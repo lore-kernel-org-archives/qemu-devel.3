@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A84C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA5DC54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:51:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1Xz-0000gg-Ni; Tue, 12 Mar 2024 08:47:59 -0400
+	id 1rk1VR-00054E-Mb; Tue, 12 Mar 2024 08:45:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1VL-0004gc-Lo
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:45:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1VA-0004S8-EC
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:45:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1VG-0000bM-BX
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:45:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1V3-0000Wh-Lq
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:45:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710247507;
+ s=mimecast20190719; t=1710247495;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1ysobHKgjBV89d+fnYnHJUmiT/TwlUt5KEIpL4LfkIU=;
- b=CHZX90+QyA52dE9j3dqnPWpgvA0crZWiA9uzX1A/t72yRYmmBydyzu/Ek7HSfZwT45d6pM
- hdX9sal7Drw7X6qz0NTvh57+HYq4EfcTdxXnFQxrWgSoF/WbPG00a3m2XUdS/tXKvTLxXT
- bGvDGDNE/duzMAnh14MnlLhPrfCzHv0=
+ bh=fVeQ/voPOLaHDifKQwHSPz/5PRJECd4+4KbN1orGcY0=;
+ b=UPUIYInUbfngIOaMmOTRI3bplqmUkUUrLxWB01ehjG+/sChv1z+3nlyrn9sJxYZmY4jbEQ
+ sTyeymrEI1b3B3+kur07WE16pWhziVsiS9eSw097fJJ8+0SqMqammm+A86tVTnBDpI4Su6
+ opPWEs51mwVzl9okwEWKgotfvaTHWC8=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-108-GFMcQvkMOe24Wk0uVepiHw-1; Tue,
- 12 Mar 2024 08:45:01 -0400
-X-MC-Unique: GFMcQvkMOe24Wk0uVepiHw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-512-uAfL0bO8OqiZ0GRkWU1U3g-1; Tue,
+ 12 Mar 2024 08:44:50 -0400
+X-MC-Unique: uAfL0bO8OqiZ0GRkWU1U3g-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 629EF1C41A20;
- Tue, 12 Mar 2024 12:45:01 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 213011C41A19;
+ Tue, 12 Mar 2024 12:44:50 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.69])
- by smtp.corp.redhat.com (Postfix) with ESMTP id B944D492BC4;
- Tue, 12 Mar 2024 12:44:59 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 638C0492BC4;
+ Tue, 12 Mar 2024 12:44:48 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 42/55] target/i386/hvf: Use CPUState typedef
-Date: Tue, 12 Mar 2024 13:43:26 +0100
-Message-ID: <20240312124339.761630-43-thuth@redhat.com>
+ Zhao Liu <zhao1.liu@intel.com>, Fabiano Rosas <farosas@suse.de>,
+ Anthony PERARD <anthony.perard@citrix.com>
+Subject: [PULL 34/55] bulk: Access existing variables initialized to &S->F
+ when available
+Date: Tue, 12 Mar 2024 13:43:18 +0100
+Message-ID: <20240312124339.761630-35-thuth@redhat.com>
 In-Reply-To: <20240312124339.761630-1-thuth@redhat.com>
 References: <20240312124339.761630-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -85,358 +86,363 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-QEMU coding style recommend using structure typedefs:
-https://www.qemu.org/docs/master/devel/style.html#typedefs
+When a variable is initialized to &struct->field, use it
+in place. Rationale: while this makes the code more concise,
+this also helps static analyzers.
 
+Mechanical change using the following Coccinelle spatch script:
+
+ @@
+ type S, F;
+ identifier s, m, v;
+ @@
+      S *s;
+      ...
+      F *v = &s->m;
+      <+...
+ -    &s->m
+ +    v
+      ...+>
+
+Inspired-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240129164514.73104-2-philmd@linaro.org>
+Acked-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240129164514.73104-14-philmd@linaro.org>
-[thuth: Break long lines to avoid checkpatch.pl errors]
+Reviewed-by: Anthony PERARD <anthony.perard@citrix.com>
+[thuth: Dropped hunks that need a rebase, and fixed sizeof() in pmu_realize()]
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/i386/hvf/x86.h       | 26 +++++++++++++-------------
- target/i386/hvf/x86_descr.h | 14 +++++++-------
- target/i386/hvf/x86_emu.h   |  4 ++--
- target/i386/hvf/x86_mmu.h   |  6 +++---
- target/i386/hvf/x86.c       | 26 +++++++++++++-------------
- target/i386/hvf/x86_descr.c | 11 +++++++----
- target/i386/hvf/x86_mmu.c   | 14 +++++++-------
- 7 files changed, 52 insertions(+), 49 deletions(-)
+ hw/display/ati.c              |  2 +-
+ hw/misc/macio/pmu.c           |  3 +--
+ hw/misc/pvpanic-pci.c         |  2 +-
+ hw/pci-bridge/cxl_root_port.c |  2 +-
+ hw/ppc/pnv.c                  | 20 ++++++++++----------
+ hw/virtio/vhost-user-scmi.c   |  6 +++---
+ hw/virtio/virtio-pci.c        |  2 +-
+ hw/xen/xen_pt.c               |  6 +++---
+ migration/multifd-zlib.c      |  2 +-
+ target/arm/cpu.c              |  4 ++--
+ target/arm/kvm.c              |  2 +-
+ target/arm/machine.c          |  6 +++---
+ target/i386/hvf/x86hvf.c      |  2 +-
+ target/m68k/helper.c          |  2 +-
+ target/ppc/kvm.c              |  8 ++++----
+ 15 files changed, 34 insertions(+), 35 deletions(-)
 
-diff --git a/target/i386/hvf/x86.h b/target/i386/hvf/x86.h
-index 947b98da41..3570f29aa9 100644
---- a/target/i386/hvf/x86.h
-+++ b/target/i386/hvf/x86.h
-@@ -248,30 +248,30 @@ typedef struct x68_segment_selector {
- #define BH(cpu)        RH(cpu, R_EBX)
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 569b8f6165..8d2501bd82 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -991,7 +991,7 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
+     }
+     vga_init(vga, OBJECT(s), pci_address_space(dev),
+              pci_address_space_io(dev), true);
+-    vga->con = graphic_console_init(DEVICE(s), 0, s->vga.hw_ops, &s->vga);
++    vga->con = graphic_console_init(DEVICE(s), 0, s->vga.hw_ops, vga);
+     if (s->cursor_guest_mode) {
+         vga->cursor_invalidate = ati_cursor_invalidate;
+         vga->cursor_draw_line = ati_cursor_draw_line;
+diff --git a/hw/misc/macio/pmu.c b/hw/misc/macio/pmu.c
+index e9a90da88f..e40c51bf52 100644
+--- a/hw/misc/macio/pmu.c
++++ b/hw/misc/macio/pmu.c
+@@ -737,8 +737,7 @@ static void pmu_realize(DeviceState *dev, Error **errp)
+     timer_mod(s->one_sec_timer, s->one_sec_target);
  
- /* deal with GDT/LDT descriptors in memory */
--bool x86_read_segment_descriptor(struct CPUState *cpu,
-+bool x86_read_segment_descriptor(CPUState *cpu,
-                                  struct x86_segment_descriptor *desc,
-                                  x68_segment_selector sel);
--bool x86_write_segment_descriptor(struct CPUState *cpu,
-+bool x86_write_segment_descriptor(CPUState *cpu,
-                                   struct x86_segment_descriptor *desc,
-                                   x68_segment_selector sel);
- 
--bool x86_read_call_gate(struct CPUState *cpu, struct x86_call_gate *idt_desc,
-+bool x86_read_call_gate(CPUState *cpu, struct x86_call_gate *idt_desc,
-                         int gate);
- 
- /* helpers */
--bool x86_is_protected(struct CPUState *cpu);
--bool x86_is_real(struct CPUState *cpu);
--bool x86_is_v8086(struct CPUState *cpu);
--bool x86_is_long_mode(struct CPUState *cpu);
--bool x86_is_long64_mode(struct CPUState *cpu);
--bool x86_is_paging_mode(struct CPUState *cpu);
--bool x86_is_pae_enabled(struct CPUState *cpu);
-+bool x86_is_protected(CPUState *cpu);
-+bool x86_is_real(CPUState *cpu);
-+bool x86_is_v8086(CPUState *cpu);
-+bool x86_is_long_mode(CPUState *cpu);
-+bool x86_is_long64_mode(CPUState *cpu);
-+bool x86_is_paging_mode(CPUState *cpu);
-+bool x86_is_pae_enabled(CPUState *cpu);
- 
- enum X86Seg;
--target_ulong linear_addr(struct CPUState *cpu, target_ulong addr, enum X86Seg seg);
--target_ulong linear_addr_size(struct CPUState *cpu, target_ulong addr, int size,
-+target_ulong linear_addr(CPUState *cpu, target_ulong addr, enum X86Seg seg);
-+target_ulong linear_addr_size(CPUState *cpu, target_ulong addr, int size,
-                               enum X86Seg seg);
--target_ulong linear_rip(struct CPUState *cpu, target_ulong rip);
-+target_ulong linear_rip(CPUState *cpu, target_ulong rip);
- 
- static inline uint64_t rdtscp(void)
- {
-diff --git a/target/i386/hvf/x86_descr.h b/target/i386/hvf/x86_descr.h
-index c356932fa4..9f06014b56 100644
---- a/target/i386/hvf/x86_descr.h
-+++ b/target/i386/hvf/x86_descr.h
-@@ -29,29 +29,29 @@ typedef struct vmx_segment {
- } vmx_segment;
- 
- /* deal with vmstate descriptors */
--void vmx_read_segment_descriptor(struct CPUState *cpu,
-+void vmx_read_segment_descriptor(CPUState *cpu,
-                                  struct vmx_segment *desc, enum X86Seg seg);
- void vmx_write_segment_descriptor(CPUState *cpu, struct vmx_segment *desc,
-                                   enum X86Seg seg);
- 
--x68_segment_selector vmx_read_segment_selector(struct CPUState *cpu,
-+x68_segment_selector vmx_read_segment_selector(CPUState *cpu,
-                                                enum X86Seg seg);
--void vmx_write_segment_selector(struct CPUState *cpu,
-+void vmx_write_segment_selector(CPUState *cpu,
-                                 x68_segment_selector selector,
-                                 enum X86Seg seg);
- 
--uint64_t vmx_read_segment_base(struct CPUState *cpu, enum X86Seg seg);
--void vmx_write_segment_base(struct CPUState *cpu, enum X86Seg seg,
-+uint64_t vmx_read_segment_base(CPUState *cpu, enum X86Seg seg);
-+void vmx_write_segment_base(CPUState *cpu, enum X86Seg seg,
-                             uint64_t base);
- 
--void x86_segment_descriptor_to_vmx(struct CPUState *cpu,
-+void x86_segment_descriptor_to_vmx(CPUState *cpu,
-                                    x68_segment_selector selector,
-                                    struct x86_segment_descriptor *desc,
-                                    struct vmx_segment *vmx_desc);
- 
- uint32_t vmx_read_segment_limit(CPUState *cpu, enum X86Seg seg);
- uint32_t vmx_read_segment_ar(CPUState *cpu, enum X86Seg seg);
--void vmx_segment_to_x86_descriptor(struct CPUState *cpu,
-+void vmx_segment_to_x86_descriptor(CPUState *cpu,
-                                    struct vmx_segment *vmx_desc,
-                                    struct x86_segment_descriptor *desc);
- 
-diff --git a/target/i386/hvf/x86_emu.h b/target/i386/hvf/x86_emu.h
-index 4b846ba80e..8bd97608c4 100644
---- a/target/i386/hvf/x86_emu.h
-+++ b/target/i386/hvf/x86_emu.h
-@@ -26,8 +26,8 @@
- void init_emu(void);
- bool exec_instruction(CPUX86State *env, struct x86_decode *ins);
- 
--void load_regs(struct CPUState *cpu);
--void store_regs(struct CPUState *cpu);
-+void load_regs(CPUState *cpu);
-+void store_regs(CPUState *cpu);
- 
- void simulate_rdmsr(CPUX86State *env);
- void simulate_wrmsr(CPUX86State *env);
-diff --git a/target/i386/hvf/x86_mmu.h b/target/i386/hvf/x86_mmu.h
-index 9ae8a548de..9447ae072c 100644
---- a/target/i386/hvf/x86_mmu.h
-+++ b/target/i386/hvf/x86_mmu.h
-@@ -36,9 +36,9 @@
- #define MMU_PAGE_US             (1 << 2)
- #define MMU_PAGE_NX             (1 << 3)
- 
--bool mmu_gva_to_gpa(struct CPUState *cpu, target_ulong gva, uint64_t *gpa);
-+bool mmu_gva_to_gpa(CPUState *cpu, target_ulong gva, uint64_t *gpa);
- 
--void vmx_write_mem(struct CPUState *cpu, target_ulong gva, void *data, int bytes);
--void vmx_read_mem(struct CPUState *cpu, void *data, target_ulong gva, int bytes);
-+void vmx_write_mem(CPUState *cpu, target_ulong gva, void *data, int bytes);
-+void vmx_read_mem(CPUState *cpu, void *data, target_ulong gva, int bytes);
- 
- #endif /* X86_MMU_H */
-diff --git a/target/i386/hvf/x86.c b/target/i386/hvf/x86.c
-index 8ceea6398e..80e36136d0 100644
---- a/target/i386/hvf/x86.c
-+++ b/target/i386/hvf/x86.c
-@@ -46,7 +46,7 @@
-    return ar;
- }*/
- 
--bool x86_read_segment_descriptor(struct CPUState *cpu,
-+bool x86_read_segment_descriptor(CPUState *cpu,
-                                  struct x86_segment_descriptor *desc,
-                                  x68_segment_selector sel)
- {
-@@ -76,7 +76,7 @@ bool x86_read_segment_descriptor(struct CPUState *cpu,
-     return true;
- }
- 
--bool x86_write_segment_descriptor(struct CPUState *cpu,
-+bool x86_write_segment_descriptor(CPUState *cpu,
-                                   struct x86_segment_descriptor *desc,
-                                   x68_segment_selector sel)
- {
-@@ -99,7 +99,7 @@ bool x86_write_segment_descriptor(struct CPUState *cpu,
-     return true;
- }
- 
--bool x86_read_call_gate(struct CPUState *cpu, struct x86_call_gate *idt_desc,
-+bool x86_read_call_gate(CPUState *cpu, struct x86_call_gate *idt_desc,
-                         int gate)
- {
-     target_ulong base  = rvmcs(cpu->accel->fd, VMCS_GUEST_IDTR_BASE);
-@@ -115,30 +115,30 @@ bool x86_read_call_gate(struct CPUState *cpu, struct x86_call_gate *idt_desc,
-     return true;
- }
- 
--bool x86_is_protected(struct CPUState *cpu)
-+bool x86_is_protected(CPUState *cpu)
- {
-     uint64_t cr0 = rvmcs(cpu->accel->fd, VMCS_GUEST_CR0);
-     return cr0 & CR0_PE_MASK;
- }
- 
--bool x86_is_real(struct CPUState *cpu)
-+bool x86_is_real(CPUState *cpu)
- {
-     return !x86_is_protected(cpu);
- }
- 
--bool x86_is_v8086(struct CPUState *cpu)
-+bool x86_is_v8086(CPUState *cpu)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
-     return x86_is_protected(cpu) && (env->eflags & VM_MASK);
- }
- 
--bool x86_is_long_mode(struct CPUState *cpu)
-+bool x86_is_long_mode(CPUState *cpu)
- {
-     return rvmcs(cpu->accel->fd, VMCS_GUEST_IA32_EFER) & MSR_EFER_LMA;
- }
- 
--bool x86_is_long64_mode(struct CPUState *cpu)
-+bool x86_is_long64_mode(CPUState *cpu)
- {
-     struct vmx_segment desc;
-     vmx_read_segment_descriptor(cpu, &desc, R_CS);
-@@ -146,24 +146,24 @@ bool x86_is_long64_mode(struct CPUState *cpu)
-     return x86_is_long_mode(cpu) && ((desc.ar >> 13) & 1);
- }
- 
--bool x86_is_paging_mode(struct CPUState *cpu)
-+bool x86_is_paging_mode(CPUState *cpu)
- {
-     uint64_t cr0 = rvmcs(cpu->accel->fd, VMCS_GUEST_CR0);
-     return cr0 & CR0_PG_MASK;
- }
- 
--bool x86_is_pae_enabled(struct CPUState *cpu)
-+bool x86_is_pae_enabled(CPUState *cpu)
- {
-     uint64_t cr4 = rvmcs(cpu->accel->fd, VMCS_GUEST_CR4);
-     return cr4 & CR4_PAE_MASK;
- }
- 
--target_ulong linear_addr(struct CPUState *cpu, target_ulong addr, X86Seg seg)
-+target_ulong linear_addr(CPUState *cpu, target_ulong addr, X86Seg seg)
- {
-     return vmx_read_segment_base(cpu, seg) + addr;
- }
- 
--target_ulong linear_addr_size(struct CPUState *cpu, target_ulong addr, int size,
-+target_ulong linear_addr_size(CPUState *cpu, target_ulong addr, int size,
-                               X86Seg seg)
- {
-     switch (size) {
-@@ -179,7 +179,7 @@ target_ulong linear_addr_size(struct CPUState *cpu, target_ulong addr, int size,
-     return linear_addr(cpu, addr, seg);
- }
- 
--target_ulong linear_rip(struct CPUState *cpu, target_ulong rip)
-+target_ulong linear_rip(CPUState *cpu, target_ulong rip)
- {
-     return linear_addr(cpu, rip, R_CS);
- }
-diff --git a/target/i386/hvf/x86_descr.c b/target/i386/hvf/x86_descr.c
-index c2d2e9ee84..f33836d6cb 100644
---- a/target/i386/hvf/x86_descr.c
-+++ b/target/i386/hvf/x86_descr.c
-@@ -67,12 +67,12 @@ x68_segment_selector vmx_read_segment_selector(CPUState *cpu, X86Seg seg)
-     return sel;
- }
- 
--void vmx_write_segment_selector(struct CPUState *cpu, x68_segment_selector selector, X86Seg seg)
-+void vmx_write_segment_selector(CPUState *cpu, x68_segment_selector selector, X86Seg seg)
- {
-     wvmcs(cpu->accel->fd, vmx_segment_fields[seg].selector, selector.sel);
- }
- 
--void vmx_read_segment_descriptor(struct CPUState *cpu, struct vmx_segment *desc, X86Seg seg)
-+void vmx_read_segment_descriptor(CPUState *cpu, struct vmx_segment *desc, X86Seg seg)
- {
-     desc->sel = rvmcs(cpu->accel->fd, vmx_segment_fields[seg].selector);
-     desc->base = rvmcs(cpu->accel->fd, vmx_segment_fields[seg].base);
-@@ -90,7 +90,9 @@ void vmx_write_segment_descriptor(CPUState *cpu, struct vmx_segment *desc, X86Se
-     wvmcs(cpu->accel->fd, sf->ar_bytes, desc->ar);
- }
- 
--void x86_segment_descriptor_to_vmx(struct CPUState *cpu, x68_segment_selector selector, struct x86_segment_descriptor *desc, struct vmx_segment *vmx_desc)
-+void x86_segment_descriptor_to_vmx(CPUState *cpu, x68_segment_selector selector,
-+                                   struct x86_segment_descriptor *desc,
-+                                   struct vmx_segment *vmx_desc)
- {
-     vmx_desc->sel = selector.sel;
-     vmx_desc->base = x86_segment_base(desc);
-@@ -107,7 +109,8 @@ void x86_segment_descriptor_to_vmx(struct CPUState *cpu, x68_segment_selector se
-                     desc->type;
- }
- 
--void vmx_segment_to_x86_descriptor(struct CPUState *cpu, struct vmx_segment *vmx_desc, struct x86_segment_descriptor *desc)
-+void vmx_segment_to_x86_descriptor(CPUState *cpu, struct vmx_segment *vmx_desc,
-+                                   struct x86_segment_descriptor *desc)
- {
-     x86_set_segment_limit(desc, vmx_desc->limit);
-     x86_set_segment_base(desc, vmx_desc->base);
-diff --git a/target/i386/hvf/x86_mmu.c b/target/i386/hvf/x86_mmu.c
-index 8cd08622a1..649074a7d2 100644
---- a/target/i386/hvf/x86_mmu.c
-+++ b/target/i386/hvf/x86_mmu.c
-@@ -49,7 +49,7 @@ struct gpt_translation {
-     bool exec_access;
- };
- 
--static int gpt_top_level(struct CPUState *cpu, bool pae)
-+static int gpt_top_level(CPUState *cpu, bool pae)
- {
-     if (!pae) {
-         return 2;
-@@ -73,7 +73,7 @@ static inline int pte_size(bool pae)
- }
- 
- 
--static bool get_pt_entry(struct CPUState *cpu, struct gpt_translation *pt,
-+static bool get_pt_entry(CPUState *cpu, struct gpt_translation *pt,
-                          int level, bool pae)
- {
-     int index;
-@@ -95,7 +95,7 @@ static bool get_pt_entry(struct CPUState *cpu, struct gpt_translation *pt,
- }
- 
- /* test page table entry */
--static bool test_pt_entry(struct CPUState *cpu, struct gpt_translation *pt,
-+static bool test_pt_entry(CPUState *cpu, struct gpt_translation *pt,
-                           int level, bool *is_large, bool pae)
- {
-     uint64_t pte = pt->pte[level];
-@@ -166,7 +166,7 @@ static inline uint64_t large_page_gpa(struct gpt_translation *pt, bool pae)
- 
- 
- 
--static bool walk_gpt(struct CPUState *cpu, target_ulong addr, int err_code,
-+static bool walk_gpt(CPUState *cpu, target_ulong addr, int err_code,
-                      struct gpt_translation *pt, bool pae)
- {
-     int top_level, level;
-@@ -205,7 +205,7 @@ static bool walk_gpt(struct CPUState *cpu, target_ulong addr, int err_code,
- }
- 
- 
--bool mmu_gva_to_gpa(struct CPUState *cpu, target_ulong gva, uint64_t *gpa)
-+bool mmu_gva_to_gpa(CPUState *cpu, target_ulong gva, uint64_t *gpa)
- {
-     bool res;
-     struct gpt_translation pt;
-@@ -225,7 +225,7 @@ bool mmu_gva_to_gpa(struct CPUState *cpu, target_ulong gva, uint64_t *gpa)
-     return false;
- }
- 
--void vmx_write_mem(struct CPUState *cpu, target_ulong gva, void *data, int bytes)
-+void vmx_write_mem(CPUState *cpu, target_ulong gva, void *data, int bytes)
- {
-     uint64_t gpa;
- 
-@@ -246,7 +246,7 @@ void vmx_write_mem(struct CPUState *cpu, target_ulong gva, void *data, int bytes
+     if (s->has_adb) {
+-        qbus_init(&s->adb_bus, sizeof(s->adb_bus), TYPE_ADB_BUS,
+-                  dev, "adb.0");
++        qbus_init(adb_bus, sizeof(*adb_bus), TYPE_ADB_BUS, dev, "adb.0");
+         adb_register_autopoll_callback(adb_bus, pmu_adb_poll, s);
      }
  }
+diff --git a/hw/misc/pvpanic-pci.c b/hw/misc/pvpanic-pci.c
+index c01e4ce864..83be95d0d2 100644
+--- a/hw/misc/pvpanic-pci.c
++++ b/hw/misc/pvpanic-pci.c
+@@ -48,7 +48,7 @@ static void pvpanic_pci_realizefn(PCIDevice *dev, Error **errp)
+     PVPanicPCIState *s = PVPANIC_PCI_DEVICE(dev);
+     PVPanicState *ps = &s->pvpanic;
  
--void vmx_read_mem(struct CPUState *cpu, void *data, target_ulong gva, int bytes)
-+void vmx_read_mem(CPUState *cpu, void *data, target_ulong gva, int bytes)
- {
-     uint64_t gpa;
+-    pvpanic_setup_io(&s->pvpanic, DEVICE(s), 2);
++    pvpanic_setup_io(ps, DEVICE(s), 2);
  
+     pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &ps->mr);
+ }
+diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
+index 62f96994eb..8a30da602c 100644
+--- a/hw/pci-bridge/cxl_root_port.c
++++ b/hw/pci-bridge/cxl_root_port.c
+@@ -175,7 +175,7 @@ static void cxl_rp_realize(DeviceState *dev, Error **errp)
+ 
+     cxl_cstate->dvsec_offset = CXL_ROOT_PORT_DVSEC_OFFSET;
+     cxl_cstate->pdev = pci_dev;
+-    build_dvsecs(&crp->cxl_cstate);
++    build_dvsecs(cxl_cstate);
+ 
+     cxl_component_register_block_init(OBJECT(pci_dev), cxl_cstate,
+                                       TYPE_CXL_ROOT_PORT);
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 0b47b92baa..93d550988f 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -1265,11 +1265,11 @@ static void pnv_chip_power8_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     /* Processor Service Interface (PSI) Host Bridge */
+-    object_property_set_int(OBJECT(&chip8->psi), "bar", PNV_PSIHB_BASE(chip),
++    object_property_set_int(OBJECT(psi8), "bar", PNV_PSIHB_BASE(chip),
+                             &error_fatal);
+-    object_property_set_link(OBJECT(&chip8->psi), ICS_PROP_XICS,
++    object_property_set_link(OBJECT(psi8), ICS_PROP_XICS,
+                              OBJECT(chip8->xics), &error_abort);
+-    if (!qdev_realize(DEVICE(&chip8->psi), NULL, errp)) {
++    if (!qdev_realize(DEVICE(psi8), NULL, errp)) {
+         return;
+     }
+     pnv_xscom_add_subregion(chip, PNV_XSCOM_PSIHB_BASE,
+@@ -1300,7 +1300,7 @@ static void pnv_chip_power8_realize(DeviceState *dev, Error **errp)
+     }
+     pnv_xscom_add_subregion(chip, PNV_XSCOM_OCC_BASE, &chip8->occ.xscom_regs);
+     qdev_connect_gpio_out(DEVICE(&chip8->occ), 0,
+-                          qdev_get_gpio_in(DEVICE(&chip8->psi), PSIHB_IRQ_OCC));
++                          qdev_get_gpio_in(DEVICE(psi8), PSIHB_IRQ_OCC));
+ 
+     /* OCC SRAM model */
+     memory_region_add_subregion(get_system_memory(), PNV_OCC_SENSOR_BASE(chip),
+@@ -1553,12 +1553,12 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
+                             &chip9->xive.xscom_regs);
+ 
+     /* Processor Service Interface (PSI) Host Bridge */
+-    object_property_set_int(OBJECT(&chip9->psi), "bar", PNV9_PSIHB_BASE(chip),
++    object_property_set_int(OBJECT(psi9), "bar", PNV9_PSIHB_BASE(chip),
+                             &error_fatal);
+     /* This is the only device with 4k ESB pages */
+-    object_property_set_int(OBJECT(&chip9->psi), "shift", XIVE_ESB_4K,
++    object_property_set_int(OBJECT(psi9), "shift", XIVE_ESB_4K,
+                             &error_fatal);
+-    if (!qdev_realize(DEVICE(&chip9->psi), NULL, errp)) {
++    if (!qdev_realize(DEVICE(psi9), NULL, errp)) {
+         return;
+     }
+     pnv_xscom_add_subregion(chip, PNV9_XSCOM_PSIHB_BASE,
+@@ -1594,7 +1594,7 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
+     }
+     pnv_xscom_add_subregion(chip, PNV9_XSCOM_OCC_BASE, &chip9->occ.xscom_regs);
+     qdev_connect_gpio_out(DEVICE(&chip9->occ), 0, qdev_get_gpio_in(
+-                              DEVICE(&chip9->psi), PSIHB9_IRQ_OCC));
++                              DEVICE(psi9), PSIHB9_IRQ_OCC));
+ 
+     /* OCC SRAM model */
+     memory_region_add_subregion(get_system_memory(), PNV9_OCC_SENSOR_BASE(chip),
+@@ -1609,7 +1609,7 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
+     pnv_xscom_add_subregion(chip, PNV9_XSCOM_SBE_MBOX_BASE,
+                             &chip9->sbe.xscom_mbox_regs);
+     qdev_connect_gpio_out(DEVICE(&chip9->sbe), 0, qdev_get_gpio_in(
+-                              DEVICE(&chip9->psi), PSIHB9_IRQ_PSU));
++                              DEVICE(psi9), PSIHB9_IRQ_PSU));
+ 
+     /* HOMER */
+     object_property_set_link(OBJECT(&chip9->homer), "chip", OBJECT(chip),
+@@ -1650,7 +1650,7 @@ static void pnv_chip_power9_realize(DeviceState *dev, Error **errp)
+                                         PNV9_XSCOM_I2CM_SIZE,
+                                 &chip9->i2c[i].xscom_regs);
+         qdev_connect_gpio_out(DEVICE(&chip9->i2c[i]), 0,
+-                              qdev_get_gpio_in(DEVICE(&chip9->psi),
++                              qdev_get_gpio_in(DEVICE(psi9),
+                                                PSIHB9_IRQ_SBE_I2C));
+     }
+ }
+diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
+index 918bb7dcf7..300847e672 100644
+--- a/hw/virtio/vhost-user-scmi.c
++++ b/hw/virtio/vhost-user-scmi.c
+@@ -56,9 +56,9 @@ static int vu_scmi_start(VirtIODevice *vdev)
+         goto err_host_notifiers;
+     }
+ 
+-    vhost_ack_features(&scmi->vhost_dev, feature_bits, vdev->guest_features);
++    vhost_ack_features(vhost_dev, feature_bits, vdev->guest_features);
+ 
+-    ret = vhost_dev_start(&scmi->vhost_dev, vdev, true);
++    ret = vhost_dev_start(vhost_dev, vdev, true);
+     if (ret < 0) {
+         error_report("Error starting vhost-user-scmi: %d", ret);
+         goto err_guest_notifiers;
+@@ -71,7 +71,7 @@ static int vu_scmi_start(VirtIODevice *vdev)
+      * enabling/disabling irqfd.
+      */
+     for (i = 0; i < scmi->vhost_dev.nvqs; i++) {
+-        vhost_virtqueue_mask(&scmi->vhost_dev, vdev, i, false);
++        vhost_virtqueue_mask(vhost_dev, vdev, i, false);
+     }
+     return 0;
+ 
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 1a7039fb0c..cb6940fc0e 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -1929,7 +1929,7 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
+     bool modern_pio = proxy->flags & VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY;
+     uint8_t *config;
+     uint32_t size;
+-    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
++    VirtIODevice *vdev = virtio_bus_get_device(bus);
+ 
+     /*
+      * Virtio capabilities present without
+diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
+index a8edabdabc..3635d1b39f 100644
+--- a/hw/xen/xen_pt.c
++++ b/hw/xen/xen_pt.c
+@@ -711,7 +711,7 @@ static void xen_pt_destroy(PCIDevice *d) {
+     uint8_t intx;
+     int rc;
+ 
+-    if (machine_irq && !xen_host_pci_device_closed(&s->real_device)) {
++    if (machine_irq && !xen_host_pci_device_closed(host_dev)) {
+         intx = xen_pt_pci_intx(s);
+         rc = xc_domain_unbind_pt_irq(xen_xc, xen_domid, machine_irq,
+                                      PT_IRQ_TYPE_PCI,
+@@ -760,8 +760,8 @@ static void xen_pt_destroy(PCIDevice *d) {
+         memory_listener_unregister(&s->io_listener);
+         s->listener_set = false;
+     }
+-    if (!xen_host_pci_device_closed(&s->real_device)) {
+-        xen_host_pci_device_put(&s->real_device);
++    if (!xen_host_pci_device_closed(host_dev)) {
++        xen_host_pci_device_put(host_dev);
+     }
+ }
+ /* init */
+diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
+index 6120faad65..9a3a7adb54 100644
+--- a/migration/multifd-zlib.c
++++ b/migration/multifd-zlib.c
+@@ -75,7 +75,7 @@ static int zlib_send_setup(MultiFDSendParams *p, Error **errp)
+ err_free_zbuff:
+     g_free(z->zbuff);
+ err_deflate_end:
+-    deflateEnd(&z->zs);
++    deflateEnd(zs);
+ err_free_z:
+     g_free(z);
+     error_setg(errp, "multifd %u: %s", p->id, err_msg);
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index f3ed79cef2..02fc0adb65 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2095,7 +2095,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+      * We rely on no XScale CPU having VFP so we can use the same bits in the
+      * TB flags field for VECSTRIDE and XSCALE_CPAR.
+      */
+-    assert(arm_feature(&cpu->env, ARM_FEATURE_AARCH64) ||
++    assert(arm_feature(env, ARM_FEATURE_AARCH64) ||
+            !cpu_isar_feature(aa32_vfp_simd, cpu) ||
+            !arm_feature(env, ARM_FEATURE_XSCALE));
+ 
+@@ -2145,7 +2145,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+     }
+ 
+     if (cpu->cfgend) {
+-        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
++        if (arm_feature(env, ARM_FEATURE_V7)) {
+             cpu->reset_sctlr |= SCTLR_EE;
+         } else {
+             cpu->reset_sctlr |= SCTLR_B;
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 81813030a5..ab85d628a8 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1888,7 +1888,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         cpu->psci_version = QEMU_PSCI_VERSION_0_2;
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PSCI_0_2;
+     }
+-    if (!arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
++    if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_EL1_32BIT;
+     }
+     if (!kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PMU_V3)) {
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 9d7dbaea54..b2b39b2475 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -773,7 +773,7 @@ static int cpu_pre_load(void *opaque)
+     env->irq_line_state = UINT32_MAX;
+ 
+     if (!kvm_enabled()) {
+-        pmu_op_start(&cpu->env);
++        pmu_op_start(env);
+     }
+ 
+     return 0;
+@@ -871,11 +871,11 @@ static int cpu_post_load(void *opaque, int version_id)
+     }
+ 
+     if (!kvm_enabled()) {
+-        pmu_op_finish(&cpu->env);
++        pmu_op_finish(env);
+     }
+ 
+     if (tcg_enabled()) {
+-        arm_rebuild_hflags(&cpu->env);
++        arm_rebuild_hflags(env);
+     }
+ 
+     return 0;
+diff --git a/target/i386/hvf/x86hvf.c b/target/i386/hvf/x86hvf.c
+index 3b1ef5f49a..be2c46246e 100644
+--- a/target/i386/hvf/x86hvf.c
++++ b/target/i386/hvf/x86hvf.c
+@@ -408,7 +408,7 @@ bool hvf_inject_interrupts(CPUState *cs)
+     if (!(env->hflags & HF_INHIBIT_IRQ_MASK) &&
+         (cs->interrupt_request & CPU_INTERRUPT_HARD) &&
+         (env->eflags & IF_MASK) && !(info & VMCS_INTR_VALID)) {
+-        int line = cpu_get_pic_interrupt(&x86cpu->env);
++        int line = cpu_get_pic_interrupt(env);
+         cs->interrupt_request &= ~CPU_INTERRUPT_HARD;
+         if (line >= 0) {
+             wvmcs(cs->accel->fd, VMCS_ENTRY_INTR_INFO, line |
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index 1c33995e5d..44b245884e 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -984,7 +984,7 @@ bool m68k_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+         access_type |= ACCESS_SUPER;
+     }
+ 
+-    ret = get_physical_address(&cpu->env, &physical, &prot,
++    ret = get_physical_address(env, &physical, &prot,
+                                address, access_type, &page_size);
+     if (likely(ret == 0)) {
+         tlb_set_page(cs, address & TARGET_PAGE_MASK,
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index bcf30a5400..9f5a890655 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -635,8 +635,8 @@ static int kvm_put_fp(CPUState *cs)
+ 
+         for (i = 0; i < 32; i++) {
+             uint64_t vsr[2];
+-            uint64_t *fpr = cpu_fpr_ptr(&cpu->env, i);
+-            uint64_t *vsrl = cpu_vsrl_ptr(&cpu->env, i);
++            uint64_t *fpr = cpu_fpr_ptr(env, i);
++            uint64_t *vsrl = cpu_vsrl_ptr(env, i);
+ 
+ #if HOST_BIG_ENDIAN
+             vsr[0] = float64_val(*fpr);
+@@ -704,8 +704,8 @@ static int kvm_get_fp(CPUState *cs)
+ 
+         for (i = 0; i < 32; i++) {
+             uint64_t vsr[2];
+-            uint64_t *fpr = cpu_fpr_ptr(&cpu->env, i);
+-            uint64_t *vsrl = cpu_vsrl_ptr(&cpu->env, i);
++            uint64_t *fpr = cpu_fpr_ptr(env, i);
++            uint64_t *vsrl = cpu_vsrl_ptr(env, i);
+ 
+             reg.addr = (uintptr_t) &vsr;
+             reg.id = vsx ? KVM_REG_PPC_VSR(i) : KVM_REG_PPC_FPR(i);
 -- 
 2.44.0
 
