@@ -4,63 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3D9BC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 16:14:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83DFCC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 16:14:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk4jH-0006ym-4q; Tue, 12 Mar 2024 12:11:51 -0400
+	id 1rk4kf-0001sY-G9; Tue, 12 Mar 2024 12:13:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rk4io-0006BV-Ls
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:11:23 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rk4kH-0001c9-Cb
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:12:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rk4im-0007Jq-BR
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:11:22 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rk4kE-0007aX-Ex
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:12:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710259879;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1710259968;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NX+1pUcb26oyJWxuy8qD9M8Pf9c6lEpEj7bKRXsqTus=;
- b=MLk0OdE5WLjqINVMUlYqN3LCKniLnp0hrndk39uOU0p+2lPk/dEVaRHsKK3GF8478ZCMeF
- F2qITvkNU1/jTT1ZzM2bsAg5vhrmmVUheNOjodOfXYOZnbdX4irWUFhzKKeu4cwoQNDjKq
- ZX1d73MYx+QDekmnr1NH/h4+w/KJlio=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-OczK7HlsM1KDT531lisNIw-1; Tue,
- 12 Mar 2024 12:11:16 -0400
-X-MC-Unique: OczK7HlsM1KDT531lisNIw-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
+ bh=LYuHTN5j++u3zJrH2d1fyCwaZODICudmqDWTtikX9As=;
+ b=Q4cCcjfRpQ3lR8N3y6oJpZgnhBzncC0aSAvmGAb8NKgAV5bKIZmNn4s+sMKytz0/S7D+NL
+ zty0NHcyZV0vK4W1U5U9I59UKk07qFBjBd0BHkpqfm8sRoviLQrnSRTyyW/JnlY2gjRVr1
+ eHMWxtKRWrCCvILEInrfle4E0XWN2jo=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-437-90ehjYPGPX-Sxdqc_JE9Qw-1; Tue, 12 Mar 2024 12:12:45 -0400
+X-MC-Unique: 90ehjYPGPX-Sxdqc_JE9Qw-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D4CAE1C07F4D;
- Tue, 12 Mar 2024 16:11:15 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by smtp.corp.redhat.com (Postfix) with ESMTP id D9E6D3C23;
- Tue, 12 Mar 2024 16:11:14 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: imammedo@redhat.com, mst@redhat.com, Ani Sinha <anisinha@redhat.com>,
- Fiona Ebner <f.ebner@proxmox.com>
-Subject: [PATCH v3 19/20] pc/q35: set SMBIOS entry point type to 'auto' by
- default
-Date: Tue, 12 Mar 2024 17:10:49 +0100
-Message-Id: <20240312161050.2248814-20-imammedo@redhat.com>
-In-Reply-To: <20240312161050.2248814-1-imammedo@redhat.com>
-References: <20240312161050.2248814-1-imammedo@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 352391819442;
+ Tue, 12 Mar 2024 16:12:44 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.60])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id DFD61492BC6;
+ Tue, 12 Mar 2024 16:12:40 +0000 (UTC)
+Date: Tue, 12 Mar 2024 16:12:38 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH 7/9] i386/sev: Refactor setting of reset vector and
+ initial CPU state
+Message-ID: <ZfB-9lPyDUHv6FbG@redhat.com>
+References: <cover.1709044754.git.roy.hopkins@suse.com>
+ <bf045e3364a0575d9680832dec5acba7aa441895.1709044754.git.roy.hopkins@suse.com>
+ <ZeIJ-3zFzj0PAvDe@redhat.com>
+ <734b9e05fe7acbc7c09c323f1d78956b0394360a.camel@suse.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+In-Reply-To: <734b9e05fe7acbc7c09c323f1d78956b0394360a.camel@suse.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -81,83 +94,114 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use smbios-entry-point-type='auto' for newer machine types as a workaround
-for Windows not detecting SMBIOS tables. Which makes QEMU pick SMBIOS tables
-based on configuration (with 2.x preferred and fallback to 3.x if the former
-isn't compatible with configuration)
+On Tue, Mar 12, 2024 at 03:45:20PM +0000, Roy Hopkins wrote:
+> On Fri, 2024-03-01 at 17:01 +0000, Daniel P. Berrangé wrote:
+> > On Tue, Feb 27, 2024 at 02:50:13PM +0000, Roy Hopkins wrote:
+> > > +            /*
+> > > +             * Ideally we would provide the VMSA directly to kvm which
+> > > would
+> > > +             * ensure that the resulting initial VMSA measurement which is
+> > > +             * calculated during KVM_SEV_LAUNCH_UPDATE_VMSA is calculated
+> > > from
+> > > +             * exactly what we provide here. Currently this is not possible
+> > > so
+> > > +             * we need to copy the parts of the VMSA structure that we
+> > > currently
+> > > +             * support into the CPU state.
+> > > +             */
+> > 
+> > This sounds like it is saying that the code is not honouring
+> > everything in the VMSA defiend by the IGVM file ?
+> > 
+> > If so, that is pretty awkward. The VMSA is effectively an external
+> > ABI between QEMU and the guest owner (or whatever is validating
+> > guest attestation reports for them), and thus predictability and
+> > stability of this over time is critical.
+> > 
+> > We don't want the attestation process to be dependent/variable on
+> > the particular QEMU/KVM version, because any upgrade to QEMU/KVM
+> > could then alter the effective VMSA that the guest owner sees.
+> > 
+> > We've already suffered pain in this respect not long ago when the
+> > kernel arbitrarily changed a default setting which altered the
+> > VMSA it exposed, breaking existing apps that validate attestation.
+> > 
+> > What will it take to provide the full VMSA to KVM, so that we can
+> > guarantee to the guest owner than the VMSA for the guest is going
+> > to perfectly match what their IGVM defined ?
+> > 
+> 
+> Yes, the fact that we have to copy the individual fields from the VMSA to
+> "CPUX86State" is less than ideal - a problem made worse by the fact that the
+> kernel does not allow direct control over some of the fields from userspace,
+> "sev_features" being a good example here where "SVM_SEV_FEAT_DEBUG_SWAP" is
+> unconditionally added by the kernel.
 
-Default compat setting of smbios-entry-point-type after series
-for pc/q35 machines:
-  * 9.0-newer: 'auto'
-  * 8.1-8.2: '64'
-  * 8.0-older: '32'
+Ah yes, the SVM_SEV_FEAT_DEBUG_SWAP feature is the one I couldn't remember
+the name of in my quoted text above, that break our apps when the kernel
+suddenly set it by default (thankfully now reverted in Linux with
+5abf6dceb066f2b02b225fd561440c98a8062681).
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2008
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
----
- hw/i386/pc.c      | 2 +-
- hw/i386/pc_piix.c | 4 ++++
- hw/i386/pc_q35.c  | 3 +++
- 3 files changed, 8 insertions(+), 1 deletion(-)
+> The kernel VMSA is at least predictable. So, although we cannot yet allow full
+> flexibility in providing a complete VMSA from QEMU and guarantee it will be
+> honoured, we could check to see if any settings conflict with those imposed by
+> the kernel and exit with an error if this is the case. I chose not to implement
+> for this first series but could easily add a patch to support this. The problem
+> here is that it ties the version of QEMU to VMSA handling functionality in the
+> kernel. Any change to the VMSA handling in the kernel would potentially
+> invalidate the checks in QEMU. The one upside here is that this will easily be
+> detectable by the attestation measurement not matching the expected measurement
+> of the IGVM file. But it will be difficult for the user to determine what the
+> discrepancy is.
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index a8e8aa2ac8..cf16337341 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1847,7 +1847,7 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
-     mc->nvdimm_supported = true;
-     mc->smp_props.dies_supported = true;
-     mc->default_ram_id = "pc.ram";
--    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
-+    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_AUTO;
- 
-     object_class_property_add(oc, PC_MACHINE_MAX_RAM_BELOW_4G, "size",
-         pc_machine_get_max_ram_below_4g, pc_machine_set_max_ram_below_4g,
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 319bc4b180..bb80c10b96 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -526,12 +526,16 @@ DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0", NULL,
- 
- static void pc_i440fx_8_2_machine_options(MachineClass *m)
- {
-+    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
-+
-     pc_i440fx_9_0_machine_options(m);
-     m->alias = NULL;
-     m->is_default = false;
- 
-     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
-+    /* For pc-i44fx-8.2 and 8.1, use SMBIOS 3.X by default */
-+    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
- }
- 
- DEFINE_I440FX_MACHINE(v8_2, "pc-i440fx-8.2", NULL,
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 45a4102e75..6fef3b17bb 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -369,10 +369,13 @@ DEFINE_Q35_MACHINE(v9_0, "pc-q35-9.0", NULL,
- 
- static void pc_q35_8_2_machine_options(MachineClass *m)
- {
-+    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
-     pc_q35_9_0_machine_options(m);
-     m->alias = NULL;
-     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
-+    /* For pc-q35-8.2 and 8.1, use SMBIOS 3.X by default */
-+    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
- }
- 
- DEFINE_Q35_MACHINE(v8_2, "pc-q35-8.2", NULL,
+Yes, the difficulty in diagnosis is the big thing I'm worried about from
+a distro supportability POV. The DEBUG_SWAP issue caused us a bunch of
+pain and that's before CVMs are even widely used.
+
+I agree that hardcoding checks in QEMU is pretty unpleasant, and probably
+not something that I'd want us to do. I'd want QEMU to be able to live
+query the kernel's default initial VMSA, if it were to be reporting
+differences vs the IGVM provided VMSA. I dn't think there's a way to
+do that nicely though - i only know of ftrace probes to dump it informally.
+
+I guess if we know & document what subset of the VMSA QEMU /can/ directly
+control, that at least narrows down where to look if something does change
+or go wrong.
+
+> The ideal solution is to add or modify a KVM ioctl to allow the VMSA to be set
+> directly, overriding the state in "CPUX86State". The current
+> KVM_SEV_LAUNCH_UPDATE_VMSA ioctl triggers the synchronisation of the VMSA but
+> does not allow it to be specified directly. This could be modified for what we
+> need. The SEV-SNP kernel patches add KVM_SEV_SNP_LAUNCH_UPDATE which allows a
+> page type of VMSA to be updated, although the current patch series does not
+> support using this to set the initial state of the VMSA:
+> https://lore.kernel.org/lkml/20231230172351.574091-19-michael.roth@amd.com/ I
+> have experimented with this myself and have successfully modified the SEV-SNP
+> kernel patches to support directly setting the VMSA from QEMU.
+> 
+> On the other hand, I have also verified that I can indeed measure an IGVM file
+> loaded using the VMSA synchronisation method currently employed and get a
+> matching measurement from the SEV attestation report.
+> 
+> What would you suggest is the best way forward for this?
+
+I'll delegate to Paolo for an opinion on the possiblity of new (or
+updated) ioctls to provide the full VMSA data.
+
+If we can't directly set the full VMSA, then next best option is a
+more formal way query to VMSA. That way libvirt could report on
+what the default initial kernel VMSA state is, which could be useful
+debug info for any bug reports.
+
+With regards,
+Daniel
 -- 
-2.39.3
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
