@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A21C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 09:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02FFEC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 09:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjyK9-0001ZA-Am; Tue, 12 Mar 2024 05:21:29 -0400
+	id 1rjyOm-0003Hq-7W; Tue, 12 Mar 2024 05:26:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1rjyK7-0001Xe-1U
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:21:27 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1rjyK3-0002jZ-UZ
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:21:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710235284; x=1741771284;
- h=from:to:cc:subject:in-reply-to:references:date:
- message-id:mime-version;
- bh=4GCwzfGbTS24EMO9wkYt9MaMxJ9FDXPxqe6Ri3RZJG4=;
- b=b5UT303hRZVMUnt4J7ECnnDXW+Ge0UiQTVOjZBgXiWcIXPH41Cx75974
- U6nRvhW7YC8/h9hgfMGswRDTR0trO1QOLoXezpKTaxqn9QVAJkEz6v1gU
- /Jt88Kb59d2VMtKN/pWDulprL8WxFxBeH7FuQoTvymTB76FkHU6Cmgwsk
- 1T7dwZ/hL1TxEojofDdz95XwNKOINlYPibh3AjnGwg1vzcGRnLDgv+f/X
- xBNm1vI7cLTGgnUnWk1T3S5NVOCCz+lv8qbTTnswvbWAySY9w/kyza5zT
- YhP16Ns+lwD9svgjykp6vhYYHzqiOgJzIJ5DknNKlEhDtCycdA2n6vL94 g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="16373637"
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="16373637"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Mar 2024 02:21:20 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="11905406"
-Received: from yhuang6-desk2.sh.intel.com (HELO
- yhuang6-desk2.ccr.corp.intel.com) ([10.238.208.55])
- by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Mar 2024 02:21:14 -0700
-From: "Huang, Ying" <ying.huang@intel.com>
-To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Cc: "Gregory Price" <gourry.memverge@gmail.com>,
- aneesh.kumar@linux.ibm.com,  mhocko@suse.com,  tj@kernel.org,
- john@jagalactic.com,  "Eishan Mirakhur" <emirakhur@micron.com>,
- "Vinicius Tavares Petrucci" <vtavarespetr@micron.com>,  "Ravis OpenSrc"
- <Ravis.OpenSrc@micron.com>,  "Alistair Popple" <apopple@nvidia.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,  Len Brown <lenb@kernel.org>,
- Dan Williams <dan.j.williams@intel.com>,  Vishal Verma
- <vishal.l.verma@intel.com>,  Dave Jiang <dave.jiang@intel.com>,  Andrew
- Morton <akpm@linux-foundation.org>,  Jonathan Cameron
- <Jonathan.Cameron@huawei.com>,  linux-acpi@vger.kernel.org,
- linux-kernel@vger.kernel.org,  nvdimm@lists.linux.dev,
- linux-cxl@vger.kernel.org,  linux-mm@kvack.org,  "Ho-Ren (Jack) Chuang"
- <horenc@vt.edu>,  "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>,
- qemu-devel@nongnu.org,  Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [PATCH v2 1/1] memory tier: acpi/hmat: create CPUless memory
- tiers after obtaining HMAT info
-In-Reply-To: <20240312061729.1997111-2-horenchuang@bytedance.com> (Ho-Ren
- Chuang's message of "Tue, 12 Mar 2024 06:17:27 +0000")
-References: <20240312061729.1997111-1-horenchuang@bytedance.com>
- <20240312061729.1997111-2-horenchuang@bytedance.com>
-Date: Tue, 12 Mar 2024 17:19:19 +0800
-Message-ID: <874jdb4xk8.fsf@yhuang6-desk2.ccr.corp.intel.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rjyOj-0003HH-QV
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:26:13 -0400
+Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rjyOh-0003O1-9t
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:26:13 -0400
+Received: by mail-oi1-x22a.google.com with SMTP id
+ 5614622812f47-3c19dd9ade5so2470128b6e.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 02:26:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1710235570; x=1710840370; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1fOhm/KsX3r5K2fqdEXWytTHtx/WjRGz1zlvAE3Dj40=;
+ b=fYjGKP9pu7cPWCh5HUqts26vay77deA8wA8RWySt/R2oQVMrvp5cnWLKYlN1DAuYBc
+ YZ7nTFZFdUudJjHwgrE0sqaVu+LlgYoNcNcKGOSDDCpWY4ott+R0PFi1UAAQPnQqbrIj
+ /6Mm8obPAXBC1NZmvS+LHPZM41j0VwMoZ33V27TLhscAPxP08jkqIJmo85Bgc59hC+zp
+ wPE8UfAfB6oVpaeYg4Lcer70oVjeh87aM+4KAypqIK/3522RdqHFSXNSSrJWkEVW3Tfq
+ /qVR6BFG9GaDkqIyFjkGUcSyx0Z29wz5mzY8nFHU4dBPLoJ754gomL13A/K2GC63P84a
+ me2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710235570; x=1710840370;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1fOhm/KsX3r5K2fqdEXWytTHtx/WjRGz1zlvAE3Dj40=;
+ b=bQtMKn9oQldDXqOYHQXRJyKeDoSFQpgL+UrKRQqJEKsoVozFg4Sq32MpVOHlhyzRnS
+ l59lt1A79HDRVN++ZhDlqIYiMtASvg/oRGh954zrK4zfYYL8LPC9cjzyp92k6D9YmQDP
+ K8UWadWHGEVl6e0i9wXsWmJqO6w/7wHHYoKoyl7a/cUnOyZah24iwH2SgYRqSHaHcfOk
+ 5s/+yL8BkIiXG8K3CaLSqnqfwiVrxvGRYdw5ej/klTujQpFJVGiDQBiTjfbeoEcUPHaQ
+ MB2J1b2g5oQzTzYcgR9EmPA1hWM5AO03J9foqawu4WjTJwgcBeefmmiY7NOzNf/vhNp/
+ nl/Q==
+X-Gm-Message-State: AOJu0Yx0vH2LShT0780eWrdK8CYdBWgeBvEEQRtZgrFUioGPfyVo+471
+ hHau6sKPpVXfhjcFnlEarWPRLSUDlWegV+DdGI3746OzxsCEohnlEdr/J8c5eVk=
+X-Google-Smtp-Source: AGHT+IHYLCjF3DmypFQa/bzeswPuSDDcUL5pJK1myjT4v6m3aSYsVEq8fEkv5KJR22PeG1T+wFGU5A==
+X-Received: by 2002:a54:4884:0:b0:3c1:db9c:543b with SMTP id
+ r4-20020a544884000000b003c1db9c543bmr7549481oic.16.1710235569835; 
+ Tue, 12 Mar 2024 02:26:09 -0700 (PDT)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ v24-20020aa78098000000b006e6750de82asm5705068pff.1.2024.03.12.02.26.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Mar 2024 02:26:09 -0700 (PDT)
+Message-ID: <c285c774-0c64-49d9-9708-35ca63e3df67@ventanamicro.com>
+Date: Tue, 12 Mar 2024 06:26:06 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ascii
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=ying.huang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 09/34] target/riscv: add remaining named features
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
+ Alistair Francis <alistair23@gmail.com>,
+ "open list:RISC-V" <qemu-riscv@nongnu.org>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Andrew Jones <ajones@ventanamicro.com>
+References: <20240308111152.2856137-1-alistair.francis@wdc.com>
+ <20240308111152.2856137-10-alistair.francis@wdc.com>
+ <CAJ307EiYcXiiTKeZMgWYQNkZ2McOOOJYYGUMh1-CnuNoy7M0Gg@mail.gmail.com>
+ <4d5bfb3d-d646-45bb-b8ec-300c14415d33@ventanamicro.com>
+In-Reply-To: <4d5bfb3d-d646-45bb-b8ec-300c14415d33@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x22a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,326 +101,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+Hi Clément, Alistair,
 
-> The current implementation treats emulated memory devices, such as
-> CXL1.1 type3 memory, as normal DRAM when they are emulated as normal memory
-> (E820_TYPE_RAM). However, these emulated devices have different
-> characteristics than traditional DRAM, making it important to
-> distinguish them. Thus, we modify the tiered memory initialization process
-> to introduce a delay specifically for CPUless NUMA nodes. This delay
-> ensures that the memory tier initialization for these nodes is deferred
-> until HMAT information is obtained during the boot process. Finally,
-> demotion tables are recalculated at the end.
->
-> * Abstract common functions into `find_alloc_memory_type()`
 
-We should move kmem_put_memory_types() (renamed to
-mt_put_memory_types()?) too.  This can be put in a separate patch.
+On 3/11/24 11:39, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 3/11/24 10:47, Clément Chigot wrote:
+>> Hi Alistair,
+>>
+>> Since this series, I'm getting warnings when using a CPU not
+>> supporting the latest ISA, such as the SIFIVE_E series.
+>>    | $ qemu-system-riscv32  -M sifive_e
+>>    | qemu-system-riscv32: warning: disabling zic64b extension for hart
+>> 0x00000000 because privilege spec version does not match
+>>    | qemu-system-riscv32: warning: disabling ziccamoa extension for
+>> hart 0x00000000 because privilege spec version does not match
+>>
+>> Those are always enabled during the initialization but
+>> riscv_cpu_disable_priv_spec_isa_exts is detecting them as unsupported
+>> by the CPU and thus disabling them.
+>> However, are those extensions different from zicnptr and zihpm
+>> extensions ? As they are not enabled by the same mean, I'm wondering
+>> about that ? Or do we want to skip their ISA verification as well ?
+> 
+> Disabling zihpm and zicntr will impact the CPU because we'll remove timers from
+> the emulation. An exception was important in this case to not change existing
+> behavior.
+> 
+> Disabling 'zic64b' and 'ziccamoa' will only impact riscv,isa. We won't change
+> any cache block size when disabling zic64ba and 'ziccamoa' does nothing
+> because it's cache related and we do not implement cache.
+> 
+> All this said, I'm less than pleased with these warnings. And they'll be getting
+> worse and worse: priv_spec 1.13 is around the corner, we'll start adding profile
+> extensions that will be marked as 1.13, some of them will be mapped to something
+> that we already support, and then vendor CPUs will be getting more and more
+> warnings because they'll be running an old priv_spec.
+> 
+> My suggestion is to not send user warnings when disabling extensions for vendor
+> CPUs. Vendor CPUs don't allow extensions to be enabled, so if an extension is
+> violating priv_spec it's not the user fault. We can add a LOG_GUEST_ERROR when
+> disabling exts but user warnings will only be shown for non-vendor CPUs.
 
-> Since different memory devices require finding or allocating a memory type,
-> these common steps are abstracted into a single function,
-> `find_alloc_memory_type()`, enhancing code scalability and conciseness.
->
-> * Handle cases where there is no HMAT when creating memory tiers
-> There is a scenario where a CPUless node does not provide HMAT information.
-> If no HMAT is specified, it falls back to using the default DRAM tier.
->
-> * Change adist calculation code to use another new lock, mt_perf_lock.
-> In the current implementation, iterating through CPUlist nodes requires
-> holding the `memory_tier_lock`. However, `mt_calc_adistance()` will end up
-> trying to acquire the same lock, leading to a potential deadlock.
-> Therefore, we propose introducing a standalone `mt_perf_lock` to protect
-> `default_dram_perf`. This approach not only avoids deadlock but also
-> prevents holding a large lock simultaneously.
->
-> Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
-> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> ---
->  drivers/acpi/numa/hmat.c     | 11 ++++++
->  drivers/dax/kmem.c           | 13 +------
->  include/linux/acpi.h         |  6 ++++
->  include/linux/memory-tiers.h |  8 +++++
->  mm/memory-tiers.c            | 70 +++++++++++++++++++++++++++++++++---
->  5 files changed, 92 insertions(+), 16 deletions(-)
->
-> diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
-> index d6b85f0f6082..28812ec2c793 100644
-> --- a/drivers/acpi/numa/hmat.c
-> +++ b/drivers/acpi/numa/hmat.c
-> @@ -38,6 +38,8 @@ static LIST_HEAD(targets);
->  static LIST_HEAD(initiators);
->  static LIST_HEAD(localities);
->  
-> +static LIST_HEAD(hmat_memory_types);
-> +
+I discussed this issue with Drew and he suggested that the problem is that we're
+enabling these innate extensions without regard for the actual priv_ver of the CPU
+being used, and a better fix would be to prevent this from happening in the first
+place.
 
-HMAT isn't a device driver for some memory devices.  So I don't think we
-should manage memory types in HMAT.  Instead, if the memory_type of a
-node isn't set by the driver, we should manage it in memory-tier.c as
-fallback.
+I'll send a patch with this approach. Thanks,
 
->  static DEFINE_MUTEX(target_lock);
->  
->  /*
-> @@ -149,6 +151,12 @@ int acpi_get_genport_coordinates(u32 uid,
->  }
->  EXPORT_SYMBOL_NS_GPL(acpi_get_genport_coordinates, CXL);
->  
-> +struct memory_dev_type *hmat_find_alloc_memory_type(int adist)
-> +{
-> +	return find_alloc_memory_type(adist, &hmat_memory_types);
-> +}
-> +EXPORT_SYMBOL_GPL(hmat_find_alloc_memory_type);
-> +
->  static __init void alloc_memory_initiator(unsigned int cpu_pxm)
->  {
->  	struct memory_initiator *initiator;
-> @@ -1038,6 +1046,9 @@ static __init int hmat_init(void)
->  	if (!hmat_set_default_dram_perf())
->  		register_mt_adistance_algorithm(&hmat_adist_nb);
->  
-> +	/* Post-create CPUless memory tiers after getting HMAT info */
-> +	memory_tier_late_init();
-> +
 
-This should be called in memory-tier.c via
+Daniel
 
-late_initcall(memory_tier_late_init);
-
-Then, we don't need hmat to call it.
-
->  	return 0;
->  out_put:
->  	hmat_free_structures();
-> diff --git a/drivers/dax/kmem.c b/drivers/dax/kmem.c
-> index 42ee360cf4e3..aee17ab59f4f 100644
-> --- a/drivers/dax/kmem.c
-> +++ b/drivers/dax/kmem.c
-> @@ -55,21 +55,10 @@ static LIST_HEAD(kmem_memory_types);
->  
->  static struct memory_dev_type *kmem_find_alloc_memory_type(int adist)
->  {
-> -	bool found = false;
->  	struct memory_dev_type *mtype;
->  
->  	mutex_lock(&kmem_memory_type_lock);
-> -	list_for_each_entry(mtype, &kmem_memory_types, list) {
-> -		if (mtype->adistance == adist) {
-> -			found = true;
-> -			break;
-> -		}
-> -	}
-> -	if (!found) {
-> -		mtype = alloc_memory_type(adist);
-> -		if (!IS_ERR(mtype))
-> -			list_add(&mtype->list, &kmem_memory_types);
-> -	}
-> +	mtype = find_alloc_memory_type(adist, &kmem_memory_types);
->  	mutex_unlock(&kmem_memory_type_lock);
->  
->  	return mtype;
-> diff --git a/include/linux/acpi.h b/include/linux/acpi.h
-> index b7165e52b3c6..3f927ff01f02 100644
-> --- a/include/linux/acpi.h
-> +++ b/include/linux/acpi.h
-> @@ -434,12 +434,18 @@ int thermal_acpi_critical_trip_temp(struct acpi_device *adev, int *ret_temp);
->  
->  #ifdef CONFIG_ACPI_HMAT
->  int acpi_get_genport_coordinates(u32 uid, struct access_coordinate *coord);
-> +struct memory_dev_type *hmat_find_alloc_memory_type(int adist);
->  #else
->  static inline int acpi_get_genport_coordinates(u32 uid,
->  					       struct access_coordinate *coord)
->  {
->  	return -EOPNOTSUPP;
->  }
-> +
-> +static inline struct memory_dev_type *hmat_find_alloc_memory_type(int adist)
-> +{
-> +	return NULL;
-> +}
->  #endif
->  
->  #ifdef CONFIG_ACPI_NUMA
-> diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.h
-> index 69e781900082..4bc2596c5774 100644
-> --- a/include/linux/memory-tiers.h
-> +++ b/include/linux/memory-tiers.h
-> @@ -48,6 +48,9 @@ int mt_calc_adistance(int node, int *adist);
->  int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
->  			     const char *source);
->  int mt_perf_to_adistance(struct access_coordinate *perf, int *adist);
-> +struct memory_dev_type *find_alloc_memory_type(int adist,
-> +							struct list_head *memory_types);
-> +void memory_tier_late_init(void);
->  #ifdef CONFIG_MIGRATION
->  int next_demotion_node(int node);
->  void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets);
-> @@ -136,5 +139,10 @@ static inline int mt_perf_to_adistance(struct access_coordinate *perf, int *adis
->  {
->  	return -EIO;
->  }
-> +
-> +static inline void memory_tier_late_init(void)
-> +{
-> +
-> +}
->  #endif	/* CONFIG_NUMA */
->  #endif  /* _LINUX_MEMORY_TIERS_H */
-> diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
-> index 0537664620e5..79f748d60e6f 100644
-> --- a/mm/memory-tiers.c
-> +++ b/mm/memory-tiers.c
-> @@ -6,6 +6,7 @@
->  #include <linux/memory.h>
->  #include <linux/memory-tiers.h>
->  #include <linux/notifier.h>
-> +#include <linux/acpi.h>
->  
->  #include "internal.h"
->  
-> @@ -35,6 +36,7 @@ struct node_memory_type_map {
->  };
->  
->  static DEFINE_MUTEX(memory_tier_lock);
-> +static DEFINE_MUTEX(mt_perf_lock);
-
-Please add comments about what it protects.  And put it near the data
-structure it protects.
-
->  static LIST_HEAD(memory_tiers);
->  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
->  struct memory_dev_type *default_dram_type;
-> @@ -623,6 +625,58 @@ void clear_node_memory_type(int node, struct memory_dev_type *memtype)
->  }
->  EXPORT_SYMBOL_GPL(clear_node_memory_type);
->  
-> +struct memory_dev_type *find_alloc_memory_type(int adist, struct list_head *memory_types)
-> +{
-> +	bool found = false;
-> +	struct memory_dev_type *mtype;
-> +
-> +	list_for_each_entry(mtype, memory_types, list) {
-> +		if (mtype->adistance == adist) {
-> +			found = true;
-> +			break;
-> +		}
-> +	}
-> +	if (!found) {
-> +		mtype = alloc_memory_type(adist);
-> +		if (!IS_ERR(mtype))
-> +			list_add(&mtype->list, memory_types);
-> +	}
-> +
-> +	return mtype;
-> +}
-> +EXPORT_SYMBOL_GPL(find_alloc_memory_type);
-> +
-> +static void memory_tier_late_create(int node)
-> +{
-> +	struct memory_dev_type *mtype = NULL;
-> +	int adist = MEMTIER_ADISTANCE_DRAM;
-> +
-> +	mt_calc_adistance(node, &adist);
-> +	if (adist != MEMTIER_ADISTANCE_DRAM) {
-
-We can manage default_dram_type() via find_alloc_memory_type()
-too.
-
-And, if "node_memory_types[node].memtype == NULL", we can call
-mt_calc_adistance(node, &adist) and find_alloc_memory_type() in
-set_node_memory_tier().  Then, we can cover hotpluged memory node too.
-
-> +		mtype = hmat_find_alloc_memory_type(adist);
-> +		if (!IS_ERR(mtype))
-> +			__init_node_memory_type(node, mtype);
-> +		else
-> +			pr_err("Failed to allocate a memory type at %s()\n", __func__);
-> +	}
-> +
-> +	set_node_memory_tier(node);
-> +}
-> +
-> +void memory_tier_late_init(void)
-> +{
-> +	int nid;
-> +
-> +	mutex_lock(&memory_tier_lock);
-> +	for_each_node_state(nid, N_MEMORY)
-> +		if (!node_state(nid, N_CPU))
-
-We should exclude "node_memory_types[nid].memtype != NULL".  Some memory
-nodes may be onlined by some device drivers and setup memory tiers
-already.
-
-> +			memory_tier_late_create(nid);
-> +
-> +	establish_demotion_targets();
-> +	mutex_unlock(&memory_tier_lock);
-> +}
-> +EXPORT_SYMBOL_GPL(memory_tier_late_init);
-> +
->  static void dump_hmem_attrs(struct access_coordinate *coord, const char *prefix)
->  {
->  	pr_info(
-> @@ -636,7 +690,7 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
->  {
->  	int rc = 0;
->  
-> -	mutex_lock(&memory_tier_lock);
-> +	mutex_lock(&mt_perf_lock);
->  	if (default_dram_perf_error) {
->  		rc = -EIO;
->  		goto out;
-> @@ -684,7 +738,7 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
->  	}
->  
->  out:
-> -	mutex_unlock(&memory_tier_lock);
-> +	mutex_unlock(&mt_perf_lock);
->  	return rc;
->  }
->  
-> @@ -700,7 +754,7 @@ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
->  	    perf->read_bandwidth + perf->write_bandwidth == 0)
->  		return -EINVAL;
->  
-> -	mutex_lock(&memory_tier_lock);
-> +	mutex_lock(&mt_perf_lock);
->  	/*
->  	 * The abstract distance of a memory node is in direct proportion to
->  	 * its memory latency (read + write) and inversely proportional to its
-> @@ -713,7 +767,7 @@ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
->  		(default_dram_perf.read_latency + default_dram_perf.write_latency) *
->  		(default_dram_perf.read_bandwidth + default_dram_perf.write_bandwidth) /
->  		(perf->read_bandwidth + perf->write_bandwidth);
-> -	mutex_unlock(&memory_tier_lock);
-> +	mutex_unlock(&mt_perf_lock);
->  
->  	return 0;
->  }
-> @@ -836,6 +890,14 @@ static int __init memory_tier_init(void)
->  	 * types assigned.
->  	 */
->  	for_each_node_state(node, N_MEMORY) {
-> +		if (!node_state(node, N_CPU))
-> +			/*
-> +			 * Defer memory tier initialization on CPUless numa nodes.
-> +			 * These will be initialized when HMAT information is
-
-HMAT is platform specific, we should avoid to mention it in general code
-if possible.
-
-> +			 * available.
-> +			 */
-> +			continue;
-> +
->  		memtier = set_node_memory_tier(node);
->  		if (IS_ERR(memtier))
->  			/*
-
---
-Best Regards,
-Huang, Ying
+> 
+> 
+> Thanks,
+> 
+> Daniel
+> 
+> 
+> 
+>>
+>> Thanks,
+>> Clément
+>>
+>> On Fri, Mar 8, 2024 at 12:13 PM Alistair Francis <alistair23@gmail.com> wrote:
+>>>
+>>> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>>
+>>> The RVA22U64 and RVA22S64 profiles mandates certain extensions that,
+>>> until now, we were implying that they were available.
+>>>
+>>> We can't do this anymore since named features also has a riscv,isa
+>>> entry. Let's add them to riscv_cpu_named_features[].
+>>>
+>>> Instead of adding one bool for each named feature that we'll always
+>>> implement, i.e. can't be turned off, add a 'ext_always_enabled' bool in
+>>> cpu->cfg. This bool will be set to 'true' in TCG accel init, and all
+>>> named features will point to it. This also means that KVM won't see
+>>> these features as always enable, which is our intention.
+>>>
+>>> If any accelerator adds support to disable one of these features, we'll
+>>> have to promote them to regular extensions and allow users to disable it
+>>> via command line.
+>>>
+>>> After this patch, here's the riscv,isa from a buildroot using the
+>>> 'rva22s64' CPU:
+>>>
+>>>   # cat /proc/device-tree/cpus/cpu@0/riscv,isa
+>>> rv64imafdc_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_
+>>> zicntr_zicsr_zifencei_zihintpause_zihpm_za64rs_zfhmin_zca_zcd_zba_zbb_
+>>> zbs_zkt_ssccptr_sscounterenw_sstvala_sstvecd_svade_svinval_svpbmt#
+>>>
+>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>>> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+>>> Message-ID: <20240215223955.969568-4-dbarboza@ventanamicro.com>
+>>> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+>>> ---
+>>>   target/riscv/cpu_cfg.h     |  6 ++++++
+>>>   target/riscv/cpu.c         | 42 +++++++++++++++++++++++++++++++-------
+>>>   target/riscv/tcg/tcg-cpu.c |  2 ++
+>>>   3 files changed, 43 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+>>> index e68a4ddb92..be39870691 100644
+>>> --- a/target/riscv/cpu_cfg.h
+>>> +++ b/target/riscv/cpu_cfg.h
+>>> @@ -128,6 +128,12 @@ struct RISCVCPUConfig {
+>>>       bool ext_svade;
+>>>       bool ext_zic64b;
+>>>
+>>> +    /*
+>>> +     * Always 'true' boolean for named features
+>>> +     * TCG always implement/can't be disabled.
+>>> +     */
+>>> +    bool ext_always_enabled;
+>>> +
+>>>       /* Vendor-specific custom extensions */
+>>>       bool ext_xtheadba;
+>>>       bool ext_xtheadbb;
+>>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>>> index f0cd408237..4c4fa79145 100644
+>>> --- a/target/riscv/cpu.c
+>>> +++ b/target/riscv/cpu.c
+>>> @@ -102,6 +102,10 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>>>       ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
+>>>       ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
+>>>       ISA_EXT_DATA_ENTRY(zicboz, PRIV_VERSION_1_12_0, ext_zicboz),
+>>> +    ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, ext_always_enabled),
+>>> +    ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, ext_always_enabled),
+>>> +    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, ext_always_enabled),
+>>> +    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_always_enabled),
+>>>       ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
+>>>       ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
+>>>       ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
+>>> @@ -110,6 +114,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>>>       ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause),
+>>>       ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
+>>>       ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+>>> +    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, ext_always_enabled),
+>>>       ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
+>>>       ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+>>>       ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
+>>> @@ -173,8 +178,12 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>>>       ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+>>>       ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+>>>       ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+>>> +    ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, ext_always_enabled),
+>>>       ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
+>>> +    ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, ext_always_enabled),
+>>>       ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+>>> +    ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, ext_always_enabled),
+>>> +    ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, ext_always_enabled),
+>>>       ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
+>>>       ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
+>>>       ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
+>>> @@ -1567,6 +1576,11 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+>>>       DEFINE_PROP_END_OF_LIST(),
+>>>   };
+>>>
+>>> +#define ALWAYS_ENABLED_FEATURE(_name) \
+>>> +    {.name = _name, \
+>>> +     .offset = CPU_CFG_OFFSET(ext_always_enabled), \
+>>> +     .enabled = true}
+>>> +
+>>>   /*
+>>>    * 'Named features' is the name we give to extensions that we
+>>>    * don't want to expose to users. They are either immutable
+>>> @@ -1578,6 +1592,23 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
+>>>       MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
+>>>       MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+>>>
+>>> +    /*
+>>> +     * cache-related extensions that are always enabled
+>>> +     * in TCG since QEMU RISC-V does not have a cache
+>>> +     * model.
+>>> +     */
+>>> +    ALWAYS_ENABLED_FEATURE("za64rs"),
+>>> +    ALWAYS_ENABLED_FEATURE("ziccif"),
+>>> +    ALWAYS_ENABLED_FEATURE("ziccrse"),
+>>> +    ALWAYS_ENABLED_FEATURE("ziccamoa"),
+>>> +    ALWAYS_ENABLED_FEATURE("zicclsm"),
+>>> +    ALWAYS_ENABLED_FEATURE("ssccptr"),
+>>> +
+>>> +    /* Other named features that TCG always implements */
+>>> +    ALWAYS_ENABLED_FEATURE("sstvecd"),
+>>> +    ALWAYS_ENABLED_FEATURE("sstvala"),
+>>> +    ALWAYS_ENABLED_FEATURE("sscounterenw"),
+>>> +
+>>>       DEFINE_PROP_END_OF_LIST(),
+>>>   };
+>>>
+>>> @@ -2171,13 +2202,10 @@ static const PropertyInfo prop_marchid = {
+>>>   };
+>>>
+>>>   /*
+>>> - * RVA22U64 defines some 'named features' or 'synthetic extensions'
+>>> - * that are cache related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
+>>> - * and Zicclsm. We do not implement caching in QEMU so we'll consider
+>>> - * all these named features as always enabled.
+>>> - *
+>>> - * There's no riscv,isa update for them (nor for zic64b, despite it
+>>> - * having a cfg offset) at this moment.
+>>> + * RVA22U64 defines some 'named features' that are cache
+>>> + * related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
+>>> + * and Zicclsm. They are always implemented in TCG and
+>>> + * doesn't need to be manually enabled by the profile.
+>>>    */
+>>>   static RISCVCPUProfile RVA22U64 = {
+>>>       .parent = NULL,
+>>> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+>>> index 2307999387..ea763abb31 100644
+>>> --- a/target/riscv/tcg/tcg-cpu.c
+>>> +++ b/target/riscv/tcg/tcg-cpu.c
+>>> @@ -1315,6 +1315,8 @@ static void riscv_tcg_cpu_instance_init(CPUState *cs)
+>>>       RISCVCPU *cpu = RISCV_CPU(cs);
+>>>       Object *obj = OBJECT(cpu);
+>>>
+>>> +    cpu->cfg.ext_always_enabled = true;
+>>> +
+>>>       misa_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
+>>>       multi_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
+>>>       riscv_cpu_add_user_properties(obj);
+>>> -- 
+>>> 2.44.0
+>>>
+>>>
 
