@@ -4,66 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F46C54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 07:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443BEC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 07:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjw90-0007nn-MM; Tue, 12 Mar 2024 03:01:51 -0400
+	id 1rjwNs-0001Wm-7y; Tue, 12 Mar 2024 03:17:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjw8o-0007nH-KU
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 03:01:40 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rjwNp-0001WX-Ms
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 03:17:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjw8m-0003ZN-8V
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 03:01:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710226896; x=1741762896;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=RzG+D96D8mZb6YJN7oWJdLmE3xTnPWbAv+i3uRMGRBY=;
- b=U8eWFlUZ3WajYKFLf0+KnzPI52nmTkfziUAEKb1cGIEqoyq/MVz3hXyP
- RShZWGMjRPI9BDC90ZzHS+FWEocC0edcMa1Dx+4uLCxZpJY5CRranP+ca
- zq3GpxlVG4RKbeH3xKRejQd1k/9kz7Zq4/IFfVc7tpYnvFOqahlFGHOzL
- WTXkyMpSGydJ7GpknWDLCl0T5MGU2BQp+JOOIiHceauqssnAlwGmpIIvn
- 6YDmDGzFXsRXSrdxGg5Jcmsp1hU5imQJCSaEX9VZMqMmmOaT6SReu3tuH
- 4C7RFuBoB2gMlzSNhboDQdS0vE5+EHv71cND42q0eZfgBEVyEWNDgfyNm A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="5093574"
-X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; 
-   d="scan'208";a="5093574"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Mar 2024 00:01:27 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; d="scan'208";a="16125741"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa005.jf.intel.com with ESMTP; 12 Mar 2024 00:01:24 -0700
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <thuth@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH] docs/about/deprecated.rst: Move SMP configurations item to
- system emulator section
-Date: Tue, 12 Mar 2024 15:15:12 +0800
-Message-Id: <20240312071512.3283513-1-zhao1.liu@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rjwNo-0005gy-3B
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 03:17:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710227827;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9Obq0syRwpGRKRmE4G4QbL3f7PveuiAZJevpxYwbvJ8=;
+ b=SPQzlxvZejn98zeQpY5rxiFl4pqaQXRKZa1S2f68A6rbBm1BoBkczaWfO30qdrBsP0mLy2
+ f8q7+sczQtCjOuq/9F32DkmfriZNm2qgOX1Jq2e3vYf+F9ho0zCCA6UeBgbhPinHnZ+VO8
+ 0jWSM9iGfmH2dbOxiHT2HmvhVTt5WnI=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-590-2ZA1enSSPf6szkJNKk6zAw-1; Tue, 12 Mar 2024 03:17:04 -0400
+X-MC-Unique: 2ZA1enSSPf6szkJNKk6zAw-1
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-dc6b269686aso8073534276.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 00:17:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710227824; x=1710832624;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9Obq0syRwpGRKRmE4G4QbL3f7PveuiAZJevpxYwbvJ8=;
+ b=D0IHs2W1txcE9wF+sVus53hkh8FIhEamQAOa62DS/UW7KCSbC6ZOy9EK3tM3KzsTK0
+ 438TGL/rt7RpETiBeEe5smOAypmzB3IGF2Nsa1mQ8Zc4PG02JnDKriN4aKmkYKxybTQq
+ 8FEDuVuwaUzU9jsNqIPA3fUj5u8swZlD8++8PJtFjjEram0qoY1AP/xtZ90f4QpyMk/Z
+ xpZFJKoQFuRaR1vlPr8lDPNRa2Bxuwa4heRJM5wX6PRGL+wQ/lad0JMlMfqEBrVzNSFB
+ RnwHutAAfclXPPs+8cC6RBItJziY3eZgbZvztKfpb8hwYz7+BWnds8xDGTw724N4rohb
+ F5Xg==
+X-Gm-Message-State: AOJu0YxVVerFbsZkbeG3CA5mEvi6cRvKa/+ssiaTvob50F/EvueebURT
+ UTcSTmFCg1ykyEp+j5P4ilceqhJu7iewLBtRdpXzyg4kmCtVtvkky7KzMEltt6h73jhm0C/TPdI
+ WboMTuq6UziXSp74mDIESObBBzlPO7BzetzizrA1ZpQL0YngUf99/
+X-Received: by 2002:a25:b109:0:b0:dc7:465d:c06d with SMTP id
+ g9-20020a25b109000000b00dc7465dc06dmr2473800ybj.28.1710227823883; 
+ Tue, 12 Mar 2024 00:17:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHyMZcVM7/trpDZ98QsCJ2zIjgYtXNrLrE7Uyug8tRUKbafHPMNI8dKEwz1vAK5PTCUb36Ydw==
+X-Received: by 2002:a25:b109:0:b0:dc7:465d:c06d with SMTP id
+ g9-20020a25b109000000b00dc7465dc06dmr2473779ybj.28.1710227823546; 
+ Tue, 12 Mar 2024 00:17:03 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ s6-20020ad44386000000b00690c5cc0ff6sm2766084qvr.124.2024.03.12.00.17.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Mar 2024 00:17:03 -0700 (PDT)
+Message-ID: <0a1c329e-e6ab-4329-815d-e6be3e64c2ae@redhat.com>
+Date: Tue, 12 Mar 2024 08:16:58 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 00/25] migration: Improve error reporting
+Content-Language: en-US, fr
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+References: <20240306133441.2351700-1-clg@redhat.com> <ZerJDAdaakTCtECF@x1n>
+ <Ze9ogyFZT73gB-La@x1n>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <Ze9ogyFZT73gB-La@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=192.198.163.15;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
 X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,66 +107,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+On 3/11/24 21:24, Peter Xu wrote:
+> On Fri, Mar 08, 2024 at 04:15:08PM +0800, Peter Xu wrote:
+>> On Wed, Mar 06, 2024 at 02:34:15PM +0100, Cédric Le Goater wrote:
+>>> * [1-4] already queued in migration-next.
+>>>    
+>>>    migration: Report error when shutdown fails
+>>>    migration: Remove SaveStateHandler and LoadStateHandler typedefs
+>>>    migration: Add documentation for SaveVMHandlers
+>>>    migration: Do not call PRECOPY_NOTIFY_SETUP notifiers in case of error
+>>>    
+>>> * [5-9] are prequisite changes in other components related to the
+>>>    migration save_setup() handler. They make sure a failure is not
+>>>    returned without setting an error.
+>>>    
+>>>    s390/stattrib: Add Error** argument to set_migrationmode() handler
+>>>    vfio: Always report an error in vfio_save_setup()
+>>>    migration: Always report an error in block_save_setup()
+>>>    migration: Always report an error in ram_save_setup()
+>>>    migration: Add Error** argument to vmstate_save()
+>>>
+>>> * [10-15] are the core changes in migration and memory components to
+>>>    propagate an error reported in a save_setup() handler.
+>>>
+>>>    migration: Add Error** argument to qemu_savevm_state_setup()
+>>>    migration: Add Error** argument to .save_setup() handler
+>>>    migration: Add Error** argument to .load_setup() handler
+>>
+>> Further queued 5-12 in migration-staging (until here), thanks.
+> 
+> Just to keep a record: due to the virtio failover test failure and the
+> other block migration uncertainty in patch 7 (in which case we may want to
+> have a fix on sectors==0 case), I unqueued this chunk for 9.0.
 
-In the commit 54c4ea8f3ae6 ("hw/core/machine-smp: Deprecate unsupported
-'parameter=1' SMP configurations"), the SMP related item is put under
-the section "User-mode emulator command line arguments" instead of
-"System emulator command line arguments".
+ok. I will ask the block folks for help to understand if sectors==0
+is also an error in the save_setup context. May be  we can still
+merge these in 9.0 cycle.
+  
+Thanks,
 
--smp is a system emulator command, so move SMP configurations item to
-system emulator section.
+C.
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
-based on 7489f7f3f81d.
-
-Note: the git diff understood my move of SMP item as the move of the
-whole "User-mode emulator command line arguments" section, which may
-cause confusion about the contents of this patch.
----
- docs/about/deprecated.rst | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index dfd681cd024e..2f9277c9158c 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -47,16 +47,6 @@ as short-form boolean values, and passed to plugins as ``arg_name=on``.
- However, short-form booleans are deprecated and full explicit ``arg_name=on``
- form is preferred.
- 
--User-mode emulator command line arguments
-------------------------------------------
--
--``-p`` (since 9.0)
--''''''''''''''''''
--
--The ``-p`` option pretends to control the host page size.  However,
--it is not possible to change the host page size, and using the
--option only causes failures.
--
- ``-smp`` (Unsupported "parameter=1" SMP configurations) (since 9.0)
- '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
-@@ -71,6 +61,16 @@ configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
- marked deprecated since 9.0, users have to ensure that all the topology members
- described with -smp are supported by the target machine.
- 
-+User-mode emulator command line arguments
-+-----------------------------------------
-+
-+``-p`` (since 9.0)
-+''''''''''''''''''
-+
-+The ``-p`` option pretends to control the host page size.  However,
-+it is not possible to change the host page size, and using the
-+option only causes failures.
-+
- QEMU Machine Protocol (QMP) commands
- ------------------------------------
- 
--- 
-2.34.1
 
 
