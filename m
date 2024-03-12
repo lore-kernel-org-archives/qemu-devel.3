@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50BB8C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18261C54E66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:41:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAbq-0002cg-Jv; Tue, 12 Mar 2024 18:28:34 -0400
+	id 1rkAeP-0006hT-1K; Tue, 12 Mar 2024 18:31:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbS-0001DF-55
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcO-0002sX-3X
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbQ-0004Vn-An
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:09 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcB-0004cR-8G
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282487;
+ s=mimecast20190719; t=1710282534;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=etBZs3HX2lGuBR1hbVUB0rO/sMf1IGM8GxytboDqRdM=;
- b=O1/1AcEyI9TRYBPOepTRs1L8Wnry4vD8MS8OMnWnZsXeKtkzv2wM8Sw66WqxhhODjw9a4m
- bOeXgf1S36VF5tsHYk8u410f90nlF2feWRfPoqgj6FNkT7XEJwAzxCYYWd/10SRe3oVjYy
- rZKHFSx28uRo0OlGs8y0HGrfZiR2S5g=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fScw+GbeSb7Y/URvyjrtWLndZz8ykgk7NaxW0WCLA+8=;
+ b=b6lJdB7RTbPoKIpwqvo9kC/d1BCPDE+Ve/0RPT4p/GBlsZ2nUcrrQKjQ4klod9i3WRNKGr
+ ZYQiNRIpqjYUrTGY5FbvQzpNVv33+zDL+Be6w+qoewGU9krdoeKWHskxc6e6UMZwj0hAE9
+ NnRD0lAMEshCDrgsvYrzcVB4MPxQTUQ=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-GzzxZA9xPHmCU2_lKKWONA-1; Tue, 12 Mar 2024 18:28:06 -0400
-X-MC-Unique: GzzxZA9xPHmCU2_lKKWONA-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-513c65ffba5so471443e87.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:05 -0700 (PDT)
+ us-mta-182-OqxLRk_fPCWq0SEIBN2z4A-1; Tue, 12 Mar 2024 18:28:53 -0400
+X-MC-Unique: OqxLRk_fPCWq0SEIBN2z4A-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a45190fd2fcso278651666b.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282484; x=1710887284;
+ d=1e100.net; s=20230601; t=1710282532; x=1710887332;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=etBZs3HX2lGuBR1hbVUB0rO/sMf1IGM8GxytboDqRdM=;
- b=v8eGxFmZktfUtYCs4oqlGRYqrOauRWVhlKdJCHm95ht9lq7IVEyojfEPJ0KzWq47J/
- LAuB+gfh3kq9FcZWNfYPheBviSjuoqQa5LVLTwdDiHfJginw9E7hyWZ6Sg9Jg9IAJdeD
- Sf5sfhmM0APTTXJ9y16voJHGKDWnsX2abjlm8juTZyaGUYWqpKHm0MMBlPBO1K9Wune7
- hJGEnMmmy18i1+xKMzTUBlv6Ei7XZ351s0WDuDuLQ8B4wECXlIxrFETssIUUb3KX3Axi
- GHvkE0rDebrEDanBs+7n08FKD8tYvCmyJIW9arDPXj3o4w+u/Wd22RbEUWWYPMJ2E+NO
- bEww==
-X-Gm-Message-State: AOJu0Yz4KLMhP2tF9GYyY9fgKH7Eln5HWyuvQkYfeor9xz7t/W0y8X6y
- mtyk8MyilzCM62euhKHvJHvzGhP64M7wh9LTAZnI3F9XTKwvf9tkqAOGE+wVQei56M1iDAPCCuG
- T2ww1Vg7ICoW2Ge5TL5xPf1SM1jsn0vZdyJz9M0XupY97so8yLNHrd8xx7SLFeEq7tz1e6wlpd5
- ZuHShOMl8Fr5joX51VaaF2N7tMJSvgt48M
-X-Received: by 2002:a2e:731a:0:b0:2d2:869a:55af with SMTP id
- o26-20020a2e731a000000b002d2869a55afmr1159329ljc.17.1710282483747; 
- Tue, 12 Mar 2024 15:28:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSFqKvR2UcFJXgi5mGcjFeYUWNfakFoXm8r2jVygLNu+yNQcChYg+JznZMhc4eaNfM6rgQiQ==
-X-Received: by 2002:a2e:731a:0:b0:2d2:869a:55af with SMTP id
- o26-20020a2e731a000000b002d2869a55afmr1159305ljc.17.1710282483136; 
- Tue, 12 Mar 2024 15:28:03 -0700 (PDT)
+ bh=fScw+GbeSb7Y/URvyjrtWLndZz8ykgk7NaxW0WCLA+8=;
+ b=fucTjwYQuESfLjfJSe10oU5xYduBWtLp9uaC7mqEbeM5c0whVzn/ZMqOo4DVOyv7XH
+ wVc3y+63Pn/2Q30JpRchgoUrfKo5E5+k4fc2H14LrZdevJxY6zTzc+FNK/uVEgWoTGgd
+ 3i+STeMbpdic7bYBa4B45IaAjT8R/ExHTvS9pMAAqVy3L0za5wtihSw0TRDrZlOs4Ne3
+ yyhgQD5+fKo/h+7+Ho7Thdzt7oZWjfSDWe6YMXuSAtAZjP2TDyklKZz981lNapLWmS+3
+ WPRqd+pVFUMYCTObnm7IDDbJrxzIrwHWkLv0sQlQrSxgcCZ5mxmKs7RMJq883kzic60J
+ XNQA==
+X-Gm-Message-State: AOJu0Ywbnc1X3XJ+4O4L/47mnj5cNFRrNuObBMkEnhWePSdFHk9oVl/R
+ UAPcVFSZ+dcayT3Dq3wKiuuWd70XjWSwwTfGXwsykWa6MjXgDjd1iTAN2EhJmLhrEYM2NDJWUOD
+ QMZOdAj8unCLv3ae0p3LT+n/glyvRIlpC65DlfVBQwH/BodHvKyrdaA+rY80XzTQlvyPZA0sJC0
+ venhBrygPNOj9xg+HBnaz2aLoOZdsY53Qk
+X-Received: by 2002:a17:907:7d9e:b0:a46:30f4:6321 with SMTP id
+ oz30-20020a1709077d9e00b00a4630f46321mr5098891ejc.58.1710282531877; 
+ Tue, 12 Mar 2024 15:28:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEvzpcqEL0CG+1pobs8bJpTj9boPaW9IzYrExRw17aftRGIy7teSuOAfCNdc63I+EFuN7Mylw==
+X-Received: by 2002:a17:907:7d9e:b0:a46:30f4:6321 with SMTP id
+ oz30-20020a1709077d9e00b00a4630f46321mr5098879ejc.58.1710282531463; 
+ Tue, 12 Mar 2024 15:28:51 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- f8-20020a056402004800b00568550a0762sm2805946edu.6.2024.03.12.15.28.00
+ l19-20020a170906231300b00a449d6184dasm4213363eja.6.2024.03.12.15.28.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:28:02 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:27:59 -0400
+ Tue, 12 Mar 2024 15:28:51 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:28:48 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Ani Sinha <anisinha@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Julia Suvorova <jusual@redhat.com>, kraxel@redhat.com,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 47/68] pc: q35: Bump max_cpus to 4096 vcpus
-Message-ID: <e4e98c7eebfab0f844784cdf5c108bb3d60ac9a2.1710282274.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: [PULL 61/68] virtio-iommu: Add an option to define the input range
+ width
+Message-ID: <01e7e4921ccebb81cebc69eb648040a57be4f5ff.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -109,69 +106,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-Since commit f10a570b093e6 ("KVM: x86: Add CONFIG_KVM_MAX_NR_VCPUS to allow up to 4096 vCPUs")
-Linux kernel can support upto a maximum number of 4096 vcpus when MAXSMP is
-enabled in the kernel. At present, QEMU has been tested to correctly boot a
-linux guest with 4096 vcpus using the current edk2 upstream master branch that
-has the fixes corresponding to the following two PRs:
+aw-bits is a new option that allows to set the bit width of
+the input address range. This value will be used as a default for
+the device config input_range.end. By default it is set to 64 bits
+which is the current value.
 
-https://github.com/tianocore/edk2/pull/5410
-https://github.com/tianocore/edk2/pull/5418
-
-The changes merged into edk2 with the above PRs will be in the upcoming 2024-05
-release. With current seabios firmware, it boots fine with 4096 vcpus already.
-So bump up the value max_cpus to 4096 for q35 machines versions 9 and newer.
-Q35 machines versions 8.2 and older continue to support 1024 maximum vcpus
-as before for compatibility reasons.
-
-If KVM is not able to support the specified number of vcpus, QEMU would
-return the following error messages:
-
-$ ./qemu-system-x86_64 -cpu host -accel kvm -machine q35 -smp 1728
-qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
-qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
-Number of SMP cpus requested (1728) exceeds the maximum cpus supported by KVM (1024)
-
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Igor Mammedov <imammedo@redhat.com>
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Julia Suvorova <jusual@redhat.com>
-Cc: kraxel@redhat.com
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Message-Id: <20240228143351.3967-1-anisinha@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-Id: <20240307134445.92296-7-eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/pc_q35.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/hw/virtio/virtio-iommu.h | 1 +
+ hw/virtio/virtio-iommu.c         | 8 +++++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 45a4102e75..df63a92b78 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -350,7 +350,7 @@ static void pc_q35_machine_options(MachineClass *m)
-     m->default_nic = "e1000e";
-     m->default_kernel_irqchip_split = false;
-     m->no_floppy = 1;
--    m->max_cpus = 1024;
-+    m->max_cpus = 4096;
-     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
-     machine_class_allow_dynamic_sysbus_dev(m, TYPE_AMD_IOMMU_DEVICE);
-     machine_class_allow_dynamic_sysbus_dev(m, TYPE_INTEL_IOMMU_DEVICE);
-@@ -371,6 +371,7 @@ static void pc_q35_8_2_machine_options(MachineClass *m)
- {
-     pc_q35_9_0_machine_options(m);
-     m->alias = NULL;
-+    m->max_cpus = 1024;
-     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
- }
+diff --git a/include/hw/virtio/virtio-iommu.h b/include/hw/virtio/virtio-iommu.h
+index 67ea5022af..83a52cc446 100644
+--- a/include/hw/virtio/virtio-iommu.h
++++ b/include/hw/virtio/virtio-iommu.h
+@@ -68,6 +68,7 @@ struct VirtIOIOMMU {
+     Notifier machine_done;
+     bool granule_frozen;
+     GranuleMode granule_mode;
++    uint8_t aw_bits;
+ };
+ 
+ #endif
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index aab97e1527..1326c6ec41 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -1314,7 +1314,12 @@ static void virtio_iommu_device_realize(DeviceState *dev, Error **errp)
+      * in vfio realize
+      */
+     s->config.bypass = s->boot_bypass;
+-    s->config.input_range.end = UINT64_MAX;
++    if (s->aw_bits < 32 || s->aw_bits > 64) {
++        error_setg(errp, "aw-bits must be within [32,64]");
++        return;
++    }
++    s->config.input_range.end =
++        s->aw_bits == 64 ? UINT64_MAX : BIT_ULL(s->aw_bits) - 1;
+ 
+     switch (s->granule_mode) {
+     case GRANULE_MODE_4K:
+@@ -1544,6 +1549,7 @@ static Property virtio_iommu_properties[] = {
+     DEFINE_PROP_BOOL("boot-bypass", VirtIOIOMMU, boot_bypass, true),
+     DEFINE_PROP_GRANULE_MODE("granule", VirtIOIOMMU, granule_mode,
+                              GRANULE_MODE_HOST),
++    DEFINE_PROP_UINT8("aw-bits", VirtIOIOMMU, aw_bits, 64),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
 -- 
 MST
 
