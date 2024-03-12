@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB11DC54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36B2C54E66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxqO-00047H-FJ; Tue, 12 Mar 2024 04:50:44 -0400
+	id 1rjxtg-0006Wn-1G; Tue, 12 Mar 2024 04:54:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjxqF-00043c-2u
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:50:37 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjxtd-0006We-5j
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:54:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjxqA-0005mB-Vt
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:50:33 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjxtb-0006SW-M9
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:54:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710233430;
+ s=mimecast20190719; t=1710233642;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1VRk1c+RLEPigqDbqoCcY3ibvyOTKcjaTe1GsSxEYhE=;
- b=OmMjidiopsir0aXXtEhrufiDd8t5YrTCrKiwpIOQLG1WTJ7ziyTaXNUt/Hn+H6OwU//wO0
- rWnEz/RRqkwpzghfEJZqeEF4NRFpBWXj5kZfstRRDHt/dfg9ew/zCEMyrbS8rP0mNtWER2
- b3s3WggvbamXUTMl9RJ8KTVVIES0WeM=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TB+dJ1z5rFpwPpb8f0K6cqhLtZ8cr4WQuAeF8nhNzZQ=;
+ b=g2nVxOfWCR0C4tJ1TGVJohvjJ6He8NcVZ2BqOUgCTIj6SMOqdQDyF2IXcHPR61V/Ywjp2a
+ H1yF8CgTemWo5ug6ECHHzJ52YnQfFNVo/kRCv80ttCQnsF25N8+r4CRi9Iebt6e402M4l9
+ KOEOJfmIReeFz0erRMQULquXZ2eng2A=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-75-1Dp_JNUnOy2g6ZH1tw7yiw-1; Tue, 12 Mar 2024 04:50:28 -0400
-X-MC-Unique: 1Dp_JNUnOy2g6ZH1tw7yiw-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-513b3ca9650so979249e87.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:50:28 -0700 (PDT)
+ us-mta-451-roCi0z3cMlC2Hczpxyy7uA-1; Tue, 12 Mar 2024 04:54:01 -0400
+X-MC-Unique: roCi0z3cMlC2Hczpxyy7uA-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-41330261f8cso5633755e9.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:54:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710233427; x=1710838227;
+ d=1e100.net; s=20230601; t=1710233640; x=1710838440;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1VRk1c+RLEPigqDbqoCcY3ibvyOTKcjaTe1GsSxEYhE=;
- b=jxxc5FRXkzxORrZT/i6k8ZBU9adOC1pXGEsglh+7Wc4sq4cSJtGqaF25pIgj5dbQ9U
- tMEiH35OHQf33IGYuYwzPrfyQJh294PjEQgm4xgj0xQ0sHq4qYeeNP9UjT8JON7ntSV/
- yiWpH5y6neLQUWoBkSJNPEC4mp2pdHbyYjo5BTiyntYtIUZ3cvF/A5sOaB/zGOeSJXYc
- wqMSZH9hRtdVkxqTwLlemcJKez6gveZHc+RBewvZuYc7/CnYIgM0b2A7FuhAl5BPWvpM
- KRaAfwq5bLiroA3VnRZDXVqWko65B1TM0nM2jIXHimtYCfoE++Ps4zAuH4WPaQMjuDC7
- A2xg==
+ bh=TB+dJ1z5rFpwPpb8f0K6cqhLtZ8cr4WQuAeF8nhNzZQ=;
+ b=PCWknqGs0gY0k3xHTD6kNNt3GP8sbcYmCNVZ18ovmpCevCxTsE88Hukj63dbX5jZjI
+ IuJJ4W8Z74SSRbbfV3AWPqKrA4OGP/z6yLyK2cq7DnFkM21NOc0gLjj6JVt+Eq30RqeO
+ gvtwn7GgKKdSKPjpyRHeIvr0p4QrqqeHlTwjX4fCC979Iy6hVf/qVDLGcR3sNlAXvlg/
+ vfzxfwyBWUZDxqX3ySiYDA0NVjtHr7VA3W+W2p0+vOF/D4ysWf2i/jTLGbwsx303gMKG
+ jFf0kpC89RHJYnFH3U7WGDNNmv4UacYp6UsxaB7lN9ZyK/WfqzcPOugUBGlJWi0xFodI
+ drZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWrQqZ1o+Hx5E3elR/BTeoDuru+v9kL6jvslMwA3SfVcYviZCSvHzPZdDPwhv+C3zoUZm17hVxXa12kch57pjs8kvqWHuo=
-X-Gm-Message-State: AOJu0YxjLcHIzR+wRmX7RWRnd5Z/W7h3e59oLVMOvb70VmKUzkGOnc1D
- vEbjSGla7vD+P58u4qUzxQ04yMyHngYsv7KnvBip4vpX829WpZfFiAsAyY3zLCH5RWmCcaE/N+j
- QmzRLf/CSathOB/P54+5RLSJ/kaspk7Czf4MProWuNKWbMOLsVuqT
-X-Received: by 2002:a05:6512:2207:b0:513:b159:e711 with SMTP id
- h7-20020a056512220700b00513b159e711mr3159644lfu.4.1710233427357; 
- Tue, 12 Mar 2024 01:50:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrbHM8HQNspLfLsZ2yAQl4rOUe4bhtpb/ccCaU+HrxT7o0XBG1Gcyyha1yO8kM8jC9sTvpOA==
-X-Received: by 2002:a05:6512:2207:b0:513:b159:e711 with SMTP id
- h7-20020a056512220700b00513b159e711mr3159628lfu.4.1710233427014; 
- Tue, 12 Mar 2024 01:50:27 -0700 (PDT)
+ AJvYcCUzooB6Xf8wSO2GjbynOEIHS3PSlg3i+3Vn04zj0dvJXE+zYoTJ0i/8lN1H+ljPwk7yumV1L0wpzc93OJ3Y562Ah58Y29M=
+X-Gm-Message-State: AOJu0Yz8KkrruRrN3UxMLn8RMapiqlNwZKOk0VCj3GSZ4liY6m8R8iPC
+ OpPtuOPihvMKe7eanoJi8Pfc9sHfBfe89o1fb8i2NCiffcPV5+cbftKHUPiDfRdPEGFPoYlD0mO
+ kplMcXB6R0DM5F1lo+trbnDD/4nEX8p3QULII4Tn9tgU9L5Q7o+TO
+X-Received: by 2002:a05:600c:4f16:b0:412:bcc9:32dc with SMTP id
+ l22-20020a05600c4f1600b00412bcc932dcmr2207744wmq.31.1710233640263; 
+ Tue, 12 Mar 2024 01:54:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHSd7tYr9DeWc3ebGz4fOVo4M7xc23m0w0l3lXhRWvvhnGN/CwfgqDtKcc61xp9EOmdSBTBbg==
+X-Received: by 2002:a05:600c:4f16:b0:412:bcc9:32dc with SMTP id
+ l22-20020a05600c4f1600b00412bcc932dcmr2207732wmq.31.1710233639963; 
+ Tue, 12 Mar 2024 01:53:59 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-86.web.vodafone.de.
  [109.43.177.86]) by smtp.gmail.com with ESMTPSA id
- h17-20020a05600c315100b004101f27737asm18150696wmo.29.2024.03.12.01.50.25
+ iv6-20020a05600c548600b0041294d015fbsm11837135wmb.40.2024.03.12.01.53.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 01:50:26 -0700 (PDT)
-Message-ID: <4ba8e5dc-cda0-4ed4-8baa-82687a235627@redhat.com>
-Date: Tue, 12 Mar 2024 09:50:25 +0100
+ Tue, 12 Mar 2024 01:53:59 -0700 (PDT)
+Message-ID: <5e9c1dea-ffde-4aa6-87fa-a3727816e6e4@redhat.com>
+Date: Tue, 12 Mar 2024 09:53:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/29] Cleanup up to fix missing ERRP_GUARD() for
- error_prepend()
+Subject: Re: [PATCH v2 25/29] hw/virtio/vhost-vsock: Fix missing ERRP_GUARD()
+ for error_prepend()
 Content-Language: en-US
 To: Zhao Liu <zhao1.liu@linux.intel.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, Markus Armbruster <armbru@redhat.com>
-Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
- <d48e5d05-0e1e-4bb0-b10a-f0c943b055f6@linaro.org>
- <ZfAVsQTIOgAOjd0Y@intel.com>
+ <20240311033822.3142585-26-zhao1.liu@linux.intel.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -123,9 +123,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <ZfAVsQTIOgAOjd0Y@intel.com>
+In-Reply-To: <20240311033822.3142585-26-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
@@ -150,39 +150,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/03/2024 09.43, Zhao Liu wrote:
-> Hi Thomas/Markus/Michael,
+On 11/03/2024 04.38, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> For the remaing patches, could you please help me merge them next?
+> As the comment in qapi/error, passing @errp to error_prepend() requires
+> ERRP_GUARD():
 > 
-> Many thanks!
+> * = Why, when and how to use ERRP_GUARD() =
+> *
+> * Without ERRP_GUARD(), use of the @errp parameter is restricted:
+> ...
+> * - It should not be passed to error_prepend(), error_vprepend() or
+> *   error_append_hint(), because that doesn't work with &error_fatal.
+> * ERRP_GUARD() lifts these restrictions.
+> *
+> * To use ERRP_GUARD(), add it right at the beginning of the function.
+> * @errp can then be used without worrying about the argument being
+> * NULL or &error_fatal.
+> 
+> ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
+> can't see this additional information, because exit() happens in
+> error_setg earlier than information is added [1].
+> 
+> The vhost_vsock_device_realize() passes @errp to error_prepend(), and as
+> a VirtioDeviceClass.realize method, its @errp is from
+> DeviceClass.realize so that there is no guarantee that the @errp won't
+> point to @error_fatal.
+> 
+> To avoid the issue like [1] said, add missing ERRP_GUARD() at the
+> beginning of this function.
+> 
+> [1]: Issue description in the commit message of commit ae7c80a7bd73
+>       ("error: New macro ERRP_GUARD()").
+> 
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   hw/virtio/vhost-vsock.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+> index d5ca0b5a1055..3d4a5a97f484 100644
+> --- a/hw/virtio/vhost-vsock.c
+> +++ b/hw/virtio/vhost-vsock.c
+> @@ -121,6 +121,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
+>   
+>   static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>   {
+> +    ERRP_GUARD();
+>       VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+>       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>       VHostVSock *vsock = VHOST_VSOCK(dev);
 
-Yes, I'm currently reviewing the ones that don't have a Reviewed-by yet. I 
-can pick up the remaining patches if the other maintainers won't pick them 
-up for the softfreeze today.
-
-  Thomas
-
-
-> On Tue, Mar 12, 2024 at 09:17:30AM +0100, Philippe Mathieu-Daudé wrote:
->> Date: Tue, 12 Mar 2024 09:17:30 +0100
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Subject: Re: [PATCH v2 00/29] Cleanup up to fix missing ERRP_GUARD() for
->>   error_prepend()
->>
->> On 11/3/24 04:37, Zhao Liu wrote:
->>
->>> ---
->>> Zhao Liu (29):
->>
->>>     hw/core/loader-fit: Fix missing ERRP_GUARD() for error_prepend()
->>>     hw/core/qdev-properties-system: Fix missing ERRP_GUARD() for
->>>       error_prepend()
->>>     hw/misc/ivshmem: Fix missing ERRP_GUARD() for error_prepend()
->>
->> I'm queuing these 3 patches, thanks!
-> 
-> 
-> 
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
