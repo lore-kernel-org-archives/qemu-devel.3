@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E626C54E69
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBE9AC54E6A
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:41:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAeG-0006Ul-EV; Tue, 12 Mar 2024 18:31:04 -0400
+	id 1rkAeG-0006V3-Kb; Tue, 12 Mar 2024 18:31:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcG-0002rc-Pg
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcY-0002vM-11
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAc6-0004bn-Gf
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcQ-0004dy-EU
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282529;
+ s=mimecast20190719; t=1710282548;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=q+KmS4ZjhMpglK5yf3m23Viq3SpbBkSkvKu7CqYvcy0=;
- b=PSirbAlGDkovQUQDNlLEzJPL6q+oUzOcEizgccJXzZTT1prjg7fImExjl53EO8oIEPJpqy
- FMwulPDQCniEv8dJumBM+2wSZJc0I4LGWCSoke4Z4FLk3GWXAr4bIoTjjJ40UjtGh/e+Pt
- Esy4wBccP0htKRtEjt1+jrUBy/lmqwQ=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tvskLJuZlte5MbngUkjQAr+sRrlvuUkQnWRcVHGQVPU=;
+ b=AzGHL/aYotVQvf8ighfu5dA/ctgH5TJQq58OJy15Y+6ALwUBVo4jdNwK2dQ2ZUEbHZLFjS
+ R0ckPMtstiDQZVtdzTFluZ677cyAWzEpyRzCZRfevOD6mHcLd9gfxrMqfnKKRHqtreYN9o
+ MDu2P3zvBHim0u7sX3ImbArtX7UX8EM=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-694-Dr4quDAbOkC9A4Ca48DfrQ-1; Tue, 12 Mar 2024 18:28:47 -0400
-X-MC-Unique: Dr4quDAbOkC9A4Ca48DfrQ-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-513332823cfso6021450e87.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:47 -0700 (PDT)
+ us-mta-509-2HO4ty4EOLCbl8J6ocvs3w-1; Tue, 12 Mar 2024 18:29:06 -0400
+X-MC-Unique: 2HO4ty4EOLCbl8J6ocvs3w-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2d2ecf61dd7so46311801fa.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:29:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282526; x=1710887326;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=q+KmS4ZjhMpglK5yf3m23Viq3SpbBkSkvKu7CqYvcy0=;
- b=Nm4Yte1qCcLZ9jujALwaQVq9berGs1edpur1fgIvapk+b8Xky7VOIKYaTkoR//dEp+
- xZAMqrNXBiKti/wwB/qDn9hNIn7glmPqbf9TtZcGluhhWtCgPv0ohOT89TnYg6rCpmso
- +DA379YzHB95fbbJ3MvKd7hHg69HMTlza+ED8hQ+bPcbTQF+r2hT1sOImgmn71r7Dz/V
- Qv+Dehh+4x4S2X55QJ82PcoatZDYNyvfTj9ox1s29v5tPNNnIulPSHKVIxGBTdeDj3vc
- 3TGGVvmGvB9Z3HSb63r0dUOTWhvdce/SCumShdVMIHaabFNhbzmj4NBtSfMyOANs6a+x
- F3RQ==
-X-Gm-Message-State: AOJu0YzXseb+K9hTfG5gBxBfLAUCbwn0ZhBskUGwkYfL+po0l7zD3occ
- 8BnDsxENoxsy2VzNOUeILuK4FvXU9paBAPILH5Nb96Kd2fokrfTlB01Ge65bd0YUPk4SNEuyThZ
- bACGdy4IJ2YahXitrvRMOnPNgQ8qk1Cz8LAnqSV4aVuj8DbCkuolPAUsFM9IWvFovfEC+LSfl8e
- NonaTbxEdKUnyk5B6f1xHcEJu85TsQmm9P
-X-Received: by 2002:a19:f706:0:b0:513:9e39:e8b7 with SMTP id
- z6-20020a19f706000000b005139e39e8b7mr2232214lfe.16.1710282525913; 
- Tue, 12 Mar 2024 15:28:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEo3qlAKiLGgeTkL9KtX7dBkt5NvQ6u03phXTDQ8n4klSi8/G06Mw7YCVgp5Fpf9JdaR+4MKg==
-X-Received: by 2002:a19:f706:0:b0:513:9e39:e8b7 with SMTP id
- z6-20020a19f706000000b005139e39e8b7mr2232195lfe.16.1710282525378; 
- Tue, 12 Mar 2024 15:28:45 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710282545; x=1710887345;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tvskLJuZlte5MbngUkjQAr+sRrlvuUkQnWRcVHGQVPU=;
+ b=OxoEJ5+gfKKaI5ftaTJYSakzAiiwlPR6+8DMcdAygryghxHWtlxd7CjmKcQimyM6ET
+ 8KF04ifdxNuu8GK4Ea6U5zHwt+jpDRi3RYAMnF9QjuAZPeZr6zoKTAHvAGlIk1Ub3NA1
+ 83aaOgaTgzkUfMkfNGbexiRqx7drVtMjHnPfC35cOZ1AsgT8HJ5/iTT1RDLBCUGO3Mjl
+ 4o+qiJH/oDIu/rqVrIEhiawxIGnjo4o0Z1a/I+m0914/ixYtOcrUfVoxz9rQYUhDAhA8
+ soWdTAcBIVeh/9EjWDrbDGvEdEimLUMQ6riWPJ+fCkULtrG6j3/hNZndZMMGFKLhi1vh
+ R1cQ==
+X-Gm-Message-State: AOJu0YxyfnSfxkp8Nhk0vYFUKINkplJtA8R3pvtuz/u61lg+i61P6hXQ
+ N/XEENdZFLYn8DyOEytn44cBbckQTFP/kQs8qmW0mOtfls12VxV+JV1G3+Pgy76/4Xc5LNqIv4C
+ VtDP9x15+OfuLrlmDuxCxD3UfF+oz5ZY1I0nNKb+1hKnKl0JaXlqSSd9E93dQt+kZxHHu9D+IEB
+ Rr2ukj9lwQSvfa1WWeMyFJ+Pg/bMFWePGP
+X-Received: by 2002:a05:6512:3188:b0:513:28b3:bd5d with SMTP id
+ i8-20020a056512318800b0051328b3bd5dmr2803327lfe.54.1710282544864; 
+ Tue, 12 Mar 2024 15:29:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHK4BRn7zVVB48QoZ/7Q+Gso3634VHGiSN2BO+yMn2ZaShP9d57VPeNClenceHNgUtOnE+d6Q==
+X-Received: by 2002:a05:6512:3188:b0:513:28b3:bd5d with SMTP id
+ i8-20020a056512318800b0051328b3bd5dmr2803306lfe.54.1710282544327; 
+ Tue, 12 Mar 2024 15:29:04 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- p26-20020a170906b21a00b00a4655a71a27sm73803ejz.163.2024.03.12.15.28.43
+ jo11-20020a170906f6cb00b00a46522c38c4sm201218ejb.207.2024.03.12.15.29.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:28:45 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:28:42 -0400
+ Tue, 12 Mar 2024 15:29:03 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:29:01 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 59/68] qemu-options.hx: Document the virtio-iommu-pci granule
- option
-Message-ID: <695012903f99d42c03a5bc87fe24f591b6bf7153.1710282274.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 65/68] hmat acpi: Do not add Memory Proximity Domain
+ Attributes Structure targetting non existent memory.
+Message-ID: <2eb6672cfdaea7dacd8e9bb0523887f13b9f85ce.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,41 +102,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-We are missing an entry for the virtio-iommu-pci device. Add the
-information on which machine it is currently supported and document
-the new granule option.
+If qemu is started with a proximity node containing CPUs alone,
+it will provide one of these structures to say memory in this
+node is directly connected to itself.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
+This description is arguably pointless even if there is memory
+in the node.  If there is no memory present, and hence no SRAT
+entry it breaks Linux HMAT passing and the table is rejected.
 
-Message-Id: <20240307134445.92296-5-eric.auger@redhat.com>
+https://elixir.bootlin.com/linux/v6.7/source/drivers/acpi/numa/hmat.c#L444
+
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20240307160326.31570-2-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- qemu-options.hx | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/acpi/hmat.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 937fd7ed84..c6f3d2e76d 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -1172,6 +1172,14 @@ SRST
-     Please also refer to the wiki page for general scenarios of VT-d
-     emulation in QEMU: https://wiki.qemu.org/Features/VT-d.
+diff --git a/hw/acpi/hmat.c b/hw/acpi/hmat.c
+index 2242981e18..8ea240878a 100644
+--- a/hw/acpi/hmat.c
++++ b/hw/acpi/hmat.c
+@@ -204,6 +204,13 @@ static void hmat_build_table_structs(GArray *table_data, NumaState *numa_state)
+     build_append_int_noprefix(table_data, 0, 4); /* Reserved */
  
-+``-device virtio-iommu-pci[,option=...]``
-+    This is only supported by ``-machine q35`` (x86_64) and ``-machine virt`` (ARM).
-+    It supports below options:
-+
-+    ``granule=val`` (possible values are 4k, 8k, 16k, 64k and host; default: host)
-+        This decides the default granule to be be exposed by the
-+        virtio-iommu. If host, the granule matches the host page size.
-+
- ERST
+     for (i = 0; i < numa_state->num_nodes; i++) {
++        /*
++         * Linux rejects whole HMAT table if a node with no memory
++         * has one of these structures listing it as a target.
++         */
++        if (!numa_state->nodes[i].node_mem) {
++            continue;
++        }
+         flags = 0;
  
- DEF("name", HAS_ARG, QEMU_OPTION_name,
+         if (numa_state->nodes[i].initiator < MAX_NODES) {
 -- 
 MST
 
