@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84FE5C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FFC8C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:03:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5TN-0004it-Uu; Tue, 12 Mar 2024 12:59:29 -0400
+	id 1rk5U5-0005JZ-D6; Tue, 12 Mar 2024 13:00:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5TK-0004d5-GF; Tue, 12 Mar 2024 12:59:26 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1rk5Tn-00052j-QA; Tue, 12 Mar 2024 12:59:57 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5TH-0007xM-Ay; Tue, 12 Mar 2024 12:59:25 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6e5c0be115aso80380b3a.3; 
- Tue, 12 Mar 2024 09:59:22 -0700 (PDT)
+ id 1rk5Tj-00081L-8o; Tue, 12 Mar 2024 12:59:55 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6e6adc557f3so572407b3a.1; 
+ Tue, 12 Mar 2024 09:59:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710262761; x=1710867561; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710262789; x=1710867589; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2hIrP+GOO7mqBVQBlneIZNaQyZ+Zlpvjob7t6Cp/ux0=;
- b=HJb7wkV9Xory+0sMHc5wcGXZUAuE9AA20v5f9E42YDlGDOFcZ0KxfYgt24000iVf7R
- Av80iu8tiohxNHnuPSXINxChS/O2UvCDtSVNjwMYP2GDu9B6fmnzagQbpaRpVGEJKB5R
- aDdVb6o9GEGEs5utkDr8jyhsw1kiOAzrTPw1uX6A1YjOBs5XWzRPu/amikCkgwmlYNNc
- z0ZLGgLS2mTAZyap6RHx2LdJNqdLeWLzqHkpSFkB09XajlRhCSp1B3EZ2VJxbDwdhC6m
- IbEDkVRZFtVzAV3qz035J3MEHAx/mBVzAICNObMCMRTHE7XJeWJt5Q5bgfP4oFQsc8j0
- USCA==
+ bh=M7kmXgqtdcMD9RJbt2RdUSSdzZ9tGHMF/tncpvYDkjQ=;
+ b=CnQzzrw8BUsv8dgX3bl5Q+DMzDv2v8LmjwQL/ahLTxT71PIKdHpeIZn5iqnu9BRq6E
+ jNeuQbVFtUya4d2JfS60EtFM8iff/sk+zev6RcQBLWvt/XDMkCO1dupo6STNgt3JPzaK
+ nxpZCeZXshR5bD/7zGLyzrd/54PB2Wm1h4R6j1kTMweHU2X7yJRmQ8eParEIzOC5+R0Y
+ NXqog4klTi6heqTSBznO5EksaxAttk7KqxR5o+KrpRKPQ3JsMyjs+qJkjo+8SEdd/clC
+ sMhh0wTwfDT2T7pBaOxodir410mWb2AutSnPL1ZCMhYmcsXop9B97U8ShX0c/PsTlWhL
+ wkHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710262761; x=1710867561;
+ d=1e100.net; s=20230601; t=1710262789; x=1710867589;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2hIrP+GOO7mqBVQBlneIZNaQyZ+Zlpvjob7t6Cp/ux0=;
- b=jhYinOvoUP4wERzaomNTvInqyuceSTA/K0jRAiosCwPQkKV/YnnAvA8ihMkaaY9u/6
- otf9U2mdTZ6OsjeWaJErYMQwLZKrcm1+TO+Fq3VWzgD66ibj0kN0PpK+uT5T/P6NGT1L
- iQorI+IaJzE0ac14lf//b6KgPk19j8RJAQ0ybCyj6Errdk7vY3vFa+eZlf0scGDOpAfB
- xGdN47oyJwAULhtH5VqWd9AU1/+Nfr2UO83m94bIvEODAh0YupUeOTJYLB8XRT3GfjgK
- kbfHRMoLqT1XRK4AJJLLf+XKgYTcsluI1PuFMm6nWj32JYqK7KkAOJ9ihtOuk/iT2F+w
- jcpg==
+ bh=M7kmXgqtdcMD9RJbt2RdUSSdzZ9tGHMF/tncpvYDkjQ=;
+ b=lhvfgMNhFG1PwTp17S4cKV5aWwPmXbEudfwKhpee9rFbO6kSA43gEd8E2nn7XW0FEN
+ GLaCgVpYZ/e7pZbhWTmbX8TnIjnNEoUSJKgUSfQ5xjluBFf3ZOZCTrGRV8vd3HMpEMpr
+ qlKmi2rDGq6mxw5qfZEhMMd/YGTQSPbN11hagpDkKIX7qeL5MlrSJwAnIJj6fOLH9OQL
+ KTR2ykpJrWJDJ/ZWJ9eInvoqv0X+lLIMaUIjX2wFzf5vNTYN2JKJgt1OYdByRdIsv9+2
+ PBSYkKzMKcuVuuVK7ZbROFvu+8UN1L6PKjcNo8S6YpvXlzgd+K8bbEmwgfEAaec16u2h
+ hf/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWYP+ji8EOQLL58UDjMta6P39xxtsN+Qfzugrs1mQIyuduNI+uTXUEjph2RmncYpbTi9SpXxfsGO4wHRzD03Ggk2dX3
-X-Gm-Message-State: AOJu0YxmHCVqo4tSzVFz9exLXTuef0eObU0vEf8aRsWNwGViiZMwnRy1
- DC7lSudNmTTUqObq/Cv8AhwR2u0DGQeOzKTuBB+NkfBUzoDSApnRDbA9L1+IHMA=
-X-Google-Smtp-Source: AGHT+IG5cDMQmDShI4v5/qJWIFcWmnXg36TxA1wPQkWCdPcpo+/gYQqwvMMo7rTJSCGOjkTsYkPGwg==
-X-Received: by 2002:a05:6a00:2d0a:b0:6e2:de02:598e with SMTP id
- fa10-20020a056a002d0a00b006e2de02598emr14132pfb.33.1710262761034; 
- Tue, 12 Mar 2024 09:59:21 -0700 (PDT)
+ AJvYcCUc/IrVQEvLV4GCVFpwNxItXJNhCDjJVcA3R8vaVTKaX6/bGorBLRE36cvxafl+WpoYyO1AmMkEb4j5tPzCfqfOwD2y
+X-Gm-Message-State: AOJu0YzLGb4Zo4MQvfl2860dnuAu9bzkC2HqLuFl/Bu5U9Mxr8gwhIy5
+ 3hlUmpn6HTLMCW8OgGEDBTqjamOTMsbF4i/QFHIj86OqsQAZ8rONsXQPd2qSnv8=
+X-Google-Smtp-Source: AGHT+IExJJzpys6WiWWedS4/RTEYMS7L60ZlSWHvW9TgnXeE2wvWKCq6ozj+BRzBAikBr9nZr+DLCg==
+X-Received: by 2002:a05:6a20:9591:b0:1a3:2f5e:d4fb with SMTP id
+ iu17-20020a056a20959100b001a32f5ed4fbmr716528pzb.61.1710262789198; 
+ Tue, 12 Mar 2024 09:59:49 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.09.59.18
+ t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.09.59.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 09:59:20 -0700 (PDT)
+ Tue, 12 Mar 2024 09:59:48 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 05/38] target/ppc: POWER10 does not have transactional memory
-Date: Wed, 13 Mar 2024 02:58:16 +1000
-Message-ID: <20240312165851.2240242-6-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 13/38] docs: Deprecate the pseries-2.12 machines
+Date: Wed, 13 Mar 2024 02:58:24 +1000
+Message-ID: <20240312165851.2240242-14-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240312165851.2240242-1-npiggin@gmail.com>
 References: <20240312165851.2240242-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,43 +97,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-POWER10 hardware implements a degenerate transactional memory facility
-in POWER8/9 PCR compatibility modes to permit migration from older
-CPUs, but POWER10 / ISA v3.1 mode does not support it so the CPU model
-should not support it.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+pSeries machines before 3.0 have complex migration back
+compatibility code we'd like to get ride of. The last
+one is 2.12, which is 6 years old. We just deprecated up
+to the 2.11 machine in commit 1392617d35 ("spapr: Tag
+pseries-2.1 - 2.11 machines as deprecated").
+Take to opportunity to also deprecate the 2.12 machines.
+
+Acked-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu_init.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ docs/about/deprecated.rst | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 572cbdf25f..b160926a93 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -6573,11 +6573,10 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data)
-                         PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |
-                         PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
-                         PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
--                        PPC2_TM | PPC2_ISA300 | PPC2_PRCNTL | PPC2_ISA310 |
-+                        PPC2_ISA300 | PPC2_PRCNTL | PPC2_ISA310 |
-                         PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206;
-     pcc->msr_mask = (1ull << MSR_SF) |
-                     (1ull << MSR_HV) |
--                    (1ull << MSR_TM) |
-                     (1ull << MSR_VR) |
-                     (1ull << MSR_VSX) |
-                     (1ull << MSR_EE) |
-@@ -6617,7 +6616,7 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data)
-     pcc->flags = POWERPC_FLAG_VRE | POWERPC_FLAG_SE |
-                  POWERPC_FLAG_BE | POWERPC_FLAG_PMM |
-                  POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |
--                 POWERPC_FLAG_VSX | POWERPC_FLAG_TM | POWERPC_FLAG_SCV;
-+                 POWERPC_FLAG_VSX | POWERPC_FLAG_SCV;
-     pcc->l1_dcache_size = 0x8000;
-     pcc->l1_icache_size = 0x8000;
- }
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 4fb86608e4..7b548519b5 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -237,13 +237,13 @@ The Nios II architecture is orphan.
+ The machine is no longer in existence and has been long unmaintained
+ in QEMU. This also holds for the TC51828 16MiB flash that it uses.
+ 
+-``pseries-2.1`` up to ``pseries-2.11`` (since 9.0)
++``pseries-2.1`` up to ``pseries-2.12`` (since 9.0)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+-Older pseries machines before version 2.12 have undergone many changes
++Older pseries machines before version 3.0 have undergone many changes
+ to correct issues, mostly regarding migration compatibility. These are
+ no longer maintained and removing them will make the code easier to
+-read and maintain. Use versions 2.12 and above as a replacement.
++read and maintain. Use versions 3.0 and above as a replacement.
+ 
+ Arm machines ``akita``, ``borzoi``, ``cheetah``, ``connex``, ``mainstone``, ``n800``, ``n810``, ``spitz``, ``terrier``, ``tosa``, ``verdex``, ``z2`` (since 9.0)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 -- 
 2.42.0
 
