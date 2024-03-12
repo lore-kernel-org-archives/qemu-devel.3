@@ -4,70 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D565AC54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF98C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:30:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0I4-00078N-Iq; Tue, 12 Mar 2024 07:27:28 -0400
+	id 1rk0Kq-0001JC-95; Tue, 12 Mar 2024 07:30:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rk0Hw-0006eW-33
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:27:21 -0400
-Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rk0Km-0001Ib-VJ; Tue, 12 Mar 2024 07:30:18 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rk0He-00010l-Vp
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:27:18 -0400
-Received: by mail-yb1-xb30.google.com with SMTP id
- 3f1490d57ef6-dbed0710c74so3283751276.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:27:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rk0Kk-0001VD-Sx; Tue, 12 Mar 2024 07:30:16 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1dbd32cff0bso40656295ad.0; 
+ Tue, 12 Mar 2024 04:30:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710242819; x=1710847619; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1710243013; x=1710847813; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wNEsIfuHFB3HiLUL/TgDl7Xq/yPRZNjZ7t0tQW27ii0=;
- b=URgpAtDAOOox+4+h/jdI7KRdJF/rccAV13Z4rO06o080TwLO+NHWwWUlJsaWmdLROv
- 2znyZLpWTpvVrUncabUiDJi2rvRx+OINdkdUdW6EV41TDcdLii9ily7szKYMssxL9lru
- FUq0JKwcrNgiBWc3lAWMRMFT/IPfvqeAEzO25SKaG8dihxRNL4cNa0NsdhCkPsTUscsl
- RuuETxKmbohpZq2zvoss5F/l4/6fxsbUF7cBqh3WOo9Kmr2+BpAqYIKArziOY4hsqcfi
- 26xXD7NBa036r0ZqYO1iZzKbwHqhomXLdMNuM7ofxGiC5yMW/44C3H9g76vt3I37yw5w
- 5oKw==
+ bh=+oOTZ3+k767paO2ZWmMwt1IfpMrA/GhtNkSkYph7lbg=;
+ b=EE88r+dv0wW+OaO6Z9Gc4b8d3v2lHi2ys6SRBspCZGr3LkR79AFcnNsvHCxTW38X3W
+ sn+StcB/+fIWjVaFA7r7HPk7QdiQxfAuJlELN9waYiP/KBCMKe0zTfWFIzt3YTuvORjZ
+ EC18uqnfSAP1wPvOgXs0MdxHBPYyAqysuu+Ff74z+O376Pzp2gtc+9zoK2UScoZLZgRb
+ Uyl7fcI+cO9XweNWcr0/xeDFIers5XoEl/PmwUKAf8TzZDWf6eXL/TGL5xKyj52kN6BO
+ beyxmLywMhrM96SQeGpfdF6VhpLEHlQ3Wgiaoa2VQwlwWJwRa1FsyZTBXvbVvM4Ob9zs
+ 1sGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710242819; x=1710847619;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wNEsIfuHFB3HiLUL/TgDl7Xq/yPRZNjZ7t0tQW27ii0=;
- b=cjm05py2L64hKorMqT/i8UYrlrlV9Q1/Kf0WcuJhLnN0ouIuMglKDMArAd1zUNNA2X
- 0E58JFqOp6W/1GwbbLLAYZJ1+ajFn+3VP7WSCdLk3z1BGpW5N8x5cRctiveSm3a0CtVV
- nG44BqkbNnM8cTLYsO5B2N3ciQ9QhkgipGG6sOL9CgF5OBgtnT5+u189oNiCDzzuuTTT
- Dwcd/+nm9cjCO5fH2olgwAKA408oq2NqfTHRmNvS/sxc41/qpgSfWREXIQK8Sdh0IuF+
- JIpeEJrKVBNC49ex/SfERLo+UqQJJ9o9pph1QfCOeVsnG6Zbw5yYNwKUtxwwSVRp8p9b
- W8Rg==
-X-Gm-Message-State: AOJu0YwMJvxa1YoiPvxq60Y/u97fOduVVeN9d7KSKyNAsfQ+dE3IGl8O
- F8f+zElCX4rrcyOSrg7fs+ZakDmAhMLsODY3CLvDBvZ3oN//wcn9TQ1auXBvrTzUF0KLnQnR+zl
- wptUncdXdiBmCA/qPmaZz2MPrdN8=
-X-Google-Smtp-Source: AGHT+IHN6DvaRS106XlWd4m5QI+rZA0ZzEzkqGVSnLLaSw7OA+QSUzcoL8vo0DyYR2pN03u7EGuOYkgPKoMXNUCmStQ=
-X-Received: by 2002:a25:6ad4:0:b0:dcb:ff73:2262 with SMTP id
- f203-20020a256ad4000000b00dcbff732262mr6673218ybc.36.1710242819476; Tue, 12
- Mar 2024 04:26:59 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240306222523.3236832-1-dongwon.kim@intel.com>
-In-Reply-To: <20240306222523.3236832-1-dongwon.kim@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 12 Mar 2024 15:26:48 +0400
-Message-ID: <CAJ+F1CJEJ8neE9woTJ=SPoSdZA+T4QNC0-GccZ9N2C_cgOvNwQ@mail.gmail.com>
-Subject: Re: [PATCH v3] ui/gtk: flush display pipeline before saving vmstate
- when blob=true
-To: dongwon.kim@intel.com
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ d=1e100.net; s=20230601; t=1710243013; x=1710847813;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=+oOTZ3+k767paO2ZWmMwt1IfpMrA/GhtNkSkYph7lbg=;
+ b=KjeVRySCfQw6PnyxR3HkWtuDRlLjK4bxYlRSczYRhct60N/WiJHZ0Y1FktHMmDWzUk
+ XLzgKw6ARbL5cUyEHH7+LxgifA21MtS87QAShRIG4/psW7+VrjXWQZV6KLov3SvGlwv3
+ 2ehyPxJemaQTk4bibKtkRbuKLYmstwqxxzryAhyFDzYWoOy9Gc84ge+cJQTXbOoNJxJ0
+ FgNn4TC+7BCnV48CA/Zd1dlam3kHOQM0vVpp9NrT5aEIC62BNplVivysHTM8kagIA4GZ
+ raA4TdAoaHKvLy529Zhx7rUsSo80N4HNiEkqBXCBqrZNtc+wfRbJNnlPVQfZgfr3BZIJ
+ BPBA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJoHM0+rtXm2mRuNw33WUsOfqSW2rtXpHcFCXW8l+F82gsJfqqgLZp3sxuOPbcFBjdAlKknYn42fB6s0aLJ9VfBjxtwv+jhunCr4C9ij1oAk+FlL7fJmHV8sc=
+X-Gm-Message-State: AOJu0YyTfrkzjQeBr2kBJsOpkwzDmsIM4x9jpQx3tR7NawcUFIKstF4U
+ AqmK9EFStKsUhWhp9Lb/HgOA5h5HG1NIlbTg1tUDZhaRd3wcV+QI
+X-Google-Smtp-Source: AGHT+IEO38WHKdbau550x5RIB7/M49ZVJQ6plSpF3HnBVdGdYH747R4g2oAme150SusKacQVUHmR1Q==
+X-Received: by 2002:a17:902:ce8d:b0:1dd:916d:771f with SMTP id
+ f13-20020a170902ce8d00b001dd916d771fmr7949285plg.39.1710243012802; 
+ Tue, 12 Mar 2024 04:30:12 -0700 (PDT)
+Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
+ c8-20020a170902d48800b001dd8cf4170bsm4929537plg.230.2024.03.12.04.30.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Mar 2024 04:30:12 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-yb1-xb30.google.com
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 12 Mar 2024 21:30:06 +1000
+Message-Id: <CZRQJQZNBJHX.BWVREWGW4VI2@wheely>
+Cc: <clg@kaod.org>, <mikey@neuling.org>, <amachhiw@linux.vnet.ibm.com>,
+ <vaibhav@linux.ibm.com>, <sbhat@linux.ibm.com>, <danielhb413@gmail.com>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v5 04/14] spapr: nested: keep nested-hv related code
+ restricted to its API.
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.15.2
+References: <20240308111940.1617660-1-harshpb@linux.ibm.com>
+ <20240308111940.1617660-5-harshpb@linux.ibm.com>
+In-Reply-To: <20240308111940.1617660-5-harshpb@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,128 +97,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Fri Mar 8, 2024 at 9:19 PM AEST, Harsh Prateek Bora wrote:
+> spapr_exit_nested and spapr_get_pate_nested_hv contains code which
+> is specific to nested-hv API. Isolating code flows based on API
+> helps extending it to be used with different API as well.
+>
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Suggested-by: Nicholas Piggin <npiggin@gmail.com>
 
-On Thu, Mar 7, 2024 at 2:27=E2=80=AFAM <dongwon.kim@intel.com> wrote:
->
-> From: Dongwon Kim <dongwon.kim@intel.com>
->
-> If the guest state is paused before it gets a response for the current
-> scanout frame submission (resource-flush), it won't flush new frames
-> after being restored as it still waits for the old response, which is
-> accepted as a scanout render done signal. So it's needed to unblock
-> the current scanout render pipeline before the run state is changed
-> to make sure the guest receives the response for the current frame
-> submission.
->
-> v2: Giving some time for the fence to be signaled before flushing
->     the pipeline
->
-> v3: Prevent redundant call of gd_hw_gl_flushed by checking dmabuf
->     and fence_fd >=3D 0 in it (e.g. during and after eglClientWaitSync
->     in gd_change_runstate).
->
->     Destroy sync object later in gd_hw_fl_flushed
->
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+
 > ---
->  ui/egl-helpers.c |  2 --
->  ui/gtk.c         | 31 +++++++++++++++++++++++++++----
->  2 files changed, 27 insertions(+), 6 deletions(-)
+>  include/hw/ppc/spapr_nested.h |  3 +++
+>  hw/ppc/spapr.c                |  6 +++++-
+>  hw/ppc/spapr_nested.c         | 25 ++++++++++++++++++++++---
+>  3 files changed, 30 insertions(+), 4 deletions(-)
 >
-> diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-> index 3d19dbe382..a77f9e57d9 100644
-> --- a/ui/egl-helpers.c
-> +++ b/ui/egl-helpers.c
-> @@ -385,8 +385,6 @@ void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf)
->      if (dmabuf->sync) {
-
-We may want to check that no fence_fd exists before, to avoid leaks.
-
-I also notice that fence_fd is initialized with 0 in
-vfio_display_get_dmabuf(). It would probably make sense to introduce
-functions to allocate, set and get fields from QemuDmaBuf and make the
-struct private, as it is too easy to do a wrong initialization...
-
-
->          dmabuf->fence_fd =3D eglDupNativeFenceFDANDROID(qemu_egl_display=
-,
->                                                        dmabuf->sync);
-> -        eglDestroySyncKHR(qemu_egl_display, dmabuf->sync);
-> -        dmabuf->sync =3D NULL;
+> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.=
+h
+> index 2488ea98da..bf3a7b8d89 100644
+> --- a/include/hw/ppc/spapr_nested.h
+> +++ b/include/hw/ppc/spapr_nested.h
+> @@ -5,6 +5,8 @@
+> =20
+>  typedef struct SpaprMachineStateNested {
+>      uint64_t ptcr;
+> +    uint8_t api;
+> +#define NESTED_API_KVM_HV  1
+>  } SpaprMachineStateNested;
+> =20
+>  /*
+> @@ -103,4 +105,5 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp);
+>  typedef struct SpaprMachineState SpaprMachineState;
+>  bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
+>                                target_ulong lpid, ppc_v3_pate_t *entry);
+> +uint8_t spapr_nested_api(SpaprMachineState *spapr);
+>  #endif /* HW_SPAPR_NESTED_H */
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index 65d766b898..a08ffe55b6 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -1376,7 +1376,11 @@ static bool spapr_get_pate(PPCVirtualHypervisor *v=
+hyp, PowerPCCPU *cpu,
+>          entry->dw1 =3D spapr->patb_entry;
+>          return true;
+>      } else {
+> -        return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
+> +        assert(spapr_nested_api(spapr));
+> +        if (spapr_nested_api(spapr) =3D=3D NESTED_API_KVM_HV) {
+> +            return spapr_get_pate_nested_hv(spapr, cpu, lpid, entry);
+> +        }
+> +        return false;
 >      }
 >  }
->
-> diff --git a/ui/gtk.c b/ui/gtk.c
-> index 810d7fc796..eaca890cba 100644
-> --- a/ui/gtk.c
-> +++ b/ui/gtk.c
-> @@ -597,10 +597,14 @@ void gd_hw_gl_flushed(void *vcon)
->      VirtualConsole *vc =3D vcon;
->      QemuDmaBuf *dmabuf =3D vc->gfx.guest_fb.dmabuf;
->
-> -    qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
-> -    close(dmabuf->fence_fd);
-> -    dmabuf->fence_fd =3D -1;
-> -    graphic_hw_gl_block(vc->gfx.dcl.con, false);
-> +    if (dmabuf && dmabuf->fence_fd >=3D 0) {
-
-It may have failed to create the fence_fd, but succeeded in creating
-the sync, in which case it will leak the sync.
-
-Btw, can't the fence_fd be created at the same time as the sync
-instead of having two functions?
-
-I also noticed that fenced_fd is incorrectly checked for > 0 instead
-of >=3D 0 in gtk-egl.c and gtk-gl-area.c. Can you fix that as well?
-
-> +        qemu_set_fd_handler(dmabuf->fence_fd, NULL, NULL, NULL);
-> +        close(dmabuf->fence_fd);
-> +        dmabuf->fence_fd =3D -1;
-> +        eglDestroySyncKHR(qemu_egl_display, dmabuf->sync);
-> +        dmabuf->sync =3D NULL;
-> +        graphic_hw_gl_block(vc->gfx.dcl.con, false);
-> +    }
->  }
->
->  /** DisplayState Callbacks (opengl version) **/
-> @@ -678,6 +682,25 @@ static const DisplayGLCtxOps egl_ctx_ops =3D {
->  static void gd_change_runstate(void *opaque, bool running, RunState stat=
-e)
+> =20
+> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+> index c2a33fc3a9..12fdbe2aba 100644
+> --- a/hw/ppc/spapr_nested.c
+> +++ b/hw/ppc/spapr_nested.c
+> @@ -11,11 +11,19 @@
+>  void spapr_nested_reset(SpaprMachineState *spapr)
 >  {
->      GtkDisplayState *s =3D opaque;
-> +    int i;
-> +
-> +    if (state =3D=3D RUN_STATE_SAVE_VM) {
-> +        for (i =3D 0; i < s->nb_vcs; i++) {
-> +            VirtualConsole *vc =3D &s->vc[i];
-> +
-> +            if (vc->gfx.guest_fb.dmabuf &&
-> +                vc->gfx.guest_fb.dmabuf->fence_fd >=3D 0) {
-> +                eglClientWaitSync(qemu_egl_display,
-> +                                  vc->gfx.guest_fb.dmabuf->sync,
-> +                                  EGL_SYNC_FLUSH_COMMANDS_BIT_KHR,
-> +                                  100000000);
-> +
-> +                /* force flushing current scanout blob rendering process
-> +                 * just in case the fence is still not signaled */
-> +                gd_hw_gl_flushed(vc);
-> +            }
-> +        }
-> +    }
->
->      gd_update_caption(s);
+>      if (spapr_get_cap(spapr, SPAPR_CAP_NESTED_KVM_HV)) {
+> +        spapr->nested.api =3D NESTED_API_KVM_HV;
+>          spapr_unregister_nested_hv();
+>          spapr_register_nested_hv();
+> +    } else {
+> +        spapr->nested.api =3D 0;
+>      }
 >  }
-> --
-> 2.34.1
->
->
+> =20
+> +uint8_t spapr_nested_api(SpaprMachineState *spapr)
+> +{
+> +    return spapr->nested.api;
+> +}
+> +
+>  #ifdef CONFIG_TCG
+> =20
+>  bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
+> @@ -310,7 +318,7 @@ static target_ulong h_enter_nested(PowerPCCPU *cpu,
+>      return env->gpr[3];
+>  }
+> =20
+> -void spapr_exit_nested(PowerPCCPU *cpu, int excp)
+> +static void spapr_exit_nested_hv(PowerPCCPU *cpu, int excp)
+>  {
+>      CPUPPCState *env =3D &cpu->env;
+>      SpaprCpuState *spapr_cpu =3D spapr_cpu_state(cpu);
+> @@ -322,8 +330,6 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp)
+>      struct kvmppc_pt_regs *regs;
+>      hwaddr len;
+> =20
+> -    assert(spapr_cpu->in_nested);
+> -
+>      nested_save_state(&l2_state, cpu);
+>      hsrr0 =3D env->spr[SPR_HSRR0];
+>      hsrr1 =3D env->spr[SPR_HSRR1];
+> @@ -413,6 +419,19 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp)
+>      address_space_unmap(CPU(cpu)->as, regs, len, len, true);
+>  }
+> =20
+> +void spapr_exit_nested(PowerPCCPU *cpu, int excp)
+> +{
+> +    SpaprMachineState *spapr =3D SPAPR_MACHINE(qdev_get_machine());
+> +    SpaprCpuState *spapr_cpu =3D spapr_cpu_state(cpu);
+> +
+> +    assert(spapr_cpu->in_nested);
+> +    if (spapr_nested_api(spapr) =3D=3D NESTED_API_KVM_HV) {
+> +        spapr_exit_nested_hv(cpu, excp);
+> +    } else {
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+>  void spapr_register_nested_hv(void)
+>  {
+>      spapr_register_hypercall(KVMPPC_H_SET_PARTITION_TABLE, h_set_ptbl);
 
-thanks
-
-
---=20
-Marc-Andr=C3=A9 Lureau
 
