@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F077C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:34:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A60AC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAac-00062C-IK; Tue, 12 Mar 2024 18:27:19 -0400
+	id 1rkAdJ-0005ar-Vo; Tue, 12 Mar 2024 18:30:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaU-0005Jr-RX
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcI-0002ry-4a
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaT-0004Li-A8
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAc8-0004c7-F8
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282428;
+ s=mimecast20190719; t=1710282531;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HZviP4yQ6PlfNYlhjLnO9O0fDmhpIErXsX1IdIBxhxY=;
- b=Sz1k3gH8Bw4DCRAuHxGXQDE+xRu4C9/7DYOborcbXIsWNyOnVYsov6VfTLBXGdYjryasgW
- TKJTntR/d8wlR+nAMTd2yv8MlT9mUEk+EIeuiT/mnQrBp+YIpyKyeKDpG5QC9MsKT+8wxT
- HPKsLXCY/SqVfxMnkXyhu5M73HSFRsw=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SkLCskZADtvicMPgS7N3Shz0FKc1G4wcmgr3/rSi1jg=;
+ b=aJb7n1frFuC7gbxlWndEONrwaC7rAPJRrSOo1HPkuSTPXqTdEYI0vzlXD4NTAHr48k51G/
+ 06BUYh9rvCICJilWoQHqkhmeQqt+h7UXktgLntwSqmYd0fbzm+x2vyCkGk/ColzK0oXQt6
+ vBFnC89ejBfzriMvEnGHr88/rujShBE=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-d4WTOU5SM_OTp5vbNf6guA-1; Tue, 12 Mar 2024 18:27:07 -0400
-X-MC-Unique: d4WTOU5SM_OTp5vbNf6guA-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5684650b00bso197475a12.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:07 -0700 (PDT)
+ us-mta-251-RRueLvNdPhGBjT357YJz8g-1; Tue, 12 Mar 2024 18:28:50 -0400
+X-MC-Unique: RRueLvNdPhGBjT357YJz8g-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-568728e521bso1094767a12.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282426; x=1710887226;
+ d=1e100.net; s=20230601; t=1710282529; x=1710887329;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HZviP4yQ6PlfNYlhjLnO9O0fDmhpIErXsX1IdIBxhxY=;
- b=GbkEJJUB1nAieTIg25lkxX7O5JJftRUbSXT36rNHQ4D8bDDxPZhWaXR+uzgdlqDgsk
- Ndujii3gHqcqXHlB65zO6N2s7h3v80hwmb2EvH8oyo/RsXLi6iq3k69vJarA6MVYTAXV
- En81/qlK5lmNE0NYsrBgVTHT4IfwxcnKipr5DTo396d/ZlE76dRzSuiGpV6jq7qrf/Yz
- MxzBBpFXi07BML+z5bAKbaIeXc0PKojxCIY8DNn0viVHDd2W4HzNHCagXHh/UMA6Qdi/
- LdWD6Uk7TSEXtFeXL+Av4zqEqATv5hru8MBXLsunCyeXQ/ZgcOU9jHRWv7iV1nyctYuD
- XGdw==
-X-Gm-Message-State: AOJu0Yxu9WdgjQ7FSfVMx+CgB8A8Keslf78RuxNIA55vYh4+OovtU7pg
- kDTA3U7xgf1fde++shrBIjP1chkjOlSZup4Hfm2ewMu42MHynbfLeHw4Hn8LYy/lIXUoER/VS79
- m7I2QrvNGGBpiWohewfUMT5oSSgrhpqv9mRdP3lpYE+5MnFDKXZLZFRSeUC8VmC6RPooso53F/P
- AROcNh+jca2zqKzQfQxqVy9h+1+0nSVjsW
-X-Received: by 2002:a50:d69b:0:b0:568:1c9c:95a7 with SMTP id
- r27-20020a50d69b000000b005681c9c95a7mr3130005edi.40.1710282426083; 
- Tue, 12 Mar 2024 15:27:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFfHQzJ1JyQ7t76fDjre6/5htUCC57Xu8nWAgvtBGdQOxE6DKGNxgCsu4K3e7aDb+q3J0GZbQ==
-X-Received: by 2002:a50:d69b:0:b0:568:1c9c:95a7 with SMTP id
- r27-20020a50d69b000000b005681c9c95a7mr3129989edi.40.1710282425662; 
- Tue, 12 Mar 2024 15:27:05 -0700 (PDT)
+ bh=SkLCskZADtvicMPgS7N3Shz0FKc1G4wcmgr3/rSi1jg=;
+ b=TOPU6zyM57/il/m8aK8pqPlj1s/t1qXUddUKQ7dFdbL5bCGObqMyroDYDqSHXyFoS7
+ HWxduP+ofB11bRMHdCqw7cBuH0fgyP4BiYAgJPVUGfL92Ys0qy+XPPHT19uJcYTBHBkC
+ xnBdPFKGNuDHiG1BfsKolfP4+5gg1KEwLj9j2PRGcUkErhkFfhW6ZowfK8V7+xeVUrjB
+ eAVbR813bye7Xyycd+1F93tEumJiJ2+wzlD+yj4Su9dixlztiACK+kau2WeohQUp4gIH
+ 7zYycKgGfmfzgcfED0/9zchZ4OkmQLq0tfZSwQsVioHiun59gMtrpXfyEZIU18gV6lTU
+ Wijw==
+X-Gm-Message-State: AOJu0YwpxsCLQMZ2Xdq+jAnhbufLfpZBpDjTnzfXeDJ1VKkOVrD/Ww2a
+ dmNu1vPkx56YknBMNx5/go9Hmk6OKGLcM/FUh6/IqiHNuhBtmCMq9pOY21EmLJBRcsVr0Q8jGGz
+ pZgPFD/xJAmsJuIFxrJ/fCcNhkPEfmgkxELBW1BtQKBGJyWbHEgoLa8CfpMjPBeT1V4nVJrR35j
+ FWlnJSHkv3H8dXPnjkkV9iwJeKuyLOCa73
+X-Received: by 2002:a50:f696:0:b0:567:3bbd:cefb with SMTP id
+ d22-20020a50f696000000b005673bbdcefbmr2561979edn.35.1710282528788; 
+ Tue, 12 Mar 2024 15:28:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDO+cV22/TTgsh2a4S0j3ck470gwU1x6D2mZTQmKgd2I2B7B7BebfU5zaGEa6MERtj9rfCRQ==
+X-Received: by 2002:a50:f696:0:b0:567:3bbd:cefb with SMTP id
+ d22-20020a50f696000000b005673bbdcefbmr2561963edn.35.1710282528377; 
+ Tue, 12 Mar 2024 15:28:48 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- r14-20020aa7cfce000000b005687f8721f9sm296397edy.82.2024.03.12.15.27.03
+ v22-20020aa7d816000000b005687e041608sm440346edq.37.2024.03.12.15.28.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:27:05 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:27:02 -0400
+ Tue, 12 Mar 2024 15:28:48 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:28:45 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Volker =?utf-8?Q?R=C3=BCmelin?= <vr_qemu@t-online.de>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL 30/68] hw/audio/virtio-sound: return correct command response
- size
-Message-ID: <633487df8d303b37a88584d5a57a39dbcd91c7bf.1710282274.git.mst@redhat.com>
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: [PULL 60/68] virtio-iommu: Trace domain range limits as unsigned int
+Message-ID: <fdda908f945bcd985be4ebd2a06d00719bc15e93.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -82,15 +80,14 @@ Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,75 +104,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Volker Rümelin <vr_qemu@t-online.de>
+From: Eric Auger <eric.auger@redhat.com>
 
-The payload size returned by command VIRTIO_SND_R_PCM_INFO is
-wrong. The code in process_cmd() assumes that all commands
-return only a virtio_snd_hdr payload, but some commands like
-VIRTIO_SND_R_PCM_INFO may return an additional payload.
+Use %u format to trace domain_range limits.
 
-Add a zero initialized payload_size variable to struct
-virtio_snd_ctrl_command to allow for additional payloads.
-
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
-Message-Id: <20240218083351.8524-1-vr_qemu@t-online.de>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-Id: <20240307134445.92296-6-eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/audio/virtio-snd.h | 1 +
- hw/audio/virtio-snd.c         | 7 +++++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ hw/virtio/trace-events | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
-index c3767f442b..3d79181364 100644
---- a/include/hw/audio/virtio-snd.h
-+++ b/include/hw/audio/virtio-snd.h
-@@ -230,6 +230,7 @@ struct virtio_snd_ctrl_command {
-     VirtQueue *vq;
-     virtio_snd_hdr ctrl;
-     virtio_snd_hdr resp;
-+    size_t payload_size;
-     QTAILQ_ENTRY(virtio_snd_ctrl_command) next;
- };
- #endif
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index ea2aeaef14..e604d8f30c 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -243,12 +243,13 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
-         memset(&pcm_info[i].padding, 0, 5);
-     }
- 
-+    cmd->payload_size = sizeof(virtio_snd_pcm_info) * count;
-     cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_OK);
-     iov_from_buf(cmd->elem->in_sg,
-                  cmd->elem->in_num,
-                  sizeof(virtio_snd_hdr),
-                  pcm_info,
--                 sizeof(virtio_snd_pcm_info) * count);
-+                 cmd->payload_size);
- }
- 
- /*
-@@ -749,7 +750,8 @@ process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
-                  0,
-                  &cmd->resp,
-                  sizeof(virtio_snd_hdr));
--    virtqueue_push(cmd->vq, cmd->elem, sizeof(virtio_snd_hdr));
-+    virtqueue_push(cmd->vq, cmd->elem,
-+                   sizeof(virtio_snd_hdr) + cmd->payload_size);
-     virtio_notify(VIRTIO_DEVICE(s), cmd->vq);
- }
- 
-@@ -808,6 +810,7 @@ static void virtio_snd_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
-         cmd->elem = elem;
-         cmd->vq = vq;
-         cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_OK);
-+        /* implicit cmd->payload_size = 0; */
-         QTAILQ_INSERT_TAIL(&s->cmdq, cmd, next);
-         elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
-     }
+diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
+index 9df24864a2..13b6991179 100644
+--- a/hw/virtio/trace-events
++++ b/hw/virtio/trace-events
+@@ -112,7 +112,7 @@ virtio_iommu_device_reset(void) "reset!"
+ virtio_iommu_system_reset(void) "system reset!"
+ virtio_iommu_get_features(uint64_t features) "device supports features=0x%"PRIx64
+ virtio_iommu_device_status(uint8_t status) "driver status = %d"
+-virtio_iommu_get_config(uint64_t page_size_mask, uint64_t start, uint64_t end, uint32_t domain_start, uint32_t domain_end, uint32_t probe_size, uint8_t bypass) "page_size_mask=0x%"PRIx64" input range start=0x%"PRIx64" input range end=0x%"PRIx64" domain range start=%d domain range end=%d probe_size=0x%x bypass=0x%x"
++virtio_iommu_get_config(uint64_t page_size_mask, uint64_t start, uint64_t end, uint32_t domain_start, uint32_t domain_end, uint32_t probe_size, uint8_t bypass) "page_size_mask=0x%"PRIx64" input range start=0x%"PRIx64" input range end=0x%"PRIx64" domain range start=%u domain range end=%u probe_size=0x%x bypass=0x%x"
+ virtio_iommu_set_config(uint8_t bypass) "bypass=0x%x"
+ virtio_iommu_attach(uint32_t domain_id, uint32_t ep_id) "domain=%d endpoint=%d"
+ virtio_iommu_detach(uint32_t domain_id, uint32_t ep_id) "domain=%d endpoint=%d"
 -- 
 MST
 
