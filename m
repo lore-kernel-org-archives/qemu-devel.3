@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F36B8C54E68
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F8DC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:27:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAaD-00050i-VE; Tue, 12 Mar 2024 18:27:02 -0400
+	id 1rkAZi-0004ZB-B8; Tue, 12 Mar 2024 18:26:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAZu-0004qc-ID
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAZf-0004Yi-Jk
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAZr-0004HJ-Pw
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:33 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAZd-0004G3-WB
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282391;
+ s=mimecast20190719; t=1710282377;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=i1e4GUGjzQM8a1eupwANxlFHs977Y0k1VRi7DWaQORU=;
- b=W3ufxu6ro6h7bUPksp6UTp/MbwU6wLcfiKlItSW73ypYWaHTUgFA88qyirmC0k9hrVAIl2
- vtKNpxHEqzd/x2El5PwctNQURgt1ZUYn156f7F1o9b4qHPfirdVPzxSSYLM7Qn/h36ugaC
- tZkiwrBfko4xnVeuIG87T/AJNqgxtpQ=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uK1DhLEmCwAUM4WVYh1w+A/omwtvVrpMmMYYh4o/i+I=;
+ b=etA7GxpGGihpb+lC2svpvzqpycddIJVXpMhvAuneJ8xz1Q5XH3b1YlWckAeH0pNq2iSCIA
+ cW0c2vRMIeXNa/ddTonBiVw9VosEDdyQ1penyFGpxggEDEbhXosl8k6MQ5x8zml7JMeqfg
+ 2ltDOHSqGjCZXqi8hgTy53d5i9X90Dw=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-124-n9gIghEyPaSa5ASW0bRh7g-1; Tue, 12 Mar 2024 18:26:29 -0400
-X-MC-Unique: n9gIghEyPaSa5ASW0bRh7g-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a464f5e2499so14321166b.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:26:29 -0700 (PDT)
+ us-mta-482-lWYgiSLkM16maHv1DA4wWg-1; Tue, 12 Mar 2024 18:26:16 -0400
+X-MC-Unique: lWYgiSLkM16maHv1DA4wWg-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-5684345c0ebso290142a12.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:26:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282388; x=1710887188;
+ d=1e100.net; s=20230601; t=1710282374; x=1710887174;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i1e4GUGjzQM8a1eupwANxlFHs977Y0k1VRi7DWaQORU=;
- b=iepSmQFexDPG7SJ1kBMf9hXzP5uEveeMq0kAf0xHO/0CF0z0JW66d41peUuRT+MenY
- g7n3eLbyuKv+YwSgWiUS62PsC3LM/s80ZnHGjqvoVFiQC6ErpcpEu/UOHIasAiWbxPPv
- VOcILRKAwjGSAJm5yg0cv6B/C/Y8agjvc4eulMBkCqu+e0rx0PyE2oCEZVvRAIdtkQj5
- 26dYHH56G4lNZDRkF9FfcpcH1dEZ+mfKmfwwWeeECyX5+xZ55magHt6TzN85DbgNZIFF
- UV2FMYbGq+zaqoCnYyZGCF/Mo5cqYCYidwRo5QxDlmMFacKn5Srmy0P+1cmYJpNDJHtc
- MjUw==
-X-Gm-Message-State: AOJu0Yzj3njJ5W+HucBebgtb9/FClGgu50nAKivwPLlPGL3oIiELwXgW
- 7ShWGIhBIdkoP+5rbhCgBzY26WE97UMq2f/0PZ0uol9Il9OrtM7GSJMsljky3NQ0LL6h5NrVanf
- zYLCd9MzuDENNxPb42e5NU9r2vfPFus/7SpawevGgcx4FNI1jSLe1xr5ncscrDb2dWKDV8TjDak
- q2OAXph8gDy5zIgVa07C0sQ24K3OGLgDQw
-X-Received: by 2002:a17:906:f90f:b0:a44:8caf:a2e0 with SMTP id
- lc15-20020a170906f90f00b00a448cafa2e0mr1929339ejb.74.1710282387751; 
- Tue, 12 Mar 2024 15:26:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/MCi3z4oMxir9FcDKAtv878bHogVlAHR+NcU0p9cztfKybkEjs04BFHfUYEs8AcH1tkOTdA==
-X-Received: by 2002:a17:906:f90f:b0:a44:8caf:a2e0 with SMTP id
- lc15-20020a170906f90f00b00a448cafa2e0mr1929322ejb.74.1710282387215; 
- Tue, 12 Mar 2024 15:26:27 -0700 (PDT)
+ bh=uK1DhLEmCwAUM4WVYh1w+A/omwtvVrpMmMYYh4o/i+I=;
+ b=Dvuw+zTN4L0yDNopNqe3/o60pk9vNJPLGcyM32/YUH0/j5SKL85+OSzILZ9nx3Zet/
+ Ngf/UrZIsXqwOGX4ccEjvSTub2vPuRakpP+2kxX0Y8EloIHYcR1fUtSz0ax6KLeSRl4n
+ ey6roKmzu67ih7x2R+1uzZrMpv/N/owH5PE5pU8fWseyu6RCZq1f2U7YlDsvFnVJbO9l
+ HajGi4taZD0OJjzwXx5l1UMCmiF8L/NrKl+vvAzR9/dDzH6OzYsQYZTPfdWN41A8Ipeg
+ XEPXE00obgRUXGs+5uW9O4753qoruj7VJMPDjt/r+IBsvL4vUPAzC0wZlq+IocEbiUp0
+ 4K3g==
+X-Gm-Message-State: AOJu0Yy9aznRE3GzNU0sWSM7YvkgqiykiS9ffHniwTg0SD8igx/gpfMP
+ qNMC30iz00JoWU6LHyy5RJwU9ZApDuO6hK8gnKt+A4cyVoIf4H8XM+UB64Pb6AaCQ4JdbA9EEsf
+ cfWC4FEFy14sW7bUdc0G8OTAvWlvl9b2SMO4jXr7ffy/HU3e+ZDmLApo5wh03TTXTu83z2SNSMX
+ zdqTHXzKuiEGCd411/FkpmMzXAIP262b0N
+X-Received: by 2002:a50:8a9d:0:b0:568:145a:4a22 with SMTP id
+ j29-20020a508a9d000000b00568145a4a22mr860130edj.4.1710282374609; 
+ Tue, 12 Mar 2024 15:26:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFm2A3qaPDQU67tgC1/XF2+5KDNl9m2TgWcYz9HmefGM0Eg8eHZzAght4sV3YThZwA0hiE6Q==
+X-Received: by 2002:a50:8a9d:0:b0:568:145a:4a22 with SMTP id
+ j29-20020a508a9d000000b00568145a4a22mr860108edj.4.1710282374252; 
+ Tue, 12 Mar 2024 15:26:14 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- ov9-20020a170906fc0900b00a46367a17f7sm1700996ejb.206.2024.03.12.15.26.25
+ et3-20020a056402378300b005687a473947sm720658edb.28.2024.03.12.15.26.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:26:26 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:26:24 -0400
+ Tue, 12 Mar 2024 15:26:13 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:26:11 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -70,8 +70,8 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Raphael Norwitz <raphael@enfabrica.net>,
  Stefano Garzarella <sgarzare@redhat.com>,
  Mario Casquero <mcasquer@redhat.com>
-Subject: [PULL 18/68] libvhost-user: Don't zero out memory for memory regions
-Message-ID: <c6f90b785291389168b15fe797788bcbb5a7803a.1710282274.git.mst@redhat.com>
+Subject: [PULL 14/68] libvhost-user: Factor out removing all mem regions
+Message-ID: <bec5820908919f70f87b57b92e4c92be128f5cfd.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -106,47 +106,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: David Hildenbrand <david@redhat.com>
 
-dev->nregions always covers only valid entries. Stop zeroing out other
-array elements that are unused.
+Let's factor it out. Note that the check for MAP_FAILED was wrong as
+we never set mmap_addr if mmap() failed. We'll remove the NULL check
+separately.
 
 Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
 Acked-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: David Hildenbrand <david@redhat.com>
-Message-Id: <20240214151701.29906-8-david@redhat.com>
+Message-Id: <20240214151701.29906-4-david@redhat.com>
 Tested-by: Mario Casquero <mcasquer@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 34 ++++++++++++-----------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
 diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 225283f764..2e8b611385 100644
+index 360c5366d6..e4907dfc26 100644
 --- a/subprojects/libvhost-user/libvhost-user.c
 +++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -888,13 +888,9 @@ vu_rem_mem_reg(VuDev *dev, VhostUserMsg *vmsg) {
+@@ -240,6 +240,22 @@ qva_to_va(VuDev *dev, uint64_t qemu_addr)
+     return NULL;
+ }
  
-             munmap((void *)(uintptr_t)r->mmap_addr, r->size + r->mmap_offset);
++static void
++vu_remove_all_mem_regs(VuDev *dev)
++{
++    unsigned int i;
++
++    for (i = 0; i < dev->nregions; i++) {
++        VuDevRegion *r = &dev->regions[i];
++        void *ma = (void *)(uintptr_t)r->mmap_addr;
++
++        if (ma) {
++            munmap(ma, r->size + r->mmap_offset);
++        }
++    }
++    dev->nregions = 0;
++}
++
+ static void
+ vmsg_close_fds(VhostUserMsg *vmsg)
+ {
+@@ -1003,14 +1019,7 @@ vu_set_mem_table_exec(VuDev *dev, VhostUserMsg *vmsg)
+     unsigned int i;
+     VhostUserMemory m = vmsg->payload.memory, *memory = &m;
  
--            /*
--             * Shift all affected entries by 1 to close the hole at index i and
--             * zero out the last entry.
--             */
-+            /* Shift all affected entries by 1 to close the hole at index. */
-             memmove(dev->regions + i, dev->regions + i + 1,
-                     sizeof(VuDevRegion) * (dev->nregions - i - 1));
--            memset(dev->regions + dev->nregions - 1, 0, sizeof(VuDevRegion));
-             DPRINT("Successfully removed a region\n");
-             dev->nregions--;
-             i--;
-@@ -2119,7 +2115,6 @@ vu_init(VuDev *dev,
-         DPRINT("%s: failed to malloc mem regions\n", __func__);
-         return false;
-     }
--    memset(dev->regions, 0, VHOST_USER_MAX_RAM_SLOTS * sizeof(dev->regions[0]));
+-    for (i = 0; i < dev->nregions; i++) {
+-        VuDevRegion *r = &dev->regions[i];
+-        void *ma = (void *) (uintptr_t) r->mmap_addr;
+-
+-        if (ma) {
+-            munmap(ma, r->size + r->mmap_offset);
+-        }
+-    }
++    vu_remove_all_mem_regs(dev);
+     dev->nregions = memory->nregions;
  
-     dev->vq = malloc(max_queues * sizeof(dev->vq[0]));
-     if (!dev->vq) {
+     if (dev->postcopy_listening) {
+@@ -2112,14 +2121,7 @@ vu_deinit(VuDev *dev)
+ {
+     unsigned int i;
+ 
+-    for (i = 0; i < dev->nregions; i++) {
+-        VuDevRegion *r = &dev->regions[i];
+-        void *m = (void *) (uintptr_t) r->mmap_addr;
+-        if (m != MAP_FAILED) {
+-            munmap(m, r->size + r->mmap_offset);
+-        }
+-    }
+-    dev->nregions = 0;
++    vu_remove_all_mem_regs(dev);
+ 
+     for (i = 0; i < dev->max_queues; i++) {
+         VuVirtq *vq = &dev->vq[i];
 -- 
 MST
 
