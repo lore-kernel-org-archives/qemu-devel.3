@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DFC8C54E68
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:45:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CFF2C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:45:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1U5-0002D2-P0; Tue, 12 Mar 2024 08:43:58 -0400
+	id 1rk1Uj-0003Qa-QO; Tue, 12 Mar 2024 08:44:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1U0-00028b-LS
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:43:54 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Uh-0003J8-73
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Tz-0008VH-4m
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:43:52 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1UU-0000F5-48
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710247430;
+ s=mimecast20190719; t=1710247456;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FUKoTLeTxfFWfzT1Hk4oshCWhioL2/n7PsIJ/oYzl9M=;
- b=SJw8qs3wAmnTRRyXemDL5OIBMwr8bNzUPocj+Zl6I0igeiF/AKPy/B9sV49Nn7ThUe489G
- YKEJV27/MxwEJSHxQhYdX8zn7Q3lmTPw8eUIr/Vh4f0N0SckEANiy+VtEZzrStlziqAQDG
- VZF+sAVRGaSXuVhaLKrB8+Vh9WnoqyY=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-45-Uo96sfJUMdixp5llT2oYkg-1; Tue,
- 12 Mar 2024 08:43:47 -0400
-X-MC-Unique: Uo96sfJUMdixp5llT2oYkg-1
+ bh=4C44MmMMEQdKtFE3edzoXx5VS3pfk4Y4IryOJo9Kic8=;
+ b=bQXH/i8zVA7QELw4A4voAocdVd2iF4TXUV/awrpdfDci7AwDv7s7xgkU8tX5RDjAxjiXpt
+ grMb2dDfoJ8GWFTpFceVjgG9j4FvyskD68l5w1lhcpNCvK7y2LnLmJoDUzGmPHD0rAhpQl
+ tN+f8Jv6UTGjR3VLUMwrUBL+gwzNCH8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-679-9yGfNmKeN1i8Rwvzs4oxlQ-1; Tue, 12 Mar 2024 08:44:14 -0400
+X-MC-Unique: 9yGfNmKeN1i8Rwvzs4oxlQ-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A15B31C07265;
- Tue, 12 Mar 2024 12:43:46 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 365EF800264;
+ Tue, 12 Mar 2024 12:44:14 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.69])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 39F0D492BC4;
- Tue, 12 Mar 2024 12:43:45 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 0EC4C492BD0;
+ Tue, 12 Mar 2024 12:44:12 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 03/55] hw/mem/cxl_type3: Fix missing ERRP_GUARD() in
- ct3_realize()
-Date: Tue, 12 Mar 2024 13:42:47 +0100
-Message-ID: <20240312124339.761630-4-thuth@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Subject: [PULL 16/55] block/snapshot: Fix missing ERRP_GUARD() for
+ error_prepend()
+Date: Tue, 12 Mar 2024 13:43:00 +0100
+Message-ID: <20240312124339.761630-17-thuth@redhat.com>
 In-Reply-To: <20240312124339.761630-1-thuth@redhat.com>
 References: <20240312124339.761630-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -64,7 +65,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,59 +83,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-As the comment in qapi/error, dereferencing @errp requires
+As the comment in qapi/error, passing @errp to error_prepend() requires
 ERRP_GUARD():
 
 * = Why, when and how to use ERRP_GUARD() =
 *
 * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-* - It must not be dereferenced, because it may be null.
 ...
+* - It should not be passed to error_prepend(), error_vprepend() or
+*   error_append_hint(), because that doesn't work with &error_fatal.
 * ERRP_GUARD() lifts these restrictions.
 *
 * To use ERRP_GUARD(), add it right at the beginning of the function.
 * @errp can then be used without worrying about the argument being
 * NULL or &error_fatal.
-*
-* Using it when it's not needed is safe, but please avoid cluttering
-* the source with useless code.
 
-But in ct3_realize(), @errp is dereferenced without ERRP_GUARD():
+ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
+can't see this additional information, because exit() happens in
+error_setg earlier than information is added [1].
 
-cxl_doe_cdat_init(cxl_cstate, errp);
-if (*errp) {
-    goto err_free_special_ops;
-}
+In block/snapshot.c, there are 2 functions passing @errp to
+error_prepend() without ERRP_GUARD():
+ - bdrv_all_delete_snapshot()
+ - bdrv_all_goto_snapshot()
 
-Here we check *errp, because cxl_doe_cdat_init() returns void. And
-ct3_realize() - as a PCIDeviceClass.realize() method - doesn't get the
-NULL @errp parameter, it hasn't triggered the bug that dereferencing
-the NULL @errp.
+As the APIs exposed in include/block/snapshot.h, they could be called
+by other modules.
 
-To follow the requirement of @errp, add missing ERRP_GUARD() in
-ct3_realize().
+To avoid potential issues as [1] said, add missing ERRP_GUARD() at the
+beginning of these 2 functions.
 
-Suggested-by: Markus Armbruster <armbru@redhat.com>
+[1]: Issue description in the commit message of commit ae7c80a7bd73
+     ("error: New macro ERRP_GUARD()").
+
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240223085653.1255438-4-zhao1.liu@linux.intel.com>
+Message-ID: <20240311033822.3142585-11-zhao1.liu@linux.intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/mem/cxl_type3.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/snapshot.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index b679dfae1c..b0a7e9f11b 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -645,6 +645,7 @@ static DOEProtocol doe_cdat_prot[] = {
- 
- static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+diff --git a/block/snapshot.c b/block/snapshot.c
+index 8694fc0a3e..8242b4abac 100644
+--- a/block/snapshot.c
++++ b/block/snapshot.c
+@@ -566,6 +566,7 @@ int bdrv_all_delete_snapshot(const char *name,
+                              bool has_devices, strList *devices,
+                              Error **errp)
  {
 +    ERRP_GUARD();
-     CXLType3Dev *ct3d = CXL_TYPE3(pci_dev);
-     CXLComponentState *cxl_cstate = &ct3d->cxl_cstate;
-     ComponentRegisters *regs = &cxl_cstate->crb;
+     g_autoptr(GList) bdrvs = NULL;
+     GList *iterbdrvs;
+ 
+@@ -605,6 +606,7 @@ int bdrv_all_goto_snapshot(const char *name,
+                            bool has_devices, strList *devices,
+                            Error **errp)
+ {
++    ERRP_GUARD();
+     g_autoptr(GList) bdrvs = NULL;
+     GList *iterbdrvs;
+     int ret;
 -- 
 2.44.0
 
