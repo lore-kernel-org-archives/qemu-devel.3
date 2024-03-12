@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7891DC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64CDCC54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:06:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjzxb-0006iD-5i; Tue, 12 Mar 2024 07:06:19 -0400
+	id 1rjzxL-0006PV-IW; Tue, 12 Mar 2024 07:06:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rjzxX-0006fl-3B
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:06:15 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1rjzxI-0006OG-IS
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:06:00 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rjzxS-0004tP-6V
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:06:14 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-56838e00367so4540860a12.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:06:07 -0700 (PDT)
+ id 1rjzx9-0004dI-SA
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:06:00 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-56647babfe6so6109580a12.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710241566; x=1710846366; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710241550; x=1710846350; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=p7OEZPa7p6Pe7ENAE6q6rtIkEaxEOW1ji58ZGDGbUJA=;
- b=e0MMsVdT5h375SRNMZOtutvUZj0v7oSuzcBmK0i4ahec6yUhXTyZjEvukrUqc8aPkm
- q82wkID45uFHWc7d/JTpA6iUa4T+MGnn7Xgb5AT6jq1OZ9l3Tr5W6rCG4bxlAPZe8n5m
- BzIBQ7zWObpv1nz/ihkOjj9qR4329J8rInNsH8z9uxOD9TNJVYqMhaWJI71GxUXdHWzw
- E0cNx/1Ng2naWrg/P6kP2ohJ7W+iHoxeMT/tBq8SeLzEHoIIp2/KlaKg9z3YBEooM4Fi
- FTBR0xf+az/0XiT6yhd8iPbVd73MPY0D1QF9RilWuV+MWfwYwS4Ogg+qOi1fcOz1IKHO
- Gm6A==
+ bh=0F86ewSYmM1T1nxCBxEvTW8lp9AN40udFid87USF8t8=;
+ b=UOfwBJeTCQIH+VXelZ/rmpTNSwbomMdL2aKEMlPj6Ynj+YQqi1ZWIImGIIYcRJNeZD
+ xRnXu/sDvuoyEmMQBkAYxSEjs09v++DnpiQu49SaKdpJXS1NEsdCrRU544hzErgQKFAO
+ +4tMEHPWgTOIy0hELp+ExPTpml8YfBE29IvRKBwWcLOCUXG4qWQBsH3f83M5SeLPpY5T
+ Od2hoHzphBRtI0Gw9GcT4/cVPsLBn8Yf0ek6MLRB0iwOFf2fnlbDYItYbV3DjhidTIso
+ DFf3XB5QcbPwFuEHHx6PMx3lX9eyml1pem6PdEcoj4kq1FmZKPLwbXF4g53zvmOUvtws
+ OrMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710241566; x=1710846366;
+ d=1e100.net; s=20230601; t=1710241550; x=1710846350;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=p7OEZPa7p6Pe7ENAE6q6rtIkEaxEOW1ji58ZGDGbUJA=;
- b=ssKnqGfRnTqNqW9DziItuoJ78sjCevs4Pjl1Am4U16kTk2QOvsk4/x27PjpVDGlshM
- i8yXSXL5b1XyUHxsVJPDt7/zGd+ta2JExkn6bGwzqlhHt/WK6DSk05qQdRrAS6pxjpHy
- WecMExTDRA3rLidM8xBgt989sZTVxwLjfsN5i9q2WhIWQIuERnkDw97Xc59lq3Eht//+
- 4k74FH/ouragfTX4RxZGuGeQEgzq72sJnB3U+HhWKP5dh8I/W+Ab7mmbfJEVo3BKym2Y
- vkwzN0PJqnHLyMNyBHq3C0CBiyEEzLhEBhCIqJX8lYrkmizdWyxgPF80FP/gP926YTAg
- Kv1w==
-X-Gm-Message-State: AOJu0Yx9DkZNyVO5E5SRFXeY+HFTRYuemudGtI//amR4t3WLE/Mavoig
- 6G8u9jpzHs1vGgD5jP/vpYISKZ6uM8GITMqgZEw0JTAVO6PM3Trpqe9E2E6LM5ENZL5Aqe8D7pQ
- EvggKx7mGdHuPrrDrG1O/m4mK4j7pOWcgwiJYJCFWGUR7al6a
-X-Google-Smtp-Source: AGHT+IFU6gdUn5kV2pnxMtMY/hnnbwLilV7xcx5/Z86+abBtPbQihE7d0xZC/6QIJ1f7c2BunMPobJWSv/KKkdGcF2g=
-X-Received: by 2002:a50:d741:0:b0:568:1c56:f82 with SMTP id
- i1-20020a50d741000000b005681c560f82mr2122335edj.36.1710241566750; Tue, 12 Mar
- 2024 04:06:06 -0700 (PDT)
+ bh=0F86ewSYmM1T1nxCBxEvTW8lp9AN40udFid87USF8t8=;
+ b=M3qRFodfR+zLhXv2fewOsU592TTyDxuW5RDt3TtLgHM8SyvBQmewIo/u9IHIALO3Rl
+ IBE4HBps2RgfjJaVao4J6TgwFUJcIQosQI2G7uqy+8mViurBx3zj/Lj29g6zuvjxfjh5
+ j7l6UDoMNtO4K5sB8qZAwXbrKrk6BfrUAbC8A1yB4yDNNf/SGcysklqPZpX8F+Vb0qKi
+ QYjju4LMqFzh+C3NbeIhr7ZcZIQid9EBE3JCQ7yTrySVJzIbjN21cGT7X3Kw6Db1u/vC
+ JTsGEMX/4w66mp2r++Hf9iMHKxBXi1gok02zFJb13nKKDUlFGY5h+E9hqxWbfzfCxn/4
+ K+Bg==
+X-Gm-Message-State: AOJu0YwNZDq3i4n8WfSeXN8FJe7PYjPoxOo3ubgzt4ByhmORb/HAbd/C
+ hmiTKc+Mj0KEKuZmKztGyMTIoX+PBC3hnODnCvjTl8OCD3izjTxUxyVOROXlNouazJiKJC+tZNl
+ ZzkZduy/8IoZ3xTcxbjtw2b9wtUcqYEzpRbjvomsiujxaF1vK
+X-Google-Smtp-Source: AGHT+IFFaEAweZiSxkTjoSvsV6ai0kwsawy+1FxlNUN7g6Sk+xikNFUKe/M7lNIVYyG31Kac6/BvpicoJBPm/xuG+mg=
+X-Received: by 2002:a50:a44e:0:b0:568:7bb3:3b14 with SMTP id
+ v14-20020a50a44e000000b005687bb33b14mr56776edb.8.1710241550023; Tue, 12 Mar
+ 2024 04:05:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240311175440.305912-1-laurent@vivier.eu>
-In-Reply-To: <20240311175440.305912-1-laurent@vivier.eu>
+References: <20240311165724.176168-1-kkostiuk@redhat.com>
+In-Reply-To: <20240311165724.176168-1-kkostiuk@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 12 Mar 2024 11:05:56 +0000
-Message-ID: <CAFEAcA-w87eBiYr3+jJZgRa_R1b1yqKtdCoSryREiiah0Hk2CA@mail.gmail.com>
-Subject: Re: [PULL 0/1] M68k for 9.0 patches
-To: Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org
+Date: Tue, 12 Mar 2024 11:05:39 +0000
+Message-ID: <CAFEAcA_qyKVXzj0p814Xke2bQLNANpQ_eg4c-DYj1ZCTyorXJg@mail.gmail.com>
+Subject: Re: [PULL 0/3] Misc QGA patches for 2024-03-11
+To: Konstantin Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,7 +87,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Mar 2024 at 17:55, Laurent Vivier <laurent@vivier.eu> wrote:
+On Mon, 11 Mar 2024 at 16:57, Konstantin Kostiuk <kkostiuk@redhat.com> wrote:
 >
 > The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf05f:
 >
@@ -95,16 +95,14 @@ On Mon, 11 Mar 2024 at 17:55, Laurent Vivier <laurent@vivier.eu> wrote:
 >
 > are available in the Git repository at:
 >
->   https://github.com/vivier/qemu-m68k.git tags/m68k-for-9.0-pull-request
+>   https://github.com/kostyanf14/qemu.git tags/qga-pull-2024-03-11-2
 >
-> for you to fetch changes up to e39a0809b99bbbe5f0ec432fdd9e8c943ba24936:
+> for you to fetch changes up to bfded6fe62b859e337386ed3028b85743569a30b:
 >
->   virt: set the CPU type in BOOTINFO (2024-03-11 09:38:08 +0100)
->
-> ----------------------------------------------------------------
-> Pull request for m68k 20240311
+>   qga-win: Add support of Windows Server 2025 in get-osinfo command (2024-03-11 18:24:39 +0200)
 >
 > ----------------------------------------------------------------
+> qga-pull-2024-03-11-2
 
 
 Applied, thanks.
