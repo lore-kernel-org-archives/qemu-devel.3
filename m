@@ -4,89 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7191DC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A724BC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk2hG-00009l-1G; Tue, 12 Mar 2024 10:01:38 -0400
+	id 1rk2hH-0000Am-DH; Tue, 12 Mar 2024 10:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rk2gy-00005N-8i
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:01:27 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rk2gv-0008Ku-QV
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:01:20 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1dd81aee2b4so29288755ad.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:01:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710252076; x=1710856876; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UXrzOUK7SCW5glR9/buYN1mR79SnPFprWQqXnJXsOs4=;
- b=Jx2H0Oe8l6EARaRBrZQuJvg8jxiJCegwq7xXyqcvPa6LUGh6yemo8nu8Cw2mMGPR4T
- bCAgDdpVGTWBt7zZSu2siqC7kOS0/r6gdkNPS9l723FJseBRel0+lkR8fQ6NFktgfz2F
- HFryrlmRy9Vn/KDRNUyE/iZcdKSmwBJ9VOms6Y9WwpE/nAQr++avX4eUNBn6clbLLuJu
- 9dkSrjjsJ6O15WgrWZ74k3f2id8uhA0f+CZIL33N+DYLDWa0iVBXoEdIGhsJhxzHursB
- jMdfZa3HSexvWNOqV6ZSXGyOmSuc675lVw4Kl/dDPd7XzegpgqIqXQfuSDBvUeNLyjwJ
- r/rQ==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rk2h8-00008T-E7
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:01:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rk2h2-0008Lc-DC
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:01:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710252082;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+/ox2JGbS0SeOXheyjIXqcpVyGDKcf5z5WdQRKXiagg=;
+ b=MlOtpnuYAEgpvbJZ5WYHNlCYmdPVoHQDUsAtjt5IIRiThmr87bc0XoSxzsxISkAi34U1Tb
+ nKC9dzSRmpCezXg9eKGoJIxsmhbA33KosALid8kbi6Upe7j7q+uR9CJenwg2q8YOzB2Jm6
+ IXKu0HwxecZYrHuf00qr/2iTI83BO5c=
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
+ [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-135-xe8jxfVpNZK_EI1rDyiv7Q-1; Tue, 12 Mar 2024 10:01:14 -0400
+X-MC-Unique: xe8jxfVpNZK_EI1rDyiv7Q-1
+Received: by mail-ot1-f71.google.com with SMTP id
+ 46e09a7af769-6e0ee5097feso6269550a34.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:01:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710252076; x=1710856876;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1710252073; x=1710856873;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UXrzOUK7SCW5glR9/buYN1mR79SnPFprWQqXnJXsOs4=;
- b=ZBCWlvdJGa7Pl2iU7WPtUm661AU1y5wJOmCT5aFOeMPyPGvLh//xe1hfJo+bGNXBUL
- xsiI6wposmu+iSsJWjIEi1mIJ9L6gp3bjYWofCN9N05htPP3mHfP1ijftI8hrtB9BXiD
- 5sRYqjdrS2mh5V8ErzV6kSdeAOCHoT8b7arapdfhaXWzgprZBUdA2pcv56ukdjPPX0xK
- guwdC9JjP4Di7gVwFtTT1tY4WBPhwM0oe0Kj7XYyMtdsyzhop9QiUZ6C3SWabPgzRQKb
- poFxdhWFab28RgeFTyfnul9GiAFBeV/fYam3M194JPlIz548ukHIbvdzUfCN9AHboYDG
- Lsqg==
+ bh=+/ox2JGbS0SeOXheyjIXqcpVyGDKcf5z5WdQRKXiagg=;
+ b=k6guFIZg4Og5DgxrUEAjRUi3FYWKE2/SL7rhPR04bp0arxDUrQVPLOFPwU64QJHco8
+ izG/9IQ76/MeUt54XRhrByNL/vC5sQ0wMWrZFTqNpuDUh2bAcXOvk0b1DYX6XRQj165c
+ epMSoCxnFf/HQ4IQbl/NZtTXikWsxXucPc1z8LnNACi67QLrBf6gqeTyCLTzd4mMMj7+
+ xDSoBWFrB6G43CR/0Z8A6swjXcjPGXXn3qyiquJz7gOKiF9xm/Cm0J11rlSmYzzf6x2u
+ nQ7WcztTCeMLko2kAN8m33IniNdZNLTWaZIxpFEIB+T8M0WzWSz0iXL4y+EcveKbEdfx
+ K0Uw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUQtDqy+vBsQBLFP9RcXaZ4igKYCqHgwJbOTMxWKrIBxL8ULIcQhN/RAZgnOeP6dFOh+Osaf4fhIoDpaLvedhiJX57/qw=
-X-Gm-Message-State: AOJu0YyzswFAKaoSzuwdkS+5C6A0B+cSMjg4WFtZXQJZMtNhL84aF2qk
- 2QKrbYrF6mJUXrfnaZ9RM0FJS6Ib1KhXK3tv0N2TwSM5WyO6uYiDYU+ua2FGWP7RIykK6hQW+/b
- 7
-X-Google-Smtp-Source: AGHT+IF1pcXpvkxp0RnqbJAJQgIntGwTQjFMdPVfFTL0lBhTPBpQZN2tsCCLn6XW2OJ3rwjhC2pFXQ==
-X-Received: by 2002:a17:90a:488f:b0:29b:ce33:492d with SMTP id
- b15-20020a17090a488f00b0029bce33492dmr7372236pjh.22.1710252074166; 
- Tue, 12 Mar 2024 07:01:14 -0700 (PDT)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- lx11-20020a17090b4b0b00b0029c472ec962sm884683pjb.47.2024.03.12.07.01.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ AJvYcCWMURXdb8jPQqVmD/OqEtuJRM0FVIZ5YMs2hTCsCClFwgcbkQcrtkhQDr2mGEACXmDWocYWMOkDiFOT9JrpWh8KiKBgYv8=
+X-Gm-Message-State: AOJu0Yx1ZCcPDLCSZkf+gnxdvKrWr3uDQ4BqOHO3iVJV7ABy8n0TxDyq
+ PjZ/Wz13hgqlgYUbVIRryDBlk15Bq/BIQuTUW8/gcrwgPanURE19lEi/yNom6YDXNOReTYmMTav
+ AdEg41H6tp2DfDpXHIGDTZhSAj74u02N9sOXp56qeLIYYzQibKSOc
+X-Received: by 2002:a05:6870:f686:b0:221:96fd:1465 with SMTP id
+ el6-20020a056870f68600b0022196fd1465mr166901oab.42.1710252073583; 
  Tue, 12 Mar 2024 07:01:13 -0700 (PDT)
-Message-ID: <0c7c6be1-12fb-4267-9d41-bd51637d104a@linaro.org>
-Date: Tue, 12 Mar 2024 04:01:07 -1000
+X-Google-Smtp-Source: AGHT+IFZMHpw/BpoVsTOce3nUxnD2IsD5Jiqg712rwif4ZTX3Rma6D6H8UNIa8O7R1K08/o9mAhg+g==
+X-Received: by 2002:a05:6870:f686:b0:221:96fd:1465 with SMTP id
+ el6-20020a056870f68600b0022196fd1465mr166849oab.42.1710252073192; 
+ Tue, 12 Mar 2024 07:01:13 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ vv20-20020a05620a563400b0078908fe1764sm409125qkn.61.2024.03.12.07.01.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Mar 2024 07:01:12 -0700 (PDT)
+Message-ID: <b2b52017-c4cd-43e9-a67b-2ccbb92ad99e@redhat.com>
+Date: Tue, 12 Mar 2024 15:01:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/ppc: Move floating-point arithmetic instructions
- to decodetree.
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
- qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: danielhb413@gmail.com, clg@kaod.org, harshpb@linux.ibm.com,
- sbhat@linux.ibm.com
-References: <20240307110318.170319-1-rathc@linux.ibm.com>
- <CZRO4Y67CBPV.2IAKB80EFDKEY@wheely>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CZRO4Y67CBPV.2IAKB80EFDKEY@wheely>
+Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
+ qemu_savevm_state_setup()
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Alex Williamson
+ <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Prasad Pandit <pjp@fedoraproject.org>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-11-clg@redhat.com> <87plw44wps.fsf@suse.de>
+ <1566715b-a9a5-4df6-8e64-f4f912e2ea2f@redhat.com> <87le6omw0d.fsf@suse.de>
+ <9071affc-ffb5-435a-99d1-ca829703e31b@redhat.com>
+ <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
+In-Reply-To: <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,240 +112,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/24 23:36, Nicholas Piggin wrote:
-> On Thu Mar 7, 2024 at 9:03 PM AEST, Chinmay Rath wrote:
->> This patch moves the below instructions to decodetree specification :
+On 3/12/24 14:34, Cédric Le Goater wrote:
+> On 3/12/24 13:32, Cédric Le Goater wrote:
+>> On 3/11/24 20:03, Fabiano Rosas wrote:
+>>> Cédric Le Goater <clg@redhat.com> writes:
+>>>
+>>>> On 3/8/24 15:36, Fabiano Rosas wrote:
+>>>>> Cédric Le Goater <clg@redhat.com> writes:
+>>>>>
+>>>>>> This prepares ground for the changes coming next which add an Error**
+>>>>>> argument to the .save_setup() handler. Callers of qemu_savevm_state_setup()
+>>>>>> now handle the error and fail earlier setting the migration state from
+>>>>>> MIGRATION_STATUS_SETUP to MIGRATION_STATUS_FAILED.
+>>>>>>
+>>>>>> In qemu_savevm_state(), move the cleanup to preserve the error
+>>>>>> reported by .save_setup() handlers.
+>>>>>>
+>>>>>> Since the previous behavior was to ignore errors at this step of
+>>>>>> migration, this change should be examined closely to check that
+>>>>>> cleanups are still correctly done.
+>>>>>>
+>>>>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>>>>>> ---
+>>>>>>
+>>>>>>    Changes in v4:
+>>>>>>    - Merged cleanup change in qemu_savevm_state()
+>>>>>>    Changes in v3:
+>>>>>>    - Set migration state to MIGRATION_STATUS_FAILED
+>>>>>>    - Fixed error handling to be done under lock in bg_migration_thread()
+>>>>>>    - Made sure an error is always set in case of failure in
+>>>>>>      qemu_savevm_state_setup()
+>>>>>>    migration/savevm.h    |  2 +-
+>>>>>>    migration/migration.c | 27 ++++++++++++++++++++++++---
+>>>>>>    migration/savevm.c    | 26 +++++++++++++++-----------
+>>>>>>    3 files changed, 40 insertions(+), 15 deletions(-)
+>>>>>>
+>>>>>> diff --git a/migration/savevm.h b/migration/savevm.h
+>>>>>> index 74669733dd63a080b765866c703234a5c4939223..9ec96a995c93a42aad621595f0ed58596c532328 100644
+>>>>>> --- a/migration/savevm.h
+>>>>>> +++ b/migration/savevm.h
+>>>>>> @@ -32,7 +32,7 @@
+>>>>>>    bool qemu_savevm_state_blocked(Error **errp);
+>>>>>>    void qemu_savevm_non_migratable_list(strList **reasons);
+>>>>>>    int qemu_savevm_state_prepare(Error **errp);
+>>>>>> -void qemu_savevm_state_setup(QEMUFile *f);
+>>>>>> +int qemu_savevm_state_setup(QEMUFile *f, Error **errp);
+>>>>>>    bool qemu_savevm_state_guest_unplug_pending(void);
+>>>>>>    int qemu_savevm_state_resume_prepare(MigrationState *s);
+>>>>>>    void qemu_savevm_state_header(QEMUFile *f);
+>>>>>> diff --git a/migration/migration.c b/migration/migration.c
+>>>>>> index a49fcd53ee19df1ce0182bc99d7e064968f0317b..6d1544224e96f5edfe56939a9c8395d88ef29581 100644
+>>>>>> --- a/migration/migration.c
+>>>>>> +++ b/migration/migration.c
+>>>>>> @@ -3408,6 +3408,8 @@ static void *migration_thread(void *opaque)
+>>>>>>        int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
+>>>>>>        MigThrError thr_error;
+>>>>>>        bool urgent = false;
+>>>>>> +    Error *local_err = NULL;
+>>>>>> +    int ret;
+>>>>>>        thread = migration_threads_add("live_migration", qemu_get_thread_id());
+>>>>>> @@ -3451,9 +3453,17 @@ static void *migration_thread(void *opaque)
+>>>>>>        }
+>>>>>>        bql_lock();
+>>>>>> -    qemu_savevm_state_setup(s->to_dst_file);
+>>>>>> +    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
+>>>>>>        bql_unlock();
+>>>>>> +    if (ret) {
+>>>>>> +        migrate_set_error(s, local_err);
+>>>>>> +        error_free(local_err);
+>>>>>> +        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+>>>>>> +                          MIGRATION_STATUS_FAILED);
+>>>>>> +        goto out;
+>>>>>> +     }
+>>>>>> +
+>>>>>>        qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+>>>>>>                                   MIGRATION_STATUS_ACTIVE);
+>>>>>
+>>>>> This^ should be before the new block it seems:
+>>>>>
+>>>>> GOOD:
+>>>>> migrate_set_state new state setup
+>>>>> migrate_set_state new state wait-unplug
+>>>>> migrate_fd_cancel
+>>>>> migrate_set_state new state cancelling
+>>>>> migrate_fd_cleanup
+>>>>> migrate_set_state new state cancelled
+>>>>> migrate_fd_cancel
+>>>>> ok 1 /x86_64/failover-virtio-net/migrate/abort/wait-unplug
+>>>>>
+>>>>> BAD:
+>>>>> migrate_set_state new state setup
+>>>>> migrate_fd_cancel
+>>>>> migrate_set_state new state cancelling
+>>>>> migrate_fd_cleanup
+>>>>> migrate_set_state new state cancelled
+>>>>> qemu-system-x86_64: ram_save_setup failed: Input/output error
+>>>>> **
+>>>>> ERROR:../tests/qtest/virtio-net-failover.c:1203:test_migrate_abort_wait_unplug:
+>>>>> assertion failed (status == "cancelling"): ("cancelled" == "cancelling")
+>>>>>
+>>>>> Otherwise migration_iteration_finish() will schedule the cleanup BH and
+>>>>> that will run concurrently with migrate_fd_cancel() issued by the test
+>>>>> and bad things happens.
+>>>>
+>>>> This hack makes things work :
+>>>>
+>>>> @@ -3452,6 +3452,9 @@ static void *migration_thread(void *opaq
+>>>>            qemu_savevm_send_colo_enable(s->to_dst_file);
+>>>>        }
+>>>> +    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+>>>> +                            MIGRATION_STATUS_SETUP);
+>>>> +
+>>>
+>>> Why move it all the way up here? Has moving the wait_unplug before the
+>>> 'if (ret)' block not worked for you?
 >>
->>      f{add, sub, mul, div, re, rsqrte, madd, msub, nmadd, nmsub}[s][.] : A-form
->>      ft{div, sqrt}                                                     : X-form
->>
->> With this patch, all the floating-point arithmetic instructions have been
->> moved to decodetree.
->> The patch also merges the definitions of different sets of helper methods of
->> the above instructions, which are similar, using macros.
->> The changes were verified by validating that the tcg ops generated by those
->> instructions remain the same, which were captured with the '-d in_asm,op' flag.
->>
->> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+>> We could be sleeping while holding the BQL. It looked wrong.
 > 
-> Hi Chinmay,
-> 
-> Nice patch. I think the fpu_helper.c change should be done separately.
-> 
->> diff --git a/target/ppc/fpu_helper.c b/target/ppc/fpu_helper.c
->> index 4b3dcad5d1..a3fcfb3907 100644
->> --- a/target/ppc/fpu_helper.c
->> +++ b/target/ppc/fpu_helper.c
->> @@ -490,54 +490,16 @@ static void float_invalid_op_addsub(CPUPPCState *env, int flags,
->>       }
->>   }
->>   
->> -/* fadd - fadd. */
->> -float64 helper_fadd(CPUPPCState *env, float64 arg1, float64 arg2)
->> -{
->> -    float64 ret = float64_add(arg1, arg2, &env->fp_status);
->> -    int flags = get_float_exception_flags(&env->fp_status);
->> -
->> -    if (unlikely(flags & float_flag_invalid)) {
->> -        float_invalid_op_addsub(env, flags, 1, GETPC());
->> -    }
->> -
->> -    return ret;
->> -}
->> -
->> -/* fadds - fadds. */
->> -float64 helper_fadds(CPUPPCState *env, float64 arg1, float64 arg2)
->> -{
->> -    float64 ret = float64r32_add(arg1, arg2, &env->fp_status);
->> -    int flags = get_float_exception_flags(&env->fp_status);
->> -
->> -    if (unlikely(flags & float_flag_invalid)) {
->> -        float_invalid_op_addsub(env, flags, 1, GETPC());
->> -    }
->> -    return ret;
->> -}
->> -
->> -/* fsub - fsub. */
->> -float64 helper_fsub(CPUPPCState *env, float64 arg1, float64 arg2)
->> -{
->> -    float64 ret = float64_sub(arg1, arg2, &env->fp_status);
->> -    int flags = get_float_exception_flags(&env->fp_status);
->> -
->> -    if (unlikely(flags & float_flag_invalid)) {
->> -        float_invalid_op_addsub(env, flags, 1, GETPC());
->> -    }
->> -
->> -    return ret;
->> -}
->> -
->> -/* fsubs - fsubs. */
->> -float64 helper_fsubs(CPUPPCState *env, float64 arg1, float64 arg2)
->> -{
->> -    float64 ret = float64r32_sub(arg1, arg2, &env->fp_status);
->> -    int flags = get_float_exception_flags(&env->fp_status);
->> -
->> -    if (unlikely(flags & float_flag_invalid)) {
->> -        float_invalid_op_addsub(env, flags, 1, GETPC());
->> -    }
->> -    return ret;
->> +#define FPU_ADD_SUB(name, op)                                                 \
->> +float64 helper_##name(CPUPPCState *env, float64 arg1, float64 arg2)           \
->> +{                                                                             \
->> +    float64 ret = op(arg1, arg2, &env->fp_status);                            \
->> +    int flags = get_float_exception_flags(&env->fp_status);                   \
->> +                                                                              \
->> +    if (unlikely(flags & float_flag_invalid)) {                               \
->> +        float_invalid_op_addsub(env, flags, 1, GETPC());                      \
->> +    }                                                                         \
->> +    return ret;                                                               \
->>   }
->>   
->>   static void float_invalid_op_mul(CPUPPCState *env, int flags,
->> @@ -550,29 +512,17 @@ static void float_invalid_op_mul(CPUPPCState *env, int flags,
->>       }
->>   }
->>   
->> -/* fmul - fmul. */
->> -float64 helper_fmul(CPUPPCState *env, float64 arg1, float64 arg2)
->> -{
->> -    float64 ret = float64_mul(arg1, arg2, &env->fp_status);
->> -    int flags = get_float_exception_flags(&env->fp_status);
->> -
->> -    if (unlikely(flags & float_flag_invalid)) {
->> -        float_invalid_op_mul(env, flags, 1, GETPC());
->> -    }
->> -
->> -    return ret;
->> -}
->> -
->> -/* fmuls - fmuls. */
->> -float64 helper_fmuls(CPUPPCState *env, float64 arg1, float64 arg2)
->> -{
->> -    float64 ret = float64r32_mul(arg1, arg2, &env->fp_status);
->> -    int flags = get_float_exception_flags(&env->fp_status);
->> -
->> -    if (unlikely(flags & float_flag_invalid)) {
->> -        float_invalid_op_mul(env, flags, 1, GETPC());
->> -    }
->> -    return ret;
->> +#define FPU_MUL(name, op)                                                     \
->> +float64 helper_##name(CPUPPCState *env, float64 arg1, float64 arg2)           \
->> +{                                                                             \
->> +    float64 ret = op(arg1, arg2, &env->fp_status);                            \
->> +    int flags = get_float_exception_flags(&env->fp_status);                   \
->> +                                                                              \
->> +    if (unlikely(flags & float_flag_invalid)) {                               \
->> +        float_invalid_op_mul(env, flags, 1, GETPC());                         \
->> +    }                                                                         \
->> +                                                                              \
->> +    return ret;                                                               \
->>   }
->>   
->>   static void float_invalid_op_div(CPUPPCState *env, int flags,
->> @@ -587,37 +537,31 @@ static void float_invalid_op_div(CPUPPCState *env, int flags,
->>       }
->>   }
->>   
->> -/* fdiv - fdiv. */
->> -float64 helper_fdiv(CPUPPCState *env, float64 arg1, float64 arg2)
->> -{
->> -    float64 ret = float64_div(arg1, arg2, &env->fp_status);
->> -    int flags = get_float_exception_flags(&env->fp_status);
->> -
->> -    if (unlikely(flags & float_flag_invalid)) {
->> -        float_invalid_op_div(env, flags, 1, GETPC());
->> -    }
->> -    if (unlikely(flags & float_flag_divbyzero)) {
->> -        float_zero_divide_excp(env, GETPC());
->> -    }
->> -
->> -    return ret;
->> +#define FPU_DIV(name, op)                                                     \
->> +float64 helper_##name(CPUPPCState *env, float64 arg1, float64 arg2)           \
->> +{                                                                             \
->> +    float64 ret = op(arg1, arg2, &env->fp_status);                            \
->> +    int flags = get_float_exception_flags(&env->fp_status);                   \
->> +                                                                              \
->> +    if (unlikely(flags & float_flag_invalid)) {                               \
->> +        float_invalid_op_div(env, flags, 1, GETPC());                         \
->> +    }                                                                         \
->> +    if (unlikely(flags & float_flag_divbyzero)) {                             \
->> +        float_zero_divide_excp(env, GETPC());                                 \
->> +    }                                                                         \
->> +                                                                              \
->> +    return ret;                                                               \
->>   }
->>   
->> -/* fdivs - fdivs. */
->> -float64 helper_fdivs(CPUPPCState *env, float64 arg1, float64 arg2)
->> -{
->> -    float64 ret = float64r32_div(arg1, arg2, &env->fp_status);
->> -    int flags = get_float_exception_flags(&env->fp_status);
->> -
->> -    if (unlikely(flags & float_flag_invalid)) {
->> -        float_invalid_op_div(env, flags, 1, GETPC());
->> -    }
->> -    if (unlikely(flags & float_flag_divbyzero)) {
->> -        float_zero_divide_excp(env, GETPC());
->> -    }
->>   
->> -    return ret;
->> -}
->> +FPU_ADD_SUB(FADD, float64_add)
->> +FPU_ADD_SUB(FADDS, float64r32_add)
->> +FPU_ADD_SUB(FSUB, float64_sub)
->> +FPU_ADD_SUB(FSUBS, float64r32_sub)
->> +FPU_MUL(FMUL, float64_mul)
->> +FPU_MUL(FMULS, float64r32_mul)
->> +FPU_DIV(FDIV, float64_div)
->> +FPU_DIV(FDIVS, float64r32_div)
-> 
-> Several of the existing macros have slightly different styles and
-> patterns. FPU_FMADD being one. You're mostly adding an existing style
-> and being pretty consistent so that's fine. It would be nice if the
-> others could be made more regular, but maybe not feasible.
-> 
-> There is also quite a bit of duplication in the templates just to
-> cater to different error handling. I wonder if you could consolidate
-> it a bit or make it nicer if you passed in the flags handling
-> function as an argument. Then you could have:
-> 
-> 
-> #define FPU_HELPER(name, op, flags_handler)                           \
-> float64 helper_##name(CPUPPCState *env, float64 arg1, float64 arg2)   \
-> {                                                                     \
->      float64 ret = op(arg1, arg2, &env->fp_status);                    \
->      int flags = get_float_exception_flags(&env->fp_status);           \
->      flags_handler(env, flags)                                         \
->      return ret;                                                       \
-> }
-> 
-> static inline void addsub_flags_handler(CPUPPCState *env, int flags)
-> {
->      if (unlikely(flags & float_flag_invalid)) {
->          float_invalid_op_addsub(env, flags, 1, GETPC());
->      }
-> }
-> 
-> static inline void mul_flags_handler(CPUPPCState *env, int flags)
-> {
->      if (unlikely(flags & float_flag_invalid)) {
->          float_invalid_op_mul(env, flags, 1, GETPC());
->      }
-> }
-> 
-> static inline void div_flags_handler(CPUPPCState *env, int flags)
-> {
->      if (unlikely(flags & float_flag_invalid)) {
->          float_invalid_op_div(env, flags, 1, GETPC());
->      }
->      if (unlikely(flags & float_flag_divbyzero)) {
->          float_zero_divide_excp(env, GETPC());
->      }
-> }
+> Sorry wrong answer. Yes I can try moving it before the 'if (ret)' block.
+> I can reproduce easily with an x86 guest running on PPC64.
 
-Beware -- GETPC() may only be called from the outermost helper.
+That works just the same.
+
+Peter, Fabiano,
+
+What would you prefer  ?
+
+1. move qemu_savevm_wait_unplug() before qemu_savevm_state_setup(),
+    means one new patch.
+
+2. leave qemu_savevm_wait_unplug() after qemu_savevm_state_setup()
+    and handle state_setup() errors after waiting. means an update
+    of this patch.
 
 
-r~
+Thanks,
+
+C.
+
+
+  
+
 
