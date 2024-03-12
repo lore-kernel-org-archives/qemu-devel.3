@@ -4,106 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE43C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:29:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94DF0C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:32:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5tr-00027Q-U1; Tue, 12 Mar 2024 13:26:51 -0400
+	id 1rk5yl-000075-Fk; Tue, 12 Mar 2024 13:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rk5te-00023y-VD; Tue, 12 Mar 2024 13:26:39 -0400
-Received: from wfhigh5-smtp.messagingengine.com ([64.147.123.156])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5yj-000061-4G
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:31:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1rk5td-0005No-3C; Tue, 12 Mar 2024 13:26:38 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
- by mailfhigh.west.internal (Postfix) with ESMTP id C544E1800082;
- Tue, 12 Mar 2024 13:26:33 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Tue, 12 Mar 2024 13:26:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:date:date:from
- :from:in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm3; t=1710264393; x=
- 1710350793; bh=l7VA1kmIdj5go01fibCCpJkzwEtHzwcL+nZbGerYsTM=; b=U
- DXQBjP7uwKHDAMpLUHr2zI6IxglSZamC59bz3tvU15Z4dBjrYtqg/8VMK6Vj8Ciq
- MRsTkWuX1KHTzw2c75878Y8h333ccbqVDtmDb8a60oLCAJ2ynJ+idoJM4Ld7W9kM
- RsQ6UX1fkdYT/RONRhGKAZ6nhDuuh4P3fxA9IKPmkMP9hAiH0Cs3o3y/vfYawrFt
- YXz4/2cpo1pC/T5PjHtcAPVtKoFWr5ryYETFCxhne/f0wjmafLaYbMpMf6p43zue
- cngM9PUv4E4PGkxd+1DVqZPBLjm3h+W5k7LgocSjnpWzDW/BWLSaHfembbVBA590
- t4IxZZPMId3N0mfJAgSpA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710264393; x=
- 1710350793; bh=l7VA1kmIdj5go01fibCCpJkzwEtHzwcL+nZbGerYsTM=; b=k
- RuNqlDrQ3AeSvm3hBFgk742HrZMCTuiBW9ik8lInjBuUeBDf9nbd9gYoSJhJPIi4
- JQzdwKmBsqLhaawoDE0clrp575AputN7xumMJJ28FSDLDxZzTP6o1ne5FjQj0cBB
- m2khCEiJJO3FFFY0Bj5KtzPmCTKNum5BJ55Q1hGObM9cQiznDWITXgHDCm9cEXE8
- 9c/Lpjj/drEkh/8o8in9H0MSbm7FsI/SQGW/08h2jGdbB5WTmaSgTh3WD8yLT+2q
- l5LUCYG/vo71i1fSpQWzS4HNv5qg7U6nNVdDXeKTXMTFOF0kx6VoI479tskzWZvl
- kk/6PvoippOT14KcZwYYQ==
-X-ME-Sender: <xms:SJDwZXvcwt9Z-EcbjvXDrqTAGAE3XY18iwzzgoMgj1Vu9oaxdjV9ww>
- <xme:SJDwZYd-aIthe_X2KTh3Tc921LQkKiun7F3h3Dbsgd-JtT_1kYSSL5J771CzJx7ro
- qtKJsf8pzb2mfdGJbY>
-X-ME-Received: <xmr:SJDwZayB_-pFRIfMxTUvlwEIWabZUzZ-6crKRJz0Hn9RIFkBkY0GQcz2I3xGRVYMWNYItBeVSQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjeefgddutddtucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhlrghu
- shculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrth
- htvghrnhepjefgieelgfeiveehkeeuveehheekfeevgeeigfehfefgjeejhefffeegudej
- udegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepih
- htshesihhrrhgvlhgvvhgrnhhtrdgukh
-X-ME-Proxy: <xmx:SZDwZWMqvpTuw3CKQFTaUxGM3NYh8WbqwbnZluWTGUuG5tdEHkYv9Q>
- <xmx:SZDwZX_ClFheBnQxbAQ4ifqGxnu1nDI9W7BtydhYPBbduNgzA4gKrg>
- <xmx:SZDwZWWGD07jMY-OZo2sZGmVAD8jZIvsU1e4bBvM9PeYb4lGtUnUJw>
- <xmx:SZDwZYeIFB2Cb6oIvjtXJ8h9iTBiUXDi9G270Um6Basqym-aTDbs3g>
- <xmx:SZDwZbURfUCHNufeiv6DbUYuOQMzHqpGIHmfkHMaaiuMHYqQV_9wuiwRUm4>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 12 Mar 2024 13:26:30 -0400 (EDT)
-From: Klaus Jensen <its@irrelevant.dk>
-To: Peter Maydell <peter.maydell@linaro.org>,
-	qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>, qemu-block@nongnu.org,
- Yanan Wang <wangyanan55@huawei.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jesper Devantier <foss@defmacro.it>, Minwoo Im <minwoo.im@samsung.com>,
- qemu-stable@nongnu.org, Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL v2 1/6] hw/nvme: separate 'serial' property for VFs
-Date: Tue, 12 Mar 2024 18:26:24 +0100
-Message-ID: <20240312172622.58652-9-its@irrelevant.dk>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240312172622.58652-8-its@irrelevant.dk>
-References: <20240312172622.58652-8-its@irrelevant.dk>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5yg-0006ch-89
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:31:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710264708;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=//SyssXISUCq4C1aYS1ELFQuOov804BdxJx3R7Jq0VE=;
+ b=jVd39KwBhifgQyhevz+XMeSDljoMJU1I0omFCglGn9XbFt6n67WuhiDuHFKTi0iZcNsFTt
+ zCKFDfIjDQoAwxarao7QvhxmMa0P7afXEvgAkAM2cAFHTB4P1CXnmnCyon8kiuyKmSo9h5
+ JOPJ6wxtAhXcpdcLy90ckhHOfFuS68U=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-190-XBDOWzf1ORGCl3cUWMJMIQ-1; Tue, 12 Mar 2024 13:31:46 -0400
+X-MC-Unique: XBDOWzf1ORGCl3cUWMJMIQ-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-513b2e92c19so2379059e87.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 10:31:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710264704; x=1710869504;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=//SyssXISUCq4C1aYS1ELFQuOov804BdxJx3R7Jq0VE=;
+ b=MNf5i+c6cLt63emW7Z1RXWkbBpTMLF/m380aks4pE9HAf83e+jvtSsCcSnjtURGEg3
+ g1CyUKiR6tYWkz9sHAfhW6rMZEytz8Kj8dSjlTzqqxQhkFJME/Y1XYt6dvpkMW6MY2iJ
+ jd6wq8ThJxhSrqamUdC27qPvhkcSbSCDVmj82D3d79ppsMOSAjAOGfbnTs069Z+eXNSK
+ mGb2gQ0txLYuyqcXJZ7iWrkGARGttGVOkGl5S7Z4+mH+QGZ/Q4FiiSa5QTVRI7vyxwJ0
+ iMWR1fmv14GYlA9T81sYLtpv6YpVbd4BCnV6N28v+5xk2Rj3tNtFgVlkUOXYT0XfD5MI
+ 4TVw==
+X-Gm-Message-State: AOJu0YyKfJLGzc4lDOm6avLpu89zFtXtRrwkUVAysKcMj4XIzO0bACQS
+ gmX1K28GtOai8lvEyqHZNvuy3VM5SLRg9PPr+vu0OpfEdH8xixvlvu+R0zT1OPiaCrtki4rn3UF
+ 7QxRyY/ZcNYLshxdQCNuzxEzkmHbu8NGsvQ3GIcVG71ipQyPzCWZ8y4Yf/MKuEuk=
+X-Received: by 2002:a05:6512:3d09:b0:513:8a39:e0d9 with SMTP id
+ d9-20020a0565123d0900b005138a39e0d9mr9092573lfv.64.1710264703865; 
+ Tue, 12 Mar 2024 10:31:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF97KVZ4NJsSPklkW8hw8fji0fjotp8zVLmMTD0nAlh7ZF69wRbKYwr/aQc4wtGKSNvch3WxA==
+X-Received: by 2002:a05:6512:3d09:b0:513:8a39:e0d9 with SMTP id
+ d9-20020a0565123d0900b005138a39e0d9mr9092548lfv.64.1710264703241; 
+ Tue, 12 Mar 2024 10:31:43 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
+ by smtp.gmail.com with ESMTPSA id
+ r11-20020a05600c35cb00b004127057d6b9sm19619010wmq.35.2024.03.12.10.31.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 10:31:42 -0700 (PDT)
+Date: Tue, 12 Mar 2024 13:31:39 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 00/20] Workaround Windows failing to find 64bit SMBIOS
+ entry point with SeaBIOS
+Message-ID: <20240312133056-mutt-send-email-mst@kernel.org>
+References: <20240312161050.2248814-1-imammedo@redhat.com>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1724; i=k.jensen@samsung.com;
- h=from:subject; bh=XddK9fgznLnaxCGQz8aWhKGnoFKoCfbUCAuoljS2hIM=;
- b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGXwkD4Zj5olpC72zzipnjwY6NMt1OnU4pj+p
- RI2dDcXbu+bZokBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJl8JA+AAoJEE3hrzFt
- Tw3pWqMH/AwJRSDnSKEMrUuOcvBzROTcNBhOLXH+Tkjue3pa3YtejzAVChAI8jyr9BfWYit4/Ug
- 2zCzLfOZPAWGcZrSdbdlSzx/7dziCAehdiH5Ay+14Hjm0CyKijq32XJnSDbMiiCR+GNS3Ga+Zss
- qA5iNnGlDbO3zUQLl6eEiXbnX+GQPxyOr6/ygVWFYuaDioaieT9wp7SK4lPBfq/05smnUo8zS5C
- ZUmSaVyGowyk8iAXyZjTyKXKH4nA7cQl6E95VVpqV/rZ+uWdOoPs9cywdaQTDUVwZZGLtgA1DQb
- fPn/STtEFe+XL23NkfEpgnjdnp/wip6ydiT7B64mFDv2CqyyDT1D96RE
-X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
- fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=64.147.123.156; envelope-from=its@irrelevant.dk;
- helo=wfhigh5-smtp.messagingengine.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240312161050.2248814-1-imammedo@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,50 +99,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Minwoo Im <minwoo.im@samsung.com>
+On Tue, Mar 12, 2024 at 05:10:30PM +0100, Igor Mammedov wrote:
+> Changelog:
+>  v3:
+>    * whitespace missed by checkpatch
+>    * fix idndent in QAPI
+>    * reorder 17/20 before 1st 'auto' can be used
+>    * pick up acks
+>  v2:
+>    * QAPI style fixes (Markus Armbruster <armbru@redhat.com>)
+>    * squash 11/19 into 10/19 (Ani Sinha <anisinha@redhat.com>)
+>    * split '[PATCH 09/19] smbios: build legacy mode code only for 'pc' machine'
+>      in 3 smaller patches, to make it more readable
+>        smbios: add smbios_add_usr_blob_size() helper                                  
+>        smbios: rename/expose structures/bitmaps used by both legacy and modern code                                                                  
+>        smbios: build legacy mode code only for 'pc' machine
+>    * pick up acks
 
-Currently, when a VF is created, it uses the 'params' object of the PF
-as it is. In other words, the 'params.serial' string memory area is also
-shared. In this situation, if the VF is removed from the system, the
-PF's 'params.serial' object is released with object_finalize() followed
-by object_property_del_all() which release the memory for 'serial'
-property. If that happens, the next VF created will inherit a serial
-from a corrupted memory area.
+thanks!
+of course this conflicts with
+SMBIOS type 9
+and I am trying to figure out how to resolve this again.
+Do you ack SMBIOS type 9 btw?
 
-If this happens, an error will occur when comparing subsys->serial and
-n->params.serial in the nvme_subsys_register_ctrl() function.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 44c2c09488db ("hw/nvme: Add support for SR-IOV")
-Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 76fe0397045b..94ef63945725 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8309,9 +8309,15 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
-     if (pci_is_vf(pci_dev)) {
-         /*
-          * VFs derive settings from the parent. PF's lifespan exceeds
--         * that of VF's, so it's safe to share params.serial.
-+         * that of VF's.
-          */
-         memcpy(&n->params, &pn->params, sizeof(NvmeParams));
-+
-+        /*
-+         * Set PF's serial value to a new string memory to prevent 'serial'
-+         * property object release of PF when a VF is removed from the system.
-+         */
-+        n->params.serial = g_strdup(pn->params.serial);
-         n->subsys = pn->subsys;
-     }
- 
--- 
-2.44.0
+> Windows (10) bootloader when running on top of SeaBIOS, fails to find            
+> SMBIOSv3 entry point. Tracing it shows that it looks for v2 anchor markers       
+> only and not v3. Tricking it into believing that entry point is found            
+> lets Windows successfully locate and parse SMBIOSv3 tables. Whether it           
+> will be fixed on Windows side is not clear so here goes a workaround.            
+>                                                                                  
+> Idea is to try build v2 tables if QEMU configuration permits,                    
+> and fallback to v3 tables otherwise. That will mask Windows issue                
+> form majority of users.                                                          
+> However if VM configuration can't be described (typically large VMs)             
+> by v2 tables, QEMU will use SMBIOSv3 and Windows will hit the issue              
+> again. In this case complain to Microsoft and/or use UEFI instead of             
+> SeaBIOS (requires reinstall).                                                    
+>                                                                                  
+> Default compat setting of smbios-entry-point-type after series                   
+> for pc/q35 machines:                                                             
+>   * 9.0-newer: 'auto'                                                            
+>   * 8.1-8.2: '64'                                                                
+>   * 8.0-older: '32'                                                              
+>                                                                                  
+> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2008                        
+> CC: imammedo@redhat.com                                                          
+> CC: mst@redhat.com
+> 
+> Igor Mammedov (20):
+>   tests: smbios: make it possible to write SMBIOS only test
+>   tests: smbios: add test for -smbios type=11 option
+>   tests: smbios: add test for legacy mode CLI options
+>   smbios: cleanup smbios_get_tables() from legacy handling
+>   smbios: get rid of smbios_smp_sockets global
+>   smbios: get rid of smbios_legacy global
+>   smbios: avoid mangling user provided tables
+>   smbios: don't check type4 structures in legacy mode
+>   smbios: add smbios_add_usr_blob_size() helper
+>   smbios: rename/expose structures/bitmaps used by both legacy and
+>     modern code
+>   smbios: build legacy mode code only for 'pc' machine
+>   smbios: handle errors consistently
+>   smbios: get rid of global smbios_ep_type
+>   smbios: clear smbios_type4_count before building tables
+>   smbios: extend smbios-entry-point-type with 'auto' value
+>   smbios: in case of entry point is 'auto' try to build v2 tables 1st
+>   smbios: error out when building type 4 table is not possible
+>   tests: acpi/smbios: whitelist expected blobs
+>   pc/q35: set SMBIOS entry point type to 'auto' by default
+>   tests: acpi: update expected SSDT.dimmpxm blob
+> 
+>  hw/i386/fw_cfg.h                     |   3 +-
+>  include/hw/firmware/smbios.h         |  28 +-
+>  hw/arm/virt.c                        |   6 +-
+>  hw/i386/Kconfig                      |   1 +
+>  hw/i386/fw_cfg.c                     |  14 +-
+>  hw/i386/pc.c                         |   4 +-
+>  hw/i386/pc_piix.c                    |   4 +
+>  hw/i386/pc_q35.c                     |   3 +
+>  hw/loongarch/virt.c                  |   7 +-
+>  hw/riscv/virt.c                      |   6 +-
+>  hw/smbios/Kconfig                    |   2 +
+>  hw/smbios/meson.build                |   4 +
+>  hw/smbios/smbios.c                   | 481 +++++++++++----------------
+>  hw/smbios/smbios_legacy.c            | 185 +++++++++++
+>  hw/smbios/smbios_legacy_stub.c       |  15 +
+>  qapi/machine.json                    |   5 +-
+>  tests/data/acpi/q35/SSDT.dimmpxm     | Bin 1815 -> 1815 bytes
+>  tests/data/smbios/type11_blob        | Bin 0 -> 11 bytes
+>  tests/data/smbios/type11_blob.legacy | Bin 0 -> 10 bytes
+>  tests/qtest/bios-tables-test.c       |  81 ++++-
+>  20 files changed, 533 insertions(+), 316 deletions(-)
+>  create mode 100644 hw/smbios/smbios_legacy.c
+>  create mode 100644 hw/smbios/smbios_legacy_stub.c
+>  create mode 100644 tests/data/smbios/type11_blob
+>  create mode 100644 tests/data/smbios/type11_blob.legacy
+> 
+> -- 
+> 2.39.3
 
 
