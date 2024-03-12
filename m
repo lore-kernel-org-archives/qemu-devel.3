@@ -4,87 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D1ECC54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 10:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C06C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 10:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjzba-0007tr-AE; Tue, 12 Mar 2024 06:43:34 -0400
+	id 1rjzq6-0004A1-L4; Tue, 12 Mar 2024 06:58:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjzbY-0007tb-06
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 06:43:32 -0400
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjzbV-00088S-Uk
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 06:43:31 -0400
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-2219ed4e2d9so2512606fac.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 03:43:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710240208; x=1710845008; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kuRlFKFpC0srJB9yGmQGwshNqSFVKKbRTE4Kb70eO58=;
- b=IDN2aaaXX2+hmk3xp67gcT//wcGKcJINUM6sg685FqFfOIqA10t+EZA2IW4aq/KYnW
- NTROxYAd+DDPUAfN5HJomUw0+vzWcYLHQYhKpq2An8fs3aw+3VoTN2+HwnGCJFG5Mv5q
- XRDXMnc77RxhmOEfi8x+6AiqS1DpOVE7VSxAeew342X3YccL6JWLv3AnkhksmotoXj0V
- Y6dIY8YLKvHi/VYDqqM3VsBJcvbCr+0F/mT1oI65kHLjbM8FwOnuPkFysq/+r+D5+ADd
- jKvDO7esXOolztjEhvhJC8Ub341rTELrEoudtzYvSghP8bllzdgFUAFFyyAXqSoBG1gy
- 7Gxg==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjzq3-000498-0u
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 06:58:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjzq0-0003If-9n
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 06:58:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710241107;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=t09QWsY94/iQRZOnzLkiHhhxO2pFYnVJQ15R56gTi90=;
+ b=BgyxbMxb3jQ35lmwDpAGeB357iXNYCu3OuRnaa+7+DEf/OoG9u9txdp1WDhRVNU7lhENlt
+ WkQV++jrUMEf7r1TxavP6wXQdFRqEeJzsSOp8JMOBhDn02A2FhvUMAm0x/A2tdQTMhIjSj
+ rF+iIM0qyvjr2QfGxerGm0jdfgs3Ry0=
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-178-fp-8qzwYNr-Fp6GCzAbCDQ-1; Tue, 12 Mar 2024 06:58:25 -0400
+X-MC-Unique: fp-8qzwYNr-Fp6GCzAbCDQ-1
+Received: by mail-ua1-f70.google.com with SMTP id
+ a1e0cc1a2514c-7db1c4c6df6so1851019241.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 03:58:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710240208; x=1710845008;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=kuRlFKFpC0srJB9yGmQGwshNqSFVKKbRTE4Kb70eO58=;
- b=CwtjvNgyjEkfcXah8aBcKlzjT+PQd1dM/FD8VVfd8MVw5MjC9clbULh5budROzLHDG
- kKaDwZHLFz1AtkebPRCGfNszPlz+arjBCWwuuEsfGXNRHGMWfZXcOcxvM3sid/BJNfcl
- TVtqY9ivPRZSh4Kfwww0szQQ40Ou6eDuCC4jbB+yfnnX2R1n4WMtjtInGlZFCWG8aWfq
- bFloUBH5PVUgvxHKwnALc8zQikpXT5Ui+y/fFV6Ih7LZpu5cBKBRXV+4glo0bxhWExMg
- uQ9Eku+wd5u/jYd37dZ+X+UcyvcSK08EBTfzVYlr9PGZW4+9s14H1x18QwSL/+ac142I
- u9/Q==
+ d=1e100.net; s=20230601; t=1710241105; x=1710845905;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=t09QWsY94/iQRZOnzLkiHhhxO2pFYnVJQ15R56gTi90=;
+ b=FlDT7hnCFgxKSq1m835obWvfqGGuhY6FFrmUQ/HWKABBOig9Vfi+pbIeuRVJooxU8S
+ uVC2S6/5R+fVgjIDsKm80S9Bmv1kTCvVN66CBOOK7H9hqUHzE79eqXcxwBu1fRUmzPFj
+ DTQW9OWWCX7WrrJ15lFnUMs4ITGHU8Aox27E8gbmFVmJvy5lXovfZDh1EeV1qOnIE7SX
+ wzopbOkWSgTKJENEJM1x4AW4TR4xoI+lpzBOXsK1GqHbCQYBDdoGuFR6CE7TbMh1llgf
+ oVbuOaX49t5gX/4bwdu6hJrVRceHD2VkC75t5VmdocjCMEDoa+0tPzGrmNTeUYlQ0CnY
+ jjTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUHtl5dLUqVsnXouoQc4uLgMf7ygLZ+/hDZ6dd5u2xnJRkBONYrYpU/BVVwzlV6PP13ne9L2TEnzWZPl/0TdW8PuZN0P0=
-X-Gm-Message-State: AOJu0Yz1rJIiegBiRXRpDDxN0SpEO5AE+J/JexzXBqpz+yTJJ+tcBuce
- HuymEb7K+/nBW0kf099Jxcabn5vU8pKbVi5pKssCLBDvR9xHP8qh
-X-Google-Smtp-Source: AGHT+IEUL1Jui2hv/XKH580i/lDgkSSvkTMlKJZ5kxC5Ke0VFlyevgs7oEtgmAc8Y7tJ+9BqE1hFPw==
-X-Received: by 2002:a05:6871:54e:b0:221:c9ef:5b with SMTP id
- t14-20020a056871054e00b00221c9ef005bmr6410304oal.18.1710240208112; 
- Tue, 12 Mar 2024 03:43:28 -0700 (PDT)
-Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
- p1-20020a63c141000000b005dc389409c1sm5695049pgi.93.2024.03.12.03.43.23
+ AJvYcCUm3cktlRYAeDrdopqz0OHMBZvAX2kj+IypTRnbWDHZYKJhyx6r1RoqOCkxN5OouAL/D0glLgDAmyVUru41rp5PcmthbtU=
+X-Gm-Message-State: AOJu0YyikGhwd4AoVR42LzzolurH6Qho718TGCMO2735LzUXSwYCr5QN
+ 3aWL66VbrSbDuv+L88lsAiNF5VoehqZkSCdr82+eKDAYRpsjZ85Jkb7bLv0TLZtPTYcYQIxsm1G
+ 7iMX4am85eAmZMSLNtUzL/I4jQ0qiL9+gUG/m0/YzUZ/wWW3tZnDy
+X-Received: by 2002:a05:6122:1689:b0:4c8:e834:6cf2 with SMTP id
+ 9-20020a056122168900b004c8e8346cf2mr5391224vkl.3.1710241105309; 
+ Tue, 12 Mar 2024 03:58:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtCzZ5TA7h9HxcRxlzvWik4+loeycFPPMxtIdVzO3b5gRmM4gqXQbDLa+4sOabcSEDHwf29g==
+X-Received: by 2002:a05:6122:1689:b0:4c8:e834:6cf2 with SMTP id
+ 9-20020a056122168900b004c8e8346cf2mr5391211vkl.3.1710241104988; 
+ Tue, 12 Mar 2024 03:58:24 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-177-86.web.vodafone.de.
+ [109.43.177.86]) by smtp.gmail.com with ESMTPSA id
+ m14-20020ad44d4e000000b00690d26a6b20sm1893400qvm.130.2024.03.12.03.58.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 03:43:27 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Mar 2024 20:43:21 +1000
-Message-Id: <CZRPJY7D8D83.1QIJXJ5QEL05S@wheely>
-Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Richard
- Henderson" <richard.henderson@linaro.org>, =?utf-8?q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Paolo Bonzini" <pbonzini@redhat.com>, "John
- Snow" <jsnow@redhat.com>, "Cleber Rosa" <crosa@redhat.com>, "Wainer dos
- Santos Moschetta" <wainersm@redhat.com>, "Beraldo Leal" <bleal@redhat.com>,
- "Michael Tokarev" <mjt@tls.msk.ru>
-Subject: Re: [PATCH v4 20/24] replay: simple auto-snapshot mode for record
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Pavel Dovgalyuk" <pavel.dovgalyuk@ispras.ru>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.15.2
-References: <20240311174026.2177152-1-npiggin@gmail.com>
- <20240311174026.2177152-21-npiggin@gmail.com>
- <42f7335c-5e0c-4640-af10-878a4c8732c9@ispras.ru>
-In-Reply-To: <42f7335c-5e0c-4640-af10-878a4c8732c9@ispras.ru>
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=npiggin@gmail.com; helo=mail-oa1-x29.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ Tue, 12 Mar 2024 03:58:24 -0700 (PDT)
+Message-ID: <db5a73f5-bccc-4595-b1e9-4ed5806e3884@redhat.com>
+Date: Tue, 12 Mar 2024 11:58:16 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/29] hw, target: Prefer fast cpu_env() over slower
+ CPU QOM cast macro
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240129164514.73104-1-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240129164514.73104-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,215 +150,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Mar 12, 2024 at 7:00 PM AEST, Pavel Dovgalyuk wrote:
-> On 11.03.2024 20:40, Nicholas Piggin wrote:
-> > record makes an initial snapshot when the machine is created, to enable
-> > reverse-debugging. Often the issue being debugged appears near the end =
-of
-> > the trace, so it is important for performance to keep snapshots close t=
-o
-> > the end.
-> >=20
-> > This implements a periodic snapshot mode that keeps a rolling set of
-> > recent snapshots. This could be done by the debugger or other program
-> > that talks QMP, but for setting up simple scenarios and tests, this is
-> > more convenient.
-> >=20
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >   docs/system/replay.rst   |  5 ++++
-> >   include/sysemu/replay.h  | 11 ++++++++
-> >   replay/replay-snapshot.c | 57 +++++++++++++++++++++++++++++++++++++++=
-+
-> >   replay/replay.c          | 27 +++++++++++++++++--
-> >   system/vl.c              |  9 +++++++
-> >   qemu-options.hx          |  9 +++++--
-> >   6 files changed, 114 insertions(+), 4 deletions(-)
-> >=20
-> > diff --git a/docs/system/replay.rst b/docs/system/replay.rst
-> > index ca7c17c63d..1ae8614475 100644
-> > --- a/docs/system/replay.rst
-> > +++ b/docs/system/replay.rst
-> > @@ -156,6 +156,11 @@ for storing VM snapshots. Here is the example of t=
-he command line for this:
-> >   ``empty.qcow2`` drive does not connected to any virtual block device =
-and used
-> >   for VM snapshots only.
-> >  =20
-> > +``rrsnapmode`` can be used to select just an initial snapshot or perio=
-dic
-> > +snapshots, with ``rrsnapcount`` specifying the number of periodic snap=
-shots
-> > +to maintain, and ``rrsnaptime`` the amount of run time in seconds betw=
-een
-> > +periodic snapshots.
-> > +
-> >   .. _network-label:
-> >  =20
-> >   Network devices
-> > diff --git a/include/sysemu/replay.h b/include/sysemu/replay.h
-> > index 8102fa54f0..92fa82842b 100644
-> > --- a/include/sysemu/replay.h
-> > +++ b/include/sysemu/replay.h
-> > @@ -48,6 +48,17 @@ typedef enum ReplayCheckpoint ReplayCheckpoint;
-> >  =20
-> >   typedef struct ReplayNetState ReplayNetState;
-> >  =20
-> > +enum ReplaySnapshotMode {
-> > +    REPLAY_SNAPSHOT_MODE_INITIAL,
-> > +    REPLAY_SNAPSHOT_MODE_PERIODIC,
-> > +};
->
-> This should be defined in replay-internal.h, because it is internal for=
-=20
-> replay.
->
-> > +typedef enum ReplaySnapshotMode ReplaySnapshotMode;
-> > +
-> > +extern ReplaySnapshotMode replay_snapshot_mode;
-> > +
-> > +extern uint64_t replay_snapshot_periodic_delay;
-> > +extern int replay_snapshot_periodic_nr_keep;
->
-> These ones are internal too.
+On 29/01/2024 17.44, Philippe Mathieu-Daudé wrote:
+> Patches missing review: 1, 2, 5, 6, 8, 11, 14, 15, 29
+> 
+> It will be simpler if I get the whole series via my hw-cpus
+> tree once fully reviewed.
+> 
+> Since v2:
+> - Rebased
+> - bsd/linux-user
+> - Preliminary clean cpu_reset_hold
+> - Add R-b
+> 
+> Since v1:
+> - Avoid CPU() cast (Paolo)
+> - Split per targets (Thomas)
+> 
+> Use cpu_env() -- which is fast path -- when possible.
+> Bulk conversion using Coccinelle spatch (script included).
+> 
+> Philippe Mathieu-Daudé (29):
+>    bulk: Access existing variables initialized to &S->F when available
+>    hw/core: Declare CPUArchId::cpu as CPUState instead of Object
+>    hw/acpi/cpu: Use CPUState typedef
+>    bulk: Call in place single use cpu_env()
+>    scripts/coccinelle: Add cpu_env.cocci script
+>    target: Replace CPU_GET_CLASS(cpu -> obj) in cpu_reset_hold() handler
+>    target/alpha: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/arm: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/avr: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/cris: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/hexagon: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/hppa: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/i386/hvf: Use CPUState typedef
+>    target/i386: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/loongarch: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/m68k: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/microblaze: Prefer fast cpu_env() over slower CPU QOM cast
+>      macro
+>    target/mips: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/nios2: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/openrisc: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/ppc: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/riscv: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/rx: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/s390x: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/sh4: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/sparc: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/tricore: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    target/xtensa: Prefer fast cpu_env() over slower CPU QOM cast macro
+>    user: Prefer fast cpu_env() over slower CPU QOM cast macro
 
-Okay for both.
+FYI, I'll try to queue those for my PR today except for:
 
->
-> > +
-> >   /* Name of the initial VM snapshot */
-> >   extern char *replay_snapshot;
-> >  =20
-> > diff --git a/replay/replay-snapshot.c b/replay/replay-snapshot.c
-> > index ccb4d89dda..762555feaa 100644
-> > --- a/replay/replay-snapshot.c
-> > +++ b/replay/replay-snapshot.c
-> > @@ -70,6 +70,53 @@ void replay_vmstate_register(void)
-> >       vmstate_register(NULL, 0, &vmstate_replay, &replay_state);
-> >   }
-> >  =20
-> > +static QEMUTimer *replay_snapshot_timer;
-> > +static int replay_snapshot_count;
-> > +
-> > +static void replay_snapshot_timer_cb(void *opaque)
-> > +{
-> > +    Error *err =3D NULL;
-> > +    char *name;
-> > +
-> > +    if (!replay_can_snapshot()) {
-> > +        /* Try again soon */
-> > +        timer_mod(replay_snapshot_timer,
-> > +                  qemu_clock_get_ms(QEMU_CLOCK_REALTIME) +
-> > +                  replay_snapshot_periodic_delay / 10);
-> > +        return;
-> > +    }
-> > +
-> > +    name =3D g_strdup_printf("%s-%d", replay_snapshot, replay_snapshot=
-_count);
-> > +    if (!save_snapshot(name,
-> > +                       true, NULL, false, NULL, &err)) {
-> > +        error_report_err(err);
-> > +        error_report("Could not create periodic snapshot "
-> > +                     "for icount record, disabling");
-> > +        g_free(name);
-> > +        return;
-> > +    }
-> > +    g_free(name);
-> > +    replay_snapshot_count++;
-> > +
-> > +    if (replay_snapshot_periodic_nr_keep >=3D 1 &&
-> > +        replay_snapshot_count > replay_snapshot_periodic_nr_keep) {
-> > +        int del_nr;
-> > +
-> > +        del_nr =3D replay_snapshot_count - replay_snapshot_periodic_nr=
-_keep - 1;
-> > +        name =3D g_strdup_printf("%s-%d", replay_snapshot, del_nr);
->
-> Copy-paste of snapshot name format.
+  scripts/coccinelle: Add cpu_env.cocci script
+  --> Still needs review and you mentioned a pending change
 
-Yes good catch.
+  target/arm: Prefer fast cpu_env() over slower CPU QOM cast macro
+  --> Needs a rebase and review
 
->
-> > +        if (!delete_snapshot(name, false, NULL, &err)) {
-> > +            error_report_err(err);
-> > +            error_report("Could not delete periodic snapshot "
-> > +                         "for icount record");
-> > +        }
-> > +        g_free(name);
-> > +    }
-> > +
-> > +    timer_mod(replay_snapshot_timer,
-> > +              qemu_clock_get_ms(QEMU_CLOCK_REALTIME) +
-> > +              replay_snapshot_periodic_delay);
-> > +}
-> > +
-> >   void replay_vmstate_init(void)
-> >   {
-> >       Error *err =3D NULL;
-> > @@ -82,6 +129,16 @@ void replay_vmstate_init(void)
-> >                   error_report("Could not create snapshot for icount re=
-cord");
-> >                   exit(1);
-> >               }
-> > +
-> > +            if (replay_snapshot_mode =3D=3D REPLAY_SNAPSHOT_MODE_PERIO=
-DIC) {
-> > +                replay_snapshot_timer =3D timer_new_ms(QEMU_CLOCK_REAL=
-TIME,
-> > +                                                     replay_snapshot_t=
-imer_cb,
-> > +                                                     NULL);
-> > +                timer_mod(replay_snapshot_timer,
-> > +                          qemu_clock_get_ms(QEMU_CLOCK_REALTIME) +
-> > +                          replay_snapshot_periodic_delay);
-> > +            }
-> > +
-> >           } else if (replay_mode =3D=3D REPLAY_MODE_PLAY) {
-> >               if (!load_snapshot(replay_snapshot, NULL, false, NULL, &e=
-rr)) {
-> >                   error_report_err(err);
-> > diff --git a/replay/replay.c b/replay/replay.c
-> > index 895fa6b67a..c916e71d30 100644
-> > --- a/replay/replay.c
-> > +++ b/replay/replay.c
-> > @@ -29,6 +29,10 @@
-> >   ReplayMode replay_mode =3D REPLAY_MODE_NONE;
-> >   char *replay_snapshot;
-> >  =20
-> > +ReplaySnapshotMode replay_snapshot_mode;
-> > +uint64_t replay_snapshot_periodic_delay;
-> > +int replay_snapshot_periodic_nr_keep;
-> > +
-> >   /* Name of replay file  */
-> >   static char *replay_filename;
-> >   ReplayState replay_state;
-> > @@ -424,6 +428,27 @@ void replay_configure(QemuOpts *opts)
-> >       }
-> >  =20
-> >       replay_snapshot =3D g_strdup(qemu_opt_get(opts, "rrsnapshot"));
-> > +    if (replay_snapshot && mode =3D=3D REPLAY_MODE_RECORD) {
-> > +        const char *snapmode;
-> > +
-> > +        snapmode =3D qemu_opt_get(opts, "rrsnapmode");
-> > +        if (!snapmode || !strcmp(snapmode, "initial")) {
-> > +            replay_snapshot_mode =3D REPLAY_SNAPSHOT_MODE_INITIAL;
-> > +        } else if (!strcmp(snapmode, "periodic")) {
-> > +            replay_snapshot_mode =3D REPLAY_SNAPSHOT_MODE_PERIODIC;
-> > +        } else {
-> > +            error_report("Invalid rrsnapmode option: %s", snapmode);
-> > +            exit(1);
-> > +        }
-> > +
-> > +        /* Default 10 host seconds of machine runtime per snapshot. */
-> > +        replay_snapshot_periodic_delay =3D
-> > +                           qemu_opt_get_number(opts, "rrsnaptime", 10)=
- * 1000;
->
-> Can user set it to zero here?
+  target/hppa: Prefer fast cpu_env() over slower CPU QOM cast macro
+  --> Needs a rebase
 
-I guess so. It would just continually snapshot, which is probably okay
-if that's what you want.
+  target/i386: Prefer fast cpu_env() over slower CPU QOM cast macro
+  --> There were unaddressed review comments from Igor
 
-Thanks,
-Nick
+  target/riscv: Prefer fast cpu_env() over slower CPU QOM cast macro
+  --> Needs a rebase
+
+  Thomas
+
 
