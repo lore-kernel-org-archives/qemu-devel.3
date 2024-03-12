@@ -4,56 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5ABCC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0AA6C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:49:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1VQ-00050O-U9; Tue, 12 Mar 2024 08:45:20 -0400
+	id 1rk1XN-0007n8-9N; Tue, 12 Mar 2024 08:47:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Uw-0004FV-EK
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1VX-0005Rt-O5
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:45:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Ur-0000T5-Ps
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:50 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1VU-0000tl-4c
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:45:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710247485;
+ s=mimecast20190719; t=1710247523;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rIgnOsfFSMsEGyT7FNEqh+sTvP35EQ6b4LH2suBdKa0=;
- b=W1bLiYCd2XagLFVw3gxcqZzGQj6EgkIK6Ng2GLFNA6r737nIhzlxr6LmCSuDxiNZoqpvbf
- R49CL1e5YnDZ1faqAqhC6QwJR3zwmY1/6jObUaIGsBQBWaKaOri4j11s5GFR2ZJzGgPp+H
- FBYqz7JFvwoDXMwQsFcCM+fYE2e1joI=
+ bh=mOZ+n16hSmdhLc1QeYUQIA8GPqXkcZgaeKwVr7g+qTU=;
+ b=Ku1HuOoxoGRig4YQVkKwd6HJFgpVXciV6Znd1pjO+nVLdwW7e0GUnyPZ/RtU/DqjdraLvo
+ CU4S+GbCM7ixXaspFwOSP5GGm5QyZJDCwBXV/vf13leFAMareQKsP5Zbnao0hMVLWDQPTh
+ yMkUa729FeAzQGDXWEyoa1PpgPzzFZQ=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-dJ5XrLoIMhuJ21aBty9TrQ-1; Tue, 12 Mar 2024 08:44:42 -0400
-X-MC-Unique: dJ5XrLoIMhuJ21aBty9TrQ-1
+ us-mta-267-GfFjSG8COkutb5_eOVSdDw-1; Tue, 12 Mar 2024 08:45:21 -0400
+X-MC-Unique: GfFjSG8COkutb5_eOVSdDw-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BBD29810FDA;
- Tue, 12 Mar 2024 12:44:41 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6DE66800264;
+ Tue, 12 Mar 2024 12:45:21 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.69])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 9A530492BD4;
- Tue, 12 Mar 2024 12:44:40 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 12E53492BD0;
+ Tue, 12 Mar 2024 12:45:19 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PULL 29/55] hw/virtio/vhost: Fix missing ERRP_GUARD() for
- error_prepend()
-Date: Tue, 12 Mar 2024 13:43:13 +0100
-Message-ID: <20240312124339.761630-30-thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Warner Losh <imp@bsdimp.com>
+Subject: [PULL 55/55] user: Prefer fast cpu_env() over slower CPU QOM cast
+ macro
+Date: Tue, 12 Mar 2024 13:43:39 +0100
+Message-ID: <20240312124339.761630-56-thuth@redhat.com>
 In-Reply-To: <20240312124339.761630-1-thuth@redhat.com>
 References: <20240312124339.761630-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -80,71 +83,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-As the comment in qapi/error, passing @errp to error_prepend() requires
-ERRP_GUARD():
+Mechanical patch produced running the command documented
+in scripts/coccinelle/cpu_env.cocci_template header.
 
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-...
-* - It should not be passed to error_prepend(), error_vprepend() or
-*   error_append_hint(), because that doesn't work with &error_fatal.
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
-
-ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
-can't see this additional information, because exit() happens in
-error_setg earlier than information is added [1].
-
-In hw/virtio/vhost.c, there are 2 functions passing @errp to
-error_prepend() without ERRP_GUARD():
-- vhost_save_backend_state()
-- vhost_load_backend_state()
-
-Their @errp both points to callers' @local_err. However, as the APIs
-defined in include/hw/virtio/vhost.h, it is necessary to protect their
-@errp with ERRP_GUARD().
-
-To follow the requirement of @errp, add missing ERRP_GUARD() at their
-beginning.
-
-[1]: Issue description in the commit message of commit ae7c80a7bd73
-     ("error: New macro ERRP_GUARD()").
-
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240311033822.3142585-27-zhao1.liu@linux.intel.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Message-ID: <20240129164514.73104-30-philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/virtio/vhost.c | 2 ++
- 1 file changed, 2 insertions(+)
+ bsd-user/signal.c   | 3 +--
+ linux-user/signal.c | 6 ++----
+ 2 files changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 2c9ac79468..2e4e040db8 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -2199,6 +2199,7 @@ int vhost_check_device_state(struct vhost_dev *dev, Error **errp)
- 
- int vhost_save_backend_state(struct vhost_dev *dev, QEMUFile *f, Error **errp)
+diff --git a/bsd-user/signal.c b/bsd-user/signal.c
+index e9f80a06d3..3ac50c2d71 100644
+--- a/bsd-user/signal.c
++++ b/bsd-user/signal.c
+@@ -463,14 +463,13 @@ static int fatal_signal(int sig)
+ void force_sig_fault(int sig, int code, abi_ulong addr)
  {
-+    ERRP_GUARD();
-     /* Maximum chunk size in which to transfer the state */
-     const size_t chunk_size = 1 * 1024 * 1024;
-     g_autofree void *transfer_buf = NULL;
-@@ -2291,6 +2292,7 @@ fail:
+     CPUState *cpu = thread_cpu;
+-    CPUArchState *env = cpu_env(cpu);
+     target_siginfo_t info = {};
  
- int vhost_load_backend_state(struct vhost_dev *dev, QEMUFile *f, Error **errp)
+     info.si_signo = sig;
+     info.si_errno = 0;
+     info.si_code = code;
+     info.si_addr = addr;
+-    queue_signal(env, sig, QEMU_SI_FAULT, &info);
++    queue_signal(cpu_env(cpu), sig, QEMU_SI_FAULT, &info);
+ }
+ 
+ static void host_signal_handler(int host_sig, siginfo_t *info, void *puc)
+diff --git a/linux-user/signal.c b/linux-user/signal.c
+index cc7dd78e41..1aebf3fc47 100644
+--- a/linux-user/signal.c
++++ b/linux-user/signal.c
+@@ -623,7 +623,6 @@ void signal_init(void)
+ void force_sig(int sig)
  {
-+    ERRP_GUARD();
-     size_t transfer_buf_size = 0;
-     g_autofree void *transfer_buf = NULL;
-     g_autoptr(GError) g_err = NULL;
+     CPUState *cpu = thread_cpu;
+-    CPUArchState *env = cpu_env(cpu);
+     target_siginfo_t info = {};
+ 
+     info.si_signo = sig;
+@@ -631,7 +630,7 @@ void force_sig(int sig)
+     info.si_code = TARGET_SI_KERNEL;
+     info._sifields._kill._pid = 0;
+     info._sifields._kill._uid = 0;
+-    queue_signal(env, info.si_signo, QEMU_SI_KILL, &info);
++    queue_signal(cpu_env(cpu), info.si_signo, QEMU_SI_KILL, &info);
+ }
+ 
+ /*
+@@ -641,14 +640,13 @@ void force_sig(int sig)
+ void force_sig_fault(int sig, int code, abi_ulong addr)
+ {
+     CPUState *cpu = thread_cpu;
+-    CPUArchState *env = cpu_env(cpu);
+     target_siginfo_t info = {};
+ 
+     info.si_signo = sig;
+     info.si_errno = 0;
+     info.si_code = code;
+     info._sifields._sigfault._addr = addr;
+-    queue_signal(env, sig, QEMU_SI_FAULT, &info);
++    queue_signal(cpu_env(cpu), sig, QEMU_SI_FAULT, &info);
+ }
+ 
+ /* Force a SIGSEGV if we couldn't write to memory trying to set
 -- 
 2.44.0
 
