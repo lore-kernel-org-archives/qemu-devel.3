@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8FA1C54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 21:12:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9684C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 21:16:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk9Q5-0006O4-Sm; Tue, 12 Mar 2024 17:12:22 -0400
+	id 1rk9T7-00080g-AB; Tue, 12 Mar 2024 17:15:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rk9Q0-0006Nf-70
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:12:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rk9Px-00078x-B4
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:12:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710277932;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M8yZyjIdA/e1H8Jln/jMaSv7+cT+Zz0CK3B5hADnkEk=;
- b=M+2XFVWlbCKDQ1rMkG/3cdvLwC1HDEDZeuBNz3QPTuO01PdIDbsHaEkGf20iu4FVc5llbH
- LFUgeWjo/vTMBfCnXFHd0yFirguT6rqy2eeUMNJRZ5YaJaiQZeqNaJLBtb5Ykp9SVghuoo
- UaCM4U6J6/0QwG8ZfDIo6xi4ZAqI+j0=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-UQESWSiiN8St0BtDDuDcrA-1; Tue, 12 Mar 2024 17:12:11 -0400
-X-MC-Unique: UQESWSiiN8St0BtDDuDcrA-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6818b8cb840so18725956d6.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 14:12:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rk9Sw-00080A-A1
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:15:18 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rk9St-0007lg-Ok
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:15:17 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6e6a9fafacdso770135b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 14:15:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710278112; x=1710882912; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7hN+E7bIVFDzzeY8dEklh2xJ6fzhqJN325jyX8VRJxQ=;
+ b=Oo8yL8s2QLxC3odJxsq57GP+hUIkz/KnpVo504l7cU5ZsHJnDQkcYxRlkScN1Y19Gq
+ 1zwgqHxC52sM6FZfopmXPrwvMjhq+LuiyH4b+uddBnF4UBeyMbWXgBd/lra604mIn3K0
+ GFStwXu7WqkQmwwh1X3W2CsMyVmZ3r2jL0PBJ766RqE50PBf5aHaOc5cPgS9yM9qyM8p
+ e0INZY8PQAcDew+aAoek0Cw6atCsEPvJI/SOSYQuORa65OFrSTYJ0M3FwgcbJ7iErUHM
+ EutNp+Icdf7TCIEi7z6AYpIUzYWKLtFhNm2isxQ89sgoe/iD/U5yCH7vzha3MX1EW4LE
+ 0ZXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710277930; x=1710882730;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=M8yZyjIdA/e1H8Jln/jMaSv7+cT+Zz0CK3B5hADnkEk=;
- b=nmoayltDI9GSpvvLqJKRMgcEl30Vx/stTEpzWTt4VJc8hYlEhn0IvBnRbdB0nr+7ot
- ujuYQj8mu640qRe3rWSXchKb2ENsXJGaj7a3AIZ9omFk1yTRWSztdN46T8sbGjUzwO9Y
- PJCYla1QiPIWVtmrcyESYrg4ivfewb5IjRgmilQ63+y7H29R+CZM9RBMje5heUckQiBr
- Bkikpi6So5w+pBV6iELPScNg7ZjD271vZwWvDDHzAJdQFmU9h8eDVqv78Icv+ir8/91T
- Rk2wO7nydExVv8A2qfx7v5Fh3RGJ4VcJAxKYF8RsK7a6YcKhX7wD0T61a6T0a6qx1DqB
- ckBw==
-X-Gm-Message-State: AOJu0Ywx4s8Sb1omJqOxAMx199mymaRGSAW/M/Y0nuyBegorjE5K3VPL
- mr6d/Il4bzAFYTOd+TR/TiMX2OXIoiAL8zU2QFLOpXid1pBHVCaFTEKbnweII3DKoPCTr59o2cz
- KfZdNp1RZohnporJ4fDGAEff1vg/ibocWN9uK7ZEWVustpv9JZprmBTmiF+h+
-X-Received: by 2002:a05:620a:4690:b0:788:5c48:55b6 with SMTP id
- bq16-20020a05620a469000b007885c4855b6mr12408883qkb.5.1710277930504; 
- Tue, 12 Mar 2024 14:12:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG12fjBWMTliPSE4PZgwq0jt7Tm8Y46hZU92chSq1wXsc0N78s1pZfqYh24Oo8UI3qszKoKdg==
-X-Received: by 2002:a05:620a:4690:b0:788:5c48:55b6 with SMTP id
- bq16-20020a05620a469000b007885c4855b6mr12408864qkb.5.1710277930174; 
- Tue, 12 Mar 2024 14:12:10 -0700 (PDT)
-Received: from x1n (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- wi23-20020a05620a571700b007883e882a3esm4038975qkn.100.2024.03.12.14.12.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 14:12:09 -0700 (PDT)
-Date: Tue, 12 Mar 2024 17:12:08 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Het Gala <het.gala@nutanix.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, thuth@redhat.com,
- lvivier@redhat.com, pbonzini@redhat.com, farosas@suse.de
-Subject: Re: [PATCH v7 0/8] tests/qtest/migration: Add tests for introducing
- 'channels' argument in migrate QAPIs
-Message-ID: <ZfDFKHm1Q_bzmGcY@x1n>
-References: <20240312202634.63349-1-het.gala@nutanix.com>
+ d=1e100.net; s=20230601; t=1710278112; x=1710882912;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7hN+E7bIVFDzzeY8dEklh2xJ6fzhqJN325jyX8VRJxQ=;
+ b=jzf0TRg0cRN7afUlZ+g2W6ii14dTvlojNqKvSZugoIRzlq78jzRLPVitHdZ7CyGEPl
+ AOsiQpY/sUgIeFf+alfZLX9BmNkvJSNTHvGSBFOjQhyRjJ0JZBEzCYOsEh85p3WMOBpF
+ goP+DJLLDHIVSBdhKy2st5VixCEAOXpuVyazM/jMJflziFLoU7ixPWt+DzU1LqrX/Bkp
+ 5WhtyPVKi0/h46sjZp8BdBRHO/YeIw59VBz/Js32oXDPAZ5gKT7atPeipqTbmt92d1RT
+ izjJnOCxn4srpd5J8HBSGYyrU2ohprjO//Tm3MeegxKdgRIAHENkycsKZkEVUnctphZY
+ Db3w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXNEtFGZCqPkoSREHfrLZu0E+ipOlTx/1Dbh16EIIcJ3p55R92yS8WTkgOMshtnygl+91k/n2sbPjofHEqRvJszfLnmosU=
+X-Gm-Message-State: AOJu0Yyh5BHGNELHPg6gnJCTWpIHwcYFVVXiRp8t+lnM7P+qP60Jx+h2
+ YdWYkgXoAxYPG9NlzxLkJY/HEQ+rWcWpOO5kVqmqUPEk79hzJ3jeFFnMkMY5VnY=
+X-Google-Smtp-Source: AGHT+IGDZaBS4V/WO6ViNTSIgKll97joaGEQ58yojWEz143FSmIasE90bmTYvyJChNveaIal2kjAZA==
+X-Received: by 2002:a05:6a00:c90:b0:6e6:9560:f113 with SMTP id
+ a16-20020a056a000c9000b006e69560f113mr689097pfv.3.1710278112366; 
+ Tue, 12 Mar 2024 14:15:12 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ a2-20020aa780c2000000b006e091a254adsm6572190pfn.30.2024.03.12.14.15.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Mar 2024 14:15:11 -0700 (PDT)
+Message-ID: <24e8c6ce-589b-44d3-92e1-887916aff709@linaro.org>
+Date: Tue, 12 Mar 2024 11:15:08 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240312202634.63349-1-het.gala@nutanix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/5] plugins: add new inline op STORE_U64
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20240312075428.244210-1-pierrick.bouvier@linaro.org>
+ <20240312075428.244210-3-pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240312075428.244210-3-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,24 +100,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 12, 2024 at 08:26:26PM +0000, Het Gala wrote:
-> With recent migrate QAPI changes, enabling the direct use of the
-> 'channels' argument to avoid redundant URI string parsing is achieved.
-> 
-> To ensure backward compatibility, both 'uri' and 'channels' are kept as
-> optional parameters in migration QMP commands. However, they are mutually
-> exhaustive, requiring at least one for a successful migration connection.
-> This patchset adds qtests to validate 'uri' and 'channels' arguments'
-> mututally exhaustive behaviour.
-> 
-> Additionally, all migration qtests fail to employ 'channel' as the primary
-> method for validating migration QAPIs. This patchset also adds test to
-> enforce only use of 'channel' argument as the initial entry point for
-> migration QAPIs.
+On 3/11/24 21:54, Pierrick Bouvier wrote:
+> +static void gen_empty_inline_cb_store_u64(void)
+> +{
+> +    TCGv_i32 cpu_index = tcg_temp_ebb_new_i32();
+> +    TCGv_ptr cpu_index_as_ptr = tcg_temp_ebb_new_ptr();
+> +    TCGv_i64 val = tcg_temp_ebb_new_i64();
+> +    TCGv_ptr ptr = tcg_temp_ebb_new_ptr();
+> +
+> +    tcg_gen_ld_i32(cpu_index, tcg_env,
+> +                   -offsetof(ArchCPU, env) + offsetof(CPUState, cpu_index));
+> +    /* second operand will be replaced by immediate value */
+> +    tcg_gen_mul_i32(cpu_index, cpu_index, cpu_index);
+> +    tcg_gen_ext_i32_ptr(cpu_index_as_ptr, cpu_index);
+> +    tcg_gen_movi_ptr(ptr, 0);
+> +    tcg_gen_add_ptr(ptr, ptr, cpu_index_as_ptr);
+> +
+> +    tcg_gen_movi_i64(val, 0);
+> +    tcg_gen_st_i64(val, ptr, 0);
+> +
+> +    tcg_temp_free_ptr(ptr);
+> +    tcg_temp_free_i64(val);
+> +    tcg_temp_free_ptr(cpu_index_as_ptr);
+> +    tcg_temp_free_i32(cpu_index);
+> +}
 
-queued for 9.1, thanks.
+I was never fond of this full pattern generate...
 
--- 
-Peter Xu
+> @@ -352,6 +385,20 @@ static TCGOp *copy_st_i64(TCGOp **begin_op, TCGOp *op)
+>       return op;
+>   }
+>   
+> +static TCGOp *copy_mov_i64(TCGOp **begin_op, TCGOp *op, uint64_t v)
+> +{
+> +    if (TCG_TARGET_REG_BITS == 32) {
+> +        op = copy_op(begin_op, op, INDEX_op_mov_i32);
+> +        op->args[1] = tcgv_i32_arg(TCGV_LOW(tcg_constant_i64(v)));
+> +        op = copy_op(begin_op, op, INDEX_op_mov_i32);
+> +        op->args[1] = tcgv_i32_arg(TCGV_HIGH(tcg_constant_i64(v)));
+> +    } else {
+> +        op = copy_op(begin_op, op, INDEX_op_mov_i64);
+> +        op->args[1] = tcgv_i64_arg(tcg_constant_i64(v));
+> +    }
+> +    return op;
+> +}
 
+... followed by pattern match and modify.  I think adding more of this is fragile, and a 
+mistake.
+
+(1) This encodes knowledge of the order of the parts of a mov_i64 for 32-bit host.
+(2) You shouldn't use TCG_LOW/HIGH of tcg_constant_i64, but two separate calls to 
+tcg_constant_i32 with the parts of @v.
+
+But all of this would be easier if we simply generate new code now, instead of copy.
+
+> +static TCGOp *append_inline_cb_store_u64(const struct qemu_plugin_dyn_cb *cb,
+> +                                       TCGOp *begin_op, TCGOp *op,
+> +                                       int *unused)
+> +{
+> +    char *ptr = cb->inline_insn.entry.score->data->data;
+> +    size_t elem_size = g_array_get_element_size(
+> +        cb->inline_insn.entry.score->data);
+> +    size_t offset = cb->inline_insn.entry.offset;
+> +    op = copy_ld_i32(&begin_op, op);
+> +    op = copy_mul_i32(&begin_op, op, elem_size);
+> +    op = copy_ext_i32_ptr(&begin_op, op);
+> +    op = copy_const_ptr(&begin_op, op, ptr + offset);
+> +    op = copy_add_ptr(&begin_op, op);
+> +    op = copy_mov_i64(&begin_op, op, cb->inline_insn.imm);
+> +    op = copy_st_i64(&begin_op, op);
+
+You'd also be able to fold offset into the store.  This would allow the scoreboard address 
+to be entered once into the constant pool and have multiple uses.
+
+
+r~
 
