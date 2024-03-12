@@ -4,65 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C66C54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A63C54E60
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 13:08:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1r6-0002rx-QH; Tue, 12 Mar 2024 09:07:44 -0400
+	id 1rk1rb-00031X-8h; Tue, 12 Mar 2024 09:08:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk1r0-0002pQ-Cb
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 09:07:38 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1rk1rP-0002yg-Op
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 09:08:04 -0400
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk1qx-0004ri-GB
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 09:07:37 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5685d46b199so3015846a12.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 06:07:35 -0700 (PDT)
+ id 1rk1rL-00050E-TQ
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 09:08:01 -0400
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2d3b93e992aso50297591fa.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 06:07:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710248854; x=1710853654; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DsIIMDBcFxqUBQCOVrRhaHwdFqJs6zI6tpPqUgoYu24=;
- b=Y5xnr5aMwEIgGa3qJT4L/nTlRBajb95SeyGfC/RCtPue85ndHn0B/E/rkCCbEN3TU2
- QeiEg+VLKQa14A/NI26hh0oMvvvVxQuU6wh2DJVZ+YqZa5MbwsipZQnOzhNxBM4KldQ0
- Btr8GYh8yrZKKoCmh3sNIAnXzjf4l8vQDhj73/J5x+0h6z6X+y5Z2NHaPmdyQVqUpokw
- 8s5/7vcs1Y/6XCM7ThAexpaTpfVcC709IS0omBcqwFSk+XFgsu62VeUY5r+C6kHSgV4z
- lxPdJQK4DKngi7WFCc2A2xEyPxzK/JCnrkcp2nlgd2LEtD6fspSdaDDLAcaKnxMLZ8/p
- xO0w==
+ d=linaro.org; s=google; t=1710248876; x=1710853676; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ynOkJk3qf6voyLcRAVcFG39fxJk/EvCvr0otbUA9gG0=;
+ b=HONcNfv1nDQnom1ryVey49McPw/imZluqUbcFVD8IvBuLTX7GP3+0lxHep6QvMk0Pi
+ 28hbQ0VXG9yxFa41+mAlL2/klImM45zVXWiU9JlcCqkuFKVUy8AA7c0k0WtHax5rQx6F
+ heddpz9FFfG4JIENEACCH8j7eYwKY/yVu+yL7fis2bqAA38nZ2TI4G44DeTsQ29QVx7T
+ qm375lluDbpHnvw/5LBOBz+cTyhMg7HrEQ7gDIoEfYKW4ySNtWlYiRxY8ZQqKQxZFo+k
+ 6OQhsdZh/h+euSEAFP2JOXg05jGoYhoc+WKjjjWfWJlyWkJmElJJhFK2I8n+H/HNInL3
+ IcQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710248854; x=1710853654;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DsIIMDBcFxqUBQCOVrRhaHwdFqJs6zI6tpPqUgoYu24=;
- b=E07XuYhNl6bPpTbJCIyH1r5BFY7IpFl0pimVHSTJitq5dwKcescZyGHYyDtFYUkhtS
- t7oHf8dB6V/lmAN2yFpI430tjf9zqzHijJXoT3UEq9yw8qaGTAWoLqnW45vI6kiv195s
- uUG8oPDdj6fY3zsK6yyl4+ERnyRzNt1S6IeKAUDfGQtCyIIHggyfM/3CfvN1Oppev6f7
- ev2xSYVBg7EuW9J63XzJ7Bs8UyUVoI5hjDzTGsfeR9vR23QOBm0CVOgZaR9RlyQtSTeh
- oxwyULomx96CeX5og31z6o9V2sZ8jQVa3v+m667niukN03gPwuBVwFkvvSzmnqKCUALx
- +98A==
-X-Gm-Message-State: AOJu0YySTV39oTe6qNT7ZYRtFlBLFeE9xBuyuZwamyqbATfaM9qhor1z
- sOpu5D7iyzHhhZ0VBvu6/A4xxX5MbDnYqgc0HklnkBOyv/lrvMrfdrr61OnRr3HXgsBXeWkEJBs
- B97DJnEZllx3562YAr8g0Ac3TGjC4UXvrMuoSrO5U3DNlsDHk
-X-Google-Smtp-Source: AGHT+IGg78vSG+7QWG5awzow6V5WzJIuIqPX0s9T/OyAsYU/VD6JA1QDvV0VBn0WJstLbY3Ne1pGXea7/UTpJXWtKss=
-X-Received: by 2002:a50:8d42:0:b0:566:d27a:2ab5 with SMTP id
- t2-20020a508d42000000b00566d27a2ab5mr2569507edt.10.1710248853759; Tue, 12 Mar
- 2024 06:07:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710248876; x=1710853676;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ynOkJk3qf6voyLcRAVcFG39fxJk/EvCvr0otbUA9gG0=;
+ b=WeMZydjPKHZqLvkWaQ5TMVUkoZv9S7RNOaDwDOVVNPuxDeYSxecs2dciHwDjkSWeSA
+ CcR3QfgnEqOWXNJ1kCUPFxGh8HUg9EgZL5WgibFxIquShdC+Wmg5kYBHLFp8QiIfAgkZ
+ Im65R5r4kA+1jNNNsJxCaTDEjLPg0VXtDb4uRtY7otXNV6ZRc7FNznNoniA+ZeHkuo8o
+ XeNifr9ypedT3h7P4wskIFyNEIYkFg1dYAR3Gn6J2WLDIQySVrmQXHWadLz9wS/RZZZS
+ +/G8gO8f6aZQ2YTTEHHpGsZDSuVenTJVEdzmSAXcmqYtGQx6gUh/aSAxeYCty3siYb/c
+ TLog==
+X-Gm-Message-State: AOJu0Yw0RLEMYcxVgVnQPealnzeOulidbMe06zCjUY5brlffBUWCzUeo
+ aaxcgJPOQhEnNrkju4hoT6psCEib2Mboe3YUQO9S7ALR1qgzt/wwSAwqiZ2jYpgS3fp7VTg4t4h
+ TBFMRskydhFV/WcPTuaqQbU8RxT7+EEIeREnKIA==
+X-Google-Smtp-Source: AGHT+IFJveOmP3Zz1bL25O/W5YyBh7sM+PEPxNf5D38sg8as0NatWDaHb1nbxeQ3Zlko2TyCK9NJ+vKDREAsC4gHoAU=
+X-Received: by 2002:a2e:a98c:0:b0:2d4:3c32:816f with SMTP id
+ x12-20020a2ea98c000000b002d43c32816fmr4751062ljq.2.1710248876365; Tue, 12 Mar
+ 2024 06:07:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240311191241.4177990-1-peter.maydell@linaro.org>
-In-Reply-To: <20240311191241.4177990-1-peter.maydell@linaro.org>
+References: <20240311215925.40618-1-peterx@redhat.com>
+In-Reply-To: <20240311215925.40618-1-peterx@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 12 Mar 2024 13:07:22 +0000
-Message-ID: <CAFEAcA_cU4Wot4=HXUurby8rHKJ9Xyvqu_rOXk2ATMmq5j=GUg@mail.gmail.com>
-Subject: Re: [PULL 00/20] target-arm queue
-To: qemu-devel@nongnu.org
+Date: Tue, 12 Mar 2024 13:07:45 +0000
+Message-ID: <CAFEAcA8dJWrGAzUDURCGbKRpfkCTXZCvk3aXV7X7QqWR44gqbw@mail.gmail.com>
+Subject: Re: [PULL 00/34] Migration 20240311 patches
+To: peterx@redhat.com
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -85,7 +89,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Mar 2024 at 19:12, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Mon, 11 Mar 2024 at 21:59, <peterx@redhat.com> wrote:
+>
+> From: Peter Xu <peterx@redhat.com>
 >
 > The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf05f:
 >
@@ -93,17 +99,24 @@ On Mon, 11 Mar 2024 at 19:12, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
 > are available in the Git repository at:
 >
->   https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240311
+>   https://gitlab.com/peterx/qemu.git tags/migration-20240311-pull-request
 >
-> for you to fetch changes up to 5dd6bfd90d01e0cb27c349157208e5e4ce883846:
+> for you to fetch changes up to 1815338df00fd0a3fe25085564c6966f74c8f43d:
 >
->   docs: update copyright date to the year 2024 (2024-03-11 17:21:21 +0000)
+>   migration/multifd: Add new migration test cases for legacy zero page checking. (2024-03-11 16:57:09 -0400)
 >
 > ----------------------------------------------------------------
-> target-arm queue:
->  * contrib/elf2dmp: Improve robustness to corrupt input files
->  * docs: update copyright date to the year 2024
->  * hw/arm: Deprecate various old Arm machine types
+> Migration pull request
+>
+> - Avihai's fix to allow vmstate iterators to not starve for VFIO
+> - Maksim's fix on additional check on precopy load error
+> - Fabiano's fix on fdatasync() hang in mapped-ram
+> - Jonathan's fix on vring cached access over MMIO regions
+> - Cedric's cleanup patches 1-4 out of his error report series
+> - Yu's fix for RDMA migration (which used to be broken even for 8.2)
+> - Anthony's small cleanup/fix on err message
+> - Steve's patches on privatize migration.h
+> - Xiang's patchset to enable zero page detections in multifd threads
 >
 
 
