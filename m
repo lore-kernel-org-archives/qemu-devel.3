@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E96C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A488C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:09:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5WP-0000R3-Ai; Tue, 12 Mar 2024 13:02:37 -0400
+	id 1rk5WZ-000258-Hh; Tue, 12 Mar 2024 13:02:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5US-0006Bd-32; Tue, 12 Mar 2024 13:00:38 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rk5UG-0005xr-Re
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:00:35 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5UN-0008NB-Lu; Tue, 12 Mar 2024 13:00:35 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6e5dddd3b95so28358b3a.1; 
- Tue, 12 Mar 2024 10:00:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rk5UC-0008Jn-H2
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:00:23 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2d208be133bso65234561fa.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 10:00:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710262830; x=1710867630; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MoKRCKsm4E9lna6+NySazE4WVLMGHBKm/4jK5soogyI=;
- b=h/wPq5d7Hnz2CMC2PHvQdnGYFZ7R/MTebEFEOnc3He/T68OvaGqY1UotH+wxA8Z+Cn
- L7FejViyW3Iwudr9EtKciPxd/35LAZ4IUB0BqdQCvQ0TQK2oNNX8LRksMptwzLvV6KVB
- ZbJBPHWTs/movfpv8Z4th/mhb3Q/kGA4U64w7EfEUadxbXi4cJl7DftaRvRh58YmsMsP
- ZYnk76Yg1qBUGCBY8W6ImnQ54637IWMRdyVWk4+CSGdinUGmxMi0cJJfSiVrFb7su56V
- zkxb2GNl0dP6TNbNPDSEbSiGx1iL3s9fX1ju2zYddrcJLligzYtPxgXL5OoCWUEm99UZ
- H1uQ==
+ d=linaro.org; s=google; t=1710262818; x=1710867618; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=D/uNmK++/ud7f+ngB6fiXfdhnqeNrD4IIe9hghiHPPk=;
+ b=WmYFHUY6jzw4kZoE+Q0r9hg4HYTv90gx+w5tTq3c5FqkfzuYCR18MeDAwQdrsVTI+P
+ 8qeNUMklu4uylb7u1mFRWYashBFTivZ+3yxzPIcoNSEVoCvvFJkQgkPV1K7y5mmHxg1E
+ d6khbT3a1QkJ/LBgUM+DpLjOgisUUV5tz+FHiOdskHFYuY/t+XwkyIz9uq/1gCajObna
+ k5+4cz36x00NZbAbF0A01MF7LWRQrCeSWxsxj7sOgeeLoAdJ6f+8BY5HDE5kcc3Gxec8
+ 7VdVgjJaAn0FUOldwr8BV17M24dz7dUDCf0f1a9hOUpMDr3LIGqKUhcPtOPPWFTMehgO
+ JiYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710262830; x=1710867630;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MoKRCKsm4E9lna6+NySazE4WVLMGHBKm/4jK5soogyI=;
- b=KPVzImCD9dZMScfEXx7Ax+EtfL4Ha6G2Df26SKu35K2xRT+Rz2wAMRfACTrkXrPGWH
- anRHHWK5PVMnBUnAUwbntZdDNGxcDgToTpGWDG7jLxqpMuRJYuUvCd+xOPwR01NJgTuF
- ix7+Ynzja2DvVRl/vobWp1ipiKWkYOmaGwsPIU+Tc2CXernO5Oh+3uADnogA7sYG+Cib
- 3bokJLWGYPBddN7wu1StIeEszfmrA8vSDUAoANn3lCuXCqzqnh6IQjKj4RTBEcWJNHkE
- 5z/99cXbKS9uIRQs7NmH7OM41Wqgq+0zzRs/dE8pWOI7Xri/oAOKhSnlJ7ZcbhRXMq79
- fx7g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWOrxi1aNl8jqCLOFUZDaDxqG7zizkcuzuHrS+vFQDXm0sFM6qwNfTXJMAEtAXs8Hw/330ICK7nj0cqiwEfpooHK+ue
-X-Gm-Message-State: AOJu0YzKQ6w5HKGYy65bIJGsatsthy+DXje10BZ9KXP4c9s2ArFq+/sq
- X064pd4jnFcOtOiCXFvrqMxGnL8wUnCdL8gN1++qzFs21d5XgzX0kx14cXuyse8=
-X-Google-Smtp-Source: AGHT+IF1p01VJJTEl2S+CqTXnh4h3YJRrxS9Kc2zlICgMzRwtJj7wCs+ILpowdv8u55j3xlBrgb2bw==
-X-Received: by 2002:a05:6a21:32a5:b0:1a1:6cf3:265b with SMTP id
- yt37-20020a056a2132a500b001a16cf3265bmr207438pzb.18.1710262829814; 
- Tue, 12 Mar 2024 10:00:29 -0700 (PDT)
-Received: from wheely.local0.net ([118.208.155.46])
- by smtp.gmail.com with ESMTPSA id
- t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.10.00.26
+ d=1e100.net; s=20230601; t=1710262818; x=1710867618;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=D/uNmK++/ud7f+ngB6fiXfdhnqeNrD4IIe9hghiHPPk=;
+ b=s/fmtvQmN3ww+XMzmXSIqZDx1vBN8KFGAFz1o/Vo+E7Toj1aUXIsxZ7z3gK2zi64Kw
+ Tu9y+9T4wYosxItKnj05hl3t44PrEglX+WZw1ykFajyRPVlgfXPuALm3AmoCpSnPjyyW
+ UiQ5Y0La9X3AxliARvpY0VowgiNnxQ08+7ZRGMNUrjk+Bci9etantWLXo9ZPNKASZSma
+ BZneU4pcu9qr4GZH77DjiKijwf2XB6og4zVn5n3VVmf21iIytxklbH/QwVYACfY4lxLS
+ oWBj8s8k9eveG0Uijz/j9irQXU9mTJwBjUxDWBeWyblLkri8Bkl5Q605cs71Lozom/Sq
+ SHqQ==
+X-Gm-Message-State: AOJu0YwfvohA7M9kU/SmNvJGYE7P572mQLqwu3rLZeSdAdnbPOP5oBMe
+ LpASSl5exZynNB/O6T3RBls2hBkQncDPNqBuEF/RF+1zacKZh5Pf6MgrFCJCxeA=
+X-Google-Smtp-Source: AGHT+IFDvjuetJIW2htdTjG1Mw0v+5yWjl056nZ8maZa3fQe8R5LysxvlZ0O65wF0tCF7kQ0E1gduQ==
+X-Received: by 2002:a2e:9550:0:b0:2d4:2faa:d93 with SMTP id
+ t16-20020a2e9550000000b002d42faa0d93mr5159573ljh.45.1710262818085; 
+ Tue, 12 Mar 2024 10:00:18 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ x21-20020aa7d395000000b00567fa27e75fsm4079742edq.32.2024.03.12.10.00.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 10:00:29 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
+ Tue, 12 Mar 2024 10:00:17 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 164FC5F7D6;
+ Tue, 12 Mar 2024 17:00:17 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PULL 24/38] target/ppc: Remove interrupt handler wrapper functions
-Date: Wed, 13 Mar 2024 02:58:35 +1000
-Message-ID: <20240312165851.2240242-25-npiggin@gmail.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240312165851.2240242-1-npiggin@gmail.com>
-References: <20240312165851.2240242-1-npiggin@gmail.com>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>
+Subject: [PATCH v2] gitlab: aggressively avoid extra GIT data
+Date: Tue, 12 Mar 2024 17:00:11 +0000
+Message-Id: <20240312170011.1688444-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,124 +97,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+This avoids fetching blobs and tree references for branches we are not
+going to worry about. Also skip tag references which are similarly not
+useful and keep the default --prune. This keeps the .git data to
+around 100M rather than the ~400M even a shallow clone takes.
 
-These wrappers call out to handle POWER7 and newer in separate
-functions but reduce to the generic case when TARGET_PPC64 is not
-defined. It is easy enough to include the switch in the beginning of
-the generic functions to branch out to the specific functions and get
-rid of these wrappers. This avoids one indirection and entirely
-compiles out the switch without TARGET_PPC64.
+So we can check the savings we also run a quick du while setting up
+the build.
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+We also have to have special settings of GIT_FETCH_EXTRA_FLAGS for the
+Windows build, the migration legacy test and the custom runners. In
+the case of the custom runners we also move the free floating variable
+to the runner template.
+
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+
 ---
- target/ppc/excp_helper.c | 67 +++++++++++++++++-----------------------
- 1 file changed, 28 insertions(+), 39 deletions(-)
+v2
+  - make custom runners follow the legacy options
+---
+ .gitlab-ci.d/base.yml               | 4 ++++
+ .gitlab-ci.d/buildtest-template.yml | 1 +
+ .gitlab-ci.d/buildtest.yml          | 2 ++
+ .gitlab-ci.d/custom-runners.yml     | 5 +++--
+ .gitlab-ci.d/windows.yml            | 2 ++
+ 5 files changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index a9efda7626..ded488fcd8 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -1978,8 +1978,21 @@ static int p9_next_unmasked_interrupt(CPUPPCState *env)
- }
- #endif /* TARGET_PPC64 */
+diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+index 2dd8a9b57c..bf3d8efab6 100644
+--- a/.gitlab-ci.d/base.yml
++++ b/.gitlab-ci.d/base.yml
+@@ -24,6 +24,10 @@ variables:
+     # Each script line from will be in a collapsible section in the job output
+     # and show the duration of each line.
+     FF_SCRIPT_SECTIONS: 1
++    # The project has a fairly fat GIT repo so we try and avoid bringing in things
++    # we don't need. The --filter options avoid blobs and tree references we aren't going to use
++    # and we also avoid fetching tags.
++    GIT_FETCH_EXTRA_FLAGS: --filter=blob:none --filter=tree:0 --no-tags --prune --quiet
  
--static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
-+static int ppc_next_unmasked_interrupt(CPUPPCState *env)
- {
-+#ifdef TARGET_PPC64
-+    switch (env->excp_model) {
-+    case POWERPC_EXCP_POWER7:
-+        return p7_next_unmasked_interrupt(env);
-+    case POWERPC_EXCP_POWER8:
-+        return p8_next_unmasked_interrupt(env);
-+    case POWERPC_EXCP_POWER9:
-+    case POWERPC_EXCP_POWER10:
-+        return p9_next_unmasked_interrupt(env);
-+    default:
-+        break;
-+    }
-+#endif
-     bool async_deliver;
+   interruptible: true
  
-     /* External reset */
-@@ -2090,23 +2103,6 @@ static int ppc_next_unmasked_interrupt_generic(CPUPPCState *env)
-     return 0;
- }
+diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+index 4fbfeb6667..22045add80 100644
+--- a/.gitlab-ci.d/buildtest-template.yml
++++ b/.gitlab-ci.d/buildtest-template.yml
+@@ -14,6 +14,7 @@
+     - export CCACHE_DIR="$CCACHE_BASEDIR/ccache"
+     - export CCACHE_MAXSIZE="500M"
+     - export PATH="$CCACHE_WRAPPERSDIR:$PATH"
++    - du -sh .git
+     - mkdir build
+     - cd build
+     - ccache --zero-stats
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index c7d92fc301..cfdff175c3 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -187,6 +187,8 @@ build-previous-qemu:
+   variables:
+     IMAGE: opensuse-leap
+     TARGETS: x86_64-softmmu aarch64-softmmu
++    # Override the default flags as we need more to grab the old version
++    GIT_FETCH_EXTRA_FLAGS: --prune --quiet
+   before_script:
+     - export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
+     - git remote add upstream https://gitlab.com/qemu-project/qemu
+diff --git a/.gitlab-ci.d/custom-runners.yml b/.gitlab-ci.d/custom-runners.yml
+index 8e5b9500f4..a0e79acd39 100644
+--- a/.gitlab-ci.d/custom-runners.yml
++++ b/.gitlab-ci.d/custom-runners.yml
+@@ -10,13 +10,14 @@
+ # gitlab-runner.  To avoid problems that gitlab-runner can cause while
+ # reusing the GIT repository, let's enable the clone strategy, which
+ # guarantees a fresh repository on each job run.
+-variables:
+-  GIT_STRATEGY: clone
  
--static int ppc_next_unmasked_interrupt(CPUPPCState *env)
--{
--    switch (env->excp_model) {
--#ifdef TARGET_PPC64
--    case POWERPC_EXCP_POWER7:
--        return p7_next_unmasked_interrupt(env);
--    case POWERPC_EXCP_POWER8:
--        return p8_next_unmasked_interrupt(env);
--    case POWERPC_EXCP_POWER9:
--    case POWERPC_EXCP_POWER10:
--        return p9_next_unmasked_interrupt(env);
--#endif
--    default:
--        return ppc_next_unmasked_interrupt_generic(env);
--    }
--}
--
- /*
-  * Sets CPU_INTERRUPT_HARD if there is at least one unmasked interrupt to be
-  * delivered and clears CPU_INTERRUPT_HARD otherwise.
-@@ -2336,8 +2332,21 @@ static void p9_deliver_interrupt(CPUPPCState *env, int interrupt)
- }
- #endif /* TARGET_PPC64 */
- 
--static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
-+static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
- {
-+#ifdef TARGET_PPC64
-+    switch (env->excp_model) {
-+    case POWERPC_EXCP_POWER7:
-+        return p7_deliver_interrupt(env, interrupt);
-+    case POWERPC_EXCP_POWER8:
-+        return p8_deliver_interrupt(env, interrupt);
-+    case POWERPC_EXCP_POWER9:
-+    case POWERPC_EXCP_POWER10:
-+        return p9_deliver_interrupt(env, interrupt);
-+    default:
-+        break;
-+    }
-+#endif
-     PowerPCCPU *cpu = env_archcpu(env);
- 
-     switch (interrupt) {
-@@ -2440,26 +2449,6 @@ static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
-     }
- }
- 
--static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
--{
--    switch (env->excp_model) {
--#ifdef TARGET_PPC64
--    case POWERPC_EXCP_POWER7:
--        p7_deliver_interrupt(env, interrupt);
--        break;
--    case POWERPC_EXCP_POWER8:
--        p8_deliver_interrupt(env, interrupt);
--        break;
--    case POWERPC_EXCP_POWER9:
--    case POWERPC_EXCP_POWER10:
--        p9_deliver_interrupt(env, interrupt);
--        break;
--#endif
--    default:
--        ppc_deliver_interrupt_generic(env, interrupt);
--    }
--}
--
- void ppc_cpu_do_system_reset(CPUState *cs)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
+ # All custom runners can extend this template to upload the testlog
+ # data as an artifact and also feed the junit report
+ .custom_runner_template:
+   extends: .base_job_template
++  variables:
++    GIT_STRATEGY: clone
++    GIT_FETCH_EXTRA_FLAGS: --no-tags --prune --quiet
+   artifacts:
+     name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+     expire_in: 7 days
+diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+index f116b8012d..94834269ec 100644
+--- a/.gitlab-ci.d/windows.yml
++++ b/.gitlab-ci.d/windows.yml
+@@ -28,6 +28,8 @@ msys2-64bit:
+     # qTests don't run successfully with "--without-default-devices",
+     # so let's exclude the qtests from CI for now.
+     TEST_ARGS: --no-suite qtest
++    # The Windows git is a bit older so override the default
++    GIT_FETCH_EXTRA_FLAGS: --no-tags --prune --quiet
+   artifacts:
+     name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+     expire_in: 7 days
 -- 
-2.42.0
+2.39.2
 
 
