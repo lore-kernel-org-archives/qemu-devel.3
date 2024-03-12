@@ -4,79 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F02FC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6696FC54E66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAac-0005yQ-5B; Tue, 12 Mar 2024 18:27:18 -0400
+	id 1rkAeF-0006T8-V5; Tue, 12 Mar 2024 18:31:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaC-00053b-En
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:00 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcx-0004Wk-CU
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAa8-0004K0-JW
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcw-0004h0-24
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282407;
+ s=mimecast20190719; t=1710282579;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mYZExF4b/5G+QkupUCgRhC1lWR4Wq2MT6nsHzd4F7G4=;
- b=A3KNTBdENf018SPxZEtyU0YTxJVJRD3YliE09SmenU+axfxsZ+WDUc76a2WLMSXlxWxv4s
- vTTX6Ni8A5LH9tIGdlWg0TtTqTdUBxB7SL6BXmlxVezYp6OCeVQtorR8CC89ZNmxwl2HKj
- de+aWM00FwlZP7NTvJGrglOk8IVssFQ=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=9rpR2mubP+HGapvPEtzweij3vxVaeaCtxnw4CpB2h9c=;
+ b=VsE6TvgrbFSwFYi5Mh6vbPuajF0PNbYK0yB3DmUitI5ZNsGUmE0yn+i7fW0lDQ9uXkRuO2
+ Of3yzKwQMFUAkfQP0Zn1xyW4YPP1DQV7Lx12Z/YvF3n6rmGlc2WdaVIW07fGBTf+YOYrXd
+ YK9isQWsfP/txG8NQrnPWYNOtnb6/8U=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-vVz6AAPiPn283p0nSjTz6A-1; Tue, 12 Mar 2024 18:26:45 -0400
-X-MC-Unique: vVz6AAPiPn283p0nSjTz6A-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a46447b0b13so67813466b.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:26:45 -0700 (PDT)
+ us-mta-270-8weMgKyqOCm16VEHX3g5Fw-1; Tue, 12 Mar 2024 18:29:38 -0400
+X-MC-Unique: 8weMgKyqOCm16VEHX3g5Fw-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-568653cff80so1460550a12.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:29:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282404; x=1710887204;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mYZExF4b/5G+QkupUCgRhC1lWR4Wq2MT6nsHzd4F7G4=;
- b=ZavbaCewPsR3kOTxveJhjZA1xc6bdqzFMfb2VBnVz1zuUS+n4sVEJBEeJZT0pksPUB
- eFg82bjqjQDv9xszD8wwQuFNI4bum7ezc5aQbHdU3WrzPeDdVq9rFuAWUPFD7U/UqJCn
- JlLs13aLhNchk/CJOn+PU4qmQa2aKYomV3tphlBAOnLFYHJqonWQbvhn3VIt4WtVkNLP
- ZMDuMMiLMvcaXxwkN2hZk0XSxUt41Umgr/C+wS3NfQiMXA+uv6nDQX/X+C0vQFpotyEp
- EmUtzV2ZeBk+1hCRh33uvAz21CM8m33Im/WpBDV6B4++FRGSP1L3W6YgmVW3/8zzbhGG
- VIqQ==
-X-Gm-Message-State: AOJu0Yy0u/B6yZIfjNnR5YZm/qh7qu57WhI2n34s+rGom3HoDKfGqFIg
- V06EmmMSzFIALz7u3fPkc1gUazxmPI/XR2Yp3jEs/8095VUtBwwlocANEH27jFmMTAoHJx0VNJR
- HTNZkohYr7M+HY3NB9bdlO5R/NwSiKc71b78V60qi3SY9KZuYFIJOvcg+K0eRRw7D6v0Ts2fXcq
- 7wvTHOETCKvjtCLOnkzzaSpLZoKv2a5p9Z
-X-Received: by 2002:a17:907:a708:b0:a45:becb:6e3d with SMTP id
- vw8-20020a170907a70800b00a45becb6e3dmr8250022ejc.20.1710282403884; 
- Tue, 12 Mar 2024 15:26:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF/xIuX935586122cMvJOFsGklUux1lP46CD3GBOEmRAQ2odG0jk0rQYyFLNq0hMrAJpYAxVQ==
-X-Received: by 2002:a17:907:a708:b0:a45:becb:6e3d with SMTP id
- vw8-20020a170907a70800b00a45becb6e3dmr8250004ejc.20.1710282403331; 
- Tue, 12 Mar 2024 15:26:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710282576; x=1710887376;
+ h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9rpR2mubP+HGapvPEtzweij3vxVaeaCtxnw4CpB2h9c=;
+ b=BwEPOAWUZXhU6wlkkUok9bejTLxpwowT0scuExmLultETcHvodogF6k7vhvxCzZW5q
+ fDs6s/HqBfYCOgQJrdmGxGQ3ZFg89kgBupSJsya/64DDQTZoBTGuzjEatsDAn3l7huQL
+ WpLnQ5VYcwsiDrVzOcfkhluk+PmZZHZ9bK50mv0thPGG9Rcp/IdcgRNc2AnQ9UbTvlZ0
+ 5aKjloWCTtl8QkeGyLoL6sSlGjWtVDzDrQ8G5cvRWwsjG5lxWYt7ZDp9vEF1xppSTHuW
+ m06USqjlh+ooTUne6+Dl1bVdfvW1GC8mnUSKL+C1awzdhpWGsYasJYz/CR57WQ9MY72P
+ Kp3w==
+X-Gm-Message-State: AOJu0YzVcp8BvLz/S+QAlR1+dysJNQU5vM6Vurg5TQcRbGqn3cKghHVe
+ PwknQGsUUysg1bR2Y1SdXAlC/ejUvZKZ2TMcEjLVVZz8jZOiCzu/+wxBRkubBgLqfPDXXRl0+Kw
+ fT7CScdbywm9OpW20FvMcGb5N8deRzKhDNIEbux7/jy0lzNFzHeaTX2MmErnhahNQY1+9+NBipS
+ 0QMnYnKaoomV7z4B/oc8lLVsmlxrzhzBQv
+X-Received: by 2002:a05:6402:5c4:b0:564:5764:a5d8 with SMTP id
+ n4-20020a05640205c400b005645764a5d8mr7410126edx.25.1710282576227; 
+ Tue, 12 Mar 2024 15:29:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHNwcoC1wlbA8vogIh3AblChCVBZlWTNhCTai/iAie5NblNY1vE0LjGN87M3A6dOOoe9jB21g==
+X-Received: by 2002:a05:6402:5c4:b0:564:5764:a5d8 with SMTP id
+ n4-20020a05640205c400b005645764a5d8mr7410109edx.25.1710282575742; 
+ Tue, 12 Mar 2024 15:29:35 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- uz17-20020a170907119100b00a45cac9ae6bsm4213324ejb.162.2024.03.12.15.26.41
+ ev19-20020a056402541300b0056742460f68sm4271821edb.66.2024.03.12.15.29.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:26:42 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:26:40 -0400
+ Tue, 12 Mar 2024 15:29:35 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:29:33 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Mario Casquero <mcasquer@redhat.com>
-Subject: [PULL 23/68] libvhost-user: Factor out vq usability check
-Message-ID: <2a29022768f1777d71e26b784a264323d1914dd6.1710282274.git.mst@redhat.com>
-References: <cover.1710282274.git.mst@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PATCH] SMBIOS: fix long lines
+Message-ID: <9bce53c4f7ffda8e4a49353902626702fa01e5a6.1710282571.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
@@ -104,98 +96,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hildenbrand <david@redhat.com>
+Break up long lines to fit under 80/90 char limit.
 
-Let's factor it out to prepare for further changes.
-
-Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Message-Id: <20240214151701.29906-13-david@redhat.com>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 24 +++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ hw/smbios/smbios.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 55aef5fcc6..ed0a978d4f 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -283,6 +283,12 @@ vu_remove_all_mem_regs(VuDev *dev)
-     dev->nregions = 0;
- }
- 
-+static bool
-+vu_is_vq_usable(VuDev *dev, VuVirtq *vq)
-+{
-+    return likely(!dev->broken) && likely(vq->vring.avail);
-+}
-+
- static size_t
- get_fd_hugepagesize(int fd)
- {
-@@ -2380,8 +2386,7 @@ vu_queue_get_avail_bytes(VuDev *dev, VuVirtq *vq, unsigned int *in_bytes,
-     idx = vq->last_avail_idx;
- 
-     total_bufs = in_total = out_total = 0;
--    if (unlikely(dev->broken) ||
--        unlikely(!vq->vring.avail)) {
-+    if (!vu_is_vq_usable(dev, vq)) {
-         goto done;
-     }
- 
-@@ -2496,8 +2501,7 @@ vu_queue_avail_bytes(VuDev *dev, VuVirtq *vq, unsigned int in_bytes,
- bool
- vu_queue_empty(VuDev *dev, VuVirtq *vq)
- {
--    if (unlikely(dev->broken) ||
--        unlikely(!vq->vring.avail)) {
-+    if (!vu_is_vq_usable(dev, vq)) {
-         return true;
-     }
- 
-@@ -2536,8 +2540,7 @@ vring_notify(VuDev *dev, VuVirtq *vq)
- 
- static void _vu_queue_notify(VuDev *dev, VuVirtq *vq, bool sync)
- {
--    if (unlikely(dev->broken) ||
--        unlikely(!vq->vring.avail)) {
-+    if (!vu_is_vq_usable(dev, vq)) {
-         return;
-     }
- 
-@@ -2862,8 +2865,7 @@ vu_queue_pop(VuDev *dev, VuVirtq *vq, size_t sz)
-     unsigned int head;
-     VuVirtqElement *elem;
- 
--    if (unlikely(dev->broken) ||
--        unlikely(!vq->vring.avail)) {
-+    if (!vu_is_vq_usable(dev, vq)) {
-         return NULL;
-     }
- 
-@@ -3020,8 +3022,7 @@ vu_queue_fill(VuDev *dev, VuVirtq *vq,
- {
-     struct vring_used_elem uelem;
- 
--    if (unlikely(dev->broken) ||
--        unlikely(!vq->vring.avail)) {
-+    if (!vu_is_vq_usable(dev, vq)) {
-         return;
-     }
- 
-@@ -3050,8 +3051,7 @@ vu_queue_flush(VuDev *dev, VuVirtq *vq, unsigned int count)
- {
-     uint16_t old, new;
- 
--    if (unlikely(dev->broken) ||
--        unlikely(!vq->vring.avail)) {
-+    if (!vu_is_vq_usable(dev, vq)) {
-         return;
-     }
- 
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index e3d5d8f2e2..949c2d74a1 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -1592,12 +1592,15 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
+             t = g_new0(struct type9_instance, 1);
+             save_opt(&t->slot_designation, opts, "slot_designation");
+             t->slot_type = qemu_opt_get_number(opts, "slot_type", 0);
+-            t->slot_data_bus_width = qemu_opt_get_number(opts, "slot_data_bus_width", 0);
++            t->slot_data_bus_width =
++                qemu_opt_get_number(opts, "slot_data_bus_width", 0);
+             t->current_usage = qemu_opt_get_number(opts, "current_usage", 0);
+             t->slot_length = qemu_opt_get_number(opts, "slot_length", 0);
+             t->slot_id = qemu_opt_get_number(opts, "slot_id", 0);
+-            t->slot_characteristics1 = qemu_opt_get_number(opts, "slot_characteristics1", 0);
+-            t->slot_characteristics2 = qemu_opt_get_number(opts, "slot_characteristics2", 0);
++            t->slot_characteristics1 =
++                qemu_opt_get_number(opts, "slot_characteristics1", 0);
++            t->slot_characteristics2 =
++                qemu_opt_get_number(opts, "slot_characteristics2", 0);
+             save_opt(&t->pcidev, opts, "pcidev");
+             QTAILQ_INSERT_TAIL(&type9, t, next);
+             return;
 -- 
 MST
 
