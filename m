@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F11C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7891DC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjzwt-0006E1-89; Tue, 12 Mar 2024 07:05:35 -0400
+	id 1rjzxb-0006iD-5i; Tue, 12 Mar 2024 07:06:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rjzws-0006Ds-5p
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:05:34 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1rjzxX-0006fl-3B
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:06:15 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rjzwq-0004Wp-C3
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:05:33 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-568307fe62eso5421532a12.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:05:31 -0700 (PDT)
+ id 1rjzxS-0004tP-6V
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:06:14 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-56838e00367so4540860a12.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710241530; x=1710846330; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ns/D/GEbg+1EaTTfRx4jrWC5lSquljI+6HiF884RLvU=;
- b=Xk43gGrttHSZ26qAy+QR1hlG11q4hWrn+Yruvuf6RtfyOnVK9+4mTu+CCYWnuV+weO
- 2lS+SIsfCdQ6FerROUj1kTtqrNE0vulQEZy9ZO7rAGpm5BivRTqEhLRiezqK0meV0q5V
- AiuYL/3mZmBUs24zaiGcrXkdZcvrlpdAZM9c1hqyeoBqpoVuTUrDCitTgP2b8vyQSLNr
- Y75L2MLtri8RZJrvBgnKWKU94A5bj+Vj90oU5AJYjmE+Ed+4fyow5NyXhrt+HK+tBRAL
- x3KW2xPbRkDov42neKBtLUs3MsYYrgLYtDr/2h7p38FKSqbABMANzUYvdChXg388OlGE
- S4Sw==
+ d=linaro.org; s=google; t=1710241566; x=1710846366; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=p7OEZPa7p6Pe7ENAE6q6rtIkEaxEOW1ji58ZGDGbUJA=;
+ b=e0MMsVdT5h375SRNMZOtutvUZj0v7oSuzcBmK0i4ahec6yUhXTyZjEvukrUqc8aPkm
+ q82wkID45uFHWc7d/JTpA6iUa4T+MGnn7Xgb5AT6jq1OZ9l3Tr5W6rCG4bxlAPZe8n5m
+ BzIBQ7zWObpv1nz/ihkOjj9qR4329J8rInNsH8z9uxOD9TNJVYqMhaWJI71GxUXdHWzw
+ E0cNx/1Ng2naWrg/P6kP2ohJ7W+iHoxeMT/tBq8SeLzEHoIIp2/KlaKg9z3YBEooM4Fi
+ FTBR0xf+az/0XiT6yhd8iPbVd73MPY0D1QF9RilWuV+MWfwYwS4Ogg+qOi1fcOz1IKHO
+ Gm6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710241530; x=1710846330;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Ns/D/GEbg+1EaTTfRx4jrWC5lSquljI+6HiF884RLvU=;
- b=K72LlIwjW6o/FYnegUrDiSN88CYNXze/iRWIG1bP2CkLs57p69IYIWY1osQfuqY0L+
- hnaOQfuraIEA+gE8e2kuYE3tXATZSOnjYQiFcsFfNBvNfpLfQrscJGyE6x3B3of8vkxS
- 2qUTnIc1Mpql1ESQJW3dvEyi1t7dZL1SdHOO0SUC38BzVoEBNmLprKZPU4CJWwvLBPQR
- mhOaYbaKIMO45pZYHNpAjEA1QH9u96If/0mWSZRa9s9fC28PzmOTA98AD4ndngvSm20o
- ccEuQ0APitirb4fTLjUGAi+GhxJMBATBlyeJl31KZ8ehvkTmYgvjbgmQx/RS8TEdN/9R
- 6+Zw==
-X-Gm-Message-State: AOJu0Yy6jQr3Vd3YHEYgAwA6Jyiro3Oxe0g409vwmZ4owKLNj2CAm54r
- D1sMafDj/QFOChAPore57bzCGzNODqwTFKqAgEWGsrkQr7oMaj4B1iHCAPyYDxEPwOQnuSDHmWl
- IjZletYpKu7YegfAFRAfO3E/AqGZvSlarHKQ8/rJzqV1ecN+w
-X-Google-Smtp-Source: AGHT+IHltc7pU83o9mj7u1mF4YlNhurjHr9Jp/QFtD+lmI4IJcLzCbsU5u8xUntH0OYXWfmz4aBhVrnnLKvgkMo7pUM=
-X-Received: by 2002:a50:d495:0:b0:568:3004:c611 with SMTP id
- s21-20020a50d495000000b005683004c611mr5197993edi.42.1710241530193; Tue, 12
- Mar 2024 04:05:30 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710241566; x=1710846366;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=p7OEZPa7p6Pe7ENAE6q6rtIkEaxEOW1ji58ZGDGbUJA=;
+ b=ssKnqGfRnTqNqW9DziItuoJ78sjCevs4Pjl1Am4U16kTk2QOvsk4/x27PjpVDGlshM
+ i8yXSXL5b1XyUHxsVJPDt7/zGd+ta2JExkn6bGwzqlhHt/WK6DSk05qQdRrAS6pxjpHy
+ WecMExTDRA3rLidM8xBgt989sZTVxwLjfsN5i9q2WhIWQIuERnkDw97Xc59lq3Eht//+
+ 4k74FH/ouragfTX4RxZGuGeQEgzq72sJnB3U+HhWKP5dh8I/W+Ab7mmbfJEVo3BKym2Y
+ vkwzN0PJqnHLyMNyBHq3C0CBiyEEzLhEBhCIqJX8lYrkmizdWyxgPF80FP/gP926YTAg
+ Kv1w==
+X-Gm-Message-State: AOJu0Yx9DkZNyVO5E5SRFXeY+HFTRYuemudGtI//amR4t3WLE/Mavoig
+ 6G8u9jpzHs1vGgD5jP/vpYISKZ6uM8GITMqgZEw0JTAVO6PM3Trpqe9E2E6LM5ENZL5Aqe8D7pQ
+ EvggKx7mGdHuPrrDrG1O/m4mK4j7pOWcgwiJYJCFWGUR7al6a
+X-Google-Smtp-Source: AGHT+IFU6gdUn5kV2pnxMtMY/hnnbwLilV7xcx5/Z86+abBtPbQihE7d0xZC/6QIJ1f7c2BunMPobJWSv/KKkdGcF2g=
+X-Received: by 2002:a50:d741:0:b0:568:1c56:f82 with SMTP id
+ i1-20020a50d741000000b005681c560f82mr2122335edj.36.1710241566750; Tue, 12 Mar
+ 2024 04:06:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240310191924.201680-1-clg@redhat.com>
-In-Reply-To: <20240310191924.201680-1-clg@redhat.com>
+References: <20240311175440.305912-1-laurent@vivier.eu>
+In-Reply-To: <20240311175440.305912-1-laurent@vivier.eu>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 12 Mar 2024 11:05:19 +0000
-Message-ID: <CAFEAcA853VG67nvAf0SNjaWcaVt2YqKSmwkcWoaREiggdLboDQ@mail.gmail.com>
-Subject: Re: [PULL 0/2] vfio queue
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Date: Tue, 12 Mar 2024 11:05:56 +0000
+Message-ID: <CAFEAcA-w87eBiYr3+jJZgRa_R1b1yqKtdCoSryREiiah0Hk2CA@mail.gmail.com>
+Subject: Re: [PULL 0/1] M68k for 9.0 patches
+To: Laurent Vivier <laurent@vivier.eu>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -89,27 +87,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 10 Mar 2024 at 19:20, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
+On Mon, 11 Mar 2024 at 17:55, Laurent Vivier <laurent@vivier.eu> wrote:
 >
-> The following changes since commit cbccded4a2b5d685a426a437e25f67d3a375b2=
-92:
+> The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf05f:
 >
->   Merge tag 'pull-riscv-to-apply-20240308-1' of https://github.com/alista=
-ir23/qemu into staging (2024-03-08 11:47:01 +0000)
+>   Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into staging (2024-03-09 20:12:21 +0000)
 >
 > are available in the Git repository at:
 >
->   https://github.com/legoater/qemu/ tags/pull-vfio-20240310
+>   https://github.com/vivier/qemu-m68k.git tags/m68k-for-9.0-pull-request
 >
-> for you to fetch changes up to 0cb51c183a91e882b10ead4ddf2321296a537c47:
+> for you to fetch changes up to e39a0809b99bbbe5f0ec432fdd9e8c943ba24936:
 >
->   vfio: allow cpr-reboot migration if suspended (2024-03-08 22:10:13 +010=
-0)
+>   virt: set the CPU type in BOOTINFO (2024-03-11 09:38:08 +0100)
 >
 > ----------------------------------------------------------------
-> vfio queue:
->
-> * Allow cpr-reboot for vfio
+> Pull request for m68k 20240311
 >
 > ----------------------------------------------------------------
 
