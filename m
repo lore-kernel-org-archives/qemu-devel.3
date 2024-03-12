@@ -4,100 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 900BCC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1FACC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:03:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk6Qe-0001f3-2P; Tue, 12 Mar 2024 14:00:52 -0400
+	id 1rk6Sl-0002Z3-Ch; Tue, 12 Mar 2024 14:02:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk6QK-0001b2-M0
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:00:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk6SF-0002RD-AU
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:02:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk6QH-0002o4-AC
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:00:24 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk6SC-0003Hu-On
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:02:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710266417;
+ s=mimecast20190719; t=1710266540;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SO0EPgm7BqsnG8vdVPs/h99HjcNJP0V+y7vUnzFvtdU=;
- b=PYcVjlH9Y8bdZhZco7A4HWlvNYiQCnGLheydYesxDR5FTQSIGoEKbyoI6IU0WVzCyr5WkE
- swpwEYgj+jlY80yH9hHdQT164ai4YDUQl3EDUyusOSwa0t04mtgqGZWQuqFN3xlk0Um1eM
- rfBbNuPjIapC2/or407iQ0/7pQXlWBA=
+ bh=wuFXnHbk4Ph8I7gPvn0ymvYNVfFIImEZkhvtspv5C0I=;
+ b=PTMro+baNbgvbiUCTo3UKaRXmOk82HLj8q5TiaTGI6mAE5aphn3tHbigTcdFAfBUhoNHPp
+ crN8t2ZizHUV1SZ7CvbqHTBazH5nWW9grErRDxyU5KErVi9gzLzN+cGButYmGzoacrARAJ
+ mvttuUq5tPgoVi5mCcRFakN2sJqtixc=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-0URBOYqgNpuc_SGFX0JG1g-1; Tue, 12 Mar 2024 14:00:14 -0400
-X-MC-Unique: 0URBOYqgNpuc_SGFX0JG1g-1
+ us-mta-660-7HbVeDJvP0-TPkyerttWxg-1; Tue, 12 Mar 2024 14:02:18 -0400
+X-MC-Unique: 7HbVeDJvP0-TPkyerttWxg-1
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-412fb99c892so1008625e9.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:00:13 -0700 (PDT)
+ 5b1f17b1804b1-412e992444eso24679305e9.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:02:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710266413; x=1710871213;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SO0EPgm7BqsnG8vdVPs/h99HjcNJP0V+y7vUnzFvtdU=;
- b=OT3/udllsvAGizBynxZSlxjak5NbP+crp2/Ph+MXGAB/fkl6oKis3sqfzkFrYLhr3A
- 0bGODPce0Zy7rM9Vyhrf4QcN2fCKYK1QAF6m7bimzl5WFC9Hgazk5XsNPtZRvEB722ug
- 2Q3BgnCnyqhJzxU3WkMRnpJjU9RHhc8szVh+UglgL39TdtmzDGmgRVxWnBWXiRVk7k9B
- gDS6EEPws0eqA/OEzVnuT/mE9jcSGKs5FcSd+kQt2ahHRbF18r6HX3LkqgRz2VZkMcRK
- 8x5FSmzkpaOZLeak0w60HhbMJeqXqXLdBIqHkYbpY4hNI2ojTuTkt3KISmhUM/ArSfRc
- nb9A==
-X-Gm-Message-State: AOJu0Yy3TTF7WrJPnC2zqNlkx4FygoFDe/sIfeTrMbVv3c95/0lDLylR
- PNb5sUW2/fhjbVn0P27Y0Cf0W5SdZ/+54q+l3Ac8R9MnyMCTY8mnZSFyoGP+GKxw3O5oequjqiw
- +ozwRH/GBGLu7wdwUYZVqhgZsseAWoCTktyNBvFTkmX6ogzqSuPU2
-X-Received: by 2002:a05:600c:4f09:b0:413:1dae:dcdd with SMTP id
- l9-20020a05600c4f0900b004131daedcddmr700845wmq.6.1710266412766; 
- Tue, 12 Mar 2024 11:00:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHenfbcrL4F39Xr0c8AcnFTnNoML5e+nuBrQba39mLX6tlrOXamE8ijLL8NE71pUMR1LW/C8g==
-X-Received: by 2002:a05:600c:4f09:b0:413:1dae:dcdd with SMTP id
- l9-20020a05600c4f0900b004131daedcddmr700785wmq.6.1710266412041; 
- Tue, 12 Mar 2024 11:00:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710266537; x=1710871337;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wuFXnHbk4Ph8I7gPvn0ymvYNVfFIImEZkhvtspv5C0I=;
+ b=p7ZE2XRbnukTjqDWFTIEqg2RNol1DJ8MpCqwfrTPdcpnbTQVMPomgz1zeQmJcFOkAM
+ HeAMxmzg+2cx7sM5SkoRpBbcH2USlJszx/xw35qPO0K/Et5PZij4RLm//Do9bT1c16hy
+ Yc7rr6vG4uGdXPgNKh6TkL560EvDdkqYGSDSX9V2oGgdGM45SEDyz+/6B/q+LkcaOruB
+ RUoEzg2OFPDCaB7Sv2eFe0ri7d9TwVdOoW3vace9XseYjdb2/xEUvNy5AEwgLljPEvgY
+ oz7CVq4Do3gtWVHivJ/LlZzhuZ1b/dnDDeCwSMv9BUYDQIVg+qVyIUCwrF62RDatfhnk
+ hBeA==
+X-Gm-Message-State: AOJu0YyV9PoP1tnq7dbqsHqk09Rxx84lQ6wlLag08JhTk7M0gL8BsXf4
+ EWhs3TQ8eZIPRjTLxghFL2qiW5D6snu30jJOH5wPDmNODBWeCh9eQiJ1J8kadiKqu5UxK0n9LJx
+ RvdcqkbyaxN/usa9MGBw0pj833OWkvZ8GP/JsB5X1U3BPNRf9AILV
+X-Received: by 2002:a05:600c:310f:b0:412:f572:5318 with SMTP id
+ g15-20020a05600c310f00b00412f5725318mr7670648wmo.11.1710266537032; 
+ Tue, 12 Mar 2024 11:02:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFmedmsaF7YJ8lTr+O81RCDuBOTcYZxyMkmkTL7zXUMOM18B3cLOJQj45BL0yDB6G4NlrnY9A==
+X-Received: by 2002:a05:600c:310f:b0:412:f572:5318 with SMTP id
+ g15-20020a05600c310f00b00412f5725318mr7670623wmo.11.1710266536478; 
+ Tue, 12 Mar 2024 11:02:16 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
  by smtp.gmail.com with ESMTPSA id
- t10-20020a05600c450a00b004131388d948sm17546130wmo.0.2024.03.12.11.00.04
+ bd24-20020a05600c1f1800b00413e4ff2884sm854211wmb.40.2024.03.12.11.02.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 11:00:11 -0700 (PDT)
-Date: Tue, 12 Mar 2024 14:00:02 -0400
+ Tue, 12 Mar 2024 11:02:16 -0700 (PDT)
+Date: Tue, 12 Mar 2024 14:02:11 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, maz@kernel.org,
- jean-philippe@linaro.org, jonathan.cameron@huawei.com,
- lpieralisi@kernel.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, imammedo@redhat.com,
- andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
- eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
- will@kernel.org, gshan@redhat.com, rafael@kernel.org,
- alex.bennee@linaro.org, linux@armlinux.org.uk,
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, salil.mehta@opnsrc.net,
- zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
- wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
- lixianglai@loongson.cn, linuxarm@huawei.com
-Subject: Re: [PATCH V8 0/8] Add architecture agnostic code to support vCPU
- Hotplug
-Message-ID: <20240312135802-mutt-send-email-mst@kernel.org>
-References: <20240312020000.12992-1-salil.mehta@huawei.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Sanjay Rao <srao@redhat.com>, Boaz Ben Shabat <bbenshab@redhat.com>,
+ Joe Mario <jmario@redhat.com>
+Subject: Re: [PATCH v2] virtio-blk: iothread-vq-mapping coroutine pool sizing
+Message-ID: <20240312140142-mutt-send-email-mst@kernel.org>
+References: <20240312151204.412624-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240312020000.12992-1-salil.mehta@huawei.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20240312151204.412624-1-stefanha@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,133 +101,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 12, 2024 at 01:59:52AM +0000, Salil Mehta wrote:
-> Virtual CPU hotplug support is being added across various architectures[1][3].
-> This series adds various code bits common across all architectures:
+On Tue, Mar 12, 2024 at 11:12:04AM -0400, Stefan Hajnoczi wrote:
+> It is possible to hit the sysctl vm.max_map_count limit when the
+> coroutine pool size becomes large. Each coroutine requires two mappings
+> (one for the stack and one for the guard page). QEMU can crash with
+> "failed to set up stack guard page" or "failed to allocate memory for
+> stack" when this happens.
 > 
-> 1. vCPU creation and Parking code refactor [Patch 1]
-> 2. Update ACPI GED framework to support vCPU Hotplug [Patch 2,3]
-> 3. ACPI CPUs AML code change [Patch 4,5]
-> 4. Helper functions to support unrealization of CPU objects [Patch 6,7]
-> 5. Docs [Patch 8]
+> Coroutine pool sizing is simple when there is only thread: sum up all
+> I/O requests across all virtqueues.
+> 
+> When the iothread-vq-mapping option is used we should calculate tighter
+> bounds because thread may serve a subset of the device's virtqueues:
+> take the maximum number of the number of I/O requests across all
+> virtqueues. A thread does not need coroutine pool space for I/O requests
+> that are handled by other threads.
+> 
+> This is not a solution to hitting vm.max_map_count, but it helps. A
+> guest with 64 vCPUs (hence 64 virtqueues) across 4 IOThreads with one
+> iothread-vq-mapping virtio-blk device and a root disk without goes from
+> pool_max_size 16,448 to 10,304.
+> 
+> Reported-by: Sanjay Rao <srao@redhat.com>
+> Reported-by: Boaz Ben Shabat <bbenshab@redhat.com>
+> Reported-by: Joe Mario <jmario@redhat.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 
 
-I replied separately: patch 1 needs ack from KVM maintainers.
+Looks reasonable.
 
-I suspect I could pick some bits I have no way to know
-whether they were tested separately.
-In any way looks like something best left to next release ...
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
+if you want me to merge it, let me know pls.
+
+> ---
+> v2:
+> - State the the tighter bounds reflect the fact that threads may only
+>   process a subset of the total I/O requests from a device [Kevin]
+> - Add Reported-by: Joe Mario, he has been investigating this issue.
 > 
-> Repository:
+>  include/hw/virtio/virtio-blk.h |  2 ++
+>  hw/block/virtio-blk.c          | 34 ++++++++++++++++++++++++++++++++--
+>  2 files changed, 34 insertions(+), 2 deletions(-)
 > 
-> [*] https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v2.common.v8
-> 
-> 
-> Revision History:
-> 
-> Patch-set V7 -> V8
-> 
-> 1. Rebased and Fixed the conflicts
-> 
-> Patch-set  V6 -> V7
-> 1. Addressed Alex Bennée's comments
->    - Updated the docs
-> 2. Addressed Igor Mammedov's comments
->    - Merged patches [Patch V6 3/9] & [Patch V6 7/9] with [Patch V6 4/9]
->    - Updated commit-log of [Patch V6 1/9] and [Patch V6 5/9]     
-> 3. Added Shaoqin Huang's Reviewed-by tags for whole series.
-> Link: https://lore.kernel.org/qemu-devel/20231013105129.25648-1-salil.mehta@huawei.com/
-> 
-> Patch-set  V5 -> V6
-> 1. Addressed Gavin Shan's comments
->    - Fixed the assert() ranges of address spaces
->    - Rebased the patch-set to latest changes in the qemu.git
->    - Added Reviewed-by tags for patches {8,9}
-> 2. Addressed Jonathan Cameron's comments
->    - Updated commit-log for [Patch V5 1/9] with mention of trace events
->    - Added Reviewed-by tags for patches {1,5}
-> 3. Added Tested-by tags from Xianglai Li
-> 4. Fixed checkpatch.pl error "Qemu -> QEMU" in [Patch V5 1/9] 
-> Link: https://lore.kernel.org/qemu-devel/20231011194355.15628-1-salil.mehta@huawei.com/
-> 
-> Patch-set  V4 -> V5
-> 1. Addressed Gavin Shan's comments
->    - Fixed the trace events print string for kvm_{create,get,park,destroy}_vcpu
->    - Added Reviewed-by tag for patch {1}
-> 2. Added Shaoqin Huang's Reviewed-by tags for Patches {2,3}
-> 3. Added Tested-by Tag from Vishnu Pajjuri to the patch-set
-> 4. Dropped the ARM specific [Patch V4 10/10]
-> Link: https://lore.kernel.org/qemu-devel/20231009203601.17584-1-salil.mehta@huawei.com/
-> 
-> Patch-set  V3 -> V4
-> 1. Addressed David Hilderbrand's comments
->    - Fixed the wrong doc comment of kvm_park_vcpu API prototype
->    - Added Reviewed-by tags for patches {2,4}
-> Link: https://lore.kernel.org/qemu-devel/20231009112812.10612-1-salil.mehta@huawei.com/
-> 
-> Patch-set  V2 -> V3
-> 1. Addressed Jonathan Cameron's comments
->    - Fixed 'vcpu-id' type wrongly changed from 'unsigned long' to 'integer'
->    - Removed unnecessary use of variable 'vcpu_id' in kvm_park_vcpu
->    - Updated [Patch V2 3/10] commit-log with details of ACPI_CPU_SCAN_METHOD macro
->    - Updated [Patch V2 5/10] commit-log with details of conditional event handler method
->    - Added Reviewed-by tags for patches {2,3,4,6,7}
-> 2. Addressed Gavin Shan's comments
->    - Remove unnecessary use of variable 'vcpu_id' in kvm_par_vcpu
->    - Fixed return value in kvm_get_vcpu from -1 to -ENOENT
->    - Reset the value of 'gdb_num_g_regs' in gdb_unregister_coprocessor_all
->    - Fixed the kvm_{create,park}_vcpu prototypes docs
->    - Added Reviewed-by tags for patches {2,3,4,5,6,7,9,10}
-> 3. Addressed one earlier missed comment by Alex Bennée in RFC V1
->    - Added traces instead of DPRINTF in the newly added and some existing functions
-> Link: https://lore.kernel.org/qemu-devel/20230930001933.2660-1-salil.mehta@huawei.com/
-> 
-> Patch-set V1 -> V2
-> 1. Addressed Alex Bennée's comments
->    - Refactored the kvm_create_vcpu logic to get rid of goto
->    - Added the docs for kvm_{create,park}_vcpu prototypes
->    - Splitted the gdbstub and AddressSpace destruction change into separate patches
->    - Added Reviewed-by tags for patches {2,10}
-> Link: https://lore.kernel.org/qemu-devel/20230929124304.13672-1-salil.mehta@huawei.com/
-> 
-> References:
-> 
-> [1] https://lore.kernel.org/qemu-devel/20230926100436.28284-1-salil.mehta@huawei.com/
-> [2] https://lore.kernel.org/all/20230913163823.7880-1-james.morse@arm.com/
-> [3] https://lore.kernel.org/qemu-devel/cover.1695697701.git.lixianglai@loongson.cn/
-> 
-> 
-> 
-> Salil Mehta (8):
->   accel/kvm: Extract common KVM vCPU {creation,parking} code
->   hw/acpi: Move CPU ctrl-dev MMIO region len macro to common header file
->   hw/acpi: Update ACPI GED framework to support vCPU Hotplug
->   hw/acpi: Update GED _EVT method AML with CPU scan
->   hw/acpi: Update CPUs AML with cpu-(ctrl)dev change
->   physmem: Add helper function to destroy CPU AddressSpace
->   gdbstub: Add helper function to unregister GDB register space
->   docs/specs/acpi_hw_reduced_hotplug: Add the CPU Hotplug Event Bit
-> 
->  accel/kvm/kvm-all.c                    | 64 ++++++++++++++++++++------
->  accel/kvm/trace-events                 |  5 +-
->  docs/specs/acpi_hw_reduced_hotplug.rst |  3 +-
->  gdbstub/gdbstub.c                      | 12 +++++
->  hw/acpi/acpi-cpu-hotplug-stub.c        |  6 +++
->  hw/acpi/cpu.c                          | 27 +++++++----
->  hw/acpi/generic_event_device.c         | 21 +++++++++
->  hw/i386/acpi-build.c                   |  3 +-
->  include/exec/cpu-common.h              |  8 ++++
->  include/exec/gdbstub.h                 |  6 +++
->  include/hw/acpi/cpu.h                  |  5 +-
->  include/hw/acpi/cpu_hotplug.h          |  4 ++
->  include/hw/acpi/generic_event_device.h |  4 ++
->  include/hw/core/cpu.h                  |  1 +
->  include/sysemu/kvm.h                   | 16 +++++++
->  system/physmem.c                       | 29 ++++++++++++
->  16 files changed, 185 insertions(+), 29 deletions(-)
-> 
+> diff --git a/include/hw/virtio/virtio-blk.h b/include/hw/virtio/virtio-blk.h
+> index 5c14110c4b..ac29700ad4 100644
+> --- a/include/hw/virtio/virtio-blk.h
+> +++ b/include/hw/virtio/virtio-blk.h
+> @@ -74,6 +74,8 @@ struct VirtIOBlock {
+>      uint64_t host_features;
+>      size_t config_size;
+>      BlockRAMRegistrar blk_ram_registrar;
+> +
+> +    unsigned coroutine_pool_size;
+>  };
+>  
+>  typedef struct VirtIOBlockReq {
+> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+> index 738cb2ac36..0a14b2b175 100644
+> --- a/hw/block/virtio-blk.c
+> +++ b/hw/block/virtio-blk.c
+> @@ -1957,6 +1957,35 @@ static void virtio_blk_stop_ioeventfd(VirtIODevice *vdev)
+>      s->ioeventfd_stopping = false;
+>  }
+>  
+> +/* Increase the coroutine pool size to include our I/O requests */
+> +static void virtio_blk_inc_coroutine_pool_size(VirtIOBlock *s)
+> +{
+> +    VirtIOBlkConf *conf = &s->conf;
+> +    unsigned max_requests = 0;
+> +
+> +    /* Tracks the total number of requests for AioContext */
+> +    g_autoptr(GHashTable) counters = g_hash_table_new(NULL, NULL);
+> +
+> +    /* Call this function after setting up vq_aio_context[] */
+> +    assert(s->vq_aio_context);
+> +
+> +    for (unsigned i = 0; i < conf->num_queues; i++) {
+> +        AioContext *ctx = s->vq_aio_context[i];
+> +        unsigned n = GPOINTER_TO_UINT(g_hash_table_lookup(counters, ctx));
+> +
+> +        n += conf->queue_size / 2; /* this is a heuristic */
+> +
+> +        g_hash_table_insert(counters, ctx, GUINT_TO_POINTER(n));
+> +
+> +        if (n > max_requests) {
+> +            max_requests = n;
+> +        }
+> +    }
+> +
+> +    qemu_coroutine_inc_pool_size(max_requests);
+> +    s->coroutine_pool_size = max_requests; /* stash it for ->unrealize() */
+> +}
+> +
+>  static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
+>  {
+>      VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+> @@ -2048,7 +2077,6 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
+>      for (i = 0; i < conf->num_queues; i++) {
+>          virtio_add_queue(vdev, conf->queue_size, virtio_blk_handle_output);
+>      }
+> -    qemu_coroutine_inc_pool_size(conf->num_queues * conf->queue_size / 2);
+>  
+>      /* Don't start ioeventfd if transport does not support notifiers. */
+>      if (!virtio_device_ioeventfd_enabled(vdev)) {
+> @@ -2065,6 +2093,8 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
+>          return;
+>      }
+>  
+> +    virtio_blk_inc_coroutine_pool_size(s);
+> +
+>      /*
+>       * This must be after virtio_init() so virtio_blk_dma_restart_cb() gets
+>       * called after ->start_ioeventfd() has already set blk's AioContext.
+> @@ -2096,7 +2126,7 @@ static void virtio_blk_device_unrealize(DeviceState *dev)
+>      for (i = 0; i < conf->num_queues; i++) {
+>          virtio_del_queue(vdev, i);
+>      }
+> -    qemu_coroutine_dec_pool_size(conf->num_queues * conf->queue_size / 2);
+> +    qemu_coroutine_dec_pool_size(s->coroutine_pool_size);
+>      qemu_mutex_destroy(&s->rq_lock);
+>      blk_ram_registrar_destroy(&s->blk_ram_registrar);
+>      qemu_del_vm_change_state_handler(s->change);
 > -- 
-> 2.34.1
+> 2.44.0
 
 
