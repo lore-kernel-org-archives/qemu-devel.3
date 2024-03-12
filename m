@@ -4,78 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB609C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9282CC54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:37:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1LM-0004mE-6c; Tue, 12 Mar 2024 08:34:56 -0400
+	id 1rk1Nx-0006XD-Qe; Tue, 12 Mar 2024 08:37:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1rk1LJ-0004ef-K3
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:34:53 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1rk1LI-0006bV-1h
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:34:53 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2d28051376eso55577811fa.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 05:34:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710246889; x=1710851689; darn=nongnu.org;
- h=content-disposition:mime-version:message-id:subject:cc:to:from:date
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dz6mkZfvIg+cU6S14MGqd9CBaPH+Vm2xfOlfw5fIN7Q=;
- b=m6lEdR+il+/OehEjYTbR+hyehYpBp+VB22LT65SjtXrpHoYmo9gJBQ4MuCBNbpNvHa
- u0hk6iU1Ot2DRFyUrkB4Cv2y1X8VujnOLGNREPki1pOey9ZvatVGZ5linC6Eik98O16f
- VgJ35xXn6Gf511Z9v9C9+ldukb07AVd9bEI98jcii410iQySA04YtwHL8fJMgXKZwUPm
- wQqsYhzMID0ofNJ+jYoFicJpO1AETKYxYsswYLJ8qd6ntIALbfruvpubs61AZvgj9ixx
- idwvUYY3BKZAHN+Pm0l6ikoNISxZxL9ExsHEDsrRw10Uzkg+ca/288jIMYlX/nOO/y0G
- 1W0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710246889; x=1710851689;
- h=content-disposition:mime-version:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dz6mkZfvIg+cU6S14MGqd9CBaPH+Vm2xfOlfw5fIN7Q=;
- b=a5SPfoaB01KxUh036lUQyJCb2aVhcPdj2NpEoVXs/KZaXbUe+WYWXVVbstmV8Ik8/U
- I/FWOMphoibelsnaD3o7sv6vE9K9YFB1SK9mrokp1fAHAkW8Dq9aW2FYlIGOupuhjxWF
- cZNAk9A7K1Pk8qJA9ytWCsjD5iakFuz2rvfNyO4kQ9i9Hf4yAbXtaQunh9fAUhRTEFec
- Cw7j6VqFj5og4l9EGqDKxQFj+lJiZc7c/h8kPGvpcWR4x4Kq7PG+BlWfBaVfr10vI5JK
- h7V5FTL2yLMgUf9HaJGiHCySiESeVR+XoJSZ8C+om3+gLrylE3Q5oigTUKM3TzU/ZmFY
- l10A==
-X-Gm-Message-State: AOJu0YwRxtZZbwEXWcSbOmhtiCb90HsXSMjrZjD3eA4YMweogluQDnb2
- DcF1ZcZ9kHdXN0361p3zP0e0N8+KqK3LPl1DeCJj5/ItUSpeShZaHMe4rABYFiVVnQ==
-X-Google-Smtp-Source: AGHT+IG9S0CR/tAMPdb4sNT5OfeXcb5PoSR1TkoY2IHcdeD1cewO3wtPEFXun9/qjRjxXzMGNGnfBw==
-X-Received: by 2002:ac2:4c9c:0:b0:513:7ef5:1059 with SMTP id
- d28-20020ac24c9c000000b005137ef51059mr6510315lfl.18.1710246889175; 
- Tue, 12 Mar 2024 05:34:49 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
- by smtp.gmail.com with ESMTPSA id
- be37-20020a056512252500b00513b15ac2a2sm638575lfb.94.2024.03.12.05.34.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 05:34:48 -0700 (PDT)
-Date: Tue, 12 Mar 2024 13:34:48 +0100
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Cc: qemu-devel@nongnu.org
-Subject: Running x86 hypervisors inside QEMU x86 TCG outer guest?
-Message-ID: <ZfBL6KEfgIXANulr@toto>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rk1Nt-0006UI-VX
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:37:33 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1rk1Np-0007Gk-JC
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:37:33 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TvCnw0HlWz6J9sP;
+ Tue, 12 Mar 2024 20:37:08 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id CC34C1400C9;
+ Tue, 12 Mar 2024 20:37:25 +0800 (CST)
+Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 12 Mar
+ 2024 12:37:25 +0000
+Date: Tue, 12 Mar 2024 12:37:23 +0000
+To: fan <nifan.cxl@gmail.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <gregory.price@memverge.com>, <ira.weiny@intel.com>,
+ <dan.j.williams@intel.com>, <a.manzanares@samsung.com>, <dave@stgolabs.net>,
+ <nmtadam.samsung@gmail.com>, <jim.harris@samsung.com>,
+ <Jorgen.Hansen@wdc.com>, <wj28.lee@gmail.com>, Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH v5 09/13] hw/cxl/events: Add qmp interfaces to
+ add/release dynamic capacity extents
+Message-ID: <20240312123723.0000420d@Huawei.com>
+In-Reply-To: <ZevnKbzBOy_9sjeg@debian>
+References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
+ <20240304194331.1586191-10-nifan.cxl@gmail.com>
+ <20240306174811.000029fd@Huawei.com> <Zej5EuQXytgeWGfj@debian>
+ <20240307124555.00001408@Huawei.com> <ZevnKbzBOy_9sjeg@debian>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x229.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.202.227.76]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,72 +73,157 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi!
+On Fri, 8 Mar 2024 20:35:53 -0800
+fan <nifan.cxl@gmail.com> wrote:
 
-I'm trying to figure out if QEMU supports running x86 hypervisors (KVM and Xen) inside emulated (TCG) x86_64 guests.
-I.e, using TCG emulated x86 hardware virtualization (Intel VMX/EPT or AMD SVM/NPT).
+> On Thu, Mar 07, 2024 at 12:45:55PM +0000, Jonathan Cameron wrote:
+> > ...
+> >   
+> > > > > +    list = records;
+> > > > > +    extents = g_new0(CXLDCExtentRaw, num_extents);
+> > > > > +    while (list) {
+> > > > > +        CXLDCExtent *ent;
+> > > > > +        bool skip_extent = false;
+> > > > > +
+> > > > > +        offset = list->value->offset;
+> > > > > +        len = list->value->len;
+> > > > > +
+> > > > > +        extents[i].start_dpa = offset + dcd->dc.regions[rid].base;
+> > > > > +        extents[i].len = len;
+> > > > > +        memset(extents[i].tag, 0, 0x10);
+> > > > > +        extents[i].shared_seq = 0;
+> > > > > +
+> > > > > +        if (type == DC_EVENT_RELEASE_CAPACITY ||
+> > > > > +            type == DC_EVENT_FORCED_RELEASE_CAPACITY) {
+> > > > > +            /*
+> > > > > +             *  if the extent is still pending to be added to the host,    
+> > > > 
+> > > > Odd spacing.
+> > > >     
+> > > > > +             * remove it from the pending extent list, so later when the add
+> > > > > +             * response for the extent arrives, the device can reject the
+> > > > > +             * extent as it is not in the pending list.
+> > > > > +             */
+> > > > > +            ent = cxl_dc_extent_exists(&dcd->dc.extents_pending_to_add,
+> > > > > +                        &extents[i]);
+> > > > > +            if (ent) {
+> > > > > +                QTAILQ_REMOVE(&dcd->dc.extents_pending_to_add, ent, node);
+> > > > > +                g_free(ent);
+> > > > > +                skip_extent = true;
+> > > > > +            } else if (!cxl_dc_extent_exists(&dcd->dc.extents, &extents[i])) {
+> > > > > +                /* If the exact extent is not in the accepted list, skip */
+> > > > > +                skip_extent = true;
+> > > > > +            }    
+> > > > I think we need to reject case of some extents skipped and others not.
+> > > > That's not supported yet so we need to complain if we get it at least. Maybe we need
+> > > > to do two passes so we know this has happened early (or perhaps this is a later
+> > > > patch in which case a todo here would help).    
+> > > 
+> > > Skip here does not mean the extent is invalid, it just means the extent
+> > > is still pending to add, so remove them from pending list would be
+> > > enough to reject the extent, no need to release further. That is based
+> > > on your feedback on v4.  
+> > 
+> > Ah. I'd missunderstood.  
+> 
+> Hi Jonathan,
+> 
+> I think we should not allow to release extents that are still pending to
+> add. 
+> If we allow it, there is a case that will not work.
+> Let's see the following case (time order):
+> 1. Send request to add extent A to host; (A --> pending list)
+> 2. Send request to release A from the host; (Delete A from pending list,
+> hoping the following add response for A will fail as there is not a matched
+> extent in the pending list).
 
-So far, I've been able to run nested x86 KVM when the host is on KVM but no luck with TCG.
-With intel TCG cores kvm-ok in the guest says there's no KVM support.
-With AMD TCG cores, kvm-ok looks fine but as soon as I try to run a guest, it doesn't run anything.
+Definitely not allow the host to release something it hasn't accepted.
+Should allow QMP to release such entrees though (and same for fmapi when
+we get there). Any such requested from host should be treated as whatever
+it says to do if you release an extent that you don't have.
 
-Am I doing something wrong or is this expected?
+> 3. Host send response to the device for the add request, however, for
+> some reason, it does not accept any of it, so updated list is empty,
+> spec allows it. Based on the spec, we need to drop the extent at the
+> head of the event log. Now we have problem. Since extent A is already
+> dropped from the list, we either cannot drop as the list is empty, which
+> is not the worst. If we have more extents in the list, we may drop the
+> one following A, which is for another request. If this happens, all the
+> following extents will be acked incorrectly as the order has been
+> shifted.
+>  
+> Does the above reasoning make sense to you?
+Absolutely.  I got confused here on who was doing release.
+Host definitely can't release stuff it hasn't successfully accepted.
 
-Some of the command-lines I've tried:
-This is the command-line I use for AMD like outer TCG guest:
-${QEMU} -M q35,accel=tcg -m 6G \
-        -cpu "EPYC-Rome-v2" \
-        -smp 1 \
-        -display none \
-        -serial mon:stdio \
-        -kernel ubuntu-23.10-server-cloudimg-amd64-vmlinuz-generic \
-        -append "root=/dev/sda1 console=ttyS0 intel_iommu=on" \
-        -initrd ubuntu-23.10-server-cloudimg-amd64-initrd-generic \
-        -device intel-iommu,intremap=on,device-iotlb=on \
-        -device virtio-net-pci,netdev=net0,romfile="" \
-        -netdev type=user,id=net0,hostfwd=tcp::2228-:22 \
-        -drive file=ubuntu-23.10-server-cloudimg-amd64.img \
-        -drive file=cloudimg-user-data.img,format=raw,snapshot=yes \
-        -drive file=hd.qcow2 \
-        $*
+Jonathan
 
-This is the one for Intel TCG guests:
-${QEMU} -M q35,accel=tcg -m 6G \
-        -cpu "Haswell,vmx=on" \
-        -smp 1 \
-        -display none \
-        -serial mon:stdio \
-        -kernel ubuntu-23.10-server-cloudimg-amd64-vmlinuz-generic \
-        -append "root=/dev/sda1 console=ttyS0 intel_iommu=on" \
-        -initrd ubuntu-23.10-server-cloudimg-amd64-initrd-generic \
-        -device intel-iommu,intremap=on,device-iotlb=on \
-        -device virtio-net-pci,netdev=net0,romfile="" \
-        -netdev type=user,id=net0,hostfwd=tcp::2228-:22 \
-        -drive file=ubuntu-23.10-server-cloudimg-amd64.img \
-        -drive file=cloudimg-user-data.img,format=raw,snapshot=yes \
-        -drive file=hd.qcow2 \
-        $*
+> 
+> Fan
+> 
+> >   
+> > > 
+> > > The loop here is only to collect the extents to sent to the event log. 
+> > > But as you said, we need one pass before updating pending list.
+> > > Actually if we do not allow the above case where extents to release is
+> > > still in the pending to add list, we can just return here with error, no
+> > > extra dry run needed. 
+> > > 
+> > > What do you think?  
+> > 
+> > I think we need a way to back out extents from the pending to add list
+> > so we can create the race where they are offered to the OS and it takes
+> > forever to accept and by the time it does we've removed them.
+> >   
+> > >   
+> > > >     
+> > > > > +        
+> > > > > +
+> > > > > +        /* No duplicate or overlapped extents are allowed */
+> > > > > +        if (test_any_bits_set(blk_bitmap, offset / block_size,
+> > > > > +                              len / block_size)) {
+> > > > > +            error_setg(errp, "duplicate or overlapped extents are detected");
+> > > > > +            return;
+> > > > > +        }
+> > > > > +        bitmap_set(blk_bitmap, offset / block_size, len / block_size);
+> > > > > +
+> > > > > +        list = list->next;
+> > > > > +        if (!skip_extent) {
+> > > > > +            i++;    
+> > > > Problem is if we skip one in the middle the records will be wrong below.    
+> > > 
+> > > Why? Only extents passed the check will be stored in variable extents and
+> > > processed further and i be updated. 
+> > > For skipped ones, since i is not updated, they will be
+> > > overwritten by following valid ones.  
+> > Ah. I'd missed the fact you store into the extent without a check on validity
+> > but only move the index on if they were valid. Then rely on not passing a trailing
+> > entry at the end.
+> > If would be more readable I think if local variables were used for the parameters
+> > until we've decided not to skip and the this ended with
+> > 
+> >         if (!skip_extent) {
+> >             extents[i] = (DCXLDCExtentRaw) {
+> >                 .start_dpa = ...
+> > 	        ...
+> >             };
+> >             i++
+> >         }
+> > We have local len already so probably just need
+> > uint64_t start_dpa = offset + dcd->dc.regions[rid].base;
+> > 
+> > Also maybe skip_extent_evlog or something like that to explain we are only
+> > skipping that part. 
+> > Helps people like me who read it completely wrong!
+> > 
+> > Jonathan
+> > 
+> >  
+> >   
 
-This is the one that works (nested KVM):
-${QEMU} -M q35,accel=kvm,kernel-irqchip=split -m 6G \
-        -cpu host \
-        -smp 1 \
-        -display none \
-        -serial mon:stdio \
-        -kernel ubuntu-23.10-server-cloudimg-amd64-vmlinuz-generic \
-        -append "root=/dev/sda1 console=ttyS0 intel_iommu=on" \
-        -initrd ubuntu-23.10-server-cloudimg-amd64-initrd-generic \
-        -device intel-iommu,intremap=on,device-iotlb=on \
-        -device virtio-net-pci,netdev=net0,romfile="" \
-        -netdev type=user,id=net0,hostfwd=tcp::2228-:22 \
-        -drive file=ubuntu-23.10-server-cloudimg-amd64.img \
-        -drive file=cloudimg-user-data.img,format=raw,snapshot=yes \
-        -drive file=hd.qcow2 \
-        $*
-
-Best regards,
-Edgar
 
