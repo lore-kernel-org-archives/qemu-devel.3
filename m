@@ -4,68 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC01C54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 10:13:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98701C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 10:29:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjz7k-0002uk-NM; Tue, 12 Mar 2024 06:12:44 -0400
+	id 1rjzMn-0007tb-5m; Tue, 12 Mar 2024 06:28:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjz7d-0002u3-Gz; Tue, 12 Mar 2024 06:12:37 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rjzMg-0007s0-LL; Tue, 12 Mar 2024 06:28:10 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjz7a-0002n1-4f; Tue, 12 Mar 2024 06:12:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710238354; x=1741774354;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=wSqSiLG+NZqdAqTMJRfPpQD42L3+mQM4qj6rqb8R/OU=;
- b=mXz8m8i3gQJjOCOO0+PZLyNmMPe+4CdR3381BoEEiX9UAkaY9z/5TEfY
- HJdBMGNlQSZfZXIx1bKt7Q1puLR2IUFzuU5r9Pcs9EG7fUMhO5aBNf2Pf
- yylFA/7LpaeebmydEji+P0Lfdvd47d2/voUOVN8XFSzcRo43XmkYH/KJE
- 3dt7sXdpxaxRmckOvEcSLvyvnGXnW5xHsPRQtiBqNLWwlylazgusEAfJa
- 5wZnHrrq6Nq3lcZRWpI+yc0uSAFuzAsVXoT7hOOC4bvtRqNc5rUDRldrL
- F1yhjnK5sId8OFOiGrUys7+FSibrahPpO8cti3+FDGWK4kJpZ8vVca3yb Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="15665663"
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="15665663"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Mar 2024 03:12:29 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="11944790"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa007.jf.intel.com with ESMTP; 12 Mar 2024 03:12:26 -0700
-Date: Tue, 12 Mar 2024 18:26:15 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2 00/29] Cleanup up to fix missing ERRP_GUARD() for
- error_prepend()
-Message-ID: <ZfAtx3fBR9KgsAWa@intel.com>
-References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
- <d48e5d05-0e1e-4bb0-b10a-f0c943b055f6@linaro.org>
- <ZfAVsQTIOgAOjd0Y@intel.com>
- <4ba8e5dc-cda0-4ed4-8baa-82687a235627@redhat.com>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rjzMd-0005gA-MJ; Tue, 12 Mar 2024 06:28:10 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42C9sUVS014737; Tue, 12 Mar 2024 10:28:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=TytBLiVQBJefecAJDstfa5Wo6up7gUeAPTXj4Rz3Da8=;
+ b=CLlOTteiM6cAUPMpIRQFqHLDnPjoL5i71ZkyjVVRIQYuQUWirWX2hCW9k10NY/yproBr
+ KSp01NqTZG4cadx+Amf9OWMj3Ye4gJ9RmIPe29LQJA4SdeikKRq27T1hkKyO8LouZLso
+ aRuaJDbiUq3AD1cA0bE3tOotXCgazgl6obHVYuI3jdH4l3+Cq1mCMZA7QPckvM7QjRRM
+ 8RtkYugdItWz2ZCKiNxweJOU4apHLowLqPbEE3G76KqzxwzcxXaz0DpyeR3Ml6hAw6C1
+ +dasPoldWdtpZt1w7MPeKgNs7WdPtmDukIWvcUYmhQUoZxN2LgNrKtr81Rwtu4ANNwDF vA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtmbu8r13-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Mar 2024 10:28:02 +0000
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42CAR798010066;
+ Tue, 12 Mar 2024 10:28:02 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtmbu8r0n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Mar 2024 10:28:01 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42C9FaFk020423; Tue, 12 Mar 2024 10:28:00 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ws3kkx9kr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Mar 2024 10:28:00 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42CARwTN46596510
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 Mar 2024 10:28:00 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 15DCB5805A;
+ Tue, 12 Mar 2024 10:27:58 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3AAD55806F;
+ Tue, 12 Mar 2024 10:27:56 +0000 (GMT)
+Received: from [9.109.243.35] (unknown [9.109.243.35])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 12 Mar 2024 10:27:55 +0000 (GMT)
+Message-ID: <39ff316c-f28d-4986-95b6-ed2705d7cf8b@linux.ibm.com>
+Date: Tue, 12 Mar 2024 15:57:54 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4ba8e5dc-cda0-4ed4-8baa-82687a235627@redhat.com>
-Received-SPF: none client-ip=192.198.163.9;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/13] target/ppc: Prevent supervisor from modifying
+ MSR[ME]
+Content-Language: en-US
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>
+References: <20240311185200.2185753-1-npiggin@gmail.com>
+ <20240311185200.2185753-10-npiggin@gmail.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20240311185200.2185753-10-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: hBHnS6caNYSmKdMN4XMrH5JUtOltmGj_
+X-Proofpoint-GUID: D_evinNN4j3F_3QpgBOVwl9CQabVArug
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-12_08,2024-03-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ impostorscore=0 malwarescore=0 bulkscore=0 mlxlogscore=858 spamscore=0
+ suspectscore=0 clxscore=1015 phishscore=0 adultscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403120080
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,36 +117,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 12, 2024 at 09:50:25AM +0100, Thomas Huth wrote:
-> Date: Tue, 12 Mar 2024 09:50:25 +0100
-> From: Thomas Huth <thuth@redhat.com>
-> Subject: Re: [PATCH v2 00/29] Cleanup up to fix missing ERRP_GUARD() for
->  error_prepend()
+
+
+On 3/12/24 00:21, Nicholas Piggin wrote:
+> Prevent guest state modifying the MSR[ME] bit. Per ISA:
 > 
-> On 12/03/2024 09.43, Zhao Liu wrote:
-> > Hi Thomas/Markus/Michael,
-> > 
-> > For the remaing patches, could you please help me merge them next?
-> > 
-> > Many thanks!
+>    An attempt to modify MSRME in privileged but non-hypervisor state is
+
+s/MSRME/MSR[ME] ?
+
+>    ignored (i.e., the bit is not changed).
 > 
-> Yes, I'm currently reviewing the ones that don't have a Reviewed-by yet. I
-> can pick up the remaining patches if the other maintainers won't pick them
-> up for the softfreeze today.
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   target/ppc/helper_regs.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
+> diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+> index 410b39c231..25258986e3 100644
+> --- a/target/ppc/helper_regs.c
+> +++ b/target/ppc/helper_regs.c
+> @@ -264,6 +264,11 @@ int hreg_store_msr(CPUPPCState *env, target_ulong value, int alter_hv)
+>           value &= ~MSR_HVB;
+>           value |= env->msr & MSR_HVB;
+>       }
+> +    /* Attempt to modify MSR[ME] in guest state is ignored */
+> +    if (is_book3s_arch2x(env) && !(env->msr & MSR_HVB)) {
+> +        value &= ~(1 << MSR_ME);
+> +        value |= env->msr & (1 << MSR_ME);
+> +    }
 
-Appreciate that you can help me get on the last train of releases.
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-If possible, could you please also help me pick up two other ERRP_GUARD()
-related cleanups (total 8 patches, both got r/b)? ;-)
-
-My cleanup is too fragmented, I'll try to centralize my work to make it easier
-for maintainer to review and merge in the future!
-
-[1]: https://lore.kernel.org/qemu-devel/20240223085653.1255438-1-zhao1.liu@linux.intel.com/
-[2]: https://lore.kernel.org/qemu-devel/20240312060337.3240965-1-zhao1.liu@linux.intel.com/
-
-Many thanks,
-Zhao
-
+>       if ((value ^ env->msr) & (R_MSR_IR_MASK | R_MSR_DR_MASK)) {
+>           cpu_interrupt_exittb(cs);
+>       }
 
