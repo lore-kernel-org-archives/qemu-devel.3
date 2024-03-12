@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F8DC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB28BC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAZi-0004ZB-B8; Tue, 12 Mar 2024 18:26:22 -0400
+	id 1rkAaj-00077e-6w; Tue, 12 Mar 2024 18:27:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAZf-0004Yi-Jk
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:19 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaf-0006Yi-OK
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAZd-0004G3-WB
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:19 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAae-0004Nh-4p
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282377;
+ s=mimecast20190719; t=1710282439;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uK1DhLEmCwAUM4WVYh1w+A/omwtvVrpMmMYYh4o/i+I=;
- b=etA7GxpGGihpb+lC2svpvzqpycddIJVXpMhvAuneJ8xz1Q5XH3b1YlWckAeH0pNq2iSCIA
- cW0c2vRMIeXNa/ddTonBiVw9VosEDdyQ1penyFGpxggEDEbhXosl8k6MQ5x8zml7JMeqfg
- 2ltDOHSqGjCZXqi8hgTy53d5i9X90Dw=
+ bh=tOh3XMBYaTXqwwXatODmJZBdFVP40l8SCuosqwHz9Dw=;
+ b=ii1iK+WkwFh73+BkYZVSb+Pdsrx0lio9MABqJgCrfXbiQs8EmxralwvrNcIlrAgJfyKVzz
+ Nj01Q8Hc0EKmKjuQm4kN6PW2JP3yqXZ73ZoZk2f1tBMggqft3a7SXgK3/EmauWLKN2mGVj
+ h+ZePIaWy7cmeOxf7yUuyDSxPUihxLI=
 Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
  [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-482-lWYgiSLkM16maHv1DA4wWg-1; Tue, 12 Mar 2024 18:26:16 -0400
-X-MC-Unique: lWYgiSLkM16maHv1DA4wWg-1
+ us-mta-36-ILpux4BcPtGBPqoRS-_61Q-1; Tue, 12 Mar 2024 18:27:18 -0400
+X-MC-Unique: ILpux4BcPtGBPqoRS-_61Q-1
 Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5684345c0ebso290142a12.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:26:16 -0700 (PDT)
+ 4fb4d7f45d1cf-56864b8f5f9so1354730a12.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282374; x=1710887174;
+ d=1e100.net; s=20230601; t=1710282436; x=1710887236;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uK1DhLEmCwAUM4WVYh1w+A/omwtvVrpMmMYYh4o/i+I=;
- b=Dvuw+zTN4L0yDNopNqe3/o60pk9vNJPLGcyM32/YUH0/j5SKL85+OSzILZ9nx3Zet/
- Ngf/UrZIsXqwOGX4ccEjvSTub2vPuRakpP+2kxX0Y8EloIHYcR1fUtSz0ax6KLeSRl4n
- ey6roKmzu67ih7x2R+1uzZrMpv/N/owH5PE5pU8fWseyu6RCZq1f2U7YlDsvFnVJbO9l
- HajGi4taZD0OJjzwXx5l1UMCmiF8L/NrKl+vvAzR9/dDzH6OzYsQYZTPfdWN41A8Ipeg
- XEPXE00obgRUXGs+5uW9O4753qoruj7VJMPDjt/r+IBsvL4vUPAzC0wZlq+IocEbiUp0
- 4K3g==
-X-Gm-Message-State: AOJu0Yy9aznRE3GzNU0sWSM7YvkgqiykiS9ffHniwTg0SD8igx/gpfMP
- qNMC30iz00JoWU6LHyy5RJwU9ZApDuO6hK8gnKt+A4cyVoIf4H8XM+UB64Pb6AaCQ4JdbA9EEsf
- cfWC4FEFy14sW7bUdc0G8OTAvWlvl9b2SMO4jXr7ffy/HU3e+ZDmLApo5wh03TTXTu83z2SNSMX
- zdqTHXzKuiEGCd411/FkpmMzXAIP262b0N
-X-Received: by 2002:a50:8a9d:0:b0:568:145a:4a22 with SMTP id
- j29-20020a508a9d000000b00568145a4a22mr860130edj.4.1710282374609; 
- Tue, 12 Mar 2024 15:26:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFm2A3qaPDQU67tgC1/XF2+5KDNl9m2TgWcYz9HmefGM0Eg8eHZzAght4sV3YThZwA0hiE6Q==
-X-Received: by 2002:a50:8a9d:0:b0:568:145a:4a22 with SMTP id
- j29-20020a508a9d000000b00568145a4a22mr860108edj.4.1710282374252; 
- Tue, 12 Mar 2024 15:26:14 -0700 (PDT)
+ bh=tOh3XMBYaTXqwwXatODmJZBdFVP40l8SCuosqwHz9Dw=;
+ b=TNBB36HZdgGwX3wE7Gnl5m4YT2SqAoLN3038QZNd0hNkegA20Iy4EuHz7KkAq8jCPe
+ ox+/i9jhjOTZ7nGRHpft602IKNWFte4Cnvk0pzLsQS6PGryDmO2M7s9xRCFO1d+MSMfL
+ 4FkVqRTkC6IcShBV1dv1SA5PoXgtQlr1PdO65zdP/Tx/q+JCZ6MqPeZAksTbyNkY/Wcc
+ gSbCFZxn85P3vRkFBmwbq0HwCkiAzcGVgcq2KOx2APV0c3gAT1BOvxYIDFjvCeBW4i9y
+ d7o7vcBsUyFiWGzDgmh4GdqaixdRnPiSns0BipkuH+We44J/p7kKh8H2diVx/dPDD2ml
+ P5ow==
+X-Gm-Message-State: AOJu0YwCWJ+lJfxyFXGyd5Xzu98hPmSKybUXh1X6VBRsngtQTsNX2EOn
+ nyBWUOb3P6KhtqIdrB6jIF8tlZw8KyjioojQsA+V/HjTH1Y6xsxVPJ3rnprMObliy/7+1eMceoD
+ iaz03VFh7i9U8PvbqPofC6EvGryodK406GmMK8VNqh6z/5bs8Gjqi8TSCfz5mbXy0zOKNU0fTST
+ pNvMwUYBGwY5Id1AX/djxMx3oI1pEHfpWg
+X-Received: by 2002:a50:c315:0:b0:566:1127:4bb5 with SMTP id
+ a21-20020a50c315000000b0056611274bb5mr8334967edb.1.1710282436390; 
+ Tue, 12 Mar 2024 15:27:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFm4qsXUUXmwGcv9qOYj47DS6cCLXV96uTaaYGD6Tno7zfR92dtE36eMtWzlJW8oTvz41fALg==
+X-Received: by 2002:a50:c315:0:b0:566:1127:4bb5 with SMTP id
+ a21-20020a50c315000000b0056611274bb5mr8334950edb.1.1710282435946; 
+ Tue, 12 Mar 2024 15:27:15 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- et3-20020a056402378300b005687a473947sm720658edb.28.2024.03.12.15.26.12
+ fe5-20020a056402390500b005684173e413sm2318047edb.72.2024.03.12.15.27.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:26:13 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:26:11 -0400
+ Tue, 12 Mar 2024 15:27:15 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:27:12 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Mario Casquero <mcasquer@redhat.com>
-Subject: [PULL 14/68] libvhost-user: Factor out removing all mem regions
-Message-ID: <bec5820908919f70f87b57b92e4c92be128f5cfd.1710282274.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL 33/68] hw/cxl/cxl-host: Fix missing ERRP_GUARD() in
+ cxl_fixed_memory_window_config()
+Message-ID: <2a0e0a35002db7ac64f4e82ea2a4ad2fb6d934b0.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -104,82 +103,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hildenbrand <david@redhat.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Let's factor it out. Note that the check for MAP_FAILED was wrong as
-we never set mmap_addr if mmap() failed. We'll remove the NULL check
-separately.
+As the comment in qapi/error, dereferencing @errp requires
+ERRP_GUARD():
 
-Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Message-Id: <20240214151701.29906-4-david@redhat.com>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
+* = Why, when and how to use ERRP_GUARD() =
+*
+* Without ERRP_GUARD(), use of the @errp parameter is restricted:
+* - It must not be dereferenced, because it may be null.
+...
+* ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
+*
+* Using it when it's not needed is safe, but please avoid cluttering
+* the source with useless code.
+
+But in cxl_fixed_memory_window_config(), @errp is dereferenced in 2
+places without ERRP_GUARD():
+
+fw->enc_int_ways = cxl_interleave_ways_enc(fw->num_targets, errp);
+if (*errp) {
+    return;
+}
+
+and
+
+fw->enc_int_gran =
+    cxl_interleave_granularity_enc(object->interleave_granularity,
+                                   errp);
+if (*errp) {
+    return;
+}
+
+For the above 2 places, we check "*errp", because neither function
+returns a suitable error code. And since machine_set_cfmw() - the caller
+of cxl_fixed_memory_window_config() - doesn't get the NULL @errp
+parameter as the "set" method of object property,
+cxl_fixed_memory_window_config() hasn't triggered the bug that
+dereferencing the NULL @errp.
+
+To follow the requirement of @errp, add missing ERRP_GUARD() in
+cxl_fixed_memory_window_config().
+
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Message-Id: <20240223085653.1255438-2-zhao1.liu@linux.intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 34 ++++++++++++-----------
- 1 file changed, 18 insertions(+), 16 deletions(-)
+ hw/cxl/cxl-host.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 360c5366d6..e4907dfc26 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -240,6 +240,22 @@ qva_to_va(VuDev *dev, uint64_t qemu_addr)
-     return NULL;
- }
- 
-+static void
-+vu_remove_all_mem_regs(VuDev *dev)
-+{
-+    unsigned int i;
-+
-+    for (i = 0; i < dev->nregions; i++) {
-+        VuDevRegion *r = &dev->regions[i];
-+        void *ma = (void *)(uintptr_t)r->mmap_addr;
-+
-+        if (ma) {
-+            munmap(ma, r->size + r->mmap_offset);
-+        }
-+    }
-+    dev->nregions = 0;
-+}
-+
- static void
- vmsg_close_fds(VhostUserMsg *vmsg)
+diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+index 2aa776c79c..c5f5fcfd64 100644
+--- a/hw/cxl/cxl-host.c
++++ b/hw/cxl/cxl-host.c
+@@ -26,6 +26,7 @@ static void cxl_fixed_memory_window_config(CXLState *cxl_state,
+                                            CXLFixedMemoryWindowOptions *object,
+                                            Error **errp)
  {
-@@ -1003,14 +1019,7 @@ vu_set_mem_table_exec(VuDev *dev, VhostUserMsg *vmsg)
-     unsigned int i;
-     VhostUserMemory m = vmsg->payload.memory, *memory = &m;
- 
--    for (i = 0; i < dev->nregions; i++) {
--        VuDevRegion *r = &dev->regions[i];
--        void *ma = (void *) (uintptr_t) r->mmap_addr;
--
--        if (ma) {
--            munmap(ma, r->size + r->mmap_offset);
--        }
--    }
-+    vu_remove_all_mem_regs(dev);
-     dev->nregions = memory->nregions;
- 
-     if (dev->postcopy_listening) {
-@@ -2112,14 +2121,7 @@ vu_deinit(VuDev *dev)
- {
-     unsigned int i;
- 
--    for (i = 0; i < dev->nregions; i++) {
--        VuDevRegion *r = &dev->regions[i];
--        void *m = (void *) (uintptr_t) r->mmap_addr;
--        if (m != MAP_FAILED) {
--            munmap(m, r->size + r->mmap_offset);
--        }
--    }
--    dev->nregions = 0;
-+    vu_remove_all_mem_regs(dev);
- 
-     for (i = 0; i < dev->max_queues; i++) {
-         VuVirtq *vq = &dev->vq[i];
++    ERRP_GUARD();
+     g_autofree CXLFixedWindow *fw = g_malloc0(sizeof(*fw));
+     strList *target;
+     int i;
 -- 
 MST
 
