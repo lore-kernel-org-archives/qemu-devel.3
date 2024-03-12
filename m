@@ -4,84 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA460C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:07:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A3FC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5WH-00007D-K4; Tue, 12 Mar 2024 13:02:31 -0400
+	id 1rk5Xy-0005x5-S3; Tue, 12 Mar 2024 13:04:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5UA-0005Yr-14; Tue, 12 Mar 2024 13:00:18 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5U6-0008GH-C6; Tue, 12 Mar 2024 13:00:17 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-6e5760eeb7aso4198354b3a.1; 
- Tue, 12 Mar 2024 10:00:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710262807; x=1710867607; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rVf/h4PI+3Z76hKAbw499YFjHfc8Pmr7sIWjABUIFRU=;
- b=j6ivl4oREg+0hFBLs2TkCwe5Z3BHqPpGxXG4azhtxuAQDUDzhCrv6dv8mvIrbIvXxR
- YUPreFpeEROekVIIsEmGxNTvATfqnuZWAMnptdK0iP+nNfNHDdFmudhxLzVFoZ85YIrs
- Sz3XtqfS+j2skOaUwuaFt9ixnREE9DroRDup4LhCN+zFdcIskeePe07NEBVJ46jq20oX
- v7rNkUzw2FRL64hFyGRiyIka+ZCDBl0FOQbFwICrG43JU7KhqqI+UCP0jJIgQEFiSJEV
- 8mTgkdOeyIsdHNnOSsY/Ek4/5Tc1uaQfVSq6OfBO1KYuEppLMvvhoRGOWyBFfL434yD9
- OV6Q==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5Xb-0005PW-Qb
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:03:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5XZ-0000OE-PW
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:03:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710263027;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rz0ihC0jHCYEZG2/MEdzd7dbq7ihTki2jY6XLgouo9E=;
+ b=GudCN/LDD0/VsMe4w3f3tAK9pk+G+Gy/JpcDCqDjJ+vFzUc8zJCW2gCUmUEZuciJU1PxZu
+ vJYMkYC/J5XooPWxgIyGve9RGZIYrjdy9LXeWZISI0BD22M6iNXlU2fXcM4EWhEzbi9JMw
+ Ely2vXc3lSY8MR6R4UUHYRcpb7MjFck=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-94-rdzuboCFMiyeE1xgatl09g-1; Tue, 12 Mar 2024 13:03:46 -0400
+X-MC-Unique: rdzuboCFMiyeE1xgatl09g-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2d359de20dcso40816661fa.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 10:03:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710262807; x=1710867607;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rVf/h4PI+3Z76hKAbw499YFjHfc8Pmr7sIWjABUIFRU=;
- b=YBd4rW1HBfDfZd+Jjv79gxAlPSeS7HziTApC/h0EcvZWbkY3xUqfqF84r79Qmnpfgi
- oQnCmVq1IsksnVXjUz3ulP90tAsC1eygfQBCRH6McmLgtOxyAqU0udGmMjjBOqhUXlR7
- EsfwFV/5sXWjep8mBIuBRTjqE6afiwUrcN0Lz6ZgaQS5N2BFlc10LKbjOHnU9WSWYpgg
- SrUI3O6p6BzVw3VKoEopllKsuVUFa39tVUawaK5jvTJl+Zsoxp0qvZZrgG7YQQ7N2e9z
- hJjELANUItA41ZO6z6SASTSJLxnyUzae/tHPWoBoqiNjSFLlkw85bl4mvcmHh1EsF6h5
- 98EQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWaMHEYqyIEu8xNzjtJuOB1yR8GE2rUFnG8R+VPNPE71jxp2a02Efxs1NcJowV8PFWJ0uPystprOBsdCBMcxwxmAJt+
-X-Gm-Message-State: AOJu0Yx9Lu+CVlSwZu0DmOdsnbHBQZjE9y4JEYGGlRIURWTfcZDEAv9x
- Uu3xWvh/3LnCJnj9I7sj/sMHCjfjIbVWXf4HwlzvC76BJDWylCFt+/v83weutbs=
-X-Google-Smtp-Source: AGHT+IE2BWYpxkin3d2quXeWGkHTSNyrpq3ejZ4Khbf1skactvbitmdRvtpAS22JzEH5Fh2a0bV29Q==
-X-Received: by 2002:a05:6a20:72a0:b0:1a3:1553:b425 with SMTP id
- o32-20020a056a2072a000b001a31553b425mr7674251pzk.15.1710262807455; 
- Tue, 12 Mar 2024 10:00:07 -0700 (PDT)
-Received: from wheely.local0.net ([118.208.155.46])
+ d=1e100.net; s=20230601; t=1710263025; x=1710867825;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rz0ihC0jHCYEZG2/MEdzd7dbq7ihTki2jY6XLgouo9E=;
+ b=jzPi0TN3SFyCAj0Q8Uwbf6m8yXOaotc8BU3b+E9uLHTJQgJHcXNhPWSFP9Wx76ziOK
+ z4xz58uSoKUzuYuJ47W29IDTsSnD3wKuUIIpv9MqqvGFboOZzQ1+CLpfefLtW1/uep7k
+ pDaE5ebVMrEnZ6PP7O6RoeZ9VjClZ2yPKWtygv+2oE/q4P13V2P1V0XmiWOq7eGWecbc
+ b6BVfgFyUB+9yZW8A9mpaDGwoqYKr68so5Wc4mQV8WFKvQTqQjEbmm3T6CXYaxKc0fmj
+ 44s3V/aW/PygAkUrBI5O9Lf1oHTgR/q5+/oF7kxHs3BbM6/lFQTf/H7BldAlzXrqD7D3
+ jwpw==
+X-Gm-Message-State: AOJu0YyqwOjaUuwT+w6qiEkjavnmiRIbQOPwzfRSsdOt3ftWhpGs25sC
+ Ziiru3nY7BkhoVfuSgeWKhO5J1k2yd+ttCM+dvHZPVJTBVSv303ksnkPbFORy9HZnMnAI/mIg0c
+ Pt8zYq+/vtSSCskOMh8wV960xqLex6xw0+vSihWPJhF7X+m/sa/z2
+X-Received: by 2002:a2e:7c0e:0:b0:2d4:49d5:d9f with SMTP id
+ x14-20020a2e7c0e000000b002d449d50d9fmr2965503ljc.11.1710263024571; 
+ Tue, 12 Mar 2024 10:03:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGoBz0m74ibo/jV33RCk9RRcHgIs82jCfI1rb/sLDsr2B3ZXGWp+hmfT/ELc0zaCAIS9iC3Kg==
+X-Received: by 2002:a2e:7c0e:0:b0:2d4:49d5:d9f with SMTP id
+ x14-20020a2e7c0e000000b002d449d50d9fmr2965464ljc.11.1710263023931; 
+ Tue, 12 Mar 2024 10:03:43 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
  by smtp.gmail.com with ESMTPSA id
- t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.10.00.04
+ ay6-20020a05600c1e0600b004133825e6cfsm2567056wmb.24.2024.03.12.10.03.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 10:00:07 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 18/38] target/ppc: Use env_cpu for cpu_abort in excp_helper
-Date: Wed, 13 Mar 2024 02:58:29 +1000
-Message-ID: <20240312165851.2240242-19-npiggin@gmail.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240312165851.2240242-1-npiggin@gmail.com>
-References: <20240312165851.2240242-1-npiggin@gmail.com>
+ Tue, 12 Mar 2024 10:03:43 -0700 (PDT)
+Date: Tue, 12 Mar 2024 13:03:38 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com,
+ eric.auger@redhat.com, peterx@redhat.com, jasowang@redhat.com,
+ jgg@nvidia.com, nicolinc@nvidia.com, joao.m.martins@oracle.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, yi.y.sun@intel.com,
+ chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH v1 3/6] intel_iommu: Add a framework to check and sync
+ host IOMMU cap/ecap
+Message-ID: <20240312130058-mutt-send-email-mst@kernel.org>
+References: <20240228094432.1092748-1-zhenzhong.duan@intel.com>
+ <20240228094432.1092748-4-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240228094432.1092748-4-zhenzhong.duan@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,441 +108,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+On Wed, Feb 28, 2024 at 05:44:29PM +0800, Zhenzhong Duan wrote:
+> From: Yi Liu <yi.l.liu@intel.com>
+> 
+> Add a framework to check and synchronize host IOMMU cap/ecap with
+> vIOMMU cap/ecap.
+> 
+> The sequence will be:
+> 
+> vtd_cap_init() initializes iommu->cap/ecap.
+> vtd_check_hdev() update iommu->cap/ecap based on host cap/ecap.
+> iommu->cap_frozen set when machine create done, iommu->cap/ecap become readonly.
+> 
+> Implementation details for different backends will be in following patches.
+> 
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  include/hw/i386/intel_iommu.h |  1 +
+>  hw/i386/intel_iommu.c         | 50 ++++++++++++++++++++++++++++++++++-
+>  2 files changed, 50 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+> index bbc7b96add..c71a133820 100644
+> --- a/include/hw/i386/intel_iommu.h
+> +++ b/include/hw/i386/intel_iommu.h
+> @@ -283,6 +283,7 @@ struct IntelIOMMUState {
+>  
+>      uint64_t cap;                   /* The value of capability reg */
+>      uint64_t ecap;                  /* The value of extended capability reg */
+> +    bool cap_frozen;                /* cap/ecap become read-only after frozen */
+>  
+>      uint32_t context_cache_gen;     /* Should be in [1,MAX] */
+>      GHashTable *iotlb;              /* IOTLB */
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index ffa1ad6429..a9f9dfd6a7 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -35,6 +35,8 @@
+>  #include "sysemu/kvm.h"
+>  #include "sysemu/dma.h"
+>  #include "sysemu/sysemu.h"
+> +#include "hw/vfio/vfio-common.h"
+> +#include "sysemu/iommufd.h"
+>  #include "hw/i386/apic_internal.h"
+>  #include "kvm/kvm_i386.h"
+>  #include "migration/vmstate.h"
+> @@ -3819,6 +3821,38 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+>      return vtd_dev_as;
+>  }
+>  
+> +static int vtd_check_legacy_hdev(IntelIOMMUState *s,
+> +                                 IOMMULegacyDevice *ldev,
+> +                                 Error **errp)
+> +{
+> +    return 0;
+> +}
+> +
+> +static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
+> +                                  IOMMUFDDevice *idev,
+> +                                  Error **errp)
+> +{
+> +    return 0;
+> +}
+> +
+> +static int vtd_check_hdev(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hdev,
+> +                          Error **errp)
+> +{
+> +    HostIOMMUDevice *base_dev = vtd_hdev->dev;
+> +    IOMMUFDDevice *idev;
+> +
+> +    if (base_dev->type == HID_LEGACY) {
+> +        IOMMULegacyDevice *ldev = container_of(base_dev,
+> +                                               IOMMULegacyDevice, base);
+> +
+> +        return vtd_check_legacy_hdev(s, ldev, errp);
+> +    }
+> +
+> +    idev = container_of(base_dev, IOMMUFDDevice, base);
+> +
+> +    return vtd_check_iommufd_hdev(s, idev, errp);
+> +}
+> +
+>  static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>                                      HostIOMMUDevice *base_dev, Error **errp)
+>  {
+> @@ -3829,6 +3863,7 @@ static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>          .devfn = devfn,
+>      };
+>      struct vtd_as_key *new_key;
+> +    int ret;
+>  
+>      assert(base_dev);
+>  
+> @@ -3848,6 +3883,13 @@ static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>      vtd_hdev->iommu_state = s;
+>      vtd_hdev->dev = base_dev;
+>  
+> +    ret = vtd_check_hdev(s, vtd_hdev, errp);
+> +    if (ret) {
+> +        g_free(vtd_hdev);
+> +        vtd_iommu_unlock(s);
+> +        return ret;
+> +    }
+> +
+>      new_key = g_malloc(sizeof(*new_key));
+>      new_key->bus = bus;
+>      new_key->devfn = devfn;
 
-Use the env_cpu function to get the CPUState for cpu_abort. These are
-only needed in case of fatal errors so this allows to avoid casting
-and storing CPUState in a local variable wnen not needed.
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/ppc/excp_helper.c | 118 +++++++++++++++++++++------------------
- 1 file changed, 63 insertions(+), 55 deletions(-)
+Okay. So when VFIO device is created, it will call vtd_dev_set_iommu_device
+and that in turn will update caps.
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 98952de267..56a5fe7f3b 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -445,7 +445,6 @@ static void powerpc_mcheck_checkstop(CPUPPCState *env)
- 
- static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
- {
--    CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
-     int srr0, srr1;
-@@ -473,8 +472,8 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
- 
-     vector = env->excp_vectors[excp];
-     if (vector == (target_ulong)-1ULL) {
--        cpu_abort(cs, "Raised an exception without defined vector %d\n",
--                  excp);
-+        cpu_abort(env_cpu(env),
-+                  "Raised an exception without defined vector %d\n", excp);
-     }
- 
-     vector |= env->excp_prefix;
-@@ -523,7 +522,7 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
-             env->spr[SPR_40x_ESR] = ESR_PTR;
-             break;
-         default:
--            cpu_abort(cs, "Invalid program exception %d. Aborting\n",
-+            cpu_abort(env_cpu(env), "Invalid program exception %d. Aborting\n",
-                       env->error_code);
-             break;
-         }
-@@ -550,11 +549,12 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
-         trace_ppc_excp_print("PIT");
-         break;
-     case POWERPC_EXCP_DEBUG:     /* Debug interrupt                          */
--        cpu_abort(cs, "%s exception not implemented\n",
-+        cpu_abort(env_cpu(env), "%s exception not implemented\n",
-                   powerpc_excp_name(excp));
-         break;
-     default:
--        cpu_abort(cs, "Invalid PowerPC exception %d. Aborting\n", excp);
-+        cpu_abort(env_cpu(env), "Invalid PowerPC exception %d. Aborting\n",
-+                  excp);
-         break;
-     }
- 
-@@ -569,7 +569,6 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
- 
- static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
- {
--    CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
- 
-@@ -592,8 +591,8 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
- 
-     vector = env->excp_vectors[excp];
-     if (vector == (target_ulong)-1ULL) {
--        cpu_abort(cs, "Raised an exception without defined vector %d\n",
--                  excp);
-+        cpu_abort(env_cpu(env),
-+                  "Raised an exception without defined vector %d\n", excp);
-     }
- 
-     vector |= env->excp_prefix;
-@@ -653,7 +652,7 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-             break;
-         default:
-             /* Should never occur */
--            cpu_abort(cs, "Invalid program exception %d. Aborting\n",
-+            cpu_abort(env_cpu(env), "Invalid program exception %d. Aborting\n",
-                       env->error_code);
-             break;
-         }
-@@ -675,8 +674,9 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_RESET:     /* System reset exception                   */
-         if (FIELD_EX64(env->msr, MSR, POW)) {
--            cpu_abort(cs, "Trying to deliver power-saving system reset "
--                      "exception %d with no HV support\n", excp);
-+            cpu_abort(env_cpu(env),
-+                      "Trying to deliver power-saving system reset exception "
-+                      "%d with no HV support\n", excp);
-         }
-         break;
-     case POWERPC_EXCP_TRACE:     /* Trace exception                          */
-@@ -703,11 +703,12 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_SMI:       /* System management interrupt              */
-     case POWERPC_EXCP_MEXTBR:    /* Maskable external breakpoint             */
-     case POWERPC_EXCP_NMEXTBR:   /* Non maskable external breakpoint         */
--        cpu_abort(cs, "%s exception not implemented\n",
-+        cpu_abort(env_cpu(env), "%s exception not implemented\n",
-                   powerpc_excp_name(excp));
-         break;
-     default:
--        cpu_abort(cs, "Invalid PowerPC exception %d. Aborting\n", excp);
-+        cpu_abort(env_cpu(env), "Invalid PowerPC exception %d. Aborting\n",
-+                  excp);
-         break;
-     }
- 
-@@ -730,7 +731,6 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
- 
- static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
- {
--    CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
- 
-@@ -753,8 +753,8 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
- 
-     vector = env->excp_vectors[excp];
-     if (vector == (target_ulong)-1ULL) {
--        cpu_abort(cs, "Raised an exception without defined vector %d\n",
--                  excp);
-+        cpu_abort(env_cpu(env),
-+                  "Raised an exception without defined vector %d\n", excp);
-     }
- 
-     vector |= env->excp_prefix;
-@@ -812,7 +812,7 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-             break;
-         default:
-             /* Should never occur */
--            cpu_abort(cs, "Invalid program exception %d. Aborting\n",
-+            cpu_abort(env_cpu(env), "Invalid program exception %d. Aborting\n",
-                       env->error_code);
-             break;
-         }
-@@ -854,8 +854,9 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_RESET:     /* System reset exception                   */
-         if (FIELD_EX64(env->msr, MSR, POW)) {
--            cpu_abort(cs, "Trying to deliver power-saving system reset "
--                      "exception %d with no HV support\n", excp);
-+            cpu_abort(env_cpu(env),
-+                      "Trying to deliver power-saving system reset exception "
-+                      "%d with no HV support\n", excp);
-         }
-         break;
-     case POWERPC_EXCP_TRACE:     /* Trace exception                          */
-@@ -875,11 +876,12 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_SMI:       /* System management interrupt              */
-     case POWERPC_EXCP_THERM:     /* Thermal interrupt                        */
-     case POWERPC_EXCP_PERFM:     /* Embedded performance monitor interrupt   */
--        cpu_abort(cs, "%s exception not implemented\n",
-+        cpu_abort(env_cpu(env), "%s exception not implemented\n",
-                   powerpc_excp_name(excp));
-         break;
-     default:
--        cpu_abort(cs, "Invalid PowerPC exception %d. Aborting\n", excp);
-+        cpu_abort(env_cpu(env), "Invalid PowerPC exception %d. Aborting\n",
-+                  excp);
-         break;
-     }
- 
-@@ -902,7 +904,6 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
- 
- static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
- {
--    CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
- 
-@@ -925,8 +926,8 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
- 
-     vector = env->excp_vectors[excp];
-     if (vector == (target_ulong)-1ULL) {
--        cpu_abort(cs, "Raised an exception without defined vector %d\n",
--                  excp);
-+        cpu_abort(env_cpu(env),
-+                  "Raised an exception without defined vector %d\n", excp);
-     }
- 
-     vector |= env->excp_prefix;
-@@ -984,7 +985,7 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-             break;
-         default:
-             /* Should never occur */
--            cpu_abort(cs, "Invalid program exception %d. Aborting\n",
-+            cpu_abort(env_cpu(env), "Invalid program exception %d. Aborting\n",
-                       env->error_code);
-             break;
-         }
-@@ -1026,7 +1027,8 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_RESET:     /* System reset exception                   */
-         if (FIELD_EX64(env->msr, MSR, POW)) {
--            cpu_abort(cs, "Trying to deliver power-saving system reset "
-+            cpu_abort(env_cpu(env),
-+                      "Trying to deliver power-saving system reset "
-                       "exception %d with no HV support\n", excp);
-         }
-         break;
-@@ -1039,11 +1041,12 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_THERM:     /* Thermal interrupt                        */
-     case POWERPC_EXCP_PERFM:     /* Embedded performance monitor interrupt   */
-     case POWERPC_EXCP_VPUA:      /* Vector assist exception                  */
--        cpu_abort(cs, "%s exception not implemented\n",
-+        cpu_abort(env_cpu(env), "%s exception not implemented\n",
-                   powerpc_excp_name(excp));
-         break;
-     default:
--        cpu_abort(cs, "Invalid PowerPC exception %d. Aborting\n", excp);
-+        cpu_abort(env_cpu(env), "Invalid PowerPC exception %d. Aborting\n",
-+                  excp);
-         break;
-     }
- 
-@@ -1066,7 +1069,6 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
- 
- static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
- {
--    CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
-     int srr0, srr1;
-@@ -1103,8 +1105,8 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
- 
-     vector = env->excp_vectors[excp];
-     if (vector == (target_ulong)-1ULL) {
--        cpu_abort(cs, "Raised an exception without defined vector %d\n",
--                  excp);
-+        cpu_abort(env_cpu(env),
-+                  "Raised an exception without defined vector %d\n", excp);
-     }
- 
-     vector |= env->excp_prefix;
-@@ -1135,6 +1137,7 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_EXTERNAL:  /* External input                           */
-         if (env->mpic_proxy) {
-+            CPUState *cs = env_cpu(env);
-             /* IACK the IRQ on delivery */
-             env->spr[SPR_BOOKE_EPR] = ldl_phys(cs->as, env->mpic_iack);
-         }
-@@ -1173,7 +1176,7 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-             break;
-         default:
-             /* Should never occur */
--            cpu_abort(cs, "Invalid program exception %d. Aborting\n",
-+            cpu_abort(env_cpu(env), "Invalid program exception %d. Aborting\n",
-                       env->error_code);
-             break;
-         }
-@@ -1214,7 +1217,8 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
- 
-             /* DBSR already modified by caller */
-         } else {
--            cpu_abort(cs, "Debug exception triggered on unsupported model\n");
-+            cpu_abort(env_cpu(env),
-+                      "Debug exception triggered on unsupported model\n");
-         }
-         break;
-     case POWERPC_EXCP_SPEU:   /* SPE/embedded floating-point unavailable/VPU  */
-@@ -1228,17 +1232,19 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_RESET:     /* System reset exception                   */
-         if (FIELD_EX64(env->msr, MSR, POW)) {
--            cpu_abort(cs, "Trying to deliver power-saving system reset "
-+            cpu_abort(env_cpu(env),
-+                      "Trying to deliver power-saving system reset "
-                       "exception %d with no HV support\n", excp);
-         }
-         break;
-     case POWERPC_EXCP_EFPDI:     /* Embedded floating-point data interrupt   */
-     case POWERPC_EXCP_EFPRI:     /* Embedded floating-point round interrupt  */
--        cpu_abort(cs, "%s exception not implemented\n",
-+        cpu_abort(env_cpu(env), "%s exception not implemented\n",
-                   powerpc_excp_name(excp));
-         break;
-     default:
--        cpu_abort(cs, "Invalid PowerPC exception %d. Aborting\n", excp);
-+        cpu_abort(env_cpu(env), "Invalid PowerPC exception %d. Aborting\n",
-+                  excp);
-         break;
-     }
- 
-@@ -1376,7 +1382,6 @@ static bool is_prefix_insn_excp(PowerPCCPU *cpu, int excp)
- 
- static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
- {
--    CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
-     int srr0, srr1, lev = -1;
-@@ -1415,8 +1420,8 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
- 
-     vector = env->excp_vectors[excp];
-     if (vector == (target_ulong)-1ULL) {
--        cpu_abort(cs, "Raised an exception without defined vector %d\n",
--                  excp);
-+        cpu_abort(env_cpu(env),
-+                  "Raised an exception without defined vector %d\n", excp);
-     }
- 
-     vector |= env->excp_prefix;
-@@ -1512,7 +1517,7 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-             break;
-         default:
-             /* Should never occur */
--            cpu_abort(cs, "Invalid program exception %d. Aborting\n",
-+            cpu_abort(env_cpu(env), "Invalid program exception %d. Aborting\n",
-                       env->error_code);
-             break;
-         }
-@@ -1578,7 +1583,8 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-             new_msr |= (target_ulong)MSR_HVB;
-         } else {
-             if (FIELD_EX64(env->msr, MSR, POW)) {
--                cpu_abort(cs, "Trying to deliver power-saving system reset "
-+                cpu_abort(env_cpu(env),
-+                          "Trying to deliver power-saving system reset "
-                           "exception %d with no HV support\n", excp);
-             }
-         }
-@@ -1650,11 +1656,12 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-     case POWERPC_EXCP_VPUA:      /* Vector assist exception                  */
-     case POWERPC_EXCP_MAINT:     /* Maintenance exception                    */
-     case POWERPC_EXCP_HV_MAINT:  /* Hypervisor Maintenance exception         */
--        cpu_abort(cs, "%s exception not implemented\n",
-+        cpu_abort(env_cpu(env), "%s exception not implemented\n",
-                   powerpc_excp_name(excp));
-         break;
-     default:
--        cpu_abort(cs, "Invalid PowerPC exception %d. Aborting\n", excp);
-+        cpu_abort(env_cpu(env), "Invalid PowerPC exception %d. Aborting\n",
-+                  excp);
-         break;
-     }
- 
-@@ -1687,8 +1694,8 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-     } else {
-         /* Sanity check */
-         if (!(env->msr_mask & MSR_HVB) && srr0 == SPR_HSRR0) {
--            cpu_abort(cs, "Trying to deliver HV exception (HSRR) %d with "
--                      "no HV support\n", excp);
-+            cpu_abort(env_cpu(env), "Trying to deliver HV exception (HSRR) %d "
-+                      "with no HV support\n", excp);
-         }
- 
-         /* This can update new_msr and vector if AIL applies */
-@@ -1706,11 +1713,11 @@ static inline void powerpc_excp_books(PowerPCCPU *cpu, int excp)
- 
- static void powerpc_excp(PowerPCCPU *cpu, int excp)
- {
--    CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
- 
-     if (excp <= POWERPC_EXCP_NONE || excp >= POWERPC_EXCP_NB) {
--        cpu_abort(cs, "Invalid PowerPC exception %d. Aborting\n", excp);
-+        cpu_abort(env_cpu(env), "Invalid PowerPC exception %d. Aborting\n",
-+                  excp);
-     }
- 
-     qemu_log_mask(CPU_LOG_INT, "Raise exception at " TARGET_FMT_lx
-@@ -2244,7 +2251,6 @@ void ppc_maybe_interrupt(CPUPPCState *env)
- static void p7_deliver_interrupt(CPUPPCState *env, int interrupt)
- {
-     PowerPCCPU *cpu = env_archcpu(env);
--    CPUState *cs = env_cpu(env);
- 
-     switch (interrupt) {
-     case PPC_INTERRUPT_MCK: /* Machine check exception */
-@@ -2288,14 +2294,14 @@ static void p7_deliver_interrupt(CPUPPCState *env, int interrupt)
-         assert(!env->resume_as_sreset);
-         break;
-     default:
--        cpu_abort(cs, "Invalid PowerPC interrupt %d. Aborting\n", interrupt);
-+        cpu_abort(env_cpu(env), "Invalid PowerPC interrupt %d. Aborting\n",
-+                  interrupt);
-     }
- }
- 
- static void p8_deliver_interrupt(CPUPPCState *env, int interrupt)
- {
-     PowerPCCPU *cpu = env_archcpu(env);
--    CPUState *cs = env_cpu(env);
- 
-     switch (interrupt) {
-     case PPC_INTERRUPT_MCK: /* Machine check exception */
-@@ -2359,7 +2365,8 @@ static void p8_deliver_interrupt(CPUPPCState *env, int interrupt)
-         assert(!env->resume_as_sreset);
-         break;
-     default:
--        cpu_abort(cs, "Invalid PowerPC interrupt %d. Aborting\n", interrupt);
-+        cpu_abort(env_cpu(env), "Invalid PowerPC interrupt %d. Aborting\n",
-+                  interrupt);
-     }
- }
- 
-@@ -2438,7 +2445,8 @@ static void p9_deliver_interrupt(CPUPPCState *env, int interrupt)
-         assert(!env->resume_as_sreset);
-         break;
-     default:
--        cpu_abort(cs, "Invalid PowerPC interrupt %d. Aborting\n", interrupt);
-+        cpu_abort(env_cpu(env), "Invalid PowerPC interrupt %d. Aborting\n",
-+                  interrupt);
-     }
- }
- #endif
-@@ -2446,7 +2454,6 @@ static void p9_deliver_interrupt(CPUPPCState *env, int interrupt)
- static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
- {
-     PowerPCCPU *cpu = env_archcpu(env);
--    CPUState *cs = env_cpu(env);
- 
-     switch (interrupt) {
-     case PPC_INTERRUPT_RESET: /* External reset */
-@@ -2543,7 +2550,8 @@ static void ppc_deliver_interrupt_generic(CPUPPCState *env, int interrupt)
-         assert(!env->resume_as_sreset);
-         break;
-     default:
--        cpu_abort(cs, "Invalid PowerPC interrupt %d. Aborting\n", interrupt);
-+        cpu_abort(env_cpu(env), "Invalid PowerPC interrupt %d. Aborting\n",
-+                  interrupt);
-     }
- }
- 
--- 
-2.42.0
+
+
+
+> @@ -4083,7 +4125,9 @@ static void vtd_init(IntelIOMMUState *s)
+>      s->iq_dw = false;
+>      s->next_frcd_reg = 0;
+>  
+> -    vtd_cap_init(s);
+> +    if (!s->cap_frozen) {
+> +        vtd_cap_init(s);
+> +    }
+>  
+
+If it's fronzen it's because VFIO was added after machine done.
+And then what? I think caps are just wrong?
+
+
+I think the way to approach this is just by specifying this
+as an option on command line.
+
+So if one wants VFIO one has to sync caps with host.
+No?
+
+
+
+>      /*
+>       * Rsvd field masks for spte
+> @@ -4254,6 +4298,10 @@ static int vtd_machine_done_notify_one(Object *child, void *unused)
+>  
+>  static void vtd_machine_done_hook(Notifier *notifier, void *unused)
+>  {
+> +    IntelIOMMUState *iommu = INTEL_IOMMU_DEVICE(x86_iommu_get_default());
+> +
+> +    iommu->cap_frozen = true;
+> +
+>      object_child_foreach_recursive(object_get_root(),
+>                                     vtd_machine_done_notify_one, NULL);
+>  }
+> -- 
+> 2.34.1
 
 
