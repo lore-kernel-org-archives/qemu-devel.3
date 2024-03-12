@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F273C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27163C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:23:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk12k-00005v-2N; Tue, 12 Mar 2024 08:15:42 -0400
+	id 1rk19H-0002hk-9T; Tue, 12 Mar 2024 08:22:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rk12c-0008TM-DE
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:15:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rk19F-0002h8-3u
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:22:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rk12Y-0002Q4-DV
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:15:34 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rk19D-0004NG-Dw
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:22:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710245726;
+ s=mimecast20190719; t=1710246142;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cxrzgawp0feMCzKorBK3yil2PFefuiF+4c6lFK4CwKg=;
- b=PC8w9rneOv64fybDlE+jcQ0pcogDboAR66cxQKzFsfReBeGyS+8BCD0EX9l/s9JmSquIkB
- NgfknSHVpQ2/euLiaTEJ0jE4UJ63QZAN2W7eKWO0BryzNpqUgEhkrzCt+rEvbzKjCYtBEz
- NQzAfIvMw6lNRiVJDFgWTvqmJGXdbDk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u1TrsS63/GuJdDadYK/qxP8WCJIjzco38BVY2vEHLgw=;
+ b=Tpa/kwD4x+Wm2J/vFh24AhCcEfglMsr6SCHnZteY1skS9mt/k8cahIAabfVdMG14f5GgaG
+ EBSfeyw48C1pFSuAeeQhCyHVwCx6UcTYL6X+U1FTfEzYYndmkoBXFjX3GgHzWs41ijGLGJ
+ Qk/nm0SHDIgoyLshvpzpedKYS0ttfUw=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-YifYAV8vNBet-0TiQHqZJQ-1; Tue, 12 Mar 2024 08:15:25 -0400
-X-MC-Unique: YifYAV8vNBet-0TiQHqZJQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4131eaecb4aso17513575e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 05:15:25 -0700 (PDT)
+ us-mta-253--m_ZTNDbO66IQH1cHHNYsA-1; Tue, 12 Mar 2024 08:22:20 -0400
+X-MC-Unique: -m_ZTNDbO66IQH1cHHNYsA-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-78315f4f5c2so187735585a.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 05:22:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710245724; x=1710850524;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1710246140; x=1710850940;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cxrzgawp0feMCzKorBK3yil2PFefuiF+4c6lFK4CwKg=;
- b=F/2N+R5khsWTLaS+Fcmm0tTKSvVw9dkq5FeAb0370fJ+H9VmoHxcPGw0GangNgHEp7
- KL/ErjraQ+vMpOk4v2rDYnHGAiWn7/KEdmKadMSn8NC8As5O0Eh+Uq2LfmzbEWfXwBrA
- d0mzp45Biv0Ze5bKPCcIsxGNSCkxcDL/muNCahi75C94cK+xIi0QS1QLDZb3oSZEdnzj
- GKmF/LjaWEre2CZmg5V2i2ZtPZO+c2aE1C0r11oJiYy3xCHjZ1jVNX9Y03Ke0vUQyN2w
- C8wZSBjDQmBDjELEVAH7jK+cXpjCcYmZ3UPDGJGE95rQx2btLJu4fr7C1q7r1kyJdJrX
- yptw==
-X-Gm-Message-State: AOJu0Yyoe2FuHZfhzvuKUDS+vYYDSMspz9XGZNblFjSQMA1DAcizXYN1
- 217kjks8YOvjeex4oF1ppKF0i50RiKhnvwxCuXtYObY5/TipHWPbHilg7qRQbRlOkCigjf6V5/J
- hiEb6/a/k1CJHejha2RZo3iSD84BfHzzUDj70yYD6AfvcMY0jUfq/ZF3E4yTT6aosfg7twT11ke
- hZK2yog5490rQqqcQQTCCpsAtBOoO2Vw==
-X-Received: by 2002:a05:600c:458d:b0:413:2779:8e29 with SMTP id
- r13-20020a05600c458d00b0041327798e29mr4738980wmo.19.1710245724324; 
- Tue, 12 Mar 2024 05:15:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAupj8zEOKKjsB35Ul3nDpZhIuKLv2ybOoRjx0yM/GUDjJzeH9Ci7G3wGBGa0KiZdSyfbuLA==
-X-Received: by 2002:a05:600c:458d:b0:413:2779:8e29 with SMTP id
- r13-20020a05600c458d00b0041327798e29mr4738955wmo.19.1710245723981; 
- Tue, 12 Mar 2024 05:15:23 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- i6-20020adffdc6000000b0033b66c2d61esm8902190wrs.48.2024.03.12.05.15.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 05:15:23 -0700 (PDT)
-Message-ID: <8cbda205-e8a4-4420-b49a-dbe7593fc341@redhat.com>
-Date: Tue, 12 Mar 2024 13:15:22 +0100
+ bh=u1TrsS63/GuJdDadYK/qxP8WCJIjzco38BVY2vEHLgw=;
+ b=PgLv0zJuC81ExOWGt5IQCIn12z+ZVRfthYE58f4wXw6icya9L9IE9OWdMqZGQeu5Hc
+ ADU1zjW0u0YRq0y/VHYiMS6ToNrBeSrKZ1YeOkZEt3n5/KJzwPiic1/0qWPy/9D23MfK
+ m950wNgdrNDu2oTJ4QGrQyr20sseeldGHt2cI15yVJIXJdHK7cIp54PXGkI7evVcjSwZ
+ eYXr033XkDOQhJ8sVVvEwKfVi1Od6D/zIg5O007K4svz6FrvAkUucH7yrErAbErZqO8h
+ F6dPBZYmC6EuEGtchHDK0PH9H+wlIV4POYERXVdLMf/U8tZlsLFqJRaj/fVKmReeDHRb
+ U95A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVPaGScIPuU3glYc2xS++GF3TmFKSdE7mGC7FSP7DPlV4Tyi5AbDpCw/A3tTjz2vw9wRVSxc0ZjYw4aQSUT4+XHfqVDNsg=
+X-Gm-Message-State: AOJu0YxOGIAJUv0YEmY1aHKw5i4fu8PCcE3c2hiR4ODGpdMmUVbGNTw6
+ wbumgY6LNRBDvKd13lOnQKC1SQeS4ZmZXdY1gCL9gvqggsv/3b2pNdao1X0qJwUcUzFiJpk+7bT
+ +hQZzpFSvI28iiybrRi7P9xWkEmXMuCRu8/2P+PYaeEioSjIOpp7i
+X-Received: by 2002:a05:620a:400b:b0:788:4f31:1a9d with SMTP id
+ h11-20020a05620a400b00b007884f311a9dmr1815964qko.1.1710246140228; 
+ Tue, 12 Mar 2024 05:22:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8STbKKUwxHEoOYbHHiLFNAb0DbfBqDCnuhsmZpN7pTTiqnmtYftUUtNTSv+1kKnYiJb5BOA==
+X-Received: by 2002:a05:620a:400b:b0:788:4f31:1a9d with SMTP id
+ h11-20020a05620a400b00b007884f311a9dmr1815947qko.1.1710246139846; 
+ Tue, 12 Mar 2024 05:22:19 -0700 (PDT)
+Received: from x1n (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ f18-20020a05620a12f200b007882915ca34sm3631627qkl.40.2024.03.12.05.22.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 05:22:19 -0700 (PDT)
+Date: Tue, 12 Mar 2024 08:22:18 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 2/2] migration: Fix error handling after dup in file
+ migration
+Message-ID: <ZfBI-hPZefpW1Y1p@x1n>
+References: <20240311233335.17299-1-farosas@suse.de>
+ <20240311233335.17299-3-farosas@suse.de>
+ <ZfAnJjka5KHR1Mnu@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 9.0] migration: Skip only empty block devices
-Content-Language: en-US, fr
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-References: <20240312120431.550054-1-clg@redhat.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240312120431.550054-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+In-Reply-To: <ZfAnJjka5KHR1Mnu@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,48 +105,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/24 13:04, Cédric Le Goater wrote:
-> The block .save_setup() handler calls a helper routine
-> init_blk_migration() which builds a list of block devices to take into
-> account for migration. When one device is found to be empty (sectors
-> == 0), the loop exits and all the remaining devices are ignored. This
-> is a regression introduced when bdrv_iterate() was removed.
+On Tue, Mar 12, 2024 at 09:57:58AM +0000, Daniel P. Berrangé wrote:
+> On Mon, Mar 11, 2024 at 08:33:35PM -0300, Fabiano Rosas wrote:
+> > The file migration code was allowing a possible -1 from a failed call
+> > to dup() to propagate into the new QIOFileChannel::fd before checking
+> > for validity. Coverity doesn't like that, possibly due to the the
+> > lseek(-1, ...) call that would ensue before returning from the channel
+> > creation routine.
+> > 
+> > Use the newly introduced qio_channel_file_dupfd() to properly check
+> > the return of dup() before proceeding.
+> > 
+> > Fixes: CID 1539961
+> > Fixes: CID 1539965
+> > Fixes: CID 1539960
+> > Fixes: 2dd7ee7a51 ("migration/multifd: Add incoming QIOChannelFile support")
+> > Fixes: decdc76772 ("migration/multifd: Add mapped-ram support to fd: URI")
+> > Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > ---
+> >  migration/fd.c   |  9 ++++-----
+> >  migration/file.c | 14 +++++++-------
+> >  2 files changed, 11 insertions(+), 12 deletions(-)
+> > 
+> > diff --git a/migration/fd.c b/migration/fd.c
+> > index d4ae72d132..4e2a63a73d 100644
+> > --- a/migration/fd.c
+> > +++ b/migration/fd.c
+> > @@ -80,6 +80,7 @@ static gboolean fd_accept_incoming_migration(QIOChannel *ioc,
+> >  void fd_start_incoming_migration(const char *fdname, Error **errp)
+> >  {
+> >      QIOChannel *ioc;
+> > +    QIOChannelFile *fioc;
+> >      int fd = monitor_fd_param(monitor_cur(), fdname, errp);
+> >      if (fd == -1) {
+> >          return;
+> > @@ -103,15 +104,13 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
+> >          int channels = migrate_multifd_channels();
+> >  
+> >          while (channels--) {
+> > -            ioc = QIO_CHANNEL(qio_channel_file_new_fd(dup(fd)));
+> > -
+> > -            if (QIO_CHANNEL_FILE(ioc)->fd == -1) {
+> > -                error_setg(errp, "Failed to duplicate fd %d", fd);
+> > +            fioc = qio_channel_file_new_dupfd(fd, errp);
+> > +            if (!fioc) {
+> >                  return;
+> >              }
+> >  
+> >              qio_channel_set_name(ioc, "migration-fd-incoming");
+> > -            qio_channel_add_watch_full(ioc, G_IO_IN,
+> > +            qio_channel_add_watch_full(QIO_CHANNEL(fioc), G_IO_IN,
+> >                                         fd_accept_incoming_migration,
+> >                                         NULL, NULL,
+> >                                         g_main_context_get_thread_default());
 > 
-> Change that by skipping only empty devices.
+> Nothing is free'ing the already created channels, if this while()
+> loop fails on the 2nd or later iterations.
 > 
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Suggested: Kevin Wolf <kwolf@redhat.com>
-
-That's better :
-
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
-
-Sorry for the noise,
-
-C.
-
-
-> Fixes: fea68bb6e9fa ("block: Eliminate bdrv_iterate(), use bdrv_next()")
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   migration/block.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+> > diff --git a/migration/file.c b/migration/file.c
+> > index 164b079966..d458f48269 100644
+> > --- a/migration/file.c
+> > +++ b/migration/file.c
+> > @@ -58,12 +58,13 @@ bool file_send_channel_create(gpointer opaque, Error **errp)
+> >      int fd = fd_args_get_fd();
+> >  
+> >      if (fd && fd != -1) {
+> > -        ioc = qio_channel_file_new_fd(dup(fd));
+> > +        ioc = qio_channel_file_new_dupfd(fd, errp);
+> >      } else {
+> >          ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
+> > -        if (!ioc) {
+> > -            goto out;
+> > -        }
+> > +    }
+> > +
+> > +    if (!ioc) {
+> > +        goto out;
+> >      }
+> >  
+> >      multifd_channel_connect(opaque, QIO_CHANNEL(ioc));
+> > @@ -147,10 +148,9 @@ void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
+> >                                     NULL, NULL,
+> >                                     g_main_context_get_thread_default());
+> >  
+> > -        fioc = qio_channel_file_new_fd(dup(fioc->fd));
+> > +        fioc = qio_channel_file_new_dupfd(fioc->fd, errp);
+> >  
+> > -        if (!fioc || fioc->fd == -1) {
+> > -            error_setg(errp, "Error creating migration incoming channel");
+> > +        if (!fioc) {
+> >              break;
+> >          }
+> >      } while (++i < channels);
 > 
-> diff --git a/migration/block.c b/migration/block.c
-> index 8c6ebafacc1ffe930d1d4f19d968817b14852c69..2b9054889ad2ba739828594c50cf047703757e96 100644
-> --- a/migration/block.c
-> +++ b/migration/block.c
-> @@ -402,7 +402,10 @@ static int init_blk_migration(QEMUFile *f)
->           }
->   
->           sectors = bdrv_nb_sectors(bs);
-> -        if (sectors <= 0) {
-> +        if (sectors == 0) {
-> +            continue;
-> +        }
-> +        if (sectors < 0) {
->               ret = sectors;
->               bdrv_next_cleanup(&it);
->               goto out;
+> Again, nothing is free'ing when the loops fails on 2nd or later
+> iterations.
+
+For this one, I think it constantly leak one IOC even if no failure
+triggers..
+
+> 
+> So a weak
+> 
+>   Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> 
+> on the basis that it fixes the bugs that it claims to fix, but there
+> are more bugs that still need fixing here.
+
+For the other issue, Fabiano - I think there's one easy way to workaround
+and avoid bothering with "how to remove a registered IO watch" is we create
+the IOCs in a loop first, register the IO watches only if all succeeded.
+
+I'll queue the series first to fix the reported issue.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
