@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C75B2C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E45C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:12:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5X3-0004Mo-Tz; Tue, 12 Mar 2024 13:03:18 -0400
+	id 1rk5Z7-0000xY-9n; Tue, 12 Mar 2024 13:05:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5Uz-0006ra-CM; Tue, 12 Mar 2024 13:01:12 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1rk5Vg-00087z-4C; Tue, 12 Mar 2024 13:01:55 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5Ux-0008W0-6F; Tue, 12 Mar 2024 13:01:08 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6e46dcd8feaso3547291b3a.2; 
- Tue, 12 Mar 2024 10:01:06 -0700 (PDT)
+ id 1rk5Vd-0000AH-8G; Tue, 12 Mar 2024 13:01:51 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6e6ac741ff7so545058b3a.0; 
+ Tue, 12 Mar 2024 10:01:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710262865; x=1710867665; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710262907; x=1710867707; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2CypqX/Zjp70n1FIoUG4M+IW/+WsFwMUoVGMfQIzaMo=;
- b=b/REzB6l7pbdOy+KUfM42WvGzdeVHZorqLfVlqv0A9Tky4v7568crIac870EU7+9/f
- /gQts3H2aaPqnZL8nzPDugaE249fC5SPZNSFQmfLp/IxqSTbdcRbDbR8xwP7R02MaYS3
- SSkNiQ29FW1fhZS4TOKKJLu2sPbtFisky6ox8rg6ZgETokNzYbHCDAjr7bTDAOBukVhm
- UJd6Z6xhgaejNbH63mW52Fp2oxdlNH2OHAy/QMqZ17Jf65DIpk20tcItXlkaIGxdcb0V
- GayIkg3LxZzwuonp2CZ5kXFGbfKvDWLsIFSVDrZHa8BHLDGI2uc7JvW00HaphuDMSCZv
- xJeg==
+ bh=lX04aDkXFvlRCQh6VqYz9F4OSVcE/Z+9u7GVIjBUl0g=;
+ b=d9CIxTmwwwjO0NSWvHtxUV/ZUibzdH3otTp2OFllS5pYGspHy2uVnw+oM/XP7mjiPQ
+ Blsn+cFjJLzh7PM6ZtTPObA0pBzKpj1XMLXKrGe3zvd0zaWPiXYCPBm0gks+Ns8BeGXN
+ 2wGta1rvgNPpYJpBQPRWbh3V3jArsfGO/54YJK1XllS/jes23Gg6ai5A/gqXeUlOywrl
+ hlN8s7IzF+sSxOajwees5zHJkk3UbIWol8E2dA0agZNtWJ/+rjcg3fEwt5VAD//jmNck
+ 8Pc1k6DZi6k34UUQl+uZGOeQCuaTYtdd8bQ+gRuQsKqpDe6rsd0MSLTwXWlZfPYmd8T9
+ h24g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710262865; x=1710867665;
+ d=1e100.net; s=20230601; t=1710262907; x=1710867707;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2CypqX/Zjp70n1FIoUG4M+IW/+WsFwMUoVGMfQIzaMo=;
- b=eGy/6gWDYfqZEXsGBmdQhK0mA0feq2ueZZ/i/ekQuDqUbaCdGcjnYkPJ9pV3gqA+aP
- aMZG9FfzK3vjUiLY3eYpBoCAQLqk99SI9nudI/IO4VagBvAHJe8+KQMRoAFNX3XGGEBg
- n8l9gkhX5yg5RF7+aL9Cb7bkefV0E4CPQjGwh/uUUvwqhfbN1b4jXR5PHsNSsnn15/U/
- Kpk2CxaN7hSh3BLvoJ3EjDCOcELNTLHzXmnXf8YwPFwocFfy90WxoY3OsLOqm72RygXC
- R6SYMS1qRvFyl8SkQBGQqJpYGhMVnWRvtrGUMVqQLRfTaBNLkfGt/jpW8MZWVNqqiqlx
- orSw==
+ bh=lX04aDkXFvlRCQh6VqYz9F4OSVcE/Z+9u7GVIjBUl0g=;
+ b=tYa0hpIXZ6vuS2vFcMUuMJlP6LYxkThGaD0gpqcs5yJwpBDyJ+GA0TDOmUw978k0oz
+ B0zDxw28Dn+udoZ5F3mHrprk4Tb+OgSqoXnYOXoh9BK9EweUP7zu0NTns7aem0FVEHRw
+ qlWOHPmqpBXV1HVYDfVLiGc7civW7PGzI/JnkQndzMuOYxHAq1hC/bqYhgoKf/4Gc3oN
+ A2fD17VigBwwVZMtvvVR+t4bJTtLjSoa6Ye1hedXtzBkqYcrF5njXA1di9GRcy8GEszr
+ nqTmBVu6J2UQkW1kpEDN0BdoyMoyrp52wt6Dj1d9QluMZHPwbvelxsN5wBD4qC4SHxrP
+ WC0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5td+a/D5VidgTXIWkjkw323Ij6vtj0bVwGiS6aPa2yGj/lEXXlwmBCa6rIenv9UscbOIW8mliFJLDg+AYxUUVy1dO
-X-Gm-Message-State: AOJu0YwOLNCGFOSUnN+ApOEYo33VGwMDgR5QAw9jH379tensqUZT8YQp
- L7LblhBsR3MbTChsmYigU0lqYpniT+MlJudDVz2hPOx2bQf04Baz7AUyDf2D2pI=
-X-Google-Smtp-Source: AGHT+IFJJxMYg0TP0UEwCYa/y+jNm4u4anAjhlnmR8IMi17UrIjCCksLKesHrMnQtMGV7dKJSm4xHg==
-X-Received: by 2002:a05:6a20:2443:b0:1a1:1022:45f0 with SMTP id
- t3-20020a056a20244300b001a1102245f0mr2450932pzc.54.1710262865335; 
- Tue, 12 Mar 2024 10:01:05 -0700 (PDT)
+ AJvYcCXODQAriTn/D1yiYa9RQIXiL1P2Mx05bcx9gm5SjjNWHxeVMAr31qflnt/6maMj4L1GstsHJxYJI+6pDM8oXVwjxK2u
+X-Gm-Message-State: AOJu0YyIPDpZLNmz3M+HULwepHUrdxvMFWjETiyikghtiKqP4mHZ+kYT
+ 9TIGI6c3EdaF2/RMK5/9KLiVmA/Kxfe9phlWkRYWiwCMM/p9IvYtwxT6EX3uBiE=
+X-Google-Smtp-Source: AGHT+IHHFobD/lume3I6+6DrjoB1PFYIfOvW3njMOKAlzt47rWA9eZLOMaGcsQ2ht4ZMbybwaI9dcw==
+X-Received: by 2002:a05:6a20:3d25:b0:1a3:25f9:102b with SMTP id
+ y37-20020a056a203d2500b001a325f9102bmr1014246pzi.12.1710262906960; 
+ Tue, 12 Mar 2024 10:01:46 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.10.01.00
+ t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.10.01.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 10:01:03 -0700 (PDT)
+ Tue, 12 Mar 2024 10:01:46 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PULL 33/38] spapr: nested: Extend nested_ppc_state for nested PAPR
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Michael Neuling <mikey@neuling.org>
+Subject: [PULL 38/38] spapr: nested: Introduce cap-nested-papr for Nested PAPR
  API
-Date: Wed, 13 Mar 2024 02:58:44 +1000
-Message-ID: <20240312165851.2240242-34-npiggin@gmail.com>
+Date: Wed, 13 Mar 2024 02:58:49 +1000
+Message-ID: <20240312165851.2240242-39-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240312165851.2240242-1-npiggin@gmail.com>
 References: <20240312165851.2240242-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,242 +99,175 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Currently, nested_ppc_state stores a certain set of registers and works
-with nested_[load|save]_state() for state transfer as reqd for nested-hv API.
-Extending these with additional registers state as reqd for nested PAPR API.
+Introduce a SPAPR capability cap-nested-papr which enables nested PAPR
+API for nested guests. This new API is to enable support for KVM on PowerVM
+and the support in Linux kernel has already merged upstream.
 
-Acked-by: Nicholas Piggin <npiggin@gmail.com>
-Suggested-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Michael Neuling <mikey@neuling.org>
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/spapr_nested.c         | 106 ++++++++++++++++++++++++++++++++++
- include/hw/ppc/spapr_nested.h |  50 ++++++++++++++++
- target/ppc/cpu.h              |   2 +
- 3 files changed, 158 insertions(+)
+ hw/ppc/spapr.c         |  2 ++
+ hw/ppc/spapr_caps.c    | 54 ++++++++++++++++++++++++++++++++++++++++++
+ hw/ppc/spapr_nested.c  |  8 ++++---
+ include/hw/ppc/spapr.h |  6 ++++-
+ 4 files changed, 66 insertions(+), 4 deletions(-)
 
-diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-index 72bf3dc6d4..6a2ff963c6 100644
---- a/hw/ppc/spapr_nested.c
-+++ b/hw/ppc/spapr_nested.c
-@@ -108,6 +108,7 @@ static target_ulong h_copy_tofrom_guest(PowerPCCPU *cpu,
- static void nested_save_state(struct nested_ppc_state *save, PowerPCCPU *cpu)
- {
-     CPUPPCState *env = &cpu->env;
-+    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
- 
-     memcpy(save->gpr, env->gpr, sizeof(save->gpr));
- 
-@@ -134,6 +135,58 @@ static void nested_save_state(struct nested_ppc_state *save, PowerPCCPU *cpu)
-     save->pidr = env->spr[SPR_BOOKS_PID];
-     save->ppr = env->spr[SPR_PPR];
- 
-+    if (spapr_nested_api(spapr) == NESTED_API_PAPR) {
-+        save->pvr = env->spr[SPR_PVR];
-+        save->amor = env->spr[SPR_AMOR];
-+        save->dawr0 = env->spr[SPR_DAWR0];
-+        save->dawrx0 = env->spr[SPR_DAWRX0];
-+        save->ciabr = env->spr[SPR_CIABR];
-+        save->purr = env->spr[SPR_PURR];
-+        save->spurr = env->spr[SPR_SPURR];
-+        save->ic = env->spr[SPR_IC];
-+        save->vtb = env->spr[SPR_VTB];
-+        save->hdar = env->spr[SPR_HDAR];
-+        save->hdsisr = env->spr[SPR_HDSISR];
-+        save->heir = env->spr[SPR_HEIR];
-+        save->asdr = env->spr[SPR_ASDR];
-+        save->dawr1 = env->spr[SPR_DAWR1];
-+        save->dawrx1 = env->spr[SPR_DAWRX1];
-+        save->dexcr = env->spr[SPR_DEXCR];
-+        save->hdexcr = env->spr[SPR_HDEXCR];
-+        save->hashkeyr = env->spr[SPR_HASHKEYR];
-+        save->hashpkeyr = env->spr[SPR_HASHPKEYR];
-+        memcpy(save->vsr, env->vsr, sizeof(save->vsr));
-+        save->ebbhr = env->spr[SPR_EBBHR];
-+        save->tar = env->spr[SPR_TAR];
-+        save->ebbrr = env->spr[SPR_EBBRR];
-+        save->bescr = env->spr[SPR_BESCR];
-+        save->iamr = env->spr[SPR_IAMR];
-+        save->amr = env->spr[SPR_AMR];
-+        save->uamor = env->spr[SPR_UAMOR];
-+        save->dscr = env->spr[SPR_DSCR];
-+        save->fscr = env->spr[SPR_FSCR];
-+        save->pspb = env->spr[SPR_PSPB];
-+        save->ctrl = env->spr[SPR_CTRL];
-+        save->vrsave = env->spr[SPR_VRSAVE];
-+        save->dar = env->spr[SPR_DAR];
-+        save->dsisr = env->spr[SPR_DSISR];
-+        save->pmc1 = env->spr[SPR_POWER_PMC1];
-+        save->pmc2 = env->spr[SPR_POWER_PMC2];
-+        save->pmc3 = env->spr[SPR_POWER_PMC3];
-+        save->pmc4 = env->spr[SPR_POWER_PMC4];
-+        save->pmc5 = env->spr[SPR_POWER_PMC5];
-+        save->pmc6 = env->spr[SPR_POWER_PMC6];
-+        save->mmcr0 = env->spr[SPR_POWER_MMCR0];
-+        save->mmcr1 = env->spr[SPR_POWER_MMCR1];
-+        save->mmcr2 = env->spr[SPR_POWER_MMCR2];
-+        save->mmcra = env->spr[SPR_POWER_MMCRA];
-+        save->sdar = env->spr[SPR_POWER_SDAR];
-+        save->siar = env->spr[SPR_POWER_SIAR];
-+        save->sier = env->spr[SPR_POWER_SIER];
-+        save->vscr = ppc_get_vscr(env);
-+        save->fpscr = env->fpscr;
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index aaf73781b0..99d3fcb185 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -2166,6 +2166,7 @@ static const VMStateDescription vmstate_spapr = {
+         &vmstate_spapr_cap_fwnmi,
+         &vmstate_spapr_fwnmi,
+         &vmstate_spapr_cap_rpt_invalidate,
++        &vmstate_spapr_cap_nested_papr,
+         NULL
+     }
+ };
+@@ -4732,6 +4733,7 @@ static void spapr_machine_class_init(ObjectClass *oc, void *data)
+     smc->default_caps.caps[SPAPR_CAP_IBS] = SPAPR_CAP_WORKAROUND;
+     smc->default_caps.caps[SPAPR_CAP_HPT_MAXPAGESIZE] = 16; /* 64kiB */
+     smc->default_caps.caps[SPAPR_CAP_NESTED_KVM_HV] = SPAPR_CAP_OFF;
++    smc->default_caps.caps[SPAPR_CAP_NESTED_PAPR] = SPAPR_CAP_OFF;
+     smc->default_caps.caps[SPAPR_CAP_LARGE_DECREMENTER] = SPAPR_CAP_ON;
+     smc->default_caps.caps[SPAPR_CAP_CCF_ASSIST] = SPAPR_CAP_ON;
+     smc->default_caps.caps[SPAPR_CAP_FWNMI] = SPAPR_CAP_ON;
+diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
+index e889244e52..62abf1ba9d 100644
+--- a/hw/ppc/spapr_caps.c
++++ b/hw/ppc/spapr_caps.c
+@@ -487,6 +487,50 @@ static void cap_nested_kvm_hv_apply(SpaprMachineState *spapr,
+             error_append_hint(errp, "Try appending -machine cap-nested-hv=off "
+                                     "or use threads=1 with -smp\n");
+         }
++        if (spapr_nested_api(spapr) &&
++            spapr_nested_api(spapr) != NESTED_API_KVM_HV) {
++            error_setg(errp, "Nested-HV APIs are mutually exclusive");
++            error_append_hint(errp, "Please use either cap-nested-hv or "
++                                    "cap-nested-papr to proceed.\n");
++            return;
++        } else {
++            spapr->nested.api = NESTED_API_KVM_HV;
++        }
++    }
++}
++
++static void cap_nested_papr_apply(SpaprMachineState *spapr,
++                                    uint8_t val, Error **errp)
++{
++    ERRP_GUARD();
++    PowerPCCPU *cpu = POWERPC_CPU(first_cpu);
++    CPUPPCState *env = &cpu->env;
++
++    if (!val) {
++        /* capability disabled by default */
++        return;
 +    }
 +
-     save->tb_offset = env->tb_env->tb_offset;
++    if (tcg_enabled()) {
++        if (!(env->insns_flags2 & PPC2_ISA300)) {
++            error_setg(errp, "Nested-PAPR only supported on POWER9 and later");
++            error_append_hint(errp,
++                              "Try appending -machine cap-nested-papr=off\n");
++            return;
++        }
++        if (spapr_nested_api(spapr) &&
++            spapr_nested_api(spapr) != NESTED_API_PAPR) {
++            error_setg(errp, "Nested-HV APIs are mutually exclusive");
++            error_append_hint(errp, "Please use either cap-nested-hv or "
++                                    "cap-nested-papr to proceed.\n");
++            return;
++        } else {
++            spapr->nested.api = NESTED_API_PAPR;
++        }
++    } else if (kvm_enabled()) {
++        error_setg(errp, "KVM implementation does not support Nested-PAPR");
++        error_append_hint(errp,
++                          "Try appending -machine cap-nested-papr=off\n");
+     }
  }
  
-@@ -141,6 +194,7 @@ static void nested_load_state(PowerPCCPU *cpu, struct nested_ppc_state *load)
+@@ -735,6 +779,15 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
+         .type = "bool",
+         .apply = cap_nested_kvm_hv_apply,
+     },
++    [SPAPR_CAP_NESTED_PAPR] = {
++        .name = "nested-papr",
++        .description = "Allow Nested HV (PAPR API)",
++        .index = SPAPR_CAP_NESTED_PAPR,
++        .get = spapr_cap_get_bool,
++        .set = spapr_cap_set_bool,
++        .type = "bool",
++        .apply = cap_nested_papr_apply,
++    },
+     [SPAPR_CAP_LARGE_DECREMENTER] = {
+         .name = "large-decr",
+         .description = "Allow Large Decrementer",
+@@ -919,6 +972,7 @@ SPAPR_CAP_MIG_STATE(sbbc, SPAPR_CAP_SBBC);
+ SPAPR_CAP_MIG_STATE(ibs, SPAPR_CAP_IBS);
+ SPAPR_CAP_MIG_STATE(hpt_maxpagesize, SPAPR_CAP_HPT_MAXPAGESIZE);
+ SPAPR_CAP_MIG_STATE(nested_kvm_hv, SPAPR_CAP_NESTED_KVM_HV);
++SPAPR_CAP_MIG_STATE(nested_papr, SPAPR_CAP_NESTED_PAPR);
+ SPAPR_CAP_MIG_STATE(large_decr, SPAPR_CAP_LARGE_DECREMENTER);
+ SPAPR_CAP_MIG_STATE(ccf_assist, SPAPR_CAP_CCF_ASSIST);
+ SPAPR_CAP_MIG_STATE(fwnmi, SPAPR_CAP_FWNMI);
+diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+index ce3490bcf2..936659b4c0 100644
+--- a/hw/ppc/spapr_nested.c
++++ b/hw/ppc/spapr_nested.c
+@@ -13,13 +13,15 @@
+ void spapr_nested_reset(SpaprMachineState *spapr)
  {
-     CPUState *cs = CPU(cpu);
-     CPUPPCState *env = &cpu->env;
-+    SpaprMachineState *spapr = SPAPR_MACHINE(qdev_get_machine());
+     if (spapr_get_cap(spapr, SPAPR_CAP_NESTED_KVM_HV)) {
+-        spapr->nested.api = NESTED_API_KVM_HV;
+         spapr_unregister_nested_hv();
+         spapr_register_nested_hv();
+-    } else {
+-        spapr->nested.api = 0;
++    } else if (spapr_get_cap(spapr, SPAPR_CAP_NESTED_PAPR)) {
+         spapr->nested.capabilities_set = false;
++        spapr_unregister_nested_papr();
++        spapr_register_nested_papr();
+         spapr_nested_gsb_init();
++    } else {
++        spapr->nested.api = 0;
+     }
+ }
  
-     memcpy(env->gpr, load->gpr, sizeof(env->gpr));
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index 6223873641..4aaf23d28f 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -81,8 +81,10 @@ typedef enum {
+ #define SPAPR_CAP_RPT_INVALIDATE        0x0B
+ /* Support for AIL modes */
+ #define SPAPR_CAP_AIL_MODE_3            0x0C
++/* Nested PAPR */
++#define SPAPR_CAP_NESTED_PAPR           0x0D
+ /* Num Caps */
+-#define SPAPR_CAP_NUM                   (SPAPR_CAP_AIL_MODE_3 + 1)
++#define SPAPR_CAP_NUM                   (SPAPR_CAP_NESTED_PAPR + 1)
  
-@@ -167,6 +221,58 @@ static void nested_load_state(PowerPCCPU *cpu, struct nested_ppc_state *load)
-     env->spr[SPR_BOOKS_PID] = load->pidr;
-     env->spr[SPR_PPR] = load->ppr;
+ /*
+  * Capability Values
+@@ -592,6 +594,7 @@ struct SpaprMachineState {
+ #define H_GUEST_CREATE_VCPU      0x474
+ #define H_GUEST_GET_STATE        0x478
+ #define H_GUEST_SET_STATE        0x47C
++#define H_GUEST_RUN_VCPU         0x480
+ #define H_GUEST_DELETE           0x488
  
-+    if (spapr_nested_api(spapr) == NESTED_API_PAPR) {
-+        env->spr[SPR_PVR] = load->pvr;
-+        env->spr[SPR_AMOR] = load->amor;
-+        env->spr[SPR_DAWR0] = load->dawr0;
-+        env->spr[SPR_DAWRX0] = load->dawrx0;
-+        env->spr[SPR_CIABR] = load->ciabr;
-+        env->spr[SPR_PURR] = load->purr;
-+        env->spr[SPR_SPURR] = load->purr;
-+        env->spr[SPR_IC] = load->ic;
-+        env->spr[SPR_VTB] = load->vtb;
-+        env->spr[SPR_HDAR] = load->hdar;
-+        env->spr[SPR_HDSISR] = load->hdsisr;
-+        env->spr[SPR_HEIR] = load->heir;
-+        env->spr[SPR_ASDR] = load->asdr;
-+        env->spr[SPR_DAWR1] = load->dawr1;
-+        env->spr[SPR_DAWRX1] = load->dawrx1;
-+        env->spr[SPR_DEXCR] = load->dexcr;
-+        env->spr[SPR_HDEXCR] = load->hdexcr;
-+        env->spr[SPR_HASHKEYR] = load->hashkeyr;
-+        env->spr[SPR_HASHPKEYR] = load->hashpkeyr;
-+        memcpy(env->vsr, load->vsr, sizeof(env->vsr));
-+        env->spr[SPR_EBBHR] = load->ebbhr;
-+        env->spr[SPR_TAR] = load->tar;
-+        env->spr[SPR_EBBRR] = load->ebbrr;
-+        env->spr[SPR_BESCR] = load->bescr;
-+        env->spr[SPR_IAMR] = load->iamr;
-+        env->spr[SPR_AMR] = load->amr;
-+        env->spr[SPR_UAMOR] = load->uamor;
-+        env->spr[SPR_DSCR] = load->dscr;
-+        env->spr[SPR_FSCR] = load->fscr;
-+        env->spr[SPR_PSPB] = load->pspb;
-+        env->spr[SPR_CTRL] = load->ctrl;
-+        env->spr[SPR_VRSAVE] = load->vrsave;
-+        env->spr[SPR_DAR] = load->dar;
-+        env->spr[SPR_DSISR] = load->dsisr;
-+        env->spr[SPR_POWER_PMC1] = load->pmc1;
-+        env->spr[SPR_POWER_PMC2] = load->pmc2;
-+        env->spr[SPR_POWER_PMC3] = load->pmc3;
-+        env->spr[SPR_POWER_PMC4] = load->pmc4;
-+        env->spr[SPR_POWER_PMC5] = load->pmc5;
-+        env->spr[SPR_POWER_PMC6] = load->pmc6;
-+        env->spr[SPR_POWER_MMCR0] = load->mmcr0;
-+        env->spr[SPR_POWER_MMCR1] = load->mmcr1;
-+        env->spr[SPR_POWER_MMCR2] = load->mmcr2;
-+        env->spr[SPR_POWER_MMCRA] = load->mmcra;
-+        env->spr[SPR_POWER_SDAR] = load->sdar;
-+        env->spr[SPR_POWER_SIAR] = load->siar;
-+        env->spr[SPR_POWER_SIER] = load->sier;
-+        ppc_store_vscr(env, load->vscr);
-+        ppc_store_fpscr(env, load->fpscr);
-+    }
-+
-     env->tb_env->tb_offset = load->tb_offset;
- 
-     /*
-diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
-index 2ac3076fac..d232014ccb 100644
---- a/include/hw/ppc/spapr_nested.h
-+++ b/include/hw/ppc/spapr_nested.h
-@@ -7,6 +7,7 @@ typedef struct SpaprMachineStateNested {
-     uint64_t ptcr;
-     uint8_t api;
- #define NESTED_API_KVM_HV  1
-+#define NESTED_API_PAPR    2
-     bool capabilities_set;
-     uint32_t pvr_base;
-     GHashTable *guests;
-@@ -121,6 +122,55 @@ struct nested_ppc_state {
-     uint64_t ppr;
- 
-     int64_t tb_offset;
-+    /* Nested PAPR API */
-+    uint64_t amor;
-+    uint64_t dawr0;
-+    uint64_t dawrx0;
-+    uint64_t ciabr;
-+    uint64_t purr;
-+    uint64_t spurr;
-+    uint64_t ic;
-+    uint64_t vtb;
-+    uint64_t hdar;
-+    uint64_t hdsisr;
-+    uint64_t heir;
-+    uint64_t asdr;
-+    uint64_t dawr1;
-+    uint64_t dawrx1;
-+    uint64_t dexcr;
-+    uint64_t hdexcr;
-+    uint64_t hashkeyr;
-+    uint64_t hashpkeyr;
-+    ppc_vsr_t vsr[64] QEMU_ALIGNED(16);
-+    uint64_t ebbhr;
-+    uint64_t tar;
-+    uint64_t ebbrr;
-+    uint64_t bescr;
-+    uint64_t iamr;
-+    uint64_t amr;
-+    uint64_t uamor;
-+    uint64_t dscr;
-+    uint64_t fscr;
-+    uint64_t pspb;
-+    uint64_t ctrl;
-+    uint64_t vrsave;
-+    uint64_t dar;
-+    uint64_t dsisr;
-+    uint64_t pmc1;
-+    uint64_t pmc2;
-+    uint64_t pmc3;
-+    uint64_t pmc4;
-+    uint64_t pmc5;
-+    uint64_t pmc6;
-+    uint64_t mmcr0;
-+    uint64_t mmcr1;
-+    uint64_t mmcr2;
-+    uint64_t mmcra;
-+    uint64_t sdar;
-+    uint64_t siar;
-+    uint64_t sier;
-+    uint32_t vscr;
-+    uint64_t fpscr;
- };
- 
- typedef struct SpaprMachineStateNestedGuestVcpu {
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 7c48b2eadb..be5f74a7cd 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1755,9 +1755,11 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_PSPB              (0x09F)
- #define SPR_DPDES             (0x0B0)
- #define SPR_DAWR0             (0x0B4)
-+#define SPR_DAWR1             (0x0B5)
- #define SPR_RPR               (0x0BA)
- #define SPR_CIABR             (0x0BB)
- #define SPR_DAWRX0            (0x0BC)
-+#define SPR_DAWRX1            (0x0BD)
- #define SPR_HFSCR             (0x0BE)
- #define SPR_VRSAVE            (0x100)
- #define SPR_USPRG0            (0x100)
+ #define MAX_HCALL_OPCODE         H_GUEST_DELETE
+@@ -996,6 +999,7 @@ extern const VMStateDescription vmstate_spapr_cap_sbbc;
+ extern const VMStateDescription vmstate_spapr_cap_ibs;
+ extern const VMStateDescription vmstate_spapr_cap_hpt_maxpagesize;
+ extern const VMStateDescription vmstate_spapr_cap_nested_kvm_hv;
++extern const VMStateDescription vmstate_spapr_cap_nested_papr;
+ extern const VMStateDescription vmstate_spapr_cap_large_decr;
+ extern const VMStateDescription vmstate_spapr_cap_ccf_assist;
+ extern const VMStateDescription vmstate_spapr_cap_fwnmi;
 -- 
 2.42.0
 
