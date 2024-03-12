@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07713C54E66
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE9DC54E67
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:18:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxL8-00012z-Nv; Tue, 12 Mar 2024 04:18:29 -0400
+	id 1rjxLW-0001Ip-LH; Tue, 12 Mar 2024 04:18:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxKL-0000fp-Qv
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:17:40 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxKl-0000xo-Dv
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:18:05 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxKI-0008HM-05
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:17:37 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-413428499a6so1566435e9.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:17:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxKi-0008Qy-Nj
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:18:03 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-413328344acso3596655e9.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:18:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710231452; x=1710836252; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1710231479; x=1710836279; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZBunxkiIx3J7GdymtcjxLq5TiZgj9wVB5HxuBHiujLY=;
- b=hdHXzVbk6rD/7f+7iauZ1GgrLrfDqBrMlccRW15ytBRCKl7Ti3DxjmBYF5Bswy5HO2
- +MMgS/P3w3vWPxawWngRYwJlyP0K5KHq0gS4qBUqgVXxMBjRKM2dHsZsj5pvSRtEkTz2
- lVvWL4EXw737HTjqcG1/oH+baEE68nwpdtG4Ow9gbixcr0KLrzBUp3vSKikVAUPeN34A
- TAaoAOlPpKBJ/ulehtFff/J02Hgwolu6qunOpxW8nwvbsVZC8BC/ba5mWbRrC0o+hTLT
- 9nsDu2FCMV0qZPTqR6eizaTYrdf2uSaaJiobB5WgjxbYhLn8Ex+H0KUjU/WIDpmkHeYb
- II/w==
+ bh=8w2pq46hy0Mz/wZ1vAcx77hNZPpAPfFuAfn0j0C2iDY=;
+ b=NDG6lMSnMdVf1DwBxfohlUnEkgqV3QMn27IukHmDHu27U3Wm0G0p5IgX5srqn0o2cY
+ irVednWnm/3AC3FCd8FvdlFq9mQJ7Pe1FDXmevW1b4SAaNu2XWPZlr4jGEjpOyDlTbU/
+ YMrMu8E8+BUht3s1oTQRU0FArt9pDjdnC0fVuRQ6SAnpIylN3HNxis6hd3jtGF3VTQg8
+ MKCFnMAQ0IJ9u/ncI+85s4kZ4VZYtJ2/Uwd2qEnJjHeR9503SNWxZwd/aRxk2HybkWHf
+ ohDLfXSwFPpyuRpBXvtpW3fIcffw5pKgBTAp8unaH1nRfEnzzzHghFgeWXrgjPpkDEQx
+ NlIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710231452; x=1710836252;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1710231479; x=1710836279;
+ h=content-transfer-encoding:in-reply-to:references:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZBunxkiIx3J7GdymtcjxLq5TiZgj9wVB5HxuBHiujLY=;
- b=kDMd2mbzFf5j5SWh9AYM/C7Ektzvqf9rgRu2bI5YjFCmCbY1p1wxLU6vHn2Jn9CsqI
- DsueG92J4yug+FYrVtfBnfeGKqW322kBW94T2qh1yjCDnfdWtJ5sngnS3tex9wRwZvQE
- BL8mECdWlQnhm6TZGv9dQzdYbApDzWdU2360u/xFNh2Fz7PTjZ60LZy4ynlhLNdw//+p
- yFlKbjMWgGshRgxjWT2+7Mr0w6Zv4f8ESxRHpNq+XYP6QmLxgNYj4zRPBavhtafCCDi1
- AFZQl6rEKZUwdzZLUX2lkkm+jvbDtWBUT9nhMqIVT/7F3Rl011nbob2Oomk4jnoTXorM
- f6yA==
+ bh=8w2pq46hy0Mz/wZ1vAcx77hNZPpAPfFuAfn0j0C2iDY=;
+ b=kKVIqN/bTfIW/iafc08EVYK1UFbiU53eyCemZ7/FrFONItHNDrgtPcYFCeHYBGtK8/
+ 8X24EgbRydt7Eh0FG4UR7VQOPA29nJfpr8AnWN+yGR/RKIvWIFcGDgqgXKABjIwyt5+1
+ ySaU+mZinGqC1wtldlGA9j9oM/875ri3dUDbPOrlvgmmipfkg6UJgXYBQ8vhAaLJmG33
+ PZvv3QegDG7AEMU38TtXWKUiOf38lzKBApur/yu0zKjbHIotWA7MLcxwsNvp/gg5eE/F
+ t5pm4i/wWJdwsROcSSyrb357x6FwX3jcePuqVCW/FJoklYppm5LwT6InGjK3nvrCPcrq
+ lsnQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX9Plyqxo2CvDb8skUQ0Y4I0ozbckAddMqUtWUIj8FgTUbI1VZg1stNaMFcSqvQhhKhuYughffzGBit72GHGlTCc+nhNJc=
-X-Gm-Message-State: AOJu0YwrwoKO02666hte8VsGus3TaYm5S9EPkvZB2g1I9KEDrYJ1AReh
- dEJ8dATjVr6mBtuXykeV3h0mlAiCzjyderdu8FoL3GZMucHlkgtaBSmuYThbSIk=
-X-Google-Smtp-Source: AGHT+IHs79feZo7DeMAg++sYfshY4q9VvUcMjMoPJdk1KzgoMVmb8gcifUP2ZHjyyn111lRqQilUFA==
-X-Received: by 2002:a05:600c:538d:b0:413:2ab0:c317 with SMTP id
- hg13-20020a05600c538d00b004132ab0c317mr3037391wmb.11.1710231451899; 
- Tue, 12 Mar 2024 01:17:31 -0700 (PDT)
+ AJvYcCXd9YiH9w4PyL5YyUYtYLDr5/Y7fcLGPn7vJOiNRLbUCTtrtfc5Cg1vGeuLKzJNWBV2Wcv3YwHL4UrWC2Buk2gx6L4I64c=
+X-Gm-Message-State: AOJu0Yy++AaaJ6e1K6JMZjKmMm2XiFoClJE5FBAaoVtJXK9M4mQzVEeL
+ dUbay3HlaDg0sJ9r9DH7GWikq6SfDiMP5Stn4h6TqDdqe+upG5v+k0GGUE9MQbzLXVXCyiNIrEt
+ u
+X-Google-Smtp-Source: AGHT+IGrp0PF8uOdr5giTtjGmTX+DeqTRHzhTgTHLVa407dbJ4wRX/WbfdJDkaNI917iniqLUX4EEg==
+X-Received: by 2002:a05:600c:4f92:b0:413:3160:841d with SMTP id
+ n18-20020a05600c4f9200b004133160841dmr1183854wmq.8.1710231479031; 
+ Tue, 12 Mar 2024 01:17:59 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.206.139])
  by smtp.gmail.com with ESMTPSA id
- q14-20020a05600c46ce00b00412b4dca795sm11617377wmo.7.2024.03.12.01.17.30
+ q14-20020a05600c46ce00b00412b4dca795sm11617377wmo.7.2024.03.12.01.17.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 01:17:31 -0700 (PDT)
-Message-ID: <d48e5d05-0e1e-4bb0-b10a-f0c943b055f6@linaro.org>
-Date: Tue, 12 Mar 2024 09:17:30 +0100
+ Tue, 12 Mar 2024 01:17:58 -0700 (PDT)
+Message-ID: <3ddee848-5625-42f4-bcc0-2b13fb70254f@linaro.org>
+Date: Tue, 12 Mar 2024 09:17:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/29] Cleanup up to fix missing ERRP_GUARD() for
- error_prepend()
+Subject: Re: [PATCH] sun4u: remap ebus BAR0 to use unassigned_io_ops instead
+ of alias to PCI IO space
 Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>, Thomas Huth <thuth@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org
+References: <20240311064345.2531197-1-mark.cave-ayland@ilande.co.uk>
+ <eadc337e-7575-4756-ab8d-9c951cdde644@linaro.org>
+In-Reply-To: <eadc337e-7575-4756-ab8d-9c951cdde644@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,15 +97,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/3/24 04:37, Zhao Liu wrote:
+On 11/3/24 09:28, Philippe Mathieu-Daudé wrote:
+> On 11/3/24 07:43, Mark Cave-Ayland wrote:
+>> During kernel startup OpenBSD accesses addresses mapped by BAR0 of the 
+>> ebus device
+>> but at offsets where no IO devices exist. Before commit 4aa07e8649 
+>> ("hw/sparc64/ebus:
+>> Access memory regions via pci_address_space_io()") BAR0 was mapped to 
+>> legacy IO
+>> space which allows accesses to unmapped devices to succeed, but 
+>> afterwards these
+>> accesses to unmapped PCI IO space cause a memory fault which prevents 
+>> OpenBSD from
+>> booting.
+>>
+>> Since no devices are mapped at the addresses accessed by OpenBSD, 
+>> change ebus BAR0
+>> from a PCI IO space alias to an IO memory region using 
+>> unassigned_io_ops which allows
+>> these accesses to succeed and so allows OpenBSD to boot once again.
+>>
+>> Fixes: 4aa07e8649 ("hw/sparc64/ebus: Access memory regions via 
+>> pci_address_space_io()")
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+>> ---
+>>
+>> [MCA: I'd like to merge this for 9.0 since I've been carrying various 
+>> local workarounds
+>> to allow OpenBSD to boot on SPARC64 for some time.]
+> 
+> Sure.
 
-> ---
-> Zhao Liu (29):
-
->    hw/core/loader-fit: Fix missing ERRP_GUARD() for error_prepend()
->    hw/core/qdev-properties-system: Fix missing ERRP_GUARD() for
->      error_prepend()
->    hw/misc/ivshmem: Fix missing ERRP_GUARD() for error_prepend()
-
-I'm queuing these 3 patches, thanks!
+Patch queued!
 
