@@ -4,72 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5A8C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21C5CC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:29:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk37J-0005Rx-S5; Tue, 12 Mar 2024 10:28:34 -0400
+	id 1rk37M-0005U7-Ke; Tue, 12 Mar 2024 10:28:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1rk36x-0005NA-Jy
+ id 1rk36x-0005NB-OD
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:28:13 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1rk36v-0005P1-Ag
+ id 1rk36v-0005O1-AI
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:28:11 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-512e4f4e463so7619277e87.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:28:08 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4132a436086so13584145e9.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:28:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=citrix.com; s=google; t=1710253687; x=1710858487; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KV5ZYoaHLmWxMWoTm01z+WFnwLPqemdbnw4H9NY/m5g=;
- b=D3weMhcyg6l86G8cjFIhxFkuxYNcrqd2jZgvo8xQaBh3nCNfeDwaXWSKhT7Ax0Y2je
- LdYXUN4sAaXBA5OwqBMtX+/9sFX5XEaytSlNGunDTtL3aScc3YSpoMhbuU85grl4ro/s
- IEtfPDOWnP7s/ItC2jzARQIstJ+3JYvFpgyTA=
+ d=citrix.com; s=google; t=1710253686; x=1710858486; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dXi5tmsrXivALkRrCcWzIonKD+Tj1f5wxXwS4HZXIxk=;
+ b=CxLOBL/gMflmqCJ4FDo12JMrDZgyikta565BaxMFt21lpVGWzbMnf4wotInR9oiRKX
+ wqyYwb8oMBNL6S46jdHkSKKKwaJ3Cd+wqQ8dOxrm+s08rpeTmMKzXCNSIycN6yR0wlg/
+ nvdtl5NJ4jHmRM+BgikyjmFC7nkKYqLifG9Fw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710253687; x=1710858487;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KV5ZYoaHLmWxMWoTm01z+WFnwLPqemdbnw4H9NY/m5g=;
- b=PK3rOgvCQPmSap2M1agtEJKKG7f/3Vu0ByFrDw8hspg3/uby3wyEPetJIN29ncx2sP
- PXF3U7kskaGC4NWI12bO7mWJ2j/e6iILOtJbiUv1oH6uJoXse5DMFbbdWrkUEtalbkh7
- dP5dUjn4LGCUH8lN7kRSleOQ3ChzyAk2QI/7Hf7mCJv531di0tfb/ueQKqGZFXwN+5sI
- QBpguSA6SQuA/rXE6wacUNpDZ4CrpmiTiSq/nyKRDRh0XMa5+GJhwCR7u34qU7FuNE5t
- gozHo3PvklxRTlRzQNaVXu2AWFdfj8SBCTqg6dcewB/qWrplCWeSy4hqhZVLFXrgAuXd
- QxlQ==
-X-Gm-Message-State: AOJu0YxY0XVh+E4cm/NMcxpS9W1b2DsBSdiVuUuBXA+35jkJjKTOFIPL
- vRfSFnOs1nWWrCjgmpr3R8o028BY+49wHpgAhVBCENsfE/S9ziQphMK+ELD5gTg/dMaj/bZXFQc
- x
-X-Google-Smtp-Source: AGHT+IHxcatKHz1Lw5UPK3bYSr7CQ6xYEictmegTTCZPXUOugN4Ji7BehjBt+Tk1QwsXItEqzOEItQ==
-X-Received: by 2002:a05:6512:48c6:b0:513:8030:fde9 with SMTP id
- er6-20020a05651248c600b005138030fde9mr2754940lfb.58.1710253686936; 
+ d=1e100.net; s=20230601; t=1710253686; x=1710858486;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dXi5tmsrXivALkRrCcWzIonKD+Tj1f5wxXwS4HZXIxk=;
+ b=Q9+FMOfxRVjR0WeSBcqLoMd7cZQ2Siftvbd5Iwfj+Z4hNVv7ggYjDgKI0aAI3RB6Eo
+ /UkeoxigRBfm2k4tD44XPZuiBdNE9NIwXspsXrhu8g3TpsAWp5ApSXeUdIjuJpiwozF/
+ Tbgskrlwj/72Z3baB9+vIz0FA7a+LFITBZRW74ebsbSA1sydlFDZVIFjpfjs+htXw3rn
+ R9Jueq8xKJUXPfpqV+jWoJYqW8z+4F041JHfIvSPPGraF62B6sUOh2/ehr5jPxEPyxXY
+ XbJslYG+DTCoVqJoPOPDrah8Q0KkqSPu9MCUmTKR6mFb5AYF1H4Nnp1LT8nExsYvA75y
+ peLw==
+X-Gm-Message-State: AOJu0YxhaSZ2igOUtTnlX5V/yTa5dCtEvoYL4Kz1rKd6Eo127pR3XdSz
+ Ou+3ZarmY2xdTVILUNILQDtFH5bJXfHRVm+YWdMPIYL4ddVz0eFW/9jsAA34g5BXXoT31LHirbe
+ M
+X-Google-Smtp-Source: AGHT+IH/E/aFCGLF4xzgbjjOVu2GKK0+gMwSyGkeprPV2pz9FhPy/+j6qXF7gKxgPz/lcZ8pKdM7LA==
+X-Received: by 2002:a05:600c:b8c:b0:413:3391:2f23 with SMTP id
+ fl12-20020a05600c0b8c00b0041333912f23mr1511084wmb.35.1710253686050; 
  Tue, 12 Mar 2024 07:28:06 -0700 (PDT)
 Received: from localhost.localdomain
  (cpc92320-cmbg19-2-0-cust35.5-4.cable.virginm.net. [82.13.64.36])
  by smtp.gmail.com with ESMTPSA id
- t13-20020a05600c198d00b00412b0e51ef9sm12810270wmq.31.2024.03.12.07.28.06
+ t13-20020a05600c198d00b00412b0e51ef9sm12810270wmq.31.2024.03.12.07.28.05
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 07:28:06 -0700 (PDT)
+ Tue, 12 Mar 2024 07:28:05 -0700 (PDT)
 From: Anthony PERARD <anthony.perard@citrix.com>
 To: qemu-devel@nongnu.org
-Cc: Ross Lagerwall <ross.lagerwall@citrix.com>
-Subject: [PULL 1/3] xen/pt: Emulate multifunction bit in header type
-Date: Tue, 12 Mar 2024 14:27:55 +0000
-Message-Id: <20240312142757.34141-2-anthony.perard@citrix.com>
+Subject: [PULL 0/3] Xen queue 2024-03-12
+Date: Tue, 12 Mar 2024 14:27:54 +0000
+Message-Id: <20240312142757.34141-1-anthony.perard@citrix.com>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240312142757.34141-1-anthony.perard@citrix.com>
-References: <20240312142757.34141-1-anthony.perard@citrix.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=anthony.perard@cloud.com; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=anthony.perard@cloud.com; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -93,50 +90,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ross Lagerwall <ross.lagerwall@citrix.com>
+The following changes since commit 8f3f329f5e0117bd1a23a79ab751f8a7d3471e4b:
 
-The intention of the code appears to have been to unconditionally set
-the multifunction bit but since the emulation mask is 0x00 it has no
-effect. Instead, emulate the bit and set it based on the multifunction
-property of the PCIDevice (which can be set using QAPI).
+  Merge tag 'migration-20240311-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-03-12 11:35:41 +0000)
 
-This allows making passthrough devices appear as functions in a Xen
-guest.
+are available in the Git repository at:
 
-Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-Reviewed-by: Paul Durrant <paul@xen.org>
-Message-Id: <20231103172601.1319375-1-ross.lagerwall@citrix.com>
-Signed-off-by: Anthony PERARD <anthony.perard@citrix.com>
----
- hw/xen/xen_pt_config_init.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+  https://xenbits.xen.org/git-http/people/aperard/qemu-dm.git tags/pull-xen-20240312
 
-diff --git a/hw/xen/xen_pt_config_init.c b/hw/xen/xen_pt_config_init.c
-index ba4cd78238..3edaeab1e3 100644
---- a/hw/xen/xen_pt_config_init.c
-+++ b/hw/xen/xen_pt_config_init.c
-@@ -292,7 +292,10 @@ static int xen_pt_header_type_reg_init(XenPCIPassthroughState *s,
-                                        uint32_t *data)
- {
-     /* read PCI_HEADER_TYPE */
--    *data = reg->init_val | 0x80;
-+    *data = reg->init_val;
-+    if ((PCI_DEVICE(s)->cap_present & QEMU_PCI_CAP_MULTIFUNCTION)) {
-+        *data |= PCI_HEADER_TYPE_MULTI_FUNCTION;
-+    }
-     return 0;
- }
- 
-@@ -677,7 +680,7 @@ static XenPTRegInfo xen_pt_emu_reg_header0[] = {
-         .size       = 1,
-         .init_val   = 0x00,
-         .ro_mask    = 0xFF,
--        .emu_mask   = 0x00,
-+        .emu_mask   = PCI_HEADER_TYPE_MULTI_FUNCTION,
-         .init       = xen_pt_header_type_reg_init,
-         .u.b.read   = xen_pt_byte_reg_read,
-         .u.b.write  = xen_pt_byte_reg_write,
--- 
-Anthony PERARD
+for you to fetch changes up to 918a7f706b69a8c725bac0694971d2831f688ebb:
 
+  i386: load kernel on xen using DMA (2024-03-12 14:13:08 +0000)
+
+----------------------------------------------------------------
+Xen queue:
+
+* In Xen PCI passthrough, emulate multifunction bit.
+* Fix in Xen mapcache.
+* Improve performance of kernel+initrd loading in an Xen HVM Direct
+  Kernel Boot scenario.
+
+----------------------------------------------------------------
+Marek Marczykowski-Górecki (1):
+      i386: load kernel on xen using DMA
+
+Peng Fan (1):
+      xen: Drop out of coroutine context xen_invalidate_map_cache_entry
+
+Ross Lagerwall (1):
+      xen/pt: Emulate multifunction bit in header type
+
+ hw/i386/pc.c                |  3 ++-
+ hw/xen/xen-mapcache.c       | 30 ++++++++++++++++++++++++++++--
+ hw/xen/xen_pt_config_init.c |  7 +++++--
+ 3 files changed, 35 insertions(+), 5 deletions(-)
 
