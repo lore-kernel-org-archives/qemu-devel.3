@@ -4,71 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD4EC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:41:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A1AC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:42:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAdV-0006GM-8k; Tue, 12 Mar 2024 18:30:19 -0400
+	id 1rkAbn-0002Nk-9v; Tue, 12 Mar 2024 18:28:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAca-0002wp-1Q
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbV-0001Tq-0i
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcU-0004eV-Im
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbT-0004W8-As
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282554;
+ s=mimecast20190719; t=1710282490;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=9Q3ZMhxuiBKQgwWVuadLMzxaLaVsdjhfX4rDv2UGsEo=;
- b=Rt8tTZ6k2tXTHHFO1N39I2xLVWGCx2JCYVhMNLalH1HoWvmNj3/q60BJchiJhacE3R4oFt
- xNyOIU5JNOLNAsGri6ItnqJAJhDnUw/Ksw0vk3uiQMitIt7mnm8jevGfV7h3JTmfvwb/Gy
- KIfCjWdsxH4HgWgORl14AYNAZTY//9s=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rnobKvRBI1kxmZ+zEo4/9xYhnFk0DiLD2cKoeuPWbew=;
+ b=GRhNtTjemHO9+X/1YAUmBla9XknTzx9Zg7h+1MkP/kjdr3g/0Y4fnse+0jL1iDi5H4NYK0
+ MPCj/g3x4aP8bYoQ14ItP06kyc7lSpzd0yn7ZeLNnBem2TPmkCOpM0rZzXVCR5MZ6jMeiU
+ j57V9P8QKZZpKBX4dplc3FFAzEGU2hA=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-226-BJLYu9CHOcOKtr9LNGA8zg-1; Tue, 12 Mar 2024 18:29:12 -0400
-X-MC-Unique: BJLYu9CHOcOKtr9LNGA8zg-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a45acc7f191so403167666b.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:29:12 -0700 (PDT)
+ us-mta-422-UULgOr5OOMSnecr7gP9Qiw-1; Tue, 12 Mar 2024 18:28:09 -0400
+X-MC-Unique: UULgOr5OOMSnecr7gP9Qiw-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a448cfe2266so494039266b.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282551; x=1710887351;
+ d=1e100.net; s=20230601; t=1710282487; x=1710887287;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9Q3ZMhxuiBKQgwWVuadLMzxaLaVsdjhfX4rDv2UGsEo=;
- b=gTZq3IPy7K1X+LD0Lti+eUyYBhVN+Zkl3hjLzHRTWblmF+2Ymslr6l15NPPtwXM+OH
- pj8cRiA0ePdmHIT+yaA2dOmLaMCEd9vv7UiGl6KxLaHxHBw+OxaH3/6L54iA6i+gaYoY
- uaGGyOxRUAJ3K/p0Eq/3c1M6Tfh4ha9d9oPaAHI2DyFrqwm0iO3jWj2xPQ9sSHN7FMVI
- BeB8Iu0AzGNUlHzMEqAy04bn7qy8oDudYA9rIG6BhQEU0xu/QnDer0LtOImGGY6F1L6/
- VMuIlN24bZ4xEifqrZZuEXSFtemEMFC3FeDzO6HfLpwTuVhIj2ZXvc9fPgU2hmkFCUvq
- Hz8A==
-X-Gm-Message-State: AOJu0YyxZymH5oyYnfQt3YAVNyOO7jXldaasYmuh0c0Y+e6dD4/FjL0a
- /PYoETNXJKONtYttLAmo4LlDl+moAUJW4n0DnntEMAAALLJ4QtVfWIkfWGrdZfz2YEa1RrA6sNS
- jDFIEMW4m4CsaWqrVmA4WI0bqTboIBD/NQYgBclmf5EyuatrG1X/mMDIpp30Rlwnhhp8Qpc9YyJ
- /9MovYzu4l8mT2NxhMTg7I4jQnFbHh/9j0
-X-Received: by 2002:a17:907:8749:b0:a46:2b07:5334 with SMTP id
- qo9-20020a170907874900b00a462b075334mr4717116ejc.48.1710282551071; 
- Tue, 12 Mar 2024 15:29:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQ07Jy5RT2nxEDcvs+D9Txc5FhbTkeaabAnwIDZRnVrBlgpFrUvVI6LAQOJjHu1D1i5W47bA==
-X-Received: by 2002:a17:907:8749:b0:a46:2b07:5334 with SMTP id
- qo9-20020a170907874900b00a462b075334mr4717103ejc.48.1710282550623; 
- Tue, 12 Mar 2024 15:29:10 -0700 (PDT)
+ bh=rnobKvRBI1kxmZ+zEo4/9xYhnFk0DiLD2cKoeuPWbew=;
+ b=wQVIOocvuG6sHrDSZnT6LnyKC+ZLhdeQjXQ4hqWWVqzk+Oq+l8ab2Y+sFep+mns+hF
+ HCMx4W5lmyS+hW0gs/dlVNfJfM9kssA5WkcJHdJH7Vnc7UpNCNKS9MNrVukWNNcO1tk7
+ wFzb/K7LZi9DxM3pZh41qo3h+cC1tT16YVNjExKcggGP59PcVaLE/22TKnnqss2lsewG
+ 8WD/OsgTVOLzAfsHd1Z7ArErFa97HlkHHfh/GAmxsMicumLLjsTYi1TG4YFVbz8abmE5
+ aNiQktMiRqHvAADvJH6Ps1fLZ6my6JlZrzCKRszsZSAZkJEABE1TWt3FKl3c9jxoPpC0
+ UBZA==
+X-Gm-Message-State: AOJu0YxBbWg14f8aXJw/icvmEdgOYAAp+zlBJr8paPL5oP7wQRHnqdhA
+ 2NSeeCDPB5wHME1B2MioZiVqHAyRRT2xKru00GQ898fSrsbmwq77p9Ej3qqzH4twQ4EEfaPmFQW
+ WIHQaglqX54p3Pzn1wuG+USd/ZA8r20Zoc6kmheXWflooEA4s9q3oyko7Ei7WcDcFfjrT2swi2O
+ oR7ZJqyWKxH29ySOf4VmRgVBFd5NY7KAod
+X-Received: by 2002:a17:906:58d:b0:a43:e63b:2ecc with SMTP id
+ 13-20020a170906058d00b00a43e63b2eccmr6034334ejn.67.1710282487337; 
+ Tue, 12 Mar 2024 15:28:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFTrLNq7Dbg6AfyrLulJW5b8yqFhP3W0+WDTcknfkVMZI8z6z/xvHj6UMDaeEFZbP0lSHu6eQ==
+X-Received: by 2002:a17:906:58d:b0:a43:e63b:2ecc with SMTP id
+ 13-20020a170906058d00b00a43e63b2eccmr6034316ejn.67.1710282486817; 
+ Tue, 12 Mar 2024 15:28:06 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- gh16-20020a170906e09000b00a45380dfd09sm4218155ejb.105.2024.03.12.15.29.09
+ bx21-20020a170906a1d500b00a45ff890df0sm4116271ejb.35.2024.03.12.15.28.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:29:10 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:29:07 -0400
+ Tue, 12 Mar 2024 15:28:06 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:28:03 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 67/68] hw/cxl: Fix missing reserved data in CXL Device DVSEC
-Message-ID: <bfc2f7a6caa6843e50019ee2511ad11cd5582711.1710282274.git.mst@redhat.com>
+ Bernhard Beschow <shentey@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 48/68] Revert "hw/i386/pc_sysfw: Inline
+ pc_system_flash_create() and remove it"
+Message-ID: <0fbe8d7c4c7e44fc86986217dc3ab65ec4e6a302.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -101,42 +107,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-The r3.1 specification introduced a new 2 byte field, but
-to maintain DWORD alignment, a additional 2 reserved bytes
-were added. Forgot those in updating the structure definition
-but did include them in the size define leading to a buffer
-overrun.
+Commit 6f6ad2b24582 "hw/i386/pc: Confine system flash handling to pc_sysfw"
+causes a regression when specifying the property `-M pflash0` in the PCI PC
+machines:
+  qemu-system-x86_64: Property 'pc-q35-9.0-machine.pflash0' not found
+In order to revert the commit, the commit below must be reverted first.
 
-Also use the define so that we don't duplicate the value.
+This reverts commit cb05cc16029bb0a61ac5279ab7b3b90dcf2aa69f.
 
-Fixes: Coverity ID 1534095 buffer overrun
-Fixes: 8700ee15de ("hw/cxl: Standardize all references on CXL r3.1 and minor updates")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-Id: <20240308143831.6256-1-Jonathan.Cameron@huawei.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-Id: <20240226215909.30884-2-shentey@gmail.com>
+Tested-by: Alex Williamson <alex.williamson@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_pci.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/i386/pc_sysfw.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/cxl/cxl_pci.h b/include/hw/cxl/cxl_pci.h
-index 265db6c407..d0855ed78b 100644
---- a/include/hw/cxl/cxl_pci.h
-+++ b/include/hw/cxl/cxl_pci.h
-@@ -92,8 +92,9 @@ typedef struct CXLDVSECDevice {
-     uint32_t range2_base_hi;
-     uint32_t range2_base_lo;
-     uint16_t cap3;
-+    uint16_t resv;
- } QEMU_PACKED CXLDVSECDevice;
--QEMU_BUILD_BUG_ON(sizeof(CXLDVSECDevice) != 0x3A);
-+QEMU_BUILD_BUG_ON(sizeof(CXLDVSECDevice) != PCIE_CXL_DEVICE_DVSEC_LENGTH);
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index b02e285579..b9c1eb352d 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -91,6 +91,18 @@ static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
+     return PFLASH_CFI01(dev);
+ }
  
- /*
-  * CXL r3.1 Section 8.1.5: CXL Extensions DVSEC for Ports
++static void pc_system_flash_create(PCMachineState *pcms)
++{
++    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
++
++    if (pcmc->pci_enabled) {
++        pcms->flash[0] = pc_pflash_create(pcms, "system.flash0",
++                                          "pflash0");
++        pcms->flash[1] = pc_pflash_create(pcms, "system.flash1",
++                                          "pflash1");
++    }
++}
++
+ static void pc_system_flash_cleanup_unused(PCMachineState *pcms)
+ {
+     char *prop_name;
+@@ -198,8 +210,7 @@ void pc_system_firmware_init(PCMachineState *pcms,
+         return;
+     }
+ 
+-    pcms->flash[0] = pc_pflash_create(pcms, "system.flash0", "pflash0");
+-    pcms->flash[1] = pc_pflash_create(pcms, "system.flash1", "pflash1");
++    pc_system_flash_create(pcms);
+ 
+     /* Map legacy -drive if=pflash to machine properties */
+     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
 -- 
 MST
 
