@@ -4,95 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACD96C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D457C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk6WO-0004kg-Md; Tue, 12 Mar 2024 14:06:40 -0400
+	id 1rk6Wb-0004uY-1X; Tue, 12 Mar 2024 14:06:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rk6WF-0004kQ-JV
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:06:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rk6WD-0004Ch-0w
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:06:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710266786;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tugagavFWYs8SO4lYU4iVSZex7rAoeAqw+QKMbayaEI=;
- b=LFtwhV10PIVhPt/eKP7fMBa43nn5bcaHEe2DzDsatabOvai1XDNE9wd7Qk9K+ri4Ztfzg/
- ozijV9B9m+Z3W/S/4gr+lmgHvWE6fweENNYTF7W00X14dmRCELtb2RbJ3NP8hrKaX1VM+a
- IWBSyrQ2SxpslS4kRXUMjpRtqCnr+SE=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-169-3KvNX8zKPe6T8-D45-5Pzw-1; Tue, 12 Mar 2024 14:06:25 -0400
-X-MC-Unique: 3KvNX8zKPe6T8-D45-5Pzw-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-51333e20813so4304803e87.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:06:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rk6WV-0004qH-Ow
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:06:49 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rk6WU-0004Dx-6Z
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:06:47 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-513173e8191so6186555e87.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:06:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710266803; x=1710871603; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xR5iGUQZiCoR8k2pSi0KOW7ASeWFuNA9cHveRST8/e8=;
+ b=FnazQzBcj56hv9Iz8Ya85ajgHriYyG2Kb3epCRKQIIcMMQIE8yWi6NtWJX5L7t/iv9
+ JXhcUoqhM+FqYNf1uyJ9/gjyNLf53KSwoUxZmviElKSk56p2Oi6Wme6QAsPxINBlB4SY
+ SLVWjboMplwOsNhfehcXGePyiD8pYLRBPm0NNMikTh2SLvcf9gopuJSe190EPmL2q3Tc
+ nAKwsayusUkjeOFLbOzaeNxvDzjVwtD+xPgwMWUsz7SVPKkrNnM1mUs6LqJ2tZsRia4n
+ Xv+W3F7tOIxiISihwVq6xRCMFWxRyMwMSevF/NiBhwzagpjXrcX7bHIU5EYSwAGU61Rl
+ l0pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710266784; x=1710871584;
+ d=1e100.net; s=20230601; t=1710266803; x=1710871603;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tugagavFWYs8SO4lYU4iVSZex7rAoeAqw+QKMbayaEI=;
- b=cyZN3GaXA26cAplcXWVN1hy2f2Lo4UlwhTrflKTcL0x5V8/+TdcZiQikPGNjs9GO0x
- 1xx9xdgQbUdagu7k3ITyuCMU7bQo8k4+Lb3arA1ZqpKq1WGHcWJ67Xox5hQnlfr5bF2o
- Ov1Yudp8YC/5l2MTCWfjIStobwQZojlokmcSRHbYczh/B1uE7XompSqmRzMmYAsnLvj/
- yMsnmWCGXuKFczcgSK0fzdVeyWGbqmtC/2LizaO3WmY9VcLzzx1peryDZJlsvEMd/npz
- KEimI5lgPfOiyrJt89wrAO3qOAaFYmam8xF3vvBv8RZRYmJKtAEFDlupVINaAtzr1Zxr
- MO9g==
-X-Gm-Message-State: AOJu0YzyOtB1wW5Yp7v0AdYfJkUHunFt4H15zgXbgxk0CEH7xQY0yQ17
- hymFR+xFKZ73Q3pY+2T/bjbUDiHxmx7H2dVXS4a8xbMv6YfX2HEZNNFWHCp8nSlsfgH35/zAo5p
- 6hBdRfCOaSxn0gxjNYDPXBri8JTAhlDoz1rCym2B6FVVlrMO+pVdU
-X-Received: by 2002:ac2:424a:0:b0:513:7e68:a460 with SMTP id
- m10-20020ac2424a000000b005137e68a460mr622481lfl.27.1710266784113; 
- Tue, 12 Mar 2024 11:06:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFAOkcerUksKaxQRf/5bl/w8uLy8fC8oI/W6d8aOb972MlByvaPCVaPFxKHpx80J+QzvKBZmA==
-X-Received: by 2002:ac2:424a:0:b0:513:7e68:a460 with SMTP id
- m10-20020ac2424a000000b005137e68a460mr622469lfl.27.1710266783800; 
- Tue, 12 Mar 2024 11:06:23 -0700 (PDT)
-Received: from [192.168.1.33] (92-184-107-164.mobile.fr.orangecustomers.net.
- [92.184.107.164]) by smtp.gmail.com with ESMTPSA id
- g20-20020a05600c4ed400b00412f679bae1sm19669702wmq.26.2024.03.12.11.06.22
+ bh=xR5iGUQZiCoR8k2pSi0KOW7ASeWFuNA9cHveRST8/e8=;
+ b=tC1VTpBVIgPVDZqVRXLIQFiiwnX3zzZc15Q0AKW+XvlcTShQhaUhjvoGbGt03z72/t
+ JuEEqLkyavtrdsFP0cI4g3QDbSLTtaZMPmh8be01a0LL8K+tRYBhZvdsb65aLgrPenmB
+ il9i9kHR1BLak6WbGrUm5LstpX/H9cFE4tg1/+dzkWGik0rMDlXLN9c2F7jQsO87FKFm
+ 1OXL7b36nhJKlFhlExZxwBQluNRIMclEGaw8072FswbdzbKa4JH+c5VVI4yGcp8BuJ72
+ xtKs88N6NPDIgOHc5kKPB9+4LTXXF1Y2YVEqBv5sdPe/P8NxoxVbFDZ/zBQdVciW8K00
+ 7PWg==
+X-Gm-Message-State: AOJu0YwQxRBjynCWHVWOzEVXcUVOA0vD8mPU5k55saPstBlX70/8mezu
+ zCwSiCtSWmxtEDbYe1pfhnuOrf+13MXMxBTWsWDvtlNITy75S6YcvSLplfJcnas=
+X-Google-Smtp-Source: AGHT+IGlEBG40OBhYaUrcYn7hzV7aIkFm7Gb8sYx514Q95Jbzc32qkiM+I91vty2BOw9gju8nB1Z9w==
+X-Received: by 2002:ac2:4da7:0:b0:513:b062:98bf with SMTP id
+ h7-20020ac24da7000000b00513b06298bfmr535934lfe.20.1710266802251; 
+ Tue, 12 Mar 2024 11:06:42 -0700 (PDT)
+Received: from [192.168.122.175] (93.red-88-29-160.dynamicip.rima-tde.net.
+ [88.29.160.93]) by smtp.gmail.com with ESMTPSA id
+ f6-20020a05600c154600b004131ae36ac4sm15361917wmg.20.2024.03.12.11.06.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 11:06:23 -0700 (PDT)
-Message-ID: <476c7786-831d-4521-85c8-4fabd093f9dc@redhat.com>
-Date: Tue, 12 Mar 2024 19:06:20 +0100
+ Tue, 12 Mar 2024 11:06:41 -0700 (PDT)
+Message-ID: <4b17e2fa-3b6c-4c7e-a888-661d1bf1324b@linaro.org>
+Date: Tue, 12 Mar 2024 18:51:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
- qemu_savevm_state_setup()
-Content-Language: en-US, fr
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-11-clg@redhat.com> <87plw44wps.fsf@suse.de>
- <1566715b-a9a5-4df6-8e64-f4f912e2ea2f@redhat.com> <87le6omw0d.fsf@suse.de>
- <9071affc-ffb5-435a-99d1-ca829703e31b@redhat.com>
- <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
- <b2b52017-c4cd-43e9-a67b-2ccbb92ad99e@redhat.com> <874jdbmst4.fsf@suse.de>
- <ZfByYiL3Gl9d9u7h@x1n>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <ZfByYiL3Gl9d9u7h@x1n>
+Subject: Re: [PATCH 08/10] qapi: Correct error message for 'vcpu_dirty_limit'
+ parameter
+Content-Language: en-US
+To: Zhao Liu <zhao1.liu@intel.com>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
+ Juan Quintela <quintela@redhat.com>
+References: <20240312141343.3168265-1-armbru@redhat.com>
+ <20240312141343.3168265-9-armbru@redhat.com> <ZfB0Oq7SSQgiqbz5@intel.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZfB0Oq7SSQgiqbz5@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,21 +96,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[ ...]
+On 12/3/24 16:26, Zhao Liu wrote:
+> On Tue, Mar 12, 2024 at 03:13:41PM +0100, Markus Armbruster wrote:
+>> Date: Tue, 12 Mar 2024 15:13:41 +0100
+>> From: Markus Armbruster <armbru@redhat.com>
+>> Subject: [PATCH 08/10] qapi: Correct error message for 'vcpu_dirty_limit'
+>>   parameter
+>>
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>
+>> QERR_INVALID_PARAMETER_VALUE is defined as:
+>>
+>>    #define QERR_INVALID_PARAMETER_VALUE \
+>>        "Parameter '%s' expects %s"
+>>
+>> The current error is formatted as:
+>>
+>>    "Parameter 'vcpu_dirty_limit' expects is invalid, it must greater then 1 MB/s"
+>>
+>> Replace by:
+>>
+>>    "Parameter 'vcpu_dirty_limit' is invalid, it must greater than 1 MB/s"
+> 
+> Is there a grammar error here? Maybe
+> 
+> s/it must greater/it must be greater/
 
-> Now VFIO allows a migration to happen without this trick.  I'm wondering
-> whether all relevant NICs can also support VFIO migrations in the future,
-> then we can drop this tricky feature for good.
+Oops indeed!
 
-Currently, VFIO migration requires a VFIO (PCI) variant driver implementing
-the specific ops for migration. Only a few NICs are supported. It's growing
-though and we should expect more in the future, specially entreprise grade
-NICs.
+> 
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Juan Quintela <quintela@redhat.com>
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>> ---
+>>   migration/options.c | 5 ++---
+>>   1 file changed, 2 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/migration/options.c b/migration/options.c
+>> index 40eb930940..c5115f1b5c 100644
+>> --- a/migration/options.c
+>> +++ b/migration/options.c
+>> @@ -1264,9 +1264,8 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+>>   
+>>       if (params->has_vcpu_dirty_limit &&
+>>           (params->vcpu_dirty_limit < 1)) {
+>> -        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
+>> -                   "vcpu_dirty_limit",
+>> -                   "is invalid, it must greater then 1 MB/s");
+>> +        error_setg(errp, "Parameter 'vcpu_dirty_limit' is invalid,"
+>> +                         " it must greater than 1 MB/s");
 
-Thanks,
+So s/it must greater/it must be greater/ :)
 
-C.
-
-
+>>           return false;
+>>       }
+>>
+> 
+> Otherwise,
+> 
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> 
 
 
