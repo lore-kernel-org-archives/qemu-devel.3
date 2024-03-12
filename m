@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB42C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 21:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDE0C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 21:04:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk9G4-0001tg-5B; Tue, 12 Mar 2024 17:02:00 -0400
+	id 1rk9Ht-0002ez-U8; Tue, 12 Mar 2024 17:03:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rk9Fv-0001si-Dz
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:01:52 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rk9Hj-0002eI-Q0
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:03:45 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rk9Ft-0005L0-UF
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:01:51 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1dd6412da28so2699855ad.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 14:01:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rk9Hh-0005S8-N7
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 17:03:43 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-413e8f1e002so230565e9.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 14:03:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710277308; x=1710882108; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yhDzCvvu0jNEQ9qcd83suFW2T2FOxYyekKQCzJDQf7g=;
- b=JGR6CumiCQNvrPlbGX+8SkDuRlQy53ge5t4I2IPcw7NqS1cQC+zm1l1sbiInEDL/DW
- F6IXP4MzZ6vq+gJ+qmTQ2mbS974+8pfz7yulzxKWsakC5sT5dAGhWlnl07c0WzcxrIUx
- Uw+ZUrx4qZPNBQn6Um8T5yR/3BWQOm86TdSrWb7guLkNX7iXMptzd0Ct8lv+Cu1RzHCO
- aTOMjx8mV4BeHcQ5jYSVEM4UEW7/ZUdXr7aGh0sgFuKAFMii9A8Vq+zC3IorcJdgPVMV
- gxpVbn8jU0mjkohAjjr9ymUJwlYmnGezAX0Bh4uD18djgws8q+5U0X/AkwaErL8Nht5H
- KZhA==
+ d=linaro.org; s=google; t=1710277420; x=1710882220; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hd+RboktKNiO7q9GvgK60P+ZsZlpCe+ghjUbd3EGIKQ=;
+ b=Ux09GW1pOfbarpy1Pdvlnb7NlEtkV7n9FQDvVPqs6gdEfYsDcn/69OejloPses66Sg
+ ZJnvFMLu34/fhsICD8eCPkW7lH5+ucuDeugbRBVLPZ07QgVOgw8LYI0jPYAC5iZys7+H
+ esKTPnE3S49iXRninOJzPhhPCNwN/T4UY4jLZlBTJ3BiFPYAThg0Xj2Cer/HtMaThzKg
+ J4Zsuj4XKqd/KmRDs6LeN04SlwaYxdIjIMFuzxKfgaBGVgFjcXWd84yR63NpRZHYxlCo
+ zxBIyshW7/GwevW/W7Ruc+y6jAr7NE2jrPDnuVBLK4TsNjL0WSNoFCekYS5g9dzgbNW6
+ pvyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710277308; x=1710882108;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yhDzCvvu0jNEQ9qcd83suFW2T2FOxYyekKQCzJDQf7g=;
- b=hZjtrTf9kEkMQpMpqbvYcxNuXeBvS6WtdzQDu48bcqSvwLHGvWutAmuPIm9LT3JzcE
- LMGf/Is0TzsQemBlsfFRbAblkThYtflMZDFIN8dHsafXt12HdCSG10QvvQoBvLPmE3Mr
- 4mXMLfJZY+WjkRFG05pu0Hx647Aifk0eqmOMjXwRTdl1fFW4l573PLJT3aT22l+bEPYu
- +FaLeKbtu8p2CTeWMzOdaCg975+aApZ3FZDJN3I29Vg+g8Y9qI7QbAvGwfmsFcJcf30E
- 9zcpFAD4qrh+OjDbuVHm+T79w3axAGVEjZh+wYeQCLbU9Lfj/XZ4xKHbQaRlHWZ3AQVD
- 2kzQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDsmEQ198RsDnpp7U07ZCWRoC2bU+S4PY0r54pwiu28xD+leMWm7CB3iplWtuWBNStw4fD70jo5rg2ckIu/8q9OYbfRDs=
-X-Gm-Message-State: AOJu0Yxd8PGqxUrHyQDon16lFDIvQRwDoZ+EGpniTaVlYy7EHReM5tPA
- kny0seR93Q6Mdm2ygLgRrkH6GzxkCX50k9epWcGaHfocJepjNlitZP4PGytZoNU=
-X-Google-Smtp-Source: AGHT+IHJ7TGKjZGHse4FlDsEe6Hi4viwbAH07XDyOn2z6fjIAgtPy28BbGCM2OE7qyjQ5fcwVaapFA==
-X-Received: by 2002:a17:903:24e:b0:1dd:8a43:4c33 with SMTP id
- j14-20020a170903024e00b001dd8a434c33mr4580023plh.50.1710277308303; 
- Tue, 12 Mar 2024 14:01:48 -0700 (PDT)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- d15-20020a170902654f00b001dcc0e239fesm7305496pln.232.2024.03.12.14.01.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 14:01:47 -0700 (PDT)
-Message-ID: <5da31fc6-f924-41c8-a922-7ae3abd35d4d@linaro.org>
-Date: Tue, 12 Mar 2024 11:01:44 -1000
+ d=1e100.net; s=20230601; t=1710277420; x=1710882220;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hd+RboktKNiO7q9GvgK60P+ZsZlpCe+ghjUbd3EGIKQ=;
+ b=vwoQbHOiDIRwSt58qEXblk070WKZjp9C6UHxQQrSorwBpbo/Oz7oV/Ollf5md9KWUk
+ z6dLm+3rhHVHpwx7UaWFr35u5v8xbNvz1byWEW5sPKM6Ehl+scakDBs+gHvhjJ6hPiqK
+ M35BodtLK+8sAsH0rsGsNDsROYzKlzoX+H/T/Q8uoZqkDjYJP95AJyK5SUFOHinYNt10
+ bSW9j/99DmS7SjX2ymeAEJXROKlzIzsjnEMB1wh2hM/YGjFt7gSOaozmQu3N93z8qvfz
+ 5iXKNJOMk0tsfdd4i3KRhKAGoFbalZ+EQ4Eovdws5WHs47yAM/uvDIBN4l3HshmyDqoF
+ xdbg==
+X-Gm-Message-State: AOJu0YxGh/xSA8EVQkPGPVhovw1qCLv+iazl1BGjASKnhpJmc44vHrM/
+ MXxu2s0Qa5BxQh3ylFLeasxoRG+XloaDCMeL8kXsGIOxzH8B//gRuPE4+aqCnwQ=
+X-Google-Smtp-Source: AGHT+IFDmuoBzSfuw/Z+/bihDPS8kezAPEBY3Q6j+ueuYoImxtl5Un2QEv9/k96QJiNjYtnaUo4+Ew==
+X-Received: by 2002:a05:600c:4e8a:b0:413:16e1:eac1 with SMTP id
+ f10-20020a05600c4e8a00b0041316e1eac1mr8201091wmq.33.1710277419628; 
+ Tue, 12 Mar 2024 14:03:39 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ he13-20020a05600c540d00b00413331845a6sm89798wmb.13.2024.03.12.14.03.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 14:03:39 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B591E5F794;
+ Tue, 12 Mar 2024 21:03:38 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: "Nicholas Piggin" <npiggin@gmail.com>
+Cc: <qemu-devel@nongnu.org>,  "Pavel Dovgalyuk" <Pavel.Dovgalyuk@ispras.ru>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Richard
+ Henderson"
+ <richard.henderson@linaro.org>,  "Paolo Bonzini" <pbonzini@redhat.com>,
+ "John Snow" <jsnow@redhat.com>,  "Cleber Rosa" <crosa@redhat.com>,
+ "Wainer dos Santos Moschetta" <wainersm@redhat.com>,  "Beraldo Leal"
+ <bleal@redhat.com>,  "Michael Tokarev" <mjt@tls.msk.ru>
+Subject: Re: [PATCH v4 05/24] Revert "replay: stop us hanging in
+ rr_wait_io_event"
+In-Reply-To: <CZRTTCV604Z3.3MT5MR0P5FWQK@wheely> (Nicholas Piggin's message of
+ "Wed, 13 Mar 2024 00:03:43 +1000")
+References: <20240311174026.2177152-1-npiggin@gmail.com>
+ <20240311174026.2177152-6-npiggin@gmail.com>
+ <87v85ro9qt.fsf@draig.linaro.org> <CZRTTCV604Z3.3MT5MR0P5FWQK@wheely>
+User-Agent: mu4e 1.12.1; emacs 29.1
+Date: Tue, 12 Mar 2024 21:03:38 +0000
+Message-ID: <87a5n3mac5.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] plugins: prepare introduction of new inline ops
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20240312075428.244210-1-pierrick.bouvier@linaro.org>
- <20240312075428.244210-2-pierrick.bouvier@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240312075428.244210-2-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,20 +106,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/24 21:54, Pierrick Bouvier wrote:
-> Until now, only add_u64 was available, and all functions assumed this or
-> were named uniquely.
-> 
-> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> ---
->   include/qemu/plugin.h  |  2 +-
->   plugins/plugin.h       |  1 +
->   accel/tcg/plugin-gen.c | 77 +++++++++++++++++++++---------------------
->   plugins/api.c          | 23 ++++++++++---
->   plugins/core.c         |  5 +--
->   5 files changed, 61 insertions(+), 47 deletions(-)
+"Nicholas Piggin" <npiggin@gmail.com> writes:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> On Tue Mar 12, 2024 at 11:33 PM AEST, Alex Benn=C3=A9e wrote:
+>> Nicholas Piggin <npiggin@gmail.com> writes:
+>>
+>> > This reverts commit 1f881ea4a444ef36a8b6907b0b82be4b3af253a2.
+>> >
+>> > That commit causes reverse_debugging.py test failures, and does
+>> > not seem to solve the root cause of the problem x86-64 still
+>> > hangs in record/replay tests.
+>>
+>> I'm still finding the reverse debugging tests failing with this series.
+>
+> :(
+>
+> In gitlab CI or your own testing? What are you running exactly?
 
-r~
+My own - my mistake I didn't get a clean build because of the format
+bug. However I'm seeing new failures:
+
+  env QEMU_TEST_FLAKY_TESTS=3D1 AVOCADO_TIMEOUT_EXPECTED=3D1 ./pyvenv/bin/a=
+vocado run ./tests/avocado/reverse_debugging.py
+  Fetching asset from ./tests/avocado/reverse_debugging.py:ReverseDebugging=
+_AArch64.test_aarch64_virt
+  JOB ID     : bd4b29f7afaa24dc6e32933ea9bc5e46bbc3a5a4
+  JOB LOG    : /home/alex/avocado/job-results/job-2024-03-12T20.58-bd4b29f/=
+job.log
+   (1/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_X86_64.test_=
+x86_64_pc: PASS (4.49 s)
+   (2/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_X86_64.test_=
+x86_64_q35: PASS (4.50 s)
+   (3/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_AArch64.test=
+_aarch64_virt: FAIL: Invalid PC (read ffff2d941e4d7f28 instead of ffff2d941=
+e4d7f2c) (3.06 s)
+   (4/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_ppc64.test_p=
+pc64_pseries: PASS (16.48 s)
+   (5/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_ppc64.test_p=
+pc64_powernv: FAIL: Invalid PC (read 30020210 instead of 30020214) (2.80 s)
+  RESULTS    : PASS 3 | ERROR 0 | FAIL 2 | SKIP 0 | WARN 0 | INTERRUPT 0 | =
+CANCEL 0
+  JOB TIME   : 32.18 s
+
+>
+> I found 440fx must have some bug becaues it's quite bad, but
+> q35 was more stable.
+>
+>>
+>> > The problem with short-cutting the iowait that was taken during
+>> > record phase is that related events will not get consumed at the
+>> > same points (e.g., reading the clock).
+>> >
+>> > A hang with zero icount always seems to be a symptom of an earlier
+>> > problem that has caused the recording to become out of synch with
+>> > the execution and consumption of events by replay.
+>>
+>> Would it be possible to still detect the failure mode rather than a full
+>> revert?
+>
+> I'm not actually sure exactly how this patch causes test failures
+> (or how it was fixing the ones you saw). If I can reproduce the
+> ones you see I could look a bit deeper at it.
+>
+> I have been looking at some ways to try detect/report record/replay
+> errors more sanely because it can be very hard to debug them at
+> the moment. No patches quite ready to post yet, but yes if there's
+> something we could do here to help we should.
+>
+> Thanks,
+> Nick
+>
+>>
+>> >
+>> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> > ---
+>> >  include/sysemu/replay.h      |  5 -----
+>> >  accel/tcg/tcg-accel-ops-rr.c |  2 +-
+>> >  replay/replay.c              | 21 ---------------------
+>> >  3 files changed, 1 insertion(+), 27 deletions(-)
+>> >
+>> > diff --git a/include/sysemu/replay.h b/include/sysemu/replay.h
+>> > index f229b2109c..8102fa54f0 100644
+>> > --- a/include/sysemu/replay.h
+>> > +++ b/include/sysemu/replay.h
+>> > @@ -73,11 +73,6 @@ int replay_get_instructions(void);
+>> >  /*! Updates instructions counter in replay mode. */
+>> >  void replay_account_executed_instructions(void);
+>> >=20=20
+>> > -/**
+>> > - * replay_can_wait: check if we should pause for wait-io
+>> > - */
+>> > -bool replay_can_wait(void);
+>> > -
+>> >  /* Processing clocks and other time sources */
+>> >=20=20
+>> >  /*! Save the specified clock */
+>> > diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr=
+.c
+>> > index 894e73e52c..a942442a33 100644
+>> > --- a/accel/tcg/tcg-accel-ops-rr.c
+>> > +++ b/accel/tcg/tcg-accel-ops-rr.c
+>> > @@ -109,7 +109,7 @@ static void rr_wait_io_event(void)
+>> >  {
+>> >      CPUState *cpu;
+>> >=20=20
+>> > -    while (all_cpu_threads_idle() && replay_can_wait()) {
+>> > +    while (all_cpu_threads_idle()) {
+>> >          rr_stop_kick_timer();
+>> >          qemu_cond_wait_bql(first_cpu->halt_cond);
+>> >      }
+>> > diff --git a/replay/replay.c b/replay/replay.c
+>> > index b8564a4813..895fa6b67a 100644
+>> > --- a/replay/replay.c
+>> > +++ b/replay/replay.c
+>> > @@ -451,27 +451,6 @@ void replay_start(void)
+>> >      replay_enable_events();
+>> >  }
+>> >=20=20
+>> > -/*
+>> > - * For none/record the answer is yes.
+>> > - */
+>> > -bool replay_can_wait(void)
+>> > -{
+>> > -    if (replay_mode =3D=3D REPLAY_MODE_PLAY) {
+>> > -        /*
+>> > -         * For playback we shouldn't ever be at a point we wait. If
+>> > -         * the instruction count has reached zero and we have an
+>> > -         * unconsumed event we should go around again and consume it.
+>> > -         */
+>> > -        if (replay_state.instruction_count =3D=3D 0 && replay_state.h=
+as_unread_data) {
+>> > -            return false;
+>> > -        } else {
+>> > -            replay_sync_error("Playback shouldn't have to iowait");
+>> > -        }
+>> > -    }
+>> > -    return true;
+>> > -}
+>> > -
+>> > -
+>> >  void replay_finish(void)
+>> >  {
+>> >      if (replay_mode =3D=3D REPLAY_MODE_NONE) {
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
