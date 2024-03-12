@@ -4,84 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E45C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:12:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27E1C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5Z7-0000xY-9n; Tue, 12 Mar 2024 13:05:28 -0400
+	id 1rk5hi-0008Oa-8e; Tue, 12 Mar 2024 13:14:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5Vg-00087z-4C; Tue, 12 Mar 2024 13:01:55 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5Vd-0000AH-8G; Tue, 12 Mar 2024 13:01:51 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6e6ac741ff7so545058b3a.0; 
- Tue, 12 Mar 2024 10:01:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710262907; x=1710867707; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lX04aDkXFvlRCQh6VqYz9F4OSVcE/Z+9u7GVIjBUl0g=;
- b=d9CIxTmwwwjO0NSWvHtxUV/ZUibzdH3otTp2OFllS5pYGspHy2uVnw+oM/XP7mjiPQ
- Blsn+cFjJLzh7PM6ZtTPObA0pBzKpj1XMLXKrGe3zvd0zaWPiXYCPBm0gks+Ns8BeGXN
- 2wGta1rvgNPpYJpBQPRWbh3V3jArsfGO/54YJK1XllS/jes23Gg6ai5A/gqXeUlOywrl
- hlN8s7IzF+sSxOajwees5zHJkk3UbIWol8E2dA0agZNtWJ/+rjcg3fEwt5VAD//jmNck
- 8Pc1k6DZi6k34UUQl+uZGOeQCuaTYtdd8bQ+gRuQsKqpDe6rsd0MSLTwXWlZfPYmd8T9
- h24g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710262907; x=1710867707;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lX04aDkXFvlRCQh6VqYz9F4OSVcE/Z+9u7GVIjBUl0g=;
- b=tYa0hpIXZ6vuS2vFcMUuMJlP6LYxkThGaD0gpqcs5yJwpBDyJ+GA0TDOmUw978k0oz
- B0zDxw28Dn+udoZ5F3mHrprk4Tb+OgSqoXnYOXoh9BK9EweUP7zu0NTns7aem0FVEHRw
- qlWOHPmqpBXV1HVYDfVLiGc7civW7PGzI/JnkQndzMuOYxHAq1hC/bqYhgoKf/4Gc3oN
- A2fD17VigBwwVZMtvvVR+t4bJTtLjSoa6Ye1hedXtzBkqYcrF5njXA1di9GRcy8GEszr
- nqTmBVu6J2UQkW1kpEDN0BdoyMoyrp52wt6Dj1d9QluMZHPwbvelxsN5wBD4qC4SHxrP
- WC0A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXODQAriTn/D1yiYa9RQIXiL1P2Mx05bcx9gm5SjjNWHxeVMAr31qflnt/6maMj4L1GstsHJxYJI+6pDM8oXVwjxK2u
-X-Gm-Message-State: AOJu0YyIPDpZLNmz3M+HULwepHUrdxvMFWjETiyikghtiKqP4mHZ+kYT
- 9TIGI6c3EdaF2/RMK5/9KLiVmA/Kxfe9phlWkRYWiwCMM/p9IvYtwxT6EX3uBiE=
-X-Google-Smtp-Source: AGHT+IHHFobD/lume3I6+6DrjoB1PFYIfOvW3njMOKAlzt47rWA9eZLOMaGcsQ2ht4ZMbybwaI9dcw==
-X-Received: by 2002:a05:6a20:3d25:b0:1a3:25f9:102b with SMTP id
- y37-20020a056a203d2500b001a325f9102bmr1014246pzi.12.1710262906960; 
- Tue, 12 Mar 2024 10:01:46 -0700 (PDT)
-Received: from wheely.local0.net ([118.208.155.46])
- by smtp.gmail.com with ESMTPSA id
- t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.10.01.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 10:01:46 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Michael Neuling <mikey@neuling.org>
-Subject: [PULL 38/38] spapr: nested: Introduce cap-nested-papr for Nested PAPR
- API
-Date: Wed, 13 Mar 2024 02:58:49 +1000
-Message-ID: <20240312165851.2240242-39-npiggin@gmail.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20240312165851.2240242-1-npiggin@gmail.com>
-References: <20240312165851.2240242-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rk5ha-0008Nr-DR
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:14:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rk5hT-0002dj-PO
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:14:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710263641;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3xHxnnok9yVR+4/zOW1JNGl93btx0kxk65q76oKzBHI=;
+ b=bKpNs1G46vlrjUG0TmNcs78CB7qwBH1oRWRoSKtRLbtOFY7fRaA9jkuJ5beSVDq71LmbW5
+ apW2zAX2TRKTjCazpMlJ6mrJVrtS70dsUh7HZDZCVV+MayKLYSZTF6Bt3V9YHg6lXa5ViG
+ /Emf5H7q6X+IJ8AZRxxlj3hnLiAnGS0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-462-dvaAoEDROvCwegiLEXVb5w-1; Tue, 12 Mar 2024 13:13:58 -0400
+X-MC-Unique: dvaAoEDROvCwegiLEXVb5w-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A7C648007A2;
+ Tue, 12 Mar 2024 17:13:57 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.60])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 43CE540C6DAE;
+ Tue, 12 Mar 2024 17:13:56 +0000 (UTC)
+Date: Tue, 12 Mar 2024 17:13:54 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, den@virtuozzo.com,
+ andrey.drobyshev@virtuozzo.com, jsnow@redhat.com,
+ vsementsov@yandex-team.ru, kwolf@redhat.com, hreitz@redhat.com
+Subject: Re: [PATCH] block: Use LVM tools for LV block device truncation
+Message-ID: <ZfCNUtya78MZVGeA@redhat.com>
+References: <20240311174044.67094-1-alexander.ivanov@virtuozzo.com>
+ <Ze9Mb6pHcTOdghCy@redhat.com>
+ <874c2375-1216-4002-a490-8538fe92921d@virtuozzo.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <874c2375-1216-4002-a490-8538fe92921d@virtuozzo.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,181 +86,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+On Tue, Mar 12, 2024 at 06:04:26PM +0100, Alexander Ivanov wrote:
+> Thank you for the review.
+> 
+> On 3/11/24 19:24, Daniel P. Berrangé wrote:
+> > On Mon, Mar 11, 2024 at 06:40:44PM +0100, Alexander Ivanov wrote:
+> > > If a block device is an LVM logical volume we can resize it using
+> > > standard LVM tools.
+> > > 
+> > > In raw_co_truncate() check if the block device is a LV using lvdisplay
+> > > and resize it executing lvresize.
+> > > 
+> > > Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+> > > ---
+> > >   block/file-posix.c | 27 +++++++++++++++++++++++++++
+> > >   1 file changed, 27 insertions(+)
+> > > 
+> > > diff --git a/block/file-posix.c b/block/file-posix.c
+> > > index 35684f7e21..cf8a04e6f7 100644
+> > > --- a/block/file-posix.c
+> > > +++ b/block/file-posix.c
+> > > @@ -2670,6 +2670,33 @@ static int coroutine_fn raw_co_truncate(BlockDriverState *bs, int64_t offset,
+> > >       if (S_ISCHR(st.st_mode) || S_ISBLK(st.st_mode)) {
+> > >           int64_t cur_length = raw_getlength(bs);
+> > > +        /*
+> > > +         * Check if the device is an LVM logical volume and try to resize
+> > > +         * it using LVM tools.
+> > > +         */
+> > > +        if (S_ISBLK(st.st_mode) && offset > 0) {
+> > > +            char cmd[PATH_MAX + 32];
+> > > +
+> > > +            snprintf(cmd, sizeof(cmd), "lvdisplay %s > /dev/null",
+> > > +                     bs->filename);
+> > PATH_MAX + snprint is a bad practice - g_strdup_printf() is recommended
+> > for dynamic allocation, along with g_autofree for release.
+> > 
+> > > +            ret = system(cmd);
+> > IMHO using 'system' for spawning processes is dubious in any non-trivial
+> > program.
+> > 
+> > Historically at least it does not have well defined behaviour wrt signal
+> > handling in the child, before execve is called. ie potentially a signal
+> > handler registered by QEMU in the parent could run in the child having
+> > ill-effects.
+> > 
+> > 'system' also executes via the shell which opens up many risks with
+> > unsanitized files path being substituted into the command line.
+> > > +            if (ret != 0) {
+> > > +                error_setg(errp, "lvdisplay returned %d error for '%s'",
+> > > +                           ret, bs->filename);
+> > > +                return ret;
+> > > +            }
+> > Calling 'lvdisplay' doesn't seem to be needed. Surely 'lvresize' is
+> > going to report errors if it isn't an LVM device.
+> The problem is that we don't know if 'lvresize' returned an error because of
+> non-LVM device or there was another reason. For the first variant we should
+> continue original code execution, for the second - return an error.
+> > 
+> > If we want to detect an LVM device though, couldn't we lookup
+> > 'device-mapper'  in /proc/devices and then major the device major
+> > node number.
+> It will require more code for getting device major, file reading and
+> parsing.
+> Why this way is better?
 
-Introduce a SPAPR capability cap-nested-papr which enables nested PAPR
-API for nested guests. This new API is to enable support for KVM on PowerVM
-and the support in Linux kernel has already merged upstream.
+There are a variety of reasons why these LVM commands could fail.
+Directly detecting whether or not this is an LVM device, rather
+than inferring it from 'lvdisplay' result is a more precise check
+which will allow for clearer error reporting IMHO.
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Neuling <mikey@neuling.org>
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- hw/ppc/spapr.c         |  2 ++
- hw/ppc/spapr_caps.c    | 54 ++++++++++++++++++++++++++++++++++++++++++
- hw/ppc/spapr_nested.c  |  8 ++++---
- include/hw/ppc/spapr.h |  6 ++++-
- 4 files changed, 66 insertions(+), 4 deletions(-)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index aaf73781b0..99d3fcb185 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -2166,6 +2166,7 @@ static const VMStateDescription vmstate_spapr = {
-         &vmstate_spapr_cap_fwnmi,
-         &vmstate_spapr_fwnmi,
-         &vmstate_spapr_cap_rpt_invalidate,
-+        &vmstate_spapr_cap_nested_papr,
-         NULL
-     }
- };
-@@ -4732,6 +4733,7 @@ static void spapr_machine_class_init(ObjectClass *oc, void *data)
-     smc->default_caps.caps[SPAPR_CAP_IBS] = SPAPR_CAP_WORKAROUND;
-     smc->default_caps.caps[SPAPR_CAP_HPT_MAXPAGESIZE] = 16; /* 64kiB */
-     smc->default_caps.caps[SPAPR_CAP_NESTED_KVM_HV] = SPAPR_CAP_OFF;
-+    smc->default_caps.caps[SPAPR_CAP_NESTED_PAPR] = SPAPR_CAP_OFF;
-     smc->default_caps.caps[SPAPR_CAP_LARGE_DECREMENTER] = SPAPR_CAP_ON;
-     smc->default_caps.caps[SPAPR_CAP_CCF_ASSIST] = SPAPR_CAP_ON;
-     smc->default_caps.caps[SPAPR_CAP_FWNMI] = SPAPR_CAP_ON;
-diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
-index e889244e52..62abf1ba9d 100644
---- a/hw/ppc/spapr_caps.c
-+++ b/hw/ppc/spapr_caps.c
-@@ -487,6 +487,50 @@ static void cap_nested_kvm_hv_apply(SpaprMachineState *spapr,
-             error_append_hint(errp, "Try appending -machine cap-nested-hv=off "
-                                     "or use threads=1 with -smp\n");
-         }
-+        if (spapr_nested_api(spapr) &&
-+            spapr_nested_api(spapr) != NESTED_API_KVM_HV) {
-+            error_setg(errp, "Nested-HV APIs are mutually exclusive");
-+            error_append_hint(errp, "Please use either cap-nested-hv or "
-+                                    "cap-nested-papr to proceed.\n");
-+            return;
-+        } else {
-+            spapr->nested.api = NESTED_API_KVM_HV;
-+        }
-+    }
-+}
-+
-+static void cap_nested_papr_apply(SpaprMachineState *spapr,
-+                                    uint8_t val, Error **errp)
-+{
-+    ERRP_GUARD();
-+    PowerPCCPU *cpu = POWERPC_CPU(first_cpu);
-+    CPUPPCState *env = &cpu->env;
-+
-+    if (!val) {
-+        /* capability disabled by default */
-+        return;
-+    }
-+
-+    if (tcg_enabled()) {
-+        if (!(env->insns_flags2 & PPC2_ISA300)) {
-+            error_setg(errp, "Nested-PAPR only supported on POWER9 and later");
-+            error_append_hint(errp,
-+                              "Try appending -machine cap-nested-papr=off\n");
-+            return;
-+        }
-+        if (spapr_nested_api(spapr) &&
-+            spapr_nested_api(spapr) != NESTED_API_PAPR) {
-+            error_setg(errp, "Nested-HV APIs are mutually exclusive");
-+            error_append_hint(errp, "Please use either cap-nested-hv or "
-+                                    "cap-nested-papr to proceed.\n");
-+            return;
-+        } else {
-+            spapr->nested.api = NESTED_API_PAPR;
-+        }
-+    } else if (kvm_enabled()) {
-+        error_setg(errp, "KVM implementation does not support Nested-PAPR");
-+        error_append_hint(errp,
-+                          "Try appending -machine cap-nested-papr=off\n");
-     }
- }
- 
-@@ -735,6 +779,15 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] = {
-         .type = "bool",
-         .apply = cap_nested_kvm_hv_apply,
-     },
-+    [SPAPR_CAP_NESTED_PAPR] = {
-+        .name = "nested-papr",
-+        .description = "Allow Nested HV (PAPR API)",
-+        .index = SPAPR_CAP_NESTED_PAPR,
-+        .get = spapr_cap_get_bool,
-+        .set = spapr_cap_set_bool,
-+        .type = "bool",
-+        .apply = cap_nested_papr_apply,
-+    },
-     [SPAPR_CAP_LARGE_DECREMENTER] = {
-         .name = "large-decr",
-         .description = "Allow Large Decrementer",
-@@ -919,6 +972,7 @@ SPAPR_CAP_MIG_STATE(sbbc, SPAPR_CAP_SBBC);
- SPAPR_CAP_MIG_STATE(ibs, SPAPR_CAP_IBS);
- SPAPR_CAP_MIG_STATE(hpt_maxpagesize, SPAPR_CAP_HPT_MAXPAGESIZE);
- SPAPR_CAP_MIG_STATE(nested_kvm_hv, SPAPR_CAP_NESTED_KVM_HV);
-+SPAPR_CAP_MIG_STATE(nested_papr, SPAPR_CAP_NESTED_PAPR);
- SPAPR_CAP_MIG_STATE(large_decr, SPAPR_CAP_LARGE_DECREMENTER);
- SPAPR_CAP_MIG_STATE(ccf_assist, SPAPR_CAP_CCF_ASSIST);
- SPAPR_CAP_MIG_STATE(fwnmi, SPAPR_CAP_FWNMI);
-diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-index ce3490bcf2..936659b4c0 100644
---- a/hw/ppc/spapr_nested.c
-+++ b/hw/ppc/spapr_nested.c
-@@ -13,13 +13,15 @@
- void spapr_nested_reset(SpaprMachineState *spapr)
- {
-     if (spapr_get_cap(spapr, SPAPR_CAP_NESTED_KVM_HV)) {
--        spapr->nested.api = NESTED_API_KVM_HV;
-         spapr_unregister_nested_hv();
-         spapr_register_nested_hv();
--    } else {
--        spapr->nested.api = 0;
-+    } else if (spapr_get_cap(spapr, SPAPR_CAP_NESTED_PAPR)) {
-         spapr->nested.capabilities_set = false;
-+        spapr_unregister_nested_papr();
-+        spapr_register_nested_papr();
-         spapr_nested_gsb_init();
-+    } else {
-+        spapr->nested.api = 0;
-     }
- }
- 
-diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-index 6223873641..4aaf23d28f 100644
---- a/include/hw/ppc/spapr.h
-+++ b/include/hw/ppc/spapr.h
-@@ -81,8 +81,10 @@ typedef enum {
- #define SPAPR_CAP_RPT_INVALIDATE        0x0B
- /* Support for AIL modes */
- #define SPAPR_CAP_AIL_MODE_3            0x0C
-+/* Nested PAPR */
-+#define SPAPR_CAP_NESTED_PAPR           0x0D
- /* Num Caps */
--#define SPAPR_CAP_NUM                   (SPAPR_CAP_AIL_MODE_3 + 1)
-+#define SPAPR_CAP_NUM                   (SPAPR_CAP_NESTED_PAPR + 1)
- 
- /*
-  * Capability Values
-@@ -592,6 +594,7 @@ struct SpaprMachineState {
- #define H_GUEST_CREATE_VCPU      0x474
- #define H_GUEST_GET_STATE        0x478
- #define H_GUEST_SET_STATE        0x47C
-+#define H_GUEST_RUN_VCPU         0x480
- #define H_GUEST_DELETE           0x488
- 
- #define MAX_HCALL_OPCODE         H_GUEST_DELETE
-@@ -996,6 +999,7 @@ extern const VMStateDescription vmstate_spapr_cap_sbbc;
- extern const VMStateDescription vmstate_spapr_cap_ibs;
- extern const VMStateDescription vmstate_spapr_cap_hpt_maxpagesize;
- extern const VMStateDescription vmstate_spapr_cap_nested_kvm_hv;
-+extern const VMStateDescription vmstate_spapr_cap_nested_papr;
- extern const VMStateDescription vmstate_spapr_cap_large_decr;
- extern const VMStateDescription vmstate_spapr_cap_ccf_assist;
- extern const VMStateDescription vmstate_spapr_cap_fwnmi;
+Ideally we wouldn't even spawn a process for the resize operation,
+but instead call into the device mapper library API. That would
+let it work even when the seccomp sandbox is enabled and blocking
+process spawning. IME the device mapper API is not too friendly
+though, so I didn't want to suggest that as a blocker.
+
+> > > +            snprintf(cmd, sizeof(cmd), "lvresize -f -L %ldB %s > /dev/null",
+> > > +                     offset, bs->filename);
+> > > +            ret = system(cmd);
+> > > +            if (ret != 0) {
+> > > +                error_setg(errp, "lvresize returned %d error for '%s'",
+> > > +                           ret, bs->filename);
+> > lvresize might display an message on stderr on failure but that's at best
+> > going to QEMU's stderr. Any error needs to be captured and put into
+> > this error message that's fed back to the user / QMP client.
+> It seems I need to implement a high level function for programs execution.
+> Looked at
+> g_spawn_sync(), but it uses fork() under the hood and we could have a
+> performance
+> issue. Haven't found a high level function that uses vfork() and allows to
+> catch stderr.
+
+GLib should be using posix_spawn internally on all modern platforms.
+
+Resizing LVM volumes does not sound like a hot code path, so I'm
+seeing what performance concerns we would have.
+
+With regards,
+Daniel
 -- 
-2.42.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
