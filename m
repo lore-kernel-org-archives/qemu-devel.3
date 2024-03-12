@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 115EBC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 13:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 925A2C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 13:27:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk28b-00036V-KC; Tue, 12 Mar 2024 09:25:49 -0400
+	id 1rk29i-0004C3-AB; Tue, 12 Mar 2024 09:26:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rk28Z-00034r-BE
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 09:25:47 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1rk29V-00044c-Ew
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 09:26:46 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rk28X-0000KP-KE
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 09:25:46 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a45b6fcd5e8so665600666b.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 06:25:45 -0700 (PDT)
+ id 1rk29T-0000b0-Jz
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 09:26:45 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5683576ea18so5195288a12.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 06:26:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710249944; x=1710854744; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710250002; x=1710854802; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KkZYi5zbmIfH3sAzPHv6AzYkXnsJcYpsPvCpTF+yf5A=;
- b=ghmteREjkIrldQi8u0u56GSkmHEJ3IxguexnimZbdfJsXF0QqcFy34pm6GnuvtG25Z
- 9/N3vimTzACsIajTE+UpGq8kIXg3AIqTpeLYr0JhvU36Y8yx4yFPT3RFPy+wE3AsymH6
- Ngu3cbOP9XqYBuKjI3ZAuWMnoINkMz68N8PHYR7lftfSNoAtjp9Z6xKV1OhUvOChRwr5
- Kj9flERYgzZ7s7EdqVHgtXttRyxmccUZrFAhSRVyfso2ePOoky/yR9t1pLugVd1xww1H
- 0stADNOoIo5RjyCCrMU+CmpGbrtVwg2lOYAx7tKKmcmA4p23ujje+dXWJQL1k8rKcXmG
- KPSg==
+ bh=dv7+dDQpFHZQchFipqsoDj5snQTHogZtqZZooWVwU5c=;
+ b=cHnET3/hUQUf4FlZkPvoTkWVqAIh26H6URU+7QbU/aDYRbulErrRlas6v5EfHKSyUa
+ wiL+6OmBueE1efxA7n7k/FMFVgfiFEPvbye/XtcFwe9aU9t00p9eee6Lbl9sHh1UDtQe
+ RnEO7o2AQx+searuc8yUTiO338P49P8PyTyD3feZeqQF330JvTwYP5Y0ZGO6P2vwbDim
+ vFJlC+FsFJj0ZkLDy1jMApIKKeZfQCcXfYaGklCvoLKNKkOB3A/wCeu7qGWXppP+R1gu
+ RneTIF+6Hl5HhoTxKutgn2CkuJsA+Zlw+2GY0KlAapG+yLhbyRJ7NrQEpwa9ilZR59OG
+ xDtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710249944; x=1710854744;
+ d=1e100.net; s=20230601; t=1710250002; x=1710854802;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KkZYi5zbmIfH3sAzPHv6AzYkXnsJcYpsPvCpTF+yf5A=;
- b=ehDSyNl0V12KyYqwVxyCa/bW+KCTdzth4e+A57fEbc3X/Qdz88AfEu1pw4wDMkvZxR
- jYtGNv2EqLRL62by45APm0WuIhZ5MLk7glFSvKy0NAixTC2kLRNXzj+mkc+bpYjeUU8r
- UWcGnIR36c7L9T69maj0IM4SgRDuQUvAhRq4P1j+ttFF8M9HA5jsRynUrJfR/4SLJhK4
- O8K74q1gWnYFTjhl7A02eOvizh/et4ECkcCiPSYi6BgUBACNUHIQfTnl/HuUtOEc5Dcy
- svF2sAP5t+UxQMA3pnqbiAIxzKPRhg4M56NxWtGAZS1s21wWC6HJtY1IinYPs1USAxNG
- LhUQ==
-X-Gm-Message-State: AOJu0Yy+hvyAPKxqtlEp669v4dDBCSiWxiuLMHLZxnRB4SKNvBSy/Olj
- UCH7pglFILOR2tG20W2Tyy/KrJo5emlp491y96sqVSImYi4q+vehFIBC23qZDWI=
-X-Google-Smtp-Source: AGHT+IGhA7NhFZNKBa+SMHlZbb5CEjEGzYMpqwXcjr3kL4toy5hCRRBxPTHdelnKJSTXySp/VwrVQw==
-X-Received: by 2002:a17:906:b6c5:b0:a46:2243:27b with SMTP id
- ec5-20020a170906b6c500b00a462243027bmr1454488ejb.56.1710249943961; 
- Tue, 12 Mar 2024 06:25:43 -0700 (PDT)
+ bh=dv7+dDQpFHZQchFipqsoDj5snQTHogZtqZZooWVwU5c=;
+ b=W9KInRDgUCR1+72SvrTQgDKgnJ/Y5MpPQwtPbCxzUKZmbyKj1FGoaY+BMIRAEmioip
+ wm/AUbfqf5Q4ZbN+rCNaKri+n9ircJnBwqDMhhSngItGQQ7CttSMzyCse/6HEftUfmt4
+ +GmeKGRy+99IHLh77AU4VJsec2CHnZKk9l7aUZUyPDwKSNDnhWkG35TBIFvy7T8Ur/Yn
+ KfkT0ZS1ZSMCB6OV6VdfsjUHU9ceVqy74g1k454YbuW88q0bdARn6KFUH28Th8vgGcGS
+ 4mdkukLkNWgCZAxyPi4zz188RD0KP88/n/rN1bEQQ25DtvvVedcePtToKhLufp7gVIfc
+ Rs+g==
+X-Gm-Message-State: AOJu0Yxo9lRRUZBX/1n7pTpYTytSY/HhMwbmMKwvNCupXKcsvIKN3CtC
+ V5leao83NgbzYKPd4qjRMs3m29JrHvwLJUYWqUiEKLsl/S3S2Ulkr8rVBex2kHw=
+X-Google-Smtp-Source: AGHT+IGvfUyiC1lx31lZQ38CvynQpZLOVCMtSUDKvSrw96jyeoe8oCk94Xy+E/hTT2Xge74WRf4oIg==
+X-Received: by 2002:a17:907:1184:b0:a45:2e21:c776 with SMTP id
+ uz4-20020a170907118400b00a452e21c776mr4954539ejb.3.1710250001670; 
+ Tue, 12 Mar 2024 06:26:41 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a10-20020a17090640ca00b00a4550e8ae70sm3878177ejk.63.2024.03.12.06.25.43
+ z27-20020a1709060adb00b00a4576dd5a8csm3810752ejf.201.2024.03.12.06.26.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 06:25:43 -0700 (PDT)
+ Tue, 12 Mar 2024 06:26:41 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5EC6C5F863;
- Tue, 12 Mar 2024 13:25:43 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id F1D2E5F863;
+ Tue, 12 Mar 2024 13:26:40 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Nicholas Piggin <npiggin@gmail.com>
 Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
@@ -69,20 +69,20 @@ Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
  John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Wainer
  dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
  <bleal@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [PATCH v4 03/24] tests/avocado: excercise
- scripts/replay-dump.py in replay tests
-In-Reply-To: <20240311174026.2177152-4-npiggin@gmail.com> (Nicholas Piggin's
- message of "Tue, 12 Mar 2024 03:40:05 +1000")
+Subject: Re: [PATCH v4 04/24] replay: allow runstate shutdown->running when
+ replaying trace
+In-Reply-To: <20240311174026.2177152-5-npiggin@gmail.com> (Nicholas Piggin's
+ message of "Tue, 12 Mar 2024 03:40:06 +1000")
 References: <20240311174026.2177152-1-npiggin@gmail.com>
- <20240311174026.2177152-4-npiggin@gmail.com>
+ <20240311174026.2177152-5-npiggin@gmail.com>
 User-Agent: mu4e 1.12.1; emacs 29.1
-Date: Tue, 12 Mar 2024 13:25:43 +0000
-Message-ID: <877ci7poo8.fsf@draig.linaro.org>
+Date: Tue, 12 Mar 2024 13:26:40 +0000
+Message-ID: <871q8fpomn.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,11 +107,17 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Nicholas Piggin <npiggin@gmail.com> writes:
 
-> This runs replay-dump.py after recording a trace, and fails the test if
-> the script fails.
+> When replaying a trace, it is possible to go from shutdown to running
+> with a reverse-debugging step. This can be useful if the problem being
+> debugged triggers a reset or shutdown.
 >
-> replay-dump.py is modified to exit with non-zero if an error is
-> encountered while parsing, to support this.
+> This can be tested by making a recording of a machine that shuts down,
+> then using -action shutdown=3Dpause when replaying it. Continuing to the
+> end of the trace then reverse-stepping in gdb crashes due to invalid
+> runstate transition.
+>
+> Just permitting the transition seems to be all that's necessary for
+> reverse-debugging to work well in such a state.
 >
 > Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
