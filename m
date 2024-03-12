@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8D02C54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07713C54E66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:18:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxJX-0000IW-DO; Tue, 12 Mar 2024 04:16:48 -0400
+	id 1rjxL8-00012z-Nv; Tue, 12 Mar 2024 04:18:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxJ4-0000CT-VF
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:16:22 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxKL-0000fp-Qv
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:17:40 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxJ2-00088T-KA
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:16:18 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-512bde3d197so4453070e87.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:16:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxKI-0008HM-05
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:17:37 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-413428499a6so1566435e9.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:17:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710231372; x=1710836172; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710231452; x=1710836252; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5pThmiKwZCaXpGU6F6BckEm7jMsXMqdQau4EnbipAL4=;
- b=SVSMZazKZ6MVSAbNMUnXX5z7gTE1by+t+YKyROMQ+TkRBcx8zuxwVDyrn5Sl/DovUd
- TwxyPAJaI77bZWrDPw40rqJOG/VzkpKnZeoMeF0SVGiVpY25KLfPjCKNHf1Mb0YIT2WS
- XQKdl4PDeCVKtv1X91a0XlnPwAYVWkQ8HdVgI7Nce/+NI5lm3SUCOn27kXhRENncp0tt
- QZvPJldWkeKekPz2MQoL5HPR6cG1Ql2zKjJPE+rf5nh2k97QaIbtPXqNwQbqnId+NrkP
- 2WCxNFR91XCT8tQMNsQVXCW1BSyX6DwlQvkMNZvnx9wpJCOEO6O+SDfCDjBa8UD+cntf
- i4bA==
+ bh=ZBunxkiIx3J7GdymtcjxLq5TiZgj9wVB5HxuBHiujLY=;
+ b=hdHXzVbk6rD/7f+7iauZ1GgrLrfDqBrMlccRW15ytBRCKl7Ti3DxjmBYF5Bswy5HO2
+ +MMgS/P3w3vWPxawWngRYwJlyP0K5KHq0gS4qBUqgVXxMBjRKM2dHsZsj5pvSRtEkTz2
+ lVvWL4EXw737HTjqcG1/oH+baEE68nwpdtG4Ow9gbixcr0KLrzBUp3vSKikVAUPeN34A
+ TAaoAOlPpKBJ/ulehtFff/J02Hgwolu6qunOpxW8nwvbsVZC8BC/ba5mWbRrC0o+hTLT
+ 9nsDu2FCMV0qZPTqR6eizaTYrdf2uSaaJiobB5WgjxbYhLn8Ex+H0KUjU/WIDpmkHeYb
+ II/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710231372; x=1710836172;
+ d=1e100.net; s=20230601; t=1710231452; x=1710836252;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5pThmiKwZCaXpGU6F6BckEm7jMsXMqdQau4EnbipAL4=;
- b=Uy9ZwLSWNvFKf0cUaMWbh/MeAQu21iuxDyN9sCaDWEgGNFwApXksM7tcsRyGepfT7p
- dwOPz/o45ILcNZhmRJe3G682U19yINH9ipp6gnVJMyplcKHcgHvGW2BHPmoK4/LL0Mu7
- FB4vxFfK6Ai0/vwOtMjZXPT2X4atVa7nu3zAjuAd+H7HcEqUKv6g0p4Aoc+jlYxquthV
- 0kHSY/hqHUw6QODJFVUSGLLeM1NKuFKhwYIMCYhL4iwtEoYpiIK6wZJjmOSesZLbFBeK
- hnLTalh+6AAHXqHIpO5oXKbHeiDapXWCHeGzkg8+KWi0gkSLSHv+0KuELcEY5Zht2TMl
- NYSA==
+ bh=ZBunxkiIx3J7GdymtcjxLq5TiZgj9wVB5HxuBHiujLY=;
+ b=kDMd2mbzFf5j5SWh9AYM/C7Ektzvqf9rgRu2bI5YjFCmCbY1p1wxLU6vHn2Jn9CsqI
+ DsueG92J4yug+FYrVtfBnfeGKqW322kBW94T2qh1yjCDnfdWtJ5sngnS3tex9wRwZvQE
+ BL8mECdWlQnhm6TZGv9dQzdYbApDzWdU2360u/xFNh2Fz7PTjZ60LZy4ynlhLNdw//+p
+ yFlKbjMWgGshRgxjWT2+7Mr0w6Zv4f8ESxRHpNq+XYP6QmLxgNYj4zRPBavhtafCCDi1
+ AFZQl6rEKZUwdzZLUX2lkkm+jvbDtWBUT9nhMqIVT/7F3Rl011nbob2Oomk4jnoTXorM
+ f6yA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFW8hBGzaHy8fbthc2zko1z+pdNtGN7uYJDUy4pnoXADrLl+vwPG7od5o26Pf6dL1cNL4a1lSMJWxRoqKgN0U8CpwGqkw=
-X-Gm-Message-State: AOJu0YyoDXUzDcPoxwxJzpUjKwDigGW4hAGOHMC9AmnvhH/HEWM0WGW8
- qrHQJwsqEZo47KYT2OOGiijNIMpl/obF4Pd0oUkQjkXjj4b26I48yXqwQvU5Xo6q7LaHvkTEXsj
- e
-X-Google-Smtp-Source: AGHT+IE0uBEJm/37R91tHlX/ycBvYK5Puwf7RA0Z/RdBwYnQ/hdNzriDpE+/sTXTa1kLG6likaqllg==
-X-Received: by 2002:ac2:42d9:0:b0:513:80cd:e807 with SMTP id
- n25-20020ac242d9000000b0051380cde807mr6269906lfl.20.1710231372389; 
- Tue, 12 Mar 2024 01:16:12 -0700 (PDT)
+ AJvYcCX9Plyqxo2CvDb8skUQ0Y4I0ozbckAddMqUtWUIj8FgTUbI1VZg1stNaMFcSqvQhhKhuYughffzGBit72GHGlTCc+nhNJc=
+X-Gm-Message-State: AOJu0YwrwoKO02666hte8VsGus3TaYm5S9EPkvZB2g1I9KEDrYJ1AReh
+ dEJ8dATjVr6mBtuXykeV3h0mlAiCzjyderdu8FoL3GZMucHlkgtaBSmuYThbSIk=
+X-Google-Smtp-Source: AGHT+IHs79feZo7DeMAg++sYfshY4q9VvUcMjMoPJdk1KzgoMVmb8gcifUP2ZHjyyn111lRqQilUFA==
+X-Received: by 2002:a05:600c:538d:b0:413:2ab0:c317 with SMTP id
+ hg13-20020a05600c538d00b004132ab0c317mr3037391wmb.11.1710231451899; 
+ Tue, 12 Mar 2024 01:17:31 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.206.139])
  by smtp.gmail.com with ESMTPSA id
- q14-20020a05600c46ce00b00412b4dca795sm11617377wmo.7.2024.03.12.01.16.11
+ q14-20020a05600c46ce00b00412b4dca795sm11617377wmo.7.2024.03.12.01.17.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 01:16:11 -0700 (PDT)
-Message-ID: <e3c7610b-8834-426b-bf54-73e850b3586f@linaro.org>
-Date: Tue, 12 Mar 2024 09:16:10 +0100
+ Tue, 12 Mar 2024 01:17:31 -0700 (PDT)
+Message-ID: <d48e5d05-0e1e-4bb0-b10a-f0c943b055f6@linaro.org>
+Date: Tue, 12 Mar 2024 09:17:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw: gpio: introduce pcf8574 driver
+Subject: Re: [PATCH v2 00/29] Cleanup up to fix missing ERRP_GUARD() for
+ error_prepend()
 Content-Language: en-US
-To: Dmitriy Sharikhin <d.sharikhin@yadro.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Igor Kononenko <i.kononenko@yadro.com>,
- "Alexander A. Filippov" <a.filippov@yadro.com>,
- Alexander Amelkin <a.amelkin@yadro.com>
-References: <f1552d822276e878d84c01eba2cf2c7c9ebdde00.camel@yadro.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>, Thomas Huth <thuth@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f1552d822276e878d84c01eba2cf2c7c9ebdde00.camel@yadro.com>
+In-Reply-To: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,24 +98,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/3/24 10:58, Dmitriy Sharikhin wrote:
-> NXP PCF8574 and compatible ICs are simple I2C GPIO expanders.
-> PCF8574 incorporates quasi-bidirectional IO, and simple
-> communication protocol, when IO read is I2C byte read, and
-> IO write is I2C byte write. User can think of it as
-> open-drain port, when line high state is input and line low
-> state is output.
-> 
-> Signed-off-by: Dmitrii Sharikhin <d.sharikhin@yadro.com>
-> ---
->   MAINTAINERS               |   6 ++
->   hw/gpio/Kconfig           |   4 +
->   hw/gpio/meson.build       |   1 +
->   hw/gpio/pcf8574.c         | 162 ++++++++++++++++++++++++++++++++++++++
->   include/hw/gpio/pcf8574.h |  15 ++++
->   5 files changed, 188 insertions(+)
->   create mode 100644 hw/gpio/pcf8574.c
->   create mode 100644 include/hw/gpio/pcf8574.h
+On 11/3/24 04:37, Zhao Liu wrote:
 
-Patch queued, thanks!
+> ---
+> Zhao Liu (29):
+
+>    hw/core/loader-fit: Fix missing ERRP_GUARD() for error_prepend()
+>    hw/core/qdev-properties-system: Fix missing ERRP_GUARD() for
+>      error_prepend()
+>    hw/misc/ivshmem: Fix missing ERRP_GUARD() for error_prepend()
+
+I'm queuing these 3 patches, thanks!
 
