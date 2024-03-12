@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC341C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A94C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:38:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0SJ-00088M-Sl; Tue, 12 Mar 2024 07:38:04 -0400
+	id 1rk0Sl-0000Pi-HJ; Tue, 12 Mar 2024 07:38:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rk0RP-0007Gt-1W
+ id 1rk0RP-0007Gs-0q
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:37:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rk0RJ-0003BW-9o
+ id 1rk0RG-0003AW-Ja
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:37:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710243418;
+ s=mimecast20190719; t=1710243416;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mhrgPSWh3/CZjT1Prh2aYVoBUzi3uS9GB7YTqPQ4pQ4=;
- b=fZ3f1ad5qDXYkMKmfFnIKN9ZZbuZnaQS/r12Flf9fL6RMGnZTbJ+TZzE19k4BPH1KWDRKo
- gK/OcuAF+Ham4KHVZvRE0+qEY+XgX+1+LEj2F9L+S+mCnHwZnToeA1VVju2/ask1Wn/TMp
- 2O9E4yAwgSq0nF/edvOZ+WwivTmw6mk=
+ bh=2eciu0ocTTc7/Cl0LVF9a3KvMaKeeoxMyJwvyK3mSH4=;
+ b=Ua6c9iqwZcrJgdH+H1uiXROYVpwtbTrzCMifcGXo7YO4Qd5DXgHqHnXkgmM072ShGAyeh8
+ HM0cu9KY6uTJLw2yYJxACkbA09Oc23w3jGS3y9jGvyCHnMt18bKVCqX80Q7pZbIiSYRpU7
+ 7LtFiM2y30XEnbqo5uiJXzYej5HOaNk=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-V5MlNyTbNKSJCxUqHj28Aw-1; Tue, 12 Mar 2024 07:36:55 -0400
-X-MC-Unique: V5MlNyTbNKSJCxUqHj28Aw-1
+ us-mta-499-S2NN7970OWWjXfnwnc5heQ-1; Tue, 12 Mar 2024 07:36:52 -0400
+X-MC-Unique: S2NN7970OWWjXfnwnc5heQ-1
 Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
  [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B61D1811E81;
- Tue, 12 Mar 2024 11:36:54 +0000 (UTC)
-Received: from localhost.localdomain (unknown [10.72.112.61])
- by smtp.corp.redhat.com (Postfix) with ESMTP id D7FC2492BC6;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 46D4A185A783;
  Tue, 12 Mar 2024 11:36:52 +0000 (UTC)
+Received: from localhost.localdomain (unknown [10.72.112.61])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 209F3492BC6;
+ Tue, 12 Mar 2024 11:36:49 +0000 (UTC)
 From: Jason Wang <jasowang@redhat.com>
 To: qemu-devel@nongnu.org,
 	peter.maydell@linaro.org
-Cc: Nick Briggs <nicholas.h.briggs@gmail.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 3/8] Avoid unaligned fetch in ladr_match()
-Date: Tue, 12 Mar 2024 19:36:37 +0800
-Message-ID: <20240312113642.36862-4-jasowang@redhat.com>
+Cc: Laurent Vivier <lvivier@redhat.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 2/8] e1000e: fix link state on resume
+Date: Tue, 12 Mar 2024 19:36:36 +0800
+Message-ID: <20240312113642.36862-3-jasowang@redhat.com>
 In-Reply-To: <20240312113642.36862-1-jasowang@redhat.com>
 References: <20240312113642.36862-1-jasowang@redhat.com>
 MIME-Version: 1.0
@@ -82,34 +83,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nick Briggs <nicholas.h.briggs@gmail.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-There is no guarantee that the PCNetState is allocated such that
-csr[8] is allocated on an 8-byte boundary.  Since not all hosts are
-capable of unaligned fetches the 16-bit elements need to be fetched
-individually to avoid a potential fault.  Closes issue #2143
+On resume e1000e_vm_state_change() always calls e1000e_autoneg_resume()
+that sets link_down to false, and thus activates the link even
+if we have disabled it.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2143
-Signed-off-by: Nick Briggs <nicholas.h.briggs@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+The problem can be reproduced starting qemu in paused state (-S) and
+then set the link to down. When we resume the machine the link appears
+to be up.
+
+Reproducer:
+
+   # qemu-system-x86_64 ... -device e1000e,netdev=netdev0,id=net0 -S
+
+   {"execute": "qmp_capabilities" }
+   {"execute": "set_link", "arguments": {"name": "net0", "up": false}}
+   {"execute": "cont" }
+
+To fix the problem, merge the content of e1000e_vm_state_change()
+into e1000e_core_post_load() as e1000 does.
+
+Buglink: https://issues.redhat.com/browse/RHEL-21867
+Fixes: 6f3fbe4ed06a ("net: Introduce e1000e device emulation")
+Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 Signed-off-by: Jason Wang <jasowang@redhat.com>
 ---
- hw/net/pcnet.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/net/e1000e_core.c | 60 ++++++--------------------------------------
+ hw/net/e1000e_core.h |  2 --
+ 2 files changed, 7 insertions(+), 55 deletions(-)
 
-diff --git a/hw/net/pcnet.c b/hw/net/pcnet.c
-index 494eab8479..ad675ab29d 100644
---- a/hw/net/pcnet.c
-+++ b/hw/net/pcnet.c
-@@ -632,7 +632,7 @@ static inline int ladr_match(PCNetState *s, const uint8_t *buf, int size)
+diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+index e324c02dd5..3ae2a184d5 100644
+--- a/hw/net/e1000e_core.c
++++ b/hw/net/e1000e_core.c
+@@ -123,14 +123,6 @@ e1000e_intmgr_timer_resume(E1000IntrDelayTimer *timer)
+     }
+ }
+ 
+-static void
+-e1000e_intmgr_timer_pause(E1000IntrDelayTimer *timer)
+-{
+-    if (timer->running) {
+-        timer_del(timer->timer);
+-    }
+-}
+-
+ static inline void
+ e1000e_intrmgr_stop_timer(E1000IntrDelayTimer *timer)
  {
-     struct qemu_ether_header *hdr = (void *)buf;
-     if ((*(hdr->ether_dhost)&0x01) &&
--        ((uint64_t *)&s->csr[8])[0] != 0LL) {
-+        (s->csr[8] | s->csr[9] | s->csr[10] | s->csr[11]) != 0) {
-         uint8_t ladr[8] = {
-             s->csr[8] & 0xff, s->csr[8] >> 8,
-             s->csr[9] & 0xff, s->csr[9] >> 8,
+@@ -398,24 +390,6 @@ e1000e_intrmgr_resume(E1000ECore *core)
+     }
+ }
+ 
+-static void
+-e1000e_intrmgr_pause(E1000ECore *core)
+-{
+-    int i;
+-
+-    e1000e_intmgr_timer_pause(&core->radv);
+-    e1000e_intmgr_timer_pause(&core->rdtr);
+-    e1000e_intmgr_timer_pause(&core->raid);
+-    e1000e_intmgr_timer_pause(&core->tidv);
+-    e1000e_intmgr_timer_pause(&core->tadv);
+-
+-    e1000e_intmgr_timer_pause(&core->itr);
+-
+-    for (i = 0; i < E1000E_MSIX_VEC_NUM; i++) {
+-        e1000e_intmgr_timer_pause(&core->eitr[i]);
+-    }
+-}
+-
+ static void
+ e1000e_intrmgr_reset(E1000ECore *core)
+ {
+@@ -3334,12 +3308,6 @@ e1000e_core_read(E1000ECore *core, hwaddr addr, unsigned size)
+     return 0;
+ }
+ 
+-static inline void
+-e1000e_autoneg_pause(E1000ECore *core)
+-{
+-    timer_del(core->autoneg_timer);
+-}
+-
+ static void
+ e1000e_autoneg_resume(E1000ECore *core)
+ {
+@@ -3351,22 +3319,6 @@ e1000e_autoneg_resume(E1000ECore *core)
+     }
+ }
+ 
+-static void
+-e1000e_vm_state_change(void *opaque, bool running, RunState state)
+-{
+-    E1000ECore *core = opaque;
+-
+-    if (running) {
+-        trace_e1000e_vm_state_running();
+-        e1000e_intrmgr_resume(core);
+-        e1000e_autoneg_resume(core);
+-    } else {
+-        trace_e1000e_vm_state_stopped();
+-        e1000e_autoneg_pause(core);
+-        e1000e_intrmgr_pause(core);
+-    }
+-}
+-
+ void
+ e1000e_core_pci_realize(E1000ECore     *core,
+                         const uint16_t *eeprom_templ,
+@@ -3379,9 +3331,6 @@ e1000e_core_pci_realize(E1000ECore     *core,
+                                        e1000e_autoneg_timer, core);
+     e1000e_intrmgr_pci_realize(core);
+ 
+-    core->vmstate =
+-        qemu_add_vm_change_state_handler(e1000e_vm_state_change, core);
+-
+     for (i = 0; i < E1000E_NUM_QUEUES; i++) {
+         net_tx_pkt_init(&core->tx[i].tx_pkt, E1000E_MAX_TX_FRAGS);
+     }
+@@ -3405,8 +3354,6 @@ e1000e_core_pci_uninit(E1000ECore *core)
+ 
+     e1000e_intrmgr_pci_unint(core);
+ 
+-    qemu_del_vm_change_state_handler(core->vmstate);
+-
+     for (i = 0; i < E1000E_NUM_QUEUES; i++) {
+         net_tx_pkt_uninit(core->tx[i].tx_pkt);
+     }
+@@ -3576,5 +3523,12 @@ e1000e_core_post_load(E1000ECore *core)
+      */
+     nc->link_down = (core->mac[STATUS] & E1000_STATUS_LU) == 0;
+ 
++    /*
++     * we need to restart intrmgr timers, as an older version of
++     * QEMU can have stopped them before migration
++     */
++    e1000e_intrmgr_resume(core);
++    e1000e_autoneg_resume(core);
++
+     return 0;
+ }
+diff --git a/hw/net/e1000e_core.h b/hw/net/e1000e_core.h
+index 66b025cc43..01510ca78b 100644
+--- a/hw/net/e1000e_core.h
++++ b/hw/net/e1000e_core.h
+@@ -98,8 +98,6 @@ struct E1000Core {
+ 
+     E1000IntrDelayTimer eitr[E1000E_MSIX_VEC_NUM];
+ 
+-    VMChangeStateEntry *vmstate;
+-
+     uint32_t itr_guest_value;
+     uint32_t eitr_guest_value[E1000E_MSIX_VEC_NUM];
+ 
 -- 
 2.42.0
 
