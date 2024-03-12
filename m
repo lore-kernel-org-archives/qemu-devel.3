@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DFADC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B707EC54E67
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxMb-0003tN-6V; Tue, 12 Mar 2024 04:19:57 -0400
+	id 1rjxPT-0005Tt-Tg; Tue, 12 Mar 2024 04:22:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxMY-0003kt-Lc
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:19:54 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxPR-0005Sq-Kl
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:22:53 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxMT-0000Cm-SN
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:19:51 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-413385f1a0dso1579795e9.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:19:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxPO-000172-WC
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:22:53 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-41329b6286bso10538135e9.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710231587; x=1710836387; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=44i2lDGh0jAhCERlnHbPhNRhFIOzGufwrWXJwUrgyLM=;
- b=lU7lWdBK6hXA86PZdqvFThRnnI8XKm/cJphiDiwJaxLRdHlZXmQpyWzr6CLd0t3Yup
- iTuHBeMOyt+j6urIcqAcqk4yoch7XTiEx4pxU0iJ5w+WEU1mU6dMepHPGOUhtUNMMfJe
- WMgsN1hWskDgv3Z43k4zpBTn4/9nFplRfUiLHMNaKlVEC6ycoMoM1KhEMF8f+V7qF9k3
- uuejdqEuqfwcqD9/iggTihxl7Y1gEVvo92g7w1hSrsIHekMQLUAA3akdcKial5LuMWaX
- RJUTpD1YhF/uOHkMe+7vpviTHsNss2eC7aze7Tri4YAJ00tiGqLKqxqUsRloG3kNyA0M
- Z/cw==
+ d=linaro.org; s=google; t=1710231769; x=1710836569; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Y7t8ToQvoKJ38Eour/5JL7+zSxhmxaS/0ISJ7lI4Kdc=;
+ b=QL0r5xmqh3146A1Ybqwsgpaz0Z/RI85sU7uuwNECqQlwCNcw7GXaIx7dpeipi3FznM
+ ir/oGuKq6k7M20nowBjqHTg7XbawV5jXbj73/hTJMHvSaEOdLsUbo0bOGq4QsYLnMkhj
+ BSOHEdy9k+pfNhDXsqf4+M7jJmHhONxtza1wFuS/nHeE0cpOSx8tzKFbO2KGZXbDH1zL
+ iipvTPOBkgF5jv93E/Z+Sd7StUG7rlCPO16OfE/9ruDfft4I+15nrp1EQuhAZEGdBkw9
+ sIkgWLOq8qEMHGx6TTJRNveHFr5Zp+9uS8mMsbs3TnaqblHaV9m9zgXSgvKGMXXG4NzM
+ h4yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710231587; x=1710836387;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=44i2lDGh0jAhCERlnHbPhNRhFIOzGufwrWXJwUrgyLM=;
- b=dbJshCUvkO/Yx00dgKAAGZfTj3PQMw6QflV9MrZYctW4TL0jEo672GK4qMg8cCbclx
- dEk0TPHAvg8GAI00+XqIb0o24zUiRu0QrWle0GFSnmPpGqw1Sh2mmDdP4fzkXNp3Dgs1
- pjX+r22NSut8BlvgUtfqOPDJTTPEsDjoFL8eng31Vnm1rrl+GzlhTgeNZ7YybHJYrorI
- 4ySkjkvjdpqOQq44mLfhwI+AA37/uLxBF2HQ/g3SZnXLY+rLJyIi7tmYc2fiDSBlDaEe
- vWrig2FcJq3xRRtkdXX+JS/HG1A8EcRlsFWCIw0TWe+sqMJea1eiC1648g6bAowrkvjX
- Diaw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVewPoIKNqYCYqZHRviynpvY1f+DZoHHpCKvPzQmwxYE510Fo24LGEZzV4geY2B6Ia+dhl/1yKOqQ+1uH6ojtcYYVyaXK4=
-X-Gm-Message-State: AOJu0YxilAunmR7tghgNN4HOivG7CbJsYQCj5fWWWT2xYnWNqCvLspHL
- O0hy1VdTrOgTt5gP95gOPUa+B1nmLE7t5wS0sQwjHTphHW17MY0GmW3ZGJ/wEz8=
-X-Google-Smtp-Source: AGHT+IGIARh81btxNkuDE0STzfty+4YJkuCMJTYRuDF1yBGlWXIMm1YpzifNTmMCfzqeLSIJ5xStuw==
-X-Received: by 2002:a05:600c:4991:b0:413:194d:12c6 with SMTP id
- h17-20020a05600c499100b00413194d12c6mr6419929wmp.23.1710231587483; 
- Tue, 12 Mar 2024 01:19:47 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.206.139])
+ d=1e100.net; s=20230601; t=1710231769; x=1710836569;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Y7t8ToQvoKJ38Eour/5JL7+zSxhmxaS/0ISJ7lI4Kdc=;
+ b=T67xoitdJOKO2pqlLcRV29PM2eoe2Ux00K4S2/uAGQfTFv3N9iqnVPI3PigrRlBAlJ
+ L91CuctdARiv9G7Si9pTV/4d1ISmwcKEF+dFDa9iWlqpCVg/NP4cKEEs+PI9ZlKPkXDg
+ DGQFWGtHOITn8pZizo1JfqJqpzkDVirK14LMKTkyVlRd1pPm7hjeYfCVqobO9YXz6tb7
+ ZveojEEkglmps6aPGSliG3xSEObrjYzFbvPOrsQchJpWTT4rc14JEHAx6XoNYTjFZGQ/
+ 0C6q9DuwgG132c8ufpvZNFemKgpMDbtTGXR9H4mu1M8R9xwPXkKYf997PzTA+TlXQ/4s
+ crmQ==
+X-Gm-Message-State: AOJu0Ywtj0Xb7q7jz0e1rsRH2t7mRktkeChRwhsswW6oYfh/O12nMIB5
+ UKiYjvifDcgD0VGzKiP/FfFjOY+RDSyPcwlSr4LBifB9fjMLtX0fXErnEZCGtaMbGRXwESlDcPj
+ 1
+X-Google-Smtp-Source: AGHT+IG0QqIGogzMqwbFvEHg2eLWebIzfILzC8eVhOUbTh/vO+/88ZKK3HzQuK61STvYsUctEl6H7g==
+X-Received: by 2002:adf:f48c:0:b0:33d:ca56:a61f with SMTP id
+ l12-20020adff48c000000b0033dca56a61fmr6912288wro.49.1710231769187; 
+ Tue, 12 Mar 2024 01:22:49 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.206.139])
  by smtp.gmail.com with ESMTPSA id
- d9-20020adf9c89000000b0033df46f70dbsm8536533wre.9.2024.03.12.01.19.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 01:19:47 -0700 (PDT)
-Message-ID: <01ef7588-481f-4c5b-b398-c27ef71951d3@linaro.org>
-Date: Tue, 12 Mar 2024 09:19:45 +0100
+ n2-20020a5d4002000000b0033de2f2a88dsm8320603wrp.103.2024.03.12.01.22.47
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 12 Mar 2024 01:22:48 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
+ BALATON Zoltan <balaton@eik.bme.hu>, Markus Armbruster <armbru@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Snow <jsnow@redhat.com>
+Subject: [PULL 01/13] hw/ide/ahci: Rename ahci_internal.h to ahci-internal.h
+Date: Tue, 12 Mar 2024 09:22:26 +0100
+Message-ID: <20240312082239.69696-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240312082239.69696-1-philmd@linaro.org>
+References: <20240312082239.69696-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/about/deprecated.rst: Move SMP configurations item
- to system emulator section
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@linux.intel.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Thomas Huth <thuth@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-References: <20240312071512.3283513-1-zhao1.liu@linux.intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240312071512.3283513-1-zhao1.liu@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,31 +97,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/3/24 08:15, Zhao Liu wrote:
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> In the commit 54c4ea8f3ae6 ("hw/core/machine-smp: Deprecate unsupported
-> 'parameter=1' SMP configurations"), the SMP related item is put under
-> the section "User-mode emulator command line arguments" instead of
-> "System emulator command line arguments".
-> 
-> -smp is a system emulator command, so move SMP configurations item to
-> system emulator section.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
-> based on 7489f7f3f81d.
-> 
-> Note: the git diff understood my move of SMP item as the move of the
-> whole "User-mode emulator command line arguments" section, which may
-> cause confusion about the contents of this patch.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Oops my bad I guess :/
+Other headers now use dash instead of underscore. Rename
+ahci_internal.h accordingly for consistency.
 
-Thanks, patch queued!
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240227131310.C24EB4E6005@zero.eik.bme.hu>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/ide/{ahci_internal.h => ahci-internal.h} | 0
+ hw/ide/ahci.c                               | 2 +-
+ hw/ide/ich.c                                | 2 +-
+ 3 files changed, 2 insertions(+), 2 deletions(-)
+ rename hw/ide/{ahci_internal.h => ahci-internal.h} (100%)
 
-> ---
->   docs/about/deprecated.rst | 20 ++++++++++----------
->   1 file changed, 10 insertions(+), 10 deletions(-)
+diff --git a/hw/ide/ahci_internal.h b/hw/ide/ahci-internal.h
+similarity index 100%
+rename from hw/ide/ahci_internal.h
+rename to hw/ide/ahci-internal.h
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index b8123bc73d..bfefad2965 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -37,7 +37,7 @@
+ #include "hw/ide/pci.h"
+ #include "hw/ide/ahci-pci.h"
+ #include "hw/ide/ahci-sysbus.h"
+-#include "ahci_internal.h"
++#include "ahci-internal.h"
+ #include "ide-internal.h"
+ 
+ #include "trace.h"
+diff --git a/hw/ide/ich.c b/hw/ide/ich.c
+index 3ea793d790..9b909c87f3 100644
+--- a/hw/ide/ich.c
++++ b/hw/ide/ich.c
+@@ -70,7 +70,7 @@
+ #include "sysemu/dma.h"
+ #include "hw/ide/pci.h"
+ #include "hw/ide/ahci-pci.h"
+-#include "ahci_internal.h"
++#include "ahci-internal.h"
+ 
+ #define ICH9_MSI_CAP_OFFSET     0x80
+ #define ICH9_SATA_CAP_OFFSET    0xA8
+-- 
+2.41.0
 
 
