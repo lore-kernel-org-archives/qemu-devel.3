@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21C5CC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8079C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:30:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk37M-0005U7-Ke; Tue, 12 Mar 2024 10:28:36 -0400
+	id 1rk393-00089y-NG; Tue, 12 Mar 2024 10:30:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1rk36x-0005NB-OD
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:28:13 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rk390-00088b-W8
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:30:19 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1rk36v-0005O1-AI
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:28:11 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4132a436086so13584145e9.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:28:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rk38y-0005jd-DO
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:30:18 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2d24a727f78so53151fa.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=citrix.com; s=google; t=1710253686; x=1710858486; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=dXi5tmsrXivALkRrCcWzIonKD+Tj1f5wxXwS4HZXIxk=;
- b=CxLOBL/gMflmqCJ4FDo12JMrDZgyikta565BaxMFt21lpVGWzbMnf4wotInR9oiRKX
- wqyYwb8oMBNL6S46jdHkSKKKwaJ3Cd+wqQ8dOxrm+s08rpeTmMKzXCNSIycN6yR0wlg/
- nvdtl5NJ4jHmRM+BgikyjmFC7nkKYqLifG9Fw=
+ d=linaro.org; s=google; t=1710253810; x=1710858610; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=JG/YXMoKnwQo01L5oBgZCUH9wQP+hUMZv1HkcjW5hIc=;
+ b=tSiza8TfHb+sdAeqW3/x3CK/ihlfyEkxPiCM1PMetIcUYYu6sd7s4tcCZqDw3lKt1v
+ +5fOLepwRkaLRrJTRn+x80eV7MZ23Gkt/ViBLQbzifP+pDH226ULubpSsQ1+ClUISU3I
+ jc64qWBcfl8+vl3OEi0T/12kv+g7hBmCds9mxwJ4XAH3GY7J7/M1NeZhJ5Sv//BC0gB7
+ i9WgheYAlyqF31M8ny2Whdji8NPegDFKrnVLDAGAPnWD0KtRorpz2DTjfS8CTWJgXLAB
+ kpvGhECfrgzno9+jbaJPp0RyY6Mxyo4de2I5kT4X8ml19kJyUACcKimgT2uCQpzzxeIT
+ svyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710253686; x=1710858486;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dXi5tmsrXivALkRrCcWzIonKD+Tj1f5wxXwS4HZXIxk=;
- b=Q9+FMOfxRVjR0WeSBcqLoMd7cZQ2Siftvbd5Iwfj+Z4hNVv7ggYjDgKI0aAI3RB6Eo
- /UkeoxigRBfm2k4tD44XPZuiBdNE9NIwXspsXrhu8g3TpsAWp5ApSXeUdIjuJpiwozF/
- Tbgskrlwj/72Z3baB9+vIz0FA7a+LFITBZRW74ebsbSA1sydlFDZVIFjpfjs+htXw3rn
- R9Jueq8xKJUXPfpqV+jWoJYqW8z+4F041JHfIvSPPGraF62B6sUOh2/ehr5jPxEPyxXY
- XbJslYG+DTCoVqJoPOPDrah8Q0KkqSPu9MCUmTKR6mFb5AYF1H4Nnp1LT8nExsYvA75y
- peLw==
-X-Gm-Message-State: AOJu0YxhaSZ2igOUtTnlX5V/yTa5dCtEvoYL4Kz1rKd6Eo127pR3XdSz
- Ou+3ZarmY2xdTVILUNILQDtFH5bJXfHRVm+YWdMPIYL4ddVz0eFW/9jsAA34g5BXXoT31LHirbe
- M
-X-Google-Smtp-Source: AGHT+IH/E/aFCGLF4xzgbjjOVu2GKK0+gMwSyGkeprPV2pz9FhPy/+j6qXF7gKxgPz/lcZ8pKdM7LA==
-X-Received: by 2002:a05:600c:b8c:b0:413:3391:2f23 with SMTP id
- fl12-20020a05600c0b8c00b0041333912f23mr1511084wmb.35.1710253686050; 
- Tue, 12 Mar 2024 07:28:06 -0700 (PDT)
-Received: from localhost.localdomain
- (cpc92320-cmbg19-2-0-cust35.5-4.cable.virginm.net. [82.13.64.36])
- by smtp.gmail.com with ESMTPSA id
- t13-20020a05600c198d00b00412b0e51ef9sm12810270wmq.31.2024.03.12.07.28.05
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 07:28:05 -0700 (PDT)
-From: Anthony PERARD <anthony.perard@citrix.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 0/3] Xen queue 2024-03-12
-Date: Tue, 12 Mar 2024 14:27:54 +0000
-Message-Id: <20240312142757.34141-1-anthony.perard@citrix.com>
-X-Mailer: git-send-email 2.39.2
+ d=1e100.net; s=20230601; t=1710253810; x=1710858610;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JG/YXMoKnwQo01L5oBgZCUH9wQP+hUMZv1HkcjW5hIc=;
+ b=UAC9uUGzx1et6ax+mrZ0uRyWIW5LyfAGo4VxLbj+jwwPMZVwAI4DcNz1FTFyZoIhPQ
+ Mm5eSEWzkq95Frrq0eXSqP1KhcHdHDy5MJmGBHI+gREoSTVKds4P4NAv7LT6wFICrlOv
+ gD2D+6KzL5cs8/w0+hOS3217/KZL380Q9GHUHLs2veFueSl9D8wgK9R/iER4ksveWcBf
+ +kLrj9dAC0U2aDYS/idszSCE9XNanYRXFdml9xAJWdD8DPzzwKjy6WPBy54RylxdlOZT
+ 4BNwHNcClVsyXOg7uqH71mhelp241wCk7cfBc7jQgnBvPb0IAxHFzr3Mh6mx+qu401S3
+ G5KA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUTKRYmZhAlKV50D2FlqQF0xiECIvArgt0OZl1Qk19Gk2Ds6DZiCvdShkPWXj4mN94eaJhFFUpVVeY6UlB9SuRPQX7oLQQ=
+X-Gm-Message-State: AOJu0YxeqhIEhWQuwAEgZuBbkUfVV0NZWUdlDhMxkeX9k9uSFfYu2wJ3
+ ocjiOY15vWspd3s1Q+L8cIaINulA9G/5La7pHSrDo0z47cKU1X6Dn03AQIK6sz+R/MqJX6+Jb5j
+ +ubsNQ9NvQOIccnWJGjs1cmJxtLR3ns9GJ/IOXQ==
+X-Google-Smtp-Source: AGHT+IHHTcNb5kbXcaVd6mYKV3nySbPdwwaM+cWfZWMSuObGdEtOHREi9NugEnIPPwbSV0VyRIU2t8v7xO+pWksMjLk=
+X-Received: by 2002:a2e:9256:0:b0:2d4:49f5:1c29 with SMTP id
+ v22-20020a2e9256000000b002d449f51c29mr2635903ljg.25.1710253810448; Tue, 12
+ Mar 2024 07:30:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=anthony.perard@cloud.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+References: <20240307110318.170319-1-rathc@linux.ibm.com>
+ <CZRO4Y67CBPV.2IAKB80EFDKEY@wheely>
+ <0c7c6be1-12fb-4267-9d41-bd51637d104a@linaro.org>
+ <CZRU903MDUJ1.6S9RSO5A4RDG@wheely>
+In-Reply-To: <CZRU903MDUJ1.6S9RSO5A4RDG@wheely>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 12 Mar 2024 14:29:59 +0000
+Message-ID: <CAFEAcA8im7S-bsx-hYqgUy4tsc8yXjWQf7Sb-=KnuREyqqC8mw@mail.gmail.com>
+Subject: Re: [PATCH] target/ppc: Move floating-point arithmetic instructions
+ to decodetree.
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, 
+ qemu-ppc@nongnu.org, qemu-devel@nongnu.org, danielhb413@gmail.com, 
+ clg@kaod.org, harshpb@linux.ibm.com, sbhat@linux.ibm.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,38 +96,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 8f3f329f5e0117bd1a23a79ab751f8a7d3471e4b:
+On Tue, 12 Mar 2024 at 14:25, Nicholas Piggin <npiggin@gmail.com> wrote:
+>
+> On Wed Mar 13, 2024 at 12:01 AM AEST, Richard Henderson wrote:
+> > On 3/11/24 23:36, Nicholas Piggin wrote:
+>
+> [snip]
+>
+> > >
+> > > #define FPU_HELPER(name, op, flags_handler)                           \
+> > > float64 helper_##name(CPUPPCState *env, float64 arg1, float64 arg2)   \
+> > > {                                                                     \
+> > >      float64 ret = op(arg1, arg2, &env->fp_status);                    \
+> > >      int flags = get_float_exception_flags(&env->fp_status);           \
+> > >      flags_handler(env, flags)                                         \
+> > >      return ret;                                                       \
+> > > }
+> > >
+> > > static inline void addsub_flags_handler(CPUPPCState *env, int flags)
+> > > {
+> > >      if (unlikely(flags & float_flag_invalid)) {
+> > >          float_invalid_op_addsub(env, flags, 1, GETPC());
+> > >      }
+> > > }
+> > >
+> > > static inline void mul_flags_handler(CPUPPCState *env, int flags)
+> > > {
+> > >      if (unlikely(flags & float_flag_invalid)) {
+> > >          float_invalid_op_mul(env, flags, 1, GETPC());
+> > >      }
+> > > }
+> > >
+> > > static inline void div_flags_handler(CPUPPCState *env, int flags)
+> > > {
+> > >      if (unlikely(flags & float_flag_invalid)) {
+> > >          float_invalid_op_div(env, flags, 1, GETPC());
+> > >      }
+> > >      if (unlikely(flags & float_flag_divbyzero)) {
+> > >          float_zero_divide_excp(env, GETPC());
+> > >      }
+> > > }
+> >
+> > Beware -- GETPC() may only be called from the outermost helper.
+>
+> Ah, because it's using __builtin_return_address. Good to know.
+> Using always_inline and a comment should do the trick then.
 
-  Merge tag 'migration-20240311-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-03-12 11:35:41 +0000)
+The standard way to fix this is that you call GETPC() at the
+outermost helper and then pass that value around as an extra
+uintptr_t ra argument to called functions that need it.
 
-are available in the Git repository at:
-
-  https://xenbits.xen.org/git-http/people/aperard/qemu-dm.git tags/pull-xen-20240312
-
-for you to fetch changes up to 918a7f706b69a8c725bac0694971d2831f688ebb:
-
-  i386: load kernel on xen using DMA (2024-03-12 14:13:08 +0000)
-
-----------------------------------------------------------------
-Xen queue:
-
-* In Xen PCI passthrough, emulate multifunction bit.
-* Fix in Xen mapcache.
-* Improve performance of kernel+initrd loading in an Xen HVM Direct
-  Kernel Boot scenario.
-
-----------------------------------------------------------------
-Marek Marczykowski-Górecki (1):
-      i386: load kernel on xen using DMA
-
-Peng Fan (1):
-      xen: Drop out of coroutine context xen_invalidate_map_cache_entry
-
-Ross Lagerwall (1):
-      xen/pt: Emulate multifunction bit in header type
-
- hw/i386/pc.c                |  3 ++-
- hw/xen/xen-mapcache.c       | 30 ++++++++++++++++++++++++++++--
- hw/xen/xen_pt_config_init.c |  7 +++++--
- 3 files changed, 35 insertions(+), 5 deletions(-)
+thanks
+-- PMM
 
