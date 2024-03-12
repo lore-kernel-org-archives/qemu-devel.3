@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE636C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD824C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:09:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5Vy-0008Ge-PG; Tue, 12 Mar 2024 13:02:12 -0400
+	id 1rk5WR-0000oK-9E; Tue, 12 Mar 2024 13:02:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5U0-0005C3-Av; Tue, 12 Mar 2024 13:00:09 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1rk5UB-0005dn-Kn; Tue, 12 Mar 2024 13:00:19 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5Tx-00083A-7q; Tue, 12 Mar 2024 13:00:08 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6e6adc557b6so612687b3a.2; 
- Tue, 12 Mar 2024 10:00:01 -0700 (PDT)
+ id 1rk5UA-0008Im-05; Tue, 12 Mar 2024 13:00:19 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6e6a6d486d6so20497b3a.1; 
+ Tue, 12 Mar 2024 10:00:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710262800; x=1710867600; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710262815; x=1710867615; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hR5QAE7pCDJxhb5ipA2/sp4RETHxBXAwKTTkzbd/fU0=;
- b=G7e1Z9XRKVxPkjsJTQdJvjJom1sHIHmpmvquRvB7Gysu6RYTfp3tYM7nNmi78mxyS8
- 1oDoFQktaOv8yqNSh8HWfLT5ZuxDXAFjcFMScDWCA1qzFs2z6Lsn7yN9ZJD+4Rg/Zefq
- omFbLWWy8PhwOKBVH76Kyb/QzHYNAdPiQHA17hAzVsANnZ39mS5q3VFuTQGXUOha59qf
- RkjfFE80rir6WN0RnjZ5opuwP4Ycm9tvVDRHkQM/JCyrGXwHt6yQnpoFZa6CGLYdFlaC
- dSZiCdkEvs0JtJ9SCYUzjfo5dRVWv4RRzr8c1huw5sXRK383p5t0VQ72lG418WCHeWIa
- 984Q==
+ bh=MVnACJjCRHkL5fGbYyOvVToKgvTOItd5ebsk72DNyJw=;
+ b=aHir01ygjt6ycDGebkiouKscHOWAZAW/zxM9+7s2j7C+FQZM/KSFVAcSuxnw9LovSH
+ 92cZRIRFLC+59xWwZdHWwGPEqkkW526ohb5XSodU/Q/GIfUmDIKrLRqWwEyMQGaSSE3J
+ XJis1A6/SP6QUHj9uYkGqj7AIxt50P1myyupeMSV0D3lyW3PY6dum4MElYUub+RruyCy
+ Ngsiq8OFDkmUcp4V3lAJn/WAzwOd6Gspa5S2p6wyiuEN9XNYPDCtof7uz1JHxMSo6VTj
+ OaK8J6uKR8fToY2jiCH0eOK7pcEs4zMkMJrk5jjtxVd0eRthHCejcsJBrcJIa++zpUJv
+ SnQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710262800; x=1710867600;
+ d=1e100.net; s=20230601; t=1710262815; x=1710867615;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hR5QAE7pCDJxhb5ipA2/sp4RETHxBXAwKTTkzbd/fU0=;
- b=h5Nfv5cu5qUolKH8BOVM+Fu/86LVQKD2jYewu+PnTDh4sCwiEwvc7ufxuwMxjnDBfN
- 5qfIPwRTX7Dg3cXJeGlhy8WAlUXrGx8K0oPDofCkSwPEHwmp09lE2yqF08oHX8G+KXwP
- Mh0H0fIo+AmAP7GXzLarZGW0UiaCZx7Lxuhmg5V7UHFIndlfVyy7Y6cKmPZnNAE0fHo1
- dNSFtAd054hr4P6eS93af3dLR3BT9MbJU2Z6T1cbQJrSUfBMa3+yhuo3aZBlPnqlkoSJ
- 39W7nwjTLGZNnQ4ozbvHq53EiuBXTJQ3238hUCkAonHana79O32flKQI7rJA4yGEi2Sc
- YGKg==
+ bh=MVnACJjCRHkL5fGbYyOvVToKgvTOItd5ebsk72DNyJw=;
+ b=nwbkhvLqeEKVu5hHkfnMlKgLOVCxsvVbG4tTlO6Vgfs3R5SJx++Sa+7WEOEqHngcCi
+ 1I7aD4Jf8ntyRyLvKbFSmQJalkpmovuM/bVw6tms/t/hGFDRUrp+hPZwWAJu34G/C/Lg
+ EZcw7rhQiNW9OMRNj2vWdahAE9VlclLZi5EuNg7bf/A78ThrzGDny2yPFeUfPBWwjnNk
+ NdscNkI+ULJmLZPcJvjaYgu2Eu5Bua+giHr6ZNGJFCR/HI9rR80/vEGRkiygkKBeAXd9
+ yLS4p9A9Yq4VET7m23h/0xs5IOareRVtYz3MoR7BjO/hnZp+bLsUKNt4P6PiRy2Ip63u
+ jlBA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjViF74hMGVkkh9EG4/DKCxz8ZsUVzVz0BUgjwwApk89kTA6mcJcALACoh1Ld3FbsYtlJw52Hj1YE0aT0yp5+lwatS
-X-Gm-Message-State: AOJu0YzuL33Heg0WsdCjQhuI/Dy1oSrTseoPkS7gCRSLck95KM2bngoH
- qgCB016uZjS/kRutaUQvjF78bNqHv78MyIu/Ep8boq/maYsqHCnjXg9wySLl2Vo=
-X-Google-Smtp-Source: AGHT+IGurJn5i/C18O+WR7QMOKE03Hp+sOkCLv5Zo/oNUMvjGngTH2RxLvbDgPm2iYoXqEi3PCIS7A==
-X-Received: by 2002:a05:6a20:6f8c:b0:1a1:4879:1d72 with SMTP id
- gv12-20020a056a206f8c00b001a148791d72mr1022208pzb.55.1710262800046; 
- Tue, 12 Mar 2024 10:00:00 -0700 (PDT)
+ AJvYcCVC8QniCW0LZN9CQR6TlQNfzf232/PdKLqtsjE9reyqO3Lj4tloKfLk5WTLy/hAGTt61CXXn4AKnmtfNmJ9oEunBLbB
+X-Gm-Message-State: AOJu0Yx3OwSWYzJWphevAwDNgsBd6yR8mwuyYJqkh15FByeTmqDOkkMp
+ 6nj/oUKbxBez4oms4kk5Xkd1E/mOkS5ps4z/731TaaP5EX7TzZozB0k3WufJFuc=
+X-Google-Smtp-Source: AGHT+IFw/3ol6LlkhBy0/BVHrEW/tGMUp0I+6GhEnueXhHcUM4yn8kJ9cpOGtiVzhdVTdYXoM6GhbQ==
+X-Received: by 2002:a05:6a21:a598:b0:1a3:124d:3e8b with SMTP id
+ gd24-20020a056a21a59800b001a3124d3e8bmr204944pzc.16.1710262814800; 
+ Tue, 12 Mar 2024 10:00:14 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.09.59.57
+ t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.10.00.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 09:59:59 -0700 (PDT)
+ Tue, 12 Mar 2024 10:00:14 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PULL 16/38] target/ppc: Add power10 pmu SPRs
-Date: Wed, 13 Mar 2024 02:58:27 +1000
-Message-ID: <20240312165851.2240242-17-npiggin@gmail.com>
+ BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PULL 20/38] target/ppc: Add gen_exception_err_nip() function
+Date: Wed, 13 Mar 2024 02:58:31 +1000
+Message-ID: <20240312165851.2240242-21-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240312165851.2240242-1-npiggin@gmail.com>
 References: <20240312165851.2240242-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,94 +96,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Madhavan Srinivasan <maddy@linux.ibm.com>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-Currently in tcg mode, when reading from power10 pmu spr like MMCR3,
-qemu logs this message (when starting qemu with -d guest_errors)
+Add gen_exception_err_nip() that does the same as gen_exception_err()
+but takes the nip as a parameter to allow specifying it instead of
+using the current instruction address then change gen_exception_err()
+to use it.
 
-	Trying to read invalid spr 754 (0x2f2) at 0000000030056bb0
+The gen_exception() and gen_exception_nip() functions are similar so
+remove code duplication from those too while at it.
 
-This is becuase, no read/write call-backs are registered for
-these SPRs. Add support to register generic read/write
-functions to these power10 pmu sprs to fix it.
-
+Suggested-by: Nicholas Piggin <npiggin@gmail.com>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu.h      |  6 ++++++
- target/ppc/cpu_init.c | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
+ target/ppc/translate.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 0133da4e07..ed04351f27 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -1951,6 +1951,12 @@ void ppc_compat_add_property(Object *obj, const char *name,
- #define SPR_BOOKE_TLB2CFG     (0x2B2)
- #define SPR_BOOKE_TLB3CFG     (0x2B3)
- #define SPR_BOOKE_EPR         (0x2BE)
-+#define SPR_POWER_USIER2      (0x2E0)
-+#define SPR_POWER_USIER3      (0x2E1)
-+#define SPR_POWER_UMMCR3      (0x2E2)
-+#define SPR_POWER_SIER2       (0x2F0)
-+#define SPR_POWER_SIER3       (0x2F1)
-+#define SPR_POWER_MMCR3       (0x2F2)
- #define SPR_PERF0             (0x300)
- #define SPR_RCPU_MI_RBA0      (0x300)
- #define SPR_MPC_MI_CTR        (0x300)
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index b160926a93..df31490b07 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -5308,6 +5308,38 @@ static void register_power8_pmu_user_sprs(CPUPPCState *env)
-                  0x00000000);
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 4f6f7dcd89..93ffec787c 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -296,33 +296,26 @@ static inline void gen_update_nip(DisasContext *ctx, target_ulong nip)
+     tcg_gen_movi_tl(cpu_nip, nip);
  }
  
-+static void register_power10_pmu_sup_sprs(CPUPPCState *env)
-+{
-+    spr_register_kvm(env, SPR_POWER_MMCR3, "MMCR3",
-+                     SPR_NOACCESS, SPR_NOACCESS,
-+                     &spr_read_generic, &spr_write_generic,
-+                     KVM_REG_PPC_MMCR3, 0x00000000);
-+    spr_register_kvm(env, SPR_POWER_SIER2, "SIER2",
-+                     SPR_NOACCESS, SPR_NOACCESS,
-+                     &spr_read_generic, &spr_write_generic,
-+                     KVM_REG_PPC_SIER2, 0x00000000);
-+    spr_register_kvm(env, SPR_POWER_SIER3, "SIER3",
-+                     SPR_NOACCESS, SPR_NOACCESS,
-+                     &spr_read_generic, &spr_write_generic,
-+                     KVM_REG_PPC_SIER3, 0x00000000);
-+}
-+
-+static void register_power10_pmu_user_sprs(CPUPPCState *env)
-+{
-+    spr_register(env, SPR_POWER_UMMCR3, "UMMCR3",
-+                 &spr_read_generic, &spr_write_generic,
-+                 &spr_read_generic, &spr_write_generic,
-+                 0x00000000);
-+    spr_register(env, SPR_POWER_USIER2, "USIER2",
-+                 &spr_read_generic, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_generic,
-+                 0x00000000);
-+    spr_register(env, SPR_POWER_USIER3, "USIER3",
-+                 &spr_read_generic, SPR_NOACCESS,
-+                 &spr_read_generic, &spr_write_generic,
-+                 0x00000000);
-+}
-+
- static void register_power5p_ear_sprs(CPUPPCState *env)
+-static void gen_exception_err(DisasContext *ctx, uint32_t excp, uint32_t error)
++static void gen_exception_err_nip(DisasContext *ctx, uint32_t excp,
++                                  uint32_t error, target_ulong nip)
  {
-     /* External access control */
-@@ -6502,6 +6534,8 @@ static void init_proc_POWER10(CPUPPCState *env)
-     register_power9_mmu_sprs(env);
-     register_power10_hash_sprs(env);
-     register_power10_dexcr_sprs(env);
-+    register_power10_pmu_sup_sprs(env);
-+    register_power10_pmu_user_sprs(env);
+     TCGv_i32 t0, t1;
  
-     /* FIXME: Filter fields properly based on privilege level */
-     spr_register_kvm_hv(env, SPR_PSSCR, "PSSCR", NULL, NULL, NULL, NULL,
+-    /*
+-     * These are all synchronous exceptions, we set the PC back to the
+-     * faulting instruction
+-     */
+-    gen_update_nip(ctx, ctx->cia);
++    gen_update_nip(ctx, nip);
+     t0 = tcg_constant_i32(excp);
+     t1 = tcg_constant_i32(error);
+     gen_helper_raise_exception_err(tcg_env, t0, t1);
+     ctx->base.is_jmp = DISAS_NORETURN;
+ }
+ 
+-static void gen_exception(DisasContext *ctx, uint32_t excp)
++static inline void gen_exception_err(DisasContext *ctx, uint32_t excp,
++                                     uint32_t error)
+ {
+-    TCGv_i32 t0;
+-
+     /*
+      * These are all synchronous exceptions, we set the PC back to the
+      * faulting instruction
+      */
+-    gen_update_nip(ctx, ctx->cia);
+-    t0 = tcg_constant_i32(excp);
+-    gen_helper_raise_exception(tcg_env, t0);
+-    ctx->base.is_jmp = DISAS_NORETURN;
++    gen_exception_err_nip(ctx, excp, error, ctx->cia);
+ }
+ 
+ static void gen_exception_nip(DisasContext *ctx, uint32_t excp,
+@@ -336,6 +329,15 @@ static void gen_exception_nip(DisasContext *ctx, uint32_t excp,
+     ctx->base.is_jmp = DISAS_NORETURN;
+ }
+ 
++static inline void gen_exception(DisasContext *ctx, uint32_t excp)
++{
++    /*
++     * These are all synchronous exceptions, we set the PC back to the
++     * faulting instruction
++     */
++    gen_exception_nip(ctx, excp, ctx->cia);
++}
++
+ #if !defined(CONFIG_USER_ONLY)
+ static void gen_ppc_maybe_interrupt(DisasContext *ctx)
+ {
 -- 
 2.42.0
 
