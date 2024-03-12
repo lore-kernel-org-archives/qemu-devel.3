@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D218C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F02FC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAbt-0002k1-7q; Tue, 12 Mar 2024 18:28:37 -0400
+	id 1rkAac-0005yQ-5B; Tue, 12 Mar 2024 18:27:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbf-00022L-0y
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaC-00053b-En
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbd-0004Xa-MG
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:22 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAa8-0004K0-JW
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282501;
+ s=mimecast20190719; t=1710282407;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Injg7cneMn8eAOXhLA6j7Wl6zrm7JF8+SWheD737+3s=;
- b=U7QXKRcCNxeenDkkzo/Hr1Qm1iMCWcj+oT/d+ueJ2lF1gs4lnVGp/KBX77vrI6IhCibFX9
- sXdZECZ9GS7phdq/li1kMFSnmpi73hL5f9KR3Tb8oa8Tub76v8h8kkgEhRdmY1VfsWiWVP
- 7H8DPDwhZ/Zcc6YIJxVI/YPLWaaw9tI=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mYZExF4b/5G+QkupUCgRhC1lWR4Wq2MT6nsHzd4F7G4=;
+ b=A3KNTBdENf018SPxZEtyU0YTxJVJRD3YliE09SmenU+axfxsZ+WDUc76a2WLMSXlxWxv4s
+ vTTX6Ni8A5LH9tIGdlWg0TtTqTdUBxB7SL6BXmlxVezYp6OCeVQtorR8CC89ZNmxwl2HKj
+ de+aWM00FwlZP7NTvJGrglOk8IVssFQ=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-352-ZK5YOAZXObyIWWpTgoxdsg-1; Tue, 12 Mar 2024 18:28:19 -0400
-X-MC-Unique: ZK5YOAZXObyIWWpTgoxdsg-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a4606018ec4so29845266b.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:19 -0700 (PDT)
+ us-mta-644-vVz6AAPiPn283p0nSjTz6A-1; Tue, 12 Mar 2024 18:26:45 -0400
+X-MC-Unique: vVz6AAPiPn283p0nSjTz6A-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a46447b0b13so67813466b.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:26:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282498; x=1710887298;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Injg7cneMn8eAOXhLA6j7Wl6zrm7JF8+SWheD737+3s=;
- b=eDAEPd+o/ssV4X/j4e+aBQ4+xzFgmMK4hEkgSj187MHZxQXqQ3qEjOF7WoLfzuL7FF
- RlZCNqh2FfTuCHa8zi6qG/+3U4OsnKVFXPbf1JlisxUO8iR4OAQNlJeFx50j38GJSGdM
- sw+XrL1X5PZBFqBHYLhKfjQxuCu4HGB1S0uBbXJF5DPFaH1ns+gsD+oP2lNL+y+S8KyW
- 6ICHIIuLweEugYjDAC8BKRkFIzM6zIzJ8DSB34uT6OeGXMSa7Jzg1T8KGZGpFd307Abq
- YB26GfP/hsQm9OqgBztfYHbGcu5mhROo8+3LtUlj/MEdkw6xN09UWGfyMAKtIjCi6CnC
- lgGw==
-X-Gm-Message-State: AOJu0YzfYRt3y6D8zoooBRFGIExicOiZyl59gRde/pzDeScmB/usp71F
- AaqyqFiAv2u3T8uQEgF1CPvEw6nqY3QXkbyz7T9yL3Ywxvo5Clg/I0MBBMXe8j7B4WPVRLWdpKS
- hcTm4gk62hPqtnCfox7MXALv4QGxkrkpZ0u3JVZrTzqNXW/9jQoH7FpiMDm1qTzVNVreRSAmHsl
- KLKyKDXYlZTlxahkKGhY1A77fpOOoYgSu0
-X-Received: by 2002:a17:907:a809:b0:a45:b506:11ca with SMTP id
- vo9-20020a170907a80900b00a45b50611camr915489ejc.7.1710282498465; 
- Tue, 12 Mar 2024 15:28:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFn5JpY9eP8hcgxpEIzKW0ew9Upj7T/CVLDRTuNlcsmsXXOzuIc6kwHsMRmF06FI0QEQopj4g==
-X-Received: by 2002:a17:907:a809:b0:a45:b506:11ca with SMTP id
- vo9-20020a170907a80900b00a45b50611camr915469ejc.7.1710282498042; 
- Tue, 12 Mar 2024 15:28:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710282404; x=1710887204;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mYZExF4b/5G+QkupUCgRhC1lWR4Wq2MT6nsHzd4F7G4=;
+ b=ZavbaCewPsR3kOTxveJhjZA1xc6bdqzFMfb2VBnVz1zuUS+n4sVEJBEeJZT0pksPUB
+ eFg82bjqjQDv9xszD8wwQuFNI4bum7ezc5aQbHdU3WrzPeDdVq9rFuAWUPFD7U/UqJCn
+ JlLs13aLhNchk/CJOn+PU4qmQa2aKYomV3tphlBAOnLFYHJqonWQbvhn3VIt4WtVkNLP
+ ZMDuMMiLMvcaXxwkN2hZk0XSxUt41Umgr/C+wS3NfQiMXA+uv6nDQX/X+C0vQFpotyEp
+ EmUtzV2ZeBk+1hCRh33uvAz21CM8m33Im/WpBDV6B4++FRGSP1L3W6YgmVW3/8zzbhGG
+ VIqQ==
+X-Gm-Message-State: AOJu0Yy0u/B6yZIfjNnR5YZm/qh7qu57WhI2n34s+rGom3HoDKfGqFIg
+ V06EmmMSzFIALz7u3fPkc1gUazxmPI/XR2Yp3jEs/8095VUtBwwlocANEH27jFmMTAoHJx0VNJR
+ HTNZkohYr7M+HY3NB9bdlO5R/NwSiKc71b78V60qi3SY9KZuYFIJOvcg+K0eRRw7D6v0Ts2fXcq
+ 7wvTHOETCKvjtCLOnkzzaSpLZoKv2a5p9Z
+X-Received: by 2002:a17:907:a708:b0:a45:becb:6e3d with SMTP id
+ vw8-20020a170907a70800b00a45becb6e3dmr8250022ejc.20.1710282403884; 
+ Tue, 12 Mar 2024 15:26:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF/xIuX935586122cMvJOFsGklUux1lP46CD3GBOEmRAQ2odG0jk0rQYyFLNq0hMrAJpYAxVQ==
+X-Received: by 2002:a17:907:a708:b0:a45:becb:6e3d with SMTP id
+ vw8-20020a170907a70800b00a45becb6e3dmr8250004ejc.20.1710282403331; 
+ Tue, 12 Mar 2024 15:26:43 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- v8-20020a1709067d8800b00a45aeaf9969sm4241375ejo.5.2024.03.12.15.28.15
+ uz17-20020a170907119100b00a45cac9ae6bsm4213324ejb.162.2024.03.12.15.26.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:28:17 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:28:14 -0400
+ Tue, 12 Mar 2024 15:26:42 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:26:40 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 51/68] hw/i386/pc: Avoid one use of the current_machine global
-Message-ID: <6605d09791df7387c3e82c9554731a752789987e.1710282274.git.mst@redhat.com>
+ David Hildenbrand <david@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Mario Casquero <mcasquer@redhat.com>
+Subject: [PULL 23/68] libvhost-user: Factor out vq usability check
+Message-ID: <2a29022768f1777d71e26b784a264323d1914dd6.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -108,47 +104,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: David Hildenbrand <david@redhat.com>
 
-The RTC can be accessed through the X86 machine instance, so rather than passing
-the RTC it's possible to pass the machine state instead. This avoids
-pc_boot_set() from having to access the current_machine global.
+Let's factor it out to prepare for further changes.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-Id: <20240303185332.1408-3-shentey@gmail.com>
+Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Message-Id: <20240214151701.29906-13-david@redhat.com>
+Tested-by: Mario Casquero <mcasquer@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 24 +++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 98bcf4d420..4077d8162c 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -425,9 +425,10 @@ static void set_boot_dev(PCMachineState *pcms, MC146818RtcState *s,
- 
- static void pc_boot_set(void *opaque, const char *boot_device, Error **errp)
- {
--    PCMachineState *pcms = PC_MACHINE(current_machine);
-+    PCMachineState *pcms = opaque;
-+    X86MachineState *x86ms = X86_MACHINE(pcms);
- 
--    set_boot_dev(pcms, opaque, boot_device, errp);
-+    set_boot_dev(pcms, MC146818_RTC(x86ms->rtc), boot_device, errp);
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 55aef5fcc6..ed0a978d4f 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -283,6 +283,12 @@ vu_remove_all_mem_regs(VuDev *dev)
+     dev->nregions = 0;
  }
  
- static void pc_cmos_init_floppy(MC146818RtcState *rtc_state, ISADevice *floppy)
-@@ -1252,7 +1253,7 @@ void pc_basic_device_init(struct PCMachineState *pcms,
++static bool
++vu_is_vq_usable(VuDev *dev, VuVirtq *vq)
++{
++    return likely(!dev->broken) && likely(vq->vring.avail);
++}
++
+ static size_t
+ get_fd_hugepagesize(int fd)
+ {
+@@ -2380,8 +2386,7 @@ vu_queue_get_avail_bytes(VuDev *dev, VuVirtq *vq, unsigned int *in_bytes,
+     idx = vq->last_avail_idx;
+ 
+     total_bufs = in_total = out_total = 0;
+-    if (unlikely(dev->broken) ||
+-        unlikely(!vq->vring.avail)) {
++    if (!vu_is_vq_usable(dev, vq)) {
+         goto done;
      }
- #endif
  
--    qemu_register_boot_set(pc_boot_set, rtc_state);
-+    qemu_register_boot_set(pc_boot_set, pcms);
+@@ -2496,8 +2501,7 @@ vu_queue_avail_bytes(VuDev *dev, VuVirtq *vq, unsigned int in_bytes,
+ bool
+ vu_queue_empty(VuDev *dev, VuVirtq *vq)
+ {
+-    if (unlikely(dev->broken) ||
+-        unlikely(!vq->vring.avail)) {
++    if (!vu_is_vq_usable(dev, vq)) {
+         return true;
+     }
  
-     if (!xen_enabled() &&
-         (x86ms->pit == ON_OFF_AUTO_AUTO || x86ms->pit == ON_OFF_AUTO_ON)) {
+@@ -2536,8 +2540,7 @@ vring_notify(VuDev *dev, VuVirtq *vq)
+ 
+ static void _vu_queue_notify(VuDev *dev, VuVirtq *vq, bool sync)
+ {
+-    if (unlikely(dev->broken) ||
+-        unlikely(!vq->vring.avail)) {
++    if (!vu_is_vq_usable(dev, vq)) {
+         return;
+     }
+ 
+@@ -2862,8 +2865,7 @@ vu_queue_pop(VuDev *dev, VuVirtq *vq, size_t sz)
+     unsigned int head;
+     VuVirtqElement *elem;
+ 
+-    if (unlikely(dev->broken) ||
+-        unlikely(!vq->vring.avail)) {
++    if (!vu_is_vq_usable(dev, vq)) {
+         return NULL;
+     }
+ 
+@@ -3020,8 +3022,7 @@ vu_queue_fill(VuDev *dev, VuVirtq *vq,
+ {
+     struct vring_used_elem uelem;
+ 
+-    if (unlikely(dev->broken) ||
+-        unlikely(!vq->vring.avail)) {
++    if (!vu_is_vq_usable(dev, vq)) {
+         return;
+     }
+ 
+@@ -3050,8 +3051,7 @@ vu_queue_flush(VuDev *dev, VuVirtq *vq, unsigned int count)
+ {
+     uint16_t old, new;
+ 
+-    if (unlikely(dev->broken) ||
+-        unlikely(!vq->vring.avail)) {
++    if (!vu_is_vq_usable(dev, vq)) {
+         return;
+     }
+ 
 -- 
 MST
 
