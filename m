@@ -4,79 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E713C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 06:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C23CC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 06:18:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjvEy-0002cG-Ef; Tue, 12 Mar 2024 02:03:56 -0400
+	id 1rjvSh-00071Z-Pj; Tue, 12 Mar 2024 02:18:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rjvEu-0002bb-SH
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 02:03:54 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rjvSe-00070e-Rm
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 02:18:04 -0400
+Received: from mail-qk1-x735.google.com ([2607:f8b0:4864:20::735])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rjvEr-00025w-T7
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 02:03:52 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-33e7ae72312so3234029f8f.1
- for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 23:03:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rjvSc-0004WG-EU
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 02:18:04 -0400
+Received: by mail-qk1-x735.google.com with SMTP id
+ af79cd13be357-78822e21a9dso173252085a.2
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 23:17:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710223426; x=1710828226; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MEOtTxTKxg85esuTz7jcj45Ytw6I/5CMlOpI5vm2kUk=;
- b=vGpBAx0C25jwFdAjr7GOzUGmj359aCYpYOh82aDAQmt+xrVt4tQGCYd/GCFhKDWxD8
- fFmAzIhvWQZ5f3kvgHwp4g9dqyVyjTs6/2kj7mImb14KTkCG0po4feXa3KwkLQiY8tXQ
- lpB7VpPPDSvdFvKX8e/QkY3bEafH8XNt5l33fNeySo7atRKRRtqw5yv80sVoa+5FkGVl
- r4XcMz3WzyrGryBwtdwYeXF+zZy2IKs3W5rRbzXgNDxVEiyOi5Zr4/t6hpQoaUamIPDF
- oSsI/LtK2llIySgYiXtflbM9y5T0+IH9B9DIQbCfoHYVZlePvUdVgYPIm1PPzHK9XJ0R
- HPZA==
+ d=bytedance.com; s=google; t=1710224276; x=1710829076; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fgGl/GezxVhRISLyx8tZ9PTH8m4h7yDB3m04Y7JMT5Y=;
+ b=OysCTXZLDyQqNKu3m39ObIfuVikK4NMulP7ZWlddX9mZnf3aIgooUSB+wNe5UPMZNb
+ 1TVa1c7zlyq6xE664mSWvSkn4QX6/yLhffVwATqaxC3x4zzgHIMIJSXxCbuerCH6YCLX
+ KbjtZD5cux42LO9lX65m4jswyYqkdYN49PFieUy66VeNRiJ7jMbu/tl/kIxA4LyUYCWh
+ Sb6dP0DWnq98KzaJKwx2m2BHA07Su5QMBmpjs8qciwlFIvYWfbtL6LwUX+ESOUkbWic7
+ cXLfEKVVe/pBKZxo4sNaEAFRyFprPpGIobWW585tUIBaU/jMTwIhiJ28e7h5CZyyWnbb
+ xuXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710223426; x=1710828226;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MEOtTxTKxg85esuTz7jcj45Ytw6I/5CMlOpI5vm2kUk=;
- b=qn05PXB8pYy1GzUdHtLe0CLu/Ye61/iti3/3LAkGZlRafae5fhZIUS8TkxpGVhAg0O
- ew+fWqBVfEYSbBY1nFWFnTUeeRBRDOufY7uU3L2aau9PJNRf7RTIrqZ+VIvmQMiVPyPf
- VavZxzJWfqJHSsmmEwCICHKAr71xPLoXu8/PXTkdRqyYzRIDdzPDlhmonfXWohvaEz2w
- l3CDBXqAdKH8nB3eR429L8tRo0K12oVs5hQ2fC2jldd9vd1cRB92ny+3PdSM0PRocE9R
- 6Dwl3wqX9f2pP0Z6DlRS70BZ+eu5Lu83ZNCBnw30zXy7ig3Eksl4kk45d9lHcc9bwe1f
- lwlA==
-X-Gm-Message-State: AOJu0YyubvGdAbAEJiuvg9vXtn2xYIRXmCTh2R32xHosgMYzQZsWD8C9
- HeMVM/RzLn9G4VrXBjynPLnW18vMOZj2zxFF42Met3mpZijkvVTZL8t//QmY0Ck=
-X-Google-Smtp-Source: AGHT+IGOG0kikLqWZoNP3uiwtwr4PjRh5Wf8Rd6/NGdPMEaNgtDRHxDKDOACmj1A+Co7SXQg1xoP8w==
-X-Received: by 2002:adf:eac2:0:b0:33e:7896:a9d7 with SMTP id
- o2-20020adfeac2000000b0033e7896a9d7mr7207778wrn.67.1710223425597; 
- Mon, 11 Mar 2024 23:03:45 -0700 (PDT)
-Received: from [192.168.1.24] ([102.35.208.160])
+ d=1e100.net; s=20230601; t=1710224276; x=1710829076;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fgGl/GezxVhRISLyx8tZ9PTH8m4h7yDB3m04Y7JMT5Y=;
+ b=m9wNa2ug4VBLxytWhS2Vjgz1ApbnYQ1JdBostqOj0NtrruhwLX1wd8qAc94DZhOM94
+ zCoUbsnXiZi2zzR23pZHyXr9KzNcp9N/FKIapjig1yGgE9M4WiKMPpyKPGEhCrnKMJaP
+ SeeZAcMh43J30IQtC9FuDVJcObOEGngQEKo/mDSibQC9F4C7Sw3hGk0BXu1GUBDbqW5C
+ 31bpfOVbk747ZPva4EToECkdqk6JGsh3zn9lyk68k7U85I3/e8mxzkbmMfPAzk9cnfB+
+ dvjp3JNhuulDBczWXqljUKKiAybDIjiAX1/JlLNfWEEA+kz885C+VufNuHVXLw0NaaQG
+ QgRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWvRtNrZqgDI8yR5UbCAOHb1dVuhgR3FTEpq41Yz53zTkSyCC+c0LAP2sJQBlk0c28Euk2cfCpEKJJZXso6fCNCEHGpvpI=
+X-Gm-Message-State: AOJu0YzKx9B3kt3SneukhZqrXhG1/UDzyRsqLZvezn7Miw0TEFt9ITyt
+ Hnx587qAunCLacI19CzoTO3E8m1H/Rgz58vA4PYWfXrgrmeLv7M3BFGnoQf0zNA=
+X-Google-Smtp-Source: AGHT+IGQVjf55XaSaA7QRv11XERHDa0ikizCRigRPLUcQWIpU3ODAYNJ7IKwN9aaMW4bZrAoONZoqw==
+X-Received: by 2002:a05:620a:4494:b0:788:7dc5:cf8f with SMTP id
+ x20-20020a05620a449400b007887dc5cf8fmr499319qkp.35.1710224276179; 
+ Mon, 11 Mar 2024 23:17:56 -0700 (PDT)
+Received: from n231-228-171.byted.org ([147.160.184.133])
  by smtp.gmail.com with ESMTPSA id
- c11-20020adfe70b000000b0033e41e1ad93sm8112889wrm.57.2024.03.11.23.03.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 23:03:45 -0700 (PDT)
-Message-ID: <595d141e-67d7-46c0-8471-fc52f2d4af0f@linaro.org>
-Date: Tue, 12 Mar 2024 10:03:43 +0400
+ m18-20020a05620a221200b00787b93d8df1sm3394396qkh.99.2024.03.11.23.17.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 11 Mar 2024 23:17:55 -0700 (PDT)
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+To: "Gregory Price" <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com, tj@kernel.org, john@jagalactic.com,
+ "Eishan Mirakhur" <emirakhur@micron.com>,
+ "Vinicius Tavares Petrucci" <vtavarespetr@micron.com>,
+ "Ravis OpenSrc" <Ravis.OpenSrc@micron.com>,
+ "Alistair Popple" <apopple@nvidia.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown <lenb@kernel.org>,
+ Dan Williams <dan.j.williams@intel.com>,
+ Vishal Verma <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Huang Ying <ying.huang@intel.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
+ linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ nvdimm@lists.linux.dev, linux-cxl@vger.kernel.org, linux-mm@kvack.org
+Cc: "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org
+Subject: [PATCH v2 0/1] Improved Memory Tier Creation for CPUless NUMA Nodes
+Date: Tue, 12 Mar 2024 06:17:26 +0000
+Message-Id: <20240312061729.1997111-1-horenchuang@bytedance.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] plugins: conditional callbacks
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240229055359.972151-1-pierrick.bouvier@linaro.org>
- <20240229055359.972151-5-pierrick.bouvier@linaro.org>
- <87zfv4pydu.fsf@draig.linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87zfv4pydu.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wr1-x433.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::735;
+ envelope-from=horenchuang@bytedance.com; helo=mail-qk1-x735.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,55 +107,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMy8xMS8yNCAxOTo0MywgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBQaWVycmljayBCb3V2
-aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+IHdyaXRlczoNCj4gDQo+PiBFeHRl
-bmQgcGx1Z2lucyBBUEkgdG8gc3VwcG9ydCBjYWxsYmFjayBjYWxsZWQgd2l0aCBhIGdpdmVu
-IGNyaXRlcmlhDQo+PiAoZXZhbHVhdGVkIGlubGluZSkuDQo+Pg0KPj4gQWRkZWQgZnVuY3Rp
-b25zOg0KPj4gLSBxZW11X3BsdWdpbl9yZWdpc3Rlcl92Y3B1X3RiX2V4ZWNfY29uZF9jYg0K
-Pj4gLSBxZW11X3BsdWdpbl9yZWdpc3Rlcl92Y3B1X2luc25fZXhlY19jb25kX2NiDQo+Pg0K
-Pj4gVGhleSBleHBlY3QgYXMgcGFyYW1ldGVyIGEgY29uZGl0aW9uLCBhIHFlbXVfcGx1Z2lu
-X3U2NF90IChvcDEpIGFuZCBhbg0KPj4gaW1tZWRpYXRlIChvcDIpLiBDYWxsYmFjayBpcyBj
-YWxsZWQgaWYgb3AxIHxjb25kfCBvcDIgaXMgdHJ1ZS4NCj4+DQo+PiBTaWduZWQtb2ZmLWJ5
-OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+IDxz
-bmlwPg0KPj4gICANCj4+ICtzdGF0aWMgVENHQ29uZCBwbHVnaW5fY29uZF90b190Y2djb25k
-KGVudW0gcWVtdV9wbHVnaW5fY29uZCBjb25kKQ0KPj4gK3sNCj4+ICsgICAgc3dpdGNoIChj
-b25kKSB7DQo+PiArICAgIGNhc2UgUUVNVV9QTFVHSU5fQ09ORF9FUToNCj4+ICsgICAgICAg
-IHJldHVybiBUQ0dfQ09ORF9FUTsNCj4+ICsgICAgY2FzZSBRRU1VX1BMVUdJTl9DT05EX05F
-Og0KPj4gKyAgICAgICAgcmV0dXJuIFRDR19DT05EX05FOw0KPj4gKyAgICBjYXNlIFFFTVVf
-UExVR0lOX0NPTkRfTFQ6DQo+PiArICAgICAgICByZXR1cm4gVENHX0NPTkRfTFRVOw0KPj4g
-KyAgICBjYXNlIFFFTVVfUExVR0lOX0NPTkRfTEU6DQo+PiArICAgICAgICByZXR1cm4gVENH
-X0NPTkRfTEVVOw0KPj4gKyAgICBjYXNlIFFFTVVfUExVR0lOX0NPTkRfR1Q6DQo+PiArICAg
-ICAgICByZXR1cm4gVENHX0NPTkRfR1RVOw0KPj4gKyAgICBjYXNlIFFFTVVfUExVR0lOX0NP
-TkRfR0U6DQo+PiArICAgICAgICByZXR1cm4gVENHX0NPTkRfR0VVOw0KPj4gKyAgICBkZWZh
-dWx0Og0KPj4gKyAgICAgICAgLyogQUxXQVlTIGFuZCBORVZFUiBjb25kaXRpb25zIHNob3Vs
-ZCBuZXZlciByZWFjaCAqLw0KPj4gKyAgICAgICAgZ19hc3NlcnRfbm90X3JlYWNoZWQoKTsN
-Cj4+ICsgICAgfQ0KPj4gK30NCj4+ICsNCj4+ICtzdGF0aWMgVENHT3AgKmFwcGVuZF9jb25k
-X3VkYXRhX2NiKGNvbnN0IHN0cnVjdCBxZW11X3BsdWdpbl9keW5fY2IgKmNiLA0KPj4gKyAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgVENHT3AgKmJlZ2luX29wLCBUQ0dP
-cCAqb3AsIGludCAqY2JfaWR4KQ0KPj4gK3sNCj4+ICsgICAgY2hhciAqcHRyID0gY2ItPmNv
-bmRfY2IuZW50cnkuc2NvcmUtPmRhdGEtPmRhdGE7DQo+PiArICAgIHNpemVfdCBlbGVtX3Np
-emUgPSBnX2FycmF5X2dldF9lbGVtZW50X3NpemUoDQo+PiArICAgICAgICBjYi0+Y29uZF9j
-Yi5lbnRyeS5zY29yZS0+ZGF0YSk7DQo+PiArICAgIHNpemVfdCBvZmZzZXQgPSBjYi0+Y29u
-ZF9jYi5lbnRyeS5vZmZzZXQ7DQo+PiArICAgIC8qIENvbmRpdGlvbiBzaG91bGQgYmUgbmVn
-YXRlZCwgYXMgY2FsbGluZyB0aGUgY2IgaXMgdGhlICJlbHNlIiBwYXRoICovDQo+PiArICAg
-IFRDR0NvbmQgY29uZCA9IHRjZ19pbnZlcnRfY29uZChwbHVnaW5fY29uZF90b190Y2djb25k
-KGNiLT5jb25kX2NiLmNvbmQpKTsNCj4+ICsNCj4+ICsgICAgb3AgPSBjb3B5X2NvbnN0X3B0
-cigmYmVnaW5fb3AsIG9wLCBwdHIpOw0KPj4gKyAgICBvcCA9IGNvcHlfbGRfaTMyKCZiZWdp
-bl9vcCwgb3ApOw0KPj4gKyAgICBvcCA9IGNvcHlfbXVsX2kzMigmYmVnaW5fb3AsIG9wLCBl
-bGVtX3NpemUpOw0KPj4gKyAgICBvcCA9IGNvcHlfZXh0X2kzMl9wdHIoJmJlZ2luX29wLCBv
-cCk7DQo+PiArICAgIG9wID0gY29weV9jb25zdF9wdHIoJmJlZ2luX29wLCBvcCwgcHRyICsg
-b2Zmc2V0KTsNCj4+ICsgICAgb3AgPSBjb3B5X2FkZF9wdHIoJmJlZ2luX29wLCBvcCk7DQo+
-PiArICAgIG9wID0gY29weV9sZF9pNjQoJmJlZ2luX29wLCBvcCk7DQo+PiArICAgIG9wID0g
-Y29weV9icmNvbmRpX2k2NCgmYmVnaW5fb3AsIG9wLCBjb25kLCBjYi0+Y29uZF9jYi5pbW0p
-Ow0KPj4gKyAgICBvcCA9IGNvcHlfY2FsbCgmYmVnaW5fb3AsIG9wLCBjYi0+Zi52Y3B1X3Vk
-YXRhLCBjYl9pZHgpOw0KPj4gKyAgICBvcCA9IGNvcHlfc2V0X2xhYmVsKCZiZWdpbl9vcCwg
-b3ApOw0KPj4gKyAgICByZXR1cm4gb3A7DQo+IA0KPiBJIHRoaW5rIHdlIGFyZSBtaXNzaW5n
-IHNvbWV0aGluZyBoZXJlIHRvIGVuc3VyZSB0aGF0IHVkYXRhIGlzIHNldA0KPiBjb3JyZWN0
-bHkgZm9yIHRoZSBjYWxsYmFjaywgc2VlIG15IFJGQzoNCj4gDQo+ICAgIFN1YmplY3Q6IFtS
-RkMgUEFUQ0hdIGNvbnRyaWIvcGx1Z2luczogY29udHJvbCBmbG93IHBsdWdpbiAoV0lQISkN
-Cj4gICAgRGF0ZTogTW9uLCAxMSBNYXIgMjAyNCAxNTozNDozMiArMDAwMA0KPiAgICBNZXNz
-YWdlLUlkOiA8MjAyNDAzMTExNTM0MzIuMTM5NTE5MC0xLWFsZXguYmVubmVlQGxpbmFyby5v
-cmc+DQo+IA0KPiB3aGljaCBpcyBzZWVpbmcgdGhlIHNhbWUgdmFsdWUgZXZlcnkgdGltZSBp
-biB0aGUgY2FsbGJhY2suDQo+IA0KDQpJJ20gdHJ5aW5nIHRvIHJlcHJvZHVjZSBhbmQgd2ls
-bCBhbnN3ZXIgb24gdGhpcyB0aHJlYWQuDQo=
+When a memory device, such as CXL1.1 type3 memory, is emulated as
+normal memory (E820_TYPE_RAM), the memory device is indistinguishable
+from normal DRAM in terms of memory tiering with the current implementation.
+The current memory tiering assigns all detected normal memory nodes
+to the same DRAM tier. This results in normal memory devices with
+different attributions being unable to be assigned to the correct memory tier,
+leading to the inability to migrate pages between different types of memory.
+https://lore.kernel.org/linux-mm/PH0PR08MB7955E9F08CCB64F23963B5C3A860A@PH0PR08MB7955.namprd08.prod.outlook.com/T/
+
+This patchset automatically resolves the issues. It delays the initialization
+of memory tiers for CPUless NUMA nodes until they obtain HMAT information
+at boot time, eliminating the need for user intervention.
+If no HMAT is specified, it falls back to using `default_dram_type`.
+
+Example usecase:
+We have CXL memory on the host, and we create VMs with a new system memory
+device backed by host CXL memory. We inject CXL memory performance attributes
+through QEMU, and the guest now sees memory nodes with performance attributes
+in HMAT. With this change, we enable the guest kernel to construct
+the correct memory tiering for the memory nodes.
+
+-v2:
+ Thanks to Ying's comments,
+ * Rewrite cover letter & patch description
+ * Rename functions, don't use _hmat
+ * Abstract common functions into find_alloc_memory_type()
+ * Use the expected way to use set_node_memory_tier instead of modifying it
+-v1:
+ * https://lore.kernel.org/linux-mm/20240301082248.3456086-1-horenchuang@bytedance.com/T/
+
+
+Ho-Ren (Jack) Chuang (1):
+  memory tier: acpi/hmat: create CPUless memory tiers after obtaining
+    HMAT info
+
+ drivers/acpi/numa/hmat.c     | 11 ++++++
+ drivers/dax/kmem.c           | 13 +------
+ include/linux/acpi.h         |  6 ++++
+ include/linux/memory-tiers.h |  8 +++++
+ mm/memory-tiers.c            | 70 +++++++++++++++++++++++++++++++++---
+ 5 files changed, 92 insertions(+), 16 deletions(-)
+
+-- 
+Ho-Ren (Jack) Chuang
+
 
