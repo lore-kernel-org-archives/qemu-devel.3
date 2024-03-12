@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A02FC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 23:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 501CFC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 23:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkBHC-0001v0-Pi; Tue, 12 Mar 2024 19:11:18 -0400
+	id 1rkBIz-0002lD-Cj; Tue, 12 Mar 2024 19:13:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew@daynix.com>) id 1rkBHB-0001uq-PY
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 19:11:17 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <andrew@daynix.com>) id 1rkBIt-0002jz-H3
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 19:13:06 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <andrew@daynix.com>) id 1rkBH9-0003es-Lg
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 19:11:17 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2d27184197cso79911141fa.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 16:11:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <andrew@daynix.com>) id 1rkBIr-0003l7-JC
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 19:13:03 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a4627a7233aso56844566b.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 16:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710285073; x=1710889873;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710285180; x=1710889980;
  darn=nongnu.org; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JDc12UD/gFlaTF+z8O3YbbaOS5ioVNd6BYvQQVOmQx0=;
- b=NMhgJy+Hzfzhl5/g5WHD7GJMJlHKIsA2zZCH9iULqoWeG7fw42HvfM69MmDddXbnW3
- geRGWWIT+C6GPSlyf2hntKIpnvg7w0cLN8FJwXvra1PBetLisCI2/75YIp8rTJm0FqEf
- um6eycL15/mtquh7I7bg7tXFfI/G0rScA7jzTa/t+X2n5OUlY+T0m1Tok8dAU15+YDl9
- 53f4oviNn480azEm7ItK19HzRtZ3AIRzA8SFSL6SI8Wvq3BzFeG5rPQwMKoRwtvVyiuA
- 55RoqketG5T4xLfuFliSoD99K3K4SLKDT9HielCNpFh7mhyjdXVRjb8sI2C9DwMZcIFV
- eTDw==
+ bh=72K5TEDCSTaAnZCwZRGbEfY47LiMWx5ImxrGs18pxLY=;
+ b=3NHWPPVrAQxplAydQv1JpCOF5wfyBxod3l+kjzNw106FGuLB+6g7wtOrOh+Zslu2bz
+ BUSwILQ2CPlqsAg6op6DRKg2hLxoRjEbsGsx0/uSHnyaDfm4mkR6UXpD+vJDZS0AS9MR
+ hIe8H6eZ9+D9pMkTS87CBKPX7lPItdvoknF6hRPOHT0dHHEm/jALmr5lrcG7CPMgyBih
+ 0xU0ellue2g73GcIFLR2ltzMnKwSFoIijPZMiJSNz4/o7EwtogemXw+hlmWQljidyTJ2
+ EdUbz/DM0GkKUc+Dif58tHmWCDv5Kox+JflcOsCeCjvcsSliqKPjSt+cNaGNGs4UBJ3z
+ floQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710285073; x=1710889873;
+ d=1e100.net; s=20230601; t=1710285180; x=1710889980;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JDc12UD/gFlaTF+z8O3YbbaOS5ioVNd6BYvQQVOmQx0=;
- b=mJp9ZiZ2sPERNcL2jrg8UvQ2S0lAiFUwHSonfr29MhjRvxObGmbPxh2EpnWPlr35Ox
- aI5SE2K2jMdsxRG2lxZ5chjAZzJuPuciBum8LIrRCON5l/4P3Qo1hEtfXeDECQMk9O5+
- mUE+WxdyEe6GpP4DaJS/eZjKB9+uYqEjDTjgLxLGZea5tWkBRF2hoLLx95l4IFhcsNcV
- MReq9og7GuWXmJI6kCppK+MyKN7wX82HUW8Tt1/h8wAh3muFqajeXycM7aVziINqGF1x
- tLRThXn/0IjqO3XTAr8FvFFJIPi366OYDJCMy2w9QMMVY2Ofx/Lq3dZzf44SZEibzPrb
- AdPw==
+ bh=72K5TEDCSTaAnZCwZRGbEfY47LiMWx5ImxrGs18pxLY=;
+ b=JZIUOpFFuNdi/cU5sBy7MOHv2gPRsY8W0F6ue41PHfEMOWildMINnMd6xjPQ0B/vBJ
+ lspV8iPIa5AUpoWIhblShFkeriokoSu7mdqfpT3nkDbaRdEnaQUovZSfUf+TlQFzjJTy
+ uUIK5N12h4iZKS38tlGfjlxM/OOkOUFx97ZwRJb8JqBra25UAw1ZSIkB6KW4U4yZvBU8
+ 6mpMm38uCtzkTuJWdqnvouPbHtbXYVyzkDWO6H5hnmlE3WO7wezNuSPPJRO4S3stDKen
+ BUiCUG16d6D6TEvUDPibcMPLPpWDUgeydU0dvju4poThJ6CDBJEfZtK59OKVs54Sru2Y
+ SXNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+eeCnV/aCyTapfY3hppikkcJlbVBf7OybtZTNK9xGGbTwoRk0wpYZlND1aaY2V4YuCAg7x50Qfx7gwBNwH+8EglACjfA=
-X-Gm-Message-State: AOJu0YzXRPlH/aVfYgPBmIJ8N5Jk29DjyHLgAtKR4PyoTGVbTie3tlRU
- FhwEaEz/UuNCWFT4bCic0DfPgk+5WNPG6FNn+POt9AUxxKPAToRNNnJnyzICOB58MnGTKQxfZaz
- apVpxX+OIyc2e2nYWgVcCR1ofxSXC1A9FkhksxQ==
-X-Google-Smtp-Source: AGHT+IEwD7aS4Twe1jNbir9tSyMd8SKhXhCpry9YwHnKsRdOlnHrmeN009dXFd5VUeMQGqrAHMS5MQrIXVC9+QAJYeA=
-X-Received: by 2002:a2e:99d0:0:b0:2d4:3044:9311 with SMTP id
- l16-20020a2e99d0000000b002d430449311mr6160255ljj.53.1710285073283; Tue, 12
- Mar 2024 16:11:13 -0700 (PDT)
+ AJvYcCVeRVDG8SpySJeiDJmMcz1JxRUHGcVwFU++/D7RBsVLH+pyoYLVaBhXib3Ebr6DCxM3fcoCkx3Ad8cOuBt09f67gan+n80=
+X-Gm-Message-State: AOJu0YxmCbfN3CnriZ9oL/jY8OHv0ho9G159rL6PLG76mT7G78uPOWAt
+ hfvjkKIlEZqipdyU8+m24UnB8sayetw4POibLOfaK+T39xyn7SWRZyN07RaJrI8UfjnUgnQwIDb
+ 7qOgtTCfwbUV7bhYWVkU1eSrSYlVxUBYUKnh2YQ==
+X-Google-Smtp-Source: AGHT+IHndEPHFAAUg2gs2IipJ4gp1s97Z483Nj2dUChiXFwGph1bujqCbt8338J6qqLZuPJXcf2lbhdVuVqWldrfsg4=
+X-Received: by 2002:a17:906:b182:b0:a46:4beb:d06 with SMTP id
+ w2-20020a170906b18200b00a464beb0d06mr750016ejy.31.1710285179593; Tue, 12 Mar
+ 2024 16:12:59 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240205165437.1965981-1-andrew@daynix.com>
- <CABcq3pGy+Lp8YZnMZVC61wu6jDvE0BYj3kuuvuXCA+ewOtJVfg@mail.gmail.com>
- <CACGkMEs9B+7SEy1naQCQwXQDd7bzRZGjxv2h_QHx8g_az6E=Fg@mail.gmail.com>
- <CACGkMEvMoK+MZx7WkMzzVpyHw+agac38Td-aVq3Ygwb4jNhXmQ@mail.gmail.com>
-In-Reply-To: <CACGkMEvMoK+MZx7WkMzzVpyHw+agac38Td-aVq3Ygwb4jNhXmQ@mail.gmail.com>
+ <20240205165437.1965981-5-andrew@daynix.com>
+ <CACGkMEtdYosQAGYE47sMLDvC-OvFV7JM-mNvxirHwsZTDTtcOQ@mail.gmail.com>
+In-Reply-To: <CACGkMEtdYosQAGYE47sMLDvC-OvFV7JM-mNvxirHwsZTDTtcOQ@mail.gmail.com>
 From: Andrew Melnichenko <andrew@daynix.com>
-Date: Wed, 13 Mar 2024 00:45:45 +0200
-Message-ID: <CABcq3pEqCdha49FAs8knQDcp1RzA6MFxC3zwRU2oyvHcX_7EkA@mail.gmail.com>
-Subject: Re: [PATCH v9 0/5] eBPF RSS through QMP support.
+Date: Wed, 13 Mar 2024 00:47:31 +0200
+Message-ID: <CABcq3pEQ9-RW5w+4gOaQJZbcPuYnFjoVk6axoj4g53OArbso+w@mail.gmail.com>
+Subject: Re: [PATCH v9 4/5] qmp: Added new command to retrieve eBPF blob.
 To: Jason Wang <jasowang@redhat.com>
 Cc: mst@redhat.com, armbru@redhat.com, eblake@redhat.com, 
  qemu-devel@nongnu.org, berrange@redhat.com, yuri.benditovich@daynix.com, 
  yan@daynix.com, akihiko.odaki@daynix.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: none client-ip=2a00:1450:4864:20::22e;
- envelope-from=andrew@daynix.com; helo=mail-lj1-x22e.google.com
+Received-SPF: none client-ip=2a00:1450:4864:20::62b;
+ envelope-from=andrew@daynix.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,31 +94,56 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi all,
-Apparently, eBPF code from ebpf/* can't be a part of the 'common'
-library - that breaks non-system/user build. I'll change it to be a
-'system' library.
+I've checked - apparently, qapi/ebpf.json should be added to
+MAINTAINERS - I'll fix it.
 
-On Fri, Mar 8, 2024 at 10:06=E2=80=AFAM Jason Wang <jasowang@redhat.com> wr=
+On Fri, Mar 8, 2024 at 10:14=E2=80=AFAM Jason Wang <jasowang@redhat.com> wr=
 ote:
 >
-> On Fri, Mar 8, 2024 at 2:30=E2=80=AFPM Jason Wang <jasowang@redhat.com> w=
-rote:
+> On Tue, Feb 6, 2024 at 12:55=E2=80=AFAM Andrew Melnychenko <andrew@daynix=
+.com> wrote:
 > >
-> > On Mon, Feb 26, 2024 at 6:23=E2=80=AFPM Andrew Melnichenko <andrew@dayn=
-ix.com> wrote:
-> > >
-> > > Hi all,
-> > > Jason, can you please review the patch set, thank you.
+> > Now, the binary objects may be retrieved by id.
+> > It would require for future qmp commands that may require specific
+> > eBPF blob.
 > >
-> > Queued.
+> > Added command "request-ebpf". This command returns
+> > eBPF program encoded base64. The program taken from the
+> > skeleton and essentially is an ELF object that can be
+> > loaded in the future with libbpf.
 > >
-> > Thanks
+> > The reason to use the command to provide the eBPF object
+> > instead of a separate artifact was to avoid issues related
+> > to finding the eBPF itself. eBPF object is an ELF binary
+> > that contains the eBPF program and eBPF map description(BTF).
+> > Overall, eBPF object should contain the program and enough
+> > metadata to create/load eBPF with libbpf. As the eBPF
+> > maps/program should correspond to QEMU, the eBPF can't
+> > be used from different QEMU build.
+> >
+> > The first solution was a helper that comes with QEMU
+> > and loads appropriate eBPF objects. And the issue is
+> > to find a proper helper if the system has several
+> > different QEMUs installed and/or built from the source,
+> > which helpers may not be compatible.
+> >
+> > Another issue is QEMU updating while there is a running
+> > QEMU instance. With an updated helper, it may not be
+> > possible to hotplug virtio-net device to the already
+> > running QEMU. Overall, requesting the eBPF object from
+> > QEMU itself solves possible failures with acceptable effort.
+> >
+> > Links:
+> > [PATCH 3/5] qmp: Added the helper stamp check.
+> > https://lore.kernel.org/all/20230219162100.174318-4-andrew@daynix.com/
+> >
+> > Signed-off-by: Andrew Melnychenko <andrew@daynix.com>
+> > ---
+> >  ebpf/ebpf.c           | 69 +++++++++++++++++++++++++++++++++++++++++++
 >
-> This seems to fail CI at:
+> Let's add ebpf.c to MAINTAINERS otherwise CI may warn like:
 >
-> https://gitlab.com/jasowang/qemu/-/jobs/6348725269
->
-> Please fix this.
+> https://gitlab.com/jasowang/qemu/-/jobs/6349138969
 >
 > Thanks
 >
