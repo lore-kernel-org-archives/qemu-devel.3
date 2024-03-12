@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A589BC54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53BAFC54E66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:51:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0Zh-0000cu-Re; Tue, 12 Mar 2024 07:45:41 -0400
+	id 1rk0fE-0002Vz-J8; Tue, 12 Mar 2024 07:51:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk0ZZ-0000bt-W0; Tue, 12 Mar 2024 07:45:34 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1rk0fA-0002VO-Cl; Tue, 12 Mar 2024 07:51:20 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk0ZX-000587-D6; Tue, 12 Mar 2024 07:45:33 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1dc75972f25so38084945ad.1; 
- Tue, 12 Mar 2024 04:45:29 -0700 (PDT)
+ id 1rk0f6-0006Dk-42; Tue, 12 Mar 2024 07:51:17 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6e66da40b18so2582828b3a.0; 
+ Tue, 12 Mar 2024 04:51:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710243928; x=1710848728; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710244274; x=1710849074; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m+RK8+/bwNT7IFbmJCbolKcxtGC+Ki6EBs+kK9aX8+0=;
- b=cYXtwg0SS5hGThbthuhfD6df/x7VKTRBn5RMrzom5Tod+hmNQRX2ERenT9oAM9/mBD
- IwnSuBfZ+BH+oH5JEqfaHQ5s38FBXDJklUSMyHdkhHAbzgPLblVBwVAsL1t8gR3qKJBW
- 3P9QIDmxweWf3MmMJN4ATAomXp/tZkRzvzFvEiy/40yI624UzM2HtCfm88oEDiqKGBc6
- 6NukcyAj1qoMJgO2GdyJTIGcnogWxr+G6ZF+FrhckZmMjp+qSZOk0zO9Ea/Bcc3WTGms
- OIZwzEv//XHmWluyf58e/3IsotfFNYRoO76lu0u1EcWL+ZnDjauIYtT0IUyDk6T/nQ86
- QYUQ==
+ bh=dSFeAUb09gKdDgGXWSbsmWgtF2mQ7BysLkdDFCKCb94=;
+ b=cKMD02TuWswbPxF1+rQvZh3PKNtUkvkskkwNs/pSII43rGSgyWPxT0G5nij58xDBnt
+ l/ftlyg0V07eOeX4MdRjFR6tIiKDuAJdd5ecEvw9rxZ2IDY1VpfQJoqN2HVqx38jEjoo
+ hC67I0JD72Fhd6spI5gkP4O3xaLmCME8Vn4G40TmBO/4mlNM7zyFBgKS2vCMjT3110iS
+ 8K66Ql3izRrx8tNrHduJ2lJ1UkNA11WTBtAPD3D3LAJf/bBQsaDF9fyT+dV0NNOYA92r
+ 1/EX8mqM/y/b18e0yS0JdaFpgw2OoSWSnqDE7DXbRycHMD2OBZp++0hciRQxjmGrb6m2
+ WoYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710243928; x=1710848728;
+ d=1e100.net; s=20230601; t=1710244274; x=1710849074;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=m+RK8+/bwNT7IFbmJCbolKcxtGC+Ki6EBs+kK9aX8+0=;
- b=RSxfDlzoxwYpDrYZvZc0E01tBlbd3W688gKI32yFnWqXt/L6iCtsJxy6wq0XVJ/LIB
- CyruJtdLul6o/YJfz4Qp0S6vXYBiHlDBwvBD1ahiavm1wNxAdJAk0fMfpYgeUk09s9N4
- UR+MB8MbDi22cFhmpzA9SvWZJKYkMiCYCkch6+7xoJ1N58jtIiW++AuozLj04d8YxCWI
- pWFK5tLJnfyHp81/6i72/Jfvh7VQkgfV/8w7dePf3RonDhOlxNpzSLk5I4YAyQdktMvS
- 9iD/PPHmDzg8WllYXV8wJ58Hcq2jQ1Y2+MKxNCbEngf1bKipEkfAU0n4SgmMR1AbL4JD
- qyaA==
+ bh=dSFeAUb09gKdDgGXWSbsmWgtF2mQ7BysLkdDFCKCb94=;
+ b=nnjHcvwFJVRoYyubeNIEF6ytbJt5LN6tk3UeFHbgVaH01hlBM+xxieRr24Vz3GgUeo
+ p1IUDpg9IxAvdUT/FjDNERyItxwHDvx8GB1UigMKOmGeXhkv6K0TPmLCmXg7387nV49M
+ MgUnpAQtdkCRNsIrMb3hVtvkT7p9jK9CcPfKBbobi21RvzGysjZc3c2w/RG866FH9QhS
+ 2iarHp1BBHz2F3IAt4OxSIFdPdsiQFTiHZSi9XJHSEtB961ViR/W5XlLMjuEE5QThtj4
+ 8y3t6sqBEmd6Gpi3rejjXDwldNxt3mJArzZte3rdKzqz2hJsNupV93sr346u8oQglkFE
+ UP3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3Ze+Ug5gcU38WGwaC5ZM/9PEr5Yv0hSf1IqVUBN0tIP5VTnTK7YdTv1UEDKNICg9I4uyawlsz/vObZ3lPiyhm7j9Y5v46z8UPEq2YiJZu6T4645s/dVv5/KQ=
-X-Gm-Message-State: AOJu0YyFIfEGJQFjzYfVTzoS/gmZunPkUaaymkYIs9J50RYzb8m3fQHE
- Gz2OFdRtedcmLrArT9zzW93IgMcSx+a9wq4qJZQCtJxyYLmKKFJ1
-X-Google-Smtp-Source: AGHT+IGBleqitbg5W9I70+jWuXgYIxQTwx68ehaJnXEQRylF9aHbfpus8slGsyip4zNcrNEiAqenWw==
-X-Received: by 2002:a17:902:da8d:b0:1db:e453:da81 with SMTP id
- j13-20020a170902da8d00b001dbe453da81mr3696887plx.29.1710243928611; 
- Tue, 12 Mar 2024 04:45:28 -0700 (PDT)
+ AJvYcCWySEdoJV7rB+O1TpMTTkXVa+m0Qjhzd4JKtIohwWgmSvgo6JMAVJ3bSKMt2kVYS52bPvjCuNyywsqzLqOGYhYFHtMHbTKYhJ9WRlXjz2JzFy/+nm8pGXqnmJs=
+X-Gm-Message-State: AOJu0YyPVV5aayxFe4P8sgoftfUFvPUAqItYLjz94j3yv1eguVCsdOWE
+ Ze3Zvywz3lUh+23siGhLOBK+hnuX8C4iHghM3Pi9VuOF/DkhAj81
+X-Google-Smtp-Source: AGHT+IFlVc/0F8TvVbcNG1rotcSqC6+jiCKwQXArLctpRVZaNKEK+FkI6km+V5DUBw92MhdckhdgRw==
+X-Received: by 2002:a05:6a20:258e:b0:1a1:4d41:3570 with SMTP id
+ k14-20020a056a20258e00b001a14d413570mr1673757pzd.59.1710244274257; 
+ Tue, 12 Mar 2024 04:51:14 -0700 (PDT)
 Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
- ix14-20020a170902f80e00b001dca3a65200sm6516762plb.228.2024.03.12.04.45.24
+ n2-20020a170902d2c200b001dd9da359c5sm3888949plc.4.2024.03.12.04.51.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 04:45:28 -0700 (PDT)
+ Tue, 12 Mar 2024 04:51:14 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Mar 2024 21:45:22 +1000
-Message-Id: <CZRQVFPAGXNX.3UTCWD0G0DYX5@wheely>
+Date: Tue, 12 Mar 2024 21:51:08 +1000
+Message-Id: <CZRQZUIK2SFV.1WJ6FACW9RGSQ@wheely>
 Cc: <clg@kaod.org>, <mikey@neuling.org>, <amachhiw@linux.vnet.ibm.com>,
  <vaibhav@linux.ibm.com>, <sbhat@linux.ibm.com>, <danielhb413@gmail.com>,
  <qemu-devel@nongnu.org>
@@ -73,8 +73,8 @@ X-Mailer: aerc 0.15.2
 References: <20240308111940.1617660-1-harshpb@linux.ibm.com>
  <20240308111940.1617660-15-harshpb@linux.ibm.com>
 In-Reply-To: <20240308111940.1617660-15-harshpb@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -237,11 +237,9 @@ mpatible");
 > +            error_setg(errp, "Error enabling Nested-HV with KVM");
 > +        }
 
-Hmm, if KVM is enabled then we don't support PAPR nested at all, do we?
-Because the KVM cap is only for v1 nested.
+I'll just disable this on KVM for now. With that changed,
 
-Thanks,
-Nick
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
 >      }
 >  }
