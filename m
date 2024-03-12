@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00F82C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E529BC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAad-0006Al-DC; Tue, 12 Mar 2024 18:27:19 -0400
+	id 1rkAaa-0005hc-MF; Tue, 12 Mar 2024 18:27:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaK-00059Z-T9
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaM-0005CY-C8
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaI-0004Kh-67
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:00 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaK-0004Ks-SW
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282417;
+ s=mimecast20190719; t=1710282420;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fbl/4oY5S27H5N4x4Mfso73+4TVfz4B6Urk0mgRqeEc=;
- b=Y6pVXa07AWElXBenVKGKiOliTNFTBFw2TLZ53vhiLxKFP9k4UEK/3wvOUfJZVoDoGpfyDU
- gIRk1vjRKOjAy5vYymsV2lX1yvdSHWRpNtLE9dyWOE6BS3RZIds5e/UIQHnXI4PUEQwqXz
- Q1IWrq0O/JXa+rOLYOD12GQn6WxXWMY=
+ bh=wh6YuVoxx+DYLxPaX83mzfkVZkTHaR33Y90YpXonUkk=;
+ b=Kfk0QgKzsJS4GswQ0AxDnSjUz2tVEkbpNVmeBmocB41Giq0Hk6xhHZwE2Q0fy7YVs6T7Aa
+ 9p74TjHQOifjYWhNTK3/UK6uioFoxvimcs/WG8/VTfsGYZsmX2bwwBzxC7SvVA/0yFHu4M
+ t3Ru6fgCJTePpA9mUsv2/J8M+fLBw8Y=
 Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
  [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-583-_SUAqW6sN0i1_1h1pn4w_Q-1; Tue, 12 Mar 2024 18:26:56 -0400
-X-MC-Unique: _SUAqW6sN0i1_1h1pn4w_Q-1
+ us-mta-38-Lho1bPFlNP6Pm3q_YxlnUA-1; Tue, 12 Mar 2024 18:26:59 -0400
+X-MC-Unique: Lho1bPFlNP6Pm3q_YxlnUA-1
 Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a4606018ec4so29755966b.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:26:55 -0700 (PDT)
+ a640c23a62f3a-a44143c8908so27848466b.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:26:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282414; x=1710887214;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fbl/4oY5S27H5N4x4Mfso73+4TVfz4B6Urk0mgRqeEc=;
- b=CNWxmjBvPinn3GIYB9HZTML/dk06XTB2st9jqP4IHLzgGsdWTrbWqELP2k0Zaz7F+9
- pvWUJ9iBqIoIAoDX2uDwZh3lOgDtre6htQYwypMbVar315Jwmi2iM7yzop3PkIolKYtb
- VRjZ/JGCj9Sia3Pij0iZrDuVcsGd9nBbsWRLLI2ShQUP7caPfNwYe7gJ4eM9+bnN+UTv
- EODjnEIOKi1YsEC7BEBmdxuLCiNOC7pUd2VfUr1dXh1KFqmEoO59LMtvfQ6e9+EDkOkK
- rBXwZTwqttCMC75rui6nrGdoI3Xw5ntOoEFeSY88Ugtl1qTcJ81TvmBvy9Oo2xreK8rb
- fn1A==
-X-Gm-Message-State: AOJu0YxgXbScLPuZ4NqnEeZcz9ljAZ2N0gprRw4AR9FEsn88mhwQdRgf
- 1j0sqZCn2frpNJslo8ThEEJdefygHCZgVYiEe6hekRNzNrM7mqWw5tuXz9L9ucVR+1UJkLfLOmx
- itEEIQvb2do/OaigTp/FHxiIsGe8rHuzjA74rSzf4aj2v16S+2EopIq5ZsUISKCTVMVH+UKOqx4
- jY+xuLpdJr1Rt2ThmrF8kA3p8PsRDjIUsI
-X-Received: by 2002:a17:906:ba84:b0:a46:13a0:2e5c with SMTP id
- cu4-20020a170906ba8400b00a4613a02e5cmr797812ejd.25.1710282414408; 
- Tue, 12 Mar 2024 15:26:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEkM5wjMUTJem7bMnk1rIh4+fw7093GCMqaUGBLDBhtf+NP1nzXwtGQofoGY2DEKFZAUu4pVg==
-X-Received: by 2002:a17:906:ba84:b0:a46:13a0:2e5c with SMTP id
- cu4-20020a170906ba8400b00a4613a02e5cmr797775ejd.25.1710282413823; 
- Tue, 12 Mar 2024 15:26:53 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710282417; x=1710887217;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wh6YuVoxx+DYLxPaX83mzfkVZkTHaR33Y90YpXonUkk=;
+ b=ZvwlLb40IaDsJzi1FXvl6iWtisDtcv3wuzTQbXfhwIZsImsv57HzW2Qx1foUhZh/dd
+ 6eXayy4qu6o5Oin6E58WTSWp12eCtfhrYZ7HdaN8iK+NOgnQaZTuq26fBPg3WF72a9v9
+ V/z6BF2+9txan/zXL9j66LDepMvBR6mUCGGimeU2FR2h8u/iuRQv9iB0AY6qu/GbMTB9
+ RNZK/W98WMU5Di/QoGrmmrITtll8Fj6xLmCp2gBLj4X+jLCHS3m/9hBlUlVkNIlsWTKk
+ 85BlWHx+9lEvduEijMfYx10SyyhdcU9Kw4idCI4XRNP0H7/DTAr3zg7maT+wWu617yTb
+ qAew==
+X-Gm-Message-State: AOJu0YwSq9O93I4viCONsQSFO5vYmvCwamNl03a6JXYD8ly3prkSlRS5
+ GCoPhojtblEF+YxuZvz0fbLV33L8t2p5+bOp6v8bfZ28vLqJVrPIDHfvodkR3YveIkSqWyS3GRf
+ GfQTGw7fm0TfdgV9lTtFVi5WiAc0lumu8jk2PvaNZRdcSUBPGSVL4O5llLq7/2fFJxUJXZxYp5g
+ UfouKa/CPxn7DyomPsUApLM+cHDftymIP2
+X-Received: by 2002:a17:906:3511:b0:a46:371b:c4d5 with SMTP id
+ r17-20020a170906351100b00a46371bc4d5mr815102eja.22.1710282417132; 
+ Tue, 12 Mar 2024 15:26:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEBwZQhv8wXOSlf5kWVr6MCyK/Jh40PObLKzbVq92mpJ+119Eo9rJiLpnqS4I8QG/+u+duFAw==
+X-Received: by 2002:a17:906:3511:b0:a46:371b:c4d5 with SMTP id
+ r17-20020a170906351100b00a46371bc4d5mr815084eja.22.1710282416607; 
+ Tue, 12 Mar 2024 15:26:56 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- x6-20020a1709065ac600b00a465ad6e994sm6687ejs.152.2024.03.12.15.26.51
+ bx4-20020a170906a1c400b00a4528658771sm4212653ejb.31.2024.03.12.15.26.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:26:53 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:26:50 -0400
+ Tue, 12 Mar 2024 15:26:56 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:26:54 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Lukas Stockner <lstockner@genesiscloud.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 26/68] pcie: Support PCIe Gen5/Gen6 link speeds
-Message-ID: <c08da86dc412cd44039bc78df02227578bc06268.1710282274.git.mst@redhat.com>
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL 27/68] vdpa: stash memory region properties in vars
+Message-ID: <a55834579aa65f27519f948275d5efd9e2173bef.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,125 +103,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Lukas Stockner <lstockner@genesiscloud.com>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-This patch extends the PCIe link speed option so that slots can be
-configured as supporting 32GT/s (Gen5) or 64GT/s (Gen5) speeds.
-This is as simple as setting the appropriate bit in LnkCap2 and
-the appropriate value in LnkCap and LnkCtl2.
+Next changes uses this variables, so avoid call repeatedly to memory
+region functions. No functional change intended.
 
-Signed-off-by: Lukas Stockner <lstockner@genesiscloud.com>
-Message-Id: <20240215012326.3272366-1-lstockner@genesiscloud.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Message-Id: <20240215103616.330518-2-eperezma@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- qapi/common.json                 |  6 +++++-
- include/hw/pci/pcie_regs.h       |  2 ++
- hw/core/qdev-properties-system.c | 16 ++++++++++++++--
- hw/pci/pcie.c                    |  8 ++++++++
- 4 files changed, 29 insertions(+), 3 deletions(-)
+ hw/virtio/vhost-vdpa.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/qapi/common.json b/qapi/common.json
-index f1bb841951..867a9ad9b0 100644
---- a/qapi/common.json
-+++ b/qapi/common.json
-@@ -107,10 +107,14 @@
- #
- # @16: 16.0GT/s
- #
-+# @32: 32.0GT/s
-+#
-+# @64: 64.0GT/s
-+#
- # Since: 4.0
- ##
- { 'enum': 'PCIELinkSpeed',
--  'data': [ '2_5', '5', '8', '16' ] }
-+  'data': [ '2_5', '5', '8', '16', '32', '64' ] }
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index c968278e70..5559d4f89c 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -47,12 +47,14 @@ static bool vhost_vdpa_listener_skipped_section(MemoryRegionSection *section,
+                                                 int page_mask)
+ {
+     Int128 llend;
++    bool is_ram = memory_region_is_ram(section->mr);
++    bool is_iommu = memory_region_is_iommu(section->mr);
++    bool is_protected = memory_region_is_protected(section->mr);
  
- ##
- # @PCIELinkWidth:
-diff --git a/include/hw/pci/pcie_regs.h b/include/hw/pci/pcie_regs.h
-index 4972106c42..9d3b6868dc 100644
---- a/include/hw/pci/pcie_regs.h
-+++ b/include/hw/pci/pcie_regs.h
-@@ -39,6 +39,8 @@ typedef enum PCIExpLinkSpeed {
-     QEMU_PCI_EXP_LNK_5GT,
-     QEMU_PCI_EXP_LNK_8GT,
-     QEMU_PCI_EXP_LNK_16GT,
-+    QEMU_PCI_EXP_LNK_32GT,
-+    QEMU_PCI_EXP_LNK_64GT,
- } PCIExpLinkSpeed;
- 
- #define QEMU_PCI_EXP_LNKCAP_MLS(speed)  (speed)
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index b45e90edb2..28ce6162c7 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -955,7 +955,7 @@ const PropertyInfo qdev_prop_off_auto_pcibar = {
-     .set_default_value = qdev_propinfo_set_default_value_enum,
- };
- 
--/* --- PCIELinkSpeed 2_5/5/8/16 -- */
-+/* --- PCIELinkSpeed 2_5/5/8/16/32/64 -- */
- 
- static void get_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
-                                    void *opaque, Error **errp)
-@@ -977,6 +977,12 @@ static void get_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
-     case QEMU_PCI_EXP_LNK_16GT:
-         speed = PCIE_LINK_SPEED_16;
-         break;
-+    case QEMU_PCI_EXP_LNK_32GT:
-+        speed = PCIE_LINK_SPEED_32;
-+        break;
-+    case QEMU_PCI_EXP_LNK_64GT:
-+        speed = PCIE_LINK_SPEED_64;
-+        break;
-     default:
-         /* Unreachable */
-         abort();
-@@ -1010,6 +1016,12 @@ static void set_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
-     case PCIE_LINK_SPEED_16:
-         *p = QEMU_PCI_EXP_LNK_16GT;
-         break;
-+    case PCIE_LINK_SPEED_32:
-+        *p = QEMU_PCI_EXP_LNK_32GT;
-+        break;
-+    case PCIE_LINK_SPEED_64:
-+        *p = QEMU_PCI_EXP_LNK_64GT;
-+        break;
-     default:
-         /* Unreachable */
-         abort();
-@@ -1018,7 +1030,7 @@ static void set_prop_pcielinkspeed(Object *obj, Visitor *v, const char *name,
- 
- const PropertyInfo qdev_prop_pcie_link_speed = {
-     .name = "PCIELinkSpeed",
--    .description = "2_5/5/8/16",
-+    .description = "2_5/5/8/16/32/64",
-     .enum_table = &PCIELinkSpeed_lookup,
-     .get = get_prop_pcielinkspeed,
-     .set = set_prop_pcielinkspeed,
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 6db0cf69cd..0b4817e144 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -153,6 +153,14 @@ static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
-             pci_long_test_and_set_mask(exp_cap + PCI_EXP_LNKCAP2,
-                                        PCI_EXP_LNKCAP2_SLS_16_0GB);
-         }
-+        if (s->speed > QEMU_PCI_EXP_LNK_16GT) {
-+            pci_long_test_and_set_mask(exp_cap + PCI_EXP_LNKCAP2,
-+                                       PCI_EXP_LNKCAP2_SLS_32_0GB);
-+        }
-+        if (s->speed > QEMU_PCI_EXP_LNK_32GT) {
-+            pci_long_test_and_set_mask(exp_cap + PCI_EXP_LNKCAP2,
-+                                       PCI_EXP_LNKCAP2_SLS_64_0GB);
-+        }
+-    if ((!memory_region_is_ram(section->mr) &&
+-         !memory_region_is_iommu(section->mr)) ||
+-        memory_region_is_protected(section->mr) ||
+-        /* vhost-vDPA doesn't allow MMIO to be mapped  */
+-        memory_region_is_ram_device(section->mr)) {
++    /* vhost-vDPA doesn't allow MMIO to be mapped  */
++    bool is_ram_device = memory_region_is_ram_device(section->mr);
++
++    if ((!is_ram && !is_iommu) || is_protected || is_ram_device) {
+         return true;
      }
- }
  
+@@ -69,7 +71,7 @@ static bool vhost_vdpa_listener_skipped_section(MemoryRegionSection *section,
+      * size that maps to the kernel
+      */
+ 
+-    if (!memory_region_is_iommu(section->mr)) {
++    if (!is_iommu) {
+         llend = vhost_vdpa_section_end(section, page_mask);
+         if (int128_gt(llend, int128_make64(iova_max))) {
+             error_report("RAM section out of device range (max=0x%" PRIx64
 -- 
 MST
 
