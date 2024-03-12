@@ -4,76 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27E1C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C0B6C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:14:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5hi-0008Oa-8e; Tue, 12 Mar 2024 13:14:20 -0400
+	id 1rk5hx-0008SY-1o; Tue, 12 Mar 2024 13:14:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rk5ha-0008Nr-DR
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:14:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5hv-0008SN-8z
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:14:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rk5hT-0002dj-PO
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:14:09 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5ht-0002hO-LI
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:14:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710263641;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1710263668;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3xHxnnok9yVR+4/zOW1JNGl93btx0kxk65q76oKzBHI=;
- b=bKpNs1G46vlrjUG0TmNcs78CB7qwBH1oRWRoSKtRLbtOFY7fRaA9jkuJ5beSVDq71LmbW5
- apW2zAX2TRKTjCazpMlJ6mrJVrtS70dsUh7HZDZCVV+MayKLYSZTF6Bt3V9YHg6lXa5ViG
- /Emf5H7q6X+IJ8AZRxxlj3hnLiAnGS0=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1VCZN46NWcj5S9HthzW9vZvsQBJ96s3KYdr/dNzsH5c=;
+ b=Aj/hCkPaL8wexs5OJGYfqaYMSSQmlinF5YrnYFFiW5TUDzj3LbY7ZicFGYPlKUm+USCwoU
+ yqqEl7orw9xGwRTNBtxnZeMOZ3eX7YErS4pM+hJOwWMEyxDHRfWwjznQM2J/Hhaewq7q9W
+ 09Z31ElZEX+8OeQ8n92ZIV4PvEQ61Hg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462-dvaAoEDROvCwegiLEXVb5w-1; Tue, 12 Mar 2024 13:13:58 -0400
-X-MC-Unique: dvaAoEDROvCwegiLEXVb5w-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A7C648007A2;
- Tue, 12 Mar 2024 17:13:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.60])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 43CE540C6DAE;
- Tue, 12 Mar 2024 17:13:56 +0000 (UTC)
-Date: Tue, 12 Mar 2024 17:13:54 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com, jsnow@redhat.com,
- vsementsov@yandex-team.ru, kwolf@redhat.com, hreitz@redhat.com
-Subject: Re: [PATCH] block: Use LVM tools for LV block device truncation
-Message-ID: <ZfCNUtya78MZVGeA@redhat.com>
-References: <20240311174044.67094-1-alexander.ivanov@virtuozzo.com>
- <Ze9Mb6pHcTOdghCy@redhat.com>
- <874c2375-1216-4002-a490-8538fe92921d@virtuozzo.com>
+ us-mta-251-e8ufA2EfNL6sJb-_Y17jMA-1; Tue, 12 Mar 2024 13:14:27 -0400
+X-MC-Unique: e8ufA2EfNL6sJb-_Y17jMA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-412db0e24aeso944185e9.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 10:14:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710263666; x=1710868466;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1VCZN46NWcj5S9HthzW9vZvsQBJ96s3KYdr/dNzsH5c=;
+ b=tfZ3YhmEuAVMVSVDxRrqVUcwe46h156s0F9de6Ks9/n7k3sxVEHXWe5MDIppSKpD1a
+ m3gwFhOL7A0zhs/GUdc3GQmOA+N9Qd5pgPFxKGV8V6Zu9CXc7EYKTBxddxB+UtemTDwN
+ CFrETL8nvH+JalIZvWD2vIfhcPVrs5wIZpuKfotcUfqTGcOBxfeJGA1ZkW1fL3Taoy35
+ zSb4pY16r/bLhN6Rz5lcsRI5II5OoVUmsCZlFMeE88d7QkU+XBcqHOPWU2n6QqMk81SY
+ RJ2bpKb6mIt8hzVrGr7vZ1dzimw1kitoTBYZOf0bFieQ1Di5PUxYpoNM4e0EimGrnTXi
+ Smzg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVPaIKUuCGkLye2GRX8y9Q7zJUiVnaDtiXZ0VeIcqR7TfzjgH9UjnqzOyJq7RTRdl97TlNLovfffIrLhsD+dguqghKbt3c=
+X-Gm-Message-State: AOJu0YwG8H+9FP18jKgQqT9Kbj1nx0e5FKEKVn7j9AGSLwwuAZQ1IAgq
+ pfG1erH+8ixheqr8IAJDOXEcqMQkHXYJh6yEwRrsFIlz6euICQZxlW+CpGOslvK8M/w6gT5ds+5
+ jjIgQNSZ5JNGasxLj0YBs4K1ETlCHdvo1jZV166gHOcK21uULrSnt
+X-Received: by 2002:a05:600c:3109:b0:413:1bb9:1b9e with SMTP id
+ g9-20020a05600c310900b004131bb91b9emr3213680wmo.21.1710263665899; 
+ Tue, 12 Mar 2024 10:14:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGz9DZZCNXE2k9LyP4PdfNxJdbhZvUzl2YbV1MgfEJ1WTo1PBhVNj0G3DLzYk1tfe0qMG7hPA==
+X-Received: by 2002:a05:600c:3109:b0:413:1bb9:1b9e with SMTP id
+ g9-20020a05600c310900b004131bb91b9emr3213649wmo.21.1710263665322; 
+ Tue, 12 Mar 2024 10:14:25 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
+ by smtp.gmail.com with ESMTPSA id
+ fb4-20020a05600c520400b00413294ddb72sm7863394wmb.20.2024.03.12.10.14.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 10:14:24 -0700 (PDT)
+Date: Tue, 12 Mar 2024 13:14:19 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?iso-8859-1?B?IkRhbmllbCBQIC4gQmVycmFuZ+ki?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Julia Suvorova <jusual@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v5] pc: q35: Bump max_cpus to 4096 vcpus
+Message-ID: <20240312131413-mutt-send-email-mst@kernel.org>
+References: <20240228143351.3967-1-anisinha@redhat.com>
+ <8F921979-45DC-4235-9F6E-8F54DDE33FB7@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <874c2375-1216-4002-a490-8538fe92921d@virtuozzo.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <8F921979-45DC-4235-9F6E-8F54DDE33FB7@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,112 +105,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 12, 2024 at 06:04:26PM +0100, Alexander Ivanov wrote:
-> Thank you for the review.
+On Tue, Mar 12, 2024 at 12:04:37PM +0530, Ani Sinha wrote:
 > 
-> On 3/11/24 19:24, Daniel P. BerrangÃ© wrote:
-> > On Mon, Mar 11, 2024 at 06:40:44PM +0100, Alexander Ivanov wrote:
-> > > If a block device is an LVM logical volume we can resize it using
-> > > standard LVM tools.
-> > > 
-> > > In raw_co_truncate() check if the block device is a LV using lvdisplay
-> > > and resize it executing lvresize.
-> > > 
-> > > Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-> > > ---
-> > >   block/file-posix.c | 27 +++++++++++++++++++++++++++
-> > >   1 file changed, 27 insertions(+)
-> > > 
-> > > diff --git a/block/file-posix.c b/block/file-posix.c
-> > > index 35684f7e21..cf8a04e6f7 100644
-> > > --- a/block/file-posix.c
-> > > +++ b/block/file-posix.c
-> > > @@ -2670,6 +2670,33 @@ static int coroutine_fn raw_co_truncate(BlockDriverState *bs, int64_t offset,
-> > >       if (S_ISCHR(st.st_mode) || S_ISBLK(st.st_mode)) {
-> > >           int64_t cur_length = raw_getlength(bs);
-> > > +        /*
-> > > +         * Check if the device is an LVM logical volume and try to resize
-> > > +         * it using LVM tools.
-> > > +         */
-> > > +        if (S_ISBLK(st.st_mode) && offset > 0) {
-> > > +            char cmd[PATH_MAX + 32];
-> > > +
-> > > +            snprintf(cmd, sizeof(cmd), "lvdisplay %s > /dev/null",
-> > > +                     bs->filename);
-> > PATH_MAX + snprint is a bad practice - g_strdup_printf() is recommended
-> > for dynamic allocation, along with g_autofree for release.
+> 
+> > On 28-Feb-2024, at 20:03, Ani Sinha <anisinha@redhat.com> wrote:
 > > 
-> > > +            ret = system(cmd);
-> > IMHO using 'system' for spawning processes is dubious in any non-trivial
-> > program.
+> > Since commit f10a570b093e6 ("KVM: x86: Add CONFIG_KVM_MAX_NR_VCPUS to allow up to 4096 vCPUs")
+> > Linux kernel can support upto a maximum number of 4096 vcpus when MAXSMP is
+> > enabled in the kernel. At present, QEMU has been tested to correctly boot a
+> > linux guest with 4096 vcpus using the current edk2 upstream master branch that
+> > has the fixes corresponding to the following two PRs:
 > > 
-> > Historically at least it does not have well defined behaviour wrt signal
-> > handling in the child, before execve is called. ie potentially a signal
-> > handler registered by QEMU in the parent could run in the child having
-> > ill-effects.
+> > https://github.com/tianocore/edk2/pull/5410
+> > https://github.com/tianocore/edk2/pull/5418
 > > 
-> > 'system' also executes via the shell which opens up many risks with
-> > unsanitized files path being substituted into the command line.
-> > > +            if (ret != 0) {
-> > > +                error_setg(errp, "lvdisplay returned %d error for '%s'",
-> > > +                           ret, bs->filename);
-> > > +                return ret;
-> > > +            }
-> > Calling 'lvdisplay' doesn't seem to be needed. Surely 'lvresize' is
-> > going to report errors if it isn't an LVM device.
-> The problem is that we don't know if 'lvresize' returned an error because of
-> non-LVM device or there was another reason. For the first variant we should
-> continue original code execution, for the second - return an error.
+> > The changes merged into edk2 with the above PRs will be in the upcoming 2024-05
+> > release. With current seabios firmware, it boots fine with 4096 vcpus already.
+> > So bump up the value max_cpus to 4096 for q35 machines versions 9 and newer.
+> > Q35 machines versions 8.2 and older continue to support 1024 maximum vcpus
+> > as before for compatibility reasons.
 > > 
-> > If we want to detect an LVM device though, couldn't we lookup
-> > 'device-mapper'  in /proc/devices and then major the device major
-> > node number.
-> It will require more code for getting device major, file reading and
-> parsing.
-> Why this way is better?
+> > If KVM is not able to support the specified number of vcpus, QEMU would
+> > return the following error messages:
+> > 
+> > $ ./qemu-system-x86_64 -cpu host -accel kvm -machine q35 -smp 1728
+> > qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
+> > qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
+> > Number of SMP cpus requested (1728) exceeds the maximum cpus supported by KVM (1024)
+> > 
+> > Cc: Daniel P. Berrangé <berrange@redhat.com>
+> > Cc: Igor Mammedov <imammedo@redhat.com>
+> > Cc: Michael S. Tsirkin <mst@redhat.com>
+> > Cc: Julia Suvorova <jusual@redhat.com>
+> > Cc: kraxel@redhat.com
+> > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+> > Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
+> > Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> 
+> Ping .. who is picking this up? The soft code freeze starts today?
 
-There are a variety of reasons why these LVM commands could fail.
-Directly detecting whether or not this is an LVM device, rather
-than inferring it from 'lvdisplay' result is a more precise check
-which will allow for clearer error reporting IMHO.
 
+I did.
 
-Ideally we wouldn't even spawn a process for the resize operation,
-but instead call into the device mapper library API. That would
-let it work even when the seccomp sandbox is enabled and blocking
-process spawning. IME the device mapper API is not too friendly
-though, so I didn't want to suggest that as a blocker.
-
-> > > +            snprintf(cmd, sizeof(cmd), "lvresize -f -L %ldB %s > /dev/null",
-> > > +                     offset, bs->filename);
-> > > +            ret = system(cmd);
-> > > +            if (ret != 0) {
-> > > +                error_setg(errp, "lvresize returned %d error for '%s'",
-> > > +                           ret, bs->filename);
-> > lvresize might display an message on stderr on failure but that's at best
-> > going to QEMU's stderr. Any error needs to be captured and put into
-> > this error message that's fed back to the user / QMP client.
-> It seems I need to implement a high level function for programs execution.
-> Looked at
-> g_spawn_sync(), but it uses fork() under the hood and we could have a
-> performance
-> issue. Haven't found a high level function that uses vfork() and allows to
-> catch stderr.
-
-GLib should be using posix_spawn internally on all modern platforms.
-
-Resizing LVM volumes does not sound like a hot code path, so I'm
-seeing what performance concerns we would have.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> > ---
+> > hw/i386/pc_q35.c | 3 ++-
+> > 1 file changed, 2 insertions(+), 1 deletion(-)
+> > 
+> > Changelog:
+> > v5: mention the PRs in the commit message. Add tags.
+> > v4: tweaked commit message as per suggestion from danpb explicitly
+> > stating that 4096 vcpus work with edk2 fixes that are going to be
+> > available in the coming edk2 release.
+> > v3: bump up to 4096 vcpus. It has now been tested to work with edk2.
+> > See RH Jira: https://issues.redhat.com/browse/RHEL-22202
+> > v2: bump up the vcpu number to 1856. Add failure messages from ekd2 in
+> > the commit description.
+> > 
+> > diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> > index 45a4102e75..df63a92b78 100644
+> > --- a/hw/i386/pc_q35.c
+> > +++ b/hw/i386/pc_q35.c
+> > @@ -350,7 +350,7 @@ static void pc_q35_machine_options(MachineClass *m)
+> >     m->default_nic = "e1000e";
+> >     m->default_kernel_irqchip_split = false;
+> >     m->no_floppy = 1;
+> > -    m->max_cpus = 1024;
+> > +    m->max_cpus = 4096;
+> >     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
+> >     machine_class_allow_dynamic_sysbus_dev(m, TYPE_AMD_IOMMU_DEVICE);
+> >     machine_class_allow_dynamic_sysbus_dev(m, TYPE_INTEL_IOMMU_DEVICE);
+> > @@ -371,6 +371,7 @@ static void pc_q35_8_2_machine_options(MachineClass *m)
+> > {
+> >     pc_q35_9_0_machine_options(m);
+> >     m->alias = NULL;
+> > +    m->max_cpus = 1024;
+> >     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
+> >     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
+> > }
+> > -- 
+> > 2.42.0
+> > 
 
 
