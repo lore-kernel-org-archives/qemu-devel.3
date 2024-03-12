@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED56AC5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 02:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD74C5475B
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 02:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjrTw-0000TJ-G7; Mon, 11 Mar 2024 22:03:09 -0400
+	id 1rjrUV-0001LR-F6; Mon, 11 Mar 2024 22:03:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1rjrTi-00006J-4l; Mon, 11 Mar 2024 22:02:55 -0400
+ id 1rjrTz-0000g9-PX; Mon, 11 Mar 2024 22:03:16 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1rjrTg-0004oK-9w; Mon, 11 Mar 2024 22:02:53 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Ttxjv4bF8z6K6MR;
- Tue, 12 Mar 2024 10:02:43 +0800 (CST)
+ id 1rjrTx-0004pI-HT; Mon, 11 Mar 2024 22:03:10 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TtxkF3GnGz6K6Xb;
+ Tue, 12 Mar 2024 10:03:01 +0800 (CST)
 Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id BC92A1400CA;
- Tue, 12 Mar 2024 10:02:48 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 7F4361400C9;
+ Tue, 12 Mar 2024 10:03:06 +0800 (CST)
 Received: from A190218597.china.huawei.com (10.48.148.5) by
  lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Tue, 12 Mar 2024 02:02:31 +0000
+ 15.1.2507.35; Tue, 12 Mar 2024 02:02:49 +0000
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -43,10 +43,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <linuxarm@huawei.com>
-Subject: [PATCH V8 7/8] gdbstub: Add helper function to unregister GDB
- register space
-Date: Tue, 12 Mar 2024 01:59:59 +0000
-Message-ID: <20240312020000.12992-8-salil.mehta@huawei.com>
+Subject: [PATCH V8 8/8] docs/specs/acpi_hw_reduced_hotplug: Add the CPU
+ Hotplug Event Bit
+Date: Tue, 12 Mar 2024 02:00:00 +0000
+Message-ID: <20240312020000.12992-9-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.8.3
 In-Reply-To: <20240312020000.12992-1-salil.mehta@huawei.com>
 References: <20240312020000.12992-1-salil.mehta@huawei.com>
@@ -80,60 +80,31 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add common function to help unregister the GDB register space. This shall be
-done in context to the CPU unrealization.
+GED interface is used by many hotplug events like memory hotplug, NVDIMM hotplug
+and non-hotplug events like system power down event. Each of these can be
+selected using a bit in the 32 bit GED IO interface. A bit has been reserved for
+the CPU hotplug event.
 
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
 Reviewed-by: Gavin Shan <gshan@redhat.com>
-Tested-by: Xianglai Li <lixianglai@loongson.cn>
-Tested-by: Miguel Luis <miguel.luis@oracle.com>
-Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
 ---
- gdbstub/gdbstub.c      | 12 ++++++++++++
- include/exec/gdbstub.h |  6 ++++++
- 2 files changed, 18 insertions(+)
+ docs/specs/acpi_hw_reduced_hotplug.rst | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 17efcae0d0..a8449dc309 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -615,6 +615,18 @@ void gdb_register_coprocessor(CPUState *cpu,
-     }
- }
+diff --git a/docs/specs/acpi_hw_reduced_hotplug.rst b/docs/specs/acpi_hw_reduced_hotplug.rst
+index 0bd3f9399f..3acd6fcd8b 100644
+--- a/docs/specs/acpi_hw_reduced_hotplug.rst
++++ b/docs/specs/acpi_hw_reduced_hotplug.rst
+@@ -64,7 +64,8 @@ GED IO interface (4 byte access)
+        0: Memory hotplug event
+        1: System power down event
+        2: NVDIMM hotplug event
+-    3-31: Reserved
++       3: CPU hotplug event
++    4-31: Reserved
  
-+void gdb_unregister_coprocessor_all(CPUState *cpu)
-+{
-+    /*
-+     * Safe to nuke everything. GDBRegisterState::xml is static const char so
-+     * it won't be freed
-+     */
-+    g_array_free(cpu->gdb_regs, true);
-+
-+    cpu->gdb_regs = NULL;
-+    cpu->gdb_num_g_regs = 0;
-+}
-+
- static void gdb_process_breakpoint_remove_all(GDBProcess *p)
- {
-     CPUState *cpu = gdb_get_first_cpu_in_process(p);
-diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-index eb14b91139..249d4d4bc8 100644
---- a/include/exec/gdbstub.h
-+++ b/include/exec/gdbstub.h
-@@ -49,6 +49,12 @@ void gdb_register_coprocessor(CPUState *cpu,
-                               gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
-                               const GDBFeature *feature, int g_pos);
+ **write_access:**
  
-+/**
-+ * gdb_unregister_coprocessor_all() - unregisters supplemental set of registers
-+ * @cpu - the CPU associated with registers
-+ */
-+void gdb_unregister_coprocessor_all(CPUState *cpu);
-+
- /**
-  * gdbserver_start: start the gdb server
-  * @port_or_device: connection spec for gdb
 -- 
 2.34.1
 
