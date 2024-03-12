@@ -4,95 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C0B6C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:14:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94C43C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:28:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5hx-0008SY-1o; Tue, 12 Mar 2024 13:14:33 -0400
+	id 1rk5u3-0002Ez-UH; Tue, 12 Mar 2024 13:27:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5hv-0008SN-8z
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:14:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1rk5tz-0002EX-Fz; Tue, 12 Mar 2024 13:26:59 -0400
+Received: from wfout4-smtp.messagingengine.com ([64.147.123.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5ht-0002hO-LI
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:14:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710263668;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1VCZN46NWcj5S9HthzW9vZvsQBJ96s3KYdr/dNzsH5c=;
- b=Aj/hCkPaL8wexs5OJGYfqaYMSSQmlinF5YrnYFFiW5TUDzj3LbY7ZicFGYPlKUm+USCwoU
- yqqEl7orw9xGwRTNBtxnZeMOZ3eX7YErS4pM+hJOwWMEyxDHRfWwjznQM2J/Hhaewq7q9W
- 09Z31ElZEX+8OeQ8n92ZIV4PvEQ61Hg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-251-e8ufA2EfNL6sJb-_Y17jMA-1; Tue, 12 Mar 2024 13:14:27 -0400
-X-MC-Unique: e8ufA2EfNL6sJb-_Y17jMA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-412db0e24aeso944185e9.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 10:14:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710263666; x=1710868466;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1VCZN46NWcj5S9HthzW9vZvsQBJ96s3KYdr/dNzsH5c=;
- b=tfZ3YhmEuAVMVSVDxRrqVUcwe46h156s0F9de6Ks9/n7k3sxVEHXWe5MDIppSKpD1a
- m3gwFhOL7A0zhs/GUdc3GQmOA+N9Qd5pgPFxKGV8V6Zu9CXc7EYKTBxddxB+UtemTDwN
- CFrETL8nvH+JalIZvWD2vIfhcPVrs5wIZpuKfotcUfqTGcOBxfeJGA1ZkW1fL3Taoy35
- zSb4pY16r/bLhN6Rz5lcsRI5II5OoVUmsCZlFMeE88d7QkU+XBcqHOPWU2n6QqMk81SY
- RJ2bpKb6mIt8hzVrGr7vZ1dzimw1kitoTBYZOf0bFieQ1Di5PUxYpoNM4e0EimGrnTXi
- Smzg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVPaIKUuCGkLye2GRX8y9Q7zJUiVnaDtiXZ0VeIcqR7TfzjgH9UjnqzOyJq7RTRdl97TlNLovfffIrLhsD+dguqghKbt3c=
-X-Gm-Message-State: AOJu0YwG8H+9FP18jKgQqT9Kbj1nx0e5FKEKVn7j9AGSLwwuAZQ1IAgq
- pfG1erH+8ixheqr8IAJDOXEcqMQkHXYJh6yEwRrsFIlz6euICQZxlW+CpGOslvK8M/w6gT5ds+5
- jjIgQNSZ5JNGasxLj0YBs4K1ETlCHdvo1jZV166gHOcK21uULrSnt
-X-Received: by 2002:a05:600c:3109:b0:413:1bb9:1b9e with SMTP id
- g9-20020a05600c310900b004131bb91b9emr3213680wmo.21.1710263665899; 
- Tue, 12 Mar 2024 10:14:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGz9DZZCNXE2k9LyP4PdfNxJdbhZvUzl2YbV1MgfEJ1WTo1PBhVNj0G3DLzYk1tfe0qMG7hPA==
-X-Received: by 2002:a05:600c:3109:b0:413:1bb9:1b9e with SMTP id
- g9-20020a05600c310900b004131bb91b9emr3213649wmo.21.1710263665322; 
- Tue, 12 Mar 2024 10:14:25 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
- by smtp.gmail.com with ESMTPSA id
- fb4-20020a05600c520400b00413294ddb72sm7863394wmb.20.2024.03.12.10.14.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 10:14:24 -0700 (PDT)
-Date: Tue, 12 Mar 2024 13:14:19 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1rk5tx-0005Tf-I3; Tue, 12 Mar 2024 13:26:59 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+ by mailfout.west.internal (Postfix) with ESMTP id 8EA2C1C000B1;
+ Tue, 12 Mar 2024 13:26:54 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute6.internal (MEProxy); Tue, 12 Mar 2024 13:26:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:date:date:from
+ :from:in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1710264414; x=
+ 1710350814; bh=JKnGlfO0W7+PIXDSveDO2EZeh/9I2JiRCj4XnWkBROk=; b=I
+ m81mzWgHNoCNANvyZmvyVHGvhf+Rcg1Yqp6xCwUVcsoPrNeU+5LVdwAvvKinuWn0
+ D2VECzmAx5mRPjbt7CzZtEfvAAsx+k4ZxJsjcXxRvVYPpExJADcjt8kxoF6xOFnS
+ sugkg8QLk8Fw2SmFrbQUBwx6A4qZoI99GAsWZeA5w7Pq8ehCqMfIQvTDvmE3SSjW
+ 3mEEwM6E6hmGfURJ2D5RX5OLv5ryzMtDxS1MyGvFkN03hr3CMVecL21Vle5z3pJ7
+ BXFaPy9ZA1vdvxB5/W+YI743APb02uSReIk7NnwDl64UGwl/0+66G/lFwX1NgXO4
+ crqms0+cwuFUdUxuZconw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1710264414; x=
+ 1710350814; bh=JKnGlfO0W7+PIXDSveDO2EZeh/9I2JiRCj4XnWkBROk=; b=J
+ 4oObXhZyML6rx3yhG9OVq2o0CXzRtGw/sK+mPulM8Xkh49QB/cJnqfsh6gos1KzY
+ KuAD3rBXCy/7RQznwQz0w3/4HoceuZb8XNrqdWZMW7KH4IVuu6YauVckaqD36yLY
+ EVAbEETYlHYxq8JOKrVg9CUZ8SI289IcbKYPoyoIVYQa0jfs3VwhKpk83Vc9urgN
+ ojpiASQZ8IjJlk9TEBZ+piM3HtWW6OJWlpv7ZGL2o9slyKIsRi7xlmPrIzHRsShA
+ bDhKPApPo16IH7/1LYEsLBUfI8a0WyrBtyNOQmrWl7J+qC/8yi2C/enOoX6tUOjb
+ vvkwrRnTFsiOSF15eghFA==
+X-ME-Sender: <xms:XZDwZRMUYEBkBKO5yRruIiR7Nx7njornBIpUSYgVh6ANIdai5Jpkhw>
+ <xme:XZDwZT-6a_7y8ekdZqVdC9xOid_SxLfKorpLIqsDL50Bebjxt26ROZnHRvpal4UoN
+ daozDHDAjW4QzaYZ28>
+X-ME-Received: <xmr:XZDwZQQ_p2gHKNfEONGqCawGWphQoMZ0WVR0_j_jtJ4eecLKD022Sx6R26gF-gRKTrDNPAotEw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrjeefgddutddtucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhlrghu
+ shculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrth
+ htvghrnhepfeehteeghefffeegkefghfegieejkeevfffhjeevfeekudeiieevheetledu
+ jedunecuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpe
+ dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughk
+X-ME-Proxy: <xmx:XZDwZdvYZqYh0NaO6o94-aj3gVWgiYPvGMI3avEntBwyet8OknpjyQ>
+ <xmx:XZDwZZfbxlD0qQf5o_brRvQ9AuKlRrAxp45MOK03je9GCIfft95scw>
+ <xmx:XZDwZZ3FD_B2yi0Mfp7ETfdwQ2zbQ0Wg_LMn2RK5ZlBunHR5SMZOcA>
+ <xmx:XZDwZV_DmydbJZEsQDkIY33RwLKpS9SL9xxDqZUaXECmmn-RdeUB3Q>
+ <xmx:XpDwZc_jmG_I5qFnVk6kIFQ7XkG4l5iM_DiEwHBb46GD9x5FlCd1miJ66-M>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 Mar 2024 13:26:51 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+To: Peter Maydell <peter.maydell@linaro.org>,
+	qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>, qemu-block@nongnu.org,
+ Yanan Wang <wangyanan55@huawei.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?iso-8859-1?B?IkRhbmllbCBQIC4gQmVycmFuZ+ki?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Julia Suvorova <jusual@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, QEMU Developers <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v5] pc: q35: Bump max_cpus to 4096 vcpus
-Message-ID: <20240312131413-mutt-send-email-mst@kernel.org>
-References: <20240228143351.3967-1-anisinha@redhat.com>
- <8F921979-45DC-4235-9F6E-8F54DDE33FB7@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jesper Devantier <foss@defmacro.it>, Klaus Jensen <k.jensen@samsung.com>,
+ qemu-stable@nongnu.org
+Subject: [PULL v2 6/6] hw/nvme: add machine compatibility parameter to enable
+ msix exclusive bar
+Date: Tue, 12 Mar 2024 18:26:29 +0100
+Message-ID: <20240312172622.58652-14-its@irrelevant.dk>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240312172622.58652-8-its@irrelevant.dk>
+References: <20240312172622.58652-8-its@irrelevant.dk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5504; i=k.jensen@samsung.com;
+ h=from:subject; bh=9U433+XAOj8OOfgXrbOWFIMp7VQJFrBKGigW0tpjK0U=;
+ b=owJ4nAFtAZL+kA0DAAoBTeGvMW1PDekByyZiAGXwkD9vpQchn3rz4O1XZWmjXX07vy2yxb+Q5
+ /OkSKbyWV6rDYkBMwQAAQoAHRYhBFIoM6p14tzmokdmwE3hrzFtTw3pBQJl8JA/AAoJEE3hrzFt
+ Tw3pPCIIAMTaM2k0OnU5sQ0uriYlBy2U8V/C6bLEA2/TChnho6Qt7+kH24vCJLuBqnVN3lBQw/K
+ as8K6P9dcwxnZKJNbhPA4OujCBSzRWIlchvUrrNThlapDDv4Nbm+nSYWDYdvCQ9d8PcmMxy4dio
+ iPzVuQ72ZHLhM6zY5XTrrIOWl3vXDE9Bhddr+C73WPrVNA4Pv4BRA0cO70kQzs9Ne1xnSHfGNzb
+ USkaO+GRBFp0h8dbWaH9rPEHmNxYxq76FWguGQHSFNkgCX8HP3YViLOeCZoomP8DY2rf/ltZfFe
+ ByZQ0HsbnY1Ao4XzCKOwD3B08pl5Gh+uKmeRr4If1D67Ir/vUEvZfKu2
+X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
+ fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <8F921979-45DC-4235-9F6E-8F54DDE33FB7@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=64.147.123.147; envelope-from=its@irrelevant.dk;
+ helo=wfout4-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,86 +121,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 12, 2024 at 12:04:37PM +0530, Ani Sinha wrote:
-> 
-> 
-> > On 28-Feb-2024, at 20:03, Ani Sinha <anisinha@redhat.com> wrote:
-> > 
-> > Since commit f10a570b093e6 ("KVM: x86: Add CONFIG_KVM_MAX_NR_VCPUS to allow up to 4096 vCPUs")
-> > Linux kernel can support upto a maximum number of 4096 vcpus when MAXSMP is
-> > enabled in the kernel. At present, QEMU has been tested to correctly boot a
-> > linux guest with 4096 vcpus using the current edk2 upstream master branch that
-> > has the fixes corresponding to the following two PRs:
-> > 
-> > https://github.com/tianocore/edk2/pull/5410
-> > https://github.com/tianocore/edk2/pull/5418
-> > 
-> > The changes merged into edk2 with the above PRs will be in the upcoming 2024-05
-> > release. With current seabios firmware, it boots fine with 4096 vcpus already.
-> > So bump up the value max_cpus to 4096 for q35 machines versions 9 and newer.
-> > Q35 machines versions 8.2 and older continue to support 1024 maximum vcpus
-> > as before for compatibility reasons.
-> > 
-> > If KVM is not able to support the specified number of vcpus, QEMU would
-> > return the following error messages:
-> > 
-> > $ ./qemu-system-x86_64 -cpu host -accel kvm -machine q35 -smp 1728
-> > qemu-system-x86_64: -accel kvm: warning: Number of SMP cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
-> > qemu-system-x86_64: -accel kvm: warning: Number of hotpluggable cpus requested (1728) exceeds the recommended cpus supported by KVM (12)
-> > Number of SMP cpus requested (1728) exceeds the maximum cpus supported by KVM (1024)
-> > 
-> > Cc: Daniel P. Berrangé <berrange@redhat.com>
-> > Cc: Igor Mammedov <imammedo@redhat.com>
-> > Cc: Michael S. Tsirkin <mst@redhat.com>
-> > Cc: Julia Suvorova <jusual@redhat.com>
-> > Cc: kraxel@redhat.com
-> > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-> > Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
-> > Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> 
-> Ping .. who is picking this up? The soft code freeze starts today?
+From: Klaus Jensen <k.jensen@samsung.com>
 
+Commit 1901b4967c3f ("hw/block/nvme: move msix table and pba to BAR 0")
+moved the MSI-X table and PBA to BAR 0 to make room for enabling CMR and
+PMR at the same time. As reported by Julien Grall in #2184, this breaks
+migration through system hibernation.
 
-I did.
+Add a machine compatibility parameter and set it on machines pre 6.0 to
+enable the old behavior automatically, restoring the hibernation
+migration support.
 
-> > ---
-> > hw/i386/pc_q35.c | 3 ++-
-> > 1 file changed, 2 insertions(+), 1 deletion(-)
-> > 
-> > Changelog:
-> > v5: mention the PRs in the commit message. Add tags.
-> > v4: tweaked commit message as per suggestion from danpb explicitly
-> > stating that 4096 vcpus work with edk2 fixes that are going to be
-> > available in the coming edk2 release.
-> > v3: bump up to 4096 vcpus. It has now been tested to work with edk2.
-> > See RH Jira: https://issues.redhat.com/browse/RHEL-22202
-> > v2: bump up the vcpu number to 1856. Add failure messages from ekd2 in
-> > the commit description.
-> > 
-> > diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> > index 45a4102e75..df63a92b78 100644
-> > --- a/hw/i386/pc_q35.c
-> > +++ b/hw/i386/pc_q35.c
-> > @@ -350,7 +350,7 @@ static void pc_q35_machine_options(MachineClass *m)
-> >     m->default_nic = "e1000e";
-> >     m->default_kernel_irqchip_split = false;
-> >     m->no_floppy = 1;
-> > -    m->max_cpus = 1024;
-> > +    m->max_cpus = 4096;
-> >     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
-> >     machine_class_allow_dynamic_sysbus_dev(m, TYPE_AMD_IOMMU_DEVICE);
-> >     machine_class_allow_dynamic_sysbus_dev(m, TYPE_INTEL_IOMMU_DEVICE);
-> > @@ -371,6 +371,7 @@ static void pc_q35_8_2_machine_options(MachineClass *m)
-> > {
-> >     pc_q35_9_0_machine_options(m);
-> >     m->alias = NULL;
-> > +    m->max_cpus = 1024;
-> >     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-> >     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
-> > }
-> > -- 
-> > 2.42.0
-> > 
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2184
+Fixes: 1901b4967c3f ("hw/block/nvme: move msix table and pba to BAR 0")
+Reported-by: Julien Grall julien@xen.org
+Tested-by: Julien Grall julien@xen.org
+Reviewed-by: Jesper Wendel Devantier <foss@defmacro.it>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ hw/core/machine.c |  1 +
+ hw/nvme/ctrl.c    | 53 +++++++++++++++++++++++++++++++++--------------
+ hw/nvme/nvme.h    |  1 +
+ 3 files changed, 39 insertions(+), 16 deletions(-)
+
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 0e9d646b61e1..37e5d4c8dfd5 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -102,6 +102,7 @@ GlobalProperty hw_compat_5_2[] = {
+     { "PIIX4_PM", "smm-compat", "on"},
+     { "virtio-blk-device", "report-discard-granularity", "off" },
+     { "virtio-net-pci-base", "vectors", "3"},
++    { "nvme", "msix-exclusive-bar", "on"},
+ };
+ const size_t hw_compat_5_2_len = G_N_ELEMENTS(hw_compat_5_2);
+ 
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index efcfd7171066..036b15403a02 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -7810,6 +7810,11 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
+     }
+ 
+     if (n->pmr.dev) {
++        if (params->msix_exclusive_bar) {
++            error_setg(errp, "not enough BARs available to enable PMR");
++            return false;
++        }
++
+         if (host_memory_backend_is_mapped(n->pmr.dev)) {
+             error_setg(errp, "can't use already busy memdev: %s",
+                        object_get_canonical_path_component(OBJECT(n->pmr.dev)));
+@@ -8113,24 +8118,38 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+         pcie_ari_init(pci_dev, 0x100);
+     }
+ 
+-    /* add one to max_ioqpairs to account for the admin queue pair */
+-    bar_size = nvme_mbar_size(n->params.max_ioqpairs + 1, n->params.msix_qsize,
+-                              &msix_table_offset, &msix_pba_offset);
+-
+-    memory_region_init(&n->bar0, OBJECT(n), "nvme-bar0", bar_size);
+-    memory_region_init_io(&n->iomem, OBJECT(n), &nvme_mmio_ops, n, "nvme",
+-                          msix_table_offset);
+-    memory_region_add_subregion(&n->bar0, 0, &n->iomem);
+-
+-    if (pci_is_vf(pci_dev)) {
+-        pcie_sriov_vf_register_bar(pci_dev, 0, &n->bar0);
+-    } else {
++    if (n->params.msix_exclusive_bar && !pci_is_vf(pci_dev)) {
++        bar_size = nvme_mbar_size(n->params.max_ioqpairs + 1, 0, NULL, NULL);
++        memory_region_init_io(&n->iomem, OBJECT(n), &nvme_mmio_ops, n, "nvme",
++                              bar_size);
+         pci_register_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
+-                         PCI_BASE_ADDRESS_MEM_TYPE_64, &n->bar0);
++                         PCI_BASE_ADDRESS_MEM_TYPE_64, &n->iomem);
++        ret = msix_init_exclusive_bar(pci_dev, n->params.msix_qsize, 4, errp);
++    } else {
++        assert(n->params.msix_qsize >= 1);
++
++        /* add one to max_ioqpairs to account for the admin queue pair */
++        bar_size = nvme_mbar_size(n->params.max_ioqpairs + 1,
++                                  n->params.msix_qsize, &msix_table_offset,
++                                  &msix_pba_offset);
++
++        memory_region_init(&n->bar0, OBJECT(n), "nvme-bar0", bar_size);
++        memory_region_init_io(&n->iomem, OBJECT(n), &nvme_mmio_ops, n, "nvme",
++                              msix_table_offset);
++        memory_region_add_subregion(&n->bar0, 0, &n->iomem);
++
++        if (pci_is_vf(pci_dev)) {
++            pcie_sriov_vf_register_bar(pci_dev, 0, &n->bar0);
++        } else {
++            pci_register_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
++                             PCI_BASE_ADDRESS_MEM_TYPE_64, &n->bar0);
++        }
++
++        ret = msix_init(pci_dev, n->params.msix_qsize,
++                        &n->bar0, 0, msix_table_offset,
++                        &n->bar0, 0, msix_pba_offset, 0, errp);
+     }
+-    ret = msix_init(pci_dev, n->params.msix_qsize,
+-                    &n->bar0, 0, msix_table_offset,
+-                    &n->bar0, 0, msix_pba_offset, 0, errp);
++
+     if (ret == -ENOTSUP) {
+         /* report that msix is not supported, but do not error out */
+         warn_report_err(*errp);
+@@ -8434,6 +8453,8 @@ static Property nvme_props[] = {
+                       params.sriov_max_vi_per_vf, 0),
+     DEFINE_PROP_UINT8("sriov_max_vq_per_vf", NvmeCtrl,
+                       params.sriov_max_vq_per_vf, 0),
++    DEFINE_PROP_BOOL("msix-exclusive-bar", NvmeCtrl, params.msix_exclusive_bar,
++                     false),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index 392c02942682..bed8191bd5fd 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -536,6 +536,7 @@ typedef struct NvmeParams {
+     uint16_t sriov_vi_flexible;
+     uint8_t  sriov_max_vq_per_vf;
+     uint8_t  sriov_max_vi_per_vf;
++    bool     msix_exclusive_bar;
+ } NvmeParams;
+ 
+ typedef struct NvmeCtrl {
+-- 
+2.44.0
 
 
