@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A60AC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7935C54E66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAdJ-0005ar-Vo; Tue, 12 Mar 2024 18:30:06 -0400
+	id 1rkAbs-0002i5-Vl; Tue, 12 Mar 2024 18:28:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcI-0002ry-4a
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbl-0002KV-EN
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAc8-0004c7-F8
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:53 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbj-0004Y8-Tz
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282531;
+ s=mimecast20190719; t=1710282507;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SkLCskZADtvicMPgS7N3Shz0FKc1G4wcmgr3/rSi1jg=;
- b=aJb7n1frFuC7gbxlWndEONrwaC7rAPJRrSOo1HPkuSTPXqTdEYI0vzlXD4NTAHr48k51G/
- 06BUYh9rvCICJilWoQHqkhmeQqt+h7UXktgLntwSqmYd0fbzm+x2vyCkGk/ColzK0oXQt6
- vBFnC89ejBfzriMvEnGHr88/rujShBE=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HRYAFmiIOZoNHp71a+p+TPZ7pg4hnnbXtufAOJw7DWA=;
+ b=XU/2vra1PWQSHPur1xTVrnYq19RsDQjGYCF9ZClR3ib98GvK3cyha6DPysRACxtZO64hxk
+ aVn546Jec/KX+GU6ZPN9SaYHjhPx6Yyw8n1CcLrw813sN+dRKj2sKhD52qENJnrO9qErGG
+ D9QJkdUSyeBToAUpM28Kg0ngIUZQsCw=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-251-RRueLvNdPhGBjT357YJz8g-1; Tue, 12 Mar 2024 18:28:50 -0400
-X-MC-Unique: RRueLvNdPhGBjT357YJz8g-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-568728e521bso1094767a12.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:50 -0700 (PDT)
+ us-mta-168--rx-xyUmMmatqjUSnaJXbg-1; Tue, 12 Mar 2024 18:28:26 -0400
+X-MC-Unique: -rx-xyUmMmatqjUSnaJXbg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a4489805a2dso176750166b.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282529; x=1710887329;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SkLCskZADtvicMPgS7N3Shz0FKc1G4wcmgr3/rSi1jg=;
- b=TOPU6zyM57/il/m8aK8pqPlj1s/t1qXUddUKQ7dFdbL5bCGObqMyroDYDqSHXyFoS7
- HWxduP+ofB11bRMHdCqw7cBuH0fgyP4BiYAgJPVUGfL92Ys0qy+XPPHT19uJcYTBHBkC
- xnBdPFKGNuDHiG1BfsKolfP4+5gg1KEwLj9j2PRGcUkErhkFfhW6ZowfK8V7+xeVUrjB
- eAVbR813bye7Xyycd+1F93tEumJiJ2+wzlD+yj4Su9dixlztiACK+kau2WeohQUp4gIH
- 7zYycKgGfmfzgcfED0/9zchZ4OkmQLq0tfZSwQsVioHiun59gMtrpXfyEZIU18gV6lTU
- Wijw==
-X-Gm-Message-State: AOJu0YwpxsCLQMZ2Xdq+jAnhbufLfpZBpDjTnzfXeDJ1VKkOVrD/Ww2a
- dmNu1vPkx56YknBMNx5/go9Hmk6OKGLcM/FUh6/IqiHNuhBtmCMq9pOY21EmLJBRcsVr0Q8jGGz
- pZgPFD/xJAmsJuIFxrJ/fCcNhkPEfmgkxELBW1BtQKBGJyWbHEgoLa8CfpMjPBeT1V4nVJrR35j
- FWlnJSHkv3H8dXPnjkkV9iwJeKuyLOCa73
-X-Received: by 2002:a50:f696:0:b0:567:3bbd:cefb with SMTP id
- d22-20020a50f696000000b005673bbdcefbmr2561979edn.35.1710282528788; 
- Tue, 12 Mar 2024 15:28:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDO+cV22/TTgsh2a4S0j3ck470gwU1x6D2mZTQmKgd2I2B7B7BebfU5zaGEa6MERtj9rfCRQ==
-X-Received: by 2002:a50:f696:0:b0:567:3bbd:cefb with SMTP id
- d22-20020a50f696000000b005673bbdcefbmr2561963edn.35.1710282528377; 
- Tue, 12 Mar 2024 15:28:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710282504; x=1710887304;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HRYAFmiIOZoNHp71a+p+TPZ7pg4hnnbXtufAOJw7DWA=;
+ b=Rc5I9oqncetp2qwoP3RPZKzJZ3onycVdZb7fL4Ch37tGuvsWHGiqmvPJxRrV4vfP3T
+ RSQSJ9OC2SPMITqo17CnKrQ7feUN357mKHfTVo3mrF7Dc7ss3vyNZ7gVmSoxD6/Vk48F
+ IU4mvOl7h6G9SOP/4mSpHPDcHlv0emR+64+WCuLSbJGz0K/xVsk9mDNIvYbOHCXlwFRC
+ xHXEokk/kKJ+6hC9gafnc6k8SIOQhz9r9YT0XZ6ErBT4EgK72xNe/0scZhN8G0cqX8Ew
+ 5dUEicIli9kb4iQdcegQztG7MriEvOveulLUOOwKwbxPIcY4BEwYW9czUXz9IiYFDB+b
+ L7lg==
+X-Gm-Message-State: AOJu0Yz4HZahX1/YhUjRxtiuB6cYOPyLgRZulhueO+NZahddPNjmNBD0
+ Sd9bTViplaoBJmJKXiyPbSK+wVTjMoL4MIPwjzSaPe2H39/Uf1QqEZqQzQsLEfwLAmrPfa9S29g
+ YfG1C3D/3HgYtEoO3sRtYmr+tVedU5esEVH1dYDQXTmWTRfnJ0jidLqQvLUVEIVK9l8C8CzV89h
+ nj1WDTniqT7e2bT34O7GUuAuWvZ72LaiXv
+X-Received: by 2002:a17:907:cbc1:b0:a45:a3e9:debd with SMTP id
+ vk1-20020a170907cbc100b00a45a3e9debdmr8213828ejc.59.1710282504462; 
+ Tue, 12 Mar 2024 15:28:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEAvwH57dOUxhey4nr9xzfL0gG/qe5PxWH+ERvbPuSEkol8XBL1gj4Napla/sPHr1tplaMDpw==
+X-Received: by 2002:a17:907:cbc1:b0:a45:a3e9:debd with SMTP id
+ vk1-20020a170907cbc100b00a45a3e9debdmr8213810ejc.59.1710282503982; 
+ Tue, 12 Mar 2024 15:28:23 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- v22-20020aa7d816000000b005687e041608sm440346edq.37.2024.03.12.15.28.47
+ jo11-20020a170906f6cb00b00a46522c38c4sm200844ejb.207.2024.03.12.15.28.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:28:48 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:28:45 -0400
+ Tue, 12 Mar 2024 15:28:23 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:28:21 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: [PULL 60/68] virtio-iommu: Trace domain range limits as unsigned int
-Message-ID: <fdda908f945bcd985be4ebd2a06d00719bc15e93.1710282274.git.mst@redhat.com>
+ Bernhard Beschow <shentey@gmail.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 53/68] hw/i386/pc: Inline pc_cmos_init() into
+ pc_cmos_init_late() and remove it
+Message-ID: <7d12305ec8c3fa8c60b39aae0d952245a62696d4.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,33 +106,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Use %u format to trace domain_range limits.
+Now that pc_cmos_init() doesn't populate the X86MachineState::rtc attribute any
+longer, its duties can be merged into pc_cmos_init_late() which is called within
+machine_done notifier. This frees pc_piix and pc_q35 from explicit CMOS
+initialization.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Message-Id: <20240307134445.92296-6-eric.auger@redhat.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-Id: <20240303185332.1408-5-shentey@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/trace-events | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/i386/pc.h |  2 --
+ hw/i386/pc.c         | 10 ----------
+ hw/i386/pc_piix.c    |  2 --
+ hw/i386/pc_q35.c     |  2 --
+ 4 files changed, 16 deletions(-)
 
-diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
-index 9df24864a2..13b6991179 100644
---- a/hw/virtio/trace-events
-+++ b/hw/virtio/trace-events
-@@ -112,7 +112,7 @@ virtio_iommu_device_reset(void) "reset!"
- virtio_iommu_system_reset(void) "system reset!"
- virtio_iommu_get_features(uint64_t features) "device supports features=0x%"PRIx64
- virtio_iommu_device_status(uint8_t status) "driver status = %d"
--virtio_iommu_get_config(uint64_t page_size_mask, uint64_t start, uint64_t end, uint32_t domain_start, uint32_t domain_end, uint32_t probe_size, uint8_t bypass) "page_size_mask=0x%"PRIx64" input range start=0x%"PRIx64" input range end=0x%"PRIx64" domain range start=%d domain range end=%d probe_size=0x%x bypass=0x%x"
-+virtio_iommu_get_config(uint64_t page_size_mask, uint64_t start, uint64_t end, uint32_t domain_start, uint32_t domain_end, uint32_t probe_size, uint8_t bypass) "page_size_mask=0x%"PRIx64" input range start=0x%"PRIx64" input range end=0x%"PRIx64" domain range start=%u domain range end=%u probe_size=0x%x bypass=0x%x"
- virtio_iommu_set_config(uint8_t bypass) "bypass=0x%x"
- virtio_iommu_attach(uint32_t domain_id, uint32_t ep_id) "domain=%d endpoint=%d"
- virtio_iommu_detach(uint32_t domain_id, uint32_t ep_id) "domain=%d endpoint=%d"
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 8458487a5e..27a68071d7 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -178,8 +178,6 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+                           ISADevice *rtc_state,
+                           bool create_fdctrl,
+                           uint32_t hpet_irqs);
+-void pc_cmos_init(PCMachineState *pcms,
+-                  ISADevice *s);
+ void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus);
+ 
+ void pc_i8259_create(ISABus *isa_bus, qemu_irq *i8259_irqs);
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index c614697ca6..1590352bb5 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -570,14 +570,6 @@ static void pc_cmos_init_late(PCMachineState *pcms)
+     mc146818rtc_set_cmos_data(s, 0x39, val);
+ 
+     pc_cmos_init_floppy(s, pc_find_fdc0());
+-}
+-
+-void pc_cmos_init(PCMachineState *pcms,
+-                  ISADevice *rtc)
+-{
+-    int val;
+-    X86MachineState *x86ms = X86_MACHINE(pcms);
+-    MC146818RtcState *s = MC146818_RTC(rtc);
+ 
+     /* various important CMOS locations needed by PC/Bochs bios */
+ 
+@@ -618,8 +610,6 @@ void pc_cmos_init(PCMachineState *pcms,
+     val |= 0x02; /* FPU is there */
+     val |= 0x04; /* PS/2 mouse installed */
+     mc146818rtc_set_cmos_data(s, REG_EQUIPMENT_BYTE, val);
+-
+-    /* hard drives and FDC are handled by pc_cmos_init_late() */
+ }
+ 
+ static void handle_a20_line_change(void *opaque, int irq, int level)
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 9dd9f5562e..c9a6c0aa68 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -344,8 +344,6 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+     }
+ #endif
+ 
+-    pc_cmos_init(pcms, x86ms->rtc);
+-
+     if (piix4_pm) {
+         smi_irq = qemu_allocate_irq(pc_acpi_smi_interrupt, first_cpu, 0);
+ 
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index df63a92b78..1356c5d107 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -311,8 +311,6 @@ static void pc_q35_init(MachineState *machine)
+         smbus_eeprom_init(pcms->smbus, 8, NULL, 0);
+     }
+ 
+-    pc_cmos_init(pcms, x86ms->rtc);
+-
+     /* the rest devices to which pci devfn is automatically assigned */
+     pc_vga_init(isa_bus, pcms->pcibus);
+     pc_nic_init(pcmc, isa_bus, pcms->pcibus);
 -- 
 MST
 
