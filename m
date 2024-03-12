@@ -4,82 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F2EC54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:31:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E09C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0M1-0002iW-OV; Tue, 12 Mar 2024 07:31:35 -0400
+	id 1rk0PE-00058X-In; Tue, 12 Mar 2024 07:34:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk0Lj-0002PI-0L; Tue, 12 Mar 2024 07:31:16 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk0LZ-0001gC-J9; Tue, 12 Mar 2024 07:31:08 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dc29f1956cso25773355ad.0; 
- Tue, 12 Mar 2024 04:31:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710243064; x=1710847864; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KqUlLXEYkO5E5xu3upvgrjqexiwawNFT7TqAcgfRPBY=;
- b=E4WJNgGgpCEHevor2/ChQ4vYkBvjyDdHL+LtEzvLHbFWA7zoBWTW1OiWMf/RO1LwFa
- 7XWtxZi6s/ks/jRAajDHoFo8f8mJBSassXmpxBcAoydf1mKKJ7jAfHq0J0HU4C3CJO8h
- dDf1+bFFZxuWuzvO/4iuuuH8B7YXXKCIM6JZP+zjg2q9VWk0cB8mX5YdhIFplOn9o6FS
- XRTPDSH8dARnpGWFDpLS4AcB2QOSJNu1y9gnwg7BtPProkNh9wK6hZUB11J+tLxY7C8G
- oQqegW8AzFOoc+EFJ5VTEAP8uiBXPoMnHppfsvWGHhp9RGjqbcD2inzB6WH5WeZxtfmR
- Q6mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710243064; x=1710847864;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=KqUlLXEYkO5E5xu3upvgrjqexiwawNFT7TqAcgfRPBY=;
- b=a97VFAx3SUT4etMIsZQY/1YED+PAc+pQLMYwD5YEe0S1/w2PEGgKBsBrLqdvP+F1Lw
- vvi3w+5+yTZp02tPJBdYeao6+vfZAUy+PXzejz1yyFx20DycilE3+MvjWjDEjOVSdtsm
- lpRbeNRr1IsiwL34NQt8enMwXZquEU2HH+kQpiUcfrdyw9txSt96lWqakTnL6WrW9pBq
- baTP8S4MGeGTbhdO4y2gQMVf3SIIJcizl6JBKJtmhLBZTDiZF+IrOo2yH+GONXgqOdDJ
- Zkhcq9GD0X/5+Sq/vRX3f5UbA4jhTFFxbYIXJyYdNtdFf/RZ64gxUtmPToFDsKtSqVtH
- IN6Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVA81GoXtk9UMnUr5fEUhNzLuNd5W2p/YQLlHbz5/wC/L7bMeOzyN1C3TnAQ40SW45gXG+61TKGa1YARBwjQQ/DynwfgcrqtPYL3XP8yO7bWs9dbAchKrC8vxg=
-X-Gm-Message-State: AOJu0YxX4xgE60N9Tc0q5uY4Iv9eDngm7HqJ5Vku6eCGBv03VmkM3NH5
- klxt6PJ6dnIxEuEjsU0p3b2ZJ1pG9jlh7YI0jGQO2JsJtb9kH/IS
-X-Google-Smtp-Source: AGHT+IFm7i6BRZztF36RkzEV5BNRyvmv0vaTXMhT4um0IvevS0VQsFqpNbEr3NQvMSSjO2e9bEntPQ==
-X-Received: by 2002:a17:903:2349:b0:1dd:abc2:a028 with SMTP id
- c9-20020a170903234900b001ddabc2a028mr4125338plh.12.1710243063676; 
- Tue, 12 Mar 2024 04:31:03 -0700 (PDT)
-Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
- 12-20020a170902c10c00b001dc391cc28fsm6444068pli.121.2024.03.12.04.30.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 04:31:03 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Mar 2024 21:30:57 +1000
-Message-Id: <CZRQKEBW7RXM.38AAGNKKYWQEC@wheely>
-Cc: <clg@kaod.org>, <mikey@neuling.org>, <amachhiw@linux.vnet.ibm.com>,
- <vaibhav@linux.ibm.com>, <sbhat@linux.ibm.com>, <danielhb413@gmail.com>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v5 08/14] spapr: nested: Introduce H_GUEST_CREATE_VCPU
- hcall.
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.15.2
-References: <20240308111940.1617660-1-harshpb@linux.ibm.com>
- <20240308111940.1617660-9-harshpb@linux.ibm.com>
-In-Reply-To: <20240308111940.1617660-9-harshpb@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rk0Ov-00054c-2c
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:34:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rk0Ot-0002J8-Fi
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:34:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710243270;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RcYR5YQ7WTlLn8CidzNO41yDxoDdxoPdPXfAuuzedws=;
+ b=YOjY+plbay2bid4ZrEImiaABN4Fjr1+U0emcm05WJ6RmFKn2Sb7CtvROdPuQhzf4bLfCBR
+ x08sqSIKtyfHBveKem5DPKwL2Ke9gwdMj9UH3Ifmf/EjYBKZY6f9THm98Kc7rnRGrIJgoN
+ P+VbaftzBm4DJNHr984wUFR/wD5Jk84=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-593-yHKNPRUAOBC5EGsCLgJcYA-1; Tue, 12 Mar 2024 07:34:26 -0400
+X-MC-Unique: yHKNPRUAOBC5EGsCLgJcYA-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C0B3F8007A2;
+ Tue, 12 Mar 2024 11:34:25 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.60])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 51300111E5;
+ Tue, 12 Mar 2024 11:34:23 +0000 (UTC)
+Date: Tue, 12 Mar 2024 11:34:21 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ John Snow <jsnow@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 0/2] trace: fix ability to use systemtap with qemu tools
+Message-ID: <ZfA9vRfC_6xEKmL2@redhat.com>
+References: <20240108171356.1037059-1-berrange@redhat.com>
+ <Zc9ejRbEun9VF7fh@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zc9ejRbEun9VF7fh@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,192 +87,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Mar 8, 2024 at 9:19 PM AEST, Harsh Prateek Bora wrote:
-> Introduce the nested PAPR hcall H_GUEST_CREATE_VCPU which is used to
-> create and initialize the specified VCPU resource for the previously
-> created guest. Each guest can have multiple VCPUs upto max 2048.
-> All VCPUs for a guest gets deallocated on guest delete.
->
-> Signed-off-by: Michael Neuling <mikey@neuling.org>
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Ping again for these patches to get into this release.
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+On Fri, Feb 16, 2024 at 01:09:33PM +0000, Daniel P. Berrangé wrote:
+> Ping: Stefan, are you OK with picking up these trace patches
+> for merge ?
+> 
+> On Mon, Jan 08, 2024 at 05:13:54PM +0000, Daniel P. Berrangé wrote:
+> > Currently we're only generating .stp definitions for the system and
+> > user emulators forgetting all about the tools which support tracing
+> > too.
+> > 
+> > Daniel P. Berrangé (2):
+> >   tracetool: remove redundant --target-type / --target-name args
+> >   meson: generate .stp files for tools too
+> > 
+> >  docs/devel/tracing.rst |  3 +-
+> >  meson.build            | 63 +++++++++++++++++++++++++++---------------
+> >  scripts/tracetool.py   | 24 ++++------------
+> >  3 files changed, 46 insertions(+), 44 deletions(-)
 
-> ---
->  include/hw/ppc/spapr.h        |  2 ++
->  include/hw/ppc/spapr_nested.h |  8 +++++
->  hw/ppc/spapr_nested.c         | 61 +++++++++++++++++++++++++++++++++++
->  3 files changed, 71 insertions(+)
->
-> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
-> index 13416fc3d7..070135793a 100644
-> --- a/include/hw/ppc/spapr.h
-> +++ b/include/hw/ppc/spapr.h
-> @@ -365,6 +365,7 @@ struct SpaprMachineState {
->  #define H_UNSUPPORTED     -67
->  #define H_OVERLAP         -68
->  #define H_STATE           -75
-> +#define H_IN_USE          -77
->  #define H_UNSUPPORTED_FLAG -256
->  #define H_MULTI_THREADS_ACTIVE -9005
-> =20
-> @@ -587,6 +588,7 @@ struct SpaprMachineState {
->  #define H_GUEST_GET_CAPABILITIES 0x460
->  #define H_GUEST_SET_CAPABILITIES 0x464
->  #define H_GUEST_CREATE           0x470
-> +#define H_GUEST_CREATE_VCPU      0x474
->  #define H_GUEST_DELETE           0x488
-> =20
->  #define MAX_HCALL_OPCODE         H_GUEST_DELETE
-> diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.=
-h
-> index 56d43e540b..2ac3076fac 100644
-> --- a/include/hw/ppc/spapr_nested.h
-> +++ b/include/hw/ppc/spapr_nested.h
-> @@ -14,6 +14,8 @@ typedef struct SpaprMachineStateNested {
-> =20
->  typedef struct SpaprMachineStateNestedGuest {
->      uint32_t pvr_logical;
-> +    unsigned long nr_vcpus;
-> +    struct SpaprMachineStateNestedGuestVcpu *vcpus;
->  } SpaprMachineStateNestedGuest;
-> =20
->  /* Nested PAPR API related macros */
-> @@ -27,6 +29,7 @@ typedef struct SpaprMachineStateNestedGuest {
->  #define H_GUEST_CAP_P10_MODE_BMAP     2
->  #define PAPR_NESTED_GUEST_MAX         4096
->  #define H_GUEST_DELETE_ALL_FLAG       0x8000000000000000ULL
-> +#define PAPR_NESTED_GUEST_VCPU_MAX    2048
-> =20
->  /*
->   * Register state for entering a nested guest with H_ENTER_NESTED.
-> @@ -120,6 +123,11 @@ struct nested_ppc_state {
->      int64_t tb_offset;
->  };
-> =20
-> +typedef struct SpaprMachineStateNestedGuestVcpu {
-> +    bool enabled;
-> +    struct nested_ppc_state state;
-> +} SpaprMachineStateNestedGuestVcpu;
-> +
->  void spapr_exit_nested(PowerPCCPU *cpu, int excp);
->  typedef struct SpaprMachineState SpaprMachineState;
->  bool spapr_get_pate_nested_hv(SpaprMachineState *spapr, PowerPCCPU *cpu,
-> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-> index 13674c0857..4c0e2e91e1 100644
-> --- a/hw/ppc/spapr_nested.c
-> +++ b/hw/ppc/spapr_nested.c
-> @@ -8,6 +8,7 @@
->  #include "hw/ppc/spapr_nested.h"
->  #include "mmu-book3s-v3.h"
->  #include "cpu-models.h"
-> +#include "qemu/log.h"
-> =20
->  void spapr_nested_reset(SpaprMachineState *spapr)
->  {
-> @@ -434,6 +435,16 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp)
->      }
->  }
-> =20
-> +static
-> +SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *=
-spapr,
-> +                                                     target_ulong guesti=
-d)
-> +{
-> +    SpaprMachineStateNestedGuest *guest;
-> +
-> +    guest =3D g_hash_table_lookup(spapr->nested.guests, GINT_TO_POINTER(=
-guestid));
-> +    return guest;
-> +}
-> +
->  static target_ulong h_guest_get_capabilities(PowerPCCPU *cpu,
->                                               SpaprMachineState *spapr,
->                                               target_ulong opcode,
-> @@ -524,6 +535,7 @@ static void
->  destroy_guest_helper(gpointer value)
->  {
->      struct SpaprMachineStateNestedGuest *guest =3D value;
-> +    g_free(guest->vcpus);
->      g_free(guest);
->  }
-> =20
-> @@ -619,6 +631,53 @@ static target_ulong h_guest_delete(PowerPCCPU *cpu,
->      return H_SUCCESS;
->  }
-> =20
-> +static target_ulong h_guest_create_vcpu(PowerPCCPU *cpu,
-> +                                        SpaprMachineState *spapr,
-> +                                        target_ulong opcode,
-> +                                        target_ulong *args)
-> +{
-> +    target_ulong flags =3D args[0];
-> +    target_ulong guestid =3D args[1];
-> +    target_ulong vcpuid =3D args[2];
-> +    SpaprMachineStateNestedGuest *guest;
-> +
-> +    if (flags) { /* don't handle any flags for now */
-> +        return H_UNSUPPORTED_FLAG;
-> +    }
-> +
-> +    guest =3D spapr_get_nested_guest(spapr, guestid);
-> +    if (!guest) {
-> +        return H_P2;
-> +    }
-> +
-> +    if (vcpuid < guest->nr_vcpus) {
-> +        qemu_log_mask(LOG_UNIMP, "vcpuid %ld already in use, return.", v=
-cpuid);
-> +        return H_IN_USE;
-> +    }
-> +    /* linear vcpuid allocation only */
-> +    assert(vcpuid =3D=3D guest->nr_vcpus);
-> +
-> +    if (guest->nr_vcpus >=3D PAPR_NESTED_GUEST_VCPU_MAX) {
-> +        return H_P3;
-> +    }
-> +
-> +    SpaprMachineStateNestedGuestVcpu *vcpus, *curr_vcpu;
-> +    vcpus =3D g_try_renew(struct SpaprMachineStateNestedGuestVcpu,
-> +                        guest->vcpus,
-> +                        guest->nr_vcpus + 1);
-> +    if (!vcpus) {
-> +        return H_NO_MEM;
-> +    }
-> +    guest->vcpus =3D vcpus;
-> +    curr_vcpu =3D &vcpus[guest->nr_vcpus];
-> +    memset(curr_vcpu, 0, sizeof(SpaprMachineStateNestedGuestVcpu));
-> +
-> +    curr_vcpu->enabled =3D true;
-> +    guest->nr_vcpus++;
-> +
-> +    return H_SUCCESS;
-> +}
-> +
->  void spapr_register_nested_hv(void)
->  {
->      spapr_register_hypercall(KVMPPC_H_SET_PARTITION_TABLE, h_set_ptbl);
-> @@ -641,6 +700,7 @@ void spapr_register_nested_papr(void)
->      spapr_register_hypercall(H_GUEST_SET_CAPABILITIES, h_guest_set_capab=
-ilities);
->      spapr_register_hypercall(H_GUEST_CREATE          , h_guest_create);
->      spapr_register_hypercall(H_GUEST_DELETE          , h_guest_delete);
-> +    spapr_register_hypercall(H_GUEST_CREATE_VCPU     , h_guest_create_vc=
-pu);
->  }
-> =20
->  void spapr_unregister_nested_papr(void)
-> @@ -649,6 +709,7 @@ void spapr_unregister_nested_papr(void)
->      spapr_unregister_hypercall(H_GUEST_SET_CAPABILITIES);
->      spapr_unregister_hypercall(H_GUEST_CREATE);
->      spapr_unregister_hypercall(H_GUEST_DELETE);
-> +    spapr_unregister_hypercall(H_GUEST_CREATE_VCPU);
->  }
-> =20
->  #else
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
