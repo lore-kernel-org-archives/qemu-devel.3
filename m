@@ -4,58 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C68BEC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDB6BC54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:45:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1Uo-0003d0-9k; Tue, 12 Mar 2024 08:44:42 -0400
+	id 1rk1VB-0004Ok-Qy; Tue, 12 Mar 2024 08:45:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Ul-0003U4-T7
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:39 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Ux-0004Gs-5G
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Uf-0000Kc-Gl
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:39 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Uv-0000UM-Ko
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710247471;
+ s=mimecast20190719; t=1710247488;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=99QgxR3ONMdrU2vEVyveIr1/PSdkGksjhl8FbVEITvg=;
- b=UI8S9fwLooyUVRbytNKNmdcum7TeoFW+VTkLI08Oxxl78CU3xvROJN43daF72/EC4rQdul
- 4S6YSm7fpBxDLoap3xyHil8ypcy9QZ6Rcso/rFmVI9BNy7b68KIKO9iT7OzIr2sgZxgoU6
- h/cRFLtOWJEEz6oWOdLHiHEFr4fYSZQ=
+ bh=INWzqCAIUBkHptSv0LUgISkPjTMS6KGTojp8SeCYlRQ=;
+ b=DxzSbo+n+wjkPEmNLf8NcBKpA0+21EBMRv8B3+oJ+hAaCr8nDBkRqsswOvxXPOPv5Op/nr
+ yslFRCjlteDHiWrjHRUOHuUpiRG4v4J7JSAqAFVMOxrOiQab9b8duMV3aKjPHY+Q9WKiuz
+ Aa2/vK06n6m7wdq37VMN3J/Vp4bxBvc=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-190-6E926wodN8CpUf9Z7NnPLg-1; Tue, 12 Mar 2024 08:44:28 -0400
-X-MC-Unique: 6E926wodN8CpUf9Z7NnPLg-1
+ us-mta-102-n5c7ZiNnNuiRa3KAj9XY0w-1; Tue, 12 Mar 2024 08:44:40 -0400
+X-MC-Unique: n5c7ZiNnNuiRa3KAj9XY0w-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 20773101A56C;
- Tue, 12 Mar 2024 12:44:28 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5C17185CBFE;
+ Tue, 12 Mar 2024 12:44:40 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.69])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A5594492BC4;
- Tue, 12 Mar 2024 12:44:26 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 085F2492B8F;
+ Tue, 12 Mar 2024 12:44:38 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 22/55] hw/vfio/container: Fix missing ERRP_GUARD() for
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PULL 28/55] hw/virtio/vhost-vsock: Fix missing ERRP_GUARD() for
  error_prepend()
-Date: Tue, 12 Mar 2024 13:43:06 +0100
-Message-ID: <20240312124339.761630-23-thuth@redhat.com>
+Date: Tue, 12 Mar 2024 13:43:12 +0100
+Message-ID: <20240312124339.761630-29-thuth@redhat.com>
 In-Reply-To: <20240312124339.761630-1-thuth@redhat.com>
 References: <20240312124339.761630-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -104,10 +102,10 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-The vfio_get_group() passes @errp to error_prepend(). Its @errp is
-from vfio_attach_device(), and there are too many possible callers to
-check the impact of this defect; it may or may not be harmless. Thus it
-is necessary to protect @errp with ERRP_GUARD().
+The vhost_vsock_device_realize() passes @errp to error_prepend(), and as
+a VirtioDeviceClass.realize method, its @errp is from
+DeviceClass.realize so that there is no guarantee that the @errp won't
+point to @error_fatal.
 
 To avoid the issue like [1] said, add missing ERRP_GUARD() at the
 beginning of this function.
@@ -115,29 +113,27 @@ beginning of this function.
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: Cédric Le Goater <clg@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Message-ID: <20240311033822.3142585-26-zhao1.liu@linux.intel.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Message-ID: <20240311033822.3142585-20-zhao1.liu@linux.intel.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/vfio/container.c | 1 +
+ hw/virtio/vhost-vsock.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index bd25b9fbad..f66bb01f5b 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -719,6 +719,7 @@ static void vfio_disconnect_container(VFIOGroup *group)
+diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+index d5ca0b5a10..3d4a5a97f4 100644
+--- a/hw/virtio/vhost-vsock.c
++++ b/hw/virtio/vhost-vsock.c
+@@ -121,6 +121,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
  
- static VFIOGroup *vfio_get_group(int groupid, AddressSpace *as, Error **errp)
+ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
  {
 +    ERRP_GUARD();
-     VFIOGroup *group;
-     char path[32];
-     struct vfio_group_status status = { .argsz = sizeof(status) };
+     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VHostVSock *vsock = VHOST_VSOCK(dev);
 -- 
 2.44.0
 
