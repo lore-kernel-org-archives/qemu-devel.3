@@ -4,69 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDC29C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90C88C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:04:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk2j1-00024k-7h; Tue, 12 Mar 2024 10:03:27 -0400
+	id 1rk2jn-0004c1-75; Tue, 12 Mar 2024 10:04:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rk2iX-0001eQ-5a
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:02:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rk2iV-0008Rl-1X
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:02:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710252171;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ObhuA3H8+Qw8iGJTgr6GIHo8x03k3oRryE1X3xAmIPA=;
- b=hLFyMS7Vc5LW0YObBfcliCwRLJeTttEX0HUCKBE1cb0iVYB0AFmCevZL+4ui30xzTnIRif
- NlSrj3L1cUwPW7qM0WefpnqrgP2gPM6LKfN7PRas/dSy//yUEp1FclvVBa7AlVRGQMZNQ1
- BqKzatCRy9vwm+ZRU/cenBVaPPYPj70=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-557-7sDNVoeGO1-O5NiyWHWg_w-1; Tue,
- 12 Mar 2024 10:02:41 -0400
-X-MC-Unique: 7sDNVoeGO1-O5NiyWHWg_w-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 69D5D3803526;
- Tue, 12 Mar 2024 14:02:39 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.42])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 605381C060CE;
- Tue, 12 Mar 2024 14:02:37 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PULL 3/5] ui/dbus: filter out pending messages when scanout
-Date: Tue, 12 Mar 2024 18:02:14 +0400
-Message-ID: <20240312140216.313618-4-marcandre.lureau@redhat.com>
-In-Reply-To: <20240312140216.313618-1-marcandre.lureau@redhat.com>
-References: <20240312140216.313618-1-marcandre.lureau@redhat.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rk2jS-0004Tm-KD
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:03:59 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rk2jP-0008Vu-Un
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:03:54 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6e55731af5cso2856767b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:03:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710252230; x=1710857030; darn=nongnu.org;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/EjHXdX0vkbq8sODjYsOgTQoCZtMGuICiiT+NPIRA/4=;
+ b=cPA4Yc82/bP76ZuKv4UekxzSc+xw+8L2w1tM2wbAwAL58s06xhUTZQ3sznj1CQOuY1
+ 9eyRp6o98SLOaIK4As2VkuFbF1HArkfHITyFRJ66ZWGip+XtLC24uOqG5KQZjpKzEt+n
+ g2/QMEBHV5Yt0aPIgHty2Oqgg7cv91Am4JiAx70iJOqsGWwqP6NMxRJq5z6bdHbbJHYF
+ 8soRqrc79JeFEQxlzDBZq54B+cA5BlXyrDC92emftBs4s7uBIQoHr3MgGHXAxJRFUfAb
+ EXg0nfXpByUzsULv3g4gDuoTDdhQQ8LVdGDPuZAttwrLRNBQRUpjLmUJxmthFKK5HEGF
+ 4Q9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710252230; x=1710857030;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=/EjHXdX0vkbq8sODjYsOgTQoCZtMGuICiiT+NPIRA/4=;
+ b=YfYw76KTUFfEa9C5C7cEywV0sa9U+Mx/YeZy90srwmF/2pc+j36tWhiqZnUUeZC6iE
+ KtXmjAhYGPpbE9Z3gMkovMzxx4VWuxOrg8VRvn+jmiR5Yzyb+0/Aog3IXSNE7m3t1z8t
+ yaGalfhckS0WbD/tX7m5jq3efU2G+qy/j2VFAqbFceSx6OK+YF8uqKhtHvt70S8o6xHU
+ uuFNT8Ml76jp5tApMNN3d41JrfEjPVPOguh/lziF0Wo7CKnUJdNHeJHg01QJtGJpE8Cs
+ RuFigCEqoI9MWKY6/CW05xQjlqJ7OM93TT5VjRXxG55k8nDLzKFqm3gN95DvN3SDRwO/
+ 1D4Q==
+X-Gm-Message-State: AOJu0Yx5fJ6CFkC1EPxy0lFrAWrPWdTFdVpOgTopRLtIoMDRkm2jYodj
+ W/V+/U+chyPzlzBzo7B1ciCHxmkmyE7hZEVaXblauvCu5xxywQCk
+X-Google-Smtp-Source: AGHT+IEzIx0/vloPOnlrY6rgmuR8Oe3koUeuxac/DwfJ2ZCc0oRRdAn42QI6PAwgk3yiNYTSAdpJeg==
+X-Received: by 2002:a05:6a20:49aa:b0:1a0:e4a6:5d31 with SMTP id
+ fs42-20020a056a2049aa00b001a0e4a65d31mr5142856pzb.55.1710252229643; 
+ Tue, 12 Mar 2024 07:03:49 -0700 (PDT)
+Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
+ d1-20020a62f801000000b006e6253bbcb7sm6052740pfh.61.2024.03.12.07.03.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Mar 2024 07:03:49 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Date: Wed, 13 Mar 2024 00:03:43 +1000
+Message-Id: <CZRTTCV604Z3.3MT5MR0P5FWQK@wheely>
+Subject: Re: [PATCH v4 05/24] Revert "replay: stop us hanging in
+ rr_wait_io_event"
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: <qemu-devel@nongnu.org>, "Pavel Dovgalyuk" <Pavel.Dovgalyuk@ispras.ru>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Richard
+ Henderson" <richard.henderson@linaro.org>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, "John Snow" <jsnow@redhat.com>, "Cleber Rosa"
+ <crosa@redhat.com>, "Wainer dos Santos Moschetta" <wainersm@redhat.com>,
+ "Beraldo Leal" <bleal@redhat.com>, "Michael Tokarev" <mjt@tls.msk.ru>
+X-Mailer: aerc 0.15.2
+References: <20240311174026.2177152-1-npiggin@gmail.com>
+ <20240311174026.2177152-6-npiggin@gmail.com>
+ <87v85ro9qt.fsf@draig.linaro.org>
+In-Reply-To: <87v85ro9qt.fsf@draig.linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,141 +99,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Tue Mar 12, 2024 at 11:33 PM AEST, Alex Benn=C3=A9e wrote:
+> Nicholas Piggin <npiggin@gmail.com> writes:
+>
+> > This reverts commit 1f881ea4a444ef36a8b6907b0b82be4b3af253a2.
+> >
+> > That commit causes reverse_debugging.py test failures, and does
+> > not seem to solve the root cause of the problem x86-64 still
+> > hangs in record/replay tests.
+>
+> I'm still finding the reverse debugging tests failing with this series.
 
-The "Listener" connection, being private and under the control of the
-qemu display, allows for the optimization of discarding pending
-intermediary messages when queuing a new scanout. This ensures that the
-client receives only the latest scanout update, improving communication
-efficiency.
+:(
 
-While the current implementation does not provide a mechanism for
-clients who may wish to receive all updates, making this behavior
-optional could be considered in the future. For now, adopting this new
-default behavior accelerates the communication process without a
-guarantee of delivering all updates.
+In gitlab CI or your own testing? What are you running exactly?
 
-The filter is removed when the connection is dropped.
+I found 440fx must have some bug becaues it's quite bad, but
+q35 was more stable.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- ui/dbus-listener.c | 40 ++++++++++++++++++++++++++++++++++++++++
- ui/trace-events    |  1 +
- 2 files changed, 41 insertions(+)
+>
+> > The problem with short-cutting the iowait that was taken during
+> > record phase is that related events will not get consumed at the
+> > same points (e.g., reading the clock).
+> >
+> > A hang with zero icount always seems to be a symptom of an earlier
+> > problem that has caused the recording to become out of synch with
+> > the execution and consumption of events by replay.
+>
+> Would it be possible to still detect the failure mode rather than a full
+> revert?
 
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 3f4529dbbd..4a0a5d78f9 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -83,6 +83,9 @@ struct _DBusDisplayListener {
-     egl_fb fb;
- #endif
- #endif
-+
-+    guint dbus_filter;
-+    guint32 out_serial_to_discard;
- };
- 
- G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
-@@ -90,6 +93,12 @@ G_DEFINE_TYPE(DBusDisplayListener, dbus_display_listener, G_TYPE_OBJECT)
- static void dbus_gfx_update(DisplayChangeListener *dcl,
-                             int x, int y, int w, int h);
- 
-+static void ddl_discard_pending_messages(DBusDisplayListener *ddl)
-+{
-+    ddl->out_serial_to_discard = g_dbus_connection_get_last_serial(
-+        g_dbus_proxy_get_connection(G_DBUS_PROXY(ddl->proxy)));
-+}
-+
- #ifdef CONFIG_OPENGL
- static void dbus_scanout_disable(DisplayChangeListener *dcl)
- {
-@@ -276,6 +285,8 @@ static void dbus_scanout_dmabuf(DisplayChangeListener *dcl,
-         return;
-     }
- 
-+    ddl_discard_pending_messages(ddl);
-+
-     /* FIXME: add missing x/y/w/h support */
-     qemu_dbus_display1_listener_call_scanout_dmabuf(
-         ddl->proxy,
-@@ -323,6 +334,8 @@ static bool dbus_scanout_map(DBusDisplayListener *ddl)
-         return false;
-     }
- 
-+    ddl_discard_pending_messages(ddl);
-+
-     if (!qemu_dbus_display1_listener_win32_map_call_scanout_map_sync(
-             ddl->map_proxy,
-             GPOINTER_TO_UINT(target_handle),
-@@ -384,6 +397,8 @@ dbus_scanout_share_d3d_texture(
-         return false;
-     }
- 
-+    ddl_discard_pending_messages(ddl);
-+
-     qemu_dbus_display1_listener_win32_d3d11_call_scanout_texture2d(
-         ddl->d3d11_proxy,
-         GPOINTER_TO_INT(target_handle),
-@@ -639,6 +654,8 @@ static void ddl_scanout(DBusDisplayListener *ddl)
-         surface_stride(ddl->ds) * surface_height(ddl->ds), TRUE,
-         (GDestroyNotify)pixman_image_unref, pixman_image_ref(ddl->ds->image));
- 
-+    ddl_discard_pending_messages(ddl);
-+
-     qemu_dbus_display1_listener_call_scanout(
-         ddl->proxy, surface_width(ddl->ds), surface_height(ddl->ds),
-         surface_stride(ddl->ds), surface_format(ddl->ds), v_data,
-@@ -963,6 +980,28 @@ dbus_display_listener_setup_shared_map(DBusDisplayListener *ddl)
- #endif
- }
- 
-+static GDBusMessage *
-+dbus_filter(GDBusConnection *connection,
-+            GDBusMessage    *message,
-+            gboolean         incoming,
-+            gpointer         user_data)
-+{
-+    DBusDisplayListener *ddl = DBUS_DISPLAY_LISTENER(user_data);
-+    guint32 serial;
-+
-+    if (incoming) {
-+        return message;
-+    }
-+
-+    serial = g_dbus_message_get_serial(message);
-+    if (serial <= ddl->out_serial_to_discard) {
-+        trace_dbus_filter(serial, ddl->out_serial_to_discard);
-+        return NULL;
-+    }
-+
-+    return message;
-+}
-+
- DBusDisplayListener *
- dbus_display_listener_new(const char *bus_name,
-                           GDBusConnection *conn,
-@@ -987,6 +1026,7 @@ dbus_display_listener_new(const char *bus_name,
-         return NULL;
-     }
- 
-+    ddl->dbus_filter = g_dbus_connection_add_filter(conn, dbus_filter, g_object_ref(ddl), g_object_unref);
-     ddl->bus_name = g_strdup(bus_name);
-     ddl->conn = conn;
-     ddl->console = console;
-diff --git a/ui/trace-events b/ui/trace-events
-index 16c35c9fd6..e6a2894303 100644
---- a/ui/trace-events
-+++ b/ui/trace-events
-@@ -161,6 +161,7 @@ dbus_clipboard_register(const char *bus_name) "peer %s"
- dbus_clipboard_unregister(const char *bus_name) "peer %s"
- dbus_scanout_texture(uint32_t tex_id, bool backing_y_0_top, uint32_t backing_width, uint32_t backing_height, uint32_t x, uint32_t y, uint32_t w, uint32_t h) "tex_id:%u y0top:%d back:%ux%u %u+%u-%ux%u"
- dbus_gl_gfx_switch(void *p) "surf: %p"
-+dbus_filter(unsigned int serial, unsigned int filter) "serial=%u (<= %u)"
- 
- # egl-helpers.c
- egl_init_d3d11_device(void *p) "d3d device: %p"
--- 
-2.44.0
+I'm not actually sure exactly how this patch causes test failures
+(or how it was fixing the ones you saw). If I can reproduce the
+ones you see I could look a bit deeper at it.
+
+I have been looking at some ways to try detect/report record/replay
+errors more sanely because it can be very hard to debug them at
+the moment. No patches quite ready to post yet, but yes if there's
+something we could do here to help we should.
+
+Thanks,
+Nick
+
+>
+> >
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > ---
+> >  include/sysemu/replay.h      |  5 -----
+> >  accel/tcg/tcg-accel-ops-rr.c |  2 +-
+> >  replay/replay.c              | 21 ---------------------
+> >  3 files changed, 1 insertion(+), 27 deletions(-)
+> >
+> > diff --git a/include/sysemu/replay.h b/include/sysemu/replay.h
+> > index f229b2109c..8102fa54f0 100644
+> > --- a/include/sysemu/replay.h
+> > +++ b/include/sysemu/replay.h
+> > @@ -73,11 +73,6 @@ int replay_get_instructions(void);
+> >  /*! Updates instructions counter in replay mode. */
+> >  void replay_account_executed_instructions(void);
+> > =20
+> > -/**
+> > - * replay_can_wait: check if we should pause for wait-io
+> > - */
+> > -bool replay_can_wait(void);
+> > -
+> >  /* Processing clocks and other time sources */
+> > =20
+> >  /*! Save the specified clock */
+> > diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.=
+c
+> > index 894e73e52c..a942442a33 100644
+> > --- a/accel/tcg/tcg-accel-ops-rr.c
+> > +++ b/accel/tcg/tcg-accel-ops-rr.c
+> > @@ -109,7 +109,7 @@ static void rr_wait_io_event(void)
+> >  {
+> >      CPUState *cpu;
+> > =20
+> > -    while (all_cpu_threads_idle() && replay_can_wait()) {
+> > +    while (all_cpu_threads_idle()) {
+> >          rr_stop_kick_timer();
+> >          qemu_cond_wait_bql(first_cpu->halt_cond);
+> >      }
+> > diff --git a/replay/replay.c b/replay/replay.c
+> > index b8564a4813..895fa6b67a 100644
+> > --- a/replay/replay.c
+> > +++ b/replay/replay.c
+> > @@ -451,27 +451,6 @@ void replay_start(void)
+> >      replay_enable_events();
+> >  }
+> > =20
+> > -/*
+> > - * For none/record the answer is yes.
+> > - */
+> > -bool replay_can_wait(void)
+> > -{
+> > -    if (replay_mode =3D=3D REPLAY_MODE_PLAY) {
+> > -        /*
+> > -         * For playback we shouldn't ever be at a point we wait. If
+> > -         * the instruction count has reached zero and we have an
+> > -         * unconsumed event we should go around again and consume it.
+> > -         */
+> > -        if (replay_state.instruction_count =3D=3D 0 && replay_state.ha=
+s_unread_data) {
+> > -            return false;
+> > -        } else {
+> > -            replay_sync_error("Playback shouldn't have to iowait");
+> > -        }
+> > -    }
+> > -    return true;
+> > -}
+> > -
+> > -
+> >  void replay_finish(void)
+> >  {
+> >      if (replay_mode =3D=3D REPLAY_MODE_NONE) {
 
 
