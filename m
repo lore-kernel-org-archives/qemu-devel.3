@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF85EC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B72AC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:04:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5VG-00078D-6U; Tue, 12 Mar 2024 13:01:31 -0400
+	id 1rk5TN-0004ho-3e; Tue, 12 Mar 2024 12:59:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5Tp-00053R-Qp; Tue, 12 Mar 2024 13:00:00 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1rk5TG-0004ay-HP; Tue, 12 Mar 2024 12:59:23 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk5Tn-00081f-34; Tue, 12 Mar 2024 12:59:57 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-5e42b4bbfa4so3027921a12.1; 
- Tue, 12 Mar 2024 09:59:54 -0700 (PDT)
+ id 1rk5TE-0007x6-Sy; Tue, 12 Mar 2024 12:59:22 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6e6afd8da93so496030b3a.3; 
+ Tue, 12 Mar 2024 09:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710262793; x=1710867593; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710262758; x=1710867558; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JY6w3rpqFyxoTa5NCkYJFl6Arjw1dSCb+uD0G8jkaLo=;
- b=eQ26zxCxGBdaEvadLlfBzUFriZA2776ZHrH2d/owsCFBPg1YmvFRyN5oZQLB+diMNo
- 6LJ2ULPmz07/fERmWcaBzAOk1QcNGVUYdaz/KfQ7RG7HcB0rpni+fcHNMiQ/ko8/Exoz
- hiUZbb9QjChZyJmrGAWCws9WHyBR4pG9pM1fJW4GhVl9W3C+ir+0EOtMRzg85xG+EaJE
- pY9P3+qxkozBQrCwIGErLZKdR7Zzfs9ej+aaT6AuHljVkg5PbvV8p8K+PFORmiiEb4m0
- lKJ63x9QeaEjAUB29NMiu0JJhQH4OuGnaNF83BlaAh11s+zLDpQAijHEhDEfqni0GFDu
- 0a5w==
+ bh=vQN5FrIT5FE3k5QbCnhPfKluszDyxySXf7QR9utsA34=;
+ b=jCJSrY+5ahaCxQ/iiVYorUBq2YmXdNPqoGCQQ5P3TUfdhEt60FKrfP3ZpYZMfjTfMO
+ axBK1DPCmCaalh7oaZ09A1Yx/GbNMRvHrAWS7ro8L8Un/BC4rXz99Z0qRgkMjJ/2SV15
+ xXIBoQK7OrR4ttWpw8dzv33cOOmkEzEXcpxwjy1TwcYbVn/RSytIuAaquRuig1BgissR
+ nAKA2EQ3yOMoSvSt5hLCKQVj6uSkAPJp0pBIzAtIW8/EmGd0oobjjO6up7zvAakZPB+I
+ Q3YsftwE1cTVZ7qGdDtSrQ+KfurARlCCJ112nz1uSzgYbMMtqhz/lbcD1W9O9iM9l2CG
+ 5I1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710262793; x=1710867593;
+ d=1e100.net; s=20230601; t=1710262758; x=1710867558;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JY6w3rpqFyxoTa5NCkYJFl6Arjw1dSCb+uD0G8jkaLo=;
- b=UwM/7D7kQuRtSMfWYnm53P7gL0foROkL98puFnwVzVzUHKjhyLn2CNQZ2N8DiWZvc8
- 7la0v8B6vKv0zANwhQ3h1OGwzx5+f3qIJ0wr7b7jq16gcmW5Q2LO8LZg0FFR0ytqr1FW
- zrYxrxZunuqYmppm3KDKq7mjT2Au1vUvGNyd7QBsbwSpRrYUew1XVreLAxlvJXnlqJnc
- Vx4xcznY1aScECasJewDg/S+zTS/g3nOtuZhQxLaC++MZroNV7BWswwHurQQ9vgbyeD3
- 4Vuygrx3pIMEsWGLdSIAvFhr/F2VVMoOQB2E7iToun9oT4K82aFioR6Q9V0Myn/abQE2
- d24g==
+ bh=vQN5FrIT5FE3k5QbCnhPfKluszDyxySXf7QR9utsA34=;
+ b=CXhEL3g1yPFs9v4kGmK4GvfwGj/RXBtyLoPnK5m54WndGRVUTq0PPRvb06APv7HJMd
+ 8cNT0JNb75NLglEfLHDqYdqlKv6QBCTnyq+wM3B5ndBCyV3f2u46fsu1uAVFaXy2IFL/
+ IrwfkMFhUw2t4NTJXk9o3ceW6RKEYUoeP2p3EOfXW0S+HM8Vtos43eVg8dQCCbwURndj
+ miozoxCaoZtrBAJl3iXsUC/6FGq/6iY/mPJSjS9cr50Geyifu1wSmKmzhSxRcoLVBrkU
+ QAOiT1+z+oYEM57fnJdR1c41uAy0UGn5RGXAET+YfUVX42H0KrUejxkRKCMdNb3UYFA7
+ kiOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9dEhr0vyKO9XkfNQxXDtz9Rukc3mYW1aaPLrD4JOiKZfBn98MmmixDaRkq9CxnTBB0LlXqHtSO/YqR3yTW2lsoVxX
-X-Gm-Message-State: AOJu0YyIJ/zm3EYkjRTixPlJfMjGNi8c90+qdDjCrj2C4bSHsOA199Jv
- tht3OoB1cmjLW0v8TULxNqKi1L9fH4z1xrG5+9Tqu3iJWVSFqwnVanQtfuWDOBw=
-X-Google-Smtp-Source: AGHT+IGqz+XXbed8souHFSokxReA1YWz6jKymYEJM/JJWWvULQsWhXfF+WLYGlIEJEJz/pbKGsOKyw==
-X-Received: by 2002:a05:6a20:94c7:b0:1a3:10d5:688a with SMTP id
- ht7-20020a056a2094c700b001a310d5688amr819076pzb.57.1710262792962; 
- Tue, 12 Mar 2024 09:59:52 -0700 (PDT)
+ AJvYcCUlCpnlQxWYoiCfneS6cxSCCBlSu7TUMTMNThFEwQYJ5x0y9fBsJsaRbbnA3HpQ3rrvVSlNpavbIx+yG1cJWBwy1pez
+X-Gm-Message-State: AOJu0YzaXXYFrqyIHRxiKEspUKJzHmMkzyxQXZaH/LiV6Hsj+g/nAGSV
+ fMaklidQqwOCF0clg991NxbXTfjqJwEkg0reuW7IAH4dPsyzitlm61kll9uKcXs=
+X-Google-Smtp-Source: AGHT+IFK60JQMRYcSX8UFhpY2xqloPriSHO2VH/ub9lJcgSE60yi1Gf0irI01fYPYTfbG0wkZAeRag==
+X-Received: by 2002:a05:6a21:3403:b0:1a3:1048:3dfe with SMTP id
+ yn3-20020a056a21340300b001a310483dfemr7310687pzb.38.1710262757982; 
+ Tue, 12 Mar 2024 09:59:17 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.09.59.49
+ t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.09.59.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 09:59:52 -0700 (PDT)
+ Tue, 12 Mar 2024 09:59:17 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PULL 14/38] docs/system/ppc: Document running Linux on AmigaNG
- machines
-Date: Wed, 13 Mar 2024 02:58:25 +1000
-Message-ID: <20240312165851.2240242-15-npiggin@gmail.com>
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 04/38] ppc: Drop support for POWER9 and POWER10 DD1 chips
+Date: Wed, 13 Mar 2024 02:58:15 +1000
+Message-ID: <20240312165851.2240242-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240312165851.2240242-1-npiggin@gmail.com>
 References: <20240312165851.2240242-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,218 +95,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+The POWER9 DD1 and POWER10 DD1 chips are not public and are no longer of
+any use in QEMU. Remove them.
 
-Documentation on how to run Linux on the amigaone, pegasos2 and
-sam460ex machines is currently buried in the depths of the qemu-devel
-mailing list and in the source code. Let's collect the information in
-the QEMU handbook for a one stop solution.
-
-Tested-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Co-authored-by: Bernhard Beschow <shentey@gmail.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- MAINTAINERS                 |   1 +
- docs/system/ppc/amigang.rst | 161 ++++++++++++++++++++++++++++++++++++
- docs/system/target-ppc.rst  |   1 +
- 3 files changed, 163 insertions(+)
- create mode 100644 docs/system/ppc/amigang.rst
+ hw/ppc/spapr_cpu_core.c |  2 --
+ target/ppc/cpu-models.c |  4 ----
+ target/ppc/cpu_init.c   |  7 ++-----
+ target/ppc/kvm.c        | 11 -----------
+ 4 files changed, 2 insertions(+), 22 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index fe8a7454ba..1f89e274d3 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1572,6 +1572,7 @@ F: hw/rtc/m41t80.c
- F: pc-bios/canyonlands.dt[sb]
- F: pc-bios/u-boot-sam460ex-20100605.bin
- F: roms/u-boot-sam460ex
-+F: docs/system/ppc/amigang.rst
+diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+index 58cb992609..e7c9edd033 100644
+--- a/hw/ppc/spapr_cpu_core.c
++++ b/hw/ppc/spapr_cpu_core.c
+@@ -398,10 +398,8 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
+     DEFINE_SPAPR_CPU_CORE_TYPE("power8_v2.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power8e_v2.1"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power8nvl_v1.0"),
+-    DEFINE_SPAPR_CPU_CORE_TYPE("power9_v1.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
+-    DEFINE_SPAPR_CPU_CORE_TYPE("power10_v1.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
+ #ifdef CONFIG_KVM
+     DEFINE_SPAPR_CPU_CORE_TYPE("host"),
+diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
+index 36e465b390..f2301b43f7 100644
+--- a/target/ppc/cpu-models.c
++++ b/target/ppc/cpu-models.c
+@@ -728,14 +728,10 @@
+                 "POWER8 v2.0")
+     POWERPC_DEF("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10,         POWER8,
+                 "POWER8NVL v1.0")
+-    POWERPC_DEF("power9_v1.0",   CPU_POWERPC_POWER9_DD1,             POWER9,
+-                "POWER9 v1.0")
+     POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
+                 "POWER9 v2.0")
+     POWERPC_DEF("power9_v2.2",   CPU_POWERPC_POWER9_DD22,            POWER9,
+                 "POWER9 v2.2")
+-    POWERPC_DEF("power10_v1.0",  CPU_POWERPC_POWER10_DD1,            POWER10,
+-                "POWER10 v1.0")
+     POWERPC_DEF("power10_v2.0",  CPU_POWERPC_POWER10_DD20,           POWER10,
+                 "POWER10 v2.0")
+ #endif /* defined (TARGET_PPC64) */
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 1d3d1db7c3..572cbdf25f 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6350,10 +6350,7 @@ static bool ppc_pvr_match_power9(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
+         return false;
+     }
  
- pegasos2
- M: BALATON Zoltan <balaton@eik.bme.hu>
-diff --git a/docs/system/ppc/amigang.rst b/docs/system/ppc/amigang.rst
-new file mode 100644
-index 0000000000..ba1a3d80b9
---- /dev/null
-+++ b/docs/system/ppc/amigang.rst
-@@ -0,0 +1,161 @@
-+=========================================================
-+AmigaNG boards (``amigaone``, ``pegasos2``, ``sam460ex``)
-+=========================================================
-+
-+These PowerPC machines emulate boards that are primarily used for
-+running Amiga like OSes (AmigaOS 4, MorphOS and AROS) but these can
-+also run Linux which is what this section documents.
-+
-+Eyetech AmigaOne/Mai Logic Teron (``amigaone``)
-+===============================================
-+
-+The ``amigaone`` machine emulates an AmigaOne XE mainboard by Eyetech
-+which is a rebranded Mai Logic Teron board with modified U-Boot
-+firmware to support AmigaOS 4.
-+
-+Emulated devices
-+----------------
-+
-+ * PowerPC 7457 CPU (can also use``-cpu g3, 750cxe, 750fx`` or ``750gx``)
-+ * Articia S north bridge
-+ * VIA VT82C686B south bridge
-+ * PCI VGA compatible card (guests may need other card instead)
-+ * PS/2 keyboard and mouse
-+
-+Firmware
-+--------
-+
-+A firmware binary is necessary for the boot process. It is a modified
-+U-Boot under GPL but its source is lost so it cannot be included in
-+QEMU. A binary is available at
-+https://www.hyperion-entertainment.com/index.php/downloads?view=files&parent=28.
-+The ROM image is in the last 512kB which can be extracted with the
-+following command:
-+
-+.. code-block:: bash
-+
-+  $ tail -c 524288 updater.image > u-boot-amigaone.bin
-+
-+The BIOS emulator in the firmware is unable to run QEMU‘s standard
-+vgabios so ``VGABIOS-lgpl-latest.bin`` is needed instead which can be
-+downloaded from http://www.nongnu.org/vgabios.
-+
-+Running Linux
-+-------------
-+
-+There are some Linux images under the following link that work on the
-+``amigaone`` machine:
-+https://sourceforge.net/projects/amigaone-linux/files/debian-installer/.
-+To boot the system run:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-ppc -machine amigaone -bios u-boot-amigaone.bin \
-+                    -cdrom "A1 Linux Net Installer.iso" \
-+                    -device ati-vga,model=rv100,romfile=VGABIOS-lgpl-latest.bin
-+
-+From the firmware menu that appears select ``Boot sequence`` →
-+``Amiga Multiboot Options`` and set ``Boot device 1`` to
-+``Onboard VIA IDE CDROM``. Then hit escape until the main screen appears again,
-+hit escape once more and from the exit menu that appears select either
-+``Save settings and exit`` or ``Use settings for this session only``. It may
-+take a long time loading the kernel into memory but eventually it boots and the
-+installer becomes visible. The ``ati-vga`` RV100 emulation is not
-+complete yet so only frame buffer works, DRM and 3D is not available.
-+
-+Genesi/bPlan Pegasos II (``pegasos2``)
-+======================================
-+
-+The ``pegasos2`` machine emulates the Pegasos II sold by Genesi and
-+designed by bPlan. Its schematics are available at
-+https://www.powerdeveloper.org/platforms/pegasos/schematics.
-+
-+Emulated devices
-+----------------
-+
-+ * PowerPC 7457 CPU (can also use``-cpu g3`` or ``750cxe``)
-+ * Marvell MV64361 Discovery II north bridge
-+ * VIA VT8231 south bridge
-+ * PCI VGA compatible card (guests may need other card instead)
-+ * PS/2 keyboard and mouse
-+
-+Firmware
-+--------
-+
-+The Pegasos II board has an Open Firmware compliant ROM based on
-+SmartFirmware with some changes that are not open-sourced therefore
-+the ROM binary cannot be included in QEMU. An updater was available
-+from bPlan, it can be found in the `Internet Archive
-+<http://web.archive.org/web/20071021223056/http://www.bplan-gmbh.de/up050404/up050404>`_.
-+The ROM image can be extracted from it with the following command:
-+
-+.. code-block:: bash
-+
-+  $ tail -c +85581 up050404 | head -c 524288 > pegasos2.rom
-+
-+Running Linux
-+-------------
-+
-+The PowerPC version of Debian 8.11 supported Pegasos II. The BIOS
-+emulator in the firmware binary is unable to run QEMU‘s standard
-+vgabios so it needs to be disabled. To boot the system run:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-ppc -machine pegasos2 -bios pegasos2.rom \
-+                    -cdrom debian-8.11.0-powerpc-netinst.iso \
-+                    -device VGA,romfile="" -serial stdio
-+
-+At the firmware ``ok`` prompt enter ``boot cd install/pegasos``.
-+
-+Alternatively, it is possible to boot the kernel directly without
-+firmware ROM using the QEMU built-in minimal Virtual Open Firmware
-+(VOF) emulation which is also supported on ``pegasos2``. For this,
-+extract the kernel ``install/powerpc/vmlinuz-chrp.initrd`` from the CD
-+image, then run:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-ppc -machine pegasos2 -serial stdio \
-+                    -kernel vmlinuz-chrp.initrd -append "---" \
-+                    -cdrom debian-8.11.0-powerpc-netinst.iso
-+
-+aCube Sam460ex (``sam460ex``)
-+=============================
-+
-+The ``sam460ex`` machine emulates the Sam460ex board by aCube which is
-+based on the AMCC PowerPC 460EX SoC (that despite its name has a
-+PPC440 CPU core).
-+
-+Firmware
-+--------
-+
-+The board has a firmware based on an older U-Boot version with
-+modifications to support booting AmigaOS 4. The firmware ROM is
-+included with QEMU.
-+
-+Emulated devices
-+----------------
-+
-+ * PowerPC 460EX SoC
-+ * M41T80 serial RTC chip
-+ * Silicon Motion SM501 display parts (identical to SM502 on real board)
-+ * Silicon Image SiI3112 2 port SATA controller
-+ * USB keyboard and mouse
-+
-+Running Linux
-+-------------
-+
-+The only Linux distro that supported Sam460ex out of box was CruxPPC
-+2.x. It can be booted by running:
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-ppc -machine sam460ex -serial stdio \
-+                    -drive if=none,id=cd,format=raw,file=crux-ppc-2.7a.iso \
-+                    -device ide-cd,drive=cd,bus=ide.1
-+
-+There are some other kernels and instructions for booting other
-+distros on aCube's product page at
-+https://www.acube-systems.biz/index.php?page=hardware&pid=5
-+but those are untested.
-diff --git a/docs/system/target-ppc.rst b/docs/system/target-ppc.rst
-index 4f6eb93b17..87bf412ce5 100644
---- a/docs/system/target-ppc.rst
-+++ b/docs/system/target-ppc.rst
-@@ -17,6 +17,7 @@ help``.
- .. toctree::
-    :maxdepth: 1
+-    if ((pvr & 0x0f00) == 0x100) {
+-        /* DD1.x always matches power9_v1.0 */
+-        return true;
+-    } else if ((pvr & 0x0f00) == 0x200) {
++    if ((pvr & 0x0f00) == 0x200) {
+         if ((pvr & 0xf) < 2) {
+             /* DD2.0, DD2.1 match power9_v2.0 */
+             if ((pcc->pvr & 0xf) == 0) {
+@@ -6536,7 +6533,7 @@ static bool ppc_pvr_match_power10(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
+     }
  
-+   ppc/amigang
-    ppc/embedded
-    ppc/powermac
-    ppc/powernv
+     if ((pvr & 0x0f00) == (pcc->pvr & 0x0f00)) {
+-        /* Major DD version matches to power10_v1.0 and power10_v2.0 */
++        /* Major DD version matches power10_v2.0 */
+         return true;
+     }
+ 
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index bcf30a5400..525fbe3892 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -2369,17 +2369,6 @@ static void kvmppc_host_cpu_class_init(ObjectClass *oc, void *data)
+ 
+ #if defined(TARGET_PPC64)
+     pcc->radix_page_info = kvmppc_get_radix_page_info();
+-
+-    if ((pcc->pvr & 0xffffff00) == CPU_POWERPC_POWER9_DD1) {
+-        /*
+-         * POWER9 DD1 has some bugs which make it not really ISA 3.00
+-         * compliant.  More importantly, advertising ISA 3.00
+-         * architected mode may prevent guests from activating
+-         * necessary DD1 workarounds.
+-         */
+-        pcc->pcr_supported &= ~(PCR_COMPAT_3_00 | PCR_COMPAT_2_07
+-                                | PCR_COMPAT_2_06 | PCR_COMPAT_2_05);
+-    }
+ #endif /* defined(TARGET_PPC64) */
+ }
+ 
 -- 
 2.42.0
 
