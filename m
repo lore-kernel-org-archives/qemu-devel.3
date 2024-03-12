@@ -4,55 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F34C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D93BC54E6A
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:44:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1Un-0003bW-IB; Tue, 12 Mar 2024 08:44:41 -0400
+	id 1rk1Ub-0002n4-FT; Tue, 12 Mar 2024 08:44:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Uk-0003Rv-LJ
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:38 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1UC-0002Ip-Ua
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1UY-0000He-0D
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:38 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1U7-000071-MP
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710247465;
+ s=mimecast20190719; t=1710247439;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SMkq97UOvrjCqwKdwwcOgk3dpsdofdAU28+qNsNqBmU=;
- b=Mp8XrJ4WMLaW7pcKOPOugW2OKL1AR38Wmu14lyNir+ipStInqHPeHXkqc+3hC1uCn7jiQy
- CizBVV1auO/iJseXzSzPF/CYNTYVH6TVj76ThQS3gTMFu12cH+aEtbI5OJjrPSmUqcMxnI
- aiAVNjffMyd11FFw2Sd75NApA5yMGMQ=
+ bh=eSv1YqeGADcco7ZxgNGLXLtwuD3hZ+ULVdi/S+nqTWA=;
+ b=KRx2Mc3y9BK9p7akUo+KBjhlYgK25IhF7sg+tekYJI0+wmZDXKA+/IUv9uCO+rB6bVByl5
+ n+Ef2idhDj1RL77W7MYCDAOG5M4M/kDlkKZrJcDvmWJdVeRaFrD/mkP1/ww59rl/XvaB3M
+ mLL5Zv1h+ORecGDlEHmyPRl+T6aw19c=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-aO2L5-MrNHCb-05MxuU9bQ-1; Tue, 12 Mar 2024 08:44:22 -0400
-X-MC-Unique: aO2L5-MrNHCb-05MxuU9bQ-1
+ us-mta-306-z04nSDn8M3G3H6wuhKFrag-1; Tue, 12 Mar 2024 08:43:57 -0400
+X-MC-Unique: z04nSDn8M3G3H6wuhKFrag-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C895F101A56C;
- Tue, 12 Mar 2024 12:44:21 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 61217800274;
+ Tue, 12 Mar 2024 12:43:57 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.69])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 47541492BC4;
- Tue, 12 Mar 2024 12:44:19 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 76CD8492BD1;
+ Tue, 12 Mar 2024 12:43:55 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Subject: [PULL 19/55] block/virtio-blk: Fix missing ERRP_GUARD() for
- error_prepend()
-Date: Tue, 12 Mar 2024 13:43:03 +0100
-Message-ID: <20240312124339.761630-20-thuth@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>
+Subject: [PULL 09/55] block: Fix missing ERRP_GUARD() for error_prepend()
+Date: Tue, 12 Mar 2024 13:42:53 +0100
+Message-ID: <20240312124339.761630-10-thuth@redhat.com>
 In-Reply-To: <20240312124339.761630-1-thuth@redhat.com>
 References: <20240312124339.761630-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -67,7 +65,7 @@ X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,41 +102,73 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-The virtio_blk_vq_aio_context_init() passes @errp to error_prepend().
+In block.c, there are 4 functions passing @errp to error_prepend()
+without ERRP_GUARD():
+ - bdrv_co_create_opts_simple()
+ - parse_json_filename()
+ - bdrv_open_backing_file()
+ - bdrv_append_temp_snapshot()
 
-Though its @errp points its caller's local @err variable, to follow the
-requirement of @errp, add missing ERRP_GUARD() at the beginning of
-virtio_blk_vq_aio_context_init().
+bdrv_co_create_opts_simple(), is an implementation of
+BlockDriver.bdrv_co_create_opts(). There are too many possible callers
+to check the impact of this defect; it may or may not be harmless. Thus
+it is necessary to protect @errp with ERRP_GUARD().
+
+Though the @errp parameters passed to parse_json_filename(),
+bdrv_open_backing_file() and bdrv_append_temp_snapshot() points to their
+callers' local_err, to follow the requirement of @errp, also add missing
+ERRP_GUARD() at their beginning.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Kevin Wolf <kwolf@redhat.com>
 Cc: Hanna Reitz <hreitz@redhat.com>
 Cc: qemu-block@nongnu.org
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Acked-by: "Michael S. Tsirkin" <mst@redhat.com>
-Message-ID: <20240311033822.3142585-14-zhao1.liu@linux.intel.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20240311033822.3142585-4-zhao1.liu@linux.intel.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/block/virtio-blk.c | 1 +
- 1 file changed, 1 insertion(+)
+ block.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 738cb2ac36..92de315f17 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -1682,6 +1682,7 @@ static bool apply_iothread_vq_mapping(
- /* Context: BQL held */
- static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
+diff --git a/block.c b/block.c
+index 1ed9214f66..cf66c767a0 100644
+--- a/block.c
++++ b/block.c
+@@ -633,6 +633,7 @@ int coroutine_fn bdrv_co_create_opts_simple(BlockDriver *drv,
+                                             QemuOpts *opts,
+                                             Error **errp)
  {
 +    ERRP_GUARD();
-     VirtIODevice *vdev = VIRTIO_DEVICE(s);
-     VirtIOBlkConf *conf = &s->conf;
-     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     BlockBackend *blk;
+     QDict *options;
+     int64_t size = 0;
+@@ -1998,6 +1999,7 @@ fail_opts:
+ 
+ static QDict *parse_json_filename(const char *filename, Error **errp)
+ {
++    ERRP_GUARD();
+     QObject *options_obj;
+     QDict *options;
+     int ret;
+@@ -3585,6 +3587,7 @@ int bdrv_set_backing_hd(BlockDriverState *bs, BlockDriverState *backing_hd,
+ int bdrv_open_backing_file(BlockDriverState *bs, QDict *parent_options,
+                            const char *bdref_key, Error **errp)
+ {
++    ERRP_GUARD();
+     char *backing_filename = NULL;
+     char *bdref_key_dot;
+     const char *reference = NULL;
+@@ -3851,6 +3854,7 @@ static BlockDriverState *bdrv_append_temp_snapshot(BlockDriverState *bs,
+                                                    QDict *snapshot_options,
+                                                    Error **errp)
+ {
++    ERRP_GUARD();
+     g_autofree char *tmp_filename = NULL;
+     int64_t total_size;
+     QemuOpts *opts = NULL;
 -- 
 2.44.0
 
