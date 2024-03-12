@@ -4,59 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DEECC54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 09:59:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6DE2C54E68
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 09:59:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjyv0-0006jC-OW; Tue, 12 Mar 2024 05:59:35 -0400
+	id 1rjyuS-0005m4-GW; Tue, 12 Mar 2024 05:59:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rjyux-0006dn-M6; Tue, 12 Mar 2024 05:59:31 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjyuQ-0005jJ-VG
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:58:58 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1rjyuv-0000Wg-Gx; Tue, 12 Mar 2024 05:59:31 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 356894E601D;
- Tue, 12 Mar 2024 10:59:27 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id ugo4rQ0hCfa0; Tue, 12 Mar 2024 10:59:25 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3DA8C4E6006; Tue, 12 Mar 2024 10:59:25 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3B1867456B4;
- Tue, 12 Mar 2024 10:59:25 +0100 (CET)
-Date: Tue, 12 Mar 2024 10:59:25 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Nicholas Piggin <npiggin@gmail.com>
-cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- qemu-ppc@nongnu.org, qemu-devel@nongnu.org, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Benjamin Gray <bgray@linux.ibm.com>
-Subject: Re: [PATCH 06/13] ppc/spapr: Add pa-features for POWER10 machines
-In-Reply-To: <CZRI248HGG4Y.2KVSZ18AGD6CA@wheely>
-Message-ID: <17ed9bd3-61ed-a7f4-4ecb-5990ab585539@eik.bme.hu>
-References: <20240311185200.2185753-1-npiggin@gmail.com>
- <20240311185200.2185753-7-npiggin@gmail.com>
- <020a53d8-3b90-4b30-b0c7-862951fbef43@linaro.org>
- <ef4c48d1-9e11-d6af-d4cc-3ae6c567f098@eik.bme.hu>
- <CZRI248HGG4Y.2KVSZ18AGD6CA@wheely>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjyuP-0000TT-2L
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:58:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710237537; x=1741773537;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Y6VdP9faqh72Mn6LhmNnwRXRt34XCvhHGJdaTZngvro=;
+ b=YWeULdGXQS4BDGFDsCIqd+Ez+gFu0km5J2WhmtsjUH2NGyICvAlYG2oX
+ VKRidzGuvw/nW0JBWt+/jdCTAvZc756OVny0+eL1UVnGd2mdBJ7/Vz4f3
+ Wr0W/aIA3jzEX7sZ3vfzGytO9TSZ8EYK/ckioeXxyh1T08914Miaqa6/A
+ X0SzET2Gsz3yw4em4Qed1dSjtVmV3VDZrvZrSIJgJzE5dDFGAWqobDwOV
+ u1fjwEDxAuSM48c6ImrEJw9yVrgabPIQDYPAjvwIQr/4UaYsosybJsZ8j
+ KG4p8o99xEAMyJp66KHar1O0oVDyGn8kGq7Fp0V+Pwpt3iA7dEopDmxWC A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="5109253"
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
+   d="scan'208";a="5109253"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Mar 2024 02:58:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="11560026"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa006.fm.intel.com with ESMTP; 12 Mar 2024 02:58:48 -0700
+Date: Tue, 12 Mar 2024 18:12:38 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>,
+ Babu Moger <babu.moger@amd.com>, Yongwei Ma <yongwei.ma@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v9 02/21] hw/core/machine: Support modules in -smp
+Message-ID: <ZfAqltds4Bcr2Ruj@intel.com>
+References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
+ <20240227103231.1556302-3-zhao1.liu@linux.intel.com>
+ <e730da3c-42be-45d0-aa11-279ee47bb933@linux.intel.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-630685081-1710237565=:57611"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e730da3c-42be-45d0-aa11-279ee47bb933@linux.intel.com>
+Received-SPF: none client-ip=192.198.163.15;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,76 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+> > @@ -51,6 +51,10 @@ static char *cpu_hierarchy_to_string(MachineState *ms)
+> >           g_string_append_printf(s, " * clusters (%u)", ms->smp.clusters);
+> >       }
+> > +    if (mc->smp_props.modules_supported) {
+> > +        g_string_append_printf(s, " * modules (%u)", ms->smp.clusters);
+> > +    }
+> 
+> smp.clusters -> smp.modules?
+>
 
---3866299591-630685081-1710237565=:57611
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Good catch! Thanks!
 
-On Tue, 12 Mar 2024, Nicholas Piggin wrote:
-> On Tue Mar 12, 2024 at 7:07 AM AEST, BALATON Zoltan wrote:
->> On Mon, 11 Mar 2024, Philippe Mathieu-Daudé wrote:
->>> On 11/3/24 19:51, Nicholas Piggin wrote:
->>>> From: Benjamin Gray <bgray@linux.ibm.com>
->>>>
->>>> Add POWER10 pa-features entry.
->>>>
->>>> Notably DEXCR and and [P]HASHST/[P]HASHCHK instruction support is
->>>> advertised. Each DEXCR aspect is allocated a bit in the device tree,
->>>> using the 68--71 byte range (inclusive). The functionality of the
->>>> [P]HASHST/[P]HASHCHK instructions is separately declared in byte 72,
->>>> bit 0 (BE).
->>>>
->>>> Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
->>>> [npiggin: reword title and changelog, adjust a few bits]
->>>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->>>> ---
->>>>   hw/ppc/spapr.c | 34 ++++++++++++++++++++++++++++++++++
->>>>   1 file changed, 34 insertions(+)
->>>>
->>>> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
->>>> index 247f920f07..128bfe11a8 100644
->>>> --- a/hw/ppc/spapr.c
->>>> +++ b/hw/ppc/spapr.c
->>>> @@ -265,6 +265,36 @@ static void spapr_dt_pa_features(SpaprMachineState
->>>> *spapr,
->>>>           /* 60: NM atomic, 62: RNG */
->>>>           0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
->>>>       };
->>>> +    /* 3.1 removes SAO, HTM support */
->>>> +    uint8_t pa_features_31[] = { 74, 0,
->>>
->>> Nitpicking because pre-existing, all these arrays could be static const.
->>
->> If we are at it then maybe also s/0x00/   0/ because having a stream of
->> 0x80 and 0x00 is not the most readable.
->
-> Eh, it's more readable because it aligns colums.
+-Zhao
 
-Not sure it you've noticed the 3 spaces before the 0 replacing 0x0 that 
-would keep alignment. But it's not something that needs to be changed just 
-commented on it as it came up but I don't expect it to be done now on the 
-day of the freeze. It's more important to get the already reviewed and 
-queued patches in a pull request to not miss the release. So this comment 
-is just for the fuuture.
-
-Regards,
-BALATON Zoltan
-
-> But probably better
-> more readable and  less error prone would be like -
->
->    PA_FEATURE_SET(pa_features_31,  6, 0); /* DS207 */
->    PA_FEATURE_SET(pa_features_31, 18, 0); /* Vector scalar */
->
-> I just didn't quite find something I like yet. I won't change style
-> before adding the missing bits either way, but certainly would be
-> good to clean it up after.
->
-> Thanks,
-> Nick
->
->
---3866299591-630685081-1710237565=:57611--
 
