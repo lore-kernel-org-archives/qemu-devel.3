@@ -4,76 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFF36C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:43:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 997C8C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:43:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk74K-0000Vb-Gi; Tue, 12 Mar 2024 14:41:44 -0400
+	id 1rk74H-0000T4-FY; Tue, 12 Mar 2024 14:41:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rk749-0000Oj-E7
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:41:34 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1rk740-0000LB-Hl
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:41:24 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rk747-0001NK-9z
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:41:32 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1dc09556599so48619115ad.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:41:28 -0700 (PDT)
+ id 1rk73w-0001KU-3M
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:41:24 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1dd84ecfc47so21160545ad.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:41:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710268887; x=1710873687; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=x3znfmNL10eLlxG5NYqWnRcVawBnQ4i751296Itk41Q=;
- b=Z8OJwFWsDF/tj9sOZgxNZ9rh6WJMum95sYh9c/i7bxmptTDfemZXA1oBvlyTzEHbIi
- RALrOCi1LlO3K7Zotpwl0Pvd1eHeTXg3tiJTe7rEItKkGrG0Ooh3Cyi7eiOhJOHA0sSx
- KMR7voa4SeymqrodYUH1dDisfTpT/up0ET67yNki1CrTxwT6sSEROzjU9oW2CTyP8Bvq
- 09BvLjZvdpE56iZKNd26NcSB2t2mNkL19ZLtGmm6AO6lgYQdMERkoa4VCJIRmgvqWpwJ
- PotsB5sCO74a+SKhQ656xFO9VkGSqU+jfR6w8RrEokk5o7sce2xE4v46OieDf70pbPWO
- URlA==
+ d=linaro.org; s=google; t=1710268878; x=1710873678; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Jy7vZjUesFYPne4m15yVNJp4UJvcz2pR+Pm+Kx/ZwJw=;
+ b=gXNXxhCC6evF+e/FeF4GrLFxa3eN74i5yg+xoTGHP/0yl5juwLH6UW7E7R7EHWCgfq
+ cgVDbkgV68RLyYyqMFCQqU3DsGS6penqAtk6bNdHHeEhPMSVnMNEbNZwKioPFmzKeIjX
+ 8wHBWRG9xr4flv/cvUmSEcWQa0L9Bl/qxcFaaZIfF4bbJHKaXz/qFrFnNgPyg2ODCWgd
+ aEK2au7D2Xhol0X/UiYCBwhe2VH1I9ChKu16RJxSvaki8HTBW5s19PTHOOzO1pzCdkUn
+ 3U1UWa0NjWbCRgzcHMY9YvNeNFXR0rr3zPb+7uRCuIXazD4Y/Z1xJHXM/NYvOMdcQ/MK
+ MfGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710268887; x=1710873687;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=x3znfmNL10eLlxG5NYqWnRcVawBnQ4i751296Itk41Q=;
- b=FcmAJrXpL6IxdTe0X7L/EtNGUdJdX4a4Q9Qgb0+4h7Ak9fXT3CwLn1vdTIw7SJFMBa
- sgyvwiZ3vdX3JDRLYogXJFnqL1RH+hXnNB6XfqCC/f51ww6omnROkBmeHU2uQiWVOCPx
- szuqt0x9jgFdRM5Y696Sdcb48JJ18m8RQMbqlDrfZUqaqBTI7CD9XXw88yPADIqkf9LP
- DF25+0Q42rhuk3u8DLjh/3EOrCqX2psJvF2/bFPPmHZ3gcG1FVVDq/frXCxsZBZzN3U9
- 9Dfx5pBpdTlZGA87BMc7d2727C1kzqkaGYqJYmC7f0ti8tp7TBpjPVR0U+aua+d3+3dy
- jIFQ==
-X-Gm-Message-State: AOJu0YwN139S0+PbYH0k8jbv1Rxjleq/3bhxSMlbfYedI3IHS8t0V1Mb
- zJtiVXcHHGV5MaUv3DrpfBuv9VjM+HLCreoDCC2a/FLy7YnQ1fEImVZy3D2xsosr1UPrv6IBHnu
- 8
-X-Google-Smtp-Source: AGHT+IEymnULxbjX7RwzVW6Eo6baKvDY/VhBDehRQoZDgFBh9RHSKQLexjAGmxw0tUQEUIWoEuGY0A==
-X-Received: by 2002:a17:902:cf02:b0:1dd:a529:f355 with SMTP id
- i2-20020a170902cf0200b001dda529f355mr4948777plg.10.1710268887303; 
- Tue, 12 Mar 2024 11:41:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710268878; x=1710873678;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Jy7vZjUesFYPne4m15yVNJp4UJvcz2pR+Pm+Kx/ZwJw=;
+ b=EXWB1h8o/hr+HV36YdtEWYZs40reequc57gJUpH5nyn+7NiMIphRubvROxTxECr2wn
+ iq6Ph0pVA+PhCaDOEkatXx448sj3gpsto5CfmkBLIztE+n7D620ewmrZhqkBeyBwWFbC
+ QLykv4+ce35pNbBcbU9E2RMAEuyw6l8GsBtWBiZbNEhrYK3xrpIZfDt8Ig+gWzLDEUN/
+ IhDhXMmORcJp42ub/buBJZVp+HgF7ZJWKdgfPJuypCpbm+/Opr6KTi2ZZxXq1lVwzTcu
+ J+9dDkuuxpJI5/ojtEbAqMW34yuiQ2M/qjkVEGvc4JZwYrtOaXj5HGaL2OhUghfe5J6p
+ Q/9w==
+X-Gm-Message-State: AOJu0YxtCxfHePil74d9EyeZ+NrncUi+IfVk2Iw+hKmCDJb8Yx5E0vsG
+ qw/I+CurwNX3A8o5K5/6dh97lxXebb25ioohHeKgH+fit029EBdCBUjnrB+bGibxsiIfZQ4KlOA
+ J
+X-Google-Smtp-Source: AGHT+IEMyUNcBb7boRHfS5/EIFmVg8GK5kV1HthQIW2qoSK6gm4eVk7wQ0q03rUjhMMSQ5teDTxadQ==
+X-Received: by 2002:a17:902:aa88:b0:1dc:d642:aacd with SMTP id
+ d8-20020a170902aa8800b001dcd642aacdmr2104317plr.67.1710268878282; 
+ Tue, 12 Mar 2024 11:41:18 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- b11-20020a170903228b00b001dca40bb727sm6951739plh.88.2024.03.12.11.41.26
+ b11-20020a170903228b00b001dca40bb727sm6951739plh.88.2024.03.12.11.41.17
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 11:41:26 -0700 (PDT)
+ Tue, 12 Mar 2024 11:41:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 7/8] tcg/aarch64: Fix tcg_out_cmp for test comparisons
-Date: Tue, 12 Mar 2024 08:41:14 -1000
-Message-Id: <20240312184115.365415-8-richard.henderson@linaro.org>
+Subject: [PULL 0/8] tcg + linux-user patch queue
+Date: Tue, 12 Mar 2024 08:41:07 -1000
+Message-Id: <20240312184115.365415-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240312184115.365415-1-richard.henderson@linaro.org>
-References: <20240312184115.365415-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,32 +91,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass the type to tcg_out_logicali; remove the assert, duplicated
-at the start of tcg_out_logicali.
+The following changes since commit 8f3f329f5e0117bd1a23a79ab751f8a7d3471e4b:
 
-Fixes: 339adf2f38e ("tcg/aarch64: Support TCG_COND_TST{EQ,NE}")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/aarch64/tcg-target.c.inc | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+  Merge tag 'migration-20240311-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-03-12 11:35:41 +0000)
 
-diff --git a/tcg/aarch64/tcg-target.c.inc b/tcg/aarch64/tcg-target.c.inc
-index dec8ecc1b6..38446c167e 100644
---- a/tcg/aarch64/tcg-target.c.inc
-+++ b/tcg/aarch64/tcg-target.c.inc
-@@ -1388,8 +1388,7 @@ static void tcg_out_cmp(TCGContext *s, TCGType ext, TCGCond cond, TCGReg a,
-         if (!const_b) {
-             tcg_out_insn(s, 3510, ANDS, ext, TCG_REG_XZR, a, b);
-         } else {
--            tcg_debug_assert(is_limm(b));
--            tcg_out_logicali(s, I3404_ANDSI, 0, TCG_REG_XZR, a, b);
-+            tcg_out_logicali(s, I3404_ANDSI, ext, TCG_REG_XZR, a, b);
-         }
-     } else {
-         if (!const_b) {
--- 
-2.34.1
+are available in the Git repository at:
 
+  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240312
+
+for you to fetch changes up to 4fe19bbbea2cb9f1ec28cfd40cdc7f61e95a790e:
+
+  tcg/aarch64: Fix tcg_out_brcond for test comparisons (2024-03-12 04:09:21 -1000)
+
+----------------------------------------------------------------
+linux-user: Add FIFREEZE and FITHAW ioctls
+linux-user: Implement PR_*_{CHILD_SUBREAPER,SPECULATION_CTRL,TID_ADDRESS}
+linux-user/elfload: Fixes for two Coverity CIDs
+tcg/aarch64: Fixes for two TCG_COND_TST{EQ,NE} bugs
+
+----------------------------------------------------------------
+Michael Vogt (1):
+      linux-user: Add FIFREEZE and FITHAW ioctls
+
+Richard Henderson (7):
+      linux-user: Implement PR_{GET,SET}_CHILD_SUBREAPER
+      linux-user: Implement PR_{GET,SET}_SPECULATION_CTRL
+      linux-user: Implement PR_GET_TID_ADDRESS
+      linux-user/elfload: Don't close an unopened file descriptor
+      linux-user/elfload: Fully initialize struct target_elf_prpsinfo
+      tcg/aarch64: Fix tcg_out_cmp for test comparisons
+      tcg/aarch64: Fix tcg_out_brcond for test comparisons
+
+ linux-user/ioctls.h          |  6 ++++++
+ linux-user/syscall_defs.h    |  3 +++
+ linux-user/elfload.c         | 20 +++++++++++---------
+ linux-user/syscall.c         | 22 +++++++++++++++++-----
+ tcg/aarch64/tcg-target.c.inc |  4 ++--
+ 5 files changed, 39 insertions(+), 16 deletions(-)
 
