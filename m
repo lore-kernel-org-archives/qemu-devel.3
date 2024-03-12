@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A54C54E66
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C03C54E68
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxPw-0005ne-9j; Tue, 12 Mar 2024 04:23:24 -0400
+	id 1rjxPm-0005l1-Uy; Tue, 12 Mar 2024 04:23:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxPt-0005mI-7O
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:23:21 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxPk-0005jl-Pv
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:23:12 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxPp-0001AW-Ci
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:23:19 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-33ddd1624beso3095375f8f.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:23:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxPi-00019f-1U
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:23:12 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4131b1f8c91so25234835e9.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:23:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710231794; x=1710836594; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710231788; x=1710836588; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QyCNdGxEUzn56uZqvjtKqW1lxcPgF0npDxgJEUvvre8=;
- b=lesFdg4HTUSflfoAzyWIKAOpzPkDoogKt6NUsFGz/EQjOpVxrG6XxgfCDPR4H/Lm3T
- 7xO+/UjqxJ/79LtMN8or/470jknfzLB0KlpoJ0O9Ny1zd7nWd56p+rJ7jG6aHWE88Kdb
- V4uHpXRjyyKHcY+1FEviUnbUKFPbxDznjfBaT/n3hQ14I9AvHmgWHXL6rg4L5kViiaqn
- QN4Saxe+Jb2/cNqBwtp/LzmKEtfNBYX8zpR/OTiGLh5EwpPQayI+9hkaPEdQw+c5uJzM
- kHlxasfAnpBqJaPIDD8Gv2VV+6OPOneiyqu9uTQ974IUlJkDEw79GxoT5rjKxhYXbr21
- gqlA==
+ bh=3FG8zZPJK1bf6KOQDF42ZpXKRx0qaQ0s6JgBLKqquGU=;
+ b=A1j1qLwuGMRGbtGfo7okEOBKDikyI0zeXLTiJTSJXo2ywBZt7setZb5E4Ugpjg9kd+
+ u+cR6Q+oF78noG0Ed6WBQAT69FWkNPfKBFnIy1yrlfJ4WUfDGhfaLOA39xNNhxCQEG7w
+ RjXAWUeC+XQL1/to/OQ9Hp3xhpyBlNvMmPQCqNUw5hmrN8oOuhSdpDCay7gz+Ep8JsOO
+ 4PvviiFS3EesELq474IqOkclVZ/JAt+PBd/fq3i2hbw7aWieH0mPg/ezhCVtnWRkB9DP
+ ZgdN5stDM3VOGphko+5dF48wg2Cd6pfX11y4tsd3CkRAiuMi7HpVUoww3RxSjbWealXz
+ 1/rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710231794; x=1710836594;
+ d=1e100.net; s=20230601; t=1710231788; x=1710836588;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QyCNdGxEUzn56uZqvjtKqW1lxcPgF0npDxgJEUvvre8=;
- b=gPB0KS+5S0hemXnfp7NYDrv9bLJatP2aUFfipEscoCjE4UofBVBO9uEjXvFtXOE/5M
- Im3r7XvjrKaXszfdF/dEI1otq44IZKBDl9YdVnBlkloDb/Q7a7h/LGf8JEtZv8kBKDjc
- h8rFm6ht7Yu5qU3fksDn4hRi1RYEire0kxkk4ElA+kwLr2kZSj/ojY69adv0OzpU+9bD
- fwk3ALaCqZQe2/UA/FnMuD1Y/0ZQj4VRLvEyKQHyD3rHMISb8tsildqi2gCG5a58SsSN
- k3hDZyONniiHmQc/qRhm7ETn9f54XVPOWMKXlLLyEBw4qxe4UXLfgY597OGKrHPbn81V
- MPHw==
-X-Gm-Message-State: AOJu0YxcfBUbtlpUMVoSi/l69pQqLVNRemcjIEkEn2XSY22T88pEjhp1
- DlR7VyFFY+CWmZpvsvHAnpCfkb4T9qpD8royvkhVJvdFGq31RKjKm7SOoyUzW2zfod93kMfR47m
- U
-X-Google-Smtp-Source: AGHT+IEt61EFIIXe78sgAnGpd4Hm/swxGXcKdWRvf9p4g6dYVBmS6WsyIxUMLJUudHeQgJv2okIlCg==
-X-Received: by 2002:adf:a15a:0:b0:33e:9ce8:407a with SMTP id
- r26-20020adfa15a000000b0033e9ce8407amr3030528wrr.13.1710231794245; 
- Tue, 12 Mar 2024 01:23:14 -0700 (PDT)
+ bh=3FG8zZPJK1bf6KOQDF42ZpXKRx0qaQ0s6JgBLKqquGU=;
+ b=Xa18ty/nSOhEDddG6LB9R1zArU+4+XwxaBnppwkMonxutrMQE7bEdrdLcNOH6wtlW8
+ pbBbKY4C27DE1jaQTxzJLVeo6t78Ae4BzMwq2YcqTkDoH6VjnJG8jj7Y1Vh9yYP3R33R
+ hLvp0i6bC8/Rafl3/XDIsPY3VCJPQ4ejq2nmhX6LD3zIzP2yBHan1CGOykWinFfL7aLi
+ rSoUESDF4DQ31MT7OMQ2quYS7/6kGhAqHR8cxxK0Y788LiPbfzpAwc756rgq8EsHBljG
+ /GTjWhWZsRXc2/yT73m8MMugQHxsk0ZwW8sEnw2hpFp9jiYoz9WFHucqD/tPYOJXzSwz
+ nDmA==
+X-Gm-Message-State: AOJu0Yy4U5K49I+vZaVn4DxcmxsRp92ctI090k4XoTsbnY0pMshccfCl
+ opsAa0ec17RWI9WGefeZKV64/vdgeYBTD4pLrd4iTXY49Js/RH10CQ7aDEVVr90E+aF+yzL0rMF
+ f
+X-Google-Smtp-Source: AGHT+IFjpIHyDQhLi/+cn/X9cRHxihLXCE26NANe6r76wcYxDX6JnG4bdE3lQ4fjjjxjLQePGO35ZQ==
+X-Received: by 2002:a05:600c:3513:b0:413:1741:289f with SMTP id
+ h19-20020a05600c351300b004131741289fmr7491099wmq.5.1710231787739; 
+ Tue, 12 Mar 2024 01:23:07 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.139])
  by smtp.gmail.com with ESMTPSA id
- c13-20020adfe74d000000b0033cf4e47496sm8443384wrn.51.2024.03.12.01.23.12
+ t10-20020a05600c450a00b004131388d948sm16112266wmo.0.2024.03.12.01.23.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 12 Mar 2024 01:23:13 -0700 (PDT)
+ Tue, 12 Mar 2024 01:23:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 05/13] hw/core/qdev-properties-system: Fix missing ERRP_GUARD()
- for error_prepend()
-Date: Tue, 12 Mar 2024 09:22:30 +0100
-Message-ID: <20240312082239.69696-6-philmd@linaro.org>
+ Zhao Liu <zhao1.liu@intel.com>, Paul Burton <paulburton@kernel.org>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 04/13] hw/core/loader-fit: Fix missing ERRP_GUARD() for
+ error_prepend()
+Date: Tue, 12 Mar 2024 09:22:29 +0100
+Message-ID: <20240312082239.69696-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240312082239.69696-1-philmd@linaro.org>
 References: <20240312082239.69696-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,41 +118,49 @@ ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
 can't see this additional information, because exit() happens in
 error_setg earlier than information is added [1].
 
-The set_chr() passes @errp to error_prepend() without ERRP_GUARD().
+In hw/core/loader-fit.c, there are 2 functions passing @errp to
+error_prepend() without ERRP_GUARD():
+ - fit_load_kernel()
+ - fit_load_fdt()
 
-As a PropertyInfo.set method, there are too many possible callers to
-check the impact of this defect; it may or may not be harmless. Thus it
-is necessary to protect @errp with ERRP_GUARD().
+Their @errp parameters are both the pointers of the local @err virable
+in load_fit().
 
-To avoid the issue like [1] said, add missing ERRP_GUARD() at the
-beginning of this function.
+Though they don't cause the issue like [1] said, to follow the
+requirement of @errp, add missing ERRP_GUARD() at their beginning.
 
 [1]: Issue description in the commit message of commit ae7c80a7bd73
      ("error: New macro ERRP_GUARD()").
 
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: "Daniel P. Berrangé" <berrange@redhat.com
-Cc: Eduardo Habkost <eduardo@habkost.net>
+Cc: Paul Burton <paulburton@kernel.org>
+Cc: Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240311033822.3142585-16-zhao1.liu@linux.intel.com>
+Message-ID: <20240311033822.3142585-15-zhao1.liu@linux.intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/core/qdev-properties-system.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/core/loader-fit.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index b45e90edb2..00c968f4f5 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -242,6 +242,7 @@ static void get_chr(Object *obj, Visitor *v, const char *name, void *opaque,
- static void set_chr(Object *obj, Visitor *v, const char *name, void *opaque,
-                     Error **errp)
+diff --git a/hw/core/loader-fit.c b/hw/core/loader-fit.c
+index b7c7b3ba94..9f20007dbb 100644
+--- a/hw/core/loader-fit.c
++++ b/hw/core/loader-fit.c
+@@ -120,6 +120,7 @@ static int fit_load_kernel(const struct fit_loader *ldr, const void *itb,
+                            int cfg, void *opaque, hwaddr *pend,
+                            Error **errp)
  {
 +    ERRP_GUARD();
-     Property *prop = opaque;
-     CharBackend *be = object_field_prop_ptr(obj, prop);
-     Chardev *s;
+     const char *name;
+     const void *data;
+     const void *load_data;
+@@ -178,6 +179,7 @@ static int fit_load_fdt(const struct fit_loader *ldr, const void *itb,
+                         int cfg, void *opaque, const void *match_data,
+                         hwaddr kernel_end, Error **errp)
+ {
++    ERRP_GUARD();
+     Error *err = NULL;
+     const char *name;
+     const void *data;
 -- 
 2.41.0
 
