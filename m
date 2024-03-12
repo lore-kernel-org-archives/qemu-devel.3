@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A249C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 05:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98451C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 05:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjuG4-0007kI-No; Tue, 12 Mar 2024 01:01:00 -0400
+	id 1rjuHU-0008KG-PC; Tue, 12 Mar 2024 01:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjuFp-0007jj-79; Tue, 12 Mar 2024 01:00:45 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1rjuHR-0008I4-5q; Tue, 12 Mar 2024 01:02:26 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjuFl-00006I-RU; Tue, 12 Mar 2024 01:00:44 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6e56787e691so4069466b3a.0; 
- Mon, 11 Mar 2024 22:00:35 -0700 (PDT)
+ id 1rjuHP-0000OJ-GO; Tue, 12 Mar 2024 01:02:24 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-5d8b519e438so4370118a12.1; 
+ Mon, 11 Mar 2024 22:02:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710219635; x=1710824435; darn=nongnu.org;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=gmail.com; s=20230601; t=1710219741; x=1710824541; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2LE3qelXEvIBZTwy861HMsGltqDCoKADsEHL8U3k2b4=;
- b=h02/jedQFDAvxuFE9iGAppEr8G3kPt1ZHKaayu3cGRXjy1v7y1N1QYlNBSaoruV+Hz
- 7rQKuSn6Lz2x/DOsDB/I3/CMGXE3lKflfcqJ6aWu6ZhnmixX+IKelw33lXCwj/Tt4eNG
- y7rSdnSoJUg2hFrMjucB3vR948A33/GXeefCEhcz5KemJKlWLPHv0kGviOpJaOt9LSWc
- 9a/DyY+/LAv+matngITI+Y+9wqFQWhwszFLjvur77K4szC2B+l/nGO50Q6Al8WW2Mg8m
- HDLgDCYtqVrnzYpn8MnMqanisBMVIIksWDUuyjFavsaxp4iR7HdIQEX3qGiP4k6K3OnV
- cNZQ==
+ bh=0ndaXPb7f1ih42QobnOClFJRBx94v4z3va6+Oiuxyqw=;
+ b=IluCkkQJR0yzRWekestIsYICimZcL5LKG2TyDOtwR4a2lFzEqk5LAUH6pRhPb4Xqut
+ qSK2kaJ4zfjKoOnieizO44iucfDL7BJo93Ji54ghRPVWARVSiFyNhCzd1TMKDYNh/A2J
+ jcusgjAw+6jkv9tbYrpCD2FGbadbMYUtUlJowf9JeXejYQGRCLP3zir4CdQmABXsY6l8
+ KGVZ+oYR2PAdXI32o+LLFzt2O+wabCHmuQk+W0CFL6O1JgbeWLWQvO6O4E4w4ABkJ6rv
+ tTxXEasXlLNY7XX2T/rSt4GIShANVlwNs0wraHpKrZz7mvxLBIDjb4+ntxTUGIcRtZat
+ M3NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710219635; x=1710824435;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=1e100.net; s=20230601; t=1710219741; x=1710824541;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2LE3qelXEvIBZTwy861HMsGltqDCoKADsEHL8U3k2b4=;
- b=pdCy2PtMjACZp08dLgB2nv0MRgU5n80sGFS4ePpNsKh6m2zrGi/s8niZTfYgKxF8Yu
- BBdQo/jgVkzHSYurPdRyNla656EZFFVoj632vWerf0sJLnUToJouVrwv/pHYZGyHGESe
- Z5JNnm4sQghPxrkPo1oIzWNNWmkgvnfVMrlSOqgwgkbMrIeqldxkWHa+TZGUmvPntR4D
- 1i5xZwaE1+JiYdBb99aaJgdyvhq2u/i6E+8MjeV+51++jtYK4YEPWsGLIoJ+7Cobxjuo
- HeU+lXTeuS8VSBvKq9ne4h9sXdm72xX90Sg/PFBDCgp5mSXjijv/hFT9v0xw4v2ms4G3
- 1mMA==
+ bh=0ndaXPb7f1ih42QobnOClFJRBx94v4z3va6+Oiuxyqw=;
+ b=ZMp3bKWaailUxwzngacqC7QzBiBE5ceA8KOJhyIi+Nme/1Cj3/jxoFMSOXChiRkzK/
+ RaCQnl/OcqKVwTOpFyeaNFlK+YN5ntFFIwswKO9XGO5ia7BCVIaYHd2Bn1yz+TRorZgQ
+ UbjXGCcNB1VZ/YtTs5doTaSZL6bYV+IL1NT5XS/4dcvnouhCtb3PchG6tnVvjStRNHfs
+ +Pgc9P8Z5Z1X9rEu16366xIMpNoL2gOI40ftmLc9WNdhgcbesWOf5CGdU8y3B6KEkAMm
+ lxSl9sJlMNYIvgVbBGr6eYeR6rTEuFx4vND9Ozmb51GMRFKzVBPTjj2eO7RHzYaK6rCV
+ Tu+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4m5qQCjZgiUZSHt+R+12Ei8DKbs1rpboiMYZ4PyzFpw60yRZtXnMZgB3lK/YXn19ut1X1cwIcm8mad2pBv7h6OG9SEbvPZ+SZC+dmCw73ILISaqD4CzPYC38=
-X-Gm-Message-State: AOJu0YyjNOU2CeBkvBjRzuHIZPjIuC16d9GNo6inCwZfN6KqjqKWGkoC
- 3uWJli4gASA1cyfbnipk7T9oCfYlZkQc7BILsmOMFPKAU8vefr/CqiTxy54JHmA=
-X-Google-Smtp-Source: AGHT+IFN+BXKH1OZ1ErtE2ySA/Zwgf49hwkZ+fXjXiOVh96raTvGiNcFQwjYMb2MiipTen6Zt+tXmg==
-X-Received: by 2002:a05:6a20:548c:b0:1a1:879e:9b33 with SMTP id
- i12-20020a056a20548c00b001a1879e9b33mr9720669pzk.13.1710219634646; 
- Mon, 11 Mar 2024 22:00:34 -0700 (PDT)
+ AJvYcCWmNHLBsuFEFzXxNVBksTqNm4U6nbjM4ec//unenWePdxHSgbsxngGZ3zU4i5xM+f0f5A+ErZ4Pu4G089ZyLU3K7gQGdg+nkjdTKNPZVpYQ9MtvcYTH/I/J27Y=
+X-Gm-Message-State: AOJu0YwlMCHzU4viqxVgw5/hURUMffiyEXV9kydtR22OFaU3CrN1WytM
+ 4RBH9Qyr8dpNAUuu7CLfHVcwJuUoiZH9a7t0hbs26Y5i07O1yPoj
+X-Google-Smtp-Source: AGHT+IHXJZpdFpXcxK92l9u8RN+vFc/Pmeb0f9+l5yr7mHsjhWjpRzviXrweYLJMA0PNB7W29iDMoA==
+X-Received: by 2002:a05:6a21:33a1:b0:1a1:87a9:5caa with SMTP id
+ yy33-20020a056a2133a100b001a187a95caamr6647937pzb.29.1710219741329; 
+ Mon, 11 Mar 2024 22:02:21 -0700 (PDT)
 Received: from localhost ([1.146.55.44]) by smtp.gmail.com with ESMTPSA id
- v66-20020a626145000000b006e6450ccac5sm5431279pfb.126.2024.03.11.22.00.30
+ n17-20020a170903111100b001dd6412cbe9sm5566183plh.252.2024.03.11.22.02.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 11 Mar 2024 22:00:34 -0700 (PDT)
+ Mon, 11 Mar 2024 22:02:20 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Mar 2024 15:00:27 +1000
-Message-Id: <CZRI9EL3X0N1.3FAKS9QW4G9CW@wheely>
-To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, "David Gibson"
- <david@gibson.dropbear.id.au>, "Daniel Henrique Barboza"
- <danielhb413@gmail.com>, "Thomas Huth" <thuth@redhat.com>, "Harsh Prateek
- Bora" <harshpb@linux.ibm.com>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-Subject: Re: [PATCH v2] spapr: Tag pseries-2.1 - 2.11 machines as deprecated
+Date: Tue, 12 Mar 2024 15:02:14 +1000
+Message-Id: <CZRIARPDRC29.2377OJOQHTV2J@wheely>
+Cc: =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, <qemu-ppc@nongnu.org>,
+ "Daniel Henrique Barboza" <danielhb413@gmail.com>,
+ <devel@lists.libvirt.org>, "Harsh Prateek Bora" <harshpb@linux.ibm.com>,
+ "David Gibson" <david@gibson.dropbear.id.au>
+Subject: Re: [PATCH-for-9.0] docs: Deprecate the pseries-2.12 machines
 From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ <qemu-devel@nongnu.org>
 X-Mailer: aerc 0.15.2
-References: <20231214181723.1520854-1-clg@kaod.org>
- <f3e1fefc-0df3-4339-8373-7648597a78d0@linaro.org>
- <Ze9T64dA2H-LlePV@redhat.com>
-In-Reply-To: <Ze9T64dA2H-LlePV@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
+References: <20240311190459.66334-1-philmd@linaro.org>
+In-Reply-To: <20240311190459.66334-1-philmd@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,35 +97,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Mar 12, 2024 at 4:56 AM AEST, Daniel P. Berrang=C3=A9 wrote:
-> On Mon, Mar 11, 2024 at 06:46:53PM +0100, Philippe Mathieu-Daud=C3=A9 wro=
-te:
-> > Hi,
-> >=20
-> > On 14/12/23 19:17, C=C3=A9dric Le Goater wrote:
-> > > pseries machines before version 2.11 have undergone many changes to
-> > > correct issues, mostly regarding migration compatibility. This is
-> > > obfuscating the code uselessly and makes maintenance more difficult.
-> > > Remove them and only keep the last version of the 2.x series, 2.12,
-> > > still in use by old distros.
-> >=20
-> > By the time we get to QEMU v9.2, will pseries-2.12 still be used
-> > by old distros? (which ones btw?)
+On Tue Mar 12, 2024 at 5:04 AM AEST, Philippe Mathieu-Daud=C3=A9 wrote:
+> pSeries machines before 3.0 have complex migration back
+> compatibility code we'd like to get ride of. The last
+> one is 2.12, which is 6 years old. We just deprecated up
+> to the 2.11 machine in commit 1392617d35 ("spapr: Tag
+> pseries-2.1 - 2.11 machines as deprecated").
+> Take to opportunity to also deprecate the 2.12 machines.
 >
-> That's the wrong question really.
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+> In 2025 I'd like to get ride of the code related to:
 >
-> Machine types are there to facilitate live migration, and by
-> extension also handle save/restore to disk.
->
-> So the question is more which distros are likely to ship
-> new QEMU 9.2, and also still need the ability to incoming
-> migrate from an older version of their distro where 2.12
-> (or a downstream equiv) was a fully supported machine type.
+>   include/hw/ppc/spapr_cpu_core.h:31:    bool pre_3_0_migration; /* older=
+ machine don't know about SpaprCpuState */
 
-From Cedric's list, they are ~2018 vintage. I don't know if
-there is upstream policy on this, but 2025 seems reasonable
-to remove support for live migration from then.
+Acked-by: Nicholas Piggin <npiggin@gmail.com>
+
+I can merge this via the PPC tree.
 
 Thanks,
 Nick
+
+> ---
+>  docs/about/deprecated.rst | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index dfd681cd02..65111513cc 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -237,13 +237,13 @@ The Nios II architecture is orphan.
+>  The machine is no longer in existence and has been long unmaintained
+>  in QEMU. This also holds for the TC51828 16MiB flash that it uses.
+> =20
+> -``pseries-2.1`` up to ``pseries-2.11`` (since 9.0)
+> +``pseries-2.1`` up to ``pseries-2.12`` (since 9.0)
+>  ''''''''''''''''''''''''''''''''''''''''''''''''''
+> =20
+> -Older pseries machines before version 2.12 have undergone many changes
+> +Older pseries machines before version 3.0 have undergone many changes
+>  to correct issues, mostly regarding migration compatibility. These are
+>  no longer maintained and removing them will make the code easier to
+> -read and maintain. Use versions 2.12 and above as a replacement.
+> +read and maintain. Use versions 3.0 and above as a replacement.
+> =20
+>  Backend options
+>  ---------------
+
 
