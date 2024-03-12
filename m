@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E28C54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C293C54E66
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 09:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjytf-0004po-Li; Tue, 12 Mar 2024 05:58:11 -0400
+	id 1rjytQ-0004nn-9f; Tue, 12 Mar 2024 05:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rjytd-0004pP-Nm
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:58:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjytG-0004n4-QS
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:57:47 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rjytb-0000Fw-8a
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:58:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710237485;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=thrmEBnXVSz3D+YPyEDtVqxJDxCUTidCfOOfM/dsWnw=;
- b=Yz4np3EWjwkGcMR0O3X8DRXexYxkdJ2hugZLSpubmdQ+3lkDuNG7roNdNgeWxzrdMVNnys
- zQwqz61Tpp+lKzXpG3yJtG88qjHk40Uk0vARRE1+7AQETxN1ckaVhFMNxa+J9JvhIJXVcR
- iretk5nkxfbuHL9qnJVb7a6fcXCFYIM=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-91--jXTpBd2Mj2-9-CNp11-Jg-1; Tue,
- 12 Mar 2024 05:58:01 -0400
-X-MC-Unique: -jXTpBd2Mj2-9-CNp11-Jg-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 574161C07F46;
- Tue, 12 Mar 2024 09:58:01 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.60])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 5B5DC492BD1;
- Tue, 12 Mar 2024 09:58:00 +0000 (UTC)
-Date: Tue, 12 Mar 2024 09:57:58 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 2/2] migration: Fix error handling after dup in file
- migration
-Message-ID: <ZfAnJjka5KHR1Mnu@redhat.com>
-References: <20240311233335.17299-1-farosas@suse.de>
- <20240311233335.17299-3-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjytD-0000Ch-9c
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:57:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710237462; x=1741773462;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=m4NiaKsQ27utBVnDv39yTWwqiXt/Umj7/8ZxBQI5cT4=;
+ b=hA1kWqqy3bswrTw+YE+xxLt5si8Pn6au2IhFhBV5PrP+8st4LTBSCYYF
+ K7I2Ub5jeDMqeQK3MWB9TOZ+cWnyWGAwHEZ1fLe0KgN0eq8bY3BxNZ0Q2
+ dtA624VKu0tqFzX2jm95t65M9g/eMJ0/6rCJhF0ti3Ya+lqmO9l9znoyd
+ lnb1duWYZ50Cc/O/aX9QhDwZEpqToCdn6SE+r0wBRnO29qrxl7OYP+1uA
+ hEZHO/YpbM/YbOICyIQ964X9j2bni6wMRp10VYHYamAPXKA54om53fdiz
+ YJpQjVimlU83a32UrFU60I78/Iol5yRhjQVbVvKJRx313IYArnTme2mQ2 w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="4808984"
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
+   d="scan'208";a="4808984"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Mar 2024 02:57:39 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="11550428"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa009.jf.intel.com with ESMTP; 12 Mar 2024 02:57:36 -0700
+Date: Tue, 12 Mar 2024 18:11:24 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>,
+ Babu Moger <babu.moger@amd.com>, Yongwei Ma <yongwei.ma@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH v9 11/21] i386/cpu: Decouple CPUID[0x1F] subleaf with
+ specific topology level
+Message-ID: <ZfAqTEN8pvvgZ8IO@intel.com>
+References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
+ <20240227103231.1556302-12-zhao1.liu@linux.intel.com>
+ <005c1649-43d3-494f-951a-166e7200ffd5@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240311233335.17299-3-farosas@suse.de>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
+In-Reply-To: <005c1649-43d3-494f-951a-166e7200ffd5@intel.com>
+Received-SPF: none client-ip=198.175.65.20;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
 X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,118 +92,131 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 11, 2024 at 08:33:35PM -0300, Fabiano Rosas wrote:
-> The file migration code was allowing a possible -1 from a failed call
-> to dup() to propagate into the new QIOFileChannel::fd before checking
-> for validity. Coverity doesn't like that, possibly due to the the
-> lseek(-1, ...) call that would ensue before returning from the channel
-> creation routine.
+On Mon, Mar 11, 2024 at 04:45:41PM +0800, Xiaoyao Li wrote:
+> Date: Mon, 11 Mar 2024 16:45:41 +0800
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: Re: [PATCH v9 11/21] i386/cpu: Decouple CPUID[0x1F] subleaf with
+>  specific topology level
 > 
-> Use the newly introduced qio_channel_file_dupfd() to properly check
-> the return of dup() before proceeding.
+> On 2/27/2024 6:32 PM, Zhao Liu wrote:
+> > From: Zhao Liu <zhao1.liu@intel.com>
+> > 
+> > At present, the subleaf 0x02 of CPUID[0x1F] is bound to the "die" level.
+> > 
+> > In fact, the specific topology level exposed in 0x1F depends on the
+> > platform's support for extension levels (module, tile and die).
+> > 
+> > To help expose "module" level in 0x1F, decouple CPUID[0x1F] subleaf
+> > with specific topology level.
+> > 
+> > Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > 
-> Fixes: CID 1539961
-> Fixes: CID 1539965
-> Fixes: CID 1539960
-> Fixes: 2dd7ee7a51 ("migration/multifd: Add incoming QIOChannelFile support")
-> Fixes: decdc76772 ("migration/multifd: Add mapped-ram support to fd: URI")
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/fd.c   |  9 ++++-----
->  migration/file.c | 14 +++++++-------
->  2 files changed, 11 insertions(+), 12 deletions(-)
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
+Thanks!
+
+> Besides, some nits below.
+>
+
+[snip]
+
+> > +static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
+> > +                                X86CPUTopoInfo *topo_info,
+> > +                                uint32_t *eax, uint32_t *ebx,
+> > +                                uint32_t *ecx, uint32_t *edx)
+> > +{
+> > +    X86CPU *cpu = env_archcpu(env);
+> > +    unsigned long level;
+> > +    uint32_t num_threads_next_level, offset_next_level;
+> > +
+> > +    assert(count + 1 < CPU_TOPO_LEVEL_MAX);
+> > +
+> > +    /*
+> > +     * Find the No.count topology levels in avail_cpu_topo bitmap.
+> > +     * Start from bit 0 (CPU_TOPO_LEVEL_INVALID).
 > 
-> diff --git a/migration/fd.c b/migration/fd.c
-> index d4ae72d132..4e2a63a73d 100644
-> --- a/migration/fd.c
-> +++ b/migration/fd.c
-> @@ -80,6 +80,7 @@ static gboolean fd_accept_incoming_migration(QIOChannel *ioc,
->  void fd_start_incoming_migration(const char *fdname, Error **errp)
->  {
->      QIOChannel *ioc;
-> +    QIOChannelFile *fioc;
->      int fd = monitor_fd_param(monitor_cur(), fdname, errp);
->      if (fd == -1) {
->          return;
-> @@ -103,15 +104,13 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
->          int channels = migrate_multifd_channels();
->  
->          while (channels--) {
-> -            ioc = QIO_CHANNEL(qio_channel_file_new_fd(dup(fd)));
-> -
-> -            if (QIO_CHANNEL_FILE(ioc)->fd == -1) {
-> -                error_setg(errp, "Failed to duplicate fd %d", fd);
-> +            fioc = qio_channel_file_new_dupfd(fd, errp);
-> +            if (!fioc) {
->                  return;
->              }
->  
->              qio_channel_set_name(ioc, "migration-fd-incoming");
-> -            qio_channel_add_watch_full(ioc, G_IO_IN,
-> +            qio_channel_add_watch_full(QIO_CHANNEL(fioc), G_IO_IN,
->                                         fd_accept_incoming_migration,
->                                         NULL, NULL,
->                                         g_main_context_get_thread_default());
+> AFAICS, it starts from bit 1 (CPU_TOPO_LEVEL_SMT). Because the initial value
+> of level is CPU_TOPO_LEVEL_INVALID, but the first round of the loop is to
+> find the valid bit starting from (level + 1).
 
-Nothing is free'ing the already created channels, if this while()
-loop fails on the 2nd or later iterations.
+Yes, this description is much clearer.
 
-> diff --git a/migration/file.c b/migration/file.c
-> index 164b079966..d458f48269 100644
-> --- a/migration/file.c
-> +++ b/migration/file.c
-> @@ -58,12 +58,13 @@ bool file_send_channel_create(gpointer opaque, Error **errp)
->      int fd = fd_args_get_fd();
->  
->      if (fd && fd != -1) {
-> -        ioc = qio_channel_file_new_fd(dup(fd));
-> +        ioc = qio_channel_file_new_dupfd(fd, errp);
->      } else {
->          ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
-> -        if (!ioc) {
-> -            goto out;
-> -        }
-> +    }
-> +
-> +    if (!ioc) {
-> +        goto out;
->      }
->  
->      multifd_channel_connect(opaque, QIO_CHANNEL(ioc));
-> @@ -147,10 +148,9 @@ void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
->                                     NULL, NULL,
->                                     g_main_context_get_thread_default());
->  
-> -        fioc = qio_channel_file_new_fd(dup(fioc->fd));
-> +        fioc = qio_channel_file_new_dupfd(fioc->fd, errp);
->  
-> -        if (!fioc || fioc->fd == -1) {
-> -            error_setg(errp, "Error creating migration incoming channel");
-> +        if (!fioc) {
->              break;
->          }
->      } while (++i < channels);
+> > +     */
+> > +    level = CPU_TOPO_LEVEL_INVALID;
+> > +    for (int i = 0; i <= count; i++) {
+> > +        level = find_next_bit(env->avail_cpu_topo,
+> > +                              CPU_TOPO_LEVEL_PACKAGE,
+> > +                              level + 1);
+> > +
+> > +        /*
+> > +         * CPUID[0x1f] doesn't explicitly encode the package level,
+> > +         * and it just encode the invalid level (all fields are 0)
+> > +         * into the last subleaf of 0x1f.
+> > +         */
+> 
+> QEMU will never set bit CPU_TOPO_LEVEL_PACKAGE in env->avail_cpu_topo.
 
-Again, nothing is free'ing when the loops fails on 2nd or later
-iterations.
+In the patch 9 [1], I set the CPU_TOPO_LEVEL_PACKAGE in bitmap. This
+level is a basic topology level in general, so it's worth being set.
 
-So a weak
+Only in Intel's 0x1F, it doesn't have a corresponding type, and where
+I use it as a termination condition for 0x1F encoding (not an error case).
 
-  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+[1]: https://lore.kernel.org/qemu-devel/20240227103231.1556302-10-zhao1.liu@linux.intel.com/
 
-on the basis that it fixes the bugs that it claims to fix, but there
-are more bugs that still need fixing here.
+> So I think we should assert() it instead of fixing it silently.
+> 
+> > +        if (level == CPU_TOPO_LEVEL_PACKAGE) {
+> > +            level = CPU_TOPO_LEVEL_INVALID;
+> > +            break;
+> > +        }
+> > +    }
+> > +
+> > +    if (level == CPU_TOPO_LEVEL_INVALID) {
+> > +        num_threads_next_level = 0;
+> > +        offset_next_level = 0;
+> > +    } else {
+> > +        unsigned long next_level;
+> 
+> please define it at the beginning of the function. e.g.,
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Okay, I'll put the declaration of "next_level" at the beginning of this
+function with a current variable "level".
 
+> 
+> > +        next_level = find_next_bit(env->avail_cpu_topo,
+> > +                                   CPU_TOPO_LEVEL_PACKAGE,
+> > +                                   level + 1);
+> > +        num_threads_next_level = num_threads_by_topo_level(topo_info,
+> > +                                                           next_level);
+> > +        offset_next_level = apicid_offset_by_topo_level(topo_info,
+> > +                                                        next_level);
+> > +    }
+> > +
+> > +    *eax = offset_next_level;
+> > +    *ebx = num_threads_next_level;
+> > +    *ebx &= 0xffff; /* The count doesn't need to be reliable. */
+> 
+> we can combine them together. e.g.,
+> 
+> *ebx = num_threads_next_level & 0xffff; /* ... */
+> 
+> > +    *ecx = count & 0xff;
+> > +    *ecx |= cpuid1f_topo_type(level) << 8;
+> 
+> Ditto,
+> 
+> *ecx = count & 0xff | cpuid1f_topo_type(level) << 8;
+
+OK, will combine these.
+
+> > +    *edx = cpu->apic_id;
+> > +
+> > +    assert(!(*eax & ~0x1f));
+> > +}
+> > +
 
