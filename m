@@ -4,58 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C98C54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BC3C54E68
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1UZ-0002bR-GU; Tue, 12 Mar 2024 08:44:27 -0400
+	id 1rk1Uj-0003OJ-SV; Tue, 12 Mar 2024 08:44:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1U4-0002Az-LA
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:43:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Ug-0003FC-85
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1U2-0008W3-25
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:43:56 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1UT-0000FU-NT
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710247433;
+ s=mimecast20190719; t=1710247458;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dCREUU09uTOSvFl3jYOVCcfLqfCBCPH5bJcN2LFfsKo=;
- b=TL0JBjvB7fNJPkcPSK7OxAw5sZqosCYMRXzDDKAmpR9oyHxAYx8D4q97UXqAPgEh9UJW09
- q7hBPCmsRsM7PYMtZUsIbP11Ka0IpzzREDCr3i7PL7d6fHKTXdVb03QEHMAj94ZjSmF3yH
- PvOOE0cdb6OJSNLuPWnb/ylipTIbSaI=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-KeqFtyQCONuMTrmtswJ6Hg-1; Tue, 12 Mar 2024 08:43:48 -0400
-X-MC-Unique: KeqFtyQCONuMTrmtswJ6Hg-1
+ bh=Z7F03If7WrSiHRtRxDgTEU/pCZ95YcwGIDX593bl5tc=;
+ b=IsyDz8OFeC2viXxtOBoQWzMQ79KXlmu2vmC9njCd54AMNT/U1hWMuMqUXA4I1mrL8D3jhF
+ +2tF9/zr3W/4D3yaQPfEUk5njcM21zfCgB481dKKFUJApOw+ur9FZOg7S1cLVm2Y1U1Rqn
+ qv2QFvqtaUJsRjcFP3rOnvOBnEKz4a8=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-AzC44T76M8G6Eu40xBNE1Q-1; Tue,
+ 12 Mar 2024 08:44:16 -0400
+X-MC-Unique: AzC44T76M8G6Eu40xBNE1Q-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E140F800262;
- Tue, 12 Mar 2024 12:43:47 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9595A3C0D7BE;
+ Tue, 12 Mar 2024 12:44:16 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.69])
- by smtp.corp.redhat.com (Postfix) with ESMTP id E2592492BC4;
- Tue, 12 Mar 2024 12:43:46 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7955E492BC4;
+ Tue, 12 Mar 2024 12:44:14 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 04/55] hw/misc/xlnx-versal-trng: Check returned bool in
- trng_prop_fault_event_set()
-Date: Tue, 12 Mar 2024 13:42:48 +0100
-Message-ID: <20240312124339.761630-5-thuth@redhat.com>
+ Stefan Weil <sw@weilnetz.de>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Subject: [PULL 17/55] block/vdi: Fix missing ERRP_GUARD() for error_prepend()
+Date: Tue, 12 Mar 2024 13:43:01 +0100
+Message-ID: <20240312124339.761630-18-thuth@redhat.com>
 In-Reply-To: <20240312124339.761630-1-thuth@redhat.com>
 References: <20240312124339.761630-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -85,62 +83,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-As the comment in qapi/error, dereferencing @errp requires
+As the comment in qapi/error, passing @errp to error_prepend() requires
 ERRP_GUARD():
 
 * = Why, when and how to use ERRP_GUARD() =
 *
 * Without ERRP_GUARD(), use of the @errp parameter is restricted:
-* - It must not be dereferenced, because it may be null.
 ...
+* - It should not be passed to error_prepend(), error_vprepend() or
+*   error_append_hint(), because that doesn't work with &error_fatal.
 * ERRP_GUARD() lifts these restrictions.
 *
 * To use ERRP_GUARD(), add it right at the beginning of the function.
 * @errp can then be used without worrying about the argument being
 * NULL or &error_fatal.
-*
-* Using it when it's not needed is safe, but please avoid cluttering
-* the source with useless code.
 
-But in trng_prop_fault_event_set, @errp is dereferenced without
-ERRP_GUARD():
+ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
+can't see this additional information, because exit() happens in
+error_setg earlier than information is added [1].
 
-visit_type_uint32(v, name, events, errp);
-if (*errp) {
-    return;
-}
+The vdi_co_do_create() passes @errp to error_prepend() without
+ERRP_GUARD(), and its @errp parameter is so widely sourced that it is
+necessary to protect it with ERRP_GUARD().
 
-Currently, since trng_prop_fault_event_set() doesn't get the NULL @errp
-parameter as a "set" method of object property, it hasn't triggered the
-bug that dereferencing the NULL @errp.
+To avoid the potential issues as [1] said, add missing ERRP_GUARD() at
+the beginning of this function.
 
-And since visit_type_uint32() returns bool, check the returned bool
-directly instead of dereferencing @errp, then we needn't the add missing
-ERRP_GUARD().
+[1]: Issue description in the commit message of commit ae7c80a7bd73
+     ("error: New macro ERRP_GUARD()").
 
-Suggested-by: Markus Armbruster <armbru@redhat.com>
+Cc: Stefan Weil <sw@weilnetz.de>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Cc: Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240223085653.1255438-5-zhao1.liu@linux.intel.com>
+Message-ID: <20240311033822.3142585-12-zhao1.liu@linux.intel.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/misc/xlnx-versal-trng.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ block/vdi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
-index b8111b8b66..6495188dc7 100644
---- a/hw/misc/xlnx-versal-trng.c
-+++ b/hw/misc/xlnx-versal-trng.c
-@@ -644,8 +644,7 @@ static void trng_prop_fault_event_set(Object *obj, Visitor *v,
-     Property *prop = opaque;
-     uint32_t *events = object_field_prop_ptr(obj, prop);
- 
--    visit_type_uint32(v, name, events, errp);
--    if (*errp) {
-+    if (!visit_type_uint32(v, name, events, errp)) {
-         return;
-     }
- 
+diff --git a/block/vdi.c b/block/vdi.c
+index 3b57becb9f..6363da08ce 100644
+--- a/block/vdi.c
++++ b/block/vdi.c
+@@ -738,6 +738,7 @@ static int coroutine_fn GRAPH_UNLOCKED
+ vdi_co_do_create(BlockdevCreateOptions *create_options, size_t block_size,
+                  Error **errp)
+ {
++    ERRP_GUARD();
+     BlockdevCreateOptionsVdi *vdi_opts;
+     int ret = 0;
+     uint64_t bytes = 0;
 -- 
 2.44.0
 
