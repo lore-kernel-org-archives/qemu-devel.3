@@ -4,57 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D6AC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 05:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70698C54E49
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 05:50:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjuyz-00078e-9h; Tue, 12 Mar 2024 01:47:25 -0400
+	id 1rjv1U-00086j-Qq; Tue, 12 Mar 2024 01:50:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rjuyn-00075p-PX; Tue, 12 Mar 2024 01:47:18 -0400
-Received: from out30-97.freemail.mail.aliyun.com ([115.124.30.97])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjv1S-00086U-U2
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 01:49:59 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rjuyY-0007do-Em; Tue, 12 Mar 2024 01:47:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1710222408; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=n3lFD/Eap30yyY91QJ2Yy23T+51QoULRPSQPw9NBZrU=;
- b=n/XvU0uxMmNW0rF6sl2oSKN4Jz2uifB+GGlEtGXGbE+fE9zNWtOunXzHXJ+3r0L/cD1oliHhRDw2I5oDFns3Xg9Mu2Qu5SmFf+7VPdxQXTlI5PLPGt8fgd9T4kc/iBl4l9EqB5zumi7rwKP6FgZ1MQBs5Bh+8uL35E2b6joEjGc=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R481e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046049;
- MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
- TI=SMTPD_---0W2KhSFI_1710222404; 
-Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W2KhSFI_1710222404) by smtp.aliyun-inc.com;
- Tue, 12 Mar 2024 13:46:45 +0800
-From: Huang Tao <eric.huang@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
- alistair.francis@wdc.com, palmer@dabbelt.com,
- Huang Tao <eric.huang@linux.alibaba.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>
-Subject: [PATCH v2] target/riscv: Implement dynamic establishment of custom
- decoder
-Date: Tue, 12 Mar 2024 13:45:53 +0800
-Message-ID: <20240312054553.11811-1-eric.huang@linux.alibaba.com>
-X-Mailer: git-send-email 2.41.0
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjv1Q-0007yJ-DS
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 01:49:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710222596; x=1741758596;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=poBSj/TwH45qU4orRVv9VqC5G11e9zHu2p+rfihjyoI=;
+ b=ffGNwfyttzhfuHBqcfm0hzMPhnFOYsZ4R7tguYVK2ejcfOeD3s5f9HKU
+ SQ/pFOk9t4SNAnxWC2Asf6Yg8+39L5bzaPtDQcLQe4vTE9xruVmNSk6I0
+ sG1GWkOtKkDxIBsJQf5eHve2WEUWjd38FJlIZYVRgSt7VoHyjrtIZ9tSV
+ yKer9z92FFuQytKGqvgUKm+39j+3fpAAcd+SD+LMdJIm/AKL5blTxgote
+ ADSG7Z1SFQy6fqwK9aE+fvfV8jGYEpHo0UKQlML55FJA3Z0oFcQXd8M0Y
+ WziIXDSPmRU+BxkPfAZmRJ8K5Y2stA8AMLJWh5ByJmDiz5uDq+nTObVde Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="4769769"
+X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; 
+   d="scan'208";a="4769769"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Mar 2024 22:49:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; d="scan'208";a="42415161"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by fmviesa001.fm.intel.com with ESMTP; 11 Mar 2024 22:49:52 -0700
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] error: Move ERRP_GUARD() to the beginning of the function
+Date: Tue, 12 Mar 2024 14:03:37 +0800
+Message-Id: <20240312060337.3240965-1-zhao1.liu@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.97;
- envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-97.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, T_SPF_HELO_TEMPERROR=0.01,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=192.198.163.17;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,202 +78,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In this patch, we modify the decoder to be a freely composable data
-structure instead of a hardcoded one. It can be dynamically builded up
-according to the extensions.
-This approach has several benefits:
-1. Provides support for heterogeneous cpu architectures. As we add decoder in
-   RISCVCPU, each cpu can have their own decoder, and the decoders can be
-   different due to cpu's features.
-2. Improve the decoding efficiency. We run the guard_func to see if the decoder
-   can be added to the dynamic_decoder when building up the decoder. Therefore,
-   there is no need to run the guard_func when decoding each instruction. It can
-   improve the decoding efficiency
-3. For vendor or dynamic cpus, it allows them to customize their own decoder
-   functions to improve decoding efficiency, especially when vendor-defined
-   instruction sets increase. Because of dynamic building up, it can skip the other
-   decoder guard functions when decoding.
-4. Pre patch for allowing adding a vendor decoder before decode_insn32() with minimal
-   overhead for users that don't need this particular vendor deocder.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
-Suggested-by: Christoph Muellner <christoph.muellner@vrull.eu>
-Co-authored-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Since the commit 05e385d2a9 ("error: Move ERRP_GUARD() to the beginning
+of the function"), there are new codes that don't put ERRP_GUARD() at
+the beginning of the functions.
+
+As stated in the commit 05e385d2a9: "include/qapi/error.h advises to put
+ERRP_GUARD() right at the beginning of the function, because only then
+can it guard the whole function.", so clean up the few spots
+disregarding the advice.
+
+Inspired-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/riscv/cpu.c         | 19 +++++++++++++++++++
- target/riscv/cpu.h         |  2 ++
- target/riscv/cpu_decoder.h | 34 ++++++++++++++++++++++++++++++++++
- target/riscv/translate.c   | 28 ++++++++++++----------------
- 4 files changed, 67 insertions(+), 16 deletions(-)
- create mode 100644 target/riscv/cpu_decoder.h
+ * Inspired by Markus' original cleanup and copied his commit message.
+---
+ block.c                    | 2 +-
+ block/qapi.c               | 6 +++---
+ hw/s390x/s390-virtio-ccw.c | 2 +-
+ migration/options.c        | 2 +-
+ migration/postcopy-ram.c   | 4 ++--
+ net/vhost-vdpa.c           | 3 +--
+ 6 files changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 5ff0192c52..5ea5232ed8 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -38,6 +38,7 @@
- #include "kvm/kvm_riscv.h"
- #include "tcg/tcg-cpu.h"
- #include "tcg/tcg.h"
-+#include "cpu_decoder.h"
- 
- /* RISC-V CPU definitions */
- static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
-@@ -1102,6 +1103,22 @@ static void riscv_cpu_satp_mode_finalize(RISCVCPU *cpu, Error **errp)
- }
- #endif
- 
-+static void riscv_cpu_finalize_dynamic_decoder(RISCVCPU *cpu)
-+{
-+    decode_fn *dynamic_decoders;
-+    dynamic_decoders = g_new0(decode_fn, decoder_table_size);
-+    int j = 0;
-+    for (size_t i = 0; i < decoder_table_size; ++i) {
-+        if (decoder_table[i].guard_func &&
-+            decoder_table[i].guard_func(&cpu->cfg)) {
-+            dynamic_decoders[j] = decoder_table[i].decode_fn;
-+            j++;
-+        }
-+    }
-+
-+    cpu->decoders = dynamic_decoders;
-+}
-+
- void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+diff --git a/block.c b/block.c
+index 1ed9214f66ed..8a43a83c11ca 100644
+--- a/block.c
++++ b/block.c
+@@ -534,9 +534,9 @@ typedef struct CreateCo {
+ int coroutine_fn bdrv_co_create(BlockDriver *drv, const char *filename,
+                                 QemuOpts *opts, Error **errp)
  {
-     Error *local_err = NULL;
-@@ -1127,6 +1144,8 @@ void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-             return;
-         }
-     }
-+
-+    riscv_cpu_finalize_dynamic_decoder(cpu);
- }
++    ERRP_GUARD();
+     int ret;
+     GLOBAL_STATE_CODE();
+-    ERRP_GUARD();
  
- static void riscv_cpu_realize(DeviceState *dev, Error **errp)
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 5d291a7092..bb96af97f9 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -30,6 +30,7 @@
- #include "qemu/int128.h"
- #include "cpu_bits.h"
- #include "cpu_cfg.h"
-+#include "cpu_decoder.h"
- #include "qapi/qapi-types-common.h"
- #include "cpu-qom.h"
- 
-@@ -457,6 +458,7 @@ struct ArchCPU {
-     uint32_t pmu_avail_ctrs;
-     /* Mapping of events to counters */
-     GHashTable *pmu_event_ctr_map;
-+    const decode_fn *decoders;
- };
- 
- /**
-diff --git a/target/riscv/cpu_decoder.h b/target/riscv/cpu_decoder.h
-new file mode 100644
-index 0000000000..549414ce4c
---- /dev/null
-+++ b/target/riscv/cpu_decoder.h
-@@ -0,0 +1,34 @@
-+/*
-+ * QEMU RISC-V CPU Decoder
-+ *
-+ * Copyright (c) 2023-2024 Alibaba Group
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef RISCV_CPU_DECODER_H
-+#define RISCV_CPU_DECODER_H
-+
-+struct DisasContext;
-+struct RISCVCPUConfig;
-+typedef struct RISCVDecoder {
-+    bool (*guard_func)(const struct RISCVCPUConfig *);
-+    bool (*decode_fn)(struct DisasContext *, uint32_t);
-+} RISCVDecoder;
-+
-+typedef bool (*decode_fn)(struct DisasContext *, uint32_t);
-+
-+extern const size_t decoder_table_size;
-+
-+extern const RISCVDecoder decoder_table[];
-+#endif
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 177418b2b9..3f50737a50 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -115,6 +115,7 @@ typedef struct DisasContext {
-     bool frm_valid;
-     /* TCG of the current insn_start */
-     TCGOp *insn_start;
-+    const decode_fn *decoders;
- } DisasContext;
- 
- static inline bool has_ext(DisasContext *ctx, uint32_t ext)
-@@ -1118,21 +1119,16 @@ static inline int insn_len(uint16_t first_word)
-     return (first_word & 3) == 3 ? 4 : 2;
- }
- 
-+const RISCVDecoder decoder_table[] = {
-+    { always_true_p, decode_insn32 },
-+    { has_xthead_p, decode_xthead},
-+    { has_XVentanaCondOps_p, decode_XVentanaCodeOps},
-+};
-+
-+const size_t decoder_table_size = ARRAY_SIZE(decoder_table);
-+
- static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
+     if (!drv->bdrv_co_create_opts) {
+         error_setg(errp, "Driver '%s' does not support image creation",
+diff --git a/block/qapi.c b/block/qapi.c
+index 9e806fa230d8..31183d493341 100644
+--- a/block/qapi.c
++++ b/block/qapi.c
+@@ -46,11 +46,11 @@ BlockDeviceInfo *bdrv_block_device_info(BlockBackend *blk,
+                                         bool flat,
+                                         Error **errp)
  {
--    /*
--     * A table with predicate (i.e., guard) functions and decoder functions
--     * that are tested in-order until a decoder matches onto the opcode.
--     */
--    static const struct {
--        bool (*guard_func)(const RISCVCPUConfig *);
--        bool (*decode_func)(DisasContext *, uint32_t);
--    } decoders[] = {
--        { always_true_p,  decode_insn32 },
--        { has_xthead_p, decode_xthead },
--        { has_XVentanaCondOps_p,  decode_XVentanaCodeOps },
--    };
++    ERRP_GUARD();
+     ImageInfo **p_image_info;
+     ImageInfo *backing_info;
+     BlockDriverState *backing;
+     BlockDeviceInfo *info;
+-    ERRP_GUARD();
+ 
+     if (!bs->drv) {
+         error_setg(errp, "Block device %s is ejected", bs->node_name);
+@@ -330,8 +330,8 @@ void bdrv_query_image_info(BlockDriverState *bs,
+                            bool skip_implicit_filters,
+                            Error **errp)
+ {
+-    ImageInfo *info;
+     ERRP_GUARD();
++    ImageInfo *info;
+ 
+     info = g_new0(ImageInfo, 1);
+     bdrv_do_query_node_info(bs, qapi_ImageInfo_base(info), errp);
+@@ -382,10 +382,10 @@ void bdrv_query_block_graph_info(BlockDriverState *bs,
+                                  BlockGraphInfo **p_info,
+                                  Error **errp)
+ {
++    ERRP_GUARD();
+     BlockGraphInfo *info;
+     BlockChildInfoList **children_list_tail;
+     BdrvChild *c;
+-    ERRP_GUARD();
+ 
+     info = g_new0(BlockGraphInfo, 1);
+     bdrv_do_query_node_info(bs, qapi_BlockGraphInfo_base(info), errp);
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 62804cc2281d..4b6aab8eef98 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -312,9 +312,9 @@ static void ccw_init(MachineState *machine)
+ static void s390_cpu_plug(HotplugHandler *hotplug_dev,
+                         DeviceState *dev, Error **errp)
+ {
++    ERRP_GUARD();
+     MachineState *ms = MACHINE(hotplug_dev);
+     S390CPU *cpu = S390_CPU(dev);
+-    ERRP_GUARD();
+ 
+     g_assert(!ms->possible_cpus->cpus[cpu->env.core_id].cpu);
+     ms->possible_cpus->cpus[cpu->env.core_id].cpu = OBJECT(dev);
+diff --git a/migration/options.c b/migration/options.c
+index 40eb9309401c..80f49a6a8562 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -478,9 +478,9 @@ static bool migrate_incoming_started(void)
+  */
+ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+ {
++    ERRP_GUARD();
+     MigrationIncomingState *mis = migration_incoming_get_current();
+ 
+-    ERRP_GUARD();
+ #ifndef CONFIG_LIVE_BLOCK_MIGRATION
+     if (new_caps[MIGRATION_CAPABILITY_BLOCK]) {
+         error_setg(errp, "QEMU compiled without old-style (blk/-b, inc/-i) "
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 0273dc6a94ac..eccff499cb20 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -283,10 +283,10 @@ static bool request_ufd_features(int ufd, uint64_t features)
+ static bool ufd_check_and_apply(int ufd, MigrationIncomingState *mis,
+                                 Error **errp)
+ {
++    ERRP_GUARD();
+     uint64_t asked_features = 0;
+     static uint64_t supported_features;
+ 
+-    ERRP_GUARD();
+     /*
+      * it's not possible to
+      * request UFFD_API twice per one fd
+@@ -371,6 +371,7 @@ static int test_ramblock_postcopiable(RAMBlock *rb, Error **errp)
+  */
+ bool postcopy_ram_supported_by_host(MigrationIncomingState *mis, Error **errp)
+ {
++    ERRP_GUARD();
+     long pagesize = qemu_real_host_page_size();
+     int ufd = -1;
+     bool ret = false; /* Error unless we change it */
+@@ -380,7 +381,6 @@ bool postcopy_ram_supported_by_host(MigrationIncomingState *mis, Error **errp)
+     uint64_t feature_mask;
+     RAMBlock *block;
+ 
+-    ERRP_GUARD();
+     if (qemu_target_page_size() > pagesize) {
+         error_setg(errp, "Target page size bigger than host page size");
+         goto out;
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index e6bdb4562dde..a80d8d974f4a 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -1557,14 +1557,13 @@ static const VhostShadowVirtqueueOps vhost_vdpa_net_svq_ops = {
+ static int vhost_vdpa_probe_cvq_isolation(int device_fd, uint64_t features,
+                                           int cvq_index, Error **errp)
+ {
++    ERRP_GUARD();
+     uint64_t backend_features;
+     int64_t cvq_group;
+     uint8_t status = VIRTIO_CONFIG_S_ACKNOWLEDGE |
+                      VIRTIO_CONFIG_S_DRIVER;
+     int r;
+ 
+-    ERRP_GUARD();
 -
-     ctx->virt_inst_excp = false;
-     ctx->cur_insn_len = insn_len(opcode);
-     /* Check for compressed insn */
-@@ -1153,9 +1149,8 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
-                                              ctx->base.pc_next + 2));
-         ctx->opcode = opcode32;
- 
--        for (size_t i = 0; i < ARRAY_SIZE(decoders); ++i) {
--            if (decoders[i].guard_func(ctx->cfg_ptr) &&
--                decoders[i].decode_func(ctx, opcode32)) {
-+        for (size_t i = 0; ctx->decoders[i]; ++i) {
-+            if (ctx->decoders[i](ctx, opcode32)) {
-                 return;
-             }
-         }
-@@ -1199,6 +1194,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->itrigger = FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
-     ctx->zero = tcg_constant_tl(0);
-     ctx->virt_inst_excp = false;
-+    ctx->decoders = cpu->decoders;
- }
- 
- static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+     r = ioctl(device_fd, VHOST_GET_BACKEND_FEATURES, &backend_features);
+     if (unlikely(r < 0)) {
+         error_setg_errno(errp, errno, "Cannot get vdpa backend_features");
 -- 
-2.41.0
+2.34.1
 
 
