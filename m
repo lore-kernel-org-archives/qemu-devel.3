@@ -4,101 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6037FC54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A589BC54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0XS-0007jQ-IC; Tue, 12 Mar 2024 07:43:22 -0400
+	id 1rk0Zh-0000cu-Re; Tue, 12 Mar 2024 07:45:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1rk0XQ-0007iS-7p
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:43:20 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rk0ZZ-0000bt-W0; Tue, 12 Mar 2024 07:45:34 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1rk0XK-0004E2-8L
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:43:19 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2d2505352e6so79719991fa.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:43:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rk0ZX-000587-D6; Tue, 12 Mar 2024 07:45:33 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1dc75972f25so38084945ad.1; 
+ Tue, 12 Mar 2024 04:45:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1710243791; x=1710848591; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=gpo0abP48NJTZIYqIeoLjEcfZQuQVs83kwlsrD+w7Wc=;
- b=MtKq/RbpWBqvAjqLl5Hiu5wKifgGsYuibTkFMpIxWD3JclGz3CE2RZdXdY7zzOxYgu
- WpQGNtgHIubhLcBad8dk6kFUbf8l/Mwpe7z8MYZalySmlcWp06Nf3dZmO5e4sgV042qp
- xRtBWO+KnEjW677rHCnzw17XRO2S3YbR8qbFJAKGG4+mPCIvHwIwB/mzopxxNzFps3g8
- 57/DxSgg4g657Bjdtaz6KA5Nf2wtk1L0WtKsz17inwls3z4VzIWVq9onkpxkx4bLyqTm
- SgExINHLkcXWodrxMTq5KjOi6Q0dbULVWQrST46KcvugzbCwQxpVtfYw1inukXvI9q80
- OHww==
+ d=gmail.com; s=20230601; t=1710243928; x=1710848728; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=m+RK8+/bwNT7IFbmJCbolKcxtGC+Ki6EBs+kK9aX8+0=;
+ b=cYXtwg0SS5hGThbthuhfD6df/x7VKTRBn5RMrzom5Tod+hmNQRX2ERenT9oAM9/mBD
+ IwnSuBfZ+BH+oH5JEqfaHQ5s38FBXDJklUSMyHdkhHAbzgPLblVBwVAsL1t8gR3qKJBW
+ 3P9QIDmxweWf3MmMJN4ATAomXp/tZkRzvzFvEiy/40yI624UzM2HtCfm88oEDiqKGBc6
+ 6NukcyAj1qoMJgO2GdyJTIGcnogWxr+G6ZF+FrhckZmMjp+qSZOk0zO9Ea/Bcc3WTGms
+ OIZwzEv//XHmWluyf58e/3IsotfFNYRoO76lu0u1EcWL+ZnDjauIYtT0IUyDk6T/nQ86
+ QYUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710243791; x=1710848591;
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gpo0abP48NJTZIYqIeoLjEcfZQuQVs83kwlsrD+w7Wc=;
- b=HJEcA1VNT7G+07v8sieh57n9LG9gEj2jFcpgbAKlxv81UVoSI/fSzPuDlXEZe/yqJO
- aYlalefsPlpf+onbPekAXdpAh83H/CAy9oBEiziI7Ds42CT6lOcRMU6oSo70rtJW/9DG
- /7SclkJ+wkcIIPLF+KOlI4Qxu+oItgLs9+ZEdDQPsPD7+GIVV3MQGWE7E61LT8XIAKKB
- 9IzrfDehopZvPLGQ+X9WJF1O7ECSHpy3GI7h2/5BzCIeXDud2O4JInywYJnXZGYaFRhX
- aa0y2t9tGol0/KECsedvnxN47e8SG/U+YEm+2M7jZqr/dyos5hy87IFbs9S3SC4PDZ6X
- or1w==
-X-Gm-Message-State: AOJu0YyYQiXCTTmmpkUHaQGcNBVAKCq/B+fKht6TMd6HPTTO61ziyosn
- 48/vcRggY77Y9stq4Y3qMWEzi85/hQPiuQO0EFS/0cGUUuQea2LCoIS9jIQk/Yg=
-X-Google-Smtp-Source: AGHT+IFWfXaAIZd3ouD6Rma6Q6WGVEwG1MFBykI7O3TlflDAsCo2iwc+5AD7ysAC6Pp/F/+ZSNPVfQ==
-X-Received: by 2002:a2e:bea2:0:b0:2d3:352a:518d with SMTP id
- a34-20020a2ebea2000000b002d3352a518dmr159941ljr.10.1710243791332; 
- Tue, 12 Mar 2024 04:43:11 -0700 (PDT)
-Received: from [192.168.7.188]
- (cpc81487-lanc8-2-0-cust139.3-3.cable.virginm.net. [81.110.179.140])
- by smtp.gmail.com with ESMTPSA id
- o4-20020a05600c510400b00412cbe4f41bsm19164479wms.4.2024.03.12.04.43.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 04:43:11 -0700 (PDT)
-Message-ID: <5a9c727bce71669bb60077a36ad171dddb31417f.camel@suse.com>
-Subject: Re: [PATCH 3/9] backends/confidential-guest-support: Add functions
- to support IGVM
-From: Roy Hopkins <roy.hopkins@suse.com>
-To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Marcelo
- Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, Eduardo
- Habkost <eduardo@habkost.net>, Alistair Francis <alistair@alistair23.me>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
- Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>,  =?ISO-8859-1?Q?J=F6rg?= Roedel
- <jroedel@suse.com>
-Date: Tue, 12 Mar 2024 11:43:10 +0000
-In-Reply-To: <ZeIEX8v7828JcXte@redhat.com>
-References: <cover.1709044754.git.roy.hopkins@suse.com>
- <0d5af28ab63f6e4e4089b8b5a11b9fc9c941986f.1709044754.git.roy.hopkins@suse.com>
- <ZeIEX8v7828JcXte@redhat.com>
-Autocrypt: addr=roy.hopkins@suse.com; prefer-encrypt=mutual;
- keydata=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
-Content-Type: text/plain; charset="UTF-8"
+ d=1e100.net; s=20230601; t=1710243928; x=1710848728;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=m+RK8+/bwNT7IFbmJCbolKcxtGC+Ki6EBs+kK9aX8+0=;
+ b=RSxfDlzoxwYpDrYZvZc0E01tBlbd3W688gKI32yFnWqXt/L6iCtsJxy6wq0XVJ/LIB
+ CyruJtdLul6o/YJfz4Qp0S6vXYBiHlDBwvBD1ahiavm1wNxAdJAk0fMfpYgeUk09s9N4
+ UR+MB8MbDi22cFhmpzA9SvWZJKYkMiCYCkch6+7xoJ1N58jtIiW++AuozLj04d8YxCWI
+ pWFK5tLJnfyHp81/6i72/Jfvh7VQkgfV/8w7dePf3RonDhOlxNpzSLk5I4YAyQdktMvS
+ 9iD/PPHmDzg8WllYXV8wJ58Hcq2jQ1Y2+MKxNCbEngf1bKipEkfAU0n4SgmMR1AbL4JD
+ qyaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX3Ze+Ug5gcU38WGwaC5ZM/9PEr5Yv0hSf1IqVUBN0tIP5VTnTK7YdTv1UEDKNICg9I4uyawlsz/vObZ3lPiyhm7j9Y5v46z8UPEq2YiJZu6T4645s/dVv5/KQ=
+X-Gm-Message-State: AOJu0YyFIfEGJQFjzYfVTzoS/gmZunPkUaaymkYIs9J50RYzb8m3fQHE
+ Gz2OFdRtedcmLrArT9zzW93IgMcSx+a9wq4qJZQCtJxyYLmKKFJ1
+X-Google-Smtp-Source: AGHT+IGBleqitbg5W9I70+jWuXgYIxQTwx68ehaJnXEQRylF9aHbfpus8slGsyip4zNcrNEiAqenWw==
+X-Received: by 2002:a17:902:da8d:b0:1db:e453:da81 with SMTP id
+ j13-20020a170902da8d00b001dbe453da81mr3696887plx.29.1710243928611; 
+ Tue, 12 Mar 2024 04:45:28 -0700 (PDT)
+Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
+ ix14-20020a170902f80e00b001dca3a65200sm6516762plb.228.2024.03.12.04.45.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Mar 2024 04:45:28 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.2 
-MIME-Version: 1.0
-Received-SPF: permerror client-ip=2a00:1450:4864:20::232;
- envelope-from=roy.hopkins@suse.com; helo=mail-lj1-x232.google.com
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 12 Mar 2024 21:45:22 +1000
+Message-Id: <CZRQVFPAGXNX.3UTCWD0G0DYX5@wheely>
+Cc: <clg@kaod.org>, <mikey@neuling.org>, <amachhiw@linux.vnet.ibm.com>,
+ <vaibhav@linux.ibm.com>, <sbhat@linux.ibm.com>, <danielhb413@gmail.com>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v5 14/14] spapr: nested: Introduce cap-nested-papr for
+ Nested PAPR API
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.15.2
+References: <20240308111940.1617660-1-harshpb@linux.ibm.com>
+ <20240308111940.1617660-15-harshpb@linux.ibm.com>
+In-Reply-To: <20240308111940.1617660-15-harshpb@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,259 +97,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2024-03-01 at 16:37 +0000, Daniel P. Berrang=C3=A9 wrote:
-> On Tue, Feb 27, 2024 at 02:50:09PM +0000, Roy Hopkins wrote:
-> > In preparation for supporting the processing of IGVM files to configure
-> > guests, this adds a set of functions to ConfidentialGuestSupport
-> > allowing configuration of secure virtual machines that can be
-> > implemented for each supported isolation platform type such as Intel TD=
-X
-> > or AMD SEV-SNP. These functions will be called by IGVM processing code
-> > in subsequent patches.
-> >=20
-> > This commit provides a default implementation of the functions that
-> > either perform no action or generate a warning or error when they are
-> > called. Targets that support ConfidentalGuestSupport should override
-> > these implementations.
-> >=20
-> > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
-> > ---
-> > =C2=A0backends/confidential-guest-support.c=C2=A0=C2=A0=C2=A0=C2=A0 | 2=
-6 ++++++++
-> > =C2=A0include/exec/confidential-guest-support.h | 76 ++++++++++++++++++=
-+++++
-> > =C2=A02 files changed, 102 insertions(+)
-> >=20
-> > diff --git a/backends/confidential-guest-support.c b/backends/confident=
-ial-
-> > guest-support.c
-> > index da436fb736..42628be8d7 100644
-> > --- a/backends/confidential-guest-support.c
-> > +++ b/backends/confidential-guest-support.c
-> > @@ -14,6 +14,7 @@
-> > =C2=A0#include "qemu/osdep.h"
-> > =C2=A0
-> > =C2=A0#include "exec/confidential-guest-support.h"
-> > +#include "qemu/error-report.h"
-> > =C2=A0
-> > =C2=A0OBJECT_DEFINE_ABSTRACT_TYPE(ConfidentialGuestSupport,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 confidential_guest_support,
-> > @@ -45,8 +46,33 @@ static void
-> > confidential_guest_support_class_init(ObjectClass *oc, void *data)
-> > =C2=A0#endif
-> > =C2=A0}
-> > =C2=A0
-> > +static int check_support(ConfidentialGuestPlatformType platform,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- uint16_t platform_version, uint8_t highest_vtl,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- uint64_t shared_gpa_boundary)
-> > +{
-> > +=C2=A0=C2=A0=C2=A0 /* Default: no support. */
-> > +=C2=A0=C2=A0=C2=A0 return 0;
-> > +}
-> > +
-> > +static int set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ConfidentialGuestPageType =
-memory_type,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint16_t cpu_index)
-> > +{
-> > +=C2=A0=C2=A0=C2=A0 warn_report("Confidential guest memory not supporte=
-d");
-> > +=C2=A0=C2=A0=C2=A0 return -1;
-> > +}
-> > +
-> > +static int get_mem_map_entry(int index, ConfidentialGuestMemoryMapEntr=
-y
-> > *entry)
-> > +{
-> > +=C2=A0=C2=A0=C2=A0 return 1;
-> > +}
->=20
-> IIUC, all these can reports errors, and as such I think
-> they should have an 'Error **errp' parameter, so we can
-> report precise errors in these methods, rather than
-> less useful generic errors in the caller.
->=20
-> The above 'warn_report' ought to be an error too, since
-> it is returning an failure code (-1)
+On Fri Mar 8, 2024 at 9:19 PM AEST, Harsh Prateek Bora wrote:
+> Introduce a SPAPR capability cap-nested-papr which enables nested PAPR
+> API for nested guests. This new API is to enable support for KVM on Power=
+VM
+> and the support in Linux kernel has already merged upstream.
+>
+> Signed-off-by: Michael Neuling <mikey@neuling.org>
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> ---
+>  include/hw/ppc/spapr.h |  6 +++-
+>  hw/ppc/spapr.c         |  2 ++
+>  hw/ppc/spapr_caps.c    | 62 ++++++++++++++++++++++++++++++++++++++++++
+>  hw/ppc/spapr_nested.c  |  8 ++++--
+>  4 files changed, 74 insertions(+), 4 deletions(-)
+>
+> diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+> index 6223873641..4aaf23d28f 100644
+> --- a/include/hw/ppc/spapr.h
+> +++ b/include/hw/ppc/spapr.h
+> @@ -81,8 +81,10 @@ typedef enum {
+>  #define SPAPR_CAP_RPT_INVALIDATE        0x0B
+>  /* Support for AIL modes */
+>  #define SPAPR_CAP_AIL_MODE_3            0x0C
+> +/* Nested PAPR */
+> +#define SPAPR_CAP_NESTED_PAPR           0x0D
+>  /* Num Caps */
+> -#define SPAPR_CAP_NUM                   (SPAPR_CAP_AIL_MODE_3 + 1)
+> +#define SPAPR_CAP_NUM                   (SPAPR_CAP_NESTED_PAPR + 1)
+> =20
+>  /*
+>   * Capability Values
+> @@ -592,6 +594,7 @@ struct SpaprMachineState {
+>  #define H_GUEST_CREATE_VCPU      0x474
+>  #define H_GUEST_GET_STATE        0x478
+>  #define H_GUEST_SET_STATE        0x47C
+> +#define H_GUEST_RUN_VCPU         0x480
+>  #define H_GUEST_DELETE           0x488
+> =20
+>  #define MAX_HCALL_OPCODE         H_GUEST_DELETE
+> @@ -996,6 +999,7 @@ extern const VMStateDescription vmstate_spapr_cap_sbb=
+c;
+>  extern const VMStateDescription vmstate_spapr_cap_ibs;
+>  extern const VMStateDescription vmstate_spapr_cap_hpt_maxpagesize;
+>  extern const VMStateDescription vmstate_spapr_cap_nested_kvm_hv;
+> +extern const VMStateDescription vmstate_spapr_cap_nested_papr;
+>  extern const VMStateDescription vmstate_spapr_cap_large_decr;
+>  extern const VMStateDescription vmstate_spapr_cap_ccf_assist;
+>  extern const VMStateDescription vmstate_spapr_cap_fwnmi;
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index 54fc01e462..beb23fae8f 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -2121,6 +2121,7 @@ static const VMStateDescription vmstate_spapr =3D {
+>          &vmstate_spapr_cap_fwnmi,
+>          &vmstate_spapr_fwnmi,
+>          &vmstate_spapr_cap_rpt_invalidate,
+> +        &vmstate_spapr_cap_nested_papr,
+>          NULL
+>      }
+>  };
+> @@ -4687,6 +4688,7 @@ static void spapr_machine_class_init(ObjectClass *o=
+c, void *data)
+>      smc->default_caps.caps[SPAPR_CAP_IBS] =3D SPAPR_CAP_WORKAROUND;
+>      smc->default_caps.caps[SPAPR_CAP_HPT_MAXPAGESIZE] =3D 16; /* 64kiB *=
+/
+>      smc->default_caps.caps[SPAPR_CAP_NESTED_KVM_HV] =3D SPAPR_CAP_OFF;
+> +    smc->default_caps.caps[SPAPR_CAP_NESTED_PAPR] =3D SPAPR_CAP_OFF;
+>      smc->default_caps.caps[SPAPR_CAP_LARGE_DECREMENTER] =3D SPAPR_CAP_ON=
+;
+>      smc->default_caps.caps[SPAPR_CAP_CCF_ASSIST] =3D SPAPR_CAP_ON;
+>      smc->default_caps.caps[SPAPR_CAP_FWNMI] =3D SPAPR_CAP_ON;
+> diff --git a/hw/ppc/spapr_caps.c b/hw/ppc/spapr_caps.c
+> index e889244e52..d6d5a6b8df 100644
+> --- a/hw/ppc/spapr_caps.c
+> +++ b/hw/ppc/spapr_caps.c
+> @@ -487,6 +487,58 @@ static void cap_nested_kvm_hv_apply(SpaprMachineStat=
+e *spapr,
+>              error_append_hint(errp, "Try appending -machine cap-nested-h=
+v=3Doff "
+>                                      "or use threads=3D1 with -smp\n");
+>          }
+> +        if (spapr_nested_api(spapr) &&
+> +            spapr_nested_api(spapr) !=3D NESTED_API_KVM_HV) {
+> +            error_setg(errp, "Nested-HV APIs are mutually exclusive/inco=
+mpatible");
+> +            error_append_hint(errp, "Please use either cap-nested-hv or =
+"
+> +                                    "cap-nested-papr to proceed.\n");
+> +            return;
+> +        } else {
+> +            spapr->nested.api =3D NESTED_API_KVM_HV;
+> +        }
+> +    }
+> +}
+> +
+> +static void cap_nested_papr_apply(SpaprMachineState *spapr,
+> +                                    uint8_t val, Error **errp)
+> +{
+> +    ERRP_GUARD();
+> +    PowerPCCPU *cpu =3D POWERPC_CPU(first_cpu);
+> +    CPUPPCState *env =3D &cpu->env;
+> +
+> +    if (!val) {
+> +        /* capability disabled by default */
+> +        return;
+> +    }
+> +
+> +    if (tcg_enabled()) {
+> +        if (!(env->insns_flags2 & PPC2_ISA300)) {
+> +            error_setg(errp, "Nested-PAPR only supported on POWER9 and l=
+ater");
+> +            error_append_hint(errp,
+> +                              "Try appending -machine cap-nested-papr=3D=
+off\n");
+> +            return;
+> +        }
+> +        if (spapr_nested_api(spapr) &&
+> +            spapr_nested_api(spapr) !=3D NESTED_API_PAPR) {
+> +            error_setg(errp, "Nested-HV APIs are mutually exclusive/inco=
+mpatible");
+> +            error_append_hint(errp, "Please use either cap-nested-hv or =
+"
+> +                                    "cap-nested-papr to proceed.\n");
+> +            return;
+> +        } else {
+> +            spapr->nested.api =3D NESTED_API_PAPR;
+> +        }
+> +
+> +    } else if (kvm_enabled()) {
+> +        /*
+> +         * this gets executed in L1 qemu when L2 is launched,
+> +         * needs kvm-hv support in L1 kernel.
+> +         */
+> +        if (!kvmppc_has_cap_nested_kvm_hv()) {
+> +            error_setg(errp,
+> +                       "KVM implementation does not support Nested-HV");
+> +        } else if (kvmppc_set_cap_nested_kvm_hv(val) < 0) {
+> +            error_setg(errp, "Error enabling Nested-HV with KVM");
+> +        }
 
-Yes, that makes sense. I've made a comprehensive rework of the error handli=
-ng in
-the patch series which addresses this and your suggestions in the other pat=
-ches
-regarding error handling. I'll submit these as a V2.
+Hmm, if KVM is enabled then we don't support PAPR nested at all, do we?
+Because the KVM cap is only for v1 nested.
 
->=20
-> > +
-> > =C2=A0static void confidential_guest_support_init(Object *obj)
-> > =C2=A0{
-> > +=C2=A0=C2=A0=C2=A0 ConfidentialGuestSupport *cgs =3D CONFIDENTIAL_GUES=
-T_SUPPORT(obj);
-> > +=C2=A0=C2=A0=C2=A0 cgs->check_support =3D check_support;
-> > +=C2=A0=C2=A0=C2=A0 cgs->set_guest_state =3D set_guest_state;
-> > +=C2=A0=C2=A0=C2=A0 cgs->get_mem_map_entry =3D get_mem_map_entry;
-> > =C2=A0}
-> > =C2=A0
-> > =C2=A0static void confidential_guest_support_finalize(Object *obj)
-> > diff --git a/include/exec/confidential-guest-support.h
-> > b/include/exec/confidential-guest-support.h
-> > index b08ad8de4d..c43a1a32f1 100644
-> > --- a/include/exec/confidential-guest-support.h
-> > +++ b/include/exec/confidential-guest-support.h
-> > @@ -21,10 +21,46 @@
-> > =C2=A0#ifndef CONFIG_USER_ONLY
-> > =C2=A0
-> > =C2=A0#include "qom/object.h"
-> > +#include "exec/hwaddr.h"
-> > +
-> > +#if defined(CONFIG_IGVM)
-> > +#include "igvm/igvm.h"
-> > +#endif
-> > =C2=A0
-> > =C2=A0#define TYPE_CONFIDENTIAL_GUEST_SUPPORT "confidential-guest-suppo=
-rt"
-> > =C2=A0OBJECT_DECLARE_SIMPLE_TYPE(ConfidentialGuestSupport,
-> > CONFIDENTIAL_GUEST_SUPPORT)
-> > =C2=A0
-> > +typedef enum ConfidentialGuestPlatformType {
-> > +=C2=A0=C2=A0=C2=A0 CGS_PLATFORM_SEV,
-> > +=C2=A0=C2=A0=C2=A0 CGS_PLATFORM_SEV_ES,
-> > +=C2=A0=C2=A0=C2=A0 CGS_PLATFORM_SEV_SNP,
-> > +=C2=A0=C2=A0=C2=A0 CGS_PLATFORM_TDX,
->=20
-> QEMU only has support for SEV & SEV_ES today. We should leave the
-> others until we actually get an impl of SEV-SNP/TDX in QEMU that
-> supports those platforms.
+Thanks,
+Nick
 
-Ok. I'll remove the currently unsupported platforms.
-
->=20
-> > +} ConfidentialGuestPlatformType;
-> > +
-> > +typedef enum ConfidentialGuestMemoryType {
-> > +=C2=A0=C2=A0=C2=A0 CGS_MEM_RAM,
-> > +=C2=A0=C2=A0=C2=A0 CGS_MEM_RESERVED,
-> > +=C2=A0=C2=A0=C2=A0 CGS_MEM_ACPI,
-> > +=C2=A0=C2=A0=C2=A0 CGS_MEM_NVS,
-> > +=C2=A0=C2=A0=C2=A0 CGS_MEM_UNUSABLE,
-> > +} ConfidentialGuestMemoryType;
-> > +
-> > +typedef struct ConfidentialGuestMemoryMapEntry {
-> > +=C2=A0=C2=A0=C2=A0 uint64_t gpa;
-> > +=C2=A0=C2=A0=C2=A0 uint64_t size;
-> > +=C2=A0=C2=A0=C2=A0 ConfidentialGuestMemoryType type;
-> > +} ConfidentialGuestMemoryMapEntry;
-> > +
-> > +typedef enum ConfidentialGuestPageType {
-> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_NORMAL,
-> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_VMSA,
-> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_ZERO,
-> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_UNMEASURED,
-> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_SECRETS,
-> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_CPUID,
-> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_REQUIRED_MEMORY,
-> > +} ConfidentialGuestPageType;
-> > +
-> > =C2=A0struct ConfidentialGuestSupport {
-> > =C2=A0=C2=A0=C2=A0=C2=A0 Object parent;
-> > =C2=A0
-> > @@ -60,6 +96,46 @@ struct ConfidentialGuestSupport {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > =C2=A0=C2=A0=C2=A0=C2=A0 char *igvm_filename;
-> > =C2=A0#endif
-> > +
-> > +=C2=A0=C2=A0=C2=A0 /*
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * The following virtual methods need to be im=
-plemented by systems that
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * support confidential guests that can be con=
-figured with IGVM and are
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * used during processing of the IGVM file wit=
-h process_igvm().
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > +
-> > +=C2=A0=C2=A0=C2=A0 /*
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Check for to see if this confidential guest=
- supports a particular
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * platform or configuration
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > +=C2=A0=C2=A0=C2=A0 int (*check_support)(ConfidentialGuestPlatformType =
-platform,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- uint16_t platform_version, uint8_t highest_vtl,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- uint64_t shared_gpa_boundary);
-> > +
-> > +=C2=A0=C2=A0=C2=A0 /*
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Configure part of the state of a guest for =
-a particular set of data,
-> > page
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * type and gpa. This can be used for example =
-to pre-populate and
-> > measure
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * guest memory contents, define private range=
-s or set the initial CPU
-> > state
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * for one or more CPUs.
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 *
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * If memory_type is CGS_PAGE_TYPE_VMSA then p=
-tr points to the initial
-> > CPU
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * context for a virtual CPU. The format of th=
-e data depends on the
-> > type of
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * confidential virtual machine. For example, =
-for SEV-ES ptr will point
-> > to a
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * vmcb_save_area structure that should be cop=
-ied into guest memory at
-> > the
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * address specified in gpa. The cpu_index par=
-ameter contains the index
-> > of
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * the CPU the VMSA applies to.
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > +=C2=A0=C2=A0=C2=A0 int (*set_guest_state)(hwaddr gpa, uint8_t *ptr, ui=
-nt64_t len,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ConfidentialGuestPageType =
-memory_type,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint16_t cpu_index);
-> > +
-> > +=C2=A0=C2=A0=C2=A0 /*
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Iterate the system memory map, getting the =
-entry with the given
-> > index
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * that can be populated into guest memory.
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 *
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Returns 1 if the index is out of range.
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > +=C2=A0=C2=A0=C2=A0 int (*get_mem_map_entry)(int index,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ConfidentialGuestMemoryMapEntry *entry);
-> > =C2=A0};
-> > =C2=A0
-> > =C2=A0typedef struct ConfidentialGuestSupportClass {
-> > --=20
-> > 2.43.0
-> >=20
-> >=20
->=20
-> With regards,
-> Daniel
+>      }
+>  }
+> =20
+> @@ -735,6 +787,15 @@ SpaprCapabilityInfo capability_table[SPAPR_CAP_NUM] =
+=3D {
+>          .type =3D "bool",
+>          .apply =3D cap_nested_kvm_hv_apply,
+>      },
+> +    [SPAPR_CAP_NESTED_PAPR] =3D {
+> +        .name =3D "nested-papr",
+> +        .description =3D "Allow Nested HV (PAPR API)",
+> +        .index =3D SPAPR_CAP_NESTED_PAPR,
+> +        .get =3D spapr_cap_get_bool,
+> +        .set =3D spapr_cap_set_bool,
+> +        .type =3D "bool",
+> +        .apply =3D cap_nested_papr_apply,
+> +    },
+>      [SPAPR_CAP_LARGE_DECREMENTER] =3D {
+>          .name =3D "large-decr",
+>          .description =3D "Allow Large Decrementer",
+> @@ -919,6 +980,7 @@ SPAPR_CAP_MIG_STATE(sbbc, SPAPR_CAP_SBBC);
+>  SPAPR_CAP_MIG_STATE(ibs, SPAPR_CAP_IBS);
+>  SPAPR_CAP_MIG_STATE(hpt_maxpagesize, SPAPR_CAP_HPT_MAXPAGESIZE);
+>  SPAPR_CAP_MIG_STATE(nested_kvm_hv, SPAPR_CAP_NESTED_KVM_HV);
+> +SPAPR_CAP_MIG_STATE(nested_papr, SPAPR_CAP_NESTED_PAPR);
+>  SPAPR_CAP_MIG_STATE(large_decr, SPAPR_CAP_LARGE_DECREMENTER);
+>  SPAPR_CAP_MIG_STATE(ccf_assist, SPAPR_CAP_CCF_ASSIST);
+>  SPAPR_CAP_MIG_STATE(fwnmi, SPAPR_CAP_FWNMI);
+> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+> index 597dba7fdc..8db9dc19e3 100644
+> --- a/hw/ppc/spapr_nested.c
+> +++ b/hw/ppc/spapr_nested.c
+> @@ -13,13 +13,15 @@
+>  void spapr_nested_reset(SpaprMachineState *spapr)
+>  {
+>      if (spapr_get_cap(spapr, SPAPR_CAP_NESTED_KVM_HV)) {
+> -        spapr->nested.api =3D NESTED_API_KVM_HV;
+>          spapr_unregister_nested_hv();
+>          spapr_register_nested_hv();
+> -    } else {
+> -        spapr->nested.api =3D 0;
+> +    } else if (spapr_get_cap(spapr, SPAPR_CAP_NESTED_PAPR)) {
+>          spapr->nested.capabilities_set =3D false;
+> +        spapr_unregister_nested_papr();
+> +        spapr_register_nested_papr();
+>          spapr_nested_gsb_init();
+> +    } else {
+> +        spapr->nested.api =3D 0;
+>      }
+>  }
+> =20
 
 
