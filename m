@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02FFEC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 09:27:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9AEC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 09:29:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjyOm-0003Hq-7W; Tue, 12 Mar 2024 05:26:16 -0400
+	id 1rjyRX-0005Dg-6g; Tue, 12 Mar 2024 05:29:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rjyOj-0003HH-QV
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:26:13 -0400
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1rjyRU-0005C3-MQ; Tue, 12 Mar 2024 05:29:04 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rjyOh-0003O1-9t
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 05:26:13 -0400
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-3c19dd9ade5so2470128b6e.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 02:26:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1rjyRS-0003eG-BK; Tue, 12 Mar 2024 05:29:04 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a4627a7233aso315813466b.1; 
+ Tue, 12 Mar 2024 02:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710235570; x=1710840370; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1fOhm/KsX3r5K2fqdEXWytTHtx/WjRGz1zlvAE3Dj40=;
- b=fYjGKP9pu7cPWCh5HUqts26vay77deA8wA8RWySt/R2oQVMrvp5cnWLKYlN1DAuYBc
- YZ7nTFZFdUudJjHwgrE0sqaVu+LlgYoNcNcKGOSDDCpWY4ott+R0PFi1UAAQPnQqbrIj
- /6Mm8obPAXBC1NZmvS+LHPZM41j0VwMoZ33V27TLhscAPxP08jkqIJmo85Bgc59hC+zp
- wPE8UfAfB6oVpaeYg4Lcer70oVjeh87aM+4KAypqIK/3522RdqHFSXNSSrJWkEVW3Tfq
- /qVR6BFG9GaDkqIyFjkGUcSyx0Z29wz5mzY8nFHU4dBPLoJ754gomL13A/K2GC63P84a
- me2Q==
+ d=gmail.com; s=20230601; t=1710235740; x=1710840540; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Jfvr8Hgpt4XiM2qpUCgIfHLKDjogYiElmXwM+0PP/cw=;
+ b=P8RFhewy6cOoB1vpx2rjFRDieKdtcUc9eWeJtvoGtzvWeolzBoYHBZOBnnxzJAEV6y
+ ijb9UZVBbiQ13LFmEFf7oJzyQ0O8NyE29B/9dmQuQynm0UDEb/IU7HzLM6bER8Bu4HZU
+ ET6SjxkWFt5WgIIjXdqQYilLrY+CARmki4LttmwSemYCTRHLJpbVQE95bkXwa2PzB89g
+ TMeNDvgSm0LgwqAjjh0PTTMfI+O3OKOJ8MnFaADMeUqk/BwptREQQOHR7SxtrkrG1V5B
+ OS9zZOHcUPeJc7TaUbOLsVEkB1byASg+22bKsSOw1vMxd2A9o4G3RRh7O2gq+hojL2n3
+ P3ZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710235570; x=1710840370;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1fOhm/KsX3r5K2fqdEXWytTHtx/WjRGz1zlvAE3Dj40=;
- b=bQtMKn9oQldDXqOYHQXRJyKeDoSFQpgL+UrKRQqJEKsoVozFg4Sq32MpVOHlhyzRnS
- l59lt1A79HDRVN++ZhDlqIYiMtASvg/oRGh954zrK4zfYYL8LPC9cjzyp92k6D9YmQDP
- K8UWadWHGEVl6e0i9wXsWmJqO6w/7wHHYoKoyl7a/cUnOyZah24iwH2SgYRqSHaHcfOk
- 5s/+yL8BkIiXG8K3CaLSqnqfwiVrxvGRYdw5ej/klTujQpFJVGiDQBiTjfbeoEcUPHaQ
- MB2J1b2g5oQzTzYcgR9EmPA1hWM5AO03J9foqawu4WjTJwgcBeefmmiY7NOzNf/vhNp/
- nl/Q==
-X-Gm-Message-State: AOJu0Yx0vH2LShT0780eWrdK8CYdBWgeBvEEQRtZgrFUioGPfyVo+471
- hHau6sKPpVXfhjcFnlEarWPRLSUDlWegV+DdGI3746OzxsCEohnlEdr/J8c5eVk=
-X-Google-Smtp-Source: AGHT+IHYLCjF3DmypFQa/bzeswPuSDDcUL5pJK1myjT4v6m3aSYsVEq8fEkv5KJR22PeG1T+wFGU5A==
-X-Received: by 2002:a54:4884:0:b0:3c1:db9c:543b with SMTP id
- r4-20020a544884000000b003c1db9c543bmr7549481oic.16.1710235569835; 
- Tue, 12 Mar 2024 02:26:09 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- v24-20020aa78098000000b006e6750de82asm5705068pff.1.2024.03.12.02.26.07
+ d=1e100.net; s=20230601; t=1710235740; x=1710840540;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Jfvr8Hgpt4XiM2qpUCgIfHLKDjogYiElmXwM+0PP/cw=;
+ b=QQrwiKCFVi8SRy6IY1h3FI0AyfxCV/mvopQre+MOXhB6U/YZ9ZENAMPjrUOfoExCuf
+ TKyXmcb6+qmXyZ5uGGGcbu2FTYGf3I2NkDSOD+A7xSHOkTMNTTXffy4be0Yuck18dQBH
+ Me9Y1842qnCkLU497Z91TEd5xom1NARwhGm+gStdyRsu8SmDNdkBJF1es9YKLi3roIJG
+ pBAugaDd5s71igMBse5BNLjk5SokkB+oaN4fHEUK9yu5Q6eixRUMj5/cu/vShVBWd+QV
+ Ghmd81cHhlf2epGgiL4WrH3OnoClTZn9mrQdl6VslsfflokYNaJ7PBintKORsnSleSBN
+ OI7Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVFEPfyonwr8VAz6od1yWfw81KFwHG3gO7aTzO/O7QubVfnhSPYm+PbZQ09ubgMNLbwTqeSxvKEybzy0tkzCdfov/MtFmnS0kGCejs3zwblSOzyaX3mLW/F290=
+X-Gm-Message-State: AOJu0YzJgi7x2V4TbCvvgcxeCkpzFgySfN4iQXik9kG9pcCxJAOgY2XG
+ fBi4a0DZMtlqS3E4f9PPED2syNWqpqENQiVUkCaOaLCuAZSBqbe7RN0msFIo
+X-Google-Smtp-Source: AGHT+IFnkVKmJZJvokWCLL6DtnW43qULWb8Ezk9DzpAOH6Mpy0dYTel+2Dmcsserf1H9hpRS9oBC1g==
+X-Received: by 2002:a17:906:cf85:b0:a46:1e21:3739 with SMTP id
+ um5-20020a170906cf8500b00a461e213739mr6030395ejb.6.1710235739681; 
+ Tue, 12 Mar 2024 02:28:59 -0700 (PDT)
+Received: from [127.0.0.1] (dynamic-078-054-052-200.78.54.pool.telefonica.de.
+ [78.54.52.200]) by smtp.gmail.com with ESMTPSA id
+ i26-20020a170906251a00b00a44cb0bf11bsm3665807ejb.79.2024.03.12.02.28.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 02:26:09 -0700 (PDT)
-Message-ID: <c285c774-0c64-49d9-9708-35ca63e3df67@ventanamicro.com>
-Date: Tue, 12 Mar 2024 06:26:06 -0300
+ Tue, 12 Mar 2024 02:28:59 -0700 (PDT)
+Date: Tue, 12 Mar 2024 09:28:57 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+CC: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, clg@kaod.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v3=5D_docs/system/ppc=3A_Docum?=
+ =?US-ASCII?Q?ent_running_Linux_on_AmigaNG_machines?=
+In-Reply-To: <a9814b1b-98d7-29d8-36f9-228f20206917@eik.bme.hu>
+References: <20240220232200.042DA4E6005@zero.eik.bme.hu>
+ <c9dc84be-c7bf-c676-491b-2c6b1164d502@eik.bme.hu>
+ <a9814b1b-98d7-29d8-36f9-228f20206917@eik.bme.hu>
+Message-ID: <3E4E29CA-AE91-4C8D-BB51-B3759CF3110F@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 09/34] target/riscv: add remaining named features
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>,
- Alistair Francis <alistair23@gmail.com>,
- "open list:RISC-V" <qemu-riscv@nongnu.org>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Andrew Jones <ajones@ventanamicro.com>
-References: <20240308111152.2856137-1-alistair.francis@wdc.com>
- <20240308111152.2856137-10-alistair.francis@wdc.com>
- <CAJ307EiYcXiiTKeZMgWYQNkZ2McOOOJYYGUMh1-CnuNoy7M0Gg@mail.gmail.com>
- <4d5bfb3d-d646-45bb-b8ec-300c14415d33@ventanamicro.com>
-In-Reply-To: <4d5bfb3d-d646-45bb-b8ec-300c14415d33@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x22a.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,232 +99,267 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Clément, Alistair,
 
 
-On 3/11/24 11:39, Daniel Henrique Barboza wrote:
-> 
-> 
-> On 3/11/24 10:47, Clément Chigot wrote:
->> Hi Alistair,
->>
->> Since this series, I'm getting warnings when using a CPU not
->> supporting the latest ISA, such as the SIFIVE_E series.
->>    | $ qemu-system-riscv32  -M sifive_e
->>    | qemu-system-riscv32: warning: disabling zic64b extension for hart
->> 0x00000000 because privilege spec version does not match
->>    | qemu-system-riscv32: warning: disabling ziccamoa extension for
->> hart 0x00000000 because privilege spec version does not match
->>
->> Those are always enabled during the initialization but
->> riscv_cpu_disable_priv_spec_isa_exts is detecting them as unsupported
->> by the CPU and thus disabling them.
->> However, are those extensions different from zicnptr and zihpm
->> extensions ? As they are not enabled by the same mean, I'm wondering
->> about that ? Or do we want to skip their ISA verification as well ?
-> 
-> Disabling zihpm and zicntr will impact the CPU because we'll remove timers from
-> the emulation. An exception was important in this case to not change existing
-> behavior.
-> 
-> Disabling 'zic64b' and 'ziccamoa' will only impact riscv,isa. We won't change
-> any cache block size when disabling zic64ba and 'ziccamoa' does nothing
-> because it's cache related and we do not implement cache.
-> 
-> All this said, I'm less than pleased with these warnings. And they'll be getting
-> worse and worse: priv_spec 1.13 is around the corner, we'll start adding profile
-> extensions that will be marked as 1.13, some of them will be mapped to something
-> that we already support, and then vendor CPUs will be getting more and more
-> warnings because they'll be running an old priv_spec.
-> 
-> My suggestion is to not send user warnings when disabling extensions for vendor
-> CPUs. Vendor CPUs don't allow extensions to be enabled, so if an extension is
-> violating priv_spec it's not the user fault. We can add a LOG_GUEST_ERROR when
-> disabling exts but user warnings will only be shown for non-vendor CPUs.
+Am 9=2E M=C3=A4rz 2024 11:34:56 UTC schrieb BALATON Zoltan <balaton@eik=2E=
+bme=2Ehu>:
+>On Thu, 29 Feb 2024, BALATON Zoltan wrote:
+>> On Wed, 21 Feb 2024, BALATON Zoltan wrote:
+>>> Documentation on how to run Linux on the amigaone, pegasos2 and
+>>> sam460ex machines is currently buried in the depths of the qemu-devel
+>>> mailing list and in the source code=2E Let's collect the information i=
+n
+>>> the QEMU handbook for a one stop solution=2E
+>>=20
+>> Ping? (Just so it's not missed from next pull=2E)
+>
+>Ping for freeze=2E
 
-I discussed this issue with Drew and he suggested that the problem is that we're
-enabling these innate extensions without regard for the actual priv_ver of the CPU
-being used, and a better fix would be to prevent this from happening in the first
-place.
+Has this patch been tagged yet? It would really be a pity if it didn't mak=
+e it into 9=2E0=2E
 
-I'll send a patch with this approach. Thanks,
+FWIW:
 
+Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
-Daniel
-
-> 
-> 
-> Thanks,
-> 
-> Daniel
-> 
-> 
-> 
->>
->> Thanks,
->> Clément
->>
->> On Fri, Mar 8, 2024 at 12:13 PM Alistair Francis <alistair23@gmail.com> wrote:
->>>
->>> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>>
->>> The RVA22U64 and RVA22S64 profiles mandates certain extensions that,
->>> until now, we were implying that they were available.
->>>
->>> We can't do this anymore since named features also has a riscv,isa
->>> entry. Let's add them to riscv_cpu_named_features[].
->>>
->>> Instead of adding one bool for each named feature that we'll always
->>> implement, i.e. can't be turned off, add a 'ext_always_enabled' bool in
->>> cpu->cfg. This bool will be set to 'true' in TCG accel init, and all
->>> named features will point to it. This also means that KVM won't see
->>> these features as always enable, which is our intention.
->>>
->>> If any accelerator adds support to disable one of these features, we'll
->>> have to promote them to regular extensions and allow users to disable it
->>> via command line.
->>>
->>> After this patch, here's the riscv,isa from a buildroot using the
->>> 'rva22s64' CPU:
->>>
->>>   # cat /proc/device-tree/cpus/cpu@0/riscv,isa
->>> rv64imafdc_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_
->>> zicntr_zicsr_zifencei_zihintpause_zihpm_za64rs_zfhmin_zca_zcd_zba_zbb_
->>> zbs_zkt_ssccptr_sscounterenw_sstvala_sstvecd_svade_svinval_svpbmt#
->>>
->>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
->>> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
->>> Message-ID: <20240215223955.969568-4-dbarboza@ventanamicro.com>
->>> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+>
+>> Regards,
+>> BALATON Zoltan
+>>=20
+>>> Co-authored-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>>> Signed-off-by: BALATON Zoltan <balaton@eik=2Ebme=2Ehu>
+>>> Reviewed-by: Nicholas Piggin <npiggin@gmail=2Ecom>
+>>> Tested-by: Bernhard Beschow <shentey@gmail=2Ecom>
 >>> ---
->>>   target/riscv/cpu_cfg.h     |  6 ++++++
->>>   target/riscv/cpu.c         | 42 +++++++++++++++++++++++++++++++-------
->>>   target/riscv/tcg/tcg-cpu.c |  2 ++
->>>   3 files changed, 43 insertions(+), 7 deletions(-)
->>>
->>> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
->>> index e68a4ddb92..be39870691 100644
->>> --- a/target/riscv/cpu_cfg.h
->>> +++ b/target/riscv/cpu_cfg.h
->>> @@ -128,6 +128,12 @@ struct RISCVCPUConfig {
->>>       bool ext_svade;
->>>       bool ext_zic64b;
->>>
->>> +    /*
->>> +     * Always 'true' boolean for named features
->>> +     * TCG always implement/can't be disabled.
->>> +     */
->>> +    bool ext_always_enabled;
+>>> v3: Apply changes and Tested-by tag from Bernhard
+>>> v2: Move top level title one level up so subsections will be below it =
+in TOC
+>>>=20
+>>> MAINTAINERS                 |   1 +
+>>> docs/system/ppc/amigang=2Erst | 161 ++++++++++++++++++++++++++++++++++=
+++
+>>> docs/system/target-ppc=2Erst  |   1 +
+>>> 3 files changed, 163 insertions(+)
+>>> create mode 100644 docs/system/ppc/amigang=2Erst
+>>>=20
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 7d61fb9319=2E=2E0aef8cb2a6 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -1562,6 +1562,7 @@ F: hw/rtc/m41t80=2Ec
+>>> F: pc-bios/canyonlands=2Edt[sb]
+>>> F: pc-bios/u-boot-sam460ex-20100605=2Ebin
+>>> F: roms/u-boot-sam460ex
+>>> +F: docs/system/ppc/amigang=2Erst
+>>>=20
+>>> pegasos2
+>>> M: BALATON Zoltan <balaton@eik=2Ebme=2Ehu>
+>>> diff --git a/docs/system/ppc/amigang=2Erst b/docs/system/ppc/amigang=
+=2Erst
+>>> new file mode 100644
+>>> index 0000000000=2E=2Eba1a3d80b9
+>>> --- /dev/null
+>>> +++ b/docs/system/ppc/amigang=2Erst
+>>> @@ -0,0 +1,161 @@
+>>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>> +AmigaNG boards (``amigaone``, ``pegasos2``, ``sam460ex``)
+>>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
 >>> +
->>>       /* Vendor-specific custom extensions */
->>>       bool ext_xtheadba;
->>>       bool ext_xtheadbb;
->>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->>> index f0cd408237..4c4fa79145 100644
->>> --- a/target/riscv/cpu.c
->>> +++ b/target/riscv/cpu.c
->>> @@ -102,6 +102,10 @@ const RISCVIsaExtData isa_edata_arr[] = {
->>>       ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
->>>       ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
->>>       ISA_EXT_DATA_ENTRY(zicboz, PRIV_VERSION_1_12_0, ext_zicboz),
->>> +    ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, ext_always_enabled),
->>> +    ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, ext_always_enabled),
->>> +    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, ext_always_enabled),
->>> +    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_always_enabled),
->>>       ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
->>>       ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
->>>       ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
->>> @@ -110,6 +114,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->>>       ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause),
->>>       ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
->>>       ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
->>> +    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, ext_always_enabled),
->>>       ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
->>>       ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
->>>       ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
->>> @@ -173,8 +178,12 @@ const RISCVIsaExtData isa_edata_arr[] = {
->>>       ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
->>>       ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
->>>       ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
->>> +    ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, ext_always_enabled),
->>>       ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
->>> +    ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, ext_always_enabled),
->>>       ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
->>> +    ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, ext_always_enabled),
->>> +    ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, ext_always_enabled),
->>>       ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
->>>       ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
->>>       ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
->>> @@ -1567,6 +1576,11 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
->>>       DEFINE_PROP_END_OF_LIST(),
->>>   };
->>>
->>> +#define ALWAYS_ENABLED_FEATURE(_name) \
->>> +    {.name = _name, \
->>> +     .offset = CPU_CFG_OFFSET(ext_always_enabled), \
->>> +     .enabled = true}
+>>> +These PowerPC machines emulate boards that are primarily used for
+>>> +running Amiga like OSes (AmigaOS 4, MorphOS and AROS) but these can
+>>> +also run Linux which is what this section documents=2E
 >>> +
->>>   /*
->>>    * 'Named features' is the name we give to extensions that we
->>>    * don't want to expose to users. They are either immutable
->>> @@ -1578,6 +1592,23 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
->>>       MULTI_EXT_CFG_BOOL("svade", ext_svade, true),
->>>       MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
->>>
->>> +    /*
->>> +     * cache-related extensions that are always enabled
->>> +     * in TCG since QEMU RISC-V does not have a cache
->>> +     * model.
->>> +     */
->>> +    ALWAYS_ENABLED_FEATURE("za64rs"),
->>> +    ALWAYS_ENABLED_FEATURE("ziccif"),
->>> +    ALWAYS_ENABLED_FEATURE("ziccrse"),
->>> +    ALWAYS_ENABLED_FEATURE("ziccamoa"),
->>> +    ALWAYS_ENABLED_FEATURE("zicclsm"),
->>> +    ALWAYS_ENABLED_FEATURE("ssccptr"),
+>>> +Eyetech AmigaOne/Mai Logic Teron (``amigaone``)
+>>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
 >>> +
->>> +    /* Other named features that TCG always implements */
->>> +    ALWAYS_ENABLED_FEATURE("sstvecd"),
->>> +    ALWAYS_ENABLED_FEATURE("sstvala"),
->>> +    ALWAYS_ENABLED_FEATURE("sscounterenw"),
+>>> +The ``amigaone`` machine emulates an AmigaOne XE mainboard by Eyetech
+>>> +which is a rebranded Mai Logic Teron board with modified U-Boot
+>>> +firmware to support AmigaOS 4=2E
 >>> +
->>>       DEFINE_PROP_END_OF_LIST(),
->>>   };
->>>
->>> @@ -2171,13 +2202,10 @@ static const PropertyInfo prop_marchid = {
->>>   };
->>>
->>>   /*
->>> - * RVA22U64 defines some 'named features' or 'synthetic extensions'
->>> - * that are cache related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
->>> - * and Zicclsm. We do not implement caching in QEMU so we'll consider
->>> - * all these named features as always enabled.
->>> - *
->>> - * There's no riscv,isa update for them (nor for zic64b, despite it
->>> - * having a cfg offset) at this moment.
->>> + * RVA22U64 defines some 'named features' that are cache
->>> + * related: Za64rs, Zic64b, Ziccif, Ziccrse, Ziccamoa
->>> + * and Zicclsm. They are always implemented in TCG and
->>> + * doesn't need to be manually enabled by the profile.
->>>    */
->>>   static RISCVCPUProfile RVA22U64 = {
->>>       .parent = NULL,
->>> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
->>> index 2307999387..ea763abb31 100644
->>> --- a/target/riscv/tcg/tcg-cpu.c
->>> +++ b/target/riscv/tcg/tcg-cpu.c
->>> @@ -1315,6 +1315,8 @@ static void riscv_tcg_cpu_instance_init(CPUState *cs)
->>>       RISCVCPU *cpu = RISCV_CPU(cs);
->>>       Object *obj = OBJECT(cpu);
->>>
->>> +    cpu->cfg.ext_always_enabled = true;
+>>> +Emulated devices
+>>> +----------------
 >>> +
->>>       misa_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
->>>       multi_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
->>>       riscv_cpu_add_user_properties(obj);
->>> -- 
->>> 2.44.0
->>>
->>>
+>>> + * PowerPC 7457 CPU (can also use``-cpu g3, 750cxe, 750fx`` or ``750g=
+x``)
+>>> + * Articia S north bridge
+>>> + * VIA VT82C686B south bridge
+>>> + * PCI VGA compatible card (guests may need other card instead)
+>>> + * PS/2 keyboard and mouse
+>>> +
+>>> +Firmware
+>>> +--------
+>>> +
+>>> +A firmware binary is necessary for the boot process=2E It is a modifi=
+ed
+>>> +U-Boot under GPL but its source is lost so it cannot be included in
+>>> +QEMU=2E A binary is available at
+>>> +https://www=2Ehyperion-entertainment=2Ecom/index=2Ephp/downloads?view=
+=3Dfiles&parent=3D28=2E
+>>> +The ROM image is in the last 512kB which can be extracted with the
+>>> +following command:
+>>> +
+>>> +=2E=2E code-block:: bash
+>>> +
+>>> +  $ tail -c 524288 updater=2Eimage > u-boot-amigaone=2Ebin
+>>> +
+>>> +The BIOS emulator in the firmware is unable to run QEMU=E2=80=98s sta=
+ndard
+>>> +vgabios so ``VGABIOS-lgpl-latest=2Ebin`` is needed instead which can =
+be
+>>> +downloaded from http://www=2Enongnu=2Eorg/vgabios=2E
+>>> +
+>>> +Running Linux
+>>> +-------------
+>>> +
+>>> +There are some Linux images under the following link that work on the
+>>> +``amigaone`` machine:
+>>> +https://sourceforge=2Enet/projects/amigaone-linux/files/debian-instal=
+ler/=2E
+>>> +To boot the system run:
+>>> +
+>>> +=2E=2E code-block:: bash
+>>> +
+>>> +  $ qemu-system-ppc -machine amigaone -bios u-boot-amigaone=2Ebin \
+>>> +                    -cdrom "A1 Linux Net Installer=2Eiso" \
+>>> +                    -device ati-vga,model=3Drv100,romfile=3DVGABIOS-l=
+gpl-latest=2Ebin
+>>> +
+>>> +From the firmware menu that appears select ``Boot sequence`` =E2=86=
+=92
+>>> +``Amiga Multiboot Options`` and set ``Boot device 1`` to
+>>> +``Onboard VIA IDE CDROM``=2E Then hit escape until the main screen ap=
+pears again,
+>>> +hit escape once more and from the exit menu that appears select eithe=
+r
+>>> +``Save settings and exit`` or ``Use settings for this session only``=
+=2E It may
+>>> +take a long time loading the kernel into memory but eventually it boo=
+ts and the
+>>> +installer becomes visible=2E The ``ati-vga`` RV100 emulation is not
+>>> +complete yet so only frame buffer works, DRM and 3D is not available=
+=2E
+>>> +
+>>> +Genesi/bPlan Pegasos II (``pegasos2``)
+>>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>> +
+>>> +The ``pegasos2`` machine emulates the Pegasos II sold by Genesi and
+>>> +designed by bPlan=2E Its schematics are available at
+>>> +https://www=2Epowerdeveloper=2Eorg/platforms/pegasos/schematics=2E
+>>> +
+>>> +Emulated devices
+>>> +----------------
+>>> +
+>>> + * PowerPC 7457 CPU (can also use``-cpu g3`` or ``750cxe``)
+>>> + * Marvell MV64361 Discovery II north bridge
+>>> + * VIA VT8231 south bridge
+>>> + * PCI VGA compatible card (guests may need other card instead)
+>>> + * PS/2 keyboard and mouse
+>>> +
+>>> +Firmware
+>>> +--------
+>>> +
+>>> +The Pegasos II board has an Open Firmware compliant ROM based on
+>>> +SmartFirmware with some changes that are not open-sourced therefore
+>>> +the ROM binary cannot be included in QEMU=2E An updater was available
+>>> +from bPlan, it can be found in the `Internet Archive
+>>> +<http://web=2Earchive=2Eorg/web/20071021223056/http://www=2Ebplan-gmb=
+h=2Ede/up050404/up050404>`_=2E
+>>> +The ROM image can be extracted from it with the following command:
+>>> +
+>>> +=2E=2E code-block:: bash
+>>> +
+>>> +  $ tail -c +85581 up050404 | head -c 524288 > pegasos2=2Erom
+>>> +
+>>> +Running Linux
+>>> +-------------
+>>> +
+>>> +The PowerPC version of Debian 8=2E11 supported Pegasos II=2E The BIOS
+>>> +emulator in the firmware binary is unable to run QEMU=E2=80=98s stand=
+ard
+>>> +vgabios so it needs to be disabled=2E To boot the system run:
+>>> +
+>>> +=2E=2E code-block:: bash
+>>> +
+>>> +  $ qemu-system-ppc -machine pegasos2 -bios pegasos2=2Erom \
+>>> +                    -cdrom debian-8=2E11=2E0-powerpc-netinst=2Eiso \
+>>> +                    -device VGA,romfile=3D"" -serial stdio
+>>> +
+>>> +At the firmware ``ok`` prompt enter ``boot cd install/pegasos``=2E
+>>> +
+>>> +Alternatively, it is possible to boot the kernel directly without
+>>> +firmware ROM using the QEMU built-in minimal Virtual Open Firmware
+>>> +(VOF) emulation which is also supported on ``pegasos2``=2E For this,
+>>> +extract the kernel ``install/powerpc/vmlinuz-chrp=2Einitrd`` from the=
+ CD
+>>> +image, then run:
+>>> +
+>>> +=2E=2E code-block:: bash
+>>> +
+>>> +  $ qemu-system-ppc -machine pegasos2 -serial stdio \
+>>> +                    -kernel vmlinuz-chrp=2Einitrd -append "---" \
+>>> +                    -cdrom debian-8=2E11=2E0-powerpc-netinst=2Eiso
+>>> +
+>>> +aCube Sam460ex (``sam460ex``)
+>>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+>>> +
+>>> +The ``sam460ex`` machine emulates the Sam460ex board by aCube which i=
+s
+>>> +based on the AMCC PowerPC 460EX SoC (that despite its name has a
+>>> +PPC440 CPU core)=2E
+>>> +
+>>> +Firmware
+>>> +--------
+>>> +
+>>> +The board has a firmware based on an older U-Boot version with
+>>> +modifications to support booting AmigaOS 4=2E The firmware ROM is
+>>> +included with QEMU=2E
+>>> +
+>>> +Emulated devices
+>>> +----------------
+>>> +
+>>> + * PowerPC 460EX SoC
+>>> + * M41T80 serial RTC chip
+>>> + * Silicon Motion SM501 display parts (identical to SM502 on real boa=
+rd)
+>>> + * Silicon Image SiI3112 2 port SATA controller
+>>> + * USB keyboard and mouse
+>>> +
+>>> +Running Linux
+>>> +-------------
+>>> +
+>>> +The only Linux distro that supported Sam460ex out of box was CruxPPC
+>>> +2=2Ex=2E It can be booted by running:
+>>> +
+>>> +=2E=2E code-block:: bash
+>>> +
+>>> +  $ qemu-system-ppc -machine sam460ex -serial stdio \
+>>> +                    -drive if=3Dnone,id=3Dcd,format=3Draw,file=3Dcrux=
+-ppc-2=2E7a=2Eiso \
+>>> +                    -device ide-cd,drive=3Dcd,bus=3Dide=2E1
+>>> +
+>>> +There are some other kernels and instructions for booting other
+>>> +distros on aCube's product page at
+>>> +https://www=2Eacube-systems=2Ebiz/index=2Ephp?page=3Dhardware&pid=3D5
+>>> +but those are untested=2E
+>>> diff --git a/docs/system/target-ppc=2Erst b/docs/system/target-ppc=2Er=
+st
+>>> index 4f6eb93b17=2E=2E87bf412ce5 100644
+>>> --- a/docs/system/target-ppc=2Erst
+>>> +++ b/docs/system/target-ppc=2Erst
+>>> @@ -17,6 +17,7 @@ help``=2E
+>>> =2E=2E toctree::
+>>>    :maxdepth: 1
+>>>=20
+>>> +   ppc/amigang
+>>>    ppc/embedded
+>>>    ppc/powermac
+>>>    ppc/powernv
+>> 
 
