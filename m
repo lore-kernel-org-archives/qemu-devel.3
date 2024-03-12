@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C007DC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 13:15:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41FD0C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 13:16:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1yF-00009Q-5X; Tue, 12 Mar 2024 09:15:07 -0400
+	id 1rk1yb-0000Hv-DQ; Tue, 12 Mar 2024 09:15:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk1yB-00006Y-R0; Tue, 12 Mar 2024 09:15:03 -0400
+ id 1rk1yE-00008a-1B; Tue, 12 Mar 2024 09:15:06 -0400
 Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk1y9-0006s8-T8; Tue, 12 Mar 2024 09:15:03 -0400
+ id 1rk1yC-0006sh-3l; Tue, 12 Mar 2024 09:15:05 -0400
 Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6e6adf257fdso274603b3a.0; 
- Tue, 12 Mar 2024 06:15:00 -0700 (PDT)
+ d2e1a72fcca58-6e6ac00616cso347958b3a.0; 
+ Tue, 12 Mar 2024 06:15:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710249299; x=1710854099; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710249302; x=1710854102; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GmKs3OLijRDjxbbgFJRC36Pyehi0EZh4ofDu2FesM1g=;
- b=X4Gr+ct06Dj9A/CysySkc18RGNB/vperkCuV/GaJJ0/YqfQ0ZwcugrLTZIW8215jg2
- 20f0bTwDWGg0gGvgzi+MZQaqjeddpa3a0BOwTRACYRFhArIn7XIuSNf8JqKYkD2iHsTV
- NTBNtCLq+Z2cwmfye06TJGBJxjgrwPtYCJA+QpVuzNarALTLGLi9bkwyPOlhlhoC0jHB
- SDT1LYmjOLgwLnZ/7bWgkTChXC4Tbipl2+bWCdpL3eQtO+OpBw3aId4CmVOuql8sHmke
- nLsa8yBnQ0Ku3FpxliyvdjG9hFebliRYaXFmnTmp7VLq2L40QDr5jRCRpwf0P6tTWfSf
- mtqg==
+ bh=snN27fvobYyrptE+93yJyph56eOVotswARSPWE4FtYw=;
+ b=jhYPJ99GP6I4Si2LzG+u6UR8MDeNaQvSx9ZWQe+K00VAce8zTCCoDRhmEcICjrpLFV
+ fp+rGanxqGOTfPRVS7chvs3TDfdD4R2a/l+QrArdDgFPiPoQYn2R08fFJUXswCrMqgSo
+ 2CPcFQV9gubt9YHlsN6hQqj7gbY+12PUa8sX8CXWzat5sJGrX4dNo5VAe6gAUxsyzuIC
+ giFxfnM0UD4hN/8Qovg1zoeNnGjRQugIzOWxgXM+lHLEphHpOJUc6JZ5737fN7vJR2aX
+ xNudKqjkeYPMuYscOfnBzwzMWiiupd4LQXvc0qM4wVVqKN2W1oM/nKj/whM1w6i4kkH4
+ DHrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710249299; x=1710854099;
+ d=1e100.net; s=20230601; t=1710249302; x=1710854102;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GmKs3OLijRDjxbbgFJRC36Pyehi0EZh4ofDu2FesM1g=;
- b=Z32Puk8ta2RI87tEPn/y91VelFTuO0oYgSXZVrBVpSEX4otxaHfqgogQun8M15OtpH
- IS8+NCdMl2o1tupGCAQ4JokrJPWYjwBGBP16uSPnCTI5jyj/msgEMh+ZWnJEEu1oZvck
- ZL8LUC8okcMItNurKFWKE1ujJrcQSnRWy0fT1YxBwtl2PMM4FCV/U9v2NzHXm3SYeoar
- uahVLwMgQ/udU9VHyZFB5J7QrUWC0VxXCCZQHPZ2B3wMzHkw8KyW3Su8zzsaqD+G+ES4
- moXQfu4XyK6tzZYEHHiSDBAFSQZfiglVaslMFZ6+L0XluK1K3Gv5QHWFEGgz6cWRudi4
- S9pQ==
+ bh=snN27fvobYyrptE+93yJyph56eOVotswARSPWE4FtYw=;
+ b=vreWY2eOIVYeGRCbH0efLboi8K/hweRmVYJ3rescx2UiTFPxLJrlRj7JxjD68rEFZb
+ /bHNnZoEhQ5DZJ//L6HKKQel7yEDH73J1/k/zRfd8NWZ1JxUfkeojqkWx65gWvMNr37f
+ ohy9J3lRoH+Z71NPQw7bVd3KfgPYBrw2XoJmXfLyq+kGDRaxhbi2Rig8tqmvwr8jxkiB
+ gWGOU7CDGZUfDAaRb0hER1Q0UrjZFM+2GbM95PouJyxny4ScafrxXjkoMVutwzvcXfeH
+ loWW80wUZJL/RV6WoyEQqa8ypSwdTK4Te7Dr2EBtepqzNAZViuL7C+NZRm2oftVA/LJ2
+ PDYA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwAnN4NkkkmlHX4ik9OTDtT9XLqXeI17YMeDFKZyBJSMqbnsNUT+Kbc3zhStZWhJen8dgn12Sy1KthIWTNeumknYMb/5o=
-X-Gm-Message-State: AOJu0YzIb46PDH3gYYVC53lRYD1qpjjvMl4d+UJSPyqHEK4o9sf5RSyK
- 7tmBfjnLtI19c4CjmLZ+F2o8bxhrHsvdwY44phYDaGlj+T1BlDYqtW4C6qAOoOs=
-X-Google-Smtp-Source: AGHT+IGepATqylhpSSA/FQralTzzYOSVeR7wkdSwliSdSrAbd2oSsLJ6jN4vBvpX+qo/7zVozqzp5g==
-X-Received: by 2002:a05:6a00:2e9e:b0:6e6:6bef:c53c with SMTP id
- fd30-20020a056a002e9e00b006e66befc53cmr12045515pfb.0.1710249299023; 
- Tue, 12 Mar 2024 06:14:59 -0700 (PDT)
+ AJvYcCWkatODM+xsRBpPhDk4HKR7on41zLaCnlV9wh8xGAtjTKqEjhMyX5hNy/FjPN1uBuLMr9DtJeBhgLmGSXm8jifhFJ/Xf38=
+X-Gm-Message-State: AOJu0YzR+Ru2AQyP+AClljQBxdLKQDpih7r/KWCt5xzRBtEpZf7v/SmF
+ o04odZJDrQ7+aOC7jJ8mHmbx4m7dBbeOuSQArUti6jDxCE6p58ir/YuT/qgrXHk=
+X-Google-Smtp-Source: AGHT+IHS9budt8by+5GT9e58gtz5j1+FLg6LGkeL40Sb6ceMt0YN8TjwvmqFfzzr6JGmfF6tWCUS4g==
+X-Received: by 2002:a62:b61a:0:b0:6e6:9561:5999 with SMTP id
+ j26-20020a62b61a000000b006e695615999mr4613411pff.11.1710249302260; 
+ Tue, 12 Mar 2024 06:15:02 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- r15-20020aa78b8f000000b006e64f75c947sm6066084pfd.46.2024.03.12.06.14.56
+ r15-20020aa78b8f000000b006e64f75c947sm6066084pfd.46.2024.03.12.06.14.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 06:14:58 -0700 (PDT)
+ Tue, 12 Mar 2024 06:15:02 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  David Gibson <david@gibson.dropbear.id.au>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v2 09/10] target/ppc: Prevent supervisor from modifying MSR[ME]
-Date: Tue, 12 Mar 2024 23:14:18 +1000
-Message-ID: <20240312131419.2196845-10-npiggin@gmail.com>
+Subject: [PATCH v2 10/10] spapr: set MSR[ME] and MSR[FP] on client entry
+Date: Tue, 12 Mar 2024 23:14:19 +1000
+Message-ID: <20240312131419.2196845-11-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240312131419.2196845-1-npiggin@gmail.com>
 References: <20240312131419.2196845-1-npiggin@gmail.com>
@@ -96,33 +96,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prevent guest state modifying the MSR[ME] bit. Per ISA:
-
-  An attempt to modify MSR[ME] in privileged but non-hypervisor state
-  is ignored (i.e., the bit is not changed).
+The initial MSR state for the OpenFirmware binding specifies
+MSR[ME] and MSR[FP] are set.
 
 Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/helper_regs.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/ppc/spapr_cpu_core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-index 410b39c231..25258986e3 100644
---- a/target/ppc/helper_regs.c
-+++ b/target/ppc/helper_regs.c
-@@ -264,6 +264,11 @@ int hreg_store_msr(CPUPPCState *env, target_ulong value, int alter_hv)
-         value &= ~MSR_HVB;
-         value |= env->msr & MSR_HVB;
-     }
-+    /* Attempt to modify MSR[ME] in guest state is ignored */
-+    if (is_book3s_arch2x(env) && !(env->msr & MSR_HVB)) {
-+        value &= ~(1 << MSR_ME);
-+        value |= env->msr & (1 << MSR_ME);
-+    }
-     if ((value ^ env->msr) & (R_MSR_IR_MASK | R_MSR_DR_MASK)) {
-         cpu_interrupt_exittb(cs);
-     }
+diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+index 50523ead25..e7c9edd033 100644
+--- a/hw/ppc/spapr_cpu_core.c
++++ b/hw/ppc/spapr_cpu_core.c
+@@ -39,9 +39,13 @@ static void spapr_reset_vcpu(PowerPCCPU *cpu)
+ 
+     /*
+      * "PowerPC Processor binding to IEEE 1275" defines the initial MSR state
+-     * as 32bit (MSR_SF=0) in "8.2.1. Initial Register Values".
++     * as 32bit (MSR_SF=0) with MSR_ME=1 and MSR_FP=1 in "8.2.1. Initial
++     * Register Values". This can also be found in "LoPAPR 1.1" "C.9.2.1
++     * Initial Register Values".
+      */
+     env->msr &= ~(1ULL << MSR_SF);
++    env->msr |= (1ULL << MSR_ME) | (1ULL << MSR_FP);
++
+     env->spr[SPR_HIOR] = 0;
+ 
+     lpcr = env->spr[SPR_LPCR];
 -- 
 2.42.0
 
