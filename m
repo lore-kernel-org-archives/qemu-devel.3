@@ -4,83 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A7CC54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6037FC54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:43:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0XL-0007di-NL; Tue, 12 Mar 2024 07:43:15 -0400
+	id 1rk0XS-0007jQ-IC; Tue, 12 Mar 2024 07:43:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk0XF-0007b7-NP; Tue, 12 Mar 2024 07:43:09 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1rk0XQ-0007iS-7p
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:43:20 -0400
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk0XC-0004Bq-QQ; Tue, 12 Mar 2024 07:43:09 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-22222357d76so238769fac.2; 
- Tue, 12 Mar 2024 04:43:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1rk0XK-0004E2-8L
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:43:19 -0400
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2d2505352e6so79719991fa.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:43:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710243785; x=1710848585; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UAtiZi969b2n42feT+5mPdjwS1ZIhPSpF1PSeIJpniY=;
- b=IyekFKs06vBgJNSXp0Bkkj5TRVmGGBPPRtuLtDZTeZJRqhSe0ytRcvjbL/fu0UaWGd
- S9sy6hZQIq6p+v6aNFTb/LirnvdoqALruvBY3JQEwnb6pVzIOliG21SvSb0LCH0OmR0Z
- 2c33MOHY47wZ4dfpwv4UmZyTn1ddCWwDvv10wT71/U5xc1nYPROFi/6TAabzpCFWHMqw
- Fpem4FDgHaUWKQeyRE1Y4aAgPUBF/qqMumMnhKq/TW8+6hRwh+KxiXItDiKAufoyRKmJ
- etr2tgHeaG6Yj4QsmmRjMpKMLxl/8gV1NE0HPrvTFyHeGxgKW+39wseM61fju8CcQ9Q2
- HsHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710243785; x=1710848585;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ d=suse.com; s=google; t=1710243791; x=1710848591; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:autocrypt
+ :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
  :cc:subject:date:message-id:reply-to;
- bh=UAtiZi969b2n42feT+5mPdjwS1ZIhPSpF1PSeIJpniY=;
- b=lAXvOhHorCTPxuBibDCWRKT8IJtt/RpzMapi4JMRcB4fk9FvICsEDfMaTPAD5shWgS
- MrKK/9AVljIV6S/yjaANDLzT3RuVGXo2TygCduIDPjrCrrq2AABFIuT4pGucwyCYvmxe
- 7+ypQr3N5yOZpcDTlkMlAjTWHDYcVk4pDadyOv/UB8NJ3KJTgjRQaHIZgx+mKnrd1Vtw
- pND1ulVk+CS8eYoiZ4Fh0uyksZvF8tPvDF60BwdHKg4THL7ZS7WQrKwZvF+mYVY3M4hp
- FmEbBAlmRYfudYRiInCYqyDmdrDulizqCKWZkJIq5fPr0vUiQAqJQvHftf9BAl4tQ7uk
- BBTw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVFvhNBEjSzbZrY2k8bUOJSTC/jW0bokFjtyFEZ7sPn3aQr9eaSeC8JU1P+HwUjfdLwjFs3unnM8XmBQ28J1DMjgHDo+3XxMzKQ1Jqlie7pPB8u5pcjXt0izMY=
-X-Gm-Message-State: AOJu0YzJxl+wyBWBtn0XzKVNTA3lUAvdKGWZPp+iPGHjoU3x0tv3vf4P
- jdZeoMSdMJv+FeReLiBmo5X0cTTRvi44BLCO5EEnniBywdLwsDaE
-X-Google-Smtp-Source: AGHT+IFOOwJyWYl0EV9tRLFK3+FW0uQxpeacPqDfs0S047ci3MZjPY7L28XosAM2GDtX/l1s/rbjHQ==
-X-Received: by 2002:a05:6870:d88a:b0:21f:cd9a:35ad with SMTP id
- oe10-20020a056870d88a00b0021fcd9a35admr10387813oac.41.1710243785064; 
- Tue, 12 Mar 2024 04:43:05 -0700 (PDT)
-Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
- gu17-20020a056a004e5100b006e572d86152sm6073083pfb.91.2024.03.12.04.43.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 04:43:04 -0700 (PDT)
-Mime-Version: 1.0
+ bh=gpo0abP48NJTZIYqIeoLjEcfZQuQVs83kwlsrD+w7Wc=;
+ b=MtKq/RbpWBqvAjqLl5Hiu5wKifgGsYuibTkFMpIxWD3JclGz3CE2RZdXdY7zzOxYgu
+ WpQGNtgHIubhLcBad8dk6kFUbf8l/Mwpe7z8MYZalySmlcWp06Nf3dZmO5e4sgV042qp
+ xRtBWO+KnEjW677rHCnzw17XRO2S3YbR8qbFJAKGG4+mPCIvHwIwB/mzopxxNzFps3g8
+ 57/DxSgg4g657Bjdtaz6KA5Nf2wtk1L0WtKsz17inwls3z4VzIWVq9onkpxkx4bLyqTm
+ SgExINHLkcXWodrxMTq5KjOi6Q0dbULVWQrST46KcvugzbCwQxpVtfYw1inukXvI9q80
+ OHww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710243791; x=1710848591;
+ h=mime-version:user-agent:content-transfer-encoding:autocrypt
+ :references:in-reply-to:date:cc:to:from:subject:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gpo0abP48NJTZIYqIeoLjEcfZQuQVs83kwlsrD+w7Wc=;
+ b=HJEcA1VNT7G+07v8sieh57n9LG9gEj2jFcpgbAKlxv81UVoSI/fSzPuDlXEZe/yqJO
+ aYlalefsPlpf+onbPekAXdpAh83H/CAy9oBEiziI7Ds42CT6lOcRMU6oSo70rtJW/9DG
+ /7SclkJ+wkcIIPLF+KOlI4Qxu+oItgLs9+ZEdDQPsPD7+GIVV3MQGWE7E61LT8XIAKKB
+ 9IzrfDehopZvPLGQ+X9WJF1O7ECSHpy3GI7h2/5BzCIeXDud2O4JInywYJnXZGYaFRhX
+ aa0y2t9tGol0/KECsedvnxN47e8SG/U+YEm+2M7jZqr/dyos5hy87IFbs9S3SC4PDZ6X
+ or1w==
+X-Gm-Message-State: AOJu0YyYQiXCTTmmpkUHaQGcNBVAKCq/B+fKht6TMd6HPTTO61ziyosn
+ 48/vcRggY77Y9stq4Y3qMWEzi85/hQPiuQO0EFS/0cGUUuQea2LCoIS9jIQk/Yg=
+X-Google-Smtp-Source: AGHT+IFWfXaAIZd3ouD6Rma6Q6WGVEwG1MFBykI7O3TlflDAsCo2iwc+5AD7ysAC6Pp/F/+ZSNPVfQ==
+X-Received: by 2002:a2e:bea2:0:b0:2d3:352a:518d with SMTP id
+ a34-20020a2ebea2000000b002d3352a518dmr159941ljr.10.1710243791332; 
+ Tue, 12 Mar 2024 04:43:11 -0700 (PDT)
+Received: from [192.168.7.188]
+ (cpc81487-lanc8-2-0-cust139.3-3.cable.virginm.net. [81.110.179.140])
+ by smtp.gmail.com with ESMTPSA id
+ o4-20020a05600c510400b00412cbe4f41bsm19164479wms.4.2024.03.12.04.43.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 04:43:11 -0700 (PDT)
+Message-ID: <5a9c727bce71669bb60077a36ad171dddb31417f.camel@suse.com>
+Subject: Re: [PATCH 3/9] backends/confidential-guest-support: Add functions
+ to support IGVM
+From: Roy Hopkins <roy.hopkins@suse.com>
+To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Marcelo
+ Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
+ Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,  =?ISO-8859-1?Q?J=F6rg?= Roedel
+ <jroedel@suse.com>
+Date: Tue, 12 Mar 2024 11:43:10 +0000
+In-Reply-To: <ZeIEX8v7828JcXte@redhat.com>
+References: <cover.1709044754.git.roy.hopkins@suse.com>
+ <0d5af28ab63f6e4e4089b8b5a11b9fc9c941986f.1709044754.git.roy.hopkins@suse.com>
+ <ZeIEX8v7828JcXte@redhat.com>
+Autocrypt: addr=roy.hopkins@suse.com; prefer-encrypt=mutual;
+ keydata=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
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Mar 2024 21:42:59 +1000
-Message-Id: <CZRQTLPGM7CD.28JPRAKT4G5VV@wheely>
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
-Cc: <clg@kaod.org>, <mikey@neuling.org>, <amachhiw@linux.vnet.ibm.com>,
- <vaibhav@linux.ibm.com>, <sbhat@linux.ibm.com>, <danielhb413@gmail.com>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v5 13/14] spapr: nested: Introduce H_GUEST_RUN_VCPU hcall.
-X-Mailer: aerc 0.15.2
-References: <20240308111940.1617660-1-harshpb@linux.ibm.com>
- <20240308111940.1617660-14-harshpb@linux.ibm.com>
-In-Reply-To: <20240308111940.1617660-14-harshpb@linux.ibm.com>
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=npiggin@gmail.com; helo=mail-oa1-x2a.google.com
+User-Agent: Evolution 3.50.2 
+MIME-Version: 1.0
+Received-SPF: permerror client-ip=2a00:1450:4864:20::232;
+ envelope-from=roy.hopkins@suse.com; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,500 +114,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Mar 8, 2024 at 9:19 PM AEST, Harsh Prateek Bora wrote:
-> The H_GUEST_RUN_VCPU hcall is used to start execution of a Guest VCPU.
-> The Hypervisor will update the state of the Guest VCPU based on the
-> input buffer, restore the saved Guest VCPU state, and start its
-> execution.
->
-> The Guest VCPU can stop running for numerous reasons including HCALLs,
-> hypervisor exceptions, or an outstanding Host Partition Interrupt.
-> The reason that the Guest VCPU stopped running is communicated through
-> R4 and the output buffer will be filled in with any relevant state.
->
-> Signed-off-by: Michael Neuling <mikey@neuling.org>
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+On Fri, 2024-03-01 at 16:37 +0000, Daniel P. Berrang=C3=A9 wrote:
+> On Tue, Feb 27, 2024 at 02:50:09PM +0000, Roy Hopkins wrote:
+> > In preparation for supporting the processing of IGVM files to configure
+> > guests, this adds a set of functions to ConfidentialGuestSupport
+> > allowing configuration of secure virtual machines that can be
+> > implemented for each supported isolation platform type such as Intel TD=
+X
+> > or AMD SEV-SNP. These functions will be called by IGVM processing code
+> > in subsequent patches.
+> >=20
+> > This commit provides a default implementation of the functions that
+> > either perform no action or generate a warning or error when they are
+> > called. Targets that support ConfidentalGuestSupport should override
+> > these implementations.
+> >=20
+> > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> > ---
+> > =C2=A0backends/confidential-guest-support.c=C2=A0=C2=A0=C2=A0=C2=A0 | 2=
+6 ++++++++
+> > =C2=A0include/exec/confidential-guest-support.h | 76 ++++++++++++++++++=
++++++
+> > =C2=A02 files changed, 102 insertions(+)
+> >=20
+> > diff --git a/backends/confidential-guest-support.c b/backends/confident=
+ial-
+> > guest-support.c
+> > index da436fb736..42628be8d7 100644
+> > --- a/backends/confidential-guest-support.c
+> > +++ b/backends/confidential-guest-support.c
+> > @@ -14,6 +14,7 @@
+> > =C2=A0#include "qemu/osdep.h"
+> > =C2=A0
+> > =C2=A0#include "exec/confidential-guest-support.h"
+> > +#include "qemu/error-report.h"
+> > =C2=A0
+> > =C2=A0OBJECT_DEFINE_ABSTRACT_TYPE(ConfidentialGuestSupport,
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 confidential_guest_support,
+> > @@ -45,8 +46,33 @@ static void
+> > confidential_guest_support_class_init(ObjectClass *oc, void *data)
+> > =C2=A0#endif
+> > =C2=A0}
+> > =C2=A0
+> > +static int check_support(ConfidentialGuestPlatformType platform,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ uint16_t platform_version, uint8_t highest_vtl,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ uint64_t shared_gpa_boundary)
+> > +{
+> > +=C2=A0=C2=A0=C2=A0 /* Default: no support. */
+> > +=C2=A0=C2=A0=C2=A0 return 0;
+> > +}
+> > +
+> > +static int set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ConfidentialGuestPageType =
+memory_type,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint16_t cpu_index)
+> > +{
+> > +=C2=A0=C2=A0=C2=A0 warn_report("Confidential guest memory not supporte=
+d");
+> > +=C2=A0=C2=A0=C2=A0 return -1;
+> > +}
+> > +
+> > +static int get_mem_map_entry(int index, ConfidentialGuestMemoryMapEntr=
+y
+> > *entry)
+> > +{
+> > +=C2=A0=C2=A0=C2=A0 return 1;
+> > +}
+>=20
+> IIUC, all these can reports errors, and as such I think
+> they should have an 'Error **errp' parameter, so we can
+> report precise errors in these methods, rather than
+> less useful generic errors in the caller.
+>=20
+> The above 'warn_report' ought to be an error too, since
+> it is returning an failure code (-1)
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Yes, that makes sense. I've made a comprehensive rework of the error handli=
+ng in
+the patch series which addresses this and your suggestions in the other pat=
+ches
+regarding error handling. I'll submit these as a V2.
 
-> ---
->  target/ppc/cpu.h      |   2 +
->  hw/ppc/ppc.c          |  10 ++
->  hw/ppc/spapr_nested.c | 334 ++++++++++++++++++++++++++++++++++++++----
->  3 files changed, 316 insertions(+), 30 deletions(-)
->
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 4cffd46c79..95b7c86eb3 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1584,6 +1584,8 @@ uint64_t cpu_ppc_load_atbl(CPUPPCState *env);
->  uint32_t cpu_ppc_load_atbu(CPUPPCState *env);
->  void cpu_ppc_store_atbl(CPUPPCState *env, uint32_t value);
->  void cpu_ppc_store_atbu(CPUPPCState *env, uint32_t value);
-> +void cpu_ppc_increase_tb_by_offset (CPUPPCState *env, int64_t offset);
-> +void cpu_ppc_decrease_tb_by_offset (CPUPPCState *env, int64_t offset);
->  uint64_t cpu_ppc_load_vtb(CPUPPCState *env);
->  void cpu_ppc_store_vtb(CPUPPCState *env, uint64_t value);
->  bool ppc_decr_clear_on_delivery(CPUPPCState *env);
-> diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
-> index fadb8f5239..55860b9a83 100644
-> --- a/hw/ppc/ppc.c
-> +++ b/hw/ppc/ppc.c
-> @@ -633,6 +633,16 @@ void cpu_ppc_store_atbu (CPUPPCState *env, uint32_t =
-value)
->                       ((uint64_t)value << 32) | tb);
->  }
-> =20
-> +void cpu_ppc_increase_tb_by_offset (CPUPPCState *env, int64_t offset)
-> +{
-> +    env->tb_env->tb_offset +=3D offset;
-> +}
-> +
-> +void cpu_ppc_decrease_tb_by_offset (CPUPPCState *env, int64_t offset)
-> +{
-> +    env->tb_env->tb_offset -=3D offset;
-> +}
-> +
->  uint64_t cpu_ppc_load_vtb(CPUPPCState *env)
->  {
->      ppc_tb_t *tb_env =3D env->tb_env;
-> diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
-> index e0b234c786..597dba7fdc 100644
-> --- a/hw/ppc/spapr_nested.c
-> +++ b/hw/ppc/spapr_nested.c
-> @@ -200,14 +200,28 @@ static void nested_save_state(struct nested_ppc_sta=
-te *save, PowerPCCPU *cpu)
->          save->sier =3D env->spr[SPR_POWER_SIER];
->          save->vscr =3D ppc_get_vscr(env);
->          save->fpscr =3D env->fpscr;
-> +    } else if (spapr_nested_api(spapr) =3D=3D NESTED_API_KVM_HV) {
-> +        save->tb_offset =3D env->tb_env->tb_offset;
->      }
-> +}
-> =20
-> -    save->tb_offset =3D env->tb_env->tb_offset;
-> +static void nested_post_load_state(CPUPPCState *env, CPUState *cs)
-> +{
-> +    /*
-> +     * compute hflags and possible interrupts.
-> +     */
-> +    hreg_compute_hflags(env);
-> +    ppc_maybe_interrupt(env);
-> +    /*
-> +     * Nested HV does not tag TLB entries between L1 and L2, so must
-> +     * flush on transition.
-> +     */
-> +    tlb_flush(cs);
-> +    env->reserve_addr =3D -1; /* Reset the reservation */
->  }
-> =20
->  static void nested_load_state(PowerPCCPU *cpu, struct nested_ppc_state *=
-load)
->  {
-> -    CPUState *cs =3D CPU(cpu);
->      CPUPPCState *env =3D &cpu->env;
->      SpaprMachineState *spapr =3D SPAPR_MACHINE(qdev_get_machine());
-> =20
-> @@ -285,22 +299,9 @@ static void nested_load_state(PowerPCCPU *cpu, struc=
-t nested_ppc_state *load)
->          env->spr[SPR_POWER_SIER] =3D load->sier;
->          ppc_store_vscr(env, load->vscr);
->          ppc_store_fpscr(env, load->fpscr);
-> +    } else if (spapr_nested_api(spapr) =3D=3D NESTED_API_KVM_HV) {
-> +        env->tb_env->tb_offset =3D load->tb_offset;
->      }
-> -
-> -    env->tb_env->tb_offset =3D load->tb_offset;
-> -
-> -    /*
-> -     * MSR updated, compute hflags and possible interrupts.
-> -     */
-> -    hreg_compute_hflags(env);
-> -    ppc_maybe_interrupt(env);
-> -
-> -    /*
-> -     * Nested HV does not tag TLB entries between L1 and L2, so must
-> -     * flush on transition.
-> -     */
-> -    tlb_flush(cs);
-> -    env->reserve_addr =3D -1; /* Reset the reservation */
->  }
-> =20
->  /*
-> @@ -315,6 +316,7 @@ static target_ulong h_enter_nested(PowerPCCPU *cpu,
->  {
->      PowerPCCPUClass *pcc =3D POWERPC_CPU_GET_CLASS(cpu);
->      CPUPPCState *env =3D &cpu->env;
-> +    CPUState *cs =3D CPU(cpu);
->      SpaprCpuState *spapr_cpu =3D spapr_cpu_state(cpu);
->      struct nested_ppc_state l2_state;
->      target_ulong hv_ptr =3D args[0];
-> @@ -413,6 +415,7 @@ static target_ulong h_enter_nested(PowerPCCPU *cpu,
->       * Switch to the nested guest environment and start the "hdec" timer=
-.
->       */
->      nested_load_state(cpu, &l2_state);
-> +    nested_post_load_state(env, cs);
-> =20
->      hdec =3D hv_state.hdec_expiry - now;
->      cpu_ppc_hdecr_init(env);
-> @@ -444,6 +447,7 @@ static target_ulong h_enter_nested(PowerPCCPU *cpu,
->  static void spapr_exit_nested_hv(PowerPCCPU *cpu, int excp)
->  {
->      CPUPPCState *env =3D &cpu->env;
-> +    CPUState *cs =3D CPU(cpu);
->      SpaprCpuState *spapr_cpu =3D spapr_cpu_state(cpu);
->      struct nested_ppc_state l2_state;
->      target_ulong hv_ptr =3D spapr_cpu->nested_host_state->gpr[4];
-> @@ -465,6 +469,7 @@ static void spapr_exit_nested_hv(PowerPCCPU *cpu, int=
- excp)
->       */
->      assert(env->spr[SPR_LPIDR] !=3D 0);
->      nested_load_state(cpu, spapr_cpu->nested_host_state);
-> +    nested_post_load_state(env, cs);
->      env->gpr[3] =3D env->excp_vectors[excp]; /* hcall return value */
-> =20
->      cpu_ppc_hdecr_exit(env);
-> @@ -542,19 +547,6 @@ static void spapr_exit_nested_hv(PowerPCCPU *cpu, in=
-t excp)
->      address_space_unmap(CPU(cpu)->as, regs, len, len, true);
->  }
-> =20
-> -void spapr_exit_nested(PowerPCCPU *cpu, int excp)
-> -{
-> -    SpaprMachineState *spapr =3D SPAPR_MACHINE(qdev_get_machine());
-> -    SpaprCpuState *spapr_cpu =3D spapr_cpu_state(cpu);
-> -
-> -    assert(spapr_cpu->in_nested);
-> -    if (spapr_nested_api(spapr) =3D=3D NESTED_API_KVM_HV) {
-> -        spapr_exit_nested_hv(cpu, excp);
-> -    } else {
-> -        g_assert_not_reached();
-> -    }
-> -}
-> -
->  SpaprMachineStateNestedGuest *spapr_get_nested_guest(SpaprMachineState *=
-spapr,
->                                                       target_ulong guesti=
-d)
->  {
-> @@ -1539,6 +1531,286 @@ static target_ulong h_guest_get_state(PowerPCCPU =
-*cpu,
->      return h_guest_getset_state(cpu, spapr, args, false);
->  }
-> =20
-> +static void exit_nested_store_l2(PowerPCCPU *cpu, int excp,
-> +                                 SpaprMachineStateNestedGuestVcpu *vcpu)
-> +{
-> +    CPUPPCState *env =3D &cpu->env;
-> +    SpaprCpuState *spapr_cpu =3D spapr_cpu_state(cpu);
-> +    target_ulong now, hdar, hdsisr, asdr;
-> +
-> +    assert(sizeof(env->gpr) =3D=3D sizeof(vcpu->state.gpr)); /* sanity c=
-heck */
-> +
-> +    now =3D cpu_ppc_load_tbl(env); /* L2 timebase */
-> +    now -=3D vcpu->tb_offset; /* L1 timebase */
-> +    vcpu->state.dec_expiry_tb =3D now - cpu_ppc_load_decr(env);
-> +    cpu_ppc_store_decr(env, spapr_cpu->nested_host_state->dec_expiry_tb =
-- now);
-> +    /* backup hdar, hdsisr, asdr if reqd later below */
-> +    hdar   =3D vcpu->state.hdar;
-> +    hdsisr =3D vcpu->state.hdsisr;
-> +    asdr   =3D vcpu->state.asdr;
-> +
-> +    nested_save_state(&vcpu->state, cpu);
-> +
-> +    if (excp =3D=3D POWERPC_EXCP_MCHECK ||
-> +        excp =3D=3D POWERPC_EXCP_RESET ||
-> +        excp =3D=3D POWERPC_EXCP_SYSCALL) {
-> +        vcpu->state.nip =3D env->spr[SPR_SRR0];
-> +        vcpu->state.msr =3D env->spr[SPR_SRR1] & env->msr_mask;
-> +    } else {
-> +        vcpu->state.nip =3D env->spr[SPR_HSRR0];
-> +        vcpu->state.msr =3D env->spr[SPR_HSRR1] & env->msr_mask;
-> +    }
-> +
-> +    /* hdar, hdsisr, asdr should be retained unless certain exceptions *=
-/
-> +    if ((excp !=3D POWERPC_EXCP_HDSI) && (excp !=3D POWERPC_EXCP_HISI)) =
-{
-> +        vcpu->state.asdr =3D asdr;
-> +    } else if (excp !=3D POWERPC_EXCP_HDSI) {
-> +        vcpu->state.hdar   =3D hdar;
-> +        vcpu->state.hdsisr =3D hdsisr;
-> +    }
-> +}
-> +
-> +static int get_exit_ids(uint64_t srr0, uint16_t ids[16])
-> +{
-> +    int nr;
-> +
-> +    switch (srr0) {
-> +    case 0xc00:
-> +        nr =3D 10;
-> +        ids[0] =3D GSB_VCPU_GPR3;
-> +        ids[1] =3D GSB_VCPU_GPR4;
-> +        ids[2] =3D GSB_VCPU_GPR5;
-> +        ids[3] =3D GSB_VCPU_GPR6;
-> +        ids[4] =3D GSB_VCPU_GPR7;
-> +        ids[5] =3D GSB_VCPU_GPR8;
-> +        ids[6] =3D GSB_VCPU_GPR9;
-> +        ids[7] =3D GSB_VCPU_GPR10;
-> +        ids[8] =3D GSB_VCPU_GPR11;
-> +        ids[9] =3D GSB_VCPU_GPR12;
-> +        break;
-> +    case 0xe00:
-> +        nr =3D 5;
-> +        ids[0] =3D GSB_VCPU_SPR_HDAR;
-> +        ids[1] =3D GSB_VCPU_SPR_HDSISR;
-> +        ids[2] =3D GSB_VCPU_SPR_ASDR;
-> +        ids[3] =3D GSB_VCPU_SPR_NIA;
-> +        ids[4] =3D GSB_VCPU_SPR_MSR;
-> +        break;
-> +    case 0xe20:
-> +        nr =3D 4;
-> +        ids[0] =3D GSB_VCPU_SPR_HDAR;
-> +        ids[1] =3D GSB_VCPU_SPR_ASDR;
-> +        ids[2] =3D GSB_VCPU_SPR_NIA;
-> +        ids[3] =3D GSB_VCPU_SPR_MSR;
-> +        break;
-> +    case 0xe40:
-> +        nr =3D 3;
-> +        ids[0] =3D GSB_VCPU_SPR_HEIR;
-> +        ids[1] =3D GSB_VCPU_SPR_NIA;
-> +        ids[2] =3D GSB_VCPU_SPR_MSR;
-> +        break;
-> +    case 0xf80:
-> +        nr =3D 3;
-> +        ids[0] =3D GSB_VCPU_SPR_HFSCR;
-> +        ids[1] =3D GSB_VCPU_SPR_NIA;
-> +        ids[2] =3D GSB_VCPU_SPR_MSR;
-> +        break;
-> +    default:
-> +        nr =3D 0;
-> +        break;
-> +    }
-> +
-> +    return nr;
-> +}
-> +
-> +static void exit_process_output_buffer(PowerPCCPU *cpu,
-> +                                       SpaprMachineStateNestedGuest *gue=
-st,
-> +                                       target_ulong vcpuid,
-> +                                       target_ulong *r3)
-> +{
-> +    SpaprMachineStateNestedGuestVcpu *vcpu =3D &guest->vcpus[vcpuid];
-> +    struct guest_state_request gsr;
-> +    struct guest_state_buffer *gsb;
-> +    struct guest_state_element *element;
-> +    struct guest_state_element_type *type;
-> +    int exit_id_count =3D 0;
-> +    uint16_t exit_cause_ids[16];
-> +    hwaddr len;
-> +
-> +    len =3D vcpu->runbufout.size;
-> +    gsb =3D address_space_map(CPU(cpu)->as, vcpu->runbufout.addr, &len, =
-true,
-> +                            MEMTXATTRS_UNSPECIFIED);
-> +    if (!gsb || len !=3D vcpu->runbufout.size) {
-> +        address_space_unmap(CPU(cpu)->as, gsb, len, true, len);
-> +        *r3 =3D H_P2;
-> +        return;
-> +    }
-> +
-> +    exit_id_count =3D get_exit_ids(*r3, exit_cause_ids);
-> +
-> +    /* Create a buffer of elements to send back */
-> +    gsb->num_elements =3D cpu_to_be32(exit_id_count);
-> +    element =3D gsb->elements;
-> +    for (int i =3D 0; i < exit_id_count; i++) {
-> +        type =3D guest_state_element_type_find(exit_cause_ids[i]);
-> +        assert(type);
-> +        element->id =3D cpu_to_be16(exit_cause_ids[i]);
-> +        element->size =3D cpu_to_be16(type->size);
-> +        element =3D guest_state_element_next(element, NULL, NULL);
-> +    }
-> +    gsr.gsb =3D gsb;
-> +    gsr.len =3D VCPU_OUT_BUF_MIN_SZ;
-> +    gsr.flags =3D 0; /* get + never guest wide */
-> +    getset_state(guest, vcpuid, &gsr);
-> +
-> +    address_space_unmap(CPU(cpu)->as, gsb, len, true, len);
-> +    return;
-> +}
-> +
-> +static
-> +void spapr_exit_nested_papr(SpaprMachineState *spapr, PowerPCCPU *cpu, i=
-nt excp)
-> +{
-> +    CPUPPCState *env =3D &cpu->env;
-> +    CPUState *cs =3D CPU(cpu);
-> +    SpaprCpuState *spapr_cpu =3D spapr_cpu_state(cpu);
-> +    target_ulong r3_return =3D env->excp_vectors[excp]; /* hcall return =
-value */
-> +    target_ulong lpid =3D 0, vcpuid =3D 0;
-> +    struct SpaprMachineStateNestedGuestVcpu *vcpu =3D NULL;
-> +    struct SpaprMachineStateNestedGuest *guest =3D NULL;
-> +
-> +    lpid =3D spapr_cpu->nested_host_state->gpr[5];
-> +    vcpuid =3D spapr_cpu->nested_host_state->gpr[6];
-> +    guest =3D spapr_get_nested_guest(spapr, lpid);
-> +    assert(guest);
-> +    spapr_nested_vcpu_check(guest, vcpuid, false);
-> +    vcpu =3D &guest->vcpus[vcpuid];
-> +
-> +    exit_nested_store_l2(cpu, excp, vcpu);
-> +    /* do the output buffer for run_vcpu*/
-> +    exit_process_output_buffer(cpu, guest, vcpuid, &r3_return);
-> +
-> +    assert(env->spr[SPR_LPIDR] !=3D 0);
-> +    nested_load_state(cpu, spapr_cpu->nested_host_state);
-> +    cpu_ppc_decrease_tb_by_offset(env, vcpu->tb_offset);
-> +    env->gpr[3] =3D H_SUCCESS;
-> +    env->gpr[4] =3D r3_return;
-> +    nested_post_load_state(env, cs);
-> +    cpu_ppc_hdecr_exit(env);
-> +
-> +    spapr_cpu->in_nested =3D false;
-> +    g_free(spapr_cpu->nested_host_state);
-> +    spapr_cpu->nested_host_state =3D NULL;
-> +}
-> +
-> +void spapr_exit_nested(PowerPCCPU *cpu, int excp)
-> +{
-> +    SpaprMachineState *spapr =3D SPAPR_MACHINE(qdev_get_machine());
-> +    SpaprCpuState *spapr_cpu =3D spapr_cpu_state(cpu);
-> +
-> +    assert(spapr_cpu->in_nested);
-> +    if (spapr_nested_api(spapr) =3D=3D NESTED_API_KVM_HV) {
-> +        spapr_exit_nested_hv(cpu, excp);
-> +    } else if (spapr_nested_api(spapr) =3D=3D NESTED_API_PAPR) {
-> +        spapr_exit_nested_papr(spapr, cpu, excp);
-> +    } else {
-> +        g_assert_not_reached();
-> +    }
-> +}
-> +
-> +static void nested_papr_load_l2(PowerPCCPU *cpu,
-> +                                CPUPPCState *env,
-> +                                SpaprMachineStateNestedGuestVcpu *vcpu,
-> +                                target_ulong now)
-> +{
-> +    PowerPCCPUClass *pcc =3D POWERPC_CPU_GET_CLASS(cpu);
-> +    target_ulong lpcr, lpcr_mask, hdec;
-> +    lpcr_mask =3D LPCR_DPFD | LPCR_ILE | LPCR_AIL | LPCR_LD | LPCR_MER;
-> +
-> +    assert(vcpu);
-> +    assert(sizeof(env->gpr) =3D=3D sizeof(vcpu->state.gpr));
-> +    nested_load_state(cpu, &vcpu->state);
-> +    lpcr =3D (env->spr[SPR_LPCR] & ~lpcr_mask) |
-> +           (vcpu->state.lpcr & lpcr_mask);
-> +    lpcr |=3D LPCR_HR | LPCR_UPRT | LPCR_GTSE | LPCR_HVICE | LPCR_HDICE;
-> +    lpcr &=3D ~LPCR_LPES0;
-> +    env->spr[SPR_LPCR] =3D lpcr & pcc->lpcr_mask;
-> +
-> +    hdec =3D vcpu->hdecr_expiry_tb - now;
-> +    cpu_ppc_store_decr(env, vcpu->state.dec_expiry_tb - now);
-> +    cpu_ppc_hdecr_init(env);
-> +    cpu_ppc_store_hdecr(env, hdec);
-> +
-> +    cpu_ppc_increase_tb_by_offset(env, vcpu->tb_offset);
-> +}
-> +
-> +static void nested_papr_run_vcpu(PowerPCCPU *cpu,
-> +                                 uint64_t lpid,
-> +                                 SpaprMachineStateNestedGuestVcpu *vcpu)
-> +{
-> +    SpaprMachineState *spapr =3D SPAPR_MACHINE(qdev_get_machine());
-> +    CPUPPCState *env =3D &cpu->env;
-> +    CPUState *cs =3D CPU(cpu);
-> +    SpaprCpuState *spapr_cpu =3D spapr_cpu_state(cpu);
-> +    target_ulong now =3D cpu_ppc_load_tbl(env);
-> +
-> +    assert(env->spr[SPR_LPIDR] =3D=3D 0);
-> +    assert(spapr->nested.api); /* ensure API version is initialized */
-> +    spapr_cpu->nested_host_state =3D g_try_new(struct nested_ppc_state, =
-1);
-> +    assert(spapr_cpu->nested_host_state);
-> +    nested_save_state(spapr_cpu->nested_host_state, cpu);
-> +    spapr_cpu->nested_host_state->dec_expiry_tb =3D now - cpu_ppc_load_d=
-ecr(env);
-> +    nested_papr_load_l2(cpu, env, vcpu, now);
-> +    env->spr[SPR_LPIDR] =3D lpid; /* post load l2 */
-> +
-> +    spapr_cpu->in_nested =3D true;
-> +    nested_post_load_state(env, cs);
-> +}
-> +
-> +static target_ulong h_guest_run_vcpu(PowerPCCPU *cpu,
-> +                                     SpaprMachineState *spapr,
-> +                                     target_ulong opcode,
-> +                                     target_ulong *args)
-> +{
-> +    CPUPPCState *env =3D &cpu->env;
-> +    target_ulong flags =3D args[0];
-> +    target_ulong lpid =3D args[1];
-> +    target_ulong vcpuid =3D args[2];
-> +    struct SpaprMachineStateNestedGuestVcpu *vcpu;
-> +    struct guest_state_request gsr;
-> +    SpaprMachineStateNestedGuest *guest;
-> +    target_ulong rc;
-> +
-> +    if (flags) /* don't handle any flags for now */
-> +        return H_PARAMETER;
-> +
-> +    guest =3D spapr_get_nested_guest(spapr, lpid);
-> +    if (!guest) {
-> +        return H_P2;
-> +    }
-> +    if (!spapr_nested_vcpu_check(guest, vcpuid, true)) {
-> +        return H_P3;
-> +    }
-> +
-> +    if (guest->parttbl[0] =3D=3D 0) {
-> +        /* At least need a partition scoped radix tree */
-> +        return H_NOT_AVAILABLE;
-> +    }
-> +
-> +    vcpu =3D &guest->vcpus[vcpuid];
-> +
-> +    /* Read run_vcpu input buffer to update state */
-> +    gsr.buf =3D vcpu->runbufin.addr;
-> +    gsr.len =3D vcpu->runbufin.size;
-> +    gsr.flags =3D GUEST_STATE_REQUEST_SET; /* Thread wide + writing */
-> +    rc =3D map_and_getset_state(cpu, guest, vcpuid, &gsr);
-> +    if (rc =3D=3D H_SUCCESS) {
-> +        nested_papr_run_vcpu(cpu, lpid, vcpu);
-> +    } else {
-> +        env->gpr[3] =3D rc;
-> +    }
-> +    return env->gpr[3];
-> +}
-> +
->  void spapr_register_nested_hv(void)
->  {
->      spapr_register_hypercall(KVMPPC_H_SET_PARTITION_TABLE, h_set_ptbl);
-> @@ -1564,6 +1836,7 @@ void spapr_register_nested_papr(void)
->      spapr_register_hypercall(H_GUEST_CREATE_VCPU     , h_guest_create_vc=
-pu);
->      spapr_register_hypercall(H_GUEST_SET_STATE       , h_guest_set_state=
-);
->      spapr_register_hypercall(H_GUEST_GET_STATE       , h_guest_get_state=
-);
-> +    spapr_register_hypercall(H_GUEST_RUN_VCPU        , h_guest_run_vcpu)=
-;
->  }
-> =20
->  void spapr_unregister_nested_papr(void)
-> @@ -1575,6 +1848,7 @@ void spapr_unregister_nested_papr(void)
->      spapr_unregister_hypercall(H_GUEST_CREATE_VCPU);
->      spapr_unregister_hypercall(H_GUEST_SET_STATE);
->      spapr_unregister_hypercall(H_GUEST_GET_STATE);
-> +    spapr_unregister_hypercall(H_GUEST_RUN_VCPU);
->  }
-> =20
->  #else
+>=20
+> > +
+> > =C2=A0static void confidential_guest_support_init(Object *obj)
+> > =C2=A0{
+> > +=C2=A0=C2=A0=C2=A0 ConfidentialGuestSupport *cgs =3D CONFIDENTIAL_GUES=
+T_SUPPORT(obj);
+> > +=C2=A0=C2=A0=C2=A0 cgs->check_support =3D check_support;
+> > +=C2=A0=C2=A0=C2=A0 cgs->set_guest_state =3D set_guest_state;
+> > +=C2=A0=C2=A0=C2=A0 cgs->get_mem_map_entry =3D get_mem_map_entry;
+> > =C2=A0}
+> > =C2=A0
+> > =C2=A0static void confidential_guest_support_finalize(Object *obj)
+> > diff --git a/include/exec/confidential-guest-support.h
+> > b/include/exec/confidential-guest-support.h
+> > index b08ad8de4d..c43a1a32f1 100644
+> > --- a/include/exec/confidential-guest-support.h
+> > +++ b/include/exec/confidential-guest-support.h
+> > @@ -21,10 +21,46 @@
+> > =C2=A0#ifndef CONFIG_USER_ONLY
+> > =C2=A0
+> > =C2=A0#include "qom/object.h"
+> > +#include "exec/hwaddr.h"
+> > +
+> > +#if defined(CONFIG_IGVM)
+> > +#include "igvm/igvm.h"
+> > +#endif
+> > =C2=A0
+> > =C2=A0#define TYPE_CONFIDENTIAL_GUEST_SUPPORT "confidential-guest-suppo=
+rt"
+> > =C2=A0OBJECT_DECLARE_SIMPLE_TYPE(ConfidentialGuestSupport,
+> > CONFIDENTIAL_GUEST_SUPPORT)
+> > =C2=A0
+> > +typedef enum ConfidentialGuestPlatformType {
+> > +=C2=A0=C2=A0=C2=A0 CGS_PLATFORM_SEV,
+> > +=C2=A0=C2=A0=C2=A0 CGS_PLATFORM_SEV_ES,
+> > +=C2=A0=C2=A0=C2=A0 CGS_PLATFORM_SEV_SNP,
+> > +=C2=A0=C2=A0=C2=A0 CGS_PLATFORM_TDX,
+>=20
+> QEMU only has support for SEV & SEV_ES today. We should leave the
+> others until we actually get an impl of SEV-SNP/TDX in QEMU that
+> supports those platforms.
+
+Ok. I'll remove the currently unsupported platforms.
+
+>=20
+> > +} ConfidentialGuestPlatformType;
+> > +
+> > +typedef enum ConfidentialGuestMemoryType {
+> > +=C2=A0=C2=A0=C2=A0 CGS_MEM_RAM,
+> > +=C2=A0=C2=A0=C2=A0 CGS_MEM_RESERVED,
+> > +=C2=A0=C2=A0=C2=A0 CGS_MEM_ACPI,
+> > +=C2=A0=C2=A0=C2=A0 CGS_MEM_NVS,
+> > +=C2=A0=C2=A0=C2=A0 CGS_MEM_UNUSABLE,
+> > +} ConfidentialGuestMemoryType;
+> > +
+> > +typedef struct ConfidentialGuestMemoryMapEntry {
+> > +=C2=A0=C2=A0=C2=A0 uint64_t gpa;
+> > +=C2=A0=C2=A0=C2=A0 uint64_t size;
+> > +=C2=A0=C2=A0=C2=A0 ConfidentialGuestMemoryType type;
+> > +} ConfidentialGuestMemoryMapEntry;
+> > +
+> > +typedef enum ConfidentialGuestPageType {
+> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_NORMAL,
+> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_VMSA,
+> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_ZERO,
+> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_UNMEASURED,
+> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_SECRETS,
+> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_CPUID,
+> > +=C2=A0=C2=A0=C2=A0 CGS_PAGE_TYPE_REQUIRED_MEMORY,
+> > +} ConfidentialGuestPageType;
+> > +
+> > =C2=A0struct ConfidentialGuestSupport {
+> > =C2=A0=C2=A0=C2=A0=C2=A0 Object parent;
+> > =C2=A0
+> > @@ -60,6 +96,46 @@ struct ConfidentialGuestSupport {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > =C2=A0=C2=A0=C2=A0=C2=A0 char *igvm_filename;
+> > =C2=A0#endif
+> > +
+> > +=C2=A0=C2=A0=C2=A0 /*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * The following virtual methods need to be im=
+plemented by systems that
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * support confidential guests that can be con=
+figured with IGVM and are
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * used during processing of the IGVM file wit=
+h process_igvm().
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +
+> > +=C2=A0=C2=A0=C2=A0 /*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Check for to see if this confidential guest=
+ supports a particular
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * platform or configuration
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +=C2=A0=C2=A0=C2=A0 int (*check_support)(ConfidentialGuestPlatformType =
+platform,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ uint16_t platform_version, uint8_t highest_vtl,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ uint64_t shared_gpa_boundary);
+> > +
+> > +=C2=A0=C2=A0=C2=A0 /*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Configure part of the state of a guest for =
+a particular set of data,
+> > page
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * type and gpa. This can be used for example =
+to pre-populate and
+> > measure
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * guest memory contents, define private range=
+s or set the initial CPU
+> > state
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * for one or more CPUs.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 *
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * If memory_type is CGS_PAGE_TYPE_VMSA then p=
+tr points to the initial
+> > CPU
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * context for a virtual CPU. The format of th=
+e data depends on the
+> > type of
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * confidential virtual machine. For example, =
+for SEV-ES ptr will point
+> > to a
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * vmcb_save_area structure that should be cop=
+ied into guest memory at
+> > the
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * address specified in gpa. The cpu_index par=
+ameter contains the index
+> > of
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * the CPU the VMSA applies to.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +=C2=A0=C2=A0=C2=A0 int (*set_guest_state)(hwaddr gpa, uint8_t *ptr, ui=
+nt64_t len,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ConfidentialGuestPageType =
+memory_type,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint16_t cpu_index);
+> > +
+> > +=C2=A0=C2=A0=C2=A0 /*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Iterate the system memory map, getting the =
+entry with the given
+> > index
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * that can be populated into guest memory.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 *
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * Returns 1 if the index is out of range.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +=C2=A0=C2=A0=C2=A0 int (*get_mem_map_entry)(int index,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ConfidentialGuestMemoryMapEntry *entry);
+> > =C2=A0};
+> > =C2=A0
+> > =C2=A0typedef struct ConfidentialGuestSupportClass {
+> > --=20
+> > 2.43.0
+> >=20
+> >=20
+>=20
+> With regards,
+> Daniel
 
 
