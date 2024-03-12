@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E287C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FF46C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk5ee-0004iW-Mg; Tue, 12 Mar 2024 13:11:09 -0400
+	id 1rk5X2-0004Bx-Ub; Tue, 12 Mar 2024 13:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5e0-0004Q6-24
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:10:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk5dw-0001uI-E6
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:10:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710263421;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xg6qZCMrJoZ7qdlP6h4Xau/cyCcAhyzEFQyTWdBb5ZY=;
- b=i2qEXluIYefdZ9S5isvIW4KdKl6c9dpmmRScOsq4UJRbr2AG0TDmw32OpxNYdymIqYxfhl
- s/jh3oFiz946Au57UF9PnnbZKzfDEoNN9SVmBaaAc0lGKKYnQHnBDEdwFCk+VyNGevcNQn
- UXORhNdArojzH9i+w7cAqrNqgYiqE3A=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-463-D_Fh9kVUPPuvK8BLkHf6Aw-1; Tue, 12 Mar 2024 13:10:19 -0400
-X-MC-Unique: D_Fh9kVUPPuvK8BLkHf6Aw-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-51313b50f1bso3850773e87.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 10:10:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710263415; x=1710868215;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rk5UX-0006JN-IO; Tue, 12 Mar 2024 13:00:44 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rk5UT-0008P7-Uh; Tue, 12 Mar 2024 13:00:41 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6e6b5432439so29711b3a.1; 
+ Tue, 12 Mar 2024 10:00:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710262833; x=1710867633; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xg6qZCMrJoZ7qdlP6h4Xau/cyCcAhyzEFQyTWdBb5ZY=;
- b=nvYKXZtA4kytujxoWneEiPnQsjBDK3MmB44EnFUuf6DvNIH/bkWr/a8wGabmWI2juG
- rHoj4uVddjp04QscmqpYKjNcPs1UvpdfBksHucbIelLgMCcLZ5yNWME0Zkc+oR8IDi2C
- /nC5gSGaUN3XuP+MRj7x1DBhc99RFlYpCsO2e0btIoiVh6BdDV6Vu1clin5BR6YZ0cQL
- W7XX/x5vIh2RrG0MfcXPjlBJBveg9no40oBZUVkKVWpgyF/ta1PSA+O2a4EoAoQBq/VJ
- DOsuxqc2Pgq9qKBjZEP+nNGbd8CZfwB3WWi49kukfsA3BosgzdPaok5r6HKYCVnYM+9j
- ReYQ==
-X-Gm-Message-State: AOJu0YxB9wK78TQJxV1Q3rnc/uK8CxRgbA3X3m6mIOIrHT65IcX/jMl8
- Gv5PTxy/1YUWxbtuioLHsjVR4sBCx0p2/vQeyay5/kMjBM7qxZYbcFt8kg654wBO4axRgBX9cTz
- SlUy9CcH+4BjVoSbHRVoZS96mjc+f92JRk1EU4mhA0SvwOO9ymapD
-X-Received: by 2002:a05:6512:3446:b0:513:5dee:3aaa with SMTP id
- j6-20020a056512344600b005135dee3aaamr5521712lfr.68.1710263414663; 
- Tue, 12 Mar 2024 10:10:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFad8MBpBAJQ3+/+t+etE1Vo347ks1l8KEBg5Z76PuFVYHLdfgLUE+ed1KMPcJ8T0yl4z8kzQ==
-X-Received: by 2002:a05:6512:3446:b0:513:5dee:3aaa with SMTP id
- j6-20020a056512344600b005135dee3aaamr5521701lfr.68.1710263414080; 
- Tue, 12 Mar 2024 10:10:14 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
+ bh=pBITymDFeDXiJDgONKwZL8oLgmw8A0Gg/g7pdbBRahU=;
+ b=V+59vRHJxwkgA1EaDCKFw8r/RqI1IF/1hOdqVGMDE2vJcbC33Wk+KVx+vwh+ELYOrv
+ G3njQmkhz0cihQcQ9OWbi1HogpX2quYmaTIRm4B0FeTDpp1m/xGPQYGjbFf1JrydWRZe
+ WshmlBT77nlmDse/HBudbWqNySI0ncu+eSirvUfuXE0qlyefkqF3CSTHIzEbniTfj5oW
+ dPDSp2Dyd2Oik1UR4jKqcwRfVoj7do1hUtf1DGKCHbFhx8Uv2fdOGgmHLwfFSX9SYllc
+ 7rtDSweddrnH0Mqi7nDJy5WkW2iLbqXgYw9zM2NiCJn68cmqwfpjk+JDbYEsTRMwgw44
+ 1NuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710262833; x=1710867633;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pBITymDFeDXiJDgONKwZL8oLgmw8A0Gg/g7pdbBRahU=;
+ b=LE/nt+JSoY60N+xkodLCQEXxsMKllU5hjFf3ZxIjx0H6B4o8MtMtcDC4hkiymZ1bOL
+ bl1Su8+X+vLIxnY7iuvgrr6/VPF4jMeyZ8mQjSqrIa/baWUvMvM7FHN1jtxzc1FXnPN8
+ n+KtwLfFT0YISXw17w5fXaelbf1+u7KxD5OLxza4/PJj4A40/5w8UJH0ufLw/ffzzZeV
+ /E288GbS3BEwrepPJ/9Xltj+aSMstzQ9fKKCrImDNcBgAQ9Ck8LKysooroMe9KihNmvO
+ zgcXeXgqXw5k9jo6aDKrFK5uo9mnZOO4eS++1Yoo2UVmj1m8Fkv3cFDK+HN7Rqbvo0hS
+ MIEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+qKKT3XrBv0aF4vGeaRDXl8VwbVElIoiLfrNj2EURm9Dzy5qjfLZkABIsqh3uWVa59gPWqbwQkX4cSTZLj9e9Up31
+X-Gm-Message-State: AOJu0Yw3Qcxw5Wp6E6yr4sJLM9LwXY+DXebR1oomfpphBzb2WEnfaK6g
+ d3bhjKG3ktPwvZg0DCBdvQ/sUKJVFbMSAYz1lNah/zXy0v2/F4l18A16R7EqYvs=
+X-Google-Smtp-Source: AGHT+IFT0vRE1D+15HxGvwOVUTyBmL1xSAgU61PIwj17yKZEPoZa83WSAekJ/c9j96PLZKcC0CZJ+g==
+X-Received: by 2002:a05:6a20:12c2:b0:1a3:2fea:936c with SMTP id
+ v2-20020a056a2012c200b001a32fea936cmr322711pzg.41.1710262833625; 
+ Tue, 12 Mar 2024 10:00:33 -0700 (PDT)
+Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- gw7-20020a05600c850700b004131cf78b4bsm13795555wmb.12.2024.03.12.10.10.10
+ t34-20020a056a0013a200b006e6a684a6ddsm1362330pfg.220.2024.03.12.10.00.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 10:10:13 -0700 (PDT)
-Date: Tue, 12 Mar 2024 13:10:08 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com,
- eric.auger@redhat.com, peterx@redhat.com, jasowang@redhat.com,
- jgg@nvidia.com, nicolinc@nvidia.com, joao.m.martins@oracle.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, yi.y.sun@intel.com,
- chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH v1 09/11] hw/pci: Introduce
- pci_device_set/unset_iommu_device()
-Message-ID: <20240312130833-mutt-send-email-mst@kernel.org>
-References: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
- <20240228035900.1085727-10-zhenzhong.duan@intel.com>
- <20240312125422-mutt-send-email-mst@kernel.org>
+ Tue, 12 Mar 2024 10:00:33 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 25/38] spapr: nested: register nested-hv api hcalls only for
+ cap-nested-hv
+Date: Wed, 13 Mar 2024 02:58:36 +1000
+Message-ID: <20240312165851.2240242-26-npiggin@gmail.com>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20240312165851.2240242-1-npiggin@gmail.com>
+References: <20240312165851.2240242-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240312125422-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,187 +96,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 12, 2024 at 12:55:30PM -0400, Michael S. Tsirkin wrote:
-> On Wed, Feb 28, 2024 at 11:58:58AM +0800, Zhenzhong Duan wrote:
-> > From: Yi Liu <yi.l.liu@intel.com>
-> > 
-> > This adds pci_device_set/unset_iommu_device() to set/unset
-> > HostIOMMUDevice for a given PCIe device. Caller of set
-> > should fail if set operation fails.
-> > 
-> > Extract out pci_device_get_iommu_bus_devfn() to facilitate
-> > implementation of pci_device_set/unset_iommu_device().
-> > 
-> > Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> > Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-> > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> > ---
-> >  include/hw/pci/pci.h | 38 ++++++++++++++++++++++++++-
-> >  hw/pci/pci.c         | 62 +++++++++++++++++++++++++++++++++++++++++---
-> >  2 files changed, 96 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> > index fa6313aabc..8fe6f746d7 100644
-> > --- a/include/hw/pci/pci.h
-> > +++ b/include/hw/pci/pci.h
-> > @@ -3,6 +3,7 @@
-> >  
-> >  #include "exec/memory.h"
-> >  #include "sysemu/dma.h"
-> > +#include "sysemu/host_iommu_device.h"
-> >  
-> >  /* PCI includes legacy ISA access.  */
-> >  #include "hw/isa/isa.h"
-> > @@ -384,10 +385,45 @@ typedef struct PCIIOMMUOps {
-> >       *
-> >       * @devfn: device and function number
-> >       */
-> > -   AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
-> > +    AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
-> > +    /**
-> > +     * @set_iommu_device: attach a HostIOMMUDevice to a vIOMMU
-> > +     *
-> > +     * Optional callback, if not implemented in vIOMMU, then vIOMMU can't
-> > +     * retrieve host information from the associated HostIOMMUDevice.
-> > +     *
-> > +     * Return true if HostIOMMUDevice is attached, or else return false
-> > +     * with errp set.
-> > +     *
-> > +     * @bus: the #PCIBus of the PCI device.
-> > +     *
-> > +     * @opaque: the data passed to pci_setup_iommu().
-> > +     *
-> > +     * @devfn: device and function number of the PCI device.
-> > +     *
-> > +     * @dev: the data structure representing host IOMMU device.
-> > +     *
-> > +     */
-> > +    int (*set_iommu_device)(PCIBus *bus, void *opaque, int devfn,
-> > +                            HostIOMMUDevice *dev, Error **errp);
-> > +    /**
-> > +     * @unset_iommu_device: detach a HostIOMMUDevice from a vIOMMU
-> > +     *
-> > +     * Optional callback.
-> > +     *
-> > +     * @bus: the #PCIBus of the PCI device.
-> > +     *
-> > +     * @opaque: the data passed to pci_setup_iommu().
-> > +     *
-> > +     * @devfn: device and function number of the PCI device.
-> > +     */
-> > +    void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
-> >  } PCIIOMMUOps;
-> 
-> 
-> So I expected someone to implement these new callbacks but I see
-> no implementation in this patchset.
-> 
-> Is this just infrastructure that will be used later?
-> A bit hard to judge without a user ...
-> 
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
-Looked at the second part of the patchset now (dealing with VTD).
-Let's continue the discussion there.
+Since cap-nested-hv is an optional capability, it makes sense to register
+api specfic hcalls only when respective capability is enabled. This
+requires to introduce a new API to unregister hypercalls to maintain
+sanity across guest reboot since caps are re-applied across reboots and
+re-registeration of hypercalls would hit assert otherwise.
 
-> 
-> >  AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
-> > +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *base_dev,
-> > +                                Error **errp);
-> > +void pci_device_unset_iommu_device(PCIDevice *dev);
-> >  
-> >  /**
-> >   * pci_setup_iommu: Initialize specific IOMMU handlers for a PCIBus
-> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> > index 76080af580..8078307963 100644
-> > --- a/hw/pci/pci.c
-> > +++ b/hw/pci/pci.c
-> > @@ -2672,11 +2672,14 @@ static void pci_device_class_base_init(ObjectClass *klass, void *data)
-> >      }
-> >  }
-> >  
-> > -AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
-> > +static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
-> > +                                           PCIBus **aliased_bus,
-> > +                                           PCIBus **piommu_bus,
-> > +                                           int *aliased_devfn)
-> >  {
-> >      PCIBus *bus = pci_get_bus(dev);
-> >      PCIBus *iommu_bus = bus;
-> > -    uint8_t devfn = dev->devfn;
-> > +    int devfn = dev->devfn;
-> >  
-> >      while (iommu_bus && !iommu_bus->iommu_ops && iommu_bus->parent_dev) {
-> >          PCIBus *parent_bus = pci_get_bus(iommu_bus->parent_dev);
-> > @@ -2717,13 +2720,66 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
-> >  
-> >          iommu_bus = parent_bus;
-> >      }
-> > -    if (!pci_bus_bypass_iommu(bus) && iommu_bus->iommu_ops) {
-> > +
-> > +    assert(0 <= devfn && devfn < PCI_DEVFN_MAX);
-> > +    assert(iommu_bus);
-> > +
-> > +    if (pci_bus_bypass_iommu(bus) || !iommu_bus->iommu_ops) {
-> > +        iommu_bus = NULL;
-> > +    }
-> > +
-> > +    *piommu_bus = iommu_bus;
-> > +
-> > +    if (aliased_bus) {
-> > +        *aliased_bus = bus;
-> > +    }
-> > +
-> > +    if (aliased_devfn) {
-> > +        *aliased_devfn = devfn;
-> > +    }
-> > +}
-> > +
-> > +AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
-> > +{
-> > +    PCIBus *bus;
-> > +    PCIBus *iommu_bus;
-> > +    int devfn;
-> > +
-> > +    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-> > +    if (iommu_bus) {
-> >          return iommu_bus->iommu_ops->get_address_space(bus,
-> >                                   iommu_bus->iommu_opaque, devfn);
-> >      }
-> >      return &address_space_memory;
-> >  }
-> >  
-> > +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *base_dev,
-> > +                                Error **errp)
-> > +{
-> > +    PCIBus *iommu_bus;
-> > +
-> > +    pci_device_get_iommu_bus_devfn(dev, NULL, &iommu_bus, NULL);
-> > +    if (iommu_bus && iommu_bus->iommu_ops->set_iommu_device) {
-> > +        return iommu_bus->iommu_ops->set_iommu_device(pci_get_bus(dev),
-> > +                                                      iommu_bus->iommu_opaque,
-> > +                                                      dev->devfn, base_dev,
-> > +                                                      errp);
-> > +    }
-> > +    return 0;
-> > +}
-> > +
-> > +void pci_device_unset_iommu_device(PCIDevice *dev)
-> > +{
-> > +    PCIBus *iommu_bus;
-> > +
-> > +    pci_device_get_iommu_bus_devfn(dev, NULL, &iommu_bus, NULL);
-> > +    if (iommu_bus && iommu_bus->iommu_ops->unset_iommu_device) {
-> > +        return iommu_bus->iommu_ops->unset_iommu_device(pci_get_bus(dev),
-> > +                                                        iommu_bus->iommu_opaque,
-> > +                                                        dev->devfn);
-> > +    }
-> > +}
-> > +
-> >  void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
-> >  {
-> >      /*
-> > -- 
-> > 2.34.1
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/ppc/spapr.c                |  1 +
+ hw/ppc/spapr_hcall.c          | 24 ++++++++++++++++++++++--
+ hw/ppc/spapr_nested.c         | 25 +++++++++++++++++++++++--
+ include/hw/ppc/spapr.h        |  4 ++++
+ include/hw/ppc/spapr_nested.h |  1 -
+ 5 files changed, 50 insertions(+), 5 deletions(-)
+
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index abd484023a..7321c35174 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -1734,6 +1734,7 @@ static void spapr_machine_reset(MachineState *machine, ShutdownCause reason)
+ 
+     pef_kvm_reset(machine->cgs, &error_fatal);
+     spapr_caps_apply(spapr);
++    spapr_nested_reset(spapr);
+ 
+     first_ppc_cpu = POWERPC_CPU(first_cpu);
+     if (kvm_enabled() && kvmppc_has_cap_mmu_radix() &&
+diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+index 75c2d12978..5e1d020e3d 100644
+--- a/hw/ppc/spapr_hcall.c
++++ b/hw/ppc/spapr_hcall.c
+@@ -1525,6 +1525,28 @@ void spapr_register_hypercall(target_ulong opcode, spapr_hcall_fn fn)
+     *slot = fn;
+ }
+ 
++void spapr_unregister_hypercall(target_ulong opcode)
++{
++    spapr_hcall_fn *slot;
++
++    if (opcode <= MAX_HCALL_OPCODE) {
++        assert((opcode & 0x3) == 0);
++
++        slot = &papr_hypercall_table[opcode / 4];
++    } else if (opcode >= SVM_HCALL_BASE && opcode <= SVM_HCALL_MAX) {
++        /* we only have SVM-related hcall numbers assigned in multiples of 4 */
++        assert((opcode & 0x3) == 0);
++
++        slot = &svm_hypercall_table[(opcode - SVM_HCALL_BASE) / 4];
++    } else {
++        assert((opcode >= KVMPPC_HCALL_BASE) && (opcode <= KVMPPC_HCALL_MAX));
++
++        slot = &kvmppc_hypercall_table[opcode - KVMPPC_HCALL_BASE];
++    }
++
++    *slot = NULL;
++}
++
+ target_ulong spapr_hypercall(PowerPCCPU *cpu, target_ulong opcode,
+                              target_ulong *args)
+ {
+@@ -1638,8 +1660,6 @@ static void hypercall_register_types(void)
+     spapr_register_hypercall(KVMPPC_H_CAS, h_client_architecture_support);
+ 
+     spapr_register_hypercall(KVMPPC_H_UPDATE_DT, h_update_dt);
+-
+-    spapr_register_nested();
+ }
+ 
+ type_init(hypercall_register_types)
+diff --git a/hw/ppc/spapr_nested.c b/hw/ppc/spapr_nested.c
+index 121aa96ddc..8e0ee0d22f 100644
+--- a/hw/ppc/spapr_nested.c
++++ b/hw/ppc/spapr_nested.c
+@@ -7,6 +7,14 @@
+ #include "hw/ppc/spapr_cpu_core.h"
+ #include "hw/ppc/spapr_nested.h"
+ 
++void spapr_nested_reset(SpaprMachineState *spapr)
++{
++    if (spapr_get_cap(spapr, SPAPR_CAP_NESTED_KVM_HV)) {
++        spapr_unregister_nested_hv();
++        spapr_register_nested_hv();
++    }
++}
++
+ #ifdef CONFIG_TCG
+ #define PRTS_MASK      0x1f
+ 
+@@ -375,20 +383,33 @@ void spapr_exit_nested(PowerPCCPU *cpu, int excp)
+     address_space_unmap(CPU(cpu)->as, regs, len, len, true);
+ }
+ 
+-void spapr_register_nested(void)
++void spapr_register_nested_hv(void)
+ {
+     spapr_register_hypercall(KVMPPC_H_SET_PARTITION_TABLE, h_set_ptbl);
+     spapr_register_hypercall(KVMPPC_H_ENTER_NESTED, h_enter_nested);
+     spapr_register_hypercall(KVMPPC_H_TLB_INVALIDATE, h_tlb_invalidate);
+     spapr_register_hypercall(KVMPPC_H_COPY_TOFROM_GUEST, h_copy_tofrom_guest);
+ }
++
++void spapr_unregister_nested_hv(void)
++{
++    spapr_unregister_hypercall(KVMPPC_H_SET_PARTITION_TABLE);
++    spapr_unregister_hypercall(KVMPPC_H_ENTER_NESTED);
++    spapr_unregister_hypercall(KVMPPC_H_TLB_INVALIDATE);
++    spapr_unregister_hypercall(KVMPPC_H_COPY_TOFROM_GUEST);
++}
+ #else
+ void spapr_exit_nested(PowerPCCPU *cpu, int excp)
+ {
+     g_assert_not_reached();
+ }
+ 
+-void spapr_register_nested(void)
++void spapr_register_nested_hv(void)
++{
++    /* DO NOTHING */
++}
++
++void spapr_unregister_nested_hv(void)
+ {
+     /* DO NOTHING */
+ }
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index 5b5ba9ef77..78a736297b 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -631,6 +631,7 @@ typedef target_ulong (*spapr_hcall_fn)(PowerPCCPU *cpu, SpaprMachineState *sm,
+                                        target_ulong *args);
+ 
+ void spapr_register_hypercall(target_ulong opcode, spapr_hcall_fn fn);
++void spapr_unregister_hypercall(target_ulong opcode);
+ target_ulong spapr_hypercall(PowerPCCPU *cpu, target_ulong opcode,
+                              target_ulong *args);
+ 
+@@ -1028,5 +1029,8 @@ void spapr_vof_client_dt_finalize(SpaprMachineState *spapr, void *fdt);
+ 
+ /* H_WATCHDOG */
+ void spapr_watchdog_init(SpaprMachineState *spapr);
++void spapr_register_nested_hv(void);
++void spapr_unregister_nested_hv(void);
++void spapr_nested_reset(SpaprMachineState *spapr);
+ 
+ #endif /* HW_SPAPR_H */
+diff --git a/include/hw/ppc/spapr_nested.h b/include/hw/ppc/spapr_nested.h
+index d312a5d61d..09d95182b2 100644
+--- a/include/hw/ppc/spapr_nested.h
++++ b/include/hw/ppc/spapr_nested.h
+@@ -95,7 +95,6 @@ struct nested_ppc_state {
+     int64_t tb_offset;
+ };
+ 
+-void spapr_register_nested(void);
+ void spapr_exit_nested(PowerPCCPU *cpu, int excp);
+ 
+ #endif /* HW_SPAPR_NESTED_H */
+-- 
+2.42.0
 
 
