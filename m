@@ -4,82 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D457C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:07:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DBD5C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:11:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk6Wb-0004uY-1X; Tue, 12 Mar 2024 14:06:53 -0400
+	id 1rk6b5-00075L-Ll; Tue, 12 Mar 2024 14:11:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rk6WV-0004qH-Ow
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:06:49 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rk6b4-00075A-Tn
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:11:30 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rk6WU-0004Dx-6Z
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:06:47 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-513173e8191so6186555e87.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:06:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710266803; x=1710871603; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xR5iGUQZiCoR8k2pSi0KOW7ASeWFuNA9cHveRST8/e8=;
- b=FnazQzBcj56hv9Iz8Ya85ajgHriYyG2Kb3epCRKQIIcMMQIE8yWi6NtWJX5L7t/iv9
- JXhcUoqhM+FqYNf1uyJ9/gjyNLf53KSwoUxZmviElKSk56p2Oi6Wme6QAsPxINBlB4SY
- SLVWjboMplwOsNhfehcXGePyiD8pYLRBPm0NNMikTh2SLvcf9gopuJSe190EPmL2q3Tc
- nAKwsayusUkjeOFLbOzaeNxvDzjVwtD+xPgwMWUsz7SVPKkrNnM1mUs6LqJ2tZsRia4n
- Xv+W3F7tOIxiISihwVq6xRCMFWxRyMwMSevF/NiBhwzagpjXrcX7bHIU5EYSwAGU61Rl
- l0pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710266803; x=1710871603;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xR5iGUQZiCoR8k2pSi0KOW7ASeWFuNA9cHveRST8/e8=;
- b=tC1VTpBVIgPVDZqVRXLIQFiiwnX3zzZc15Q0AKW+XvlcTShQhaUhjvoGbGt03z72/t
- JuEEqLkyavtrdsFP0cI4g3QDbSLTtaZMPmh8be01a0LL8K+tRYBhZvdsb65aLgrPenmB
- il9i9kHR1BLak6WbGrUm5LstpX/H9cFE4tg1/+dzkWGik0rMDlXLN9c2F7jQsO87FKFm
- 1OXL7b36nhJKlFhlExZxwBQluNRIMclEGaw8072FswbdzbKa4JH+c5VVI4yGcp8BuJ72
- xtKs88N6NPDIgOHc5kKPB9+4LTXXF1Y2YVEqBv5sdPe/P8NxoxVbFDZ/zBQdVciW8K00
- 7PWg==
-X-Gm-Message-State: AOJu0YwQxRBjynCWHVWOzEVXcUVOA0vD8mPU5k55saPstBlX70/8mezu
- zCwSiCtSWmxtEDbYe1pfhnuOrf+13MXMxBTWsWDvtlNITy75S6YcvSLplfJcnas=
-X-Google-Smtp-Source: AGHT+IGlEBG40OBhYaUrcYn7hzV7aIkFm7Gb8sYx514Q95Jbzc32qkiM+I91vty2BOw9gju8nB1Z9w==
-X-Received: by 2002:ac2:4da7:0:b0:513:b062:98bf with SMTP id
- h7-20020ac24da7000000b00513b06298bfmr535934lfe.20.1710266802251; 
- Tue, 12 Mar 2024 11:06:42 -0700 (PDT)
-Received: from [192.168.122.175] (93.red-88-29-160.dynamicip.rima-tde.net.
- [88.29.160.93]) by smtp.gmail.com with ESMTPSA id
- f6-20020a05600c154600b004131ae36ac4sm15361917wmg.20.2024.03.12.11.06.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 11:06:41 -0700 (PDT)
-Message-ID: <4b17e2fa-3b6c-4c7e-a888-661d1bf1324b@linaro.org>
-Date: Tue, 12 Mar 2024 18:51:15 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rk6b3-0004oP-Ep
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:11:30 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id EAF6F1F443;
+ Tue, 12 Mar 2024 18:11:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710267086; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J31DYOnucmyvgvxm/yjY5U0I0pZEcYwOmHYDYwr2oOk=;
+ b=LEGW4OQg0E3eY22rFdZZKKQg0STIJOQyBFDVsJgrfG8PG+58TCjI3gTFEkPVoBxjUt7aRQ
+ HS7gHiXCxZScU+X5cNeuIE1ZO4GseZ3smL7qq/0mftN6evEWjP9dUo1l9m0i18KdsWoaur
+ GiXFrDXd4YIfAg18yVKZb6d01cY1Qhw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710267086;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J31DYOnucmyvgvxm/yjY5U0I0pZEcYwOmHYDYwr2oOk=;
+ b=PgOAG0nZwLTvR09s4lvAe0HQwI6oD0Jwm819g8Txk1CK3wTx3KytvQx8eoSG23rdMwt1aT
+ 7GdFQ/kR1Ewi+UAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710267085; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J31DYOnucmyvgvxm/yjY5U0I0pZEcYwOmHYDYwr2oOk=;
+ b=D8PyClBDWSXqz4jYawLAzElCzPsmGJT+oRh9UUAoCLh6Zl28niXDApREy3sF7il0MkGuIF
+ eHEb84H25GAZLwVyOIRgcUfiGtdw+W6nWvBoTelqQzd/hwE3wLAfWKSITll6TGfwPu/YNk
+ dUyzCoQiX1l8i8GxaOPgzGtAnESk2Ck=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710267085;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J31DYOnucmyvgvxm/yjY5U0I0pZEcYwOmHYDYwr2oOk=;
+ b=fMGvuA9WAY4GWGZKmbRtfNTtt6v+6+3ZpmHti76bggJmruCdPL/5/+OtA9gUtPjTVF5bRu
+ rVtUJQGw8UJesVCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7305F1364F;
+ Tue, 12 Mar 2024 18:11:25 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +vmkDs2a8GUEbQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 12 Mar 2024 18:11:25 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
+ pbonzini@redhat.com, peterx@redhat.com, Het Gala <het.gala@nutanix.com>
+Subject: Re: [PATCH v6 2/8] Replace connect_uri and move
+ migrate_get_socket_address inside migrate_qmp
+In-Reply-To: <20240312162025.44212-3-het.gala@nutanix.com>
+References: <20240312162025.44212-1-het.gala@nutanix.com>
+ <20240312162025.44212-3-het.gala@nutanix.com>
+Date: Tue, 12 Mar 2024 15:11:22 -0300
+Message-ID: <87zfv3l3qt.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] qapi: Correct error message for 'vcpu_dirty_limit'
- parameter
-Content-Language: en-US
-To: Zhao Liu <zhao1.liu@intel.com>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
- Juan Quintela <quintela@redhat.com>
-References: <20240312141343.3168265-1-armbru@redhat.com>
- <20240312141343.3168265-9-armbru@redhat.com> <ZfB0Oq7SSQgiqbz5@intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZfB0Oq7SSQgiqbz5@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=D8PyClBD;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=fMGvuA9W
+X-Spamd-Result: default: False [-3.30 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ RCVD_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+];
+ MX_GOOD(-0.01)[]; RCPT_COUNT_SEVEN(0.00)[8];
+ FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MID_RHS_MATCH_FROM(0.00)[]; BAYES_HAM(-2.99)[99.97%];
+ ARC_NA(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ URIBL_BLOCKED(0.00)[suse.de:email,suse.de:dkim,nutanix.com:email];
+ FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[]
+X-Rspamd-Queue-Id: EAF6F1F443
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,65 +122,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/3/24 16:26, Zhao Liu wrote:
-> On Tue, Mar 12, 2024 at 03:13:41PM +0100, Markus Armbruster wrote:
->> Date: Tue, 12 Mar 2024 15:13:41 +0100
->> From: Markus Armbruster <armbru@redhat.com>
->> Subject: [PATCH 08/10] qapi: Correct error message for 'vcpu_dirty_limit'
->>   parameter
->>
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->>
->> QERR_INVALID_PARAMETER_VALUE is defined as:
->>
->>    #define QERR_INVALID_PARAMETER_VALUE \
->>        "Parameter '%s' expects %s"
->>
->> The current error is formatted as:
->>
->>    "Parameter 'vcpu_dirty_limit' expects is invalid, it must greater then 1 MB/s"
->>
->> Replace by:
->>
->>    "Parameter 'vcpu_dirty_limit' is invalid, it must greater than 1 MB/s"
-> 
-> Is there a grammar error here? Maybe
-> 
-> s/it must greater/it must be greater/
+Het Gala <het.gala@nutanix.com> writes:
 
-Oops indeed!
+> Move the calls to migrate_get_socket_address() into migrate_qmp().
+> Get rid of connect_uri and replace it with args->connect_uri only
+> because 'to' object will help to generate connect_uri with the
+> correct port number.
+>
+> Signed-off-by: Het Gala <het.gala@nutanix.com>
+> Suggested-by: Fabiano Rosas <farosas@suse.de>
 
-> 
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Juan Quintela <quintela@redhat.com>
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> ---
->>   migration/options.c | 5 ++---
->>   1 file changed, 2 insertions(+), 3 deletions(-)
->>
->> diff --git a/migration/options.c b/migration/options.c
->> index 40eb930940..c5115f1b5c 100644
->> --- a/migration/options.c
->> +++ b/migration/options.c
->> @@ -1264,9 +1264,8 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
->>   
->>       if (params->has_vcpu_dirty_limit &&
->>           (params->vcpu_dirty_limit < 1)) {
->> -        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
->> -                   "vcpu_dirty_limit",
->> -                   "is invalid, it must greater then 1 MB/s");
->> +        error_setg(errp, "Parameter 'vcpu_dirty_limit' is invalid,"
->> +                         " it must greater than 1 MB/s");
-
-So s/it must greater/it must be greater/ :)
-
->>           return false;
->>       }
->>
-> 
-> Otherwise,
-> 
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> 
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
