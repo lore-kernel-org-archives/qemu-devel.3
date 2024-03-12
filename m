@@ -4,87 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1FACC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACD96C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk6Sl-0002Z3-Ch; Tue, 12 Mar 2024 14:02:57 -0400
+	id 1rk6WO-0004kg-Md; Tue, 12 Mar 2024 14:06:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk6SF-0002RD-AU
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:02:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rk6WF-0004kQ-JV
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:06:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk6SC-0003Hu-On
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:02:22 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rk6WD-0004Ch-0w
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:06:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710266540;
+ s=mimecast20190719; t=1710266786;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wuFXnHbk4Ph8I7gPvn0ymvYNVfFIImEZkhvtspv5C0I=;
- b=PTMro+baNbgvbiUCTo3UKaRXmOk82HLj8q5TiaTGI6mAE5aphn3tHbigTcdFAfBUhoNHPp
- crN8t2ZizHUV1SZ7CvbqHTBazH5nWW9grErRDxyU5KErVi9gzLzN+cGButYmGzoacrARAJ
- mvttuUq5tPgoVi5mCcRFakN2sJqtixc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tugagavFWYs8SO4lYU4iVSZex7rAoeAqw+QKMbayaEI=;
+ b=LFtwhV10PIVhPt/eKP7fMBa43nn5bcaHEe2DzDsatabOvai1XDNE9wd7Qk9K+ri4Ztfzg/
+ ozijV9B9m+Z3W/S/4gr+lmgHvWE6fweENNYTF7W00X14dmRCELtb2RbJ3NP8hrKaX1VM+a
+ IWBSyrQ2SxpslS4kRXUMjpRtqCnr+SE=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-660-7HbVeDJvP0-TPkyerttWxg-1; Tue, 12 Mar 2024 14:02:18 -0400
-X-MC-Unique: 7HbVeDJvP0-TPkyerttWxg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-412e992444eso24679305e9.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:02:18 -0700 (PDT)
+ us-mta-169-3KvNX8zKPe6T8-D45-5Pzw-1; Tue, 12 Mar 2024 14:06:25 -0400
+X-MC-Unique: 3KvNX8zKPe6T8-D45-5Pzw-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-51333e20813so4304803e87.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:06:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710266537; x=1710871337;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wuFXnHbk4Ph8I7gPvn0ymvYNVfFIImEZkhvtspv5C0I=;
- b=p7ZE2XRbnukTjqDWFTIEqg2RNol1DJ8MpCqwfrTPdcpnbTQVMPomgz1zeQmJcFOkAM
- HeAMxmzg+2cx7sM5SkoRpBbcH2USlJszx/xw35qPO0K/Et5PZij4RLm//Do9bT1c16hy
- Yc7rr6vG4uGdXPgNKh6TkL560EvDdkqYGSDSX9V2oGgdGM45SEDyz+/6B/q+LkcaOruB
- RUoEzg2OFPDCaB7Sv2eFe0ri7d9TwVdOoW3vace9XseYjdb2/xEUvNy5AEwgLljPEvgY
- oz7CVq4Do3gtWVHivJ/LlZzhuZ1b/dnDDeCwSMv9BUYDQIVg+qVyIUCwrF62RDatfhnk
- hBeA==
-X-Gm-Message-State: AOJu0YyV9PoP1tnq7dbqsHqk09Rxx84lQ6wlLag08JhTk7M0gL8BsXf4
- EWhs3TQ8eZIPRjTLxghFL2qiW5D6snu30jJOH5wPDmNODBWeCh9eQiJ1J8kadiKqu5UxK0n9LJx
- RvdcqkbyaxN/usa9MGBw0pj833OWkvZ8GP/JsB5X1U3BPNRf9AILV
-X-Received: by 2002:a05:600c:310f:b0:412:f572:5318 with SMTP id
- g15-20020a05600c310f00b00412f5725318mr7670648wmo.11.1710266537032; 
- Tue, 12 Mar 2024 11:02:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFmedmsaF7YJ8lTr+O81RCDuBOTcYZxyMkmkTL7zXUMOM18B3cLOJQj45BL0yDB6G4NlrnY9A==
-X-Received: by 2002:a05:600c:310f:b0:412:f572:5318 with SMTP id
- g15-20020a05600c310f00b00412f5725318mr7670623wmo.11.1710266536478; 
- Tue, 12 Mar 2024 11:02:16 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
- by smtp.gmail.com with ESMTPSA id
- bd24-20020a05600c1f1800b00413e4ff2884sm854211wmb.40.2024.03.12.11.02.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 11:02:16 -0700 (PDT)
-Date: Tue, 12 Mar 2024 14:02:11 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Sanjay Rao <srao@redhat.com>, Boaz Ben Shabat <bbenshab@redhat.com>,
- Joe Mario <jmario@redhat.com>
-Subject: Re: [PATCH v2] virtio-blk: iothread-vq-mapping coroutine pool sizing
-Message-ID: <20240312140142-mutt-send-email-mst@kernel.org>
-References: <20240312151204.412624-1-stefanha@redhat.com>
+ d=1e100.net; s=20230601; t=1710266784; x=1710871584;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tugagavFWYs8SO4lYU4iVSZex7rAoeAqw+QKMbayaEI=;
+ b=cyZN3GaXA26cAplcXWVN1hy2f2Lo4UlwhTrflKTcL0x5V8/+TdcZiQikPGNjs9GO0x
+ 1xx9xdgQbUdagu7k3ITyuCMU7bQo8k4+Lb3arA1ZqpKq1WGHcWJ67Xox5hQnlfr5bF2o
+ Ov1Yudp8YC/5l2MTCWfjIStobwQZojlokmcSRHbYczh/B1uE7XompSqmRzMmYAsnLvj/
+ yMsnmWCGXuKFczcgSK0fzdVeyWGbqmtC/2LizaO3WmY9VcLzzx1peryDZJlsvEMd/npz
+ KEimI5lgPfOiyrJt89wrAO3qOAaFYmam8xF3vvBv8RZRYmJKtAEFDlupVINaAtzr1Zxr
+ MO9g==
+X-Gm-Message-State: AOJu0YzyOtB1wW5Yp7v0AdYfJkUHunFt4H15zgXbgxk0CEH7xQY0yQ17
+ hymFR+xFKZ73Q3pY+2T/bjbUDiHxmx7H2dVXS4a8xbMv6YfX2HEZNNFWHCp8nSlsfgH35/zAo5p
+ 6hBdRfCOaSxn0gxjNYDPXBri8JTAhlDoz1rCym2B6FVVlrMO+pVdU
+X-Received: by 2002:ac2:424a:0:b0:513:7e68:a460 with SMTP id
+ m10-20020ac2424a000000b005137e68a460mr622481lfl.27.1710266784113; 
+ Tue, 12 Mar 2024 11:06:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFAOkcerUksKaxQRf/5bl/w8uLy8fC8oI/W6d8aOb972MlByvaPCVaPFxKHpx80J+QzvKBZmA==
+X-Received: by 2002:ac2:424a:0:b0:513:7e68:a460 with SMTP id
+ m10-20020ac2424a000000b005137e68a460mr622469lfl.27.1710266783800; 
+ Tue, 12 Mar 2024 11:06:23 -0700 (PDT)
+Received: from [192.168.1.33] (92-184-107-164.mobile.fr.orangecustomers.net.
+ [92.184.107.164]) by smtp.gmail.com with ESMTPSA id
+ g20-20020a05600c4ed400b00412f679bae1sm19669702wmq.26.2024.03.12.11.06.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Mar 2024 11:06:23 -0700 (PDT)
+Message-ID: <476c7786-831d-4521-85c8-4fabd093f9dc@redhat.com>
+Date: Tue, 12 Mar 2024 19:06:20 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240312151204.412624-1-stefanha@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
+ qemu_savevm_state_setup()
+Content-Language: en-US, fr
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-11-clg@redhat.com> <87plw44wps.fsf@suse.de>
+ <1566715b-a9a5-4df6-8e64-f4f912e2ea2f@redhat.com> <87le6omw0d.fsf@suse.de>
+ <9071affc-ffb5-435a-99d1-ca829703e31b@redhat.com>
+ <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
+ <b2b52017-c4cd-43e9-a67b-2ccbb92ad99e@redhat.com> <874jdbmst4.fsf@suse.de>
+ <ZfByYiL3Gl9d9u7h@x1n>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <ZfByYiL3Gl9d9u7h@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,129 +110,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 12, 2024 at 11:12:04AM -0400, Stefan Hajnoczi wrote:
-> It is possible to hit the sysctl vm.max_map_count limit when the
-> coroutine pool size becomes large. Each coroutine requires two mappings
-> (one for the stack and one for the guard page). QEMU can crash with
-> "failed to set up stack guard page" or "failed to allocate memory for
-> stack" when this happens.
-> 
-> Coroutine pool sizing is simple when there is only thread: sum up all
-> I/O requests across all virtqueues.
-> 
-> When the iothread-vq-mapping option is used we should calculate tighter
-> bounds because thread may serve a subset of the device's virtqueues:
-> take the maximum number of the number of I/O requests across all
-> virtqueues. A thread does not need coroutine pool space for I/O requests
-> that are handled by other threads.
-> 
-> This is not a solution to hitting vm.max_map_count, but it helps. A
-> guest with 64 vCPUs (hence 64 virtqueues) across 4 IOThreads with one
-> iothread-vq-mapping virtio-blk device and a root disk without goes from
-> pool_max_size 16,448 to 10,304.
-> 
-> Reported-by: Sanjay Rao <srao@redhat.com>
-> Reported-by: Boaz Ben Shabat <bbenshab@redhat.com>
-> Reported-by: Joe Mario <jmario@redhat.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+[ ...]
+
+> Now VFIO allows a migration to happen without this trick.  I'm wondering
+> whether all relevant NICs can also support VFIO migrations in the future,
+> then we can drop this tricky feature for good.
+
+Currently, VFIO migration requires a VFIO (PCI) variant driver implementing
+the specific ops for migration. Only a few NICs are supported. It's growing
+though and we should expect more in the future, specially entreprise grade
+NICs.
+
+Thanks,
+
+C.
 
 
-Looks reasonable.
-
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
-if you want me to merge it, let me know pls.
-
-> ---
-> v2:
-> - State the the tighter bounds reflect the fact that threads may only
->   process a subset of the total I/O requests from a device [Kevin]
-> - Add Reported-by: Joe Mario, he has been investigating this issue.
-> 
->  include/hw/virtio/virtio-blk.h |  2 ++
->  hw/block/virtio-blk.c          | 34 ++++++++++++++++++++++++++++++++--
->  2 files changed, 34 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/hw/virtio/virtio-blk.h b/include/hw/virtio/virtio-blk.h
-> index 5c14110c4b..ac29700ad4 100644
-> --- a/include/hw/virtio/virtio-blk.h
-> +++ b/include/hw/virtio/virtio-blk.h
-> @@ -74,6 +74,8 @@ struct VirtIOBlock {
->      uint64_t host_features;
->      size_t config_size;
->      BlockRAMRegistrar blk_ram_registrar;
-> +
-> +    unsigned coroutine_pool_size;
->  };
->  
->  typedef struct VirtIOBlockReq {
-> diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-> index 738cb2ac36..0a14b2b175 100644
-> --- a/hw/block/virtio-blk.c
-> +++ b/hw/block/virtio-blk.c
-> @@ -1957,6 +1957,35 @@ static void virtio_blk_stop_ioeventfd(VirtIODevice *vdev)
->      s->ioeventfd_stopping = false;
->  }
->  
-> +/* Increase the coroutine pool size to include our I/O requests */
-> +static void virtio_blk_inc_coroutine_pool_size(VirtIOBlock *s)
-> +{
-> +    VirtIOBlkConf *conf = &s->conf;
-> +    unsigned max_requests = 0;
-> +
-> +    /* Tracks the total number of requests for AioContext */
-> +    g_autoptr(GHashTable) counters = g_hash_table_new(NULL, NULL);
-> +
-> +    /* Call this function after setting up vq_aio_context[] */
-> +    assert(s->vq_aio_context);
-> +
-> +    for (unsigned i = 0; i < conf->num_queues; i++) {
-> +        AioContext *ctx = s->vq_aio_context[i];
-> +        unsigned n = GPOINTER_TO_UINT(g_hash_table_lookup(counters, ctx));
-> +
-> +        n += conf->queue_size / 2; /* this is a heuristic */
-> +
-> +        g_hash_table_insert(counters, ctx, GUINT_TO_POINTER(n));
-> +
-> +        if (n > max_requests) {
-> +            max_requests = n;
-> +        }
-> +    }
-> +
-> +    qemu_coroutine_inc_pool_size(max_requests);
-> +    s->coroutine_pool_size = max_requests; /* stash it for ->unrealize() */
-> +}
-> +
->  static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
->  {
->      VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-> @@ -2048,7 +2077,6 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
->      for (i = 0; i < conf->num_queues; i++) {
->          virtio_add_queue(vdev, conf->queue_size, virtio_blk_handle_output);
->      }
-> -    qemu_coroutine_inc_pool_size(conf->num_queues * conf->queue_size / 2);
->  
->      /* Don't start ioeventfd if transport does not support notifiers. */
->      if (!virtio_device_ioeventfd_enabled(vdev)) {
-> @@ -2065,6 +2093,8 @@ static void virtio_blk_device_realize(DeviceState *dev, Error **errp)
->          return;
->      }
->  
-> +    virtio_blk_inc_coroutine_pool_size(s);
-> +
->      /*
->       * This must be after virtio_init() so virtio_blk_dma_restart_cb() gets
->       * called after ->start_ioeventfd() has already set blk's AioContext.
-> @@ -2096,7 +2126,7 @@ static void virtio_blk_device_unrealize(DeviceState *dev)
->      for (i = 0; i < conf->num_queues; i++) {
->          virtio_del_queue(vdev, i);
->      }
-> -    qemu_coroutine_dec_pool_size(conf->num_queues * conf->queue_size / 2);
-> +    qemu_coroutine_dec_pool_size(s->coroutine_pool_size);
->      qemu_mutex_destroy(&s->rq_lock);
->      blk_ram_registrar_destroy(&s->blk_ram_registrar);
->      qemu_del_vm_change_state_handler(s->change);
-> -- 
-> 2.44.0
 
 
