@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACB87C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD364C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:27:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0GW-0002yO-LB; Tue, 12 Mar 2024 07:25:52 -0400
+	id 1rk0GX-0002yU-3C; Tue, 12 Mar 2024 07:25:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rk0GR-0002vZ-F6
+ id 1rk0GS-0002vy-Pt
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:25:48 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rk0GJ-0000ja-Iy
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:25:44 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-33e70d71756so2846395f8f.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:25:38 -0700 (PDT)
+ id 1rk0GL-0000lC-Qo
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:25:45 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-41329a665d8so15408825e9.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:25:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710242737; x=1710847537; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710242738; x=1710847538; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CGMxfNWMqHxIajAfVs5LmcHHz96MvpgBL7/t14DrgrU=;
- b=nPjk5M14eWsVpzTAIWJseaIlvuGSrlh2LZUphkiZp9sgJhT71I1roCQFxuF3FTRiZ3
- khrY8PEZlA2htMXQNn4RPCrUbxEXWCR6HFNay/87LX8iz9+PibOjs4LqRnYfLWboeo87
- RhmnAyLd5hWHi1VqdfD3s7KqKpiBsxJn9OLMg57/ggDmEddMR9xJ88TlIGky9g3nSogO
- WNid3gi075TB3hWa8FO4CAsa7S1eflO0b9FaMQ7qqtefAUsMEiKeKnT1IZK2xH56Zu6+
- cQbhgK9b88RD6PARaxJvXmMHNJ9lv2IXb/sCR/58bst7sxEw0AkN6/KCW+FE2Fdmlamr
- z0bA==
+ bh=JghslLQsXVIk5PSECh3p0uuw1fQ6K0uFHf3q1DuTSXA=;
+ b=or6ziAC3VtY9LPM0xv/0n/RHsLCBK9ix7GVtYswtwLwYxje4QZeJ6w0VZ/Ui0XWBfJ
+ r2huwQ8klCcAtwsuMv2utpWnOsb16EBIQ4ewvcNhJ1gOCkaYrskJg1blwE+SCN04HS64
+ wuE8OiT5uWuvRUIRzkIlGH3vbIPHtGNREqWxE8JQSnoFWgomjEjDywNzNXWE5g5qslmh
+ Nxt9OS6y17AQRgc8dJt2sVUsR4wKCf9JFZ+IKJfcPWdFFMrGmioIrvX8qtS0an/r3bbu
+ I+bvrsuoK9SFqws7Mj7rXmteiEgPdSPXgyfVoFBcgQHzhb5qlXIJ0IuWRasYhHisvrSE
+ L3lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710242737; x=1710847537;
+ d=1e100.net; s=20230601; t=1710242738; x=1710847538;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CGMxfNWMqHxIajAfVs5LmcHHz96MvpgBL7/t14DrgrU=;
- b=d7vI+83+shHyf/2bIiS/6u/V195AuLs6xfBDPPMgTXhwG8/1TkTUjMRL4hfoi19jyR
- 2bLGBp5/llyLxoYYryXUGTn21ri+68mskL/2umBXxabtityHiKZSmNGyxvJHSeimhbyh
- 2my+3vDVpF3ig1Vv32ZiJVCMvUjIAHXbW4OCxCrpA6+EK5ZktZPa7SBj5k5TqK/+4z7Z
- eVVmAUswv3Tc1pXJf+AETX3MIz0az2C59kb/iVU1ebO/QDq3Mdrne6xVbSt1lprN+bgo
- fuPXFnxzgJQ8omKpofwhIajdmt2/K6tgVFnKl8uT26hLWZ+Kx1DHvIPIR7pDokY7TmUa
- ztcQ==
-X-Gm-Message-State: AOJu0Yx62xYNOmXZGk0k2ktweT+/Rp+JppFoYVXgt+l9tRrHwP8TIllV
- 6bRGEBN9UhgCf8DRZJExHGpGM9stIPOlHA2xrPYQrh7hoqfvqfR9DlZ0d2HnHxo=
-X-Google-Smtp-Source: AGHT+IENTWigqwkP9Nfg7tJT8tfwwKXPRiyTsqMh/juct9RoNXoWCFvNIuyxuwLFcd4lo0v0rISn7Q==
-X-Received: by 2002:adf:cb8f:0:b0:33e:a626:4046 with SMTP id
- q15-20020adfcb8f000000b0033ea6264046mr1310811wrh.16.1710242736651; 
- Tue, 12 Mar 2024 04:25:36 -0700 (PDT)
+ bh=JghslLQsXVIk5PSECh3p0uuw1fQ6K0uFHf3q1DuTSXA=;
+ b=wDjKcAIjb6r9KDqBpOifT1DjFDmSIzs9MYkyoq3ixrTImXG2+5dXzOD+fi5SJZCqAY
+ d503inOCSq9S1yNvAhIFPFahuM9neQfO06xGpftei9CfhOVsnQf4n3AkCut7VQ48q+g4
+ PC0rilCs80tNHzQfV7StFrDiE63BQSUAlMdML+F2mCEdc3icEGqKBYX9Oid5OgcUljvY
+ j/fGxjdsjmL6i0usQUjPS8QDprHLoml/nNv1YvdXKxh09WsqZANPaHPB7K0YjxOhcU3v
+ OMoAadmHKXnhgd/H+uUh/H4JbYup3pyPGAJQeKsknmNK4K3fCg2ggZCTdNysa3k31iaf
+ oT5w==
+X-Gm-Message-State: AOJu0YzMd+LCsqNAN3DwdvyqYpQK6ZUNq2IiUmdIYXc5LGMYe9/wzWE2
+ m3KwhqbKNFIwRn4VL+0qDn5qo+Okk5wmPjWhrnriFPVvuRdRrYmXOU3sly2xOcE=
+X-Google-Smtp-Source: AGHT+IHUO8aCL1zgoaFD111TltxI0L6mWf0P3hu/YoxwiS6z+MbuhMkDMJUt+Kan4sWx4EHVftKoNw==
+X-Received: by 2002:a05:600c:1f81:b0:413:1dcd:b39 with SMTP id
+ je1-20020a05600c1f8100b004131dcd0b39mr6894975wmb.38.1710242738307; 
+ Tue, 12 Mar 2024 04:25:38 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- h3-20020adf9cc3000000b0033e73c58678sm8839238wre.15.2024.03.12.04.25.33
+ h12-20020a05600c350c00b0041312d21a35sm16982948wmq.7.2024.03.12.04.25.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 12 Mar 2024 04:25:36 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 26B405F8E0;
+ by draig.lan (Postfix) with ESMTP id 3F7C65F8E1;
  Tue, 12 Mar 2024 11:25:33 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 5/8] gdbstub: Save target's siginfo
-Date: Tue, 12 Mar 2024 11:25:29 +0000
-Message-Id: <20240312112532.1558319-6-alex.bennee@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 6/8] gdbstub: Add Xfer:siginfo:read stub
+Date: Tue, 12 Mar 2024 11:25:30 +0000
+Message-Id: <20240312112532.1558319-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240312112532.1558319-1-alex.bennee@linaro.org>
 References: <20240312112532.1558319-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,187 +101,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Save target's siginfo into gdbserver_state so it can be used later, for
-example, in any stub that requires the target's si_signo and si_code.
+Add stub to handle Xfer:siginfo:read packet query that requests the
+machine's siginfo data.
 
-This change affects only linux-user mode.
+This is used when GDB user executes 'print $_siginfo' and when the
+machine stops due to a signal, for instance, on SIGSEGV. The information
+in siginfo allows GDB to determiner further details on the signal, like
+the fault address/insn when the SIGSEGV is caught.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240309030901.1726211-4-gustavo.romero@linaro.org>
+Message-Id: <20240309030901.1726211-5-gustavo.romero@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/include/gdbstub/user.h b/include/gdbstub/user.h
-index 4fc88f8a25..3b8358e3da 100644
---- a/include/gdbstub/user.h
-+++ b/include/gdbstub/user.h
-@@ -9,11 +9,15 @@
- #ifndef GDBSTUB_USER_H
- #define GDBSTUB_USER_H
- 
-+#define MAX_SIGINFO_LENGTH 128
-+
- /**
-  * gdb_handlesig() - yield control to gdb
-  * @cpu: CPU
-  * @sig: if non-zero, the signal number which caused us to stop
-  * @reason: stop reason for stop reply packet or NULL
-+ * @siginfo: target-specific siginfo struct
-+ * @siginfo_len: target-specific siginfo struct length
-  *
-  * This function yields control to gdb, when a user-mode-only target
-  * needs to stop execution. If @sig is non-zero, then we will send a
-@@ -25,7 +29,7 @@
-  * or 0 if no signal should be delivered, ie the signal that caused
-  * us to stop should be ignored.
-  */
--int gdb_handlesig(CPUState *, int, const char *);
-+int gdb_handlesig(CPUState *, int, const char *, void *, int);
- 
- /**
-  * gdb_signalled() - inform remote gdb of sig exit
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 3dc285e5b7..01b313756e 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -606,7 +606,7 @@ int main(int argc, char **argv)
- 
-     if (gdbstub) {
-         gdbserver_start(gdbstub);
--        gdb_handlesig(cpu, 0);
-+        gdb_handlesig(cpu, 0, NULL, NULL, 0);
+diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+index b472459838..e83b179920 100644
+--- a/gdbstub/internals.h
++++ b/gdbstub/internals.h
+@@ -190,6 +190,7 @@ typedef union GdbCmdVariant {
+ void gdb_handle_query_rcmd(GArray *params, void *user_ctx); /* softmmu */
+ void gdb_handle_query_offsets(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx); /*user */
++void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx); /*user */
+ void gdb_handle_v_file_open(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_v_file_close(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_v_file_pread(GArray *params, void *user_ctx); /* user */
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 17efcae0d0..9c23d44baf 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -1664,6 +1664,8 @@ static void handle_query_supported(GArray *params, void *user_ctx)
+         g_string_append(gdbserver_state.str_buf, ";qXfer:auxv:read+");
      }
-     cpu_loop(env);
-     /* never exits */
-diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-index e9f80a06d3..2936eeb7a8 100644
---- a/bsd-user/signal.c
-+++ b/bsd-user/signal.c
-@@ -27,6 +27,9 @@
- #include "hw/core/tcg-cpu-ops.h"
- #include "host-signal.h"
- 
-+/* target_siginfo_t must fit in gdbstub's siginfo save area. */
-+QEMU_BUILD_BUG_ON(sizeof(target_siginfo_t) > MAX_SIGINFO_LENGTH);
+     g_string_append(gdbserver_state.str_buf, ";QCatchSyscalls+");
 +
- static struct target_sigaction sigact_table[TARGET_NSIG];
- static void host_signal_handler(int host_sig, siginfo_t *info, void *puc);
- static void target_to_host_sigset_internal(sigset_t *d,
-@@ -890,7 +893,7 @@ static void handle_pending_signal(CPUArchState *env, int sig,
- 
-     k->pending = 0;
- 
--    sig = gdb_handlesig(cpu, sig);
-+    sig = gdb_handlesig(cpu, sig, NULL, &k->info, sizeof(k->info));
-     if (!sig) {
-         sa = NULL;
-         handler = TARGET_SIG_IGN;
++    g_string_append(gdbserver_state.str_buf, ";qXfer:siginfo:read+");
+ #endif
+     g_string_append(gdbserver_state.str_buf, ";qXfer:exec-file:read+");
+ #endif
+@@ -1818,6 +1820,12 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
+         .cmd_startswith = 1,
+         .schema = "l,l0"
+     },
++    {
++        .handler = gdb_handle_query_xfer_siginfo,
++        .cmd = "Xfer:siginfo:read::",
++        .cmd_startswith = 1,
++        .schema = "l,l0"
++     },
+ #endif
+     {
+         .handler = gdb_handle_query_xfer_exec_file,
 diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 520987fddc..cf693bfbc4 100644
+index cf693bfbc4..2005f3312b 100644
 --- a/gdbstub/user.c
 +++ b/gdbstub/user.c
-@@ -95,6 +95,8 @@ typedef struct {
-     enum GDBForkState fork_state;
-     int fork_sockets[2];
-     pid_t fork_peer_pid, fork_peer_tid;
-+    uint8_t siginfo[MAX_SIGINFO_LENGTH];
-+    unsigned long siginfo_len;
- } GDBUserState;
- 
- static GDBUserState gdbserver_user_state;
-@@ -190,7 +192,8 @@ void gdb_qemu_exit(int code)
-     exit(code);
+@@ -852,3 +852,26 @@ void gdb_handle_set_catch_syscalls(GArray *params, void *user_ctx)
+ err:
+     gdb_put_packet("E00");
  }
- 
--int gdb_handlesig(CPUState *cpu, int sig, const char *reason)
-+int gdb_handlesig(CPUState *cpu, int sig, const char *reason, void *siginfo,
-+                  int siginfo_len)
- {
-     char buf[256];
-     int n;
-@@ -199,6 +202,18 @@ int gdb_handlesig(CPUState *cpu, int sig, const char *reason)
-         return sig;
-     }
- 
-+    if (siginfo) {
-+        /*
-+         * Save target-specific siginfo.
-+         *
-+         * siginfo size, i.e. siginfo_len, is asserted at compile-time to fit in
-+         * gdbserver_user_state.siginfo, usually in the source file calling
-+         * gdb_handlesig. See, for instance, {linux,bsd}-user/signal.c.
-+         */
-+        memcpy(gdbserver_user_state.siginfo, siginfo, siginfo_len);
-+        gdbserver_user_state.siginfo_len = siginfo_len;
++
++void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx)
++{
++    unsigned long offset, len;
++    uint8_t *siginfo_offset;
++
++    offset = get_param(params, 0)->val_ul;
++    len = get_param(params, 1)->val_ul;
++
++    if (offset + len > gdbserver_user_state.siginfo_len) {
++        /* Invalid offset and/or requested length. */
++        gdb_put_packet("E01");
++        return;
 +    }
 +
-     /* disable single step if it was enabled */
-     cpu_single_step(cpu, 0);
-     tb_flush(cpu);
-@@ -746,7 +761,7 @@ void gdb_breakpoint_remove_all(CPUState *cs)
- void gdb_syscall_handling(const char *syscall_packet)
- {
-     gdb_put_packet(syscall_packet);
--    gdb_handlesig(gdbserver_state.c_cpu, 0, NULL);
-+    gdb_handlesig(gdbserver_state.c_cpu, 0, NULL, NULL, 0);
- }
- 
- static bool should_catch_syscall(int num)
-@@ -764,7 +779,7 @@ void gdb_syscall_entry(CPUState *cs, int num)
- {
-     if (should_catch_syscall(num)) {
-         g_autofree char *reason = g_strdup_printf("syscall_entry:%x;", num);
--        gdb_handlesig(cs, gdb_target_sigtrap(), reason);
-+        gdb_handlesig(cs, gdb_target_sigtrap(), reason, NULL, 0);
-     }
- }
- 
-@@ -772,7 +787,7 @@ void gdb_syscall_return(CPUState *cs, int num)
- {
-     if (should_catch_syscall(num)) {
-         g_autofree char *reason = g_strdup_printf("syscall_return:%x;", num);
--        gdb_handlesig(cs, gdb_target_sigtrap(), reason);
-+        gdb_handlesig(cs, gdb_target_sigtrap(), reason, NULL, 0);
-     }
- }
- 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 55aa11c9b4..9277df2e9d 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -1018,7 +1018,7 @@ int main(int argc, char **argv, char **envp)
-                     gdbstub);
-             exit(EXIT_FAILURE);
-         }
--        gdb_handlesig(cpu, 0, NULL);
-+        gdb_handlesig(cpu, 0, NULL, NULL, 0);
-     }
- 
- #ifdef CONFIG_SEMIHOSTING
-diff --git a/linux-user/signal.c b/linux-user/signal.c
-index c769675e68..8355105dd7 100644
---- a/linux-user/signal.c
-+++ b/linux-user/signal.c
-@@ -34,6 +34,9 @@
- #include "user/safe-syscall.h"
- #include "tcg/tcg.h"
- 
-+/* target_siginfo_t must fit in gdbstub's siginfo save area. */
-+QEMU_BUILD_BUG_ON(sizeof(target_siginfo_t) > MAX_SIGINFO_LENGTH);
++    siginfo_offset = (uint8_t *)gdbserver_user_state.siginfo + offset;
 +
- static struct target_sigaction sigact_table[TARGET_NSIG];
- 
- static void host_signal_handler(int host_signum, siginfo_t *info,
-@@ -1186,7 +1189,7 @@ static void handle_pending_signal(CPUArchState *cpu_env, int sig,
-      */
-     tswap_siginfo(&k->info, &k->info);
- 
--    sig = gdb_handlesig(cpu, sig, NULL);
-+    sig = gdb_handlesig(cpu, sig, NULL, &k->info, sizeof(k->info));
-     if (!sig) {
-         sa = NULL;
-         handler = TARGET_SIG_IGN;
++    /* Reply */
++    g_string_assign(gdbserver_state.str_buf, "l");
++    gdb_memtox(gdbserver_state.str_buf, (const char *)siginfo_offset, len);
++    gdb_put_packet_binary(gdbserver_state.str_buf->str,
++                          gdbserver_state.str_buf->len, true);
++}
 -- 
 2.39.2
 
