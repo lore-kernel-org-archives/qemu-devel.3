@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD83C54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9F3C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0Ga-0003AV-P6; Tue, 12 Mar 2024 07:25:58 -0400
+	id 1rk0GT-0002wW-6J; Tue, 12 Mar 2024 07:25:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rk0GS-0002vn-24
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:25:48 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1rk0GP-0002uF-AJ
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:25:45 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rk0GL-0000l1-8k
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:25:45 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-413318a3a29so5636875e9.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:25:39 -0700 (PDT)
+ id 1rk0GK-0000jH-8J
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:25:43 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-33e672e10cfso2660343f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:25:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710242738; x=1710847538; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710242736; x=1710847536; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cLoGh9BJ5sW1PuxoNirl7iXBfbZ2yLuS6AwQQm/Ji9Q=;
- b=Q5QWEBp35t/QYKpigLPo6ygSM3kELfkJOerON98VNMp2JpTbYy97ahaHbLu7QQcOTG
- tMNHnbtcvuoqD+bKf3++T7cG1ClHwFUoemCXLvomayCmJg2nvRS/rUV7hqV9huJk9WCJ
- aJ+IVX5arGtn+4b3NaT66GxxAniHVYlxWT6SY8QByjERVVpc0QPu4t7VSB4rW5+P4Zn/
- 2XiZRmDIy8HOOQSPjnn5lV17tIL7ppDUyD2a9pChP9VUtsQdlKYqe6pHhllK3t3OIMNa
- 4uWBhNVuTi24sUr/dj24GHjR6CCwkvFfhrNbUr+WXUQboumCSMAEtRQEccmD+XqhGXOD
- sgqg==
+ bh=likgvKugk4b8t9l89CQl3BfsUjLIPBB3WZoVAljees8=;
+ b=DW08WxMF+B9rMlbuk/1FXC8SRiNlybQcsMlufn10lYW1lD9iQUeCgSAKTLErF6+gWr
+ VwZmpM3TOqE6EfOfEEUAU+JuMCsLmvjeTMJxrhPWKJEhpIeBi6+oH3L86jYI9A8+xGdL
+ dXGlX6mMTNqJ9S0Ip5EBR2fLrBes68eaRZQO0i2yT1scSWS1O+NtgBfF4Lnuj4JbUWE+
+ Oh9IjIJeXy+7TE1R74yamIk+pKLtSFzy1XuWw5V1xOTM223O1tD7us7FRvkBRzuzfpmx
+ Q9OuOmcOO+iRXPx2zQveLRtWvl9XKjcQmwLAjGlxEbMZwTRGl46PGlo+ZUNFOE5laerB
+ 5MaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710242738; x=1710847538;
+ d=1e100.net; s=20230601; t=1710242736; x=1710847536;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cLoGh9BJ5sW1PuxoNirl7iXBfbZ2yLuS6AwQQm/Ji9Q=;
- b=QbZMN1ug1hkG8roqh4AeYGwkHWhjLsGnDqh/QHb0YbDeDnXaegHVOg6U0m6TfY4kng
- khsNM9wwmeOppbfd/LEOW9RvhTSKx6Mg3KrJ1L9ydWc5Zn9+gu/s08eUsnKUQ2YyO8xU
- 1kyZ4sQ/uNVrXoGynjEGfKeM40NjZBF0pi9H7Mssl3XgYx/Qb79eQHhcRYom0zyjeSxU
- vFDQZJ7bJ4QGUlnkFJ+CjBWhUX7tBqVNwsUzQ7x5g9EgIrY4PhEq+k1zMkis5Et2NsTZ
- I2GtA5xLzc4DBfmmQIwhceBIKkv5eEevG4cXLWGrOqwL0VwCEnZyvMkodKCo20r4kzvj
- SpjQ==
-X-Gm-Message-State: AOJu0YyaDd9Hy6+4MXEBVuZ9PUAm1Xu6Zfh9GpPDKO4A1qTvGfR+EnZ7
- xtRNkE6rqtnfnIVHCb7p4WSBRuqWEsyKDX09bI7v1qkmmc3zErFwGu5VwoFs0zeSfFmIniDcAnd
- N
-X-Google-Smtp-Source: AGHT+IHY0HV1ZsSPQmEV5JTOfE++edIy9sOGWE6d7NP6Hg9qXQa5yy9OAp9VqjH4Uq41xfZvLlN+4A==
-X-Received: by 2002:a5d:6611:0:b0:33d:679d:a033 with SMTP id
- n17-20020a5d6611000000b0033d679da033mr6132756wru.36.1710242738088; 
- Tue, 12 Mar 2024 04:25:38 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- h14-20020a056000000e00b0033e7603987dsm8839153wrx.12.2024.03.12.04.25.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=likgvKugk4b8t9l89CQl3BfsUjLIPBB3WZoVAljees8=;
+ b=OzxXLdZ27PU6f9w8kSPQlsAGE7fklbOdH8jJQ221bfH1Lndj8na+r9KEeVi2U4LIpp
+ UICdOHvCbyW9EVT0SRidT3IFrjeK0XjLt9gqjsgjmuVGtbdFx3sw//j6AAnleIIW2t0w
+ CeBOkqyP6UAlmPVTJPK8hCRHTLatQx6++SmevXhlGHSFtVAm2MZP3zJ1cu0Y00sDw9Zr
+ MZ21cSENU0A56ZSQ4wU4kiZvYPe4hWgFpYwIbZcz0nb833N0kML+y1gox2ugZwSLIIqx
+ KO6r2WEcatwkJLnfy+6xsh1XL+duSK4n6SuTFqGajYVxtgYmA1KGztrtV81pndqQSqXd
+ DZ2g==
+X-Gm-Message-State: AOJu0YyM8Fs7wCbmatjcKeA/YCgm14fb4rxGg5lW9qBx17UFYry1Y9OE
+ gE23uMY/WLMDFJ/b9XJCTygz/S9j/hp5vU/rzRsaJWx98yf/WHolakWViesioW4=
+X-Google-Smtp-Source: AGHT+IHPit1NXoSm5SCOXYpz5veD40FZDYcwT3cLMIan4pT5sEjVA4tmuOIU+pnxMj43WBmsYaYSTw==
+X-Received: by 2002:adf:da4f:0:b0:33e:9113:a21d with SMTP id
+ r15-20020adfda4f000000b0033e9113a21dmr4769899wrl.28.1710242736339; 
  Tue, 12 Mar 2024 04:25:36 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a22-20020a5d4576000000b0033e68338fbasm8766559wrc.81.2024.03.12.04.25.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 04:25:33 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 69D6E5F8E5;
- Tue, 12 Mar 2024 11:25:33 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id C108F5F8D5;
+ Tue, 12 Mar 2024 11:25:32 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 8/8] gdbstub: Fix double close() of the follow-fork-mode socket
-Date: Tue, 12 Mar 2024 11:25:32 +0000
-Message-Id: <20240312112532.1558319-9-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PULL 2/8] tests/vm: ensure we build everything by default
+Date: Tue, 12 Mar 2024 11:25:26 +0000
+Message-Id: <20240312112532.1558319-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240312112532.1558319-1-alex.bennee@linaro.org>
 References: <20240312112532.1558319-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,49 +102,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+The "check" target by itself is not enough to ensure we build the user
+mode binaries. While we can't test them with check-tcg we can at least
+include them in the build.
 
-When the terminal GDB_FORK_ENABLED state is reached, the coordination
-socket is not needed anymore and is therefore closed. However, if there
-is a communication error between QEMU gdbstub and GDB, the generic
-error handling code attempts to close it again.
-
-Fix by closing it later - before returning - instead.
-
-Fixes: Coverity CID 1539966
-Fixes: d547e711a8a5 ("gdbstub: Implement follow-fork-mode child")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240312001813.13720-1-iii@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Gustavo Romero <gustavo.romero@linaro.org>
 
-diff --git a/gdbstub/user.c b/gdbstub/user.c
-index 2005f3312b..edeb72efeb 100644
---- a/gdbstub/user.c
-+++ b/gdbstub/user.c
-@@ -517,6 +517,7 @@ void gdbserver_fork_end(CPUState *cpu, pid_t pid)
-         switch (gdbserver_user_state.fork_state) {
-         case GDB_FORK_ENABLED:
-             if (gdbserver_user_state.running_state) {
-+                close(fd);
-                 return;
-             }
-             QEMU_FALLTHROUGH;
-@@ -542,7 +543,6 @@ void gdbserver_fork_end(CPUState *cpu, pid_t pid)
-                 gdbserver_user_state.fork_state = GDB_FORK_ACTIVE;
-                 break;
-             case GDB_FORK_ENABLE:
--                close(fd);
-                 gdbserver_user_state.fork_state = GDB_FORK_ENABLED;
-                 break;
-             case GDB_FORK_DISABLE:
-@@ -557,7 +557,6 @@ void gdbserver_fork_end(CPUState *cpu, pid_t pid)
-             if (write(fd, &b, 1) != 1) {
-                 goto fail;
-             }
--            close(fd);
-             gdbserver_user_state.fork_state = GDB_FORK_ENABLED;
-             break;
-         case GDB_FORK_DISABLING:
+diff --git a/tests/vm/basevm.py b/tests/vm/basevm.py
+index f8fd751eb1..4a1af04b9a 100644
+--- a/tests/vm/basevm.py
++++ b/tests/vm/basevm.py
+@@ -606,7 +606,7 @@ def get_default_jobs():
+     parser.add_argument("--build-qemu",
+                         help="build QEMU from source in guest")
+     parser.add_argument("--build-target",
+-                        help="QEMU build target", default="check")
++                        help="QEMU build target", default="all check")
+     parser.add_argument("--build-path", default=None,
+                         help="Path of build directory, "\
+                         "for using build tree QEMU binary. ")
 -- 
 2.39.2
 
