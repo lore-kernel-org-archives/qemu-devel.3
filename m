@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77007C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 16:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D0E0C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 16:30:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk4zu-0003UX-OO; Tue, 12 Mar 2024 12:29:02 -0400
+	id 1rk50I-0004AU-C9; Tue, 12 Mar 2024 12:29:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk4zt-0003RC-0u
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:29:01 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ id 1rk50B-0003zj-Rb
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:29:22 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk4zq-00022W-Ai
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:29:00 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2d094bc2244so88154441fa.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 09:28:57 -0700 (PDT)
+ id 1rk509-00028s-OU
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 12:29:19 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5684f95cc9bso278077a12.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 09:29:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710260936; x=1710865736; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ourPPBXgHsJzAv8BNAT3mWUg6FCmtfwZF1S8XNHaZ1A=;
- b=wWjO4hsfBEDeb4N7WmNXj5MQzxisKBkDqOupHWMfXn5rbNOwE6lfJmWz+1hfry7xbd
- sG2slsewVayCUTpOI4b3gZf+H0H79inqthI0uMwo/xAccln8S0B1OHApTJB3YMo7HKkR
- qY/YqssGD2CPwuw+GrpsuHZ6129QSctLli9eTJ1fowsx1LJ8b5l1KaBK3sCdyk+KIXAT
- 8mFZGaPsCBk8DuXWVDVPAE2Ex8k454DWJrbCSUM0qf3OmP+rj9E9AQ1SferIr9Nbu7q9
- pEYut+yPKzwBA84mv2hDMcevgq+UKZR1RfHQbsnYUJvElc5HUJovZpHZH6fG9PAvQ7l5
- unSg==
+ d=linaro.org; s=google; t=1710260956; x=1710865756; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=U6QXTTSPCm3sFGZ+qrJBg0fuI95XHgO4UvVzyiDJF3Y=;
+ b=HvMb+Jq5VwJHP0xgOP0AvrXyaE8UZjWaXzYTT6x/CZbnJ2utSAWYxBbj1bxQEAMkxr
+ T0u3asZ5IQ/Db+FyOHb/8/jUdnpLw2F0pG6+jCyoYTATyhV/aSYVjkXK1wGqnwoL2oZ8
+ T1McxYTTuo1WgdkOfNRukuoCg+0vsMtHKzQQmKhj152roYmWFlisD6t6gdReVNlAY32D
+ +4WDvFve3bpOGc0a3Poqcb+l63Z2xzlYLy9ZDksqBESb7mDdetdf8Yl3ULaG9Nc6nX8B
+ HGpThH/EgRXsDTNFipOQejcJhCW4bsNuHhItsdEdiM/eGaNyHougIlUZF/PM3V0W5jLz
+ H/fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710260936; x=1710865736;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ourPPBXgHsJzAv8BNAT3mWUg6FCmtfwZF1S8XNHaZ1A=;
- b=U7w3CfnEBac8nOd0vln84jYu38J45yedUtNy3TYMQhyMSpQtUEcTkgFKDIK/jYzvDf
- suAEE1BlIlVlvawix3IkLf56JC9gykWeS6KmIG+KkND6Z0dJD9BB+kKIQAlXnaxmWBmp
- fcYscV+k7JYXz4ys7ne70U5NSY7SmET/5O48qMg7WRmjVEHXyY6MYslBvEt0jF+QO606
- IZyhnlbFuMYQqXZOuKxJcaFez/Fii/zvuYDab3yU5hcm3Gt0boVJQxuJZb62ntQZPO2m
- BGPzRyW+lddTHKma0DeY0/MFempIJR6MkfYYIh7zWK2+qXePsGLvrz3iXkGbHKedwAv9
- YZOQ==
-X-Gm-Message-State: AOJu0YywJB1Yd7Pc9/wO3iaysxJ/Tyex2Zl7ZBN2MofisXXCqs3UbpyH
- wFZosPDAzXLLKVkKdLH08A517XDj5WtdfPtQ0iauALPjBsOi2EpOAbnPuwmjnZGNXIGMPvQq0BX
- lRoK0b9Ib0pgwEuwXmBgKk4+cOJp/JJwhTo0ouEe8HpKvFPAq
-X-Google-Smtp-Source: AGHT+IFAucfVR+ngFIwASocJVMMsArgAzYy5vy12NzQ8LoyqU3lWsL3KWK6hMRj2zP4BgDn2JThoWohYET8u2I/V1dg=
-X-Received: by 2002:a2e:b527:0:b0:2d4:2651:1483 with SMTP id
- z7-20020a2eb527000000b002d426511483mr1681282ljm.35.1710260936150; Tue, 12 Mar
- 2024 09:28:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710260956; x=1710865756;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=U6QXTTSPCm3sFGZ+qrJBg0fuI95XHgO4UvVzyiDJF3Y=;
+ b=ckTVUSFP9ugBZfgNHLMIRIyhtGwGocMiS7hjYrymPeZMdCeDnvwAAynEFIeOUPrfCg
+ MMiVKVpw7F09JZ9kIjFNeD90TNmfmH2vPtJdQy+TzWBRdzrAbouTCAj9HL/AuwYcRPO/
+ Nywa3AWrW7+ohlJJp5AdL65CVz5UnsPaqwytl6SgkFGTMc79SxxSQlqUV8RmQceScDei
+ 2S4cKI7Kv6v6E7xPBfz8MeAV1k+p6dApT0RGqRaezU4A1h5JceQMu+LsAcN6cItnkLof
+ Wp5yXPNn2Jo42HIKVig9PgByGonCuR8sTk9ZIgYkwyqMNugwEHh6ZXykC3/haVCc/9zb
+ 7eRA==
+X-Gm-Message-State: AOJu0YysYHXRSJrzRixPD+cdZizjhDO9KEtVs18Zfxf5N9VlqIw7ELlA
+ KOiCB0mUSwVEbwZA31xBKJPPOoYrNFdMMzWXne0PFhMljwebu+vkstFnznrbMnr1laPkLJQ4gFP
+ Y6IWmn0U6VErcSfwYVTRN+FilLHSsnZFeM2y6tg==
+X-Google-Smtp-Source: AGHT+IHxx41pFBeQ93xdvNfMgBGXQslfZRiKCpY9613nsbhEbMxMHqhemJi06GIqmMaDsF04Skuoe6NhbHl570Yxqw0=
+X-Received: by 2002:a50:d489:0:b0:568:335d:1192 with SMTP id
+ s9-20020a50d489000000b00568335d1192mr48931edi.13.1710260956198; Tue, 12 Mar
+ 2024 09:29:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240312082239.69696-1-philmd@linaro.org>
-In-Reply-To: <20240312082239.69696-1-philmd@linaro.org>
+References: <20240312113642.36862-1-jasowang@redhat.com>
+In-Reply-To: <20240312113642.36862-1-jasowang@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 12 Mar 2024 16:28:44 +0000
-Message-ID: <CAFEAcA9+69CidzthzAZX8vxnwU5rF330icLCDyJ7tfWv=bb_oA@mail.gmail.com>
-Subject: Re: [PULL 00/13] Misc HW patches for 2024-03-12
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org, 
- qemu-block@nongnu.org
+Date: Tue, 12 Mar 2024 16:29:05 +0000
+Message-ID: <CAFEAcA8VSfk1qs6mX0spmMKTWo=L9FdPj_pScHaQPOMmnXe36Q@mail.gmail.com>
+Subject: Re: [PULL 0/8] Net patches
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,38 +87,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 12 Mar 2024 at 08:24, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Tue, 12 Mar 2024 at 11:36, Jason Wang <jasowang@redhat.com> wrote:
 >
-> The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf0=
-5f:
+> The following changes since commit 05ec974671200814fa5c1d5db710e0e4b88a40af:
 >
->   Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into sta=
-ging (2024-03-09 20:12:21 +0000)
+>   Merge tag 'm68k-for-9.0-pull-request' of https://github.com/vivier/qemu-m68k into staging (2024-03-11 18:42:53 +0000)
 >
 > are available in the Git repository at:
 >
->   https://github.com/philmd/qemu.git tags/hw-misc-20240312
+>   https://github.com/jasowang/qemu.git tags/net-pull-request
 >
-> for you to fetch changes up to afc8b05cea14b2eea6f1eaa640f74b21486fca48:
+> for you to fetch changes up to 0cc14182aba961f4c34a21dd202ce6e4a87470f5:
 >
->   docs/about/deprecated.rst: Move SMP configurations item to system emula=
-tor section (2024-03-12 09:19:04 +0100)
->
-> ----------------------------------------------------------------
-> Misc HW patch queue
->
-> - Rename hw/ide/ahci-internal.h for consistency (Zoltan)
-> - More convenient PCI hotplug trace events (Vladimir)
-> - Short CLI option to add drives for sam460ex machine (Zoltan)
-> - More missing ERRP_GUARD() macros (Zhao)
-> - Avoid faulting when unmapped I/O BAR is accessed on SPARC EBUS (Mark)
-> - Remove unused includes in hw/core/ (Zhao)
-> - New PCF8574 GPIO over I2C model (Dmitriy)
-> - Require ObjC on Darwin macOS by default (Peter)
-> - Corrected "-smp parameter=3D1" placement in docs/ (Zhao)
+>   ebpf: Updated eBPF program and skeleton. (2024-03-12 19:31:47 +0800)
 >
 > ----------------------------------------------------------------
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQEzBAABCAAdFiEEIV1G9IJGaJ7HfzVi7wSWWzmNYhEFAmXwPUAACgkQ7wSWWzmN
+> YhFnIwgAgctDniJwlRxXB01eVlzXz7IulHnpSby07XEJxENSpGB8ufaeE4eK5gJy
+> NVK6C2+1EU2vRxm4oIdcvtN4C4/jtRbYYjiSTx7eE4FmSkqshSnR5XCV72LDqG3i
+> WbzInjMvYfysmcMXLfrWgxOnVew9WqEzlpEWlc7FfNKnkzBVf+JDztfqCUx0XM7H
+> qefw4ImjqQw993QxJpipXC7aEGUyouB0RIBB71FkCa9ihlh9x7W68evbOI/jTn5q
+> HWuStgS02sKHjRFliMbdbMY77FNUz4Yroo/GKSvGt64atxkQSJqPNAV+/9n18LNy
+> QAH5eK6cXFPOIAaYpADU5kHDVVAFiw==
+> =iBdx
+> -----END PGP SIGNATURE-----
 >
 
 
