@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C66FC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 596B3C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:33:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAb6-00088l-LG; Tue, 12 Mar 2024 18:27:48 -0400
+	id 1rkAcA-0002qG-T4; Tue, 12 Mar 2024 18:28:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAan-0007Tn-LL
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbj-0002Hc-5A
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAak-0004OU-Jz
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:27 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbh-0004Xu-Iw
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282446;
+ s=mimecast20190719; t=1710282504;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=D2lpmRuQpB9vA5OA++aQfNEAFEu+9OfR1snJEg9JCvg=;
- b=QNWHfJateMJOpd5zofEo7uc7oGrmwB+q60va+CjFMPwiQzGLSLrmqHWr4BVRSRLqFSyHdR
- WEWLKQr9Wb22Z7J7PTnKJ9ecIeUQ1giFEUyP2YYZ590scnGQApaFd+JqodnZfQ/1YnCqUk
- t1cjiThexcg3/XrslbHASWom9v1y0AA=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=RVo6YlMfVuw9z+NrVasJcWSQp6XiMZPaDOieWuMq5y8=;
+ b=I3/S8yUMYuA+lxVFwulY6obp7sFmAjDYteSqSbM46epN8SHs5mjEFPKQbOfOeeE2IHznLA
+ oUywls2Q30T6RFQYBT7yeUvbn3h46ZtiTIYxNdo59N8Hj1etfOJf0HqZqqZxHI6g0q66iI
+ gPbBPdE2xf4GXmbv6Iynvi717DHWL7c=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-65-lr1Wul9_NUyt_XQBe1GpzQ-1; Tue, 12 Mar 2024 18:27:24 -0400
-X-MC-Unique: lr1Wul9_NUyt_XQBe1GpzQ-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5684c1abc33so2350501a12.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:24 -0700 (PDT)
+ us-mta-595-bVqveck9PgWG6QTBjmO5lg-1; Tue, 12 Mar 2024 18:28:23 -0400
+X-MC-Unique: bVqveck9PgWG6QTBjmO5lg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a448cfe2266so494050466b.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282443; x=1710887243;
+ d=1e100.net; s=20230601; t=1710282502; x=1710887302;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D2lpmRuQpB9vA5OA++aQfNEAFEu+9OfR1snJEg9JCvg=;
- b=tLRb/Y4S3ja4DbpznNiV27QpFzmZU/ZfU1dQXQ9hAa25xvobQX2i3DnREXOBzAf5nJ
- PYlfbXu/aiu7YTwkjHz5hdsOz3t6DZRvIjVDBsM1b+UEUihFFO5Mc06iMuW2480meqZI
- VGtwQxst9z8/f0J+fwY4vKSEc+KPcqbbgqmUqvbiCLTo26HqI7ABzjDIZVbR9S9j491M
- FX/6Oaus68sNnARFP784ghRBDLuRlgKQaciKc7OmkhGM1bEEYnza+pqzZy4cVhnjC2/f
- o3Y7pi8xaiMwT1aIlOtqumWekd1TOW3/UP63NNmZYm1Dj9Oje8O3RFEWIpLKQT0SvPUP
- OLwg==
-X-Gm-Message-State: AOJu0YzRuB350MT4JbsQ11swVVingKc4DEg0tzNdxAzv9e0nlx4ZWy14
- ga84WmxGHBbJKDTKqlA+wPdi2dnFfJcPesmO5FnJTuu4C40zs47tjaEEhxAAYFujI313yQOBe8g
- Q1EakLK0kL0OlMqhqIGzNiqf/44vlnA34YkKQRgbV7fUaWw3NUcSL/LUPYrnLKp4xpiYgF++6/Y
- 5MZBgOz7oSMeskIU0k9Sc2j3VVvTJ/49Tg
-X-Received: by 2002:a50:9e48:0:b0:566:ab45:e6c5 with SMTP id
- z66-20020a509e48000000b00566ab45e6c5mr2157423ede.28.1710282443024; 
- Tue, 12 Mar 2024 15:27:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHxDO4TGc3w2tLD2JLb7Y5kfREmjXSbzSX6P7SIcBHWNwfLLoRHL27m3wQgi5keSuq/qBGa+A==
-X-Received: by 2002:a50:9e48:0:b0:566:ab45:e6c5 with SMTP id
- z66-20020a509e48000000b00566ab45e6c5mr2157407ede.28.1710282442491; 
- Tue, 12 Mar 2024 15:27:22 -0700 (PDT)
+ bh=RVo6YlMfVuw9z+NrVasJcWSQp6XiMZPaDOieWuMq5y8=;
+ b=jWB9ljVGoV4yU3alW66FnwI+1CZhZdf1H3CKSqYZq/wj3UMqmjIqawBinxdO6s1Ddq
+ FrSYqjevP29JmQK0uasmhcFSBW1oyvH/kaP4nvY/NUl0yNg1HdBsg36SE2bYwc6J39X7
+ A+sSEBZFl0+bfENSXPHEPNZ+Q7TIPwWJD7tvO/UvQFgs7rBZL9J4fRvrIsD1xDWlRzal
+ hwVauQgPrrnkk/qSvYwbNbtRs6fU2o9UbjHzwCyxvjnm4py56Fp8hFdpP9FCPz7zUgGq
+ KWfjYgOc/GPVkfXp9VgEutrHSfK8krzXndnquPp9haPxJ/IOI2lxCdQbgyXxFUYEFKP9
+ GBXQ==
+X-Gm-Message-State: AOJu0Yz36V2y1ygEpn1ZjyVffzBnC/gUiIetfLkF1zvu+TLI7jcXhAbV
+ 0BLlj7pr4RWCZzSm+ddOr+9TOsUJpfTzn72E2eoN1GaG/0+xpw5LZviPoWImfXOzNTMMtBbk6aq
+ x/dHIr8YWWmZoCMauNE7gs3wpt5Gzlde6IyO/EEPnp7R3HLep8XMPMw/UQsEUf0p/1IJclAItnJ
+ EwEM8jbztcIm/sdBuU9MJwVPnecVuWs6ho
+X-Received: by 2002:a17:907:a095:b0:a46:127a:61a7 with SMTP id
+ hu21-20020a170907a09500b00a46127a61a7mr6829711ejc.72.1710282501626; 
+ Tue, 12 Mar 2024 15:28:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKmhgE/ofZZ8UXO0d8b/a5qbMynNr/sGPXj4AU0/5oQEyY+6946rHDoK9dFWkAwQ5wl0+9dA==
+X-Received: by 2002:a17:907:a095:b0:a46:127a:61a7 with SMTP id
+ hu21-20020a170907a09500b00a46127a61a7mr6829692ejc.72.1710282500977; 
+ Tue, 12 Mar 2024 15:28:20 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- b2-20020aa7c902000000b00564e489ce9asm4411838edt.12.2024.03.12.15.27.20
+ s19-20020a170906501300b00a433f470cf1sm4252594ejj.138.2024.03.12.15.28.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:27:21 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:27:19 -0400
+ Tue, 12 Mar 2024 15:28:20 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:28:18 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Markus Armbruster <armbru@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 35/68] hw/mem/cxl_type3: Fix missing ERRP_GUARD() in
- ct3_realize()
-Message-ID: <d477d07a5d2c392c7aa99cb76921ed3e40d141ef.1710282274.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 52/68] hw/i386/pc: Set "normal" boot device order in
+ pc_basic_device_init()
+Message-ID: <c5e2d74448433c3d800dca6160b5c8fbd76c67d8.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -102,63 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-As the comment in qapi/error, dereferencing @errp requires
-ERRP_GUARD():
+The boot device order may change during the lifetime of a VM. Usually, the
+"normal" order is set once during machine init(). However, if a user specifies
+`-boot once=...`, the "normal" order is overwritten by the "once" order just
+before machine_done, and a reset handler is registered which restores the
+"normal" order during the next reset.
 
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-* - It must not be dereferenced, because it may be null.
-...
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
-*
-* Using it when it's not needed is safe, but please avoid cluttering
-* the source with useless code.
+In the next patch, pc_cmos_init() will be inlined into pc_cmos_init_late() which
+runs during machine_done. This means that the "once" boot order would be
+overwritten again with the "normal" boot order -- which renders the user's
+choice ineffective. Fix this by setting the "normal" boot order in
+pc_basic_device_init() which already registers the boot_set() handler.
 
-But in ct3_realize(), @errp is dereferenced without ERRP_GUARD():
-
-cxl_doe_cdat_init(cxl_cstate, errp);
-if (*errp) {
-    goto err_free_special_ops;
-}
-
-Here we check *errp, because cxl_doe_cdat_init() returns void. And
-ct3_realize() - as a PCIDeviceClass.realize() method - doesn't get the
-NULL @errp parameter, it hasn't triggered the bug that dereferencing
-the NULL @errp.
-
-To follow the requirement of @errp, add missing ERRP_GUARD() in
-ct3_realize().
-
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-Id: <20240223085653.1255438-4-zhao1.liu@linux.intel.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Message-Id: <20240303185332.1408-4-shentey@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/mem/cxl_type3.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/i386/pc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index b679dfae1c..b0a7e9f11b 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -645,6 +645,7 @@ static DOEProtocol doe_cdat_prot[] = {
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 4077d8162c..c614697ca6 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -614,8 +614,6 @@ void pc_cmos_init(PCMachineState *pcms,
+     mc146818rtc_set_cmos_data(s, 0x5c, val >> 8);
+     mc146818rtc_set_cmos_data(s, 0x5d, val >> 16);
  
- static void ct3_realize(PCIDevice *pci_dev, Error **errp)
- {
-+    ERRP_GUARD();
-     CXLType3Dev *ct3d = CXL_TYPE3(pci_dev);
-     CXLComponentState *cxl_cstate = &ct3d->cxl_cstate;
-     ComponentRegisters *regs = &cxl_cstate->crb;
+-    set_boot_dev(pcms, s, MACHINE(pcms)->boot_config.order, &error_fatal);
+-
+     val = 0;
+     val |= 0x02; /* FPU is there */
+     val |= 0x04; /* PS/2 mouse installed */
+@@ -1254,6 +1252,8 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+ #endif
+ 
+     qemu_register_boot_set(pc_boot_set, pcms);
++    set_boot_dev(pcms, MC146818_RTC(rtc_state),
++                 MACHINE(pcms)->boot_config.order, &error_fatal);
+ 
+     if (!xen_enabled() &&
+         (x86ms->pit == ON_OFF_AUTO_AUTO || x86ms->pit == ON_OFF_AUTO_ON)) {
 -- 
 MST
 
