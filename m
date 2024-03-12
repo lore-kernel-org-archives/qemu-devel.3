@@ -4,74 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A63C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 13:08:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF334C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 13:15:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1rb-00031X-8h; Tue, 12 Mar 2024 09:08:16 -0400
+	id 1rk1xs-0007w1-JO; Tue, 12 Mar 2024 09:14:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk1rP-0002yg-Op
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 09:08:04 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rk1xm-0007s5-LU; Tue, 12 Mar 2024 09:14:38 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk1rL-00050E-TQ
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 09:08:01 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2d3b93e992aso50297591fa.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 06:07:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rk1xj-0006nU-8y; Tue, 12 Mar 2024 09:14:38 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-5d3912c9a83so3564549a12.3; 
+ Tue, 12 Mar 2024 06:14:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710248876; x=1710853676; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ynOkJk3qf6voyLcRAVcFG39fxJk/EvCvr0otbUA9gG0=;
- b=HONcNfv1nDQnom1ryVey49McPw/imZluqUbcFVD8IvBuLTX7GP3+0lxHep6QvMk0Pi
- 28hbQ0VXG9yxFa41+mAlL2/klImM45zVXWiU9JlcCqkuFKVUy8AA7c0k0WtHax5rQx6F
- heddpz9FFfG4JIENEACCH8j7eYwKY/yVu+yL7fis2bqAA38nZ2TI4G44DeTsQ29QVx7T
- qm375lluDbpHnvw/5LBOBz+cTyhMg7HrEQ7gDIoEfYKW4ySNtWlYiRxY8ZQqKQxZFo+k
- 6OQhsdZh/h+euSEAFP2JOXg05jGoYhoc+WKjjjWfWJlyWkJmElJJhFK2I8n+H/HNInL3
- IcQg==
+ d=gmail.com; s=20230601; t=1710249272; x=1710854072; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8CqIF9FP8p96gb/VHbQI13ZloGCTmxSrkNwnf/ohF3E=;
+ b=SXrY5xGwhmTQy+jS0QVzUsoXSqYcwc9hrbKrJKslutXhx6kQ659dTnGwtAJnxQi/Sm
+ h+C1UrC1XStEtBTHbIMn+qwxwgI6mp9ltqrFuXAqPLsHXzOKjmCLKpU1ZxBHR0QAvx02
+ oe44ajczv5dRL7iDJjxPOkJ4Ow6vQkhfoTZkStZbvx/XnKRiy4VoibiEcULGjeviP6Q3
+ YlMvixJ5wRjuX4tSXwU8rZIAow08c5AE56b6XQFCYgXfVj5Q53nncIF/MsRK6dxQRKqW
+ UNAfNoWkKulpu1LvJFA9cE+D+TbRwvk8371SrtzoAdClDY6fUiHNE4tG3YG/hZzp7HFB
+ ji1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710248876; x=1710853676;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ynOkJk3qf6voyLcRAVcFG39fxJk/EvCvr0otbUA9gG0=;
- b=WeMZydjPKHZqLvkWaQ5TMVUkoZv9S7RNOaDwDOVVNPuxDeYSxecs2dciHwDjkSWeSA
- CcR3QfgnEqOWXNJ1kCUPFxGh8HUg9EgZL5WgibFxIquShdC+Wmg5kYBHLFp8QiIfAgkZ
- Im65R5r4kA+1jNNNsJxCaTDEjLPg0VXtDb4uRtY7otXNV6ZRc7FNznNoniA+ZeHkuo8o
- XeNifr9ypedT3h7P4wskIFyNEIYkFg1dYAR3Gn6J2WLDIQySVrmQXHWadLz9wS/RZZZS
- +/G8gO8f6aZQ2YTTEHHpGsZDSuVenTJVEdzmSAXcmqYtGQx6gUh/aSAxeYCty3siYb/c
- TLog==
-X-Gm-Message-State: AOJu0Yw0RLEMYcxVgVnQPealnzeOulidbMe06zCjUY5brlffBUWCzUeo
- aaxcgJPOQhEnNrkju4hoT6psCEib2Mboe3YUQO9S7ALR1qgzt/wwSAwqiZ2jYpgS3fp7VTg4t4h
- TBFMRskydhFV/WcPTuaqQbU8RxT7+EEIeREnKIA==
-X-Google-Smtp-Source: AGHT+IFJveOmP3Zz1bL25O/W5YyBh7sM+PEPxNf5D38sg8as0NatWDaHb1nbxeQ3Zlko2TyCK9NJ+vKDREAsC4gHoAU=
-X-Received: by 2002:a2e:a98c:0:b0:2d4:3c32:816f with SMTP id
- x12-20020a2ea98c000000b002d43c32816fmr4751062ljq.2.1710248876365; Tue, 12 Mar
- 2024 06:07:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710249272; x=1710854072;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8CqIF9FP8p96gb/VHbQI13ZloGCTmxSrkNwnf/ohF3E=;
+ b=KwoupgJkGDGQRX8sXADE1iK3m8JIPJyLTf9kj1KvBSGhROUg70CDWhPaMYoqo+kf+0
+ exmy5FPyUddKMslBzj2l7hMUV4PwJX8KgeIyNQ0qlkIPSyd11UvMgQiapFWwTVwbvibN
+ kVFzB9BlXFm9YrGFbZZBhAOORkMkmGj+h53mECHX1PFAtz0FnjJ1AHmUewpwLa+Kfgfb
+ fY14EeY0DC6D7eiCuH72CiqKNlRKS6z1U4gOjR4YEqbZypM0dg5KYp1CHgw7ZeiP7OV8
+ jzXFLW9QV3nr1KxowR8RDhsf6w3ITGJVvO9cLh5YcbGfAlsjWo4qiToN/nne/P0+v4bV
+ qgvg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUqY9ALEZ1qnmo7X8ALP4p6GsPkn9cbgYDHBLgqLKlm4WHkZIpZLyngRZKxe04TU1Xg+YBQqfwvt5MS4b4ScAEWgisqh5o=
+X-Gm-Message-State: AOJu0YwDodvuqOJJ8G7CIKokdUmBVPcTjT8IZSzVrJsBT6i/nFJzjHPX
+ rwJXUIkbBrRUi+3HHc8POvSE8DoNVHoi9tNC88MpXtImnVyoyB1xmKXF8YCSEJA=
+X-Google-Smtp-Source: AGHT+IERaEWABXWuzVyVTGPfVXTFhjkWyW/l7+tpsbFO+PL53jiamDSUGyNyMflrfZtzFHACBlu5Eg==
+X-Received: by 2002:a05:6a20:8922:b0:1a3:f46:853e with SMTP id
+ i34-20020a056a20892200b001a30f46853emr180173pzg.60.1710249272107; 
+ Tue, 12 Mar 2024 06:14:32 -0700 (PDT)
+Received: from wheely.local0.net ([118.208.155.46])
+ by smtp.gmail.com with ESMTPSA id
+ r15-20020aa78b8f000000b006e64f75c947sm6066084pfd.46.2024.03.12.06.14.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 06:14:31 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PATCH v2 01/10] ppc: Drop support for POWER9 and POWER10 DD1 chips
+Date: Tue, 12 Mar 2024 23:14:10 +1000
+Message-ID: <20240312131419.2196845-2-npiggin@gmail.com>
+X-Mailer: git-send-email 2.42.0
+In-Reply-To: <20240312131419.2196845-1-npiggin@gmail.com>
+References: <20240312131419.2196845-1-npiggin@gmail.com>
 MIME-Version: 1.0
-References: <20240311215925.40618-1-peterx@redhat.com>
-In-Reply-To: <20240311215925.40618-1-peterx@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 12 Mar 2024 13:07:45 +0000
-Message-ID: <CAFEAcA8dJWrGAzUDURCGbKRpfkCTXZCvk3aXV7X7QqWR44gqbw@mail.gmail.com>
-Subject: Re: [PULL 00/34] Migration 20240311 patches
-To: peterx@redhat.com
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,41 +96,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Mar 2024 at 21:59, <peterx@redhat.com> wrote:
->
-> From: Peter Xu <peterx@redhat.com>
->
-> The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf05f:
->
->   Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into staging (2024-03-09 20:12:21 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/peterx/qemu.git tags/migration-20240311-pull-request
->
-> for you to fetch changes up to 1815338df00fd0a3fe25085564c6966f74c8f43d:
->
->   migration/multifd: Add new migration test cases for legacy zero page checking. (2024-03-11 16:57:09 -0400)
->
-> ----------------------------------------------------------------
-> Migration pull request
->
-> - Avihai's fix to allow vmstate iterators to not starve for VFIO
-> - Maksim's fix on additional check on precopy load error
-> - Fabiano's fix on fdatasync() hang in mapped-ram
-> - Jonathan's fix on vring cached access over MMIO regions
-> - Cedric's cleanup patches 1-4 out of his error report series
-> - Yu's fix for RDMA migration (which used to be broken even for 8.2)
-> - Anthony's small cleanup/fix on err message
-> - Steve's patches on privatize migration.h
-> - Xiang's patchset to enable zero page detections in multifd threads
->
+The POWER9 DD1 and POWER10 DD1 chips are not public and are no longer of
+any use in QEMU. Remove them.
 
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/ppc/spapr_cpu_core.c |  2 --
+ target/ppc/cpu-models.c |  4 ----
+ target/ppc/cpu_init.c   |  7 ++-----
+ target/ppc/kvm.c        | 11 -----------
+ 4 files changed, 2 insertions(+), 22 deletions(-)
 
-Applied, thanks.
+diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+index 40b7c52f7f..50523ead25 100644
+--- a/hw/ppc/spapr_cpu_core.c
++++ b/hw/ppc/spapr_cpu_core.c
+@@ -394,10 +394,8 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
+     DEFINE_SPAPR_CPU_CORE_TYPE("power8_v2.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power8e_v2.1"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power8nvl_v1.0"),
+-    DEFINE_SPAPR_CPU_CORE_TYPE("power9_v1.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
+-    DEFINE_SPAPR_CPU_CORE_TYPE("power10_v1.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
+ #ifdef CONFIG_KVM
+     DEFINE_SPAPR_CPU_CORE_TYPE("host"),
+diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
+index 36e465b390..f2301b43f7 100644
+--- a/target/ppc/cpu-models.c
++++ b/target/ppc/cpu-models.c
+@@ -728,14 +728,10 @@
+                 "POWER8 v2.0")
+     POWERPC_DEF("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10,         POWER8,
+                 "POWER8NVL v1.0")
+-    POWERPC_DEF("power9_v1.0",   CPU_POWERPC_POWER9_DD1,             POWER9,
+-                "POWER9 v1.0")
+     POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
+                 "POWER9 v2.0")
+     POWERPC_DEF("power9_v2.2",   CPU_POWERPC_POWER9_DD22,            POWER9,
+                 "POWER9 v2.2")
+-    POWERPC_DEF("power10_v1.0",  CPU_POWERPC_POWER10_DD1,            POWER10,
+-                "POWER10 v1.0")
+     POWERPC_DEF("power10_v2.0",  CPU_POWERPC_POWER10_DD20,           POWER10,
+                 "POWER10 v2.0")
+ #endif /* defined (TARGET_PPC64) */
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 1d3d1db7c3..572cbdf25f 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6350,10 +6350,7 @@ static bool ppc_pvr_match_power9(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
+         return false;
+     }
+ 
+-    if ((pvr & 0x0f00) == 0x100) {
+-        /* DD1.x always matches power9_v1.0 */
+-        return true;
+-    } else if ((pvr & 0x0f00) == 0x200) {
++    if ((pvr & 0x0f00) == 0x200) {
+         if ((pvr & 0xf) < 2) {
+             /* DD2.0, DD2.1 match power9_v2.0 */
+             if ((pcc->pvr & 0xf) == 0) {
+@@ -6536,7 +6533,7 @@ static bool ppc_pvr_match_power10(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
+     }
+ 
+     if ((pvr & 0x0f00) == (pcc->pvr & 0x0f00)) {
+-        /* Major DD version matches to power10_v1.0 and power10_v2.0 */
++        /* Major DD version matches power10_v2.0 */
+         return true;
+     }
+ 
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index bcf30a5400..525fbe3892 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -2369,17 +2369,6 @@ static void kvmppc_host_cpu_class_init(ObjectClass *oc, void *data)
+ 
+ #if defined(TARGET_PPC64)
+     pcc->radix_page_info = kvmppc_get_radix_page_info();
+-
+-    if ((pcc->pvr & 0xffffff00) == CPU_POWERPC_POWER9_DD1) {
+-        /*
+-         * POWER9 DD1 has some bugs which make it not really ISA 3.00
+-         * compliant.  More importantly, advertising ISA 3.00
+-         * architected mode may prevent guests from activating
+-         * necessary DD1 workarounds.
+-         */
+-        pcc->pcr_supported &= ~(PCR_COMPAT_3_00 | PCR_COMPAT_2_07
+-                                | PCR_COMPAT_2_06 | PCR_COMPAT_2_05);
+-    }
+ #endif /* defined(TARGET_PPC64) */
+ }
+ 
+-- 
+2.42.0
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
-
--- PMM
 
