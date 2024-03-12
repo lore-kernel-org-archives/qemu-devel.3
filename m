@@ -4,85 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 172B3C54E60
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1268FC54E58
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 15:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk3uJ-0000Ty-A8; Tue, 12 Mar 2024 11:19:11 -0400
+	id 1rk3uJ-0000U0-VC; Tue, 12 Mar 2024 11:19:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk3uI-0000Th-6P
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rk3uI-0000Tq-Sx
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 11:19:10 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk3uF-0006VQ-Ff
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 11:19:09 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5654f700705so7316297a12.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 08:19:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710256745; x=1710861545; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vckrPcfv6XciLm9Q/kHa2ZdTPe3qu0tjvxznEZ5BDnY=;
- b=mZeqkZB5JXQidpA5VJaVDtRAkleMO9Tl+oQc59cbAFeQMztBPMWamuuhhyvYcmZrT8
- FyEa2Nrq4z7KBMFmkldj5bulQbT/kcmnXKUC6JuPW+Vh3ZisT2brJRNnM3O6Zow1Npmy
- 5w9eJ00Mav+3Q+put1xNUX2s7lqM1UDMfZUztSbDuue1P9gIM9cCrKtWFzGQU4bLJu6d
- gl6Do69Om+cS3JH6Rs6LD3vfw5GDKebbsbTUWYjQqg7kNNCrtf/wTPkKcb7ZroMtUrJc
- rqgjAbdgNdjRbvnVUJ5y98/Lweghnluu5LkgOW6sZRtYTpKkoFsXyz5P7Qp3V/JD0R67
- llYQ==
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rk3uE-0006V6-RI
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 11:19:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710256743;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vESg4F4TK3KV2+TxMR/3lXHAecFEGePJ9e7aWVE5oCY=;
+ b=YAfgjSEGoPvvqptFuyQIgAey3beXQhp5yM07mwRrsflZPSpHn15nyAUkCYfjExROD6wyvA
+ mSgWvW0v+k1Y6VfsnEuKtLpAhQuh/fthdKYMtSiavEABXs3K1tOqt8taekLK2xWH4VaTKy
+ sjW0dZJay+dSg9j0x+ydYkR8dDOjSb8=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-113-7isJpMy_NQaDwqqOcYijZg-1; Tue, 12 Mar 2024 11:19:02 -0400
+X-MC-Unique: 7isJpMy_NQaDwqqOcYijZg-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-690c19ee50bso4203926d6.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 08:19:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710256745; x=1710861545;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vckrPcfv6XciLm9Q/kHa2ZdTPe3qu0tjvxznEZ5BDnY=;
- b=iZ4QAXHTizkwDWTqvcxaF32KKohrKRqZ1kLHr1kLXtehVYoHoDLzlGi+xj003EX3ZD
- W+7qWfTIJ+n42jYCjxXffh73Koofy1vJgMJLIqLvmdjvkfNx5pfS2O9eUpl2oZiRy8Iw
- qCUThjbmFAqKakYQ6tjpqdugrRXfwHKnxQcsWkDqA0HQc8HTzlXRjDztUt1SW89BzvFe
- lRYa9gXk4kLgulBY5/ZfJy7LgnNHOVrG090D6LkxuCJKxZ3IqJsK/PxIFrrLwB5q9fFz
- 60iT9duZu1e25n5MoR/CrnXG9hv4CcKCFncR9ICLnAs39sAMWCQgNJIXhSXrX56D4+GF
- MeAA==
-X-Gm-Message-State: AOJu0Yw37OX90Jksih0plZpCtokmUOx4d+wzODMANDn+2tig6yZvsNaN
- D0WvALOWGAMzUULFNAQvpi/Id8j/FfLmSCREYtJg3wFnCBswXxRszdaWBqfxfcdXJfH9QCGMdrz
- Orj6isXmSFagusWwrIWfh0goDNaoRHhxdvpCibQ==
-X-Google-Smtp-Source: AGHT+IF2jpls+rejUnX0ifRBg5YS9H6/iV7o/8+LYOw7vp/2g8hUbuqh/kbNUon7fXUAL6KCwQ7Hlh/xvL7OYfnoPjc=
-X-Received: by 2002:a50:cd95:0:b0:567:45e2:c4db with SMTP id
- p21-20020a50cd95000000b0056745e2c4dbmr3121824edi.39.1710256745357; Tue, 12
- Mar 2024 08:19:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710256741; x=1710861541;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vESg4F4TK3KV2+TxMR/3lXHAecFEGePJ9e7aWVE5oCY=;
+ b=Hqqaki2E9fo/3bO6E/8hl+DQIrgSPxvv0dVehtAzIWlh2+n8B8XyY7OUaSzNKreqa9
+ Z7zCaN9ry4s1L9pfuIkscAjB5SW0t67BMyPaGDrN2nfszSWo973610rsUIlF4EN3AKKY
+ K65I+TM1mMc3nHoJ6+JGrXYvRFu3sS9PVzn9Ekp7hGDeDJtwHlG9BWWWeh7AGbczqCgV
+ qTY7E6Z0OKzD03I2FfYLUrjAViRBQnzqdtnIFKtr+pQ4KrC0UjFn5EZtwDvEhz/LRfWm
+ 1iItX4MG5umZvl9yEWGJpbzh+cC0t4EAPJ0Kt3mxDnrNrIBrfxd+anNAZ+DhOkQ3pry0
+ Mjhg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUT8n7hJjYS5f3FGrP5y+mawuRTo+ThGTUecbr+LhHPuAJVJtCh5krdNYyeV0+GqUumdzfPLHCqF0AFUWGitYR/Q8xm0hg=
+X-Gm-Message-State: AOJu0Yx72XxoNg8D79aiXkpVGgTC9gBD1GprjKroOi4luEOsqo50YD97
+ CosCSCYf8EJrCCU4Y02PzgBSvCPi7CPhKZj59Nv5uVeaw6c724EqwgtO3cgLtwWs/9+aaThUoZ4
+ Uw7nxZ/wOVViR6+nX8OgSjqiglkOUQekrbHmbDIHwDV4fiZEZlaJW
+X-Received: by 2002:ad4:56e3:0:b0:690:c12f:9750 with SMTP id
+ cr3-20020ad456e3000000b00690c12f9750mr8836581qvb.4.1710256741591; 
+ Tue, 12 Mar 2024 08:19:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFMNLZjgXWphQxbebhC6bR1Xs8sr7KZgohYSI0Z/4gG7NQuzZRzahzgrkUhnxlOz0u27MIEuQ==
+X-Received: by 2002:ad4:56e3:0:b0:690:c12f:9750 with SMTP id
+ cr3-20020ad456e3000000b00690c12f9750mr8836548qvb.4.1710256741181; 
+ Tue, 12 Mar 2024 08:19:01 -0700 (PDT)
+Received: from x1n (cpe688f2e2cb7c3-cm688f2e2cb7c0.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ r6-20020a0cf606000000b0069046d929a3sm3708693qvm.145.2024.03.12.08.19.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 08:19:00 -0700 (PDT)
+Date: Tue, 12 Mar 2024 11:18:58 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
+ qemu_savevm_state_setup()
+Message-ID: <ZfByYiL3Gl9d9u7h@x1n>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-11-clg@redhat.com> <87plw44wps.fsf@suse.de>
+ <1566715b-a9a5-4df6-8e64-f4f912e2ea2f@redhat.com>
+ <87le6omw0d.fsf@suse.de>
+ <9071affc-ffb5-435a-99d1-ca829703e31b@redhat.com>
+ <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
+ <b2b52017-c4cd-43e9-a67b-2ccbb92ad99e@redhat.com>
+ <874jdbmst4.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240228120215.277717-1-ines.varhol@telecom-paris.fr>
- <20240228120215.277717-2-ines.varhol@telecom-paris.fr>
-In-Reply-To: <20240228120215.277717-2-ines.varhol@telecom-paris.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 12 Mar 2024 15:18:54 +0000
-Message-ID: <CAFEAcA8LWa70KZMO1ajVLvKxwcbKQEQOHZ8Jy6JM75pr4jB9Cg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] hw/display : Add device DM163
-To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, Samuel Tardieu <sam@rfc1149.net>, 
- Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Alistair Francis <alistair.francis@wdc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <874jdbmst4.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,289 +114,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 Feb 2024 at 12:02, In=C3=A8s Varhol <ines.varhol@telecom-paris.f=
-r> wrote:
->
-> This device implements the IM120417002 colors shield v1.1 for Arduino
-> (which relies on the DM163 8x3-channel led driving logic) and features
-> a simple display of an 8x8 RGB matrix. The columns of the matrix are
-> driven by the DM163 and the rows are driven externally.
->
-> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> ---
->  docs/system/arm/b-l475e-iot01a.rst |   3 +-
->  include/hw/display/dm163.h         |  57 ++++++
->  hw/display/dm163.c                 | 308 +++++++++++++++++++++++++++++
->  hw/display/Kconfig                 |   3 +
->  hw/display/meson.build             |   1 +
->  hw/display/trace-events            |  13 ++
->  6 files changed, 384 insertions(+), 1 deletion(-)
->  create mode 100644 include/hw/display/dm163.h
->  create mode 100644 hw/display/dm163.c
->
-> diff --git a/docs/system/arm/b-l475e-iot01a.rst b/docs/system/arm/b-l475e=
--iot01a.rst
-> index 0afef8e4f4..60b9611167 100644
-> --- a/docs/system/arm/b-l475e-iot01a.rst
-> +++ b/docs/system/arm/b-l475e-iot01a.rst
-> @@ -12,13 +12,14 @@ USART, I2C, SPI, CAN and USB OTG, as well as a variet=
-y of sensors.
->  Supported devices
->  """""""""""""""""
->
-> -Currently B-L475E-IOT01A machine's only supports the following devices:
-> +Currently B-L475E-IOT01A machine's supports the following devices:
+On Tue, Mar 12, 2024 at 11:24:39AM -0300, Fabiano Rosas wrote:
+> Cédric Le Goater <clg@redhat.com> writes:
+> 
+> > On 3/12/24 14:34, Cédric Le Goater wrote:
+> >> On 3/12/24 13:32, Cédric Le Goater wrote:
+> >>> On 3/11/24 20:03, Fabiano Rosas wrote:
+> >>>> Cédric Le Goater <clg@redhat.com> writes:
+> >>>>
+> >>>>> On 3/8/24 15:36, Fabiano Rosas wrote:
+> >>>>>> Cédric Le Goater <clg@redhat.com> writes:
+> >>>>>>
+> >>>>>>> This prepares ground for the changes coming next which add an Error**
+> >>>>>>> argument to the .save_setup() handler. Callers of qemu_savevm_state_setup()
+> >>>>>>> now handle the error and fail earlier setting the migration state from
+> >>>>>>> MIGRATION_STATUS_SETUP to MIGRATION_STATUS_FAILED.
+> >>>>>>>
+> >>>>>>> In qemu_savevm_state(), move the cleanup to preserve the error
+> >>>>>>> reported by .save_setup() handlers.
+> >>>>>>>
+> >>>>>>> Since the previous behavior was to ignore errors at this step of
+> >>>>>>> migration, this change should be examined closely to check that
+> >>>>>>> cleanups are still correctly done.
+> >>>>>>>
+> >>>>>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> >>>>>>> ---
+> >>>>>>>
+> >>>>>>>    Changes in v4:
+> >>>>>>>    - Merged cleanup change in qemu_savevm_state()
+> >>>>>>>    Changes in v3:
+> >>>>>>>    - Set migration state to MIGRATION_STATUS_FAILED
+> >>>>>>>    - Fixed error handling to be done under lock in bg_migration_thread()
+> >>>>>>>    - Made sure an error is always set in case of failure in
+> >>>>>>>      qemu_savevm_state_setup()
+> >>>>>>>    migration/savevm.h    |  2 +-
+> >>>>>>>    migration/migration.c | 27 ++++++++++++++++++++++++---
+> >>>>>>>    migration/savevm.c    | 26 +++++++++++++++-----------
+> >>>>>>>    3 files changed, 40 insertions(+), 15 deletions(-)
+> >>>>>>>
+> >>>>>>> diff --git a/migration/savevm.h b/migration/savevm.h
+> >>>>>>> index 74669733dd63a080b765866c703234a5c4939223..9ec96a995c93a42aad621595f0ed58596c532328 100644
+> >>>>>>> --- a/migration/savevm.h
+> >>>>>>> +++ b/migration/savevm.h
+> >>>>>>> @@ -32,7 +32,7 @@
+> >>>>>>>    bool qemu_savevm_state_blocked(Error **errp);
+> >>>>>>>    void qemu_savevm_non_migratable_list(strList **reasons);
+> >>>>>>>    int qemu_savevm_state_prepare(Error **errp);
+> >>>>>>> -void qemu_savevm_state_setup(QEMUFile *f);
+> >>>>>>> +int qemu_savevm_state_setup(QEMUFile *f, Error **errp);
+> >>>>>>>    bool qemu_savevm_state_guest_unplug_pending(void);
+> >>>>>>>    int qemu_savevm_state_resume_prepare(MigrationState *s);
+> >>>>>>>    void qemu_savevm_state_header(QEMUFile *f);
+> >>>>>>> diff --git a/migration/migration.c b/migration/migration.c
+> >>>>>>> index a49fcd53ee19df1ce0182bc99d7e064968f0317b..6d1544224e96f5edfe56939a9c8395d88ef29581 100644
+> >>>>>>> --- a/migration/migration.c
+> >>>>>>> +++ b/migration/migration.c
+> >>>>>>> @@ -3408,6 +3408,8 @@ static void *migration_thread(void *opaque)
+> >>>>>>>        int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
+> >>>>>>>        MigThrError thr_error;
+> >>>>>>>        bool urgent = false;
+> >>>>>>> +    Error *local_err = NULL;
+> >>>>>>> +    int ret;
+> >>>>>>>        thread = migration_threads_add("live_migration", qemu_get_thread_id());
+> >>>>>>> @@ -3451,9 +3453,17 @@ static void *migration_thread(void *opaque)
+> >>>>>>>        }
+> >>>>>>>        bql_lock();
+> >>>>>>> -    qemu_savevm_state_setup(s->to_dst_file);
+> >>>>>>> +    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
+> >>>>>>>        bql_unlock();
+> >>>>>>> +    if (ret) {
+> >>>>>>> +        migrate_set_error(s, local_err);
+> >>>>>>> +        error_free(local_err);
+> >>>>>>> +        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
+> >>>>>>> +                          MIGRATION_STATUS_FAILED);
+> >>>>>>> +        goto out;
+> >>>>>>> +     }
+> >>>>>>> +
+> >>>>>>>        qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+> >>>>>>>                                   MIGRATION_STATUS_ACTIVE);
+> >>>>>>
+> >>>>>> This^ should be before the new block it seems:
+> >>>>>>
+> >>>>>> GOOD:
+> >>>>>> migrate_set_state new state setup
+> >>>>>> migrate_set_state new state wait-unplug
+> >>>>>> migrate_fd_cancel
+> >>>>>> migrate_set_state new state cancelling
+> >>>>>> migrate_fd_cleanup
+> >>>>>> migrate_set_state new state cancelled
+> >>>>>> migrate_fd_cancel
+> >>>>>> ok 1 /x86_64/failover-virtio-net/migrate/abort/wait-unplug
+> >>>>>>
+> >>>>>> BAD:
+> >>>>>> migrate_set_state new state setup
+> >>>>>> migrate_fd_cancel
+> >>>>>> migrate_set_state new state cancelling
+> >>>>>> migrate_fd_cleanup
+> >>>>>> migrate_set_state new state cancelled
+> >>>>>> qemu-system-x86_64: ram_save_setup failed: Input/output error
+> >>>>>> **
+> >>>>>> ERROR:../tests/qtest/virtio-net-failover.c:1203:test_migrate_abort_wait_unplug:
+> >>>>>> assertion failed (status == "cancelling"): ("cancelled" == "cancelling")
+> >>>>>>
+> >>>>>> Otherwise migration_iteration_finish() will schedule the cleanup BH and
+> >>>>>> that will run concurrently with migrate_fd_cancel() issued by the test
+> >>>>>> and bad things happens.
+> >>>>>
+> >>>>> This hack makes things work :
+> >>>>>
+> >>>>> @@ -3452,6 +3452,9 @@ static void *migration_thread(void *opaq
+> >>>>>            qemu_savevm_send_colo_enable(s->to_dst_file);
+> >>>>>        }
+> >>>>> +    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+> >>>>> +                            MIGRATION_STATUS_SETUP);
+> >>>>> +
+> >>>>
+> >>>> Why move it all the way up here? Has moving the wait_unplug before the
+> >>>> 'if (ret)' block not worked for you?
+> >>>
+> >>> We could be sleeping while holding the BQL. It looked wrong.
+> >> 
+> >> Sorry wrong answer. Yes I can try moving it before the 'if (ret)' block.
+> >> I can reproduce easily with an x86 guest running on PPC64.
+> >
+> > That works just the same.
+> >
+> > Peter, Fabiano,
+> >
+> > What would you prefer  ?
+> >
+> > 1. move qemu_savevm_wait_unplug() before qemu_savevm_state_setup(),
+> >     means one new patch.
+> 
+> Is there a point to this except "because we can"? Honest question, I
+> might have missed the motivation.
 
-"machines support"
+My previous point was, it avoids holding the resources (that will be
+allocated in setup() routines) while we know we can wait for a long time.
 
->
->  - Cortex-M4F based STM32L4x5 SoC
->  - STM32L4x5 EXTI (Extended interrupts and events controller)
->  - STM32L4x5 SYSCFG (System configuration controller)
->  - STM32L4x5 RCC (Reset and clock control)
->  - STM32L4x5 GPIOs (General-purpose I/Os)
-> +- optional 8x8 led display (based on DM163 driver)
->
->  Missing devices
->  """""""""""""""
-> diff --git a/include/hw/display/dm163.h b/include/hw/display/dm163.h
-> new file mode 100644
-> index 0000000000..aa775e51e1
-> --- /dev/null
-> +++ b/include/hw/display/dm163.h
-> @@ -0,0 +1,57 @@
-> +/*
-> + * QEMU DM163 8x3-channel constant current led driver
-> + * driving columns of associated 8x8 RGB matrix.
-> + *
-> + * Copyright (C) 2024 Samuel Tardieu <sam@rfc1149.net>
-> + * Copyright (C) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> + * Copyright (C) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_DISPLAY_DM163_H
-> +#define HW_DISPLAY_DM163_H
-> +
-> +#include "qom/object.h"
-> +#include "hw/qdev-core.h"
-> +
-> +#define TYPE_DM163 "dm163"
-> +OBJECT_DECLARE_SIMPLE_TYPE(DM163State, DM163);
-> +
-> +#define DM163_NUM_LEDS 24
-> +#define RGB_MATRIX_NUM_ROWS 8
-> +#define RGB_MATRIX_NUM_COLS (DM163_NUM_LEDS / 3)
-> +#define COLOR_BUFFER_SIZE RGB_MATRIX_NUM_ROWS
-> +
-> +typedef struct DM163State {
-> +    DeviceState parent_obj;
-> +
-> +    /* DM163 driver */
-> +    uint64_t bank0_shift_register[3];
-> +    uint64_t bank1_shift_register[3];
-> +    uint16_t latched_outputs[DM163_NUM_LEDS];
-> +    uint16_t outputs[DM163_NUM_LEDS];
-> +    qemu_irq sout;
-> +
-> +    uint8_t dck;
-> +    uint8_t en_b;
-> +    uint8_t lat_b;
-> +    uint8_t rst_b;
-> +    uint8_t selbk;
-> +    uint8_t sin;
-> +
-> +    /* IM120417002 colors shield */
-> +    uint8_t activated_rows;
-> +
-> +    /* 8x8 RGB matrix */
-> +    QemuConsole *console;
-> +    /* Rows currently being displayed on the matrix. */
-> +    /* The last row is filled with 0 (turned off row) */
-> +    uint32_t buffer[COLOR_BUFFER_SIZE + 1][RGB_MATRIX_NUM_COLS];
-> +    uint8_t last_buffer_idx;
-> +    uint8_t buffer_idx_of_row[RGB_MATRIX_NUM_ROWS];
-> +    /* Used to simulate retinal persistance of rows */
+But then I found that the ordering is indeed needed at least if we don't
+change migrate_set_state() first - it is the only place we set the status
+to START (which I overlooked, sorry)...
 
-"persistence" (I think there are some other instances of this
-typo below as well.)
+IMHO the function is not well designed; the state update of the next stage
+should not reside in a function to wait for failover primary devices
+conditionally. It's a bit of a mess.
 
-> +    uint8_t age_of_row[RGB_MATRIX_NUM_ROWS];
-> +} DM163State;
-> +
-> +#endif /* HW_DISPLAY_DM163_H */
-> diff --git a/hw/display/dm163.c b/hw/display/dm163.c
-> new file mode 100644
-> index 0000000000..87e886356a
-> --- /dev/null
-> +++ b/hw/display/dm163.c
-> @@ -0,0 +1,308 @@
-> +/*
-> + * QEMU DM163 8x3-channel constant current led driver
-> + * driving columns of associated 8x8 RGB matrix.
-> + *
-> + * Copyright (C) 2024 Samuel Tardieu <sam@rfc1149.net>
-> + * Copyright (C) 2024 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> + * Copyright (C) 2024 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +/*
-> + * The reference used for the DM163 is the following :
-> + * http://www.siti.com.tw/product/spec/LED/DM163.pdf
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "migration/vmstate.h"
-> +#include "hw/irq.h"
-> +#include "hw/qdev-properties.h"
-> +#include "hw/display/dm163.h"
-> +#include "ui/console.h"
-> +#include "trace.h"
-> +
-> +#define LED_SQUARE_SIZE 100
-> +/* Number of frames a row stays visible after being turned off. */
-> +#define ROW_PERSISTANCE 4
-> +
-> +static const VMStateDescription vmstate_dm163 =3D {
-> +    .name =3D TYPE_DM163,
-> +    .version_id =3D 1,
-> +    .minimum_version_id =3D 1,
-> +    .fields =3D (const VMStateField[]) {
-> +        VMSTATE_UINT8(activated_rows, DM163State),
-> +        VMSTATE_UINT64_ARRAY(bank0_shift_register, DM163State, 3),
-> +        VMSTATE_UINT64_ARRAY(bank1_shift_register, DM163State, 3),
-> +        VMSTATE_UINT16_ARRAY(latched_outputs, DM163State, DM163_NUM_LEDS=
-),
-> +        VMSTATE_UINT16_ARRAY(outputs, DM163State, DM163_NUM_LEDS),
-> +        VMSTATE_UINT8(dck, DM163State),
-> +        VMSTATE_UINT8(en_b, DM163State),
-> +        VMSTATE_UINT8(lat_b, DM163State),
-> +        VMSTATE_UINT8(rst_b, DM163State),
-> +        VMSTATE_UINT8(selbk, DM163State),
-> +        VMSTATE_UINT8(sin, DM163State),
-> +        VMSTATE_UINT32_2DARRAY(buffer, DM163State,
-> +            COLOR_BUFFER_SIZE + 1, RGB_MATRIX_NUM_COLS),
-> +        VMSTATE_UINT8(last_buffer_idx, DM163State),
-> +        VMSTATE_UINT8_ARRAY(buffer_idx_of_row, DM163State, RGB_MATRIX_NU=
-M_ROWS),
-> +        VMSTATE_UINT8_ARRAY(age_of_row, DM163State, RGB_MATRIX_NUM_ROWS)=
-,
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
-> +static void dm163_reset_hold(Object *obj)
-> +{
-> +    DM163State *s =3D DM163(obj);
-> +
-> +    /* Reset only stops the PWM. */
-> +    memset(s->outputs, 0, sizeof(s->outputs));
-> +
-> +    /* The last row of the buffer stores a turned off row */
-> +    memset(s->buffer[COLOR_BUFFER_SIZE], 0, sizeof(s->buffer[0]));
+> 
+> Also a couple of points:
+> 
+> - The current version of this proposal seems it will lose the transition
+> from SETUP->ACTIVE no? As in, after qemu_savevm_state_setup, there's
+> nothing changing the state to ACTIVE anymore.
+> 
+> - You also need to change the bg migration path.
+> 
+> >
+> > 2. leave qemu_savevm_wait_unplug() after qemu_savevm_state_setup()
+> >     and handle state_setup() errors after waiting. means an update
+> >     of this patch.
+> 
+> I vote for this. This failover feature is a pretty complex one, let's
+> not risk changing the behavior for no good reason. Just look at the
+> amount of head-banging going on in these threads:
+> 
+> https://patchwork.ozlabs.org/project/qemu-devel/cover/20181025140631.634922-1-sameeh@daynix.com/
+> https://www.mail-archive.com/qemu-devel@nongnu.org/msg609296.html
 
-This reset function seems to be missing reset handling for
-a lot of this device's state.
+Do we know who is consuming this feature?
 
-> +}
+Now VFIO allows a migration to happen without this trick.  I'm wondering
+whether all relevant NICs can also support VFIO migrations in the future,
+then we can drop this tricky feature for good.
 
+-- 
+Peter Xu
 
-> +static void dm163_invalidate_display(void *opaque)
-> +{
-> +}
-
-I'm not sure but I think the invalidate_display method is supposed
-to at least do a qemu_console_resize() to the correct size.
-It also typically sets a flag to tell the update_display method
-that it needs to redraw the whole window.
-
-> +
-> +static void dm163_update_display(void *opaque)
-> +{
-> +    DM163State *s =3D (DM163State *)opaque;
-> +    DisplaySurface *surface =3D qemu_console_surface(s->console);
-> +    uint32_t *dest;
-> +    unsigned bits_ppi =3D surface_bits_per_pixel(surface);
-> +
-> +    /* Should the code be updated to handle other bpp than 32 ? */
-
-No. The UI layer guarantees that the console surface is always
-32 bits per pixel. You don't need to assert that this is true.
-(We still have some old display driver models which have legacy
-code we never cleaned up from back when they had to cope with
-possibly different console surface bit depths; but the handling
-of other depths is just dead code in those devices.)
-
-> +    /* trace_dm163_bits_ppi(bits_ppi); */
-> +    g_assert((bits_ppi =3D=3D 32));
-> +    dest =3D surface_data(surface);
-> +    for (unsigned y =3D 0; y < RGB_MATRIX_NUM_ROWS; y++) {
-> +        for (unsigned _ =3D 0; _ < LED_SQUARE_SIZE; _++) {
-> +            for (int x =3D RGB_MATRIX_NUM_COLS * LED_SQUARE_SIZE - 1; x =
->=3D 0; x--) {
-> +                *dest++ =3D s->buffer[s->buffer_idx_of_row[y]][x / LED_S=
-QUARE_SIZE];
-> +            }
-> +        }
-> +        if (s->age_of_row[y]) {
-> +            s->age_of_row[y]--;
-> +            if (!s->age_of_row[y]) {
-> +                /*
-> +                 * If the ROW_PERSISTANCE delay is up,
-> +                 * the row is turned off.
-> +                 * (s->buffer[COLOR_BUFFER] is filled with 0)
-> +                 */
-> +                s->buffer_idx_of_row[y] =3D COLOR_BUFFER_SIZE;
-> +            }
-> +        }
-> +    }
-> +    /*
-> +     * Ideally set the refresh rate so that the row persistance
-> +     * doesn't need to be changed.
-> +     *
-> +     * Currently `dpy_ui_info_supported(s->console)` returns false
-> +     * which makes it impossible to get or set UIInfo.
-> +     */
-> +    if (dpy_ui_info_supported(s->console)) {
-> +        trace_dm163_refresh_rate(dpy_get_ui_info(s->console)->refresh_ra=
-te);
-> +    } else {
-> +        trace_dm163_refresh_rate(0);
-> +    }
-
-Why does this device care about the console's refresh rate at all?
-It should just be displaying what it needs to display.
-No other device in hw/display calls dpy_get_ui_info().
-
-(The reason it returns false is because your GraphicHwOps struct
-doesn't define a ui_info function -- dpy_get_ui_info()/dpy_set_ui_info()
-is for the UI layer to tell the display device about changes in things
-like refresh rate and window size, not for the display device to ask
-something else for this information. This is typically only needed by
-virtual devices like virtio-vga or xenfb, though, so I wouldn't
-expect you to need to set a ui_info function.)
-
-> +
-> +    dpy_gfx_update(s->console, 0, 0, RGB_MATRIX_NUM_COLS * LED_SQUARE_SI=
-ZE,
-> +                   RGB_MATRIX_NUM_ROWS * LED_SQUARE_SIZE);
-
-This will redraw the entire 800x800 window every time, which is
-not very efficient. Do we really need to do that?
-
-> +}
-> +
-> +static const GraphicHwOps dm163_ops =3D {
-> +    .invalidate  =3D dm163_invalidate_display,
-> +    .gfx_update  =3D dm163_update_display,
-> +};
-
-thanks
--- PMM
 
