@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 242F3C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FD96C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:56:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1Y8-00016Q-Vf; Tue, 12 Mar 2024 08:48:09 -0400
+	id 1rk1Uq-0003lD-EE; Tue, 12 Mar 2024 08:44:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1VS-00058A-Is
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:45:22 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Un-0003bS-5S
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1VQ-0000qT-Dk
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:45:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Ug-0000L8-A9
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710247519;
+ s=mimecast20190719; t=1710247473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4xozeGQhwIBngkiKbaCD6gMNeCrtvDlcM6z3DqF/RLw=;
- b=Sf6C3vzycw22wHokPnwNBPFg3KsRKdR9gftQbV5O1UsWwo1s1SW/nyOSdpoHZQM5R/6USl
- zWMrvtljbKOuLZ16RZXViujzfgnKVoPYGLqO+PPMZjAMUgDedgTjonlNqPxEDnYt6tMaWx
- BCJ/wLp2P2DrdsJaru5wBhxmz05G4yg=
+ bh=f5lm0VnfXsNWt+FRa/MBqsb4VrTEIB76yLlxjX43jvA=;
+ b=OglKjXl3MrWjtSLe1yRnZD7/Ool4XV0LTxn2Xlkqs0sDWemJjUTyi7OdW8DlzuDVkd1Q+n
+ ZQTXmunNvIYzQar2sNXmIVX5JoMgekBX8E7eZw6mGT6mIRkzEQXJX94mI7uXe+TPEG4M6l
+ mHfxKqRYSHGpSfFjCi3Vt8apuE+wx5k=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-wS8k9vi3MYmQSfoEYwGa3Q-1; Tue,
- 12 Mar 2024 08:45:14 -0400
-X-MC-Unique: wS8k9vi3MYmQSfoEYwGa3Q-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-K0pOP1TLOie2Z7IXsK6mAw-1; Tue,
+ 12 Mar 2024 08:44:30 -0400
+X-MC-Unique: K0pOP1TLOie2Z7IXsK6mAw-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1D6621C41A05;
- Tue, 12 Mar 2024 12:45:14 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CA81B1C07F39;
+ Tue, 12 Mar 2024 12:44:29 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.69])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 328F9492BC4;
- Tue, 12 Mar 2024 12:45:13 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 60014492BD0;
+ Tue, 12 Mar 2024 12:44:28 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 51/55] target/sh4: Prefer fast cpu_env() over slower CPU QOM
- cast macro
-Date: Tue, 12 Mar 2024 13:43:35 +0100
-Message-ID: <20240312124339.761630-52-thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 23/55] hw/vfio/helpers: Fix missing ERRP_GUARD() for
+ error_prepend()
+Date: Tue, 12 Mar 2024 13:43:07 +0100
+Message-ID: <20240312124339.761630-24-thuth@redhat.com>
 In-Reply-To: <20240312124339.761630-1-thuth@redhat.com>
 References: <20240312124339.761630-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -83,192 +83,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Mechanical patch produced running the command documented
-in scripts/coccinelle/cpu_env.cocci_template header.
+As the comment in qapi/error, passing @errp to error_prepend() requires
+ERRP_GUARD():
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240129164514.73104-26-philmd@linaro.org>
+* = Why, when and how to use ERRP_GUARD() =
+*
+* Without ERRP_GUARD(), use of the @errp parameter is restricted:
+...
+* - It should not be passed to error_prepend(), error_vprepend() or
+*   error_append_hint(), because that doesn't work with &error_fatal.
+* ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
+
+ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
+can't see this additional information, because exit() happens in
+error_setg earlier than information is added [1].
+
+In hw/vfio/helpers.c, there are 3 functions passing @errp to
+error_prepend() without ERRP_GUARD():
+ - vfio_set_irq_signaling()
+ - vfio_device_get_name()
+ - vfio_device_set_fd()
+
+There are too many possible callers to check the impact of this defect;
+it may or may not be harmless. Thus it is necessary to protect their
+@errp with ERRP_GUARD().
+
+To avoid the issue like [1] said, add missing ERRP_GUARD() at their
+beginning.
+
+[1]: Issue description in the commit message of commit ae7c80a7bd73
+     ("error: New macro ERRP_GUARD()").
+
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Cc: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-ID: <20240311033822.3142585-21-zhao1.liu@linux.intel.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/sh4/cpu.c       | 18 ++++++------------
- target/sh4/gdbstub.c   |  6 ++----
- target/sh4/helper.c    | 14 ++++----------
- target/sh4/translate.c |  6 ++----
- 4 files changed, 14 insertions(+), 30 deletions(-)
+ hw/vfio/helpers.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
-index eb7c551e9b..4f5a4a3d98 100644
---- a/target/sh4/cpu.c
-+++ b/target/sh4/cpu.c
-@@ -71,8 +71,7 @@ static void superh_restore_state_to_opc(CPUState *cs,
- static bool superh_io_recompile_replay_branch(CPUState *cs,
-                                               const TranslationBlock *tb)
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index 6789870802..47b4096c05 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -110,6 +110,7 @@ static const char *index_to_str(VFIODevice *vbasedev, int index)
+ int vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
+                            int action, int fd, Error **errp)
  {
--    SuperHCPU *cpu = SUPERH_CPU(cs);
--    CPUSH4State *env = &cpu->env;
-+    CPUSH4State *env = cpu_env(cs);
++    ERRP_GUARD();
+     struct vfio_irq_set *irq_set;
+     int argsz, ret = 0;
+     const char *name;
+@@ -613,6 +614,7 @@ bool vfio_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
  
-     if ((env->flags & (TB_FLAG_DELAY_SLOT | TB_FLAG_DELAY_SLOT_COND))
-         && !(cs->tcg_cflags & CF_PCREL) && env->pc != tb->pc) {
-@@ -107,9 +106,8 @@ static int sh4_cpu_mmu_index(CPUState *cs, bool ifetch)
- static void superh_cpu_reset_hold(Object *obj)
+ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
  {
-     CPUState *cs = CPU(obj);
--    SuperHCPU *cpu = SUPERH_CPU(cs);
-     SuperHCPUClass *scc = SUPERH_CPU_GET_CLASS(obj);
--    CPUSH4State *env = &cpu->env;
-+    CPUSH4State *env = cpu_env(cs);
++    ERRP_GUARD();
+     struct stat st;
  
-     if (scc->parent_phases.hold) {
-         scc->parent_phases.hold(obj);
-@@ -159,8 +157,7 @@ out:
+     if (vbasedev->fd < 0) {
+@@ -644,6 +646,7 @@ int vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
  
- static void sh7750r_cpu_initfn(Object *obj)
+ void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
  {
--    SuperHCPU *cpu = SUPERH_CPU(obj);
--    CPUSH4State *env = &cpu->env;
-+    CPUSH4State *env = cpu_env(CPU(obj));
++    ERRP_GUARD();
+     int fd = monitor_fd_param(monitor_cur(), str, errp);
  
-     env->id = SH_CPU_SH7750R;
-     env->features = SH_FEATURE_BCR3_AND_BCR4;
-@@ -177,8 +174,7 @@ static void sh7750r_class_init(ObjectClass *oc, void *data)
- 
- static void sh7751r_cpu_initfn(Object *obj)
- {
--    SuperHCPU *cpu = SUPERH_CPU(obj);
--    CPUSH4State *env = &cpu->env;
-+    CPUSH4State *env = cpu_env(CPU(obj));
- 
-     env->id = SH_CPU_SH7751R;
-     env->features = SH_FEATURE_BCR3_AND_BCR4;
-@@ -195,8 +191,7 @@ static void sh7751r_class_init(ObjectClass *oc, void *data)
- 
- static void sh7785_cpu_initfn(Object *obj)
- {
--    SuperHCPU *cpu = SUPERH_CPU(obj);
--    CPUSH4State *env = &cpu->env;
-+    CPUSH4State *env = cpu_env(CPU(obj));
- 
-     env->id = SH_CPU_SH7785;
-     env->features = SH_FEATURE_SH4A;
-@@ -231,8 +226,7 @@ static void superh_cpu_realizefn(DeviceState *dev, Error **errp)
- 
- static void superh_cpu_initfn(Object *obj)
- {
--    SuperHCPU *cpu = SUPERH_CPU(obj);
--    CPUSH4State *env = &cpu->env;
-+    CPUSH4State *env = cpu_env(CPU(obj));
- 
-     env->movcal_backup_tail = &(env->movcal_backup);
- }
-diff --git a/target/sh4/gdbstub.c b/target/sh4/gdbstub.c
-index d8e199fc06..75926d4e04 100644
---- a/target/sh4/gdbstub.c
-+++ b/target/sh4/gdbstub.c
-@@ -26,8 +26,7 @@
- 
- int superh_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
--    SuperHCPU *cpu = SUPERH_CPU(cs);
--    CPUSH4State *env = &cpu->env;
-+    CPUSH4State *env = cpu_env(cs);
- 
-     switch (n) {
-     case 0 ... 7:
-@@ -76,8 +75,7 @@ int superh_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- 
- int superh_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
--    SuperHCPU *cpu = SUPERH_CPU(cs);
--    CPUSH4State *env = &cpu->env;
-+    CPUSH4State *env = cpu_env(cs);
- 
-     switch (n) {
-     case 0 ... 7:
-diff --git a/target/sh4/helper.c b/target/sh4/helper.c
-index 5a6f653c12..7c6f9d374a 100644
---- a/target/sh4/helper.c
-+++ b/target/sh4/helper.c
-@@ -55,8 +55,7 @@ int cpu_sh4_is_cached(CPUSH4State *env, target_ulong addr)
- 
- void superh_cpu_do_interrupt(CPUState *cs)
- {
--    SuperHCPU *cpu = SUPERH_CPU(cs);
--    CPUSH4State *env = &cpu->env;
-+    CPUSH4State *env = cpu_env(cs);
-     int do_irq = cs->interrupt_request & CPU_INTERRUPT_HARD;
-     int do_exp, irq_vector = cs->exception_index;
- 
-@@ -432,11 +431,10 @@ static int get_physical_address(CPUSH4State * env, target_ulong * physical,
- 
- hwaddr superh_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
- {
--    SuperHCPU *cpu = SUPERH_CPU(cs);
-     target_ulong physical;
-     int prot;
- 
--    if (get_physical_address(&cpu->env, &physical, &prot, addr, MMU_DATA_LOAD)
-+    if (get_physical_address(cpu_env(cs), &physical, &prot, addr, MMU_DATA_LOAD)
-             == MMU_OK) {
-         return physical;
-     }
-@@ -782,11 +780,8 @@ int cpu_sh4_is_cached(CPUSH4State * env, target_ulong addr)
- bool superh_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- {
-     if (interrupt_request & CPU_INTERRUPT_HARD) {
--        SuperHCPU *cpu = SUPERH_CPU(cs);
--        CPUSH4State *env = &cpu->env;
--
-         /* Delay slots are indivisible, ignore interrupts */
--        if (env->flags & TB_FLAG_DELAY_SLOT_MASK) {
-+        if (cpu_env(cs)->flags & TB_FLAG_DELAY_SLOT_MASK) {
-             return false;
-         } else {
-             superh_cpu_do_interrupt(cs);
-@@ -800,8 +795,7 @@ bool superh_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                          MMUAccessType access_type, int mmu_idx,
-                          bool probe, uintptr_t retaddr)
- {
--    SuperHCPU *cpu = SUPERH_CPU(cs);
--    CPUSH4State *env = &cpu->env;
-+    CPUSH4State *env = cpu_env(cs);
-     int ret;
- 
-     target_ulong physical;
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index 6a6d862b10..a9b1bc7524 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -159,8 +159,7 @@ void sh4_translate_init(void)
- 
- void superh_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- {
--    SuperHCPU *cpu = SUPERH_CPU(cs);
--    CPUSH4State *env = &cpu->env;
-+    CPUSH4State *env = cpu_env(cs);
-     int i;
- 
-     qemu_fprintf(f, "pc=0x%08x sr=0x%08x pr=0x%08x fpscr=0x%08x\n",
-@@ -2186,7 +2185,6 @@ static void decode_gusa(DisasContext *ctx, CPUSH4State *env)
- static void sh4_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
- {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
--    CPUSH4State *env = cpu_env(cs);
-     uint32_t tbflags;
-     int bound;
- 
-@@ -2196,7 +2194,7 @@ static void sh4_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     /* We don't know if the delayed pc came from a dynamic or static branch,
-        so assume it is a dynamic branch.  */
-     ctx->delayed_pc = -1; /* use delayed pc from env pointer */
--    ctx->features = env->features;
-+    ctx->features = cpu_env(cs)->features;
-     ctx->has_movcal = (tbflags & TB_FLAG_PENDING_MOVCA);
-     ctx->gbank = ((tbflags & (1 << SR_MD)) &&
-                   (tbflags & (1 << SR_RB))) * 0x10;
+     if (fd < 0) {
 -- 
 2.44.0
 
