@@ -4,64 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70698C54E49
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 05:50:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B839C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 05:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjv1U-00086j-Qq; Tue, 12 Mar 2024 01:50:01 -0400
+	id 1rjv4U-0000dF-PG; Tue, 12 Mar 2024 01:53:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjv1S-00086U-U2
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 01:49:59 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjv1Q-0007yJ-DS
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 01:49:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710222596; x=1741758596;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=poBSj/TwH45qU4orRVv9VqC5G11e9zHu2p+rfihjyoI=;
- b=ffGNwfyttzhfuHBqcfm0hzMPhnFOYsZ4R7tguYVK2ejcfOeD3s5f9HKU
- SQ/pFOk9t4SNAnxWC2Asf6Yg8+39L5bzaPtDQcLQe4vTE9xruVmNSk6I0
- sG1GWkOtKkDxIBsJQf5eHve2WEUWjd38FJlIZYVRgSt7VoHyjrtIZ9tSV
- yKer9z92FFuQytKGqvgUKm+39j+3fpAAcd+SD+LMdJIm/AKL5blTxgote
- ADSG7Z1SFQy6fqwK9aE+fvfV8jGYEpHo0UKQlML55FJA3Z0oFcQXd8M0Y
- WziIXDSPmRU+BxkPfAZmRJ8K5Y2stA8AMLJWh5ByJmDiz5uDq+nTObVde Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="4769769"
-X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; 
-   d="scan'208";a="4769769"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Mar 2024 22:49:54 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; d="scan'208";a="42415161"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by fmviesa001.fm.intel.com with ESMTP; 11 Mar 2024 22:49:52 -0700
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH] error: Move ERRP_GUARD() to the beginning of the function
-Date: Tue, 12 Mar 2024 14:03:37 +0800
-Message-Id: <20240312060337.3240965-1-zhao1.liu@linux.intel.com>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=192.198.163.17;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rjv4P-0000cc-1Z; Tue, 12 Mar 2024 01:53:01 -0400
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rjv4L-0008T2-Tm; Tue, 12 Mar 2024 01:53:00 -0400
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-3c1a2f7e302so2478802b6e.0; 
+ Mon, 11 Mar 2024 22:52:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710222776; x=1710827576; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xLST/+LxPFJFeiKQZp5C4/yG7knQNlqjhhzs4+zCE9M=;
+ b=KCn+h2kpcWiY/o1hAe9KJ3LAN8b3MTpLP1wQy3HpogJGagl/z2XhBULPFeipoUSYVZ
+ 3S2NEuPY/6LFgprlR1VFHlB4TjOA5vtBjEMVedssOKhwHpv+HReCMm7f+lwrMi/srgfv
+ HxzNQVksDbEmhrVE4wyaIqieuWgbJM3t1EO2em6vj5BMVMcIsPkoZ/mNBZEOp6KWOin6
+ JJF9HYS/QMquyf2X66E3WfYcT7wCoW+lHrz1ato3tgSCX/O3ibNWGzyrFYVhYIE82RM0
+ afR1VnaxAdSZwdONcQQxlTJjGVG+ZtYH6/Emrg1ETiQvLCDAxnVlif3YPU5izwUzrRKG
+ Yo2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710222776; x=1710827576;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=xLST/+LxPFJFeiKQZp5C4/yG7knQNlqjhhzs4+zCE9M=;
+ b=OKYKCSDF2/stzJHz7QtcFX97uwRRyp8ULnh7RkIYOnaoce62ODu1dqEKUpvXcr79+m
+ txy82wC+waivU9zOBW2SZXPb93Q/uMeC6UGhKKdSCpKGJlb8KcBEF1sU8K/kzh1Q6cGM
+ P0sdzu9oqwJbmeg5YSaPEHIT2NAo3esWCfSWCJEiqFQzPHLczppJ2XFFR8gLe2hbgG71
+ EsUvc4CyCEgNmOpI0gRWhaTCIy5f6VWfsmfjfifriEHvcAhGOlfL6hwg379KKw8U8Z3M
+ B3RawaRT5EO0rjwTmxa4bFDvoeghFPShErGrzNsygywmoqvt0Rb/LaCsmALrSixtKuzE
+ /hUA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLyznvJIe+qDpa1PpACPDMGa3Fl5T2QMyD9+vHjPGkzIsSWmKKe6fYLA38uyw4LlEp6lEsVIsb2kq0pbjtjH0UZQTf5RJNsMe85y020e8VdW6Dnxs5BRAm0Q8=
+X-Gm-Message-State: AOJu0Yx653VTAn68Bjd1bGZx6ULhlZw6mCQW780/8MsOFaXf20y5xs71
+ MW7q1Cq4yZYSf5tdsF+mmN7LEKWLd3N+hSp1/exadydSoXBXtCTU
+X-Google-Smtp-Source: AGHT+IFl8RN0ibzoWHUitI6aPMczNZpijpS11q75Z2xrAJzx8yyD7Kj5bhZgWuTS4Jipt13LfXnmWw==
+X-Received: by 2002:a05:6808:6487:b0:3c2:54c7:2073 with SMTP id
+ fh7-20020a056808648700b003c254c72073mr2256312oib.33.1710222776271; 
+ Mon, 11 Mar 2024 22:52:56 -0700 (PDT)
+Received: from localhost ([1.146.55.44]) by smtp.gmail.com with ESMTPSA id
+ p1-20020a62b801000000b006e66a76d877sm5536450pfe.153.2024.03.11.22.52.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Mar 2024 22:52:55 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 12 Mar 2024 15:52:50 +1000
+Message-Id: <CZRJDIF198N3.HBI9LR13HIA0@wheely>
+Cc: <clg@kaod.org>, <mikey@neuling.org>, <amachhiw@linux.vnet.ibm.com>,
+ <vaibhav@linux.ibm.com>, <sbhat@linux.ibm.com>, <danielhb413@gmail.com>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v5 00/14] Nested PAPR API (KVM on PowerVM)
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
+X-Mailer: aerc 0.15.2
+References: <20240308111940.1617660-1-harshpb@linux.ibm.com>
+In-Reply-To: <20240308111940.1617660-1-harshpb@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
+ envelope-from=npiggin@gmail.com; helo=mail-oi1-x229.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,167 +95,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+On Fri Mar 8, 2024 at 9:19 PM AEST, Harsh Prateek Bora wrote:
+> There is an existing Nested-HV API to enable nested guests on powernv
+> machines. However, that is not supported on pseries/PowerVM LPARs.
+> This patch series implements required hcall interfaces to enable nested
+> guests with KVM on PowerVM.
+> Unlike Nested-HV, with this API, entire L2 state is retained by L0
+> during guest entry/exit and uses pre-defined Guest State Buffer (GSB)
+> format to communicate guest state between L1 and L2 via L0.
+>
+> L0 here refers to the phyp/PowerVM, or launching a Qemu TCG L0 with the
+> newly introduced option cap-nested-papr=3Dtrue.
+> L1 refers to the LPAR host on PowerVM or Linux booted on Qemu TCG with
+> above mentioned option cap-nested-papr=3Dtrue.
+> L2 refers to nested guest running on top of L1 using KVM.
+> No SW changes needed for Qemu running in L1 Linux as well as L2 Kernel.
+>
+> Linux Kernel side support is already merged upstream:
 
-Since the commit 05e385d2a9 ("error: Move ERRP_GUARD() to the beginning
-of the function"), there are new codes that don't put ERRP_GUARD() at
-the beginning of the functions.
+This is all looking pretty good to me now. Considering it's quite
+self-contained and adding a new feature, I think it's good to
+merge.
 
-As stated in the commit 05e385d2a9: "include/qapi/error.h advises to put
-ERRP_GUARD() right at the beginning of the function, because only then
-can it guard the whole function.", so clean up the few spots
-disregarding the advice.
+I would like to have an avocado test for it, but the avocado
+framework has a bug that's causing issues with the ppc hv test,
+and we might have to move to a new host kernel with the KVM
+support merged. I can take a look at that, I think we can add
+new tests after soft-freeze.
 
-Inspired-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- * Inspired by Markus' original cleanup and copied his commit message.
----
- block.c                    | 2 +-
- block/qapi.c               | 6 +++---
- hw/s390x/s390-virtio-ccw.c | 2 +-
- migration/options.c        | 2 +-
- migration/postcopy-ram.c   | 4 ++--
- net/vhost-vdpa.c           | 3 +--
- 6 files changed, 9 insertions(+), 10 deletions(-)
+Thanks,
+Nick
 
-diff --git a/block.c b/block.c
-index 1ed9214f66ed..8a43a83c11ca 100644
---- a/block.c
-+++ b/block.c
-@@ -534,9 +534,9 @@ typedef struct CreateCo {
- int coroutine_fn bdrv_co_create(BlockDriver *drv, const char *filename,
-                                 QemuOpts *opts, Error **errp)
- {
-+    ERRP_GUARD();
-     int ret;
-     GLOBAL_STATE_CODE();
--    ERRP_GUARD();
- 
-     if (!drv->bdrv_co_create_opts) {
-         error_setg(errp, "Driver '%s' does not support image creation",
-diff --git a/block/qapi.c b/block/qapi.c
-index 9e806fa230d8..31183d493341 100644
---- a/block/qapi.c
-+++ b/block/qapi.c
-@@ -46,11 +46,11 @@ BlockDeviceInfo *bdrv_block_device_info(BlockBackend *blk,
-                                         bool flat,
-                                         Error **errp)
- {
-+    ERRP_GUARD();
-     ImageInfo **p_image_info;
-     ImageInfo *backing_info;
-     BlockDriverState *backing;
-     BlockDeviceInfo *info;
--    ERRP_GUARD();
- 
-     if (!bs->drv) {
-         error_setg(errp, "Block device %s is ejected", bs->node_name);
-@@ -330,8 +330,8 @@ void bdrv_query_image_info(BlockDriverState *bs,
-                            bool skip_implicit_filters,
-                            Error **errp)
- {
--    ImageInfo *info;
-     ERRP_GUARD();
-+    ImageInfo *info;
- 
-     info = g_new0(ImageInfo, 1);
-     bdrv_do_query_node_info(bs, qapi_ImageInfo_base(info), errp);
-@@ -382,10 +382,10 @@ void bdrv_query_block_graph_info(BlockDriverState *bs,
-                                  BlockGraphInfo **p_info,
-                                  Error **errp)
- {
-+    ERRP_GUARD();
-     BlockGraphInfo *info;
-     BlockChildInfoList **children_list_tail;
-     BdrvChild *c;
--    ERRP_GUARD();
- 
-     info = g_new0(BlockGraphInfo, 1);
-     bdrv_do_query_node_info(bs, qapi_BlockGraphInfo_base(info), errp);
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index 62804cc2281d..4b6aab8eef98 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -312,9 +312,9 @@ static void ccw_init(MachineState *machine)
- static void s390_cpu_plug(HotplugHandler *hotplug_dev,
-                         DeviceState *dev, Error **errp)
- {
-+    ERRP_GUARD();
-     MachineState *ms = MACHINE(hotplug_dev);
-     S390CPU *cpu = S390_CPU(dev);
--    ERRP_GUARD();
- 
-     g_assert(!ms->possible_cpus->cpus[cpu->env.core_id].cpu);
-     ms->possible_cpus->cpus[cpu->env.core_id].cpu = OBJECT(dev);
-diff --git a/migration/options.c b/migration/options.c
-index 40eb9309401c..80f49a6a8562 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -478,9 +478,9 @@ static bool migrate_incoming_started(void)
-  */
- bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
- {
-+    ERRP_GUARD();
-     MigrationIncomingState *mis = migration_incoming_get_current();
- 
--    ERRP_GUARD();
- #ifndef CONFIG_LIVE_BLOCK_MIGRATION
-     if (new_caps[MIGRATION_CAPABILITY_BLOCK]) {
-         error_setg(errp, "QEMU compiled without old-style (blk/-b, inc/-i) "
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 0273dc6a94ac..eccff499cb20 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -283,10 +283,10 @@ static bool request_ufd_features(int ufd, uint64_t features)
- static bool ufd_check_and_apply(int ufd, MigrationIncomingState *mis,
-                                 Error **errp)
- {
-+    ERRP_GUARD();
-     uint64_t asked_features = 0;
-     static uint64_t supported_features;
- 
--    ERRP_GUARD();
-     /*
-      * it's not possible to
-      * request UFFD_API twice per one fd
-@@ -371,6 +371,7 @@ static int test_ramblock_postcopiable(RAMBlock *rb, Error **errp)
-  */
- bool postcopy_ram_supported_by_host(MigrationIncomingState *mis, Error **errp)
- {
-+    ERRP_GUARD();
-     long pagesize = qemu_real_host_page_size();
-     int ufd = -1;
-     bool ret = false; /* Error unless we change it */
-@@ -380,7 +381,6 @@ bool postcopy_ram_supported_by_host(MigrationIncomingState *mis, Error **errp)
-     uint64_t feature_mask;
-     RAMBlock *block;
- 
--    ERRP_GUARD();
-     if (qemu_target_page_size() > pagesize) {
-         error_setg(errp, "Target page size bigger than host page size");
-         goto out;
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index e6bdb4562dde..a80d8d974f4a 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -1557,14 +1557,13 @@ static const VhostShadowVirtqueueOps vhost_vdpa_net_svq_ops = {
- static int vhost_vdpa_probe_cvq_isolation(int device_fd, uint64_t features,
-                                           int cvq_index, Error **errp)
- {
-+    ERRP_GUARD();
-     uint64_t backend_features;
-     int64_t cvq_group;
-     uint8_t status = VIRTIO_CONFIG_S_ACKNOWLEDGE |
-                      VIRTIO_CONFIG_S_DRIVER;
-     int r;
- 
--    ERRP_GUARD();
--
-     r = ioctl(device_fd, VHOST_GET_BACKEND_FEATURES, &backend_features);
-     if (unlikely(r < 0)) {
-         error_setg_errno(errp, errno, "Cannot get vdpa backend_features");
--- 
-2.34.1
+> ---
+> commit 19d31c5f115754c369c0995df47479c384757f82
+> Author: Jordan Niethe <jniethe5@gmail.com>
+> Date:   Thu Sep 14 13:05:59 2023 +1000
+>
+>     KVM: PPC: Add support for nestedv2 guests
+> ---
+> For more details, documentation can be referred in either of patch
+> series.
+>
+> There are scripts available to assist in setting up an environment for
+> testing nested guests at https://github.com/iamjpn/kvm-powervm-test
+>
+> A tree with this series is available at:
+> https://github.com/planetharsh/qemu/tree/upstream-0305-v5
+>
+> Thanks to Michael Neuling, Shivaprasad Bhat, Amit Machhiwal, Kautuk
+> Consul, Vaibhav Jain and Jordan Niethe.
+>
+> Changelog:
+> v5: addressed review comments from Nick on v4
+> v4: https://lore.kernel.org/qemu-devel/20240220083609.748325-1-harshpb@li=
+nux.ibm.com/
+> v3: https://lore.kernel.org/qemu-devel/20240118052438.1475437-1-harshpb@l=
+inux.ibm.com/
+> v2: https://lore.kernel.org/qemu-devel/20231012104951.194876-1-harshpb@li=
+nux.ibm.com/
+> v1: https://lore.kernel.org/qemu-devel/20230906043333.448244-1-harshpb@li=
+nux.ibm.com/
+>
+> Harsh Prateek Bora (14):
+>   spapr: nested: register nested-hv api hcalls only for cap-nested-hv
+>   spapr: nested: move nested part of spapr_get_pate into spapr_nested.c
+>   spapr: nested: Introduce SpaprMachineStateNested to store related
+>     info.
+>   spapr: nested: keep nested-hv related code restricted to its API.
+>   spapr: nested: Document Nested PAPR API
+>   spapr: nested: Introduce H_GUEST_[GET|SET]_CAPABILITIES hcalls.
+>   spapr: nested: Introduce H_GUEST_[CREATE|DELETE] hcalls.
+>   spapr: nested: Introduce H_GUEST_CREATE_VCPU hcall.
+>   spapr: nested: Extend nested_ppc_state for nested PAPR API
+>   spapr: nested: Initialize the GSB elements lookup table.
+>   spapr: nested: Introduce H_GUEST_[GET|SET]_STATE hcalls.
+>   spapr: nested: Use correct source for parttbl info for nested PAPR
+>     API.
+>   spapr: nested: Introduce H_GUEST_RUN_VCPU hcall.
+>   spapr: nested: Introduce cap-nested-papr for Nested PAPR API
+>
+>  docs/devel/nested-papr.txt    |  119 +++
+>  include/hw/ppc/spapr.h        |   27 +-
+>  include/hw/ppc/spapr_nested.h |  428 ++++++++-
+>  target/ppc/cpu.h              |    4 +
+>  hw/ppc/ppc.c                  |   10 +
+>  hw/ppc/spapr.c                |   35 +-
+>  hw/ppc/spapr_caps.c           |   62 ++
+>  hw/ppc/spapr_hcall.c          |   24 +-
+>  hw/ppc/spapr_nested.c         | 1550 ++++++++++++++++++++++++++++++++-
+>  9 files changed, 2204 insertions(+), 55 deletions(-)
+>  create mode 100644 docs/devel/nested-papr.txt
 
 
