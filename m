@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10342C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:40:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AA46C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:40:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk71E-0003Xa-3z; Tue, 12 Mar 2024 14:38:32 -0400
+	id 1rk71C-0003Tx-5p; Tue, 12 Mar 2024 14:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk710-0003N2-4r
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:38:18 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1rk70z-0003Mb-14
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:38:17 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk70x-0000cR-7b
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:38:17 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-413e613316cso2016935e9.1
+ id 1rk70w-0000cN-VT
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:38:16 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-41329b6286bso14727845e9.0
  for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710268694; x=1710873494; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710268693; x=1710873493; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GSQdrQ1n3f4UDvq+g8f2/lXlL51/iuaHiFWXMRnbpHk=;
- b=yWuGgLDH0SG/GSl56ftf3mrv1jLw4be21RNZYFnEX/v5FaOnAalPe2Wdt5FY7B11KW
- LiDkV6j3pxZ2Te6Je1lH43F8d9jkfDI1Z63D5Z8HWw3UocL0Uk3SQZkd7umOjBl6rLYX
- 8XRkmOHvrJA/NYy3hLiw+QxS1NbugtREW4l7+3D5KDh8sFKts6sw17q7ZKWWy4yvlCxP
- IX+ePkzBUNZ3dl5PxLftRU3xRrEDD7FciIUpHBvlwmslJtvXw6z1pye2Uuetsi3HeimY
- 91EUKw4UFHPheWTbgZWscHmaOGSQJ4fqg8BFabYIR7ex5LTDE3GUDtvMpmEdXAEqkEdr
- FX7Q==
+ :reply-to; bh=rNmtdgrS8nqQbHwAjbW+CEcSMsj64qvynMqUvuKu6rE=;
+ b=PVPqJ4/PF7J4rRdwOH7lbeGROHnwBpYnv9wFwIjeXrLyCx4LQvk6ZYO/p4M9NYS+/9
+ cmkEpiNxF+RQkXCnFGT0wLmkdE061k9+/+pGFlh3rkk48xMsb1AThLhoj6+SmVDjog2c
+ 2/wgVkHakY3Og8t85uu34sZJtVNKStK5CQ9ftT8mpcSnft53mjZ77TOuF5mJlJAMzlmr
+ FZqVxS8fckopWM2SkKUShRuIccxA7R+62Alu3AuiSCA/XQEmD/+pQSI4WhlaYeS5xQ9c
+ ds73mbSC65uZl0QH2p0LZdV2VELEQbRC2pIlmOGMPTTXVNU86cRVT3fOlDuZwOgGr20H
+ OKwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710268694; x=1710873494;
+ d=1e100.net; s=20230601; t=1710268693; x=1710873493;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GSQdrQ1n3f4UDvq+g8f2/lXlL51/iuaHiFWXMRnbpHk=;
- b=Ug4pAfyFWQ/dvgKkn1GZVnHY4rrw6mA3sL4gUyQMrKGF7VfBgIbXOEpGiSgz9Y55Yb
- XseWqE8VxWv36TIkS8g5VrPzRjbVy0S+RX4P0oSqksE8/eayKbsGTy01cYW0fCyBKbVZ
- Jrqlc8vVh1WpN+wGEfy6oNHSkZ04vURAnk169kgtveFeGBv7uFbBRR44KEGDbwyg0j8h
- za9ul227IyZbpNoIrVqfhJTC1PTdGtNxYrSSY7esbdeYfhBtQvctyrVRTqB9+8fsEm6C
- QUNV3gMLQ5lKaTfUi00pNOdKYzG4+ZIgt8DmIghzihJ7mn01Km03a9RXhse6oGFl4oF1
- mjUA==
-X-Gm-Message-State: AOJu0YyH1dLB/n7OJG3LQNsXSThKD/vU5rp5GI22b9zsvugbjA+m7V+0
- IajuR0feHoHCP3kEFHyu8k/jfNq7FFou9U3UjEpevVbuGZjiKXxSoWJ97NjNCUg11dqO1aYQexd
- p
-X-Google-Smtp-Source: AGHT+IEx/YWUcmrMNb9rhAM5dFAhJDEne/9R9nXJVNkeukLfQHkOvmqyHlxWIYtBvuJkHMfyyTzPlg==
-X-Received: by 2002:a05:600c:458d:b0:413:2779:8e29 with SMTP id
- r13-20020a05600c458d00b0041327798e29mr5515991wmo.19.1710268693958; 
+ bh=rNmtdgrS8nqQbHwAjbW+CEcSMsj64qvynMqUvuKu6rE=;
+ b=cJ8ArTJXvUBGvmYMitjzKR3GztG17vTe/MA7GrNWYX7UHMAXpiZIrC8nq8tcVUaj9+
+ 2pj1HnJ9WjInJJ9yRGdoVqEFX4pOuQ1ekKzZjXK0CTDhRlvhiCh638gjbUiK67W+Wp1y
+ lNMsLel0ag/neMn9uc/ttTx6IWzXFPVeHsSAxKXJHJkmvqQ6Yx79q3CEKlkr8vFQmbHR
+ jnmUaBmTpdgOKFNEj/d88cQvABwT9lmerIVvhf9LRVIyVC4e/xAgycxRLHqFd7g5WYXj
+ MYjYCEW6dubyY+4GVLkpug9KgwoYzDf0z1ri5O5DUPtXrAaYBuhLLJPOYKpPGRNnlYDP
+ l96g==
+X-Gm-Message-State: AOJu0YzJKppr4XVm5sOTEH5ep/Mrf+7bYAV/z5S+PJXmB3wAQ+O9x0pP
+ tDQwBqb2H1a3GEi3eHXnCQTeZglhXWwREdZA90SJeiz+kgOqyhSCCOcCXp58zqnXK4K4g6EICB2
+ n
+X-Google-Smtp-Source: AGHT+IHkDzX/gjfiMm/bGYHoGySSAolaxSzvda/YmtVcoX3nzjjSqc/KC2K4LpHUXBTVw+qRzTQspw==
+X-Received: by 2002:a05:600c:1f07:b0:413:1f58:9d15 with SMTP id
+ bd7-20020a05600c1f0700b004131f589d15mr811421wmb.7.1710268693598; 
  Tue, 12 Mar 2024 11:38:13 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
@@ -61,17 +61,16 @@ Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  Tue, 12 Mar 2024 11:38:13 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 6/7] tests/unit/test-throttle: Avoid unintended integer
- division
-Date: Tue, 12 Mar 2024 18:38:09 +0000
-Message-Id: <20240312183810.557768-7-peter.maydell@linaro.org>
+Subject: [PATCH 5/7] hw/nvram/mac_nvram: Report failure to write data
+Date: Tue, 12 Mar 2024 18:38:08 +0000
+Message-Id: <20240312183810.557768-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240312183810.557768-1-peter.maydell@linaro.org>
 References: <20240312183810.557768-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,42 +93,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In test_compute_wait() we do
- double units = bkt.max / 10;
-which does an integer division and then assigns it to a double variable,
-and similarly later on in the expression for an assertion.
-
-Use 10.0 so that we do a floating point division and calculate the
-exact value, rather than doing an integer division.
+There's no way for the macio_nvram device to report failure to write
+data, but we can at least report it to the user with error_report()
+as we do in other devices like xlnx-efuse.
 
 Spotted by Coverity.
 
-Resolves: Coverity CID 1432564
+Resolves: Coverity CID 1507628
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/unit/test-throttle.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/nvram/mac_nvram.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tests/unit/test-throttle.c b/tests/unit/test-throttle.c
-index 2146cfacd36..24032a02667 100644
---- a/tests/unit/test-throttle.c
-+++ b/tests/unit/test-throttle.c
-@@ -127,13 +127,13 @@ static void test_compute_wait(void)
-     bkt.avg = 10;
-     bkt.max = 200;
-     for (i = 0; i < 22; i++) {
--        double units = bkt.max / 10;
-+        double units = bkt.max / 10.0;
-         bkt.level += units;
-         bkt.burst_level += units;
-         throttle_leak_bucket(&bkt, NANOSECONDS_PER_SECOND / 10);
-         wait = throttle_compute_wait(&bkt);
-         g_assert(double_cmp(bkt.burst_level, 0));
--        g_assert(double_cmp(bkt.level, (i + 1) * (bkt.max - bkt.avg) / 10));
-+        g_assert(double_cmp(bkt.level, (i + 1) * (bkt.max - bkt.avg) / 10.0));
-         /* We can do bursts for the 2 seconds we have configured in
-          * burst_length. We have 100 extra milliseconds of burst
-          * because bkt.level has been leaking during this time.
+diff --git a/hw/nvram/mac_nvram.c b/hw/nvram/mac_nvram.c
+index 5f9d16fb3e3..59277fbc776 100644
+--- a/hw/nvram/mac_nvram.c
++++ b/hw/nvram/mac_nvram.c
+@@ -48,7 +48,10 @@ static void macio_nvram_writeb(void *opaque, hwaddr addr,
+     trace_macio_nvram_write(addr, value);
+     s->data[addr] = value;
+     if (s->blk) {
+-        blk_pwrite(s->blk, addr, 1, &s->data[addr], 0);
++        if (blk_pwrite(s->blk, addr, 1, &s->data[addr], 0) < 0) {
++            error_report("%s: write of NVRAM data to backing store failed",
++                         blk_name(s->blk));
++        }
+     }
+ }
+ 
 -- 
 2.34.1
 
