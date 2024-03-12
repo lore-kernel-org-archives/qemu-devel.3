@@ -4,71 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F97C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 15:50:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B42C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 15:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk4OM-0004Mf-1x; Tue, 12 Mar 2024 11:50:14 -0400
+	id 1rk4PZ-0005aD-KO; Tue, 12 Mar 2024 11:51:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rk4OB-0004Jv-Fp
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 11:50:05 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk4PX-0005Y5-JN
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 11:51:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rk4O9-0003O6-K6
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 11:50:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk4PV-0003qo-Rb
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 11:51:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710258600;
+ s=mimecast20190719; t=1710258685;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lY188FiJ2YuM7uSFDgQLN8tycDgILAK9Yyk3onuPocA=;
- b=Sk1gtF/bOazfHIixhUxoH1pxYwX+OLNTZiQKxwg7O2CK2Px21MXu25wwfRyabX42+thTT9
- NcuoAIang4ZZpL8Fsyoly4NuBX/WVP0WhHxATpH5LpmtdHBRTltMRbL1X31MnEP8U/vydj
- gD1tg9oLDEH/JIyKwWsirzre6LdKeM4=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mVQBlnEIG4sQW3Ry856Tq69MU8nMkmIhldFUc1MEIQw=;
+ b=d1LW5jZXZXKHPKcJq6t+x2qgW/GjTa1nBu9L/GBQHRKcPZNDVhhPun4JxQH6rMr19hYmtq
+ GE8gk9S9NSogGI6ZJaT5CGidFzYk1qhZtHfokAfpcNhoij2yeAmSzBo4uU40i1FUXnFSMP
+ lmBf1vBh1hHkkvURw9B57iqo2id1iNA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-138-_Hjyh2LPOBuNEVBq8xCizQ-1; Tue, 12 Mar 2024 11:49:57 -0400
-X-MC-Unique: _Hjyh2LPOBuNEVBq8xCizQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A99EB822486;
- Tue, 12 Mar 2024 15:49:56 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.194.111])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id D6FA62166AE5;
- Tue, 12 Mar 2024 15:49:54 +0000 (UTC)
-Date: Tue, 12 Mar 2024 16:49:53 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Peter Krempa <pkrempa@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, eblake@redhat.com, hreitz@redhat.com,
- jsnow@redhat.com, den@virtuozzo.com, t.lamprecht@proxmox.com,
- alexander.ivanov@virtuozzo.com
-Subject: Re: [PATCH v2 00/10] mirror: allow switching from background to
- active mode
-Message-ID: <ZfB5oaFgYJ8SuSm1@redhat.com>
-References: <87o7gbyy8w.fsf@pond.sub.org> <ZUTffE0wfjLH2u+e@redhat.com>
- <87cywqn84g.fsf@pond.sub.org>
- <1310efb0-e211-46f5-b166-d7d529507a43@yandex-team.ru>
- <ZeWnFhLKCamlP97y@redhat.com> <ZeWr3ZGrRUrciHH4@angien.pipo.sk>
- <65f517cd-3a1b-41bd-b326-e509cb208b92@yandex-team.ru>
- <ZerRzZj-NrDZUeAF@redhat.com>
- <306d2ca4-de7d-4318-b461-a06354e3b975@yandex-team.ru>
- <1d6ba74e-b1d8-4292-9825-ea53d9bc77af@yandex-team.ru>
+ us-mta-454-l5POM6TUMD-_4mP4Z7P7-g-1; Tue, 12 Mar 2024 11:51:24 -0400
+X-MC-Unique: l5POM6TUMD-_4mP4Z7P7-g-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-412eeb789d9so485725e9.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 08:51:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710258683; x=1710863483;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mVQBlnEIG4sQW3Ry856Tq69MU8nMkmIhldFUc1MEIQw=;
+ b=MfZqMxdDo+p3VAQ3YCHs1NIN33Fz4/5OB1XAukHTrCpSNeh8JsN/IGSJuRQf3/cBt0
+ Ops/t0soCkNO3GQ5Azw17mzF+8OPyjIS3+XBaigDw3RMzTvJqexIvk6qXDKyMoAAIdI4
+ esyeXnCSnAJ3mrZwJi9Fxw10TW3fbVWf/xDkfR80Zttas84W0MmkffPMc7/t7A127Qa1
+ Ina5EsoHBXSOIrSfP+YPyEwBzY0DzKmEntfMDVhmG4lsHoJvuQJX5gbSIyY0uNOGq6q/
+ mM+i6P4v+Im8YOBKIlx9DAzAl8SANEJyFWnqnhuSuq5O6PqI/9d5fjhSwukov/YtUM6B
+ Cxqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVy9mrGU89quT1FC87p7nDks39hnqO8VTmJ4DUs9npxC9hrF0F5/kGPcdZeYAxrBqa9BkYyd7sLVzv+AtLDMkLFac5lDrc=
+X-Gm-Message-State: AOJu0YwC1bPEsoJC1UPBf0nAHZweyyIrpHCvFQ1bX7YFaowBk7xAkKnX
+ VKQYcGWjMO/y5W/Ir2wMlDZZ6/9Mxz/9eelKfZOm8XcJKSqTfj5/fzUM1x5rRJP77NW6JflAYEI
+ y8DGo7gtulqNYkEFINQskMCEWYtj+XYa6geA6YlZwMlWKGrxEHWXc
+X-Received: by 2002:a05:600c:470e:b0:413:2ea4:164b with SMTP id
+ v14-20020a05600c470e00b004132ea4164bmr3745765wmo.14.1710258682707; 
+ Tue, 12 Mar 2024 08:51:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3VVcj48NpDFVFM+N2nxHRNfNJM1yJA1PufsyMEttjBROwYjI7DHWh4bHmdN/Oaf4fq4C9hw==
+X-Received: by 2002:a05:600c:470e:b0:413:2ea4:164b with SMTP id
+ v14-20020a05600c470e00b004132ea4164bmr3745744wmo.14.1710258682146; 
+ Tue, 12 Mar 2024 08:51:22 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
+ by smtp.gmail.com with ESMTPSA id
+ bg13-20020a05600c3c8d00b00412fe0eb806sm19330762wmb.14.2024.03.12.08.51.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 08:51:21 -0700 (PDT)
+Date: Tue, 12 Mar 2024 11:51:17 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: Srujana Challa <schalla@marvell.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Vamsi Krishna Attunuru <vattunuru@marvell.com>,
+ Jerin Jacob <jerinj@marvell.com>, Jason Wang <jasowang@redhat.com>,
+ Jonah Palmer <jonah.palmer@oracle.com>
+Subject: Re: [EXT] Re: [PATCH] vhost_net: add NOTIFICATION_DATA and IN_ORDER
+ feature bits to vdpa_feature_bits
+Message-ID: <20240312115031-mutt-send-email-mst@kernel.org>
+References: <20240102111432.36817-1-schalla@marvell.com>
+ <20240219044352-mutt-send-email-mst@kernel.org>
+ <DS0PR18MB5368BA5DBD8D8CDDE1A68573A0512@DS0PR18MB5368.namprd18.prod.outlook.com>
+ <DS0PR18MB536881ACD91AFC00D2E24744A0562@DS0PR18MB5368.namprd18.prod.outlook.com>
+ <DS0PR18MB53681809B96E8745691192A1A0272@DS0PR18MB5368.namprd18.prod.outlook.com>
+ <CAJaqyWd0xRS9wqcb1pTqBb4it+DkiHZr3zGiwC3nh27taJ_4FQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1d6ba74e-b1d8-4292-9825-ea53d9bc77af@yandex-team.ru>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+In-Reply-To: <CAJaqyWd0xRS9wqcb1pTqBb4it+DkiHZr3zGiwC3nh27taJ_4FQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -93,126 +112,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.03.2024 um 14:44 hat Vladimir Sementsov-Ogievskiy geschrieben:
-> On 11.03.24 18:15, Vladimir Sementsov-Ogievskiy wrote:
-> > On 08.03.24 11:52, Kevin Wolf wrote:
-> > > Am 07.03.2024 um 20:42 hat Vladimir Sementsov-Ogievskiy geschrieben:
-> > > > On 04.03.24 14:09, Peter Krempa wrote:
-> > > > > On Mon, Mar 04, 2024 at 11:48:54 +0100, Kevin Wolf wrote:
-> > > > > > Am 28.02.2024 um 19:07 hat Vladimir Sementsov-Ogievskiy geschrieben:
-> > > > > > > On 03.11.23 18:56, Markus Armbruster wrote:
-> > > > > > > > Kevin Wolf<kwolf@redhat.com>  writes:
-> > > > > 
-> > > > > [...]
-> > > > > 
-> > > > > > > > Is the job abstraction a failure?
-> > > > > > > > 
-> > > > > > > > We have
-> > > > > > > > 
-> > > > > > > >        block-job- command      since   job- command    since
-> > > > > > > >        -----------------------------------------------------
-> > > > > > > >        block-job-set-speed     1.1
-> > > > > > > >        block-job-cancel        1.1     job-cancel      3.0
-> > > > > > > >        block-job-pause         1.3     job-pause       3.0
-> > > > > > > >        block-job-resume        1.3     job-resume      3.0
-> > > > > > > >        block-job-complete      1.3     job-complete    3.0
-> > > > > > > >        block-job-dismiss       2.12    job-dismiss     3.0
-> > > > > > > >        block-job-finalize      2.12    job-finalize    3.0
-> > > > > > > >        block-job-change        8.2
-> > > > > > > >        query-block-jobs        1.1     query-jobs
-> > > > > 
-> > > > > [...]
-> > > > > 
-> > > > > > I consider these strictly optional. We don't really have strong reasons
-> > > > > > to deprecate these commands (they are just thin wrappers), and I think
-> > > > > > libvirt still uses block-job-* in some places.
-> > > > > 
-> > > > > Libvirt uses 'block-job-cancel' because it has different semantics from
-> > > > > 'job-cancel' which libvirt documented as the behaviour of the API that
-> > > > > uses it. (Semantics regarding the expectation of what is written to the
-> > > > > destination node at the point when the job is cancelled).
-> > > > > 
-> > > > 
-> > > > That's the following semantics:
-> > > > 
-> > > >    # Note that if you issue 'block-job-cancel' after 'drive-mirror' has
-> > > >    # indicated (via the event BLOCK_JOB_READY) that the source and
-> > > >    # destination are synchronized, then the event triggered by this
-> > > >    # command changes to BLOCK_JOB_COMPLETED, to indicate that the
-> > > >    # mirroring has ended and the destination now has a point-in-time copy
-> > > >    # tied to the time of the cancellation.
-> > > > 
-> > > > Hmm. Looking at this, it looks for me, that should probably a
-> > > > 'block-job-complete" command (as leading to BLOCK_JOB_COMPLETED).
-> > > 
-> > > Yes, it's just a different completion mode.
-> > > 
-> > > > Actually, what is the difference between block-job-complete and
-> > > > block-job-cancel(force=false) for mirror in ready state?
-> > > > 
-> > > > I only see the following differencies:
-> > > > 
-> > > > 1. block-job-complete documents that it completes the job
-> > > >     synchronously.. But looking at mirror code I see it just set
-> > > >     s->should_complete = true, which will be then handled
-> > > >     asynchronously..  So I doubt that documentation is correct.
-> > > > 
-> > > > 2. block-job-complete will trigger final graph changes.
-> > > >     block-job-cancel will not.
-> > > > 
-> > > > Is [2] really useful? Seems yes: in case of some failure before
-> > > > starting migration target, we'd like to continue executing source. So,
-> > > > no reason to break block-graph in source, better keep it unchanged.
-> > > > 
-> > > > But I think, such behavior better be setup by mirror-job start
-> > > > parameter, rather then by special option for cancel (or even
-> > > > compelete) command, useful only for mirror.
-> > > 
-> > > I'm not sure, having the option on the complete command makes more sense
-> > > to me than having it in blockdev-mirror.
-> > > 
-> > > I do see the challenge of representing this meaningfully in QAPI,
-> > > though. Semantically it should be a union with job-specific options and
-> > > only mirror adds the graph-changes option. But the union variant
-> > > can't be directly selected from another option - instead we have a job
-> > > ID, and the variant is the job type of the job with this ID.
-> > 
-> > We already have such command: block-job-change. Which has id and type parameters, so user have to pass both, to identify the job itself and pick corresponding variant of the union type.
-> > 
-> > That would be good to somehow teach QAPI to get the type automatically from the job itself...
+On Mon, Mar 11, 2024 at 09:32:53AM +0100, Eugenio Perez Martin wrote:
+> On Fri, Mar 8, 2024 at 2:39â€¯PM Srujana Challa <schalla@marvell.com> wrote:
+> >
+> > Hi Michael,
+> >
+> > VIRTIO_F_NOTIFICATION_DATA needs to be exposed to make Marvell's device works
+> > with Qemu. Any other better ways to expose VIRTIO_F_NOTIFICATION_DATA feature
+> > bit for vhost vdpa use case?
+> >
 > 
+> Hi!
 > 
-> Seems, that's easy enough to implement such a possibility, I'll try. At least now I have a prototype, which compiles
+> Jonah Palmer is working on implementing notification_data [1]. He's
+> implementing it on emulated devices first but the resulting QEMU
+> should be able to enable it for vdpa devices too. Would it be possible
+> for you to review it, and /or test the series against your devices?
+> And checking that everything works on emulated devices too?
 > 
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index 0ae8ae62dc..332de67e52 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -3116,13 +3116,11 @@
->  #
->  # @id: The job identifier
->  #
-> -# @type: The job type
-> -#
->  # Since: 8.2
->  ##
->  { 'union': 'BlockJobChangeOptions',
-> -  'base': { 'id': 'str', 'type': 'JobType' },
-> -  'discriminator': 'type',
-> +  'base': { 'id': 'str' },
-> +  'discriminator': 'JobType',
->    'data': { 'mirror': 'BlockJobChangeOptionsMirror' } }
+> Thanks!
+> 
+> [1] https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg00755.html
 
-We probably need some different syntax because I think in theory we
-could get conflicts between option names and type names. But I'll leave
-this discussion to Markus. I hope you can figure out something that he
-is willing to accept, getting the variant from a callback looks like
-useful functionality.
+Yes, please do. And if anything is missing in his patches you can post
+a patch on top.
 
-For output, your implementation is probably not optimal because you're
-going to look up things the calling code already knows, but it's
-probably not the end of the world.
 
-Kevin
+> > Thanks,
+> > Srujana.
+> >
+> > > Subject: RE: [EXT] Re: [PATCH] vhost_net: add NOTIFICATION_DATA and
+> > > IN_ORDER feature bits to vdpa_feature_bits
+> > >
+> > > Ping.
+> > >
+> > > > Subject: RE: [EXT] Re: [PATCH] vhost_net: add NOTIFICATION_DATA and
+> > > > IN_ORDER feature bits to vdpa_feature_bits
+> > > >
+> > > >
+> > > >
+> > > > > -----Original Message-----
+> > > > > From: Michael S. Tsirkin <mst@redhat.com>
+> > > > > Sent: Monday, February 19, 2024 3:15 PM
+> > > > > To: Srujana Challa <schalla@marvell.com>
+> > > > > Cc: qemu-devel@nongnu.org; Vamsi Krishna Attunuru
+> > > > > <vattunuru@marvell.com>; Jerin Jacob <jerinj@marvell.com>; Jason
+> > > > > Wang <jasowang@redhat.com>
+> > > > > Subject: [EXT] Re: [PATCH] vhost_net: add NOTIFICATION_DATA and
+> > > > > IN_ORDER feature bits to vdpa_feature_bits
+> > > > >
+> > > > > External Email
+> > > > >
+> > > > > --------------------------------------------------------------------
+> > > > > -- On Tue, Jan 02, 2024 at 04:44:32PM +0530, Srujana Challa wrote:
+> > > > > > Enables VIRTIO_F_NOTIFICATION_DATA and VIRTIO_F_IN_ORDER
+> > > feature
+> > > > > bits
+> > > > > > for vhost vdpa backend. Also adds code to consider all feature
+> > > > > > bits supported by vhost net client type for feature negotiation,
+> > > > > > so that vhost backend device supported features can be negotiated with
+> > > guest.
+> > > > > >
+> > > > > > Signed-off-by: Srujana Challa <schalla@marvell.com>
+> > > > > > ---
+> > > > > >  hw/net/vhost_net.c | 10 ++++++++++
+> > > > > >  net/vhost-vdpa.c   |  2 ++
+> > > > > >  2 files changed, 12 insertions(+)
+> > > > > >
+> > > > > > diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c index
+> > > > > > e8e1661646..65ae8bcece 100644
+> > > > > > --- a/hw/net/vhost_net.c
+> > > > > > +++ b/hw/net/vhost_net.c
+> > > > > > @@ -117,6 +117,16 @@ static const int
+> > > > > > *vhost_net_get_feature_bits(struct vhost_net *net)
+> > > > > >
+> > > > > >  uint64_t vhost_net_get_features(struct vhost_net *net, uint64_t
+> > > > > > features)  {
+> > > > > > +    const int *bit = vhost_net_get_feature_bits(net);
+> > > > > > +
+> > > > > > +    /*
+> > > > > > +     * Consider all feature bits for feature negotiation with vhost backend,
+> > > > > > +     * so that all backend device supported features can be negotiated.
+> > > > > > +     */
+> > > > > > +    while (*bit != VHOST_INVALID_FEATURE_BIT) {
+> > > > > > +        features |= (1ULL << *bit);
+> > > > > > +        bit++;
+> > > > > > +    }
+> > > > > >      return vhost_get_features(&net->dev,
+> > > vhost_net_get_feature_bits(net),
+> > > > > >              features);
+> > > > > >  }
+> > > > >
+> > > > > I don't think we should do this part. With vdpa QEMU is in control
+> > > > > of which features are exposed and that is intentional since features
+> > > > > are often tied to other behaviour.
+> > > >
+> > > > Vdpa Qemu can negotiate all the features which vdpa backend device
+> > > > supports with the guest right?
+> > > > Guest drivers (it could be userspace or kernel drivers) will negotiate
+> > > > their own features, so that frontend supported features will get the
+> > > > precedence.
+> > > >
+> > > > >
+> > > > > > diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c index
+> > > > > > 3726ee5d67..51334fcfe2 100644
+> > > > > > --- a/net/vhost-vdpa.c
+> > > > > > +++ b/net/vhost-vdpa.c
+> > > > > > @@ -57,7 +57,9 @@ typedef struct VhostVDPAState {
+> > > > > >   */
+> > > > > >  const int vdpa_feature_bits[] = {
+> > > > > >      VIRTIO_F_ANY_LAYOUT,
+> > > > > > +    VIRTIO_F_IN_ORDER,
+> > > > > >      VIRTIO_F_IOMMU_PLATFORM,
+> > > > > > +    VIRTIO_F_NOTIFICATION_DATA,
+> > > > > >      VIRTIO_F_NOTIFY_ON_EMPTY,
+> > > > > >      VIRTIO_F_RING_PACKED,
+> > > > > >      VIRTIO_F_RING_RESET,
+> > > > > > --
+> > > > > > 2.25.1
+> >
+> >
 
 
