@@ -4,68 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18BC5C54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:30:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2871C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:32:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxW9-0001Ne-Qa; Tue, 12 Mar 2024 04:29:49 -0400
+	id 1rjxYe-0002x3-Tp; Tue, 12 Mar 2024 04:32:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjxW7-0001Mi-Ed; Tue, 12 Mar 2024 04:29:47 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rjxW5-00026n-8A; Tue, 12 Mar 2024 04:29:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710232185; x=1741768185;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=ZSSpFddo5gHNV5jEQzmHwmnXBeHiCAwgL53FK035/cE=;
- b=FChstYSt8YDLWwefwlcVoOF+0lZDAK9J2ff4nWSlCLEowPYt7WIZl3JK
- 4Wa/dj86tKDseBdAANwa/9hIkrYgL6dp7HVDdnqjvJ1eg/TrBx4nM+80+
- 5jotLnKIuXpwv2OACbQK5127XxDUSAgf5GpRi316quOQkovuKoTHBTQsL
- /IzlCmOkrzLieBCspJy4qRcIj9+KNPWirmIRLdv6mQVP1ewJM6fxt/QUM
- IGgZxm1z1rW9YKN4SseSqPVJGYdtHjgPLCPKWIQs+qMeoCvd8VzzZUtNe
- byBQMaiK0Ij8LG4hg8gTA3dY7tkgPBGeGImuCcZegseUgREwNDPaZA7Dv w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="7873312"
-X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; 
-   d="scan'208";a="7873312"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Mar 2024 01:29:42 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; d="scan'208";a="15953968"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa005.fm.intel.com with ESMTP; 12 Mar 2024 01:29:40 -0700
-Date: Tue, 12 Mar 2024 16:43:29 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
- Markus Armbruster <armbru@redhat.com>
-Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2 00/29] Cleanup up to fix missing ERRP_GUARD() for
- error_prepend()
-Message-ID: <ZfAVsQTIOgAOjd0Y@intel.com>
-References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
- <d48e5d05-0e1e-4bb0-b10a-f0c943b055f6@linaro.org>
+ (Exim 4.90_1) (envelope-from <xiongyining1480@phytium.com.cn>)
+ id 1rjxYb-0002wZ-9c; Tue, 12 Mar 2024 04:32:21 -0400
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <xiongyining1480@phytium.com.cn>)
+ id 1rjxYY-0002iF-Nl; Tue, 12 Mar 2024 04:32:21 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAHDwsKE_BlgM6GBg--.36585S2;
+ Tue, 12 Mar 2024 16:32:10 +0800 (CST)
+Received: from phytium.com.cn (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwCXjPAEE_BlkXMAAA--.584S4;
+ Tue, 12 Mar 2024 16:32:05 +0800 (CST)
+From: Xiong Yining <xiongyining1480@phytium.com.cn>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: rad@semihalf.com, peter.maydell@linaro.org, quic_llindhol@quicinc.com,
+ marcin.juszkiewicz@linaro.org, chenbaozi@phytium.com.cn,
+ xiongyining1480 <xiongyining1480@phytium.com.cn>
+Subject: [PATCH v2 1/2] hw/arm/sbsa-ref:Enable CPU cluster on ARM sbsa machine
+Date: Tue, 12 Mar 2024 08:30:48 +0000
+Message-Id: <20240312083049.3412522-2-xiongyining1480@phytium.com.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240312083049.3412522-1-xiongyining1480@phytium.com.cn>
+References: <20240312083049.3412522-1-xiongyining1480@phytium.com.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <d48e5d05-0e1e-4bb0-b10a-f0c943b055f6@linaro.org>
-Received-SPF: none client-ip=192.198.163.13;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+X-CM-TRANSID: AQAAfwCXjPAEE_BlkXMAAA--.584S4
+X-CM-SenderInfo: x0lr0wp1lqx0bjrumio6sk53xlxphulrpou0/1tbiAQACBmXvXPYDKAAAsO
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=xiongyinin
+ g1480@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvdXoWrZr1kXr4UKF15uw1fKF4UJwb_yoWDWwc_Jw
+ 1xXwnxWF1UKwnF9ryYyF4fAryrKw4UKFsrKrn7uFyrJw1jgF1UG3Z8JrZ7Xw18Za15Za4S
+ kF4UZF45uwnxGjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
+ Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
+ UUUU=
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=xiongyining1480@phytium.com.cn;
+ helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,31 +71,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas/Markus/Michael,
+From: xiongyining1480 <xiongyining1480@phytium.com.cn>
 
-For the remaing patches, could you please help me merge them next?
+Enable the CPU cluster on ARM sbsa machine, so user can configure the
+cluster hierarchy.
 
-Many thanks!
-Zhao
+Signed-off-by: Xiong Yining <xiongyining1480@phytium.com.cn>
+Signed-off-by: Chen Baozi <chenbaozi@phytium.com.cn>
+Tested-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+---
+ hw/arm/sbsa-ref.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-On Tue, Mar 12, 2024 at 09:17:30AM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Tue, 12 Mar 2024 09:17:30 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: Re: [PATCH v2 00/29] Cleanup up to fix missing ERRP_GUARD() for
->  error_prepend()
-> 
-> On 11/3/24 04:37, Zhao Liu wrote:
-> 
-> > ---
-> > Zhao Liu (29):
-> 
-> >    hw/core/loader-fit: Fix missing ERRP_GUARD() for error_prepend()
-> >    hw/core/qdev-properties-system: Fix missing ERRP_GUARD() for
-> >      error_prepend()
-> >    hw/misc/ivshmem: Fix missing ERRP_GUARD() for error_prepend()
-> 
-> I'm queuing these 3 patches, thanks!
-
-
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index f5709d6c14..fde7dd528f 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -886,6 +886,7 @@ static void sbsa_ref_class_init(ObjectClass *oc, void *data)
+     mc->default_ram_size = 1 * GiB;
+     mc->default_ram_id = "sbsa-ref.ram";
+     mc->default_cpus = 4;
++    mc->smp_props.clusters_supported = true;
+     mc->possible_cpu_arch_ids = sbsa_ref_possible_cpu_arch_ids;
+     mc->cpu_index_to_instance_props = sbsa_ref_cpu_index_to_props;
+     mc->get_default_cpu_node_id = sbsa_ref_get_default_cpu_node_id;
+-- 
+2.34.1
 
 
