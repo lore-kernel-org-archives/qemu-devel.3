@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35186C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1502C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:55:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1Y3-0000tm-25; Tue, 12 Mar 2024 08:48:03 -0400
+	id 1rk1Ut-0003yY-9M; Tue, 12 Mar 2024 08:44:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1VQ-0004yU-1J
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:45:20 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Un-0003bm-73
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1VN-0000eU-4K
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:45:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1Uh-0000MH-Jq
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:44:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710247516;
+ s=mimecast20190719; t=1710247475;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=y6ZbGTCAWeBMMZ2CTH7Cqh0akX4u3D/q5yzE4MTVwog=;
- b=A0kvg1FWVuvTo6N6dB0Yd/lI3oy9ui0jw7J24tBUDc4m6vSw84Rr0lTpqDN8p551HzgNbS
- vzq5sWQvUhbpZ3P4RoCst1t0mrGgAA9O9Dc9i945tdo4FP1QaQ1ZbVm/U17vArAzQrPJEp
- 0qUweNuJRpEvCtelrXBg34OelHprMIk=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-404-iSGEBXR4PX61l84jtGLlwg-1; Tue,
- 12 Mar 2024 08:45:13 -0400
-X-MC-Unique: iSGEBXR4PX61l84jtGLlwg-1
+ bh=pWG0YMU/oUrvLyvESN7OiHZYnZKXVN6LSj2RRWqMEdM=;
+ b=FEZwkd3hQ0tbWL0KQI/MxEGI9rrOa3hNdAe2Lzsf6necyrQi6QgsFmaYnpdQGhAUivZAoo
+ d4NtkWujV4ORLpH5wHFl6X8m2Qpzhw/o7V+ftZO1nuGBwarHN6ksSzZ773Rhs7pHf+A/mU
+ /cmbH5XMqOnZs/Lj+NJ6DzWwQUE2GwA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-422-bhO9GQgjMei_OCjmHjm_TA-1; Tue, 12 Mar 2024 08:44:31 -0400
+X-MC-Unique: bhO9GQgjMei_OCjmHjm_TA-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E1EFD386A0B7;
- Tue, 12 Mar 2024 12:45:12 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7C111800265;
+ Tue, 12 Mar 2024 12:44:31 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.69])
- by smtp.corp.redhat.com (Postfix) with ESMTP id BB59C492BD0;
- Tue, 12 Mar 2024 12:45:11 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 15644492BD1;
+ Tue, 12 Mar 2024 12:44:29 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 50/55] target/rx: Prefer fast cpu_env() over slower CPU QOM
- cast macro
-Date: Tue, 12 Mar 2024 13:43:34 +0100
-Message-ID: <20240312124339.761630-51-thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 24/55] hw/vfio/iommufd: Fix missing ERRP_GUARD() for
+ error_prepend()
+Date: Tue, 12 Mar 2024 13:43:08 +0100
+Message-ID: <20240312124339.761630-25-thuth@redhat.com>
 In-Reply-To: <20240312124339.761630-1-thuth@redhat.com>
 References: <20240312124339.761630-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -83,100 +83,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Mechanical patch produced running the command documented
-in scripts/coccinelle/cpu_env.cocci_template header.
+As the comment in qapi/error, passing @errp to error_prepend() requires
+ERRP_GUARD():
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240129164514.73104-24-philmd@linaro.org>
+* = Why, when and how to use ERRP_GUARD() =
+*
+* Without ERRP_GUARD(), use of the @errp parameter is restricted:
+...
+* - It should not be passed to error_prepend(), error_vprepend() or
+*   error_append_hint(), because that doesn't work with &error_fatal.
+* ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
+
+ERRP_GUARD() could avoid the case when @errp is &error_fatal, the user
+can't see this additional information, because exit() happens in
+error_setg earlier than information is added [1].
+
+The iommufd_cdev_getfd() passes @errp to error_prepend(). Its @errp is
+from vfio_attach_device(), and there are too many possible callers to
+check the impact of this defect; it may or may not be harmless. Thus it
+is necessary to protect @errp with ERRP_GUARD().
+
+To avoid the issue like [1] said, add missing ERRP_GUARD() at the
+beginning of this function.
+
+[1]: Issue description in the commit message of commit ae7c80a7bd73
+     ("error: New macro ERRP_GUARD()").
+
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Cc: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-ID: <20240311033822.3142585-22-zhao1.liu@linux.intel.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/rx/cpu.c       | 4 ++--
- target/rx/gdbstub.c   | 6 ++----
- target/rx/helper.c    | 6 ++----
- target/rx/translate.c | 3 +--
- 4 files changed, 7 insertions(+), 12 deletions(-)
+ hw/vfio/iommufd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/rx/cpu.c b/target/rx/cpu.c
-index 26ff822e71..da673a595d 100644
---- a/target/rx/cpu.c
-+++ b/target/rx/cpu.c
-@@ -71,9 +71,9 @@ static int riscv_cpu_mmu_index(CPUState *cs, bool ifunc)
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 9bfddc1360..7baf49e6ee 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -116,6 +116,7 @@ static void iommufd_cdev_unbind_and_disconnect(VFIODevice *vbasedev)
  
- static void rx_cpu_reset_hold(Object *obj)
+ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
  {
--    RXCPU *cpu = RX_CPU(obj);
-+    CPUState *cs = CPU(obj);
-     RXCPUClass *rcc = RX_CPU_GET_CLASS(obj);
--    CPURXState *env = &cpu->env;
-+    CPURXState *env = cpu_env(cs);
-     uint32_t *resetvec;
- 
-     if (rcc->parent_phases.hold) {
-diff --git a/target/rx/gdbstub.c b/target/rx/gdbstub.c
-index d7e0e6689b..f222bf003b 100644
---- a/target/rx/gdbstub.c
-+++ b/target/rx/gdbstub.c
-@@ -21,8 +21,7 @@
- 
- int rx_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- {
--    RXCPU *cpu = RX_CPU(cs);
--    CPURXState *env = &cpu->env;
-+    CPURXState *env = cpu_env(cs);
- 
-     switch (n) {
-     case 0 ... 15:
-@@ -53,8 +52,7 @@ int rx_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
- 
- int rx_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
- {
--    RXCPU *cpu = RX_CPU(cs);
--    CPURXState *env = &cpu->env;
-+    CPURXState *env = cpu_env(cs);
-     uint32_t psw;
-     switch (n) {
-     case 0 ... 15:
-diff --git a/target/rx/helper.c b/target/rx/helper.c
-index dad5fb4976..80912e8dcb 100644
---- a/target/rx/helper.c
-+++ b/target/rx/helper.c
-@@ -45,8 +45,7 @@ void rx_cpu_unpack_psw(CPURXState *env, uint32_t psw, int rte)
- #define INT_FLAGS (CPU_INTERRUPT_HARD | CPU_INTERRUPT_FIR)
- void rx_cpu_do_interrupt(CPUState *cs)
- {
--    RXCPU *cpu = RX_CPU(cs);
--    CPURXState *env = &cpu->env;
-+    CPURXState *env = cpu_env(cs);
-     int do_irq = cs->interrupt_request & INT_FLAGS;
-     uint32_t save_psw;
- 
-@@ -122,8 +121,7 @@ void rx_cpu_do_interrupt(CPUState *cs)
- 
- bool rx_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
- {
--    RXCPU *cpu = RX_CPU(cs);
--    CPURXState *env = &cpu->env;
-+    CPURXState *env = cpu_env(cs);
-     int accept = 0;
-     /* hardware interrupt (Normal) */
-     if ((interrupt_request & CPU_INTERRUPT_HARD) &&
-diff --git a/target/rx/translate.c b/target/rx/translate.c
-index f6bf68e00e..f6e9e0ec90 100644
---- a/target/rx/translate.c
-+++ b/target/rx/translate.c
-@@ -131,8 +131,7 @@ static int bdsp_s(DisasContext *ctx, int d)
- 
- void rx_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- {
--    RXCPU *cpu = RX_CPU(cs);
--    CPURXState *env = &cpu->env;
-+    CPURXState *env = cpu_env(cs);
-     int i;
-     uint32_t psw;
- 
++    ERRP_GUARD();
+     long int ret = -ENOTTY;
+     char *path, *vfio_dev_path = NULL, *vfio_path = NULL;
+     DIR *dir = NULL;
 -- 
 2.44.0
 
