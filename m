@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA75EC54E60
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9BCDC54E5D
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 13:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1xv-0007yh-G3; Tue, 12 Mar 2024 09:14:47 -0400
+	id 1rk1y7-0008Rq-J8; Tue, 12 Mar 2024 09:14:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk1xo-0007sO-LE; Tue, 12 Mar 2024 09:14:40 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1rk1y5-0008M3-BN; Tue, 12 Mar 2024 09:14:57 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rk1xm-0006oe-CF; Tue, 12 Mar 2024 09:14:39 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-6e6adc557b6so305177b3a.2; 
- Tue, 12 Mar 2024 06:14:36 -0700 (PDT)
+ id 1rk1y2-0006rA-EX; Tue, 12 Mar 2024 09:14:56 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6e6afb754fcso182342b3a.3; 
+ Tue, 12 Mar 2024 06:14:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710249275; x=1710854075; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710249292; x=1710854092; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2hIrP+GOO7mqBVQBlneIZNaQyZ+Zlpvjob7t6Cp/ux0=;
- b=fAKSh2Nfc7QU2xQqKdZ9EPIg+FfGiQu0Od6kNKEpp2wiJQG+VJJ+hZWPPOodRGHaJ/
- STAUd0zfFUMTBLPZODb+PfcRFq1u0um6yTORuXDE+ZWimDu6gEgHvK3Q0tZiY9YXhd92
- M6PXVfGWLFWtM9D4Nj/775rUCd11ds12BCYkI/aznkcoey0+pjrVGnoTUkDiW7xScwZW
- brRmmny8Y+oz2HK1Myv24kMa5mXwAT57ogKp2pfxTPnT4fPxnQGkHxfEtLsQ4zPoJlgD
- K59JWSaiZCLKhv9cIf5B33cBOtqlktI2XwlsWyOFy6Q1Zin+wno0TyEvF8/ap1ANDWV1
- VnEA==
+ bh=wmZJDwvj+FJgsSty74chMzftbuB5FvT0QJ9riUDcjhc=;
+ b=QIBQRi36iQBSWemeOAhHEQ6XjXYSFAWLZPlMDKboovkltrGrYQ9t3QNQVG/yjbLq2h
+ Njq+WpAbIm9o+pIIC0cmX83vb6DQj/+YgWAycacWUj4ckzs+aF7vwP8uISLhXNT42DzN
+ NPU7nW2PIZVN1/3/6ztYpqhZSoYxkU5GwajIdfdru+fRw4/R96TIBDcDLvJrk/Iq2kcN
+ rznbzOfXjuoWJzQE8Y5zUrhegFxv/zR0/1ByzxGcZ2FX5bhLmxEltqiaw/C4TKcrB/jW
+ QrIPitpfQRJDTxc6+EG+yhlQ2yWpgb5XipRkFz2Cd8GLXrlvbwswccwf72demUATXZMd
+ oVoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710249275; x=1710854075;
+ d=1e100.net; s=20230601; t=1710249292; x=1710854092;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2hIrP+GOO7mqBVQBlneIZNaQyZ+Zlpvjob7t6Cp/ux0=;
- b=FXsXXjptAd2/6T+WzPebx0wQeyOYnTm7it62CNFZdcTq8q92RhiYTYWAjy7Bn5OloE
- AqM33OVtAECsyRbMTkCLgcG/qp6Ee0AoXRtjKmhOfKC6SrpZJQEB94Zie2uVGmmkZSBN
- tmeDHRupLYNBIC879DZE0SbeGVq8cTgpKJVulIJh60u27xbt7+Zwwg4Lb+etye9u0PXi
- pi78an/+9nw3SpWIU5tYh6Gl9HVSw+nYltQ4FBrkBxcP7Kx0z2WIFH5Xf7u7lNmWWv/q
- i+ZY2YobhjYq6cqdV477wOWxM5v+o60UhWTWEX0ogLfAuBSrH4h/UIVO5qfGS4KNOFNW
- TPBg==
+ bh=wmZJDwvj+FJgsSty74chMzftbuB5FvT0QJ9riUDcjhc=;
+ b=D8Wn9f82YHRqwsrsODpNFckqbnEz27Vz/154gNqIo/JDQK7H/zM/fjLNj5Ir6ixfiw
+ e5POjhDgB9Zf4W2YgakK4h+SN5zWtWQwCmRgz6UCmyJmxHY08Z4sbbV9FYo1ExNhZuXU
+ CHR1weCTeD0w02BEmJTkrin1V0fKW0GCNQ4N5bQco8mGaTkkdrGwLV0908GrbcHZ/18K
+ aU5975o+rrIyLwLGXYHfYe0krn3XZvci6+HNQkvZ8w37GJ6IOVZhMm9PUrxEYxQTVDvQ
+ 4R6Ci02hsdvVtro7ltbUEi7EiBI7bER40TeTn9bDw6Fzt/MsLA8E3PbI0Qb39YPpX46+
+ KSvQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXL7OzVFPytPdl+iZVFpTz8KuL+3H6H1jKC362kEQfk8D38jsIFlfpe8SQpiABhQzvcoFxNnmEAbRkB4JrVFTC5PHolKp4=
-X-Gm-Message-State: AOJu0Ywc6R4BS1X9z6VHc2LpBbbVsy+Cwnz3DOTDXhCXJSj75Nqio1m3
- D/VelePR15yUHBba0k2EHmpZ+dZDrGb03vvZgGTl8mGmzQ5zHiaUErT1VUPoJEQ=
-X-Google-Smtp-Source: AGHT+IFHM5QqD+FFwWUSTdS0ckLdZ5o9YfQGZpazDX7iatZ5b4p9jenIQv/feUDAx46Gbaj6fFRucw==
-X-Received: by 2002:a05:6a00:3a2a:b0:6e5:599a:52b7 with SMTP id
- fj42-20020a056a003a2a00b006e5599a52b7mr241282pfb.28.1710249275542; 
- Tue, 12 Mar 2024 06:14:35 -0700 (PDT)
+ AJvYcCUCIIhE1PaV4nlfIRBt+Qch/RJSj+9p3sb+9E5SFtcUJJsEimrbRaUQHOI0Aijko3KpDtbBnyZcBuumjwr3ZQGT873alkw=
+X-Gm-Message-State: AOJu0Yx5iacWEmJ+yEWbfNKXxQYRvp81AfaSyqBoeB/Pgs/DBdCEu/D/
+ B/xSf3HoQk8Pw3fEsi1n6RWPbjIQcKOQVVZXerykPFjKl0AUqxtKgbTNfiA1BEM=
+X-Google-Smtp-Source: AGHT+IE3tLfO0e51FcEX4PzWYw1kIxCFxfpKOTLNUcLTV8224OUMCIIaCKuOk+/DM1XLkF4c8oO9Tw==
+X-Received: by 2002:a05:6a00:1944:b0:6e6:1bd6:95ab with SMTP id
+ s4-20020a056a00194400b006e61bd695abmr14152332pfk.11.1710249292474; 
+ Tue, 12 Mar 2024 06:14:52 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- r15-20020aa78b8f000000b006e64f75c947sm6066084pfd.46.2024.03.12.06.14.32
+ r15-20020aa78b8f000000b006e64f75c947sm6066084pfd.46.2024.03.12.06.14.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 06:14:35 -0700 (PDT)
+ Tue, 12 Mar 2024 06:14:52 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  David Gibson <david@gibson.dropbear.id.au>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v2 02/10] target/ppc: POWER10 does not have transactional
- memory
-Date: Tue, 12 Mar 2024 23:14:11 +1000
-Message-ID: <20240312131419.2196845-3-npiggin@gmail.com>
+Subject: [PATCH v2 07/10] ppc/pnv: Permit ibm,
+ pa-features set per machine variant
+Date: Tue, 12 Mar 2024 23:14:16 +1000
+Message-ID: <20240312131419.2196845-8-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240312131419.2196845-1-npiggin@gmail.com>
 References: <20240312131419.2196845-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,43 +97,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-POWER10 hardware implements a degenerate transactional memory facility
-in POWER8/9 PCR compatibility modes to permit migration from older
-CPUs, but POWER10 / ISA v3.1 mode does not support it so the CPU model
-should not support it.
+This allows different pa-features for powernv8/9/10.
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu_init.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ hw/ppc/pnv.c | 41 +++++++++++++++++++++++++++++------------
+ 1 file changed, 29 insertions(+), 12 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 572cbdf25f..b160926a93 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -6573,11 +6573,10 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data)
-                         PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |
-                         PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
-                         PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
--                        PPC2_TM | PPC2_ISA300 | PPC2_PRCNTL | PPC2_ISA310 |
-+                        PPC2_ISA300 | PPC2_PRCNTL | PPC2_ISA310 |
-                         PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206;
-     pcc->msr_mask = (1ull << MSR_SF) |
-                     (1ull << MSR_HV) |
--                    (1ull << MSR_TM) |
-                     (1ull << MSR_VR) |
-                     (1ull << MSR_VSX) |
-                     (1ull << MSR_EE) |
-@@ -6617,7 +6616,7 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data)
-     pcc->flags = POWERPC_FLAG_VRE | POWERPC_FLAG_SE |
-                  POWERPC_FLAG_BE | POWERPC_FLAG_PMM |
-                  POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |
--                 POWERPC_FLAG_VSX | POWERPC_FLAG_TM | POWERPC_FLAG_SCV;
-+                 POWERPC_FLAG_VSX | POWERPC_FLAG_SCV;
-     pcc->l1_dcache_size = 0x8000;
-     pcc->l1_icache_size = 0x8000;
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index aa9786e970..52d964f77a 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -133,7 +133,7 @@ static int get_cpus_node(void *fdt)
+  * device tree, used in XSCOM to address cores and in interrupt
+  * servers.
+  */
+-static void pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
++static int pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
+ {
+     PowerPCCPU *cpu = pc->threads[0];
+     CPUState *cs = CPU(cpu);
+@@ -149,11 +149,6 @@ static void pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
+     uint32_t cpufreq = 1000000000;
+     uint32_t page_sizes_prop[64];
+     size_t page_sizes_prop_size;
+-    const uint8_t pa_features[] = { 24, 0,
+-                                    0xf6, 0x3f, 0xc7, 0xc0, 0x00, 0xf0,
+-                                    0x80, 0x00, 0x00, 0x00, 0x00, 0x00,
+-                                    0x00, 0x00, 0x00, 0x00, 0x80, 0x00,
+-                                    0x80, 0x00, 0x80, 0x00, 0x80, 0x00 };
+     int offset;
+     char *nodename;
+     int cpus_offset = get_cpus_node(fdt);
+@@ -236,15 +231,14 @@ static void pnv_dt_core(PnvChip *chip, PnvCore *pc, void *fdt)
+                            page_sizes_prop, page_sizes_prop_size)));
+     }
+ 
+-    _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
+-                       pa_features, sizeof(pa_features))));
+-
+     /* Build interrupt servers properties */
+     for (i = 0; i < smt_threads; i++) {
+         servers_prop[i] = cpu_to_be32(pc->pir + i);
+     }
+     _FDT((fdt_setprop(fdt, offset, "ibm,ppc-interrupt-server#s",
+                        servers_prop, sizeof(*servers_prop) * smt_threads)));
++
++    return offset;
  }
+ 
+ static void pnv_dt_icp(PnvChip *chip, void *fdt, uint32_t pir,
+@@ -299,6 +293,17 @@ PnvChip *pnv_chip_add_phb(PnvChip *chip, PnvPHB *phb)
+     return chip;
+ }
+ 
++/*
++ * Same as spapr pa_features_207 except pnv always enables CI largepages bit.
++ * HTM is always enabled because TCG does implement HTM, it's just a
++ * degenerate implementation.
++ */
++static const uint8_t pa_features_207[] = { 24, 0,
++                 0xf6, 0x3f, 0xc7, 0xc0, 0x00, 0xf0,
++                 0x80, 0x00, 0x00, 0x00, 0x00, 0x00,
++                 0x00, 0x00, 0x00, 0x00, 0x80, 0x00,
++                 0x80, 0x00, 0x80, 0x00, 0x80, 0x00 };
++
+ static void pnv_chip_power8_dt_populate(PnvChip *chip, void *fdt)
+ {
+     static const char compat[] = "ibm,power8-xscom\0ibm,xscom";
+@@ -311,8 +316,12 @@ static void pnv_chip_power8_dt_populate(PnvChip *chip, void *fdt)
+ 
+     for (i = 0; i < chip->nr_cores; i++) {
+         PnvCore *pnv_core = chip->cores[i];
++        int offset;
++
++        offset = pnv_dt_core(chip, pnv_core, fdt);
+ 
+-        pnv_dt_core(chip, pnv_core, fdt);
++        _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
++                           pa_features_207, sizeof(pa_features_207))));
+ 
+         /* Interrupt Control Presenters (ICP). One per core. */
+         pnv_dt_icp(chip, fdt, pnv_core->pir, CPU_CORE(pnv_core)->nr_threads);
+@@ -335,8 +344,12 @@ static void pnv_chip_power9_dt_populate(PnvChip *chip, void *fdt)
+ 
+     for (i = 0; i < chip->nr_cores; i++) {
+         PnvCore *pnv_core = chip->cores[i];
++        int offset;
+ 
+-        pnv_dt_core(chip, pnv_core, fdt);
++        offset = pnv_dt_core(chip, pnv_core, fdt);
++
++        _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
++                           pa_features_207, sizeof(pa_features_207))));
+     }
+ 
+     if (chip->ram_size) {
+@@ -358,8 +371,12 @@ static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
+ 
+     for (i = 0; i < chip->nr_cores; i++) {
+         PnvCore *pnv_core = chip->cores[i];
++        int offset;
++
++        offset = pnv_dt_core(chip, pnv_core, fdt);
+ 
+-        pnv_dt_core(chip, pnv_core, fdt);
++        _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
++                           pa_features_207, sizeof(pa_features_207))));
+     }
+ 
+     if (chip->ram_size) {
 -- 
 2.42.0
 
