@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8972C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D155EC54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:35:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0PW-0005YR-Kv; Tue, 12 Mar 2024 07:35:10 -0400
+	id 1rk0Pm-00060D-SP; Tue, 12 Mar 2024 07:35:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rk0PT-0005Tr-4C
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:35:07 -0400
-Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rk0Pj-0005x4-MD
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:35:23 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rk0PR-0002Wk-6Y
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:35:06 -0400
-Received: by mail-qt1-x834.google.com with SMTP id
- d75a77b69052e-42f59ca9a7dso2016621cf.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:35:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rk0PX-0002Y3-Co
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:35:22 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5683093ffbbso6060903a12.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:35:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710243304; x=1710848104; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710243308; x=1710848108; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jBiiiSNgOpxz2KeHaJd8ZE6W2tm8N+ksGJtLDHwd9Cg=;
- b=GUpMcQdhLPP85b1rX2Ua3mIJ7b9We0dbPXFHwUlR7aisPuwcM3fJNkm3Q9M62LanYl
- v9MH6bRXIKl9Djw0/Ro7P19S621QUvcPm7OPcuSIJUkbBEMeSZcjYIpjtXqzxQ8osrX4
- zewnf7+ol3rS8fP4pRFf3FGCyeSfJ2aLNuXMGTBttPdoSlrSO8E9gCn3tnglsFVanQsc
- FHv7zLYDAyCpX6Jn+uL+8ZAYdwIlrAkndynI+b6PaQhFn2mUWjm+c5vr3gewjJ22JU3Y
- itVE7DwtK5QaHwuqHgrDSmPjuW2ZWYSoPlz7fBHuJC/7SsSnraCmxiv8J71qZ9axJHWq
- IZsQ==
+ bh=Q6oa53FNojiU7XVQUGsskhkskziips1uYf6wI+pnEcI=;
+ b=GTr44k7E1Iy7m08AZeWt82ZqQA9hMPMXo4cayyNWAvWY/nCrWhf1o5brYEmSTZcaAt
+ 3og/ErTc7boF9l8MnrDCLEURVKWP90MySKhqjnQlNIDAer9ei4CYjygtLuX38yRmCg13
+ EXkCz7e1D/htatnpctzBz5CwdOKG6F4SFlYSOmiUssP8h3sYiEbdWGRMTwrcs0CtXgv7
+ 7BJnSDYRoQLLDvQEKatVNuhwRCFJBRUaSHtakZebmuqSu+VX1lcfemAieHrYT16UYU8Z
+ 3/c1KCcSmHmTKFtTGWRV6mGkZvCkkW63cvs/OEedykBDcafR88lg9JWgEtZIs1T8WJvu
+ T6cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710243304; x=1710848104;
+ d=1e100.net; s=20230601; t=1710243308; x=1710848108;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jBiiiSNgOpxz2KeHaJd8ZE6W2tm8N+ksGJtLDHwd9Cg=;
- b=nJe6P41+faKaKAfzlM+7TKg/CajHo7jr4DnZoIObtKWYimfzo0LDZz53MiGtgOIfW4
- RVrgPQSN0xnuxopqIqoBdHBV7AUJVym+ImIuuxR2RjFY5zRKDczDuQrWlBv2zNKhXSMO
- KMTxrFrfpV49vHEuaPhaCbNRP14Zvk3tmZ4H1xYVZQw+w7F0lyPL7zc9BpikPVsZcniX
- /sSKVeUvF03MXzg016vmk7t5vrowLE+eU5KF6h7Sw62ecGrmonjQATlfeqbboCOQMw99
- g+gY6VJWmOApW5imJdx/LGH+pnq6aEBQC0HhS1M5BSb/gfJF9JO2x7YCuL49MG7uXtJP
- Tfqw==
-X-Gm-Message-State: AOJu0YzDG9EY+dJbPf2jktWA8zi0eqfIBpl7CKD4hgqVn3gSMNysrFRb
- nBCS/YoOUTVsVbO+9MFLxSmZx4igYCXzlr/1yuBmkI14N5fdcowROV1ZCY9+iitgQwbIarabJxj
- EGws7W1pNT2bOf7KEMHJlTAnMPAQ=
-X-Google-Smtp-Source: AGHT+IGlCxGKwU0bQCLFyfrSsgkOAhXJhBEVRj0oFkJU6s5uxM2QAvK8HuKaZwiEgmm5d8x10g+l6Kil3hoUcjxZbeg=
-X-Received: by 2002:a05:622a:188c:b0:42e:72ba:d54b with SMTP id
- v12-20020a05622a188c00b0042e72bad54bmr13202109qtc.21.1710243303773; Tue, 12
- Mar 2024 04:35:03 -0700 (PDT)
+ bh=Q6oa53FNojiU7XVQUGsskhkskziips1uYf6wI+pnEcI=;
+ b=fm2BWmQWR6eKMhj5aur7f7gBUTRosyDKK4ZFkfTILSW4GCGRAZ2EU7EEKyVu86JNZU
+ anzgjP3urAmufGoA4xDL61pQ7N7rQ7QxAuptdko/MEanetCISc9A9Mybh7EveJmkHlFh
+ U9rdrNZq3+KxPEJguqIyOR5HCOqN647A4sCKzQ0AM67lceLsDaNGrEQuKsycn0eLZEaK
+ 7XO5HS/0WbXoi9GPr9EUw1MQoVSuv8n+mAniaa1KAE7TC+2+CIrFQ41a7MnsY14dtCBC
+ 6lSCPEbzXIMVBbd7+ZlD6Ujac640c6c83ngkp3sNt+IcSZEMVH26TSCPnV/QPj1sc5nl
+ n8AA==
+X-Gm-Message-State: AOJu0YwcYUsTFbJUSso7XkSRHeQg3rGpqnaVbtXmP4RqZ/AD19CsiMWx
+ hdC5DENtL3DzMLhcZda4i9JIg032zemcWLQqYjs6RLoTZs8FvciLcNFnpy7MyopW/ahFrOKEJ5Q
+ SLKueyIIgvO3Qx+Jj/fwQyf4gjzjVdQOwknrlFQ==
+X-Google-Smtp-Source: AGHT+IFnAzlUuVw2vJtvyji5GO9b/YfCU3yaRbqRGy2sADFCFC72qbwF0yJ0ClHD+GQsx/R0gxpE5/b28ajlozbrCyo=
+X-Received: by 2002:a50:cd18:0:b0:566:ef8:93f6 with SMTP id
+ z24-20020a50cd18000000b005660ef893f6mr7191167edi.0.1710243308269; Tue, 12 Mar
+ 2024 04:35:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240306222535.3236855-1-dongwon.kim@intel.com>
-In-Reply-To: <20240306222535.3236855-1-dongwon.kim@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 12 Mar 2024 15:34:53 +0400
-Message-ID: <CAJ+F1CJG3fMhon-GyRCsjtJtJ3m6OK7vtPDEix=Hwnxt=sKjjg@mail.gmail.com>
-Subject: Re: [PATCH v2] virtio-gpu: first surface update with blob scanout
- after resumed
-To: dongwon.kim@intel.com
-Cc: qemu-devel@nongnu.org
+References: <20240311191105.35224-8-its@irrelevant.dk>
+In-Reply-To: <20240311191105.35224-8-its@irrelevant.dk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 12 Mar 2024 11:34:57 +0000
+Message-ID: <CAFEAcA_FC+FtfLHVy7=ekBH2SJCYpuPrg8rVg45XFZwO6r1+Lw@mail.gmail.com>
+Subject: Re: [PULL 0/6] hw/nvme updates
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-block@nongnu.org, Jesper Devantier <foss@defmacro.it>, 
+ Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <k.jensen@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x834.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,83 +94,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Thu, Mar 7, 2024 at 2:27=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+On Mon, 11 Mar 2024 at 19:11, Klaus Jensen <its@irrelevant.dk> wrote:
 >
-> From: Dongwon Kim <dongwon.kim@intel.com>
+> From: Klaus Jensen <k.jensen@samsung.com>
 >
-> The guest surface needs to be updated with a blob scanout after resumed
-> from saved vm state if blob is enabled.
+> Hi,
 >
-> v2: Rebased
+> The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf0=
+5f:
 >
+>   Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into sta=
+ging (2024-03-09 20:12:21 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/birkelund/qemu.git tags/nvme-next-pull-request
+>
+> for you to fetch changes up to a1505d799232939bf90c1b3e1fc20e81cd398404:
+>
+>   hw/nvme: add machine compatibility parameter to enable msix exclusive b=
+ar (2024-03-11 20:07:41 +0100)
+>
+> ----------------------------------------------------------------
+> hw/nvme updates
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmXvVsYACgkQTeGvMW1P
+> DemWtwf9HU3cjtvCp8AeHGoPFTwp8/Vx3cQlQ6ilADKSDm44up2+M504xE/Mdviv
+> 6y3PTPe1yiEpg/MbjWTX/df5lo+VdNoCuCyjph9mea0s1QAjCfVpl+KLMUVF/Oj5
+> y1Iz9PQqOVDJ3O4xlgmPTfd8NXE/frNJaiXAjFuBxF2+4lilD5kMxpyu7DXbLiy2
+> Szd1I3DhFAEOLEbrSSRDI3Fpy0KBdRzdKuUfmRdrHzbmhzHJefW7wnZ3aAiDboaD
+> Ny7y/aovmjGymMp9GrBKWhUFPfSUtJ8l8j4Z7acQs+VDxg8lcAHCJKOyqCBTspUL
+> PSnDe6E/CRyjrG2fUVXTLb6YW1eibQ=3D=3D
+> =3DLd7a
+> -----END PGP SIGNATURE-----
 
-This patch conflicts with the already reviewed (and almost in queue)
-patch from https://patchew.org/QEMU/20240228122323.962826-1-marcandre.lurea=
-u@redhat.com/20240228122323.962826-3-marcandre.lureau@redhat.com/.
+Hi; I'm afraid this fails to build for some jobs, eg
+https://gitlab.com/qemu-project/qemu/-/jobs/6373091994
+https://gitlab.com/qemu-project/qemu/-/jobs/6373091978
+https://gitlab.com/qemu-project/qemu/-/jobs/6373091975
 
-There are chances that it solves your problem, since it calls into
-virtio_gpu_do_set_scanout() which handles blob resources.
+../hw/nvme/ctrl.c: In function =E2=80=98nvme_realize=E2=80=99:
+../hw/nvme/ctrl.c:8146:15: error: =E2=80=98msix_pba_offset=E2=80=99 may be =
+used
+uninitialized in this function [-Werror=3Dmaybe-uninitialized]
+8146 | ret =3D msix_init(pci_dev, n->params.msix_qsize,
+     | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+8147 | &n->bar0, 0, msix_table_offset,
+     | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+8148 | &n->bar0, 0, msix_pba_offset, 0, errp);
+     | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../hw/nvme/ctrl.c:8099:33: note: =E2=80=98msix_pba_offset=E2=80=99 was decl=
+ared here
+8099 | unsigned msix_table_offset, msix_pba_offset;
+     | ^~~~~~~~~~~~~~~
+../hw/nvme/ctrl.c:8135:9: error: =E2=80=98msix_table_offset=E2=80=99 may be=
+ used
+uninitialized in this function [-Werror=3Dmaybe-uninitialized]
+8135 | memory_region_init_io(&n->iomem, OBJECT(n), &nvme_mmio_ops, n, "nvme=
+",
+     | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~
+8136 | msix_table_offset);
+     | ~~~~~~~~~~~~~~~~~~
+../hw/nvme/ctrl.c:8099:14: note: =E2=80=98msix_table_offset=E2=80=99 was de=
+clared here
+8099 | unsigned msix_table_offset, msix_pba_offset;
+     | ^~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
 
-Could you check? And if it doesn't fix it, can you apply your solution
-on top of it?
+
+I think this is because the compiler notices that nvme_mbar_size() has
+an early-exit code path which never initializes *msix_table_offset
+and *msix-pba_offset.
 
 thanks
-
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-> ---
->  hw/display/virtio-gpu.c | 21 ++++++++++++++-------
->  1 file changed, 14 insertions(+), 7 deletions(-)
->
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 1c1ee230b3..01bc4f9565 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -1422,16 +1422,23 @@ static int virtio_gpu_post_load(void *opaque, int=
- version_id)
->          if (!res) {
->              return -EINVAL;
->          }
-> -        scanout->ds =3D qemu_create_displaysurface_pixman(res->image);
-> -        if (!scanout->ds) {
-> -            return -EINVAL;
-> -        }
-> +
-> +        if (res->blob_size) {
-> +            assert(g->dmabuf.primary[i] !=3D NULL);
-> +            g->dmabuf.primary[i]->buf.fd =3D res->dmabuf_fd;
-> +            dpy_gl_scanout_dmabuf(scanout->con, &g->dmabuf.primary[i]->b=
-uf);
-> +        } else {
-> +            scanout->ds =3D qemu_create_displaysurface_pixman(res->image=
-);
-> +            if (!scanout->ds) {
-> +                return -EINVAL;
-> +            }
->  #ifdef WIN32
-> -        qemu_displaysurface_win32_set_handle(scanout->ds, res->handle, 0=
-);
-> +            qemu_displaysurface_win32_set_handle(scanout->ds, res->handl=
-e, 0);
->  #endif
-> +            dpy_gfx_replace_surface(scanout->con, scanout->ds);
-> +            dpy_gfx_update_full(scanout->con);
-> +        }
->
-> -        dpy_gfx_replace_surface(scanout->con, scanout->ds);
-> -        dpy_gfx_update_full(scanout->con);
->          if (scanout->cursor.resource_id) {
->              update_cursor(g, &scanout->cursor);
->          }
-> --
-> 2.34.1
->
->
-
-
---=20
-Marc-Andr=C3=A9 Lureau
+-- PMM
 
