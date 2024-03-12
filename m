@@ -4,67 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CCD6C54E66
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C98C54E58
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 12:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk1UE-0002K2-Od; Tue, 12 Mar 2024 08:44:06 -0400
+	id 1rk1UZ-0002bR-GU; Tue, 12 Mar 2024 08:44:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1U4-0002CH-VG
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1U4-0002Az-LA
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:43:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1U3-000055-5M
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rk1U2-0008W3-25
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 08:43:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710247434;
+ s=mimecast20190719; t=1710247433;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oz9V+k8P7fQA+YQobIcdIxZu5AQW2Cg11DH7VWZVgeM=;
- b=F4AQ758ZKCPYYMY41KNpigYg6GhktdEoomieKT95WQC4arU4EA08C1DtJj049rokiaSPWY
- og905jTVhqqN2/tMyuBsdeZSH7+3S+ntN/5qWq+Dim+dzAR3PVYP0UdDOspSSU+rU8gZC5
- xRhWvGkdweSzDL8mJyTyDsSIxhOsuBw=
+ bh=dCREUU09uTOSvFl3jYOVCcfLqfCBCPH5bJcN2LFfsKo=;
+ b=TL0JBjvB7fNJPkcPSK7OxAw5sZqosCYMRXzDDKAmpR9oyHxAYx8D4q97UXqAPgEh9UJW09
+ q7hBPCmsRsM7PYMtZUsIbP11Ka0IpzzREDCr3i7PL7d6fHKTXdVb03QEHMAj94ZjSmF3yH
+ PvOOE0cdb6OJSNLuPWnb/ylipTIbSaI=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-389-PpZ2VFodPI-Kb3Wo4b2nVQ-1; Tue, 12 Mar 2024 08:43:51 -0400
-X-MC-Unique: PpZ2VFodPI-Kb3Wo4b2nVQ-1
+ us-mta-610-KeqFtyQCONuMTrmtswJ6Hg-1; Tue, 12 Mar 2024 08:43:48 -0400
+X-MC-Unique: KeqFtyQCONuMTrmtswJ6Hg-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 016A1101A526;
- Tue, 12 Mar 2024 12:43:51 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E140F800262;
+ Tue, 12 Mar 2024 12:43:47 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.69])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 2582F492BC4;
- Tue, 12 Mar 2024 12:43:50 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id E2592492BC4;
+ Tue, 12 Mar 2024 12:43:46 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 06/55] hw/intc: Check @errp to handle the error of
- IOAPICCommonClass.realize()
-Date: Tue, 12 Mar 2024 13:42:50 +0100
-Message-ID: <20240312124339.761630-7-thuth@redhat.com>
+Subject: [PULL 04/55] hw/misc/xlnx-versal-trng: Check returned bool in
+ trng_prop_fault_event_set()
+Date: Tue, 12 Mar 2024 13:42:48 +0100
+Message-ID: <20240312124339.761630-5-thuth@redhat.com>
 In-Reply-To: <20240312124339.761630-1-thuth@redhat.com>
 References: <20240312124339.761630-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,42 +85,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-IOAPICCommonClass implements its own private realize(), and this private
-realize() allows error.
+As the comment in qapi/error, dereferencing @errp requires
+ERRP_GUARD():
 
-Since IOAPICCommonClass.realize() returns void, to check the error,
-dereference @errp with ERRP_GUARD().
+* = Why, when and how to use ERRP_GUARD() =
+*
+* Without ERRP_GUARD(), use of the @errp parameter is restricted:
+* - It must not be dereferenced, because it may be null.
+...
+* ERRP_GUARD() lifts these restrictions.
+*
+* To use ERRP_GUARD(), add it right at the beginning of the function.
+* @errp can then be used without worrying about the argument being
+* NULL or &error_fatal.
+*
+* Using it when it's not needed is safe, but please avoid cluttering
+* the source with useless code.
 
+But in trng_prop_fault_event_set, @errp is dereferenced without
+ERRP_GUARD():
+
+visit_type_uint32(v, name, events, errp);
+if (*errp) {
+    return;
+}
+
+Currently, since trng_prop_fault_event_set() doesn't get the NULL @errp
+parameter as a "set" method of object property, it hasn't triggered the
+bug that dereferencing the NULL @errp.
+
+And since visit_type_uint32() returns bool, check the returned bool
+directly instead of dereferencing @errp, then we needn't the add missing
+ERRP_GUARD().
+
+Suggested-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240223085653.1255438-8-zhao1.liu@linux.intel.com>
+Message-ID: <20240223085653.1255438-5-zhao1.liu@linux.intel.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- hw/intc/ioapic_common.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/misc/xlnx-versal-trng.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
-index cb9bf62146..efbe6958c8 100644
---- a/hw/intc/ioapic_common.c
-+++ b/hw/intc/ioapic_common.c
-@@ -152,6 +152,7 @@ static int ioapic_dispatch_post_load(void *opaque, int version_id)
+diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
+index b8111b8b66..6495188dc7 100644
+--- a/hw/misc/xlnx-versal-trng.c
++++ b/hw/misc/xlnx-versal-trng.c
+@@ -644,8 +644,7 @@ static void trng_prop_fault_event_set(Object *obj, Visitor *v,
+     Property *prop = opaque;
+     uint32_t *events = object_field_prop_ptr(obj, prop);
  
- static void ioapic_common_realize(DeviceState *dev, Error **errp)
- {
-+    ERRP_GUARD();
-     IOAPICCommonState *s = IOAPIC_COMMON(dev);
-     IOAPICCommonClass *info;
+-    visit_type_uint32(v, name, events, errp);
+-    if (*errp) {
++    if (!visit_type_uint32(v, name, events, errp)) {
+         return;
+     }
  
-@@ -162,6 +163,9 @@ static void ioapic_common_realize(DeviceState *dev, Error **errp)
- 
-     info = IOAPIC_COMMON_GET_CLASS(s);
-     info->realize(dev, errp);
-+    if (*errp) {
-+        return;
-+    }
- 
-     sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->io_memory);
-     ioapic_no++;
 -- 
 2.44.0
 
