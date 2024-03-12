@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB87C54E67
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 19:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBBDAC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 19:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk7OJ-0002ko-4f; Tue, 12 Mar 2024 15:02:23 -0400
+	id 1rk7OO-0002lE-4O; Tue, 12 Mar 2024 15:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rk7OH-0002jy-3F
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 15:02:21 -0400
+ id 1rk7OL-0002kp-Jm
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 15:02:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rk7OF-0005I0-Hv
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 15:02:20 -0400
+ id 1rk7OK-0005Jr-2V
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 15:02:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710270138;
+ s=mimecast20190719; t=1710270143;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RtHopwqj2zSve6yzyGJpkD7D5xz3ETDg+5TwNbJVrqw=;
- b=TKJRAzY3uZgkNZRojF4kzpbE9naK+Dy3Rd2LQ+e2LH3b6DzncjB2QVl20CfLjBjszH958S
- XfiM0iA6KVtGu9RXXEt/P4hlWLrvEVfHIvQRPFd7lIWq5JawgeuHV44BC0tlOmmwHycgq3
- TKpDBWaYuPvV+yIg2gx9Za6D3xw3+1M=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zz29IY7r2fxs/fSMPn/uPv786CLfFOsn5+fUKuDo+FA=;
+ b=HFYXhxT8Qu6HAo+irhuHt+saQ9YRYga2B9UC0wIvix1F4lwRLWen2NMKeBTmJezHKYku/2
+ +0H6UY1Xc7l+gb0fqbhqCKJDTpGFK0tmPSQjQPm57divKv8A6nPO37KvYzhExEdHCRvVz6
+ j0s0djEtizipnIYWTMqhsEW7AwrOB8o=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-BF7NpRT_O-SUrbwFUleAPQ-1; Tue, 12 Mar 2024 15:02:17 -0400
-X-MC-Unique: BF7NpRT_O-SUrbwFUleAPQ-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ us-mta-652-o2MhW6r5MH-Z2HKnw33Brw-1; Tue, 12 Mar 2024 15:02:20 -0400
+X-MC-Unique: o2MhW6r5MH-Z2HKnw33Brw-1
+Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C023C87A38C;
- Tue, 12 Mar 2024 19:02:16 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B221B8007A3;
+ Tue, 12 Mar 2024 19:02:19 +0000 (UTC)
 Received: from localhost (unknown [10.39.192.51])
- by smtp.corp.redhat.com (Postfix) with ESMTP id CC7B2492BC6;
- Tue, 12 Mar 2024 19:02:15 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id AA800C1576F;
+ Tue, 12 Mar 2024 19:02:18 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
@@ -54,16 +53,14 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: [PULL 2/2] meson: generate .stp files for tools too
-Date: Tue, 12 Mar 2024 15:01:44 -0400
-Message-ID: <20240312190144.433336-3-stefanha@redhat.com>
-In-Reply-To: <20240312190144.433336-1-stefanha@redhat.com>
-References: <20240312190144.433336-1-stefanha@redhat.com>
+ John Snow <jsnow@redhat.com>
+Subject: [PULL 0/2] Tracing patches
+Date: Tue, 12 Mar 2024 15:01:42 -0400
+Message-ID: <20240312190144.433336-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -89,113 +86,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+The following changes since commit 8f3f329f5e0117bd1a23a79ab751f8a7d3471e4b:
 
-The qemu-img, qemu-io, qemu-nbd, qemu-storage-daemon tools all have
-support for systemtap tracing built-in, so should be given corresponding
-.stp files to define their probes.
+  Merge tag 'migration-20240311-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-03-12 11:35:41 +0000)
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Message-id: 20240108171356.1037059-3-berrange@redhat.com
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- meson.build | 61 +++++++++++++++++++++++++++++++++++------------------
- 1 file changed, 40 insertions(+), 21 deletions(-)
+are available in the Git repository at:
 
-diff --git a/meson.build b/meson.build
-index b8d40d7c0a..520f862d7b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3808,6 +3808,7 @@ if host_os == 'darwin'
-   entitlement = find_program('scripts/entitlement.sh')
- endif
- 
-+traceable = []
- emulators = {}
- foreach target : target_dirs
-   config_target = config_target_mak[target]
-@@ -3976,27 +3977,11 @@ foreach target : target_dirs
-       emulators += {exe['name']: emulator}
-     endif
- 
--    if stap.found()
--      foreach stp: [
--        {'ext': '.stp-build', 'fmt': 'stap', 'bin': meson.current_build_dir() / exe['name'], 'install': false},
--        {'ext': '.stp', 'fmt': 'stap', 'bin': get_option('prefix') / get_option('bindir') / exe['name'], 'install': true},
--        {'ext': '-simpletrace.stp', 'fmt': 'simpletrace-stap', 'bin': '', 'install': true},
--        {'ext': '-log.stp', 'fmt': 'log-stap', 'bin': '', 'install': true},
--      ]
--        custom_target(exe['name'] + stp['ext'],
--                      input: trace_events_all,
--                      output: exe['name'] + stp['ext'],
--                      install: stp['install'],
--                      install_dir: get_option('datadir') / 'systemtap/tapset',
--                      command: [
--                        tracetool, '--group=all', '--format=' + stp['fmt'],
--                        '--binary=' + stp['bin'],
--                        '--probe-prefix=qemu.' + target_type + '.' + target_name,
--                        '@INPUT@', '@OUTPUT@'
--                      ],
--                      depend_files: tracetool_depends)
--      endforeach
--    endif
-+    traceable += [{
-+      'exe': exe['name'],
-+      'probe-prefix': 'qemu.' + target_type + '.' + target_name,
-+    }]
-+
-   endforeach
- endforeach
- 
-@@ -4031,6 +4016,14 @@ if have_tools
-                install: true)
- 
-   subdir('storage-daemon')
-+
-+  foreach exe: [ 'qemu-img', 'qemu-io', 'qemu-nbd', 'qemu-storage-daemon']
-+    traceable += [{
-+      'exe': exe,
-+      'probe-prefix': 'qemu.' + exe.substring(5).replace('-', '_')
-+    }]
-+  endforeach
-+
-   subdir('contrib/rdmacm-mux')
-   subdir('contrib/elf2dmp')
- 
-@@ -4063,6 +4056,32 @@ if have_tools
-   endif
- endif
- 
-+if stap.found()
-+  foreach t: traceable
-+    foreach stp: [
-+      {'ext': '.stp-build', 'fmt': 'stap', 'bin': meson.current_build_dir() / t['exe'], 'install': false},
-+      {'ext': '.stp', 'fmt': 'stap', 'bin': get_option('prefix') / get_option('bindir') / t['exe'], 'install': true},
-+      {'ext': '-simpletrace.stp', 'fmt': 'simpletrace-stap', 'bin': '', 'install': true},
-+      {'ext': '-log.stp', 'fmt': 'log-stap', 'bin': '', 'install': true},
-+    ]
-+      cmd = [
-+        tracetool, '--group=all', '--format=' + stp['fmt'],
-+        '--binary=' + stp['bin'],
-+        '--probe-prefix=' + t['probe-prefix'],
-+        '@INPUT@', '@OUTPUT@'
-+      ]
-+
-+      custom_target(t['exe'] + stp['ext'],
-+                    input: trace_events_all,
-+                    output: t['exe'] + stp['ext'],
-+                    install: stp['install'],
-+                    install_dir: get_option('datadir') / 'systemtap/tapset',
-+                    command: cmd,
-+                    depend_files: tracetool_depends)
-+    endforeach
-+  endforeach
-+endif
-+
- subdir('scripts')
- subdir('tools')
- subdir('pc-bios')
+  https://gitlab.com/stefanha/qemu.git tags/tracing-pull-request
+
+for you to fetch changes up to 2b608e16ca00017509fa2a211b7b49aacdedb760:
+
+  meson: generate .stp files for tools too (2024-03-12 14:52:07 -0400)
+
+----------------------------------------------------------------
+Pull request
+
+----------------------------------------------------------------
+
+Daniel P. Berrangé (2):
+  tracetool: remove redundant --target-type / --target-name args
+  meson: generate .stp files for tools too
+
+ docs/devel/tracing.rst |  3 +-
+ meson.build            | 63 +++++++++++++++++++++++++++---------------
+ scripts/tracetool.py   | 24 ++++------------
+ 3 files changed, 46 insertions(+), 44 deletions(-)
+
 -- 
 2.44.0
 
