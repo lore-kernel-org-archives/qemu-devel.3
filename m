@@ -4,103 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8799C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 06:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0BECC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 06:44:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjvmU-0003U9-Tr; Tue, 12 Mar 2024 02:38:35 -0400
+	id 1rjvrK-0004R6-2M; Tue, 12 Mar 2024 02:43:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rjvmO-0003Tn-Rn; Tue, 12 Mar 2024 02:38:28 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjvr0-0004Ol-Ad
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 02:43:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rjvmL-0008Ls-3S; Tue, 12 Mar 2024 02:38:27 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42C6b9M6022075; Tue, 12 Mar 2024 06:38:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=Z3HASq7+gyMI4oanTYo79sYaUuiKe8q43m9s3hI4x1s=;
- b=kt9nO8Aq4VCYzlhGRExZipmK4mGRjbtsdMjtyngoF6OauXwTtFSStq0iN93l44z6cJJC
- M0sHySt8MjD4HCoG+pohPeHH3YePZa8YFAZK3SRKLXO3ap15kgvVxfFCRxy/1YKm4VBb
- NBCiZQAIOrAqhKhJaRJ+xfpuL9PvM7KfWMTKtJm9bpa1DIupIAZSlYIOrWTKRZKgvSYR
- wo4s/CUfLHU37xaxzDFHBeNGmwUcuWNm4GT4cIVO+HybKmPFBvgr5+QzQuz8Rg7FTZTb
- Gq8OCdu/2sAdGYPL2VhHasLNEzRt7ZadHw7gmiOJO08jKWBL0nmI828HX6DdmN6d31iT CQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wthxh8079-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 06:38:10 +0000
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42C6c9FN024422;
- Tue, 12 Mar 2024 06:38:10 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wthxh8076-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 06:38:09 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42C66T3Z014855; Tue, 12 Mar 2024 06:38:08 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ws33nnb9q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 06:38:08 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42C6c6YF22086202
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 Mar 2024 06:38:08 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0197058062;
- Tue, 12 Mar 2024 06:38:06 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B8AEF5806B;
- Tue, 12 Mar 2024 06:38:03 +0000 (GMT)
-Received: from [9.109.243.35] (unknown [9.109.243.35])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 12 Mar 2024 06:38:03 +0000 (GMT)
-Message-ID: <a465cc07-17ee-48ea-95e6-14c15697ab09@linux.ibm.com>
-Date: Tue, 12 Mar 2024 12:08:02 +0530
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjvqy-0000Qm-HF
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 02:43:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710225791;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=s1ygLUTnF0HACGwDA9NCcM42ITrOA63ubjnOqhRlZdM=;
+ b=QggV/g9MW3Q8SEbIs8ptzf0qtikFdZXn4Usm5d51NndBGtB24BEzkUvOZyRuNLFnhN6Tp+
+ V8hSBcm0LsqzJT7QmOQwpXC5zT0rnpeDcUPFUy1LH0QvyWxSYZBNCAFca2+F223djxEPZz
+ pwBpNEeSPcAZ9M/tQiswLHr7vGsSY6s=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-601-7a-tas7SN4KQqF_LPcm8NQ-1; Tue, 12 Mar 2024 02:43:10 -0400
+X-MC-Unique: 7a-tas7SN4KQqF_LPcm8NQ-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7886591cd10so360475185a.1
+ for <qemu-devel@nongnu.org>; Mon, 11 Mar 2024 23:43:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710225789; x=1710830589;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=s1ygLUTnF0HACGwDA9NCcM42ITrOA63ubjnOqhRlZdM=;
+ b=Auy3dvy+kSsqNX6eUa96p/DoMkvzoE2oLpg8q+xVmHLrfsxiBcmrXROBSaetQnwgOo
+ shsT1QUvrKOkWfEBiSjpCsNYZT311u3L1Hj/vjd1xV1mIiNVTg57ImtqZf5PBL6WXZdT
+ HytkPE4q5YwhrHU6+6VKIj2Y9qBXfO69BE5s/Jk1zwstXj4OWLKPBnESk/tQrhBYJfg/
+ 6Kq4MgcGDR9JR6TSoskAxYjROBDNTggJJM3Dnfe0vY9crEOblfLmWish3HdtjZc80+1F
+ vhh7wirYYt9qc6Ul5w9npSnvFrHDTBtHYV4bWDc+EsKuRdF70QXQmn3EGpGrE2tVJs0+
+ 8ejQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUg73gY7rF9Vw/GfjervYjmx/6Me2CrKrrahTYBLziH91ba/L6VFsh7xOx/IcLlLIXIX6X65WfbEOy+/DG1oraJFoISzEA=
+X-Gm-Message-State: AOJu0YwT65o/XuWZ0KIPyYCO19qL94K4c2hZRnOeYLbeIa0e4KGSVYQt
+ 8yjASzJ3eCZllB69BmGcCbGvcGJh+d2qxQSp9CVhdS1YVh+mEivXBgOBi4B5kDl2w1YDO9rsm7U
+ ygqyI9yck/G0KL7E4j4Jy5aOZmwsD0FOLmsUkWu+azJvKDNAwFs4u
+X-Received: by 2002:a05:620a:8388:b0:788:49f3:ab57 with SMTP id
+ pb8-20020a05620a838800b0078849f3ab57mr15164749qkn.34.1710225789726; 
+ Mon, 11 Mar 2024 23:43:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQ5DbqvqN/RRR8gh5cD9cHlj4eIEDUbo+BKxGMavHFnDguv7wS61Fq2LA0V39tPbpmpG1mCg==
+X-Received: by 2002:a05:620a:8388:b0:788:49f3:ab57 with SMTP id
+ pb8-20020a05620a838800b0078849f3ab57mr15164737qkn.34.1710225789472; 
+ Mon, 11 Mar 2024 23:43:09 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-177-86.web.vodafone.de.
+ [109.43.177.86]) by smtp.gmail.com with ESMTPSA id
+ q5-20020ac87345000000b0042f3e7c13a4sm2621823qtp.66.2024.03.11.23.43.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Mar 2024 23:43:09 -0700 (PDT)
+Message-ID: <f044de44-2ea8-4f67-bf93-22dee805c387@redhat.com>
+Date: Tue, 12 Mar 2024 07:43:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] spapr: avoid overhead of finding vhyp class in critical
- operations
+Subject: Re: [PATCH v2 00/13] Cleanup on SMP and its test
 Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
- David Gibson <david@gibson.dropbear.id.au>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-References: <20240224073359.1025835-1-npiggin@gmail.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240224073359.1025835-1-npiggin@gmail.com>
+To: Zhao Liu <zhao1.liu@linux.intel.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org,
+ Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+References: <20240308160148.3130837-1-zhao1.liu@linux.intel.com>
+ <a6c12d41-2801-4425-98e9-351851e2f7a4@linaro.org>
+ <ZeuxcZmE9Ejr6acx@intel.com>
+ <94997958-3cc3-4e4b-bc92-2eb7e501539e@linaro.org>
+ <Ze/6R0kT++CKfaGP@intel.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <Ze/6R0kT++CKfaGP@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: V2qx_0hOABw1_wpKRcRa4o2G90HivMp2
-X-Proofpoint-GUID: 42MRTp-0glqbpyYR-ST6JoSVDPXIWDfu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-12_05,2024-03-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0
- spamscore=0 phishscore=0 priorityscore=1501 clxscore=1015 mlxscore=0
- malwarescore=0 adultscore=0 impostorscore=0 mlxlogscore=999
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2403120050
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,266 +154,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nick,
-
-One minor comment below:
-
-On 2/24/24 13:03, Nicholas Piggin wrote:
-> PPC_VIRTUAL_HYPERVISOR_GET_CLASS is used in critical operations like
-> interrupts and TLB misses and is quite costly. Running the
-> kvm-unit-tests sieve program with radix MMU enabled thrashes the TCG
-> TLB and spends a lot of time in TLB and page table walking code. The
-> test takes 67 seconds to complete with a lot of time being spent in
-> code related to finding the vhyp class:
+On 12/03/2024 07.46, Zhao Liu wrote:
+> Hi Philippe,
 > 
->     12.01%  [.] g_str_hash
->      8.94%  [.] g_hash_table_lookup
->      8.06%  [.] object_class_dynamic_cast
->      6.21%  [.] address_space_ldq
->      4.94%  [.] __strcmp_avx2
->      4.28%  [.] tlb_set_page_full
->      4.08%  [.] address_space_translate_internal
->      3.17%  [.] object_class_dynamic_cast_assert
->      2.84%  [.] ppc_radix64_xlate
+> On Sat, Mar 09, 2024 at 02:49:17PM +0100, Philippe Mathieu-Daudé wrote:
+>> Date: Sat, 9 Mar 2024 14:49:17 +0100
+>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Subject: Re: [PATCH v2 00/13] Cleanup on SMP and its test
+>>
+>> On 9/3/24 01:46, Zhao Liu wrote:
+>>> Hi Philippe,
+>>>
+>>>>
+>>>> Can you share your base commit please?
+>>>>
+>>>> Applying: hw/core/machine-smp: Remove deprecated "parameter=0" SMP
+>>>> configurations
+>>>> Applying: hw/core/machine-smp: Deprecate unsupported "parameter=1" SMP
+>>>> configurations
+>>>> error: patch failed: docs/about/deprecated.rst:47
+>>>> error: docs/about/deprecated.rst: patch does not apply
+>>>> Patch failed at 0002 hw/core/machine-smp: Deprecate unsupported
+>>>> "parameter=1" SMP configurations
+>>>>
+>>>
+>>> The base commit is e1007b6bab5cf ("Merge tag 'pull-request-2024-03-01'
+>>> of https://gitlab.com/thuth/qemu into staging").
+>>>
+>>> But I think this conflict is because of the first 4 patches of mudule
+>>> series you picked. Let me rebase this series on that module series and
+>>> refresh a v3.
+>>
+>> Ah no, it is due to commit 01e449809b ("*-user: Deprecate and
+>> disable -p pagesize").
+>>
+>> No need to respin this series, I queued it in favor of the 4 other
+>> patches.
 > 
-> Keep a pointer to the class and avoid this lookup. This reduces the
-> execution time to 40 seconds.
+> In the commit 54c4ea8f3ae6 ("hw/core/machine-smp: Deprecate unsupported
+> 'parameter=1' SMP configurations"), the smp related thing is put under
+> the section "User-mode emulator command line arguments" instead of "System
+> emulator command line arguments".
 > 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
-> This feels a bit ugly, but the performance problem of looking up the
-> class in fast paths can't be ignored. Is there a "nicer" way to get the
-> same result?
-> 
-> Thanks,
-> Nick
-> 
->   target/ppc/cpu.h           |  3 ++-
->   target/ppc/mmu-book3s-v3.h |  4 +---
->   hw/ppc/pegasos2.c          |  1 +
->   target/ppc/cpu_init.c      |  9 +++------
->   target/ppc/excp_helper.c   | 16 ++++------------
->   target/ppc/kvm.c           |  4 +---
->   target/ppc/mmu-hash64.c    | 16 ++++------------
->   target/ppc/mmu-radix64.c   |  4 +---
->   8 files changed, 17 insertions(+), 40 deletions(-)
-> 
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index ec14574d14..eb85d9aa71 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1437,6 +1437,7 @@ struct ArchCPU {
->       int vcpu_id;
->       uint32_t compat_pvr;
->       PPCVirtualHypervisor *vhyp;
-> +    PPCVirtualHypervisorClass *vhyp_class;
->       void *machine_data;
->       int32_t node_id; /* NUMA node this CPU belongs to */
->       PPCHash64Options *hash64_opts;
-> @@ -1535,7 +1536,7 @@ DECLARE_OBJ_CHECKERS(PPCVirtualHypervisor, PPCVirtualHypervisorClass,
->   
->   static inline bool vhyp_cpu_in_nested(PowerPCCPU *cpu)
->   {
-> -    return PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp)->cpu_in_nested(cpu);
-> +    return cpu->vhyp_class->cpu_in_nested(cpu);
->   }
->   #endif /* CONFIG_USER_ONLY */
->   
-> diff --git a/target/ppc/mmu-book3s-v3.h b/target/ppc/mmu-book3s-v3.h
-> index 674377a19e..f3f7993958 100644
-> --- a/target/ppc/mmu-book3s-v3.h
-> +++ b/target/ppc/mmu-book3s-v3.h
-> @@ -108,9 +108,7 @@ static inline hwaddr ppc_hash64_hpt_mask(PowerPCCPU *cpu)
->       uint64_t base;
->   
->       if (cpu->vhyp) {
+> Is this not quite right...or does it need to be fixed? If so I can tweak
+> and clean it up with a minor patch. ;-)
 
-All the checks for cpu->vhyp needs to be changed to check for 
-cpu->vhyp_class now, for all such instances.
+Yes, please send a patch to clean it up!
 
-With that,
-
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+  Thanks
+   Thomas
 
 
-> -        PPCVirtualHypervisorClass *vhc =
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        return vhc->hpt_mask(cpu->vhyp);
-> +        return cpu->vhyp_class->hpt_mask(cpu->vhyp);
->       }
->       if (cpu->env.mmu_model == POWERPC_MMU_3_00) {
->           ppc_v3_pate_t pate;
-> diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-> index 04d6decb2b..c22e8b336d 100644
-> --- a/hw/ppc/pegasos2.c
-> +++ b/hw/ppc/pegasos2.c
-> @@ -400,6 +400,7 @@ static void pegasos2_machine_reset(MachineState *machine, ShutdownCause reason)
->       machine->fdt = fdt;
->   
->       pm->cpu->vhyp = PPC_VIRTUAL_HYPERVISOR(machine);
-> +    pm->cpu->vhyp_class = PPC_VIRTUAL_HYPERVISOR_GET_CLASS(pm->cpu->vhyp);
->   }
->   
->   enum pegasos2_rtas_tokens {
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 9bccddb350..63d0094024 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -6631,6 +6631,7 @@ void cpu_ppc_set_vhyp(PowerPCCPU *cpu, PPCVirtualHypervisor *vhyp)
->       CPUPPCState *env = &cpu->env;
->   
->       cpu->vhyp = vhyp;
-> +    cpu->vhyp_class = PPC_VIRTUAL_HYPERVISOR_GET_CLASS(vhyp);
->   
->       /*
->        * With a virtual hypervisor mode we never allow the CPU to go
-> @@ -7224,9 +7225,7 @@ static void ppc_cpu_exec_enter(CPUState *cs)
->       PowerPCCPU *cpu = POWERPC_CPU(cs);
->   
->       if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        vhc->cpu_exec_enter(cpu->vhyp, cpu);
-> +        cpu->vhyp_class->cpu_exec_enter(cpu->vhyp, cpu);
->       }
->   }
->   
-> @@ -7235,9 +7234,7 @@ static void ppc_cpu_exec_exit(CPUState *cs)
->       PowerPCCPU *cpu = POWERPC_CPU(cs);
->   
->       if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        vhc->cpu_exec_exit(cpu->vhyp, cpu);
-> +        cpu->vhyp_class->cpu_exec_exit(cpu->vhyp, cpu);
->       }
->   }
->   #endif /* CONFIG_TCG */
-> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> index 98952de267..445350488c 100644
-> --- a/target/ppc/excp_helper.c
-> +++ b/target/ppc/excp_helper.c
-> @@ -840,9 +840,7 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
->            * HV mode, we need to keep hypercall support.
->            */
->           if (lev == 1 && cpu->vhyp) {
-> -            PPCVirtualHypervisorClass *vhc =
-> -                PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -            vhc->hypercall(cpu->vhyp, cpu);
-> +            cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
->               powerpc_reset_excp_state(cpu);
->               return;
->           }
-> @@ -1012,9 +1010,7 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
->            * HV mode, we need to keep hypercall support.
->            */
->           if (lev == 1 && cpu->vhyp) {
-> -            PPCVirtualHypervisorClass *vhc =
-> -                PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -            vhc->hypercall(cpu->vhyp, cpu);
-> +            cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
->               powerpc_reset_excp_state(cpu);
->               return;
->           }
-> @@ -1534,9 +1530,7 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
->   
->           /* "PAPR mode" built-in hypercall emulation */
->           if (lev == 1 && books_vhyp_handles_hcall(cpu)) {
-> -            PPCVirtualHypervisorClass *vhc =
-> -                PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -            vhc->hypercall(cpu->vhyp, cpu);
-> +            cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
->               powerpc_reset_excp_state(cpu);
->               return;
->           }
-> @@ -1677,10 +1671,8 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
->       }
->   
->       if ((new_msr & MSR_HVB) && books_vhyp_handles_hv_excp(cpu)) {
-> -        PPCVirtualHypervisorClass *vhc =
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
->           /* Deliver interrupt to L1 by returning from the H_ENTER_NESTED call */
-> -        vhc->deliver_hv_excp(cpu, excp);
-> +        cpu->vhyp_class->deliver_hv_excp(cpu, excp);
->   
->           powerpc_reset_excp_state(cpu);
->   
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index 26fa9d0575..5b5b96ab6b 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -862,9 +862,7 @@ int kvmppc_put_books_sregs(PowerPCCPU *cpu)
->       sregs.pvr = env->spr[SPR_PVR];
->   
->       if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        sregs.u.s.sdr1 = vhc->encode_hpt_for_kvm_pr(cpu->vhyp);
-> +        sregs.u.s.sdr1 = cpu->vhyp_class->encode_hpt_for_kvm_pr(cpu->vhyp);
->       } else {
->           sregs.u.s.sdr1 = env->spr[SPR_SDR1];
->       }
-> diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
-> index d645c0bb94..196b4b2a48 100644
-> --- a/target/ppc/mmu-hash64.c
-> +++ b/target/ppc/mmu-hash64.c
-> @@ -516,9 +516,7 @@ const ppc_hash_pte64_t *ppc_hash64_map_hptes(PowerPCCPU *cpu,
->       const ppc_hash_pte64_t *hptes;
->   
->       if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        return vhc->map_hptes(cpu->vhyp, ptex, n);
-> +        return cpu->vhyp_class->map_hptes(cpu->vhyp, ptex, n);
->       }
->       base = ppc_hash64_hpt_base(cpu);
->   
-> @@ -538,9 +536,7 @@ void ppc_hash64_unmap_hptes(PowerPCCPU *cpu, const ppc_hash_pte64_t *hptes,
->                               hwaddr ptex, int n)
->   {
->       if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        vhc->unmap_hptes(cpu->vhyp, hptes, ptex, n);
-> +        cpu->vhyp_class->unmap_hptes(cpu->vhyp, hptes, ptex, n);
->           return;
->       }
->   
-> @@ -820,9 +816,7 @@ static void ppc_hash64_set_r(PowerPCCPU *cpu, hwaddr ptex, uint64_t pte1)
->       hwaddr base, offset = ptex * HASH_PTE_SIZE_64 + HPTE64_DW1_R;
->   
->       if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        vhc->hpte_set_r(cpu->vhyp, ptex, pte1);
-> +        cpu->vhyp_class->hpte_set_r(cpu->vhyp, ptex, pte1);
->           return;
->       }
->       base = ppc_hash64_hpt_base(cpu);
-> @@ -837,9 +831,7 @@ static void ppc_hash64_set_c(PowerPCCPU *cpu, hwaddr ptex, uint64_t pte1)
->       hwaddr base, offset = ptex * HASH_PTE_SIZE_64 + HPTE64_DW1_C;
->   
->       if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc =
-> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        vhc->hpte_set_c(cpu->vhyp, ptex, pte1);
-> +        cpu->vhyp_class->hpte_set_c(cpu->vhyp, ptex, pte1);
->           return;
->       }
->       base = ppc_hash64_hpt_base(cpu);
-> diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
-> index 5823e039e6..496ba87a95 100644
-> --- a/target/ppc/mmu-radix64.c
-> +++ b/target/ppc/mmu-radix64.c
-> @@ -677,9 +677,7 @@ static bool ppc_radix64_xlate_impl(PowerPCCPU *cpu, vaddr eaddr,
->   
->       /* Get Partition Table */
->       if (cpu->vhyp) {
-> -        PPCVirtualHypervisorClass *vhc;
-> -        vhc = PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
-> -        if (!vhc->get_pate(cpu->vhyp, cpu, lpid, &pate)) {
-> +        if (!cpu->vhyp_class->get_pate(cpu->vhyp, cpu, lpid, &pate)) {
->               if (guest_visible) {
->                   ppc_radix64_raise_hsi(cpu, access_type, eaddr, eaddr,
->                                         DSISR_R_BADCONFIG);
 
