@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD8EC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFABFC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 18:41:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk71C-0003T6-1q; Tue, 12 Mar 2024 14:38:30 -0400
+	id 1rk743-0000LW-LZ; Tue, 12 Mar 2024 14:41:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk70z-0003Mh-Ne
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:38:17 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rk73z-0000L2-Tr
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:41:23 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk70x-0000cL-0j
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:38:17 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-41329b6286bso14727815e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:38:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rk73x-0001Ka-H7
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 14:41:23 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1dd9066b7c3so1897745ad.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 11:41:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710268693; x=1710873493; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710268880; x=1710873680; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XxETGuhhBQo6mApLsduj7FC9ZSriYQJnVDPgySwv8KY=;
- b=FsPkBAIvLRzG7OfBAwYq7BywGOs4oQkJxpOec3xQdU+r7w9IW6pnoXrPZi8UfhD/kR
- rC9WBfyLpbebc8vANlQzDRJwV7DL7PGDqkiPNcsOCzJ9Kf9gevymKm3ZM7yrYKXW3h1e
- zfPY9RzR/j2P7YT/PMvkIyP+cXD5qtUUyNAGygsgYpgwhEXia0sVajy3/2mfDp+13H1E
- XJTNC4is7ehzUG7dLRw4RFVLmn+X7VRo23lPymojV8A0Sa1yAXPEKTqxQ8R7Mtgq34kt
- zwmEiiJZZQL9TV5Q1sUdPRz6PsGBPH82UW23W6lTUBOZ8MMv7YNl+UKqmK+/+l6hW7AJ
- YUPA==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rjlfxfhEdFjoQzS7fGHXrM249N7fWoW3k9qQmZDIWL4=;
+ b=pD/qDVa17Alu/sMrs1Q8Km0Yb3UN28a8OoQxBHq1AhqzFeFHEoZ8NwEVDoiIuCsdXB
+ 2Bjg8KjYXzZ4omt1vxMw/LoVD0Ln4IjSWs9G3k27ar7O+EKXuqNiUZyloh/TOQeh74Ss
+ dQpEaXWEFmNWCl/zg3WvzNCMO8X9sYSImS9NHrHdrpLyX0c9qIzlsbYNFNOFPKF7uk8r
+ xXMISd7GY2XiM16YpYVFNPIHwH+trhm1bX4keKJoxx0QzmIhhB8tqHrJNqwMUC2h7+iF
+ qF7KXc3IWuEY1115zUaMTBKnZHAxLUQve5/XZRcTy7OmlyJL3O/BsnsPUvWLj1TL09hf
+ jHKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710268693; x=1710873493;
+ d=1e100.net; s=20230601; t=1710268880; x=1710873680;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XxETGuhhBQo6mApLsduj7FC9ZSriYQJnVDPgySwv8KY=;
- b=ljKhcpj6spaEvpiFP2Klq7QuaNYMF7J1iUscM/GdcVXjnsD5QswaLO28zs9/TlNxFE
- Sycf49h9Bu5E1hmfYGsmOchL1/yDBpzKKDjL4TzgDjjFjFEkvSx9eqqUYIKz7+aD3BYP
- +RRuZxDqZi7zK2FuHsx85DOUKv9G76wtZdq9HIYX2g/uycjT/b3jzhGcACwF3YWQjeCF
- 0lQIu2ZRhGe9GOs8Qa0GwJtpfBgtL79hDYXEjHr+5/o8/4o8IQwPUUjHwYXqNUzPFi35
- lAHXUHDvYv8M4uyvoznAE0h5yjZ5TXhc2x/tin/0jlF8I2T2sgTKiud2UiQvv52nNf9y
- +5ew==
-X-Gm-Message-State: AOJu0YyITBebTpbrR6rJA6sEI9CU77Qsz98PEw6uaF1PNXI7D74QGq/X
- 8wkqMocX6UPxg1cHktKu5WabzFgOeueipRB3LMv+SARtQlHvKJLdMeIEFCVrVlCyQy/gJAHbsiI
- D
-X-Google-Smtp-Source: AGHT+IFpuQyr3sxFxbTV1CiCvOn2uKA/ORryDX/H7nR2om000hMsYM5fQNRFGzs0NkVfQe50tLBt6A==
-X-Received: by 2002:a05:600c:4708:b0:413:2958:e323 with SMTP id
- v8-20020a05600c470800b004132958e323mr798783wmo.10.1710268693246; 
- Tue, 12 Mar 2024 11:38:13 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ bh=rjlfxfhEdFjoQzS7fGHXrM249N7fWoW3k9qQmZDIWL4=;
+ b=Py9rDk0HwiQ4nBjkcfCqWp5HaUPz/JZ28o512WP+OG5qKv14uy4Bur3uMR9F3KkZs0
+ 0gxbdP3SVzToHcpa6uXseAShBcy+1QgMRdReNT6+fq1hCog8WcPw+Bx9NYybFQMH331T
+ u2A/EyZJJF6C4kdlHBB2vTVvtjrX8js0NxMBCrnZ//Vk1+3Bsw7jnFuUpJFve5vKrDbS
+ epQJdEplSkr3WUE3iOIesDHXWn+EMRwHA6GQ1I6XnUfk+fblxT7OMmScGF7R+UtEjUP8
+ 3EDNXOsmeswXqLS1bLj+F0R04gVJL+uH+L+gDKFLfRmtLpx+Cxc5e4mvRhlVJdbzvuvF
+ kOsg==
+X-Gm-Message-State: AOJu0YxjQ8eeAcTv9IZoTaUxP6GnQDDPihgqjOhxBdiAtCkAKL5rbn4L
+ TjpIn3IZovnVLjOhloUXwn44IqeM7M9Qyz/8rML4XeiXVWuUjJuru5gPordkG+S4zOOs+3PC5cE
+ w
+X-Google-Smtp-Source: AGHT+IHAjL2gaHZ1QwXIKU6T59AReKLB7urnbWuECvvgRmxkfi7/hQaSpn8a07gh3RsrYsGri7ymEQ==
+X-Received: by 2002:a17:902:d2d0:b0:1dd:9957:2989 with SMTP id
+ n16-20020a170902d2d000b001dd99572989mr5537134plc.19.1710268879683; 
+ Tue, 12 Mar 2024 11:41:19 -0700 (PDT)
+Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- v17-20020a05600c471100b00412ee8e2f2asm19836337wmo.9.2024.03.12.11.38.12
- for <qemu-devel@nongnu.org>
+ b11-20020a170903228b00b001dca40bb727sm6951739plh.88.2024.03.12.11.41.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 11:38:13 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Tue, 12 Mar 2024 11:41:19 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 4/7] hw/misc/pca9554: Correct error check bounds in get/set
- pin functions
-Date: Tue, 12 Mar 2024 18:38:07 +0000
-Message-Id: <20240312183810.557768-5-peter.maydell@linaro.org>
+Cc: Michael Vogt <michael.vogt@gmail.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 1/8] linux-user: Add FIFREEZE and FITHAW ioctls
+Date: Tue, 12 Mar 2024 08:41:08 -1000
+Message-Id: <20240312184115.365415-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240312183810.557768-1-peter.maydell@linaro.org>
-References: <20240312183810.557768-1-peter.maydell@linaro.org>
+In-Reply-To: <20240312184115.365415-1-richard.henderson@linaro.org>
+References: <20240312184115.365415-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,46 +96,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In pca9554_get_pin() and pca9554_set_pin(), we try to detect an
-incorrect pin value, but we get the condition wrong, using ">"
-when ">=" was intended.
+From: Michael Vogt <michael.vogt@gmail.com>
 
-This has no actual effect, because in pca9554_initfn() we
-use the correct test when creating the properties and so
-we'll never be called with an out of range value. However,
-Coverity complains about the mismatch between the check and
-the later use of the pin value in a shift operation.
+Add missing FIFREEZE and FITHAW ioctls.
 
-Use the correct condition.
-
-Resolves: Coverity CID 1534917
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Michael Vogt <michael.vogt@gmail.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-Id: <20240220105726.8852-1-michael.vogt@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/misc/pca9554.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ linux-user/ioctls.h       | 6 ++++++
+ linux-user/syscall_defs.h | 3 +++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/hw/misc/pca9554.c b/hw/misc/pca9554.c
-index 778b32e4430..5e31696797d 100644
---- a/hw/misc/pca9554.c
-+++ b/hw/misc/pca9554.c
-@@ -160,7 +160,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
-         error_setg(errp, "%s: error reading %s", __func__, name);
-         return;
-     }
--    if (pin < 0 || pin > PCA9554_PIN_COUNT) {
-+    if (pin < 0 || pin >= PCA9554_PIN_COUNT) {
-         error_setg(errp, "%s invalid pin %s", __func__, name);
-         return;
-     }
-@@ -187,7 +187,7 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
-         error_setg(errp, "%s: error reading %s", __func__, name);
-         return;
-     }
--    if (pin < 0 || pin > PCA9554_PIN_COUNT) {
-+    if (pin < 0 || pin >= PCA9554_PIN_COUNT) {
-         error_setg(errp, "%s invalid pin %s", __func__, name);
-         return;
-     }
+diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+index 071f7ca253..1aec9d5836 100644
+--- a/linux-user/ioctls.h
++++ b/linux-user/ioctls.h
+@@ -134,6 +134,12 @@
+      IOCTL(FICLONE, IOC_W, TYPE_INT)
+      IOCTL(FICLONERANGE, IOC_W, MK_PTR(MK_STRUCT(STRUCT_file_clone_range)))
+ #endif
++#ifdef FIFREEZE
++     IOCTL(FIFREEZE, IOC_W | IOC_R, TYPE_INT)
++#endif
++#ifdef FITHAW
++     IOCTL(FITHAW, IOC_W | IOC_R, TYPE_INT)
++#endif
+ 
+      IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_LONG))
+ #ifdef CONFIG_FIEMAP
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index 77ba343c85..744fda599e 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -943,6 +943,9 @@ struct target_rtc_pll_info {
+ #define TARGET_FICLONE    TARGET_IOW(0x94, 9, abi_int)
+ #define TARGET_FICLONERANGE TARGET_IOW(0x94, 13, struct file_clone_range)
+ 
++#define TARGET_FIFREEZE    TARGET_IOWR('X', 119, abi_int)
++#define TARGET_FITHAW    TARGET_IOWR('X', 120, abi_int)
++
+ /*
+  * Note that the ioctl numbers for FS_IOC_<GET|SET><FLAGS|VERSION>
+  * claim type "long" but the actual type used by the kernel is "int".
 -- 
 2.34.1
 
