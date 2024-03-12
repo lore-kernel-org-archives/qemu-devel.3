@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD74C5475B
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 02:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1450EC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 02:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjrUV-0001LR-F6; Mon, 11 Mar 2024 22:03:45 -0400
+	id 1rjrTn-0000FA-T1; Mon, 11 Mar 2024 22:03:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1rjrTz-0000g9-PX; Mon, 11 Mar 2024 22:03:16 -0400
+ id 1rjrTP-0008DP-Jz; Mon, 11 Mar 2024 22:02:37 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1rjrTx-0004pI-HT; Mon, 11 Mar 2024 22:03:10 -0400
+ id 1rjrTN-0004mp-Rq; Mon, 11 Mar 2024 22:02:35 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TtxkF3GnGz6K6Xb;
- Tue, 12 Mar 2024 10:03:01 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TtxjL2f1Cz6JBW4;
+ Tue, 12 Mar 2024 10:02:14 +0800 (CST)
 Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
- by mail.maildlp.com (Postfix) with ESMTPS id 7F4361400C9;
- Tue, 12 Mar 2024 10:03:06 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id E71A6140A35;
+ Tue, 12 Mar 2024 10:02:30 +0800 (CST)
 Received: from A190218597.china.huawei.com (10.48.148.5) by
  lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Tue, 12 Mar 2024 02:02:49 +0000
+ 15.1.2507.35; Tue, 12 Mar 2024 02:02:13 +0000
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
@@ -43,10 +43,10 @@ CC: <salil.mehta@huawei.com>, <maz@kernel.org>, <jean-philippe@linaro.org>,
  <wangxiongfeng2@huawei.com>, <wangyanan55@huawei.com>,
  <jiakernel2@gmail.com>, <maobibo@loongson.cn>, <lixianglai@loongson.cn>,
  <linuxarm@huawei.com>
-Subject: [PATCH V8 8/8] docs/specs/acpi_hw_reduced_hotplug: Add the CPU
- Hotplug Event Bit
-Date: Tue, 12 Mar 2024 02:00:00 +0000
-Message-ID: <20240312020000.12992-9-salil.mehta@huawei.com>
+Subject: [PATCH V8 6/8] physmem: Add helper function to destroy CPU
+ AddressSpace
+Date: Tue, 12 Mar 2024 01:59:58 +0000
+Message-ID: <20240312020000.12992-7-salil.mehta@huawei.com>
 X-Mailer: git-send-email 2.8.3
 In-Reply-To: <20240312020000.12992-1-salil.mehta@huawei.com>
 References: <20240312020000.12992-1-salil.mehta@huawei.com>
@@ -80,31 +80,100 @@ From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GED interface is used by many hotplug events like memory hotplug, NVDIMM hotplug
-and non-hotplug events like system power down event. Each of these can be
-selected using a bit in the 32 bit GED IO interface. A bit has been reserved for
-the CPU hotplug event.
+Virtual CPU Hot-unplug leads to unrealization of a CPU object. This also
+involves destruction of the CPU AddressSpace. Add common function to help
+destroy the CPU AddressSpace.
 
 Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
 Reviewed-by: Gavin Shan <gshan@redhat.com>
+Tested-by: Xianglai Li <lixianglai@loongson.cn>
+Tested-by: Miguel Luis <miguel.luis@oracle.com>
+Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
 ---
- docs/specs/acpi_hw_reduced_hotplug.rst | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/exec/cpu-common.h |  8 ++++++++
+ include/hw/core/cpu.h     |  1 +
+ system/physmem.c          | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+)
 
-diff --git a/docs/specs/acpi_hw_reduced_hotplug.rst b/docs/specs/acpi_hw_reduced_hotplug.rst
-index 0bd3f9399f..3acd6fcd8b 100644
---- a/docs/specs/acpi_hw_reduced_hotplug.rst
-+++ b/docs/specs/acpi_hw_reduced_hotplug.rst
-@@ -64,7 +64,8 @@ GED IO interface (4 byte access)
-        0: Memory hotplug event
-        1: System power down event
-        2: NVDIMM hotplug event
--    3-31: Reserved
-+       3: CPU hotplug event
-+    4-31: Reserved
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 6346df17ce..a427d80340 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -123,6 +123,14 @@ size_t qemu_ram_pagesize_largest(void);
+  */
+ void cpu_address_space_init(CPUState *cpu, int asidx,
+                             const char *prefix, MemoryRegion *mr);
++/**
++ * cpu_address_space_destroy:
++ * @cpu: CPU for which address space needs to be destroyed
++ * @asidx: integer index of this address space
++ *
++ * Note that with KVM only one address space is supported.
++ */
++void cpu_address_space_destroy(CPUState *cpu, int asidx);
  
- **write_access:**
+ void cpu_physical_memory_rw(hwaddr addr, void *buf,
+                             hwaddr len, bool is_write);
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index ec14f74ce5..e975b8085f 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -493,6 +493,7 @@ struct CPUState {
+     QSIMPLEQ_HEAD(, qemu_work_item) work_list;
  
+     CPUAddressSpace *cpu_ases;
++    int cpu_ases_count;
+     int num_ases;
+     AddressSpace *as;
+     MemoryRegion *memory;
+diff --git a/system/physmem.c b/system/physmem.c
+index 6e9ed97597..61b32ac4f2 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -761,6 +761,7 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+ 
+     if (!cpu->cpu_ases) {
+         cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
++        cpu->cpu_ases_count = cpu->num_ases;
+     }
+ 
+     newas = &cpu->cpu_ases[asidx];
+@@ -774,6 +775,34 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+     }
+ }
+ 
++void cpu_address_space_destroy(CPUState *cpu, int asidx)
++{
++    CPUAddressSpace *cpuas;
++
++    assert(cpu->cpu_ases);
++    assert(asidx >= 0 && asidx < cpu->num_ases);
++    /* KVM cannot currently support multiple address spaces. */
++    assert(asidx == 0 || !kvm_enabled());
++
++    cpuas = &cpu->cpu_ases[asidx];
++    if (tcg_enabled()) {
++        memory_listener_unregister(&cpuas->tcg_as_listener);
++    }
++
++    address_space_destroy(cpuas->as);
++    g_free_rcu(cpuas->as, rcu);
++
++    if (asidx == 0) {
++        /* reset the convenience alias for address space 0 */
++        cpu->as = NULL;
++    }
++
++    if (--cpu->cpu_ases_count == 0) {
++        g_free(cpu->cpu_ases);
++        cpu->cpu_ases = NULL;
++    }
++}
++
+ AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)
+ {
+     /* Return the AddressSpace corresponding to the specified index */
 -- 
 2.34.1
 
