@@ -4,99 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A724BC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE76FC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:02:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk2hH-0000Am-DH; Tue, 12 Mar 2024 10:01:39 -0400
+	id 1rk2iB-0000rA-7V; Tue, 12 Mar 2024 10:02:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rk2h8-00008T-E7
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:01:33 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1rk2i5-0000j9-53
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:02:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rk2h2-0008Lc-DC
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:01:30 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1rk2i3-0008QR-4o
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:02:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710252082;
+ s=mimecast20190719; t=1710252145;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+/ox2JGbS0SeOXheyjIXqcpVyGDKcf5z5WdQRKXiagg=;
- b=MlOtpnuYAEgpvbJZ5WYHNlCYmdPVoHQDUsAtjt5IIRiThmr87bc0XoSxzsxISkAi34U1Tb
- nKC9dzSRmpCezXg9eKGoJIxsmhbA33KosALid8kbi6Upe7j7q+uR9CJenwg2q8YOzB2Jm6
- IXKu0HwxecZYrHuf00qr/2iTI83BO5c=
-Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
- [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-135-xe8jxfVpNZK_EI1rDyiv7Q-1; Tue, 12 Mar 2024 10:01:14 -0400
-X-MC-Unique: xe8jxfVpNZK_EI1rDyiv7Q-1
-Received: by mail-ot1-f71.google.com with SMTP id
- 46e09a7af769-6e0ee5097feso6269550a34.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:01:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710252073; x=1710856873;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+/ox2JGbS0SeOXheyjIXqcpVyGDKcf5z5WdQRKXiagg=;
- b=k6guFIZg4Og5DgxrUEAjRUi3FYWKE2/SL7rhPR04bp0arxDUrQVPLOFPwU64QJHco8
- izG/9IQ76/MeUt54XRhrByNL/vC5sQ0wMWrZFTqNpuDUh2bAcXOvk0b1DYX6XRQj165c
- epMSoCxnFf/HQ4IQbl/NZtTXikWsxXucPc1z8LnNACi67QLrBf6gqeTyCLTzd4mMMj7+
- xDSoBWFrB6G43CR/0Z8A6swjXcjPGXXn3qyiquJz7gOKiF9xm/Cm0J11rlSmYzzf6x2u
- nQ7WcztTCeMLko2kAN8m33IniNdZNLTWaZIxpFEIB+T8M0WzWSz0iXL4y+EcveKbEdfx
- K0Uw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWMURXdb8jPQqVmD/OqEtuJRM0FVIZ5YMs2hTCsCClFwgcbkQcrtkhQDr2mGEACXmDWocYWMOkDiFOT9JrpWh8KiKBgYv8=
-X-Gm-Message-State: AOJu0Yx1ZCcPDLCSZkf+gnxdvKrWr3uDQ4BqOHO3iVJV7ABy8n0TxDyq
- PjZ/Wz13hgqlgYUbVIRryDBlk15Bq/BIQuTUW8/gcrwgPanURE19lEi/yNom6YDXNOReTYmMTav
- AdEg41H6tp2DfDpXHIGDTZhSAj74u02N9sOXp56qeLIYYzQibKSOc
-X-Received: by 2002:a05:6870:f686:b0:221:96fd:1465 with SMTP id
- el6-20020a056870f68600b0022196fd1465mr166901oab.42.1710252073583; 
- Tue, 12 Mar 2024 07:01:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZMHpw/BpoVsTOce3nUxnD2IsD5Jiqg712rwif4ZTX3Rma6D6H8UNIa8O7R1K08/o9mAhg+g==
-X-Received: by 2002:a05:6870:f686:b0:221:96fd:1465 with SMTP id
- el6-20020a056870f68600b0022196fd1465mr166849oab.42.1710252073192; 
- Tue, 12 Mar 2024 07:01:13 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- vv20-20020a05620a563400b0078908fe1764sm409125qkn.61.2024.03.12.07.01.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 07:01:12 -0700 (PDT)
-Message-ID: <b2b52017-c4cd-43e9-a67b-2ccbb92ad99e@redhat.com>
-Date: Tue, 12 Mar 2024 15:01:09 +0100
+ content-transfer-encoding:content-transfer-encoding;
+ bh=2vVYIDdk4CEcLLnqQabY3dlqGdMxTbpLFC4X24FiKSo=;
+ b=ghZNEMBDs76WLOOo9O89LPOZwFBJ4w3t8/OTuAHr4oZjZidEAohe/eXRY31ClGlkRXFOjM
+ 8Pl4hk7uMmnlSjjHI/9DjJ09DmGkPrqX3zbAr4q58bcQD6X6QyQD/RYBwFzwN+fd6SroJ0
+ HQa3DYPeTyNolaSkBTmlJYtXMXRnT0M=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-Kg-wmS36PIGneiXa1muuPw-1; Tue,
+ 12 Mar 2024 10:02:22 -0400
+X-MC-Unique: Kg-wmS36PIGneiXa1muuPw-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B3E02380350D;
+ Tue, 12 Mar 2024 14:02:21 +0000 (UTC)
+Received: from localhost (unknown [10.39.208.42])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id BD18840735B2;
+ Tue, 12 Mar 2024 14:02:19 +0000 (UTC)
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PULL 0/5] UI patches
+Date: Tue, 12 Mar 2024 18:02:11 +0400
+Message-ID: <20240312140216.313618-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
- qemu_savevm_state_setup()
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Alex Williamson
- <alex.williamson@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Prasad Pandit <pjp@fedoraproject.org>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-11-clg@redhat.com> <87plw44wps.fsf@suse.de>
- <1566715b-a9a5-4df6-8e64-f4f912e2ea2f@redhat.com> <87le6omw0d.fsf@suse.de>
- <9071affc-ffb5-435a-99d1-ca829703e31b@redhat.com>
- <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
-In-Reply-To: <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,145 +81,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/24 14:34, Cédric Le Goater wrote:
-> On 3/12/24 13:32, Cédric Le Goater wrote:
->> On 3/11/24 20:03, Fabiano Rosas wrote:
->>> Cédric Le Goater <clg@redhat.com> writes:
->>>
->>>> On 3/8/24 15:36, Fabiano Rosas wrote:
->>>>> Cédric Le Goater <clg@redhat.com> writes:
->>>>>
->>>>>> This prepares ground for the changes coming next which add an Error**
->>>>>> argument to the .save_setup() handler. Callers of qemu_savevm_state_setup()
->>>>>> now handle the error and fail earlier setting the migration state from
->>>>>> MIGRATION_STATUS_SETUP to MIGRATION_STATUS_FAILED.
->>>>>>
->>>>>> In qemu_savevm_state(), move the cleanup to preserve the error
->>>>>> reported by .save_setup() handlers.
->>>>>>
->>>>>> Since the previous behavior was to ignore errors at this step of
->>>>>> migration, this change should be examined closely to check that
->>>>>> cleanups are still correctly done.
->>>>>>
->>>>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>>>>> ---
->>>>>>
->>>>>>    Changes in v4:
->>>>>>    - Merged cleanup change in qemu_savevm_state()
->>>>>>    Changes in v3:
->>>>>>    - Set migration state to MIGRATION_STATUS_FAILED
->>>>>>    - Fixed error handling to be done under lock in bg_migration_thread()
->>>>>>    - Made sure an error is always set in case of failure in
->>>>>>      qemu_savevm_state_setup()
->>>>>>    migration/savevm.h    |  2 +-
->>>>>>    migration/migration.c | 27 ++++++++++++++++++++++++---
->>>>>>    migration/savevm.c    | 26 +++++++++++++++-----------
->>>>>>    3 files changed, 40 insertions(+), 15 deletions(-)
->>>>>>
->>>>>> diff --git a/migration/savevm.h b/migration/savevm.h
->>>>>> index 74669733dd63a080b765866c703234a5c4939223..9ec96a995c93a42aad621595f0ed58596c532328 100644
->>>>>> --- a/migration/savevm.h
->>>>>> +++ b/migration/savevm.h
->>>>>> @@ -32,7 +32,7 @@
->>>>>>    bool qemu_savevm_state_blocked(Error **errp);
->>>>>>    void qemu_savevm_non_migratable_list(strList **reasons);
->>>>>>    int qemu_savevm_state_prepare(Error **errp);
->>>>>> -void qemu_savevm_state_setup(QEMUFile *f);
->>>>>> +int qemu_savevm_state_setup(QEMUFile *f, Error **errp);
->>>>>>    bool qemu_savevm_state_guest_unplug_pending(void);
->>>>>>    int qemu_savevm_state_resume_prepare(MigrationState *s);
->>>>>>    void qemu_savevm_state_header(QEMUFile *f);
->>>>>> diff --git a/migration/migration.c b/migration/migration.c
->>>>>> index a49fcd53ee19df1ce0182bc99d7e064968f0317b..6d1544224e96f5edfe56939a9c8395d88ef29581 100644
->>>>>> --- a/migration/migration.c
->>>>>> +++ b/migration/migration.c
->>>>>> @@ -3408,6 +3408,8 @@ static void *migration_thread(void *opaque)
->>>>>>        int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
->>>>>>        MigThrError thr_error;
->>>>>>        bool urgent = false;
->>>>>> +    Error *local_err = NULL;
->>>>>> +    int ret;
->>>>>>        thread = migration_threads_add("live_migration", qemu_get_thread_id());
->>>>>> @@ -3451,9 +3453,17 @@ static void *migration_thread(void *opaque)
->>>>>>        }
->>>>>>        bql_lock();
->>>>>> -    qemu_savevm_state_setup(s->to_dst_file);
->>>>>> +    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
->>>>>>        bql_unlock();
->>>>>> +    if (ret) {
->>>>>> +        migrate_set_error(s, local_err);
->>>>>> +        error_free(local_err);
->>>>>> +        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
->>>>>> +                          MIGRATION_STATUS_FAILED);
->>>>>> +        goto out;
->>>>>> +     }
->>>>>> +
->>>>>>        qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
->>>>>>                                   MIGRATION_STATUS_ACTIVE);
->>>>>
->>>>> This^ should be before the new block it seems:
->>>>>
->>>>> GOOD:
->>>>> migrate_set_state new state setup
->>>>> migrate_set_state new state wait-unplug
->>>>> migrate_fd_cancel
->>>>> migrate_set_state new state cancelling
->>>>> migrate_fd_cleanup
->>>>> migrate_set_state new state cancelled
->>>>> migrate_fd_cancel
->>>>> ok 1 /x86_64/failover-virtio-net/migrate/abort/wait-unplug
->>>>>
->>>>> BAD:
->>>>> migrate_set_state new state setup
->>>>> migrate_fd_cancel
->>>>> migrate_set_state new state cancelling
->>>>> migrate_fd_cleanup
->>>>> migrate_set_state new state cancelled
->>>>> qemu-system-x86_64: ram_save_setup failed: Input/output error
->>>>> **
->>>>> ERROR:../tests/qtest/virtio-net-failover.c:1203:test_migrate_abort_wait_unplug:
->>>>> assertion failed (status == "cancelling"): ("cancelled" == "cancelling")
->>>>>
->>>>> Otherwise migration_iteration_finish() will schedule the cleanup BH and
->>>>> that will run concurrently with migrate_fd_cancel() issued by the test
->>>>> and bad things happens.
->>>>
->>>> This hack makes things work :
->>>>
->>>> @@ -3452,6 +3452,9 @@ static void *migration_thread(void *opaq
->>>>            qemu_savevm_send_colo_enable(s->to_dst_file);
->>>>        }
->>>> +    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
->>>> +                            MIGRATION_STATUS_SETUP);
->>>> +
->>>
->>> Why move it all the way up here? Has moving the wait_unplug before the
->>> 'if (ret)' block not worked for you?
->>
->> We could be sleeping while holding the BQL. It looked wrong.
-> 
-> Sorry wrong answer. Yes I can try moving it before the 'if (ret)' block.
-> I can reproduce easily with an x86 guest running on PPC64.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-That works just the same.
+The following changes since commit 8f3f329f5e0117bd1a23a79ab751f8a7d3471e4b:
 
-Peter, Fabiano,
+  Merge tag 'migration-20240311-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-03-12 11:35:41 +0000)
 
-What would you prefer  ?
+are available in the Git repository at:
 
-1. move qemu_savevm_wait_unplug() before qemu_savevm_state_setup(),
-    means one new patch.
+  https://gitlab.com/marcandre.lureau/qemu.git tags/ui-pull-request
 
-2. leave qemu_savevm_wait_unplug() after qemu_savevm_state_setup()
-    and handle state_setup() errors after waiting. means an update
-    of this patch.
+for you to fetch changes up to dfcf74fa68c88233209aafc5f82728d0b9a1af5c:
 
+  virtio-gpu: fix scanout migration post-load (2024-03-12 17:57:58 +0400)
 
-Thanks,
+----------------------------------------------------------------
+display/ui: pending fixes
 
-C.
+- ui/vnc: Respect bound console
+- ui/dbus: optimize a bit message queuing
+- virtio-gpu: fix blob scanout post-load
 
+----------------------------------------------------------------
 
-  
+Akihiko Odaki (1):
+  ui/vnc: Respect bound console
+
+Marc-André Lureau (4):
+  ui/dbus: factor out sending a scanout
+  ui/dbus: filter out pending messages when scanout
+  virtio-gpu: remove needless condition
+  virtio-gpu: fix scanout migration post-load
+
+ include/hw/virtio/virtio-gpu.h |  1 +
+ hw/display/virtio-gpu.c        | 58 ++++++++++++++++++--------
+ ui/dbus-listener.c             | 75 ++++++++++++++++++++++++++--------
+ ui/vnc.c                       | 59 +++++++++++++-------------
+ ui/trace-events                |  1 +
+ 5 files changed, 130 insertions(+), 64 deletions(-)
+
+-- 
+2.44.0
 
 
