@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E074C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 10:35:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87477C54E66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 10:37:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjzTq-0002sv-Vv; Tue, 12 Mar 2024 06:35:36 -0400
+	id 1rjzV8-00043A-6x; Tue, 12 Mar 2024 06:36:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjzTH-0002do-0v; Tue, 12 Mar 2024 06:34:59 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1rjzV4-00042c-Ag; Tue, 12 Mar 2024 06:36:50 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjzTE-0006Tk-Vx; Tue, 12 Mar 2024 06:34:58 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1dda8e5fa8dso12072305ad.2; 
- Tue, 12 Mar 2024 03:34:56 -0700 (PDT)
+ id 1rjzV0-00076p-FG; Tue, 12 Mar 2024 06:36:50 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1dd10a37d68so46095415ad.2; 
+ Tue, 12 Mar 2024 03:36:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710239695; x=1710844495; darn=nongnu.org;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=gmail.com; s=20230601; t=1710239805; x=1710844605; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zDrSxw2a1dZXNh2t4XrQi8qVcPP8vMSjMjJ8Zj8JwNI=;
- b=NfZDe8ist+RXGgSn5nM2X9jkZodeqvecE5maYjAW7Msr1uhrRkV+7bFFpL4lq1IdSw
- OE6NMBR3/Bh3fDm/YEyozWfy+ozi29iXBEXZwRQgpaxrk3xs8RVjtJ62r7a+8z5/wkyW
- vTBcFR5eXIt0VghtaY2JD+YJKpYlbE763RbXirUmWOeogo2XLhpSGa7a6cAGqnUYNFmB
- h/h12G3jDlxfmwNgnLaoCB9M9+XpP2PALJonNMt7MilthPGZVxrVGnqjAfFRoGmIVzeN
- HCKaiUWrExKe0rhb0R+YuRFXbHqJfd9O2SL4B3y6G2VJ0Hsv8BWiuSrMeJPUL6fv0yqb
- iPmA==
+ bh=N/feAvFsiQEEYbBfbw2VoGB58BoW/awLOfmKBRsXW+s=;
+ b=gaQ6kYDlWbWPreK5pAbj1O+1visStydGI0uNUlU3SZVFAofSNBGXzZjmCSNdoJPm3N
+ /WnypPLMBNWjNPkgrhNaS3ZqQt3rv7tpkhpRpbPGx5xuo7d0yKvqdhBOwF9D0FaqHNzP
+ ll7+eqd7td4UEXTGxORkuNREkya9t2HKUmE6VKoNlgb/TFJA7u5B3mVJfCeXmtfSkUvP
+ zQ7UBmcNjDCSDOWSnSeo56XGt+3nAgx221p/HkyK613FFC2Au1FtElXeslBozoGnsINv
+ VZalSUKk5tdr4DWM47cEds/YhCa065KuapTOklAI72u+vTp/WloCoPSU2T2eAkQyRBIF
+ eeKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710239695; x=1710844495;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
+ d=1e100.net; s=20230601; t=1710239805; x=1710844605;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=zDrSxw2a1dZXNh2t4XrQi8qVcPP8vMSjMjJ8Zj8JwNI=;
- b=tpA20WPczZ5etg7ITlIfBc4Z/cgfOI8sP+o1GwHFtPanwzQjTVUChPnkirIh1RoIJT
- vB1deChWb2LbNQFP7sp+kvI4WmlyhG3hTiCNIhUuwqIyDBT1I3gxtEEA/fVtXllrGfJm
- zC/1MPDd4yRbsEM85OXIoGWsdezUSls0ABScubu/xgflvZK3Cfd/KdRR4qy4l19spdAg
- g8MHB97jilOO0rngnPoMK9V5hToxmEaMzPwpzSLu7u0kGF1O5fYmsXz7qH0XOKbuV7K9
- hPzQcf0KI/SNDwo4bTWUXNCjyHOk7NEDvGT3yuF+uPbz7jcHds5ss+doicj4wQ63G4cj
- Nz9A==
+ bh=N/feAvFsiQEEYbBfbw2VoGB58BoW/awLOfmKBRsXW+s=;
+ b=TgEA5iWYZ4mhsWGxEPaZEY+6U5jhnL0N5oxSTRJRL+wI9aOZ2FUJWwcs8sNX5c/XyN
+ fc1JPgN4uyhyA3KRiXbJQYXvPgFnGwbZVwysO4KPXZERnD+ZiSi9ff7D7iRGMPWcKO7D
+ FEmQySqwHIxb1Si8L1OBb8cwMaHT7/6Gd5He5gPNoUO81zHh9ssAX5YvWbiQISBLFLFZ
+ C1E4voRmEWNcKXC+RLHxCQt5g0ecdmqxdGGh+CUYgpP3Y6bkSC9qGlTFXWLmRRRi9sp5
+ LSrXTcuzPR2BIG0Q1T2gVSY/7qeHp171B80WLW+rgKd734g/b8+wqPxLwWcWc3whGALc
+ OF6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXOnKaVatlaJJxC0rn4Zl4BQjkB/3xfxVVgeK1OahaILrYQrXNKiZlgfZE8IgE86gOioUSUMzgsEXeaohKWVeNswJ2t
-X-Gm-Message-State: AOJu0YyrC1jmQro3a7PvwdhFAfr3TYdA/QKN/EAPtKxhwP3g8X82E85H
- asXlkFQ7/lLMexuNwKnRGHBbLVNj8EcigZ7yzNZ8wIaUJsQ5GvQN
-X-Google-Smtp-Source: AGHT+IGl+z2dSUgStFnnLuYp1yN6ZuyAB1TvvM0LOUJ2+7zkmWgE5mfmHf83z5CE0l79RJcaK6dcgw==
-X-Received: by 2002:a17:902:bb92:b0:1dc:3261:ab7 with SMTP id
- m18-20020a170902bb9200b001dc32610ab7mr8039703pls.49.1710239695206; 
- Tue, 12 Mar 2024 03:34:55 -0700 (PDT)
+ AJvYcCUy+xswr+zsJCRunJQYRVrnSEzQGdG2BYJyC26wkOroD5Fu55M1pxTISFMdtEM/57BpusLi5DXWYZ0iKfIQhK3Ji3Nx94iQtrm7XpW2v5WoK/VwLll0mYozVq8=
+X-Gm-Message-State: AOJu0YyZbQaut/y3smJ2TY1HDY/ojuZqAmrL/6qn7h8462K+CGIWo4HE
+ +W7GokKaxhKSPq2+2NARJ4SYkyulGsTdp4Otcx6oDrd459Rho1NC
+X-Google-Smtp-Source: AGHT+IFgNZ/pAfaLbH2iMa9g0DYLiSpmEfmVKJSlsON7EcO9+kkyouQaomQZKgDsWDj8oWldGHVmng==
+X-Received: by 2002:a17:902:7c07:b0:1dd:6211:e26 with SMTP id
+ x7-20020a1709027c0700b001dd62110e26mr6855371pll.15.1710239804513; 
+ Tue, 12 Mar 2024 03:36:44 -0700 (PDT)
 Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
- ix14-20020a170902f80e00b001dca3a65200sm6376156plb.228.2024.03.12.03.34.52
+ a15-20020a170902eccf00b001dcf91da5c8sm184186plh.95.2024.03.12.03.36.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 03:34:55 -0700 (PDT)
+ Tue, 12 Mar 2024 03:36:44 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Mar 2024 20:34:50 +1000
-Message-Id: <CZRPDFEWNO6X.28MWRY8A1IB2H@wheely>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
-Cc: <qemu-devel@nongnu.org>, "Daniel Henrique Barboza"
- <danielhb413@gmail.com>, "David Gibson" <david@gibson.dropbear.id.au>,
- "Benjamin Gray" <bgray@linux.ibm.com>
-Subject: Re: [PATCH 06/13] ppc/spapr: Add pa-features for POWER10 machines
+Date: Tue, 12 Mar 2024 20:36:39 +1000
+Message-Id: <CZRPETJSO62V.5YV22F323JKC@wheely>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>, <clg@kaod.org>
+Subject: Re: [PATCH v3] docs/system/ppc: Document running Linux on AmigaNG
+ machines
 From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Bernhard Beschow" <shentey@gmail.com>, "BALATON Zoltan"
+ <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.15.2
-References: <20240311185200.2185753-1-npiggin@gmail.com>
- <20240311185200.2185753-7-npiggin@gmail.com>
- <297e96cb-568f-4811-b563-e999ee079b5f@linux.ibm.com>
-In-Reply-To: <297e96cb-568f-4811-b563-e999ee079b5f@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
+References: <20240220232200.042DA4E6005@zero.eik.bme.hu>
+ <c9dc84be-c7bf-c676-491b-2c6b1164d502@eik.bme.hu>
+ <a9814b1b-98d7-29d8-36f9-228f20206917@eik.bme.hu>
+ <3E4E29CA-AE91-4C8D-BB51-B3759CF3110F@gmail.com>
+In-Reply-To: <3E4E29CA-AE91-4C8D-BB51-B3759CF3110F@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,105 +98,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Mar 12, 2024 at 7:34 PM AEST, Harsh Prateek Bora wrote:
+On Tue Mar 12, 2024 at 7:28 PM AEST, Bernhard Beschow wrote:
 >
 >
-> On 3/12/24 00:21, Nicholas Piggin wrote:
-> > From: Benjamin Gray <bgray@linux.ibm.com>
-> >=20
-> > Add POWER10 pa-features entry.
-> >=20
-> > Notably DEXCR and and [P]HASHST/[P]HASHCHK instruction support is
+> Am 9. M=C3=A4rz 2024 11:34:56 UTC schrieb BALATON Zoltan <balaton@eik.bme=
+.hu>:
+> >On Thu, 29 Feb 2024, BALATON Zoltan wrote:
+> >> On Wed, 21 Feb 2024, BALATON Zoltan wrote:
+> >>> Documentation on how to run Linux on the amigaone, pegasos2 and
+> >>> sam460ex machines is currently buried in the depths of the qemu-devel
+> >>> mailing list and in the source code. Let's collect the information in
+> >>> the QEMU handbook for a one stop solution.
+> >>=20
+> >> Ping? (Just so it's not missed from next pull.)
+> >
+> >Ping for freeze.
 >
-> s/and and/and
->
-> > advertised. Each DEXCR aspect is allocated a bit in the device tree,
-> > using the 68--71 byte range (inclusive). The functionality of the
-> > [P]HASHST/[P]HASHCHK instructions is separately declared in byte 72,
-> > bit 0 (BE).
-> >=20
-> > Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
-> > [npiggin: reword title and changelog, adjust a few bits]
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >   hw/ppc/spapr.c | 34 ++++++++++++++++++++++++++++++++++
-> >   1 file changed, 34 insertions(+)
-> >=20
-> > diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> > index 247f920f07..128bfe11a8 100644
-> > --- a/hw/ppc/spapr.c
-> > +++ b/hw/ppc/spapr.c
-> > @@ -265,6 +265,36 @@ static void spapr_dt_pa_features(SpaprMachineState=
- *spapr,
-> >           /* 60: NM atomic, 62: RNG */
-> >           0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
-> >       };
-> > +    /* 3.1 removes SAO, HTM support */
-> > +    uint8_t pa_features_31[] =3D { 74, 0,
-> > +        /* 0: MMU|FPU|SLB|RUN|DABR|NX, 1: fri[nzpm]|DABRX|SPRG3|SLB0|P=
-P110 */
-> > +        /* 2: VPM|DS205|PPR|DS202|DS206, 3: LSD|URG, 5: LE|CFAR|EB|LSQ=
- */
-> > +        0xf6, 0x1f, 0xc7, 0xc0, 0x00, 0xf0, /* 0 - 5 */
-> > +        /* 6: DS207 */
-> > +        0x80, 0x00, 0x00, 0x00, 0x00, 0x00, /* 6 - 11 */
-> > +        /* 16: Vector */
-> > +        0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 12 - 17 */
-> > +        /* 18: Vec. Scalar, 20: Vec. XOR */
-> > +        0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 18 - 23 */
-> > +        /* 24: Ext. Dec, 26: 64 bit ftrs, 28: PM ftrs */
-> > +        0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
-> > +        /* 32: LE atomic, 34: EBB + ext EBB */
-> > +        0x00, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
-> > +        /* 40: Radix MMU */
-> > +        0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
-> > +        /* 42: PM, 44: PC RA, 46: SC vec'd */
-> > +        0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
-> > +        /* 48: SIMD, 50: QP BFP, 52: String */
-> > +        0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 48 - 53 */
-> > +        /* 54: DecFP, 56: DecI, 58: SHA */
-> > +        0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 54 - 59 */
-> > +        /* 60: NM atomic, 62: RNG */
-> > +        0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
-> > +        /* 68: DEXCR[SBHE|IBRTPDUS|SRAPD|NPHIE|PHIE] */
-> > +        0x00, 0x00, 0xce, 0x00, 0x00, 0x00, /* 66 - 71 */
-> > +        /* 72: [P]HASHCHK */
->
-> Do we want to mention [P]HASHST as well in comment above ?
+> Has this patch been tagged yet? It would really be a pity if it didn't ma=
+ke it into 9.0.
 
-Sure. I'll do a quick respin.
+Will send out a PR today and I'll include it.
+
+>
+> FWIW:
+>
+> Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+
+Thanks, always helpful.
 
 Thanks,
 Nick
 
 >
-> > +        0x80, 0x00,                         /* 72 - 73 */
-> > +    };
-> >       uint8_t *pa_features =3D NULL;
-> >       size_t pa_size;
-> >  =20
->
-> In future, we may want to have helpers returning pointer to the
-> pa_features array and corresponding size conditionally based on the
-> required ISA support needed, instead of having local arrays bloat this
-> routine.
->
-> For now, with cosmetic fixes,
->
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->
-> > @@ -280,6 +310,10 @@ static void spapr_dt_pa_features(SpaprMachineState=
- *spapr,
-> >           pa_features =3D pa_features_300;
-> >           pa_size =3D sizeof(pa_features_300);
-> >       }
-> > +    if (ppc_check_compat(cpu, CPU_POWERPC_LOGICAL_3_10, 0, cpu->compat=
-_pvr)) {
-> > +        pa_features =3D pa_features_31;
-> > +        pa_size =3D sizeof(pa_features_31);
-> > +    }
-> >       if (!pa_features) {
-> >           return;
-> >       }
+> >
+> >> Regards,
+> >> BALATON Zoltan
+> >>=20
+> >>> Co-authored-by: Bernhard Beschow <shentey@gmail.com>
+> >>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> >>> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+> >>> Tested-by: Bernhard Beschow <shentey@gmail.com>
+> >>> ---
+> >>> v3: Apply changes and Tested-by tag from Bernhard
+> >>> v2: Move top level title one level up so subsections will be below it=
+ in TOC
+> >>>=20
+> >>> MAINTAINERS                 |   1 +
+> >>> docs/system/ppc/amigang.rst | 161 +++++++++++++++++++++++++++++++++++=
++
+> >>> docs/system/target-ppc.rst  |   1 +
+> >>> 3 files changed, 163 insertions(+)
+> >>> create mode 100644 docs/system/ppc/amigang.rst
+> >>>=20
+> >>> diff --git a/MAINTAINERS b/MAINTAINERS
+> >>> index 7d61fb9319..0aef8cb2a6 100644
+> >>> --- a/MAINTAINERS
+> >>> +++ b/MAINTAINERS
+> >>> @@ -1562,6 +1562,7 @@ F: hw/rtc/m41t80.c
+> >>> F: pc-bios/canyonlands.dt[sb]
+> >>> F: pc-bios/u-boot-sam460ex-20100605.bin
+> >>> F: roms/u-boot-sam460ex
+> >>> +F: docs/system/ppc/amigang.rst
+> >>>=20
+> >>> pegasos2
+> >>> M: BALATON Zoltan <balaton@eik.bme.hu>
+> >>> diff --git a/docs/system/ppc/amigang.rst b/docs/system/ppc/amigang.rs=
+t
+> >>> new file mode 100644
+> >>> index 0000000000..ba1a3d80b9
+> >>> --- /dev/null
+> >>> +++ b/docs/system/ppc/amigang.rst
+> >>> @@ -0,0 +1,161 @@
+> >>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >>> +AmigaNG boards (``amigaone``, ``pegasos2``, ``sam460ex``)
+> >>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >>> +
+> >>> +These PowerPC machines emulate boards that are primarily used for
+> >>> +running Amiga like OSes (AmigaOS 4, MorphOS and AROS) but these can
+> >>> +also run Linux which is what this section documents.
+> >>> +
+> >>> +Eyetech AmigaOne/Mai Logic Teron (``amigaone``)
+> >>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >>> +
+> >>> +The ``amigaone`` machine emulates an AmigaOne XE mainboard by Eyetec=
+h
+> >>> +which is a rebranded Mai Logic Teron board with modified U-Boot
+> >>> +firmware to support AmigaOS 4.
+> >>> +
+> >>> +Emulated devices
+> >>> +----------------
+> >>> +
+> >>> + * PowerPC 7457 CPU (can also use``-cpu g3, 750cxe, 750fx`` or ``750=
+gx``)
+> >>> + * Articia S north bridge
+> >>> + * VIA VT82C686B south bridge
+> >>> + * PCI VGA compatible card (guests may need other card instead)
+> >>> + * PS/2 keyboard and mouse
+> >>> +
+> >>> +Firmware
+> >>> +--------
+> >>> +
+> >>> +A firmware binary is necessary for the boot process. It is a modifie=
+d
+> >>> +U-Boot under GPL but its source is lost so it cannot be included in
+> >>> +QEMU. A binary is available at
+> >>> +https://www.hyperion-entertainment.com/index.php/downloads?view=3Dfi=
+les&parent=3D28.
+> >>> +The ROM image is in the last 512kB which can be extracted with the
+> >>> +following command:
+> >>> +
+> >>> +.. code-block:: bash
+> >>> +
+> >>> +  $ tail -c 524288 updater.image > u-boot-amigaone.bin
+> >>> +
+> >>> +The BIOS emulator in the firmware is unable to run QEMU=E2=80=98s st=
+andard
+> >>> +vgabios so ``VGABIOS-lgpl-latest.bin`` is needed instead which can b=
+e
+> >>> +downloaded from http://www.nongnu.org/vgabios.
+> >>> +
+> >>> +Running Linux
+> >>> +-------------
+> >>> +
+> >>> +There are some Linux images under the following link that work on th=
+e
+> >>> +``amigaone`` machine:
+> >>> +https://sourceforge.net/projects/amigaone-linux/files/debian-install=
+er/.
+> >>> +To boot the system run:
+> >>> +
+> >>> +.. code-block:: bash
+> >>> +
+> >>> +  $ qemu-system-ppc -machine amigaone -bios u-boot-amigaone.bin \
+> >>> +                    -cdrom "A1 Linux Net Installer.iso" \
+> >>> +                    -device ati-vga,model=3Drv100,romfile=3DVGABIOS-=
+lgpl-latest.bin
+> >>> +
+> >>> +From the firmware menu that appears select ``Boot sequence`` =E2=86=
+=92
+> >>> +``Amiga Multiboot Options`` and set ``Boot device 1`` to
+> >>> +``Onboard VIA IDE CDROM``. Then hit escape until the main screen app=
+ears again,
+> >>> +hit escape once more and from the exit menu that appears select eith=
+er
+> >>> +``Save settings and exit`` or ``Use settings for this session only``=
+. It may
+> >>> +take a long time loading the kernel into memory but eventually it bo=
+ots and the
+> >>> +installer becomes visible. The ``ati-vga`` RV100 emulation is not
+> >>> +complete yet so only frame buffer works, DRM and 3D is not available=
+.
+> >>> +
+> >>> +Genesi/bPlan Pegasos II (``pegasos2``)
+> >>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >>> +
+> >>> +The ``pegasos2`` machine emulates the Pegasos II sold by Genesi and
+> >>> +designed by bPlan. Its schematics are available at
+> >>> +https://www.powerdeveloper.org/platforms/pegasos/schematics.
+> >>> +
+> >>> +Emulated devices
+> >>> +----------------
+> >>> +
+> >>> + * PowerPC 7457 CPU (can also use``-cpu g3`` or ``750cxe``)
+> >>> + * Marvell MV64361 Discovery II north bridge
+> >>> + * VIA VT8231 south bridge
+> >>> + * PCI VGA compatible card (guests may need other card instead)
+> >>> + * PS/2 keyboard and mouse
+> >>> +
+> >>> +Firmware
+> >>> +--------
+> >>> +
+> >>> +The Pegasos II board has an Open Firmware compliant ROM based on
+> >>> +SmartFirmware with some changes that are not open-sourced therefore
+> >>> +the ROM binary cannot be included in QEMU. An updater was available
+> >>> +from bPlan, it can be found in the `Internet Archive
+> >>> +<http://web.archive.org/web/20071021223056/http://www.bplan-gmbh.de/=
+up050404/up050404>`_.
+> >>> +The ROM image can be extracted from it with the following command:
+> >>> +
+> >>> +.. code-block:: bash
+> >>> +
+> >>> +  $ tail -c +85581 up050404 | head -c 524288 > pegasos2.rom
+> >>> +
+> >>> +Running Linux
+> >>> +-------------
+> >>> +
+> >>> +The PowerPC version of Debian 8.11 supported Pegasos II. The BIOS
+> >>> +emulator in the firmware binary is unable to run QEMU=E2=80=98s stan=
+dard
+> >>> +vgabios so it needs to be disabled. To boot the system run:
+> >>> +
+> >>> +.. code-block:: bash
+> >>> +
+> >>> +  $ qemu-system-ppc -machine pegasos2 -bios pegasos2.rom \
+> >>> +                    -cdrom debian-8.11.0-powerpc-netinst.iso \
+> >>> +                    -device VGA,romfile=3D"" -serial stdio
+> >>> +
+> >>> +At the firmware ``ok`` prompt enter ``boot cd install/pegasos``.
+> >>> +
+> >>> +Alternatively, it is possible to boot the kernel directly without
+> >>> +firmware ROM using the QEMU built-in minimal Virtual Open Firmware
+> >>> +(VOF) emulation which is also supported on ``pegasos2``. For this,
+> >>> +extract the kernel ``install/powerpc/vmlinuz-chrp.initrd`` from the =
+CD
+> >>> +image, then run:
+> >>> +
+> >>> +.. code-block:: bash
+> >>> +
+> >>> +  $ qemu-system-ppc -machine pegasos2 -serial stdio \
+> >>> +                    -kernel vmlinuz-chrp.initrd -append "---" \
+> >>> +                    -cdrom debian-8.11.0-powerpc-netinst.iso
+> >>> +
+> >>> +aCube Sam460ex (``sam460ex``)
+> >>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D
+> >>> +
+> >>> +The ``sam460ex`` machine emulates the Sam460ex board by aCube which =
+is
+> >>> +based on the AMCC PowerPC 460EX SoC (that despite its name has a
+> >>> +PPC440 CPU core).
+> >>> +
+> >>> +Firmware
+> >>> +--------
+> >>> +
+> >>> +The board has a firmware based on an older U-Boot version with
+> >>> +modifications to support booting AmigaOS 4. The firmware ROM is
+> >>> +included with QEMU.
+> >>> +
+> >>> +Emulated devices
+> >>> +----------------
+> >>> +
+> >>> + * PowerPC 460EX SoC
+> >>> + * M41T80 serial RTC chip
+> >>> + * Silicon Motion SM501 display parts (identical to SM502 on real bo=
+ard)
+> >>> + * Silicon Image SiI3112 2 port SATA controller
+> >>> + * USB keyboard and mouse
+> >>> +
+> >>> +Running Linux
+> >>> +-------------
+> >>> +
+> >>> +The only Linux distro that supported Sam460ex out of box was CruxPPC
+> >>> +2.x. It can be booted by running:
+> >>> +
+> >>> +.. code-block:: bash
+> >>> +
+> >>> +  $ qemu-system-ppc -machine sam460ex -serial stdio \
+> >>> +                    -drive if=3Dnone,id=3Dcd,format=3Draw,file=3Dcru=
+x-ppc-2.7a.iso \
+> >>> +                    -device ide-cd,drive=3Dcd,bus=3Dide.1
+> >>> +
+> >>> +There are some other kernels and instructions for booting other
+> >>> +distros on aCube's product page at
+> >>> +https://www.acube-systems.biz/index.php?page=3Dhardware&pid=3D5
+> >>> +but those are untested.
+> >>> diff --git a/docs/system/target-ppc.rst b/docs/system/target-ppc.rst
+> >>> index 4f6eb93b17..87bf412ce5 100644
+> >>> --- a/docs/system/target-ppc.rst
+> >>> +++ b/docs/system/target-ppc.rst
+> >>> @@ -17,6 +17,7 @@ help``.
+> >>> .. toctree::
+> >>>    :maxdepth: 1
+> >>>=20
+> >>> +   ppc/amigang
+> >>>    ppc/embedded
+> >>>    ppc/powermac
+> >>>    ppc/powernv
+> >>
 
 
