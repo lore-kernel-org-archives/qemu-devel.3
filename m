@@ -4,83 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED21C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D6EC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxvY-0007zI-P9; Tue, 12 Mar 2024 04:56:04 -0400
+	id 1rjxwF-0000An-Np; Tue, 12 Mar 2024 04:56:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjxvS-0007wE-Bn; Tue, 12 Mar 2024 04:55:59 -0400
-Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rjxvP-0006ug-C4; Tue, 12 Mar 2024 04:55:58 -0400
-Received: by mail-oo1-xc35.google.com with SMTP id
- 006d021491bc7-5a1bd83d55dso2076615eaf.2; 
- Tue, 12 Mar 2024 01:55:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710233753; x=1710838553; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5esw4tNvb5auHbgZ/4nQS4xcFRaNBbal7bf8Cd4HTyY=;
- b=Mvby+lwyKaPNC5zyFltupTiCJDlirgHp+ybZg2+lWhMm8eoizJCbFgXGoXrQ9SdKyh
- MTZZVPY8s2ssl2OsSB/MS7GAAgl04C+0QCHCS4cVMgf3vQD+f3UT0/7+ZtJaeCepMER9
- ECSi2MTwybnRnmPpH3RUrpmPpMeCgxs1gboC2dH+JdA+oFk+DNUhRECSf+lWG4/9vfGj
- fVDYoADyTDEbFj37tK6fWypgBMa0u5chXmUpIlND9pCn1W06lQ+IXVICj/i4+eisICPN
- rnMm+DfUULPq3bsGcXgftn1CgBRMj5DawPB+GMi1tTVb14o6iM/lafGhLQ61qFGR87me
- 3tOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710233753; x=1710838553;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=5esw4tNvb5auHbgZ/4nQS4xcFRaNBbal7bf8Cd4HTyY=;
- b=LxJgphZOl2oESIsTIZsjS1itnffixeisFF+pjT/7a8zE1FlrY8P9nusrfZzsbebxhD
- e8/MxJEhLrE3SaInrCaDbhABnWvjq21AeOPI72xMrqJtA3WpxExmH9fV0X2ZlM0owGI2
- krD4xOUVCK1lpqiw5UdLViTi8SVSRc3YNnhIJNQU86HthIegUZK7YiUjtAs58z18LCkv
- ElQcM5DuiV+5FZUGNefUnSL37api3o26ZDE52lHYaWJ+uanhkIG1vCwLlp8TN8eb3dvj
- TqSGjWyk4F/ja+O211EOwchwOBEHCG94VzChstv3QM3G2mViQLyDIHWcWSxwrwfkWPOH
- Dt1g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVUVNUpEzqFQISjeCAlsfGLH9q60bxrWvQJA55txFUjxCovpe4iY/cKoaAOwJg1mHZTvl4kWIWN1UgQamiMhDj/a+h7
-X-Gm-Message-State: AOJu0Yyj5y4E2aG+Jhi6tzNHuygVDk1uvBHo95izG5JuIAtKTkJ3q16l
- +Vt5xMVQi4rUCEC9hEkORL6K2VzAOwh4h2qSmd0iOBdqWtUSpolq
-X-Google-Smtp-Source: AGHT+IE3cNjJ4asQ09aTEmHiUZtsJSuvikF9mtVwBb+OaagcBNEqsHH4KCiWnxNSDAiRB7aPiCTXTA==
-X-Received: by 2002:a05:6358:789:b0:17b:5c7b:2d24 with SMTP id
- n9-20020a056358078900b0017b5c7b2d24mr11534876rwj.1.1710233753453; 
- Tue, 12 Mar 2024 01:55:53 -0700 (PDT)
-Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
- c8-20020a654208000000b005dc49afed53sm4885990pgq.55.2024.03.12.01.55.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 01:55:53 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Mar 2024 18:55:48 +1000
-Message-Id: <CZRN9LQ7KX7O.3LVY9BPQCGK15@wheely>
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
-Cc: <qemu-devel@nongnu.org>, "Daniel Henrique Barboza"
- <danielhb413@gmail.com>, "David Gibson" <david@gibson.dropbear.id.au>
-Subject: Re: [PATCH 02/13] target/ppc: POWER10 does not have transactional
- memory
-X-Mailer: aerc 0.15.2
-References: <20240311185200.2185753-1-npiggin@gmail.com>
- <20240311185200.2185753-3-npiggin@gmail.com>
- <df3f326b-2519-4a0b-9734-f425a9ba0972@linux.ibm.com>
-In-Reply-To: <df3f326b-2519-4a0b-9734-f425a9ba0972@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
- envelope-from=npiggin@gmail.com; helo=mail-oo1-xc35.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rjxwC-00008j-60; Tue, 12 Mar 2024 04:56:44 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rjxw9-00073W-Bk; Tue, 12 Mar 2024 04:56:43 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42C8NvMK025088; Tue, 12 Mar 2024 08:56:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=YpmxIYrLa9nyujytwhTAMIYiHyIFBMmZz9D8cxmXGb0=;
+ b=Od6jiAE/KMhAKPRG7aNFd1iN9/EIxSfJH00U68CZyDju+uFXjtysiutopzmr+YjbSfDn
+ CH8lXB46YsM9nfp7T4xlPDZNou6mDK+JbeLY6/xhDiSH9fU4H9sbqYM1CM95jTxzt5WJ
+ n0l2WplWr3qVZzYAMAGhl5tUaYxkPzF9DrlW8nv9oBL8qC5+Jw1nD3OT2Tvd2tSx0RX7
+ COVmMmZ7qQaMAC0+LmpMtMoz3BTwih+Bju9X09eyMdwc+XoKQEdYiZ24h01OyN8O08lr
+ ELcoCcWLQZqP3Xi7RyywNUOtbMHyTrIHawXTub3dIVKEO3zch6mHOa3Y3Y6Kwifju+// vQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtkdqrdcy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Mar 2024 08:56:28 +0000
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42C8keeD014509;
+ Tue, 12 Mar 2024 08:56:28 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtkdqrdcv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Mar 2024 08:56:28 +0000
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42C7QSTU013553; Tue, 12 Mar 2024 08:56:27 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ws4ak5mng-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Mar 2024 08:56:27 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42C8uPX538928642
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 Mar 2024 08:56:27 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 113DD58056;
+ Tue, 12 Mar 2024 08:56:25 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D2C2A58052;
+ Tue, 12 Mar 2024 08:56:22 +0000 (GMT)
+Received: from [9.109.243.35] (unknown [9.109.243.35])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 12 Mar 2024 08:56:22 +0000 (GMT)
+Message-ID: <672bd14a-235c-40e3-a859-d822f1b063cd@linux.ibm.com>
+Date: Tue, 12 Mar 2024 14:26:21 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] spapr: avoid overhead of finding vhyp class in critical
+ operations
+Content-Language: en-US
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+References: <20240224073359.1025835-1-npiggin@gmail.com>
+ <a465cc07-17ee-48ea-95e6-14c15697ab09@linux.ibm.com>
+ <CZRN44HD20CR.33XSLDXL84FZH@wheely>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <CZRN44HD20CR.33XSLDXL84FZH@wheely>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: dEbIyzN4O0pU8QhGYhvZYFKXRH9rRrZx
+X-Proofpoint-GUID: YZmIxEV1fkc0LdknB5-PduY_hSpYNDlO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-12_06,2024-03-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ priorityscore=1501 mlxscore=0 mlxlogscore=932 adultscore=0 malwarescore=0
+ impostorscore=0 spamscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403120068
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,73 +119,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Mar 12, 2024 at 6:10 PM AEST, Harsh Prateek Bora wrote:
-> Hi Nick,
->
-> One query/comment below:
->
-> On 3/12/24 00:21, Nicholas Piggin wrote:
-> > POWER10 hardware implements a degenerate transactional memory facility
-> > in POWER8/9 PCR compatibility modes to permit migration from older
-> > CPUs, but POWER10 / ISA v3.1 mode does not support it so the CPU model
-> > should not support it.
-> >=20
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >   target/ppc/cpu_init.c | 4 ++--
-> >   1 file changed, 2 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> > index 572cbdf25f..d7e84a2f40 100644
-> > --- a/target/ppc/cpu_init.c
-> > +++ b/target/ppc/cpu_init.c
-> > @@ -6573,7 +6573,7 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *da=
-ta)
-> >                           PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |
-> >                           PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
-> >                           PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 =
-|
-> > -                        PPC2_TM | PPC2_ISA300 | PPC2_PRCNTL | PPC2_ISA=
-310 |
-> > +                        PPC2_ISA300 | PPC2_PRCNTL | PPC2_ISA310 |
-> >                           PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206;
-> >       pcc->msr_mask =3D (1ull << MSR_SF) |
-> >                       (1ull << MSR_HV) |
-> > @@ -6617,7 +6617,7 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *da=
-ta)
-> >       pcc->flags =3D POWERPC_FLAG_VRE | POWERPC_FLAG_SE |
-> >                    POWERPC_FLAG_BE | POWERPC_FLAG_PMM |
-> >                    POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |
-> > -                 POWERPC_FLAG_VSX | POWERPC_FLAG_TM | POWERPC_FLAG_SCV=
-;
-> > +                 POWERPC_FLAG_VSX | POWERPC_FLAG_SCV;
-> >       pcc->l1_dcache_size =3D 0x8000;
-> >       pcc->l1_icache_size =3D 0x8000;
-> >   }
->
-> Shouldn't we also have below change included with this:
->
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index aac095e5fd..faefc0420e 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -6641,7 +6641,6 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data=
-)
->                           PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206 | PPC2_ATTN;
->       pcc->msr_mask =3D (1ull << MSR_SF) |
->                       (1ull << MSR_HV) |
-> -                    (1ull << MSR_TM) |
->                       (1ull << MSR_VR) |
->                       (1ull << MSR_VSX) |
->                       (1ull << MSR_EE) |
 
-I think you're probably right. I'll do some testing...
 
-Thanks,
-Nick
+On 3/12/24 14:18, Nicholas Piggin wrote:
+> On Tue Mar 12, 2024 at 4:38 PM AEST, Harsh Prateek Bora wrote:
+>> Hi Nick,
+>>
+>> One minor comment below:
+>>
+>> On 2/24/24 13:03, Nicholas Piggin wrote:
+>>> PPC_VIRTUAL_HYPERVISOR_GET_CLASS is used in critical operations like
+>>> interrupts and TLB misses and is quite costly. Running the
+>>> kvm-unit-tests sieve program with radix MMU enabled thrashes the TCG
+>>> TLB and spends a lot of time in TLB and page table walking code. The
+>>> test takes 67 seconds to complete with a lot of time being spent in
+>>> code related to finding the vhyp class:
+>>>
+>>>      12.01%  [.] g_str_hash
+>>>       8.94%  [.] g_hash_table_lookup
+>>>       8.06%  [.] object_class_dynamic_cast
+>>>       6.21%  [.] address_space_ldq
+>>>       4.94%  [.] __strcmp_avx2
+>>>       4.28%  [.] tlb_set_page_full
+>>>       4.08%  [.] address_space_translate_internal
+>>>       3.17%  [.] object_class_dynamic_cast_assert
+>>>       2.84%  [.] ppc_radix64_xlate
+>>>
+>>> Keep a pointer to the class and avoid this lookup. This reduces the
+>>> execution time to 40 seconds.
+>>>
+>>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>>> ---
+>>> This feels a bit ugly, but the performance problem of looking up the
+>>> class in fast paths can't be ignored. Is there a "nicer" way to get the
+>>> same result?
+>>>
+>>> Thanks,
+>>> Nick
+>>>
+>>>    target/ppc/cpu.h           |  3 ++-
+>>>    target/ppc/mmu-book3s-v3.h |  4 +---
+>>>    hw/ppc/pegasos2.c          |  1 +
+>>>    target/ppc/cpu_init.c      |  9 +++------
+>>>    target/ppc/excp_helper.c   | 16 ++++------------
+>>>    target/ppc/kvm.c           |  4 +---
+>>>    target/ppc/mmu-hash64.c    | 16 ++++------------
+>>>    target/ppc/mmu-radix64.c   |  4 +---
+>>>    8 files changed, 17 insertions(+), 40 deletions(-)
+>>>
+>>> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+>>> index ec14574d14..eb85d9aa71 100644
+>>> --- a/target/ppc/cpu.h
+>>> +++ b/target/ppc/cpu.h
+>>> @@ -1437,6 +1437,7 @@ struct ArchCPU {
+>>>        int vcpu_id;
+>>>        uint32_t compat_pvr;
+>>>        PPCVirtualHypervisor *vhyp;
+>>> +    PPCVirtualHypervisorClass *vhyp_class;
+>>>        void *machine_data;
+>>>        int32_t node_id; /* NUMA node this CPU belongs to */
+>>>        PPCHash64Options *hash64_opts;
+>>> @@ -1535,7 +1536,7 @@ DECLARE_OBJ_CHECKERS(PPCVirtualHypervisor, PPCVirtualHypervisorClass,
+>>>    
+>>>    static inline bool vhyp_cpu_in_nested(PowerPCCPU *cpu)
+>>>    {
+>>> -    return PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp)->cpu_in_nested(cpu);
+>>> +    return cpu->vhyp_class->cpu_in_nested(cpu);
+>>>    }
+>>>    #endif /* CONFIG_USER_ONLY */
+>>>    
+>>> diff --git a/target/ppc/mmu-book3s-v3.h b/target/ppc/mmu-book3s-v3.h
+>>> index 674377a19e..f3f7993958 100644
+>>> --- a/target/ppc/mmu-book3s-v3.h
+>>> +++ b/target/ppc/mmu-book3s-v3.h
+>>> @@ -108,9 +108,7 @@ static inline hwaddr ppc_hash64_hpt_mask(PowerPCCPU *cpu)
+>>>        uint64_t base;
+>>>    
+>>>        if (cpu->vhyp) {
+>>
+>> All the checks for cpu->vhyp needs to be changed to check for
+>> cpu->vhyp_class now, for all such instances.
+> 
+> It wasn't supposed to, because vhyp != NULL implies vhyp_class != NULL.
+> It's supposed to be an equivalent transformation just changing the
+> lookup function.
 
->
-> Otherwise,
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+I agree, but not just it appears a bit odd, my only worry is if a future
+change cause vhyp_class to be NULL before the control reaches here, this
+check wont really serve the purpose. Anyways, not a mandatory
+requirement for now, so I shall leave it to your choice.
 
+regards,
+Harsh
+
+> 
+> Okay to leave it as is?
+> 
+> Thanks,
+> Nick
+> 
+>>
+>> With that,
+>>
+>> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>>
+>>
+>>> -        PPCVirtualHypervisorClass *vhc =
+>>> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -        return vhc->hpt_mask(cpu->vhyp);
+>>> +        return cpu->vhyp_class->hpt_mask(cpu->vhyp);
+>>>        }
+>>>        if (cpu->env.mmu_model == POWERPC_MMU_3_00) {
+>>>            ppc_v3_pate_t pate;
+>>> diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
+>>> index 04d6decb2b..c22e8b336d 100644
+>>> --- a/hw/ppc/pegasos2.c
+>>> +++ b/hw/ppc/pegasos2.c
+>>> @@ -400,6 +400,7 @@ static void pegasos2_machine_reset(MachineState *machine, ShutdownCause reason)
+>>>        machine->fdt = fdt;
+>>>    
+>>>        pm->cpu->vhyp = PPC_VIRTUAL_HYPERVISOR(machine);
+>>> +    pm->cpu->vhyp_class = PPC_VIRTUAL_HYPERVISOR_GET_CLASS(pm->cpu->vhyp);
+>>>    }
+>>>    
+>>>    enum pegasos2_rtas_tokens {
+>>> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+>>> index 9bccddb350..63d0094024 100644
+>>> --- a/target/ppc/cpu_init.c
+>>> +++ b/target/ppc/cpu_init.c
+>>> @@ -6631,6 +6631,7 @@ void cpu_ppc_set_vhyp(PowerPCCPU *cpu, PPCVirtualHypervisor *vhyp)
+>>>        CPUPPCState *env = &cpu->env;
+>>>    
+>>>        cpu->vhyp = vhyp;
+>>> +    cpu->vhyp_class = PPC_VIRTUAL_HYPERVISOR_GET_CLASS(vhyp);
+>>>    
+>>>        /*
+>>>         * With a virtual hypervisor mode we never allow the CPU to go
+>>> @@ -7224,9 +7225,7 @@ static void ppc_cpu_exec_enter(CPUState *cs)
+>>>        PowerPCCPU *cpu = POWERPC_CPU(cs);
+>>>    
+>>>        if (cpu->vhyp) {
+>>> -        PPCVirtualHypervisorClass *vhc =
+>>> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -        vhc->cpu_exec_enter(cpu->vhyp, cpu);
+>>> +        cpu->vhyp_class->cpu_exec_enter(cpu->vhyp, cpu);
+>>>        }
+>>>    }
+>>>    
+>>> @@ -7235,9 +7234,7 @@ static void ppc_cpu_exec_exit(CPUState *cs)
+>>>        PowerPCCPU *cpu = POWERPC_CPU(cs);
+>>>    
+>>>        if (cpu->vhyp) {
+>>> -        PPCVirtualHypervisorClass *vhc =
+>>> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -        vhc->cpu_exec_exit(cpu->vhyp, cpu);
+>>> +        cpu->vhyp_class->cpu_exec_exit(cpu->vhyp, cpu);
+>>>        }
+>>>    }
+>>>    #endif /* CONFIG_TCG */
+>>> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+>>> index 98952de267..445350488c 100644
+>>> --- a/target/ppc/excp_helper.c
+>>> +++ b/target/ppc/excp_helper.c
+>>> @@ -840,9 +840,7 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
+>>>             * HV mode, we need to keep hypercall support.
+>>>             */
+>>>            if (lev == 1 && cpu->vhyp) {
+>>> -            PPCVirtualHypervisorClass *vhc =
+>>> -                PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -            vhc->hypercall(cpu->vhyp, cpu);
+>>> +            cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
+>>>                powerpc_reset_excp_state(cpu);
+>>>                return;
+>>>            }
+>>> @@ -1012,9 +1010,7 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
+>>>             * HV mode, we need to keep hypercall support.
+>>>             */
+>>>            if (lev == 1 && cpu->vhyp) {
+>>> -            PPCVirtualHypervisorClass *vhc =
+>>> -                PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -            vhc->hypercall(cpu->vhyp, cpu);
+>>> +            cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
+>>>                powerpc_reset_excp_state(cpu);
+>>>                return;
+>>>            }
+>>> @@ -1534,9 +1530,7 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
+>>>    
+>>>            /* "PAPR mode" built-in hypercall emulation */
+>>>            if (lev == 1 && books_vhyp_handles_hcall(cpu)) {
+>>> -            PPCVirtualHypervisorClass *vhc =
+>>> -                PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -            vhc->hypercall(cpu->vhyp, cpu);
+>>> +            cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
+>>>                powerpc_reset_excp_state(cpu);
+>>>                return;
+>>>            }
+>>> @@ -1677,10 +1671,8 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
+>>>        }
+>>>    
+>>>        if ((new_msr & MSR_HVB) && books_vhyp_handles_hv_excp(cpu)) {
+>>> -        PPCVirtualHypervisorClass *vhc =
+>>> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>>            /* Deliver interrupt to L1 by returning from the H_ENTER_NESTED call */
+>>> -        vhc->deliver_hv_excp(cpu, excp);
+>>> +        cpu->vhyp_class->deliver_hv_excp(cpu, excp);
+>>>    
+>>>            powerpc_reset_excp_state(cpu);
+>>>    
+>>> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+>>> index 26fa9d0575..5b5b96ab6b 100644
+>>> --- a/target/ppc/kvm.c
+>>> +++ b/target/ppc/kvm.c
+>>> @@ -862,9 +862,7 @@ int kvmppc_put_books_sregs(PowerPCCPU *cpu)
+>>>        sregs.pvr = env->spr[SPR_PVR];
+>>>    
+>>>        if (cpu->vhyp) {
+>>> -        PPCVirtualHypervisorClass *vhc =
+>>> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -        sregs.u.s.sdr1 = vhc->encode_hpt_for_kvm_pr(cpu->vhyp);
+>>> +        sregs.u.s.sdr1 = cpu->vhyp_class->encode_hpt_for_kvm_pr(cpu->vhyp);
+>>>        } else {
+>>>            sregs.u.s.sdr1 = env->spr[SPR_SDR1];
+>>>        }
+>>> diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
+>>> index d645c0bb94..196b4b2a48 100644
+>>> --- a/target/ppc/mmu-hash64.c
+>>> +++ b/target/ppc/mmu-hash64.c
+>>> @@ -516,9 +516,7 @@ const ppc_hash_pte64_t *ppc_hash64_map_hptes(PowerPCCPU *cpu,
+>>>        const ppc_hash_pte64_t *hptes;
+>>>    
+>>>        if (cpu->vhyp) {
+>>> -        PPCVirtualHypervisorClass *vhc =
+>>> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -        return vhc->map_hptes(cpu->vhyp, ptex, n);
+>>> +        return cpu->vhyp_class->map_hptes(cpu->vhyp, ptex, n);
+>>>        }
+>>>        base = ppc_hash64_hpt_base(cpu);
+>>>    
+>>> @@ -538,9 +536,7 @@ void ppc_hash64_unmap_hptes(PowerPCCPU *cpu, const ppc_hash_pte64_t *hptes,
+>>>                                hwaddr ptex, int n)
+>>>    {
+>>>        if (cpu->vhyp) {
+>>> -        PPCVirtualHypervisorClass *vhc =
+>>> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -        vhc->unmap_hptes(cpu->vhyp, hptes, ptex, n);
+>>> +        cpu->vhyp_class->unmap_hptes(cpu->vhyp, hptes, ptex, n);
+>>>            return;
+>>>        }
+>>>    
+>>> @@ -820,9 +816,7 @@ static void ppc_hash64_set_r(PowerPCCPU *cpu, hwaddr ptex, uint64_t pte1)
+>>>        hwaddr base, offset = ptex * HASH_PTE_SIZE_64 + HPTE64_DW1_R;
+>>>    
+>>>        if (cpu->vhyp) {
+>>> -        PPCVirtualHypervisorClass *vhc =
+>>> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -        vhc->hpte_set_r(cpu->vhyp, ptex, pte1);
+>>> +        cpu->vhyp_class->hpte_set_r(cpu->vhyp, ptex, pte1);
+>>>            return;
+>>>        }
+>>>        base = ppc_hash64_hpt_base(cpu);
+>>> @@ -837,9 +831,7 @@ static void ppc_hash64_set_c(PowerPCCPU *cpu, hwaddr ptex, uint64_t pte1)
+>>>        hwaddr base, offset = ptex * HASH_PTE_SIZE_64 + HPTE64_DW1_C;
+>>>    
+>>>        if (cpu->vhyp) {
+>>> -        PPCVirtualHypervisorClass *vhc =
+>>> -            PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -        vhc->hpte_set_c(cpu->vhyp, ptex, pte1);
+>>> +        cpu->vhyp_class->hpte_set_c(cpu->vhyp, ptex, pte1);
+>>>            return;
+>>>        }
+>>>        base = ppc_hash64_hpt_base(cpu);
+>>> diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
+>>> index 5823e039e6..496ba87a95 100644
+>>> --- a/target/ppc/mmu-radix64.c
+>>> +++ b/target/ppc/mmu-radix64.c
+>>> @@ -677,9 +677,7 @@ static bool ppc_radix64_xlate_impl(PowerPCCPU *cpu, vaddr eaddr,
+>>>    
+>>>        /* Get Partition Table */
+>>>        if (cpu->vhyp) {
+>>> -        PPCVirtualHypervisorClass *vhc;
+>>> -        vhc = PPC_VIRTUAL_HYPERVISOR_GET_CLASS(cpu->vhyp);
+>>> -        if (!vhc->get_pate(cpu->vhyp, cpu, lpid, &pate)) {
+>>> +        if (!cpu->vhyp_class->get_pate(cpu->vhyp, cpu, lpid, &pate)) {
+>>>                if (guest_visible) {
+>>>                    ppc_radix64_raise_hsi(cpu, access_type, eaddr, eaddr,
+>>>                                          DSISR_R_BADCONFIG);
+> 
+> 
 
