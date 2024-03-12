@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD0CBC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04CEEC54E66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxQA-0006L7-RB; Tue, 12 Mar 2024 04:23:38 -0400
+	id 1rjxQ6-000668-5H; Tue, 12 Mar 2024 04:23:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxQ9-0006I2-Dl
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:23:37 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxQ4-00062O-1V
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:23:32 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxQ7-0001Df-5v
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:23:37 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4132a5b38fbso9387955e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:23:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rjxQ1-0001CV-4x
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:23:31 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-33e8b957a89so1580176f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:23:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710231813; x=1710836613; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710231807; x=1710836607; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uETsEUNOz0/4CrmmYx0I6id+tmI4uW8xOvgnA3mXRG0=;
- b=KjQcJPKFeRixgTaUntEcbKHzxuPYGelnIEoVcdyWOa1yZSoFlGRfze3FsDcCVWo0KL
- 6Uy51D/odDLH1I9mK+wuLHSDf2y8IUDX47GUhF2/5FDf8u9fxerUM5EM8kj23sGf35IC
- cL0zZ9AVO4X9gGwKBF0ICUzjsZ2xpnMI9cGN6GSaiU9NG/FR2ifVnuIJT76KqXYkOBws
- Hr0+xaiAZbayC0CQLn3d46uKNgRTUCGGve+Xf4z0ooPGk5foKzwUqTNEsxKls8FGCQ5j
- VJ1XSHoUkttiUErv4uSBo5wa6bL2BvOGSXY5m8biPMXh044bi4Fw6zMLDPFJOLKRuD+U
- EyAw==
+ bh=Eq8dPdS4O29YZHMSjUomBAXNnVOWg/nPlLYlOBRYYnw=;
+ b=TcVF8q6CVfURTxPJpFVhmfBYNF3AcQyeUARzttJCWT6au5QoD2EK4TnbjV0DAz4o17
+ V2eVZZwVvivJNj2qn8Fut3l8cG35tFybALy4IgnxM+i5j9cmcaThLrikdrx5u/bGFEsP
+ dfnIak911LM0Ygi8aU2nXkIfD/fB6pepAczg6oFsMmypp2mrwT8ujsd4w+T+qm7kt4ze
+ u7U/ZdsL03pUFhL0Vk8Gfq/wsN8/GzUmvjqk9jeS76n5n8gZDrbWpuBmDcs1++JKZJt6
+ WhoNMP+TaIWlpIXSRl0y6UL4cFjW7rE1WrKvpldJd+5PP1PFjGpt8/OEf0r+GTBsvZOq
+ gt9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710231813; x=1710836613;
+ d=1e100.net; s=20230601; t=1710231807; x=1710836607;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uETsEUNOz0/4CrmmYx0I6id+tmI4uW8xOvgnA3mXRG0=;
- b=NyuDGtIOh8jOSw76HTZwUtp0geFbjc6u61Hbf4zTv7dDIGdc4ASmclr6xuBDY4h6se
- O7a1pJnFcCHa/NgdtjhDSxrN4cXq7l0vg7swBEjRrtd+vRfQsaXfW5YQtP6PHT3ZK3ei
- IYnWA+2Z/1j31D/Oj2z+7r8m0sIDVsAVUOtqfZS3lLd24D9MU4872jINNWcAuJ4gaVoa
- nB5Y8e6Bb/BYgjiA5cnix0hg2Rood08m8i34OgRi1qNL2Bql6Rg0PDC/Wyn6/9IXdg6d
- 1E9Weo0Alw/Tog51xcA08VEDStq2XUkx12aGzotPeLM7aIZtn47VJEW8uHUeS+bTqik/
- 5gjQ==
-X-Gm-Message-State: AOJu0Yzz8VHo7zMXCxoD4FzQyd96Uga1FAgcMod5hUUKi757VPd/Aewt
- SnM4WU5z/k9QNs4pU0IGHdTVVPUhN5bGhXl/LGancSHqD1DgSxtUD1XyQbi5h7sH/1+V6BtJKHh
- K
-X-Google-Smtp-Source: AGHT+IEhOuG22b2IIs/SqSKA8tVgYjPtpSIJ6cjv/SzDthbzRx1JDrFH6QfzZYaRveCZjv/cvFzoQg==
-X-Received: by 2002:a05:600c:6a1a:b0:413:1285:6e40 with SMTP id
- jj26-20020a05600c6a1a00b0041312856e40mr6633849wmb.20.1710231813577; 
- Tue, 12 Mar 2024 01:23:33 -0700 (PDT)
+ bh=Eq8dPdS4O29YZHMSjUomBAXNnVOWg/nPlLYlOBRYYnw=;
+ b=UiHK63kFY00iiB4Jl1N8ztOdIbqtDA9p/9A4lwSTnsRFijLiEw9CAlh0Y/hTlLhtQ2
+ yBFlD7wNRhYyNAQPzBHOZmU5sRolLCC4UVgmPb61EWzMEOz5GFckpWOX04ZKjrAdymil
+ ikA9xmgDMS+mwfnJJL1EUZWtJNmTMHRH4HprUmaxGycbp0kmOreb2SyQTiInADtVSdI0
+ q0NVAKmK44Hispf8qKtvraM2y5w4wODNQwnwK8TqBSHwA1ckL0fCg67lWAannUs3ZdKp
+ x1jH0gpeFUsRqxMybleAPzMjcMHcI958ViO3CYhaVUi/Ec3lKJnOtk6tkM1PeJEidO68
+ NdAg==
+X-Gm-Message-State: AOJu0YxeiThGYuco1Sfb85RtPWreD8a/Jq+mCaSpLtKaKY2tGYGkwbbO
+ tpy3VesdQljrZvO9iOWwwzOYs4w1CdGs/n3kybzSiqNTTl0uOEeCt0DYuWAAaWDQj1ujWyYUGlp
+ A
+X-Google-Smtp-Source: AGHT+IFHYt65s7EEaSlDZ6EY6Mu48qwjmIYfw3xS43O3GxR51c7APuxncTcj8Zkr7G4BUn2581D0rA==
+X-Received: by 2002:a5d:5505:0:b0:33d:277d:a2c7 with SMTP id
+ b5-20020a5d5505000000b0033d277da2c7mr5082955wrv.16.1710231807243; 
+ Tue, 12 Mar 2024 01:23:27 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.139])
  by smtp.gmail.com with ESMTPSA id
- t13-20020a05600c198d00b00412b0e51ef9sm11854370wmq.31.2024.03.12.01.23.31
+ bx33-20020a5d5b21000000b0033e93e00f68sm5279431wrb.61.2024.03.12.01.23.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 12 Mar 2024 01:23:33 -0700 (PDT)
+ Tue, 12 Mar 2024 01:23:26 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-block@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: [PULL 08/13] hw/core: Cleanup unused included headers in cpu-common.c
-Date: Tue, 12 Mar 2024 09:22:33 +0100
-Message-ID: <20240312082239.69696-9-philmd@linaro.org>
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PULL 07/13] sun4u: remap ebus BAR0 to use unassigned_io_ops instead
+ of alias to PCI IO space
+Date: Tue, 12 Mar 2024 09:22:32 +0100
+Message-ID: <20240312082239.69696-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240312082239.69696-1-philmd@linaro.org>
 References: <20240312082239.69696-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,43 +97,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-Remove unused headers in cpu-common.c:
-* qemu/notify.h
-* exec/cpu-common.h
-* qemu/error-report.h
-* qemu/qemu-print.h
+During kernel startup OpenBSD accesses addresses mapped by BAR0 of the ebus device
+but at offsets where no IO devices exist. Before commit 4aa07e8649 ("hw/sparc64/ebus:
+Access memory regions via pci_address_space_io()") BAR0 was mapped to legacy IO
+space which allows accesses to unmapped devices to succeed, but afterwards these
+accesses to unmapped PCI IO space cause a memory fault which prevents OpenBSD from
+booting.
 
-Tested by "./configure" and then "make".
+Since no devices are mapped at the addresses accessed by OpenBSD, change ebus BAR0
+from a PCI IO space alias to an IO memory region using unassigned_io_ops which allows
+these accesses to succeed and so allows OpenBSD to boot once again.
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Fixes: 4aa07e8649 ("hw/sparc64/ebus: Access memory regions via pci_address_space_io()")
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240311075621.3224684-2-zhao1.liu@linux.intel.com>
+Message-ID: <20240311064345.2531197-1-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/core/cpu-common.c | 4 ----
- 1 file changed, 4 deletions(-)
+ hw/sparc64/sun4u.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 0108fb11db..4bd9c70a83 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -22,14 +22,10 @@
- #include "qapi/error.h"
- #include "hw/core/cpu.h"
- #include "sysemu/hw_accel.h"
--#include "qemu/notify.h"
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
- #include "exec/log.h"
--#include "exec/cpu-common.h"
- #include "exec/gdbstub.h"
--#include "qemu/error-report.h"
--#include "qemu/qemu-print.h"
- #include "sysemu/tcg.h"
- #include "hw/boards.h"
- #include "hw/qdev-properties.h"
+diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+index eda9b58a21..cff6d5abaf 100644
+--- a/hw/sparc64/sun4u.c
++++ b/hw/sparc64/sun4u.c
+@@ -360,8 +360,13 @@ static void ebus_realize(PCIDevice *pci_dev, Error **errp)
+     pci_dev->config[0x09] = 0x00; // programming i/f
+     pci_dev->config[0x0D] = 0x0a; // latency_timer
+ 
+-    memory_region_init_alias(&s->bar0, OBJECT(s), "bar0",
+-                             pci_address_space_io(pci_dev), 0, 0x1000000);
++    /*
++     * BAR0 is accessed by OpenBSD but not for ebus device access: allow any
++     * memory access to this region to succeed which allows the OpenBSD kernel
++     * to boot.
++     */
++    memory_region_init_io(&s->bar0, OBJECT(s), &unassigned_io_ops, s,
++                          "bar0", 0x1000000);
+     pci_register_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &s->bar0);
+     memory_region_init_alias(&s->bar1, OBJECT(s), "bar1",
+                              pci_address_space_io(pci_dev), 0, 0x8000);
 -- 
 2.41.0
 
