@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0B2FC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 19:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E984CC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 19:03:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk7OH-0002kP-St; Tue, 12 Mar 2024 15:02:21 -0400
+	id 1rk7OF-0002jN-DH; Tue, 12 Mar 2024 15:02:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rk7OG-0002jV-7P
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 15:02:20 -0400
+ id 1rk7OC-0002h9-80
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 15:02:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rk7OE-0005Ht-KF
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 15:02:19 -0400
+ id 1rk7OA-0005HK-OS
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 15:02:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710270138;
+ s=mimecast20190719; t=1710270134;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4iRu6lQv+QNbYf+gPPgoTuDCHvhZOlOXKTSWrZLOITw=;
- b=Gb6Z27aI+rrzYHl0Ji8XU75JIz7Vhvo5D7+/3eqypyjdZig0xd221J//DLOlTaZH/0nPje
- UJ/TIqYwsihVVjQSDS1eD22kt7qy0oLdt2PlZDJRn47gQGS4M2Qla6Ude58qlQMkrewQIx
- 9DQw5Pom2pXbWSDpe21l4GZ/orzEJzg=
+ bh=oSDtm5zvcwto5PRbuw1B3KDgHFY5VH5ss8AqxSTgCoE=;
+ b=Pa5vOd4tHl05+3cohqIKuMWuA2oGWkDZIrpGaEljZFWV8piKJDJiR0ea2qejhpVeEHBAG4
+ L6pdXN2OwtWQchfek0a8TEowIaK4aazH/mwb6pEH49mYEUwTE67Ou7/a1QH7ct7xuHl+w6
+ Sw123SAHvlzNwvYVb5cIYAqVd0enXSw=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-P75w82q7NcqyUJw0CFATrQ-1; Tue, 12 Mar 2024 15:02:14 -0400
-X-MC-Unique: P75w82q7NcqyUJw0CFATrQ-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ us-mta-626-4hCAqajhPEeccnKzIewVOg-1; Tue, 12 Mar 2024 15:02:10 -0400
+X-MC-Unique: 4hCAqajhPEeccnKzIewVOg-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5E217800262;
- Tue, 12 Mar 2024 19:02:14 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 89C65800268;
+ Tue, 12 Mar 2024 19:02:09 +0000 (UTC)
 Received: from localhost (unknown [10.39.192.51])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 7300B1121337;
- Tue, 12 Mar 2024 19:02:13 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id D2D9C492BC7;
+ Tue, 12 Mar 2024 19:02:08 +0000 (UTC)
+Date: Tue, 12 Mar 2024 14:50:57 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+To: John Snow <jsnow@redhat.com>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>
-Subject: [PULL 1/2] tracetool: remove redundant --target-type / --target-name
- args
-Date: Tue, 12 Mar 2024 15:01:43 -0400
-Message-ID: <20240312190144.433336-2-stefanha@redhat.com>
-In-Reply-To: <20240312190144.433336-1-stefanha@redhat.com>
-References: <20240312190144.433336-1-stefanha@redhat.com>
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH 1/2] tracetool: remove redundant --target-type /
+ --target-name args
+Message-ID: <20240312185057.GE389553@fedora>
+References: <20240108171356.1037059-1-berrange@redhat.com>
+ <20240108171356.1037059-2-berrange@redhat.com>
+ <CAFn=p-bJNzH7_iFDjV-Fwg_yO3HPvwaSSxBnuhXD-T6tCTR1Fg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="osJ9JKGD4wSD0OZh"
+Content-Disposition: inline
+In-Reply-To: <CAFn=p-bJNzH7_iFDjV-Fwg_yO3HPvwaSSxBnuhXD-T6tCTR1Fg@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
@@ -90,115 +91,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
 
-The --target-type and --target-name args are used to construct
-the default probe prefix if '--probe-prefix' is not given. The
-meson.build will always pass '--probe-prefix', so the other args
-are effectively redundant.
+--osJ9JKGD4wSD0OZh
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: John Snow <jsnow@redhat.com>
-Message-id: 20240108171356.1037059-2-berrange@redhat.com
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- docs/devel/tracing.rst |  3 +--
- meson.build            |  2 --
- scripts/tracetool.py   | 24 +++++-------------------
- 3 files changed, 6 insertions(+), 23 deletions(-)
+On Mon, Jan 08, 2024 at 04:50:40PM -0500, John Snow wrote:
+> On Mon, Jan 8, 2024 at 12:14=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange=
+@redhat.com> wrote:
+> >
+> > The --target-type and --target-name args are used to construct
+> > the default probe prefix if '--probe-prefix' is not given. The
+> > meson.build will always pass '--probe-prefix', so the other args
+> > are effectively redundant.
+> >
+> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>=20
+> Fine by me, provided there's no reason anyone is calling tracetool
+> manually for some reason I haven't thought about. I assume we'll hear
+> about it if so...
 
-diff --git a/docs/devel/tracing.rst b/docs/devel/tracing.rst
-index d288480db1..043bed7fd0 100644
---- a/docs/devel/tracing.rst
-+++ b/docs/devel/tracing.rst
-@@ -357,8 +357,7 @@ probes::
- 
-     scripts/tracetool.py --backends=dtrace --format=stap \
-                          --binary path/to/qemu-binary \
--                         --target-type system \
--                         --target-name x86_64 \
-+                         --probe-prefix qemu.system.x86_64 \
-                          --group=all \
-                          trace-events-all \
-                          qemu.stp
-diff --git a/meson.build b/meson.build
-index f9dbe7634e..b8d40d7c0a 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3991,8 +3991,6 @@ foreach target : target_dirs
-                       command: [
-                         tracetool, '--group=all', '--format=' + stp['fmt'],
-                         '--binary=' + stp['bin'],
--                        '--target-name=' + target_name,
--                        '--target-type=' + target_type,
-                         '--probe-prefix=qemu.' + target_type + '.' + target_name,
-                         '@INPUT@', '@OUTPUT@'
-                       ],
-diff --git a/scripts/tracetool.py b/scripts/tracetool.py
-index ab7653a5ce..5de9ce96d3 100755
---- a/scripts/tracetool.py
-+++ b/scripts/tracetool.py
-@@ -44,12 +44,9 @@ def error_opt(msg = None):
-     --help                   This help message.
-     --list-backends          Print list of available backends.
-     --check-backends         Check if the given backend is valid.
--    --binary <path>          Full path to QEMU binary.
--    --target-type <type>     QEMU emulator target type ('system' or 'user').
--    --target-name <name>     QEMU emulator target name.
--    --group <name>           Name of the event group
--    --probe-prefix <prefix>  Prefix for dtrace probe names
--                             (default: qemu-<target-type>-<target-name>).\
-+    --binary <path>          Full path to QEMU binary (required for 'stap' backend).
-+    --group <name>           Name of the event group.
-+    --probe-prefix <prefix>  Prefix for dtrace probe names (required for 'stap' backend).
- """ % {
-             "script" : _SCRIPT,
-             "backends" : backend_descr,
-@@ -67,7 +64,7 @@ def main(args):
- 
-     long_opts = ["backends=", "format=", "help", "list-backends",
-                  "check-backends", "group="]
--    long_opts += ["binary=", "target-type=", "target-name=", "probe-prefix="]
-+    long_opts += ["binary=", "probe-prefix="]
- 
-     try:
-         opts, args = getopt.getopt(args[1:], "", long_opts)
-@@ -79,8 +76,6 @@ def main(args):
-     arg_format = ""
-     arg_group = None
-     binary = None
--    target_type = None
--    target_name = None
-     probe_prefix = None
-     for opt, arg in opts:
-         if opt == "--help":
-@@ -102,10 +97,6 @@ def main(args):
- 
-         elif opt == "--binary":
-             binary = arg
--        elif opt == '--target-type':
--            target_type = arg
--        elif opt == '--target-name':
--            target_name = arg
-         elif opt == '--probe-prefix':
-             probe_prefix = arg
- 
-@@ -127,13 +118,8 @@ def main(args):
-     if arg_format == "stap":
-         if binary is None:
-             error_opt("--binary is required for SystemTAP tapset generator")
--        if probe_prefix is None and target_type is None:
--            error_opt("--target-type is required for SystemTAP tapset generator")
--        if probe_prefix is None and target_name is None:
--            error_opt("--target-name is required for SystemTAP tapset generator")
--
-         if probe_prefix is None:
--            probe_prefix = ".".join(["qemu", target_type, target_name])
-+            error_opt("--probe-prefix is required for SystemTAP tapset generator")
- 
-     if len(args) < 2:
-         error_opt("missing trace-events and output filepaths")
--- 
-2.44.0
+That's okay. tracetool.py is internal to QEMU so we're free to change
+the command-line options.
+
+Stefan
+
+--osJ9JKGD4wSD0OZh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmXwpBEACgkQnKSrs4Gr
+c8h21gf/SMcf9XIyW6TAT3xx+rVCmOoopASAeLxXrcrKRH4Nk9CJUZ2L+qwUYdrB
+/VgBPi+qKiayKtJQkMHTzqU39Gz9hDY0m6aFW7p6TPPJu8TrWzzJtyKOXCSsnX/H
+Qvt5/OSklzTLGOHtpY6xcEJ8L77W16ARvlYAMlKJOkm/wuwQAVJ2Dvahd6jetB5P
+5+5f0UCi/ouD9XpJ1KWvZ5B9kFepb0UYCXCeUfpiliZVcPp34a01XdqlwucXoDg9
+cw1bnsxOJEzdkF5rc8brR0wUXSfSPl1BHsK0Vu5dkYgJ60g0Rj5oN6dCx1lSrNpX
+vxxdSv8NzM/qWX5HNc6ASMvL43sygA==
+=EOJr
+-----END PGP SIGNATURE-----
+
+--osJ9JKGD4wSD0OZh--
 
 
