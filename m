@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68361C54E5D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C38C54E58
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 20:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk8Wx-0001mM-BR; Tue, 12 Mar 2024 16:15:23 -0400
+	id 1rk8Wv-0001mH-AP; Tue, 12 Mar 2024 16:15:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rk8Wq-0001ly-AU
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 16:15:16 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rk8Wo-0001LZ-5W
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rk8Wp-0001lo-IW
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 16:15:15 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4132f780ee2so1408525e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 13:15:11 -0700 (PDT)
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rk8Wl-0001JH-OD
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 16:15:12 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-33e9623c3a8so205916f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 13:15:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710274510; x=1710879310; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Gs5HlW/Ip3qFcJbnSXOPguk0JHRri5DnrCS/iUDagd0=;
- b=kriJGLY/pDR0v7aiAz4MkeEwo//oQNgN9BAJakpBYKJx0AC8+b/QDThdK31LYWTcec
- V1tqRojKl105VqCVekvp43VAJqUmpSU0dvyySE4w/d5wGx4nQA3XcFZb5q8z5SOjgrn/
- 41GQieRG+Aeu+TV4bfvlEVK7qg6Lzg96YLmW9+iGzE4XmT1XSgTDLLACVTP+CC9QaBTC
- fVjsNPJtr7P5Bg/BlesN61z1GlUvqzBv07ZW2R1T2gIRidixLpqQe0dB9R9k7dqWl14B
- rrtd2qCDEDAJj3HChTr5+Wayc6rY8dIzZK1pAmma2whfWpBhRxCG28AXloKb6c76SNt0
- QWtw==
+ d=linaro.org; s=google; t=1710274503; x=1710879303; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mHESGhfLSlYehDJfOaQNs3o0t0nyr1FSmJX5b5N9tss=;
+ b=e1Yc6XCqhUc1m32uJpkjIOer3Wa3w1VjJRrY9fV50NhhNGNyxBnBwhkX/KJQM1aGOz
+ XzkEFYgj1tjC1gbZ7vukQmQ46uEhyJn3JV9xBz1IpZacAxfa2hxkIIszrbHl6vF6FRPG
+ VsBHge1f1XHLKDsNCdLeQ6EsyAeLcsI4DlIM6xI9JSu+IvsaU6viV8MpTD0668TmYZ06
+ JpdMDIQfe+b1cdOS5Izvxi050vmcHc/pa98ojTNu2YeeaEMVv701PgvrcPxrr7tFXPtE
+ 7Rkv/e36x+gzElk4iorHK/sBQtb4SPq/dzXWc4FBodKibu8ZmES/jUV2t30rL9JKzNzA
+ 6uyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710274510; x=1710879310;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Gs5HlW/Ip3qFcJbnSXOPguk0JHRri5DnrCS/iUDagd0=;
- b=NR6Tkks4V3HkYRlQ1bSkD0rfcQjErD3rsNmKd2c0BamGWi2aYF9EjIJrrKieJ0SVjc
- ujdT1sRpLuvukhIFOckUSMYlTqEZhZvLXuabutE3pn7YYLk3nSb3NRiEZKD2KViRcOf/
- OzICF5Ksm8rMFMsWzyH12JUaTt0ElBMmZmtYuGCZRQ0rthLeTF8JVX/KF8Go6baFpfNO
- dSl6SqSYalagaoaOl700Sf//7n/neUoG+NVSWSI+u9EnRp/1xlc7fqd7R1masQfIBYZr
- CNPc2oUZHHanTaS+1WP+79cmT49ASYNbQ/G6DtkFV+/ums07uSAjYcE1peUacJJd4N/j
- /blw==
-X-Gm-Message-State: AOJu0YzyJyTVoPzCpDUhfqXm0AkwGnalKv/Kfwjjr7bzgqmZpYMRUpib
- r94qsh2T+UaZHrZv9kMGo4gcUvuUkdBxG/Ab4vyA/FlO626EgjY4pW8W87OZ86DMqRAlJwQ/vL4
- g1cM=
-X-Google-Smtp-Source: AGHT+IFjZAd83dMgNuXQtiAWrZHnUnF2LKvMmOsD6m/cQY5bktRJZsn11IFGIB5hk7X9B9sEpTl3Cg==
-X-Received: by 2002:a05:600c:34c3:b0:412:c379:606 with SMTP id
- d3-20020a05600c34c300b00412c3790606mr534888wmq.2.1710274510026; 
- Tue, 12 Mar 2024 13:15:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710274503; x=1710879303;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mHESGhfLSlYehDJfOaQNs3o0t0nyr1FSmJX5b5N9tss=;
+ b=jsT+2S2dH2H9NrA6FyD+z5cASeUu36LoxpOtF9Wih76ah0CPiVUkjR9ftemSvSJT9e
+ 7e5xAmBIw5hlMEVPQTwfuqociq5ArZk8+Nyt1S4D9asDMYezY2v07C7la6iHuNYDpwh6
+ lyR4rY/QINcmU609WdCZksB2PGJyfoIpk6TUF53MgzuSi/PNU/XAL8IbMZHJcpNPgcjL
+ c9C1RBTJq17lCZKXj8cR+JAEiLvnFgwpFJOsi9vablXLfxQzceWtd4NtuUGRhnmsBy7v
+ YYS5puEWqzLUvO3CFu7mlM2M/lTwNWY/Iz8X6Ww+E1uSL1ftoToRnhTEIjjcf4u9N+8x
+ 1ksA==
+X-Gm-Message-State: AOJu0YyZx+l4Lo3NEwTI9WO9R85iBnRVpIEHyW9blK/wuLMar6vhLOTY
+ bgiTk+AN5XrJkGr0Pzvj6POvHugv3yk2FnQ5tDsFm5mT3ePKSr80xORTafp6XmvHB5N3upfpOBL
+ Nw0Q=
+X-Google-Smtp-Source: AGHT+IFFNhr6FsPwRbnZ6h1VGysDGqZQVUwW5jOqwmTz4qurqqcQPorVmx7i/FlrBR1aqhDZnQDyqg==
+X-Received: by 2002:a5d:65c4:0:b0:33d:ca56:a616 with SMTP id
+ e4-20020a5d65c4000000b0033dca56a616mr335770wrw.36.1710274502887; 
+ Tue, 12 Mar 2024 13:15:02 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.139])
  by smtp.gmail.com with ESMTPSA id
- s14-20020a05600c45ce00b00413177c3f1dsm13194769wmo.18.2024.03.12.13.15.07
+ v9-20020a5d59c9000000b0033e22a7b3f8sm9744832wry.75.2024.03.12.13.15.00
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 12 Mar 2024 13:15:09 -0700 (PDT)
+ Tue, 12 Mar 2024 13:15:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>,
@@ -64,17 +63,16 @@ Cc: David Hildenbrand <david@redhat.com>,
  Nicholas Piggin <npiggin@gmail.com>, Peter Xu <peterx@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.0 v2 1/3] physmem: Expose tlb_reset_dirty_range_all()
-Date: Tue, 12 Mar 2024 21:14:56 +0100
-Message-ID: <20240312201458.79532-2-philmd@linaro.org>
+Subject: [PATCH-for-9.0 v2 0/3] system/physmem: Fix migration dirty bitmap
+ coherency with TCG memory access
+Date: Tue, 12 Mar 2024 21:14:55 +0100
+Message-ID: <20240312201458.79532-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240312201458.79532-1-philmd@linaro.org>
-References: <20240312201458.79532-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,40 +95,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to call tlb_reset_dirty_range_all() outside of
-system/physmem.c, expose its prototype.
+Respin of Nicholas patch, without introducing
+tcg_cpu_physical_memory_dirty_bits_cleared(),
+and split in more digestible parts.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/exec/exec-all.h | 1 +
- system/physmem.c        | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+Nicholas Piggin (2):
+  physmem: Factor cpu_physical_memory_dirty_bits_cleared() out
+  physmem: Fix migration dirty bitmap coherency with TCG memory access
 
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index ce36bb10d4..3e53501691 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -655,6 +655,7 @@ static inline void mmap_unlock(void) {}
- 
- void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length);
- void tlb_set_dirty(CPUState *cpu, vaddr addr);
-+void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
- 
- MemoryRegionSection *
- address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr addr,
-diff --git a/system/physmem.c b/system/physmem.c
-index 6cfb7a80ab..5441480ff0 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -819,7 +819,7 @@ found:
-     return block;
- }
- 
--static void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length)
-+void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length)
- {
-     CPUState *cpu;
-     ram_addr_t start1;
+Philippe Mathieu-Daudé (1):
+  physmem: Expose tlb_reset_dirty_range_all()
+
+ include/exec/exec-all.h |  1 +
+ include/exec/ram_addr.h | 12 ++++++++++++
+ system/physmem.c        | 10 ++++------
+ 3 files changed, 17 insertions(+), 6 deletions(-)
+
 -- 
 2.41.0
 
