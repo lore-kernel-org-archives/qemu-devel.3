@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A213EC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97B2EC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:29:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAbj-0002Bc-TD; Tue, 12 Mar 2024 18:28:30 -0400
+	id 1rkAbS-000121-I3; Tue, 12 Mar 2024 18:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbH-0000Rx-QC
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAb6-00089z-Ew
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbF-0004U3-1q
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:58 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAb3-0004SE-K4
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282476;
+ s=mimecast20190719; t=1710282464;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=BVAzYUdYDXeS1BjbLwTo4D9WpXNY+EQLjqjS51o2N6Q=;
- b=dyeOiIPaaJs1SJrXaolOdlEYq1SGkqvNo3TDI0Nz2WS/LmHIkt3Re6IeTB0uAl7S53+K4A
- I6KVB3Yoiu6RZDaxhB+E9TcV5xfAuYChrTBuvgf79iV6QsPnNoUwRuWpuKcgXvRNjRIvk1
- hsXL0dGiisQGm5sU8EJxSoZZ2Hzhls4=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NqqINJTPjtPrz9SrOlmZuaNG/epdXuQvR5UtyixbkoQ=;
+ b=I0wzsbSmJd4VOW9JkRAUVcTrJleu9kw4sAWLbTikvkIypQT63lJMkQ69cJMnZnbnrkCeOi
+ 6OAKpVB2fyj8gC5d9NCjLs7iTO9xAdHJ45WG+LrqcKeZySEoXLzJnhn63CahO5C2lqY6Ze
+ WGQ26fhU+AROJ982NrCz2lm70BuBc/k=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-15-MaE45JF1ObmG0yAQj-e9VA-1; Tue, 12 Mar 2024 18:27:54 -0400
-X-MC-Unique: MaE45JF1ObmG0yAQj-e9VA-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2d45ce4457eso10603441fa.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:54 -0700 (PDT)
+ us-mta-648-bK85dkSoMJyIq9ccpL3ITg-1; Tue, 12 Mar 2024 18:27:43 -0400
+X-MC-Unique: bK85dkSoMJyIq9ccpL3ITg-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5684c1abc33so2350646a12.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282473; x=1710887273;
+ d=1e100.net; s=20230601; t=1710282462; x=1710887262;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BVAzYUdYDXeS1BjbLwTo4D9WpXNY+EQLjqjS51o2N6Q=;
- b=WoxXyDY90gM4984Mwu1QbpcsBrj7xPx8JQk6NCuSNnaEZiukBxeozUQKOqnjyVpmdI
- 4GaOB398cHwC+g6LLJRWbVXuFeRHe037UFNhqcOA+jr4zHSKw91bWy+B39GmZBVeqH7Z
- hrC+GIMC2pfCcxYtUx0oYOdQ31MtG9LsxygBag6C/KGBsbWdhElgRlu4ZTUeSz2O3kkX
- m4rRdceVVujgxRceWZD2mmwGeT2UvE3R4RpbrrlsPNckcyu2KlvTHaJ8onplbxY+BUH0
- MplCVbW46Cs+BjQ/TzEjBI5GFZHKCxLIb8mGZRjPrinU8boocrEfQxjDzUpJ9k/Fq/i3
- fFNg==
-X-Gm-Message-State: AOJu0Yxgyz475RQjDnmwexwUvBfdlkQza2NdbMDBmrHsK513dfRYavH9
- tlVQRRGL33KHMXfih/uYClzZ9mD3F7amfv7JMb6w7CFXWNkI2P14B0zZYpONn1GMKGxD50CwnXg
- ImwohoaCmFaO40vAFdA9tiTvfS/iAGPeIO0kn9Ox74VcyN9WY5SkEre3a9vzjwcjJWg6LMyfxfa
- 1fJiLvsxMeWlkUwPT94PWuKykckAMeWidB
-X-Received: by 2002:a05:651c:19a9:b0:2d4:2b05:a671 with SMTP id
- bx41-20020a05651c19a900b002d42b05a671mr7668447ljb.32.1710282472818; 
- Tue, 12 Mar 2024 15:27:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFaakUsdseKRtUZRtuj29cuQXD8qIflaps60yPx+hhLx32+EVGLUZdyRhKZBfmHXm9/KF77LQ==
-X-Received: by 2002:a05:651c:19a9:b0:2d4:2b05:a671 with SMTP id
- bx41-20020a05651c19a900b002d42b05a671mr7668417ljb.32.1710282472155; 
- Tue, 12 Mar 2024 15:27:52 -0700 (PDT)
+ bh=NqqINJTPjtPrz9SrOlmZuaNG/epdXuQvR5UtyixbkoQ=;
+ b=mavIEnlSqC9WD3Wyy0zdJz4mlFEdBhF4AeHW25JRmu/moGaqRyjbZlHNI+9x2K99mb
+ yu+r/25fI1ONU/vWLdqmqChcKAjx9j7NplyjYWlEKGBAGm2S9jHVRVcVm86ICIWXXq4X
+ SRBwYCHUHEc3oODiWNv2/Yhrxy4+s+MeNksrWPQM5lQEgk5wfRQllrI9bNyIf3ThnzEq
+ OA7mqlI5ecMFIYBqz26BXiJjUtFuIihLlG96mFKeAYGL//iJM7LYem6tQZxxFxCEapkV
+ 8XhxwcFlW2nGa1juYSEovxHVFG2jFB1s3as4NY8QiMmtm5HI2Tp1NoHJIanC60BbcvmA
+ eQmg==
+X-Gm-Message-State: AOJu0YxyRDFy3vUBtiTk0OaS5YeFwGsKdwLjMyJFvv+7IiHOuewyoLAv
+ dTZgSvhIr8xwcnNX1HnlLHMKD0lEVpY06paBaZ808+e09cZwPkxB1lWn9POqBApRnU0cmTCzMns
+ Sx6ujsuqv8UKMJNTdvio6B1LRB5dc0TFEKi9mfVI/IKiKdNeWtJvtsT8Tg116A9cBwuTa22eozZ
+ teF8zTuAnMbODGJTFHYOEFOtWujDfHS4Aw
+X-Received: by 2002:a50:d65c:0:b0:565:cbba:b7a1 with SMTP id
+ c28-20020a50d65c000000b00565cbbab7a1mr2363372edj.1.1710282461942; 
+ Tue, 12 Mar 2024 15:27:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE3xP+hoJCD7tM/5GLrYX3TvO3O01GDiQDOFMhaSmPaWqureyJ5Ly4APgqiEGnwWA/i7FxgDw==
+X-Received: by 2002:a50:d65c:0:b0:565:cbba:b7a1 with SMTP id
+ c28-20020a50d65c000000b00565cbbab7a1mr2363353edj.1.1710282461517; 
+ Tue, 12 Mar 2024 15:27:41 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- f8-20020a056402004800b00568550a0762sm2805826edu.6.2024.03.12.15.27.49
+ r24-20020aa7d158000000b00568525ab2e8sm2964730edo.55.2024.03.12.15.27.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:27:51 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:27:48 -0400
+ Tue, 12 Mar 2024 15:27:41 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:27:38 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org
-Subject: [PULL 44/68] pcie_sriov: Reset SR-IOV extended capability
-Message-ID: <c8bc4db403e17663b69d811e69f88c9dfc6f7be2.1710282274.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Felix Wu <flwu@google.com>,
+ Nabih Estefan <nabihestefan@google.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 41/68] Implement SMBIOS type 9 v2.6
+Message-ID: <04f143d828845d0fd52dd4a52664d81a4f5431f7.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -81,14 +77,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,108 +102,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Felix Wu <flwu@google.com>
 
-pcie_sriov_pf_disable_vfs() is called when resetting the PF, but it only
-disables VFs and does not reset SR-IOV extended capability, leaking the
-state and making the VF Enable register inconsistent with the actual
-state.
-
-Replace pcie_sriov_pf_disable_vfs() with pcie_sriov_pf_reset(), which
-does not only disable VFs but also resets the capability.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240228-reuse-v8-3-282660281e60@daynix.com>
+Signed-off-by: Felix Wu <flwu@google.com>
+Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+Message-Id: <20240221170027.1027325-3-nabihestefan@google.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
 ---
- include/hw/pci/pcie_sriov.h |  4 ++--
- hw/net/igb.c                |  2 +-
- hw/nvme/ctrl.c              |  2 +-
- hw/pci/pcie_sriov.c         | 26 ++++++++++++++++++--------
- 4 files changed, 22 insertions(+), 12 deletions(-)
+ include/hw/firmware/smbios.h |  4 +++
+ hw/smbios/smbios.c           | 49 +++++++++++++++++++++++++++++++++---
+ qemu-options.hx              |  2 +-
+ 3 files changed, 51 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
-index 095fb0c9ed..b77eb7bf58 100644
---- a/include/hw/pci/pcie_sriov.h
-+++ b/include/hw/pci/pcie_sriov.h
-@@ -58,8 +58,8 @@ void pcie_sriov_pf_add_sup_pgsize(PCIDevice *dev, uint16_t opt_sup_pgsize);
- void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-                              uint32_t val, int len);
+diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
+index 9ab114aea2..c21b8d3285 100644
+--- a/include/hw/firmware/smbios.h
++++ b/include/hw/firmware/smbios.h
+@@ -222,6 +222,10 @@ struct smbios_type_9 {
+     uint16_t slot_id;
+     uint8_t slot_characteristics1;
+     uint8_t slot_characteristics2;
++    /* SMBIOS spec v2.6+ */
++    uint16_t segment_group_number;
++    uint8_t bus_number;
++    uint8_t device_number;
+ } QEMU_PACKED;
  
--/* Reset SR/IOV VF Enable bit to unregister all VFs */
--void pcie_sriov_pf_disable_vfs(PCIDevice *dev);
-+/* Reset SR/IOV */
-+void pcie_sriov_pf_reset(PCIDevice *dev);
+ /* SMBIOS type 11 - OEM strings */
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index 38b3ea172c..e3d5d8f2e2 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -123,7 +123,7 @@ static QTAILQ_HEAD(, type8_instance) type8 = QTAILQ_HEAD_INITIALIZER(type8);
  
- /* Get logical VF number of a VF - only valid for VFs */
- uint16_t pcie_sriov_vf_number(PCIDevice *dev);
-diff --git a/hw/net/igb.c b/hw/net/igb.c
-index 0b5c31a58b..9345506f81 100644
---- a/hw/net/igb.c
-+++ b/hw/net/igb.c
-@@ -493,7 +493,7 @@ static void igb_qdev_reset_hold(Object *obj)
- 
-     trace_e1000e_cb_qdev_reset_hold();
- 
--    pcie_sriov_pf_disable_vfs(d);
-+    pcie_sriov_pf_reset(d);
-     igb_core_reset(&s->core);
- }
- 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 2860a9bed1..447c4de6fd 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -7116,7 +7116,7 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
-             }
- 
-             if (rst != NVME_RESET_CONTROLLER) {
--                pcie_sriov_pf_disable_vfs(pci_dev);
-+                pcie_sriov_pf_reset(pci_dev);
-             }
-         }
- 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index da209b7f47..51b66d1bb3 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -249,16 +249,26 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
- }
- 
- 
--/* Reset SR/IOV VF Enable bit to trigger an unregister of all VFs */
--void pcie_sriov_pf_disable_vfs(PCIDevice *dev)
-+/* Reset SR/IOV */
-+void pcie_sriov_pf_reset(PCIDevice *dev)
- {
-     uint16_t sriov_cap = dev->exp.sriov_cap;
--    if (sriov_cap) {
--        uint32_t val = pci_get_byte(dev->config + sriov_cap + PCI_SRIOV_CTRL);
--        if (val & PCI_SRIOV_CTRL_VFE) {
--            val &= ~PCI_SRIOV_CTRL_VFE;
--            pcie_sriov_config_write(dev, sriov_cap + PCI_SRIOV_CTRL, val, 1);
--        }
-+    if (!sriov_cap) {
-+        return;
+ /* type 9 instance for parsing */
+ struct type9_instance {
+-    const char *slot_designation;
++    const char *slot_designation, *pcidev;
+     uint8_t slot_type, slot_data_bus_width, current_usage, slot_length,
+             slot_characteristics1, slot_characteristics2;
+     uint16_t slot_id;
+@@ -436,6 +436,11 @@ static const QemuOptDesc qemu_smbios_type9_opts[] = {
+         .type = QEMU_OPT_NUMBER,
+         .help = "slot characteristics2, see the spec",
+     },
++    {
++        .name = "pci_device",
++        .type = QEMU_OPT_STRING,
++        .help = "PCI device, if provided."
 +    }
-+
-+    pci_set_word(dev->config + sriov_cap + PCI_SRIOV_CTRL, 0);
-+    unregister_vfs(dev);
-+
-+    /*
-+     * Default is to use 4K pages, software can modify it
-+     * to any of the supported bits
-+     */
-+    pci_set_word(dev->config + sriov_cap + PCI_SRIOV_SYS_PGSIZE, 0x1);
-+
-+    for (uint16_t i = 0; i < PCI_NUM_REGIONS; i++) {
-+        pci_set_quad(dev->config + sriov_cap + PCI_SRIOV_BAR + i * 4,
-+                     dev->exp.sriov_pf.vf_bar_type[i]);
+ };
+ 
+ static const QemuOptDesc qemu_smbios_type11_opts[] = {
+@@ -866,7 +871,7 @@ static void smbios_build_type_8_table(void)
      }
  }
  
+-static void smbios_build_type_9_table(void)
++static void smbios_build_type_9_table(Error **errp)
+ {
+     unsigned instance = 0;
+     struct type9_instance *t9;
+@@ -883,6 +888,43 @@ static void smbios_build_type_9_table(void)
+         t->slot_characteristics1 = t9->slot_characteristics1;
+         t->slot_characteristics2 = t9->slot_characteristics2;
+ 
++        if (t9->pcidev) {
++            PCIDevice *pdev = NULL;
++            int rc = pci_qdev_find_device(t9->pcidev, &pdev);
++            if (rc != 0) {
++                error_setg(errp,
++                           "No PCI device %s for SMBIOS type 9 entry %s",
++                           t9->pcidev, t9->slot_designation);
++                return;
++            }
++            /*
++             * We only handle the case were the device is attached to
++             * the PCI root bus. The general case is more complex as
++             * bridges are enumerated later and the table would need
++             * to be updated at this moment.
++             */
++            if (!pci_bus_is_root(pci_get_bus(pdev))) {
++                error_setg(errp,
++                           "Cannot create type 9 entry for PCI device %s: "
++                           "not attached to the root bus",
++                           t9->pcidev);
++                return;
++            }
++            t->segment_group_number = cpu_to_le16(0);
++            t->bus_number = pci_dev_bus_num(pdev);
++            t->device_number = pdev->devfn;
++        } else {
++            /*
++             * Per SMBIOS spec, For slots that are not of the PCI, AGP, PCI-X,
++             * or PCI-Express type that do not have bus/device/function
++             * information, 0FFh should be populated in the fields of Segment
++             * Group Number, Bus Number, Device/Function Number.
++             */
++            t->segment_group_number = 0xff;
++            t->bus_number = 0xff;
++            t->device_number = 0xff;
++        }
++
+         SMBIOS_BUILD_TABLE_POST;
+         instance++;
+     }
+@@ -1207,7 +1249,7 @@ void smbios_get_tables(MachineState *ms,
+         }
+ 
+         smbios_build_type_8_table();
+-        smbios_build_type_9_table();
++        smbios_build_type_9_table(errp);
+         smbios_build_type_11_table();
+ 
+ #define MAX_DIMM_SZ (16 * GiB)
+@@ -1556,6 +1598,7 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
+             t->slot_id = qemu_opt_get_number(opts, "slot_id", 0);
+             t->slot_characteristics1 = qemu_opt_get_number(opts, "slot_characteristics1", 0);
+             t->slot_characteristics2 = qemu_opt_get_number(opts, "slot_characteristics2", 0);
++            save_opt(&t->pcidev, opts, "pcidev");
+             QTAILQ_INSERT_TAIL(&type9, t, next);
+             return;
+         }
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 7da9235b08..937fd7ed84 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -2718,7 +2718,7 @@ SRST
+ ``-smbios type=4[,sock_pfx=str][,manufacturer=str][,version=str][,serial=str][,asset=str][,part=str][,processor-family=%d][,processor-id=%d]``
+     Specify SMBIOS type 4 fields
+ 
+-``-smbios type=9[,slot_designation=str][,slot_type=%d][,slot_data_bus_width=%d][,current_usage=%d][,slot_length=%d][,slot_id=%d][,slot_characteristics1=%d][,slot_characteristics12=%d]``
++``-smbios type=9[,slot_designation=str][,slot_type=%d][,slot_data_bus_width=%d][,current_usage=%d][,slot_length=%d][,slot_id=%d][,slot_characteristics1=%d][,slot_characteristics12=%d][,pci_device=str]``
+     Specify SMBIOS type 9 fields
+ 
+ ``-smbios type=11[,value=str][,path=filename]``
 -- 
 MST
 
