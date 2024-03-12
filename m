@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D95E9C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5A8C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk375-0005Nt-RS; Tue, 12 Mar 2024 10:28:21 -0400
+	id 1rk37J-0005Rx-S5; Tue, 12 Mar 2024 10:28:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1rk36z-0005NE-80
+ id 1rk36x-0005NA-Jy
  for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:28:13 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1rk36v-0005PL-Bx
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:28:12 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-413e642806fso169495e9.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:28:09 -0700 (PDT)
+ id 1rk36v-0005P1-Ag
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 10:28:11 -0400
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-512e4f4e463so7619277e87.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 07:28:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=citrix.com; s=google; t=1710253688; x=1710858488; darn=nongnu.org;
+ d=citrix.com; s=google; t=1710253687; x=1710858487; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=l8yhocMsTnBM9RxbWE+rnkoHnCZQapESNY+2+Nhur+g=;
- b=HX2N7E6U/HOsAQyGxZ7NHQBXsZyOwy0kjTW6zxPMytZ3A07GI6ljxeaZq6FWtLXZl9
- 8sM9pI9Ns7P/E3EL5qU20SkHd3yfETd4HyqE5cYdG/NyvqYhyIsvnGSLW6uTr3ENzYhf
- QO1+RN+q5UBB46tVh0d9kut81D+pX4vJY2dGk=
+ bh=KV5ZYoaHLmWxMWoTm01z+WFnwLPqemdbnw4H9NY/m5g=;
+ b=D3weMhcyg6l86G8cjFIhxFkuxYNcrqd2jZgvo8xQaBh3nCNfeDwaXWSKhT7Ax0Y2je
+ LdYXUN4sAaXBA5OwqBMtX+/9sFX5XEaytSlNGunDTtL3aScc3YSpoMhbuU85grl4ro/s
+ IEtfPDOWnP7s/ItC2jzARQIstJ+3JYvFpgyTA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710253688; x=1710858488;
+ d=1e100.net; s=20230601; t=1710253687; x=1710858487;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=l8yhocMsTnBM9RxbWE+rnkoHnCZQapESNY+2+Nhur+g=;
- b=APbSWf9VMkE9aCZOhIaz00YduSJMzZLwYUyTbIDZUBLVoU8WFWUSP8P2rZ50vdc+7x
- /iNgSSSGa/aDX9ewrMWXMl2lCyKfzzN+/3drbyHXPXsntI7mOmb6Ui2tsaRv+d6BrFSI
- RhbACLAdKqmYrZ1hMkNtuM0zX8HfFH4iRSMOLfoK1v9Bkq5TBrp99pISTECfxPMQ0KZ5
- mT20Z8aXCNFTOuEo8VLFLugAHV+SWo135RB3GfUq8VYuPhCdXlyfeLJ+DpAvG8mUjnEo
- DQuHHLQqO5A03qQCIvLKCjHMc0gI5/T6TOrxKwc0bZT4T2z7+FB+GOS6JRNyyw5FOB4X
- gxfw==
-X-Gm-Message-State: AOJu0YzkLoWB1uiHOk5+5c38fKZOT9fbQusONGr2f9ddrDIe6qHOwIa/
- XjvgiBw+dm5f3pWgAg7hMzECMe9aDzs5YIA9kvhdbjEJDo/caRiLjjepuK2Fs06WYaFSOvQ3XfB
- A
-X-Google-Smtp-Source: AGHT+IFwwMUJ7IS7QPhDsUKLmaL2ThpgcxUY4sHiuWDlxBPvSNMOq0R7FMOkswp3Hq0AM9ENHwuErA==
-X-Received: by 2002:a05:600c:3d9b:b0:413:38c6:2c7a with SMTP id
- bi27-20020a05600c3d9b00b0041338c62c7amr1370102wmb.22.1710253687811; 
- Tue, 12 Mar 2024 07:28:07 -0700 (PDT)
+ bh=KV5ZYoaHLmWxMWoTm01z+WFnwLPqemdbnw4H9NY/m5g=;
+ b=PK3rOgvCQPmSap2M1agtEJKKG7f/3Vu0ByFrDw8hspg3/uby3wyEPetJIN29ncx2sP
+ PXF3U7kskaGC4NWI12bO7mWJ2j/e6iILOtJbiUv1oH6uJoXse5DMFbbdWrkUEtalbkh7
+ dP5dUjn4LGCUH8lN7kRSleOQ3ChzyAk2QI/7Hf7mCJv531di0tfb/ueQKqGZFXwN+5sI
+ QBpguSA6SQuA/rXE6wacUNpDZ4CrpmiTiSq/nyKRDRh0XMa5+GJhwCR7u34qU7FuNE5t
+ gozHo3PvklxRTlRzQNaVXu2AWFdfj8SBCTqg6dcewB/qWrplCWeSy4hqhZVLFXrgAuXd
+ QxlQ==
+X-Gm-Message-State: AOJu0YxY0XVh+E4cm/NMcxpS9W1b2DsBSdiVuUuBXA+35jkJjKTOFIPL
+ vRfSFnOs1nWWrCjgmpr3R8o028BY+49wHpgAhVBCENsfE/S9ziQphMK+ELD5gTg/dMaj/bZXFQc
+ x
+X-Google-Smtp-Source: AGHT+IHxcatKHz1Lw5UPK3bYSr7CQ6xYEictmegTTCZPXUOugN4Ji7BehjBt+Tk1QwsXItEqzOEItQ==
+X-Received: by 2002:a05:6512:48c6:b0:513:8030:fde9 with SMTP id
+ er6-20020a05651248c600b005138030fde9mr2754940lfb.58.1710253686936; 
+ Tue, 12 Mar 2024 07:28:06 -0700 (PDT)
 Received: from localhost.localdomain
  (cpc92320-cmbg19-2-0-cust35.5-4.cable.virginm.net. [82.13.64.36])
  by smtp.gmail.com with ESMTPSA id
- t13-20020a05600c198d00b00412b0e51ef9sm12810270wmq.31.2024.03.12.07.28.07
+ t13-20020a05600c198d00b00412b0e51ef9sm12810270wmq.31.2024.03.12.07.28.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 07:28:07 -0700 (PDT)
+ Tue, 12 Mar 2024 07:28:06 -0700 (PDT)
 From: Anthony PERARD <anthony.perard@citrix.com>
 To: qemu-devel@nongnu.org
-Cc: Peng Fan <peng.fan@nxp.com>
-Subject: [PULL 2/3] xen: Drop out of coroutine context
- xen_invalidate_map_cache_entry
-Date: Tue, 12 Mar 2024 14:27:56 +0000
-Message-Id: <20240312142757.34141-3-anthony.perard@citrix.com>
+Cc: Ross Lagerwall <ross.lagerwall@citrix.com>
+Subject: [PULL 1/3] xen/pt: Emulate multifunction bit in header type
+Date: Tue, 12 Mar 2024 14:27:55 +0000
+Message-Id: <20240312142757.34141-2-anthony.perard@citrix.com>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240312142757.34141-1-anthony.perard@citrix.com>
 References: <20240312142757.34141-1-anthony.perard@citrix.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=anthony.perard@cloud.com; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=anthony.perard@cloud.com; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
 X-Spam_bar: --
@@ -94,109 +93,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-xen_invalidate_map_cache_entry is not expected to run in a
-coroutine. Without this, there is crash:
+The intention of the code appears to have been to unconditionally set
+the multifunction bit but since the emulation mask is 0x00 it has no
+effect. Instead, emulate the bit and set it based on the multifunction
+property of the PCIDevice (which can be set using QAPI).
 
-    signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
-    threadid=<optimized out>) at pthread_kill.c:78
-    at /usr/src/debug/glibc/2.38+git-r0/sysdeps/posix/raise.c:26
-    fmt=0xffff9e1ca8a8 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n",
-    assertion=assertion@entry=0xaaaae0d25740 "!qemu_in_coroutine()",
-    file=file@entry=0xaaaae0d301a8 "../qemu-xen-dir-remote/block/graph-lock.c", line=line@entry=260,
-    function=function@entry=0xaaaae0e522c0 <__PRETTY_FUNCTION__.3> "bdrv_graph_rdlock_main_loop") at assert.c:92
-    assertion=assertion@entry=0xaaaae0d25740 "!qemu_in_coroutine()",
-    file=file@entry=0xaaaae0d301a8 "../qemu-xen-dir-remote/block/graph-lock.c", line=line@entry=260,
-    function=function@entry=0xaaaae0e522c0 <__PRETTY_FUNCTION__.3> "bdrv_graph_rdlock_main_loop") at assert.c:101
-    at ../qemu-xen-dir-remote/block/graph-lock.c:260
-    at /home/Freenix/work/sw-stash/xen/upstream/tools/qemu-xen-dir-remote/include/block/graph-lock.h:259
-    host=host@entry=0xffff742c8000, size=size@entry=2097152)
-    at ../qemu-xen-dir-remote/block/io.c:3362
-    host=0xffff742c8000, size=2097152)
-    at ../qemu-xen-dir-remote/block/block-backend.c:2859
-    host=<optimized out>, size=<optimized out>, max_size=<optimized out>)
-    at ../qemu-xen-dir-remote/block/block-ram-registrar.c:33
-    size=2097152, max_size=2097152)
-    at ../qemu-xen-dir-remote/hw/core/numa.c:883
-    buffer=buffer@entry=0xffff743c5000 "")
-    at ../qemu-xen-dir-remote/hw/xen/xen-mapcache.c:475
-    buffer=buffer@entry=0xffff743c5000 "")
-    at ../qemu-xen-dir-remote/hw/xen/xen-mapcache.c:487
-    as=as@entry=0xaaaae1ca3ae8 <address_space_memory>, buffer=0xffff743c5000,
-    len=<optimized out>, is_write=is_write@entry=true,
-    access_len=access_len@entry=32768)
-    at ../qemu-xen-dir-remote/system/physmem.c:3199
-    dir=DMA_DIRECTION_FROM_DEVICE, len=<optimized out>,
-    buffer=<optimized out>, as=0xaaaae1ca3ae8 <address_space_memory>)
-    at /home/Freenix/work/sw-stash/xen/upstream/tools/qemu-xen-dir-remote/include/sysemu/dma.h:236
-    elem=elem@entry=0xaaaaf620aa30, len=len@entry=32769)
-    at ../qemu-xen-dir-remote/hw/virtio/virtio.c:758
-    elem=elem@entry=0xaaaaf620aa30, len=len@entry=32769, idx=idx@entry=0)
-    at ../qemu-xen-dir-remote/hw/virtio/virtio.c:919
-    elem=elem@entry=0xaaaaf620aa30, len=32769)
-    at ../qemu-xen-dir-remote/hw/virtio/virtio.c:994
-    req=req@entry=0xaaaaf620aa30, status=status@entry=0 '\000')
-    at ../qemu-xen-dir-remote/hw/block/virtio-blk.c:67
-    ret=0) at ../qemu-xen-dir-remote/hw/block/virtio-blk.c:136
-    at ../qemu-xen-dir-remote/block/block-backend.c:1559
---Type <RET> for more, q to quit, c to continue without paging--
-    at ../qemu-xen-dir-remote/block/block-backend.c:1614
-    i1=<optimized out>) at ../qemu-xen-dir-remote/util/coroutine-ucontext.c:177
-    at ../sysdeps/unix/sysv/linux/aarch64/setcontext.S:123
+This allows making passthrough devices appear as functions in a Xen
+guest.
 
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Message-Id: <20240124021450.21656-1-peng.fan@oss.nxp.com>
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Reviewed-by: Paul Durrant <paul@xen.org>
+Message-Id: <20231103172601.1319375-1-ross.lagerwall@citrix.com>
 Signed-off-by: Anthony PERARD <anthony.perard@citrix.com>
 ---
- hw/xen/xen-mapcache.c | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
+ hw/xen/xen_pt_config_init.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 4f956d048e..7f59080ba7 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -476,11 +476,37 @@ static void xen_invalidate_map_cache_entry_unlocked(uint8_t *buffer)
-     g_free(entry);
- }
- 
--void xen_invalidate_map_cache_entry(uint8_t *buffer)
-+typedef struct XenMapCacheData {
-+    Coroutine *co;
-+    uint8_t *buffer;
-+} XenMapCacheData;
-+
-+static void xen_invalidate_map_cache_entry_bh(void *opaque)
+diff --git a/hw/xen/xen_pt_config_init.c b/hw/xen/xen_pt_config_init.c
+index ba4cd78238..3edaeab1e3 100644
+--- a/hw/xen/xen_pt_config_init.c
++++ b/hw/xen/xen_pt_config_init.c
+@@ -292,7 +292,10 @@ static int xen_pt_header_type_reg_init(XenPCIPassthroughState *s,
+                                        uint32_t *data)
  {
-+    XenMapCacheData *data = opaque;
-+
-     mapcache_lock();
--    xen_invalidate_map_cache_entry_unlocked(buffer);
-+    xen_invalidate_map_cache_entry_unlocked(data->buffer);
-     mapcache_unlock();
-+
-+    aio_co_wake(data->co);
-+}
-+
-+void coroutine_mixed_fn xen_invalidate_map_cache_entry(uint8_t *buffer)
-+{
-+    if (qemu_in_coroutine()) {
-+        XenMapCacheData data = {
-+            .co = qemu_coroutine_self(),
-+            .buffer = buffer,
-+        };
-+        aio_bh_schedule_oneshot(qemu_get_current_aio_context(),
-+                                xen_invalidate_map_cache_entry_bh, &data);
-+        qemu_coroutine_yield();
-+    } else {
-+        mapcache_lock();
-+        xen_invalidate_map_cache_entry_unlocked(buffer);
-+        mapcache_unlock();
+     /* read PCI_HEADER_TYPE */
+-    *data = reg->init_val | 0x80;
++    *data = reg->init_val;
++    if ((PCI_DEVICE(s)->cap_present & QEMU_PCI_CAP_MULTIFUNCTION)) {
++        *data |= PCI_HEADER_TYPE_MULTI_FUNCTION;
 +    }
+     return 0;
  }
  
- void xen_invalidate_map_cache(void)
+@@ -677,7 +680,7 @@ static XenPTRegInfo xen_pt_emu_reg_header0[] = {
+         .size       = 1,
+         .init_val   = 0x00,
+         .ro_mask    = 0xFF,
+-        .emu_mask   = 0x00,
++        .emu_mask   = PCI_HEADER_TYPE_MULTI_FUNCTION,
+         .init       = xen_pt_header_type_reg_init,
+         .u.b.read   = xen_pt_byte_reg_read,
+         .u.b.write  = xen_pt_byte_reg_write,
 -- 
 Anthony PERARD
 
