@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8064FC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFFCCC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 14:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk3X5-0007ah-W4; Tue, 12 Mar 2024 10:55:12 -0400
+	id 1rk3a5-0000s8-CD; Tue, 12 Mar 2024 10:58:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rk3X3-0007Yf-J8; Tue, 12 Mar 2024 10:55:09 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
+ id 1rk3a3-0000rP-HC; Tue, 12 Mar 2024 10:58:15 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rk3X1-000245-Sh; Tue, 12 Mar 2024 10:55:09 -0400
+ id 1rk3a1-0002t6-SP; Tue, 12 Mar 2024 10:58:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710255308; x=1741791308;
+ t=1710255494; x=1741791494;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=Tmk5c4ctNZx7xmRdwKIvUTw8peuZ+0aY0ceacotRs2g=;
- b=XzTCSn7nR5ZPQKxW68ppvj5eAO39M1rFmtPv4HkVMBF4pZ9S9Cw0W2lr
- rTOBs/ZmPRYt5bC61963Ir8K9ddKRhFojhPCCHBLjeRDg2hiqGJJcgS/D
- tiRMpnxOKdiwpKg0XAg1ClkdJSRU6IJnH1Bej/g4Eg3Qvl6oQf9z8u+ip
- /ydZgOvAH4+JvyBlGPsFeCloh7gyQtRhJmffyH2TOS1czRg2EkApVzoNb
- lgZMdYJkCG+64vtFDiT7gD/nOTC5XNmUWgH/ZrOi76AP/afKZj2MW+04r
- rWxF4kXY3Wi0F5FVo18c9PdP4YnfqY6+vAyUol/P8+kJ3fvLMo6E6AHsV Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11011"; a="7914637"
+ bh=ghZJrT9XQokHEIkS9kdsFLofvd7ZnjR/iH9cXzOivHQ=;
+ b=PVdSr/jJ8QyAUkikJQgA3kRzDgYFitQMLiOLGzWeiqQt9GlKXSdzT2Md
+ VIGUnDDT8Pa+/P3v/6ExxQuP0IyAR2g3DILOKGHbqxykAoghgZnHZYJPm
+ NUg0KSoR2hawul4HBvCeSR6X8hwEDKmv6fCkhrYgUDi9WsYLOhiV3syGy
+ Cz834PsZcf7RPo7OSZ/6ZFHgERDTQtLae6rn7Ahzr/7lEo9+p+B9dgGMw
+ M+9ploeK5gzWtT98nCclhgXQ1EuSH/nrrvujFtADdkjxt5u4E9bwCPZdS
+ XYkjzI2aKviM9iGj5lrDHMm5+iVw5z1le686S7gencTl/QYS6JVORTcya A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11011"; a="8783914"
 X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
-   d="scan'208";a="7914637"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Mar 2024 07:55:03 -0700
+   d="scan'208";a="8783914"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Mar 2024 07:58:11 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="16220472"
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="16131271"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 12 Mar 2024 07:55:02 -0700
-Date: Tue, 12 Mar 2024 23:08:50 +0800
+ by fmviesa003.fm.intel.com with ESMTP; 12 Mar 2024 07:58:08 -0700
+Date: Tue, 12 Mar 2024 23:11:58 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
  philmd@linaro.org
-Subject: Re: [PATCH 03/10] qapi: Inline and remove QERR_DEVICE_HAS_NO_MEDIUM
+Subject: Re: [PATCH 04/10] qapi: Inline and remove QERR_DEVICE_NO_HOTPLUG
  definition
-Message-ID: <ZfBwAlgPMIhZKyiB@intel.com>
+Message-ID: <ZfBwvknSkSCqGAjL@intel.com>
 References: <20240312141343.3168265-1-armbru@redhat.com>
- <20240312141343.3168265-4-armbru@redhat.com>
+ <20240312141343.3168265-5-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240312141343.3168265-4-armbru@redhat.com>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20240312141343.3168265-5-armbru@redhat.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -80,10 +80,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 12, 2024 at 03:13:36PM +0100, Markus Armbruster wrote:
-> Date: Tue, 12 Mar 2024 15:13:36 +0100
+On Tue, Mar 12, 2024 at 03:13:37PM +0100, Markus Armbruster wrote:
+> Date: Tue, 12 Mar 2024 15:13:37 +0100
 > From: Markus Armbruster <armbru@redhat.com>
-> Subject: [PATCH 03/10] qapi: Inline and remove QERR_DEVICE_HAS_NO_MEDIUM
+> Subject: [PATCH 04/10] qapi: Inline and remove QERR_DEVICE_NO_HOTPLUG
 >  definition
 > 
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
@@ -102,10 +102,9 @@ On Tue, Mar 12, 2024 at 03:13:36PM +0100, Markus Armbruster wrote:
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
 >  include/qapi/qmp/qerror.h | 3 ---
->  block/snapshot.c          | 7 ++++---
->  blockdev.c                | 2 +-
->  3 files changed, 5 insertions(+), 7 deletions(-)
->
+>  hw/core/qdev.c            | 4 ++--
+>  system/qdev-monitor.c     | 2 +-
+>  3 files changed, 3 insertions(+), 6 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
