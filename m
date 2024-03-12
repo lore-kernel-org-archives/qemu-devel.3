@@ -4,102 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ECD4C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38ABEC54E66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxpE-0002ad-CK; Tue, 12 Mar 2024 04:49:34 -0400
+	id 1rjxqT-0004HL-08; Tue, 12 Mar 2024 04:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rjxp4-0002ZJ-Bz; Tue, 12 Mar 2024 04:49:22 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjxqM-00047F-Gu
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:50:44 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rjxp1-0005ZA-4w; Tue, 12 Mar 2024 04:49:21 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42C8kInv007709; Tue, 12 Mar 2024 08:49:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=6KyAXOMhNBQlD68qhjqmu6gZ6FmaqjrQLsw0dvlkufU=;
- b=U+k27faIr7HitYxfi4bKGrod+xvKkAqqZJz0pkxqcLc3/FCrhNaTSlKuEahQ7dsYJP5Y
- FFiZm8YACAYcG4FgTDKaOdaEGYcZYU0zGsKu13IeeCb38VrF4pM8yh4yu8aq+wJCHKKX
- hZwyoO2miaAy+mkz3usGjIHcEGh/LtqOqG6ioR77akBinC5yJv3mJ1684aWusZ/MqyHr
- 9bSoJgQCQLAziXXJEckhip/GwJqfkliidWJVcvTasbXoixPfhnXJ/lWG8GhCLqu1HfDg
- 9xSrQxCbIsNBhHyOt76GcqgMij5RJMYukS1s4UlFGegMB7uP5G3XEhAYNSs1RAA2KmlT EQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtjtq0swe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 08:49:13 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42C8kKlE007940;
- Tue, 12 Mar 2024 08:49:13 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtjtq0sw0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 08:49:13 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42C8eOcR015477; Tue, 12 Mar 2024 08:49:11 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ws2fyp3c2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 08:49:11 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42C8n9kI47907204
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 Mar 2024 08:49:11 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3596C5806A;
- Tue, 12 Mar 2024 08:49:09 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 287C358052;
- Tue, 12 Mar 2024 08:49:07 +0000 (GMT)
-Received: from [9.109.243.35] (unknown [9.109.243.35])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 12 Mar 2024 08:49:06 +0000 (GMT)
-Message-ID: <d6723eb8-d5fe-4ae6-b1f3-5c701e5e877b@linux.ibm.com>
-Date: Tue, 12 Mar 2024 14:19:05 +0530
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rjxqJ-0005n0-NZ
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:50:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710233440; x=1741769440;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=tA7oWp+GjC17n46OR1Cu4CFWGzTsKORFW9MJUrRGwSc=;
+ b=SKwdfOai2WmSwpkUrsxlT3CMKXELFfDw7M9W8psv3RqRHwKWwmpIU4Vf
+ i5CeL3s6hufPaDl0YRE2mXHZnv292ijqcCb0RA/ZLKF/hHEEy+T6EP3yq
+ KerZlWVa3pKjHi7aQUoXjZ87jx6wSVyk9Ci0+2z9bJ5SIX3ij2Pqu6HIe
+ KAcfU8OxaUbb96qkytaje4mkxxfCc72peDBSiiZpyl05Nuq21JP7r021f
+ UkVoQMAhzmFZk4OZlb31J+lV9jOUuGOBhojbcDK8yOMRMWxt8lyd44O0x
+ 7SNEsfJqiADXEqV9kSUscT4VjYUKYzgEKt7HHm/chimutFVuHLLQUuHsl g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="27403845"
+X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; d="scan'208";a="27403845"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Mar 2024 01:50:37 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; d="scan'208";a="16043565"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 12 Mar 2024 01:50:31 -0700
+Date: Tue, 12 Mar 2024 17:04:21 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Zhuocheng Ding <zhuocheng.ding@intel.com>,
+ Babu Moger <babu.moger@amd.com>, Yongwei Ma <yongwei.ma@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Robert Hoo <robert.hu@linux.intel.com>
+Subject: Re: [PATCH v9 06/21] i386/cpu: Use APIC ID info to encode cache topo
+ in CPUID[4]
+Message-ID: <ZfAalR49aErs2/M1@intel.com>
+References: <20240227103231.1556302-1-zhao1.liu@linux.intel.com>
+ <20240227103231.1556302-7-zhao1.liu@linux.intel.com>
+ <c88ee253-f212-4aa7-9db9-e90a99a9a1e3@intel.com>
+ <Ze23y7UzGxnsyo6O@intel.com>
+ <164e9fe1-c89d-4354-a7f7-a565c624934e@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/13] ppc/spapr: Remove copy-paste from pa-features
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>
-References: <20240311185200.2185753-1-npiggin@gmail.com>
- <20240311185200.2185753-5-npiggin@gmail.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240311185200.2185753-5-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Uknv7mlR-VtI0hP6P75M2X1rqLWZ6Lq0
-X-Proofpoint-ORIG-GUID: pAYwrstXyQUEhYpptggwX4juTUOAcDUU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-12_06,2024-03-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 mlxlogscore=999
- spamscore=0 mlxscore=0 phishscore=0 bulkscore=0 adultscore=0
- suspectscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2403120068
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <164e9fe1-c89d-4354-a7f7-a565c624934e@intel.com>
+Received-SPF: none client-ip=198.175.65.9;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,51 +96,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nick,
-
-On 3/12/24 00:21, Nicholas Piggin wrote:
-> TCG does not support copy/paste instructions. Remove it from
-> ibm,pa-features. This has never been implemented under TCG or
-
-s/or/nor ?
-
-> practically usable under KVM, so it won't be missed.
+On Mon, Mar 11, 2024 at 05:03:02PM +0800, Xiaoyao Li wrote:
+> Date: Mon, 11 Mar 2024 17:03:02 +0800
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: Re: [PATCH v9 06/21] i386/cpu: Use APIC ID info to encode cache
+>  topo in CPUID[4]
 > 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   hw/ppc/spapr.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
+> On 3/10/2024 9:38 PM, Zhao Liu wrote:
+> > Hi Xiaoyao,
+> > 
+> > > >                case 3: /* L3 cache info */
+> > > > -                die_offset = apicid_die_offset(&topo_info);
+> > > >                    if (cpu->enable_l3_cache) {
+> > > > +                    addressable_threads_width = apicid_die_offset(&topo_info);
+> > > 
+> > > Please get rid of the local variable @addressable_threads_width.
+> > > 
+> > > It is truly confusing.
+> > 
+> > There're several reasons for this:
+> > 
+> > 1. This commit is trying to use APIC ID topology layout to decode 2
+> > cache topology fields in CPUID[4], CPUID.04H:EAX[bits 25:14] and
+> > CPUID.04H:EAX[bits 31:26]. When there's a addressable_cores_width to map
+> > to CPUID.04H:EAX[bits 31:26], it's more clear to also map
+> > CPUID.04H:EAX[bits 25:14] to another variable.
 > 
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index 5099f12cc6..7d7da30f60 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -254,8 +254,8 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
->           0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
->           /* 30: MMR, 32: LE atomic, 34: EBB + ext EBB */
->           0x80, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
-> -        /* 36: SPR SO, 38: Copy/Paste, 40: Radix MMU */
-> -        0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 36 - 41 */
-> +        /* 36: SPR SO, 40: Radix MMU */
-> +        0x80, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
->           /* 42: PM, 44: PC RA, 46: SC vec'd */
->           0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
->           /* 48: SIMD, 50: QP BFP, 52: String */
-> @@ -288,6 +288,10 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
->        * SSO (SAO) ordering is supported on KVM and thread=single hosts,
->        * but not MTTCG, so disable it. To advertise it, a cap would have
->        * to be added, or support implemented for MTTCG.
-> +     *
-> +     * Copy/paste is not supported by TCG, so it is not advertised. KVM
-> +     * can execute them but it has no accelerator drivers which are usable,
-> +     * so there isn't much need for it anyway.
->        */
+> I don't dislike using a variable. I dislike the name of that variable since
+> it's misleading
 
-If doing a re-spin, you may consider comments on prev patch applicable
-above as well. Either ways, with prev typo fixed:
+Names are hard to choose...
 
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> 
+> > 2. All these 2 variables are temporary in this commit, and they will be
+> > replaed by 2 helpers in follow-up cleanup of this series.
+> 
+> you mean patch 20?
+> 
+> I don't see how removing the local variable @addressable_threads_width
+> conflicts with patch 20. As a con, it introduces code churn.
 
->   
->       if (ppc_hash64_has(cpu, PPC_HASH64_CI_LARGEPAGE)) {
+Yes...I prefer to wrap it in variables in advance, then the meaning of
+the fields is clearer I think.
+
+> > 3. Similarly, to make it easier to clean up later with the helper and
+> > for more people to review, it's neater to explicitly indicate the
+> > CPUID.04H:EAX[bits 25:14] with a variable here.
+> 
+> If you do want keeping the variable. Please add a comment above it to
+> explain the meaning.
+>
+
+OK, I'll add comments for both 2 variables. Thanks!
+
 
