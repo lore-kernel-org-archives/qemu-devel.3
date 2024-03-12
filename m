@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01FCDC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:26:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 632DCC54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:26:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0GP-0002u4-4V; Tue, 12 Mar 2024 07:25:45 -0400
+	id 1rk0GK-0002pr-WF; Tue, 12 Mar 2024 07:25:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rk0GO-0002tU-17
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:25:44 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ id 1rk0GI-0002ku-Q9
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:25:38 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rk0GF-0000gj-NC
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:25:42 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-513a81b717cso2465756e87.0
+ id 1rk0GF-0000gp-N7
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:25:37 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-412e784060cso37658925e9.1
  for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:25:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710242733; x=1710847533; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710242734; x=1710847534; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lFd08eLrd4gGZuM0kNWdC4d2ia0nfqfy86pon6xWh1k=;
- b=bcwW9czWa5T5iUu2nDdG7Zm3o0UfMGB0hTCdWvzl1R6UrHr4htjsgifOLKwTMHctIa
- ho83jp0k/qKP6CzrU3k5rLWaITJGu8iepNEJQzYgUWPV+jhNvR2plOOL7pmyPd4PB+PJ
- 6X84KFd0SdXDtFpsM9qmerh7Agw91RYhahH2tTLzECGmjaofnLBpPNn5np2+9fPWC2V9
- NMA3Q7UgL2o3isJ8wgDISd6ZW3w0Y5oU6qAIzD3dc2hCJZs2bxnWMzh4AbBhwjjJubcm
- /CvQ1P0lt/rD1wGsD5xvrA1nO0uTrCMLGoN3szhiPPQH3hf3qX3A/njChYLBeYmIdwE8
- rLNA==
+ bh=T/TnnwpHa6+cyA8uGT7QNYUXfL4ZfkLpAJU45+MsrCA=;
+ b=n4uJV1YiLWsgQgp1dY+laz1pcbL9o9J0xdvCGCbS8/ihSrKCEuB23kMtt6H0ER5A2w
+ Nl6Fg/auvQlQ8Pabn2nlNuThZ5q8fSD5zI1hDb0mahC44AZN2mEEtPkrTt0E8+rg3M2U
+ WCLurpzHyWgcQ4jI5Of1wq/qYOIdxXf0iUN5ktllkT2vB0c8wwcAE0pXxdmfCN5otlWk
+ ULGpziuda6xDQpuwk2sb3y+bUDy/b0sI68saWk2syL+bL6R+2L6vT/rT8zo5vGLDteTQ
+ BFNBH70Vnkknk7VeCs5CzZNzLRUYBDLEF50szAKBqJGCgnOtF5MEl9YZSPJI6XAdW0FH
+ Z2YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710242733; x=1710847533;
+ d=1e100.net; s=20230601; t=1710242734; x=1710847534;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lFd08eLrd4gGZuM0kNWdC4d2ia0nfqfy86pon6xWh1k=;
- b=tk6cpcTjtlhk0funQXJKvRxf+KI2hpI/+6w1Mlyj73gCmHEcQVaIsLDVEj9DJPAgzx
- /eJB3wZoMVnDfPwzBxk3H6PgulE33oMRYxmGv/Xla6ufbCqM0IVFu5IPWm6T6ICmPCzs
- ORUhkDAo2rhEAcPiaj4T3aClXCi/ZPP/B/seD/PYB0eYOQPUdcwI2j/j/JT/19C8tWIs
- VomF8SAEIvVNaRNPN86Lc6OMXu7hEtah/4tvcJewZ0Vl71csbZZR4EIpORSVKFufjd0P
- 7XYqJ4lAYhHqXYPQNYy0YbitnxWXvfFwAFZiLro2ED+mPyHBiKonpDJxExRzYEN2jgSK
- +UHQ==
-X-Gm-Message-State: AOJu0YyT/AoBixVUOdrnYmQfAh5pKdg6QzwV3QHNShCLJjwf283spi+1
- hOPfa31N+S4PWCV2pgij9kl9a4rUD5xqb0lYwWDD6zJo8bSRvqim2Nr/Ln2U0u8=
-X-Google-Smtp-Source: AGHT+IFC6Fh3LNkcZ9kqV5GEWUtPFb95TYfhzKiyewiw/UssDJV+5/k+C6Fe4iuCammu+eoJs5T60Q==
-X-Received: by 2002:a05:6512:b94:b0:513:a833:cdaa with SMTP id
- b20-20020a0565120b9400b00513a833cdaamr4849827lfv.69.1710242733529; 
+ bh=T/TnnwpHa6+cyA8uGT7QNYUXfL4ZfkLpAJU45+MsrCA=;
+ b=XkNrRJQMnKJChzhLXaR7SbEw+ABMuXXKWoIyRlBESXNrgGgt8dqGPdAE5ucejjb0xg
+ 4Nkj7p+OTDu5+CNHuaio2/Mpe9Walqz3H+V4RpyS51tdfwWjOmrANxPDecS6GEB/ak9L
+ mFvC6qdB/jyYt2q1+bzHlkKjTYbQYvY83JNPoE+mcrqsltDbrMQCimqoohg1Y88AgMVP
+ jZsvbrKUUyvbo8hms+CmLvcerxWJMc8gzqzoho7c45P8M8RoblghSSWxgg78OIfuSPEs
+ SAdDf4huOkIX5a5/nwDZaru0uytrrDjsvtH0tqOb+GuMoi9BWOo3A9vYzNfa+kBJPuRX
+ L5nQ==
+X-Gm-Message-State: AOJu0YwLv9LBHjS5x3Tz+wyn525VGnkZHdjJczcoULTGq73uQYPcHm+m
+ 6sYuXH0IVcIXKHji0dmAU/8taqrX01yFPp2MdZu9Tey3x2kxZsK62o8qnKP3Oz2AG81KC9oHhgM
+ p
+X-Google-Smtp-Source: AGHT+IEWcScdWkZZSFA3fhfyySTZM6qshOpTGB7e9ilrLU/nlvoATnJYwNdFnP+6FHZj8HpUDomcGQ==
+X-Received: by 2002:a05:600c:35c8:b0:413:1619:a78 with SMTP id
+ r8-20020a05600c35c800b0041316190a78mr8585316wmq.4.1710242733914; 
  Tue, 12 Mar 2024 04:25:33 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- j1-20020a05600c1c0100b00412ee7d65a6sm12202228wms.6.2024.03.12.04.25.33
+ s13-20020a5d6a8d000000b0033d202abf01sm8785691wru.28.2024.03.12.04.25.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 12 Mar 2024 04:25:33 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AF3D45F8D4;
+ by draig.lan (Postfix) with ESMTP id D715C5F8DA;
  Tue, 12 Mar 2024 11:25:32 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>
-Subject: [PULL 1/8] gitlab: aggressively avoid extra GIT data
-Date: Tue, 12 Mar 2024 11:25:25 +0000
-Message-Id: <20240312112532.1558319-2-alex.bennee@linaro.org>
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PULL 3/8] gdbstub: Rename back gdb_handlesig
+Date: Tue, 12 Mar 2024 11:25:27 +0000
+Message-Id: <20240312112532.1558319-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240312112532.1558319-1-alex.bennee@linaro.org>
 References: <20240312112532.1558319-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12b.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,73 +101,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This avoids fetching blobs and tree references for branches we are not
-going to worry about. Also skip tag references which are similarly not
-useful and keep the default --prune. This keeps the .git data to
-around 100M rather than the ~400M even a shallow clone takes.
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-So we can check the savings we also run a quick du while setting up
-the build.
+Rename gdb_handlesig_reason back to gdb_handlesig. There is no need to
+add a wrapper for gdb_handlesig and rename it when a new parameter is
+added.
 
-We also have to have special settings of GIT_FETCH_EXTRA_FLAGS for the
-Windows build (git too old?) and the migration legacy test where we
-build an older QEMU alongside the main one.
-
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240309030901.1726211-2-gustavo.romero@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
-index 2dd8a9b57c..bf3d8efab6 100644
---- a/.gitlab-ci.d/base.yml
-+++ b/.gitlab-ci.d/base.yml
-@@ -24,6 +24,10 @@ variables:
-     # Each script line from will be in a collapsible section in the job output
-     # and show the duration of each line.
-     FF_SCRIPT_SECTIONS: 1
-+    # The project has a fairly fat GIT repo so we try and avoid bringing in things
-+    # we don't need. The --filter options avoid blobs and tree references we aren't going to use
-+    # and we also avoid fetching tags.
-+    GIT_FETCH_EXTRA_FLAGS: --filter=blob:none --filter=tree:0 --no-tags --prune --quiet
+diff --git a/include/gdbstub/user.h b/include/gdbstub/user.h
+index 4c4e5c4c58..4fc88f8a25 100644
+--- a/include/gdbstub/user.h
++++ b/include/gdbstub/user.h
+@@ -10,7 +10,7 @@
+ #define GDBSTUB_USER_H
  
-   interruptible: true
+ /**
+- * gdb_handlesig_reason() - yield control to gdb
++ * gdb_handlesig() - yield control to gdb
+  * @cpu: CPU
+  * @sig: if non-zero, the signal number which caused us to stop
+  * @reason: stop reason for stop reply packet or NULL
+@@ -25,18 +25,7 @@
+  * or 0 if no signal should be delivered, ie the signal that caused
+  * us to stop should be ignored.
+  */
+-int gdb_handlesig_reason(CPUState *, int, const char *);
+-
+-/**
+- * gdb_handlesig() - yield control to gdb
+- * @cpu CPU
+- * @sig: if non-zero, the signal number which caused us to stop
+- * @see gdb_handlesig_reason()
+- */
+-static inline int gdb_handlesig(CPUState *cpu, int sig)
+-{
+-    return gdb_handlesig_reason(cpu, sig, NULL);
+-}
++int gdb_handlesig(CPUState *, int, const char *);
  
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 4fbfeb6667..22045add80 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -14,6 +14,7 @@
-     - export CCACHE_DIR="$CCACHE_BASEDIR/ccache"
-     - export CCACHE_MAXSIZE="500M"
-     - export PATH="$CCACHE_WRAPPERSDIR:$PATH"
-+    - du -sh .git
-     - mkdir build
-     - cd build
-     - ccache --zero-stats
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index c7d92fc301..cfdff175c3 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -187,6 +187,8 @@ build-previous-qemu:
-   variables:
-     IMAGE: opensuse-leap
-     TARGETS: x86_64-softmmu aarch64-softmmu
-+    # Override the default flags as we need more to grab the old version
-+    GIT_FETCH_EXTRA_FLAGS: --prune --quiet
-   before_script:
-     - export QEMU_PREV_VERSION="$(sed 's/\([0-9.]*\)\.[0-9]*/v\1.0/' VERSION)"
-     - git remote add upstream https://gitlab.com/qemu-project/qemu
-diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
-index f116b8012d..94834269ec 100644
---- a/.gitlab-ci.d/windows.yml
-+++ b/.gitlab-ci.d/windows.yml
-@@ -28,6 +28,8 @@ msys2-64bit:
-     # qTests don't run successfully with "--without-default-devices",
-     # so let's exclude the qtests from CI for now.
-     TEST_ARGS: --no-suite qtest
-+    # The Windows git is a bit older so override the default
-+    GIT_FETCH_EXTRA_FLAGS: --no-tags --prune --quiet
-   artifacts:
-     name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
-     expire_in: 7 days
+ /**
+  * gdb_signalled() - inform remote gdb of sig exit
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 7f9f19a124..520987fddc 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -190,7 +190,7 @@ void gdb_qemu_exit(int code)
+     exit(code);
+ }
+ 
+-int gdb_handlesig_reason(CPUState *cpu, int sig, const char *reason)
++int gdb_handlesig(CPUState *cpu, int sig, const char *reason)
+ {
+     char buf[256];
+     int n;
+@@ -746,7 +746,7 @@ void gdb_breakpoint_remove_all(CPUState *cs)
+ void gdb_syscall_handling(const char *syscall_packet)
+ {
+     gdb_put_packet(syscall_packet);
+-    gdb_handlesig(gdbserver_state.c_cpu, 0);
++    gdb_handlesig(gdbserver_state.c_cpu, 0, NULL);
+ }
+ 
+ static bool should_catch_syscall(int num)
+@@ -764,7 +764,7 @@ void gdb_syscall_entry(CPUState *cs, int num)
+ {
+     if (should_catch_syscall(num)) {
+         g_autofree char *reason = g_strdup_printf("syscall_entry:%x;", num);
+-        gdb_handlesig_reason(cs, gdb_target_sigtrap(), reason);
++        gdb_handlesig(cs, gdb_target_sigtrap(), reason);
+     }
+ }
+ 
+@@ -772,7 +772,7 @@ void gdb_syscall_return(CPUState *cs, int num)
+ {
+     if (should_catch_syscall(num)) {
+         g_autofree char *reason = g_strdup_printf("syscall_return:%x;", num);
+-        gdb_handlesig_reason(cs, gdb_target_sigtrap(), reason);
++        gdb_handlesig(cs, gdb_target_sigtrap(), reason);
+     }
+ }
+ 
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 41caa77cb5..55aa11c9b4 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -1018,7 +1018,7 @@ int main(int argc, char **argv, char **envp)
+                     gdbstub);
+             exit(EXIT_FAILURE);
+         }
+-        gdb_handlesig(cpu, 0);
++        gdb_handlesig(cpu, 0, NULL);
+     }
+ 
+ #ifdef CONFIG_SEMIHOSTING
+diff --git a/linux-user/signal.c b/linux-user/signal.c
+index cc7dd78e41..bca44c295d 100644
+--- a/linux-user/signal.c
++++ b/linux-user/signal.c
+@@ -1180,7 +1180,7 @@ static void handle_pending_signal(CPUArchState *cpu_env, int sig,
+     /* dequeue signal */
+     k->pending = 0;
+ 
+-    sig = gdb_handlesig(cpu, sig);
++    sig = gdb_handlesig(cpu, sig, NULL);
+     if (!sig) {
+         sa = NULL;
+         handler = TARGET_SIG_IGN;
 -- 
 2.39.2
 
