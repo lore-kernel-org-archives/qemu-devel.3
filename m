@@ -4,81 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D155EC54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:35:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F980C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk0Pm-00060D-SP; Tue, 12 Mar 2024 07:35:26 -0400
+	id 1rk0RW-0007Ib-RG; Tue, 12 Mar 2024 07:37:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk0Pj-0005x4-MD
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:35:23 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rk0PX-0002Y3-Co
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:35:22 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5683093ffbbso6060903a12.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:35:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710243308; x=1710848108; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q6oa53FNojiU7XVQUGsskhkskziips1uYf6wI+pnEcI=;
- b=GTr44k7E1Iy7m08AZeWt82ZqQA9hMPMXo4cayyNWAvWY/nCrWhf1o5brYEmSTZcaAt
- 3og/ErTc7boF9l8MnrDCLEURVKWP90MySKhqjnQlNIDAer9ei4CYjygtLuX38yRmCg13
- EXkCz7e1D/htatnpctzBz5CwdOKG6F4SFlYSOmiUssP8h3sYiEbdWGRMTwrcs0CtXgv7
- 7BJnSDYRoQLLDvQEKatVNuhwRCFJBRUaSHtakZebmuqSu+VX1lcfemAieHrYT16UYU8Z
- 3/c1KCcSmHmTKFtTGWRV6mGkZvCkkW63cvs/OEedykBDcafR88lg9JWgEtZIs1T8WJvu
- T6cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710243308; x=1710848108;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Q6oa53FNojiU7XVQUGsskhkskziips1uYf6wI+pnEcI=;
- b=fm2BWmQWR6eKMhj5aur7f7gBUTRosyDKK4ZFkfTILSW4GCGRAZ2EU7EEKyVu86JNZU
- anzgjP3urAmufGoA4xDL61pQ7N7rQ7QxAuptdko/MEanetCISc9A9Mybh7EveJmkHlFh
- U9rdrNZq3+KxPEJguqIyOR5HCOqN647A4sCKzQ0AM67lceLsDaNGrEQuKsycn0eLZEaK
- 7XO5HS/0WbXoi9GPr9EUw1MQoVSuv8n+mAniaa1KAE7TC+2+CIrFQ41a7MnsY14dtCBC
- 6lSCPEbzXIMVBbd7+ZlD6Ujac640c6c83ngkp3sNt+IcSZEMVH26TSCPnV/QPj1sc5nl
- n8AA==
-X-Gm-Message-State: AOJu0YwcYUsTFbJUSso7XkSRHeQg3rGpqnaVbtXmP4RqZ/AD19CsiMWx
- hdC5DENtL3DzMLhcZda4i9JIg032zemcWLQqYjs6RLoTZs8FvciLcNFnpy7MyopW/ahFrOKEJ5Q
- SLKueyIIgvO3Qx+Jj/fwQyf4gjzjVdQOwknrlFQ==
-X-Google-Smtp-Source: AGHT+IFnAzlUuVw2vJtvyji5GO9b/YfCU3yaRbqRGy2sADFCFC72qbwF0yJ0ClHD+GQsx/R0gxpE5/b28ajlozbrCyo=
-X-Received: by 2002:a50:cd18:0:b0:566:ef8:93f6 with SMTP id
- z24-20020a50cd18000000b005660ef893f6mr7191167edi.0.1710243308269; Tue, 12 Mar
- 2024 04:35:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rk0RF-0007Eu-5m
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:36:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rk0R9-00037g-Gb
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:36:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710243408;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=XUnJ9YXC8+JVl4R7Ep7cwjws40H8qie0n58QFF04tJQ=;
+ b=g+3O2WoxyGqA5n624qi3NDR3XVrG+ypdQeISAabtBpZ43B/grNsQQIX17ws58ZMcd8Ibhm
+ cbgzcd2BHe9ziS+qXoqRNf0KJBcP4o1npZt5pTxGDMHtSv3/2ch5YlOGPeKUQdXGsFqPDW
+ sRUYfYmL8Rq4GCi1w8Hq0w2rpn7bGy0=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-255-ZGpOXUiKOC6PRzjMfN-raw-1; Tue,
+ 12 Mar 2024 07:36:47 -0400
+X-MC-Unique: ZGpOXUiKOC6PRzjMfN-raw-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id BC18E2800C40;
+ Tue, 12 Mar 2024 11:36:46 +0000 (UTC)
+Received: from localhost.localdomain (unknown [10.72.112.61])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id E7E30492BC7;
+ Tue, 12 Mar 2024 11:36:44 +0000 (UTC)
+From: Jason Wang <jasowang@redhat.com>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Cc: Jason Wang <jasowang@redhat.com>
+Subject: [PULL 0/8] Net patches
+Date: Tue, 12 Mar 2024 19:36:34 +0800
+Message-ID: <20240312113642.36862-1-jasowang@redhat.com>
 MIME-Version: 1.0
-References: <20240311191105.35224-8-its@irrelevant.dk>
-In-Reply-To: <20240311191105.35224-8-its@irrelevant.dk>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 12 Mar 2024 11:34:57 +0000
-Message-ID: <CAFEAcA_FC+FtfLHVy7=ekBH2SJCYpuPrg8rVg45XFZwO6r1+Lw@mail.gmail.com>
-Subject: Re: [PULL 0/6] hw/nvme updates
-To: Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-block@nongnu.org, Jesper Devantier <foss@defmacro.it>, 
- Yanan Wang <wangyanan55@huawei.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <k.jensen@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,80 +79,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Mar 2024 at 19:11, Klaus Jensen <its@irrelevant.dk> wrote:
->
-> From: Klaus Jensen <k.jensen@samsung.com>
->
-> Hi,
->
-> The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf0=
-5f:
->
->   Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into sta=
-ging (2024-03-09 20:12:21 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/birkelund/qemu.git tags/nvme-next-pull-request
->
-> for you to fetch changes up to a1505d799232939bf90c1b3e1fc20e81cd398404:
->
->   hw/nvme: add machine compatibility parameter to enable msix exclusive b=
-ar (2024-03-11 20:07:41 +0100)
->
-> ----------------------------------------------------------------
-> hw/nvme updates
-> -----BEGIN PGP SIGNATURE-----
->
-> iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmXvVsYACgkQTeGvMW1P
-> DemWtwf9HU3cjtvCp8AeHGoPFTwp8/Vx3cQlQ6ilADKSDm44up2+M504xE/Mdviv
-> 6y3PTPe1yiEpg/MbjWTX/df5lo+VdNoCuCyjph9mea0s1QAjCfVpl+KLMUVF/Oj5
-> y1Iz9PQqOVDJ3O4xlgmPTfd8NXE/frNJaiXAjFuBxF2+4lilD5kMxpyu7DXbLiy2
-> Szd1I3DhFAEOLEbrSSRDI3Fpy0KBdRzdKuUfmRdrHzbmhzHJefW7wnZ3aAiDboaD
-> Ny7y/aovmjGymMp9GrBKWhUFPfSUtJ8l8j4Z7acQs+VDxg8lcAHCJKOyqCBTspUL
-> PSnDe6E/CRyjrG2fUVXTLb6YW1eibQ=3D=3D
-> =3DLd7a
-> -----END PGP SIGNATURE-----
+The following changes since commit 05ec974671200814fa5c1d5db710e0e4b88a40af:
 
-Hi; I'm afraid this fails to build for some jobs, eg
-https://gitlab.com/qemu-project/qemu/-/jobs/6373091994
-https://gitlab.com/qemu-project/qemu/-/jobs/6373091978
-https://gitlab.com/qemu-project/qemu/-/jobs/6373091975
+  Merge tag 'm68k-for-9.0-pull-request' of https://github.com/vivier/qemu-m68k into staging (2024-03-11 18:42:53 +0000)
 
-../hw/nvme/ctrl.c: In function =E2=80=98nvme_realize=E2=80=99:
-../hw/nvme/ctrl.c:8146:15: error: =E2=80=98msix_pba_offset=E2=80=99 may be =
-used
-uninitialized in this function [-Werror=3Dmaybe-uninitialized]
-8146 | ret =3D msix_init(pci_dev, n->params.msix_qsize,
-     | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-8147 | &n->bar0, 0, msix_table_offset,
-     | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-8148 | &n->bar0, 0, msix_pba_offset, 0, errp);
-     | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-../hw/nvme/ctrl.c:8099:33: note: =E2=80=98msix_pba_offset=E2=80=99 was decl=
-ared here
-8099 | unsigned msix_table_offset, msix_pba_offset;
-     | ^~~~~~~~~~~~~~~
-../hw/nvme/ctrl.c:8135:9: error: =E2=80=98msix_table_offset=E2=80=99 may be=
- used
-uninitialized in this function [-Werror=3Dmaybe-uninitialized]
-8135 | memory_region_init_io(&n->iomem, OBJECT(n), &nvme_mmio_ops, n, "nvme=
-",
-     | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
-~~
-8136 | msix_table_offset);
-     | ~~~~~~~~~~~~~~~~~~
-../hw/nvme/ctrl.c:8099:14: note: =E2=80=98msix_table_offset=E2=80=99 was de=
-clared here
-8099 | unsigned msix_table_offset, msix_pba_offset;
-     | ^~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+are available in the Git repository at:
 
+  https://github.com/jasowang/qemu.git tags/net-pull-request
 
-I think this is because the compiler notices that nvme_mbar_size() has
-an early-exit code path which never initializes *msix_table_offset
-and *msix-pba_offset.
+for you to fetch changes up to 0cc14182aba961f4c34a21dd202ce6e4a87470f5:
 
-thanks
--- PMM
+  ebpf: Updated eBPF program and skeleton. (2024-03-12 19:31:47 +0800)
+
+----------------------------------------------------------------
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCAAdFiEEIV1G9IJGaJ7HfzVi7wSWWzmNYhEFAmXwPUAACgkQ7wSWWzmN
+YhFnIwgAgctDniJwlRxXB01eVlzXz7IulHnpSby07XEJxENSpGB8ufaeE4eK5gJy
+NVK6C2+1EU2vRxm4oIdcvtN4C4/jtRbYYjiSTx7eE4FmSkqshSnR5XCV72LDqG3i
+WbzInjMvYfysmcMXLfrWgxOnVew9WqEzlpEWlc7FfNKnkzBVf+JDztfqCUx0XM7H
+qefw4ImjqQw993QxJpipXC7aEGUyouB0RIBB71FkCa9ihlh9x7W68evbOI/jTn5q
+HWuStgS02sKHjRFliMbdbMY77FNUz4Yroo/GKSvGt64atxkQSJqPNAV+/9n18LNy
+QAH5eK6cXFPOIAaYpADU5kHDVVAFiw==
+=iBdx
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Andrew Melnychenko (5):
+      ebpf: Added eBPF map update through mmap.
+      ebpf: Added eBPF initialization by fds.
+      virtio-net: Added property to load eBPF RSS with fds.
+      qmp: Added new command to retrieve eBPF blob.
+      ebpf: Updated eBPF program and skeleton.
+
+Laurent Vivier (2):
+      igb: fix link state on resume
+      e1000e: fix link state on resume
+
+Nick Briggs (1):
+      Avoid unaligned fetch in ladr_match()
+
+ ebpf/ebpf.c                    |   69 +++
+ ebpf/ebpf.h                    |   29 +
+ ebpf/ebpf_rss-stub.c           |    6 +
+ ebpf/ebpf_rss.c                |  149 ++++-
+ ebpf/ebpf_rss.h                |   10 +
+ ebpf/meson.build               |    2 +-
+ ebpf/rss.bpf.skeleton.h        | 1343 ++++++++++++++++++++--------------------
+ ebpf/trace.h                   |    1 -
+ hw/net/e1000e_core.c           |   60 +-
+ hw/net/e1000e_core.h           |    2 -
+ hw/net/igb_core.c              |   51 +-
+ hw/net/igb_core.h              |    2 -
+ hw/net/pcnet.c                 |    2 +-
+ hw/net/virtio-net.c            |   54 +-
+ include/hw/virtio/virtio-net.h |    2 +
+ meson.build                    |   10 +-
+ qapi/ebpf.json                 |   66 ++
+ qapi/meson.build               |    1 +
+ qapi/qapi-schema.json          |    1 +
+ tools/ebpf/rss.bpf.c           |    7 +-
+ 20 files changed, 1058 insertions(+), 809 deletions(-)
+ create mode 100644 ebpf/ebpf.c
+ create mode 100644 ebpf/ebpf.h
+ delete mode 100644 ebpf/trace.h
+ create mode 100644 qapi/ebpf.json
+
 
