@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A084AC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61AB1C54E66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:15:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxET-00066z-DG; Tue, 12 Mar 2024 04:11:33 -0400
+	id 1rjxHW-0007Ur-Ib; Tue, 12 Mar 2024 04:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjxER-00065p-9H
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:11:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjxHT-0007UZ-Q8
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:14:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjxEP-0006xa-EG
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:11:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rjxHS-0007bB-7e
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 04:14:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710231088;
+ s=mimecast20190719; t=1710231277;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=h8IIW/kUbeU72UEwqrk6JHNKB2vu4PXNo0DumvdtXT0=;
- b=KYDuuHwE1wAzsjpC2es2NwK9jB8niDbs+iePr6AqVbTWPn9Bx3GBC6GoC5dPDMHTxtBb8T
- CwuoY4eu/hI/q8udubr/G6Iv/P0hzfYRERdcegiCxmI/l5aBdXU/Y+RauBlc31cfnvZPBs
- 4R4GAEx1nP62MDPwsueJ2iwkaMwU/Ss=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iZX4ia+kzVCPXL4hnW0xJ/6c7JqvR+7+6nledC+T94w=;
+ b=RXdKV9gdLsrz5aC5pckMSD3Cf1DyBHYlC6fSPN3Yf8V+yW8JXOuMRScX7CANhy1GezS2KY
+ BXoaPDqSgaUIxeEr5BrkhImkNSL7XjIM3NJwMYzi5Z+lDD0rCJhyY3j19ACxPxdhMZEPgA
+ niina+RH0AJNTuEW3zxgAjlS/V8iOIk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-502-d-OnhIG3MsSq-HvzQmJUOA-1; Tue, 12 Mar 2024 04:11:26 -0400
-X-MC-Unique: d-OnhIG3MsSq-HvzQmJUOA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4131eaecb4aso16550305e9.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:11:26 -0700 (PDT)
+ us-mta-272-tTFiSVmxPC-12YJ8aLDDyQ-1; Tue, 12 Mar 2024 04:14:35 -0400
+X-MC-Unique: tTFiSVmxPC-12YJ8aLDDyQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-33e95458c42so1116120f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 01:14:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710231085; x=1710835885;
+ d=1e100.net; s=20230601; t=1710231274; x=1710836074;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=h8IIW/kUbeU72UEwqrk6JHNKB2vu4PXNo0DumvdtXT0=;
- b=LtTiRck5nADbX1jdgn2RgTmmFP0RtCuiu/36dccim+vezqVRVHSec/MiCa9GRPdCzW
- n/edfCwye2DXNYcDAYEpcNcwFfxz3dHha309/uAe+Qw+R+90qXX8HFH5ti1nKpMl1gj1
- iG5gkiWQqFAaZAYsjx74ge+NYLSAsp37T3zQwaiJ5ayicsQERG9VUWAQF38LU3d12TZX
- bBYmQ6IacvlX9aA2FfpnKKw/ERyB45qEaIDR26tuBILewbOjy4EVp+RAE5YwRcXupIsR
- Mz3oply0yJ2GlK8RmW0ALL6ihlrkGuQQ8cCYuGw9sIHAkmiWZT7v4bc7zYp36T3IeZH2
- j70g==
+ bh=iZX4ia+kzVCPXL4hnW0xJ/6c7JqvR+7+6nledC+T94w=;
+ b=l73YbEdcHpg/lEy+5zFjbef5jjRfGYaLHPc7pRp1fdkVOYurGxRYatqBRaaPsfLDP2
+ eAi3/2rcYXYaJV/+9bndvDM2Tiqr+airQtoktyj0okKM461Ei+yP7BTKm4jb15y26tXE
+ FRP4uTcTtqlqgk40WPReorG4+NcTdwctFLnaYAHlfxnZE4JvMxewEcUP+Ua+ZSkn2nIp
+ GitQLP3wjM3nlVmMDXdHNapMLGCEYjWMi0EWZSJNo36hA7g3XZYA4UlIZkOfo4cINso3
+ 3EQownLAYe5uwPGW1TY1u4GFCJdoMvm87kTdtQ9kcK3aY2Ks3/XZKSEI5TMjnH/978YC
+ 4CBw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUdA/TiyVou+DVbzHbMUHB8F5uQEwSZ4TB1Vw4Dq1uDXoxsfs9+6UDJHUowXBJArQw7ACC+q/tgbtpcJ9BIOjX180IEZZg=
-X-Gm-Message-State: AOJu0YxxsJG+Xc3gU7JQhrCwcJ/bPAnUmAQdAYpgM0wFYgO7aFBo7RXG
- 2QIN8vkhUDQscUrF3PnL51d7gUtlLQ/idbbezrFXdTbG0OdQe2R2bbfwj0n16APmoi0L4N3LmYs
- e/S/Fz8CLkxbnWUgfNk7jLABQa9GLsUT3ZtvgJKOajqZOI4m8YTR0
-X-Received: by 2002:a05:600c:1f94:b0:413:1dcb:b618 with SMTP id
- je20-20020a05600c1f9400b004131dcbb618mr5760869wmb.39.1710231085514; 
- Tue, 12 Mar 2024 01:11:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFTv/CZ3jtWjloEgx7HwcNPCNrxVr42LQJcEH68YIgIJ2fAPXXtsO6CSnLGuY2qCtOB51LV1Q==
-X-Received: by 2002:a05:600c:1f94:b0:413:1dcb:b618 with SMTP id
- je20-20020a05600c1f9400b004131dcbb618mr5760851wmb.39.1710231085175; 
- Tue, 12 Mar 2024 01:11:25 -0700 (PDT)
+ AJvYcCXE1iPv0cjenWHoIuJ9EcyxxLy4KpcuPzN0U31u/4zESfDcF2VZMAXivomXco0MOjvfcvKv/rHZcRdmMmi+cV4uBAvHnpw=
+X-Gm-Message-State: AOJu0YwRY97IwWOAlyGUyMImLGkv0/t81D6KrTydOQMFIr2+AWXiMXRl
+ C0tud0Z0lG+5rKi+N90Q9qe2WB2WLgyDS9FKd3tUEj05NGN2rTaERwngEwmoDGCRwX4SEp5vPSp
+ mLtnMgUbOau1Mi+SixtBIEN+YkcgIHXNaQBz35teBjE3M94nabP/3
+X-Received: by 2002:a5d:670f:0:b0:33d:c29d:2219 with SMTP id
+ o15-20020a5d670f000000b0033dc29d2219mr718979wru.8.1710231274648; 
+ Tue, 12 Mar 2024 01:14:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEf4iGmjVGbZvylraLqlFi+dfW+ed939PTMIfv1LsuVh73dpKT2rNxd1SC9lOGd+PqzRJLQXw==
+X-Received: by 2002:a5d:670f:0:b0:33d:c29d:2219 with SMTP id
+ o15-20020a5d670f000000b0033dc29d2219mr718963wru.8.1710231274348; 
+ Tue, 12 Mar 2024 01:14:34 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-86.web.vodafone.de.
  [109.43.177.86]) by smtp.gmail.com with ESMTPSA id
- fl17-20020a05600c0b9100b0041338f660d8sm1045092wmb.25.2024.03.12.01.11.23
+ b17-20020a05600010d100b0033e03a6b1ecsm8403477wrx.18.2024.03.12.01.14.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 01:11:24 -0700 (PDT)
-Message-ID: <c49b13a5-f3ed-4fe5-83bf-13a4dc887d1c@redhat.com>
-Date: Tue, 12 Mar 2024 09:11:23 +0100
+ Tue, 12 Mar 2024 01:14:33 -0700 (PDT)
+Message-ID: <c663a881-161d-431f-8f56-298dbc1f0f36@redhat.com>
+Date: Tue, 12 Mar 2024 09:14:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/29] block/snapshot: Fix missing ERRP_GUARD() for
+Subject: Re: [PATCH v2 11/29] block/vdi: Fix missing ERRP_GUARD() for
  error_prepend()
 Content-Language: en-US
 To: Zhao Liu <zhao1.liu@linux.intel.com>,
@@ -77,10 +77,10 @@ To: Zhao Liu <zhao1.liu@linux.intel.com>,
  Michael Tokarev <mjt@tls.msk.ru>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
+ Stefan Weil <sw@weilnetz.de>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
 References: <20240311033822.3142585-1-zhao1.liu@linux.intel.com>
- <20240311033822.3142585-11-zhao1.liu@linux.intel.com>
+ <20240311033822.3142585-12-zhao1.liu@linux.intel.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -124,7 +124,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240311033822.3142585-11-zhao1.liu@linux.intel.com>
+In-Reply-To: <20240311033822.3142585-12-zhao1.liu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -174,48 +174,37 @@ On 11/03/2024 04.38, Zhao Liu wrote:
 > can't see this additional information, because exit() happens in
 > error_setg earlier than information is added [1].
 > 
-> In block/snapshot.c, there are 2 functions passing @errp to
-> error_prepend() without ERRP_GUARD():
->   - bdrv_all_delete_snapshot()
->   - bdrv_all_goto_snapshot()
+> The vdi_co_do_create() passes @errp to error_prepend() without
+> ERRP_GUARD(), and its @errp parameter is so widely sourced that it is
+> necessary to protect it with ERRP_GUARD().
 > 
-> As the APIs exposed in include/block/snapshot.h, they could be called
-> by other modules.
-> 
-> To avoid potential issues as [1] said, add missing ERRP_GUARD() at the
-> beginning of these 2 functions.
+> To avoid the potential issues as [1] said, add missing ERRP_GUARD() at
+> the beginning of this function.
 > 
 > [1]: Issue description in the commit message of commit ae7c80a7bd73
 >       ("error: New macro ERRP_GUARD()").
 > 
+> Cc: Stefan Weil <sw@weilnetz.de>
 > Cc: Kevin Wolf <kwolf@redhat.com>
 > Cc: Hanna Reitz <hreitz@redhat.com>
 > Cc: qemu-block@nongnu.org
 > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->   block/snapshot.c | 2 ++
->   1 file changed, 2 insertions(+)
+>   block/vdi.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/block/snapshot.c b/block/snapshot.c
-> index 8694fc0a3eba..8242b4abac41 100644
-> --- a/block/snapshot.c
-> +++ b/block/snapshot.c
-> @@ -566,6 +566,7 @@ int bdrv_all_delete_snapshot(const char *name,
->                                bool has_devices, strList *devices,
->                                Error **errp)
+> diff --git a/block/vdi.c b/block/vdi.c
+> index 3b57becb9fe0..6363da08cee9 100644
+> --- a/block/vdi.c
+> +++ b/block/vdi.c
+> @@ -738,6 +738,7 @@ static int coroutine_fn GRAPH_UNLOCKED
+>   vdi_co_do_create(BlockdevCreateOptions *create_options, size_t block_size,
+>                    Error **errp)
 >   {
 > +    ERRP_GUARD();
->       g_autoptr(GList) bdrvs = NULL;
->       GList *iterbdrvs;
->   
-> @@ -605,6 +606,7 @@ int bdrv_all_goto_snapshot(const char *name,
->                              bool has_devices, strList *devices,
->                              Error **errp)
->   {
-> +    ERRP_GUARD();
->       g_autoptr(GList) bdrvs = NULL;
->       GList *iterbdrvs;
->       int ret;
+>       BlockdevCreateOptionsVdi *vdi_opts;
+>       int ret = 0;
+>       uint64_t bytes = 0;
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
