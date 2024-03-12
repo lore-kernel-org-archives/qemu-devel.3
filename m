@@ -4,102 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D145CC54E49
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 04:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F36CEC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 04:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rju5q-0003L1-Ml; Tue, 12 Mar 2024 00:50:26 -0400
+	id 1rju6X-000423-Ok; Tue, 12 Mar 2024 00:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rju5k-0003Hg-6s; Tue, 12 Mar 2024 00:50:20 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rju5g-0006mC-Ej; Tue, 12 Mar 2024 00:50:19 -0400
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42C4gItS008439; Tue, 12 Mar 2024 04:50:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=eM+BYQ8T71WmW183na6Ef3W/TaMTaWWe864zz9L6oBE=;
- b=TSDzJknvgzveZE33R43e6eH2H33mWMFz35ejiqEpiAqYWe5VDW+OAgPpoieOfpYfQGp0
- rV/m/+z8U+rs++LTLdfCr/Bkdo4+7gEfHjih0YbETTnFg893yx7D/XzUeX9bzydPEYXZ
- S/Gf+8RXVDwBCpbS2X73JK3nKu0DYhjDeQoIhBVoz1yASk4EppuG/GRgGcW9C2Vt3E20
- 3zvoABJ2MveEst9ggjKaad3bqBrDvjmMSf0GAO5exixneOZMMqBAU4o8dTKbDr0UDWhX
- QKfzRiWODJ6uDWJK8Jj/ArlYrE5rjhRwIULdfmiz2YBxKRcvWcM0shruN0gLGsaAVL1t 8g== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtg8mr2a3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 04:50:09 +0000
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42C4j9H9015232;
- Tue, 12 Mar 2024 04:50:09 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtg8mr29x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 04:50:08 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42C2BJbC015028; Tue, 12 Mar 2024 04:50:08 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ws33nmv40-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 04:50:08 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42C4o5PI47513908
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 Mar 2024 04:50:07 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B079F58052;
- Tue, 12 Mar 2024 04:50:05 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C17958056;
- Tue, 12 Mar 2024 04:50:04 +0000 (GMT)
-Received: from [9.109.243.35] (unknown [9.109.243.35])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 12 Mar 2024 04:50:03 +0000 (GMT)
-Message-ID: <5f8b269f-1f43-42ab-b4bf-d0314b739493@linux.ibm.com>
-Date: Tue, 12 Mar 2024 10:20:02 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] ppc: Drop support for POWER9 and POWER10 DD1 chips
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rju6V-00041h-VY; Tue, 12 Mar 2024 00:51:08 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rju6T-00071t-Ht; Tue, 12 Mar 2024 00:51:07 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-6e6381df003so4436249b3a.0; 
+ Mon, 11 Mar 2024 21:51:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710219063; x=1710823863; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tv/BIKWdUlZNjkCMkKQZP50qURnDYVYHlxOgQJon8Es=;
+ b=UU/7KKCxPR9jRbR1X8fV2nlOB7XJNQ+8rKhDy0RvEivfWhM6/WwlxF5YBkyxZX6GjM
+ eSOFyY0Na5LUNEVII/P0ZiLu7qHbvpJUW6qUqM9z2f4/tFQD2oO1BCWMi01SBpenrWWc
+ zQQFn1z18UGYrsefm+DibDCV3rF3ENLphqF35Vw6Lid/Zx2mBnCejLL3yOXP4aGghbwV
+ Q0TYUJewoZlvteBY44FSIg+s+mPyXtmdINp7r8yzKM4Wlr1WCQtmeJFUA3ulrhXTxTZ4
+ b32wcpwac5Ie8UrZ/mp0RNiCoAUg7ZlXfx+/yfEOaiU6BRM+YK7Jf3+lP4J2+f1Tb01v
+ nbug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710219063; x=1710823863;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=tv/BIKWdUlZNjkCMkKQZP50qURnDYVYHlxOgQJon8Es=;
+ b=YVT6PtoboIexjkM/RuGVpDA7kkf4ux4P6W2iQ6+YWXoKT6xQvJy4RYwdjmArPKeISj
+ kOXNe65CiKGLXQAlSUhYSuwo7qX/oDY/4/T6w6ZZDVx7qfV4k2BMDDUAVRbrMuGeurhZ
+ pt46wMKvDaISztxueQP3OC8z5tCCQcqGW5MTNTyqEGN0RfAbduPDfdtgY6SSSMFS5con
+ VbJwbLOV58Qpw8GDqSS7/Iun70JNDFno1qgMjKwsgip5Evm27pvB76mrDKH0JD/m/YPj
+ 3kEzz9xDPBqYlNFCEGXCRxT1NPwe7WyryykZtXWaW7cQS/TqWTZcwuLrMuymlX348bKc
+ gN5g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW0WI6x73Ul4cvrjea+tlA+whbrBKdb+ehE73F5p4IwUhlzRFuuLsqt0XiyI9g+y0lrcjop5F8EeFrEFOoxOm5qHNNaLMc=
+X-Gm-Message-State: AOJu0Yxu0wtTc2vVNUdao7PNLGOVwx3yXvjDnkojI3RtvUPCXQUZf0sT
+ zssUViFb0AEBWH7MiQS6CD+OO7EzhwC6mssSdyI1VeXuLLO+iCDv
+X-Google-Smtp-Source: AGHT+IEsCSU+I76yNtWdLYOZq3NCA4pp9TKMEsMlbmBk6/q5gfrOWHzKOTCISzWMPPGriRe+1M6D3w==
+X-Received: by 2002:a05:6a00:1951:b0:6e3:84cb:3d51 with SMTP id
+ s17-20020a056a00195100b006e384cb3d51mr10793830pfk.33.1710219063578; 
+ Mon, 11 Mar 2024 21:51:03 -0700 (PDT)
+Received: from localhost ([1.146.55.44]) by smtp.gmail.com with ESMTPSA id
+ p39-20020a056a0026e700b006e04553a4c5sm5175359pfw.52.2024.03.11.21.50.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 11 Mar 2024 21:51:03 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 12 Mar 2024 14:50:56 +1000
+Message-Id: <CZRI248HGG4Y.2KVSZ18AGD6CA@wheely>
+Cc: <qemu-ppc@nongnu.org>, <qemu-devel@nongnu.org>, "Daniel Henrique
+ Barboza" <danielhb413@gmail.com>, "David Gibson"
+ <david@gibson.dropbear.id.au>, "Harsh Prateek Bora"
+ <harshpb@linux.ibm.com>, "Benjamin Gray" <bgray@linux.ibm.com>
+Subject: Re: [PATCH 06/13] ppc/spapr: Add pa-features for POWER10 machines
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Mailer: aerc 0.15.2
 References: <20240311185200.2185753-1-npiggin@gmail.com>
- <20240311185200.2185753-2-npiggin@gmail.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240311185200.2185753-2-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: mAlNulH5joK0HlB7ZtqVCjtz28_JtiEq
-X-Proofpoint-ORIG-GUID: wwA1hFML1G3TXQrsFikc8LZx9nzthZl7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-12_03,2024-03-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0
- mlxlogscore=999 impostorscore=0 priorityscore=1501 spamscore=0
- clxscore=1015 suspectscore=0 mlxscore=0 bulkscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2403120035
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+ <20240311185200.2185753-7-npiggin@gmail.com>
+ <020a53d8-3b90-4b30-b0c7-862951fbef43@linaro.org>
+ <ef4c48d1-9e11-d6af-d4cc-3ae6c567f098@eik.bme.hu>
+In-Reply-To: <ef4c48d1-9e11-d6af-d4cc-3ae6c567f098@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,122 +100,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue Mar 12, 2024 at 7:07 AM AEST, BALATON Zoltan wrote:
+> On Mon, 11 Mar 2024, Philippe Mathieu-Daud=C3=A9 wrote:
+> > On 11/3/24 19:51, Nicholas Piggin wrote:
+> >> From: Benjamin Gray <bgray@linux.ibm.com>
+> >>=20
+> >> Add POWER10 pa-features entry.
+> >>=20
+> >> Notably DEXCR and and [P]HASHST/[P]HASHCHK instruction support is
+> >> advertised. Each DEXCR aspect is allocated a bit in the device tree,
+> >> using the 68--71 byte range (inclusive). The functionality of the
+> >> [P]HASHST/[P]HASHCHK instructions is separately declared in byte 72,
+> >> bit 0 (BE).
+> >>=20
+> >> Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
+> >> [npiggin: reword title and changelog, adjust a few bits]
+> >> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> >> ---
+> >>   hw/ppc/spapr.c | 34 ++++++++++++++++++++++++++++++++++
+> >>   1 file changed, 34 insertions(+)
+> >>=20
+> >> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> >> index 247f920f07..128bfe11a8 100644
+> >> --- a/hw/ppc/spapr.c
+> >> +++ b/hw/ppc/spapr.c
+> >> @@ -265,6 +265,36 @@ static void spapr_dt_pa_features(SpaprMachineStat=
+e=20
+> >> *spapr,
+> >>           /* 60: NM atomic, 62: RNG */
+> >>           0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
+> >>       };
+> >> +    /* 3.1 removes SAO, HTM support */
+> >> +    uint8_t pa_features_31[] =3D { 74, 0,
+> >
+> > Nitpicking because pre-existing, all these arrays could be static const=
+.
+>
+> If we are at it then maybe also s/0x00/   0/ because having a stream of=
+=20
+> 0x80 and 0x00 is not the most readable.
 
+Eh, it's more readable because it aligns colums. But probably better
+more readable and  less error prone would be like -
 
-On 3/12/24 00:21, Nicholas Piggin wrote:
-> The POWER9 DD1 and POWER10 DD1 chips are not public and are no longer of
-> any use in QEMU. Remove them.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   hw/ppc/spapr_cpu_core.c |  2 --
->   target/ppc/cpu-models.c |  4 ----
->   target/ppc/cpu_init.c   |  7 ++-----
->   target/ppc/kvm.c        | 11 -----------
->   4 files changed, 2 insertions(+), 22 deletions(-)
+    PA_FEATURE_SET(pa_features_31,  6, 0); /* DS207 */
+    PA_FEATURE_SET(pa_features_31, 18, 0); /* Vector scalar */
 
-Do we want to squash in removal of the macro as well?
+I just didn't quite find something I like yet. I won't change style
+before adding the missing bits either way, but certainly would be
+good to clean it up after.
 
-diff --git a/target/ppc/cpu-models.h b/target/ppc/cpu-models.h
-index 0229ef3a9a..a5167873ae 100644
---- a/target/ppc/cpu-models.h
-+++ b/target/ppc/cpu-models.h
-@@ -348,7 +348,6 @@ enum {
-      CPU_POWERPC_POWER8NVL_BASE     = 0x004C0000,
-      CPU_POWERPC_POWER8NVL_v10      = 0x004C0100,
-      CPU_POWERPC_POWER9_BASE        = 0x004E0000,
--    CPU_POWERPC_POWER9_DD1         = 0x004E1100,
-      CPU_POWERPC_POWER9_DD20        = 0x004E1200,
-      CPU_POWERPC_POWER9_DD22        = 0x004E1202,
-      CPU_POWERPC_POWER10_BASE       = 0x00800000,
-
-With that,
-
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
-regards,
-Harsh
-
-> 
-> diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-> index 40b7c52f7f..50523ead25 100644
-> --- a/hw/ppc/spapr_cpu_core.c
-> +++ b/hw/ppc/spapr_cpu_core.c
-> @@ -394,10 +394,8 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
->       DEFINE_SPAPR_CPU_CORE_TYPE("power8_v2.0"),
->       DEFINE_SPAPR_CPU_CORE_TYPE("power8e_v2.1"),
->       DEFINE_SPAPR_CPU_CORE_TYPE("power8nvl_v1.0"),
-> -    DEFINE_SPAPR_CPU_CORE_TYPE("power9_v1.0"),
->       DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
->       DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
-> -    DEFINE_SPAPR_CPU_CORE_TYPE("power10_v1.0"),
->       DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
->   #ifdef CONFIG_KVM
->       DEFINE_SPAPR_CPU_CORE_TYPE("host"),
-> diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-> index 36e465b390..f2301b43f7 100644
-> --- a/target/ppc/cpu-models.c
-> +++ b/target/ppc/cpu-models.c
-> @@ -728,14 +728,10 @@
->                   "POWER8 v2.0")
->       POWERPC_DEF("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10,         POWER8,
->                   "POWER8NVL v1.0")
-> -    POWERPC_DEF("power9_v1.0",   CPU_POWERPC_POWER9_DD1,             POWER9,
-> -                "POWER9 v1.0")
->       POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
->                   "POWER9 v2.0")
->       POWERPC_DEF("power9_v2.2",   CPU_POWERPC_POWER9_DD22,            POWER9,
->                   "POWER9 v2.2")
-> -    POWERPC_DEF("power10_v1.0",  CPU_POWERPC_POWER10_DD1,            POWER10,
-> -                "POWER10 v1.0")
->       POWERPC_DEF("power10_v2.0",  CPU_POWERPC_POWER10_DD20,           POWER10,
->                   "POWER10 v2.0")
->   #endif /* defined (TARGET_PPC64) */
-> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> index 1d3d1db7c3..572cbdf25f 100644
-> --- a/target/ppc/cpu_init.c
-> +++ b/target/ppc/cpu_init.c
-> @@ -6350,10 +6350,7 @@ static bool ppc_pvr_match_power9(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
->           return false;
->       }
->   
-> -    if ((pvr & 0x0f00) == 0x100) {
-> -        /* DD1.x always matches power9_v1.0 */
-> -        return true;
-> -    } else if ((pvr & 0x0f00) == 0x200) {
-> +    if ((pvr & 0x0f00) == 0x200) {
->           if ((pvr & 0xf) < 2) {
->               /* DD2.0, DD2.1 match power9_v2.0 */
->               if ((pcc->pvr & 0xf) == 0) {
-> @@ -6536,7 +6533,7 @@ static bool ppc_pvr_match_power10(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
->       }
->   
->       if ((pvr & 0x0f00) == (pcc->pvr & 0x0f00)) {
-> -        /* Major DD version matches to power10_v1.0 and power10_v2.0 */
-> +        /* Major DD version matches power10_v2.0 */
->           return true;
->       }
->   
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index bcf30a5400..525fbe3892 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -2369,17 +2369,6 @@ static void kvmppc_host_cpu_class_init(ObjectClass *oc, void *data)
->   
->   #if defined(TARGET_PPC64)
->       pcc->radix_page_info = kvmppc_get_radix_page_info();
-> -
-> -    if ((pcc->pvr & 0xffffff00) == CPU_POWERPC_POWER9_DD1) {
-> -        /*
-> -         * POWER9 DD1 has some bugs which make it not really ISA 3.00
-> -         * compliant.  More importantly, advertising ISA 3.00
-> -         * architected mode may prevent guests from activating
-> -         * necessary DD1 workarounds.
-> -         */
-> -        pcc->pcr_supported &= ~(PCR_COMPAT_3_00 | PCR_COMPAT_2_07
-> -                                | PCR_COMPAT_2_06 | PCR_COMPAT_2_05);
-> -    }
->   #endif /* defined(TARGET_PPC64) */
->   }
->   
+Thanks,
+Nick
 
