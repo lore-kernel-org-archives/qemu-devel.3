@@ -4,67 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64CDCC54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B50C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:09:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjzxL-0006PV-IW; Tue, 12 Mar 2024 07:06:03 -0400
+	id 1rjzzd-0000tT-FR; Tue, 12 Mar 2024 07:08:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rjzxI-0006OG-IS
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:06:00 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1rjzzZ-0000s1-75
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:08:22 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rjzx9-0004dI-SA
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:06:00 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-56647babfe6so6109580a12.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:05:51 -0700 (PDT)
+ id 1rjzzW-0005b1-Ar
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:08:19 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-33e959d8bc0so1920577f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:08:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710241550; x=1710846350; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0F86ewSYmM1T1nxCBxEvTW8lp9AN40udFid87USF8t8=;
- b=UOfwBJeTCQIH+VXelZ/rmpTNSwbomMdL2aKEMlPj6Ynj+YQqi1ZWIImGIIYcRJNeZD
- xRnXu/sDvuoyEmMQBkAYxSEjs09v++DnpiQu49SaKdpJXS1NEsdCrRU544hzErgQKFAO
- +4tMEHPWgTOIy0hELp+ExPTpml8YfBE29IvRKBwWcLOCUXG4qWQBsH3f83M5SeLPpY5T
- Od2hoHzphBRtI0Gw9GcT4/cVPsLBn8Yf0ek6MLRB0iwOFf2fnlbDYItYbV3DjhidTIso
- DFf3XB5QcbPwFuEHHx6PMx3lX9eyml1pem6PdEcoj4kq1FmZKPLwbXF4g53zvmOUvtws
- OrMw==
+ d=linaro.org; s=google; t=1710241697; x=1710846497; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QHUmaWQn0ldrlIK8tQw5bpDJbHvqza+98v6FJpbFdXg=;
+ b=c4Bg7vd2YcdpuAVzFwtJLSfM5t1SzqW8lIKaTfbnVr9gUYdOlEEtZ61Rply2CEdYNS
+ 5RQeNBvsRhq8AKFXXTetGIpWYrtpwnINaBZnOb/pp7BkU0zVleVqUaNPp+/lmOwoKyyk
+ rH8dhJbNbNh/ZniWrQAxSCsq1yuUKqnMwiKPlH64g5TlumYguf3bhl6+dvZwUpZhfrnT
+ DEbMjL674N3SDAMFLIF2WM8gPbOlH9L0jit3X+dwV4U3yl5WqswlVS4yYCaQ2o6bKpkH
+ Y6ulat6EhUZ8D1ZL/bjd1t7CHHUT1L5Sz4MV44zVbpvMWJcWrgyTgc6e8u4o7qd2jCwn
+ dAzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710241550; x=1710846350;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1710241697; x=1710846497;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0F86ewSYmM1T1nxCBxEvTW8lp9AN40udFid87USF8t8=;
- b=M3qRFodfR+zLhXv2fewOsU592TTyDxuW5RDt3TtLgHM8SyvBQmewIo/u9IHIALO3Rl
- IBE4HBps2RgfjJaVao4J6TgwFUJcIQosQI2G7uqy+8mViurBx3zj/Lj29g6zuvjxfjh5
- j7l6UDoMNtO4K5sB8qZAwXbrKrk6BfrUAbC8A1yB4yDNNf/SGcysklqPZpX8F+Vb0qKi
- QYjju4LMqFzh+C3NbeIhr7ZcZIQid9EBE3JCQ7yTrySVJzIbjN21cGT7X3Kw6Db1u/vC
- JTsGEMX/4w66mp2r++Hf9iMHKxBXi1gok02zFJb13nKKDUlFGY5h+E9hqxWbfzfCxn/4
- K+Bg==
-X-Gm-Message-State: AOJu0YwNZDq3i4n8WfSeXN8FJe7PYjPoxOo3ubgzt4ByhmORb/HAbd/C
- hmiTKc+Mj0KEKuZmKztGyMTIoX+PBC3hnODnCvjTl8OCD3izjTxUxyVOROXlNouazJiKJC+tZNl
- ZzkZduy/8IoZ3xTcxbjtw2b9wtUcqYEzpRbjvomsiujxaF1vK
-X-Google-Smtp-Source: AGHT+IFFaEAweZiSxkTjoSvsV6ai0kwsawy+1FxlNUN7g6Sk+xikNFUKe/M7lNIVYyG31Kac6/BvpicoJBPm/xuG+mg=
-X-Received: by 2002:a50:a44e:0:b0:568:7bb3:3b14 with SMTP id
- v14-20020a50a44e000000b005687bb33b14mr56776edb.8.1710241550023; Tue, 12 Mar
- 2024 04:05:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240311165724.176168-1-kkostiuk@redhat.com>
-In-Reply-To: <20240311165724.176168-1-kkostiuk@redhat.com>
+ bh=QHUmaWQn0ldrlIK8tQw5bpDJbHvqza+98v6FJpbFdXg=;
+ b=Es5WbpOR9p9pFgNp0yymjt0eQEi2sKJcSknFyu3i9eETPMVNlYSWUIKsnpBcL4nohZ
+ VDPxk/oXEL2N4njEIBV6g39AT97ZJNDWUQOK8Dyp1JLhbstNn1GC/LjHjCe0OApOLu3O
+ RLEMmj1ByATZpdoaFRmO6CWI68PL+x1R0E6QhpsPZRAYknnN3k3LFjBy+6cNrJWYuKPc
+ Ae/RqXJMfJXwH6tjXcl7GzwXdTs0lKRJSEkCHC7fSCAcRyv36hAPFrPpTpsjl77zJR0B
+ kJaQkGWfTFOzN2I82q0EI3yqMoERh9CfWvrMBuagkP7WhKo6ujEMYdoelhGSuOX1orlh
+ fK5Q==
+X-Gm-Message-State: AOJu0YyjQjfF1BDOirK5cf07Wp8cOZK+MgfObdFyorga16kkKfzORulP
+ nUQH3xwZ8nAeyQZ/2rCWy53iymmI8Y0cSKun/KtvgvNQtoKzMei9ATxmc26l1PshBgABaLzmrLV
+ y
+X-Google-Smtp-Source: AGHT+IFEGTRbbaHEZ5tXNkASgM4NDARvHLeJdsiC3pHdjaEBkguaCOTf/KiWBRvEHN+7LTWtjpyjIA==
+X-Received: by 2002:adf:a390:0:b0:33d:27d4:2fec with SMTP id
+ l16-20020adfa390000000b0033d27d42fecmr6121078wrb.35.1710241696682; 
+ Tue, 12 Mar 2024 04:08:16 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ w10-20020a5d680a000000b0033e0dd83be1sm8770431wru.91.2024.03.12.04.08.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 04:08:16 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 12 Mar 2024 11:05:39 +0000
-Message-ID: <CAFEAcA_qyKVXzj0p814Xke2bQLNANpQ_eg4c-DYj1ZCTyorXJg@mail.gmail.com>
-Subject: Re: [PULL 0/3] Misc QGA patches for 2024-03-11
-To: Konstantin Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+Subject: [PATCH] tests: Raise timeouts for bufferiszero and crypto-tlscredsx509
+Date: Tue, 12 Mar 2024 11:08:15 +0000
+Message-Id: <20240312110815.116992-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,28 +91,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 11 Mar 2024 at 16:57, Konstantin Kostiuk <kkostiuk@redhat.com> wrote:
->
-> The following changes since commit 7489f7f3f81dcb776df8c1b9a9db281fc21bf05f:
->
->   Merge tag 'hw-misc-20240309' of https://github.com/philmd/qemu into staging (2024-03-09 20:12:21 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/kostyanf14/qemu.git tags/qga-pull-2024-03-11-2
->
-> for you to fetch changes up to bfded6fe62b859e337386ed3028b85743569a30b:
->
->   qga-win: Add support of Windows Server 2025 in get-osinfo command (2024-03-11 18:24:39 +0200)
->
-> ----------------------------------------------------------------
-> qga-pull-2024-03-11-2
+On our gcov CI job, the bufferiszero and crypto-tlscredsx509
+tests time out occasionally, making the job flaky. Double the
+timeout on these two tests.
 
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2221
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+cc stable just because it probably helps CI reliability there too
+---
+ tests/unit/meson.build | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Applied, thanks.
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index cae925c1325..30db3c418fa 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -173,8 +173,9 @@ test_env.set('G_TEST_BUILDDIR', meson.current_build_dir())
+ 
+ slow_tests = {
+   'test-aio-multithread' : 120,
++  'test-bufferiszero': 60,
+   'test-crypto-block' : 300,
+-  'test-crypto-tlscredsx509': 45,
++  'test-crypto-tlscredsx509': 90,
+   'test-crypto-tlssession': 45,
+   'test-replication': 60,
+ }
+-- 
+2.34.1
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
-
--- PMM
 
