@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 915BFC54E6E
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:41:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 660CAC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAZf-0004Yh-Am; Tue, 12 Mar 2024 18:26:19 -0400
+	id 1rkAdI-0005O2-5O; Tue, 12 Mar 2024 18:30:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAZa-0004Wk-Kv
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcY-0002vl-OO
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAZX-0004F6-UJ
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAcU-0004eN-F7
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:29:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282371;
+ s=mimecast20190719; t=1710282553;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=gyYIKMrI3SRF/ysRxD0KwjA2vDDvjUVwVWXBG4PxT30=;
- b=SjFXPfEcL/QvRCW90UOzsGbJ9UkXsO68DQw5G7PAujz0+ZpzUYMphTFaOFThUnvZilo/gr
- QF2T+Rodtm/mS97veBO8Sc3JcqT0/ts+W8b/9aCB1Yh0Wb/39SZKatKkYL7uKiGdKiVHuq
- v8mRQt0s7nCzB/Cl4uWzJdq1CM7psPo=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2oYq0iZXaQr5DMI6kVH19Up4p/ecK9SPws94ZnuK5Hw=;
+ b=Wxlq23ngghDveUN5llanCGgTuJ40glV6WazUDlpNlyRloGyR0hLFsXSifN5H/chFlwmNwt
+ nQIruKlT1pQGbJ8mOv3iaX+g3tW1B9aBBH9fVF3iOMJ+WLL03AwFBy5z/AoGo3L8SUYhjn
+ Z6gGUflS5o4Zam4V/g+/Q+WxbizAm04=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-PCvCupVZMhiV2L9ewoJ-5Q-1; Tue, 12 Mar 2024 18:26:09 -0400
-X-MC-Unique: PCvCupVZMhiV2L9ewoJ-5Q-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-56844c6a2cbso2298288a12.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:26:09 -0700 (PDT)
+ us-mta-208-asIaeoxHNsqQv5wm1YCzMA-1; Tue, 12 Mar 2024 18:29:10 -0400
+X-MC-Unique: asIaeoxHNsqQv5wm1YCzMA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a44143c8908so28013366b.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:29:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282368; x=1710887168;
+ d=1e100.net; s=20230601; t=1710282548; x=1710887348;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gyYIKMrI3SRF/ysRxD0KwjA2vDDvjUVwVWXBG4PxT30=;
- b=uo7ZWRoh9jSDUmFkKLRF+sCuHi3az57m8WmrmG/HCGQaJF0Rq19StMGyCjCiCvS/Zp
- PCbpbXW16gi5/SMC6I3ryyr9TIrS8ZuwMyS2PcQQevG9sOFFDEQ2s42YOhAXF0x6zcoD
- aJ2wbtrUK7V0PRXdjznk/SiTKx66UrsTkOG8AClFg+LIy88WeovbvBMj+udZQm5ayGuo
- AUcOaJjW52TxLjTfRvlfIxP9Gr9wBcEPFROJBT/q73z0z185mI07JmTFE5p4DuIMO22d
- OegnEqnBPyKmWahArWr6tv4XSAfjfCPu8VLz9ann2fG1cvfdnOHE/pCOTIL/NDFSbfAW
- MOtg==
-X-Gm-Message-State: AOJu0Yxrj4XlsCnOLzAdF0+4W7t9Lly/Z4Hy8gZotZ6yKWBXb1c022rn
- PMgQ6Ryz66w5E40qBITkOSfcrBukA3isYb/JX9wy1NLGrYP3j6QbZ7K29roiISyrF5lmFRn4zgP
- M/NSe2JBfuW/dv7gktJgmMK5ehmRwb6Tf2WlM0EoSBIUwk3zJjQ9GqKyW2i/ZjPEqHAzyBwXZFQ
- 8W53N7OEIZCiGhcMLCiK44VbUD4+qbbKhz
-X-Received: by 2002:a17:907:1688:b0:a46:13f3:eb84 with SMTP id
- cx8-20020a170907168800b00a4613f3eb84mr1254240ejd.0.1710282367955; 
- Tue, 12 Mar 2024 15:26:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGewxjL+ux1V0g6HyHL9tz9M5FkwSzKmuAHQY+jVmJejvtwGqAjEYY1tixuvxc3snwC69XBNQ==
-X-Received: by 2002:a17:907:1688:b0:a46:13f3:eb84 with SMTP id
- cx8-20020a170907168800b00a4613f3eb84mr1254227ejd.0.1710282367404; 
- Tue, 12 Mar 2024 15:26:07 -0700 (PDT)
+ bh=2oYq0iZXaQr5DMI6kVH19Up4p/ecK9SPws94ZnuK5Hw=;
+ b=e4/5gVMN0ecta4M6klHfdVCCraMmVe2mzWIJaF+CWrWRfFGTeN9cYKGizOFuVIDw1B
+ t/duJZo3ccDFLN8te7ciQrAJgfg+B1xv4mrGXe6yua5ebiaCfT9nQDOArhqG19lokyCQ
+ 3BbgW5NhKnzb35D+lhlHFXA1Ire4FCxS4UqT4u6qYeMWAgV9lYfXjmmfGCJphWpHjznT
+ HhRQguyYp3tnGHNbYx23NmV94nRb70fnyYPgMpK7tJiOelVHg9oq4EToVhz3M/E0nIqQ
+ KHEsAZoTXn66KmjPPWBxh5RWx6iqZpnlhW2bu+kZbG1O6mSAIcRT1IwI5St7FGYZeo0D
+ /yTQ==
+X-Gm-Message-State: AOJu0YyC+Ipq/jDddud5aQVLRf7Yql1umhlqmSsvT+BfmoJzgqvLrs1q
+ 6PvfWf4XaOTxNWnl5KK3aIL3azidLrpmBDBXLRtMtlY2dhZGSUZM1JymyIw1AwhmxpF2RQA3glL
+ 5gOo7KxntbFATmD2MoMdzECMREq4+bVpRF/PlE8BXIiD7NfPWGVoWqU+QM7ako5yQ1xiZr8z5p7
+ LxPrLzOvlyifCUTq0Lj24WYM7K/rBGcU6I
+X-Received: by 2002:a17:906:c00a:b0:a46:4fc1:c9fe with SMTP id
+ e10-20020a170906c00a00b00a464fc1c9femr688800ejz.27.1710282548395; 
+ Tue, 12 Mar 2024 15:29:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHsCZTemK7QdO83y+cy6XCnKxRfZWuO0Db+MI2RJ4EjaTptmWAseH4bdsysjaZg3Xa0Jp441Q==
+X-Received: by 2002:a17:906:c00a:b0:a46:4fc1:c9fe with SMTP id
+ e10-20020a170906c00a00b00a464fc1c9femr688769ejz.27.1710282547683; 
+ Tue, 12 Mar 2024 15:29:07 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- be10-20020a1709070a4a00b00a461d2a3374sm2892729ejc.47.2024.03.12.15.26.05
+ kn22-20020a170906aa5600b00a45200fe2b5sm4242271ejb.224.2024.03.12.15.29.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:26:06 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:26:04 -0400
+ Tue, 12 Mar 2024 15:29:07 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:29:04 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Mario Casquero <mcasquer@redhat.com>
-Subject: [PULL 12/68] libvhost-user: Dynamically allocate memory for memory
- slots
-Message-ID: <d884e2727849fc95d337262ec91be60165473c4a.1710282274.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 66/68] hmat acpi: Fix out of bounds access due to missing use
+ of indirection
+Message-ID: <74e2845c5f95b0c139c79233ddb65bb17f2dd679.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -80,14 +78,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,71 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hildenbrand <david@redhat.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-Let's prepare for increasing VHOST_USER_MAX_RAM_SLOTS by dynamically
-allocating dev->regions. We don't have any ABI guarantees (not
-dynamically linked), so we can simply change the layout of VuDev.
+With a numa set up such as
 
-Let's zero out the memory, just as we used to do.
+-numa nodeid=0,cpus=0 \
+-numa nodeid=1,memdev=mem \
+-numa nodeid=2,cpus=1
 
-Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Message-Id: <20240214151701.29906-2-david@redhat.com>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
+and appropriate hmat_lb entries the initiator list is correctly
+computed and writen to HMAT as 0,2 but then the LB data is accessed
+using the node id (here 2), landing outside the entry_list array.
+
+Stash the reverse lookup when writing the initiator list and use
+it to get the correct array index index.
+
+Fixes: 4586a2cb83 ("hmat acpi: Build System Locality Latency and Bandwidth Information Structure(s)")
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20240307160326.31570-3-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.h |  2 +-
- subprojects/libvhost-user/libvhost-user.c | 11 +++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ hw/acpi/hmat.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
-index c2352904f0..c882b4e3a2 100644
---- a/subprojects/libvhost-user/libvhost-user.h
-+++ b/subprojects/libvhost-user/libvhost-user.h
-@@ -398,7 +398,7 @@ typedef struct VuDevInflightInfo {
- struct VuDev {
-     int sock;
-     uint32_t nregions;
--    VuDevRegion regions[VHOST_USER_MAX_RAM_SLOTS];
-+    VuDevRegion *regions;
-     VuVirtq *vq;
-     VuDevInflightInfo inflight_info;
-     int log_call_fd;
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index a3b158c671..360c5366d6 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -2171,6 +2171,8 @@ vu_deinit(VuDev *dev)
- 
-     free(dev->vq);
-     dev->vq = NULL;
-+    free(dev->regions);
-+    dev->regions = NULL;
- }
- 
- bool
-@@ -2205,9 +2207,18 @@ vu_init(VuDev *dev,
-     dev->backend_fd = -1;
-     dev->max_queues = max_queues;
- 
-+    dev->regions = malloc(VHOST_USER_MAX_RAM_SLOTS * sizeof(dev->regions[0]));
-+    if (!dev->regions) {
-+        DPRINT("%s: failed to malloc mem regions\n", __func__);
-+        return false;
-+    }
-+    memset(dev->regions, 0, VHOST_USER_MAX_RAM_SLOTS * sizeof(dev->regions[0]));
-+
-     dev->vq = malloc(max_queues * sizeof(dev->vq[0]));
-     if (!dev->vq) {
-         DPRINT("%s: failed to malloc virtqueues\n", __func__);
-+        free(dev->regions);
-+        dev->regions = NULL;
-         return false;
+diff --git a/hw/acpi/hmat.c b/hw/acpi/hmat.c
+index 8ea240878a..9b1662b6b8 100644
+--- a/hw/acpi/hmat.c
++++ b/hw/acpi/hmat.c
+@@ -78,6 +78,7 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+                           uint32_t *initiator_list)
+ {
+     int i, index;
++    uint32_t initiator_to_index[MAX_NODES] = {};
+     HMAT_LB_Data *lb_data;
+     uint16_t *entry_list;
+     uint32_t base;
+@@ -121,6 +122,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+     /* Initiator Proximity Domain List */
+     for (i = 0; i < num_initiator; i++) {
+         build_append_int_noprefix(table_data, initiator_list[i], 4);
++        /* Reverse mapping for array possitions */
++        initiator_to_index[initiator_list[i]] = i;
      }
  
+     /* Target Proximity Domain List */
+@@ -132,7 +135,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+     entry_list = g_new0(uint16_t, num_initiator * num_target);
+     for (i = 0; i < hmat_lb->list->len; i++) {
+         lb_data = &g_array_index(hmat_lb->list, HMAT_LB_Data, i);
+-        index = lb_data->initiator * num_target + lb_data->target;
++        index = initiator_to_index[lb_data->initiator] * num_target +
++            lb_data->target;
+ 
+         entry_list[index] = (uint16_t)(lb_data->data / hmat_lb->base);
+     }
 -- 
 MST
 
