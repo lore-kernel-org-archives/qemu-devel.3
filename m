@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB28BC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:28:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C115C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:28:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAaj-00077e-6w; Tue, 12 Mar 2024 18:27:25 -0400
+	id 1rkAah-0006qZ-G7; Tue, 12 Mar 2024 18:27:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaf-0006Yi-OK
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:21 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaP-0005Cr-2x
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAae-0004Nh-4p
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:21 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAaN-0004L9-Kr
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:27:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282439;
+ s=mimecast20190719; t=1710282423;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tOh3XMBYaTXqwwXatODmJZBdFVP40l8SCuosqwHz9Dw=;
- b=ii1iK+WkwFh73+BkYZVSb+Pdsrx0lio9MABqJgCrfXbiQs8EmxralwvrNcIlrAgJfyKVzz
- Nj01Q8Hc0EKmKjuQm4kN6PW2JP3yqXZ73ZoZk2f1tBMggqft3a7SXgK3/EmauWLKN2mGVj
- h+ZePIaWy7cmeOxf7yUuyDSxPUihxLI=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AurzQqFpLzlXuBxIL8RZRvJLoJVHujck2MunJ5OHm/A=;
+ b=TkEGZAAC023Wk4Od/24M7nYvAE7e8Bt12uAHsKH6TxhZmMoKqBdvRe0n/Bcyfw7MoUHmav
+ /2HAi73PPVLpL78hl/4NBdVbGBfLidJmVxzapMbUmeNFsBpO9T0peEBEszSd1exWjeMozk
+ ZSEOczvxod9B8YGDzyI+MB4qHhElxdU=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-36-ILpux4BcPtGBPqoRS-_61Q-1; Tue, 12 Mar 2024 18:27:18 -0400
-X-MC-Unique: ILpux4BcPtGBPqoRS-_61Q-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-56864b8f5f9so1354730a12.3
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:18 -0700 (PDT)
+ us-mta-668-iVtBERrFOf-8rWQyqUohXA-1; Tue, 12 Mar 2024 18:27:01 -0400
+X-MC-Unique: iVtBERrFOf-8rWQyqUohXA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a4651c22fd2so13431966b.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:27:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282436; x=1710887236;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tOh3XMBYaTXqwwXatODmJZBdFVP40l8SCuosqwHz9Dw=;
- b=TNBB36HZdgGwX3wE7Gnl5m4YT2SqAoLN3038QZNd0hNkegA20Iy4EuHz7KkAq8jCPe
- ox+/i9jhjOTZ7nGRHpft602IKNWFte4Cnvk0pzLsQS6PGryDmO2M7s9xRCFO1d+MSMfL
- 4FkVqRTkC6IcShBV1dv1SA5PoXgtQlr1PdO65zdP/Tx/q+JCZ6MqPeZAksTbyNkY/Wcc
- gSbCFZxn85P3vRkFBmwbq0HwCkiAzcGVgcq2KOx2APV0c3gAT1BOvxYIDFjvCeBW4i9y
- d7o7vcBsUyFiWGzDgmh4GdqaixdRnPiSns0BipkuH+We44J/p7kKh8H2diVx/dPDD2ml
- P5ow==
-X-Gm-Message-State: AOJu0YwCWJ+lJfxyFXGyd5Xzu98hPmSKybUXh1X6VBRsngtQTsNX2EOn
- nyBWUOb3P6KhtqIdrB6jIF8tlZw8KyjioojQsA+V/HjTH1Y6xsxVPJ3rnprMObliy/7+1eMceoD
- iaz03VFh7i9U8PvbqPofC6EvGryodK406GmMK8VNqh6z/5bs8Gjqi8TSCfz5mbXy0zOKNU0fTST
- pNvMwUYBGwY5Id1AX/djxMx3oI1pEHfpWg
-X-Received: by 2002:a50:c315:0:b0:566:1127:4bb5 with SMTP id
- a21-20020a50c315000000b0056611274bb5mr8334967edb.1.1710282436390; 
- Tue, 12 Mar 2024 15:27:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFm4qsXUUXmwGcv9qOYj47DS6cCLXV96uTaaYGD6Tno7zfR92dtE36eMtWzlJW8oTvz41fALg==
-X-Received: by 2002:a50:c315:0:b0:566:1127:4bb5 with SMTP id
- a21-20020a50c315000000b0056611274bb5mr8334950edb.1.1710282435946; 
- Tue, 12 Mar 2024 15:27:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710282419; x=1710887219;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AurzQqFpLzlXuBxIL8RZRvJLoJVHujck2MunJ5OHm/A=;
+ b=wmLqc7GSw0oX7T3boca5yBolys1qVN84wPq+SccF9RLOfinX50XJYIL6Xsb0r7jrL2
+ Y76A/GgY/j02tH66Ol6isttPGEc1t2x7FkR+iXqSg7p8BRhO+vSCig+sYNCuh69ZmTkY
+ 8QoivkGcIMvbze6ynXt/edJqfG/u/7cZ1Ntm+RHIid9ZPy4HPp8sHTMxIn8n/g6vvXOT
+ fgb2t+XicwkLtBTqZMnx8uiCeng+n/0qw4WoclXS1k84pk8EMYzHCyMqZ93wPwwVke8m
+ 1q+bcCqJ2U0Cpsn+yEGNZLWrQGb33ebS6T1GuEK1WWloQyEtfuPJ54E+I14AmKS69Xwn
+ OT1Q==
+X-Gm-Message-State: AOJu0Yz9GwDd3POXxpRpTiqur4wKnELcPkwZwHtIRlu7d7V50UKIKwZZ
+ tKOwRc8kmlBKubvRzPKKS/WxFCDarV5PiNhJTzonDiuTWKYmVNc7WPMTpnBH0fl/PgEq4c9NXeY
+ deTW4G1HKVGkLFvS1xIsBFE81A/BV9cvu8U1f/DgZggK70iMZ7jZwnhAEZH96HXR72lGD/HYUPk
+ RC5U9/QHRwIMAcdDZX8wLORt6Wn9I4pJ+g
+X-Received: by 2002:a17:906:3984:b0:a44:1f3:e474 with SMTP id
+ h4-20020a170906398400b00a4401f3e474mr6422436eje.23.1710282419582; 
+ Tue, 12 Mar 2024 15:26:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGYD/1NG1Sa14VJz3wbarGz8hPiW7rFJxlXu8xjn1LlPtMm9umoofuX94IQIgERRJIL/ZRTIw==
+X-Received: by 2002:a17:906:3984:b0:a44:1f3:e474 with SMTP id
+ h4-20020a170906398400b00a4401f3e474mr6422425eje.23.1710282419137; 
+ Tue, 12 Mar 2024 15:26:59 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- fe5-20020a056402390500b005684173e413sm2318047edb.72.2024.03.12.15.27.14
+ lt9-20020a170906fa8900b00a45c4d3ee11sm4224960ejb.123.2024.03.12.15.26.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:27:15 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:27:12 -0400
+ Tue, 12 Mar 2024 15:26:58 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:26:56 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Markus Armbruster <armbru@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 33/68] hw/cxl/cxl-host: Fix missing ERRP_GUARD() in
- cxl_fixed_memory_window_config()
-Message-ID: <2a0e0a35002db7ac64f4e82ea2a4ad2fb6d934b0.1710282274.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL 28/68] vdpa: trace skipped memory sections
+Message-ID: <a8516e5c9719cf45fd81d6790bc9ffdcf753376b.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -103,75 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-As the comment in qapi/error, dereferencing @errp requires
-ERRP_GUARD():
+Sometimes, certain parts are not being skipped in
+vhost_vdpa_listener_region_del, but they are skipped in
+vhost_vdpa_listener_region_add, or vice versa.  The vhost-vdpa code
+expects all parts to maintain their properties, so we're adding a trace
+to help with debugging when any part is skipped.
 
-* = Why, when and how to use ERRP_GUARD() =
-*
-* Without ERRP_GUARD(), use of the @errp parameter is restricted:
-* - It must not be dereferenced, because it may be null.
-...
-* ERRP_GUARD() lifts these restrictions.
-*
-* To use ERRP_GUARD(), add it right at the beginning of the function.
-* @errp can then be used without worrying about the argument being
-* NULL or &error_fatal.
-*
-* Using it when it's not needed is safe, but please avoid cluttering
-* the source with useless code.
-
-But in cxl_fixed_memory_window_config(), @errp is dereferenced in 2
-places without ERRP_GUARD():
-
-fw->enc_int_ways = cxl_interleave_ways_enc(fw->num_targets, errp);
-if (*errp) {
-    return;
-}
-
-and
-
-fw->enc_int_gran =
-    cxl_interleave_granularity_enc(object->interleave_granularity,
-                                   errp);
-if (*errp) {
-    return;
-}
-
-For the above 2 places, we check "*errp", because neither function
-returns a suitable error code. And since machine_set_cfmw() - the caller
-of cxl_fixed_memory_window_config() - doesn't get the NULL @errp
-parameter as the "set" method of object property,
-cxl_fixed_memory_window_config() hasn't triggered the bug that
-dereferencing the NULL @errp.
-
-To follow the requirement of @errp, add missing ERRP_GUARD() in
-cxl_fixed_memory_window_config().
-
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-Id: <20240223085653.1255438-2-zhao1.liu@linux.intel.com>
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Message-Id: <20240215103616.330518-3-eperezma@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/cxl/cxl-host.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/virtio/vhost-vdpa.c | 3 +++
+ hw/virtio/trace-events | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-index 2aa776c79c..c5f5fcfd64 100644
---- a/hw/cxl/cxl-host.c
-+++ b/hw/cxl/cxl-host.c
-@@ -26,6 +26,7 @@ static void cxl_fixed_memory_window_config(CXLState *cxl_state,
-                                            CXLFixedMemoryWindowOptions *object,
-                                            Error **errp)
- {
-+    ERRP_GUARD();
-     g_autofree CXLFixedWindow *fw = g_malloc0(sizeof(*fw));
-     strList *target;
-     int i;
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 5559d4f89c..3bcd05cc22 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -55,6 +55,9 @@ static bool vhost_vdpa_listener_skipped_section(MemoryRegionSection *section,
+     bool is_ram_device = memory_region_is_ram_device(section->mr);
+ 
+     if ((!is_ram && !is_iommu) || is_protected || is_ram_device) {
++        trace_vhost_vdpa_skipped_memory_section(is_ram, is_iommu, is_protected,
++                                                is_ram_device, iova_min,
++                                                iova_max, page_mask);
+         return true;
+     }
+ 
+diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
+index 20577aa584..9df24864a2 100644
+--- a/hw/virtio/trace-events
++++ b/hw/virtio/trace-events
+@@ -30,6 +30,7 @@ vhost_user_write(uint32_t req, uint32_t flags) "req:%d flags:0x%"PRIx32""
+ vhost_user_create_notifier(int idx, void *n) "idx:%d n:%p"
+ 
+ # vhost-vdpa.c
++vhost_vdpa_skipped_memory_section(int is_ram, int is_iommu, int is_protected, int is_ram_device, uint64_t first, uint64_t last, int page_mask) "is_ram=%d, is_iommu=%d, is_protected=%d, is_ram_device=%d iova_min=0x%"PRIx64" iova_last=0x%"PRIx64" page_mask=0x%x"
+ vhost_vdpa_dma_map(void *vdpa, int fd, uint32_t msg_type, uint32_t asid, uint64_t iova, uint64_t size, uint64_t uaddr, uint8_t perm, uint8_t type) "vdpa_shared:%p fd: %d msg_type: %"PRIu32" asid: %"PRIu32" iova: 0x%"PRIx64" size: 0x%"PRIx64" uaddr: 0x%"PRIx64" perm: 0x%"PRIx8" type: %"PRIu8
+ vhost_vdpa_dma_unmap(void *vdpa, int fd, uint32_t msg_type, uint32_t asid, uint64_t iova, uint64_t size, uint8_t type) "vdpa_shared:%p fd: %d msg_type: %"PRIu32" asid: %"PRIu32" iova: 0x%"PRIx64" size: 0x%"PRIx64" type: %"PRIu8
+ vhost_vdpa_listener_begin_batch(void *v, int fd, uint32_t msg_type, uint8_t type)  "vdpa_shared:%p fd: %d msg_type: %"PRIu32" type: %"PRIu8
 -- 
 MST
 
