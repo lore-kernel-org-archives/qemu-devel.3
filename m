@@ -4,99 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AF2C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 19:28:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA3B1C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 19:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk7n8-0003VL-CY; Tue, 12 Mar 2024 15:28:02 -0400
+	id 1rk7qN-0004PP-Qt; Tue, 12 Mar 2024 15:31:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk7n5-0003UY-Lg
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 15:28:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk7n4-0001Qe-9u
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 15:27:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710271677;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Dpd8jeFnO50PSi1haA/KCQahhKW4QjVb1g+TiTd+m9o=;
- b=GyBlc37w27upwBd4M2hY8KYR1QA/AXtQJgpuAGljMlifhDaBRrn3XJ8LvKvE4+YxjdNaLN
- M4LX7hcEbmAXC0GZmG+i4GgENnpMfUdJwHDPU20edAnXKIXKj6dBbSZWXQd4cezm4ZTEpL
- W5aT01J3KhM9fyYNTOdRTEHrNP+o0K0=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-658-X8ShPgUZPjSEMJQxvAlCCA-1; Tue, 12 Mar 2024 15:27:55 -0400
-X-MC-Unique: X8ShPgUZPjSEMJQxvAlCCA-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a45c994ba7cso14896366b.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 12:27:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1rk7q6-0004OX-8E; Tue, 12 Mar 2024 15:31:06 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1rk7q3-000260-9Z; Tue, 12 Mar 2024 15:31:05 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a461c50deccso45329366b.0; 
+ Tue, 12 Mar 2024 12:31:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710271860; x=1710876660; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lERavBCSZyIEiab1mn+GibZsroCG+MnnpsTUbVjtEbE=;
+ b=hZ4CJWBXW91o1hOhVWr2MOd5Fr2KDe/Op1CtFLu2zKXKo6K7muMgyfuesG9Zks225r
+ wS2GAStxXyi8jEXKh2+YvYYljtmJVZP/mcLAJTY64VmkRC2L3kAggqqFxE1wmY8OLc+q
+ L4DYM6m/oF5/u67GvoiW6cjDPUUXvhCT+qw6V8YSm5XIihm/szeFMoJU0B/XmH9DQkNl
+ kNfjhdDK3BppYeMGgCDN9+oZ/n/Is/DojmSkc8ScP4ovba/l138Q0KjgdXHXIi1vd8To
+ Xcpl3RMY4XvLH3BPehXczGdRTjsBEOzCA0UqUurIcbjNCakMI15IObdkutlc0JLn5PAz
+ R1pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710271673; x=1710876473;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Dpd8jeFnO50PSi1haA/KCQahhKW4QjVb1g+TiTd+m9o=;
- b=qB3tT1c9Pjo3+gSQ4XP1EHK4snGPzDfybzKCev1Ii66nep76k/22At+Lna2XcSKpR3
- MLwk9zG/3klXfJR5pxD9gEfLYz83GgET9hpthjWPyB2rbVs6W6KYuHwkW+MtAJZ1uVfK
- PLmbDwM4Z0BqBZ96+jJn27PcArIo3R/ZA+miht/6uJxVgvx+WsO3n8XG7wzPGWTDpFBX
- XNDXLFZlB9SwyV9cAtExxv0jl7O1Bsv8hgL+RyOugLZS++MJeQ6WKefu86ePcplU5k0k
- XXT/9Fhek2okduF2LhRYOTQSAqg9LLatIlRAkvUdqBd8dIPL1A0SyGNkWGTUWV1FdQM2
- vUVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDsNuMMpTAiS4be/HdmOh4ls/IPzSdXnoY8YsV5Zs+vO+T+V3JQ3AYo615TglmTws6MCmG2e+oGIKNmoEWM/oB0exuYcY=
-X-Gm-Message-State: AOJu0Yye7W+x0P/MMd1E9AOofA3wZeXV7nfWhh/Ia7xQkJ95/Au7pRBV
- N9r9Pd727bfdwTgLbKj6fVhev/13T34W1QwtFSDkspnOQaEZR1LChWn1q4IvCmkPsObHoeeUQrX
- HX7FF8eLSPsuPdoxbW2WtWPXa2BY35yCofJAewYmy0IDWwcGV+caV
-X-Received: by 2002:a17:907:2e08:b0:a3f:1b49:c92b with SMTP id
- ig8-20020a1709072e0800b00a3f1b49c92bmr3940328ejc.48.1710271673330; 
- Tue, 12 Mar 2024 12:27:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLDEuP9sca4rgqUXXMHDacBtKCFdi8SVod1GqM78V9q6zQxy4NO79dojrJMjQxBm3Q8GoM2w==
-X-Received: by 2002:a17:907:2e08:b0:a3f:1b49:c92b with SMTP id
- ig8-20020a1709072e0800b00a3f1b49c92bmr3940300ejc.48.1710271672880; 
- Tue, 12 Mar 2024 12:27:52 -0700 (PDT)
-Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- la18-20020a170907781200b00a43e8e76825sm4180658ejc.149.2024.03.12.12.27.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 12:27:52 -0700 (PDT)
-Date: Tue, 12 Mar 2024 15:27:47 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v8 07/15] pcie_sriov: Do not manually unrealize
-Message-ID: <20240312152644-mutt-send-email-mst@kernel.org>
-References: <20240228-reuse-v8-0-282660281e60@daynix.com>
- <20240228-reuse-v8-7-282660281e60@daynix.com>
+ d=1e100.net; s=20230601; t=1710271860; x=1710876660;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lERavBCSZyIEiab1mn+GibZsroCG+MnnpsTUbVjtEbE=;
+ b=ILWPIPJ7Omh2jlC2EeobxPjMQd8oZ0vXnUfW6FeztTmXGOia2vRLBFCvUxlZqv0pYh
+ qA4AGnetJtpcyq7X/KuSzGSUicbPYO3Njck+VYzaO74WwkccflSWvuLoBPgBS942U8vd
+ WqPm1/wXjWGyCVo9Ql2CJYS0Phwjez7m9ttkVq2TWfK3VXOA4tIXnvTMAwoZMgr5oZIQ
+ hbpeSMYvj5l3ESHz9xyXruzN0bp8PrwTzdSM8AgsT4zPhoVTIiVsgr5aYh+pX06kb/zw
+ zoy3mqC2a0AgJEvHJ6S80f+zljClY1XmlpxImrGMpfkJtNbFU91zsmPRbvWyTPU26MzO
+ Zezg==
+X-Gm-Message-State: AOJu0Yya1lEeq2o+LL2Uo03iT1pMxaSSAIRfbI1biR6ckzumMncuDpGK
+ mLGwklERGXdpUDyTYStCgY26XPgwE3l1aNCJQeHoq6ex1pcckntZ2Py4acLt
+X-Google-Smtp-Source: AGHT+IH8mRakYxRIk5eEjxL88Y1vP6v1OV9Vt4bK9eZ3BD8eZflyCyflf2pKo97kduCGY1/sSNEToQ==
+X-Received: by 2002:a17:906:af97:b0:a46:3c16:a496 with SMTP id
+ mj23-20020a170906af9700b00a463c16a496mr885713ejb.31.1710271860165; 
+ Tue, 12 Mar 2024 12:31:00 -0700 (PDT)
+Received: from [127.0.0.1] ([62.214.191.67]) by smtp.gmail.com with ESMTPSA id
+ rv25-20020a17090710d900b00a455519bcb3sm4133560ejb.55.2024.03.12.12.30.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Mar 2024 12:30:59 -0700 (PDT)
+Date: Tue, 12 Mar 2024 19:29:30 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>
+CC: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PULL 00/38] ppc-for-9.0-2 queue
+In-Reply-To: <20240312165851.2240242-1-npiggin@gmail.com>
+References: <20240312165851.2240242-1-npiggin@gmail.com>
+Message-ID: <52391359-9A38-44EC-8747-904D0C627F50@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240228-reuse-v8-7-282660281e60@daynix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,58 +92,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 28, 2024 at 08:33:18PM +0900, Akihiko Odaki wrote:
-> A device gets automatically unrealized when being unparented.
-> 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-
-I was bisecting and when I bisected to this commit I got a
-build error:
-
-../hw/pci/pcie_sriov.c: In function ‘register_vf’:
-../hw/pci/pcie_sriov.c:154:9: error: implicit declaration of function ‘error_report_err’; did you mean ‘error_report’? [-Werror=implicit-function-declaration]
-  154 |         error_report_err(local_err);
-      |         ^~~~~~~~~~~~~~~~
-      |         error_report
-../hw/pci/pcie_sriov.c:154:9: error: nested extern declaration of ‘error_report_err’ [-Werror=nested-externs]
-cc1: all warnings being treated as errors
 
 
-could not bother checking which patch introduced this, follow up patches
-fix this up.
+Am 12=2E M=C3=A4rz 2024 16:58:11 UTC schrieb Nicholas Piggin <npiggin@gmai=
+l=2Ecom>:
+>The following changes since commit 35ac6831d98e18e2c78c85c93e3a6ca1f1ae3e=
+58:
+>
+>  Merge tag 'net-pull-request' of https://github=2Ecom/jasowang/qemu into=
+ staging (2024-03-12 13:42:57 +0000)
+>
+>are available in the Git repository at:
+>
+>  https://gitlab=2Ecom/npiggin/qemu=2Egit tags/pull-ppc-for-9=2E0-2-20240=
+313
+>
+>for you to fetch changes up to e1617b845104032f0aaad9b91dcda56c7c437998:
+>
+>  spapr: nested: Introduce cap-nested-papr for Nested PAPR API (2024-03-1=
+3 02:47:04 +1000)
+>
+>----------------------------------------------------------------
+>* PAPR nested hypervisor host implementation for spapr TCG
+>* excp_helper=2Ec code cleanups and improvements
+>* Move more ops to decodetree
+>* Deprecate pseries-2=2E12 machines and P9 and P10 DD1=2E0 CPUs
+>* Document running Linux on AmigaNG
+>* Update dt feature advertising POWER CPUs=2E
+>* Add P10 PMU SPRs
+>* Improve pnv topology calculation for SMT8 CPUs=2E
+>* Various bug fixes=2E
+>
+>----------------------------------------------------------------
+>BALATON Zoltan (8):
+>      docs/system/ppc: Document running Linux on AmigaNG machines
 
+Thanks, Nicholas!
 
+Best regards,
+Bernhard
 
-> ---
->  hw/pci/pcie_sriov.c | 5 -----
->  1 file changed, 5 deletions(-)
-> 
-> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-> index e9b23221d713..8b1fd2a89ad7 100644
-> --- a/hw/pci/pcie_sriov.c
-> +++ b/hw/pci/pcie_sriov.c
-> @@ -17,7 +17,6 @@
->  #include "hw/qdev-properties.h"
->  #include "qemu/error-report.h"
->  #include "qemu/range.h"
-> -#include "qapi/error.h"
->  #include "trace.h"
->  
->  static PCIDevice *register_vf(PCIDevice *pf, int devfn,
-> @@ -204,11 +203,7 @@ static void unregister_vfs(PCIDevice *dev)
->      trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
->                                 PCI_FUNC(dev->devfn), num_vfs);
->      for (i = 0; i < num_vfs; i++) {
-> -        Error *err = NULL;
->          PCIDevice *vf = dev->exp.sriov_pf.vf[i];
-> -        if (!object_property_set_bool(OBJECT(vf), "realized", false, &err)) {
-> -            error_reportf_err(err, "Failed to unplug: ");
-> -        }
->          object_unparent(OBJECT(vf));
->          object_unref(OBJECT(vf));
->      }
-> 
-> -- 
-> 2.43.2
-
+>      target/ppc: Use env_cpu for cpu_abort in excp_helper
+>      target/ppc: Readability improvements in exception handlers
+>      target/ppc: Add gen_exception_err_nip() function
+>      target/ppc: Clean up ifdefs in excp_helper=2Ec, part 1
+>      target/ppc: Clean up ifdefs in excp_helper=2Ec, part 2
+>      target/ppc: Clean up ifdefs in excp_helper=2Ec, part 3
+>      target/ppc: Remove interrupt handler wrapper functions
+>
+>Benjamin Gray (1):
+>      ppc/spapr: Add pa-features for POWER10 machines
+>
+>Caleb Schlossin (1):
+>      ppc/pnv: Improve pervasive topology calculation for big-core
+>
+>Chinmay Rath (1):
+>      target/ppc: Move add and subf type fixed-point arithmetic instructi=
+ons to decodetree
+>
+>C=C3=A9dric Le Goater (1):
+>      MAINTAINERS: Remove myself as reviewer from PPC
+>
+>Harsh Prateek Bora (14):
+>      spapr: nested: register nested-hv api hcalls only for cap-nested-hv
+>      spapr: nested: move nested part of spapr_get_pate into spapr_nested=
+=2Ec
+>      spapr: nested: Introduce SpaprMachineStateNested to store related i=
+nfo=2E
+>      spapr: nested: keep nested-hv related code restricted to its API=2E
+>      spapr: nested: Document Nested PAPR API
+>      spapr: nested: Introduce H_GUEST_[GET|SET]_CAPABILITIES hcalls=2E
+>      spapr: nested: Introduce H_GUEST_[CREATE|DELETE] hcalls=2E
+>      spapr: nested: Introduce H_GUEST_CREATE_VCPU hcall=2E
+>      spapr: nested: Extend nested_ppc_state for nested PAPR API
+>      spapr: nested: Initialize the GSB elements lookup table=2E
+>      spapr: nested: Introduce H_GUEST_[GET|SET]_STATE hcalls=2E
+>      spapr: nested: Use correct source for parttbl info for nested PAPR =
+API=2E
+>      spapr: nested: Introduce H_GUEST_RUN_VCPU hcall=2E
+>      spapr: nested: Introduce cap-nested-papr for Nested PAPR API
+>
+>Madhavan Srinivasan (1):
+>      target/ppc: Add power10 pmu SPRs
+>
+>Nicholas Piggin (10):
+>      target/ppc: Fix GDB SPR regnum indexing
+>      target/ppc: Prevent supervisor from modifying MSR[ME]
+>      spapr: set MSR[ME] and MSR[FP] on client entry
+>      ppc: Drop support for POWER9 and POWER10 DD1 chips
+>      target/ppc: POWER10 does not have transactional memory
+>      ppc/spapr|pnv: Remove SAO from pa-features
+>      ppc/spapr: Remove copy-paste from pa-features
+>      ppc/spapr: Adjust ibm,pa-features for POWER9
+>      ppc/pnv: Permit ibm,pa-features set per machine variant
+>      ppc/pnv: Set POWER9, POWER10 ibm,pa-features bits
+>
+>Philippe Mathieu-Daud=C3=A9 (1):
+>      docs: Deprecate the pseries-2=2E12 machines
+>
+> MAINTAINERS                                |    4 +-
+> docs/about/deprecated=2Erst                  |    6 +-
+> docs/devel/nested-papr=2Etxt                 |  119 +++
+> docs/system/ppc/amigang=2Erst                |  161 +++
+> docs/system/target-ppc=2Erst                 |    1 +
+> hw/ppc/pnv=2Ec                               |  175 +++-
+> hw/ppc/pnv_core=2Ec                          |    8 +-
+> hw/ppc/ppc=2Ec                               |   10 +
+> hw/ppc/spapr=2Ec                             |   98 +-
+> hw/ppc/spapr_caps=2Ec                        |   54 +
+> hw/ppc/spapr_cpu_core=2Ec                    |    8 +-
+> hw/ppc/spapr_hcall=2Ec                       |   24 +-
+> hw/ppc/spapr_nested=2Ec                      | 1556 ++++++++++++++++++++=
++++++++-
+> include/hw/ppc/pnv_chip=2Eh                  |    2 +-
+> include/hw/ppc/pnv_core=2Eh                  |    1 +
+> include/hw/ppc/spapr=2Eh                     |   27 +-
+> include/hw/ppc/spapr_nested=2Eh              |  427 +++++++-
+> target/ppc/cpu-models=2Ec                    |    4 -
+> target/ppc/cpu=2Eh                           |   11 +
+> target/ppc/cpu_init=2Ec                      |   46 +-
+> target/ppc/excp_helper=2Ec                   |  418 +++-----
+> target/ppc/gdbstub=2Ec                       |    7 +-
+> target/ppc/helper_regs=2Ec                   |    5 +
+> target/ppc/insn32=2Edecode                   |   26 +
+> target/ppc/kvm=2Ec                           |   11 -
+> target/ppc/misc_helper=2Ec                   |    3 -
+> target/ppc/translate=2Ec                     |  164 +--
+> target/ppc/translate/fixedpoint-impl=2Ec=2Einc |   70 ++
+> 28 files changed, 2883 insertions(+), 563 deletions(-)
+> create mode 100644 docs/devel/nested-papr=2Etxt
+> create mode 100644 docs/system/ppc/amigang=2Erst
+>
 
