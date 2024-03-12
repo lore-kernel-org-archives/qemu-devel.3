@@ -4,87 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212FCC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F11C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 11:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjzwd-00068T-2k; Tue, 12 Mar 2024 07:05:19 -0400
+	id 1rjzwt-0006E1-89; Tue, 12 Mar 2024 07:05:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjzwc-00068G-0l
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:05:18 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rjzws-0006Ds-5p
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:05:34 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rjzwT-0004Ng-N8
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:05:17 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-5cddfe0cb64so3582320a12.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:05:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rjzwq-0004Wp-C3
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 07:05:33 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-568307fe62eso5421532a12.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 04:05:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710241508; x=1710846308; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1710241530; x=1710846330; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3/Mr0aLn0orEs7qmNxR5pfUTV4u2w3MLoaCmbfcZHXM=;
- b=O2cof5RvkjhHiPFqMKxHlh6EEzFl3PCsmuzjEobzeKZa4Fc8fIyc5rLU9686VVckcM
- l+QVH61iHJ17JQYnfphQ+gYlyG0da2KtyS/NruI9ZV8Zmlf9oJkPiQyKqnTWOo+RyULn
- a5Puhmd1NekNhDAxdpJMAxmDCpVBxQcexLjqizhV8jUMm2XfkS33EU0bowmXzaJkg9co
- KtKl42yaQR2XJ82AGadljpy1RmZM/IJq1nSgdtoNwm9UftzE7z//gfND5lIMeCcL4IYl
- EDSFlMxDHl7Cf/UGr/7fTMuiRYDwaAWkw5EvYBFfYy75AHXa21EfxgFIRZBmqK0T1bcA
- pamQ==
+ bh=Ns/D/GEbg+1EaTTfRx4jrWC5lSquljI+6HiF884RLvU=;
+ b=Xk43gGrttHSZ26qAy+QR1hlG11q4hWrn+Yruvuf6RtfyOnVK9+4mTu+CCYWnuV+weO
+ 2lS+SIsfCdQ6FerROUj1kTtqrNE0vulQEZy9ZO7rAGpm5BivRTqEhLRiezqK0meV0q5V
+ AiuYL/3mZmBUs24zaiGcrXkdZcvrlpdAZM9c1hqyeoBqpoVuTUrDCitTgP2b8vyQSLNr
+ Y75L2MLtri8RZJrvBgnKWKU94A5bj+Vj90oU5AJYjmE+Ed+4fyow5NyXhrt+HK+tBRAL
+ x3KW2xPbRkDov42neKBtLUs3MsYYrgLYtDr/2h7p38FKSqbABMANzUYvdChXg388OlGE
+ S4Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710241508; x=1710846308;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=3/Mr0aLn0orEs7qmNxR5pfUTV4u2w3MLoaCmbfcZHXM=;
- b=P2zvj1810MU+NhDUJ6gzi2nczy6LXm6/BodOltv/S6gKpn4fhnYCT7reH1MRPp79UE
- sgR99I/27MM2xy6LpNqZXWw963vqhvMbyp9cYVkr9ERHffmIXWwgHfKQRkAlHFjkgxT7
- EGxaC/EAab5Pjm+DAjJUKO7P7uhly3y4L1lZQxqYoGsUNB5zGIpLeSbasw2gJz6zUZcT
- X01jZxwz5qSPJom0OCdu7oPrOfCVWMV1gdCQfDbGyzZrBSsweMYrepYkkF3nT87RTrIo
- vwfYjwsZ2wdX4rUgRLdfhNBP1+FSMumXEI0zKA9/PX73FAmqCXwoC9w2qZUX7YgSbmYh
- 4srg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVC431FVXBOYdyWcOGIJXb5/zG6GEogxInzt61AAz/NX3PvK9yh5ndZEqj7X2gmLfNkwmc5gOztwgsbrpn7a9YwJCbSvq8=
-X-Gm-Message-State: AOJu0YwIiITlMDLH+fqYBKAoILz4xt5sblHAZnwrqwCUl/N4woFxWMEb
- ZVilg+8UtVnuI4LJ4+S0zRGQ5LqvWL3zJkT6PPdJB2YdwF6miXdzS6ljREganVI=
-X-Google-Smtp-Source: AGHT+IE+qQvXmzpJoXPtSxY0dcOjRW4Priju5gtO6PBgXqZZkF1NqDTNGc+weWsEja0Sc9ES1yBjww==
-X-Received: by 2002:a05:6a20:c1f:b0:1a1:68c8:a1e5 with SMTP id
- bw31-20020a056a200c1f00b001a168c8a1e5mr5298109pzb.51.1710241508085; 
- Tue, 12 Mar 2024 04:05:08 -0700 (PDT)
-Received: from localhost ([118.208.155.46]) by smtp.gmail.com with ESMTPSA id
- fd29-20020a056a002e9d00b006e580678dfbsm5901720pfb.193.2024.03.12.04.05.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 04:05:07 -0700 (PDT)
-Mime-Version: 1.0
+ d=1e100.net; s=20230601; t=1710241530; x=1710846330;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ns/D/GEbg+1EaTTfRx4jrWC5lSquljI+6HiF884RLvU=;
+ b=K72LlIwjW6o/FYnegUrDiSN88CYNXze/iRWIG1bP2CkLs57p69IYIWY1osQfuqY0L+
+ hnaOQfuraIEA+gE8e2kuYE3tXATZSOnjYQiFcsFfNBvNfpLfQrscJGyE6x3B3of8vkxS
+ 2qUTnIc1Mpql1ESQJW3dvEyi1t7dZL1SdHOO0SUC38BzVoEBNmLprKZPU4CJWwvLBPQR
+ mhOaYbaKIMO45pZYHNpAjEA1QH9u96If/0mWSZRa9s9fC28PzmOTA98AD4ndngvSm20o
+ ccEuQ0APitirb4fTLjUGAi+GhxJMBATBlyeJl31KZ8ehvkTmYgvjbgmQx/RS8TEdN/9R
+ 6+Zw==
+X-Gm-Message-State: AOJu0Yy6jQr3Vd3YHEYgAwA6Jyiro3Oxe0g409vwmZ4owKLNj2CAm54r
+ D1sMafDj/QFOChAPore57bzCGzNODqwTFKqAgEWGsrkQr7oMaj4B1iHCAPyYDxEPwOQnuSDHmWl
+ IjZletYpKu7YegfAFRAfO3E/AqGZvSlarHKQ8/rJzqV1ecN+w
+X-Google-Smtp-Source: AGHT+IHltc7pU83o9mj7u1mF4YlNhurjHr9Jp/QFtD+lmI4IJcLzCbsU5u8xUntH0OYXWfmz4aBhVrnnLKvgkMo7pUM=
+X-Received: by 2002:a50:d495:0:b0:568:3004:c611 with SMTP id
+ s21-20020a50d495000000b005683004c611mr5197993edi.42.1710241530193; Tue, 12
+ Mar 2024 04:05:30 -0700 (PDT)
+MIME-Version: 1.0
+References: <20240310191924.201680-1-clg@redhat.com>
+In-Reply-To: <20240310191924.201680-1-clg@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 12 Mar 2024 11:05:19 +0000
+Message-ID: <CAFEAcA853VG67nvAf0SNjaWcaVt2YqKSmwkcWoaREiggdLboDQ@mail.gmail.com>
+Subject: Re: [PULL 0/2] vfio queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 12 Mar 2024 21:05:00 +1000
-Message-Id: <CZRQ0IX3UQRZ.KXS6OX3HY1RD@wheely>
-Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Richard
- Henderson" <richard.henderson@linaro.org>, =?utf-8?q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Paolo Bonzini" <pbonzini@redhat.com>, "John
- Snow" <jsnow@redhat.com>, "Cleber Rosa" <crosa@redhat.com>, "Wainer dos
- Santos Moschetta" <wainersm@redhat.com>, "Beraldo Leal" <bleal@redhat.com>,
- "Michael Tokarev" <mjt@tls.msk.ru>
-Subject: Re: [PATCH v4 11/24] net: Use virtual time for net announce
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Pavel Dovgalyuk" <pavel.dovgalyuk@ispras.ru>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.15.2
-References: <20240311174026.2177152-1-npiggin@gmail.com>
- <20240311174026.2177152-12-npiggin@gmail.com>
- <6e9b8e49-f00f-46fc-bbf8-4af27e0c3906@ispras.ru>
-In-Reply-To: <6e9b8e49-f00f-46fc-bbf8-4af27e0c3906@ispras.ru>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x532.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,39 +89,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Mar 12, 2024 at 7:09 PM AEST, Pavel Dovgalyuk wrote:
-> This won't work, as needed. Announce timer can't be enabled, because
-> it is set in post_load function. Therefore announce callbacks break
-> the replay, when virtio-net is used with snapshots.
-
-I see. Is that somehow marked as being incompatible with rr?
-
-Thanks,
-Nick
-
+On Sun, 10 Mar 2024 at 19:20, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 >
-> On 11.03.2024 20:40, Nicholas Piggin wrote:
-> > Using virtual time for announce ensures that guest visible effects
-> > are deterministic and don't break replay.
-> >=20
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >   net/announce.c | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/net/announce.c b/net/announce.c
-> > index 9e99044422..70b5d5e822 100644
-> > --- a/net/announce.c
-> > +++ b/net/announce.c
-> > @@ -187,7 +187,7 @@ static void qemu_announce_self_once(void *opaque)
-> >  =20
-> >   void qemu_announce_self(AnnounceTimer *timer, AnnounceParameters *par=
-ams)
-> >   {
-> > -    qemu_announce_timer_reset(timer, params, QEMU_CLOCK_REALTIME,
-> > +    qemu_announce_timer_reset(timer, params, QEMU_CLOCK_VIRTUAL,
-> >                                 qemu_announce_self_once, timer);
-> >       if (params->rounds) {
-> >           qemu_announce_self_once(timer);
+> The following changes since commit cbccded4a2b5d685a426a437e25f67d3a375b2=
+92:
+>
+>   Merge tag 'pull-riscv-to-apply-20240308-1' of https://github.com/alista=
+ir23/qemu into staging (2024-03-08 11:47:01 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/legoater/qemu/ tags/pull-vfio-20240310
+>
+> for you to fetch changes up to 0cb51c183a91e882b10ead4ddf2321296a537c47:
+>
+>   vfio: allow cpr-reboot migration if suspended (2024-03-08 22:10:13 +010=
+0)
+>
+> ----------------------------------------------------------------
+> vfio queue:
+>
+> * Allow cpr-reboot for vfio
+>
+> ----------------------------------------------------------------
 
+
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
+
+-- PMM
 
