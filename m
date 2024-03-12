@@ -4,56 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3463C54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:08:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26DA0C54E66
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 08:11:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjxAk-0003Qo-53; Tue, 12 Mar 2024 04:07:44 -0400
+	id 1rjxE1-0005v6-Tj; Tue, 12 Mar 2024 04:11:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=j0G5=KS=kaod.org=clg@ozlabs.org>)
- id 1rjxAH-0002zJ-Jo; Tue, 12 Mar 2024 04:07:16 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rjxDx-0005rw-CZ; Tue, 12 Mar 2024 04:11:03 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=j0G5=KS=kaod.org=clg@ozlabs.org>)
- id 1rjxAB-0005rs-1B; Tue, 12 Mar 2024 04:07:11 -0400
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Tv5pC0XZZz4wcT;
- Tue, 12 Mar 2024 19:06:59 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Tv5p82FFQz4wqN;
- Tue, 12 Mar 2024 19:06:55 +1100 (AEDT)
-Message-ID: <1f4b97ec-2cf0-4619-a3d1-6aae6e609ec3@kaod.org>
-Date: Tue, 12 Mar 2024 09:06:54 +0100
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1rjxDq-0006qZ-E7; Tue, 12 Mar 2024 04:10:59 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42C86WL0015395; Tue, 12 Mar 2024 08:10:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=NCkYxn1/Tm/Mq/TFNGQFcpRi8E6u6TqwK25UFuaAHo4=;
+ b=DNNyfWS2yafY551cOhwCWHYt6h9gwqSmfR50izeWca0X6NGuPFO13l27tNb0audBGKJb
+ Coln2ZpKHa1FRpsYe8cNFUHtWN3YTae4OBhGIngQYfRKvX8g00x+dJtxziLb4lxq0LIx
+ PlveFTxGnKuJgIRjMyY/p/h0JxBwjpUnZQoZ4sZu8rfT/7oxms+iTywxpraSv4K7e9KD
+ zlKRuOaWAMhSbJIhgus/jZvyRdlrdg7sBF30/c4gze1A6abknCzlEIWFtjg2p4QwqTb3
+ Ytm67BG/EHpiR9oAKmRP54l+fhHxv7DwQvu2peNMy/OKQ5bcfOvBFY/9IpP8G4Pd+aLK YA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtk4483rn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Mar 2024 08:10:40 +0000
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42C86fD3016261;
+ Tue, 12 Mar 2024 08:10:39 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtk4483rd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Mar 2024 08:10:39 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42C5BhQf018112; Tue, 12 Mar 2024 08:10:38 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ws23t6127-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Mar 2024 08:10:38 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42C8AZp328967264
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 Mar 2024 08:10:37 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A27D75806D;
+ Tue, 12 Mar 2024 08:10:33 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D6A7358063;
+ Tue, 12 Mar 2024 08:10:31 +0000 (GMT)
+Received: from [9.109.243.35] (unknown [9.109.243.35])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 12 Mar 2024 08:10:31 +0000 (GMT)
+Message-ID: <df3f326b-2519-4a0b-9734-f425a9ba0972@linux.ibm.com>
+Date: Tue, 12 Mar 2024 13:40:30 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] ppc/pnv: Set POWER9, POWER10 ibm,pa-features bits
-Content-Language: en-US, fr
+Subject: Re: [PATCH 02/13] target/ppc: POWER10 does not have transactional
+ memory
+Content-Language: en-US
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>
+ David Gibson <david@gibson.dropbear.id.au>
 References: <20240311185200.2185753-1-npiggin@gmail.com>
- <20240311185200.2185753-9-npiggin@gmail.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240311185200.2185753-9-npiggin@gmail.com>
+ <20240311185200.2185753-3-npiggin@gmail.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20240311185200.2185753-3-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=j0G5=KS=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: xpW5cssffRHBLEEMVnGajWM_8XZ0G4m4
+X-Proofpoint-GUID: Mcr5a_dY0uAGgyEaudU59u-0z4c26iKj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-12_06,2024-03-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ clxscore=1015 mlxlogscore=999 priorityscore=1501 suspectscore=0 mlxscore=0
+ adultscore=0 phishscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403120062
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,136 +117,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/24 19:51, Nicholas Piggin wrote:
-> Copy the pa-features arrays from spapr, adjusting slightly as
-> described in comments.
+Hi Nick,
+
+One query/comment below:
+
+On 3/12/24 00:21, Nicholas Piggin wrote:
+> POWER10 hardware implements a degenerate transactional memory facility
+> in POWER8/9 PCR compatibility modes to permit migration from older
+> CPUs, but POWER10 / ISA v3.1 mode does not support it so the CPU model
+> should not support it.
 > 
-> Cc: "Cédric Le Goater" <clg@kaod.org>
-> Cc: "Frédéric Barrat" <fbarrat@linux.ibm.com>
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   hw/ppc/pnv.c   | 67 ++++++++++++++++++++++++++++++++++++++++++++++++--
->   hw/ppc/spapr.c |  1 +
->   2 files changed, 66 insertions(+), 2 deletions(-)
+>   target/ppc/cpu_init.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 52d964f77a..3e30c08420 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -332,6 +332,35 @@ static void pnv_chip_power8_dt_populate(PnvChip *chip, void *fdt)
->       }
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index 572cbdf25f..d7e84a2f40 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -6573,7 +6573,7 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data)
+>                           PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |
+>                           PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 |
+>                           PPC2_ISA205 | PPC2_ISA207S | PPC2_FP_CVT_S64 |
+> -                        PPC2_TM | PPC2_ISA300 | PPC2_PRCNTL | PPC2_ISA310 |
+> +                        PPC2_ISA300 | PPC2_PRCNTL | PPC2_ISA310 |
+>                           PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206;
+>       pcc->msr_mask = (1ull << MSR_SF) |
+>                       (1ull << MSR_HV) |
+> @@ -6617,7 +6617,7 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data)
+>       pcc->flags = POWERPC_FLAG_VRE | POWERPC_FLAG_SE |
+>                    POWERPC_FLAG_BE | POWERPC_FLAG_PMM |
+>                    POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |
+> -                 POWERPC_FLAG_VSX | POWERPC_FLAG_TM | POWERPC_FLAG_SCV;
+> +                 POWERPC_FLAG_VSX | POWERPC_FLAG_SCV;
+>       pcc->l1_dcache_size = 0x8000;
+>       pcc->l1_icache_size = 0x8000;
 >   }
->   
-> +/*
-> + * Same as spapr pa_features_300 except pnv always enables CI largepages bit.
-> + */
-> +static const uint8_t pa_features_300[] = { 66, 0,
-> +    /* 0: MMU|FPU|SLB|RUN|DABR|NX, 1: CILRG|fri[nzpm]|DABRX|SPRG3|SLB0|PP110 */
-> +    /* 2: VPM|DS205|PPR|DS202|DS206, 3: LSD|URG, 5: LE|CFAR|EB|LSQ */
-> +    0xf6, 0x3f, 0xc7, 0xc0, 0x00, 0xf0, /* 0 - 5 */
-> +    /* 6: DS207 */
-> +    0x80, 0x00, 0x00, 0x00, 0x00, 0x00, /* 6 - 11 */
-> +    /* 16: Vector */
-> +    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 12 - 17 */
-> +    /* 18: Vec. Scalar, 20: Vec. XOR, 22: HTM */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 18 - 23 */
-> +    /* 24: Ext. Dec, 26: 64 bit ftrs, 28: PM ftrs */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
-> +    /* 32: LE atomic, 34: EBB + ext EBB */
-> +    0x00, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
-> +    /* 40: Radix MMU */
-> +    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
-> +    /* 42: PM, 44: PC RA, 46: SC vec'd */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
-> +    /* 48: SIMD, 50: QP BFP, 52: String */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 48 - 53 */
-> +    /* 54: DecFP, 56: DecI, 58: SHA */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 54 - 59 */
-> +    /* 60: NM atomic, 62: RNG */
-> +    0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
-> +};
-> +
->   static void pnv_chip_power9_dt_populate(PnvChip *chip, void *fdt)
->   {
->       static const char compat[] = "ibm,power9-xscom\0ibm,xscom";
-> @@ -349,7 +378,7 @@ static void pnv_chip_power9_dt_populate(PnvChip *chip, void *fdt)
->           offset = pnv_dt_core(chip, pnv_core, fdt);
->   
->           _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
-> -                           pa_features_207, sizeof(pa_features_207))));
-> +                           pa_features_300, sizeof(pa_features_300))));
->       }
->   
->       if (chip->ram_size) {
-> @@ -359,6 +388,40 @@ static void pnv_chip_power9_dt_populate(PnvChip *chip, void *fdt)
->       pnv_dt_lpc(chip, fdt, 0, PNV9_LPCM_BASE(chip), PNV9_LPCM_SIZE);
->   }
->   
-> +/*
-> + * Same as spapr pa_features_31 except pnv always enables CI largepages bit,
-> + * always disables copy/paste.
-> + */
-> +static const uint8_t pa_features_31[] = { 74, 0,
-> +    /* 0: MMU|FPU|SLB|RUN|DABR|NX, 1: CILRG|fri[nzpm]|DABRX|SPRG3|SLB0|PP110 */
-> +    /* 2: VPM|DS205|PPR|DS202|DS206, 3: LSD|URG, 5: LE|CFAR|EB|LSQ */
-> +    0xf6, 0x3f, 0xc7, 0xc0, 0x00, 0xf0, /* 0 - 5 */
-> +    /* 6: DS207 */
-> +    0x80, 0x00, 0x00, 0x00, 0x00, 0x00, /* 6 - 11 */
-> +    /* 16: Vector */
-> +    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 12 - 17 */
-> +    /* 18: Vec. Scalar, 20: Vec. XOR */
-> +    0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 18 - 23 */
-> +    /* 24: Ext. Dec, 26: 64 bit ftrs, 28: PM ftrs */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
-> +    /* 32: LE atomic, 34: EBB + ext EBB */
-> +    0x00, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
-> +    /* 40: Radix MMU */
-> +    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
-> +    /* 42: PM, 44: PC RA, 46: SC vec'd */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
-> +    /* 48: SIMD, 50: QP BFP, 52: String */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 48 - 53 */
-> +    /* 54: DecFP, 56: DecI, 58: SHA */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 54 - 59 */
-> +    /* 60: NM atomic, 62: RNG */
-> +    0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
-> +    /* 68: DEXCR[SBHE|IBRTPDUS|SRAPD|NPHIE|PHIE] */
-> +    0x00, 0x00, 0xce, 0x00, 0x00, 0x00, /* 66 - 71 */
-> +    /* 72: [P]HASHCHK */
-> +    0x80, 0x00,                         /* 72 - 73 */
-> +};
-> +
->   static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
->   {
->       static const char compat[] = "ibm,power10-xscom\0ibm,xscom";
-> @@ -376,7 +439,7 @@ static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
->           offset = pnv_dt_core(chip, pnv_core, fdt);
->   
->           _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
-> -                           pa_features_207, sizeof(pa_features_207))));
-> +                           pa_features_31, sizeof(pa_features_31))));
->       }
->   
->       if (chip->ram_size) {
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index 128bfe11a8..b53c13e037 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -233,6 +233,7 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
->                                    PowerPCCPU *cpu,
->                                    void *fdt, int offset)
->   {
-> +    /* These should be kept in sync with pnv */
 
-yes. In that case, the array definition should be moved under target/ppc/.
-May be under PowerPCCPUClass ?
+Shouldn't we also have below change included with this:
 
-Thanks,
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index aac095e5fd..faefc0420e 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6641,7 +6641,6 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data)
+                          PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206 | PPC2_ATTN;
+      pcc->msr_mask = (1ull << MSR_SF) |
+                      (1ull << MSR_HV) |
+-                    (1ull << MSR_TM) |
+                      (1ull << MSR_VR) |
+                      (1ull << MSR_VSX) |
+                      (1ull << MSR_EE) |
 
-C.
-
->       uint8_t pa_features_206[] = { 6, 0,
->           0xf6, 0x1f, 0xc7, 0x00, 0x00, 0xc0 };
->       uint8_t pa_features_207[] = { 24, 0,
+Otherwise,
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
 
