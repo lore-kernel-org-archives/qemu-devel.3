@@ -4,103 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC13C54E5D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E971C54E60
 	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 13:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk2Qn-0005Lz-Ve; Tue, 12 Mar 2024 09:44:38 -0400
+	id 1rk2QW-00059Q-PZ; Tue, 12 Mar 2024 09:44:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rk2Qm-0005LP-7d; Tue, 12 Mar 2024 09:44:36 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rk2QU-00058I-N2; Tue, 12 Mar 2024 09:44:18 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rk2Qk-00043K-2n; Tue, 12 Mar 2024 09:44:35 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42CCrd7s027685; Tue, 12 Mar 2024 13:44:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=m8SETuk1g63VUQthJSO2KGz++TU9Zxekdx4+pmFqemA=;
- b=CEe+vJjLF1Hs0ebUGWZSmoSOEulH++XSn2vT/YTWG0pLbqrPGhm3FAljiZuv/1Ytx80K
- mdDbyqaug783WjqfsGObOmYkph6Twb9knlKhGAy3/6Go4B2YEJK6WTQfq0vUnrX8OYIL
- hmYvP2mqxxXSNS0xBjGZg792qgd52svUvJfzyCT94ePNp/Lu8azJolgZ8sNlJ5KVyrKF
- /eCfHCBNdirbqp1119hFLTAd7U0CKjxspv6tei3KhUGjnVjMbMwiuz+vaiE2LZG6q5S/
- WAmljHCouet/q/ux12ceJ2UX+b/1o2WVBR3ncoV4JQcG++9Yp14SzpZiH+oLseb2jgJb QA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtqesryyq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 13:44:29 +0000
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42CDI0Hd029686;
- Tue, 12 Mar 2024 13:44:28 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtqesryyf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 13:44:28 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42CBGZPv018143; Tue, 12 Mar 2024 13:44:27 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ws23t7jmw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Mar 2024 13:44:27 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42CDiP9v48365958
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 Mar 2024 13:44:27 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C64945806D;
- Tue, 12 Mar 2024 13:44:23 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B077258055;
- Tue, 12 Mar 2024 13:44:19 +0000 (GMT)
-Received: from [9.171.52.145] (unknown [9.171.52.145])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 12 Mar 2024 13:44:19 +0000 (GMT)
-Message-ID: <b6d04ed3-efc7-4882-8bf7-e0829a07b3ce@linux.ibm.com>
-Date: Tue, 12 Mar 2024 19:14:17 +0530
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rk2QQ-0003zr-NH; Tue, 12 Mar 2024 09:44:18 -0400
+Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:30ad:0:640:87bc:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 56D7660A5B;
+ Tue, 12 Mar 2024 16:44:09 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b4b6::1:f] (unknown
+ [2a02:6b8:b081:b4b6::1:f])
+ by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 7imGCA1InGk0-zCZ5X7ax; Tue, 12 Mar 2024 16:44:08 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1710251048;
+ bh=TX/iPFoZBL/XOzeaYns9qnFHuswxWFdHgqCbyd+6dXc=;
+ h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
+ b=dyBVe4UsfMdGaI9WXt6IU2aceVe0lprN+A9EcyafC7Ji983BvQPXOoU9E1qZ8rTtT
+ Bw+6seJDcjd40nM7pFAwMqKaPBQk5B30TZpPiPYBpO9fuaC9N5+hp9ohq5c6GD9loY
+ Fo0OcvgWTdVBJQdrBLN4XZmb/jzFYtSAVv+X0Fjs=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <1d6ba74e-b1d8-4292-9825-ea53d9bc77af@yandex-team.ru>
+Date: Tue, 12 Mar 2024 16:44:07 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/10] ppc/pnv: Set POWER9, POWER10 ibm,pa-features bits
+Subject: Re: [PATCH v2 00/10] mirror: allow switching from background to
+ active mode
 Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>
-References: <20240312131419.2196845-1-npiggin@gmail.com>
- <20240312131419.2196845-9-npiggin@gmail.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240312131419.2196845-9-npiggin@gmail.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Peter Krempa <pkrempa@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, eblake@redhat.com, hreitz@redhat.com,
+ jsnow@redhat.com, den@virtuozzo.com, t.lamprecht@proxmox.com,
+ alexander.ivanov@virtuozzo.com
+References: <a5c48627-0bef-46cd-9426-587b358fe32d@yandex-team.ru>
+ <993bfa5d-1a91-4b32-9bd8-165b7abba4f0@proxmox.com>
+ <99dd287b-816b-4f4f-b156-32f94bbb62c2@yandex-team.ru>
+ <87o7gbyy8w.fsf@pond.sub.org> <ZUTffE0wfjLH2u+e@redhat.com>
+ <87cywqn84g.fsf@pond.sub.org>
+ <1310efb0-e211-46f5-b166-d7d529507a43@yandex-team.ru>
+ <ZeWnFhLKCamlP97y@redhat.com> <ZeWr3ZGrRUrciHH4@angien.pipo.sk>
+ <65f517cd-3a1b-41bd-b326-e509cb208b92@yandex-team.ru>
+ <ZerRzZj-NrDZUeAF@redhat.com>
+ <306d2ca4-de7d-4318-b461-a06354e3b975@yandex-team.ru>
+In-Reply-To: <306d2ca4-de7d-4318-b461-a06354e3b975@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: nX-hbUb7S1X7d32q65L4KCrTcojDOvCY
-X-Proofpoint-GUID: oGqrPkuE8EAPESAP9laQB-M0y652xxj9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-12_08,2024-03-12_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- bulkscore=0 spamscore=0 phishscore=0 adultscore=0 mlxlogscore=999
- priorityscore=1501 malwarescore=0 impostorscore=0 clxscore=1015 mlxscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2403120105
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,132 +88,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 3/12/24 18:44, Nicholas Piggin wrote:
-> Copy the pa-features arrays from spapr, adjusting slightly as
-> described in comments.
+On 11.03.24 18:15, Vladimir Sementsov-Ogievskiy wrote:
+> On 08.03.24 11:52, Kevin Wolf wrote:
+>> Am 07.03.2024 um 20:42 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>>> On 04.03.24 14:09, Peter Krempa wrote:
+>>>> On Mon, Mar 04, 2024 at 11:48:54 +0100, Kevin Wolf wrote:
+>>>>> Am 28.02.2024 um 19:07 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>>>>>> On 03.11.23 18:56, Markus Armbruster wrote:
+>>>>>>> Kevin Wolf<kwolf@redhat.com>  writes:
+>>>>
+>>>> [...]
+>>>>
+>>>>>>> Is the job abstraction a failure?
+>>>>>>>
+>>>>>>> We have
+>>>>>>>
+>>>>>>>        block-job- command      since   job- command    since
+>>>>>>>        -----------------------------------------------------
+>>>>>>>        block-job-set-speed     1.1
+>>>>>>>        block-job-cancel        1.1     job-cancel      3.0
+>>>>>>>        block-job-pause         1.3     job-pause       3.0
+>>>>>>>        block-job-resume        1.3     job-resume      3.0
+>>>>>>>        block-job-complete      1.3     job-complete    3.0
+>>>>>>>        block-job-dismiss       2.12    job-dismiss     3.0
+>>>>>>>        block-job-finalize      2.12    job-finalize    3.0
+>>>>>>>        block-job-change        8.2
+>>>>>>>        query-block-jobs        1.1     query-jobs
+>>>>
+>>>> [...]
+>>>>
+>>>>> I consider these strictly optional. We don't really have strong reasons
+>>>>> to deprecate these commands (they are just thin wrappers), and I think
+>>>>> libvirt still uses block-job-* in some places.
+>>>>
+>>>> Libvirt uses 'block-job-cancel' because it has different semantics from
+>>>> 'job-cancel' which libvirt documented as the behaviour of the API that
+>>>> uses it. (Semantics regarding the expectation of what is written to the
+>>>> destination node at the point when the job is cancelled).
+>>>>
+>>>
+>>> That's the following semantics:
+>>>
+>>>    # Note that if you issue 'block-job-cancel' after 'drive-mirror' has
+>>>    # indicated (via the event BLOCK_JOB_READY) that the source and
+>>>    # destination are synchronized, then the event triggered by this
+>>>    # command changes to BLOCK_JOB_COMPLETED, to indicate that the
+>>>    # mirroring has ended and the destination now has a point-in-time copy
+>>>    # tied to the time of the cancellation.
+>>>
+>>> Hmm. Looking at this, it looks for me, that should probably a
+>>> 'block-job-complete" command (as leading to BLOCK_JOB_COMPLETED).
+>>
+>> Yes, it's just a different completion mode.
+>>
+>>> Actually, what is the difference between block-job-complete and
+>>> block-job-cancel(force=false) for mirror in ready state?
+>>>
+>>> I only see the following differencies:
+>>>
+>>> 1. block-job-complete documents that it completes the job
+>>>     synchronously.. But looking at mirror code I see it just set
+>>>     s->should_complete = true, which will be then handled
+>>>     asynchronously..  So I doubt that documentation is correct.
+>>>
+>>> 2. block-job-complete will trigger final graph changes.
+>>>     block-job-cancel will not.
+>>>
+>>> Is [2] really useful? Seems yes: in case of some failure before
+>>> starting migration target, we'd like to continue executing source. So,
+>>> no reason to break block-graph in source, better keep it unchanged.
+>>>
+>>> But I think, such behavior better be setup by mirror-job start
+>>> parameter, rather then by special option for cancel (or even
+>>> compelete) command, useful only for mirror.
+>>
+>> I'm not sure, having the option on the complete command makes more sense
+>> to me than having it in blockdev-mirror.
+>>
+>> I do see the challenge of representing this meaningfully in QAPI,
+>> though. Semantically it should be a union with job-specific options and
+>> only mirror adds the graph-changes option. But the union variant
+>> can't be directly selected from another option - instead we have a job
+>> ID, and the variant is the job type of the job with this ID.
 > 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-
-Although future re-org is expected per discussion on v1, but for now:
-
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
-> ---
->   hw/ppc/pnv.c   | 67 ++++++++++++++++++++++++++++++++++++++++++++++++--
->   hw/ppc/spapr.c |  1 +
->   2 files changed, 66 insertions(+), 2 deletions(-)
+> We already have such command: block-job-change. Which has id and type parameters, so user have to pass both, to identify the job itself and pick corresponding variant of the union type.
 > 
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 52d964f77a..8a502dea90 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -332,6 +332,35 @@ static void pnv_chip_power8_dt_populate(PnvChip *chip, void *fdt)
->       }
->   }
->   
-> +/*
-> + * Same as spapr pa_features_300 except pnv always enables CI largepages bit.
-> + */
-> +static const uint8_t pa_features_300[] = { 66, 0,
-> +    /* 0: MMU|FPU|SLB|RUN|DABR|NX, 1: CILRG|fri[nzpm]|DABRX|SPRG3|SLB0|PP110 */
-> +    /* 2: VPM|DS205|PPR|DS202|DS206, 3: LSD|URG, 5: LE|CFAR|EB|LSQ */
-> +    0xf6, 0x3f, 0xc7, 0xc0, 0x00, 0xf0, /* 0 - 5 */
-> +    /* 6: DS207 */
-> +    0x80, 0x00, 0x00, 0x00, 0x00, 0x00, /* 6 - 11 */
-> +    /* 16: Vector */
-> +    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 12 - 17 */
-> +    /* 18: Vec. Scalar, 20: Vec. XOR, 22: HTM */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 18 - 23 */
-> +    /* 24: Ext. Dec, 26: 64 bit ftrs, 28: PM ftrs */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
-> +    /* 32: LE atomic, 34: EBB + ext EBB */
-> +    0x00, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
-> +    /* 40: Radix MMU */
-> +    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
-> +    /* 42: PM, 44: PC RA, 46: SC vec'd */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
-> +    /* 48: SIMD, 50: QP BFP, 52: String */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 48 - 53 */
-> +    /* 54: DecFP, 56: DecI, 58: SHA */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 54 - 59 */
-> +    /* 60: NM atomic, 62: RNG */
-> +    0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
-> +};
-> +
->   static void pnv_chip_power9_dt_populate(PnvChip *chip, void *fdt)
->   {
->       static const char compat[] = "ibm,power9-xscom\0ibm,xscom";
-> @@ -349,7 +378,7 @@ static void pnv_chip_power9_dt_populate(PnvChip *chip, void *fdt)
->           offset = pnv_dt_core(chip, pnv_core, fdt);
->   
->           _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
-> -                           pa_features_207, sizeof(pa_features_207))));
-> +                           pa_features_300, sizeof(pa_features_300))));
->       }
->   
->       if (chip->ram_size) {
-> @@ -359,6 +388,40 @@ static void pnv_chip_power9_dt_populate(PnvChip *chip, void *fdt)
->       pnv_dt_lpc(chip, fdt, 0, PNV9_LPCM_BASE(chip), PNV9_LPCM_SIZE);
->   }
->   
-> +/*
-> + * Same as spapr pa_features_31 except pnv always enables CI largepages bit,
-> + * always disables copy/paste.
-> + */
-> +static const uint8_t pa_features_31[] = { 74, 0,
-> +    /* 0: MMU|FPU|SLB|RUN|DABR|NX, 1: CILRG|fri[nzpm]|DABRX|SPRG3|SLB0|PP110 */
-> +    /* 2: VPM|DS205|PPR|DS202|DS206, 3: LSD|URG, 5: LE|CFAR|EB|LSQ */
-> +    0xf6, 0x3f, 0xc7, 0xc0, 0x00, 0xf0, /* 0 - 5 */
-> +    /* 6: DS207 */
-> +    0x80, 0x00, 0x00, 0x00, 0x00, 0x00, /* 6 - 11 */
-> +    /* 16: Vector */
-> +    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 12 - 17 */
-> +    /* 18: Vec. Scalar, 20: Vec. XOR */
-> +    0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 18 - 23 */
-> +    /* 24: Ext. Dec, 26: 64 bit ftrs, 28: PM ftrs */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
-> +    /* 32: LE atomic, 34: EBB + ext EBB */
-> +    0x00, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
-> +    /* 40: Radix MMU */
-> +    0x00, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
-> +    /* 42: PM, 44: PC RA, 46: SC vec'd */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
-> +    /* 48: SIMD, 50: QP BFP, 52: String */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 48 - 53 */
-> +    /* 54: DecFP, 56: DecI, 58: SHA */
-> +    0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 54 - 59 */
-> +    /* 60: NM atomic, 62: RNG */
-> +    0x80, 0x00, 0x80, 0x00, 0x00, 0x00, /* 60 - 65 */
-> +    /* 68: DEXCR[SBHE|IBRTPDUS|SRAPD|NPHIE|PHIE] */
-> +    0x00, 0x00, 0xce, 0x00, 0x00, 0x00, /* 66 - 71 */
-> +    /* 72: [P]HASHST/[P]HASHCHK */
-> +    0x80, 0x00,                         /* 72 - 73 */
-> +};
-> +
->   static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
->   {
->       static const char compat[] = "ibm,power10-xscom\0ibm,xscom";
-> @@ -376,7 +439,7 @@ static void pnv_chip_power10_dt_populate(PnvChip *chip, void *fdt)
->           offset = pnv_dt_core(chip, pnv_core, fdt);
->   
->           _FDT((fdt_setprop(fdt, offset, "ibm,pa-features",
-> -                           pa_features_207, sizeof(pa_features_207))));
-> +                           pa_features_31, sizeof(pa_features_31))));
->       }
->   
->       if (chip->ram_size) {
-> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-> index a684e0d9dc..abd484023a 100644
-> --- a/hw/ppc/spapr.c
-> +++ b/hw/ppc/spapr.c
-> @@ -243,6 +243,7 @@ static void spapr_dt_pa_features(SpaprMachineState *spapr,
->        * so there isn't much need for it anyway.
->        */
->   
-> +    /* These should be kept in sync with pnv */
->       uint8_t pa_features_206[] = { 6, 0,
->           0xf6, 0x1f, 0xc7, 0x00, 0x00, 0xc0 };
->       uint8_t pa_features_207[] = { 24, 0,
+> That would be good to somehow teach QAPI to get the type automatically from the job itself...
+
+
+Seems, that's easy enough to implement such a possibility, I'll try. At least now I have a prototype, which compiles
+
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index 0ae8ae62dc..332de67e52 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -3116,13 +3116,11 @@
+  #
+  # @id: The job identifier
+  #
+-# @type: The job type
+-#
+  # Since: 8.2
+  ##
+  { 'union': 'BlockJobChangeOptions',
+-  'base': { 'id': 'str', 'type': 'JobType' },
+-  'discriminator': 'type',
++  'base': { 'id': 'str' },
++  'discriminator': 'JobType',
+    'data': { 'mirror': 'BlockJobChangeOptionsMirror' } }
+
+
+to
+
+
+bool visit_type_BlockJobChangeOptions_members(Visitor *v, BlockJobChangeOptions *obj, Error **errp)
+{
+     JobType tag;
+     if (!visit_type_q_obj_BlockJobChangeOptions_base_members(v, (q_obj_BlockJobChangeOptions_base *)obj, errp)) {
+         return false;
+     }
+     if (!BlockJobChangeOptions_mapper(obj, &tag, errp)) {
+         return false;
+     }
+     switch (tag) {
+     case JOB_TYPE_MIRROR:
+         return visit_type_BlockJobChangeOptionsMirror_members(v, &obj->u.mirror, errp);
+     case JOB_TYPE_COMMIT:
+         break;
+     ...
+
+
+
+(specifying member as descriminator works too, and I'm not going to change the interface of block-job-change, it's just and example)
+
+BlockJobChangeOptions_mapper() should be defined by hand, like this:
+
+bool BlockJobChangeOptions_mapper(BlockJobChangeOptions *opts, JobType *out,
+                                   Error **errp)
+{
+     BlockJob *job;
+
+     JOB_LOCK_GUARD();
+
+     job = find_block_job_locked(opts->id, errp);
+     if (!job) {
+         return false;
+     }
+
+     return job_type(&job->job);
+}
+
+
+
+-- 
+Best regards,
+Vladimir
+
 
