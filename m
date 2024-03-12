@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70580C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52666C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 22:39:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkAae-0006Gx-2D; Tue, 12 Mar 2024 18:27:20 -0400
+	id 1rkAbo-0002Sl-5i; Tue, 12 Mar 2024 18:28:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAa2-00051P-NL
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbN-0000VS-Bo
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAa1-0004JF-5Y
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:26:42 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkAbL-0004V0-Uc
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 18:28:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710282400;
+ s=mimecast20190719; t=1710282483;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=kuEw/qjyX67TtnsTtkeQbRtswvxdOIF5Wj6N4Z6tg+M=;
- b=iK/WIe37bcei/guxfc8Y1nuH0IFwXkXo62qnaXJd9FHxP4WvtbK9Zfj74BXjVYbhsML1r+
- X2DPtfbaUIBYMnceV2Kbo0wSOOBIvFXLKpCg0yXAr6QEuwbumHi/82uEKaftFioTjVhyVO
- OtFtwYv+vYwPOTiyqSfVDD2kmUcG/v8=
+ bh=akonLPthwYIhBZHpIZGIq9r2NNojszL0eybTb3tNgkY=;
+ b=HXawJCETuy4AYLzhUJ8P67m4onfiR9y4MK5W4iWDjMp/r+XZORNUtuTaLIi+iGwe8sUnti
+ NWTqgj4jgvQKAsl21mnj7YGXHo7DaIwQ70Wo/y+Vs+o2LGqDrnDNmdAv1Hl4UIupR/hrkJ
+ yBs4FsdJ1ZNjaWXGWHi/YZ8RCkcsmhw=
 Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
  [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-zCpsfkUuPW2rz_ozc5U20Q-1; Tue, 12 Mar 2024 18:26:39 -0400
-X-MC-Unique: zCpsfkUuPW2rz_ozc5U20Q-1
+ us-mta-343-EdPnNFw3MdaalUHAy6TPlQ-1; Tue, 12 Mar 2024 18:28:01 -0400
+X-MC-Unique: EdPnNFw3MdaalUHAy6TPlQ-1
 Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-5684650b00bso197339a12.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:26:39 -0700 (PDT)
+ 4fb4d7f45d1cf-568728e521bso1094416a12.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 15:28:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710282398; x=1710887198;
+ d=1e100.net; s=20230601; t=1710282479; x=1710887279;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kuEw/qjyX67TtnsTtkeQbRtswvxdOIF5Wj6N4Z6tg+M=;
- b=CROg71ORa7E1VLk20Oj3f32w60LM8ToAonJDlFGwiK7MdLzR2H3B6UBueKOP/WlkrS
- hz2Xmj6VDRzfqRS4reCCjxZ6Vls2LxIXeaiKvnkgtOjOc9zMAmj0X9AAoKRw9ZjU/3JA
- C8W84ZLe01zoMe1vHib4jHG6hNhs4VLGQYRr2xVqqvQJ1fQKYlVKUVFWsyxQIh4OPUsu
- Vi/RAqehBOMPqusxFqgqiLPZvC77I5qfZmNTEaj+DMSWQeOARcNkQ9oTXkxl5UOOsdn2
- J6U3zAJHMRC/9iy7kBopR8gsRAUkugeqog8kdp+b+9N8jmHnwKdJd8Lv581OESe8nzvo
- ST/Q==
-X-Gm-Message-State: AOJu0Yw0C0wvIZV+ytfR/GlDnfJR6uxXSB3RQWvB6bQYdwpjD1gdtp0v
- as5Y7Jf52LJaDgI2wvuQzCv06O1+ogNoeE55k2IEtnlv2LFrd+ffrAgsQBCZZYwC5VF5f/ZWcux
- 6MIfxD0ziJ8KzwtWlcrOUH7YhzWpbFfR7rdDezFjzzEbb62IiWZkr8kMrLCoFDWBvMSzztsx9QZ
- IvH7I02pga79uTNR6goLIPyYj0L0im1afV
-X-Received: by 2002:a50:cd07:0:b0:567:c0ac:b31d with SMTP id
- z7-20020a50cd07000000b00567c0acb31dmr3239045edi.37.1710282397762; 
- Tue, 12 Mar 2024 15:26:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzKExrWXvkSicF1QyPBfmJJoUhq+5gI90oLC/H9I9Cz8E4q6klZu+4vvB9XFTQaSLFR8qadg==
-X-Received: by 2002:a50:cd07:0:b0:567:c0ac:b31d with SMTP id
- z7-20020a50cd07000000b00567c0acb31dmr3239026edi.37.1710282397223; 
- Tue, 12 Mar 2024 15:26:37 -0700 (PDT)
+ bh=akonLPthwYIhBZHpIZGIq9r2NNojszL0eybTb3tNgkY=;
+ b=K8B+EHGGud8hL1zefhUcBrhvaBOd4/vVsq0BzFF5YKGNxQ873FO8rdsxRfn1R/LdW5
+ i/MVmO4CBqj1G33cQ8Z+YRrzW9ouJvjwFaI7H7kgAJ3Gc7HFr+aboLwJhKeTTaFR+c2n
+ HFO3cZhx0wfdDbfJNhn2q58t08d4xDk26+s/cxlHFv/olecaUSIQQGUSZPsYZ8hJROPK
+ XsFQxQn0g35jpXWzS22fGSRJsK0AvnpfohxhI9NbVFllvn8qsuPYIwo8XQyLKyTqfa9B
+ 2Q6IPEs5Zo6bvo0G/KlCk4TPK4jM+1U/dq+K7O6wnoChmg59mnc7bMc34j7t3Q9JepHO
+ j3eg==
+X-Gm-Message-State: AOJu0YyLkCNXJk6OUt4AU4REB4ibIFo34l1h/JudcnC4YdE9sO2d3Yoe
+ ZvaoDT6/Lkyz0c/LrdYMW2M8LdCiuk5U2ucMRLG6j9AgihneMsIzJsfTTnXgaKkCuQKXtKMYxlh
+ ASo11jvbVidiZwNX42YXAQpcfNiWIwJ186hAMwOygDRBBYDXv1DwjlcJUbShfJWfp02p0EJA6Kw
+ TVrR7FbS4rsj2S6/OJtSTRV957jx8WNFN1
+X-Received: by 2002:a50:85ca:0:b0:565:9c76:73c3 with SMTP id
+ q10-20020a5085ca000000b005659c7673c3mr2234764edh.29.1710282479559; 
+ Tue, 12 Mar 2024 15:27:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGjfWqhJk0JNsuF2PrMzMadSWRjBqomqSwwXYF3xskZ8Ar3sCxBUHY7Jt/aQrUTZM3RTh8H+g==
+X-Received: by 2002:a50:85ca:0:b0:565:9c76:73c3 with SMTP id
+ q10-20020a5085ca000000b005659c7673c3mr2234746edh.29.1710282479009; 
+ Tue, 12 Mar 2024 15:27:59 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- f21-20020a50d555000000b0056835320f76sm4582789edj.8.2024.03.12.15.26.35
+ ek24-20020a056402371800b005682fbc2531sm4262946edb.74.2024.03.12.15.27.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 15:26:36 -0700 (PDT)
-Date: Tue, 12 Mar 2024 18:26:34 -0400
+ Tue, 12 Mar 2024 15:27:58 -0700 (PDT)
+Date: Tue, 12 Mar 2024 18:27:55 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Mario Casquero <mcasquer@redhat.com>
-Subject: [PULL 21/68] libvhost-user: Speedup gpa_to_mem_region() and
- vu_gpa_to_va()
-Message-ID: <a3c0118c5a1e64d32a2208388b5ea90e2ec9d214.1710282274.git.mst@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org
+Subject: [PULL 46/68] hw/pci: Always call pcie_sriov_pf_reset()
+Message-ID: <1a909e3dd85d5c57a0e6a7e3285a29e57574f80d.1710282274.git.mst@redhat.com>
 References: <cover.1710282274.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -80,16 +81,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1710282274.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,121 +105,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hildenbrand <david@redhat.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Let's speed up GPA to memory region / virtual address lookup. Store the
-memory regions ordered by guest physical addresses, and use binary
-search for address translation, as well as when adding/removing memory
-regions.
+Call pcie_sriov_pf_reset() from pci_do_device_reset() just as we do
+for msi_reset() and msix_reset() to prevent duplicating code for each
+SR-IOV PF.
 
-Most importantly, this will speed up GPA->VA address translation when we
-have many memslots.
-
-Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Message-Id: <20240214151701.29906-11-david@redhat.com>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240228-reuse-v8-5-282660281e60@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 49 +++++++++++++++++++++--
- 1 file changed, 45 insertions(+), 4 deletions(-)
+ hw/net/igb.c   | 2 --
+ hw/nvme/ctrl.c | 4 ----
+ hw/pci/pci.c   | 1 +
+ 3 files changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index d72f25396d..ef6353d847 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -199,19 +199,30 @@ vu_panic(VuDev *dev, const char *msg, ...)
- static VuDevRegion *
- vu_gpa_to_mem_region(VuDev *dev, uint64_t guest_addr)
+diff --git a/hw/net/igb.c b/hw/net/igb.c
+index 9345506f81..9b37523d6d 100644
+--- a/hw/net/igb.c
++++ b/hw/net/igb.c
+@@ -488,12 +488,10 @@ static void igb_pci_uninit(PCIDevice *pci_dev)
+ 
+ static void igb_qdev_reset_hold(Object *obj)
  {
--    unsigned int i;
-+    int low = 0;
-+    int high = dev->nregions - 1;
+-    PCIDevice *d = PCI_DEVICE(obj);
+     IGBState *s = IGB(obj);
  
-     /*
-      * Memory regions cannot overlap in guest physical address space. Each
-      * GPA belongs to exactly one memory region, so there can only be one
-      * match.
-+     *
-+     * We store our memory regions ordered by GPA and can simply perform a
-+     * binary search.
-      */
--    for (i = 0; i < dev->nregions; i++) {
--        VuDevRegion *cur = &dev->regions[i];
-+    while (low <= high) {
-+        unsigned int mid = low + (high - low) / 2;
-+        VuDevRegion *cur = &dev->regions[mid];
+     trace_e1000e_cb_qdev_reset_hold();
  
-         if (guest_addr >= cur->gpa && guest_addr < cur->gpa + cur->size) {
-             return cur;
-         }
-+        if (guest_addr >= cur->gpa + cur->size) {
-+            low = mid + 1;
-+        }
-+        if (guest_addr < cur->gpa) {
-+            high = mid - 1;
-+        }
-     }
-     return NULL;
+-    pcie_sriov_pf_reset(d);
+     igb_core_reset(&s->core);
  }
-@@ -273,9 +284,14 @@ vu_remove_all_mem_regs(VuDev *dev)
- static void
- _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
- {
-+    const uint64_t start_gpa = msg_region->guest_phys_addr;
-+    const uint64_t end_gpa = start_gpa + msg_region->memory_size;
-     int prot = PROT_READ | PROT_WRITE;
-     VuDevRegion *r;
-     void *mmap_addr;
-+    int low = 0;
-+    int high = dev->nregions - 1;
-+    unsigned int idx;
  
-     DPRINT("Adding region %d\n", dev->nregions);
-     DPRINT("    guest_phys_addr: 0x%016"PRIx64"\n",
-@@ -295,6 +311,29 @@ _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
-         prot = PROT_NONE;
-     }
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 447c4de6fd..40159f39b8 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -7114,10 +7114,6 @@ static void nvme_ctrl_reset(NvmeCtrl *n, NvmeResetType rst)
+                 sctrl = &n->sec_ctrl_list.sec[i];
+                 nvme_virt_set_state(n, le16_to_cpu(sctrl->scid), false);
+             }
+-
+-            if (rst != NVME_RESET_CONTROLLER) {
+-                pcie_sriov_pf_reset(pci_dev);
+-            }
+         }
  
-+    /*
-+     * We will add memory regions into the array sorted by GPA. Perform a
-+     * binary search to locate the insertion point: it will be at the low
-+     * index.
-+     */
-+    while (low <= high) {
-+        unsigned int mid = low + (high - low)  / 2;
-+        VuDevRegion *cur = &dev->regions[mid];
-+
-+        /* Overlap of GPA addresses. */
-+        if (start_gpa < cur->gpa + cur->size && cur->gpa < end_gpa) {
-+            vu_panic(dev, "regions with overlapping guest physical addresses");
-+            return;
-+        }
-+        if (start_gpa >= cur->gpa + cur->size) {
-+            low = mid + 1;
-+        }
-+        if (start_gpa < cur->gpa) {
-+            high = mid - 1;
-+        }
-+    }
-+    idx = low;
-+
-     /*
-      * We don't use offset argument of mmap() since the mapped address has
-      * to be page aligned, and we use huge pages.
-@@ -308,7 +347,9 @@ _vu_add_mem_reg(VuDev *dev, VhostUserMemoryRegion *msg_region, int fd)
-     DPRINT("    mmap_addr:       0x%016"PRIx64"\n",
-            (uint64_t)(uintptr_t)mmap_addr);
+         if (rst != NVME_RESET_CONTROLLER) {
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 6496d027ca..e7a39cb203 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -409,6 +409,7 @@ static void pci_do_device_reset(PCIDevice *dev)
  
--    r = &dev->regions[dev->nregions];
-+    /* Shift all affected entries by 1 to open a hole at idx. */
-+    r = &dev->regions[idx];
-+    memmove(r + 1, r, sizeof(VuDevRegion) * (dev->nregions - idx));
-     r->gpa = msg_region->guest_phys_addr;
-     r->size = msg_region->memory_size;
-     r->qva = msg_region->userspace_addr;
+     msi_reset(dev);
+     msix_reset(dev);
++    pcie_sriov_pf_reset(dev);
+ }
+ 
+ /*
 -- 
 MST
 
