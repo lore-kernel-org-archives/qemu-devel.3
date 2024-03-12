@@ -4,105 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF6BC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 11 Mar 2024 23:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 805F8C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 00:19:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjp9u-0007y7-Ef; Mon, 11 Mar 2024 19:34:18 -0400
+	id 1rjpqj-00074O-AX; Mon, 11 Mar 2024 20:18:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rjp9p-0007xm-I3
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 19:34:14 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rjp9n-0003MN-UB
- for qemu-devel@nongnu.org; Mon, 11 Mar 2024 19:34:13 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id B694D5CD44;
- Mon, 11 Mar 2024 23:34:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710200048; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UDPRMrNkuLByuTPoBFeGZ6rQXVXqUChcsg87De8wo7I=;
- b=F62hWxjc5y6/Nxi9rqoN2vvVuCcN7ynnxeuCnpZwUzEPzhR1coz0cbC1ywKQwc8nEmI3ef
- PmyR5Ui4mSAUNsFdIUCzfvTFaV4TLFJalU/SHIqRNzZ34QWZNJ1cjYAAAZ2AFgMdY2G5g7
- nkjZGl4YJXMiaDZOu/NqrW6/1xUe5fs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710200048;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UDPRMrNkuLByuTPoBFeGZ6rQXVXqUChcsg87De8wo7I=;
- b=l+i66OJq+zPpGAnagwB2WLN2yHfHksiP4UIctMDK45gMegOMHBGIo6UPx44Qi5utyCDJ9b
- Ta4ZZaoZQITpf9CA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710200048; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UDPRMrNkuLByuTPoBFeGZ6rQXVXqUChcsg87De8wo7I=;
- b=F62hWxjc5y6/Nxi9rqoN2vvVuCcN7ynnxeuCnpZwUzEPzhR1coz0cbC1ywKQwc8nEmI3ef
- PmyR5Ui4mSAUNsFdIUCzfvTFaV4TLFJalU/SHIqRNzZ34QWZNJ1cjYAAAZ2AFgMdY2G5g7
- nkjZGl4YJXMiaDZOu/NqrW6/1xUe5fs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710200048;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UDPRMrNkuLByuTPoBFeGZ6rQXVXqUChcsg87De8wo7I=;
- b=l+i66OJq+zPpGAnagwB2WLN2yHfHksiP4UIctMDK45gMegOMHBGIo6UPx44Qi5utyCDJ9b
- Ta4ZZaoZQITpf9CA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F0D3B13695;
- Mon, 11 Mar 2024 23:34:06 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id IIG9KO6U72VSEQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 11 Mar 2024 23:34:06 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH 1/2] io: Introduce qio_channel_file_new_dupfd
-Date: Mon, 11 Mar 2024 20:33:34 -0300
-Message-Id: <20240311233335.17299-2-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240311233335.17299-1-farosas@suse.de>
-References: <20240311233335.17299-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rjpqf-00073o-5P
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 20:18:30 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1rjpqc-0001vN-Pn
+ for qemu-devel@nongnu.org; Mon, 11 Mar 2024 20:18:28 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42BNxWlI018456; Tue, 12 Mar 2024 00:18:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=vxdbzfcNSt40KxQz2rg72yT7GwphQHC5CQghqLpWof4=;
+ b=nVhWxCX2D3GdqzAotZTcjd0x4+tFcOML1Aq6SPfi62nsznAsNUlhm+xxkfGOqq4Rt5/j
+ b/bcRDHw8iFhCARxNXv5k935w/HDm5TH+sxBuANEYBrSfjG4N/usTipUHaNOUsKQ2JjL
+ z6KzbxbQt51Vps3HNhZnXqqgp8DrUWrkCk6o8b9ESalNpc3DuNtAwGZn6Egd5WPalP2s
+ dZljU0s8cG8qQpxnhlmCeDw1MZdjzZ+tDoNmo84t7J6YA5ukFfbE7P7HrDkZNWY0HGQc
+ zv2EuuU23+dkyLByAu420LYu67Oe4WtczQVtjPkNgStSmfzcSfloVv63QghbAzsOoHsK kw== 
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wtb960ngh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Mar 2024 00:18:21 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42BLK6R1018155; Tue, 12 Mar 2024 00:18:20 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ws23t41vv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Mar 2024 00:18:20 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42C0IGAG41353488
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 12 Mar 2024 00:18:18 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 65FF52004B;
+ Tue, 12 Mar 2024 00:18:16 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1B1B820040;
+ Tue, 12 Mar 2024 00:18:16 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.72.107])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 12 Mar 2024 00:18:16 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH] gdbstub: Fix double close() of the follow-fork-mode socket
+Date: Tue, 12 Mar 2024 01:07:01 +0100
+Message-ID: <20240312001813.13720-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-1.87 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- NEURAL_HAM_LONG(-1.00)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- BAYES_HAM(-1.57)[92.20%]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: lI2Cm5BKsgiIk9VNP1JBKr8sjvrMUmzj
+X-Proofpoint-GUID: lI2Cm5BKsgiIk9VNP1JBKr8sjvrMUmzj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-11_12,2024-03-11_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ clxscore=1015 phishscore=0 adultscore=0 impostorscore=0 bulkscore=0
+ mlxlogscore=995 spamscore=0 suspectscore=0 malwarescore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403120000
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,70 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new helper function for creating a QIOChannelFile channel with a
-duplicated file descriptor. This saves the calling code from having to
-do error checking on the dup() call.
+When the terminal GDB_FORK_ENABLED state is reached, the coordination
+socket is not needed anymore and is therefore closed. However, if there
+is a communication error between QEMU gdbstub and GDB, the generic
+error handling code attempts to close it again.
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Fix by closing it later - before returning - instead.
+
+Fixes: Coverity CID 1539966
+Fixes: d547e711a8a5 ("gdbstub: Implement follow-fork-mode child")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- include/io/channel-file.h | 18 ++++++++++++++++++
- io/channel-file.c         | 12 ++++++++++++
- 2 files changed, 30 insertions(+)
+ gdbstub/user.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/include/io/channel-file.h b/include/io/channel-file.h
-index 50e8eb1138..d373a4e44d 100644
---- a/include/io/channel-file.h
-+++ b/include/io/channel-file.h
-@@ -68,6 +68,24 @@ struct QIOChannelFile {
- QIOChannelFile *
- qio_channel_file_new_fd(int fd);
- 
-+/**
-+ * qio_channel_file_new_dupfd:
-+ * @fd: the file descriptor
-+ * @errp: pointer to initialized error object
-+ *
-+ * Create a new IO channel object for a file represented by the @fd
-+ * parameter. Like qio_channel_file_new_fd(), but the @fd is first
-+ * duplicated with dup().
-+ *
-+ * The channel will own the duplicated file descriptor and will take
-+ * responsibility for closing it, the original FD is owned by the
-+ * caller.
-+ *
-+ * Returns: the new channel object
-+ */
-+QIOChannelFile *
-+qio_channel_file_new_dupfd(int fd, Error **errp);
-+
- /**
-  * qio_channel_file_new_path:
-  * @path: the file path
-diff --git a/io/channel-file.c b/io/channel-file.c
-index d4706fa592..cbdd03bf21 100644
---- a/io/channel-file.c
-+++ b/io/channel-file.c
-@@ -45,6 +45,18 @@ qio_channel_file_new_fd(int fd)
-     return ioc;
- }
- 
-+QIOChannelFile *
-+qio_channel_file_new_dupfd(int fd, Error **errp)
-+{
-+    int newfd = dup(fd);
-+
-+    if (newfd < 0) {
-+        error_setg_errno(errp, errno, "Could not dup FD %d", fd);
-+        return NULL;
-+    }
-+
-+    return qio_channel_file_new_fd(newfd);
-+}
- 
- QIOChannelFile *
- qio_channel_file_new_path(const char *path,
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 7f9f19a1249..08aed022e26 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -502,6 +502,7 @@ void gdbserver_fork_end(CPUState *cpu, pid_t pid)
+         switch (gdbserver_user_state.fork_state) {
+         case GDB_FORK_ENABLED:
+             if (gdbserver_user_state.running_state) {
++                close(fd);
+                 return;
+             }
+             QEMU_FALLTHROUGH;
+@@ -527,7 +528,6 @@ void gdbserver_fork_end(CPUState *cpu, pid_t pid)
+                 gdbserver_user_state.fork_state = GDB_FORK_ACTIVE;
+                 break;
+             case GDB_FORK_ENABLE:
+-                close(fd);
+                 gdbserver_user_state.fork_state = GDB_FORK_ENABLED;
+                 break;
+             case GDB_FORK_DISABLE:
+@@ -542,7 +542,6 @@ void gdbserver_fork_end(CPUState *cpu, pid_t pid)
+             if (write(fd, &b, 1) != 1) {
+                 goto fail;
+             }
+-            close(fd);
+             gdbserver_user_state.fork_state = GDB_FORK_ENABLED;
+             break;
+         case GDB_FORK_DISABLING:
 -- 
-2.35.3
+2.44.0
 
 
