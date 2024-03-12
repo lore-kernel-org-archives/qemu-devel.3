@@ -4,86 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F047C54E66
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 07:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE1BCC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 07:33:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rjwY3-0002sx-Ki; Tue, 12 Mar 2024 03:27:45 -0400
+	id 1rjwco-0004bf-NK; Tue, 12 Mar 2024 03:32:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rjwXi-0002s2-66
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 03:27:22 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rjwch-0004b1-EZ
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 03:32:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rjwXc-0007bz-Fr
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 03:27:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710228437; x=1741764437;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=wq55gM97pyRdirQ5fxyXXyXEC+jco3c3Ytc8YdM0KwA=;
- b=bJzQ56foBcFL5YW5ggpj7xN/1+Tlg+xtdIRemY0zuqe33640CShGTyqq
- mS1gcYQoBFwl3Cfj0pU5B7qL3+TS6EPvVUYlU5m0Suv5suHPxqTAT0ono
- FrYk/PkBE7pqWPFdcSTzdfOqHqBBDt3FSH1FsGOtJRBkgrO5FYLc8zMAf
- y+z9EtyS9kOPl0d2Mx5dsTvtyzYnnWhwaoe1870dPVw1jEdNcaQ25ApPB
- PwKqJV/cThzf3L6CweFMELYZK1/UqEpm4cEbY2MKx6kkDvFXON8voLO8g
- iNrTO6VA9/RYvXuCfmjTooukvckIH75RSOEVy1vHWgwNwe9qZ0voZGqrP w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11010"; a="16362954"
-X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; d="scan'208";a="16362954"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Mar 2024 00:27:11 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,118,1708416000"; d="scan'208";a="34622364"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.125.243.127])
- ([10.125.243.127])
- by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Mar 2024 00:27:04 -0700
-Message-ID: <73f7b57c-32b7-4ea5-bcb2-b6eecf52e08b@intel.com>
-Date: Tue, 12 Mar 2024 15:27:01 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rjwcd-0008Nw-9W
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 03:32:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710228740;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QERrIPigsceGck5mOEFw3c8mKGL8ZIpArdqU2tQjykk=;
+ b=dIV1YcH7RdOGo9wowbqLAh9cxL7LZNgpfh/riJx6uCR6Njs8lLcyWM6cgI5XT4N9sLfLvF
+ yYx4/sCE0JynzImtyzl9PUmOyYkxnEjS8RNp+/cySj2I2km2IQDwR6HIrHVTMG0C3u2q1T
+ BqsawjgzBdCrXngEss9vJlQ26/fT7vc=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-266-wl_1h86nNPqFuyc45nJbFw-1; Tue,
+ 12 Mar 2024 03:32:16 -0400
+X-MC-Unique: wl_1h86nNPqFuyc45nJbFw-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 871EE1C05AAC;
+ Tue, 12 Mar 2024 07:32:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id A5FB540C6DAD;
+ Tue, 12 Mar 2024 07:31:54 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4EF1D21E6A24; Tue, 12 Mar 2024 08:32:15 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH v3 08/20] qapi/schema: add type narrowing to lookup_type()
+In-Reply-To: <CAFn=p-YkNHQM7QQUfd+p9E7d4BpdS4JpfGw30RJ6SsVmeWGZmw@mail.gmail.com>
+ (John Snow's message of "Mon, 11 Mar 2024 14:26:43 -0400")
+References: <20240201224246.39480-1-jsnow@redhat.com>
+ <20240201224246.39480-9-jsnow@redhat.com>
+ <87zfvvberq.fsf@pond.sub.org>
+ <CAFn=p-amLiQmaFoN3J+m=Yrij_JLzzezW8QFd3t+8N1ETfmUHA@mail.gmail.com>
+ <CAFn=p-YkNHQM7QQUfd+p9E7d4BpdS4JpfGw30RJ6SsVmeWGZmw@mail.gmail.com>
+Date: Tue, 12 Mar 2024 08:32:15 +0100
+Message-ID: <87sf0voqgw.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 52/65] i386/tdx: Wire TDX_REPORT_FATAL_ERROR with
- GuestPanic facility
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand
- <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
- Isaku Yamahata <isaku.yamahata@gmail.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
-References: <20240229063726.610065-1-xiaoyao.li@intel.com>
- <20240229063726.610065-53-xiaoyao.li@intel.com> <874jdr1wmt.fsf@pond.sub.org>
- <d5cb6e5e-0bc1-40bd-8fc1-50a03f42e9cf@intel.com>
- <87y1au881k.fsf@pond.sub.org>
- <95e623e1-ccf3-4d8f-9751-7767db100e2b@intel.com>
- <87plw1uszk.fsf@pond.sub.org>
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <87plw1uszk.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.029,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,126 +89,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/2024 3:29 PM, Markus Armbruster wrote:
-> Xiaoyao Li <xiaoyao.li@intel.com> writes:
-> 
->> On 3/7/2024 9:51 PM, Markus Armbruster wrote:
->>> Xiaoyao Li <xiaoyao.li@intel.com> writes:
->>>
->>>> On 2/29/2024 4:51 PM, Markus Armbruster wrote:
->>>>> Xiaoyao Li <xiaoyao.li@intel.com> writes:
->>>>>
->>>>>> Integrate TDX's TDX_REPORT_FATAL_ERROR into QEMU GuestPanic facility
->>>>>>
->>>>>> Originated-from: Isaku Yamahata <isaku.yamahata@intel.com>
->>>>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>>>>> ---
->>>>>> Changes in v5:
->>>>>> - mention additional error information in gpa when it presents;
->>>>>> - refine the documentation; (Markus)
->>>>>>
->>>>>> Changes in v4:
->>>>>> - refine the documentation; (Markus)
->>>>>>
->>>>>> Changes in v3:
->>>>>> - Add docmentation of new type and struct; (Daniel)
->>>>>> - refine the error message handling; (Daniel)
->>>>>> ---
->>>>>>     qapi/run-state.json   | 31 +++++++++++++++++++++--
->>>>>>     system/runstate.c     | 58 +++++++++++++++++++++++++++++++++++++++++++
->>>>>>     target/i386/kvm/tdx.c | 24 +++++++++++++++++-
->>>>>>     3 files changed, 110 insertions(+), 3 deletions(-)
->>>>>>
->>>>>> diff --git a/qapi/run-state.json b/qapi/run-state.json
->>>>>> index dd0770b379e5..b71dd1884eb6 100644
->>>>>> --- a/qapi/run-state.json
->>>>>> +++ b/qapi/run-state.json
-> 
-> [...]
-> 
->>>>>> @@ -564,6 +567,30 @@
->>>>>>               'psw-addr': 'uint64',
->>>>>>               'reason': 'S390CrashReason'}}
->>>>>> +##
->>>>>> +# @GuestPanicInformationTdx:
->>>>>> +#
->>>>>> +# TDX Guest panic information specific to TDX, as specified in the
->>>>>> +# "Guest-Hypervisor Communication Interface (GHCI) Specification",
->>>>>> +# section TDG.VP.VMCALL<ReportFatalError>.
->>>>>> +#
->>>>>> +# @error-code: TD-specific error code
->>>>>> +#
->>>>>> +# @message: Human-readable error message provided by the guest. Not
->>>>>> +#     to be trusted.
->>>>>> +#
->>>>>> +# @gpa: guest-physical address of a page that contains more verbose
->>>>>> +#     error information, as zero-terminated string.  Present when the
->>>>>> +#     "GPA valid" bit (bit 63) is set in @error-code.
->>>>>
->>>>> Uh, peeking at GHCI Spec section 3.4 TDG.VP.VMCALL<ReportFatalError>, I
->>>>> see operand R12 consists of
->>>>>
->>>>>        bits    name                        description
->>>>>        31:0    TD-specific error code      TD-specific error code
->>>>>                                            Panic – 0x0.
->>>>>                                            Values – 0x1 to 0xFFFFFFFF
->>>>>                                            reserved.
->>>>>        62:32   TD-specific extended        TD-specific extended error code.
->>>>>                error code                  TD software defined.
->>>>>        63      GPA Valid                   Set if the TD specified additional
->>>>>                                            information in the GPA parameter
->>>>>                                            (R13).
->>>>> Is @error-code all of R12, or just bits 31:0?
->>>>> If it's all of R12, description of @error-code as "TD-specific error
->>>>> code" is misleading.
->>>>
->>>> We pass all of R12 to @error_code.
->>>>
->>>> Here it wants to use "error_code" as generic as the whole R12. Do you have any better description of it ?
->>>
->>> Sadly, the spec is of no help: it doesn't name the entire thing, only
->>> the three sub-fields TD-specific error code, TD-specific extended error
->>> code, GPA valid.
->>>
->>> We could take the hint, and provide the sub-fields instead:
->>>
->>> * @error-code contains the TD-specific error code (bits 31:0)
->>>
->>> * @extended-error-code contains the TD-specific extended error code
->>>     (bits 62:32)
->>>
->>> * we don't need @gpa-valid, because it's the same as "@gpa is present"
->>>
->>> If we decide to keep the single member, we do need another name for it.
->>> @error-codes (plural) doesn't exactly feel wonderful, but it gives at
->>> least a subtle hint that it's not just *the* error code.
+John Snow <jsnow@redhat.com> writes:
+
+> On Mon, Mar 11, 2024 at 2:14=E2=80=AFPM John Snow <jsnow@redhat.com> wrot=
+e:
 >>
->> The reason we only defined one single member, is that the
->> extended-error-code is not used now, and I believe it won't be used in
->> the near future.
-> 
-> Aha!  Then I recommend
-> 
-> * @error-code contains the TD-specific error code (bits 31:0)
-> 
-> * Omit bits 62:32 from the reply; if we later find an actual use for
->    them, we can add a suitable member
-> 
-> * Omit bit 63, because it's the same as "@gpa is present"
-> 
->> If no objection from others, I will use @error-codes (plural) in the
->> next version.
-> 
-> I recommend to keep the @error-code name, but narrow its value to the
-> actual error code, i.e. bits 31:0.
+>> On Tue, Feb 20, 2024 at 5:39=E2=80=AFAM Markus Armbruster <armbru@redhat=
+.com> wrote:
+>> >
+>> > John Snow <jsnow@redhat.com> writes:
+>> >
+>> > > This function is a bit hard to type as-is; mypy needs some assertion=
+s to
+>> > > assist with the type narrowing.
+>> > >
+>> > > Signed-off-by: John Snow <jsnow@redhat.com>
+>> > > ---
+>> > >  scripts/qapi/schema.py | 4 +++-
+>> > >  1 file changed, 3 insertions(+), 1 deletion(-)
+>> > >
+>> > > diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+>> > > index 043ee7556e6..e617abb03af 100644
+>> > > --- a/scripts/qapi/schema.py
+>> > > +++ b/scripts/qapi/schema.py
+>> > > @@ -997,7 +997,9 @@ def lookup_entity(self, name, typ=3DNone):
+>> >        def lookup_entity(self, name, typ=3DNone):
+>> >            ent =3D self._entity_dict.get(name)
+>> >            if typ and not isinstance(ent, typ):
+>> >                return None
+>> > >          return ent
+>> > >
+>> > >      def lookup_type(self, name):
+>> > > -        return self.lookup_entity(name, QAPISchemaType)
+>> > > +        typ =3D self.lookup_entity(name, QAPISchemaType)
+>> > > +        assert typ is None or isinstance(typ, QAPISchemaType)
+>> > > +        return typ
+>> > >
+>> > >      def resolve_type(self, name, info, what):
+>> > >          typ =3D self.lookup_type(name)
+>> >
+>> > I figure the real trouble-maker is .lookup_entity().
+>> >
+>> > When not passed an optional type argument, it returns QAPISchemaEntity.
+>> >
+>> > When passed an optional type argument, it returns that type or None.
+>> >
+>> > Too cute for type hints to express, I guess.
+>> >
+>> > What if we drop .lookup_entity()'s optional argument?  There are just
+>> > three callers:
+>> >
+>> > 1. .lookup_type(), visible above.
+>> >
+>> >        def lookup_type(self, name):
+>> >            ent =3D self.lookup_entity(name)
+>> >            if isinstance(ent, QAPISchemaType):
+>> >                return ent
+>> >            return None
+>> >
+>> >     This should permit typing it as -> Optional[QAPISchemaType] without
+>> >     further ado.
+>> >
+>> > 2. ._make_implicit_object_type() below
+>> >
+>> >    Uses .lookup_type() to check whether the implicit object type alrea=
+dy
+>> >    exists.  We figure we could
+>> >
+>> >            typ =3D self.lookup_entity(name)
+>> >            if typ:
+>> >                assert(isinstance(typ, QAPISchemaObjectType))
+>> >                # The implicit object type has multiple users.  This can
+>> >
+>> > 3. QAPIDocDirective.run() doesn't pass a type argument, so no change.
+>> >
+>> > Thoughts?
+>> >
+>> > If you'd prefer not to rock the boat for this series, could it still
+>> > make sense as a followup?
+>>
+>> It makes sense as a follow-up, I think. I had other patches in the
+>> past that attempted to un-cuten these functions and make them more
+>> statically solid, but the shifting sands kept making it easier to put
+>> off until later.
+>>
+>> Lemme see if I can just tack this on to the end of the series and see
+>> how it behaves...
+>
+> Oh, I see what you're doing. Well, I think it's fine if you want to,
+> but it's also fine to keep this "stricter" method. There's also ways
+> to type it using mypy's @overload which I've monkey'd with in the
+> past. Dealer's choice, honestly, but I think I'm eager to just get to
+> the "fully typed" baseline and then worry about changing more stuff.
 
-It works for me. I will got this direction in the next version.
-
->>>>> If it's just bits 31:0, then 'Present when the "GPA valid" bit (bit 63)
->>>>> is set in @error-code' is wrong.  Could go with 'Only present when the
->>>>> guest provides this information'.
-> 
-> [...]
-> 
+That's okay.  However, a good part of the typing exercise's benefit is
+the pinpointing of needlessly cute code, i.e. code that could be just as
+well be less cute.  To actually reap the benefit, we need to make it
+less cute.  If we put it off, we risk to forget.  Acceptable if we take
+appropriate steps not to forget.
 
 
