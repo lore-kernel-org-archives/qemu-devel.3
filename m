@@ -4,88 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA19C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B96BDC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 12 Mar 2024 17:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rk6Lo-0007ZV-NR; Tue, 12 Mar 2024 13:55:44 -0400
+	id 1rk6Ma-0007p5-V8; Tue, 12 Mar 2024 13:56:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk6Ll-0007Yk-Eb
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:55:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rk6MS-0007i4-SH
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:56:25 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rk6Lj-0002OL-0r
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:55:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710266137;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rqxg+bRkO1FTqkgtei/TrIiKOv15eEm0HgYedbw/mlY=;
- b=GM8lKYKSnxWux66ue+T6grbjFEWdUdN4yjhMhoYl0948RBh8T2xaFZ3XGGGMGbmLP+HfcM
- RDJOZiu8FLUkKxLceohAoNCh7CZsks6MylwIz939TqZA8LHUkpvE38l/SRoS1mGoJOkili
- G/zuWLHl4+CNobn4u0jPsL7IDrjIL/E=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-374-JgC7ftbkNyiPbFr3rSS7rA-1; Tue, 12 Mar 2024 13:55:36 -0400
-X-MC-Unique: JgC7ftbkNyiPbFr3rSS7rA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33e8b535e27so2049533f8f.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 10:55:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710266135; x=1710870935;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rqxg+bRkO1FTqkgtei/TrIiKOv15eEm0HgYedbw/mlY=;
- b=nOa1oEhezUd8X6tXbxUE2brxSq8CxM3O3uV1BthxOjIuiWvSymcpjDEpJhv05k9sXw
- tHwjWFeaJC+qsbazaLOgxhNmCxQohhVptX2rfq9Z1HIeNiQnTcgzEC7vjWTnCK/dzTMc
- C32yjWOHMipgLm+WC8WlYpbsvL7WOVaxWT/n89bcTCLnsgl7NORnWY+k2tfkFs6dozAY
- Tf7XWeyqH02E/1xzeWmNIjZI/8I0/lMteQd/YzbWAKWAkaQEubg0H5hoKJS1wYEpEkMX
- Zpb3z2hD7nfNnbAuU7qKATH7fZ1Q0Z0NFkU6Q4AUGoM8WurvwNaaJp9/f/B0rnOwGh8i
- F2Iw==
-X-Gm-Message-State: AOJu0Yz68TdfcSQFrAkImLUudO5JTmFGR+a0l5zhyOIlrscqcombplJS
- ch12RmDWmTrtn51PS5EOIb+g2wnElx/1v+BHlllfnB1euJyjT0s4S6OFj6xZ6UGOi3x5M3tWmee
- aXliYalm4tacgGWT1cU4s+9Z3yqbJTSDG2/oRBie3wXC4EPPeXhmS
-X-Received: by 2002:adf:fa52:0:b0:33e:7b36:e17d with SMTP id
- y18-20020adffa52000000b0033e7b36e17dmr134234wrr.22.1710266134694; 
- Tue, 12 Mar 2024 10:55:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFo+Bu45HprZlWraqjiPb4d/ft2m5DKXvU8LTRFNe44lyyVMqt2FGf1wz6R+e9UucANxOpo8Q==
-X-Received: by 2002:adf:fa52:0:b0:33e:7b36:e17d with SMTP id
- y18-20020adffa52000000b0033e7b36e17dmr134216wrr.22.1710266134219; 
- Tue, 12 Mar 2024 10:55:34 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f0:532c:5ae4:fce6:76e1:fa1a])
- by smtp.gmail.com with ESMTPSA id
- g5-20020a5d6985000000b0033d6c928a95sm9609837wru.63.2024.03.12.10.55.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 10:55:33 -0700 (PDT)
-Date: Tue, 12 Mar 2024 13:55:28 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Thomas =?iso-8859-1?Q?Wei=DFschuh?= <thomas@t-8ch.de>
-Cc: qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Arnd Bergmann <arnd@arndb.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH] docs/specs/pvpanic: document shutdown event
-Message-ID: <20240312135414-mutt-send-email-mst@kernel.org>
-References: <20240310-pvpanic-shutdown-spec-v1-1-b258e182ce55@t-8ch.de>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rk6MP-0002Sv-O7
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 13:56:23 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5B55B55584;
+ Tue, 12 Mar 2024 20:57:20 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id B3B71972D5;
+ Tue, 12 Mar 2024 20:56:17 +0300 (MSK)
+Message-ID: <c10c6ec3-faaa-4e1a-bfb6-41eea38fdcb2@tls.msk.ru>
+Date: Tue, 12 Mar 2024 20:56:17 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240310-pvpanic-shutdown-spec-v1-1-b258e182ce55@t-8ch.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/8] Net patches
+Content-Language: en-US
+To: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org
+References: <20240312113642.36862-1-jasowang@redhat.com>
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Nick Briggs <nicholas.h.briggs@gmail.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240312113642.36862-1-jasowang@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,54 +85,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 10, 2024 at 04:04:51PM +0100, Thomas Weiﬂschuh wrote:
-> Shutdown requests are normally hardware dependent.
-> By extending pvpanic to also handle shutdown requests, guests can
-> submit such requests with an easily implementable and cross-platform
-> mechanism.
+12.03.2024 14:36, Jason Wang wrote:
+...
+> ----------------------------------------------------------------
+> Andrew Melnychenko (5):
+>        ebpf: Added eBPF map update through mmap.
+>        ebpf: Added eBPF initialization by fds.
+>        virtio-net: Added property to load eBPF RSS with fds.
+>        qmp: Added new command to retrieve eBPF blob.
+>        ebpf: Updated eBPF program and skeleton.
 > 
-> Signed-off-by: Thomas Weiﬂschuh <thomas@t-8ch.de>
+> Laurent Vivier (2):
+>        igb: fix link state on resume
+>        e1000e: fix link state on resume
+> 
+> Nick Briggs (1):
+>        Avoid unaligned fetch in ladr_match()
 
+ From the above, I'm picking up igb & e100e "fix link state on resume"
+and "Avoid unaligned fetch in ladr_match()" for stable.
 
-Okay I merged this to get us out of the bind.
-Pls post a fixup patch adding something like (to be implemented)
-so people reading this do not become confused.
+Please let me know if this is incorrect.
 
-> ---
-> This patch was split out from my earlier pvpanic-shutdown series [0].
-> The original series dropped the usage of the linux/pvpanic.h UAPI
-> header.
-> As we decided to keep the linux header [1] this first commit only adds
-> the spec definition.
-> Then a patch to Linux will add the new events to linux/pvpanic.h.
-> After this the rest of the changes to QEMU will be submitted again.
-> 
-> [0] https://lore.kernel.org/qemu-devel/20240208-pvpanic-shutdown-v6-0-965580ac057b@t-8ch.de/
-> [1] https://lore.kernel.org/lkml/20240213053953-mutt-send-email-mst@kernel.org/
-> ---
->  docs/specs/pvpanic.rst | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/docs/specs/pvpanic.rst b/docs/specs/pvpanic.rst
-> index f894bc19555f..61a80480edb8 100644
-> --- a/docs/specs/pvpanic.rst
-> +++ b/docs/specs/pvpanic.rst
-> @@ -29,6 +29,8 @@ bit 1
->    a guest panic has happened and will be handled by the guest;
->    the host should record it or report it, but should not affect
->    the execution of the guest.
-> +bit 2
-> +  a regular guest shutdown has happened and should be processed by the host
->  
->  PCI Interface
->  -------------
-> 
-> ---
-> base-commit: f901bf11b3ddf852e591593b09b8aa7a177f9a0b
-> change-id: 20240310-pvpanic-shutdown-spec-4ea2172529e8
-> 
-> Best regards,
-> -- 
-> Thomas Weiﬂschuh <thomas@t-8ch.de>
+Thanks,
 
+/mjt
 
