@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55521C54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 06:50:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 783B1C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 06:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkIRA-0004rm-UR; Wed, 13 Mar 2024 02:50:05 -0400
+	id 1rkIRp-0005CU-CQ; Wed, 13 Mar 2024 02:50:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkIR7-0004pn-HH
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 02:50:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkIRP-0004zU-1s
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 02:50:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkIR5-0000KR-Ru
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 02:50:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkIRM-0000PL-QM
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 02:50:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710312599;
+ s=mimecast20190719; t=1710312615;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=C0DcxDO3m2vtxwdKzv4jUJfjIm4ktk+IdMc2OXd8j08=;
- b=c0M1uaxXZs0JgVPhhu5uTGQQNNEYW88OxvrXSQcGMgMpoPfbv+5bEZm4hSdFwbFKA5FU/b
- +ys+1AgnWFo0xTLEmFkrF50vCUs9+53aQSGnIN83aa9hVAVjOC800hWbtqp5ICuSWrSbbm
- +B6VWS8Kkw2bp1kltEjcgYDSLMS5l9o=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Go8QLI9gQbXmyhHkKz0PaJ+v3qPiC1qNd2rnvX58eMk=;
+ b=VvlMkY4byWW6X5cntDvjNZJgGxcjhk9qTUi8cVCxrKvoTPffJXy+62hXCVLZfd69iHPZ1+
+ NgRIK/HNMo50JpwFVeGNzxU1mtyyGFQSVkJAsZYC8BUllWcJJZS4xTNfRzo9MdMsQz4kyq
+ KCxuZ8WAHvmevb3zlKUMR3Ef13NCIw8=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-154-0Sa1751WODyC7inV2y-kdQ-1; Wed, 13 Mar 2024 02:49:57 -0400
-X-MC-Unique: 0Sa1751WODyC7inV2y-kdQ-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-33e8b93b4efso1974062f8f.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 23:49:57 -0700 (PDT)
+ us-mta-671-9sDuPv4lPVKxY2nr6F3VeA-1; Wed, 13 Mar 2024 02:50:14 -0400
+X-MC-Unique: 9sDuPv4lPVKxY2nr6F3VeA-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-513c65ffba5so846829e87.2
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 23:50:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710312595; x=1710917395;
+ d=1e100.net; s=20230601; t=1710312612; x=1710917412;
  h=content-disposition:mime-version:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=C0DcxDO3m2vtxwdKzv4jUJfjIm4ktk+IdMc2OXd8j08=;
- b=hhbgYNPD/odgcG4uQSIHHuxPPEjebbTOIDHsJ/WXO15OhPwWqGHK/yNIi2gOLv6pGz
- rs1/I0UvSM+7Fz126JvsRfDise7uADnQXP/8/NZZng6hmeligD/3sjOe6DhJGRrAaskv
- fgioMm662S/g3L/CQ7Boz8GOPJcdFpAwfYVya1A2yVbEqFsHcsndTRXanw2kG5JIiR2J
- fjC8osFZsi46bgdAm9S6WfZZryvIBHUeNujt92E70XucYdf6UsvjFTVqMjrW7eXUAxi0
- bl6Bzfc1+0pDpiJroF/5cWM3CNqqTwQtjrHtnfrMt9TowO0bx/DePplDp5Md5PFVyyKv
- JImw==
-X-Gm-Message-State: AOJu0YwFx29oi4wxELEjJ2r8Iv+BE49WEzfh3mvYV8RGiSv/YIxjGF1K
- fgBmWiF0j9jU26dxfF5nJz+v0goz1cdvIVBl/JH4vbLw16EpkLln+/B4+Evy7gJ2f05M/4+djvK
- cNexqFmakFrVJJ2n+Fy1r2VrfqUm21gCPNKnQrNqDO7fIxKLpHXJJL9KV6GB9+yGIyntWxdDOc/
- qbQwpYKMhJV6Ik54Lp8oc6htIgic33GA==
-X-Received: by 2002:a5d:4a08:0:b0:33e:a04a:ccca with SMTP id
- m8-20020a5d4a08000000b0033ea04acccamr943887wrq.30.1710312595671; 
- Tue, 12 Mar 2024 23:49:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEJzkDe5Zid9gEgain8RTbig0QzuJeMfXDxt9w4qLQ9029heCjRPlNC38IW7FDmr237EyCsKw==
-X-Received: by 2002:a5d:4a08:0:b0:33e:a04a:ccca with SMTP id
- m8-20020a5d4a08000000b0033ea04acccamr943873wrq.30.1710312595184; 
- Tue, 12 Mar 2024 23:49:55 -0700 (PDT)
+ bh=Go8QLI9gQbXmyhHkKz0PaJ+v3qPiC1qNd2rnvX58eMk=;
+ b=LteX6oyC7fa/qtgAqAzMu5VZsAfreW5ET4ytj4em5pwJwDcJJ/IIgmCdGj1Q2cLR46
+ v+4A0le7UwhLFaP9lOVsQQ+zj5SvAf+to1YJDGNGm540uaZ5fbPPm2mhL3cnkgSykgo7
+ 7TKOo8OVof51hlMDFG42KiP0EXSlU5QUhmI8TbpFafiOF0WwVFiqmjgL+nJ/AV0U9HGy
+ 9LDP2z7mmAUgw6qNqlGmaHP98O/amzJAGlbgPGKOXH5CqVmH+5H+Q7JQD0CrGjgoFgxq
+ R1a12Ho7SI6SHHkkN89NF3M+/sJg/TZWXV+8ET9emgulwOiFpHfoNifbf3itky9SpQWX
+ K0Og==
+X-Gm-Message-State: AOJu0Yw4HWnMISztBzgtrPnmD0IFEH8tJibtEcziPwRs557yq8PJtrT1
+ I/BA872DtnHoG7YyCdRygoJ5tZAsRtnjfYadDpQdwKjzmEpcEIyg8Grw3fkK3updXpYtbVEn5xV
+ ES7VP7xuYcT2yQqT4sCWnezL3EKdekPW8Iy07CMXk3L3X9ALHYULlbg8x04NsVi3oEpFUAHjsn0
+ eKTXHF+tlIzRSVTi1ugDF3wcFJiO9ZCA==
+X-Received: by 2002:a05:6512:694:b0:513:42e:ddf0 with SMTP id
+ t20-20020a056512069400b00513042eddf0mr1877926lfe.36.1710312612157; 
+ Tue, 12 Mar 2024 23:50:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFbn0IFcHLdFd1xpIywrSkAibGWg2Y8/3rTZqYlZGjO0HUz33f5sxTLMUVzDgcAT+DcXKD1VQ==
+X-Received: by 2002:a05:6512:694:b0:513:42e:ddf0 with SMTP id
+ t20-20020a056512069400b00513042eddf0mr1877902lfe.36.1710312611612; 
+ Tue, 12 Mar 2024 23:50:11 -0700 (PDT)
 Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
- ay2-20020a5d6f02000000b0033d9f0dcb35sm563104wrb.87.2024.03.12.23.49.53
+ k37-20020a05600c1ca500b00413e6c56faasm1252864wms.41.2024.03.12.23.50.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 12 Mar 2024 23:49:54 -0700 (PDT)
-Date: Wed, 13 Mar 2024 02:49:52 -0400
+ Tue, 12 Mar 2024 23:50:11 -0700 (PDT)
+Date: Wed, 13 Mar 2024 02:50:08 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Felix Wu <flwu@google.com>, Nabih Estefan <nabihestefan@google.com>,
- Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>
-Subject: [PATCH repost] SMBIOS: fix long lines
-Message-ID: <d62c5fcd4df119ecfb64a17753de75ca920c78d3.1710312575.git.mst@redhat.com>
+Cc: Lukas Stockner <lstockner@genesiscloud.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: [PATCH] qapi: document PCIe Gen5/Gen6 speeds since 9.0
+Message-ID: <7a27998637b347c287b6a1c1394669e2769fa8e4.1710312598.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,41 +97,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Break up long lines to fit under 80/90 char limit.
+Document that PCIe Gen5/Gen6 speeds are only in QAPI
+since 9.0 - the rest is since 4.0.
 
-Fixes: 04f143d828 ("Implement SMBIOS type 9 v2.6")
-Fixes: 735eee07d1 ("Implement base of SMBIOS type 9 descriptor.")
-Cc: "Felix Wu" <flwu@google.com>
-Cc: Nabih Estefan <nabihestefan@google.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Cc: Lukas Stockner <lstockner@genesiscloud.com>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Fixes: c08da86dc4 ("pcie: Support PCIe Gen5/Gen6 link speeds")
+Suggested-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/smbios/smbios.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ qapi/common.json | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index e3d5d8f2e2..949c2d74a1 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -1592,12 +1592,15 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
-             t = g_new0(struct type9_instance, 1);
-             save_opt(&t->slot_designation, opts, "slot_designation");
-             t->slot_type = qemu_opt_get_number(opts, "slot_type", 0);
--            t->slot_data_bus_width = qemu_opt_get_number(opts, "slot_data_bus_width", 0);
-+            t->slot_data_bus_width =
-+                qemu_opt_get_number(opts, "slot_data_bus_width", 0);
-             t->current_usage = qemu_opt_get_number(opts, "current_usage", 0);
-             t->slot_length = qemu_opt_get_number(opts, "slot_length", 0);
-             t->slot_id = qemu_opt_get_number(opts, "slot_id", 0);
--            t->slot_characteristics1 = qemu_opt_get_number(opts, "slot_characteristics1", 0);
--            t->slot_characteristics2 = qemu_opt_get_number(opts, "slot_characteristics2", 0);
-+            t->slot_characteristics1 =
-+                qemu_opt_get_number(opts, "slot_characteristics1", 0);
-+            t->slot_characteristics2 =
-+                qemu_opt_get_number(opts, "slot_characteristics2", 0);
-             save_opt(&t->pcidev, opts, "pcidev");
-             QTAILQ_INSERT_TAIL(&type9, t, next);
-             return;
+diff --git a/qapi/common.json b/qapi/common.json
+index 867a9ad9b0..7558ce5430 100644
+--- a/qapi/common.json
++++ b/qapi/common.json
+@@ -107,9 +107,9 @@
+ #
+ # @16: 16.0GT/s
+ #
+-# @32: 32.0GT/s
++# @32: 32.0GT/s (since 9.0)
+ #
+-# @64: 64.0GT/s
++# @64: 64.0GT/s (since 9.0)
+ #
+ # Since: 4.0
+ ##
 -- 
 MST
 
