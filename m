@@ -4,87 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BDDC54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 05:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8E5EC54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 06:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkHK9-0001l1-Af; Wed, 13 Mar 2024 01:38:45 -0400
+	id 1rkHfN-00069P-VG; Wed, 13 Mar 2024 02:00:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkHK7-0001kV-1G
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:38:43 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkHK5-0003JB-0n
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:38:42 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-29bb3d62949so3420062a91.1
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 22:38:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710308319; x=1710913119; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BJLjiyJW4471YgTtt3S7IB/synTzjVT9S8z3v4x/PYY=;
- b=AwRFzWg4LtxklDzcz3BG60lX17EtfK9TV7k4wjbfRPYxJZd0YNKY+YHEsg2nwjxc2t
- STCTryIUv8BrQ3mbYVkAJUge4i08jYWpcnJrZ8zcO2eNSy0tyFT1tLSCqdnkaXOJYa5C
- sxFk8kVHWFa9rkhLSnrjh4EFm7hmAdYmJTk2m7WslwsDs69F9Qp6P4TbTvNrxtyPX02f
- xfD7UdQqKOGZCfXm+0f/q5QhXHGJ4wAya8aj/t+4AyAqj5lH/agaKgZsWvjXFFLAeyvP
- 7v7IoQHiwVaOCVMqoZJLukeDLrpkZYZHohfOiX3TYgBT8azKOm3yhi4KK8U69zQxrZts
- NI/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710308319; x=1710913119;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=BJLjiyJW4471YgTtt3S7IB/synTzjVT9S8z3v4x/PYY=;
- b=GlR7XKQWKV7b+zoLj2a+9CbtibmMOxDcSB7A84T/JkIjxmgfv8+zYr6D58LsNHbY1d
- YYChNGSdLwXw9xVMoxgFfdYF2vSCy0ivH7gQzPZYPBUFPtOqc6j6NpgR3Iz/xUwbVKBy
- 3oYUaIj2GkSKP60HPMck7Bt8aNAhxVt6rzUYpJHRtjHlMESP1s1G8MCXLQ+CuMbLAP6n
- bUNhyAFCKT70zQuDYDi20tHZdZfdAllPYUW+Ky0iCHa5kw0f0Uh28p6QakMtKgfjyUO/
- WANbuu2QqoOwhdj66eOjhu76bB42JVfsJ0J2l0hd2P0gAHgrjuzyqzzaJm7J6ANEJIzW
- bgPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6XwaFK/UV53wkTAz4cpNgsqmTd+qVKp1gk24V51ASf7ithRh6H1jriWRea/K7edjSuF3anU5DXRcGrF7XGDU1e5GdXz0=
-X-Gm-Message-State: AOJu0YwljYg/44ANtOgLRNO5Cq/0BgS44l3CgpMxP8W1R3k4nhPpWeWm
- hqRsOhq06LEoOoQ2LqOX0lYz9roMaDuLj8+vCWb43yw03Ejj6F3P
-X-Google-Smtp-Source: AGHT+IGE8iiMtQCJrEIBskNNWaspPDJm4HeCnoPX2RayrQMkr9rjk7xNJgiwC2OIWsqXM8vPd8YxPg==
-X-Received: by 2002:a17:90a:e508:b0:29b:aee7:5937 with SMTP id
- t8-20020a17090ae50800b0029baee75937mr4006748pjy.23.1710308319115; 
- Tue, 12 Mar 2024 22:38:39 -0700 (PDT)
-Received: from localhost ([1.146.20.17]) by smtp.gmail.com with ESMTPSA id
- s21-20020a17090aa11500b0029beec8e86csm511287pjp.36.2024.03.12.22.38.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 22:38:38 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 13 Mar 2024 15:38:23 +1000
-Message-Id: <CZSDOZT1RURT.3FBGNCY6GQ1WE@wheely>
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Pavel Dovgalyuk" <pavel.dovgalyuk@ispras.ru>, <qemu-devel@nongnu.org>
-Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Richard
- Henderson" <richard.henderson@linaro.org>, =?utf-8?q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Paolo Bonzini" <pbonzini@redhat.com>, "John
- Snow" <jsnow@redhat.com>, "Cleber Rosa" <crosa@redhat.com>, "Wainer dos
- Santos Moschetta" <wainersm@redhat.com>, "Beraldo Leal" <bleal@redhat.com>,
- "Michael Tokarev" <mjt@tls.msk.ru>
-Subject: Re: [PATCH v4 11/24] net: Use virtual time for net announce
-X-Mailer: aerc 0.15.2
-References: <20240311174026.2177152-1-npiggin@gmail.com>
- <20240311174026.2177152-12-npiggin@gmail.com>
- <6e9b8e49-f00f-46fc-bbf8-4af27e0c3906@ispras.ru>
- <CZRQ0IX3UQRZ.KXS6OX3HY1RD@wheely>
- <13c1e838-0c0a-42e9-baa4-2418569311d5@ispras.ru>
-In-Reply-To: <13c1e838-0c0a-42e9-baa4-2418569311d5@ispras.ru>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rkHfE-00068z-Eo; Wed, 13 Mar 2024 02:00:32 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rkHfA-00070S-D4; Wed, 13 Mar 2024 02:00:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710309629; x=1741845629;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=PVsToUiCUiOhSzkdiRM4zUD+fdyiF34qLsiHYhQsYC4=;
+ b=NxhHUwDnuxK9Twb5dAvsc/4ilkervYNghh2cDUqLEMKXhJBXw5OTSyX7
+ FWHI1uCfH0rnUcVFEhaZ/ccxVe0nVWF46cZF1WQmYsYXoyqBdZUSfOu0i
+ tBA2wKORViNni/YTFYnUBpGrtc1N5eXkqEykbPJp1mLmKzks5CEDogXS3
+ tQ9U9ZJ1Z8uksv5DQHyfycoAwn1weJiRN8DtxPJ6uwTUA6qhPxLSjPFbp
+ qyHAC97uMUTyc4IAyW+ZXWr7nivdK0NjaGjI0Dbz/nzVqKqxD1uGvOyS5
+ jQUcGlmu2JhEfLbFCsgMhWc4aHRIEpt4AvNlWDAgqhY8l8DfUyuwRMlVo Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11011"; a="16501385"
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="16501385"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Mar 2024 23:00:22 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="16519824"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa005.jf.intel.com with ESMTP; 12 Mar 2024 23:00:12 -0700
+Date: Wed, 13 Mar 2024 14:14:02 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, maz@kernel.org,
+ jean-philippe@linaro.org, jonathan.cameron@huawei.com,
+ lpieralisi@kernel.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, imammedo@redhat.com,
+ andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
+ eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
+ mst@redhat.com, will@kernel.org, gshan@redhat.com,
+ rafael@kernel.org, alex.bennee@linaro.org, linux@armlinux.org.uk,
+ darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
+ vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
+ miguel.luis@oracle.com, salil.mehta@opnsrc.net,
+ zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
+ wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
+ lixianglai@loongson.cn, linuxarm@huawei.com
+Subject: Re: [PATCH V8 3/8] hw/acpi: Update ACPI GED framework to support
+ vCPU Hotplug
+Message-ID: <ZfFEKgpRiEOZo9xd@intel.com>
+References: <20240312020000.12992-1-salil.mehta@huawei.com>
+ <20240312020000.12992-4-salil.mehta@huawei.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240312020000.12992-4-salil.mehta@huawei.com>
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,64 +90,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue Mar 12, 2024 at 9:12 PM AEST, Pavel Dovgalyuk wrote:
-> On 12.03.2024 14:05, Nicholas Piggin wrote:
-> > On Tue Mar 12, 2024 at 7:09 PM AEST, Pavel Dovgalyuk wrote:
-> >> This won't work, as needed. Announce timer can't be enabled, because
-> >> it is set in post_load function. Therefore announce callbacks break
-> >> the replay, when virtio-net is used with snapshots.
-> >=20
-> > I see. Is that somehow marked as being incompatible with rr?
+Hi Salil,
+
+It seems my comment [1] in v7 was missed, but I still hit the same
+issue. Pls let me paste the previous comment here again.
+
+[1]: https://lore.kernel.org/qemu-devel/ZXCqp32ggIFvUweu@intel.com/
+
+[snip]
+
+> @@ -400,6 +411,12 @@ static void acpi_ged_initfn(Object *obj)
+>      memory_region_init_io(&ged_st->regs, obj, &ged_regs_ops, ged_st,
+>                            TYPE_ACPI_GED "-regs", ACPI_GED_REG_COUNT);
+>      sysbus_init_mmio(sbd, &ged_st->regs);
+> +
+> +    memory_region_init(&s->container_cpuhp, OBJECT(dev), "cpuhp container",
+> +                       ACPI_CPU_HOTPLUG_REG_LEN);
+> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->container_cpuhp);
+> +    cpu_hotplug_hw_init(&s->container_cpuhp, OBJECT(dev),
+> +                        &s->cpuhp_state, 0);
+>  }
 >
-> Here's the prior discussion on it:=20
-> https://lore.kernel.org/qemu-devel/8735ovx0zd.fsf@linaro.org/t/
 
-Thanks for that context. You already fixed some of these, lol that
-would have saved me a few hours. Maybe clearing the announce flag
-is the right way to solve this, I might take that instead.
+I find this cpu_hotplug_hw_init() can still cause qtest errors (for v8)
+on x86 platforms as you mentioned in v6:
+https://lore.kernel.org/qemu-devel/15e70616-6abb-63a4-17d0-820f4a254607@opnsrc.net/T/#m108f102b2fe92b7dd7218f2f942f7b233a9d6af3
 
-Trouble is we have virtio-net selftests in tests already and this
-causes failures. So we need to get it fixed. I do think the bh API
-is a bit clunky and could be revised into a name that makes more
-sense for the non-replay developer, but that's really a separate
-issue and should not prevent this bug fixes being merged.
+IIUC, microvm machine has its own 'possible_cpus_arch_ids' and that is
+inherited from its parent x86 machine.
 
-We really need non-flaky rr testing upstream because it's quite
-easy to break. So I will keep trying to get these merged.
+The above error is because device-introspect-test sets the none-machine:
+
+# starting QEMU: exec ./qemu-system-i386 -qtest unix:/tmp/qtest-3094820.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-3094820.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -nodefaults -machine none -accel qtest
+
+So what about just checking mc->possible_cpu_arch_ids instead of an
+assert in cpu_hotplug_hw_init()?
+
+diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
+index 4b24a2500361..303f1f1f57bc 100644
+--- a/hw/acpi/cpu.c
++++ b/hw/acpi/cpu.c
+@@ -221,7 +221,10 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
+     const CPUArchIdList *id_list;
+     int i;
+
+-    assert(mc->possible_cpu_arch_ids);
++    if (!mc->possible_cpu_arch_ids) {
++        return;
++    }
++
+     id_list = mc->possible_cpu_arch_ids(machine);
+     state->dev_count = id_list->len;
+     state->devs = g_new0(typeof(*state->devs), state->dev_count);
+
+This check seems to be acceptable in the general code path? Not all machines
+have possible_cpu_arch_ids, after all.
 
 Thanks,
-Nick
-
->
->
-> >=20
-> > Thanks,
-> > Nick
-> >=20
-> >>
-> >> On 11.03.2024 20:40, Nicholas Piggin wrote:
-> >>> Using virtual time for announce ensures that guest visible effects
-> >>> are deterministic and don't break replay.
-> >>>
-> >>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> >>> ---
-> >>>    net/announce.c | 2 +-
-> >>>    1 file changed, 1 insertion(+), 1 deletion(-)
-> >>>
-> >>> diff --git a/net/announce.c b/net/announce.c
-> >>> index 9e99044422..70b5d5e822 100644
-> >>> --- a/net/announce.c
-> >>> +++ b/net/announce.c
-> >>> @@ -187,7 +187,7 @@ static void qemu_announce_self_once(void *opaque)
-> >>>   =20
-> >>>    void qemu_announce_self(AnnounceTimer *timer, AnnounceParameters *=
-params)
-> >>>    {
-> >>> -    qemu_announce_timer_reset(timer, params, QEMU_CLOCK_REALTIME,
-> >>> +    qemu_announce_timer_reset(timer, params, QEMU_CLOCK_VIRTUAL,
-> >>>                                  qemu_announce_self_once, timer);
-> >>>        if (params->rounds) {
-> >>>            qemu_announce_self_once(timer);
-> >=20
+Zhao
 
 
