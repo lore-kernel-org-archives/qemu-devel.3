@@ -4,105 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95445C54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 13:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16231C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 13:56:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkP05-0008Jy-0v; Wed, 13 Mar 2024 09:50:33 -0400
+	id 1rkP5I-000273-47; Wed, 13 Mar 2024 09:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rkP01-0008IN-Bi
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 09:50:29 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rkOzw-0001yV-G5
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 09:50:26 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 6BCC021C95;
- Wed, 13 Mar 2024 13:50:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710337822; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=sCkKhgnLfdegQjnsF7DBkPAUAO/TZQcd0bHNfQp9euU=;
- b=sKYyiASOJY85OSaD+jNtiQ42HK88yYNSowp0bcQh5mWMcoImEpMJdXr2NieVIw0yo4bgis
- ujX9PuIbcvHuXm92a/haB2tqu5dUmpAcieCpo4dZKqrMFpXa5xtzs4tzM+6Rx2ERGOJbHn
- nP85frkySIhB40PxhbjGhF5l7C0z7A0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710337822;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=sCkKhgnLfdegQjnsF7DBkPAUAO/TZQcd0bHNfQp9euU=;
- b=GYerXEh7T4JKW0IAB8Yo5Q1hLBjv2jKzFd8Yuqo5rMLx7Qe2oCttIv8qvgdXNNlH5jscsR
- 0kp38FpQHkFzBnCg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710337822; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=sCkKhgnLfdegQjnsF7DBkPAUAO/TZQcd0bHNfQp9euU=;
- b=sKYyiASOJY85OSaD+jNtiQ42HK88yYNSowp0bcQh5mWMcoImEpMJdXr2NieVIw0yo4bgis
- ujX9PuIbcvHuXm92a/haB2tqu5dUmpAcieCpo4dZKqrMFpXa5xtzs4tzM+6Rx2ERGOJbHn
- nP85frkySIhB40PxhbjGhF5l7C0z7A0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710337822;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=sCkKhgnLfdegQjnsF7DBkPAUAO/TZQcd0bHNfQp9euU=;
- b=GYerXEh7T4JKW0IAB8Yo5Q1hLBjv2jKzFd8Yuqo5rMLx7Qe2oCttIv8qvgdXNNlH5jscsR
- 0kp38FpQHkFzBnCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 447E11397F;
- Wed, 13 Mar 2024 13:50:21 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Y5bkAh2v8WWAUwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 13 Mar 2024 13:50:21 +0000
-From: Fabiano Rosas <farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rkP4x-0001sN-Dn
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 09:55:37 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1rkP4t-00036I-KN
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 09:55:34 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42D8i7aG031167; Wed, 13 Mar 2024 13:55:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=from : to : cc :
+ subject : date : message-id; s=corp-2023-11-20;
+ bh=yNPYq5MseoAKYH52wi9OHIv1lZYux99SDhvTlFCw9mI=;
+ b=WgH/ewbvF3XVIbnJ8ib4kG7+U3Bwpmwr9dFLUQkTbg2dDxy9VoSRZAcJZx8GojsAAwhY
+ AU0F2zvnaNnc8N9m8CBqVPkFqUXuA1bl8KmaT0IzJHOGSs9HAkMLIirgEe11CP4qgJaM
+ nZi9TUGIkAEY4UuZAxjQH7ZDtKex3eEfcOaaV+9hYgMGCr17cWQD80h1jBK8y9D308WT
+ rzLWQnJ6ASDI6sibRzHMhNZrXcJebNBu3ZgcGzBMBkGeKUaN/rBQRiQIOx7rqofouQtv
+ 9CsYxkz2PyBBnqNq0fSgv555egPVj3yX2yQsJFTWJ+5NWa14wD69whl26eG6t2xi6yGs gg== 
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wrepd0w9d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 Mar 2024 13:55:23 +0000
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 42DDQW0k037319; Wed, 13 Mar 2024 13:55:21 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wre78u5cm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 Mar 2024 13:55:21 +0000
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42DDtL0p037833;
+ Wed, 13 Mar 2024 13:55:21 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 3wre78u5c0-1; Wed, 13 Mar 2024 13:55:21 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Subject: [PATCH] migration: Fix iocs leaks during file and fd migration
-Date: Wed, 13 Mar 2024 10:50:18 -0300
-Message-Id: <20240313135018.28079-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=sKYyiASO;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=GYerXEh7
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-1.51 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- R_MISSING_CHARSET(2.50)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; BROKEN_CONTENT_TYPE(1.50)[];
- TO_DN_SOME(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- NEURAL_HAM_LONG(-1.00)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_TLS_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%]
-X-Rspamd-Queue-Id: 6BCC021C95
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH] migration: cpr-reboot documentation
+Date: Wed, 13 Mar 2024 06:55:19 -0700
+Message-Id: <1710338119-330923-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-13_08,2024-03-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ suspectscore=0
+ malwarescore=0 spamscore=0 mlxscore=0 adultscore=0 mlxlogscore=999
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403130104
+X-Proofpoint-ORIG-GUID: 09XHw80M-DWKnT04CEvXhSpKZdxtk0Ic
+X-Proofpoint-GUID: 09XHw80M-DWKnT04CEvXhSpKZdxtk0Ic
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,208 +98,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The memory for the io channels is being leaked in three different ways
-during file migration:
-
-1) if the offset check fails we never drop the ioc reference;
-
-2) if multifd is not enabled, we allocate an extra channel for no
-   reason;
-
-3) if multifd is enabled but channel creation fails when calling
-   dup(), we leave the previous channels around along with the glib
-   polling;
-
-Fix all issues by restructuring the code to first allocate the
-channels and only register the watches when all channels have been
-created.
-
-The file and fd migrations can share this code because both are backed
-by the file migration infrastructure.
-
-Fixes: 2dd7ee7a51 ("migration/multifd: Add incoming QIOChannelFile support")
-Fixes: decdc76772 ("migration/multifd: Add mapped-ram support to fd: URI")
-Reported-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
-based-on: https://gitlab.com/peterx/migration-stable
-CI run: https://gitlab.com/farosas/qemu/-/pipelines/1211909831
----
- migration/fd.c   | 28 +++-------------------
- migration/file.c | 62 +++++++++++++++++++++++++++++++-----------------
- migration/file.h |  3 +++
- 3 files changed, 46 insertions(+), 47 deletions(-)
+ docs/devel/migration/CPR.rst      | 147 ++++++++++++++++++++++++++++++++++++++
+ docs/devel/migration/features.rst |   1 +
+ 2 files changed, 148 insertions(+)
+ create mode 100644 docs/devel/migration/CPR.rst
 
-diff --git a/migration/fd.c b/migration/fd.c
-index 4e2a63a73d..b74a3eb8c8 100644
---- a/migration/fd.c
-+++ b/migration/fd.c
-@@ -18,6 +18,7 @@
- #include "qapi/error.h"
- #include "channel.h"
- #include "fd.h"
-+#include "file.h"
- #include "migration.h"
- #include "monitor/monitor.h"
- #include "io/channel-file.h"
-@@ -68,19 +69,9 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
-     object_unref(OBJECT(ioc));
- }
- 
--static gboolean fd_accept_incoming_migration(QIOChannel *ioc,
--                                             GIOCondition condition,
--                                             gpointer opaque)
--{
--    migration_channel_process_incoming(ioc);
--    object_unref(OBJECT(ioc));
--    return G_SOURCE_REMOVE;
--}
--
- void fd_start_incoming_migration(const char *fdname, Error **errp)
- {
-     QIOChannel *ioc;
--    QIOChannelFile *fioc;
-     int fd = monitor_fd_param(monitor_cur(), fdname, errp);
-     if (fd == -1) {
-         return;
-@@ -96,24 +87,11 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
- 
-     qio_channel_set_name(ioc, "migration-fd-incoming");
-     qio_channel_add_watch_full(ioc, G_IO_IN,
--                               fd_accept_incoming_migration,
-+                               file_accept_incoming_migration,
-                                NULL, NULL,
-                                g_main_context_get_thread_default());
- 
-     if (migrate_multifd()) {
--        int channels = migrate_multifd_channels();
--
--        while (channels--) {
--            fioc = qio_channel_file_new_dupfd(fd, errp);
--            if (!fioc) {
--                return;
--            }
--
--            qio_channel_set_name(ioc, "migration-fd-incoming");
--            qio_channel_add_watch_full(QIO_CHANNEL(fioc), G_IO_IN,
--                                       fd_accept_incoming_migration,
--                                       NULL, NULL,
--                                       g_main_context_get_thread_default());
--        }
-+        file_recv_channels_create(fd, errp);
-     }
- }
-diff --git a/migration/file.c b/migration/file.c
-index e56c5eb0a5..bb264115eb 100644
---- a/migration/file.c
-+++ b/migration/file.c
-@@ -106,22 +106,48 @@ void file_start_outgoing_migration(MigrationState *s,
-     migration_channel_connect(s, ioc, NULL, NULL);
- }
- 
--static gboolean file_accept_incoming_migration(QIOChannel *ioc,
--                                               GIOCondition condition,
--                                               gpointer opaque)
-+gboolean file_accept_incoming_migration(QIOChannel *ioc, GIOCondition condition,
-+                                        gpointer opaque)
- {
-     migration_channel_process_incoming(ioc);
-     object_unref(OBJECT(ioc));
-     return G_SOURCE_REMOVE;
- }
- 
-+void file_recv_channels_create(int fd, Error **errp)
-+{
-+    int i, channels = migrate_multifd_channels();
-+    g_autofree QIOChannelFile **fiocs = g_new0(QIOChannelFile *, channels);
+diff --git a/docs/devel/migration/CPR.rst b/docs/devel/migration/CPR.rst
+new file mode 100644
+index 0000000..63c3647
+--- /dev/null
++++ b/docs/devel/migration/CPR.rst
+@@ -0,0 +1,147 @@
++CheckPoint and Restart (CPR)
++============================
 +
-+    for (i = 0; i < channels; i++) {
-+        QIOChannelFile *fioc = qio_channel_file_new_dupfd(fd, errp);
++CPR is the umbrella name for a set of migration modes in which the
++VM is migrated to a new QEMU instance on the same host.  It is
++intended for use when the goal is to update host software components
++that run the VM, such as QEMU or even the host kernel.  At this time,
++cpr-reboot is the only available mode.
 +
-+        if (!fioc) {
-+            while (i) {
-+                object_unref(fiocs[--i]);
-+            }
-+            return;
-+        }
++Because QEMU is restarted on the same host, with access to the same
++local devices, CPR is allowed in certain cases where normal migration
++would be blocked.  However, the user must not modify the contents of
++guest block devices between quitting old QEMU and starting new QEMU.
 +
-+        fiocs[i] = fioc;
-+    }
++CPR unconditionally stops VM execution before memory is saved, and
++thus does not depend on any form of dirty page tracking.
 +
-+    for (i = 0; i < channels; i++) {
-+        QIOChannelFile *fioc = fiocs[i];
++cpr-reboot mode
++---------------
 +
-+        qio_channel_set_name(QIO_CHANNEL(fioc), "migration-file-incoming");
-+        qio_channel_add_watch_full(QIO_CHANNEL(fioc), G_IO_IN,
-+                                   file_accept_incoming_migration,
-+                                   NULL, NULL,
-+                                   g_main_context_get_thread_default());
-+    }
-+}
++In this mode, QEMU stops the VM, and writes VM state to the migration
++URI, which will typically be a file.  After quitting QEMU, the user
++resumes by running QEMU with the ``-incoming`` option.  Because the
++old and new QEMU instances are not active concurrently, the URI cannot
++be a type that streams data from one instance to the other.
 +
- void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
- {
-     g_autofree char *filename = g_strdup(file_args->filename);
-     QIOChannelFile *fioc = NULL;
-     uint64_t offset = file_args->offset;
--    int channels = 1;
--    int i = 0;
- 
-     trace_migration_file_incoming(filename);
- 
-@@ -132,28 +158,20 @@ void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
- 
-     if (offset &&
-         qio_channel_io_seek(QIO_CHANNEL(fioc), offset, SEEK_SET, errp) < 0) {
-+        object_unref(OBJECT(fioc));
-         return;
-     }
- 
-+    qio_channel_set_name(QIO_CHANNEL(fioc), "migration-file-incoming");
-+    qio_channel_add_watch_full(QIO_CHANNEL(fioc), G_IO_IN,
-+                               file_accept_incoming_migration,
-+                               NULL, NULL,
-+                               g_main_context_get_thread_default());
++Guest RAM can be saved in place if backed by shared memory, or can be
++copied to a file.  The former is more efficient and is therefore
++preferred.
 +
++After state and memory are saved, the user may update userland host
++software before restarting QEMU and resuming the VM.  Further, if
++the RAM is backed by persistent shared memory, such as a DAX device,
++then the user may reboot to a new host kernel before restarting QEMU.
 +
-     if (migrate_multifd()) {
--        channels += migrate_multifd_channels();
-+        file_recv_channels_create(fioc->fd, errp);
-     }
--
--    do {
--        QIOChannel *ioc = QIO_CHANNEL(fioc);
--
--        qio_channel_set_name(ioc, "migration-file-incoming");
--        qio_channel_add_watch_full(ioc, G_IO_IN,
--                                   file_accept_incoming_migration,
--                                   NULL, NULL,
--                                   g_main_context_get_thread_default());
--
--        fioc = qio_channel_file_new_dupfd(fioc->fd, errp);
--
--        if (!fioc) {
--            break;
--        }
--    } while (++i < channels);
- }
- 
- int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
-diff --git a/migration/file.h b/migration/file.h
-index 9f71e87f74..940122db0f 100644
---- a/migration/file.h
-+++ b/migration/file.h
-@@ -20,6 +20,9 @@ void file_start_outgoing_migration(MigrationState *s,
- int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp);
- void file_cleanup_outgoing_migration(void);
- bool file_send_channel_create(gpointer opaque, Error **errp);
-+void file_recv_channels_create(int fd, Error **errp);
-+gboolean file_accept_incoming_migration(QIOChannel *ioc, GIOCondition condition,
-+                                        gpointer opaque);
- int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
-                             int niov, RAMBlock *block, Error **errp);
- int multifd_file_recv_data(MultiFDRecvParams *p, Error **errp);
++This mode supports VFIO devices provided the user first puts the
++guest in the suspended runstate, such as by issuing the
++``guest-suspend-ram`` command to the QEMU guest agent.  The agent
++must be pre-installed in the guest, and the guest must support
++suspend to RAM.  Beware that suspension can take a few seconds, so
++the user should poll to see the suspended state before proceeding
++with the CPR operation.
++
++Usage
++^^^^^
++
++It is recommended that guest RAM be backed with some type of shared
++memory, such as ``memory-backend-file,share=on``, and that the
++``x-ignore-shared`` capability be set.  This combination allows memory
++to be saved in place.  Otherwise, after QEMU stops the VM, all guest
++RAM is copied to the migration URI.
++
++Outgoing:
++  * Set the migration mode parameter to ``cpr-reboot``.
++  * Set the ``x-ignore-shared`` capability if desired.
++  * Issue the ``migrate`` command.  It is recommended the the URI be a
++    ``file`` type, but one can use other types such as ``exec``,
++    provided the command captures all the data from the outgoing side,
++    and provides all the data to the incoming side.
++  * Quit when QEMU reaches the postmigrate state.
++
++Incoming:
++  * Start QEMU with the ``-incoming defer`` option.
++  * Set the migration mode parameter to ``cpr-reboot``.
++  * Set the ``x-ignore-shared`` capability if desired.
++  * Issue the ``migrate-incoming`` command.
++  * If the VM was running when the outgoing ``migrate`` command was
++    issued, then QEMU automatically resumes VM execution.
++
++Example 1
++^^^^^^^^^
++::
++
++  # qemu-kvm -monitor stdio
++  -object memory-backend-file,id=ram0,size=4G,mem-path=/dev/dax0.0,align=2M,share=on -m 4G
++  ...
++
++  (qemu) info status
++  VM status: running
++  (qemu) migrate_set_parameter mode cpr-reboot
++  (qemu) migrate_set_capability x-ignore-shared on
++  (qemu) migrate -d file:vm.state
++  (qemu) info status
++  VM status: paused (postmigrate)
++  (qemu) quit
++
++  ### optionally update kernel and reboot
++  # systemctl kexec
++  kexec_core: Starting new kernel
++  ...
++
++  # qemu-kvm ... -incoming defer
++  (qemu) info status
++  VM status: paused (inmigrate)
++  (qemu) migrate_set_parameter mode cpr-reboot
++  (qemu) migrate_set_capability x-ignore-shared on
++  (qemu) migrate_incoming file:vm.state
++  (qemu) info status
++  VM status: running
++
++Example 2: VFIO
++^^^^^^^^^^^^^^^
++::
++
++  # qemu-kvm -monitor stdio
++  -object memory-backend-file,id=ram0,size=4G,mem-path=/dev/dax0.0,align=2M,share=on -m 4G
++  -device vfio-pci, ...
++  -chardev socket,id=qga0,path=qga.sock,server=on,wait=off
++  -device virtserialport,chardev=qga0,name=org.qemu.guest_agent.0
++  ...
++
++  (qemu) info status
++  VM status: running
++
++  # echo '{"execute":"guest-suspend-ram"}' | ncat --send-only -U qga.sock
++
++  (qemu) info status
++  VM status: paused (suspended)
++  (qemu) migrate_set_parameter mode cpr-reboot
++  (qemu) migrate_set_capability x-ignore-shared on
++  (qemu) migrate -d file:vm.state
++  (qemu) info status
++  VM status: paused (postmigrate)
++  (qemu) quit
++
++  ### optionally update kernel and reboot
++  # systemctl kexec
++  kexec_core: Starting new kernel
++  ...
++
++  # qemu-kvm ... -incoming defer
++  (qemu) info status
++  VM status: paused (inmigrate)
++  (qemu) migrate_set_parameter mode cpr-reboot
++  (qemu) migrate_set_capability x-ignore-shared on
++  (qemu) migrate_incoming file:vm.state
++  (qemu) info status
++  VM status: paused (suspended)
++  (qemu) system_wakeup
++  (qemu) info status
++  VM status: running
++
++Caveats
++^^^^^^^
++
++cpr-reboot mode may not be used with postcopy, background-snapshot,
++or COLO.
+diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
+index 9d1abd2..d5ca7b8 100644
+--- a/docs/devel/migration/features.rst
++++ b/docs/devel/migration/features.rst
+@@ -11,3 +11,4 @@ Migration has plenty of features to support different use cases.
+    vfio
+    virtio
+    mapped-ram
++   CPR
 -- 
-2.35.3
+1.8.3.1
 
 
