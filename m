@@ -4,103 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0825AC54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 11:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D295BC54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 11:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkN8r-0007xv-Nb; Wed, 13 Mar 2024 07:51:29 -0400
+	id 1rkNAB-0000Pz-AL; Wed, 13 Mar 2024 07:52:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1rkN8p-0007xG-87; Wed, 13 Mar 2024 07:51:27 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1rkNA4-0000MW-Ib; Wed, 13 Mar 2024 07:52:46 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
- id 1rkN8m-00040O-4L; Wed, 13 Mar 2024 07:51:26 -0400
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ id 1rkN9x-0004DN-IH; Wed, 13 Mar 2024 07:52:43 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42DB6jNH013100; Wed, 13 Mar 2024 11:51:09 GMT
+ 42DBes3h020942; Wed, 13 Mar 2024 11:52:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=pp1;
- bh=XiwRsVbqhwtQkWhhV6/5WlzBAZEoNvY+8IAeggKrTX8=;
- b=j0Y29R8tPNscNWX6iX96KQ4+HA3kFbQdTf4lA2BAf0oPDT7psgZjDwBB9yCz1gkNlfhw
- e+kcBrNU4NV+j4cqjgOw8gt3U1+BihsxvWZ/2rw3iCW6swTy7nO/BzZs8u/sP4/f4rl1
- akRs2/RlIXHF8TG4e8WuJYnxxt7jchzTkd1N1KgwLsVa88QBKQRfeF58CAhiNtwvwq/M
- b+PqCpL3zazCVH335bgNpQ1/y9VsbyJCqT40kQCqtif7VlHUYQOIVQpIqD29lHTgTyrl
- NOsieNhcEgS2LXh5iGEFzOrSMhsZg4rCeQSv+BcfNol9MTQBpQV5uA5EwnxRYf9cxNkl sA== 
+ bh=snu3Cje9b1hVIrPQR0zzRwfMwLOc1tjve8uIANffzmk=;
+ b=s3Eaw8TEekDymeQvE8RWg5hd2YoP7+mU917mUDcnUJS9UY511XyXlIWTsKoK3k8jroGJ
+ +naeM4Wh+52bYHjIqf8M8FtpnhpbiJ7ZOgSzuKyeiksIIHNbx+InWyY8ozlUhfHvkj2Y
+ 9yWsGl7c3xN0amShC0SWvaanDak+FtnNuUbnZMYB1/kMUlkhTGxyr0L9Et8sZPHtfek2
+ u0pWBqKynaGvX7QJzLEVR2AuKmzPQlmJ+ogdH3AWumGoCiB64V6heM9IoxoEVweLgBDc
+ 5ycFp5PNqCR+mlHyG74m6Nk7NNnT/3nq1DK3T2ZFvg0HyK/vmeCyRw3oiV/+/uVyKYZJ 5A== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wu6w3v049-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wuauf8p09-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 13 Mar 2024 11:51:09 +0000
-Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42DBp8QH017535;
- Wed, 13 Mar 2024 11:51:08 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wu6w3v047-1
+ Wed, 13 Mar 2024 11:52:31 +0000
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42DBhh9C026971;
+ Wed, 13 Mar 2024 11:52:31 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wuauf8p04-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 13 Mar 2024 11:51:08 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42D9Wos6015524; Wed, 13 Mar 2024 11:51:08 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ws2fywrpf-1
+ Wed, 13 Mar 2024 11:52:31 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42D9Kmg5018128; Wed, 13 Mar 2024 11:52:30 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ws23tdtdg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 13 Mar 2024 11:51:07 +0000
+ Wed, 13 Mar 2024 11:52:30 +0000
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42DBp2Fn25363032
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42DBqPqI49217826
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 13 Mar 2024 11:51:04 GMT
+ Wed, 13 Mar 2024 11:52:27 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3E0BC20040;
- Wed, 13 Mar 2024 11:51:02 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id F0C7920043;
+ Wed, 13 Mar 2024 11:52:24 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6F6B220043;
- Wed, 13 Mar 2024 11:51:00 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 282C120040;
+ Wed, 13 Mar 2024 11:52:23 +0000 (GMT)
 Received: from [9.199.192.140] (unknown [9.199.192.140])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 13 Mar 2024 11:51:00 +0000 (GMT)
-Message-ID: <b647b088-7551-4f78-9cef-69adf9092699@linux.vnet.ibm.com>
-Date: Wed, 13 Mar 2024 17:20:59 +0530
+ Wed, 13 Mar 2024 11:52:22 +0000 (GMT)
+Message-ID: <a69ae066-defb-4a73-8867-bd582de04bf8@linux.vnet.ibm.com>
+Date: Wed, 13 Mar 2024 17:22:22 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] target/ppc: Move floating-point arithmetic instructions
  to decodetree.
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org, danielhb413@gmail.com, clg@kaod.org,
+To: Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: danielhb413@gmail.com, clg@kaod.org, richard.henderson@linaro.org,
  harshpb@linux.ibm.com, sbhat@linux.ibm.com
 References: <20240307110318.170319-1-rathc@linux.ibm.com>
- <CZRO4Y67CBPV.2IAKB80EFDKEY@wheely>
- <0c7c6be1-12fb-4267-9d41-bd51637d104a@linaro.org>
- <CZRU903MDUJ1.6S9RSO5A4RDG@wheely>
- <CAFEAcA8im7S-bsx-hYqgUy4tsc8yXjWQf7Sb-=KnuREyqqC8mw@mail.gmail.com>
+ <CZRONZ09DV9X.22XWTY7M4VBHO@wheely>
 From: Chinmay Rath <rathc@linux.vnet.ibm.com>
-In-Reply-To: <CAFEAcA8im7S-bsx-hYqgUy4tsc8yXjWQf7Sb-=KnuREyqqC8mw@mail.gmail.com>
+In-Reply-To: <CZRONZ09DV9X.22XWTY7M4VBHO@wheely>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: HS4CtudiXoWVxTZlAvFXN4MpHGmvlVf7
-X-Proofpoint-ORIG-GUID: hRCSyB5MjGYpnMqRA2ZjqU6XEUB6_Rrh
+X-Proofpoint-ORIG-GUID: S_VIGkV0EPoNDEJHJyU39t2b2EkbMApf
+X-Proofpoint-GUID: PV6ql2RHhexeZJP9ysoPsZ4mHZXarjSL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-13_07,2024-03-12_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  impostorscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0 priorityscore=1501
- malwarescore=0 mlxscore=0 adultscore=0 clxscore=1011 mlxlogscore=832
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ priorityscore=1501 clxscore=1015 spamscore=0 mlxscore=0 adultscore=0
+ mlxlogscore=999 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2403130088
-Received-SPF: none client-ip=148.163.158.5;
- envelope-from=rathc@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=rathc@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -125,57 +120,433 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 3/12/24 19:59, Peter Maydell wrote:
-> On Tue, 12 Mar 2024 at 14:25, Nicholas Piggin <npiggin@gmail.com> wrote:
->> On Wed Mar 13, 2024 at 12:01 AM AEST, Richard Henderson wrote:
->>> On 3/11/24 23:36, Nicholas Piggin wrote:
->> [snip]
->>
->>>> #define FPU_HELPER(name, op, flags_handler)                           \
->>>> float64 helper_##name(CPUPPCState *env, float64 arg1, float64 arg2)   \
->>>> {                                                                     \
->>>>       float64 ret = op(arg1, arg2, &env->fp_status);                    \
->>>>       int flags = get_float_exception_flags(&env->fp_status);           \
->>>>       flags_handler(env, flags)                                         \
->>>>       return ret;                                                       \
->>>> }
->>>>
->>>> static inline void addsub_flags_handler(CPUPPCState *env, int flags)
->>>> {
->>>>       if (unlikely(flags & float_flag_invalid)) {
->>>>           float_invalid_op_addsub(env, flags, 1, GETPC());
->>>>       }
->>>> }
->>>>
->>>> static inline void mul_flags_handler(CPUPPCState *env, int flags)
->>>> {
->>>>       if (unlikely(flags & float_flag_invalid)) {
->>>>           float_invalid_op_mul(env, flags, 1, GETPC());
->>>>       }
->>>> }
->>>>
->>>> static inline void div_flags_handler(CPUPPCState *env, int flags)
->>>> {
->>>>       if (unlikely(flags & float_flag_invalid)) {
->>>>           float_invalid_op_div(env, flags, 1, GETPC());
->>>>       }
->>>>       if (unlikely(flags & float_flag_divbyzero)) {
->>>>           float_zero_divide_excp(env, GETPC());
->>>>       }
->>>> }
->>> Beware -- GETPC() may only be called from the outermost helper.
->> Ah, because it's using __builtin_return_address. Good to know.
->> Using always_inline and a comment should do the trick then.
-> The standard way to fix this is that you call GETPC() at the
-> outermost helper and then pass that value around as an extra
-> uintptr_t ra argument to called functions that need it.
-Thanks Peter, Nick and Richard. I shall post v2 with suggested updates.
+On 3/12/24 15:31, Nicholas Piggin wrote:
+> On Thu Mar 7, 2024 at 9:03 PM AEST, Chinmay Rath wrote:
+>> diff --git a/target/ppc/translate/fp-impl.c.inc b/target/ppc/translate/fp-impl.c.inc
+>> index 189cd8c979..03b84ba79b 100644
+>> --- a/target/ppc/translate/fp-impl.c.inc
+>> +++ b/target/ppc/translate/fp-impl.c.inc
+>> @@ -30,96 +30,73 @@ static void gen_set_cr1_from_fpscr(DisasContext *ctx)
+>>   #endif
+>>   
+>>   /***                       Floating-Point arithmetic                       ***/
+>> -#define _GEN_FLOAT_ACB(name, op1, op2, set_fprf, type)                        \
+>> -static void gen_f##name(DisasContext *ctx)                                    \
+>> -{                                                                             \
+>> -    TCGv_i64 t0;                                                              \
+>> -    TCGv_i64 t1;                                                              \
+>> -    TCGv_i64 t2;                                                              \
+>> -    TCGv_i64 t3;                                                              \
+>> -    if (unlikely(!ctx->fpu_enabled)) {                                        \
+>> -        gen_exception(ctx, POWERPC_EXCP_FPU);                                 \
+>> -        return;                                                               \
+>> -    }                                                                         \
+>> -    t0 = tcg_temp_new_i64();                                                  \
+>> -    t1 = tcg_temp_new_i64();                                                  \
+>> -    t2 = tcg_temp_new_i64();                                                  \
+>> -    t3 = tcg_temp_new_i64();                                                  \
+>> -    gen_reset_fpstatus();                                                     \
+>> -    get_fpr(t0, rA(ctx->opcode));                                             \
+>> -    get_fpr(t1, rC(ctx->opcode));                                             \
+>> -    get_fpr(t2, rB(ctx->opcode));                                             \
+>> -    gen_helper_f##name(t3, tcg_env, t0, t1, t2);                              \
+>> -    set_fpr(rD(ctx->opcode), t3);                                             \
+>> -    if (set_fprf) {                                                           \
+>> -        gen_compute_fprf_float64(t3);                                         \
+>> -    }                                                                         \
+>> -    if (unlikely(Rc(ctx->opcode) != 0)) {                                     \
+>> -        gen_set_cr1_from_fpscr(ctx);                                          \
+>> -    }                                                                         \
+>> +static bool do_helper_acb(DisasContext *ctx, arg_A *a,
+>> +                          void (*helper)(TCGv_i64, TCGv_ptr, TCGv_i64,
+>> +                                         TCGv_i64, TCGv_i64))
+>> +{
+>> +    REQUIRE_INSNS_FLAGS(ctx, FLOAT);
+>> +    REQUIRE_FPU(ctx);
+>> +    TCGv_i64 t0, t1, t2, t3;
+> Existing style prefers the variable declarations first I think.
+>
+>> +    t0 = tcg_temp_new_i64();
+>> +    t1 = tcg_temp_new_i64();
+>> +    t2 = tcg_temp_new_i64();
+>> +    t3 = tcg_temp_new_i64();
+>> +    gen_reset_fpstatus();
+>> +    get_fpr(t0, a->fra);
+>> +    get_fpr(t1, a->frc);
+>> +    get_fpr(t2, a->frb);
+>> +    helper(t3, tcg_env, t0, t1, t2);
+>> +    set_fpr(a->frt, t3);
+>> +    gen_compute_fprf_float64(t3);
+>> +    if (unlikely(a->rc != false)) {
+> This reads better without the double negative. I.e., just
+>    if (unlikely(a->rc)) {
+>
+> Otherwise the decodetree parts look good, with those updated
+> and split out from the helper generation:
+>
+> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Thanks Nick, I shall post v2 with suggested updates.
 
 Regards,
 Chinmay
 >
-> thanks
-> -- PMM
+> Thanks,
+> Nick
+>
+>> +        gen_set_cr1_from_fpscr(ctx);
+>> +    }
+>> +    return true;
+>>   }
+>
+>>   
+>> -#define GEN_FLOAT_ACB(name, op2, set_fprf, type)                              \
+>> -_GEN_FLOAT_ACB(name, 0x3F, op2, set_fprf, type);                              \
+>> -_GEN_FLOAT_ACB(name##s, 0x3B, op2, set_fprf, type);
+>> -
+>> -#define _GEN_FLOAT_AB(name, op1, op2, inval, set_fprf, type)                  \
+>> -static void gen_f##name(DisasContext *ctx)                                    \
+>> -{                                                                             \
+>> -    TCGv_i64 t0;                                                              \
+>> -    TCGv_i64 t1;                                                              \
+>> -    TCGv_i64 t2;                                                              \
+>> -    if (unlikely(!ctx->fpu_enabled)) {                                        \
+>> -        gen_exception(ctx, POWERPC_EXCP_FPU);                                 \
+>> -        return;                                                               \
+>> -    }                                                                         \
+>> -    t0 = tcg_temp_new_i64();                                                  \
+>> -    t1 = tcg_temp_new_i64();                                                  \
+>> -    t2 = tcg_temp_new_i64();                                                  \
+>> -    gen_reset_fpstatus();                                                     \
+>> -    get_fpr(t0, rA(ctx->opcode));                                             \
+>> -    get_fpr(t1, rB(ctx->opcode));                                             \
+>> -    gen_helper_f##name(t2, tcg_env, t0, t1);                                  \
+>> -    set_fpr(rD(ctx->opcode), t2);                                             \
+>> -    if (set_fprf) {                                                           \
+>> -        gen_compute_fprf_float64(t2);                                         \
+>> -    }                                                                         \
+>> -    if (unlikely(Rc(ctx->opcode) != 0)) {                                     \
+>> -        gen_set_cr1_from_fpscr(ctx);                                          \
+>> -    }                                                                         \
+>> +static bool do_helper_ab(DisasContext *ctx, arg_A_tab *a,
+>> +                         void (*helper)(TCGv_i64, TCGv_ptr, TCGv_i64,
+>> +                                        TCGv_i64))
+>> +{
+>> +    REQUIRE_INSNS_FLAGS(ctx, FLOAT);
+>> +    REQUIRE_FPU(ctx);
+>> +    TCGv_i64 t0, t1, t2;
+>> +    t0 = tcg_temp_new_i64();
+>> +    t1 = tcg_temp_new_i64();
+>> +    t2 = tcg_temp_new_i64();
+>> +    gen_reset_fpstatus();
+>> +    get_fpr(t0, a->fra);
+>> +    get_fpr(t1, a->frb);
+>> +    helper(t2, tcg_env, t0, t1);
+>> +    set_fpr(a->frt, t2);
+>> +    gen_compute_fprf_float64(t2);
+>> +    if (unlikely(a->rc) != false) {
+>> +        gen_set_cr1_from_fpscr(ctx);
+>> +    }
+>> +    return true;
+>>   }
+>> -#define GEN_FLOAT_AB(name, op2, inval, set_fprf, type)                        \
+>> -_GEN_FLOAT_AB(name, 0x3F, op2, inval, set_fprf, type);                        \
+>> -_GEN_FLOAT_AB(name##s, 0x3B, op2, inval, set_fprf, type);
+>>   
+>> -#define _GEN_FLOAT_AC(name, op1, op2, inval, set_fprf, type)                  \
+>> -static void gen_f##name(DisasContext *ctx)                                    \
+>> -{                                                                             \
+>> -    TCGv_i64 t0;                                                              \
+>> -    TCGv_i64 t1;                                                              \
+>> -    TCGv_i64 t2;                                                              \
+>> -    if (unlikely(!ctx->fpu_enabled)) {                                        \
+>> -        gen_exception(ctx, POWERPC_EXCP_FPU);                                 \
+>> -        return;                                                               \
+>> -    }                                                                         \
+>> -    t0 = tcg_temp_new_i64();                                                  \
+>> -    t1 = tcg_temp_new_i64();                                                  \
+>> -    t2 = tcg_temp_new_i64();                                                  \
+>> -    gen_reset_fpstatus();                                                     \
+>> -    get_fpr(t0, rA(ctx->opcode));                                             \
+>> -    get_fpr(t1, rC(ctx->opcode));                                             \
+>> -    gen_helper_f##name(t2, tcg_env, t0, t1);                                  \
+>> -    set_fpr(rD(ctx->opcode), t2);                                             \
+>> -    if (set_fprf) {                                                           \
+>> -        gen_compute_fprf_float64(t2);                                         \
+>> -    }                                                                         \
+>> -    if (unlikely(Rc(ctx->opcode) != 0)) {                                     \
+>> -        gen_set_cr1_from_fpscr(ctx);                                          \
+>> -    }                                                                         \
+>> +static bool do_helper_ac(DisasContext *ctx, arg_A_tac *a,
+>> +                         void (*helper)(TCGv_i64, TCGv_ptr, TCGv_i64,
+>> +                                        TCGv_i64))
+>> +{
+>> +    REQUIRE_INSNS_FLAGS(ctx, FLOAT);
+>> +    REQUIRE_FPU(ctx);
+>> +    TCGv_i64 t0, t1, t2;
+>> +    t0 = tcg_temp_new_i64();
+>> +    t1 = tcg_temp_new_i64();
+>> +    t2 = tcg_temp_new_i64();
+>> +    gen_reset_fpstatus();
+>> +    get_fpr(t0, a->fra);
+>> +    get_fpr(t1, a->frc);
+>> +    helper(t2, tcg_env, t0, t1);
+>> +    set_fpr(a->frt, t2);
+>> +    gen_compute_fprf_float64(t2);
+>> +    if (unlikely(a->rc) != false) {
+>> +        gen_set_cr1_from_fpscr(ctx);
+>> +    }
+>> +    return true;
+>>   }
+>> -#define GEN_FLOAT_AC(name, op2, inval, set_fprf, type)                        \
+>> -_GEN_FLOAT_AC(name, 0x3F, op2, inval, set_fprf, type);                        \
+>> -_GEN_FLOAT_AC(name##s, 0x3B, op2, inval, set_fprf, type);
+>>   
+>>   #define GEN_FLOAT_B(name, op2, op3, set_fprf, type)                           \
+>>   static void gen_f##name(DisasContext *ctx)                                    \
+>> @@ -145,64 +122,22 @@ static void gen_f##name(DisasContext *ctx)                                    \
+>>       }                                                                         \
+>>   }
+>>   
+>> -#define GEN_FLOAT_BS(name, op1, op2, set_fprf, type)                          \
+>> -static void gen_f##name(DisasContext *ctx)                                    \
+>> -{                                                                             \
+>> -    TCGv_i64 t0;                                                              \
+>> -    TCGv_i64 t1;                                                              \
+>> -    if (unlikely(!ctx->fpu_enabled)) {                                        \
+>> -        gen_exception(ctx, POWERPC_EXCP_FPU);                                 \
+>> -        return;                                                               \
+>> -    }                                                                         \
+>> -    t0 = tcg_temp_new_i64();                                                  \
+>> -    t1 = tcg_temp_new_i64();                                                  \
+>> -    gen_reset_fpstatus();                                                     \
+>> -    get_fpr(t0, rB(ctx->opcode));                                             \
+>> -    gen_helper_f##name(t1, tcg_env, t0);                                      \
+>> -    set_fpr(rD(ctx->opcode), t1);                                             \
+>> -    if (set_fprf) {                                                           \
+>> -        gen_compute_fprf_float64(t1);                                         \
+>> -    }                                                                         \
+>> -    if (unlikely(Rc(ctx->opcode) != 0)) {                                     \
+>> -        gen_set_cr1_from_fpscr(ctx);                                          \
+>> -    }                                                                         \
+>> -}
+>> -
+>> -/* fadd - fadds */
+>> -GEN_FLOAT_AB(add, 0x15, 0x000007C0, 1, PPC_FLOAT);
+>> -/* fdiv - fdivs */
+>> -GEN_FLOAT_AB(div, 0x12, 0x000007C0, 1, PPC_FLOAT);
+>> -/* fmul - fmuls */
+>> -GEN_FLOAT_AC(mul, 0x19, 0x0000F800, 1, PPC_FLOAT);
+>> -
+>> -/* fre */
+>> -GEN_FLOAT_BS(re, 0x3F, 0x18, 1, PPC_FLOAT_EXT);
+>> -
+>> -/* fres */
+>> -GEN_FLOAT_BS(res, 0x3B, 0x18, 1, PPC_FLOAT_FRES);
+>> -
+>> -/* frsqrte */
+>> -GEN_FLOAT_BS(rsqrte, 0x3F, 0x1A, 1, PPC_FLOAT_FRSQRTE);
+>> -
+>> -/* frsqrtes */
+>> -static void gen_frsqrtes(DisasContext *ctx)
+>> +static bool do_helper_bs(DisasContext *ctx, arg_A_tb *a,
+>> +                         void (*helper)(TCGv_i64, TCGv_ptr, TCGv_i64))
+>>   {
+>> -    TCGv_i64 t0;
+>> -    TCGv_i64 t1;
+>> -    if (unlikely(!ctx->fpu_enabled)) {
+>> -        gen_exception(ctx, POWERPC_EXCP_FPU);
+>> -        return;
+>> -    }
+>> +    REQUIRE_FPU(ctx);
+>> +    TCGv_i64 t0, t1;
+>>       t0 = tcg_temp_new_i64();
+>>       t1 = tcg_temp_new_i64();
+>>       gen_reset_fpstatus();
+>> -    get_fpr(t0, rB(ctx->opcode));
+>> -    gen_helper_frsqrtes(t1, tcg_env, t0);
+>> -    set_fpr(rD(ctx->opcode), t1);
+>> +    get_fpr(t0, a->frb);
+>> +    helper(t1, tcg_env, t0);
+>> +    set_fpr(a->frt, t1);
+>>       gen_compute_fprf_float64(t1);
+>> -    if (unlikely(Rc(ctx->opcode) != 0)) {
+>> +    if (unlikely(a->rc != false)) {
+>>           gen_set_cr1_from_fpscr(ctx);
+>>       }
+>> +    return true;
+>>   }
+>>   
+>>   static bool trans_FSEL(DisasContext *ctx, arg_A *a)
+>> @@ -228,10 +163,6 @@ static bool trans_FSEL(DisasContext *ctx, arg_A *a)
+>>       return true;
+>>   }
+>>   
+>> -/* fsub - fsubs */
+>> -GEN_FLOAT_AB(sub, 0x14, 0x000007C0, 1, PPC_FLOAT);
+>> -/* Optional: */
+>> -
+>>   static bool do_helper_fsqrt(DisasContext *ctx, arg_A_tb *a,
+>>                               void (*helper)(TCGv_i64, TCGv_ptr, TCGv_i64))
+>>   {
+>> @@ -254,19 +185,33 @@ static bool do_helper_fsqrt(DisasContext *ctx, arg_A_tb *a,
+>>       return true;
+>>   }
+>>   
+>> +TRANS(FADD, do_helper_ab, gen_helper_FADD);
+>> +TRANS(FADDS, do_helper_ab, gen_helper_FADDS);
+>> +TRANS(FSUB, do_helper_ab, gen_helper_FSUB);
+>> +TRANS(FSUBS, do_helper_ab, gen_helper_FSUBS);
+>> +TRANS(FDIV, do_helper_ab, gen_helper_FDIV);
+>> +TRANS(FDIVS, do_helper_ab, gen_helper_FDIVS);
+>> +TRANS(FMUL, do_helper_ac, gen_helper_FMUL);
+>> +TRANS(FMULS, do_helper_ac, gen_helper_FMULS);
+>> +
+>> +TRANS(FMADD, do_helper_acb, gen_helper_FMADD);
+>> +TRANS(FMADDS, do_helper_acb, gen_helper_FMADDS);
+>> +TRANS(FMSUB, do_helper_acb, gen_helper_FMSUB);
+>> +TRANS(FMSUBS, do_helper_acb, gen_helper_FMSUBS);
+>> +
+>> +TRANS(FNMADD, do_helper_acb, gen_helper_FNMADD);
+>> +TRANS(FNMADDS, do_helper_acb, gen_helper_FNMADDS);
+>> +TRANS(FNMSUB, do_helper_acb, gen_helper_FNMSUB);
+>> +TRANS(FNMSUBS, do_helper_acb, gen_helper_FNMSUBS);
+>> +
+>> +TRANS_FLAGS(FLOAT_EXT, FRE, do_helper_bs, gen_helper_FRE);
+>> +TRANS_FLAGS(FLOAT_FRES, FRES, do_helper_bs, gen_helper_FRES);
+>> +TRANS_FLAGS(FLOAT_FRSQRTE, FRSQRTE, do_helper_bs, gen_helper_FRSQRTE);
+>> +TRANS_FLAGS(FLOAT_FRSQRTES, FRSQRTES, do_helper_bs, gen_helper_FRSQRTES);
+>> +
+>>   TRANS(FSQRT, do_helper_fsqrt, gen_helper_FSQRT);
+>>   TRANS(FSQRTS, do_helper_fsqrt, gen_helper_FSQRTS);
+>>   
+>> -/***                     Floating-Point multiply-and-add                   ***/
+>> -/* fmadd - fmadds */
+>> -GEN_FLOAT_ACB(madd, 0x1D, 1, PPC_FLOAT);
+>> -/* fmsub - fmsubs */
+>> -GEN_FLOAT_ACB(msub, 0x1C, 1, PPC_FLOAT);
+>> -/* fnmadd - fnmadds */
+>> -GEN_FLOAT_ACB(nmadd, 0x1F, 1, PPC_FLOAT);
+>> -/* fnmsub - fnmsubs */
+>> -GEN_FLOAT_ACB(nmsub, 0x1E, 1, PPC_FLOAT);
+>> -
+>>   /***                     Floating-Point round & convert                    ***/
+>>   /* fctiw */
+>>   GEN_FLOAT_B(ctiw, 0x0E, 0x00, 0, PPC_FLOAT);
+>> @@ -304,35 +249,29 @@ GEN_FLOAT_B(rip, 0x08, 0x0E, 1, PPC_FLOAT_EXT);
+>>   /* frim */
+>>   GEN_FLOAT_B(rim, 0x08, 0x0F, 1, PPC_FLOAT_EXT);
+>>   
+>> -static void gen_ftdiv(DisasContext *ctx)
+>> +static bool trans_FTDIV(DisasContext *ctx, arg_X_bf *a)
+>>   {
+>> -    TCGv_i64 t0;
+>> -    TCGv_i64 t1;
+>> -    if (unlikely(!ctx->fpu_enabled)) {
+>> -        gen_exception(ctx, POWERPC_EXCP_FPU);
+>> -        return;
+>> -    }
+>> +    REQUIRE_INSNS_FLAGS2(ctx, FP_TST_ISA206);
+>> +    REQUIRE_FPU(ctx);
+>> +    TCGv_i64 t0, t1;
+>>       t0 = tcg_temp_new_i64();
+>>       t1 = tcg_temp_new_i64();
+>> -    get_fpr(t0, rA(ctx->opcode));
+>> -    get_fpr(t1, rB(ctx->opcode));
+>> -    gen_helper_ftdiv(cpu_crf[crfD(ctx->opcode)], t0, t1);
+>> +    get_fpr(t0, a->ra);
+>> +    get_fpr(t1, a->rb);
+>> +    gen_helper_FTDIV(cpu_crf[a->bf], t0, t1);
+>> +    return true;
+>>   }
+>>   
+>> -static void gen_ftsqrt(DisasContext *ctx)
+>> +static bool trans_FTSQRT(DisasContext *ctx, arg_X_bf_b *a)
+>>   {
+>> -    TCGv_i64 t0;
+>> -    if (unlikely(!ctx->fpu_enabled)) {
+>> -        gen_exception(ctx, POWERPC_EXCP_FPU);
+>> -        return;
+>> -    }
+>> -    t0 = tcg_temp_new_i64();
+>> -    get_fpr(t0, rB(ctx->opcode));
+>> -    gen_helper_ftsqrt(cpu_crf[crfD(ctx->opcode)], t0);
+>> +    REQUIRE_INSNS_FLAGS2(ctx, FP_TST_ISA206);
+>> +    REQUIRE_FPU(ctx);
+>> +    TCGv_i64 t0 = tcg_temp_new_i64();
+>> +    get_fpr(t0, a->rb);
+>> +    gen_helper_FTSQRT(cpu_crf[a->bf], t0);
+>> +    return true;
+>>   }
+>>   
+>> -
+>> -
+>>   /***                         Floating-Point compare                        ***/
+>>   
+>>   /* fcmpo */
+>> @@ -1111,14 +1050,7 @@ TRANS(STFDX, do_lsfp_X, false, true, false)
+>>   TRANS(STFDUX, do_lsfp_X, true, true, false)
+>>   TRANS(PSTFD, do_lsfp_PLS_D, false, true, false)
+>>   
+>> -#undef _GEN_FLOAT_ACB
+>> -#undef GEN_FLOAT_ACB
+>> -#undef _GEN_FLOAT_AB
+>> -#undef GEN_FLOAT_AB
+>> -#undef _GEN_FLOAT_AC
+>> -#undef GEN_FLOAT_AC
+>>   #undef GEN_FLOAT_B
+>> -#undef GEN_FLOAT_BS
+>>   
+>>   #undef GEN_LDF
+>>   #undef GEN_LDUF
+>> diff --git a/target/ppc/translate/fp-ops.c.inc b/target/ppc/translate/fp-ops.c.inc
+>> index d4c6c4bed1..cef4b5dfcb 100644
+>> --- a/target/ppc/translate/fp-ops.c.inc
+>> +++ b/target/ppc/translate/fp-ops.c.inc
+>> @@ -1,36 +1,6 @@
+>> -#define _GEN_FLOAT_ACB(name, op, op1, op2, isfloat, set_fprf, type)           \
+>> -GEN_HANDLER(f##name, op1, op2, 0xFF, 0x00000000, type)
+>> -#define GEN_FLOAT_ACB(name, op2, set_fprf, type)                              \
+>> -_GEN_FLOAT_ACB(name, name, 0x3F, op2, 0, set_fprf, type),                     \
+>> -_GEN_FLOAT_ACB(name##s, name, 0x3B, op2, 1, set_fprf, type)
+>> -#define _GEN_FLOAT_AB(name, op, op1, op2, inval, isfloat, set_fprf, type)     \
+>> -GEN_HANDLER(f##name, op1, op2, 0xFF, inval, type)
+>> -#define GEN_FLOAT_AB(name, op2, inval, set_fprf, type)                        \
+>> -_GEN_FLOAT_AB(name, name, 0x3F, op2, inval, 0, set_fprf, type),               \
+>> -_GEN_FLOAT_AB(name##s, name, 0x3B, op2, inval, 1, set_fprf, type)
+>> -#define _GEN_FLOAT_AC(name, op, op1, op2, inval, isfloat, set_fprf, type)     \
+>> -GEN_HANDLER(f##name, op1, op2, 0xFF, inval, type)
+>> -#define GEN_FLOAT_AC(name, op2, inval, set_fprf, type)                        \
+>> -_GEN_FLOAT_AC(name, name, 0x3F, op2, inval, 0, set_fprf, type),               \
+>> -_GEN_FLOAT_AC(name##s, name, 0x3B, op2, inval, 1, set_fprf, type)
+>>   #define GEN_FLOAT_B(name, op2, op3, set_fprf, type)                           \
+>>   GEN_HANDLER(f##name, 0x3F, op2, op3, 0x001F0000, type)
+>> -#define GEN_FLOAT_BS(name, op1, op2, set_fprf, type)                          \
+>> -GEN_HANDLER(f##name, op1, op2, 0xFF, 0x001F07C0, type)
+>>   
+>> -GEN_FLOAT_AB(add, 0x15, 0x000007C0, 1, PPC_FLOAT),
+>> -GEN_FLOAT_AB(div, 0x12, 0x000007C0, 1, PPC_FLOAT),
+>> -GEN_FLOAT_AC(mul, 0x19, 0x0000F800, 1, PPC_FLOAT),
+>> -GEN_FLOAT_BS(re, 0x3F, 0x18, 1, PPC_FLOAT_EXT),
+>> -GEN_FLOAT_BS(res, 0x3B, 0x18, 1, PPC_FLOAT_FRES),
+>> -GEN_FLOAT_BS(rsqrte, 0x3F, 0x1A, 1, PPC_FLOAT_FRSQRTE),
+>> -GEN_FLOAT_AB(sub, 0x14, 0x000007C0, 1, PPC_FLOAT),
+>> -GEN_FLOAT_ACB(madd, 0x1D, 1, PPC_FLOAT),
+>> -GEN_FLOAT_ACB(msub, 0x1C, 1, PPC_FLOAT),
+>> -GEN_FLOAT_ACB(nmadd, 0x1F, 1, PPC_FLOAT),
+>> -GEN_FLOAT_ACB(nmsub, 0x1E, 1, PPC_FLOAT),
+>> -GEN_HANDLER_E(ftdiv, 0x3F, 0x00, 0x04, 1, PPC_NONE, PPC2_FP_TST_ISA206),
+>> -GEN_HANDLER_E(ftsqrt, 0x3F, 0x00, 0x05, 1, PPC_NONE, PPC2_FP_TST_ISA206),
+>>   GEN_FLOAT_B(ctiw, 0x0E, 0x00, 0, PPC_FLOAT),
+>>   GEN_HANDLER_E(fctiwu, 0x3F, 0x0E, 0x04, 0, PPC_NONE, PPC2_FP_CVT_ISA206),
+>>   GEN_FLOAT_B(ctiwz, 0x0F, 0x00, 0, PPC_FLOAT),
+>> @@ -61,7 +31,6 @@ GEN_STXF(stfiw, st32fiw, 0x17, 0x1E, PPC_FLOAT_STFIWX)
+>>   GEN_HANDLER_E(stfdepx, 0x1F, 0x1F, 0x16, 0x00000001, PPC_NONE, PPC2_BOOKE206),
+>>   GEN_HANDLER_E(stfdpx, 0x1F, 0x17, 0x1C, 0x00200001, PPC_NONE, PPC2_ISA205),
+>>   
+>> -GEN_HANDLER(frsqrtes, 0x3B, 0x1A, 0xFF, 0x001F07C0, PPC_FLOAT_FRSQRTES),
+>>   GEN_HANDLER(fcmpo, 0x3F, 0x00, 0x01, 0x00600001, PPC_FLOAT),
+>>   GEN_HANDLER(fcmpu, 0x3F, 0x00, 0x00, 0x00600001, PPC_FLOAT),
+>>   GEN_HANDLER(fabs, 0x3F, 0x08, 0x08, 0x001F0000, PPC_FLOAT),
 >
 
 
