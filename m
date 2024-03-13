@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59C5DC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 05:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FB4C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 05:29:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkH99-0007eA-Gn; Wed, 13 Mar 2024 01:27:23 -0400
+	id 1rkHAg-000899-Ml; Wed, 13 Mar 2024 01:29:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkH96-0007dy-Hc
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:27:20 -0400
-Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rkHAJ-00084c-9Y; Wed, 13 Mar 2024 01:28:36 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkH94-0001Um-TL
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:27:20 -0400
-Received: by mail-oo1-xc29.google.com with SMTP id
- 006d021491bc7-5a422ea50e6so95362eaf.2
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 22:27:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rkHAH-0001a1-Ri; Wed, 13 Mar 2024 01:28:35 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-6e6ade6a66aso611946b3a.3; 
+ Tue, 12 Mar 2024 22:28:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710307637; x=1710912437; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=gmail.com; s=20230601; t=1710307712; x=1710912512; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SnXKdH2/uWP57aKF2ItTto9p7NWRfTRsqVbKFZCjSmw=;
- b=nRLKf7e14qeBM8hBNfvrRRgL5nzykYX8I6lS76lkmgAfuCOcbqgJxN+i1TTSYtw2JA
- gYqEEwQipI8vuSE/5oSONwY/XAUKzAkpgp2KFFR5U9KD7M39DwxGRtSMvly527wEhsvu
- nCxLirnyixSeslJ7CKTh3LUjo6Do2LlFlXOaKpNzaD/TrVDfoVnAIbvYDpoKHfFrnoRu
- Whfzr8WTiB94fj9NZxUUtDftL1joqDZnTY20jzM8P6iUoVYNUJyg4jyV44UEM3k2z2Qv
- ODvbVQzfM9E8vRd5gUmDMPqTK/XUnCjVbnU9DqY2eg2kMUMS138xMiAfDqeHMkACI/Vi
- oLsw==
+ bh=3/K1la7pgEEWHnPcVxOwQq76xApyBNCBJbxaNlbx+ao=;
+ b=fby6N/c7C0FgF4a8rfpkEsNJPELypGnN9CVa6Hdox8leWlaUFiKZAaFecI/8fnROzP
+ GGuIOQqwU4ckW+4LFTrAo6bejBDJmwkgEvGkkBW97qHg+VkuVJX7L2sPoDwhw6m58ELp
+ xR87ltxudZmD3YbPFdmu8WaeZF3sB48gaPD/WpEK5/Ed2y8aLg9OFMM0Qi9A9BYavZbx
+ VUXp5Hs2LAfAEQFYogG1NE3ZFeCeLOyFO0btipROY91rtGLwkdZBibJ9rieGYuu0Z4Bs
+ Jt0eH1suOU9Th8TzEAMhCeN6M/ixghNkFEoQb+pFDdfAQsip1ONutK8QDHteKQwIDpeb
+ MW9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710307637; x=1710912437;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=1e100.net; s=20230601; t=1710307712; x=1710912512;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=SnXKdH2/uWP57aKF2ItTto9p7NWRfTRsqVbKFZCjSmw=;
- b=dG+Q0WWnd19Re0/LbFUnoeRPQyAcmP7zM8AoAYdRujZfqxHz8uOxSgrUcwGeTs7DPf
- qE/tKOfF4SuU8hlILLycVoMKoiXTU3EfNBc3yA+lNeQL1ycIZwfgCNGC1UN947UO7zPL
- nNOXLDwWSNxAF0AzhOiU2LFa4VtqSNDBembd5ld7PBEr5PcYBAqs/arJls/6Wm0sD0B2
- p+hpd+JGGsF7oKt/YwNwWUFe4wkeobvSO4CQZ3oYII9x7T35Hs9rIr/L2mNwqbeESMVC
- f2QnsGaURZKHqbNQXMRBtmXD3I40kPOapxW6XrpPnPATGRhUrc+ONjnlZapCidPRu1Bg
- B0mA==
-X-Gm-Message-State: AOJu0YwaQJylLnJFp23l2hjx9EuUaCvu4SkBRLFmK/uy8o6ATwxZ13pN
- WPc9Pc7NpbMArpLCCsWX8xKYmIb5kpRRKH0Uw7MOGEco2FPSYtDy
-X-Google-Smtp-Source: AGHT+IEuZPopXt8ctCtN+RbTklJNLwkYT4db4caHAMMHw9nnNHv1qEDoHxuEK0pQkXMSWz6SvyZibQ==
-X-Received: by 2002:a05:6358:7f17:b0:17b:f880:a3c1 with SMTP id
- p23-20020a0563587f1700b0017bf880a3c1mr4067520rwn.17.1710307637448; 
- Tue, 12 Mar 2024 22:27:17 -0700 (PDT)
+ bh=3/K1la7pgEEWHnPcVxOwQq76xApyBNCBJbxaNlbx+ao=;
+ b=EQ5Xh6i2DRFpsOy45FjvNzlFE58QtMjHPj5V1nM7tUMet3bgCmIJhsRQyHpauhrSFu
+ ujxDIojPCXvh033obo39m+3SuW9uDNCuI6r+x7r0O/9FmzW57aCkPYvYCZWt6ktZWwEK
+ +lEUFtpM3xO8FIhKtWUEZPVT3veqrD0OYgORFzdZ5mxd2+6TnutZj8jPEm6eTuk6UTQM
+ oOddbKE8DneGFPUUyZsgpz8cTqlXK/EjHG/syIk5birNRSKObJj72yK5hwQ+ctOr5YL+
+ IKA1nEnMdsulrZxZ/5T2OG98515Vax+D/UQ660Dnwrxt1FeXcGgb6YThItA9+WpTnF6a
+ IRMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXel97pFSCVWlKe/QxVYhvBmayWcZ4xh/IC8XRdWA3m/GUlvkZFSXCEXM3MkRVTEIOCbfHbfvMozmnCbr7XA0OM1StjHitrDuj/QmbXRgvvunykHp9ho7b3Ktc=
+X-Gm-Message-State: AOJu0YzlCBhsVMYIPIuJfoRf6/Q1aikJhne51keO3xDV3giIa9T4j0u4
+ hyVQxw74j1+VUOnddgL61yUl5KdWHO6UNNdeiJyla/1nEAKstD78
+X-Google-Smtp-Source: AGHT+IEN0rb6inaz/lUO9do9s2GeOscju0nNUUQt/GHR+1YTexZ2UX77NmrHYZpgYVnQwKWwPUz+Jg==
+X-Received: by 2002:a05:6a00:2e96:b0:6e5:80a4:2ff2 with SMTP id
+ fd22-20020a056a002e9600b006e580a42ff2mr1582717pfb.30.1710307712082; 
+ Tue, 12 Mar 2024 22:28:32 -0700 (PDT)
 Received: from localhost ([1.146.20.17]) by smtp.gmail.com with ESMTPSA id
- g6-20020aa79f06000000b006e6baf14752sm323054pfr.58.2024.03.12.22.27.12
+ c4-20020a62f844000000b006e6be504b0bsm131952pfm.168.2024.03.12.22.28.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 22:27:17 -0700 (PDT)
+ Tue, 12 Mar 2024 22:28:31 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 13 Mar 2024 15:27:08 +1000
-Message-Id: <CZSDGDZ6T6H1.1XB30P8R9UPT6@wheely>
-Subject: Re: [PATCH v4 05/24] Revert "replay: stop us hanging in
- rr_wait_io_event"
+Date: Wed, 13 Mar 2024 15:28:24 +1000
+Message-Id: <CZSDHCIGS20N.2X51Z0GLK9O7S@wheely>
+Cc: "Richard Henderson" <richard.henderson@linaro.org>, "Chinmay Rath"
+ <rathc@linux.ibm.com>, <qemu-ppc@nongnu.org>, <qemu-devel@nongnu.org>,
+ <danielhb413@gmail.com>, <clg@kaod.org>, <harshpb@linux.ibm.com>,
+ <sbhat@linux.ibm.com>
+Subject: Re: [PATCH] target/ppc: Move floating-point arithmetic instructions
+ to decodetree.
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: <qemu-devel@nongnu.org>, "Pavel Dovgalyuk" <Pavel.Dovgalyuk@ispras.ru>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Richard
- Henderson" <richard.henderson@linaro.org>, "Paolo Bonzini"
- <pbonzini@redhat.com>, "John Snow" <jsnow@redhat.com>, "Cleber Rosa"
- <crosa@redhat.com>, "Wainer dos Santos Moschetta" <wainersm@redhat.com>,
- "Beraldo Leal" <bleal@redhat.com>, "Michael Tokarev" <mjt@tls.msk.ru>
+To: "Peter Maydell" <peter.maydell@linaro.org>
 X-Mailer: aerc 0.15.2
-References: <20240311174026.2177152-1-npiggin@gmail.com>
- <20240311174026.2177152-6-npiggin@gmail.com>
- <87v85ro9qt.fsf@draig.linaro.org> <CZRTTCV604Z3.3MT5MR0P5FWQK@wheely>
- <87a5n3mac5.fsf@draig.linaro.org>
-In-Reply-To: <87a5n3mac5.fsf@draig.linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c29;
- envelope-from=npiggin@gmail.com; helo=mail-oo1-xc29.google.com
+References: <20240307110318.170319-1-rathc@linux.ibm.com>
+ <CZRO4Y67CBPV.2IAKB80EFDKEY@wheely>
+ <0c7c6be1-12fb-4267-9d41-bd51637d104a@linaro.org>
+ <CZRU903MDUJ1.6S9RSO5A4RDG@wheely>
+ <CAFEAcA8im7S-bsx-hYqgUy4tsc8yXjWQf7Sb-=KnuREyqqC8mw@mail.gmail.com>
+In-Reply-To: <CAFEAcA8im7S-bsx-hYqgUy4tsc8yXjWQf7Sb-=KnuREyqqC8mw@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,58 +101,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Mar 13, 2024 at 7:03 AM AEST, Alex Benn=C3=A9e wrote:
-> "Nicholas Piggin" <npiggin@gmail.com> writes:
->
-> > On Tue Mar 12, 2024 at 11:33 PM AEST, Alex Benn=C3=A9e wrote:
-> >> Nicholas Piggin <npiggin@gmail.com> writes:
-> >>
-> >> > This reverts commit 1f881ea4a444ef36a8b6907b0b82be4b3af253a2.
-> >> >
-> >> > That commit causes reverse_debugging.py test failures, and does
-> >> > not seem to solve the root cause of the problem x86-64 still
-> >> > hangs in record/replay tests.
-> >>
-> >> I'm still finding the reverse debugging tests failing with this series=
-.
+On Wed Mar 13, 2024 at 12:29 AM AEST, Peter Maydell wrote:
+> On Tue, 12 Mar 2024 at 14:25, Nicholas Piggin <npiggin@gmail.com> wrote:
 > >
-> > :(
+> > On Wed Mar 13, 2024 at 12:01 AM AEST, Richard Henderson wrote:
+> > > On 3/11/24 23:36, Nicholas Piggin wrote:
 > >
-> > In gitlab CI or your own testing? What are you running exactly?
+> > [snip]
+> >
+> > > >
+> > > > #define FPU_HELPER(name, op, flags_handler)                        =
+   \
+> > > > float64 helper_##name(CPUPPCState *env, float64 arg1, float64 arg2)=
+   \
+> > > > {                                                                  =
+   \
+> > > >      float64 ret =3D op(arg1, arg2, &env->fp_status);              =
+      \
+> > > >      int flags =3D get_float_exception_flags(&env->fp_status);     =
+      \
+> > > >      flags_handler(env, flags)                                     =
+    \
+> > > >      return ret;                                                   =
+    \
+> > > > }
+> > > >
+> > > > static inline void addsub_flags_handler(CPUPPCState *env, int flags=
+)
+> > > > {
+> > > >      if (unlikely(flags & float_flag_invalid)) {
+> > > >          float_invalid_op_addsub(env, flags, 1, GETPC());
+> > > >      }
+> > > > }
+> > > >
+> > > > static inline void mul_flags_handler(CPUPPCState *env, int flags)
+> > > > {
+> > > >      if (unlikely(flags & float_flag_invalid)) {
+> > > >          float_invalid_op_mul(env, flags, 1, GETPC());
+> > > >      }
+> > > > }
+> > > >
+> > > > static inline void div_flags_handler(CPUPPCState *env, int flags)
+> > > > {
+> > > >      if (unlikely(flags & float_flag_invalid)) {
+> > > >          float_invalid_op_div(env, flags, 1, GETPC());
+> > > >      }
+> > > >      if (unlikely(flags & float_flag_divbyzero)) {
+> > > >          float_zero_divide_excp(env, GETPC());
+> > > >      }
+> > > > }
+> > >
+> > > Beware -- GETPC() may only be called from the outermost helper.
+> >
+> > Ah, because it's using __builtin_return_address. Good to know.
+> > Using always_inline and a comment should do the trick then.
 >
-> My own - my mistake I didn't get a clean build because of the format
-> bug.
+> The standard way to fix this is that you call GETPC() at the
+> outermost helper and then pass that value around as an extra
+> uintptr_t ra argument to called functions that need it.
 
-Ah, x86_64 is working for you now? Great.
-
-> However I'm seeing new failures:
->
->   env QEMU_TEST_FLAKY_TESTS=3D1 AVOCADO_TIMEOUT_EXPECTED=3D1 ./pyvenv/bin=
-/avocado run ./tests/avocado/reverse_debugging.py
->   Fetching asset from ./tests/avocado/reverse_debugging.py:ReverseDebuggi=
-ng_AArch64.test_aarch64_virt
->   JOB ID     : bd4b29f7afaa24dc6e32933ea9bc5e46bbc3a5a4
->   JOB LOG    : /home/alex/avocado/job-results/job-2024-03-12T20.58-bd4b29=
-f/job.log
->    (1/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_X86_64.tes=
-t_x86_64_pc: PASS (4.49 s)
->    (2/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_X86_64.tes=
-t_x86_64_q35: PASS (4.50 s)
->    (3/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_AArch64.te=
-st_aarch64_virt: FAIL: Invalid PC (read ffff2d941e4d7f28 instead of ffff2d9=
-41e4d7f2c) (3.06 s)
-
-I added a bunch of test cases that x86 has problems with for some
-reason, so it skips them. Maybe aarch64 is the same. I'll take a
-closer look at it.
-
->    (4/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_ppc64.test=
-_ppc64_pseries: PASS (16.48 s)
->    (5/5) ./tests/avocado/reverse_debugging.py:ReverseDebugging_ppc64.test=
-_ppc64_powernv: FAIL: Invalid PC (read 30020210 instead of 30020214) (2.80 =
-s)
-
-powernv is known flaky so that's expected for now.
+Oh that makes sense, thanks for the tip.
 
 Thanks,
 Nick
