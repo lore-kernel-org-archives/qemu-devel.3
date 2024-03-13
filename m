@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED27C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 10:56:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D6D3C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 10:57:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkMHq-0006xZ-Nw; Wed, 13 Mar 2024 06:56:43 -0400
+	id 1rkMIQ-0008Fh-9o; Wed, 13 Mar 2024 06:57:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkMHk-0006kA-Ps
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 06:56:37 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkMIB-0007sJ-Rz
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 06:57:06 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkMHf-0007NB-MW
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 06:56:33 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-413385f1a0dso9997805e9.2
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 03:56:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkMIA-0007PJ-5m
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 06:57:03 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4133100bccdso13158245e9.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 03:57:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710327389; x=1710932189; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710327420; x=1710932220; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CROdx12QKl/1CF1N/rB6ZStXhwFFSus0g/BOxVcdlUw=;
- b=Wq2TJDIL5RIxBfthsAXovDqQMAPTz9snIVyYF+rRCM9MQqUCCs5RBZ/ZP3QE6zYkTm
- 5Uy7Fj6ohce7DcIKbMRS7qon4ALbMmfHODu/0qLIzMuUMPulr2k7mzlvz2bCkF+MoxMz
- hsAS/UTdamqF/gqp6+OlmuGUj0qdDbr23mFZdMUpAcOmG38s5SLblq7KFAWUu3UJ0Mbx
- 5UFvk2mNnabm0A+whL9nLeORV9u/Baz3mchVqk6xnu8Yyu+krMqDi+EWrOPvR8Owc9Kl
- OAreMl0RcdsjkFrXkurWz3eFGWzebAyW8PSJEqUAF0j+zodYgnkacimiFvHqeghHf1ib
- B+fg==
+ bh=uI+qRwlVDIo9kSWXVEYpTLUYDOqEaVIDLp1wmMxJwfE=;
+ b=e5pMhoczBdQf4LasUWeQtj7NJYVWv3G1olc92nQ9QpPIGL4o38sU/Qkds0AnNjeNDp
+ Xz9T064n0Z0lse5zEWtlsmr+NHiheBGtMs08XoOtPUrKVRakOOwCqe84QDy5Cf8g825z
+ cjijQ7iPqAbhfl7ELFf60MbYk+nXFbwWtHjG6jGNsdYtXyr+mSNWMGnIRfF2Kv0lt6Gx
+ zOvHOCKM8b60pCtk/JUqLSWO2dFkvQQ7yxEfDreOSvNLTvHtWhESHmlLkEGmr+eG3Vpk
+ Be5QZuDFGJp52mHgXRTIrwXNZdpTna0oKtP7FYPo8IHls+TQ///hYuaqC/9g40i4dlmT
+ cAqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710327389; x=1710932189;
+ d=1e100.net; s=20230601; t=1710327420; x=1710932220;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CROdx12QKl/1CF1N/rB6ZStXhwFFSus0g/BOxVcdlUw=;
- b=ITxw8Lrfz653viCkNOLvZWfNBZs0X/ItgFQwMb5ELhmdvB/2MiEgrdvrvKfCfXrWWN
- vqGmhCMW/3RR+//gHkj+yA64BknbUKzXlj6pgHSgq101a3UDlpSjK0rvOBgZivPEOoSZ
- VTziTMC1oacD2sozrIYLcH6jK6wWgGbS+Cq6AdG0FW76HYYZHszuzJ16o5d0nrF7B9LV
- kV4ZxI+blYib8VxXAEYrtpyHFDq9p4TM1/A4retRBkOZAzNY+4xTter6vwkcvpfGcpwa
- 8snh8nG2Gfu+6xF/rSfi3N3ZIdrykZJwMp9lrpkf8Hn9+ElWDmm1hw8h3/NKIV9ZJIW1
- ZNjA==
+ bh=uI+qRwlVDIo9kSWXVEYpTLUYDOqEaVIDLp1wmMxJwfE=;
+ b=OokVc2GWCfAdql2vEd5I92AH6AX3c3Iu4UnlT1vvCEdBqIGFmluSEPl/Iht19HWPWJ
+ MDBC+S470ByWTi5nlxsCPxdiNLsvSQpp4U03bxENo8EuWv2ZWegVgRMih0G/A+ow17OR
+ dOl0nkFzPmYo+t0IbE30DpgcMbW2xISAkPkmgbOtVohTc07eUzb62PjvLi/bloREERlD
+ nTXyiXI2Ru/wzW/2wDWbZcFnmPql18ZymWZ0rHFWlOQ4V+aQuT71z4IWH1yioNmf2uH9
+ U48UPdTQaNi655gG+PumRYJe+Y70GgiGkFmzGR4es0cyQYOPZFH6FvYucWFMN4aPWvVt
+ RTMg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUa37wZCLNOdYasJ5l4ir7MNxKDmz+omqwiY2z6TKM9wVmwtryxLD09/LmRoxFomRfPUXTvpoAX0INyEF2J2hVqThxAsFg=
-X-Gm-Message-State: AOJu0Yz8anX520rje1jlQc3nzYC4DTDS4gbbmC5b9h1XlS8QQHYjV+Q1
- s//EXLhggSl3K3C5b6oWSJ/0o3MZ9rrySvUYqhOpCMpDRB4NxNCqwFBmUt67dto=
-X-Google-Smtp-Source: AGHT+IHqVlUnu5bms0Wbfd1pOkRKwSzFUfHtjvBmbh8Qa8wCgnMYSe4K7KjtaK2Oj3Uv96xe6tFhkQ==
-X-Received: by 2002:a05:600c:358f:b0:413:2522:a9f5 with SMTP id
- p15-20020a05600c358f00b004132522a9f5mr7866140wmq.21.1710327389228; 
- Wed, 13 Mar 2024 03:56:29 -0700 (PDT)
+ AJvYcCWaEcnI/Z2vmclxGVikMru0ZGdhAeYx038fiYkPHHQOL+kxQSvxqFu6nVM34cXmBfzLIIqVgVWaKTkwwBLsArrl/DmoEyc=
+X-Gm-Message-State: AOJu0YweuTy62pW2qjjQL6ZT3pbzHhgEBXT/Fpe5putut/C0ybjTQSvn
+ h5bjydf5fvcsH0GlZrQAZeTO0LFRWteavog4IM/2YPS1ynmoDNUX6YhklPm1gAs=
+X-Google-Smtp-Source: AGHT+IHjkhUJeMDysgNCo7j4PO35FLxnpKhdduZ/qqK9GowDpy0b0QtiSJG+mczz4Xy9ONVZIaXz8w==
+X-Received: by 2002:a05:600c:4ecf:b0:413:1713:864 with SMTP id
+ g15-20020a05600c4ecf00b0041317130864mr9799498wmq.33.1710327420299; 
+ Wed, 13 Mar 2024 03:57:00 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.182.179])
  by smtp.gmail.com with ESMTPSA id
- o5-20020a05600c510500b00412cfdc41f7sm1441780wms.0.2024.03.13.03.56.28
+ o5-20020a05600c510500b00412cfdc41f7sm1441780wms.0.2024.03.13.03.56.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Mar 2024 03:56:28 -0700 (PDT)
-Message-ID: <a90a7f94-df7e-4597-8953-3cb54efa4d15@linaro.org>
-Date: Wed, 13 Mar 2024 11:56:27 +0100
+ Wed, 13 Mar 2024 03:56:59 -0700 (PDT)
+Message-ID: <6fb74b0f-2059-4490-9215-f0c7baca0ce0@linaro.org>
+Date: Wed, 13 Mar 2024 11:56:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/16] esp.c: don't assert() if FIFO empty when
- executing non-DMA SELATNS
+Subject: Re: [PATCH v2 08/16] esp.c: introduce esp_fifo_push_buf() function
+ for pushing to the FIFO
 Content-Language: en-US
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
  fam@euphon.net, laurent@vivier.eu, qemu-devel@nongnu.org
 References: <20240313085810.2655062-1-mark.cave-ayland@ilande.co.uk>
- <20240313085810.2655062-10-mark.cave-ayland@ilande.co.uk>
+ <20240313085810.2655062-9-mark.cave-ayland@ilande.co.uk>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240313085810.2655062-10-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20240313085810.2655062-9-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,15 +98,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/3/24 09:58, Mark Cave-Ayland wrote:
-> The current logic assumes that at least 1 byte is present in the FIFO when
-> executing a non-DMA SELATNS command, but this may not be the case if the
-> guest executes an invalid ESP command sequence.
+> Instead of pushing data into the FIFO directly with fifo8_push_all(), add a new
+> esp_fifo_push_buf() function and use it accordingly.
 > 
-> Reported-by: Chuhong Yuan <hslester96@gmail.com>
 > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > ---
->   hw/scsi/esp.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   hw/scsi/esp.c | 11 ++++++++---
+>   1 file changed, 8 insertions(+), 3 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
