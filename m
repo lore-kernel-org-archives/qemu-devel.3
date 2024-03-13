@@ -4,86 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 922A8C54E66
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 17:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11EA1C54E66
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 17:22:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkSGj-0002Vs-J4; Wed, 13 Mar 2024 13:19:57 -0400
+	id 1rkSIb-0003VI-8O; Wed, 13 Mar 2024 13:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rkSGh-0002RN-9a
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 13:19:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rkSIV-0003TD-7D
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 13:21:47 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rkSGe-0004e4-Cl
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 13:19:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710350390;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FvFqmJowF+xbYcG23Pa1IXjsAsfx/5HqCWt+Tio9V4A=;
- b=Fn0sS/XIHk+NSlU0SS9AFe3xG+fl363mKLM336UpWE5GAjz9U2LWIjw36iuvGJJ/Ri1RDF
- CXxD4O2lZI5yZGmnuylaWn3F7nXAV/Ke4zdXx7c3yncS/WZCBANzbVvLE9Yh6KLgcSxDmV
- i4bcWmRhR72ygaBVs3d4c2eqAgTJxjk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-i75A9pkRMumCMK3wGcmzCQ-1; Wed, 13 Mar 2024 13:19:48 -0400
-X-MC-Unique: i75A9pkRMumCMK3wGcmzCQ-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-33e79d3f462so6947f8f.1
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 10:19:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710350387; x=1710955187;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FvFqmJowF+xbYcG23Pa1IXjsAsfx/5HqCWt+Tio9V4A=;
- b=BJz6iLykk1KKjiqAjEQiE5EFsoOMpba2Yaj/Z+HoeIJ6rfGxgSCeEZ609RhASkX3J1
- cbBlbYBm3ZEUvCpWhy8pd6g0ZNAte3D88woAq93v3t8lca96yNWh0JLojcc/633SuFvj
- KEuh7LPSKGvj/f5l5ZV8tzJxPySFt3BFgGmnNbGLm5YlwMOwx5FBVbAyLLJGnKq7yYJW
- 4eHLHydTAdKf7SrK5ffFi9v1HPm+1obtWCNbBtZcHHsAZNoQjyG+/Kc6vmVxV+yQvgkF
- NL+1L9f28kh7A8OIuA29BUjdAY9bShZ+IAXK4yPBeoIc5rQnaBPLDkxfEvqSOMZE/vF2
- 1atA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXeGjfDfpTmPy9OZMGenOhrb2ORQ/9/IZZ73O78vvd58CXmAbA3JCRrZBgwX6oUDfPUXBltjHlejFNaVOIXaxHdl6pXSBM=
-X-Gm-Message-State: AOJu0Yyi9xTxEpzgrW6mmmXmGTaBmNcHL4E+QK00XrxrmNr+Zdt6m5Id
- G0vq0fxreTWw1WqaXtvwHra8nH/kPd6QOChptEtZPn9oSiXK8xrBrKLIwre3V1LsltCuTdMFdM7
- 8nTDgh5IsEnGnEz0vQFsMu8f8OhxhVi8inhARKqd4vqQVTDIu8DsYkKHlJTEQ5DzNIjXPciYHhV
- GTBM31lEH58Sm0ePAYIs3DHsPnwGE=
-X-Received: by 2002:adf:e6cf:0:b0:33d:c5b5:5796 with SMTP id
- y15-20020adfe6cf000000b0033dc5b55796mr2241012wrm.22.1710350387639; 
- Wed, 13 Mar 2024 10:19:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGSM2Grza5I4H3Kti5+u0SVlJ60ibahU9D7CKsQlygWba6RQu10C+RoM+XEmOsAcQM6PoQei4iMme94cVa9rd0=
-X-Received: by 2002:adf:e6cf:0:b0:33d:c5b5:5796 with SMTP id
- y15-20020adfe6cf000000b0033dc5b55796mr2240999wrm.22.1710350387313; Wed, 13
- Mar 2024 10:19:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rkSIT-00054n-Iu
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 13:21:46 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id ECFDD55B84;
+ Wed, 13 Mar 2024 20:22:46 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 68C5A9890C;
+ Wed, 13 Mar 2024 20:21:42 +0300 (MSK)
+Message-ID: <7f6ecc97-8c32-4929-8ae1-b296e874ced2@tls.msk.ru>
+Date: Wed, 13 Mar 2024 20:21:41 +0300
 MIME-Version: 1.0
-References: <20240313084935.1412274-1-ppandit@redhat.com>
- <20240313151839.GA545171@fedora>
-In-Reply-To: <20240313151839.GA545171@fedora>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Wed, 13 Mar 2024 22:49:31 +0530
-Message-ID: <CAE8KmOy7Lj1tJ2mNTA3rEOoFEzCW+x1O-NrP+7Xy6hhoedH3EA@mail.gmail.com>
-Subject: Re: [PATCH v3] linux-aio: add IO_CMD_FDSYNC command support
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: kwolf@redhat.com, qemu-block@nongnu.org, qemu-devel@nongnu.org, 
- mtosatti@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.971,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 2/3] xen: Drop out of coroutine context
+ xen_invalidate_map_cache_entry
+Content-Language: en-US
+To: Anthony PERARD <anthony.perard@citrix.com>, qemu-devel@nongnu.org
+Cc: Peng Fan <peng.fan@nxp.com>
+References: <20240312142757.34141-1-anthony.perard@citrix.com>
+ <20240312142757.34141-3-anthony.perard@citrix.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240312142757.34141-3-anthony.perard@citrix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,20 +86,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 13 Mar 2024 at 20:48, Stefan Hajnoczi <stefanha@redhat.com> wrote:
-> > +extern bool laio_has_fdsync(int);
-> Please declare this in include/block/raw-aio.h alongside the other laio APIs.
->
-> FDSYNC support should be probed at open() time and the result should be
-> stored in a new bool field like s->laio_supports_fdsync. That way the
-> cost of laio_has_fdsync() on every flush request is avoided.
+12.03.2024 17:27, Anthony PERARD wrote:
+> From: Peng Fan <peng.fan@nxp.com>
+> 
+> xen_invalidate_map_cache_entry is not expected to run in a
+> coroutine. Without this, there is crash:
 
-* Okay. Here 's' is a BDRVRawState object and file open seems to
-happen in the raw_open_common() function? I'll move the
-laio_has_fdsync() call there and see how it works.
+Hi!  Is this a stable material? (It applies cleanly and builds on 8.2 and 7.2)
 
-Thank you.
----
-  - Prasad
+Thanks,
 
+/mjt
 
