@@ -4,61 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60404C54E66
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 15:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A562C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 15:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkQEr-0003ts-Ko; Wed, 13 Mar 2024 11:09:53 -0400
+	id 1rkQNd-0000bS-2X; Wed, 13 Mar 2024 11:18:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rkQEd-0003bZ-G8; Wed, 13 Mar 2024 11:09:40 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rkQNV-0000XL-SS
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 11:18:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rkQEV-0005se-O3; Wed, 13 Mar 2024 11:09:39 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c08:8793:0:640:b059:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 3016D60E56;
- Wed, 13 Mar 2024 18:09:30 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:7318::1:20])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 99pZB52GZiE0-6Cfukku8; Wed, 13 Mar 2024 18:09:29 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1710342569;
- bh=z/o77ZBizUBxnCNHSRVifBjl5Rg0JJeqoaiwZHtzozY=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=zBH2HsiKUheV56XqzUCYE/3gnZw506OzWaONG4JJhyRKvXSs6x622Ew2KB/kt8Mpe
- fDHa3neIJmlt2ViIfG2l850PNabShldyOWOobOpRurtZSzxqdkKvMHLtJGNn/LRZE+
- kkvJyUaiiydLWleU5vc5TgrjtfxK5R9XZPmZDBAg=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, jsnow@redhat.com, vsementsov@yandex-team.ru,
- kwolf@redhat.com, hreitz@redhat.com, devel@lists.libvirt.org,
- eblake@redhat.com, armbru@redhat.com, michael.roth@amd.com,
- pbonzini@redhat.com, pkrempa@redhat.com, f.ebner@proxmox.com
-Subject: [RFC 05/15] qapi: JobChangeOptions: make type member optional and
- deprecated
-Date: Wed, 13 Mar 2024 18:08:57 +0300
-Message-Id: <20240313150907.623462-6-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240313150907.623462-1-vsementsov@yandex-team.ru>
-References: <20240313150907.623462-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rkQNU-0000A9-2b
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 11:18:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710343126;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VEcRcqvX/jSNb5WHXXkOefOm59FO7Mwz4RJzG7a5dIA=;
+ b=CC72/GFnnZyLi6HGyzZ6zITBgsluYlACVRwZIVAKPW9LQBW2r4AyvWd7H3+q+lRZntsbre
+ PWWTpciLmCOo96VdqQ5q0bImWjXgWhRkBUuoqaJ8O+SY/RAhFf9tAcwyfw3Q9wRMJv4d1e
+ qO2gQv8NpFraAxXdzbV4PW7+ucTha1Y=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-515-p4MHQAUkMNeec_dJf0Movw-1; Wed, 13 Mar 2024 11:18:41 -0400
+X-MC-Unique: p4MHQAUkMNeec_dJf0Movw-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 93089882380;
+ Wed, 13 Mar 2024 15:18:41 +0000 (UTC)
+Received: from localhost (unknown [10.39.192.186])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 09D33492BC9;
+ Wed, 13 Mar 2024 15:18:40 +0000 (UTC)
+Date: Wed, 13 Mar 2024 11:18:39 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: kwolf@redhat.com, qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ mtosatti@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v3] linux-aio: add IO_CMD_FDSYNC command support
+Message-ID: <20240313151839.GA545171@fedora>
+References: <20240313084935.1412274-1-ppandit@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="3pj7XjJpTo2Dtv0N"
+Content-Disposition: inline
+In-Reply-To: <20240313084935.1412274-1-ppandit@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.971,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -76,133 +82,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now QEMU can understand type directly from the job itself, type is
-redundant.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- blockjob.c                           |  2 +-
- docs/about/deprecated.rst            |  6 ++++++
- job-qmp.c                            | 17 +++++++++++++++++
- qapi/block-core.json                 | 10 ++++++++--
- stubs/meson.build                    |  1 +
- stubs/qapi-jobchangeoptions-mapper.c |  8 ++++++++
- 6 files changed, 41 insertions(+), 3 deletions(-)
- create mode 100644 stubs/qapi-jobchangeoptions-mapper.c
+--3pj7XjJpTo2Dtv0N
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/blockjob.c b/blockjob.c
-index 788cb1e07d..33c40e7d25 100644
---- a/blockjob.c
-+++ b/blockjob.c
-@@ -319,7 +319,7 @@ void block_job_change_locked(BlockJob *job, JobChangeOptions *opts,
- 
-     GLOBAL_STATE_CODE();
- 
--    if (job_type(&job->job) != opts->type) {
-+    if (opts->has_type && job_type(&job->job) != opts->type) {
-         error_setg(errp, "Job '%s' is '%s' job, not '%s'", job->job.id,
-                    job_type_str(&job->job), JobType_str(opts->type));
-         return;
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index dfd681cd02..64981e5e4a 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -142,6 +142,12 @@ accepted incorrect commands will return an error. Users should make sure that
- all arguments passed to ``device_add`` are consistent with the documented
- property types.
- 
-+
-+``block-job-change`` argument ``type`` (since 9.1)
-+''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+QEMU can get job type from the job itself (by @id), @type field is redundant.
-+
- QEMU Machine Protocol (QMP) events
- ----------------------------------
- 
-diff --git a/job-qmp.c b/job-qmp.c
-index 9e26fa899f..c486df9579 100644
---- a/job-qmp.c
-+++ b/job-qmp.c
-@@ -26,6 +26,8 @@
- #include "qemu/osdep.h"
- #include "qemu/job.h"
- #include "qapi/qapi-commands-job.h"
-+#include "qapi/qapi-types-block-core.h"
-+#include "qapi/qapi-visit-block-core.h"
- #include "qapi/error.h"
- #include "trace/trace-root.h"
- 
-@@ -186,3 +188,18 @@ JobInfoList *qmp_query_jobs(Error **errp)
- 
-     return head;
- }
-+
-+bool JobChangeOptions_mapper(JobChangeOptions *opts, JobType *out, Error **errp)
-+{
-+    Job *job;
-+
-+    JOB_LOCK_GUARD();
-+
-+    job = find_job_locked(opts->id, errp);
-+    if (!job) {
-+        return false;
-+    }
-+
-+    *out = job_type(job);
-+    return true;
-+}
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 6041e7bd8f..3d890dfcd0 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -3082,11 +3082,17 @@
- #
- # @type: The job type
- #
-+# Features:
-+#
-+# @deprecated: Members @type is deprecated. Qemu can get type from
-+#     the job itself, @type is redundant.
-+#
- # Since: 8.2
- ##
- { 'union': 'JobChangeOptions',
--  'base': { 'id': 'str', 'type': 'JobType' },
--  'discriminator': 'type',
-+  'base': { 'id': 'str',
-+            '*type': { 'type': 'JobType', 'features': ['deprecated'] } },
-+  'discriminator': 'JobType',
-   'data': { 'mirror': 'JobChangeOptionsMirror' } }
- 
- ##
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 0bf25e6ca5..e480400a6c 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -31,6 +31,7 @@ stub_ss.add(files('module-opts.c'))
- stub_ss.add(files('monitor.c'))
- stub_ss.add(files('monitor-core.c'))
- stub_ss.add(files('physmem.c'))
-+stub_ss.add(files('qapi-jobchangeoptions-mapper.c'))
- stub_ss.add(files('qemu-timer-notify-cb.c'))
- stub_ss.add(files('memory_device.c'))
- stub_ss.add(files('qmp-command-available.c'))
-diff --git a/stubs/qapi-jobchangeoptions-mapper.c b/stubs/qapi-jobchangeoptions-mapper.c
-new file mode 100644
-index 0000000000..e4acfd91b3
---- /dev/null
-+++ b/stubs/qapi-jobchangeoptions-mapper.c
-@@ -0,0 +1,8 @@
-+#include "qemu/osdep.h"
-+#include "qapi/qapi-visit-block-core.h"
-+#include "qapi/qapi-types-job.h"
-+
-+bool JobChangeOptions_mapper(JobChangeOptions *opts, JobType *out, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
--- 
-2.34.1
+On Wed, Mar 13, 2024 at 02:19:35PM +0530, Prasad Pandit wrote:
+> From: Prasad Pandit <pjp@fedoraproject.org>
+>=20
+> Libaio defines IO_CMD_FDSYNC command to sync all outstanding
+> asynchronous I/O operations, by flushing out file data to the
+> disk storage.
+>=20
+> Enable linux-aio to submit such aio request. This helps to
+> reduce latency induced via pthread_create calls by
+> thread-pool (aio=3Dthreads).
+>=20
+> Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+> ---
+>  block/file-posix.c |  7 +++++++
+>  block/linux-aio.c  | 22 +++++++++++++++++++++-
+>  2 files changed, 28 insertions(+), 1 deletion(-)
+>=20
+> v3: check if host kernel supports aio_fsync call
+>   -> https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg03210.ht=
+ml
+>=20
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index 35684f7e21..a30494d1a8 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -2453,6 +2453,8 @@ static inline bool raw_check_linux_io_uring(BDRVRaw=
+State *s)
+>  #endif
+> =20
+>  #ifdef CONFIG_LINUX_AIO
+> +extern bool laio_has_fdsync(int);
+
+Please declare this in include/block/raw-aio.h alongside the other laio API=
+s.
+
+> +
+>  static inline bool raw_check_linux_aio(BDRVRawState *s)
+>  {
+>      Error *local_err =3D NULL;
+> @@ -2599,6 +2601,11 @@ static int coroutine_fn raw_co_flush_to_disk(Block=
+DriverState *bs)
+>      if (raw_check_linux_io_uring(s)) {
+>          return luring_co_submit(bs, s->fd, 0, NULL, QEMU_AIO_FLUSH);
+>      }
+> +#endif
+> +#ifdef CONFIG_LINUX_AIO
+> +    if (raw_check_linux_aio(s) && laio_has_fdsync(s->fd)) {
+
+FDSYNC support should be probed at open() time and the result should be
+stored in a new bool field like s->laio_supports_fdsync. That way the
+cost of laio_has_fdsync() on every flush request is avoided.
+
+> +        return laio_co_submit(s->fd, 0, NULL, QEMU_AIO_FLUSH, 0);
+> +    }
+>  #endif
+>      return raw_thread_pool_submit(handle_aiocb_flush, &acb);
+>  }
+> diff --git a/block/linux-aio.c b/block/linux-aio.c
+> index ec05d946f3..ed20a503e9 100644
+> --- a/block/linux-aio.c
+> +++ b/block/linux-aio.c
+> @@ -67,6 +67,7 @@ struct LinuxAioState {
+>      int event_max;
+>  };
+> =20
+> +bool laio_has_fdsync(int);
+>  static void ioq_submit(LinuxAioState *s);
+> =20
+>  static inline ssize_t io_event_ret(struct io_event *ev)
+> @@ -384,6 +385,9 @@ static int laio_do_submit(int fd, struct qemu_laiocb =
+*laiocb, off_t offset,
+>      case QEMU_AIO_READ:
+>          io_prep_preadv(iocbs, fd, qiov->iov, qiov->niov, offset);
+>          break;
+> +    case QEMU_AIO_FLUSH:
+> +        io_prep_fdsync(iocbs, fd);
+> +        break;
+>      /* Currently Linux kernel does not support other operations */
+>      default:
+>          fprintf(stderr, "%s: invalid AIO request type 0x%x.\n",
+> @@ -412,7 +416,7 @@ int coroutine_fn laio_co_submit(int fd, uint64_t offs=
+et, QEMUIOVector *qiov,
+>      AioContext *ctx =3D qemu_get_current_aio_context();
+>      struct qemu_laiocb laiocb =3D {
+>          .co         =3D qemu_coroutine_self(),
+> -        .nbytes     =3D qiov->size,
+> +        .nbytes     =3D qiov ? qiov->size : 0,
+>          .ctx        =3D aio_get_linux_aio(ctx),
+>          .ret        =3D -EINPROGRESS,
+>          .is_read    =3D (type =3D=3D QEMU_AIO_READ),
+> @@ -486,3 +490,19 @@ void laio_cleanup(LinuxAioState *s)
+>      }
+>      g_free(s);
+>  }
+> +
+> +bool laio_has_fdsync(int fd)
+> +{
+> +    struct iocb cb;
+> +    struct iocb *cbs[] =3D {&cb, NULL};
+> +
+> +    io_context_t ctx =3D 0;
+> +    io_setup(1, &ctx);
+> +
+> +    /* check if host kernel supports IO_CMD_FDSYNC */
+> +    io_prep_fdsync(&cb, fd);
+> +    int ret =3D io_submit(ctx, 1, cbs);
+> +
+> +    io_destroy(ctx);
+> +    return (ret =3D=3D -EINVAL) ? false : true;
+> +}
+> --=20
+> 2.44.0
+>=20
+
+--3pj7XjJpTo2Dtv0N
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmXxw88ACgkQnKSrs4Gr
+c8j0NQf/VwFpzFlbG/Tvc2MT31vBtldKT7wUdmYOWL+YrYAw8X5EOL3MNB4zpQtF
+ia18/G8zHB+Y+9cdnH4zroxQkAM3uSdBlPibBhk8oEuAW/P/YOVgn1jmEiSLBK8N
+Kd1ZJJxGKBj9yJSMjYjZaOTop4Mn8+OPAV9qxD1VzpXEseJTzg+lKf/0zMc+zcuc
+0Qyy8cE30SEG2aCFCpcd56SL/ni9ncjdN8o4r03knOTTlOX+OAIAO0aM1oNOlpHy
+0xPIdsecW99quqh/4RpzWnRu6z9a0URa4g2/NEWFLzoW25tgd/lN9SxKCX9brCig
+bU3VxkjP7w67HcvOOVeak04rlnmwMQ==
+=VgQO
+-----END PGP SIGNATURE-----
+
+--3pj7XjJpTo2Dtv0N--
 
 
