@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 121F6C54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 08:01:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A3FC54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 08:15:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkJXX-0007zv-UT; Wed, 13 Mar 2024 04:00:43 -0400
+	id 1rkJka-0001O9-Nd; Wed, 13 Mar 2024 04:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1rkJXT-0007zb-V1
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:00:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1rkJXR-000713-N4
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:00:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710316835;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oi2vnmmBzCWB567PGY+8n1qdildTzQRHfRpxJaSS2nw=;
- b=XrpMyiYuZ8ZvGiBsnKZmxYKnt6+NCx214u3Fgd7jdLr8o7d3jse6YMROMHy92eSL7XafLp
- mXW0B/CVG4tYOiYJHcrcGhNYpYhMT22YGmNWUL7Lsk+qJvuFDeUgj0hGmuX7ahqHYPYako
- /A80cZ5FjPjW/JZmvYqY30/p1N25ExA=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-351-k6PdrrFSOwK3u_laIN_82g-1; Wed, 13 Mar 2024 04:00:31 -0400
-X-MC-Unique: k6PdrrFSOwK3u_laIN_82g-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-29a5bae5b3fso5923993a91.2
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 01:00:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1rkJkZ-0001M2-5T
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:14:11 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1rkJkX-0001lP-C6
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:14:10 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-5e152c757a5so3781953a12.2
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 01:14:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1710317647; x=1710922447; darn=nongnu.org;
+ h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Yv8wKA/KPYbFLr3DTp7mYK7V8Z+RK2NI/4+apdD1MNA=;
+ b=SmZkFok0aiM6HiuH34Vps+q459YvjXLO08vjjlJW3jlFzWL+fvKOo6Le0yTQdRYudj
+ gWgzS7m+eNWGETs5118LUcY0GzvvSmMMXDgXoJo0jOCuuf+6uQWPQIxlZGcB5uq9fY6N
+ j85BjsqFmrFeTbbCj9fHxGB8wKgkBvIM3rro/ZHKVDg5jfU0vBOyMtx+GhC9r0Mn8nd6
+ 7rY1rPZfKFzJT6jb8UMujZQeT/anJJVecO6vU6r3LMc9PYVx8uhYxks8lzzaAeH/vfqT
+ JLm9+Xaw9CMS6GZ9Nf3oexTz75WZvsBJGGuBvbMRTZG2UdTpB0k31t9XBBtjQXB2SPEA
+ 9anA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710316830; x=1710921630;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oi2vnmmBzCWB567PGY+8n1qdildTzQRHfRpxJaSS2nw=;
- b=ImziEcrnCXHNXdwVps7fXb/bYEMGm3oDRzUIDl6QdKSYWZCaMkAiadZGj8eKImohqo
- DO3rDr5kfybRrfLYV4gOa5NjhwSiDQzmUPhPs7rvXTAeBlsFrRlDINY6XK0ZZCXklxlX
- tS5GMzj5ny9nLKa208s77XXy6CyM1LS7qif5HjjstryZuKuao6Ur1Ve20qjmlctmzS0a
- /iN404pgOaOu7IsqSQ0ncX19NcjZTnSbp8EusQW1LGeTv0RmzCfAito4AwwKlh2K+KR9
- ofqU+4eHZQz0x/twNgGxJTzI7XgzZHjpC543G08DkjDRQ/YxPs9SExxjvozNS8bP1uhP
- H1og==
-X-Gm-Message-State: AOJu0Yym6zKtqFezig3wIrzez0RSWiYyzJ5pUu3JlmiRTCVovk4Wd3WX
- iMaQgUHTjHTXYslDVwts7tQ0iukjfJwZmpagFV/pF8JjDV5MeQSzQDZhOqmulvdslYxYZDtSPHQ
- OjTHhm8Be8Mtd7Wx9y8Onm7FQKZ0Zz5aBsIJ2HHhSCRQtk+bCmMs/uVmQ5CHyk4lfWW6oeTwFi3
- zzJec5dNIxmjyFEFzlfC4vnoeVwyY=
-X-Received: by 2002:a17:90a:eb07:b0:29c:5ba6:c518 with SMTP id
- j7-20020a17090aeb0700b0029c5ba6c518mr1602857pjz.6.1710316830273; 
- Wed, 13 Mar 2024 01:00:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFEgbJLpPOEyXZusvCXIhRmFlfAVPfHzXRezU53CuurNQJBqhmzW3wCz8sFwSmLvsYjZc/236bQCffnM2hbY6w=
-X-Received: by 2002:a17:90a:eb07:b0:29c:5ba6:c518 with SMTP id
- j7-20020a17090aeb0700b0029c5ba6c518mr1602837pjz.6.1710316829941; Wed, 13 Mar
- 2024 01:00:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240219143423.272012-1-aesteve@redhat.com>
- <20240312142033-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240312142033-mutt-send-email-mst@kernel.org>
-From: Albert Esteve <aesteve@redhat.com>
-Date: Wed, 13 Mar 2024 09:00:18 +0100
-Message-ID: <CADSE00LSoSyqomKtCQM-AxAKvtz2+Hmc=0r6KDeyy+LdNYfBEg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/5] Virtio dmabuf improvements
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, stefanha@gmail.com, alex.bennee@linaro.org, 
- philmd@linaro.org, kraxel@redhat.com, marcandre.lureau@gmail.com
-Content-Type: multipart/alternative; boundary="0000000000001a40a50613862b6a"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ d=1e100.net; s=20230601; t=1710317647; x=1710922447;
+ h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Yv8wKA/KPYbFLr3DTp7mYK7V8Z+RK2NI/4+apdD1MNA=;
+ b=hR9Gk2r2uycL097eXlZPo3iEFx3V1rbB5UGliNkuKnh8rnp8P6nhn0Jd62ZdGBmEYX
+ oA4my3VsMfIdevNeR1ySPptEn9D8PPTQ/LBo2Gb+0nnkQJmR4tBMwWEXedbqRl9KRfWH
+ K3elrRsE50We+SAWH+TrzX4DKP0pzJXev4WSvKxe3nZnqMDGafK3PcWGixD89IWoWm5o
+ +4b/QurTuuTpQnOUENFsjuum+8FUyYrvq900i6FoaSAZhxeTaev6uHr8WMBXa6Pc+k9f
+ 9EzMaeu7E/JVoOSdpbI5KoyJnE0m6tGMAZ108KBPEUdE646CgfNQiuRsMF3PCbaK1kKN
+ tT2Q==
+X-Gm-Message-State: AOJu0YxMmL6l5YHHsoeRQ9G3Ms+AClaKNZlXAkPhY80bS0K67EiuE6xt
+ LUzrVQK9kA+JRUf0vM4JV0nIjW/pc9jxkeB35DdmXkrg5e3Lla0lr8xlfRQZkbAF/aWQIDRomS5
+ DQvIBp7RIaBLsc/yVm+LeSCZaSZIkKtWYhOyGTeg4DbW86vxVdukWRulxZcQWqCad08LvLIdc9e
+ X2Z1I4sizK0+MwxaY1uGmJRUYR7vqVQj5KKURo7aFIuA==
+X-Google-Smtp-Source: AGHT+IF9dTZQ87uwf7lhAsJ5YgIK8iAnEyvliRhDcIaIeZ+oa0mzLZ7VRZ+cbLV1F2Mct8C366kgWQ==
+X-Received: by 2002:a05:6a21:6da7:b0:1a3:2b94:dbaf with SMTP id
+ wl39-20020a056a216da700b001a32b94dbafmr4122449pzb.1.1710317647176; 
+ Wed, 13 Mar 2024 01:14:07 -0700 (PDT)
+Received: from hsinchu26.internal.sifive.com
+ (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+ by smtp.gmail.com with ESMTPSA id
+ gw12-20020a17090b0a4c00b0029beb0fc60fsm820291pjb.28.2024.03.13.01.14.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Mar 2024 01:14:06 -0700 (PDT)
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com,
+ jim.shu@sifive.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 1/1] target/riscv/kvm: fix timebase-frequency when using KVM
+ acceleration
+Date: Wed, 13 Mar 2024 16:13:57 +0800
+Message-Id: <20240313081359.20845-1-yongxuan.wang@sifive.com>
+X-Mailer: git-send-email 2.17.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=yongxuan.wang@sifive.com; helo=mail-pg1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,128 +100,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000001a40a50613862b6a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+The timebase-frequency of guest OS should be the same with host
+machine. The timebase-frequency value in DTS should be got from
+hypervisor when using KVM acceleration.
 
-On Tue, Mar 12, 2024 at 7:23=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
- wrote:
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+---
+ hw/riscv/virt.c              | 11 +++++++++--
+ target/riscv/kvm/kvm-cpu.c   |  9 +++++++++
+ target/riscv/kvm/kvm_riscv.h | 13 +++++++++++++
+ 3 files changed, 31 insertions(+), 2 deletions(-)
 
-> On Mon, Feb 19, 2024 at 03:34:18PM +0100, Albert Esteve wrote:
-> > v1: https://www.mail-archive.com/qemu-devel@nongnu.org/msg1005257.html
-> > v2: https://www.mail-archive.com/qemu-devel@nongnu.org/msg1014615.html
-> > v3: Virtio dmabuf improvements
-> > v3 -> v4
-> >   - Changed GMutex by QemuMutex in virtio-dmabuf
-> >   - Made the value at VirtioSharedObject an union
-> >     to make naming more clear
-> >   - Added some documentation
->
-> Dropped everything except patch 1 for now.
->
-
-Got it. Thanks!
-
-
->
-> > Various improvements for the virtio-dmabuf module.
-> > This patch includes:
-> >
-> > - Check for ownership before allowing a vhost device
-> >   to remove an object from the table.
-> > - Properly cleanup shared resources if a vhost device
-> >   object gets cleaned up.
-> > - Rename virtio dmabuf functions to `virtio_dmabuf_*`
-> >
-> > Albert Esteve (5):
-> >   hw/virtio: check owner for removing objects
-> >   hw/virtio: document SharedObject structures
-> >   hw/virtio: change dmabuf mutex to QemuMutex
-> >   hw/virtio: cleanup shared resources
-> >   hw/virtio: rename virtio dmabuf API
-> >
-> >  docs/interop/vhost-user.rst       |  4 +-
-> >  hw/display/virtio-dmabuf.c        | 98 +++++++++++++++++++------------
-> >  hw/virtio/vhost-user.c            | 31 +++++++---
-> >  hw/virtio/vhost.c                 |  3 +
-> >  hw/virtio/virtio.c                |  3 +
-> >  include/hw/virtio/virtio-dmabuf.h | 73 +++++++++++++++++------
-> >  tests/unit/test-virtio-dmabuf.c   | 82 +++++++++++++++++++-------
-> >  7 files changed, 211 insertions(+), 83 deletions(-)
-> >
-> > --
-> > 2.43.1
->
->
-
---0000000000001a40a50613862b6a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br clear=3D"all"><div><div dir=3D"ltr" c=
-lass=3D"gmail_signature"><div dir=3D"ltr"><p style=3D"color:rgb(0,0,0);font=
--family:RedHatText,sans-serif;font-weight:bold;margin:0px;padding:0px;font-=
-size:14px"><br></p></div></div></div></div><br><div class=3D"gmail_quote"><=
-div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 12, 2024 at 7:23=E2=80=AFP=
-M Michael S. Tsirkin &lt;<a href=3D"mailto:mst@redhat.com">mst@redhat.com</=
-a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On=
- Mon, Feb 19, 2024 at 03:34:18PM +0100, Albert Esteve wrote:<br>
-&gt; v1: <a href=3D"https://www.mail-archive.com/qemu-devel@nongnu.org/msg1=
-005257.html" rel=3D"noreferrer" target=3D"_blank">https://www.mail-archive.=
-com/qemu-devel@nongnu.org/msg1005257.html</a><br>
-&gt; v2: <a href=3D"https://www.mail-archive.com/qemu-devel@nongnu.org/msg1=
-014615.html" rel=3D"noreferrer" target=3D"_blank">https://www.mail-archive.=
-com/qemu-devel@nongnu.org/msg1014615.html</a><br>
-&gt; v3: Virtio dmabuf improvements<br>
-&gt; v3 -&gt; v4<br>
-&gt;=C2=A0 =C2=A0- Changed GMutex by QemuMutex in virtio-dmabuf<br>
-&gt;=C2=A0 =C2=A0- Made the value at VirtioSharedObject an union<br>
-&gt;=C2=A0 =C2=A0 =C2=A0to make naming more clear<br>
-&gt;=C2=A0 =C2=A0- Added some documentation<br>
-<br>
-Dropped everything except patch 1 for now.<br></blockquote><div><br></div><=
-div>Got it. Thanks!</div><div>=C2=A0</div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">
-<br>
-&gt; Various improvements for the virtio-dmabuf module.<br>
-&gt; This patch includes:<br>
-&gt; <br>
-&gt; - Check for ownership before allowing a vhost device<br>
-&gt;=C2=A0 =C2=A0to remove an object from the table.<br>
-&gt; - Properly cleanup shared resources if a vhost device<br>
-&gt;=C2=A0 =C2=A0object gets cleaned up.<br>
-&gt; - Rename virtio dmabuf functions to `virtio_dmabuf_*`<br>
-&gt; <br>
-&gt; Albert Esteve (5):<br>
-&gt;=C2=A0 =C2=A0hw/virtio: check owner for removing objects<br>
-&gt;=C2=A0 =C2=A0hw/virtio: document SharedObject structures<br>
-&gt;=C2=A0 =C2=A0hw/virtio: change dmabuf mutex to QemuMutex<br>
-&gt;=C2=A0 =C2=A0hw/virtio: cleanup shared resources<br>
-&gt;=C2=A0 =C2=A0hw/virtio: rename virtio dmabuf API<br>
-&gt; <br>
-&gt;=C2=A0 docs/interop/vhost-user.rst=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 4 =
-+-<br>
-&gt;=C2=A0 hw/display/virtio-dmabuf.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 | 98 +++++=
-++++++++++++++------------<br>
-&gt;=C2=A0 hw/virtio/vhost-user.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-| 31 +++++++---<br>
-&gt;=C2=A0 hw/virtio/vhost.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0|=C2=A0 3 +<br>
-&gt;=C2=A0 hw/virtio/virtio.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 |=C2=A0 3 +<br>
-&gt;=C2=A0 include/hw/virtio/virtio-dmabuf.h | 73 +++++++++++++++++------<b=
-r>
-&gt;=C2=A0 tests/unit/test-virtio-dmabuf.c=C2=A0 =C2=A0| 82 +++++++++++++++=
-++++-------<br>
-&gt;=C2=A0 7 files changed, 211 insertions(+), 83 deletions(-)<br>
-&gt; <br>
-&gt; -- <br>
-&gt; 2.43.1<br>
-<br>
-</blockquote></div></div>
-
---0000000000001a40a50613862b6a--
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index a094af97c32a..a7ed7fa13010 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -710,8 +710,15 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+     int socket_count = riscv_socket_count(ms);
+ 
+     qemu_fdt_add_subnode(ms->fdt, "/cpus");
+-    qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
+-                          RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ);
++
++    if (kvm_enabled()) {
++        qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
++                              kvm_riscv_get_timebase_frequency(first_cpu));
++    } else {
++        qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
++                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ);
++    }
++
+     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#size-cells", 0x0);
+     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#address-cells", 0x1);
+     qemu_fdt_add_subnode(ms->fdt, "/cpus/cpu-map");
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index c7afdb1e81b7..bbb115eaa867 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -739,6 +739,15 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
+     env->kvm_timer_dirty = false;
+ }
+ 
++uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs)
++{
++    uint64_t reg;
++
++    KVM_RISCV_GET_TIMER(cs, frequency, reg);
++
++    return reg;
++}
++
+ static int kvm_riscv_get_regs_vector(CPUState *cs)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
+index 4bd98fddc776..130a4bde0480 100644
+--- a/target/riscv/kvm/kvm_riscv.h
++++ b/target/riscv/kvm/kvm_riscv.h
+@@ -29,4 +29,17 @@ void riscv_kvm_aplic_request(void *opaque, int irq, int level);
+ int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state);
+ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+ 
++#ifdef CONFIG_KVM
++
++uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs);
++
++#else
++
++static inline uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs)
++{
++    g_assert_not_reached();
++}
++
++#endif
++
+ #endif
+-- 
+2.17.1
 
 
