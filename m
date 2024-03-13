@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A83AC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 05:07:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3848C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 05:18:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkGpl-0002Bk-Mv; Wed, 13 Mar 2024 01:07:21 -0400
+	id 1rkH0J-0004Xw-0G; Wed, 13 Mar 2024 01:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rkGpf-0002B9-TY
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:07:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rkGpc-0006Qp-2q
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:07:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710306430;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pM3SwMIauMCPI8Dt92wSrnAm8oA2Jea9gq61TqjyA9k=;
- b=DzeWek3Kc4vX8A74bGQ+jXemoRCl5MDg+HqtYFBrlOwY78gSZ3ak5vYz3osfelSZkJF3Jx
- ldp+ycx5edz4dp0ip4OjVWMR9VnWwDun8tKDYfSlhF759ILdnKtcOCfWvUkqwCh6uwHtvC
- v6PH0m/MDekB4/0KoemRkvgdURe8ab0=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-173-U1lSsYfmOhCSuKv4GqRg9g-1; Wed, 13 Mar 2024 01:07:08 -0400
-X-MC-Unique: U1lSsYfmOhCSuKv4GqRg9g-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-29bf071cc04so2381838a91.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 22:07:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkH0A-0004Wp-Pg
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:18:07 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkH09-0008Aw-9d
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:18:06 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6e6aa5c5a6fso638548b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 22:18:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710307083; x=1710911883; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GE8hhN1a7ibH5O1+4As36+w6TzTJvEkL7Nqc428usZU=;
+ b=gQuy/N3K81Ycg+2ydbEhapecwnVaIFI54ZgnwPa/tKPhkpGpE6jiYRWEFk2GBPWGyD
+ 83rdVjlZ5hw2dZyEOWgR/TcCVQ9ILtXe3gOdWRd13nf9cH7C746rczt+OarOTg3DV6vm
+ kPoukrqRrcITnOeo6h/qYwlMY7rPspmS5sKaZlUad4+wo0bklMiT7QhR7Xk82lBhpUKI
+ UY7AmsOxLDcaVXqrpMn1wXlbGCLh+bdCDcPKIWFKrlWTRa0OPEUiEGqyMGJ6kbkKEuVN
+ dPlKQ8vQRnnfnC5LB+vCn3yDDaHON2PlEb0fJQ1GKLZrGXz6DmoZBP2vb5jwciFUQtvK
+ WQ/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710306427; x=1710911227;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pM3SwMIauMCPI8Dt92wSrnAm8oA2Jea9gq61TqjyA9k=;
- b=w1jNjKEPdrh5FL5kzIL7f9vzi6HrvGVn9+2Px8A1fzxP+ye1SaVC4+unM6K6uZRgiY
- qQZRTajgRPcL338g83jJSx8Q1bqCZLKrepHMG//TUPNKXb/LVmzRIXJgeAfDUUk1Zw4J
- 5gXqCxDNEv/kgNNEfO0tax4ZbZ3k27fwGPFBPeLaTMoY83u+9cZ/djz5zn+3uqMajtwK
- ChPVu3BLC1jkSLat7G3hveiFeNaa4NNEJkLfeVbY3FzUIhqF5vAZhACLWH4c39Knn4aX
- UFkaKq1UX9l+6XavjPj4zV10kNYDyw48wy5gO1NicQhFScSev7PVGEJ7ngIkpVzbiDno
- iTOA==
+ d=1e100.net; s=20230601; t=1710307083; x=1710911883;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=GE8hhN1a7ibH5O1+4As36+w6TzTJvEkL7Nqc428usZU=;
+ b=Cg1ht2hyPR7u3n6LInGsxRxjqgUqC1M6X+BVkrkQ1FXpDmxJ204qTLmA+yRbQVXZC9
+ 4abEL3aZrrNNwLlkI6OqwIdspOUJzyHoySJy0R84kIWzdwrs6jR47aqnxmD/ursg6LZn
+ glZAkAb5lijBw3XmpY1RzYh9g28MLUrubGgV3C0xlfymFSrivDbd922v+XHE0ZJZcmmM
+ e9yANjCiW+Y7EeJF/4JHXbJfhSZiANqe6epFY/6Z7OPbHDXYEEjWEx7i7pITYomeBb24
+ Z/1BFXS+sDmIG7o+MGUOIa9Rrrk79Hi0ld6a/nowcpBjmwoyJGQd5rRa7ABJYN43ZA1k
+ vhBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX3mx88RBHgNZhXBapzRCc+7kMxwtRk0dZNRCXcH19roe4rzS8pA9THBvGonf6xNEIqIVFY+rMxvTnt4AIw37MvW/sOZbc=
-X-Gm-Message-State: AOJu0YwJ2LL+j2+4cC4oUJBtX9p9JTOFP56k0pPg+MPonUvWynLJNshs
- oAZObpIuqxx/jvT9sqiWG562uZX4rReqWeZd2eC+Uvkd750gi88h87F8JcPPBdXvt8BY0k7GPMr
- acd2Xu2GdbZb0GheTBEcCMNK9vWx2ZwQvhlMKnIcggVk2BOXP79Hw+idTwyX7fjoriAqEyJQHFj
- 0bJdU7WnxAC1zHLR8QVl3yKfYZ44A=
-X-Received: by 2002:a17:90b:1d92:b0:29c:5ca7:8bee with SMTP id
- pf18-20020a17090b1d9200b0029c5ca78beemr1157394pjb.43.1710306427426; 
- Tue, 12 Mar 2024 22:07:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFCYlVs98WS9to9ahPFseITny1doTIYT5GKTvmNyFD4ARZoRj+48f+Epuov581zwDlyDdG2bpAYp4jlgMmNv+U=
-X-Received: by 2002:a17:90b:1d92:b0:29c:5ca7:8bee with SMTP id
- pf18-20020a17090b1d9200b0029c5ca78beemr1157384pjb.43.1710306427139; Tue, 12
- Mar 2024 22:07:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240205165437.1965981-1-andrew@daynix.com>
- <CABcq3pGy+Lp8YZnMZVC61wu6jDvE0BYj3kuuvuXCA+ewOtJVfg@mail.gmail.com>
- <CACGkMEs9B+7SEy1naQCQwXQDd7bzRZGjxv2h_QHx8g_az6E=Fg@mail.gmail.com>
- <CACGkMEvMoK+MZx7WkMzzVpyHw+agac38Td-aVq3Ygwb4jNhXmQ@mail.gmail.com>
- <CABcq3pEqCdha49FAs8knQDcp1RzA6MFxC3zwRU2oyvHcX_7EkA@mail.gmail.com>
-In-Reply-To: <CABcq3pEqCdha49FAs8knQDcp1RzA6MFxC3zwRU2oyvHcX_7EkA@mail.gmail.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 13 Mar 2024 13:06:56 +0800
-Message-ID: <CACGkMEs9vd_AmG9wyBvoGMg-M-Apc+EVhod7Hd9YaSRzn7CuUA@mail.gmail.com>
-Subject: Re: [PATCH v9 0/5] eBPF RSS through QMP support.
-To: Andrew Melnichenko <andrew@daynix.com>
-Cc: mst@redhat.com, armbru@redhat.com, eblake@redhat.com, 
- qemu-devel@nongnu.org, berrange@redhat.com, yuri.benditovich@daynix.com, 
- yan@daynix.com, akihiko.odaki@daynix.com
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCVQKT0wxaoUBNwcxJzup3A0cDrroLcXo87daMba5GmA4nj58nrm17Up7NYswVpo6P5ynNz2BQql2HT25VFgfJWNj/z2gZE=
+X-Gm-Message-State: AOJu0Yz05nx9RcO2F0CbhTLfJ1UhE1hcT9DrvIjnD5/rhOOLHdppZNM6
+ MaQ5kCTv3ZX5xkVjb6Ukx4W29gVVBlv97z8N9cB1MVaDFjpfIeT6
+X-Google-Smtp-Source: AGHT+IFnRnlppiw+LHReegp6IdP1+J2Kxs0b1EqKanCyrVp2Qu9Qoytxmld4FzzjJYgtSU+N1VNF3g==
+X-Received: by 2002:a05:6a21:1aa:b0:1a1:492a:d6a0 with SMTP id
+ le42-20020a056a2101aa00b001a1492ad6a0mr6096389pzb.47.1710307083134; 
+ Tue, 12 Mar 2024 22:18:03 -0700 (PDT)
+Received: from localhost ([1.146.20.17]) by smtp.gmail.com with ESMTPSA id
+ l16-20020a170902f69000b001dd8cfd9933sm6070804plg.151.2024.03.12.22.17.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Mar 2024 22:18:02 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 13 Mar 2024 15:17:55 +1000
+Message-Id: <CZSD9BNHUXII.2Q6EMCDYLUSF1@wheely>
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ <qemu-devel@nongnu.org>
+Cc: "David Hildenbrand" <david@redhat.com>, "Richard Henderson"
+ <richard.henderson@linaro.org>, "Peter Xu" <peterx@redhat.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, "Thomas Huth" <thuth@redhat.com>
+Subject: Re: [PATCH-for-9.0 v2 1/3] physmem: Expose tlb_reset_dirty_range_all()
+X-Mailer: aerc 0.15.2
+References: <20240312201458.79532-1-philmd@linaro.org>
+ <20240312201458.79532-2-philmd@linaro.org>
+In-Reply-To: <20240312201458.79532-2-philmd@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,50 +97,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Andrew:
-
-On Wed, Mar 13, 2024 at 7:11=E2=80=AFAM Andrew Melnichenko <andrew@daynix.c=
-om> wrote:
+On Wed Mar 13, 2024 at 6:14 AM AEST, Philippe Mathieu-Daud=C3=A9 wrote:
+> In order to call tlb_reset_dirty_range_all() outside of
+> system/physmem.c, expose its prototype.
 >
-> Hi all,
-> Apparently, eBPF code from ebpf/* can't be a part of the 'common'
-> library - that breaks non-system/user build. I'll change it to be a
-> 'system' library.
 
-I've dropped some of the tracing as a workaround (due to schedule
-pressure) since yesterday was a soft freeze and I don't want to miss
-it again.
+Acked-by: Nicholas Piggin <npiggin@gmail.com>
 
-The pull request has been merged. Please fix that on top (add some
-tracing back probably).
-
-Thanks
-
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  include/exec/exec-all.h | 1 +
+>  system/physmem.c        | 2 +-
+>  2 files changed, 2 insertions(+), 1 deletion(-)
 >
-> On Fri, Mar 8, 2024 at 10:06=E2=80=AFAM Jason Wang <jasowang@redhat.com> =
-wrote:
-> >
-> > On Fri, Mar 8, 2024 at 2:30=E2=80=AFPM Jason Wang <jasowang@redhat.com>=
- wrote:
-> > >
-> > > On Mon, Feb 26, 2024 at 6:23=E2=80=AFPM Andrew Melnichenko <andrew@da=
-ynix.com> wrote:
-> > > >
-> > > > Hi all,
-> > > > Jason, can you please review the patch set, thank you.
-> > >
-> > > Queued.
-> > >
-> > > Thanks
-> >
-> > This seems to fail CI at:
-> >
-> > https://gitlab.com/jasowang/qemu/-/jobs/6348725269
-> >
-> > Please fix this.
-> >
-> > Thanks
-> >
->
+> diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+> index ce36bb10d4..3e53501691 100644
+> --- a/include/exec/exec-all.h
+> +++ b/include/exec/exec-all.h
+> @@ -655,6 +655,7 @@ static inline void mmap_unlock(void) {}
+> =20
+>  void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length=
+);
+>  void tlb_set_dirty(CPUState *cpu, vaddr addr);
+> +void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
+> =20
+>  MemoryRegionSection *
+>  address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr addr,
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 6cfb7a80ab..5441480ff0 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -819,7 +819,7 @@ found:
+>      return block;
+>  }
+> =20
+> -static void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t lengt=
+h)
+> +void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length)
+>  {
+>      CPUState *cpu;
+>      ram_addr_t start1;
 
 
