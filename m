@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FB4C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 05:29:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BDDC54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 05:39:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkHAg-000899-Ml; Wed, 13 Mar 2024 01:29:01 -0400
+	id 1rkHK9-0001l1-Af; Wed, 13 Mar 2024 01:38:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rkHAJ-00084c-9Y; Wed, 13 Mar 2024 01:28:36 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkHK7-0001kV-1G
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:38:43 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rkHAH-0001a1-Ri; Wed, 13 Mar 2024 01:28:35 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-6e6ade6a66aso611946b3a.3; 
- Tue, 12 Mar 2024 22:28:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkHK5-0003JB-0n
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:38:42 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-29bb3d62949so3420062a91.1
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 22:38:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710307712; x=1710912512; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1710308319; x=1710913119; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3/K1la7pgEEWHnPcVxOwQq76xApyBNCBJbxaNlbx+ao=;
- b=fby6N/c7C0FgF4a8rfpkEsNJPELypGnN9CVa6Hdox8leWlaUFiKZAaFecI/8fnROzP
- GGuIOQqwU4ckW+4LFTrAo6bejBDJmwkgEvGkkBW97qHg+VkuVJX7L2sPoDwhw6m58ELp
- xR87ltxudZmD3YbPFdmu8WaeZF3sB48gaPD/WpEK5/Ed2y8aLg9OFMM0Qi9A9BYavZbx
- VUXp5Hs2LAfAEQFYogG1NE3ZFeCeLOyFO0btipROY91rtGLwkdZBibJ9rieGYuu0Z4Bs
- Jt0eH1suOU9Th8TzEAMhCeN6M/ixghNkFEoQb+pFDdfAQsip1ONutK8QDHteKQwIDpeb
- MW9A==
+ bh=BJLjiyJW4471YgTtt3S7IB/synTzjVT9S8z3v4x/PYY=;
+ b=AwRFzWg4LtxklDzcz3BG60lX17EtfK9TV7k4wjbfRPYxJZd0YNKY+YHEsg2nwjxc2t
+ STCTryIUv8BrQ3mbYVkAJUge4i08jYWpcnJrZ8zcO2eNSy0tyFT1tLSCqdnkaXOJYa5C
+ sxFk8kVHWFa9rkhLSnrjh4EFm7hmAdYmJTk2m7WslwsDs69F9Qp6P4TbTvNrxtyPX02f
+ xfD7UdQqKOGZCfXm+0f/q5QhXHGJ4wAya8aj/t+4AyAqj5lH/agaKgZsWvjXFFLAeyvP
+ 7v7IoQHiwVaOCVMqoZJLukeDLrpkZYZHohfOiX3TYgBT8azKOm3yhi4KK8U69zQxrZts
+ NI/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710307712; x=1710912512;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1710308319; x=1710913119;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=3/K1la7pgEEWHnPcVxOwQq76xApyBNCBJbxaNlbx+ao=;
- b=EQ5Xh6i2DRFpsOy45FjvNzlFE58QtMjHPj5V1nM7tUMet3bgCmIJhsRQyHpauhrSFu
- ujxDIojPCXvh033obo39m+3SuW9uDNCuI6r+x7r0O/9FmzW57aCkPYvYCZWt6ktZWwEK
- +lEUFtpM3xO8FIhKtWUEZPVT3veqrD0OYgORFzdZ5mxd2+6TnutZj8jPEm6eTuk6UTQM
- oOddbKE8DneGFPUUyZsgpz8cTqlXK/EjHG/syIk5birNRSKObJj72yK5hwQ+ctOr5YL+
- IKA1nEnMdsulrZxZ/5T2OG98515Vax+D/UQ660Dnwrxt1FeXcGgb6YThItA9+WpTnF6a
- IRMA==
+ bh=BJLjiyJW4471YgTtt3S7IB/synTzjVT9S8z3v4x/PYY=;
+ b=GlR7XKQWKV7b+zoLj2a+9CbtibmMOxDcSB7A84T/JkIjxmgfv8+zYr6D58LsNHbY1d
+ YYChNGSdLwXw9xVMoxgFfdYF2vSCy0ivH7gQzPZYPBUFPtOqc6j6NpgR3Iz/xUwbVKBy
+ 3oYUaIj2GkSKP60HPMck7Bt8aNAhxVt6rzUYpJHRtjHlMESP1s1G8MCXLQ+CuMbLAP6n
+ bUNhyAFCKT70zQuDYDi20tHZdZfdAllPYUW+Ky0iCHa5kw0f0Uh28p6QakMtKgfjyUO/
+ WANbuu2QqoOwhdj66eOjhu76bB42JVfsJ0J2l0hd2P0gAHgrjuzyqzzaJm7J6ANEJIzW
+ bgPw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXel97pFSCVWlKe/QxVYhvBmayWcZ4xh/IC8XRdWA3m/GUlvkZFSXCEXM3MkRVTEIOCbfHbfvMozmnCbr7XA0OM1StjHitrDuj/QmbXRgvvunykHp9ho7b3Ktc=
-X-Gm-Message-State: AOJu0YzlCBhsVMYIPIuJfoRf6/Q1aikJhne51keO3xDV3giIa9T4j0u4
- hyVQxw74j1+VUOnddgL61yUl5KdWHO6UNNdeiJyla/1nEAKstD78
-X-Google-Smtp-Source: AGHT+IEN0rb6inaz/lUO9do9s2GeOscju0nNUUQt/GHR+1YTexZ2UX77NmrHYZpgYVnQwKWwPUz+Jg==
-X-Received: by 2002:a05:6a00:2e96:b0:6e5:80a4:2ff2 with SMTP id
- fd22-20020a056a002e9600b006e580a42ff2mr1582717pfb.30.1710307712082; 
- Tue, 12 Mar 2024 22:28:32 -0700 (PDT)
+ AJvYcCU6XwaFK/UV53wkTAz4cpNgsqmTd+qVKp1gk24V51ASf7ithRh6H1jriWRea/K7edjSuF3anU5DXRcGrF7XGDU1e5GdXz0=
+X-Gm-Message-State: AOJu0YwljYg/44ANtOgLRNO5Cq/0BgS44l3CgpMxP8W1R3k4nhPpWeWm
+ hqRsOhq06LEoOoQ2LqOX0lYz9roMaDuLj8+vCWb43yw03Ejj6F3P
+X-Google-Smtp-Source: AGHT+IGE8iiMtQCJrEIBskNNWaspPDJm4HeCnoPX2RayrQMkr9rjk7xNJgiwC2OIWsqXM8vPd8YxPg==
+X-Received: by 2002:a17:90a:e508:b0:29b:aee7:5937 with SMTP id
+ t8-20020a17090ae50800b0029baee75937mr4006748pjy.23.1710308319115; 
+ Tue, 12 Mar 2024 22:38:39 -0700 (PDT)
 Received: from localhost ([1.146.20.17]) by smtp.gmail.com with ESMTPSA id
- c4-20020a62f844000000b006e6be504b0bsm131952pfm.168.2024.03.12.22.28.27
+ s21-20020a17090aa11500b0029beec8e86csm511287pjp.36.2024.03.12.22.38.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 22:28:31 -0700 (PDT)
+ Tue, 12 Mar 2024 22:38:38 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 13 Mar 2024 15:28:24 +1000
-Message-Id: <CZSDHCIGS20N.2X51Z0GLK9O7S@wheely>
-Cc: "Richard Henderson" <richard.henderson@linaro.org>, "Chinmay Rath"
- <rathc@linux.ibm.com>, <qemu-ppc@nongnu.org>, <qemu-devel@nongnu.org>,
- <danielhb413@gmail.com>, <clg@kaod.org>, <harshpb@linux.ibm.com>,
- <sbhat@linux.ibm.com>
-Subject: Re: [PATCH] target/ppc: Move floating-point arithmetic instructions
- to decodetree.
+Date: Wed, 13 Mar 2024 15:38:23 +1000
+Message-Id: <CZSDOZT1RURT.3FBGNCY6GQ1WE@wheely>
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Peter Maydell" <peter.maydell@linaro.org>
+To: "Pavel Dovgalyuk" <pavel.dovgalyuk@ispras.ru>, <qemu-devel@nongnu.org>
+Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Richard
+ Henderson" <richard.henderson@linaro.org>, =?utf-8?q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Paolo Bonzini" <pbonzini@redhat.com>, "John
+ Snow" <jsnow@redhat.com>, "Cleber Rosa" <crosa@redhat.com>, "Wainer dos
+ Santos Moschetta" <wainersm@redhat.com>, "Beraldo Leal" <bleal@redhat.com>,
+ "Michael Tokarev" <mjt@tls.msk.ru>
+Subject: Re: [PATCH v4 11/24] net: Use virtual time for net announce
 X-Mailer: aerc 0.15.2
-References: <20240307110318.170319-1-rathc@linux.ibm.com>
- <CZRO4Y67CBPV.2IAKB80EFDKEY@wheely>
- <0c7c6be1-12fb-4267-9d41-bd51637d104a@linaro.org>
- <CZRU903MDUJ1.6S9RSO5A4RDG@wheely>
- <CAFEAcA8im7S-bsx-hYqgUy4tsc8yXjWQf7Sb-=KnuREyqqC8mw@mail.gmail.com>
-In-Reply-To: <CAFEAcA8im7S-bsx-hYqgUy4tsc8yXjWQf7Sb-=KnuREyqqC8mw@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x433.google.com
+References: <20240311174026.2177152-1-npiggin@gmail.com>
+ <20240311174026.2177152-12-npiggin@gmail.com>
+ <6e9b8e49-f00f-46fc-bbf8-4af27e0c3906@ispras.ru>
+ <CZRQ0IX3UQRZ.KXS6OX3HY1RD@wheely>
+ <13c1e838-0c0a-42e9-baa4-2418569311d5@ispras.ru>
+In-Reply-To: <13c1e838-0c0a-42e9-baa4-2418569311d5@ispras.ru>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,67 +102,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Mar 13, 2024 at 12:29 AM AEST, Peter Maydell wrote:
-> On Tue, 12 Mar 2024 at 14:25, Nicholas Piggin <npiggin@gmail.com> wrote:
-> >
-> > On Wed Mar 13, 2024 at 12:01 AM AEST, Richard Henderson wrote:
-> > > On 3/11/24 23:36, Nicholas Piggin wrote:
-> >
-> > [snip]
-> >
-> > > >
-> > > > #define FPU_HELPER(name, op, flags_handler)                        =
-   \
-> > > > float64 helper_##name(CPUPPCState *env, float64 arg1, float64 arg2)=
-   \
-> > > > {                                                                  =
-   \
-> > > >      float64 ret =3D op(arg1, arg2, &env->fp_status);              =
-      \
-> > > >      int flags =3D get_float_exception_flags(&env->fp_status);     =
-      \
-> > > >      flags_handler(env, flags)                                     =
-    \
-> > > >      return ret;                                                   =
-    \
-> > > > }
-> > > >
-> > > > static inline void addsub_flags_handler(CPUPPCState *env, int flags=
-)
-> > > > {
-> > > >      if (unlikely(flags & float_flag_invalid)) {
-> > > >          float_invalid_op_addsub(env, flags, 1, GETPC());
-> > > >      }
-> > > > }
-> > > >
-> > > > static inline void mul_flags_handler(CPUPPCState *env, int flags)
-> > > > {
-> > > >      if (unlikely(flags & float_flag_invalid)) {
-> > > >          float_invalid_op_mul(env, flags, 1, GETPC());
-> > > >      }
-> > > > }
-> > > >
-> > > > static inline void div_flags_handler(CPUPPCState *env, int flags)
-> > > > {
-> > > >      if (unlikely(flags & float_flag_invalid)) {
-> > > >          float_invalid_op_div(env, flags, 1, GETPC());
-> > > >      }
-> > > >      if (unlikely(flags & float_flag_divbyzero)) {
-> > > >          float_zero_divide_excp(env, GETPC());
-> > > >      }
-> > > > }
-> > >
-> > > Beware -- GETPC() may only be called from the outermost helper.
-> >
-> > Ah, because it's using __builtin_return_address. Good to know.
-> > Using always_inline and a comment should do the trick then.
+On Tue Mar 12, 2024 at 9:12 PM AEST, Pavel Dovgalyuk wrote:
+> On 12.03.2024 14:05, Nicholas Piggin wrote:
+> > On Tue Mar 12, 2024 at 7:09 PM AEST, Pavel Dovgalyuk wrote:
+> >> This won't work, as needed. Announce timer can't be enabled, because
+> >> it is set in post_load function. Therefore announce callbacks break
+> >> the replay, when virtio-net is used with snapshots.
+> >=20
+> > I see. Is that somehow marked as being incompatible with rr?
 >
-> The standard way to fix this is that you call GETPC() at the
-> outermost helper and then pass that value around as an extra
-> uintptr_t ra argument to called functions that need it.
+> Here's the prior discussion on it:=20
+> https://lore.kernel.org/qemu-devel/8735ovx0zd.fsf@linaro.org/t/
 
-Oh that makes sense, thanks for the tip.
+Thanks for that context. You already fixed some of these, lol that
+would have saved me a few hours. Maybe clearing the announce flag
+is the right way to solve this, I might take that instead.
+
+Trouble is we have virtio-net selftests in tests already and this
+causes failures. So we need to get it fixed. I do think the bh API
+is a bit clunky and could be revised into a name that makes more
+sense for the non-replay developer, but that's really a separate
+issue and should not prevent this bug fixes being merged.
+
+We really need non-flaky rr testing upstream because it's quite
+easy to break. So I will keep trying to get these merged.
 
 Thanks,
 Nick
+
+>
+>
+> >=20
+> > Thanks,
+> > Nick
+> >=20
+> >>
+> >> On 11.03.2024 20:40, Nicholas Piggin wrote:
+> >>> Using virtual time for announce ensures that guest visible effects
+> >>> are deterministic and don't break replay.
+> >>>
+> >>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> >>> ---
+> >>>    net/announce.c | 2 +-
+> >>>    1 file changed, 1 insertion(+), 1 deletion(-)
+> >>>
+> >>> diff --git a/net/announce.c b/net/announce.c
+> >>> index 9e99044422..70b5d5e822 100644
+> >>> --- a/net/announce.c
+> >>> +++ b/net/announce.c
+> >>> @@ -187,7 +187,7 @@ static void qemu_announce_self_once(void *opaque)
+> >>>   =20
+> >>>    void qemu_announce_self(AnnounceTimer *timer, AnnounceParameters *=
+params)
+> >>>    {
+> >>> -    qemu_announce_timer_reset(timer, params, QEMU_CLOCK_REALTIME,
+> >>> +    qemu_announce_timer_reset(timer, params, QEMU_CLOCK_VIRTUAL,
+> >>>                                  qemu_announce_self_once, timer);
+> >>>        if (params->rounds) {
+> >>>            qemu_announce_self_once(timer);
+> >=20
+
 
