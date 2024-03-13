@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 097B0C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 08:59:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EB99C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 08:59:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkKSF-0008K9-H8; Wed, 13 Mar 2024 04:59:19 -0400
+	id 1rkKRj-0007aV-Rf; Wed, 13 Mar 2024 04:58:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rkKSD-0008Du-5S
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:59:17 -0400
+ id 1rkKRi-0007Zm-5w
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:58:46 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rkKSB-0002Jc-PE
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:59:16 -0400
+ id 1rkKRg-0002Ci-O6
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:58:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
  List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=zo6qBEL1QSeFZLNolV3DrVpqMBTkyiEf6bkbgHwJp1M=; b=VF33LB3X0NMWtsV9JEm4ag0k4n
- svLqY8LdaJpJMyO6pZIS0LBK0zeHQfBSFJNiHBqAkbwvYus9X5508z3i7xLesGS1vzPsHDWinXhmn
- dC72KyCxN2Jfx0lXaIqfzktxFe6gd7PQAU3II3VF7A1ISfeyXoeM3RngInlZVxgdxyXejTQmPjxM2
- kq+dQzj16VhXTlGSjZADz149VscRFJfqYWGRev5rpZfhsrJP7BtekyfCIcOAWXbF3f8ojKeWwuBYv
- tsg6EVBwziSNWqFR6qeX5q5KT+DXzfC5yw5eeKynCPTH1hYkOVyQK2WxdnIl6umjVWHP61vlaht36
- K7j/X02Y6Zil0WLMAC9eFxxbp+yQAEmS2CFsdJd+56qJ6seZSybQXcx+AtnH9TDcsUMqNKiQKS08L
- tSMXMaF7PjVMX9PQRHrPZQlExpWGlcdeWmLR5XPxp4hPWQXvgOAVL4Lk5Rnue1Y0pwdKuZT96zO51
- afbLgUuA12FnR5h1khcdT6RaupOWluobFSpAwIPUDSnTutBljPEPdH66Fm2DU3zVrNs4MLUi1P7zG
- KuCcBvI/9kjXegKKj8Cj1QFRFmOTaRD/uy9PtPrExRaqQee5coPlgYFKBPrd2Kg3J5V27MYrfRSM9
- dVZGHujqj16PTi8BRJJc1u2Z2aEOUZM7ObkzMsva4=;
+ bh=8ou60ZFfGz5wGuATfQwlf3o/Sr8yITEBKcHYAHL8PJg=; b=nRm+swVMS5GtExiogDX+ko214U
+ ZUavRH1cqgLILijo9cmVatQGZYQWkiXjD4L/WpvtOX87yFwVVKVpXlUlo56nmYxf2pWvpZIlm14Pr
+ cqTiSnaXE38hdIkwhF7ID+9HMSS34gjmtFR7t89oO1ONEFPS1GQXDxQ29xPFEv+7MooWoRikdwnBv
+ y6sThI4CQ4Yc35oPKFkOL50g2MxKLDos9LHOWu9f+ggFvvK+y8sW78Oj6QSgsdMNcMkC1JcG4LJen
+ DZ9wQSwKqI+JDzOPW5PUpg4/5/WLQgoN5SvWZng7TpPqZZGgqRnikh1ki3RODzFwAL5j5SPSTshRc
+ y34E+8W+LC7CpBOMwU3TO2L4z+OtEx8/2iXRXMvRrYjkJx9zyw6WdUAG3RGunAnCQZllVqiil/ouL
+ uh/qiaYQAMQw0mG2VWiNZu8JjGtbPb9/orECuR2QwDM/AdhwQD302JmRf7hg1IVIOWUq8pZ9dseGw
+ OGoy6l4Q8e5hR45iVH47D7km7SVdW+y0x+xJKlJEX9UjalFGZn2mys8lGw2i1VyTo4foZFkz2+WQf
+ lxa/gnkMf5AACpPvYJb5M6SXzF9C6eus2ZaKxrzNYQ6/3urv5ii/CWuWu0HyuUXHNcsVbf0gooW1V
+ OLnawhpRAkFqS0MzSsY+ZgJDaD1u76VN46RSh4OQ4=;
 Received: from [2a00:23c4:8bb3:1000:1218:d855:1998:7fa8]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1rkKRG-000CUN-TO; Wed, 13 Mar 2024 08:58:23 +0000
+ id 1rkKQl-000CUN-9d; Wed, 13 Mar 2024 08:57:51 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: pbonzini@redhat.com, fam@euphon.net, laurent@vivier.eu,
  qemu-devel@nongnu.org
-Date: Wed, 13 Mar 2024 08:58:04 +0000
-Message-Id: <20240313085810.2655062-11-mark.cave-ayland@ilande.co.uk>
+Date: Wed, 13 Mar 2024 08:57:55 +0000
+Message-Id: <20240313085810.2655062-2-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240313085810.2655062-1-mark.cave-ayland@ilande.co.uk>
 References: <20240313085810.2655062-1-mark.cave-ayland@ilande.co.uk>
@@ -53,8 +53,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb3:1000:1218:d855:1998:7fa8
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2 10/16] esp.c: don't assert() if FIFO empty when executing
- esp_cdb_length()
+Subject: [PATCH v2 01/16] esp.c: replace cmdfifo use of esp_fifo_pop_buf() in
+ do_command_phase()
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,28 +80,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This does not happen during normal usage, but can occur if the guest issues an
-invalid ESP command sequence.
+The aim is to restrict the esp_fifo_*() functions so that they only operate on
+the hardware FIFO. When reading from cmdfifo in do_command_phase() use the
+underlying Fifo8 functions directly.
 
-Reported-by: Chuhong Yuan <hslester96@gmail.com>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 ---
- hw/scsi/esp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/scsi/esp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index 55143a1208..0050493e18 100644
+index 590ff99744..f8230c74b3 100644
 --- a/hw/scsi/esp.c
 +++ b/hw/scsi/esp.c
-@@ -431,7 +431,7 @@ static int esp_cdb_length(ESPState *s)
-     int cmdlen, len;
+@@ -265,7 +265,7 @@ static void esp_do_nodma(ESPState *s);
  
-     cmdlen = fifo8_num_used(&s->cmdfifo);
--    if (cmdlen < s->cmdfifo_cdb_offset) {
-+    if (cmdlen == 0 || cmdlen < s->cmdfifo_cdb_offset) {
-         return 0;
+ static void do_command_phase(ESPState *s)
+ {
+-    uint32_t cmdlen;
++    uint32_t cmdlen, n;
+     int32_t datalen;
+     SCSIDevice *current_lun;
+     uint8_t buf[ESP_CMDFIFO_SZ];
+@@ -275,7 +275,7 @@ static void do_command_phase(ESPState *s)
+     if (!cmdlen || !s->current_dev) {
+         return;
      }
+-    esp_fifo_pop_buf(&s->cmdfifo, buf, cmdlen);
++    memcpy(buf, fifo8_pop_buf(&s->cmdfifo, cmdlen, &n), cmdlen);
  
+     current_lun = scsi_device_find(&s->bus, 0, s->current_dev->id, s->lun);
+     if (!current_lun) {
 -- 
 2.39.2
 
