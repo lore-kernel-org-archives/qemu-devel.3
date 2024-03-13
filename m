@@ -4,82 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF9B8C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 11:04:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D53FC54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 11:05:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkMOj-0006Jm-F6; Wed, 13 Mar 2024 07:03:49 -0400
+	id 1rkMPm-00084E-GM; Wed, 13 Mar 2024 07:04:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkMOO-00063O-OD
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 07:03:32 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkMOK-0000AE-SB
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 07:03:28 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2d208be133bso77160321fa.2
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 04:03:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710327799; x=1710932599; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Oz6dKbtn4IEpsUsc1P2fSpHA/xRdhf0Yk89OHKhclJI=;
- b=sVK1mmeB+mKfB7J2pyWZSduNg0MifJZrgmO6Ez6ywGHIVM9j3ufqWEobvCU8puyyi/
- OYyFnfaO1FOlbuVYb6ZdfblJfCr07d7K7/mwiE/GeEouUuqUPVmznSdg9ocZQo3jNuf7
- myvjeoEprSU8vWOUJq7wdyA3iRfQaWnyFq2OhtaV+3JgQGni650tsPTPOFY5A/FK1JYj
- cb24DXPD8jMK9bqcNHjUEyOsARjxm/WZ1McM8VnZrkHqTEJ4X7ffAxtwWkrIdBcbpjsD
- uuiS+R57flJ1F9yP+45R68sNJQKvyMQ5+317MtmYS1bJIWS4M70R/dGyHyhJz1kcuhPw
- 1eSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710327799; x=1710932599;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Oz6dKbtn4IEpsUsc1P2fSpHA/xRdhf0Yk89OHKhclJI=;
- b=GLOcSeBiiZiN421v2YozJMNBQfzi+F4OFCJvG/qMbruBkqCHsoImP+VihNfAhFz9x4
- FwV+lBDTpUGfLuy3l7/zX03fE8Krvh8RyvyI4x28zPQ+XwmK52ZIzcP5KkxLPlaGJlV4
- u1sJen22Ecw/YETgsSuwKozG8xl6HDMzBSM66NvKF5QOaYQ3SvYSBdUMNEzRbhQvf2tW
- GmWF++36+Kas+XlutLF1sQoM095+tZHcHyU6E7J7zhe6+v5R7MQ+yUiBYti4MbJVOlHH
- 0IITB/niCNFPLOPEWhO81JsgLERkgMzz0DEaEDDdpkX+LNYaOBGHph7Qg52nRgoS6Isw
- jW3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUpe68arHwGZ2v0WkYMsB1N5d7o0o+UwtUDp1TOxE7Ua8gxUEB9RtPoVwMurapzTArGCCIlh64flWPNVtQYeQ5FSfJbH9U=
-X-Gm-Message-State: AOJu0YxeoEIPBWIZ1ndSA3S/7sRDeZj27zJ/zzsHYOJ+DyvZXZBrjTAx
- jq0I20HR9rHixAl/JRDEtG/84lLLkeCTwKXj4Xu/AtAorR1b2CZjV4yXj0dojgU=
-X-Google-Smtp-Source: AGHT+IHfM7bEA01RJpJfBvuM25xju+MtygpyTn8dpF2PB8OADeHlhAZhKX36SCGRpyJBafoutBH+Fg==
-X-Received: by 2002:ac2:4c9a:0:b0:513:c658:7997 with SMTP id
- d26-20020ac24c9a000000b00513c6587997mr1749018lfl.24.1710327798933; 
- Wed, 13 Mar 2024 04:03:18 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.182.179])
- by smtp.gmail.com with ESMTPSA id
- fm26-20020a05600c0c1a00b00413ebdca679sm841873wmb.37.2024.03.13.04.03.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Mar 2024 04:03:18 -0700 (PDT)
-Message-ID: <9c36ddab-59a9-47fa-ab2e-ab0e9cff5fb6@linaro.org>
-Date: Wed, 13 Mar 2024 12:03:17 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rkMPj-00083r-DO
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 07:04:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rkMPh-0000U2-4k
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 07:04:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710327886;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xTr+njGk3GsFdCw6MLtnpMXfqrNez0s9HGsAL4rnVTo=;
+ b=QAU5OzaQ3mGm8KzXVQhqOYbJhAiAIsdWmfy0j/kVFm5mF2vaduEnNepoYytNNfb1wf5yVT
+ T1Iqpd/xKo6mx4ugVKtxyFVe+OPsCQ2+ZCCbCavUoO+TtImL5k08KjNLmihHpzFHvzgNpg
+ ndt1A6adPtzbCyU1rlXeRRZN6SA2IAI=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-625-33eKy8ZtNnm_B8Yf6Oiy3g-1; Wed, 13 Mar 2024 07:04:44 -0400
+X-MC-Unique: 33eKy8ZtNnm_B8Yf6Oiy3g-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A95DC87280D
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 11:04:44 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.47])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8929F492BC7;
+ Wed, 13 Mar 2024 11:04:43 +0000 (UTC)
+Date: Wed, 13 Mar 2024 11:04:41 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Anthony Harivel <aharivel@redhat.com>
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, qemu-devel@nongnu.org,
+ vchundur@redhat.com
+Subject: Re: [PATCH v3 3/3] Add support for RAPL MSRs in KVM/Qemu
+Message-ID: <ZfGIScbYp3htVRMi@redhat.com>
+References: <20240125072214.318382-1-aharivel@redhat.com>
+ <20240125072214.318382-4-aharivel@redhat.com>
+ <ZbjDtytv-_-Bz4-S@redhat.com> <CZRQCYCXNTF2.1I5CNECSOB6IL@fedora>
+ <ZfB5eBwWXL45sN_K@redhat.com> <CZSKAAQ3HE0Q.32DYA8Y3PX16V@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/16] esp.c: replace cmdfifo use of esp_fifo_pop_buf()
- in do_message_phase()
-Content-Language: en-US
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
- fam@euphon.net, laurent@vivier.eu, qemu-devel@nongnu.org
-References: <20240313085810.2655062-1-mark.cave-ayland@ilande.co.uk>
- <20240313085810.2655062-3-mark.cave-ayland@ilande.co.uk>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240313085810.2655062-3-mark.cave-ayland@ilande.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CZSKAAQ3HE0Q.32DYA8Y3PX16V@fedora>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,46 +85,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/3/24 09:57, Mark Cave-Ayland wrote:
-> The aim is to restrict the esp_fifo_*() functions so that they only operate on
-> the hardware FIFO. When reading from cmdfifo in do_message_phase() use the
-> underlying Fifo8 functions directly.
+On Wed, Mar 13, 2024 at 11:48:19AM +0100, Anthony Harivel wrote:
+> Hi Daniel,
 > 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> ---
->   hw/scsi/esp.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
+> Daniel P. Berrangé, Mar 12, 2024 at 16:49:
 > 
-> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-> index f8230c74b3..100560244b 100644
-> --- a/hw/scsi/esp.c
-> +++ b/hw/scsi/esp.c
-> @@ -309,6 +309,8 @@ static void do_command_phase(ESPState *s)
->   
->   static void do_message_phase(ESPState *s)
->   {
-> +    uint32_t n;
-> +
->       if (s->cmdfifo_cdb_offset) {
->           uint8_t message = esp_fifo_pop(&s->cmdfifo);
->   
-> @@ -320,7 +322,10 @@ static void do_message_phase(ESPState *s)
->       /* Ignore extended messages for now */
->       if (s->cmdfifo_cdb_offset) {
->           int len = MIN(s->cmdfifo_cdb_offset, fifo8_num_used(&s->cmdfifo));
-> -        esp_fifo_pop_buf(&s->cmdfifo, NULL, len);
-> +
-> +        if (len) {
-> +            fifo8_pop_buf(&s->cmdfifo, len, &n);
+> > The point still stands though. NUMA node ID numbers are not
+> > guaranteed to be the same as socket ID numbers. Very often
+> > then will be the same (which makes it annoying to test as it
+> > is easy to not realize the difference), but we can't rely on
+> > that.
+> >
+> > > I'm using functions of libnuma to populate the maxpkgs of the host. 
+> > > I tested this on different Intel CPU with multiple packages and this 
+> > > has always returned the good number of packages. A false positive ?
+> >
+> > maxpkgs comes from vmsr_get_max_physical_package() which you're
+> > reading from sysfs, rather than libnuma.
+> >
+> > > So here I'm checking if the thread has run on the package number 'i'. 
+> > > I populate 'numa_node_id' with numa_node_of_cpu().
+> > > 
+> > > I did not wanted to reinvent the wheel and the only lib that was talking 
+> > > about "node" was libnuma.
+> >
+> > I'm not actually convinced we need to use libnuma at all. IIUC, you're
+> > just trying to track all CPUs within the same physical socket (package).
+> > I don't think we need to care about NUMA nodes to do that tracking.
+> >
+> 
+> Alright, having a deeper look I'm actually using NUMA for 2 info:
+> 
+> - How many cpu per Package: this helps me calculate the ratio.
+> 
+> - To whom package the cpu belongs: to calculate the ratio with the right 
+>   package energy counter.
+> 
+> Without libnuma, I'm bit confused on how to handle this. 
+> 
+> Should I parse /sys/bus/node/devices/node* to know how many packages ?
+> Should I parse /sys/bus/node/devices/node0/cpu0/topology/core_cpus_list 
+> to handle which cpu belongs to which package ?
 
-'n' is unused, use NULL?
+You don't need to access it via the /node/ hierarchy
 
-> +        }
->           s->cmdfifo_cdb_offset = 0;
->       }
->   }
+The canonical path for CPUs would be
+
+  /sys/devices/system/cpu/cpuNNN/topology
+
+The core_cpus_list file is giving you hyper-thread siblings within
+a core, which I don't think is what you want.
+
+If you're after discrete physical packages, then 'package_cpus_list'
+gives you all CPUs within a physical socket (package) I believe.
+
+> Would that be too cumbusome for the user to enter the detail about how
+> many packages and how many cpu per pakages ? 
+> 
+> i.e: 
+> -kvm,rapl=true,maxpkgs=2,cpupkgs=8,rapl-helper-socket=/path/sock.sock
+
+That won't cope with asymmetrical CPU configurations, so I think it
+is preferrable to read the info from sysfs.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
