@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 870DFC54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 06:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55521C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 06:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkILT-0002vw-6V; Wed, 13 Mar 2024 02:44:11 -0400
+	id 1rkIRA-0004rm-UR; Wed, 13 Mar 2024 02:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rkILJ-0002tv-OR
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 02:44:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkIR7-0004pn-HH
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 02:50:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rkILI-0007co-9S
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 02:44:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rkIR5-0000KR-Ru
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 02:50:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710312238;
+ s=mimecast20190719; t=1710312599;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yx4EM9JMYrPj7CF22F6uCP0VZeb2Af2fb7imMmp9nUA=;
- b=I4LDVJtfzl/hJf8ISw+afAkxxeG89DxL2Y9vFHkJwd5RNh/EDsfPTS8M4XxxMDyYJl0OJ0
- R/MHiqlHe9VWLdvNk17CKU98p6RqiJf0711AAoYV8I7JSbRRaEJDHAXQGjMVJPNonDLGMX
- v4VT7O69jDq6Xj/GSs6gOXhSCDVQekM=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=C0DcxDO3m2vtxwdKzv4jUJfjIm4ktk+IdMc2OXd8j08=;
+ b=c0M1uaxXZs0JgVPhhu5uTGQQNNEYW88OxvrXSQcGMgMpoPfbv+5bEZm4hSdFwbFKA5FU/b
+ +ys+1AgnWFo0xTLEmFkrF50vCUs9+53aQSGnIN83aa9hVAVjOC800hWbtqp5ICuSWrSbbm
+ +B6VWS8Kkw2bp1kltEjcgYDSLMS5l9o=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-NUgMG3w-OrmVUKTI0TZQLA-1; Wed, 13 Mar 2024 02:43:57 -0400
-X-MC-Unique: NUgMG3w-OrmVUKTI0TZQLA-1
-Received: by mail-oo1-f71.google.com with SMTP id
- 006d021491bc7-5a1def46ac7so3436195eaf.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 23:43:56 -0700 (PDT)
+ us-mta-154-0Sa1751WODyC7inV2y-kdQ-1; Wed, 13 Mar 2024 02:49:57 -0400
+X-MC-Unique: 0Sa1751WODyC7inV2y-kdQ-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-33e8b93b4efso1974062f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 23:49:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710312236; x=1710917036;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yx4EM9JMYrPj7CF22F6uCP0VZeb2Af2fb7imMmp9nUA=;
- b=rY7MZAtSvv6vGlbW8Tou8pVMh8BLR2VHdbZXoEq/8QbPZe4/S0qq/oiQI0lruiNnT6
- 2tJFPEUfC0bb0BWuoPKviL6otrc1LSFecu4eYCad6KvUiZhJMZ+Cls5wg8I8gawWo9IN
- CzkBAXRmQ+VqdglXR5E9HGU+36AAh9GyUeXmOivgRzXw/eRHeMnf9FBfSUL9Yxx1WvrX
- u1D68bvVCQtv/vp4B8tb7S+GNkNpwlDNZslMPBNoC8fUEIEvgtbBaIL903gEFcrpiZYu
- LMMwCjMPmWgIDYVYQKs4P+wl1C7+/QfWp94iuADBSo0dXAwRTYWnLvy8Uo/ey3Cd1+ok
- 5H+g==
-X-Gm-Message-State: AOJu0Yx5nQFGKFTO0nWNNHXdqcbERstKMeSHXgM/a4CIp3huCXR8e4vw
- QpYyH+O7oF2HGXt6jtldrJmNuvFMaPtu8Jzn9iVsSnZUOwd7pPK0VJoPcoGKscg/1SKCROmrdXz
- Yh1yHwEyvYNDQCgwGiBPHR27XfIQ5nQ9C15MDTks08r5auXtJdr9TcqBDOs+tTP4Yo2gn1cSDqh
- 4J+k0j+l81Q2ep+w30bcXhBb25psY=
-X-Received: by 2002:a05:6358:5482:b0:17e:6dd9:d7d1 with SMTP id
- v2-20020a056358548200b0017e6dd9d7d1mr3090342rwe.31.1710312236333; 
- Tue, 12 Mar 2024 23:43:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGV3SiCRdNvChk6iJSjRjUvgKwfz67VjGvX8X9DzqqJrFthDP6qTZssccfPyuzQ23UL7Uuw6q/3NGhjjGU7mcc=
-X-Received: by 2002:a05:6358:5482:b0:17e:6dd9:d7d1 with SMTP id
- v2-20020a056358548200b0017e6dd9d7d1mr3090330rwe.31.1710312235994; Tue, 12 Mar
- 2024 23:43:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710312595; x=1710917395;
+ h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=C0DcxDO3m2vtxwdKzv4jUJfjIm4ktk+IdMc2OXd8j08=;
+ b=hhbgYNPD/odgcG4uQSIHHuxPPEjebbTOIDHsJ/WXO15OhPwWqGHK/yNIi2gOLv6pGz
+ rs1/I0UvSM+7Fz126JvsRfDise7uADnQXP/8/NZZng6hmeligD/3sjOe6DhJGRrAaskv
+ fgioMm662S/g3L/CQ7Boz8GOPJcdFpAwfYVya1A2yVbEqFsHcsndTRXanw2kG5JIiR2J
+ fjC8osFZsi46bgdAm9S6WfZZryvIBHUeNujt92E70XucYdf6UsvjFTVqMjrW7eXUAxi0
+ bl6Bzfc1+0pDpiJroF/5cWM3CNqqTwQtjrHtnfrMt9TowO0bx/DePplDp5Md5PFVyyKv
+ JImw==
+X-Gm-Message-State: AOJu0YwFx29oi4wxELEjJ2r8Iv+BE49WEzfh3mvYV8RGiSv/YIxjGF1K
+ fgBmWiF0j9jU26dxfF5nJz+v0goz1cdvIVBl/JH4vbLw16EpkLln+/B4+Evy7gJ2f05M/4+djvK
+ cNexqFmakFrVJJ2n+Fy1r2VrfqUm21gCPNKnQrNqDO7fIxKLpHXJJL9KV6GB9+yGIyntWxdDOc/
+ qbQwpYKMhJV6Ik54Lp8oc6htIgic33GA==
+X-Received: by 2002:a5d:4a08:0:b0:33e:a04a:ccca with SMTP id
+ m8-20020a5d4a08000000b0033ea04acccamr943887wrq.30.1710312595671; 
+ Tue, 12 Mar 2024 23:49:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEJzkDe5Zid9gEgain8RTbig0QzuJeMfXDxt9w4qLQ9029heCjRPlNC38IW7FDmr237EyCsKw==
+X-Received: by 2002:a5d:4a08:0:b0:33e:a04a:ccca with SMTP id
+ m8-20020a5d4a08000000b0033ea04acccamr943873wrq.30.1710312595184; 
+ Tue, 12 Mar 2024 23:49:55 -0700 (PDT)
+Received: from redhat.com ([2.52.134.16]) by smtp.gmail.com with ESMTPSA id
+ ay2-20020a5d6f02000000b0033d9f0dcb35sm563104wrb.87.2024.03.12.23.49.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Mar 2024 23:49:54 -0700 (PDT)
+Date: Wed, 13 Mar 2024 02:49:52 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Felix Wu <flwu@google.com>, Nabih Estefan <nabihestefan@google.com>,
+ Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: [PATCH repost] SMBIOS: fix long lines
+Message-ID: <d62c5fcd4df119ecfb64a17753de75ca920c78d3.1710312575.git.mst@redhat.com>
 MIME-Version: 1.0
-References: <20240312113642.36862-1-jasowang@redhat.com>
- <c10c6ec3-faaa-4e1a-bfb6-41eea38fdcb2@tls.msk.ru>
-In-Reply-To: <c10c6ec3-faaa-4e1a-bfb6-41eea38fdcb2@tls.msk.ru>
-From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 13 Mar 2024 14:43:44 +0800
-Message-ID: <CACGkMEtvUHmbKCvNPauTnUR7+fXctwOVYxo45P3TZR7yEPsVsA@mail.gmail.com>
-Subject: Re: [PULL 0/8] Net patches
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
- Nick Briggs <nicholas.h.briggs@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -99,39 +97,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 13, 2024 at 1:56=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
-ote:
->
-> 12.03.2024 14:36, Jason Wang wrote:
-> ...
-> > ----------------------------------------------------------------
-> > Andrew Melnychenko (5):
-> >        ebpf: Added eBPF map update through mmap.
-> >        ebpf: Added eBPF initialization by fds.
-> >        virtio-net: Added property to load eBPF RSS with fds.
-> >        qmp: Added new command to retrieve eBPF blob.
-> >        ebpf: Updated eBPF program and skeleton.
-> >
-> > Laurent Vivier (2):
-> >        igb: fix link state on resume
-> >        e1000e: fix link state on resume
-> >
-> > Nick Briggs (1):
-> >        Avoid unaligned fetch in ladr_match()
->
->  From the above, I'm picking up igb & e100e "fix link state on resume"
-> and "Avoid unaligned fetch in ladr_match()" for stable.
->
-> Please let me know if this is incorrect.
->
+Break up long lines to fit under 80/90 char limit.
 
-It's correct.
+Fixes: 04f143d828 ("Implement SMBIOS type 9 v2.6")
+Fixes: 735eee07d1 ("Implement base of SMBIOS type 9 descriptor.")
+Cc: "Felix Wu" <flwu@google.com>
+Cc: Nabih Estefan <nabihestefan@google.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/smbios/smbios.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-Thanks
-
-> Thanks,
->
-> /mjt
->
+diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
+index e3d5d8f2e2..949c2d74a1 100644
+--- a/hw/smbios/smbios.c
++++ b/hw/smbios/smbios.c
+@@ -1592,12 +1592,15 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
+             t = g_new0(struct type9_instance, 1);
+             save_opt(&t->slot_designation, opts, "slot_designation");
+             t->slot_type = qemu_opt_get_number(opts, "slot_type", 0);
+-            t->slot_data_bus_width = qemu_opt_get_number(opts, "slot_data_bus_width", 0);
++            t->slot_data_bus_width =
++                qemu_opt_get_number(opts, "slot_data_bus_width", 0);
+             t->current_usage = qemu_opt_get_number(opts, "current_usage", 0);
+             t->slot_length = qemu_opt_get_number(opts, "slot_length", 0);
+             t->slot_id = qemu_opt_get_number(opts, "slot_id", 0);
+-            t->slot_characteristics1 = qemu_opt_get_number(opts, "slot_characteristics1", 0);
+-            t->slot_characteristics2 = qemu_opt_get_number(opts, "slot_characteristics2", 0);
++            t->slot_characteristics1 =
++                qemu_opt_get_number(opts, "slot_characteristics1", 0);
++            t->slot_characteristics2 =
++                qemu_opt_get_number(opts, "slot_characteristics2", 0);
+             save_opt(&t->pcidev, opts, "pcidev");
+             QTAILQ_INSERT_TAIL(&type9, t, next);
+             return;
+-- 
+MST
 
 
