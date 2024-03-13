@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96296C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 04:46:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5047C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 04:46:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkGRE-0007zs-Ft; Wed, 13 Mar 2024 00:42:00 -0400
+	id 1rkGRE-0007zu-GG; Wed, 13 Mar 2024 00:42:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rkGQx-0007vL-C2
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 00:41:44 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rkGQv-0007uO-AA
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 00:41:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rkGQu-0001sq-4o
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 00:41:43 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rkGQs-0001rw-RR
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 00:41:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710304899;
+ s=mimecast20190719; t=1710304898;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sYDsDCrGqE3cjrmd52lK26TXCSjR12gSUoy0kxO2XdE=;
- b=IZHtM0OfwuTFUOypB8mnTcnAFsWKxXilaSJSUJXDFLmoiorXXDgPCGyINb/i44vG4Mq0ZB
- FAIaAQ1dk9gEEEOwitveWImbebxmlRjDkPHGV9RVhkRaeZ3NSbDfXH+nQUmV3Q1mMQ+ZUO
- SppmWMSsHtJ6+3s4XwM7+ZFFWg7oGIs=
+ bh=bx3EHnsEmcvVefVjCE8VVdLYHyjdxGGfvCmgZC2jPVU=;
+ b=WnsdCUh/HatBzIUlSIB74b5sRqxelh3rBDyvP2+W65dEi7UK3HmrEZgDxK7l3eM2nQ/f7A
+ zf6L6L6aJvA9p1phmPwgLy8svsa00RjiS6g3pJxpgdTVsBGgOstjVHtVXPkYsRmgzdD5+o
+ fwi8qbQwgLBPK5LioWcwuRhETI2IaTs=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-F4DGufEqOFmMElCqqKeHww-1; Wed, 13 Mar 2024 00:41:35 -0400
-X-MC-Unique: F4DGufEqOFmMElCqqKeHww-1
+ us-mta-403-FIA7Ap21N76OUFllxYjoyw-1; Wed, 13 Mar 2024 00:41:36 -0400
+X-MC-Unique: FIA7Ap21N76OUFllxYjoyw-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A9B208007A3;
- Wed, 13 Mar 2024 04:41:34 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E810D185A781;
+ Wed, 13 Mar 2024 04:41:35 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.16.65])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 6F1CA10F53;
- Wed, 13 Mar 2024 04:41:34 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id ADCEC10E4B;
+ Wed, 13 Mar 2024 04:41:35 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 18/23] qapi/schema: assert inner type of QAPISchemaVariants
- in check_clash()
-Date: Wed, 13 Mar 2024 00:41:22 -0400
-Message-ID: <20240313044127.49089-19-jsnow@redhat.com>
+Subject: [PATCH v4 22/23] qapi/schema: turn on mypy strictness
+Date: Wed, 13 Mar 2024 00:41:26 -0400
+Message-ID: <20240313044127.49089-23-jsnow@redhat.com>
 In-Reply-To: <20240313044127.49089-1-jsnow@redhat.com>
 References: <20240313044127.49089-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -81,38 +80,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QAPISchemaVariant's "variants" field is typed as
-List[QAPISchemaVariant], where the typing for QAPISchemaVariant allows
-its type field to be any QAPISchemaType.
-
-However, QAPISchemaVariant expects that all of its variants contain the
-narrower QAPISchemaObjectType. This relationship is enforced at runtime
-in QAPISchemaVariants.check(). This relationship is not embedded in the
-type system though, so QAPISchemaVariants.check_clash() needs to
-re-assert this property in order to call
-QAPISchemaVariant.type.check_clash().
+This patch can be rolled in with the previous one once the series is
+ready for merge, but for work-in-progress' sake, it's separate here.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- scripts/qapi/schema.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ scripts/qapi/mypy.ini | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index 39f653f13fd..3b8c2ebbb5f 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -715,7 +715,10 @@ def check(self, schema, seen):
-     def check_clash(self, info, seen):
-         for v in self.variants:
-             # Reset seen map for each variant, since qapi names from one
--            # branch do not affect another branch
-+            # branch do not affect another branch.
-+            #
-+            # v.type's typing is enforced in check() above.
-+            assert isinstance(v.type, QAPISchemaObjectType)
-             v.type.check_clash(info, dict(seen))
- 
- 
+diff --git a/scripts/qapi/mypy.ini b/scripts/qapi/mypy.ini
+index 56e0dfb1327..8109470a031 100644
+--- a/scripts/qapi/mypy.ini
++++ b/scripts/qapi/mypy.ini
+@@ -2,8 +2,3 @@
+ strict = True
+ disallow_untyped_calls = False
+ python_version = 3.8
+-
+-[mypy-qapi.schema]
+-disallow_untyped_defs = False
+-disallow_incomplete_defs = False
+-check_untyped_defs = False
 -- 
 2.44.0
 
