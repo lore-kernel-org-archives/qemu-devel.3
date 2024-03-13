@@ -4,86 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A3FC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 08:15:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62FC3C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 08:16:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkJka-0001O9-Nd; Wed, 13 Mar 2024 04:14:12 -0400
+	id 1rkJmC-0002VT-48; Wed, 13 Mar 2024 04:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1rkJkZ-0001M2-5T
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:14:11 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
- id 1rkJkX-0001lP-C6
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:14:10 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-5e152c757a5so3781953a12.2
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 01:14:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1710317647; x=1710922447; darn=nongnu.org;
- h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Yv8wKA/KPYbFLr3DTp7mYK7V8Z+RK2NI/4+apdD1MNA=;
- b=SmZkFok0aiM6HiuH34Vps+q459YvjXLO08vjjlJW3jlFzWL+fvKOo6Le0yTQdRYudj
- gWgzS7m+eNWGETs5118LUcY0GzvvSmMMXDgXoJo0jOCuuf+6uQWPQIxlZGcB5uq9fY6N
- j85BjsqFmrFeTbbCj9fHxGB8wKgkBvIM3rro/ZHKVDg5jfU0vBOyMtx+GhC9r0Mn8nd6
- 7rY1rPZfKFzJT6jb8UMujZQeT/anJJVecO6vU6r3LMc9PYVx8uhYxks8lzzaAeH/vfqT
- JLm9+Xaw9CMS6GZ9Nf3oexTz75WZvsBJGGuBvbMRTZG2UdTpB0k31t9XBBtjQXB2SPEA
- 9anA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710317647; x=1710922447;
- h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Yv8wKA/KPYbFLr3DTp7mYK7V8Z+RK2NI/4+apdD1MNA=;
- b=hR9Gk2r2uycL097eXlZPo3iEFx3V1rbB5UGliNkuKnh8rnp8P6nhn0Jd62ZdGBmEYX
- oA4my3VsMfIdevNeR1ySPptEn9D8PPTQ/LBo2Gb+0nnkQJmR4tBMwWEXedbqRl9KRfWH
- K3elrRsE50We+SAWH+TrzX4DKP0pzJXev4WSvKxe3nZnqMDGafK3PcWGixD89IWoWm5o
- +4b/QurTuuTpQnOUENFsjuum+8FUyYrvq900i6FoaSAZhxeTaev6uHr8WMBXa6Pc+k9f
- 9EzMaeu7E/JVoOSdpbI5KoyJnE0m6tGMAZ108KBPEUdE646CgfNQiuRsMF3PCbaK1kKN
- tT2Q==
-X-Gm-Message-State: AOJu0YxMmL6l5YHHsoeRQ9G3Ms+AClaKNZlXAkPhY80bS0K67EiuE6xt
- LUzrVQK9kA+JRUf0vM4JV0nIjW/pc9jxkeB35DdmXkrg5e3Lla0lr8xlfRQZkbAF/aWQIDRomS5
- DQvIBp7RIaBLsc/yVm+LeSCZaSZIkKtWYhOyGTeg4DbW86vxVdukWRulxZcQWqCad08LvLIdc9e
- X2Z1I4sizK0+MwxaY1uGmJRUYR7vqVQj5KKURo7aFIuA==
-X-Google-Smtp-Source: AGHT+IF9dTZQ87uwf7lhAsJ5YgIK8iAnEyvliRhDcIaIeZ+oa0mzLZ7VRZ+cbLV1F2Mct8C366kgWQ==
-X-Received: by 2002:a05:6a21:6da7:b0:1a3:2b94:dbaf with SMTP id
- wl39-20020a056a216da700b001a32b94dbafmr4122449pzb.1.1710317647176; 
- Wed, 13 Mar 2024 01:14:07 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- gw12-20020a17090b0a4c00b0029beb0fc60fsm820291pjb.28.2024.03.13.01.14.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Mar 2024 01:14:06 -0700 (PDT)
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com,
- jim.shu@sifive.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/1] target/riscv/kvm: fix timebase-frequency when using KVM
- acceleration
-Date: Wed, 13 Mar 2024 16:13:57 +0800
-Message-Id: <20240313081359.20845-1-yongxuan.wang@sifive.com>
-X-Mailer: git-send-email 2.17.1
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=yongxuan.wang@sifive.com; helo=mail-pg1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rkJm8-0002Pq-Ov
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:15:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rkJm6-00021u-Qb
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:15:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710317744;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4iiF09AQqMKK+vz1K8fXrb5ZKZyEsbQmkRPwfWXefcA=;
+ b=GZqVWz1nSv+YRHm9sarPz0h9TiiZX6kiwKM5TW45STuk2HDLL/ihq5xpWl7wXPSeXr4DHF
+ nBYPxS33hiLImfRQSZYqbyDULPNTwEQ9D1ouT/nw5fyaaYmrK32NJPoWJXCi9XIF36mGPR
+ JVw5AJywl3sLqlXR8BawPA6nvq0CCpM=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-344-8uImgTX4Omuj2Ikv2gNyVA-1; Wed, 13 Mar 2024 04:15:40 -0400
+X-MC-Unique: 8uImgTX4Omuj2Ikv2gNyVA-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2C5B688F522;
+ Wed, 13 Mar 2024 08:15:40 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.160])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id E82C31C060D0;
+ Wed, 13 Mar 2024 08:15:39 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id ADEB318009A3; Wed, 13 Mar 2024 09:15:38 +0100 (CET)
+Date: Wed, 13 Mar 2024 09:15:38 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Tao Su <tao1.su@linux.intel.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Tom Lendacky <thomas.lendacky@amd.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] kvm: add support for guest physical bits
+Message-ID: <bu2rau6gpkgbm3uagostv6fxye53nd3qx7fhdxcr5mwwvd7yln@4nesoydyg7dt>
+References: <20240305105233.617131-1-kraxel@redhat.com>
+ <20240305105233.617131-3-kraxel@redhat.com>
+ <ZfFKJPYoE5bacb6+@linux.bj.intel.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZfFKJPYoE5bacb6+@linux.bj.intel.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,82 +85,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The timebase-frequency of guest OS should be the same with host
-machine. The timebase-frequency value in DTS should be got from
-hypervisor when using KVM acceleration.
+On Wed, Mar 13, 2024 at 02:39:32PM +0800, Tao Su wrote:
+> On Tue, Mar 05, 2024 at 11:52:33AM +0100, Gerd Hoffmann wrote:
+> > Query kvm for supported guest physical address bits, in cpuid
+> > function 80000008, eax[23:16].  Usually this is identical to host
+> > physical address bits.  With NPT or EPT being used this might be
+> > restricted to 48 (max 4-level paging address space size) even if
+> > the host cpu supports more physical address bits.
+> > 
+> > When set pass this to the guest, using cpuid too.  Guest firmware
+> > can use this to figure how big the usable guest physical address
+> > space is, so PCI bar mapping are actually reachable.
+> 
+> If this patch is applied, do you have plans to implement it in
+> OVMF/Seabios?
 
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
----
- hw/riscv/virt.c              | 11 +++++++++--
- target/riscv/kvm/kvm-cpu.c   |  9 +++++++++
- target/riscv/kvm/kvm_riscv.h | 13 +++++++++++++
- 3 files changed, 31 insertions(+), 2 deletions(-)
+Yes.  ovmf test patches:
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index a094af97c32a..a7ed7fa13010 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -710,8 +710,15 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
-     int socket_count = riscv_socket_count(ms);
- 
-     qemu_fdt_add_subnode(ms->fdt, "/cpus");
--    qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
--                          RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ);
-+
-+    if (kvm_enabled()) {
-+        qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
-+                              kvm_riscv_get_timebase_frequency(first_cpu));
-+    } else {
-+        qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
-+                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ);
-+    }
-+
-     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#size-cells", 0x0);
-     qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#address-cells", 0x1);
-     qemu_fdt_add_subnode(ms->fdt, "/cpus/cpu-map");
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index c7afdb1e81b7..bbb115eaa867 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -739,6 +739,15 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
-     env->kvm_timer_dirty = false;
- }
- 
-+uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs)
-+{
-+    uint64_t reg;
-+
-+    KVM_RISCV_GET_TIMER(cs, frequency, reg);
-+
-+    return reg;
-+}
-+
- static int kvm_riscv_get_regs_vector(CPUState *cs)
- {
-     RISCVCPU *cpu = RISCV_CPU(cs);
-diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
-index 4bd98fddc776..130a4bde0480 100644
---- a/target/riscv/kvm/kvm_riscv.h
-+++ b/target/riscv/kvm/kvm_riscv.h
-@@ -29,4 +29,17 @@ void riscv_kvm_aplic_request(void *opaque, int irq, int level);
- int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state);
- void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
- 
-+#ifdef CONFIG_KVM
-+
-+uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs);
-+
-+#else
-+
-+static inline uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs)
-+{
-+    g_assert_not_reached();
-+}
-+
-+#endif
-+
- #endif
--- 
-2.17.1
+https://github.com/kraxel/edk2/commits/devel/guest-phys-bits/
+
+take care,
+  Gerd
 
 
