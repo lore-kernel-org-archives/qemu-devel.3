@@ -4,72 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14106C54E66
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 17:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36EBCC54E66
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 17:50:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkSUK-0006ok-FI; Wed, 13 Mar 2024 13:34:00 -0400
+	id 1rkSjb-0001Nf-D5; Wed, 13 Mar 2024 13:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rkSUI-0006oJ-S3
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 13:33:58 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rkSjS-0001Lx-BN
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 13:49:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rkSUH-0007YF-8z
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 13:33:58 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 40E0D55B8A;
- Wed, 13 Mar 2024 20:34:57 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D2A7498917;
- Wed, 13 Mar 2024 20:33:52 +0300 (MSK)
-Message-ID: <3b054ce9-3f4f-49f6-aa42-dea33264466f@tls.msk.ru>
-Date: Wed, 13 Mar 2024 20:33:52 +0300
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rkSjP-0002KZ-Ia
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 13:49:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710352174;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dlNpPTcaITZ00aKzUyXPFmB+DjbwGdvL/M1C1BnE5IA=;
+ b=ElOvXtJDuaWHcTRRrm/sW0iXH8227dAFfv1wvE3xreHYqzGvTCFIuKSp++r1/SPU0EFAcp
+ EFGxv1zG82GSMhOyGcSEYGQJVwrpJYsiPV7+h3/zzmsCKRDJ0aScoVsHCiksopzhItZZFf
+ CNDT1xaQfQI1GBaqPqRfNfWPNRyxYg0=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-562-ajQ7zs3iN4OubRRASdVBrQ-1; Wed, 13 Mar 2024 13:49:31 -0400
+X-MC-Unique: ajQ7zs3iN4OubRRASdVBrQ-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-607838c0800so12968047b3.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 10:49:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710352171; x=1710956971;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dlNpPTcaITZ00aKzUyXPFmB+DjbwGdvL/M1C1BnE5IA=;
+ b=nDXYLqB9te0iPpKQKw8i0gsv6WYBFE5yF7Yr4J2wVZnCOU98/V9MhECWDsIqKwgEqu
+ oB+nrtkOwEuDx9wfq3bVdrirl+m9KsY1rZSYedkV1aIgSw5r2PWpJQPMPpoNX8uErZsU
+ rlEzobuWBhUpeFxPBbSzihJ4SWBD76JkthqCmiEm4cJQzuvl4bFXlgolWOE9hOXGICln
+ /GKhX314j1GD59lG/lDenQY10Tz/r8tMDlRWgcH11QiOibePDkGti9s4O8N7WMLAQi7P
+ 7vKX5j28GJhk/hUCRcNJXp0dnxMlaRv1yuPuLH8BBV3gETNEEfJvJvj3c1p7748qQ4R4
+ lNqg==
+X-Gm-Message-State: AOJu0YwvJr0V1hlO/eJmk1xpP8aI31Pmt+2WQ8dl2TTpZOnvGKvcZSQG
+ KAycLuWZH06iMHyEtMitjyiJLEL/xmUPBysvM0JaIJC7+UOlaRdnAIQuxqe4pNMoTMgTPtDPRAU
+ bGkOH+yNYH1DJn1ZZW3sNq9SXxIixV7oLac+yPivx7l1myQiF2lEJ1+cR8YjCtDa22Th3uhiaLY
+ pBnP7shraG0HHDTr2o3o5H77hdr8JcK4ypeDg=
+X-Received: by 2002:a0d:e857:0:b0:609:8460:e29c with SMTP id
+ r84-20020a0de857000000b006098460e29cmr2332555ywe.6.1710352170945; 
+ Wed, 13 Mar 2024 10:49:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkWb/6xzPQmpEsFa5iTKdI9gqEI1JWOM9DcJyFzywwwqRQnLmKZzXx8v17rd9hYsZ3VA62dXzuNpm83GaTngc=
+X-Received: by 2002:a0d:e857:0:b0:609:8460:e29c with SMTP id
+ r84-20020a0de857000000b006098460e29cmr2332541ywe.6.1710352170668; Wed, 13 Mar
+ 2024 10:49:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 2/3] xen: Drop out of coroutine context
- xen_invalidate_map_cache_entry
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Anthony PERARD <anthony.perard@citrix.com>, qemu-devel@nongnu.org
-Cc: Peng Fan <peng.fan@nxp.com>
-References: <20240312142757.34141-1-anthony.perard@citrix.com>
- <20240312142757.34141-3-anthony.perard@citrix.com>
- <7f6ecc97-8c32-4929-8ae1-b296e874ced2@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <7f6ecc97-8c32-4929-8ae1-b296e874ced2@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+References: <20240207092702.25242-1-sgarzare@redhat.com>
+In-Reply-To: <20240207092702.25242-1-sgarzare@redhat.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Wed, 13 Mar 2024 18:49:17 +0100
+Message-ID: <CAGxU2F646BY1ANN0ohsYLSXjOWufCQqzpWyOQOe6W7G1ec+K0Q@mail.gmail.com>
+Subject: Re: [PATCH] vhost-vdpa: check vhost_vdpa_set_vring_ready() return
+ value
+To: qemu-devel@nongnu.org, mst@redhat.com
+Cc: lulu@redhat.com, kwolf@redhat.com, eperezma@redhat.com, 
+ Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.971,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,21 +99,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-13.03.2024 20:21, Michael Tokarev:
-> 12.03.2024 17:27, Anthony PERARD wrote:
->> From: Peng Fan <peng.fan@nxp.com>
->>
->> xen_invalidate_map_cache_entry is not expected to run in a
->> coroutine. Without this, there is crash:
-> 
-> Hi!  Is this a stable material? (It applies cleanly and builds on 8.2 and 7.2)
+Gentle ping :-)
 
-Actually for 7.2 it needed a minor tweak:
+On Wed, Feb 7, 2024 at 10:27=E2=80=AFAM Stefano Garzarella <sgarzare@redhat=
+.com> wrote:
+>
+> vhost_vdpa_set_vring_ready() could already fail, but if Linux's
+> patch [1] will be merged, it may fail with more chance if
+> userspace does not activate virtqueues before DRIVER_OK when
+> VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated.
+>
+> So better check its return value anyway.
+>
+> [1] https://lore.kernel.org/virtualization/20240206145154.118044-1-sgarza=
+re@redhat.com/T/#u
+>
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
+> Note: This patch conflicts with [2], but the resolution is simple,
+> so for now I sent a patch for the current master, but I'll rebase
+> this patch if we merge the other one first.
+>
+> [2] https://lore.kernel.org/qemu-devel/20240202132521.32714-1-kwolf@redha=
+t.com/
+> ---
+>  hw/virtio/vdpa-dev.c |  8 +++++++-
+>  net/vhost-vdpa.c     | 15 ++++++++++++---
+>  2 files changed, 19 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+> index eb9ecea83b..d57cd76c18 100644
+> --- a/hw/virtio/vdpa-dev.c
+> +++ b/hw/virtio/vdpa-dev.c
+> @@ -259,7 +259,11 @@ static int vhost_vdpa_device_start(VirtIODevice *vde=
+v, Error **errp)
+>          goto err_guest_notifiers;
+>      }
+>      for (i =3D 0; i < s->dev.nvqs; ++i) {
+> -        vhost_vdpa_set_vring_ready(&s->vdpa, i);
+> +        ret =3D vhost_vdpa_set_vring_ready(&s->vdpa, i);
+> +        if (ret < 0) {
+> +            error_setg_errno(errp, -ret, "Error starting vring %d", i);
+> +            goto err_dev_stop;
+> +        }
+>      }
+>      s->started =3D true;
+>
+> @@ -274,6 +278,8 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev=
+, Error **errp)
+>
+>      return ret;
+>
+> +err_dev_stop:
+> +    vhost_dev_stop(&s->dev, vdev, false);
+>  err_guest_notifiers:
+>      k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
+>  err_host_notifiers:
+> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> index 3726ee5d67..e3d8036479 100644
+> --- a/net/vhost-vdpa.c
+> +++ b/net/vhost-vdpa.c
+> @@ -381,7 +381,10 @@ static int vhost_vdpa_net_data_load(NetClientState *=
+nc)
+>      }
+>
+>      for (int i =3D 0; i < v->dev->nvqs; ++i) {
+> -        vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
+> +        int ret =3D vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
+> +        if (ret < 0) {
+> +            return ret;
+> +        }
+>      }
+>      return 0;
+>  }
+> @@ -1213,7 +1216,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState =
+*nc)
+>
+>      assert(nc->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_VDPA);
+>
+> -    vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
+> +    r =3D vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
+> +    if (unlikely(r < 0)) {
+> +        return r;
+> +    }
+>
+>      if (v->shadow_vqs_enabled) {
+>          n =3D VIRTIO_NET(v->dev->vdev);
+> @@ -1252,7 +1258,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState =
+*nc)
+>      }
+>
+>      for (int i =3D 0; i < v->dev->vq_index; ++i) {
+> -        vhost_vdpa_set_vring_ready(v, i);
+> +        r =3D vhost_vdpa_set_vring_ready(v, i);
+> +        if (unlikely(r < 0)) {
+> +            return r;
+> +        }
+>      }
+>
+>      return 0;
+> --
+> 2.43.0
+>
 
--void coroutine_mixed_fn xen_invalidate_map_cache_entry(uint8_t *buffer)
-+void xen_invalidate_map_cache_entry(uint8_t *buffer)
-
-but the rest is okay.
-
-/mjt
 
