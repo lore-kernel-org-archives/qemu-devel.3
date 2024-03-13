@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45D92C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 04:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7180DC54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 04:44:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkGRB-0007yY-4P; Wed, 13 Mar 2024 00:41:57 -0400
+	id 1rkGR8-0007xQ-7R; Wed, 13 Mar 2024 00:41:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rkGQu-0007uF-6Z
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rkGQt-0007uE-MP
  for qemu-devel@nongnu.org; Wed, 13 Mar 2024 00:41:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rkGQr-0001rS-AQ
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rkGQq-0001rE-Kt
  for qemu-devel@nongnu.org; Wed, 13 Mar 2024 00:41:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1710304896;
@@ -24,34 +24,34 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WEDIoVPOeTuf+QVZMJaYVYq2r7iKETXU0cn8JtACErE=;
- b=U59bbtF05ABJboorLZEunUdds+7TIzh7P2jnOPwxc33/xeGMtBVnRSFOQFMap9QJFNyc/8
- MNzY8lErKTlf+HghRJN0G/mT4XkD0xaIfAxEydVf2/X37v5zqF5p/s4bfy1RXTD8RKWWME
- DqXMYcECkazEgB/dpihbYOie6GhoP+Q=
+ bh=nmE9ahkr205qFik1K8btaIxpo/2jE6pdxITtjDV4o6o=;
+ b=CssBRUDDWrw7c+zNU6dQK9ssZUIOJlOWRwO4ypi5YZD7VuGBTXWzBqYC+omFiC+XwgjUK3
+ fVMSlqBPky2V7bhDARfrg+UqUYBwTVB7Ifu8VBRAYfR4ZqUIhzM+GCJbKOGZ9t3EVbNULI
+ qX3OOLzLY4KAOyECcvMyM3MkWhk3ie0=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558--xfbeI5TOT6VIbkZZhrUjw-1; Wed,
- 13 Mar 2024 00:41:34 -0400
-X-MC-Unique: -xfbeI5TOT6VIbkZZhrUjw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-530-RzS_5vf1PFmRzfeyRIuFUA-1; Wed,
+ 13 Mar 2024 00:41:31 -0400
+X-MC-Unique: RzS_5vf1PFmRzfeyRIuFUA-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 624B71C05AE9;
- Wed, 13 Mar 2024 04:41:34 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6197C29AB3EF;
+ Wed, 13 Mar 2024 04:41:31 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.16.65])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 2881710E4B;
- Wed, 13 Mar 2024 04:41:34 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 2419710F53;
+ Wed, 13 Mar 2024 04:41:31 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v4 17/23] qapi/schema: fix typing for
- QAPISchemaVariants.tag_member
-Date: Wed, 13 Mar 2024 00:41:21 -0400
-Message-ID: <20240313044127.49089-18-jsnow@redhat.com>
+Subject: [PATCH v4 07/23] qapi/schema: declare type for
+ QAPISchemaArrayType.element_type
+Date: Wed, 13 Mar 2024 00:41:11 -0400
+Message-ID: <20240313044127.49089-8-jsnow@redhat.com>
 In-Reply-To: <20240313044127.49089-1-jsnow@redhat.com>
 References: <20240313044127.49089-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -82,84 +82,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are two related changes here:
+A QAPISchemaArrayType's element type gets resolved only during .check().
+We have QAPISchemaArrayType.__init__() initialize self.element_type =
+None, and .check() assign the actual type.  Using .element_type before
+.check() is wrong, and hopefully crashes due to the value being None.
+Works.
 
-(1) We need to perform type narrowing for resolving the type of
-    tag_member during check(), and
+However, it makes for awkward typing.  With .element_type:
+Optional[QAPISchemaType], mypy is of course unable to see that it's None
+before .check(), and a QAPISchemaType after.  To help it over the hump,
+we'd have to assert self.element_type is not None before all the (valid)
+uses.  The assertion catches invalid uses, but only at run time; mypy
+can't flag them.
 
-(2) tag_member is a delayed initialization field, but we can hide it
-    behind a property that raises an Exception if it's called too
-    early. This simplifies the typing in quite a few places and avoids
-    needing to assert that the "tag_member is not None" at a dozen
-    callsites, which can be confusing and suggest the wrong thing to a
-    drive-by contributor.
+Instead, declare .element_type in .__init__() as QAPISchemaType
+*without* initializing it.  Using .element_type before .check() now
+certainly crashes, which is an improvement.  Mypy still can't flag
+invalid uses, but that's okay.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- scripts/qapi/schema.py | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ scripts/qapi/schema.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index fb30314741a..39f653f13fd 100644
+index 8440a7243d8..c549a4e3bd0 100644
 --- a/scripts/qapi/schema.py
 +++ b/scripts/qapi/schema.py
-@@ -627,25 +627,39 @@ def __init__(self, tag_name, info, tag_member, variants):
-             assert isinstance(v, QAPISchemaVariant)
-         self._tag_name = tag_name
-         self.info = info
--        self.tag_member = tag_member
-+        self._tag_member: Optional[QAPISchemaObjectTypeMember] = tag_member
-         self.variants = variants
+@@ -381,7 +381,7 @@ def __init__(self, name, info, element_type):
+         super().__init__(name, info, None)
+         assert isinstance(element_type, str)
+         self._element_type_name = element_type
+-        self.element_type = None
++        self.element_type: QAPISchemaType
  
-+    @property
-+    def tag_member(self) -> 'QAPISchemaObjectTypeMember':
-+        if self._tag_member is None:
-+            raise RuntimeError(
-+                "QAPISchemaVariants has no tag_member property until "
-+                "after check() has been run."
-+            )
-+        return self._tag_member
-+
-     def set_defined_in(self, name):
-         for v in self.variants:
-             v.set_defined_in(name)
- 
-     def check(self, schema, seen):
-         if self._tag_name:      # union
--            self.tag_member = seen.get(c_name(self._tag_name))
-+            # We need to narrow the member type:
-+            tmp = seen.get(c_name(self._tag_name))
-+            assert tmp is None or isinstance(tmp, QAPISchemaObjectTypeMember)
-+            self._tag_member = tmp
-+
-             base = "'base'"
-             # Pointing to the base type when not implicit would be
-             # nice, but we don't know it here
--            if not self.tag_member or self._tag_name != self.tag_member.name:
-+            if not self._tag_member or self._tag_name != self._tag_member.name:
-                 raise QAPISemError(
-                     self.info,
-                     "discriminator '%s' is not a member of %s"
-                     % (self._tag_name, base))
-             # Here we do:
-+            assert self.tag_member.defined_in
-             base_type = schema.resolve_type(self.tag_member.defined_in)
-             if not base_type.is_implicit():
-                 base = "base type '%s'" % self.tag_member.defined_in
-@@ -665,11 +679,13 @@ def check(self, schema, seen):
-                     "discriminator member '%s' of %s must not be conditional"
-                     % (self._tag_name, base))
-         else:                   # alternate
-+            assert self._tag_member
-             assert isinstance(self.tag_member.type, QAPISchemaEnumType)
-             assert not self.tag_member.optional
-             assert not self.tag_member.ifcond.is_present()
-         if self._tag_name:      # union
-             # branches that are not explicitly covered get an empty type
-+            assert self.tag_member.defined_in
-             cases = {v.name for v in self.variants}
-             for m in self.tag_member.type.members:
-                 if m.name not in cases:
+     def need_has_if_optional(self):
+         # When FOO is an array, we still need has_FOO to distinguish
 -- 
 2.44.0
 
