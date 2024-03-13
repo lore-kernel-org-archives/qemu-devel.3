@@ -4,88 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 516D1C54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 11:49:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DC9C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 11:50:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkN6b-0005Tg-Vt; Wed, 13 Mar 2024 07:49:10 -0400
+	id 1rkN7F-0006Ep-UA; Wed, 13 Mar 2024 07:49:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkN6Q-0005LV-7Y
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 07:49:03 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rkN6u-00063F-69
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 07:49:33 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkN6J-0003Fc-3d
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 07:48:54 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2d208be133bso77754981fa.2
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 04:48:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rkN6c-0003NL-0J
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 07:49:27 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4133100bccdso13429075e9.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 04:49:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710330529; x=1710935329; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1THYEQEsQJgwRa45jnQXidYz3+zTDduzx9e0SC0WCVg=;
- b=OWeSeRyH85yUXHSr38jHr5m3q0rC3a4/fRYbRAeRcx3zcywNEaqk5ZHQp40iiaF2S3
- I/x6mMD/39B2IqImR0Ys+MB9AxcgyylcUB2GexNXRCs62ycUD/WwJI354uYUyL+sIrJm
- KHthqTFMnitZHMZd413yw8r5R+6D5W/DiPzFstfaaywwr98XExmpsqcG+V2kdO2xdR0H
- WMa7qpq4nbHe90PZLiIPHpZFrOGuU7Xs7lu59dj12ZkmhEyLe1OqfvTKWZGzsNOE1e19
- q5NP59Jpvckd7PaKTQhyoqet5U/bCdWulSArH141upy3GgYdHMyiwFfLi1YuyHdrdhaq
- NEZw==
+ d=linaro.org; s=google; t=1710330548; x=1710935348; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DHC0ACrNIuYRz4G1OaWWg9lq1EE8PUCMUKSz9aqMvd4=;
+ b=A47Mnsuh3//bLtVqUYriqWXvgUfvmHM/wBuK9zOaoLlWqtYRcsGhBxQa00BrpWmgrV
+ PP07omhw/4di+IJ0/J12kXKlWdB9CdFUT2vOQr1ZEb+as2OjzUjUv/RR7c8RT6gZrPG+
+ FNcKS/qgrVGvOstwhdr8soXLIBdkojwYt1SXDdWGi1rTtlokWXVIiruNvsz5Zx5LAkTn
+ m/qbtxrOhBbCd/JHlTV5Uq0nh6gdlEky+iCprBqAukqgLic+4+4I+ocG201KAFyShDTi
+ ndI3dCAGKqI+P36z1AysJVAjFFKe3ruL1ym/CP/Bmd1Dzg2an+WMZDZn/PuNCGGiR7UZ
+ h8iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710330529; x=1710935329;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1THYEQEsQJgwRa45jnQXidYz3+zTDduzx9e0SC0WCVg=;
- b=vxfgb6fY3D1kFEPmEEZlBTBn5p/X5ZhOeZfss3+pIhgFRFUl4aLXNokiyMCjEQuQYN
- T3Sv9TYNXiLEM5ggTK2Bs4prVMpxSDStwYXMp5Hs8rxL7+6wn4NN4/AV4Vu3xSzAx1/K
- s7n4SG1SnmerPSTV6bhH7tz+LTitmMJCZoa6Dz4z3jejbuRvufPCGz2HxtEufLEu3/Uc
- nCPT79WzVcBrduFyW4YU29PfmfZ8tMkfUhhDYvKpA+MCZvm12W1Hq8/PIENj2VP2UUiP
- yQikZZEgISyOYxLEhI138cyC9QpRFDnXjNxvBbPg8+c+jwNi+cUCKVbNEKSwfzRNpj4M
- AdoA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXHUA04u99qvAj9veR3uV2w1vR/PsejwJPWFRrohrku0k5ueWwBne/vGxev2YZuZaz6SOnqBRxD1+5ao2BTR6GwaNTIdh8=
-X-Gm-Message-State: AOJu0YyxnWatn4B1BOMR5M7NEphnIOZTZrxVdTfgBKHl1zdLfMFRDSyy
- NUpTt1OnQRUdBqLacHo+Kyk3PwVx6g3oMGFzZ7AHJ+RbN+n/uFAml+v0gkPHuo0=
-X-Google-Smtp-Source: AGHT+IETAQFeNGipTMkxFWC7tCZlNWHj+dwFSt7GVZPsSejewn5UtSDpgD1VUYLFyBGUibMcwgkJ6Q==
-X-Received: by 2002:a05:651c:124a:b0:2d4:6d3c:3989 with SMTP id
- h10-20020a05651c124a00b002d46d3c3989mr733296ljh.36.1710330529213; 
- Wed, 13 Mar 2024 04:48:49 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.182.179])
- by smtp.gmail.com with ESMTPSA id
- bo3-20020a056000068300b0033e9d0b3faasm6385589wrb.82.2024.03.13.04.48.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Mar 2024 04:48:48 -0700 (PDT)
-Message-ID: <e6e12dba-04df-4964-81d0-34890906f647@linaro.org>
-Date: Wed, 13 Mar 2024 12:48:47 +0100
+ d=1e100.net; s=20230601; t=1710330548; x=1710935348;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DHC0ACrNIuYRz4G1OaWWg9lq1EE8PUCMUKSz9aqMvd4=;
+ b=EJAxRZsYHlVIhmHdlJB9zwtxFtDi66WQx71Frv38OVU1/jmEz+oLmPaU+77CYLtpQy
+ NtzQt3iWo7KmhRkvBnp//UXe27AuLEfkQR8p9Gn2ARv3dEe67YZYADmlQF9U/Ku5YlyI
+ WtXMDxJoRHIjnEBDQDP34VlsrJUD2gv11lEcDSFzL/FOUPLIgNYzw0RkMFZysEo850Ti
+ OkHp8q44JuN+cYg++gLlBNCCgCJwb+1c3dmzRp0kI9uWT6gUb+gBA5yEYvgtNei8h6v4
+ AXkE7f04RDv68LiqCraRMAz1WqcwNYv9+xYBrO1bjAQJnugEj7jpV20VlXkvshTpmIWO
+ abWw==
+X-Gm-Message-State: AOJu0Yz9NliOd9aUfu5xYn8Tm8a2PyuC3RBvTJdZplgJMopsOR8Vg1Zu
+ KWET26iZH6L0QAwcvyzXS8LOo4YbFiZ4XN5Mm6gYDS07YJTPlvPN6IL2wPX1nDRiQ4pJXHQq9nv
+ N
+X-Google-Smtp-Source: AGHT+IF9rRAEj8rqwmzx+AYKxbXmqGMmTxazzIx6FYBwthFWJRzA0GFts+FwWETnfPM2aoRvFvB1+A==
+X-Received: by 2002:a05:600c:4586:b0:413:1f57:aba6 with SMTP id
+ r6-20020a05600c458600b004131f57aba6mr8864403wmo.12.1710330548106; 
+ Wed, 13 Mar 2024 04:49:08 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ c11-20020adfe70b000000b0033e41e1ad93sm11500842wrm.57.2024.03.13.04.49.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Mar 2024 04:49:07 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id EE7BF5F8D8;
+ Wed, 13 Mar 2024 11:49:06 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL v2 for 9.0 0/7] final maintainer updates (testing, gdbstub)
+Date: Wed, 13 Mar 2024 11:49:06 +0000
+Message-Id: <20240313114906.20979-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] tests/avocado: update sbsa-ref firmware
-Content-Language: en-US
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org
-Cc: Radoslaw Biernacki <rad@semihalf.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>, Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Brad Smith <brad@comstyle.com>,
- qemu-arm@nongnu.org
-References: <20240313-sbsa-ref-firmware-update-v1-0-e166703c5424@linaro.org>
- <20240313-sbsa-ref-firmware-update-v1-1-e166703c5424@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240313-sbsa-ref-firmware-update-v1-1-e166703c5424@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,23 +93,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/3/24 11:08, Marcin Juszkiewicz wrote:
-> We now have CI job to build those and publish in space with
-> readable urls.
-> 
-> Firmware is built using Debian 'bookworm' cross toolchain (gcc 12.2.0).
-> 
-> Used versions:
-> 
-> - Trusted Firmware v2.10.2
-> - Tianocore EDK2 stable202402
-> - Tianocore EDK2 Platforms code commit 085c2fb
-> 
-> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-> ---
->   tests/avocado/machine_aarch64_sbsaref.py | 40 +++++++++++++++++---------------
->   1 file changed, 21 insertions(+), 19 deletions(-)
+The following changes since commit 0748129684be2773117b0b8fc3c60161abdb7bb8:
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+  Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2024-03-12 16:56:13 +0000)
+
+are available in the Git repository at:
+
+  https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-final-130324-1
+
+for you to fetch changes up to 6971998e241d8edc842b165b447f706c05166ae6:
+
+  gdbstub: Fix double close() of the follow-fork-mode socket (2024-03-13 11:43:52 +0000)
+
+----------------------------------------------------------------
+final updates for 9.0 (testing, gdbstub):
+
+  - fix the over rebuilding of test VMs
+  - support Xfer:siginfo:read in gdbstub
+  - fix double close() in gdbstub
+
+----------------------------------------------------------------
+Alex Bennée (1):
+      tests/vm: ensure we build everything by default
+
+Gustavo Romero (5):
+      gdbstub: Rename back gdb_handlesig
+      linux-user: Move tswap_siginfo out of target code
+      gdbstub: Save target's siginfo
+      gdbstub: Add Xfer:siginfo:read stub
+      tests/tcg: Add multiarch test for Xfer:siginfo:read stub
+
+Ilya Leoshkevich (1):
+      gdbstub: Fix double close() of the follow-fork-mode socket
+
+ gdbstub/internals.h                                |  1 +
+ include/gdbstub/user.h                             | 19 +++------
+ linux-user/signal-common.h                         |  2 -
+ bsd-user/main.c                                    |  2 +-
+ bsd-user/signal.c                                  |  5 ++-
+ gdbstub/gdbstub.c                                  |  8 ++++
+ gdbstub/user.c                                     | 49 +++++++++++++++++++---
+ linux-user/aarch64/signal.c                        |  2 +-
+ linux-user/alpha/signal.c                          |  2 +-
+ linux-user/arm/signal.c                            |  2 +-
+ linux-user/hexagon/signal.c                        |  2 +-
+ linux-user/hppa/signal.c                           |  2 +-
+ linux-user/i386/signal.c                           |  6 +--
+ linux-user/loongarch64/signal.c                    |  2 +-
+ linux-user/m68k/signal.c                           |  4 +-
+ linux-user/main.c                                  |  2 +-
+ linux-user/microblaze/signal.c                     |  2 +-
+ linux-user/mips/signal.c                           |  4 +-
+ linux-user/nios2/signal.c                          |  2 +-
+ linux-user/openrisc/signal.c                       |  2 +-
+ linux-user/ppc/signal.c                            |  4 +-
+ linux-user/riscv/signal.c                          |  2 +-
+ linux-user/s390x/signal.c                          |  2 +-
+ linux-user/sh4/signal.c                            |  2 +-
+ linux-user/signal.c                                | 15 +++++--
+ linux-user/sparc/signal.c                          |  2 +-
+ linux-user/xtensa/signal.c                         |  2 +-
+ tests/tcg/multiarch/segfault.c                     | 14 +++++++
+ tests/tcg/multiarch/Makefile.target                | 10 ++++-
+ .../multiarch/gdbstub/test-qxfer-siginfo-read.py   | 26 ++++++++++++
+ tests/vm/basevm.py                                 |  2 +-
+ 31 files changed, 149 insertions(+), 52 deletions(-)
+ create mode 100644 tests/tcg/multiarch/segfault.c
+ create mode 100644 tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
+
+-- 
+2.39.2
 
 
