@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68665C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 21:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69494C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 21:36:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkWEW-0001Jg-R5; Wed, 13 Mar 2024 17:33:56 -0400
+	id 1rkWFM-0002Q4-Mt; Wed, 13 Mar 2024 17:34:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWET-0001In-T8
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:33:53 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWFJ-0002FR-PO
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:34:45 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWEL-0007hT-Af
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:33:53 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-33e76d653b5so216530f8f.3
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 14:33:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWFH-0007rq-TR
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:34:45 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33ddd1624beso231733f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 14:34:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710365623; x=1710970423; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=FIxO42vqFtufIsfhY5joiyENSkrv8/reaFYUY5ay7IM=;
- b=FzNkX7bikvrzaUryZa98vc16OYFfpaWlUukIudteuvtQ2IZc3hwzh3V5gYnWAEeZ3V
- zoI0jszVaGGi35Xh/VJcyNJjb8X4D/ZWS16/tqCyFsRbF3mG/84w9uEK7MzCUDGLHgV1
- 4oMEyjDlE8Hiyk8CPLT+bYjx5QGALVSZ3kuRhiVfoOKVCFTOTcc1jMaGf5JYZWqkIHiF
- i7rD7Z2NQImMdF1ozJuJEGFKYSElxHVegnvH8L5HtuCY26LlDVfuRq5wDGgfhm+ZJXJ+
- Bf2cK3WIo3k17jXD/sug+kELUUEKpoWZiYIDGBKKlGs8n2ehUAB3BjCLuxjYMPeZVTR0
- w3xw==
+ d=linaro.org; s=google; t=1710365682; x=1710970482; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8X472is1XN7Nm+dILoz/idT0Hrtz/X3rNIf8XYJ+iTQ=;
+ b=ftxLuPcoqiHOwjaIRz+nXm/cc7GnJ3LW5N4apU5H+5lyzFyK3BP4t1lXikkODggPzJ
+ vkW5KoGIrfo1gOd/vZDiehQukxmZF0z/QfOJxQXlD6LoUnjX5IsOnmg5rFATOExSMAja
+ pO9FgmdPNuS+Qyl/rabRkWgiXOlm1J2P9263Q+T2SXQxekzQ81OqBYE58UH782hWBdSF
+ I3kGY/dUM0kOtIAgrGPmMWWV/vJHuBiyb4M7o01e/NWgVH7rhC72+7omatG5Z7m5rPd2
+ Glx1Gj44hSaZv68pJh5YgbwHA2nHqsPbqSzwGsK+VSOl34wiSysPE5iKL6nuzGLxLnl8
+ QDUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710365623; x=1710970423;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FIxO42vqFtufIsfhY5joiyENSkrv8/reaFYUY5ay7IM=;
- b=DedHt9j79/47iIhPK63enjDoTd5DZ6uhXCbrUpvi6CBaYzGddKEnSM+HDMexZGjH8b
- jn44i1yjDtMFRoIO3AIjKaAmLI3Jmf/W4TJ39UTgMx1MVHkqeBcBVBNF+hUbt7kl5Lw4
- H3ACWx7Jmw2sJtfrbNZnKpHhyJLrToVURtbZ9j6NFi18uswr9bff+3Fxz3UqqFNCYk2Q
- 6piwip8i39CG/PCcC4mpxIfjxKJFOiOQMXNqi99CT4GgXvyppF9zpd1tLg3oMGUwlJlB
- X7pL5OZqP5CrvwxYn9xHc5Sm7htqR0dTWUb2ccrw2BT8a2/KT2s23ScZpvHR7M5nHKDI
- hrzQ==
+ d=1e100.net; s=20230601; t=1710365682; x=1710970482;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8X472is1XN7Nm+dILoz/idT0Hrtz/X3rNIf8XYJ+iTQ=;
+ b=SDNMkZPGzSdvxQif9NrZbTWByfOqwYQDsWN2HsqKLdjDul0Zz078EF3umsq2obKm51
+ bqzTQrSQdXbEI1ihj9LzdMCNmBvPEIJxOKpqNRxEFxhG2qcVLD1kvRNswkBmMrqXmZ4c
+ kZUm769QckB4K32I5M/VYVaXI1SXL8IJO2GlfqmvoyYaFEscPgbzY0bDWY19j0YQADqb
+ q+I9AMIcvCTbGy0vlmlzrPGfls7HFWSDLgXzcOGq+2s0yDTiF0uQgT7dcCHST3S+9TqG
+ mE5yy87PTHLX+omH6Set/ZSeiQCz9TB6jU9nrooxzSqCZJFA9KU6R8l6+XVWJwWw4wEP
+ h+Tw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZc0YTwM18/UnnDkGhxglHEsbudyUPLoRlPHsuvpc4pUfJPx8RTEk0E5+oQl/eMHNiRJXAHotvY/6GnM5BnvvytEShYhc=
-X-Gm-Message-State: AOJu0YwjQruwUpzRl9sTJIlox3Uwp+1TJa+T1z99uWDwersZD1sJ29K4
- 1hfQJ2vz/JEgIkgwopVVwxm7Bcltj+0tPkjR7hwq5lXjP1Babnz1UyFtkFdbs/U=
-X-Google-Smtp-Source: AGHT+IGO3NaVVT/WOQkFn/CiwtQQYkB+YiO7AyFwqurLvvw4fx4t1V6DIDAoaCNyn0e8u5oCed6SfA==
-X-Received: by 2002:a5d:6602:0:b0:33e:97b8:41e9 with SMTP id
- n2-20020a5d6602000000b0033e97b841e9mr2611284wru.52.1710365623375; 
- Wed, 13 Mar 2024 14:33:43 -0700 (PDT)
+ AJvYcCXKquW5yDCGVlKLV0eQW/VMJ2r2rUd8U/qqHBJcO/N+O0nTKuIdJs+9aRV8LOqbvLAvlPZwlQ0T60exLp2HmhNC5M6dw+Q=
+X-Gm-Message-State: AOJu0YzJtyCs2QEfP6XUhyGpdL5j+fxBVmqmJxarh89nyDOu5V/5xfhq
+ GlVgbtnIf8VU1RoHnwBob5lS0GThc5c0qeeKk0+QsnWhxADkBxAzwL90SAVHAUE=
+X-Google-Smtp-Source: AGHT+IFQ+X44STFpsLaI99RVxnAcASp7BBxTUJTZK6/k7vY0xknW8WQ41XVXSu0eVbwc2O4gAu+F1A==
+X-Received: by 2002:adf:a296:0:b0:33e:bc7f:edd7 with SMTP id
+ s22-20020adfa296000000b0033ebc7fedd7mr2372862wra.7.1710365682559; 
+ Wed, 13 Mar 2024 14:34:42 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.182.179])
  by smtp.gmail.com with ESMTPSA id
- bp16-20020a5d5a90000000b0033ec312cd8asm69602wrb.33.2024.03.13.14.33.41
+ bk1-20020a0560001d8100b0033e95794186sm57071wrb.83.2024.03.13.14.34.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 13 Mar 2024 14:33:42 -0700 (PDT)
+ Wed, 13 Mar 2024 14:34:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
@@ -65,21 +66,25 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  qemu-ppc@nongnu.org
-Subject: [PATCH-for-9.1 00/12] accel/tcg: Finish replacing SOFTMMU -> SYSTEM
-Date: Wed, 13 Mar 2024 22:33:27 +0100
-Message-ID: <20240313213339.82071-1-philmd@linaro.org>
+Subject: [PATCH-for-9.1 09/12] accel/tcg/internal: Check for USER_ONLY
+ definition instead of SOFTMMU
+Date: Wed, 13 Mar 2024 22:33:36 +0100
+Message-ID: <20240313213339.82071-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240313213339.82071-1-philmd@linaro.org>
+References: <20240313213339.82071-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,42 +100,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Finish the softmmu/system clarification.
+Since we *might* have user emulation with softmmu,
+replace the system emulation check by !user emulation one.
 
-Poison CONFIG_SOFTMMU at the end, we can still
-check for system mode with !CONFIG_USER_ONLY.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ accel/tcg/internal-target.h | 6 +++---
+ accel/tcg/tb-hash.h         | 4 ++--
+ accel/tcg/tcg-all.c         | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-Philippe Mathieu-Daudé (12):
-  accel/tcg/plugin: Remove CONFIG_SOFTMMU_GATE definition
-  travis-ci: Rename SOFTMMU -> SYSTEM
-  gdbstub: Correct invalid mentions of 'softmmu' by 'system'
-  gdbstub/system: Rename 'user_ctx' argument as 'ctx'
-  target/ppc: Rename init_excp_4xx_softmmu() -> init_excp_4xx()
-  tcg/sparc64: Check for USER_ONLY definition instead of SOFTMMU one
-  plugins/api: Check for USER_ONLY definition instead of SOFTMMU one
-  accel/tcg/tb-maint: Add comments around system emulation
-  accel/tcg/internal: Check for USER_ONLY definition instead of SOFTMMU
-  exec/cpu-defs: Restrict SOFTMMU specific definitions to accel/tcg/
-  tcg: Remove unused CONFIG_SOFTMMU definition from libtcg_system.fa
-  exec/poison: Poison CONFIG_SOFTMMU again
-
- accel/tcg/internal-target.h   | 32 +++++++++++++++++++++++++++++---
- accel/tcg/tb-hash.h           |  4 ++--
- gdbstub/internals.h           | 26 +++++++++++++-------------
- include/exec/cpu-defs.h       | 26 --------------------------
- include/exec/poison.h         |  1 +
- accel/tcg/plugin-gen.c        |  6 ------
- accel/tcg/tb-maint.c          |  7 ++++---
- accel/tcg/tcg-all.c           |  2 +-
- gdbstub/system.c              | 10 +++++-----
- plugins/api.c                 | 10 +++++-----
- target/ppc/cpu_init.c         |  4 ++--
- tcg/sparc64/tcg-target.c.inc  |  8 ++++----
- .travis.yml                   |  8 ++++----
- scripts/make-config-poison.sh |  1 -
- tcg/meson.build               |  1 -
- 15 files changed, 70 insertions(+), 76 deletions(-)
-
+diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
+index 4e36cf858e..b22b29c461 100644
+--- a/accel/tcg/internal-target.h
++++ b/accel/tcg/internal-target.h
+@@ -24,7 +24,7 @@
+ #define assert_memory_lock()
+ #endif
+ 
+-#if defined(CONFIG_SOFTMMU) && defined(CONFIG_DEBUG_TCG)
++#if !defined(CONFIG_USER_ONLY) && defined(CONFIG_DEBUG_TCG)
+ void assert_no_pages_locked(void);
+ #else
+ static inline void assert_no_pages_locked(void) { }
+@@ -62,12 +62,12 @@ void tb_unlock_page1(tb_page_addr_t, tb_page_addr_t);
+ void tb_unlock_pages(TranslationBlock *);
+ #endif
+ 
+-#ifdef CONFIG_SOFTMMU
++#ifndef CONFIG_USER_ONLY
+ void tb_invalidate_phys_range_fast(ram_addr_t ram_addr,
+                                    unsigned size,
+                                    uintptr_t retaddr);
+ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+-#endif /* CONFIG_SOFTMMU */
++#endif /* !CONFIG_USER_ONLY */
+ 
+ TranslationBlock *tb_gen_code(CPUState *cpu, vaddr pc,
+                               uint64_t cs_base, uint32_t flags,
+diff --git a/accel/tcg/tb-hash.h b/accel/tcg/tb-hash.h
+index a0c61f25cd..45a484ce82 100644
+--- a/accel/tcg/tb-hash.h
++++ b/accel/tcg/tb-hash.h
+@@ -25,7 +25,7 @@
+ #include "qemu/xxhash.h"
+ #include "tb-jmp-cache.h"
+ 
+-#ifdef CONFIG_SOFTMMU
++#ifndef CONFIG_USER_ONLY
+ 
+ /* Only the bottom TB_JMP_PAGE_BITS of the jump cache hash bits vary for
+    addresses on the same page.  The top bits are the same.  This allows
+@@ -58,7 +58,7 @@ static inline unsigned int tb_jmp_cache_hash_func(vaddr pc)
+     return (pc ^ (pc >> TB_JMP_CACHE_BITS)) & (TB_JMP_CACHE_SIZE - 1);
+ }
+ 
+-#endif /* CONFIG_SOFTMMU */
++#endif /* CONFIG_USER_ONLY */
+ 
+ static inline
+ uint32_t tb_hash_func(tb_page_addr_t phys_pc, vaddr pc,
+diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+index c6619f5b98..929af1f64c 100644
+--- a/accel/tcg/tcg-all.c
++++ b/accel/tcg/tcg-all.c
+@@ -116,7 +116,7 @@ static int tcg_init_machine(MachineState *ms)
+     tb_htable_init();
+     tcg_init(s->tb_size * MiB, s->splitwx_enabled, max_cpus);
+ 
+-#if defined(CONFIG_SOFTMMU)
++#if !defined(CONFIG_USER_ONLY)
+     /*
+      * There's no guest base to take into account, so go ahead and
+      * initialize the prologue now.
 -- 
 2.41.0
 
