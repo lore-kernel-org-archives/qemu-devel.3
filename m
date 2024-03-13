@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59CA6C54791
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92885C54E66
 	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 19:41:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkUSu-0005yg-Ak; Wed, 13 Mar 2024 15:40:40 -0400
+	id 1rkUSF-0005dM-0Y; Wed, 13 Mar 2024 15:39:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rkUSs-0005y8-FN
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:40:38 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1rkUS4-0005aq-3r
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:39:49 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rkUSr-0004Au-29
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:40:38 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-56899d9bf52so259779a12.2
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 12:40:36 -0700 (PDT)
+ id 1rkUS1-0003p6-68
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:39:47 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2d220e39907so2525001fa.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 12:39:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710358835; x=1710963635; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710358783; x=1710963583; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Wv6PR31IpeRCrdiWV9ppttAHnl6/2+vuVtyTTu0/Kpw=;
- b=BAyJAP/sovCD0ieAYGcmicAKqPhmzJiIXzvT6w6x8ypAYHMYrrtciAwjfbUeUDAP5h
- owKEpQ7dHIlIik7BOGX2BjFkWu+F4FOfp/QmUf0XyToERgixkUXu0uJCl2xan9vIn1uC
- +gh+CC/Hf7QKQe3riLAu9buZa5+zbWzYX+KG2b3BERq3i3+HAki3tjqzvXdWZ9hGXjYS
- /l1y/fHMs5WzJU2AvQScf6090T0W+djMD9/8U+fPdYHiKZ/kd5cWWzUlot3k1zcnrP/T
- fgKxCDCggEsFwH+E1Tn6dJpmY648PqYZWEdVHf4dIIH+fksMJvmpArVjNSjME90hPLUE
- ALOQ==
+ bh=ePwrOhCqD6QcBntpos1ixTsxkp9ZbNWVANNVJnLwFRQ=;
+ b=mqQrrVT6obgnOLTHjenvroj4xWhyRt/nKElHaNw+ygvevscY1+15MmrkxQ0YbjxbMI
+ ATE65Egry5NnKntwIuhV+OriWj1JqK+Lxgdtn7S49vMw2cRh5/665P3Or+/Rdy3Kq3Hz
+ M6khc9TRhdCUpxLBPZ40soGc4vjyCqNIMlB7YR2j9f2ORqhs8Ql16ZJo0mahiSA/R5I5
+ lYfUagjTdkNvC7Hminkgeqk4WdvPt7OR1+zsQbrzRWqY8MNUPCd8yOrJmTILOErLo8bV
+ QF7BdHkybAsSfJDiGDc7W5XBe3wiHLGDJXGd2SOBROIf25PLwonfxhP4q6jueNNQF5YX
+ fZvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710358835; x=1710963635;
+ d=1e100.net; s=20230601; t=1710358783; x=1710963583;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Wv6PR31IpeRCrdiWV9ppttAHnl6/2+vuVtyTTu0/Kpw=;
- b=MZ8E6dWm3i7uiLquimmdTS4NNmGeBZVSRtPTzDcM+6UgqFuLtq7J4phk5Gy9z3rP1V
- uBDxFamTfymBKftPt6QLwQlP4AmYR23feHRqnn86dOKgozQCqADaaAuHNhPPuQmliIDm
- dY1fM7PwEgRlgqOmb2fgrd0iwzTNStkC+8GTNq2o4xfKb75HkKQiPtFhqeDf7/ildpGl
- 7kC2TW7UWNm670mIzqMsrl/KcBC0M9MUy/6J9QtM1K/zeomMmxSowe7ts5hCtltBgI1O
- ZzTS5xwYIW7ZMD1g2xnXNhOA+/zJFYWHl8C5ukxirJ0Bbjz/ESV0HQ3YoMo/juno8GXQ
- Re4A==
-X-Gm-Message-State: AOJu0YyfaZqVxxM4YZpjLZbTOJjErEE8dsX7joXY6C8NHUIVzZR7JS9U
- MUd6OLneYgOOX8xkEoKcxDdCKdV24P/kB/dHqqRFeWr4wuLEBFdZAGgBN78C5Q5x9ybgZpYspxS
- AMXQhdYHAwp5vJ+9DZdZ1A46wW0J8s9N88ng79nmRHXZGnPJI
-X-Google-Smtp-Source: AGHT+IHt/SsLK/8NHh5VDgqQMhY1reUwFuZFHeKCwrYsZP/5pmVkVpUqt6IrrzNXGSAEim1+vMp8FDWSoJUCa3zKvvI=
-X-Received: by 2002:a50:934a:0:b0:568:1882:651f with SMTP id
- n10-20020a50934a000000b005681882651fmr9461639eda.25.1710358835488; Wed, 13
- Mar 2024 12:40:35 -0700 (PDT)
+ bh=ePwrOhCqD6QcBntpos1ixTsxkp9ZbNWVANNVJnLwFRQ=;
+ b=rFagIbpBagmMfNQ0rYVDPK81/QLBAz0JOHavVDBAcA7ZTX9zRzqK+VcZNtb2se8ku1
+ KFqGjrdu1ieaIDXzvXzJ8e8PF0pV4iup2fLTdlVz0hafRMgSvDQDZucAoILOyyiifN91
+ CZMNJ04+ggUAKHaYxZ+mHKV6CYJsw08GIzGJyxmiMO3y5qUClo7na6RcKf5espYgH6DS
+ 32Ss6vsvqnMnQy+62QwD5blg5CBSk4V3DCMkqU4JJgQelH0JzmO7Br/OzAXiyYCg4W4d
+ Wu5IcmWQGrF2ukDi+T1sPZlGtDDujHxim97eTmqj/cVRnVsQiR6XcXQQe51fEBQAPc4E
+ 09Mg==
+X-Gm-Message-State: AOJu0YzX6f+6L0T4YhbiRuaZLDJtG/uSksIHWUB+p2qY+eqXyttZwWzv
+ yVyLTy8ix98ftKCnPaJTfcj/I0VdRu2mcUe08A+H3jsE+xONP3G18voQdcrjuFCh5dvFVBMN11I
+ ugqnHDKt9SCue35V6OQIrfdrTUalqAPEMDYdDTw==
+X-Google-Smtp-Source: AGHT+IHWoCRupv9NNRuOudLIq7LC3JxoPndrft4/POvIAW7mvfVaYI/USK1YJ0aXmGe7mP9xdPiM+LAeh54JBCcoHvE=
+X-Received: by 2002:a2e:b52d:0:b0:2d4:6a6a:22bf with SMTP id
+ z13-20020a2eb52d000000b002d46a6a22bfmr2084044ljm.23.1710358783153; Wed, 13
+ Mar 2024 12:39:43 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240313184954.42513-1-philmd@linaro.org>
- <20240313184954.42513-3-philmd@linaro.org>
-In-Reply-To: <20240313184954.42513-3-philmd@linaro.org>
+ <20240313184954.42513-4-philmd@linaro.org>
+In-Reply-To: <20240313184954.42513-4-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 13 Mar 2024 19:40:24 +0000
-Message-ID: <CAFEAcA8KhyikEOusdJwFR5JbuDMnx_rnzm5w=U-OVcpDaSy9fw@mail.gmail.com>
-Subject: Re: [PATCH-for-9.0 2/4] accel/hvf: Un-inline
- hvf_arch_supports_guest_debug()
+Date: Wed, 13 Mar 2024 19:39:31 +0000
+Message-ID: <CAFEAcA9ZtyRG5G=vLXNJdA3RPKsvLGh-v8MO2tq1mC3ch5_asw@mail.gmail.com>
+Subject: Re: [PATCH-for-9.0 3/4] qtest/libqos: Un-inline size_to_prdtl()
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
  Laurent Vivier <lvivier@redhat.com>, John Snow <jsnow@redhat.com>,
@@ -74,8 +73,8 @@ Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,9 +104,27 @@ g> wrote:
 > functions with external linkage") for rationale.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  tests/qtest/libqos/ahci.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
+> index a2c94c6e06..135b23ffd9 100644
+> --- a/tests/qtest/libqos/ahci.c
+> +++ b/tests/qtest/libqos/ahci.c
+> @@ -662,7 +662,7 @@ unsigned ahci_pick_cmd(AHCIQState *ahci, uint8_t port=
+)
+>      g_assert_not_reached();
+>  }
+>
+> -inline unsigned size_to_prdtl(unsigned bytes, unsigned bytes_per_prd)
+> +unsigned size_to_prdtl(unsigned bytes, unsigned bytes_per_prd)
+>  {
+>      /* Each PRD can describe up to 4MiB */
+>      g_assert_cmphex(bytes_per_prd, <=3D, 4096 * 1024);
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+It looks like this function is only used in this file, so
+we could make it static ?
 
-thanks
 -- PMM
 
