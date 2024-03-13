@@ -4,84 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18422C54E60
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 19:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33FCBC54E60
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 19:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkTvz-0008IO-EB; Wed, 13 Mar 2024 15:06:39 -0400
+	id 1rkU0J-0000ln-7u; Wed, 13 Mar 2024 15:11:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rkTvs-0008I9-TV
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:06:33 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rkTvr-0006js-0Y
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:06:32 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-513c53ed3d8so260455e87.3
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 12:06:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
+ id 1rkU07-0000lT-Ic
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:10:55 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
+ id 1rkTzt-0007Qh-6a
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:10:54 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42DHx2NT015075; Wed, 13 Mar 2024 19:10:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=KAgeJKGlNWXTlSjfYGsoGa/6MN5mvyUgno/nc5X+peU=;
+ b=mQyFVp47ZbIDU0Td5NIu+TSv+OUTNg12nJj3GFjTekxpEw1qXQGY0Ad+jzTc4QmSkwMX
+ Rhb/qkCQ0UF2hEGiB8ePdHYjaHnQ3Uo1o00kWa6kDgnbTK8ByLVbAzMJsY0k172Td1gE
+ 1fV2nf4pm7T231KxxNsjejReY54vvtTpL+TXhaka3veLtoxp9IUSlv5G5N1oDztdZwDo
+ 9S/riO29RttEljIBE2Qi0A9HuLj9GRLt3Cmjw0akfseV/OVlhdBo04y16F/duilgCJCv
+ oP8B/DmPvnpBZNzbz51P27RiJgZ1oyHUx3QmRBwgAxXQJxAFl2IZ1MCcxwz8Muuu6tLT zA== 
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wrftdhx4b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 Mar 2024 19:10:36 +0000
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 42DJ73jC004864; Wed, 13 Mar 2024 19:10:35 GMT
+Received: from nam12-mw2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12lp2040.outbound.protection.outlook.com [104.47.66.40])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wre79kjj4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 Mar 2024 19:10:35 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Vu8RnMgiDpZj1tzR/RabDdY7mbWkKGr/EOe8kZ6CZuU1qYucx/JEcgP1mG6t3BHErXYaQNQGtH4jis9aCqyL71i2wvHIUykVpYUJtEvtZOTlEuZ3okC41u1irGE/8fWEUzCGcylIzcZFQGg9sEqJR2zS2wGU4O9qaC+LeuhrvmHWEIRsmIO5aYDeCdVF182vIH50e5wFKuTCSRfYAd+D8caXYNcyY9frx+DWhwwQEhuEIeUsEMBpD4ENeGUJKB0C3/4FyVe/vyT0K4hGYcmgQkBP11hca3PcGud0N95Nm3YqNb1psa77fHvIPjuujYS4X7bnpLh0TsfnX/ivi4NRsw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KAgeJKGlNWXTlSjfYGsoGa/6MN5mvyUgno/nc5X+peU=;
+ b=X0UoESKiNx8/KAiBrN6qTHsbUiX0m+ISLu/+pRZP2R64JUOoxLu50yFvnxwAgln4amRbqfFWGMZTM4IxNP1YVvLF9h5yoi9AkrawlDJBITort+raQOz9nzaE45JahZBj9oeMbwGlTweLqTMYRnouqeu8om9dAKzfaLFHYxrA1t88FkwBgOvjvSObsiay7JxNqCAc6GzczyYVa0zTLxAWKL/S6YJQhxfKQdLwHFA+W1Tp+8v5jrxlnsGq1B53prmGM+HJQAGAN9dCzb4zsOv2ws+9s+ncUQoCqDwx1LckdBdWi5wthZMt5VQHaOHmBbCRDJnG71aFV+mmQ9lOuEIz9Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710356787; x=1710961587; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=25IAnW90jZ78aTwEWy+x9rhtEYMv+xdl/Qj1hLOjQXQ=;
- b=DgeM6sMT1OLRuizqzSTn5opEybssFPhS5CEPB3Z91Gr/56cX4kszH9DJQLObkcZqYR
- 5D3Et1qsKv3v7Z2FiYE2g6dReDQo+4GyR4BZlK4Vn4k89677NkvfxVi/KYo7iq/XAh8e
- 2YIzSGhbqlIsZ1Ra9GW+SzncRP40IzDJSTccbqIH9V2NTmddfiauaYwVlceGKXcz/aFg
- IIG9qbjcfE07QdXz40KW5b/OePfl/stPZs/spR9uXZbZ2+bCBDEHKVBSGyhgJ/W9VVab
- Yr1zRR7M6hyXk0pINpa5zFm0J5SewdUedOX8n6XhHVr9NwCw9xBT33XyFRAmSV+wb82w
- nGqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710356787; x=1710961587;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=25IAnW90jZ78aTwEWy+x9rhtEYMv+xdl/Qj1hLOjQXQ=;
- b=qykJb0F1zqktYmkNbcp+/zK2bT6LWVsUb21Fo7WOtC/QTaiVT59qIquITaMmfjm6Ml
- 0YBCVz5jBqharx4/hcW0x0pX6LXotWB6z7lkojFExNYgamind0LDdJN89gxpSA0c/NeU
- SZlVg2uSY/7U99JPn2GMF52Z6Y2CfUf0J6ax9BRB75tuPnUbi6BpyEWg9g+cWvnTObdF
- b4kO8TrRWKt/Yx5cGgx0R+yglCa7WWjtJoCoh/fQF0GhdbLgUI1hawqbVUJPJiDzGzi8
- MOVcgmcYyTV9bkJE1g8PR/fYX+u63RPkfe6g2/AY/3fXkH1OSvUOEX5rc/2JNKLcuR6j
- yoRg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVpJkCSM/zENV/CcCr7/A+LXst3Qw330c3G5sWaSoCR5nyjzdzsNcb9wNLBkw3Q3xwYK4vOrSpi5dGRUt7qa3379fHq72k=
-X-Gm-Message-State: AOJu0YwHHHH3pSQozyXpC6R+d+tPUSlhm2SnWccVYnfPt4uRhLJDnd+S
- pXhDkCAD2VqMfJ6d4QYRpaouC3osTWbuFxvH/jyLHni345H6f/4vP00mpTlcq67s/9HdYCX81rK
- g
-X-Google-Smtp-Source: AGHT+IF+ILfuGfui2YFF8mLu9wVYOkgUtoaZvdOjBpVwODC0lcBV7eVKw13ntAZwShXjnflldmNUQw==
-X-Received: by 2002:ac2:5f8e:0:b0:513:c625:a6f6 with SMTP id
- r14-20020ac25f8e000000b00513c625a6f6mr2900821lfe.49.1710356787367; 
- Wed, 13 Mar 2024 12:06:27 -0700 (PDT)
-Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
- by smtp.gmail.com with ESMTPSA id
- fs27-20020a05600c3f9b00b00413e63bb140sm3107557wmb.41.2024.03.13.12.06.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Mar 2024 12:06:26 -0700 (PDT)
-Date: Wed, 13 Mar 2024 20:06:25 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Himanshu Chauhan <hchauhan@ventanamicro.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 1/3] target/riscv: Enable mcontrol6 triggers only when
- sdtrig is selected
-Message-ID: <20240313-7736ce7e5110189807de2287@orel>
-References: <20240313182009.608685-1-hchauhan@ventanamicro.com>
- <20240313182009.608685-2-hchauhan@ventanamicro.com>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=KAgeJKGlNWXTlSjfYGsoGa/6MN5mvyUgno/nc5X+peU=;
+ b=mYznookYcPjHYf3wdynnS1rQNb5c79uDeeiPGKrDcCRI4aOW5yaK0W9WncfZ8btniZyaKwxPdYmoro9/C2Cm6WPuyQZs7IVv95OBxsAegrRTDyb/Mc2ELBq7FAPpG5Pdl5LCq/EFxXo+wwJuS4z6R9thQVmKz3GJgL8a+KpD3GE=
+Received: from MW4PR10MB6535.namprd10.prod.outlook.com (2603:10b6:303:225::12)
+ by CO1PR10MB4787.namprd10.prod.outlook.com (2603:10b6:303:9c::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.18; Wed, 13 Mar
+ 2024 19:10:33 +0000
+Received: from MW4PR10MB6535.namprd10.prod.outlook.com
+ ([fe80::bf6e:420b:90be:3cff]) by MW4PR10MB6535.namprd10.prod.outlook.com
+ ([fe80::bf6e:420b:90be:3cff%4]) with mapi id 15.20.7386.017; Wed, 13 Mar 2024
+ 19:10:33 +0000
+Message-ID: <d869db89-f39a-4358-9977-7d5c1a027d31@oracle.com>
+Date: Wed, 13 Mar 2024 12:10:24 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/12] vdpa: fix network breakage after cancelling
+ migration
+Content-Language: en-US
+To: Michael Tokarev <mjt@tls.msk.ru>, jasowang@redhat.com, mst@redhat.com,
+ dtatulea@nvidia.com, leiyang@redhat.com, yin31149@gmail.com,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <1707910082-10243-1-git-send-email-si-wei.liu@oracle.com>
+ <1707910082-10243-13-git-send-email-si-wei.liu@oracle.com>
+ <41f0f7b4-ce3d-4e60-8567-1aa34a616b1a@tls.msk.ru>
+From: Si-Wei Liu <si-wei.liu@oracle.com>
+Organization: Oracle Corporation
+In-Reply-To: <41f0f7b4-ce3d-4e60-8567-1aa34a616b1a@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P123CA0072.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:153::23) To MW4PR10MB6535.namprd10.prod.outlook.com
+ (2603:10b6:303:225::12)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240313182009.608685-2-hchauhan@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=ajones@ventanamicro.com; helo=mail-lf1-x134.google.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW4PR10MB6535:EE_|CO1PR10MB4787:EE_
+X-MS-Office365-Filtering-Correlation-Id: bd8d9c40-3b67-4e17-1fd3-08dc439141d0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: z/2QeOhH93wwD7pfQOBvqLThMdsvacii5kuzngmf2dzaBck++n/UUk5nY3eP29nMKEo3zobu0jbNsU1PbdfBXVfcrZzOGD3iMaVtI06g6HvAVZmPN0mxV8jPb5ttz58zVuzOlSKOx+GJNz/RLQq+z3YCfBo03DFkBTEGAzwmMgOS1zy0wdinNCaVouUfd+v6kloQhyjKWzajGCbX3oOW35sNInXwSyBZauFRjmfbxsRk181+IUOvCbt9p8g+m2ExLIGKSMhZM1N+EQ348+ou0hr8SBJOd7/Mxw1z3rO0/NXcg6HbbPhPwTr5I0Ijc2GtFSjFSqFZtS4EZj2hqN/6ObP2jueTXEMEesUba+5rtDRtRFtQbVrr2edXkuPxZZbPd/d0Q/o4RWZfsCAkJi+jinzIzF0Mngq+ww7SVN+iataoqZA+BYLVqdsmei19JXhPHNKYtDP40XpA3pzWdXdkLGwsSEX1R3dPuFO89+MsxF1iT/shw7G0UfQ7SF8LyKOjbccmtr/Z8Y1A1LGdB3G+QIt6iX0bZ+IKpS+5MaNNCtPFBxzz++a/XGTV/5WJWo7KF8Ux4cxKx00OWKeFr1QIrBrjuyoYeiedZ1tsEUZIdQ0SQkb1mEK2glxoz0WAh4UH4KGDFKBuYjGN64KVLxFmh75F8RQktd0dNy+hedGpARI=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MW4PR10MB6535.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(1800799015)(376005); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NGhrRmtBeXhnanRPSU82ZU1iWmYyZjkyNSs1cThESW11TzM4dk4rRUFmaXp0?=
+ =?utf-8?B?WERDQTY2RXpGb3NFSk1PdDE0dDhySW1ZajNLTXMrTUZJK3pEUHJoZG9lNXM4?=
+ =?utf-8?B?UnVYRmRla005aDJ3WGhSdzYvK0x1UVdFQ20zYVlBcGdmQ1ZWbUFDTTlWYUFj?=
+ =?utf-8?B?cE8vOXBOVzAvT3F2eHRBZktyaUpsTjhxYllJZklOOVVQZytWa241YkRLUjJm?=
+ =?utf-8?B?L2Q2a3MwYUdZbkh2QVFtNVVLMzV1dXdvQ0ZYenZsay8yaFZyWFlMaTRVZVQ3?=
+ =?utf-8?B?c1F5NHBZbVNnRmRUc3lrV0NBeUo1SE5oQWRUSHVZQmtsNE02bVY5d0lKbnAy?=
+ =?utf-8?B?SFVObWd1YWp5REs0VkxqUmRSckdVYkQ5WUtDTVZTa2pDb0h4eEpsaC91bE15?=
+ =?utf-8?B?QUg5ZmI1cTBCVi9YbmUxMysycHpXN0psWm94Rjh2UHZQTXJmNEtxOHNtcnhZ?=
+ =?utf-8?B?bG1SRGZsRGFWcnpWV3Y4anlDY0d6ZlAyb3RKYTRtbzRBWWdHODJ3YTROdGtp?=
+ =?utf-8?B?R21LMmIraEw2SFJsK1ZnVll1MnBzTVExR29pWmRyNkNQeDR3REtlbDdteVhu?=
+ =?utf-8?B?cHFCNlQvanBObE5UYlB1VnA4YWI5eUZadzRWZkxwVXJPN0w4TnBXSnFJS1Ni?=
+ =?utf-8?B?T1V5Wkl2aG83Ynl6elExMHFSeEdUcnRMbWdseVNVZ1FUL0dhMHpUYm9VNnhK?=
+ =?utf-8?B?bW51cUtKektpb1J0clZaN1k4cGJucC9hNk92cEtvRnZackRpeHBpMDhDR0M3?=
+ =?utf-8?B?WDdOQ1ZWSFVUVGtJUG1ZTVpRWWZ3L3dnMlplWXhQMWdvZDJLVS9KTndSVE5m?=
+ =?utf-8?B?b20yM1dCZUVYL3pwRUZJc3l0SzJBZEpxT2FLZ2NMbEIrQVBJZUtSSUJSbzBX?=
+ =?utf-8?B?UDZUcHNrV3VieTdBdHc5MGdNNmYyaUEwQmE5eUxOQk5PUGJlcUJwRXdwbzZ0?=
+ =?utf-8?B?Slo0R1dvKzl2Z2NOTVk3VUVLNHdwRlRzTElUYlFhTUltWTZXOFlwMXJnUkFp?=
+ =?utf-8?B?NE9BalBKZjdqTitNTUFkTGJiRkRqUlh2Z0xaRlZpSlBMSVo3bFZuWW90Wnpw?=
+ =?utf-8?B?RzB6enVNNnMxRzJlODJWQkxWclR6UklZNG0reG1pZ2RjNm9kUk40N3E1eXVV?=
+ =?utf-8?B?bFpzVkpJSStMZHl4b2lXTkFudkl3TzVjdTA2VWUxV2JGNnM0V1B6eSsxellj?=
+ =?utf-8?B?bythVGZrekltMmpTcHZBaW1OYlJWazJtMTRlai9iT2ZpaDF4Ui9kQmtZR2tY?=
+ =?utf-8?B?Ny9Ib3lWWmNxaGdtTUlXWlpMd3hmLzFzVllyR0xSU2tEWjNPOWNyTnBMRi9z?=
+ =?utf-8?B?TVQvcStPdGZCbWhkRWdsc3N2NXNlTHJjbGhMMnlVV0RKcERiTUUxZ2Frcllk?=
+ =?utf-8?B?L3pJYjVWN1l6M2xXU3AvK3NtSXJYWTg5M3NxdEdKOE5xN0tOc2pGQ0pldWtQ?=
+ =?utf-8?B?TnVlKzcwdmtodlI2ZUxuVWJ2WDQ3Z2tPNGswYkF0ejUvZ1AxUjFGNnU5MVZ3?=
+ =?utf-8?B?aCtjSHByWlNnY0U0V3Z2RTlJVFRITWRwNWl1TGg2eXZnc2tDalo3ck5qN3Uv?=
+ =?utf-8?B?RWp5aDY3QndRZ3RqekdhUUZZWC8yUjRyWGR0LzFmTWdFUGN6OGhaZjl4aFVY?=
+ =?utf-8?B?d280WGRxUEMrUno1NGU2YURZeXEzWDNIUC83V013T2JXWWhIZWdUZ1ZRbXVV?=
+ =?utf-8?B?Z1VuWG56Zk45SU53K1hjbFprUU9NMUVtamI2VW9EQ0hBQVcvWEZTdXRwZHU3?=
+ =?utf-8?B?OGh6STBwdmtNaXBVdjAvY2gyc1o2cU1UWjd1VVJhcmRYbytQVkhKSWt0YjFt?=
+ =?utf-8?B?MEFnTVVmdG4reUhyZFRleHhGcm00dkVOZW8zNmpOV2JnNW1ISlI0U1dPbUto?=
+ =?utf-8?B?dWJuQ3ZVODhEMHFHWTNzd3dKaVdzaUJrNmRpTUxYdWcxdkVxdS9LRTJYQkRF?=
+ =?utf-8?B?dFE2VHkzRlNuQ0lVSWpvTHJRZ2o5eXdLL0EydUlPaEx3TDJQYmM5UnJkMVQ3?=
+ =?utf-8?B?YWl6MzhvemhHaHNHbHNTR0I2ODZtOFhjNENacDJVL3VuU0dkbkNOWWlmeHMr?=
+ =?utf-8?B?Rlp4d0NOZm1ma1g0NkNLcmJoV0hoQjQ5cHpLaFV3N2xZWUtSQkdVNTNIa2hm?=
+ =?utf-8?Q?zWtSM8jtbJzOTy/D1836YAIOm?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: jNlZaYBHtv71Zj7+WgICPXKAmPND1S/xaf71HWIHeBSk0j/+RMZCOZr/rocVihrfjK6ZvH/DT72ZdLcUNSSz7MgMjT4HuHMFWqUGGKzrqiPzDbhv0jnEqD05HmK6u9A/8Vc/clzYaKVpyEqZ0eEaFXh5MaCX9cWkZ/xqxPP9S42ayvq0YCIhGfDvWrQFatUOyuAp61aBptxZLwH2SnGoZzK+tILNpCSIib1M+nylXJiPqELqdjmPJY/JfEbt9lu71aEGtFpJJC5xtmt6P2K21xt1vYhU4FbI47JYQ1HZVrOHJYPVBjV9tC4rRnA5pSUlpW1RuH47RYG3xnNAXOE9Kht+4BpABON9U9sYP6eQXmQwBipjIpo+FbHuyw3ijSwA8OVXXKzS//6UgW/SypmtAqtdbTBDdIOuKCGTHo6WhhVoBM851qzbNwc/RMRE1yyPO80D/o0bniygMY19yYXs4O+eahm9GQ1nJt/ILA8AvjO7nBj0fxfWNFw8WoXC/NeeM8b661RsXs+bIq4fo/kQf5P3qCnA2JWQUXEhiyn2N0Y++7MUqis/smjHKCCe/Ev9VGlH0p0Rb6mXr3VfgZ4VGh+8tPrpotbGJcEwiOtVI+4=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bd8d9c40-3b67-4e17-1fd3-08dc439141d0
+X-MS-Exchange-CrossTenant-AuthSource: MW4PR10MB6535.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Mar 2024 19:10:33.6026 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: QTlCb6v4t5bs/0MU1aUyti5ROmadkeSnZc4rA7W+G/9IDavHeAhh08pdfTc242sm6Y8Yk3tqJe+pMpjtXSNAMA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR10MB4787
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-13_09,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ phishscore=0
+ spamscore=0 suspectscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403130147
+X-Proofpoint-ORIG-GUID: mceozs_8iRPE3ZZ-pESOTA2qUeGw30SQ
+X-Proofpoint-GUID: mceozs_8iRPE3ZZ-pESOTA2qUeGw30SQ
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=si-wei.liu@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,230 +186,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 13, 2024 at 11:50:07PM +0530, Himanshu Chauhan wrote:
-> The mcontrol6 triggers are not defined in debug specification v0.13
-> These triggers are defined in sdtrig ISA extension.
-> 
-> This patch:
->    * Adds ext_sdtrig capability which is used to select mcontrol6 triggers
->    * Keeps the debug property. All triggers that are defined in v0.13 are
->      exposed.
-> 
-> Signed-off-by: Himanshu Chauhan <hchauhan@ventanamicro.com>
-> ---
->  target/riscv/cpu.c     |  4 +-
->  target/riscv/cpu_cfg.h |  1 +
->  target/riscv/csr.c     |  2 +-
->  target/riscv/debug.c   | 90 +++++++++++++++++++++++++-----------------
->  target/riscv/machine.c |  2 +-
->  5 files changed, 58 insertions(+), 41 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index c160b9216b..2602aae9f5 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1008,7 +1008,7 @@ static void riscv_cpu_reset_hold(Object *obj)
->      set_default_nan_mode(1, &env->fp_status);
->  
->  #ifndef CONFIG_USER_ONLY
-> -    if (cpu->cfg.debug) {
-> +    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
->          riscv_trigger_reset_hold(env);
->      }
->  
-> @@ -1168,7 +1168,7 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
->      riscv_cpu_register_gdb_regs_for_features(cs);
->  
->  #ifndef CONFIG_USER_ONLY
-> -    if (cpu->cfg.debug) {
-> +    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
->          riscv_trigger_realize(&cpu->env);
->      }
->  #endif
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 2040b90da0..0c57e1acd4 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -114,6 +114,7 @@ struct RISCVCPUConfig {
->      bool ext_zvfbfwma;
->      bool ext_zvfh;
->      bool ext_zvfhmin;
-> +    bool ext_sdtrig;
->      bool ext_smaia;
->      bool ext_ssaia;
->      bool ext_sscofpmf;
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 726096444f..26623d3640 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -546,7 +546,7 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
->  
->  static RISCVException debug(CPURISCVState *env, int csrno)
->  {
-> -    if (riscv_cpu_cfg(env)->debug) {
-> +    if (riscv_cpu_cfg(env)->debug || riscv_cpu_cfg(env)->ext_sdtrig) {
->          return RISCV_EXCP_NONE;
->      }
->  
-> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index e30d99cc2f..674223e966 100644
-> --- a/target/riscv/debug.c
-> +++ b/target/riscv/debug.c
-> @@ -100,13 +100,15 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
->      target_ulong tdata1 = env->tdata1[trigger_index];
->      int trigger_type = get_trigger_type(env, trigger_index);
->      trigger_action_t action = DBG_ACTION_NONE;
-> +    const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
->  
->      switch (trigger_type) {
->      case TRIGGER_TYPE_AD_MATCH:
->          action = (tdata1 & TYPE2_ACTION) >> 12;
->          break;
->      case TRIGGER_TYPE_AD_MATCH6:
-> -        action = (tdata1 & TYPE6_ACTION) >> 12;
-> +        if (cfg->ext_sdtrig)
-> +            action = (tdata1 & TYPE6_ACTION) >> 12;
->          break;
->      case TRIGGER_TYPE_INST_CNT:
->      case TRIGGER_TYPE_INT:
-> @@ -727,7 +729,12 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
->          type2_reg_write(env, env->trigger_cur, tdata_index, val);
->          break;
->      case TRIGGER_TYPE_AD_MATCH6:
-> -        type6_reg_write(env, env->trigger_cur, tdata_index, val);
-> +        if (riscv_cpu_cfg(env)->ext_sdtrig) {
-> +            type6_reg_write(env, env->trigger_cur, tdata_index, val);
-> +        } else {
-> +            qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\n",
-> +                          trigger_type);
-> +        }
->          break;
->      case TRIGGER_TYPE_INST_CNT:
->          itrigger_reg_write(env, env->trigger_cur, tdata_index, val);
-> @@ -750,9 +757,14 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
->  
->  target_ulong tinfo_csr_read(CPURISCVState *env)
->  {
-> -    /* assume all triggers support the same types of triggers */
-> -    return BIT(TRIGGER_TYPE_AD_MATCH) |
-> -           BIT(TRIGGER_TYPE_AD_MATCH6);
-> +    target_ulong ts = 0;
-> +
-> +    ts = BIT(TRIGGER_TYPE_AD_MATCH);
-> +
-> +    if (riscv_cpu_cfg(env)->ext_sdtrig)
-> +        ts |= BIT(TRIGGER_TYPE_AD_MATCH6);
-> +
-> +    return ts;
->  }
->  
->  void riscv_cpu_debug_excp_handler(CPUState *cs)
-> @@ -803,19 +815,21 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
->                  }
->                  break;
->              case TRIGGER_TYPE_AD_MATCH6:
-> -                ctrl = env->tdata1[i];
-> -                pc = env->tdata2[i];
-> -
-> -                if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
-> -                    if (env->virt_enabled) {
-> -                        /* check VU/VS bit against current privilege level */
-> -                        if ((ctrl >> 23) & BIT(env->priv)) {
-> -                            return true;
-> -                        }
-> -                    } else {
-> -                        /* check U/S/M bit against current privilege level */
-> -                        if ((ctrl >> 3) & BIT(env->priv)) {
-> -                            return true;
-> +                if (cpu->cfg.ext_sdtrig) {
-> +                    ctrl = env->tdata1[i];
-> +                    pc = env->tdata2[i];
-> +
-> +                    if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
-> +                        if (env->virt_enabled) {
-> +                            /* check VU/VS bit against current privilege level */
-> +                            if ((ctrl >> 23) & BIT(env->priv)) {
-> +                                return true;
-> +                            }
-> +                        } else {
-> +                            /* check U/S/M bit against current privilege level */
-> +                            if ((ctrl >> 3) & BIT(env->priv)) {
-> +                                return true;
-> +                            }
->                          }
->                      }
->                  }
-> @@ -869,27 +883,29 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
->              }
->              break;
->          case TRIGGER_TYPE_AD_MATCH6:
-> -            ctrl = env->tdata1[i];
-> -            addr = env->tdata2[i];
-> -            flags = 0;
-> +            if (cpu->cfg.ext_sdtrig) {
-> +                ctrl = env->tdata1[i];
-> +                addr = env->tdata2[i];
-> +                flags = 0;
->  
-> -            if (ctrl & TYPE6_LOAD) {
-> -                flags |= BP_MEM_READ;
-> -            }
-> -            if (ctrl & TYPE6_STORE) {
-> -                flags |= BP_MEM_WRITE;
-> -            }
-> +                if (ctrl & TYPE6_LOAD) {
-> +                    flags |= BP_MEM_READ;
-> +                }
-> +                if (ctrl & TYPE6_STORE) {
-> +                    flags |= BP_MEM_WRITE;
-> +                }
->  
-> -            if ((wp->flags & flags) && (wp->vaddr == addr)) {
-> -                if (env->virt_enabled) {
-> -                    /* check VU/VS bit against current privilege level */
-> -                    if ((ctrl >> 23) & BIT(env->priv)) {
-> -                        return true;
-> -                    }
-> -                } else {
-> -                    /* check U/S/M bit against current privilege level */
-> -                    if ((ctrl >> 3) & BIT(env->priv)) {
-> -                        return true;
-> +                if ((wp->flags & flags) && (wp->vaddr == addr)) {
-> +                    if (env->virt_enabled) {
-> +                        /* check VU/VS bit against current privilege level */
-> +                        if ((ctrl >> 23) & BIT(env->priv)) {
-> +                            return true;
-> +                        }
-> +                    } else {
-> +                        /* check U/S/M bit against current privilege level */
-> +                        if ((ctrl >> 3) & BIT(env->priv)) {
-> +                            return true;
-> +                        }
->                      }
->                  }
->              }
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 76f2150f78..383151a4f8 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -230,7 +230,7 @@ static bool debug_needed(void *opaque)
->  {
->      RISCVCPU *cpu = opaque;
->  
-> -    return cpu->cfg.debug;
-> +    return cpu->cfg.debug || cpu->cfg.ext_sdtrig;
->  }
->  
->  static int debug_post_load(void *opaque, int version_id)
-> -- 
-> 2.34.1
-> 
+
+
+On 3/13/2024 11:12 AM, Michael Tokarev wrote:
+> 14.02.2024 14:28, Si-Wei Liu wrote:
+>> Fix an issue where cancellation of ongoing migration ends up
+>> with no network connectivity.
+>>
+>> When canceling migration, SVQ will be switched back to the
+>> passthrough mode, but the right call fd is not programed to
+>> the device and the svq's own call fd is still used. At the
+>> point of this transitioning period, the shadow_vqs_enabled
+>> hadn't been set back to false yet, causing the installation
+>> of call fd inadvertently bypassed.
+>>
+>> Fixes: a8ac88585da1 ("vhost: Add Shadow VirtQueue call forwarding 
+>> capabilities")
+>> Cc: Eugenio Pérez <eperezma@redhat.com>
+>> Acked-by: Jason Wang <jasowang@redhat.com>
+>> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+>> ---
+>>   hw/virtio/vhost-vdpa.c | 10 +++++++++-
+>>   1 file changed, 9 insertions(+), 1 deletion(-)
+>
+> Is this a -stable material?
+Probably yes, the pre-requisites of this patch are PATCH #10 and #11 
+from this series (where SVQ_TSTATE_DISABLING gets defined and set).
+
+>
+> If yes, is it also applicable for stable-7.2 (mentioned commit is in 
+> 7.2.0),
+> which lacks v7.2.0-2327-gb276524386 "vdpa: Remember last call fd set",
+> or should this one also be picked up?
+Eugenio can judge, but seems to me the relevant code path cannot be 
+effectively called as the dynamic SVQ feature (switching over to SVQ 
+dynamically when migration is started) is not supported from 7.2. Maybe 
+not worth it to cherry-pick this one to 7.2. Cherry-pick to stable-8.0 
+and above should be applicable though (it needs some tweaks on patch #10 
+to move svq_switching from @struct VhostVDPAShared to @struct vhost_vdpa).
+
+Regards,
+-Siwei
+
+>
+> Thanks,
+>
+> /mjt
+>
+>> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+>> index 004110f..dfeca8b 100644
+>> --- a/hw/virtio/vhost-vdpa.c
+>> +++ b/hw/virtio/vhost-vdpa.c
+>> @@ -1468,7 +1468,15 @@ static int vhost_vdpa_set_vring_call(struct 
+>> vhost_dev *dev,
+>>         /* Remember last call fd because we can switch to SVQ 
+>> anytime. */
+>>       vhost_svq_set_svq_call_fd(svq, file->fd);
+>> -    if (v->shadow_vqs_enabled) {
+>> +    /*
+>> +     * When SVQ is transitioning to off, shadow_vqs_enabled has
+>> +     * not been set back to false yet, but the underlying call fd
+>> +     * will have to switch back to the guest notifier to signal the
+>> +     * passthrough virtqueues. In other situations, SVQ's own call
+>> +     * fd shall be used to signal the device model.
+>> +     */
+>> +    if (v->shadow_vqs_enabled &&
+>> +        v->shared->svq_switching != SVQ_TSTATE_DISABLING) {
+>>           return 0;
+>>       }
 >
 
-afaict we never have if cfg.debug without '|| cfg.ext_sdtrig', so I
-maintain that we don't need to add the '|| cfg.ext_sdtrig' now that we
-ensure debug is set when ext_sdtrig is set.
-
-Thanks,
-drew
 
