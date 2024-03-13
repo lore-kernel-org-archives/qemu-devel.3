@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7053FC54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 20:22:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04242C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 20:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkV6z-0006tP-Hq; Wed, 13 Mar 2024 16:22:05 -0400
+	id 1rkVGv-0001a4-W8; Wed, 13 Mar 2024 16:32:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flwu@google.com>) id 1rkV6y-0006tG-FH
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 16:22:04 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rkVGu-0001Zp-Ik
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 16:32:20 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <flwu@google.com>) id 1rkV6v-0002nR-UZ
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 16:22:04 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-413ef770363so1676675e9.2
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 13:22:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rkVGk-0005Xv-73
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 16:32:20 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-29be5386b74so251042a91.3
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 13:32:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1710361319; x=1710966119; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=PUv4FKR1iakZ4yV/9Fop0O0x/1oCRZQ8+x/F8e3qb5o=;
- b=SYLMytshbrwKws/dbCAg2OkaWsA9W05RfhZmB5YaK4Y/wCvJSi2FnXcOavH6h7JBiS
- ptKo7pygjq+7xVbpg5a/hpKgujzSbZ47qmCq++c36jVsI4ZgjzpIWmOVybQSCV8SeuAS
- tyJx0QyZ9UGNQBfSD14GTTxSgSm92P/K0b3wBfFJlPlktIATRdGpjPATYHgoCPvSIxS/
- s7pp+07prqEn2UF4N2A9U530nR8Uoh/WIZnp7aFmAgyFUgRHDwGRBOXMPlYNnBshm0mR
- y+GO9YEBx3hHJoV+YObU9EhHQwr8BWEgQh5elaQDg9YBzk2yiOgP7FLhgbUBOGF1CNGH
- yPPA==
+ d=linaro.org; s=google; t=1710361928; x=1710966728; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8EQXYdw1C35y+BpHN8LByykkB6qNlkLOnhOrcNRY5ig=;
+ b=plA5r4CB1GPXZsh+KnF6QbX3tyHYcBN9LimjgaRDtLOheEbqbgr+8Sv8xPapgW2qEZ
+ x62giLdGFWeQjX3up8CoEUiZ7TSm+HAb22V3gfWEDAfsPZYD6a7aZIooiv3DL97itSnU
+ q9LaFSPMW23RDug6lEQnNiCq85dAfjQJm3bduny6OzDiGF6zOIZLaIP0YzHbFD6xqF+D
+ EbS1N4WWr3TICfApf+7kew70MBdE46FGr0AgMyXBNPGDAmbJFEaGWq2uEjitWgx4Fe0H
+ pyhAMS7ad9/XEKbtQbpO9kzzwdZKqabEy4ckRP8v7vINtQ2wvSW9hiGHCU4PA/Z1JHsy
+ NmKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710361319; x=1710966119;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PUv4FKR1iakZ4yV/9Fop0O0x/1oCRZQ8+x/F8e3qb5o=;
- b=vMRStE/+IUXkzLChdILWTUN/PYxoU8cvS3N92T8vkx35KfO6lK9NYXMt+g8eHrhN/O
- A9/c3+IEKxIm33jwv29DZNcEF+clSHfB5nchMSnQa+zcOg7mUWwOK9St+sqLBq3ZColt
- ovEtAsgGnBcqSqdMYcOo685bKaQA9Tt+nZekXKIlleOrYoEkHb2pYJvHfTvTNT34Ofev
- 7YGDrpqCFu7hDg2wiyE6cpShkAIKcdII3VD9Rw2lJgrGP/P0/oHPWVe1OlvuDXuHJgh8
- st0pUz0Bnftr2oUjs+kDiYfRSVIjlpKX5KdvjXNhNn+ROdTEFCptNqpbVsv9Q3UjvOOi
- eH3g==
-X-Gm-Message-State: AOJu0YxVCSViByluuPpejm0vzmRFyc3yeBrEr5+KV6XyIjUmYsme0ZSP
- a1/A3XYwlQO3SZUhuK1ds96/FIdpQDvirfBN23afXhkG1GvfhN+WRBHtu1IK8C7qDofjK7YOco3
- WZuJtEa5usouSwxrTxCx+rWZtLfI3p/DZhfMj
-X-Google-Smtp-Source: AGHT+IE6UlhEGPQ606WiCx+ebpXsgbDRhOtJ82DwjvdG0V3VrPbeujyBTL5WA3PQK3XC+NOZjabbWaxGK88TqboVyZI=
-X-Received: by 2002:a05:600c:4591:b0:413:e8db:2c9b with SMTP id
- r17-20020a05600c459100b00413e8db2c9bmr630687wmo.40.1710361319345; Wed, 13 Mar
- 2024 13:21:59 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710361928; x=1710966728;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8EQXYdw1C35y+BpHN8LByykkB6qNlkLOnhOrcNRY5ig=;
+ b=cdYjfLo5bVaGkPIQ1iNItyvzszpbqJLiCut5vo/FFR9mJIx7QRALfZMIfEIhEwXe8+
+ R+ACvSkioTrK5IhE3oRYBcHecynrxTrHGCPXVKvTzrN66rrDWScGwBlfXS3ZyBWf4Mr+
+ uDTlmtGHenN3AswEzAcTNzJUYiFHDhSzNbpDVnMzVQrrpMiT8RptiHjOI7C6ZHeVyhez
+ xgCoMuIeaoXSbeyv2nCxkfiEz/tWfA5Oy/9aK4Me+DvQNdWTzpOHcBSp8510RtxoPkKU
+ 8DOTLnHkVADcxqQqTyULxZVkKVxOl8acHDZ59YBktY7g/2et+6DeIaoACm59Xx72jNVa
+ BTXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWH6oOqxtKl0BMvGhExs+WmOsWk2LOOpMcahQAgtB7gOI3l8NVa5XdC0oPwTJMYal+ApfQ6WbtAff4/4RPr1fz6o8u3dS4=
+X-Gm-Message-State: AOJu0YydozLQqSefz1NO2LHcgZ5t50t70IHzp3Jomx1QyN6MBSkqY6x5
+ zEJPpxozE9GEoGZSOZpiGCo9HoNPAyBhJgFScPXFljJ5KJ1Hs4zzj8LkHCDIiAE=
+X-Google-Smtp-Source: AGHT+IHOvPyJsyxMuZdgCvX0ijZastQiKUrIpxrb9mMNRmvNV/9XZhe5ptw7sYDsgKLCyHTOEohdBw==
+X-Received: by 2002:a17:90b:a15:b0:29c:7582:7de with SMTP id
+ gg21-20020a17090b0a1500b0029c758207demr592100pjb.39.1710361928574; 
+ Wed, 13 Mar 2024 13:32:08 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ i6-20020a17090a718600b0029bafbdcfbesm1758490pjk.46.2024.03.13.13.32.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 13 Mar 2024 13:32:08 -0700 (PDT)
+Message-ID: <4040e1dc-d856-4718-8b6a-9856b1521b1d@linaro.org>
+Date: Wed, 13 Mar 2024 10:32:03 -1000
 MIME-Version: 1.0
-References: <CAHdnXhDZMgAKZyhucJ8QsFJHiO5xqdQq9zVn5X2SSL0-Q12-Jg@mail.gmail.com>
- <CAO=notyfoWHWDRBkdMY45_oiifX+t+9hyJfvaMhrAii3yJ7X-g@mail.gmail.com>
-In-Reply-To: <CAO=notyfoWHWDRBkdMY45_oiifX+t+9hyJfvaMhrAii3yJ7X-g@mail.gmail.com>
-From: Felix Wu <flwu@google.com>
-Date: Wed, 13 Mar 2024 13:21:46 -0700
-Message-ID: <CAJt6XFr2RQBFKNWQG3jwbc-J_QGpz6KdpP4pWeaekk3KabQtHg@mail.gmail.com>
-Subject: Re: udp guestfwd
-To: Louai Al-Khanji <louai.khanji@gmail.com>
-Cc: qemu-devel@nongnu.org, Patrick Venture <venture@google.com>
-Content-Type: multipart/alternative; boundary="000000000000e1491f0613908662"
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=flwu@google.com; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] target/riscv: Implement dynamic establishment of
+ custom decoder
+Content-Language: en-US
+To: Huang Tao <eric.huang@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
+ alistair.francis@wdc.com, palmer@dabbelt.com,
+ Christoph Muellner <christoph.muellner@vrull.eu>
+References: <20240313095715.32811-1-eric.huang@linux.alibaba.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240313095715.32811-1-eric.huang@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,105 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e1491f0613908662
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 3/12/24 23:57, Huang Tao wrote:
+> In this patch, we modify the decoder to be a freely composable data
+> structure instead of a hardcoded one. It can be dynamically builded up
+> according to the extensions.
+> This approach has several benefits:
+> 1. Provides support for heterogeneous cpu architectures. As we add decoder in
+>     RISCVCPU, each cpu can have their own decoder, and the decoders can be
+>     different due to cpu's features.
+> 2. Improve the decoding efficiency. We run the guard_func to see if the decoder
+>     can be added to the dynamic_decoder when building up the decoder. Therefore,
+>     there is no need to run the guard_func when decoding each instruction. It can
+>     improve the decoding efficiency
+> 3. For vendor or dynamic cpus, it allows them to customize their own decoder
+>     functions to improve decoding efficiency, especially when vendor-defined
+>     instruction sets increase. Because of dynamic building up, it can skip the other
+>     decoder guard functions when decoding.
+> 4. Pre patch for allowing adding a vendor decoder before decode_insn32() with minimal
+>     overhead for users that don't need this particular vendor deocder.
+> 
+> Signed-off-by: Huang Tao<eric.huang@linux.alibaba.com>
+> Suggested-by: Christoph Muellner<christoph.muellner@vrull.eu>
+> Co-authored-by: LIU Zhiwei<zhiwei_liu@linux.alibaba.com>
+> ---
+> 
+> Changes in v3:
+> - use GPtrArray to save decode function poionter list.
+> ---
+>   target/riscv/cpu.c         | 18 ++++++++++++++++++
+>   target/riscv/cpu.h         |  2 ++
+>   target/riscv/cpu_decoder.h | 34 ++++++++++++++++++++++++++++++++++
+>   target/riscv/translate.c   | 29 +++++++++++++----------------
+>   4 files changed, 67 insertions(+), 16 deletions(-)
+>   create mode 100644 target/riscv/cpu_decoder.h
 
-Hi Louai,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Are you using IPv6 or IPv4? The IPv4 is actually broken (if you want to
-send multiple requests to slirp and get them forwarded).
-You can check the latest comments in following tickets:
-https://gitlab.freedesktop.org/slirp/libslirp/-/issues/67
-https://gitlab.com/qemu-project/qemu/-/issues/1835
-
-If you want to use IPv6, let me know and I can create pull requests in
-libslirp so you can try it.
-
-Thanks, Felix
-
-On Fri, Dec 8, 2023 at 9:33=E2=80=AFAM Patrick Venture <venture@google.com>=
- wrote:
-
->
-> On Fri, Oct 27, 2023 at 11:44=E2=80=AFPM Louai Al-Khanji <louai.khanji@gm=
-ail.com>
-> wrote:
->
->> Hi,
->>
->> I'm interested in having the guestfwd option work for udp. My
->> understanding is that currently it's restricted to only tcp.
->>
->> I'm not familiar with libslirp internals. What would need to be changed
->> to implement this? I'm potentially interested in doing the work.
->>
->> I did a tiny amount of digging around libslirp and saw this comment in
->> `udp.c':
->>
->>         /*
->>          * XXXXX Here, check if it's in udpexec_list,
->>          * and if it is, do the fork_exec() etc.
->>          */
->>
->> I wonder whether that is related. In any case any help is much
->> appreciated.
->>
->
-> Felix has been working in this space and it may take time to get the CLs
-> landed in libslirp and qemu.
->
-> Patrick
->
->>
->> Thanks,
->> Louai Al-Khanji
->>
->
-
---000000000000e1491f0613908662
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Louai,<div><br></div><div>Are you using IPv6 or IPv4? T=
-he IPv4 is actually=C2=A0broken (if you want to send multiple requests to s=
-lirp and get them forwarded).</div><div>You can check the latest comments i=
-n following tickets:</div><div><a href=3D"https://gitlab.freedesktop.org/sl=
-irp/libslirp/-/issues/67">https://gitlab.freedesktop.org/slirp/libslirp/-/i=
-ssues/67</a><br></div><div><a href=3D"https://gitlab.com/qemu-project/qemu/=
--/issues/1835">https://gitlab.com/qemu-project/qemu/-/issues/1835</a><br></=
-div><div><br></div><div>If you want to use IPv6, let me know and I can crea=
-te pull requests in libslirp so you can try it.</div><div><br></div><div>Th=
-anks, Felix</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" clas=
-s=3D"gmail_attr">On Fri, Dec 8, 2023 at 9:33=E2=80=AFAM Patrick Venture &lt=
-;<a href=3D"mailto:venture@google.com">venture@google.com</a>&gt; wrote:<br=
-></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
-border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><=
-br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri,=
- Oct 27, 2023 at 11:44=E2=80=AFPM Louai Al-Khanji &lt;<a href=3D"mailto:lou=
-ai.khanji@gmail.com" target=3D"_blank">louai.khanji@gmail.com</a>&gt; wrote=
-:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
-8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"lt=
-r">Hi,<div><br></div><div>I&#39;m interested in having the guestfwd option =
-work for udp. My understanding is that currently it&#39;s restricted to onl=
-y tcp.</div><div><br></div><div>I&#39;m not familiar with libslirp=C2=A0int=
-ernals. What would need to be changed to implement this? I&#39;m potentiall=
-y interested in doing the work.</div><div><br></div><div>I did a tiny amoun=
-t of digging around libslirp and saw this comment in `udp.c&#39;:<br clear=
-=3D"all"><div><br></div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0* XXXXX Here, check if it&#39;s in udpexec_list,<br=
->=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* and if it is, do the fork_exec() etc.<=
-br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br></div><div><br></div><div>I wond=
-er whether that is related. In any case any help is much appreciated.</div>=
-</div></div></blockquote><div><br></div><div dir=3D"ltr">Felix has been wor=
-king=C2=A0in this space and it may take time to get the=C2=A0CLs landed in =
-libslirp and qemu.<div><br></div></div><div>Patrick=C2=A0</div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div><div><br></div>=
-<span class=3D"gmail_signature_prefix">Thanks,</span><br><div dir=3D"ltr" c=
-lass=3D"gmail_signature">Louai Al-Khanji<br></div></div></div>
-</blockquote></div></div>
-</blockquote></div>
-
---000000000000e1491f0613908662--
+r~
 
