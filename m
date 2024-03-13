@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94746C54E66
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 18:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CE6FC54E66
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 18:24:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkTDs-0002pN-9M; Wed, 13 Mar 2024 14:21:04 -0400
+	id 1rkTGv-000647-U0; Wed, 13 Mar 2024 14:24:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hchauhan@ventanamicro.com>)
- id 1rkTDp-0002nV-Qg
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:21:01 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hchauhan@ventanamicro.com>)
- id 1rkTDk-0007vU-RR
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:21:01 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6e6c18e9635so43422b3a.1
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 11:20:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710354055; x=1710958855; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=V9yR02paUVHQyso62YPWoKXi5F18Kl8z0j8On/39+HY=;
- b=QxWe99dfjjJ4WZPxhVb5a6ntstR1NmnqTqfF3LdwsmHJO2DDBO2fMo7Z5sStPvK57t
- k9gypQmqYsDgziO9ARQDYRpHXe8jBTs454UF/wvntUlmcVXvNXYcj+ibA/y0iYMFVFvR
- 7tZGPHfXWv3FKreou5mk3EBLrwbxgjXOEuXlYtiFyLktdHBJ/SVOZ37waq6BJdp9vtdd
- vgpFQtT+4ZwZhw4Ov/ZI3z34YcAczONU7ppma+/cLdhzaGmhWsuIy90f80jN6YhXspdE
- mYW9SY3E6BWd3BlJAXMHiYlq+tq3Cl2DRUBe0b8Y9h28fvo5gzR5ujCDTwaXnZZQjRWb
- v9hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710354055; x=1710958855;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=V9yR02paUVHQyso62YPWoKXi5F18Kl8z0j8On/39+HY=;
- b=PVfwdRuIgTPfQBPLL2R4Vg6TLber0NINCCS8LMSBzB5GCHLoynyfYHg6nYBcO/3M0n
- yAQ2EowHc0/gaezSzJtO0pn1Lhx6XS8oS+gYTU+c2zDmKUbVV925D8CBMc4o09jF7wKM
- HVqbwzKjM6o4uSlvJe41ykcaBe27bsN5U5cwtnERxgSIbDH283tc0MEvY3cGKna/IXOO
- ahTErgr8ru48FdaONaLP/viAIdQPNxRqQ4cxxP4qQrzzAzcdxEyq152hpXvlEu8miolJ
- 0yp6Nam7KOENx/rPdaaUm0YySvfLv9UM0E6Ev6t8okwJ4X8dZGSeda6QCNnDr8ZOyZk9
- OYoQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhG6c5U0mSbHORp3LXNmzsxDmufJ9GYQxPAAh+954FoJxx9g4yoUzuDXH/+tNiWB+lVMiaKblUbZBZp4PLyKa53tfZQVk=
-X-Gm-Message-State: AOJu0YwrJfZkYf0+5yN7Z2uzhwt/oxhJGjugIPuuzR+5XZYBFxXSnIsn
- XkJ3iUosn8G6E+2QvaX0iEGC6wK8p5aToEPNhP7oYYs+7rXD4DEkvZ/BWW3JfyI4fyZXLfh7l6o
- dK24=
-X-Google-Smtp-Source: AGHT+IGF9WwKcBco1L+6SpDPaZFj9idkgmgKY/pWblDnKBXgnRuVS7dn+6pmGfT8ksZ6MDV+fWnlzQ==
-X-Received: by 2002:a05:6a21:3986:b0:1a1:43cc:c03a with SMTP id
- ad6-20020a056a21398600b001a143ccc03amr5903060pzc.1.1710354055287; 
- Wed, 13 Mar 2024 11:20:55 -0700 (PDT)
-Received: from localhost.localdomain ([49.37.251.185])
- by smtp.gmail.com with ESMTPSA id
- l22-20020a62be16000000b006e6a16acf85sm3457528pff.87.2024.03.13.11.20.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Mar 2024 11:20:54 -0700 (PDT)
-From: Himanshu Chauhan <hchauhan@ventanamicro.com>
-To: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH v5 1/3] target/riscv: Enable mcontrol6 triggers only when
- sdtrig is selected
-Date: Wed, 13 Mar 2024 23:50:07 +0530
-Message-Id: <20240313182009.608685-2-hchauhan@ventanamicro.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240313182009.608685-1-hchauhan@ventanamicro.com>
-References: <20240313182009.608685-1-hchauhan@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rkTGu-00063z-IQ
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:24:12 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rkTGs-0008FK-Qd
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:24:12 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 9F15755BA9;
+ Wed, 13 Mar 2024 21:25:11 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9FC3E9895E;
+ Wed, 13 Mar 2024 21:24:06 +0300 (MSK)
+Message-ID: <24d738c6-27d6-4ff3-8b52-d0639deae855@tls.msk.ru>
+Date: Wed, 13 Mar 2024 21:24:06 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=hchauhan@ventanamicro.com; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] hmat acpi: Fix out of bounds access due to missing
+ use of indirection
+Content-Language: en-US
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Liu Jingqi <jingqi.liu@intel.com>, qemu-devel@nongnu.org, ankita@nvidia.com,
+ "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>
+Cc: linuxarm@huawei.com, Markus Armbruster <armbru@redhat.com>,
+ Daniel Black <daniel@linux.ibm.com>
+References: <20240307160326.31570-1-Jonathan.Cameron@huawei.com>
+ <20240307160326.31570-3-Jonathan.Cameron@huawei.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240307160326.31570-3-Jonathan.Cameron@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,221 +90,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The mcontrol6 triggers are not defined in debug specification v0.13
-These triggers are defined in sdtrig ISA extension.
+07.03.2024 19:03, Jonathan Cameron via wrote:
+> With a numa set up such as
+> 
+> -numa nodeid=0,cpus=0 \
+> -numa nodeid=1,memdev=mem \
+> -numa nodeid=2,cpus=1
+> 
+> and appropriate hmat_lb entries the initiator list is correctly
+> computed and writen to HMAT as 0,2 but then the LB data is accessed
+> using the node id (here 2), landing outside the entry_list array.
+> 
+> Stash the reverse lookup when writing the initiator list and use
+> it to get the correct array index index.
+> 
+> Fixes: 4586a2cb83 ("hmat acpi: Build System Locality Latency and Bandwidth Information Structure(s)")
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-This patch:
-   * Adds ext_sdtrig capability which is used to select mcontrol6 triggers
-   * Keeps the debug property. All triggers that are defined in v0.13 are
-     exposed.
+This seems like a -stable material, is it not?
 
-Signed-off-by: Himanshu Chauhan <hchauhan@ventanamicro.com>
----
- target/riscv/cpu.c     |  4 +-
- target/riscv/cpu_cfg.h |  1 +
- target/riscv/csr.c     |  2 +-
- target/riscv/debug.c   | 90 +++++++++++++++++++++++++-----------------
- target/riscv/machine.c |  2 +-
- 5 files changed, 58 insertions(+), 41 deletions(-)
+Thanks,
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index c160b9216b..2602aae9f5 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1008,7 +1008,7 @@ static void riscv_cpu_reset_hold(Object *obj)
-     set_default_nan_mode(1, &env->fp_status);
- 
- #ifndef CONFIG_USER_ONLY
--    if (cpu->cfg.debug) {
-+    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
-         riscv_trigger_reset_hold(env);
-     }
- 
-@@ -1168,7 +1168,7 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
-     riscv_cpu_register_gdb_regs_for_features(cs);
- 
- #ifndef CONFIG_USER_ONLY
--    if (cpu->cfg.debug) {
-+    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
-         riscv_trigger_realize(&cpu->env);
-     }
- #endif
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 2040b90da0..0c57e1acd4 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -114,6 +114,7 @@ struct RISCVCPUConfig {
-     bool ext_zvfbfwma;
-     bool ext_zvfh;
-     bool ext_zvfhmin;
-+    bool ext_sdtrig;
-     bool ext_smaia;
-     bool ext_ssaia;
-     bool ext_sscofpmf;
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 726096444f..26623d3640 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -546,7 +546,7 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
- 
- static RISCVException debug(CPURISCVState *env, int csrno)
- {
--    if (riscv_cpu_cfg(env)->debug) {
-+    if (riscv_cpu_cfg(env)->debug || riscv_cpu_cfg(env)->ext_sdtrig) {
-         return RISCV_EXCP_NONE;
-     }
- 
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index e30d99cc2f..674223e966 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -100,13 +100,15 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
-     target_ulong tdata1 = env->tdata1[trigger_index];
-     int trigger_type = get_trigger_type(env, trigger_index);
-     trigger_action_t action = DBG_ACTION_NONE;
-+    const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
- 
-     switch (trigger_type) {
-     case TRIGGER_TYPE_AD_MATCH:
-         action = (tdata1 & TYPE2_ACTION) >> 12;
-         break;
-     case TRIGGER_TYPE_AD_MATCH6:
--        action = (tdata1 & TYPE6_ACTION) >> 12;
-+        if (cfg->ext_sdtrig)
-+            action = (tdata1 & TYPE6_ACTION) >> 12;
-         break;
-     case TRIGGER_TYPE_INST_CNT:
-     case TRIGGER_TYPE_INT:
-@@ -727,7 +729,12 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
-         type2_reg_write(env, env->trigger_cur, tdata_index, val);
-         break;
-     case TRIGGER_TYPE_AD_MATCH6:
--        type6_reg_write(env, env->trigger_cur, tdata_index, val);
-+        if (riscv_cpu_cfg(env)->ext_sdtrig) {
-+            type6_reg_write(env, env->trigger_cur, tdata_index, val);
-+        } else {
-+            qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\n",
-+                          trigger_type);
-+        }
-         break;
-     case TRIGGER_TYPE_INST_CNT:
-         itrigger_reg_write(env, env->trigger_cur, tdata_index, val);
-@@ -750,9 +757,14 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
- 
- target_ulong tinfo_csr_read(CPURISCVState *env)
- {
--    /* assume all triggers support the same types of triggers */
--    return BIT(TRIGGER_TYPE_AD_MATCH) |
--           BIT(TRIGGER_TYPE_AD_MATCH6);
-+    target_ulong ts = 0;
-+
-+    ts = BIT(TRIGGER_TYPE_AD_MATCH);
-+
-+    if (riscv_cpu_cfg(env)->ext_sdtrig)
-+        ts |= BIT(TRIGGER_TYPE_AD_MATCH6);
-+
-+    return ts;
- }
- 
- void riscv_cpu_debug_excp_handler(CPUState *cs)
-@@ -803,19 +815,21 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
-                 }
-                 break;
-             case TRIGGER_TYPE_AD_MATCH6:
--                ctrl = env->tdata1[i];
--                pc = env->tdata2[i];
--
--                if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
--                    if (env->virt_enabled) {
--                        /* check VU/VS bit against current privilege level */
--                        if ((ctrl >> 23) & BIT(env->priv)) {
--                            return true;
--                        }
--                    } else {
--                        /* check U/S/M bit against current privilege level */
--                        if ((ctrl >> 3) & BIT(env->priv)) {
--                            return true;
-+                if (cpu->cfg.ext_sdtrig) {
-+                    ctrl = env->tdata1[i];
-+                    pc = env->tdata2[i];
-+
-+                    if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
-+                        if (env->virt_enabled) {
-+                            /* check VU/VS bit against current privilege level */
-+                            if ((ctrl >> 23) & BIT(env->priv)) {
-+                                return true;
-+                            }
-+                        } else {
-+                            /* check U/S/M bit against current privilege level */
-+                            if ((ctrl >> 3) & BIT(env->priv)) {
-+                                return true;
-+                            }
-                         }
-                     }
-                 }
-@@ -869,27 +883,29 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
-             }
-             break;
-         case TRIGGER_TYPE_AD_MATCH6:
--            ctrl = env->tdata1[i];
--            addr = env->tdata2[i];
--            flags = 0;
-+            if (cpu->cfg.ext_sdtrig) {
-+                ctrl = env->tdata1[i];
-+                addr = env->tdata2[i];
-+                flags = 0;
- 
--            if (ctrl & TYPE6_LOAD) {
--                flags |= BP_MEM_READ;
--            }
--            if (ctrl & TYPE6_STORE) {
--                flags |= BP_MEM_WRITE;
--            }
-+                if (ctrl & TYPE6_LOAD) {
-+                    flags |= BP_MEM_READ;
-+                }
-+                if (ctrl & TYPE6_STORE) {
-+                    flags |= BP_MEM_WRITE;
-+                }
- 
--            if ((wp->flags & flags) && (wp->vaddr == addr)) {
--                if (env->virt_enabled) {
--                    /* check VU/VS bit against current privilege level */
--                    if ((ctrl >> 23) & BIT(env->priv)) {
--                        return true;
--                    }
--                } else {
--                    /* check U/S/M bit against current privilege level */
--                    if ((ctrl >> 3) & BIT(env->priv)) {
--                        return true;
-+                if ((wp->flags & flags) && (wp->vaddr == addr)) {
-+                    if (env->virt_enabled) {
-+                        /* check VU/VS bit against current privilege level */
-+                        if ((ctrl >> 23) & BIT(env->priv)) {
-+                            return true;
-+                        }
-+                    } else {
-+                        /* check U/S/M bit against current privilege level */
-+                        if ((ctrl >> 3) & BIT(env->priv)) {
-+                            return true;
-+                        }
-                     }
-                 }
-             }
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 76f2150f78..383151a4f8 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -230,7 +230,7 @@ static bool debug_needed(void *opaque)
- {
-     RISCVCPU *cpu = opaque;
- 
--    return cpu->cfg.debug;
-+    return cpu->cfg.debug || cpu->cfg.ext_sdtrig;
- }
- 
- static int debug_post_load(void *opaque, int version_id)
--- 
-2.34.1
+/mjt
+
+> ---
+>   hw/acpi/hmat.c | 6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/acpi/hmat.c b/hw/acpi/hmat.c
+> index 723ae28d32..b933ae3c06 100644
+> --- a/hw/acpi/hmat.c
+> +++ b/hw/acpi/hmat.c
+> @@ -78,6 +78,7 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+>                             uint32_t *initiator_list)
+>   {
+>       int i, index;
+> +    uint32_t initiator_to_index[MAX_NODES] = {};
+>       HMAT_LB_Data *lb_data;
+>       uint16_t *entry_list;
+>       uint32_t base;
+> @@ -121,6 +122,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+>       /* Initiator Proximity Domain List */
+>       for (i = 0; i < num_initiator; i++) {
+>           build_append_int_noprefix(table_data, initiator_list[i], 4);
+> +        /* Reverse mapping for array possitions */
+> +        initiator_to_index[initiator_list[i]] = i;
+>       }
+>   
+>       /* Target Proximity Domain List */
+> @@ -132,7 +135,8 @@ static void build_hmat_lb(GArray *table_data, HMAT_LB_Info *hmat_lb,
+>       entry_list = g_new0(uint16_t, num_initiator * num_target);
+>       for (i = 0; i < hmat_lb->list->len; i++) {
+>           lb_data = &g_array_index(hmat_lb->list, HMAT_LB_Data, i);
+> -        index = lb_data->initiator * num_target + lb_data->target;
+> +        index = initiator_to_index[lb_data->initiator] * num_target +
+> +            lb_data->target;
+>   
+>           entry_list[index] = (uint16_t)(lb_data->data / hmat_lb->base);
+>       }
 
 
