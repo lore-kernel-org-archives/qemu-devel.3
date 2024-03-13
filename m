@@ -4,46 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4DE4C54791
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DF46C54E60
 	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 18:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkThI-0002dR-5G; Wed, 13 Mar 2024 14:51:29 -0400
+	id 1rkTge-0001pH-1f; Wed, 13 Mar 2024 14:50:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rkTh6-0002MA-6C
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:51:17 -0400
-Received: from todd.t-8ch.de ([159.69.126.157])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rkTh2-0004Kk-BP
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:51:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
- t=1710355869; bh=nRJf/N6o8fgUC/Zd5i/fkKonSZ0sW0Nl3K1SCe8whvg=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Vx+KoI9rfmlA/v1yqjiBz22iCoGOO/gziMPLUVqyoCuNsCLaqZICi/oGJF4qQvF2c
- 9PFAuGxlOTHjpe6oGiIRSSY34SEoFNPFxRtC8PW1xyPmDJA9G5pt3go8vgflAhUAEy
- viDp4qJkG6PqyKe5TnDBoa1k00D1KycGmmzw0Z34=
-Date: Wed, 13 Mar 2024 19:51:08 +0100
-From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-To: Hao Chen <chenh@yusur.tech>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, mst@redhat.com, 
- cohuck@redhat.com, pbonzini@redhat.com
-Subject: Re: [PATCH] hw/virtio: Add support for VDPA network simulation devices
-Message-ID: <d9e4f3b4-9c2e-466c-b5f4-3387ce88c6b9@t-8ch.de>
-References: <20240221073802.2888022-1-chenh@yusur.tech>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkTga-0001ig-N0
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:50:46 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkTgX-0004GK-Ku
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:50:44 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-41324a16c9eso1120705e9.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 11:50:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710355839; x=1710960639; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FWk3AJvtwG4+M7tAK6vUDxEOFolgTz5/lAeIi0nhTag=;
+ b=WQBs14mQmdx4bWTKOZGi9MDsZizypAaGwIHTJrn0xyQQpGx0vrHjbD6XQUOPwtkjMN
+ 0egPfX+B8/3uwQOa+qWavGBdcJOzruXY5qDHb2rcolYYWZUzsJ+5J6E2C3yzliMEZ8E4
+ Ggo6vzpmH/1QtMYM5QX7Kv7IB75HKMw+Ko0sHZsNLz6TPepKty0CKyL2mzWfZKF2fIB1
+ CJj57Su3NiaztYBuqQlg7IxyACSk9fszeWEb5n09s+X4HWuqk1EpP0UUfMtWNigGPGbw
+ TgNlFfYlXuR2wiw4TBEHilHlnpVtinR6Q/GKai8+DUhqEojxT67Xm2a9au2Qum7/OLji
+ E0Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710355839; x=1710960639;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FWk3AJvtwG4+M7tAK6vUDxEOFolgTz5/lAeIi0nhTag=;
+ b=DAZ4ko60CgnsB+L7dvNEUk9yvV5zF2syTbcz3HkgLeBaB6GnlqWcXyjKYYcuEZHk/7
+ GiQV3hSB7BVwhldJql/UO6nGGp+uPNoXkbrdelyq7/875KG6Su1pmVBUPLvumu3BIrTv
+ AMUEv1GvYDHXBn5DCw2KhcRFcAhJwrP+3Nc0ZO4Xk3KZer79ENRWZjsAnbvqroLOI/Q2
+ XgDNbMaGyBDevvHqRXyN4bopI94PJlCAWnuGIqlD1cbwPlYOzFviFi95HBKeDzNDX76r
+ qpaDWnFlj5twX0tsMNwtBW1d+ahidvGOC78qm/y3eBW2ORGzqGvK1Jl0eCL6afvJDLNq
+ 48Xw==
+X-Gm-Message-State: AOJu0Yx6WVM4t0e5/1WOSj5yJlHd7qM0bapV2EZfloq8qjEmbGVKcaWO
+ 01HVI8FsaWNhtBRIoT6+nLmIBBbGIuaZcvm8SIPeTOs0GBX5UUKG/1UvPJqosrruPOKCW944DCT
+ 2
+X-Google-Smtp-Source: AGHT+IHVCvYGdXOqSvhG0TkqF8/nwJckNMnZ5dORAkrkWJrRClth+omh0ZGW0c16mbE21+ad/grISA==
+X-Received: by 2002:a05:600c:1f94:b0:412:ea32:e7b0 with SMTP id
+ je20-20020a05600c1f9400b00412ea32e7b0mr540827wmb.40.1710355838743; 
+ Wed, 13 Mar 2024 11:50:38 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.182.179])
+ by smtp.gmail.com with ESMTPSA id
+ w10-20020a5d680a000000b0033e0dd83be1sm12254046wru.91.2024.03.13.11.50.36
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 13 Mar 2024 11:50:38 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ John Snow <jsnow@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Eric Auger <eric.auger@redhat.com>, qemu-block@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-9.0 4/4] meson: Enable -Wstatic-in-inline
+Date: Wed, 13 Mar 2024 19:49:54 +0100
+Message-ID: <20240313184954.42513-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240313184954.42513-1-philmd@linaro.org>
+References: <20240313184954.42513-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240221073802.2888022-1-chenh@yusur.tech>
-Received-SPF: pass client-ip=159.69.126.157; envelope-from=thomas@t-8ch.de;
- helo=todd.t-8ch.de
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,51 +101,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-02-21 15:38:02+0800, Hao Chen wrote:
-> This patch adds support for VDPA network simulation devices.
-> The device is developed based on virtio-net and tap backend,
-> and supports hardware live migration function.
-> 
-> For more details, please refer to "docs/system/devices/vdpa-net.rst"
-> 
-> Signed-off-by: Hao Chen <chenh@yusur.tech>
-> ---
->  MAINTAINERS                                 |   5 +
->  docs/system/device-emulation.rst            |   1 +
->  docs/system/devices/vdpa-net.rst            | 121 +++++++++++++
->  hw/net/virtio-net.c                         |  16 ++
->  hw/virtio/virtio-pci.c                      | 189 +++++++++++++++++++-
->  hw/virtio/virtio.c                          |  39 ++++
->  include/hw/virtio/virtio-pci.h              |   5 +
->  include/hw/virtio/virtio.h                  |  19 ++
->  include/standard-headers/linux/virtio_pci.h |   7 +
->  9 files changed, 399 insertions(+), 3 deletions(-)
->  create mode 100644 docs/system/devices/vdpa-net.rst
+Compilers are clever enough to inline code when necessary.
 
-[..]
+The only case we accept an inline function is static in
+header (we use C, not C++).
 
-> diff --git a/include/standard-headers/linux/virtio_pci.h b/include/standard-headers/linux/virtio_pci.h
-> index b7fdfd0668..fb5391cef6 100644
-> --- a/include/standard-headers/linux/virtio_pci.h
-> +++ b/include/standard-headers/linux/virtio_pci.h
-> @@ -216,6 +216,13 @@ struct virtio_pci_cfg_cap {
->  #define VIRTIO_PCI_COMMON_Q_NDATA	56
->  #define VIRTIO_PCI_COMMON_Q_RESET	58
->  
-> +#define LM_LOGGING_CTRL                 0
-> +#define LM_BASE_ADDR_LOW                4
-> +#define LM_BASE_ADDR_HIGH               8
-> +#define LM_END_ADDR_LOW                 12
-> +#define LM_END_ADDR_HIGH                16
-> +#define LM_VRING_STATE_OFFSET           0x20
+Add the -Wstatic-in-inline CPPFLAG to prevent public and
+inline function to be added in the code base.
 
-These changes are not in upstream Linux and will be undone by
-./scripts/update-linux-headers.sh.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ meson.build | 1 +
+ 1 file changed, 1 insertion(+)
 
-Are they intentionally in this header?
+diff --git a/meson.build b/meson.build
+index b375248a76..f57397aa53 100644
+--- a/meson.build
++++ b/meson.build
+@@ -591,6 +591,7 @@ warn_flags = [
+   '-Wold-style-definition',
+   '-Wredundant-decls',
+   '-Wshadow=local',
++  '-Wstatic-in-inline',
+   '-Wstrict-prototypes',
+   '-Wtype-limits',
+   '-Wundef',
+-- 
+2.41.0
 
-> +
->  #endif /* VIRTIO_PCI_NO_MODERN */
->  
->  #endif
 
