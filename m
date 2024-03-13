@@ -4,88 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DF46C54E60
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 18:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E045FC54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 18:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkTge-0001pH-1f; Wed, 13 Mar 2024 14:50:48 -0400
+	id 1rkTiD-0005tk-7R; Wed, 13 Mar 2024 14:52:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkTga-0001ig-N0
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:50:46 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkTgX-0004GK-Ku
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:50:44 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-41324a16c9eso1120705e9.0
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 11:50:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710355839; x=1710960639; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FWk3AJvtwG4+M7tAK6vUDxEOFolgTz5/lAeIi0nhTag=;
- b=WQBs14mQmdx4bWTKOZGi9MDsZizypAaGwIHTJrn0xyQQpGx0vrHjbD6XQUOPwtkjMN
- 0egPfX+B8/3uwQOa+qWavGBdcJOzruXY5qDHb2rcolYYWZUzsJ+5J6E2C3yzliMEZ8E4
- Ggo6vzpmH/1QtMYM5QX7Kv7IB75HKMw+Ko0sHZsNLz6TPepKty0CKyL2mzWfZKF2fIB1
- CJj57Su3NiaztYBuqQlg7IxyACSk9fszeWEb5n09s+X4HWuqk1EpP0UUfMtWNigGPGbw
- TgNlFfYlXuR2wiw4TBEHilHlnpVtinR6Q/GKai8+DUhqEojxT67Xm2a9au2Qum7/OLji
- E0Uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710355839; x=1710960639;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FWk3AJvtwG4+M7tAK6vUDxEOFolgTz5/lAeIi0nhTag=;
- b=DAZ4ko60CgnsB+L7dvNEUk9yvV5zF2syTbcz3HkgLeBaB6GnlqWcXyjKYYcuEZHk/7
- GiQV3hSB7BVwhldJql/UO6nGGp+uPNoXkbrdelyq7/875KG6Su1pmVBUPLvumu3BIrTv
- AMUEv1GvYDHXBn5DCw2KhcRFcAhJwrP+3Nc0ZO4Xk3KZer79ENRWZjsAnbvqroLOI/Q2
- XgDNbMaGyBDevvHqRXyN4bopI94PJlCAWnuGIqlD1cbwPlYOzFviFi95HBKeDzNDX76r
- qpaDWnFlj5twX0tsMNwtBW1d+ahidvGOC78qm/y3eBW2ORGzqGvK1Jl0eCL6afvJDLNq
- 48Xw==
-X-Gm-Message-State: AOJu0Yx6WVM4t0e5/1WOSj5yJlHd7qM0bapV2EZfloq8qjEmbGVKcaWO
- 01HVI8FsaWNhtBRIoT6+nLmIBBbGIuaZcvm8SIPeTOs0GBX5UUKG/1UvPJqosrruPOKCW944DCT
- 2
-X-Google-Smtp-Source: AGHT+IHVCvYGdXOqSvhG0TkqF8/nwJckNMnZ5dORAkrkWJrRClth+omh0ZGW0c16mbE21+ad/grISA==
-X-Received: by 2002:a05:600c:1f94:b0:412:ea32:e7b0 with SMTP id
- je20-20020a05600c1f9400b00412ea32e7b0mr540827wmb.40.1710355838743; 
- Wed, 13 Mar 2024 11:50:38 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.182.179])
- by smtp.gmail.com with ESMTPSA id
- w10-20020a5d680a000000b0033e0dd83be1sm12254046wru.91.2024.03.13.11.50.36
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 13 Mar 2024 11:50:38 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- John Snow <jsnow@redhat.com>, Alexander Graf <agraf@csgraf.de>,
- Eric Auger <eric.auger@redhat.com>, qemu-block@nongnu.org,
- Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.0 4/4] meson: Enable -Wstatic-in-inline
-Date: Wed, 13 Mar 2024 19:49:54 +0100
-Message-ID: <20240313184954.42513-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240313184954.42513-1-philmd@linaro.org>
-References: <20240313184954.42513-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rkTiB-0005tZ-9D
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:52:23 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rkTi5-0004TW-Gr
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:52:20 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4AD4955BB7;
+ Wed, 13 Mar 2024 21:53:19 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 99A739897B;
+ Wed, 13 Mar 2024 21:52:14 +0300 (MSK)
+Message-ID: <4370c6a3-edc5-4327-b499-0fe85f1a902f@tls.msk.ru>
+Date: Wed, 13 Mar 2024 21:52:14 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/12] vdpa: fix network breakage after cancelling
+ migration
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: Si-Wei Liu <si-wei.liu@oracle.com>, jasowang@redhat.com, mst@redhat.com,
+ dtatulea@nvidia.com, leiyang@redhat.com, yin31149@gmail.com,
+ =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <1707910082-10243-1-git-send-email-si-wei.liu@oracle.com>
+ <1707910082-10243-13-git-send-email-si-wei.liu@oracle.com>
+ <41f0f7b4-ce3d-4e60-8567-1aa34a616b1a@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <41f0f7b4-ce3d-4e60-8567-1aa34a616b1a@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,32 +89,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Compilers are clever enough to inline code when necessary.
+13.03.2024 21:12, Michael Tokarev пишет:
+> 14.02.2024 14:28, Si-Wei Liu wrote:
+>> Fix an issue where cancellation of ongoing migration ends up
+>> with no network connectivity.
+>>
+>> When canceling migration, SVQ will be switched back to the
+>> passthrough mode, but the right call fd is not programed to
+>> the device and the svq's own call fd is still used. At the
+>> point of this transitioning period, the shadow_vqs_enabled
+>> hadn't been set back to false yet, causing the installation
+>> of call fd inadvertently bypassed.
+>>
+>> Fixes: a8ac88585da1 ("vhost: Add Shadow VirtQueue call forwarding capabilities")
+>> Cc: Eugenio Pérez <eperezma@redhat.com>
+>> Acked-by: Jason Wang <jasowang@redhat.com>
+>> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+>> ---
+>>   hw/virtio/vhost-vdpa.c | 10 +++++++++-
+>>   1 file changed, 9 insertions(+), 1 deletion(-)
+> 
+> Is this a -stable material?
+> 
+> If yes, is it also applicable for stable-7.2 (mentioned commit is in 7.2.0),
+> which lacks v7.2.0-2327-gb276524386 "vdpa: Remember last call fd set",
+> or should this one also be picked up?
 
-The only case we accept an inline function is static in
-header (we use C, not C++).
+Aha, this does not actually work without v8.2.0-171-gf6fe3e333f
+"vdpa: move memory listener to vhost_vdpa_shared".
 
-Add the -Wstatic-in-inline CPPFLAG to prevent public and
-inline function to be added in the code base.
+/mjt
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- meson.build | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/meson.build b/meson.build
-index b375248a76..f57397aa53 100644
---- a/meson.build
-+++ b/meson.build
-@@ -591,6 +591,7 @@ warn_flags = [
-   '-Wold-style-definition',
-   '-Wredundant-decls',
-   '-Wshadow=local',
-+  '-Wstatic-in-inline',
-   '-Wstrict-prototypes',
-   '-Wtype-limits',
-   '-Wundef',
--- 
-2.41.0
+>> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+>> index 004110f..dfeca8b 100644
+>> --- a/hw/virtio/vhost-vdpa.c
+>> +++ b/hw/virtio/vhost-vdpa.c
+>> @@ -1468,7 +1468,15 @@ static int vhost_vdpa_set_vring_call(struct vhost_dev *dev,
+>>       /* Remember last call fd because we can switch to SVQ anytime. */
+>>       vhost_svq_set_svq_call_fd(svq, file->fd);
+>> -    if (v->shadow_vqs_enabled) {
+>> +    /*
+>> +     * When SVQ is transitioning to off, shadow_vqs_enabled has
+>> +     * not been set back to false yet, but the underlying call fd
+>> +     * will have to switch back to the guest notifier to signal the
+>> +     * passthrough virtqueues. In other situations, SVQ's own call
+>> +     * fd shall be used to signal the device model.
+>> +     */
+>> +    if (v->shadow_vqs_enabled &&
+>> +        v->shared->svq_switching != SVQ_TSTATE_DISABLING) {
+>>           return 0;
+>>       }
+> 
 
 
