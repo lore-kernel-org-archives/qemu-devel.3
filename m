@@ -4,61 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5CA7C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 15:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281AEC54E66
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 15:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkQEs-0003uo-7W; Wed, 13 Mar 2024 11:09:54 -0400
+	id 1rkQGi-0007D4-PU; Wed, 13 Mar 2024 11:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rkQEb-0003bC-Jy; Wed, 13 Mar 2024 11:09:39 -0400
-Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rkQEZ-0005td-G5; Wed, 13 Mar 2024 11:09:37 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c08:8793:0:640:b059:0])
- by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id 5E81960DBA;
- Wed, 13 Mar 2024 18:09:33 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:7318::1:20])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 99pZB52GZiE0-Jw55lBFV; Wed, 13 Mar 2024 18:09:32 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1710342572;
- bh=oAmIBIVRoPB9IV/Df1MWhYDzUX/APDm0FauUKs5ntZ8=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=F7Dsbg1ACHRopfkwf282Lw4tAvMlupvlIwO62Q46ggJKqyTl68bHUNbbMXTHEVX8T
- VU43j/4RUOjl1f4dOEGDeVFECMbimayUX/9Y77RMRquMqfFCh5/SjPv3Nllvu2Bv9x
- CITx2MkucSZz09IdybfZQFJceDep1qf1y5sRved8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, jsnow@redhat.com, vsementsov@yandex-team.ru,
- kwolf@redhat.com, hreitz@redhat.com, devel@lists.libvirt.org,
- eblake@redhat.com, armbru@redhat.com, michael.roth@amd.com,
- pbonzini@redhat.com, pkrempa@redhat.com, f.ebner@proxmox.com
-Subject: [RFC 08/15] qapi: job-change: support speed parameter
-Date: Wed, 13 Mar 2024 18:09:00 +0300
-Message-Id: <20240313150907.623462-9-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240313150907.623462-1-vsementsov@yandex-team.ru>
-References: <20240313150907.623462-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rkQGV-0005n9-1q
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 11:11:39 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rkQGI-0006kI-Rh
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 11:11:34 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 849C221C75;
+ Wed, 13 Mar 2024 15:11:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710342680; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wqc+S3KogG0hVeINQwvTFYdsTBB7WNFbJUVwPtjtmRM=;
+ b=IA+qsDwkpUhhjCkhGbJdS+VAEGKjJq24IJMnrK7lhVvnrViTArNHenaanBCZBb5xPhdBJs
+ sGEZy7J1LkieRpYGx+gFV4GAzZ3KZQ4gAAUR2hsaKvr4KgDb7GNwDi4/svgcWJFtYEonEV
+ 6hNtmV60d+AqiGV9gtxF+NKRy4mLhTU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710342680;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wqc+S3KogG0hVeINQwvTFYdsTBB7WNFbJUVwPtjtmRM=;
+ b=JbZapmJwlm7E2e6EjNMXUcetiaoMG2nZhyZFyUKOzGmw4asEIdirxASwXKnWnWvCllMiay
+ 6IlAhg2s/0R8rYCQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710342680; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wqc+S3KogG0hVeINQwvTFYdsTBB7WNFbJUVwPtjtmRM=;
+ b=IA+qsDwkpUhhjCkhGbJdS+VAEGKjJq24IJMnrK7lhVvnrViTArNHenaanBCZBb5xPhdBJs
+ sGEZy7J1LkieRpYGx+gFV4GAzZ3KZQ4gAAUR2hsaKvr4KgDb7GNwDi4/svgcWJFtYEonEV
+ 6hNtmV60d+AqiGV9gtxF+NKRy4mLhTU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710342680;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Wqc+S3KogG0hVeINQwvTFYdsTBB7WNFbJUVwPtjtmRM=;
+ b=JbZapmJwlm7E2e6EjNMXUcetiaoMG2nZhyZFyUKOzGmw4asEIdirxASwXKnWnWvCllMiay
+ 6IlAhg2s/0R8rYCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0EF3313977;
+ Wed, 13 Mar 2024 15:11:19 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id vpWuMRfC8WUpcAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 13 Mar 2024 15:11:19 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Subject: Re: [PATCH] migration: Fix iocs leaks during file and fd migration
+In-Reply-To: <ZfG-apnNAky0e5yw@x1n>
+References: <20240313135018.28079-1-farosas@suse.de> <ZfG-apnNAky0e5yw@x1n>
+Date: Wed, 13 Mar 2024 12:11:17 -0300
+Message-ID: <874jdacgkq.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+Content-Type: text/plain
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=IA+qsDwk;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=JbZapmJw
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ BAYES_HAM(-3.00)[100.00%]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[3]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Queue-Id: 849C221C75
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,304 +118,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow change job speed through job-change command. Old
-block-job-set-speed would be deprecated soon.
+Peter Xu <peterx@redhat.com> writes:
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- block/backup.c           |  8 ++++++
- block/commit.c           | 10 ++++++-
- block/mirror.c           | 60 ++++++++++++++++++++++++----------------
- block/stream.c           |  8 ++++++
- blockjob.c               | 13 +++++++++
- include/block/blockjob.h |  7 +++++
- include/qemu/job.h       |  2 +-
- qapi/block-core.json     | 23 +++++++++++++--
- 8 files changed, 103 insertions(+), 28 deletions(-)
+> On Wed, Mar 13, 2024 at 10:50:18AM -0300, Fabiano Rosas wrote:
+>> The memory for the io channels is being leaked in three different ways
+>> during file migration:
+>> 
+>> 1) if the offset check fails we never drop the ioc reference;
+>> 
+>> 2) if multifd is not enabled, we allocate an extra channel for no
+>>    reason;
+>
+> This leak should also happen even if multifd enabled; it just always leak
+> one unconditionally..
+>
+>> 
+>> 3) if multifd is enabled but channel creation fails when calling
+>>    dup(), we leave the previous channels around along with the glib
+>>    polling;
+>> 
+>> Fix all issues by restructuring the code to first allocate the
+>> channels and only register the watches when all channels have been
+>> created.
+>> 
+>> The file and fd migrations can share this code because both are backed
+>> by the file migration infrastructure.
+>> 
+>> Fixes: 2dd7ee7a51 ("migration/multifd: Add incoming QIOChannelFile support")
+>> Fixes: decdc76772 ("migration/multifd: Add mapped-ram support to fd: URI")
+>> Reported-by: Peter Xu <peterx@redhat.com>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>> based-on: https://gitlab.com/peterx/migration-stable
+>
+> Invalid link. :)
 
-diff --git a/block/backup.c b/block/backup.c
-index ec29d6b810..bf086dc5f9 100644
---- a/block/backup.c
-+++ b/block/backup.c
-@@ -336,6 +336,13 @@ static bool backup_cancel(Job *job, bool force)
-     return true;
- }
- 
-+static bool backup_change(Job *job, JobChangeOptions *opts, Error **errp)
-+{
-+    BlockJob *bjob = container_of(job, BlockJob, job);
-+
-+    return block_job_change(bjob, &opts->u.backup, errp);
-+}
-+
- static const BlockJobDriver backup_job_driver = {
-     .job_driver = {
-         .instance_size          = sizeof(BackupBlockJob),
-@@ -348,6 +355,7 @@ static const BlockJobDriver backup_job_driver = {
-         .clean                  = backup_clean,
-         .pause                  = backup_pause,
-         .cancel                 = backup_cancel,
-+        .change                 = backup_change,
-     },
-     .set_speed = backup_set_speed,
- };
-diff --git a/block/commit.c b/block/commit.c
-index 7c3fdcb0ca..ccb6097679 100644
---- a/block/commit.c
-+++ b/block/commit.c
-@@ -204,6 +204,13 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-     return 0;
- }
- 
-+static bool commit_change(Job *job, JobChangeOptions *opts, Error **errp)
-+{
-+    BlockJob *bjob = container_of(job, BlockJob, job);
-+
-+    return block_job_change(bjob, &opts->u.commit, errp);
-+}
-+
- static const BlockJobDriver commit_job_driver = {
-     .job_driver = {
-         .instance_size = sizeof(CommitBlockJob),
-@@ -213,7 +220,8 @@ static const BlockJobDriver commit_job_driver = {
-         .run           = commit_run,
-         .prepare       = commit_prepare,
-         .abort         = commit_abort,
--        .clean         = commit_clean
-+        .clean         = commit_clean,
-+        .change        = commit_change,
-     },
- };
- 
-diff --git a/block/mirror.c b/block/mirror.c
-index e670d0dd4f..f474b87079 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -1251,41 +1251,45 @@ static bool commit_active_cancel(Job *job, bool force)
-     return force || !job_is_ready(job);
- }
- 
--static void mirror_change(Job *job, JobChangeOptions *opts, Error **errp)
-+static bool mirror_change(Job *job, JobChangeOptions *opts, Error **errp)
- {
-+    BlockJob *bjob = container_of(job, BlockJob, job);
-     MirrorBlockJob *s = container_of(job, MirrorBlockJob, common.job);
-     JobChangeOptionsMirror *change_opts = &opts->u.mirror;
--    MirrorCopyMode current;
--
--    /*
--     * The implementation relies on the fact that copy_mode is only written
--     * under the BQL. Otherwise, further synchronization would be required.
--     */
-+    MirrorCopyMode old_mode;
- 
-     GLOBAL_STATE_CODE();
- 
--    if (!change_opts->has_copy_mode) {
--        /* Nothing to do */
--        return;
--    }
-+    if (change_opts->has_copy_mode) {
-+        old_mode = qatomic_read(&s->copy_mode);
- 
--    if (qatomic_read(&s->copy_mode) == change_opts->copy_mode) {
--        return;
--    }
-+        if (old_mode != change_opts->copy_mode) {
-+            if (change_opts->copy_mode != MIRROR_COPY_MODE_WRITE_BLOCKING) {
-+                error_setg(errp, "Change to copy mode '%s' is not implemented",
-+                           MirrorCopyMode_str(change_opts->copy_mode));
-+                return false;
-+            }
- 
--    if (change_opts->copy_mode != MIRROR_COPY_MODE_WRITE_BLOCKING) {
--        error_setg(errp, "Change to copy mode '%s' is not implemented",
--                   MirrorCopyMode_str(change_opts->copy_mode));
--        return;
-+            if (old_mode != MIRROR_COPY_MODE_BACKGROUND) {
-+                error_setg(errp, "Expected current copy mode '%s', got '%s'",
-+                           MirrorCopyMode_str(MIRROR_COPY_MODE_BACKGROUND),
-+                           MirrorCopyMode_str(old_mode));
-+                return false;
-+            }
-+        }
-     }
- 
--    current = qatomic_cmpxchg(&s->copy_mode, MIRROR_COPY_MODE_BACKGROUND,
--                              change_opts->copy_mode);
--    if (current != MIRROR_COPY_MODE_BACKGROUND) {
--        error_setg(errp, "Expected current copy mode '%s', got '%s'",
--                   MirrorCopyMode_str(MIRROR_COPY_MODE_BACKGROUND),
--                   MirrorCopyMode_str(current));
-+    if (!block_job_change(bjob, qapi_JobChangeOptionsMirror_base(change_opts),
-+                          errp))
-+    {
-+        return false;
-     }
-+
-+    old_mode = qatomic_cmpxchg(&s->copy_mode, MIRROR_COPY_MODE_BACKGROUND,
-+                               change_opts->copy_mode);
-+    assert(old_mode == MIRROR_COPY_MODE_BACKGROUND);
-+
-+    return true;
- }
- 
- static void mirror_query(BlockJob *job, BlockJobInfo *info)
-@@ -1315,6 +1319,13 @@ static const BlockJobDriver mirror_job_driver = {
-     .query                  = mirror_query,
- };
- 
-+static bool commit_active_change(Job *job, JobChangeOptions *opts, Error **errp)
-+{
-+    BlockJob *bjob = container_of(job, BlockJob, job);
-+
-+    return block_job_change(bjob, &opts->u.commit, errp);
-+}
-+
- static const BlockJobDriver commit_active_job_driver = {
-     .job_driver = {
-         .instance_size          = sizeof(MirrorBlockJob),
-@@ -1327,6 +1338,7 @@ static const BlockJobDriver commit_active_job_driver = {
-         .pause                  = mirror_pause,
-         .complete               = mirror_complete,
-         .cancel                 = commit_active_cancel,
-+        .change                 = commit_active_change,
-     },
-     .drained_poll           = mirror_drained_poll,
- };
-diff --git a/block/stream.c b/block/stream.c
-index 7031eef12b..34f4588537 100644
---- a/block/stream.c
-+++ b/block/stream.c
-@@ -239,6 +239,13 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
-     return error;
- }
- 
-+static bool stream_change(Job *job, JobChangeOptions *opts, Error **errp)
-+{
-+    BlockJob *bjob = container_of(job, BlockJob, job);
-+
-+    return block_job_change(bjob, &opts->u.stream, errp);
-+}
-+
- static const BlockJobDriver stream_job_driver = {
-     .job_driver = {
-         .instance_size = sizeof(StreamBlockJob),
-@@ -248,6 +255,7 @@ static const BlockJobDriver stream_job_driver = {
-         .prepare       = stream_prepare,
-         .clean         = stream_clean,
-         .user_resume   = block_job_user_resume,
-+        .change        = stream_change,
-     },
- };
- 
-diff --git a/blockjob.c b/blockjob.c
-index 2769722b37..d3cd4f4fbf 100644
---- a/blockjob.c
-+++ b/blockjob.c
-@@ -312,6 +312,19 @@ static bool block_job_set_speed(BlockJob *job, int64_t speed, Error **errp)
-     return block_job_set_speed_locked(job, speed, errp);
- }
- 
-+bool block_job_change(BlockJob *job, JobChangeOptionsBlockJob *opts,
-+                      Error **errp)
-+{
-+    GLOBAL_STATE_CODE();
-+
-+    if (!opts->has_speed) {
-+        /* Nothing to do */
-+        return true;
-+    }
-+
-+    return block_job_set_speed(job, opts->speed, errp);
-+}
-+
- void block_job_ratelimit_processed_bytes(BlockJob *job, uint64_t n)
- {
-     IO_CODE();
-diff --git a/include/block/blockjob.h b/include/block/blockjob.h
-index 72e849a140..fe433c8d35 100644
---- a/include/block/blockjob.h
-+++ b/include/block/blockjob.h
-@@ -224,4 +224,11 @@ bool block_job_is_internal(BlockJob *job);
-  */
- const BlockJobDriver *block_job_driver(BlockJob *job);
- 
-+/**
-+ * Common part of .change handler for block-jobs.
-+ * Applies changes described in opts to the job.
-+ */
-+bool block_job_change(BlockJob *job, JobChangeOptionsBlockJob *opts,
-+                      Error **errp);
-+
- #endif
-diff --git a/include/qemu/job.h b/include/qemu/job.h
-index d44cdb0cc8..1c9da74a0c 100644
---- a/include/qemu/job.h
-+++ b/include/qemu/job.h
-@@ -313,7 +313,7 @@ struct JobDriver {
-      *
-      * Note that this can already be called before the job coroutine is running.
-      */
--    void (*change)(Job *job, JobChangeOptions *opts, Error **errp);
-+    bool (*change)(Job *job, JobChangeOptions *opts, Error **errp);
- 
-     /**
-      * Called when the job is freed.
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index f5cefa441b..93f96e747e 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -3062,6 +3062,17 @@
- { 'command': 'block-job-finalize', 'data': { 'id': 'str' },
-   'allow-preconfig': true }
- 
-+##
-+# @JobChangeOptionsBlockJob:
-+#
-+# @speed: Change job speed (in bytes per second).  Supported for
-+#     for backup, mirror, commit and stream jobs.
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'JobChangeOptionsBlockJob',
-+  'data': { '*speed' : 'uint64' } }
-+
- ##
- # @JobChangeOptionsMirror:
- #
-@@ -3071,12 +3082,17 @@
- # Since: 8.2
- ##
- { 'struct': 'JobChangeOptionsMirror',
-+  'base': 'JobChangeOptionsBlockJob',
-   'data': { '*copy-mode' : 'MirrorCopyMode' } }
- 
-+
- ##
- # @JobChangeOptions:
- #
--# Block job options that can be changed after job creation.
-+# Job options that can be changed after job creation. When option is
-+# not specified the corresponding job parameter remains unchanged.
-+# The change is transactional: on success all changes are applied
-+# successfully, on failure nothing is changed.
- #
- # @id: The job identifier
- #
-@@ -3093,7 +3109,10 @@
-   'base': { 'id': 'str',
-             '*type': { 'type': 'JobType', 'features': ['deprecated'] } },
-   'discriminator': 'JobType',
--  'data': { 'mirror': 'JobChangeOptionsMirror' } }
-+  'data': { 'mirror': 'JobChangeOptionsMirror',
-+            'backup': 'JobChangeOptionsBlockJob',
-+            'stream': 'JobChangeOptionsBlockJob',
-+            'commit': 'JobChangeOptionsBlockJob' } }
- 
- ##
- # @block-job-change:
--- 
-2.34.1
+lol, all kinds of wrong.
 
+The correct one would be:
+
+https://gitlab.com/peterx/qemu/-/commits/migration-stable
+
+>
+> I am not sure whether patchew will understand this even if the link is
+> correct, but I hope!
+
+I was thinking more of helping reviewers than patchew actually.
+
+>
+>> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1211909831
+>> ---
+>>  migration/fd.c   | 28 +++-------------------
+>>  migration/file.c | 62 +++++++++++++++++++++++++++++++-----------------
+>>  migration/file.h |  3 +++
+>>  3 files changed, 46 insertions(+), 47 deletions(-)
+>> 
+>> diff --git a/migration/fd.c b/migration/fd.c
+>> index 4e2a63a73d..b74a3eb8c8 100644
+>> --- a/migration/fd.c
+>> +++ b/migration/fd.c
+>> @@ -18,6 +18,7 @@
+>>  #include "qapi/error.h"
+>>  #include "channel.h"
+>>  #include "fd.h"
+>> +#include "file.h"
+>>  #include "migration.h"
+>>  #include "monitor/monitor.h"
+>>  #include "io/channel-file.h"
+>> @@ -68,19 +69,9 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
+>>      object_unref(OBJECT(ioc));
+>>  }
+>>  
+>> -static gboolean fd_accept_incoming_migration(QIOChannel *ioc,
+>> -                                             GIOCondition condition,
+>> -                                             gpointer opaque)
+>> -{
+>> -    migration_channel_process_incoming(ioc);
+>> -    object_unref(OBJECT(ioc));
+>> -    return G_SOURCE_REMOVE;
+>> -}
+>> -
+>>  void fd_start_incoming_migration(const char *fdname, Error **errp)
+>>  {
+>>      QIOChannel *ioc;
+>> -    QIOChannelFile *fioc;
+>>      int fd = monitor_fd_param(monitor_cur(), fdname, errp);
+>>      if (fd == -1) {
+>>          return;
+>> @@ -96,24 +87,11 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
+>>  
+>>      qio_channel_set_name(ioc, "migration-fd-incoming");
+>>      qio_channel_add_watch_full(ioc, G_IO_IN,
+>> -                               fd_accept_incoming_migration,
+>> +                               file_accept_incoming_migration,
+>>                                 NULL, NULL,
+>>                                 g_main_context_get_thread_default());
+>
+> Mostly correct, but IIUC we'll still leak this main io watch if below
+> failed, similar issue for file path below.  We may need to manage all IOCs
+> including the main one.
+>
+
+Yes, good point. Sigh... I'll get it right eventually.
+
+>>  
+>>      if (migrate_multifd()) {
+>> -        int channels = migrate_multifd_channels();
+>> -
+>> -        while (channels--) {
+>> -            fioc = qio_channel_file_new_dupfd(fd, errp);
+>> -            if (!fioc) {
+>> -                return;
+>> -            }
+>> -
+>> -            qio_channel_set_name(ioc, "migration-fd-incoming");
+>> -            qio_channel_add_watch_full(QIO_CHANNEL(fioc), G_IO_IN,
+>> -                                       fd_accept_incoming_migration,
+>> -                                       NULL, NULL,
+>> -                                       g_main_context_get_thread_default());
+>> -        }
+>> +        file_recv_channels_create(fd, errp);
+>>      }
+>>  }
+>> diff --git a/migration/file.c b/migration/file.c
+>> index e56c5eb0a5..bb264115eb 100644
+>> --- a/migration/file.c
+>> +++ b/migration/file.c
+>> @@ -106,22 +106,48 @@ void file_start_outgoing_migration(MigrationState *s,
+>>      migration_channel_connect(s, ioc, NULL, NULL);
+>>  }
+>>  
+>> -static gboolean file_accept_incoming_migration(QIOChannel *ioc,
+>> -                                               GIOCondition condition,
+>> -                                               gpointer opaque)
+>> +gboolean file_accept_incoming_migration(QIOChannel *ioc, GIOCondition condition,
+>> +                                        gpointer opaque)
+>>  {
+>>      migration_channel_process_incoming(ioc);
+>>      object_unref(OBJECT(ioc));
+>>      return G_SOURCE_REMOVE;
+>>  }
+>>  
+>> +void file_recv_channels_create(int fd, Error **errp)
+>> +{
+>> +    int i, channels = migrate_multifd_channels();
+>> +    g_autofree QIOChannelFile **fiocs = g_new0(QIOChannelFile *, channels);
+>> +
+>> +    for (i = 0; i < channels; i++) {
+>> +        QIOChannelFile *fioc = qio_channel_file_new_dupfd(fd, errp);
+>> +
+>> +        if (!fioc) {
+>> +            while (i) {
+>> +                object_unref(fiocs[--i]);
+>> +            }
+>> +            return;
+>> +        }
+>> +
+>> +        fiocs[i] = fioc;
+>> +    }
+>> +
+>> +    for (i = 0; i < channels; i++) {
+>> +        QIOChannelFile *fioc = fiocs[i];
+>> +
+>> +        qio_channel_set_name(QIO_CHANNEL(fioc), "migration-file-incoming");
+>> +        qio_channel_add_watch_full(QIO_CHANNEL(fioc), G_IO_IN,
+>> +                                   file_accept_incoming_migration,
+>> +                                   NULL, NULL,
+>> +                                   g_main_context_get_thread_default());
+>> +    }
+>> +}
+>> +
+>>  void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
+>>  {
+>>      g_autofree char *filename = g_strdup(file_args->filename);
+>>      QIOChannelFile *fioc = NULL;
+>>      uint64_t offset = file_args->offset;
+>> -    int channels = 1;
+>> -    int i = 0;
+>>  
+>>      trace_migration_file_incoming(filename);
+>>  
+>> @@ -132,28 +158,20 @@ void file_start_incoming_migration(FileMigrationArgs *file_args, Error **errp)
+>>  
+>>      if (offset &&
+>>          qio_channel_io_seek(QIO_CHANNEL(fioc), offset, SEEK_SET, errp) < 0) {
+>> +        object_unref(OBJECT(fioc));
+>>          return;
+>>      }
+>>  
+>> +    qio_channel_set_name(QIO_CHANNEL(fioc), "migration-file-incoming");
+>> +    qio_channel_add_watch_full(QIO_CHANNEL(fioc), G_IO_IN,
+>> +                               file_accept_incoming_migration,
+>> +                               NULL, NULL,
+>> +                               g_main_context_get_thread_default());
+>> +
+>> +
+>>      if (migrate_multifd()) {
+>> -        channels += migrate_multifd_channels();
+>> +        file_recv_channels_create(fioc->fd, errp);
+>>      }
+>> -
+>> -    do {
+>> -        QIOChannel *ioc = QIO_CHANNEL(fioc);
+>> -
+>> -        qio_channel_set_name(ioc, "migration-file-incoming");
+>> -        qio_channel_add_watch_full(ioc, G_IO_IN,
+>> -                                   file_accept_incoming_migration,
+>> -                                   NULL, NULL,
+>> -                                   g_main_context_get_thread_default());
+>> -
+>> -        fioc = qio_channel_file_new_dupfd(fioc->fd, errp);
+>> -
+>> -        if (!fioc) {
+>> -            break;
+>> -        }
+>> -    } while (++i < channels);
+>>  }
+>>  
+>>  int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
+>> diff --git a/migration/file.h b/migration/file.h
+>> index 9f71e87f74..940122db0f 100644
+>> --- a/migration/file.h
+>> +++ b/migration/file.h
+>> @@ -20,6 +20,9 @@ void file_start_outgoing_migration(MigrationState *s,
+>>  int file_parse_offset(char *filespec, uint64_t *offsetp, Error **errp);
+>>  void file_cleanup_outgoing_migration(void);
+>>  bool file_send_channel_create(gpointer opaque, Error **errp);
+>> +void file_recv_channels_create(int fd, Error **errp);
+>> +gboolean file_accept_incoming_migration(QIOChannel *ioc, GIOCondition condition,
+>> +                                        gpointer opaque);
+>>  int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
+>>                              int niov, RAMBlock *block, Error **errp);
+>>  int multifd_file_recv_data(MultiFDRecvParams *p, Error **errp);
+>> -- 
+>> 2.35.3
+>> 
 
