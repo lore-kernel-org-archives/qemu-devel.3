@@ -4,85 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01D41C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 10:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86312C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 10:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkM9C-0007nS-Ie; Wed, 13 Mar 2024 06:47:46 -0400
+	id 1rkMA1-0008C6-CS; Wed, 13 Mar 2024 06:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkM9B-0007mb-19
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 06:47:45 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkM98-0005jy-Op
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 06:47:44 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-56845954ffeso5031512a12.2
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 03:47:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710326860; x=1710931660; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=n8fchBLUZk4r9Z/ABP0FYSgp5y3W9g67zIQxvWUWSa4=;
- b=ogsdllSksyGt2VGA/rC/SreirMd8heBQPDglSTQV9wDgC69vru3EZ2XN3YeLa60giV
- e930ZO2ZKAcXS0IjiWnEtYplveVGTnHtr+Ch1mi/M7u6EXvt3+7k92ZC9qmnaBKP39cV
- C4hy8TYMb+jX8Cu5flWa0qdZRIy6m2xNRrC8l7EOChDDzw/1cn1kVdP7OSQZKwX7uY+G
- Y6O1UmjZsKslBRSTPq2oWOArM0u9o8GLu6KtZtRc81A5mMzeNbS+0v+upHCwLNuIsUKw
- A7Nbz5pO1JVn/b5NB3d1sqXaSnIea95YN971H8Ibgk281fA2Z27983kT1LwbSv2O8eZk
- 7etQ==
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rkM9u-00088y-9t
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 06:48:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
+ id 1rkM9o-0005my-1k
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 06:48:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710326902;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=02Uy6I1pJ7IGclKC4/mdNq6Oq4ji/kvfYdxDrDXLtQM=;
+ b=F2iH0dSXlSdvshPQKiVNUebof3v3qiK8yInzeBa1fWgLt9dzeSp4Ss/nX7MP6gC2z9cIcQ
+ Goq/jvlulT8Suu928OJUjQ8fchOVdbBtATOlwSXXEEvj+P/nCpa643VmleQlSHvLlrbdJF
+ d+fRa30VqSNEA43uYAxYBOl9NB/VjSw=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-210-AWwzF7ljPraTAvUqBuAJ-A-1; Wed, 13 Mar 2024 06:48:21 -0400
+X-MC-Unique: AWwzF7ljPraTAvUqBuAJ-A-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-33e94548450so315932f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 03:48:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710326860; x=1710931660;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n8fchBLUZk4r9Z/ABP0FYSgp5y3W9g67zIQxvWUWSa4=;
- b=hQiXElTmZXgr7eIxyqGAW1k2XhhtQ5laE8iifGrjmHZak8MRpU20NvKFrDSe0PNdqr
- KfWCsy6jUZcVd+x6vc3su3pBNh+AkvKRFyr3mXGZs+p8A5jvnvvYas6CD4HPhjnaL4h5
- VpT41YABhWrdCG/DXuBEbxxopmtxDqAZtjHbe/O6BEm5TnpZRhtnL5lLvppH9ON7Y3k5
- 7pMSJwXaxylIRl9TuQNyJKj3MzU4yNmkWh8XZAspjx2+rCfZb8D3RX0NSsZxDPCtVgYD
- exed8Lefz3aqOxHvV1QYIed5YlkeGKJtD7rKJnpO4/eZldPlimfzg8CZl8iQcdrNayiT
- sXcg==
+ d=1e100.net; s=20230601; t=1710326900; x=1710931700;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=02Uy6I1pJ7IGclKC4/mdNq6Oq4ji/kvfYdxDrDXLtQM=;
+ b=w6O0uu/I17uauGVso8Uj/pbirOKR/4J9SDVNY7wjmL4yng24g3UqRevmrGbsj1B602
+ r6MPNvTpA2p/e6QRdsmrRHDfym1m3jlRDSuD8II8tDXmIyDMOnEsQFTFwJiIoc+SdpZ9
+ hWmH6rZiL5XasvvFBJStIu0mwOfw6oVS4cUqmKnxZCkHyXE/vLycSo3f/fWFUYpXM9+h
+ 3JmGTSU5XbY3y3PD5SOSk6i0eAaURbOonqg6kY+mW8mzV0oWs+0sw18/sVqjNqOGno9X
+ Hr68iRlej5M6I1BuAzU3M0u2AqDzGXlMwqQcD9/hfNVefqMkAgS3QsDvYrnrL0X1lsgK
+ s8jQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7jRIqGA4AO5mfLHx9yl+pJrF9U1WW+x9kEQr+KgPRoLxfNbvxGjqk/D9ILFssVT60tQ1+BYGgD615pAHaxBp8B21t6wo=
-X-Gm-Message-State: AOJu0YyNILKDiz8Cf+jkWDnntc2I+KyAHeXzW856QfbLWDRImw962vgo
- xnQ8erLYDIi85d+Lbw2rHHO73n6oq++ABpnzIk4T1nuUtSTZPiV2UfveO1axNfA=
-X-Google-Smtp-Source: AGHT+IE63TT36L/f1A2kH1itFq4SM+6ROo41uXvLaBmPB7tKGk82I8pxXrAu+u15+bUnFWBtMH4Qzg==
-X-Received: by 2002:a17:907:a0cc:b0:a46:3814:c3e6 with SMTP id
- hw12-20020a170907a0cc00b00a463814c3e6mr2788566ejc.60.1710326860144; 
- Wed, 13 Mar 2024 03:47:40 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.182.179])
+ AJvYcCXwxETF/c6fJoQsddAM4N/BLoXzfuKsJl/YMa9qqISOxDk/ymSRI8zUI8dmz+wjgYLO7iWtO+JaCzD195x+IRjnwqOQulU=
+X-Gm-Message-State: AOJu0YwPgE9QGcw7mUH4c371UeoaI/bkaXGYIZwtMK4Cvs5LO5YRAcrK
+ XF0T4rTwrsCfWNPF2eHWfIhvaQHy7H4pBZXOeYQdvX7qpdVc1oJl7tyZ94JRZZBVDWo5RmSM4td
+ yt46O+5g0PWwqoXWkKZSgCHfmZOYd/ncgO4PAxxjVsIxnErA6h5N5
+X-Received: by 2002:adf:a48e:0:b0:33e:929e:5366 with SMTP id
+ g14-20020adfa48e000000b0033e929e5366mr1873958wrb.28.1710326900634; 
+ Wed, 13 Mar 2024 03:48:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGaVsJ5uKSy7dXq1VQCSUh92NqSs8aA/PYNVp9jcuB3iMBdJ/yLKlZpRnhd6jyJEUyjbuM4jw==
+X-Received: by 2002:adf:a48e:0:b0:33e:929e:5366 with SMTP id
+ g14-20020adfa48e000000b0033e929e5366mr1873941wrb.28.1710326900238; 
+ Wed, 13 Mar 2024 03:48:20 -0700 (PDT)
+Received: from localhost ([2a01:e0a:a9a:c460:2827:8723:3c60:c84a])
  by smtp.gmail.com with ESMTPSA id
- jx14-20020a170907760e00b00a4635a21ff0sm777960ejc.38.2024.03.13.03.47.38
+ j6-20020a5d6046000000b0033e122a9a91sm11303230wrt.105.2024.03.13.03.48.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Mar 2024 03:47:39 -0700 (PDT)
-Message-ID: <1ae334d6-f009-4e80-bf09-0500fa3486a9@linaro.org>
-Date: Wed, 13 Mar 2024 11:47:37 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/riscv: Implement dynamic establishment of
- custom decoder
-Content-Language: en-US
-To: Huang Tao <eric.huang@linux.alibaba.com>, qemu-devel@nongnu.org,
- dbarboza@ventanamicro.com
-Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
- bin.meng@windriver.com, alistair.francis@wdc.com, palmer@dabbelt.com,
- Christoph Muellner <christoph.muellner@vrull.eu>
-References: <20240313095715.32811-1-eric.huang@linux.alibaba.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240313095715.32811-1-eric.huang@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Wed, 13 Mar 2024 03:48:19 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 13 Mar 2024 11:48:19 +0100
+Message-Id: <CZSKAAQ3HE0Q.32DYA8Y3PX16V@fedora>
+Cc: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <qemu-devel@nongnu.org>,
+ <vchundur@redhat.com>
+Subject: Re: [PATCH v3 3/3] Add support for RAPL MSRs in KVM/Qemu
+From: "Anthony Harivel" <aharivel@redhat.com>
+To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
+X-Mailer: aerc/0.15.2-111-g39195000e213
+References: <20240125072214.318382-1-aharivel@redhat.com>
+ <20240125072214.318382-4-aharivel@redhat.com> <ZbjDtytv-_-Bz4-S@redhat.com>
+ <CZRQCYCXNTF2.1I5CNECSOB6IL@fedora> <ZfB5eBwWXL45sN_K@redhat.com>
+In-Reply-To: <ZfB5eBwWXL45sN_K@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=aharivel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,224 +107,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi Daniel,
 
-On 13/3/24 10:57, Huang Tao wrote:
-> In this patch, we modify the decoder to be a freely composable data
-> structure instead of a hardcoded one. It can be dynamically builded up
-> according to the extensions.
-> This approach has several benefits:
-> 1. Provides support for heterogeneous cpu architectures. As we add decoder in
->     RISCVCPU, each cpu can have their own decoder, and the decoders can be
->     different due to cpu's features.
-> 2. Improve the decoding efficiency. We run the guard_func to see if the decoder
->     can be added to the dynamic_decoder when building up the decoder. Therefore,
->     there is no need to run the guard_func when decoding each instruction. It can
->     improve the decoding efficiency
-> 3. For vendor or dynamic cpus, it allows them to customize their own decoder
->     functions to improve decoding efficiency, especially when vendor-defined
->     instruction sets increase. Because of dynamic building up, it can skip the other
->     decoder guard functions when decoding.
-> 4. Pre patch for allowing adding a vendor decoder before decode_insn32() with minimal
->     overhead for users that don't need this particular vendor deocder.
+Daniel P. Berrang=C3=A9, Mar 12, 2024 at 16:49:
 
-Typo "decoder"
+> The point still stands though. NUMA node ID numbers are not
+> guaranteed to be the same as socket ID numbers. Very often
+> then will be the same (which makes it annoying to test as it
+> is easy to not realize the difference), but we can't rely on
+> that.
+>
+> > I'm using functions of libnuma to populate the maxpkgs of the host.=20
+> > I tested this on different Intel CPU with multiple packages and this=20
+> > has always returned the good number of packages. A false positive ?
+>
+> maxpkgs comes from vmsr_get_max_physical_package() which you're
+> reading from sysfs, rather than libnuma.
+>
+> > So here I'm checking if the thread has run on the package number 'i'.=
+=20
+> > I populate 'numa_node_id' with numa_node_of_cpu().
+> >=20
+> > I did not wanted to reinvent the wheel and the only lib that was talkin=
+g=20
+> > about "node" was libnuma.
+>
+> I'm not actually convinced we need to use libnuma at all. IIUC, you're
+> just trying to track all CPUs within the same physical socket (package).
+> I don't think we need to care about NUMA nodes to do that tracking.
+>
 
-> 
-> Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
-> Suggested-by: Christoph Muellner <christoph.muellner@vrull.eu>
-> Co-authored-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> ---
-> 
-> Changes in v3:
-> - use GPtrArray to save decode function poionter list.
-> ---
->   target/riscv/cpu.c         | 18 ++++++++++++++++++
->   target/riscv/cpu.h         |  2 ++
->   target/riscv/cpu_decoder.h | 34 ++++++++++++++++++++++++++++++++++
->   target/riscv/translate.c   | 29 +++++++++++++----------------
->   4 files changed, 67 insertions(+), 16 deletions(-)
->   create mode 100644 target/riscv/cpu_decoder.h
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 5ff0192c52..9aedd93cf6 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -38,6 +38,7 @@
->   #include "kvm/kvm_riscv.h"
->   #include "tcg/tcg-cpu.h"
->   #include "tcg/tcg.h"
-> +#include "cpu_decoder.h"
->   
->   /* RISC-V CPU definitions */
->   static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
-> @@ -1102,6 +1103,21 @@ static void riscv_cpu_satp_mode_finalize(RISCVCPU *cpu, Error **errp)
->   }
->   #endif
->   
-> +static void riscv_cpu_finalize_dynamic_decoder(RISCVCPU *cpu)
+Alright, having a deeper look I'm actually using NUMA for 2 info:
 
-riscv_tcg_cpu_finalize_dynamic_decoder()
+- How many cpu per Package: this helps me calculate the ratio.
 
-> +{
-> +    GPtrArray *dynamic_decoders;
-> +    dynamic_decoders = g_ptr_array_sized_new(decoder_table_size);
-> +    for (size_t i = 0; i < decoder_table_size; ++i) {
-> +        if (decoder_table[i].guard_func &&
-> +            decoder_table[i].guard_func(&cpu->cfg)) {
-> +            g_ptr_array_add(dynamic_decoders,
-> +                            (gpointer)decoder_table[i].decode_fn);
-> +        }
-> +    }
-> +
-> +    cpu->decoders = dynamic_decoders;
-> +}
+- To whom package the cpu belongs: to calculate the ratio with the right=20
+  package energy counter.
 
-Move this function to translate.c and make decoder_table[] static.
-Then we don't need the "cpu_decoder.h", it is specific to TCG and
-declarations go in "target/riscv/tcg/tcg-cpu.h".
+Without libnuma, I'm bit confused on how to handle this.=20
 
-> +
->   void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
->   {
->       Error *local_err = NULL;
-> @@ -1127,6 +1143,8 @@ void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
->               return;
->           }
->       }
-> +
-> +    riscv_cpu_finalize_dynamic_decoder(cpu);
+Should I parse /sys/bus/node/devices/node* to know how many packages ?
+Should I parse /sys/bus/node/devices/node0/cpu0/topology/core_cpus_list=20
+to handle which cpu belongs to which package ?
 
-Move within the 'if tcg_enabled' block.
+Would that be too cumbusome for the user to enter the detail about how
+many packages and how many cpu per pakages ?=20
 
->   }
->   
->   static void riscv_cpu_realize(DeviceState *dev, Error **errp)
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 5d291a7092..923721e67a 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -30,6 +30,7 @@
->   #include "qemu/int128.h"
->   #include "cpu_bits.h"
->   #include "cpu_cfg.h"
-> +#include "cpu_decoder.h"
->   #include "qapi/qapi-types-common.h"
->   #include "cpu-qom.h"
->   
-> @@ -457,6 +458,7 @@ struct ArchCPU {
->       uint32_t pmu_avail_ctrs;
->       /* Mapping of events to counters */
->       GHashTable *pmu_event_ctr_map;
-> +    const GPtrArray *decoders;
->   };
->   
->   /**
-> diff --git a/target/riscv/cpu_decoder.h b/target/riscv/cpu_decoder.h
-> new file mode 100644
-> index 0000000000..549414ce4c
-> --- /dev/null
-> +++ b/target/riscv/cpu_decoder.h
-> @@ -0,0 +1,34 @@
-> +/*
-> + * QEMU RISC-V CPU Decoder
-> + *
-> + * Copyright (c) 2023-2024 Alibaba Group
-> + *
-> + * This program is free software; you can redistribute it and/or modify it
-> + * under the terms and conditions of the GNU General Public License,
-> + * version 2 or later, as published by the Free Software Foundation.
-> + *
-> + * This program is distributed in the hope it will be useful, but WITHOUT
-> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-> + * more details.
-> + *
-> + * You should have received a copy of the GNU General Public License along with
-> + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#ifndef RISCV_CPU_DECODER_H
-> +#define RISCV_CPU_DECODER_H
-> +
-> +struct DisasContext;
-> +struct RISCVCPUConfig;
-> +typedef struct RISCVDecoder {
-> +    bool (*guard_func)(const struct RISCVCPUConfig *);
-> +    bool (*decode_fn)(struct DisasContext *, uint32_t);
-> +} RISCVDecoder;
-> +
-> +typedef bool (*decode_fn)(struct DisasContext *, uint32_t);
-> +
-> +extern const size_t decoder_table_size;
-> +
-> +extern const RISCVDecoder decoder_table[];
-> +#endif
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 177418b2b9..332f0bfd4e 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -115,6 +115,7 @@ typedef struct DisasContext {
->       bool frm_valid;
->       /* TCG of the current insn_start */
->       TCGOp *insn_start;
-> +    const GPtrArray *decoders;
+i.e:=20
+-kvm,rapl=3Dtrue,maxpkgs=3D2,cpupkgs=3D8,rapl-helper-socket=3D/path/sock.so=
+ck
 
-Why do we need this reference? We can use env_archcpu(env)->decoders.
+> > Maybe I'm wrong assuming that a "node" (defined as an area where all=20
+> > memory has the same speed as seen from a particular CPU) could lead me=
+=20
+> > to the packages number ?
+>
+> Historically you could have multiple sockets in the same NUMA node
+> ie a m:1 mapping.
+>
+> These days with AMD sockets, you can have 1 socket compromising
+> many NUMA nodes, as individual dies within a socket are each their
+> own NUMA node. So a 1:m mapping
+>
+> On Intel I think it is still typical to have 1 socket per numa
+> node, but again I don't think we can rely on that 1:1 mapping.
+>
+> Fortunately I don't think it matters, since it looks like you
+> don't really need to track NUMA nodes, only sockets (phnysical
+> package IDs)
+>
 
->   } DisasContext;
->   
->   static inline bool has_ext(DisasContext *ctx, uint32_t ext)
-> @@ -1118,21 +1119,16 @@ static inline int insn_len(uint16_t first_word)
->       return (first_word & 3) == 3 ? 4 : 2;
->   }
->   
-> +const RISCVDecoder decoder_table[] = {
-> +    { always_true_p, decode_insn32 },
-> +    { has_xthead_p, decode_xthead},
-> +    { has_XVentanaCondOps_p, decode_XVentanaCodeOps},
-> +};
-> +
-> +const size_t decoder_table_size = ARRAY_SIZE(decoder_table);
-> +
->   static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
->   {
-> -    /*
-> -     * A table with predicate (i.e., guard) functions and decoder functions
-> -     * that are tested in-order until a decoder matches onto the opcode.
-> -     */
-> -    static const struct {
-> -        bool (*guard_func)(const RISCVCPUConfig *);
-> -        bool (*decode_func)(DisasContext *, uint32_t);
-> -    } decoders[] = {
-> -        { always_true_p,  decode_insn32 },
-> -        { has_xthead_p, decode_xthead },
-> -        { has_XVentanaCondOps_p,  decode_XVentanaCodeOps },
-> -    };
-> -
->       ctx->virt_inst_excp = false;
->       ctx->cur_insn_len = insn_len(opcode);
->       /* Check for compressed insn */
-> @@ -1153,9 +1149,9 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
->                                                ctx->base.pc_next + 2));
->           ctx->opcode = opcode32;
->   
-> -        for (size_t i = 0; i < ARRAY_SIZE(decoders); ++i) {
-> -            if (decoders[i].guard_func(ctx->cfg_ptr) &&
-> -                decoders[i].decode_func(ctx, opcode32)) {
-> +        for (guint i = 0; i < ctx->decoders->len; ++i) {
-> +            decode_fn func = g_ptr_array_index(ctx->decoders, i);
-> +            if (func(ctx, opcode32)) {
->                   return;
->               }
->           }
-> @@ -1199,6 +1195,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
->       ctx->itrigger = FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
->       ctx->zero = tcg_constant_tl(0);
->       ctx->virt_inst_excp = false;
-> +    ctx->decoders = cpu->decoders;
->   }
->   
->   static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+Very informative, thanks !
+
+> With regards,
+> Daniel
+> --=20
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+
+Regards,
+Anthony
+
 
 
