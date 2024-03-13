@@ -4,95 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F41C54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 21:12:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D9A8C54E66
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 21:18:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkVtD-0002ik-Fv; Wed, 13 Mar 2024 17:11:55 -0400
+	id 1rkVyX-0004A6-19; Wed, 13 Mar 2024 17:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rkVtC-0002iV-Dk
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:11:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rkVtB-0003pU-04
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:11:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710364311;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AleTZl1PUVX908GJT/LUOxERo/O5kQrPyepGmWEy0Mk=;
- b=UMJ2+KNqTsbLzudsoUe6G/bPuTBvUxtx0pI6DFM+jUuTOxSxhCXxfaNjo+Z5oWgsOR25Tt
- v0QNfIppqo2m1gnID9nTnrn1mT2iZfYyX9BWkfbrZ6zMhcYY1cJaVqhxj9lrNf0H6K7KY7
- C+GKAYeYvMt46Z/ubGwPbGPbMak6n7k=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-173-SYA5GkDLMeamLZlIooxylw-1; Wed, 13 Mar 2024 17:11:49 -0400
-X-MC-Unique: SYA5GkDLMeamLZlIooxylw-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-42ef6c2e84cso1981171cf.1
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 14:11:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710364309; x=1710969109;
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rkVyV-00049i-GG
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:17:23 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rkVyT-0004rw-6M
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:17:23 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6e6c10bdd2fso363077b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 14:17:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710364639; x=1710969439; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AleTZl1PUVX908GJT/LUOxERo/O5kQrPyepGmWEy0Mk=;
- b=lPfX/88ivrEja9e6o7aHOe64tQGHjd/AuV35xEYEHYswYaJgxcnpHmOJpgU+BJjL1U
- JIgnxoYL9or6pAQDg6rLmmLv2DeY0V31tNLSwe4MCvrjgnQr1VptU/VEy3paojI3E23K
- LvQIFBG6P38gFL3PgYqfqw2rC9aOnAYSamPUNB8ie/nSlc2t7O5yaDeoupJ/UTqQYnO0
- Wd4lGvrrEltwgZweTYoPAswW51hCnvddYBRZSffuXMGazqeNx58ZIApw2Diu8Ahpl473
- VftNr6LtWR/GXeuI9GvFoYYsVMWgNhu8lJPH8RcKcqRJVP4LUZDUeBpf0rQbTBmKjyiM
- gTeg==
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9LA32x4bAq7N51W51DbJjLo8OzFpBdGXq7iH5r8duwE=;
+ b=m92HLioxv31tnR7sUDZt6tmb4iELhoQvnFnBgFs98HgZgmgEW3/og77n+jo5kGa4DI
+ YKaCWrc4p3CnMDE2uc/az4P5SSD/3LY+kxCeFdbx4HiUZUhS1182t1bogZTVd36HerZb
+ 9f/M5aEH6GYqjz4IdZVk879nTQxAl5I+OqUFkO+AmmWlsbGimPBlVdEvjLVr2V0CblG8
+ H6hAdmR2aLOPXvyUYKrDlJ7BqoyFqlekTq22aXjLHVBLfE1dY23e7RaW/z2altLuYUvD
+ OMsOeN6BuqP6ap+L6xhCh4IuZksU8us0wKwE7v/yQ2yW0w9ORp72ubO2Z1/l5Z+JGzLT
+ yqxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710364639; x=1710969439;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9LA32x4bAq7N51W51DbJjLo8OzFpBdGXq7iH5r8duwE=;
+ b=CGgHgZR2QNMbSCSWxcXjeEirlV+AcCeJQPGyUFoQxDWXMaVZY9f4P/92bOOxQgIZAE
+ qwVOycP2cpx3CFJE4qp/s2/xXfjnz+RiIiVFyMPEg251Rgj38TI0MstlRqv3wt0uPo2W
+ fhirfmB4yV9uHut46huoTHycjU7CGTKCApepcoacQn/oGZilJE+zoocUCoNK3UxGXQaW
+ AnF3l46C8GgBzcbgxw76G6DP97p2dVVrggRc3HZs1SS7WmI8ZuMrgJfy567sZr8yQ1Un
+ 9QRyEYRtT4NLTJU05Zn3utOdWh4klulfOvtXZjGtwg6oVBtBs5fG0/QMPRRPo+EJN4C7
+ zSBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVyVJYBECJXUsVcefIKVMY9bPqNSe2AupcvwuIgqsYBSETjMM6O4Etqsp54sqkC4iasNGysZnXwGJogxxykChlADJrXxms=
-X-Gm-Message-State: AOJu0YxgAXo3MRFWONx3LfP4R1jelJaBH1XAD3fca/NaYPvR7dfci7Za
- yKv9pMFdljSIYi30KSQINYQMKPAFPTRx7fL8V9GvlE9E2XPzTXO5sCzAyxyGfQ+DDU9fIjwkuEb
- Fj06r0VTi7Kib+sEBeZ9q6R/DLXSAOPuYBlSrzx9oBhlqv/cDuw32
-X-Received: by 2002:a05:622a:411:b0:42e:5a10:27f0 with SMTP id
- n17-20020a05622a041100b0042e5a1027f0mr16351178qtx.8.1710364309121; 
- Wed, 13 Mar 2024 14:11:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGastwUDFGNcZAVxWzFxhwe+79etmDKmqvi6C0Sv3oUr/36Ra4U/p1l6j6TS3KeTcCMaAMB7A==
-X-Received: by 2002:a05:622a:411:b0:42e:5a10:27f0 with SMTP id
- n17-20020a05622a041100b0042e5a1027f0mr16351162qtx.8.1710364308847; 
- Wed, 13 Mar 2024 14:11:48 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- q11-20020ac8450b000000b004308e46e815sm1189908qtn.67.2024.03.13.14.11.46
+ AJvYcCU6vhv85PHmKv/jwEVHYz6QVidQcBevgBfkEQJ0XImoCtc5I4o3m8rGqTYW0ZrMc84ZF9Ftuir+6T1j5PQvnrRUefd03zw=
+X-Gm-Message-State: AOJu0YzHMVsKHioFUcKtLxtp6iod8x1/HrwkWhBjF6+uXNvn39eUjDUU
+ lawMk41Elo+rFVFgTmlhZrTPDBj8mD7GW5ZK88R8F53tEBZapxLAmfE+yzL5Gp8=
+X-Google-Smtp-Source: AGHT+IHcn4868ih0sM/IkecDTSdpN142VYOUVh4KSN8vI6DTT8TxaSr0GYQOpMicO7oAAVa66gWGOw==
+X-Received: by 2002:a05:6a20:b288:b0:1a1:67fb:924b with SMTP id
+ ei8-20020a056a20b28800b001a167fb924bmr117673pzb.28.1710364639378; 
+ Wed, 13 Mar 2024 14:17:19 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ a26-20020aa7865a000000b006e6b5e65579sm54500pfo.106.2024.03.13.14.16.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Mar 2024 14:11:47 -0700 (PDT)
-Message-ID: <33a8303b-1123-4f10-89b3-ee952cbcf838@redhat.com>
-Date: Wed, 13 Mar 2024 22:11:45 +0100
+ Wed, 13 Mar 2024 14:17:18 -0700 (PDT)
+Message-ID: <87936b8f-4900-4a5f-a63d-266c1550c9a1@linaro.org>
+Date: Wed, 13 Mar 2024 11:16:37 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/iommufd: Fix memory leak
+Subject: Re: [PATCH for-9.0 v13 4/8] target/riscv: always clear vstart in
+ whole vec move insns
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
- <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <20240313210628.786224-1-clg@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240313210628.786224-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.971,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ philmd@linaro.org
+References: <20240313193059.405329-1-dbarboza@ventanamicro.com>
+ <20240313193059.405329-5-dbarboza@ventanamicro.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240313193059.405329-5-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,53 +98,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 3/13/24 22:06, Cédric Le Goater wrote:
-> Make sure variable contents is freed if scanf fails.
->
-> Cc: Eric Auger <eric.auger@redhat.com>
-> Cc: Yi Liu <yi.l.liu@intel.com>
-> Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Fixes: CID 1540007
-> Fixes: 5ee3dc7af785 ("vfio/iommufd: Implement the iommufd backend")
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Thanks!
-
-Eric
+On 3/13/24 09:30, Daniel Henrique Barboza wrote:
+> These insns have 2 paths: we'll either have vstart already cleared if
+> vstart_eq_zero or we'll do a brcond to check if vstart >= maxsz to call
+> the 'vmvr_v' helper. The helper will clear vstart if it executes until
+> the end, or if vstart >= vl.
+> 
+> However, if vstart >= maxsz, the helper will be skipped, and vstart
+> won't be cleared since the helper is being responsible from doing it.
+> 
+> We want to make the helpers responsible to manage vstart, including
+> these corner cases, precisely to avoid these situations. Move the vstart
+>> = maxsz cond to the helper, and be sure to clear vstart if that
+> happens.  This way we're now 100% sure that vstart is being clearer in
+> the end of the execution, regardless of the path taken.
+> 
+> Fixes: f714361ed7 ("target/riscv: rvv-1.0: implement vstart CSR")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->  hw/vfio/iommufd.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index a75a785e90c64cdcc4d10c88d217801b3f536cdb..cd549e0ee8573e75772c51cc96153762a6bc8550 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -152,9 +152,8 @@ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
->  
->      if (sscanf(contents, "%d:%d", &major, &minor) != 2) {
->          error_setg(errp, "failed to get major:minor for \"%s\"", vfio_dev_path);
-> -        goto out_free_dev_path;
-> +        goto out_free_contents;
->      }
-> -    g_free(contents);
->      vfio_devt = makedev(major, minor);
->  
->      vfio_path = g_strdup_printf("/dev/vfio/devices/%s", dent->d_name);
-> @@ -166,6 +165,8 @@ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
->      trace_iommufd_cdev_getfd(vfio_path, ret);
->      g_free(vfio_path);
->  
-> +out_free_contents:
-> +    g_free(contents);
->  out_free_dev_path:
->      g_free(vfio_dev_path);
->  out_close_dir:
+>   target/riscv/insn_trans/trans_rvv.c.inc | 3 ---
+>   target/riscv/vector_helper.c            | 5 +++++
+>   2 files changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+> index 8c16a9f5b3..52c26a7834 100644
+> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+> @@ -3664,12 +3664,9 @@ static bool trans_##NAME(DisasContext *s, arg_##NAME * a)               \
+>                                vreg_ofs(s, a->rs2), maxsz, maxsz);        \
+>               mark_vs_dirty(s);                                           \
+>           } else {                                                        \
+> -            TCGLabel *over = gen_new_label();                           \
+> -            tcg_gen_brcondi_tl(TCG_COND_GEU, cpu_vstart, maxsz, over);  \
+>               tcg_gen_gvec_2_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2), \
+>                                  tcg_env, maxsz, maxsz, 0, gen_helper_vmvr_v); \
+>               mark_vs_dirty(s);                                           \
+> -            gen_set_label(over);                                        \
+>           }                                                               \
+>           return true;                                                    \
+>       }                                                                   \
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index b4360dbd52..7260a5972b 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -5163,6 +5163,11 @@ void HELPER(vmvr_v)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
+>   
+>       VSTART_CHECK_EARLY_EXIT(env);
+>   
+> +    if (env->vstart >= maxsz) {
+> +        env->vstart = 0;
+> +        return;
+> +    }
 
+Did you need the VSTART_CHECK_EARLY_EXIT here then?
+It certainly seems like the vstart >= vl check is redundant...
+
+
+r~
 
