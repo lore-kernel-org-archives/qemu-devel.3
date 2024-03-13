@@ -4,80 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7DC9C54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 11:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0825AC54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 11:52:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkN7F-0006Ep-UA; Wed, 13 Mar 2024 07:49:51 -0400
+	id 1rkN8r-0007xv-Nb; Wed, 13 Mar 2024 07:51:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rkN6u-00063F-69
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 07:49:33 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rkN6c-0003NL-0J
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 07:49:27 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4133100bccdso13429075e9.0
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 04:49:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710330548; x=1710935348; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=DHC0ACrNIuYRz4G1OaWWg9lq1EE8PUCMUKSz9aqMvd4=;
- b=A47Mnsuh3//bLtVqUYriqWXvgUfvmHM/wBuK9zOaoLlWqtYRcsGhBxQa00BrpWmgrV
- PP07omhw/4di+IJ0/J12kXKlWdB9CdFUT2vOQr1ZEb+as2OjzUjUv/RR7c8RT6gZrPG+
- FNcKS/qgrVGvOstwhdr8soXLIBdkojwYt1SXDdWGi1rTtlokWXVIiruNvsz5Zx5LAkTn
- m/qbtxrOhBbCd/JHlTV5Uq0nh6gdlEky+iCprBqAukqgLic+4+4I+ocG201KAFyShDTi
- ndI3dCAGKqI+P36z1AysJVAjFFKe3ruL1ym/CP/Bmd1Dzg2an+WMZDZn/PuNCGGiR7UZ
- h8iQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710330548; x=1710935348;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DHC0ACrNIuYRz4G1OaWWg9lq1EE8PUCMUKSz9aqMvd4=;
- b=EJAxRZsYHlVIhmHdlJB9zwtxFtDi66WQx71Frv38OVU1/jmEz+oLmPaU+77CYLtpQy
- NtzQt3iWo7KmhRkvBnp//UXe27AuLEfkQR8p9Gn2ARv3dEe67YZYADmlQF9U/Ku5YlyI
- WtXMDxJoRHIjnEBDQDP34VlsrJUD2gv11lEcDSFzL/FOUPLIgNYzw0RkMFZysEo850Ti
- OkHp8q44JuN+cYg++gLlBNCCgCJwb+1c3dmzRp0kI9uWT6gUb+gBA5yEYvgtNei8h6v4
- AXkE7f04RDv68LiqCraRMAz1WqcwNYv9+xYBrO1bjAQJnugEj7jpV20VlXkvshTpmIWO
- abWw==
-X-Gm-Message-State: AOJu0Yz9NliOd9aUfu5xYn8Tm8a2PyuC3RBvTJdZplgJMopsOR8Vg1Zu
- KWET26iZH6L0QAwcvyzXS8LOo4YbFiZ4XN5Mm6gYDS07YJTPlvPN6IL2wPX1nDRiQ4pJXHQq9nv
- N
-X-Google-Smtp-Source: AGHT+IF9rRAEj8rqwmzx+AYKxbXmqGMmTxazzIx6FYBwthFWJRzA0GFts+FwWETnfPM2aoRvFvB1+A==
-X-Received: by 2002:a05:600c:4586:b0:413:1f57:aba6 with SMTP id
- r6-20020a05600c458600b004131f57aba6mr8864403wmo.12.1710330548106; 
- Wed, 13 Mar 2024 04:49:08 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- c11-20020adfe70b000000b0033e41e1ad93sm11500842wrm.57.2024.03.13.04.49.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Mar 2024 04:49:07 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EE7BF5F8D8;
- Wed, 13 Mar 2024 11:49:06 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL v2 for 9.0 0/7] final maintainer updates (testing, gdbstub)
-Date: Wed, 13 Mar 2024 11:49:06 +0000
-Message-Id: <20240313114906.20979-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1rkN8p-0007xG-87; Wed, 13 Mar 2024 07:51:27 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.vnet.ibm.com>)
+ id 1rkN8m-00040O-4L; Wed, 13 Mar 2024 07:51:26 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42DB6jNH013100; Wed, 13 Mar 2024 11:51:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=XiwRsVbqhwtQkWhhV6/5WlzBAZEoNvY+8IAeggKrTX8=;
+ b=j0Y29R8tPNscNWX6iX96KQ4+HA3kFbQdTf4lA2BAf0oPDT7psgZjDwBB9yCz1gkNlfhw
+ e+kcBrNU4NV+j4cqjgOw8gt3U1+BihsxvWZ/2rw3iCW6swTy7nO/BzZs8u/sP4/f4rl1
+ akRs2/RlIXHF8TG4e8WuJYnxxt7jchzTkd1N1KgwLsVa88QBKQRfeF58CAhiNtwvwq/M
+ b+PqCpL3zazCVH335bgNpQ1/y9VsbyJCqT40kQCqtif7VlHUYQOIVQpIqD29lHTgTyrl
+ NOsieNhcEgS2LXh5iGEFzOrSMhsZg4rCeQSv+BcfNol9MTQBpQV5uA5EwnxRYf9cxNkl sA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wu6w3v049-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 Mar 2024 11:51:09 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42DBp8QH017535;
+ Wed, 13 Mar 2024 11:51:08 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wu6w3v047-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 Mar 2024 11:51:08 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42D9Wos6015524; Wed, 13 Mar 2024 11:51:08 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ws2fywrpf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 13 Mar 2024 11:51:07 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42DBp2Fn25363032
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 13 Mar 2024 11:51:04 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3E0BC20040;
+ Wed, 13 Mar 2024 11:51:02 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6F6B220043;
+ Wed, 13 Mar 2024 11:51:00 +0000 (GMT)
+Received: from [9.199.192.140] (unknown [9.199.192.140])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 13 Mar 2024 11:51:00 +0000 (GMT)
+Message-ID: <b647b088-7551-4f78-9cef-69adf9092699@linux.vnet.ibm.com>
+Date: Wed, 13 Mar 2024 17:20:59 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/ppc: Move floating-point arithmetic instructions
+ to decodetree.
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org, danielhb413@gmail.com, clg@kaod.org,
+ harshpb@linux.ibm.com, sbhat@linux.ibm.com
+References: <20240307110318.170319-1-rathc@linux.ibm.com>
+ <CZRO4Y67CBPV.2IAKB80EFDKEY@wheely>
+ <0c7c6be1-12fb-4267-9d41-bd51637d104a@linaro.org>
+ <CZRU903MDUJ1.6S9RSO5A4RDG@wheely>
+ <CAFEAcA8im7S-bsx-hYqgUy4tsc8yXjWQf7Sb-=KnuREyqqC8mw@mail.gmail.com>
+From: Chinmay Rath <rathc@linux.vnet.ibm.com>
+In-Reply-To: <CAFEAcA8im7S-bsx-hYqgUy4tsc8yXjWQf7Sb-=KnuREyqqC8mw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: HS4CtudiXoWVxTZlAvFXN4MpHGmvlVf7
+X-Proofpoint-ORIG-GUID: hRCSyB5MjGYpnMqRA2ZjqU6XEUB6_Rrh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-13_07,2024-03-12_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0 priorityscore=1501
+ malwarescore=0 mlxscore=0 adultscore=0 clxscore=1011 mlxlogscore=832
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403130088
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=rathc@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,75 +123,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 0748129684be2773117b0b8fc3c60161abdb7bb8:
 
-  Merge tag 'ui-pull-request' of https://gitlab.com/marcandre.lureau/qemu into staging (2024-03-12 16:56:13 +0000)
 
-are available in the Git repository at:
+On 3/12/24 19:59, Peter Maydell wrote:
+> On Tue, 12 Mar 2024 at 14:25, Nicholas Piggin <npiggin@gmail.com> wrote:
+>> On Wed Mar 13, 2024 at 12:01 AM AEST, Richard Henderson wrote:
+>>> On 3/11/24 23:36, Nicholas Piggin wrote:
+>> [snip]
+>>
+>>>> #define FPU_HELPER(name, op, flags_handler)                           \
+>>>> float64 helper_##name(CPUPPCState *env, float64 arg1, float64 arg2)   \
+>>>> {                                                                     \
+>>>>       float64 ret = op(arg1, arg2, &env->fp_status);                    \
+>>>>       int flags = get_float_exception_flags(&env->fp_status);           \
+>>>>       flags_handler(env, flags)                                         \
+>>>>       return ret;                                                       \
+>>>> }
+>>>>
+>>>> static inline void addsub_flags_handler(CPUPPCState *env, int flags)
+>>>> {
+>>>>       if (unlikely(flags & float_flag_invalid)) {
+>>>>           float_invalid_op_addsub(env, flags, 1, GETPC());
+>>>>       }
+>>>> }
+>>>>
+>>>> static inline void mul_flags_handler(CPUPPCState *env, int flags)
+>>>> {
+>>>>       if (unlikely(flags & float_flag_invalid)) {
+>>>>           float_invalid_op_mul(env, flags, 1, GETPC());
+>>>>       }
+>>>> }
+>>>>
+>>>> static inline void div_flags_handler(CPUPPCState *env, int flags)
+>>>> {
+>>>>       if (unlikely(flags & float_flag_invalid)) {
+>>>>           float_invalid_op_div(env, flags, 1, GETPC());
+>>>>       }
+>>>>       if (unlikely(flags & float_flag_divbyzero)) {
+>>>>           float_zero_divide_excp(env, GETPC());
+>>>>       }
+>>>> }
+>>> Beware -- GETPC() may only be called from the outermost helper.
+>> Ah, because it's using __builtin_return_address. Good to know.
+>> Using always_inline and a comment should do the trick then.
+> The standard way to fix this is that you call GETPC() at the
+> outermost helper and then pass that value around as an extra
+> uintptr_t ra argument to called functions that need it.
+Thanks Peter, Nick and Richard. I shall post v2 with suggested updates.
 
-  https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-final-130324-1
-
-for you to fetch changes up to 6971998e241d8edc842b165b447f706c05166ae6:
-
-  gdbstub: Fix double close() of the follow-fork-mode socket (2024-03-13 11:43:52 +0000)
-
-----------------------------------------------------------------
-final updates for 9.0 (testing, gdbstub):
-
-  - fix the over rebuilding of test VMs
-  - support Xfer:siginfo:read in gdbstub
-  - fix double close() in gdbstub
-
-----------------------------------------------------------------
-Alex Bennée (1):
-      tests/vm: ensure we build everything by default
-
-Gustavo Romero (5):
-      gdbstub: Rename back gdb_handlesig
-      linux-user: Move tswap_siginfo out of target code
-      gdbstub: Save target's siginfo
-      gdbstub: Add Xfer:siginfo:read stub
-      tests/tcg: Add multiarch test for Xfer:siginfo:read stub
-
-Ilya Leoshkevich (1):
-      gdbstub: Fix double close() of the follow-fork-mode socket
-
- gdbstub/internals.h                                |  1 +
- include/gdbstub/user.h                             | 19 +++------
- linux-user/signal-common.h                         |  2 -
- bsd-user/main.c                                    |  2 +-
- bsd-user/signal.c                                  |  5 ++-
- gdbstub/gdbstub.c                                  |  8 ++++
- gdbstub/user.c                                     | 49 +++++++++++++++++++---
- linux-user/aarch64/signal.c                        |  2 +-
- linux-user/alpha/signal.c                          |  2 +-
- linux-user/arm/signal.c                            |  2 +-
- linux-user/hexagon/signal.c                        |  2 +-
- linux-user/hppa/signal.c                           |  2 +-
- linux-user/i386/signal.c                           |  6 +--
- linux-user/loongarch64/signal.c                    |  2 +-
- linux-user/m68k/signal.c                           |  4 +-
- linux-user/main.c                                  |  2 +-
- linux-user/microblaze/signal.c                     |  2 +-
- linux-user/mips/signal.c                           |  4 +-
- linux-user/nios2/signal.c                          |  2 +-
- linux-user/openrisc/signal.c                       |  2 +-
- linux-user/ppc/signal.c                            |  4 +-
- linux-user/riscv/signal.c                          |  2 +-
- linux-user/s390x/signal.c                          |  2 +-
- linux-user/sh4/signal.c                            |  2 +-
- linux-user/signal.c                                | 15 +++++--
- linux-user/sparc/signal.c                          |  2 +-
- linux-user/xtensa/signal.c                         |  2 +-
- tests/tcg/multiarch/segfault.c                     | 14 +++++++
- tests/tcg/multiarch/Makefile.target                | 10 ++++-
- .../multiarch/gdbstub/test-qxfer-siginfo-read.py   | 26 ++++++++++++
- tests/vm/basevm.py                                 |  2 +-
- 31 files changed, 149 insertions(+), 52 deletions(-)
- create mode 100644 tests/tcg/multiarch/segfault.c
- create mode 100644 tests/tcg/multiarch/gdbstub/test-qxfer-siginfo-read.py
-
--- 
-2.39.2
+Regards,
+Chinmay
+>
+> thanks
+> -- PMM
+>
 
 
