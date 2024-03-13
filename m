@@ -4,65 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 348BBC54E68
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 08:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AFD5C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 08:57:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkKJF-0002n7-GX; Wed, 13 Mar 2024 04:50:02 -0400
+	id 1rkKQ7-0006ld-7h; Wed, 13 Mar 2024 04:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rkKJ3-0002jE-I3
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:49:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rkKJ1-0000DA-KW
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:49:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710319785;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=nak0yr6B3kWAnErxNK2rR0lCio2XzH+ueyZd9XmZcIQ=;
- b=aaB8EWS5+mdu1YmNQ2fR9F8aQB6dzGMbJQZuLvdkKrYcDgS8/kIkhZ+NpfGvfr9Sd1MjBR
- N41ySPWxDdw3CLyVB4ZHXsBda4A8nQgNtHF4gdAjEstOIi4CdW26IgYVukKyH61yJ7Ms22
- wnrFkiuRTu73Xzg6eup3bgumv5VdIvQ=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-u_PmLlb_O_6gG8VO9zmm9w-1; Wed,
- 13 Mar 2024 04:49:44 -0400
-X-MC-Unique: u_PmLlb_O_6gG8VO9zmm9w-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DBC04380228B;
- Wed, 13 Mar 2024 08:49:43 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.67.24.5])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C63F7492BC6;
- Wed, 13 Mar 2024 08:49:39 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: stefanha@redhat.com
-Cc: kwolf@redhat.com, qemu-block@nongnu.org, qemu-devel@nongnu.org,
- mtosatti@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH v3] linux-aio: add IO_CMD_FDSYNC command support
-Date: Wed, 13 Mar 2024 14:19:35 +0530
-Message-ID: <20240313084935.1412274-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rkKQ6-0006lF-0m
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:57:06 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rkKQ3-0001wN-W7
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 04:57:05 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-33d90dfe73cso324124f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 01:57:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1710320219; x=1710925019; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=zzeXVOwj4j/YDqEdvW6/fBZnpKw/FuA6FRyIKZNEoVw=;
+ b=W0U38b8kM2/8/20439EwSh0IsKOi5FyeI5E3EVMvUyhJoi2iWO+31kBKi188LFm5/m
+ 6CO5VOM7MsduOw6EQKEErTO+g+pa+51BSbr+6v6CAxJgMnOJQpng150HomEQI7Y4tblg
+ 4Tvu+/MxDACSyrCIAHmYfJJJCzKNQCYa2XfbmVU8S2lCdVaYBSgsE1LGxI/ewX+akqoH
+ FMnf7IgI5XpRbGnhqhHu8Cbcwm1Xf81FKvLB5bH8OCjzfQB/AqO3RQsP9KMydVH2LkPS
+ QOcyLvKi8nGx0XmeVTiGS/964/XUtCM9c/dRsuKutgDNcDCG+2vvO7H/7s/+2rriGhJ/
+ NZzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710320219; x=1710925019;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zzeXVOwj4j/YDqEdvW6/fBZnpKw/FuA6FRyIKZNEoVw=;
+ b=TBfkYLSR6eqPGSp54MPSq3JG9QkRjYqEfY5HnE1pesEYqjU/CLuKkmtR7r6i3lhXVo
+ yRF7UahpFcgy0IJtQEnNagZ2ueGaYLhM1gycfvTuSCDkhUMck3sHUTpiQwDkCi759muE
+ 8WQig4afRRCf8uyNG4U5ItVVrvJ48IEPgdus9T8x5iN07UkLdp4pRrW9LkfP15YEqyC4
+ p8dT0x5mBpP1ffuX1MnTP375ZYTIcdLBd4ZnPu//itCF7++itqCqfE3gHE8Uqafu2ZHY
+ 5J0JvuBGy870s5bzSoQ3Vp02I9Kig0tUKmryIlEXpTXP/6VybRs6TF9r7J/piPDrVcaL
+ 7/2Q==
+X-Gm-Message-State: AOJu0Yyi/YaJq/R4RuRVSALSPWrVhjZoz9kaHKxJfHdHr1X7Vern8QYU
+ 9tjr62lV967KdfVNyZ1GCrwo9tva03OLI3D8iuIRP/UBHxlNzj7gmlkn9CzCuF8=
+X-Google-Smtp-Source: AGHT+IFsTPMYvibcG3IfeN0KXC3CUkO5eaGAhCqPOBPryOwWsAcS2CKxby7Yl3sOI3T/ShHm9e7Kyg==
+X-Received: by 2002:adf:cb92:0:b0:33d:61c7:9b2c with SMTP id
+ q18-20020adfcb92000000b0033d61c79b2cmr1411915wrh.34.1710320219272; 
+ Wed, 13 Mar 2024 01:56:59 -0700 (PDT)
+Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
+ by smtp.gmail.com with ESMTPSA id
+ n20-20020a05600c4f9400b00412f8bf2d82sm1636864wmq.28.2024.03.13.01.56.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Mar 2024 01:56:58 -0700 (PDT)
+Date: Wed, 13 Mar 2024 09:56:52 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
+ vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 1/1] target/riscv/kvm: fix timebase-frequency when using
+ KVM acceleration
+Message-ID: <20240313-d11a0490609909bd354f01b2@orel>
+References: <20240313081359.20845-1-yongxuan.wang@sifive.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240313081359.20845-1-yongxuan.wang@sifive.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,102 +100,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+On Wed, Mar 13, 2024 at 04:13:57PM +0800, Yong-Xuan Wang wrote:
+> The timebase-frequency of guest OS should be the same with host
+> machine. The timebase-frequency value in DTS should be got from
+> hypervisor when using KVM acceleration.
+> 
+> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+> ---
+>  hw/riscv/virt.c              | 11 +++++++++--
+>  target/riscv/kvm/kvm-cpu.c   |  9 +++++++++
+>  target/riscv/kvm/kvm_riscv.h | 13 +++++++++++++
+>  3 files changed, 31 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index a094af97c32a..a7ed7fa13010 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -710,8 +710,15 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+>      int socket_count = riscv_socket_count(ms);
+>  
+>      qemu_fdt_add_subnode(ms->fdt, "/cpus");
+> -    qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
+> -                          RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ);
+> +
+> +    if (kvm_enabled()) {
+> +        qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
+> +                              kvm_riscv_get_timebase_frequency(first_cpu));
+> +    } else {
+> +        qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
+> +                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ);
+> +    }
+> +
+>      qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#size-cells", 0x0);
+>      qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#address-cells", 0x1);
+>      qemu_fdt_add_subnode(ms->fdt, "/cpus/cpu-map");
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index c7afdb1e81b7..bbb115eaa867 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -739,6 +739,15 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
+>      env->kvm_timer_dirty = false;
+>  }
+>  
+> +uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs)
+> +{
+> +    uint64_t reg;
+> +
+> +    KVM_RISCV_GET_TIMER(cs, frequency, reg);
+> +
+> +    return reg;
+> +}
+> +
+>  static int kvm_riscv_get_regs_vector(CPUState *cs)
+>  {
+>      RISCVCPU *cpu = RISCV_CPU(cs);
+> diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
+> index 4bd98fddc776..130a4bde0480 100644
+> --- a/target/riscv/kvm/kvm_riscv.h
+> +++ b/target/riscv/kvm/kvm_riscv.h
+> @@ -29,4 +29,17 @@ void riscv_kvm_aplic_request(void *opaque, int irq, int level);
+>  int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state);
+>  void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+>  
+> +#ifdef CONFIG_KVM
+> +
+> +uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs);
+> +
+> +#else
+> +
+> +static inline uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs)
+> +{
+> +    g_assert_not_reached();
+> +}
+> +
+> +#endif
+> +
 
-Libaio defines IO_CMD_FDSYNC command to sync all outstanding
-asynchronous I/O operations, by flushing out file data to the
-disk storage.
+I think we've decided we don't need stubs like these since kvm_riscv_*
+functions should always be called within 'if (kvm_enabled())' blocks (as
+you have above), and then we leave it to the compile testing to point
+out kvm function calls without kvm_enabled().
 
-Enable linux-aio to submit such aio request. This helps to
-reduce latency induced via pthread_create calls by
-thread-pool (aio=threads).
+>  #endif
+> -- 
+> 2.17.1
+>
 
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
----
- block/file-posix.c |  7 +++++++
- block/linux-aio.c  | 22 +++++++++++++++++++++-
- 2 files changed, 28 insertions(+), 1 deletion(-)
+Besides dropping the stubs,
 
-v3: check if host kernel supports aio_fsync call
-  -> https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg03210.html
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 35684f7e21..a30494d1a8 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -2453,6 +2453,8 @@ static inline bool raw_check_linux_io_uring(BDRVRawState *s)
- #endif
- 
- #ifdef CONFIG_LINUX_AIO
-+extern bool laio_has_fdsync(int);
-+
- static inline bool raw_check_linux_aio(BDRVRawState *s)
- {
-     Error *local_err = NULL;
-@@ -2599,6 +2601,11 @@ static int coroutine_fn raw_co_flush_to_disk(BlockDriverState *bs)
-     if (raw_check_linux_io_uring(s)) {
-         return luring_co_submit(bs, s->fd, 0, NULL, QEMU_AIO_FLUSH);
-     }
-+#endif
-+#ifdef CONFIG_LINUX_AIO
-+    if (raw_check_linux_aio(s) && laio_has_fdsync(s->fd)) {
-+        return laio_co_submit(s->fd, 0, NULL, QEMU_AIO_FLUSH, 0);
-+    }
- #endif
-     return raw_thread_pool_submit(handle_aiocb_flush, &acb);
- }
-diff --git a/block/linux-aio.c b/block/linux-aio.c
-index ec05d946f3..ed20a503e9 100644
---- a/block/linux-aio.c
-+++ b/block/linux-aio.c
-@@ -67,6 +67,7 @@ struct LinuxAioState {
-     int event_max;
- };
- 
-+bool laio_has_fdsync(int);
- static void ioq_submit(LinuxAioState *s);
- 
- static inline ssize_t io_event_ret(struct io_event *ev)
-@@ -384,6 +385,9 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
-     case QEMU_AIO_READ:
-         io_prep_preadv(iocbs, fd, qiov->iov, qiov->niov, offset);
-         break;
-+    case QEMU_AIO_FLUSH:
-+        io_prep_fdsync(iocbs, fd);
-+        break;
-     /* Currently Linux kernel does not support other operations */
-     default:
-         fprintf(stderr, "%s: invalid AIO request type 0x%x.\n",
-@@ -412,7 +416,7 @@ int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
-     AioContext *ctx = qemu_get_current_aio_context();
-     struct qemu_laiocb laiocb = {
-         .co         = qemu_coroutine_self(),
--        .nbytes     = qiov->size,
-+        .nbytes     = qiov ? qiov->size : 0,
-         .ctx        = aio_get_linux_aio(ctx),
-         .ret        = -EINPROGRESS,
-         .is_read    = (type == QEMU_AIO_READ),
-@@ -486,3 +490,19 @@ void laio_cleanup(LinuxAioState *s)
-     }
-     g_free(s);
- }
-+
-+bool laio_has_fdsync(int fd)
-+{
-+    struct iocb cb;
-+    struct iocb *cbs[] = {&cb, NULL};
-+
-+    io_context_t ctx = 0;
-+    io_setup(1, &ctx);
-+
-+    /* check if host kernel supports IO_CMD_FDSYNC */
-+    io_prep_fdsync(&cb, fd);
-+    int ret = io_submit(ctx, 1, cbs);
-+
-+    io_destroy(ctx);
-+    return (ret == -EINVAL) ? false : true;
-+}
--- 
-2.44.0
-
+Thanks,
+drew
 
