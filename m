@@ -4,72 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551D9C54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 09:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F043DC54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 09:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkL68-0001Oy-G2; Wed, 13 Mar 2024 05:40:32 -0400
+	id 1rkLI7-0004pQ-Fb; Wed, 13 Mar 2024 05:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rkL66-0001Oo-MQ
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 05:40:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rkL63-00024x-Hm
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 05:40:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710322825;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/VDIsS8xatjbwIvdxMWV6loRxSBb9iEYV5eZJQRgg9k=;
- b=fVYKZAET/lx/wPJ4Y1hSaXBzqfsFWwrfivfd4hFccbvqRT8Oxb4fOWE4fRqI/WoCz6mdny
- QpTaOU/SKeHZuoaRIxENkjti5T4+rsKSGd5q6dK3VjLk6kSUXq9ZxflEnzOGCryjoULVs4
- 3/EN2aAqqM+TkU9mbHO+aEmPcNwUpCQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-369-UekRnUn5NOWLnRQ01iajGQ-1; Wed, 13 Mar 2024 05:40:23 -0400
-X-MC-Unique: UekRnUn5NOWLnRQ01iajGQ-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3A084800265;
- Wed, 13 Mar 2024 09:40:23 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id D5D3540C6CB1;
- Wed, 13 Mar 2024 09:40:22 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id ADC7F21E6A24; Wed, 13 Mar 2024 10:40:21 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Hyman Huang <yong.huang@smartx.com>,  qemu-devel@nongnu.org,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [PATCH v4 0/3] Adjust the output of x-query-virtio-status
-In-Reply-To: <20240313051034-mutt-send-email-mst@kernel.org> (Michael
- S. Tsirkin's message of "Wed, 13 Mar 2024 05:18:50 -0400")
-References: <cover.1708525606.git.yong.huang@smartx.com>
- <20240312121944-mutt-send-email-mst@kernel.org>
- <87h6hah7bb.fsf@pond.sub.org>
- <20240313051034-mutt-send-email-mst@kernel.org>
-Date: Wed, 13 Mar 2024 10:40:21 +0100
-Message-ID: <87msr2fp16.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rkLI5-0004oe-9w
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 05:52:53 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rkLI3-0003bF-96
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 05:52:53 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a44f2d894b7so106336966b.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 02:52:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1710323569; x=1710928369; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ruQFcJuHUQqZP8BhvR0EDOl0VOmtFkHUR9/tKdO75is=;
+ b=i7S21LqfYsob1gUDe4cxF6nvHnl3KYBrHJ2V3FU7YTd1lCS7YR6nnNGooLVRxtEBoB
+ QBFwAP3LdoA99h1S68KtSUyO3A/3dWvjTejNHOqVEbiDBsAdTP+fYbqyldSEUD734Uy3
+ e6aEuvQvOTgucK3aigEaQkCcK043Y4TkJDi/DswewLjdCXbVETOF4xiXY9+HQkrhB9q9
+ g5BL0bVseA1LTU//zLOZW9vEN2R0kI2Jo/BZ6ZsKx8tKvAyydrb+WGJrv3N2DrrVKIjl
+ 6Nr45+QOdc5HktqlXiiY4WP16MaVDo5LnBVY01ZWkKUh1I7CykKSqjWxia+5IAogrP/F
+ 0mLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710323569; x=1710928369;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ruQFcJuHUQqZP8BhvR0EDOl0VOmtFkHUR9/tKdO75is=;
+ b=Lq/r1IJwOtAczW57LSy1JKRHIAJEjbBoLGLzE07+Gi5OdqjhkzANVMIzceqjZ8uiPK
+ pDGFu6pQMWccb2oFe2JocwdH9054cpS+AWCjWuUtyRuzeRkzd4ehYSOEGmWLbvNIkkOg
+ 4bzW+mgzlW9tvBTtEfJpPxtcyhzpXxssHJ44U84K23MYIP8BvmEJJEvulwzjmcLUDIgT
+ dwmagYnL20kMA21LXZU27Ec1gJrwKGjA0+XeqevsKFhe/T/TuWSXDyQQOT3RuRcawG77
+ z2NeGbJd0hXc9304h0En0eIgP+TK80P8dQbb2NLDvce/eWb2NnyUD9SFNkPeYFTEv8aQ
+ jaAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVdQwyQ+4PolktwhYAUJ4tsaqK8wYz0b/IZz5GAOmHZUhkmH0X/syDvy/6WPJKlzIVRhmaM7aJbK6nTqdX2UsnYm6mrDfs=
+X-Gm-Message-State: AOJu0Yy3jkbDuN4hLDz8e/My1PmfjU9Tjgo4L3MKOdoAiKM3Pkj7pMqU
+ nVP+pckGtcRSexuz81MXp7QL0wRcQ/xgUJIyg6L31lbaIWuhBhBl5vB43tvwjwc=
+X-Google-Smtp-Source: AGHT+IHeWdRwrWlsnX+qww/Fng+daJsY+SZQswyAFQP5z6SkmzBUxgtVbNcg7Pl8SC6b7RCrAzX8FA==
+X-Received: by 2002:a17:907:a0d2:b0:a44:277c:1683 with SMTP id
+ hw18-20020a170907a0d200b00a44277c1683mr4992771ejc.53.1710323569533; 
+ Wed, 13 Mar 2024 02:52:49 -0700 (PDT)
+Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
+ by smtp.gmail.com with ESMTPSA id
+ l20-20020a1709067d5400b00a46224d4442sm3156887ejp.212.2024.03.13.02.52.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Mar 2024 02:52:49 -0700 (PDT)
+Date: Wed, 13 Mar 2024 10:52:48 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Himanshu Chauhan <hchauhan@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 1/3] target/riscv: Enable mcontrol6 triggers only when
+ sdtrig is selected
+Message-ID: <20240313-a62777ede69ea38aad80b882@orel>
+References: <20240313060931.242161-1-hchauhan@ventanamicro.com>
+ <20240313060931.242161-2-hchauhan@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240313060931.242161-2-hchauhan@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,100 +96,240 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+On Wed, Mar 13, 2024 at 11:39:29AM +0530, Himanshu Chauhan wrote:
+> The mcontrol6 triggers are not defined in debug specification v0.13
+> These triggers are defined in sdtrig ISA extension.
+> 
+> This patch:
+>    * Adds ext_sdtrig capability which is used to select mcontrol6 triggers
+>    * Keeps the debug property. All triggers that are defined in v0.13 are
+>      exposed.
+> 
+> Signed-off-by: Himanshu Chauhan <hchauhan@ventanamicro.com>
+> ---
+>  target/riscv/cpu.c     |  4 +-
+>  target/riscv/cpu_cfg.h |  1 +
+>  target/riscv/csr.c     |  2 +-
+>  target/riscv/debug.c   | 92 +++++++++++++++++++++++++-----------------
+>  target/riscv/machine.c |  2 +-
+>  5 files changed, 60 insertions(+), 41 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index c160b9216b..2602aae9f5 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1008,7 +1008,7 @@ static void riscv_cpu_reset_hold(Object *obj)
+>      set_default_nan_mode(1, &env->fp_status);
+>  
+>  #ifndef CONFIG_USER_ONLY
+> -    if (cpu->cfg.debug) {
+> +    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
+>          riscv_trigger_reset_hold(env);
+>      }
+>  
+> @@ -1168,7 +1168,7 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
+>      riscv_cpu_register_gdb_regs_for_features(cs);
+>  
+>  #ifndef CONFIG_USER_ONLY
+> -    if (cpu->cfg.debug) {
+> +    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
+>          riscv_trigger_realize(&cpu->env);
+>      }
+>  #endif
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index 2040b90da0..0c57e1acd4 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -114,6 +114,7 @@ struct RISCVCPUConfig {
+>      bool ext_zvfbfwma;
+>      bool ext_zvfh;
+>      bool ext_zvfhmin;
+> +    bool ext_sdtrig;
+>      bool ext_smaia;
+>      bool ext_ssaia;
+>      bool ext_sscofpmf;
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 726096444f..26623d3640 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -546,7 +546,7 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
+>  
+>  static RISCVException debug(CPURISCVState *env, int csrno)
+>  {
+> -    if (riscv_cpu_cfg(env)->debug) {
+> +    if (riscv_cpu_cfg(env)->debug || riscv_cpu_cfg(env)->ext_sdtrig) {
+>          return RISCV_EXCP_NONE;
+>      }
+>  
+> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+> index e30d99cc2f..c6a92ba0f7 100644
+> --- a/target/riscv/debug.c
+> +++ b/target/riscv/debug.c
+> @@ -100,13 +100,16 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
+>      target_ulong tdata1 = env->tdata1[trigger_index];
+>      int trigger_type = get_trigger_type(env, trigger_index);
+>      trigger_action_t action = DBG_ACTION_NONE;
+> +    const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
+>  
+>      switch (trigger_type) {
+>      case TRIGGER_TYPE_AD_MATCH:
+>          action = (tdata1 & TYPE2_ACTION) >> 12;
+>          break;
+>      case TRIGGER_TYPE_AD_MATCH6:
+> -        action = (tdata1 & TYPE6_ACTION) >> 12;
+> +        /* Only sdtrig ISA extension supports type 6 match */
 
-> On Wed, Mar 13, 2024 at 09:20:08AM +0100, Markus Armbruster wrote:
->> "Michael S. Tsirkin" <mst@redhat.com> writes:
->> 
->> > On Wed, Feb 21, 2024 at 10:28:50PM +0800, Hyman Huang wrote:
->> >> v4:
->> >> - Rebase on master
->> >> - Fix the syntax mistake within the commit message of [PATCH v3 1/3]
->> >> - Adjust the linking file in hw/virtio/meson.build suggested by Markus
->> >> 
->> >> Please review,
->> >> Yong
->> >
->> > I'm still not excited about this.
->> > For one this will not scale when we add more than 64 feature bits.
->> 
->> x-query-virtio-status is meant to be a low effort, low level debugging
->> aid.  Its feature set members correspond 1:1 to uint64_t members of the
->> C struct, which I figure correspond 1:1 to 64-bit words in the binary
->> virtio interface.
->> If we run out of bits in the binary virtio interface, I guess we'd add
->> another 64-bit word.  The C struct acquires another uint64_t member, and
->> so does x-query-virtio-status.
->> 
->> What's wrong with that?
+I'd drop the comment since the if-statement says the same thing.
+
+> +        if (cfg->ext_sdtrig)
+> +            action = (tdata1 & TYPE6_ACTION) >> 12;
+>          break;
+>      case TRIGGER_TYPE_INST_CNT:
+>      case TRIGGER_TYPE_INT:
+> @@ -727,7 +730,12 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+>          type2_reg_write(env, env->trigger_cur, tdata_index, val);
+>          break;
+>      case TRIGGER_TYPE_AD_MATCH6:
+> -        type6_reg_write(env, env->trigger_cur, tdata_index, val);
+> +        if (riscv_cpu_cfg(env)->ext_sdtrig) {
+> +            type6_reg_write(env, env->trigger_cur, tdata_index, val);
+> +        } else {
+> +            qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\n",
+> +                          trigger_type);
+> +        }
+>          break;
+>      case TRIGGER_TYPE_INST_CNT:
+>          itrigger_reg_write(env, env->trigger_cur, tdata_index, val);
+> @@ -750,9 +758,15 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+>  
+>  target_ulong tinfo_csr_read(CPURISCVState *env)
+>  {
+> -    /* assume all triggers support the same types of triggers */
+> -    return BIT(TRIGGER_TYPE_AD_MATCH) |
+> -           BIT(TRIGGER_TYPE_AD_MATCH6);
+> +    target_ulong ts = 0;
+> +
+> +    ts = BIT(TRIGGER_TYPE_AD_MATCH);
+> +
+> +    /* sdtrig ISA extension supports type 6 match */
+
+Also drop this comment.
+
+> +    if (riscv_cpu_cfg(env)->ext_sdtrig)
+> +        ts |= BIT(TRIGGER_TYPE_AD_MATCH6);
+> +
+> +    return ts;
+>  }
+>  
+>  void riscv_cpu_debug_excp_handler(CPUState *cs)
+> @@ -803,19 +817,21 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
+>                  }
+>                  break;
+>              case TRIGGER_TYPE_AD_MATCH6:
+> -                ctrl = env->tdata1[i];
+> -                pc = env->tdata2[i];
+> -
+> -                if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
+> -                    if (env->virt_enabled) {
+> -                        /* check VU/VS bit against current privilege level */
+> -                        if ((ctrl >> 23) & BIT(env->priv)) {
+> -                            return true;
+> -                        }
+> -                    } else {
+> -                        /* check U/S/M bit against current privilege level */
+> -                        if ((ctrl >> 3) & BIT(env->priv)) {
+> -                            return true;
+> +                if (cpu->cfg.ext_sdtrig) {
+> +                   ctrl = env->tdata1[i];
+
+Check your whitespace. Missing one space of indent in the line above.
+
+> +                    pc = env->tdata2[i];
+> +
+> +                    if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
+> +                        if (env->virt_enabled) {
+> +                            /* check VU/VS bit against current privilege level */
+> +                            if ((ctrl >> 23) & BIT(env->priv)) {
+> +                                return true;
+> +                            }
+> +                        } else {
+> +                            /* check U/S/M bit against current privilege level */
+> +                            if ((ctrl >> 3) & BIT(env->priv)) {
+> +                                return true;
+> +                            }
+>                          }
+>                      }
+>                  }
+> @@ -869,27 +885,29 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+>              }
+>              break;
+>          case TRIGGER_TYPE_AD_MATCH6:
+> -            ctrl = env->tdata1[i];
+> -            addr = env->tdata2[i];
+> -            flags = 0;
+> +            if (cpu->cfg.ext_sdtrig) {
+> +                ctrl = env->tdata1[i];
+> +                addr = env->tdata2[i];
+> +                flags = 0;
+>  
+> -            if (ctrl & TYPE6_LOAD) {
+> -                flags |= BP_MEM_READ;
+> -            }
+> -            if (ctrl & TYPE6_STORE) {
+> -                flags |= BP_MEM_WRITE;
+> -            }
+> +                if (ctrl & TYPE6_LOAD) {
+> +                    flags |= BP_MEM_READ;
+> +                }
+> +                if (ctrl & TYPE6_STORE) {
+> +                    flags |= BP_MEM_WRITE;
+> +                }
+>  
+> -            if ((wp->flags & flags) && (wp->vaddr == addr)) {
+> -                if (env->virt_enabled) {
+> -                    /* check VU/VS bit against current privilege level */
+> -                    if ((ctrl >> 23) & BIT(env->priv)) {
+> -                        return true;
+> -                    }
+> -                } else {
+> -                    /* check U/S/M bit against current privilege level */
+> -                    if ((ctrl >> 3) & BIT(env->priv)) {
+> -                        return true;
+> +                if ((wp->flags & flags) && (wp->vaddr == addr)) {
+> +                    if (env->virt_enabled) {
+> +                        /* check VU/VS bit against current privilege level */
+> +                        if ((ctrl >> 23) & BIT(env->priv)) {
+> +                            return true;
+> +                        }
+> +                    } else {
+> +                        /* check U/S/M bit against current privilege level */
+> +                        if ((ctrl >> 3) & BIT(env->priv)) {
+> +                            return true;
+> +                        }
+>                      }
+>                  }
+>              }
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 76f2150f78..1cb8656191 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -230,7 +230,7 @@ static bool debug_needed(void *opaque)
+>  {
+>      RISCVCPU *cpu = opaque;
+>  
+> -    return cpu->cfg.debug;
+> +    return (cpu->cfg.debug || cpu->cfg.ext_sdtrig);
+
+nit: Unnecssary ()
+
+>  }
+>  
+>  static int debug_post_load(void *opaque, int version_id)
+> -- 
+> 2.34.1
+> 
 >
-> Nope, that last part about virtio binary interface is wrong. virtio does
-> not have a 64-bit word in it's ABI, it has an array of bits represented,
-> depending on a transport, as a dynamically sized array of 32-bit words
-> (PCI, MMIO) or a dynamically sized array of bytes (CCW).
 
-Then have x-query-virtio-status return a suitable array of unsigned
-numbers.  Look ma, no invention!
-
-> We are beginning to get closer to filling up 64 bits for some devices
-> so I'm already looking at not baking 64 bit in new code.
->
->> 
->> > As long as we are changing this let's address this please.
->> > I would also suggest just keeping the name in there, so
->> > a decoded feature will be
->> > [0, NAME]
->> > and a non-decoded will be just
->> > [23]
->> >
->> > will make for a smaller change.
->> 
->> I'm not sure I understand your suggestion.
->> 
->> [...]
->
-> For example, for the balloon device:
->
-> instead of e.g. 0x201 as this patch would do,
-> I propose [ [{0, "VIRTIO_BALLOON_F_MUST_TELL_HOST" }, {9, ""}] ].
-
-Syntactially invalid.  I guess you mean something like
-
-    [{"bit": 0, "name": "VIRTIO_BALLOON_F_MUST_TELL_HOST"},
-     {"bit": 9, "name": ""}]
-
-or with optional @name
-
-    [{"bit": 0, "name": "VIRTIO_BALLOON_F_MUST_TELL_HOST"},
-     {"bit": 9}]
-
-This is an awfully verbose encoding of an n-bit number, even if we omit
-"VIRTIO_BALLOON_F_" as noise.
-
-I could be awkward for the use case described in PATCH 1's commit
-message:
-
-    However, we sometimes want to compare features and status bits without
-    caring for their exact meaning.  Say we want to verify the correctness
-    of the virtio negotiation between guest, QEMU, and OVS-DPDK.  We can use
-    QMP command x-query-virtio-status to retrieve vhost-user net device
-    features, and the "ovs-vsctl list interface" command to retrieve
-    interface features.  Without commit f3034ad71fc, we could then simply
-    compare the numbers.  With this commit, we first have to map from the
-    strings back to the numeric encoding.
-
-It next describes the patch's solution:
-
-    Revert the decoding for QMP, but keep it for HMP.
-
-    This makes the QMP command easier to use for use cases where we
-    don't need to decode, like the comparison above.  For use cases
-    where we need to decode, we replace parsing undocumented strings by
-    decoding virtio's well-known binary encoding.
-
-Since this is not a stable interface, instead of a perfect (and to my
-subjective self overengineered) solution at some future point, I'd
-prefer to get in a simple one *now*, even if we may have to evolve it
-later.
-
+Thanks,
+drew
 
