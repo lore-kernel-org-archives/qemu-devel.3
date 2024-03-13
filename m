@@ -4,76 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E045FC54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 18:52:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18422C54E60
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 19:07:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkTiD-0005tk-7R; Wed, 13 Mar 2024 14:52:25 -0400
+	id 1rkTvz-0008IO-EB; Wed, 13 Mar 2024 15:06:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rkTiB-0005tZ-9D
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:52:23 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rkTi5-0004TW-Gr
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:52:20 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4AD4955BB7;
- Wed, 13 Mar 2024 21:53:19 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 99A739897B;
- Wed, 13 Mar 2024 21:52:14 +0300 (MSK)
-Message-ID: <4370c6a3-edc5-4327-b499-0fe85f1a902f@tls.msk.ru>
-Date: Wed, 13 Mar 2024 21:52:14 +0300
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rkTvs-0008I9-TV
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:06:33 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rkTvr-0006js-0Y
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:06:32 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-513c53ed3d8so260455e87.3
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 12:06:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1710356787; x=1710961587; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=25IAnW90jZ78aTwEWy+x9rhtEYMv+xdl/Qj1hLOjQXQ=;
+ b=DgeM6sMT1OLRuizqzSTn5opEybssFPhS5CEPB3Z91Gr/56cX4kszH9DJQLObkcZqYR
+ 5D3Et1qsKv3v7Z2FiYE2g6dReDQo+4GyR4BZlK4Vn4k89677NkvfxVi/KYo7iq/XAh8e
+ 2YIzSGhbqlIsZ1Ra9GW+SzncRP40IzDJSTccbqIH9V2NTmddfiauaYwVlceGKXcz/aFg
+ IIG9qbjcfE07QdXz40KW5b/OePfl/stPZs/spR9uXZbZ2+bCBDEHKVBSGyhgJ/W9VVab
+ Yr1zRR7M6hyXk0pINpa5zFm0J5SewdUedOX8n6XhHVr9NwCw9xBT33XyFRAmSV+wb82w
+ nGqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710356787; x=1710961587;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=25IAnW90jZ78aTwEWy+x9rhtEYMv+xdl/Qj1hLOjQXQ=;
+ b=qykJb0F1zqktYmkNbcp+/zK2bT6LWVsUb21Fo7WOtC/QTaiVT59qIquITaMmfjm6Ml
+ 0YBCVz5jBqharx4/hcW0x0pX6LXotWB6z7lkojFExNYgamind0LDdJN89gxpSA0c/NeU
+ SZlVg2uSY/7U99JPn2GMF52Z6Y2CfUf0J6ax9BRB75tuPnUbi6BpyEWg9g+cWvnTObdF
+ b4kO8TrRWKt/Yx5cGgx0R+yglCa7WWjtJoCoh/fQF0GhdbLgUI1hawqbVUJPJiDzGzi8
+ MOVcgmcYyTV9bkJE1g8PR/fYX+u63RPkfe6g2/AY/3fXkH1OSvUOEX5rc/2JNKLcuR6j
+ yoRg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVpJkCSM/zENV/CcCr7/A+LXst3Qw330c3G5sWaSoCR5nyjzdzsNcb9wNLBkw3Q3xwYK4vOrSpi5dGRUt7qa3379fHq72k=
+X-Gm-Message-State: AOJu0YwHHHH3pSQozyXpC6R+d+tPUSlhm2SnWccVYnfPt4uRhLJDnd+S
+ pXhDkCAD2VqMfJ6d4QYRpaouC3osTWbuFxvH/jyLHni345H6f/4vP00mpTlcq67s/9HdYCX81rK
+ g
+X-Google-Smtp-Source: AGHT+IF+ILfuGfui2YFF8mLu9wVYOkgUtoaZvdOjBpVwODC0lcBV7eVKw13ntAZwShXjnflldmNUQw==
+X-Received: by 2002:ac2:5f8e:0:b0:513:c625:a6f6 with SMTP id
+ r14-20020ac25f8e000000b00513c625a6f6mr2900821lfe.49.1710356787367; 
+ Wed, 13 Mar 2024 12:06:27 -0700 (PDT)
+Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
+ by smtp.gmail.com with ESMTPSA id
+ fs27-20020a05600c3f9b00b00413e63bb140sm3107557wmb.41.2024.03.13.12.06.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Mar 2024 12:06:26 -0700 (PDT)
+Date: Wed, 13 Mar 2024 20:06:25 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Himanshu Chauhan <hchauhan@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 1/3] target/riscv: Enable mcontrol6 triggers only when
+ sdtrig is selected
+Message-ID: <20240313-7736ce7e5110189807de2287@orel>
+References: <20240313182009.608685-1-hchauhan@ventanamicro.com>
+ <20240313182009.608685-2-hchauhan@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/12] vdpa: fix network breakage after cancelling
- migration
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Si-Wei Liu <si-wei.liu@oracle.com>, jasowang@redhat.com, mst@redhat.com,
- dtatulea@nvidia.com, leiyang@redhat.com, yin31149@gmail.com,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <1707910082-10243-1-git-send-email-si-wei.liu@oracle.com>
- <1707910082-10243-13-git-send-email-si-wei.liu@oracle.com>
- <41f0f7b4-ce3d-4e60-8567-1aa34a616b1a@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <41f0f7b4-ce3d-4e60-8567-1aa34a616b1a@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240313182009.608685-2-hchauhan@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=ajones@ventanamicro.com; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,56 +97,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-13.03.2024 21:12, Michael Tokarev пишет:
-> 14.02.2024 14:28, Si-Wei Liu wrote:
->> Fix an issue where cancellation of ongoing migration ends up
->> with no network connectivity.
->>
->> When canceling migration, SVQ will be switched back to the
->> passthrough mode, but the right call fd is not programed to
->> the device and the svq's own call fd is still used. At the
->> point of this transitioning period, the shadow_vqs_enabled
->> hadn't been set back to false yet, causing the installation
->> of call fd inadvertently bypassed.
->>
->> Fixes: a8ac88585da1 ("vhost: Add Shadow VirtQueue call forwarding capabilities")
->> Cc: Eugenio Pérez <eperezma@redhat.com>
->> Acked-by: Jason Wang <jasowang@redhat.com>
->> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
->> ---
->>   hw/virtio/vhost-vdpa.c | 10 +++++++++-
->>   1 file changed, 9 insertions(+), 1 deletion(-)
+On Wed, Mar 13, 2024 at 11:50:07PM +0530, Himanshu Chauhan wrote:
+> The mcontrol6 triggers are not defined in debug specification v0.13
+> These triggers are defined in sdtrig ISA extension.
 > 
-> Is this a -stable material?
+> This patch:
+>    * Adds ext_sdtrig capability which is used to select mcontrol6 triggers
+>    * Keeps the debug property. All triggers that are defined in v0.13 are
+>      exposed.
 > 
-> If yes, is it also applicable for stable-7.2 (mentioned commit is in 7.2.0),
-> which lacks v7.2.0-2327-gb276524386 "vdpa: Remember last call fd set",
-> or should this one also be picked up?
-
-Aha, this does not actually work without v8.2.0-171-gf6fe3e333f
-"vdpa: move memory listener to vhost_vdpa_shared".
-
-/mjt
-
->> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
->> index 004110f..dfeca8b 100644
->> --- a/hw/virtio/vhost-vdpa.c
->> +++ b/hw/virtio/vhost-vdpa.c
->> @@ -1468,7 +1468,15 @@ static int vhost_vdpa_set_vring_call(struct vhost_dev *dev,
->>       /* Remember last call fd because we can switch to SVQ anytime. */
->>       vhost_svq_set_svq_call_fd(svq, file->fd);
->> -    if (v->shadow_vqs_enabled) {
->> +    /*
->> +     * When SVQ is transitioning to off, shadow_vqs_enabled has
->> +     * not been set back to false yet, but the underlying call fd
->> +     * will have to switch back to the guest notifier to signal the
->> +     * passthrough virtqueues. In other situations, SVQ's own call
->> +     * fd shall be used to signal the device model.
->> +     */
->> +    if (v->shadow_vqs_enabled &&
->> +        v->shared->svq_switching != SVQ_TSTATE_DISABLING) {
->>           return 0;
->>       }
+> Signed-off-by: Himanshu Chauhan <hchauhan@ventanamicro.com>
+> ---
+>  target/riscv/cpu.c     |  4 +-
+>  target/riscv/cpu_cfg.h |  1 +
+>  target/riscv/csr.c     |  2 +-
+>  target/riscv/debug.c   | 90 +++++++++++++++++++++++++-----------------
+>  target/riscv/machine.c |  2 +-
+>  5 files changed, 58 insertions(+), 41 deletions(-)
 > 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index c160b9216b..2602aae9f5 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1008,7 +1008,7 @@ static void riscv_cpu_reset_hold(Object *obj)
+>      set_default_nan_mode(1, &env->fp_status);
+>  
+>  #ifndef CONFIG_USER_ONLY
+> -    if (cpu->cfg.debug) {
+> +    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
+>          riscv_trigger_reset_hold(env);
+>      }
+>  
+> @@ -1168,7 +1168,7 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
+>      riscv_cpu_register_gdb_regs_for_features(cs);
+>  
+>  #ifndef CONFIG_USER_ONLY
+> -    if (cpu->cfg.debug) {
+> +    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
+>          riscv_trigger_realize(&cpu->env);
+>      }
+>  #endif
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index 2040b90da0..0c57e1acd4 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -114,6 +114,7 @@ struct RISCVCPUConfig {
+>      bool ext_zvfbfwma;
+>      bool ext_zvfh;
+>      bool ext_zvfhmin;
+> +    bool ext_sdtrig;
+>      bool ext_smaia;
+>      bool ext_ssaia;
+>      bool ext_sscofpmf;
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 726096444f..26623d3640 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -546,7 +546,7 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
+>  
+>  static RISCVException debug(CPURISCVState *env, int csrno)
+>  {
+> -    if (riscv_cpu_cfg(env)->debug) {
+> +    if (riscv_cpu_cfg(env)->debug || riscv_cpu_cfg(env)->ext_sdtrig) {
+>          return RISCV_EXCP_NONE;
+>      }
+>  
+> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+> index e30d99cc2f..674223e966 100644
+> --- a/target/riscv/debug.c
+> +++ b/target/riscv/debug.c
+> @@ -100,13 +100,15 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
+>      target_ulong tdata1 = env->tdata1[trigger_index];
+>      int trigger_type = get_trigger_type(env, trigger_index);
+>      trigger_action_t action = DBG_ACTION_NONE;
+> +    const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
+>  
+>      switch (trigger_type) {
+>      case TRIGGER_TYPE_AD_MATCH:
+>          action = (tdata1 & TYPE2_ACTION) >> 12;
+>          break;
+>      case TRIGGER_TYPE_AD_MATCH6:
+> -        action = (tdata1 & TYPE6_ACTION) >> 12;
+> +        if (cfg->ext_sdtrig)
+> +            action = (tdata1 & TYPE6_ACTION) >> 12;
+>          break;
+>      case TRIGGER_TYPE_INST_CNT:
+>      case TRIGGER_TYPE_INT:
+> @@ -727,7 +729,12 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+>          type2_reg_write(env, env->trigger_cur, tdata_index, val);
+>          break;
+>      case TRIGGER_TYPE_AD_MATCH6:
+> -        type6_reg_write(env, env->trigger_cur, tdata_index, val);
+> +        if (riscv_cpu_cfg(env)->ext_sdtrig) {
+> +            type6_reg_write(env, env->trigger_cur, tdata_index, val);
+> +        } else {
+> +            qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\n",
+> +                          trigger_type);
+> +        }
+>          break;
+>      case TRIGGER_TYPE_INST_CNT:
+>          itrigger_reg_write(env, env->trigger_cur, tdata_index, val);
+> @@ -750,9 +757,14 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+>  
+>  target_ulong tinfo_csr_read(CPURISCVState *env)
+>  {
+> -    /* assume all triggers support the same types of triggers */
+> -    return BIT(TRIGGER_TYPE_AD_MATCH) |
+> -           BIT(TRIGGER_TYPE_AD_MATCH6);
+> +    target_ulong ts = 0;
+> +
+> +    ts = BIT(TRIGGER_TYPE_AD_MATCH);
+> +
+> +    if (riscv_cpu_cfg(env)->ext_sdtrig)
+> +        ts |= BIT(TRIGGER_TYPE_AD_MATCH6);
+> +
+> +    return ts;
+>  }
+>  
+>  void riscv_cpu_debug_excp_handler(CPUState *cs)
+> @@ -803,19 +815,21 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
+>                  }
+>                  break;
+>              case TRIGGER_TYPE_AD_MATCH6:
+> -                ctrl = env->tdata1[i];
+> -                pc = env->tdata2[i];
+> -
+> -                if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
+> -                    if (env->virt_enabled) {
+> -                        /* check VU/VS bit against current privilege level */
+> -                        if ((ctrl >> 23) & BIT(env->priv)) {
+> -                            return true;
+> -                        }
+> -                    } else {
+> -                        /* check U/S/M bit against current privilege level */
+> -                        if ((ctrl >> 3) & BIT(env->priv)) {
+> -                            return true;
+> +                if (cpu->cfg.ext_sdtrig) {
+> +                    ctrl = env->tdata1[i];
+> +                    pc = env->tdata2[i];
+> +
+> +                    if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
+> +                        if (env->virt_enabled) {
+> +                            /* check VU/VS bit against current privilege level */
+> +                            if ((ctrl >> 23) & BIT(env->priv)) {
+> +                                return true;
+> +                            }
+> +                        } else {
+> +                            /* check U/S/M bit against current privilege level */
+> +                            if ((ctrl >> 3) & BIT(env->priv)) {
+> +                                return true;
+> +                            }
+>                          }
+>                      }
+>                  }
+> @@ -869,27 +883,29 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+>              }
+>              break;
+>          case TRIGGER_TYPE_AD_MATCH6:
+> -            ctrl = env->tdata1[i];
+> -            addr = env->tdata2[i];
+> -            flags = 0;
+> +            if (cpu->cfg.ext_sdtrig) {
+> +                ctrl = env->tdata1[i];
+> +                addr = env->tdata2[i];
+> +                flags = 0;
+>  
+> -            if (ctrl & TYPE6_LOAD) {
+> -                flags |= BP_MEM_READ;
+> -            }
+> -            if (ctrl & TYPE6_STORE) {
+> -                flags |= BP_MEM_WRITE;
+> -            }
+> +                if (ctrl & TYPE6_LOAD) {
+> +                    flags |= BP_MEM_READ;
+> +                }
+> +                if (ctrl & TYPE6_STORE) {
+> +                    flags |= BP_MEM_WRITE;
+> +                }
+>  
+> -            if ((wp->flags & flags) && (wp->vaddr == addr)) {
+> -                if (env->virt_enabled) {
+> -                    /* check VU/VS bit against current privilege level */
+> -                    if ((ctrl >> 23) & BIT(env->priv)) {
+> -                        return true;
+> -                    }
+> -                } else {
+> -                    /* check U/S/M bit against current privilege level */
+> -                    if ((ctrl >> 3) & BIT(env->priv)) {
+> -                        return true;
+> +                if ((wp->flags & flags) && (wp->vaddr == addr)) {
+> +                    if (env->virt_enabled) {
+> +                        /* check VU/VS bit against current privilege level */
+> +                        if ((ctrl >> 23) & BIT(env->priv)) {
+> +                            return true;
+> +                        }
+> +                    } else {
+> +                        /* check U/S/M bit against current privilege level */
+> +                        if ((ctrl >> 3) & BIT(env->priv)) {
+> +                            return true;
+> +                        }
+>                      }
+>                  }
+>              }
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 76f2150f78..383151a4f8 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -230,7 +230,7 @@ static bool debug_needed(void *opaque)
+>  {
+>      RISCVCPU *cpu = opaque;
+>  
+> -    return cpu->cfg.debug;
+> +    return cpu->cfg.debug || cpu->cfg.ext_sdtrig;
+>  }
+>  
+>  static int debug_post_load(void *opaque, int version_id)
+> -- 
+> 2.34.1
+> 
+>
 
+afaict we never have if cfg.debug without '|| cfg.ext_sdtrig', so I
+maintain that we don't need to add the '|| cfg.ext_sdtrig' now that we
+ensure debug is set when ext_sdtrig is set.
+
+Thanks,
+drew
 
