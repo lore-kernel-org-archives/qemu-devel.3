@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B4A8C54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 19:31:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22F30C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 19:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkUJG-0006mb-VM; Wed, 13 Mar 2024 15:30:42 -0400
+	id 1rkUJs-0006qU-Ir; Wed, 13 Mar 2024 15:31:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rkUJE-0006mI-QL
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:30:41 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rkUJl-0006q0-8P
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:31:13 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rkUJA-0002Mz-QC
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:30:40 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1dc13fb0133so1326745ad.3
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 12:30:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rkUJf-0002Q9-Rt
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:31:10 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6e6aaa2f02cso211972b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 12:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710358234; x=1710963034; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gRwwGWz9KP/1WQutJ1UhzyGPLs3PXgcwcBdlN0sW2XM=;
- b=eiNh2clegnGAI+Vjn67Qobr6YYUzIx55Nepd97M4IKR08H8PisWt5RwZQqCOBrA6a7
- no2NIOl8Ag1GJ+iPEtVtutN+uw8hckV4TRyDO0VxiaEAD+kUCberVf7L38HaoDyiyMKU
- Z0gi67eGwni1MVdommrxwIHfLI7u4mXbPGoEtKwvAuXc79PIVTMRYUDMXXYPp6Xn2V/x
- fBOIVyo4DpxywmrNmYyMhWLB8pL9iUBvNHa2Jmy3gE27JKLNPesicX8My+mbE24iypK5
- a+qR/sCuscrg9Jn8XqnGiLoxT99Z9VtzwMiGC9aBMJfIVQuKhCJlkuC7a6XfKtfnBm0M
- Cxyg==
+ d=ventanamicro.com; s=google; t=1710358265; x=1710963065; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=u49ZsHiKEZPJuB9ki+WLQrM9cRTAq7Fel6AdXa7pwl4=;
+ b=lFvca4BU4G89xX+uxnnyfWHU2hrxQ0m+safJ1xyeWhq5/TkfSlfrrBkYmL/JKU9Ywq
+ NWtTYBacWibcTWHIbdgA9APk1VX21yN/3e+jhGxjw7yxBtK68qtIL5JKrC83qSHS+41u
+ bIahh+88lFSweGJpQNNuD0aapA9sJdYqTavjMGO1esL/23V4Y21/lpb8sw8zDXwWFcM2
+ D3/ycDcYMGBzb+nPFlg84DI1iwoNtoP7rT5qIBV/fQwOICHBLgOrJMSs8VBXn85qA9x1
+ sE/h20an+kzsUbdhst0ZOEEmajseZ9Y7dUz/z8eQcBRVy/HtuyWmfF5TVwfjgF+bMB2X
+ XHGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710358234; x=1710963034;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gRwwGWz9KP/1WQutJ1UhzyGPLs3PXgcwcBdlN0sW2XM=;
- b=inKQmfMYKQbe/FQUbyrC/kA3a/3N5uR+0ktUllWbnWexHFt5hXQhOWIS2k3UYvG2ua
- nWNGnLWHJpwQZyxglZjUUNKFd4bezsSOb1I5URLU9mjicjeRLVV2pT3AAK6JDCA7L7pR
- MC2JOJYfIeim4A+IiTox4LrWaEaJnD7aqrgxlHmrTntIS0LBlv747edwCqxOws063aI1
- EktfX2SrvRkDbxeodRXhLFd3Q0z3IpIEUnjbUlELlXZoGMSrLkJL26O5/cVAidl5aAFy
- 7Gr73IBrn+skw853yTkwUi+E1F25s/V40KtqgrMuWNzENmlTBKm/CdJB/su8KIgy2bmr
- ceAw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXoHdsHUUPYq6Ng7NnXKtiEUctc2fMUPjlT05OhZhkczCOr6CBWMCSC+vJZxH1GMoeMMqif0CDr12NwYVxM5vDCcIv5I9M=
-X-Gm-Message-State: AOJu0YyDlSYxYm+n6uiM2M+Q3n9LZ9EjXrKLZ3Q2GtjOn/iH0ICnx/kN
- 558U3EQFVQHNWFPap77EeNURa7AsX4951cjjZS8SA+xi1XzSMOTCmY2iJPTsOtA=
-X-Google-Smtp-Source: AGHT+IFAli8TX3sct3p0xmJS4kp7/pOpDPNvGWD8d3dwIfIASW+VMZb1bOI+EogDU19YPv0TN/JnMA==
-X-Received: by 2002:a17:902:dac2:b0:1dd:bdf6:3744 with SMTP id
- q2-20020a170902dac200b001ddbdf63744mr5857921plx.17.1710358234656; 
- Wed, 13 Mar 2024 12:30:34 -0700 (PDT)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- ky14-20020a170902f98e00b001dd61bc14f2sm9100329plb.8.2024.03.13.12.30.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Mar 2024 12:30:34 -0700 (PDT)
-Message-ID: <731fa1ad-5831-4b94-bea4-c57bce01a260@linaro.org>
-Date: Wed, 13 Mar 2024 09:30:30 -1000
+ d=1e100.net; s=20230601; t=1710358265; x=1710963065;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=u49ZsHiKEZPJuB9ki+WLQrM9cRTAq7Fel6AdXa7pwl4=;
+ b=eKWkhQv7NJPnvMy9B1yYplc4eZ1aE7/D/WFMZq67m0bV6Q2MrIY8Q5w9wcsYF7aG9E
+ EPRR8IC3E4k1xIqpeDsu7T1146mgbBHP7yLy4rfjee+LqH9NhounFUPRfFEWN7zA23ae
+ IB90qjVawZKMfSiHfYbFs0X+Eha7EoNXarnPuJffA2ZS5K6Uhi5lUP4xDxmClFd5+jFj
+ KWu/W4ldN8v8oBaoYe4OmL8NmZp9tBCSsfykUxfSx+kQq/B31mmb17bXSOTgg8Xl0ZHw
+ qaGsOSlnE9lXNrVtQF4DjrG2B49H6ACTs4hBWVJz7jCGvLBK5NDfnINmFKM52xUI45OZ
+ eocQ==
+X-Gm-Message-State: AOJu0YwP5pHO3AljTDA5OoTtlHQnohMSTLxnfBLa64h+nm5/LhMn1IuB
+ Zm6zpuydz+L/KwLLFXO3Ojgr5J2XyF/Mlw6mKmrMQ66bkWZsvExRvDM6oUgCaYTb9+sB7AF0cf7
+ f
+X-Google-Smtp-Source: AGHT+IFKXP9ho4NSxxrUXMK9RLKbTROhSlf+f0+BYGKpx4n8EmpM8A52jiSdBPpDKQJB1f3z/emprQ==
+X-Received: by 2002:a05:6a00:189e:b0:6e6:c5d5:9195 with SMTP id
+ x30-20020a056a00189e00b006e6c5d59195mr984143pfh.28.1710358265489; 
+ Wed, 13 Mar 2024 12:31:05 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ k10-20020a628e0a000000b006e5a915a9e7sm8912421pfe.10.2024.03.13.12.31.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Mar 2024 12:31:05 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ richard.henderson@linaro.org, philmd@linaro.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH for-9.0 v13 0/8] riscv: set vstart_eq_zero on vector insns
+Date: Wed, 13 Mar 2024 16:30:51 -0300
+Message-ID: <20240313193059.405329-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/1] target/i386: Enable page walking from MMIO memory
-Content-Language: en-US
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gregory Price <gregory.price@memverge.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, linuxarm@huawei.com
-References: <20240307155304.31241-1-Jonathan.Cameron@huawei.com>
- <20240307155304.31241-2-Jonathan.Cameron@huawei.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240307155304.31241-2-Jonathan.Cameron@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,46 +95,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/7/24 05:53, Jonathan Cameron wrote:
-> From: Gregory Price <gregory.price@memverge.com>
-> 
-> CXL emulation of interleave requires read and write hooks due to
-> requirement for subpage granularity. The Linux kernel stack now enables
-> using this memory as conventional memory in a separate NUMA node. If a
-> process is deliberately forced to run from that node
-> $ numactl --membind=1 ls
-> the page table walk on i386 fails.
-> 
-> Useful part of backtrace:
-> 
->      (cpu=cpu@entry=0x555556fd9000, fmt=fmt@entry=0x555555fe3378 "cpu_io_recompile: could not find TB for pc=%p")
->      at ../../cpu-target.c:359
->      (retaddr=0, addr=19595792376, attrs=..., xlat=<optimized out>, cpu=0x555556fd9000, out_offset=<synthetic pointer>)
->      at ../../accel/tcg/cputlb.c:1339
->      (cpu=0x555556fd9000, full=0x7fffee0d96e0, ret_be=ret_be@entry=0, addr=19595792376, size=size@entry=8, mmu_idx=4, type=MMU_DATA_LOAD, ra=0) at ../../accel/tcg/cputlb.c:2030
->      (cpu=cpu@entry=0x555556fd9000, p=p@entry=0x7ffff56fddc0, mmu_idx=<optimized out>, type=type@entry=MMU_DATA_LOAD, memop=<optimized out>, ra=ra@entry=0) at ../../accel/tcg/cputlb.c:2356
->      (cpu=cpu@entry=0x555556fd9000, addr=addr@entry=19595792376, oi=oi@entry=52, ra=ra@entry=0, access_type=access_type@entry=MMU_DATA_LOAD) at ../../accel/tcg/cputlb.c:2439
->      at ../../accel/tcg/ldst_common.c.inc:301
->      at ../../target/i386/tcg/sysemu/excp_helper.c:173
->      (err=0x7ffff56fdf80, out=0x7ffff56fdf70, mmu_idx=0, access_type=MMU_INST_FETCH, addr=18446744072116178925, env=0x555556fdb7c0)
->      at ../../target/i386/tcg/sysemu/excp_helper.c:578
->      (cs=0x555556fd9000, addr=18446744072116178925, size=<optimized out>, access_type=MMU_INST_FETCH, mmu_idx=0, probe=<optimized out>, retaddr=0) at ../../target/i386/tcg/sysemu/excp_helper.c:604
-> 
-> Avoid this by plumbing the address all the way down from
-> x86_cpu_tlb_fill() where is available as retaddr to the actual accessors
-> which provide it to probe_access_full() which already handles MMIO accesses.
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Gregory Price <gregory.price@memverge.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> ---
-> v3: No change.
+Hi,
 
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2180
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2220
+In this new version I added a new patch (patch 4) to handle the case
+pointed out by LIU Zhiwei in v12. I decided to do it in separate since
+it's a distinct case from what we're dealing with in patch 5.
 
+No other changes made. Series based on master.
 
-r~
+Patches missing acks: patch 4.
+
+Changes from v12:
+- patch 4 (new):
+  - move vstart >= maxsz cond to the vmvr_v helper
+  - clear vstart when vstart >= maxsz
+- v12 link: https://lore.kernel.org/qemu-riscv/20240311180821.250469-1-dbarboza@ventanamicro.com/
+
+Daniel Henrique Barboza (7):
+  target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
+  trans_rvv.c.inc: set vstart = 0 in int scalar move insns
+  target/riscv/vector_helpers: do early exit when vstart >= vl
+  target/riscv: always clear vstart in whole vec move insns
+  target/riscv: remove 'over' brconds from vector trans
+  trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+  target/riscv/vector_helper.c: optimize loops in ldst helpers
+
+Ivan Klokov (1):
+  target/riscv: enable 'vstart_eq_zero' in the end of insns
+
+ target/riscv/insn_trans/trans_rvbf16.c.inc |  18 +-
+ target/riscv/insn_trans/trans_rvv.c.inc    | 198 +++++----------------
+ target/riscv/insn_trans/trans_rvvk.c.inc   |  30 +---
+ target/riscv/translate.c                   |   6 +
+ target/riscv/vcrypto_helper.c              |  32 ++++
+ target/riscv/vector_helper.c               | 102 ++++++++++-
+ target/riscv/vector_internals.c            |   4 +
+ target/riscv/vector_internals.h            |   9 +
+ 8 files changed, 207 insertions(+), 192 deletions(-)
+
+-- 
+2.43.2
+
 
