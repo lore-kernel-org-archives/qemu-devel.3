@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0E44C54E66
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 21:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40826C54E68
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 22:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkWLj-0003zn-3D; Wed, 13 Mar 2024 17:41:23 -0400
+	id 1rkWfe-0007Mu-Hn; Wed, 13 Mar 2024 18:01:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWLg-0003zO-KW
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:41:21 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rkWfb-0007MA-97
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 18:01:55 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWLf-00013D-71
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:41:20 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-5131a9b3d5bso446604e87.0
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 14:41:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rkWfZ-0004I7-Qa
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 18:01:55 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6e6ac741ff7so405776b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 15:01:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710366077; x=1710970877; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JyHIKVFnW4IAENh7a1NH3TNXnVQr2Vjt/G0GlwYn3qg=;
- b=ka06MIp4mh9VRBXuDcrq+DdLzGSDNQf6zj7+r47RrSWgJ0S9LoDU2KhbgWe4hy32RZ
- ujchEafPLF5WSHhFMYucbKfwkbXxFPsU+p76OG+aNotkJdjVsTkEt8J+RPFyFKBX56O5
- NSHYsaxc0AZhUa5huiUARWrttwTO0eo+JPZEnmswalVz+a+5svKFzoVERAPkCXeSxMhJ
- LQYKjQApJBcU6EavlWFHxYFx/oISYVR2P6RUPH8C4vAQJsjJdbaJ0AwJIypoYNnGeA5S
- /wGidf+pvjmLEI+vvzywOKZiWzqFQT0IJZoMtCToNhPNw6wmTLei8Bd9PUrfXcJ5+Sp6
- B1Yw==
+ d=ventanamicro.com; s=google; t=1710367311; x=1710972111; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8PUZYN/jxC55WgIbgr/YDIPnxwzEfC4uN3+8U/WL+Ts=;
+ b=Q06OjxCZerl1XvDcegt72BmQESemm5mNjTw0F2GRybJyrou8cYROoOdA60KFdfE4xC
+ ZLYVwWpYNBMxS+l5HMHGdC+CU/dTuY49QY90sEAra0gAs5bBDlax4XZ+s2Z5lUHga5P9
+ tW1qlgUKMY0MmCgcEpcLB+XKnaYLPDjE6izztthTmqRGChPuAlWxKv6Cuu5phs138yxl
+ ILgHU/QD++QuxPOcytMD/q/WXb9k/z0FXtaVLgQKiujOBWZC92MEpxYi6AkptvBBn7MW
+ unrBDwSmmkzq3thwCZjZwL0HXZ83QstxPd7qqbX4Ai5fQrm9cqHlwFx4ac9IcXnIhhvm
+ CKgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710366077; x=1710970877;
- h=content-transfer-encoding:in-reply-to:references:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JyHIKVFnW4IAENh7a1NH3TNXnVQr2Vjt/G0GlwYn3qg=;
- b=vxeK4lFDtNVARnBst5K+7z//3PGonxvmYYlOt6qtnXUvO36U6g4KEVdEpVXxx26evV
- Rljizp4450i4oeu04olhNruCm3i5newWWv6SQi0ZGZgbPA958nYkKZZtfZjHRwmIAR2b
- 91BzqtskuipjTuK4da3P01xPk/bk7hs1qolrmOKUJfIzXk3FX17sNYJu2tQX1FNnY8Pd
- Y4OE9Zzf1tkz0kvtmsrQyXtj6GFoY+PenqRlB5Acnc8b05Sedfb4srA+t0eEKQ2dQKIW
- TZDvY6w8tVjccbJJP7Tbgb5UeQWMgGJ1KYrnvr2x16tSG/HboXLaj7cEiWRhJ4VyXHol
- wCYw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUDXX6vkGEKeNn0Z7l8AyCpXysSfpL/n5mmo2S4gOEPfcxBsX0ZIabD0R8TjSsu141N2RWnW3ddv/7YdKHwGvnEbbwLmmw=
-X-Gm-Message-State: AOJu0YwCwrtbMkcqjKs62/JSELg0Iu0lYsQ6K/HD161awuMJIIxc4YHA
- oG8qnAVi2od8nVIkWzZTaCi5jUM9fAXlXW5xVeHn4yFgZDQZxiz1Mr1on/5krDI=
-X-Google-Smtp-Source: AGHT+IHy2+c4rTgZrWSqpGWc0ZF42twxi2F4uuTX3VLSGtvOm4EditJ+v4Zs5m5MaEa6d0BKVoe38A==
-X-Received: by 2002:a05:6512:46a:b0:513:c813:bdf1 with SMTP id
- x10-20020a056512046a00b00513c813bdf1mr1966390lfd.5.1710366077223; 
- Wed, 13 Mar 2024 14:41:17 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.182.179])
+ d=1e100.net; s=20230601; t=1710367311; x=1710972111;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8PUZYN/jxC55WgIbgr/YDIPnxwzEfC4uN3+8U/WL+Ts=;
+ b=YWqpIqF76dwWcnw2y/D2xiYdR7z0+XXCV/AYWJHWYNDznE31dBX1hND+eAL9NW2j4n
+ mzGYv0tin9N+Edy5edgfFeMBwLClmKjWcjcCWWP+8FEAVvfWQBMD3GIebi08CE/+BOJd
+ aq0mK4vyWBfj6toNIyZRy7BT8jFB4i7rASWzLrNJ26ixFRqQC3nrqW7mDwWe6qXh9NF6
+ qzTTlHKZlFtxvUmFA1h/jRn8i3OcOevyGxyBq3ET5g2Y/3Z1wGiAyQFAZ4zLz5FxBxod
+ fmgJX9CBmGeovLWnalsnyBi8pxgks4ZA2xBmy1kC8BMZ5BsUT2C9a3lPWcHZI6WUICd4
+ Rs6g==
+X-Gm-Message-State: AOJu0YyvT0AH/PUGfY2VCM9nzXtbQaWNCuaL70Mf7sMkS5+yCF9ve8zs
+ D8KjUWF2J8dvLcLwE9WZ+p92nO4an0jP+WzTH6pmp1akqsr2ayyYBOW8+ErSr6IllGVEOoB5Hcy
+ b
+X-Google-Smtp-Source: AGHT+IEZcj3UOOX7c2dqK50m68ikQVMYXpWO/kKRFN0xGjiN0eJ1xNOiZv0VjOk+mgzReffP87wrmw==
+X-Received: by 2002:a05:6a20:c6c8:b0:1a3:1246:c43e with SMTP id
+ gw8-20020a056a20c6c800b001a31246c43emr228712pzb.28.1710367311677; 
+ Wed, 13 Mar 2024 15:01:51 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
  by smtp.gmail.com with ESMTPSA id
- r8-20020a05600c458800b00413e8df267bsm276831wmo.48.2024.03.13.14.41.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Mar 2024 14:41:16 -0700 (PDT)
-Message-ID: <e630b670-acec-4d6d-b89d-dafcdcbfee84@linaro.org>
-Date: Wed, 13 Mar 2024 22:41:15 +0100
+ ln17-20020a056a003cd100b006e6bcbea9e0sm95812pfb.88.2024.03.13.15.01.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Mar 2024 15:01:51 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ richard.henderson@linaro.org, philmd@linaro.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH for-9.0 v14 1/8] target/riscv/vector_helper.c: set vstart = 0
+ in GEN_VEXT_VSLIDEUP_VX()
+Date: Wed, 13 Mar 2024 19:01:34 -0300
+Message-ID: <20240313220141.427730-2-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <20240313220141.427730-1-dbarboza@ventanamicro.com>
+References: <20240313220141.427730-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/16] esp.c: replace cmdfifo use of esp_fifo_pop_buf()
- in do_message_phase()
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
- fam@euphon.net, laurent@vivier.eu, qemu-devel@nongnu.org
-References: <20240313085810.2655062-1-mark.cave-ayland@ilande.co.uk>
- <20240313085810.2655062-3-mark.cave-ayland@ilande.co.uk>
- <9c36ddab-59a9-47fa-ab2e-ab0e9cff5fb6@linaro.org>
-In-Reply-To: <9c36ddab-59a9-47fa-ab2e-ab0e9cff5fb6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,44 +98,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/3/24 12:03, Philippe Mathieu-Daudé wrote:
-> On 13/3/24 09:57, Mark Cave-Ayland wrote:
->> The aim is to restrict the esp_fifo_*() functions so that they only 
->> operate on
->> the hardware FIFO. When reading from cmdfifo in do_message_phase() use 
->> the
->> underlying Fifo8 functions directly.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> ---
->>   hw/scsi/esp.c | 7 ++++++-
->>   1 file changed, 6 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
->> index f8230c74b3..100560244b 100644
->> --- a/hw/scsi/esp.c
->> +++ b/hw/scsi/esp.c
->> @@ -309,6 +309,8 @@ static void do_command_phase(ESPState *s)
->>   static void do_message_phase(ESPState *s)
->>   {
->> +    uint32_t n;
->> +
->>       if (s->cmdfifo_cdb_offset) {
->>           uint8_t message = esp_fifo_pop(&s->cmdfifo);
->> @@ -320,7 +322,10 @@ static void do_message_phase(ESPState *s)
->>       /* Ignore extended messages for now */
->>       if (s->cmdfifo_cdb_offset) {
->>           int len = MIN(s->cmdfifo_cdb_offset, 
->> fifo8_num_used(&s->cmdfifo));
->> -        esp_fifo_pop_buf(&s->cmdfifo, NULL, len);
->> +
->> +        if (len) {
->> +            fifo8_pop_buf(&s->cmdfifo, len, &n);
-> 
-> 'n' is unused, use NULL?
+The helper isn't setting env->vstart = 0 after its execution, as it is
+expected from every vector instruction that completes successfully.
 
-Using NULL:
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/vector_helper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index fe56c007d5..ca79571ae2 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -4781,6 +4781,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2,         \
+         }                                                                 \
+         *((ETYPE *)vd + H(i)) = *((ETYPE *)vs2 + H(i - offset));          \
+     }                                                                     \
++    env->vstart = 0;                                                      \
+     /* set tail elements to 1s */                                         \
+     vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
+ }
+-- 
+2.43.2
 
 
