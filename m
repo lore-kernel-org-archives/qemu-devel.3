@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B83C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 21:29:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B95C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 21:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkW9P-0007R6-FM; Wed, 13 Mar 2024 17:28:39 -0400
+	id 1rkWFC-0001g9-PZ; Wed, 13 Mar 2024 17:34:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rkW9M-0007QY-Dj
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:28:38 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWF8-0001X3-5p
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:34:36 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rkW9J-0006op-Bj
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:28:34 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 28FA41F7EB;
- Wed, 13 Mar 2024 21:28:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710365309; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=x05CQlcb6Yvi/3eCSTsya6CX3q4bjBsSk5RmGMDTU8c=;
- b=LgEIoSbsrJ6KREBVECPrc0JhlZvjqTc39ACA9FSJZEmDOSPP6/iCXKf2lbr/0F+SpEyk8A
- Nkt1AQs3v59kqVTB8G5rkaN9Nsw0jehvTPTKCa75oLslGfNVGTIuBDUYZJduIbQFVrNAE+
- AK1X7itmZWv5BdeR/9KwMIvJf+LwKMo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710365309;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=x05CQlcb6Yvi/3eCSTsya6CX3q4bjBsSk5RmGMDTU8c=;
- b=sdMncz8hqctHiJI/YAnoZCYqplK4KjCyMagGa7UDPkTS9xWfwOqQ7eaPX6bexRe1BpPeoD
- 4XcKfccYsLX9qRCg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710365309; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=x05CQlcb6Yvi/3eCSTsya6CX3q4bjBsSk5RmGMDTU8c=;
- b=LgEIoSbsrJ6KREBVECPrc0JhlZvjqTc39ACA9FSJZEmDOSPP6/iCXKf2lbr/0F+SpEyk8A
- Nkt1AQs3v59kqVTB8G5rkaN9Nsw0jehvTPTKCa75oLslGfNVGTIuBDUYZJduIbQFVrNAE+
- AK1X7itmZWv5BdeR/9KwMIvJf+LwKMo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710365309;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=x05CQlcb6Yvi/3eCSTsya6CX3q4bjBsSk5RmGMDTU8c=;
- b=sdMncz8hqctHiJI/YAnoZCYqplK4KjCyMagGa7UDPkTS9xWfwOqQ7eaPX6bexRe1BpPeoD
- 4XcKfccYsLX9qRCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E79C413977;
- Wed, 13 Mar 2024 21:28:27 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +leXKnsa8mX/ZQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 13 Mar 2024 21:28:27 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Subject: [PATCH v2 0/2] migration mapped-ram fixes
-Date: Wed, 13 Mar 2024 18:28:22 -0300
-Message-Id: <20240313212824.16974-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWF6-0007qS-KK
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:34:33 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33e99b639e0so175680f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 14:34:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710365669; x=1710970469; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JMlHJDMRIAHpHLqTr2iQoA8Xh8BaIO4Idzn+WvdthY0=;
+ b=UOZLtLlM8K1O0iwuXrxMRLJoEOld5PAD7vaQigr/873cQ5Fjrk8NVcL1B1Rda2Q7gT
+ t7VVUDaX6aWX4v8HMvqCewkp7fz2CPGi1bhikt2L6h7Jqb2dQr+wwWvGRq2zTOqpPg62
+ xKy8iVsTDC+G3KUOu9NQhtdwBRFJILCKq8v7wDAnxhce4KqXrKgfGoe7x2VojGCEf5nl
+ GTc4/SahZ4vOSbLJUv7frGdOBy8iEkSlcWSLu19V1amuvvKcLzURVQ/UQL0G6mHgI3Mz
+ xc5c2QsMs0Oh2wNIj1ePWieDwG5GqJfd0cbd8+XDq/ngdkSQhfikUZHp3GBUIHEp5+oE
+ eBLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710365669; x=1710970469;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JMlHJDMRIAHpHLqTr2iQoA8Xh8BaIO4Idzn+WvdthY0=;
+ b=duc/6gIjDp+ih4iUqs7HcMYCpOBuzAFcK2BYThcyOWYPOdTFShGQkCYtcESDztaI4V
+ vi4qjpIdx0R5opCH4r2KakG/EJ9wxVnpqKF5sJKVzN4ER07inRSNaJvmnglesr0+A4Up
+ Y+HJDL4tD6pod6WmWgfNPFxAN/Qe/vJ2ydCVB1aQ9rVgv5iSfJ9PQnRcKslu/uwFdB/S
+ EInwJnnMdXpFnJpE3d2LcfeoBaVETFqFDuPeWY/d++soW4Fqy2nXRUjF4eUAgZp8EsT0
+ h1icW1rL9/g2QBWW+0ZpFMB0gOyc39TgvMaK6gBsV9EnbU9SaAZQBXjbYPvWzuVzRLrg
+ 9sBA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUnWGvzL9zLH+/r/9WHw1kl9PgX5nc/HX9nCRGPqeveQg2LAZlyKG+P+GyRd/efOM/SNOwORHWpERbYAQfBkG5cfEhQ3OQ=
+X-Gm-Message-State: AOJu0YyNYPv4Qh+Xd1GwT/70n0hgDT/mKioXxv1Pgvskhbl60ohVhAed
+ KxlTjDELhIZZeL/ZhXdY5zO4QSY9GuhcmVp0ArJoDjk7Emw3tfqPYWs8ON4wvYo=
+X-Google-Smtp-Source: AGHT+IE5YdWXUTth27hEU1V1E8fyQOBWq8O4KldeXvftJ706S8dQ/FVUZAk+M0ATF9M7WGc3KFO16g==
+X-Received: by 2002:adf:f549:0:b0:33e:8aba:cd0a with SMTP id
+ j9-20020adff549000000b0033e8abacd0amr2538518wrp.9.1710365669722; 
+ Wed, 13 Mar 2024 14:34:29 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.182.179])
+ by smtp.gmail.com with ESMTPSA id
+ k6-20020a5d5186000000b0033b48190e5esm62867wrv.67.2024.03.13.14.34.27
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 13 Mar 2024 14:34:29 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-ppc@nongnu.org, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PATCH-for-9.1 07/12] plugins/api: Check for USER_ONLY definition
+ instead of SOFTMMU one
+Date: Wed, 13 Mar 2024 22:33:34 +0100
+Message-ID: <20240313213339.82071-8-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240313213339.82071-1-philmd@linaro.org>
+References: <20240313213339.82071-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [2.78 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; R_MISSING_CHARSET(2.50)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
- BROKEN_CONTENT_TYPE(1.50)[]; TO_DN_SOME(0.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- BAYES_HAM(-0.92)[86.27%]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,30 +101,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Since we *might* have user emulation with softmmu,
+replace the system emulation check by !user emulation one.
 
-In this v2:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ plugins/api.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-patch 1 - The fix for the ioc leaks, now including the main channel
-
-patch 2 - A fix for an fd: migration case I thought I had written code
-          for, but obviously didn't.
-
-Thank you for your patience.
-
-based-on: https://gitlab.com/peterx/qemu/-/commits/migration-stable
-CI run: https://gitlab.com/farosas/qemu/-/pipelines/1212483701
-
-Fabiano Rosas (2):
-  migration: Fix iocs leaks during file and fd migration
-  migration/multifd: Ensure we're not given a socket for file migration
-
- migration/fd.c   | 35 +++++++++++---------------
- migration/file.c | 65 ++++++++++++++++++++++++++++++++----------------
- migration/file.h |  1 +
- 3 files changed, 60 insertions(+), 41 deletions(-)
-
+diff --git a/plugins/api.c b/plugins/api.c
+index 8fa5a600ac..06d3e95da2 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -294,14 +294,14 @@ bool qemu_plugin_mem_is_store(qemu_plugin_meminfo_t info)
+  * Virtual Memory queries
+  */
+ 
+-#ifdef CONFIG_SOFTMMU
++#ifndef CONFIG_USER_ONLY
+ static __thread struct qemu_plugin_hwaddr hwaddr_info;
+ #endif
+ 
+ struct qemu_plugin_hwaddr *qemu_plugin_get_hwaddr(qemu_plugin_meminfo_t info,
+                                                   uint64_t vaddr)
+ {
+-#ifdef CONFIG_SOFTMMU
++#ifndef CONFIG_USER_ONLY
+     CPUState *cpu = current_cpu;
+     unsigned int mmu_idx = get_mmuidx(info);
+     enum qemu_plugin_mem_rw rw = get_plugin_meminfo_rw(info);
+@@ -323,7 +323,7 @@ struct qemu_plugin_hwaddr *qemu_plugin_get_hwaddr(qemu_plugin_meminfo_t info,
+ 
+ bool qemu_plugin_hwaddr_is_io(const struct qemu_plugin_hwaddr *haddr)
+ {
+-#ifdef CONFIG_SOFTMMU
++#ifndef CONFIG_USER_ONLY
+     return haddr->is_io;
+ #else
+     return false;
+@@ -332,7 +332,7 @@ bool qemu_plugin_hwaddr_is_io(const struct qemu_plugin_hwaddr *haddr)
+ 
+ uint64_t qemu_plugin_hwaddr_phys_addr(const struct qemu_plugin_hwaddr *haddr)
+ {
+-#ifdef CONFIG_SOFTMMU
++#ifndef CONFIG_USER_ONLY
+     if (haddr) {
+         return haddr->phys_addr;
+     }
+@@ -342,7 +342,7 @@ uint64_t qemu_plugin_hwaddr_phys_addr(const struct qemu_plugin_hwaddr *haddr)
+ 
+ const char *qemu_plugin_hwaddr_device_name(const struct qemu_plugin_hwaddr *h)
+ {
+-#ifdef CONFIG_SOFTMMU
++#ifndef CONFIG_USER_ONLY
+     if (h && h->is_io) {
+         MemoryRegion *mr = h->mr;
+         if (!mr->name) {
 -- 
-2.35.3
+2.41.0
 
 
