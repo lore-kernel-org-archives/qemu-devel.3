@@ -4,54 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DAA6C54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 18:31:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F2BC54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 18:51:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkTNT-0007lu-Pt; Wed, 13 Mar 2024 14:30:59 -0400
+	id 1rkTg2-0001YT-Mz; Wed, 13 Mar 2024 14:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rkTND-0007kM-7T
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:30:51 -0400
-Received: from todd.t-8ch.de ([159.69.126.157])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rkTNA-00016h-FF
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:30:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
- t=1710354633; bh=uMO6Nm3s6pTXwozpOl7YuSfWTfjdYkYi+h1hy8fvNUg=;
- h=From:Date:Subject:To:Cc:From;
- b=QNnsTXVKSvtX0Fc+kQEfPYyTEBLjQ84NnGQffO164RqwuYo5zOS++5b90nOCXzlfo
- FjsgxBE/rShRvR8fNm9YC1IaHooZ+IORRHbXZwEYwNDsOnUQ1X7174HCdoaegvQTSq
- jUvi4NqB6GbxXFgTUR9KWlaXQ90F4WQoJWJMeTo4=
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Date: Wed, 13 Mar 2024 19:30:31 +0100
-Subject: [PATCH] docs/specs/pvpanic: mark shutdown event as not implemented
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkTfx-0001Xz-Oj
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:50:06 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkTfv-0003v8-F7
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:50:05 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-513ca834ad7so270147e87.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 11:50:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710355801; x=1710960601; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2uvg7pJFeMQcnPLMPf2nUqArdk7gKSBHY/6kmDxSVbs=;
+ b=zKbuVom8E5Ehj9++mWQzupIomgmIPzB9ta2GbFi6TK7TXPJNh7woMUss20a+4wbcv/
+ 18U0cYnzAWbnjALLMANhs6L/u21qIWZmzV5V0GLVpoPdw7kY2fRkKVEUzrW6xWCyfVQX
+ Gi/2tG6fS4j3LSaeGOQsMH6c0tumWNyJWRjJ2Lg0WHfjCmmqFRkLRd9UjoQhJEefiERB
+ bamBgwRBGvv4ulckZI8iZZENgbzwigpj48kEtZoftoJ0HtAEEV7Z4NmzwWukUrOHJ712
+ E5DjNY5ZNGSxLOYzxBcGPWFWpvnKV80oXKxBY4rBljJ1VCQPRaoGi/i19NflREKp3uIn
+ dbag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710355801; x=1710960601;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2uvg7pJFeMQcnPLMPf2nUqArdk7gKSBHY/6kmDxSVbs=;
+ b=FUYsow9BffR0np3ct/wJOtTjWJPxb/sHj75dnwRLEEk+gWMAILNDawtiq20ffoggkQ
+ IrgsdIQ3a+K3qpus6x88wA0mvd1EFAK92JHta7eOsO68P76FDZb4kUTRdsLAbC5tXHih
+ Cuii8Xilp0blq6YL5VRTBgG9RVLC4ArkXvC/R0zZRvAJ0wehphXooBXQwfJ4V9GzR9W9
+ w8XM8lo/TEd439IWWewwVBo1zbHpj7y3EASWb5n0HHlULNUlkmrfKAre2TI6iYGADJoa
+ gELyj7G/ck2TQeM72W+isUPkZEOZCjMEga/+iDalEUO/crXky6utc1YMCS1mNRBCqN1d
+ WuHg==
+X-Gm-Message-State: AOJu0Yzwl6k4zAter9unSaDG18te6wsGe1W42YbF5niHuxAzSum7kpGH
+ jH68Ao2vpW99TVCweePJdmf0VNWhz2WtanTYMjFE1VFCvenkkWZnwqoKzh2LLte14nIz5z5+eTn
+ 3
+X-Google-Smtp-Source: AGHT+IGd5oSOAY+51z1dpoBzCAMSQ7nNh4ZMyTYUDBI9tf4tfYJf62nh9LNKW4d2JKypejTXtL5Whg==
+X-Received: by 2002:a19:771c:0:b0:513:cbf2:50b3 with SMTP id
+ s28-20020a19771c000000b00513cbf250b3mr1061509lfc.35.1710355800790; 
+ Wed, 13 Mar 2024 11:50:00 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.182.179])
+ by smtp.gmail.com with ESMTPSA id
+ o16-20020a05600c511000b00412c1d51a0dsm3088896wms.45.2024.03.13.11.49.57
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 13 Mar 2024 11:50:00 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ John Snow <jsnow@redhat.com>, Alexander Graf <agraf@csgraf.de>,
+ Eric Auger <eric.auger@redhat.com>, qemu-block@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-9.0 0/4] overall: Avoid using inlined functions with
+ external linkage again
+Date: Wed, 13 Mar 2024 19:49:50 +0100
+Message-ID: <20240313184954.42513-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20240313-pvpanic-note-v1-1-7f2571cdaedc@t-8ch.de>
-X-B4-Tracking: v=1; b=H4sIAMbw8WUC/x3MTQqAIBBA4avIrBP8qYiuEi1Ex5qNioYE4t2Tl
- t/ivQYFM2GBnTXIWKlQDANyYmBvEy7k5IZBCTULLTVPNZlAlof4IPdGW9yckutiYCQpo6f33x1
- n7x+cx1p9XgAAAA==
-To: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1710354633; l=897;
- i=thomas@t-8ch.de; s=20221212; h=from:subject:message-id;
- bh=uMO6Nm3s6pTXwozpOl7YuSfWTfjdYkYi+h1hy8fvNUg=;
- b=s5lNMdrsWMspLfP1OMJMwGw6da/W7BYmKDy0K9MpfrADRxgylcvoTAYZvWC9VoOiwy3HsInW2
- siyQchfRrthA4gTqgYsvhtXXbmR3ThvA8iaOvCrRo/mxTb5puwsZog0
-X-Developer-Key: i=thomas@t-8ch.de; a=ed25519;
- pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
-Received-SPF: pass client-ip=159.69.126.157; envelope-from=thomas@t-8ch.de;
- helo=todd.t-8ch.de
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,35 +99,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mention the fact that this event is not yet implemented
-to avoid confusion.
-As requested by Michael.
+Mostly as a C style cleanup, use -Wstatic-in-inline to avoid
+using inlined function with external linkage.
 
-Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
----
- docs/specs/pvpanic.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Philippe Mathieu-Daudé (4):
+  hw/arm/smmu: Avoid using inlined functions with external linkage again
+  accel/hvf: Un-inline hvf_arch_supports_guest_debug()
+  qtest/libqos: Un-inline size_to_prdtl()
+  meson: Enable -Wstatic-in-inline
 
-diff --git a/docs/specs/pvpanic.rst b/docs/specs/pvpanic.rst
-index 61a80480edb8..b0f27860ec3b 100644
---- a/docs/specs/pvpanic.rst
-+++ b/docs/specs/pvpanic.rst
-@@ -29,7 +29,7 @@ bit 1
-   a guest panic has happened and will be handled by the guest;
-   the host should record it or report it, but should not affect
-   the execution of the guest.
--bit 2
-+bit 2 (to be implemented)
-   a regular guest shutdown has happened and should be processed by the host
- 
- PCI Interface
+ meson.build               | 1 +
+ hw/arm/smmu-common.c      | 2 +-
+ target/arm/hvf/hvf.c      | 2 +-
+ target/i386/hvf/hvf.c     | 2 +-
+ tests/qtest/libqos/ahci.c | 2 +-
+ 5 files changed, 5 insertions(+), 4 deletions(-)
 
----
-base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
-change-id: 20240313-pvpanic-note-fa3ce8d2165a
-
-Best regards,
 -- 
-Thomas Weißschuh <thomas@t-8ch.de>
+2.41.0
 
 
