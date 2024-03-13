@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E326BC54E66
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 19:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E8BAC54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 19:32:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkUKK-0007I5-JT; Wed, 13 Mar 2024 15:31:48 -0400
+	id 1rkUKH-0006wG-1x; Wed, 13 Mar 2024 15:31:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rkUK8-0006xO-KX
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:31:44 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1rkUJp-0006qX-1Z
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:31:20 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rkUK6-0002TX-SA
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:31:36 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6e6adc557b6so262917b3a.2
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 12:31:33 -0700 (PDT)
+ id 1rkUJl-0002Qa-1L
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 15:31:16 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-6e55b33ad14so163505b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 12:31:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710358292; x=1710963092; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1710358269; x=1710963069; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dQxZomeoNn9i8QHNEyNqDc/x9f1sWSuEH/Pg+YiDFJs=;
- b=Lh1hCjNRKlM3JWhIhH15gG3iRWX3+JFCiW4n5kFAccOsYg1hBjgpVNz/0iASjBUYGq
- H8BL2+R04dVXL/mme2iEwBmM0NzoY4nw5ZvjF1QF3EqsKT2nNgT5Tzej2o9atOBwffBl
- JN1qdzzF/4ZFvUtEVWwCrX1zufi8w+pMftc1Mwhth8EHCag+g33bWWprpD/LEqRWc2nv
- T/FKaxEzHegipFkelKcGfDlRodBr+UARciY00Zz9z/l23A7CR82lV3wrNS3MYHCEP0rm
- MbeGFXEbaa/XeHrfO9FQUn0/jhagzfgacGAoclJERO6gFMcpIhPRywjooBoT2oLLuFDE
- bBwg==
+ bh=8PUZYN/jxC55WgIbgr/YDIPnxwzEfC4uN3+8U/WL+Ts=;
+ b=hZ1mtA7wSG29Fp8L2WEsSXXySTSzMXtIPzy1+7p/vUypRNYi3k4z2mpLs/850WUVbz
+ HZGKYvYitNEkGYRlMqrFGpr0NVQyseFgPlty5FSKKU8TzlfaGHy0S/16r+bmKeiW6PRD
+ tPJb9hXneUZhPzGyOG9fqF/l0VsNgkSzQza+1bNgQx70ntHB0B/FEP40g2NLOWFhX5hE
+ MCVD3WRsTKBUMVvfsaCQO6MoNAOTS1BmofBswOLzWP+lijwdNLL1IkOxYPivppbIct0W
+ Bk1dNc9kXdzhIYtl4VETpNQPjh5PsK0R1gxiF2rCE6d3bbPQuhQ9P8I98+ypdmXZgLKN
+ KXZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710358292; x=1710963092;
+ d=1e100.net; s=20230601; t=1710358269; x=1710963069;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dQxZomeoNn9i8QHNEyNqDc/x9f1sWSuEH/Pg+YiDFJs=;
- b=P6uFbNQLToZ2PIgBRsq9NoCjT6eyhCKXZjM3ixeyzGj8VczIAM8YYD21hsBN4+PLbq
- leSppSHuKB6gJpjuqdjJWVb1g0iiFRcWY5lgHGM5ZCKMFvxyHdb+Tuf6gIZ35S5VjMVA
- FjpOjgvK9mBosfCsxSXZ+FhcKrTnGhVZ9IPgxqj5iHtg8ET/PAockhaMbtH1UnypwB76
- flMbiOPKKQMJEJx4HK0/INGPbTTuSFnfSaF5t6/sUe6E7JPZvQRW9NPWN+bSea72ZU0T
- +irPVzpGeGPdvijxro071CjuIOzitKcT0IxtQ0ch+o4PuIfwXksrSpzzlXemeqwX0tV9
- bxBQ==
-X-Gm-Message-State: AOJu0YzPc8uv4eDg+SNtpSuBxQfu5Luysa/8r7QK7apCm4OQPImpGu2s
- +OlN4aWF5ue/ryz6VHIzT6bDRA3O8dVnbKTre5jIxSVy9eX/jP8VkvNGwZjRcHCMg0Uc0mEwv4x
- r
-X-Google-Smtp-Source: AGHT+IF2IX4GlWL8B//geHu6J/3ylLHGbQPkKJgNj0PnC8OacyeZ0YJWzqR6qpytVWYSCktvcZN47g==
-X-Received: by 2002:a05:6a20:d90b:b0:1a2:a596:4dce with SMTP id
- jd11-20020a056a20d90b00b001a2a5964dcemr3971976pzb.58.1710358292105; 
- Wed, 13 Mar 2024 12:31:32 -0700 (PDT)
+ bh=8PUZYN/jxC55WgIbgr/YDIPnxwzEfC4uN3+8U/WL+Ts=;
+ b=oxpp7OLoxfHYLHedhKaeC+uG0Y+prjhFxLf6ZT97s3O4ivA7EcomKErrrV3yIGh6/M
+ TqTjzWrxEsDlYHfiP4BNxDzkTdwFSQIqYUIf9ZNtmse7d+pOzYwh+Uno0VMmqUEB42ZN
+ 6GR7TZsf63cXGPm99YoeYqSIkcJF62wH981VKHWVZSv90kWlqmv4xWjFXhKD0+X5+HqH
+ O2IXYAFal1177NMcVMA5rkoVj+Yno8KbGfMel6OlxcFrbM8YR+PSZlhUsKo5Ys+sdCnp
+ tq14qHFvVcmOkWkQLrFjjwilPg1vNmii/QEmuLa/T39okoaCUHIb2Q8Us7BjYxT/TUnb
+ c3xg==
+X-Gm-Message-State: AOJu0YwHY2ZXGwURWjaWikt53d3afsPVLK5fuaADijNzdOKGraP/1aQ+
+ LrgrWyMKaCigOZ/gBjGOpBMQlng6pGstk0koUxQbYLrORycieXmDHEqbrpIiyEbajPJayGQc/wj
+ u
+X-Google-Smtp-Source: AGHT+IF+4Tbe4uSyPjFuMsg+bCY723/3U6mX5hoKEfqrjXZJR2lqvkGuGcc31S/VGGCgQxwOMIBqIg==
+X-Received: by 2002:a05:6a00:938b:b0:6e6:97b9:1ec3 with SMTP id
+ ka11-20020a056a00938b00b006e697b91ec3mr3668406pfb.13.1710358268988; 
+ Wed, 13 Mar 2024 12:31:08 -0700 (PDT)
 Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
  by smtp.gmail.com with ESMTPSA id
- k10-20020a628e0a000000b006e5a915a9e7sm8912421pfe.10.2024.03.13.12.31.29
+ k10-20020a628e0a000000b006e5a915a9e7sm8912421pfe.10.2024.03.13.12.31.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Mar 2024 12:31:31 -0700 (PDT)
+ Wed, 13 Mar 2024 12:31:08 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  richard.henderson@linaro.org, philmd@linaro.org,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH for-9.0 v13 8/8] target/riscv/vector_helper.c: optimize loops
- in ldst helpers
-Date: Wed, 13 Mar 2024 16:30:59 -0300
-Message-ID: <20240313193059.405329-9-dbarboza@ventanamicro.com>
+Subject: [PATCH for-9.0 v13 1/8] target/riscv/vector_helper.c: set vstart = 0
+ in GEN_VEXT_VSLIDEUP_VX()
+Date: Wed, 13 Mar 2024 16:30:52 -0300
+Message-ID: <20240313193059.405329-2-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240313193059.405329-1-dbarboza@ventanamicro.com>
 References: <20240313193059.405329-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,49 +98,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Change the for loops in ldst helpers to do a single increment in the
-counter, and assign it env->vstart, to avoid re-reading from vstart
-every time.
+The helper isn't setting env->vstart = 0 after its execution, as it is
+expected from every vector instruction that completes successfully.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/vector_helper.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/riscv/vector_helper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 7260a5972b..b29b8f9116 100644
+index fe56c007d5..ca79571ae2 100644
 --- a/target/riscv/vector_helper.c
 +++ b/target/riscv/vector_helper.c
-@@ -209,7 +209,7 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base,
- 
-     VSTART_CHECK_EARLY_EXIT(env);
- 
--    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
-+    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
-         k = 0;
-         while (k < nf) {
-             if (!vm && !vext_elem_mask(v0, i)) {
-@@ -277,7 +277,7 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
-     VSTART_CHECK_EARLY_EXIT(env);
- 
-     /* load bytes from guest memory */
--    for (i = env->vstart; i < evl; i++, env->vstart++) {
-+    for (i = env->vstart; i < evl; env->vstart = ++i) {
-         k = 0;
-         while (k < nf) {
-             target_ulong addr = base + ((i * nf + k) << log2_esz);
-@@ -393,7 +393,7 @@ vext_ldst_index(void *vd, void *v0, target_ulong base,
-     VSTART_CHECK_EARLY_EXIT(env);
- 
-     /* load bytes from guest memory */
--    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
-+    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
-         k = 0;
-         while (k < nf) {
-             if (!vm && !vext_elem_mask(v0, i)) {
+@@ -4781,6 +4781,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2,         \
+         }                                                                 \
+         *((ETYPE *)vd + H(i)) = *((ETYPE *)vs2 + H(i - offset));          \
+     }                                                                     \
++    env->vstart = 0;                                                      \
+     /* set tail elements to 1s */                                         \
+     vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
+ }
 -- 
 2.43.2
 
