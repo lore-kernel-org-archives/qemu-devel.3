@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB894C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 21:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0E44C54E66
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 21:41:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkWKt-0003MT-2r; Wed, 13 Mar 2024 17:40:31 -0400
+	id 1rkWLj-0003zn-3D; Wed, 13 Mar 2024 17:41:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWKr-0003M5-Kb
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:40:29 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWLg-0003zO-KW
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:41:21 -0400
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWKq-0000zc-0D
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:40:29 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-413ef82038eso1739525e9.1
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 14:40:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkWLf-00013D-71
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 17:41:20 -0400
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-5131a9b3d5bso446604e87.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 14:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710366026; x=1710970826; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1710366077; x=1710970877; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tYgcinaA7vaMv4T5/owPLAAkeG3/sKMeNrNbb57/8xE=;
- b=gG0gRe1doaeIbKIilKd6tkPLCulGvogSPOHK13f059O1BwMMQXmvSiLou08ZZRfRFN
- Xetr/c+tHTSZkbolBTvWHmjl8IBhG6ULoRSfMju6+VctXcPXw8PmtrKCyoOsIVJhpsWD
- PpGJ1ogltKKJcFcu/Uq6sZ2MfNKkZDTtcy9k4v2a+GSYVQGcHPTs+xG91fW88sGohG/0
- qwHD9taNjq5QSP4AXM80EL9Ve6j6dpNGJO63uxZ637E9z1T3Yc6fP7v0Eq5gb4DGUqzw
- XWdroF/9lBcioD63djH6Jh9rOyQltezwddk0G/vYHD3rUdtqbWK7feBDOyq/t3FGrku7
- tVKQ==
+ bh=JyHIKVFnW4IAENh7a1NH3TNXnVQr2Vjt/G0GlwYn3qg=;
+ b=ka06MIp4mh9VRBXuDcrq+DdLzGSDNQf6zj7+r47RrSWgJ0S9LoDU2KhbgWe4hy32RZ
+ ujchEafPLF5WSHhFMYucbKfwkbXxFPsU+p76OG+aNotkJdjVsTkEt8J+RPFyFKBX56O5
+ NSHYsaxc0AZhUa5huiUARWrttwTO0eo+JPZEnmswalVz+a+5svKFzoVERAPkCXeSxMhJ
+ LQYKjQApJBcU6EavlWFHxYFx/oISYVR2P6RUPH8C4vAQJsjJdbaJ0AwJIypoYNnGeA5S
+ /wGidf+pvjmLEI+vvzywOKZiWzqFQT0IJZoMtCToNhPNw6wmTLei8Bd9PUrfXcJ5+Sp6
+ B1Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710366026; x=1710970826;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1710366077; x=1710970877;
+ h=content-transfer-encoding:in-reply-to:references:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tYgcinaA7vaMv4T5/owPLAAkeG3/sKMeNrNbb57/8xE=;
- b=tis4xfobVdoPJAQ5LLJmA3PCZ9HPZl0w1Uka2mN+9EB3TiUbFzWzBwe8oMKLikbJNu
- SJC4LJIqWIshUBzhVORYN8G6O0/pKxfNvKV5Ds6Px0Rk27PjL6giKayKFXYdJpQ2lnKr
- Ll4Vj4liNG9UI+qQIW9/aIU1qtIZsnqlNbTq5HiDSZ+F7Qjp3DJsBexLcmq9davncEIL
- 0NWx55ZqfnS0sQTEOZJS5pHQLgC08G7Nvo5RWz7sF0dEDQU8JAQMlPFrX/RhQdanP7pz
- +51abPynTzrBC4ChGT8+PXivvwdC/QuG7TSlU7PYJLzfe67uqTOJn7m2/kQTimNoxGRG
- 4t1g==
+ bh=JyHIKVFnW4IAENh7a1NH3TNXnVQr2Vjt/G0GlwYn3qg=;
+ b=vxeK4lFDtNVARnBst5K+7z//3PGonxvmYYlOt6qtnXUvO36U6g4KEVdEpVXxx26evV
+ Rljizp4450i4oeu04olhNruCm3i5newWWv6SQi0ZGZgbPA958nYkKZZtfZjHRwmIAR2b
+ 91BzqtskuipjTuK4da3P01xPk/bk7hs1qolrmOKUJfIzXk3FX17sNYJu2tQX1FNnY8Pd
+ Y4OE9Zzf1tkz0kvtmsrQyXtj6GFoY+PenqRlB5Acnc8b05Sedfb4srA+t0eEKQ2dQKIW
+ TZDvY6w8tVjccbJJP7Tbgb5UeQWMgGJ1KYrnvr2x16tSG/HboXLaj7cEiWRhJ4VyXHol
+ wCYw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7qEseCvPdvauUfRV6jJCh/7ckcvWyDetbumeVND3D38LjgkbPNH0wBFeIUEMOLV2SYUH8IUulPzlhgLIEiTenU+H26Rk=
-X-Gm-Message-State: AOJu0YwHM3jRjpDk3WQ7r3joCRxAFTmxopi/fPZn1udr77a2hCwonbnf
- FizY2LP+n4/u9GObF40Kd9ieV0iAA33KB2lYy+MKgtyj6smtZGrP0maX2OoLIWPGMmzTDnGyJ6t
- k
-X-Google-Smtp-Source: AGHT+IFGfO5gHri0xhXGi22JEQak7jt+FZW8je/LMN9q6dtdaTLnMYbB6hUPSJ7EDMdUtSlQZR5+Gg==
-X-Received: by 2002:a05:600c:5124:b0:412:ebde:8873 with SMTP id
- o36-20020a05600c512400b00412ebde8873mr31863wms.30.1710366026333; 
- Wed, 13 Mar 2024 14:40:26 -0700 (PDT)
+ AJvYcCUDXX6vkGEKeNn0Z7l8AyCpXysSfpL/n5mmo2S4gOEPfcxBsX0ZIabD0R8TjSsu141N2RWnW3ddv/7YdKHwGvnEbbwLmmw=
+X-Gm-Message-State: AOJu0YwCwrtbMkcqjKs62/JSELg0Iu0lYsQ6K/HD161awuMJIIxc4YHA
+ oG8qnAVi2od8nVIkWzZTaCi5jUM9fAXlXW5xVeHn4yFgZDQZxiz1Mr1on/5krDI=
+X-Google-Smtp-Source: AGHT+IHy2+c4rTgZrWSqpGWc0ZF42twxi2F4uuTX3VLSGtvOm4EditJ+v4Zs5m5MaEa6d0BKVoe38A==
+X-Received: by 2002:a05:6512:46a:b0:513:c813:bdf1 with SMTP id
+ x10-20020a056512046a00b00513c813bdf1mr1966390lfd.5.1710366077223; 
+ Wed, 13 Mar 2024 14:41:17 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.182.179])
  by smtp.gmail.com with ESMTPSA id
- r8-20020a05600c458800b00413e8df267bsm276831wmo.48.2024.03.13.14.40.25
+ r8-20020a05600c458800b00413e8df267bsm276831wmo.48.2024.03.13.14.41.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Mar 2024 14:40:25 -0700 (PDT)
-Message-ID: <ceca4488-a8ab-4dad-b54a-9059f982ce19@linaro.org>
-Date: Wed, 13 Mar 2024 22:40:23 +0100
+ Wed, 13 Mar 2024 14:41:16 -0700 (PDT)
+Message-ID: <e630b670-acec-4d6d-b89d-dafcdcbfee84@linaro.org>
+Date: Wed, 13 Mar 2024 22:41:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/16] esp.c: replace cmdfifo use of esp_fifo_pop_buf()
- in do_command_phase()
+Subject: Re: [PATCH v2 02/16] esp.c: replace cmdfifo use of esp_fifo_pop_buf()
+ in do_message_phase()
 Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, pbonzini@redhat.com,
  fam@euphon.net, laurent@vivier.eu, qemu-devel@nongnu.org
 References: <20240313085810.2655062-1-mark.cave-ayland@ilande.co.uk>
- <20240313085810.2655062-2-mark.cave-ayland@ilande.co.uk>
- <c0a5a1cc-a6bb-4856-a708-d19195aacb9f@linaro.org>
- <bcd010a7-c09c-483c-9ebb-0e75be578545@ilande.co.uk>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <bcd010a7-c09c-483c-9ebb-0e75be578545@ilande.co.uk>
+ <20240313085810.2655062-3-mark.cave-ayland@ilande.co.uk>
+ <9c36ddab-59a9-47fa-ab2e-ab0e9cff5fb6@linaro.org>
+In-Reply-To: <9c36ddab-59a9-47fa-ab2e-ab0e9cff5fb6@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,66 +98,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/3/24 22:08, Mark Cave-Ayland wrote:
-> On 13/03/2024 11:03, Philippe Mathieu-Daudé wrote:
-> 
->> On 13/3/24 09:57, Mark Cave-Ayland wrote:
->>> The aim is to restrict the esp_fifo_*() functions so that they only 
->>> operate on
->>> the hardware FIFO. When reading from cmdfifo in do_command_phase() 
->>> use the
->>> underlying Fifo8 functions directly.
->>>
->>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->>> ---
->>>   hw/scsi/esp.c | 4 ++--
->>>   1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
->>> index 590ff99744..f8230c74b3 100644
->>> --- a/hw/scsi/esp.c
->>> +++ b/hw/scsi/esp.c
->>> @@ -265,7 +265,7 @@ static void esp_do_nodma(ESPState *s);
->>>   static void do_command_phase(ESPState *s)
->>>   {
->>> -    uint32_t cmdlen;
->>> +    uint32_t cmdlen, n;
->>>       int32_t datalen;
->>>       SCSIDevice *current_lun;
->>>       uint8_t buf[ESP_CMDFIFO_SZ];
->>> @@ -275,7 +275,7 @@ static void do_command_phase(ESPState *s)
->>>       if (!cmdlen || !s->current_dev) {
->>>           return;
->>>       }
->>> -    esp_fifo_pop_buf(&s->cmdfifo, buf, cmdlen);
->>> +    memcpy(buf, fifo8_pop_buf(&s->cmdfifo, cmdlen, &n), cmdlen);
+On 13/3/24 12:03, Philippe Mathieu-Daudé wrote:
+> On 13/3/24 09:57, Mark Cave-Ayland wrote:
+>> The aim is to restrict the esp_fifo_*() functions so that they only 
+>> operate on
+>> the hardware FIFO. When reading from cmdfifo in do_message_phase() use 
+>> the
+>> underlying Fifo8 functions directly.
 >>
->> 'n' is unused, use NULL?
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> ---
+>>   hw/scsi/esp.c | 7 ++++++-
+>>   1 file changed, 6 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+>> index f8230c74b3..100560244b 100644
+>> --- a/hw/scsi/esp.c
+>> +++ b/hw/scsi/esp.c
+>> @@ -309,6 +309,8 @@ static void do_command_phase(ESPState *s)
+>>   static void do_message_phase(ESPState *s)
+>>   {
+>> +    uint32_t n;
+>> +
+>>       if (s->cmdfifo_cdb_offset) {
+>>           uint8_t message = esp_fifo_pop(&s->cmdfifo);
+>> @@ -320,7 +322,10 @@ static void do_message_phase(ESPState *s)
+>>       /* Ignore extended messages for now */
+>>       if (s->cmdfifo_cdb_offset) {
+>>           int len = MIN(s->cmdfifo_cdb_offset, 
+>> fifo8_num_used(&s->cmdfifo));
+>> -        esp_fifo_pop_buf(&s->cmdfifo, NULL, len);
+>> +
+>> +        if (len) {
+>> +            fifo8_pop_buf(&s->cmdfifo, len, &n);
 > 
-> I was sure I had tried that before and it had failed, but I see that you 
-> made it work with NULL in commit cd04033dbe ("util/fifo8: Allow 
-> fifo8_pop_buf() to not populate popped length") - thanks!
+> 'n' is unused, use NULL?
 
-Ah!
+Using NULL:
 
-So using NULL in patches 1 and 2:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> I'll make the change for v3, but I'll wait a couple of days first to see 
-> if there are any further comments, in particular R-B tags for patches 10 
-> and 11.
-
-I still have them in my TOREVIEW queue and need to digest them.
-
-> 
->>>       current_lun = scsi_device_find(&s->bus, 0, s->current_dev->id, 
->>> s->lun);
->>>       if (!current_lun) {
-> 
-> 
-> ATB,
-> 
-> Mark.
-> 
 
 
