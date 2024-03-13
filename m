@@ -4,67 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20ADDC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 12:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A0E3C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 12:50:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkNrI-0004eF-1p; Wed, 13 Mar 2024 08:37:24 -0400
+	id 1rkO36-0000l2-23; Wed, 13 Mar 2024 08:49:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rkNr9-0004bI-Kx
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 08:37:19 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rkO34-0000ki-Uo
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 08:49:34 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rkNr5-00078U-PD
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 08:37:14 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-568307fe62eso7101706a12.1
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 05:37:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rkO33-0001fv-5O
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 08:49:34 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2d46dd8b0b8so5908161fa.2
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 05:49:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710333430; x=1710938230; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=W2KOYWLb0BCwLfBGy+z/iZaW0adTlaN63+C+ZhBqP2U=;
- b=TCDkZJ9Qg3kBowaahh5IL3LMxQginmnw4dhntnrafoptfUCQeNPMd9irhfXbBqD/k8
- m/Y8YhHGfs3vDCl0RWcLMmCBeZpD1q4Ahv79gpBUKr6o8En7kKEgV1jezQaw7DNuC6CP
- LdqLSFEXfu64I3LOOuIg8QaPn/TSMTNO74eyH5ZPja9JEyrX8kzA48X4KcJNx0dB6aIP
- VpUZDcW1VrtVfbHAW9Ew0y7OQDXIVq/YF5xuGEeJc+UpFuo3nrySyIVzEAXIOudmod07
- FCDeoSVSNhJ0WFDqUluTa+EcoklIUprZxfqLP0JvSUDr36fgXIKgYt3cNFTYPAin3xss
- 2UYg==
+ d=ventanamicro.com; s=google; t=1710334171; x=1710938971; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=67IZMwEKKDGF7mCcQNP/wMYA5z/SJyIIi8fEpZu9CgA=;
+ b=iDkNYrX1hQ1DaV8TXbJ6ANuIu/QqkemxBDhvnGE1kmWtbts2S3PRXyHo1o746GD1GF
+ dg1F6PByBqq7GmmRBha+KnU69LYTyA4/JO23qRmSMTE/bKMC6OztPVr98v/NYkRDmP+t
+ T5SVlhInpQHgBBEgwCU7SwUb6U7qXa+1s0QsNUXMgaWxG0XsAc1WEAAgN/xrbQT/9OHu
+ DVWnQi9cvescn4ye/ElU0EVZ/EjeFrkd6zdYTu5ylFE1ZZVy5H9lL88jGJAMUBlSX2Tc
+ zoX08EtY468xyPFfMq8yFe/Ox47SwRoNhcj73REd64K/Zkv0gKQesPEQWeYZhD9mz+LO
+ KV6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710333430; x=1710938230;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W2KOYWLb0BCwLfBGy+z/iZaW0adTlaN63+C+ZhBqP2U=;
- b=Opr3ewi0Bq78scyJ0+R8EVnDuK/2v3HRnICRirVc2NveeOW4p762/Plg/0ZrMovA4E
- B0BFro3zpAnCTPp1ACV5nxg1eLfnZpxX0K88X4s3+qJaVZPNrKbi3iIAgyHx2L7jwa+Z
- BW41kYeLiCTdDav0OADe4Y4np02uzcuDyYj5Zse6zVerWnA/9gvVMcxnRxBcFH1CO7TX
- HJ4TmXe+Cq8ad5/a3x0dGxPWsHRonuJZggzXVhS6LLYEB8+EAYDPu4XYoW1g2nA9NQ8v
- soKsZbf6XlKIvDUEqLsKsZvBfJJYSBMlAgB/bLG2A4bJ9nJYS+ZFKblgVwQsuR6F7QIe
- Ao1w==
-X-Gm-Message-State: AOJu0Yz7HR4Wdpcccz87Bg4Bs1Q8886hPUyPuD6e81rSRQlghq8293cz
- dSMsbYt2JGA5aEPgTStMqgs50P7+gfLWY+r+ApZNmdoLA8N9Ue60aIpiIMpKfr5uQCWcdGFJhVx
- 50458OG4tQ3fCtOGIspQ590B3w8K+zZbAsIOUYg==
-X-Google-Smtp-Source: AGHT+IFg5WiGPVggw1BAER6veKLyb+h8oZmon6cCX3hx4nw7aZN7qKpGOzOsxM6U8ZgHih17eRjtzgxqE/1P1aZ1JnA=
-X-Received: by 2002:a50:d794:0:b0:566:4adc:45ac with SMTP id
- w20-20020a50d794000000b005664adc45acmr8313849edi.8.1710333429999; Wed, 13 Mar
- 2024 05:37:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710334171; x=1710938971;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=67IZMwEKKDGF7mCcQNP/wMYA5z/SJyIIi8fEpZu9CgA=;
+ b=duSawfUveT0G13rj87CCxHJ+tPmH30na9gMYefWN6uJSYhNKwLb8K2CJCIAdA3xdWa
+ 6W0E+MA+3N6/OSbhatwUAYa1ts3N0ZQr1Bb8ys/Ptize46uULBxh1GBzTgWoY7E+l4vw
+ P7S5cEnudheMoPtOpF+NFfOD+QSH6NkBGqmB5fzMnRYlLPdyhktiFDHMaGxcJ0hnWxy4
+ j8vo/gcavuEo8zLrE1KM3fPE3shmXBJsR0j6/jUB7ssYUyLtqqPg/nEtViqDYkJIcWKr
+ +3ojgEufr0Dtpf1og0fnnHlU5bRhVLUWN0GlseNyXCQOSSBeN1b5ZaZ6jf24VHjx1/MK
+ QmNQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWuMF0UUQA9pnMycNI1Qi/pyenOXm6T07JT0MYW25sawZAzbWwIjZjVdKYmWjo7U4ta88RHZz0tUO2mIqzkNCHqbeIx3v8=
+X-Gm-Message-State: AOJu0YySijDngM0YYO+eNkM4wdhXQMxpIvY7m1jEfymcci27Sd8z5FmL
+ qMgiP19R4v91s0E2/5xsXKLJqsH9gnuq0ojbyEq5uekbSjqSvjITVFIYIc9bkQ0=
+X-Google-Smtp-Source: AGHT+IFN/2NxpsGdWcYL4ORLZKK6nFRJUjSqBYx0LcSiC8DipyoeVIy2BsxrEpzzaJUObJNy73qU9w==
+X-Received: by 2002:a05:6512:1251:b0:513:c47d:c070 with SMTP id
+ fb17-20020a056512125100b00513c47dc070mr3204316lfb.42.1710334171418; 
+ Wed, 13 Mar 2024 05:49:31 -0700 (PDT)
+Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
+ by smtp.gmail.com with ESMTPSA id
+ m14-20020a05600c4f4e00b00413294ddb72sm2268367wmq.20.2024.03.13.05.49.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 13 Mar 2024 05:49:30 -0700 (PDT)
+Date: Wed, 13 Mar 2024 13:49:29 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Himanshu Chauhan <hchauhan@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 2/3] target/riscv: Expose sdtrig ISA extension
+Message-ID: <20240313-31131fe87882ea953d5aa6d4@orel>
+References: <20240313060931.242161-1-hchauhan@ventanamicro.com>
+ <20240313060931.242161-3-hchauhan@ventanamicro.com>
+ <20240313-0ac597594e930a42685aeba5@orel>
+ <CAPd4WezTTcYA5grMBrGYx5LUwF2jPT8gbL6CQWMZtsd1AJNuZQ@mail.gmail.com>
+ <20240313-8164061a70dafa62c8bb755b@orel>
+ <7898E43D-AF22-4170-BEC9-BC172304F483@ventanamicro.com>
 MIME-Version: 1.0
-References: <20240312184115.365415-1-richard.henderson@linaro.org>
-In-Reply-To: <20240312184115.365415-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 13 Mar 2024 12:36:59 +0000
-Message-ID: <CAFEAcA9BJicAwbWkWUL-YEXJbajw29oFo=vWkQkQSFS1hUahNA@mail.gmail.com>
-Subject: Re: [PULL 0/8] tcg + linux-user patch queue
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7898E43D-AF22-4170-BEC9-BC172304F483@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=ajones@ventanamicro.com; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,33 +101,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 12 Mar 2024 at 18:43, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> The following changes since commit 8f3f329f5e0117bd1a23a79ab751f8a7d3471e4b:
->
->   Merge tag 'migration-20240311-pull-request' of https://gitlab.com/peterx/qemu into staging (2024-03-12 11:35:41 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240312
->
-> for you to fetch changes up to 4fe19bbbea2cb9f1ec28cfd40cdc7f61e95a790e:
->
->   tcg/aarch64: Fix tcg_out_brcond for test comparisons (2024-03-12 04:09:21 -1000)
->
-> ----------------------------------------------------------------
-> linux-user: Add FIFREEZE and FITHAW ioctls
-> linux-user: Implement PR_*_{CHILD_SUBREAPER,SPECULATION_CTRL,TID_ADDRESS}
-> linux-user/elfload: Fixes for two Coverity CIDs
-> tcg/aarch64: Fixes for two TCG_COND_TST{EQ,NE} bugs
->
+On Wed, Mar 13, 2024 at 05:48:16PM +0530, Himanshu Chauhan wrote:
+...
+> >>>> #ifndef CONFIG_USER_ONLY
+> >>>> +    if (cpu->cfg.debug && cpu->cfg.ext_sdtrig) {
+> >>>> +         warn_report("Disabling debug property since sdtrig ISA
+> >>> extension "
+> >>>> +                     "is enabled");
+> >>>> +         cpu->cfg.debug = 0;
+> >>> 
+> >>> If sdtrig is a superset of debug, then why do we need to disable debug?
+> >>> 
+> >> 
+> >> "debug" is not disabled. The flag is turned off. This is for unambiguity
+> >> between which spec is in force currently.
+> >> May come handy (not now but later) in if conditions.
+> > 
+> > I know sdtrig/debug functionality remains enabled, but why state that the
+> > 'debug' functionality is no longer enabled?
+> 
+> Got it. The warning can be removed.
+> 
+> > If sdtrig is a superset, then,
+> > when it's enabled, both the debug functionality and the sdtrig
+> > functionality are enabled. Actually, sdtrig should do the opposite, it
+> > should ensure debug=true. The warning would look odd to users that know
+> 
+> I would disagree to set debug=true when sdtrig is selected. These are two different specifications and should be treated so. Sdtrig is a superset now but may have another revision not backward compatible. For two different specifications and flags should mirror the same. On the same lines, this patch (as it does) should keep (cfg->debug || cfg->sdtrig) which shows that you are dealing with two different specifications. They behave same for some triggers but are still different. Deprecation isn’t a problem now or later.
 
+sdtrig is frozen, otherwise it would require the 'x-' prefix, so it can
+no longer change in a substantial way and therefore if it's a superset of
+debug now then it always will be. If a change is made to "debug
+functionality" then it will get a new extension name which may not be
+compatible with either 'debug' or 'sdtrig', however that's not the case
+here. If a platform supports 'sdtrig', then it supports 'debug', as
+'sdtrig' is a superset of 'debug'. Pretending like they're mutually
+exclusive doesn't make sense when they completely overlap. Indeed
+platform's will likely *want* to advertise that they are compatible with
+both because software that is only compatible with 'debug' will need to
+know if it will work or not. A platform that says it's not compatible
+with 'debug', when it is, because it supports sdtrig, is limiting the
+software that will run on it for no reason.
 
-Applied, thanks.
+Thanks,
+drew
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
-
--- PMM
+> 
+> > this and the debug=off would also look odd in the results of cpu model
+> > expansion. Keeping debug=true would also avoid needing to change all the
+> > if cpu->cfg.debug conditions to if cpu->cfg.debug || cpu->cfg.ext_sdtrig.
+> > 
+> > If we deprecate 'debug' someday, then we'll add a warning for when
+> > there is 'debug' explicitly enabled by a user and also for 'debug'
+> > configs which lack 'sdtrig', but we don't need to worry about that now.
+> > 
+> > Thanks,
+> > drew
+> 
+> 
 
