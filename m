@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3848C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 05:18:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDCAEC54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 05:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkH0J-0004Xw-0G; Wed, 13 Mar 2024 01:18:15 -0400
+	id 1rkH63-0006o2-Jh; Wed, 13 Mar 2024 01:24:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkH0A-0004Wp-Pg
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:18:07 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkH61-0006nt-6o
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:24:09 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkH09-0008Aw-9d
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:18:06 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6e6aa5c5a6fso638548b3a.0
- for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 22:18:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rkH5u-0000wY-Bj
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 01:24:08 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1dd81aee2b4so36243195ad.0
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 22:24:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710307083; x=1710911883; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
+ d=gmail.com; s=20230601; t=1710307441; x=1710912241; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GE8hhN1a7ibH5O1+4As36+w6TzTJvEkL7Nqc428usZU=;
- b=gQuy/N3K81Ycg+2ydbEhapecwnVaIFI54ZgnwPa/tKPhkpGpE6jiYRWEFk2GBPWGyD
- 83rdVjlZ5hw2dZyEOWgR/TcCVQ9ILtXe3gOdWRd13nf9cH7C746rczt+OarOTg3DV6vm
- kPoukrqRrcITnOeo6h/qYwlMY7rPspmS5sKaZlUad4+wo0bklMiT7QhR7Xk82lBhpUKI
- UY7AmsOxLDcaVXqrpMn1wXlbGCLh+bdCDcPKIWFKrlWTRa0OPEUiEGqyMGJ6kbkKEuVN
- dPlKQ8vQRnnfnC5LB+vCn3yDDaHON2PlEb0fJQ1GKLZrGXz6DmoZBP2vb5jwciFUQtvK
- WQ/Q==
+ bh=LY2J4uZnvS38u85z52fqHUvPqNYN1HgO48/fDMx6Xu8=;
+ b=le4Mp11G9SjFJG8p8iCoCMG+Qq/CPsTutgE/ZXIfXWt+x02uAJRjxdjQIHQ1DGZhbW
+ GCizRSJlwiVeJiKcwCEnlUGoMHbyx+CnqYnTuWkhzSmx9OOF9QJHrM9sV6jYcjVGQSvX
+ XuyojRfPY51nJ2snsIlbSMLyRX7ErTLlumeaEOhRyPI1l2PAP8jCnYhqGl4UUQb4FQZr
+ Su/IYGoDC2okJNYmRkERp4OBoUVeZ1qA3D9QULrnjSuwY43Co6REKX78TFMpXoIFiFUI
+ WlhUs9frVInEaX9r1AwwlimQPyBKGFtZ7H+fkmomUOeNVdlP1HFpFy5BkJQKmrRX1+CN
+ OGhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710307083; x=1710911883;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
+ d=1e100.net; s=20230601; t=1710307441; x=1710912241;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=GE8hhN1a7ibH5O1+4As36+w6TzTJvEkL7Nqc428usZU=;
- b=Cg1ht2hyPR7u3n6LInGsxRxjqgUqC1M6X+BVkrkQ1FXpDmxJ204qTLmA+yRbQVXZC9
- 4abEL3aZrrNNwLlkI6OqwIdspOUJzyHoySJy0R84kIWzdwrs6jR47aqnxmD/ursg6LZn
- glZAkAb5lijBw3XmpY1RzYh9g28MLUrubGgV3C0xlfymFSrivDbd922v+XHE0ZJZcmmM
- e9yANjCiW+Y7EeJF/4JHXbJfhSZiANqe6epFY/6Z7OPbHDXYEEjWEx7i7pITYomeBb24
- Z/1BFXS+sDmIG7o+MGUOIa9Rrrk79Hi0ld6a/nowcpBjmwoyJGQd5rRa7ABJYN43ZA1k
- vhBQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQKT0wxaoUBNwcxJzup3A0cDrroLcXo87daMba5GmA4nj58nrm17Up7NYswVpo6P5ynNz2BQql2HT25VFgfJWNj/z2gZE=
-X-Gm-Message-State: AOJu0Yz05nx9RcO2F0CbhTLfJ1UhE1hcT9DrvIjnD5/rhOOLHdppZNM6
- MaQ5kCTv3ZX5xkVjb6Ukx4W29gVVBlv97z8N9cB1MVaDFjpfIeT6
-X-Google-Smtp-Source: AGHT+IFnRnlppiw+LHReegp6IdP1+J2Kxs0b1EqKanCyrVp2Qu9Qoytxmld4FzzjJYgtSU+N1VNF3g==
-X-Received: by 2002:a05:6a21:1aa:b0:1a1:492a:d6a0 with SMTP id
- le42-20020a056a2101aa00b001a1492ad6a0mr6096389pzb.47.1710307083134; 
- Tue, 12 Mar 2024 22:18:03 -0700 (PDT)
+ bh=LY2J4uZnvS38u85z52fqHUvPqNYN1HgO48/fDMx6Xu8=;
+ b=CPvpOG7XiKQT/i7M303P4ajwck43BUw4LThSBZ/QVb3H1rEtdWbvpxqY4xseJKRFeI
+ KXZc5zwY/ToLdl44Eilw7/95GweflnmUIYvJgi2aEfXUm3Zr6fX9qtxYZmUNQ73veMOB
+ sUh2Uc821qvLB1usjkCxzXQv0Fe7MTcJHDrVyE5nz4c4zpT5scTcz0/GCzZG32mO0cXt
+ FYp37P33KOX5l8s62GPL4lD4Eu5F9sf3R1ZLkJvCMmCG0e4srHWMRUd6sec2hLkI/EuD
+ 9UY3rnUokCa5TrUoJFptD5C1jVbwVaQpfF01k45KfBKdYu1DHjptQ1tZDaVg7I0qf/Pi
+ SANg==
+X-Gm-Message-State: AOJu0YxM4mPmh9r/fe4VYCUpQqBtRz7jtNcaWioWmp4rj/ENVVi++xLQ
+ ltmEbgFfIN+NKmUWsPHIW28iWwGPzE0lsvmGrzrWL0GHW5eiS/oW
+X-Google-Smtp-Source: AGHT+IFLAcaph6umJSoo3uyuQ4nf8+cNJOUcD85YwLvZZaQOMCQ6S+ufiuhqAt+C5uC8l+OUsnqE7A==
+X-Received: by 2002:a17:902:b104:b0:1dc:8eba:42c3 with SMTP id
+ q4-20020a170902b10400b001dc8eba42c3mr11969319plr.23.1710307440948; 
+ Tue, 12 Mar 2024 22:24:00 -0700 (PDT)
 Received: from localhost ([1.146.20.17]) by smtp.gmail.com with ESMTPSA id
- l16-20020a170902f69000b001dd8cfd9933sm6070804plg.151.2024.03.12.22.17.58
+ ld12-20020a170902facc00b001dcfaf4db22sm7696577plb.2.2024.03.12.22.23.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 12 Mar 2024 22:18:02 -0700 (PDT)
+ Tue, 12 Mar 2024 22:24:00 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 13 Mar 2024 15:17:55 +1000
-Message-Id: <CZSD9BNHUXII.2Q6EMCDYLUSF1@wheely>
+Date: Wed, 13 Mar 2024 15:23:53 +1000
+Message-Id: <CZSDDVZW4G3L.6CV89ZRMQK9G@wheely>
+Cc: <qemu-devel@nongnu.org>, "David Hildenbrand" <david@redhat.com>,
+ "Richard Henderson" <richard.henderson@linaro.org>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, "Thomas Huth" <thuth@redhat.com>
+Subject: Re: [PATCH-for-9.0 v2 0/3] system/physmem: Fix migration dirty
+ bitmap coherency with TCG memory access
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-devel@nongnu.org>
-Cc: "David Hildenbrand" <david@redhat.com>, "Richard Henderson"
- <richard.henderson@linaro.org>, "Peter Xu" <peterx@redhat.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>, "Thomas Huth" <thuth@redhat.com>
-Subject: Re: [PATCH-for-9.0 v2 1/3] physmem: Expose tlb_reset_dirty_range_all()
+To: "Peter Xu" <peterx@redhat.com>, =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
 X-Mailer: aerc 0.15.2
-References: <20240312201458.79532-1-philmd@linaro.org>
- <20240312201458.79532-2-philmd@linaro.org>
-In-Reply-To: <20240312201458.79532-2-philmd@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
+References: <20240312201458.79532-1-philmd@linaro.org> <ZfDEmtLqviO1vMZk@x1n>
+In-Reply-To: <ZfDEmtLqviO1vMZk@x1n>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,45 +95,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Mar 13, 2024 at 6:14 AM AEST, Philippe Mathieu-Daud=C3=A9 wrote:
-> In order to call tlb_reset_dirty_range_all() outside of
-> system/physmem.c, expose its prototype.
+On Wed Mar 13, 2024 at 7:09 AM AEST, Peter Xu wrote:
+> On Tue, Mar 12, 2024 at 09:14:55PM +0100, Philippe Mathieu-Daud=C3=A9 wro=
+te:
+> > Respin of Nicholas patch, without introducing
+> > tcg_cpu_physical_memory_dirty_bits_cleared(),
+> > and split in more digestible parts.
+> >=20
+> > Nicholas Piggin (2):
+> >   physmem: Factor cpu_physical_memory_dirty_bits_cleared() out
+> >   physmem: Fix migration dirty bitmap coherency with TCG memory access
+> >=20
+> > Philippe Mathieu-Daud=C3=A9 (1):
+> >   physmem: Expose tlb_reset_dirty_range_all()
+> >=20
+> >  include/exec/exec-all.h |  1 +
+> >  include/exec/ram_addr.h | 12 ++++++++++++
+> >  system/physmem.c        | 10 ++++------
+> >  3 files changed, 17 insertions(+), 6 deletions(-)
 >
+> Yes agree a better split than the single patch.  Tentatively queued while
+> waiting for any comments.
 
-Acked-by: Nicholas Piggin <npiggin@gmail.com>
+I've run into several other possible races / lost dirty tracking
+when stressing this stuff, but this one was the easiest to hit and
+most obvious and simple fix, so I think it's still good to go.
 
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  include/exec/exec-all.h | 1 +
->  system/physmem.c        | 2 +-
->  2 files changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-> index ce36bb10d4..3e53501691 100644
-> --- a/include/exec/exec-all.h
-> +++ b/include/exec/exec-all.h
-> @@ -655,6 +655,7 @@ static inline void mmap_unlock(void) {}
-> =20
->  void tlb_reset_dirty(CPUState *cpu, ram_addr_t start1, ram_addr_t length=
-);
->  void tlb_set_dirty(CPUState *cpu, vaddr addr);
-> +void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length);
-> =20
->  MemoryRegionSection *
->  address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr addr,
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 6cfb7a80ab..5441480ff0 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -819,7 +819,7 @@ found:
->      return block;
->  }
-> =20
-> -static void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t lengt=
-h)
-> +void tlb_reset_dirty_range_all(ram_addr_t start, ram_addr_t length)
->  {
->      CPUState *cpu;
->      ram_addr_t start1;
+Also have a qtest test case that can reproduce this one so I'll
+send that after this is merged. It's really just the migration
+test case with value verification added in.
 
+Thanks,
+Nick
 
