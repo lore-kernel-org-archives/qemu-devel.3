@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 775C3C54E5D
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 01:07:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E1F9C54E5D
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 01:30:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkD5N-0008D9-FN; Tue, 12 Mar 2024 21:07:13 -0400
+	id 1rkDQz-00051U-Qo; Tue, 12 Mar 2024 21:29:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <isaku.yamahata@intel.com>)
- id 1rkB9B-0007vy-QV
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 19:03:12 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <isaku.yamahata@intel.com>)
- id 1rkB98-00027Q-Vq
- for qemu-devel@nongnu.org; Tue, 12 Mar 2024 19:03:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710284579; x=1741820579;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=IrT1/YF8DYrgsN6ccIFZAd6be3RlcYlS+yhDN8FYwes=;
- b=NxQt2gKyfLAcMhmTwWrn+7oGNxo8jLSntYEJ0VZsd+UQficvQStg92Xf
- qvkcUkxsGxPF7wh2MjnNg6pyNuf1aBvW7qgcURv72Ibo2stot1XEYYu7/
- LbJUas/RSKsnyrJCO1BC0JFID6X+0ObfTszmr87RhZaqEe4dXOi6ZdhYt
- r9StJ/Bmmc93x9Zbu6VKpUSsbCdq+n7HYQ5EjibskFH2UZAFCkKHD7n9Y
- dos61ODlNG1dW0/Aa2epXC35I5YQrXgcH1+dE6fQThyzO9bp98mbadloT
- CirYnqJcBaCICVEuJHtx1YG0QQbhtokozF4z6C9XE6jLS1ZsmQ43gw1NM A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11011"; a="5148064"
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; 
-   d="scan'208";a="5148064"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Mar 2024 16:02:56 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,119,1708416000"; d="scan'208";a="11598309"
-Received: from ls.sc.intel.com (HELO localhost) ([172.25.112.31])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Mar 2024 16:02:55 -0700
-Date: Tue, 12 Mar 2024 16:02:54 -0700
-From: Isaku Yamahata <isaku.yamahata@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Claudio Fontana <cfontana@suse.de>, Gerd Hoffmann <kraxel@redhat.com>,
- Isaku Yamahata <isaku.yamahata@gmail.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>, isaku.yamahata@intel.com,
- isaku.yamahata@linux.intel.com
-Subject: Re: [PATCH v5 15/65] i386/tdx: Get tdx_capabilities via
- KVM_TDX_CAPABILITIES
-Message-ID: <20240312230254.GJ935089@ls.amr.corp.intel.com>
-References: <20240229063726.610065-1-xiaoyao.li@intel.com>
- <20240229063726.610065-16-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rkDQx-00051L-P7
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 21:29:31 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rkDQv-0000wB-BQ
+ for qemu-devel@nongnu.org; Tue, 12 Mar 2024 21:29:30 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-2218da9620cso3509405fac.3
+ for <qemu-devel@nongnu.org>; Tue, 12 Mar 2024 18:29:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710293367; x=1710898167; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0nCvQJnGgqZ8j6TUlu4MQnsXDICVgh6A8WsY5qyoAT0=;
+ b=sPNiTVpBaFyjRvmxpgphkrUSzvKiEUE5TUcSjYEH/CAxWi3a410Kd0HFpWCN3b09zr
+ QUafRZtGtvKr23FFLlcLT5jkVOhGDbAreddpYD0DxaPH5+I2fN1AQbSB4vMLMamBKQts
+ /VrfjTeGk+EpFiLC8jYiA0sf2uBVk95Wt1FB6j39FXru49Cx78hFrWsd+GEsCXXVkCrw
+ +ca1TWMzqveYL+HEtJ3dfkoC9HLHQWtXZFf/rCCWE1oYA2WNwMWpirv20D0iZ90IpVWh
+ pUr9+MH1zhwjc2jm9HfNLUfrS6GE3xJUiQ80gtfCCSNjxndvQ8BjVu5XKo/+feRg1HRO
+ e2nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710293367; x=1710898167;
+ h=content-transfer-encoding:in-reply-to:references:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0nCvQJnGgqZ8j6TUlu4MQnsXDICVgh6A8WsY5qyoAT0=;
+ b=aEubSdgkgPSAQ9fJ3nCm4TeU8DzSomt296r4m/xvtImGQfStZd0mGrNMeON6ujOSEH
+ JY8/7M5QXOy17vCzcrTz+ZZmrCEUeFDn3kL0hAz6TC2doHoTTHt4xWqMKArTlqdvV3py
+ zI6nY50ecsAjjCPsASlOPJhwDjaoaXYN6TO09IJYZp5PUl2bcc0n7axw2LNJRJJ7uREs
+ TxVIdU3J+75I7fyA6j/GqttnBHUdJ2tcWEOfGI2t0RZx+YAaJbVd8l7JT2YZ8qOMosxE
+ yG770lPle8ZMVkTjGbKeoUkZaS8kEtjXVl9+F949qyZwvYeqG6b6a4IaGGTNRZ98pRl0
+ ocZg==
+X-Gm-Message-State: AOJu0Yx3s41QG5SEUaSJjf5nB3eLQq/NBIIqtpy/1gMUtVo5bs1mnOYb
+ 2QPQtlCYjU6pY9pDgEJJIQ2nPyYSgI+Np9N+aEq4AE5u4Npnv3a4QHa1SDxj355tHnUzYkrjakW
+ J
+X-Google-Smtp-Source: AGHT+IFmXhPQhvohduBywnxw16L3wAE/pFoEY3njwJFr9ILKPCAg8ukz11ICmyEHWipqW3Hwb89Kwg==
+X-Received: by 2002:a05:6871:590:b0:21e:5f83:e698 with SMTP id
+ u16-20020a056871059000b0021e5f83e698mr12716920oan.52.1710293367357; 
+ Tue, 12 Mar 2024 18:29:27 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ g5-20020aa79f05000000b006e6a52307dcsm1806619pfr.122.2024.03.12.18.29.26
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 12 Mar 2024 18:29:26 -0700 (PDT)
+Message-ID: <f25c6f13-d535-4e58-92ff-f2b22e80720e@linaro.org>
+Date: Tue, 12 Mar 2024 15:29:23 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240229063726.610065-16-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=198.175.65.16;
- envelope-from=isaku.yamahata@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/15] tcg/optimize: Fold andc with immediate to and
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+References: <20240312143839.136408-1-richard.henderson@linaro.org>
+ <20240312143839.136408-2-richard.henderson@linaro.org>
+In-Reply-To: <20240312143839.136408-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.687,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 12 Mar 2024 21:07:11 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,128 +97,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 29, 2024 at 01:36:36AM -0500,
-Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+On 3/12/24 04:38, Richard Henderson wrote:
+> +        /* Fold andc r,x,i to and r,x,~i. */
+> +        op->opc = (ctx->type == TCG_TYPE_I32
+> +                   ? INDEX_op_and_i32 : INDEX_op_and_i64);
 
-> KVM provides TDX capabilities via sub command KVM_TDX_CAPABILITIES of
-> IOCTL(KVM_MEMORY_ENCRYPT_OP). Get the capabilities when initializing
-> TDX context. It will be used to validate user's setting later.
-> 
-> Since there is no interface reporting how many cpuid configs contains in
-> KVM_TDX_CAPABILITIES, QEMU chooses to try starting with a known number
-> and abort when it exceeds KVM_MAX_CPUID_ENTRIES.
-> 
-> Besides, introduce the interfaces to invoke TDX "ioctls" at different
-> scope (KVM, VM and VCPU) in preparation.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> ---
-> Changes in v4:
-> - use {} to initialize struct kvm_tdx_cmd, to avoid memset();
-> - remove tdx_platform_ioctl() because no user;
-> 
-> Changes in v3:
-> - rename __tdx_ioctl() to tdx_ioctl_internal()
-> - Pass errp in get_tdx_capabilities();
-> 
-> changes in v2:
->   - Make the error message more clear;
-> 
-> changes in v1:
->   - start from nr_cpuid_configs = 6 for the loop;
->   - stop the loop when nr_cpuid_configs exceeds KVM_MAX_CPUID_ENTRIES;
-> ---
->  target/i386/kvm/kvm.c      |  2 -
->  target/i386/kvm/kvm_i386.h |  2 +
->  target/i386/kvm/tdx.c      | 91 +++++++++++++++++++++++++++++++++++++-
->  3 files changed, 92 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 52d99d30bdc8..0e68e80f4291 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -1685,8 +1685,6 @@ static int hyperv_init_vcpu(X86CPU *cpu)
->  
->  static Error *invtsc_mig_blocker;
->  
-> -#define KVM_MAX_CPUID_ENTRIES  100
-> -
->  static void kvm_init_xsave(CPUX86State *env)
->  {
->      if (has_xsave2) {
-> diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-> index 55fb25fa8e2e..c3ef46a97a7b 100644
-> --- a/target/i386/kvm/kvm_i386.h
-> +++ b/target/i386/kvm/kvm_i386.h
-> @@ -13,6 +13,8 @@
->  
->  #include "sysemu/kvm.h"
->  
-> +#define KVM_MAX_CPUID_ENTRIES  100
-> +
->  #ifdef CONFIG_KVM
->  
->  #define kvm_pit_in_kernel() \
-> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-> index d9a1dd46dc69..2b956450a083 100644
-> --- a/target/i386/kvm/tdx.c
-> +++ b/target/i386/kvm/tdx.c
-> @@ -12,18 +12,107 @@
->   */
->  
->  #include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
-> +#include "qapi/error.h"
->  #include "qom/object_interfaces.h"
-> +#include "sysemu/kvm.h"
->  
->  #include "hw/i386/x86.h"
-> +#include "kvm_i386.h"
->  #include "tdx.h"
->  
-> +static struct kvm_tdx_capabilities *tdx_caps;
-> +
-> +enum tdx_ioctl_level{
-> +    TDX_VM_IOCTL,
-> +    TDX_VCPU_IOCTL,
-> +};
-> +
-> +static int tdx_ioctl_internal(void *state, enum tdx_ioctl_level level, int cmd_id,
-> +                        __u32 flags, void *data)
-> +{
-> +    struct kvm_tdx_cmd tdx_cmd = {};
-> +    int r;
-> +
-> +    tdx_cmd.id = cmd_id;
-> +    tdx_cmd.flags = flags;
-> +    tdx_cmd.data = (__u64)(unsigned long)data;
-> +
-> +    switch (level) {
-> +    case TDX_VM_IOCTL:
-> +        r = kvm_vm_ioctl(kvm_state, KVM_MEMORY_ENCRYPT_OP, &tdx_cmd);
-> +        break;
-> +    case TDX_VCPU_IOCTL:
-> +        r = kvm_vcpu_ioctl(state, KVM_MEMORY_ENCRYPT_OP, &tdx_cmd);
-> +        break;
-> +    default:
-> +        error_report("Invalid tdx_ioctl_level %d", level);
-> +        exit(1);
-> +    }
-> +
-> +    return r;
-> +}
-> +
-> +static inline int tdx_vm_ioctl(int cmd_id, __u32 flags, void *data)
-> +{
-> +    return tdx_ioctl_internal(NULL, TDX_VM_IOCTL, cmd_id, flags, data);
-> +}
-> +
-> +static inline int tdx_vcpu_ioctl(void *vcpu_fd, int cmd_id, __u32 flags,
-> +                                 void *data)
+This and the next two patches also need to handle vector types.
 
-As kvm_vcpu_ioctl(CPUState *cpu, int type, ...) takes CPUState *, this can be
-tdx_vcpu_ioctl(CPUState *cpu, ) instead of void *.
-I struggled to fin my mistake to pass "int vcpu_fd" to this function.
--- 
-Isaku Yamahata <isaku.yamahata@intel.com>
+
+r~
 
