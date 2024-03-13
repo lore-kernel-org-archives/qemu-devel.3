@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DB9BC54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 18:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24EE9C54791
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 18:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkTgV-0001dw-TB; Wed, 13 Mar 2024 14:50:39 -0400
+	id 1rkTgT-0001bw-K7; Wed, 13 Mar 2024 14:50:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkTgR-0001br-BG
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:50:35 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkTgK-0001aQ-G9
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:50:29 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkTgO-0004FI-Uc
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:50:35 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-413eb7cf7dfso1645725e9.0
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 11:50:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkTgH-0004DB-S2
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 14:50:28 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-412e784060cso8085975e9.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 11:50:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710355831; x=1710960631; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710355824; x=1710960624; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X17Ya2bvpA+4v4TFaE60WLvpjjO6zpu/JP88j5/yX/w=;
- b=f9EtNz/ZHx+4BCXzeEHkXEpAhnaN8ZnZyFxpL5FjMAdnfsbQ/1Of/RbL9xShaJUS5F
- yULqqs6v5sOFcH77Ogc+/+BcentQA1brFuEVqO0jZSaI/w8BWyiNaePKU6m+6lyC+4SG
- eBUJlmYMULvB5pCyz/ZXFFOnWBOpT+yGUZqMiR97+gMTTYUpsmxgxgavA+bixsaOhJEZ
- 6c+xmKvmEQj8NFBWccqKjFfWjAN5d+WU8VBrg6khXE2W5ZCRIGRVKf96Z4nxiMiWHRfG
- kWtMAJBh8s60PS/HxeeN/NQhV/2UQil+32yGgpCrq7U3twnBCvqxrubLvuRQWmJeIt6z
- Cb3A==
+ bh=c2tKyqNq18mnQFUnvgOLAQJ9bujVYus/vlpKAdDFa/k=;
+ b=qXOIyT2NKkSKe4DIfdACtVnqJ9uMMjDKOuPwOwBCK75YZBCWhnlFxr3hsHAepZv97I
+ gaPb2S/eFRwgNbh1b0TRphUSbb3ZxkWDbxDO/3w+E+ZkmdASXsA8HWeSXtfN3MopESp9
+ EndtKzXCMQdS+bBcQv2+iMIJyrzyZriDBaFsg888c/SbYI7kdA5pcuTxcgdC7QrLmLDV
+ 2GAaupfrujvMiC25THscTIZmIna/wt/0hQfztgweGmPN5BZylAgpzbBgZFm7TN+CXosR
+ b3jg+72+SFlpauidtZFhnNdH4/84wA2iUS4aQMMMF0WNndHhYYU+hd30NyRD+R7Yjj5p
+ 0gXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710355831; x=1710960631;
+ d=1e100.net; s=20230601; t=1710355824; x=1710960624;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=X17Ya2bvpA+4v4TFaE60WLvpjjO6zpu/JP88j5/yX/w=;
- b=rXXYulfN0XlJEmOTpUD9lj9MJvQgaE0qRLjGbJzjrFoHkwB1yWpp8y5GZn/v1XTe9h
- XYum2YyPZezdWhYxIQ7XtqoN1WOmwR6pjbfx+MimGy0jMDwWx2k/HPbooBlGeZ5IRerA
- 5PoKUUWcPgjnmW/EtLUDswRN4rPnydXlwivwiI+8JFrKUDewfR1PfHy0s33mb2SFacaZ
- RMQPlsO/dWPolurB2jEGUo/MIEEk5e2ScAw66cE5wSBkxBqQLEafOEp0zEoa3WcyOoeq
- oYSPP2LWWLljt/n0xy4vKrd5POCA22tG4mWWB6vt6JykLJ6BWroGH6LBdLnX4rPz0jDG
- A/0w==
-X-Gm-Message-State: AOJu0Yw2zEvY6BxKgqYP72EkwA1BfPqHcfbyViaeGh1ym7NJUwz5oiLZ
- uB0ghkkGy9QPs2asfXYTP1sRkVSt7+/92Lb+9kaUVeQOE3OI8lVfpoHuoWalfEq+Qk78nrsvzsz
- z
-X-Google-Smtp-Source: AGHT+IGsvzdgN7ucAIoiomxDKoaZWax6gBU734zZCqWs/3xAkyQ7rw8GWiUctzeOxTFbc1yXyiTzdA==
-X-Received: by 2002:a05:600c:1910:b0:413:1ee4:692e with SMTP id
- j16-20020a05600c191000b004131ee4692emr631218wmq.9.1710355831312; 
- Wed, 13 Mar 2024 11:50:31 -0700 (PDT)
+ bh=c2tKyqNq18mnQFUnvgOLAQJ9bujVYus/vlpKAdDFa/k=;
+ b=exSVyeSDjh/uQ3DIvXEvE5c7OjmW9CxFQasT5xOxiXK7kUS9CP4qx1PZCoWHIUVrkc
+ ov15aESfzWFpBfajkrPx+Fh0+nMA7jhj82ZoGIl2a/HZbLcwrIFj4VFtQtYP4x22Tkct
+ WMjb42VTObjyLVKARL9AVBbb0HVIJGrAk5TMYGXM9GsfMYerrnKUPsAsVmAp92BjY3jG
+ tGEPTJkEw29qNJQlBruxYTpfLDtaVDtD43DdNxpCaQKCXhm6PdevcGNOiVidvW9H9UcA
+ g2Aghi+Ee15JznCHwquWwl9FqJ2pjV2UR5DpIUsVDDaNi7W8W9Zm0pu2t5aniMcV3Rh3
+ J3FQ==
+X-Gm-Message-State: AOJu0YwvYfh5ns8H3jDVNv2SgQTb4jf4jT8w6NXDe/lPWaIQmjV7kmaX
+ ZlauNnJeM6NJ9ShE7n9Y0yHE4pfYeKBZqCb0GCetVdFInH+KmrrtFnWw7PiPDeXGZOVp39ZpUVO
+ q
+X-Google-Smtp-Source: AGHT+IGRjNXSm6URsefntlBe5NG/XXhkPOjK0qhUt5MTYFzxGv/n1fZSwckPI1B9i5sIM+IUbgCmGg==
+X-Received: by 2002:adf:cd10:0:b0:33e:b787:5beb with SMTP id
+ w16-20020adfcd10000000b0033eb7875bebmr2237803wrm.0.1710355823908; 
+ Wed, 13 Mar 2024 11:50:23 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.182.179])
  by smtp.gmail.com with ESMTPSA id
- fj14-20020a05600c0c8e00b00413385ec7e6sm3088148wmb.47.2024.03.13.11.50.28
+ a17-20020adffad1000000b0033dc7e50488sm12209454wrs.96.2024.03.13.11.50.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 13 Mar 2024 11:50:30 -0700 (PDT)
+ Wed, 13 Mar 2024 11:50:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
@@ -68,17 +68,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.0 3/4] qtest/libqos: Un-inline size_to_prdtl()
-Date: Wed, 13 Mar 2024 19:49:53 +0100
-Message-ID: <20240313184954.42513-4-philmd@linaro.org>
+Subject: [PATCH-for-9.0 2/4] accel/hvf: Un-inline
+ hvf_arch_supports_guest_debug()
+Date: Wed, 13 Mar 2024 19:49:52 +0100
+Message-ID: <20240313184954.42513-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240313184954.42513-1-philmd@linaro.org>
 References: <20240313184954.42513-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,22 +107,36 @@ functions with external linkage") for rationale.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/qtest/libqos/ahci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/hvf/hvf.c  | 2 +-
+ target/i386/hvf/hvf.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-index a2c94c6e06..135b23ffd9 100644
---- a/tests/qtest/libqos/ahci.c
-+++ b/tests/qtest/libqos/ahci.c
-@@ -662,7 +662,7 @@ unsigned ahci_pick_cmd(AHCIQState *ahci, uint8_t port)
-     g_assert_not_reached();
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index e5f0f60093..65a5601804 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2246,7 +2246,7 @@ void hvf_arch_update_guest_debug(CPUState *cpu)
+     hvf_arch_set_traps();
  }
  
--inline unsigned size_to_prdtl(unsigned bytes, unsigned bytes_per_prd)
-+unsigned size_to_prdtl(unsigned bytes, unsigned bytes_per_prd)
+-inline bool hvf_arch_supports_guest_debug(void)
++bool hvf_arch_supports_guest_debug(void)
  {
-     /* Each PRD can describe up to 4MiB */
-     g_assert_cmphex(bytes_per_prd, <=, 4096 * 1024);
+     return true;
+ }
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 11ffdd4c69..1ed8ed5154 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -708,7 +708,7 @@ void hvf_arch_update_guest_debug(CPUState *cpu)
+ {
+ }
+ 
+-inline bool hvf_arch_supports_guest_debug(void)
++bool hvf_arch_supports_guest_debug(void)
+ {
+     return false;
+ }
 -- 
 2.41.0
 
