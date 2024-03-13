@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F043DC54791
-	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 09:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFF0C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 13 Mar 2024 09:55:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkLI7-0004pQ-Fb; Wed, 13 Mar 2024 05:52:55 -0400
+	id 1rkLJv-00064Q-Dc; Wed, 13 Mar 2024 05:54:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rkLI5-0004oe-9w
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 05:52:53 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1rkLJu-000643-G7
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 05:54:46 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rkLI3-0003bF-96
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 05:52:53 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a44f2d894b7so106336966b.1
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 02:52:50 -0700 (PDT)
+ id 1rkLJs-0003lT-TO
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 05:54:46 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5684073ab38so1274421a12.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 02:54:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710323569; x=1710928369; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1710323683; x=1710928483; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ruQFcJuHUQqZP8BhvR0EDOl0VOmtFkHUR9/tKdO75is=;
- b=i7S21LqfYsob1gUDe4cxF6nvHnl3KYBrHJ2V3FU7YTd1lCS7YR6nnNGooLVRxtEBoB
- QBFwAP3LdoA99h1S68KtSUyO3A/3dWvjTejNHOqVEbiDBsAdTP+fYbqyldSEUD734Uy3
- e6aEuvQvOTgucK3aigEaQkCcK043Y4TkJDi/DswewLjdCXbVETOF4xiXY9+HQkrhB9q9
- g5BL0bVseA1LTU//zLOZW9vEN2R0kI2Jo/BZ6ZsKx8tKvAyydrb+WGJrv3N2DrrVKIjl
- 6Nr45+QOdc5HktqlXiiY4WP16MaVDo5LnBVY01ZWkKUh1I7CykKSqjWxia+5IAogrP/F
- 0mLg==
+ bh=I3bOMZQ9BOPzzEgW12MeEnwoVuMCFQn4wljIhDg4nwk=;
+ b=DtUCCp7201GD5oHWzotZKy8UV0/jsqwNuISms1QUi1fv3cNfRK2HxUIR+79+QmBZ50
+ AT2VF4DhFoYtDHYmMyeJRNR2fbe800Y4Rr6qUT92inEGtcQ8vVAe+yufNQjvhwgmX4x/
+ WTCU40OZ135Cz2v6zrq+FlHkY1oALTe2RRP23IL8dZEZXbtvTyWbTcFUQj7XI+L/zw7Z
+ oSbq8+WH4Rq6UlBAG7l+bdNqnvDDy0nfa47O4e0Mcb7PCvH6YjRsVhRdX2alu5bqIUJU
+ nqiccd6WUEybtSkbzem5zHSZBq3526hdTodcKLtp1BaO353v5vYomfaLD+Ulf3ZzxPRv
+ G/Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710323569; x=1710928369;
+ d=1e100.net; s=20230601; t=1710323683; x=1710928483;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ruQFcJuHUQqZP8BhvR0EDOl0VOmtFkHUR9/tKdO75is=;
- b=Lq/r1IJwOtAczW57LSy1JKRHIAJEjbBoLGLzE07+Gi5OdqjhkzANVMIzceqjZ8uiPK
- pDGFu6pQMWccb2oFe2JocwdH9054cpS+AWCjWuUtyRuzeRkzd4ehYSOEGmWLbvNIkkOg
- 4bzW+mgzlW9tvBTtEfJpPxtcyhzpXxssHJ44U84K23MYIP8BvmEJJEvulwzjmcLUDIgT
- dwmagYnL20kMA21LXZU27Ec1gJrwKGjA0+XeqevsKFhe/T/TuWSXDyQQOT3RuRcawG77
- z2NeGbJd0hXc9304h0En0eIgP+TK80P8dQbb2NLDvce/eWb2NnyUD9SFNkPeYFTEv8aQ
- jaAA==
+ bh=I3bOMZQ9BOPzzEgW12MeEnwoVuMCFQn4wljIhDg4nwk=;
+ b=bHEq7eU4Avqek3Vx9RqHcmTqKt6/qm3EVinAlF1Mgs1zsQdeHW0g3eq1AOXbCqYF9p
+ 3gT5e/7PTEZAU3BAg5twp5sU56Krzb8WMcbV4upfq8NrL9K7E4l/6gIB1241dMKWxjhd
+ NCzns3ZLIxFOmiQiv4PSWvvBt2+qRizMjKM+M+j1UYosqpxbVf8YshOxVC3LTbaZwOqe
+ sZCzpUYWKAA4xhZk3sl/eNYvYnzBMrEq7Fm/Obq/cOOvv3/lGNAsjzg9BoBttn2A4YSh
+ Zh1JUpOsxPQ/b6L6/L3XLfZ2wE45O0i/gTmJmRfkJFceMO3veEdpyuTT3IYLHnyj1Qj1
+ P8hg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdQwyQ+4PolktwhYAUJ4tsaqK8wYz0b/IZz5GAOmHZUhkmH0X/syDvy/6WPJKlzIVRhmaM7aJbK6nTqdX2UsnYm6mrDfs=
-X-Gm-Message-State: AOJu0Yy3jkbDuN4hLDz8e/My1PmfjU9Tjgo4L3MKOdoAiKM3Pkj7pMqU
- nVP+pckGtcRSexuz81MXp7QL0wRcQ/xgUJIyg6L31lbaIWuhBhBl5vB43tvwjwc=
-X-Google-Smtp-Source: AGHT+IHeWdRwrWlsnX+qww/Fng+daJsY+SZQswyAFQP5z6SkmzBUxgtVbNcg7Pl8SC6b7RCrAzX8FA==
-X-Received: by 2002:a17:907:a0d2:b0:a44:277c:1683 with SMTP id
- hw18-20020a170907a0d200b00a44277c1683mr4992771ejc.53.1710323569533; 
- Wed, 13 Mar 2024 02:52:49 -0700 (PDT)
+ AJvYcCUm4hwrck6ZrQ5D16XggCnQIVvNmoRdQC0q5FlY/Vw1VtrwzOnhlZRXL9aZFFHgqErktpXsosnZ091Go2k+J6eOrmNxhn0=
+X-Gm-Message-State: AOJu0Yw2YEejB+v1ntVS4hNKoNA2S+wq8bzxA1BWWYXEHTBmEGfG1qJS
+ f1su+sXCA0wC89Wl0+l/2MVzyX4mezGzxixyV2dxvQPyyzfzuzuPwBh1XFcb0Rc=
+X-Google-Smtp-Source: AGHT+IGt0jjWH6xA/C4mbEWoKDPY3DWoS+ftRWBf+pSgH9ZBD0d8abQRp72SG7eVCzA7lvuhcFYBTw==
+X-Received: by 2002:a50:9983:0:b0:566:902e:65e4 with SMTP id
+ m3-20020a509983000000b00566902e65e4mr2174552edb.18.1710323683162; 
+ Wed, 13 Mar 2024 02:54:43 -0700 (PDT)
 Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
  by smtp.gmail.com with ESMTPSA id
- l20-20020a1709067d5400b00a46224d4442sm3156887ejp.212.2024.03.13.02.52.48
+ ev19-20020a056402541300b0056742460f68sm4759563edb.66.2024.03.13.02.54.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 13 Mar 2024 02:52:49 -0700 (PDT)
-Date: Wed, 13 Mar 2024 10:52:48 +0100
+ Wed, 13 Mar 2024 02:54:42 -0700 (PDT)
+Date: Wed, 13 Mar 2024 10:54:41 +0100
 From: Andrew Jones <ajones@ventanamicro.com>
 To: Himanshu Chauhan <hchauhan@ventanamicro.com>
 Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 1/3] target/riscv: Enable mcontrol6 triggers only when
- sdtrig is selected
-Message-ID: <20240313-a62777ede69ea38aad80b882@orel>
+Subject: Re: [PATCH v4 2/3] target/riscv: Expose sdtrig ISA extension
+Message-ID: <20240313-0ac597594e930a42685aeba5@orel>
 References: <20240313060931.242161-1-hchauhan@ventanamicro.com>
- <20240313060931.242161-2-hchauhan@ventanamicro.com>
+ <20240313060931.242161-3-hchauhan@ventanamicro.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240313060931.242161-2-hchauhan@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x630.google.com
+In-Reply-To: <20240313060931.242161-3-hchauhan@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,240 +95,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 13, 2024 at 11:39:29AM +0530, Himanshu Chauhan wrote:
-> The mcontrol6 triggers are not defined in debug specification v0.13
-> These triggers are defined in sdtrig ISA extension.
+On Wed, Mar 13, 2024 at 11:39:30AM +0530, Himanshu Chauhan wrote:
+> This patch adds "sdtrig" in the ISA string when sdtrig extension is enabled.
+> The sdtrig extension may or may not be implemented in a system. Therefore, the
+>            -cpu rv64,sdtrig=<true/false>
+> option can be used to dynamically turn sdtrig extension on or off.
 > 
-> This patch:
->    * Adds ext_sdtrig capability which is used to select mcontrol6 triggers
->    * Keeps the debug property. All triggers that are defined in v0.13 are
->      exposed.
+> Since, the sdtrig ISA extension is a superset of debug specification, disable
+> the debug property when sdtrig is enabled. A warning is printed when this is
+> done.
+> 
+> By default, the sdtrig extension is disabled and debug property enabled as usual.
 > 
 > Signed-off-by: Himanshu Chauhan <hchauhan@ventanamicro.com>
 > ---
->  target/riscv/cpu.c     |  4 +-
->  target/riscv/cpu_cfg.h |  1 +
->  target/riscv/csr.c     |  2 +-
->  target/riscv/debug.c   | 92 +++++++++++++++++++++++++-----------------
->  target/riscv/machine.c |  2 +-
->  5 files changed, 60 insertions(+), 41 deletions(-)
+>  target/riscv/cpu.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index c160b9216b..2602aae9f5 100644
+> index 2602aae9f5..ab057a0926 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -1008,7 +1008,7 @@ static void riscv_cpu_reset_hold(Object *obj)
+> @@ -175,6 +175,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>      ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
+>      ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+>      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+> +    ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, ext_sdtrig),
+>      ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
+>      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+>      ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+> @@ -1008,6 +1009,12 @@ static void riscv_cpu_reset_hold(Object *obj)
 >      set_default_nan_mode(1, &env->fp_status);
 >  
 >  #ifndef CONFIG_USER_ONLY
-> -    if (cpu->cfg.debug) {
-> +    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
->          riscv_trigger_reset_hold(env);
->      }
->  
-> @@ -1168,7 +1168,7 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
->      riscv_cpu_register_gdb_regs_for_features(cs);
->  
->  #ifndef CONFIG_USER_ONLY
-> -    if (cpu->cfg.debug) {
-> +    if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
->          riscv_trigger_realize(&cpu->env);
->      }
->  #endif
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 2040b90da0..0c57e1acd4 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -114,6 +114,7 @@ struct RISCVCPUConfig {
->      bool ext_zvfbfwma;
->      bool ext_zvfh;
->      bool ext_zvfhmin;
-> +    bool ext_sdtrig;
->      bool ext_smaia;
->      bool ext_ssaia;
->      bool ext_sscofpmf;
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 726096444f..26623d3640 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -546,7 +546,7 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
->  
->  static RISCVException debug(CPURISCVState *env, int csrno)
->  {
-> -    if (riscv_cpu_cfg(env)->debug) {
-> +    if (riscv_cpu_cfg(env)->debug || riscv_cpu_cfg(env)->ext_sdtrig) {
->          return RISCV_EXCP_NONE;
->      }
->  
-> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index e30d99cc2f..c6a92ba0f7 100644
-> --- a/target/riscv/debug.c
-> +++ b/target/riscv/debug.c
-> @@ -100,13 +100,16 @@ static trigger_action_t get_trigger_action(CPURISCVState *env,
->      target_ulong tdata1 = env->tdata1[trigger_index];
->      int trigger_type = get_trigger_type(env, trigger_index);
->      trigger_action_t action = DBG_ACTION_NONE;
-> +    const RISCVCPUConfig *cfg = riscv_cpu_cfg(env);
->  
->      switch (trigger_type) {
->      case TRIGGER_TYPE_AD_MATCH:
->          action = (tdata1 & TYPE2_ACTION) >> 12;
->          break;
->      case TRIGGER_TYPE_AD_MATCH6:
-> -        action = (tdata1 & TYPE6_ACTION) >> 12;
-> +        /* Only sdtrig ISA extension supports type 6 match */
+> +    if (cpu->cfg.debug && cpu->cfg.ext_sdtrig) {
+> +	    warn_report("Disabling debug property since sdtrig ISA extension "
+> +			"is enabled");
+> +	    cpu->cfg.debug = 0;
 
-I'd drop the comment since the if-statement says the same thing.
-
-> +        if (cfg->ext_sdtrig)
-> +            action = (tdata1 & TYPE6_ACTION) >> 12;
->          break;
->      case TRIGGER_TYPE_INST_CNT:
->      case TRIGGER_TYPE_INT:
-> @@ -727,7 +730,12 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
->          type2_reg_write(env, env->trigger_cur, tdata_index, val);
->          break;
->      case TRIGGER_TYPE_AD_MATCH6:
-> -        type6_reg_write(env, env->trigger_cur, tdata_index, val);
-> +        if (riscv_cpu_cfg(env)->ext_sdtrig) {
-> +            type6_reg_write(env, env->trigger_cur, tdata_index, val);
-> +        } else {
-> +            qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\n",
-> +                          trigger_type);
-> +        }
->          break;
->      case TRIGGER_TYPE_INST_CNT:
->          itrigger_reg_write(env, env->trigger_cur, tdata_index, val);
-> @@ -750,9 +758,15 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
->  
->  target_ulong tinfo_csr_read(CPURISCVState *env)
->  {
-> -    /* assume all triggers support the same types of triggers */
-> -    return BIT(TRIGGER_TYPE_AD_MATCH) |
-> -           BIT(TRIGGER_TYPE_AD_MATCH6);
-> +    target_ulong ts = 0;
-> +
-> +    ts = BIT(TRIGGER_TYPE_AD_MATCH);
-> +
-> +    /* sdtrig ISA extension supports type 6 match */
-
-Also drop this comment.
-
-> +    if (riscv_cpu_cfg(env)->ext_sdtrig)
-> +        ts |= BIT(TRIGGER_TYPE_AD_MATCH6);
-> +
-> +    return ts;
->  }
->  
->  void riscv_cpu_debug_excp_handler(CPUState *cs)
-> @@ -803,19 +817,21 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
->                  }
->                  break;
->              case TRIGGER_TYPE_AD_MATCH6:
-> -                ctrl = env->tdata1[i];
-> -                pc = env->tdata2[i];
-> -
-> -                if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
-> -                    if (env->virt_enabled) {
-> -                        /* check VU/VS bit against current privilege level */
-> -                        if ((ctrl >> 23) & BIT(env->priv)) {
-> -                            return true;
-> -                        }
-> -                    } else {
-> -                        /* check U/S/M bit against current privilege level */
-> -                        if ((ctrl >> 3) & BIT(env->priv)) {
-> -                            return true;
-> +                if (cpu->cfg.ext_sdtrig) {
-> +                   ctrl = env->tdata1[i];
-
-Check your whitespace. Missing one space of indent in the line above.
-
-> +                    pc = env->tdata2[i];
-> +
-> +                    if ((ctrl & TYPE6_EXEC) && (bp->pc == pc)) {
-> +                        if (env->virt_enabled) {
-> +                            /* check VU/VS bit against current privilege level */
-> +                            if ((ctrl >> 23) & BIT(env->priv)) {
-> +                                return true;
-> +                            }
-> +                        } else {
-> +                            /* check U/S/M bit against current privilege level */
-> +                            if ((ctrl >> 3) & BIT(env->priv)) {
-> +                                return true;
-> +                            }
->                          }
->                      }
->                  }
-> @@ -869,27 +885,29 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
->              }
->              break;
->          case TRIGGER_TYPE_AD_MATCH6:
-> -            ctrl = env->tdata1[i];
-> -            addr = env->tdata2[i];
-> -            flags = 0;
-> +            if (cpu->cfg.ext_sdtrig) {
-> +                ctrl = env->tdata1[i];
-> +                addr = env->tdata2[i];
-> +                flags = 0;
->  
-> -            if (ctrl & TYPE6_LOAD) {
-> -                flags |= BP_MEM_READ;
-> -            }
-> -            if (ctrl & TYPE6_STORE) {
-> -                flags |= BP_MEM_WRITE;
-> -            }
-> +                if (ctrl & TYPE6_LOAD) {
-> +                    flags |= BP_MEM_READ;
-> +                }
-> +                if (ctrl & TYPE6_STORE) {
-> +                    flags |= BP_MEM_WRITE;
-> +                }
->  
-> -            if ((wp->flags & flags) && (wp->vaddr == addr)) {
-> -                if (env->virt_enabled) {
-> -                    /* check VU/VS bit against current privilege level */
-> -                    if ((ctrl >> 23) & BIT(env->priv)) {
-> -                        return true;
-> -                    }
-> -                } else {
-> -                    /* check U/S/M bit against current privilege level */
-> -                    if ((ctrl >> 3) & BIT(env->priv)) {
-> -                        return true;
-> +                if ((wp->flags & flags) && (wp->vaddr == addr)) {
-> +                    if (env->virt_enabled) {
-> +                        /* check VU/VS bit against current privilege level */
-> +                        if ((ctrl >> 23) & BIT(env->priv)) {
-> +                            return true;
-> +                        }
-> +                    } else {
-> +                        /* check U/S/M bit against current privilege level */
-> +                        if ((ctrl >> 3) & BIT(env->priv)) {
-> +                            return true;
-> +                        }
->                      }
->                  }
->              }
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 76f2150f78..1cb8656191 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -230,7 +230,7 @@ static bool debug_needed(void *opaque)
->  {
->      RISCVCPU *cpu = opaque;
->  
-> -    return cpu->cfg.debug;
-> +    return (cpu->cfg.debug || cpu->cfg.ext_sdtrig);
-
-nit: Unnecssary ()
-
->  }
->  
->  static int debug_post_load(void *opaque, int version_id)
-> -- 
-> 2.34.1
-> 
->
+If sdtrig is a superset of debug, then why do we need to disable debug?
 
 Thanks,
 drew
+
+> +    }
+> +
+>      if (cpu->cfg.debug || cpu->cfg.ext_sdtrig) {
+>          riscv_trigger_reset_hold(env);
+>      }
+> @@ -1480,6 +1487,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+>      MULTI_EXT_CFG_BOOL("zvfhmin", ext_zvfhmin, false),
+>      MULTI_EXT_CFG_BOOL("sstc", ext_sstc, true),
+>  
+> +    MULTI_EXT_CFG_BOOL("sdtrig", ext_sdtrig, false),
+>      MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
+>      MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
+>      MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
+> -- 
+> 2.34.1
+> 
+> 
 
