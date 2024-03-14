@@ -4,88 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E85C5475B
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 08:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA86C5475B
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 08:22:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkgIa-0003cK-9t; Thu, 14 Mar 2024 04:18:53 -0400
+	id 1rkgM3-0005JP-8L; Thu, 14 Mar 2024 04:22:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkgIM-0003Zz-NP
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 04:18:36 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkgI4-000476-2Z
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 04:18:33 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-412e784060cso10598085e9.1
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 01:18:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710404294; x=1711009094; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rVWU7P/DnwI+iZYeVWqvk44FiBdH/KUtzIP73fA+37U=;
- b=nv6OSEXuYVAMEHBYnvcgjcFvVTrJwPTJO06H7LXbi+leOpYwQAJma+3d14lIbZJO7b
- nhittJ5/LKUi6yKcjDnKvQKqAzj/8tUJGbQ+tA/q9DU45CCOZT9ub7nWfhWCkDcjZTp/
- 0rczz28roPpA61TP0FvyZ65loQDRzbBFALGeg0/7wTuOKKI1T4VaZylAZznvNZ9OE8FT
- kiSK+hh0JgMLkFAABce3WxizSstsZZNx8QeJyS4BwJye/WGRt6qqu/Fnnog3+iFMxjXv
- aCcUsaihw7/eE5XRGDlj/yf3VmyGzR/qYOWUxK40yO5K5WEgaLS/aTKVuNewru5kuoyi
- 5ROA==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rkgLu-0005IM-DJ
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 04:22:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rkgLo-0004rm-Qo
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 04:22:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710404527;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1MiXOVN+cjJ/Gf7ZXssMABZEA5Q7t06q2gSo+QMAIK0=;
+ b=L0lxdFG97pf29QFSXMmJ0y0lJJ1S67WFaB4tnctUd4Gn49Vx3t63VNmUNeSTHeZ9bs99jl
+ rI/Z2jQU3XuvTUR/zkP5Uj1QDN+0BIrblKNtgEFqn5Xmb8Se2y05N9iu7ECjn3AwQI/trL
+ uZzp2DPcumHU4Z58W33kqUyvq0PDPtQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-75-qbfdjT-tMjWt1CWVFudSgw-1; Thu, 14 Mar 2024 04:22:03 -0400
+X-MC-Unique: qbfdjT-tMjWt1CWVFudSgw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4131c96569dso3270685e9.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 01:22:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710404294; x=1711009094;
+ d=1e100.net; s=20230601; t=1710404523; x=1711009323;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rVWU7P/DnwI+iZYeVWqvk44FiBdH/KUtzIP73fA+37U=;
- b=vinkG5gNjGjmm1vnbmcSXrugWVYbc4qiJVLaqNd3KT4wNi7ZW8FTj3anx9n2jOOT04
- ujKuRoNg57D0oBuKteKRYkLcQStV8o5wEgEF141iUi40+LG3veiFNQRb/gQlwARFlXyn
- XecPmNN0pMQKL5FMIuJNC+heplo+MPewHudugt7eakwr9hgV8srHm5+hFJJA3vZ5rT1T
- DCe1cSiNhUf8Z2o3WwXuBYjYcmwfl2WpyjMpTAn+ClWY383HliHpoTRnuvIcpEueOgVa
- e1y1eXHAqHAPBhXzmOHwQxEZPwqLTrCT9HuZac1J+yyISh/7/gGr6nF4TMQxP9Csqgjd
- omOw==
+ bh=1MiXOVN+cjJ/Gf7ZXssMABZEA5Q7t06q2gSo+QMAIK0=;
+ b=Tj+VaVaF0wNVHR3bKI/jDLg6fiTEsF4iXyOUyYXGlPa3O/eNB/QomL9gAtKhvgi8db
+ 0rHw2TgVWEizpF12Eibj4Xdpczp4h2yyHnVs6jqNPezrG/eFuBFDW6byOMZqiT3WoCTn
+ uEknhlSMv+Iv+zTdlVR7JrsdgKwxhsx7ChZhNXm50Reuy73UItPf37biSkSwQJoQkZX/
+ l21sedTJrzRpT6+whYvpm6YtF5EJMjW92YNxgGcw2slQSbapcTjOAPyiS6JUtDH7Dbb6
+ ydZvr5m/PgamooDIsVhBvdx+t9vXUA1/ch5LMse0SLRJ3DJgCWpOdq1Hm8xjrZBNkuui
+ zhow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUH3Fgh95Ji2hHeqH5anaMPE5VRBnDdn9SyH+rMhpOJmNSYrYpZFXSSMK6Y2ps8e8pi5Ur3C+0DdBCvHQEqmVY4bgcmTQI=
-X-Gm-Message-State: AOJu0YzAZvWMlCVVWKtYeeCrE7jmKwPlX0w+fMYYg3Xjf7cWQD4Fcn2j
- uqzKAK113pWFPMDxwtreEH0hMFPPt2obNaCyd3ixnSX/oEVjkEJnnLI0DcPkAGk=
-X-Google-Smtp-Source: AGHT+IHAry3S0zZTMZNrJ7s7YkX17dkr+LdBxQClreC+NxHE6yRZcdDhN36JR8p68s0UOjHVUDLjMQ==
-X-Received: by 2002:a05:6000:b4f:b0:33e:bb68:62b3 with SMTP id
- dk15-20020a0560000b4f00b0033ebb6862b3mr1132150wrb.1.1710404294036; 
- Thu, 14 Mar 2024 01:18:14 -0700 (PDT)
-Received: from [192.168.164.175] (144.red-95-127-32.staticip.rima-tde.net.
- [95.127.32.144]) by smtp.gmail.com with ESMTPSA id
- bn15-20020a056000060f00b0033ebf702e17sm165336wrb.21.2024.03.14.01.18.11
+ AJvYcCVPjnNveMG7+SEai0Dp90ZcaS5l03kZSvx2nhIdCGIialIpn/yyUaIRKxtO/O6yRD9TNLcLuLSdl9jkbXdiy3He6mIz1gg=
+X-Gm-Message-State: AOJu0YwCiHgBqZ5Hvf0+L9CuLiW5qdNmADxhd/bfSfuxVi+eKcwiVf+M
+ chIsK5M5RtK+T4w8tmASKocOIaFkP4a+Itz7b/rAXrbveslTzhillG9x9Z1pdKTtWLeOQsKQXYX
+ AAqvzkJ8FT9w5a/3linqSwM9BFJ22LSn+cr94DasJgH9m3AtltY9e
+X-Received: by 2002:a05:600c:1f94:b0:413:f296:980e with SMTP id
+ je20-20020a05600c1f9400b00413f296980emr699324wmb.31.1710404522897; 
+ Thu, 14 Mar 2024 01:22:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGstUBYrYo9kNmSADagwXQg94vY0J17v7po6oTVzOlFXLcRK4ZmPyPt2jlwAA5NI/o+lxV3Gw==
+X-Received: by 2002:a05:600c:1f94:b0:413:f296:980e with SMTP id
+ je20-20020a05600c1f9400b00413f296980emr699312wmb.31.1710404522620; 
+ Thu, 14 Mar 2024 01:22:02 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae?
+ ([2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae])
+ by smtp.gmail.com with ESMTPSA id
+ he13-20020a05600c540d00b00413f7a2b33esm214027wmb.1.2024.03.14.01.22.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Mar 2024 01:18:13 -0700 (PDT)
-Message-ID: <d848a938-f47f-47cc-adff-130a418facbb@linaro.org>
-Date: Thu, 14 Mar 2024 09:18:09 +0100
+ Thu, 14 Mar 2024 01:22:02 -0700 (PDT)
+Message-ID: <c3eb60f5-0c85-41cf-84a8-a19eaf017b8c@redhat.com>
+Date: Thu, 14 Mar 2024 09:22:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/riscv: Implement dynamic establishment of
- custom decoder
-Content-Language: en-US
-To: Huang Tao <eric.huang@linux.alibaba.com>, qemu-devel@nongnu.org,
- dbarboza@ventanamicro.com
-Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
- bin.meng@windriver.com, alistair.francis@wdc.com, palmer@dabbelt.com,
- Christoph Muellner <christoph.muellner@vrull.eu>
-References: <20240313095715.32811-1-eric.huang@linux.alibaba.com>
- <1ae334d6-f009-4e80-bf09-0500fa3486a9@linaro.org>
- <e5a3cb94-b45d-476a-9d83-04e47ace7c2b@linux.alibaba.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <e5a3cb94-b45d-476a-9d83-04e47ace7c2b@linux.alibaba.com>
+Subject: Re: [PATCH] vfio/iommufd: Fix memory leak
+Content-Language: en-US, fr
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>
+References: <20240313210628.786224-1-clg@redhat.com>
+ <SJ0PR11MB6744F04B74DE66C9A4A3B46692292@SJ0PR11MB6744.namprd11.prod.outlook.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <SJ0PR11MB6744F04B74DE66C9A4A3B46692292@SJ0PR11MB6744.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.971,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,70 +106,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/3/24 07:24, Huang Tao wrote:
-> Hi,
+On 3/14/24 04:31, Duan, Zhenzhong wrote:
 > 
-> On 2024/3/13 18:47, Philippe Mathieu-Daudé wrote:
->>
->>> +{
->>> +    GPtrArray *dynamic_decoders;
->>> +    dynamic_decoders = g_ptr_array_sized_new(decoder_table_size);
->>> +    for (size_t i = 0; i < decoder_table_size; ++i) {
->>> +        if (decoder_table[i].guard_func &&
->>> +            decoder_table[i].guard_func(&cpu->cfg)) {
->>> +            g_ptr_array_add(dynamic_decoders,
->>> + (gpointer)decoder_table[i].decode_fn);
->>> +        }
->>> +    }
->>> +
->>> +    cpu->decoders = dynamic_decoders;
->>> +}
->>
->> Move this function to translate.c and make decoder_table[] static.
->> Then we don't need the "cpu_decoder.h", it is specific to TCG and
->> declarations go in "target/riscv/tcg/tcg-cpu.h".
->>
-> This function is about finalizing the feature of cpu, it is not suitable 
-> to move it to translate.c from the perspective of code structure and 
-> readability.
 > 
-> I will try to move the function to tcg-cpu.c, and the declarations to 
-> tcg-cpu.h according to your suggestion.
-> 
->>> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
->>> index 177418b2b9..332f0bfd4e 100644
->>> --- a/target/riscv/translate.c
->>> +++ b/target/riscv/translate.c
->>> @@ -115,6 +115,7 @@ typedef struct DisasContext {
->>>       bool frm_valid;
->>>       /* TCG of the current insn_start */
->>>       TCGOp *insn_start;
->>> +    const GPtrArray *decoders;
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@redhat.com>
+>> Sent: Thursday, March 14, 2024 5:06 AM
+>> To: qemu-devel@nongnu.org
+>> Cc: Alex Williamson <alex.williamson@redhat.com>; Cédric Le Goater
+>> <clg@redhat.com>; Eric Auger <eric.auger@redhat.com>; Liu, Yi L
+>> <yi.l.liu@intel.com>; Duan, Zhenzhong <zhenzhong.duan@intel.com>
+>> Subject: [PATCH] vfio/iommufd: Fix memory leak
 >>
->> Why do we need this reference? We can use env_archcpu(env)->decoders.
+>> Make sure variable contents is freed if scanf fails.
 >>
-> As Richard said before:
+>> Cc: Eric Auger <eric.auger@redhat.com>
+>> Cc: Yi Liu <yi.l.liu@intel.com>
+>> Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>> Fixes: CID 1540007
+>> Fixes: 5ee3dc7af785 ("vfio/iommufd: Implement the iommufd backend")
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > 
->  > We try to avoid placing env into DisasContext, so that it is much 
-> harder to make the mistake of referencing env fields at 
-> translation-time, when you really needed to generate tcg code to 
-> reference the fields at runtime.
+> Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> 
+> Unrelated to this patch, I see there are four g_free calls, not clear if it's deserved
+> to cleanup with g_autofree.
 
-Right, he told me the same on IRC recently ;)
+Ah yes. This is much better indeed.
 
-> 
-> It also applies to the ArchCPU case.
-> 
-> 
-> Thanks to your review, I will adopt the other suggestions in the next 
-> version.
-> 
-> 
-> Thanks,
-> 
-> Huang Tao
-> 
-> 
-> 
+
+Thanks,
+
+C.
+
+
 
 
