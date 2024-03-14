@@ -4,98 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 500B5C54E67
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC6FC54E60
 	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 19:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkqPe-0006E9-J1; Thu, 14 Mar 2024 15:06:47 -0400
+	id 1rkqPW-0006Ci-F9; Thu, 14 Mar 2024 15:06:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rkqPT-0006CX-A3
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 15:06:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1rkqPS-0006CC-Ek; Thu, 14 Mar 2024 15:06:34 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rkqPQ-0002Cf-GE
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 15:06:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710443190;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hjirL1/LjRJi2Fqm5GZDwwtcfSDmr/yBx4cC7oZq5g0=;
- b=J9vrr5KlODxwWlBnEUCAJHWhoPsk6l5DXZMM44fmOyHIL+aM5k4+2jk5c499gfEvX/oBAW
- wKLqqkVya8Ag7XCmT5/8UBdychh3DqTrYsdIlBFhaHQpFdI7J2/e+eU6L9nDFoMtQuQxDr
- Sx25E3G6LxUyL9lX9PsspOl8EepSM5o=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-387-ehj-IuIwP4S2PPgGPYxM-Q-1; Thu, 14 Mar 2024 15:06:28 -0400
-X-MC-Unique: ehj-IuIwP4S2PPgGPYxM-Q-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-60a54004e9fso25366397b3.3
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 12:06:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710443188; x=1711047988;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hjirL1/LjRJi2Fqm5GZDwwtcfSDmr/yBx4cC7oZq5g0=;
- b=cjEkZRuG1tgHyqgJZ1xKjfX75Ij5gChPkE/KTIhJ0vR4DpEejP6Z2c5FNjc3iUBQxh
- 7KgTvxWFeMSOmoV093f1kb1AzW65LQLDEfGymFbSHO97U73A7Zke84yhsYCNffMc20lp
- cO26PGXwrVlu5MvMiLSjPJ1ySJZ3IMvd7u6wVRvPedwfLbomT3LVOKni8YMIosY81VjP
- BbIVG3/Uouich/NIYufbPBnvaE93Dg/ryK0CirtN23759DSoJfFtFqpIpoF2AdjK1D9T
- /34UDLyl5VUQOyc7H6dFEdmAVYf4la2z1JmJV6S+TM73Qy4VfLp7Sd5xsh+q+WUf/YZZ
- diwg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXSM+M/MWR7KXSdRIj9P/TX8VAJEouYP0166voP9UdoGnNi9HonFQpfeq2kgcE9YySqlRE6M9jXVZsXDsKcD1xrX9HBV1c=
-X-Gm-Message-State: AOJu0YzpOyzkT3ShrWcnWTrOICJe7UeCOB9JtnwbVOY57KLNCDRX5AOC
- sIOCOYT8ybPBln5ulfP00txdLM8bKiiNPloL7Sa3DGCm/SjuUzQuJJeReGF1Cg8bxiSU3DIQaZ/
- VfLPgDxnstVH55zBIA56BRbnEkFFINUeH7jlw3zPmxzBeQWCvtsBh8FflGFN53E2G3sH+YZDd4f
- 3bjY7T186Qjzw2sf+vtoT9Ctx9xpE=
-X-Received: by 2002:a81:9c53:0:b0:60a:a73:9516 with SMTP id
- n19-20020a819c53000000b0060a0a739516mr2388718ywa.47.1710443188038; 
- Thu, 14 Mar 2024 12:06:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGylYrFCxeZlV3nrP6xZzh4yZUM+eQbBH7v9bTyUxXA5rBJhh3olPEO845D6EGxADRMTO6Kj92yx9pgthzBLKw=
-X-Received: by 2002:a81:9c53:0:b0:60a:a73:9516 with SMTP id
- n19-20020a819c53000000b0060a0a739516mr2388706ywa.47.1710443187726; Thu, 14
- Mar 2024 12:06:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240313115412.3334962-1-jonah.palmer@oracle.com>
- <20240313115412.3334962-2-jonah.palmer@oracle.com>
- <CACGkMEv6bRgrV_nvZK5Tb89CvTP5Kpyj4+na4Q9F=xBOJ6=8sw@mail.gmail.com>
- <b0e4a124-cced-4cbc-9f89-b8967f5a0b2c@oracle.com>
- <CAJaqyWcmzuY5R8hC-zwp_mEK40sYgwHU0vhewKziQLsY2EnpLg@mail.gmail.com>
- <f173f397-965f-43f9-9ce0-b417e86d6935@oracle.com>
-In-Reply-To: <f173f397-965f-43f9-9ce0-b417e86d6935@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 14 Mar 2024 20:05:51 +0100
-Message-ID: <CAJaqyWfspBXGw0WE2=HBuZiBJjyWTrMm2jyB4e0mP9UkixS4Mg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] virtio/virtio-pci: Handle extra notification data
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org, mst@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, pasic@linux.ibm.com, 
- borntraeger@linux.ibm.com, farman@linux.ibm.com, thuth@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com, 
- cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com, 
- qemu-block@nongnu.org, qemu-s390x@nongnu.org, leiyang@redhat.com, 
- schalla@marvell.com, vattunuru@marvell.com, jerinj@marvell.com, 
- dtatulea@nvidia.com, virtio-fs@lists.linux.dev
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1rkqPO-0002CK-5q; Thu, 14 Mar 2024 15:06:33 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42EIYW3D029436; Thu, 14 Mar 2024 19:06:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=ER5Dd0iTU3dhpwOqQJ/8pG4gI0Xs/7WsT2vSEThz0hY=;
+ b=epWZoGl06fNIvEpVFK3vdBpJY0aXViu2oKSDEgO3C9TQqbhe9BVxmbkaIE6nmuOycDym
+ P7dDFLXk8K1GjskNMqatN9zAfhPqLtT+ilNF2AiJ3XgQSPuO9Y8oOuLveJN/7THmmcmP
+ 6Yu0ra4TIyqSZfXA97B/3J1m1yWFN0oUZ2Iawshm90U7BXQvjLrhcCc145zmSbCncHi3
+ giy1AWfLEp5Zxx36uefGW6M6ySxX8X/PRthbHQ4H7TdT0rXO4F+SeC65fs2dhDIrCoeW
+ 5luly8P4Dk8VHS3DBKaVwbE6bxiCPXedD9cPJLVsLcDZ1ZZw4zSKlkXTk8tLJ4h0+KJ+ TA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wv68010vc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 14 Mar 2024 19:06:26 +0000
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42EIv9Lp019968;
+ Thu, 14 Mar 2024 19:06:26 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wv68010v2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 14 Mar 2024 19:06:26 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42EHPOMN018552; Thu, 14 Mar 2024 19:06:25 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ws4t2ef5t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 14 Mar 2024 19:06:25 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42EJ6LdL35127724
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 14 Mar 2024 19:06:23 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B59C22004F;
+ Thu, 14 Mar 2024 19:06:21 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 61AB92004D;
+ Thu, 14 Mar 2024 19:06:21 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.171.31.78]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 14 Mar 2024 19:06:21 +0000 (GMT)
+Message-ID: <e892a83206380c9342f57e92562d3db4e4a125e8.camel@linux.ibm.com>
+Subject: Re: [PATCH] docs/s390: clarify even more that cpu-topology is KVM-only
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: Claudio Fontana <cfontana@suse.de>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Date: Thu, 14 Mar 2024 20:06:21 +0100
+In-Reply-To: <20240314172218.16478-1-cfontana@suse.de>
+References: <20240314172218.16478-1-cfontana@suse.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: zvVqsXEzwkSh6VPOkHLSE0ukOgvCHMPG
+X-Proofpoint-GUID: fJUm2WgpcG3VspAG51xKaWaRvDz99Tl0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ priorityscore=1501 clxscore=1015 adultscore=0 impostorscore=0
+ lowpriorityscore=0 mlxscore=0 spamscore=0 mlxlogscore=999 phishscore=0
+ bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403140147
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,174 +114,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 14, 2024 at 5:06=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
->
->
->
-> On 3/14/24 10:55 AM, Eugenio Perez Martin wrote:
-> > On Thu, Mar 14, 2024 at 1:16=E2=80=AFPM Jonah Palmer <jonah.palmer@orac=
-le.com> wrote:
-> >>
-> >>
-> >>
-> >> On 3/13/24 11:01 PM, Jason Wang wrote:
-> >>> On Wed, Mar 13, 2024 at 7:55=E2=80=AFPM Jonah Palmer <jonah.palmer@or=
-acle.com> wrote:
-> >>>>
-> >>>> Add support to virtio-pci devices for handling the extra data sent
-> >>>> from the driver to the device when the VIRTIO_F_NOTIFICATION_DATA
-> >>>> transport feature has been negotiated.
-> >>>>
-> >>>> The extra data that's passed to the virtio-pci device when this
-> >>>> feature is enabled varies depending on the device's virtqueue
-> >>>> layout.
-> >>>>
-> >>>> In a split virtqueue layout, this data includes:
-> >>>>    - upper 16 bits: shadow_avail_idx
-> >>>>    - lower 16 bits: virtqueue index
-> >>>>
-> >>>> In a packed virtqueue layout, this data includes:
-> >>>>    - upper 16 bits: 1-bit wrap counter & 15-bit shadow_avail_idx
-> >>>>    - lower 16 bits: virtqueue index
-> >>>>
-> >>>> Tested-by: Lei Yang <leiyang@redhat.com>
-> >>>> Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> >>>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> >>>> ---
-> >>>>    hw/virtio/virtio-pci.c     | 10 +++++++---
-> >>>>    hw/virtio/virtio.c         | 18 ++++++++++++++++++
-> >>>>    include/hw/virtio/virtio.h |  1 +
-> >>>>    3 files changed, 26 insertions(+), 3 deletions(-)
-> >>>>
-> >>>> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> >>>> index cb6940fc0e..0f5c3c3b2f 100644
-> >>>> --- a/hw/virtio/virtio-pci.c
-> >>>> +++ b/hw/virtio/virtio-pci.c
-> >>>> @@ -384,7 +384,7 @@ static void virtio_ioport_write(void *opaque, ui=
-nt32_t addr, uint32_t val)
-> >>>>    {
-> >>>>        VirtIOPCIProxy *proxy =3D opaque;
-> >>>>        VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
-> >>>> -    uint16_t vector;
-> >>>> +    uint16_t vector, vq_idx;
-> >>>>        hwaddr pa;
-> >>>>
-> >>>>        switch (addr) {
-> >>>> @@ -408,8 +408,12 @@ static void virtio_ioport_write(void *opaque, u=
-int32_t addr, uint32_t val)
-> >>>>                vdev->queue_sel =3D val;
-> >>>>            break;
-> >>>>        case VIRTIO_PCI_QUEUE_NOTIFY:
-> >>>> -        if (val < VIRTIO_QUEUE_MAX) {
-> >>>> -            virtio_queue_notify(vdev, val);
-> >>>> +        vq_idx =3D val;
-> >>>> +        if (vq_idx < VIRTIO_QUEUE_MAX) {
-> >>>> +            if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION=
-_DATA)) {
-> >>>> +                virtio_queue_set_shadow_avail_data(vdev, val);
-> >>>> +            }
-> >>>> +            virtio_queue_notify(vdev, vq_idx);
-> >>>>            }
-> >>>>            break;
-> >>>>        case VIRTIO_PCI_STATUS:
-> >>>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> >>>> index d229755eae..bcb9e09df0 100644
-> >>>> --- a/hw/virtio/virtio.c
-> >>>> +++ b/hw/virtio/virtio.c
-> >>>> @@ -2255,6 +2255,24 @@ void virtio_queue_set_align(VirtIODevice *vde=
-v, int n, int align)
-> >>>>        }
-> >>>>    }
-> >>>>
-> >>>> +void virtio_queue_set_shadow_avail_data(VirtIODevice *vdev, uint32_=
-t data)
-> >
-> > Maybe I didn't explain well, but I think it is better to pass directly
-> > idx to a VirtQueue *. That way only the caller needs to check for a
-> > valid vq idx, and (my understanding is) the virtio.c interface is
-> > migrating to VirtQueue * use anyway.
-> >
->
-> Oh, are you saying to just pass in a VirtQueue *vq instead of
-> VirtIODevice *vdev and get rid of the vq->vring.desc check in the functio=
-n?
->
+On Thu, 2024-03-14 at 18:22 +0100, Claudio Fontana wrote:
+> At least for now cpu-topology is implemented only for KVM.
+>=20
+> We already say this, but this tries to be more explicit,
+> and also show it in the examples.
+>=20
+> This adds a new reference in the introduction that we can point to,
+> whenever we need to reference accelerators and how to select them.
+>=20
+> Signed-off-by: Claudio Fontana <cfontana@suse.de>
 
-No, that needs to be kept. I meant the access to vdev->vq[i] without
-checking for a valid i.
+Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Tested-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+(meaning I ran make html)
 
-You can get the VirtQueue in the caller with virtio_get_queue. Which
-also does not check for a valid index, but that way is clearer the
-caller needs to check it.
-
-As a side note, the check for desc !=3D 0 is widespread in QEMU but the
-driver may use 0 address for desc, so it's not 100% valid. But to
-change that now requires a deeper change out of the scope of this
-series, so let's keep it for now :).
-
-Thanks!
-
-> >>>> +{
-> >>>> +    /* Lower 16 bits is the virtqueue index */
-> >>>> +    uint16_t i =3D data;
-> >>>> +    VirtQueue *vq =3D &vdev->vq[i];
-> >>>> +
-> >>>> +    if (!vq->vring.desc) {
-> >>>> +        return;
-> >>>> +    }
-> >>>> +
-> >>>> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
-> >>>> +        vq->shadow_avail_wrap_counter =3D (data >> 31) & 0x1;
-> >>>> +        vq->shadow_avail_idx =3D (data >> 16) & 0x7FFF;
-> >>>> +    } else {
-> >>>> +        vq->shadow_avail_idx =3D (data >> 16);
-> >>>
-> >>> Do we need to do a sanity check for this value?
-> >>>
-> >>> Thanks
-> >>>
-> >>
-> >> It can't hurt, right? What kind of check did you have in mind?
-> >>
-> >> if (vq->shadow_avail_idx >=3D vq->vring.num)
-> >>
-> >
-> > I'm a little bit lost too. shadow_avail_idx can take all uint16_t
-> > values. Maybe you meant checking for a valid vq index, Jason?
-> >
-> > Thanks!
-> >
-> >> Or something else?
-> >>
-> >>>> +    }
-> >>>> +}
-> >>>> +
-> >>>>    static void virtio_queue_notify_vq(VirtQueue *vq)
-> >>>>    {
-> >>>>        if (vq->vring.desc && vq->handle_output) {
-> >>>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> >>>> index c8f72850bc..53915947a7 100644
-> >>>> --- a/include/hw/virtio/virtio.h
-> >>>> +++ b/include/hw/virtio/virtio.h
-> >>>> @@ -335,6 +335,7 @@ void virtio_queue_update_rings(VirtIODevice *vde=
-v, int n);
-> >>>>    void virtio_init_region_cache(VirtIODevice *vdev, int n);
-> >>>>    void virtio_queue_set_align(VirtIODevice *vdev, int n, int align)=
-;
-> >>>>    void virtio_queue_notify(VirtIODevice *vdev, int n);
-> >>>> +void virtio_queue_set_shadow_avail_data(VirtIODevice *vdev, uint32_=
-t data);
-> >>>>    uint16_t virtio_queue_vector(VirtIODevice *vdev, int n);
-> >>>>    void virtio_queue_set_vector(VirtIODevice *vdev, int n, uint16_t =
-vector);
-> >>>>    int virtio_queue_set_host_notifier_mr(VirtIODevice *vdev, int n,
-> >>>> --
-> >>>> 2.39.3
-> >>>>
-> >>>
-> >>
-> >
->
+> ---
+>  docs/system/introduction.rst       |  2 ++
+>  docs/system/s390x/cpu-topology.rst | 14 ++++++++------
+>  2 files changed, 10 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
+> index 51ac132d6c..746707eb00 100644
+> --- a/docs/system/introduction.rst
+> +++ b/docs/system/introduction.rst
+> @@ -1,6 +1,8 @@
+>  Introduction
+>  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> =20
+> +.. _Accelerators:
+> +
+>  Virtualisation Accelerators
+>  ---------------------------
+> =20
+> diff --git a/docs/system/s390x/cpu-topology.rst b/docs/system/s390x/cpu-t=
+opology.rst
+> index 5133fdc362..ca344e273c 100644
+> --- a/docs/system/s390x/cpu-topology.rst
+> +++ b/docs/system/s390x/cpu-topology.rst
+> @@ -25,17 +25,19 @@ monitor polarization changes, see ``docs/devel/s390-c=
+pu-topology.rst``.
+>  Prerequisites
+>  -------------
+> =20
+> -To use the CPU topology, you need to run with KVM on a s390x host that
+> -uses the Linux kernel v6.0 or newer (which provide the so-called
+> +To use the CPU topology, you currently need to choose the KVM accelerato=
+r.
+> +See :ref:`Accelerators` for more details about accelerators and how to s=
+elect them.
+> +
+> +The s390x host needs to use a Linux kernel v6.0 or newer (which provides=
+ the so-called
+>  ``KVM_CAP_S390_CPU_TOPOLOGY`` capability that allows QEMU to signal the
+>  CPU topology facility via the so-called STFLE bit 11 to the VM).
+> =20
+>  Enabling CPU topology
+>  ---------------------
+> =20
+> -Currently, CPU topology is only enabled in the host model by default.
+> +Currently, CPU topology is enabled by default only in the "host" cpu mod=
+el.
+> =20
+> -Enabling CPU topology in a CPU model is done by setting the CPU flag
+> +Enabling CPU topology in another CPU model is done by setting the CPU fl=
+ag
+>  ``ctop`` to ``on`` as in:
+> =20
+>  .. code-block:: bash
+> @@ -132,7 +134,7 @@ In the following machine we define 8 sockets with 4 c=
+ores each.
+> =20
+>  .. code-block:: bash
+> =20
+> -  $ qemu-system-s390x -m 2G \
+> +  $ qemu-system-s390x -accel kvm -m 2G \
+>      -cpu gen16b,ctop=3Don \
+>      -smp cpus=3D5,sockets=3D8,cores=3D4,maxcpus=3D32 \
+>      -device host-s390x-cpu,core-id=3D14 \
+> @@ -227,7 +229,7 @@ with vertical high entitlement.
+> =20
+>  .. code-block:: bash
+> =20
+> -  $ qemu-system-s390x -m 2G \
+> +  $ qemu-system-s390x -accel kvm -m 2G \
+>      -cpu gen16b,ctop=3Don \
+>      -smp cpus=3D1,sockets=3D8,cores=3D4,maxcpus=3D32 \
+>      \
 
 
