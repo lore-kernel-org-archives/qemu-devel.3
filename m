@@ -4,71 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B67E6C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:25:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43EBDC54E5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkmvn-0007et-8S; Thu, 14 Mar 2024 11:23:43 -0400
+	id 1rkmvq-0007lU-M8; Thu, 14 Mar 2024 11:23:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rkmva-0007NA-4C
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1rkmvo-0007im-1Z
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:44 -0400
+Received: from esa12.hc1455-7.c3s2.iphmx.com ([139.138.37.100])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rkmvY-0003ot-Fn
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710429807;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QK3VzflXInySfueK+SfexWiK/O+z9FeBvoPlrZmIFkU=;
- b=XA0tq8H9oL/jSMXjDvbOUlCJ+kMHEKoUbYuTUStNlTdVGpp5sHvnKZwm98Bo0SKCuzJMEJ
- TfBs8mslFbmSO79oAPK0iGBJ5pRZznbBRu1aSEQ0EfKLgxkCwVrWhF5mIDb+I2mLF7l2TJ
- 4v0Zwnhnr0/A1F8E86AQly+Bli6hkMo=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688--9ani6VjO1GVqn51y520ZQ-1; Thu, 14 Mar 2024 11:23:25 -0400
-X-MC-Unique: -9ani6VjO1GVqn51y520ZQ-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1A56E800277;
- Thu, 14 Mar 2024 15:23:25 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 3BE0917A8E;
- Thu, 14 Mar 2024 15:23:24 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, Ani Sinha <anisinha@redhat.com>,
- Fiona Ebner <f.ebner@proxmox.com>
-Subject: [PATCH v4 19/21] pc/q35: set SMBIOS entry point type to 'auto' by
- default
-Date: Thu, 14 Mar 2024 16:23:00 +0100
-Message-Id: <20240314152302.2324164-20-imammedo@redhat.com>
-In-Reply-To: <20240314152302.2324164-1-imammedo@redhat.com>
-References: <20240314152302.2324164-1-imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1rkmvm-0003q4-0Z
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1710429821; x=1741965821;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=evENAN8QwOVpGZETLVj8aFWGFrZb4cuvRJYiwQLopHk=;
+ b=Xv1bDtQVFHc5S4cGysbORCcLjwOrz7M6ZV63BUpLSPDC2VAJtxUIcpwY
+ FRgiMrILaSxsAmZ+hZ6/JezuYzDq2BJbzBi8GX2+jnkt+ZL3akH3DYtGZ
+ m0LF7atEPmZBhXJKtIpzchW2OCqHLZ8M78GjF0CNJM5sTQvysmKFuJjWd
+ fR5Dtd0dbrTPrFPygzwOwNEDmN0Q5g3XOFW3O6iHGKR82MMMhCaihXCPC
+ bSM4lT8aiQCabHbYMRGVdOI9iRgPMQSY4Ra5gbQAcMvvz1w3c1eKOo+7j
+ m+49nqxzxuPyPqaboVypygYa+oXGox3Hx1HEqXiSPsDp5g/RPk9IuAaXv Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11013"; a="131584832"
+X-IronPort-AV: E=Sophos;i="6.07,125,1708354800"; d="scan'208";a="131584832"
+Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
+ by esa12.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Mar 2024 00:23:37 +0900
+Received: from oym-m4.gw.nic.fujitsu.com (oym-nat-oym-m4.gw.nic.fujitsu.com
+ [192.168.87.61])
+ by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id 0AF7A5F0F5
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 00:23:36 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by oym-m4.gw.nic.fujitsu.com (Postfix) with ESMTP id 31E784F89F
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 00:23:35 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id BDFE120098E10
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 00:23:34 +0900 (JST)
+Received: from [10.193.128.195] (unknown [10.193.128.195])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 32B901A006A;
+ Thu, 14 Mar 2024 23:23:34 +0800 (CST)
+Message-ID: <125c1701-3f18-45f7-9770-45ec41feae7b@fujitsu.com>
+Date: Thu, 14 Mar 2024 23:23:33 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 3/5] cxl/core: introduce cxl_mem_report_poison()
+To: Dan Williams <dan.j.williams@intel.com>
+Cc: Jonathan.Cameron@huawei.com, qemu-devel@nongnu.org,
+ linux-cxl@vger.kernel.org
+References: <20240209115417.724638-1-ruansy.fnst@fujitsu.com>
+ <20240209115417.724638-6-ruansy.fnst@fujitsu.com>
+ <65c71bdc81927_d2d4294f9@dwillia2-xfh.jf.intel.com.notmuch>
+In-Reply-To: <65c71bdc81927_d2d4294f9@dwillia2-xfh.jf.intel.com.notmuch>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28252.000
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28252.000
+X-TMASE-Result: 10--16.183800-10.000000
+X-TMASE-MatchedRID: 6Yvl3or3fgqPvrMjLFD6eCkMR2LAnMRp2q80vLACqaeqvcIF1TcLYA4p
+ qmczoDwtjlYl41I8jVOZKLS7xMLJgrKFg5Tail4EWFHKJ2wSViT865QlVwxmG7rfxlRjqBJ34MP
+ 8QbjSbz3qhalTWVmQtzioQ72L2lCJjnkOkV5xgha5x7uAXGEprcE5XPQnBzGXq8KsbROd9VTZ3y
+ a1EhGxQ5J5q9EvnZr1z2BzWfwZiWsMeUy96gk4BMQ4mpKyfkqZdmWMDQajOiKwcSh5kytY+bTLc
+ NrcH2Gr585VzGMOFzABi3kqJOK62b+/RSFMoL2cxEHRux+uk8h+ICquNi0WJNQlmYqwTTb1fLTm
+ 1duEMC3e/XLnHnOr96YgO4sEv0aRftwZ3X11IV0=
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=139.138.37.100;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa12.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,84 +98,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use smbios-entry-point-type='auto' for newer machine types as a workaround
-for Windows not detecting SMBIOS tables. Which makes QEMU pick SMBIOS tables
-based on configuration (with 2.x preferred and fallback to 3.x if the former
-isn't compatible with configuration)
 
-Default compat setting of smbios-entry-point-type after series
-for pc/q35 machines:
-  * 9.0-newer: 'auto'
-  * 8.1-8.2: '64'
-  * 8.0-older: '32'
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2008
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
----
- hw/i386/pc.c      | 2 +-
- hw/i386/pc_piix.c | 4 ++++
- hw/i386/pc_q35.c  | 3 +++
- 3 files changed, 8 insertions(+), 1 deletion(-)
+在 2024/2/10 14:46, Dan Williams 写道:
+> Shiyang Ruan wrote:
+>> If poison is detected(reported from cxl memdev), OS should be notified to
+>> handle it.  Introduce this function:
+>>    1. translate DPA to HPA;
+>>    2. construct a MCE instance; (TODO: more details need to be filled)
+>>    3. log it into MCE event queue;
+>>
+>> After that, MCE mechanism can walk over its notifier chain to execute
+>> specific handlers.
+>>
+>> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+>> ---
+>>   arch/x86/kernel/cpu/mce/core.c |  1 +
+>>   drivers/cxl/core/mbox.c        | 33 +++++++++++++++++++++++++++++++++
+>>   2 files changed, 34 insertions(+)
+>>
+>> diff --git a/arch/x86/kernel/cpu/mce/core.c b/arch/x86/kernel/cpu/mce/core.c
+>> index bc39252bc54f..a64c0aceb7e0 100644
+>> --- a/arch/x86/kernel/cpu/mce/core.c
+>> +++ b/arch/x86/kernel/cpu/mce/core.c
+>> @@ -131,6 +131,7 @@ void mce_setup(struct mce *m)
+>>   	m->ppin = cpu_data(m->extcpu).ppin;
+>>   	m->microcode = boot_cpu_data.microcode;
+>>   }
+>> +EXPORT_SYMBOL_GPL(mce_setup);
+> 
+> No, mce_setup() is x86 specific and the CXL subsystem is CPU
+> architecture independent. My expectation is that CXL should translate
+> errors for edac similar to how the ACPI GHES code does it. See usage of
+> edac_raw_mc_handle_error() and memory_failure_queue().
+> 
+> Otherwise an MCE is a CPU consumption of poison event, and CXL is
+> reporting device-side discovery of poison.
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 44eb073abd..e80f02bef4 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1832,7 +1832,7 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
-     mc->nvdimm_supported = true;
-     mc->smp_props.dies_supported = true;
-     mc->default_ram_id = "pc.ram";
--    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
-+    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_AUTO;
- 
-     object_class_property_add(oc, PC_MACHINE_MAX_RAM_BELOW_4G, "size",
-         pc_machine_get_max_ram_below_4g, pc_machine_set_max_ram_below_4g,
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index c9a6c0aa68..18ba076609 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -525,12 +525,16 @@ DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0", NULL,
- 
- static void pc_i440fx_8_2_machine_options(MachineClass *m)
- {
-+    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
-+
-     pc_i440fx_9_0_machine_options(m);
-     m->alias = NULL;
-     m->is_default = false;
- 
-     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
-+    /* For pc-i44fx-8.2 and 8.1, use SMBIOS 3.X by default */
-+    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
- }
- 
- DEFINE_I440FX_MACHINE(v8_2, "pc-i440fx-8.2", NULL,
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 8a427c4647..b5922b44af 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -376,11 +376,14 @@ DEFINE_Q35_MACHINE(v9_0, "pc-q35-9.0", NULL,
- 
- static void pc_q35_8_2_machine_options(MachineClass *m)
- {
-+    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
-     pc_q35_9_0_machine_options(m);
-     m->alias = NULL;
-     m->max_cpus = 1024;
-     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
-+    /* For pc-q35-8.2 and 8.1, use SMBIOS 3.X by default */
-+    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
- }
- 
- DEFINE_Q35_MACHINE(v8_2, "pc-q35-8.2", NULL,
--- 
-2.39.3
+Yes, I misunderstood here.  I was mean to use MCE to finally call 
+memory_failure(). I think memory_failure_queue() is what I need.
 
+   void memory_failure_queue(unsigned long pfn, int flags)
+
+But it can only queue one PFN at a time, we may need to make it support 
+queuing a range of PFN.
+
+
+--
+Thanks,
+Ruan.
 
