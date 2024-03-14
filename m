@@ -4,109 +4,182 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C43EC54E60
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 20:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F8E9C54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 20:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkrPb-0002qc-Rg; Thu, 14 Mar 2024 16:10:47 -0400
+	id 1rkrcc-0005pZ-A7; Thu, 14 Mar 2024 16:24:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
- id 1rkrPZ-0002q5-15; Thu, 14 Mar 2024 16:10:46 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
- id 1rkrPW-0006Gk-Px; Thu, 14 Mar 2024 16:10:44 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 2750C1F895;
- Thu, 14 Mar 2024 20:10:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710447039; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GR20zWgT7lM5VSPAE9ytxulaNgejXAoxf1MMGXw51bU=;
- b=wUiqKA6t1YZu3k3KAOXI+qIAwP+88klXP6DzZRd2cbJm8Wgi8mbz99tVHkI84o5hHGgQVf
- Isf1gdNkGMD6k3d9QHypA92L25MQcJ3sJZoim+M7dbIYnN6g8TYAaCeUzIAOISvzfuqkHV
- X6EKceX5jjRcW60d3l1GpyFI35Jn3dw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710447039;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GR20zWgT7lM5VSPAE9ytxulaNgejXAoxf1MMGXw51bU=;
- b=rZ7CMoCA406ZF39Ex79nlrpdfmcPBoIrERIDNBwc6BkpR+SIug8nTqG6IfqrkvSGpop+ub
- aJCDD2GSZyUQGSCg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710447039; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GR20zWgT7lM5VSPAE9ytxulaNgejXAoxf1MMGXw51bU=;
- b=wUiqKA6t1YZu3k3KAOXI+qIAwP+88klXP6DzZRd2cbJm8Wgi8mbz99tVHkI84o5hHGgQVf
- Isf1gdNkGMD6k3d9QHypA92L25MQcJ3sJZoim+M7dbIYnN6g8TYAaCeUzIAOISvzfuqkHV
- X6EKceX5jjRcW60d3l1GpyFI35Jn3dw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710447039;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=GR20zWgT7lM5VSPAE9ytxulaNgejXAoxf1MMGXw51bU=;
- b=rZ7CMoCA406ZF39Ex79nlrpdfmcPBoIrERIDNBwc6BkpR+SIug8nTqG6IfqrkvSGpop+ub
- aJCDD2GSZyUQGSCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A5E031368B;
- Thu, 14 Mar 2024 20:10:38 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id PH1eJL5Z82XRAQAAD6G6ig
- (envelope-from <cfontana@suse.de>); Thu, 14 Mar 2024 20:10:38 +0000
-Message-ID: <540bb2d3-7bd6-a4b7-32e2-5787dc1ca015@suse.de>
-Date: Thu, 14 Mar 2024 21:10:37 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH] target/s390x: improve cpu compatibility check error
- message
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1rkrca-0005oz-AX; Thu, 14 Mar 2024 16:24:12 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1rkrcW-0000VA-Bw; Thu, 14 Mar 2024 16:24:12 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42EJxF9h008873; Thu, 14 Mar 2024 20:23:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=5rIFtoBJMNOAQKIUfOm8+jqGAJX2h5amQ1m0+F4nVhM=;
+ b=mjmkiK+++s+lMw2yY33VieKO4Whg4LZE8dLycOW2Zo+AjoxDOyAl/j9+elQ0UP9MD5/R
+ KCOfpp41Wi4aHDimoKROhY337DGjU+xGLMMC1cIpI/2/r2/A1iScEJdE1/bvvWXaB1Tq
+ WPHnQ9U5WpU792BjbR3q66jix+rGu0kbVk2cmtZvVtLV2LhCvVOD5Mit2h9LJHaD2Wtv
+ ZhduZt9uM2ptL/iR742aFASe4ZkZmvjZtS1dkywbt0DPTzUDRZhpJGHjeWQ3tKhpQzQy
+ fk5tQQwBs5QN5LQXiuWbK4JS22cqaGdlpxRoPBFqBY4bQi4RN/lX29HpdlbK8zM/3B28 fA== 
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wv0af96ex-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 14 Mar 2024 20:23:41 +0000
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 42EK7Dnv004810; Thu, 14 Mar 2024 20:23:40 GMT
+Received: from nam02-bn1-obe.outbound.protection.outlook.com
+ (mail-bn1nam02lp2040.outbound.protection.outlook.com [104.47.51.40])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wre7baen6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 14 Mar 2024 20:23:40 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=f95QW9gyyOefYL6cxx4NplZT2Xb8bj/X9BTNgWjN6Dx4geIhA7XYZoACreL7WvRedtRWHYx4SNiwjc2kSFyg0JMrDp4hmBV/EeU9jUDXGJw4Ssu8vw9JayRnhmr2QniORP/EgFw1NFW9juL3QqidQ7rxxz4rWhZ5pY7rJMnHksF3S0TMnmXZgT8+FhQSjrFxIxiUlcyUHVT89IWz4cpy9MIlPcvxts1dZUy9MUhKx55C2c8iPjAthHfQvQY7UenjZBbb0c4Dpq8OvtCuqaY7dDi2qAso8gNO1AL3LPvg5h9bOmN6jL7do5O6MIxZPgtieAGTWFXciblQp3Fy3ajC6g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5rIFtoBJMNOAQKIUfOm8+jqGAJX2h5amQ1m0+F4nVhM=;
+ b=G1+QErw6l96rNoibbpfNtfbDwSu95tc7k/dFgGHQPKw1O/YDWAterFgBCq+3mOvGFR55y5ZeFimfhrRbA7kR9w/PFPyvIKO+XI48iDnpFLkjaOBVM1OICpKjJ++iWIpptO9ySZ1UOs6h6z++G0y7yyVdpC6Jday1k4uiunup4h20SOi79elKpaKkvhTbVzH14th0U8pqWXcisu6Q3+zZJbAx8is7uAcFbO1RiOoucSLuyhSvTjtAaxfByvLBASVB7eqiIDqLCpEHphY4tLmJqeJfIGUrvcScEBi4FSjXePXPlXi2Zmd+Z6kEutozBA0X4xjSrKljVJG2mjtBh0t3VQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5rIFtoBJMNOAQKIUfOm8+jqGAJX2h5amQ1m0+F4nVhM=;
+ b=c6BErRU4xO6vfmP+X982EWg8UwRZqgto/nrkwGeBD2zM/NYWnvQppJ3Xuvsc7aw8WUNFxNZ/IY0LXa2giXsuVl/uetvRPCJVng2N4Mt0mi/8DCqc7qdNsKrqbliMlqTDtJtTHgOV5/4dfZXk4ssn9cuQm2jcT8L87hL/CGW5QQs=
+Received: from PH0PR10MB4664.namprd10.prod.outlook.com (2603:10b6:510:41::11)
+ by PH0PR10MB4423.namprd10.prod.outlook.com (2603:10b6:510:40::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.36; Thu, 14 Mar
+ 2024 20:23:35 +0000
+Received: from PH0PR10MB4664.namprd10.prod.outlook.com
+ ([fe80::75a:a398:452a:90a9]) by PH0PR10MB4664.namprd10.prod.outlook.com
+ ([fe80::75a:a398:452a:90a9%6]) with mapi id 15.20.7386.017; Thu, 14 Mar 2024
+ 20:23:35 +0000
+Message-ID: <8b87682b-f22f-461e-bca7-1c80a6b9c760@oracle.com>
+Date: Thu, 14 Mar 2024 16:23:31 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/6] virtio/virtio-pci: Handle extra notification data
 Content-Language: en-US
-To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20240314190007.19568-1-cfontana@suse.de>
- <226063093bf4dcb200c981dd5b655135d8a47feb.camel@linux.ibm.com>
-From: Claudio Fontana <cfontana@suse.de>
-In-Reply-To: <226063093bf4dcb200c981dd5b655135d8a47feb.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_DN_ALL(0.00)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=cfontana@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.534,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org, mst@redhat.com,
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com,
+ raphael@enfabrica.net, kwolf@redhat.com, hreitz@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
+ iii@linux.ibm.com, cohuck@redhat.com, pbonzini@redhat.com,
+ fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org,
+ qemu-s390x@nongnu.org, leiyang@redhat.com, schalla@marvell.com,
+ vattunuru@marvell.com, jerinj@marvell.com, dtatulea@nvidia.com,
+ virtio-fs@lists.linux.dev
+References: <20240313115412.3334962-1-jonah.palmer@oracle.com>
+ <20240313115412.3334962-2-jonah.palmer@oracle.com>
+ <CACGkMEv6bRgrV_nvZK5Tb89CvTP5Kpyj4+na4Q9F=xBOJ6=8sw@mail.gmail.com>
+ <b0e4a124-cced-4cbc-9f89-b8967f5a0b2c@oracle.com>
+ <CAJaqyWcmzuY5R8hC-zwp_mEK40sYgwHU0vhewKziQLsY2EnpLg@mail.gmail.com>
+ <f173f397-965f-43f9-9ce0-b417e86d6935@oracle.com>
+ <CAJaqyWfspBXGw0WE2=HBuZiBJjyWTrMm2jyB4e0mP9UkixS4Mg@mail.gmail.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
+In-Reply-To: <CAJaqyWfspBXGw0WE2=HBuZiBJjyWTrMm2jyB4e0mP9UkixS4Mg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: BLAPR03CA0148.namprd03.prod.outlook.com
+ (2603:10b6:208:32e::33) To PH0PR10MB4664.namprd10.prod.outlook.com
+ (2603:10b6:510:41::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB4664:EE_|PH0PR10MB4423:EE_
+X-MS-Office365-Filtering-Correlation-Id: a11c371e-d148-46c3-5932-08dc4464a012
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: VTwkocSRHe5YLCWKQm/LNiyI0pUYRTTfuB9Y5JePBTjLmDg6x3EwSpBw5hNntQJRzeZ15CZWiTtge+vD9d0l/1TiyY8k+5//EMLzBfETuffxWjvb5eHqdqnfucS0zsLNzePIIfIdav7aGD009URnZwF6AO6PARN0NoEw5mVQe6DLZ31/B6NBykvxSiUc56mYQJlf+sJSPWeoxmlekYKEbSwPFebGFaB9kZsq9iFkvHQwQ77Ue0QXjgakqhtBQ5ChbNuGRFjJ6YYKegTgiMkUe66dqoHl7u1myeesNwU/FwWq7u6Pw87bBaxclKZ36Wo7jERDaYF+han+HmxG+V4XcQ46Tj+ed6UQLNRKRZ37UnZ3h+38Z1SHsLM4Gny6MuBxIorG03CGbQTagn4R9oBTV4G4Qx10XD57lokxlMI38kD+0ZVlHKSRM+116aU1ivyXtLnAzfN6PArOpSd2FoYieZ664Md6CVPdZ1ztBScWt710izwtsnsuATBT0efIGvOeSiwVCaGRBniCUmTaHGjUZl5SRLB/jsLFSg+AauvA0wFZ4AuJMd+wzbWkoz74DUXLc5NMy0Qk4PR7Hunf3jvJwJdjcqU8noNzTwcji0IAORinPUzzmPXwco1Ll3hd1C6foPD3PF3MVeHS+KV3DN6W4RMuOU/KxE2PmWv9XvHYcUQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR10MB4664.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(1800799015)(7416005)(376005); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eG14MUxGd01FbjN3MUtHcm5IYzJMM1lOc2NSbSszRXRXZG5Ma3laTnJKSkJY?=
+ =?utf-8?B?dE1BWURFUUVsNDdCQmZGeXhGbXpRVUNNVmk5MC9QVnBvU3lhaTU3TTNDL3JH?=
+ =?utf-8?B?WVRmSmJ2c2dsVnRrQmo2c0ZzK0NkWnB0aFlBT244NnZMZmxsbGw4VW5Oc0li?=
+ =?utf-8?B?dWFjTk16am1EVUtFU2JMb1llSzJvakNRVzZ0d0w0K2xwdzBrYk1CVnY4b1Z2?=
+ =?utf-8?B?cE81VG9ldGRUaERnejVreUpsSmRGTWpvMnUzNU9jdEhZNW5na0kvcjhOMjVz?=
+ =?utf-8?B?bXRoaU42akZzUDVXOTlPOWNJdy9vZDNucHVGcmtUcEoxQ1dPeTRBeHhUQmpl?=
+ =?utf-8?B?M0ZnRnJVQjJYK0lpaXVGdmtkYVlMV3dEVU5abkRKTWdSeGF0WUJPakhiMU4x?=
+ =?utf-8?B?T1hHeS8zR3BONVQwQnFzdjhHdWFyY0pBdTF3R3pBRzdQRWtnVmlqRHBVd0Ft?=
+ =?utf-8?B?RnBUSTBQS2xlS01JZHFidW42M3NRYlZScnNTd01Qd0UwZ3NRaTVzUllKZmNV?=
+ =?utf-8?B?aElQSTFGVGJDZ1RKc3cyR2VPeGlzWHFaeHNzM2s5NU05ckN3dUZCaml1c0FN?=
+ =?utf-8?B?bjNIaGJ3Qm9uaHRUSVlQcVNob2RZMWdiRXpHUnhoalRBMUtHUm9JUWxNL0ZZ?=
+ =?utf-8?B?eGhJYjN5blJ6VEovczh5SGR2dWFmb1NFdHdGcXh3NzZnOHp5ZTAxNzNwTnk0?=
+ =?utf-8?B?eVhUS2ZCMTBqK0RMdFVHbmdCUHlZQmlzZTFCREYrdllOL2JuWmYrZmk3Nm5X?=
+ =?utf-8?B?WXNlRExOQUdESFd4aUR3RlFzY2pMSXVVR0xMU3pzWXFKTXdNaHlQNDNoalZ3?=
+ =?utf-8?B?R2hIR3Eyb1hsZWMrNDcxL2hxRnViMHRxNlpvVDNvNFhqcjB3aU5kY25zQmk5?=
+ =?utf-8?B?aW9CZ1dwMU8vUjUwSWQyek5XYTJISFh0RldvWEpZSmNCSXRWUEZLa0lFc2FF?=
+ =?utf-8?B?VHl4NTZ4cVdySXlLRExYYzI0QmZKbWlaQjJOSmg3YXh4ZVdSRzVTY3N4djQ3?=
+ =?utf-8?B?TnF5d3l1c3NoR0dlSzROYW5BL2p6YjMyMEZuNEF1ZGhOWWdaSkZaM0kzd29p?=
+ =?utf-8?B?NmpFRCtPTzlPUGlJZlAvUWdocTR2RkhpaXIrTFBMOUVHc3Q4SzBlTVdRQUxa?=
+ =?utf-8?B?enZ0MmFxdUJaM1ozaXJxQ0R5Mk5tQ3haK0RVWm1iZHdqSUJRN1c4U2dDR1Qx?=
+ =?utf-8?B?STZNQjBRbUFsS25JbWxKRkg1QTRHUVBDTEIxdVVDc1hzMVpMbk9oczN6cHRR?=
+ =?utf-8?B?eUkrZlZvS214d3lKVE5yV2VBVExodDBhWXBPckdIZHBjRGxUZU1MamlwTC8z?=
+ =?utf-8?B?SEF1cjZ1d0JGZjUzdElMeUYzdDkvZURKUm5LbTJsM0Z1cElmV0pnQTBJaWxJ?=
+ =?utf-8?B?VTV6STNEVHphZ2VLb1MyZS9FZ2FJWWJyS1Q0NW02Y1pzbXowc2MvWllWZFpn?=
+ =?utf-8?B?S0NlTjduNURpakpGNys2OGVvTER0Tm5wT214SUJSQ29yMDVEQjNQbTJDN3Vm?=
+ =?utf-8?B?TjJ5VmdqcE0wdktSMWN0YTZ4VTJBUDZVdXN1YzE5dlRuMVBnL21sd2FnUTZ1?=
+ =?utf-8?B?MkhaLzFXbEhZUWxaRVlkdXc4YzEwYjQxOURUZ21JTVAyNVdKb2pEQmt1K3E5?=
+ =?utf-8?B?VDJONFM3eHFrZzhsbmUvZ1dpUUZwc1NXVy9IVC9hazl4ZFZoSHhYcEJlbGdD?=
+ =?utf-8?B?ekhsS0tpL2RjRGxlcTk3OFFpcjRJelNsQ0VycmRzVVFtcks4SCtZOWwveW5T?=
+ =?utf-8?B?ZExhSmc5TU5JMndUVWRYVDlJbVNDOUs0ZzFvL3ZJWXpUNmR6a0hoMjdXTGFD?=
+ =?utf-8?B?MitBd2NOV2tQTHBJSlJhdy8zNFdQMFNpcWtpQ1ljWVBhS2VOTkJFTWVKdHor?=
+ =?utf-8?B?MkFxa2JwaFRueHZmNzhFY1dGUm1BdFIxY1ZEZWZGSGhoTE5iQXNnVnBQRTlL?=
+ =?utf-8?B?aDZQNG14OUVLYkFxMWViOFlIcm56SVhBd2pYbS83dy9tUFVKWE1QQjYxSmds?=
+ =?utf-8?B?RVF3eUJ5Y2pNazl3NU5MU2dSSHdkRmwrRUFXemZKYldjeWRydndFR3ZybVZs?=
+ =?utf-8?B?OUZLQVEyeW53VXZWalcrT1p1aGtJVWdRQ1ZlcE90YkJFSXhEQ01zaGlGNUJ1?=
+ =?utf-8?B?VEJwRmtVbUZQWDkzdXh1aFdmdWY1aE42R1hsT041K3lNUVVHL0k2RUh0d2Qz?=
+ =?utf-8?Q?4bg3KFVEpGnKg+/fzz4sMzg=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: cFSlXRa+b60+qOUKsME7zx96ZmAmYKTigNPVnnR7FKoG1r32wJ7wDh8OAc3Ib9IkmUJKZBGYVQsVtIhUMci1lHyGskEpk1GgdcAUcW1tD6RDgQqf7KIMRWtyqSq3OrbBu1omKHlaXHuWCpNc9j+fAZSl9ITZ9m5I+i8fkwP/AesMFatbkEu6OZqEwVg6mN7fVWjmvxMJdOe3BwmWcruh/lZj2lhIUb9i53rkgYU1hdFjy8lujm7yUwYzYb0DPdajgtnb8f6/oBg59X23Z2RXOZgUs7my4j0n6UWWitKYLfY5vswfQvAk0ISdy8gn0jEAY7++VWCknCoJmChW9qocJMeU0hSGnO3P2XSWKHwRtTEAgFwU428WaR+oUeHUgHlkYmmrZzftR8HJfK+e5PbpKEV7bO8gHEqbCsO60ew7wAGG4t4KoL2no97oub+bQrs0rLWt6LWLaqJZMIljk62SvURM9rdhj9XDeRlHivvO6is6XC5nEA9F4CSccNNRN4MmWdxCkJY2qSemSHdbydHqyQxBhyFccsqPHWPJsoaMBHFCVr+rtsZckJ8RPwQxfR/KQi0K3EP669o1sEncef4GJ/CbnvM6/xM+ykeHiv9lLNw=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a11c371e-d148-46c3-5932-08dc4464a012
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4664.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Mar 2024 20:23:35.6692 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: iCia8P5zbQ7JM0Yb2J32Q5gm+Adr0n5ZkwbCB4c4eiYTSx+WC9K0OFUJJ+wiD+cgkLXAkav1T89OR7+NtX0CwA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB4423
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ phishscore=0
+ spamscore=0 suspectscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403140157
+X-Proofpoint-GUID: m4R_jQMLj-qSE9zjy6D53Gys6wvIUR0v
+X-Proofpoint-ORIG-GUID: m4R_jQMLj-qSE9zjy6D53Gys6wvIUR0v
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,90 +195,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/14/24 20:44, Nina Schoetterl-Glausch wrote:
-> On Thu, 2024-03-14 at 20:00 +0100, Claudio Fontana wrote:
->> some users were confused by this message showing under TCG:
+
+
+On 3/14/24 3:05 PM, Eugenio Perez Martin wrote:
+> On Thu, Mar 14, 2024 at 5:06 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
 >>
->> Selected CPU generation is too new. Maximum supported model
->> in the configuration: 'xyz'
 >>
->> Try to clarify that the maximum can depend on the accel by
->> adding also the current accelerator to the message as such:
 >>
->> Selected CPU generation is too new. Maximum supported model
->> in the accelerator 'tcg' configuration: 'xyz'
+>> On 3/14/24 10:55 AM, Eugenio Perez Martin wrote:
+>>> On Thu, Mar 14, 2024 at 1:16 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 3/13/24 11:01 PM, Jason Wang wrote:
+>>>>> On Wed, Mar 13, 2024 at 7:55 PM Jonah Palmer <jonah.palmer@oracle.com> wrote:
+>>>>>>
+>>>>>> Add support to virtio-pci devices for handling the extra data sent
+>>>>>> from the driver to the device when the VIRTIO_F_NOTIFICATION_DATA
+>>>>>> transport feature has been negotiated.
+>>>>>>
+>>>>>> The extra data that's passed to the virtio-pci device when this
+>>>>>> feature is enabled varies depending on the device's virtqueue
+>>>>>> layout.
+>>>>>>
+>>>>>> In a split virtqueue layout, this data includes:
+>>>>>>     - upper 16 bits: shadow_avail_idx
+>>>>>>     - lower 16 bits: virtqueue index
+>>>>>>
+>>>>>> In a packed virtqueue layout, this data includes:
+>>>>>>     - upper 16 bits: 1-bit wrap counter & 15-bit shadow_avail_idx
+>>>>>>     - lower 16 bits: virtqueue index
+>>>>>>
+>>>>>> Tested-by: Lei Yang <leiyang@redhat.com>
+>>>>>> Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+>>>>>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+>>>>>> ---
+>>>>>>     hw/virtio/virtio-pci.c     | 10 +++++++---
+>>>>>>     hw/virtio/virtio.c         | 18 ++++++++++++++++++
+>>>>>>     include/hw/virtio/virtio.h |  1 +
+>>>>>>     3 files changed, 26 insertions(+), 3 deletions(-)
+>>>>>>
+>>>>>> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+>>>>>> index cb6940fc0e..0f5c3c3b2f 100644
+>>>>>> --- a/hw/virtio/virtio-pci.c
+>>>>>> +++ b/hw/virtio/virtio-pci.c
+>>>>>> @@ -384,7 +384,7 @@ static void virtio_ioport_write(void *opaque, uint32_t addr, uint32_t val)
+>>>>>>     {
+>>>>>>         VirtIOPCIProxy *proxy = opaque;
+>>>>>>         VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+>>>>>> -    uint16_t vector;
+>>>>>> +    uint16_t vector, vq_idx;
+>>>>>>         hwaddr pa;
+>>>>>>
+>>>>>>         switch (addr) {
+>>>>>> @@ -408,8 +408,12 @@ static void virtio_ioport_write(void *opaque, uint32_t addr, uint32_t val)
+>>>>>>                 vdev->queue_sel = val;
+>>>>>>             break;
+>>>>>>         case VIRTIO_PCI_QUEUE_NOTIFY:
+>>>>>> -        if (val < VIRTIO_QUEUE_MAX) {
+>>>>>> -            virtio_queue_notify(vdev, val);
+>>>>>> +        vq_idx = val;
+>>>>>> +        if (vq_idx < VIRTIO_QUEUE_MAX) {
+>>>>>> +            if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
+>>>>>> +                virtio_queue_set_shadow_avail_data(vdev, val);
+>>>>>> +            }
+>>>>>> +            virtio_queue_notify(vdev, vq_idx);
+>>>>>>             }
+>>>>>>             break;
+>>>>>>         case VIRTIO_PCI_STATUS:
+>>>>>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>>>>>> index d229755eae..bcb9e09df0 100644
+>>>>>> --- a/hw/virtio/virtio.c
+>>>>>> +++ b/hw/virtio/virtio.c
+>>>>>> @@ -2255,6 +2255,24 @@ void virtio_queue_set_align(VirtIODevice *vdev, int n, int align)
+>>>>>>         }
+>>>>>>     }
+>>>>>>
+>>>>>> +void virtio_queue_set_shadow_avail_data(VirtIODevice *vdev, uint32_t data)
+>>>
+>>> Maybe I didn't explain well, but I think it is better to pass directly
+>>> idx to a VirtQueue *. That way only the caller needs to check for a
+>>> valid vq idx, and (my understanding is) the virtio.c interface is
+>>> migrating to VirtQueue * use anyway.
+>>>
 >>
->> Signed-off-by: Claudio Fontana <cfontana@suse.de>
->> ---
->>  target/s390x/cpu_models.c | 11 ++++++-----
->>  1 file changed, 6 insertions(+), 5 deletions(-)
+>> Oh, are you saying to just pass in a VirtQueue *vq instead of
+>> VirtIODevice *vdev and get rid of the vq->vring.desc check in the function?
 >>
->> diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
->> index 1a1c096122..0d6d8fc727 100644
->> --- a/target/s390x/cpu_models.c
->> +++ b/target/s390x/cpu_models.c
->> @@ -508,14 +508,14 @@ static void check_compatibility(const S390CPUModel *max_model,
->>  
->>      if (model->def->gen > max_model->def->gen) {
->>          error_setg(errp, "Selected CPU generation is too new. Maximum "
->> -                   "supported model in the configuration: \'%s\'",
->> -                   max_model->def->name);
->> +                   "supported model in the accelerator \'%s\' configuration: \'%s\'",
->> +                   current_accel_name(), max_model->def->name);
->>          return;
->>      } else if (model->def->gen == max_model->def->gen &&
->>                 model->def->ec_ga > max_model->def->ec_ga) {
->>          error_setg(errp, "Selected CPU GA level is too new. Maximum "
->> -                   "supported model in the configuration: \'%s\'",
->> -                   max_model->def->name);
->> +                   "supported model in the accelerator \'%s\' configuration: \'%s\'",
->> +                   current_accel_name(), max_model->def->name);
->>          return;
->>      }
->>  
->> @@ -537,7 +537,8 @@ static void check_compatibility(const S390CPUModel *max_model,
->>      error_setg(errp, " ");
->>      s390_feat_bitmap_to_ascii(missing, errp, error_prepend_missing_feat);
->>      error_prepend(errp, "Some features requested in the CPU model are not "
->> -                  "available in the configuration: ");
->> +                  "available in the accelerator \'%s\' configuration: ",
->> +                  current_accel_name());
->>  }
 > 
-> I wonder if these might not be confusing in other circumstances, e.g. when
-> running with KVM and the Linux version lacks support for some feature.
-
-Here you are referencing specifically the last hunk right? Ie the "Some features requested..." message.
-
-> I think something along the lines of:
-> 
-> error_...(errp, "... supported by the current configuration ...", ...);
-> error_append_hint(errp, "Consider using a different accelerator, a different QEMU version or, when using KVM, a different kernel");
-> 
-> would be better.
-
-Interesting I'll try something along these lines.
-
-> 
-> I'm not sure about line breaks in error message, I like the better grepability
-> of unbroken lines but the coding style guide doesn't mention anything.
-
-better greppability in the log (as the error message in the log), or in the source code (or both)?
-I am generally in favor of both, but there might be constraints on line length, although scripts/checkpatch.pl did not complain when I attempted this (I wonder if bug or feature).
-
-docs/devel/style.rst on the code line length topic says:
-"Lines should be 80 characters; try not to make them longer..."
-
-and it does talk about exceptions. In the case of error message strings I think this could be one one of those exceptions.
-
-In terms of logs, I did not find anything either, the most pertinent section should be "Error handling and reporting" in the same file,
-but there is nothing about breaking up [or not] a single message in errors with newlines.
-
->>  
->>  S390CPUModel *get_max_cpu_model(Error **errp)
+> No, that needs to be kept. I meant the access to vdev->vq[i] without
+> checking for a valid i.
 > 
 
-Thanks,
+Ahh okay I see what you mean. But I thought the following was checking 
+for a valid VQ index:
 
-Claudio
+if (vq_idx < VIRTIO_QUEUE_MAX)
+
+Of course the virtio device may not have up to VIRTIO_QUEUE_MAX 
+virtqueues, so maybe we should be checking for validity like this?
+
+if (vdev->vq[i].vring.num == 0)
+
+Or was there something else you had in mind? Apologies for the confusion.
+
+> You can get the VirtQueue in the caller with virtio_get_queue. Which
+> also does not check for a valid index, but that way is clearer the
+> caller needs to check it.
+> 
+
+Roger, I'll use this instead for clarity.
+
+> As a side note, the check for desc != 0 is widespread in QEMU but the
+> driver may use 0 address for desc, so it's not 100% valid. But to
+> change that now requires a deeper change out of the scope of this
+> series, so let's keep it for now :).
+> 
+> Thanks! >
+
+I'll add it to the todo list =]
+
+>>>>>> +{
+>>>>>> +    /* Lower 16 bits is the virtqueue index */
+>>>>>> +    uint16_t i = data;
+>>>>>> +    VirtQueue *vq = &vdev->vq[i];
+>>>>>> +
+>>>>>> +    if (!vq->vring.desc) {
+>>>>>> +        return;
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
+>>>>>> +        vq->shadow_avail_wrap_counter = (data >> 31) & 0x1;
+>>>>>> +        vq->shadow_avail_idx = (data >> 16) & 0x7FFF;
+>>>>>> +    } else {
+>>>>>> +        vq->shadow_avail_idx = (data >> 16);
+>>>>>
+>>>>> Do we need to do a sanity check for this value?
+>>>>>
+>>>>> Thanks
+>>>>>
+>>>>
+>>>> It can't hurt, right? What kind of check did you have in mind?
+>>>>
+>>>> if (vq->shadow_avail_idx >= vq->vring.num)
+>>>>
+>>>
+>>> I'm a little bit lost too. shadow_avail_idx can take all uint16_t
+>>> values. Maybe you meant checking for a valid vq index, Jason?
+>>>
+>>> Thanks!
+>>>
+>>>> Or something else?
+>>>>
+>>>>>> +    }
+>>>>>> +}
+>>>>>> +
+>>>>>>     static void virtio_queue_notify_vq(VirtQueue *vq)
+>>>>>>     {
+>>>>>>         if (vq->vring.desc && vq->handle_output) {
+>>>>>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+>>>>>> index c8f72850bc..53915947a7 100644
+>>>>>> --- a/include/hw/virtio/virtio.h
+>>>>>> +++ b/include/hw/virtio/virtio.h
+>>>>>> @@ -335,6 +335,7 @@ void virtio_queue_update_rings(VirtIODevice *vdev, int n);
+>>>>>>     void virtio_init_region_cache(VirtIODevice *vdev, int n);
+>>>>>>     void virtio_queue_set_align(VirtIODevice *vdev, int n, int align);
+>>>>>>     void virtio_queue_notify(VirtIODevice *vdev, int n);
+>>>>>> +void virtio_queue_set_shadow_avail_data(VirtIODevice *vdev, uint32_t data);
+>>>>>>     uint16_t virtio_queue_vector(VirtIODevice *vdev, int n);
+>>>>>>     void virtio_queue_set_vector(VirtIODevice *vdev, int n, uint16_t vector);
+>>>>>>     int virtio_queue_set_host_notifier_mr(VirtIODevice *vdev, int n,
+>>>>>> --
+>>>>>> 2.39.3
+>>>>>>
+>>>>>
+>>>>
+>>>
+>>
+> 
 
