@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEA6BC54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:23:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9ACCC54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:24:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkmve-0007OK-3I; Thu, 14 Mar 2024 11:23:35 -0400
+	id 1rkmvf-0007OV-Vi; Thu, 14 Mar 2024 11:23:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rkmvY-0007MM-JM
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:29 -0400
+ id 1rkmvX-0007Lz-Hs
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rkmvX-0003oN-7d
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:28 -0400
+ id 1rkmvW-0003o1-1i
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710429806;
+ s=mimecast20190719; t=1710429805;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7igaEh31g9P/EUDqnJLqJXf4FuWyr/DSDVJ/9clU3ZY=;
- b=BsgBJ+lFpVFetxWc8Qtj2n5PtqoPGxkSe1/NaO6U8UDZ8hTSwY8bvMavS075Xcq8EyZUql
- 9J9f0inWKFuAhckUzm+WS6DRRapH21IIJsrBUbwr2VjSsNNT6mYvymXOmXY4tPxurodKog
- +CydwbH+wooq/BDm1sQe3mu3hoQuoxE=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-99-k8dfL0jUMMaPEtYQnmqFTQ-1; Thu,
- 14 Mar 2024 11:23:25 -0400
-X-MC-Unique: k8dfL0jUMMaPEtYQnmqFTQ-1
+ bh=WEhRrgn7jhef1qjl5d34NM0T+BDoeV1Zh9D6DKBAsDI=;
+ b=QxVCFpZK213rfhRUZqLXSzOEUxxddLqVqHRWbUb+OP/nDSbzbuSqO+rbmqH1UWiOdfmcHs
+ IjwmA1Ph5OKURqt2Fuhux7Za8TdMKZGvYA1fzvHV+EpIKbCYP3nZTQVT2KsV8hTG1xBFCR
+ IH6yPV3YvAbTzTU8j7zWY6ykUsYzHag=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-665-CP5iUfqiPDuFggMOeoZ1kQ-1; Thu, 14 Mar 2024 11:23:22 -0400
+X-MC-Unique: CP5iUfqiPDuFggMOeoZ1kQ-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0BA8238008B7
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 15:23:24 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EA13E879853;
+ Thu, 14 Mar 2024 15:23:20 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 46A8317A9A;
- Thu, 14 Mar 2024 15:23:23 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C0B5510F53;
+ Thu, 14 Mar 2024 15:23:19 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: mst@redhat.com,
-	Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH v4 18/21] tests: acpi/smbios: whitelist expected blobs
-Date: Thu, 14 Mar 2024 16:22:59 +0100
-Message-Id: <20240314152302.2324164-19-imammedo@redhat.com>
+Cc: mst@redhat.com, Markus Armbruster <armbru@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>
+Subject: [PATCH v4 15/21] smbios: extend smbios-entry-point-type with 'auto'
+ value
+Date: Thu, 14 Mar 2024 16:22:56 +0100
+Message-Id: <20240314152302.2324164-16-imammedo@redhat.com>
 In-Reply-To: <20240314152302.2324164-1-imammedo@redhat.com>
 References: <20240314152302.2324164-1-imammedo@redhat.com>
 MIME-Version: 1.0
@@ -84,19 +85,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Acked-by: Ani Sinha <anisinha@redhat.com>
----
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 1 file changed, 1 insertion(+)
+later patches will use it to pick SMBIOS version at runtime
+depending on configuration.
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..81148a604f 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/q35/SSDT.dimmpxm",
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+---
+v3:
+    - make sure i2nd line of comment is indented on 4 spaces only
+---
+ qapi/machine.json | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/qapi/machine.json b/qapi/machine.json
+index bb5a178909..0840c91e70 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1797,10 +1797,13 @@
+ #
+ # @64: SMBIOS version 3.0 (64-bit) Entry Point
+ #
++# @auto: Either 2.x or 3.x SMBIOS version, 2.x if configuration can be
++#     described by it and 3.x otherwise (since: 9.0)
++#
+ # Since: 7.0
+ ##
+ { 'enum': 'SmbiosEntryPointType',
+-  'data': [ '32', '64' ] }
++  'data': [ '32', '64', 'auto' ] }
+ 
+ ##
+ # @MemorySizeConfiguration:
 -- 
 2.39.3
 
