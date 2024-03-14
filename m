@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F7BC54E60
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 21:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 476B9C54E5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 21:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rksCA-0003P1-1P; Thu, 14 Mar 2024 17:00:58 -0400
+	id 1rksn0-00022a-4d; Thu, 14 Mar 2024 17:39:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <olaf@aepfle.de>) id 1rksC8-0003O2-2j
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:00:56 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.23])
+ (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
+ id 1rksmv-00022E-6R
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:38:57 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <olaf@aepfle.de>) id 1rksC6-0007iC-Az
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:00:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1710450048; cv=none;
- d=strato.com; s=strato-dkim-0002;
- b=FY5oE175THP6/kKNwtGw9+YVGFjG5f5uxyW6wdzYeFpbi/R4HxrSLYDuNfxbR6rvgi
- zi1rkneuqABDjeEzrmmvPUtvkYb6cMScH4CHxPlV3WMGDtJCYPnWA9iQ5CzcB+miyxVp
- cGlNO7eN8DzOcQUbaLpWOwbCAEo2vIaZwGHwCupP3jw0ygJc1mkUNPcvASd7qH/K2oY+
- 5jdTy8PHMlohMGoaqoOdpAAVFVxJBHDMzYxMo5GcBPmwE55Jd0IuU7gKtt3caLRvRYW5
- c1B995Q0wVv1J0gHZPcbY9ezucuUCWfAMzdKsseqzDnZrd8hBU0Pzw2+1oefQQqPyIpS
- GIhg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1710450048;
- s=strato-dkim-0002; d=strato.com;
- h=Message-ID:Subject:To:From:Date:Cc:Date:From:Subject:Sender;
- bh=x1EV4L0okCKI7QasZUxX4Pl/TC1PnUyBxbcARD+jOCA=;
- b=jGAl2tFVoGxIglosbcYwq2VvwPuQSuzs5+DMoM7t4ytkPVrqUyKTMsr8fIJFCyQfIW
- nYoL+hsKexPAoQDz1GU/3NioJ7TsYClz3OEB80S5ifupgy2DQtLTz2BNzEq0IHiD10dT
- 2ZYDNvR3oooctwM91gCh9NaK0Gtjfz8vgQw5DIBfQeEKwwtbZ2wARwRh7iIiY6vg/wzH
- SK/4QZXeqXtvKky+wjPRYLeFqcK2EsgpChx3s/KgebRWtinn7P4H63kjn+McsiQyOrCT
- QtaZHKV66VJ7KAXTYCtQsSqqOGDpN1R6D1bHXSJY/3Mip/0cARpJwwJacWEM66hNlirX
- zreA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1710450048;
- s=strato-dkim-0002; d=aepfle.de;
- h=Message-ID:Subject:To:From:Date:Cc:Date:From:Subject:Sender;
- bh=x1EV4L0okCKI7QasZUxX4Pl/TC1PnUyBxbcARD+jOCA=;
- b=j0DYypQVphn9XdHNmYzG+Bji24BPatdplmfPufv2IA1tG/ZVbloWKFE0WB7KNv1KBv
- RezeDx774/oDNfXIyHAXFb7NXqIxSKtfLBdTRzq8o5nnFz115vHwchESfmpy2/nzQR76
- 0wikAJ1B3ESZxUxYn4Im/oRHdJHqrrONb2cSuUtXJ3BL+XPXI4T6rJf2M0WArMXqpab5
- BDmBZhFhkoxFKxC6saoSzdtVWvypQZTxpE8+36o5c73GP2Sn2g17SRBJRMW861caCMnY
- 6sHJ4DfWRFHmaNFv+mBKogYio4W6we5ax0JUR6ekTmkJ79NRgpWGlMPf+wFeE/0Bj8T0
- gFUw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1710450048;
- s=strato-dkim-0003; d=aepfle.de;
- h=Message-ID:Subject:To:From:Date:Cc:Date:From:Subject:Sender;
- bh=x1EV4L0okCKI7QasZUxX4Pl/TC1PnUyBxbcARD+jOCA=;
- b=IHKbIZxbvfnl9Ir0Xb4rlFcG8gFdyHPF75cDhsyr2TaoalZhnVcCwQRDPk3URb41Dg
- NY/fnsAGHa8WaZdq//Cw==
-X-RZG-AUTH: ":P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QLpd5ylWvMDX3y/OuD5rXVisR5ABaIaxjsvWV3+5zoB6xJde0knZVA/JvNMMXDFQ=="
-Received: from sender by smtp.strato.de (RZmta 50.2.2 AUTH)
- with ESMTPSA id Dfe7e402EL0m0dP
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
- (Client did not present a certificate) for <qemu-devel@nongnu.org>;
- Thu, 14 Mar 2024 22:00:48 +0100 (CET)
-Date: Thu, 14 Mar 2024 22:00:38 +0100
-From: Olaf Hering <olaf@aepfle.de>
+ (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
+ id 1rksmt-00080G-C9
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:38:56 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42ELDcH6016463; Thu, 14 Mar 2024 21:38:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=from : to : cc :
+ subject : date : message-id; s=corp-2023-11-20;
+ bh=DRPeOZwl5bh4BbTJ0f2bcJMuEm96QltP56PMEsm+Ing=;
+ b=gHIvqKFhe2Yr2Xdsq1f3wWS7QBKNYszqbs9h0URkhLz0rhKlcxfX8smRbDwh1gNqvaAk
+ XvQ7IDWjorZpA8r/434r9CzdpREh3Ev06Qr3vKS2XfnySpxr7sEaLTzpC+jykx9Hs5Rv
+ ZobqCo0NbcSHokQJeY25JIwIpSLGexl+c6svx8kfeYr3c8meURzQyuOpIceSNTaOP0RH
+ P3kDGqAYe46ixFnIoT+UquOMf2QY7TCyw4Jt6c6NA77FO/5dndEm/HCMV80exY+lwH+N
+ k/InoQxnX8jaoo4AfJT78nxWqrQVMEQE9oFkcrQ7eToIiAZC0puBkbpQJ//uwyBJOQhU Xg== 
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wv0absaur-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 14 Mar 2024 21:38:51 +0000
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 42EJmWac019716; Thu, 14 Mar 2024 21:38:50 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wre7ayv25-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 14 Mar 2024 21:38:50 +0000
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42ELco1c002045;
+ Thu, 14 Mar 2024 21:38:50 GMT
+Received: from ban25x6uut24.us.oracle.com (ban25x6uut24.us.oracle.com
+ [10.153.73.24])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 3wre7ayv1k-1; Thu, 14 Mar 2024 21:38:50 +0000
+From: Si-Wei Liu <si-wei.liu@oracle.com>
 To: qemu-devel@nongnu.org
-Subject: Regression in v7.2.10 - ui-dbus.so requires -fPIC
-Message-ID: <20240314220038.1aaae79f.olaf@aepfle.de>
-X-Mailer: Claws Mail (olh) 20240223T214820.cce9f45c hat ein Softwareproblem,
- kann man nichts machen.
-MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/GYfzay0mcrWe3xuGjh9Xt7z";
- protocol="application/pgp-signature"; micalg=pgp-sha256
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=85.215.255.23; envelope-from=olaf@aepfle.de;
- helo=mo4-p00-ob.smtp.rzone.de
+Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
+ joao.m.martins@oracle.com, si-wei.liu@oracle.com
+Subject: [PATCH v4 1/2] vhost: dirty log should be per backend type
+Date: Thu, 14 Mar 2024 13:27:34 -0700
+Message-Id: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ mlxscore=0 spamscore=0
+ bulkscore=0 phishscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
+ definitions=main-2403140166
+X-Proofpoint-ORIG-GUID: vJH8_WzYjlUADPob9HPOJGNz8KSwRKUN
+X-Proofpoint-GUID: vJH8_WzYjlUADPob9HPOJGNz8KSwRKUN
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=si-wei.liu@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,49 +96,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---Sig_/GYfzay0mcrWe3xuGjh9Xt7z
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+There could be a mix of both vhost-user and vhost-kernel clients
+in the same QEMU process, where separate vhost loggers for the
+specific vhost type have to be used. Make the vhost logger per
+backend type, and have them properly reference counted.
 
-ui-dbus.so is a shared library. But it is apparently handled differently
-than all the other shared libraries: it is not compiled with -fPIC.
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
 
-As a result it fails to link. Not sure why this happens only here.
-Everything up to v7.2.9 was fine.
+---
+v3->v4:
+  - remove checking NULL return value from vhost_log_get
 
-Looking at some random other library like libui-spice-core.a,
-every object is compiled with -fPIC.=20
+v2->v3:
+  - remove non-effective assertion that never be reached
+  - do not return NULL from vhost_log_get()
+  - add neccessary assertions to vhost_log_get()
+---
+ hw/virtio/vhost.c | 45 +++++++++++++++++++++++++++++++++------------
+ 1 file changed, 33 insertions(+), 12 deletions(-)
 
-But ui/dbus-display1.c is compiled with -fPIE instead.
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 2c9ac79..612f4db 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -43,8 +43,8 @@
+     do { } while (0)
+ #endif
+ 
+-static struct vhost_log *vhost_log;
+-static struct vhost_log *vhost_log_shm;
++static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
++static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
+ 
+ /* Memslots used by backends that support private memslots (without an fd). */
+ static unsigned int used_memslots;
+@@ -287,6 +287,10 @@ static int vhost_set_backend_type(struct vhost_dev *dev,
+         r = -1;
+     }
+ 
++    if (r == 0) {
++        assert(dev->vhost_ops->backend_type == backend_type);
++    }
++
+     return r;
+ }
+ 
+@@ -319,16 +323,22 @@ static struct vhost_log *vhost_log_alloc(uint64_t size, bool share)
+     return log;
+ }
+ 
+-static struct vhost_log *vhost_log_get(uint64_t size, bool share)
++static struct vhost_log *vhost_log_get(VhostBackendType backend_type,
++                                       uint64_t size, bool share)
+ {
+-    struct vhost_log *log = share ? vhost_log_shm : vhost_log;
++    struct vhost_log *log;
++
++    assert(backend_type > VHOST_BACKEND_TYPE_NONE);
++    assert(backend_type < VHOST_BACKEND_TYPE_MAX);
++
++    log = share ? vhost_log_shm[backend_type] : vhost_log[backend_type];
+ 
+     if (!log || log->size != size) {
+         log = vhost_log_alloc(size, share);
+         if (share) {
+-            vhost_log_shm = log;
++            vhost_log_shm[backend_type] = log;
+         } else {
+-            vhost_log = log;
++            vhost_log[backend_type] = log;
+         }
+     } else {
+         ++log->refcnt;
+@@ -340,11 +350,20 @@ static struct vhost_log *vhost_log_get(uint64_t size, bool share)
+ static void vhost_log_put(struct vhost_dev *dev, bool sync)
+ {
+     struct vhost_log *log = dev->log;
++    VhostBackendType backend_type;
+ 
+     if (!log) {
+         return;
+     }
+ 
++    assert(dev->vhost_ops);
++    backend_type = dev->vhost_ops->backend_type;
++
++    if (backend_type == VHOST_BACKEND_TYPE_NONE ||
++        backend_type >= VHOST_BACKEND_TYPE_MAX) {
++        return;
++    }
++
+     --log->refcnt;
+     if (log->refcnt == 0) {
+         /* Sync only the range covered by the old log */
+@@ -352,13 +371,13 @@ static void vhost_log_put(struct vhost_dev *dev, bool sync)
+             vhost_log_sync_range(dev, 0, dev->log_size * VHOST_LOG_CHUNK - 1);
+         }
+ 
+-        if (vhost_log == log) {
++        if (vhost_log[backend_type] == log) {
+             g_free(log->log);
+-            vhost_log = NULL;
+-        } else if (vhost_log_shm == log) {
++            vhost_log[backend_type] = NULL;
++        } else if (vhost_log_shm[backend_type] == log) {
+             qemu_memfd_free(log->log, log->size * sizeof(*(log->log)),
+                             log->fd);
+-            vhost_log_shm = NULL;
++            vhost_log_shm[backend_type] = NULL;
+         }
+ 
+         g_free(log);
+@@ -376,7 +395,8 @@ static bool vhost_dev_log_is_shared(struct vhost_dev *dev)
+ 
+ static inline void vhost_dev_log_resize(struct vhost_dev *dev, uint64_t size)
+ {
+-    struct vhost_log *log = vhost_log_get(size, vhost_dev_log_is_shared(dev));
++    struct vhost_log *log = vhost_log_get(dev->vhost_ops->backend_type,
++                                          size, vhost_dev_log_is_shared(dev));
+     uint64_t log_base = (uintptr_t)log->log;
+     int r;
+ 
+@@ -2037,7 +2057,8 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+         uint64_t log_base;
+ 
+         hdev->log_size = vhost_get_log_size(hdev);
+-        hdev->log = vhost_log_get(hdev->log_size,
++        hdev->log = vhost_log_get(hdev->vhost_ops->backend_type,
++                                  hdev->log_size,
+                                   vhost_dev_log_is_shared(hdev));
+         log_base = (uintptr_t)hdev->log->log;
+         r = hdev->vhost_ops->vhost_set_log_base(hdev,
+-- 
+1.8.3.1
 
-Is this intentional?=20
-
-Olaf
-
-ld: ui/libdbus-display1.a.p/meson-generated_.._dbus-display1.c.o: warning: =
-relocation against `qemu_dbus_display1_audio_get_type' in read-only section=
- `.text'
-
---Sig_/GYfzay0mcrWe3xuGjh9Xt7z
-Content-Type: application/pgp-signature
-Content-Description: Digitale Signatur von OpenPGP
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEE97o7Um30LT3B+5b/86SN7mm1DoAFAmXzZXYACgkQ86SN7mm1
-DoDYmg//UuS4zVk3UFj871N+h5nUVY1Z2JTRo1KGjvOscUKZzlVsWfW9k2wk3YYX
-LWEGvjlnU+PMDrYdF6T8M6gSk2zLsou485J0Rmca17/JXrL3oa5NSVFhAtxuTKW4
-ZlJzBabDzn2V4j985eZ1GclTlqRBNDo4SzBE2KC03aROPCfkQf+om7kNzmqI6OqV
-wiEBuASnVQhXff8YLqX8+HwQtjCRi770gqTU+x9PX691zNOfa8FjGgeNcfJ7QSn9
-v8JlWMLDA3Zm1BfXCExagqALj6QoSsVOT2f/w+/Hw6Vffu5O7e6P6WAvBsiJu9sB
-XRgpyYCx/FwsadCeg2onIm8uYeEuH5mb8S2LxVTlGKtrsCQHrC76Vx5vGVIPcjTO
-qHfvXhOYvXOML31feoKJfa64hiAKaiQNOqtFLTHOJQxvVLNdc1j2ldLRLY4qDD+l
-yKicu4PUv3GphNuuOC/rcS7ps77VGozKCMRlyukqekmY2FG13kWBZToPdG7pRo8T
-k29H9+UsZUVtVo2Ombx7Mm8du9FJTApPXTso8zPjkyc12xk/fikSIciOZzmsQTJR
-8A7rFKMRKrrs57TbLeOwmxAD13j7EMbR7UOpK53uKEg0aH3zZqtEX2zXY+BmIvRv
-glbAOGLrs1mZu2b90PrneidDjJWWxRv9KZbtGlPmFyTryLeK8Rk=
-=tfIM
------END PGP SIGNATURE-----
-
---Sig_/GYfzay0mcrWe3xuGjh9Xt7z--
 
