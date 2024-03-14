@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 117BAC54E5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 20:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F7BC54E60
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 21:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkrvd-0000nk-FT; Thu, 14 Mar 2024 16:43:53 -0400
+	id 1rksCA-0003P1-1P; Thu, 14 Mar 2024 17:00:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rkrvb-0000nK-JS
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 16:43:51 -0400
-Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rkrvZ-0003YT-Co
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 16:43:51 -0400
-Received: by mail-oo1-xc2d.google.com with SMTP id
- 006d021491bc7-5a1d1a28da2so667866eaf.1
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 13:43:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710449027; x=1711053827; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hWd8oI3ruJ/SwaDYtCbFIZWKWHZ8FtZ+k+TBoesWmzw=;
- b=Yy+spOXtiWcV63izJEVAajDi6j0IvFqVI3MKegCs4l9+l7X35+aHNVBQlfRQVVCWkO
- rgBO78DvemhaUBTwVNVZIMWgaD59THSfWtvdm3tscq0/PPMz9Yg6tYC2+UgX94WBE3q0
- rt7PM8VZmkOfHsTVsn+SbWmjnthHchjJx2JFlvN3UpQaWbm3EvOfs/HWj3GisPghFi+w
- oQR0C/01YSTjvyF0+Znq0dNREy1fibDnM3EN8ILAvpNbCarUDMyh5gpX/4i384LSgC0b
- k9cBNlvJfMetpdR9lr8fsODBt44/s20hZx7TyeNT3km1et4mnPQOTSChjZqrdcNvOAsI
- bl5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710449027; x=1711053827;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hWd8oI3ruJ/SwaDYtCbFIZWKWHZ8FtZ+k+TBoesWmzw=;
- b=t6D5NlFWgVLFAYTpgxSpUhRYYs2vrLOySEdDAsYOyM83fAOPvXsSY9M017iB0NQjjF
- cBHVKba/ENViLPVqZh/RYt6T9smGDQNAFBTAR+ku+Rhx4S+G/9GrxD3NWV0DRR2/LY2y
- 2A6WwECegtowUuv3jWsENsv8UXc8mk3fb4bBBoTrEWanz1EglzXBo7bwwWl8aUJKFCyG
- DdM6fnDYEsMmIn3jSnWolNvoMr/Pn5k8gGVfg45iUBVdbe31iKRhywu+qtztyJh4Ak/5
- WQJmNHuV5xwPY1/2r8BUY5STgDGPgtG0Y2ecJz5756WOtCdIA1+R80ZgzOnLkPoBpnSU
- CcHQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWIrtwh82fvC9S4hZ6rzZkzi0PP4hecrMjChws2zR9oeYKn4zUClINviVYIKiWNbsULy8zIAzAQEjHGx0XXTbjcgS392u0=
-X-Gm-Message-State: AOJu0Yyh7Yx5JrHHPNjW0F5e0xirOqqn1wOeAqYdPDsHXXXmeX6Pe6Ya
- BNV5SXKAytg3qjOCWPcHFbTuEIVc6bS8CHtVkC53VFOwx0Z3NWXX
-X-Google-Smtp-Source: AGHT+IGLC4ii6d9/X/S+f1aZQgquO/OeR/z7YgHXMeqbzzxL78V9dRn9ImHT9QmYfrJSPrLru3TU9g==
-X-Received: by 2002:a05:6359:4c85:b0:17c:23c2:98e4 with SMTP id
- kk5-20020a0563594c8500b0017c23c298e4mr372941rwc.3.1710449027158; 
- Thu, 14 Mar 2024 13:43:47 -0700 (PDT)
-Received: from debian ([2601:641:300:14de:1741:531a:c8b2:ee1e])
- by smtp.gmail.com with ESMTPSA id
- b3-20020a631b03000000b005c6617b52e6sm1131298pgb.5.2024.03.14.13.43.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Mar 2024 13:43:46 -0700 (PDT)
-From: fan <nifan.cxl@gmail.com>
-X-Google-Original-From: fan <fan@debian>
-Date: Thu, 14 Mar 2024 13:43:26 -0700
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: nifan.cxl@gmail.com, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- gregory.price@memverge.com, ira.weiny@intel.com,
- dan.j.williams@intel.com, a.manzanares@samsung.com,
- dave@stgolabs.net, nmtadam.samsung@gmail.com,
- jim.harris@samsung.com, Jorgen.Hansen@wdc.com, wj28.lee@gmail.com,
- Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH v5 06/13] hw/mem/cxl_type3: Add host backend and address
- space handling for DC regions
-Message-ID: <ZfNhbtT3Eld6WIU7@debian>
-References: <20240304194331.1586191-1-nifan.cxl@gmail.com>
- <20240304194331.1586191-7-nifan.cxl@gmail.com>
- <20240306162816.00002e0e@Huawei.com>
+ (Exim 4.90_1) (envelope-from <olaf@aepfle.de>) id 1rksC8-0003O2-2j
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:00:56 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.23])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <olaf@aepfle.de>) id 1rksC6-0007iC-Az
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:00:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1710450048; cv=none;
+ d=strato.com; s=strato-dkim-0002;
+ b=FY5oE175THP6/kKNwtGw9+YVGFjG5f5uxyW6wdzYeFpbi/R4HxrSLYDuNfxbR6rvgi
+ zi1rkneuqABDjeEzrmmvPUtvkYb6cMScH4CHxPlV3WMGDtJCYPnWA9iQ5CzcB+miyxVp
+ cGlNO7eN8DzOcQUbaLpWOwbCAEo2vIaZwGHwCupP3jw0ygJc1mkUNPcvASd7qH/K2oY+
+ 5jdTy8PHMlohMGoaqoOdpAAVFVxJBHDMzYxMo5GcBPmwE55Jd0IuU7gKtt3caLRvRYW5
+ c1B995Q0wVv1J0gHZPcbY9ezucuUCWfAMzdKsseqzDnZrd8hBU0Pzw2+1oefQQqPyIpS
+ GIhg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1710450048;
+ s=strato-dkim-0002; d=strato.com;
+ h=Message-ID:Subject:To:From:Date:Cc:Date:From:Subject:Sender;
+ bh=x1EV4L0okCKI7QasZUxX4Pl/TC1PnUyBxbcARD+jOCA=;
+ b=jGAl2tFVoGxIglosbcYwq2VvwPuQSuzs5+DMoM7t4ytkPVrqUyKTMsr8fIJFCyQfIW
+ nYoL+hsKexPAoQDz1GU/3NioJ7TsYClz3OEB80S5ifupgy2DQtLTz2BNzEq0IHiD10dT
+ 2ZYDNvR3oooctwM91gCh9NaK0Gtjfz8vgQw5DIBfQeEKwwtbZ2wARwRh7iIiY6vg/wzH
+ SK/4QZXeqXtvKky+wjPRYLeFqcK2EsgpChx3s/KgebRWtinn7P4H63kjn+McsiQyOrCT
+ QtaZHKV66VJ7KAXTYCtQsSqqOGDpN1R6D1bHXSJY/3Mip/0cARpJwwJacWEM66hNlirX
+ zreA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1710450048;
+ s=strato-dkim-0002; d=aepfle.de;
+ h=Message-ID:Subject:To:From:Date:Cc:Date:From:Subject:Sender;
+ bh=x1EV4L0okCKI7QasZUxX4Pl/TC1PnUyBxbcARD+jOCA=;
+ b=j0DYypQVphn9XdHNmYzG+Bji24BPatdplmfPufv2IA1tG/ZVbloWKFE0WB7KNv1KBv
+ RezeDx774/oDNfXIyHAXFb7NXqIxSKtfLBdTRzq8o5nnFz115vHwchESfmpy2/nzQR76
+ 0wikAJ1B3ESZxUxYn4Im/oRHdJHqrrONb2cSuUtXJ3BL+XPXI4T6rJf2M0WArMXqpab5
+ BDmBZhFhkoxFKxC6saoSzdtVWvypQZTxpE8+36o5c73GP2Sn2g17SRBJRMW861caCMnY
+ 6sHJ4DfWRFHmaNFv+mBKogYio4W6we5ax0JUR6ekTmkJ79NRgpWGlMPf+wFeE/0Bj8T0
+ gFUw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1710450048;
+ s=strato-dkim-0003; d=aepfle.de;
+ h=Message-ID:Subject:To:From:Date:Cc:Date:From:Subject:Sender;
+ bh=x1EV4L0okCKI7QasZUxX4Pl/TC1PnUyBxbcARD+jOCA=;
+ b=IHKbIZxbvfnl9Ir0Xb4rlFcG8gFdyHPF75cDhsyr2TaoalZhnVcCwQRDPk3URb41Dg
+ NY/fnsAGHa8WaZdq//Cw==
+X-RZG-AUTH: ":P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QLpd5ylWvMDX3y/OuD5rXVisR5ABaIaxjsvWV3+5zoB6xJde0knZVA/JvNMMXDFQ=="
+Received: from sender by smtp.strato.de (RZmta 50.2.2 AUTH)
+ with ESMTPSA id Dfe7e402EL0m0dP
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+ (Client did not present a certificate) for <qemu-devel@nongnu.org>;
+ Thu, 14 Mar 2024 22:00:48 +0100 (CET)
+Date: Thu, 14 Mar 2024 22:00:38 +0100
+From: Olaf Hering <olaf@aepfle.de>
+To: qemu-devel@nongnu.org
+Subject: Regression in v7.2.10 - ui-dbus.so requires -fPIC
+Message-ID: <20240314220038.1aaae79f.olaf@aepfle.de>
+X-Mailer: Claws Mail (olh) 20240223T214820.cce9f45c hat ein Softwareproblem,
+ kann man nichts machen.
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240306162816.00002e0e@Huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
- envelope-from=nifan.cxl@gmail.com; helo=mail-oo1-xc2d.google.com
+Content-Type: multipart/signed; boundary="Sig_/GYfzay0mcrWe3xuGjh9Xt7z";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=85.215.255.23; envelope-from=olaf@aepfle.de;
+ helo=mo4-p00-ob.smtp.rzone.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,222 +98,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 06, 2024 at 04:28:16PM +0000, Jonathan Cameron wrote:
-> On Mon,  4 Mar 2024 11:34:01 -0800
-> nifan.cxl@gmail.com wrote:
-> 
-> > From: Fan Ni <fan.ni@samsung.com>
-> > 
-> > Add (file/memory backed) host backend, all the dynamic capacity regions
-> > will share a single, large enough host backend. Set up address space for
-> > DC regions to support read/write operations to dynamic capacity for DCD.
-> > 
-> > With the change, following supports are added:
-> > 1. Add a new property to type3 device "volatile-dc-memdev" to point to host
-> >    memory backend for dynamic capacity. Currently, all dc regions share one
-> >    host backend.
-> > 2. Add namespace for dynamic capacity for read/write support;
-> > 3. Create cdat entries for each dynamic capacity region;
-> > 4. Fix dvsec range registers to include DC regions.
-> > 
-> > Signed-off-by: Fan Ni <fan.ni@samsung.com>
-> Hi Fan, 
-> 
-> This one has a few more significant comments inline.
-> 
-> thanks,
-> 
-> Jonathan
-> 
-> > ---
-> 
-> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> > index c045fee32d..2b380a260b 100644
-> > --- a/hw/mem/cxl_type3.c
-> > +++ b/hw/mem/cxl_type3.c
-> > @@ -45,7 +45,8 @@ enum {
-> >  
-> >  static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
-> >                                            int dsmad_handle, uint64_t size,
-> > -                                          bool is_pmem, uint64_t dpa_base)
-> > +                                          bool is_pmem, bool is_dynamic,
-> > +                                          uint64_t dpa_base)
-> >  {
-> >      g_autofree CDATDsmas *dsmas = NULL;
-> >      g_autofree CDATDslbis *dslbis0 = NULL;
-> 
-> There is a fixlet going through for these as the autofree doesn't do anything.
-> Will require a rebase.  I'll do it on my tree, but might not push that out for a
-> few days so this is just a heads up for anyone using these.
-> 
-> https://lore.kernel.org/qemu-devel/20240304104406.59855-1-thuth@redhat.com/
-> 
-> It went in clean for me, so may not even be something anyone notices!
-> 
-> > @@ -61,7 +62,8 @@ static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
-> >              .length = sizeof(*dsmas),
-> >          },
-> >          .DSMADhandle = dsmad_handle,
-> > -        .flags = is_pmem ? CDAT_DSMAS_FLAG_NV : 0,
-> > +        .flags = (is_pmem ? CDAT_DSMAS_FLAG_NV : 0) |
-> > +                 (is_dynamic ? CDAT_DSMAS_FLAG_DYNAMIC_CAP : 0),
-> >          .DPA_base = dpa_base,
-> >          .DPA_length = size,
-> >      };
-> > @@ -149,12 +151,13 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-> >      g_autofree CDATSubHeader **table = NULL;
-> >  
-> >  
-> > @@ -176,21 +179,55 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-> >          pmr_size = memory_region_size(nonvolatile_mr);
-> >      }
-> >  
-> > +    if (ct3d->dc.num_regions) {
-> > +        if (ct3d->dc.host_dc) {
-> > +            dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
-> > +            if (!dc_mr) {
-> > +                return -EINVAL;
-> > +            }
-> > +            len += CT3_CDAT_NUM_ENTRIES * ct3d->dc.num_regions;
-> > +        } else {
-> > +            return -EINVAL;
-> 
-> Flip logic to get the error out the way first and reduce indent.
-> 
->      if (ct3d->dc.num_regions) {
->         if (!ct3d->dc.host_dc) {
->             return -EINVAL;
->         }
->         dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
->         if (!dc_mr) {
->             return -EINVAL;
->         }
->         len += CT3...
->      }
-> 
-> > +        }
-> > +    }
-> > +
-> 
-> >  
-> >      *cdat_table = g_steal_pointer(&table);
-> > @@ -300,11 +337,24 @@ static void build_dvsecs(CXLType3Dev *ct3d)
-> >              range2_size_hi = ct3d->hostpmem->size >> 32;
-> >              range2_size_lo = (2 << 5) | (2 << 2) | 0x3 |
-> >                               (ct3d->hostpmem->size & 0xF0000000);
-> > +        } else if (ct3d->dc.host_dc) {
-> > +            range2_size_hi = ct3d->dc.host_dc->size >> 32;
-> > +            range2_size_lo = (2 << 5) | (2 << 2) | 0x3 |
-> > +                             (ct3d->dc.host_dc->size & 0xF0000000);
-> >          }
-> > -    } else {
-> > +    } else if (ct3d->hostpmem) {
-> >          range1_size_hi = ct3d->hostpmem->size >> 32;
-> >          range1_size_lo = (2 << 5) | (2 << 2) | 0x3 |
-> >                           (ct3d->hostpmem->size & 0xF0000000);
-> > +        if (ct3d->dc.host_dc) {
-> > +            range2_size_hi = ct3d->dc.host_dc->size >> 32;
-> > +            range2_size_lo = (2 << 5) | (2 << 2) | 0x3 |
-> > +                             (ct3d->dc.host_dc->size & 0xF0000000);
-> > +        }
-> > +    } else {
-> > +        range1_size_hi = ct3d->dc.host_dc->size >> 32;
-> > +        range1_size_lo = (2 << 5) | (2 << 2) | 0x3 |
-> > +                         (ct3d->dc.host_dc->size & 0xF0000000);
-> 
-> I've forgotten if we ever closed out on the right thing to do
-> with the legacy range registers.   Maybe, just ignoring DC is the
-> right option for now?  So I'd drop this block of changes.
-> Maybe Linux will do the wrong thing if we do, but then we should
-> make Linux more flexible on this.
-> 
-> If we did get a clarification that this is the right way to go
-> then add a note here.
+--Sig_/GYfzay0mcrWe3xuGjh9Xt7z
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Hi Jonathan,
-I have noticed in the current kernel code, when checking whether the
-media is ready (in cxl_await_media_ready), we need to check the devsec
-range registers, for dcd device, if we leave dvsec range registers
-unset, the device cannot put into "ready" state, which will cause the
-device inactive. 
+ui-dbus.so is a shared library. But it is apparently handled differently
+than all the other shared libraries: it is not compiled with -fPIC.
 
-https://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl.git/tree/drivers/cxl/core/pci.c?h=fixes&id=d206a76d7d2726f3b096037f2079ce0bd3ba329b#n195
+As a result it fails to link. Not sure why this happens only here.
+Everything up to v7.2.9 was fine.
 
-So we need to set it as above?? DO I miss anything?
+Looking at some random other library like libui-spice-core.a,
+every object is compiled with -fPIC.=20
 
-Fan 
+But ui/dbus-display1.c is compiled with -fPIE instead.
 
-> 
-> 
-> >      }
-> >  
-> >      dvsec = (uint8_t *)&(CXLDVSECDevice){
-> > @@ -579,11 +629,27 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
-> >  {
-> >      int i;
-> >      uint64_t region_base = 0;
-> > -    uint64_t region_len =  2 * GiB;
-> > -    uint64_t decode_len = 2 * GiB;
-> > +    uint64_t region_len;
-> > +    uint64_t decode_len;
-> >      uint64_t blk_size = 2 * MiB;
-> >      CXLDCRegion *region;
-> >      MemoryRegion *mr;
-> > +    uint64_t dc_size;
-> > +
-> > +    mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
-> > +    dc_size = memory_region_size(mr);
-> > +    region_len = DIV_ROUND_UP(dc_size, ct3d->dc.num_regions);
-> > +
-> > +    if (region_len * ct3d->dc.num_regions > dc_size) {
-> This check had me scratching my head for a minute.
-> Why not just check
-> 
-> 	if (dc_size % (ct3d->dc.num_regions * CXL_CAPACITY_MULTIPLER) != 0) {
-> 		error_setg(errp, "host backend must by a multiple of 256MiB and region len);
-> 		return false;
-> 	}
-> > +        error_setg(errp, "host backend size must be multiples of region len");
-> > +        return false;
-> > +    }
-> > +    if (region_len % CXL_CAPACITY_MULTIPLIER != 0) {
-> > +        error_setg(errp, "DC region size is unaligned to %lx",
-> > +                   CXL_CAPACITY_MULTIPLIER);
-> > +        return false;
-> > +    }
-> > +    decode_len = region_len;
-> 
-> 
-> 
-> 
-> > @@ -868,16 +974,24 @@ static int cxl_type3_hpa_to_as_and_dpa(CXLType3Dev *ct3d,
-> >                                         AddressSpace **as,
-> >                                         uint64_t *dpa_offset)
-> >  {
-> > -    MemoryRegion *vmr = NULL, *pmr = NULL;
-> > +    MemoryRegion *vmr = NULL, *pmr = NULL, *dc_mr = NULL;
-> > +    uint64_t vmr_size = 0, pmr_size = 0, dc_size = 0;
-> >  
-> >      if (ct3d->hostvmem) {
-> >          vmr = host_memory_backend_get_memory(ct3d->hostvmem);
-> > +        vmr_size = memory_region_size(vmr);
-> >      }
-> >      if (ct3d->hostpmem) {
-> >          pmr = host_memory_backend_get_memory(ct3d->hostpmem);
-> > +        pmr_size = memory_region_size(pmr);
-> > +    }
-> > +    if (ct3d->dc.host_dc) {
-> > +        dc_mr = host_memory_backend_get_memory(ct3d->dc.host_dc);
-> > +        /* Do we want dc_size to be dc_mr->size or not?? */
-> 
-> Maybe - definitely don't want to leave this comment here
-> unanswered and I think you enforce it above anyway.
-> 
-> So if we get here ct3d->dc.total_capacity == memory_region_size(ct3d->dc.host_dc);
-> As such we could just not stash total_capacity at all?
-> 
-> 
-> > +        dc_size = ct3d->dc.total_capacity;
-> >      }
-> 
+Is this intentional?=20
+
+Olaf
+
+ld: ui/libdbus-display1.a.p/meson-generated_.._dbus-display1.c.o: warning: =
+relocation against `qemu_dbus_display1_audio_get_type' in read-only section=
+ `.text'
+
+--Sig_/GYfzay0mcrWe3xuGjh9Xt7z
+Content-Type: application/pgp-signature
+Content-Description: Digitale Signatur von OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE97o7Um30LT3B+5b/86SN7mm1DoAFAmXzZXYACgkQ86SN7mm1
+DoDYmg//UuS4zVk3UFj871N+h5nUVY1Z2JTRo1KGjvOscUKZzlVsWfW9k2wk3YYX
+LWEGvjlnU+PMDrYdF6T8M6gSk2zLsou485J0Rmca17/JXrL3oa5NSVFhAtxuTKW4
+ZlJzBabDzn2V4j985eZ1GclTlqRBNDo4SzBE2KC03aROPCfkQf+om7kNzmqI6OqV
+wiEBuASnVQhXff8YLqX8+HwQtjCRi770gqTU+x9PX691zNOfa8FjGgeNcfJ7QSn9
+v8JlWMLDA3Zm1BfXCExagqALj6QoSsVOT2f/w+/Hw6Vffu5O7e6P6WAvBsiJu9sB
+XRgpyYCx/FwsadCeg2onIm8uYeEuH5mb8S2LxVTlGKtrsCQHrC76Vx5vGVIPcjTO
+qHfvXhOYvXOML31feoKJfa64hiAKaiQNOqtFLTHOJQxvVLNdc1j2ldLRLY4qDD+l
+yKicu4PUv3GphNuuOC/rcS7ps77VGozKCMRlyukqekmY2FG13kWBZToPdG7pRo8T
+k29H9+UsZUVtVo2Ombx7Mm8du9FJTApPXTso8zPjkyc12xk/fikSIciOZzmsQTJR
+8A7rFKMRKrrs57TbLeOwmxAD13j7EMbR7UOpK53uKEg0aH3zZqtEX2zXY+BmIvRv
+glbAOGLrs1mZu2b90PrneidDjJWWxRv9KZbtGlPmFyTryLeK8Rk=
+=tfIM
+-----END PGP SIGNATURE-----
+
+--Sig_/GYfzay0mcrWe3xuGjh9Xt7z--
 
