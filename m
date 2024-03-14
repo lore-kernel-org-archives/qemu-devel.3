@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC34C54E60
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E149DC54E60
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:45:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rknFN-0000Sz-1M; Thu, 14 Mar 2024 11:43:57 -0400
+	id 1rknGc-00016M-CW; Thu, 14 Mar 2024 11:45:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rknFI-0000Sk-RG
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:43:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rknFB-0006t0-Bh
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:43:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710431018;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/ivjlUdJ9DlU0H8mqhtnj9i4vjnyWZzqWs3N3xcO7XM=;
- b=dhoJb95UohtGxZMpyvmydxzR8StMdJ27yIlsRqOqcE7myIoQOCOqIbTP/VS5AjrGPUSC/Y
- bcrqEl8Uws/4kpn10VFE8dHINLklIuets3hD1POrYFwyEx1phJYLbKQP7/QbVzOwaPG5uA
- kGSWxGIv3Tioca6BPKdRtJ6vDVelqy0=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-0bO5GhMOM3qzAVdxT_sZng-1; Thu, 14 Mar 2024 11:43:37 -0400
-X-MC-Unique: 0bO5GhMOM3qzAVdxT_sZng-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-69152af7760so1839656d6.1
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 08:43:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1rknGa-00015l-H1
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:45:12 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1rknGY-0007Hw-Br
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:45:11 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-51320ca689aso1371359e87.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 08:45:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710431108; x=1711035908; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=/tsVpAtLaCvgN9dlkyI0vmkggG/7Ft3hdDWmTwIV4EI=;
+ b=YjyIaU3vaHaupY5rj6xVSciFTRXy1zDNUQxn2/AYUtP7tvy32OgeNdHibk+Ro5m8tS
+ Kz+9oB27UNc5FScuDJ2Re4jm7zZ02tvsMNBz+U5kkfAbCmIzXy93eJJZpHRIu326FpIK
+ vGNPvWo1I6Bv2htalHi83BPzHwbKTWIEVDRiV6udyHS8nPcHe7H5VhASr/Z+U4YUic9c
+ 2n8TocKPWfSu5LyDZrlK54vjNi/KxWO5i8vAPq8rIAgI1IoaJsxtMT+rockWpJ/sGw+7
+ aBqfpVImQx+EecoJzevYJkg4oe+l8iOUoDgEAri2KS5XzwRo35wjeh4O52k67VCPO0K8
+ uOpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710431016; x=1711035816;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/ivjlUdJ9DlU0H8mqhtnj9i4vjnyWZzqWs3N3xcO7XM=;
- b=RjFClyFrWaNVpehDjD/Go1KjjF/iVTeLAzzH3xihdaH1HhcR78+qUoF7moYgVUihnM
- tJF76mWrM8YX76WefXKz97lE5h8OT5KJQASI8nDuxAr9skx7dpPXWP3cQp4cLofQpXY9
- oTtEIWpt1NcsLh9ltod8caFd0e3SiQ0gV07//06pLUskG9XVc6UopEuGZIEbrtWX6Fhn
- WNLlhIvtoX5HrY/iodGulNqmhSP8cvhVIJlqYorH0Zz0KsQdCRDT6OqHXzqWAzpp4uba
- az6nICYMe2prtbSDtq4eqGrtui7xtndwIoekxIqtCpNJ2jDEkARwKmSQv93niQDCXkK1
- Ggiw==
-X-Gm-Message-State: AOJu0YyD1XbUQpA+7707ogWhUkdvs+lVf3FVkCsVxASyF9E6Wkwdsk9Z
- 2iOuDreZUBOBimX0SpOhmTcyJA/FzadHg7ivOdwyF13hDM95AyqRG/6etsujbpHQ9SzTMvrm5sH
- xhHZKsUC+NVQzKY4yBiPCEY6ds0EonytfOHktt8rX+DHdqSjJrjB7OAN9gKXv
-X-Received: by 2002:a05:6214:318b:b0:690:b5a9:84f1 with SMTP id
- lb11-20020a056214318b00b00690b5a984f1mr2206242qvb.1.1710431016316; 
- Thu, 14 Mar 2024 08:43:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+QFkM8FcIOUjym880VmR7Og2Eta+21aGKNN3C/wocRSy7t9Miw3dvyGnubr5g+pKbv6fH0A==
-X-Received: by 2002:a05:6214:318b:b0:690:b5a9:84f1 with SMTP id
- lb11-20020a056214318b00b00690b5a984f1mr2206217qvb.1.1710431015797; 
- Thu, 14 Mar 2024 08:43:35 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- gy10-20020a056214242a00b0068f6e1c3582sm569069qvb.146.2024.03.14.08.43.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Mar 2024 08:43:35 -0700 (PDT)
-Date: Thu, 14 Mar 2024 11:43:34 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH v2 2/2] migration/multifd: Ensure we're not given a
- socket for file migration
-Message-ID: <ZfMbJnC96vUXnPTJ@x1n>
-References: <20240313212824.16974-1-farosas@suse.de>
- <20240313212824.16974-3-farosas@suse.de> <ZfMTVApNl01-yS_v@x1n>
+ d=1e100.net; s=20230601; t=1710431108; x=1711035908;
+ h=content-transfer-encoding:in-reply-to:organization:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/tsVpAtLaCvgN9dlkyI0vmkggG/7Ft3hdDWmTwIV4EI=;
+ b=qOsQAmUhAyyAy7inoO8rrGXuh30eLP38WlSOYiSF10goq9FAc/xxyZr6rik19E8fd0
+ 5GY1XoBBTR7HT3t+b+s4WQ2l0c9wLQKkF9yJFfduKAFsWkvLlwUIO3xcHmIf0e4zRT25
+ e6CAaPl7V6Wp/Tbypt3XFxdI/FHOkIg4QVJ8fqMOLoXKyJ5VlOiXfEieCmBFFZCSUaUP
+ 7dEavvDQRAQPQPmB02f2TZofEqMJISWuHlbL1LCshjQENW7L0sWHqjJe9M21An+es9Nr
+ z2qEwSP7uQkSnwz/eBUYjB03fABW7mvPte33aoe7j3jj0GOXCdr2w8HPqp+Vy01j9NlU
+ 80Uw==
+X-Gm-Message-State: AOJu0Yzz/ga2OlC/9AWYPISb4fEqgoPKWivOJDs/17piqpLPz78yEri3
+ s7VKd0d9B+3X3SEgYcnSqp9/4AP5P0uVAPv6S4WX5arxy6GVz2E5tsLcTlI6dtw=
+X-Google-Smtp-Source: AGHT+IEfxXoYx/PWLLBuRXi1GuLyNwYGCNRR5aV+gi7tPa7CTzK3jfbM2g0zb5wzu6qel03oMuWRlg==
+X-Received: by 2002:a19:5f04:0:b0:513:97d5:245e with SMTP id
+ t4-20020a195f04000000b0051397d5245emr424208lfb.31.1710431107975; 
+ Thu, 14 Mar 2024 08:45:07 -0700 (PDT)
+Received: from [192.168.200.106] (83.11.22.169.ipv4.supernova.orange.pl.
+ [83.11.22.169]) by smtp.gmail.com with ESMTPSA id
+ y24-20020ac255b8000000b005134751aca7sm314837lfg.275.2024.03.14.08.45.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Mar 2024 08:45:07 -0700 (PDT)
+Message-ID: <42b7eeb5-9105-4958-8b57-1c7b56e52010@linaro.org>
+Date: Thu, 14 Mar 2024 16:45:06 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZfMTVApNl01-yS_v@x1n>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] tests/avocado: use OpenBSD 7.4 for sbsa-ref
+Content-Language: pl-PL, en-GB, en-HK
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Brad Smith <brad@comstyle.com>,
+ qemu-arm@nongnu.org
+References: <20240314-sbsa-ref-firmware-update-v2-0-b557c56559cd@linaro.org>
+ <20240314-sbsa-ref-firmware-update-v2-3-b557c56559cd@linaro.org>
+ <87bk7hggcz.fsf@draig.linaro.org>
+ <7da62f7f-3e87-470b-b089-1bfe5aa97555@linaro.org>
+ <87ttl8g8ue.fsf@draig.linaro.org>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Organization: Linaro
+In-Reply-To: <87ttl8g8ue.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lf1-x12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,102 +107,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 14, 2024 at 11:10:12AM -0400, Peter Xu wrote:
-> On Wed, Mar 13, 2024 at 06:28:24PM -0300, Fabiano Rosas wrote:
-> > When doing migration using the fd: URI, the incoming migration starts
-> > before the user has passed the file descriptor to QEMU. This means
-> > that the checks at migration_channels_and_transport_compatible()
-> > happen too soon and we need to allow a migration channel of type
-> > SOCKET_ADDRESS_TYPE_FD even though socket migration is not supported
-> > with multifd.
-> 
-> Hmm, bare with me if this is a stupid one.. why the incoming migration can
-> start _before_ the user passed in the fd?
-> 
-> IOW, why can't we rely on a single fd_is_socket() check for
-> SOCKET_ADDRESS_TYPE_FD in transport_supports_multi_channels()?
-> 
-> > 
-> > The commit decdc76772 ("migration/multifd: Add mapped-ram support to
-> > fd: URI") was supposed to add a second check prior to starting
-> > migration to make sure a socket fd is not passed instead of a file fd,
-> > but failed to do so.
-> > 
-> > Add the missing verification.
-> > 
-> > Fixes: decdc76772 ("migration/multifd: Add mapped-ram support to fd: URI")
-> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> > ---
-> >  migration/fd.c   | 8 ++++++++
-> >  migration/file.c | 7 +++++++
-> >  2 files changed, 15 insertions(+)
-> > 
-> > diff --git a/migration/fd.c b/migration/fd.c
-> > index 39a52e5c90..c07030f715 100644
-> > --- a/migration/fd.c
-> > +++ b/migration/fd.c
-> > @@ -22,6 +22,7 @@
-> >  #include "migration.h"
-> >  #include "monitor/monitor.h"
-> >  #include "io/channel-file.h"
-> > +#include "io/channel-socket.h"
-> >  #include "io/channel-util.h"
-> >  #include "options.h"
-> >  #include "trace.h"
-> > @@ -95,6 +96,13 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
-> >      }
-> >  
-> >      if (migrate_multifd()) {
-> > +        if (fd_is_socket(fd)) {
-> > +            error_setg(errp,
-> > +                       "Multifd migration to a socket FD is not supported");
-> > +            object_unref(ioc);
-> > +            return;
-> > +        }
+W dniu 14.03.2024 o 15:56, Alex Bennée pisze:
+>>> If we are not going to delete the entries then at least use a @skip
+>>> instead of commenting. Maybe:
+>>>     @skip("Potential un-diagnosed upstream bug?")
+>> Daniel or Peter suggested to open a GitLab issue and use
+>>
+>>      @skip("https://gitlab.com/qemu-project/qemu/-/issues/xyz")
+>>
+>> to track progress.
+> That's a good idea. Are you going to respin?
 
-And... I just noticed this is forbiding multifd+socket+fd in general?  But
-isn't that the majority of multifd usage when with libvirt over sockets?
+Opened https://gitlab.com/qemu-project/qemu/-/issues/2224 to track 
+problem. Subscribed to arm@openbsd mailing list.
 
-Shouldn't it about fd's seekable-or-not instead when mapped-ram enabled
-(IOW, migration_needs_seekable_channel() only)?
+Will walk the dog and then mail them with problem.
 
-> > +
-> >          file_create_incoming_channels(ioc, errp);
-> >      } else {
-> >          qio_channel_set_name(ioc, "migration-fd-incoming");
-> > diff --git a/migration/file.c b/migration/file.c
-> > index ddde0ca818..b6e8ba13f2 100644
-> > --- a/migration/file.c
-> > +++ b/migration/file.c
-> > @@ -15,6 +15,7 @@
-> >  #include "file.h"
-> >  #include "migration.h"
-> >  #include "io/channel-file.h"
-> > +#include "io/channel-socket.h"
-> >  #include "io/channel-util.h"
-> >  #include "options.h"
-> >  #include "trace.h"
-> > @@ -58,6 +59,12 @@ bool file_send_channel_create(gpointer opaque, Error **errp)
-> >      int fd = fd_args_get_fd();
-> >  
-> >      if (fd && fd != -1) {
-> > +        if (fd_is_socket(fd)) {
-> > +            error_setg(errp,
-> > +                       "Multifd migration to a socket FD is not supported");
-> > +            goto out;
-> > +        }
-> > +
-> >          ioc = qio_channel_file_new_dupfd(fd, errp);
-> >      } else {
-> >          ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
-> > -- 
-> > 2.35.3
-> > 
-> 
-> -- 
-> Peter Xu
-
--- 
-Peter Xu
-
+And respin patch series tomorrow.
 
