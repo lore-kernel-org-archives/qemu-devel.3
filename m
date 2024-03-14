@@ -4,77 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAC20C54E66
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 02:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3595EC54E66
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 02:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkaqG-0001hb-P5; Wed, 13 Mar 2024 22:29:12 -0400
+	id 1rkb3z-00048q-Sf; Wed, 13 Mar 2024 22:43:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zltjiangshi@gmail.com>)
- id 1rkaqF-0001hQ-L8
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 22:29:11 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zltjiangshi@gmail.com>)
- id 1rkaqE-0005PP-1M
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 22:29:11 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a446b5a08f0so91785266b.1
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 19:29:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
+ id 1rkb3x-000469-Q6; Wed, 13 Mar 2024 22:43:21 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
+ id 1rkb3m-0007OX-Dz; Wed, 13 Mar 2024 22:43:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710383348; x=1710988148; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qqKoE7Fx3Qc4F7kfxXYFA2EHoabnRfr+NWbJs0IvoEk=;
- b=hJYxRyC5p8IcA27rewV4PAT4FJW1pU498qqmNTv0e+xzrM3ogy49FnJe0nR3Wtq2fr
- SEJG1UNUNSmYxILPIJmg1Cp2gPH1YQHN+AmaXpqK6ZULZlxwnIqfe1Yiu4rC5qVYTT5O
- Z/H0yirFBiTQSWzmbPIPsKdUOm7rVEhTKIo6YblA5+BQHimZ1T6FwBQ8W/kUzMZWjCTF
- x5/DjT+/8mPfsuNnnzsRiSXeCygQLAYAHLxrdXOVpomi21wgkr9s6n+zdDAlUy6D8u7p
- p6JR/FZX/1KLjUMkiXtlj0MaOoFxUYqeiLBPiPWEjH1yifIU1u5Gv58XiSd+wEtCCm0E
- iXBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710383348; x=1710988148;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qqKoE7Fx3Qc4F7kfxXYFA2EHoabnRfr+NWbJs0IvoEk=;
- b=F1vVLkefk7CuPpi+abr24N6JcFzu5ndaLQsBpFJBYVCMTUfuhdSNKC2pknwYl8nCJy
- XuKhHmyPg/tRF94tN3hMHPfZKwdjYdsm6asrsXU3t8JL6kO3/h6c4lCN+UsBu0ZQI1kM
- 5LtFKALGB+7BeyhKtBX95cEEohb1z14o29pl+TpUVUCrtTSY1cSxCKPDSUjcfpT1JLKQ
- PVTEOV33z0k80Ep1TidQ0EtmS4XTVec6iG0FTJhhwdUalKEauGZ1+BkcLCn7TG2ZwBYM
- pxpuD+PrSLTjwaAe2ejBzMwC5DKYndhqDth4GMxDNnGDkbafG7QEXamvVLRO7DvS6mtp
- +8mQ==
-X-Gm-Message-State: AOJu0YyZBjc2DolthhkvAi577AYIFiaCzS6NTHZF1Dj0NtVIfhJ5Bl9+
- QNEqhF5zm9IEMVU6iLRAIebQYsxgBW5SfF9tSNtlFxBG/M2yTnp9URkXnbcqjEqxG7kaHaW49k2
- 4djfwe4VJsAODUjMOmbfx+HEilAJDuuwne5OzHOpm
-X-Google-Smtp-Source: AGHT+IHvwXSZZzcjhxpEjNTm19uv5RVifCogAPoWwP36+Dnv15F7Cj5IQOYBwtqB4pv2MIpkRgKEZ4i8OgyRrc2H2Tg=
-X-Received: by 2002:a17:906:c359:b0:a44:806f:ad56 with SMTP id
- ci25-20020a170906c35900b00a44806fad56mr490787ejb.11.1710383348095; Wed, 13
- Mar 2024 19:29:08 -0700 (PDT)
+ d=gibson.dropbear.id.au; s=202312; t=1710384178;
+ bh=iNE3Zs3fc6erURONGwAp+OcLysgJTyaeeic/HRLPYrE=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=U89Q4V1twcwI2cpEMGj5mfWXd5PqEZUOl3GOMijuj9tGnA/h0OVZ0aXSu+Zoh0CFU
+ /EDTi/BU4re9rVyaTnERxO0CeCGRdHFQZ3x4r2+jcttmaWy9jDcTY2BINQlC2B45oY
+ spPCBvbOdOYG819L5Lf6ENghn/4zllCHXWCb2DoVsnIgLxYm+h5xdvMnTuleaM4k2X
+ t57UupOF06w8wczGpWCMAX5+AfSydpZVYfYHU0fcTfqYjzL8w36OmhE3U2ejikRz8t
+ vYLYa1D9L0c8rC+sIwS2L1OWEG8sRXVXWv7rB87jiYcWtqshQb6EqHFlzQmJ91xt8S
+ 4oewlg+59JJjA==
+Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
+ id 4TwBWQ455Fz4wqM; Thu, 14 Mar 2024 13:42:58 +1100 (AEDT)
+Date: Thu, 14 Mar 2024 13:35:36 +1100
+From: David Gibson <david@gibson.dropbear.id.au>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: Re: [PATCH v2 04/10] ppc/spapr: Remove copy-paste from pa-features
+Message-ID: <ZfJieDXnHwqlSjzW@zatzit>
+References: <20240312131419.2196845-1-npiggin@gmail.com>
+ <20240312131419.2196845-5-npiggin@gmail.com>
 MIME-Version: 1.0
-References: <20240307164835.300412-1-gaosong@loongson.cn>
- <20240307164835.300412-4-gaosong@loongson.cn>
-In-Reply-To: <20240307164835.300412-4-gaosong@loongson.cn>
-From: chen huacai <zltjiangshi@gmail.com>
-Date: Thu, 14 Mar 2024 10:28:59 +0800
-Message-ID: <CABDp7Vo9ZOrz+4iKtToC+hs_JzptZg2cup+NdDaniV-3Qev+Tw@mail.gmail.com>
-Subject: Re: [PATCH v6 03/17] hw/loongarch: Add slave cpu boot_code
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, maobibo@loongson.cn
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=zltjiangshi@gmail.com; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="NErrRBGQga85G5Sf"
+Content-Disposition: inline
+In-Reply-To: <20240312131419.2196845-5-npiggin@gmail.com>
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=dgibson@gandalf.ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,132 +69,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Song,
 
-On Fri, Mar 8, 2024 at 12:51=E2=80=AFAM Song Gao <gaosong@loongson.cn> wrot=
-e:
->
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <20240301093839.663947-4-gaosong@loongson.cn>
+--NErrRBGQga85G5Sf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Mar 12, 2024 at 11:14:13PM +1000, Nicholas Piggin wrote:
+> TCG does not support copy/paste instructions. Remove it from
+> ibm,pa-features. This has never been implemented under TCG or
+> practically usable under KVM, so it won't be missed.
+
+As with the previous patch, the specific circumstances here justify
+breaking the general rule.
+
+>=20
+> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  hw/loongarch/boot.c | 70 ++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 69 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-> index 149deb2e01..e560ac178a 100644
-> --- a/hw/loongarch/boot.c
-> +++ b/hw/loongarch/boot.c
-> @@ -15,6 +15,54 @@
->  #include "sysemu/reset.h"
->  #include "sysemu/qtest.h"
->
-> +static const unsigned int slave_boot_code[] =3D {
-> +                  /* Configure reset ebase.         */
-> +    0x0400302c,   /* csrwr      $r12,0xc            */
-Use reg-names may be a little better than reg-nums.
-
-Huacai
-
-> +
-> +                  /* Disable interrupt.             */
-> +    0x0380100c,   /* ori        $r12,$r0,0x4        */
-> +    0x04000180,   /* csrxchg    $r0,$r12,0x0        */
-> +
-> +                  /* Clear mailbox.                 */
-> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
-> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
-> +    0x06481da0,   /* iocsrwr.d  $r0,$r13            */
-> +
-> +                  /* Enable IPI interrupt.          */
-> +    0x1400002c,   /* lu12i.w    $r12,1(0x1)         */
-> +    0x0400118c,   /* csrxchg    $r12,$r12,0x4       */
-> +    0x02fffc0c,   /* addi.d     $r12,$r0,-1(0xfff)  */
-> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
-> +    0x038011ad,   /* ori        $r13,$r13,0x4       */
-> +    0x064819ac,   /* iocsrwr.w  $r12,$r13           */
-> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
-> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
-> +
-> +                  /* Wait for wakeup  <.L11>:       */
-> +    0x06488000,   /* idle       0x0                 */
-> +    0x03400000,   /* andi       $r0,$r0,0x0         */
-> +    0x064809ac,   /* iocsrrd.w  $r12,$r13           */
-> +    0x43fff59f,   /* beqz       $r12,-12(0x7ffff4) # 48 <.L11> */
-> +
-> +                  /* Read and clear IPI interrupt.  */
-> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
-> +    0x064809ac,   /* iocsrrd.w  $r12,$r13           */
-> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
-> +    0x038031ad,   /* ori        $r13,$r13,0xc       */
-> +    0x064819ac,   /* iocsrwr.w  $r12,$r13           */
-> +
-> +                  /* Disable  IPI interrupt.        */
-> +    0x1400002c,   /* lu12i.w    $r12,1(0x1)         */
-> +    0x04001180,   /* csrxchg    $r0,$r12,0x4        */
-> +
-> +                  /* Read mail buf and jump to specified entry */
-> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
-> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
-> +    0x06480dac,   /* iocsrrd.d  $r12,$r13           */
-> +    0x00150181,   /* move       $r1,$r12            */
-> +    0x4c000020,   /* jirl       $r0,$r1,0           */
-> +};
-> +
->  static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
->  {
->      return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
-> @@ -111,8 +159,15 @@ static void loongarch_firmware_boot(LoongArchMachine=
-State *lams,
->      fw_cfg_add_kernel_info(info, lams->fw_cfg);
->  }
->
-> +static void init_boot_rom(struct loongarch_boot_info *info, void *p)
-> +{
-> +    memcpy(p, &slave_boot_code, sizeof(slave_boot_code));
-> +    p +=3D sizeof(slave_boot_code);
-> +}
-> +
->  static void loongarch_direct_kernel_boot(struct loongarch_boot_info *inf=
-o)
->  {
-> +    void  *p, *bp;
->      int64_t kernel_addr =3D 0;
->      LoongArchCPU *lacpu;
->      CPUState *cs;
-> @@ -126,11 +181,24 @@ static void loongarch_direct_kernel_boot(struct loo=
-ngarch_boot_info *info)
->          }
->      }
->
-> +    /* Load 'boot_rom' at [0 - 1MiB] */
-> +    p =3D g_malloc0(1 * MiB);
-> +    bp =3D p;
-> +    init_boot_rom(info, p);
-> +    rom_add_blob_fixed("boot_rom", bp, 1 * MiB, 0);
-> +
->      CPU_FOREACH(cs) {
->          lacpu =3D LOONGARCH_CPU(cs);
->          lacpu->env.load_elf =3D true;
-> -        lacpu->env.elf_address =3D kernel_addr;
-> +        if (cs =3D=3D first_cpu) {
-> +            lacpu->env.elf_address =3D kernel_addr;
-> +        } else {
-> +            lacpu->env.elf_address =3D 0;
-> +        }
-> +        lacpu->env.boot_info =3D info;
->      }
-> +
-> +    g_free(bp);
->  }
->
->  void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info =
-*info)
-> --
-> 2.34.1
->
->
-
+>  hw/ppc/spapr.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index 3108d7c532..4192cd8d6c 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -237,6 +237,10 @@ static void spapr_dt_pa_features(SpaprMachineState *=
+spapr,
+>       * SSO (SAO) ordering is supported on KVM and thread=3Dsingle hosts,
+>       * but not MTTCG, so disable it. To advertise it, a cap would have
+>       * to be added, or support implemented for MTTCG.
+> +     *
+> +     * Copy/paste is not supported by TCG, so it is not advertised. KVM
+> +     * can execute them but it has no accelerator drivers which are usab=
+le,
+> +     * so there isn't much need for it anyway.
+>       */
+> =20
+>      uint8_t pa_features_206[] =3D { 6, 0,
+> @@ -260,8 +264,8 @@ static void spapr_dt_pa_features(SpaprMachineState *s=
+papr,
+>          0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 24 - 29 */
+>          /* 30: MMR, 32: LE atomic, 34: EBB + ext EBB */
+>          0x80, 0x00, 0x80, 0x00, 0xC0, 0x00, /* 30 - 35 */
+> -        /* 36: SPR SO, 38: Copy/Paste, 40: Radix MMU */
+> -        0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 36 - 41 */
+> +        /* 36: SPR SO, 40: Radix MMU */
+> +        0x80, 0x00, 0x00, 0x00, 0x80, 0x00, /* 36 - 41 */
+>          /* 42: PM, 44: PC RA, 46: SC vec'd */
+>          0x80, 0x00, 0x80, 0x00, 0x80, 0x00, /* 42 - 47 */
+>          /* 48: SIMD, 50: QP BFP, 52: String */
 
 --=20
-Huacai Chen
+David Gibson			| I'll have my music baroque, and my code
+david AT gibson.dropbear.id.au	| minimalist, thank you.  NOT _the_ _other_
+				| _way_ _around_!
+http://www.ozlabs.org/~dgibson
+
+--NErrRBGQga85G5Sf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmXyYm8ACgkQzQJF27ox
+2GeU9RAAlW3rkKkiT3uR0gESZhscuhRuoF3ytXfm9pOLBl6lkisgU6H997WIgpB0
+uFZ6FAPI963VpFQhT8WWw8TGdbKKS9w3QYmZhjTWisCwGaiKJNWnMf3oS+6xsgrD
+A3OWNJXr79a9XkGcGG4lM0N4WOU9LJR8srD72Pn1TfTmMkfmwMzitwV/Fx/743Xd
+8FELi1RNuzcZgKSaid7rbTD90gnvMrXnuh+MQsM6QCJ7pWjyCMZ+U9FSnQqg7PGx
+OPspMRHuKOPdQ9Hbz1sSYw1mn9UFnVjh0/MIx01RsIU2UIP1fmxyIsad3UVYYFPB
+Oh2c6GF3CD0Iua1kPQjKL0YyMe3MdD86vccUyE+9JBGEtqUJWQZWr91gYNS6suad
+jik+yv8PpbFdhzaA4OVxA7UvxactCz2k8uiQR6y8ghtjtrbrBNAs0iphmuAk82HF
+TJrJc3gEz8zd7QQx3HPd4ZTxCoO4lVc4KTecGfwgaG/i+S83q/fMGU8XsCu4MFuY
++PN43uTJBemOLlpKmJ7TWPvfKPhP7uGYewc7l5qaNOhjWjV+4ubMCxyCQmCvYkrv
+W6UqCIL6e1ML0aLxcTk5XrHKiuHoStX9vMVX0JMdtTWhpe67fR/qyDvucwdB2CYz
+RlfHOeJlrn8mU+1ZYkFK3h6zUAbz9vQIM8p/yCgURZqf/Qexn/o=
+=tKtv
+-----END PGP SIGNATURE-----
+
+--NErrRBGQga85G5Sf--
 
