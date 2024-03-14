@@ -4,88 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90CA6C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 12:29:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 183D1C54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 12:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkkBl-0002z1-JH; Thu, 14 Mar 2024 08:28:01 -0400
+	id 1rkkDd-0003n7-BM; Thu, 14 Mar 2024 08:29:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rkkBi-0002yB-Oo
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:28:00 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rkkDZ-0003mR-HJ
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:29:54 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rkkBg-00023O-If
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:27:58 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-413fd8e4b3cso7235e9.3
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 05:27:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rkkDY-0002R2-2Y
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:29:53 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a466a27d30aso115261266b.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 05:29:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710419274; x=1711024074; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1710419390; x=1711024190; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xU6vldNdfhEMmVPXKJ6F5qcXFrr2Um3C9M04lDiDrWk=;
- b=jWHTiPYxLb3Ml71vaWRCBL9+TcBkmX/7uNMOx31dQxYUtSOB3ibFQDTogmSJrshc31
- 5oNskTkNwRMRyQaatAkYhiRo0xXX5DzBGXxFOSZbMIp6nLu65Q9Apqw8W0a+kt3kzobk
- 8nY7xrX2poxPRnaGbvNFKnfOTYCHmXYT3kRpc8xkf4TmlYhn9EUny4JeN/nc1DYXSFwL
- 6M5cmB9EqIgdf4gM5dCl68Qtbnq1a26/SkRjvJ/0Fd/z/9x/c1sPyhzMXhkcE3IkixCp
- Kv0z+FveLeGQVZuFmDNGl0iuG+OkKhs2VjmI3Hd/huYieox2TYNBhKUS9kS50W4kltyK
- d/Mg==
+ bh=yjXbgRvqLh+Z2qvq7iRFjdTU/gRC9bFpHEUW+cUPfG0=;
+ b=GfMF8MkRfu5/ftZROzF7s5erJ3YyISXAUcJCmeJA7Hl9ZZeGfXG5yw0c8u2hMjRdhK
+ y5GgRsNmyTygJIHXb3XNV0rzYE2eeSV1wUdNLrvivTxxwsvpOBNyF1EtkQVVxQdlWRQD
+ Hoe4cLHe2uZRZrLWvmMtRRH0wBv7/qrNCuD9JlHBUc5o4I9QpLTg9ylKOQsoD0cH0SM1
+ +/BJevegr1F0Yn22nRoHwWzPdcyn/SzdxoTvBJjKIELtTdnuE2EjntPqAu9X/NfWEZcg
+ BMEqReNoPpXhGHjo+m59wguju/RwxiXK1AWWgvDucIxzf22zBWTtmZhyw6oE8qY+SqIY
+ ri6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710419274; x=1711024074;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xU6vldNdfhEMmVPXKJ6F5qcXFrr2Um3C9M04lDiDrWk=;
- b=QnuHES0aZwrNiO3uWYTdsoNUhGsQ+hbWcA8DhkENuoRglxC5LYzEbibC2gay3/B9bA
- XdbfJrVLw9a5xzxwDNNiLUZE5QcZRK1kU5tIBA68PzjN3HDwWx50sq0SmwEp7+TPwRMl
- T8kuPkzyVmETymKniGIyF8XbdLoMXNI6KQSeW+WP6FqlucRmUV0xF8mx+/5c8plnBB/P
- n4fu80RUTlEppdxRDnSd9SCYofI/fVn9gAG74QqiAaULvBJ954W0q35GNt90mTooVbMU
- H1IoqGav1wDGTPh/MF8ArowLJLKzYBYtvg3M67WKRLNFhREwqfJOpbRMkLGUpPyW0Ftk
- 2OvA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUM1x6jjxdMoIjviMRbtBgfIluDnOoPH2v3NRj2bncJuNT6eoZB3fOzFDW8gln8yMjkgEGFdRULdopUR8MbCTWl7ti7VZQ=
-X-Gm-Message-State: AOJu0Yxo5XEHKsNm3E9XQ+xzHNtPDJ2GyHM+Km5ihgK2xPuS++1Ou+jT
- qYG6i9strLW1TW1PPZUNxmLgsVVIgICSv2BGK/3TsT0hkHAn7XTbaZ7n/gHA4s4=
-X-Google-Smtp-Source: AGHT+IGdjXLSsBcTydOuzGhEIqXIgYfB39PmTdc7Tr1snp3xVBMv79jSxyiAaXlcItpN/QE8PNtvhA==
-X-Received: by 2002:a05:600c:310d:b0:412:bcc1:44cc with SMTP id
- g13-20020a05600c310d00b00412bcc144ccmr1388987wmo.3.1710419274371; 
- Thu, 14 Mar 2024 05:27:54 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a13-20020adfeecd000000b0033ec94c6277sm646545wrp.115.2024.03.14.05.27.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Mar 2024 05:27:54 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7AC575F713;
- Thu, 14 Mar 2024 12:27:53 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- qemu-devel@nongnu.org,  Radoslaw Biernacki <rad@semihalf.com>,  Leif
- Lindholm <quic_llindhol@quicinc.com>,  Cleber Rosa <crosa@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Wainer dos
- Santos Moschetta
- <wainersm@redhat.com>,  Beraldo Leal <bleal@redhat.com>,  Brad Smith
- <brad@comstyle.com>,  qemu-arm@nongnu.org
-Subject: Re: [PATCH v2 2/4] tests/avocado: drop virtio-rng from sbsa-ref tests
-In-Reply-To: <CAFEAcA8GhAMtvsRE71fybuY90hXBavbXwCrb=-fWGqg8JebTEQ@mail.gmail.com>
- (Peter Maydell's message of "Thu, 14 Mar 2024 12:14:03 +0000")
-References: <20240314-sbsa-ref-firmware-update-v2-0-b557c56559cd@linaro.org>
- <20240314-sbsa-ref-firmware-update-v2-2-b557c56559cd@linaro.org>
- <87h6h9gghs.fsf@draig.linaro.org>
- <CAFEAcA8GhAMtvsRE71fybuY90hXBavbXwCrb=-fWGqg8JebTEQ@mail.gmail.com>
-User-Agent: mu4e 1.12.1; emacs 29.2
-Date: Thu, 14 Mar 2024 12:27:53 +0000
-Message-ID: <875xxpgfqu.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1710419390; x=1711024190;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yjXbgRvqLh+Z2qvq7iRFjdTU/gRC9bFpHEUW+cUPfG0=;
+ b=ZCv3YKX5b7XWT4pCnDWBzP/cVGfGQguuFIjrUVbmV8hyli84BFP1Tu9uDxSVuRjSw3
+ bhCoQhRB2zQekMr8Z09eR1gRkLuaPDzvPU9zqVdNSdFt4utlO2RJR4SaEtsU97IJ2tMB
+ 7HOjj+shtf6yxY5C2zcn3Eza5wdg7AJ2ZexBewyPWHkJyYtF2fFkxB0Dz0Inu99MIGMC
+ oCTvVkINmODdZ7vdULqDBJlnu+cB4hGgC/xkz1I3YAT2ZZcE7zOgQHsDJB1+HWOrTisk
+ xw4Iqy0LU/UBFGWMKwEjWTHjoKuUdEW2wpK+bYVoKsJ7UtnwZMGoWinnoBKtJzT9SZiU
+ su9A==
+X-Gm-Message-State: AOJu0YytRz3vbbTjSn5vwd6+jXbQDvKSZxWdVTFHHCmwu5/EIU1txlU5
+ 2mZiS98AQxYAZE1uqFJ8yb9CIjRcQh6tn+byaAn2Mqc08HrgTX9gosFU2QNfQklAvxkZkbZTLQ/
+ lTe08NpDeym+//LV1AT85UJuBZ4Q95dvrMiR7Jw==
+X-Google-Smtp-Source: AGHT+IGWZiZ6kVlMU4/mBnGLxx5CYKbo4K4D45pvBI4Ebhnt8OVUKQXfdronNn/hFpSD5sCdx4ees6fuq6e8ehkbbLk=
+X-Received: by 2002:a17:906:24cc:b0:a45:ab16:deea with SMTP id
+ f12-20020a17090624cc00b00a45ab16deeamr961282ejb.55.1710419389851; Thu, 14 Mar
+ 2024 05:29:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20240312170011.1688444-1-alex.bennee@linaro.org>
+In-Reply-To: <20240312170011.1688444-1-alex.bennee@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 14 Mar 2024 14:29:34 +0200
+Message-ID: <CAAjaMXaVG818tqGU20gsbpZ8CpAqhaXPAdnL5+Ph==c6TiWDbw@mail.gmail.com>
+Subject: Re: [PATCH v2] gitlab: aggressively avoid extra GIT data
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,36 +93,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> On Thu, 14 Mar 2024 at 12:11, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
->>
->> Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org> writes:
->>
->> > sbsa-ref is supposed to emulate real hardware so virtio-rng-pci
->> > does not fit here
->>
->> What is real anyway ;-)
->>
->> VirtIO devices exist in real life and I would argue for PCI the device
->> appears very much like a normal PCI device. I could see the argument for
->> avoiding virtio-mmio devices which are a lot more VM-only in flavour.
+On Tue, 12 Mar 2024 at 19:09, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> But our platform for testing virtio-rng-pci should be the 'virt'
-> board (and our avocado test for virt does indeed have that device).
-> What exactly are we adding by testing it also in sbsa-ref,
-> where the typical user will *not* be using it (if they wanted
-> a virtio setup they would be using 'virt')?
-
-I assume just ensuring the board has enough entropy to boot cleanly. If
-it doesn't need it then it doesn't matter I guess.
-
+> This avoids fetching blobs and tree references for branches we are not
+> going to worry about. Also skip tag references which are similarly not
+> useful and keep the default --prune. This keeps the .git data to
+> around 100M rather than the ~400M even a shallow clone takes.
 >
-> thanks
-> -- PMM
+> So we can check the savings we also run a quick du while setting up
+> the build.
+>
+> We also have to have special settings of GIT_FETCH_EXTRA_FLAGS for the
+> Windows build, the migration legacy test and the custom runners. In
+> the case of the custom runners we also move the free floating variable
+> to the runner template.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+> ---
+> v2
+>   - make custom runners follow the legacy options
+> ---
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
