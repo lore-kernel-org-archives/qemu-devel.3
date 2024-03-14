@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54416C54E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E0BFC54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:24:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkmvb-0007NB-NB; Thu, 14 Mar 2024 11:23:31 -0400
+	id 1rkmvo-0007ia-1l; Thu, 14 Mar 2024 11:23:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rkmvS-0007J1-OX
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:23 -0400
+ id 1rkmvb-0007Nf-C2
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rkmvR-0003lV-Ey
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:22 -0400
+ id 1rkmvY-0003p7-VT
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710429799;
+ s=mimecast20190719; t=1710429808;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qbnvYYXtvyNILwnEwzPHkrZpJ1rSzEzW0RlVGP4LJxI=;
- b=KGINCvA9vJx8oXzQKoM4xXrhVaDuYw3wWhkpiw4H96C3sWCLjr/WMYLA2H77bknMrxsGmb
- NNnxirUkLEeflkJNHRi3/ziNCIf/+5jCdzU1oD9ZPF+t9BAFM6of2VvhifYpdKFV2+UpmK
- R2/sNHv4gIWXUhQsgiMOYXgXubcTDaw=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-552-pX15jfZhMJe2cDisQ_zFKQ-1; Thu, 14 Mar 2024 11:23:14 -0400
-X-MC-Unique: pX15jfZhMJe2cDisQ_zFKQ-1
+ bh=gu/myyffSH5c+2Tatf3S7yexqX/32ZFWbLbXva6hqGY=;
+ b=dVHFpsDyCjKU7hntiaw+7Hj1pZ0xFqzwo24dsMm5tSCBhKuZoJqSQ3YRD9op9dZQdpkrKk
+ FRDem9rjLpThXMtIm5fc97ESKkvwO1LfbEGr6hy4bkTDskL0CD3z03Qq1CJtlOL/ezArgB
+ JDfkjmWt+mxeP33039IEQRIvuLA6wlI=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-sAGy6iZhMsucnng5bv1JQw-1; Thu,
+ 14 Mar 2024 11:23:26 -0400
+X-MC-Unique: sAGy6iZhMsucnng5bv1JQw-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 775DD101CC6B
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 15:23:14 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1069F3C0D1A4
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 15:23:26 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A342616A9C;
- Thu, 14 Mar 2024 15:23:13 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 4B6A9111E5;
+ Thu, 14 Mar 2024 15:23:25 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com,
 	Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH v4 09/21] smbios: add smbios_add_usr_blob_size() helper
-Date: Thu, 14 Mar 2024 16:22:50 +0100
-Message-Id: <20240314152302.2324164-10-imammedo@redhat.com>
+Subject: [PATCH v4 20/21] tests: acpi: update expected SSDT.dimmpxm blob
+Date: Thu, 14 Mar 2024 16:23:01 +0100
+Message-Id: <20240314152302.2324164-21-imammedo@redhat.com>
 In-Reply-To: <20240314152302.2324164-1-imammedo@redhat.com>
 References: <20240314152302.2324164-1-imammedo@redhat.com>
 MIME-Version: 1.0
@@ -84,51 +84,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-it will be used by follow up patch when legacy handling
-is moved out into a separate file.
+address shift is caused by switch to 32-bit SMBIOS entry point
+which has slightly different size from 64-bit one and happens
+to trigger a bit different memory layout.
+
+Expected diff:
+
+-    Name (MEMA, 0x07FFE000)
++    Name (MEMA, 0x07FFF000)
 
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Acked-by: Ani Sinha <anisinha@redhat.com>
 ---
- hw/smbios/smbios.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ tests/data/acpi/q35/SSDT.dimmpxm            | Bin 1815 -> 1815 bytes
+ 2 files changed, 1 deletion(-)
 
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index a96e5cd839..d530667a9d 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -1411,6 +1411,14 @@ static bool save_opt_list(size_t *ndest, char ***dest, QemuOpts *opts,
-     return true;
- }
- 
-+static void smbios_add_usr_blob_size(size_t size)
-+{
-+    if (!usr_blobs_sizes) {
-+        usr_blobs_sizes = g_array_new(false, false, sizeof(size_t));
-+    }
-+    g_array_append_val(usr_blobs_sizes, size);
-+}
-+
- void smbios_entry_add(QemuOpts *opts, Error **errp)
- {
-     const char *val;
-@@ -1458,10 +1466,12 @@ void smbios_entry_add(QemuOpts *opts, Error **errp)
-             smbios_type4_count++;
-         }
- 
--        if (!usr_blobs_sizes) {
--            usr_blobs_sizes = g_array_new(false, false, sizeof(size_t));
--        }
--        g_array_append_val(usr_blobs_sizes, size);
-+        /*
-+         * preserve blob size for legacy mode so it could build its
-+         * blobs flavor from 'usr_blobs'
-+         */
-+        smbios_add_usr_blob_size(size);
-+
-         usr_blobs_len += size;
-         if (size > usr_table_max) {
-             usr_table_max = size;
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 81148a604f..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/q35/SSDT.dimmpxm",
+diff --git a/tests/data/acpi/q35/SSDT.dimmpxm b/tests/data/acpi/q35/SSDT.dimmpxm
+index 70f133412f5e0aa128ab210245a8de7304eeb843..9ea4e0d0ceaa8a5cbd706afb6d49de853fafe654 100644
+GIT binary patch
+delta 23
+ecmbQvH=U0wIM^jboSlJzam_|9E_UV*|JeaVTLvQl
+
+delta 23
+ecmbQvH=U0wIM^jboSlJzanD9BE_UVz|JeaVy9Ofw
+
 -- 
 2.39.3
 
