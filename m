@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6711C5475B
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 12:03:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4797DC5475B
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 12:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkjnW-0003Xr-Pz; Thu, 14 Mar 2024 08:03:00 -0400
+	id 1rkjwL-0005wd-8F; Thu, 14 Mar 2024 08:12:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rkjnF-0003Sx-Vj
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:02:48 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1rkjwG-0005w0-1o
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:12:00 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rkjms-0004Ye-9J
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:02:41 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a44e3176120so110668866b.1
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 05:02:05 -0700 (PDT)
+ id 1rkjw5-0006si-7N
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:11:52 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-33e17342ea7so515018f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 05:11:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710417722; x=1711022522; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710418304; x=1711023104; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eteaIqbh2amjcWhiYQPvrkofHijvapw8cdvP3axaxSY=;
- b=dk+dHtdMMZoLg7A3xW6f1bYLSEPFQb0rdjIhiEIke49bfsZBQqeJyCy5fcOR68OVsO
- pRMdLfr8RnXlW6LiN9DTtYXGSGBtHR+pRTuWBFcYY6r28Kqp5QMq6FPCd6XOmV2n3bAB
- YE1ZPw/LUHghejIyPopq126GvTfnxWhip6ir2vn+31TfBAmi7DKrRNeg2xYtC4NemwV0
- vYPGDTL3EkvL12aEtzVq+Q4s0HNx1EvJu/VcyYrR8ejAyrbsLM8Bu0iNEFdEQVxp+AJ3
- /8s85UpWK2cZoMlz7ix8fFq5UbuknONAGn7MNuCybNvrJ6qk5VYUeFSomVqvG0ZUw2pn
- PRtg==
+ bh=O5wGf6G6sEPiVspAgbQ1vNiXc8hIrQ09KCxRrHhUPDM=;
+ b=TC1aJ9NvwbiYUfbiicAmuyvbATGmPnWJCIDMcigsWUA4hrrShkhF64qQMmyo4rzXVq
+ LolkD0n1H1271oVZmR7f4dYeDqOEA09yNcAbXSB68OLBCLCzFtqoJVtkUaMLhJT+WIJg
+ QxWTiiqyRBwyWoFHfNnzB2I3v4EG4zl+rTT9miQE9oI/0SvIWhu/+pjzXEoGhOydX9cy
+ gwbQU+Heu1kvSxwf0RRarOtdJZVEZuzdVaW/jG2MJxS0SAYnT6bO5fBjXB74U0bv/4x5
+ qnlxBsB8HY+SC7jMXIlKDEFUqVlPZx5BAPqMbxpVTGnI3BTJZsD4BX5w7NDRSvvpPS4V
+ 0qmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710417722; x=1711022522;
+ d=1e100.net; s=20230601; t=1710418304; x=1711023104;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=eteaIqbh2amjcWhiYQPvrkofHijvapw8cdvP3axaxSY=;
- b=gaDEPTH1Y4cCisj7XGTjKT1+Y0wK8uIehi3R5/uJoFvWt7aFTllIDT1zcOi/gzScL8
- Gx6P3JkS+pLSVWkijApIjgkxXKz3CC5Julk4cnNFUesHKc974hM6ab7pxXYo4/Sr9/OS
- yp+PcUxI7A3HwWyPcrmBFXypbtCVlBbayWHb+xA/Ctub4Dt/mgYOYwiVadvT3IAb2fkm
- 2tQUpkOiemePUGU9g1oK4i7sClFOgpltnqSQKMfwgayONdwYP2KIEOhXop5qG0SXw3g/
- yuuxTu/hVX+DQGvd1rjKyFiA8V+Lhvw7Taqv3uK/PrRmC/ocBSxB5ILL2TXe+gqooWvd
- 9vpA==
-X-Gm-Message-State: AOJu0Yz4vVUQT7HqvTJ2vkBxyz7GGeXcnggTaIH89UIYCxc3h/VnGCK7
- 8zabAPRwWXl5t3/NpWIoAugyISmYHVjnd5bIT+VOTXt3Gn5XCKtPWnS4HmL6JDo=
-X-Google-Smtp-Source: AGHT+IGV7HLJ8zPywFR7P4NEn7mfhAxUuAW1V1X7PpberUvCJFvB2nbCnCdVCIqo7V3+FM30Rh9pQQ==
-X-Received: by 2002:a17:906:19c7:b0:a46:637c:db67 with SMTP id
- h7-20020a17090619c700b00a46637cdb67mr398584ejd.5.1710417721769; 
- Thu, 14 Mar 2024 05:02:01 -0700 (PDT)
+ bh=O5wGf6G6sEPiVspAgbQ1vNiXc8hIrQ09KCxRrHhUPDM=;
+ b=IfP/j1uC7a1F6sgF2S8V60hPSaAYOt9U+56dfDm2drlYyPtBqenv4Tq3LWlrbjm52b
+ ACjTxW77+KGYDlp9YkxiDtdiTQ05Vfw8NFUJKqgExjgkqTH8qPD6nKvIlyCFIkWkVT44
+ yxnhJNDYRZqhTlkqb60t650lRP3ltDenNEHm8wXsd6C5Fmh1cRd93+xW1Y2RbvB6KrYq
+ 8FM/9go5wqVf2InbQKh1zJ4HQLclkUwuYtv0iN3bDMg6wPhHidUPuHcvgJyjijooaYmH
+ DGNKqgKFdqMdL6wet1kziHSe7oQI1rTIn/T5BJN+4Bwj6DLePQ6UvlUael+Wf8qRkiDd
+ NSOQ==
+X-Gm-Message-State: AOJu0YyjgEWETSlzV42r48DgKg1lMhx/ECnHJpIxw3V6QDITfeZbiiXA
+ MfZUGftitA+6m6/4RFq6bVtJ47coSUv5JbBkdLwkiQBZPQbR+08c6ox6DX+fJyY=
+X-Google-Smtp-Source: AGHT+IGjiypbkF9/nz8zezjZQxET4lXjTx9jDCRsPRsFO8sUSqZbIrnfi46ekoCUj/rGluwkj0dcGQ==
+X-Received: by 2002:a5d:4d05:0:b0:33e:7003:b1bc with SMTP id
+ z5-20020a5d4d05000000b0033e7003b1bcmr1217692wrt.7.1710418304117; 
+ Thu, 14 Mar 2024 05:11:44 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a9-20020a170906244900b00a46641e728bsm643786ejb.113.2024.03.14.05.02.01
+ b16-20020adfee90000000b0033ec7182673sm636455wro.52.2024.03.14.05.11.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Mar 2024 05:02:01 -0700 (PDT)
+ Thu, 14 Mar 2024 05:11:43 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AF5285F890;
- Thu, 14 Mar 2024 12:02:00 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 408B15F890;
+ Thu, 14 Mar 2024 12:11:43 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Richard Henderson
- <richard.henderson@linaro.org>
-Subject: Re: [RFC PATCH v2] contrib/plugins: control flow plugin (WIP!)
-In-Reply-To: <20240314114907.88890-1-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?=
- message of "Thu, 14 Mar 2024 11:49:07 +0000")
-References: <20240314114907.88890-1-alex.bennee@linaro.org>
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: qemu-devel@nongnu.org,  Radoslaw Biernacki <rad@semihalf.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Leif Lindholm
+ <quic_llindhol@quicinc.com>,  Cleber Rosa <crosa@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Wainer dos Santos
+ Moschetta
+ <wainersm@redhat.com>,  Beraldo Leal <bleal@redhat.com>,  Brad Smith
+ <brad@comstyle.com>,  qemu-arm@nongnu.org
+Subject: Re: [PATCH v2 2/4] tests/avocado: drop virtio-rng from sbsa-ref tests
+In-Reply-To: <20240314-sbsa-ref-firmware-update-v2-2-b557c56559cd@linaro.org>
+ (Marcin Juszkiewicz's message of "Thu, 14 Mar 2024 10:23:25 +0100")
+References: <20240314-sbsa-ref-firmware-update-v2-0-b557c56559cd@linaro.org>
+ <20240314-sbsa-ref-firmware-update-v2-2-b557c56559cd@linaro.org>
 User-Agent: mu4e 1.12.1; emacs 29.2
-Date: Thu, 14 Mar 2024 12:02:00 +0000
-Message-ID: <87msr1ggxz.fsf@draig.linaro.org>
+Date: Thu, 14 Mar 2024 12:11:43 +0000
+Message-ID: <87h6h9gghs.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,142 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org> writes:
 
-> This is a simple control flow tracking plugin that uses the latest
-> inline and conditional operations to detect and track control flow
-> changes. It is currently an exercise at seeing how useful the changes
-> are.
+> sbsa-ref is supposed to emulate real hardware so virtio-rng-pci
+> does not fit here
+
+What is real anyway ;-)
+
+VirtIO devices exist in real life and I would argue for PCI the device
+appears very much like a normal PCI device. I could see the argument for
+avoiding virtio-mmio devices which are a lot more VM-only in flavour.
+
 >
-> Based-on: <20240312075428.244210-1-pierrick.bouvier@linaro.org>
-> Cc: Gustavo Romero <gustavo.romero@linaro.org>
-> Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Message-Id: <20240311153432.1395190-1-alex.bennee@linaro.org>
->
+> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 > ---
-> v2
->   - only need a single call back
->   - drop need for INSN_WIDTH
->   - still don't understand the early exits
+>  tests/avocado/machine_aarch64_sbsaref.py | 8 --------
+>  1 file changed, 8 deletions(-)
 >
-> I'm still seeing weirdness in the generated code, for example the
-> plugin reports "early exits" which doesn't make sense for a ret which
-> terminates a block:
->
->   addr: 0x403c88 hexchar: ret  (1/1)
->     early exits 1280
->     branches 1280
->       to 0x403d00 (639)
->       to 0x403d24 (639)
->
-<snip>
-> +
-> +/*
-> + * At the start of each block we need to resolve two things:
-> + *
-> + *  - is last_pc =3D=3D block_end, if not we had an early exit
-> + *  - is start of block last_pc + insn width, if not we jumped
-> + *
-> + * Once those are dealt with we can instrument the rest of the
-> + * instructions for their execution.
-> + *
-> + */
-> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-> +{
-> +    uint64_t pc =3D qemu_plugin_tb_vaddr(tb);
-> +    size_t insns =3D qemu_plugin_tb_n_insns(tb);
-> +    struct qemu_plugin_insn *last_insn =3D qemu_plugin_tb_get_insn(tb, i=
-nsns - 1);
-> +
-> +    /*
-> +     * check if we are executing linearly after the last block. We can
-> +     * handle both early block exits and normal branches in the
-> +     * callback if we hit it.
-> +     */
-> +    gpointer udata =3D GUINT_TO_POINTER(pc);
-> +    qemu_plugin_register_vcpu_tb_exec_cond_cb(
-> +        tb, vcpu_tb_branched_exec, QEMU_PLUGIN_CB_NO_REGS,
-> +        QEMU_PLUGIN_COND_NE, pc_after_block, pc, udata);
-> +
-> +    /*
-> +     * Now we can set start/end for this block so the next block can
-> +     * check where we are at.
-> +     */
-> +    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(tb,
-> +                                                      QEMU_PLUGIN_INLINE=
-_STORE_U64,
-> +                                                      end_block, qemu_pl=
-ugin_insn_vaddr(last_insn));
-> +    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(tb,
-> +                                                      QEMU_PLUGIN_INLINE=
-_STORE_U64,
-> +                                                      pc_after_block,
-> +                                                      qemu_plugin_insn_v=
-addr(last_insn) +
-> +
-> qemu_plugin_insn_size(last_insn));
-
-With the following:
-
-modified   contrib/plugins/cflow.c
-@@ -220,7 +220,7 @@ static void vcpu_tb_branched_exec(unsigned int cpu_inde=
-x, void *udata)
-     g_mutex_lock(&node->lock);
-=20
-     if (early_exit) {
--        fprintf(stderr, "%s: pc=3D%"PRIx64", epbc=3D%"PRIx64"
-+        fprintf(stderr, "%s: pc=3D%"PRIx64", epbc=3D%"PRIx64
-                 " npc=3D%"PRIx64", lpc=3D%"PRIx64", \n",
-                 __func__, pc, ebpc, npc, lpc);
-         node->early_exit++;
-@@ -264,6 +264,7 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct q=
-emu_plugin_tb *tb)
- {
-     uint64_t pc =3D qemu_plugin_tb_vaddr(tb);
-     size_t insns =3D qemu_plugin_tb_n_insns(tb);
-+    struct qemu_plugin_insn *first_insn =3D qemu_plugin_tb_get_insn(tb, 0);
-     struct qemu_plugin_insn *last_insn =3D qemu_plugin_tb_get_insn(tb, ins=
-ns - 1);
-=20
-     /*
-@@ -278,12 +279,13 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct=
- qemu_plugin_tb *tb)
-=20
-     /*
-      * Now we can set start/end for this block so the next block can
--     * check where we are at.
-+     * check where we are at. Do this on the first instruction and not
-+     * the TB so we don't get mixed up with above.
-      */
--    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(tb,
-+    qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(first_insn,
-                                                       QEMU_PLUGIN_INLINE_S=
-TORE_U64,
-                                                       end_block, qemu_plug=
-in_insn_vaddr(last_insn));
--    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(tb,
-+    qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(first_insn,
-                                                       QEMU_PLUGIN_INLINE_S=
-TORE_U64,
-                                                       pc_after_block,
-                                                       qemu_plugin_insn_vad=
-dr(last_insn) +
-
-The report looks more sane:
-
-  collected 9013 control flow nodes in the hash table
-    addr: 0x403c88 hexchar: ret  (0/1)
-      branches 1280=20=20=20=20=20=20
-        to 0x403d00 (639)=20=20=20=20=20=20=20=20=20=20=20=20
-        to 0x403d24 (639)
-
-So I think we need to think about preserving the ordering of
-instrumentation (at least from the same plugin) so we are not laying any
-API bear traps for users.
-
-I assume because loads and stores are involved we won't see the
-optimiser trying to swap stuff around.
+> diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/mac=
+hine_aarch64_sbsaref.py
+> index cbab793455..259225f15f 100644
+> --- a/tests/avocado/machine_aarch64_sbsaref.py
+> +++ b/tests/avocado/machine_aarch64_sbsaref.py
+> @@ -132,10 +132,6 @@ def boot_alpine_linux(self, cpu):
+>              cpu,
+>              "-drive",
+>              f"file=3D{iso_path},format=3Draw",
+> -            "-device",
+> -            "virtio-rng-pci,rng=3Drng0",
+> -            "-object",
+> -            "rng-random,id=3Drng0,filename=3D/dev/urandom",
+>          )
+>=20=20
+>          self.vm.launch()
+> @@ -179,10 +175,6 @@ def boot_openbsd73(self, cpu):
+>              cpu,
+>              "-drive",
+>              f"file=3D{img_path},format=3Draw",
+> -            "-device",
+> -            "virtio-rng-pci,rng=3Drng0",
+> -            "-object",
+> -            "rng-random,id=3Drng0,filename=3D/dev/urandom",
+>          )
+>=20=20
+>          self.vm.launch()
 
 --=20
 Alex Benn=C3=A9e
