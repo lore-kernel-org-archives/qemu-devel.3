@@ -4,101 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C320C54E60
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 17:23:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 335C4C54E5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 17:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkomh-0004iK-D6; Thu, 14 Mar 2024 13:22:27 -0400
+	id 1rkooN-0005UF-BX; Thu, 14 Mar 2024 13:24:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
- id 1rkomg-0004hW-0B; Thu, 14 Mar 2024 13:22:26 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ id 1rkooL-0005Tr-5U; Thu, 14 Mar 2024 13:24:09 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
- id 1rkomd-0007VD-NP; Thu, 14 Mar 2024 13:22:25 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ id 1rkooJ-0007hH-Co; Thu, 14 Mar 2024 13:24:08 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7E91721C11;
- Thu, 14 Mar 2024 17:22:21 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id AD61821C11;
+ Thu, 14 Mar 2024 17:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710436941; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=48U569SFn8PKr5C1IaFwLU5+q6DQk0Z8+yLxOYUzkAE=;
- b=WYrixRrTHFuoZZbfIzI0PiPuO57SyYFuDpAn3u3iw+mwKCcDhNjvfUU+AnVWIwhJtPhbgd
- kZc+Pwax8gy/SrSisQrIECKRwrb3LPiwIP5L8GEbPv6bNLwEt/wXn/1/mJm6pAwNpEs/Z+
- B5YmbW/JdalTJG1hjPJls5alACow0Ao=
+ t=1710437045; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=O8oILZZxiogqj3knyr94Y7Cgk4oJYKp5Rd1/mPw1kyY=;
+ b=xW8beGSrVDsP8ncc2y6wHcsdN7pH+nTW+kr86jreJV8tNrskEk1ZFY+OUrIDLXrc+FxeXW
+ 7HqAbZrVJQyvQJeDCw83SMLjYCQoPwUKrjWKWhHNI4Bkv/+LwqdGvnWuT6IlBo3K1N4I0l
+ Yzvdi8mDgTefvA+ZM+TGPcWAqoiBAT0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710436941;
+ s=susede2_ed25519; t=1710437045;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=48U569SFn8PKr5C1IaFwLU5+q6DQk0Z8+yLxOYUzkAE=;
- b=4IoCMp1NRoqK/84Xp124sBQ8zB7WoAGFntwPQVCjCjkUw3Um86e5v6MUwyBVX+L4eybfTD
- UrFJ58udF/EU3oAw==
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=O8oILZZxiogqj3knyr94Y7Cgk4oJYKp5Rd1/mPw1kyY=;
+ b=iicb+KCaQt6kyFjiTol9y43jTsqiF1pUqJnB20dMx6mXhbf2U1/V29FhxUJAsIRufZdMCA
+ 1o7iihZC1Hpm21Bw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710436941; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=48U569SFn8PKr5C1IaFwLU5+q6DQk0Z8+yLxOYUzkAE=;
- b=WYrixRrTHFuoZZbfIzI0PiPuO57SyYFuDpAn3u3iw+mwKCcDhNjvfUU+AnVWIwhJtPhbgd
- kZc+Pwax8gy/SrSisQrIECKRwrb3LPiwIP5L8GEbPv6bNLwEt/wXn/1/mJm6pAwNpEs/Z+
- B5YmbW/JdalTJG1hjPJls5alACow0Ao=
+ t=1710437045; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=O8oILZZxiogqj3knyr94Y7Cgk4oJYKp5Rd1/mPw1kyY=;
+ b=xW8beGSrVDsP8ncc2y6wHcsdN7pH+nTW+kr86jreJV8tNrskEk1ZFY+OUrIDLXrc+FxeXW
+ 7HqAbZrVJQyvQJeDCw83SMLjYCQoPwUKrjWKWhHNI4Bkv/+LwqdGvnWuT6IlBo3K1N4I0l
+ Yzvdi8mDgTefvA+ZM+TGPcWAqoiBAT0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710436941;
+ s=susede2_ed25519; t=1710437045;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=48U569SFn8PKr5C1IaFwLU5+q6DQk0Z8+yLxOYUzkAE=;
- b=4IoCMp1NRoqK/84Xp124sBQ8zB7WoAGFntwPQVCjCjkUw3Um86e5v6MUwyBVX+L4eybfTD
- UrFJ58udF/EU3oAw==
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=O8oILZZxiogqj3knyr94Y7Cgk4oJYKp5Rd1/mPw1kyY=;
+ b=iicb+KCaQt6kyFjiTol9y43jTsqiF1pUqJnB20dMx6mXhbf2U1/V29FhxUJAsIRufZdMCA
+ 1o7iihZC1Hpm21Bw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 31B071368B;
- Thu, 14 Mar 2024 17:22:21 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 79F521368B;
+ Thu, 14 Mar 2024 17:24:05 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id aRf1CU0y82UxTwAAD6G6ig
- (envelope-from <cfontana@suse.de>); Thu, 14 Mar 2024 17:22:21 +0000
-From: Claudio Fontana <cfontana@suse.de>
-To: Thomas Huth <thuth@redhat.com>, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Cc: Claudio Fontana <cfontana@suse.de>, qemu-devel <qemu-devel@nongnu.org>,
- qemu-s390x <qemu-s390x@nongnu.org>, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH] docs/s390: clarify even more that cpu-topology is KVM-only
-Date: Thu, 14 Mar 2024 18:22:18 +0100
-Message-Id: <20240314172218.16478-1-cfontana@suse.de>
-X-Mailer: git-send-email 2.26.2
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4lfRG7Uy82XITwAAD6G6ig
+ (envelope-from <cfontana@suse.de>); Thu, 14 Mar 2024 17:24:05 +0000
+Message-ID: <d3b18277-15fe-b9d3-cb1b-6b5a555b6954@suse.de>
+Date: Thu, 14 Mar 2024 18:24:04 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Subject: Re: question on s390x topology: KVM only, or also TCG?
+Content-Language: en-US
+To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Ilya Leoshkevich <iii@linux.ibm.com>, 
+ qemu-s390x <qemu-s390x@nongnu.org>
+References: <c2aa273a-6f49-2a02-fd4d-a3ddd37db388@suse.de>
+ <f0d5ec8d-02fe-4660-afcf-ad7b0af1dc13@redhat.com>
+ <93131e9b6b6292c42657ba338aa134f15a88081f.camel@linux.ibm.com>
+From: Claudio Fontana <cfontana@suse.de>
+In-Reply-To: <93131e9b6b6292c42657ba338aa134f15a88081f.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=WYrixRrT;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=4IoCMp1N
-X-Spamd-Bar: /
-X-Spamd-Result: default: False [-0.51 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- R_MISSING_CHARSET(2.50)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; BROKEN_CONTENT_TYPE(1.50)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_THREE(0.00)[3];
+	none
+X-Spamd-Result: default: False [-0.32 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-0.02)[54.75%];
+ FROM_HAS_DN(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- TO_DN_ALL(0.00)[]; MID_CONTAINS_FROM(1.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ TO_DN_ALL(0.00)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_TLS_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 7E91721C11
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=cfontana@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ MIME_TRACE(0.00)[0:+]; SUBJECT_ENDS_QUESTION(1.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=cfontana@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.534,
  RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -116,80 +122,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At least for now cpu-topology is implemented only for KVM.
+On 3/14/24 17:44, Nina Schoetterl-Glausch wrote:
+> On Thu, 2024-03-14 at 16:54 +0100, Thomas Huth wrote:
+>> On 14/03/2024 16.49, Claudio Fontana wrote:
+>>> Hello Pierre, Ilya,
+>>>
+>>> I have a question on the s390x "topology" feature and examples.
+>>>
+>>> Mainly, is this feature supposed to be KVM accelerator-only, or also available when using the TCG accelerator?
+>>
+>>   Hi Claudio!
+>>
+>> Pierre left IBM, please CC: Nina with regards to s390x topology instead.
+>>
+>> But with regards to your question, I think I can answer that, too: The 
+>> topology feature is currently working with KVM only, yes. It hasn't been 
+>> implemented for TCG yet.
+>>
+>>> (docs/devel/s390-cpu-topology.rst vs https://www.qemu.org/docs/master/system/s390x/cpu-topology.html)
+>>>
+>>> I see stsi-topology.c in target/s390x/kvm/ , so that part is clearly KVM-specific,
+>>>
+>>> but in hw/s390x/cpu-topology.c I read:
+>>>
+>>> "
+>>>   * - The first part in this file is taking care of all common functions
+>>>   *   used by KVM and TCG to create and modify the topology.
+> 
+> What Thomas said. Read this as the code in file being independent with respect to the accelerator,
+> it's just that TCG support is missing.
+>  
+> [...]
+>>>
+>>> So I would assume this is KVM-only, but then in the "Examples" section below I see the example:
+>>>
+>>> "
+>>> $ qemu-system-s390x -m 2G \
+>>>    -cpu gen16b,ctop=on \
+> 
+> TCG doesn't support this cpu ^ and so will refuse to run.
+> 
+>>>    -smp cpus=5,sockets=8,cores=4,maxcpus=32 \
+> 
+> When running with TCG, drawers & books are supported by -smp also, but well, you cannot do anything
+> with that.
+> 
+> [...]
+>>
+> 
 
-We already say this, but this tries to be more explicit,
-and also show it in the examples.
+Thank you for your responses Thomas and Nina,
+I have just sent a patch that tries to make it even more explicit.
 
-This adds a new reference in the introduction that we can point to,
-whenever we need to reference accelerators and how to select them.
+"[PATCH] docs/s390: clarify even more that cpu-topology is KVM-only"
 
-Signed-off-by: Claudio Fontana <cfontana@suse.de>
----
- docs/system/introduction.rst       |  2 ++
- docs/system/s390x/cpu-topology.rst | 14 ++++++++------
- 2 files changed, 10 insertions(+), 6 deletions(-)
+Thanks,
 
-diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
-index 51ac132d6c..746707eb00 100644
---- a/docs/system/introduction.rst
-+++ b/docs/system/introduction.rst
-@@ -1,6 +1,8 @@
- Introduction
- ============
- 
-+.. _Accelerators:
-+
- Virtualisation Accelerators
- ---------------------------
- 
-diff --git a/docs/system/s390x/cpu-topology.rst b/docs/system/s390x/cpu-topology.rst
-index 5133fdc362..ca344e273c 100644
---- a/docs/system/s390x/cpu-topology.rst
-+++ b/docs/system/s390x/cpu-topology.rst
-@@ -25,17 +25,19 @@ monitor polarization changes, see ``docs/devel/s390-cpu-topology.rst``.
- Prerequisites
- -------------
- 
--To use the CPU topology, you need to run with KVM on a s390x host that
--uses the Linux kernel v6.0 or newer (which provide the so-called
-+To use the CPU topology, you currently need to choose the KVM accelerator.
-+See :ref:`Accelerators` for more details about accelerators and how to select them.
-+
-+The s390x host needs to use a Linux kernel v6.0 or newer (which provides the so-called
- ``KVM_CAP_S390_CPU_TOPOLOGY`` capability that allows QEMU to signal the
- CPU topology facility via the so-called STFLE bit 11 to the VM).
- 
- Enabling CPU topology
- ---------------------
- 
--Currently, CPU topology is only enabled in the host model by default.
-+Currently, CPU topology is enabled by default only in the "host" cpu model.
- 
--Enabling CPU topology in a CPU model is done by setting the CPU flag
-+Enabling CPU topology in another CPU model is done by setting the CPU flag
- ``ctop`` to ``on`` as in:
- 
- .. code-block:: bash
-@@ -132,7 +134,7 @@ In the following machine we define 8 sockets with 4 cores each.
- 
- .. code-block:: bash
- 
--  $ qemu-system-s390x -m 2G \
-+  $ qemu-system-s390x -accel kvm -m 2G \
-     -cpu gen16b,ctop=on \
-     -smp cpus=5,sockets=8,cores=4,maxcpus=32 \
-     -device host-s390x-cpu,core-id=14 \
-@@ -227,7 +229,7 @@ with vertical high entitlement.
- 
- .. code-block:: bash
- 
--  $ qemu-system-s390x -m 2G \
-+  $ qemu-system-s390x -accel kvm -m 2G \
-     -cpu gen16b,ctop=on \
-     -smp cpus=1,sockets=8,cores=4,maxcpus=32 \
-     \
--- 
-2.26.2
-
+Claudio
 
