@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E60C54E60
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 14:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C480DC54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 14:57:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkmUv-0006IH-Ig; Thu, 14 Mar 2024 10:55:57 -0400
+	id 1rkmW2-0006nV-MY; Thu, 14 Mar 2024 10:57:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rkmUt-0006Hl-VB
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 10:55:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rkmUs-0006hi-38
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 10:55:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710428151;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=fSMLfDG4VeMZCthGc79Fntkf0/HoTmUlrk/uagO1Z1E=;
- b=Xqs0MJVoL3d/m37Hw/wwOGbUuZhnuM/cDKfhKYt21VNhxVIla01t+QTOUUtTlAeYxYaoRe
- DxQwUu5ClHhmCkl12ydxXs4PCX1cYjAtGznauh5MX2nRpi7qCo5RLBpxstyDSzfU+/aBeP
- mb3xhRZeOhOUBK+trPeO5prWC8QWWAA=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-ciKTej8ZMYeyKkug051zwg-1; Thu, 14 Mar 2024 10:55:50 -0400
-X-MC-Unique: ciKTej8ZMYeyKkug051zwg-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-60a0815e3f9so16694677b3.2
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 07:55:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rkmVx-0006mT-SD
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 10:57:02 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rkmVv-0007Ah-Te
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 10:57:01 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a467739e1f0so63085066b.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 07:56:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710428218; x=1711033018; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=X2hzatiBoTg+dIRKPqDZQyDL99J0DoTyOFQorprLg8I=;
+ b=AkBrCY9GoykOEaFVGojNe9/fl9T5XpyM2tBNACW/UyXd52J9jXdWdlGf4ZT4w35NYI
+ nrISlSsZ6EIIwVxiiBQuIjCPWM65Wa8wNnlMG82vArCpQFNgojt88SrtaLb/9b4xmK5G
+ D+2kgTDIFuDNp0yJai6y03ToQWo1ntwHGYeI4fZVlU38Qu+3inISGv0t99H0Lf1p26sm
+ K2sw+gpY6OQD2DJoviAbubHJXykk1ePZ7kNuWzuu9SH5qRJtt7u9fLG8LvmznxwJ5EpZ
+ oah+RYcresAWTiUyp79HFD3sd3trXvRGtBXi55iw6qkt8WWSDk2tHu6ezRXL8OGY+LCX
+ a6DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710428150; x=1711032950;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fSMLfDG4VeMZCthGc79Fntkf0/HoTmUlrk/uagO1Z1E=;
- b=RQilFAWq09qaMw7xT1H5eY5pZAD8Tn7zDmqtQZu6g2VkD96fl0r5oPkCt0/Kf6ko+w
- eQxiOJxhUX0EHW0NCyRaPZYxt/Vk/JNJ6H4ZakUTJMz+Xxsj9FpVvhTZfVScNnNVvAkl
- W/BIDE/LOdvtfUEC4LApwj/NUJGmrV9sVykvmLSuFJH8atgIM4C7pdMW6X2wEGnZVa5c
- wKkZDNRmTDIrfcsI6XOxTaEZkL6QKFVXKpQkhTpD+amnmzoOJdp4uIarH0FnAGlLzmUN
- 4S5Fpm+fPBeObK8B6k5bzTvk9VwhD0JVykafSrvo1OQsVqb2yDlB06Y3JGq3JT5dvygI
- S6bg==
+ d=1e100.net; s=20230601; t=1710428218; x=1711033018;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=X2hzatiBoTg+dIRKPqDZQyDL99J0DoTyOFQorprLg8I=;
+ b=hKUwIN8HgYpKKhFTbjDt+seXJhVlb7cewdJYOmKLGVoGAHf+tfI4C5omrbyY/cuy4Q
+ 777QlYp3f+p+vbwmA8a1r5mfqmGY3Ye4tK1XnyPvZP36mPCwexoSPt1rHJ3fOHm3pAFd
+ j/rRzBFGVtNX2Wpf6Sho1pmLJKxXukOJUssLtn9npKinKszRi1InfVG2u7ftGaw9irsO
+ oRm9PycN/5tpUcUOh0e2RrzeQ1NXcBXTB9fU9nWAvsumSTwAtZXXlW+fQbLLDyqoy//h
+ IMjCTdIdOQK3YlxIEbQQbx/+lm0EgPrfC0v4Y08I7Ik7nC9z5QnBbNErE+29KlsmBacE
+ 0Ypw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpIyHGZLuzFZ+ttpBv/0a0usTusOpe++jXxkhO2MqdB2WTdFCBkk3YU6TDnwvHxAxWNVuHJaGlsqBr5VHST5frT82QC+8=
-X-Gm-Message-State: AOJu0YwPUG5JQQ0c8Y0+838Cu+5DD2m6rbU6/Cje+7GSed1vtmRX8ktA
- oshOY8WSSEqL21CswVeel7NVp1hiq48sAZUk6OIqraPfcYc4JA2LGbtSSXnXefpRDhJylNkk6PD
- x6JNv1IOuyfmen4Plq1yLH6Z0zuyiwCfixySS+keNDaI955TFoLY2qJh1NkqA7+letoak4mr32u
- gEr+R2PJT4sSjXVYpmVKyzlFsUSnA=
-X-Received: by 2002:a25:ef49:0:b0:dcf:2cfe:c82e with SMTP id
- w9-20020a25ef49000000b00dcf2cfec82emr2088873ybm.55.1710428150013; 
- Thu, 14 Mar 2024 07:55:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEO+C19NHczw78koKdxn35FiZkSA/rnbsEfcPiyp904M912CAJ8aQXqGGuNjPhxlUByyKIeZb18nvXumRu/e6c=
-X-Received: by 2002:a25:ef49:0:b0:dcf:2cfe:c82e with SMTP id
- w9-20020a25ef49000000b00dcf2cfec82emr2088852ybm.55.1710428149733; Thu, 14 Mar
- 2024 07:55:49 -0700 (PDT)
+ AJvYcCUrCjXVwcSLOqM6Wftxs1mRZamASt+EGlhv+QJFP+xr7R5e+RfbNbP+02KnthCAiJ8nvl+8FafRxl0XmAX2T6rFhA6czq8=
+X-Gm-Message-State: AOJu0YzIjo5UcPM9yz9g41YA4cLgra2rUcGSpGg8FaEE6+89PdkyLegA
+ wspV926l7ZqzCqQq4CUFaqdvNmbSkzVOlC/8T879AQfA/gmrgofWsfnxMN4oXI4=
+X-Google-Smtp-Source: AGHT+IEK8TaTZ+bBVmdw6evvc1QcHRrd5sh5e/8RJmetbo4r7a5GK6uvGTNH5UlK/Zt+BvpYCh4uOg==
+X-Received: by 2002:a17:906:e253:b0:a44:e722:db8f with SMTP id
+ gq19-20020a170906e25300b00a44e722db8fmr136070ejb.41.1710428218201; 
+ Thu, 14 Mar 2024 07:56:58 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ u6-20020a1709063b8600b00a45f2dc6795sm782303ejf.137.2024.03.14.07.56.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Mar 2024 07:56:57 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0DCF85F785;
+ Thu, 14 Mar 2024 14:56:57 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ qemu-devel@nongnu.org,  Radoslaw Biernacki <rad@semihalf.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Leif Lindholm
+ <quic_llindhol@quicinc.com>,  Cleber Rosa <crosa@redhat.com>,  Wainer dos
+ Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal <bleal@redhat.com>,
+ Brad Smith <brad@comstyle.com>,  qemu-arm@nongnu.org
+Subject: Re: [PATCH v2 3/4] tests/avocado: use OpenBSD 7.4 for sbsa-ref
+In-Reply-To: <7da62f7f-3e87-470b-b089-1bfe5aa97555@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 14 Mar 2024 15:39:44
+ +0100")
+References: <20240314-sbsa-ref-firmware-update-v2-0-b557c56559cd@linaro.org>
+ <20240314-sbsa-ref-firmware-update-v2-3-b557c56559cd@linaro.org>
+ <87bk7hggcz.fsf@draig.linaro.org>
+ <7da62f7f-3e87-470b-b089-1bfe5aa97555@linaro.org>
+User-Agent: mu4e 1.12.1; emacs 29.2
+Date: Thu, 14 Mar 2024 14:56:57 +0000
+Message-ID: <87ttl8g8ue.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240313115412.3334962-1-jonah.palmer@oracle.com>
- <20240313115412.3334962-2-jonah.palmer@oracle.com>
- <CACGkMEv6bRgrV_nvZK5Tb89CvTP5Kpyj4+na4Q9F=xBOJ6=8sw@mail.gmail.com>
- <b0e4a124-cced-4cbc-9f89-b8967f5a0b2c@oracle.com>
-In-Reply-To: <b0e4a124-cced-4cbc-9f89-b8967f5a0b2c@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 14 Mar 2024 15:55:13 +0100
-Message-ID: <CAJaqyWcmzuY5R8hC-zwp_mEK40sYgwHU0vhewKziQLsY2EnpLg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] virtio/virtio-pci: Handle extra notification data
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org, mst@redhat.com, 
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, raphael@enfabrica.net, 
- kwolf@redhat.com, hreitz@redhat.com, pasic@linux.ibm.com, 
- borntraeger@linux.ibm.com, farman@linux.ibm.com, thuth@redhat.com, 
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com, 
- cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com, 
- qemu-block@nongnu.org, qemu-s390x@nongnu.org, leiyang@redhat.com, 
- schalla@marvell.com, vattunuru@marvell.com, jerinj@marvell.com, 
- dtatulea@nvidia.com, virtio-fs@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,145 +108,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 14, 2024 at 1:16=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
->
->
->
-> On 3/13/24 11:01 PM, Jason Wang wrote:
-> > On Wed, Mar 13, 2024 at 7:55=E2=80=AFPM Jonah Palmer <jonah.palmer@orac=
-le.com> wrote:
-> >>
-> >> Add support to virtio-pci devices for handling the extra data sent
-> >> from the driver to the device when the VIRTIO_F_NOTIFICATION_DATA
-> >> transport feature has been negotiated.
-> >>
-> >> The extra data that's passed to the virtio-pci device when this
-> >> feature is enabled varies depending on the device's virtqueue
-> >> layout.
-> >>
-> >> In a split virtqueue layout, this data includes:
-> >>   - upper 16 bits: shadow_avail_idx
-> >>   - lower 16 bits: virtqueue index
-> >>
-> >> In a packed virtqueue layout, this data includes:
-> >>   - upper 16 bits: 1-bit wrap counter & 15-bit shadow_avail_idx
-> >>   - lower 16 bits: virtqueue index
-> >>
-> >> Tested-by: Lei Yang <leiyang@redhat.com>
-> >> Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> >> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-> >> ---
-> >>   hw/virtio/virtio-pci.c     | 10 +++++++---
-> >>   hw/virtio/virtio.c         | 18 ++++++++++++++++++
-> >>   include/hw/virtio/virtio.h |  1 +
-> >>   3 files changed, 26 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> >> index cb6940fc0e..0f5c3c3b2f 100644
-> >> --- a/hw/virtio/virtio-pci.c
-> >> +++ b/hw/virtio/virtio-pci.c
-> >> @@ -384,7 +384,7 @@ static void virtio_ioport_write(void *opaque, uint=
-32_t addr, uint32_t val)
-> >>   {
-> >>       VirtIOPCIProxy *proxy =3D opaque;
-> >>       VirtIODevice *vdev =3D virtio_bus_get_device(&proxy->bus);
-> >> -    uint16_t vector;
-> >> +    uint16_t vector, vq_idx;
-> >>       hwaddr pa;
-> >>
-> >>       switch (addr) {
-> >> @@ -408,8 +408,12 @@ static void virtio_ioport_write(void *opaque, uin=
-t32_t addr, uint32_t val)
-> >>               vdev->queue_sel =3D val;
-> >>           break;
-> >>       case VIRTIO_PCI_QUEUE_NOTIFY:
-> >> -        if (val < VIRTIO_QUEUE_MAX) {
-> >> -            virtio_queue_notify(vdev, val);
-> >> +        vq_idx =3D val;
-> >> +        if (vq_idx < VIRTIO_QUEUE_MAX) {
-> >> +            if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_D=
-ATA)) {
-> >> +                virtio_queue_set_shadow_avail_data(vdev, val);
-> >> +            }
-> >> +            virtio_queue_notify(vdev, vq_idx);
-> >>           }
-> >>           break;
-> >>       case VIRTIO_PCI_STATUS:
-> >> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> >> index d229755eae..bcb9e09df0 100644
-> >> --- a/hw/virtio/virtio.c
-> >> +++ b/hw/virtio/virtio.c
-> >> @@ -2255,6 +2255,24 @@ void virtio_queue_set_align(VirtIODevice *vdev,=
- int n, int align)
-> >>       }
-> >>   }
-> >>
-> >> +void virtio_queue_set_shadow_avail_data(VirtIODevice *vdev, uint32_t =
-data)
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-Maybe I didn't explain well, but I think it is better to pass directly
-idx to a VirtQueue *. That way only the caller needs to check for a
-valid vq idx, and (my understanding is) the virtio.c interface is
-migrating to VirtQueue * use anyway.
-
-> >> +{
-> >> +    /* Lower 16 bits is the virtqueue index */
-> >> +    uint16_t i =3D data;
-> >> +    VirtQueue *vq =3D &vdev->vq[i];
-> >> +
-> >> +    if (!vq->vring.desc) {
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
-> >> +        vq->shadow_avail_wrap_counter =3D (data >> 31) & 0x1;
-> >> +        vq->shadow_avail_idx =3D (data >> 16) & 0x7FFF;
-> >> +    } else {
-> >> +        vq->shadow_avail_idx =3D (data >> 16);
-> >
-> > Do we need to do a sanity check for this value?
-> >
-> > Thanks
-> >
+> On 14/3/24 13:14, Alex Benn=C3=A9e wrote:
+>> Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org> writes:
+>>=20
+>>> 7.4 was released in October 2023, time to update before 7.3 gets droppe=
+d.
+>>>
+>>> Disabled tests for 'max' cpu as OpenBSD fails there.
+>>>
+>>> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+>>> ---
+>>>   tests/avocado/machine_aarch64_sbsaref.py | 47 +++++++++++++++++++++++=
+---------
+>>>   1 file changed, 34 insertions(+), 13 deletions(-)
+>>>
+>>> diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/m=
+achine_aarch64_sbsaref.py
+>>> index 259225f15f..0e52dc5854 100644
+>>> --- a/tests/avocado/machine_aarch64_sbsaref.py
+>>> +++ b/tests/avocado/machine_aarch64_sbsaref.py
+>>> @@ -159,14 +159,14 @@ def test_sbsaref_alpine_linux_max(self):
+>>>       # This tests the whole boot chain from EFI to Userspace
+>>>       # We only boot a whole OS for the current top level CPU and GIC
+>>>       # Other test profiles should use more minimal boots
+>>> -    def boot_openbsd73(self, cpu):
+>>> +    def boot_openbsd(self, cpu):
+>>>           self.fetch_firmware()
+>>>             img_url =3D (
+>>> -            "https://cdn.openbsd.org/pub/OpenBSD/7.3/arm64/miniroot73.=
+img"
+>>> +            "https://cdn.openbsd.org/pub/OpenBSD/7.4/arm64/miniroot74.=
+img"
+>>>           )
+>>>   -        img_hash =3D
+>>> "7fc2c75401d6f01fbfa25f4953f72ad7d7c18650056d30755c44b9c129b707e5"
+>>> +        img_hash =3D "7b08b2ce081cff6408d183f7152ddcfd2779912104866e4f=
+df6ae2d864b51142"
+>>>           img_path =3D self.fetch_asset(img_url, algorithm=3D"sha256", =
+asset_hash=3Dimg_hash)
+>>>             self.vm.set_console()
+>>> @@ -180,23 +180,44 @@ def boot_openbsd73(self, cpu):
+>>>           self.vm.launch()
+>>>           wait_for_console_pattern(self,
+>>>                                    "Welcome to the OpenBSD/arm64"
+>>> -                                 " 7.3 installation program.")
+>>> +                                 " 7.4 installation program.")
+>>>   -    def test_sbsaref_openbsd73_cortex_a57(self):
+>>> +    def test_sbsaref_openbsd_cortex_a57(self):
+>>>           """
+>>>           :avocado: tags=3Dcpu:cortex-a57
+>>> +        :avocado: tags=3Dos:openbsd
+>>>           """
+>>> -        self.boot_openbsd73("cortex-a57")
+>>> +        self.boot_openbsd("cortex-a57")
+>>>   -    def test_sbsaref_openbsd73_neoverse_n1(self):
+>>> +    def test_sbsaref_openbsd_neoverse_n1(self):
+>>>           """
+>>>           :avocado: tags=3Dcpu:neoverse-n1
+>>> +        :avocado: tags=3Dos:openbsd
+>>>           """
+>>> -        self.boot_openbsd73("neoverse-n1")
+>>> +        self.boot_openbsd("neoverse-n1")
+>>>   -    def test_sbsaref_openbsd73_max(self):
+>>> -        """
+>>> -        :avocado: tags=3Dcpu:max
+>>> -        """
+>>> -        self.boot_openbsd73("max")
+>>> +# OpenBSD 7.4 does not boot on current max cpu.
+>>> +#
+>>> +#   def test_sbsaref_openbsd_max_pauth_off(self):
+>>> +#       """
+>>> +#       :avocado: tags=3Dcpu:max
+>>> +#       :avocado: tags=3Dos:openbsd
+>>> +#       """
+>>> +#       self.boot_openbsd("max,pauth=3Doff")
+>> If we are not going to delete the entries then at least use a @skip
+>> instead of commenting. Maybe:
+>>    @skip("Potential un-diagnosed upstream bug?")
 >
-> It can't hurt, right? What kind of check did you have in mind?
+> Daniel or Peter suggested to open a GitLab issue and use
 >
-> if (vq->shadow_avail_idx >=3D vq->vring.num)
+>     @skip("https://gitlab.com/qemu-project/qemu/-/issues/xyz")
 >
+> to track progress.
 
-I'm a little bit lost too. shadow_avail_idx can take all uint16_t
-values. Maybe you meant checking for a valid vq index, Jason?
+That's a good idea. Are you going to respin?
 
-Thanks!
-
-> Or something else?
 >
-> >> +    }
-> >> +}
-> >> +
-> >>   static void virtio_queue_notify_vq(VirtQueue *vq)
-> >>   {
-> >>       if (vq->vring.desc && vq->handle_output) {
-> >> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-> >> index c8f72850bc..53915947a7 100644
-> >> --- a/include/hw/virtio/virtio.h
-> >> +++ b/include/hw/virtio/virtio.h
-> >> @@ -335,6 +335,7 @@ void virtio_queue_update_rings(VirtIODevice *vdev,=
- int n);
-> >>   void virtio_init_region_cache(VirtIODevice *vdev, int n);
-> >>   void virtio_queue_set_align(VirtIODevice *vdev, int n, int align);
-> >>   void virtio_queue_notify(VirtIODevice *vdev, int n);
-> >> +void virtio_queue_set_shadow_avail_data(VirtIODevice *vdev, uint32_t =
-data);
-> >>   uint16_t virtio_queue_vector(VirtIODevice *vdev, int n);
-> >>   void virtio_queue_set_vector(VirtIODevice *vdev, int n, uint16_t vec=
-tor);
-> >>   int virtio_queue_set_host_notifier_mr(VirtIODevice *vdev, int n,
-> >> --
-> >> 2.39.3
-> >>
-> >
->
+>> but it would be nice to figure out exactly where is breaks.
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
