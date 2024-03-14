@@ -4,87 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 466FDC5475B
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 09:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC5B7C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 11:17:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkhhC-0004Zd-Qh; Thu, 14 Mar 2024 05:48:19 -0400
+	id 1rkj4p-0004Vc-Vt; Thu, 14 Mar 2024 07:16:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rkhh7-0004ZT-So
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 05:48:13 -0400
-Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rkhgz-0004BP-4b
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 05:48:13 -0400
-Received: by mail-oo1-xc2e.google.com with SMTP id
- 006d021491bc7-5a467dae51dso15099eaf.1
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 02:48:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710409684; x=1711014484; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UkHUxYPI2dZFHxkr8oO6zxZLSGowwUek3In1UIeTNZM=;
- b=TAr0Ra5FtlPMh1GaijK/zV/JztmhE+Xsi4rDS/eTwHHaJDdPv4RMKFEGTCtNbq7Nrg
- vDRpvU+c+1k9OlhxrwYuwE20bzaPnRV+2C326DTr9aMs7OohHa0v9HjWiDsMO95ixIwh
- WDdBvF1XmfI9Y3eLMKHUs1zr6a7DgszZPzhZjPuk7ESv1WffIFgzaPeU06IjB1DzabP/
- hWIKZResXdBtvCwdZr+eQ/MbzTtNGAFqcbSwFRLVQzkUuDngGPSdEytDCQZci0FKd3OS
- uXq42p7xoRjyzoyAM+uq3oN0iUVqVz2/zYIZmYK6HEATYLQILgOc29yutHQz+45Sv23r
- pW2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710409684; x=1711014484;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UkHUxYPI2dZFHxkr8oO6zxZLSGowwUek3In1UIeTNZM=;
- b=hXz59CRsMVrKV7odF6RYs3MgTsQtwE8J7b5NIL3Xeg4L1vkp6lNRSLinqCtGh4cMMN
- UiaCXvXQzEFSbAAJaPkoyaWpkf9rCp3jIYLBQHvyBSInWF4klIoyTX70Q835YJPJvk9p
- DSwjfHIMYZ3tymhuvnvrxOi8gdsH7h4HI2qAs4lRi6lZR/tcsSpibMRM0IZ8Tb0LROJF
- 4U4yDowgXlTlR1q+7zssqC/dOTBWp9Xkge1JL4aCim55Gw9RrV7wWkXznuv7RP1vn9R1
- nmqpvCf9IT47oitXGofZR2OM4Q9I2IZx+T8kUoDw/qnmNLeYdKb+B2N24Xy7PtstYXyD
- 3Bkw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3WfkPo7mHL6lnBvYKcwNgEbKQq2BmSAIHpqEua7xOykO1PzwUPVG/uItgqiQ+i3GRI8yZg19Regl7i9unXsdSBR3X2Fc=
-X-Gm-Message-State: AOJu0YwWx0pYWZo29yTLtk/ZlaxZKcXJqStcwu+zj1KmjxnHhxPbu+IX
- Y8hdS2C+ZaaMdXYIjoNGGXu5DrlEG/scjcKNZLnE6KkH+aWEhUgghx4LmUaXxDQ=
-X-Google-Smtp-Source: AGHT+IFDdRAgivjHn/vqUUfn3LRaoVwA7EQPvSukMLeLQDiz5N9gF/bw6layj63H50nk8fCeX5PfGQ==
-X-Received: by 2002:a05:6359:4584:b0:17e:a368:441b with SMTP id
- no4-20020a056359458400b0017ea368441bmr1663418rwb.0.1710409683798; 
- Thu, 14 Mar 2024 02:48:03 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- x8-20020a63fe48000000b005dc36279d6dsm306636pgj.73.2024.03.14.02.48.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Mar 2024 02:48:03 -0700 (PDT)
-Message-ID: <5fa68b7f-9eb7-4817-ad63-7f8e9ca09d7e@ventanamicro.com>
-Date: Thu, 14 Mar 2024 06:47:58 -0300
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1rkj4k-0004Uv-Vm
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 07:16:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1rkj4h-0003KU-L7
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 07:16:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710414998;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=cdX6ov4AtD+Ch6QCrlz5w4MVVmmUapIHlamKpnx3uuk=;
+ b=clPcUmtxUWPwrtRxBwh2Oh/uUlBpskYUk0eR3OgnYcipSfy95eOkK2c5LG8N3eaJZ5Ne1V
+ ucGAOunQUxZWkH3D8X8/zYbfnAqcs5spk7A5PSDBTrhpJmIn68cSsv34hcRPP1VEt0L2Ur
+ jNhYkmi13TnqvwEpZdAb89ROsQLluXM=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-301-rIqjPqmOOR6NkcT4-KWkqQ-1; Thu, 14 Mar 2024 07:16:36 -0400
+X-MC-Unique: rIqjPqmOOR6NkcT4-KWkqQ-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6F392800264;
+ Thu, 14 Mar 2024 11:16:36 +0000 (UTC)
+Received: from kaapi.redhat.com (unknown [10.67.24.5])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id C5AEE111E3F3;
+ Thu, 14 Mar 2024 11:16:33 +0000 (UTC)
+From: Prasad Pandit <ppandit@redhat.com>
+To: stefanha@redhat.com
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
+ mtosatti@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH v4] linux-aio: add IO_CMD_FDSYNC command support
+Date: Thu, 14 Mar 2024 16:46:28 +0530
+Message-ID: <20240314111628.1508636-1-ppandit@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 v14 4/8] target/riscv/vector_helpers: do early
- exit when vstart >= vl
-Content-Language: en-US
-To: Max Chou <max.chou@sifive.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- richard.henderson@linaro.org, philmd@linaro.org
-References: <20240313220141.427730-1-dbarboza@ventanamicro.com>
- <20240313220141.427730-5-dbarboza@ventanamicro.com>
- <9c04593a-3909-47b4-92f7-4195582a8e83@sifive.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <9c04593a-3909-47b4-92f7-4195582a8e83@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oo1-xc2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,61 +78,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Prasad Pandit <pjp@fedoraproject.org>
 
+Libaio defines IO_CMD_FDSYNC command to sync all outstanding
+asynchronous I/O operations, by flushing out file data to the
+disk storage.
 
-On 3/14/24 00:52, Max Chou wrote:
-> Hi Daniel,
-> 
-> According the v spec section 15.2 & 15.3.
-> 
-> "The vcpop.m instruction writes x[rd] even if vl=0 (with the value 0, since no mask elements are active).
->    Traps on vcpop.m are always reported with a vstart of 0. The vcpop.m instruction will raise an illegal instruction exception if vstart is non-zero."
-> 
-> "The vfirst.m instruction writes x[rd] even if vl=0 (with the value -1, since no mask elements are active).
->   Traps on vfirst are always reported with a vstart of 0. The vfirst instruction will raise an illegal instruction exception if vstart is non-zero."
-> 
-> Both the vcpop.m and vfirst.m instructions will raise illegal instruction exception with non-zero vstart.
-> 
-> And currently both the trans_vcpop_m and trans_vfirst_m translate functions check the vstart_eq_zero flag.
-> So I think the early exit checking in the vcpop.m and vfirstm helper functions may be redundant.
-> 
->> @@ -4585,6 +4641,11 @@ target_ulong HELPER(vcpop_m)(void *v0, void *vs2, CPURISCVState *env,
->>       uint32_t vl = env->vl;
->>       int i;
->>   
->> +    if (env->vstart >= env->vl) {
->> +        env->vstart = 0;
->> +        return 0;
->> +    }
->> +
->>       for (i = env->vstart; i < vl; i++) {
->>           if (vm || vext_elem_mask(v0, i)) {
->>               if (vext_elem_mask(vs2, i)) {
-> 
-> According v spec section 15.3
-> 
-> ""The vfirst.m instruction writes x[rd] even if vl=0 (with the value -1, since no mask elements are active)."
-> 
-> If both the vstart and vl are 0 here, the early exit checking will return the wrong value 0 (the return value should be -1) here.
+Enable linux-aio to submit such aio request. This helps to
+reduce latency induced via pthread_create calls by
+thread-pool (aio=threads).
 
-Let's just remove these early exits from both vcpop.m and vfirst.m functions then.
+Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+---
+ block/file-posix.c      |  7 +++++++
+ block/linux-aio.c       | 21 ++++++++++++++++++++-
+ include/block/raw-aio.h |  1 +
+ 3 files changed, 28 insertions(+), 1 deletion(-)
 
-Thanks,
+v4: New boolean field to indicate if aio_fdsync is available or not.
+    It is set at file open time and checked before AIO_FLUSH call.
+  - https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg03701.html
 
-Daniel
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 35684f7e21..78a8cea03b 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -159,6 +159,7 @@ typedef struct BDRVRawState {
+     bool has_discard:1;
+     bool has_write_zeroes:1;
+     bool use_linux_aio:1;
++    bool has_laio_fdsync:1;
+     bool use_linux_io_uring:1;
+     int page_cache_inconsistent; /* errno from fdatasync failure */
+     bool has_fallocate;
+@@ -718,6 +719,7 @@ static int raw_open_common(BlockDriverState *bs, QDict *options,
+         ret = -EINVAL;
+         goto fail;
+     }
++    s->has_laio_fdsync = laio_has_fdsync(s->fd);
+ #else
+     if (s->use_linux_aio) {
+         error_setg(errp, "aio=native was specified, but is not supported "
+@@ -2599,6 +2601,11 @@ static int coroutine_fn raw_co_flush_to_disk(BlockDriverState *bs)
+     if (raw_check_linux_io_uring(s)) {
+         return luring_co_submit(bs, s->fd, 0, NULL, QEMU_AIO_FLUSH);
+     }
++#endif
++#ifdef CONFIG_LINUX_AIO
++    if (s->has_laio_fdsync && raw_check_linux_aio(s)) {
++        return laio_co_submit(s->fd, 0, NULL, QEMU_AIO_FLUSH, 0);
++    }
+ #endif
+     return raw_thread_pool_submit(handle_aiocb_flush, &acb);
+ }
+diff --git a/block/linux-aio.c b/block/linux-aio.c
+index ec05d946f3..e3b5ec9aba 100644
+--- a/block/linux-aio.c
++++ b/block/linux-aio.c
+@@ -384,6 +384,9 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
+     case QEMU_AIO_READ:
+         io_prep_preadv(iocbs, fd, qiov->iov, qiov->niov, offset);
+         break;
++    case QEMU_AIO_FLUSH:
++        io_prep_fdsync(iocbs, fd);
++        break;
+     /* Currently Linux kernel does not support other operations */
+     default:
+         fprintf(stderr, "%s: invalid AIO request type 0x%x.\n",
+@@ -412,7 +415,7 @@ int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
+     AioContext *ctx = qemu_get_current_aio_context();
+     struct qemu_laiocb laiocb = {
+         .co         = qemu_coroutine_self(),
+-        .nbytes     = qiov->size,
++        .nbytes     = qiov ? qiov->size : 0,
+         .ctx        = aio_get_linux_aio(ctx),
+         .ret        = -EINPROGRESS,
+         .is_read    = (type == QEMU_AIO_READ),
+@@ -486,3 +489,19 @@ void laio_cleanup(LinuxAioState *s)
+     }
+     g_free(s);
+ }
++
++bool laio_has_fdsync(int fd)
++{
++    struct iocb cb;
++    struct iocb *cbs[] = {&cb, NULL};
++
++    io_context_t ctx = 0;
++    io_setup(1, &ctx);
++
++    /* check if host kernel supports IO_CMD_FDSYNC */
++    io_prep_fdsync(&cb, fd);
++    int ret = io_submit(ctx, 1, cbs);
++
++    io_destroy(ctx);
++    return (ret == -EINVAL) ? false : true;
++}
+diff --git a/include/block/raw-aio.h b/include/block/raw-aio.h
+index 20e000b8ef..626706827f 100644
+--- a/include/block/raw-aio.h
++++ b/include/block/raw-aio.h
+@@ -60,6 +60,7 @@ void laio_cleanup(LinuxAioState *s);
+ int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
+                                 int type, uint64_t dev_max_batch);
+ 
++bool laio_has_fdsync(int);
+ void laio_detach_aio_context(LinuxAioState *s, AioContext *old_context);
+ void laio_attach_aio_context(LinuxAioState *s, AioContext *new_context);
+ #endif
+-- 
+2.44.0
 
-> 
->> @@ -4604,6 +4665,11 @@ target_ulong HELPER(vfirst_m)(void *v0, void *vs2, CPURISCVState *env,
->>       uint32_t vl = env->vl;
->>       int i;
->>   
->> +    if (env->vstart >= env->vl) {
->> +        env->vstart = 0;
->> +        return 0;
->> +    }
->> +
->>       for (i = env->vstart; i < vl; i++) {
->>           if (vm || vext_elem_mask(v0, i)) {
->>               if (vext_elem_mask(vs2, i)) {
->>
 
