@@ -4,93 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E149DC54E60
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:45:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F80C54E5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:49:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rknGc-00016M-CW; Thu, 14 Mar 2024 11:45:14 -0400
+	id 1rknKo-0002bA-IW; Thu, 14 Mar 2024 11:49:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rknGa-00015l-H1
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:45:12 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1rknKm-0002ak-QD
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:49:32 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rknGY-0007Hw-Br
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:45:11 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-51320ca689aso1371359e87.2
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 08:45:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710431108; x=1711035908; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=/tsVpAtLaCvgN9dlkyI0vmkggG/7Ft3hdDWmTwIV4EI=;
- b=YjyIaU3vaHaupY5rj6xVSciFTRXy1zDNUQxn2/AYUtP7tvy32OgeNdHibk+Ro5m8tS
- Kz+9oB27UNc5FScuDJ2Re4jm7zZ02tvsMNBz+U5kkfAbCmIzXy93eJJZpHRIu326FpIK
- vGNPvWo1I6Bv2htalHi83BPzHwbKTWIEVDRiV6udyHS8nPcHe7H5VhASr/Z+U4YUic9c
- 2n8TocKPWfSu5LyDZrlK54vjNi/KxWO5i8vAPq8rIAgI1IoaJsxtMT+rockWpJ/sGw+7
- aBqfpVImQx+EecoJzevYJkg4oe+l8iOUoDgEAri2KS5XzwRo35wjeh4O52k67VCPO0K8
- uOpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710431108; x=1711035908;
- h=content-transfer-encoding:in-reply-to:organization:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/tsVpAtLaCvgN9dlkyI0vmkggG/7Ft3hdDWmTwIV4EI=;
- b=qOsQAmUhAyyAy7inoO8rrGXuh30eLP38WlSOYiSF10goq9FAc/xxyZr6rik19E8fd0
- 5GY1XoBBTR7HT3t+b+s4WQ2l0c9wLQKkF9yJFfduKAFsWkvLlwUIO3xcHmIf0e4zRT25
- e6CAaPl7V6Wp/Tbypt3XFxdI/FHOkIg4QVJ8fqMOLoXKyJ5VlOiXfEieCmBFFZCSUaUP
- 7dEavvDQRAQPQPmB02f2TZofEqMJISWuHlbL1LCshjQENW7L0sWHqjJe9M21An+es9Nr
- z2qEwSP7uQkSnwz/eBUYjB03fABW7mvPte33aoe7j3jj0GOXCdr2w8HPqp+Vy01j9NlU
- 80Uw==
-X-Gm-Message-State: AOJu0Yzz/ga2OlC/9AWYPISb4fEqgoPKWivOJDs/17piqpLPz78yEri3
- s7VKd0d9B+3X3SEgYcnSqp9/4AP5P0uVAPv6S4WX5arxy6GVz2E5tsLcTlI6dtw=
-X-Google-Smtp-Source: AGHT+IEfxXoYx/PWLLBuRXi1GuLyNwYGCNRR5aV+gi7tPa7CTzK3jfbM2g0zb5wzu6qel03oMuWRlg==
-X-Received: by 2002:a19:5f04:0:b0:513:97d5:245e with SMTP id
- t4-20020a195f04000000b0051397d5245emr424208lfb.31.1710431107975; 
- Thu, 14 Mar 2024 08:45:07 -0700 (PDT)
-Received: from [192.168.200.106] (83.11.22.169.ipv4.supernova.orange.pl.
- [83.11.22.169]) by smtp.gmail.com with ESMTPSA id
- y24-20020ac255b8000000b005134751aca7sm314837lfg.275.2024.03.14.08.45.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Mar 2024 08:45:07 -0700 (PDT)
-Message-ID: <42b7eeb5-9105-4958-8b57-1c7b56e52010@linaro.org>
-Date: Thu, 14 Mar 2024 16:45:06 +0100
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1rknKk-00088j-Vy
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:49:32 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id DD0C021D3C;
+ Thu, 14 Mar 2024 15:49:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710431365; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=KyiVEK6szeJ4sVZQklq28GiejLCfpy3rgaMZ8ehlvpA=;
+ b=LuM7wYLN1umnCvcT6wH6OD2JWOIiO7tNlZhgD6JnfNTa4i2WdoNA6sfHW80rqZBuBlCzpg
+ UgXc4/YUmNxoi8W95Xl2xMe0HUPNMKuyIr4/0jQ/I0knwjgu+bp7Umj9WIrRzsq7FozR6W
+ CdmzzKglU2uGcd4+6LElQCvm+j2Ed7g=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710431365;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=KyiVEK6szeJ4sVZQklq28GiejLCfpy3rgaMZ8ehlvpA=;
+ b=JycLJK0rzaXdDuxTHWowP6YlnCWpFmZgSSemlWNXmRH9vjXF9LsJYctvy3sP/btV7ME73s
+ EQQ7EA/Arq1vHbDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710431364; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=KyiVEK6szeJ4sVZQklq28GiejLCfpy3rgaMZ8ehlvpA=;
+ b=j42S0mN1qjeHZWzP81RsEJl9pG7gTnLG9zi0GpRQ6afzG6+pcbhLo3Mh+kuiMZd9CsN3kA
+ jF8ran+3C1NIy+Tm2KiufU+jhgw31HsBCBBMCrgfipfGFE4obYIBwXwiDDMJtRctq4dR8S
+ naJ4jBBZZpUAqiUJmugAOyEN+/+4Qh4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710431364;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=KyiVEK6szeJ4sVZQklq28GiejLCfpy3rgaMZ8ehlvpA=;
+ b=nNJdJHoieUTGX/Vq8YxPFPaD+WIDaY2zfZVYEXPXfPcYkN9tA9QkBqO7UNIjVlhvzSpOE/
+ d0RqwUSLGm62YYBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BEA901368B;
+ Thu, 14 Mar 2024 15:49:24 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id PRATLYQc82WsMQAAD6G6ig
+ (envelope-from <cfontana@suse.de>); Thu, 14 Mar 2024 15:49:24 +0000
+Message-ID: <c2aa273a-6f49-2a02-fd4d-a3ddd37db388@suse.de>
+Date: Thu, 14 Mar 2024 16:49:24 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] tests/avocado: use OpenBSD 7.4 for sbsa-ref
-Content-Language: pl-PL, en-GB, en-HK
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>, Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Brad Smith <brad@comstyle.com>,
- qemu-arm@nongnu.org
-References: <20240314-sbsa-ref-firmware-update-v2-0-b557c56559cd@linaro.org>
- <20240314-sbsa-ref-firmware-update-v2-3-b557c56559cd@linaro.org>
- <87bk7hggcz.fsf@draig.linaro.org>
- <7da62f7f-3e87-470b-b089-1bfe5aa97555@linaro.org>
- <87ttl8g8ue.fsf@draig.linaro.org>
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Organization: Linaro
-In-Reply-To: <87ttl8g8ue.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lf1-x12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
+Content-Language: en-US
+To: Pierre Morel <pmorel@linux.ibm.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Ilya Leoshkevich <iii@linux.ibm.com>
+From: Claudio Fontana <cfontana@suse.de>
+Subject: question on s390x topology: KVM only, or also TCG?
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=j42S0mN1;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=nNJdJHoi
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.51 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ TO_DN_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; SUBJECT_ENDS_QUESTION(1.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Queue-Id: DD0C021D3C
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=cfontana@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,21 +123,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 14.03.2024 o 15:56, Alex Bennée pisze:
->>> If we are not going to delete the entries then at least use a @skip
->>> instead of commenting. Maybe:
->>>     @skip("Potential un-diagnosed upstream bug?")
->> Daniel or Peter suggested to open a GitLab issue and use
->>
->>      @skip("https://gitlab.com/qemu-project/qemu/-/issues/xyz")
->>
->> to track progress.
-> That's a good idea. Are you going to respin?
+Hello Pierre, Ilya,
 
-Opened https://gitlab.com/qemu-project/qemu/-/issues/2224 to track 
-problem. Subscribed to arm@openbsd mailing list.
+I have a question on the s390x "topology" feature and examples.
 
-Will walk the dog and then mail them with problem.
+Mainly, is this feature supposed to be KVM accelerator-only, or also available when using the TCG accelerator?
 
-And respin patch series tomorrow.
+(docs/devel/s390-cpu-topology.rst vs https://www.qemu.org/docs/master/system/s390x/cpu-topology.html)
+
+I see stsi-topology.c in target/s390x/kvm/ , so that part is clearly KVM-specific,
+
+but in hw/s390x/cpu-topology.c I read:
+
+"
+ * - The first part in this file is taking care of all common functions                                                                     
+ *   used by KVM and TCG to create and modify the topology.                                                                                 
+ *                                                                                                                                          
+ * - The second part, building the topology information data for the                                                                        
+ *   guest with CPU and KVM specificity will be implemented inside                                                                          
+ *   the target/s390/kvm sub tree.
+"
+
+In the docs/devel/s390-cpu-topology.rst
+
+I see the example command:
+
+ qemu-system-s390x \
+    -enable-kvm \
+    -cpu z14,ctop=on \
+    -smp 1,drawers=3,books=3,sockets=2,cores=2,maxcpus=36 \
+    -device z14-s390x-cpu,core-id=19,entitlement=high \
+    -device z14-s390x-cpu,core-id=11,entitlement=low \
+    -device z14-s390x-cpu,core-id=12,entitlement=high \
+   ...
+
+
+which uses KVM only.
+
+In https://www.qemu.org/docs/master/system/s390x/cpu-topology.html
+
+I read:
+
+"Prerequisites:
+To use the CPU topology, you need to run with KVM on a s390x host that uses the Linux kernel v6.0 or newer (which provide the so-called KVM_CAP_S390_CPU_TOPOLOGY capability that allows QEMU to signal the CPU topology facility via the so-called STFLE bit 11 to the VM).
+"
+
+So I would assume this is KVM-only, but then in the "Examples" section below I see the example:
+
+"
+$ qemu-system-s390x -m 2G \
+  -cpu gen16b,ctop=on \
+  -smp cpus=5,sockets=8,cores=4,maxcpus=32 \
+  -device host-s390x-cpu,core-id=14 \
+"
+
+and
+
+"
+qemu-system-s390x -m 2G \
+  -cpu gen16b,ctop=on \
+  -smp cpus=1,sockets=8,cores=4,maxcpus=32 \
+  \
+  -device gen16b-s390x-cpu,drawer-id=1,book-id=1,socket-id=2,core-id=1 \
+  -device gen16b-s390x-cpu,drawer-id=1,book-id=1,socket-id=2,core-id=2 \
+  -device gen16b-s390x-cpu,drawer-id=1,book-id=1,socket-id=2,core-id=3 \
+  \
+  -device gen16b-s390x-cpu,drawer-id=0,book-id=0,socket-id=0,core-id=9 \
+  -device gen16b-s390x-cpu,drawer-id=0,book-id=0,socket-id=0,core-id=14 \
+  \
+  -device gen16b-s390x-cpu,core-id=4,dedicated=on,entitlement=high
+"
+
+We received questions about this, so I hope you can shed some light, maybe it would be good to just update the web page to include -accel kvm or -enable-kvm everywhere for clarity?
+
+Thanks for your help on this,
+
+Claudio
+
+-- 
+Claudio Fontana
+Engineering Manager Virtualization, SUSE Labs Core
+
+SUSE Software Solutions Italy Srl
 
