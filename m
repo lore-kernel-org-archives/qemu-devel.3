@@ -4,91 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E65C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 12:15:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76DC0C5475B
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 12:16:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkjyw-0007CE-Gs; Thu, 14 Mar 2024 08:14:47 -0400
+	id 1rkk0D-0008Ub-2b; Thu, 14 Mar 2024 08:16:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rkjys-00077R-Pi
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:14:42 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rkk0B-0008UJ-0g
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:16:03 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rkjyp-0007MK-Nu
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:14:42 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-413e61525c2so5956565e9.2
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 05:14:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rkk09-0007V0-1e
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 08:16:02 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-513af1a29b1so1055833e87.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 05:16:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710418477; x=1711023277; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QR4pjjwgm5XaOqh28NmkniJonDS9mW+ocYdqeu416MU=;
- b=p9/8jG+ZFu/wihgmYP37rfEseWf3727Ft8gpVSwmna+jG6sxf8pvvHuqsNHuhvUrtH
- Wg9UkOj+oaOj8KwyZziaiRieW3K0WCMTZvxljAb1Hp7AKjrVAgVp+0rm30vjS4xIX6Zh
- tTd28Wce/sPYcrwZQVX1TskAth1jHJwmSmeiXbJNaTqk2eJbPdIUQJ+G5dJgI0ke9jGc
- CCPno1WpUhzH1YDC3vrNckvMYQkPw7qjfDXyuA+Tm+olygCZRVLpXkSF3qz6JTphaHdQ
- HtGM0lroZYwKj/uH00B2X+mkcwn37l1GNje4jJKVj0eyIbs1+m6OCWSci3cMv2aTDH2g
- WGqw==
+ d=linaro.org; s=google; t=1710418559; x=1711023359; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fk9XmIizq0TPCjsKheSR67oLCOQAzAIxuSkiQx0vMs8=;
+ b=hXe3LCBkivMbO+73WpDB19BoH3xnLO3SoNqrkSJkkMLjeEmlY1mg7Y0dkcrCv+xh+8
+ CI5OCF6dN5wIQMSSsjaDxEODszoxlbEkYRv55MfO35laHoISySIN+s+iK+rp78YUdAEm
+ r3jCRShZFwOZOqH0HTfdzj7xIC1UO+cfKQemX0IA9jZHMkx1qe/+C9FusiFSIVtVPYk1
+ RVOgyeJM0oVzMR7ISg95YOdSpD4ZoKKgN/US1MAxVYjTgdM8TnTbCIA11IAQI9JeizZl
+ jjXaDzl8aAZio6GroV5CC//QsI0bVt5HfOl53uA9lUm6UsvgEoBS+67CGFaiD4+cfvti
+ 1zHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710418477; x=1711023277;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=QR4pjjwgm5XaOqh28NmkniJonDS9mW+ocYdqeu416MU=;
- b=wOATDMvh/UYSvcarE5mK2c4dEMirUWDH0I7MfS+ZyNWr7qOLEOqiD0uSyUSOPGLIIW
- iS/SaK3VYadcYXt5Bwvo67ezixPutwpkoVDDpL/sqSI85B1EdeRPRaQhDTZFMOHQR2VM
- 73tqwsIgxveAkoM/oCrA7lcRHrVTSRe+c3WWSMX+jIilNg6F7FEHtXcUTVkvJFwj/Sb1
- 4GTk4QYnXCjpwTuvFD98CBqSUBryBFR4xBKDZm3H1mkMn8J+f+wtQRsOJts6o2ebISlO
- lTRt+1nVVzhdKZrZGdatN/8NFNawOB5e5jXNHURkOJbUxnC3d08gos1ip9L4yx1zZO3l
- tnhA==
-X-Gm-Message-State: AOJu0Yz7f34p5yZ6ynAeVgIOLjFLSVe390nVKen4KJdAjmWQOiaXMvm6
- r+zFc1PwLkKHkQ4nPcOWdveQ6sAiM3ygHWjLx+VbH+OLozvu/rlc0MLS8KEv1ss=
-X-Google-Smtp-Source: AGHT+IGmeat4qaHOi72IuCm8G8viUwTAfVgOIb/E0xXwZAWAKvo5DtNdhubQrTU9vw/0LvU35vl+QA==
-X-Received: by 2002:a05:600c:1389:b0:413:ee4b:cd8e with SMTP id
- u9-20020a05600c138900b00413ee4bcd8emr1210956wmf.24.1710418477446; 
- Thu, 14 Mar 2024 05:14:37 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- l19-20020a05600c4f1300b004130378fb77sm5560207wmq.6.2024.03.14.05.14.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Mar 2024 05:14:37 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BA02B5F87D;
- Thu, 14 Mar 2024 12:14:36 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: qemu-devel@nongnu.org,  Radoslaw Biernacki <rad@semihalf.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Leif Lindholm
- <quic_llindhol@quicinc.com>,  Cleber Rosa <crosa@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Wainer dos Santos
- Moschetta
- <wainersm@redhat.com>,  Beraldo Leal <bleal@redhat.com>,  Brad Smith
- <brad@comstyle.com>,  qemu-arm@nongnu.org
-Subject: Re: [PATCH v2 3/4] tests/avocado: use OpenBSD 7.4 for sbsa-ref
-In-Reply-To: <20240314-sbsa-ref-firmware-update-v2-3-b557c56559cd@linaro.org>
- (Marcin Juszkiewicz's message of "Thu, 14 Mar 2024 10:23:26 +0100")
-References: <20240314-sbsa-ref-firmware-update-v2-0-b557c56559cd@linaro.org>
- <20240314-sbsa-ref-firmware-update-v2-3-b557c56559cd@linaro.org>
-User-Agent: mu4e 1.12.1; emacs 29.2
-Date: Thu, 14 Mar 2024 12:14:36 +0000
-Message-ID: <87bk7hggcz.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1710418559; x=1711023359;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fk9XmIizq0TPCjsKheSR67oLCOQAzAIxuSkiQx0vMs8=;
+ b=FPu/7Rtswq4WcH6UXqSbHfcGAYGfhj4sFcVqtD6PZfObknbpcvkNLOw1bIKFgNPoJ7
+ Ioxs52dZ5eDUX9TdgT1ViKLn4SZjJqHCPLpJsKT9Fi/jdgeRZvihPwOwzPC6WOXccgjJ
+ cu3m3zVNz/JlKpMcMQjiexh+REem9/CoxfJwU/ETuTHWVMGJVJH80U1FjouHz01XkwVA
+ sKOeZpFoDbx3msHnw8xpC+sWtMrS7DGJ4ppGIfHBbrtLihpcljg2HOjtX+WItGNYB4Ti
+ W9UG+zO63ciYeEoWisUYT/J8hsI+DHcCTS0NKLFVHjCDoe4mon+1saSvAziEE7j2WoKn
+ Ze0g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXVTJPiNb9U7GfSSikZ7mJCbTsYpqNlsIbWLkZtx1jjVEB9F93wzu1yct8I6XfST+84DVs9ytH7/Sn2e+fY3HP1fcigFAw=
+X-Gm-Message-State: AOJu0Yx9htfaDsHSl5a6HMXw0NJCth0l1unQmhTg/GwiOzNEsDUK3rWX
+ hgQh50G2VOyC+dG06sVtD6Tt2ZT0MVEMnq6jYzU+lQJ+CSOo440nIAvKOldQMKA=
+X-Google-Smtp-Source: AGHT+IGDoUudKYzFVWAnoy4O5aM3WK1yyxGrFkDofUnbxDS1NprxnYu7AGczMHQ8joFfzskBJtGEUg==
+X-Received: by 2002:a05:6512:1153:b0:513:d3b8:267e with SMTP id
+ m19-20020a056512115300b00513d3b8267emr802503lfg.47.1710418558730; 
+ Thu, 14 Mar 2024 05:15:58 -0700 (PDT)
+Received: from [192.168.1.24] ([102.35.208.160])
+ by smtp.gmail.com with ESMTPSA id
+ u17-20020a05600c19d100b00412f016a151sm2307944wmq.9.2024.03.14.05.15.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Mar 2024 05:15:57 -0700 (PDT)
+Message-ID: <c5fae40d-8828-4ecb-b9b1-4d179cca2e74@linaro.org>
+Date: Thu, 14 Mar 2024 16:15:53 +0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2] contrib/plugins: control flow plugin (WIP!)
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Richard Henderson <richard.henderson@linaro.org>
+References: <20240314114907.88890-1-alex.bennee@linaro.org>
+ <87msr1ggxz.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87msr1ggxz.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,112 +101,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org> writes:
-
-> 7.4 was released in October 2023, time to update before 7.3 gets dropped.
->
-> Disabled tests for 'max' cpu as OpenBSD fails there.
->
-> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-> ---
->  tests/avocado/machine_aarch64_sbsaref.py | 47 +++++++++++++++++++++++---=
-------
->  1 file changed, 34 insertions(+), 13 deletions(-)
->
-> diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/mac=
-hine_aarch64_sbsaref.py
-> index 259225f15f..0e52dc5854 100644
-> --- a/tests/avocado/machine_aarch64_sbsaref.py
-> +++ b/tests/avocado/machine_aarch64_sbsaref.py
-> @@ -159,14 +159,14 @@ def test_sbsaref_alpine_linux_max(self):
->      # This tests the whole boot chain from EFI to Userspace
->      # We only boot a whole OS for the current top level CPU and GIC
->      # Other test profiles should use more minimal boots
-> -    def boot_openbsd73(self, cpu):
-> +    def boot_openbsd(self, cpu):
->          self.fetch_firmware()
->=20=20
->          img_url =3D (
-> -            "https://cdn.openbsd.org/pub/OpenBSD/7.3/arm64/miniroot73.im=
-g"
-> +            "https://cdn.openbsd.org/pub/OpenBSD/7.4/arm64/miniroot74.im=
-g"
->          )
->=20=20
-> -        img_hash =3D "7fc2c75401d6f01fbfa25f4953f72ad7d7c18650056d30755c=
-44b9c129b707e5"
-> +        img_hash =3D "7b08b2ce081cff6408d183f7152ddcfd2779912104866e4fdf=
-6ae2d864b51142"
->          img_path =3D self.fetch_asset(img_url, algorithm=3D"sha256", ass=
-et_hash=3Dimg_hash)
->=20=20
->          self.vm.set_console()
-> @@ -180,23 +180,44 @@ def boot_openbsd73(self, cpu):
->          self.vm.launch()
->          wait_for_console_pattern(self,
->                                   "Welcome to the OpenBSD/arm64"
-> -                                 " 7.3 installation program.")
-> +                                 " 7.4 installation program.")
->=20=20
-> -    def test_sbsaref_openbsd73_cortex_a57(self):
-> +    def test_sbsaref_openbsd_cortex_a57(self):
->          """
->          :avocado: tags=3Dcpu:cortex-a57
-> +        :avocado: tags=3Dos:openbsd
->          """
-> -        self.boot_openbsd73("cortex-a57")
-> +        self.boot_openbsd("cortex-a57")
->=20=20
-> -    def test_sbsaref_openbsd73_neoverse_n1(self):
-> +    def test_sbsaref_openbsd_neoverse_n1(self):
->          """
->          :avocado: tags=3Dcpu:neoverse-n1
-> +        :avocado: tags=3Dos:openbsd
->          """
-> -        self.boot_openbsd73("neoverse-n1")
-> +        self.boot_openbsd("neoverse-n1")
->=20=20
-> -    def test_sbsaref_openbsd73_max(self):
-> -        """
-> -        :avocado: tags=3Dcpu:max
-> -        """
-> -        self.boot_openbsd73("max")
-> +# OpenBSD 7.4 does not boot on current max cpu.
-> +#
-> +#   def test_sbsaref_openbsd_max_pauth_off(self):
-> +#       """
-> +#       :avocado: tags=3Dcpu:max
-> +#       :avocado: tags=3Dos:openbsd
-> +#       """
-> +#       self.boot_openbsd("max,pauth=3Doff")
-
-If we are not going to delete the entries then at least use a @skip
-instead of commenting. Maybe:
-
-  @skip("Potential un-diagnosed upstream bug?")
-
-but it would be nice to figure out exactly where is breaks.
-
-> +
-> +#   @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeo=
-ut')
-> +#   def test_sbsaref_openbsd_max_pauth_impdef(self):
-> +#       """
-> +#       :avocado: tags=3Dcpu:max
-> +#       :avocado: tags=3Dos:openbsd
-> +#       """
-> +#       self.boot_openbsd("max,pauth-impdef=3Don")
-> +
-> +#   @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeo=
-ut')
-> +#   def test_sbsaref_openbsd_max(self):
-> +#       """
-> +#       :avocado: tags=3Dcpu:max
-> +#       :avocado: tags=3Dos:openbsd
-> +#       """
-> +#       self.boot_openbsd("max")
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+T24gMy8xNC8yNCAxNjowMiwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBBbGV4IEJlbm7DqWUg
+PGFsZXguYmVubmVlQGxpbmFyby5vcmc+IHdyaXRlczoNCj4gDQo+PiBUaGlzIGlzIGEgc2lt
+cGxlIGNvbnRyb2wgZmxvdyB0cmFja2luZyBwbHVnaW4gdGhhdCB1c2VzIHRoZSBsYXRlc3QN
+Cj4+IGlubGluZSBhbmQgY29uZGl0aW9uYWwgb3BlcmF0aW9ucyB0byBkZXRlY3QgYW5kIHRy
+YWNrIGNvbnRyb2wgZmxvdw0KPj4gY2hhbmdlcy4gSXQgaXMgY3VycmVudGx5IGFuIGV4ZXJj
+aXNlIGF0IHNlZWluZyBob3cgdXNlZnVsIHRoZSBjaGFuZ2VzDQo+PiBhcmUuDQo+Pg0KPj4g
+QmFzZWQtb246IDwyMDI0MDMxMjA3NTQyOC4yNDQyMTAtMS1waWVycmljay5ib3V2aWVyQGxp
+bmFyby5vcmc+DQo+PiBDYzogR3VzdGF2byBSb21lcm8gPGd1c3Rhdm8ucm9tZXJvQGxpbmFy
+by5vcmc+DQo+PiBDYzogUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5h
+cm8ub3JnPg0KPj4gU2lnbmVkLW9mZi1ieTogQWxleCBCZW5uw6llIDxhbGV4LmJlbm5lZUBs
+aW5hcm8ub3JnPg0KPj4gTWVzc2FnZS1JZDogPDIwMjQwMzExMTUzNDMyLjEzOTUxOTAtMS1h
+bGV4LmJlbm5lZUBsaW5hcm8ub3JnPg0KPj4NCj4+IC0tLQ0KPj4gdjINCj4+ICAgIC0gb25s
+eSBuZWVkIGEgc2luZ2xlIGNhbGwgYmFjaw0KPj4gICAgLSBkcm9wIG5lZWQgZm9yIElOU05f
+V0lEVEgNCj4+ICAgIC0gc3RpbGwgZG9uJ3QgdW5kZXJzdGFuZCB0aGUgZWFybHkgZXhpdHMN
+Cj4+DQo+PiBJJ20gc3RpbGwgc2VlaW5nIHdlaXJkbmVzcyBpbiB0aGUgZ2VuZXJhdGVkIGNv
+ZGUsIGZvciBleGFtcGxlIHRoZQ0KPj4gcGx1Z2luIHJlcG9ydHMgImVhcmx5IGV4aXRzIiB3
+aGljaCBkb2Vzbid0IG1ha2Ugc2Vuc2UgZm9yIGEgcmV0IHdoaWNoDQo+PiB0ZXJtaW5hdGVz
+IGEgYmxvY2s6DQo+Pg0KPj4gICAgYWRkcjogMHg0MDNjODggaGV4Y2hhcjogcmV0ICAoMS8x
+KQ0KPj4gICAgICBlYXJseSBleGl0cyAxMjgwDQo+PiAgICAgIGJyYW5jaGVzIDEyODANCj4+
+ICAgICAgICB0byAweDQwM2QwMCAoNjM5KQ0KPj4gICAgICAgIHRvIDB4NDAzZDI0ICg2Mzkp
+DQo+Pg0KPiA8c25pcD4NCj4+ICsNCj4+ICsvKg0KPj4gKyAqIEF0IHRoZSBzdGFydCBvZiBl
+YWNoIGJsb2NrIHdlIG5lZWQgdG8gcmVzb2x2ZSB0d28gdGhpbmdzOg0KPj4gKyAqDQo+PiAr
+ICogIC0gaXMgbGFzdF9wYyA9PSBibG9ja19lbmQsIGlmIG5vdCB3ZSBoYWQgYW4gZWFybHkg
+ZXhpdA0KPj4gKyAqICAtIGlzIHN0YXJ0IG9mIGJsb2NrIGxhc3RfcGMgKyBpbnNuIHdpZHRo
+LCBpZiBub3Qgd2UganVtcGVkDQo+PiArICoNCj4+ICsgKiBPbmNlIHRob3NlIGFyZSBkZWFs
+dCB3aXRoIHdlIGNhbiBpbnN0cnVtZW50IHRoZSByZXN0IG9mIHRoZQ0KPj4gKyAqIGluc3Ry
+dWN0aW9ucyBmb3IgdGhlaXIgZXhlY3V0aW9uLg0KPj4gKyAqDQo+PiArICovDQo+PiArc3Rh
+dGljIHZvaWQgdmNwdV90Yl90cmFucyhxZW11X3BsdWdpbl9pZF90IGlkLCBzdHJ1Y3QgcWVt
+dV9wbHVnaW5fdGIgKnRiKQ0KPj4gK3sNCj4+ICsgICAgdWludDY0X3QgcGMgPSBxZW11X3Bs
+dWdpbl90Yl92YWRkcih0Yik7DQo+PiArICAgIHNpemVfdCBpbnNucyA9IHFlbXVfcGx1Z2lu
+X3RiX25faW5zbnModGIpOw0KPj4gKyAgICBzdHJ1Y3QgcWVtdV9wbHVnaW5faW5zbiAqbGFz
+dF9pbnNuID0gcWVtdV9wbHVnaW5fdGJfZ2V0X2luc24odGIsIGluc25zIC0gMSk7DQo+PiAr
+DQo+PiArICAgIC8qDQo+PiArICAgICAqIGNoZWNrIGlmIHdlIGFyZSBleGVjdXRpbmcgbGlu
+ZWFybHkgYWZ0ZXIgdGhlIGxhc3QgYmxvY2suIFdlIGNhbg0KPj4gKyAgICAgKiBoYW5kbGUg
+Ym90aCBlYXJseSBibG9jayBleGl0cyBhbmQgbm9ybWFsIGJyYW5jaGVzIGluIHRoZQ0KPj4g
+KyAgICAgKiBjYWxsYmFjayBpZiB3ZSBoaXQgaXQuDQo+PiArICAgICAqLw0KPj4gKyAgICBn
+cG9pbnRlciB1ZGF0YSA9IEdVSU5UX1RPX1BPSU5URVIocGMpOw0KPj4gKyAgICBxZW11X3Bs
+dWdpbl9yZWdpc3Rlcl92Y3B1X3RiX2V4ZWNfY29uZF9jYigNCj4+ICsgICAgICAgIHRiLCB2
+Y3B1X3RiX2JyYW5jaGVkX2V4ZWMsIFFFTVVfUExVR0lOX0NCX05PX1JFR1MsDQo+PiArICAg
+ICAgICBRRU1VX1BMVUdJTl9DT05EX05FLCBwY19hZnRlcl9ibG9jaywgcGMsIHVkYXRhKTsN
+Cj4+ICsNCj4+ICsgICAgLyoNCj4+ICsgICAgICogTm93IHdlIGNhbiBzZXQgc3RhcnQvZW5k
+IGZvciB0aGlzIGJsb2NrIHNvIHRoZSBuZXh0IGJsb2NrIGNhbg0KPj4gKyAgICAgKiBjaGVj
+ayB3aGVyZSB3ZSBhcmUgYXQuDQo+PiArICAgICAqLw0KPj4gKyAgICBxZW11X3BsdWdpbl9y
+ZWdpc3Rlcl92Y3B1X3RiX2V4ZWNfaW5saW5lX3Blcl92Y3B1KHRiLA0KPj4gKyAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFFFTVVfUExV
+R0lOX0lOTElORV9TVE9SRV9VNjQsDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgZW5kX2Jsb2NrLCBxZW11X3BsdWdpbl9pbnNu
+X3ZhZGRyKGxhc3RfaW5zbikpOw0KPj4gKyAgICBxZW11X3BsdWdpbl9yZWdpc3Rlcl92Y3B1
+X3RiX2V4ZWNfaW5saW5lX3Blcl92Y3B1KHRiLA0KPj4gKyAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFFFTVVfUExVR0lOX0lOTElORV9T
+VE9SRV9VNjQsDQo+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgcGNfYWZ0ZXJfYmxvY2ssDQo+PiArICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcWVtdV9wbHVnaW5faW5zbl92
+YWRkcihsYXN0X2luc24pICsNCj4+ICsNCj4+IHFlbXVfcGx1Z2luX2luc25fc2l6ZShsYXN0
+X2luc24pKTsNCj4gDQo+IFdpdGggdGhlIGZvbGxvd2luZzoNCj4gDQo+IG1vZGlmaWVkICAg
+Y29udHJpYi9wbHVnaW5zL2NmbG93LmMNCj4gQEAgLTIyMCw3ICsyMjAsNyBAQCBzdGF0aWMg
+dm9pZCB2Y3B1X3RiX2JyYW5jaGVkX2V4ZWModW5zaWduZWQgaW50IGNwdV9pbmRleCwgdm9p
+ZCAqdWRhdGEpDQo+ICAgICAgIGdfbXV0ZXhfbG9jaygmbm9kZS0+bG9jayk7DQo+ICAgDQo+
+ICAgICAgIGlmIChlYXJseV9leGl0KSB7DQo+IC0gICAgICAgIGZwcmludGYoc3RkZXJyLCAi
+JXM6IHBjPSUiUFJJeDY0IiwgZXBiYz0lIlBSSXg2NCINCj4gKyAgICAgICAgZnByaW50Zihz
+dGRlcnIsICIlczogcGM9JSJQUkl4NjQiLCBlcGJjPSUiUFJJeDY0DQo+ICAgICAgICAgICAg
+ICAgICAgICIgbnBjPSUiUFJJeDY0IiwgbHBjPSUiUFJJeDY0IiwgXG4iLA0KPiAgICAgICAg
+ICAgICAgICAgICBfX2Z1bmNfXywgcGMsIGVicGMsIG5wYywgbHBjKTsNCj4gICAgICAgICAg
+IG5vZGUtPmVhcmx5X2V4aXQrKzsNCj4gQEAgLTI2NCw2ICsyNjQsNyBAQCBzdGF0aWMgdm9p
+ZCB2Y3B1X3RiX3RyYW5zKHFlbXVfcGx1Z2luX2lkX3QgaWQsIHN0cnVjdCBxZW11X3BsdWdp
+bl90YiAqdGIpDQo+ICAgew0KPiAgICAgICB1aW50NjRfdCBwYyA9IHFlbXVfcGx1Z2luX3Ri
+X3ZhZGRyKHRiKTsNCj4gICAgICAgc2l6ZV90IGluc25zID0gcWVtdV9wbHVnaW5fdGJfbl9p
+bnNucyh0Yik7DQo+ICsgICAgc3RydWN0IHFlbXVfcGx1Z2luX2luc24gKmZpcnN0X2luc24g
+PSBxZW11X3BsdWdpbl90Yl9nZXRfaW5zbih0YiwgMCk7DQo+ICAgICAgIHN0cnVjdCBxZW11
+X3BsdWdpbl9pbnNuICpsYXN0X2luc24gPSBxZW11X3BsdWdpbl90Yl9nZXRfaW5zbih0Yiwg
+aW5zbnMgLSAxKTsNCj4gICANCj4gICAgICAgLyoNCj4gQEAgLTI3OCwxMiArMjc5LDEzIEBA
+IHN0YXRpYyB2b2lkIHZjcHVfdGJfdHJhbnMocWVtdV9wbHVnaW5faWRfdCBpZCwgc3RydWN0
+IHFlbXVfcGx1Z2luX3RiICp0YikNCj4gICANCj4gICAgICAgLyoNCj4gICAgICAgICogTm93
+IHdlIGNhbiBzZXQgc3RhcnQvZW5kIGZvciB0aGlzIGJsb2NrIHNvIHRoZSBuZXh0IGJsb2Nr
+IGNhbg0KPiAtICAgICAqIGNoZWNrIHdoZXJlIHdlIGFyZSBhdC4NCj4gKyAgICAgKiBjaGVj
+ayB3aGVyZSB3ZSBhcmUgYXQuIERvIHRoaXMgb24gdGhlIGZpcnN0IGluc3RydWN0aW9uIGFu
+ZCBub3QNCj4gKyAgICAgKiB0aGUgVEIgc28gd2UgZG9uJ3QgZ2V0IG1peGVkIHVwIHdpdGgg
+YWJvdmUuDQo+ICAgICAgICAqLw0KPiAtICAgIHFlbXVfcGx1Z2luX3JlZ2lzdGVyX3ZjcHVf
+dGJfZXhlY19pbmxpbmVfcGVyX3ZjcHUodGIsDQo+ICsgICAgcWVtdV9wbHVnaW5fcmVnaXN0
+ZXJfdmNwdV9pbnNuX2V4ZWNfaW5saW5lX3Blcl92Y3B1KGZpcnN0X2luc24sDQo+ICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgUUVN
+VV9QTFVHSU5fSU5MSU5FX1NUT1JFX1U2NCwNCj4gICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBlbmRfYmxvY2ssIHFlbXVfcGx1Z2lu
+X2luc25fdmFkZHIobGFzdF9pbnNuKSk7DQo+IC0gICAgcWVtdV9wbHVnaW5fcmVnaXN0ZXJf
+dmNwdV90Yl9leGVjX2lubGluZV9wZXJfdmNwdSh0YiwNCj4gKyAgICBxZW11X3BsdWdpbl9y
+ZWdpc3Rlcl92Y3B1X2luc25fZXhlY19pbmxpbmVfcGVyX3ZjcHUoZmlyc3RfaW5zbiwNCj4g
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICBRRU1VX1BMVUdJTl9JTkxJTkVfU1RPUkVfVTY0LA0KPiAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBjX2FmdGVyX2Jsb2NrLA0K
+PiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgIHFlbXVfcGx1Z2luX2luc25fdmFkZHIobGFzdF9pbnNuKSArDQo+IA0KPiBUaGUgcmVw
+b3J0IGxvb2tzIG1vcmUgc2FuZToNCj4gDQo+ICAgIGNvbGxlY3RlZCA5MDEzIGNvbnRyb2wg
+ZmxvdyBub2RlcyBpbiB0aGUgaGFzaCB0YWJsZQ0KPiAgICAgIGFkZHI6IDB4NDAzYzg4IGhl
+eGNoYXI6IHJldCAgKDAvMSkNCj4gICAgICAgIGJyYW5jaGVzIDEyODANCj4gICAgICAgICAg
+dG8gMHg0MDNkMDAgKDYzOSkNCj4gICAgICAgICAgdG8gMHg0MDNkMjQgKDYzOSkNCj4gDQo+
+IFNvIEkgdGhpbmsgd2UgbmVlZCB0byB0aGluayBhYm91dCBwcmVzZXJ2aW5nIHRoZSBvcmRl
+cmluZyBvZg0KPiBpbnN0cnVtZW50YXRpb24gKGF0IGxlYXN0IGZyb20gdGhlIHNhbWUgcGx1
+Z2luKSBzbyB3ZSBhcmUgbm90IGxheWluZyBhbnkNCj4gQVBJIGJlYXIgdHJhcHMgZm9yIHVz
+ZXJzLg0KPiANCj4gSSBhc3N1bWUgYmVjYXVzZSBsb2FkcyBhbmQgc3RvcmVzIGFyZSBpbnZv
+bHZlZCB3ZSB3b24ndCBzZWUgdGhlDQo+IG9wdGltaXNlciB0cnlpbmcgdG8gc3dhcCBzdHVm
+ZiBhcm91bmQuDQo+IA0KDQpDdXJyZW50bHksIG9yZGVyIGlzIGZpeGVkLg0KDQpTZXJpZXMg
+aW50cm9kdWNpbmcgbW9yZSBpbmxpbmUgb3BzIGNoYW5nZWQgb3JkZXIgdG8gYmU6DQotIGlu
+bGluZSBvcHM6DQogICAtIFBMVUdJTl9HRU5fQ0JfSU5MSU5FX0FERF9VNjQNCiAgIC0gUExV
+R0lOX0dFTl9DQl9JTkxJTkVfU1RPUkVfVTY0DQotIGNhbGxiYWNrczoNCiAgIC0gUExVR0lO
+X0dFTl9DQl9VREFUQQ0KICAgLSBQTFVHSU5fR0VOX0NCX1VEQVRBX1INCiAgIC0gUExVR0lO
+X0dFTl9DQl9DT05EX1VEQVRBDQogICAtIFBMVUdJTl9HRU5fQ0JfQ09ORF9VREFUQV9SLA0K
+DQpJdCBtYWRlIG11Y2ggbW9yZSBzZW5zZSB0aGFuIGhhdmluZyBjYWxsYmFja3MgZmlyc3Qg
+KGVzcGVjaWFsbHkgDQpyZWdhcmRpbmcgbmV3IGNvbmRpdGlvbiBjYWxsYmFjaykuDQoNCklu
+IGdlbmVyYWwsIEkgYWdyZWUgdGhhdCB1c2VyIHNob3VsZCBiZSBhYmxlIHRvIGludHJvZHVj
+ZSBvcCBpbiBhbnkgDQpvcmRlciBoZSB3YW50cywgYW5kIGNvbXBvc2UgdGhlbSBsaWtlIHRo
+ZXkgd2FudC4NCldlIGNvdWxkIGltYWdpbmUga2VlcGluZyBhIHNpbXBsZSBhcnJheS9saXN0
+IGZvciBibG9jay9pbnNuIHdpdGggYW55IA0KdHlwZSBvZiBpbnN0cnVtZW50YXRpb24gcG9z
+c2libGUsIHdpdGggYSBzaW1wbGUgZW51bSBkaWN0YWN0aW5nIA0KaW5zdHJ1bWVudGF0aW9u
+IGtpbmQgKGluc3RlYWQgb2Ygc2V2ZXJhbCB2YXJpYWJsZXMgbGlrZSBpdCdzIHRoZSBjYXNl
+IG5vdykuDQoNClRoZSBjdXJyZW50IHBsdWdpbiBjb3JlIGlzIG5vdCByZWFsbHkgZmxleGli
+bGUgcmVnYXJkaW5nIHRoaXMsIGJ1dCANCmhvcGVmdWxseSBvbmNlIGNsZWFuZWQgd2l0aCBh
+IHNpbmdsZSBwYXNzLCB3ZSBjYW4gdGFrZSBhIGxvb2sgYXQgdGhpcy4NCg==
 
