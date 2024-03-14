@@ -4,83 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0660C54E60
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 17:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C320C54E60
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 17:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkodz-0002y5-1h; Thu, 14 Mar 2024 13:13:27 -0400
+	id 1rkomh-0004iK-D6; Thu, 14 Mar 2024 13:22:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rkodx-0002x9-PD
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 13:13:25 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
+ id 1rkomg-0004hW-0B; Thu, 14 Mar 2024 13:22:26 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1rkodw-0006BM-6l
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 13:13:25 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-568a19fcc4eso908183a12.1
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 10:13:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710436401; x=1711041201; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=OqQBtrihkj/R+Xi0gP+XQSu/qnSWcolA39Qgx4tgN2Y=;
- b=KsF00Pc2+lhY55yusX34krjSQ7BWtmbR+zhAXYt0/wIYUd0xjKBbcmMK3TYPPSO01a
- qY8xaVb3F72I+Ncsl06Cj+SQE4FWDmhoZX3758QxVXHJ6MIvQaIC4cQjPN7KvaXhFGwO
- iInII7dFCTM6iedy8RRNhJGOBDLIw2rNskaO9QAlXwNJZJ1+TuG9OjyF+4MgD6DSMd0U
- riA/9uBJ/+QQ/b5DNSyMpt+cYSZ0emYOfGJjhGJJOG7x+tPcb7cCH04RBEJBWisAzaUn
- jKi/xOPI3vPwfrD7im0yzQkCPvU/KtLTF9EoopRheOWoWkbjk7iSbcuoLaIlQvPrE1AS
- aTJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710436401; x=1711041201;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OqQBtrihkj/R+Xi0gP+XQSu/qnSWcolA39Qgx4tgN2Y=;
- b=Zrc+OJ2WYQpfz8RanFrXIOAh218/VFB6yHEzE7S9ScoVDswEHvHHOPXieyRm4jJd5o
- 3YkOV4lGvEA21Haxk4pHoHzFgWQ86+uVYQuj8BSgJs2kMfkMIzPhU0yUCIJ0+VxkwDsd
- Z77AsS6E4GylQhUJKqyhqc+COQx7GJrCWLq6rHHVUa0PeegR9M32ck0DW6UVCeesgldu
- T+j9Xl3cMYGSSqWsQ5l/7f+OhCFP3qROmbz6nRfUJxHGlPr/qNy6gEmXAN2/Iftu8GWe
- EUeox1wLL57g2Q+paxHl9UcosEgJEGQmDgP6nih4MOXSNB7JN8zTyRJ3IqKOelVSIAC1
- 4PNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXg6C7+vvTf/wCfmbe6+lrA6cb9YArOS8gIFkXQR3DREucIspZ/2cq49IpmQbIzaxX1aGmNQlVNtGQgLGpeh+jOCDvCYQE=
-X-Gm-Message-State: AOJu0YyJxbt9StBcjjsthuhmKARlHUf8rX5joAe0+aRFizf+yZ+1Dmpw
- OsxIQLvFoz3EKUPJ0EZ+ySDr2uyAzvesa2vR6l29usfGlUlPV7KwEG8vyMBO41s=
-X-Google-Smtp-Source: AGHT+IF9wPWs1eq2zEUM4xKPza7RI9IR8AudHHXJzVVQc52o4Zydgdg4vbZ4PC4Ue4UVjbY+AsoMZA==
-X-Received: by 2002:a05:6402:1513:b0:565:7ce5:abdb with SMTP id
- f19-20020a056402151300b005657ce5abdbmr906090edw.10.1710436401190; 
- Thu, 14 Mar 2024 10:13:21 -0700 (PDT)
-Received: from localhost (cst2-173-16.cust.vodafone.cz. [31.30.173.16])
- by smtp.gmail.com with ESMTPSA id
- f12-20020a05640214cc00b00568a22038b4sm649547edx.88.2024.03.14.10.13.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Mar 2024 10:13:20 -0700 (PDT)
-Date: Thu, 14 Mar 2024 18:13:19 +0100
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Himanshu Chauhan <hchauhan@ventanamicro.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 3/3] target/riscv: Enable sdtrig for Ventana's Veyron
- CPUs
-Message-ID: <20240314-00815f922c7320ceca28398b@orel>
-References: <20240314113510.477862-1-hchauhan@ventanamicro.com>
- <20240314113510.477862-4-hchauhan@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
+ id 1rkomd-0007VD-NP; Thu, 14 Mar 2024 13:22:25 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7E91721C11;
+ Thu, 14 Mar 2024 17:22:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710436941; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=48U569SFn8PKr5C1IaFwLU5+q6DQk0Z8+yLxOYUzkAE=;
+ b=WYrixRrTHFuoZZbfIzI0PiPuO57SyYFuDpAn3u3iw+mwKCcDhNjvfUU+AnVWIwhJtPhbgd
+ kZc+Pwax8gy/SrSisQrIECKRwrb3LPiwIP5L8GEbPv6bNLwEt/wXn/1/mJm6pAwNpEs/Z+
+ B5YmbW/JdalTJG1hjPJls5alACow0Ao=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710436941;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=48U569SFn8PKr5C1IaFwLU5+q6DQk0Z8+yLxOYUzkAE=;
+ b=4IoCMp1NRoqK/84Xp124sBQ8zB7WoAGFntwPQVCjCjkUw3Um86e5v6MUwyBVX+L4eybfTD
+ UrFJ58udF/EU3oAw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710436941; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=48U569SFn8PKr5C1IaFwLU5+q6DQk0Z8+yLxOYUzkAE=;
+ b=WYrixRrTHFuoZZbfIzI0PiPuO57SyYFuDpAn3u3iw+mwKCcDhNjvfUU+AnVWIwhJtPhbgd
+ kZc+Pwax8gy/SrSisQrIECKRwrb3LPiwIP5L8GEbPv6bNLwEt/wXn/1/mJm6pAwNpEs/Z+
+ B5YmbW/JdalTJG1hjPJls5alACow0Ao=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710436941;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=48U569SFn8PKr5C1IaFwLU5+q6DQk0Z8+yLxOYUzkAE=;
+ b=4IoCMp1NRoqK/84Xp124sBQ8zB7WoAGFntwPQVCjCjkUw3Um86e5v6MUwyBVX+L4eybfTD
+ UrFJ58udF/EU3oAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 31B071368B;
+ Thu, 14 Mar 2024 17:22:21 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id aRf1CU0y82UxTwAAD6G6ig
+ (envelope-from <cfontana@suse.de>); Thu, 14 Mar 2024 17:22:21 +0000
+From: Claudio Fontana <cfontana@suse.de>
+To: Thomas Huth <thuth@redhat.com>, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Cc: Claudio Fontana <cfontana@suse.de>, qemu-devel <qemu-devel@nongnu.org>,
+ qemu-s390x <qemu-s390x@nongnu.org>, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH] docs/s390: clarify even more that cpu-topology is KVM-only
+Date: Thu, 14 Mar 2024 18:22:18 +0100
+Message-Id: <20240314172218.16478-1-cfontana@suse.de>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240314113510.477862-4-hchauhan@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=WYrixRrT;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=4IoCMp1N
+X-Spamd-Bar: /
+X-Spamd-Result: default: False [-0.51 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ R_MISSING_CHARSET(2.50)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; BROKEN_CONTENT_TYPE(1.50)[];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ TO_DN_ALL(0.00)[]; MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ RCVD_TLS_ALL(0.00)[]; BAYES_HAM(-3.00)[100.00%]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 7E91721C11
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=cfontana@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,35 +116,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 14, 2024 at 05:05:10PM +0530, Himanshu Chauhan wrote:
-> Ventana's Veyron CPUs support sdtrig ISA extension. By default, enable
-> the sdtrig extension and disable the debug property for these CPUs.
+At least for now cpu-topology is implemented only for KVM.
 
-The commit message needs to be updated to remove the 'and disable the
-debug property'.
+We already say this, but this tries to be more explicit,
+and also show it in the examples.
 
-> 
-> Signed-off-by: Himanshu Chauhan <hchauhan@ventanamicro.com>
-> ---
->  target/riscv/cpu.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 66c91fffd6..3c7ad1c903 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -569,6 +569,7 @@ static void rv64_veyron_v1_cpu_init(Object *obj)
->      cpu->cfg.cbom_blocksize = 64;
->      cpu->cfg.cboz_blocksize = 64;
->      cpu->cfg.ext_zicboz = true;
-> +    cpu->cfg.ext_sdtrig = true;
->      cpu->cfg.ext_smaia = true;
->      cpu->cfg.ext_ssaia = true;
->      cpu->cfg.ext_sscofpmf = true;
-> -- 
-> 2.34.1
->
+This adds a new reference in the introduction that we can point to,
+whenever we need to reference accelerators and how to select them.
 
-Thanks,
-drew
+Signed-off-by: Claudio Fontana <cfontana@suse.de>
+---
+ docs/system/introduction.rst       |  2 ++
+ docs/system/s390x/cpu-topology.rst | 14 ++++++++------
+ 2 files changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
+index 51ac132d6c..746707eb00 100644
+--- a/docs/system/introduction.rst
++++ b/docs/system/introduction.rst
+@@ -1,6 +1,8 @@
+ Introduction
+ ============
+ 
++.. _Accelerators:
++
+ Virtualisation Accelerators
+ ---------------------------
+ 
+diff --git a/docs/system/s390x/cpu-topology.rst b/docs/system/s390x/cpu-topology.rst
+index 5133fdc362..ca344e273c 100644
+--- a/docs/system/s390x/cpu-topology.rst
++++ b/docs/system/s390x/cpu-topology.rst
+@@ -25,17 +25,19 @@ monitor polarization changes, see ``docs/devel/s390-cpu-topology.rst``.
+ Prerequisites
+ -------------
+ 
+-To use the CPU topology, you need to run with KVM on a s390x host that
+-uses the Linux kernel v6.0 or newer (which provide the so-called
++To use the CPU topology, you currently need to choose the KVM accelerator.
++See :ref:`Accelerators` for more details about accelerators and how to select them.
++
++The s390x host needs to use a Linux kernel v6.0 or newer (which provides the so-called
+ ``KVM_CAP_S390_CPU_TOPOLOGY`` capability that allows QEMU to signal the
+ CPU topology facility via the so-called STFLE bit 11 to the VM).
+ 
+ Enabling CPU topology
+ ---------------------
+ 
+-Currently, CPU topology is only enabled in the host model by default.
++Currently, CPU topology is enabled by default only in the "host" cpu model.
+ 
+-Enabling CPU topology in a CPU model is done by setting the CPU flag
++Enabling CPU topology in another CPU model is done by setting the CPU flag
+ ``ctop`` to ``on`` as in:
+ 
+ .. code-block:: bash
+@@ -132,7 +134,7 @@ In the following machine we define 8 sockets with 4 cores each.
+ 
+ .. code-block:: bash
+ 
+-  $ qemu-system-s390x -m 2G \
++  $ qemu-system-s390x -accel kvm -m 2G \
+     -cpu gen16b,ctop=on \
+     -smp cpus=5,sockets=8,cores=4,maxcpus=32 \
+     -device host-s390x-cpu,core-id=14 \
+@@ -227,7 +229,7 @@ with vertical high entitlement.
+ 
+ .. code-block:: bash
+ 
+-  $ qemu-system-s390x -m 2G \
++  $ qemu-system-s390x -accel kvm -m 2G \
+     -cpu gen16b,ctop=on \
+     -smp cpus=1,sockets=8,cores=4,maxcpus=32 \
+     \
+-- 
+2.26.2
+
 
