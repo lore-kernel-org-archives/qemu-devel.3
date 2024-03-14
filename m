@@ -4,88 +4,171 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD39C5475B
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 03:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BBDEC54E5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 04:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkc9D-0007MD-MW; Wed, 13 Mar 2024 23:52:51 -0400
+	id 1rkcLO-0000Y8-AJ; Thu, 14 Mar 2024 00:05:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rkc9C-0007La-7a
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 23:52:50 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rkc9A-0001aF-By
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 23:52:49 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dd7df835a8so4797385ad.1
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 20:52:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1710388365; x=1710993165; darn=nongnu.org;
- h=in-reply-to:from:content-language:references:cc:to:subject
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uukGC2YgkiA6kPo351DkNE23YYT/xm/ozkkgaxd2t2w=;
- b=FdXsonbtkWbv+tqwZYkiAX4SQx4NpjySajxOB2lilzuQOzidzBEWZRSQAD7N9CGNZZ
- NC2GX5XTILuXajyvRUJcbhnkqcQoblIWSAkdrst/x45UEqXEznatYMO/HY0Ka1tGTryV
- 4uMXdl0akfBwEJYgyOoQrvGbscf8IWcNP+gTtOPBlTe19lf1ryCE+cB/BX4MKhC8uPPa
- ZOTmbqxQNIXdxXTnNDunrJP+285GESIY72ryG9Fdunihrl3uo4lV/tA3Y2Vzp1kLvrQ0
- Mir3DwHkjG8WWk+Oa52tt0+zDviHUZyucA2upf2ElSA6xngn6ZlWvvdEhfeOQ73L93qJ
- TAiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710388365; x=1710993165;
- h=in-reply-to:from:content-language:references:cc:to:subject
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=uukGC2YgkiA6kPo351DkNE23YYT/xm/ozkkgaxd2t2w=;
- b=VMXyhxQnrQEVdUjzkfERFP3qrs1MoCuP9V5C4gNIrvFS40ml2IF+OZiE+KdhGg1lF6
- Pxvegn2FlZbNZNlP2xDDTKk7fweZUqVwwWHib4mLLv1HyUcgzW7+4hBVJIKxS8728ywi
- vjEzaD5t4JjnhtLOLbktKipfL65lzYOKFGl5iKJYzRY3tkL4YsLRb0CVIKPLPPwFFlF1
- rCrCVK3cwhaoDN2yszLERbmQLL3MA1tcYMhg1HGMJEAf19tohNiqhv82gQTRDIP17ukE
- SjKjYDeTunhfgr6gEcV/FbE57PweHelnDcNDGfdcXctxUqVEPzE+VXSgLSR9A5sMvhfh
- dUBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDazx72YL3ltax1qm74dQDtZeQPOWNaLizqcr3U8AjacsVea9tDU/5pfC10jRpd1sVeVNudL4yCGVaPQUJU4k1r1eFe1c=
-X-Gm-Message-State: AOJu0YztbeBnZ3ZI9ajbZ9A0kQOXuBfxw8KEHMXqIPnb3IPmQVLMFHAu
- ByFN9Q1LO3Q7Ee99WZrsQNau6ipzXiOE8+p/M/66mnCAWECoCthKDKu9M3lsHJc=
-X-Google-Smtp-Source: AGHT+IE61WGKudf1fKmddlALVxSKtz1c/MrLKYnuyL0TWqU1rKISKhHlUDHpyFOTh1FhrFbTW3MpHg==
-X-Received: by 2002:a17:902:cecf:b0:1dd:d412:906c with SMTP id
- d15-20020a170902cecf00b001ddd412906cmr1018388plg.12.1710388365212; 
- Wed, 13 Mar 2024 20:52:45 -0700 (PDT)
-Received: from [100.64.0.1] ([136.226.240.169])
- by smtp.gmail.com with ESMTPSA id
- a2-20020a170902ecc200b001dddc21866csm428329plh.103.2024.03.13.20.52.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 13 Mar 2024 20:52:44 -0700 (PDT)
-Content-Type: multipart/alternative;
- boundary="------------KGMbmnlyOj1YMr26eVfba8hg"
-Message-ID: <9c04593a-3909-47b4-92f7-4195582a8e83@sifive.com>
-Date: Thu, 14 Mar 2024 11:52:42 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 v14 4/8] target/riscv/vector_helpers: do early
- exit when vstart >= vl
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- richard.henderson@linaro.org, philmd@linaro.org
-References: <20240313220141.427730-1-dbarboza@ventanamicro.com>
- <20240313220141.427730-5-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1rkcLK-0000W3-Ri
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 00:05:23 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1rkcLH-0003yL-VJ
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 00:05:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710389120; x=1741925120;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=U+5xcGwksgbb3L43iXx8VRo0QHTVvZFCKpxXRtEhfw8=;
+ b=RWsJ7DnLz5+fJG8juhtPx/HJtpOu56atODjx+C77AUBnasT5PyqCv0P4
+ 9uC7j4MF8LWD1bpF8MsHvKO1gBDKw8kipBu+wXesPUl6H+UK0GKDZfk2V
+ Ethtz7xZ3l9PwvlFlJPCDCCEzeZoOewEUC370c1wV67aAHNdLRPj+QrnB
+ yRDR7aPb+AIiGFsyOG7i1SjJqRLFfoisCd4v5IurteVrEUHZNWAmPYIiT
+ 9UGycbSgSoFhq48jrKqqqgVq4tvJSD1w+6HSN9OlQ6AGWCH/ivbnWFr5j
+ SlQO4X6h48bg5/bTZsILgrFoAEggb0KawrWUGXsug4V40k8/6Ha9OL/Vy g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11012"; a="5044889"
+X-IronPort-AV: E=Sophos;i="6.07,124,1708416000"; 
+   d="scan'208";a="5044889"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Mar 2024 21:05:13 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,124,1708416000"; d="scan'208";a="12092091"
+Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
+ by fmviesa009.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 13 Mar 2024 21:05:13 -0700
+Received: from fmsmsx612.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Wed, 13 Mar 2024 21:05:12 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx612.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Wed, 13 Mar 2024 21:05:12 -0700
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (104.47.57.41) by
+ edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Wed, 13 Mar 2024 21:05:12 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Q/9perT3yRAuY5mUhdprmsLPYVgLAIxZc8xZlaKXRoEzc0jiZBOF8rCtnxeN3CXykSkD49+5B2rOuixnUd8HsFW1e6Wfyv1nfTWzS1p1IqM7Gixm+x+oUqc5qoLW0nTCBJ8mI0P0Lppg91iSF7qj7GawU2nRIg0oH4FJ9e3DynwIybHjA/y9EzL3iYGpB0CYuPhQSEyk8/Qteb4Vo17aGY6iAl5OxMF/r0ZSjwyw5DzYWHDfBX5+IngC2eEUb+oI0YIVKZmJL/IzlZ4uEVOi7mJLh7c5uUwjQZlSxER3l3ys58H13wrvnh1RYDEsbbTig6TGes0EyO1h8cRqxTq+rQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OAd8O7DaJkFPpo/oS/5YmRqAiTzjBPJIIj0lnDK1a1U=;
+ b=FqN4M9bNCYuN56oSV75DXYG2n6pY0p96DE9Oq6kFxKsHp+PEHZGKTX56GimP+CPxTkPomtbvtZZ1KvrrrvEY3f3cdNKc6QDO302waLmfjtoMeRcppZQ5Qqd9MVGOYBimwk1sQusoAU5W6OwzuZ95LsWgZU8YyRZ45C6uT4Oitb0jE2snb8LYwzpAydGrgtnPC7HuYSK6ZCr5Ltd5s6koiVK50K9LJI0++PeaepGyIgfkb1G/DZP+a2kLfPr9BRNXTIDYht71QQCbMBymtyE4n+T6wemvhjMh5YL97MAuZtDv/rXTIosieUHXTvgFgiFSaQh6Lpx9QiIzODduiVljGg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by CH3PR11MB8705.namprd11.prod.outlook.com (2603:10b6:610:1cc::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.19; Thu, 14 Mar
+ 2024 04:05:10 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::e4a3:76ce:879:9129]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::e4a3:76ce:879:9129%7]) with mapi id 15.20.7386.017; Thu, 14 Mar 2024
+ 04:05:10 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>, "clg@redhat.com"
+ <clg@redhat.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi
+ L" <yi.l.liu@intel.com>, "Sun, Yi Y" <yi.y.sun@intel.com>, "Peng, Chao P"
+ <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>
+Subject: RE: [PATCH v1 3/6] intel_iommu: Add a framework to check and sync
+ host IOMMU cap/ecap
+Thread-Topic: [PATCH v1 3/6] intel_iommu: Add a framework to check and sync
+ host IOMMU cap/ecap
+Thread-Index: AQHaaisbo2H+re2kM06xKrJPfsjhv7E0ah0AgACay5CAAFDoAIAABZmggABAY4CAARH34A==
+Date: Thu, 14 Mar 2024 04:05:10 +0000
+Message-ID: <SJ0PR11MB6744C09DA5405DB89C8D7C0D92292@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20240228094432.1092748-1-zhenzhong.duan@intel.com>
+ <20240228094432.1092748-4-zhenzhong.duan@intel.com>
+ <20240312130058-mutt-send-email-mst@kernel.org>
+ <SJ0PR11MB67446BFCEC0FFFBC018D70DA922A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <20240313030303-mutt-send-email-mst@kernel.org>
+ <SJ0PR11MB6744F2805D8EF6722C725DAC922A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <20240313071647-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240313071647-mutt-send-email-mst@kernel.org>
+Accept-Language: en-US
 Content-Language: en-US
-From: Max Chou <max.chou@sifive.com>
-In-Reply-To: <20240313220141.427730-5-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=max.chou@sifive.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|CH3PR11MB8705:EE_
+x-ms-office365-filtering-correlation-id: fe4e0260-3a7f-4765-28be-08dc43dbf118
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: lS++K+44ssF4Dcg+urcw+M2A4oVtBrTAx9pA1Vp/qzDAX1X4I+8KPYjC1bZ2xNyNiDMaFWOr3oEmrddI65uKEz0YQuc4E6L97+L7VN9WgE/WageJlameFh9ZqRMJm3K1WGSHOquX2K8FOiBw7zQ9eLhsGUPsv6ic7FTef2nFvpIWvM/Nmy0uNDHsd9JxTdwKmHjWvNQqfxAOUY0241qwHvsjyJYnbV39ccFS3HEYgklGNAtnaP0rQsi/XmMgI2tVneipmD7bm4LWhY2BcPMeDaeWROu1Y1aiNOygNWUc6okVMPO60dtc3NTy7AiyORkcahSSvP6Oqupra3qVZHXtwxLgig0vxtS70Rg70sH2lc/ZKsyE24+/BSlFwKGpHSnls1gCh5fdeFEk6RPZ0Wi2vz/jd2kh3aE6WljA9eIn28JBfNQBRnhI4nw/5CTJkYrME7SWc3+6Xen4XwtOckez+yPPhp9NA6f3vgQZ5GubOEzg05u4JrZTKHP/QLEHySeAJkPhuXfr2y9uTCpDrqiVraD7O0did/TW0lKpvf7peOYRw4/jx7QLxuKJhrX3c4TmC0YL+cw2pLJ+VWP4v+EFHQZ6Z8iC1AEMjrSb56fRCKNy44wKJD4nc6DNxUGtOcvgVgsNfFNtX1bxU/6lSobS2WL3sfIB+rEC9B9gpmWt+VlcKfPZKw/Rd8PcEwSwlAjsJoVVofuuMr9niviG1fJnDQbat5d3VWovFs5jpJBlhRE=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(7416005)(376005)(1800799015)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?YreHc6BYP10vSJvilW9RT3+dfVUomNz5uxmtHdf/6yCiIB7TA9Xhy10dCWtW?=
+ =?us-ascii?Q?bcVSmb16BbiiGG7REx5NmzOVK/fo2lEulj1rABHBrnH43UcZa75VUl7/pLNM?=
+ =?us-ascii?Q?4WZlB/t4qY9NB4se+Sf4Xt9qtGNGXrQqrrwo+sINvTGlaV/YGP8XEu3ucDio?=
+ =?us-ascii?Q?phCppbVKBYTXUBrMG/Mmy2yY+xPUyAZnaMh4ohpEWN1tvovMq5z/bfgXCbFR?=
+ =?us-ascii?Q?jNqb1VF8cn8MKMI0hcR+EBuG3izsoP3I0u2AuN7RaoUXLWBXOQ5WAYnzq81W?=
+ =?us-ascii?Q?sZOvLM8GwDwKGF79yXFpm/dn93gGwZh2aFZ+vmGlYxCiccXL3AToN1Xtgje6?=
+ =?us-ascii?Q?CWHT29BoY+F6jy9R8dzDUsqwLkrvFhEyRX4jFOTdsX2AKsYp0k4mhZOpMX3T?=
+ =?us-ascii?Q?zWHOd+EuhF66WISt7j2qo6fQIVeAMsI4hGMYAYcvrK2vwM2ztggXxJ6DaXX8?=
+ =?us-ascii?Q?l1gcQo2CXLVwBiwCN22Iwve1jckGMWGDTCjsigC9nC1+cDpBKYbzDfL6kU6A?=
+ =?us-ascii?Q?9I1/JuHbWLaxeElrbaVtNxru5Ona1W1jvmdIlrS8Ay+1Y4tyTyEmB0/gTt0U?=
+ =?us-ascii?Q?H4R60iEydtLY9GeRanr+4Q7tKhx4FneoWrbFgLvH7p2uSrrqn/X3ypJg/boe?=
+ =?us-ascii?Q?VCeU1IuWpGXvqX8pbrSsPI+2Uuh6CQB/nxjfJgDvGGtGpwH1vN/On+zA4wcC?=
+ =?us-ascii?Q?X0et+UFeKk0TByO5OCjApJcJYS2XfyCeIIAWAO/cbMilwBVcRwDb7Estqylc?=
+ =?us-ascii?Q?D0l8K7FCb1ZnWTpKJluX/kHBJcPwGQfEjULoFN/hFRsOdaYDwjOv3HAGaf8o?=
+ =?us-ascii?Q?Moh9EYOd7dDJRRVbWTBGPYGffSnyhvWncnCgPaUTEvDhyptV8Z+rWSB0qIxS?=
+ =?us-ascii?Q?Csdh537O5653Muu/T7/XjihKOTkbqn3GLSw0Ck3Y/MNBksXTh6mjrNo7+Ngg?=
+ =?us-ascii?Q?f8Y7fmBeULBGMNj5SadM8q4EEIPztynl6i223Sb5kPvy3NhDkgf8SgP/zDxo?=
+ =?us-ascii?Q?iZ8e4AqxRfDMPUeRatjE5dTS/FGKxmns89ilOxjtbHeDDcS+rsTnrSAmU8UM?=
+ =?us-ascii?Q?iUntD2psyrit2zK85PyiFjZak4EpcKJBwiEICgTNLBbKYZJCUYdTwHQi/V9t?=
+ =?us-ascii?Q?1Lu/WRawwTrKbfbvjvPnfD9Qk9iYxZ1yaN+9a3qm1tCmHE6zN1QnoeC43S/o?=
+ =?us-ascii?Q?6XFV06Pz4+I7KcfzWTyLUvyzBff+fte77qD4bDXAg2Gfg6KqbYfPHfnzbpfM?=
+ =?us-ascii?Q?To+blHM5FX2+d30vh9aCK4dtbGIWQ8FTP7DYiibH2K6aZIZ+2QapC3x1F6jQ?=
+ =?us-ascii?Q?cwJwR+wWBzm8lomyiqCT9/cbzSt4ZF44uQXpCs02H40LKdcTUe50JR0HnRLf?=
+ =?us-ascii?Q?7tPfHvexrSY4JpShd6ADTBz9iT/F+08+D4J4DQd6uopVtZEP7LOR1dT8G2+0?=
+ =?us-ascii?Q?B/cA0kXXRMqYPUE4Vtl2JmwqaDejefSqVHUoleyYT86GubxxCYFPeY8T2AKG?=
+ =?us-ascii?Q?cDTplD9QDkNW30Q0Y97nQaY+vl4/L0dBhOlgwRIIDaAdAllMWzhFU3Db31U4?=
+ =?us-ascii?Q?CsX/yHdgbtI39tVVC1LWw6j187KwGjc9oc9nxhsc?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fe4e0260-3a7f-4765-28be-08dc43dbf118
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Mar 2024 04:05:10.1325 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: cw8F6hcjWRb+4ipiJoA8TdKyGT/C9uVa+V2O7IeaTMcmAEb6J2DevkfWksm0eksLakkxJhwIjEe/9oXdteUK/sKHPQAFW87g6qckUC6nLNc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8705
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.19;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.971,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,219 +184,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------KGMbmnlyOj1YMr26eVfba8hg
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
 
-Hi Daniel,
 
-According the v spec section 15.2 & 15.3.
-
-"The vcpop.m instruction writes x[rd] even if vl=0 (with the value 0, 
-since no mask elements are active).
-   Traps on vcpop.m are always reported with a vstart of 0. The vcpop.m 
-instruction will raise an illegal instruction exception if vstart is 
-non-zero."
-
-"The vfirst.m instruction writes x[rd] even if vl=0 (with the value -1, 
-since no mask elements are active).
-  Traps on vfirst are always reported with a vstart of 0. The vfirst 
-instruction will raise an illegal instruction exception if vstart is 
-non-zero."
-
-Both the vcpop.m and vfirst.m instructions will raise illegal 
-instruction exception with non-zero vstart.
-
-And currently both the trans_vcpop_m and trans_vfirst_m translate 
-functions check the vstart_eq_zero flag.
-So I think the early exit checking in the vcpop.m and vfirstm helper 
-functions may be redundant.
-
-> @@ -4585,6 +4641,11 @@ target_ulong HELPER(vcpop_m)(void *v0, void *vs2, CPURISCVState *env,
->       uint32_t vl = env->vl;
->       int i;
->   
-> +    if (env->vstart >= env->vl) {
-> +        env->vstart = 0;
-> +        return 0;
-> +    }
-> +
->       for (i = env->vstart; i < vl; i++) {
->           if (vm || vext_elem_mask(v0, i)) {
->               if (vext_elem_mask(vs2, i)) {
-
-According v spec section 15.3
-
-""The vfirst.m instruction writes x[rd] even if vl=0 (with the value -1, 
-since no mask elements are active)."
-
-If both the vstart and vl are 0 here, the early exit checking will 
-return the wrong value 0 (the return value should be -1) here.
-
-> @@ -4604,6 +4665,11 @@ target_ulong HELPER(vfirst_m)(void *v0, void *vs2, CPURISCVState *env,
->       uint32_t vl = env->vl;
->       int i;
->   
-> +    if (env->vstart >= env->vl) {
-> +        env->vstart = 0;
-> +        return 0;
-> +    }
-> +
->       for (i = env->vstart; i < vl; i++) {
->           if (vm || vext_elem_mask(v0, i)) {
->               if (vext_elem_mask(vs2, i)) {
+>-----Original Message-----
+>From: Michael S. Tsirkin <mst@redhat.com>
+>Subject: Re: [PATCH v1 3/6] intel_iommu: Add a framework to check and
+>sync host IOMMU cap/ecap
 >
---------------KGMbmnlyOj1YMr26eVfba8hg
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+>On Wed, Mar 13, 2024 at 07:54:11AM +0000, Duan, Zhenzhong wrote:
+>>
+>>
+>> >-----Original Message-----
+>> >From: Michael S. Tsirkin <mst@redhat.com>
+>> >Subject: Re: [PATCH v1 3/6] intel_iommu: Add a framework to check and
+>> >sync host IOMMU cap/ecap
+>> >
+>> >On Wed, Mar 13, 2024 at 02:52:39AM +0000, Duan, Zhenzhong wrote:
+>> >> Hi Michael,
+>> >>
+>> >> >-----Original Message-----
+>> >> >From: Michael S. Tsirkin <mst@redhat.com>
+>> >> >Subject: Re: [PATCH v1 3/6] intel_iommu: Add a framework to check
+>and
+>> >> >sync host IOMMU cap/ecap
+>> >> >
+>> >> >On Wed, Feb 28, 2024 at 05:44:29PM +0800, Zhenzhong Duan wrote:
+>> >> >> From: Yi Liu <yi.l.liu@intel.com>
+>> >> >>
+>> >> >> Add a framework to check and synchronize host IOMMU cap/ecap
+>with
+>> >> >> vIOMMU cap/ecap.
+>> >> >>
+>> >> >> The sequence will be:
+>> >> >>
+>> >> >> vtd_cap_init() initializes iommu->cap/ecap.
+>> >> >> vtd_check_hdev() update iommu->cap/ecap based on host cap/ecap.
+>> >> >> iommu->cap_frozen set when machine create done, iommu-
+>>cap/ecap
+>> >> >become readonly.
+>> >> >>
+>> >> >> Implementation details for different backends will be in following
+>> >patches.
+>> >> >>
+>> >> >> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+>> >> >> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+>> >> >> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>> >> >> ---
+>> >> >>  include/hw/i386/intel_iommu.h |  1 +
+>> >> >>  hw/i386/intel_iommu.c         | 50
+>> >> >++++++++++++++++++++++++++++++++++-
+>> >> >>  2 files changed, 50 insertions(+), 1 deletion(-)
+>> >> >>
+>> >> >> diff --git a/include/hw/i386/intel_iommu.h
+>> >> >b/include/hw/i386/intel_iommu.h
+>> >> >> index bbc7b96add..c71a133820 100644
+>> >> >> --- a/include/hw/i386/intel_iommu.h
+>> >> >> +++ b/include/hw/i386/intel_iommu.h
+>> >> >> @@ -283,6 +283,7 @@ struct IntelIOMMUState {
+>> >> >>
+>> >> >>      uint64_t cap;                   /* The value of capability re=
+g */
+>> >> >>      uint64_t ecap;                  /* The value of extended capa=
+bility reg
+>*/
+>> >> >> +    bool cap_frozen;                /* cap/ecap become read-only =
+after
+>> >frozen */
+>> >> >>
+>> >> >>      uint32_t context_cache_gen;     /* Should be in [1,MAX] */
+>> >> >>      GHashTable *iotlb;              /* IOTLB */
+>> >> >> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+>> >> >> index ffa1ad6429..a9f9dfd6a7 100644
+>> >> >> --- a/hw/i386/intel_iommu.c
+>> >> >> +++ b/hw/i386/intel_iommu.c
+>> >> >> @@ -35,6 +35,8 @@
+>> >> >>  #include "sysemu/kvm.h"
+>> >> >>  #include "sysemu/dma.h"
+>> >> >>  #include "sysemu/sysemu.h"
+>> >> >> +#include "hw/vfio/vfio-common.h"
+>> >> >> +#include "sysemu/iommufd.h"
+>> >> >>  #include "hw/i386/apic_internal.h"
+>> >> >>  #include "kvm/kvm_i386.h"
+>> >> >>  #include "migration/vmstate.h"
+>> >> >> @@ -3819,6 +3821,38 @@ VTDAddressSpace
+>> >> >*vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+>> >> >>      return vtd_dev_as;
+>> >> >>  }
+>> >> >>
+>> >> >> +static int vtd_check_legacy_hdev(IntelIOMMUState *s,
+>> >> >> +                                 IOMMULegacyDevice *ldev,
+>> >> >> +                                 Error **errp)
+>> >> >> +{
+>> >> >> +    return 0;
+>> >> >> +}
+>> >> >> +
+>> >> >> +static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
+>> >> >> +                                  IOMMUFDDevice *idev,
+>> >> >> +                                  Error **errp)
+>> >> >> +{
+>> >> >> +    return 0;
+>> >> >> +}
+>> >> >> +
+>> >> >> +static int vtd_check_hdev(IntelIOMMUState *s,
+>> >VTDHostIOMMUDevice
+>> >> >*vtd_hdev,
+>> >> >> +                          Error **errp)
+>> >> >> +{
+>> >> >> +    HostIOMMUDevice *base_dev =3D vtd_hdev->dev;
+>> >> >> +    IOMMUFDDevice *idev;
+>> >> >> +
+>> >> >> +    if (base_dev->type =3D=3D HID_LEGACY) {
+>> >> >> +        IOMMULegacyDevice *ldev =3D container_of(base_dev,
+>> >> >> +                                               IOMMULegacyDevice,=
+ base);
+>> >> >> +
+>> >> >> +        return vtd_check_legacy_hdev(s, ldev, errp);
+>> >> >> +    }
+>> >> >> +
+>> >> >> +    idev =3D container_of(base_dev, IOMMUFDDevice, base);
+>> >> >> +
+>> >> >> +    return vtd_check_iommufd_hdev(s, idev, errp);
+>> >> >> +}
+>> >> >> +
+>> >> >>  static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque,
+>int
+>> >> >devfn,
+>> >> >>                                      HostIOMMUDevice *base_dev, Er=
+ror **errp)
+>> >> >>  {
+>> >> >> @@ -3829,6 +3863,7 @@ static int
+>> >vtd_dev_set_iommu_device(PCIBus
+>> >> >*bus, void *opaque, int devfn,
+>> >> >>          .devfn =3D devfn,
+>> >> >>      };
+>> >> >>      struct vtd_as_key *new_key;
+>> >> >> +    int ret;
+>> >> >>
+>> >> >>      assert(base_dev);
+>> >> >>
+>> >> >> @@ -3848,6 +3883,13 @@ static int
+>> >vtd_dev_set_iommu_device(PCIBus
+>> >> >*bus, void *opaque, int devfn,
+>> >> >>      vtd_hdev->iommu_state =3D s;
+>> >> >>      vtd_hdev->dev =3D base_dev;
+>> >> >>
+>> >> >> +    ret =3D vtd_check_hdev(s, vtd_hdev, errp);
+>> >> >> +    if (ret) {
+>> >> >> +        g_free(vtd_hdev);
+>> >> >> +        vtd_iommu_unlock(s);
+>> >> >> +        return ret;
+>> >> >> +    }
+>> >> >> +
+>> >> >>      new_key =3D g_malloc(sizeof(*new_key));
+>> >> >>      new_key->bus =3D bus;
+>> >> >>      new_key->devfn =3D devfn;
+>> >> >
+>> >> >
+>> >> >Okay. So when VFIO device is created, it will call
+>> >vtd_dev_set_iommu_device
+>> >> >and that in turn will update caps.
+>> >> >
+>> >> >
+>> >> >
+>> >> >
+>> >> >> @@ -4083,7 +4125,9 @@ static void vtd_init(IntelIOMMUState *s)
+>> >> >>      s->iq_dw =3D false;
+>> >> >>      s->next_frcd_reg =3D 0;
+>> >> >>
+>> >> >> -    vtd_cap_init(s);
+>> >> >> +    if (!s->cap_frozen) {
+>> >> >> +        vtd_cap_init(s);
+>> >> >> +    }
+>> >> >>
+>> >> >
+>> >> >If it's fronzen it's because VFIO was added after machine done.
+>> >> >And then what? I think caps are just wrong?
+>> >>
+>> >> Not quite get your question on caps being wrong. But try to explains:
+>> >>
+>> >> When a hot plugged vfio device's host iommu cap isn't compatible with
+>> >> vIOMMU's, hotplug should fail. Currently there is no check for this a=
+nd
+>> >> allow hotplug to succeed, but then some issue will reveal later,
+>> >> e.g., vIOMMU's MGAW > host IOMMU's MGAW, guest can setup iova
+>> >> mapping beyond host supported iova range, then DMA will fail.
+>> >>
+>> >> In fact, before this series, cap is not impacted by VFIO, so it's sam=
+e
+>effect of
+>> >> frozen after machine done.
+>> >>
+>> >> >
+>> >> >
+>> >> >I think the way to approach this is just by specifying this
+>> >> >as an option on command line.
+>> >>
+>> >> Do you mean add a cap_frozen property to intel_iommu?
+>> >> Vtd_init() is called in realize() and system reset(), so I utilize re=
+alize() to
+>init
+>> >cap
+>> >> and froze cap before system reset(). If cap_frozen is an option, when=
+ it's
+>> >set to
+>> >> false, cap could be updated every system reset and it's not a fix val=
+ue
+>any
+>> >more.
+>> >> This may break migration.
+>> >
+>> >No, I mean either
+>> >1. add some kind of vfio-iommu device that is not exposed to guest
+>> >   but is not hot pluggable
+>>
+>> Not quite get, what will such vfio-iommu device be used for if not expos=
+ed
+>to guest.
+>
+>It will update the IOMMU.
+>And do so without need for tricky callbacks.
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><font face="monospace">Hi Daniel,<br>
-      </font></p>
-    <p><font face="monospace">According the v spec section 15.2 &amp;
-        15.3.<br>
-      </font></p>
-    <p><font face="monospace">"</font><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">The </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vcpop.m
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">instruction
-        writes </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">x[rd] </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">even
-        if </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vl</span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">=0
-        (with the value 0, since no mask elements are active).<br>
-          Traps on </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vcpop.m
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">are
-        always reported with a </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vstart
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">of 0.
-        The </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vcpop.m
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">instruction
-        will raise an illegal instruction
-        exception if </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vstart
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">is
-        non-zero."<br>
-        <br>
-        "</span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">The </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vfirst.m
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">instruction
-        writes </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">x[rd] </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">even
-        if </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vl</span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">=0
-        (with the value -1, since no mask elements are active).<br>
-         Traps on </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vfirst
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">are
-        always reported with a </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vstart
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">of 0.
-        The </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vfirst
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">instruction
-        will raise an illegal instruction exception if
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vstart
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">is
-        non-zero."</span></p>
-    <p><span style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">Both
-        the vcpop.m and vfirst.m instructions will raise illegal
-        instruction exception with non-zero vstart.</span></p>
-    <p><span style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">And
-        currently both the trans_vcpop_m and trans_vfirst_m translate
-        functions check the vstart_eq_zero flag.<br>
-        So I think the early exit checking in the vcpop.m and vfirstm
-        helper functions may be redundant.<br>
-      </span></p>
-    <div class="page" title="Page 78">
-      <div class="layoutArea">
-        <div class="column"> </div>
-      </div>
-    </div>
-    <div class="page" title="Page 78">
-      <div class="layoutArea">
-        <div class="column"> </div>
-      </div>
-    </div>
-    <span style="white-space: pre-wrap">
-</span>
-    <blockquote type="cite"
-      cite="mid:20240313220141.427730-5-dbarboza@ventanamicro.com">
-      <pre class="moz-quote-pre" wrap="">@@ -4585,6 +4641,11 @@ target_ulong HELPER(vcpop_m)(void *v0, void *vs2, CPURISCVState *env,
-     uint32_t vl = env-&gt;vl;
-     int i;
- 
-+    if (env-&gt;vstart &gt;= env-&gt;vl) {
-+        env-&gt;vstart = 0;
-+        return 0;
-+    }
-+
-     for (i = env-&gt;vstart; i &lt; vl; i++) {
-         if (vm || vext_elem_mask(v0, i)) {
-             if (vext_elem_mask(vs2, i)) {</pre>
-    </blockquote>
-    <p><font face="monospace">According v spec section 15.3</font></p>
-    <p><font face="monospace">"</font><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">"</span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">The </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vfirst.m
-      </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">instruction
-        writes </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">x[rd] </span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">even
-        if </span><span
-        style="font-size: 9.000000pt; font-family: 'RobotoMono'">vl</span><span
-        style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">=0
-        (with the value -1, since no mask elements are active)."</span></p>
-    <p><span style="font-size: 9.000000pt; font-family: 'IBMPlexSans'">If
-        both the vstart and vl are 0 here, the early exit checking will
-        return the wrong value 0 (the return value should be -1) here.<br>
-      </span></p>
-    <blockquote type="cite"
-      cite="mid:20240313220141.427730-5-dbarboza@ventanamicro.com">
-      <pre class="moz-quote-pre" wrap="">
-@@ -4604,6 +4665,11 @@ target_ulong HELPER(vfirst_m)(void *v0, void *vs2, CPURISCVState *env,
-     uint32_t vl = env-&gt;vl;
-     int i;
- 
-+    if (env-&gt;vstart &gt;= env-&gt;vl) {
-+        env-&gt;vstart = 0;
-+        return 0;
-+    }
-+
-     for (i = env-&gt;vstart; i &lt; vl; i++) {
-         if (vm || vext_elem_mask(v0, i)) {
-             if (vext_elem_mask(vs2, i)) {
+Sorry to bother you again, just want to get clear understanding to your sug=
+gestions.
 
-</pre>
-    </blockquote>
-  </body>
-</html>
+1. Is vfio-iommu device type inherited from TYPE_VFIO_PCI_NOHOTPLUG?
 
---------------KGMbmnlyOj1YMr26eVfba8hg--
+2. How to avoid tricky set/unset_iommu_device callbacks with vfio-iommu dev=
+ice,
+    if we want to pass vfio-iommu device to vIOMMU to update caps?
+
+3. Do you mean we can loop on vfio_device_list to get vfio-iommu device?
+    We want to support vdpa device in future, also need to loop vdpa device=
+ list;
+    also need to bypass vfio device whose host bridge configured IOMMU bypa=
+ssed.
+
+4. It looks, with vfio-iommu device hotplug is not supported, or I misunder=
+stand?
+
+Thanks
+Zhenzhong
 
