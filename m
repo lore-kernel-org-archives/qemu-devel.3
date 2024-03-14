@@ -4,76 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 402F3C54E68
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35971C54E67
 	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:23:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkmv2-00078c-0J; Thu, 14 Mar 2024 11:22:56 -0400
+	id 1rkmvL-0007Ce-Ed; Thu, 14 Mar 2024 11:23:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rkmuz-00078J-Av
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:22:53 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rkmvG-0007A9-V7
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rkmuw-0003iL-Qs
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:22:53 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rkmvF-0003jZ-7J
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:23:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710429768;
+ s=mimecast20190719; t=1710429786;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YBLsaHQRWmgI5xtRyjnZlSrZ5Mfmm95p7kFi0A/ame0=;
- b=XQCtsBoCQFQlIHUYZEpWLDm0nLc5Ujb1FfvWHCbK9o9oCKxLORpdEL0eJQpb51DFI6rhoe
- 4IFqg85uucCU8Xe8HNY+syQ+/2kI+vq/oe1m8A6gmepwSbf1lvKm2JtfGtY133crROKLSU
- 451PcpTRYgkmxt987lf24Tk9/2JPFCk=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Ceb/DwbL3VM9R4zU+4xdcj357/Vv+D/hDusM8ICr8Dk=;
+ b=Ux2wfqDmnUvx8iJhWGR8WQQna7fsjwCS222OIAgRqAyR05z8sTyp9qb1thzVf7dkskSwZ0
+ HeQWQPEB+B8M4z/hrP7CgKv5Xr8q9nSvti57xMSD0d88knqXtS820Ow1Oz7zIHHqr7EY9w
+ ZxZmqQ+Rv7Jz6zJwaCdrl3iKjD3C+Ww=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-15-UhLMvhIsO42Mzhwjdhgg5g-1; Thu, 14 Mar 2024 11:22:46 -0400
-X-MC-Unique: UhLMvhIsO42Mzhwjdhgg5g-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-690d3f5af86so3691406d6.0
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 08:22:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710429766; x=1711034566;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YBLsaHQRWmgI5xtRyjnZlSrZ5Mfmm95p7kFi0A/ame0=;
- b=D1IeFXZSCiyUOchjjq9s1vVsCtQaymZssAp3LEF0uX5LWfkANTyBZetwIdqL+/w66s
- 0FAhk2KITeIkee54E7N+jYKSfwyoUgh7ovmyOyp0FafvAUW8hebFcS1hADO1NejFZesX
- KEqAFo2+8eJJVxJwyE5+WrdpSx/e0m7fpXEB4qSMJJ5If64Jihf97p6fOnJ5VmGX9hJf
- uQhl5JjYKMM40iytV43PWB//Mtb7ZAQTAKbj1AsZ0GMv/o80ItypikkuHzDf9MKhQ+rT
- 7j8zjUEZZV/j+dFyEPmMFKy+tJdS5dwcS7TQ6hcsTfyZE4GocrYpPAVySgoO2A3RTP3L
- X/Qg==
-X-Gm-Message-State: AOJu0YxC1FM34tdoTK/GM8IuTS4aeuWLzZuG+30b+lgM5hmpb/oR4fQw
- bj3hx9DS0nuNsXug4MHnQ/rCmP5HgLdMeDpzYTHGpfcMNO0Em/BwwP4qb+ntGVhaIa4QMi5Ub8e
- PWTBTDc7akrP6LTk+xD/Fl/Xfw8o32XRUCaW8Vy8LI8c5QUFmbLhj9HVmFUTQ
-X-Received: by 2002:a05:6214:2b87:b0:690:d74d:7e6d with SMTP id
- kr7-20020a0562142b8700b00690d74d7e6dmr2111552qvb.3.1710429766057; 
- Thu, 14 Mar 2024 08:22:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrgr8ZehAZbR6Bcchlz4mFY+tU2MLAQmy9t1bwtYO1AAGIjwUoXsvYUT0fzokglRpQz4nbfg==
-X-Received: by 2002:a05:6214:2b87:b0:690:d74d:7e6d with SMTP id
- kr7-20020a0562142b8700b00690d74d7e6dmr2111534qvb.3.1710429765625; 
- Thu, 14 Mar 2024 08:22:45 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 9-20020a0562140d4900b006904d35e1c6sm577741qvr.58.2024.03.14.08.22.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Mar 2024 08:22:45 -0700 (PDT)
-Date: Thu, 14 Mar 2024 11:22:44 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH v2 0/2] migration mapped-ram fixes
-Message-ID: <ZfMWRBDN4wPQsOWI@x1n>
-References: <20240313212824.16974-1-farosas@suse.de>
+ us-mta-549-haERBOOtM5G__GKXcwB22A-1; Thu, 14 Mar 2024 11:23:05 -0400
+X-MC-Unique: haERBOOtM5G__GKXcwB22A-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C498787984D
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 15:23:04 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 1EE2010F53;
+ Thu, 14 Mar 2024 15:23:04 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com
+Subject: [PATCH v4 00/21] Workaround Windows failing to find 64bit SMBIOS
+ entry point with SeaBIOS
+Date: Thu, 14 Mar 2024 16:22:41 +0100
+Message-Id: <20240314152302.2324164-1-imammedo@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240313212824.16974-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -98,60 +81,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 13, 2024 at 06:28:22PM -0300, Fabiano Rosas wrote:
-> Hi,
-> 
-> In this v2:
-> 
-> patch 1 - The fix for the ioc leaks, now including the main channel
-> 
-> patch 2 - A fix for an fd: migration case I thought I had written code
->           for, but obviously didn't.
+Changelog:
+ v4:
+   * rebase on top of current master due to conflict with
+     new SMBIOS table 9 commits
+   * add extra patch with comments about obscure legacy entries counting
+ v3:
+   * whitespace missed by checkpatch
+   * fix idndent in QAPI
+   * reorder 17/20 before 1st 'auto' can be used
+   * pick up acks
+ v2:
+   * QAPI style fixes (Markus Armbruster <armbru@redhat.com>)
+   * squash 11/19 into 10/19 (Ani Sinha <anisinha@redhat.com>)
+   * split '[PATCH 09/19] smbios: build legacy mode code only for 'pc' machine'
+     in 3 smaller patches, to make it more readable
+       smbios: add smbios_add_usr_blob_size() helper                                  
+       smbios: rename/expose structures/bitmaps used by both legacy and modern code                                                                  
+       smbios: build legacy mode code only for 'pc' machine
+   * pick up acks
 
-Maybe I found one more issue.. I'm looking at fd_start_outgoing_migration().
+Windows (10) bootloader when running on top of SeaBIOS, fails to find
+SMBIOSv3 entry point. Tracing it shows that it looks for v2 anchor markers
+only and not v3. Tricking it into believing that entry point is found
+lets Windows successfully locate and parse SMBIOSv3 tables. Whether it
+will be fixed on Windows side is not clear so here goes a workaround.
 
-    ioc = qio_channel_new_fd(fd, errp);  <----- here the fd is consumed and
-                                                then owned by the IOC
-    if (!ioc) {
-        close(fd);
-        return;
-    }
+Idea is to try build v2 tables if QEMU configuration permits,
+and fallback to v3 tables otherwise. That will mask Windows issue
+form majority of users.
+However if VM configuration can't be described (typically large VMs)
+by v2 tables, QEMU will use SMBIOSv3 and Windows will hit the issue
+again. In this case complain to Microsoft and/or use UEFI instead of
+SeaBIOS (requires reinstall).
 
-    outgoing_args.fd = fd;               <----- here we use the fd again,
-                                                and "owned" by outgoing_args
-                                                even if it shouldn't?
+Default compat setting of smbios-entry-point-type after series
+for pc/q35 machines:
+  * 9.0-newer: 'auto'
+  * 8.1-8.2: '64'
+  * 8.0-older: '32'
 
-The problem is outgoing_args.fd will be cleaned up with a close().  I had a
-feeling that it's possible it will close() something else if the fd reused
-before that close() but after the IOC's.  We may want yet another dup() for
-outgoing_args.fd?
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2008
 
-If you agree, we may also want to avoid doing:
+Igor Mammedov (21):
+  tests: smbios: make it possible to write SMBIOS only test
+  tests: smbios: add test for -smbios type=11 option
+  tests: smbios: add test for legacy mode CLI options
+  smbios: cleanup smbios_get_tables() from legacy handling
+  smbios: get rid of smbios_smp_sockets global
+  smbios: get rid of smbios_legacy global
+  smbios: avoid mangling user provided tables
+  smbios: don't check type4 structures in legacy mode
+  smbios: add smbios_add_usr_blob_size() helper
+  smbios: rename/expose structures/bitmaps used by both legacy and
+    modern code
+  smbios: build legacy mode code only for 'pc' machine
+  smbios: handle errors consistently
+  smbios: get rid of global smbios_ep_type
+  smbios: clear smbios_type4_count before building tables
+  smbios: extend smbios-entry-point-type with 'auto' value
+  smbios: in case of entry point is 'auto' try to build v2 tables 1st
+  smbios: error out when building type 4 table is not possible
+  tests: acpi/smbios: whitelist expected blobs
+  pc/q35: set SMBIOS entry point type to 'auto' by default
+  tests: acpi: update expected SSDT.dimmpxm blob
+  smbios: add extra comments to smbios_get_table_legacy()
 
-    outgoing_args.fd = -1;
+ hw/i386/fw_cfg.h                     |   3 +-
+ include/hw/firmware/smbios.h         |  28 +-
+ hw/arm/virt.c                        |   6 +-
+ hw/i386/Kconfig                      |   1 +
+ hw/i386/fw_cfg.c                     |  14 +-
+ hw/i386/pc.c                         |   4 +-
+ hw/i386/pc_piix.c                    |   4 +
+ hw/i386/pc_q35.c                     |   3 +
+ hw/loongarch/virt.c                  |   7 +-
+ hw/riscv/virt.c                      |   6 +-
+ hw/smbios/Kconfig                    |   2 +
+ hw/smbios/meson.build                |   4 +
+ hw/smbios/smbios.c                   | 483 +++++++++++----------------
+ hw/smbios/smbios_legacy.c            | 192 +++++++++++
+ hw/smbios/smbios_legacy_stub.c       |  15 +
+ qapi/machine.json                    |   5 +-
+ tests/data/acpi/q35/SSDT.dimmpxm     | Bin 1815 -> 1815 bytes
+ tests/data/smbios/type11_blob        | Bin 0 -> 11 bytes
+ tests/data/smbios/type11_blob.legacy | Bin 0 -> 10 bytes
+ tests/qtest/bios-tables-test.c       |  81 ++++-
+ 20 files changed, 541 insertions(+), 317 deletions(-)
+ create mode 100644 hw/smbios/smbios_legacy.c
+ create mode 100644 hw/smbios/smbios_legacy_stub.c
+ create mode 100644 tests/data/smbios/type11_blob
+ create mode 100644 tests/data/smbios/type11_blob.legacy
 
-We could assert it instead making sure no fd leak.
-
-> 
-> Thank you for your patience.
-> 
-> based-on: https://gitlab.com/peterx/qemu/-/commits/migration-stable
-> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1212483701
-> 
-> Fabiano Rosas (2):
->   migration: Fix iocs leaks during file and fd migration
->   migration/multifd: Ensure we're not given a socket for file migration
-> 
->  migration/fd.c   | 35 +++++++++++---------------
->  migration/file.c | 65 ++++++++++++++++++++++++++++++++----------------
->  migration/file.h |  1 +
->  3 files changed, 60 insertions(+), 41 deletions(-)
-> 
-> -- 
-> 2.35.3
-> 
-
--- 
-Peter Xu
+--
+2.39.3
 
 
