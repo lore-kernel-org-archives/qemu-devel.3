@@ -4,158 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A05B2C54E66
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 03:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA21C5475B
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 03:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkbft-0002Jw-26; Wed, 13 Mar 2024 23:22:33 -0400
+	id 1rkbi9-000374-Ea; Wed, 13 Mar 2024 23:24:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1rkbfr-0002Jh-4n
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 23:22:31 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rkbi7-000362-Gh
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 23:24:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1rkbfo-00056y-GL
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 23:22:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710386548; x=1741922548;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=oGUxH7FTlCEr3E4SGWGc0+/SNvN1LnQJLSyeRrE1Ofo=;
- b=jPXUBLMc6Cc6ZrnCY4hkwgvJmlMh1mNDJbjufEYT5fbOy4qTvPAwc/of
- mzf/GG4Cfe+Mt0j4AVM9zk9DzJN+c1dJfQbGtLeJZ3FL+ex1PfnWcvwS7
- Udsq4DS3CJIsFXnS8iRDG/9cnyKMp79JCwUvY4YW7+TCKMYtqHN0xBq2y
- gcU2QubNotopMT3YLhCEyNYfw0DqasawTSET8lQGnQztuM0FhFCSEhMM3
- arjof25xa7fn2vCLMKW14isXX12i0AvFEwQm/vhNL06iLwt6BLQAx+WYw
- 0pNPe/QRJmnMBRXaaneMdSUB2+b6blOfo2FeAbgZEh9tG9+ObZ0R3LkUY w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11012"; a="8966343"
-X-IronPort-AV: E=Sophos;i="6.07,124,1708416000"; 
-   d="scan'208";a="8966343"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Mar 2024 20:22:24 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,124,1708416000"; d="scan'208";a="12164101"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
- by orviesa009.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 13 Mar 2024 20:22:24 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 13 Mar 2024 20:22:24 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Wed, 13 Mar 2024 20:22:23 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Wed, 13 Mar 2024 20:22:23 -0700
-Received: from NAM02-SN1-obe.outbound.protection.outlook.com (104.47.57.40) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Wed, 13 Mar 2024 20:22:23 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kucd+Qut6heQwNls6N99fv2/IYgGRRX8qVK/jo881WlJ1d4QnEwjgujLSzhFzIBM+46m/ENhBkB89i60huKTJqvPHopz2RtK1cb98REEDUZQOGbXZc58wTZCz6a77yl7saOBAS643TGro83dZHx28W4ykDX867G+wlSnmW4XosrsiKarqE9VvfqqWAxVxGDxlqLDVIB5FiVNvrnJxJbKvNfIfK/oif/zX7AdMa1HfgGfOd1DOzi+lXwQOJ/44PU483nl44phaioeQFzGQHSOinwcwYhe1uJIlt2e5nfWBAPyg54Xe7TlbzC2sSMBg4ZCZtwOQ1B/KbTtoWc9U4cP+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=I+pWw4ERtXPbjm98aWEAf6TP8WiDG41hu0KNxouZ/SY=;
- b=nZ7zU/f77Ml/Fw1W5qNfNHDnCZbQZLLUPtiIIpDFaDjUrI03dOihIniC0pg0wvRWz8eI7Tey9LRyadOys+e3V3mQJuDaadQuSLoX2go0vOxyiCTH7Npd1WHuZ6dCXRfFvzZcm/NBw/0wqpsaEGjrH/BbAejs853Owb9OKNgiTUokM5CJtamO2XagDbUuxHYgL0WzoKwq9hRBRv1oc3vP0p3W9RqksmxO8kqLxE98+frwi0d4aMtju/dN283pJtYFEYP2He4K+Mt1yGOajJMDxUBnbGUCWaqrA7jYgcHtga+sX6UB0AhCGx4/f6aOR7tRS8rUCIV/ELIvzIDOcuuA9A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS0PR11MB7529.namprd11.prod.outlook.com (2603:10b6:8:141::20)
- by PH0PR11MB7445.namprd11.prod.outlook.com (2603:10b6:510:26e::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7362.14; Thu, 14 Mar
- 2024 03:22:21 +0000
-Received: from DS0PR11MB7529.namprd11.prod.outlook.com
- ([fe80::b1f5:9d1f:f510:d54c]) by DS0PR11MB7529.namprd11.prod.outlook.com
- ([fe80::b1f5:9d1f:f510:d54c%3]) with mapi id 15.20.7386.015; Thu, 14 Mar 2024
- 03:22:21 +0000
-Message-ID: <a947bfd9-4670-476e-b90b-cac03632ad3b@intel.com>
-Date: Thu, 14 Mar 2024 11:25:50 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/iommufd: Fix memory leak
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, <qemu-devel@nongnu.org>
-CC: Alex Williamson <alex.williamson@redhat.com>, Eric Auger
- <eric.auger@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>
-References: <20240313210628.786224-1-clg@redhat.com>
-From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20240313210628.786224-1-clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI2PR02CA0032.apcprd02.prod.outlook.com
- (2603:1096:4:195::12) To DS0PR11MB7529.namprd11.prod.outlook.com
- (2603:10b6:8:141::20)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rkbi5-0005Rs-Vh
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 23:24:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710386688;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8l6GDiQ30I+perZVPKckMJTL3NiBCH47KmE/HyWeOhg=;
+ b=FYX/z4v7YUbKa9pfM6bxTANhS7tvyj43RXwT2IrQIJ0v5fRbNd9yr2D8ORNkqZ5gzYHQgS
+ 0Yq1HNPgN9tqc8Ys4OjOQYkoxQlcHJg4gs9/RoTNHPGC/KCZZVuyNR6HRqgOwGhMdQlGn9
+ wPy+yQDVW/gwQGxxSzSPaz43FFtFyOg=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-121-7VEor4CsOh2b3_K_g8zbGw-1; Wed, 13 Mar 2024 23:24:46 -0400
+X-MC-Unique: 7VEor4CsOh2b3_K_g8zbGw-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-299c5a61099so481818a91.0
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 20:24:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710386685; x=1710991485;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8l6GDiQ30I+perZVPKckMJTL3NiBCH47KmE/HyWeOhg=;
+ b=hz8OP9NSh/oBtyemhrOwAHBy9ZJ2SHZbil+ra1jVQwokEHNsjptUBleGkKQs5rvgYK
+ k1gVq93b9ySDLzlQAhWwC+8aUX+kEU9iWT6YEn4FpBxTbNVe3brAXfn2BmIsFIB/A5js
+ iuzdFwH6p72QXJo2VixoGAsOn9sdFUcnQF0TUbWw+vHefFxVJqfUj83b7MbHYZH6zvVn
+ khUpGrLNiLjbzZDZFqH/Zg7wSv8y7rz/SKt+C0bwZpgYaOD2sI4uGf2k2awshUSXyjjK
+ STpPVPQuYJFF7vF+w73M0K42sJPo/+cVgnfjDLeN0hGkF0Qdp1WwcKjbI7ICaTn7b7We
+ +J3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX383xy1zGecFvNvd6OM4lPpV2rMwkWgvkDghghJKRj3qZU4BZvwJAMPDvkBT0UMfBVzHVbXXI8Xgxr44z+52qexpZ+lNw=
+X-Gm-Message-State: AOJu0YyOb2Wt5pKCv8P9yqyX3cxXVMYMq9lBa0oUzoSrn2hktqVVjbLl
+ 7yf3hv+J4mcyIX7te3vVEEW7uRBHzdXxYxfUjgrRUGAdvHxKusAiSxvxqDlN6oZmzeeLI0JWNCd
+ xp8WY7f0tQ7/ipZ3+rGGQ18tYlUtfyEZLmgYetygr/ZyLPcWSGLMGdT9vOhwiUzm1ItDO93sYaF
+ CKVs2zgGEK3IA9Eh4/Jc/IP80ZAp4=
+X-Received: by 2002:a05:6a21:78a7:b0:1a3:260a:aad5 with SMTP id
+ bf39-20020a056a2178a700b001a3260aaad5mr1008326pzc.3.1710386685221; 
+ Wed, 13 Mar 2024 20:24:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEu3BBVHW7Zcct6ivl/fXRSf/vLfnJaXljhkMkmh5iNRTdDb4rh4obSXYHIhpQ2Oc0IMsU4AosXeInqRXCdAAU=
+X-Received: by 2002:a05:6a21:78a7:b0:1a3:260a:aad5 with SMTP id
+ bf39-20020a056a2178a700b001a3260aaad5mr1008313pzc.3.1710386684925; Wed, 13
+ Mar 2024 20:24:44 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR11MB7529:EE_|PH0PR11MB7445:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9e1a5d25-ecbc-4eff-041c-08dc43d5f587
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Ybnopo5Qi3mNj0ZUgub++Wv5z3TQgNF3Yn5PZGIQjOeytfnUChvmU63MyQoPTy2JoyAA5EFHN9+PehVtcYK8nIkJqZq9uJgup+HYj7xFKkh8lePfQVvX7zqgzBRABuk8OtfGjCJKL1Uu+74IPa3A3OyXHraJrmI3jSg32zUbAoWPrjf9MRxQV2fSTXjDoZ0I1rZ142MXEL+lnFDV2Qubw5XgtSmw4qcRe6nVcYwbPKbH0+XXHv4oqJf6yZ0y+gFPV0tMzzb82S3Q+qYCzpmvWPTzqdVPBTia1W1BQMsHMVpjf9ZhQ7po74akhCr7lPA6j65y7dwY6QuvFPX0fUs0SV/eihYt+cNWrgGuUoZRd4V+ngFxFVjwCxYwmFUVzOoom6tYAYsHZzRz1c9zPPOPUAau0b+Creekh0AJ/NJwG4WtPpvm44OVaLZ5IP/wBCyVVtf/0Kcg29XSDJYTKumDpF/YvJGQZw3tm9BBhpXP0BxAEh9sKCMj/OJlXahs4z60rYZSiN2hvJR1v6PNCUD4iknunNFQdlnpVSDVkEMnyoSaG7R0WQh+2BbpyQtUSvOcg7SCW7scWqgg8ttSt+rYUhD90pZS8q0hoxTD2vlu9oKL2lUi8nYko2iNtBdNO/BLaR1wfugB8J5MxCtMgYvFZN1aWIPR6cT2+BRs5dNshHA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS0PR11MB7529.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(1800799015)(376005); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VUJJWXY5dmZ0QmpVWDM4cllBb2FScXNWS3QzdDNaSHh5R1dnUzl3UXRpeG45?=
- =?utf-8?B?OEtQSHY4Rjc0SnIxMWh5ajAvRGl3cStPbjh2aXJhNnIyTnNObHVHWm1iZmYw?=
- =?utf-8?B?NlIzQlN6dEJPYUF3NUV5MVd4TlhSWDdFdEJDd2t6ZU94Z3BVTWVEeU9WVm9W?=
- =?utf-8?B?OXJaNjBBZ0gwNWNuVkNYQWx6Q3REOERIZ0pvenRLY01CdUJKMWdFZ3ZQWnE2?=
- =?utf-8?B?dE1RNXlrUUtqd0VqM0hSa3k0TXA2SUNGK1lZUExCMnppR2NDMytUb00rNmM1?=
- =?utf-8?B?bVVmRG1Dbmlld0dGTDhNUXNKL1lYb21ONHVDd0ZTMXdJdzBIS1MzM0hIZW1m?=
- =?utf-8?B?VzV0UEFKc2s4OWtnRjlwNVZlMUgzaU1EeFBBVEU1OGVVUU5ZWEgwNUZrd3hY?=
- =?utf-8?B?NWpuZXA2WFdLcVhxWGgwNXE5R0lSQ1FwNmFmK1htaXR4K21iNGIvSURnenlM?=
- =?utf-8?B?eGFIVWZZOTNDMXFiYXpnKzZaNjBpZ2swQjZhTGd5M1Z6VmtIenNsejdEOG4w?=
- =?utf-8?B?Uk80K2prdWk4NVNDVmhnNVIvNGZiQlY4SWlVaEZHdWlmd3VjTHR2eFVXZUF1?=
- =?utf-8?B?NlphMTVHTEdJL0MzQVVFZTFxQVdiNC82UldTRjRURmx0NkZXdU01akpNaEsr?=
- =?utf-8?B?Z1pnUmNIUWZwZHYvak9YbXlrMVlISndudllNUENEYTBONVVsa2IzSDlYWVB1?=
- =?utf-8?B?dmFMS1BtVjVGOU8xdTd5ck92Sm9CbXp1Z2xURHVtMktsU2p5ZXpEbkpTT1I3?=
- =?utf-8?B?VGdSRHVvTjhkN3FVdVoxTk9ReEJkS0RjSG1YZy9KUmRyVUZQVnphYTJFQmw5?=
- =?utf-8?B?Z24xSE5tQ1djN3l0WkZmdlUyQ0xnYzIrWWh5ZVA3czd4SUUzUXJSRkZLZTgz?=
- =?utf-8?B?MCtrUElyR0RtOFF6cGtGV29PQXJCeW54N0I4ck01MHlGT3RqdE9GUHA5UlA0?=
- =?utf-8?B?QlJ4VEQyV3R6NFpFbWhUd0M4cEl1aXdibnFwVEdDSGtvN3hpbGZPMWZ3RW1Q?=
- =?utf-8?B?TFBpV2VkQmpNRHpRWG5zeHBJZzRMaFE5UG92Q3l3UmwxVHR2eFNxSklFWi94?=
- =?utf-8?B?cWZ1SkF3OE0yVGxUbjhvYWVnTG1EOTczUDVnd2pwWVBaMGpHV0RhdURXZFBJ?=
- =?utf-8?B?QWNNdHFhcmk3VkxLQ2FhK0xtcEpWS3YrYXZNTCsxTUFlbk0yNTdLeEhZUHZF?=
- =?utf-8?B?VklBL1Z0Ky9vSVd6K0dsazZINjRwcWdodStGL25pT3pqbFhnWW9aTWRTYitk?=
- =?utf-8?B?MzcrZS9OYVdzQW5HbUtOMi9nTW9ZQnBFU3dXUFRFN204L3lIN1dqc05mSXVp?=
- =?utf-8?B?YkRLTnFQYWVBQ0NsNVVaUXk3eUdKRTY0S0FsaDhncnJHZHdJek5tbFAvQis3?=
- =?utf-8?B?OEJ5cHZ4REt0UTEyYXJVbEFBdEFPbE9RRnd1VlVFKzNWZEtsbGhENThpcGQv?=
- =?utf-8?B?THhxZkhKQVJGSjRHK3VXVElxeG1GQXd3NEFyS0lpL0QvVUVLZUl6eXBxRVVR?=
- =?utf-8?B?UHRuVXNmMEdaRVBSYkU5R2lHRHI3Wk45cGxaNTZ1dkxLUDIrdndvU0RNVzl5?=
- =?utf-8?B?M3duZjNoUEs0SFBCNFF2akgzMUQySnhBTmgrZUR3T2V5Z1Bpd0h4aFBTckNJ?=
- =?utf-8?B?akJYcXhHck5kQXAvWWorUDhiM1B5S0lWcUpsWEZQYkEzQmkrczBHQ21hTkRs?=
- =?utf-8?B?NUx2elhTTW5iaWVlUWZWQlVlbG95Z2FKeW1jazdnaEt6WUloNlArZjIyVUpO?=
- =?utf-8?B?R3RBL1dPMlc4M1ZPYXdZNDA2VkprWGNZelMyd2Z1T056S0tkWXJpdVJWYXZR?=
- =?utf-8?B?ZnQrblgwaHlLZHd6M3VxWCtDQ0lYcmUzd1pIT1RJejdueGJjZ2lFTzBlemNB?=
- =?utf-8?B?RXVuU0Y0Mk9ZZjBwMnVkNk8zcXd6V3o4K3pmbWk5SjFTRFpFRFY3RlhqaDFj?=
- =?utf-8?B?TXIwZ3FCdEZMVCtDdThVemdjS0NMRzNqRkFqQ1ZJQ2dhRG1pM2FwQTU3UTdm?=
- =?utf-8?B?Z09sVUE0aUtjRlF5SDlWUkpYMkVWWEZHb0s5R3VGdmpzdmt0dEVsVkFNeVlN?=
- =?utf-8?B?c2laSm9YQmNYNStrRjhpVlg2VTVIdnRJckExM2hlYWtBVFltNTVQV1ZXVytC?=
- =?utf-8?Q?3lmkIsBEwiVVEChGHQSmqnsKf?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9e1a5d25-ecbc-4eff-041c-08dc43d5f587
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7529.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Mar 2024 03:22:20.9303 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7bz052m1BgfAXVIII89HWOraZVJZ2/62q46UVagYpIFM+R+Z1DyR/R0v6bqhqos9B9wLbAXP2uZsV8WrjNJVoQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB7445
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=yi.l.liu@intel.com;
- helo=mgamail.intel.com
+References: <20240221073802.2888022-1-chenh@yusur.tech>
+ <d9e4f3b4-9c2e-466c-b5f4-3387ce88c6b9@t-8ch.de>
+ <20240313155136-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240313155136-mutt-send-email-mst@kernel.org>
+From: Jason Wang <jasowang@redhat.com>
+Date: Thu, 14 Mar 2024 11:24:33 +0800
+Message-ID: <CACGkMEtSSb-9PsmQKPA4i-UWVJJ4ZVog8rt+1PKoqE+ABhpRTA@mail.gmail.com>
+Subject: Re: [PATCH] hw/virtio: Add support for VDPA network simulation devices
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>, 
+ Hao Chen <chenh@yusur.tech>, qemu-devel@nongnu.org, cohuck@redhat.com, 
+ pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
 X-Spam_bar: ---
@@ -178,49 +102,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/3/14 05:06, Cédric Le Goater wrote:
-> Make sure variable contents is freed if scanf fails.
-> 
-> Cc: Eric Auger <eric.auger@redhat.com>
-> Cc: Yi Liu <yi.l.liu@intel.com>
-> Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Fixes: CID 1540007
-> Fixes: 5ee3dc7af785 ("vfio/iommufd: Implement the iommufd backend")
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/vfio/iommufd.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index a75a785e90c64cdcc4d10c88d217801b3f536cdb..cd549e0ee8573e75772c51cc96153762a6bc8550 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -152,9 +152,8 @@ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
->   
->       if (sscanf(contents, "%d:%d", &major, &minor) != 2) {
->           error_setg(errp, "failed to get major:minor for \"%s\"", vfio_dev_path);
-> -        goto out_free_dev_path;
-> +        goto out_free_contents;
->       }
-> -    g_free(contents);
->       vfio_devt = makedev(major, minor);
->   
->       vfio_path = g_strdup_printf("/dev/vfio/devices/%s", dent->d_name);
-> @@ -166,6 +165,8 @@ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
->       trace_iommufd_cdev_getfd(vfio_path, ret);
->       g_free(vfio_path);
->   
-> +out_free_contents:
-> +    g_free(contents);
->   out_free_dev_path:
->       g_free(vfio_dev_path);
->   out_close_dir:
+On Thu, Mar 14, 2024 at 3:52=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> On Wed, Mar 13, 2024 at 07:51:08PM +0100, Thomas Wei=C3=9Fschuh wrote:
+> > On 2024-02-21 15:38:02+0800, Hao Chen wrote:
+> > > This patch adds support for VDPA network simulation devices.
+> > > The device is developed based on virtio-net and tap backend,
+> > > and supports hardware live migration function.
+> > >
+> > > For more details, please refer to "docs/system/devices/vdpa-net.rst"
+> > >
+> > > Signed-off-by: Hao Chen <chenh@yusur.tech>
+> > > ---
+> > >  MAINTAINERS                                 |   5 +
+> > >  docs/system/device-emulation.rst            |   1 +
+> > >  docs/system/devices/vdpa-net.rst            | 121 +++++++++++++
+> > >  hw/net/virtio-net.c                         |  16 ++
+> > >  hw/virtio/virtio-pci.c                      | 189 ++++++++++++++++++=
++-
 
-good catch.
+I think those modifications should belong to a separate file as it
+might conflict with virito features in the future.
 
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+> > >  hw/virtio/virtio.c                          |  39 ++++
+> > >  include/hw/virtio/virtio-pci.h              |   5 +
+> > >  include/hw/virtio/virtio.h                  |  19 ++
+> > >  include/standard-headers/linux/virtio_pci.h |   7 +
+> > >  9 files changed, 399 insertions(+), 3 deletions(-)
+> > >  create mode 100644 docs/system/devices/vdpa-net.rst
+> >
+> > [..]
+> >
+> > > diff --git a/include/standard-headers/linux/virtio_pci.h b/include/st=
+andard-headers/linux/virtio_pci.h
+> > > index b7fdfd0668..fb5391cef6 100644
+> > > --- a/include/standard-headers/linux/virtio_pci.h
+> > > +++ b/include/standard-headers/linux/virtio_pci.h
+> > > @@ -216,6 +216,13 @@ struct virtio_pci_cfg_cap {
+> > >  #define VIRTIO_PCI_COMMON_Q_NDATA  56
+> > >  #define VIRTIO_PCI_COMMON_Q_RESET  58
+> > >
+> > > +#define LM_LOGGING_CTRL                 0
+> > > +#define LM_BASE_ADDR_LOW                4
+> > > +#define LM_BASE_ADDR_HIGH               8
+> > > +#define LM_END_ADDR_LOW                 12
+> > > +#define LM_END_ADDR_HIGH                16
+> > > +#define LM_VRING_STATE_OFFSET           0x20
+> >
+> > These changes are not in upstream Linux and will be undone by
+> > ./scripts/update-linux-headers.sh.
+> >
+> > Are they intentionally in this header?
+>
+>
+> Good point. Pls move.
 
--- 
-Regards,
-Yi Liu
+Right and this part, it's not a part of standard virtio.
+
+Thanks
+
+>
+> > > +
+> > >  #endif /* VIRTIO_PCI_NO_MODERN */
+> > >
+> > >  #endif
+>
+
 
