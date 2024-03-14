@@ -4,71 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4BEAC54E60
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 14:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C356C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 14:40:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkm5h-0008BZ-1O; Thu, 14 Mar 2024 10:29:54 -0400
+	id 1rkmFN-0001ci-I4; Thu, 14 Mar 2024 10:39:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rkm5e-0008Av-93
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 10:29:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rkm5b-0001O4-Uq
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 10:29:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710426586;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LLN468TyQHbOUB6laCVtRxLqUFs0jLNPG7UOmufCxgM=;
- b=SXXPKGgMnaCOlSyNOdnYBp2hTlgtkWBJ3Hljo9n3cXgd0W2e2eeQprhioR45Q1TQohgVKU
- LEJ+xbopgVYUkRUrHq4zvOJIKYs/3nN39JTi/2/yMx2rThGWhZvShClom997jX5bTWp5xw
- lahoRMk/Sna+0irwmUNpoe/z6yReuHU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-6fqMHo6VPUut-B3AKhphWA-1; Thu, 14 Mar 2024 10:29:42 -0400
-X-MC-Unique: 6fqMHo6VPUut-B3AKhphWA-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D1E05800270;
- Thu, 14 Mar 2024 14:29:41 +0000 (UTC)
-Received: from localhost (unknown [10.39.193.201])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 519A32166B4F;
- Thu, 14 Mar 2024 14:29:41 +0000 (UTC)
-Date: Thu, 14 Mar 2024 10:29:39 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, eblake@redhat.com,
- aliang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: Re: [PATCH for-9.0] mirror: Don't call job_pause_point() under graph
- lock
-Message-ID: <20240314142939.GE611723@fedora>
-References: <20240313153000.33121-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkmFL-0001bk-5c
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 10:39:51 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkmFJ-0003Xb-Bu
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 10:39:50 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-5139d80f8b6so1326082e87.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 07:39:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710427187; x=1711031987; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vxbaZwekquaku/Npv8Z3xYVN46oxQj9yTwQgTQzjTiA=;
+ b=RwA2ODj/gX0IzYonzxMAs/3k1ZGQaGXu7ys8KH5SqPlnbwsxFCN22pNweT6OIh03w7
+ nXaoZpzkXXgywWhVrigQyThIC9KhwxH8VMLBf4+li/jopnAieQJsIsfq3xwWTBu8mIxc
+ C4ivT21RO1R4I8beip8N/AEEtlf8j6bR0ow9ms8SDeu08c0GT2+Wi7YfYTXFefVhZQpC
+ oss6Dv8XGyoHK5RufR0Dz8TBBpPbh/3Nuwkks4lvqUPbgKAyYbo8bFCb+QvIfO83K3cR
+ VuhnmasxMuptKEyrlfwCK0aMGy/bGk01anuv3UioUDenW1+08r1eLJtAGkvGh/yhe8mK
+ p+XQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710427187; x=1711031987;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vxbaZwekquaku/Npv8Z3xYVN46oxQj9yTwQgTQzjTiA=;
+ b=ZMl7M15dE0B4xLKL5TIHBvzME0sLGgcu8t57n1B+DmCRjs38bitiaMRSDuad/ctF4K
+ CCT4dCf2p5ahIep1+EW5t9kbQZeMnhOhl6f85qu0Nv2TvdWhKG7u6cNclcjt4Vn/nAqB
+ YdUqWXohUHiLrHSDeCMJ1vMkCJmuHRXihzS2FE8AxyAtOupmiuzvh5cQoPBGDpIOyhTT
+ RF4e/P8KfZWSLe0CSj/jYKihdDkJNVIK1+brG5QuyWksBqy13Mi1fRl2EAypFO4XYYH9
+ ZSHL2FJ3wIE9VyJQJsfzUujecPh6qqFgylG43OIZZ1npcbuJbmUHlU3pUyJ1YAXW+3c4
+ +tUg==
+X-Gm-Message-State: AOJu0Yz8paURWzdaFNWzaj32RUQczjFRr01B7Z3irNObYNlZH7Fl71rw
+ 3FEg8nG0YPrcQlLJfYuZ5FpdrNJ/PVZT3BbWHT/ecAiwJiI6AFkQoRPR6PFcPcE=
+X-Google-Smtp-Source: AGHT+IFZvxJxW8cgPHeNwKAYGFIModlfpPdaIpc+8Azsyrt/9fTFf+s5LRJRKJ5jMQv5WzA4yhvZiw==
+X-Received: by 2002:a05:6512:443:b0:513:c9ca:1333 with SMTP id
+ y3-20020a056512044300b00513c9ca1333mr196656lfk.22.1710427187340; 
+ Thu, 14 Mar 2024 07:39:47 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.197.77])
+ by smtp.gmail.com with ESMTPSA id
+ bh26-20020a05600c3d1a00b00413ee67f741sm3648570wmb.13.2024.03.14.07.39.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Mar 2024 07:39:46 -0700 (PDT)
+Message-ID: <7da62f7f-3e87-470b-b089-1bfe5aa97555@linaro.org>
+Date: Thu, 14 Mar 2024 15:39:44 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="4f7Iuz/GAeJAzZaM"
-Content-Disposition: inline
-In-Reply-To: <20240313153000.33121-1-kwolf@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] tests/avocado: use OpenBSD 7.4 for sbsa-ref
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: qemu-devel@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Brad Smith <brad@comstyle.com>,
+ qemu-arm@nongnu.org
+References: <20240314-sbsa-ref-firmware-update-v2-0-b557c56559cd@linaro.org>
+ <20240314-sbsa-ref-firmware-update-v2-3-b557c56559cd@linaro.org>
+ <87bk7hggcz.fsf@draig.linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87bk7hggcz.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,112 +101,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 14/3/24 13:14, Alex Bennée wrote:
+> Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org> writes:
+> 
+>> 7.4 was released in October 2023, time to update before 7.3 gets dropped.
+>>
+>> Disabled tests for 'max' cpu as OpenBSD fails there.
+>>
+>> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+>> ---
+>>   tests/avocado/machine_aarch64_sbsaref.py | 47 +++++++++++++++++++++++---------
+>>   1 file changed, 34 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
+>> index 259225f15f..0e52dc5854 100644
+>> --- a/tests/avocado/machine_aarch64_sbsaref.py
+>> +++ b/tests/avocado/machine_aarch64_sbsaref.py
+>> @@ -159,14 +159,14 @@ def test_sbsaref_alpine_linux_max(self):
+>>       # This tests the whole boot chain from EFI to Userspace
+>>       # We only boot a whole OS for the current top level CPU and GIC
+>>       # Other test profiles should use more minimal boots
+>> -    def boot_openbsd73(self, cpu):
+>> +    def boot_openbsd(self, cpu):
+>>           self.fetch_firmware()
+>>   
+>>           img_url = (
+>> -            "https://cdn.openbsd.org/pub/OpenBSD/7.3/arm64/miniroot73.img"
+>> +            "https://cdn.openbsd.org/pub/OpenBSD/7.4/arm64/miniroot74.img"
+>>           )
+>>   
+>> -        img_hash = "7fc2c75401d6f01fbfa25f4953f72ad7d7c18650056d30755c44b9c129b707e5"
+>> +        img_hash = "7b08b2ce081cff6408d183f7152ddcfd2779912104866e4fdf6ae2d864b51142"
+>>           img_path = self.fetch_asset(img_url, algorithm="sha256", asset_hash=img_hash)
+>>   
+>>           self.vm.set_console()
+>> @@ -180,23 +180,44 @@ def boot_openbsd73(self, cpu):
+>>           self.vm.launch()
+>>           wait_for_console_pattern(self,
+>>                                    "Welcome to the OpenBSD/arm64"
+>> -                                 " 7.3 installation program.")
+>> +                                 " 7.4 installation program.")
+>>   
+>> -    def test_sbsaref_openbsd73_cortex_a57(self):
+>> +    def test_sbsaref_openbsd_cortex_a57(self):
+>>           """
+>>           :avocado: tags=cpu:cortex-a57
+>> +        :avocado: tags=os:openbsd
+>>           """
+>> -        self.boot_openbsd73("cortex-a57")
+>> +        self.boot_openbsd("cortex-a57")
+>>   
+>> -    def test_sbsaref_openbsd73_neoverse_n1(self):
+>> +    def test_sbsaref_openbsd_neoverse_n1(self):
+>>           """
+>>           :avocado: tags=cpu:neoverse-n1
+>> +        :avocado: tags=os:openbsd
+>>           """
+>> -        self.boot_openbsd73("neoverse-n1")
+>> +        self.boot_openbsd("neoverse-n1")
+>>   
+>> -    def test_sbsaref_openbsd73_max(self):
+>> -        """
+>> -        :avocado: tags=cpu:max
+>> -        """
+>> -        self.boot_openbsd73("max")
+>> +# OpenBSD 7.4 does not boot on current max cpu.
+>> +#
+>> +#   def test_sbsaref_openbsd_max_pauth_off(self):
+>> +#       """
+>> +#       :avocado: tags=cpu:max
+>> +#       :avocado: tags=os:openbsd
+>> +#       """
+>> +#       self.boot_openbsd("max,pauth=off")
+> 
+> If we are not going to delete the entries then at least use a @skip
+> instead of commenting. Maybe:
+> 
+>    @skip("Potential un-diagnosed upstream bug?")
 
---4f7Iuz/GAeJAzZaM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Daniel or Peter suggested to open a GitLab issue and use
 
-On Wed, Mar 13, 2024 at 04:30:00PM +0100, Kevin Wolf wrote:
-> Calling job_pause_point() while holding the graph reader lock
-> potentially results in a deadlock: bdrv_graph_wrlock() first drains
-> everything, including the mirror job, which pauses it. The job is only
-> unpaused at the end of the drain section, which is when the graph writer
-> lock has been successfully taken. However, if the job happens to be
-> paused at a pause point where it still holds the reader lock, the writer
-> lock can't be taken as long as the job is still paused.
->=20
-> Mark job_pause_point() as GRAPH_UNLOCKED and fix mirror accordingly.
->=20
-> Cc: qemu-stable@nongnu.org
-> Buglink: https://issues.redhat.com/browse/RHEL-28125
-> Fixes: 004915a96a7a40e942ac85e6d22518cbcd283506
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->  include/qemu/job.h |  2 +-
->  block/mirror.c     | 10 ++++++----
->  2 files changed, 7 insertions(+), 5 deletions(-)
->=20
-> diff --git a/include/qemu/job.h b/include/qemu/job.h
-> index 9ea98b5927..2b873f2576 100644
-> --- a/include/qemu/job.h
-> +++ b/include/qemu/job.h
-> @@ -483,7 +483,7 @@ void job_enter(Job *job);
->   *
->   * Called with job_mutex *not* held.
->   */
-> -void coroutine_fn job_pause_point(Job *job);
-> +void coroutine_fn GRAPH_UNLOCKED job_pause_point(Job *job);
-> =20
->  /**
->   * @job: The job that calls the function.
-> diff --git a/block/mirror.c b/block/mirror.c
-> index 5145eb53e1..1bdce3b657 100644
-> --- a/block/mirror.c
-> +++ b/block/mirror.c
-> @@ -479,9 +479,9 @@ static unsigned mirror_perform(MirrorBlockJob *s, int=
-64_t offset,
->      return bytes_handled;
->  }
-> =20
-> -static void coroutine_fn GRAPH_RDLOCK mirror_iteration(MirrorBlockJob *s)
-> +static void coroutine_fn GRAPH_UNLOCKED mirror_iteration(MirrorBlockJob =
-*s)
->  {
-> -    BlockDriverState *source =3D s->mirror_top_bs->backing->bs;
-> +    BlockDriverState *source;
->      MirrorOp *pseudo_op;
->      int64_t offset;
->      /* At least the first dirty chunk is mirrored in one iteration. */
-> @@ -489,6 +489,10 @@ static void coroutine_fn GRAPH_RDLOCK mirror_iterati=
-on(MirrorBlockJob *s)
->      bool write_zeroes_ok =3D bdrv_can_write_zeroes_with_unmap(blk_bs(s->=
-target));
->      int max_io_bytes =3D MAX(s->buf_size / MAX_IN_FLIGHT, MAX_IO_BYTES);
-> =20
-> +    bdrv_graph_co_rdlock();
-> +    source =3D s->mirror_top_bs->backing->bs;
+     @skip("https://gitlab.com/qemu-project/qemu/-/issues/xyz")
 
-Is bdrv_ref(source) needed here so that source cannot go away if someone
-else write locks the graph and removes it? Or maybe something else
-protects against that. Either way, please add a comment that explains
-why this is safe.
+to track progress.
 
-> +    bdrv_graph_co_rdunlock();
-> +
->      bdrv_dirty_bitmap_lock(s->dirty_bitmap);
->      offset =3D bdrv_dirty_iter_next(s->dbi);
->      if (offset < 0) {
-> @@ -1066,9 +1070,7 @@ static int coroutine_fn mirror_run(Job *job, Error =
-**errp)
->                  mirror_wait_for_free_in_flight_slot(s);
->                  continue;
->              } else if (cnt !=3D 0) {
-> -                bdrv_graph_co_rdlock();
->                  mirror_iteration(s);
-> -                bdrv_graph_co_rdunlock();
->              }
->          }
-> =20
-> --=20
-> 2.44.0
->=20
-
---4f7Iuz/GAeJAzZaM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmXzCdMACgkQnKSrs4Gr
-c8h2ogf/XKvlyuw9KxsTEgBrbNiGWqNSswZrNQnCaEbKcEKs7aU4Gjhr4N2Ay4NZ
-A4VbtLRiI85r15jaciFmzeimyB40XY9BmUluBjrsVGpkVbs+PTheO0ifAWrn1LaR
-izYiAP+smzeu3KYhPKj4foWAauIMLS2bUHDNHJfIBskrxPADXO6uSNTXtI8cWvdT
-NY+RCtKUOmN6OR169sJTIUXGCXjsp8R9v3dxkO/IDiCO4MehrBTRjRmGnbe8h0El
-pMb1b7ycx+FBtXaOgDvdUVHa9o3gnTbjXlUmimDzUIcRhBjEO6WIiVDeZN5Xys1q
-6Eacym35CXXHrQP32uRZlvtlLx2fHA==
-=V0Fe
------END PGP SIGNATURE-----
-
---4f7Iuz/GAeJAzZaM--
+> but it would be nice to figure out exactly where is breaks.
 
 
