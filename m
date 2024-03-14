@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2603C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 02:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAC20C54E66
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 02:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkapb-0001al-2R; Wed, 13 Mar 2024 22:28:31 -0400
+	id 1rkaqG-0001hb-P5; Wed, 13 Mar 2024 22:29:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zltjiangshi@gmail.com>)
- id 1rkapZ-0001aO-Mh
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 22:28:29 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ id 1rkaqF-0001hQ-L8
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 22:29:11 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zltjiangshi@gmail.com>)
- id 1rkapU-0005NM-BA
- for qemu-devel@nongnu.org; Wed, 13 Mar 2024 22:28:29 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-513cfd48224so281247e87.2
- for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 19:28:23 -0700 (PDT)
+ id 1rkaqE-0005PP-1M
+ for qemu-devel@nongnu.org; Wed, 13 Mar 2024 22:29:11 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a446b5a08f0so91785266b.1
+ for <qemu-devel@nongnu.org>; Wed, 13 Mar 2024 19:29:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710383302; x=1710988102; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710383348; x=1710988148; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/b+khNJEi49ePDotxFv03YXRyNImE+Jwwhb6Mm8O5aQ=;
- b=QTuS/ecda2JrJDUmIbfbULJyDFiTPrXkVnI4MzY0Peug5Uh7WUfwPpq6Cidnt353gO
- xDMqKDWq46KRd+y8Z/zYv05e1JnVZZ81c0gl9rDC6u8jznQ8viTeqtdbvhuHm6fwdWiU
- 0j4pqpY3tFz5611dW15kRmcZxQFPpG5K0nzIcjxMmQg+8JbB0PuV/2zyjsuryA0ljFUy
- 9xjcbPG7U/8yPKN9CRRuhdiQQ+BwkFcPmAQ02squgLv8s8Txnr/u1nPC9Z7zeuqW8QRT
- cr9ntMgEeawXa5l2JYtFuv1m1Ibebeh1WZpVbLvHtMMOoOq8naBSIIPNgKIg81RRFODG
- wFZw==
+ bh=qqKoE7Fx3Qc4F7kfxXYFA2EHoabnRfr+NWbJs0IvoEk=;
+ b=hJYxRyC5p8IcA27rewV4PAT4FJW1pU498qqmNTv0e+xzrM3ogy49FnJe0nR3Wtq2fr
+ SEJG1UNUNSmYxILPIJmg1Cp2gPH1YQHN+AmaXpqK6ZULZlxwnIqfe1Yiu4rC5qVYTT5O
+ Z/H0yirFBiTQSWzmbPIPsKdUOm7rVEhTKIo6YblA5+BQHimZ1T6FwBQ8W/kUzMZWjCTF
+ x5/DjT+/8mPfsuNnnzsRiSXeCygQLAYAHLxrdXOVpomi21wgkr9s6n+zdDAlUy6D8u7p
+ p6JR/FZX/1KLjUMkiXtlj0MaOoFxUYqeiLBPiPWEjH1yifIU1u5Gv58XiSd+wEtCCm0E
+ iXBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710383302; x=1710988102;
+ d=1e100.net; s=20230601; t=1710383348; x=1710988148;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/b+khNJEi49ePDotxFv03YXRyNImE+Jwwhb6Mm8O5aQ=;
- b=xLHW/zxfLajfV3PTF5NoyX97ljn+FJh00K6xd/exeLRhYQyv6ElnuVZKcWkyeqzKi5
- zJ1rTnxkU/zHxm3Y55kvHPGjBa1GY1rO4K4b91qu0YTm3C1gQPwKGkmAuSYn5XTF7Ndj
- z8f8evAZC6EDVX92HdyLT5FeaJ0sHowuaFJDXFlXL5X5ue62r8NT1nRyfRWiJ8JPjkZU
- pt9MHs0BoOl9uxkQ4cGe4P682N86eqwM9/qIl+Kj9yoAMXxH8rzrQXRF2BJgWuAx2xbt
- i2tqvNIu8B2TdnthY4frxM3+ynW1NkSUGMssi97hXudc+Sk1tblUxYGMGt7uotQrzfr4
- Opcg==
-X-Gm-Message-State: AOJu0Yw9XPV/0fX/QX5cA/4iUkJlqWASXKenmKSaL6BvM1BjIfDb/cMl
- DbDqs/jwJgTBDjpMcHMQd6HRs0/8Ha0A+Wyw6g7YTnkg2RPeHo0bIdk7oEc1/JrBgss1f7skixM
- 0+sffKN3jt4Dqv52iWfadjF/k8HiPYO1JSA+zO79J
-X-Google-Smtp-Source: AGHT+IEVu2ZFG0O0xzs6ByNjce8A9PfuE2kdtbmXxGRF3MUOTG/51bVMimGuCKMX6m4gx/IT5wE3HOYrS8wWYrgWKZ4=
-X-Received: by 2002:a05:6512:28c:b0:513:baec:b18b with SMTP id
- j12-20020a056512028c00b00513baecb18bmr184513lfp.28.1710383301368; Wed, 13 Mar
- 2024 19:28:21 -0700 (PDT)
+ bh=qqKoE7Fx3Qc4F7kfxXYFA2EHoabnRfr+NWbJs0IvoEk=;
+ b=F1vVLkefk7CuPpi+abr24N6JcFzu5ndaLQsBpFJBYVCMTUfuhdSNKC2pknwYl8nCJy
+ XuKhHmyPg/tRF94tN3hMHPfZKwdjYdsm6asrsXU3t8JL6kO3/h6c4lCN+UsBu0ZQI1kM
+ 5LtFKALGB+7BeyhKtBX95cEEohb1z14o29pl+TpUVUCrtTSY1cSxCKPDSUjcfpT1JLKQ
+ PVTEOV33z0k80Ep1TidQ0EtmS4XTVec6iG0FTJhhwdUalKEauGZ1+BkcLCn7TG2ZwBYM
+ pxpuD+PrSLTjwaAe2ejBzMwC5DKYndhqDth4GMxDNnGDkbafG7QEXamvVLRO7DvS6mtp
+ +8mQ==
+X-Gm-Message-State: AOJu0YyZBjc2DolthhkvAi577AYIFiaCzS6NTHZF1Dj0NtVIfhJ5Bl9+
+ QNEqhF5zm9IEMVU6iLRAIebQYsxgBW5SfF9tSNtlFxBG/M2yTnp9URkXnbcqjEqxG7kaHaW49k2
+ 4djfwe4VJsAODUjMOmbfx+HEilAJDuuwne5OzHOpm
+X-Google-Smtp-Source: AGHT+IHvwXSZZzcjhxpEjNTm19uv5RVifCogAPoWwP36+Dnv15F7Cj5IQOYBwtqB4pv2MIpkRgKEZ4i8OgyRrc2H2Tg=
+X-Received: by 2002:a17:906:c359:b0:a44:806f:ad56 with SMTP id
+ ci25-20020a170906c35900b00a44806fad56mr490787ejb.11.1710383348095; Wed, 13
+ Mar 2024 19:29:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1710379781.git.lixianglai@loongson.cn>
- <0e940b2aee9a5c29bb41d6a9611955482d250325.1710379781.git.lixianglai@loongson.cn>
-In-Reply-To: <0e940b2aee9a5c29bb41d6a9611955482d250325.1710379781.git.lixianglai@loongson.cn>
+References: <20240307164835.300412-1-gaosong@loongson.cn>
+ <20240307164835.300412-4-gaosong@loongson.cn>
+In-Reply-To: <20240307164835.300412-4-gaosong@loongson.cn>
 From: chen huacai <zltjiangshi@gmail.com>
-Date: Thu, 14 Mar 2024 10:28:12 +0800
-Message-ID: <CABDp7VqrVua8T7LRf8mNsQFXae9TwKVA7Viq10-363aQrHkvMw@mail.gmail.com>
-Subject: Re: [PATCH V4 1/1] target/loongarch: Fixed tlb huge page loading issue
-To: Xianglai Li <lixianglai@loongson.cn>
-Cc: qemu-devel@nongnu.org, maobibo@loongson.cn, Song Gao <gaosong@loongson.cn>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>, zhaotianrui@loongson.cn,
- yijun@loongson.cn, wuruiyang@loongson.cn
+Date: Thu, 14 Mar 2024 10:28:59 +0800
+Message-ID: <CABDp7Vo9ZOrz+4iKtToC+hs_JzptZg2cup+NdDaniV-3Qev+Tw@mail.gmail.com>
+Subject: Re: [PATCH v6 03/17] hw/loongarch: Add slave cpu boot_code
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, maobibo@loongson.cn
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=zltjiangshi@gmail.com; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=zltjiangshi@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,238 +90,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Xianglai,
+Song,
 
-Generally, the subject should be "Fix tlb huge page loading issue"
-rather than "Fixed tlb huge page loading issue".
-
-On Thu, Mar 14, 2024 at 9:34=E2=80=AFAM Xianglai Li <lixianglai@loongson.cn=
-> wrote:
+On Fri, Mar 8, 2024 at 12:51=E2=80=AFAM Song Gao <gaosong@loongson.cn> wrot=
+e:
 >
-> When we use qemu tcg simulation, the page size of bios is 4KB.
-> When using the level 2 super large page (page size is 1G) to create the p=
-age table,
-> it is found that the content of the corresponding address space is abnorm=
-al,
-> resulting in the bios can not start the operating system and graphical in=
-terface normally.
->
-> The lddir and ldpte instruction emulation has
-> a problem with the use of super large page processing above level 2.
-> The page size is not correctly calculated,
-> resulting in the wrong page size of the table entry found by tlb.
->
-> Cc: maobibo@loongson.cn
-> Cc: Song Gao <gaosong@loongson.cn>
-> Cc: Xiaojuan Yang <yangxiaojuan@loongson.cn>
-> Cc: zhaotianrui@loongson.cn
-> Cc: yijun@loongson.cn
-> Cc: wuruiyang@loongson.cn
->
-> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> Message-Id: <20240301093839.663947-4-gaosong@loongson.cn>
 > ---
->  target/loongarch/cpu-csr.h        |   3 +
->  target/loongarch/internals.h      |   5 --
->  target/loongarch/tcg/tlb_helper.c | 105 ++++++++++++++++++++----------
->  3 files changed, 74 insertions(+), 39 deletions(-)
+>  hw/loongarch/boot.c | 70 ++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 69 insertions(+), 1 deletion(-)
 >
-> Changes log:
-> V3->V4:
-> Optimize the huge page calculation method,
-> use the FIELD macro for bit calculation.
+> diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+> index 149deb2e01..e560ac178a 100644
+> --- a/hw/loongarch/boot.c
+> +++ b/hw/loongarch/boot.c
+> @@ -15,6 +15,54 @@
+>  #include "sysemu/reset.h"
+>  #include "sysemu/qtest.h"
 >
-> V2->V3:
-> Delete the intermediate variable LDDIR_PS, and implement lddir and ldpte
-> huge pages by referring to the latest architecture reference manual.
->
-> V1->V2:
-> Modified the patch title format and Enrich the commit mesg description
->
-> diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
-> index c59d7a9fcb..b0775cf6bf 100644
-> --- a/target/loongarch/cpu-csr.h
-> +++ b/target/loongarch/cpu-csr.h
-> @@ -67,6 +67,9 @@ FIELD(TLBENTRY, D, 1, 1)
->  FIELD(TLBENTRY, PLV, 2, 2)
->  FIELD(TLBENTRY, MAT, 4, 2)
->  FIELD(TLBENTRY, G, 6, 1)
-> +FIELD(TLBENTRY, HUGE, 6, 1)
-> +FIELD(TLBENTRY, HG, 12, 1)
-> +FIELD(TLBENTRY, LEVEL, 13, 2)
->  FIELD(TLBENTRY_32, PPN, 8, 24)
->  FIELD(TLBENTRY_64, PPN, 12, 36)
->  FIELD(TLBENTRY_64, NR, 61, 1)
-> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-> index a2fc54c8a7..944153b180 100644
-> --- a/target/loongarch/internals.h
-> +++ b/target/loongarch/internals.h
-> @@ -16,11 +16,6 @@
->  #define TARGET_PHYS_MASK MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS)
->  #define TARGET_VIRT_MASK MAKE_64BIT_MASK(0, TARGET_VIRT_ADDR_SPACE_BITS)
->
-> -/* Global bit used for lddir/ldpte */
-> -#define LOONGARCH_PAGE_HUGE_SHIFT   6
-> -/* Global bit for huge page */
-> -#define LOONGARCH_HGLOBAL_SHIFT     12
-> -
->  void loongarch_translate_init(void);
->
->  void loongarch_cpu_dump_state(CPUState *cpu, FILE *f, int flags);
-> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb=
-_helper.c
-> index 22be031ac7..b9a8633791 100644
-> --- a/target/loongarch/tcg/tlb_helper.c
-> +++ b/target/loongarch/tcg/tlb_helper.c
-> @@ -17,6 +17,34 @@
->  #include "exec/log.h"
->  #include "cpu-csr.h"
->
-> +static void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_bas=
-e,
-> +                               uint64_t *dir_width, target_ulong level)
-> +{
-> +    switch (level) {
-> +    case 1:
-> +        *dir_base =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_BASE);
-> +        *dir_width =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_WIDTH);
-> +        break;
-> +    case 2:
-> +        *dir_base =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_BASE);
-> +        *dir_width =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_WIDTH);
-> +        break;
-> +    case 3:
-> +        *dir_base =3D FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_BASE);
-> +        *dir_width =3D FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_WIDTH);
-> +        break;
-> +    case 4:
-> +        *dir_base =3D FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_BASE);
-> +        *dir_width =3D FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_WIDTH);
-> +        break;
-> +    default:
-> +        /* level may be zero for ldpte */
-> +        *dir_base =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
-> +        *dir_width =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
-> +        break;
-> +    }
-> +}
+> +static const unsigned int slave_boot_code[] =3D {
+> +                  /* Configure reset ebase.         */
+> +    0x0400302c,   /* csrwr      $r12,0xc            */
+Use reg-names may be a little better than reg-nums.
+
+Huacai
+
 > +
->  static void raise_mmu_exception(CPULoongArchState *env, target_ulong add=
-ress,
->                                  MMUAccessType access_type, int tlb_error=
-)
+> +                  /* Disable interrupt.             */
+> +    0x0380100c,   /* ori        $r12,$r0,0x4        */
+> +    0x04000180,   /* csrxchg    $r0,$r12,0x0        */
+> +
+> +                  /* Clear mailbox.                 */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
+> +    0x06481da0,   /* iocsrwr.d  $r0,$r13            */
+> +
+> +                  /* Enable IPI interrupt.          */
+> +    0x1400002c,   /* lu12i.w    $r12,1(0x1)         */
+> +    0x0400118c,   /* csrxchg    $r12,$r12,0x4       */
+> +    0x02fffc0c,   /* addi.d     $r12,$r0,-1(0xfff)  */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038011ad,   /* ori        $r13,$r13,0x4       */
+> +    0x064819ac,   /* iocsrwr.w  $r12,$r13           */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
+> +
+> +                  /* Wait for wakeup  <.L11>:       */
+> +    0x06488000,   /* idle       0x0                 */
+> +    0x03400000,   /* andi       $r0,$r0,0x0         */
+> +    0x064809ac,   /* iocsrrd.w  $r12,$r13           */
+> +    0x43fff59f,   /* beqz       $r12,-12(0x7ffff4) # 48 <.L11> */
+> +
+> +                  /* Read and clear IPI interrupt.  */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x064809ac,   /* iocsrrd.w  $r12,$r13           */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038031ad,   /* ori        $r13,$r13,0xc       */
+> +    0x064819ac,   /* iocsrwr.w  $r12,$r13           */
+> +
+> +                  /* Disable  IPI interrupt.        */
+> +    0x1400002c,   /* lu12i.w    $r12,1(0x1)         */
+> +    0x04001180,   /* csrxchg    $r0,$r12,0x4        */
+> +
+> +                  /* Read mail buf and jump to specified entry */
+> +    0x1400002d,   /* lu12i.w    $r13,1(0x1)         */
+> +    0x038081ad,   /* ori        $r13,$r13,0x20      */
+> +    0x06480dac,   /* iocsrrd.d  $r12,$r13           */
+> +    0x00150181,   /* move       $r1,$r12            */
+> +    0x4c000020,   /* jirl       $r0,$r1,0           */
+> +};
+> +
+>  static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
 >  {
-> @@ -485,7 +513,23 @@ target_ulong helper_lddir(CPULoongArchState *env, ta=
-rget_ulong base,
->      target_ulong badvaddr, index, phys, ret;
->      int shift;
->      uint64_t dir_base, dir_width;
-> -    bool huge =3D (base >> LOONGARCH_PAGE_HUGE_SHIFT) & 0x1;
-> +
-> +    if (unlikely((level =3D=3D 0) || (level > 4))) {
-> +        return base;
-> +    }
-> +
-> +    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
-> +        if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
-> +            return base;
-> +        } else {
-> +            return  FIELD_DP64(base, TLBENTRY, LEVEL, level);
-> +        }
-> +
-> +        if (unlikely(level =3D=3D 4)) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "Attempted use of level %lu huge page\n", leve=
-l);
-> +        }
-> +    }
->
->      badvaddr =3D env->CSR_TLBRBADV;
->      base =3D base & TARGET_PHYS_MASK;
-> @@ -494,33 +538,12 @@ target_ulong helper_lddir(CPULoongArchState *env, t=
-arget_ulong base,
->      shift =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
->      shift =3D (shift + 1) * 3;
->
-> -    if (huge) {
-> -        return base;
-> -    }
-> -    switch (level) {
-> -    case 1:
-> -        dir_base =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_BASE);
-> -        dir_width =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_WIDTH);
-> -        break;
-> -    case 2:
-> -        dir_base =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_BASE);
-> -        dir_width =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_WIDTH);
-> -        break;
-> -    case 3:
-> -        dir_base =3D FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_BASE);
-> -        dir_width =3D FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_WIDTH);
-> -        break;
-> -    case 4:
-> -        dir_base =3D FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_BASE);
-> -        dir_width =3D FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_WIDTH);
-> -        break;
-> -    default:
-> -        do_raise_exception(env, EXCCODE_INE, GETPC());
-> -        return 0;
-> -    }
-> +    get_dir_base_width(env, &dir_base, &dir_width, level);
-> +
->      index =3D (badvaddr >> dir_base) & ((1 << dir_width) - 1);
->      phys =3D base | index << shift;
->      ret =3D ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
-> +
->      return ret;
+>      return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
+> @@ -111,8 +159,15 @@ static void loongarch_firmware_boot(LoongArchMachine=
+State *lams,
+>      fw_cfg_add_kernel_info(info, lams->fw_cfg);
 >  }
 >
-> @@ -530,20 +553,34 @@ void helper_ldpte(CPULoongArchState *env, target_ul=
-ong base, target_ulong odd,
->      CPUState *cs =3D env_cpu(env);
->      target_ulong phys, tmp0, ptindex, ptoffset0, ptoffset1, ps, badv;
->      int shift;
-> -    bool huge =3D (base >> LOONGARCH_PAGE_HUGE_SHIFT) & 0x1;
->      uint64_t ptbase =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
->      uint64_t ptwidth =3D FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
-> +    uint64_t dir_base, dir_width;
->
->      base =3D base & TARGET_PHYS_MASK;
-> +    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
-> +        /*
-> +         * Gets the huge page level and Gets huge page size
-> +         * Clears the huge page level information in the address
-> +         * Clears huge page bit
-> +         */
-> +        get_dir_base_width(env, &dir_base, &dir_width,
-> +                           FIELD_EX64(base, TLBENTRY, LEVEL));
+> +static void init_boot_rom(struct loongarch_boot_info *info, void *p)
+> +{
+> +    memcpy(p, &slave_boot_code, sizeof(slave_boot_code));
+> +    p +=3D sizeof(slave_boot_code);
+> +}
 > +
-> +        FIELD_DP64(base, TLBENTRY, LEVEL, 0);
-> +        FIELD_DP64(base, TLBENTRY, HUGE, 0);
-> +        if (FIELD_EX64(base, TLBENTRY, HG)) {
-> +            FIELD_DP64(base, TLBENTRY, HG, 0);
-> +            FIELD_DP64(base, TLBENTRY, G, 1);
-> +        }
->
-> -    if (huge) {
-> -        /* Huge Page. base is paddr */
-> -        tmp0 =3D base ^ (1 << LOONGARCH_PAGE_HUGE_SHIFT);
-> -        /* Move Global bit */
-> -        tmp0 =3D ((tmp0 & (1 << LOONGARCH_HGLOBAL_SHIFT))  >>
-> -                LOONGARCH_HGLOBAL_SHIFT) << R_TLBENTRY_G_SHIFT |
-> -                (tmp0 & (~(1 << LOONGARCH_HGLOBAL_SHIFT)));
-> -        ps =3D ptbase + ptwidth - 1;
-> +        /*
-> +         * Huge pages are evenly split into parity pages
-> +         * when loaded into the tlb,
-> +         * so the tlb page size needs to be divided by 2.
-> +         */
-> +        ps =3D dir_base + dir_width - 1;
-> +        tmp0 =3D base;
->          if (odd) {
->              tmp0 +=3D MAKE_64BIT_MASK(ps, 1);
+>  static void loongarch_direct_kernel_boot(struct loongarch_boot_info *inf=
+o)
+>  {
+> +    void  *p, *bp;
+>      int64_t kernel_addr =3D 0;
+>      LoongArchCPU *lacpu;
+>      CPUState *cs;
+> @@ -126,11 +181,24 @@ static void loongarch_direct_kernel_boot(struct loo=
+ngarch_boot_info *info)
 >          }
+>      }
+>
+> +    /* Load 'boot_rom' at [0 - 1MiB] */
+> +    p =3D g_malloc0(1 * MiB);
+> +    bp =3D p;
+> +    init_boot_rom(info, p);
+> +    rom_add_blob_fixed("boot_rom", bp, 1 * MiB, 0);
+> +
+>      CPU_FOREACH(cs) {
+>          lacpu =3D LOONGARCH_CPU(cs);
+>          lacpu->env.load_elf =3D true;
+> -        lacpu->env.elf_address =3D kernel_addr;
+> +        if (cs =3D=3D first_cpu) {
+> +            lacpu->env.elf_address =3D kernel_addr;
+> +        } else {
+> +            lacpu->env.elf_address =3D 0;
+> +        }
+> +        lacpu->env.boot_info =3D info;
+>      }
+> +
+> +    g_free(bp);
+>  }
+>
+>  void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info =
+*info)
 > --
-> 2.39.1
+> 2.34.1
 >
 >
 
