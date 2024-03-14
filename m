@@ -4,83 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 476B9C54E5D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8624C54E60
 	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 21:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rksn0-00022a-4d; Thu, 14 Mar 2024 17:39:04 -0400
+	id 1rksm8-0001p5-MA; Thu, 14 Mar 2024 17:38:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
- id 1rksmv-00022E-6R
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:38:57 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
- id 1rksmt-00080G-C9
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:38:56 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42ELDcH6016463; Thu, 14 Mar 2024 21:38:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=from : to : cc :
- subject : date : message-id; s=corp-2023-11-20;
- bh=DRPeOZwl5bh4BbTJ0f2bcJMuEm96QltP56PMEsm+Ing=;
- b=gHIvqKFhe2Yr2Xdsq1f3wWS7QBKNYszqbs9h0URkhLz0rhKlcxfX8smRbDwh1gNqvaAk
- XvQ7IDWjorZpA8r/434r9CzdpREh3Ev06Qr3vKS2XfnySpxr7sEaLTzpC+jykx9Hs5Rv
- ZobqCo0NbcSHokQJeY25JIwIpSLGexl+c6svx8kfeYr3c8meURzQyuOpIceSNTaOP0RH
- P3kDGqAYe46ixFnIoT+UquOMf2QY7TCyw4Jt6c6NA77FO/5dndEm/HCMV80exY+lwH+N
- k/InoQxnX8jaoo4AfJT78nxWqrQVMEQE9oFkcrQ7eToIiAZC0puBkbpQJ//uwyBJOQhU Xg== 
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wv0absaur-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 14 Mar 2024 21:38:51 +0000
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 42EJmWac019716; Thu, 14 Mar 2024 21:38:50 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wre7ayv25-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 14 Mar 2024 21:38:50 +0000
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42ELco1c002045;
- Thu, 14 Mar 2024 21:38:50 GMT
-Received: from ban25x6uut24.us.oracle.com (ban25x6uut24.us.oracle.com
- [10.153.73.24])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 3wre7ayv1k-1; Thu, 14 Mar 2024 21:38:50 +0000
-From: Si-Wei Liu <si-wei.liu@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
- joao.m.martins@oracle.com, si-wei.liu@oracle.com
-Subject: [PATCH v4 1/2] vhost: dirty log should be per backend type
-Date: Thu, 14 Mar 2024 13:27:34 -0700
-Message-Id: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 spamscore=0
- bulkscore=0 phishscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2403140166
-X-Proofpoint-ORIG-GUID: vJH8_WzYjlUADPob9HPOJGNz8KSwRKUN
-X-Proofpoint-GUID: vJH8_WzYjlUADPob9HPOJGNz8KSwRKUN
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=si-wei.liu@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
+ id 1rksm5-0001ol-Am; Thu, 14 Mar 2024 17:38:05 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
+ id 1rksm3-0007w5-MS; Thu, 14 Mar 2024 17:38:05 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 4BB9121D63;
+ Thu, 14 Mar 2024 21:38:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710452281; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=pP4betEpGnM5MgnyQWCVs9+190M4LeW8zXrFd8S/FwE=;
+ b=fIR47HO7DE3rFXfY19GA0UTDEsGfZtcL3+A+sy0S1DXraZeESZCukRrBE4sn20QbpT48MG
+ fhFyyyNsB4E4UZz7/pdkzFuszMoXwSHeCPQUxh6RvxJ+86GR+tLDgAgK1ST+lhHnjCrHLI
+ Dj8ZUU9C3mRiGFQcVwnQMAJYURqYeFc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710452281;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=pP4betEpGnM5MgnyQWCVs9+190M4LeW8zXrFd8S/FwE=;
+ b=CPN6wgHl737CkLaT5iVE05sKPoJ10EHoZfcEFKFLW2bHG8xOxf/2QOxs4HMKM6V1sqvQf2
+ K5Dbygyq1X8iwyCA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710452281; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=pP4betEpGnM5MgnyQWCVs9+190M4LeW8zXrFd8S/FwE=;
+ b=fIR47HO7DE3rFXfY19GA0UTDEsGfZtcL3+A+sy0S1DXraZeESZCukRrBE4sn20QbpT48MG
+ fhFyyyNsB4E4UZz7/pdkzFuszMoXwSHeCPQUxh6RvxJ+86GR+tLDgAgK1ST+lhHnjCrHLI
+ Dj8ZUU9C3mRiGFQcVwnQMAJYURqYeFc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710452281;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=pP4betEpGnM5MgnyQWCVs9+190M4LeW8zXrFd8S/FwE=;
+ b=CPN6wgHl737CkLaT5iVE05sKPoJ10EHoZfcEFKFLW2bHG8xOxf/2QOxs4HMKM6V1sqvQf2
+ K5Dbygyq1X8iwyCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A5CCE1368B;
+ Thu, 14 Mar 2024 21:38:00 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 71NoJDhu82XcGQAAD6G6ig
+ (envelope-from <cfontana@suse.de>); Thu, 14 Mar 2024 21:38:00 +0000
+From: Claudio Fontana <cfontana@suse.de>
+To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
+Cc: Claudio Fontana <cfontana@suse.de>, qemu-devel <qemu-devel@nongnu.org>,
+ qemu-s390x <qemu-s390x@nongnu.org>, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v2] target/s390x: improve cpu compatibility check error message
+Date: Thu, 14 Mar 2024 22:37:46 +0100
+Message-Id: <20240314213746.27163-1-cfontana@suse.de>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [0.70 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
+ R_MISSING_CHARSET(2.50)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; BROKEN_CONTENT_TYPE(1.50)[];
+ RCPT_COUNT_FIVE(0.00)[6]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_DN_ALL(0.00)[]; NEURAL_HAM_SHORT(-0.20)[-0.999];
+ MID_CONTAINS_FROM(1.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ BAYES_HAM(-3.00)[100.00%]
+Authentication-Results: smtp-out1.suse.de;
+	none
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=cfontana@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,139 +110,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There could be a mix of both vhost-user and vhost-kernel clients
-in the same QEMU process, where separate vhost loggers for the
-specific vhost type have to be used. Make the vhost logger per
-backend type, and have them properly reference counted.
+some users were confused by this message showing under TCG:
 
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Selected CPU generation is too new. Maximum supported model
+in the configuration: 'xyz'
 
+Clarify that the maximum can depend on the accel, and add a
+hint to try a different one.
+
+Also add a hint for features mismatch to suggest trying
+different accel, QEMU and kernel versions.
+
+Signed-off-by: Claudio Fontana <cfontana@suse.de>
 ---
-v3->v4:
-  - remove checking NULL return value from vhost_log_get
+ target/s390x/cpu_models.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
-v2->v3:
-  - remove non-effective assertion that never be reached
-  - do not return NULL from vhost_log_get()
-  - add neccessary assertions to vhost_log_get()
----
- hw/virtio/vhost.c | 45 +++++++++++++++++++++++++++++++++------------
- 1 file changed, 33 insertions(+), 12 deletions(-)
-
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 2c9ac79..612f4db 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -43,8 +43,8 @@
-     do { } while (0)
- #endif
- 
--static struct vhost_log *vhost_log;
--static struct vhost_log *vhost_log_shm;
-+static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
-+static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
- 
- /* Memslots used by backends that support private memslots (without an fd). */
- static unsigned int used_memslots;
-@@ -287,6 +287,10 @@ static int vhost_set_backend_type(struct vhost_dev *dev,
-         r = -1;
-     }
- 
-+    if (r == 0) {
-+        assert(dev->vhost_ops->backend_type == backend_type);
-+    }
-+
-     return r;
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index 1a1c096122..8ed3bb6a27 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -500,6 +500,16 @@ static void error_prepend_missing_feat(const char *name, void *opaque)
+     error_prepend((Error **) opaque, "%s ", name);
  }
  
-@@ -319,16 +323,22 @@ static struct vhost_log *vhost_log_alloc(uint64_t size, bool share)
-     return log;
- }
- 
--static struct vhost_log *vhost_log_get(uint64_t size, bool share)
-+static struct vhost_log *vhost_log_get(VhostBackendType backend_type,
-+                                       uint64_t size, bool share)
- {
--    struct vhost_log *log = share ? vhost_log_shm : vhost_log;
-+    struct vhost_log *log;
++static void check_compat_model_failed(Error **errp,
++                                      const S390CPUModel *max_model,
++                                      const char *msg)
++{
++    error_setg(errp, "%s. Maximum supported model in the current configuration: \'%s\'",
++               msg, max_model->def->name);
++    error_append_hint(errp, "Consider a different accelerator, try \"-accel help\"\n");
++    return;
++}
 +
-+    assert(backend_type > VHOST_BACKEND_TYPE_NONE);
-+    assert(backend_type < VHOST_BACKEND_TYPE_MAX);
-+
-+    log = share ? vhost_log_shm[backend_type] : vhost_log[backend_type];
- 
-     if (!log || log->size != size) {
-         log = vhost_log_alloc(size, share);
-         if (share) {
--            vhost_log_shm = log;
-+            vhost_log_shm[backend_type] = log;
-         } else {
--            vhost_log = log;
-+            vhost_log[backend_type] = log;
-         }
-     } else {
-         ++log->refcnt;
-@@ -340,11 +350,20 @@ static struct vhost_log *vhost_log_get(uint64_t size, bool share)
- static void vhost_log_put(struct vhost_dev *dev, bool sync)
+ static void check_compatibility(const S390CPUModel *max_model,
+                                 const S390CPUModel *model, Error **errp)
  {
-     struct vhost_log *log = dev->log;
-+    VhostBackendType backend_type;
+@@ -507,15 +517,11 @@ static void check_compatibility(const S390CPUModel *max_model,
+     S390FeatBitmap missing;
  
-     if (!log) {
+     if (model->def->gen > max_model->def->gen) {
+-        error_setg(errp, "Selected CPU generation is too new. Maximum "
+-                   "supported model in the configuration: \'%s\'",
+-                   max_model->def->name);
++        check_compat_model_failed(errp, max_model, "Selected CPU generation is too new");
+         return;
+     } else if (model->def->gen == max_model->def->gen &&
+                model->def->ec_ga > max_model->def->ec_ga) {
+-        error_setg(errp, "Selected CPU GA level is too new. Maximum "
+-                   "supported model in the configuration: \'%s\'",
+-                   max_model->def->name);
++        check_compat_model_failed(errp, max_model, "Selected CPU GA level is too new");
          return;
      }
  
-+    assert(dev->vhost_ops);
-+    backend_type = dev->vhost_ops->backend_type;
-+
-+    if (backend_type == VHOST_BACKEND_TYPE_NONE ||
-+        backend_type >= VHOST_BACKEND_TYPE_MAX) {
-+        return;
-+    }
-+
-     --log->refcnt;
-     if (log->refcnt == 0) {
-         /* Sync only the range covered by the old log */
-@@ -352,13 +371,13 @@ static void vhost_log_put(struct vhost_dev *dev, bool sync)
-             vhost_log_sync_range(dev, 0, dev->log_size * VHOST_LOG_CHUNK - 1);
-         }
+@@ -537,7 +543,9 @@ static void check_compatibility(const S390CPUModel *max_model,
+     error_setg(errp, " ");
+     s390_feat_bitmap_to_ascii(missing, errp, error_prepend_missing_feat);
+     error_prepend(errp, "Some features requested in the CPU model are not "
+-                  "available in the configuration: ");
++                  "available in the current configuration: ");
++    error_append_hint(errp,
++                      "Consider a different accelerator, QEMU, or kernel version\n");
+ }
  
--        if (vhost_log == log) {
-+        if (vhost_log[backend_type] == log) {
-             g_free(log->log);
--            vhost_log = NULL;
--        } else if (vhost_log_shm == log) {
-+            vhost_log[backend_type] = NULL;
-+        } else if (vhost_log_shm[backend_type] == log) {
-             qemu_memfd_free(log->log, log->size * sizeof(*(log->log)),
-                             log->fd);
--            vhost_log_shm = NULL;
-+            vhost_log_shm[backend_type] = NULL;
-         }
- 
-         g_free(log);
-@@ -376,7 +395,8 @@ static bool vhost_dev_log_is_shared(struct vhost_dev *dev)
- 
- static inline void vhost_dev_log_resize(struct vhost_dev *dev, uint64_t size)
- {
--    struct vhost_log *log = vhost_log_get(size, vhost_dev_log_is_shared(dev));
-+    struct vhost_log *log = vhost_log_get(dev->vhost_ops->backend_type,
-+                                          size, vhost_dev_log_is_shared(dev));
-     uint64_t log_base = (uintptr_t)log->log;
-     int r;
- 
-@@ -2037,7 +2057,8 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-         uint64_t log_base;
- 
-         hdev->log_size = vhost_get_log_size(hdev);
--        hdev->log = vhost_log_get(hdev->log_size,
-+        hdev->log = vhost_log_get(hdev->vhost_ops->backend_type,
-+                                  hdev->log_size,
-                                   vhost_dev_log_is_shared(hdev));
-         log_base = (uintptr_t)hdev->log->log;
-         r = hdev->vhost_ops->vhost_set_log_base(hdev,
+ S390CPUModel *get_max_cpu_model(Error **errp)
 -- 
-1.8.3.1
+2.26.2
 
 
