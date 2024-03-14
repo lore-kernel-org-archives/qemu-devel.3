@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73FB0C5475B
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 07:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19E85C5475B
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 08:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkfuq-0007KK-P9; Thu, 14 Mar 2024 03:54:16 -0400
+	id 1rkgIa-0003cK-9t; Thu, 14 Mar 2024 04:18:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1rkfup-0007K9-Ea
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 03:54:15 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1rkfum-0007C0-L1
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 03:54:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710402853; x=1741938853;
- h=from:to:cc:subject:in-reply-to:references:date:
- message-id:mime-version:content-transfer-encoding;
- bh=BSNFSHcbJc+JWKcff7iLUgr8ujlh8aLQK4K89Zi3fLw=;
- b=KeuFjPmMKaB/speTBfYTNV3FlVszFxxhYDFOwoPbFPdSr4XSvsrqbCLg
- dK5hyOjAQ7EfxsaWLq5DWvmP38yS+CgOmHTpxcJS1kJtIaaPiw4/IICR8
- GxQq19ARNGEJT8O+Q3eFDQfD3E4saTxMlO1ErMcuOLGRv3zK1aXARKCSz
- LRY9fDcwrD/grVExmWNJmyaYfelOooGyf+FaK0dVIYTyIzwlVSc4g/3Oj
- FMqeHhTW57zwAkJtmQgcb2A1VWuv/mV+EjhWQ4HYdIf03VPJbkrqHhVFf
- G4pJ3FzSdzWxuisQL963mq9m8PQlZ5RiA0/3mV2FkAtIFaWpJh45fCjU5 A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11012"; a="5400751"
-X-IronPort-AV: E=Sophos;i="6.07,124,1708416000"; 
-   d="scan'208";a="5400751"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Mar 2024 00:54:08 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,124,1708416000"; d="scan'208";a="16798148"
-Received: from yhuang6-desk2.sh.intel.com (HELO
- yhuang6-desk2.ccr.corp.intel.com) ([10.238.208.55])
- by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Mar 2024 00:54:01 -0700
-From: "Huang, Ying" <ying.huang@intel.com>
-To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Cc: Gregory Price <gourry.memverge@gmail.com>,  aneesh.kumar@linux.ibm.com,
- mhocko@suse.com,  tj@kernel.org,  john@jagalactic.com,  Eishan Mirakhur
- <emirakhur@micron.com>,  Vinicius Tavares Petrucci
- <vtavarespetr@micron.com>,  Ravis OpenSrc <Ravis.OpenSrc@micron.com>,
- Alistair Popple <apopple@nvidia.com>,  "Rafael J. Wysocki"
- <rafael@kernel.org>,  Len Brown <lenb@kernel.org>,  Dan Williams
- <dan.j.williams@intel.com>,  Vishal Verma <vishal.l.verma@intel.com>,
- Dave Jiang <dave.jiang@intel.com>,  Andrew Morton
- <akpm@linux-foundation.org>,  Jonathan Cameron
- <Jonathan.Cameron@huawei.com>,  linux-acpi@vger.kernel.org,
- linux-kernel@vger.kernel.org,  nvdimm@lists.linux.dev,
- linux-cxl@vger.kernel.org,  linux-mm@kvack.org,  "Ho-Ren (Jack) Chuang"
- <horenc@vt.edu>,  "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>,
- qemu-devel@nongnu.org,  Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [External] Re: [PATCH v2 1/1] memory tier: acpi/hmat: create
- CPUless memory tiers after obtaining HMAT info
-In-Reply-To: <CAKPbEqpTNN5GKKCXmyTv0szpL-N1pdKFZYPHCJjyhgpKZGMiWw@mail.gmail.com>
- (Ho-Ren Chuang's message of "Wed, 13 Mar 2024 01:16:27 -0700")
-References: <20240312061729.1997111-1-horenchuang@bytedance.com>
- <20240312061729.1997111-2-horenchuang@bytedance.com>
- <874jdb4xk8.fsf@yhuang6-desk2.ccr.corp.intel.com>
- <CAKPbEqpTNN5GKKCXmyTv0szpL-N1pdKFZYPHCJjyhgpKZGMiWw@mail.gmail.com>
-Date: Thu, 14 Mar 2024 15:52:07 +0800
-Message-ID: <8734st2qu0.fsf@yhuang6-desk2.ccr.corp.intel.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkgIM-0003Zz-NP
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 04:18:36 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rkgI4-000476-2Z
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 04:18:33 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-412e784060cso10598085e9.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 01:18:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710404294; x=1711009094; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rVWU7P/DnwI+iZYeVWqvk44FiBdH/KUtzIP73fA+37U=;
+ b=nv6OSEXuYVAMEHBYnvcgjcFvVTrJwPTJO06H7LXbi+leOpYwQAJma+3d14lIbZJO7b
+ nhittJ5/LKUi6yKcjDnKvQKqAzj/8tUJGbQ+tA/q9DU45CCOZT9ub7nWfhWCkDcjZTp/
+ 0rczz28roPpA61TP0FvyZ65loQDRzbBFALGeg0/7wTuOKKI1T4VaZylAZznvNZ9OE8FT
+ kiSK+hh0JgMLkFAABce3WxizSstsZZNx8QeJyS4BwJye/WGRt6qqu/Fnnog3+iFMxjXv
+ aCcUsaihw7/eE5XRGDlj/yf3VmyGzR/qYOWUxK40yO5K5WEgaLS/aTKVuNewru5kuoyi
+ 5ROA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710404294; x=1711009094;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rVWU7P/DnwI+iZYeVWqvk44FiBdH/KUtzIP73fA+37U=;
+ b=vinkG5gNjGjmm1vnbmcSXrugWVYbc4qiJVLaqNd3KT4wNi7ZW8FTj3anx9n2jOOT04
+ ujKuRoNg57D0oBuKteKRYkLcQStV8o5wEgEF141iUi40+LG3veiFNQRb/gQlwARFlXyn
+ XecPmNN0pMQKL5FMIuJNC+heplo+MPewHudugt7eakwr9hgV8srHm5+hFJJA3vZ5rT1T
+ DCe1cSiNhUf8Z2o3WwXuBYjYcmwfl2WpyjMpTAn+ClWY383HliHpoTRnuvIcpEueOgVa
+ e1y1eXHAqHAPBhXzmOHwQxEZPwqLTrCT9HuZac1J+yyISh/7/gGr6nF4TMQxP9Csqgjd
+ omOw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUH3Fgh95Ji2hHeqH5anaMPE5VRBnDdn9SyH+rMhpOJmNSYrYpZFXSSMK6Y2ps8e8pi5Ur3C+0DdBCvHQEqmVY4bgcmTQI=
+X-Gm-Message-State: AOJu0YzAZvWMlCVVWKtYeeCrE7jmKwPlX0w+fMYYg3Xjf7cWQD4Fcn2j
+ uqzKAK113pWFPMDxwtreEH0hMFPPt2obNaCyd3ixnSX/oEVjkEJnnLI0DcPkAGk=
+X-Google-Smtp-Source: AGHT+IHAry3S0zZTMZNrJ7s7YkX17dkr+LdBxQClreC+NxHE6yRZcdDhN36JR8p68s0UOjHVUDLjMQ==
+X-Received: by 2002:a05:6000:b4f:b0:33e:bb68:62b3 with SMTP id
+ dk15-20020a0560000b4f00b0033ebb6862b3mr1132150wrb.1.1710404294036; 
+ Thu, 14 Mar 2024 01:18:14 -0700 (PDT)
+Received: from [192.168.164.175] (144.red-95-127-32.staticip.rima-tde.net.
+ [95.127.32.144]) by smtp.gmail.com with ESMTPSA id
+ bn15-20020a056000060f00b0033ebf702e17sm165336wrb.21.2024.03.14.01.18.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Mar 2024 01:18:13 -0700 (PDT)
+Message-ID: <d848a938-f47f-47cc-adff-130a418facbb@linaro.org>
+Date: Thu, 14 Mar 2024 09:18:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=ying.huang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.971,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] target/riscv: Implement dynamic establishment of
+ custom decoder
+Content-Language: en-US
+To: Huang Tao <eric.huang@linux.alibaba.com>, qemu-devel@nongnu.org,
+ dbarboza@ventanamicro.com
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
+ bin.meng@windriver.com, alistair.francis@wdc.com, palmer@dabbelt.com,
+ Christoph Muellner <christoph.muellner@vrull.eu>
+References: <20240313095715.32811-1-eric.huang@linux.alibaba.com>
+ <1ae334d6-f009-4e80-bf09-0500fa3486a9@linaro.org>
+ <e5a3cb94-b45d-476a-9d83-04e47ace7c2b@linux.alibaba.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <e5a3cb94-b45d-476a-9d83-04e47ace7c2b@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,400 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+On 14/3/24 07:24, Huang Tao wrote:
+> Hi,
+> 
+> On 2024/3/13 18:47, Philippe Mathieu-Daudé wrote:
+>>
+>>> +{
+>>> +    GPtrArray *dynamic_decoders;
+>>> +    dynamic_decoders = g_ptr_array_sized_new(decoder_table_size);
+>>> +    for (size_t i = 0; i < decoder_table_size; ++i) {
+>>> +        if (decoder_table[i].guard_func &&
+>>> +            decoder_table[i].guard_func(&cpu->cfg)) {
+>>> +            g_ptr_array_add(dynamic_decoders,
+>>> + (gpointer)decoder_table[i].decode_fn);
+>>> +        }
+>>> +    }
+>>> +
+>>> +    cpu->decoders = dynamic_decoders;
+>>> +}
+>>
+>> Move this function to translate.c and make decoder_table[] static.
+>> Then we don't need the "cpu_decoder.h", it is specific to TCG and
+>> declarations go in "target/riscv/tcg/tcg-cpu.h".
+>>
+> This function is about finalizing the feature of cpu, it is not suitable 
+> to move it to translate.c from the perspective of code structure and 
+> readability.
+> 
+> I will try to move the function to tcg-cpu.c, and the declarations to 
+> tcg-cpu.h according to your suggestion.
+> 
+>>> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+>>> index 177418b2b9..332f0bfd4e 100644
+>>> --- a/target/riscv/translate.c
+>>> +++ b/target/riscv/translate.c
+>>> @@ -115,6 +115,7 @@ typedef struct DisasContext {
+>>>       bool frm_valid;
+>>>       /* TCG of the current insn_start */
+>>>       TCGOp *insn_start;
+>>> +    const GPtrArray *decoders;
+>>
+>> Why do we need this reference? We can use env_archcpu(env)->decoders.
+>>
+> As Richard said before:
+> 
+>  > We try to avoid placing env into DisasContext, so that it is much 
+> harder to make the mistake of referencing env fields at 
+> translation-time, when you really needed to generate tcg code to 
+> reference the fields at runtime.
 
-> On Tue, Mar 12, 2024 at 2:21=E2=80=AFAM Huang, Ying <ying.huang@intel.com=
-> wrote:
->>
->> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
->>
->> > The current implementation treats emulated memory devices, such as
->> > CXL1.1 type3 memory, as normal DRAM when they are emulated as normal m=
-emory
->> > (E820_TYPE_RAM). However, these emulated devices have different
->> > characteristics than traditional DRAM, making it important to
->> > distinguish them. Thus, we modify the tiered memory initialization pro=
-cess
->> > to introduce a delay specifically for CPUless NUMA nodes. This delay
->> > ensures that the memory tier initialization for these nodes is deferred
->> > until HMAT information is obtained during the boot process. Finally,
->> > demotion tables are recalculated at the end.
->> >
->> > * Abstract common functions into `find_alloc_memory_type()`
->>
->> We should move kmem_put_memory_types() (renamed to
->> mt_put_memory_types()?) too.  This can be put in a separate patch.
->>
->
-> Will do! Thanks,
->
->
->>
->> > Since different memory devices require finding or allocating a memory =
-type,
->> > these common steps are abstracted into a single function,
->> > `find_alloc_memory_type()`, enhancing code scalability and conciseness.
->> >
->> > * Handle cases where there is no HMAT when creating memory tiers
->> > There is a scenario where a CPUless node does not provide HMAT informa=
-tion.
->> > If no HMAT is specified, it falls back to using the default DRAM tier.
->> >
->> > * Change adist calculation code to use another new lock, mt_perf_lock.
->> > In the current implementation, iterating through CPUlist nodes requires
->> > holding the `memory_tier_lock`. However, `mt_calc_adistance()` will en=
-d up
->> > trying to acquire the same lock, leading to a potential deadlock.
->> > Therefore, we propose introducing a standalone `mt_perf_lock` to prote=
-ct
->> > `default_dram_perf`. This approach not only avoids deadlock but also
->> > prevents holding a large lock simultaneously.
->> >
->> > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
->> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
->> > ---
->> >  drivers/acpi/numa/hmat.c     | 11 ++++++
->> >  drivers/dax/kmem.c           | 13 +------
->> >  include/linux/acpi.h         |  6 ++++
->> >  include/linux/memory-tiers.h |  8 +++++
->> >  mm/memory-tiers.c            | 70 +++++++++++++++++++++++++++++++++---
->> >  5 files changed, 92 insertions(+), 16 deletions(-)
->> >
->> > diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
->> > index d6b85f0f6082..28812ec2c793 100644
->> > --- a/drivers/acpi/numa/hmat.c
->> > +++ b/drivers/acpi/numa/hmat.c
->> > @@ -38,6 +38,8 @@ static LIST_HEAD(targets);
->> >  static LIST_HEAD(initiators);
->> >  static LIST_HEAD(localities);
->> >
->> > +static LIST_HEAD(hmat_memory_types);
->> > +
->>
->> HMAT isn't a device driver for some memory devices.  So I don't think we
->> should manage memory types in HMAT.
->
-> I can put it back in memory-tier.c. How about the list? Do we still
-> need to keep a separate list for storing late_inited memory nodes?
-> And how about the list name if we need to remove the prefix "hmat_"?
+Right, he told me the same on IRC recently ;)
 
-I don't think we need a separate list for memory-less nodes.  Just
-iterate all memory-less nodes.
+> 
+> It also applies to the ArchCPU case.
+> 
+> 
+> Thanks to your review, I will adopt the other suggestions in the next 
+> version.
+> 
+> 
+> Thanks,
+> 
+> Huang Tao
+> 
+> 
+> 
 
->
->> Instead, if the memory_type of a
->> node isn't set by the driver, we should manage it in memory-tier.c as
->> fallback.
->>
->
-> Do you mean some device drivers may init memory tiers between
-> memory_tier_init() and late_initcall(memory_tier_late_init);?
-> And this is the reason why you mention to exclude
-> "node_memory_types[nid].memtype !=3D NULL" in memory_tier_late_init().
-> Is my understanding correct?
-
-Yes.
-
->> >  static DEFINE_MUTEX(target_lock);
->> >
->> >  /*
->> > @@ -149,6 +151,12 @@ int acpi_get_genport_coordinates(u32 uid,
->> >  }
->> >  EXPORT_SYMBOL_NS_GPL(acpi_get_genport_coordinates, CXL);
->> >
->> > +struct memory_dev_type *hmat_find_alloc_memory_type(int adist)
->> > +{
->> > +     return find_alloc_memory_type(adist, &hmat_memory_types);
->> > +}
->> > +EXPORT_SYMBOL_GPL(hmat_find_alloc_memory_type);
->> > +
->> >  static __init void alloc_memory_initiator(unsigned int cpu_pxm)
->> >  {
->> >       struct memory_initiator *initiator;
->> > @@ -1038,6 +1046,9 @@ static __init int hmat_init(void)
->> >       if (!hmat_set_default_dram_perf())
->> >               register_mt_adistance_algorithm(&hmat_adist_nb);
->> >
->> > +     /* Post-create CPUless memory tiers after getting HMAT info */
->> > +     memory_tier_late_init();
->> > +
->>
->> This should be called in memory-tier.c via
->>
->> late_initcall(memory_tier_late_init);
->>
->> Then, we don't need hmat to call it.
->>
->
-> Thanks. Learned!
->
->
->> >       return 0;
->> >  out_put:
->> >       hmat_free_structures();
->> > diff --git a/drivers/dax/kmem.c b/drivers/dax/kmem.c
->> > index 42ee360cf4e3..aee17ab59f4f 100644
->> > --- a/drivers/dax/kmem.c
->> > +++ b/drivers/dax/kmem.c
->> > @@ -55,21 +55,10 @@ static LIST_HEAD(kmem_memory_types);
->> >
->> >  static struct memory_dev_type *kmem_find_alloc_memory_type(int adist)
->> >  {
->> > -     bool found =3D false;
->> >       struct memory_dev_type *mtype;
->> >
->> >       mutex_lock(&kmem_memory_type_lock);
->> > -     list_for_each_entry(mtype, &kmem_memory_types, list) {
->> > -             if (mtype->adistance =3D=3D adist) {
->> > -                     found =3D true;
->> > -                     break;
->> > -             }
->> > -     }
->> > -     if (!found) {
->> > -             mtype =3D alloc_memory_type(adist);
->> > -             if (!IS_ERR(mtype))
->> > -                     list_add(&mtype->list, &kmem_memory_types);
->> > -     }
->> > +     mtype =3D find_alloc_memory_type(adist, &kmem_memory_types);
->> >       mutex_unlock(&kmem_memory_type_lock);
->> >
->> >       return mtype;
->> > diff --git a/include/linux/acpi.h b/include/linux/acpi.h
->> > index b7165e52b3c6..3f927ff01f02 100644
->> > --- a/include/linux/acpi.h
->> > +++ b/include/linux/acpi.h
->> > @@ -434,12 +434,18 @@ int thermal_acpi_critical_trip_temp(struct acpi_=
-device *adev, int *ret_temp);
->> >
->> >  #ifdef CONFIG_ACPI_HMAT
->> >  int acpi_get_genport_coordinates(u32 uid, struct access_coordinate *c=
-oord);
->> > +struct memory_dev_type *hmat_find_alloc_memory_type(int adist);
->> >  #else
->> >  static inline int acpi_get_genport_coordinates(u32 uid,
->> >                                              struct access_coordinate =
-*coord)
->> >  {
->> >       return -EOPNOTSUPP;
->> >  }
->> > +
->> > +static inline struct memory_dev_type *hmat_find_alloc_memory_type(int=
- adist)
->> > +{
->> > +     return NULL;
->> > +}
->> >  #endif
->> >
->> >  #ifdef CONFIG_ACPI_NUMA
->> > diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers=
-.h
->> > index 69e781900082..4bc2596c5774 100644
->> > --- a/include/linux/memory-tiers.h
->> > +++ b/include/linux/memory-tiers.h
->> > @@ -48,6 +48,9 @@ int mt_calc_adistance(int node, int *adist);
->> >  int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
->> >                            const char *source);
->> >  int mt_perf_to_adistance(struct access_coordinate *perf, int *adist);
->> > +struct memory_dev_type *find_alloc_memory_type(int adist,
->> > +                                                     struct list_head=
- *memory_types);
->> > +void memory_tier_late_init(void);
->> >  #ifdef CONFIG_MIGRATION
->> >  int next_demotion_node(int node);
->> >  void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets);
->> > @@ -136,5 +139,10 @@ static inline int mt_perf_to_adistance(struct acc=
-ess_coordinate *perf, int *adis
->> >  {
->> >       return -EIO;
->> >  }
->> > +
->> > +static inline void memory_tier_late_init(void)
->> > +{
->> > +
->> > +}
->> >  #endif       /* CONFIG_NUMA */
->> >  #endif  /* _LINUX_MEMORY_TIERS_H */
->> > diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
->> > index 0537664620e5..79f748d60e6f 100644
->> > --- a/mm/memory-tiers.c
->> > +++ b/mm/memory-tiers.c
->> > @@ -6,6 +6,7 @@
->> >  #include <linux/memory.h>
->> >  #include <linux/memory-tiers.h>
->> >  #include <linux/notifier.h>
->> > +#include <linux/acpi.h>
->> >
->> >  #include "internal.h"
->> >
->> > @@ -35,6 +36,7 @@ struct node_memory_type_map {
->> >  };
->> >
->> >  static DEFINE_MUTEX(memory_tier_lock);
->> > +static DEFINE_MUTEX(mt_perf_lock);
->>
->> Please add comments about what it protects.  And put it near the data
->> structure it protects.
->>
->
-> Where is better for me to add comments for this? Code? Patch description?
-> Will put it closer to the protected data. Thanks.
-
-Just put the comments at the above of the lock in the source code.
-
->
->
->> >  static LIST_HEAD(memory_tiers);
->> >  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
->> >  struct memory_dev_type *default_dram_type;
->> > @@ -623,6 +625,58 @@ void clear_node_memory_type(int node, struct memo=
-ry_dev_type *memtype)
->> >  }
->> >  EXPORT_SYMBOL_GPL(clear_node_memory_type);
->> >
->> > +struct memory_dev_type *find_alloc_memory_type(int adist, struct list=
-_head *memory_types)
->> > +{
->> > +     bool found =3D false;
->> > +     struct memory_dev_type *mtype;
->> > +
->> > +     list_for_each_entry(mtype, memory_types, list) {
->> > +             if (mtype->adistance =3D=3D adist) {
->> > +                     found =3D true;
->> > +                     break;
->> > +             }
->> > +     }
->> > +     if (!found) {
->> > +             mtype =3D alloc_memory_type(adist);
->> > +             if (!IS_ERR(mtype))
->> > +                     list_add(&mtype->list, memory_types);
->> > +     }
->> > +
->> > +     return mtype;
->> > +}
->> > +EXPORT_SYMBOL_GPL(find_alloc_memory_type);
->> > +
->> > +static void memory_tier_late_create(int node)
->> > +{
->> > +     struct memory_dev_type *mtype =3D NULL;
->> > +     int adist =3D MEMTIER_ADISTANCE_DRAM;
->> > +
->> > +     mt_calc_adistance(node, &adist);
->> > +     if (adist !=3D MEMTIER_ADISTANCE_DRAM) {
->>
->> We can manage default_dram_type() via find_alloc_memory_type()
->> too.
->>
->> And, if "node_memory_types[node].memtype =3D=3D NULL", we can call
->> mt_calc_adistance(node, &adist) and find_alloc_memory_type() in
->> set_node_memory_tier().  Then, we can cover hotpluged memory node too.
->>
->> > +             mtype =3D hmat_find_alloc_memory_type(adist);
->> > +             if (!IS_ERR(mtype))
->> > +                     __init_node_memory_type(node, mtype);
->> > +             else
->> > +                     pr_err("Failed to allocate a memory type at %s()=
-\n", __func__);
->> > +     }
->> > +
->> > +     set_node_memory_tier(node);
->> > +}
->> > +
->> > +void memory_tier_late_init(void)
->> > +{
->> > +     int nid;
->> > +
->> > +     mutex_lock(&memory_tier_lock);
->> > +     for_each_node_state(nid, N_MEMORY)
->> > +             if (!node_state(nid, N_CPU))
->>
->> We should exclude "node_memory_types[nid].memtype !=3D NULL".  Some memo=
-ry
->> nodes may be onlined by some device drivers and setup memory tiers
->> already.
->>
->> > +                     memory_tier_late_create(nid);
->> > +
->> > +     establish_demotion_targets();
->> > +     mutex_unlock(&memory_tier_lock);
->> > +}
->> > +EXPORT_SYMBOL_GPL(memory_tier_late_init);
->> > +
->> >  static void dump_hmem_attrs(struct access_coordinate *coord, const ch=
-ar *prefix)
->> >  {
->> >       pr_info(
->> > @@ -636,7 +690,7 @@ int mt_set_default_dram_perf(int nid, struct acces=
-s_coordinate *perf,
->> >  {
->> >       int rc =3D 0;
->> >
->> > -     mutex_lock(&memory_tier_lock);
->> > +     mutex_lock(&mt_perf_lock);
->> >       if (default_dram_perf_error) {
->> >               rc =3D -EIO;
->> >               goto out;
->> > @@ -684,7 +738,7 @@ int mt_set_default_dram_perf(int nid, struct acces=
-s_coordinate *perf,
->> >       }
->> >
->> >  out:
->> > -     mutex_unlock(&memory_tier_lock);
->> > +     mutex_unlock(&mt_perf_lock);
->> >       return rc;
->> >  }
->> >
->> > @@ -700,7 +754,7 @@ int mt_perf_to_adistance(struct access_coordinate =
-*perf, int *adist)
->> >           perf->read_bandwidth + perf->write_bandwidth =3D=3D 0)
->> >               return -EINVAL;
->> >
->> > -     mutex_lock(&memory_tier_lock);
->> > +     mutex_lock(&mt_perf_lock);
->> >       /*
->> >        * The abstract distance of a memory node is in direct proportio=
-n to
->> >        * its memory latency (read + write) and inversely proportional =
-to its
->> > @@ -713,7 +767,7 @@ int mt_perf_to_adistance(struct access_coordinate =
-*perf, int *adist)
->> >               (default_dram_perf.read_latency + default_dram_perf.writ=
-e_latency) *
->> >               (default_dram_perf.read_bandwidth + default_dram_perf.wr=
-ite_bandwidth) /
->> >               (perf->read_bandwidth + perf->write_bandwidth);
->> > -     mutex_unlock(&memory_tier_lock);
->> > +     mutex_unlock(&mt_perf_lock);
->> >
->> >       return 0;
->> >  }
->> > @@ -836,6 +890,14 @@ static int __init memory_tier_init(void)
->> >        * types assigned.
->> >        */
->> >       for_each_node_state(node, N_MEMORY) {
->> > +             if (!node_state(node, N_CPU))
->> > +                     /*
->> > +                      * Defer memory tier initialization on CPUless n=
-uma nodes.
->> > +                      * These will be initialized when HMAT informati=
-on is
->>
->> HMAT is platform specific, we should avoid to mention it in general code
->> if possible.
->>
->
-> Will fix! Thanks,
->
->
->> > +                      * available.
->> > +                      */
->> > +                     continue;
->> > +
->> >               memtier =3D set_node_memory_tier(node);
->> >               if (IS_ERR(memtier))
->> >                       /*
->>
-
---
-Best Regards,
-Huang, Ying
 
