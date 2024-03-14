@@ -4,65 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78A6BC5475B
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 11:18:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4EF4C54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 11:36:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkj66-0005Ab-Ob; Thu, 14 Mar 2024 07:18:06 -0400
+	id 1rkjNC-0001O7-1Z; Thu, 14 Mar 2024 07:35:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rkj5v-00058h-Jz
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 07:17:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1rkj5u-0003QR-2X
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 07:17:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710415073;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=vCIE0YmZFuvbvv/sX02hPd9ARHpV/dzxOgjsuL+QjFw=;
- b=ThEQUx9Pwp+Jz51vL8FWnMuCZSoA0xg+1RR42s8JVHTTeuEKVAsKciP55FlqtXBCghQ9Ge
- gYGOwcE+5lciD+hMpiXOaqksLLCdnytk2Ge+Jex4oeswv6SENF97Qr5RmHgTwWyQLCXnBF
- dJWpm9H741lmUWUXt7pdhULZvQ0f/zQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-443-_Kqej3gPNw-v4sE_GsavSg-1; Thu, 14 Mar 2024 07:17:49 -0400
-X-MC-Unique: _Kqej3gPNw-v4sE_GsavSg-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 42ABE101A586;
- Thu, 14 Mar 2024 11:17:49 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.67.24.5])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id F2C1BC1576F;
- Thu, 14 Mar 2024 11:17:45 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: stefanha@redhat.com
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
- mtosatti@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PATCH] file-posix: rearrange BDRVRawState fields
-Date: Thu, 14 Mar 2024 16:47:41 +0530
-Message-ID: <20240314111741.1508705-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <hchauhan@ventanamicro.com>)
+ id 1rkjMt-0001LF-9b
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 07:35:29 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hchauhan@ventanamicro.com>)
+ id 1rkjMq-0007I2-Di
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 07:35:27 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1dde367a10aso247425ad.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 04:35:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1710416120; x=1711020920; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eNWDQzg7Cj2NmO7oV7q03WSZVn4J1P7IOb9ROmxn1Qs=;
+ b=i78tVxtIPXB1hLdOY797hImfgOLGO04WZqSVqZphQTrwE6ODrqLBeyoW2J+koVxix2
+ EWsQAN2e7WyX4fMIsPejFFuvJbk5mZ3TsYcoUS11YDBQx3dzjkrNmmfA3uzw8OzW505F
+ syUkjS9gK+o3vav2M1vo841U5/1NDXxFVuE65TRpyuQmfw6D/vNHvck6gwJr6P+WEntp
+ 4Rgh7GmOjvyQKMRX3rPZfqr3XpNPa5KmHqvEnb5930Qa3lUE0DboE7JdHnDr+XBKMvnd
+ JtU92TlEAL30+2YX0lfrr+IpN8kA25wFmWWA50W74d2Vt4/9C+m4uOOCR1djObYfzkcs
+ i8rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710416120; x=1711020920;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eNWDQzg7Cj2NmO7oV7q03WSZVn4J1P7IOb9ROmxn1Qs=;
+ b=iNW5IuRStZTlQfYJ8Yvdh908JgLP8lUWj7sWt+/eKpoDwbRdSu86pp0i0D3MAUmXb/
+ wXrYcRmrBdDEE7GbtNDeqf28Pt2YAtn5rl5JTg8wMWbDSC/B2XxrhBHIC7os40xEmPm6
+ hTpJiQfgEd6c4raUyYpckD5Mgpc086sBZnOiGmUpep4GRgDeQuNBFF/i9Kjj8RXOWvRr
+ /NxgWeAnpYiIzJe5MvC+T8A+PbXMxjHL2K1Aya34T3D5j9IUTx2ulkw9GSFeLIVl+m+E
+ HYEREH9JHRVYIFEHhGHLnEh6abcTTxDqS1z2vhgGB9WIiXBJiXC7OmquXOyf6PGdIZdF
+ PRPQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVa4vHgSUGz21gyxLItkHUigMYIOCzpefOeIy991qQ8WtMv12kZu2OzOpmcpjQfj1t5v1l9g7AS9c9QMDxNapru6G4nbZU=
+X-Gm-Message-State: AOJu0YziAtD2Y7Hv4xv6tRD2YH5iZvq8x7wZnOJ0USxLZ9BLSFpXSl2I
+ QLhrXRBZAO+VckacfmXpO9nXCWh15OpLb6ycyCxaMHoi0VhzFHvZJMiXXv7IEX3pX7Ek8R0H86f
+ a898=
+X-Google-Smtp-Source: AGHT+IEMiIdwVR/qco9lcEISeI3075BXQAmycq13RyanmtV6Bs5IvejyhislGKRpsmay/wpgkkOGdw==
+X-Received: by 2002:a17:902:d50f:b0:1dc:3c:fb67 with SMTP id
+ b15-20020a170902d50f00b001dc003cfb67mr1531812plg.5.1710416120349; 
+ Thu, 14 Mar 2024 04:35:20 -0700 (PDT)
+Received: from aryabhatta.. ([49.37.251.185]) by smtp.gmail.com with ESMTPSA id
+ y7-20020a17090322c700b001dc6f7e794dsm1465859plg.16.2024.03.14.04.35.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Mar 2024 04:35:20 -0700 (PDT)
+From: Himanshu Chauhan <hchauhan@ventanamicro.com>
+To: qemu-riscv@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: ajones@ventanamicro.com
+Subject: [PATCH v6 3/3] target/riscv: Enable sdtrig for Ventana's Veyron CPUs
+Date: Thu, 14 Mar 2024 17:05:10 +0530
+Message-Id: <20240314113510.477862-4-hchauhan@ventanamicro.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240314113510.477862-1-hchauhan@ventanamicro.com>
+References: <20240314113510.477862-1-hchauhan@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=hchauhan@ventanamicro.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,84 +96,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+Ventana's Veyron CPUs support sdtrig ISA extension. By default, enable
+the sdtrig extension and disable the debug property for these CPUs.
 
-Rearrange BRDVRawState structure fields to avoid memory
-fragments in its object's memory and save some(~8) bytes
-per object.
-
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
+Signed-off-by: Himanshu Chauhan <hchauhan@ventanamicro.com>
 ---
- block/file-posix.c | 39 +++++++++++++++++++--------------------
- 1 file changed, 19 insertions(+), 20 deletions(-)
+ target/riscv/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 78a8cea03b..584346ea3e 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -135,12 +135,6 @@
- #define RAW_LOCK_SHARED_BASE           200
- 
- typedef struct BDRVRawState {
--    int fd;
--    bool use_lock;
--    int type;
--    int open_flags;
--    size_t buf_align;
--
-     /* The current permissions. */
-     uint64_t perm;
-     uint64_t shared_perm;
-@@ -151,29 +145,34 @@ typedef struct BDRVRawState {
-     uint64_t locked_shared_perm;
- 
-     uint64_t aio_max_batch;
-+    struct {
-+        uint64_t discard_nb_ok;
-+        uint64_t discard_nb_failed;
-+        uint64_t discard_bytes_ok;
-+    } stats;
- 
-+    PRManager *pr_mgr;
-+    BDRVReopenState *reopen_state;
-+
-+    size_t buf_align;
-+    int fd;
-+    int type;
-+    int open_flags;
-     int perm_change_fd;
-     int perm_change_flags;
--    BDRVReopenState *reopen_state;
-+    int page_cache_inconsistent; /* errno from fdatasync failure */
- 
-+    bool use_lock;
-+    bool has_fallocate;
-+    bool needs_alignment;
-+    bool force_alignment;
-+    bool drop_cache;
-+    bool check_cache_dropped;
-     bool has_discard:1;
-     bool has_write_zeroes:1;
-     bool use_linux_aio:1;
-     bool has_laio_fdsync:1;
-     bool use_linux_io_uring:1;
--    int page_cache_inconsistent; /* errno from fdatasync failure */
--    bool has_fallocate;
--    bool needs_alignment;
--    bool force_alignment;
--    bool drop_cache;
--    bool check_cache_dropped;
--    struct {
--        uint64_t discard_nb_ok;
--        uint64_t discard_nb_failed;
--        uint64_t discard_bytes_ok;
--    } stats;
--
--    PRManager *pr_mgr;
- } BDRVRawState;
- 
- typedef struct BDRVRawReopenState {
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 66c91fffd6..3c7ad1c903 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -569,6 +569,7 @@ static void rv64_veyron_v1_cpu_init(Object *obj)
+     cpu->cfg.cbom_blocksize = 64;
+     cpu->cfg.cboz_blocksize = 64;
+     cpu->cfg.ext_zicboz = true;
++    cpu->cfg.ext_sdtrig = true;
+     cpu->cfg.ext_smaia = true;
+     cpu->cfg.ext_ssaia = true;
+     cpu->cfg.ext_sscofpmf = true;
 -- 
-2.44.0
+2.34.1
 
 
