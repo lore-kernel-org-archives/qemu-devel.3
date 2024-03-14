@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3340CC54E60
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 17:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B56DCC54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 17:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkpKS-0005Mo-2V; Thu, 14 Mar 2024 13:57:20 -0400
+	id 1rkpLr-0007bd-M3; Thu, 14 Mar 2024 13:58:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rkpKQ-0005MN-Ml
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 13:57:18 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rkpKO-0005Uw-TZ
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 13:57:18 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1dc3b4b9b62so8672225ad.1
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 10:57:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710439034; x=1711043834; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RRHN55ULEkatQtFgjdidQ4nkmjY6fdcGFkhAKHEXGks=;
- b=cO2h65TsVybz7d8T6VFdMaVu3ekXUm+cpi9tD/RLLwlCFNxs6rxAzr5/DUoheK4W7/
- zm9nIxfhuTKmKAiHHppMUjlNNVhdz++YjUNjCFkf2OiFCmrbaWt8+eIq7R+GKCSr1nrc
- NGd6FB9l8cPJtznf5qdarctN8wa6QcJCi86EOMjkxzYauO9W5bkij2LSy2j4LsFPTpfe
- vEQUX68HLLx4odaLsnV5dDIOixj8A4rf36oGVS7Ft7syPiCJbRPJrU/i7LnkCxaaem+F
- DTCj5GwlF+znjCzl2KHSG2atOzqQXmsBlQBfv2hpD79KGVvj5TpbWKYkZeGJxyR9cSJG
- LH9A==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rkpLY-0007CC-Ns
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 13:58:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rkpLS-0005i3-64
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 13:58:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710439100;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bmzA7ofjcHyBGtEnZoez5F86eGFzMwkffuyeikUn0Fc=;
+ b=F3swfUGKbtYPkgMIlC2TlqcSbJFPViOfEnAJtyOmXFboiSoeDRPZjEuVCAKsqD5iE5Yv74
+ 7l96oFCNl9WtVmih3Rrw8TfHX45ku9M8erRkNnRxX3mqR21YccTbW3IitdD3b2AAjHt9bh
+ JuFHpJZHq5vBKfTJ3E9SxdgwMr76Szg=
+Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com
+ [209.85.160.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-650-9v0sVOHwPl-YnBg1jMnw5A-1; Thu, 14 Mar 2024 13:58:18 -0400
+X-MC-Unique: 9v0sVOHwPl-YnBg1jMnw5A-1
+Received: by mail-oa1-f72.google.com with SMTP id
+ 586e51a60fabf-22206c445fcso432641fac.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 10:58:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710439034; x=1711043834;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RRHN55ULEkatQtFgjdidQ4nkmjY6fdcGFkhAKHEXGks=;
- b=XfCb6cuz7dyciiu9ChUV2IFv9ZGLrRh0zuSuqR2vPoBK3Gzx1VXXNheVUDkKXt5Sr0
- T3el0aP0tdROAN7KSQOXuO/NRnJiLL1nEif8bDLGteg7sf5v783Wg/UnArMCt9+umgAk
- dcbwSFMjZug/K13jqNqIoDr0qvFJADg9cSKsw+EWbokN1eXs/exTPZiREy0PvFdpt7kx
- 98g1n1mKp87q6yxIZEg4XZA5MzHixqjF2yTclcz/IY2iQBxq+d2GP7cuXQqXu43fSdFO
- vCu5KlUBl95yrU6I7WPzi9E13WiyPBR8N2lCR9Dw4EP+R9Mbz4JYLTk+lJEWHkvJ1Ohj
- OV/g==
-X-Gm-Message-State: AOJu0YxYexYR2jufugaktcJMR7rd6h3eUP/l/a1UUmUiqlSpQKu2oHY6
- sgDYr8R0v6kYqiQHwVMJbkXbrgBbqcxmDcNy9J8I9wCl6pFggzaOZX3OjLAXn1kHFgjz2gPPqqa
- 4
-X-Google-Smtp-Source: AGHT+IFnT8palw9PPj8YM/8Pg2kwW+RjZ2CL2jRET6rYVq+KxkyUwLPWvKPKVuQlDt6ulebQmGaQ9w==
-X-Received: by 2002:a17:903:41c7:b0:1dd:b2de:e0bf with SMTP id
- u7-20020a17090341c700b001ddb2dee0bfmr9379694ple.18.1710439034194; 
- Thu, 14 Mar 2024 10:57:14 -0700 (PDT)
-Received: from grind.dc1.ventanamicro.com ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- i7-20020a170902c94700b001db717d2dbbsm1991776pla.210.2024.03.14.10.57.11
+ d=1e100.net; s=20230601; t=1710439097; x=1711043897;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bmzA7ofjcHyBGtEnZoez5F86eGFzMwkffuyeikUn0Fc=;
+ b=sIDZdlaEdXjtEZRsJhAxdYOEHs7iRL6iqLjzT4rhp4KamyYqbgrEEoBtwAeT7JtRmn
+ YsDTrpiyIqBcRq7gpSj26cbJ/BDK9nxKLDur/w3ka6AD00TU+4gT9p/lT/zLZm4gYIDb
+ uFE21qVekrSWaRNlSJ4k8CiBl7L5OiRMkD3DmxJZcnemJdE9d4657XQfHzxaLGRc9YHr
+ CmXqQdb6vbdoYqb3lYhgq1+uBbkqqoPKV+1NIInQKluSVYRR/t1ODyitkW5tmH9zYLqg
+ u5ZqEWUGNh/vraPRLNl6SfUt7nndsf2cT0H34j7vqV33r6g5hF6BC+ulZCiUZYd0jJNp
+ SeRA==
+X-Gm-Message-State: AOJu0YyYAHCYIce7bWXvqoIM0ZZMamcvaTgGFXaEtI8r611YRomplW60
+ A/qtxzevd/XMPHd4CX+oYgpzkg1Hz+DhStJ2ybxfU/lcOPhn1M3mJ21Z/oU4IUpfz3xQu31l2kg
+ pxmh6zNF4bqeSHDz6jeYcRxOezzxMVGQRDXBk+18OxqewaNbjw0Qj
+X-Received: by 2002:a05:6870:548b:b0:221:8fd1:21d9 with SMTP id
+ f11-20020a056870548b00b002218fd121d9mr2661507oan.1.1710439097480; 
+ Thu, 14 Mar 2024 10:58:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQ5iJpTBp9HTsOLNGLh73Kjm8abhWfz2l6ntutXTbLjNBqelGZrjAJtgpnEB0ZX1I1wY+jaw==
+X-Received: by 2002:a05:6870:548b:b0:221:8fd1:21d9 with SMTP id
+ f11-20020a056870548b00b002218fd121d9mr2661496oan.1.1710439097104; 
+ Thu, 14 Mar 2024 10:58:17 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ z17-20020a056214041100b0068ff8d75a90sm750022qvx.19.2024.03.14.10.58.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Mar 2024 10:57:13 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- max.chou@sifive.com, richard.henderson@linaro.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH for 9.0 v15 01/10] target/riscv/vector_helper.c: set vstart =
- 0 in GEN_VEXT_VSLIDEUP_VX()
-Date: Thu, 14 Mar 2024 14:56:55 -0300
-Message-ID: <20240314175704.478276-2-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240314175704.478276-1-dbarboza@ventanamicro.com>
-References: <20240314175704.478276-1-dbarboza@ventanamicro.com>
+ Thu, 14 Mar 2024 10:58:16 -0700 (PDT)
+Date: Thu, 14 Mar 2024 13:58:15 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH v2 2/2] migration/multifd: Ensure we're not given a
+ socket for file migration
+Message-ID: <ZfM6t7NfRXK_1k6m@x1n>
+References: <20240313212824.16974-1-farosas@suse.de>
+ <20240313212824.16974-3-farosas@suse.de> <ZfMTVApNl01-yS_v@x1n>
+ <ZfMbJnC96vUXnPTJ@x1n> <87sf0svjuo.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87sf0svjuo.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,29 +101,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The helper isn't setting env->vstart = 0 after its execution, as it is
-expected from every vector instruction that completes successfully.
+On Thu, Mar 14, 2024 at 01:50:07PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Thu, Mar 14, 2024 at 11:10:12AM -0400, Peter Xu wrote:
+> >> On Wed, Mar 13, 2024 at 06:28:24PM -0300, Fabiano Rosas wrote:
+> >> > When doing migration using the fd: URI, the incoming migration starts
+> >> > before the user has passed the file descriptor to QEMU. This means
+> >> > that the checks at migration_channels_and_transport_compatible()
+> >> > happen too soon and we need to allow a migration channel of type
+> >> > SOCKET_ADDRESS_TYPE_FD even though socket migration is not supported
+> >> > with multifd.
+> >> 
+> >> Hmm, bare with me if this is a stupid one.. why the incoming migration can
+> >> start _before_ the user passed in the fd?
+> >> 
+> >> IOW, why can't we rely on a single fd_is_socket() check for
+> >> SOCKET_ADDRESS_TYPE_FD in transport_supports_multi_channels()?
+> >> 
+> >> > 
+> >> > The commit decdc76772 ("migration/multifd: Add mapped-ram support to
+> >> > fd: URI") was supposed to add a second check prior to starting
+> >> > migration to make sure a socket fd is not passed instead of a file fd,
+> >> > but failed to do so.
+> >> > 
+> >> > Add the missing verification.
+> >> > 
+> >> > Fixes: decdc76772 ("migration/multifd: Add mapped-ram support to fd: URI")
+> >> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >> > ---
+> >> >  migration/fd.c   | 8 ++++++++
+> >> >  migration/file.c | 7 +++++++
+> >> >  2 files changed, 15 insertions(+)
+> >> > 
+> >> > diff --git a/migration/fd.c b/migration/fd.c
+> >> > index 39a52e5c90..c07030f715 100644
+> >> > --- a/migration/fd.c
+> >> > +++ b/migration/fd.c
+> >> > @@ -22,6 +22,7 @@
+> >> >  #include "migration.h"
+> >> >  #include "monitor/monitor.h"
+> >> >  #include "io/channel-file.h"
+> >> > +#include "io/channel-socket.h"
+> >> >  #include "io/channel-util.h"
+> >> >  #include "options.h"
+> >> >  #include "trace.h"
+> >> > @@ -95,6 +96,13 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
+> >> >      }
+> >> >  
+> >> >      if (migrate_multifd()) {
+> >> > +        if (fd_is_socket(fd)) {
+> >> > +            error_setg(errp,
+> >> > +                       "Multifd migration to a socket FD is not supported");
+> >> > +            object_unref(ioc);
+> >> > +            return;
+> >> > +        }
+> >
+> > And... I just noticed this is forbiding multifd+socket+fd in general?  But
+> > isn't that the majority of multifd usage when with libvirt over sockets?
+> 
+> I didn't think multifd supported socket fds, does it? I don't see code
+> to create the multiple channels anywhere. How would that work? Multiple
+> threads writing to a single socket fd? I'm a bit confused.
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/vector_helper.c | 1 +
- 1 file changed, 1 insertion(+)
+You're probably right.
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index fe56c007d5..ca79571ae2 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -4781,6 +4781,7 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong s1, void *vs2,         \
-         }                                                                 \
-         *((ETYPE *)vd + H(i)) = *((ETYPE *)vs2 + H(i - offset));          \
-     }                                                                     \
-+    env->vstart = 0;                                                      \
-     /* set tail elements to 1s */                                         \
-     vext_set_elems_1s(vd, vta, vl * esz, total_elems * esz);              \
- }
+I somehow had the assumption that Libvirt always used fds to passover to
+QEMU for migration, but indeed multifd at least shouldn't support it as I
+read the code again..  It'll be good if Dan would help to clarify when fd
+will be used in migrations.
+
 -- 
-2.44.0
+Peter Xu
 
 
