@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C70E1C54E5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 16:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65B44C54E5D
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 16:56:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkoHf-0003uj-Li; Thu, 14 Mar 2024 12:50:23 -0400
+	id 1rkoMm-0005Aq-2h; Thu, 14 Mar 2024 12:55:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rkoHe-0003tr-Pz
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 12:50:22 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rkoMk-0005Af-Fx
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 12:55:38 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rkoHb-0002FX-Kp
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 12:50:22 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rkoMi-00031G-Kl
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 12:55:38 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 8BDCC21CE8;
- Thu, 14 Mar 2024 16:50:10 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 187001F390;
+ Thu, 14 Mar 2024 16:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710435010; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1710435334; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mon/R/0ujW9x+cxDN0VH5AW91KheoY9TYM1d9QBb/48=;
- b=cmo8QdSwz77E98k/YWybpMcX0ymig+uaIod4468O077l1h6UJSqHCqiNZOl+J4CqIGl2ix
- fYk55KqTZSTr7GtneD+ydspQHUxFD6Iug/OiXfw9gokd4SXC6LD7aHW1efotNtigX9gekc
- 2IT3NwGjUMlny0EvqnN3OpjkDXENfBE=
+ bh=0Va8Ff8W60MH2/OX9Amrlru4JMeElDW4neFCyR6Towk=;
+ b=T0uqRrFfgE4r7qvzH0n1nv3ExfI9JwTrvZoofO/sqqzVTgDt4l+617rZ/HrmCdS9Ap4Pzm
+ eiOrlyMSRLXOtj8SnsD6BC9qmX8IypR948Z9E8LWqg2NVJww8/z/cLWL60M961YdmpK7Lv
+ AV4F5rmVfJ6KpOnhoand1vg6Y0YhROo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710435010;
+ s=susede2_ed25519; t=1710435334;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mon/R/0ujW9x+cxDN0VH5AW91KheoY9TYM1d9QBb/48=;
- b=71lheqmdop63KIsjamLoYPor6HmeN71omqFq4NPIt78X9feefRHHwVqyf6/V1p4Ya8p27w
- YE/NytAPAoC9F+BA==
+ bh=0Va8Ff8W60MH2/OX9Amrlru4JMeElDW4neFCyR6Towk=;
+ b=/laARfGY38MUTHLD+nbGXt/6n2BNGWp1BBUz34r1/BpRuf32sTAWrbRLQOwvBY1ecZ7Mxk
+ snsqbKjJ0gK5oVCA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710435010; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1710435334; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mon/R/0ujW9x+cxDN0VH5AW91KheoY9TYM1d9QBb/48=;
- b=cmo8QdSwz77E98k/YWybpMcX0ymig+uaIod4468O077l1h6UJSqHCqiNZOl+J4CqIGl2ix
- fYk55KqTZSTr7GtneD+ydspQHUxFD6Iug/OiXfw9gokd4SXC6LD7aHW1efotNtigX9gekc
- 2IT3NwGjUMlny0EvqnN3OpjkDXENfBE=
+ bh=0Va8Ff8W60MH2/OX9Amrlru4JMeElDW4neFCyR6Towk=;
+ b=T0uqRrFfgE4r7qvzH0n1nv3ExfI9JwTrvZoofO/sqqzVTgDt4l+617rZ/HrmCdS9Ap4Pzm
+ eiOrlyMSRLXOtj8SnsD6BC9qmX8IypR948Z9E8LWqg2NVJww8/z/cLWL60M961YdmpK7Lv
+ AV4F5rmVfJ6KpOnhoand1vg6Y0YhROo=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710435010;
+ s=susede2_ed25519; t=1710435334;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mon/R/0ujW9x+cxDN0VH5AW91KheoY9TYM1d9QBb/48=;
- b=71lheqmdop63KIsjamLoYPor6HmeN71omqFq4NPIt78X9feefRHHwVqyf6/V1p4Ya8p27w
- YE/NytAPAoC9F+BA==
+ bh=0Va8Ff8W60MH2/OX9Amrlru4JMeElDW4neFCyR6Towk=;
+ b=/laARfGY38MUTHLD+nbGXt/6n2BNGWp1BBUz34r1/BpRuf32sTAWrbRLQOwvBY1ecZ7Mxk
+ snsqbKjJ0gK5oVCA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 163F21368E;
- Thu, 14 Mar 2024 16:50:09 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 96FDE1368C;
+ Thu, 14 Mar 2024 16:55:33 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 0jqoM8Eq82UHRQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 14 Mar 2024 16:50:09 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 9l86FwUs82XLRgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 14 Mar 2024 16:55:33 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: Re: [PATCH v2 2/2] migration/multifd: Ensure we're not given a
- socket for file migration
-In-Reply-To: <ZfMbJnC96vUXnPTJ@x1n>
-References: <20240313212824.16974-1-farosas@suse.de>
- <20240313212824.16974-3-farosas@suse.de> <ZfMTVApNl01-yS_v@x1n>
- <ZfMbJnC96vUXnPTJ@x1n>
-Date: Thu, 14 Mar 2024 13:50:07 -0300
-Message-ID: <87sf0svjuo.fsf@suse.de>
+Subject: Re: [PATCH v2 0/2] migration mapped-ram fixes
+In-Reply-To: <ZfMWRBDN4wPQsOWI@x1n>
+References: <20240313212824.16974-1-farosas@suse.de> <ZfMWRBDN4wPQsOWI@x1n>
+Date: Thu, 14 Mar 2024 13:55:31 -0300
+Message-ID: <87plvwvjlo.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Spamd-Result: default: False [-3.30 / 50.00]; ARC_NA(0.00)[];
@@ -85,15 +82,14 @@ X-Spamd-Result: default: False [-3.30 / 50.00]; ARC_NA(0.00)[];
  TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-0.995];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ NEURAL_HAM_SHORT(-0.20)[-0.985];
  FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
  MID_RHS_MATCH_FROM(0.00)[]
-Authentication-Results: smtp-out1.suse.de;
+Authentication-Results: smtp-out2.suse.de;
 	none
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -118,107 +114,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> On Thu, Mar 14, 2024 at 11:10:12AM -0400, Peter Xu wrote:
->> On Wed, Mar 13, 2024 at 06:28:24PM -0300, Fabiano Rosas wrote:
->> > When doing migration using the fd: URI, the incoming migration starts
->> > before the user has passed the file descriptor to QEMU. This means
->> > that the checks at migration_channels_and_transport_compatible()
->> > happen too soon and we need to allow a migration channel of type
->> > SOCKET_ADDRESS_TYPE_FD even though socket migration is not supported
->> > with multifd.
+> On Wed, Mar 13, 2024 at 06:28:22PM -0300, Fabiano Rosas wrote:
+>> Hi,
 >> 
->> Hmm, bare with me if this is a stupid one.. why the incoming migration can
->> start _before_ the user passed in the fd?
+>> In this v2:
 >> 
->> IOW, why can't we rely on a single fd_is_socket() check for
->> SOCKET_ADDRESS_TYPE_FD in transport_supports_multi_channels()?
+>> patch 1 - The fix for the ioc leaks, now including the main channel
 >> 
->> > 
->> > The commit decdc76772 ("migration/multifd: Add mapped-ram support to
->> > fd: URI") was supposed to add a second check prior to starting
->> > migration to make sure a socket fd is not passed instead of a file fd,
->> > but failed to do so.
->> > 
->> > Add the missing verification.
->> > 
->> > Fixes: decdc76772 ("migration/multifd: Add mapped-ram support to fd: URI")
->> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> > ---
->> >  migration/fd.c   | 8 ++++++++
->> >  migration/file.c | 7 +++++++
->> >  2 files changed, 15 insertions(+)
->> > 
->> > diff --git a/migration/fd.c b/migration/fd.c
->> > index 39a52e5c90..c07030f715 100644
->> > --- a/migration/fd.c
->> > +++ b/migration/fd.c
->> > @@ -22,6 +22,7 @@
->> >  #include "migration.h"
->> >  #include "monitor/monitor.h"
->> >  #include "io/channel-file.h"
->> > +#include "io/channel-socket.h"
->> >  #include "io/channel-util.h"
->> >  #include "options.h"
->> >  #include "trace.h"
->> > @@ -95,6 +96,13 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
->> >      }
->> >  
->> >      if (migrate_multifd()) {
->> > +        if (fd_is_socket(fd)) {
->> > +            error_setg(errp,
->> > +                       "Multifd migration to a socket FD is not supported");
->> > +            object_unref(ioc);
->> > +            return;
->> > +        }
+>> patch 2 - A fix for an fd: migration case I thought I had written code
+>>           for, but obviously didn't.
 >
-> And... I just noticed this is forbiding multifd+socket+fd in general?  But
-> isn't that the majority of multifd usage when with libvirt over sockets?
+> Maybe I found one more issue.. I'm looking at fd_start_outgoing_migration().
+>
+>     ioc = qio_channel_new_fd(fd, errp);  <----- here the fd is consumed and
+>                                                 then owned by the IOC
+>     if (!ioc) {
+>         close(fd);
+>         return;
+>     }
+>
+>     outgoing_args.fd = fd;               <----- here we use the fd again,
+>                                                 and "owned" by outgoing_args
+>                                                 even if it shouldn't?
+>
+> The problem is outgoing_args.fd will be cleaned up with a close().  I had a
+> feeling that it's possible it will close() something else if the fd reused
+> before that close() but after the IOC's.  We may want yet another dup() for
+> outgoing_args.fd?
 
-I didn't think multifd supported socket fds, does it? I don't see code
-to create the multiple channels anywhere. How would that work? Multiple
-threads writing to a single socket fd? I'm a bit confused.
+I think the right fix is to not close() it at
+fd_cleanup_outgoing_migration(). That fd is already owned by the ioc.
 
 >
-> Shouldn't it about fd's seekable-or-not instead when mapped-ram enabled
-> (IOW, migration_needs_seekable_channel() only)?
+> If you agree, we may also want to avoid doing:
+>
+>     outgoing_args.fd = -1;
 
-Yes, that could be a validation to be done if we actually get the fd at
-the right moment.
+We will always need this. This is just initialization of the field
+because 0 is a valid fd value. Otherwise the file.c code can't know if
+we're actually using an fd at all.
+
+@file_send_channel_create:
+
+int fd = fd_args_get_fd();
+
+if (fd && fd != -1) {
+    <new IOC from fd>
+} else {
+    <new IOC from file name>
+}
 
 >
->> > +
->> >          file_create_incoming_channels(ioc, errp);
->> >      } else {
->> >          qio_channel_set_name(ioc, "migration-fd-incoming");
->> > diff --git a/migration/file.c b/migration/file.c
->> > index ddde0ca818..b6e8ba13f2 100644
->> > --- a/migration/file.c
->> > +++ b/migration/file.c
->> > @@ -15,6 +15,7 @@
->> >  #include "file.h"
->> >  #include "migration.h"
->> >  #include "io/channel-file.h"
->> > +#include "io/channel-socket.h"
->> >  #include "io/channel-util.h"
->> >  #include "options.h"
->> >  #include "trace.h"
->> > @@ -58,6 +59,12 @@ bool file_send_channel_create(gpointer opaque, Error **errp)
->> >      int fd = fd_args_get_fd();
->> >  
->> >      if (fd && fd != -1) {
->> > +        if (fd_is_socket(fd)) {
->> > +            error_setg(errp,
->> > +                       "Multifd migration to a socket FD is not supported");
->> > +            goto out;
->> > +        }
->> > +
->> >          ioc = qio_channel_file_new_dupfd(fd, errp);
->> >      } else {
->> >          ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
->> > -- 
->> > 2.35.3
->> > 
+> We could assert it instead making sure no fd leak.
+>
+>> 
+>> Thank you for your patience.
+>> 
+>> based-on: https://gitlab.com/peterx/qemu/-/commits/migration-stable
+>> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1212483701
+>> 
+>> Fabiano Rosas (2):
+>>   migration: Fix iocs leaks during file and fd migration
+>>   migration/multifd: Ensure we're not given a socket for file migration
+>> 
+>>  migration/fd.c   | 35 +++++++++++---------------
+>>  migration/file.c | 65 ++++++++++++++++++++++++++++++++----------------
+>>  migration/file.h |  1 +
+>>  3 files changed, 60 insertions(+), 41 deletions(-)
 >> 
 >> -- 
->> Peter Xu
+>> 2.35.3
+>> 
 
