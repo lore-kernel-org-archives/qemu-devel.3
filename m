@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77AC0C54E5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC34C54E60
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkn6b-00074x-BO; Thu, 14 Mar 2024 11:34:53 -0400
+	id 1rknFN-0000Sz-1M; Thu, 14 Mar 2024 11:43:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rkn6Z-00074b-I9
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:34:51 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rknFI-0000Sk-RG
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:43:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rkn6X-0005L7-S7
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:34:51 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rknFB-0006t0-Bh
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:43:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710430489;
+ s=mimecast20190719; t=1710431018;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AEEVtknUnrLhxYeaPOof3LmohS9luSd5fVUZqHwhoWA=;
- b=b0LFrqyYiZQTRazP7ffH6y/+lvSdZnDjO8/6f94/0EePIwHy3Rizw7OfG/8z9CfDmJYtxp
- TsvlAQnjaQNiNOBK90SCUDOfoO+d2ANlkoBoiMfVZHHpRYzyzzbbwtuNpukTwfgHGttv9v
- syRFdaRt+yLUeVPZTOxV5lZEwY//0t8=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/ivjlUdJ9DlU0H8mqhtnj9i4vjnyWZzqWs3N3xcO7XM=;
+ b=dhoJb95UohtGxZMpyvmydxzR8StMdJ27yIlsRqOqcE7myIoQOCOqIbTP/VS5AjrGPUSC/Y
+ bcrqEl8Uws/4kpn10VFE8dHINLklIuets3hD1POrYFwyEx1phJYLbKQP7/QbVzOwaPG5uA
+ kGSWxGIv3Tioca6BPKdRtJ6vDVelqy0=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-352-qyW1jYV4PoWPue8WPJkedw-1; Thu, 14 Mar 2024 11:34:47 -0400
-X-MC-Unique: qyW1jYV4PoWPue8WPJkedw-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-60a54004e9fso21421287b3.3
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 08:34:46 -0700 (PDT)
+ us-mta-682-0bO5GhMOM3qzAVdxT_sZng-1; Thu, 14 Mar 2024 11:43:37 -0400
+X-MC-Unique: 0bO5GhMOM3qzAVdxT_sZng-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-69152af7760so1839656d6.1
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 08:43:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710430486; x=1711035286;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AEEVtknUnrLhxYeaPOof3LmohS9luSd5fVUZqHwhoWA=;
- b=fZVFf5tWguxlAkFobpbeudeiiyhxGRwgQC6zP+B3LKRsI0lXSXb2korM6pBE2PLUnF
- tg28U8DXyJRaPhTSgTM6BIHx/JlprWh9cIoE5ePg941yocqoSCZ96vUy7G3YTZMQUFcF
- nSIp0ef83K4BdyAwlbaG/rAFN6ik3TvaawledSpNOLIYP1T4OXT8bL/CIvg5o/OuQF7m
- Mdrtdfbmo842TiubODsVJFmrrJS0VxyhtjlcOgiOuwCAJpt7exMeu9F/KZ16F6VJqHPg
- qI26AL8Nknx8eMZ1IRLo4R5rFoUal4zzF9kAePT0LDs+6jXJCh+lTmghbiiutGA+JAGJ
- ZrMQ==
-X-Gm-Message-State: AOJu0YypYfNGKwG0KjB9PSfsF3ZmMdUJrdSDeTpmhbH/pzXwZXjFnd9y
- r0joFI0IZ5gwazZbK0yxc6rluahMeuUCGHdy/W1c9SkwI4iJk08T2FhEqpfZPcVFZyG9lIlU3dY
- zdrOoxI7JQ5y3SCnT08j/vusHoi3NpBMv5ajxBXz0J0bc9JIH1V4TEiV8uD102UZnN2q0jeQZq6
- JBX/pQVMcnIfjcXT8uxXfcLHIE1AA=
-X-Received: by 2002:a0d:ca8e:0:b0:609:8262:9846 with SMTP id
- m136-20020a0dca8e000000b0060982629846mr2445812ywd.7.1710430486413; 
- Thu, 14 Mar 2024 08:34:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGkTZkxmqwpc5GA+2FiteaY6QfreNoPa1wkaclfUlqinRVczuru73KHxTX/flBTM9K0dHeXxPQedKbThrWYJfQ=
-X-Received: by 2002:a0d:ca8e:0:b0:609:8262:9846 with SMTP id
- m136-20020a0dca8e000000b0060982629846mr2445780ywd.7.1710430486070; Thu, 14
- Mar 2024 08:34:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710431016; x=1711035816;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/ivjlUdJ9DlU0H8mqhtnj9i4vjnyWZzqWs3N3xcO7XM=;
+ b=RjFClyFrWaNVpehDjD/Go1KjjF/iVTeLAzzH3xihdaH1HhcR78+qUoF7moYgVUihnM
+ tJF76mWrM8YX76WefXKz97lE5h8OT5KJQASI8nDuxAr9skx7dpPXWP3cQp4cLofQpXY9
+ oTtEIWpt1NcsLh9ltod8caFd0e3SiQ0gV07//06pLUskG9XVc6UopEuGZIEbrtWX6Fhn
+ WNLlhIvtoX5HrY/iodGulNqmhSP8cvhVIJlqYorH0Zz0KsQdCRDT6OqHXzqWAzpp4uba
+ az6nICYMe2prtbSDtq4eqGrtui7xtndwIoekxIqtCpNJ2jDEkARwKmSQv93niQDCXkK1
+ Ggiw==
+X-Gm-Message-State: AOJu0YyD1XbUQpA+7707ogWhUkdvs+lVf3FVkCsVxASyF9E6Wkwdsk9Z
+ 2iOuDreZUBOBimX0SpOhmTcyJA/FzadHg7ivOdwyF13hDM95AyqRG/6etsujbpHQ9SzTMvrm5sH
+ xhHZKsUC+NVQzKY4yBiPCEY6ds0EonytfOHktt8rX+DHdqSjJrjB7OAN9gKXv
+X-Received: by 2002:a05:6214:318b:b0:690:b5a9:84f1 with SMTP id
+ lb11-20020a056214318b00b00690b5a984f1mr2206242qvb.1.1710431016316; 
+ Thu, 14 Mar 2024 08:43:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG+QFkM8FcIOUjym880VmR7Og2Eta+21aGKNN3C/wocRSy7t9Miw3dvyGnubr5g+pKbv6fH0A==
+X-Received: by 2002:a05:6214:318b:b0:690:b5a9:84f1 with SMTP id
+ lb11-20020a056214318b00b00690b5a984f1mr2206217qvb.1.1710431015797; 
+ Thu, 14 Mar 2024 08:43:35 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ gy10-20020a056214242a00b0068f6e1c3582sm569069qvb.146.2024.03.14.08.43.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Mar 2024 08:43:35 -0700 (PDT)
+Date: Thu, 14 Mar 2024 11:43:34 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH v2 2/2] migration/multifd: Ensure we're not given a
+ socket for file migration
+Message-ID: <ZfMbJnC96vUXnPTJ@x1n>
+References: <20240313212824.16974-1-farosas@suse.de>
+ <20240313212824.16974-3-farosas@suse.de> <ZfMTVApNl01-yS_v@x1n>
 MIME-Version: 1.0
-References: <1710401215-25490-1-git-send-email-si-wei.liu@oracle.com>
- <1710401215-25490-2-git-send-email-si-wei.liu@oracle.com>
-In-Reply-To: <1710401215-25490-2-git-send-email-si-wei.liu@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 14 Mar 2024 16:34:10 +0100
-Message-ID: <CAJaqyWfpMpQBTcDGaf+btUWXpZPveXaY4YC9eN1ajz60VihbHw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] vhost: Perform memory section dirty scans once per
- iteration
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com, 
- joao.m.martins@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZfMTVApNl01-yS_v@x1n>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -100,199 +100,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 14, 2024 at 9:38=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com> =
-wrote:
->
-> On setups with one or more virtio-net devices with vhost on,
-> dirty tracking iteration increases cost the bigger the number
-> amount of queues are set up e.g. on idle guests migration the
-> following is observed with virtio-net with vhost=3Don:
->
-> 48 queues -> 78.11%  [.] vhost_dev_sync_region.isra.13
-> 8 queues -> 40.50%   [.] vhost_dev_sync_region.isra.13
-> 1 queue -> 6.89%     [.] vhost_dev_sync_region.isra.13
-> 2 devices, 1 queue -> 18.60%  [.] vhost_dev_sync_region.isra.14
->
-> With high memory rates the symptom is lack of convergence as soon
-> as it has a vhost device with a sufficiently high number of queues,
-> the sufficient number of vhost devices.
->
-> On every migration iteration (every 100msecs) it will redundantly
-> query the *shared log* the number of queues configured with vhost
-> that exist in the guest. For the virtqueue data, this is necessary,
-> but not for the memory sections which are the same. So essentially
-> we end up scanning the dirty log too often.
->
-> To fix that, select a vhost device responsible for scanning the
-> log with regards to memory sections dirty tracking. It is selected
-> when we enable the logger (during migration) and cleared when we
-> disable the logger. If the vhost logger device goes away for some
-> reason, the logger will be re-selected from the rest of vhost
-> devices.
->
-> After making mem-section logger a singleton instance, constant cost
-> of 7%-9% (like the 1 queue report) will be seen, no matter how many
-> queues or how many vhost devices are configured:
->
-> 48 queues -> 8.71%    [.] vhost_dev_sync_region.isra.13
-> 2 devices, 8 queues -> 7.97%   [.] vhost_dev_sync_region.isra.14
->
-> Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
-> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-> ---
-> v2 -> v3:
->   - add after-fix benchmark to commit log
->   - rename vhost_log_dev_enabled to vhost_dev_should_log
->   - remove unneeded comparisons for backend_type
->   - use QLIST array instead of single flat list to store vhost
->     logger devices
->   - simplify logger election logic
->
-> ---
->  hw/virtio/vhost.c         | 63 +++++++++++++++++++++++++++++++++++++++++=
-+-----
->  include/hw/virtio/vhost.h |  1 +
->  2 files changed, 58 insertions(+), 6 deletions(-)
->
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index efe2f74..d91858b 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -45,6 +45,7 @@
->
->  static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
->  static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
-> +static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
->
->  /* Memslots used by backends that support private memslots (without an f=
-d). */
->  static unsigned int used_memslots;
-> @@ -149,6 +150,43 @@ bool vhost_dev_has_iommu(struct vhost_dev *dev)
->      }
->  }
->
-> +static inline bool vhost_dev_should_log(struct vhost_dev *dev)
-> +{
-> +    assert(dev->vhost_ops);
-> +    assert(dev->vhost_ops->backend_type > VHOST_BACKEND_TYPE_NONE);
-> +    assert(dev->vhost_ops->backend_type < VHOST_BACKEND_TYPE_MAX);
-> +
-> +    return dev =3D=3D QLIST_FIRST(&vhost_log_devs[dev->vhost_ops->backen=
-d_type]);
-> +}
-> +
-> +static inline void vhost_dev_elect_mem_logger(struct vhost_dev *hdev, bo=
-ol add)
-> +{
-> +    VhostBackendType backend_type;
-> +
-> +    assert(hdev->vhost_ops);
-> +
-> +    backend_type =3D hdev->vhost_ops->backend_type;
-> +    assert(backend_type > VHOST_BACKEND_TYPE_NONE);
-> +    assert(backend_type < VHOST_BACKEND_TYPE_MAX);
-> +
-> +    if (add && !QLIST_IS_INSERTED(hdev, logdev_entry)) {
-> +        if (QLIST_EMPTY(&vhost_log_devs[backend_type])) {
-> +            QLIST_INSERT_HEAD(&vhost_log_devs[backend_type],
-> +                              hdev, logdev_entry);
-> +        } else {
-> +            /*
-> +             * The first vhost_device in the list is selected as the sha=
-red
-> +             * logger to scan memory sections. Put new entry next to the=
- head
-> +             * to avoid inadvertent change to the underlying logger devi=
-ce.
-> +             */
+On Thu, Mar 14, 2024 at 11:10:12AM -0400, Peter Xu wrote:
+> On Wed, Mar 13, 2024 at 06:28:24PM -0300, Fabiano Rosas wrote:
+> > When doing migration using the fd: URI, the incoming migration starts
+> > before the user has passed the file descriptor to QEMU. This means
+> > that the checks at migration_channels_and_transport_compatible()
+> > happen too soon and we need to allow a migration channel of type
+> > SOCKET_ADDRESS_TYPE_FD even though socket migration is not supported
+> > with multifd.
+> 
+> Hmm, bare with me if this is a stupid one.. why the incoming migration can
+> start _before_ the user passed in the fd?
+> 
+> IOW, why can't we rely on a single fd_is_socket() check for
+> SOCKET_ADDRESS_TYPE_FD in transport_supports_multi_channels()?
+> 
+> > 
+> > The commit decdc76772 ("migration/multifd: Add mapped-ram support to
+> > fd: URI") was supposed to add a second check prior to starting
+> > migration to make sure a socket fd is not passed instead of a file fd,
+> > but failed to do so.
+> > 
+> > Add the missing verification.
+> > 
+> > Fixes: decdc76772 ("migration/multifd: Add mapped-ram support to fd: URI")
+> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> > ---
+> >  migration/fd.c   | 8 ++++++++
+> >  migration/file.c | 7 +++++++
+> >  2 files changed, 15 insertions(+)
+> > 
+> > diff --git a/migration/fd.c b/migration/fd.c
+> > index 39a52e5c90..c07030f715 100644
+> > --- a/migration/fd.c
+> > +++ b/migration/fd.c
+> > @@ -22,6 +22,7 @@
+> >  #include "migration.h"
+> >  #include "monitor/monitor.h"
+> >  #include "io/channel-file.h"
+> > +#include "io/channel-socket.h"
+> >  #include "io/channel-util.h"
+> >  #include "options.h"
+> >  #include "trace.h"
+> > @@ -95,6 +96,13 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
+> >      }
+> >  
+> >      if (migrate_multifd()) {
+> > +        if (fd_is_socket(fd)) {
+> > +            error_setg(errp,
+> > +                       "Multifd migration to a socket FD is not supported");
+> > +            object_unref(ioc);
+> > +            return;
+> > +        }
 
-Why is changing the logger device a problem? All the code paths are
-either changing the QLIST or logging, isn't it?
+And... I just noticed this is forbiding multifd+socket+fd in general?  But
+isn't that the majority of multifd usage when with libvirt over sockets?
 
-> +            QLIST_INSERT_AFTER(QLIST_FIRST(&vhost_log_devs[backend_type]=
-),
-> +                               hdev, logdev_entry);
-> +        }
-> +    } else if (!add && QLIST_IS_INSERTED(hdev, logdev_entry)) {
-> +        QLIST_REMOVE(hdev, logdev_entry);
-> +    }
-> +}
-> +
->  static int vhost_sync_dirty_bitmap(struct vhost_dev *dev,
->                                     MemoryRegionSection *section,
->                                     hwaddr first,
-> @@ -166,12 +204,14 @@ static int vhost_sync_dirty_bitmap(struct vhost_dev=
- *dev,
->      start_addr =3D MAX(first, start_addr);
->      end_addr =3D MIN(last, end_addr);
->
-> -    for (i =3D 0; i < dev->mem->nregions; ++i) {
-> -        struct vhost_memory_region *reg =3D dev->mem->regions + i;
-> -        vhost_dev_sync_region(dev, section, start_addr, end_addr,
-> -                              reg->guest_phys_addr,
-> -                              range_get_last(reg->guest_phys_addr,
-> -                                             reg->memory_size));
-> +    if (vhost_dev_should_log(dev)) {
-> +        for (i =3D 0; i < dev->mem->nregions; ++i) {
-> +            struct vhost_memory_region *reg =3D dev->mem->regions + i;
-> +            vhost_dev_sync_region(dev, section, start_addr, end_addr,
-> +                                  reg->guest_phys_addr,
-> +                                  range_get_last(reg->guest_phys_addr,
-> +                                                 reg->memory_size));
-> +        }
->      }
->      for (i =3D 0; i < dev->nvqs; ++i) {
->          struct vhost_virtqueue *vq =3D dev->vqs + i;
-> @@ -383,6 +423,7 @@ static void vhost_log_put(struct vhost_dev *dev, bool=
- sync)
->          g_free(log);
->      }
->
-> +    vhost_dev_elect_mem_logger(dev, false);
->      dev->log =3D NULL;
->      dev->log_size =3D 0;
->  }
-> @@ -998,6 +1039,15 @@ static int vhost_dev_set_log(struct vhost_dev *dev,=
- bool enable_log)
->              goto err_vq;
->          }
->      }
-> +
-> +    /*
-> +     * At log start we select our vhost_device logger that will scan the
-> +     * memory sections and skip for the others. This is possible because
-> +     * the log is shared amongst all vhost devices for a given type of
-> +     * backend.
-> +     */
-> +    vhost_dev_elect_mem_logger(dev, enable_log);
-> +
->      return 0;
->  err_vq:
->      for (; i >=3D 0; --i) {
-> @@ -2073,6 +2123,7 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIOD=
-evice *vdev, bool vrings)
->              VHOST_OPS_DEBUG(r, "vhost_set_log_base failed");
->              goto fail_log;
->          }
-> +        vhost_dev_elect_mem_logger(hdev, true);
->      }
->      if (vrings) {
->          r =3D vhost_dev_set_vring_enable(hdev, true);
-> diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> index 0247778..d75faf4 100644
-> --- a/include/hw/virtio/vhost.h
-> +++ b/include/hw/virtio/vhost.h
-> @@ -129,6 +129,7 @@ struct vhost_dev {
->      void *opaque;
->      struct vhost_log *log;
->      QLIST_ENTRY(vhost_dev) entry;
-> +    QLIST_ENTRY(vhost_dev) logdev_entry;
->      QLIST_HEAD(, vhost_iommu) iommu_list;
->      IOMMUNotifier n;
->      const VhostDevConfigOps *config_ops;
-> --
-> 1.8.3.1
->
+Shouldn't it about fd's seekable-or-not instead when mapped-ram enabled
+(IOW, migration_needs_seekable_channel() only)?
+
+> > +
+> >          file_create_incoming_channels(ioc, errp);
+> >      } else {
+> >          qio_channel_set_name(ioc, "migration-fd-incoming");
+> > diff --git a/migration/file.c b/migration/file.c
+> > index ddde0ca818..b6e8ba13f2 100644
+> > --- a/migration/file.c
+> > +++ b/migration/file.c
+> > @@ -15,6 +15,7 @@
+> >  #include "file.h"
+> >  #include "migration.h"
+> >  #include "io/channel-file.h"
+> > +#include "io/channel-socket.h"
+> >  #include "io/channel-util.h"
+> >  #include "options.h"
+> >  #include "trace.h"
+> > @@ -58,6 +59,12 @@ bool file_send_channel_create(gpointer opaque, Error **errp)
+> >      int fd = fd_args_get_fd();
+> >  
+> >      if (fd && fd != -1) {
+> > +        if (fd_is_socket(fd)) {
+> > +            error_setg(errp,
+> > +                       "Multifd migration to a socket FD is not supported");
+> > +            goto out;
+> > +        }
+> > +
+> >          ioc = qio_channel_file_new_dupfd(fd, errp);
+> >      } else {
+> >          ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
+> > -- 
+> > 2.35.3
+> > 
+> 
+> -- 
+> Peter Xu
+
+-- 
+Peter Xu
 
 
