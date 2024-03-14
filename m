@@ -4,167 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F142DC54E5D
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 09:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6C8C5475B
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 09:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkhGZ-0002eI-QZ; Thu, 14 Mar 2024 05:20:47 -0400
+	id 1rkhIG-0003ms-L5; Thu, 14 Mar 2024 05:22:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rkhGY-0002eA-Ng
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 05:20:46 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rkhI9-0003kJ-UZ; Thu, 14 Mar 2024 05:22:26 -0400
+Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rkhGW-0007NV-4A
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 05:20:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710408044; x=1741944044;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=TCrVAXjNxeyvliEOeK8Bs+DBzDGbIEZ7cZjLOGPta3Y=;
- b=eUxuQi3/r2/g0Pu47vMK0pqrsKOoVGymz6fRXdbCVaym++LFKCla/YrB
- vtkYgHqi4rWPbeGhTy9CTPGf5c/M+JZMGLPoIfpOMcKvwoKatnMUEuioy
- 8Gx+DIskOp6xmUmtTLosWAxLuD5e83ogTJpMsN4XySj/Wah861lJnC/5q
- 9ysWNHvaD1M5OMCatZh/GecyYVqLlxwCRezsX+hgKsje1mkccvGD6aVv+
- az8sp4dw5ieJEyKNylfqK/+gr9epMSMk5bG24JRT1rWkdkq/r/uYphwUv
- IuV2v9i+3jAh1OBIShfrwoRReTqqSyIMIawhGGTOwP624P3UxWxOYocgP Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11012"; a="5077683"
-X-IronPort-AV: E=Sophos;i="6.07,125,1708416000"; 
-   d="scan'208";a="5077683"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Mar 2024 02:20:40 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,124,1708416000"; d="scan'208";a="35358610"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
- by fmviesa002.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 14 Mar 2024 02:20:40 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Thu, 14 Mar 2024 02:20:39 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Thu, 14 Mar 2024 02:20:38 -0700
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35 via Frontend Transport; Thu, 14 Mar 2024 02:20:38 -0700
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (104.47.66.40) by
- edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Thu, 14 Mar 2024 02:20:38 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=LlxpL2NjRXLp6dZbf0Vg9Q8BncrfRB+yVR6TGV+tozasu0anhsXp88cRHJttWE0WXWft9m48BxEp1bA5boVQSUbLu0dOzxHSc//2EGcICXQhXXx+xU2t1sO7i+mDADBWyIsLJJYURTyhsOwU65U2j4EHJsLp2jV6ybl7DrUS9hwNkUeD9XYdttGDYlx1bIm0PzhCJRByAp27Z6ofZduozkzF9NphKH3iuXExBO5a/G6X8W6tjqCX+nC9r1+wf9wxFJjI8q45DaTiL44Depp60AF4f6YFgttMVZgdIsoNKE7vcHOrjkjtXmjLAS9hHA3veUxc6X65mB27UY6/EOSvsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TCrVAXjNxeyvliEOeK8Bs+DBzDGbIEZ7cZjLOGPta3Y=;
- b=OZhcqrgGwZVt4KBEfuaLALQe/AqufndJ3oDYpbPkyGhNee7Nk/inH+CrtifAVgzQGISSBYNNwX8+yWwF4AleYHls5GkkjkDvdE1XZM4Lma0N+0RZ9kzNhX95HZZ4Sh68imZC5ifLgEvaHSFHSvQcLQ6gFRdK+YGSRN2mA22MknEv0pC/0goPihRM1+bsxVXoLylid9W/RtC3g6jSea5tK8Jdu73PPSwT6duDpBzaaRMS7xDsfKIHh0x24Ykhmdg++OTsjOictGf7Yi2Kg4ZHbwiJbpqkHE6hDryKLUfhSdjL7B7hmdJWkbo7c6Mwek6lkJxaPf8nJj1RWjoG8GrDRw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by IA1PR11MB8197.namprd11.prod.outlook.com (2603:10b6:208:446::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.20; Thu, 14 Mar
- 2024 09:20:35 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::e4a3:76ce:879:9129]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::e4a3:76ce:879:9129%7]) with mapi id 15.20.7386.017; Thu, 14 Mar 2024
- 09:20:35 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Alex Williamson <alex.williamson@redhat.com>, Eric Auger
- <eric.auger@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>
-Subject: RE: [PATCH v2] vfio/iommufd: Fix memory leak
-Thread-Topic: [PATCH v2] vfio/iommufd: Fix memory leak
-Thread-Index: AQHadejRU9K1qW8ZSkiyfIr+WQkx4LE29cxw
-Date: Thu, 14 Mar 2024 09:20:35 +0000
-Message-ID: <SJ0PR11MB67440DE66F08BC84BC1A3D6992292@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20240314082238.844370-1-clg@redhat.com>
-In-Reply-To: <20240314082238.844370-1-clg@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|IA1PR11MB8197:EE_
-x-ms-office365-filtering-correlation-id: b4022c7f-c715-46f7-1db6-08dc44080183
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: KIjBNEtK15Nz7VRmiV8dN4NPm9LxUWedQSotgXt/Mnb9sACqkao0dcvW5k6EF4PQzyNpjzt0IlQALH6XoV6VCVkPpv0bArtBkb/+r3oZInarPZ5Q2hbui/o/xCIcEW4f/xK/Yw+xpNjaoSBp8TlsO+oGbGk3TUqHngcAiG7spdaS5ztLFaPOChqfZl84PhIGPyGaY7xr9X4Qt4j+/kb7zb7+VK2/6hxhgL0/KM+7lqj2k30bFGHa4o7sDL3BBD0nPX+S46JMcez0kTuFIwuKx37AEDLy87prhS1Jv7CXRiQ9eyHwgYFlEDr7y9sAmQ7BD5k2ZWbbFehgHjyfhPUOtKE6eZZ6e/8yJqePtcHpK2hPJs9CrBtVZMOuRiQd4yFog35u72fBmb3C9wo8l1QMewznqAOcpA/YlyOo8BjqtRVHZFYP2O4n3EjKWx2oQ4G1mIDxdv+CBz0viu59CdlXp3voLSJyreQmSWNPl2X26HHqucPSOY8Jx8ihbr8qca+Qoe+jx1acZz+zxo8ns455geyyS0zC0+VWy/8JDq7agXqPjAg9bTAxzU8+QmdlJNod7V8ySd1pKYUgjzlhHUneE/R4fVkz2jNLinDtzSyeoL/fDBbDGw42SwynVfqsXtjYFdLXovAjmar5V6pB70lEbFHiNCsmduuBLApUeHoDpcAyvPu0kP92Bge6e3mzrsgaVfyXaX4C3X6jxQ/7tUBOf64b08kABJls31szawJwQeY=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(1800799015)(38070700009); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?S1RyWGVwL0JTTkhsU25lUjQrOEE2STFYd3JEVWNMUStWVXB4U0tvcTZNN0FT?=
- =?utf-8?B?TUg2UDJ2TlhVLytjNldRYUlmM0ZyMURrWFVQM3lTOTJZSFVGV2tzTXhTV1JX?=
- =?utf-8?B?Sy8zK0FzMmU0ekQzWGVQbzNweDBRdVBZSzd3aWxNY1luZmdMWkdYTUx6d0pV?=
- =?utf-8?B?ZWsrWjc2YkhkZ3FtOFVNVkpaZ3JOSjRBb3dFYVRtNTl3d1JkYTZxaDZHLzBu?=
- =?utf-8?B?ODJwSURPQXdzWWxpaGg0dWFWYVdBV3NUUUNWckxORFYvOVBzekNqOVNXRitF?=
- =?utf-8?B?Tjd6bzVCTHkvdEwrMHhsM2h4UGpKckJHd1FrSHVUY0VBeWE4dGFhVkJ0SEpH?=
- =?utf-8?B?YUlPV2M0Uk9qMlRQdFRLY3p3ZkNyWkZmY0lyUDJpbGhPWFlIZnhOVVpNNkds?=
- =?utf-8?B?NkJodTZzeU5WR05WYlRxbTAxaUcxZTN0WkJhb1RoWmJ3M0R1YTRzTjdoY3Rx?=
- =?utf-8?B?S0pBRHdMNUVXcU9PcUFEMFVadE80bElpdmpHSmJ3bmV1aVI2cGhiMm05M1hB?=
- =?utf-8?B?S0haOEF0NEZPVDR6cGJ2NHdRb1lwTys1aUtSenBPYmFNWjZGMGhVRjJIYmsv?=
- =?utf-8?B?d3dvMmpuUTI1blNkdXl2enF5aEM0UFZvWFZPamlzSDhyT2RaN1pONEhZeith?=
- =?utf-8?B?eGhKVHlhUG83dG1JeTBPeFRud0FiUXBua0prZEQyeERERk1sNGtuRHl2dWc5?=
- =?utf-8?B?Q3pPcVRLY3lOV2JFL1lnVzI0M0JxVkdRUHZHZWZ2cXJVc2ZoSFdjR3lWT0R4?=
- =?utf-8?B?di9FNVZjOWg0NnhiQytQd1FxRmVHWUJFdTNiQ0lmUmNocVZFUHNoNzVnSStp?=
- =?utf-8?B?OGRuK3lxaXdzSS9RTTB6M0s1Sit6V25JNW9OcTBEdGtuY0dYUGtEL0dSWUQ1?=
- =?utf-8?B?eUtxOE85K3hna1F4T2N4Skt2UXZscm1nNjRVZXpGZjluRmtEMkR3VDdUMUVC?=
- =?utf-8?B?QUk0N2FGWmlPRXVsczIydC9KbWxTTkZEM1hVaDUwMTdFc3orMkZXUEtIQWRj?=
- =?utf-8?B?WlNzYVlkZmhLUk15N2JWc0lQaTNySnpnVEdjRWRJWGRxcG1IclpXQWRTSWhx?=
- =?utf-8?B?Y2Vhdm1Bck1aMUxFblFlNjlZWm56V1ZCYm5aMlg0dStlQzBNOHV0ajhENGxD?=
- =?utf-8?B?b2pCbUMvWjVpNTVQeFpYQ1kxcEFDTC9xRTZXVmZjbTgzUjBuN0RwT3IwUFVF?=
- =?utf-8?B?REpBbkVqNXN4N1V4TjBTSDB3MEdwRkcycWFRUCtqc00vRTlhR2szTmJSRlNu?=
- =?utf-8?B?WFRvVEVJWWh5TFdJZVZaVjdRbytwcjVWZzJvVzgxRnFOVlA1dXljYjc5Uk8y?=
- =?utf-8?B?b2NoU3BmQXpGbVRtRFVLelV0elM4ZW9uYTM1akwwc29lRUdFRlVFdjFpOHNN?=
- =?utf-8?B?WnpWZWI2LzQ5ZDg2RVVRRzRMMkgydmpCOU1yMzR0ZGN3cHZXd1h3NTJTTFVI?=
- =?utf-8?B?UXpmbEk1Q3VubGVYVTg4U3dCb3ZreG9FTnRxUW01Qk1aQzdabFRibWgwWmZ1?=
- =?utf-8?B?cHRKZDU4bUd3cEYycUNHRGNiSzNOejVwOEJ3NGYvYVprdk1KcVUrRUtQanFn?=
- =?utf-8?B?K3ZzdlJRcUVxeHBvaGxhT2ljMzJwbm0vLzgyTDRrbyt3bmZ0ZlU1ZWNmZ0h6?=
- =?utf-8?B?b2JqcWpXdDNERWFuekhHSlJEMG5aRmxER2t0eFVPcXVjaGJmTXBuVk9kSzc1?=
- =?utf-8?B?MkptNkIvYk9mS0FoeGNadDFoNitkWldFK1BFZWpCSlpBZ2pSMFh2UVc1VGpF?=
- =?utf-8?B?U2dMNWI0SmYvMzhXcmRRUWt4OWlXckRvaTA4QWJoR0trZmwxdyt6d2dncUNw?=
- =?utf-8?B?ZTJhZ3h3VDBIYXJqVHlJL0taQ2lKU0dtcktUbmtCd0xKRmJRU1dMN3BFNWtL?=
- =?utf-8?B?cUk1ZjFqZzYveStjamVOckhaMlpGTEFMUU9iM2lybGpyWm55c2xDMklUazVK?=
- =?utf-8?B?VUs2Y1ZWTkZ2KzR0Vnp1Z29UazFoOWZXZGpUWHVBeDVHRzhXeUxPUXpVTkgr?=
- =?utf-8?B?Unh2OUdyY3hieFpESDJNaXF0YmZlV3Zaa1JEb3JHQU5aZEFXY1dBK29Oc090?=
- =?utf-8?B?RjlPdWlTeC9GZEJPL21aYTBhWGJ4SjdWMVFFajh5UG1iMTlHMXZZUGJoa2lx?=
- =?utf-8?Q?LM6yVIgVBAaJzNDks/3Ge+3Yc?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rkhI6-0007kf-Kv; Thu, 14 Mar 2024 05:22:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1710408132; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=8AVRS8kdGDxvhZ7lJ3E08rqjLlrzW7JeEhjy+paRXxQ=;
+ b=I/RFnLuvEeG8tVAUAYNaqSvhm8G4TmZCK9pl38a4Y05pA7clPOOCl1Te+HwaPJbp2vLvpsgvIUWyqj6HMbhiK1eSlhS9am6fv12wAJBYyZjmSzU7pxmL90OoclGFMX8rlmBhK/LKRVBkzOrCA1PgipJy3X4vp+HCM4SxG+iNT5o=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R481e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046056;
+ MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=11; SR=0;
+ TI=SMTPD_---0W2S0TRv_1710408129; 
+Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
+ fp:SMTPD_---0W2S0TRv_1710408129) by smtp.aliyun-inc.com;
+ Thu, 14 Mar 2024 17:22:10 +0800
+From: Huang Tao <eric.huang@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
+ alistair.francis@wdc.com, palmer@dabbelt.com,
+ Huang Tao <eric.huang@linux.alibaba.com>,
+ Christoph Muellner <christoph.muellner@vrull.eu>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v4] target/riscv: Implement dynamic establishment of custom
+ decoder
+Date: Thu, 14 Mar 2024 17:21:58 +0800
+Message-ID: <20240314092158.65866-1-eric.huang@linux.alibaba.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b4022c7f-c715-46f7-1db6-08dc44080183
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Mar 2024 09:20:35.5122 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: lv1/MH1kcWMYF0drUlVfLe+dyscooRiB2PGvg/3D0Gl6lrPhUmsYaEIjJEYIKqgVW8nhKrI1qAr28pb91ygltrdHRMZsRCCoYhw0kauf/sQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB8197
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.19;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.971,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.118;
+ envelope-from=eric.huang@linux.alibaba.com;
+ helo=out30-118.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -180,56 +71,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IEPDqWRyaWMgTGUgR29hdGVy
-IDxjbGdAcmVkaGF0LmNvbT4NCj5TdWJqZWN0OiBbUEFUQ0ggdjJdIHZmaW8vaW9tbXVmZDogRml4
-IG1lbW9yeSBsZWFrDQo+DQo+Q292ZXJpdHkgcmVwb3J0ZWQgYSBtZW1vcnkgbGVhayBvbiB2YXJp
-YWJsZSAnY29udGVudHMnIGluIHJvdXRpbmUNCj5pb21tdWZkX2NkZXZfZ2V0ZmQoKS4gVXNlIGdf
-YXV0b2ZyZWUgdmFyaWFibGVzIHRvIHNpbXBsaWZ5IHRoZSBleGl0DQo+cGF0aCBhbmQgZ2V0IHJp
-ZCBvZiBnX2ZyZWUoKSBjYWxscy4NCj4NCj5DYzogRXJpYyBBdWdlciA8ZXJpYy5hdWdlckByZWRo
-YXQuY29tPg0KPkNjOiBZaSBMaXUgPHlpLmwubGl1QGludGVsLmNvbT4NCj5GaXhlczogQ0lEIDE1
-NDAwMDcNCj5GaXhlczogNWVlM2RjN2FmNzg1ICgidmZpby9pb21tdWZkOiBJbXBsZW1lbnQgdGhl
-IGlvbW11ZmQgYmFja2VuZCIpDQo+U3VnZ2VzdGVkLWJ5OiBaaGVuemhvbmcgRHVhbiA8emhlbnpo
-b25nLmR1YW5AaW50ZWwuY29tPg0KPlNpZ25lZC1vZmYtYnk6IEPDqWRyaWMgTGUgR29hdGVyIDxj
-bGdAcmVkaGF0LmNvbT4NCg0KUmV2aWV3ZWQtYnk6IFpoZW56aG9uZyBEdWFuIDx6aGVuemhvbmcu
-ZHVhbkBpbnRlbC5jb20+DQoNClRoYW5rcw0KWmhlbnpob25nDQoNCj4tLS0NCj4gaHcvdmZpby9p
-b21tdWZkLmMgfCAxOSArKysrKysrKy0tLS0tLS0tLS0tDQo+IDEgZmlsZSBjaGFuZ2VkLCA4IGlu
-c2VydGlvbnMoKyksIDExIGRlbGV0aW9ucygtKQ0KPg0KPmRpZmYgLS1naXQgYS9ody92ZmlvL2lv
-bW11ZmQuYyBiL2h3L3ZmaW8vaW9tbXVmZC5jDQo+aW5kZXgNCj5hNzVhNzg1ZTkwYzY0Y2RjYzRk
-MTBjODhkMjE3ODAxYjNmNTM2Y2RiLi5iOWM3ZWZiM2VmMTFlNDllMTg5MTAzDQo+YWU2ZmI5MDEx
-YTYzMWI2MGRhIDEwMDY0NA0KPi0tLSBhL2h3L3ZmaW8vaW9tbXVmZC5jDQo+KysrIGIvaHcvdmZp
-by9pb21tdWZkLmMNCj5AQCAtMTE4LDEwICsxMTgsMTIgQEAgc3RhdGljIGludCBpb21tdWZkX2Nk
-ZXZfZ2V0ZmQoY29uc3QgY2hhcg0KPipzeXNmc19wYXRoLCBFcnJvciAqKmVycnApDQo+IHsNCj4g
-ICAgIEVSUlBfR1VBUkQoKTsNCj4gICAgIGxvbmcgaW50IHJldCA9IC1FTk9UVFk7DQo+LSAgICBj
-aGFyICpwYXRoLCAqdmZpb19kZXZfcGF0aCA9IE5VTEwsICp2ZmlvX3BhdGggPSBOVUxMOw0KPisg
-ICAgZ19hdXRvZnJlZSBjaGFyICpwYXRoID0gTlVMTDsNCj4rICAgIGdfYXV0b2ZyZWUgY2hhciAq
-dmZpb19kZXZfcGF0aCA9IE5VTEw7DQo+KyAgICBnX2F1dG9mcmVlIGNoYXIgKnZmaW9fcGF0aCA9
-IE5VTEw7DQo+ICAgICBESVIgKmRpciA9IE5VTEw7DQo+ICAgICBzdHJ1Y3QgZGlyZW50ICpkZW50
-Ow0KPi0gICAgZ2NoYXIgKmNvbnRlbnRzOw0KPisgICAgZ19hdXRvZnJlZSBnY2hhciAqY29udGVu
-dHMgPSBOVUxMOw0KPiAgICAgZ3NpemUgbGVuZ3RoOw0KPiAgICAgaW50IG1ham9yLCBtaW5vcjsN
-Cj4gICAgIGRldl90IHZmaW9fZGV2dDsNCj5AQCAtMTMwLDcgKzEzMiw3IEBAIHN0YXRpYyBpbnQg
-aW9tbXVmZF9jZGV2X2dldGZkKGNvbnN0IGNoYXINCj4qc3lzZnNfcGF0aCwgRXJyb3IgKiplcnJw
-KQ0KPiAgICAgZGlyID0gb3BlbmRpcihwYXRoKTsNCj4gICAgIGlmICghZGlyKSB7DQo+ICAgICAg
-ICAgZXJyb3Jfc2V0Z19lcnJubyhlcnJwLCBlcnJubywgImNvdWxkbid0IG9wZW4gZGlyZWN0b3J5
-ICVzIiwgcGF0aCk7DQo+LSAgICAgICAgZ290byBvdXRfZnJlZV9wYXRoOw0KPisgICAgICAgIGdv
-dG8gb3V0Ow0KPiAgICAgfQ0KPg0KPiAgICAgd2hpbGUgKChkZW50ID0gcmVhZGRpcihkaXIpKSkg
-ew0KPkBAIC0xNDcsMTQgKzE0OSwxMyBAQCBzdGF0aWMgaW50IGlvbW11ZmRfY2Rldl9nZXRmZChj
-b25zdCBjaGFyDQo+KnN5c2ZzX3BhdGgsIEVycm9yICoqZXJycCkNCj4NCj4gICAgIGlmICghZ19m
-aWxlX2dldF9jb250ZW50cyh2ZmlvX2Rldl9wYXRoLCAmY29udGVudHMsICZsZW5ndGgsIE5VTEwp
-KSB7DQo+ICAgICAgICAgZXJyb3Jfc2V0ZyhlcnJwLCAiZmFpbGVkIHRvIGxvYWQgXCIlc1wiIiwg
-dmZpb19kZXZfcGF0aCk7DQo+LSAgICAgICAgZ290byBvdXRfZnJlZV9kZXZfcGF0aDsNCj4rICAg
-ICAgICBnb3RvIG91dF9jbG9zZV9kaXI7DQo+ICAgICB9DQo+DQo+ICAgICBpZiAoc3NjYW5mKGNv
-bnRlbnRzLCAiJWQ6JWQiLCAmbWFqb3IsICZtaW5vcikgIT0gMikgew0KPiAgICAgICAgIGVycm9y
-X3NldGcoZXJycCwgImZhaWxlZCB0byBnZXQgbWFqb3I6bWlub3IgZm9yIFwiJXNcIiIsIHZmaW9f
-ZGV2X3BhdGgpOw0KPi0gICAgICAgIGdvdG8gb3V0X2ZyZWVfZGV2X3BhdGg7DQo+KyAgICAgICAg
-Z290byBvdXRfY2xvc2VfZGlyOw0KPiAgICAgfQ0KPi0gICAgZ19mcmVlKGNvbnRlbnRzKTsNCj4g
-ICAgIHZmaW9fZGV2dCA9IG1ha2VkZXYobWFqb3IsIG1pbm9yKTsNCj4NCj4gICAgIHZmaW9fcGF0
-aCA9IGdfc3RyZHVwX3ByaW50ZigiL2Rldi92ZmlvL2RldmljZXMvJXMiLCBkZW50LT5kX25hbWUp
-Ow0KPkBAIC0xNjQsMTcgKzE2NSwxMyBAQCBzdGF0aWMgaW50IGlvbW11ZmRfY2Rldl9nZXRmZChj
-b25zdCBjaGFyDQo+KnN5c2ZzX3BhdGgsIEVycm9yICoqZXJycCkNCj4gICAgIH0NCj4NCj4gICAg
-IHRyYWNlX2lvbW11ZmRfY2Rldl9nZXRmZCh2ZmlvX3BhdGgsIHJldCk7DQo+LSAgICBnX2ZyZWUo
-dmZpb19wYXRoKTsNCj4NCj4tb3V0X2ZyZWVfZGV2X3BhdGg6DQo+LSAgICBnX2ZyZWUodmZpb19k
-ZXZfcGF0aCk7DQo+IG91dF9jbG9zZV9kaXI6DQo+ICAgICBjbG9zZWRpcihkaXIpOw0KPi1vdXRf
-ZnJlZV9wYXRoOg0KPitvdXQ6DQo+ICAgICBpZiAoKmVycnApIHsNCj4gICAgICAgICBlcnJvcl9w
-cmVwZW5kKGVycnAsIFZGSU9fTVNHX1BSRUZJWCwgcGF0aCk7DQo+ICAgICB9DQo+LSAgICBnX2Zy
-ZWUocGF0aCk7DQo+DQo+ICAgICByZXR1cm4gcmV0Ow0KPiB9DQo+LS0NCj4yLjQ0LjANCg0K
+In this patch, we modify the decoder to be a freely composable data
+structure instead of a hardcoded one. It can be dynamically builded up
+according to the extensions.
+This approach has several benefits:
+1. Provides support for heterogeneous cpu architectures. As we add decoder in
+   RISCVCPU, each cpu can have their own decoder, and the decoders can be
+   different due to cpu's features.
+2. Improve the decoding efficiency. We run the guard_func to see if the decoder
+   can be added to the dynamic_decoder when building up the decoder. Therefore,
+   there is no need to run the guard_func when decoding each instruction. It can
+   improve the decoding efficiency
+3. For vendor or dynamic cpus, it allows them to customize their own decoder
+   functions to improve decoding efficiency, especially when vendor-defined
+   instruction sets increase. Because of dynamic building up, it can skip the other
+   decoder guard functions when decoding.
+4. Pre patch for allowing adding a vendor decoder before decode_insn32() with minimal
+   overhead for users that don't need this particular vendor decoder.
+
+Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
+Suggested-by: Christoph Muellner <christoph.muellner@vrull.eu>
+Co-authored-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+Changes in v4:
+- fix typo
+- rename function
+- add 'if tcg_enable()'
+- move function to tcg-cpu.c and declarations to tcg-cpu.h
+
+Changes in v3:
+- use GPtrArray to save decode function poionter list.
+---
+ target/riscv/cpu.c         |  1 +
+ target/riscv/cpu.h         |  1 +
+ target/riscv/tcg/tcg-cpu.c | 15 +++++++++++++++
+ target/riscv/tcg/tcg-cpu.h | 15 +++++++++++++++
+ target/riscv/translate.c   | 31 +++++++++++++++----------------
+ 5 files changed, 47 insertions(+), 16 deletions(-)
+
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index c160b9216b..17070b82a7 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1132,6 +1132,7 @@ void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+             error_propagate(errp, local_err);
+             return;
+         }
++        riscv_tcg_cpu_finalize_dynamic_decoder(cpu);
+     } else if (kvm_enabled()) {
+         riscv_kvm_cpu_finalize_features(cpu, &local_err);
+         if (local_err != NULL) {
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 3b1a02b944..48e67410e1 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -457,6 +457,7 @@ struct ArchCPU {
+     uint32_t pmu_avail_ctrs;
+     /* Mapping of events to counters */
+     GHashTable *pmu_event_ctr_map;
++    const GPtrArray *decoders;
+ };
+ 
+ /**
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index ab6db817db..c9ab92ea2f 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -853,6 +853,21 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+     }
+ }
+ 
++void riscv_tcg_cpu_finalize_dynamic_decoder(RISCVCPU *cpu)
++{
++    GPtrArray *dynamic_decoders;
++    dynamic_decoders = g_ptr_array_sized_new(decoder_table_size);
++    for (size_t i = 0; i < decoder_table_size; ++i) {
++        if (decoder_table[i].guard_func &&
++            decoder_table[i].guard_func(&cpu->cfg)) {
++            g_ptr_array_add(dynamic_decoders,
++                            (gpointer)decoder_table[i].riscv_cpu_decode_fn);
++        }
++    }
++
++    cpu->decoders = dynamic_decoders;
++}
++
+ bool riscv_cpu_tcg_compatible(RISCVCPU *cpu)
+ {
+     return object_dynamic_cast(OBJECT(cpu), TYPE_RISCV_CPU_HOST) == NULL;
+diff --git a/target/riscv/tcg/tcg-cpu.h b/target/riscv/tcg/tcg-cpu.h
+index f7b32417f8..ce94253fe4 100644
+--- a/target/riscv/tcg/tcg-cpu.h
++++ b/target/riscv/tcg/tcg-cpu.h
+@@ -26,4 +26,19 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp);
+ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+ bool riscv_cpu_tcg_compatible(RISCVCPU *cpu);
+ 
++struct DisasContext;
++struct RISCVCPUConfig;
++typedef struct RISCVDecoder {
++    bool (*guard_func)(const struct RISCVCPUConfig *);
++    bool (*riscv_cpu_decode_fn)(struct DisasContext *, uint32_t);
++} RISCVDecoder;
++
++typedef bool (*riscv_cpu_decode_fn)(struct DisasContext *, uint32_t);
++
++extern const size_t decoder_table_size;
++
++extern const RISCVDecoder decoder_table[];
++
++void riscv_tcg_cpu_finalize_dynamic_decoder(RISCVCPU *cpu);
++
+ #endif
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index ea5d52b2ef..bce16d5054 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -37,6 +37,8 @@
+ #include "exec/helper-info.c.inc"
+ #undef  HELPER_H
+ 
++#include "tcg/tcg-cpu.h"
++
+ /* global register indices */
+ static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc, cpu_vl, cpu_vstart;
+ static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
+@@ -117,6 +119,7 @@ typedef struct DisasContext {
+     bool frm_valid;
+     /* TCG of the current insn_start */
+     TCGOp *insn_start;
++    const GPtrArray *decoders;
+ } DisasContext;
+ 
+ static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+@@ -1120,21 +1123,16 @@ static inline int insn_len(uint16_t first_word)
+     return (first_word & 3) == 3 ? 4 : 2;
+ }
+ 
++const RISCVDecoder decoder_table[] = {
++    { always_true_p, decode_insn32 },
++    { has_xthead_p, decode_xthead},
++    { has_XVentanaCondOps_p, decode_XVentanaCodeOps},
++};
++
++const size_t decoder_table_size = ARRAY_SIZE(decoder_table);
++
+ static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
+ {
+-    /*
+-     * A table with predicate (i.e., guard) functions and decoder functions
+-     * that are tested in-order until a decoder matches onto the opcode.
+-     */
+-    static const struct {
+-        bool (*guard_func)(const RISCVCPUConfig *);
+-        bool (*decode_func)(DisasContext *, uint32_t);
+-    } decoders[] = {
+-        { always_true_p,  decode_insn32 },
+-        { has_xthead_p, decode_xthead },
+-        { has_XVentanaCondOps_p,  decode_XVentanaCodeOps },
+-    };
+-
+     ctx->virt_inst_excp = false;
+     ctx->cur_insn_len = insn_len(opcode);
+     /* Check for compressed insn */
+@@ -1155,9 +1153,9 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
+                                              ctx->base.pc_next + 2));
+         ctx->opcode = opcode32;
+ 
+-        for (size_t i = 0; i < ARRAY_SIZE(decoders); ++i) {
+-            if (decoders[i].guard_func(ctx->cfg_ptr) &&
+-                decoders[i].decode_func(ctx, opcode32)) {
++        for (guint i = 0; i < ctx->decoders->len; ++i) {
++            riscv_cpu_decode_fn func = g_ptr_array_index(ctx->decoders, i);
++            if (func(ctx, opcode32)) {
+                 return;
+             }
+         }
+@@ -1202,6 +1200,7 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     ctx->itrigger = FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
+     ctx->zero = tcg_constant_tl(0);
+     ctx->virt_inst_excp = false;
++    ctx->decoders = cpu->decoders;
+ }
+ 
+ static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+-- 
+2.41.0
+
 
