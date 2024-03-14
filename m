@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83096C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58A91C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkmj0-0001zz-LP; Thu, 14 Mar 2024 11:10:32 -0400
+	id 1rkmjZ-00028K-U0; Thu, 14 Mar 2024 11:11:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rkmiu-0001zo-8G
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:10:24 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rkmjY-000287-IA
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:11:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rkmis-00016h-Hl
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:10:23 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rkmjT-0001H8-9y
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:11:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710429017;
+ s=mimecast20190719; t=1710429055;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=D31+BBZM9ZUhhr7Y6H0RmtF0XDBEJkK8NSX4DJpQxIM=;
- b=bDlTy39FfViIA7DI6FTLTf2Vg+vUUsFKn15vsmjOBIi0C33aEpqHYy9wiTQM0coKTdz6ln
- 56t7uFDkI/2aYBs7dXOouyzog2mMjm5OnF/+EqLsQ4/fDs9Zu7GYdYVOOOOaxdSz4vC3QY
- b0db9zteeKljpGnWHcmK6GTdPXQaKMs=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=N6Erxny+hNpyBOaDSS8QYg0A9YF0tufPzKpzmDhOcN4=;
+ b=AJcsHqILzr+PoaSD9Y0iAnXNsM27pxpg4YxAchDnjCjJFxjYKxA42zMabfKZRr6hfRXtjG
+ r11ZK95m2UPzOoVC0FrB/WHj2k+8sxkSJf+qsQceQIN68WQ1yCmnpAVJ5W60Z6RSKWMsMK
+ QFq7A6u6ajYsVape3fVrYmsZi+ZvXSc=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-227-HrRqvdvxOjCDoa_i_nRVjA-1; Thu, 14 Mar 2024 11:10:15 -0400
-X-MC-Unique: HrRqvdvxOjCDoa_i_nRVjA-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-690c19ee50bso3255426d6.0
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 08:10:15 -0700 (PDT)
+ us-mta-407-mFHfp2rnNEuQ3ehF_vE7tA-1; Thu, 14 Mar 2024 11:10:54 -0400
+X-MC-Unique: mFHfp2rnNEuQ3ehF_vE7tA-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-690b5ad0e61so3430656d6.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 08:10:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710429015; x=1711033815;
+ d=1e100.net; s=20230601; t=1710429054; x=1711033854;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D31+BBZM9ZUhhr7Y6H0RmtF0XDBEJkK8NSX4DJpQxIM=;
- b=MZYh5KzmfkoP4NyAdGLd0kSPYL1QeRDZApf5jk4BX9kTco1WTR+0azOSFO1zp9yBOb
- hr/SoFMwbspKSycj3r4alBd2PWjHngCC5CZwUdPPbCI9aN6E3eF4/cbL/Q87WKbwCTqG
- mh/Utxve7X9X3MbfqIHRS5njPPRuJaSOqSlc2bBFRFsig8etvWX6xWogWiF9IAfJnHzv
- uCcBR4Grw8x5yE0pdRGQlQSt/B7O8lsXmmL8NnFyC4J6CKNneXsgRRJQABekK2Zta9aI
- 3U2Ui5M0sC0xtrWnbLAEdsuxS12gpfnoc5srRsgajeKYIz+ttQTaAgFhkNtZJKmzDxNT
- up7w==
-X-Gm-Message-State: AOJu0YyM15sbDosNo40AO+4y+tqAxG8XLDZaiyO0gTKsMPXbcRmLUUT6
- wjswXj3SYUSXpMbK/tQTDSN5IKW2TQuej+8IAVSG77LOKwP+OyBiRhNfZOs8fPBG2Ug44oaV9Q1
- +yoCInMeL3EPDwNqFEKjhiFZb/gESOqNyxgpkqsltPFlLYSCFMlSpodmuhTqC
-X-Received: by 2002:a05:6214:4384:b0:691:2524:2d87 with SMTP id
- oh4-20020a056214438400b0069125242d87mr2142215qvb.2.1710429014669; 
- Thu, 14 Mar 2024 08:10:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG3vep0tWAaPKoSB5HLrZiMnY3/jUVsyFP79wDc3XjtwxD5YPj8TMO+JYjgl2n20L+anekk5Q==
-X-Received: by 2002:a05:6214:4384:b0:691:2524:2d87 with SMTP id
- oh4-20020a056214438400b0069125242d87mr2142181qvb.2.1710429014192; 
- Thu, 14 Mar 2024 08:10:14 -0700 (PDT)
+ bh=N6Erxny+hNpyBOaDSS8QYg0A9YF0tufPzKpzmDhOcN4=;
+ b=QejIFZkDMn1OlJg0rVXy5rU+VQD7SYORgyIZzMlvEDJ598Akos2Ng+vGIXPmLWPm1s
+ 59EYxw3+MfWkrPsVkYrUQXXX0dVLRDcLl6i0/IjErimMgvzwdYS6SSFtSaY4goBidc+c
+ LkD/PQlOt3erDT4ShIkk+AnKf/Yasb5j1YfOoIprspiHS19zxMOabVHn8UC89ZJOWKel
+ vDWLLT0N2WQ2zBF4ooRc5QSPrtphbHfNLkXZYQHrwurBbQsn+NF5WfsSSlwg/U10ArBC
+ qHlHLbutT3sxStemiwXLv5gP0BYCERbJE2WLfZhC2b6aTv8jvGr/mz91/4ZJKioOrXfr
+ 3fdg==
+X-Gm-Message-State: AOJu0Yx+TfS+TQKTSmI5MXwUuYM042bicodgCPPB2B6YxAOqTylMuZ02
+ qS22mUij5/JrS68c5gVYDp3uLu5MpLmu4cCvUPUECeETk5SrJ+xPUwAyNvXXwq3/1wNiMHmVafr
+ 4ez3CN/+usYrskABg2sjh2nyjZtwhmuUMvZB5gqoo3EoNsJJZMrOp
+X-Received: by 2002:a05:622a:15c9:b0:42f:30d1:f7e5 with SMTP id
+ d9-20020a05622a15c900b0042f30d1f7e5mr2417933qty.2.1710429053861; 
+ Thu, 14 Mar 2024 08:10:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHuPYhuosDRP5To6V43cB2lL55227MQksDtlGJA6uN9y+MR+mWqHbe9mmIk2k33RyVHozfsVg==
+X-Received: by 2002:a05:622a:15c9:b0:42f:30d1:f7e5 with SMTP id
+ d9-20020a05622a15c900b0042f30d1f7e5mr2417889qty.2.1710429053238; 
+ Thu, 14 Mar 2024 08:10:53 -0700 (PDT)
 Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- r9-20020a056214124900b00690bee954fasm557434qvv.98.2024.03.14.08.10.13
+ u18-20020ac87512000000b0042f09265a34sm868275qtq.91.2024.03.14.08.10.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 14 Mar 2024 08:10:13 -0700 (PDT)
-Date: Thu, 14 Mar 2024 11:10:12 -0400
+ Thu, 14 Mar 2024 08:10:53 -0700 (PDT)
+Date: Thu, 14 Mar 2024 11:10:52 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org,
  Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH v2 2/2] migration/multifd: Ensure we're not given a
- socket for file migration
-Message-ID: <ZfMTVApNl01-yS_v@x1n>
+Subject: Re: [PATCH v2 1/2] migration: Fix iocs leaks during file and fd
+ migration
+Message-ID: <ZfMTfAXRDT7WsgtV@x1n>
 References: <20240313212824.16974-1-farosas@suse.de>
- <20240313212824.16974-3-farosas@suse.de>
+ <20240313212824.16974-2-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240313212824.16974-3-farosas@suse.de>
+In-Reply-To: <20240313212824.16974-2-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,89 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 13, 2024 at 06:28:24PM -0300, Fabiano Rosas wrote:
-> When doing migration using the fd: URI, the incoming migration starts
-> before the user has passed the file descriptor to QEMU. This means
-> that the checks at migration_channels_and_transport_compatible()
-> happen too soon and we need to allow a migration channel of type
-> SOCKET_ADDRESS_TYPE_FD even though socket migration is not supported
-> with multifd.
-
-Hmm, bare with me if this is a stupid one.. why the incoming migration can
-start _before_ the user passed in the fd?
-
-IOW, why can't we rely on a single fd_is_socket() check for
-SOCKET_ADDRESS_TYPE_FD in transport_supports_multi_channels()?
-
+On Wed, Mar 13, 2024 at 06:28:23PM -0300, Fabiano Rosas wrote:
+> The memory for the io channels is being leaked in three different ways
+> during file migration:
 > 
-> The commit decdc76772 ("migration/multifd: Add mapped-ram support to
-> fd: URI") was supposed to add a second check prior to starting
-> migration to make sure a socket fd is not passed instead of a file fd,
-> but failed to do so.
+> 1) if the offset check fails we never drop the ioc reference;
 > 
-> Add the missing verification.
+> 2) we allocate an extra channel for no reason;
 > 
+> 3) if multifd is enabled but channel creation fails when calling
+>    dup(), we leave the previous channels around along with the glib
+>    polling;
+> 
+> Fix all issues by restructuring the code to first allocate the
+> channels and only register the watches when all channels have been
+> created.
+> 
+> For multifd, the file and fd migrations can share code because both
+> are backed by a QIOChannelFile. For the non-multifd case, the fd needs
+> to be separate because it is backed by a QIOChannelSocket.
+> 
+> Fixes: 2dd7ee7a51 ("migration/multifd: Add incoming QIOChannelFile support")
 > Fixes: decdc76772 ("migration/multifd: Add mapped-ram support to fd: URI")
+> Reported-by: Peter Xu <peterx@redhat.com>
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/fd.c   | 8 ++++++++
->  migration/file.c | 7 +++++++
->  2 files changed, 15 insertions(+)
-> 
-> diff --git a/migration/fd.c b/migration/fd.c
-> index 39a52e5c90..c07030f715 100644
-> --- a/migration/fd.c
-> +++ b/migration/fd.c
-> @@ -22,6 +22,7 @@
->  #include "migration.h"
->  #include "monitor/monitor.h"
->  #include "io/channel-file.h"
-> +#include "io/channel-socket.h"
->  #include "io/channel-util.h"
->  #include "options.h"
->  #include "trace.h"
-> @@ -95,6 +96,13 @@ void fd_start_incoming_migration(const char *fdname, Error **errp)
->      }
->  
->      if (migrate_multifd()) {
-> +        if (fd_is_socket(fd)) {
-> +            error_setg(errp,
-> +                       "Multifd migration to a socket FD is not supported");
-> +            object_unref(ioc);
-> +            return;
-> +        }
-> +
->          file_create_incoming_channels(ioc, errp);
->      } else {
->          qio_channel_set_name(ioc, "migration-fd-incoming");
-> diff --git a/migration/file.c b/migration/file.c
-> index ddde0ca818..b6e8ba13f2 100644
-> --- a/migration/file.c
-> +++ b/migration/file.c
-> @@ -15,6 +15,7 @@
->  #include "file.h"
->  #include "migration.h"
->  #include "io/channel-file.h"
-> +#include "io/channel-socket.h"
->  #include "io/channel-util.h"
->  #include "options.h"
->  #include "trace.h"
-> @@ -58,6 +59,12 @@ bool file_send_channel_create(gpointer opaque, Error **errp)
->      int fd = fd_args_get_fd();
->  
->      if (fd && fd != -1) {
-> +        if (fd_is_socket(fd)) {
-> +            error_setg(errp,
-> +                       "Multifd migration to a socket FD is not supported");
-> +            goto out;
-> +        }
-> +
->          ioc = qio_channel_file_new_dupfd(fd, errp);
->      } else {
->          ioc = qio_channel_file_new_path(outgoing_args.fname, flags, 0, errp);
-> -- 
-> 2.35.3
-> 
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 -- 
 Peter Xu
