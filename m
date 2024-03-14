@@ -4,81 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48932C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:11:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 402F3C54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 15:23:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkmj7-00020w-7k; Thu, 14 Mar 2024 11:10:37 -0400
+	id 1rkmv2-00078c-0J; Thu, 14 Mar 2024 11:22:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rkmj2-00020P-1b
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:10:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rkmuz-00078J-Av
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:22:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rkmiz-0001Co-76
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:10:31 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rkmuw-0003iL-Qs
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 11:22:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710429025;
+ s=mimecast20190719; t=1710429768;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Pj3aaqN19j56qx4MelVBDieuga/+og8o6ZW80EXc2Mc=;
- b=B5PY0lwFyKLvFi9zK2UJtoyFdDmJfnn9MXlUOO7JOT61TiwIcVHGtNRsaou+gL6+WpRL5K
- JYugjoIao50SPWVkif3HFeKe/CbsDWxXHl9TcOGSY84BjnJOk8dYxwacU8QuBIEHS5WJpM
- wrCXCxiQK50V0BzzYBn0BPL+gaJmX4E=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YBLsaHQRWmgI5xtRyjnZlSrZ5Mfmm95p7kFi0A/ame0=;
+ b=XQCtsBoCQFQlIHUYZEpWLDm0nLc5Ujb1FfvWHCbK9o9oCKxLORpdEL0eJQpb51DFI6rhoe
+ 4IFqg85uucCU8Xe8HNY+syQ+/2kI+vq/oe1m8A6gmepwSbf1lvKm2JtfGtY133crROKLSU
+ 451PcpTRYgkmxt987lf24Tk9/2JPFCk=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-AdilCfpYOuucKOsZ-W5xpw-1; Thu, 14 Mar 2024 11:10:22 -0400
-X-MC-Unique: AdilCfpYOuucKOsZ-W5xpw-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-60a0151f194so17789707b3.1
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 08:10:22 -0700 (PDT)
+ us-mta-15-UhLMvhIsO42Mzhwjdhgg5g-1; Thu, 14 Mar 2024 11:22:46 -0400
+X-MC-Unique: UhLMvhIsO42Mzhwjdhgg5g-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-690d3f5af86so3691406d6.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 08:22:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710429022; x=1711033822;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Pj3aaqN19j56qx4MelVBDieuga/+og8o6ZW80EXc2Mc=;
- b=MOwE43PeQ2PvPC7loX1QCsyHkYdvKXtp9nHrQp2p6wJmIyNdxwmh5LypMRAb0H38/N
- lEMc8bGc7VoLA4avbkCp+0AUKfpeIsqym3dNMQujd0HQH9xw/MkuIpD+T5Q/Y17olg5E
- CtHiNYCivxe8W5GXj+sZjJejW+uv3yuZbCqBuwvAFGGD4NEbRMbmFTHSxUPwKJ0NEwbQ
- qJzZjAwIXccqAYEdwzAQpqo1o9ofWEHYeLD3bfJZ1wk+KWQdyGTVOO3RhNNwC3A2D4ho
- URR+7C8S1/V7yj97qiXrn4Pr31iWQXFlehYvtiGluH+PdHmznsTgePgrGcDxhflTkL4C
- /E3g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWlrJMWbqoal4z/kcRV/nC501+EJk0CuiUoTk5MKvz5fmruSB4Uxx6e4OKPMtrJ00rdd8dI3Y7RSee2ieLwu4lFG4wtvXo=
-X-Gm-Message-State: AOJu0YxNFgoKe++zwVou1Miu+ZfwH5fBbjHhQHL0IhRy/3IibqE7ph+W
- boco/cm65sPBJbdbrUza9pH+5H0rp11Qu7i3c74EE9d8rzC0dpo70sXfi5ZqdwWNlK5r0YqJyhi
- yL1MZfDbWT2KVK05jZwiv+qIzGD1mcZnql0XzB2YNSeYsIEJqGZnXkFaE+wIa3LCXNTZ+makS/Y
- dLg6MoZ/8weUzocCXaAD846vnERSOVBHDm3HM=
-X-Received: by 2002:a05:690c:3413:b0:60c:d234:5c78 with SMTP id
- fn19-20020a05690c341300b0060cd2345c78mr870537ywb.4.1710429022051; 
- Thu, 14 Mar 2024 08:10:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IExXbQgi7wca5rENcsFtd/VX7cEArG91TSGIc5MPu9U05jXnf1WlIX5idkJBYMt7syEeb24AI2NJ72fJ4iNMZ8=
-X-Received: by 2002:a05:690c:3413:b0:60c:d234:5c78 with SMTP id
- fn19-20020a05690c341300b0060cd2345c78mr870518ywb.4.1710429021813; Thu, 14 Mar
- 2024 08:10:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710429766; x=1711034566;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YBLsaHQRWmgI5xtRyjnZlSrZ5Mfmm95p7kFi0A/ame0=;
+ b=D1IeFXZSCiyUOchjjq9s1vVsCtQaymZssAp3LEF0uX5LWfkANTyBZetwIdqL+/w66s
+ 0FAhk2KITeIkee54E7N+jYKSfwyoUgh7ovmyOyp0FafvAUW8hebFcS1hADO1NejFZesX
+ KEqAFo2+8eJJVxJwyE5+WrdpSx/e0m7fpXEB4qSMJJ5If64Jihf97p6fOnJ5VmGX9hJf
+ uQhl5JjYKMM40iytV43PWB//Mtb7ZAQTAKbj1AsZ0GMv/o80ItypikkuHzDf9MKhQ+rT
+ 7j8zjUEZZV/j+dFyEPmMFKy+tJdS5dwcS7TQ6hcsTfyZE4GocrYpPAVySgoO2A3RTP3L
+ X/Qg==
+X-Gm-Message-State: AOJu0YxC1FM34tdoTK/GM8IuTS4aeuWLzZuG+30b+lgM5hmpb/oR4fQw
+ bj3hx9DS0nuNsXug4MHnQ/rCmP5HgLdMeDpzYTHGpfcMNO0Em/BwwP4qb+ntGVhaIa4QMi5Ub8e
+ PWTBTDc7akrP6LTk+xD/Fl/Xfw8o32XRUCaW8Vy8LI8c5QUFmbLhj9HVmFUTQ
+X-Received: by 2002:a05:6214:2b87:b0:690:d74d:7e6d with SMTP id
+ kr7-20020a0562142b8700b00690d74d7e6dmr2111552qvb.3.1710429766057; 
+ Thu, 14 Mar 2024 08:22:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrgr8ZehAZbR6Bcchlz4mFY+tU2MLAQmy9t1bwtYO1AAGIjwUoXsvYUT0fzokglRpQz4nbfg==
+X-Received: by 2002:a05:6214:2b87:b0:690:d74d:7e6d with SMTP id
+ kr7-20020a0562142b8700b00690d74d7e6dmr2111534qvb.3.1710429765625; 
+ Thu, 14 Mar 2024 08:22:45 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 9-20020a0562140d4900b006904d35e1c6sm577741qvr.58.2024.03.14.08.22.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 14 Mar 2024 08:22:45 -0700 (PDT)
+Date: Thu, 14 Mar 2024 11:22:44 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH v2 0/2] migration mapped-ram fixes
+Message-ID: <ZfMWRBDN4wPQsOWI@x1n>
+References: <20240313212824.16974-1-farosas@suse.de>
 MIME-Version: 1.0
-References: <13625712.uLZWGnKmhe@valdaarhun>
- <CAGxU2F4jx5m5_ijNoWZpVK_MepvtDBY8L70-dSZmRUPmTskCNw@mail.gmail.com>
- <CAJaqyWfOaYmX-6qo-O2xWjge5av_2MDLnQVO41XLskLQC6nXsQ@mail.gmail.com>
- <6022175.lOV4Wx5bFT@valdaarhun>
-In-Reply-To: <6022175.lOV4Wx5bFT@valdaarhun>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 14 Mar 2024 16:09:45 +0100
-Message-ID: <CAJaqyWcuU_kQpCN+U3ejWgfm+zBv3Mofe0zyi-RB+rbqgDHEgg@mail.gmail.com>
-Subject: Re: Intention to work on GSoC project
-To: Sahil <icegambit91@gmail.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- qemu-level <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240313212824.16974-1-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -103,36 +98,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 1, 2024 at 7:29=E2=80=AFPM Sahil <icegambit91@gmail.com> wrote:
->
+On Wed, Mar 13, 2024 at 06:28:22PM -0300, Fabiano Rosas wrote:
 > Hi,
->
-> On Friday, March 1, 2024 1:10:49 PM IST you wrote:
-> > [...]
-> > You can add the recently published
-> > "virtio-live-migration-technical-deep-dive" :) [1].
-> >
-> > [1]
-> > https://developers.redhat.com/articles/2024/02/21/virtio-live-migration=
--technical-deep-dive
->
-> Thank you. This resource will help me cover a lot of ground.
->
-> > [...]
-> > There are few other tasks pending for QEMU in general and SVQ in
-> > particular. I'll add them as gitlab issues by today.
-> >
->
-> That would be nice. I'll keep an eye out for the new issues.
->
+> 
+> In this v2:
+> 
+> patch 1 - The fix for the ioc leaks, now including the main channel
+> 
+> patch 2 - A fix for an fd: migration case I thought I had written code
+>           for, but obviously didn't.
 
-Hi Sahil,
+Maybe I found one more issue.. I'm looking at fd_start_outgoing_migration().
 
-It's being hard to find a good self-contained small task related to
-the project to be honest. As it would be out of SVQ, would it be ok
-for you if we start straight to the task of adding the packed vq
-format to SVQ?
+    ioc = qio_channel_new_fd(fd, errp);  <----- here the fd is consumed and
+                                                then owned by the IOC
+    if (!ioc) {
+        close(fd);
+        return;
+    }
 
-Thanks!
+    outgoing_args.fd = fd;               <----- here we use the fd again,
+                                                and "owned" by outgoing_args
+                                                even if it shouldn't?
+
+The problem is outgoing_args.fd will be cleaned up with a close().  I had a
+feeling that it's possible it will close() something else if the fd reused
+before that close() but after the IOC's.  We may want yet another dup() for
+outgoing_args.fd?
+
+If you agree, we may also want to avoid doing:
+
+    outgoing_args.fd = -1;
+
+We could assert it instead making sure no fd leak.
+
+> 
+> Thank you for your patience.
+> 
+> based-on: https://gitlab.com/peterx/qemu/-/commits/migration-stable
+> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1212483701
+> 
+> Fabiano Rosas (2):
+>   migration: Fix iocs leaks during file and fd migration
+>   migration/multifd: Ensure we're not given a socket for file migration
+> 
+>  migration/fd.c   | 35 +++++++++++---------------
+>  migration/file.c | 65 ++++++++++++++++++++++++++++++++----------------
+>  migration/file.h |  1 +
+>  3 files changed, 60 insertions(+), 41 deletions(-)
+> 
+> -- 
+> 2.35.3
+> 
+
+-- 
+Peter Xu
 
 
