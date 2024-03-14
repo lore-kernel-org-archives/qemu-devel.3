@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E10C54E60
-	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 21:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75200C54E60
+	for <qemu-devel@archiver.kernel.org>; Thu, 14 Mar 2024 21:46:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rksn2-00022b-8h; Thu, 14 Mar 2024 17:39:05 -0400
+	id 1rkstc-0004mB-IV; Thu, 14 Mar 2024 17:45:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
- id 1rksmv-00022J-B4
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:38:57 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <prvs=796226c42=derekmn@amazon.com>)
+ id 1rksta-0004ls-W8
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:45:51 -0400
+Received: from smtp-fw-33001.amazon.com ([207.171.190.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
- id 1rksmt-00080R-6h
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:38:57 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42ELDh9X022241; Thu, 14 Mar 2024 21:38:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=corp-2023-11-20;
- bh=8VHbxUYRLJxMjFuiJotJejqiZKa1+U3oCH5CckEI2Ok=;
- b=kCROYhrII0Wy2YPwN0yVHENwAyvhU4hfbJ/HgcsFumAx1n4Ch+cI1E4i/G0Z4Dm4gkxO
- mnM6/++xugCmdT6chEiXDJJ5DaESuArjsEXVtBEQUxXhyOAsn4y9N6y6Zd5YPMLiqjHp
- sMp2udv9T8swziY5zxX+egNhIbLbqL1TPhw1TH3BSVRXUwKbU6sypzwO3sjc+i1fQsoO
- TRCpUPrjp+g9tgDDrvvUbCx/E0NmRV/LTu3pjeCDdWQ17JmH5o41ARRlslfjzNLyKuHs
- Y3t8R88eJ9wF2uGxWhj6JYA5r20crUWzGZ4rTo4AbkOal6/eIPGXTpO/ifIq5/PRSYKW JA== 
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wv0achb1a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 14 Mar 2024 21:38:52 +0000
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 42EJmWjv019794; Thu, 14 Mar 2024 21:38:51 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wre7ayv2m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 14 Mar 2024 21:38:51 +0000
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42ELco1e002045;
- Thu, 14 Mar 2024 21:38:51 GMT
-Received: from ban25x6uut24.us.oracle.com (ban25x6uut24.us.oracle.com
- [10.153.73.24])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 3wre7ayv1k-2; Thu, 14 Mar 2024 21:38:51 +0000
-From: Si-Wei Liu <si-wei.liu@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
- joao.m.martins@oracle.com, si-wei.liu@oracle.com
-Subject: [PATCH v4 2/2] vhost: Perform memory section dirty scans once per
- iteration
-Date: Thu, 14 Mar 2024 13:27:35 -0700
-Message-Id: <1710448055-11709-2-git-send-email-si-wei.liu@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
-References: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxscore=0 spamscore=0
- bulkscore=0 phishscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2403140166
-X-Proofpoint-GUID: xwoCXlDLRva1Bznec4muIpTBaeNj87bS
-X-Proofpoint-ORIG-GUID: xwoCXlDLRva1Bznec4muIpTBaeNj87bS
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=si-wei.liu@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ (Exim 4.90_1) (envelope-from <prvs=796226c42=derekmn@amazon.com>)
+ id 1rkstY-0000aN-Jd
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 17:45:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1710452749; x=1741988749;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=vp3hGSwgMbzRk72sOUpHptWRQ85XgRAAacWGIwKWzDg=;
+ b=aa0rWVgZtS8PibnoevugUC5l4uek1U9VIEoUzzgIBjeTqOf35o+if16x
+ QDAj1P4Ymbhr6+LNqvY7ldJ9QH+AxGkAjArnN5alHiOKKNqsiWDDIQG7j
+ IcK1Lt0H90qEPhvjyFP+QY8iACuIPtjiK5pNkQVmOGs3RB/dm81Q+qSKP 0=;
+X-IronPort-AV: E=Sophos;i="6.07,126,1708387200"; d="scan'208";a="332923184"
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
+ by smtp-border-fw-33001.sea14.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Mar 2024 21:45:43 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [10.0.7.35:4706]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.8.10:2525] with
+ esmtp (Farcaster)
+ id b3e2a354-b5d8-40da-9532-79da56e6a481; Thu, 14 Mar 2024 21:45:42 +0000 (UTC)
+X-Farcaster-Flow-ID: b3e2a354-b5d8-40da-9532-79da56e6a481
+Received: from EX19D003UWC002.ant.amazon.com (10.13.138.169) by
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.28; Thu, 14 Mar 2024 21:45:35 +0000
+Received: from [10.119.229.181] (10.119.229.181) by
+ EX19D003UWC002.ant.amazon.com (10.13.138.169) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1258.28; Thu, 14 Mar 2024 21:45:34 +0000
+Message-ID: <404fec0f-430b-44f1-8cdf-13573f0ae522@amazon.com>
+Date: Thu, 14 Mar 2024 14:45:33 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: Unmapping KVM Guest Memory from Host Kernel
+To: Sean Christopherson <seanjc@google.com>, James Gowans <jgowans@amazon.com>
+CC: "akpm@linux-foundation.org" <akpm@linux-foundation.org>, Patrick Roy
+ <roypat@amazon.co.uk>, "chao.p.peng@linux.intel.com"
+ <chao.p.peng@linux.intel.com>, "rppt@kernel.org" <rppt@kernel.org>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, David Woodhouse
+ <dwmw@amazon.co.uk>, Nikita Kalyazin <kalyazin@amazon.co.uk>,
+ "lstoakes@gmail.com" <lstoakes@gmail.com>, "Liam.Howlett@oracle.com"
+ <Liam.Howlett@oracle.com>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>,
+ "vbabka@suse.cz" <vbabka@suse.cz>, "mst@redhat.com" <mst@redhat.com>,
+ "somlo@cmu.edu" <somlo@cmu.edu>, Alexander Graf <graf@amazon.de>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "linux-coco@lists.linux.dev"
+ <linux-coco@lists.linux.dev>, <xmarcalx@amazon.com>, <tabba@google.com>,
+ <qperret@google.com>, <kvmarm@lists.linux.dev>
+References: <cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com>
+ <ZeudRmZz7M6fWPVM@google.com>
+Content-Language: en-US
+From: "Manwaring, Derek" <derekmn@amazon.com>
+In-Reply-To: <ZeudRmZz7M6fWPVM@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.119.229.181]
+X-ClientProxiedBy: EX19D042UWB002.ant.amazon.com (10.13.139.175) To
+ EX19D003UWC002.ant.amazon.com (10.13.138.169)
+Received-SPF: pass client-ip=207.171.190.10;
+ envelope-from=prvs=796226c42=derekmn@amazon.com; helo=smtp-fw-33001.amazon.com
+X-Spam_score_int: -128
+X-Spam_score: -12.9
+X-Spam_bar: ------------
+X-Spam_report: (-12.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,187 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On setups with one or more virtio-net devices with vhost on,
-dirty tracking iteration increases cost the bigger the number
-amount of queues are set up e.g. on idle guests migration the
-following is observed with virtio-net with vhost=on:
+On Fri, 8 Mar 2024 15:22:50 -0800, Sean Christopherson wrote:
+> On Fri, Mar 08, 2024, James Gowans wrote:
+> > We are also aware of ongoing work on guest_memfd. The current
+> > implementation unmaps guest memory from VMM address space, but leaves it
+> > in the kernel’s direct map. We’re not looking at unmapping from VMM
+> > userspace yet; we still need guest RAM there for PV drivers like virtio
+> > to continue to work. So KVM’s gmem doesn’t seem like the right solution?
+>
+> We (and by "we", I really mean the pKVM folks) are also working on allowing
+> userspace to mmap() guest_memfd[*].  pKVM aside, the long term vision I have for
+> guest_memfd is to be able to use it for non-CoCo VMs, precisely for the security
+> and robustness benefits it can bring.
+>
+> What I am hoping to do with guest_memfd is get userspace to only map memory it
+> needs, e.g. for emulated/synthetic devices, on-demand.  I.e. to get to a state
+> where guest memory is mapped only when it needs to be.
 
-48 queues -> 78.11%  [.] vhost_dev_sync_region.isra.13
-8 queues -> 40.50%   [.] vhost_dev_sync_region.isra.13
-1 queue -> 6.89%     [.] vhost_dev_sync_region.isra.13
-2 devices, 1 queue -> 18.60%  [.] vhost_dev_sync_region.isra.14
+Thank you for the direction, this is super helpful.
 
-With high memory rates the symptom is lack of convergence as soon
-as it has a vhost device with a sufficiently high number of queues,
-the sufficient number of vhost devices.
+We are new to the guest_memfd space, and for simplicity we'd prefer to
+leave guest_memfd completely mapped in userspace. Even in the long term,
+we actually don't have any use for unmapping from host userspace. The
+current form of marking pages shared doesn't quite align with what we're
+trying to do either since it also shares the pages with the host kernel.
 
-On every migration iteration (every 100msecs) it will redundantly
-query the *shared log* the number of queues configured with vhost
-that exist in the guest. For the virtqueue data, this is necessary,
-but not for the memory sections which are the same. So essentially
-we end up scanning the dirty log too often.
+What are your thoughts on a flag for KVM_CREATE_GUEST_MEMFD that only
+removes from the host kernel's direct map, but leaves everything mapped
+in userspace?
 
-To fix that, select a vhost device responsible for scanning the
-log with regards to memory sections dirty tracking. It is selected
-when we enable the logger (during migration) and cleared when we
-disable the logger. If the vhost logger device goes away for some
-reason, the logger will be re-selected from the rest of vhost
-devices.
-
-After making mem-section logger a singleton instance, constant cost
-of 7%-9% (like the 1 queue report) will be seen, no matter how many
-queues or how many vhost devices are configured:
-
-48 queues -> 8.71%    [.] vhost_dev_sync_region.isra.13
-2 devices, 8 queues -> 7.97%   [.] vhost_dev_sync_region.isra.14
-
-Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
-Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-
----
-v3 -> v4:
-  - add comment to clarify effect on cache locality and
-    performance
-
-v2 -> v3:
-  - add after-fix benchmark to commit log
-  - rename vhost_log_dev_enabled to vhost_dev_should_log
-  - remove unneeded comparisons for backend_type
-  - use QLIST array instead of single flat list to store vhost
-    logger devices
-  - simplify logger election logic
----
- hw/virtio/vhost.c         | 67 ++++++++++++++++++++++++++++++++++++++++++-----
- include/hw/virtio/vhost.h |  1 +
- 2 files changed, 62 insertions(+), 6 deletions(-)
-
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 612f4db..58522f1 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -45,6 +45,7 @@
- 
- static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
- static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
-+static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
- 
- /* Memslots used by backends that support private memslots (without an fd). */
- static unsigned int used_memslots;
-@@ -149,6 +150,47 @@ bool vhost_dev_has_iommu(struct vhost_dev *dev)
-     }
- }
- 
-+static inline bool vhost_dev_should_log(struct vhost_dev *dev)
-+{
-+    assert(dev->vhost_ops);
-+    assert(dev->vhost_ops->backend_type > VHOST_BACKEND_TYPE_NONE);
-+    assert(dev->vhost_ops->backend_type < VHOST_BACKEND_TYPE_MAX);
-+
-+    return dev == QLIST_FIRST(&vhost_log_devs[dev->vhost_ops->backend_type]);
-+}
-+
-+static inline void vhost_dev_elect_mem_logger(struct vhost_dev *hdev, bool add)
-+{
-+    VhostBackendType backend_type;
-+
-+    assert(hdev->vhost_ops);
-+
-+    backend_type = hdev->vhost_ops->backend_type;
-+    assert(backend_type > VHOST_BACKEND_TYPE_NONE);
-+    assert(backend_type < VHOST_BACKEND_TYPE_MAX);
-+
-+    if (add && !QLIST_IS_INSERTED(hdev, logdev_entry)) {
-+        if (QLIST_EMPTY(&vhost_log_devs[backend_type])) {
-+            QLIST_INSERT_HEAD(&vhost_log_devs[backend_type],
-+                              hdev, logdev_entry);
-+        } else {
-+            /*
-+             * The first vhost_device in the list is selected as the shared
-+             * logger to scan memory sections. Put new entry next to the head
-+             * to avoid inadvertent change to the underlying logger device.
-+             * This is done in order to get better cache locality and to avoid
-+             * performance churn on the hot path for log scanning. Even when
-+             * new devices come and go quickly, it wouldn't end up changing
-+             * the active leading logger device at all.
-+             */
-+            QLIST_INSERT_AFTER(QLIST_FIRST(&vhost_log_devs[backend_type]),
-+                               hdev, logdev_entry);
-+        }
-+    } else if (!add && QLIST_IS_INSERTED(hdev, logdev_entry)) {
-+        QLIST_REMOVE(hdev, logdev_entry);
-+    }
-+}
-+
- static int vhost_sync_dirty_bitmap(struct vhost_dev *dev,
-                                    MemoryRegionSection *section,
-                                    hwaddr first,
-@@ -166,12 +208,14 @@ static int vhost_sync_dirty_bitmap(struct vhost_dev *dev,
-     start_addr = MAX(first, start_addr);
-     end_addr = MIN(last, end_addr);
- 
--    for (i = 0; i < dev->mem->nregions; ++i) {
--        struct vhost_memory_region *reg = dev->mem->regions + i;
--        vhost_dev_sync_region(dev, section, start_addr, end_addr,
--                              reg->guest_phys_addr,
--                              range_get_last(reg->guest_phys_addr,
--                                             reg->memory_size));
-+    if (vhost_dev_should_log(dev)) {
-+        for (i = 0; i < dev->mem->nregions; ++i) {
-+            struct vhost_memory_region *reg = dev->mem->regions + i;
-+            vhost_dev_sync_region(dev, section, start_addr, end_addr,
-+                                  reg->guest_phys_addr,
-+                                  range_get_last(reg->guest_phys_addr,
-+                                                 reg->memory_size));
-+        }
-     }
-     for (i = 0; i < dev->nvqs; ++i) {
-         struct vhost_virtqueue *vq = dev->vqs + i;
-@@ -383,6 +427,7 @@ static void vhost_log_put(struct vhost_dev *dev, bool sync)
-         g_free(log);
-     }
- 
-+    vhost_dev_elect_mem_logger(dev, false);
-     dev->log = NULL;
-     dev->log_size = 0;
- }
-@@ -998,6 +1043,15 @@ static int vhost_dev_set_log(struct vhost_dev *dev, bool enable_log)
-             goto err_vq;
-         }
-     }
-+
-+    /*
-+     * At log start we select our vhost_device logger that will scan the
-+     * memory sections and skip for the others. This is possible because
-+     * the log is shared amongst all vhost devices for a given type of
-+     * backend.
-+     */
-+    vhost_dev_elect_mem_logger(dev, enable_log);
-+
-     return 0;
- err_vq:
-     for (; i >= 0; --i) {
-@@ -2068,6 +2122,7 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-             VHOST_OPS_DEBUG(r, "vhost_set_log_base failed");
-             goto fail_log;
-         }
-+        vhost_dev_elect_mem_logger(hdev, true);
-     }
-     if (vrings) {
-         r = vhost_dev_set_vring_enable(hdev, true);
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 0247778..d75faf4 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -129,6 +129,7 @@ struct vhost_dev {
-     void *opaque;
-     struct vhost_log *log;
-     QLIST_ENTRY(vhost_dev) entry;
-+    QLIST_ENTRY(vhost_dev) logdev_entry;
-     QLIST_HEAD(, vhost_iommu) iommu_list;
-     IOMMUNotifier n;
-     const VhostDevConfigOps *config_ops;
--- 
-1.8.3.1
-
+Derek
 
