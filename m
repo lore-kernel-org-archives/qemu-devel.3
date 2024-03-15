@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCB46C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 11:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B2D0C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 11:28:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl5hP-000695-WB; Fri, 15 Mar 2024 07:26:08 -0400
+	id 1rl5jc-00084J-2m; Fri, 15 Mar 2024 07:28:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rl5hD-000642-3E
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:25:56 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rl5hA-0000xC-07
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:25:54 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1def89f0cfdso1420445ad.0
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 04:25:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1710501948; x=1711106748; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9D1A+47M8HZ4rgmE3RGvdpACQZfP2AsPr6UkrnISCPc=;
- b=JE2coyS5PoQSzw5BTvIrWX7s5W1QCBp0+VZ9F5/H1/xrJfc7NH+67MfJfHOe55rev+
- Am+6i1UCoox24XfG//8gzXZXWr082BMLaPSIdNhMKxtCEDj5y+5dx6vwUuED+TCoatN+
- FNBOoojBrhpiN3C8iI97vsRDRrAA8UkYv5HxI+UvuzQdNy4Vwa/35b8+l2lUgH0RI5mB
- vko2O2jmroGR/K+8540E0NRd48rxpFe7iVeaZbtO25MUwoaxuWvE9IQwfqgtlGXqNY8t
- soKSYs2MtWZA0Zti+UmtWXDfhT9S7VlPpNvQt/nB5J6SkH1KcQvpto3PkyxnnvJCufE8
- SkHQ==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rl5jZ-00083b-9c
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:28:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rl5jX-0001SQ-1P
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:28:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710502097;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=x2h2pYTgh5PyMC74qLvTPILXe53aZuAmn8woLk5C2Lo=;
+ b=Vg8cedScIcX/ojoQIK8gvq0m6enIWv9oACRqbpujUBrLeT4Gnt0y+s4oJ70CniBFuk5EpH
+ B9tWfxcfQnGFzz9AJSWjg5NV7jvvtUgpyZFStKwB7DCSNEOCe3fmrb+XntJTvITECx2MCX
+ pCfEuxwFNO8Ib2BL3+aG4GdtnUYbUq8=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-662-v3ax8I-pOfeTQglPtizWQg-1; Fri, 15 Mar 2024 07:28:16 -0400
+X-MC-Unique: v3ax8I-pOfeTQglPtizWQg-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-60a0151f194so33790967b3.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 04:28:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710501948; x=1711106748;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9D1A+47M8HZ4rgmE3RGvdpACQZfP2AsPr6UkrnISCPc=;
- b=KxUGOp7BaAAwLw5w2gaDBo6gX5sHEwGbDyRxkvcmYZ2uUFprnBpRUG4x8SsIhZqf3l
- 2n0W2eLpladivfQgNgi9stpL/CLxKd+xD8NenAVhIg7YOAsIKaKu8uTFVmjL3yT3tg6w
- zrv3pwRsiOgdhTZlRojljIpNSX/fR4gdkrUTabxnANZqCeV5qxjVyRz3vk8oeYOOjhqP
- XuIuAT0DuXzgB7uO81eJb43B8wIJDRFsu1IiNZ7GoeEiwIsNQskmvYThV7JIW8ECDXE7
- +nk+6WgkKX1bMune39sVyiv7N//91jLf/g8gN7hRhe1X0tvKpb38fNGpn0IV258P6Yhr
- 2Xwg==
+ d=1e100.net; s=20230601; t=1710502096; x=1711106896;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=x2h2pYTgh5PyMC74qLvTPILXe53aZuAmn8woLk5C2Lo=;
+ b=OdQYvjwHwtkrE5jw2Ho5b0sPWIACLVSDisKsICiVdwSuKNd1G9PLJCAbC8KZvqfKti
+ SiNq7RVnIFn3SmrxY1fAB3oGz1QADcfCrtah1lz/2P9YAVKHzYQ12QnxfzvIv7i+QCZ9
+ /ofUcWWHvnx9xE+kBzQiV6RUQzVWzXt4XFASSwJybINUSctJiV+6CKZMAXP6ufN5bx2c
+ IncUhQ7l4WnX9ZCy6ryjEjBScLwuOrkeJlo+9zvGO7MWOYGSgiMPjy49u/B4eSyYzNZF
+ Ypv/KGsIcT3qhizozP7aBcsGDNv+ycpVCe/1xxw13FZl1bV+Hk3O5HOH+nOyKIoiuxqO
+ prKA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXM5H0GHJ5JvWanZeyj+vx+iWyHIZjo9w5GeAJU2LieqQ9N6pFgas0zqVJ5kW1ndIZOSshU7bW9UtOMQZbMOazGu/kK6xI=
-X-Gm-Message-State: AOJu0YzkY8CQsOXqduu3vB1JKvzCliwa7x0NatYqM24ndl16LVJm7Snb
- bkfFLSuyn4KkVqLRtcL8fYGXmITfeuftIXkxeZ3wHqNkALX/6IsW9wvnf9y8WHc=
-X-Google-Smtp-Source: AGHT+IFoyHnXZ6rKqjRtFi46/zItbJ8LBZKtMVFyiTTAVKACSwiC06Dmm0D0Vw/7eMdfEbJ5Tf6WyQ==
-X-Received: by 2002:a17:902:bcc2:b0:1dd:8ed0:59d0 with SMTP id
- o2-20020a170902bcc200b001dd8ed059d0mr5274111pls.17.1710501948340; 
- Fri, 15 Mar 2024 04:25:48 -0700 (PDT)
-Received: from [100.64.0.1] ([136.226.240.163])
- by smtp.gmail.com with ESMTPSA id
- j1-20020a170902c3c100b001ddb57a4dffsm3555571plj.132.2024.03.15.04.25.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 Mar 2024 04:25:47 -0700 (PDT)
-Message-ID: <41084cbb-bb01-4dbc-9334-01067eb8550a@sifive.com>
-Date: Fri, 15 Mar 2024 19:25:39 +0800
+ AJvYcCX1yApnP+WUS9vr/HOY2YSXJSKIY+zRus4S1v3QrEsM0ex7nTxwugrgnUrwHZyMzvElFJCSpmOFo5GVfjCm4lswfWm7MK8=
+X-Gm-Message-State: AOJu0Yws3HUjo+lwmW0YvTFlAMnyzkVIPCo/HUVES2jmGwU6Km/ghReI
+ mnFkG2+b0IaGfWJJLKDQ2+fsFu6JHJfsJg6TocWnPMeQuO9R/192tlCvMcQZD89QrfWk4j1+jCJ
+ GK5z3VEYTWa83gQEpaFge7G2hHSJPhwgV3z5n0mNkqzNTwjaSKvTXQY6svzmzN7mFN5UBpjGoyl
+ BGN8rVMgVyDWqNN1k0FnnoiD2erz0=
+X-Received: by 2002:a0d:c282:0:b0:60c:7540:37d7 with SMTP id
+ e124-20020a0dc282000000b0060c754037d7mr3997487ywd.7.1710502095784; 
+ Fri, 15 Mar 2024 04:28:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFRHWtNHxg3+AXifEO1h0YjSLFgr6U9WeJHW9UbmfMPjIFuIEc2Zhnwezr6zCmK3kkVSkO/lRnhtZZnxoyGos=
+X-Received: by 2002:a0d:c282:0:b0:60c:7540:37d7 with SMTP id
+ e124-20020a0dc282000000b0060c754037d7mr3997467ywd.7.1710502095416; Fri, 15
+ Mar 2024 04:28:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 9.0 v15 05/10] target/riscv: always clear vstart for
- ldst_whole insns
-Content-Language: en-US
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- richard.henderson@linaro.org
-References: <20240314175704.478276-1-dbarboza@ventanamicro.com>
- <20240314175704.478276-6-dbarboza@ventanamicro.com>
-From: Max Chou <max.chou@sifive.com>
-In-Reply-To: <20240314175704.478276-6-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=max.chou@sifive.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <13625712.uLZWGnKmhe@valdaarhun> <6022175.lOV4Wx5bFT@valdaarhun>
+ <CAJaqyWcuU_kQpCN+U3ejWgfm+zBv3Mofe0zyi-RB+rbqgDHEgg@mail.gmail.com>
+ <1786176.VLH7GnMWUR@valdaarhun>
+In-Reply-To: <1786176.VLH7GnMWUR@valdaarhun>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Fri, 15 Mar 2024 12:27:39 +0100
+Message-ID: <CAJaqyWdmGbYj1KjN6zcu-fRij9X6mNG-xKHqQiaVsY1zu1T-Ag@mail.gmail.com>
+Subject: Re: Intention to work on GSoC project
+To: Sahil <icegambit91@gmail.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ qemu-level <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.933,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,146 +102,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Max Chou <max.chou@sifive.com>
+On Fri, Mar 15, 2024 at 8:15=E2=80=AFAM Sahil <icegambit91@gmail.com> wrote=
+:
+>
+> Hi,
+>
+> Thank you for your email.
+>
+> On Thursday, March 14, 2024 8:39:45 PM IST Eugenio Perez Martin wrote:
+> > Hi Sahil,
+> >
+> > It's being hard to find a good self-contained small task related to
+> > the project to be honest. As it would be out of SVQ, would it be ok
+> > for you if we start straight to the task of adding the packed vq
+> > format to SVQ?
+> >
+> > Thanks!
+>
+> Sure, this works too! I would love to get started with the project.
+>
+> I have a small update as well. I have read through a few docs and
+> articles to familiarize myself with the relevant terminology and
+> technicalities.
+>
+> 1. "About", "system emulation" and "user mode emulation" sections of
+>     the user documentation [1]
+> 2. The migration subsystem [2]
+>
+> Some sections in the above docs were difficult to grasp. For the time
+> being, I have focused on those parts that I thought were relevant
+> to the project.
+>
 
-On 2024/3/15 1:56 AM, Daniel Henrique Barboza wrote:
-> Commit 8ff8ac6329 added a conditional to guard the vext_ldst_whole()
-> helper if vstart >= evl. But by skipping the helper we're also not
-> setting vstart = 0 at the end of the insns, which is incorrect.
+Please feel free to ask any questions, maybe we can improve the doc :).
+
+> I have also read through the following articles:
 >
-> We'll move the conditional to vext_ldst_whole(), following in line with
-> the removal of all brconds vstart >= vl that the next patch will do. The
-> idea is to make the helpers responsible for their own vstart management.
+> 1. Introduction to virtio-networking and vhost-net [3]
+> 2. Deep dive into Virtio-networking and vhost-net [4]
+> 3. Virtualized Hardware Devices [5]
+> 4. VFIO - "Virtual Function I/O" (Just the introduction) [6]
+> 5. Virtio-net failover: An introduction [7]
 >
-> Fix ldst_whole isns by:
+> I hope I haven't gone off on a tangent. I was planning to finish reading
+> up on the following articles as well:
 >
-> - remove the brcond that skips the helper if vstart is >= evl;
+
+There is a post before the first in the series:
+https://www.redhat.com/en/blog/virtio-devices-and-drivers-overview-headjack=
+-and-phone
+
+> 1. Virtqueues and virtio ring: How the data travels [8]
+> 2. Packed virtqueue: How to reduce overhead with virtio [9]
+> 3. Virtio live migration technical deep dive [10]
+> 4. Hands on vDPA: what do you do when you ain't got the hardware v2 (Part=
+ 1) [11]
 >
-> - vext_ldst_whole() now does an early exit with the same check, where
->    evl = (vlenb * nf) >> log2_esz, but the early exit will also clear
->    vstart.
+
+I think it's a good plan!
+
+If you feel like you're reading a lot of theory and want to get your
+hands dirty already, you can also start messing with the code with the
+blogs you already read. Or, maybe, after reading the Packed virtqueue
+one, your call.
+
+In a very brute-forced description, you can start trying to copy all
+the *packed* stuff of kernel's drivers/virtio/virtio_ring.c into
+vhost_shadow_virtqueue.c. There is a lot more in the task, and I can
+get into more detail if you want either here or in a meeting.
+
+If you prefer to continue with the theory it is ok too.
+
+> I believe the hands-on vPDA article will have me set up a development
+> environment for the project as well.
 >
-> The 'width' param is now unneeded in ldst_whole_trans() and is also
-> removed. It was used for the evl calculation for the brcond and has no
-> other use now.  The 'width' is reflected in vext_ldst_whole() via
-> log2_esz, which is encoded by GEN_VEXT_LD_WHOLE() as
-> "ctzl(sizeof(ETYPE))".
+
+Yes, that's right.
+
+> Please let me know if I should amend my roadmap. I am
+> excited to get started :)
 >
-> Suggested-by: Max Chou <max.chou@sifive.com>
-> Fixes: 8ff8ac6329 ("target/riscv: rvv: Add missing early exit condition for whole register load/store")
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->   target/riscv/insn_trans/trans_rvv.c.inc | 52 +++++++++++--------------
->   target/riscv/vector_helper.c            |  5 +++
->   2 files changed, 28 insertions(+), 29 deletions(-)
+
+I think it is a great plan!
+
+Thanks!
+
+> Thanks,
+> Sahil
 >
-> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-> index 52c26a7834..1366445e1f 100644
-> --- a/target/riscv/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-> @@ -1097,13 +1097,9 @@ GEN_VEXT_TRANS(vle64ff_v, MO_64, r2nfvm, ldff_op, ld_us_check)
->   typedef void gen_helper_ldst_whole(TCGv_ptr, TCGv, TCGv_env, TCGv_i32);
->   
->   static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-> -                             uint32_t width, gen_helper_ldst_whole *fn,
-> +                             gen_helper_ldst_whole *fn,
->                                DisasContext *s)
->   {
-> -    uint32_t evl = s->cfg_ptr->vlenb * nf / width;
-> -    TCGLabel *over = gen_new_label();
-> -    tcg_gen_brcondi_tl(TCG_COND_GEU, cpu_vstart, evl, over);
-> -
->       TCGv_ptr dest;
->       TCGv base;
->       TCGv_i32 desc;
-> @@ -1120,8 +1116,6 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
->   
->       fn(dest, base, tcg_env, desc);
->   
-> -    gen_set_label(over);
-> -
->       return true;
->   }
->   
-> @@ -1129,42 +1123,42 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
->    * load and store whole register instructions ignore vtype and vl setting.
->    * Thus, we don't need to check vill bit. (Section 7.9)
->    */
-> -#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF, WIDTH)               \
-> +#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF)                                \
->   static bool trans_##NAME(DisasContext *s, arg_##NAME * a)                 \
->   {                                                                         \
->       if (require_rvv(s) &&                                                 \
->           QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                                 \
-> -        return ldst_whole_trans(a->rd, a->rs1, ARG_NF, WIDTH,             \
-> +        return ldst_whole_trans(a->rd, a->rs1, ARG_NF,                    \
->                                   gen_helper_##NAME, s);                    \
->       }                                                                     \
->       return false;                                                         \
->   }
->   
-> -GEN_LDST_WHOLE_TRANS(vl1re8_v,  1, 1)
-> -GEN_LDST_WHOLE_TRANS(vl1re16_v, 1, 2)
-> -GEN_LDST_WHOLE_TRANS(vl1re32_v, 1, 4)
-> -GEN_LDST_WHOLE_TRANS(vl1re64_v, 1, 8)
-> -GEN_LDST_WHOLE_TRANS(vl2re8_v,  2, 1)
-> -GEN_LDST_WHOLE_TRANS(vl2re16_v, 2, 2)
-> -GEN_LDST_WHOLE_TRANS(vl2re32_v, 2, 4)
-> -GEN_LDST_WHOLE_TRANS(vl2re64_v, 2, 8)
-> -GEN_LDST_WHOLE_TRANS(vl4re8_v,  4, 1)
-> -GEN_LDST_WHOLE_TRANS(vl4re16_v, 4, 2)
-> -GEN_LDST_WHOLE_TRANS(vl4re32_v, 4, 4)
-> -GEN_LDST_WHOLE_TRANS(vl4re64_v, 4, 8)
-> -GEN_LDST_WHOLE_TRANS(vl8re8_v,  8, 1)
-> -GEN_LDST_WHOLE_TRANS(vl8re16_v, 8, 2)
-> -GEN_LDST_WHOLE_TRANS(vl8re32_v, 8, 4)
-> -GEN_LDST_WHOLE_TRANS(vl8re64_v, 8, 8)
-> +GEN_LDST_WHOLE_TRANS(vl1re8_v,  1)
-> +GEN_LDST_WHOLE_TRANS(vl1re16_v, 1)
-> +GEN_LDST_WHOLE_TRANS(vl1re32_v, 1)
-> +GEN_LDST_WHOLE_TRANS(vl1re64_v, 1)
-> +GEN_LDST_WHOLE_TRANS(vl2re8_v,  2)
-> +GEN_LDST_WHOLE_TRANS(vl2re16_v, 2)
-> +GEN_LDST_WHOLE_TRANS(vl2re32_v, 2)
-> +GEN_LDST_WHOLE_TRANS(vl2re64_v, 2)
-> +GEN_LDST_WHOLE_TRANS(vl4re8_v,  4)
-> +GEN_LDST_WHOLE_TRANS(vl4re16_v, 4)
-> +GEN_LDST_WHOLE_TRANS(vl4re32_v, 4)
-> +GEN_LDST_WHOLE_TRANS(vl4re64_v, 4)
-> +GEN_LDST_WHOLE_TRANS(vl8re8_v,  8)
-> +GEN_LDST_WHOLE_TRANS(vl8re16_v, 8)
-> +GEN_LDST_WHOLE_TRANS(vl8re32_v, 8)
-> +GEN_LDST_WHOLE_TRANS(vl8re64_v, 8)
->   
->   /*
->    * The vector whole register store instructions are encoded similar to
->    * unmasked unit-stride store of elements with EEW=8.
->    */
-> -GEN_LDST_WHOLE_TRANS(vs1r_v, 1, 1)
-> -GEN_LDST_WHOLE_TRANS(vs2r_v, 2, 1)
-> -GEN_LDST_WHOLE_TRANS(vs4r_v, 4, 1)
-> -GEN_LDST_WHOLE_TRANS(vs8r_v, 8, 1)
-> +GEN_LDST_WHOLE_TRANS(vs1r_v, 1)
-> +GEN_LDST_WHOLE_TRANS(vs2r_v, 2)
-> +GEN_LDST_WHOLE_TRANS(vs4r_v, 4)
-> +GEN_LDST_WHOLE_TRANS(vs8r_v, 8)
->   
->   /*
->    *** Vector Integer Arithmetic Instructions
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index bcc553c0e2..1f4c276b21 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -572,6 +572,11 @@ vext_ldst_whole(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
->       uint32_t vlenb = riscv_cpu_cfg(env)->vlenb;
->       uint32_t max_elems = vlenb >> log2_esz;
->   
-> +    if (env->vstart >= ((vlenb * nf) >> log2_esz)) {
-> +        env->vstart = 0;
-> +        return;
-> +    }
-> +
->       k = env->vstart / max_elems;
->       off = env->vstart % max_elems;
->   
+> [1] https://www.qemu.org/docs/master/index.html
+> [2] https://www.qemu.org/docs/master/devel/migration/index.html
+> [3] https://www.redhat.com/en/blog/introduction-virtio-networking-and-vho=
+st-net
+> [4] https://www.redhat.com/en/blog/deep-dive-virtio-networking-and-vhost-=
+net
+> [5] https://access.redhat.com/documentation/en-us/red_hat_enterprise_linu=
+x/7/html/virtualization_getting_started_guide/sec-virtualization_getting_st=
+arted-products-virtualized-hardware-devices
+> [6] https://www.kernel.org/doc/html/latest/driver-api/vfio.html
+> [7] https://www.redhat.com/en/blog/virtio-net-failover-introduction
+> [8] https://www.redhat.com/en/blog/virtqueues-and-virtio-ring-how-data-tr=
+avels
+> [9] https://developers.redhat.com/articles/2024/02/21/virtio-live-migrati=
+on-technical-deep-dive
+> [10] https://www.redhat.com/en/blog/packed-virtqueue-how-reduce-overhead-=
+virtio
+> [11] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-ai=
+nt-got-hardware-part-1
+>
+>
+
 
