@@ -4,92 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C103C54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 04:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1286C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 04:04:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkyiZ-0002xl-Ag; Thu, 14 Mar 2024 23:58:51 -0400
+	id 1rkyng-0001iX-Hc; Fri, 15 Mar 2024 00:04:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rkyiO-0002fz-K4
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 23:58:42 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rkyiM-000258-Da
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 23:58:39 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dc29f1956cso11731595ad.0
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 20:58:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710475116; x=1711079916;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4udzfC4o8hc15auoNaG3g6zD6/NN7zzxG/2gffAwrMo=;
- b=hmGGEnMpLvMFoLA1Noszt57+RQQwBis0XBgzPLZjEAfTj4hahBsGkD9TUJDgzoXJcH
- 7TQcGWAF//jb+EBn7oS8grLPlRJzu6KhCgEnrvyXrIpsPsvPxd77uEt6a1fSeh9dkYyf
- YUoaI3SLolNWraDBRaxPrlnYOT8tlzXRje6GkP8M7PUI7NETKVJQvMoCNX5YeAWzJEEa
- R/xT1FAeL9Vzshj8/PwkC30pP0whPANljshlF0ZeAnHmEDIJq7gxS2X56wrqQ7iyMHfL
- UQRs7Fk1wpufKNmoOELlvdjjZg7/RDFp6HlerYn71C8LEkOIWNiAxNDnvGTdB/ZKHS2D
- Xwmg==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rkynf-0001iP-Ij
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 00:04:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rkynd-00031P-NB
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 00:04:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710475444;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=48cL7dJWiQicfy5ZVsmlo1tEbADF+OUWknvrIK34cKs=;
+ b=XG+EWhMu7JFpVbQneJ1aDPgjoKUsGkCs+3He6+j8mPcj0Uh8Xi04BzJ+UeqoKrXeEna7Iu
+ qbRBWIJVEXifs8P50/pK6N9pmnvepyIVFsNRR7tng70tPNIVnFiN0XUCMJ8BTWCieznyx9
+ kvFhq5GizjFtHzWXBgQpnCKsa29t27Q=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-335-ERrGS6ttNX-_BZ7tAw7uXg-1; Fri, 15 Mar 2024 00:04:02 -0400
+X-MC-Unique: ERrGS6ttNX-_BZ7tAw7uXg-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-5cfc2041cdfso1330296a12.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 21:04:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710475116; x=1711079916;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1710475441; x=1711080241;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4udzfC4o8hc15auoNaG3g6zD6/NN7zzxG/2gffAwrMo=;
- b=vABGZKAONIAmFspU01qk8uOqiOguaZnjT+f2J1ElTZHNFif+sTs9HZoWpDScSm9cEI
- i0ccRkPDnprAsdvbxrazU0xMN25zpZ2N1PF98VE1UDj8d3FOVrRq5ne7K69S3TsE0dtB
- b1sOPcCLp9ys3By3ILAmubIvHIGCo3ww6+siuhc9lCfjOiuFThISYYfhGK/MLASPip5Z
- duyc9BVAeeXpLl9GPKTg7Nu2xS/7RFXjP31XkvAYl9frCF9WR1WjOU7sR/a2h2Tpm2zw
- s2yXkQzNa722QCJDnenNeSUE1QMb68EDpgW62ldKBoXtXvJhuQ3jdJk05lKjvqWbhH6f
- s5qA==
-X-Gm-Message-State: AOJu0YwJ6f2x+oirAY29U6DD/ql/ZbRhO9Fsq6jcs06yZkVyZe+qQlAi
- BFRcyNdTQGk0sC7mdte2LdKgg4bp0p1pMdP+kINWETQWJoHqYnOxD9uwvIBAJkc=
-X-Google-Smtp-Source: AGHT+IG04ULe+P9n7+jUXa7jAVuPiYVC9wXQBgEuc+yRgIUADi0exz2SqtoXxrrHx3tZnnkJmtQdag==
-X-Received: by 2002:a17:902:ed0b:b0:1dd:6f4c:c67 with SMTP id
- b11-20020a170902ed0b00b001dd6f4c0c67mr1906323pld.24.1710475116316; 
- Thu, 14 Mar 2024 20:58:36 -0700 (PDT)
-Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
- by smtp.gmail.com with UTF8SMTPSA id
- ky6-20020a170902f98600b001dcfbbb1ddesm2609086plb.7.2024.03.14.20.58.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Mar 2024 20:58:36 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 15 Mar 2024 12:57:56 +0900
-Subject: [PATCH for 9.1 v9 09/11] hw/pci: Use UINT32_MAX as a default value
- for rombar
+ bh=48cL7dJWiQicfy5ZVsmlo1tEbADF+OUWknvrIK34cKs=;
+ b=qET01cVq3LeQiOWgdpwC6zBG4sLVWFJuV0DH3qXdT9FGU3cmd1UGTpeF0KgJmAmxrl
+ E6HqmhiV9e3UrdiM11tnk6juZkBwxBPB2AuUBKbHyEBXb7qDWUw8fSYVJJzxQW2OBXF9
+ ga7z8IL21M5KkLsuOarogpG9XPRtjGzDLcbDGe6ZofQzCFa15ewL49WtrrD9sAkPXQES
+ Xr6ir8Nbm0qEnxZpX+U9b034AMFmf/t15deJZBSluTb2uZuW7U+1nAKR6rMBT9IOeAes
+ 9sPmfLQjetAWF1LKUx7iuhrAVKJM29a37wkZ3kq+6A7zuWbIG7NeDUlhO8gbryYDLQ1t
+ OA/w==
+X-Gm-Message-State: AOJu0Yz36ihVACw3nTVbiwLdM5YxHs6skrawy7TJYrwf12zxshKWhTOQ
+ 6CAq/lEdxxdrwlmI6LynDlCSUUY2nShrKbm2T/y/OiFCpfI/GgLtSwSJKjMfXIv9+9dYQHINseI
+ L3YLjJawCBj6TVdRTzcgTT3gB4nw4zr/qVxO5kg8DOt7gbzGVZGjPXKpwC/v4VRAPBkhtGpHtmp
+ gDzGsbKBtLMEbbCeB+otxX61zzCA74INK5OMAWlSfV
+X-Received: by 2002:a05:6a21:7898:b0:1a3:3089:9de5 with SMTP id
+ bf24-20020a056a21789800b001a330899de5mr2605352pzc.0.1710475440991; 
+ Thu, 14 Mar 2024 21:04:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGImy8PqHXR6v1tv6qVlPuyTGhg+/Ruh36RITXd871dhZpJDvllY/5ruvIIBp/hJ1E0E+86CMZ7nE9R0RKGI7o=
+X-Received: by 2002:a05:6a21:7898:b0:1a3:3089:9de5 with SMTP id
+ bf24-20020a056a21789800b001a330899de5mr2605340pzc.0.1710475440694; Thu, 14
+ Mar 2024 21:04:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240315-reuse-v9-9-67aa69af4d53@daynix.com>
-References: <20240315-reuse-v9-0-67aa69af4d53@daynix.com>
-In-Reply-To: <20240315-reuse-v9-0-67aa69af4d53@daynix.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::62a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
+ <1710448055-11709-2-git-send-email-si-wei.liu@oracle.com>
+In-Reply-To: <1710448055-11709-2-git-send-email-si-wei.liu@oracle.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Fri, 15 Mar 2024 12:03:49 +0800
+Message-ID: <CACGkMEukLmTSfuXxSMsZuO_B7o7623x=gmLD5s-xoinEq=dWYQ@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] vhost: Perform memory section dirty scans once per
+ iteration
+To: Si-Wei Liu <si-wei.liu@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, eperezma@redhat.com, 
+ joao.m.martins@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,55 +100,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently there is no way to distinguish the case that rombar is
-explicitly specified as 1 and the case that rombar is not specified.
+On Fri, Mar 15, 2024 at 5:39=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com> =
+wrote:
+>
+> On setups with one or more virtio-net devices with vhost on,
+> dirty tracking iteration increases cost the bigger the number
+> amount of queues are set up e.g. on idle guests migration the
+> following is observed with virtio-net with vhost=3Don:
+>
+> 48 queues -> 78.11%  [.] vhost_dev_sync_region.isra.13
+> 8 queues -> 40.50%   [.] vhost_dev_sync_region.isra.13
+> 1 queue -> 6.89%     [.] vhost_dev_sync_region.isra.13
+> 2 devices, 1 queue -> 18.60%  [.] vhost_dev_sync_region.isra.14
+>
+> With high memory rates the symptom is lack of convergence as soon
+> as it has a vhost device with a sufficiently high number of queues,
+> the sufficient number of vhost devices.
+>
+> On every migration iteration (every 100msecs) it will redundantly
+> query the *shared log* the number of queues configured with vhost
+> that exist in the guest. For the virtqueue data, this is necessary,
+> but not for the memory sections which are the same. So essentially
+> we end up scanning the dirty log too often.
+>
+> To fix that, select a vhost device responsible for scanning the
+> log with regards to memory sections dirty tracking. It is selected
+> when we enable the logger (during migration) and cleared when we
+> disable the logger. If the vhost logger device goes away for some
+> reason, the logger will be re-selected from the rest of vhost
+> devices.
+>
+> After making mem-section logger a singleton instance, constant cost
+> of 7%-9% (like the 1 queue report) will be seen, no matter how many
+> queues or how many vhost devices are configured:
+>
+> 48 queues -> 8.71%    [.] vhost_dev_sync_region.isra.13
+> 2 devices, 8 queues -> 7.97%   [.] vhost_dev_sync_region.isra.14
+>
+> Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
+> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+>
+> ---
+> v3 -> v4:
+>   - add comment to clarify effect on cache locality and
+>     performance
+>
+> v2 -> v3:
+>   - add after-fix benchmark to commit log
+>   - rename vhost_log_dev_enabled to vhost_dev_should_log
+>   - remove unneeded comparisons for backend_type
+>   - use QLIST array instead of single flat list to store vhost
+>     logger devices
+>   - simplify logger election logic
+> ---
+>  hw/virtio/vhost.c         | 67 +++++++++++++++++++++++++++++++++++++++++=
++-----
+>  include/hw/virtio/vhost.h |  1 +
+>  2 files changed, 62 insertions(+), 6 deletions(-)
+>
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 612f4db..58522f1 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -45,6 +45,7 @@
+>
+>  static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
+>  static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
+> +static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
+>
+>  /* Memslots used by backends that support private memslots (without an f=
+d). */
+>  static unsigned int used_memslots;
+> @@ -149,6 +150,47 @@ bool vhost_dev_has_iommu(struct vhost_dev *dev)
+>      }
+>  }
+>
+> +static inline bool vhost_dev_should_log(struct vhost_dev *dev)
+> +{
+> +    assert(dev->vhost_ops);
+> +    assert(dev->vhost_ops->backend_type > VHOST_BACKEND_TYPE_NONE);
+> +    assert(dev->vhost_ops->backend_type < VHOST_BACKEND_TYPE_MAX);
+> +
+> +    return dev =3D=3D QLIST_FIRST(&vhost_log_devs[dev->vhost_ops->backen=
+d_type]);
 
-Set rombar UINT32_MAX by default to distinguish these cases just as it
-is done for addr and romsize. It was confirmed that changing the default
-value to UINT32_MAX will not change the behavior by looking at
-occurences of rom_bar.
+A dumb question, why not simple check
 
-$ git grep -w rom_bar
-hw/display/qxl.c:328:    QXLRom *rom = memory_region_get_ram_ptr(&d->rom_bar);
-hw/display/qxl.c:431:    qxl_set_dirty(&qxl->rom_bar, 0, qxl->rom_size);
-hw/display/qxl.c:1048:    QXLRom *rom = memory_region_get_ram_ptr(&qxl->rom_bar);
-hw/display/qxl.c:2131:    memory_region_init_rom(&qxl->rom_bar, OBJECT(qxl), "qxl.vrom",
-hw/display/qxl.c:2154: PCI_BASE_ADDRESS_SPACE_MEMORY, &qxl->rom_bar);
-hw/display/qxl.h:101:    MemoryRegion       rom_bar;
-hw/pci/pci.c:74:    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-hw/pci/pci.c:2329:    if (!pdev->rom_bar) {
-hw/vfio/pci.c:1019:    if (vdev->pdev.romfile || !vdev->pdev.rom_bar) {
-hw/xen/xen_pt_load_rom.c:29:    if (dev->romfile || !dev->rom_bar) {
-include/hw/pci/pci_device.h:150:    uint32_t rom_bar;
+dev->log =3D=3D vhost_log_shm[dev->vhost_ops->backend_type]
 
-rom_bar refers to a different variable in qxl. It is only tested if
-the value is 0 or not in the other places.
+?
 
-If a user explicitly set UINT32_MAX, we still cannot distinguish that
-from the implicit default. However, it is unlikely to be a problem as
-nobody would type literal UINT32_MAX (0xffffffff or 4294967295) by
-chance.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- hw/pci/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 84df07a2789b..cb5ac46e9f27 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -71,7 +71,7 @@ static Property pci_props[] = {
-     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
-     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
-     DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, UINT32_MAX),
--    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-+    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, UINT32_MAX),
-     DEFINE_PROP_BIT("multifunction", PCIDevice, cap_present,
-                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
-     DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
-
--- 
-2.44.0
+Thanks
 
 
