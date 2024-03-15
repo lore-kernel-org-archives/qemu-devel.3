@@ -4,92 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E25AC54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EDC0C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:15:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl7Kx-00008n-EV; Fri, 15 Mar 2024 09:11:03 -0400
+	id 1rl7MS-0005gz-3S; Fri, 15 Mar 2024 09:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7Kh-0007ZW-7K
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:49 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7KX-0008CX-Lu
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:44 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a36126ee41eso254168366b.2
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:10:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710508235; x=1711113035; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ziq2wowWWC1u1AFoZqkoU9Vq9nlm9ySbjwCpiWVML/s=;
- b=op75yWP2kBjzzxO4AdYFmO4Wwo0v7v88JOe1Ykk8tAKJ0uI0EFjvxmuiLe0nmavjWX
- MJVkOvgR18oqw+jMCWtIu7E5CruYbj5uTFZiOdFfOZ37VzhYmpwLTJXyJYO0JCTmlKnJ
- Czkzl93KzuaVFic86Yf2+OYELIHTTNMivoaIe527tsfKkbf5YkKgEfn1ZZ0Cxp2AuNLh
- Gu44qFgAQXlZg3lk25436nEktmosFjajJCT5A3HXGkgQJs0XM1Jm12dAf+CyJG9IXyZB
- yBYDGRgL3AUXmRIgzQ6CtU3pXGijOhy1IhNy2GvuJpP4yOI1M/BL2QJiw737yDPN+QyL
- csmw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rl7ME-0005KQ-HX
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:12:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rl7M2-0000MK-5h
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:12:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710508328;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t3QzGecZxkqmeAovbFozqqZfealShnKvYvbZaHfAxm8=;
+ b=OCuWVs9onmrKyLvUkyNPGJ1nX+LrEKpODFO5Vq+NoYpE6SB3Vb+vXOJlyc2rv58LnCNh2A
+ fMMpOtItyRNpsoxhxPHVvqh0GNec4H5ke4D5pFbckEkYoTZO7yJRX4m6Srtqxa8WOLfMqJ
+ IqbjMSwoCsI9E5inz65azYToH/m+ZEQ=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-671-GWmCuXgoOnKWmIW0fSrtYw-1; Fri, 15 Mar 2024 09:12:04 -0400
+X-MC-Unique: GWmCuXgoOnKWmIW0fSrtYw-1
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7830635331bso53818885a.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:12:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710508235; x=1711113035;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Ziq2wowWWC1u1AFoZqkoU9Vq9nlm9ySbjwCpiWVML/s=;
- b=Ofc1QXKuSjB6OC2rkBmZna/4I8ds7WF6Va33wI9XmguVB1B51qaS1u2924gSJ1ebj1
- 422PErMmRWGDi57/saNSSTCPfBTTnXiyaey89aWONa0jnfXBmG9+ZJYmxFeR5MCtjgAB
- lT5lIreGZkN4e3R25qofp0Svtv4H4EXv3FSUB9Dg2maMN9U9HinIj9WYMZjfHwUB7dl/
- vko2M3NTg7BfWkGK0dRi0SjCI4iv8zYZQjkwEQGgaeNuohgNq7D3Xx9+ZEYvw34J8jua
- SFHsmhEPMGDqFK1ALnD7KJd3iFL6Xz8mZ+0+Sa4YcGc6/qcJ69HojardylvL4RsTEZOh
- M2cg==
-X-Gm-Message-State: AOJu0Yyc74U8eUjvGETCbCaoHAx3ZT09u2Po07c34QZcSXf5dCUEGdyJ
- mwhrL3SCkmqddQIVUn96xy1zFKg6XBaOeEepHzEDrGePwVEfWyncgklOnRRC8R4SVYR6mBcdvQu
- v
-X-Google-Smtp-Source: AGHT+IGM9lKIGYFKaZaCihcgLpVmcmySzlNiRx+Vc9T9AfUSHHHR2fR0Hvp2VtpFFpo3dT3QgLPrVA==
-X-Received: by 2002:a17:906:40ca:b0:a45:2e21:c776 with SMTP id
- a10-20020a17090640ca00b00a452e21c776mr3334104ejk.3.1710508235156; 
- Fri, 15 Mar 2024 06:10:35 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.145.26])
- by smtp.gmail.com with ESMTPSA id
- c19-20020a170906341300b00a462736feedsm1691257ejb.62.2024.03.15.06.10.33
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 15 Mar 2024 06:10:34 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Markus Armbruster <armbru@redhat.com>
-Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Claudio Fontana <cfontana@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 12/21] system: Introduce QemuArchBit enum
-Date: Fri, 15 Mar 2024 14:09:00 +0100
-Message-ID: <20240315130910.15750-13-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240315130910.15750-1-philmd@linaro.org>
-References: <20240315130910.15750-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1710508324; x=1711113124;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=t3QzGecZxkqmeAovbFozqqZfealShnKvYvbZaHfAxm8=;
+ b=xE5ECsFm3wFOyWY4Z3wqCnyaVm+t7+vzwyK4wqfXYmsvUrW7rBorUJv6RzKbWeb7CK
+ Xfi6HZjzLtejkyxSBcogYML5Ua602c2c0hNmUApav+u0Lkv5It/Xjh26gSWrTH80pUig
+ DCJYWxUy+jvRwhYy6iYE5CraHnkGEhUnXG4Cp3qT6YYC053WEjjawOo1FWSlczrUGpVz
+ HUR51iKQ46j2EnKsvtUCStdrXXCfpB9dtZJSgbHOtp4+/a4OvSlGvP9z4as3tyPOSHXf
+ YQ8E1QsSoSR2HYMmduohqJojSwnB1NWh9Cf7B6r3Z6d6he4PLFJalSn6NtyM098eAypx
+ AJ+w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZy+jr2HJG4Opotl+Rcsk+MVksDj0We9OLu8qyG5BZY/lK4munhafzWIoPSZ+HBQJqtxuvVmR8HtOB145UDVhYUbDEko4=
+X-Gm-Message-State: AOJu0Yz5b1RM0wVRMVZ/z6baX3jHBdkVbpaUUBVsxRyyCQk06iLL9SML
+ cyrAU58Gxu3pvKTSFBrUPP8wAJdTZ5CdGMpbqAY1tWjFIpRb6y7rKRgzfIG9nC8T8aPAJZCp1fB
+ qC4d3wsB0K3LhmoPA9tCAdTgU1zDAOj3W+QNky12toNJt9kReh5Wt
+X-Received: by 2002:a05:622a:1803:b0:430:ace8:980c with SMTP id
+ t3-20020a05622a180300b00430ace8980cmr2762410qtc.1.1710508324393; 
+ Fri, 15 Mar 2024 06:12:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGlSkM10vaTojpFVCisS8VCJleQrPXNXLv5wBOUyUmxzN/Chyqk7/kQvlCBCel3tTYOe39hMQ==
+X-Received: by 2002:a05:622a:1803:b0:430:ace8:980c with SMTP id
+ t3-20020a05622a180300b00430ace8980cmr2762379qtc.1.1710508323996; 
+ Fri, 15 Mar 2024 06:12:03 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ k17-20020ac81411000000b0042c7d11e280sm1960849qtj.90.2024.03.15.06.12.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Mar 2024 06:12:03 -0700 (PDT)
+Date: Fri, 15 Mar 2024 09:11:56 -0400
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
+ qemu_savevm_state_setup()
+Message-ID: <ZfRJHEya_kPaXWbU@x1n>
+References: <87le6omw0d.fsf@suse.de>
+ <9071affc-ffb5-435a-99d1-ca829703e31b@redhat.com>
+ <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
+ <b2b52017-c4cd-43e9-a67b-2ccbb92ad99e@redhat.com>
+ <874jdbmst4.fsf@suse.de> <ZfByYiL3Gl9d9u7h@x1n>
+ <87wmq7l2xx.fsf@suse.de>
+ <b9cb5c16-59a4-4cdc-9d12-6d7c2306b4ff@redhat.com>
+ <ZfQqpK0xCwygYYho@x1n>
+ <c946ae1f-3315-496e-b316-33343e43830f@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01, UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+In-Reply-To: <c946ae1f-3315-496e-b316-33343e43830f@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.933,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,97 +114,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Current QEMU_ARCH_foo definitions are used as masks.
-Extract the bit values, so we can easily iterate over.
+On Fri, Mar 15, 2024 at 01:20:49PM +0100, Cédric Le Goater wrote:
+> +static void qemu_savevm_wait_unplug(MigrationState *s, int state)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/sysemu/arch_init.h | 69 ++++++++++++++++++++++++++------------
- 1 file changed, 47 insertions(+), 22 deletions(-)
+One more trivial comment: I'd even consider dropping "state" altogether, as
+this should be the only state this function should be invoked.  So we can
+perhaps assert it instead of passing it over?
 
-diff --git a/include/sysemu/arch_init.h b/include/sysemu/arch_init.h
-index 8850cb1a14..cf597c40a3 100644
---- a/include/sysemu/arch_init.h
-+++ b/include/sysemu/arch_init.h
-@@ -1,30 +1,55 @@
- #ifndef QEMU_ARCH_INIT_H
- #define QEMU_ARCH_INIT_H
- 
-+typedef enum QemuArchBit {
-+    QEMU_ARCH_BIT_ALPHA         = 0,
-+    QEMU_ARCH_BIT_ARM           = 1,
-+    QEMU_ARCH_BIT_CRIS          = 2,
-+    QEMU_ARCH_BIT_I386          = 3,
-+    QEMU_ARCH_BIT_M68K          = 4,
-+    QEMU_ARCH_BIT_MICROBLAZE    = 6,
-+    QEMU_ARCH_BIT_MIPS          = 7,
-+    QEMU_ARCH_BIT_PPC           = 8,
-+    QEMU_ARCH_BIT_S390X         = 9,
-+    QEMU_ARCH_BIT_SH4           = 10,
-+    QEMU_ARCH_BIT_SPARC         = 11,
-+    QEMU_ARCH_BIT_XTENSA        = 12,
-+    QEMU_ARCH_BIT_OPENRISC      = 13,
-+    QEMU_ARCH_BIT_TRICORE       = 16,
-+    QEMU_ARCH_BIT_NIOS2         = 17,
-+    QEMU_ARCH_BIT_HPPA          = 18,
-+    QEMU_ARCH_BIT_RISCV         = 19,
-+    QEMU_ARCH_BIT_RX            = 20,
-+    QEMU_ARCH_BIT_AVR           = 21,
-+    QEMU_ARCH_BIT_HEXAGON       = 22,
-+    QEMU_ARCH_BIT_LOONGARCH     = 23,
- 
--enum {
-+    QEMU_ARCH_BIT_LAST          = QEMU_ARCH_BIT_LOONGARCH
-+} QemuArchBit;
-+
-+enum QemuArchMask {
-     QEMU_ARCH_ALL = -1,
--    QEMU_ARCH_ALPHA = (1 << 0),
--    QEMU_ARCH_ARM = (1 << 1),
--    QEMU_ARCH_CRIS = (1 << 2),
--    QEMU_ARCH_I386 = (1 << 3),
--    QEMU_ARCH_M68K = (1 << 4),
--    QEMU_ARCH_MICROBLAZE = (1 << 6),
--    QEMU_ARCH_MIPS = (1 << 7),
--    QEMU_ARCH_PPC = (1 << 8),
--    QEMU_ARCH_S390X = (1 << 9),
--    QEMU_ARCH_SH4 = (1 << 10),
--    QEMU_ARCH_SPARC = (1 << 11),
--    QEMU_ARCH_XTENSA = (1 << 12),
--    QEMU_ARCH_OPENRISC = (1 << 13),
--    QEMU_ARCH_TRICORE = (1 << 16),
--    QEMU_ARCH_NIOS2 = (1 << 17),
--    QEMU_ARCH_HPPA = (1 << 18),
--    QEMU_ARCH_RISCV = (1 << 19),
--    QEMU_ARCH_RX = (1 << 20),
--    QEMU_ARCH_AVR = (1 << 21),
--    QEMU_ARCH_HEXAGON = (1 << 22),
--    QEMU_ARCH_LOONGARCH = (1 << 23),
-+    QEMU_ARCH_ALPHA             = (1 << QEMU_ARCH_BIT_ALPHA),
-+    QEMU_ARCH_ARM               = (1 << QEMU_ARCH_BIT_ARM),
-+    QEMU_ARCH_CRIS              = (1 << QEMU_ARCH_BIT_CRIS),
-+    QEMU_ARCH_I386              = (1 << QEMU_ARCH_BIT_I386),
-+    QEMU_ARCH_M68K              = (1 << QEMU_ARCH_BIT_M68K),
-+    QEMU_ARCH_MICROBLAZE        = (1 << QEMU_ARCH_BIT_MICROBLAZE),
-+    QEMU_ARCH_MIPS              = (1 << QEMU_ARCH_BIT_MIPS),
-+    QEMU_ARCH_PPC               = (1 << QEMU_ARCH_BIT_PPC),
-+    QEMU_ARCH_S390X             = (1 << QEMU_ARCH_BIT_S390X),
-+    QEMU_ARCH_SH4               = (1 << QEMU_ARCH_BIT_SH4),
-+    QEMU_ARCH_SPARC             = (1 << QEMU_ARCH_BIT_SPARC),
-+    QEMU_ARCH_XTENSA            = (1 << QEMU_ARCH_BIT_XTENSA),
-+    QEMU_ARCH_OPENRISC          = (1 << QEMU_ARCH_BIT_OPENRISC),
-+    QEMU_ARCH_TRICORE           = (1 << QEMU_ARCH_BIT_TRICORE),
-+    QEMU_ARCH_NIOS2             = (1 << QEMU_ARCH_BIT_NIOS2),
-+    QEMU_ARCH_HPPA              = (1 << QEMU_ARCH_BIT_HPPA),
-+    QEMU_ARCH_RISCV             = (1 << QEMU_ARCH_BIT_RISCV),
-+    QEMU_ARCH_RX                = (1 << QEMU_ARCH_BIT_RX),
-+    QEMU_ARCH_AVR               = (1 << QEMU_ARCH_BIT_AVR),
-+    QEMU_ARCH_HEXAGON           = (1 << QEMU_ARCH_BIT_HEXAGON),
-+    QEMU_ARCH_LOONGARCH         = (1 << QEMU_ARCH_BIT_LOONGARCH),
- };
- 
- extern const uint32_t arch_type;
 -- 
-2.41.0
+Peter Xu
 
 
