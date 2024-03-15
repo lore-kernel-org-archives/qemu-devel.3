@@ -4,117 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22920C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 17:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59A86C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 17:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlBCm-00061B-3N; Fri, 15 Mar 2024 13:18:52 -0400
+	id 1rlBUn-0002Mc-Ad; Fri, 15 Mar 2024 13:37:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
- id 1rlBCk-00060t-P1; Fri, 15 Mar 2024 13:18:50 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
- id 1rlBCj-0004z5-4v; Fri, 15 Mar 2024 13:18:50 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8F2D41FB76;
- Fri, 15 Mar 2024 17:18:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710523123; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rlBUj-0002M1-Ll
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 13:37:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rlBUh-0008Qm-Ef
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 13:37:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710524241;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YGWtaRiMDysWe3rSBY5RWEQ52fm1eJuar54PWZmTxVQ=;
- b=tVv4Im/X54COKjzTgWOWGP/N/uC9CcuwyQi79r1izdJfejdxJ82ssz02uv6sJ8eACkZHvr
- y5EQrGDSqzV/SSTs+t1BykBu72iZ7LMkYWNg5wdYOfpPNh9j75G8z6C1uCTseqwWYOc6qy
- X1DdFFbwD77tebYA159cSw7X5Ka2EfU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710523123;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YGWtaRiMDysWe3rSBY5RWEQ52fm1eJuar54PWZmTxVQ=;
- b=UBQNXHBVJn6xl1N4xSNg7LTXsRP0Nl9Xsz/i3Xln0xbrxb9YTogay9+Mg1vvQfdWCY0zdn
- h+EuXblMpYVfodCA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710523123; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YGWtaRiMDysWe3rSBY5RWEQ52fm1eJuar54PWZmTxVQ=;
- b=tVv4Im/X54COKjzTgWOWGP/N/uC9CcuwyQi79r1izdJfejdxJ82ssz02uv6sJ8eACkZHvr
- y5EQrGDSqzV/SSTs+t1BykBu72iZ7LMkYWNg5wdYOfpPNh9j75G8z6C1uCTseqwWYOc6qy
- X1DdFFbwD77tebYA159cSw7X5Ka2EfU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710523123;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YGWtaRiMDysWe3rSBY5RWEQ52fm1eJuar54PWZmTxVQ=;
- b=UBQNXHBVJn6xl1N4xSNg7LTXsRP0Nl9Xsz/i3Xln0xbrxb9YTogay9+Mg1vvQfdWCY0zdn
- h+EuXblMpYVfodCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 20B9A1368C;
- Fri, 15 Mar 2024 17:18:43 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([10.150.64.162])
- by imap1.dmz-prg2.suse.org with ESMTPSA id efDuAvOC9GULdwAAD6G6ig
- (envelope-from <cfontana@suse.de>); Fri, 15 Mar 2024 17:18:43 +0000
-Message-ID: <5cbf8c4e-2741-6e52-c245-62fe1c50f22a@suse.de>
-Date: Fri, 15 Mar 2024 18:18:42 +0100
+ bh=t2zq0H2KZ7KLSRGf+Aoi1m/uDaQEgtzPp9Qb+7DrVto=;
+ b=RNBMLmX5aigGcfAFwd7/N6D+uBaimF0L3oNX9/evha05+Pv5V6hU3a11V8h6L3DCDr1Hfe
+ sLjE8SLuluWOQX+fySgLYAG5rR1edTsKVVdnIKEmP/mP79GDuuL6y+82NjMqGcOwLqS+gn
+ F58PDVmzEG7hglE2WXXAoytGo4T906g=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-317-cRHsluf3NXi4oIESk-TPew-1; Fri, 15 Mar 2024 13:37:19 -0400
+X-MC-Unique: cRHsluf3NXi4oIESk-TPew-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-29c6ff57cedso2149874a91.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 10:37:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710524238; x=1711129038;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=t2zq0H2KZ7KLSRGf+Aoi1m/uDaQEgtzPp9Qb+7DrVto=;
+ b=ElW9kornu5cI5LTvPxRYGq338lUgG+/QmRZFsEZcQMEJag2Xn3L7Xy2EGIqPbxskEQ
+ IRAiT3mE7cetb8IgKfGPdRCHsTOLU+pPcMVlSpbB5a3+FBewS4ISASjJsY3HPQWGMRWC
+ 5xS49lx8LvWhLv9XX+Ad3GCy31bTBlMDS06CcmKpUieV7CAN/uRtZlDpIq9F+iXqYptn
+ A/KMfPgEe4naCCq0VJ6IZFYsvlhYR/xZYZGWSPsfrcGIML1jrypZOIRpqQJ5KKz/BuO2
+ /0XUvh/lj67qpmVZTe8ZNWgUsnxOaiGYZ7iN0y1EnAruoKgeRTcg/HKd7WqeV4MM2h5D
+ QQHA==
+X-Gm-Message-State: AOJu0YylT5Q0S61rGl0XCcXcAKOjWhQthfsiwtLDg5J6VpVdNEy048P2
+ jMCoIg36GLT2f6cDJzM3IvyjZNPRFnSGyJU349x9VgMi1gfgUr2/RbcCjD8Wbq7K/QrugfDYev3
+ aaSQFtHD2VQcwI8Nda1znOCTUd0z+SLsvte+2IclNMQSUZ+5TA7p14BB7o6kiXuz1ksDaeo5bqJ
+ mlfnqRivzHkMm+0BBoc5TaZLz8Is0=
+X-Received: by 2002:a17:90b:148d:b0:29c:76a9:3b7b with SMTP id
+ js13-20020a17090b148d00b0029c76a93b7bmr3701798pjb.7.1710524238284; 
+ Fri, 15 Mar 2024 10:37:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECjNuIx7txYB7J+yZgIITJ8fieuWsvBB9NBUaKZGmBcnAo4/8gAXjDOitBARg/F02hZ5Nb4rtKQ8JKNb/Lh5c=
+X-Received: by 2002:a17:90b:148d:b0:29c:76a9:3b7b with SMTP id
+ js13-20020a17090b148d00b0029c76a93b7bmr3701784pjb.7.1710524238023; Fri, 15
+ Mar 2024 10:37:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.4.0
-Subject: Re: [PATCH v2] target/s390x: improve cpu compatibility check error
- message
-Content-Language: en-US
-To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20240314213746.27163-1-cfontana@suse.de>
- <6ce770d49082d4a2b42bcf71200521ca58dc4ed5.camel@linux.ibm.com>
-From: Claudio Fontana <cfontana@suse.de>
-In-Reply-To: <6ce770d49082d4a2b42bcf71200521ca58dc4ed5.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- BAYES_HAM(-3.00)[100.00%]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_FIVE(0.00)[5];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- TO_DN_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="tVv4Im/X";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=UBQNXHBV
-X-Rspamd-Queue-Id: 8F2D41FB76
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=cfontana@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -60
-X-Spam_score: -6.1
-X-Spam_bar: ------
-X-Spam_report: (-6.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-1.686,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240313044127.49089-1-jsnow@redhat.com>
+ <20240313044127.49089-22-jsnow@redhat.com>
+ <87edcbegn0.fsf@pond.sub.org>
+In-Reply-To: <87edcbegn0.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Fri, 15 Mar 2024 13:37:05 -0400
+Message-ID: <CAFn=p-aJKNWHW6+XE1RFzDu8eHBGY-0k=1CgnkFJyYZd-EZgHA@mail.gmail.com>
+Subject: Re: [PATCH v4 21/23] qapi/schema: add type hints
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>
+Content-Type: multipart/alternative; boundary="000000000000965f880613b67522"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.933,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,85 +97,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/15/24 17:59, Nina Schoetterl-Glausch wrote:
-> On Thu, 2024-03-14 at 22:37 +0100, Claudio Fontana wrote:
->> some users were confused by this message showing under TCG:
->>
->> Selected CPU generation is too new. Maximum supported model
->> in the configuration: 'xyz'
->>
->> Clarify that the maximum can depend on the accel, and add a
->> hint to try a different one.
->>
->> Also add a hint for features mismatch to suggest trying
->> different accel, QEMU and kernel versions.
->>
->> Signed-off-by: Claudio Fontana <cfontana@suse.de>
-> 
-> Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-> 
->> ---
->>  target/s390x/cpu_models.c | 22 +++++++++++++++-------
->>  1 file changed, 15 insertions(+), 7 deletions(-)
->>
->> diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
->> index 1a1c096122..8ed3bb6a27 100644
->> --- a/target/s390x/cpu_models.c
->> +++ b/target/s390x/cpu_models.c
->> @@ -500,6 +500,16 @@ static void error_prepend_missing_feat(const char *name, void *opaque)
->>      error_prepend((Error **) opaque, "%s ", name);
->>  }
->>  
->> +static void check_compat_model_failed(Error **errp,
->> +                                      const S390CPUModel *max_model,
->> +                                      const char *msg)
->> +{
->> +    error_setg(errp, "%s. Maximum supported model in the current configuration: \'%s\'",
->> +               msg, max_model->def->name);
->> +    error_append_hint(errp, "Consider a different accelerator, try \"-accel help\"\n");
->> +    return;
->> +}
->> +
->>  static void check_compatibility(const S390CPUModel *max_model,
->>                                  const S390CPUModel *model, Error **errp)
->>  {
->> @@ -507,15 +517,11 @@ static void check_compatibility(const S390CPUModel *max_model,
->>      S390FeatBitmap missing;
->>  
->>      if (model->def->gen > max_model->def->gen) {
->> -        error_setg(errp, "Selected CPU generation is too new. Maximum "
->> -                   "supported model in the configuration: \'%s\'",
->> -                   max_model->def->name);
->> +        check_compat_model_failed(errp, max_model, "Selected CPU generation is too new");
->>          return;
->>      } else if (model->def->gen == max_model->def->gen &&
->>                 model->def->ec_ga > max_model->def->ec_ga) {
->> -        error_setg(errp, "Selected CPU GA level is too new. Maximum "
->> -                   "supported model in the configuration: \'%s\'",
->> -                   max_model->def->name);
->> +        check_compat_model_failed(errp, max_model, "Selected CPU GA level is too new");
->>          return;
->>      }
->>  
->> @@ -537,7 +543,9 @@ static void check_compatibility(const S390CPUModel *max_model,
->>      error_setg(errp, " ");
->>      s390_feat_bitmap_to_ascii(missing, errp, error_prepend_missing_feat);
->>      error_prepend(errp, "Some features requested in the CPU model are not "
->> -                  "available in the configuration: ");
->> +                  "available in the current configuration: ");
->> +    error_append_hint(errp,
->> +                      "Consider a different accelerator, QEMU, or kernel version\n");
-> 
-> If I'm reading the regex right, this ^, a string literal on a separate line, is excluded
-> from the line length check.
+--000000000000965f880613b67522
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks, it's very good to know!
+On Fri, Mar 15, 2024, 10:03=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
 
-Claudio
-> 
->>  }
->>  
->>  S390CPUModel *get_max_cpu_model(Error **errp)
-> 
+> John Snow <jsnow@redhat.com> writes:
+>
+> > This patch only adds type hints, which aren't utilized at runtime and
+> > don't change the behavior of this module in any way.
+> >
+> > In a scant few locations, type hints are removed where no longer
+> > necessary due to inference power from typing all of the rest of
+> > creation; and any type hints that no longer need string quotes are
+> > changed.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  scripts/qapi/schema.py | 568 ++++++++++++++++++++++++++++-------------
+> >  1 file changed, 396 insertions(+), 172 deletions(-)
+> >
+> > diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+> > index 3b8c2ebbb5f..d2faaea6eac 100644
+> > --- a/scripts/qapi/schema.py
+> > +++ b/scripts/qapi/schema.py
+>
+> [...]
+>
+> > @@ -1006,18 +1181,27 @@ def _def_definition(self, defn):
+> >                  defn.info, "%s is already defined" %
+> other_defn.describe())
+> >          self._entity_dict[defn.name] =3D defn
+> >
+> > -    def lookup_entity(self, name, typ=3DNone):
+> > +    def lookup_entity(
+> > +        self,
+> > +        name: str,
+> > +        typ: Optional[type] =3D None,
+> > +    ) -> Optional[QAPISchemaEntity]:
+>
+> Optional[QAPISchemaDefinition], actually.
+>
+
+Ah! Very good catch.
+
+
+> >          ent =3D self._entity_dict.get(name)
+> >          if typ and not isinstance(ent, typ):
+> >              return None
+> >          return ent
+>
+> [...]
+>
+>
+
+--000000000000965f880613b67522
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Fri, Mar 15, 2024, 10:03=E2=80=AFAM Markus Armbrust=
+er &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote=
+:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bor=
+der-left:1px #ccc solid;padding-left:1ex">John Snow &lt;<a href=3D"mailto:j=
+snow@redhat.com" target=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&=
+gt; writes:<br>
+<br>
+&gt; This patch only adds type hints, which aren&#39;t utilized at runtime =
+and<br>
+&gt; don&#39;t change the behavior of this module in any way.<br>
+&gt;<br>
+&gt; In a scant few locations, type hints are removed where no longer<br>
+&gt; necessary due to inference power from typing all of the rest of<br>
+&gt; creation; and any type hints that no longer need string quotes are<br>
+&gt; changed.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 scripts/qapi/schema.py | 568 ++++++++++++++++++++++++++++-------=
+------<br>
+&gt;=C2=A0 1 file changed, 396 insertions(+), 172 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py<br>
+&gt; index 3b8c2ebbb5f..d2faaea6eac 100644<br>
+&gt; --- a/scripts/qapi/schema.py<br>
+&gt; +++ b/scripts/qapi/schema.py<br>
+<br>
+[...]<br>
+<br>
+&gt; @@ -1006,18 +1181,27 @@ def _def_definition(self, defn):<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=
+=3D"http://defn.info" rel=3D"noreferrer noreferrer" target=3D"_blank">defn.=
+info</a>, &quot;%s is already defined&quot; % other_defn.describe())<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self._entity_dict[<a href=3D"http://=
+defn.name" rel=3D"noreferrer noreferrer" target=3D"_blank">defn.name</a>] =
+=3D defn<br>
+&gt;=C2=A0 <br>
+&gt; -=C2=A0 =C2=A0 def lookup_entity(self, name, typ=3DNone):<br>
+&gt; +=C2=A0 =C2=A0 def lookup_entity(<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 self,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 name: str,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 typ: Optional[type] =3D None,<br>
+&gt; +=C2=A0 =C2=A0 ) -&gt; Optional[QAPISchemaEntity]:<br>
+<br>
+Optional[QAPISchemaDefinition], actually.<br></blockquote></div></div><div =
+dir=3D"auto"><br></div><div dir=3D"auto">Ah! Very good catch.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc sol=
+id;padding-left:1ex">
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ent =3D self._entity_dict.get(name)<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if typ and not isinstance(ent, typ):=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return None<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return ent<br>
+<br>
+[...]<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000965f880613b67522--
 
 
