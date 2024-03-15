@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5544CC54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 06:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44893C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 06:43:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl1Gw-00025J-KG; Fri, 15 Mar 2024 02:42:31 -0400
+	id 1rl1HW-0002BH-5L; Fri, 15 Mar 2024 02:43:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rl1Gt-000253-0P
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:42:27 -0400
-Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ id 1rl1HU-0002AW-1y
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:43:04 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rl1Gr-0005KT-8Y
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:42:26 -0400
-Received: by mail-oo1-xc30.google.com with SMTP id
- 006d021491bc7-59fb0b5b47eso601922eaf.3
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 23:42:24 -0700 (PDT)
+ id 1rl1HR-0005Ne-8B
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:43:03 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6e6b5831bc8so1769434b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 23:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710484943; x=1711089743; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710484976; x=1711089776; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XV0/rfi9+XnuHPOrvt5YSLUSgCjiCBnapvaJA46FE8k=;
- b=huWRB/DpVIscM0lzzqqcZuL3Sj6TWD0rNfiyFho12O2eoAUkBxHlJCIOYiCR6Qutgy
- AB8TOxiM9iZ+c0k1C1upFwLHoTADLDJzplgtbPmwtStnx72vr3YbZbutYHML4LQGZI3s
- oIlRG+2d6HvHpTCj8DhDshnz2bKtlsBY9HkUpqS/pLCpbcZJN1ubESVre6+M6WW9kkXt
- 3xUHt6DelU/Out3Zl02EMZxzHlDPdr9jdVtCh3JnGl3utLdic6rm8dEJNhbY3+1nMnKn
- wIrjZtJXTbG2zpo553LAWQi1m7uAQzuVwStYgAdgkJHSE6C2EMinFUZM9Nkgs60mBtB1
- S8Xg==
+ bh=dWdlKqM9eUib6PnBU9BEHUH4tP+pJNByaXChBbFYYj0=;
+ b=UY5ihcoBVWAmXSVMhHCPbTxVTjxcZbqb1E9XtKlhQ9+kFRdZCRPhW/kr8BH4kHdF+u
+ VvbrQbcCk+XEKN/kC9/S1WwAAuv3/DfdKNKdg/G1ljdR+EuxZNIJXkheMJ7RVuPIp46H
+ MdciMoVv95Po7jmN+g0JXxeDvppdVwpbLyV+nbSdvw584/VIepzzdx5+f5UVZVsOMUqb
+ J73sFkrFRrhF5PZ/n5+xAVC9qU3+MG8hcVqfFluc7Pg8GfWM6Z1+wZRBWuvLperg7lnu
+ Thj37h+mgZvrFyyEH3coFkDN+Gsc55G/Z+cHDp/ggI8KQYlNOKEIlJ/4pN+2SuckfZJX
+ Y+DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710484943; x=1711089743;
+ d=1e100.net; s=20230601; t=1710484976; x=1711089776;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XV0/rfi9+XnuHPOrvt5YSLUSgCjiCBnapvaJA46FE8k=;
- b=IbWohA3MInaifzLLyi60DrUuBU/90g7bilqF2FGH7JRULHuVZ0CdT3wLM1Ouw2GOSv
- z561gzBiIICiuAInxBlUaRp1HED2gCxcZtcomrhPmpZ21ELezyQZIOBMYDTGG9oyEatD
- qtOIXVFo5TFSFxoUVZGky8ZHi58TBZczVnn8CcnXkHrLIzVBcvWt6vfN5cn6jLArrelO
- VJHCGN4PvvvNtx3/NR1lFPd0pVpX5g3YKD4MIjNUKJ9+m3a7FPm9MNK0ymBmoWnfzqMT
- qzPGUcTNFdfZDB9SHzMScl56FE32aTaNLfe6xMsvbMQys5gic/1vE8FP0fN5+joH1bsG
- z28w==
+ bh=dWdlKqM9eUib6PnBU9BEHUH4tP+pJNByaXChBbFYYj0=;
+ b=mWZsO8GGSqxg01X6ze3Td5jyBAwYoE9VyvNSRpxHByCvmA1lANRt7V9Nzba6j9sZng
+ 2DS9ighBD8U0yXz/r0SEe82Dib3gtGO5cEfjENb9TWOmHcicUSn/A5xKF3ePtIuq4BmQ
+ BOJZyZqp6c/jPE806S3r9E9yMWOE5FqfvXZZcv4w3HOftV/e4QToQO5pcaEcfHkMIhKt
+ I24pJ5xtMDMpTri0DQ6+1/PC23boNdnoKP4dY6Xg3gPCRqKGxG1EEZCnSZPTNUAy26aX
+ 2OrrZgJ+WrUjAX23HZspkBIc/SWoMPQSwKjyq+ZRNINLEs/ro/zDNkl8THA3uSAyrCBj
+ NN9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXUYi019tP0k2cQ/2+ngZRgUeXMJlrY29azGt3Ybb7Ph0vqiMSWietFySIWKBMgrl2RZnkn3d+jVX2Tegc7DeTOUCvn2qE=
-X-Gm-Message-State: AOJu0Yz0aoCFtQkjyJ+pRcmNOUf0rtYiucVofjWl0hsKMUvv6hUZgu9E
- 7Y8T2p/LDZnMEYEElhvCIuy0wn/1dJe1athAhkU5QX6g4oApeVjjF/y9FjzhwKI=
-X-Google-Smtp-Source: AGHT+IH1Q1qGVgomlDchiMaPkPmrwpvRXO7EBDM30O4WKNb8AO7Y2MKtKdiFQLjt1gF8S2Wn/oPf4g==
-X-Received: by 2002:a05:6358:2799:b0:17c:1c76:84b1 with SMTP id
- l25-20020a056358279900b0017c1c7684b1mr4735979rwb.14.1710484943114; 
- Thu, 14 Mar 2024 23:42:23 -0700 (PDT)
+ AJvYcCWg1bjBVU8bqMaF6b9mVXKFW18moB5c31o2RQvth1nb8tIc/x6XAWtXTxDto9AhcrFmr+qC81Gr/ep4b66PKfdR8qhmA5M=
+X-Gm-Message-State: AOJu0Yx+WbjllfZ6r1q6dQGKt/zAwh+FCgkMaXVR0L9ZlMDUVT8ZexG3
+ KWr08Fy2L+p2EepYxke1wZcikzDobzfTifPDXsArOjnG+Vr2CIYzsadR18uO3Xw=
+X-Google-Smtp-Source: AGHT+IHiGhcZ9b4J+7XrKMN6zVfuPSuljNxom8OYI9sJ9aiLyadQG4SPt37ZNQscQHC0I18INU/YeA==
+X-Received: by 2002:a05:6a00:2da0:b0:6e6:2999:e61c with SMTP id
+ fb32-20020a056a002da000b006e62999e61cmr4982652pfb.17.1710484976629; 
+ Thu, 14 Mar 2024 23:42:56 -0700 (PDT)
 Received: from [192.168.0.227] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- g20-20020a63dd54000000b005ce998b9391sm1785164pgj.67.2024.03.14.23.42.21
+ g20-20020a63dd54000000b005ce998b9391sm1785164pgj.67.2024.03.14.23.42.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Mar 2024 23:42:22 -0700 (PDT)
-Message-ID: <fbca036f-ecb9-4b14-9c02-73d85b6de0af@linaro.org>
-Date: Thu, 14 Mar 2024 20:42:18 -1000
+ Thu, 14 Mar 2024 23:42:56 -0700 (PDT)
+Message-ID: <d0d771ad-b4f6-4c6e-a8f7-e566a33ca006@linaro.org>
+Date: Thu, 14 Mar 2024 20:42:53 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.0? 01/12] accel/tcg/plugin: Remove
- CONFIG_SOFTMMU_GATE definition
+Subject: Re: [PATCH-for-9.0? 02/12] travis-ci: Rename SOFTMMU -> SYSTEM
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-ppc@nongnu.org
+ qemu-ppc@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
 References: <20240313213339.82071-1-philmd@linaro.org>
- <20240313213339.82071-2-philmd@linaro.org>
+ <20240313213339.82071-3-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240313213339.82071-2-philmd@linaro.org>
+In-Reply-To: <20240313213339.82071-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,12 +104,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/13/24 11:33, Philippe Mathieu-Daudé wrote:
-> The CONFIG_SOFTMMU_GATE definition was never used, remove it.
+> Since we*might*  have user emulation with softmmu,
+> rename MAIN_SOFTMMU_TARGETS as MAIN_SYSTEM_TARGETS
+> to express 'system emulation targets'.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   accel/tcg/plugin-gen.c | 6 ------
->   1 file changed, 6 deletions(-)
+>   .travis.yml | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
