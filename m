@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84813C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 12:30:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF46C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 12:30:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl6hG-0002DM-Su; Fri, 15 Mar 2024 08:30:02 -0400
+	id 1rl6hZ-0002J8-BS; Fri, 15 Mar 2024 08:30:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rl6h9-0002CN-Vv
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:29:56 -0400
+ id 1rl6hE-0002Dc-OL
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:30:02 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rl6h6-0006OT-Hn
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:29:54 -0400
+ id 1rl6h6-0006OU-UE
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:29:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=LI4Zjt2kmsotdBVKwkUebV826YtkKLl6ksUtmYYkisA=; b=h2EHbiHxZbOW
- 926K4H1p/nZouq1o0yST2h3iNqfjYxOOpL1EXnpBaQEbdP+b17f0Z+3fVJq2l+59/FNunvw9cQLkf
- llpwmDreF6h5zI7108p2lS65wsb2Ax6bDtW87dBL9N9mHjt47++MIgjePlda5+4ijBwzro++y33U8
- tDx6vOBg/1XX36zRzA6CmpMYUEIlAGVjftMTKJqpP3o4a4pT645vitwC1TUg7Pl/NiqvgTESIuuON
- XeTwZKJNXM7pyuRx8AFp6FcQmbpbt+JIWSx0FncaoM6cfMjp21M/7iRYJ38Gdj5iVny5V8t0cbu9I
- Dxt6lTS/alEWjsLIwZqHaQ==;
+ Content-Type; bh=t7XlrqutVCUHR7SEHqbK4gTTxIOu1rtpDU+8vOsVCKg=; b=BFDlUavUltkB
+ t7k6TF7NjogYRJIsCxRJ3ZNKAYsgrRz+zFG9WGJCHaYnk0JB1vhbF8+94pKcOrhbsxg2zpevESGdM
+ +sOm1tmGCjMt1wEiePKWs5tIgaNzoQHUkVB7/xsYfOoRHhMZ3bGLS2g8kAEYvZAOEE9FvjR3iSx8C
+ XqggWWznrinCKZ8DV7X5A7tpz3otyGedxzJIODkTBUUOKzpp0O+RTCMOGHPvV2JslnNhhdnw5plO0
+ lh1xgVt9fRrTtm+AVQkGDYUxoAlUIPnpJkKKdPxbUkzHrc4ZNiCIxbxBFo5wx3aNXl5GaTEWeuGmX
+ 73ZlN99IJK3Ct5EIluzr9Q==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rl6f5-005Caf-06;
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rl6f5-005Caf-0S;
  Fri, 15 Mar 2024 13:29:46 +0100
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, michael.roth@amd.com, kkostiuk@redhat.com,
  marcandre.lureau@redhat.com, philmd@linaro.org,
  andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v3 2/7] qga: introduce ga_run_command() helper for guest cmd
- execution
-Date: Fri, 15 Mar 2024 14:29:41 +0200
-Message-Id: <20240315122946.39168-3-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v3 4/7] qga/commands-posix: qmp_guest_set_time: use
+ ga_run_command helper
+Date: Fri, 15 Mar 2024 14:29:43 +0200
+Message-Id: <20240315122946.39168-5-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240315122946.39168-1-andrey.drobyshev@virtuozzo.com>
 References: <20240315122946.39168-1-andrey.drobyshev@virtuozzo.com>
@@ -70,182 +70,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When executing guest commands in *nix environment, we repeat the same
-fork/exec pattern multiple times.  Let's just separate it into a single
-helper which would also be able to feed input data into the launched
-process' stdin.  This way we can avoid code duplication.
+There's no need to check for the existence of "/sbin/hwclock", the
+exec() call will do that for us.
 
-To keep the history more bisectable, let's replace qmp commands
-implementations one by one.  Also add G_GNUC_UNUSED attribute to the
-helper and remove it in the next commit.
-
-Originally-by: Yuri Pudgorodskiy <yur@virtuozzo.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- qga/commands-posix.c | 150 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 150 insertions(+)
+ qga/commands-posix.c | 43 +++----------------------------------------
+ 1 file changed, 3 insertions(+), 40 deletions(-)
 
 diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 8207c4c47e..ad05630086 100644
+index d4025e0c1e..94b652d54e 100644
 --- a/qga/commands-posix.c
 +++ b/qga/commands-posix.c
-@@ -76,6 +76,156 @@ static void ga_wait_child(pid_t pid, int *status, Error **errp)
-     g_assert(rpid == pid);
+@@ -279,21 +279,9 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
+ void qmp_guest_set_time(bool has_time, int64_t time_ns, Error **errp)
+ {
+     int ret;
+-    int status;
+-    pid_t pid;
+     Error *local_err = NULL;
+     struct timeval tv;
+-    static const char hwclock_path[] = "/sbin/hwclock";
+-    static int hwclock_available = -1;
+-
+-    if (hwclock_available < 0) {
+-        hwclock_available = (access(hwclock_path, X_OK) == 0);
+-    }
+-
+-    if (!hwclock_available) {
+-        error_setg(errp, QERR_UNSUPPORTED);
+-        return;
+-    }
++    const char *argv[] = {"/sbin/hwclock", has_time ? "-w" : "-s", NULL};
+ 
+     /* If user has passed a time, validate and set it. */
+     if (has_time) {
+@@ -324,37 +312,12 @@ void qmp_guest_set_time(bool has_time, int64_t time_ns, Error **errp)
+      * just need to synchronize the hardware clock. However, if no time was
+      * passed, user is requesting the opposite: set the system time from the
+      * hardware clock (RTC). */
+-    pid = fork();
+-    if (pid == 0) {
+-        setsid();
+-        reopen_fd_to_null(0);
+-        reopen_fd_to_null(1);
+-        reopen_fd_to_null(2);
+-
+-        /* Use '/sbin/hwclock -w' to set RTC from the system time,
+-         * or '/sbin/hwclock -s' to set the system time from RTC. */
+-        execl(hwclock_path, "hwclock", has_time ? "-w" : "-s", NULL);
+-        _exit(EXIT_FAILURE);
+-    } else if (pid < 0) {
+-        error_setg_errno(errp, errno, "failed to create child process");
+-        return;
+-    }
+-
+-    ga_wait_child(pid, &status, &local_err);
++    ga_run_command(argv, NULL, "set hardware clock to system time",
++                   &local_err);
+     if (local_err) {
+         error_propagate(errp, local_err);
+         return;
+     }
+-
+-    if (!WIFEXITED(status)) {
+-        error_setg(errp, "child process has terminated abnormally");
+-        return;
+-    }
+-
+-    if (WEXITSTATUS(status)) {
+-        error_setg(errp, "hwclock failed to set hardware clock to system time");
+-        return;
+-    }
  }
  
-+static ssize_t ga_pipe_read_str(int fd[2], char **str)
-+{
-+    ssize_t n, len = 0;
-+    char buf[1024];
-+
-+    close(fd[1]);
-+    fd[1] = -1;
-+    while ((n = read(fd[0], buf, sizeof(buf))) != 0) {
-+        if (n < 0) {
-+            if (errno == EINTR) {
-+                continue;
-+            } else {
-+                len = -errno;
-+                break;
-+            }
-+        }
-+        *str = g_realloc(*str, len + n + 1);
-+        memcpy(*str + len, buf, n);
-+        len += n;
-+        *str[len] = '\0';
-+    }
-+    close(fd[0]);
-+    fd[0] = -1;
-+
-+    return len;
-+}
-+
-+/*
-+ * Helper to run command with input/output redirection,
-+ * sending string to stdin and taking error message from
-+ * stdout/err.
-+ */
-+G_GNUC_UNUSED
-+static int ga_run_command(const char *argv[], const char *in_str,
-+                          const char *action, Error **errp)
-+{
-+    pid_t pid;
-+    int status;
-+    int retcode = -1;
-+    int infd[2] = { -1, -1 };
-+    int outfd[2] = { -1, -1 };
-+    char *str = NULL;
-+    ssize_t len = 0;
-+
-+    if ((in_str && !g_unix_open_pipe(infd, FD_CLOEXEC, NULL)) ||
-+        !g_unix_open_pipe(outfd, FD_CLOEXEC, NULL)) {
-+        error_setg(errp, "cannot create pipe FDs");
-+        goto out;
-+    }
-+
-+    pid = fork();
-+    if (pid == 0) {
-+        char *cherr = NULL;
-+
-+        setsid();
-+
-+        if (in_str) {
-+            /* Redirect stdin to infd. */
-+            close(infd[1]);
-+            dup2(infd[0], 0);
-+            close(infd[0]);
-+        } else {
-+            reopen_fd_to_null(0);
-+        }
-+
-+        /* Redirect stdout/stderr to outfd. */
-+        close(outfd[0]);
-+        dup2(outfd[1], 1);
-+        dup2(outfd[1], 2);
-+        close(outfd[1]);
-+
-+        execvp(argv[0], (char *const *)argv);
-+
-+        /* Write the cause of failed exec to pipe for the parent to read it. */
-+        cherr = g_strdup_printf("failed to exec '%s'", argv[0]);
-+        perror(cherr);
-+        g_free(cherr);
-+        _exit(EXIT_FAILURE);
-+    } else if (pid < 0) {
-+        error_setg_errno(errp, errno, "failed to create child process");
-+        goto out;
-+    }
-+
-+    if (in_str) {
-+        close(infd[0]);
-+        infd[0] = -1;
-+        if (qemu_write_full(infd[1], in_str, strlen(in_str)) !=
-+                strlen(in_str)) {
-+            error_setg_errno(errp, errno, "%s: cannot write to stdin pipe",
-+                             action);
-+            goto out;
-+        }
-+        close(infd[1]);
-+        infd[1] = -1;
-+    }
-+
-+    len = ga_pipe_read_str(outfd, &str);
-+    if (len < 0) {
-+        error_setg_errno(errp, -len, "%s: cannot read from stdout/stderr pipe",
-+                         action);
-+        goto out;
-+    }
-+
-+    ga_wait_child(pid, &status, errp);
-+    if (*errp) {
-+        goto out;
-+    }
-+
-+    if (!WIFEXITED(status)) {
-+        if (len) {
-+            error_setg(errp, "child process has terminated abnormally: %s",
-+                       str);
-+        } else {
-+            error_setg(errp, "child process has terminated abnormally");
-+        }
-+        goto out;
-+    }
-+
-+    retcode = WEXITSTATUS(status);
-+
-+    if (WEXITSTATUS(status)) {
-+        if (len) {
-+            error_setg(errp, "child process has failed to %s: %s",
-+                       action, str);
-+        } else {
-+            error_setg(errp, "child process has failed to %s: exit status %d",
-+                       action, WEXITSTATUS(status));
-+        }
-+        goto out;
-+    }
-+
-+out:
-+    g_free(str);
-+
-+    if (infd[0] != -1) {
-+        close(infd[0]);
-+    }
-+    if (infd[1] != -1) {
-+        close(infd[1]);
-+    }
-+    if (outfd[0] != -1) {
-+        close(outfd[0]);
-+    }
-+    if (outfd[1] != -1) {
-+        close(outfd[1]);
-+    }
-+
-+    return retcode;
-+}
-+
- void qmp_guest_shutdown(const char *mode, Error **errp)
- {
-     const char *shutdown_flag;
+ typedef enum {
 -- 
 2.39.3
 
