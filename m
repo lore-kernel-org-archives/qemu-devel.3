@@ -4,52 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 901E1C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 16:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB4FC54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 16:40:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlABZ-0001YG-7c; Fri, 15 Mar 2024 12:13:33 -0400
+	id 1rlAaN-0007uG-Pa; Fri, 15 Mar 2024 12:39:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lorenz@brun.one>) id 1rl91I-0007iI-Hz
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 10:58:52 -0400
-Received: from s2.dolansoft.org ([212.51.146.245] helo=mx.dolansoft.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lorenz@brun.one>) id 1rl91G-0005oE-Dh
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 10:58:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=brun.one;
- s=s1; h=MIME-Version:Message-ID:Date:Subject:Cc:To:From:In-Reply-To:
- References:From:To:Subject:Date:Message-ID:Reply-To;
- bh=q71kjRy1vgrW30Iwwa+K3qmXkGojyqby1TCUGLaZCwI=; b=KWsaEmWjLLmFA9teN/MSlDWCY/
- 6q+6uh+TJyuSiEzrtt176fqeFqOHJwsJU+cVZUClNtstWftWoaByRwj9X4iwo/ANe/RnUnjWDuOjK
- xAtBJcy2uBvmPmorSeD/E5cQdAiZaI4uyn3dJezjzpixN2cwvHSCiLDBtTrcMUBegiRpxIY+41xYA
- 3cYWPYlPOeZIipZn49DoSO5NyHVwxwWj5I8KeHG+WmnPhgEoJq9y0oUKwQIkOlm3Cn9FuDY4BUsPs
- XvL+dcRSSDrBzH9O9phRIU2l/vJ3dscuFCsT9+8i/LFxoEPodg1jrQ5ScOKSlaG4woNyAbdewvsqW
- yzN92W5A==;
-Received: from [212.51.153.89] (helo=localhost.localdomain)
- by mx.dolansoft.org with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96.2) (envelope-from <lorenz@dolansoft.org>)
- id 1rl91A-000bvY-2e; Fri, 15 Mar 2024 14:58:44 +0000
-From: Lorenz Brun <lorenz@brun.one>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
-	Fam Zheng <fam@euphon.net>
-Subject: [PATCH] scsi-generic: fix io_timeout property not applying
-Date: Fri, 15 Mar 2024 15:58:31 +0100
-Message-ID: <20240315145831.2531695-1-lorenz@brun.one>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rlAaK-0007u0-Fe
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 12:39:08 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rlAaI-0006YJ-Q6
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 12:39:08 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-513d4559fb4so2359059e87.3
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 09:39:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710520744; x=1711125544; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GwoUDi1aTR9nFS2lil41K52D7zbkSG3+6SKMvfX0p90=;
+ b=tbeIpAwzP1y6I5wSpouBpWzNgWOUNJr08T1Oi4NO+DRYLe039Vdo8xBJUz5LtlfXII
+ b/qVw47MEiYhgM5g9rsp/6mgdYpWbKMPS3aywSusojGtZkA3/QOhPWbkNSp6VDka2ZFc
+ W7m50ofX14swOtdDbj9wd2eS6Cal73DzoK9GSiAY5x8mZ38gayPXSHYNVyBxad7/2cDV
+ DHqF29s4loEret3jbdJxaquKkZ+disirR3QLnqMSh41MXZxcPppgM15ClN2zuEmTMD80
+ FB1UVyprxLVZTgU8xq4H5nS8O6w0RUss9l7V7vVJsqcTPSI0aPpE12FK6B8oDkJwj+3m
+ 3Unw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710520744; x=1711125544;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GwoUDi1aTR9nFS2lil41K52D7zbkSG3+6SKMvfX0p90=;
+ b=KNgTQt02WhxIqO2LUz8o9MUalC4AWlmh4XDQjRvQBgCmkLQSPfJNI96KNC0CctdsBV
+ KrqJ35glIHRuBCfD9OdtyoBq+pyThd2OtIiMJXKDp8GeabuSW1MEjV9peiAbFx/p88ye
+ 9sY4yKIuVMxoa8qdMkdCQV3AmfW7w4uBidwJx72NqTNz8Hi13agbEmtSXLs12kbXtn7O
+ VTFU54xSbugc8NxqrWWBOOR0sMlXamBHCGgp2BbsQKVC+Q0c/6Ie2Or1h9KqKS1FoDEv
+ 0OEg6ckGz+J9Cc3B4A5RcpwsTPC3KQbWO8v3CHkEwAKJMCwoU+y4MbwGKAofCkrQzl9t
+ jQgA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxnZpghrSmYDcIlqVyAJV2xYd3KDB3taAyAT6oRrHSTapVrrQWH5jumOZFv/39wG1prZfZECLC/q3rTqbRnFzMG9XiRvw=
+X-Gm-Message-State: AOJu0YzO3V1c4+Lr+ukgPPVWWNMNmg4fVlgElypKH5gUlwlpjijdeLnc
+ rBdz1YimcQ4zBtnpF5jRJLk62YX5ZqY62ldrAa7W5r61IQX5w51UHWAXTZ2GZV8=
+X-Google-Smtp-Source: AGHT+IGvLc82wW7kv8oiguzyo1zSAkhKDNpDy8ifHwqKtMJHvfdWfZ/yV7CbYwU46APFrDgSl32cAQ==
+X-Received: by 2002:ac2:4425:0:b0:513:b040:707b with SMTP id
+ w5-20020ac24425000000b00513b040707bmr3924609lfl.51.1710520744002; 
+ Fri, 15 Mar 2024 09:39:04 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.145.26])
+ by smtp.gmail.com with ESMTPSA id
+ p6-20020adfcc86000000b0033ec072a491sm3550828wrj.35.2024.03.15.09.39.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 15 Mar 2024 09:39:03 -0700 (PDT)
+Message-ID: <06c7f2c3-b773-4ce0-91ba-eb4249b8ce8a@linaro.org>
+Date: Fri, 15 Mar 2024 17:39:01 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 24/25] qapi: Tighten check whether implicit object type
+ already exists
+Content-Language: en-US
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: jsnow@redhat.com, peter.maydell@linaro.org, michael.roth@amd.com
+References: <20240315152301.3621858-1-armbru@redhat.com>
+ <20240315152301.3621858-25-armbru@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240315152301.3621858-25-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.51.146.245; envelope-from=lorenz@brun.one;
- helo=mx.dolansoft.org
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 15 Mar 2024 12:13:31 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,38 +97,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The io_timeout property, introduced in c9b6609 (part of 6.0) is
-silently overwritten by the hardcoded default value of 30 seconds
-(DEFAULT_IO_TIMEOUT) in scsi_generic_realize because that function is
-being called after the properties have already been applied.
+On 15/3/24 16:23, Markus Armbruster wrote:
+> Entities with names starting with q_obj_ are implicit object types.
+> Therefore, QAPISchema._make_implicit_object_type()'s .lookup_entity()
+> can only return a QAPISchemaObjectType.  Assert that.
+> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>   scripts/qapi/schema.py | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-The property definition already has a default value which is applied
-correctly when no value is explicitly set, so we can just remove the
-code which overrides the io_timeout completely.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This has been tested by stracing SG_IO operations with the io_timeout
-property set and unset and now sets the timeout field in the ioctl
-request to the proper value.
-
-Fixes: c9b6609b69facad ("scsi: make io_timeout configurable")
-Signed-off-by: Lorenz Brun <lorenz@brun.one>
----
- hw/scsi/scsi-generic.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index b7b04e1d63..ee945f87e3 100644
---- a/hw/scsi/scsi-generic.c
-+++ b/hw/scsi/scsi-generic.c
-@@ -752,7 +752,6 @@ static void scsi_generic_realize(SCSIDevice *s, Error **errp)
- 
-     /* Only used by scsi-block, but initialize it nevertheless to be clean.  */
-     s->default_scsi_version = -1;
--    s->io_timeout = DEFAULT_IO_TIMEOUT;
-     scsi_generic_read_device_inquiry(s);
- }
- 
--- 
-2.42.0
 
 
