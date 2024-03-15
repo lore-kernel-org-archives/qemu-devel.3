@@ -4,105 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A0EC54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 12:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EEA4C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 12:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl6dh-0008N9-2x; Fri, 15 Mar 2024 08:26:21 -0400
+	id 1rl6dk-0008O8-AU; Fri, 15 Mar 2024 08:26:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1rl6dQ-0008LS-Rb; Fri, 15 Mar 2024 08:26:06 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <ff@shokubai.tech>) id 1rl5eE-0005TG-MR
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:22:52 -0400
+Received: from 2.mo619.mail-out.ovh.net ([178.33.254.187])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1rl6dN-0005TV-II; Fri, 15 Mar 2024 08:26:04 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42FB1Lg1014235; Fri, 15 Mar 2024 12:25:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=inuPcBOKNpA5aFdaAfhGbBVvv76YoC3NkTIk3n4Dr/c=;
- b=foG2pCEk11DCgw72F27UsE+YJX+339dVkHF4h9IQtW+qmgjMIWVnRM/zNzdvxIcnh1Pa
- ufk/DoD/SGV7o1GppvfOKEtv4O/xRrGHH0vrTEUI85nyCZTVdAKTWd+NfsT2qAgPDONz
- XTJwg7eck2JvG7y2MfJ0TpdyDpvWU9SRJAjpxTzabMwIIDHXI/qgUYvk6P3SrByB78N9
- boEYYKNeopxLzbDimb6VLqkslzWAnKiuHkuaNKVrQZjpC1o9n8Di/KJYxsxYvbLcTHIK
- js3gs7d1GL+RrqajgEzpDPM/m7cape+aMHgOWvHG5SdAhfay5vIu+3Ix9ifDkR4sqrPe pA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wvjhyjqv6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Mar 2024 12:25:56 +0000
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42FCPXjT032245;
- Fri, 15 Mar 2024 12:25:56 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wvjhyjqv0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Mar 2024 12:25:56 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42FBo2EM013553; Fri, 15 Mar 2024 12:25:55 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3ws4akuddq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Mar 2024 12:25:55 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42FCPoKf23462516
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Mar 2024 12:25:52 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 556422004B;
- Fri, 15 Mar 2024 12:25:50 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 37EBB20040;
- Fri, 15 Mar 2024 12:25:50 +0000 (GMT)
-Received: from [9.152.224.222] (unknown [9.152.224.222])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 15 Mar 2024 12:25:50 +0000 (GMT)
-Message-ID: <8d42a208-f592-49ad-a914-7568a80eee97@linux.ibm.com>
-Date: Fri, 15 Mar 2024 13:25:49 +0100
+ (Exim 4.90_1) (envelope-from <ff@shokubai.tech>) id 1rl5e9-0000N0-VW
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:22:49 -0400
+Received: from DAG2EX1.indiv5.local (unknown [10.111.182.163])
+ by mo619.mail-out.ovh.net (Postfix) with ESMTPS id 4Tx20S6Txdz1B5q;
+ Fri, 15 Mar 2024 11:22:32 +0000 (UTC)
+Received: from DAG2EX1.indiv5.local (172.16.2.21) by DAG2EX1.indiv5.local
+ (172.16.2.21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.37; Fri, 15 Mar
+ 2024 12:22:31 +0100
+Received: from DAG2EX1.indiv5.local ([fe80::8db3:f8fe:2645:753b]) by
+ DAG2EX1.indiv5.local ([fe80::8db3:f8fe:2645:753b%6]) with mapi id
+ 15.01.2507.037; Fri, 15 Mar 2024 12:22:31 +0100
+From: ff <ff@shokubai.tech>
+To: =?utf-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Mark Burton
+ <mburton@qti.qualcomm.com>, Palmer Dabbelt <palmer@dabbelt.com>, "Alistair
+ Francis" <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ "Edgar E.Iglesias" <edgar.iglesias@gmail.com>, Stefano Stabellini
+ <sstabellini@kernel.org>, =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>, Don Harbin <don.harbin@linaro.org>, "Alessandro Di
+ Federico" <ale@rev.ng>, Anton Johansson <anjo@rev.ng>, Song Gao
+ <gaosong@loongson.cn>, Michael Rolnik <mrolnik@gmail.com>, Brian Cain
+ <bcain@quicinc.com>, Christoph Muellner <christoph.muellner@vrull.eu>,
+ Philipp Tomsich <philipp.tomsich@vrull.eu>, Max Filippov
+ <jcmvbkbc@gmail.com>, Francisco Iglesias <francisco.iglesias@amd.com>
+Subject: Re: Any interest in the QEMU community attending DVCon Europe October
+ 2024?
+Thread-Topic: Any interest in the QEMU community attending DVCon Europe
+ October 2024?
+Thread-Index: AQHabxTmtvFdRAal3UOLjdxfiBNTJbE4t/o3
+Date: Fri, 15 Mar 2024 11:22:31 +0000
+Message-ID: <9FF2104A-DF54-4475-99CD-0BCAA444F1C7@shokubai.tech>
+References: <8734t4wuco.fsf@draig.linaro.org>
+In-Reply-To: <8734t4wuco.fsf@draig.linaro.org>
+Accept-Language: fr-FR, en-US
+Content-Language: fr-FR
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x: improve cpu compatibility check error
- message
-Content-Language: en-US
-To: Claudio Fontana <cfontana@suse.de>, Thomas Huth <thuth@redhat.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20240314190007.19568-1-cfontana@suse.de>
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20240314190007.19568-1-cfontana@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 7p7kLj50tPxmNn-gODPaZjfzFBmALmRS
-X-Proofpoint-GUID: MCBzvnX6-iw1A5_NCQRmbS8dY2V0vyx0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 clxscore=1011 adultscore=0 impostorscore=0 spamscore=0
- mlxlogscore=999 phishscore=0 mlxscore=0 bulkscore=0 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2403150100
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+DKIM-Signature: v=1; a=rsa-sha256; d=shokubai.tech; s=ovhex1078890-selector1; 
+ c=relaxed/relaxed; t=1710501752; h=from:to:subject:date;
+ bh=WpbzGZ+BKEsbU7Kmi9sVPInkwue4zko+FQv46RMabzw=;
+ b=ry6BtBreaMYSGDqcDN40udW/jPV9dInQtH0FvqKEVSD/2kUlfC5ry42ISow0v6YJxrGEwTvQBcKZEg+BebbsAHATNuEJqasTWEzF9GrxL09agMUldNCLwgPch3xA0TR8xu6hmHR/ozlZJr4V+ld4NN7L6EFf/qnBsF9LsQEz4ZbXJHyW/xVseY7mVNmR35klwA4X89E2+2JZbGAKSgoloWHfTes2651Oxfuij+9/XcDAKfQ8uzJ8r0PxyIxbJ8X6XKvGnhAtvHwCGLbuGXG8pJgxvcN32bRTrc9stb6LI1HziiRVefVAJsG4iNJfYPzgO+SPyrLMZyvGf8DlC4lRhQ==
+X-Ovh-Tracer-Id: 3421046868173045490
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvledrjeelgddviecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufhtfffkfhgjtgfgggesthgsmhdttddtjeenucfhrhhomhepfhhfuceofhhfsehshhhokhhusggrihdrthgvtghhqeenucggtffrrghtthgvrhhnpeeftdehteeifeefueeitdeijeeggefflefghffhtdfhhfelvdeghfeffeefvedvieenucffohhmrghinhepughvtghonhdqvghurhhophgvrdhorhhgnecukfhppeduvdejrddtrddtrddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehffhesshhhohhkuhgsrghirdhtvggthhdpnhgspghrtghpthhtohepudelpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehmsghurhhtohhnsehqthhirdhquhgrlhgtohhmmhdrtghomhdprhgtphhtthhopehprghlmhgvrhesuggrsggsvghlthdrtghomhdprhgtphhtthhopegrlhhishhtrghirhdrfhhrrghntghishesfigutgdrtghomhdprhgtphhtthhopegsihhnrdhmvghnghesfihinhgurhhivhgvrhdrtghomhdprhgtphhtthhopegvughgrghrrdhighhlvghsihgrshesghhmrghilhdrtghomhdprhgtphhtth
+ hopehsshhtrggsvghllhhinhhisehkvghrnhgvlhdrohhrgh
+Received-SPF: pass client-ip=178.33.254.187; envelope-from=ff@shokubai.tech;
+ helo=2.mo619.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 15 Mar 2024 08:26:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -117,61 +91,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 14.03.24 um 20:00 schrieb Claudio Fontana:
-> some users were confused by this message showing under TCG:
-> 
-> Selected CPU generation is too new. Maximum supported model
-> in the configuration: 'xyz'
-> 
-> Try to clarify that the maximum can depend on the accel by
-> adding also the current accelerator to the message as such:
-> 
-> Selected CPU generation is too new. Maximum supported model
-> in the accelerator 'tcg' configuration: 'xyz'
-> 
-> Signed-off-by: Claudio Fontana <cfontana@suse.de>
-
-Independent on which message we end up with (see comments
-in this mail thread), I agree that improving the
-error message is helpful.
-
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-
-> ---
->   target/s390x/cpu_models.c | 11 ++++++-----
->   1 file changed, 6 insertions(+), 5 deletions(-)
-> 
-> diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-> index 1a1c096122..0d6d8fc727 100644
-> --- a/target/s390x/cpu_models.c
-> +++ b/target/s390x/cpu_models.c
-> @@ -508,14 +508,14 @@ static void check_compatibility(const S390CPUModel *max_model,
->   
->       if (model->def->gen > max_model->def->gen) {
->           error_setg(errp, "Selected CPU generation is too new. Maximum "
-> -                   "supported model in the configuration: \'%s\'",
-> -                   max_model->def->name);
-> +                   "supported model in the accelerator \'%s\' configuration: \'%s\'",
-> +                   current_accel_name(), max_model->def->name);
->           return;
->       } else if (model->def->gen == max_model->def->gen &&
->                  model->def->ec_ga > max_model->def->ec_ga) {
->           error_setg(errp, "Selected CPU GA level is too new. Maximum "
-> -                   "supported model in the configuration: \'%s\'",
-> -                   max_model->def->name);
-> +                   "supported model in the accelerator \'%s\' configuration: \'%s\'",
-> +                   current_accel_name(), max_model->def->name);
->           return;
->       }
->   
-> @@ -537,7 +537,8 @@ static void check_compatibility(const S390CPUModel *max_model,
->       error_setg(errp, " ");
->       s390_feat_bitmap_to_ascii(missing, errp, error_prepend_missing_feat);
->       error_prepend(errp, "Some features requested in the CPU model are not "
-> -                  "available in the configuration: ");
-> +                  "available in the accelerator \'%s\' configuration: ",
-> +                  current_accel_name());
->   }
->   
->   S390CPUModel *get_max_cpu_model(Error **errp)
+DQoNCj4gTGUgNSBtYXJzIDIwMjQgw6AgMTY6NTAsIEFsZXggQmVubsOpZSA8YWxleC5iZW5uZWVA
+bGluYXJvLm9yZz4gYSDDqWNyaXQgOg0KPiANCj4g77u/DQo+IEhpLA0KPiANCj4gT3ZlciByZWNl
+bnQgeWVhcnMgdGhlcmUgaGFzIGJlZW4gYSBwdXNoIHRvIG1ha2UgUUVNVSBtb3JlIGZsZXhpYmxl
+IGZvcg0KPiBFREEgdHlwZSBhcHBsaWNhdGlvbnMuIEFzIGxvbmcgdGltZSBkZXZlbG9wZXJzIGtu
+b3cgdGhlcmUgYXJlIGEgbnVtYmVyDQo+IG9mIGRvd25zdHJlYW0gZm9ya3Mgb2YgUUVNVSB3aGlj
+aCBoYXZlIHRoZWlyIG93biBzb2x1dGlvbnMgZm9yIG1vZGVsbGluZw0KPiBoZXRlcm9nZW5lb3Vz
+IHN5c3RlbXMgYW5kIGludGVncmF0aW5nIHdpdGggaGFyZHdhcmUgbW9kZWxzLiBUaGUgd29yayBi
+eQ0KPiBQaGlsaXBwZSwgQW50b24gYW5kIG90aGVycyB0byBidWlsZCBhIHNpbmdsZSBiaW5hcnkg
+d2l0aCBjb21wb3NhYmxlDQo+IGhhcmR3YXJlIGlzIGFpbWluZyBhdCBsZWFzdCB0byBzb2x2ZSB0
+aGUgaGV0ZXJvZ2VuZW91cyBtb2RlbGxpbmcgcHJvYmxlbQ0KPiBpbiB0aGUgdXBzdHJlYW0gcHJv
+amVjdC4NCj4gDQo+IFdoaWxlIHdlIGRvIGRpc2N1c3MgdGhlc2UgIlRDRyIgdG9waWNzIGR1cmlu
+ZyBLVk0gRm9ydW0gdGhlIHByb2plY3QgbWF5DQo+IGJlbmVmaXQgZnJvbSBkb2luZyBzb21lIG91
+dHJlYWNoIGF0IHNvbWUgY29uZmVyZW5jZXMgd2hlcmUgc2ltdWxhdGlvbg0KPiBhbmQgZW11bGF0
+aW9uIGFyZSB0aGUgcHJpbWFyeSBmb2N1cy4NCj4gDQo+IFRoZSBEZXNpZ24gYW5kIFZlcmlmaWNh
+dGlvbiBDb25mZXJlbmNlICYgRXhoaWJpdGlvbiBFdXJvcGUgKERWQ29uDQo+IEV1cm9wZSkgaXMg
+dGhlIHByZW1pZXIgRXVyb3BlYW4gdGVjaG5pY2FsIGNvbmZlcmVuY2Ugb24gc3lzdGVtLA0KPiBz
+b2Z0d2FyZSwgZGVzaWduLCB2ZXJpZmljYXRpb24sIHZhbGlkYXRpb24gYW5kIGludGVncmF0aW9u
+LiBUaGlzIHllYXIgaXQNCj4gd2lsbCBiZSBvbiB0aGUgMTUtMTYgT2N0b2JlciAyMDI0IGluIE11
+bmljaC4gU2VlOiBodHRwczovL2R2Y29uLWV1cm9wZS5vcmcvDQo+IA0KPiBUaGVyZSBoYXZlIGJl
+ZW4gYSBudW1iZXIgb2YgcGFwZXJzIGFuZCB3b3Jrc2hvcHMgb24gUUVNVS9LVk0gdG9waWNzIG92
+ZXINCj4gdGhlIHllYXJzLiBVbmZvcnR1bmF0ZWx5IHRoZSB3ZWJzaXRlIGRvZXNuJ3QgcHJvdmlk
+ZSBzbGlkZXMgb3IgdmlkZW9zIG9mDQo+IHRoZSB0YWxrcyBidXQgdG9waWNzIGhhdmUgaW5jbHVk
+ZWQgaG93IFFFTVUgY2FuIGJlIHVzZWQgYXMgYSBmYXN0DQo+IGluc3RydWN0aW9uIHNpbXVsYXRv
+ciBhbG9uZ3NpZGUgdGhpbmdzIHN1Y2ggYXMgU3lzdGVtQyBtb2RlbHMgb3INCj4gdmlydHVhbGlz
+YXRpb24gY2FuIGJlIGxldmVyYWdlZCB0byBhY2NlbGVyYXRlIGZ1bGwgc3lzdGVtIGVtdWxhdGlv
+bi4NCj4gDQo+IFRoZSBtYWluIHRyYWNrcyBhcmUgZmFpcmx5IGFjYWRlbWljIHdoZXJlIGVuZ2lu
+ZWVyaW5nIGFuZCByZXNlYXJjaA0KPiBwYXBlcnMgYXJlIHN1Ym1pdHRlZCBhbmQgaWYgYWNjZXB0
+ZWQgY2FuIHRoZW4gYmUgcHJlc2VudGVkIGF0IHRoZQ0KPiBjb25mZXJlbmNlLiBUaGlzIGlzIHBy
+b2JhYmx5IG92ZXIgdGhlIHRvcCBmb3IgUUVNVSByZWxhdGVkIHN0dWZmIGJ1dA0KPiB0aGVpciBp
+cyBhIHR1dG9yaWFsIHRyYWNrIChkZWFkbGluZSBmb3IgQWJzdHJhY3RzIDFzdCBKdWx5KSB3aGlj
+aCBjb3VsZA0KPiBiZSBhIGdvb2QgdGFyZ2V0IGZvciBhIGludHJvZHVjdGlvbiB0byB0aGUgZmVh
+dHVyZXMgYW5kIGNhcGFiaWxpdGllcyBvZg0KPiB0aGUgUUVNVSB1cHN0cmVhbS4gSSBzdXNwZWN0
+IHRoZXJlIHdvdWxkIGJlIGludGVyZXN0IGluIHRoZSB3aWRlcg0KPiBtb2RlbGxpbmcgY29tbXVu
+aXR5IHRvIGZpbmQgb3V0IG1vcmUgYWJvdXQgaG93IHRvIHVzZSB0aGUgdXBzdHJlYW0NCj4gcHJv
+amVjdCBkaXJlY3RseS4NCj4gDQo+IFRoZXJlIGlzIGEgY28tbG9jYXRlZCAiU3lzdGVtQyBFdm9s
+dXRpb24gRGF5IiBvbiB0aGUgMTd0aCB3aGVyZSB0aGVyZQ0KPiBtaWdodCB3ZWxsIGJlIGEgc3Ry
+b25nIG92ZXJsYXAgYmV0d2VlbiBTeXN0ZW1DIHVzZXJzIGFuZCBRRU1VLiBNYXJrDQo+IEJ1cnRv
+biBpcyBpbnZvbHZlZCB3aXRoIHRoYXQgYW5kIGlzIGtlZW4gZm9yIHByb3Bvc2FscyB0YWxraW5n
+IGFib3V0DQo+IGludGVncmF0aW5nIFN5c3RlbUMgbW9kZWxzIHdpdGggUUVNVS4gUGxlYXNlIHNl
+bmQgYSBtZXNzYWdlIHRvDQo+IG1idXJ0b25AcXVpY2luYy5jb20gaWYgeW91J3JlIGludGVyZXN0
+ZWQuDQo+IA0KPiBTbyBpcyBhbnlvbmUgaW50ZXJlc3RlZD8NCj4gDQo+IFNob3VsZCB3ZSBkbyBt
+b3JlIHdpdGhpbiB0aGUgY29tbXVuaXR5IHRvIG5ldHdvcmsgYW5kIGRpc2N1c3Mgb3VyIHBsYW5z
+DQo+IGZvciBRRU1VIGFzIGEgbW9kZWxsaW5nIHNvbHV0aW9uPw0KPiANCj4gQW55IG90aGVyIHRo
+b3VnaHRzPw0KDQpJIHdvdWxkIGxvdmUgdG8gaGVhciBob3cgUWVtdSBjYW4gcGFydGljaXBhdGUg
+aW50byBoZXRlcm9nZW5lb3VzIHNpbXVsYXRpb25zLg0KT25lIGNhc2UgaXMgd2hlcmUgbXVsdGlw
+bGUgUWVtdSBpbnN0YW5jZXMgY29sbGFib3JhdGUgd2l0aCBsaW1pdGVkIGludGVyYWN0aW9ucywN
+Ck9uZSBjYXNlIGlzIHdoZXJlIHRoZXJlIGlzIHdpdGggbWVtb3J5IGFsaWFzaW5nIChjb3J0ZXgg
+TS9SIHNlZSBhIMKrIHdpbmRvdyDCuyBvZiB0aGUgbWFpbiBtZW1vcnkgd2l0aCBhIGRpZmZlcmVu
+dCBhZGRyZXNzIGZvciB0aGUgc2FtZSBieXRlKSBiZXR3ZWVuIFFlbXUuDQpPbmUgY2FzZSBRZW11
+IGlzIGludGVncmF0ZWQgd2l0aCAgb3RoZXIgc2ltdWxhdG9ycy4gQW4gaW50ZXJmYWNlIHRvIGhh
+bmRsZSBhbGlhc2luZywgIE1NSU8sIFNNTVUsIEdJQyBhcmUgcmVxdWlyZWQgdG8gYWxsb3cgYWxs
+IHBvc3NpYmxlIGNhc2VzIG9mIHdoaWNoIHNpbXVsYXRvciBlbXVsYXRlIHdoYXQuDQo+IA0KPiAt
+LQ0KPiBBbGV4IEJlbm7DqWUNCj4gVmlydHVhbGlzYXRpb24gVGVjaCBMZWFkIEAgTGluYXJvDQo=
 
