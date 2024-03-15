@@ -4,56 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8171C54E5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 01:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77F43C54E60
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 02:30:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkwkp-0000HY-9B; Thu, 14 Mar 2024 21:53:03 -0400
+	id 1rkxJz-00069R-60; Thu, 14 Mar 2024 22:29:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1rkwkj-0000H5-U0
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 21:52:57 -0400
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1rkwkg-0006hM-LZ
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 21:52:57 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwA3tEHnqfNlqUOwBg--.43868S2;
- Fri, 15 Mar 2024 09:52:39 +0800 (CST)
-Received: from phytium.com.cn (unknown [123.150.8.50])
- by mail (Coremail) with SMTP id AQAAfwD3aEHlqfNliS8AAA--.98S3;
- Fri, 15 Mar 2024 09:52:37 +0800 (CST)
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-To: jonathan.cameron@huawei.com
-Cc: dave.jiang@intel.com, fan.ni@samsung.com, ira.weiny@intel.com,
- linux-cxl@vger.kernel.org, linuxarm@huawei.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH v9 0/7]  QEMU CXL Provide mock CXL events and irq support
-Date: Fri, 15 Mar 2024 09:52:28 +0800
-Message-Id: <20240315015228.307512-1-wangyuquan1236@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230530133603.16934-1-Jonathan.Cameron@huawei.com>
-References: <20230530133603.16934-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1rkxJw-000691-V3
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 22:29:21 -0400
+Received: from esa8.hc1455-7.c3s2.iphmx.com ([139.138.61.253])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1rkxJt-0004KW-2f
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 22:29:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1710469756; x=1742005756;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=9hZ9QgaNYwoI99lUQxp/3ftJBswYg/gLMcRjg38Y3Ng=;
+ b=eX761rKveklLSpcnVVPpnNn6kdfeMS+fy+huBMv1jn51NBfVT0q0+eL5
+ Am58eJg9YPEhTUoa4/mucRVyM/2xWcjQdoUGy6RFDGcBsj4hxct5tYkJc
+ RPHr/YR0XLZFW68oxLuzpUeTqk/0MoaOR/4xfeQBPfkcPGbdWbJfWrcvC
+ QJJsOElrBel0TOVlrBUOI19YbUSFI4peiIv57InhpG086n69Z0wwrma3J
+ hRrh+luVZ7SO8+DZza2EfYwDbUV0mpW4KZxDWzV4OI4uYQJs2o6SQnIWO
+ SJUJd/hhnNVLrWRKZBYPjhumxkB36At0cFJev6XYd8AHKMVdXzeDMhxDh w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11013"; a="140310837"
+X-IronPort-AV: E=Sophos;i="6.07,127,1708354800"; d="scan'208";a="140310837"
+Received: from unknown (HELO yto-r1.gw.nic.fujitsu.com) ([218.44.52.217])
+ by esa8.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Mar 2024 11:29:11 +0900
+Received: from yto-m4.gw.nic.fujitsu.com (yto-nat-yto-m4.gw.nic.fujitsu.com
+ [192.168.83.67])
+ by yto-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id 40EB8FBD93
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 11:29:09 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by yto-m4.gw.nic.fujitsu.com (Postfix) with ESMTP id 86629FA5E
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 11:29:08 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 021B220097E4F
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 11:29:08 +0900 (JST)
+Received: from [192.168.50.5] (unknown [10.167.226.114])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 6D72A1A006C;
+ Fri, 15 Mar 2024 10:29:07 +0800 (CST)
+Message-ID: <48223415-8466-480d-86e1-8b9945782c0c@fujitsu.com>
+Date: Fri, 15 Mar 2024 10:29:07 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 5/5] cxl/core: add poison injection event handler
+To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org, dan.j.williams@intel.com
+References: <20240209115417.724638-1-ruansy.fnst@fujitsu.com>
+ <20240209115417.724638-8-ruansy.fnst@fujitsu.com>
+ <20240213165150.00006d9a@Huawei.com>
+In-Reply-To: <20240213165150.00006d9a@Huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwD3aEHlqfNliS8AAA--.98S3
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAFAWXzUXsAmQACsi
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvdXoWrKw17XrW8CFWxWr4ktFWfGrg_yoWDGFX_uF
- 4vkFZIvw4ayFn8Ar47XFW8W3y3J3yDu3y5WF4kJF4Iyr1fJwsxGan2yF9xJa43GFW5Xan0
- ywn8X3s2gw1xWjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
- Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
- UUUU=
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28252.004
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28252.004
+X-TMASE-Result: 10--21.396700-10.000000
+X-TMASE-MatchedRID: 5U6uFEJz7+qPvrMjLFD6eJTQgFTHgkhZ2q80vLACqadlEv6AItKWFy/6
+ oQ/dDcvKy38TH6dNchXJPxJtAmAiU2tppRWiT/6uZAV3hs6etPpNLPQl0QAltNbZhgeyVPQj0cb
+ Kh4SdBY7G9WPCYEtgIpcltWa2cevGRdvJFOk47xeuW2+UBGEpHTVEnbrqmBw7OQ/k0Ia5E6hkcT
+ XUAfcQrznpSV66h8LN2r3f3jyDzpOJ/ssfpZm9q95x7RpGJf1awBi8lRTMyBoUnySvXGc7qro8P
+ QV15rjgpBGZFKPZXG2nnGms2c1SHC+5NdfXUqybjrVn4cme+w59LQinZ4QefNQdB5NUNSsiDrBA
+ jvbPhh50HSe131POnpBlLa6MK1y4
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=139.138.61.253;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa8.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,38 +97,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello, Jonathan
 
-When during the test of qmps of CXL events like "cxl-inject-general-media-event", 
-I am confuesd about the argument "flags". According to "qapi/cxl.json" in qemu, 
-this argument represents "Event Record Flags" in Common Event Record Format.
-However, it seems like the specific 'Event Record Severity' in this field can be
-different from the value of 'Event Status' in "Event Status Register". 
 
-For instance (take an injection example in the coverlatter):
+在 2024/2/14 0:51, Jonathan Cameron 写道:
+> 
+>> +
+>> +void cxl_event_handle_record(struct cxl_memdev *cxlmd,
+>> +			     enum cxl_event_log_type type,
+>> +			     enum cxl_event_type event_type,
+>> +			     const uuid_t *uuid, union cxl_event *evt)
+>> +{
+>> +	if (event_type == CXL_CPER_EVENT_GEN_MEDIA) {
+>>   		trace_cxl_general_media(cxlmd, type, &evt->gen_media);
+>> -	else if (event_type == CXL_CPER_EVENT_DRAM)
+>> +		/* handle poison event */
+>> +		if (type == CXL_EVENT_TYPE_FAIL)
+>> +			cxl_event_handle_poison(cxlmd, &evt->gen_media);
+> 
+> I'm not 100% convinced this is necessary poison causing.  Also
+> the text tells us we should see 'an appropriate event'.
+> DRAM one seems likely to be chosen by some vendors.
 
-{ "execute": "cxl-inject-general-media-event",
-    "arguments": {
-        "path": "/machine/peripheral/cxl-mem0",
-        "log": "informational",
-        "flags": 1,
-        "dpa": 1000,
-        "descriptor": 3,
-        "type": 3,
-        "transaction-type": 192,
-        "channel": 3,
-        "device": 5,
-        "component-id": "iras mem"
-    }}
+I think it's right to use DRAM Event Record for volatile-memdev, but 
+should poison on a persistent-memdev also use DRAM Event Record too? 
+Though its 'Physical Address' feild has the 'Volatile' bit too, which is 
+same as General Media Event Record.  I am a bit confused about this.
 
-In my understanding, the 'Event Status' is informational and the 
-'Event Record Severity' is Warning event, which means these two arguments are
-independent of each other. Is my understanding correct?
+> 
+> The fatal check maybe makes it a little more likely (maybe though
+> I'm not sure anything says a device must log it to the failure log)
+> but it might be Memory Event Type 1, which is the host tried to
+> access an invalid address.  Sure poison might be returned to that
+> error but what would the main kernel memory handling do with it?
+> Something is very wrong
+> but it's not corrupted device memory.  TE state violations are in there
+> as well. Sure poison is returned on reads (I think - haven't checked).
+> 
+> IF the aim here is to say 'maybe there is poison, better check the
+> poison list'. Then that is reasonable but we should ensure things
+> like timer expiry are definitely ruled out and rename the function
+> to make it clear it might not find poison.
 
-Many thanks
-Yuquan
+I forgot to distinguish the 'Transaction Type' here. Host Inject Poison 
+is 0x04h. And other types should also have their specific handle method.
 
+
+--
+Thanks,
+Ruan.
+
+> 
+> Jonathan
 
