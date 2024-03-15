@@ -4,173 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3400C54E6A
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 18:46:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9DE9C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 20:35:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlCYR-0003sS-B1; Fri, 15 Mar 2024 14:45:21 -0400
+	id 1rlEGP-0005Jz-BY; Fri, 15 Mar 2024 16:34:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
- id 1rlCYK-0003rs-HK
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 14:45:12 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1rlEGM-0005JV-LN
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 16:34:47 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
- id 1rlCYE-0002qw-Mc
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 14:45:12 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42FH8xBY030245; Fri, 15 Mar 2024 18:45:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=tB5IPQ86MS1UFnDQsxjsK8Df7Ft8cvKMKme3ML/zUro=;
- b=nyb2K3Mai2WY5QfbkWYrE11WYXDmLycJ8L7CNBoBW92FNYp/SToQ78B/qxLT8ojGUxiA
- rt52ROTqjq/tWvDZa4YresGtQ7Tk8yHZ+Is6t07HvZsuKsIqNb85lKyn6b7+6hqY99fG
- tyDhIahuCApZ0usPCA0NY1GKxp9GAylv6DT6hDFOupjzS9bpepvnEGFtNDR1qp6ZWs6c
- QyHIwuJxDi9eoe8M6dvkZhNnaud7biBRUgC5LJmMZ5hTN5lEzJfkyPfWy+guWIQFTolq
- ocJQkPLEspNRb7URR0LE7hz/UnGN09z/AwG01lLlPGRO+62C/scHNf18kKHPplnDv54W wg== 
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wvt34085w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Mar 2024 18:45:03 +0000
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 42FHJJRX037703; Fri, 15 Mar 2024 18:45:02 GMT
-Received: from nam10-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam10lp2100.outbound.protection.outlook.com [104.47.58.100])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wvtmmkaas-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Mar 2024 18:45:02 +0000
+ (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
+ id 1rlEGH-0004hR-4Q
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 16:34:46 -0400
+Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
+ 42FFRe5B011623; Fri, 15 Mar 2024 13:34:37 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-type:message-id:date:subject:to:cc:references:from
+ :in-reply-to:mime-version; s=proofpoint20171006; bh=nmUj8mSAA5xG
+ tneH5NyWAhPOIC/IG8JSGLTVI5+J8A8=; b=emKELwuhUxYeG1zZcPTi7/nhhfd+
+ fBeGxjaysgLvbzaILvhZQfXUITGeLuRXaqspEX0x0nj3iKBs6pv6RCGFspuGMxpl
+ 1keTfR6VA/CDrRWP5wQ56DfVKIvO8Q9ubHBUby7mPe6EVwthW7TYfdKIWsN0cJJg
+ zHH+sotGiHuUkw7onNaodnDJSqHiUY1c8C6y7dS1C4WPlTmGe4lMx2ZHV1G1CKmu
+ 8qUmRjN2cqSdzavTCohePac5Qcp7wzbmJRfGh21EiwGGAAF/0JqWBFNODfzoo5k3
+ aBDPDL7F9hhjSn4euwm/2mSF1CFgD0wxlhlMh+Bpz96+cfnd5AvIr3th0A==
+Received: from nam12-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam12lp2168.outbound.protection.outlook.com [104.47.59.168])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 3wva09t4fq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Mar 2024 13:34:37 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=h930eseKHE+TFkM4LIlxMeltavBBw99jRXak6d/hWVg2Dj2dfraTn/LjtxPS2YmyyeF9CjoRL7CfViXS8/XRJN80geHytzEG2rXzl8Ucd5Q4TbB2jQCH9g+wXY1jYC/GmR+lwmNQqDMyPaWj6ism3lW93W6QSMADzo0cQDO1EdznqcODDtV6D9Mf6X+Tu6dL4VMpU+pk9f4wriHx8SShnz8UJfaKGCK91zcqAAkRKyx1MnP9/Tih+G+YB7I5H+ASRkc4lyNYIw31L3rwoSPTYhem1M/bizZMOUnlDQAjhPKjraOz/MgOQ89/1GMd3Aq8N76Z3XL67srZlR3iY+DZ+w==
+ b=JZu4TTM5UC6r6NuP4GghjS2FSqyXylma5+mhO1gzURWOIFA6dYdoCgL553qWRQ2gbV/TG/gnL4Q4PISb4pxFI+ACQIhA70QxJ7C6tWbqiAIpZlR9ddbpPsU7mjYM24g443HRgfCwXrI6NBteRDy+SSNGHzUzt8JwirwUSIxxoL1X6L5MldEFjW+tNDB8bEH0zHr/pUJX9Gbm1u3AeRij0UckAgLxnICcqv1QeboiG0AuZ1uCyvBoNl8Oh4SSoRYVjGOh5pxWhk5IFP/R+dopCd/9Pt7FpmhsMKG/0UV+4L1tBlEJZ8b7oR2vKfNNfMQoABl/f1qW06BcP0/74sMqsg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tB5IPQ86MS1UFnDQsxjsK8Df7Ft8cvKMKme3ML/zUro=;
- b=T77bGfBgnsmM2Zz46S915uU5nlruYj+oB3YnYAY91JwOxOq514ZHFDpyevI3WIWLpiqVmBsX0/1bRKszv25/tNv5c6CCXW6r6UAuCRTRbDZta85eRevCfGxlPIcwLyAY5dkwMBuWFP4q184ZmYHR3a8HLk4cGN4/bLJ9NSAkroMzi0ZZSAwirWeZzjEZWC3RjtNNe2qQthfsh2uGHSi0N1G/qG9CUh3Axc80BLgQ6af94r385a8yqxXtridghpAF+rssuEky70NOeME0b/TIIkGO+vvFva8QIaAhej1oWQmJJOLSfzjOisDm5GSU4L2jlH5i3BuDV9jdRmy1VLrC2w==
+ bh=nmUj8mSAA5xGtneH5NyWAhPOIC/IG8JSGLTVI5+J8A8=;
+ b=JRq0wRZtmbXGRkLzkezlNvtHkXlP7BtVCD6Axb/LDpPmcnHSgEldiXC+E7lQLHTrPxZwix/JjazE3YDbhgMVsiadGQXxJWPtw5Sw1+OAFx+SF/fYPqPhECqPBn17I7jNZpzv/YsD4ZPTq7CEEKEM67R6vdlFFISoorQcwoesKlTHh0j4I7KCMWPNWn+BV9m28X0wCDPhdYWAXP02OAmAiU+8WEdWljt9kkP5qZy29mk9/JcTF9dBarpJimP/I2WeeS8AQn3vDBM0Afb5jZBrDYkkiQfZweXNppOWXbVkxtqWWDdS0txECtQT1s/uPw5K+szmhD3k/zXWBtQKnYoLzA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tB5IPQ86MS1UFnDQsxjsK8Df7Ft8cvKMKme3ML/zUro=;
- b=C7Qx1RYV4JTXvgApbr1PII5htkTStxazaR3mOfkJTYlRPNhttEMJhkwZYhnL/8NrhqgFzGIG/aBMRlmHsyJvdmfopb4PHcrn/am5tK5u2JdxAb/IIjArUKXK57aey5rr23gwHpSweyV+ifbDRtIIPmYkSJ8BD/73FhFZXJyD/OE=
-Received: from MW4PR10MB6535.namprd10.prod.outlook.com (2603:10b6:303:225::12)
- by DS0PR10MB6847.namprd10.prod.outlook.com (2603:10b6:8:11e::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.22; Fri, 15 Mar
- 2024 18:45:00 +0000
-Received: from MW4PR10MB6535.namprd10.prod.outlook.com
- ([fe80::bf6e:420b:90be:3cff]) by MW4PR10MB6535.namprd10.prod.outlook.com
- ([fe80::bf6e:420b:90be:3cff%4]) with mapi id 15.20.7386.017; Fri, 15 Mar 2024
- 18:45:00 +0000
-Message-ID: <d6c1769c-049e-47a3-8705-bdfe1b2a6fd8@oracle.com>
-Date: Fri, 15 Mar 2024 11:44:55 -0700
+ bh=nmUj8mSAA5xGtneH5NyWAhPOIC/IG8JSGLTVI5+J8A8=;
+ b=N8ofyc8gPcnMTldjcwBhXdnhxKOg/ve4ZtdY4d5JgLrO+nZFRZM9nZo6elfoyzwmUEMl1i9JPCttYceu8KhMwJRLXkshDRL2817F9EWy78NgxrWJpYFPeR0tTAwEt6oUt+SpEe+6fMmv4hRLD6psuDCnPp4yB0Jye4ym4D7WA6BAu7MsDAkDdeJNIbEhvKT5atXLxK9ZKzHUhp2l0lpMhySxbQruHjpAEsghqjrXIRV2i31VT9PW68MLOn2772r4nCRHDSuzG9CXBS9AZvHB48KzS2wQX+gjlFkWLbFlRiqpT2dPKkL4ECtlnTBx0t7nbxBeDgWtdztebKVscco+fQ==
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
+ by CH3PR02MB10217.namprd02.prod.outlook.com (2603:10b6:610:1be::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.20; Fri, 15 Mar
+ 2024 20:34:35 +0000
+Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
+ ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7386.017; Fri, 15 Mar 2024
+ 20:34:34 +0000
+Content-Type: multipart/alternative;
+ boundary="------------UVhyv1tQIq5of3ieHTgJM1zT"
+Message-ID: <c25c8cf7-ea28-4c5f-962a-1fe5abc51870@nutanix.com>
+Date: Sat, 16 Mar 2024 02:04:28 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] vhost: Perform memory section dirty scans once per
- iteration
+Subject: Re: [PATCH v7 3/8] tests/qtest/migration: Replace
+ migrate_get_connect_uri inplace of migrate_get_socket_address
 Content-Language: en-US
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, eperezma@redhat.com,
- joao.m.martins@oracle.com
-References: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
- <1710448055-11709-2-git-send-email-si-wei.liu@oracle.com>
- <CACGkMEukLmTSfuXxSMsZuO_B7o7623x=gmLD5s-xoinEq=dWYQ@mail.gmail.com>
-From: Si-Wei Liu <si-wei.liu@oracle.com>
-Organization: Oracle Corporation
-In-Reply-To: <CACGkMEukLmTSfuXxSMsZuO_B7o7623x=gmLD5s-xoinEq=dWYQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BLAPR03CA0061.namprd03.prod.outlook.com
- (2603:10b6:208:329::6) To MW4PR10MB6535.namprd10.prod.outlook.com
- (2603:10b6:303:225::12)
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
+ pbonzini@redhat.com, peterx@redhat.com
+References: <20240312202634.63349-1-het.gala@nutanix.com>
+ <20240312202634.63349-4-het.gala@nutanix.com> <871q8b8xeg.fsf@suse.de>
+From: Het Gala <het.gala@nutanix.com>
+In-Reply-To: <871q8b8xeg.fsf@suse.de>
+X-ClientProxiedBy: MA0PR01CA0084.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:ae::18) To SJ2PR02MB9955.namprd02.prod.outlook.com
+ (2603:10b6:a03:55f::16)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW4PR10MB6535:EE_|DS0PR10MB6847:EE_
-X-MS-Office365-Filtering-Correlation-Id: f34ba05c-7c7c-4505-eaee-08dc452004e7
+X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|CH3PR02MB10217:EE_
+X-MS-Office365-Filtering-Correlation-Id: 568b2463-b597-4ee6-555f-08dc452f5374
+x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 4itkGkhj0m1tqiQqRWVGSSO7D+2hqsMJYcMP+/El88lPOtwApjF1sYZvZdcpl0uYllqcyqbIBJIwD42HwN7IM+Lpe3/V5f6hjHUVyZdJgOjEqazFlSfPnMrb1MerbbNObXcdsE23xplge8pqGRuNnYuw4YI9WRidlaaiL8yZlQfRvgt2OgAygbLt2TEkFqrFaCI9qzilFIA64oJtqPYvKfM6C2wEhEEkwI1qBYQJtyJPtrlL5aqTN/cy/3EPdh+ZcIGv0WT0EIPzxC8I13kIPEYP+b/DQu5MSfiZAknh59LiJNhx4FBKOjTsHZ6fJ60i7cUsWRycsVzB8IBBX7hxVLeQ6sqKP8J/8PVbj+/UcvkN7Mhj7xGALHguWayYxKZsxSoX51+WtyMYmVjCHSgnMNgdml6e+xZfCzkhhL7CuuRucPLMvJ5NiZJ/LUN+63tNvITqXPmna6Qotz9HXd7ViuFZ/9Q+Q7ImcTPjSuloraslJiomr68QHt5IqINuhAZcYjIW1tjN4YGNg3+wOcCpgkqHoHR+v2gBf8zbcXUyGz0DnQJNea0gqFuZrqqu4Sup+R3qVNihLlDjReDtqCfpO0biqKB1qtaQC/IboqTZJ/Tno7JnnEbOTH3uCyLlzepfltqmuviFoss8OyxxVgC34DH3z+dfsbqkteudsd6mlRI=
+X-Microsoft-Antispam-Message-Info: 31oKth+5vA/uR6YZIaOLusjb6SsErylx6PJEaOxW/XfB1JaJDUvgh/hCEu34VXHTVBoW82aiBnXJPB84DL4dUAg4RhGt6UNtZQcgGT5RhFkoRgRPliRZq17aAtblIjSRMQQ5zrgNZfpSK6B4zzB8ie2vgP6GXLB4WIVkHEqgbZwdr7nAwAJw1oMiSfTz+1vBcTGs0E8wLtdui1XHH53ncHHMja8Xc/tUTrNAR16s+8Q6BgNGD8etF9mjYsfS+Z0JNri6+Ppanb4s3PImgd6kVMdvneQoN2IWqjlF++vlkvjmj4ocXlvDtQ7JgZ+bVbcbb06fTD/Buub6ln/iGSDtigfdh5yI0r7aHXHyZk82AExUFJyD8/fI0un+gWGTVp67ZdWk54RDiNDsIGZbTsL1c7LoZS5G9LxnUBa4X4b1t4F7Jq8TELJBt8nSnDKL4pwnOJ5xidHMrUBwZjkTcc34yJ0yWdduy4oE7zMUM7/2zOQUJEgFmYjdjzHI5EIzgpHp852CNWwZ0Q7OkWKPURf35GbGbLlVp4WhtvuaHDSGRzp955OKd1guR6V1caBBD79ioiSep2lhi+WiIBS3dEGYrmxaBPsThGRD2flYZVeTge6UD6SPIAG9VSCJOlWIsTbFW7jpT58Iuxpff8jRv15w2oI8plMKchKvhYLRcUwyKVQ=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW4PR10MB6535.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(1800799015)(366007); DIR:OUT; SFP:1101; 
+ IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(366007)(376005)(1800799015); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?REJCUFlXSmluNDBPVForek5HdWpmWTBrZ3lUbFBlVTRCVnNkS0dvRDhFOEtq?=
- =?utf-8?B?dXVTanVlMXl2WStzbFZtd0xvVjdxa1FDWHFZdjY0S1lwd3FVSzJkdmFtZGkx?=
- =?utf-8?B?Mm5BK05QYzRkdnR3UVd5d2k2V04yWW1QcnoxekxFWFlRdlpNYitRRnBGUzRF?=
- =?utf-8?B?aHJEZXVFeHNsRDZrQjkyQ1RKVlE0ZEhndGhSb1BYN3NZaE02N0htMnZJQW8y?=
- =?utf-8?B?c2xmTXppdkNhRWw2dUljUUJZMlhFQUIvUmdEWjJlbWo3L1BKTDFaM2Era0ZW?=
- =?utf-8?B?aEFFL0FBQ1BrSjNpUGFjeHIwS1ZjUjY2RnkxSEJkeWQxbThSS3YwcVlkY0xH?=
- =?utf-8?B?dTUyNytYQlI2N1Ayck95UmdRRDJBUzZjTlE5ZzVMbTJ5SFdselpkQUd6YmtK?=
- =?utf-8?B?V3dLcFJ5eUF0WWtqenBoaFIzYUoybzdVaUpaU1ZnNVB0SHdmMUtBdFppYlcx?=
- =?utf-8?B?c1haYlZLcUtuL0YwSnhrUHprdXdaMkZjR2Nhd2VLdDdXQkVHUitxQXRkaTll?=
- =?utf-8?B?RVZHd1U4L3ZVSWxQL3BITHMyZEVDaUxDeENBMmNUTGN6b0puMlQvcWRLWDZo?=
- =?utf-8?B?VHpMMlZsa0FNZkNicmQrVDZuQzh6bEVzUmkyZFBONjZiK3o4MFRocHpuOHlB?=
- =?utf-8?B?R0VvT29Qck1HZlAwOVlCTnl3NmZxZTBrZzFqMGx1eCtMekYzUWlBOWEzYWov?=
- =?utf-8?B?ZUlhR1pIa3dNRUg1VVlLc3Q5R1R4cURzTTZNamlQMjY0YUdFY1NpSHVwZStR?=
- =?utf-8?B?SmV6cjNrdkRVSERrODA1Y1M4TVZjcVJvNzZPMHlmZ3A3RTdpY0svRUl5VE1V?=
- =?utf-8?B?OUozOVVuS2IweWhmQTlRV2hZNjhuSUFqZUpKek5tOEZYNHZQK3Y0WkF4RnJC?=
- =?utf-8?B?cTFNVFpCd2U3WjliYitBL1U0cUdIZHZHZUFWQmNwcWlvNyt6cmZ4UDN2VnR3?=
- =?utf-8?B?aTNNdnVFZXpzUnlpcmFsRWoxNWtSbUMvM0NveVhkZ0VkNzBnZGlGT0hmSi94?=
- =?utf-8?B?dVM1cmhUNEhCamk0YjdCSVJ0QThSYjZOZjdUSG0vUXl2WXdhZ1Q0My9wZDJ2?=
- =?utf-8?B?ZWo2WnRVcS9wVjZDNHhxWU44aGJ5OS8rT3hQeTNkMnhFZFJGSjFBekUyNFVt?=
- =?utf-8?B?Q09OSGQ4Skoyc1NzK2Fud3l2UlZFS3lCOFVTK0hGcXE0d1VhdXUvR2NxcE1Z?=
- =?utf-8?B?S1llbG9lVk9XWGRWbDVLaDhvV2hHZG0rWFVmbnVMb0J5M3dBUy9YeVcwdGlG?=
- =?utf-8?B?UUE0ZEZleTdXYnA5OHBYeHdVMTlmUlZVNE1kOWk0c2duRVZTbXhPeXQvSEZU?=
- =?utf-8?B?NCtXM0dNZWdYYmY1YllUZEV3V3FubnpXSUM3Q1YrekZ0clBYbFlZQWdST0dm?=
- =?utf-8?B?T1JmS0NSZ3lPRDNLdllnZEdJN0dKck9mNUdCMXNORURycU96ZEhDeHc5eWR5?=
- =?utf-8?B?c05VQzBuMnRYSllSKzM5Yi90bmpXN2tDMkxQbHYxQU83Q0FwZkFzc3JSL3lq?=
- =?utf-8?B?SmlKaC9VeThSTE5VZkhKeEU4VWtDVWEyeCtoMWlwejhzZStlUHQzdGJnWlhr?=
- =?utf-8?B?OHNIaTU1a2tFOHUvdE5LNFJjNUZVeHlDYlNDMFVBVUplSTBNaGhMMUxwY0Ry?=
- =?utf-8?B?djd1aW5xUnpoY3pBU3dVcGFMUVpteXowZ3V3eGpDUytRZ3ZlNFo3aG4rTXEx?=
- =?utf-8?B?Q0dTTWRvRGw2TFlIUk1PWnBOUjVFZVBSNkl4ODJaa0VzdHgvc2NidmZnVFFK?=
- =?utf-8?B?am5IN0d0RmpoeTRhNkxnT0tDaDVTUWVMZk1aTkh6NmVOTUg5QmRaNXB4R2Q0?=
- =?utf-8?B?RTJvREU3UEFvRE95akhUSHR3cVRCd2hwVXZLQkMxZXI2dytSNFFjUkNBQWIr?=
- =?utf-8?B?S1N3VVpZSTdKV3lnc2lxV0ttSy8yb0RMNmhndW1kN1JyemdCYUF1RXBYM2dT?=
- =?utf-8?B?NkpSZVV5SnhlaXd3TUNtLzhiQ09aQW1keDVaZmhuZW0raG51YlJ4NFRsSFJp?=
- =?utf-8?B?R1hWckhZbHI3S0psTDJxakl0bHhHcmpxMmRLSnh3cFZ4eFB3S3NhcGJYWEtS?=
- =?utf-8?B?TG8rYnAwazBYUkhnc01OZjVHY2JnSE5WQ2p5TzY3UUZNMWRyckluRUVacHRU?=
- =?utf-8?Q?7sGAhiJUoc566zxoPyjbgr3ag?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 8v/xT7nlIYjAHRVIS7IMR36y+GJaijaTrT9xaeqdrR7rmiKx5YlsuxxcHRCfl4/++nuN9KW4ohQ64CvTZ/XtvvN8M7UQrstrPXTzUyDsWpsg1F40JTHSrKkfF9IiqTB1fsY97zT2fngPviy9eqRw8eELCPSNlh1H9TKTFvaSVWIwNq5A02hVAXHYP8GLQgO/5yaYhcIKWwclBgSfqcRusyn+XbpNuIFzvTjTbPRdeJephgHP2uhT8SVhQyDsP260BIoEkehWpv510GlOCqjd1qQ4pLKeulfGmV9Gm15kky1MdnLXcjEjwXOVHO+8lc1rmDAX3UeF4c7XCq2XpgTnB1E6XNuaWBanCAanMN/ul8yxqPHkLvI7jkGvwepO54vJ4avCDYURJzPoVDxw5zdriLlxzjJOwOtRRpz/gqKWdqkrjY7Z1JkNNvQQLmY7lJLdM0DWAOIW61p3oV6WI5bhMbl+q6Um65493uY+ptsOlNL2bxjWWHwaCElnU+dYI0eBif2kxpzwOm3Jab81N0plHhC3kpYtRP4Y3lJWSskJU20fkG96VEt+GGM14v+QI6somoYxUDXVqUDqv2nj32kMasEmukPM0Cu+Q/9+aHCFvtE=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f34ba05c-7c7c-4505-eaee-08dc452004e7
-X-MS-Exchange-CrossTenant-AuthSource: MW4PR10MB6535.namprd10.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ek5GU1U0bEt0MVc3Q2ZXemRCQnFYNzlENnBtSWxXTTdUUFpMemhUVnFRT3gv?=
+ =?utf-8?B?Nm9tRDBoR25yQ2ZaOW1DdGJMYjJkNUNESFduWkNJNUh0bTlrUFZSeXFQUDMx?=
+ =?utf-8?B?TUQ0dk5QN1I3Sy8wd1BFYW5DS1hFb3hDYWwxRXBEVWk4N0lNL2VmcFdUUlRB?=
+ =?utf-8?B?Z2o2dkI5UTZOKzhRNnk3M3c4MXRsWlNLMUd4SWl6NjNBeU9iNkFlQ21COHRl?=
+ =?utf-8?B?SVNiOXJkY3p4bm42aU92NHRzL2lvcEFvTUF2djRmcURmOEdXSlBUMEtGUDZa?=
+ =?utf-8?B?aWp3QmNOOVBLVE10aDNvV2dCelpaQVBqRWhEaEFzNGpvUlErOXVIMU9wdWhk?=
+ =?utf-8?B?dUlFY2taZVJmeERYTHFwM3dRUm1yVUVBaUVVMWhqL3g3djZaWld3VHBjZEwy?=
+ =?utf-8?B?WmtZU1pBVUJ3YlR0elV6a0RKZG9BcXhIUUJQZE9mdXFhWHpxUDZwRjE1TFZX?=
+ =?utf-8?B?aFdmd1RzVXU0WkdScDJKeFp1TXpydWRUdGlZLzVyV3FDL3lkNWFNV3NUREho?=
+ =?utf-8?B?Ryszd25YWDN5VmZTamxiT0RhNCtFRjdHVktTZnlUNHB3K1ZRbHFrdjU0cGFM?=
+ =?utf-8?B?TzFyQXk1anArbFdpVkd6akovTTkwMnhkWk9QdkVraW15N204SkdRYm0zbU5r?=
+ =?utf-8?B?bDd0SXlzZWppMFd0dkpkZXJUdnVWcUtJUEs4ckRZcSswQ00wN1ROWm51WURv?=
+ =?utf-8?B?UHBJdHJQMDN5TFdheHVBclhncXROU29rYnZhVHBtRE9Db3AvMHY0QmVONEZH?=
+ =?utf-8?B?bDVVV3NKelYrL3pKVkd6ZEh0SEhDOEVpVFQvWW9pcHNSemtxcklCbGVmWkFQ?=
+ =?utf-8?B?NUJKamxpTUpBa2orc0lnNlJXTEhMNzV6ZUtTM1Q1aTlTYjhTN3diczQxaWp4?=
+ =?utf-8?B?ekdXMXkrMkZkYVM4UUFoTDlsekJ6ZDNEUHY2VVNoTlFDUllGcG9GMTkvZnNE?=
+ =?utf-8?B?by9JWGlaUU1lc1p6dDhYS00wMmEvc3NCK3lWTlR2UEtZYU5LdjNVSFJRbTVq?=
+ =?utf-8?B?bGZXN2l2UGZZTWhGcVFXOWtkczFOZkgvRkM4RHZYMUFWbnpDOUhQaFB1Nk0w?=
+ =?utf-8?B?ZjBQemx5VlVoUVM0VWNyenFkTjJtb1JveE80YWNhTmJFelpFUGlsTHBMSXBL?=
+ =?utf-8?B?Q0M0aDQ1bC9KV1NRdytiajBQYllCektVZ2hEbHMydlY2cy8xZEtmMy9RSEMv?=
+ =?utf-8?B?Q1JhNTlvRFhSams1eWtqYU5Vay9nK1crSHhuc3ZZMTJzSW83dUhQalVwN3Bw?=
+ =?utf-8?B?MEljaThCWjJCZUlJRHZTNDNyVGxyZGovcjFGYlA5Q0dnTUV2citKRThuaDhJ?=
+ =?utf-8?B?RU95MytXYWxiN3p4SmI5T01abDduQ2FZK0RwdjdBdjRNQkpPZllweEUwQ1Bn?=
+ =?utf-8?B?WnltSlpFcDVSUHVmME9aQTJ5L0pQQTVHOXJSS0t2OWQvc2MzZGsrelZQVUJ1?=
+ =?utf-8?B?L0xFdlVlaTJDV2FuSlBlNFUyNlFCMUUwbjAxNWMyMlBuWkZTOHUySEtqSnM1?=
+ =?utf-8?B?VTNZWkJLa1k5RkxoWHRscVlVOFNwR25mNDV1dThGdXo2cm4vZXQ4MnVsL1Jt?=
+ =?utf-8?B?NmlNUzM5cUtSVWhMbDA2WXJDYStNM29ZVU9INWtUVWdzY2Y1ZmluKy9oWm1M?=
+ =?utf-8?B?dmY3MXpGeHdFaTd4VEFZbDlDc2x2VWwwR0RLZFBvU3pEVkhkQjNqZlZiU3Fo?=
+ =?utf-8?B?dzNrN3VUWUNSME14YTlSTlpoV01vblFzODJPN3BqLy9tWi9uR1R1MTJUVmM3?=
+ =?utf-8?B?Z1VxWG1ocFJJamNwOFkrdzRSTktYSmtadU1qM1VCSTFJL0FtRG92MU5NSUZ6?=
+ =?utf-8?B?YmlEWGhQd2lDcVRscG9jelVENEFIeWtrWW1Lc3gwWVZYZzVHSExYMU9IRERm?=
+ =?utf-8?B?S0svd1h4QWoxNWJ1cDZrMFRFRFBHaWZlZ1ZhTVh5eGI2cVovTDZmZHhmbFRM?=
+ =?utf-8?B?bStIekFwNFNIaEhheHp2VWh6Y1lVdWdTTWJBdzZ0ZjBYUzlYK3BsSkdlQW5l?=
+ =?utf-8?B?UGFGY0VnY20xWnoyMmlKSHQxOFIrUUp5c0RFdG1QOWM2ODdUc29qNEJJVDE1?=
+ =?utf-8?B?dkUvRDl4VTluOThKRURMWElRT1VoeHZXODR1Q2czMjJ3SkR4RndrczQwb29J?=
+ =?utf-8?Q?MUZjgydjQupuqIyMOEKA5/Lgj?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 568b2463-b597-4ee6-555f-08dc452f5374
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Mar 2024 18:45:00.4795 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Mar 2024 20:34:34.8669 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: d8gTgfEiHIBoAfFRQzQjSf8tkGCCi6YpO1girzGBNRt4LYAnU8qCHZe++bOXaoeCUdE/1RkdczKm+HkEX8dKJg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB6847
+X-MS-Exchange-CrossTenant-UserPrincipalName: Cxforlw3MFtobsWykhfkKmUEBOmvoElfh7bNcN4Yg96h91nIrHL0onMN2svS/hyVhAXyFuKwJ/NCthf3sp1GUw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR02MB10217
+X-Proofpoint-GUID: OrweHn9gEPnMiW152O_9343EqRvqLaf6
+X-Proofpoint-ORIG-GUID: OrweHn9gEPnMiW152O_9343EqRvqLaf6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-15_05,2024-03-15_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- malwarescore=0
- suspectscore=0 adultscore=0 mlxlogscore=999 spamscore=0 bulkscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2403140000 definitions=main-2403150152
-X-Proofpoint-GUID: EXy9wbGsMTF1sbzTM9P-bmxUNFNs7ryo
-X-Proofpoint-ORIG-GUID: EXy9wbGsMTF1sbzTM9P-bmxUNFNs7ryo
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=si-wei.liu@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ definitions=2024-03-15_07,2024-03-15_01,2023-05-22_02
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12; envelope-from=het.gala@nutanix.com;
+ helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.933,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -186,99 +168,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--------------UVhyv1tQIq5of3ieHTgJM1zT
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
-On 3/14/2024 9:03 PM, Jason Wang wrote:
-> On Fri, Mar 15, 2024 at 5:39 AM Si-Wei Liu <si-wei.liu@oracle.com> wrote:
->> On setups with one or more virtio-net devices with vhost on,
->> dirty tracking iteration increases cost the bigger the number
->> amount of queues are set up e.g. on idle guests migration the
->> following is observed with virtio-net with vhost=on:
+On 15/03/24 6:28 pm, Fabiano Rosas wrote:
+> Het Gala<het.gala@nutanix.com>  writes:
+>
+>> Refactor migrate_get_socket_address to internally utilize 'socket-address'
+>> parameter, reducing redundancy in the function definition.
 >>
->> 48 queues -> 78.11%  [.] vhost_dev_sync_region.isra.13
->> 8 queues -> 40.50%   [.] vhost_dev_sync_region.isra.13
->> 1 queue -> 6.89%     [.] vhost_dev_sync_region.isra.13
->> 2 devices, 1 queue -> 18.60%  [.] vhost_dev_sync_region.isra.14
+>> migrate_get_socket_address implicitly converts SocketAddress into str.
+>> Move migrate_get_socket_address inside migrate_get_connect_uri which
+>> should return the uri string instead.
 >>
->> With high memory rates the symptom is lack of convergence as soon
->> as it has a vhost device with a sufficiently high number of queues,
->> the sufficient number of vhost devices.
->>
->> On every migration iteration (every 100msecs) it will redundantly
->> query the *shared log* the number of queues configured with vhost
->> that exist in the guest. For the virtqueue data, this is necessary,
->> but not for the memory sections which are the same. So essentially
->> we end up scanning the dirty log too often.
->>
->> To fix that, select a vhost device responsible for scanning the
->> log with regards to memory sections dirty tracking. It is selected
->> when we enable the logger (during migration) and cleared when we
->> disable the logger. If the vhost logger device goes away for some
->> reason, the logger will be re-selected from the rest of vhost
->> devices.
->>
->> After making mem-section logger a singleton instance, constant cost
->> of 7%-9% (like the 1 queue report) will be seen, no matter how many
->> queues or how many vhost devices are configured:
->>
->> 48 queues -> 8.71%    [.] vhost_dev_sync_region.isra.13
->> 2 devices, 8 queues -> 7.97%   [.] vhost_dev_sync_region.isra.14
->>
->> Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
->> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
->> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
->>
+>> Signed-off-by: Het Gala<het.gala@nutanix.com>
+>> Suggested-by: Fabiano Rosas<farosas@suse.de>
+>> Reviewed-by: Fabiano Rosas<farosas@suse.de>
 >> ---
->> v3 -> v4:
->>    - add comment to clarify effect on cache locality and
->>      performance
+>>   tests/qtest/migration-helpers.c | 29 +++++++++++++++++++----------
+>>   1 file changed, 19 insertions(+), 10 deletions(-)
 >>
->> v2 -> v3:
->>    - add after-fix benchmark to commit log
->>    - rename vhost_log_dev_enabled to vhost_dev_should_log
->>    - remove unneeded comparisons for backend_type
->>    - use QLIST array instead of single flat list to store vhost
->>      logger devices
->>    - simplify logger election logic
->> ---
->>   hw/virtio/vhost.c         | 67 ++++++++++++++++++++++++++++++++++++++++++-----
->>   include/hw/virtio/vhost.h |  1 +
->>   2 files changed, 62 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->> index 612f4db..58522f1 100644
->> --- a/hw/virtio/vhost.c
->> +++ b/hw/virtio/vhost.c
->> @@ -45,6 +45,7 @@
->>
->>   static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
->>   static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
->> +static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
->>
->>   /* Memslots used by backends that support private memslots (without an fd). */
->>   static unsigned int used_memslots;
->> @@ -149,6 +150,47 @@ bool vhost_dev_has_iommu(struct vhost_dev *dev)
+>> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+>> index 3e8c19c4de..8806dc841e 100644
+>> --- a/tests/qtest/migration-helpers.c
+>> +++ b/tests/qtest/migration-helpers.c
+>> @@ -48,28 +48,37 @@ static char *SocketAddress_to_str(SocketAddress *addr)
 >>       }
 >>   }
->>
->> +static inline bool vhost_dev_should_log(struct vhost_dev *dev)
->> +{
->> +    assert(dev->vhost_ops);
->> +    assert(dev->vhost_ops->backend_type > VHOST_BACKEND_TYPE_NONE);
->> +    assert(dev->vhost_ops->backend_type < VHOST_BACKEND_TYPE_MAX);
+>>   
+>> -static char *
+>> -migrate_get_socket_address(QTestState *who, const char *parameter)
+>> +static SocketAddress *migrate_get_socket_address(QTestState *who)
+>>   {
+>>       QDict *rsp;
+>> -    char *result;
+>>       SocketAddressList *addrs;
+>> +    SocketAddress *addr;
+>>       Visitor *iv = NULL;
+>>       QObject *object;
+>>   
+>>       rsp = migrate_query(who);
+>> -    object = qdict_get(rsp, parameter);
+>> +    object = qdict_get(rsp, "socket-address");
+> Just a heads up, none of what I'm about to say applies to current
+> master.
+>
+> This can return NULL if there is no socket-address, such as with a file
+> migration. Then the visitor code below just barfs. It would be nice if
+> we touched this up eventually.
+
+Yes. I agree this is not full proof solution and covers for all the cases.
+It would only for 'socket-address'. Could you elaborate on what other than
+socket-address the QObject can have ?
+
+> I only noticed this because I was fiddling with the file migration API
+> and this series helped me a lot to test my changes. So thanks for that,
+> Het.
+>
+> Another point is: we really need to encourage people to write tests
+> using the new channels API. I added the FileMigrationArgs with the
+> 'offset' as a required parameter, not even knowing optional parameters
+> were a thing. So it's obviously not enough to write support for the new
+> API if no tests ever touch it.
+Yes, definitely we need more tests with the new channels API to test other
+than just tcp connection. I could give a try for vsock and unix with the
+new QAPI syntax, and add some tests.
+
+I also wanted to bring in attention that, this solution I what i feel is 
+also
+not complete. If we are using new channel syntax for migrate_qmp, then the
+same syntax should also be used for migrate_qmp_incoming. But we haven't
+touch that, and it still prints the old syntax. We might need a lot changes
+in design maybe to incorporate that too in new tests totally with the new
+syntax.
+
+Another thing that you also noted down while discussing on the patches that
+we should have a standard pattern on how to define the migration tests. Even
+that would be helpful for the users, on how to add new tests, where to add
+new tests in the file, and which test is needed to run if a specific change
+needs to be tested.
+
+>>   
+>>       iv = qobject_input_visitor_new(object);
+>>       visit_type_SocketAddressList(iv, NULL, &addrs, &error_abort);
+>> +    addr = addrs->value;
+>>       visit_free(iv);
+>>   
+>> -    /* we are only using a single address */
+>> -    result = SocketAddress_to_str(addrs->value);
+>> -
+>> -    qapi_free_SocketAddressList(addrs);
+>>       qobject_unref(rsp);
+>> -    return result;
+>> +    return addr;
+>> +}
 >> +
->> +    return dev == QLIST_FIRST(&vhost_log_devs[dev->vhost_ops->backend_type]);
-> A dumb question, why not simple check
->
-> dev->log == vhost_log_shm[dev->vhost_ops->backend_type]
-Because we are not sure if the logger comes from vhost_log_shm[] or 
-vhost_log[]. Don't want to complicate the check here by calling into 
-vhost_dev_log_is_shared() everytime when the .log_sync() is called.
+>> +static char *
+>> +migrate_get_connect_uri(QTestState *who)
+>> +{
+>> +    SocketAddress *addrs;
+>> +    char *connect_uri;
+>> +
+>> +    addrs = migrate_get_socket_address(who);
+>> +    connect_uri = SocketAddress_to_str(addrs);
+>> +
+>> +    qapi_free_SocketAddress(addrs);
+>> +    return connect_uri;
+>>   }
+>>   
+>>   bool migrate_watch_for_events(QTestState *who, const char *name,
+>> @@ -129,7 +138,7 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
+>>   
+>>       g_assert(!qdict_haskey(args, "uri"));
+>>       if (!uri) {
+>> -        connect_uri = migrate_get_socket_address(to, "socket-address");
+>> +        connect_uri = migrate_get_connect_uri(to);
+>>       }
+>>       qdict_put_str(args, "uri", uri ? uri : connect_uri);
 
--Siwei
-> ?
->
-> Thanks
->
+Regards,
+Het Gala
 
+--------------UVhyv1tQIq5of3ieHTgJM1zT
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 15/03/24 6:28 pm, Fabiano Rosas
+      wrote:<br>
+    </div>
+    <blockquote type="cite" cite="mid:871q8b8xeg.fsf@suse.de">
+      <pre class="moz-quote-pre" wrap="">Het Gala <a class="moz-txt-link-rfc2396E" href="mailto:het.gala@nutanix.com">&lt;het.gala@nutanix.com&gt;</a> writes:
+
+</pre>
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap="">Refactor migrate_get_socket_address to internally utilize 'socket-address'
+parameter, reducing redundancy in the function definition.
+
+migrate_get_socket_address implicitly converts SocketAddress into str.
+Move migrate_get_socket_address inside migrate_get_connect_uri which
+should return the uri string instead.
+
+Signed-off-by: Het Gala <a class="moz-txt-link-rfc2396E" href="mailto:het.gala@nutanix.com">&lt;het.gala@nutanix.com&gt;</a>
+Suggested-by: Fabiano Rosas <a class="moz-txt-link-rfc2396E" href="mailto:farosas@suse.de">&lt;farosas@suse.de&gt;</a>
+Reviewed-by: Fabiano Rosas <a class="moz-txt-link-rfc2396E" href="mailto:farosas@suse.de">&lt;farosas@suse.de&gt;</a>
+---
+ tests/qtest/migration-helpers.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
+
+diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+index 3e8c19c4de..8806dc841e 100644
+--- a/tests/qtest/migration-helpers.c
++++ b/tests/qtest/migration-helpers.c
+@@ -48,28 +48,37 @@ static char *SocketAddress_to_str(SocketAddress *addr)
+     }
+ }
+ 
+-static char *
+-migrate_get_socket_address(QTestState *who, const char *parameter)
++static SocketAddress *migrate_get_socket_address(QTestState *who)
+ {
+     QDict *rsp;
+-    char *result;
+     SocketAddressList *addrs;
++    SocketAddress *addr;
+     Visitor *iv = NULL;
+     QObject *object;
+ 
+     rsp = migrate_query(who);
+-    object = qdict_get(rsp, parameter);
++    object = qdict_get(rsp, &quot;socket-address&quot;);
+</pre>
+      </blockquote>
+      <pre class="moz-quote-pre" wrap="">
+Just a heads up, none of what I'm about to say applies to current
+master.
+
+This can return NULL if there is no socket-address, such as with a file
+migration. Then the visitor code below just barfs. It would be nice if
+we touched this up eventually.</pre>
+    </blockquote>
+    <p><font face="monospace">Yes. </font><font face="monospace">I
+        agree this is not full proof solution and covers for all the
+        cases.</font><font face="monospace"><br>
+        It would only for 'socket-address'. Could you elaborate on what
+        other than<br>
+        socket-address the QObject can have ?</font><span style="white-space: pre-wrap">
+</span><span style="white-space: pre-wrap">
+</span></p>
+    <blockquote type="cite" cite="mid:871q8b8xeg.fsf@suse.de">
+      <pre class="moz-quote-pre" wrap="">I only noticed this because I was fiddling with the file migration API
+and this series helped me a lot to test my changes. So thanks for that,
+Het.
+
+Another point is: we really need to encourage people to write tests
+using the new channels API. I added the FileMigrationArgs with the
+'offset' as a required parameter, not even knowing optional parameters
+were a thing. So it's obviously not enough to write support for the new
+API if no tests ever touch it.</pre>
+    </blockquote>
+    <font face="monospace">Yes, definitely we need more tests with the
+      new channels API to test other<br>
+      than just tcp connection. I could give a try for vsock and unix
+      with the<br>
+      new QAPI syntax, and add some tests.<br>
+      <br>
+      I also wanted to bring in attention that, this solution I what i
+      feel is also<br>
+      not complete. If we are using new channel syntax for migrate_qmp,
+      then the<br>
+      same syntax should also be used for migrate_qmp_incoming. But we
+      haven't<br>
+      touch that, and it still prints the old syntax. We might need a
+      lot changes<br>
+      in design maybe to incorporate that too in new tests totally with
+      the new<br>
+      syntax.<br>
+      <br>
+    </font>
+    <p><font face="monospace">Another thing that you also noted down
+        while discussing on the patches that<br>
+        we should have a standard pattern on how to define the migration
+        tests. Even<br>
+        that would be helpful for the users, on how to add new tests,
+        where to add<br>
+        new tests in the file, and which test is needed to run if a
+        specific change<br>
+        needs to be tested.</font><span style="white-space: pre-wrap">
+</span><span style="white-space: pre-wrap">
+</span></p>
+    <blockquote type="cite" cite="mid:871q8b8xeg.fsf@suse.de">
+      <blockquote type="cite">
+        <pre class="moz-quote-pre" wrap=""> 
+     iv = qobject_input_visitor_new(object);
+     visit_type_SocketAddressList(iv, NULL, &amp;addrs, &amp;error_abort);
++    addr = addrs-&gt;value;
+     visit_free(iv);
+ 
+-    /* we are only using a single address */
+-    result = SocketAddress_to_str(addrs-&gt;value);
+-
+-    qapi_free_SocketAddressList(addrs);
+     qobject_unref(rsp);
+-    return result;
++    return addr;
++}
++
++static char *
++migrate_get_connect_uri(QTestState *who)
++{
++    SocketAddress *addrs;
++    char *connect_uri;
++
++    addrs = migrate_get_socket_address(who);
++    connect_uri = SocketAddress_to_str(addrs);
++
++    qapi_free_SocketAddress(addrs);
++    return connect_uri;
+ }
+ 
+ bool migrate_watch_for_events(QTestState *who, const char *name,
+@@ -129,7 +138,7 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
+ 
+     g_assert(!qdict_haskey(args, &quot;uri&quot;));
+     if (!uri) {
+-        connect_uri = migrate_get_socket_address(to, &quot;socket-address&quot;);
++        connect_uri = migrate_get_connect_uri(to);
+     }
+     qdict_put_str(args, &quot;uri&quot;, uri ? uri : connect_uri);</pre>
+      </blockquote>
+    </blockquote>
+    <p><font face="monospace">Regards,<br>
+        Het Gala<br>
+      </font></p>
+  </body>
+</html>
+
+--------------UVhyv1tQIq5of3ieHTgJM1zT--
 
