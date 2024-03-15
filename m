@@ -4,113 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED6EFC54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 12:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E78C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 12:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl6Rl-0003dS-B8; Fri, 15 Mar 2024 08:14:01 -0400
+	id 1rl6YW-0005ur-Pg; Fri, 15 Mar 2024 08:21:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rl6Rk-0003cx-Gk
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:14:00 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rl6Ri-0002vP-Mb
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:14:00 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 27FA21FB61;
- Fri, 15 Mar 2024 12:13:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710504835; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rl6YW-0005ug-6F
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:21:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rl6YS-0004QR-PQ
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:20:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710505255;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Qy0sgdFPSVM5nwCoFFi9SS1dsRIcbeUvlDJB2vFLPdI=;
- b=XIxQUVLXuMew4j/goR6vCX5nNXWIuFUXcu6OqfM5ZPQhtTv8Psoj4Uc0m2NPLztXN3PCUp
- B4btSDxrHiX9Zqw4QuRSudClBwK0qaxANP9STPdNwW8EHI81IHWm9PEhg/Wqe+uPnlU0CO
- wYrNVIrA9g1kL/lTguxTn9btvEUdLjA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710504835;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qy0sgdFPSVM5nwCoFFi9SS1dsRIcbeUvlDJB2vFLPdI=;
- b=nj1rOGIPrLYnu5+cVXJb/MVZGAYaD6U/Q1gAnpYFCqJcOE6OoNwF4AACUehrr+gc7q9OyU
- Men3ZmiR5LyPvDDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1710504835; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qy0sgdFPSVM5nwCoFFi9SS1dsRIcbeUvlDJB2vFLPdI=;
- b=XIxQUVLXuMew4j/goR6vCX5nNXWIuFUXcu6OqfM5ZPQhtTv8Psoj4Uc0m2NPLztXN3PCUp
- B4btSDxrHiX9Zqw4QuRSudClBwK0qaxANP9STPdNwW8EHI81IHWm9PEhg/Wqe+uPnlU0CO
- wYrNVIrA9g1kL/lTguxTn9btvEUdLjA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1710504835;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Qy0sgdFPSVM5nwCoFFi9SS1dsRIcbeUvlDJB2vFLPdI=;
- b=nj1rOGIPrLYnu5+cVXJb/MVZGAYaD6U/Q1gAnpYFCqJcOE6OoNwF4AACUehrr+gc7q9OyU
- Men3ZmiR5LyPvDDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A57FD13460;
- Fri, 15 Mar 2024 12:13:54 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id B7saG4I79GVtEQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 15 Mar 2024 12:13:54 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Eric Blake
- <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [RFC PATCH v3 3/3] migration: Add fd to FileMigrationArgs
-In-Reply-To: <ZfQNDv--4BnN5zYx@redhat.com>
-References: <20240315032040.7974-1-farosas@suse.de>
- <20240315032040.7974-4-farosas@suse.de> <ZfQNDv--4BnN5zYx@redhat.com>
-Date: Fri, 15 Mar 2024 09:13:52 -0300
-Message-ID: <875xxn8zgf.fsf@suse.de>
+ bh=/N9EOjd3a1GQ1YREfOHVE5M1U0gc+dCHJHd00CmzGFw=;
+ b=XM16MfEoLsfFL0pDyPabPTCY0raDZ+kDb4UbA8NW0mkzaipFRSyXr7fXTlje3EAh6o96mK
+ pjgVz9eGl8fEQK6PUtLH0ly118g3CO81pT/YTrRz9WE5/binuJzE6JrEXFl92/ko4BksGB
+ 2LNUVZtnvGGLvF77+KSJapQ0g3x704c=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-397-yOQ5Kf7BPFehoasf4dKUgw-1; Fri, 15 Mar 2024 08:20:53 -0400
+X-MC-Unique: yOQ5Kf7BPFehoasf4dKUgw-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-690e820dd84so36824816d6.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 05:20:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710505253; x=1711110053;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/N9EOjd3a1GQ1YREfOHVE5M1U0gc+dCHJHd00CmzGFw=;
+ b=fMLoxL/HIXAn3JKtbU3ahmFyDiH1ai5IFOHhYJbkmHkePAqlhAReM2WCyrDiTqTSLL
+ +UtDRIlRs7THu+thA58uNR7DyBpWsdAZsxp8Wux58tmiupNawDcT2y6gCPaM33+6dp4l
+ ABaz/0BlDrYvlCYXtWWyKgE2VwvdQoibfQZLF5QPuITBul5nsnCzWNgF8PTAJmdLFmOm
+ TPPcExzO9selBwqS2RHEIk88teLHKdjlV9pw4C89+6OrAAkeqkC2djtHXofH743RZKPL
+ 3vgmIZQviLmmoCbnWMDa8YtCv8t9xg/gU0S0+zwkn0qNxhtT3rgurYSnzI75s29dBiyS
+ /Idw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVWLAV/9Wwu8+5wnvOigsB0PUlf8MYauGQ1Pyhpjh2/FXg48mMPP0SPgbQ6kzwwSyLsmm9JELegIRdvSKGatqSntwWLl40=
+X-Gm-Message-State: AOJu0YwJkJrUrrTIkWeUlC103rCJBqn9j8cCq3ujx12/DxZbGOfW61H1
+ wQ+slfGTjSuXjxPRA3RJpBZZ4UqaS/i1BIV3/WCbKPN9bRSqYeTDkJ4JFNogwsAxBedd9LdlTiH
+ 3bmpXc49J3PkTKivfNDUS1tubxgLzxR+SoE5pjUZanMudImmLFxHX
+X-Received: by 2002:ad4:5990:0:b0:691:3cf5:b7ad with SMTP id
+ ek16-20020ad45990000000b006913cf5b7admr7010834qvb.12.1710505253199; 
+ Fri, 15 Mar 2024 05:20:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFgB4jfLgfnM3zzS04cvIiLxVqpJ9EoGizII7QgUTDhe+u/SgiX3oTnKcq9I8YmuM9a7oiH4A==
+X-Received: by 2002:ad4:5990:0:b0:691:3cf5:b7ad with SMTP id
+ ek16-20020ad45990000000b006913cf5b7admr7010803qvb.12.1710505252867; 
+ Fri, 15 Mar 2024 05:20:52 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae?
+ ([2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae])
+ by smtp.gmail.com with ESMTPSA id
+ q3-20020ad45743000000b00690d2ed0d74sm1919780qvx.115.2024.03.15.05.20.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 15 Mar 2024 05:20:52 -0700 (PDT)
+Message-ID: <c946ae1f-3315-496e-b316-33343e43830f@redhat.com>
+Date: Fri, 15 Mar 2024 13:20:49 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-6.51 / 50.00]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- RCVD_COUNT_THREE(0.00)[3]; DKIM_TRACE(0.00)[suse.de:+];
- MX_GOOD(-0.01)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- FROM_EQ_ENVFROM(0.00)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- ARC_NA(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.10)[text/plain];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XIxQUVLX;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=nj1rOGIP
-X-Rspamd-Queue-Id: 27FA21FB61
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
+ qemu_savevm_state_setup()
+Content-Language: en-US, fr
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+References: <87plw44wps.fsf@suse.de>
+ <1566715b-a9a5-4df6-8e64-f4f912e2ea2f@redhat.com> <87le6omw0d.fsf@suse.de>
+ <9071affc-ffb5-435a-99d1-ca829703e31b@redhat.com>
+ <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
+ <b2b52017-c4cd-43e9-a67b-2ccbb92ad99e@redhat.com> <874jdbmst4.fsf@suse.de>
+ <ZfByYiL3Gl9d9u7h@x1n> <87wmq7l2xx.fsf@suse.de>
+ <b9cb5c16-59a4-4cdc-9d12-6d7c2306b4ff@redhat.com> <ZfQqpK0xCwygYYho@x1n>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <ZfQqpK0xCwygYYho@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.933,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,94 +115,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 3/15/24 12:01, Peter Xu wrote:
+> On Fri, Mar 15, 2024 at 11:17:45AM +0100, Cédric Le Goater wrote:
+>>> migrate_set_state is also unintuitive because it ignores invalid state
+>>> transitions and we've been using that property to deal with special
+>>> states such as POSTCOPY_PAUSED and FAILED:
+>>>
+>>> - After the migration goes into POSTCOPY_PAUSED, the resumed migration's
+>>>     migrate_init() will try to set the state NONE->SETUP, which is not
+>>>     valid.
+>>>
+>>> - After save_setup fails, the migration goes into FAILED, but wait_unplug
+>>>     will try to transition SETUP->ACTIVE, which is also not valid.
+>>>
+>>
+>> I am not sure I understand what the plan is. Both solutions are problematic
+>> regarding the state transitions.
+>>
+>> Should we consider that waiting for failover devices to unplug is an internal
+>> step of the SETUP phase not transitioning to ACTIVE ?
+> 
+> If to unblock this series, IIUC the simplest solution is to do what Fabiano
+> suggested, that we move qemu_savevm_wait_unplug() to be before the check of
+> setup() ret. 
 
-> On Fri, Mar 15, 2024 at 12:20:40AM -0300, Fabiano Rosas wrote:
->> The fd: URI has supported migration to a file or socket since before
->> QEMU 8.2. In 8.2 we added the file: URI that supported migration to a
->> file. So now we have two ways (three if you count exec:>cat) to
->> migrate to a file. Fine.
->>=20
->> However,
->>=20
->> In 8.2 we also added the new qmp_migrate API that uses a JSON channel
->> list instead of the URI. It added two migration transports SOCKET and
->> FILE. It was decided that the new API would classify the fd migration
->> as a type of socket migration, neglecting the fact that the fd.c code
->> also supported file migrations.
->>=20
->> In 9.0 we're adding support for fd + multifd + mapped-ram, which is
->> tied to the file migration. This was implemented in fd.c, which is
->> only reachable when the SOCKET address type is used.
->>=20
->> The result of this is that we're asking users of the new API to create  =
- (1)
->> something called a "socket" to perform migration to a plain file. And
->> creating something called a "file" provides no way of passing in a
->> file descriptor. This is confusing.
->
-> The 'file:' protocol eventually calls into qemu_open, and this
-> transparently allows for FD passing using /dev/fdset/NNN syntax
-> to pass in FDs.=20
->
+The simplest is IMHO moving qemu_savevm_wait_unplug() before
+qemu_savevm_state_setup() and leave patch 10 is unchanged. See
+below the extra patch. It looks much cleaner than what we have
+today.
 
-Ok, that's technically correct. But it works differently from
-fd:fdname.
+> In that case, the state change in qemu_savevm_wait_unplug()
+> should be benign and we should see a super small window it became ACTIVE
+> but then it should be FAILED (and IIUC the patch itself will need to use
+> ACTIVE as "old_state", not SETUP anymore).
 
-/dev/fdset requires the user to switch from getfd to add-fd and it
-requires QEMU and libvirt/user to synchronize on the open() flags being
-used. QEMU cannot just receive any fd, it must be an fd that matches the
-flags QEMU passed into qio_channel_file_new_path().
+OK. I will give it a try to compare.
 
-Users will have to adapt to the new API anyway, so it might be ok to
-require these changes around it as well.
+> For the long term, maybe we can remove the WAIT_UNPLUG state?  
 
-To keep compatibility, we'd continue to accept the fd that comes from
-"fd:" or SOCKET_ADDRESS_TYPE_FD. But we'd be making it harder for users
-of the fd: syntax to move to the new API.
+I hope so, it's an internal SETUP state for me.
 
-I also don't know how we would deal with fdset when (if) we add support
-for passing in more channels in the new API. It supports multiple fds,
-but how do we deal with something like:
+> The only Libvirt support seems to be here:
+> 
+> commit 8a226ddb3602586a2ba2359afc4448c02f566a0e
+> Author: Laine Stump <laine@redhat.com>
+> Date:   Wed Jan 15 16:38:57 2020 -0500
+> 
+>      qemu: add wait-unplug to qemu migration status enum
+> 
+> Considering that qemu_savevm_wait_unplug() can be a noop if the device is
+> already unplugged, I think it means no upper layer app should rely on this
+> state to present.
 
-"[ { 'channel-type': 'main',"
-"    'addr': { 'transport': 'file',"
-"              'filename': '/dev/fdset/1' } },
-"  { 'channel-type': 'second',"
-"    'addr': { 'transport': 'file',"
-"              'filename': '/dev/fdset/2' } } ]",
+Thanks,
 
-Maybe that's too far ahead for this discussion.
+C.
 
->> diff --git a/qapi/migration.json b/qapi/migration.json
->> index aa1b39bce1..37f4b9c6fb 100644
->> --- a/qapi/migration.json
->> +++ b/qapi/migration.json
->> @@ -1656,13 +1656,20 @@
->>  #
->>  # @filename: The file to receive the migration stream
->>  #
->> +# @fd: A file descriptor name or number.  File descriptors must be
->> +#     first added with the 'getfd' command. (since 9.0).
->> +#
->>  # @offset: The file offset where the migration stream will start
->>  #
->> +# Since 9.0, all members are optional, but at least one of @filename
->> +# or @fd are required.
->> +#
->>  # Since: 8.2
->>  ##
->>  { 'struct': 'FileMigrationArgs',
->> -  'data': { 'filename': 'str',
->> -            'offset': 'uint64' } }
->> +  'data': { '*filename': 'str',
->> +            '*fd': 'str',
->> +            '*offset': 'uint64' } }
->
-> Adding 'fd' here is not desirable, because 'filename' is
-> resolved via qemu_open which allows for FD passing without
-> introducing any new syntax in interfaces which take filenames.
->
-> With regards,
-> Daniel
+
+> 
+@@ -3383,11 +3383,10 @@ bool migration_rate_limit(void)
+   * unplugged
+   */
+  
+-static void qemu_savevm_wait_unplug(MigrationState *s, int old_state,
+-                                    int new_state)
++static void qemu_savevm_wait_unplug(MigrationState *s, int state)
+  {
+      if (qemu_savevm_state_guest_unplug_pending()) {
+-        migrate_set_state(&s->state, old_state, MIGRATION_STATUS_WAIT_UNPLUG);
++        migrate_set_state(&s->state, state, MIGRATION_STATUS_WAIT_UNPLUG);
+  
+          while (s->state == MIGRATION_STATUS_WAIT_UNPLUG &&
+                 qemu_savevm_state_guest_unplug_pending()) {
+@@ -3410,9 +3409,7 @@ static void qemu_savevm_wait_unplug(Migr
+              }
+          }
+  
+-        migrate_set_state(&s->state, MIGRATION_STATUS_WAIT_UNPLUG, new_state);
+-    } else {
+-        migrate_set_state(&s->state, old_state, new_state);
++        migrate_set_state(&s->state, MIGRATION_STATUS_WAIT_UNPLUG, state);
+      }
+  }
+  
+@@ -3469,17 +3466,19 @@ static void *migration_thread(void *opaq
+          qemu_savevm_send_colo_enable(s->to_dst_file);
+      }
+  
++    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP);
++
+      bql_lock();
+      qemu_savevm_state_setup(s->to_dst_file);
+      bql_unlock();
+  
+-    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+-                               MIGRATION_STATUS_ACTIVE);
+-
+      s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
+  
+      trace_migration_thread_setup_complete();
+  
++    migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
++                      MIGRATION_STATUS_ACTIVE);
++
+      while (migration_is_active()) {
+          if (urgent || !migration_rate_exceeded(s->to_dst_file)) {
+              MigIterateState iter_state = migration_iteration_run(s);
+@@ -3580,18 +3579,20 @@ static void *bg_migration_thread(void *o
+      ram_write_tracking_prepare();
+  #endif
+  
++    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP);
++
+      bql_lock();
+      qemu_savevm_state_header(s->to_dst_file);
+      qemu_savevm_state_setup(s->to_dst_file);
+      bql_unlock();
+  
+-    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
+-                               MIGRATION_STATUS_ACTIVE);
+-
+      s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
+  
+      trace_migration_thread_setup_complete();
+  
++    migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
++                      MIGRATION_STATUS_ACTIVE);
++
+      bql_lock();
+  
+      if (migration_stop_vm(s, RUN_STATE_PAUSED)) {
+
 
