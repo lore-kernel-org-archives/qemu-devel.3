@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0062C54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E25AC54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:15:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl7LL-0001Wl-1g; Fri, 15 Mar 2024 09:11:28 -0400
+	id 1rl7Kx-00008n-EV; Fri, 15 Mar 2024 09:11:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7KT-00079Z-AL
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:34 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7Kh-0007ZW-7K
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:49 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7KJ-000836-TT
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:32 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-513cfd48224so2914829e87.2
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:10:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7KX-0008CX-Lu
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:44 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a36126ee41eso254168366b.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:10:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710508222; x=1711113022; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710508235; x=1711113035; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=juKrFHTenueZGgaczYCixm7yTPX2XVgDuiXA1GdKgho=;
- b=nvfjlwjpj1j6AGq1kErWVZXNMSIghtLCXx8EqZADOAVKOwYClTex9UNbeeJW8EthQy
- xT01/1h+LZMIN61eu2D+NA3vkmbWeS81w2WoJF79CRfA6N16ROrilpzHZhMkxvK/MjGg
- zez1N+rT33T15Gyn+wIwzKtFdmrndHfllg0mxY6NniCbXEcShuLFXO/dPbdRiVPNtumU
- U9egae0Mkt9vdfB/Qcop8cHfpJrZMOBpv9Xb1zbRH39o03HaQH7/UZQpKMizlHo4qo3E
- IhjUYSJ+Dudx8pp+4qIw+4K5lmpfQgvN6XZdHfBy6L9++mLPAPIwqancZV9/IPHbcXWW
- k0sA==
+ bh=Ziq2wowWWC1u1AFoZqkoU9Vq9nlm9ySbjwCpiWVML/s=;
+ b=op75yWP2kBjzzxO4AdYFmO4Wwo0v7v88JOe1Ykk8tAKJ0uI0EFjvxmuiLe0nmavjWX
+ MJVkOvgR18oqw+jMCWtIu7E5CruYbj5uTFZiOdFfOZ37VzhYmpwLTJXyJYO0JCTmlKnJ
+ Czkzl93KzuaVFic86Yf2+OYELIHTTNMivoaIe527tsfKkbf5YkKgEfn1ZZ0Cxp2AuNLh
+ Gu44qFgAQXlZg3lk25436nEktmosFjajJCT5A3HXGkgQJs0XM1Jm12dAf+CyJG9IXyZB
+ yBYDGRgL3AUXmRIgzQ6CtU3pXGijOhy1IhNy2GvuJpP4yOI1M/BL2QJiw737yDPN+QyL
+ csmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710508222; x=1711113022;
+ d=1e100.net; s=20230601; t=1710508235; x=1711113035;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=juKrFHTenueZGgaczYCixm7yTPX2XVgDuiXA1GdKgho=;
- b=THTh51O4jwuLo7pQfTwqAlta/Bd0Cj60VAhHbqIf/RK9mjbEYhtZrBA+/m+/l2XOoz
- wvFVWhA5i7QfB7TU5h9C+u1ZX+vLmKzVoLbXQVHN7l4Q+bccw1Knn6q5k7YuMWvx0CAQ
- 5So2uozf2jJZPrNSlPGd6KSU8XSSIvOcLZnwtEjnNcEc7dC5qq+VKHWPfOeH24SDy7T4
- iKjdswt6EFiVpxptzfKzZ63Gh3NRuAJOWSAfMnZ+ML0eOeeikoxtc9IokzVw7dK23kK4
- K0uDNx0+S50BpggjH8/Oo8222AEpE/qHet82IjtqO926XxjOzQNyDaYP9twCYBPQ4Uoi
- kOag==
-X-Gm-Message-State: AOJu0YyaQve91zbuyoUpzd7JWF8ow8XTUQg0a0OJyMTYZhVBOSRt9qq8
- DSIOyp6+175iChpqWAUqCGhFkundFrctq8aM9JYJ9aMthDpsmllJf602Ud5qUi4egoektvlPKIq
- M
-X-Google-Smtp-Source: AGHT+IG/fkrm3CO2MahErI9fFc2gtBPFkzwyIu619VO5D+ezRzl3dqx8ZqO1u+VaQLLAaFAD47y0KA==
-X-Received: by 2002:a19:f807:0:b0:513:2bea:d0e0 with SMTP id
- a7-20020a19f807000000b005132bead0e0mr2965749lff.62.1710508221669; 
- Fri, 15 Mar 2024 06:10:21 -0700 (PDT)
+ bh=Ziq2wowWWC1u1AFoZqkoU9Vq9nlm9ySbjwCpiWVML/s=;
+ b=Ofc1QXKuSjB6OC2rkBmZna/4I8ds7WF6Va33wI9XmguVB1B51qaS1u2924gSJ1ebj1
+ 422PErMmRWGDi57/saNSSTCPfBTTnXiyaey89aWONa0jnfXBmG9+ZJYmxFeR5MCtjgAB
+ lT5lIreGZkN4e3R25qofp0Svtv4H4EXv3FSUB9Dg2maMN9U9HinIj9WYMZjfHwUB7dl/
+ vko2M3NTg7BfWkGK0dRi0SjCI4iv8zYZQjkwEQGgaeNuohgNq7D3Xx9+ZEYvw34J8jua
+ SFHsmhEPMGDqFK1ALnD7KJd3iFL6Xz8mZ+0+Sa4YcGc6/qcJ69HojardylvL4RsTEZOh
+ M2cg==
+X-Gm-Message-State: AOJu0Yyc74U8eUjvGETCbCaoHAx3ZT09u2Po07c34QZcSXf5dCUEGdyJ
+ mwhrL3SCkmqddQIVUn96xy1zFKg6XBaOeEepHzEDrGePwVEfWyncgklOnRRC8R4SVYR6mBcdvQu
+ v
+X-Google-Smtp-Source: AGHT+IGM9lKIGYFKaZaCihcgLpVmcmySzlNiRx+Vc9T9AfUSHHHR2fR0Hvp2VtpFFpo3dT3QgLPrVA==
+X-Received: by 2002:a17:906:40ca:b0:a45:2e21:c776 with SMTP id
+ a10-20020a17090640ca00b00a452e21c776mr3334104ejk.3.1710508235156; 
+ Fri, 15 Mar 2024 06:10:35 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.145.26])
  by smtp.gmail.com with ESMTPSA id
- s11-20020a170906bc4b00b00a4671d37717sm1605908ejv.52.2024.03.15.06.10.19
+ c19-20020a170906341300b00a462736feedsm1691257ejb.62.2024.03.15.06.10.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 15 Mar 2024 06:10:21 -0700 (PDT)
+ Fri, 15 Mar 2024 06:10:34 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Markus Armbruster <armbru@redhat.com>
@@ -71,28 +71,25 @@ Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: [PATCH-for-9.1 10/21] qapi: Make CpuModel* definitions target agnostic
-Date: Fri, 15 Mar 2024 14:08:58 +0100
-Message-ID: <20240315130910.15750-11-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-9.1 12/21] system: Introduce QemuArchBit enum
+Date: Fri, 15 Mar 2024 14:09:00 +0100
+Message-ID: <20240315130910.15750-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240315130910.15750-1-philmd@linaro.org>
 References: <20240315130910.15750-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01, UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,195 +105,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CpuModelInfo, CpuModelExpansionType and CpuModelCompareResult
-are not restricted to any particular target. Define them in
-machine.json to generate them once.
+Current QEMU_ARCH_foo definitions are used as masks.
+Extract the bit values, so we can easily iterate over.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- qapi/machine-target.json | 78 ---------------------------------------
- qapi/machine.json        | 79 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 79 insertions(+), 78 deletions(-)
+ include/sysemu/arch_init.h | 69 ++++++++++++++++++++++++++------------
+ 1 file changed, 47 insertions(+), 22 deletions(-)
 
-diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-index 5f17b25d50..0412400df3 100644
---- a/qapi/machine-target.json
-+++ b/qapi/machine-target.json
-@@ -6,84 +6,6 @@
+diff --git a/include/sysemu/arch_init.h b/include/sysemu/arch_init.h
+index 8850cb1a14..cf597c40a3 100644
+--- a/include/sysemu/arch_init.h
++++ b/include/sysemu/arch_init.h
+@@ -1,30 +1,55 @@
+ #ifndef QEMU_ARCH_INIT_H
+ #define QEMU_ARCH_INIT_H
  
- { 'include': 'machine.json' }
++typedef enum QemuArchBit {
++    QEMU_ARCH_BIT_ALPHA         = 0,
++    QEMU_ARCH_BIT_ARM           = 1,
++    QEMU_ARCH_BIT_CRIS          = 2,
++    QEMU_ARCH_BIT_I386          = 3,
++    QEMU_ARCH_BIT_M68K          = 4,
++    QEMU_ARCH_BIT_MICROBLAZE    = 6,
++    QEMU_ARCH_BIT_MIPS          = 7,
++    QEMU_ARCH_BIT_PPC           = 8,
++    QEMU_ARCH_BIT_S390X         = 9,
++    QEMU_ARCH_BIT_SH4           = 10,
++    QEMU_ARCH_BIT_SPARC         = 11,
++    QEMU_ARCH_BIT_XTENSA        = 12,
++    QEMU_ARCH_BIT_OPENRISC      = 13,
++    QEMU_ARCH_BIT_TRICORE       = 16,
++    QEMU_ARCH_BIT_NIOS2         = 17,
++    QEMU_ARCH_BIT_HPPA          = 18,
++    QEMU_ARCH_BIT_RISCV         = 19,
++    QEMU_ARCH_BIT_RX            = 20,
++    QEMU_ARCH_BIT_AVR           = 21,
++    QEMU_ARCH_BIT_HEXAGON       = 22,
++    QEMU_ARCH_BIT_LOONGARCH     = 23,
  
--##
--# @CpuModelInfo:
--#
--# Virtual CPU model.
--#
--# A CPU model consists of the name of a CPU definition, to which delta
--# changes are applied (e.g. features added/removed). Most magic values
--# that an architecture might require should be hidden behind the name.
--# However, if required, architectures can expose relevant properties.
--#
--# @name: the name of the CPU definition the model is based on
--#
--# @props: a dictionary of QOM properties to be applied
--#
--# Since: 2.8
--##
--{ 'struct': 'CpuModelInfo',
--  'data': { 'name': 'str',
--            '*props': 'any' } }
--
--##
--# @CpuModelExpansionType:
--#
--# An enumeration of CPU model expansion types.
--#
--# @static: Expand to a static CPU model, a combination of a static
--#     base model name and property delta changes.  As the static base
--#     model will never change, the expanded CPU model will be the
--#     same, independent of QEMU version, machine type, machine
--#     options, and accelerator options.  Therefore, the resulting
--#     model can be used by tooling without having to specify a
--#     compatibility machine - e.g. when displaying the "host" model.
--#     The @static CPU models are migration-safe.
--#
--# @full: Expand all properties.  The produced model is not guaranteed
--#     to be migration-safe, but allows tooling to get an insight and
--#     work with model details.
--#
--# Note: When a non-migration-safe CPU model is expanded in static
--#     mode, some features enabled by the CPU model may be omitted,
--#     because they can't be implemented by a static CPU model
--#     definition (e.g. cache info passthrough and PMU passthrough in
--#     x86). If you need an accurate representation of the features
--#     enabled by a non-migration-safe CPU model, use @full.  If you
--#     need a static representation that will keep ABI compatibility
--#     even when changing QEMU version or machine-type, use @static
--#     (but keep in mind that some features may be omitted).
--#
--# Since: 2.8
--##
--{ 'enum': 'CpuModelExpansionType',
--  'data': [ 'static', 'full' ] }
--
--##
--# @CpuModelCompareResult:
--#
--# An enumeration of CPU model comparison results.  The result is
--# usually calculated using e.g. CPU features or CPU generations.
--#
--# @incompatible: If model A is incompatible to model B, model A is not
--#     guaranteed to run where model B runs and the other way around.
--#
--# @identical: If model A is identical to model B, model A is
--#     guaranteed to run where model B runs and the other way around.
--#
--# @superset: If model A is a superset of model B, model B is
--#     guaranteed to run where model A runs.  There are no guarantees
--#     about the other way.
--#
--# @subset: If model A is a subset of model B, model A is guaranteed to
--#     run where model B runs.  There are no guarantees about the other
--#     way.
--#
--# Since: 2.8
--##
--{ 'enum': 'CpuModelCompareResult',
--  'data': [ 'incompatible', 'identical', 'superset', 'subset' ] }
--
- ##
- # @CpuModelBaselineInfo:
- #
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 4bc38e86fd..65702c2c78 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -10,6 +10,85 @@
- 
- { 'include': 'common.json' }
- 
-+##
-+# @CpuModelInfo:
-+#
-+# Virtual CPU model.
-+#
-+# A CPU model consists of the name of a CPU definition, to which delta
-+# changes are applied (e.g. features added/removed). Most magic values
-+# that an architecture might require should be hidden behind the name.
-+# However, if required, architectures can expose relevant properties.
-+#
-+# @name: the name of the CPU definition the model is based on
-+#
-+# @props: a dictionary of QOM properties to be applied
-+#
-+# Since: 2.8
-+##
-+{ 'struct': 'CpuModelInfo',
-+  'data': { 'name': 'str',
-+            '*props': 'any' }
-+}
+-enum {
++    QEMU_ARCH_BIT_LAST          = QEMU_ARCH_BIT_LOONGARCH
++} QemuArchBit;
 +
-+##
-+# @CpuModelExpansionType:
-+#
-+# An enumeration of CPU model expansion types.
-+#
-+# @static: Expand to a static CPU model, a combination of a static
-+#     base model name and property delta changes.  As the static base
-+#     model will never change, the expanded CPU model will be the
-+#     same, independent of QEMU version, machine type, machine
-+#     options, and accelerator options.  Therefore, the resulting
-+#     model can be used by tooling without having to specify a
-+#     compatibility machine - e.g. when displaying the "host" model.
-+#     The @static CPU models are migration-safe.
-+#
-+# @full: Expand all properties.  The produced model is not guaranteed
-+#     to be migration-safe, but allows tooling to get an insight and
-+#     work with model details.
-+#
-+# Note: When a non-migration-safe CPU model is expanded in static
-+#     mode, some features enabled by the CPU model may be omitted,
-+#     because they can't be implemented by a static CPU model
-+#     definition (e.g. cache info passthrough and PMU passthrough in
-+#     x86). If you need an accurate representation of the features
-+#     enabled by a non-migration-safe CPU model, use @full.  If you
-+#     need a static representation that will keep ABI compatibility
-+#     even when changing QEMU version or machine-type, use @static
-+#     (but keep in mind that some features may be omitted).
-+#
-+# Since: 2.8
-+##
-+{ 'enum': 'CpuModelExpansionType',
-+  'data': [ 'static', 'full' ] }
-+
-+##
-+# @CpuModelCompareResult:
-+#
-+# An enumeration of CPU model comparison results.  The result is
-+# usually calculated using e.g. CPU features or CPU generations.
-+#
-+# @incompatible: If model A is incompatible to model B, model A is not
-+#     guaranteed to run where model B runs and the other way around.
-+#
-+# @identical: If model A is identical to model B, model A is
-+#     guaranteed to run where model B runs and the other way around.
-+#
-+# @superset: If model A is a superset of model B, model B is
-+#     guaranteed to run where model A runs.  There are no guarantees
-+#     about the other way.
-+#
-+# @subset: If model A is a subset of model B, model A is guaranteed to
-+#     run where model B runs.  There are no guarantees about the other
-+#     way.
-+#
-+# Since: 2.8
-+##
-+{ 'enum': 'CpuModelCompareResult',
-+  'data': [ 'incompatible', 'identical', 'superset', 'subset' ] }
-+
- ##
- # @SysEmuTarget:
- #
++enum QemuArchMask {
+     QEMU_ARCH_ALL = -1,
+-    QEMU_ARCH_ALPHA = (1 << 0),
+-    QEMU_ARCH_ARM = (1 << 1),
+-    QEMU_ARCH_CRIS = (1 << 2),
+-    QEMU_ARCH_I386 = (1 << 3),
+-    QEMU_ARCH_M68K = (1 << 4),
+-    QEMU_ARCH_MICROBLAZE = (1 << 6),
+-    QEMU_ARCH_MIPS = (1 << 7),
+-    QEMU_ARCH_PPC = (1 << 8),
+-    QEMU_ARCH_S390X = (1 << 9),
+-    QEMU_ARCH_SH4 = (1 << 10),
+-    QEMU_ARCH_SPARC = (1 << 11),
+-    QEMU_ARCH_XTENSA = (1 << 12),
+-    QEMU_ARCH_OPENRISC = (1 << 13),
+-    QEMU_ARCH_TRICORE = (1 << 16),
+-    QEMU_ARCH_NIOS2 = (1 << 17),
+-    QEMU_ARCH_HPPA = (1 << 18),
+-    QEMU_ARCH_RISCV = (1 << 19),
+-    QEMU_ARCH_RX = (1 << 20),
+-    QEMU_ARCH_AVR = (1 << 21),
+-    QEMU_ARCH_HEXAGON = (1 << 22),
+-    QEMU_ARCH_LOONGARCH = (1 << 23),
++    QEMU_ARCH_ALPHA             = (1 << QEMU_ARCH_BIT_ALPHA),
++    QEMU_ARCH_ARM               = (1 << QEMU_ARCH_BIT_ARM),
++    QEMU_ARCH_CRIS              = (1 << QEMU_ARCH_BIT_CRIS),
++    QEMU_ARCH_I386              = (1 << QEMU_ARCH_BIT_I386),
++    QEMU_ARCH_M68K              = (1 << QEMU_ARCH_BIT_M68K),
++    QEMU_ARCH_MICROBLAZE        = (1 << QEMU_ARCH_BIT_MICROBLAZE),
++    QEMU_ARCH_MIPS              = (1 << QEMU_ARCH_BIT_MIPS),
++    QEMU_ARCH_PPC               = (1 << QEMU_ARCH_BIT_PPC),
++    QEMU_ARCH_S390X             = (1 << QEMU_ARCH_BIT_S390X),
++    QEMU_ARCH_SH4               = (1 << QEMU_ARCH_BIT_SH4),
++    QEMU_ARCH_SPARC             = (1 << QEMU_ARCH_BIT_SPARC),
++    QEMU_ARCH_XTENSA            = (1 << QEMU_ARCH_BIT_XTENSA),
++    QEMU_ARCH_OPENRISC          = (1 << QEMU_ARCH_BIT_OPENRISC),
++    QEMU_ARCH_TRICORE           = (1 << QEMU_ARCH_BIT_TRICORE),
++    QEMU_ARCH_NIOS2             = (1 << QEMU_ARCH_BIT_NIOS2),
++    QEMU_ARCH_HPPA              = (1 << QEMU_ARCH_BIT_HPPA),
++    QEMU_ARCH_RISCV             = (1 << QEMU_ARCH_BIT_RISCV),
++    QEMU_ARCH_RX                = (1 << QEMU_ARCH_BIT_RX),
++    QEMU_ARCH_AVR               = (1 << QEMU_ARCH_BIT_AVR),
++    QEMU_ARCH_HEXAGON           = (1 << QEMU_ARCH_BIT_HEXAGON),
++    QEMU_ARCH_LOONGARCH         = (1 << QEMU_ARCH_BIT_LOONGARCH),
+ };
+ 
+ extern const uint32_t arch_type;
 -- 
 2.41.0
 
