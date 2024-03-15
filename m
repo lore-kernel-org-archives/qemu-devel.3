@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C695CC54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 14:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50FC5C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 14:32:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl8Zx-0008QD-Qn; Fri, 15 Mar 2024 10:30:37 -0400
+	id 1rl8ax-0000g1-01; Fri, 15 Mar 2024 10:31:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rl8Zv-0008Q3-Lz
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 10:30:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rl8au-0000fY-UK
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 10:31:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rl8Zq-0000Om-M1
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 10:30:35 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rl8at-0000lq-K1
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 10:31:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710513029;
+ s=mimecast20190719; t=1710513094;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=D3rd/vfmpZJwv/k9eXfVSDx9/0yA+++LEfWKMNUrKtY=;
- b=T27qzEirMrf45sv1WciZBajKQxIQ8TWIsU5QYdoLLrlvpNELhwbGRvPX9mofytTAZNvUGa
- vy4fLAbsTJunW5qEMCYeA7uJ+L5wIjCbIvMR9r9YkyIz5Sx8Evz5hVw/wsgMkPJum2epdi
- 4sehBKRg1hkZf0JTg3ttezPSV8gSibc=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qhLpqY0x5oddwZF7Pef1cCyhlta+48OMpG5TdILQZW4=;
+ b=JHJhAReirxj4b+cvTP46qBqrHHKWV0WrI0Gn9KeRBb3bklJnGwsm22Xv5eBqRXiEiZj4kA
+ DxDWTLWDZ85vE/yvr6lkoCSoYPMUCXTMjzSOPzy+xiN1UFm2ndqbkX6MqxKbpUeQTOxFft
+ 7DS7AlrVJtGVAINjIHdt6AWssAVwVm4=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-SKn99HsLO_WpX2fSui4lOA-1; Fri, 15 Mar 2024 10:30:28 -0400
-X-MC-Unique: SKn99HsLO_WpX2fSui4lOA-1
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-787dea68f58so199350285a.3
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 07:30:27 -0700 (PDT)
+ us-mta-202-FZAvT-ocPp-vwNjpeF3WWw-1; Fri, 15 Mar 2024 10:31:31 -0400
+X-MC-Unique: FZAvT-ocPp-vwNjpeF3WWw-1
+Received: by mail-oa1-f69.google.com with SMTP id
+ 586e51a60fabf-2218e929fabso2339695fac.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 07:31:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710513027; x=1711117827;
+ d=1e100.net; s=20230601; t=1710513090; x=1711117890;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D3rd/vfmpZJwv/k9eXfVSDx9/0yA+++LEfWKMNUrKtY=;
- b=RSU09he4xtVzULjOLO9X/ugpmEEb6KFMt02Nk0tkuQ1FaOw6Q9Vnw7JmwR3LFo3F8y
- lnsxBx/+KSQsYMrHDJiIkniKJL3TxeqWrxqaGctCpfKkMOqWXqQccEJ2CwG/OJKftpfd
- tK5JVt+qNLTdJCt0kIsXLyiyAweKV3hj3BqDL8mjtLJbRoLYBuCE0c2wW21S6lydD/dw
- un8gxVgJO4BhuHciQ3gITCASjKLiBSg9ReJMgBNmQs/2+x+6HYWcH1lQdoS9+wHMC+Iz
- 8/s7wUrDHkOuPXpRQn+cjVPV9jyWPAXbpOun7oCV+EKc/MyWLRCmPwWRnquGIEkRoxn0
- gyUQ==
+ bh=qhLpqY0x5oddwZF7Pef1cCyhlta+48OMpG5TdILQZW4=;
+ b=IWuxP0f/Cfzge99D2QeNsnXpGRqlDs7EUHRLzZLopL7PHitXdFM1WNK+laig8exfzZ
+ uzJ3oIMjgTi+Y9SF5fiM/Ocfd/pN7wxoh4y0932RP975RQrD5RX0EN7s7TsF/0phoJnR
+ XpKMoUTjSU/+6BBEvbJTCGDYpIYyluOOEawpizbFMHoLlYJlyC7GjUsMf/e6kHB1SULM
+ DNxCJ+YvrPGz5IH0+1QOn0Y22dDZWwPjE3lh2lMGEgqRPrarPkYwlUDjqXQErGCZ/rfX
+ KPwLQJwclIN2CGvGecXWsnyk92bwehA4mGunwE9q80bI3Nt0ZLfMCuL29X+9mMFcIsKU
+ hyoA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXH1D2wZV3Wn5/TrREkR89UKBSOaRQRnrjz4TPhIro96mJjOrRyl1RPFY4gYdxSgNkyHUBaDklmMUdJxjVfO2pHj5auitI=
-X-Gm-Message-State: AOJu0YyRQFaMbYRwRcS1BKOEAeS9LDwmqr9h9KvTGb6rzpBPRvJoo3cf
- g8kE/ijcBECZihpdDvbzG53cx9BjokNLfFyawxg1E0sjnjTZ51whcEw9z0MnXCnOtpoMqqsJY92
- LeUrkKjWB25pyRBh/w0abE3HXPlleio7yGo6qeQ3RFK/UUsu0lCLv
-X-Received: by 2002:a05:620a:4415:b0:789:e247:1d7e with SMTP id
- v21-20020a05620a441500b00789e2471d7emr3862871qkp.43.1710513027394; 
- Fri, 15 Mar 2024 07:30:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEUpioS3Pf1LdM+osfgI387qK55fZ1LdejtuTN3pnfI6if0p+2b7L6wEMN65cr7BcK1IBjs1Q==
-X-Received: by 2002:a05:620a:4415:b0:789:e247:1d7e with SMTP id
- v21-20020a05620a441500b00789e2471d7emr3862842qkp.43.1710513027083; 
- Fri, 15 Mar 2024 07:30:27 -0700 (PDT)
+ AJvYcCUc0cwrwrkRDR65pBItpXtwN/4wtUio37bJwcTqUngHRyd/rgymK4PnfoLFPis+o4FHmXW3RkVyAja4N6MkoY+1/pHpvhE=
+X-Gm-Message-State: AOJu0YyJo3SZZpJ6/G7bX99dZRIItME4Sy9eswhUgvkPTQv7Tyx3lltM
+ c0mab2HvgntTz5xaqtgmlLcK58pPh1wZhwFCqjz59/R9faCS42qoN9uogUj+lG3xvzwt+FSwrNt
+ gmTLiLcxVRcWlpRTRUSflsAamzGxr5LlHzuZhjzzusyffKDAWBC44
+X-Received: by 2002:a05:6870:a9a8:b0:221:51c1:3284 with SMTP id
+ ep40-20020a056870a9a800b0022151c13284mr4533913oab.12.1710513090728; 
+ Fri, 15 Mar 2024 07:31:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdeO2EIoA5mBxje0Sr97nbgFhL5lWzeipbLlrIyX7iAy0eTyCZIf3SSCoOBMhaKWjMA1FGUQ==
+X-Received: by 2002:a05:6870:a9a8:b0:221:51c1:3284 with SMTP id
+ ep40-20020a056870a9a800b0022151c13284mr4533889oab.12.1710513090494; 
+ Fri, 15 Mar 2024 07:31:30 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae?
  ([2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae])
  by smtp.gmail.com with ESMTPSA id
- dc33-20020a05620a522100b007885cd1c058sm2106481qkb.103.2024.03.15.07.30.25
+ dc33-20020a05620a522100b007885cd1c058sm2106481qkb.103.2024.03.15.07.31.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 Mar 2024 07:30:26 -0700 (PDT)
-Message-ID: <0f6f0a06-7ec7-4ad9-a47e-2466a18dbf50@redhat.com>
-Date: Fri, 15 Mar 2024 15:30:23 +0100
+ Fri, 15 Mar 2024 07:31:30 -0700 (PDT)
+Message-ID: <36089ba2-7ee3-412f-9050-739a8ead2fbc@redhat.com>
+Date: Fri, 15 Mar 2024 15:31:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
@@ -85,20 +85,21 @@ References: <87le6omw0d.fsf@suse.de>
  <b2b52017-c4cd-43e9-a67b-2ccbb92ad99e@redhat.com> <874jdbmst4.fsf@suse.de>
  <ZfByYiL3Gl9d9u7h@x1n> <87wmq7l2xx.fsf@suse.de>
  <b9cb5c16-59a4-4cdc-9d12-6d7c2306b4ff@redhat.com> <ZfQqpK0xCwygYYho@x1n>
- <c946ae1f-3315-496e-b316-33343e43830f@redhat.com> <ZfRIc1l_PElCVNtL@x1n>
+ <c946ae1f-3315-496e-b316-33343e43830f@redhat.com> <ZfRJHEya_kPaXWbU@x1n>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <ZfRIc1l_PElCVNtL@x1n>
+In-Reply-To: <ZfRJHEya_kPaXWbU@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.933,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,72 +115,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/15/24 14:09, Peter Xu wrote:
+On 3/15/24 14:11, Peter Xu wrote:
 > On Fri, Mar 15, 2024 at 01:20:49PM +0100, Cédric Le Goater wrote:
->> On 3/15/24 12:01, Peter Xu wrote:
->>> On Fri, Mar 15, 2024 at 11:17:45AM +0100, Cédric Le Goater wrote:
->>>>> migrate_set_state is also unintuitive because it ignores invalid state
->>>>> transitions and we've been using that property to deal with special
->>>>> states such as POSTCOPY_PAUSED and FAILED:
->>>>>
->>>>> - After the migration goes into POSTCOPY_PAUSED, the resumed migration's
->>>>>      migrate_init() will try to set the state NONE->SETUP, which is not
->>>>>      valid.
->>>>>
->>>>> - After save_setup fails, the migration goes into FAILED, but wait_unplug
->>>>>      will try to transition SETUP->ACTIVE, which is also not valid.
->>>>>
->>>>
->>>> I am not sure I understand what the plan is. Both solutions are problematic
->>>> regarding the state transitions.
->>>>
->>>> Should we consider that waiting for failover devices to unplug is an internal
->>>> step of the SETUP phase not transitioning to ACTIVE ?
->>>
->>> If to unblock this series, IIUC the simplest solution is to do what Fabiano
->>> suggested, that we move qemu_savevm_wait_unplug() to be before the check of
->>> setup() ret.
->>
->> The simplest is IMHO moving qemu_savevm_wait_unplug() before
->> qemu_savevm_state_setup() and leave patch 10 is unchanged. See
->> below the extra patch. It looks much cleaner than what we have
->> today.
+>> +static void qemu_savevm_wait_unplug(MigrationState *s, int state)
 > 
-> Yes it looks cleaner indeed, it's just that then we'll have one more
-> possible state conversions like SETUP->UNPLUG->SETUP.  I'd say it's fine,
-> but let's also copy Laruent and Laine if it's going to be posted formally.
+> One more trivial comment: I'd even consider dropping "state" altogether, as
+> this should be the only state this function should be invoked.  So we can
+> perhaps assert it instead of passing it over?
 
-OK. I just sent the alternative implementation. The code looks a little
-ugly  :
-
-     bql_lock();                                                           |
-     qemu_savevm_state_header(s->to_dst_file);                             |
-     ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);            | in SETUP state
-     bql_unlock();                                                         |
-                                                                           |
-     qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,                    | SETUP -> ACTIVE transition
-                                MIGRATION_STATUS_ACTIVE);                  |
-                                                                           |
-     /*                                                                    |
-      * Handle SETUP failures after waiting for virtio-net-failover        |
-      * devices to unplug. This to preserve migration state transitions.   |
-      */                                                                   |
-     if (ret) {                                                            |
-         migrate_set_error(s, local_err);                                  | handling SETUP errors in ACTIVE
-         error_free(local_err);                                            |
-         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,             |
-                           MIGRATION_STATUS_FAILED);                       |
-         goto fail_setup;                                                  |
-     }                                                                     |
-                                                                           |
-     s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;     | SETUP duration
-                                                                           |
-     trace_migration_thread_setup_complete();                              | SETUP trace event
-
+Yes. If you prefer this implementation I will change.
 
 
 Thanks,
 
 C.
+
+
 
 
