@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB1AC54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 16:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 459C4C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 16:57:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlArE-0003f6-Ck; Fri, 15 Mar 2024 12:56:37 -0400
+	id 1rlArf-0003nf-7f; Fri, 15 Mar 2024 12:57:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rlAr9-0003bZ-DA; Fri, 15 Mar 2024 12:56:31 -0400
+ id 1rlArb-0003kg-3O; Fri, 15 Mar 2024 12:56:59 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rlAr6-0001DV-IH; Fri, 15 Mar 2024 12:56:31 -0400
+ id 1rlArW-0001D3-HF; Fri, 15 Mar 2024 12:56:56 -0400
 Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42FGXT4Y031892; Fri, 15 Mar 2024 16:56:16 GMT
+ 42FGWljV031318; Fri, 15 Mar 2024 16:56:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
+ subject : date : message-id : mime-version : content-type :
  content-transfer-encoding; s=corp-2023-11-20;
- bh=ceoE3jO9B2h+pVIG5d/HxPnA+bGppP7/EnHv+dhO8hM=;
- b=ihoK030n/TN5fxWd7TepDjOOIFFJQ7Mt163MBPW/YzOJM8hKjQeHngfNIoAEbmQxf7dn
- mHaCV6I3dwukWwXBOoTS2/bpQTrkbE6vQDokyTdctZFij/cfJQ9t1+/KIMpv4SpsWz2F
- TdCePAKvBGFQQgxGgwy5awrJRF2Llg5xM3YGL3srSd7s3m34z77ITPKn7Bn+W7CCGKe+
- DgIQCm9FfkCC75GkdRF6f3kHAU3MGFoLAzr9U5jMb9Kkk/482L91ZXPsa51eGl/6dYLN
- 8qmUvpUuuYda73WEaP6bwjg2pvshqxnWaatlEj3CHOK2BUreAz8xIUviVbHp1iNktcy0 5A== 
+ bh=3eHbAAIIQmEG5KvxGNSGBd9oTioylrZC7es/fv+Lq+k=;
+ b=CSWqoKz6Ru49Qgm/R+I16oHcmh9orH6/m7vtEtVRmqO/JSpDLUBwZZegQPZPke5ZztpG
+ Bmaa7ZDyRKYuTpTjTj7udnqNazbwHufmiSCdST7CS8fTfRN5rHbTzvJjvsWuGZehkOiM
+ 9SY0RkRJ0Xxax0m45w/eZa4JV4PHZvpnQfaNlswjF/TnnKzXV13cPAWzBbJG6V4fMZul
+ STL/oo3sG/eXk4/UgLE9iHPWBJ18KVAiWPbxe9il/d/RkerJf4la1CMt4GnjQXVCBEpl
+ MuVqmK2pOaaafAnmibxmduS3FuXF8zkfcClqrxGhc7VxkGptrUJIAIAHFpnVF9vDoKLZ EQ== 
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wvsxk01b8-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wvsxk01b1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Mar 2024 16:56:15 +0000
+ Fri, 15 Mar 2024 16:56:04 +0000
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 42FFLv1G033763; Fri, 15 Mar 2024 16:56:14 GMT
+ with ESMTP id 42FFkhqn033842; Fri, 15 Mar 2024 16:56:03 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wre7bw7sh-1
+ 3wre7bw7jv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Mar 2024 16:56:14 +0000
+ Fri, 15 Mar 2024 16:56:03 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42FGu2YU039399;
- Fri, 15 Mar 2024 16:56:13 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42FGu2YO039399;
+ Fri, 15 Mar 2024 16:56:02 GMT
 Received: from jonah-ol8.us.oracle.com (dhcp-10-65-177-130.vpn.oracle.com
  [10.65.177.130])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 3wre7bw7fq-4; Fri, 15 Mar 2024 16:56:13 +0000
+ 3wre7bw7fq-1; Fri, 15 Mar 2024 16:56:02 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
@@ -65,13 +65,13 @@ Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
  qemu-block@nongnu.org, qemu-s390x@nongnu.org, leiyang@redhat.com,
  schalla@marvell.com, vattunuru@marvell.com, jerinj@marvell.com,
  dtatulea@nvidia.com, virtio-fs@lists.linux.dev
-Subject: [PATCH v3 for 9.1 3/6] virtio-mmio: Handle extra notification data
-Date: Fri, 15 Mar 2024 12:55:54 -0400
-Message-Id: <20240315165557.26942-4-jonah.palmer@oracle.com>
+Subject: [PATCH v3 for 9.1 0/6] virtio,
+ vhost: Add VIRTIO_F_NOTIFICATION_DATA support
+Date: Fri, 15 Mar 2024 12:55:51 -0400
+Message-Id: <20240315165557.26942-1-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240315165557.26942-1-jonah.palmer@oracle.com>
-References: <20240315165557.26942-1-jonah.palmer@oracle.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
@@ -81,8 +81,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  mlxlogscore=999 malwarescore=0 mlxscore=0 bulkscore=0 spamscore=0
  suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2403150138
-X-Proofpoint-GUID: JIylqI0H-9VdzpPZ2UK40EG-1b1_EXPr
-X-Proofpoint-ORIG-GUID: JIylqI0H-9VdzpPZ2UK40EG-1b1_EXPr
+X-Proofpoint-GUID: 7ovHRep8jnaRjrKMKAvk1xKl9lGZnAT2
+X-Proofpoint-ORIG-GUID: 7ovHRep8jnaRjrKMKAvk1xKl9lGZnAT2
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
@@ -107,49 +107,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support to virtio-mmio devices for handling the extra data sent from
-the driver to the device when the VIRTIO_F_NOTIFICATION_DATA transport
-feature has been negotiated.
+The goal of these patches are to add support to a variety of virtio and
+vhost devices for the VIRTIO_F_NOTIFICATION_DATA transport feature. This
+feature indicates that a driver will pass extra data (instead of just a
+virtqueue's index) when notifying the corresponding device.
 
-The extra data that's passed to the virtio-mmio device when this feature
-is enabled varies depending on the device's virtqueue layout.
+The data passed in by the driver when this feature is enabled varies in
+format depending on if the device is using a split or packed virtqueue
+layout:
 
-The data passed to the virtio-mmio device is in the same format as the
-data passed to virtio-pci devices.
+ Split VQ
+  - Upper 16 bits: shadow_avail_idx
+  - Lower 16 bits: virtqueue index
 
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
----
- hw/virtio/virtio-mmio.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ Packed VQ
+  - Upper 16 bits: 1-bit wrap counter & 15-bit shadow_avail_idx
+  - Lower 16 bits: virtqueue index
 
-diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
-index 22f9fbcf5a..003c363f0b 100644
---- a/hw/virtio/virtio-mmio.c
-+++ b/hw/virtio/virtio-mmio.c
-@@ -248,6 +248,7 @@ static void virtio_mmio_write(void *opaque, hwaddr offset, uint64_t value,
- {
-     VirtIOMMIOProxy *proxy = (VirtIOMMIOProxy *)opaque;
-     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-+    uint16_t vq_idx;
- 
-     trace_virtio_mmio_write_offset(offset, value);
- 
-@@ -407,8 +408,13 @@ static void virtio_mmio_write(void *opaque, hwaddr offset, uint64_t value,
-         }
-         break;
-     case VIRTIO_MMIO_QUEUE_NOTIFY:
--        if (value < VIRTIO_QUEUE_MAX) {
--            virtio_queue_notify(vdev, value);
-+        vq_idx = value;
-+        if (vq_idx < VIRTIO_QUEUE_MAX && virtio_queue_get_num(vdev, vq_idx)) {
-+            if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
-+                virtio_queue_set_shadow_avail_idx(virtio_get_queue(vdev, vq_idx),
-+                                                  (value >> 16) & 0xFFFF);
-+            }
-+            virtio_queue_notify(vdev, vq_idx);
-         }
-         break;
-     case VIRTIO_MMIO_INTERRUPT_ACK:
+Also, due to the limitations of ioeventfd not being able to carry the
+extra provided by the driver, having both VIRTIO_F_NOTIFICATION_DATA
+feature and ioeventfd enabled is a functional mismatch. The user must
+explicitly disable ioeventfd for the device in the Qemu arguments when
+using this feature, else the device will fail to complete realization.
+
+For example, a device must explicitly enable notification_data as well
+as disable ioeventfd:
+
+    -device virtio-scsi-pci,...,ioeventfd=off,notification_data=on
+
+A significant aspect of this effort has been to maintain compatibility
+across different backends. As such, the feature is offered by backend
+devices only when supported, with fallback mechanisms where backend
+support is absent.
+
+v3: Validate VQ idx via. virtio_queue_get_num() (pci, mmio, ccw)
+    Rename virtio_queue_set_shadow_avail_data
+    Only pass in upper 16 bits of 32-bit extra data (was redundant)
+    Make notification compatibility check function static
+    Drop tags on patches 1/6, 3/6, and 4/6
+
+v2: Don't disable ioeventfd by default, user must disable it
+    Drop tags on patch 2/6
+
+Jonah Palmer (6):
+  virtio/virtio-pci: Handle extra notification data
+  virtio: Prevent creation of device using notification-data with ioeventfd
+  virtio-mmio: Handle extra notification data
+  virtio-ccw: Handle extra notification data
+  vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to vhost feature bits
+  virtio: Add VIRTIO_F_NOTIFICATION_DATA property definition
+
+ hw/block/vhost-user-blk.c    |  1 +
+ hw/net/vhost_net.c           |  2 ++
+ hw/s390x/s390-virtio-ccw.c   | 17 +++++++++++----
+ hw/scsi/vhost-scsi.c         |  1 +
+ hw/scsi/vhost-user-scsi.c    |  1 +
+ hw/virtio/vhost-user-fs.c    |  2 +-
+ hw/virtio/vhost-user-vsock.c |  1 +
+ hw/virtio/virtio-mmio.c      | 10 +++++++--
+ hw/virtio/virtio-pci.c       | 11 +++++++---
+ hw/virtio/virtio.c           | 40 ++++++++++++++++++++++++++++++++++++
+ include/hw/virtio/virtio.h   |  6 +++++-
+ net/vhost-vdpa.c             |  1 +
+ 12 files changed, 82 insertions(+), 11 deletions(-)
+
 -- 
 2.39.3
 
