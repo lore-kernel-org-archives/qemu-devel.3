@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F382C54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 05:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D797DC54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 06:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl0b8-0007Qj-TZ; Fri, 15 Mar 2024 01:59:20 -0400
+	id 1rl0iV-0000bJ-Vp; Fri, 15 Mar 2024 02:06:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl0aw-0007Q5-4D
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 01:59:09 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl0ar-0006MB-Bd
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 01:59:05 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5683576ea18so2347809a12.3
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 22:58:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710482339; x=1711087139; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BZjL9ZqfvtWNM1ZCUEfyeVikeJAyJNJDFLOu/oNOvG8=;
- b=NcKI9XUdZNabAzxMkqW9kTNUCVYt8YO/TbNVEuKKjYARPyG5hQNV8OOibWcv+t48xR
- nqpq2X12K+K2jvH5dG1Ut09OkP4SZtbzNYLUk698zfZAAPjHvZks0Ct4Hi2H+YzFxMUv
- NgJtxmMpw+NKuqOXCW1fUs6mwCWvArHDsgG+9137ClVuxin56mr46biv8KdeDa3d1lhC
- UHlVwhYATvZMlKbvrN6rRZoasXYL+qlEIo5gqnmy/xyOdk8SgicqFXsfguGsFDoVqj5B
- nNnSVfNZe78/YZ6qjfIg6qn1AY2al0UD9eN1FnKDOlsskJKWx3fEMKyCzbwyztWIBRk4
- LLGQ==
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1rl0iT-0000Yq-M3
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:06:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1rl0iR-0007sZ-L2
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:06:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710482808;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0JZOkvSxVP+jDlVHmbpH5W7wNbPSixXaqf4Ao0BtMhc=;
+ b=JFCtHtzalz6TNAhkJ2pgzn2a7k0XmxTlI/mNd9hUaYf5XJHCnHHwk9WJKUXmNGC5nkHy4+
+ UDfX4IxlY9GsoLkaaNLp+K7NVhMG5W0O7IqPnY/dzHAVNPYHLVW/6dmcPSCjf/72DVPlEG
+ R4VOilab4NHWqhiaUqTj6v20hIhrASg=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-267-VzJeTXLUMG-u8oqLiRQ54A-1; Fri, 15 Mar 2024 02:06:46 -0400
+X-MC-Unique: VzJeTXLUMG-u8oqLiRQ54A-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5689a5ef341so1066127a12.0
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 23:06:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710482339; x=1711087139;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BZjL9ZqfvtWNM1ZCUEfyeVikeJAyJNJDFLOu/oNOvG8=;
- b=aQd46N9LRoSquSbs124fcueoJ0xKosAjQkzGLH4u8gRUIulTItQHvCyzJ/SDArdYQc
- PEOLXMYd2J8T+40zkBMvreHNKSL0NTxQs2vFvgtt8KC56wwQrbgUs1wiARo7lYu7vxT9
- o2ZYBYV89fYvPTfNua0Fs6SkSSmjvZ1yde9Kv7HvSFJs1oOaTFxJfyzOQBHjgh4MfYSw
- OPCP2DnuALllNvHYFl/FtrXWoFDaWx0SPrfFMXsJU/NmuIfmzCZlq7sf0lqzl+ckcGzt
- sqeXCBt92BbmImXRLa7wLCFuC1cSMoYY4mSb44mRN12W1r462473OAD1IWyT57KgeFIi
- QFYg==
-X-Gm-Message-State: AOJu0YxGT1iKQ3S9s9KjCARqTqKRbvgovO474gm1RDSLgREhaftjdWI/
- 2sidM0SYyGfNzFx37I4mQJKi/Irc73vpYE9piYNC0Y4wdis1acS2y4eTCSO7KM4=
-X-Google-Smtp-Source: AGHT+IEqa3HbsuvZX2MCbZJ7TpLVjHWSD+H6E+/gCE7uvV5hluTP/QHbJRVv6jqtPcLcweNC/i+96A==
-X-Received: by 2002:a05:6402:1f83:b0:566:a526:21ea with SMTP id
- c3-20020a0564021f8300b00566a52621eamr2966262edc.33.1710482338778; 
- Thu, 14 Mar 2024 22:58:58 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.197.77])
- by smtp.gmail.com with ESMTPSA id
- ev19-20020a056402541300b005689c2c6508sm1359971edb.70.2024.03.14.22.58.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Mar 2024 22:58:58 -0700 (PDT)
-Message-ID: <70cae0ae-148f-4b6a-839c-423a5ad54b31@linaro.org>
-Date: Fri, 15 Mar 2024 06:58:56 +0100
+ d=1e100.net; s=20230601; t=1710482804; x=1711087604;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0JZOkvSxVP+jDlVHmbpH5W7wNbPSixXaqf4Ao0BtMhc=;
+ b=g1eXYLTS6LTwxLzyuyGF5Q4CK7FOWFKmxmzS9RRlRF1JsFzdfU6Mhwuas95eNcOm+Q
+ lvOFawsKYKmUcvzeCV4qsHlT4HSBjH+Hosd2Oe+0/lt614o2auR4sCi/dNmWxv/IQBK7
+ Sh0carAPOIGp7Hwczhi5/beuU+d4gWUVnMp4edEg+ZuyIMf8f1P9KrFd6RYziQYmNoLV
+ 2buiN65Q6IBbxEuDR1iY+WUeW5ERK3E23qcpOSQUkYwROkK4E+5cWqAbTgNSUKj2unc8
+ gLfm3P98TMPsb47Fbo7oIBYoFAD7Uincl0xVET7eOiTODHUk3jpPTw/XX7vIEFEu+H0Z
+ ia2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWe9AymMmp9p8A1kKcrrfbuz4oKx9ZYD0SlwC7vtNdyOe7eC9a5Lhx64aHEi2p44hvJMxteZh0VssMt1UME4L12ZBL0IzM=
+X-Gm-Message-State: AOJu0Ywo0iztOPckGDiXWgrS8bMkJAlnq4kYffLyp7+ulmCnl3Y7FJSK
+ 6lM1BG44fzjY6Y8Xm/K3k1SLWSuS3xFFe+slZ308qqogJ5XzxhrgBTzsLMVjsuqJWgTuC831LwS
+ BzwHZrhgrYCPJqfLb9w4XCbAm6XsPJjJ9YeI5x9By3zSLRzxdhvkUMMhQIps6lVjikNgURZhPmE
+ gAk4kZ+VZ9yhdru4Kxim5jAFENMs54JWx+Y5k=
+X-Received: by 2002:a05:6402:3605:b0:568:3004:c611 with SMTP id
+ el5-20020a056402360500b005683004c611mr1430971edb.42.1710482804469; 
+ Thu, 14 Mar 2024 23:06:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFrMtAJHaEIZ+eI+cdisoFQGkdCFBaZXTzwfISmJJlZQY4X71cqJGkslOBuXBBVnbPdI/ZiILlA7zB2wa+tYoE=
+X-Received: by 2002:a05:6402:3605:b0:568:3004:c611 with SMTP id
+ el5-20020a056402360500b005683004c611mr1430959edb.42.1710482804191; Thu, 14
+ Mar 2024 23:06:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/s390x: improve cpu compatibility check error
- message
-Content-Language: en-US
-To: Claudio Fontana <cfontana@suse.de>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20240314213746.27163-1-cfontana@suse.de>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240314213746.27163-1-cfontana@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+References: <20240307062823.2377318-1-justinien.bouron@gmail.com>
+ <20240315023620.950554-1-justinien.bouron@gmail.com>
+In-Reply-To: <20240315023620.950554-1-justinien.bouron@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Fri, 15 Mar 2024 10:06:28 +0400
+Message-ID: <CAMxuvazGzq+EZjS3fOomp=wnZy4RwU9msUdjxXXuT3spPADpGA@mail.gmail.com>
+Subject: Re: [PATCH] input-linux: Add option to not grab a device upon guest
+ startup
+To: Justinien Bouron <justinien.bouron@gmail.com>
+Cc: armbru@redhat.com, berrange@redhat.com, eblake@redhat.com, 
+ eduardo@habkost.net, kraxel@redhat.com, pbonzini@redhat.com, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,26 +103,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/3/24 22:37, Claudio Fontana wrote:
-> some users were confused by this message showing under TCG:
-> 
-> Selected CPU generation is too new. Maximum supported model
-> in the configuration: 'xyz'
+Hi Justinien
 
-(Note for the maintainer queuing this patch, consider adding
-  few extra spaces to indent the previously displayed output).
+On Fri, Mar 15, 2024 at 6:37=E2=80=AFAM Justinien Bouron
+<justinien.bouron@gmail.com> wrote:
+>
+> Just a ping to make sure this patch hasn't been lost in the noise.
+> Any chance to get this merged? Should I send a v2 with a revised commit m=
+essage?
+>
 
-> Clarify that the maximum can depend on the accel, and add a
-> hint to try a different one.
-> 
-> Also add a hint for features mismatch to suggest trying
-> different accel, QEMU and kernel versions.
-> 
-> Signed-off-by: Claudio Fontana <cfontana@suse.de>
-> ---
->   target/s390x/cpu_models.c | 22 +++++++++++++++-------
->   1 file changed, 15 insertions(+), 7 deletions(-)
+It's too late for 9.0. Please send a v2 with updated commit message.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+thanks
 
 
