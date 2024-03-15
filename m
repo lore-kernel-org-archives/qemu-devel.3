@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9437C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E159C54E6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl7Kr-0007y2-VM; Fri, 15 Mar 2024 09:10:58 -0400
+	id 1rl7LN-0001jo-8l; Fri, 15 Mar 2024 09:11:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7K1-0006NK-Gq
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:07 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7L9-0000jH-7E
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:11:15 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7Jy-0007rc-Kp
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:04 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-56845954fffso1900392a12.3
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:10:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7L6-0008VV-Cn
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:11:14 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a450bedffdfso240670766b.3
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710508200; x=1711113000; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710508269; x=1711113069; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fQB6SJNy6yiy7zdv0lmI6ciVyOB2Uy024AmMoGafIwE=;
- b=D5Yow0ZKecc+XgV8kl3Fxp2klHV9pOvF/G2+ZI/Djby9UEMTStT24gk1yvGump1MJl
- MKkrD+pkP5pgDTJKhudDNevRLhRgSs8PL4pZTd9G2sUePI8EJeOlCBlHwT3IYYF4ZRs6
- JhCpKZMNSbP+/r3huUOKAf4M65t39X3AXyvKeobTfq26PlElFA8WMhLT78gKOOx6o8f6
- +bOlu3ydmRnzoSTUxtJZ5ZxmQukqNdodiuZZr1d3hf09n1YlCzoUgbAErfivYRvpS0Ry
- AFY6o61+Hnh5gRH9HeSGysOrs0zqx8bQd3t/Yar2vGrzZh5JGovLdA6puQxfIqt+cJNy
- 9t0g==
+ bh=oFQX8aoXPy4f67f4Z4hL1RP4Zt/8Mcsow7bhGPOckjM=;
+ b=kQwSSy5rpT0flCZWWWbRGYuLlc/QRK/FgdbQ27xmWyr8w2G7ZnNyVIYSXZtjJBEyby
+ QZtPx2JijZQpSu3QvZtr5F/tjsKzZOhq9cTzX35je+SAmxewa1OAbWcLpKdhz2Kx7mFp
+ Tc6xtt8uGxp4M20U7QrBFDb1ZI8k6mIv+AER+9C2UfK8ASMyCkIgOgVyCHcRZJ+p5eOA
+ tgnZVpYtlmMtd7NUPSwn6asYgfx0W9G/i9b3JaQPFv9wyHT33xL0xR5VMi10P5Y8BQci
+ pXCUZ0/kct3BCAHxcE0JxGwqlBUOKXy+AvFooh9J/UDlpTdsOxXw7tMpAyGjurUBsY1i
+ KRIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710508200; x=1711113000;
+ d=1e100.net; s=20230601; t=1710508269; x=1711113069;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fQB6SJNy6yiy7zdv0lmI6ciVyOB2Uy024AmMoGafIwE=;
- b=wA1Q06FQydF8JKpdbbJbtDNth5nHHsAEPR6LxXv2+0KdnJtQXJIYmeZjZc9ANkPhdh
- IAcnML/fnAKkzzJ7RicTogA7oHVMH+kmolD0QZE1gexSQlIkQFnSHKqwuY1+z0pZrefE
- v1uUDRZQb4PQ2otGN4aXcw+7yKb7MN5DadKLV3XLENfPhth/EdS502Pn2dETK+FrCSks
- eXmLEA21i4v7bb9Ecd/rDejIIMQPxeBFiYQ1HZNclYh64CDztqcMSX1QPOK+l1lsDbZV
- NukM4eUR7W43HxFhYbX7GNLqlhkKwvSGD0ohI0tHlIZjRdD4gaiM9I6gWs0FiUoa+OCL
- F85Q==
-X-Gm-Message-State: AOJu0YwRshe073NO21WeonKAJ5m7Th7pwTIrjqHFmQtkTuOJMPN9zIYa
- sF559hWTs+LkcO0gzpvuD7G1lIxpd/gnsxU3X1oEn12Ti5YvdidJauAfo1wlS1lABrrZbNpdIAD
- c
-X-Google-Smtp-Source: AGHT+IERNJD9BeD1ZTNKcgjKR1YrxbrTZMT90NVR2wKIdl/tZTRzhcTVHamLl8tpd/LjDM8xLQUvNQ==
-X-Received: by 2002:aa7:dd0f:0:b0:565:b456:435d with SMTP id
- i15-20020aa7dd0f000000b00565b456435dmr2931558edv.17.1710508200588; 
- Fri, 15 Mar 2024 06:10:00 -0700 (PDT)
+ bh=oFQX8aoXPy4f67f4Z4hL1RP4Zt/8Mcsow7bhGPOckjM=;
+ b=B8pKq5wh6ije87PNztwoGtoVVu++QobZpgwTZVLb4dUuCq0Vuq8T9lRWZ55iDQHxAb
+ V57iuHaq09g/OD4XcA8vvLxPCS2IZPsM+n4si8Y1W3dyHN2P8Y7hl7lHaeUTXKo+e26Q
+ yPr6nYYgdpBpXtFYXr6u6eJFWKHNAV8F0xtvcUusdx64hEirLbtSykixKG7rAwCx7lVY
+ 4GKLE2HRhK/B4wWQPk1jNEVmXOrSf9glDjj0mbdx3AFGudvfGpRKpAmXIJ4Ud8N9V/2n
+ ROgXMhsvZXgQrUipiXGJyL/nD/iS2sT5H/agRLoDbmDcnqhQObMtIjZG3fSErFKn+PgO
+ zBfg==
+X-Gm-Message-State: AOJu0Yw/MsjPrUK/wqMot3jBKnnvH5g8a20UVtFjFNBGHCRsatQG03DX
+ e3Xb1waIDYAwmiEbsz20TFa8Rg7EQFkGQkcasr+83sv5JvNXUt+tTdYO8vMWOlf+eqxcxExSTmW
+ G
+X-Google-Smtp-Source: AGHT+IF+MuEc059bBpNi8Z/N4PGDT98KYLptzGgGl6UNuatWgPqddtvCqzOiCyAHdP8HEfeppGnxnA==
+X-Received: by 2002:a17:906:4a10:b0:a46:8ca9:eb2e with SMTP id
+ w16-20020a1709064a1000b00a468ca9eb2emr932738eju.38.1710508269218; 
+ Fri, 15 Mar 2024 06:11:09 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.145.26])
  by smtp.gmail.com with ESMTPSA id
- q10-20020aa7d44a000000b005689d0a97d1sm1657891edr.24.2024.03.15.06.09.58
+ a23-20020a1709066d5700b00a467a129104sm1183953ejt.173.2024.03.15.06.11.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 15 Mar 2024 06:10:00 -0700 (PDT)
+ Fri, 15 Mar 2024 06:11:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Markus Armbruster <armbru@redhat.com>
@@ -72,29 +72,30 @@ Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Huacai Chen <chenhuacai@kernel.org>
-Subject: [PATCH-for-9.1 07/21] target/mips: Make MIPS_CPU common to new
- MIPS32_CPU / MIPS64_CPU types
-Date: Fri, 15 Mar 2024 14:08:55 +0100
-Message-ID: <20240315130910.15750-8-philmd@linaro.org>
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [RFC PATCH-for-9.1 17/21] target/riscv: Use QMP
+ generic_query_cpu_definitions()
+Date: Fri, 15 Mar 2024 14:09:05 +0100
+Message-ID: <20240315130910.15750-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240315130910.15750-1-philmd@linaro.org>
 References: <20240315130910.15750-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,126 +111,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"target/foo/cpu-qom.h" can not use any target specific definitions.
-
-Currently "target/mips/cpu-qom.h" defines TYPE_MIPS_CPU depending
-on the mips(32)/mips64 build type. This doesn't scale in a
-heterogeneous context where we need to access both types concurrently.
-
-In order to do that, introduce the new MIPS32_CPU / MIPS64_CPU types,
-both inheriting a common TYPE_MIPS_CPU base type.
-
-Keep the current CPU types registered in mips_register_cpudef_type()
-as 32 or 64-bit, but instead of depending on the binary built being
-targeting 32/64-bit, check whether the CPU is 64-bit by looking at
-the CPU_MIPS64 bit.
+Expose riscv_cpu_add_definition() and use it as add_definition()
+handler, then use the QMP generic_query_cpu_definitions() method.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/cpu-qom.h              | 13 +++++++------
- target/mips/cpu.c                  | 11 ++++++++++-
- target/mips/sysemu/mips-qmp-cmds.c | 26 ++------------------------
- 3 files changed, 19 insertions(+), 31 deletions(-)
+ target/riscv/cpu.h            |  2 ++
+ target/riscv/cpu.c            |  1 +
+ target/riscv/riscv-qmp-cmds.c | 11 +++--------
+ 3 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/target/mips/cpu-qom.h b/target/mips/cpu-qom.h
-index 0eea2a2598..bf464f16b6 100644
---- a/target/mips/cpu-qom.h
-+++ b/target/mips/cpu-qom.h
-@@ -1,5 +1,5 @@
- /*
-- * QEMU MIPS CPU
-+ * QEMU MIPS CPU QOM header (target agnostic)
-  *
-  * Copyright (c) 2012 SUSE LINUX Products GmbH
-  *
-@@ -22,14 +22,15 @@
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 3b1a02b944..15fc287680 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -824,4 +824,6 @@ void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
+ uint8_t satp_mode_max_from_map(uint32_t map);
+ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
  
- #include "hw/core/cpu.h"
- 
--#ifdef TARGET_MIPS64
--#define TYPE_MIPS_CPU "mips64-cpu"
--#else
--#define TYPE_MIPS_CPU "mips-cpu"
--#endif
-+#define TYPE_MIPS_CPU   "mips-cpu"
-+#define TYPE_MIPS32_CPU "mips32-cpu"
-+#define TYPE_MIPS64_CPU "mips64-cpu"
- 
- OBJECT_DECLARE_CPU_TYPE(MIPSCPU, MIPSCPUClass, MIPS_CPU)
- 
-+OBJECT_DECLARE_CPU_TYPE(MIPS32CPU, MIPSCPUClass, MIPS32_CPU)
-+OBJECT_DECLARE_CPU_TYPE(MIPS64CPU, MIPSCPUClass, MIPS64_CPU)
++void riscv_cpu_add_definition(gpointer data, gpointer user_data);
 +
- #define MIPS_CPU_TYPE_SUFFIX "-" TYPE_MIPS_CPU
- #define MIPS_CPU_TYPE_NAME(model) model MIPS_CPU_TYPE_SUFFIX
+ #endif /* RISCV_CPU_H */
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index c160b9216b..2da9364335 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2341,6 +2341,7 @@ static int64_t riscv_get_arch_id(CPUState *cs)
+ #include "hw/core/sysemu-cpu-ops.h"
  
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index c096d97fe3..f3ea6175f2 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -604,6 +604,14 @@ static const TypeInfo mips_cpu_types[] = {
-         .abstract       = true,
-         .class_size     = sizeof(MIPSCPUClass),
-         .class_init     = mips_cpu_class_init,
-+    }, {
-+        .name           = TYPE_MIPS32_CPU,
-+        .parent         = TYPE_MIPS_CPU,
-+        .abstract       = true,
-+    }, {
-+        .name           = TYPE_MIPS64_CPU,
-+        .parent         = TYPE_MIPS_CPU,
-+        .abstract       = true,
-     }
- };
+ static const struct SysemuCPUOps riscv_sysemu_ops = {
++    .add_definition = riscv_cpu_add_definition,
+     .get_phys_page_debug = riscv_cpu_get_phys_page_debug,
+     .write_elf64_note = riscv_cpu_write_elf64_note,
+     .write_elf32_note = riscv_cpu_write_elf32_note,
+diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
+index d363dc318d..45adc90d3b 100644
+--- a/target/riscv/riscv-qmp-cmds.c
++++ b/target/riscv/riscv-qmp-cmds.c
+@@ -26,6 +26,7 @@
  
-@@ -620,7 +628,8 @@ static void mips_register_cpudef_type(const struct mips_def_t *def)
-     char *typename = mips_cpu_type_name(def->name);
-     TypeInfo ti = {
-         .name = typename,
--        .parent = TYPE_MIPS_CPU,
-+        .parent = def->insn_flags & CPU_MIPS64
-+                  ? TYPE_MIPS64_CPU : TYPE_MIPS32_CPU,
-         .class_init = mips_cpu_cpudef_class_init,
-         .class_data = (void *)def,
-     };
-diff --git a/target/mips/sysemu/mips-qmp-cmds.c b/target/mips/sysemu/mips-qmp-cmds.c
-index 7340ac70ba..329db3a028 100644
---- a/target/mips/sysemu/mips-qmp-cmds.c
-+++ b/target/mips/sysemu/mips-qmp-cmds.c
-@@ -8,31 +8,9 @@
- 
- #include "qemu/osdep.h"
+ #include "qapi/error.h"
  #include "qapi/qapi-commands-machine-target.h"
--#include "cpu.h"
--
--static void mips_cpu_add_definition(gpointer data, gpointer user_data)
--{
--    ObjectClass *oc = data;
--    CpuDefinitionInfoList **cpu_list = user_data;
--    CpuDefinitionInfo *info;
--    const char *typename;
--
--    typename = object_class_get_name(oc);
--    info = g_malloc0(sizeof(*info));
--    info->name = cpu_model_from_type(typename);
--    info->q_typename = g_strdup(typename);
--
--    QAPI_LIST_PREPEND(*cpu_list, info);
--}
 +#include "qapi/commands-target-compat.h"
+ #include "qapi/qmp/qbool.h"
+ #include "qapi/qmp/qdict.h"
+ #include "qapi/qobject-input-visitor.h"
+@@ -36,7 +37,7 @@
+ #include "cpu-qom.h"
+ #include "cpu.h"
+ 
+-static void riscv_cpu_add_definition(gpointer data, gpointer user_data)
++void riscv_cpu_add_definition(gpointer data, gpointer user_data)
+ {
+     ObjectClass *oc = data;
+     CpuDefinitionInfoList **cpu_list = user_data;
+@@ -55,13 +56,7 @@ static void riscv_cpu_add_definition(gpointer data, gpointer user_data)
  
  CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
  {
 -    CpuDefinitionInfoList *cpu_list = NULL;
--    GSList *list;
+-    GSList *list = object_class_get_list(TYPE_RISCV_CPU, false);
 -
--    list = object_class_get_list(TYPE_MIPS_CPU, false);
--    g_slist_foreach(list, mips_cpu_add_definition, &cpu_list);
+-    g_slist_foreach(list, riscv_cpu_add_definition, &cpu_list);
 -    g_slist_free(list);
 -
 -    return cpu_list;
 +    return generic_query_cpu_definitions(errp);
  }
+ 
+ static void riscv_check_if_cpu_available(RISCVCPU *cpu, Error **errp)
 -- 
 2.41.0
 
