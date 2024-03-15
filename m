@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9458CC54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 15:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93B09C54E6E
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 15:24:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl9P0-0007h0-RI; Fri, 15 Mar 2024 11:23:22 -0400
+	id 1rl9PC-0007s3-Ck; Fri, 15 Mar 2024 11:23:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9Ox-0007Ye-6k
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9PB-0007rp-00
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9Oo-00020e-Mg
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:18 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9P9-00026a-Fv
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710516190;
+ s=mimecast20190719; t=1710516210;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oak0hG0W8yZsZk/qPhZtlNtqAbN0zjrZmtAUU1T83nw=;
- b=cXpr6WKTY3nm8Hh6yGWdLBp9aCpZld1TRBBRZzYpTIxSRd0rVEnMP/hBx5tMK4TE/Pd4hh
- 6T4HcKbfKu9Zere0EVy5egjIPF0aCayqD1lF8Ypr1v7jE3IfFoj8LoMGKjNiTyHhm94eOF
- LIhJ7tW6J/hGrex8WV1S1o4GIYLmjl8=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-520-aD6g9p0oMJ64eRvQ-yOh-A-1; Fri,
- 15 Mar 2024 11:23:06 -0400
-X-MC-Unique: aD6g9p0oMJ64eRvQ-yOh-A-1
-Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
- [10.11.54.8])
+ bh=BDAqiTc1O9KkVRj0IL6mR+LO3QjyUV8SVrlBKORZQXQ=;
+ b=ElHqt4VcG04SBsE8afx/esmgx9aKhlIGZynGJLkHokiohgwl13iKn1NWpr0xrVtVVnVfgP
+ BrnlFQDxSmD/NxPGLnyI5euQWfgJf3H4m4AEYmsMVo9woKkdblpELvwal2QCnQYoKEvLJm
+ 9mTxX4lpbIPZSBJR96E8DfY27vibmj8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-479-OKRsYc3RMve2dgOedUnh9g-1; Fri, 15 Mar 2024 11:23:03 -0400
+X-MC-Unique: OKRsYc3RMve2dgOedUnh9g-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6168C3803537;
- Fri, 15 Mar 2024 15:23:06 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1E4F4800262;
+ Fri, 15 Mar 2024 15:23:03 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 40A74C04223;
- Fri, 15 Mar 2024 15:23:06 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id F1DE8200AFA2;
+ Fri, 15 Mar 2024 15:23:02 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 182E221E66C6; Fri, 15 Mar 2024 16:23:02 +0100 (CET)
+ id D3C7221E6A28; Fri, 15 Mar 2024 16:23:01 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: jsnow@redhat.com,
 	peter.maydell@linaro.org,
 	michael.roth@amd.com
-Subject: [PATCH v5 20/25] qapi/parser.py: assert member.info is present in
- connect_member
-Date: Fri, 15 Mar 2024 16:22:56 +0100
-Message-ID: <20240315152301.3621858-21-armbru@redhat.com>
+Subject: [PATCH v5 01/25] qapi/parser: fix typo - self.returns.info =>
+ self.errors.info
+Date: Fri, 15 Mar 2024 16:22:37 +0100
+Message-ID: <20240315152301.3621858-2-armbru@redhat.com>
 In-Reply-To: <20240315152301.3621858-1-armbru@redhat.com>
 References: <20240315152301.3621858-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -87,25 +87,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
+Small copy-pasto. The correct info field to use in this conditional
+block is self.errors.info.
+
+Fixes: 3a025d3d1ffa
 Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- scripts/qapi/parser.py | 1 +
- 1 file changed, 1 insertion(+)
+ scripts/qapi/parser.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index 2f3c704fa2..7b13a583ac 100644
+index d8f76060b8..fed88e9074 100644
 --- a/scripts/qapi/parser.py
 +++ b/scripts/qapi/parser.py
-@@ -707,6 +707,7 @@ def append_line(self, line: str) -> None:
+@@ -733,7 +733,7 @@ def check_expr(self, expr: QAPIExpression) -> None:
+                     "'Returns' section is only valid for commands")
+             if self.errors:
+                 raise QAPISemError(
+-                    self.returns.info,
++                    self.errors.info,
+                     "'Errors' section is only valid for commands")
  
-     def connect_member(self, member: 'QAPISchemaMember') -> None:
-         if member.name not in self.args:
-+            assert member.info
-             if self.symbol not in member.info.pragma.documentation_exceptions:
-                 raise QAPISemError(member.info,
-                                    "%s '%s' lacks documentation"
+     def check(self) -> None:
 -- 
 2.44.0
 
