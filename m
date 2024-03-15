@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29958C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 15:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D55C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 15:25:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl9PD-0007sZ-L0; Fri, 15 Mar 2024 11:23:35 -0400
+	id 1rl9Ot-0007AR-JY; Fri, 15 Mar 2024 11:23:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9PC-0007s2-8s
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9Os-00074S-AP
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9P9-00026g-NH
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:34 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9On-0001zR-BH
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710516210;
+ s=mimecast20190719; t=1710516188;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XUbETe0HpQ0ytMGrfpXOdJAYxPuTEstiv/nvtKZ5VoY=;
- b=EJEiVDQrLYBOkaBUwMjpkkIcIWJ1YBiO1IRECu0AqokUbekHNzbBstTA1G4P1gxTyE4PKR
- //CJSyNQ+W1yrPrVU2mhu8H4vetGeu9f/fxBKFX+68nyxdW4rq6T85/0mbMmU6Lm0/WkXW
- ar8eaIv6IzPz/xtMuAI6wG/X+3S1gJw=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-BRVrsVTFO-2dEyPEnM4jvg-1; Fri,
- 15 Mar 2024 11:23:04 -0400
-X-MC-Unique: BRVrsVTFO-2dEyPEnM4jvg-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ bh=iuXlJWkLOTSCm4x+nIQ3+iRqxZDs2p0TRUEIhBFjwi4=;
+ b=QGljV25gSVDU3tnDK7tbXMWd3I/NfLcWGa4kNVD9w+exhKPFbSQTv6ql/50xKTBbjzo0Ea
+ Mnj0iXlei+AmWlR1+iPGWhhNgSd7XrehC1WftPQMWurxm5YnPrih8RMvrGatXJ8ga22sbD
+ UUl53ZDtatwwbavM1st/8SaOEi38VMk=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-540-Ix3j29kkPiC8fCkuECzPtg-1; Fri, 15 Mar 2024 11:23:04 -0400
+X-MC-Unique: Ix3j29kkPiC8fCkuECzPtg-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5610D3803532;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3E5F88007BA;
  Fri, 15 Mar 2024 15:23:04 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 03E41492BC6;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 1DB91111E3F3;
  Fri, 15 Mar 2024 15:23:04 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E617D21E6891; Fri, 15 Mar 2024 16:23:01 +0100 (CET)
+ id EC0E921E68BD; Fri, 15 Mar 2024 16:23:01 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: jsnow@redhat.com,
 	peter.maydell@linaro.org,
 	michael.roth@amd.com
-Subject: [PATCH v5 07/25] qapi/schema: declare type for
- QAPISchemaArrayType.element_type
-Date: Fri, 15 Mar 2024 16:22:43 +0100
-Message-ID: <20240315152301.3621858-8-armbru@redhat.com>
+Subject: [PATCH v5 09/25] qapi/schema: adjust type narrowing for mypy's benefit
+Date: Fri, 15 Mar 2024 16:22:45 +0100
+Message-ID: <20240315152301.3621858-10-armbru@redhat.com>
 In-Reply-To: <20240315152301.3621858-1-armbru@redhat.com>
 References: <20240315152301.3621858-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -87,44 +86,77 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-A QAPISchemaArrayType's element type gets resolved only during .check().
-We have QAPISchemaArrayType.__init__() initialize self.element_type =
-None, and .check() assign the actual type.  Using .element_type before
-.check() is wrong, and hopefully crashes due to the value being None.
-Works.
+We already take care to perform some type narrowing for arg_type and
+ret_type, but not in a way where mypy can utilize the result once we add
+type hints, e.g.:
 
-However, it makes for awkward typing.  With .element_type:
-Optional[QAPISchemaType], mypy is of course unable to see that it's None
-before .check(), and a QAPISchemaType after.  To help it over the hump,
-we'd have to assert self.element_type is not None before all the (valid)
-uses.  The assertion catches invalid uses, but only at run time; mypy
-can't flag them.
+qapi/schema.py:833: error: Incompatible types in assignment (expression
+has type "QAPISchemaType", variable has type
+"Optional[QAPISchemaObjectType]") [assignment]
 
-Instead, declare .element_type in .__init__() as QAPISchemaType
-*without* initializing it.  Using .element_type before .check() now
-certainly crashes, which is an improvement.  Mypy still can't flag
-invalid uses, but that's okay.
+qapi/schema.py:893: error: Incompatible types in assignment (expression
+has type "QAPISchemaType", variable has type
+"Optional[QAPISchemaObjectType]") [assignment]
+
+A simple change to use a temporary variable helps the medicine go down.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- scripts/qapi/schema.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/qapi/schema.py | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
 diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index 307f8af01a..48f157fb91 100644
+index 0b01c841ff..e44802369d 100644
 --- a/scripts/qapi/schema.py
 +++ b/scripts/qapi/schema.py
-@@ -381,7 +381,7 @@ def __init__(self, name, info, element_type):
-         super().__init__(name, info, None)
-         assert isinstance(element_type, str)
-         self._element_type_name = element_type
--        self.element_type = None
-+        self.element_type: QAPISchemaType
- 
-     def need_has_if_optional(self):
-         # When FOO is an array, we still need has_FOO to distinguish
+@@ -843,13 +843,14 @@ def __init__(self, name, info, doc, ifcond, features,
+     def check(self, schema):
+         super().check(schema)
+         if self._arg_type_name:
+-            self.arg_type = schema.resolve_type(
++            arg_type = schema.resolve_type(
+                 self._arg_type_name, self.info, "command's 'data'")
+-            if not isinstance(self.arg_type, QAPISchemaObjectType):
++            if not isinstance(arg_type, QAPISchemaObjectType):
+                 raise QAPISemError(
+                     self.info,
+                     "command's 'data' cannot take %s"
+-                    % self.arg_type.describe())
++                    % arg_type.describe())
++            self.arg_type = arg_type
+             if self.arg_type.variants and not self.boxed:
+                 raise QAPISemError(
+                     self.info,
+@@ -866,8 +867,8 @@ def check(self, schema):
+             if self.name not in self.info.pragma.command_returns_exceptions:
+                 typ = self.ret_type
+                 if isinstance(typ, QAPISchemaArrayType):
+-                    typ = self.ret_type.element_type
+                     assert typ
++                    typ = typ.element_type
+                 if not isinstance(typ, QAPISchemaObjectType):
+                     raise QAPISemError(
+                         self.info,
+@@ -903,13 +904,14 @@ def __init__(self, name, info, doc, ifcond, features, arg_type, boxed):
+     def check(self, schema):
+         super().check(schema)
+         if self._arg_type_name:
+-            self.arg_type = schema.resolve_type(
++            typ = schema.resolve_type(
+                 self._arg_type_name, self.info, "event's 'data'")
+-            if not isinstance(self.arg_type, QAPISchemaObjectType):
++            if not isinstance(typ, QAPISchemaObjectType):
+                 raise QAPISemError(
+                     self.info,
+                     "event's 'data' cannot take %s"
+-                    % self.arg_type.describe())
++                    % typ.describe())
++            self.arg_type = typ
+             if self.arg_type.variants and not self.boxed:
+                 raise QAPISemError(
+                     self.info,
 -- 
 2.44.0
 
