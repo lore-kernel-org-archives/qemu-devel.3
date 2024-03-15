@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5529C54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 15:25:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A962C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 15:25:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl9Oq-0006yq-UR; Fri, 15 Mar 2024 11:23:12 -0400
+	id 1rl9Ox-0007Yj-AR; Fri, 15 Mar 2024 11:23:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9Op-0006yD-LN
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:11 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9Ou-0007Ix-Od
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9Om-0001zF-LU
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:11 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9On-0001zn-SW
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710516187;
+ s=mimecast20190719; t=1710516189;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HcewSSZK2YF0b2OQgBHpUjKURZjdR2E/SDiyQTmuYTI=;
- b=DzwoinLBmMu0HJpVfJpJND8zBc7ubQYUXICeC1JQQM8mqcxcrSQm7/ayuf/FZWxMWYZlUH
- dXWi0WTp5A+GBbD6srGqDr4cvh4zhNemXApOCzBLWyis6Gj8cB7lyuqxPZx/Z/BdR2+tdi
- 1XQqKBuA/2CarIi1IH/sJ6/q6FJzIhk=
+ bh=tkFNeRvG3W35JOHEfrTqWwO2xhqjt542rM3ljgsYWpk=;
+ b=UyCUk+B/jDo6uJSGIuPxPgz4f6+gEGDsiG7bGZPTnlRJItu1IAY/8VXSo3gN3KiQZzIn3v
+ xc34uh+gK4W7NrSWJFl43ZBCilDSzAS0m0jN51BurgHqQURbI7ZfdAYWqkTwOR7zFyyZlf
+ yiqZeu3jnplR2uZ6a+bJUh8d4S7c8wc=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-574-FV5Kk748PZiyRTjoHZ6ZtA-1; Fri,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-400-ezUi8ZrcMQyT3QllBsve6Q-1; Fri,
  15 Mar 2024 11:23:05 -0400
-X-MC-Unique: FV5Kk748PZiyRTjoHZ6ZtA-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
+X-MC-Unique: ezUi8ZrcMQyT3QllBsve6Q-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 032323CBD52A;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2FAA428EC122;
  Fri, 15 Mar 2024 15:23:05 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id D574910F53;
- Fri, 15 Mar 2024 15:23:04 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0E11140C6DB3;
+ Fri, 15 Mar 2024 15:23:05 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DCF6821E6939; Fri, 15 Mar 2024 16:23:01 +0100 (CET)
+ id 0CD4021E682C; Fri, 15 Mar 2024 16:23:02 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: jsnow@redhat.com,
 	peter.maydell@linaro.org,
 	michael.roth@amd.com
-Subject: [PATCH v5 04/25] qapi/schema: add pylint suppressions
-Date: Fri, 15 Mar 2024 16:22:40 +0100
-Message-ID: <20240315152301.3621858-5-armbru@redhat.com>
+Subject: [PATCH v5 16/25] qapi/schema: Don't initialize "members" with `None`
+Date: Fri, 15 Mar 2024 16:22:52 +0100
+Message-ID: <20240315152301.3621858-17-armbru@redhat.com>
 In-Reply-To: <20240315152301.3621858-1-armbru@redhat.com>
 References: <20240315152301.3621858-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
@@ -86,69 +86,77 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-With this patch, pylint is happy with the file, so enable it in the
-configuration.
+Declare, but don't initialize the "members" field with type
+List[QAPISchemaObjectTypeMember].
+
+This simplifies the typing from what would otherwise be
+Optional[List[T]] to merely List[T]. This removes the need to add
+assertions to several callsites that this value is not None - which it
+never will be after the delayed initialization in check() anyway.
+
+The type declaration without initialization trick will cause accidental
+uses of this field prior to full initialization to raise an
+AttributeError.
+
+(Note that it is valid to have an empty members list, see the internal
+q_empty object as an example. For this reason, we cannot use the empty
+list as a replacement test for full initialization and instead rely on
+the _checked/_check_complete fields.)
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- scripts/qapi/pylintrc  | 5 -----
- scripts/qapi/schema.py | 5 +++++
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ scripts/qapi/schema.py | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/scripts/qapi/pylintrc b/scripts/qapi/pylintrc
-index 1342412c3c..c028a1f9f5 100644
---- a/scripts/qapi/pylintrc
-+++ b/scripts/qapi/pylintrc
-@@ -1,10 +1,5 @@
- [MASTER]
- 
--# Add files or directories matching the regex patterns to the ignore list.
--# The regex matches against base names, not paths.
--ignore-patterns=schema.py,
--
--
- [MESSAGES CONTROL]
- 
- # Disable the message, report, category or checker with the given id(s). You
 diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index 8ba5665bc6..117f0f78f0 100644
+index 2c3de72ae6..74b0d7b007 100644
 --- a/scripts/qapi/schema.py
 +++ b/scripts/qapi/schema.py
-@@ -12,6 +12,8 @@
- # This work is licensed under the terms of the GNU GPL, version 2.
- # See the COPYING file in the top-level directory.
- 
-+# pylint: disable=too-many-lines
-+
- # TODO catching name collisions in generated code would be nice
- 
+@@ -20,7 +20,7 @@
  from collections import OrderedDict
-@@ -83,6 +85,7 @@ def c_name(self):
-         return c_name(self.name)
+ import os
+ import re
+-from typing import List, Optional
++from typing import List, Optional, cast
+ 
+ from .common import (
+     POINTER_SUFFIX,
+@@ -449,7 +449,7 @@ def __init__(self, name, info, doc, ifcond, features,
+         self.base = None
+         self.local_members = local_members
+         self.variants = variants
+-        self.members = None
++        self.members: List[QAPISchemaObjectTypeMember]
+         self._check_complete = False
  
      def check(self, schema):
-+        # pylint: disable=unused-argument
-         assert not self._checked
-         seen = {}
-         for f in self.features:
-@@ -113,6 +116,7 @@ def is_implicit(self):
-         return not self.info
+@@ -482,7 +482,11 @@ def check(self, schema):
+         for m in self.local_members:
+             m.check(schema)
+             m.check_clash(self.info, seen)
+-        members = seen.values()
++
++        # self.check_clash() works in terms of the supertype, but
++        # self.members is declared List[QAPISchemaObjectTypeMember].
++        # Cast down to the subtype.
++        members = cast(List[QAPISchemaObjectTypeMember], list(seen.values()))
  
-     def visit(self, visitor):
-+        # pylint: disable=unused-argument
-         assert self._checked
+         if self.variants:
+             self.variants.check(schema, seen)
+@@ -515,11 +519,9 @@ def is_implicit(self):
+         return self.name.startswith('q_')
  
-     def describe(self):
-@@ -131,6 +135,7 @@ def visit_module(self, name):
-         pass
+     def is_empty(self):
+-        assert self.members is not None
+         return not self.members and not self.variants
  
-     def visit_needed(self, entity):
-+        # pylint: disable=unused-argument
-         # Default to visiting everything
-         return True
+     def has_conditional_members(self):
+-        assert self.members is not None
+         return any(m.ifcond.is_present() for m in self.members)
  
+     def c_name(self):
 -- 
 2.44.0
 
