@@ -4,96 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A6D7C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 16:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADAD6C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 17:00:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlArf-0003ng-7r; Fri, 15 Mar 2024 12:57:03 -0400
+	id 1rlAuG-0007F8-7m; Fri, 15 Mar 2024 12:59:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rlArH-0003fh-8e; Fri, 15 Mar 2024 12:56:41 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1rlAu2-00071v-2t; Fri, 15 Mar 2024 12:59:31 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rlArF-0001Eg-ET; Fri, 15 Mar 2024 12:56:38 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42FGTsMc025836; Fri, 15 Mar 2024 16:56:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=corp-2023-11-20;
- bh=1Nvax0mgi5tEGBGcqR4AXsGt6aHxcvh65F3l5WmnhjA=;
- b=fUIONs92aRUhT73yXnbRD9qhqRZRPSDB+qMJh+vYhJjtTqOz/IfxgRzLrBd8Qw1K1n73
- oWeyEqt/Hq7pOK2sIDjxpTxN1sTFD4ys/D/z9HaIk0YQ0W8l5IwcBFq6WyKCB1M9SKvj
- uAlE3qlHonvKRPt75DvAf8gg4Ku0bVYEpfC0eAhJ078O6Cq/kuCmsBVPwk/aal5uE3do
- i1EGoRHYpGJ6Rjq0Snr4y4Agnz8ANTGqshkhLTAUoYBGfiCMwC7Mp2FEIK8vKDosfQYt
- S0+91E3LGgBeAYVRr0dWOUOfoMvCUh8hOyF+ClIZkKc2wM1IsqJoE0Mn82jeJEfLmHrs Xw== 
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wvswbg1h6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Mar 2024 16:56:26 +0000
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 42FGWMdD033761; Fri, 15 Mar 2024 16:56:25 GMT
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1rlAtz-0001dW-6Q; Fri, 15 Mar 2024 12:59:29 -0400
+Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42FGSRoa019066; Fri, 15 Mar 2024 16:59:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=xo2ZLJGnIwGkE4Afh5Yiz3LPYz5Xj+8fb1hS4uNVlAA=;
+ b=dPU1x8p+5MWEB8ekOAORjRwJPon5eux2ELGNVs4RtLvPFTKeFRA/fC6fKy4TUljzuNlx
+ kpkAjextjP/rEMVGaaRsW2hJ/DC2mr/ZekItfWiKZPWZuKGoULGyazSrWABpcAiFTMHe
+ JMzv/VA+1sFUTgDr31jJofG2V78/W2ZXXP/4+AKtiKPM4AiJmdKSiolWELy1jxhKIUFf
+ Hh0heUzmIxRRIl9sHhZ4uOOhzfx/sbg1bUSNjVDu0wLof2WPneP7f2iEGR8RYpXY4dxp
+ wRtMWIYrwezcS5D/knKtV9jG1O6s70pX6qFCwF5qaKu1lbF5sPhgzivRfb9IbKtIsqS5 DA== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 3wre7bw801-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Mar 2024 16:56:25 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42FGu2Ya039399;
- Fri, 15 Mar 2024 16:56:24 GMT
-Received: from jonah-ol8.us.oracle.com (dhcp-10-65-177-130.vpn.oracle.com
- [10.65.177.130])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 3wre7bw7fq-7; Fri, 15 Mar 2024 16:56:24 +0000
-From: Jonah Palmer <jonah.palmer@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com,
- jonah.palmer@oracle.com, raphael@enfabrica.net, kwolf@redhat.com,
- hreitz@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, thuth@redhat.com, richard.henderson@linaro.org,
- david@redhat.com, iii@linux.ibm.com, cohuck@redhat.com,
- pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com,
- qemu-block@nongnu.org, qemu-s390x@nongnu.org, leiyang@redhat.com,
- schalla@marvell.com, vattunuru@marvell.com, jerinj@marvell.com,
- dtatulea@nvidia.com, virtio-fs@lists.linux.dev
-Subject: [PATCH v3 for 9.1 6/6] virtio: Add VIRTIO_F_NOTIFICATION_DATA
- property definition
-Date: Fri, 15 Mar 2024 12:55:57 -0400
-Message-Id: <20240315165557.26942-7-jonah.palmer@oracle.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240315165557.26942-1-jonah.palmer@oracle.com>
-References: <20240315165557.26942-1-jonah.palmer@oracle.com>
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wvsvm0cvc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Mar 2024 16:59:23 +0000
+Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42FGwhIe026827;
+ Fri, 15 Mar 2024 16:59:22 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wvsvm0cv4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Mar 2024 16:59:22 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42FGXnTu032216; Fri, 15 Mar 2024 16:59:21 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wvsyar4c0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Mar 2024 16:59:21 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42FGxHrl33423686
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 15 Mar 2024 16:59:19 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B356F2005A;
+ Fri, 15 Mar 2024 16:59:17 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 612122004E;
+ Fri, 15 Mar 2024 16:59:17 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.171.81.174]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 15 Mar 2024 16:59:17 +0000 (GMT)
+Message-ID: <6ce770d49082d4a2b42bcf71200521ca58dc4ed5.camel@linux.ibm.com>
+Subject: Re: [PATCH v2] target/s390x: improve cpu compatibility check error
+ message
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: Claudio Fontana <cfontana@suse.de>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-s390x <qemu-s390x@nongnu.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Date: Fri, 15 Mar 2024 17:59:17 +0100
+In-Reply-To: <20240314213746.27163-1-cfontana@suse.de>
+References: <20240314213746.27163-1-cfontana@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 750Osaiqwpw2vDNvD9BXc7t9y3JBlqHG
+X-Proofpoint-ORIG-GUID: Xs-n294F-Gzi3D6cEXAE4G1ZUFpw-07Y
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-15_04,2024-03-13_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- phishscore=0
- mlxlogscore=999 malwarescore=0 mlxscore=0 bulkscore=0 spamscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2403150138
-X-Proofpoint-GUID: i7qbg82F6o4WOxSUtVng38NSyEDn-S0_
-X-Proofpoint-ORIG-GUID: i7qbg82F6o4WOxSUtVng38NSyEDn-S0_
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015
+ adultscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 bulkscore=0 phishscore=0 priorityscore=1501 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2403140000
+ definitions=main-2403150138
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,35 +115,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the virtio device property definitions to include the
-VIRTIO_F_NOTIFICATION_DATA feature.
+On Thu, 2024-03-14 at 22:37 +0100, Claudio Fontana wrote:
+> some users were confused by this message showing under TCG:
+>=20
+> Selected CPU generation is too new. Maximum supported model
+> in the configuration: 'xyz'
+>=20
+> Clarify that the maximum can depend on the accel, and add a
+> hint to try a different one.
+>=20
+> Also add a hint for features mismatch to suggest trying
+> different accel, QEMU and kernel versions.
+>=20
+> Signed-off-by: Claudio Fontana <cfontana@suse.de>
 
-The default state of this feature is disabled, allowing it to be
-explicitly enabled where it's supported.
+Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 
-Tested-by: Lei Yang <leiyang@redhat.com>
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
----
- include/hw/virtio/virtio.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+> ---
+>  target/s390x/cpu_models.c | 22 +++++++++++++++-------
+>  1 file changed, 15 insertions(+), 7 deletions(-)
+>=20
+> diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+> index 1a1c096122..8ed3bb6a27 100644
+> --- a/target/s390x/cpu_models.c
+> +++ b/target/s390x/cpu_models.c
+> @@ -500,6 +500,16 @@ static void error_prepend_missing_feat(const char *n=
+ame, void *opaque)
+>      error_prepend((Error **) opaque, "%s ", name);
+>  }
+> =20
+> +static void check_compat_model_failed(Error **errp,
+> +                                      const S390CPUModel *max_model,
+> +                                      const char *msg)
+> +{
+> +    error_setg(errp, "%s. Maximum supported model in the current configu=
+ration: \'%s\'",
+> +               msg, max_model->def->name);
+> +    error_append_hint(errp, "Consider a different accelerator, try \"-ac=
+cel help\"\n");
+> +    return;
+> +}
+> +
+>  static void check_compatibility(const S390CPUModel *max_model,
+>                                  const S390CPUModel *model, Error **errp)
+>  {
+> @@ -507,15 +517,11 @@ static void check_compatibility(const S390CPUModel =
+*max_model,
+>      S390FeatBitmap missing;
+> =20
+>      if (model->def->gen > max_model->def->gen) {
+> -        error_setg(errp, "Selected CPU generation is too new. Maximum "
+> -                   "supported model in the configuration: \'%s\'",
+> -                   max_model->def->name);
+> +        check_compat_model_failed(errp, max_model, "Selected CPU generat=
+ion is too new");
+>          return;
+>      } else if (model->def->gen =3D=3D max_model->def->gen &&
+>                 model->def->ec_ga > max_model->def->ec_ga) {
+> -        error_setg(errp, "Selected CPU GA level is too new. Maximum "
+> -                   "supported model in the configuration: \'%s\'",
+> -                   max_model->def->name);
+> +        check_compat_model_failed(errp, max_model, "Selected CPU GA leve=
+l is too new");
+>          return;
+>      }
+> =20
+> @@ -537,7 +543,9 @@ static void check_compatibility(const S390CPUModel *m=
+ax_model,
+>      error_setg(errp, " ");
+>      s390_feat_bitmap_to_ascii(missing, errp, error_prepend_missing_feat)=
+;
+>      error_prepend(errp, "Some features requested in the CPU model are no=
+t "
+> -                  "available in the configuration: ");
+> +                  "available in the current configuration: ");
+> +    error_append_hint(errp,
+> +                      "Consider a different accelerator, QEMU, or kernel=
+ version\n");
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index cdd4f86b61..14858c0924 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -370,7 +370,9 @@ typedef struct VirtIORNGConf VirtIORNGConf;
-     DEFINE_PROP_BIT64("packed", _state, _field, \
-                       VIRTIO_F_RING_PACKED, false), \
-     DEFINE_PROP_BIT64("queue_reset", _state, _field, \
--                      VIRTIO_F_RING_RESET, true)
-+                      VIRTIO_F_RING_RESET, true), \
-+    DEFINE_PROP_BIT64("notification_data", _state, _field, \
-+                      VIRTIO_F_NOTIFICATION_DATA, false)
- 
- hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);
- bool virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
--- 
-2.39.3
+If I'm reading the regex right, this ^, a string literal on a separate line=
+, is excluded
+from the line length check.
+
+>  }
+> =20
+>  S390CPUModel *get_max_cpu_model(Error **errp)
 
 
