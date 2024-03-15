@@ -4,81 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D797DC54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 06:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF196C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 06:08:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl0iV-0000bJ-Vp; Fri, 15 Mar 2024 02:06:56 -0400
+	id 1rl0jK-00017k-5D; Fri, 15 Mar 2024 02:07:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1rl0iT-0000Yq-M3
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:06:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl0j5-0000vg-Dt
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:07:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1rl0iR-0007sZ-L2
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:06:53 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl0j3-0007vt-9A
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:07:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710482808;
+ s=mimecast20190719; t=1710482848;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0JZOkvSxVP+jDlVHmbpH5W7wNbPSixXaqf4Ao0BtMhc=;
- b=JFCtHtzalz6TNAhkJ2pgzn2a7k0XmxTlI/mNd9hUaYf5XJHCnHHwk9WJKUXmNGC5nkHy4+
- UDfX4IxlY9GsoLkaaNLp+K7NVhMG5W0O7IqPnY/dzHAVNPYHLVW/6dmcPSCjf/72DVPlEG
- R4VOilab4NHWqhiaUqTj6v20hIhrASg=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=RY4Yk72aFv3Y2uvea1HZuSf4K7y9l/pb9OIVp8Kgxw8=;
+ b=Rqwqd5Z1+flSfldbfdMhgRaGbl0W5hszW8oYM/wNbXr2ffdKMHjxClMdTazoSB++cv4nEx
+ Y5riY8TcK5SOQJr8UHnnyuh1Cl5vvNN/757z3M40zHhLtrcn0ZeYUAUl6VxEVgwiWSIQ+V
+ zvJWENUjsgh91qFCaVv7iVXlkSGEJVA=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-267-VzJeTXLUMG-u8oqLiRQ54A-1; Fri, 15 Mar 2024 02:06:46 -0400
-X-MC-Unique: VzJeTXLUMG-u8oqLiRQ54A-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5689a5ef341so1066127a12.0
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 23:06:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710482804; x=1711087604;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0JZOkvSxVP+jDlVHmbpH5W7wNbPSixXaqf4Ao0BtMhc=;
- b=g1eXYLTS6LTwxLzyuyGF5Q4CK7FOWFKmxmzS9RRlRF1JsFzdfU6Mhwuas95eNcOm+Q
- lvOFawsKYKmUcvzeCV4qsHlT4HSBjH+Hosd2Oe+0/lt614o2auR4sCi/dNmWxv/IQBK7
- Sh0carAPOIGp7Hwczhi5/beuU+d4gWUVnMp4edEg+ZuyIMf8f1P9KrFd6RYziQYmNoLV
- 2buiN65Q6IBbxEuDR1iY+WUeW5ERK3E23qcpOSQUkYwROkK4E+5cWqAbTgNSUKj2unc8
- gLfm3P98TMPsb47Fbo7oIBYoFAD7Uincl0xVET7eOiTODHUk3jpPTw/XX7vIEFEu+H0Z
- ia2w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWe9AymMmp9p8A1kKcrrfbuz4oKx9ZYD0SlwC7vtNdyOe7eC9a5Lhx64aHEi2p44hvJMxteZh0VssMt1UME4L12ZBL0IzM=
-X-Gm-Message-State: AOJu0Ywo0iztOPckGDiXWgrS8bMkJAlnq4kYffLyp7+ulmCnl3Y7FJSK
- 6lM1BG44fzjY6Y8Xm/K3k1SLWSuS3xFFe+slZ308qqogJ5XzxhrgBTzsLMVjsuqJWgTuC831LwS
- BzwHZrhgrYCPJqfLb9w4XCbAm6XsPJjJ9YeI5x9By3zSLRzxdhvkUMMhQIps6lVjikNgURZhPmE
- gAk4kZ+VZ9yhdru4Kxim5jAFENMs54JWx+Y5k=
-X-Received: by 2002:a05:6402:3605:b0:568:3004:c611 with SMTP id
- el5-20020a056402360500b005683004c611mr1430971edb.42.1710482804469; 
- Thu, 14 Mar 2024 23:06:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFrMtAJHaEIZ+eI+cdisoFQGkdCFBaZXTzwfISmJJlZQY4X71cqJGkslOBuXBBVnbPdI/ZiILlA7zB2wa+tYoE=
-X-Received: by 2002:a05:6402:3605:b0:568:3004:c611 with SMTP id
- el5-20020a056402360500b005683004c611mr1430959edb.42.1710482804191; Thu, 14
- Mar 2024 23:06:44 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240307062823.2377318-1-justinien.bouron@gmail.com>
- <20240315023620.950554-1-justinien.bouron@gmail.com>
-In-Reply-To: <20240315023620.950554-1-justinien.bouron@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Fri, 15 Mar 2024 10:06:28 +0400
-Message-ID: <CAMxuvazGzq+EZjS3fOomp=wnZy4RwU9msUdjxXXuT3spPADpGA@mail.gmail.com>
+ us-mta-198-CroS8c_kPViHXyD0Db-RDw-1; Fri, 15 Mar 2024 02:07:21 -0400
+X-MC-Unique: CroS8c_kPViHXyD0Db-RDw-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 67040811E81;
+ Fri, 15 Mar 2024 06:07:21 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 41057492BD1;
+ Fri, 15 Mar 2024 06:07:21 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3AA7A21E6A24; Fri, 15 Mar 2024 07:07:20 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Justinien Bouron <justinien.bouron@gmail.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9?=
+ <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Eric Blake
+ <eblake@redhat.com>,  Markus Armbruster <armbru@redhat.com>,  Gerd
+ Hoffmann <kraxel@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  qemu-devel@nongnu.org
 Subject: Re: [PATCH] input-linux: Add option to not grab a device upon guest
  startup
-To: Justinien Bouron <justinien.bouron@gmail.com>
-Cc: armbru@redhat.com, berrange@redhat.com, eblake@redhat.com, 
- eduardo@habkost.net, kraxel@redhat.com, pbonzini@redhat.com, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+In-Reply-To: <20240307062823.2377318-1-justinien.bouron@gmail.com> (Justinien
+ Bouron's message of "Wed, 6 Mar 2024 22:28:22 -0800")
+References: <20240307062823.2377318-1-justinien.bouron@gmail.com>
+Date: Fri, 15 Mar 2024 07:07:20 +0100
+Message-ID: <875xxoni3r.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -103,18 +88,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Justinien
+Justinien Bouron <justinien.bouron@gmail.com> writes:
 
-On Fri, Mar 15, 2024 at 6:37=E2=80=AFAM Justinien Bouron
-<justinien.bouron@gmail.com> wrote:
+> Depending on your use-case, it might be inconvenient to have qemu grab
+> the input device immediately upon starting the guest, especially if the
+> guest takes a while to start in which case it may take a few seconds
+> before being able to release the device via the toggle combination.
 >
-> Just a ping to make sure this patch hasn't been lost in the noise.
-> Any chance to get this merged? Should I send a v2 with a revised commit m=
-essage?
+> Added a new bool option to input-linux: grab-on-startup. If true, the
+> device is grabbed as soon as the guest is started, otherwise it is not
+> grabbed until the toggle combination is entered. To avoid breaking
+> existing setups, the default value of grab-on-startup is true, ie. same
+> behaviour as before this change.
 >
+> Signed-off-by: Justinien Bouron <justinien.bouron@gmail.com>
+> ---
+>  qapi/qom.json    | 13 ++++++++++++-
+>  ui/input-linux.c | 20 +++++++++++++++++++-
+>  2 files changed, 31 insertions(+), 2 deletions(-)
+>
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 032c6fa037..50e66d55cc 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -508,13 +508,24 @@
+>  # @grab-toggle: the key or key combination that toggles device grab
+>  #     (default: ctrl-ctrl)
+>  #
+> +# @grab-on-startup: if true, grab the device immediately upon starting the
+> +#     guest. Otherwise, don't grab the device until the combination is entered.
+> +#     This does not influence other devices even if grab_all is true, ie. in the
 
-It's too late for 9.0. Please send a v2 with updated commit message.
+i.e.
 
-thanks
+> +#     unlikely scenario where device1 has grab_all=true + grab-on-startup=true
+> +#     and device2 has grab-on-startup=false, only device1 is grabbed on startup,
+> +#     then, once the grab combination is entered, grabbing is toggled off for
+> +#     both devices (because device1 enforces the grab_all property) until the
+> +#     combination is entered again at which point both devices will be grabbed.
+> +#     (default: true).
+
+From docs/devel/qapi-code-gen.rst section Documentation markup:
+
+    For legibility, wrap text paragraphs so every line is at most 70
+    characters long.
+
+    Separate sentences with two spaces.
+
+> +
+
+No blank lines in the middle of comment blocks, please.
+
+>  # Since: 2.6
+>  ##
+
+Together:
+
+   # @grab-on-startup: if true, grab the device immediately upon starting
+   #     the guest.  Otherwise, don't grab the device until the
+   #     combination is entered.  This does not influence other devices
+   #     even if grab_all is true, i.e. in the unlikely scenario where
+   #     device1 has grab_all=true + grab-on-startup=true and device2 has
+   #     grab-on-startup=false, only device1 is grabbed on startup, then,
+   #     once the grab combination is entered, grabbing is toggled off
+   #     for both devices (because device1 enforces the grab_all
+   #     property) until the combination is entered again at which point
+   #     both devices will be grabbed.  (default: true).
+   #
+   # Since: 2.6
+   ##
+
+>  { 'struct': 'InputLinuxProperties',
+>    'data': { 'evdev': 'str',
+>              '*grab_all': 'bool',
+>              '*repeat': 'bool',
+> -            '*grab-toggle': 'GrabToggleKeys' } }
+> +            '*grab-toggle': 'GrabToggleKeys',
+> +            '*grab-on-startup': 'bool'} }
+>  
+>  ##
+>  # @EventLoopBaseProperties:
+
+[...]
 
 
