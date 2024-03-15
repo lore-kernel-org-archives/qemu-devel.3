@@ -4,80 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B2D0C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 11:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1E8C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 11:35:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl5jc-00084J-2m; Fri, 15 Mar 2024 07:28:24 -0400
+	id 1rl5pm-0001cA-4B; Fri, 15 Mar 2024 07:34:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rl5jZ-00083b-9c
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:28:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rl5pg-0001Zm-JS
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:34:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rl5jX-0001SQ-1P
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:28:21 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rl5pe-0002oT-Hw
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:34:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710502097;
+ s=mimecast20190719; t=1710502475;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x2h2pYTgh5PyMC74qLvTPILXe53aZuAmn8woLk5C2Lo=;
- b=Vg8cedScIcX/ojoQIK8gvq0m6enIWv9oACRqbpujUBrLeT4Gnt0y+s4oJ70CniBFuk5EpH
- B9tWfxcfQnGFzz9AJSWjg5NV7jvvtUgpyZFStKwB7DCSNEOCe3fmrb+XntJTvITECx2MCX
- pCfEuxwFNO8Ib2BL3+aG4GdtnUYbUq8=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=e4I4qdtJY5GanHprVljL9ylvCf+YpRIYlwzQ/fUQUak=;
+ b=PaZ4rSxdrlfyrrpR1ocZ22V/WeBb6KvXffqp17fNY2O3KyU5TqnGPdc+qsoC+Mp9Nlbgdl
+ c9Rcjx8xMAaG8Wp/VA+rUNWpdj741bR36hEIEgmriS7UtkDVCxZ8c2f1k/z0NWXrmA0vPc
+ FjZi8rMYpdRM7G/42LleKW9T5cezoM0=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-v3ax8I-pOfeTQglPtizWQg-1; Fri, 15 Mar 2024 07:28:16 -0400
-X-MC-Unique: v3ax8I-pOfeTQglPtizWQg-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-60a0151f194so33790967b3.1
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 04:28:16 -0700 (PDT)
+ us-mta-369-AkV0ejbDOzGew06t7Bs9ZQ-1; Fri, 15 Mar 2024 07:34:33 -0400
+X-MC-Unique: AkV0ejbDOzGew06t7Bs9ZQ-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-430a062d60bso1755451cf.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 04:34:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710502096; x=1711106896;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=x2h2pYTgh5PyMC74qLvTPILXe53aZuAmn8woLk5C2Lo=;
- b=OdQYvjwHwtkrE5jw2Ho5b0sPWIACLVSDisKsICiVdwSuKNd1G9PLJCAbC8KZvqfKti
- SiNq7RVnIFn3SmrxY1fAB3oGz1QADcfCrtah1lz/2P9YAVKHzYQ12QnxfzvIv7i+QCZ9
- /ofUcWWHvnx9xE+kBzQiV6RUQzVWzXt4XFASSwJybINUSctJiV+6CKZMAXP6ufN5bx2c
- IncUhQ7l4WnX9ZCy6ryjEjBScLwuOrkeJlo+9zvGO7MWOYGSgiMPjy49u/B4eSyYzNZF
- Ypv/KGsIcT3qhizozP7aBcsGDNv+ycpVCe/1xxw13FZl1bV+Hk3O5HOH+nOyKIoiuxqO
- prKA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX1yApnP+WUS9vr/HOY2YSXJSKIY+zRus4S1v3QrEsM0ex7nTxwugrgnUrwHZyMzvElFJCSpmOFo5GVfjCm4lswfWm7MK8=
-X-Gm-Message-State: AOJu0Yws3HUjo+lwmW0YvTFlAMnyzkVIPCo/HUVES2jmGwU6Km/ghReI
- mnFkG2+b0IaGfWJJLKDQ2+fsFu6JHJfsJg6TocWnPMeQuO9R/192tlCvMcQZD89QrfWk4j1+jCJ
- GK5z3VEYTWa83gQEpaFge7G2hHSJPhwgV3z5n0mNkqzNTwjaSKvTXQY6svzmzN7mFN5UBpjGoyl
- BGN8rVMgVyDWqNN1k0FnnoiD2erz0=
-X-Received: by 2002:a0d:c282:0:b0:60c:7540:37d7 with SMTP id
- e124-20020a0dc282000000b0060c754037d7mr3997487ywd.7.1710502095784; 
- Fri, 15 Mar 2024 04:28:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEFRHWtNHxg3+AXifEO1h0YjSLFgr6U9WeJHW9UbmfMPjIFuIEc2Zhnwezr6zCmK3kkVSkO/lRnhtZZnxoyGos=
-X-Received: by 2002:a0d:c282:0:b0:60c:7540:37d7 with SMTP id
- e124-20020a0dc282000000b0060c754037d7mr3997467ywd.7.1710502095416; Fri, 15
- Mar 2024 04:28:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710502473; x=1711107273;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=e4I4qdtJY5GanHprVljL9ylvCf+YpRIYlwzQ/fUQUak=;
+ b=SMtnwPexNRBcvwui8jG3iuC9JcepOUkA9OrqSH5ZgS2ZUs53XdKAX+/Y25q60z29bn
+ ddVi+QT/pODrH7CBGIspOyMzq+4KiaHQgzDZeUvL2h4iB3Yj1OuowmPMCRc5uVCZ3uq5
+ mQmssIle5XTxVU3ebaLMIxwUypiH/Ekm2YTxdJ3oe7+cZs83HD2zUXnx/G98OK4OarkG
+ KivL7xtPXk9YP7rYnsqnJy/4xPjyTOqsO+qsZVTcPrKRJNxz+vyuYcUw92chGd2kvQQB
+ j7m2NISMJls4IuZCRhyMgfDRU1rwYaRlJJv7QK/YICKxMbGHQQVHSI+resdRlHNycc/C
+ z8Jw==
+X-Gm-Message-State: AOJu0YyW2OiI8NsFl/Qp7ab82+ag1bou4GB4ZErj3Clv3x6x6bf1Z/bc
+ lX0oKFnXNOQrm5+mOQtHRkjCP7fxhsMonGd6kK/dFvBBJwjwjZMZWAlo/DqBnwVYgzFET+xqRcm
+ pOW2Rz/zW7+jWkFD702hkNViyjiVFQYF9ZC8+Wvd6iVvyWC2v7V96
+X-Received: by 2002:a05:620a:8396:b0:789:dc90:21b0 with SMTP id
+ pb22-20020a05620a839600b00789dc9021b0mr1870428qkn.0.1710502473237; 
+ Fri, 15 Mar 2024 04:34:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/FeNkoTPVmoQuzOTD3U/wPSWcPplk+AqWfpjEpO5dTP6V54+1w1zG9hBDR4ZjLmk7Lu/uZg==
+X-Received: by 2002:a05:620a:8396:b0:789:dc90:21b0 with SMTP id
+ pb22-20020a05620a839600b00789dc9021b0mr1870402qkn.0.1710502472886; 
+ Fri, 15 Mar 2024 04:34:32 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ bp10-20020a05620a458a00b00789e8860ef7sm187949qkb.121.2024.03.15.04.34.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Mar 2024 04:34:32 -0700 (PDT)
+Date: Fri, 15 Mar 2024 07:34:30 -0400
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>,
+ Paul Durrant <paul@xen.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Hyman Huang <yong.huang@smartx.com>
+Subject: Re: [PATCH v4 14/25] memory: Add Error** argument to the
+ global_dirty_log routines
+Message-ID: <ZfQyRu7nt6M6uzTJ@x1n>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-15-clg@redhat.com>
 MIME-Version: 1.0
-References: <13625712.uLZWGnKmhe@valdaarhun> <6022175.lOV4Wx5bFT@valdaarhun>
- <CAJaqyWcuU_kQpCN+U3ejWgfm+zBv3Mofe0zyi-RB+rbqgDHEgg@mail.gmail.com>
- <1786176.VLH7GnMWUR@valdaarhun>
-In-Reply-To: <1786176.VLH7GnMWUR@valdaarhun>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Fri, 15 Mar 2024 12:27:39 +0100
-Message-ID: <CAJaqyWdmGbYj1KjN6zcu-fRij9X6mNG-xKHqQiaVsY1zu1T-Ag@mail.gmail.com>
-Subject: Re: Intention to work on GSoC project
-To: Sahil <icegambit91@gmail.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- qemu-level <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240306133441.2351700-15-clg@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -102,114 +111,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 15, 2024 at 8:15=E2=80=AFAM Sahil <icegambit91@gmail.com> wrote=
-:
->
-> Hi,
->
-> Thank you for your email.
->
-> On Thursday, March 14, 2024 8:39:45 PM IST Eugenio Perez Martin wrote:
-> > Hi Sahil,
-> >
-> > It's being hard to find a good self-contained small task related to
-> > the project to be honest. As it would be out of SVQ, would it be ok
-> > for you if we start straight to the task of adding the packed vq
-> > format to SVQ?
-> >
-> > Thanks!
->
-> Sure, this works too! I would love to get started with the project.
->
-> I have a small update as well. I have read through a few docs and
-> articles to familiarize myself with the relevant terminology and
-> technicalities.
->
-> 1. "About", "system emulation" and "user mode emulation" sections of
->     the user documentation [1]
-> 2. The migration subsystem [2]
->
-> Some sections in the above docs were difficult to grasp. For the time
-> being, I have focused on those parts that I thought were relevant
-> to the project.
->
+On Wed, Mar 06, 2024 at 02:34:29PM +0100, Cédric Le Goater wrote:
+> Now that the log_global*() handlers take an Error** parameter and
+> return a bool, do the same for memory_global_dirty_log_start() and
+> memory_global_dirty_log_stop(). The error is reported in the callers
+> for now and it will be propagated in the call stack in the next
+> changes.
+> 
+> To be noted a functional change in ram_init_bitmaps(), if the dirty
+> pages logger fails to start, there is no need to synchronize the dirty
+> pages bitmaps. colo_incoming_start_dirty_log() could be modified in a
+> similar way.
+> 
+> Cc: Stefano Stabellini <sstabellini@kernel.org>
+> Cc: Anthony Perard <anthony.perard@citrix.com>
+> Cc: Paul Durrant <paul@xen.org>
+> Cc: "Michael S. Tsirkin" <mst@redhat.com>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: David Hildenbrand <david@redhat.com>
+> Cc: Hyman Huang <yong.huang@smartx.com>
+> Reviewed-by: Hyman Huang <yong.huang@smartx.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+> 
+>  Changes in v4:
+> 
+>  - Dropped log_global_stop() and log_global_sync() changes
+>  
+>  include/exec/memory.h |  5 ++++-
+>  hw/i386/xen/xen-hvm.c |  2 +-
+>  migration/dirtyrate.c | 13 +++++++++++--
+>  migration/ram.c       | 22 ++++++++++++++++++++--
+>  system/memory.c       | 11 +++++------
+>  5 files changed, 41 insertions(+), 12 deletions(-)
+> 
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index 5555567bc4c9fdb53e8f63487f1400980275687d..c129ee6db7162504bd72d4cfc69b5affb2cd87e8 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -2570,8 +2570,11 @@ void memory_listener_unregister(MemoryListener *listener);
+>   * memory_global_dirty_log_start: begin dirty logging for all regions
+>   *
+>   * @flags: purpose of starting dirty log, migration or dirty rate
+> + * @errp: pointer to Error*, to store an error if it happens.
+> + *
+> + * Return: true on success, else false setting @errp with error.
+>   */
+> -void memory_global_dirty_log_start(unsigned int flags);
+> +bool memory_global_dirty_log_start(unsigned int flags, Error **errp);
+>  
+>  /**
+>   * memory_global_dirty_log_stop: end dirty logging for all regions
+> diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+> index 0608ca99f5166fd6379ee674442484e805eff9c0..57cb7df50788a6c31eff68c95e8eaa856fdebede 100644
+> --- a/hw/i386/xen/xen-hvm.c
+> +++ b/hw/i386/xen/xen-hvm.c
+> @@ -654,7 +654,7 @@ void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
+>  void qmp_xen_set_global_dirty_log(bool enable, Error **errp)
+>  {
+>      if (enable) {
+> -        memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION);
+> +        memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION, errp);
+>      } else {
+>          memory_global_dirty_log_stop(GLOBAL_DIRTY_MIGRATION);
+>      }
+> diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
+> index 1d2e85746fb7b10eb7f149976970f9a92125af8a..d02d70b7b4b86a29d4d5540ded416543536d8f98 100644
+> --- a/migration/dirtyrate.c
+> +++ b/migration/dirtyrate.c
+> @@ -90,9 +90,15 @@ static int64_t do_calculate_dirtyrate(DirtyPageRecord dirty_pages,
+>  
+>  void global_dirty_log_change(unsigned int flag, bool start)
+>  {
+> +    Error *local_err = NULL;
+> +    bool ret;
+> +
+>      bql_lock();
+>      if (start) {
+> -        memory_global_dirty_log_start(flag);
+> +        ret = memory_global_dirty_log_start(flag, &local_err);
+> +        if (!ret) {
+> +            error_report_err(local_err);
+> +        }
+>      } else {
+>          memory_global_dirty_log_stop(flag);
+>      }
+> @@ -608,9 +614,12 @@ static void calculate_dirtyrate_dirty_bitmap(struct DirtyRateConfig config)
+>  {
+>      int64_t start_time;
+>      DirtyPageRecord dirty_pages;
+> +    Error *local_err = NULL;
+>  
+>      bql_lock();
+> -    memory_global_dirty_log_start(GLOBAL_DIRTY_DIRTY_RATE);
+> +    if (!memory_global_dirty_log_start(GLOBAL_DIRTY_DIRTY_RATE, &local_err)) {
+> +        error_report_err(local_err);
+> +    }
+>  
+>      /*
+>       * 1'round of log sync may return all 1 bits with
+> diff --git a/migration/ram.c b/migration/ram.c
+> index c5149b7d717aefad7f590422af0ea4a40e7507be..397b4c0f218a66d194e44f9c5f9fe8e9885c48b6 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -2836,18 +2836,31 @@ static void migration_bitmap_clear_discarded_pages(RAMState *rs)
+>  
+>  static void ram_init_bitmaps(RAMState *rs)
+>  {
+> +    Error *local_err = NULL;
+> +    bool ret = true;
+> +
+>      qemu_mutex_lock_ramlist();
+>  
+>      WITH_RCU_READ_LOCK_GUARD() {
+>          ram_list_init_bitmaps();
+>          /* We don't use dirty log with background snapshots */
+>          if (!migrate_background_snapshot()) {
+> -            memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION);
+> +            ret = memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION,
+> +                                                &local_err);
+> +            if (!ret) {
+> +                error_report_err(local_err);
+> +                goto out_unlock;
 
-Please feel free to ask any questions, maybe we can improve the doc :).
+Here we may need to free the bitmaps created in ram_list_init_bitmaps().
 
-> I have also read through the following articles:
->
-> 1. Introduction to virtio-networking and vhost-net [3]
-> 2. Deep dive into Virtio-networking and vhost-net [4]
-> 3. Virtualized Hardware Devices [5]
-> 4. VFIO - "Virtual Function I/O" (Just the introduction) [6]
-> 5. Virtio-net failover: An introduction [7]
->
-> I hope I haven't gone off on a tangent. I was planning to finish reading
-> up on the following articles as well:
->
+We can have a helper ram_bitmaps_destroy() for that.
 
-There is a post before the first in the series:
-https://www.redhat.com/en/blog/virtio-devices-and-drivers-overview-headjack=
--and-phone
+One thing be careful is the new file_bmap can be created but missing in the
+ram_save_cleanup(), it's because it's freed earlier.  IMHO if we will have
+a new ram_bitmaps_destroy() we can unconditionally free file_bmap there
+too, as if it's freed early g_free() is noop.
 
-> 1. Virtqueues and virtio ring: How the data travels [8]
-> 2. Packed virtqueue: How to reduce overhead with virtio [9]
-> 3. Virtio live migration technical deep dive [10]
-> 4. Hands on vDPA: what do you do when you ain't got the hardware v2 (Part=
- 1) [11]
->
+> +            }
+>              migration_bitmap_sync_precopy(rs, false);
+>          }
+>      }
+> +out_unlock:
+>      qemu_mutex_unlock_ramlist();
+>  
+> +    if (!ret) {
+> +        return;
+> +    }
+> +
+>      /*
+>       * After an eventual first bitmap sync, fixup the initial bitmap
+>       * containing all 1s to exclude any discarded pages from migration.
+> @@ -3631,6 +3644,8 @@ int colo_init_ram_cache(void)
+>  void colo_incoming_start_dirty_log(void)
+>  {
+>      RAMBlock *block = NULL;
+> +    Error *local_err = NULL;
+> +
+>      /* For memory_global_dirty_log_start below. */
+>      bql_lock();
+>      qemu_mutex_lock_ramlist();
+> @@ -3642,7 +3657,10 @@ void colo_incoming_start_dirty_log(void)
+>              /* Discard this dirty bitmap record */
+>              bitmap_zero(block->bmap, block->max_length >> TARGET_PAGE_BITS);
+>          }
+> -        memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION);
+> +        if (!memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION,
+> +                                           &local_err)) {
+> +            error_report_err(local_err);
+> +        }
+>      }
+>      ram_state->migration_dirty_pages = 0;
+>      qemu_mutex_unlock_ramlist();
+> diff --git a/system/memory.c b/system/memory.c
+> index 3600e716149407c10a1f6bf8f0a81c2611cf15ba..cbc098216b789f50460f1d1bc7ec122030693d9e 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -2931,10 +2931,9 @@ static void memory_global_dirty_log_rollback(MemoryListener *listener,
+>      }
+>  }
+>  
+> -void memory_global_dirty_log_start(unsigned int flags)
+> +bool memory_global_dirty_log_start(unsigned int flags, Error **errp)
+>  {
+>      unsigned int old_flags;
+> -    Error *local_err = NULL;
+>  
+>      assert(flags && !(flags & (~GLOBAL_DIRTY_MASK)));
+>  
+> @@ -2946,7 +2945,7 @@ void memory_global_dirty_log_start(unsigned int flags)
+>  
+>      flags &= ~global_dirty_tracking;
+>      if (!flags) {
+> -        return;
+> +        return true;
+>      }
+>  
+>      old_flags = global_dirty_tracking;
+> @@ -2959,7 +2958,7 @@ void memory_global_dirty_log_start(unsigned int flags)
+>  
+>          QTAILQ_FOREACH(listener, &memory_listeners, link) {
+>              if (listener->log_global_start) {
+> -                ret = listener->log_global_start(listener, &local_err);
+> +                ret = listener->log_global_start(listener, errp);
+>                  if (!ret) {
+>                      break;
+>                  }
+> @@ -2969,14 +2968,14 @@ void memory_global_dirty_log_start(unsigned int flags)
+>          if (!ret) {
+>              memory_global_dirty_log_rollback(QTAILQ_PREV(listener, link),
+>                                               flags);
+> -            error_report_err(local_err);
+> -            return;
+> +            return false;
+>          }
+>  
+>          memory_region_transaction_begin();
+>          memory_region_update_pending = true;
+>          memory_region_transaction_commit();
+>      }
+> +    return true;
+>  }
+>  
+>  static void memory_global_dirty_log_do_stop(unsigned int flags)
+> -- 
+> 2.44.0
+> 
 
-I think it's a good plan!
-
-If you feel like you're reading a lot of theory and want to get your
-hands dirty already, you can also start messing with the code with the
-blogs you already read. Or, maybe, after reading the Packed virtqueue
-one, your call.
-
-In a very brute-forced description, you can start trying to copy all
-the *packed* stuff of kernel's drivers/virtio/virtio_ring.c into
-vhost_shadow_virtqueue.c. There is a lot more in the task, and I can
-get into more detail if you want either here or in a meeting.
-
-If you prefer to continue with the theory it is ok too.
-
-> I believe the hands-on vPDA article will have me set up a development
-> environment for the project as well.
->
-
-Yes, that's right.
-
-> Please let me know if I should amend my roadmap. I am
-> excited to get started :)
->
-
-I think it is a great plan!
-
-Thanks!
-
-> Thanks,
-> Sahil
->
-> [1] https://www.qemu.org/docs/master/index.html
-> [2] https://www.qemu.org/docs/master/devel/migration/index.html
-> [3] https://www.redhat.com/en/blog/introduction-virtio-networking-and-vho=
-st-net
-> [4] https://www.redhat.com/en/blog/deep-dive-virtio-networking-and-vhost-=
-net
-> [5] https://access.redhat.com/documentation/en-us/red_hat_enterprise_linu=
-x/7/html/virtualization_getting_started_guide/sec-virtualization_getting_st=
-arted-products-virtualized-hardware-devices
-> [6] https://www.kernel.org/doc/html/latest/driver-api/vfio.html
-> [7] https://www.redhat.com/en/blog/virtio-net-failover-introduction
-> [8] https://www.redhat.com/en/blog/virtqueues-and-virtio-ring-how-data-tr=
-avels
-> [9] https://developers.redhat.com/articles/2024/02/21/virtio-live-migrati=
-on-technical-deep-dive
-> [10] https://www.redhat.com/en/blog/packed-virtqueue-how-reduce-overhead-=
-virtio
-> [11] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-ai=
-nt-got-hardware-part-1
->
->
+-- 
+Peter Xu
 
 
