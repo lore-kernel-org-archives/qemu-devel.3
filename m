@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F237FC54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 12:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84813C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 12:30:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl6hC-0002D8-MF; Fri, 15 Mar 2024 08:29:58 -0400
+	id 1rl6hG-0002DM-Su; Fri, 15 Mar 2024 08:30:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rl6h9-0002CL-10
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:29:55 -0400
+ id 1rl6h9-0002CN-Vv
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:29:56 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rl6h6-0006OR-Hb
+ id 1rl6h6-0006OT-Hn
  for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:29:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=z+2upVLm5CJLKbcQAz4YdhJ9C1wGGiDlSEOSE/EyGsY=; b=nsINTdb8tBVP
- DgMlRXjEz2Umdf6eJMjrIGj3YLhtyxURzFMaZYZUg0vz4SvLdXt3v49+xk6lUIwDOWNjpEgY7tMrn
- IbEZ0Mit731NyOG3M/x+1H9/kKmi7OWfH2W3DtY6j3/NDGsn5lQv3jE9HKZVLUhWulXNfe5h5X9my
- TxJ7XHb5/gCdx3KziWy0NJrxy7JxKmYDrRQw0aKdDIqIcd5vzZr0Aoc240tb/F0U2C+Xo/GVVbOYN
- aiG8LvvrmfoiURwdl7u59v25oG0V1K2FXggBMLy1etY2oQgPybM77jvhzYkZBwzDEeG8uJV17g25T
- JYPn14efF1cRd1vsmqrnDA==;
+ Content-Type; bh=LI4Zjt2kmsotdBVKwkUebV826YtkKLl6ksUtmYYkisA=; b=h2EHbiHxZbOW
+ 926K4H1p/nZouq1o0yST2h3iNqfjYxOOpL1EXnpBaQEbdP+b17f0Z+3fVJq2l+59/FNunvw9cQLkf
+ llpwmDreF6h5zI7108p2lS65wsb2Ax6bDtW87dBL9N9mHjt47++MIgjePlda5+4ijBwzro++y33U8
+ tDx6vOBg/1XX36zRzA6CmpMYUEIlAGVjftMTKJqpP3o4a4pT645vitwC1TUg7Pl/NiqvgTESIuuON
+ XeTwZKJNXM7pyuRx8AFp6FcQmbpbt+JIWSx0FncaoM6cfMjp21M/7iRYJ38Gdj5iVny5V8t0cbu9I
+ Dxt6lTS/alEWjsLIwZqHaQ==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rl6f4-005Caf-39;
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rl6f5-005Caf-06;
  Fri, 15 Mar 2024 13:29:46 +0100
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, michael.roth@amd.com, kkostiuk@redhat.com,
  marcandre.lureau@redhat.com, philmd@linaro.org,
  andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v3 1/7] qga: guest-get-fsinfo: add optional 'total-bytes-root'
- field
-Date: Fri, 15 Mar 2024 14:29:40 +0200
-Message-Id: <20240315122946.39168-2-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v3 2/7] qga: introduce ga_run_command() helper for guest cmd
+ execution
+Date: Fri, 15 Mar 2024 14:29:41 +0200
+Message-Id: <20240315122946.39168-3-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240315122946.39168-1-andrey.drobyshev@virtuozzo.com>
 References: <20240315122946.39168-1-andrey.drobyshev@virtuozzo.com>
@@ -70,85 +70,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the commit 25b5ff1a86 ("qga: add mountpoint usage info to
-GuestFilesystemInfo") we have 2 values reported in guest-get-fsinfo:
-used = (f_blocks - f_bfree), total = (f_blocks - f_bfree + f_bavail) as
-returned by statvfs(3).  While on Windows guests that's all we can get
-with GetDiskFreeSpaceExA(), on POSIX guests we might also be interested in
-total file system size, as it's visible for root user.  Let's add an
-optional field 'total-bytes-root' to GuestFilesystemInfo struct, which'd
-only be reported on POSIX and represent f_blocks value as returned by
-statvfs(3).
+When executing guest commands in *nix environment, we repeat the same
+fork/exec pattern multiple times.  Let's just separate it into a single
+helper which would also be able to feed input data into the launched
+process' stdin.  This way we can avoid code duplication.
 
-While here, let's document better where those values come from in both
-POSIX and Windows.
+To keep the history more bisectable, let's replace qmp commands
+implementations one by one.  Also add G_GNUC_UNUSED attribute to the
+helper and remove it in the next commit.
 
+Originally-by: Yuri Pudgorodskiy <yur@virtuozzo.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
- qga/commands-posix.c |  2 ++
- qga/commands-win32.c |  1 +
- qga/qapi-schema.json | 12 +++++++++++-
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ qga/commands-posix.c | 150 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 150 insertions(+)
 
 diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 26008db497..8207c4c47e 100644
+index 8207c4c47e..ad05630086 100644
 --- a/qga/commands-posix.c
 +++ b/qga/commands-posix.c
-@@ -1569,8 +1569,10 @@ static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount,
-         nonroot_total = used + buf.f_bavail;
-         fs->used_bytes = used * fr_size;
-         fs->total_bytes = nonroot_total * fr_size;
-+        fs->total_bytes_root = buf.f_blocks * fr_size;
+@@ -76,6 +76,156 @@ static void ga_wait_child(pid_t pid, int *status, Error **errp)
+     g_assert(rpid == pid);
+ }
  
-         fs->has_total_bytes = true;
-+        fs->has_total_bytes_root = true;
-         fs->has_used_bytes = true;
-     }
- 
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-index a1015757d8..9e820aad8d 100644
---- a/qga/commands-win32.c
-+++ b/qga/commands-win32.c
-@@ -1143,6 +1143,7 @@ static GuestFilesystemInfo *build_guest_fsinfo(char *guid, Error **errp)
-     fs = g_malloc(sizeof(*fs));
-     fs->name = g_strdup(guid);
-     fs->has_total_bytes = false;
-+    fs->has_total_bytes_root = false;
-     fs->has_used_bytes = false;
-     if (len == 0) {
-         fs->mountpoint = g_strdup("System Reserved");
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index b8efe31897..093a5ab602 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -1031,8 +1031,18 @@
- # @type: file system type string
- #
- # @used-bytes: file system used bytes (since 3.0)
-+#     * POSIX: (f_blocks - f_bfree) * f_frsize, as returned by statvfs(3)
-+#     * Windows: (TotalNumberOfBytes - TotalNumberOfFreeBytes), as returned
-+#       by GetDiskFreeSpaceEx()
- #
- # @total-bytes: non-root file system total bytes (since 3.0)
-+#     * POSIX: (f_blocks - f_bfree + f_bavail) * f_frsize, as returned by
-+#       statvfs(3)
-+#     * Windows: TotalNumberOfBytes, as returned by GetDiskFreeSpaceEx()
-+#
-+# @total-bytes-root: total file system size in bytes (as visible for a
-+#     priviledged user) (since 8.3)
-+#     * POSIX only: (f_blocks * f_frsize), returned by statvfs(3)
- #
- # @disk: an array of disk hardware information that the volume lies
- #     on, which may be empty if the disk type is not supported
-@@ -1042,7 +1052,7 @@
- { 'struct': 'GuestFilesystemInfo',
-   'data': {'name': 'str', 'mountpoint': 'str', 'type': 'str',
-            '*used-bytes': 'uint64', '*total-bytes': 'uint64',
--           'disk': ['GuestDiskAddress']} }
-+           '*total-bytes-root': 'uint64', 'disk': ['GuestDiskAddress']} }
- 
- ##
- # @guest-get-fsinfo:
++static ssize_t ga_pipe_read_str(int fd[2], char **str)
++{
++    ssize_t n, len = 0;
++    char buf[1024];
++
++    close(fd[1]);
++    fd[1] = -1;
++    while ((n = read(fd[0], buf, sizeof(buf))) != 0) {
++        if (n < 0) {
++            if (errno == EINTR) {
++                continue;
++            } else {
++                len = -errno;
++                break;
++            }
++        }
++        *str = g_realloc(*str, len + n + 1);
++        memcpy(*str + len, buf, n);
++        len += n;
++        *str[len] = '\0';
++    }
++    close(fd[0]);
++    fd[0] = -1;
++
++    return len;
++}
++
++/*
++ * Helper to run command with input/output redirection,
++ * sending string to stdin and taking error message from
++ * stdout/err.
++ */
++G_GNUC_UNUSED
++static int ga_run_command(const char *argv[], const char *in_str,
++                          const char *action, Error **errp)
++{
++    pid_t pid;
++    int status;
++    int retcode = -1;
++    int infd[2] = { -1, -1 };
++    int outfd[2] = { -1, -1 };
++    char *str = NULL;
++    ssize_t len = 0;
++
++    if ((in_str && !g_unix_open_pipe(infd, FD_CLOEXEC, NULL)) ||
++        !g_unix_open_pipe(outfd, FD_CLOEXEC, NULL)) {
++        error_setg(errp, "cannot create pipe FDs");
++        goto out;
++    }
++
++    pid = fork();
++    if (pid == 0) {
++        char *cherr = NULL;
++
++        setsid();
++
++        if (in_str) {
++            /* Redirect stdin to infd. */
++            close(infd[1]);
++            dup2(infd[0], 0);
++            close(infd[0]);
++        } else {
++            reopen_fd_to_null(0);
++        }
++
++        /* Redirect stdout/stderr to outfd. */
++        close(outfd[0]);
++        dup2(outfd[1], 1);
++        dup2(outfd[1], 2);
++        close(outfd[1]);
++
++        execvp(argv[0], (char *const *)argv);
++
++        /* Write the cause of failed exec to pipe for the parent to read it. */
++        cherr = g_strdup_printf("failed to exec '%s'", argv[0]);
++        perror(cherr);
++        g_free(cherr);
++        _exit(EXIT_FAILURE);
++    } else if (pid < 0) {
++        error_setg_errno(errp, errno, "failed to create child process");
++        goto out;
++    }
++
++    if (in_str) {
++        close(infd[0]);
++        infd[0] = -1;
++        if (qemu_write_full(infd[1], in_str, strlen(in_str)) !=
++                strlen(in_str)) {
++            error_setg_errno(errp, errno, "%s: cannot write to stdin pipe",
++                             action);
++            goto out;
++        }
++        close(infd[1]);
++        infd[1] = -1;
++    }
++
++    len = ga_pipe_read_str(outfd, &str);
++    if (len < 0) {
++        error_setg_errno(errp, -len, "%s: cannot read from stdout/stderr pipe",
++                         action);
++        goto out;
++    }
++
++    ga_wait_child(pid, &status, errp);
++    if (*errp) {
++        goto out;
++    }
++
++    if (!WIFEXITED(status)) {
++        if (len) {
++            error_setg(errp, "child process has terminated abnormally: %s",
++                       str);
++        } else {
++            error_setg(errp, "child process has terminated abnormally");
++        }
++        goto out;
++    }
++
++    retcode = WEXITSTATUS(status);
++
++    if (WEXITSTATUS(status)) {
++        if (len) {
++            error_setg(errp, "child process has failed to %s: %s",
++                       action, str);
++        } else {
++            error_setg(errp, "child process has failed to %s: exit status %d",
++                       action, WEXITSTATUS(status));
++        }
++        goto out;
++    }
++
++out:
++    g_free(str);
++
++    if (infd[0] != -1) {
++        close(infd[0]);
++    }
++    if (infd[1] != -1) {
++        close(infd[1]);
++    }
++    if (outfd[0] != -1) {
++        close(outfd[0]);
++    }
++    if (outfd[1] != -1) {
++        close(outfd[1]);
++    }
++
++    return retcode;
++}
++
+ void qmp_guest_shutdown(const char *mode, Error **errp)
+ {
+     const char *shutdown_flag;
 -- 
 2.39.3
 
