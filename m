@@ -4,72 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9257C54E66
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 06:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5544CC54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 06:43:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl0xS-0007v3-Gv; Fri, 15 Mar 2024 02:22:22 -0400
+	id 1rl1Gw-00025J-KG; Fri, 15 Mar 2024 02:42:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1rl0xQ-0007uu-5e
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:22:20 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1rl0xN-0001vU-M9
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:22:19 -0400
-Received: from loongson.cn (unknown [10.20.42.32])
- by gateway (Coremail) with SMTP id _____8BxXesP6fNloF8ZAA--.61429S3;
- Fri, 15 Mar 2024 14:22:07 +0800 (CST)
-Received: from [10.20.42.32] (unknown [10.20.42.32])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxAOUK6fNlz7taAA--.12881S2; 
- Fri, 15 Mar 2024 14:22:05 +0800 (CST)
-Subject: Re: [PATCH V4 1/1] target/loongarch: Fixed tlb huge page loading issue
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, Song Gao <gaosong@loongson.cn>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>, zhaotianrui@loongson.cn,
- yijun@loongson.cn, wuruiyang@loongson.cn
-References: <cover.1710379781.git.lixianglai@loongson.cn>
- <0e940b2aee9a5c29bb41d6a9611955482d250325.1710379781.git.lixianglai@loongson.cn>
- <60733d71-daba-4f4a-a184-357526a3b3a0@linaro.org>
-From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <05a4b109-6e86-6ecf-4399-c0f9d5fd1a6f@loongson.cn>
-Date: Fri, 15 Mar 2024 14:22:02 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rl1Gt-000253-0P
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:42:27 -0400
+Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rl1Gr-0005KT-8Y
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:42:26 -0400
+Received: by mail-oo1-xc30.google.com with SMTP id
+ 006d021491bc7-59fb0b5b47eso601922eaf.3
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 23:42:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710484943; x=1711089743; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XV0/rfi9+XnuHPOrvt5YSLUSgCjiCBnapvaJA46FE8k=;
+ b=huWRB/DpVIscM0lzzqqcZuL3Sj6TWD0rNfiyFho12O2eoAUkBxHlJCIOYiCR6Qutgy
+ AB8TOxiM9iZ+c0k1C1upFwLHoTADLDJzplgtbPmwtStnx72vr3YbZbutYHML4LQGZI3s
+ oIlRG+2d6HvHpTCj8DhDshnz2bKtlsBY9HkUpqS/pLCpbcZJN1ubESVre6+M6WW9kkXt
+ 3xUHt6DelU/Out3Zl02EMZxzHlDPdr9jdVtCh3JnGl3utLdic6rm8dEJNhbY3+1nMnKn
+ wIrjZtJXTbG2zpo553LAWQi1m7uAQzuVwStYgAdgkJHSE6C2EMinFUZM9Nkgs60mBtB1
+ S8Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710484943; x=1711089743;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XV0/rfi9+XnuHPOrvt5YSLUSgCjiCBnapvaJA46FE8k=;
+ b=IbWohA3MInaifzLLyi60DrUuBU/90g7bilqF2FGH7JRULHuVZ0CdT3wLM1Ouw2GOSv
+ z561gzBiIICiuAInxBlUaRp1HED2gCxcZtcomrhPmpZ21ELezyQZIOBMYDTGG9oyEatD
+ qtOIXVFo5TFSFxoUVZGky8ZHi58TBZczVnn8CcnXkHrLIzVBcvWt6vfN5cn6jLArrelO
+ VJHCGN4PvvvNtx3/NR1lFPd0pVpX5g3YKD4MIjNUKJ9+m3a7FPm9MNK0ymBmoWnfzqMT
+ qzPGUcTNFdfZDB9SHzMScl56FE32aTaNLfe6xMsvbMQys5gic/1vE8FP0fN5+joH1bsG
+ z28w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXUYi019tP0k2cQ/2+ngZRgUeXMJlrY29azGt3Ybb7Ph0vqiMSWietFySIWKBMgrl2RZnkn3d+jVX2Tegc7DeTOUCvn2qE=
+X-Gm-Message-State: AOJu0Yz0aoCFtQkjyJ+pRcmNOUf0rtYiucVofjWl0hsKMUvv6hUZgu9E
+ 7Y8T2p/LDZnMEYEElhvCIuy0wn/1dJe1athAhkU5QX6g4oApeVjjF/y9FjzhwKI=
+X-Google-Smtp-Source: AGHT+IH1Q1qGVgomlDchiMaPkPmrwpvRXO7EBDM30O4WKNb8AO7Y2MKtKdiFQLjt1gF8S2Wn/oPf4g==
+X-Received: by 2002:a05:6358:2799:b0:17c:1c76:84b1 with SMTP id
+ l25-20020a056358279900b0017c1c7684b1mr4735979rwb.14.1710484943114; 
+ Thu, 14 Mar 2024 23:42:23 -0700 (PDT)
+Received: from [192.168.0.227] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ g20-20020a63dd54000000b005ce998b9391sm1785164pgj.67.2024.03.14.23.42.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 14 Mar 2024 23:42:22 -0700 (PDT)
+Message-ID: <fbca036f-ecb9-4b14-9c02-73d85b6de0af@linaro.org>
+Date: Thu, 14 Mar 2024 20:42:18 -1000
 MIME-Version: 1.0
-In-Reply-To: <60733d71-daba-4f4a-a184-357526a3b3a0@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.0? 01/12] accel/tcg/plugin: Remove
+ CONFIG_SOFTMMU_GATE definition
 Content-Language: en-US
-X-CM-TRANSID: AQAAf8CxAOUK6fNlz7taAA--.12881S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoWxAw48urWrWr1rKF47Ww17Arc_yoW5Aw18pr
- 1kJrWUGryUJrn5JF13JryUJry5Xr1Ut3WkXr18ZFyUJr4DtrW0grWUXrnFgF1UJr48Jr4U
- Ar1UZry7Zr17GrgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
- ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8cz
- VUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.534,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-ppc@nongnu.org
+References: <20240313213339.82071-1-philmd@linaro.org>
+ <20240313213339.82071-2-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240313213339.82071-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc30.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,82 +103,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard:
-> On 3/13/24 15:33, Xianglai Li wrote:
->> +    if (unlikely((level == 0) || (level > 4))) {
->> +        return base;
->> +    }
->> +
->> +    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
->> +        if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
->> +            return base;
->> +        } else {
->> +            return  FIELD_DP64(base, TLBENTRY, LEVEL, level);
->> +        }
->> +
->> +        if (unlikely(level == 4)) {
->> +            qemu_log_mask(LOG_GUEST_ERROR,
->> +                          "Attempted use of level %lu huge page\n", 
->> level);
->> +        }
->
-> This block is unreachable, because you've already returned.
-> Perhaps it would be worthwhile to add another for the level==0 or > 4 
-> case above?
->
-A normal level 4 page table should not print an error log,
+On 3/13/24 11:33, Philippe Mathieu-Daudé wrote:
+> The CONFIG_SOFTMMU_GATE definition was never used, remove it.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   accel/tcg/plugin-gen.c | 6 ------
+>   1 file changed, 6 deletions(-)
 
-only if a level 4 page is large, so we should put it in
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-     if (FIELD_EX64(base, TLBENTRY, HUGE)) {
-         if (unlikely(level == 4)) {
-             qemu_log_mask(LOG_GUEST_ERROR,
-                           "Attempted use of level %lu huge page\n", level);
-         }
-
-         if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
-             return base;
-         } else {
-             return  FIELD_DP64(base, TLBENTRY, LEVEL, level);
-         }
-     }
-
-
-Thanks!
-
-Xianglai.
-
-
->> @@ -530,20 +553,34 @@ void helper_ldpte(CPULoongArchState *env, 
->> target_ulong base, target_ulong odd,
->>       CPUState *cs = env_cpu(env);
->>       target_ulong phys, tmp0, ptindex, ptoffset0, ptoffset1, ps, badv;
->>       int shift;
->> -    bool huge = (base >> LOONGARCH_PAGE_HUGE_SHIFT) & 0x1;
->>       uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
->>       uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
->> +    uint64_t dir_base, dir_width;
->>         base = base & TARGET_PHYS_MASK;
->> +    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
->> +        /*
->> +         * Gets the huge page level and Gets huge page size
->> +         * Clears the huge page level information in the address
->> +         * Clears huge page bit
->> +         */
->> +        get_dir_base_width(env, &dir_base, &dir_width,
->> +                           FIELD_EX64(base, TLBENTRY, LEVEL));
->> +
->> +        FIELD_DP64(base, TLBENTRY, LEVEL, 0);
->> +        FIELD_DP64(base, TLBENTRY, HUGE, 0);
->> +        if (FIELD_EX64(base, TLBENTRY, HG)) {
->> +            FIELD_DP64(base, TLBENTRY, HG, 0);
->> +            FIELD_DP64(base, TLBENTRY, G, 1);
->
-> FIELD_DP64 returns a value.  You need
->
->     base = FIELD_DP64(base, ...);
->
->
-> r~
-
+r~
 
