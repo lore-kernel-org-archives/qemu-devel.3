@@ -4,90 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44893C54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 06:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E614DC54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 06:45:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl1HW-0002BH-5L; Fri, 15 Mar 2024 02:43:06 -0400
+	id 1rl1JC-0003nH-N3; Fri, 15 Mar 2024 02:44:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rl1HU-0002AW-1y
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:43:04 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rl1HR-0005Ne-8B
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 02:43:03 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-6e6b5831bc8so1769434b3a.0
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 23:42:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710484976; x=1711089776; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dWdlKqM9eUib6PnBU9BEHUH4tP+pJNByaXChBbFYYj0=;
- b=UY5ihcoBVWAmXSVMhHCPbTxVTjxcZbqb1E9XtKlhQ9+kFRdZCRPhW/kr8BH4kHdF+u
- VvbrQbcCk+XEKN/kC9/S1WwAAuv3/DfdKNKdg/G1ljdR+EuxZNIJXkheMJ7RVuPIp46H
- MdciMoVv95Po7jmN+g0JXxeDvppdVwpbLyV+nbSdvw584/VIepzzdx5+f5UVZVsOMUqb
- J73sFkrFRrhF5PZ/n5+xAVC9qU3+MG8hcVqfFluc7Pg8GfWM6Z1+wZRBWuvLperg7lnu
- Thj37h+mgZvrFyyEH3coFkDN+Gsc55G/Z+cHDp/ggI8KQYlNOKEIlJ/4pN+2SuckfZJX
- Y+DA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710484976; x=1711089776;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dWdlKqM9eUib6PnBU9BEHUH4tP+pJNByaXChBbFYYj0=;
- b=mWZsO8GGSqxg01X6ze3Td5jyBAwYoE9VyvNSRpxHByCvmA1lANRt7V9Nzba6j9sZng
- 2DS9ighBD8U0yXz/r0SEe82Dib3gtGO5cEfjENb9TWOmHcicUSn/A5xKF3ePtIuq4BmQ
- BOJZyZqp6c/jPE806S3r9E9yMWOE5FqfvXZZcv4w3HOftV/e4QToQO5pcaEcfHkMIhKt
- I24pJ5xtMDMpTri0DQ6+1/PC23boNdnoKP4dY6Xg3gPCRqKGxG1EEZCnSZPTNUAy26aX
- 2OrrZgJ+WrUjAX23HZspkBIc/SWoMPQSwKjyq+ZRNINLEs/ro/zDNkl8THA3uSAyrCBj
- NN9w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWg1bjBVU8bqMaF6b9mVXKFW18moB5c31o2RQvth1nb8tIc/x6XAWtXTxDto9AhcrFmr+qC81Gr/ep4b66PKfdR8qhmA5M=
-X-Gm-Message-State: AOJu0Yx+WbjllfZ6r1q6dQGKt/zAwh+FCgkMaXVR0L9ZlMDUVT8ZexG3
- KWr08Fy2L+p2EepYxke1wZcikzDobzfTifPDXsArOjnG+Vr2CIYzsadR18uO3Xw=
-X-Google-Smtp-Source: AGHT+IHiGhcZ9b4J+7XrKMN6zVfuPSuljNxom8OYI9sJ9aiLyadQG4SPt37ZNQscQHC0I18INU/YeA==
-X-Received: by 2002:a05:6a00:2da0:b0:6e6:2999:e61c with SMTP id
- fb32-20020a056a002da000b006e62999e61cmr4982652pfb.17.1710484976629; 
- Thu, 14 Mar 2024 23:42:56 -0700 (PDT)
-Received: from [192.168.0.227] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- g20-20020a63dd54000000b005ce998b9391sm1785164pgj.67.2024.03.14.23.42.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Mar 2024 23:42:56 -0700 (PDT)
-Message-ID: <d0d771ad-b4f6-4c6e-a8f7-e566a33ca006@linaro.org>
-Date: Thu, 14 Mar 2024 20:42:53 -1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.0? 02/12] travis-ci: Rename SOFTMMU -> SYSTEM
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-ppc@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-References: <20240313213339.82071-1-philmd@linaro.org>
- <20240313213339.82071-3-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240313213339.82071-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1rl1JB-0003mo-0k; Fri, 15 Mar 2024 02:44:49 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1rl1J9-0005Wi-5G; Fri, 15 Mar 2024 02:44:48 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42F4l82B027619; Fri, 15 Mar 2024 06:44:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : content-transfer-encoding : mime-version; s=pp1;
+ bh=LGiHrJSfmWH6IYFcAnL5sJHua6FcZd0Mm2ycoq6jj4g=;
+ b=ceiA5yqdvpTzVhBOh41GX3gkREyqzLVeWoq5QqagJ9jPJfMHBtlW6EegOEIJAuNCV75J
+ lOMmWeQPJ8KXPdJKV0brKN0AfxRAlivwHb4Zt3wZ2F6X3VKYhCafelZI4JbZZ6AsRpnZ
+ AfUozQ2LgtiImgvKKGvLS6zB9VucuV+/5Vc+/hQfjzX4YxjgH4WpnzFwmMjY8lfBxF+y
+ XnKjFUij9xBul+JH0RzetRBn8/s3Z+TUDxti7EOIjEE3YYWb6/mHVZF+4R+qZ0zRiQFM
+ fNzy4tDELhJmO2E/QDAgsPyfR21p9PyQAv5E5/O7MI/ImW4P30s+LL+B0ZKwGIXWYami eQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wvfkw960a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Mar 2024 06:44:42 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42F6eqPK010689;
+ Fri, 15 Mar 2024 06:44:42 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wvfkw9604-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Mar 2024 06:44:42 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42F3t6jT015028; Fri, 15 Mar 2024 06:44:41 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ws33pa729-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 15 Mar 2024 06:44:41 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42F6iZPS40304990
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 15 Mar 2024 06:44:37 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B413920043;
+ Fri, 15 Mar 2024 06:44:35 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E856620040;
+ Fri, 15 Mar 2024 06:44:33 +0000 (GMT)
+Received: from localhost.in.ibm.com (unknown [9.199.192.140])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 15 Mar 2024 06:44:33 +0000 (GMT)
+From: Chinmay Rath <rathc@linux.ibm.com>
+To: qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ clg@kaod.org, richard.henderson@linaro.org, peter.maydell@linaro.org,
+ harshpb@linux.ibm.com, sbhat@linux.ibm.com
+Subject: [PATCH v2 0/2] Moving fp arithmetic insns to decodetree.
+Date: Fri, 15 Mar 2024 12:14:20 +0530
+Message-Id: <20240315064422.737812-1-rathc@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: e2gdoH_wZhyD12cVsC-a5fmap-gY10cc
+X-Proofpoint-ORIG-GUID: pEWrn0nyl8mNq5hqYBrC6mHzWZ9QoNDd
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ malwarescore=0 phishscore=0 bulkscore=0 mlxlogscore=491 spamscore=0
+ lowpriorityscore=0 priorityscore=1501 adultscore=0 suspectscore=0
+ mlxscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403150053
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,17 +112,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/13/24 11:33, Philippe Mathieu-Daudé wrote:
-> Since we*might*  have user emulation with softmmu,
-> rename MAIN_SOFTMMU_TARGETS as MAIN_SYSTEM_TARGETS
-> to express 'system emulation targets'.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   .travis.yml | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+This patch series moves floating-point arithmetic instructions from
+legacy to decodetree format. The first patch consolidates the common
+behaviour of floating-point helper functions using macros, reducing
+code duplication. The second patch moves all the floating arithmetic
+instructions to decodetree.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Change log :
+v2 : Addressed review comments on v1
+v1 : https://lore.kernel.org/qemu-devel/20240307110318.170319-1-rathc@linux.ibm.com/
 
-r~
+Chinmay Rath (2):
+  target/ppc: Merge various fpu helpers
+  target/ppc: Move floating-point arithmetic instructions to decodetree.
+
+ target/ppc/helper.h                |  44 ++---
+ target/ppc/insn32.decode           |  42 +++++
+ target/ppc/fpu_helper.c            | 235 +++++++-----------------
+ target/ppc/translate/fp-impl.c.inc | 285 +++++++++++------------------
+ target/ppc/translate/fp-ops.c.inc  |  31 ----
+ 5 files changed, 242 insertions(+), 395 deletions(-)
+
+-- 
+2.39.3
+
 
