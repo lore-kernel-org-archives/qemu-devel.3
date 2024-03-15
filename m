@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 778D3C54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 09:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75227C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 09:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl3SA-0008PR-3x; Fri, 15 Mar 2024 05:02:14 -0400
+	id 1rl3iM-0003K7-SN; Fri, 15 Mar 2024 05:18:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1rl3S2-0008OK-3n
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 05:02:10 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1rl3Ry-0006Hc-1V
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 05:02:04 -0400
-Received: from loongson.cn (unknown [10.20.42.32])
- by gateway (Coremail) with SMTP id _____8BxVfF9DvRlPGkZAA--.61853S3;
- Fri, 15 Mar 2024 17:01:49 +0800 (CST)
-Received: from [10.20.42.32] (unknown [10.20.42.32])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxzM54DvRlhs9aAA--.12682S2; 
- Fri, 15 Mar 2024 17:01:46 +0800 (CST)
-Subject: Re: [PATCH V4 1/1] target/loongarch: Fixed tlb huge page loading issue
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, Song Gao <gaosong@loongson.cn>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>, zhaotianrui@loongson.cn,
- yijun@loongson.cn, wuruiyang@loongson.cn
-References: <cover.1710379781.git.lixianglai@loongson.cn>
- <0e940b2aee9a5c29bb41d6a9611955482d250325.1710379781.git.lixianglai@loongson.cn>
- <60733d71-daba-4f4a-a184-357526a3b3a0@linaro.org>
- <05a4b109-6e86-6ecf-4399-c0f9d5fd1a6f@loongson.cn>
- <90bde2c9-46fd-458c-9c32-22dac25bb069@linaro.org>
-From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <874eb7af-d1a0-0777-bc10-555381b85118@loongson.cn>
-Date: Fri, 15 Mar 2024 17:01:44 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rl3iL-0003I6-Uc
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 05:18:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rl3iK-0000YF-9E
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 05:18:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710494335;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=j5PWWCTUbve5HZqg5gNONsxDza5Z88BZwyMjQ/11dZc=;
+ b=GgiA4wJGaSPX5v4j/sjwFsjEz3P8sNTr0IkGrKyqnDNin89JCbfsZJP+DSe9Fr/9B9Vaxu
+ 32pJtBChQ6u3kGNm1S4pcy4Te5czUwJr58DMCxKwSPwctFtcV6O8WtQU2tF8KS83LGZef6
+ gO8Pc9JF0hdk9Y6nKNi5nUqoW/t8eZ8=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-226-B1AxVKRlOpWVefx_8aUj9A-1; Fri,
+ 15 Mar 2024 05:18:52 -0400
+X-MC-Unique: B1AxVKRlOpWVefx_8aUj9A-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1017B3C0D7BD;
+ Fri, 15 Mar 2024 09:18:52 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.78])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 86CDF10E4B;
+ Fri, 15 Mar 2024 09:18:50 +0000 (UTC)
+Date: Fri, 15 Mar 2024 09:18:48 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, den@virtuozzo.com,
+ andrey.drobyshev@virtuozzo.com, jsnow@redhat.com,
+ vsementsov@yandex-team.ru, kwolf@redhat.com, hreitz@redhat.com
+Subject: Re: [PATCH v3] block: Use LVM tools for LV block device truncation
+Message-ID: <ZfQSeHe7-4fNkiCI@redhat.com>
+References: <20240315085838.226506-1-alexander.ivanov@virtuozzo.com>
 MIME-Version: 1.0
-In-Reply-To: <90bde2c9-46fd-458c-9c32-22dac25bb069@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8DxzM54DvRlhs9aAA--.12682S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoW7ArykJry5AF4kAFy5JFyUCFX_yoW8Xw1rpr
- n5Jry5Kr90kwn3GFnFgw1jvry5tw1UJ3WkZr1kAFyUJr4UJrn0qr48Zr1IgF1UJr48Jr48
- Zr1UJr15Zr4UGrgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GF
- ylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL
- 05UUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.534,
+In-Reply-To: <20240315085838.226506-1-alexander.ivanov@virtuozzo.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,65 +84,115 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard :
+On Fri, Mar 15, 2024 at 09:58:38AM +0100, Alexander Ivanov wrote:
+> If a block device is an LVM logical volume we can resize it using
+> standard LVM tools.
+> 
+> Add a helper to detect if a device is a DM device. In raw_co_truncate()
+> check if the block device is DM and resize it executing lvresize.
+> 
+> Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+> ---
+>  block/file-posix.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
 
-> On 3/14/24 20:22, lixianglai wrote:
->> Hi Richard:
->>> On 3/13/24 15:33, Xianglai Li wrote:
->>>> +    if (unlikely((level == 0) || (level > 4))) {
->>>> +        return base;
->>>> +    }
-> ...
->>> Perhaps it would be worthwhile to add another for the level==0 or > 
->>> 4 case above?
->>>
->> A normal level 4 page table should not print an error log,
->>
->> only if a level 4 page is large, so we should put it in
->>
->>      if (FIELD_EX64(base, TLBENTRY, HUGE)) {
->>          if (unlikely(level == 4)) {
->>              qemu_log_mask(LOG_GUEST_ERROR,
->>                            "Attempted use of level %lu huge page\n", 
->> level);
->>          }
->>
->>          if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
->>              return base;
->>          } else {
->>              return  FIELD_DP64(base, TLBENTRY, LEVEL, level);
->>          }
->>      }
->
-> A level 5 page table is not normal, nor is a level 0 lddir.
->
-
-We communicate with the hardware guys that the behavior above level 4 
-and lddir 0 is undefined behavior.
-
-The result of our test on 3A5000 is that it has no any effect on "base",
-
-however in future chips the behavior may change since it may support 
-5-level page table and width for level[13:14] may change also.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
-So in this context,I am not sure which level to use to print logs,
+> 
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index 35684f7e21..af17a43fe9 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -2642,6 +2642,38 @@ raw_regular_truncate(BlockDriverState *bs, int fd, int64_t offset,
+>      return raw_thread_pool_submit(handle_aiocb_truncate, &acb);
+>  }
+>  
+> +static bool device_is_dm(struct stat *st)
+> +{
+> +    unsigned int maj, maj2;
+> +    char line[32], devname[16];
+> +    bool ret = false;
+> +    FILE *f;
+> +
+> +    if (!S_ISBLK(st->st_mode)) {
+> +        return false;
+> +    }
+> +
+> +    f = fopen("/proc/devices", "r");
+> +    if (!f) {
+> +        return false;
+> +    }
+> +
+> +    maj = major(st->st_rdev);
+> +
+> +    while (fgets(line, sizeof(line), f)) {
+> +        if (sscanf(line, "%u %15s", &maj2, devname) != 2) {
+> +            continue;
+> +        }
+> +        if (strcmp(devname, "device-mapper") == 0) {
+> +            ret = (maj == maj2);
+> +            break;
+> +        }
+> +    }
+> +
+> +    fclose(f);
+> +    return ret;
+> +}
+> +
+>  static int coroutine_fn raw_co_truncate(BlockDriverState *bs, int64_t offset,
+>                                          bool exact, PreallocMode prealloc,
+>                                          BdrvRequestFlags flags, Error **errp)
+> @@ -2670,6 +2702,35 @@ static int coroutine_fn raw_co_truncate(BlockDriverState *bs, int64_t offset,
+>      if (S_ISCHR(st.st_mode) || S_ISBLK(st.st_mode)) {
+>          int64_t cur_length = raw_getlength(bs);
+>  
+> +        /*
+> +         * Try to resize an LVM device using LVM tools.
+> +         */
+> +        if (device_is_dm(&st) && offset > 0) {
+> +            int spawn_flags = G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL;
+> +            int status;
+> +            bool success;
+> +            char *err;
+> +            GError *gerr = NULL, *gerr_exit = NULL;
+> +            g_autofree char *size_str = g_strdup_printf("%" PRId64 "B", offset);
+> +            const char *cmd[] = {"lvresize", "-f", "-L",
+> +                                 size_str, bs->filename, NULL};
+> +
+> +            success = g_spawn_sync(NULL, (gchar **)cmd, NULL, spawn_flags,
+> +                                   NULL, NULL, NULL, &err, &status, &gerr);
+> +
+> +            if (success && g_spawn_check_exit_status(status, &gerr_exit)) {
+> +                return 0;
+> +            }
+> +
+> +            if (success) {
+> +                error_setg(errp, "%s: %s", gerr_exit->message, err);
+> +            } else {
+> +                error_setg(errp, "lvresize execution error: %s", gerr->message);
+> +            }
+> +
+> +            return -EINVAL;
+> +        }
+> +
+>          if (offset != cur_length && exact) {
+>              error_setg(errp, "Cannot resize device files");
+>              return -ENOTSUP;
+> -- 
+> 2.40.1
+> 
+> 
 
-which content to print, and where to add these prints,
-
-any more detailed advice?
-
-
-Thanks!
-
-Xianglai.
-
-
-
->
-> r~
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
