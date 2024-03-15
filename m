@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA6DEC54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686A7C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl7Jo-0005xE-38; Fri, 15 Mar 2024 09:09:52 -0400
+	id 1rl7LJ-0001Jo-7R; Fri, 15 Mar 2024 09:11:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1rl7Ja-0005eI-6Z
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:09:40 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7LG-00013c-8d
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:11:22 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1rl7JW-0007cq-L2
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:09:37 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-5dbd519bde6so1604038a12.1
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:09:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7LD-000057-IC
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:11:21 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a4682272ff6so89356666b.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710508173; x=1711112973; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Y4vX0WH0NUhjpqoGC54S3e1oXOXXObwA9DbtQ2MGi0g=;
- b=dpbDMCxEvWES4UrjeR6mWrMh7ranEAo92ypKgzMniMXuMof1fy2xgtEXXgUtGaO9vJ
- bUVgFLoXqo7fa1+Nb1MWBpG124tquYFS1TgW4RWjt4osVWjf4zir+cxxnVlLxgzhoK+K
- RphAs5sWCEA1yyhEcZAV8+r2t+nDC7w2432TGLxnPpaCDjzvhkDtqeTNjc6h+tySquFv
- PW9vSoOkZ8HSEVOI/BQ/diyif5pYEwM31SCjsPjWP330qTHDQjSQKTM2RX1fbOzeLo7V
- 6MOE6LGJVA1i6SepTyN7nbvGxlC8Q72wMg/PYlXVjtCs5VZH3fnDMbPDyNdEK9W7XJGd
- bKYA==
+ d=linaro.org; s=google; t=1710508276; x=1711113076; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+0JRGXmaH9yCo1gEGbOzPrdlVZvoU4tW4IJan5xxXVU=;
+ b=dpSYf7EoNPRPNeSq2HIQBoHLvFQ2UGcH1RvNBtHwGT/soD+2Dlic7r908QHtOndpA/
+ Zrb8pkasLpcIIZUv7MwWCdF7mYHXpu9ikJp2Toop3c3q1wC6isOM19NrA+nbbDFoZapX
+ WJ76pBVlSC74QPoPDN4hiBosYmkTHQphJ8CuiDqQsrJc96sk+uOOuOV44kaZ+85kgbPK
+ F+bw56lqdzyar5CPVtEzO7McUXQfGttVLEOi1KG61itplUWLtPWdmVXkhtDsEC7noLLF
+ bQFyRHYCZdQ5Jv3nfuejymu3wbZWkg2tyISHT7HhDXCzLmc5TViLOvv0eUUWvJwcvgW6
+ jK0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710508173; x=1711112973;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Y4vX0WH0NUhjpqoGC54S3e1oXOXXObwA9DbtQ2MGi0g=;
- b=aEGQxzVQUvg5i3cshI++yHnraxdYFPEhGzJhH8rz8N+294c1Y+Ljm6d5If4f8ebfI8
- mv3f41fIaqke97YBWeZj+nnc57lLH3Hbx44bSx5eMlPTHnTBci/HJ7v0YizWBlJO6dyz
- mp5bMHdAYH2cR1Fh9qDys+6llpYwO3dBbop88U9qDKoiVw7PMK57d3rK0ejeuH0f6Y/j
- HBzl2FuKfD7wx4w1ahiXg+qzYTZQDr0Mn2RM96agDi4qBVRD4j+aZjvqAjlWpsYN5d1P
- yI3UOMGztt4dcvRC/ZQZJKb9ptgnQu+YxFfWHInqZ8BWgLxNj7EMjslm6NqO9PyUe2yw
- Y56g==
-X-Gm-Message-State: AOJu0YzBah3NrL4WfmotDZSSyRg3EAdf8cpsBXYAlcwspgx5m2AahJrI
- e1zkriMGELATXxTx8yLHTNMdKscleC7Qn59ulDCyVKamgR7uuhZbLfuz33KSwPqqaSTUp7Vp7x0
- f
-X-Google-Smtp-Source: AGHT+IHrOjBklu9HBEAjzciZt8OGddqy1g0WWGgBjLYwax43oKa2s5ys0rBE6kE14xLzlx8R1BE8Lw==
-X-Received: by 2002:a17:90a:ea0e:b0:29b:b15d:5353 with SMTP id
- w14-20020a17090aea0e00b0029bb15d5353mr4612835pjy.31.1710508172750; 
- Fri, 15 Mar 2024 06:09:32 -0700 (PDT)
-Received: from sunil-pc.Dlink ([106.51.184.12])
+ d=1e100.net; s=20230601; t=1710508276; x=1711113076;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+0JRGXmaH9yCo1gEGbOzPrdlVZvoU4tW4IJan5xxXVU=;
+ b=HAa0nnhUUCtGxTgQ27bIEdsl5NwYo1StE4IHXquk+NPr7ysSwyD3IDmz0lBWs8JQUF
+ UpkvDcVNwmB4Oma4NQuZ5rhYd6pSNxn61Ur/cBdXsWRyacQYEQ8Cz801cUKTDahAlahI
+ 7w7ms+/XDSqO005mXs7P5mdpdfT3+UX3rXMNMef/+Qc5becQjIRGU9UkzSHkjBlz+KDC
+ am9zW37s+wZ3nomXUIGn6bTh5Ed9dW6vyN7u3MGmDAnQ3cU4uTUnl7DJHf7DRhT9eVBT
+ wUCqbcAGqj4J/wJuh98NngJFQrPZmGFyMLhdY1zbOem6OnKx4VGPbkLD2T+NtSJL5iN2
+ 7joQ==
+X-Gm-Message-State: AOJu0Yxy/CwVoo04QD2dotWyO8YATPlc3ISTjOtihy07k7IJ9Ul/nW/A
+ EhrXrkVBWW7nbNuKwt82uMavvQQRtzKbvPvNBjWKE9U29EKauARQ4F6SftZcnDRQDZ+/8ZO16fO
+ j
+X-Google-Smtp-Source: AGHT+IH8DC/lPhj5k3DkFaXoEv+D5iiSC1Us/4T3OryunIMlcb3vrVAMN7YjcE7wkczxqJzYpIahqA==
+X-Received: by 2002:a17:906:29d6:b0:a46:bb:c4e3 with SMTP id
+ y22-20020a17090629d600b00a4600bbc4e3mr2733759eje.32.1710508275761; 
+ Fri, 15 Mar 2024 06:11:15 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.145.26])
  by smtp.gmail.com with ESMTPSA id
- r3-20020a17090ad40300b0029c68206e2bsm2886663pju.0.2024.03.15.06.09.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Mar 2024 06:09:32 -0700 (PDT)
-From: Sunil V L <sunilvl@ventanamicro.com>
+ dt22-20020a170906b79600b00a4669f6c2e2sm1672024ejb.44.2024.03.15.06.11.13
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 15 Mar 2024 06:11:15 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+	Markus Armbruster <armbru@redhat.com>
+Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Claudio Fontana <cfontana@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair23@gmail.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- Anup Patel <apatel@ventanamicro.com>, Haibo1 Xu <haibo1.xu@intel.com>,
- Sunil V L <sunilvl@ventanamicro.com>
-Subject: [PATCH 03/12] uefi-test-tools: Add support for python based build
- script
-Date: Fri, 15 Mar 2024 18:39:15 +0530
-Message-Id: <20240315130924.2378849-1-sunilvl@ventanamicro.com>
-X-Mailer: git-send-email 2.40.1
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH-for-9.1 18/21] target/i386: Use QMP
+ generic_query_cpu_definitions()
+Date: Fri, 15 Mar 2024 14:09:06 +0100
+Message-ID: <20240315130910.15750-19-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240315130910.15750-1-philmd@linaro.org>
+References: <20240315130910.15750-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,132 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-edk2-funcs.sh which is used in this Makefile, was removed in the commit
-c28a2891f3 ("edk2: update build script"). It is replaced with a python
-based script. So, update the Makefile and add the configuration file as
-required to support the python based build script.
+Register x86_cpu_definition_entry() and x86_cpu_list_compare()
+as handler so we can use the QMP generic_query_cpu_definitions()
+method.
 
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/uefi-test-tools/Makefile               | 18 +++----
- tests/uefi-test-tools/uefi-test-build.config | 57 ++++++++++++++++++++
- 2 files changed, 63 insertions(+), 12 deletions(-)
- create mode 100644 tests/uefi-test-tools/uefi-test-build.config
+ target/i386/cpu.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/tests/uefi-test-tools/Makefile b/tests/uefi-test-tools/Makefile
-index 0c003f2877..f94738b645 100644
---- a/tests/uefi-test-tools/Makefile
-+++ b/tests/uefi-test-tools/Makefile
-@@ -12,7 +12,7 @@
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 07f64c1ea5..e5dbd307d8 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -38,6 +38,7 @@
+ #ifndef CONFIG_USER_ONLY
+ #include "sysemu/reset.h"
+ #include "qapi/qapi-commands-machine-target.h"
++#include "qapi/commands-target-compat.h"
+ #include "exec/address-spaces.h"
+ #include "hw/boards.h"
+ #include "hw/i386/sgx-epc.h"
+@@ -5667,11 +5668,7 @@ static void x86_cpu_definition_entry(gpointer data, gpointer user_data)
  
- edk2_dir              := ../../roms/edk2
- images_dir            := ../data/uefi-boot-images
--emulation_targets     := arm aarch64 i386 x86_64
-+emulation_targets     := arm aarch64 i386 x86_64 riscv64
- uefi_binaries         := bios-tables-test
- intermediate_suffixes := .efi .fat .iso.raw
+ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
+ {
+-    CpuDefinitionInfoList *cpu_list = NULL;
+-    GSList *list = get_sorted_cpu_model_list();
+-    g_slist_foreach(list, x86_cpu_definition_entry, &cpu_list);
+-    g_slist_free(list);
+-    return cpu_list;
++    return generic_query_cpu_definitions(errp);
+ }
  
-@@ -56,7 +56,8 @@ Build/%.iso.raw: Build/%.fat
- # stripped from, the argument.
- map_arm_to_uefi     = $(subst arm,ARM,$(1))
- map_aarch64_to_uefi = $(subst aarch64,AA64,$(call map_arm_to_uefi,$(1)))
--map_i386_to_uefi    = $(subst i386,IA32,$(call map_aarch64_to_uefi,$(1)))
-+map_riscv64_to_uefi = $(subst riscv64,RISCV64,$(call map_aarch64_to_uefi,$(1)))
-+map_i386_to_uefi    = $(subst i386,IA32,$(call map_riscv64_to_uefi,$(1)))
- map_x86_64_to_uefi  = $(subst x86_64,X64,$(call map_i386_to_uefi,$(1)))
- map_to_uefi         = $(subst .,,$(call map_x86_64_to_uefi,$(1)))
+ #endif /* !CONFIG_USER_ONLY */
+@@ -7937,6 +7934,8 @@ static Property x86_cpu_properties[] = {
+ #include "hw/core/sysemu-cpu-ops.h"
  
-@@ -70,7 +71,7 @@ Build/%.fat: Build/%.efi
- 	uefi_bin_b=$$(stat --format=%s -- $<) && \
- 		uefi_fat_kb=$$(( (uefi_bin_b * 11 / 10 + 1023) / 1024 )) && \
- 		uefi_fat_kb=$$(( uefi_fat_kb >= 64 ? uefi_fat_kb : 64 )) && \
--		mkdosfs -C $@ -n $(basename $(@F)) -- $$uefi_fat_kb
-+		mkdosfs -C $@ -n "bios-test" -- $$uefi_fat_kb
- 	MTOOLS_SKIP_CHECK=1 mmd -i $@ ::EFI
- 	MTOOLS_SKIP_CHECK=1 mmd -i $@ ::EFI/BOOT
- 	MTOOLS_SKIP_CHECK=1 mcopy -i $@ -- $< \
-@@ -95,15 +96,8 @@ Build/%.fat: Build/%.efi
- # we must mark the recipe manually as recursive, by using the "+" indicator.
- # This way, when the inner "make" starts a parallel build of the target edk2
- # module, it can communicate with the outer "make"'s job server.
--Build/bios-tables-test.%.efi: build-edk2-tools
--	+./build.sh $(edk2_dir) BiosTablesTest $* $@
--
--build-edk2-tools:
--	cd $(edk2_dir)/BaseTools && git submodule update --init --force
--	$(MAKE) -C $(edk2_dir)/BaseTools \
--		PYTHON_COMMAND=$${EDK2_PYTHON_COMMAND:-python3} \
--		EXTRA_OPTFLAGS='$(EDK2_BASETOOLS_OPTFLAGS)' \
--		EXTRA_LDFLAGS='$(EDK2_BASETOOLS_LDFLAGS)'
-+Build/bios-tables-test.%.efi:
-+	$(PYTHON) ../../roms/edk2-build.py --config uefi-test-build.config
- 
- clean:
- 	rm -rf Build Conf log
-diff --git a/tests/uefi-test-tools/uefi-test-build.config b/tests/uefi-test-tools/uefi-test-build.config
-new file mode 100644
-index 0000000000..4fb89f7db9
---- /dev/null
-+++ b/tests/uefi-test-tools/uefi-test-build.config
-@@ -0,0 +1,57 @@
-+[global]
-+core = ../../roms/edk2
-+
-+####################################################################################
-+# arm
-+
-+[build.arm]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+module = UefiTestToolsPkg/BiosTablesTest/BiosTablesTest.inf
-+dest = ./Build
-+arch = ARM
-+cpy1 = ARM/BiosTablesTest.efi  bios-tables-test.arm.efi
-+
-+####################################################################################
-+# aarch64
-+
-+[build.aarch64]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+module = UefiTestToolsPkg/BiosTablesTest/BiosTablesTest.inf
-+dest = ./Build
-+arch = AARCH64
-+cpy1 = AARCH64/BiosTablesTest.efi  bios-tables-test.aarch64.efi
-+
-+####################################################################################
-+# riscv64
-+
-+[build.riscv]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+module = UefiTestToolsPkg/BiosTablesTest/BiosTablesTest.inf
-+dest = ./Build
-+arch = RISCV64
-+cpy1 = RISCV64/BiosTablesTest.efi  bios-tables-test.riscv64.efi
-+
-+####################################################################################
-+# ia32
-+
-+[build.ia32]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+module = UefiTestToolsPkg/BiosTablesTest/BiosTablesTest.inf
-+dest = ./Build
-+arch = IA32
-+cpy1 = IA32/BiosTablesTest.efi  bios-tables-test.i386.efi
-+
-+####################################################################################
-+# x64
-+
-+[build.x64]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+module = UefiTestToolsPkg/BiosTablesTest/BiosTablesTest.inf
-+dest = ./Build
-+arch = X64
-+cpy1 = X64/BiosTablesTest.efi  bios-tables-test.x86_64.efi
+ static const struct SysemuCPUOps i386_sysemu_ops = {
++    .add_definition = x86_cpu_definition_entry,
++    .cpu_list_compare = x86_cpu_list_compare,
+     .get_memory_mapping = x86_cpu_get_memory_mapping,
+     .get_paging_enabled = x86_cpu_get_paging_enabled,
+     .get_phys_page_attrs_debug = x86_cpu_get_phys_page_attrs_debug,
 -- 
-2.40.1
+2.41.0
 
 
