@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAAC8C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50B0FC54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl7LT-000259-UV; Fri, 15 Mar 2024 09:11:35 -0400
+	id 1rl7Kt-00088q-9J; Fri, 15 Mar 2024 09:10:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7Ku-0008JC-Cd
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:11:00 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7KO-0006yq-5z
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:29 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7Kr-0008S2-Bi
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:59 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-565c6cf4819so5313618a12.1
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:10:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7K6-0007wU-Mw
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:26 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5688eaf1165so3196598a12.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:10:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710508255; x=1711113055; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710508208; x=1711113008; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XKSoPbdfR84sDrdE++VJn8/NPQXAflULbgNG03R7vOs=;
- b=GJdmN5QdeNlSHjlc1eKHQ7df0nIAbPKjenT+oX55U5TcaLNyjnHeQP/mf2mcoNgefV
- 3/0N5Gq9dp5+q73f8R90qT5BtgchnGqcvGsrYsntQBibTnpNB5kiGKZtSRwa/CF/ZhKF
- gnZqEJ/ER1wySAZ3pXE5H8htSt3QVSzQYKFkWazihql/bvkK8lU7VwuXPgBN2Gd/BhRE
- +K/31cInbp7bBSTKIRL+i3ArrwMr93NkjnyDHtrd88JtCFGRr2wgggocnB2pbSQYL5aK
- dVmEQD7R10hMyhcYj+HeoXKB/cyQLM2PD3sv5s5o2bgsf1Rhx93zmJJ3/5oLbJbH9HJB
- IcKA==
+ bh=qDIsKXjb1Jl9yBqR7T/u0FWdWtcs/rDVYwZEhcpoxew=;
+ b=nloCUCPnHdJsTMOe5mB56ubaQqAIRf8Nt8dSaGwx8ZgJNLgL4o5fs/vibYlSdxwQDu
+ 77pUt1NYKxQkxq1Rrm7sDRFClixlech/srG5DqOIi/nd/017iu8LLJ0+iKSFRs4KCZlq
+ mug7V1dobjrxLy02cXPiKoc3tzth37HV5ebQK+vCrC96s54SXJKS38dqAU9nMyMDLglG
+ zjD8vQGdL7FSIneCIPz5NYhk4SkTgKWhTDj+m9DxScoMthRTVLkSQjXugFCbyVfsjeTU
+ kaw2GVYGa+8j7am6YPiBU+E5Z12b2AhtlPRjAYjLvD/+8YflBQPRsmNcEwFhX0mhb0aD
+ spFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710508255; x=1711113055;
+ d=1e100.net; s=20230601; t=1710508208; x=1711113008;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XKSoPbdfR84sDrdE++VJn8/NPQXAflULbgNG03R7vOs=;
- b=atZchh4oiajVyyjjNYzsEr582si7DREMC0BORHzZvKgYiOOpO96teAPL04sJ8JBgFB
- yaeeIEZBLWJBOemvBCODirfHe0aFkJMtWakx0KN9oEiyJiZCkU5opR9kRZRK3vNJOihc
- G5JlV/sMYKSjUKVDAakIahY4HFyD6hq+5fUeQZwEG7ycKjZ+HnBar+tNYB0iHks/auCf
- up4FCtK3FIKbyskZ88Baw6s8ffc4iWVQHffIxeNLVoDT+wx2H2YtggCLdxopRgtLi+iv
- 9s2HwhJEiseQhUzSO36/3oAWVlSqzD/b9s3k03zkf7fuLpcbtJyheuWPawfVQhh26YyB
- 6tOA==
-X-Gm-Message-State: AOJu0YyzbGrwGr53DX8HcUqVfImSijciP4Kq3GKTtmPCh4wM4t4OLMOr
- pKcseIHKaESa7iqJS1w3jzS+9J+DrC8yi/3eSlhoYmITgJeg17qVnmGHOG/9matPWyC65Z1tfHw
- h
-X-Google-Smtp-Source: AGHT+IHYyeLEfVVgN9kci+ZeRoPz5G6i50JiPnnqzD2jONHSLkszD0RljwqLECh5RRITNdvEpl0ANg==
-X-Received: by 2002:a17:906:5a95:b0:a46:74fe:9177 with SMTP id
- l21-20020a1709065a9500b00a4674fe9177mr3636958ejq.21.1710508255621; 
- Fri, 15 Mar 2024 06:10:55 -0700 (PDT)
+ bh=qDIsKXjb1Jl9yBqR7T/u0FWdWtcs/rDVYwZEhcpoxew=;
+ b=PEtxakO3ZJ9ZxNL+wQxLTU7tfr7OllaGyksgF2VsYh1WQF+FNwE/hPBA8+2xmadxxN
+ NIJXF99K3RBYi7yABwtWJKej15Lb7l07nHOm9t8zwZhDADRO36q+meW7J+RETrP40cyh
+ 7DaPhIh4aYIKeAnBFoWY3FRyDtH/XV0oemIculxVVb/NH23zNW7t2wtazjAAQGVOTvEv
+ 5fRbmfMIboI1nDxlN5krlHTQkSrl6QOv65ZcR0ySEq5dgb8Ubgj5C388iYg8Pdg8hg4n
+ +DiLePoCTO0OIgTOfBlGvL0SIAZgPH7YMHLmuy7u4k3NHoOGGb5HTubAMna5QZvJl/xG
+ 1ENg==
+X-Gm-Message-State: AOJu0YwsMS7uELZvQABsnYb+he8EP2l7UhwniQ72i+kZpsKKfJlCAWID
+ +I+kwQ2Uxe/apyicdm9spjCUMoNvZkBDsRaYgSbbtdW+C+cSl2kl+Efl/yLE6VOD7m+r4YnKg5t
+ P
+X-Google-Smtp-Source: AGHT+IHz6vQYIeOBcjGc+xE2c8P3SUzSTmtoEr2FLDXsqrRWBjGskKgF5u0V0+3R6przXpowCYuWpA==
+X-Received: by 2002:a05:6402:5512:b0:568:9c6b:eb0f with SMTP id
+ fi18-20020a056402551200b005689c6beb0fmr3550192edb.21.1710508207999; 
+ Fri, 15 Mar 2024 06:10:07 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.145.26])
  by smtp.gmail.com with ESMTPSA id
- sa15-20020a1709076d0f00b00a45bbeeea9asm1681047ejc.167.2024.03.15.06.10.53
+ dk4-20020a0564021d8400b0056706105abesm1689843edb.33.2024.03.15.06.10.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 15 Mar 2024 06:10:55 -0700 (PDT)
+ Fri, 15 Mar 2024 06:10:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Markus Armbruster <armbru@redhat.com>
@@ -71,19 +71,21 @@ Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH-for-9.1 15/21] target/arm: Use QMP
- generic_query_cpu_definitions()
-Date: Fri, 15 Mar 2024 14:09:03 +0100
-Message-ID: <20240315130910.15750-16-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH-for-9.1 08/21] target/sparc: Make SPARC_CPU common to new
+ SPARC32_CPU/SPARC64_CPU types
+Date: Fri, 15 Mar 2024 14:08:56 +0100
+Message-ID: <20240315130910.15750-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240315130910.15750-1-philmd@linaro.org>
 References: <20240315130910.15750-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,54 +108,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/arm/arm-qmp-cmds.c | 25 ++-----------------------
- 1 file changed, 2 insertions(+), 23 deletions(-)
+"target/foo/cpu-qom.h" can not use any target specific definitions.
 
-diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-index 3cc8cc738b..c5091e64ec 100644
---- a/target/arm/arm-qmp-cmds.c
-+++ b/target/arm/arm-qmp-cmds.c
-@@ -28,6 +28,7 @@
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/qapi-commands-machine-target.h"
- #include "qapi/qapi-commands-misc-target.h"
-+#include "qapi/commands-target-compat.h"
- #include "qapi/qmp/qdict.h"
- #include "qom/qom-qobject.h"
+Currently "target/sparc/cpu-qom.h" defines TYPE_SPARC_CPU
+depending on the sparc(32)/sparc64 build type. This doesn't
+scale in a heterogeneous context where we need to access both
+types concurrently.
+
+In order to do that, introduce the new SPARC32_CPU / SPARC64_CPU
+types, both inheriting a common TYPE_SPARC_CPU base type.
+
+Keep the current CPU types registered in sparc_register_cpudef_type()
+as 32 or 64-bit, depending on the binary built.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+---
+ target/sparc/cpu-qom.h |  9 +++++----
+ target/sparc/cpu.c     | 12 +++++++++++-
+ 2 files changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/target/sparc/cpu-qom.h b/target/sparc/cpu-qom.h
+index a86331bd58..6ad283506e 100644
+--- a/target/sparc/cpu-qom.h
++++ b/target/sparc/cpu-qom.h
+@@ -22,14 +22,15 @@
  
-@@ -220,29 +221,7 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-     return expansion_info;
- }
+ #include "hw/core/cpu.h"
  
--static void arm_cpu_add_definition(gpointer data, gpointer user_data)
--{
--    ObjectClass *oc = data;
--    CpuDefinitionInfoList **cpu_list = user_data;
--    CpuDefinitionInfo *info;
--    const char *typename;
--
--    typename = object_class_get_name(oc);
--    info = g_malloc0(sizeof(*info));
--    info->name = cpu_model_from_type(typename);
--    info->q_typename = g_strdup(typename);
--
--    QAPI_LIST_PREPEND(*cpu_list, info);
--}
--
- CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
- {
--    CpuDefinitionInfoList *cpu_list = NULL;
--    GSList *list;
--
--    list = object_class_get_list(TYPE_ARM_CPU, false);
--    g_slist_foreach(list, arm_cpu_add_definition, &cpu_list);
--    g_slist_free(list);
--
--    return cpu_list;
-+    return generic_query_cpu_definitions(errp);
- }
+-#ifdef TARGET_SPARC64
+-#define TYPE_SPARC_CPU "sparc64-cpu"
+-#else
+ #define TYPE_SPARC_CPU "sparc-cpu"
+-#endif
++#define TYPE_SPARC32_CPU "sparc32-cpu"
++#define TYPE_SPARC64_CPU "sparc64-cpu"
+ 
+ OBJECT_DECLARE_CPU_TYPE(SPARCCPU, SPARCCPUClass, SPARC_CPU)
+ 
++OBJECT_DECLARE_CPU_TYPE(SPARC32CPU, SPARCCPUClass, SPARC32_CPU)
++OBJECT_DECLARE_CPU_TYPE(SPARC64CPU, SPARCCPUClass, SPARC64_CPU)
++
+ #define SPARC_CPU_TYPE_SUFFIX "-" TYPE_SPARC_CPU
+ #define SPARC_CPU_TYPE_NAME(model) model SPARC_CPU_TYPE_SUFFIX
+ 
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 42b13ab63f..9e27e16b75 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -959,6 +959,12 @@ static const TypeInfo sparc_cpu_types[] = {
+         .abstract       = true,
+         .class_size     = sizeof(SPARCCPUClass),
+         .class_init     = sparc_cpu_class_init,
++    }, {
++        .name           = TYPE_SPARC32_CPU,
++        .parent         = TYPE_SPARC_CPU,
++    }, {
++        .name           = TYPE_SPARC64_CPU,
++        .parent         = TYPE_SPARC_CPU,
+     }
+ };
+ 
+@@ -975,7 +981,11 @@ static void sparc_register_cpudef_type(const struct sparc_def_t *def)
+     char *typename = sparc_cpu_type_name(def->name);
+     TypeInfo ti = {
+         .name = typename,
+-        .parent = TYPE_SPARC_CPU,
++#ifdef TARGET_SPARC64
++        .parent = TYPE_SPARC64_CPU,
++#else
++        .parent = TYPE_SPARC32_CPU,
++#endif
+         .class_init = sparc_cpu_cpudef_class_init,
+         .class_data = (void *)def,
+     };
 -- 
 2.41.0
 
