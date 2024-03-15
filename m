@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5252BC54E66
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 03:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0FABC54E66
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 03:59:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkyiU-0002no-VU; Thu, 14 Mar 2024 23:58:47 -0400
+	id 1rkyiQ-0002gB-DM; Thu, 14 Mar 2024 23:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rkyiM-0002fY-Ig
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 23:58:38 -0400
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1rkyiJ-0002dC-8Z
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 23:58:36 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rkyiJ-00024H-22
- for qemu-devel@nongnu.org; Thu, 14 Mar 2024 23:58:36 -0400
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-3c1a1e1e539so1383301b6e.1
- for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 20:58:32 -0700 (PDT)
+ id 1rkyiD-00023h-6Q
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 23:58:30 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-6e6b54a28d0so1465475b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 14 Mar 2024 20:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710475111; x=1711079911;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710475107; x=1711079907;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TDKYAJW0u4AL8dsA1W9VjtJSLz1K/O17feCu17WZXfU=;
- b=Y/nqSp+1DdS24dWHs47/Da0kqSNLOOecI1zcXLrGlNAVAGMQKOBs6WaUmOwG6P3jeY
- aCpJeB8mlHIUeG4HEURScW9rMdIu1lbDKBIb1BkHjWheSIN812+x9lnNfmpGsJoHJsLx
- j9omxnFDXmP+ckfY9MGXL5eBPAN+b7cRCcer92uTNqnUn91Ddho1P6cUO4JBZSNBccE9
- 793P3K+br1HDmOalvPZD3wJUyPvP6l97BKzqmpbgwtR7xlpT7v96tCcgtEFbRpjBBx61
- NvfCGecHCKQov/YLmCeLfB31km+RjEqK3SaX4EF2G72lwj5k7kfPrbz/pqtAEY8KiUvN
- MVAQ==
+ :reply-to; bh=d2B5PcXjV/WvrmnePjI8Cyfuht09Wwa24XAfpuPwLPk=;
+ b=KUygdhwGydOSZxg5fzJvyPeJXKzYO+6TSvm59Wj/Fux97vVqDf5ZVQBFE0TxXHLWTf
+ RAcpNPSVwBOkGVoohX7uWofdHO4jEjjZMBYLbKvJim/rhKe31z3Nxi9FPKBVa9nK3Hvi
+ uIG+Ts1i4KnIJVr1Y4bMaZ2FUg1bgteu/flOLnIRm7LmCCBKeaBycMyvQ8RYaChAHkS4
+ WF9njlL4t450HjdpHDTYErrYVSUbNaIzRoYSSPmFLl8BO6MMbBHBxHjVJqIdZr8IRI69
+ wMrgfgaAhVReZaolluY57ygddTwp5XFEEXSZjNlWut/VJyJiLRdB9OnKsSEnUdax38C2
+ zESw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710475111; x=1711079911;
+ d=1e100.net; s=20230601; t=1710475107; x=1711079907;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TDKYAJW0u4AL8dsA1W9VjtJSLz1K/O17feCu17WZXfU=;
- b=d/GX4TtQFoxZv0bKVgu+xbiN8lYxmjvWURHqUyFO1oyPyHX+QqNIkOe6qAdtg3e34z
- 1i7MvIYRn+0tYcECEgdHu4a4Eo97CLSMmyBYa2LZC5Cqej0oGxh6phGWUsstlpKjwUO4
- RFNWx/TrAbrYio+jxNRlFowiY4KqjcE5kddIDpcZWTbTxCb1qykyr71mfgOAI+KCYYgy
- l392oeYNRjWYun/8UqEJAbjmedhuFj5h4Ng0BRBE6f846Kvn5hkfzyLI4wqMkdpvNWCx
- 4UjB8C1NYdon4wGZPzxGnr1U7uKeLCDIm5nyJLt23LcbWVM+Olu45kw3nOlcmz0XtzIK
- RHcQ==
-X-Gm-Message-State: AOJu0YwPLjBsB2xgupiDK++FhLC3u0+rrj/UrsN1k6pmP+XSSZk8JUKJ
- n7cLr8bSpI5Jbc0BwWhOK9lx+lif30/sJoFqwwh0Q6PNhxFjyf71HogTMpe+G/A=
-X-Google-Smtp-Source: AGHT+IGycaDNaiM9ORQeqjrrYPmrgSfB7hPe+1atlfpsb+ZznYPdg3+JbQ9k5ijEfr7b4hAT7gsFOA==
-X-Received: by 2002:a05:6808:1304:b0:3c3:5226:72b9 with SMTP id
- y4-20020a056808130400b003c3522672b9mr4593310oiv.54.1710475111685; 
- Thu, 14 Mar 2024 20:58:31 -0700 (PDT)
+ bh=d2B5PcXjV/WvrmnePjI8Cyfuht09Wwa24XAfpuPwLPk=;
+ b=wejXyFWR3jdthpI8X0YirtIjUtfJZV1CCre3gewQuU9CmQdDbBqSW0xN5grX5pOFM+
+ k+dzy5Kb9yOJyzUlVGyRzUZgbG+Hwg3jFbP12vQkRRMVLS2/ND1RhL3lHwW9ssFT7n6R
+ 9VoOkYgwPbj/ppIgHo7Duku2iSmAdpV5AryJ+lKdFgMUpw0kLpe0BdL20+mDOc6PDMI8
+ rdFkUZhJu/K2TfeoS0cnNmvC3N5C/b7pjcr0a/KgOI7rsRM/uibcZJ37nfPcvKZ3VPWp
+ 6EB3B9aiWHWa7BbOSWXvM0yacIN+t54ZdvmtCN61mVn4J9VceHw7wHkD1GLwxzewz1qj
+ /EaQ==
+X-Gm-Message-State: AOJu0Yy2xhk29aVrF/O5jStFwSLx2sKBkwacUKQCO3Pxmx81dJxdztct
+ L5syG90/x7ZYezH4qq5+U7vVmijg+mBdHDE9GcktXpnoG6X+ViA3G/qVRi1vkVQ=
+X-Google-Smtp-Source: AGHT+IFF8gJBBOG5sl40yPgi/PIsx15roazvTmbQh+Y+7KklQ6EHeCaeoCHq5jpQmPrvmiaYrocOiw==
+X-Received: by 2002:a05:6a00:22c8:b0:6e6:9f03:6a6d with SMTP id
+ f8-20020a056a0022c800b006e69f036a6dmr2220382pfj.3.1710475106833; 
+ Thu, 14 Mar 2024 20:58:26 -0700 (PDT)
 Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with UTF8SMTPSA id
- c2-20020a056a00008200b006e6c843dbe9sm2351997pfj.204.2024.03.14.20.58.28
+ t188-20020a625fc5000000b006e6f8e9ab6asm328734pfb.15.2024.03.14.20.58.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 14 Mar 2024 20:58:31 -0700 (PDT)
+ Thu, 14 Mar 2024 20:58:26 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 15 Mar 2024 12:57:55 +0900
-Subject: [PATCH for 9.1 v9 08/11] hw/pci: Replace -1 with UINT32_MAX for
- romsize
+Date: Fri, 15 Mar 2024 12:57:54 +0900
+Subject: [PATCH for 9.1 v9 07/11] pcie_sriov: Register VFs after migration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240315-reuse-v9-8-67aa69af4d53@daynix.com>
+Message-Id: <20240315-reuse-v9-7-67aa69af4d53@daynix.com>
 References: <20240315-reuse-v9-0-67aa69af4d53@daynix.com>
 In-Reply-To: <20240315-reuse-v9-0-67aa69af4d53@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -82,8 +81,8 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::22f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x22f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::433;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -105,84 +104,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-romsize is an uint32_t variable. Specifying -1 as an uint32_t value is
-obscure way to denote UINT32_MAX.
+pcie_sriov doesn't have code to restore its state after migration, but
+igb, which uses pcie_sriov, naively claimed its migration capability.
 
-Worse, if int is wider than 32-bit, it will change the behavior of a
-construct like the following:
-romsize = -1;
-if (romsize != -1) {
-    ...
-}
+Add code to register VFs after migration and fix igb migration.
 
-When -1 is assigned to romsize, -1 will be implicitly casted into
-uint32_t, resulting in UINT32_MAX. On contrary, when evaluating
-romsize != -1, romsize will be casted into int, and it will be a
-comparison of UINT32_MAX and -1, and result in false.
-
-Replace -1 with UINT32_MAX for statements involving the variable to
-clarify the intent and prevent potential breakage.
-
+Fixes: 3a977deebe6b ("Intrdocue igb device emulation")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- hw/pci/pci.c             | 8 ++++----
- hw/xen/xen_pt_load_rom.c | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ include/hw/pci/pcie_sriov.h | 2 ++
+ hw/pci/pci.c                | 7 +++++++
+ hw/pci/pcie_sriov.c         | 7 +++++++
+ 3 files changed, 16 insertions(+)
 
+diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+index 793d03c5f12e..d576a8c6be19 100644
+--- a/include/hw/pci/pcie_sriov.h
++++ b/include/hw/pci/pcie_sriov.h
+@@ -57,6 +57,8 @@ void pcie_sriov_pf_add_sup_pgsize(PCIDevice *dev, uint16_t opt_sup_pgsize);
+ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+                              uint32_t val, int len);
+ 
++void pcie_sriov_pf_post_load(PCIDevice *dev);
++
+ /* Reset SR/IOV */
+ void pcie_sriov_pf_reset(PCIDevice *dev);
+ 
 diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 54b375da2d26..84df07a2789b 100644
+index 750c2ba696d1..54b375da2d26 100644
 --- a/hw/pci/pci.c
 +++ b/hw/pci/pci.c
-@@ -70,7 +70,7 @@ static bool pcie_has_upstream_port(PCIDevice *dev);
- static Property pci_props[] = {
-     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
-     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
--    DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, -1),
-+    DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, UINT32_MAX),
-     DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-     DEFINE_PROP_BIT("multifunction", PCIDevice, cap_present,
-                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
-@@ -2073,7 +2073,7 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
-                                  g_cmp_uint32, NULL);
-     }
+@@ -733,10 +733,17 @@ static bool migrate_is_not_pcie(void *opaque, int version_id)
+     return !pci_is_express((PCIDevice *)opaque);
+ }
  
--    if (pci_dev->romsize != -1 && !is_power_of_2(pci_dev->romsize)) {
-+    if (pci_dev->romsize != UINT32_MAX && !is_power_of_2(pci_dev->romsize)) {
-         error_setg(errp, "ROM size %u is not a power of two", pci_dev->romsize);
-         return;
++static int pci_post_load(void *opaque, int version_id)
++{
++    pcie_sriov_pf_post_load(opaque);
++    return 0;
++}
++
+ const VMStateDescription vmstate_pci_device = {
+     .name = "PCIDevice",
+     .version_id = 2,
+     .minimum_version_id = 1,
++    .post_load = pci_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_INT32_POSITIVE_LE(version_id, PCIDevice),
+         VMSTATE_BUFFER_UNSAFE_INFO_TEST(config, PCIDevice,
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index fae6acea4acb..56523ab4e833 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -252,6 +252,13 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
      }
-@@ -2359,7 +2359,7 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
-         return;
-     }
+ }
  
--    if (load_file || pdev->romsize == -1) {
-+    if (load_file || pdev->romsize == UINT32_MAX) {
-         path = qemu_find_file(QEMU_FILE_TYPE_BIOS, pdev->romfile);
-         if (path == NULL) {
-             path = g_strdup(pdev->romfile);
-@@ -2378,7 +2378,7 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
-                        pdev->romfile);
-             return;
-         }
--        if (pdev->romsize != -1) {
-+        if (pdev->romsize != UINT_MAX) {
-             if (size > pdev->romsize) {
-                 error_setg(errp, "romfile \"%s\" (%u bytes) "
-                            "is too large for ROM size %u",
-diff --git a/hw/xen/xen_pt_load_rom.c b/hw/xen/xen_pt_load_rom.c
-index 03422a8a7148..6bc64acd3352 100644
---- a/hw/xen/xen_pt_load_rom.c
-+++ b/hw/xen/xen_pt_load_rom.c
-@@ -53,7 +53,7 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
-     }
-     fseek(fp, 0, SEEK_SET);
++void pcie_sriov_pf_post_load(PCIDevice *dev)
++{
++    if (dev->exp.sriov_cap) {
++        register_vfs(dev);
++    }
++}
++
  
--    if (dev->romsize != -1) {
-+    if (dev->romsize != UINT_MAX) {
-         if (st.st_size > dev->romsize) {
-             error_report("ROM BAR \"%s\" (%ld bytes) is too large for ROM size %u",
-                          rom_file, (long) st.st_size, dev->romsize);
+ /* Reset SR/IOV */
+ void pcie_sriov_pf_reset(PCIDevice *dev)
 
 -- 
 2.44.0
