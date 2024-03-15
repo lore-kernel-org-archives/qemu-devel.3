@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB4FC54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 16:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 454C5C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 16:40:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlAaN-0007uG-Pa; Fri, 15 Mar 2024 12:39:11 -0400
+	id 1rlAb3-00080M-Lg; Fri, 15 Mar 2024 12:39:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rlAaK-0007u0-Fe
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 12:39:08 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rlAaw-000802-LJ
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 12:39:46 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rlAaI-0006YJ-Q6
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 12:39:08 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-513d4559fb4so2359059e87.3
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 09:39:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rlAat-0006gM-JQ
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 12:39:46 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a466f89560eso287818466b.3
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 09:39:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710520744; x=1711125544; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GwoUDi1aTR9nFS2lil41K52D7zbkSG3+6SKMvfX0p90=;
- b=tbeIpAwzP1y6I5wSpouBpWzNgWOUNJr08T1Oi4NO+DRYLe039Vdo8xBJUz5LtlfXII
- b/qVw47MEiYhgM5g9rsp/6mgdYpWbKMPS3aywSusojGtZkA3/QOhPWbkNSp6VDka2ZFc
- W7m50ofX14swOtdDbj9wd2eS6Cal73DzoK9GSiAY5x8mZ38gayPXSHYNVyBxad7/2cDV
- DHqF29s4loEret3jbdJxaquKkZ+disirR3QLnqMSh41MXZxcPppgM15ClN2zuEmTMD80
- FB1UVyprxLVZTgU8xq4H5nS8O6w0RUss9l7V7vVJsqcTPSI0aPpE12FK6B8oDkJwj+3m
- 3Unw==
+ d=linaro.org; s=google; t=1710520782; x=1711125582; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B3BJ+70MnWU8jvhVqOWXYrc/s+eGuVzDpwMTXY43zKg=;
+ b=TrP/ttybeLGHDoo6eFGj49+Ee54u1hFtR8Ju+1hPxnvBiJW3Gb0jHp8BhBBUa2xqnq
+ 9RTL7pkGXNCaVfJAsrYcUDqDS2EQXuSTuZDW8Yf2pi7Gk2Dxi5ald9G+h1QSZzvtCcDH
+ Grbjauxx323dal9Q2FJI8xUk6Na9ZmG6kJLSO0JrR+SME5N710Ne4tp2ShF82z+3QHzB
+ 15YmEkWNgXK0hxu4hZRdlSjOvrE9iwXDtiSmsYPtwWpRj0NzDNEymgOzMhZE5y+Vfm2S
+ hFIaRYQ0s+3K+BVZekx2Bh+QOPEqzWSfkMOTTCB5C5NB0MIbU66dexfdnRejmZA+N+k1
+ IjmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710520744; x=1711125544;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GwoUDi1aTR9nFS2lil41K52D7zbkSG3+6SKMvfX0p90=;
- b=KNgTQt02WhxIqO2LUz8o9MUalC4AWlmh4XDQjRvQBgCmkLQSPfJNI96KNC0CctdsBV
- KrqJ35glIHRuBCfD9OdtyoBq+pyThd2OtIiMJXKDp8GeabuSW1MEjV9peiAbFx/p88ye
- 9sY4yKIuVMxoa8qdMkdCQV3AmfW7w4uBidwJx72NqTNz8Hi13agbEmtSXLs12kbXtn7O
- VTFU54xSbugc8NxqrWWBOOR0sMlXamBHCGgp2BbsQKVC+Q0c/6Ie2Or1h9KqKS1FoDEv
- 0OEg6ckGz+J9Cc3B4A5RcpwsTPC3KQbWO8v3CHkEwAKJMCwoU+y4MbwGKAofCkrQzl9t
- jQgA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxnZpghrSmYDcIlqVyAJV2xYd3KDB3taAyAT6oRrHSTapVrrQWH5jumOZFv/39wG1prZfZECLC/q3rTqbRnFzMG9XiRvw=
-X-Gm-Message-State: AOJu0YzO3V1c4+Lr+ukgPPVWWNMNmg4fVlgElypKH5gUlwlpjijdeLnc
- rBdz1YimcQ4zBtnpF5jRJLk62YX5ZqY62ldrAa7W5r61IQX5w51UHWAXTZ2GZV8=
-X-Google-Smtp-Source: AGHT+IGvLc82wW7kv8oiguzyo1zSAkhKDNpDy8ifHwqKtMJHvfdWfZ/yV7CbYwU46APFrDgSl32cAQ==
-X-Received: by 2002:ac2:4425:0:b0:513:b040:707b with SMTP id
- w5-20020ac24425000000b00513b040707bmr3924609lfl.51.1710520744002; 
- Fri, 15 Mar 2024 09:39:04 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.145.26])
- by smtp.gmail.com with ESMTPSA id
- p6-20020adfcc86000000b0033ec072a491sm3550828wrj.35.2024.03.15.09.39.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 Mar 2024 09:39:03 -0700 (PDT)
-Message-ID: <06c7f2c3-b773-4ce0-91ba-eb4249b8ce8a@linaro.org>
-Date: Fri, 15 Mar 2024 17:39:01 +0100
+ d=1e100.net; s=20230601; t=1710520782; x=1711125582;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=B3BJ+70MnWU8jvhVqOWXYrc/s+eGuVzDpwMTXY43zKg=;
+ b=BLXnkqFZ/sUFnw7Rpb7HYrdoGae52I+XCaUeb/R2DDXq49KtogKpHv3z/X5Cc3pZVS
+ aaR6YUqigXr8HPBb5DrQ5puJORckyLQvLRLoG1SWEV+GQCEJWlo2DCp50VV+LdsPZGto
+ lseJVLl+HhDsIRWiiTyIYqIHfOWUm/uVapGsy1kLz7dm+qQU1u262/WynMWwbyw89V8W
+ 9LyHG5qotz53pnhuLUhhfhIWi7OaNjE3ewofMykl6whTmtOGvcHa3g8EpU1VPsNbgulw
+ 3wm95AoJco+m/PJa9Jon6G1wMygSc9mOloc9ZSb4lI90a4x+VoFLxY22cphCDFS5zfi3
+ Ys0Q==
+X-Gm-Message-State: AOJu0Yxu1cXzoNJAHsFFZpF6meMKOFZBnnN69C7LCvKVBpbZJQN3zKxQ
+ IhQJ7nGRC7nYtW2oVi41XplYxlmp0Ht3ZPtwZJg0tWKwxk0PpXo3dfkLDz+2rLU=
+X-Google-Smtp-Source: AGHT+IF9ywiAFboEu2cNiVyapUcTWi2oQLL2zhX1VwKioSskAS6RB+MhHatTP7JdByyMF6Kjhhm5Xw==
+X-Received: by 2002:a17:907:6d1d:b0:a46:8d95:ff7e with SMTP id
+ sa29-20020a1709076d1d00b00a468d95ff7emr1964813ejc.21.1710520781810; 
+ Fri, 15 Mar 2024 09:39:41 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ wr6-20020a170907700600b00a466c66804bsm1831116ejb.49.2024.03.15.09.39.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Mar 2024 09:39:41 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1A5965F873;
+ Fri, 15 Mar 2024 16:39:41 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Lorenz Brun <lorenz@brun.one>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Fam Zheng
+ <fam@euphon.net>
+Subject: Re: [PATCH] scsi-generic: fix io_timeout property not applying
+In-Reply-To: <20240315145831.2531695-1-lorenz@brun.one> (Lorenz Brun's message
+ of "Fri, 15 Mar 2024 15:58:31 +0100")
+References: <20240315145831.2531695-1-lorenz@brun.one>
+User-Agent: mu4e 1.12.1; emacs 29.2
+Date: Fri, 15 Mar 2024 16:39:41 +0000
+Message-ID: <87plvv30vm.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 24/25] qapi: Tighten check whether implicit object type
- already exists
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: jsnow@redhat.com, peter.maydell@linaro.org, michael.roth@amd.com
-References: <20240315152301.3621858-1-armbru@redhat.com>
- <20240315152301.3621858-25-armbru@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240315152301.3621858-25-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,17 +98,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/3/24 16:23, Markus Armbruster wrote:
-> Entities with names starting with q_obj_ are implicit object types.
-> Therefore, QAPISchema._make_implicit_object_type()'s .lookup_entity()
-> can only return a QAPISchemaObjectType.  Assert that.
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Lorenz Brun <lorenz@brun.one> writes:
+
+> The io_timeout property, introduced in c9b6609 (part of 6.0) is
+> silently overwritten by the hardcoded default value of 30 seconds
+> (DEFAULT_IO_TIMEOUT) in scsi_generic_realize because that function is
+> being called after the properties have already been applied.
+>
+> The property definition already has a default value which is applied
+> correctly when no value is explicitly set, so we can just remove the
+> code which overrides the io_timeout completely.
+>
+> This has been tested by stracing SG_IO operations with the io_timeout
+> property set and unset and now sets the timeout field in the ioctl
+> request to the proper value.
+>
+> Fixes: c9b6609b69facad ("scsi: make io_timeout configurable")
+> Signed-off-by: Lorenz Brun <lorenz@brun.one>
 > ---
->   scripts/qapi/schema.py | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>  hw/scsi/scsi-generic.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
+> index b7b04e1d63..ee945f87e3 100644
+> --- a/hw/scsi/scsi-generic.c
+> +++ b/hw/scsi/scsi-generic.c
+> @@ -752,7 +752,6 @@ static void scsi_generic_realize(SCSIDevice *s, Error=
+ **errp)
+>=20=20
+>      /* Only used by scsi-block, but initialize it nevertheless to be cle=
+an.  */
+>      s->default_scsi_version =3D -1;
+> -    s->io_timeout =3D DEFAULT_IO_TIMEOUT;
+>      scsi_generic_read_device_inquiry(s);
+>  }
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
