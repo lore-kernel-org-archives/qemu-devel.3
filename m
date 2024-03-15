@@ -4,101 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A22C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 11:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48FCEC54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 11:10:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl5KJ-0005On-5m; Fri, 15 Mar 2024 07:02:15 -0400
+	id 1rl5RM-0008JY-65; Fri, 15 Mar 2024 07:09:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rl5K8-0005KO-Cb
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:02:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rl5K6-0004A2-O1
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:02:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710500521;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1HEtOnZx7X1bml+0RIOaXt+HVPacOXFPnIikuhAPZCY=;
- b=TndzO8NLdaCA2UHQrLdpJI8Ry77N+JQ0iHuUEKi8l9s7iuHTP00uDFXIx20v2kd1LAu7cH
- gQmDA+HD2yTFGivxMfOpjR0qbk45oDQzd+gXIFRUJah5ZXUPs/cK2+Hmo9t0b3+qWCvZgo
- bcTvPuLQaqTdF2TF5p3+Uow9wKHVK0U=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-22-wcwP27HYMfu8X8AzrPrWEQ-1; Fri, 15 Mar 2024 07:01:59 -0400
-X-MC-Unique: wcwP27HYMfu8X8AzrPrWEQ-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-69152af7760so3966256d6.1
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 04:01:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rl5RJ-0008Gg-C4
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:09:29 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rl5RH-0006MD-Ha
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:09:29 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-413ef770363so15358785e9.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 04:09:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710500964; x=1711105764; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=04OJfbSzWusN/VZpxRtEm0O003DJV5Le58rCeQlCex4=;
+ b=DEjTUMZdUzfZFSxa41X6STf/BfJcJGsxav8KVy3a9ZxCcQtxGvqlU2i941FECOQ20u
+ QH4ZM3dWDUA+ls04tyOW79CRrwkYUeSiam2jNO92W7Jznrn8G8jNI9NQHMrvUMou8Aes
+ Jd4RLB1nu7XS+4b5u1TNZYWw6HsfgVHW4Grp+9qtX4vLUVTW4yuhmVX4zliYOxc+Jwyj
+ tndxCOSum24qqIWs1xg3DY0w8+wFSSLsYcmx+fh1Z5LMEmubpvtLQNOOi4ubrRxyW+sw
+ 7IizR/DNy/YvMe8t9RKlPf0pdiF0ztph4UsbFyWB/e5057CpIn7LhD90PRh92/QqG/Av
+ ujfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710500519; x=1711105319;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1HEtOnZx7X1bml+0RIOaXt+HVPacOXFPnIikuhAPZCY=;
- b=jh5F7kPoLBsDnBK3mmrBQVeHGyR7opYV3grJ4W27x8Gl+Oqempl+fshpNB6u2mvk2g
- U0vyuoBpJOXOOgedD4kPOJuNIuImeh0ju4eYDLBWaudPwQPC/jRsoyjVV8Pf6cugmUdD
- myksLQh+yrmc/1fP5q8YurYQU0gxJ4BNhGoMre/Ov6YG9jbXNXnPmbESq3+OoFD4lvkA
- +bmhrYO2fkFFQM7YruvNFdiaZfD6TmSwiyiN5FCqWx//rXgVytOvSjSt+41T7r9C6kbL
- YebzlnBU3A1IjWKESBCBbO7XCTVN3REc0SaMZYYhsZ58iw3VZY347vyYL5JHhre2pz5O
- qlwA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXf7eFWg718WB7KOLTC10fu7t48U841WpjzhP/c2zupWzOB48q088rxvAJXtCgRuAdL3dNnuEqshykWBY+7krwiyekMTzk=
-X-Gm-Message-State: AOJu0Yx6hKpJd+qah9CcPH3x3YGtr4bMiZn+q911MO4QWBRqjaldg+sG
- DZlEwlm+OriT9GnE96p646wOer6nce+vPsyDt85zROzDDjNJzXaMVOdQCTxd7/ELDcStD+mBWRd
- 6ZTrLkXK4zTfQnBwtGXFWlc5jMYNQ0W+Rl62T+HumHOx3gSLFb6Pb
-X-Received: by 2002:a05:6214:2c0a:b0:691:ca1:ce8a with SMTP id
- qq10-20020a0562142c0a00b006910ca1ce8amr1742394qvb.6.1710500519401; 
- Fri, 15 Mar 2024 04:01:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHX5dZenAd0eOzp2a058DKA8ft/D5fBKtCsJVF2Daafw1Kmj7FdILE2JI4uZJtmXrmqRtCgEw==
-X-Received: by 2002:a05:6214:2c0a:b0:691:ca1:ce8a with SMTP id
- qq10-20020a0562142c0a00b006910ca1ce8amr1742357qvb.6.1710500519005; 
- Fri, 15 Mar 2024 04:01:59 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- p14-20020a05621421ee00b00691631154a2sm1517544qvj.43.2024.03.15.04.01.58
+ d=1e100.net; s=20230601; t=1710500964; x=1711105764;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=04OJfbSzWusN/VZpxRtEm0O003DJV5Le58rCeQlCex4=;
+ b=prXrY58IhOXADDSfWhKyE27aYADoFXxvZK4v92X90aJH3bTT5rmgqsY7sdgVp1D11/
+ Ell2+WY4mduoECxMtD9aPLLbW8n3bX+JTtGEgT6m5yGW5h6FwvISEHTVeXB8g9XmbMnH
+ HjcU6AelYYdwTmuinNcOI1ElmqchjgbY14pU+IWCnGX6X8pcYaTlqk59u1ktVvgWKnMy
+ yQFVotSwyj7RPfVQ5tLBie34yBG0c8yDhh7RD2Q/3G1fohuUD+hnp4eAnuTTH+Sbc2P7
+ 4vDmgtEqBy2xyxmuF+YJRTkUdWtMlUfnEk+EMu/2mdL9ofyEQUPBula3VsNHGhQfaiP3
+ rVQg==
+X-Gm-Message-State: AOJu0YyVY7PfRAgoMtQEuPF3ebTSAlc1D6KKP5McJeOfLXT/YoLBMDel
+ ZBQHvLTEXCcL8R2YpSch5vV19hlJcDLJEqS8NjG02ls9hFCobWMfQdj9sZnZykw=
+X-Google-Smtp-Source: AGHT+IGi52eUG/qE+zqVWJfrBd1aVsUCI24myzC8wu1h+WF2ZSxot2tqbAsk6pxxUqwLS1KNf0NEuQ==
+X-Received: by 2002:a05:600c:4450:b0:413:f1c5:4b1b with SMTP id
+ v16-20020a05600c445000b00413f1c54b1bmr2502601wmn.33.1710500964255; 
+ Fri, 15 Mar 2024 04:09:24 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ fj6-20020a05600c0c8600b00414024b2f49sm1238606wmb.0.2024.03.15.04.09.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Mar 2024 04:01:58 -0700 (PDT)
-Date: Fri, 15 Mar 2024 07:01:56 -0400
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
- qemu_savevm_state_setup()
-Message-ID: <ZfQqpK0xCwygYYho@x1n>
-References: <87plw44wps.fsf@suse.de>
- <1566715b-a9a5-4df6-8e64-f4f912e2ea2f@redhat.com>
- <87le6omw0d.fsf@suse.de>
- <9071affc-ffb5-435a-99d1-ca829703e31b@redhat.com>
- <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
- <b2b52017-c4cd-43e9-a67b-2ccbb92ad99e@redhat.com>
- <874jdbmst4.fsf@suse.de> <ZfByYiL3Gl9d9u7h@x1n>
- <87wmq7l2xx.fsf@suse.de>
- <b9cb5c16-59a4-4cdc-9d12-6d7c2306b4ff@redhat.com>
+ Fri, 15 Mar 2024 04:09:23 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 945025F785;
+ Fri, 15 Mar 2024 11:09:23 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mark Burton <mburton@qti.qualcomm.com>,  Palmer Dabbelt
+ <palmer@dabbelt.com>,  Alistair Francis <alistair.francis@wdc.com>,  Bin
+ Meng <bin.meng@windriver.com>,  Edgar E. Iglesias
+ <edgar.iglesias@gmail.com>,  Stefano Stabellini <sstabellini@kernel.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Don Harbin
+ <don.harbin@linaro.org>,  Alessandro Di Federico <ale@rev.ng>,  Anton
+ Johansson <anjo@rev.ng>,  =?utf-8?Q?Fran=C3=A7ois?= Ozog
+ <ff@shokubai.tech>,  Song Gao
+ <gaosong@loongson.cn>,  Michael Rolnik <mrolnik@gmail.com>,  Brian Cain
+ <bcain@quicinc.com>,  Christoph Muellner <christoph.muellner@vrull.eu>,
+ Philipp Tomsich <philipp.tomsich@vrull.eu>,  Max Filippov
+ <jcmvbkbc@gmail.com>,  Francisco Iglesias <francisco.iglesias@amd.com>
+Subject: Re: Any interest in the QEMU community attending DVCon Europe
+ October 2024?
+In-Reply-To: <8734t4wuco.fsf@draig.linaro.org> ("Alex =?utf-8?Q?Benn=C3=A9?=
+ =?utf-8?Q?e=22's?= message of "Tue, 05 Mar 2024 15:50:47 +0000")
+References: <8734t4wuco.fsf@draig.linaro.org>
+User-Agent: mu4e 1.12.1; emacs 29.2
+Date: Fri, 15 Mar 2024 11:09:23 +0000
+Message-ID: <871q8b4uqk.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b9cb5c16-59a4-4cdc-9d12-6d7c2306b4ff@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,48 +109,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 15, 2024 at 11:17:45AM +0100, Cédric Le Goater wrote:
-> > migrate_set_state is also unintuitive because it ignores invalid state
-> > transitions and we've been using that property to deal with special
-> > states such as POSTCOPY_PAUSED and FAILED:
-> > 
-> > - After the migration goes into POSTCOPY_PAUSED, the resumed migration's
-> >    migrate_init() will try to set the state NONE->SETUP, which is not
-> >    valid.
-> > 
-> > - After save_setup fails, the migration goes into FAILED, but wait_unplug
-> >    will try to transition SETUP->ACTIVE, which is also not valid.
-> > 
-> 
-> I am not sure I understand what the plan is. Both solutions are problematic
-> regarding the state transitions.
-> 
-> Should we consider that waiting for failover devices to unplug is an internal
-> step of the SETUP phase not transitioning to ACTIVE ?
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-If to unblock this series, IIUC the simplest solution is to do what Fabiano
-suggested, that we move qemu_savevm_wait_unplug() to be before the check of
-setup() ret.  In that case, the state change in qemu_savevm_wait_unplug()
-should be benign and we should see a super small window it became ACTIVE
-but then it should be FAILED (and IIUC the patch itself will need to use
-ACTIVE as "old_state", not SETUP anymore).
+> Hi,
+>
+> Over recent years there has been a push to make QEMU more flexible for
+> EDA type applications. As long time developers know there are a number
+> of downstream forks of QEMU which have their own solutions for modelling
+> heterogeneous systems and integrating with hardware models. The work by
+> Philippe, Anton and others to build a single binary with composable
+> hardware is aiming at least to solve the heterogeneous modelling problem
+> in the upstream project.
+>
+> While we do discuss these "TCG" topics during KVM Forum the project may
+> benefit from doing some outreach at some conferences where simulation
+> and emulation are the primary focus.
+>
+> The Design and Verification Conference & Exhibition Europe (DVCon
+> Europe) is the premier European technical conference on system,
+> software, design, verification, validation and integration. This year it
+> will be on the 15-16 October 2024 in Munich. See: https://dvcon-europe.or=
+g/
+>
+> There have been a number of papers and workshops on QEMU/KVM topics over
+> the years. Unfortunately the website doesn't provide slides or videos of
+> the talks but topics have included how QEMU can be used as a fast
+> instruction simulator alongside things such as SystemC models or
+> virtualisation can be leveraged to accelerate full system emulation.
+>
+> The main tracks are fairly academic where engineering and research
+> papers are submitted and if accepted can then be presented at the
+> conference. This is probably over the top for QEMU related stuff but
+> their is a tutorial track (deadline for Abstracts 1st July) which could
+> be a good target for a introduction to the features and capabilities of
+> the QEMU upstream. I suspect there would be interest in the wider
+> modelling community to find out more about how to use the upstream
+> project directly.
+>
+> There is a co-located "SystemC Evolution Day" on the 17th where there
+> might well be a strong overlap between SystemC users and QEMU. Mark
+> Burton is involved with that and is keen for proposals talking about
+> integrating SystemC models with QEMU. Please send a message to
+> mburton@quicinc.com if you're interested.
+>
+> So is anyone interested?
+>
+> Should we do more within the community to network and discuss our plans
+> for QEMU as a modelling solution?
+>
+> Any other thoughts?
 
-For the long term, maybe we can remove the WAIT_UNPLUG state?  The only
-Libvirt support seems to be here:
+Gentle ping, any interest?
 
-commit 8a226ddb3602586a2ba2359afc4448c02f566a0e
-Author: Laine Stump <laine@redhat.com>
-Date:   Wed Jan 15 16:38:57 2020 -0500
-
-    qemu: add wait-unplug to qemu migration status enum
-
-Considering that qemu_savevm_wait_unplug() can be a noop if the device is
-already unplugged, I think it means no upper layer app should rely on this
-state to present.
-
-Thanks,
-
--- 
-Peter Xu
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
