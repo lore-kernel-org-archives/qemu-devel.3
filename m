@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E614DC54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 06:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5081C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 06:45:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl1JC-0003nH-N3; Fri, 15 Mar 2024 02:44:50 -0400
+	id 1rl1JL-0003qy-BO; Fri, 15 Mar 2024 02:44:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1rl1JB-0003mo-0k; Fri, 15 Mar 2024 02:44:49 -0400
+ id 1rl1JK-0003qY-44; Fri, 15 Mar 2024 02:44:58 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1rl1J9-0005Wi-5G; Fri, 15 Mar 2024 02:44:48 -0400
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ id 1rl1JI-0005Yf-6a; Fri, 15 Mar 2024 02:44:57 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42F4l82B027619; Fri, 15 Mar 2024 06:44:42 GMT
+ 42F5bf2A009575; Fri, 15 Mar 2024 06:44:53 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
- : date : message-id : content-transfer-encoding : mime-version; s=pp1;
- bh=LGiHrJSfmWH6IYFcAnL5sJHua6FcZd0Mm2ycoq6jj4g=;
- b=ceiA5yqdvpTzVhBOh41GX3gkREyqzLVeWoq5QqagJ9jPJfMHBtlW6EegOEIJAuNCV75J
- lOMmWeQPJ8KXPdJKV0brKN0AfxRAlivwHb4Zt3wZ2F6X3VKYhCafelZI4JbZZ6AsRpnZ
- AfUozQ2LgtiImgvKKGvLS6zB9VucuV+/5Vc+/hQfjzX4YxjgH4WpnzFwmMjY8lfBxF+y
- XnKjFUij9xBul+JH0RzetRBn8/s3Z+TUDxti7EOIjEE3YYWb6/mHVZF+4R+qZ0zRiQFM
- fNzy4tDELhJmO2E/QDAgsPyfR21p9PyQAv5E5/O7MI/ImW4P30s+LL+B0ZKwGIXWYami eQ== 
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=k8D7OlHZnZoT8xoBDAq5ShwpIGtO88BwavlxfvX90tc=;
+ b=cKYpvY8BOz/BGt/F2ldh/38hoAp3zd6wpLLtxbO2BvPxWDrQcOP1zP8FUMCoIh0DhhiW
+ ft7GUw9ZL9FkHW5OR4azErVecfwvZNgaxM11Ev/+GXc9HILY45X/ROiYmwbksIkF+KzN
+ MVHZc9IAhRUG3fF92CxhQsgjFwUi/FhF1ovCRFo+hCqFGWQCHhqrAMdtVwT4EV3V/1tJ
+ 5ngLcKFU5mznZoAYkoprbFeFkC/byPD5ZkLGz/AIVdAkuM0NzlCqPMfYCxolH2P8ZI2g
+ L2cAFCN94k5rEAd8ZkzvD4YgY3Bdfa1JTTIMf1UKzP6jsQp+dF4C6yX4D+CXVvth1XEP nA== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wvfkw960a-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wvgbegq3s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Mar 2024 06:44:42 +0000
-Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42F6eqPK010689;
- Fri, 15 Mar 2024 06:44:42 GMT
+ Fri, 15 Mar 2024 06:44:52 +0000
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42F6iqhh031419;
+ Fri, 15 Mar 2024 06:44:52 GMT
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wvfkw9604-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wvgbegq3n-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Mar 2024 06:44:42 +0000
+ Fri, 15 Mar 2024 06:44:52 +0000
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
  by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42F3t6jT015028; Fri, 15 Mar 2024 06:44:41 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ws33pa729-1
+ 42F3jBZV014861; Fri, 15 Mar 2024 06:44:51 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3ws33pa72m-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 15 Mar 2024 06:44:41 +0000
+ Fri, 15 Mar 2024 06:44:51 +0000
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42F6iZPS40304990
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42F6ikgi39059964
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 15 Mar 2024 06:44:37 GMT
+ Fri, 15 Mar 2024 06:44:48 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B413920043;
- Fri, 15 Mar 2024 06:44:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0A91D20040;
+ Fri, 15 Mar 2024 06:44:46 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E856620040;
- Fri, 15 Mar 2024 06:44:33 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 492422004D;
+ Fri, 15 Mar 2024 06:44:44 +0000 (GMT)
 Received: from localhost.in.ibm.com (unknown [9.199.192.140])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 15 Mar 2024 06:44:33 +0000 (GMT)
+ Fri, 15 Mar 2024 06:44:44 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
  clg@kaod.org, richard.henderson@linaro.org, peter.maydell@linaro.org,
  harshpb@linux.ibm.com, sbhat@linux.ibm.com
-Subject: [PATCH v2 0/2] Moving fp arithmetic insns to decodetree.
-Date: Fri, 15 Mar 2024 12:14:20 +0530
-Message-Id: <20240315064422.737812-1-rathc@linux.ibm.com>
+Subject: [PATCH v2 1/2] target/ppc: Merge various fpu helpers
+Date: Fri, 15 Mar 2024 12:14:21 +0530
+Message-Id: <20240315064422.737812-2-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.39.3
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: e2gdoH_wZhyD12cVsC-a5fmap-gY10cc
-X-Proofpoint-ORIG-GUID: pEWrn0nyl8mNq5hqYBrC6mHzWZ9QoNDd
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+In-Reply-To: <20240315064422.737812-1-rathc@linux.ibm.com>
+References: <20240315064422.737812-1-rathc@linux.ibm.com>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: qMzER5K2Yjs6AnSdFprHcBQJn2lnjb21
+X-Proofpoint-GUID: 14vUiMRyD5IphpOIejJeMx_PNK5LgUpG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-14_13,2024-03-13_01,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- malwarescore=0 phishscore=0 bulkscore=0 mlxlogscore=491 spamscore=0
- lowpriorityscore=0 priorityscore=1501 adultscore=0 suspectscore=0
- mlxscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ bulkscore=0 spamscore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 mlxscore=0
+ mlxlogscore=418 phishscore=0 adultscore=0 suspectscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2311290000 definitions=main-2403150053
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
@@ -112,27 +114,288 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series moves floating-point arithmetic instructions from
-legacy to decodetree format. The first patch consolidates the common
-behaviour of floating-point helper functions using macros, reducing
-code duplication. The second patch moves all the floating arithmetic
-instructions to decodetree.
+This patch merges the definitions of the following set of fpu helper methods,
+which are similar, using macros :
 
-Change log :
-v2 : Addressed review comments on v1
-v1 : https://lore.kernel.org/qemu-devel/20240307110318.170319-1-rathc@linux.ibm.com/
+1. f{add, sub, mul, div}(s)
+2. fre(s)
+3. frsqrte(s)
 
-Chinmay Rath (2):
-  target/ppc: Merge various fpu helpers
-  target/ppc: Move floating-point arithmetic instructions to decodetree.
+Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+---
+ target/ppc/fpu_helper.c | 221 +++++++++++-----------------------------
+ 1 file changed, 62 insertions(+), 159 deletions(-)
 
- target/ppc/helper.h                |  44 ++---
- target/ppc/insn32.decode           |  42 +++++
- target/ppc/fpu_helper.c            | 235 +++++++-----------------
- target/ppc/translate/fp-impl.c.inc | 285 +++++++++++------------------
- target/ppc/translate/fp-ops.c.inc  |  31 ----
- 5 files changed, 242 insertions(+), 395 deletions(-)
-
+diff --git a/target/ppc/fpu_helper.c b/target/ppc/fpu_helper.c
+index 4b3dcad5d1..8d0cbe27e7 100644
+--- a/target/ppc/fpu_helper.c
++++ b/target/ppc/fpu_helper.c
+@@ -490,54 +490,12 @@ static void float_invalid_op_addsub(CPUPPCState *env, int flags,
+     }
+ }
+ 
+-/* fadd - fadd. */
+-float64 helper_fadd(CPUPPCState *env, float64 arg1, float64 arg2)
++static inline void addsub_flags_handler(CPUPPCState *env, int flags,
++                                        uintptr_t ra)
+ {
+-    float64 ret = float64_add(arg1, arg2, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+-    if (unlikely(flags & float_flag_invalid)) {
+-        float_invalid_op_addsub(env, flags, 1, GETPC());
+-    }
+-
+-    return ret;
+-}
+-
+-/* fadds - fadds. */
+-float64 helper_fadds(CPUPPCState *env, float64 arg1, float64 arg2)
+-{
+-    float64 ret = float64r32_add(arg1, arg2, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+-    if (unlikely(flags & float_flag_invalid)) {
+-        float_invalid_op_addsub(env, flags, 1, GETPC());
+-    }
+-    return ret;
+-}
+-
+-/* fsub - fsub. */
+-float64 helper_fsub(CPUPPCState *env, float64 arg1, float64 arg2)
+-{
+-    float64 ret = float64_sub(arg1, arg2, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+     if (unlikely(flags & float_flag_invalid)) {
+-        float_invalid_op_addsub(env, flags, 1, GETPC());
++        float_invalid_op_addsub(env, flags, 1, ra);
+     }
+-
+-    return ret;
+-}
+-
+-/* fsubs - fsubs. */
+-float64 helper_fsubs(CPUPPCState *env, float64 arg1, float64 arg2)
+-{
+-    float64 ret = float64r32_sub(arg1, arg2, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+-    if (unlikely(flags & float_flag_invalid)) {
+-        float_invalid_op_addsub(env, flags, 1, GETPC());
+-    }
+-    return ret;
+ }
+ 
+ static void float_invalid_op_mul(CPUPPCState *env, int flags,
+@@ -550,29 +508,11 @@ static void float_invalid_op_mul(CPUPPCState *env, int flags,
+     }
+ }
+ 
+-/* fmul - fmul. */
+-float64 helper_fmul(CPUPPCState *env, float64 arg1, float64 arg2)
+-{
+-    float64 ret = float64_mul(arg1, arg2, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+-    if (unlikely(flags & float_flag_invalid)) {
+-        float_invalid_op_mul(env, flags, 1, GETPC());
+-    }
+-
+-    return ret;
+-}
+-
+-/* fmuls - fmuls. */
+-float64 helper_fmuls(CPUPPCState *env, float64 arg1, float64 arg2)
++static inline void mul_flags_handler(CPUPPCState *env, int flags, uintptr_t ra)
+ {
+-    float64 ret = float64r32_mul(arg1, arg2, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+     if (unlikely(flags & float_flag_invalid)) {
+-        float_invalid_op_mul(env, flags, 1, GETPC());
++        float_invalid_op_mul(env, flags, 1, ra);
+     }
+-    return ret;
+ }
+ 
+ static void float_invalid_op_div(CPUPPCState *env, int flags,
+@@ -587,36 +527,14 @@ static void float_invalid_op_div(CPUPPCState *env, int flags,
+     }
+ }
+ 
+-/* fdiv - fdiv. */
+-float64 helper_fdiv(CPUPPCState *env, float64 arg1, float64 arg2)
+-{
+-    float64 ret = float64_div(arg1, arg2, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+-    if (unlikely(flags & float_flag_invalid)) {
+-        float_invalid_op_div(env, flags, 1, GETPC());
+-    }
+-    if (unlikely(flags & float_flag_divbyzero)) {
+-        float_zero_divide_excp(env, GETPC());
+-    }
+-
+-    return ret;
+-}
+-
+-/* fdivs - fdivs. */
+-float64 helper_fdivs(CPUPPCState *env, float64 arg1, float64 arg2)
++static inline void div_flags_handler(CPUPPCState *env, int flags, uintptr_t ra)
+ {
+-    float64 ret = float64r32_div(arg1, arg2, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+     if (unlikely(flags & float_flag_invalid)) {
+-        float_invalid_op_div(env, flags, 1, GETPC());
++        float_invalid_op_div(env, flags, 1, ra);
+     }
+     if (unlikely(flags & float_flag_divbyzero)) {
+-        float_zero_divide_excp(env, GETPC());
++        float_zero_divide_excp(env, ra);
+     }
+-
+-    return ret;
+ }
+ 
+ static uint64_t float_invalid_cvt(CPUPPCState *env, int flags,
+@@ -812,81 +730,66 @@ float64 helper_##name(CPUPPCState *env, float64 arg)                          \
+ FPU_FSQRT(FSQRT, float64_sqrt)
+ FPU_FSQRT(FSQRTS, float64r32_sqrt)
+ 
+-/* fre - fre. */
+-float64 helper_fre(CPUPPCState *env, float64 arg)
+-{
+-    /* "Estimate" the reciprocal with actual division.  */
+-    float64 ret = float64_div(float64_one, arg, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+-    if (unlikely(flags & float_flag_invalid_snan)) {
+-        float_invalid_op_vxsnan(env, GETPC());
+-    }
+-    if (unlikely(flags & float_flag_divbyzero)) {
+-        float_zero_divide_excp(env, GETPC());
+-        /* For FPSCR.ZE == 0, the result is 1/2.  */
+-        ret = float64_set_sign(float64_half, float64_is_neg(arg));
+-    }
+-
+-    return ret;
++#define FPU_FRE(name, op)                                                     \
++float64 helper_##name(CPUPPCState *env, float64 arg)                          \
++{                                                                             \
++    /* "Estimate" the reciprocal with actual division.  */                    \
++    float64 ret = op(float64_one, arg, &env->fp_status);                      \
++    int flags = get_float_exception_flags(&env->fp_status);                   \
++                                                                              \
++    if (unlikely(flags & float_flag_invalid_snan)) {                          \
++        float_invalid_op_vxsnan(env, GETPC());                                \
++    }                                                                         \
++    if (unlikely(flags & float_flag_divbyzero)) {                             \
++        float_zero_divide_excp(env, GETPC());                                 \
++        /* For FPSCR.ZE == 0, the result is 1/2.  */                          \
++        ret = float64_set_sign(float64_half, float64_is_neg(arg));            \
++    }                                                                         \
++                                                                              \
++    return ret;                                                               \
+ }
+ 
+-/* fres - fres. */
+-uint64_t helper_fres(CPUPPCState *env, uint64_t arg)
+-{
+-    /* "Estimate" the reciprocal with actual division.  */
+-    float64 ret = float64r32_div(float64_one, arg, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+-    if (unlikely(flags & float_flag_invalid_snan)) {
+-        float_invalid_op_vxsnan(env, GETPC());
+-    }
+-    if (unlikely(flags & float_flag_divbyzero)) {
+-        float_zero_divide_excp(env, GETPC());
+-        /* For FPSCR.ZE == 0, the result is 1/2.  */
+-        ret = float64_set_sign(float64_half, float64_is_neg(arg));
+-    }
+-
+-    return ret;
++#define FPU_FRSQRTE(name, op)                                                 \
++float64 helper_##name(CPUPPCState *env, float64 arg)                          \
++{                                                                             \
++    /* "Estimate" the reciprocal with actual division.  */                    \
++    float64 rets = float64_sqrt(arg, &env->fp_status);                        \
++    float64 retd = op(float64_one, rets, &env->fp_status);                    \
++    int flags = get_float_exception_flags(&env->fp_status);                   \
++                                                                              \
++    if (unlikely(flags & float_flag_invalid)) {                               \
++        float_invalid_op_sqrt(env, flags, 1, GETPC());                        \
++    }                                                                         \
++    if (unlikely(flags & float_flag_divbyzero)) {                             \
++        /* Reciprocal of (square root of) zero.  */                           \
++        float_zero_divide_excp(env, GETPC());                                 \
++    }                                                                         \
++                                                                              \
++    return retd;                                                              \
+ }
+ 
+-/* frsqrte  - frsqrte. */
+-float64 helper_frsqrte(CPUPPCState *env, float64 arg)
+-{
+-    /* "Estimate" the reciprocal with actual division.  */
+-    float64 rets = float64_sqrt(arg, &env->fp_status);
+-    float64 retd = float64_div(float64_one, rets, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+-    if (unlikely(flags & float_flag_invalid)) {
+-        float_invalid_op_sqrt(env, flags, 1, GETPC());
+-    }
+-    if (unlikely(flags & float_flag_divbyzero)) {
+-        /* Reciprocal of (square root of) zero.  */
+-        float_zero_divide_excp(env, GETPC());
+-    }
+-
+-    return retd;
++#define FPU_HELPER(name, op, flags_handler)                                   \
++float64 helper_##name(CPUPPCState *env, float64 arg1, float64 arg2)           \
++{                                                                             \
++    float64 ret = op(arg1, arg2, &env->fp_status);                            \
++    int flags = get_float_exception_flags(&env->fp_status);                   \
++    uintptr_t ra = GETPC();                                                   \
++    flags_handler(env, flags, ra);                                            \
++    return ret;                                                               \
+ }
+ 
+-/* frsqrtes  - frsqrtes. */
+-float64 helper_frsqrtes(CPUPPCState *env, float64 arg)
+-{
+-    /* "Estimate" the reciprocal with actual division.  */
+-    float64 rets = float64_sqrt(arg, &env->fp_status);
+-    float64 retd = float64r32_div(float64_one, rets, &env->fp_status);
+-    int flags = get_float_exception_flags(&env->fp_status);
+-
+-    if (unlikely(flags & float_flag_invalid)) {
+-        float_invalid_op_sqrt(env, flags, 1, GETPC());
+-    }
+-    if (unlikely(flags & float_flag_divbyzero)) {
+-        /* Reciprocal of (square root of) zero.  */
+-        float_zero_divide_excp(env, GETPC());
+-    }
+-
+-    return retd;
+-}
++FPU_FRE(fre, float64_div)
++FPU_FRE(fres, float64r32_div)
++FPU_FRSQRTE(frsqrte, float64_div)
++FPU_FRSQRTE(frsqrtes, float64r32_div)
++FPU_HELPER(fadd, float64_add, addsub_flags_handler)
++FPU_HELPER(fadds, float64r32_add, addsub_flags_handler)
++FPU_HELPER(fsub, float64_sub, addsub_flags_handler)
++FPU_HELPER(fsubs, float64r32_sub, addsub_flags_handler)
++FPU_HELPER(fmul, float64_mul, mul_flags_handler)
++FPU_HELPER(fmuls, float64r32_mul, mul_flags_handler)
++FPU_HELPER(fdiv, float64_div, div_flags_handler)
++FPU_HELPER(fdivs, float64r32_div, div_flags_handler)
+ 
+ /* fsel - fsel. */
+ uint64_t helper_FSEL(uint64_t a, uint64_t b, uint64_t c)
 -- 
 2.39.3
 
