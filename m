@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1AE6C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 261F6C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl7LG-00013U-FN; Fri, 15 Mar 2024 09:11:22 -0400
+	id 1rl7KK-0006mh-Cr; Fri, 15 Mar 2024 09:10:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7L1-0000LC-12
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:11:07 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7Jo-0005yH-0T
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:09:52 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7Ky-0008UE-3L
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:11:06 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2d48d75ab70so7099441fa.0
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:11:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7Jk-0007kM-P3
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:09:50 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a36126ee41eso254024766b.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710508262; x=1711113062; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710508187; x=1711112987; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9q6xaVyoPJIMQfl186LF5IP9vgj5sXw3ui9Yz0YXC2Q=;
- b=TMVOa6AS5DHcYj9w4EjFpStIyqMpbkGn81Fb5r7+qlYyQ4rTH+i+rSeLABMphE+KLN
- 8Zao5q1pbPFsXliXcmAMyRqM6/W+iBlnktK4DvSz6Is9eElfCqt6N0rxUZ6GXfTDGent
- p+oJjqjfasjEUcD/J2jrd6JmA5wyD6mAhYebqHmsc2fQd+1GSe4PGghlP6tWyc5DAAwQ
- WCJHKy32JsDYdxb1D8clU3ws1TSBnI652+pNexEzEnFoOzyzj68k2KkQzDp66anCz1ib
- a2q26oyfKaBKfJSl/sWZwWrlAvBfS4EIs/nRE8tlC4fw3vAhS1A+xeXAGr2aOLPwzj/q
- ilWg==
+ bh=7ztA/s++99kJlJQVkkhi5KVYRPW5VID21TBVzyIGr2Y=;
+ b=jiGT8GrZ9igAjQoCC815i0lvzx2CR+1zxy8vL2gf9kgM5JRISixm7OQ3P1GuqzBu/g
+ 0b3grywW7QiWjM8vgXTcp3EaDAINKBXocmKH5Y8v0kogi5pWwHZrflfO/B32TUYMo6V+
+ CMTkw5qh1pWpDfZlJc/iXBYaGBVoDWokXpiFA9W5oojGQ5u5vQ7w8aSGaJeMS/0l/B8M
+ ND8Dss8NO+p3oHwxsW8N9gjSGeiRC6suG7esXapi/yKNAlsuUDkXuhfrQxlU9OGUWeCN
+ yfcFuqC7VpwCTSZmWtTvNDgTK9Bc7gzyeNuTCFdwPSs6KCm/lxjJ4Zxyl8ghJ0+xrsmv
+ sLMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710508262; x=1711113062;
+ d=1e100.net; s=20230601; t=1710508187; x=1711112987;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9q6xaVyoPJIMQfl186LF5IP9vgj5sXw3ui9Yz0YXC2Q=;
- b=bxOEOBysOmNRDl6Hr+dCiHYGNwnxKk/veOg0SnX5HVGtfBmU03zObsUcLfJ7o84tYb
- jRf2aLXFnJw1QjBnP3FdxQL0mIIYUpvs8znlFL6cV+7937KZD0F7pgEXZsrqMw5ucBPS
- +vKNY9zh3+qz2KWCehcm50rrJ8LkNSAvhXiXo8fB9oUSlrUcd2u1s/v6b7A6zUGXZVT+
- AUITwPMRbmB1FOAo+d6TOYvAZsZ9Q0gp4ZqTc02OPgY7d9ad2/fGLl4eM4EawHujZ9U8
- y39I4J1jWkYt4lP3xqHURHNyZ/rRiklFMAktSq4AC09rk9GX/++QAuZ0/JLcrgVO/EDJ
- HyFA==
-X-Gm-Message-State: AOJu0Ywk303jt0gu7O0AvDY4r1kySdDld22xgLFhat8ALICrPXIXpVoc
- zZasMcfOkDEG2Mz998Ro9Py9XRAMYVY+pcVY36Sx7sBXJX2rKbwtC/eQwJCPMOsaVK4Cpnq3cEB
- K
-X-Google-Smtp-Source: AGHT+IGug9mMTyD+ClS5FiGdRLYqtGhTbiwMx2zP8ulnJSipWbsuMSAlqPeuMtp7D26lqxqXlTB4Zw==
-X-Received: by 2002:a2e:a9a6:0:b0:2d2:65b9:b420 with SMTP id
- x38-20020a2ea9a6000000b002d265b9b420mr4153813ljq.1.1710508262292; 
- Fri, 15 Mar 2024 06:11:02 -0700 (PDT)
+ bh=7ztA/s++99kJlJQVkkhi5KVYRPW5VID21TBVzyIGr2Y=;
+ b=rag2LlJ3wEvZjvc7vpBhrejK0tUtqsd/wS7hYBg+dUP/WyBb0pGH7FZ+1MH3uKDxOV
+ hfmy1WlU2N0kGslKXXbwWhjktokVLeqyP6khJRF+wGaQ6X5R/IBwqK6Wkz04hOUFNQNS
+ uDMyc0kvsHfV5NG+8vKenDlHkm26Yp4zJdCJl/7GmdR8h9giQVgOvk6JW9RoFFdwrnt+
+ Qqxr+DMR2XY7SHHEjYzP6aD9+FUg/TSieqvH0At5jrIykr7YHDfIvMkNRTw7FD2TrueU
+ sbNbzdOp/p0wPOD8IQGHg1SMrMOhA+q+kK5jJMmbjvmLPhNwhRrmgQDfn7eAL7JflEgl
+ eUXw==
+X-Gm-Message-State: AOJu0YxAyOpGWa3BbtPL43iH3ZZpasa3LodoK0W+fKEbuu/lWU/KTwOj
+ rm1oJwRA56lpiqJv0SHwtmqaK3FT5cmszDn6ByABIsWeeK/ug46y9LwUKB8Rr+IqeMVrfJOSR3P
+ E
+X-Google-Smtp-Source: AGHT+IHGdVDgE0BV4E6ET1vnyKOiNgQutr60WkuR7/igTVB/b/2IuiYcgezn/mIAKkIya0Cm/N2Kbw==
+X-Received: by 2002:a17:906:6bc8:b0:a46:800a:6358 with SMTP id
+ t8-20020a1709066bc800b00a46800a6358mr1492199ejs.15.1710508187195; 
+ Fri, 15 Mar 2024 06:09:47 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.145.26])
  by smtp.gmail.com with ESMTPSA id
- d4-20020aa7d5c4000000b0056711540692sm1656538eds.79.2024.03.15.06.11.00
+ f23-20020a1709067f9700b00a466a265ffcsm1722093ejr.145.2024.03.15.06.09.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 15 Mar 2024 06:11:01 -0700 (PDT)
+ Fri, 15 Mar 2024 06:09:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Markus Armbruster <armbru@redhat.com>
@@ -72,19 +72,20 @@ Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Subject: [RFC PATCH-for-9.1 16/21] target/loongarch: Use QMP
- generic_query_cpu_definitions()
-Date: Fri, 15 Mar 2024 14:09:04 +0100
-Message-ID: <20240315130910.15750-17-philmd@linaro.org>
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PATCH-for-9.1 05/21] cpus: Open code OBJECT_DECLARE_TYPE() in
+ OBJECT_DECLARE_CPU_TYPE()
+Date: Fri, 15 Mar 2024 14:08:53 +0100
+Message-ID: <20240315130910.15750-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240315130910.15750-1-philmd@linaro.org>
 References: <20240315130910.15750-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x229.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,52 +108,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/loongarch/loongarch-qmp-cmds.c | 23 ++---------------------
- 1 file changed, 2 insertions(+), 21 deletions(-)
+Since the OBJECT_DECLARE_CPU_TYPE() macro uses the abstract ArchCPU
+type, when declaring multiple CPUs of the same ArchCPU type we get
+an error related to the indirect G_DEFINE_AUTOPTR_CLEANUP_FUNC()
+use within OBJECT_DECLARE_TYPE():
 
-diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
-index 8721a5eb13..ef5aedc1cd 100644
---- a/target/loongarch/loongarch-qmp-cmds.c
-+++ b/target/loongarch/loongarch-qmp-cmds.c
-@@ -9,34 +9,15 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-machine-target.h"
-+#include "qapi/commands-target-compat.h"
- #include "cpu.h"
- #include "qapi/qmp/qdict.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qom/qom-qobject.h"
+  target/mips/cpu-qom.h:31:1: error: redefinition of 'glib_autoptr_clear_ArchCPU'
+  OBJECT_DECLARE_CPU_TYPE(MIPS64CPU, MIPSCPUClass, MIPS64_CPU)
+  ^
+  include/hw/core/cpu.h:82:5: note: expanded from macro 'OBJECT_DECLARE_CPU_TYPE'
+      OBJECT_DECLARE_TYPE(ArchCPU, CpuClassType, CPU_MODULE_OBJ_NAME);
+      ^
+  include/qom/object.h:237:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
+      G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
+      ^
+  /usr/include/glib-2.0/glib/gmacros.h:1371:3: note: expanded from macro 'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
+    _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
+    ^
+  /usr/include/glib-2.0/glib/gmacros.h:1354:36: note: expanded from macro '_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
+    static G_GNUC_UNUSED inline void _GLIB_AUTOPTR_CLEAR_FUNC_NAME(TypeName) (TypeName *_ptr)                     \
+                                     ^
+  /usr/include/glib-2.0/glib/gmacros.h:1338:49: note: expanded from macro '_GLIB_AUTOPTR_CLEAR_FUNC_NAME'
+  #define _GLIB_AUTOPTR_CLEAR_FUNC_NAME(TypeName) glib_autoptr_clear_##TypeName
+                                                  ^
+  <scratch space>:54:1: note: expanded from here
+  glib_autoptr_clear_ArchCPU
+  ^
+  target/mips/cpu-qom.h:30:1: note: previous definition is here
+  OBJECT_DECLARE_CPU_TYPE(MIPS32CPU, MIPSCPUClass, MIPS32_CPU)
+  ^
+
+Avoid that problem by expanding the OBJECT_DECLARE_TYPE() macro
+within OBJECT_DECLARE_CPU_TYPE().
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
+---
+TODO: check rth comment:
+What about adding an OBJECT_DECLARE_CPU_SUBTYPE that omits half the stuff instead?
+We don't need another object typedef at all, for instance.
+---
+ include/hw/core/cpu.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index ec14f74ce5..4c2e5095bf 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -78,7 +78,12 @@ DECLARE_CLASS_CHECKERS(CPUClass, CPU,
+  */
+ #define OBJECT_DECLARE_CPU_TYPE(CpuInstanceType, CpuClassType, CPU_MODULE_OBJ_NAME) \
+     typedef struct ArchCPU CpuInstanceType; \
+-    OBJECT_DECLARE_TYPE(ArchCPU, CpuClassType, CPU_MODULE_OBJ_NAME);
++    typedef struct CpuClassType CpuClassType; \
++    \
++    G_DEFINE_AUTOPTR_CLEANUP_FUNC(CpuInstanceType, object_unref) \
++    \
++    DECLARE_OBJ_CHECKERS(CpuInstanceType, CpuClassType, \
++                         CPU_MODULE_OBJ_NAME, TYPE_##CPU_MODULE_OBJ_NAME)
  
--static void loongarch_cpu_add_definition(gpointer data, gpointer user_data)
--{
--    ObjectClass *oc = data;
--    CpuDefinitionInfoList **cpu_list = user_data;
--    CpuDefinitionInfo *info = g_new0(CpuDefinitionInfo, 1);
--    const char *typename = object_class_get_name(oc);
--
--    info->name = cpu_model_from_type(typename);
--    info->q_typename = g_strdup(typename);
--
--    QAPI_LIST_PREPEND(*cpu_list, info);
--}
--
- CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
- {
--    CpuDefinitionInfoList *cpu_list = NULL;
--    GSList *list;
--
--    list = object_class_get_list(TYPE_LOONGARCH_CPU, false);
--    g_slist_foreach(list, loongarch_cpu_add_definition, &cpu_list);
--    g_slist_free(list);
--
--    return cpu_list;
-+    return generic_query_cpu_definitions(errp);
- }
- 
- static const char *cpu_model_advertised_features[] = {
+ typedef enum MMUAccessType {
+     MMU_DATA_LOAD  = 0,
 -- 
 2.41.0
 
