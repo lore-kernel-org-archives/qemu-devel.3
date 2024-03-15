@@ -4,56 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 751ABC54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 10:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A22C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 11:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl5Cq-0001rM-Rz; Fri, 15 Mar 2024 06:54:32 -0400
+	id 1rl5KJ-0005On-5m; Fri, 15 Mar 2024 07:02:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1rl5Cn-0001r2-8A
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 06:54:29 -0400
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1rl5Ck-0002ll-Pg
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 06:54:29 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDHz7PeKPRl1Yq1Bg--.24203S2;
- Fri, 15 Mar 2024 18:54:22 +0800 (CST)
-Received: from phytium.com.cn (unknown [123.150.8.50])
- by mail (Coremail) with SMTP id AQAAfwBHuUHUKPRlaIwAAA--.853S4;
- Fri, 15 Mar 2024 18:54:16 +0800 (CST)
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-To: ira.weiny@intel.com, jonathan.cameron@huawei.com, dan.j.williams@intel.com
-Cc: linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org,
- qemu-devel@nongnu.org, chenbaozi@phytium.com.cn,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>
-Subject: [PATCH 1/1] cxl/mem: Fix for the index of Clear Event Record Handle
-Date: Fri, 15 Mar 2024 18:53:36 +0800
-Message-Id: <20240315105336.464156-2-wangyuquan1236@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240315105336.464156-1-wangyuquan1236@phytium.com.cn>
-References: <20240315105336.464156-1-wangyuquan1236@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rl5K8-0005KO-Cb
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:02:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rl5K6-0004A2-O1
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 07:02:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710500521;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1HEtOnZx7X1bml+0RIOaXt+HVPacOXFPnIikuhAPZCY=;
+ b=TndzO8NLdaCA2UHQrLdpJI8Ry77N+JQ0iHuUEKi8l9s7iuHTP00uDFXIx20v2kd1LAu7cH
+ gQmDA+HD2yTFGivxMfOpjR0qbk45oDQzd+gXIFRUJah5ZXUPs/cK2+Hmo9t0b3+qWCvZgo
+ bcTvPuLQaqTdF2TF5p3+Uow9wKHVK0U=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-22-wcwP27HYMfu8X8AzrPrWEQ-1; Fri, 15 Mar 2024 07:01:59 -0400
+X-MC-Unique: wcwP27HYMfu8X8AzrPrWEQ-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-69152af7760so3966256d6.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 04:01:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710500519; x=1711105319;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1HEtOnZx7X1bml+0RIOaXt+HVPacOXFPnIikuhAPZCY=;
+ b=jh5F7kPoLBsDnBK3mmrBQVeHGyR7opYV3grJ4W27x8Gl+Oqempl+fshpNB6u2mvk2g
+ U0vyuoBpJOXOOgedD4kPOJuNIuImeh0ju4eYDLBWaudPwQPC/jRsoyjVV8Pf6cugmUdD
+ myksLQh+yrmc/1fP5q8YurYQU0gxJ4BNhGoMre/Ov6YG9jbXNXnPmbESq3+OoFD4lvkA
+ +bmhrYO2fkFFQM7YruvNFdiaZfD6TmSwiyiN5FCqWx//rXgVytOvSjSt+41T7r9C6kbL
+ YebzlnBU3A1IjWKESBCBbO7XCTVN3REc0SaMZYYhsZ58iw3VZY347vyYL5JHhre2pz5O
+ qlwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXf7eFWg718WB7KOLTC10fu7t48U841WpjzhP/c2zupWzOB48q088rxvAJXtCgRuAdL3dNnuEqshykWBY+7krwiyekMTzk=
+X-Gm-Message-State: AOJu0Yx6hKpJd+qah9CcPH3x3YGtr4bMiZn+q911MO4QWBRqjaldg+sG
+ DZlEwlm+OriT9GnE96p646wOer6nce+vPsyDt85zROzDDjNJzXaMVOdQCTxd7/ELDcStD+mBWRd
+ 6ZTrLkXK4zTfQnBwtGXFWlc5jMYNQ0W+Rl62T+HumHOx3gSLFb6Pb
+X-Received: by 2002:a05:6214:2c0a:b0:691:ca1:ce8a with SMTP id
+ qq10-20020a0562142c0a00b006910ca1ce8amr1742394qvb.6.1710500519401; 
+ Fri, 15 Mar 2024 04:01:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHX5dZenAd0eOzp2a058DKA8ft/D5fBKtCsJVF2Daafw1Kmj7FdILE2JI4uZJtmXrmqRtCgEw==
+X-Received: by 2002:a05:6214:2c0a:b0:691:ca1:ce8a with SMTP id
+ qq10-20020a0562142c0a00b006910ca1ce8amr1742357qvb.6.1710500519005; 
+ Fri, 15 Mar 2024 04:01:59 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ p14-20020a05621421ee00b00691631154a2sm1517544qvj.43.2024.03.15.04.01.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Mar 2024 04:01:58 -0700 (PDT)
+Date: Fri, 15 Mar 2024 07:01:56 -0400
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
+ qemu_savevm_state_setup()
+Message-ID: <ZfQqpK0xCwygYYho@x1n>
+References: <87plw44wps.fsf@suse.de>
+ <1566715b-a9a5-4df6-8e64-f4f912e2ea2f@redhat.com>
+ <87le6omw0d.fsf@suse.de>
+ <9071affc-ffb5-435a-99d1-ca829703e31b@redhat.com>
+ <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
+ <b2b52017-c4cd-43e9-a67b-2ccbb92ad99e@redhat.com>
+ <874jdbmst4.fsf@suse.de> <ZfByYiL3Gl9d9u7h@x1n>
+ <87wmq7l2xx.fsf@suse.de>
+ <b9cb5c16-59a4-4cdc-9d12-6d7c2306b4ff@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwBHuUHUKPRlaIwAAA--.853S4
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAFAWXzUXsFBgAAs6
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW7KryrZw4xuFWfKr1DAr4rAFb_yoW8uw1UpF
- W3uryIkr4kXa1a9wsxAas0g3y3Zay0grW3urWUt3s3G34avF98XF1fJ3yjyFsIkFyrXF1x
- Arn8Zr45GayjgF7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+In-Reply-To: <b9cb5c16-59a4-4cdc-9d12-6d7c2306b4ff@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.987,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -71,73 +115,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The dev_dbg info for Clear Event Records mailbox command would report
-the handle of the next record to clear not the current one.
+On Fri, Mar 15, 2024 at 11:17:45AM +0100, Cédric Le Goater wrote:
+> > migrate_set_state is also unintuitive because it ignores invalid state
+> > transitions and we've been using that property to deal with special
+> > states such as POSTCOPY_PAUSED and FAILED:
+> > 
+> > - After the migration goes into POSTCOPY_PAUSED, the resumed migration's
+> >    migrate_init() will try to set the state NONE->SETUP, which is not
+> >    valid.
+> > 
+> > - After save_setup fails, the migration goes into FAILED, but wait_unplug
+> >    will try to transition SETUP->ACTIVE, which is also not valid.
+> > 
+> 
+> I am not sure I understand what the plan is. Both solutions are problematic
+> regarding the state transitions.
+> 
+> Should we consider that waiting for failover devices to unplug is an internal
+> step of the SETUP phase not transitioning to ACTIVE ?
 
-This was because the index 'i' had incremented before printing the
-current handle value.
+If to unblock this series, IIUC the simplest solution is to do what Fabiano
+suggested, that we move qemu_savevm_wait_unplug() to be before the check of
+setup() ret.  In that case, the state change in qemu_savevm_wait_unplug()
+should be benign and we should see a super small window it became ACTIVE
+but then it should be FAILED (and IIUC the patch itself will need to use
+ACTIVE as "old_state", not SETUP anymore).
 
-This fix also adjusts the index variable name from 'i' to 'clear_cnt'
-which can be easier for developers to distinguish and understand.
+For the long term, maybe we can remove the WAIT_UNPLUG state?  The only
+Libvirt support seems to be here:
 
-Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
----
- drivers/cxl/core/mbox.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+commit 8a226ddb3602586a2ba2359afc4448c02f566a0e
+Author: Laine Stump <laine@redhat.com>
+Date:   Wed Jan 15 16:38:57 2020 -0500
 
-diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index 9adda4795eb7..3ca2845ae6aa 100644
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -881,7 +881,7 @@ static int cxl_clear_event_record(struct cxl_memdev_state *mds,
- 	struct cxl_mbox_cmd mbox_cmd;
- 	u16 cnt;
- 	int rc = 0;
--	int i;
-+	int clear_cnt;
- 
- 	/* Payload size may limit the max handles */
- 	if (pl_size > mds->payload_size) {
-@@ -908,28 +908,29 @@ static int cxl_clear_event_record(struct cxl_memdev_state *mds,
- 	 * Clear Event Records uses u8 for the handle cnt while Get Event
- 	 * Record can return up to 0xffff records.
- 	 */
--	i = 0;
-+	clear_cnt = 0;
- 	for (cnt = 0; cnt < total; cnt++) {
- 		struct cxl_event_record_raw *raw = &get_pl->records[cnt];
- 		struct cxl_event_generic *gen = &raw->event.generic;
- 
--		payload->handles[i++] = gen->hdr.handle;
-+		payload->handles[clear_cnt] = gen->hdr.handle;
- 		dev_dbg(mds->cxlds.dev, "Event log '%d': Clearing %u\n", log,
--			le16_to_cpu(payload->handles[i]));
-+			le16_to_cpu(payload->handles[clear_cnt]));
- 
--		if (i == max_handles) {
--			payload->nr_recs = i;
-+		clear_cnt++;
-+		if (clear_cnt == max_handles) {
-+			payload->nr_recs = clear_cnt;
- 			rc = cxl_internal_send_cmd(mds, &mbox_cmd);
- 			if (rc)
- 				goto free_pl;
--			i = 0;
-+			clear_cnt = 0;
- 		}
- 	}
- 
- 	/* Clear what is left if any */
--	if (i) {
--		payload->nr_recs = i;
--		mbox_cmd.size_in = struct_size(payload, handles, i);
-+	if (clear_cnt) {
-+		payload->nr_recs = clear_cnt;
-+		mbox_cmd.size_in = struct_size(payload, handles, clear_cnt);
- 		rc = cxl_internal_send_cmd(mds, &mbox_cmd);
- 		if (rc)
- 			goto free_pl;
+    qemu: add wait-unplug to qemu migration status enum
+
+Considering that qemu_savevm_wait_unplug() can be a noop if the device is
+already unplugged, I think it means no upper layer app should rely on this
+state to present.
+
+Thanks,
+
 -- 
-2.34.1
+Peter Xu
 
 
