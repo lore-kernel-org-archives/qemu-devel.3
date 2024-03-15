@@ -4,82 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88FC8C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 15:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD682C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 15:23:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl9A8-0001jr-Ni; Fri, 15 Mar 2024 11:08:00 -0400
+	id 1rl9P0-0007gn-41; Fri, 15 Mar 2024 11:23:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rl9A7-0001iy-91
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:07:59 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9Oy-0007eE-9E
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rl9A2-0007OR-DN
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:07:58 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9Op-00020m-4X
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710515273;
+ s=mimecast20190719; t=1710516190;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KkDKLvNu1cZWPQdFoHazfvg9l7f5VzwLsoLGtElFrfs=;
- b=Y+4Zf3hLxWJhzR6RwgT5vvi1xwEwuyf6k58nFgcT0WDnPPloPFmadUxLbL4q0j7BNqNZcm
- GZACmIbkDTq0Pr1uriCXfD5snxI8QHdizu2KBq/E5GRZTpBg9S9H7U+yJadDEacGHyy46V
- t3JTv1dWDB2XGPfZ17sieNQRgE7EBs0=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=deQq+hCtwY/CcyKIotIwykziTMAABf0R9UV59nXNgKA=;
+ b=N61OkWY0Do0FJNRc8AtB5xzCLm+wwHvUbsiQeNvdmRrAlpNWb8cxtLF0sxHya4H5F9h8di
+ l2GQxsYZrrQsmdqVQT8MDeb7Vu7ifAuuRQevIRu2/8lnGwf9rmYwBBM3gm1TO18Q9hIfB9
+ Kh9qlzFveoLOpawCF5JtR1NSUBpvKwk=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-464-ZrMmomcLMM6H1njdo1mHjA-1; Fri, 15 Mar 2024 11:07:52 -0400
-X-MC-Unique: ZrMmomcLMM6H1njdo1mHjA-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-787dea68f58so202371385a.3
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 08:07:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710515272; x=1711120072;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KkDKLvNu1cZWPQdFoHazfvg9l7f5VzwLsoLGtElFrfs=;
- b=rGP9X3YHn2rx8/oibcLtYIK7SiAK6PIDcAJI8ZlaG5XdpCtOkYqiw03vC2ykETq5NS
- LIKSGhwK7cDGc2V6bsLPpZDeyJcktKyvcPGWcNVuw/hNxcRdsq5nnOAyjYOXSbXq7+L3
- ltkYl5NgZK3dyKvFQQaMwctVps5GT+0Qq29xT8KigudRP0iNsVlYjw0KRftq0wh/g8xD
- dbsOGeT5xM9fkPne302F+Uh2BQWj58o4UBikuMEY1f6wK7rdhlq6uipFZVpZq9E8LziG
- qw1Nrr7IbI29ZbQAu725VQbGHYQ981+H885FLOveQaacuTbUkPBHNn7gdlSFXNOQAQeE
- YwdA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4I15HfwBN+Gw6/+fK/3KW+QopzAb4z/chg1LadaBnpbveY+QoGH4XXji5A1NjTg/H8345IiZ1cjr+0fPMv/S2ie5+BaM=
-X-Gm-Message-State: AOJu0Yy94D7VP3gCI2ISni0E2mNzdwR3JFOUzt504iR5n4VuiMZKNyK7
- /wetjDoQ+J2L/Fxy42C5zREcb0hYqSOuzQ8Ikhm7Je//c2/nCym6ROQBNJoeeyZSnVMRTdntTKP
- nTu5EDJrcizSk+QolRIiuwDU1a7n+Bsqc2S8qdIMg1i3R1OlX7NRS
-X-Received: by 2002:a05:620a:1108:b0:788:21f3:bfa4 with SMTP id
- o8-20020a05620a110800b0078821f3bfa4mr5168232qkk.57.1710515272051; 
- Fri, 15 Mar 2024 08:07:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFKOxU5mswKEnJBLp+ACpWqciai9VipzVtZBvXGJXjwcL7az0fitp7Xi8TGKZ3d5g9TAwe/A==
-X-Received: by 2002:a05:620a:1108:b0:788:21f3:bfa4 with SMTP id
- o8-20020a05620a110800b0078821f3bfa4mr5168207qkk.57.1710515271701; 
- Fri, 15 Mar 2024 08:07:51 -0700 (PDT)
-Received: from sgarzare-redhat (host-87-12-25-33.business.telecomitalia.it.
- [87.12.25.33]) by smtp.gmail.com with ESMTPSA id
- c25-20020ae9e219000000b00789d7111878sm1927847qkc.76.2024.03.15.08.07.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Mar 2024 08:07:51 -0700 (PDT)
-Date: Fri, 15 Mar 2024 16:07:45 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, mst@redhat.com, eperezma@redhat.com, 
- jasowang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: Re: [PATCH for-9.0 v2] vdpa-dev: Fix initialisation order to restore
- VDUSE compatibility
-Message-ID: <emqti7b54jqyqxpug7jewzhviukilpeshlk6puu7gsy5y7jhzx@7crtolsz7qhd>
-References: <20240315140331.59227-1-kwolf@redhat.com>
+ us-mta-76-ssSw1BOzPZ2OGuEPtSriHg-1; Fri, 15 Mar 2024 11:23:05 -0400
+X-MC-Unique: ssSw1BOzPZ2OGuEPtSriHg-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2BAB882248D;
+ Fri, 15 Mar 2024 15:23:05 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0A2F9111DCF3;
+ Fri, 15 Mar 2024 15:23:05 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 09C2421E682B; Fri, 15 Mar 2024 16:23:02 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: jsnow@redhat.com,
+	peter.maydell@linaro.org,
+	michael.roth@amd.com
+Subject: [PATCH v5 15/25] qapi/schema: add _check_complete flag
+Date: Fri, 15 Mar 2024 16:22:51 +0100
+Message-ID: <20240315152301.3621858-16-armbru@redhat.com>
+In-Reply-To: <20240315152301.3621858-1-armbru@redhat.com>
+References: <20240315152301.3621858-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20240315140331.59227-1-kwolf@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -104,182 +84,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 15, 2024 at 03:03:31PM +0100, Kevin Wolf wrote:
->VDUSE requires that virtqueues are first enabled before the DRIVER_OK
->status flag is set; with the current API of the kernel module, it is
->impossible to enable the opposite order in our block export code because
->userspace is not notified when a virtqueue is enabled.
->
->This requirement also mathces the normal initialisation order as done by
->the generic vhost code in QEMU. However, commit 6c482547 accidentally
->changed the order for vdpa-dev and broke access to VDUSE devices with
->this.
->
->This changes vdpa-dev to use the normal order again and use the standard
->vhost callback .vhost_set_vring_enable for this. VDUSE devices can be
->used with vdpa-dev again after this fix.
->
->vhost_net intentionally avoided enabling the vrings for vdpa and does
->this manually later while it does enable them for other vhost backends.
->Reflect this in the vhost_net code and return early for vdpa, so that
->the behaviour doesn't change for this device.
->
->Cc: qemu-stable@nongnu.org
->Fixes: 6c4825476a4351530bcac17abab72295b75ffe98
->Signed-off-by: Kevin Wolf <kwolf@redhat.com>
->---
->v2:
->- Actually make use of the @enable parameter
->- Change vhost_net to preserve the current behaviour
->
-> hw/net/vhost_net.c     | 10 ++++++++++
-> hw/virtio/vdpa-dev.c   |  5 +----
-> hw/virtio/vhost-vdpa.c | 27 +++++++++++++++++++++++++--
-> hw/virtio/vhost.c      |  8 +++++++-
-> 4 files changed, 43 insertions(+), 7 deletions(-)
->
->diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
->index e8e1661646..fd1a93701a 100644
->--- a/hw/net/vhost_net.c
->+++ b/hw/net/vhost_net.c
->@@ -541,6 +541,16 @@ int vhost_set_vring_enable(NetClientState *nc, int enable)
->     VHostNetState *net = get_vhost_net(nc);
->     const VhostOps *vhost_ops = net->dev.vhost_ops;
->
->+    /*
->+     * vhost-vdpa network devices need to enable dataplane virtqueues after
->+     * DRIVER_OK, so they can recover device state before starting dataplane.
->+     * Because of that, we don't enable virtqueues here and leave it to
->+     * net/vhost-vdpa.c.
->+     */
->+    if (nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
->+        return 0;
->+    }
->+
->     nc->vring_enable = enable;
->
->     if (vhost_ops && vhost_ops->vhost_set_vring_enable) {
->diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
->index eb9ecea83b..13e87f06f6 100644
->--- a/hw/virtio/vdpa-dev.c
->+++ b/hw/virtio/vdpa-dev.c
->@@ -253,14 +253,11 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev, Error **errp)
->
->     s->dev.acked_features = vdev->guest_features;
->
->-    ret = vhost_dev_start(&s->dev, vdev, false);
->+    ret = vhost_dev_start(&s->dev, vdev, true);
->     if (ret < 0) {
->         error_setg_errno(errp, -ret, "Error starting vhost");
->         goto err_guest_notifiers;
->     }
->-    for (i = 0; i < s->dev.nvqs; ++i) {
->-        vhost_vdpa_set_vring_ready(&s->vdpa, i);
->-    }
->     s->started = true;
->
->     /*
->diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
->index ddae494ca8..401afac2f5 100644
->--- a/hw/virtio/vhost-vdpa.c
->+++ b/hw/virtio/vhost-vdpa.c
->@@ -886,12 +886,13 @@ static int vhost_vdpa_get_vq_index(struct vhost_dev *dev, int idx)
->     return idx;
-> }
->
->-int vhost_vdpa_set_vring_ready(struct vhost_vdpa *v, unsigned idx)
->+static int vhost_vdpa_set_vring_enable_one(struct vhost_vdpa *v, unsigned idx,
->+                                           int enable)
-> {
->     struct vhost_dev *dev = v->dev;
->     struct vhost_vring_state state = {
->         .index = idx,
->-        .num = 1,
->+        .num = enable,
->     };
->     int r = vhost_vdpa_call(dev, VHOST_VDPA_SET_VRING_ENABLE, &state);
->
+From: John Snow <jsnow@redhat.com>
 
-After this line we now have:
+Instead of using the None value for the members field, use a dedicated
+flag to detect recursive misconfigurations.
 
-       trace_vhost_vdpa_set_vring_ready(dev, idx, r);
+This is intended to assist with subsequent patches that seek to remove
+the "None" value from the members field (which can never hold that value
+after the final call to check()) in order to simplify the static typing
+of that field; avoiding the need of assertions littered at many
+callsites to eliminate the possibility of the None value.
 
-Should we rename it or move it to the new function?
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ scripts/qapi/schema.py | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-If we rename it, we should trace also `enable`.
-
->@@ -899,6 +900,27 @@ int vhost_vdpa_set_vring_ready(struct vhost_vdpa 
->*v, unsigned idx)
->     return r;
-> }
->
->+static int vhost_vdpa_set_vring_enable(struct vhost_dev *dev, int enable)
->+{
->+    struct vhost_vdpa *v = dev->opaque;
->+    unsigned int i;
->+    int ret;
->+
->+    for (i = 0; i < dev->nvqs; ++i) {
->+        ret = vhost_vdpa_set_vring_enable_one(v, i, enable);
->+        if (ret < 0) {
->+            return ret;
->+        }
->+    }
->+
->+    return 0;
->+}
->+
->+int vhost_vdpa_set_vring_ready(struct vhost_vdpa *v, unsigned idx)
->+{
->+    return vhost_vdpa_set_vring_enable_one(v, idx, 1);
->+}
->+
-> static int vhost_vdpa_set_config_call(struct vhost_dev *dev,
->                                        int fd)
-> {
->@@ -1514,6 +1536,7 @@ const VhostOps vdpa_ops = {
->         .vhost_set_features = vhost_vdpa_set_features,
->         .vhost_reset_device = vhost_vdpa_reset_device,
->         .vhost_get_vq_index = vhost_vdpa_get_vq_index,
->+        .vhost_set_vring_enable = vhost_vdpa_set_vring_enable,
->         .vhost_get_config  = vhost_vdpa_get_config,
->         .vhost_set_config = vhost_vdpa_set_config,
->         .vhost_requires_shm_log = NULL,
->diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->index 2c9ac79468..decfb85184 100644
->--- a/hw/virtio/vhost.c
->+++ b/hw/virtio/vhost.c
->@@ -1984,7 +1984,13 @@ static int vhost_dev_set_vring_enable(struct vhost_dev *hdev, int enable)
->     return hdev->vhost_ops->vhost_set_vring_enable(hdev, enable);
-> }
->
->-/* Host notifiers must be enabled at this point. */
->+/*
->+ * Host notifiers must be enabled at this point.
->+ *
->+ * If @vring is true, this function will enable all vrings before starting the
-
-Nit: @vrings
-
->+ * device. If it is false, the vring initialization is left to be done by the
->+ * caller.
->+ */
-> int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-> {
->     int i, r;
->-- 
->2.44.0
->
-
-The rest LGTM, but while reviewing I was thinking whether it would be
-better to split the patch into two: first patch to support
-.vhost_set_vring_enable() for vhost-vdpa, second patch to fix
-hw/virtio/vdpa-dev.c.
-
-But I'm not sure this is a good idea since the second is strictly
-dependent on the first.
-
-Thanks,
-Stefano
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+index 173e27d9e2..2c3de72ae6 100644
+--- a/scripts/qapi/schema.py
++++ b/scripts/qapi/schema.py
+@@ -450,12 +450,13 @@ def __init__(self, name, info, doc, ifcond, features,
+         self.local_members = local_members
+         self.variants = variants
+         self.members = None
++        self._check_complete = False
+ 
+     def check(self, schema):
+         # This calls another type T's .check() exactly when the C
+         # struct emitted by gen_object() contains that T's C struct
+         # (pointers don't count).
+-        if self.members is not None:
++        if self._check_complete:
+             # A previous .check() completed: nothing to do
+             return
+         if self._checked:
+@@ -464,7 +465,7 @@ def check(self, schema):
+                                "object %s contains itself" % self.name)
+ 
+         super().check(schema)
+-        assert self._checked and self.members is None
++        assert self._checked and not self._check_complete
+ 
+         seen = OrderedDict()
+         if self._base_name:
+@@ -487,7 +488,8 @@ def check(self, schema):
+             self.variants.check(schema, seen)
+             self.variants.check_clash(self.info, seen)
+ 
+-        self.members = members  # mark completed
++        self.members = members
++        self._check_complete = True  # mark completed
+ 
+     # Check that the members of this type do not cause duplicate JSON members,
+     # and update seen to track the members seen so far. Report any errors
+-- 
+2.44.0
 
 
