@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C3EC54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 15:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F873C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 15:25:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl9Ou-000763-0s; Fri, 15 Mar 2024 11:23:16 -0400
+	id 1rl9P4-0007ig-6p; Fri, 15 Mar 2024 11:23:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9Op-0006yC-Jz
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9Oz-0007eP-An
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9On-0001zN-BP
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:11 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl9Oq-00021X-Bn
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 11:23:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710516188;
+ s=mimecast20190719; t=1710516191;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NmDKWvkY6LHaYmPgECKyIblYZQ6WWgvxF9ehAc/hLCc=;
- b=gYg4fOOqd0GS0phl7b2st8vBUE253z1BZzaKE8+nbkR6pY8z7C7XltXCMzJSInu3X/raL1
- L5LsX6tfofJJ1LaerjRFWjTn7Tu0Y24cWYWrw4gGIVCzHZ/ZHC9Wq72T5BixMd7bX/Tg75
- plV1AwJXZnO0Wvm0W48AI+WhUMZKULw=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-4VcxbuiOONK3XhNsblGv0A-1; Fri,
- 15 Mar 2024 11:23:04 -0400
-X-MC-Unique: 4VcxbuiOONK3XhNsblGv0A-1
+ bh=LZgZgYfHTFdicpTgNsXXKGTnpGjPlk1Db3JCkh8LiHc=;
+ b=D44LNbwRh/k4YRYnimFOCeDwc78VqHBIsKBsAnXmFo/eGsuYHrtd/TfhJFm5bqGwb2YsMF
+ XWfQhpuQxkJJJEQ9DcVo1jnuyileaR2hU1uz8Qw7qPjSfWMFZ8qvZA+0KW6EjLGW+UW/H6
+ YZkxOt8dLzhw5c7pdkKVj1AuybT3Nzs=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-76-NGBzLZxuNSS_k_fF07X5BQ-1; Fri, 15 Mar 2024 11:23:07 -0400
+X-MC-Unique: NGBzLZxuNSS_k_fF07X5BQ-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
  [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 184D028EC11E;
- Fri, 15 Mar 2024 15:23:04 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 327758007B8;
+ Fri, 15 Mar 2024 15:23:05 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id EBC31111E404;
- Fri, 15 Mar 2024 15:23:03 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 123391121306;
+ Fri, 15 Mar 2024 15:23:05 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E32D521E688F; Fri, 15 Mar 2024 16:23:01 +0100 (CET)
+ id 128F721E682E; Fri, 15 Mar 2024 16:23:02 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: jsnow@redhat.com,
 	peter.maydell@linaro.org,
 	michael.roth@amd.com
-Subject: [PATCH v5 06/25] qapi/schema: declare type for
- QAPISchemaObjectTypeMember.type
-Date: Fri, 15 Mar 2024 16:22:42 +0100
-Message-ID: <20240315152301.3621858-7-armbru@redhat.com>
+Subject: [PATCH v5 18/25] qapi/schema: assert inner type of QAPISchemaVariants
+ in check_clash()
+Date: Fri, 15 Mar 2024 16:22:54 +0100
+Message-ID: <20240315152301.3621858-19-armbru@redhat.com>
 In-Reply-To: <20240315152301.3621858-1-armbru@redhat.com>
 References: <20240315152301.3621858-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -29
 X-Spam_score: -3.0
@@ -87,47 +87,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Snow <jsnow@redhat.com>
 
-A QAPISchemaObjectTypeMember's type gets resolved only during .check().
-We have QAPISchemaObjectTypeMember.__init__() initialize self.type =
-None, and .check() assign the actual type.  Using .type before .check()
-is wrong, and hopefully crashes due to the value being None.  Works.
+QAPISchemaVariant's "variants" field is typed as
+List[QAPISchemaVariant], where the typing for QAPISchemaVariant allows
+its type field to be any QAPISchemaType.
 
-However, it makes for awkward typing.  With .type:
-Optional[QAPISchemaType], mypy is of course unable to see that it's None
-before .check(), and a QAPISchemaType after.  To help it over the hump,
-we'd have to assert self.type is not None before all the (valid) uses.
-The assertion catches invalid uses, but only at run time; mypy can't
-flag them.
-
-Instead, declare .type in .__init__() as QAPISchemaType *without*
-initializing it.  Using .type before .check() now certainly crashes,
-which is an improvement.  Mypy still can't flag invalid uses, but that's
-okay.
-
-Addresses typing errors such as these:
-
-qapi/schema.py:657: error: "None" has no attribute "alternate_qtype"  [attr-defined]
-qapi/schema.py:662: error: "None" has no attribute "describe"  [attr-defined]
+However, QAPISchemaVariant expects that all of its variants contain the
+narrower QAPISchemaObjectType. This relationship is enforced at runtime
+in QAPISchemaVariants.check(). This relationship is not embedded in the
+type system though, so QAPISchemaVariants.check_clash() needs to
+re-assert this property in order to call
+QAPISchemaVariant.type.check_clash().
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- scripts/qapi/schema.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/qapi/schema.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index b298c8b4f9..307f8af01a 100644
+index 9c138badb0..177bfa0d11 100644
 --- a/scripts/qapi/schema.py
 +++ b/scripts/qapi/schema.py
-@@ -786,7 +786,7 @@ def __init__(self, name, info, typ, optional, ifcond=None, features=None):
-             assert isinstance(f, QAPISchemaFeature)
-             f.set_defined_in(name)
-         self._type_name = typ
--        self.type = None
-+        self.type: QAPISchemaType  # set during check()
-         self.optional = optional
-         self.features = features or []
+@@ -716,7 +716,10 @@ def check(self, schema, seen):
+     def check_clash(self, info, seen):
+         for v in self.variants:
+             # Reset seen map for each variant, since qapi names from one
+-            # branch do not affect another branch
++            # branch do not affect another branch.
++            #
++            # v.type's typing is enforced in check() above.
++            assert isinstance(v.type, QAPISchemaObjectType)
+             v.type.check_clash(info, dict(seen))
+ 
  
 -- 
 2.44.0
