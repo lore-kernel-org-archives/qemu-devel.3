@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3DF3C54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 21:29:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1152FC54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 21:32:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlF7A-0000z4-MO; Fri, 15 Mar 2024 17:29:20 -0400
+	id 1rlF9c-0001yH-SL; Fri, 15 Mar 2024 17:31:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rlF74-0000xJ-Vd
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 17:29:15 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1rlF9b-0001xX-8Q
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 17:31:51 -0400
+Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rlF72-00062p-R9
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 17:29:14 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6e6082eab17so2347003b3a.1
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 14:29:11 -0700 (PDT)
+ id 1rlF9Y-0006Un-HL
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 17:31:49 -0400
+Received: by mail-oa1-x31.google.com with SMTP id
+ 586e51a60fabf-22187576d54so1953686fac.1
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 14:31:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710538151; x=1711142951; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710538306; x=1711143106; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PHlXGhlJbUlZATbLsXMoxAgW9JAsVtI8n+jSvPJLsKU=;
- b=M5rWc9guTljAVilhzjsFwCahW5KSJ3AvSDZe5R7O5CuSFaE6IrBUzEQhfT8AL21Znv
- pGc8BjDQOiPxydNfG93KyxNcUft9Liif4qFw7K0auPsSNtMXLp1++ny73sb+StWc/bP/
- xJb1ki7sBleQPjzpX/UZiYGauiQNsVtFV4mKwyBnTIch8mIVQIWGzxZgMWGSSNWhDCe4
- WXyPYsZGDxlCQE6AqCBwSoPCLJUQhPuWoZCk7yQA8h+Mh7ffR5My7svd/TAa2VQ2f4ix
- 9EmHKCyAd6xW7wHEm9vQpAEwg5qPq1tSDDXzK/U7vQT9zkrhXGe7wxBcOylKols2wpp5
- Q9eg==
+ bh=SW5xvAxGVSsUbmFcCIJOoyCgU+n+KFQeJTG3aS/IKfE=;
+ b=x8STgAVsNj9yXezGjwOCIdmSzbzLzTAKDm0Upgzt6btThy2WgaYfKZ+VJnV/ZojyxL
+ /DveuUYzlvl7eRBa7nSfgPRXlMvzYakajXc9FzATxAvxzpGirszy98r1qDoG4b4oPen7
+ z3/gD1Ui3H9hJzSqh2dS4qBQ3gAhlADBMELrJzUQR8JnStbATSHeWFIxaM8HrIqnEPh8
+ +j8AoXq689A5SO0OFwl2a0sduK7fGv8VANRuUox90Gh4Ys+rP1Z6zJL/Eg3XvOJAWwg3
+ Ik8nhf1UIucpjGn5n/RlCxETLTwYG00s5gsYPxLvTwWiwSgE8CG58bxFJTbnSkqaEJ8P
+ ckUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710538151; x=1711142951;
+ d=1e100.net; s=20230601; t=1710538306; x=1711143106;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PHlXGhlJbUlZATbLsXMoxAgW9JAsVtI8n+jSvPJLsKU=;
- b=mnLKdog+WGuFuhjVDyFFLUzIKB22hLOWx/oJWmNojygibgBlKQMt9ZXnN9M6QyzAy2
- wFVVQCzuw0RzQC5UsNaEggjYXfk0bJRXa9ZPRepTiYd+4/rKmFEsap/bvnFpqS+KD0QV
- 0eo7x0Kfy6l/H6n8l9fWlFlf3FI85mERWhKbvSSS4es3BcH4PMpPhD6tCfKV8kDP9cVt
- hRIOelyg8oRk9PVMNwcmRhgURbYlw0e7AIe7BsFnRRkHyl/eCyI9hdF2lZ7wmHrGb5xn
- QTZvUiCLNssjECD0oenw/HhJ7vLwhYeiNCjR7bEszUCMx9gzBCSl8TpWVpAXkttAEhIZ
- h1SQ==
+ bh=SW5xvAxGVSsUbmFcCIJOoyCgU+n+KFQeJTG3aS/IKfE=;
+ b=VZd3sCT8xiZFtHZLArerYDRPVI3JyDYjvQSJ+CtKnmj0rMDNGsB0gm+GL313Ns5/Sv
+ xNmXjQiDgK6wqYlhj/AC41/fm+K5TB8Hg4nW+CRYkc71T2CzKURGp9mAoHFXdMObSgQV
+ dfOJ8h4ylrHswo0Hih72MQXkp0IgkWcU196lYlphlpDr5hK2nYmBxKI5BZzBpxQxfYTu
+ mAriD1V0g9Ziwv0KP8rtUVQA9OQvmOeLPdeloKQzhefV9INsyWm1wwT9oDIPBKq3/7RS
+ J5OeBok6ogEiV07KLhRvIDqxub6cRZ2RrX4NNILjVJFmmo8wUPoUpqmSt/IIm2CfMtvg
+ oJ6A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWqJf+XYH3qY1f+wf9kF4o02GQGpl1dTg+qzbW9TO9/0FO0YSA2ag4ScO9/bduxLsystauIGCnCxpRHDp2qfKLdOgWwdCs=
-X-Gm-Message-State: AOJu0Yz6V2fHYvf0LY/tMg8C+LweG9SWyJyMl134zZE3HWSQmMBHsBzS
- DtLiK918xVApRM6R6Y4UA7Uyc3D0ohMoiKAGa1fgVkOTXpBmEGjUGfdl0eSWp+w=
-X-Google-Smtp-Source: AGHT+IH2cre5Yk7pdjUbtaUfxNZ/ztBSsat+WSbv/Ml000S4tZN8JEY3CX4rn9dbIcYi5H30x7RhTw==
-X-Received: by 2002:a05:6a20:12c9:b0:1a1:4d0c:7de2 with SMTP id
- v9-20020a056a2012c900b001a14d0c7de2mr6649512pzg.56.1710538150780; 
- Fri, 15 Mar 2024 14:29:10 -0700 (PDT)
+ AJvYcCUW69FDVLhGkefVUfvplYA0Y0jgm4VgScIaXOWH/bX30/4zUBLl9jqIhAt9bXjeUP3hDlmB1+BteLya+CPlKJRvu/hvkdk=
+X-Gm-Message-State: AOJu0YxTU/7zAXRkAlai4srK4Dn0u+0dUGFbjdPU0MzU6LkGFcWlF1Lo
+ a7cNwGEKr0eOc9rKIQAzXbEFt7QjiSiOz2U5AzAWLXcF9k9yYjbeW3gdy15jlZ4=
+X-Google-Smtp-Source: AGHT+IH8ZHCgfGzg+ZEmzzTwkasdeVuZVMMi5sTQxmhd4nAdA8tbCDQMsBIH9BAO6r+7BS+ggqYWgw==
+X-Received: by 2002:a05:6870:350c:b0:221:8c16:1 with SMTP id
+ k12-20020a056870350c00b002218c160001mr7146801oah.33.1710538306325; 
+ Fri, 15 Mar 2024 14:31:46 -0700 (PDT)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- o14-20020a63fb0e000000b005cfc1015befsm2951730pgh.89.2024.03.15.14.29.09
+ r8-20020a62e408000000b006e64c9bc2b3sm3962473pfh.11.2024.03.15.14.31.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 Mar 2024 14:29:10 -0700 (PDT)
-Message-ID: <3e43eb36-b240-4446-b56f-9f155176788c@linaro.org>
-Date: Fri, 15 Mar 2024 11:29:05 -1000
+ Fri, 15 Mar 2024 14:31:45 -0700 (PDT)
+Message-ID: <46bf4272-f946-4df4-b70b-cd4e13c5ade2@linaro.org>
+Date: Fri, 15 Mar 2024 11:31:41 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 10/12] exec/cpu-defs: Restrict SOFTMMU specific
- definitions to accel/tcg/
+Subject: Re: [PATCH-for-9.1 06/12] tcg/sparc64: Check for USER_ONLY definition
+ instead of SOFTMMU one
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -74,13 +74,13 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  qemu-ppc@nongnu.org
 References: <20240313213339.82071-1-philmd@linaro.org>
- <20240313213339.82071-11-philmd@linaro.org>
+ <20240313213339.82071-7-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240313213339.82071-11-philmd@linaro.org>
+In-Reply-To: <20240313213339.82071-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,29 +104,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/13/24 11:33, Philippe Mathieu-Daudé wrote:
-> CPU_TLB_foo definitions are specific to SoftMMU and
-> only used in accel/tcg/.
+> Since we *might* have user emulation with softmmu,
+> replace the system emulation check by !user emulation one.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   accel/tcg/internal-target.h | 26 ++++++++++++++++++++++++++
->   include/exec/cpu-defs.h     | 26 --------------------------
->   2 files changed, 26 insertions(+), 26 deletions(-)
-> 
-> diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
-> index b22b29c461..9b5cc9168b 100644
-> --- a/accel/tcg/internal-target.h
-> +++ b/accel/tcg/internal-target.h
-> @@ -12,6 +12,32 @@
->   #include "exec/exec-all.h"
->   #include "exec/translate-all.h"
->   
-> +#if defined(CONFIG_SOFTMMU) && defined(CONFIG_TCG)
+>   tcg/sparc64/tcg-target.c.inc | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
-I see this is moved intact, but drop the CONFIG_TCG ifdef within accel/tcg/.
-With that change,
+Having read further, the ultimate goal is worthwhile.
+It'll be easy to turn these into runtime tests when we get there.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
