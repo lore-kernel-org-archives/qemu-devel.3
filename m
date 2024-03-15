@@ -4,85 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 948C1C54E5D
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 01:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8171C54E5D
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 01:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rkwCZ-0004Ji-HA; Thu, 14 Mar 2024 21:17:40 -0400
+	id 1rkwkp-0000HY-9B; Thu, 14 Mar 2024 21:53:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhukeqian1@huawei.com>)
- id 1rkwCX-0004JG-Fa; Thu, 14 Mar 2024 21:17:37 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhukeqian1@huawei.com>)
- id 1rkwCU-0001Qd-MU; Thu, 14 Mar 2024 21:17:37 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TwmYq1S60z6K6Sd;
- Fri, 15 Mar 2024 09:17:03 +0800 (CST)
-Received: from lhrpeml100003.china.huawei.com (unknown [7.191.160.210])
- by mail.maildlp.com (Postfix) with ESMTPS id AAF92140A36;
- Fri, 15 Mar 2024 09:16:57 +0800 (CST)
-Received: from kwepemi500026.china.huawei.com (7.221.188.247) by
- lhrpeml100003.china.huawei.com (7.191.160.210) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.35; Fri, 15 Mar 2024 01:16:41 +0000
-Received: from kwepemi500026.china.huawei.com ([7.221.188.247]) by
- kwepemi500026.china.huawei.com ([7.221.188.247]) with mapi id 15.01.2507.035; 
- Fri, 15 Mar 2024 09:16:39 +0800
-To: Salil Mehta <salil.mehta@huawei.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
- <jean-philippe@linaro.org>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
- <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "will@kernel.org" <will@kernel.org>,
- "gshan@redhat.com" <gshan@redhat.com>, "rafael@kernel.org"
- <rafael@kernel.org>, "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
- <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>, "wangyanan (Y)"
- <wangyanan55@huawei.com>, "jiakernel2@gmail.com" <jiakernel2@gmail.com>,
- "Wanghaibin (D)" <wanghaibin.wang@huawei.com>, "maobibo@loongson.cn"
- <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- Linuxarm <linuxarm@huawei.com>, yuzenghui <yuzenghui@huawei.com>
-Subject: =?gb2312?B?tPC4tDogW1BBVENIIFY4IDYvOF0gcGh5c21lbTogQWRkIGhlbHBlciBmdW5j?=
- =?gb2312?Q?tion_to_destroy_CPU_AddressSpace?=
-Thread-Topic: [PATCH V8 6/8] physmem: Add helper function to destroy CPU
- AddressSpace
-Thread-Index: AQHadCFYAMQRhS7fMEqlDm9aYjar8rE4AmeQ
-Date: Fri, 15 Mar 2024 01:16:39 +0000
-Message-ID: <7bccde5479f044dc87679236b736b861@huawei.com>
-References: <20240312020000.12992-1-salil.mehta@huawei.com>
- <20240312020000.12992-7-salil.mehta@huawei.com>
-In-Reply-To: <20240312020000.12992-7-salil.mehta@huawei.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.174.187.224]
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
+ id 1rkwkj-0000H5-U0
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 21:52:57 -0400
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <wangyuquan1236@phytium.com.cn>) id 1rkwkg-0006hM-LZ
+ for qemu-devel@nongnu.org; Thu, 14 Mar 2024 21:52:57 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwA3tEHnqfNlqUOwBg--.43868S2;
+ Fri, 15 Mar 2024 09:52:39 +0800 (CST)
+Received: from phytium.com.cn (unknown [123.150.8.50])
+ by mail (Coremail) with SMTP id AQAAfwD3aEHlqfNliS8AAA--.98S3;
+ Fri, 15 Mar 2024 09:52:37 +0800 (CST)
+From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+To: jonathan.cameron@huawei.com
+Cc: dave.jiang@intel.com, fan.ni@samsung.com, ira.weiny@intel.com,
+ linux-cxl@vger.kernel.org, linuxarm@huawei.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v9 0/7]  QEMU CXL Provide mock CXL events and irq support
+Date: Fri, 15 Mar 2024 09:52:28 +0800
+Message-Id: <20240315015228.307512-1-wangyuquan1236@phytium.com.cn>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230530133603.16934-1-Jonathan.Cameron@huawei.com>
+References: <20230530133603.16934-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56; envelope-from=zhukeqian1@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: 14
-X-Spam_score: 1.4
-X-Spam_bar: +
-X-Spam_report: (1.4 / 5.0 requ) BAYES_00=-1.9, CHARSET_FARAWAY_HEADER=3.2,
- MIME_CHARSET_FARAWAY=2.45, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwD3aEHlqfNliS8AAA--.98S3
+X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAFAWXzUXsAmQACsi
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
+ 1236@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvdXoWrKw17XrW8CFWxWr4ktFWfGrg_yoWDGFX_uF
+ 4vkFZIvw4ayFn8Ar47XFW8W3y3J3yDu3y5WF4kJF4Iyr1fJwsxGan2yF9xJa43GFW5Xan0
+ ywn8X3s2gw1xWjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
+ Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
+ UUUU=
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=wangyuquan1236@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,36 +66,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  zhukeqian <zhukeqian1@huawei.com>
-From:  zhukeqian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgU2FsaWwsDQoNClsuLi5dDQoNCit2b2lkIGNwdV9hZGRyZXNzX3NwYWNlX2Rlc3Ryb3koQ1BV
-U3RhdGUgKmNwdSwgaW50IGFzaWR4KSB7DQorICAgIENQVUFkZHJlc3NTcGFjZSAqY3B1YXM7DQor
-DQorICAgIGFzc2VydChjcHUtPmNwdV9hc2VzKTsNCisgICAgYXNzZXJ0KGFzaWR4ID49IDAgJiYg
-YXNpZHggPCBjcHUtPm51bV9hc2VzKTsNCisgICAgLyogS1ZNIGNhbm5vdCBjdXJyZW50bHkgc3Vw
-cG9ydCBtdWx0aXBsZSBhZGRyZXNzIHNwYWNlcy4gKi8NCisgICAgYXNzZXJ0KGFzaWR4ID09IDAg
-fHwgIWt2bV9lbmFibGVkKCkpOw0KKw0KKyAgICBjcHVhcyA9ICZjcHUtPmNwdV9hc2VzW2FzaWR4
-XTsNCisgICAgaWYgKHRjZ19lbmFibGVkKCkpIHsNCisgICAgICAgIG1lbW9yeV9saXN0ZW5lcl91
-bnJlZ2lzdGVyKCZjcHVhcy0+dGNnX2FzX2xpc3RlbmVyKTsNCisgICAgfQ0KKw0KKyAgICBhZGRy
-ZXNzX3NwYWNlX2Rlc3Ryb3koY3B1YXMtPmFzKTsNCisgICAgZ19mcmVlX3JjdShjcHVhcy0+YXMs
-IHJjdSk7DQoNCkluIGFkZHJlc3Nfc3BhY2VfZGVzdHJveSgpLCBpdCBjYWxscyBjYWxsX3JjdTEo
-KSBvbiBjcHVhcy0+YXMgd2hpY2ggd2lsbCBzZXQgZG9fYWRkcmVzc19zcGFjZV9kZXN0cm95KCkg
-YXMgdGhlIHJjdSBmdW5jLg0KQW5kIGdfZnJlZV9yY3UoKSBhbHNvIGNhbGxzIGNhbGxfcmN1MSgp
-IG9uIGNwdWFzLT5hcyB3aGljaCB3aWxsIG92ZXJ3cml0ZSB0aGUgcmN1IGZ1bmMgYXMgZ19mcmVl
-KCkuDQoNClRoZW4gSSB0aGluayB0aGUgZ19mcmVlKCkgbWF5IGJlIGNhbGxlZCB0d2ljZSBpbiBy
-Y3UgdGhyZWFkLCBwbGVhc2UgdmVyaWZ5IHRoYXQuDQoNClRoZSBzb3VyY2UgY29kZSBvZiBjYWxs
-X3JjdTE6DQoNCnZvaWQgY2FsbF9yY3UxKHN0cnVjdCByY3VfaGVhZCAqbm9kZSwgdm9pZCAoKmZ1
-bmMpKHN0cnVjdCByY3VfaGVhZCAqbm9kZSkpDQp7DQogICAgbm9kZS0+ZnVuYyA9IGZ1bmM7DQog
-ICAgZW5xdWV1ZShub2RlKTsNCiAgICBxYXRvbWljX2luYygmcmN1X2NhbGxfY291bnQpOw0KICAg
-IHFlbXVfZXZlbnRfc2V0KCZyY3VfY2FsbF9yZWFkeV9ldmVudCk7DQp9DQoNClRoYW5rcywNCktl
-cWlhbg0KDQorDQorICAgIGlmIChhc2lkeCA9PSAwKSB7DQorICAgICAgICAvKiByZXNldCB0aGUg
-Y29udmVuaWVuY2UgYWxpYXMgZm9yIGFkZHJlc3Mgc3BhY2UgMCAqLw0KKyAgICAgICAgY3B1LT5h
-cyA9IE5VTEw7DQorICAgIH0NCisNCisgICAgaWYgKC0tY3B1LT5jcHVfYXNlc19jb3VudCA9PSAw
-KSB7DQorICAgICAgICBnX2ZyZWUoY3B1LT5jcHVfYXNlcyk7DQorICAgICAgICBjcHUtPmNwdV9h
-c2VzID0gTlVMTDsNCisgICAgfQ0KK30NCisNCiBBZGRyZXNzU3BhY2UgKmNwdV9nZXRfYWRkcmVz
-c19zcGFjZShDUFVTdGF0ZSAqY3B1LCBpbnQgYXNpZHgpICB7DQogICAgIC8qIFJldHVybiB0aGUg
-QWRkcmVzc1NwYWNlIGNvcnJlc3BvbmRpbmcgdG8gdGhlIHNwZWNpZmllZCBpbmRleCAqLw0KLS0N
-CjIuMzQuMQ0KDQo=
+Hello, Jonathan
+
+When during the test of qmps of CXL events like "cxl-inject-general-media-event", 
+I am confuesd about the argument "flags". According to "qapi/cxl.json" in qemu, 
+this argument represents "Event Record Flags" in Common Event Record Format.
+However, it seems like the specific 'Event Record Severity' in this field can be
+different from the value of 'Event Status' in "Event Status Register". 
+
+For instance (take an injection example in the coverlatter):
+
+{ "execute": "cxl-inject-general-media-event",
+    "arguments": {
+        "path": "/machine/peripheral/cxl-mem0",
+        "log": "informational",
+        "flags": 1,
+        "dpa": 1000,
+        "descriptor": 3,
+        "type": 3,
+        "transaction-type": 192,
+        "channel": 3,
+        "device": 5,
+        "component-id": "iras mem"
+    }}
+
+In my understanding, the 'Event Status' is informational and the 
+'Event Record Severity' is Warning event, which means these two arguments are
+independent of each other. Is my understanding correct?
+
+Many thanks
+Yuquan
+
 
