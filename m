@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 454C5C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 16:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB1AC54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 16:57:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlAb3-00080M-Lg; Fri, 15 Mar 2024 12:39:53 -0400
+	id 1rlArE-0003f6-Ck; Fri, 15 Mar 2024 12:56:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rlAaw-000802-LJ
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 12:39:46 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rlAat-0006gM-JQ
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 12:39:46 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a466f89560eso287818466b.3
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 09:39:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710520782; x=1711125582; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B3BJ+70MnWU8jvhVqOWXYrc/s+eGuVzDpwMTXY43zKg=;
- b=TrP/ttybeLGHDoo6eFGj49+Ee54u1hFtR8Ju+1hPxnvBiJW3Gb0jHp8BhBBUa2xqnq
- 9RTL7pkGXNCaVfJAsrYcUDqDS2EQXuSTuZDW8Yf2pi7Gk2Dxi5ald9G+h1QSZzvtCcDH
- Grbjauxx323dal9Q2FJI8xUk6Na9ZmG6kJLSO0JrR+SME5N710Ne4tp2ShF82z+3QHzB
- 15YmEkWNgXK0hxu4hZRdlSjOvrE9iwXDtiSmsYPtwWpRj0NzDNEymgOzMhZE5y+Vfm2S
- hFIaRYQ0s+3K+BVZekx2Bh+QOPEqzWSfkMOTTCB5C5NB0MIbU66dexfdnRejmZA+N+k1
- IjmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710520782; x=1711125582;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=B3BJ+70MnWU8jvhVqOWXYrc/s+eGuVzDpwMTXY43zKg=;
- b=BLXnkqFZ/sUFnw7Rpb7HYrdoGae52I+XCaUeb/R2DDXq49KtogKpHv3z/X5Cc3pZVS
- aaR6YUqigXr8HPBb5DrQ5puJORckyLQvLRLoG1SWEV+GQCEJWlo2DCp50VV+LdsPZGto
- lseJVLl+HhDsIRWiiTyIYqIHfOWUm/uVapGsy1kLz7dm+qQU1u262/WynMWwbyw89V8W
- 9LyHG5qotz53pnhuLUhhfhIWi7OaNjE3ewofMykl6whTmtOGvcHa3g8EpU1VPsNbgulw
- 3wm95AoJco+m/PJa9Jon6G1wMygSc9mOloc9ZSb4lI90a4x+VoFLxY22cphCDFS5zfi3
- Ys0Q==
-X-Gm-Message-State: AOJu0Yxu1cXzoNJAHsFFZpF6meMKOFZBnnN69C7LCvKVBpbZJQN3zKxQ
- IhQJ7nGRC7nYtW2oVi41XplYxlmp0Ht3ZPtwZJg0tWKwxk0PpXo3dfkLDz+2rLU=
-X-Google-Smtp-Source: AGHT+IF9ywiAFboEu2cNiVyapUcTWi2oQLL2zhX1VwKioSskAS6RB+MhHatTP7JdByyMF6Kjhhm5Xw==
-X-Received: by 2002:a17:907:6d1d:b0:a46:8d95:ff7e with SMTP id
- sa29-20020a1709076d1d00b00a468d95ff7emr1964813ejc.21.1710520781810; 
- Fri, 15 Mar 2024 09:39:41 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- wr6-20020a170907700600b00a466c66804bsm1831116ejb.49.2024.03.15.09.39.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Mar 2024 09:39:41 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1A5965F873;
- Fri, 15 Mar 2024 16:39:41 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Lorenz Brun <lorenz@brun.one>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Fam Zheng
- <fam@euphon.net>
-Subject: Re: [PATCH] scsi-generic: fix io_timeout property not applying
-In-Reply-To: <20240315145831.2531695-1-lorenz@brun.one> (Lorenz Brun's message
- of "Fri, 15 Mar 2024 15:58:31 +0100")
-References: <20240315145831.2531695-1-lorenz@brun.one>
-User-Agent: mu4e 1.12.1; emacs 29.2
-Date: Fri, 15 Mar 2024 16:39:41 +0000
-Message-ID: <87plvv30vm.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1rlAr9-0003bZ-DA; Fri, 15 Mar 2024 12:56:31 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
+ id 1rlAr6-0001DV-IH; Fri, 15 Mar 2024 12:56:31 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42FGXT4Y031892; Fri, 15 Mar 2024 16:56:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=corp-2023-11-20;
+ bh=ceoE3jO9B2h+pVIG5d/HxPnA+bGppP7/EnHv+dhO8hM=;
+ b=ihoK030n/TN5fxWd7TepDjOOIFFJQ7Mt163MBPW/YzOJM8hKjQeHngfNIoAEbmQxf7dn
+ mHaCV6I3dwukWwXBOoTS2/bpQTrkbE6vQDokyTdctZFij/cfJQ9t1+/KIMpv4SpsWz2F
+ TdCePAKvBGFQQgxGgwy5awrJRF2Llg5xM3YGL3srSd7s3m34z77ITPKn7Bn+W7CCGKe+
+ DgIQCm9FfkCC75GkdRF6f3kHAU3MGFoLAzr9U5jMb9Kkk/482L91ZXPsa51eGl/6dYLN
+ 8qmUvpUuuYda73WEaP6bwjg2pvshqxnWaatlEj3CHOK2BUreAz8xIUviVbHp1iNktcy0 5A== 
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3wvsxk01b8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 15 Mar 2024 16:56:15 +0000
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 42FFLv1G033763; Fri, 15 Mar 2024 16:56:14 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3wre7bw7sh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 15 Mar 2024 16:56:14 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42FGu2YU039399;
+ Fri, 15 Mar 2024 16:56:13 GMT
+Received: from jonah-ol8.us.oracle.com (dhcp-10-65-177-130.vpn.oracle.com
+ [10.65.177.130])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 3wre7bw7fq-4; Fri, 15 Mar 2024 16:56:13 +0000
+From: Jonah Palmer <jonah.palmer@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, jasowang@redhat.com, eperezma@redhat.com,
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com,
+ jonah.palmer@oracle.com, raphael@enfabrica.net, kwolf@redhat.com,
+ hreitz@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, thuth@redhat.com, richard.henderson@linaro.org,
+ david@redhat.com, iii@linux.ibm.com, cohuck@redhat.com,
+ pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com,
+ qemu-block@nongnu.org, qemu-s390x@nongnu.org, leiyang@redhat.com,
+ schalla@marvell.com, vattunuru@marvell.com, jerinj@marvell.com,
+ dtatulea@nvidia.com, virtio-fs@lists.linux.dev
+Subject: [PATCH v3 for 9.1 3/6] virtio-mmio: Handle extra notification data
+Date: Fri, 15 Mar 2024 12:55:54 -0400
+Message-Id: <20240315165557.26942-4-jonah.palmer@oracle.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240315165557.26942-1-jonah.palmer@oracle.com>
+References: <20240315165557.26942-1-jonah.palmer@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-15_04,2024-03-13_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ phishscore=0
+ mlxlogscore=999 malwarescore=0 mlxscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2403150138
+X-Proofpoint-GUID: JIylqI0H-9VdzpPZ2UK40EG-1b1_EXPr
+X-Proofpoint-ORIG-GUID: JIylqI0H-9VdzpPZ2UK40EG-1b1_EXPr
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,45 +107,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Lorenz Brun <lorenz@brun.one> writes:
+Add support to virtio-mmio devices for handling the extra data sent from
+the driver to the device when the VIRTIO_F_NOTIFICATION_DATA transport
+feature has been negotiated.
 
-> The io_timeout property, introduced in c9b6609 (part of 6.0) is
-> silently overwritten by the hardcoded default value of 30 seconds
-> (DEFAULT_IO_TIMEOUT) in scsi_generic_realize because that function is
-> being called after the properties have already been applied.
->
-> The property definition already has a default value which is applied
-> correctly when no value is explicitly set, so we can just remove the
-> code which overrides the io_timeout completely.
->
-> This has been tested by stracing SG_IO operations with the io_timeout
-> property set and unset and now sets the timeout field in the ioctl
-> request to the proper value.
->
-> Fixes: c9b6609b69facad ("scsi: make io_timeout configurable")
-> Signed-off-by: Lorenz Brun <lorenz@brun.one>
-> ---
->  hw/scsi/scsi-generic.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-> index b7b04e1d63..ee945f87e3 100644
-> --- a/hw/scsi/scsi-generic.c
-> +++ b/hw/scsi/scsi-generic.c
-> @@ -752,7 +752,6 @@ static void scsi_generic_realize(SCSIDevice *s, Error=
- **errp)
->=20=20
->      /* Only used by scsi-block, but initialize it nevertheless to be cle=
-an.  */
->      s->default_scsi_version =3D -1;
-> -    s->io_timeout =3D DEFAULT_IO_TIMEOUT;
->      scsi_generic_read_device_inquiry(s);
->  }
+The extra data that's passed to the virtio-mmio device when this feature
+is enabled varies depending on the device's virtqueue layout.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+The data passed to the virtio-mmio device is in the same format as the
+data passed to virtio-pci devices.
 
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+---
+ hw/virtio/virtio-mmio.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
+index 22f9fbcf5a..003c363f0b 100644
+--- a/hw/virtio/virtio-mmio.c
++++ b/hw/virtio/virtio-mmio.c
+@@ -248,6 +248,7 @@ static void virtio_mmio_write(void *opaque, hwaddr offset, uint64_t value,
+ {
+     VirtIOMMIOProxy *proxy = (VirtIOMMIOProxy *)opaque;
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
++    uint16_t vq_idx;
+ 
+     trace_virtio_mmio_write_offset(offset, value);
+ 
+@@ -407,8 +408,13 @@ static void virtio_mmio_write(void *opaque, hwaddr offset, uint64_t value,
+         }
+         break;
+     case VIRTIO_MMIO_QUEUE_NOTIFY:
+-        if (value < VIRTIO_QUEUE_MAX) {
+-            virtio_queue_notify(vdev, value);
++        vq_idx = value;
++        if (vq_idx < VIRTIO_QUEUE_MAX && virtio_queue_get_num(vdev, vq_idx)) {
++            if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
++                virtio_queue_set_shadow_avail_idx(virtio_get_queue(vdev, vq_idx),
++                                                  (value >> 16) & 0xFFFF);
++            }
++            virtio_queue_notify(vdev, vq_idx);
+         }
+         break;
+     case VIRTIO_MMIO_INTERRUPT_ACK:
+-- 
+2.39.3
+
 
