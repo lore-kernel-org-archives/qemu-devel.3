@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62EDEC54E6E
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9437C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl7LN-0001l5-It; Fri, 15 Mar 2024 09:11:29 -0400
+	id 1rl7Kr-0007y2-VM; Fri, 15 Mar 2024 09:10:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7KW-0007Hv-OB
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:37 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7K1-0006NK-Gq
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:07 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7KQ-00089U-Cr
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:36 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a468616ed70so87817766b.3
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:10:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7Jy-0007rc-Kp
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:04 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-56845954fffso1900392a12.3
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:10:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710508228; x=1711113028; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710508200; x=1711113000; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3PuQ6WSEYLWnTCNPDldZo+Ppk/XGMtRnTbQuxwxDUsU=;
- b=N8uBIKKOFTKMTS2NhbYeYgKi9oxDwQ82f1F/hTkHPOKcQrXxY2o+Ar74bgtCAG++33
- afYmL6YtPS+Dl7GLQ1swVJ8qMN7WDvjoLCknXnWrNBuItICyvI6oC3RrDdS69t9zF/7w
- 2F/5ROMzWcySpVTOkrpFHY/mUQrAYEWhLdMJb2a83DNE1o6NarOao0o0QVNz4YzzhtFu
- 3PwdTOOq4Nsl6Kkyw7CS8iqgTvTJbfp0tknt5avEvdfkq3xoLnlP6WdHcQB4+iDcVopZ
- 6MhduNeaSoNnCkgr51EDrLu0kMs5ivZ4jLFnOjCwuu2lqLWrzFNgdfrFuDVKisjEBule
- PwbA==
+ bh=fQB6SJNy6yiy7zdv0lmI6ciVyOB2Uy024AmMoGafIwE=;
+ b=D5Yow0ZKecc+XgV8kl3Fxp2klHV9pOvF/G2+ZI/Djby9UEMTStT24gk1yvGump1MJl
+ MKkrD+pkP5pgDTJKhudDNevRLhRgSs8PL4pZTd9G2sUePI8EJeOlCBlHwT3IYYF4ZRs6
+ JhCpKZMNSbP+/r3huUOKAf4M65t39X3AXyvKeobTfq26PlElFA8WMhLT78gKOOx6o8f6
+ +bOlu3ydmRnzoSTUxtJZ5ZxmQukqNdodiuZZr1d3hf09n1YlCzoUgbAErfivYRvpS0Ry
+ AFY6o61+Hnh5gRH9HeSGysOrs0zqx8bQd3t/Yar2vGrzZh5JGovLdA6puQxfIqt+cJNy
+ 9t0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710508228; x=1711113028;
+ d=1e100.net; s=20230601; t=1710508200; x=1711113000;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3PuQ6WSEYLWnTCNPDldZo+Ppk/XGMtRnTbQuxwxDUsU=;
- b=tY63dYRMP1LsTPo+LzONT1daiyomZU8iyLdYmaNVf26xQFY//U4gjorETa6pxaF3NP
- jQHgbkbHvsWNx4fS6O1fX0q3JbuTxbPCMA3leiitFVeDy8RZHalC46qUiiSbmV9QDZco
- tGOu7fG+ItKiyE4opk+iU2WCxi/urXNLOKqugCUjJHf4XuVEZouHrgYgldX2im6eUJ4c
- tP7dSd03g/R58xKjn46NnqAZdf+DnFWvnmJqrK0YcKpDGMfMWv/VQ/9dlN+5FBSBXvR0
- mkEVtWOREiboR8fL0AoKbe9IBU3skVcyFWJZklbf6tNPPtt68cdIShoIat/Nt2xeH9he
- qiYw==
-X-Gm-Message-State: AOJu0Yyp21e8g8jPcrOy6hZZdHh+bR/fv3iDU35mktc7djTPlage7DxR
- KIe+8FIMR3AwxOZw/CE2CHSIZ/yRv/wua1WyaAGQTxkc0z7sSmTVDPWTBuWmI1T8wUT42+jpr+w
- 0
-X-Google-Smtp-Source: AGHT+IHgeAMf1+cGAIhix5rGRpA+zqYrLpk7WoUtK15pKAlNv3sQvH3L0f0P3bef1BLZ9RiIeTQhug==
-X-Received: by 2002:a17:906:f845:b0:a3e:8300:1af3 with SMTP id
- ks5-20020a170906f84500b00a3e83001af3mr3107382ejb.30.1710508228508; 
- Fri, 15 Mar 2024 06:10:28 -0700 (PDT)
+ bh=fQB6SJNy6yiy7zdv0lmI6ciVyOB2Uy024AmMoGafIwE=;
+ b=wA1Q06FQydF8JKpdbbJbtDNth5nHHsAEPR6LxXv2+0KdnJtQXJIYmeZjZc9ANkPhdh
+ IAcnML/fnAKkzzJ7RicTogA7oHVMH+kmolD0QZE1gexSQlIkQFnSHKqwuY1+z0pZrefE
+ v1uUDRZQb4PQ2otGN4aXcw+7yKb7MN5DadKLV3XLENfPhth/EdS502Pn2dETK+FrCSks
+ eXmLEA21i4v7bb9Ecd/rDejIIMQPxeBFiYQ1HZNclYh64CDztqcMSX1QPOK+l1lsDbZV
+ NukM4eUR7W43HxFhYbX7GNLqlhkKwvSGD0ohI0tHlIZjRdD4gaiM9I6gWs0FiUoa+OCL
+ F85Q==
+X-Gm-Message-State: AOJu0YwRshe073NO21WeonKAJ5m7Th7pwTIrjqHFmQtkTuOJMPN9zIYa
+ sF559hWTs+LkcO0gzpvuD7G1lIxpd/gnsxU3X1oEn12Ti5YvdidJauAfo1wlS1lABrrZbNpdIAD
+ c
+X-Google-Smtp-Source: AGHT+IERNJD9BeD1ZTNKcgjKR1YrxbrTZMT90NVR2wKIdl/tZTRzhcTVHamLl8tpd/LjDM8xLQUvNQ==
+X-Received: by 2002:aa7:dd0f:0:b0:565:b456:435d with SMTP id
+ i15-20020aa7dd0f000000b00565b456435dmr2931558edv.17.1710508200588; 
+ Fri, 15 Mar 2024 06:10:00 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.145.26])
  by smtp.gmail.com with ESMTPSA id
- jl27-20020a17090775db00b00a45c9945251sm1696627ejc.192.2024.03.15.06.10.26
+ q10-20020aa7d44a000000b005689d0a97d1sm1657891edr.24.2024.03.15.06.09.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 15 Mar 2024 06:10:28 -0700 (PDT)
+ Fri, 15 Mar 2024 06:10:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Markus Armbruster <armbru@redhat.com>
@@ -72,27 +72,29 @@ Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
  Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: [PATCH-for-9.1 11/21] qapi: Make CpuDefinitionInfo target agnostic
-Date: Fri, 15 Mar 2024 14:08:59 +0100
-Message-ID: <20240315130910.15750-12-philmd@linaro.org>
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Huacai Chen <chenhuacai@kernel.org>
+Subject: [PATCH-for-9.1 07/21] target/mips: Make MIPS_CPU common to new
+ MIPS32_CPU / MIPS64_CPU types
+Date: Fri, 15 Mar 2024 14:08:55 +0100
+Message-ID: <20240315130910.15750-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240315130910.15750-1-philmd@linaro.org>
 References: <20240315130910.15750-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,170 +110,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generate the CpuDefinitionInfo type once for all targets.
-In few commits @query-cpu-definitions will become generic
-and all target will return their CPUs list.
+"target/foo/cpu-qom.h" can not use any target specific definitions.
+
+Currently "target/mips/cpu-qom.h" defines TYPE_MIPS_CPU depending
+on the mips(32)/mips64 build type. This doesn't scale in a
+heterogeneous context where we need to access both types concurrently.
+
+In order to do that, introduce the new MIPS32_CPU / MIPS64_CPU types,
+both inheriting a common TYPE_MIPS_CPU base type.
+
+Keep the current CPU types registered in mips_register_cpudef_type()
+as 32 or 64-bit, but instead of depending on the binary built being
+targeting 32/64-bit, check whether the CPU is 64-bit by looking at
+the CPU_MIPS64 bit.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- qapi/machine-target.json | 69 ----------------------------------------
- qapi/machine.json        | 63 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 63 insertions(+), 69 deletions(-)
+ target/mips/cpu-qom.h              | 13 +++++++------
+ target/mips/cpu.c                  | 11 ++++++++++-
+ target/mips/sysemu/mips-qmp-cmds.c | 26 ++------------------------
+ 3 files changed, 19 insertions(+), 31 deletions(-)
 
-diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-index 0412400df3..7480921d33 100644
---- a/qapi/machine-target.json
-+++ b/qapi/machine-target.json
-@@ -212,75 +212,6 @@
-                    'TARGET_LOONGARCH64',
-                    'TARGET_RISCV' ] } }
+diff --git a/target/mips/cpu-qom.h b/target/mips/cpu-qom.h
+index 0eea2a2598..bf464f16b6 100644
+--- a/target/mips/cpu-qom.h
++++ b/target/mips/cpu-qom.h
+@@ -1,5 +1,5 @@
+ /*
+- * QEMU MIPS CPU
++ * QEMU MIPS CPU QOM header (target agnostic)
+  *
+  * Copyright (c) 2012 SUSE LINUX Products GmbH
+  *
+@@ -22,14 +22,15 @@
  
--##
--# @CpuDefinitionInfo:
--#
--# Virtual CPU definition.
--#
--# @name: the name of the CPU definition
--#
--# @migration-safe: whether a CPU definition can be safely used for
--#     migration in combination with a QEMU compatibility machine when
--#     migrating between different QEMU versions and between hosts with
--#     different sets of (hardware or software) capabilities.  If not
--#     provided, information is not available and callers should not
--#     assume the CPU definition to be migration-safe.  (since 2.8)
--#
--# @static: whether a CPU definition is static and will not change
--#     depending on QEMU version, machine type, machine options and
--#     accelerator options.  A static model is always migration-safe.
--#     (since 2.8)
--#
--# @unavailable-features: List of properties that prevent the CPU model
--#     from running in the current host.  (since 2.8)
--#
--# @typename: Type name that can be used as argument to
--#     @device-list-properties, to introspect properties configurable
--#     using -cpu or -global.  (since 2.9)
--#
--# @alias-of: Name of CPU model this model is an alias for.  The target
--#     of the CPU model alias may change depending on the machine type.
--#     Management software is supposed to translate CPU model aliases
--#     in the VM configuration, because aliases may stop being
--#     migration-safe in the future (since 4.1)
--#
--# @deprecated: If true, this CPU model is deprecated and may be
--#     removed in in some future version of QEMU according to the QEMU
--#     deprecation policy.  (since 5.2)
--#
--# @unavailable-features is a list of QOM property names that represent
--# CPU model attributes that prevent the CPU from running.  If the QOM
--# property is read-only, that means there's no known way to make the
--# CPU model run in the current host.  Implementations that choose not
--# to provide specific information return the property name "type". If
--# the property is read-write, it means that it MAY be possible to run
--# the CPU model in the current host if that property is changed.
--# Management software can use it as hints to suggest or choose an
--# alternative for the user, or just to generate meaningful error
--# messages explaining why the CPU model can't be used.  If
--# @unavailable-features is an empty list, the CPU model is runnable
--# using the current host and machine-type.  If @unavailable-features
--# is not present, runnability information for the CPU is not
--# available.
--#
--# Since: 1.2
--##
--{ 'struct': 'CpuDefinitionInfo',
--  'data': { 'name': 'str',
--            '*migration-safe': 'bool',
--            'static': 'bool',
--            '*unavailable-features': [ 'str' ],
--            'typename': 'str',
--            '*alias-of' : 'str',
--            'deprecated' : 'bool' },
--  'if': { 'any': [ 'TARGET_PPC',
--                   'TARGET_ARM',
--                   'TARGET_I386',
--                   'TARGET_S390X',
--                   'TARGET_MIPS',
--                   'TARGET_LOONGARCH64',
--                   'TARGET_RISCV' ] } }
--
- ##
- # @query-cpu-definitions:
- #
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 65702c2c78..9c44b8fa82 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -10,6 +10,69 @@
+ #include "hw/core/cpu.h"
  
- { 'include': 'common.json' }
+-#ifdef TARGET_MIPS64
+-#define TYPE_MIPS_CPU "mips64-cpu"
+-#else
+-#define TYPE_MIPS_CPU "mips-cpu"
+-#endif
++#define TYPE_MIPS_CPU   "mips-cpu"
++#define TYPE_MIPS32_CPU "mips32-cpu"
++#define TYPE_MIPS64_CPU "mips64-cpu"
  
-+##
-+# @CpuDefinitionInfo:
-+#
-+# Virtual CPU definition.
-+#
-+# @name: the name of the CPU definition
-+#
-+# @migration-safe: whether a CPU definition can be safely used for
-+#     migration in combination with a QEMU compatibility machine when
-+#     migrating between different QEMU versions and between hosts with
-+#     different sets of (hardware or software) capabilities.  If not
-+#     provided, information is not available and callers should not
-+#     assume the CPU definition to be migration-safe.  (since 2.8)
-+#
-+# @static: whether a CPU definition is static and will not change
-+#     depending on QEMU version, machine type, machine options and
-+#     accelerator options.  A static model is always migration-safe.
-+#     (since 2.8)
-+#
-+# @unavailable-features: List of properties that prevent the CPU model
-+#     from running in the current host.  (since 2.8)
-+#
-+# @typename: Type name that can be used as argument to
-+#     @device-list-properties, to introspect properties configurable
-+#     using -cpu or -global.  (since 2.9)
-+#
-+# @alias-of: Name of CPU model this model is an alias for.  The target
-+#     of the CPU model alias may change depending on the machine type.
-+#     Management software is supposed to translate CPU model aliases
-+#     in the VM configuration, because aliases may stop being
-+#     migration-safe in the future (since 4.1)
-+#
-+# @deprecated: If true, this CPU model is deprecated and may be
-+#     removed in in some future version of QEMU according to the QEMU
-+#     deprecation policy.  (since 5.2)
-+#
-+# @unavailable-features is a list of QOM property names that represent
-+# CPU model attributes that prevent the CPU from running.  If the QOM
-+# property is read-only, that means there's no known way to make the
-+# CPU model run in the current host.  Implementations that choose not
-+# to provide specific information return the property name "type". If
-+# the property is read-write, it means that it MAY be possible to run
-+# the CPU model in the current host if that property is changed.
-+# Management software can use it as hints to suggest or choose an
-+# alternative for the user, or just to generate meaningful error
-+# messages explaining why the CPU model can't be used.  If
-+# @unavailable-features is an empty list, the CPU model is runnable
-+# using the current host and machine-type.  If @unavailable-features
-+# is not present, runnability information for the CPU is not
-+# available.
-+#
-+# Since: 1.2
-+##
-+{ 'struct': 'CpuDefinitionInfo',
-+  'data': { 'name': 'str',
-+            '*migration-safe': 'bool',
-+            'static': 'bool',
-+            '*unavailable-features': [ 'str' ],
-+            'typename': 'str',
-+            '*alias-of' : 'str',
-+            'deprecated' : 'bool' }
-+}
+ OBJECT_DECLARE_CPU_TYPE(MIPSCPU, MIPSCPUClass, MIPS_CPU)
+ 
++OBJECT_DECLARE_CPU_TYPE(MIPS32CPU, MIPSCPUClass, MIPS32_CPU)
++OBJECT_DECLARE_CPU_TYPE(MIPS64CPU, MIPSCPUClass, MIPS64_CPU)
 +
- ##
- # @CpuModelInfo:
- #
+ #define MIPS_CPU_TYPE_SUFFIX "-" TYPE_MIPS_CPU
+ #define MIPS_CPU_TYPE_NAME(model) model MIPS_CPU_TYPE_SUFFIX
+ 
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index c096d97fe3..f3ea6175f2 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -604,6 +604,14 @@ static const TypeInfo mips_cpu_types[] = {
+         .abstract       = true,
+         .class_size     = sizeof(MIPSCPUClass),
+         .class_init     = mips_cpu_class_init,
++    }, {
++        .name           = TYPE_MIPS32_CPU,
++        .parent         = TYPE_MIPS_CPU,
++        .abstract       = true,
++    }, {
++        .name           = TYPE_MIPS64_CPU,
++        .parent         = TYPE_MIPS_CPU,
++        .abstract       = true,
+     }
+ };
+ 
+@@ -620,7 +628,8 @@ static void mips_register_cpudef_type(const struct mips_def_t *def)
+     char *typename = mips_cpu_type_name(def->name);
+     TypeInfo ti = {
+         .name = typename,
+-        .parent = TYPE_MIPS_CPU,
++        .parent = def->insn_flags & CPU_MIPS64
++                  ? TYPE_MIPS64_CPU : TYPE_MIPS32_CPU,
+         .class_init = mips_cpu_cpudef_class_init,
+         .class_data = (void *)def,
+     };
+diff --git a/target/mips/sysemu/mips-qmp-cmds.c b/target/mips/sysemu/mips-qmp-cmds.c
+index 7340ac70ba..329db3a028 100644
+--- a/target/mips/sysemu/mips-qmp-cmds.c
++++ b/target/mips/sysemu/mips-qmp-cmds.c
+@@ -8,31 +8,9 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qapi/qapi-commands-machine-target.h"
+-#include "cpu.h"
+-
+-static void mips_cpu_add_definition(gpointer data, gpointer user_data)
+-{
+-    ObjectClass *oc = data;
+-    CpuDefinitionInfoList **cpu_list = user_data;
+-    CpuDefinitionInfo *info;
+-    const char *typename;
+-
+-    typename = object_class_get_name(oc);
+-    info = g_malloc0(sizeof(*info));
+-    info->name = cpu_model_from_type(typename);
+-    info->q_typename = g_strdup(typename);
+-
+-    QAPI_LIST_PREPEND(*cpu_list, info);
+-}
++#include "qapi/commands-target-compat.h"
+ 
+ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
+ {
+-    CpuDefinitionInfoList *cpu_list = NULL;
+-    GSList *list;
+-
+-    list = object_class_get_list(TYPE_MIPS_CPU, false);
+-    g_slist_foreach(list, mips_cpu_add_definition, &cpu_list);
+-    g_slist_free(list);
+-
+-    return cpu_list;
++    return generic_query_cpu_definitions(errp);
+ }
 -- 
 2.41.0
 
