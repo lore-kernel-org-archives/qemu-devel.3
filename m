@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 686A7C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B6EC54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:11:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl7LJ-0001Jo-7R; Fri, 15 Mar 2024 09:11:25 -0400
+	id 1rl7Kw-0008SA-6U; Fri, 15 Mar 2024 09:11:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7LG-00013c-8d
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:11:22 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1rl7KA-0006Zr-VT
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:17 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7LD-000057-IC
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:11:21 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a4682272ff6so89356666b.2
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:11:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1rl7Jy-0007r1-7n
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:14 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6e6cadfffdbso1802251b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:10:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710508276; x=1711113076; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1710508199; x=1711112999; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+0JRGXmaH9yCo1gEGbOzPrdlVZvoU4tW4IJan5xxXVU=;
- b=dpSYf7EoNPRPNeSq2HIQBoHLvFQ2UGcH1RvNBtHwGT/soD+2Dlic7r908QHtOndpA/
- Zrb8pkasLpcIIZUv7MwWCdF7mYHXpu9ikJp2Toop3c3q1wC6isOM19NrA+nbbDFoZapX
- WJ76pBVlSC74QPoPDN4hiBosYmkTHQphJ8CuiDqQsrJc96sk+uOOuOV44kaZ+85kgbPK
- F+bw56lqdzyar5CPVtEzO7McUXQfGttVLEOi1KG61itplUWLtPWdmVXkhtDsEC7noLLF
- bQFyRHYCZdQ5Jv3nfuejymu3wbZWkg2tyISHT7HhDXCzLmc5TViLOvv0eUUWvJwcvgW6
- jK0g==
+ bh=1JsmeTBVN2sRCxleZ76cGscd4q7biWqmkJjrGr36tu0=;
+ b=J1hHEUgHdT/fkd/6o2o5/YBNg1J3S7NXyu6+3JGWWTwCsC7vRCY4g267jKxtcu+Zqe
+ sgSIE/B2l20D+uMdwbgLkHP7iZ87BVTvhAPYifF/9MXBrseo/oqYwJKLOksWuHB+PrZb
+ bujsDxSyniLtL6aPy873F+pnjmDJTI/5+Mm0FJ4E+3hnevFDk6th9xKZK6nhb2WmQsHR
+ HzkW658MH5nDC9iP3tAV3ellrRuf2Zb8bhPqY6uZ2SSwCBIphnSvEjSofdCbkbE3Q8Vj
+ P0ROV8t+YK0uviDgTYolCXIEmh+1u68cYqUJewnvycgx6pi+wSYwTVcDEyg24pWrKvua
+ tRJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710508276; x=1711113076;
+ d=1e100.net; s=20230601; t=1710508199; x=1711112999;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+0JRGXmaH9yCo1gEGbOzPrdlVZvoU4tW4IJan5xxXVU=;
- b=HAa0nnhUUCtGxTgQ27bIEdsl5NwYo1StE4IHXquk+NPr7ysSwyD3IDmz0lBWs8JQUF
- UpkvDcVNwmB4Oma4NQuZ5rhYd6pSNxn61Ur/cBdXsWRyacQYEQ8Cz801cUKTDahAlahI
- 7w7ms+/XDSqO005mXs7P5mdpdfT3+UX3rXMNMef/+Qc5becQjIRGU9UkzSHkjBlz+KDC
- am9zW37s+wZ3nomXUIGn6bTh5Ed9dW6vyN7u3MGmDAnQ3cU4uTUnl7DJHf7DRhT9eVBT
- wUCqbcAGqj4J/wJuh98NngJFQrPZmGFyMLhdY1zbOem6OnKx4VGPbkLD2T+NtSJL5iN2
- 7joQ==
-X-Gm-Message-State: AOJu0Yxy/CwVoo04QD2dotWyO8YATPlc3ISTjOtihy07k7IJ9Ul/nW/A
- EhrXrkVBWW7nbNuKwt82uMavvQQRtzKbvPvNBjWKE9U29EKauARQ4F6SftZcnDRQDZ+/8ZO16fO
- j
-X-Google-Smtp-Source: AGHT+IH8DC/lPhj5k3DkFaXoEv+D5iiSC1Us/4T3OryunIMlcb3vrVAMN7YjcE7wkczxqJzYpIahqA==
-X-Received: by 2002:a17:906:29d6:b0:a46:bb:c4e3 with SMTP id
- y22-20020a17090629d600b00a4600bbc4e3mr2733759eje.32.1710508275761; 
- Fri, 15 Mar 2024 06:11:15 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.145.26])
+ bh=1JsmeTBVN2sRCxleZ76cGscd4q7biWqmkJjrGr36tu0=;
+ b=E12dSCy73yDx9pI9R5gxFc9ctZnAgQZCte6F/BPi6gPxuOFv2B5JXD/5iKMSP/aeD7
+ fXjMGFYgXx0oHr2vibNA8yQf57O7/NJU/GRZ/CVLkPZ35Q7Zmx1DayyvplYQbeL4cQQf
+ u9f3Bt8Z8hJg63ZJDbQ9nMrHrexZmJHiF6xgyQWVX09Gy+44zAk3e/HeFw7f9aWeGpdq
+ oA4qTnkzYkMVdAmOCFNufOnvKIyPnH3eTfA2EAB/2xrxRTftQ83y2YVgUxoYLwMqkEwz
+ WBQWMq8hnuQJYei43Nflq0gMnPZysSLzdBxHyG3jz7U89Sh1vAhXwIJFzSGveJ4ELs/i
+ auCw==
+X-Gm-Message-State: AOJu0Yw3j2EVM4uTH4YLum9DXYMGNGhBBq5jU5IHbtw7bws/leeoVbmU
+ 8dyMnUiMzsNiU1anc6XA1VcSbXdZItaxv0pYxMHcFkdf/+1AHjLCFxrFi9FNJkB2l0fSC6lvLyR
+ e
+X-Google-Smtp-Source: AGHT+IGk16iw1tTDOrbRN0W0Q0R0/WrAWlPbsKTL77h7TeZzM7tVW8IWW3lVJMWpt3VB7fI3ZNjFdQ==
+X-Received: by 2002:a17:90b:3a48:b0:29d:dd0f:f853 with SMTP id
+ oh8-20020a17090b3a4800b0029ddd0ff853mr3121079pjb.26.1710508199293; 
+ Fri, 15 Mar 2024 06:09:59 -0700 (PDT)
+Received: from sunil-pc.Dlink ([106.51.184.12])
  by smtp.gmail.com with ESMTPSA id
- dt22-20020a170906b79600b00a4669f6c2e2sm1672024ejb.44.2024.03.15.06.11.13
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 15 Mar 2024 06:11:15 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ r3-20020a17090ad40300b0029c68206e2bsm2886663pju.0.2024.03.15.06.09.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Mar 2024 06:09:58 -0700 (PDT)
+From: Sunil V L <sunilvl@ventanamicro.com>
 To: qemu-devel@nongnu.org,
-	Markus Armbruster <armbru@redhat.com>
-Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+	qemu-arm@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Claudio Fontana <cfontana@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH-for-9.1 18/21] target/i386: Use QMP
- generic_query_cpu_definitions()
-Date: Fri, 15 Mar 2024 14:09:06 +0100
-Message-ID: <20240315130910.15750-19-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240315130910.15750-1-philmd@linaro.org>
-References: <20240315130910.15750-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair23@gmail.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
+ Anup Patel <apatel@ventanamicro.com>, Haibo1 Xu <haibo1.xu@intel.com>,
+ Sunil V L <sunilvl@ventanamicro.com>
+Subject: [PATCH 08/12] meson.build: Add RISC-V to the edk2-target list
+Date: Fri, 15 Mar 2024 18:39:20 +0530
+Message-Id: <20240315130924.2378849-6-sunilvl@ventanamicro.com>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20240315130924.2378849-1-sunilvl@ventanamicro.com>
+References: <20240315130924.2378849-1-sunilvl@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,50 +108,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register x86_cpu_definition_entry() and x86_cpu_list_compare()
-as handler so we can use the QMP generic_query_cpu_definitions()
-method.
+so that ACPI table test can be supported.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
 ---
- target/i386/cpu.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 07f64c1ea5..e5dbd307d8 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -38,6 +38,7 @@
- #ifndef CONFIG_USER_ONLY
- #include "sysemu/reset.h"
- #include "qapi/qapi-commands-machine-target.h"
-+#include "qapi/commands-target-compat.h"
- #include "exec/address-spaces.h"
- #include "hw/boards.h"
- #include "hw/i386/sgx-epc.h"
-@@ -5667,11 +5668,7 @@ static void x86_cpu_definition_entry(gpointer data, gpointer user_data)
+diff --git a/meson.build b/meson.build
+index b8ded80cbe..bf50688593 100644
+--- a/meson.build
++++ b/meson.build
+@@ -93,7 +93,7 @@ else
+   iasl = find_program(get_option('iasl'), required: true)
+ endif
  
- CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
- {
--    CpuDefinitionInfoList *cpu_list = NULL;
--    GSList *list = get_sorted_cpu_model_list();
--    g_slist_foreach(list, x86_cpu_definition_entry, &cpu_list);
--    g_slist_free(list);
--    return cpu_list;
-+    return generic_query_cpu_definitions(errp);
- }
- 
- #endif /* !CONFIG_USER_ONLY */
-@@ -7937,6 +7934,8 @@ static Property x86_cpu_properties[] = {
- #include "hw/core/sysemu-cpu-ops.h"
- 
- static const struct SysemuCPUOps i386_sysemu_ops = {
-+    .add_definition = x86_cpu_definition_entry,
-+    .cpu_list_compare = x86_cpu_list_compare,
-     .get_memory_mapping = x86_cpu_get_memory_mapping,
-     .get_paging_enabled = x86_cpu_get_paging_enabled,
-     .get_phys_page_attrs_debug = x86_cpu_get_phys_page_attrs_debug,
+-edk2_targets = [ 'arm-softmmu', 'aarch64-softmmu', 'i386-softmmu', 'x86_64-softmmu' ]
++edk2_targets = [ 'arm-softmmu', 'aarch64-softmmu', 'i386-softmmu', 'x86_64-softmmu', 'riscv64-softmmu' ]
+ unpack_edk2_blobs = false
+ foreach target : edk2_targets
+   if target in target_dirs
 -- 
-2.41.0
+2.40.1
 
 
