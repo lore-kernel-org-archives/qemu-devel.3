@@ -4,101 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E78C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 12:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D79D6C54E58
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 12:23:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl6YW-0005ur-Pg; Fri, 15 Mar 2024 08:21:00 -0400
+	id 1rl6aQ-0006rS-Rw; Fri, 15 Mar 2024 08:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rl6YW-0005ug-6F
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:21:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rl6YS-0004QR-PQ
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:20:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710505255;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/N9EOjd3a1GQ1YREfOHVE5M1U0gc+dCHJHd00CmzGFw=;
- b=XM16MfEoLsfFL0pDyPabPTCY0raDZ+kDb4UbA8NW0mkzaipFRSyXr7fXTlje3EAh6o96mK
- pjgVz9eGl8fEQK6PUtLH0ly118g3CO81pT/YTrRz9WE5/binuJzE6JrEXFl92/ko4BksGB
- 2LNUVZtnvGGLvF77+KSJapQ0g3x704c=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-397-yOQ5Kf7BPFehoasf4dKUgw-1; Fri, 15 Mar 2024 08:20:53 -0400
-X-MC-Unique: yOQ5Kf7BPFehoasf4dKUgw-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-690e820dd84so36824816d6.0
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 05:20:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl6aO-0006qi-R9
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:22:56 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl6aN-0004e7-8A
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 08:22:56 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-413f76ff0daso9621255e9.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 05:22:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710505373; x=1711110173; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6+ar7a6maRXKS2xN1AP1Ldd0vWNdIACAf5dh2nKd3pw=;
+ b=DYICZNp/fErvhTBvxPwdnTM8F1wHNDcngqRtGdpG0nFchysJJt4CZ82RaK7gNdeinM
+ upUk5U0kKRKyvImHWKdHmApSOW5yNbL9z2VEXQg+wsN0QuDLaR8kJ6WeM2sYRYIfXOtn
+ 7yXoUnWv4DcnfW/5sWIq/oxOfpP4falFatzWq+T+/wMLcxSj3j+MjloIDc61R3CTgKs5
+ HxWcqbZ/lNkVHb74bXiwzbmJF/2r5GW0OEOO/C7QSyX4r9t9uI2w83UNJpFHvMguao6g
+ jqFwzBcitb4CTIcCMFLxW0+4i6vuEsjSUJgm954s8gxYrN+Xu5XbJtrpMtxnjGWXb8wV
+ 164w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710505253; x=1711110053;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1710505373; x=1711110173;
+ h=content-transfer-encoding:in-reply-to:from:cc:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/N9EOjd3a1GQ1YREfOHVE5M1U0gc+dCHJHd00CmzGFw=;
- b=fMLoxL/HIXAn3JKtbU3ahmFyDiH1ai5IFOHhYJbkmHkePAqlhAReM2WCyrDiTqTSLL
- +UtDRIlRs7THu+thA58uNR7DyBpWsdAZsxp8Wux58tmiupNawDcT2y6gCPaM33+6dp4l
- ABaz/0BlDrYvlCYXtWWyKgE2VwvdQoibfQZLF5QPuITBul5nsnCzWNgF8PTAJmdLFmOm
- TPPcExzO9selBwqS2RHEIk88teLHKdjlV9pw4C89+6OrAAkeqkC2djtHXofH743RZKPL
- 3vgmIZQviLmmoCbnWMDa8YtCv8t9xg/gU0S0+zwkn0qNxhtT3rgurYSnzI75s29dBiyS
- /Idw==
+ bh=6+ar7a6maRXKS2xN1AP1Ldd0vWNdIACAf5dh2nKd3pw=;
+ b=oUHtSy/6iOskYEzpJ/liZ268F2WkdDIDVH4oWtGcuudvK1xFyitep5+wbnG+LQifpe
+ 7m+T0AlLDW4V1Ivv2DixTxKx64kbLsCogihuyACSeFPSZdahYjvUV6LJZ0B0BwuAG5HF
+ nHnozcq0YSORq+274GYxq2LKYqMLHou0ulrz02pI7ZUclo6yIl0DieevOIwfRjHXIXF8
+ p7dx+kbopqcZ4IpWvmCvCXaz483Q2FVp3GOpt2WLQyKqX/l4H8tsBwbypPobZR03Dc2N
+ O4+YwEKwKx1pVxfRUBmU/TPT5Rbd5gpv/L7ZRxC719AmUOHgEAfWEqcwE/kjLFaMfwrt
+ 6Beg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVWLAV/9Wwu8+5wnvOigsB0PUlf8MYauGQ1Pyhpjh2/FXg48mMPP0SPgbQ6kzwwSyLsmm9JELegIRdvSKGatqSntwWLl40=
-X-Gm-Message-State: AOJu0YwJkJrUrrTIkWeUlC103rCJBqn9j8cCq3ujx12/DxZbGOfW61H1
- wQ+slfGTjSuXjxPRA3RJpBZZ4UqaS/i1BIV3/WCbKPN9bRSqYeTDkJ4JFNogwsAxBedd9LdlTiH
- 3bmpXc49J3PkTKivfNDUS1tubxgLzxR+SoE5pjUZanMudImmLFxHX
-X-Received: by 2002:ad4:5990:0:b0:691:3cf5:b7ad with SMTP id
- ek16-20020ad45990000000b006913cf5b7admr7010834qvb.12.1710505253199; 
- Fri, 15 Mar 2024 05:20:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFgB4jfLgfnM3zzS04cvIiLxVqpJ9EoGizII7QgUTDhe+u/SgiX3oTnKcq9I8YmuM9a7oiH4A==
-X-Received: by 2002:ad4:5990:0:b0:691:3cf5:b7ad with SMTP id
- ek16-20020ad45990000000b006913cf5b7admr7010803qvb.12.1710505252867; 
- Fri, 15 Mar 2024 05:20:52 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae?
- ([2a01:e0a:9e2:9000:d55d:ba01:adf2:d3ae])
+ AJvYcCWJrTiKYygoOF3k5JicAxAR42FILvTo4Y8weKsa9zCCeEnHlHUgQV/1UEZsEXWdX81UuAgCEz5Cke7Dgs+W33JkimueG20=
+X-Gm-Message-State: AOJu0Yzfc3Ac1D3flrAqZqISIh4AQj9L8vFijfrshIlCgV69P06yk/E7
+ 3WRQ6q6gQYRiKPhP2jc3y5qEB1F9WBNdJ2DvwhF8ljPuaa9yvDfWNjhyfk1iw60=
+X-Google-Smtp-Source: AGHT+IE74hK0/OSyz0kM4qpY+YvGUKC7QbA64wa10ic0ZCOi6xvOMfMGNcmyh6GJl9j7QWMKlhb9rg==
+X-Received: by 2002:a05:600c:3106:b0:413:21f5:de48 with SMTP id
+ g6-20020a05600c310600b0041321f5de48mr3951564wmo.18.1710505373310; 
+ Fri, 15 Mar 2024 05:22:53 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.145.26])
  by smtp.gmail.com with ESMTPSA id
- q3-20020ad45743000000b00690d2ed0d74sm1919780qvx.115.2024.03.15.05.20.51
+ i9-20020a05600c354900b00413ef6826desm5651606wmq.4.2024.03.15.05.22.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 Mar 2024 05:20:52 -0700 (PDT)
-Message-ID: <c946ae1f-3315-496e-b316-33343e43830f@redhat.com>
-Date: Fri, 15 Mar 2024 13:20:49 +0100
+ Fri, 15 Mar 2024 05:22:52 -0700 (PDT)
+Message-ID: <f46958e5-01e3-4d88-9d76-00af9d30f110@linaro.org>
+Date: Fri, 15 Mar 2024 13:22:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/25] migration: Add Error** argument to
- qemu_savevm_state_setup()
-Content-Language: en-US, fr
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-References: <87plw44wps.fsf@suse.de>
- <1566715b-a9a5-4df6-8e64-f4f912e2ea2f@redhat.com> <87le6omw0d.fsf@suse.de>
- <9071affc-ffb5-435a-99d1-ca829703e31b@redhat.com>
- <8ba5dba7-1849-46ff-b708-a9caac66be27@redhat.com>
- <b2b52017-c4cd-43e9-a67b-2ccbb92ad99e@redhat.com> <874jdbmst4.fsf@suse.de>
- <ZfByYiL3Gl9d9u7h@x1n> <87wmq7l2xx.fsf@suse.de>
- <b9cb5c16-59a4-4cdc-9d12-6d7c2306b4ff@redhat.com> <ZfQqpK0xCwygYYho@x1n>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <ZfQqpK0xCwygYYho@x1n>
+Subject: Re: [PATCH 17/18] target/mips: Make MIPS_CPU common to new MIPS32_CPU
+ / MIPS64_CPU types
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20231010092901.99189-1-philmd@linaro.org>
+ <20231010092901.99189-18-philmd@linaro.org>
+ <8d30ccda-5b81-42fd-b36c-79bbaceffa2a@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <8d30ccda-5b81-42fd-b36c-79bbaceffa2a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.933,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,135 +99,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/15/24 12:01, Peter Xu wrote:
-> On Fri, Mar 15, 2024 at 11:17:45AM +0100, Cédric Le Goater wrote:
->>> migrate_set_state is also unintuitive because it ignores invalid state
->>> transitions and we've been using that property to deal with special
->>> states such as POSTCOPY_PAUSED and FAILED:
->>>
->>> - After the migration goes into POSTCOPY_PAUSED, the resumed migration's
->>>     migrate_init() will try to set the state NONE->SETUP, which is not
->>>     valid.
->>>
->>> - After save_setup fails, the migration goes into FAILED, but wait_unplug
->>>     will try to transition SETUP->ACTIVE, which is also not valid.
->>>
+On 13/10/23 06:34, Richard Henderson wrote:
+> On 10/10/23 02:28, Philippe Mathieu-Daudé wrote:
+>> "target/foo/cpu-qom.h" can not use any target specific definitions.
 >>
->> I am not sure I understand what the plan is. Both solutions are problematic
->> regarding the state transitions.
+>> Currently "target/mips/cpu-qom.h" defines TYPE_MIPS_CPU depending
+>> on the mips(32)/mips64 build type. This doesn't scale in a
+>> heterogeneous context where we need to access both types concurrently.
 >>
->> Should we consider that waiting for failover devices to unplug is an internal
->> step of the SETUP phase not transitioning to ACTIVE ?
+>> In order to do that, introduce the new MIPS32_CPU / MIPS64_CPU types,
+>> both inheriting a common TYPE_MIPS_CPU base type.
+>>
+>> Keep the current CPU types registered in mips_register_cpudef_type()
+>> as 32 or 64-bit, but instead of depending on the binary built being
+>> targeting 32/64-bit, check whether the CPU is 64-bit by looking at
+>> the CPU_MIPS64 bit.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/mips/cpu-qom.h | 13 ++++++-------
+>>   target/mips/cpu.h     |  3 +++
+>>   target/mips/cpu.c     | 11 ++++++++++-
+>>   3 files changed, 19 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/target/mips/cpu-qom.h b/target/mips/cpu-qom.h
+>> index 9c98ca1956..1a71509b5e 100644
+>> --- a/target/mips/cpu-qom.h
+>> +++ b/target/mips/cpu-qom.h
+>> @@ -1,5 +1,5 @@
+>>   /*
+>> - * QEMU MIPS CPU
+>> + * QEMU MIPS CPU QOM header (target agnostic)
+>>    *
+>>    * Copyright (c) 2012 SUSE LINUX Products GmbH
+>>    *
+>> @@ -23,13 +23,12 @@
+>>   #include "hw/core/cpu.h"
+>>   #include "qom/object.h"
+>> -#ifdef TARGET_MIPS64
+>> -#define TYPE_MIPS_CPU "mips64-cpu"
+>> -#else
+>> -#define TYPE_MIPS_CPU "mips-cpu"
+>> -#endif
+>> +#define TYPE_MIPS_CPU   "mips-cpu"
+>> +#define TYPE_MIPS32_CPU "mips32-cpu"
+>> +#define TYPE_MIPS64_CPU "mips64-cpu"
+>> -OBJECT_DECLARE_CPU_TYPE(MIPSCPU, MIPSCPUClass, MIPS_CPU)
+>> +OBJECT_DECLARE_CPU_TYPE(MIPS32CPU, MIPSCPUClass, MIPS32_CPU)
+>> +OBJECT_DECLARE_CPU_TYPE(MIPS64CPU, MIPSCPUClass, MIPS64_CPU)
+>>   #define MIPS_CPU_TYPE_SUFFIX "-" TYPE_MIPS_CPU
+>>   #define MIPS_CPU_TYPE_NAME(model) model MIPS_CPU_TYPE_SUFFIX
+>> diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+>> index 6b026e6bcf..3b6d0a7a8a 100644
+>> --- a/target/mips/cpu.h
+>> +++ b/target/mips/cpu.h
+>> @@ -10,6 +10,9 @@
+>>   #include "hw/clock.h"
+>>   #include "mips-defs.h"
+>> +/* Abstract QOM MIPS CPU, not exposed to other targets */
+>> +OBJECT_DECLARE_CPU_TYPE(MIPSCPU, MIPSCPUClass, MIPS_CPU)
 > 
-> If to unblock this series, IIUC the simplest solution is to do what Fabiano
-> suggested, that we move qemu_savevm_wait_unplug() to be before the check of
-> setup() ret. 
+> Why is this one moved back to cpu.h?
+> You exposed TYPE_X86_CPU in i386/cpu-qom.h...
 
-The simplest is IMHO moving qemu_savevm_wait_unplug() before
-qemu_savevm_state_setup() and leave patch 10 is unchanged. See
-below the extra patch. It looks much cleaner than what we have
-today.
-
-> In that case, the state change in qemu_savevm_wait_unplug()
-> should be benign and we should see a super small window it became ACTIVE
-> but then it should be FAILED (and IIUC the patch itself will need to use
-> ACTIVE as "old_state", not SETUP anymore).
-
-OK. I will give it a try to compare.
-
-> For the long term, maybe we can remove the WAIT_UNPLUG state?  
-
-I hope so, it's an internal SETUP state for me.
-
-> The only Libvirt support seems to be here:
-> 
-> commit 8a226ddb3602586a2ba2359afc4448c02f566a0e
-> Author: Laine Stump <laine@redhat.com>
-> Date:   Wed Jan 15 16:38:57 2020 -0500
-> 
->      qemu: add wait-unplug to qemu migration status enum
-> 
-> Considering that qemu_savevm_wait_unplug() can be a noop if the device is
-> already unplugged, I think it means no upper layer app should rely on this
-> state to present.
-
-Thanks,
-
-C.
-
-
-> 
-@@ -3383,11 +3383,10 @@ bool migration_rate_limit(void)
-   * unplugged
-   */
-  
--static void qemu_savevm_wait_unplug(MigrationState *s, int old_state,
--                                    int new_state)
-+static void qemu_savevm_wait_unplug(MigrationState *s, int state)
-  {
-      if (qemu_savevm_state_guest_unplug_pending()) {
--        migrate_set_state(&s->state, old_state, MIGRATION_STATUS_WAIT_UNPLUG);
-+        migrate_set_state(&s->state, state, MIGRATION_STATUS_WAIT_UNPLUG);
-  
-          while (s->state == MIGRATION_STATUS_WAIT_UNPLUG &&
-                 qemu_savevm_state_guest_unplug_pending()) {
-@@ -3410,9 +3409,7 @@ static void qemu_savevm_wait_unplug(Migr
-              }
-          }
-  
--        migrate_set_state(&s->state, MIGRATION_STATUS_WAIT_UNPLUG, new_state);
--    } else {
--        migrate_set_state(&s->state, old_state, new_state);
-+        migrate_set_state(&s->state, MIGRATION_STATUS_WAIT_UNPLUG, state);
-      }
-  }
-  
-@@ -3469,17 +3466,19 @@ static void *migration_thread(void *opaq
-          qemu_savevm_send_colo_enable(s->to_dst_file);
-      }
-  
-+    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP);
-+
-      bql_lock();
-      qemu_savevm_state_setup(s->to_dst_file);
-      bql_unlock();
-  
--    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
--                               MIGRATION_STATUS_ACTIVE);
--
-      s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
-  
-      trace_migration_thread_setup_complete();
-  
-+    migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
-+                      MIGRATION_STATUS_ACTIVE);
-+
-      while (migration_is_active()) {
-          if (urgent || !migration_rate_exceeded(s->to_dst_file)) {
-              MigIterateState iter_state = migration_iteration_run(s);
-@@ -3580,18 +3579,20 @@ static void *bg_migration_thread(void *o
-      ram_write_tracking_prepare();
-  #endif
-  
-+    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP);
-+
-      bql_lock();
-      qemu_savevm_state_header(s->to_dst_file);
-      qemu_savevm_state_setup(s->to_dst_file);
-      bql_unlock();
-  
--    qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
--                               MIGRATION_STATUS_ACTIVE);
--
-      s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
-  
-      trace_migration_thread_setup_complete();
-  
-+    migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
-+                      MIGRATION_STATUS_ACTIVE);
-+
-      bql_lock();
-  
-      if (migration_stop_vm(s, RUN_STATE_PAUSED)) {
-
+First thinking was to expose the base TYPE, so we can use QOM methods
+to enumerate implementations, but not expose QOM state/class getter
+for the base type (except in target/foo/). HW would use concrete
+32 or 64b type state/class getter. I might be wrong, so I'll keep
+the base type exposed for now. We might restrict later.
 
