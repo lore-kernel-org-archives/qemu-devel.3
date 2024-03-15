@@ -4,85 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A28C54E66
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 07:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7315C54E66
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 07:33:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl1mR-0001tU-UP; Fri, 15 Mar 2024 03:15:04 -0400
+	id 1rl23e-0005rL-De; Fri, 15 Mar 2024 03:32:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1rl1mP-0001t5-3v
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 03:15:01 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1rl1mN-00039W-DT
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 03:15:00 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6e6cadfffdbso1506584b3a.3
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 00:14:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710486897; x=1711091697; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nN00p1goZ6PQ989OHEk60XO6aAEKzaDhvEXFwjTjPLI=;
- b=ne019nRcJeRKOZo6LEItuX93hIaPRvXDMv7xe3qJf9Ilof6yAbgHbxXSUGCrEw3AA+
- iyk0uy4XOkiH3EUaHMfwauble7fV8R3E1VyAHJq3kEgehqTe89Zw8yD0TdpLuqZqt3Kx
- e2iK7bn8gpQSeHxD9aY08M+y9hIY7pcOZlx4F1GvZLzOY2JbxPRWhHAwsOWjCV1gIrPY
- U4sSFlHOY+fgeWI5eTNF/k+jfey1EbvjgfCiBXmnCsYjhkmQJ0xa4gkr0YJ4jo0gb2RB
- FxZYT7+3w9VH2JZ9xMwRU2P3i+K3xzWgaYngqDL/mO6XtOTMsClu9gZsj+F9wvEQttMP
- v8tA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710486897; x=1711091697;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nN00p1goZ6PQ989OHEk60XO6aAEKzaDhvEXFwjTjPLI=;
- b=FZU7Utl3RWCkcBeqEtN6JijEla1nkcsgykYh7v3xC0I7omcCZpZ+CD7Cooa/wyzNzo
- 0/RZHgZASJCbI1NNSd+rEAfCqJgYrs2r6LUGoULVa2HaxPHeQMOkeuIqWrN4LeL5VTWo
- 7AcnmnbNHm81qAeT9CSBkHpaaeuA/fge750AlKEOQq9FkMeXIvaSSlXjVy0SKYs2H+MB
- IlhBYRmzvyU8+WXAH8/M1n53mqlpUYiOICfLfubZRzPBWWyq5S8xuQuDHUij5rqvDUiv
- /K+0u/RO+vqgIyBNalaS9MZ3gzvV2RjVcNj4n+Z3hhW3zIgl0zpdUcUZl607J2f0bMdp
- WqOA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6ZO29S/H6BCgqev0RdWKxdQQV789Am6HXBRnWaSUCfT37An25LBjElCFs58xKwY9XRY2lt9ramhrByknICrkJo7e7ttQ=
-X-Gm-Message-State: AOJu0YxhDDBoUOYT6HnGbvI/izMhNrkfqf7V4xkR5+GFc+1TGAxAphlC
- In7KBOivz0F8Z89z7Mx4iqvvnGHsEIyanK4qKL6crVHNqg/czKT5
-X-Google-Smtp-Source: AGHT+IEtj00xOhA4NWmd4DPnYM616RQ6sO1/j7mVzrwzwCGDxodbUfrkv2OedQRkxvjFz7U2YUgBXg==
-X-Received: by 2002:a05:6a20:bb05:b0:1a1:876a:9cce with SMTP id
- fc5-20020a056a20bb0500b001a1876a9ccemr1994644pzb.42.1710486896667; 
- Fri, 15 Mar 2024 00:14:56 -0700 (PDT)
-Received: from valdaarhun.localnet ([223.233.86.143])
- by smtp.gmail.com with ESMTPSA id
- l10-20020a170903244a00b001dde0e74e5fsm2989198pls.63.2024.03.15.00.14.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Mar 2024 00:14:56 -0700 (PDT)
-From: Sahil <icegambit91@gmail.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- qemu-level <qemu-devel@nongnu.org>
-Subject: Re: Intention to work on GSoC project
-Date: Fri, 15 Mar 2024 12:44:51 +0530
-Message-ID: <1786176.VLH7GnMWUR@valdaarhun>
-In-Reply-To: <CAJaqyWcuU_kQpCN+U3ejWgfm+zBv3Mofe0zyi-RB+rbqgDHEgg@mail.gmail.com>
-References: <13625712.uLZWGnKmhe@valdaarhun> <6022175.lOV4Wx5bFT@valdaarhun>
- <CAJaqyWcuU_kQpCN+U3ejWgfm+zBv3Mofe0zyi-RB+rbqgDHEgg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1rl23c-0005qv-3z
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 03:32:48 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1rl23W-0006Ht-QF
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 03:32:47 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8DxvuuS+fNlNWMZAA--.61023S3;
+ Fri, 15 Mar 2024 15:32:34 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxXs2Q+fNlVcJaAA--.37974S2; 
+ Fri, 15 Mar 2024 15:32:32 +0800 (CST)
+From: Xianglai Li <lixianglai@loongson.cn>
+To: qemu-devel@nongnu.org,
+	gaosong@loongson.cn
+Cc: richard.henderson@linaro.org, maobibo@loongson.cn,
+ yangxiaojuan@loongson.cn, zhaotianrui@loongson.cn, yijun@loongson.cn,
+ wuruiyang@loongson.cn, zltjiangshi@gmail.com, lixianglai@loongson.cn
+Subject: [PATCH V5] target/loongarch: Fix tlb huge page loading issue
+Date: Fri, 15 Mar 2024 15:32:32 +0800
+Message-Id: <20240315073232.1176196-1-lixianglai@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=icegambit91@gmail.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8BxXs2Q+fNlVcJaAA--.37974S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,70 +65,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+When we use qemu tcg simulation, the page size of bios is 4KB.
+When using the level 2 super huge page (page size is 1G) to create the page table,
+it is found that the content of the corresponding address space is abnormal,
+resulting in the bios can not start the operating system and graphical interface normally.
 
-Thank you for your email.
+The lddir and ldpte instruction emulation has
+a problem with the use of super huge page processing above level 2.
+The page size is not correctly calculated,
+resulting in the wrong page size of the table entry found by tlb.
 
-On Thursday, March 14, 2024 8:39:45 PM IST Eugenio Perez Martin wrote:
-> Hi Sahil,
-> 
-> It's being hard to find a good self-contained small task related to
-> the project to be honest. As it would be out of SVQ, would it be ok
-> for you if we start straight to the task of adding the packed vq
-> format to SVQ?
-> 
-> Thanks!
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+---
+ target/loongarch/cpu-csr.h        |   3 +
+ target/loongarch/internals.h      |   5 --
+ target/loongarch/tcg/tlb_helper.c | 111 +++++++++++++++++++++---------
+ 3 files changed, 80 insertions(+), 39 deletions(-)
 
-Sure, this works too! I would love to get started with the project.
+Changes log:
+V4->V5:
+Modifying the patch Title.
+Fix incorrect usage of FIELD macro and code logic errors in patch.
 
-I have a small update as well. I have read through a few docs and
-articles to familiarize myself with the relevant terminology and
-technicalities.
+V3->V4:
+Optimize the huge page calculation method,
+use the FIELD macro for bit calculation.
 
-1. "About", "system emulation" and "user mode emulation" sections of
-    the user documentation [1]
-2. The migration subsystem [2]
+V2->V3:
+Delete the intermediate variable LDDIR_PS, and implement lddir and ldpte
+huge pages by referring to the latest architecture reference manual.
 
-Some sections in the above docs were difficult to grasp. For the time
-being, I have focused on those parts that I thought were relevant
-to the project.
+V1->V2:
+Modified the patch title format and Enrich the commit mesg description
 
-I have also read through the following articles:
-
-1. Introduction to virtio-networking and vhost-net [3]
-2. Deep dive into Virtio-networking and vhost-net [4]
-3. Virtualized Hardware Devices [5]
-4. VFIO - "Virtual Function I/O" (Just the introduction) [6]
-5. Virtio-net failover: An introduction [7]
-
-I hope I haven't gone off on a tangent. I was planning to finish reading
-up on the following articles as well:
-
-1. Virtqueues and virtio ring: How the data travels [8]
-2. Packed virtqueue: How to reduce overhead with virtio [9]
-3. Virtio live migration technical deep dive [10]
-4. Hands on vDPA: what do you do when you ain't got the hardware v2 (Part 1) [11]
-
-I believe the hands-on vPDA article will have me set up a development
-environment for the project as well.
-
-Please let me know if I should amend my roadmap. I am
-excited to get started :)
-
-Thanks,
-Sahil
-
-[1] https://www.qemu.org/docs/master/index.html
-[2] https://www.qemu.org/docs/master/devel/migration/index.html
-[3] https://www.redhat.com/en/blog/introduction-virtio-networking-and-vhost-net
-[4] https://www.redhat.com/en/blog/deep-dive-virtio-networking-and-vhost-net
-[5] https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_getting_started_guide/sec-virtualization_getting_started-products-virtualized-hardware-devices
-[6] https://www.kernel.org/doc/html/latest/driver-api/vfio.html
-[7] https://www.redhat.com/en/blog/virtio-net-failover-introduction
-[8] https://www.redhat.com/en/blog/virtqueues-and-virtio-ring-how-data-travels
-[9] https://developers.redhat.com/articles/2024/02/21/virtio-live-migration-technical-deep-dive
-[10] https://www.redhat.com/en/blog/packed-virtqueue-how-reduce-overhead-virtio
-[11] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-aint-got-hardware-part-1
-
+diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+index c59d7a9fcb..0834e91f30 100644
+--- a/target/loongarch/cpu-csr.h
++++ b/target/loongarch/cpu-csr.h
+@@ -67,6 +67,9 @@ FIELD(TLBENTRY, D, 1, 1)
+ FIELD(TLBENTRY, PLV, 2, 2)
+ FIELD(TLBENTRY, MAT, 4, 2)
+ FIELD(TLBENTRY, G, 6, 1)
++FIELD(TLBENTRY, HUGE, 6, 1)
++FIELD(TLBENTRY, HGLOBAL, 12, 1)
++FIELD(TLBENTRY, LEVEL, 13, 2)
+ FIELD(TLBENTRY_32, PPN, 8, 24)
+ FIELD(TLBENTRY_64, PPN, 12, 36)
+ FIELD(TLBENTRY_64, NR, 61, 1)
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index a2fc54c8a7..944153b180 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -16,11 +16,6 @@
+ #define TARGET_PHYS_MASK MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS)
+ #define TARGET_VIRT_MASK MAKE_64BIT_MASK(0, TARGET_VIRT_ADDR_SPACE_BITS)
+ 
+-/* Global bit used for lddir/ldpte */
+-#define LOONGARCH_PAGE_HUGE_SHIFT   6
+-/* Global bit for huge page */
+-#define LOONGARCH_HGLOBAL_SHIFT     12
+-
+ void loongarch_translate_init(void);
+ 
+ void loongarch_cpu_dump_state(CPUState *cpu, FILE *f, int flags);
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 22be031ac7..1d22afddd3 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -17,6 +17,34 @@
+ #include "exec/log.h"
+ #include "cpu-csr.h"
+ 
++static void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
++                               uint64_t *dir_width, target_ulong level)
++{
++    switch (level) {
++    case 1:
++        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_BASE);
++        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_WIDTH);
++        break;
++    case 2:
++        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_BASE);
++        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_WIDTH);
++        break;
++    case 3:
++        *dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_BASE);
++        *dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_WIDTH);
++        break;
++    case 4:
++        *dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_BASE);
++        *dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_WIDTH);
++        break;
++    default:
++        /* level may be zero for ldpte */
++        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
++        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
++        break;
++    }
++}
++
+ static void raise_mmu_exception(CPULoongArchState *env, target_ulong address,
+                                 MMUAccessType access_type, int tlb_error)
+ {
+@@ -485,7 +513,23 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+     target_ulong badvaddr, index, phys, ret;
+     int shift;
+     uint64_t dir_base, dir_width;
+-    bool huge = (base >> LOONGARCH_PAGE_HUGE_SHIFT) & 0x1;
++
++    if (unlikely((level == 0) || (level > 4))) {
++        return base;
++    }
++
++    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
++        if (unlikely(level == 4)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "Attempted use of level %lu huge page\n", level);
++        }
++
++        if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
++            return base;
++        } else {
++            return FIELD_DP64(base, TLBENTRY, LEVEL, level);
++        }
++    }
+ 
+     badvaddr = env->CSR_TLBRBADV;
+     base = base & TARGET_PHYS_MASK;
+@@ -494,30 +538,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+     shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
+     shift = (shift + 1) * 3;
+ 
+-    if (huge) {
+-        return base;
+-    }
+-    switch (level) {
+-    case 1:
+-        dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_BASE);
+-        dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_WIDTH);
+-        break;
+-    case 2:
+-        dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_BASE);
+-        dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_WIDTH);
+-        break;
+-    case 3:
+-        dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_BASE);
+-        dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_WIDTH);
+-        break;
+-    case 4:
+-        dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_BASE);
+-        dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_WIDTH);
+-        break;
+-    default:
+-        do_raise_exception(env, EXCCODE_INE, GETPC());
+-        return 0;
+-    }
++    get_dir_base_width(env, &dir_base, &dir_width, level);
+     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+     phys = base | index << shift;
+     ret = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
+@@ -530,20 +551,42 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+     CPUState *cs = env_cpu(env);
+     target_ulong phys, tmp0, ptindex, ptoffset0, ptoffset1, ps, badv;
+     int shift;
+-    bool huge = (base >> LOONGARCH_PAGE_HUGE_SHIFT) & 0x1;
+     uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+     uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
++    uint64_t dir_base, dir_width;
+ 
++    /*
++     * The parameter "base" has only two types,
++     * one is the page table base address,
++     * whose bit 6 should be 0,
++     * and the other is the huge page entry,
++     * whose bit 6 should be 1.
++     */
+     base = base & TARGET_PHYS_MASK;
++    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
++        /*
++         * Gets the huge page level and Gets huge page size.
++         * Clears the huge page level information in the entry.
++         * Clears huge page bit.
++         * Move HGLOBAL bit to GLOBAL bit.
++         */
++        get_dir_base_width(env, &dir_base, &dir_width,
++                           FIELD_EX64(base, TLBENTRY, LEVEL));
++
++        base = FIELD_DP64(base, TLBENTRY, LEVEL, 0);
++        base = FIELD_DP64(base, TLBENTRY, HUGE, 0);
++        if (FIELD_EX64(base, TLBENTRY, HGLOBAL)) {
++            base = FIELD_DP64(base, TLBENTRY, HGLOBAL, 0);
++            base = FIELD_DP64(base, TLBENTRY, G, 1);
++        }
+ 
+-    if (huge) {
+-        /* Huge Page. base is paddr */
+-        tmp0 = base ^ (1 << LOONGARCH_PAGE_HUGE_SHIFT);
+-        /* Move Global bit */
+-        tmp0 = ((tmp0 & (1 << LOONGARCH_HGLOBAL_SHIFT))  >>
+-                LOONGARCH_HGLOBAL_SHIFT) << R_TLBENTRY_G_SHIFT |
+-                (tmp0 & (~(1 << LOONGARCH_HGLOBAL_SHIFT)));
+-        ps = ptbase + ptwidth - 1;
++        /*
++         * Huge pages are evenly split into parity pages
++         * when loaded into the tlb,
++         * so the tlb page size needs to be divided by 2.
++         */
++        ps = dir_base + dir_width - 1;
++        tmp0 = base;
+         if (odd) {
+             tmp0 += MAKE_64BIT_MASK(ps, 1);
+         }
+-- 
+2.39.1
 
 
