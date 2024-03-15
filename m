@@ -4,85 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E0EC54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF4CC54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:13:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl7L9-0000ko-JW; Fri, 15 Mar 2024 09:11:15 -0400
+	id 1rl7L9-0000fW-Pw; Fri, 15 Mar 2024 09:11:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7Kq-0007pM-4r
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:56 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1rl7KQ-00070o-D7
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:30 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rl7Kh-0008OW-N5
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:51 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2d2505352e6so23328061fa.3
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:10:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1rl7KI-00081L-BL
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:10:29 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-29c71c6e20cso1745848a91.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 06:10:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710508242; x=1711113042; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1710508220; x=1711113020; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J25HPqsyrmOQ1iioSn9g7nmBc+Xq8CsuJB3WGvQV87Y=;
- b=Vi27EO75DlJiqo/Ja2Yu1gvvOfJoqPZMmfBJWXQZ3xQJKEN6K9Z5xtpRzuOOApi9h+
- CQJkzAFktpzv/Fl9+xFPFNLFbdnZn9FLP95wbAXYGylB9/NMv+6c4tkbW0DgYPFr4Z4R
- 2Jql/IoxdTqS9Wu/VRFxLwFBUKVdt3mTzQCQ8dMl88PBUm5XlaTy2NnwwmJ9BZF2QDT6
- WvBI4wJiwxcXMvcenhJChApo1Hsy403pKwo06V2fnRnEaMG4jXi/bCFredKo+aqrh5pd
- rGgITL0wuytDWPo04vs7YUdH7+t77tTkKnbaj6Z3KaADvwE+kWCeB3ACpq0PyT33VEM+
- jCgw==
+ bh=nbTQO2KVoRaBqcKgnkMGplR/jUAxDF5U80st6L4ph7Q=;
+ b=RJLAhd1ciGwCfaHXQbkYjJhG5vynmk3us1blbeJpdtRyeYPcDG+M7ciY3Gk6y8yBCU
+ 0hSaHe3NvXum8ZJoD3KEKQO1iUiY21Rq5JIsrFUmaB+RBV1cjXW0gAjvQcX2dUPqU+B6
+ X89TwWd0M+A6fTIJZ/uNHpLiHdFhkDKhq54jdkB1r2xLAAv4R9nm3OELEVkuc6yfKwmH
+ 8EDmpq+SG2RppdPotqRLyGYS2ISanCo1+U2g5I0GCwxGll3foL0NOKJK4uZ+NiJpDHTE
+ Z9LWDScGWsVjL/eOaSA+s0Wh9rFL9ORrCGX4eXZ59zVS5+S4scUUN0L3Rj4WUNxy6kRP
+ rhbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710508242; x=1711113042;
+ d=1e100.net; s=20230601; t=1710508220; x=1711113020;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=J25HPqsyrmOQ1iioSn9g7nmBc+Xq8CsuJB3WGvQV87Y=;
- b=hl/8wJX9axlKx3V/lWGGLIgcXUS59Zg39Zkv7XfW8Y8fW6azhdVZZ1yunWBSvQoa9k
- 27Zhw3GOk8tP9qeK0zQdoVP2SBtZUqhz7r4aYDIGosrrPB4WI7BFqxTIuILSJNFOIHIw
- dAOoO1+/PgSvksaWfzIh+GRC62bHkZTbv53JnFjmthQKgL3K1UjClKzvf3BrGSUV8YmN
- qUwT/8Kkn3nZbKRKcDD60+IR5hFL5lmiJdbRNzMxfpKl1h1kt8OD/nBsja5cNgGVnvPZ
- V3kvUCPoXs0wWJ+thaJFtbZ9boga6G3sG8L0kJxwWasuVA3Trb0h3iTPFTND7ZvNBUoV
- sbVg==
-X-Gm-Message-State: AOJu0YwAYoi6MYLeY97i1kh8wKVQKba8P7RpBnURRV7M0vSwWx0/FXpU
- Q49nZcoVn/RuGa0KByFIpeSAqHotv6Fpf3hmnaOgMknWlAaEYwiDFwX9yfq9t/1oMVL73eQnbhi
- Y
-X-Google-Smtp-Source: AGHT+IEv3LwWoidfawbI4h9yAjYbFyjy4RfVu/IFC9ezcLGHzfJWoWogtJbH4nZ9k43Uxgvez5OUAA==
-X-Received: by 2002:a05:651c:23a:b0:2d3:3b37:db78 with SMTP id
- z26-20020a05651c023a00b002d33b37db78mr2967826ljn.16.1710508241796; 
- Fri, 15 Mar 2024 06:10:41 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.145.26])
+ bh=nbTQO2KVoRaBqcKgnkMGplR/jUAxDF5U80st6L4ph7Q=;
+ b=FEUs04wsXuUT6x1yujyFanZI/aNbvrwPRS3dUqFLABaKi137UdKF+wYaTZ75oJ2r+D
+ zLEr1GUhye+c2KrozVSEP7TNnjnV6PDV/4hG6ddaRbszlXQcOrY1G3KbQkAwsY/4ry4i
+ kJm7hM/Zji30R67CgLWKucQnf3mNpcE18/9jh8L0/DD6Uh5tpcQObisNMB5bw//XF4F/
+ mn6vkgGm5AjMv2vE/J/zb8Ut8NOJ0hGS+Uw+juMp0QmGIjnxwxq4z/VGMhoaxYZ06vGN
+ 7bLTm14L0WAyPp2qXhhE/jTO3O68lrSkGDMF+51DqON7aPfOV94X6UalVq/FNrmxr2Xr
+ 3maQ==
+X-Gm-Message-State: AOJu0YyqnctQsyTzInySgMOqQbd75VmnlY1WhN6/y+oSxAwLi+Mat4Zj
+ /aHc9koo5XBqT5KUaNyIlv9GhkGv/vtzv6mo9+GAyk/7LLqzAcaxnPa05b17jnW+YsHC55EnfF5
+ U
+X-Google-Smtp-Source: AGHT+IFbKFMKzp3PnsashRb8m5vhoqv9/1zNOpgtQHm6eK4uKz8EmZPd2f6gZpXqceUoCkcx3/NRxQ==
+X-Received: by 2002:a17:90a:be18:b0:29e:781:25dc with SMTP id
+ a24-20020a17090abe1800b0029e078125dcmr383552pjs.19.1710508219750; 
+ Fri, 15 Mar 2024 06:10:19 -0700 (PDT)
+Received: from sunil-pc.Dlink ([106.51.184.12])
  by smtp.gmail.com with ESMTPSA id
- l23-20020a1709065a9700b00a460040a102sm1670235ejq.124.2024.03.15.06.10.39
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 15 Mar 2024 06:10:41 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ r3-20020a17090ad40300b0029c68206e2bsm2886663pju.0.2024.03.15.06.10.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Mar 2024 06:10:19 -0700 (PDT)
+From: Sunil V L <sunilvl@ventanamicro.com>
 To: qemu-devel@nongnu.org,
-	Markus Armbruster <armbru@redhat.com>
-Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+	qemu-arm@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Claudio Fontana <cfontana@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 13/21] system: Introduce cpu_typename_by_arch_bit()
-Date: Fri, 15 Mar 2024 14:09:01 +0100
-Message-ID: <20240315130910.15750-14-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240315130910.15750-1-philmd@linaro.org>
-References: <20240315130910.15750-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair23@gmail.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
+ Anup Patel <apatel@ventanamicro.com>, Haibo1 Xu <haibo1.xu@intel.com>,
+ Sunil V L <sunilvl@ventanamicro.com>
+Subject: [PATCH 12/12] tests/qtest/bios-tables-test.c: Enable basic testing
+ for RISC-V
+Date: Fri, 15 Mar 2024 18:39:24 +0530
+Message-Id: <20240315130924.2378849-10-sunilvl@ventanamicro.com>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20240315130924.2378849-1-sunilvl@ventanamicro.com>
+References: <20240315130924.2378849-1-sunilvl@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,123 +109,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a helper to return the CPU type name given a QemuArchBit.
+Add basic ACPI table testing for RISC-V.
 
-The TYPE_PPC_CPU target have different 32/64-bit definitions
-so we can not include it yet.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
 ---
----
- MAINTAINERS                |  1 +
- include/sysemu/arch_init.h |  2 ++
- system/cpu-qom-helpers.c   | 58 ++++++++++++++++++++++++++++++++++++++
- system/meson.build         |  1 +
- 4 files changed, 62 insertions(+)
- create mode 100644 system/cpu-qom-helpers.c
+ tests/qtest/bios-tables-test.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ed98814398..af27490243 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -148,6 +148,7 @@ M: Richard Henderson <richard.henderson@linaro.org>
- R: Paolo Bonzini <pbonzini@redhat.com>
- S: Maintained
- F: system/cpus.c
-+F: system/cpu-qom-helpers.c
- F: system/watchpoint.c
- F: cpu-common.c
- F: cpu-target.c
-diff --git a/include/sysemu/arch_init.h b/include/sysemu/arch_init.h
-index cf597c40a3..1874f18e67 100644
---- a/include/sysemu/arch_init.h
-+++ b/include/sysemu/arch_init.h
-@@ -27,6 +27,8 @@ typedef enum QemuArchBit {
-     QEMU_ARCH_BIT_LAST          = QEMU_ARCH_BIT_LOONGARCH
- } QemuArchBit;
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index c492438ced..033acc8958 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -1923,6 +1923,30 @@ static void test_acpi_microvm_acpi_erst(void)
+ }
+ #endif /* CONFIG_POSIX */
  
-+const char *cpu_typename_by_arch_bit(QemuArchBit arch_bit);
-+
- enum QemuArchMask {
-     QEMU_ARCH_ALL = -1,
-     QEMU_ARCH_ALPHA             = (1 << QEMU_ARCH_BIT_ALPHA),
-diff --git a/system/cpu-qom-helpers.c b/system/cpu-qom-helpers.c
-new file mode 100644
-index 0000000000..0d402ee3a0
---- /dev/null
-+++ b/system/cpu-qom-helpers.c
-@@ -0,0 +1,58 @@
-+/*
-+ * Helpers for CPU QOM types
-+ *
-+ * SPDX-FileCopyrightText: 2024 Linaro Ltd.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "sysemu/arch_init.h"
-+
-+#include "target/alpha/cpu-qom.h"
-+#include "target/arm/cpu-qom.h"
-+#include "target/avr/cpu-qom.h"
-+#include "target/cris/cpu-qom.h"
-+#include "target/hexagon/cpu-qom.h"
-+#include "target/hppa/cpu-qom.h"
-+#include "target/i386/cpu-qom.h"
-+#include "target/loongarch/cpu-qom.h"
-+#include "target/m68k/cpu-qom.h"
-+#include "target/microblaze/cpu-qom.h"
-+#include "target/mips/cpu-qom.h"
-+#include "target/nios2/cpu-qom.h"
-+#include "target/openrisc/cpu-qom.h"
-+#include "target/riscv/cpu-qom.h"
-+#include "target/rx/cpu-qom.h"
-+#include "target/s390x/cpu-qom.h"
-+#include "target/sparc/cpu-qom.h"
-+#include "target/sh4/cpu-qom.h"
-+#include "target/tricore/cpu-qom.h"
-+#include "target/xtensa/cpu-qom.h"
-+
-+const char *cpu_typename_by_arch_bit(QemuArchBit arch_bit)
++static void test_acpi_riscv64_virt_tcg(void)
 +{
-+    static const char *cpu_bit_to_typename[QEMU_ARCH_BIT_LAST + 1] = {
-+        [QEMU_ARCH_BIT_ALPHA]       = TYPE_ALPHA_CPU,
-+        [QEMU_ARCH_BIT_ARM]         = TYPE_ARM_CPU,
-+        [QEMU_ARCH_BIT_CRIS]        = TYPE_CRIS_CPU,
-+        [QEMU_ARCH_BIT_I386]        = TYPE_I386_CPU,
-+        [QEMU_ARCH_BIT_M68K]        = TYPE_M68K_CPU,
-+        [QEMU_ARCH_BIT_MICROBLAZE]  = TYPE_MICROBLAZE_CPU,
-+        [QEMU_ARCH_BIT_MIPS]        = TYPE_MIPS_CPU,
-+        /* TODO:                      TYPE_PPC_CPU */
-+        [QEMU_ARCH_BIT_S390X]       = TYPE_S390_CPU,
-+        [QEMU_ARCH_BIT_SH4]         = TYPE_SUPERH_CPU,
-+        [QEMU_ARCH_BIT_SPARC]       = TYPE_SPARC_CPU,
-+        [QEMU_ARCH_BIT_XTENSA]      = TYPE_XTENSA_CPU,
-+        [QEMU_ARCH_BIT_OPENRISC]    = TYPE_OPENRISC_CPU,
-+        [QEMU_ARCH_BIT_TRICORE]     = TYPE_TRICORE_CPU,
-+        [QEMU_ARCH_BIT_NIOS2]       = TYPE_NIOS2_CPU,
-+        [QEMU_ARCH_BIT_HPPA]        = TYPE_HPPA_CPU,
-+        [QEMU_ARCH_BIT_RISCV]       = TYPE_RISCV_CPU,
-+        [QEMU_ARCH_BIT_RX]          = TYPE_RX_CPU,
-+        [QEMU_ARCH_BIT_AVR]         = TYPE_AVR_CPU,
-+        [QEMU_ARCH_BIT_HEXAGON]     = TYPE_HEXAGON_CPU,
-+        [QEMU_ARCH_BIT_LOONGARCH]   = TYPE_LOONGARCH_CPU,
++    test_data data = {
++        .machine = "virt",
++        .arch = "riscv64",
++        .tcg_only = true,
++        .uefi_fl1 = "pc-bios/edk2-riscv-code.fd",
++        .uefi_fl2 = "pc-bios/edk2-riscv-vars.fd",
++        .ram_start = 0x80000000ULL,
++        .scan_len = 128ULL * 1024 * 1024,
 +    };
-+    return cpu_bit_to_typename[arch_bit];
++
++    /*
++     * RHCT will have ISA string encoded. To reduce the effort
++     * of updating expected AML file for any new default ISA extension,
++     * use the profile rva22s64. Once profile is ratified, there may
++     * not be new extension possible.
++     */
++    test_acpi_one("-cpu rva22s64 -device virtio-blk-device,drive=hd0 "
++                  "-drive file=tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2,id=hd0",
++                  &data);
++    free_test_data(&data);
 +}
-diff --git a/system/meson.build b/system/meson.build
-index 25e2117250..c6ee97e3b2 100644
---- a/system/meson.build
-+++ b/system/meson.build
-@@ -10,6 +10,7 @@ system_ss.add(files(
-   'balloon.c',
-   'bootdevice.c',
-   'cpus.c',
-+  'cpu-qom-helpers.c',
-   'cpu-throttle.c',
-   'cpu-timers.c',
-   'datadir.c',
++
+ static void test_acpi_aarch64_virt_tcg(void)
+ {
+     test_data data = {
+@@ -2342,6 +2366,10 @@ int main(int argc, char *argv[])
+                 qtest_add_func("acpi/virt/viot", test_acpi_aarch64_virt_viot);
+             }
+         }
++    } else if (strcmp(arch, "riscv64") == 0) {
++        if (has_tcg && qtest_has_device("virtio-blk-pci")) {
++            qtest_add_func("acpi/virt", test_acpi_riscv64_virt_tcg);
++        }
+     }
+     ret = g_test_run();
+     boot_sector_cleanup(disk);
 -- 
-2.41.0
+2.40.1
 
 
