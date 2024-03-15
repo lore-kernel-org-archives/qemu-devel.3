@@ -4,73 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEB88C54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:46:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A683C54E67
+	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 13:49:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl7rd-0000fY-P2; Fri, 15 Mar 2024 09:44:49 -0400
+	id 1rl7vy-0002l3-76; Fri, 15 Mar 2024 09:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl7rb-0000fH-2Q
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:44:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rl7vv-0002jk-6v; Fri, 15 Mar 2024 09:49:15 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rl7rY-0007bE-8u
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 09:44:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710510282;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+zNjahT3d2nZxwcCaVP9rl4fjt4m4rz6ioOxRDpGCAs=;
- b=UWgQpqmLKNgvQnN0k/UVQDdGs4gWUr69jgPOVCbzIOeo6y8WXF0CthKYQLkkCTiPDhsv7X
- lCRluak0FxxDPu4mzV48YxLoZSTfrIHDaEO2jR5bAevXCxAEDs1h3nNceLc8/P5/GjgmSu
- HWEjUjEpCGM+dCTza/jab2VD2sfH8bE=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-Mt8zbjfwN8evHEwFkpWdRA-1; Fri,
- 15 Mar 2024 09:44:41 -0400
-X-MC-Unique: Mt8zbjfwN8evHEwFkpWdRA-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C225C3C0D842;
- Fri, 15 Mar 2024 13:44:40 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 9E62B2022C1E;
- Fri, 15 Mar 2024 13:44:40 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9885C21E6A24; Fri, 15 Mar 2024 14:44:39 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org,  berrange@redhat.com,  michael.roth@amd.com,
- kkostiuk@redhat.com,  marcandre.lureau@redhat.com,  philmd@linaro.org,
- den@virtuozzo.com
-Subject: Re: [PATCH v3 1/7] qga: guest-get-fsinfo: add optional
- 'total-bytes-root' field
-In-Reply-To: <20240315122946.39168-2-andrey.drobyshev@virtuozzo.com> (Andrey
- Drobyshev's message of "Fri, 15 Mar 2024 14:29:40 +0200")
-References: <20240315122946.39168-1-andrey.drobyshev@virtuozzo.com>
- <20240315122946.39168-2-andrey.drobyshev@virtuozzo.com>
-Date: Fri, 15 Mar 2024 14:44:39 +0100
-Message-ID: <87le6jehiw.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rl7vm-0008W3-VU; Fri, 15 Mar 2024 09:49:14 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c08:6c2d:0:640:316f:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 6004B61003;
+ Fri, 15 Mar 2024 16:48:56 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b70d::1:34] (unknown
+ [2a02:6b8:b081:b70d::1:34])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id tmppvd7IbCg0-LLpYfkVr; Fri, 15 Mar 2024 16:48:55 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1710510535;
+ bh=7UYqzZlgDX6KYDDXVU/2pD5rQYBkgY9M/HjabE/RkbQ=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=J8d3NPOaDPDZwRRTWFOeMSUluhIGuuzjZuKycX0u5MnaViU8Q1AI7N0ZHOgfjbrK6
+ CDqdbP60IA5U7C/CShvU4pa4K2WxPim1LH7fyChekAf7nuH+h1s78swxavaGuFNHRH
+ zHyeizg2XIb8HySLUVyL5aqAbmYxwAuwYYZTUDfY=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <403ec287-bddd-45ea-bf95-b15c6aff476b@yandex-team.ru>
+Date: Fri, 15 Mar 2024 16:48:55 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.933,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] blockcommit: Reopen base image as RO after abort
+Content-Language: en-US
+To: Alexander Ivanov <alexander.ivanov@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com, 
+ jsnow@redhat.com, kwolf@redhat.com, hreitz@redhat.com
+References: <20240130091440.2346274-1-alexander.ivanov@virtuozzo.com>
+ <fd599353-5d83-46c7-938f-c5ff30c4b647@virtuozzo.com>
+ <c9aa265d-9b3f-4504-a75b-31e08aef5c2f@yandex-team.ru>
+ <711cd053-df5d-47e5-8562-367c437ad44c@virtuozzo.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <711cd053-df5d-47e5-8562-367c437ad44c@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,86 +77,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Andrey Drobyshev <andrey.drobyshev@virtuozzo.com> writes:
+On 15.03.24 12:55, Alexander Ivanov wrote:
+> 
+> 
+> On 2/28/24 17:48, Vladimir Sementsov-Ogievskiy wrote:
+>> On 09.02.24 15:29, Alexander Ivanov wrote:
+>>> Could you please review the patch?
+>>
+>> Sorry for long delay.
+>>
+>> Honestly, I don't like refcnt in block-driver. It violate incapsulation, refcnt is interal thing of common block layer. And actually, you can't make any assumptions from value of refcnt, as you don't know which additional parents were created and why, and when they are going unref their children.
+> Hmmm... Maybe I can just exclude refcnt check from the condition, can't I. If BDS will be removed it doesn't matter if we make it RO. What do you think?
 
-> Since the commit 25b5ff1a86 ("qga: add mountpoint usage info to
-> GuestFilesystemInfo") we have 2 values reported in guest-get-fsinfo:
-> used = (f_blocks - f_bfree), total = (f_blocks - f_bfree + f_bavail) as
-> returned by statvfs(3).  While on Windows guests that's all we can get
-> with GetDiskFreeSpaceExA(), on POSIX guests we might also be interested in
-> total file system size, as it's visible for root user.  Let's add an
-> optional field 'total-bytes-root' to GuestFilesystemInfo struct, which'd
-> only be reported on POSIX and represent f_blocks value as returned by
-> statvfs(3).
->
-> While here, let's document better where those values come from in both
-> POSIX and Windows.
->
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Sounds good. I even don't see, why you need bdrv_chain_has_significant_parent() check. We just roll-back ro->rw transition on failure case, isn't just always correct thing to do?
 
-[...]
+>>
+>> What was wrong with v2?
+> My bad, it seems, I didn't send v2 before I decided to change the patch.
 
-> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index b8efe31897..093a5ab602 100644
-> --- a/qga/qapi-schema.json
-> +++ b/qga/qapi-schema.json
-> @@ -1031,8 +1031,18 @@
->  # @type: file system type string
->  #
->  # @used-bytes: file system used bytes (since 3.0)
-> +#     * POSIX: (f_blocks - f_bfree) * f_frsize, as returned by statvfs(3)
-> +#     * Windows: (TotalNumberOfBytes - TotalNumberOfFreeBytes), as returned
-> +#       by GetDiskFreeSpaceEx()
->  #
->  # @total-bytes: non-root file system total bytes (since 3.0)
-> +#     * POSIX: (f_blocks - f_bfree + f_bavail) * f_frsize, as returned by
-> +#       statvfs(3)
-> +#     * Windows: TotalNumberOfBytes, as returned by GetDiskFreeSpaceEx()
-> +#
-> +# @total-bytes-root: total file system size in bytes (as visible for a
-> +#     priviledged user) (since 8.3)
+Hmm, somehow, I don't have it in my mailbox, but here it is: https://patchew.org/QEMU/20240109093128.157460-1-alexander.ivanov@virtuozzo.com/
 
-privileged
 
-> +#     * POSIX only: (f_blocks * f_frsize), returned by statvfs(3)
->  #
->  # @disk: an array of disk hardware information that the volume lies
->  #     on, which may be empty if the disk type is not supported
-> @@ -1042,7 +1052,7 @@
->  { 'struct': 'GuestFilesystemInfo',
->    'data': {'name': 'str', 'mountpoint': 'str', 'type': 'str',
->             '*used-bytes': 'uint64', '*total-bytes': 'uint64',
-> -           'disk': ['GuestDiskAddress']} }
-> +           '*total-bytes-root': 'uint64', 'disk': ['GuestDiskAddress']} }
->  
->  ##
->  # @guest-get-fsinfo:
+===
 
-Fails to build the manual:
+More: in commit message you say about failure case. And it seems OK to roll-back ro->rw transition on failure, if we did it. But mirror_exit_common() called on success path too. I think, on success patch, we should do any additional reopenings?
 
-    qga/qapi-schema.json:1019:Unexpected indentation.
-
-To fix, add blank lines before the lists, like this:
-
-   # @used-bytes: file system used bytes (since 3.0)
-   #
-   #     * POSIX: (f_blocks - f_bfree) * f_frsize, as returned by
-   #       statvfs(3)
-   #     * Windows: (TotalNumberOfBytes - TotalNumberOfFreeBytes), as
-   #       returned by GetDiskFreeSpaceEx()
-   #
-   # @total-bytes: non-root file system total bytes (since 3.0)
-   #
-   #     * POSIX: (f_blocks - f_bfree + f_bavail) * f_frsize, as returned by
-   #       statvfs(3)
-   #     * Windows: TotalNumberOfBytes, as returned by GetDiskFreeSpaceEx()
-   #
-   # @total-bytes-root: total file system size in bytes (as visible for a
-   #     privileged user) (since 8.3)
-   #
-   #     * POSIX only: (f_blocks * f_frsize), returned by statvfs(3)
-   #
-
-Yes, reST can be quite annoying.
+-- 
+Best regards,
+Vladimir
 
 
