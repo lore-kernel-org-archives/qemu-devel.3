@@ -4,60 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1DB2C54E67
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 14:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD86C48BF6
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 Mar 2024 19:41:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rl8vN-0004Ah-DG; Fri, 15 Mar 2024 10:52:45 -0400
+	id 1rlZtZ-0005bt-TU; Sat, 16 Mar 2024 15:40:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhukeqian1@huawei.com>)
- id 1rl8vL-0004AS-ER
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 10:52:43 -0400
-Received: from szxga06-in.huawei.com ([45.249.212.32])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rlZtP-0005bS-UE; Sat, 16 Mar 2024 15:40:33 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhukeqian1@huawei.com>)
- id 1rl8vH-0004pU-Kd
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 10:52:43 -0400
-Received: from mail.maildlp.com (unknown [172.19.88.163])
- by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4Tx6dw6NGQz1vwyt
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 22:51:48 +0800 (CST)
-Received: from kwepemd500004.china.huawei.com (unknown [7.221.188.173])
- by mail.maildlp.com (Postfix) with ESMTPS id 1398A180063
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 22:52:33 +0800 (CST)
-Received: from kwepemi500026.china.huawei.com (7.221.188.247) by
- kwepemd500004.china.huawei.com (7.221.188.173) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1258.28; Fri, 15 Mar 2024 22:52:32 +0800
-Received: from kwepemi500026.china.huawei.com ([7.221.188.247]) by
- kwepemi500026.china.huawei.com ([7.221.188.247]) with mapi id 15.01.2507.035; 
- Fri, 15 Mar 2024 22:52:32 +0800
-To: qemu-devel <qemu-devel@nongnu.org>
-CC: "Wanghaibin (D)" <wanghaibin.wang@huawei.com>, yuzenghui
- <yuzenghui@huawei.com>, Salil Mehta <salil.mehta@huawei.com>
-Subject: [RFC] Is there a bug in pause_all_vcpus()
-Thread-Topic: [RFC] Is there a bug in pause_all_vcpus()
-Thread-Index: AQHaduhoTQUi6xvKuk6NjbJUxzpGig==
-Content-Class: urn:content-classes:message
-Date: Fri, 15 Mar 2024 14:52:32 +0000
-Message-ID: 3A5C0543-A402-4A78-8A12-41D7EF58BB54
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-Content-Type: multipart/alternative;
- boundary="_000_3A5C0543A4024A788A1241D7EF58BB54_"
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rlZtM-0001xO-Ik; Sat, 16 Mar 2024 15:40:31 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 99B3A567EC;
+ Sat, 16 Mar 2024 22:41:24 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3A8289AF26;
+ Sat, 16 Mar 2024 22:40:14 +0300 (MSK)
+Message-ID: <4b803768-09df-4b6c-a745-f0158543310d@tls.msk.ru>
+Date: Sat, 16 Mar 2024 22:40:14 +0300
 MIME-Version: 1.0
-Received-SPF: pass client-ip=45.249.212.32; envelope-from=zhukeqian1@huawei.com;
- helo=szxga06-in.huawei.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
- INVALID_MSGID=0.568, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: Regression in v7.2.10 - ui-dbus.so requires -fPIC
+Content-Language: en-US
+To: Olaf Hering <olaf@aepfle.de>, qemu-devel@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20240314220038.1aaae79f.olaf@aepfle.de>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+In-Reply-To: <20240314220038.1aaae79f.olaf@aepfle.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,137 +82,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  zhukeqian <zhukeqian1@huawei.com>
-From:  zhukeqian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_3A5C0543A4024A788A1241D7EF58BB54_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+15.03.2024 00:00, Olaf Hering wrote:
+> ui-dbus.so is a shared library. But it is apparently handled differently
+> than all the other shared libraries: it is not compiled with -fPIC.
+> 
+> As a result it fails to link. Not sure why this happens only here.
+> Everything up to v7.2.9 was fine.
+> 
+> Looking at some random other library like libui-spice-core.a,
+> every object is compiled with -fPIC.
+> 
+> But ui/dbus-display1.c is compiled with -fPIE instead.
+> 
+> Is this intentional?
+> 
+> Olaf
+> 
+> ld: ui/libdbus-display1.a.p/meson-generated_.._dbus-display1.c.o: warning: relocation against `qemu_dbus_display1_audio_get_type' in read-only section `.text'
 
-DQoNCkR1cmluZyB3ZSB3YWl0ZWQgb24gcWVtdV9wYXVzZV9jb25kIHRoZSBicWwgd2FzIHVubG9j
-a2VkLA0KdGhlIHZjcHUncyBzdGF0ZSBtYXkgaGFzIGJlZW4gY2hhbmdlZCBieSBvdGhlciB0aHJl
-YWQsIHNvDQp3ZSBtdXN0IHJlcXVlc3QgdGhlIHBhdXNlIHN0YXRlIG9uIGFsbCB2Y3B1cyBhZ2Fp
-bi4NCg0KRm9yIGV4YW1wbGU6DQoNCkJvdGggbWFpbiBsb29wIHRocmVhZCBhbmQgdkNQVSB0aHJl
-YWQgYXJlIGFsbG93ZWQgdG8gY2FsbA0KcGF1c2VfYWxsX3ZjcHVzKCksIGFuZCBpbiBnZW5lcmFs
-IHJlc3VtZV9hbGxfdmNwdXMoKSBpcyBjYWxsZWQNCmFmdGVyIGl0Lg0KDQpUaHVzIHRoZXJlIGlz
-IHBvc3NpYmlsaXR5IHRoYXQgZHVyaW5nIHRocmVhZCBUMSB3YWl0cyBvbg0KcWVtdV9wYXVzZV9j
-b25kLCBvdGhlciB0aHJlYWQgaGFzIGNhbGxlZCBwYXVzZV9hbGxfdmNwdXMoKSBhbmQNCnJlc3Vt
-ZV9hbGxfdmNwdXMoKSwgdGhlbiB0aHJlYWQgVDEgd2lsbCBzdHVjaywgYmVjYXVzZSB0aGUgY29u
-ZGl0aW9uDQphbGxfdmNwdXNfcGF1c2VkKCkgaXMgYWx3YXlzIGZhbHNlLg0KDQpQUzoNCkkgaGl0
-IHRoaXMgYnVnIHdoZW4gSSB0ZXN0IHRoZSBSRkMgcGF0Y2ggb2YgQVJNIHZDUFUgaG90cGx1ZyBm
-ZWF0dXJlLg0KVGhpcyBwYXRjaCBpcyBub3QgdmVyaWZpZWQhISEganVzdCBmb3IgUkZDLg0KDQpT
-aWduZWQtb2ZmLWJ5OiBLZXFpYW4gWmh1IDx6aHVrZXFpYW4xQGh1YXdlaS5jb20+DQotLS0NCiBz
-eXN0ZW0vY3B1cy5jIHwgMjIgKysrKysrKysrKysrKysrKystLS0tLQ0KIDEgZmlsZSBjaGFuZ2Vk
-LCAxNyBpbnNlcnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQ0KDQpkaWZmIC0tZ2l0IGEvc3lzdGVt
-L2NwdXMuYyBiL3N5c3RlbS9jcHVzLmMNCmluZGV4IDY4ZDE2MWQ5NmIuLjI0YWM4MDg1Y2QgMTAw
-NjQ0DQotLS0gYS9zeXN0ZW0vY3B1cy5jDQorKysgYi9zeXN0ZW0vY3B1cy5jDQpAQCAtNTcxLDEy
-ICs1NzEsMTQgQEAgc3RhdGljIGJvb2wgYWxsX3ZjcHVzX3BhdXNlZCh2b2lkKQ0KICAgICByZXR1
-cm4gdHJ1ZTsNCiB9DQoNCi12b2lkIHBhdXNlX2FsbF92Y3B1cyh2b2lkKQ0KK3N0YXRpYyB2b2lk
-IHJlcXVlc3RfcGF1c2VfYWxsX3ZjcHVzKHZvaWQpDQogew0KICAgICBDUFVTdGF0ZSAqY3B1Ow0K
-DQotICAgIHFlbXVfY2xvY2tfZW5hYmxlKFFFTVVfQ0xPQ0tfVklSVFVBTCwgZmFsc2UpOw0KICAg
-ICBDUFVfRk9SRUFDSChjcHUpIHsNCisgICAgICAgIGlmIChjcHUtPnN0b3BwZWQpIHsNCisgICAg
-ICAgICAgICBjb250aW51ZTsNCisgICAgICAgIH0NCiAgICAgICAgIGlmIChxZW11X2NwdV9pc19z
-ZWxmKGNwdSkpIHsNCiAgICAgICAgICAgICBxZW11X2NwdV9zdG9wKGNwdSwgdHJ1ZSk7DQogICAg
-ICAgICB9IGVsc2Ugew0KQEAgLTU4NCw2ICs1ODYsMTQgQEAgdm9pZCBwYXVzZV9hbGxfdmNwdXMo
-dm9pZCkNCiAgICAgICAgICAgICBxZW11X2NwdV9raWNrKGNwdSk7DQogICAgICAgICB9DQogICAg
-IH0NCit9DQorDQordm9pZCBwYXVzZV9hbGxfdmNwdXModm9pZCkNCit7DQorICAgIENQVVN0YXRl
-ICpjcHU7DQorDQorICAgIHFlbXVfY2xvY2tfZW5hYmxlKFFFTVVfQ0xPQ0tfVklSVFVBTCwgZmFs
-c2UpOw0KKyAgICByZXF1ZXN0X3BhdXNlX2FsbF92Y3B1cygpOw0KDQogICAgIC8qIFdlIG5lZWQg
-dG8gZHJvcCB0aGUgcmVwbGF5X2xvY2sgc28gYW55IHZDUFUgdGhyZWFkcyB3b2tlbiB1cA0KICAg
-ICAgKiBjYW4gZmluaXNoIHRoZWlyIHJlcGxheSB0YXNrcw0KQEAgLTU5Miw5ICs2MDIsMTEgQEAg
-dm9pZCBwYXVzZV9hbGxfdmNwdXModm9pZCkNCg0KICAgICB3aGlsZSAoIWFsbF92Y3B1c19wYXVz
-ZWQoKSkgew0KICAgICAgICAgcWVtdV9jb25kX3dhaXQoJnFlbXVfcGF1c2VfY29uZCwgJmJxbCk7
-DQotICAgICAgICBDUFVfRk9SRUFDSChjcHUpIHsNCi0gICAgICAgICAgICBxZW11X2NwdV9raWNr
-KGNwdSk7DQotICAgICAgICB9DQorICAgICAgICAvKiBEdXJpbmcgd2Ugd2FpdGVkIG9uIHFlbXVf
-cGF1c2VfY29uZCB0aGUgYnFsIHdhcyB1bmxvY2tlZCwNCisgICAgICAgICAqIHRoZSB2Y3B1J3Mg
-c3RhdGUgbWF5IGhhcyBiZWVuIGNoYW5nZWQgYnkgb3RoZXIgdGhyZWFkLCBzbw0KKyAgICAgICAg
-ICogd2UgbXVzdCByZXF1ZXN0IHRoZSBwYXVzZSBzdGF0ZSBvbiBhbGwgdmNwdXMgYWdhaW4uDQor
-ICAgICAgICAgKi8NCisgICAgICAgIHJlcXVlc3RfcGF1c2VfYWxsX3ZjcHVzKCk7DQogICAgIH0N
-Cg0KICAgICBicWxfdW5sb2NrKCk7DQotLQ0KMi4zNi4xDQoNCg0KDQo=
+Hi!
 
---_000_3A5C0543A4024A788A1241D7EF58BB54_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <D028A07D658A4C40995C8250DF7EB29E@huawei.com>
-Content-Transfer-Encoding: base64
+This seems to be the following patch which I picked up for 7.2.10:
 
-PCFET0NUWVBFIGh0bWw+DQo8aHRtbD4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVu
-dC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPC9tYXRhPjxzdHls
-ZSB0eXBlPSJ0ZXh0L2NzcyI+Cioge2JveC1zaXppbmc6Ym9yZGVyLWJveDt9CmJvZHkge2ZvbnQt
-ZmFtaWx5OiBDYWxpYnJpO30KPC9zdHlsZT4NCjwvaGVhZD4NCjxib2R5Pg0KPGRpdj4NCjxkaXYg
-aWQ9ImZvY3VzIj4NCjxkaXY+PGJyPg0KPGJyPg0KPGRpdj5EdXJpbmcgd2Ugd2FpdGVkIG9uIHFl
-bXVfcGF1c2VfY29uZCB0aGUgYnFsIHdhcyB1bmxvY2tlZCw8L2Rpdj4NCjxkaXY+dGhlIHZjcHUn
-cyBzdGF0ZSBtYXkgaGFzIGJlZW4gY2hhbmdlZCBieSBvdGhlciB0aHJlYWQsIHNvPC9kaXY+DQo8
-ZGl2PndlIG11c3QgcmVxdWVzdCB0aGUgcGF1c2Ugc3RhdGUgb24gYWxsIHZjcHVzIGFnYWluLjwv
-ZGl2Pg0KPGRpdj48YnI+DQo8L2Rpdj4NCjxkaXY+Rm9yIGV4YW1wbGU6PC9kaXY+DQo8ZGl2Pjxi
-cj4NCjwvZGl2Pg0KPGRpdj5Cb3RoIG1haW4gbG9vcCB0aHJlYWQgYW5kIHZDUFUgdGhyZWFkIGFy
-ZSBhbGxvd2VkIHRvIGNhbGw8L2Rpdj4NCjxkaXY+cGF1c2VfYWxsX3ZjcHVzKCksIGFuZCBpbiBn
-ZW5lcmFsIHJlc3VtZV9hbGxfdmNwdXMoKSBpcyBjYWxsZWQ8L2Rpdj4NCjxkaXY+YWZ0ZXIgaXQu
-PC9kaXY+DQo8ZGl2Pjxicj4NCjwvZGl2Pg0KPGRpdj5UaHVzIHRoZXJlIGlzIHBvc3NpYmlsaXR5
-IHRoYXQgZHVyaW5nIHRocmVhZCBUMSB3YWl0cyBvbjwvZGl2Pg0KPGRpdj5xZW11X3BhdXNlX2Nv
-bmQsIG90aGVyIHRocmVhZCBoYXMgY2FsbGVkIHBhdXNlX2FsbF92Y3B1cygpIGFuZDwvZGl2Pg0K
-PGRpdj5yZXN1bWVfYWxsX3ZjcHVzKCksIHRoZW4gdGhyZWFkIFQxIHdpbGwgc3R1Y2ssIGJlY2F1
-c2UgdGhlIGNvbmRpdGlvbjwvZGl2Pg0KPGRpdj5hbGxfdmNwdXNfcGF1c2VkKCkgaXMgYWx3YXlz
-IGZhbHNlLjwvZGl2Pg0KPGRpdj48YnI+DQo8L2Rpdj4NCjxkaXY+UFM6PC9kaXY+DQo8ZGl2Pkkg
-aGl0IHRoaXMgYnVnIHdoZW4gSSB0ZXN0IHRoZSBSRkMgcGF0Y2ggb2YgQVJNIHZDUFUgaG90cGx1
-ZyBmZWF0dXJlLjwvZGl2Pg0KPGRpdj5UaGlzIHBhdGNoIGlzIG5vdCB2ZXJpZmllZCEhISBqdXN0
-IGZvciBSRkMuPC9kaXY+DQo8ZGl2Pjxicj4NCjwvZGl2Pg0KPGRpdj5TaWduZWQtb2ZmLWJ5OiBL
-ZXFpYW4gWmh1ICZsdDt6aHVrZXFpYW4xQGh1YXdlaS5jb20mZ3Q7PC9kaXY+DQo8ZGl2Pi0tLTwv
-ZGl2Pg0KPGRpdj4mbmJzcDtzeXN0ZW0vY3B1cy5jIHwgMjIgJiM0MzsmIzQzOyYjNDM7JiM0Mzsm
-IzQzOyYjNDM7JiM0MzsmIzQzOyYjNDM7JiM0MzsmIzQzOyYjNDM7JiM0MzsmIzQzOyYjNDM7JiM0
-MzsmIzQzOy0tLS0tPC9kaXY+DQo8ZGl2PiZuYnNwOzEgZmlsZSBjaGFuZ2VkLCAxNyBpbnNlcnRp
-b25zKCYjNDM7KSwgNSBkZWxldGlvbnMoLSk8L2Rpdj4NCjxkaXY+PGJyPg0KPC9kaXY+DQo8ZGl2
-PmRpZmYgLS1naXQgYS9zeXN0ZW0vY3B1cy5jIGIvc3lzdGVtL2NwdXMuYzwvZGl2Pg0KPGRpdj5p
-bmRleCA2OGQxNjFkOTZiLi4yNGFjODA4NWNkIDEwMDY0NDwvZGl2Pg0KPGRpdj4tLS0gYS9zeXN0
-ZW0vY3B1cy5jPC9kaXY+DQo8ZGl2PiYjNDM7JiM0MzsmIzQzOyBiL3N5c3RlbS9jcHVzLmM8L2Rp
-dj4NCjxkaXY+QEAgLTU3MSwxMiAmIzQzOzU3MSwxNCBAQCBzdGF0aWMgYm9vbCBhbGxfdmNwdXNf
-cGF1c2VkKHZvaWQpPC9kaXY+DQo8ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7cmV0dXJuIHRydWU7
-PC9kaXY+DQo8ZGl2PiZuYnNwO308L2Rpdj4NCjxkaXY+Jm5ic3A7PC9kaXY+DQo8ZGl2Pi12b2lk
-IHBhdXNlX2FsbF92Y3B1cyh2b2lkKTwvZGl2Pg0KPGRpdj4mIzQzO3N0YXRpYyB2b2lkIHJlcXVl
-c3RfcGF1c2VfYWxsX3ZjcHVzKHZvaWQpPC9kaXY+DQo8ZGl2PiZuYnNwO3s8L2Rpdj4NCjxkaXY+
-Jm5ic3A7ICZuYnNwOyAmbmJzcDtDUFVTdGF0ZSAqY3B1OzwvZGl2Pg0KPGRpdj4mbmJzcDs8L2Rp
-dj4NCjxkaXY+LSZuYnNwOyAmbmJzcDsgcWVtdV9jbG9ja19lbmFibGUoUUVNVV9DTE9DS19WSVJU
-VUFMLCBmYWxzZSk7PC9kaXY+DQo8ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7Q1BVX0ZPUkVBQ0go
-Y3B1KSB7PC9kaXY+DQo8ZGl2PiYjNDM7Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7IGlmIChj
-cHUtJmd0O3N0b3BwZWQpIHs8L2Rpdj4NCjxkaXY+JiM0MzsmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
-bmJzcDsgJm5ic3A7ICZuYnNwOyBjb250aW51ZTs8L2Rpdj4NCjxkaXY+JiM0MzsmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgfTwvZGl2Pg0KPGRpdj4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
-cDsgJm5ic3A7aWYgKHFlbXVfY3B1X2lzX3NlbGYoY3B1KSkgezwvZGl2Pg0KPGRpdj4mbmJzcDsg
-Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDtxZW11X2NwdV9zdG9wKGNw
-dSwgdHJ1ZSk7PC9kaXY+DQo8ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDt9
-IGVsc2UgezwvZGl2Pg0KPGRpdj5AQCAtNTg0LDYgJiM0Mzs1ODYsMTQgQEAgdm9pZCBwYXVzZV9h
-bGxfdmNwdXModm9pZCk8L2Rpdj4NCjxkaXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
-YnNwOyAmbmJzcDsgJm5ic3A7cWVtdV9jcHVfa2ljayhjcHUpOzwvZGl2Pg0KPGRpdj4mbmJzcDsg
-Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7fTwvZGl2Pg0KPGRpdj4mbmJzcDsgJm5ic3A7ICZu
-YnNwO308L2Rpdj4NCjxkaXY+JiM0Mzt9PC9kaXY+DQo8ZGl2PiYjNDM7PC9kaXY+DQo8ZGl2PiYj
-NDM7dm9pZCBwYXVzZV9hbGxfdmNwdXModm9pZCk8L2Rpdj4NCjxkaXY+JiM0Mzt7PC9kaXY+DQo8
-ZGl2PiYjNDM7Jm5ic3A7ICZuYnNwOyBDUFVTdGF0ZSAqY3B1OzwvZGl2Pg0KPGRpdj4mIzQzOzwv
-ZGl2Pg0KPGRpdj4mIzQzOyZuYnNwOyAmbmJzcDsgcWVtdV9jbG9ja19lbmFibGUoUUVNVV9DTE9D
-S19WSVJUVUFMLCBmYWxzZSk7PC9kaXY+DQo8ZGl2PiYjNDM7Jm5ic3A7ICZuYnNwOyByZXF1ZXN0
-X3BhdXNlX2FsbF92Y3B1cygpOzwvZGl2Pg0KPGRpdj4mbmJzcDs8L2Rpdj4NCjxkaXY+Jm5ic3A7
-ICZuYnNwOyAmbmJzcDsvKiBXZSBuZWVkIHRvIGRyb3AgdGhlIHJlcGxheV9sb2NrIHNvIGFueSB2
-Q1BVIHRocmVhZHMgd29rZW4gdXA8L2Rpdj4NCjxkaXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgKiBj
-YW4gZmluaXNoIHRoZWlyIHJlcGxheSB0YXNrczwvZGl2Pg0KPGRpdj5AQCAtNTkyLDkgJiM0Mzs2
-MDIsMTEgQEAgdm9pZCBwYXVzZV9hbGxfdmNwdXModm9pZCk8L2Rpdj4NCjxkaXY+Jm5ic3A7PC9k
-aXY+DQo8ZGl2PiZuYnNwOyAmbmJzcDsgJm5ic3A7d2hpbGUgKCFhbGxfdmNwdXNfcGF1c2VkKCkp
-IHs8L2Rpdj4NCjxkaXY+Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO3FlbXVfY29u
-ZF93YWl0KCZhbXA7cWVtdV9wYXVzZV9jb25kLCAmYW1wO2JxbCk7PC9kaXY+DQo8ZGl2Pi0mbmJz
-cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgQ1BVX0ZPUkVBQ0goY3B1KSB7PC9kaXY+DQo8ZGl2Pi0m
-bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyBxZW11X2NwdV9raWNrKGNw
-dSk7PC9kaXY+DQo8ZGl2Pi0mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgfTwvZGl2Pg0KPGRp
-dj4mIzQzOyZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAvKiBEdXJpbmcgd2Ugd2FpdGVkIG9u
-IHFlbXVfcGF1c2VfY29uZCB0aGUgYnFsIHdhcyB1bmxvY2tlZCw8L2Rpdj4NCjxkaXY+JiM0Mzsm
-bmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7KiB0aGUgdmNwdSdzIHN0YXRlIG1heSBo
-YXMgYmVlbiBjaGFuZ2VkIGJ5IG90aGVyIHRocmVhZCwgc288L2Rpdj4NCjxkaXY+JiM0MzsmbmJz
-cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7KiB3ZSBtdXN0IHJlcXVlc3QgdGhlIHBhdXNl
-IHN0YXRlIG9uIGFsbCB2Y3B1cyBhZ2Fpbi48L2Rpdj4NCjxkaXY+JiM0MzsmbmJzcDsgJm5ic3A7
-ICZuYnNwOyAmbmJzcDsgJm5ic3A7Ki88L2Rpdj4NCjxkaXY+JiM0MzsmbmJzcDsgJm5ic3A7ICZu
-YnNwOyAmbmJzcDsgcmVxdWVzdF9wYXVzZV9hbGxfdmNwdXMoKTs8L2Rpdj4NCjxkaXY+Jm5ic3A7
-ICZuYnNwOyAmbmJzcDt9PC9kaXY+DQo8ZGl2PiZuYnNwOzwvZGl2Pg0KPGRpdj4mbmJzcDsgJm5i
-c3A7ICZuYnNwO2JxbF91bmxvY2soKTs8L2Rpdj4NCjxkaXY+LS08L2Rpdj4NCjxkaXY+Mi4zNi4x
-PC9kaXY+DQo8ZGl2Pjxicj4NCjwvZGl2Pg0KPGJyPg0KPGJyPg0KPC9kaXY+DQo8L2Rpdj4NCjwv
-ZGl2Pg0KPGRpdj48L2Rpdj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+commit c172136ea3320fa285c39bfb07298bbe1a14ba5e
+Author: Marc-André Lureau <marcandre.lureau@redhat.com>
+Date:   Thu Aug 11 15:59:40 2022 +0400
 
---_000_3A5C0543A4024A788A1241D7EF58BB54_--
+     meson: ensure dbus-display generated code is built before other units
+
+     It's simply by luck that dbus-display header is built first before the
+     other units using it.
+
+     With sourceset, I can't find an easier way out than declaring an extra
+     dependency for dbus-display1 generate code.
+
+     Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+     Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+     (cherry picked from commit 1222070e772833c6875e0ca63565db12c22df39e)
+     Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+This has bitten me multiple times, when dbus-display1.c isn't generated
+promptly.  So I thought it's a good pick.  Apparently not :)
+
+And indeed, on master the same issue exists now, - after the above commit,
+dbus-display1.o is being built with -fPIE instead of -fPIC. Reverting this
+commit makes it use -fPIC again.
+
+Apparently we don't build with --enable-modules and with a recent enough
+compiler to catch this (my gcc-12.2 on debian bookworm does not care about
+this stuff).
+
+Cc'ing Marc-André.
+
+An interesting side-effect :)
+
+Thanks,
+
+/mjt
 
