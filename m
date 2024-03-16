@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A0CC54E58
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 Mar 2024 01:59:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D150C54E67
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 Mar 2024 01:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlJIx-0002q4-U7; Fri, 15 Mar 2024 21:57:47 -0400
+	id 1rlJJ4-0002rY-38; Fri, 15 Mar 2024 21:57:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rlJIw-0002o5-F9
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:46 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1rlJJ2-0002r0-1A
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:52 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rlJIu-0000jN-Re
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:46 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1dc49b00bdbso20597895ad.3
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 18:57:44 -0700 (PDT)
+ id 1rlJJ0-0000lG-FA
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:51 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1dd9b6098aeso20337085ad.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 18:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710554263; x=1711159063; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710554269; x=1711159069; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7nfW9NMKBYgHEbFge3X4GcZHuOXPsIrrYwIsT1Iscy8=;
- b=wH9mQHDC+n/2lF/qyOb2bDJsJAT9iKUQqg8xbVnOYYozynBEGMBT/V4CbQqirt9wqv
- mEommrnEYan0yHt9tX3GNy4c4mGmGJxW5Rr/SRr+bI8gK11O2rp6sR5izHHgGL8PRPDQ
- lj6EnkJbO8ymSpZf/X2PdIol/7Mvw+CASRAdW0604EWUmN9IQxH4DRRrYNzwh8nXT8X3
- GyivU8oP/v/Yli2IFTt0iVfyg62Aiwg7dKro4VgbMiio3axl4cxL6n6XTHuneZqq7CxT
- w9SOy72IN2lDoEoFEqU9nmW2voDeAQ83lPoEHANGNjCVgx8gf5fyq2aSBHNUes1LqwEx
- 46+w==
+ bh=r3h8QUtdpv2Bkm8l3PLViSF5XzQ3nzd/ZWsA5m75Pu0=;
+ b=gmN2AxlKeiDcACMGGZv+zBUn184OKaH0coHm2iMLsCyVdUGFV8LArSGq294M3/o55U
+ JHG4PGTLG2blXtvb74J+2JeagaCP7o0C0qtVCSU21qnQ30khwQpI9tDv6xsDioY979vF
+ WUuup9OH5ewXoriu44/q7y4f25U0czW8YnLbQMPdTrTQD7jZ7Fd2zpX/rzT11pPXSKDh
+ BAaizdSUpdYBzbbPvQJQqeyKHc/iYAf0/iHitkl4TxVmMrHFAH5lUe0IQojL/2c0dlKw
+ 34eVwcJeLvxJXpo3ITr5m4Hn0x4gCfnb5hpTEnKegRp9ZBwxqY9/NkckWJRWPRDJV7q5
+ dbQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710554263; x=1711159063;
+ d=1e100.net; s=20230601; t=1710554269; x=1711159069;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7nfW9NMKBYgHEbFge3X4GcZHuOXPsIrrYwIsT1Iscy8=;
- b=I8erLO32o1f2LDxAimvttIR7Zh2c/IMVtEgkfEu/SOYCMfCZE0tiEYRNLjFu9FRq3s
- 7rP5BTaoILYfFlacUPISLHk2ATPj2t6if3oxaKzoB8xnOmyOb735AIaBrWZLvuuC1b84
- ARBnTV4bEYtYGedo3zEpCpb1IfOp/7RSVAx7QPOcD3cFJ5MYVH5Pubkv3Su/eGrggrKM
- nekDmngNx3j9j7Hevhdo3LAUrgJ9RNlTEJ3Y8Gdv7kXiI3ilBRueeoUNLIfZWsnH/Ja8
- BZ7tQ0Qw23saKPerpGgWCzVGhfs2oZfV2ECnFYUgB/+jQ2xlrKGYsqsyk960NkvUS6zR
- bEMg==
-X-Gm-Message-State: AOJu0YwGNv/YiwgH1xjvaoh5K7FsaZHq6aCsNm8yjhv008TE6m+5ZePj
- UcVcxD1lfGEpM+nYagb4svDNJG5JtQP3JPZ+J5u8NLH/7VfWn2Ga+85FLOzhtdePqG0hM7QHztL
- H
-X-Google-Smtp-Source: AGHT+IEZjLrftSXGjhrEbOh9DDLf6V9GHnvLyv+Hmf5WZLlvNn2g8xNLGb/YCksvb8M1iXA0zix/IA==
-X-Received: by 2002:a17:902:f68c:b0:1df:fd30:8b2d with SMTP id
- l12-20020a170902f68c00b001dffd308b2dmr72873plg.50.1710554263625; 
- Fri, 15 Mar 2024 18:57:43 -0700 (PDT)
+ bh=r3h8QUtdpv2Bkm8l3PLViSF5XzQ3nzd/ZWsA5m75Pu0=;
+ b=vVF/j5GtNOfDSx8UhSQs/yhOyC8hC2j59/oOqt168nC9vHmnupZFwxH4NqB8zF0iKl
+ Xh4KZA2mbzRPq9V7u8TXMXaaFq8Y6Y/tJlcga3bFTK++dOhoMiL+22rZh/9eBBTnBWTO
+ glCakQp/D5RCiCFJLFizX3jIR9krvq5+iCJgDZo9Cqf+CQGGoVhtgx9HH+KnOqaxTE0V
+ qPgaQ/KVcR7CV5OdDjNkhDTSU4+nrwpgAf5Mlg8JdvIvwfCDEVn1jf3abxxLkP9TPoL+
+ xMPOgu2XB0dWhITtHOKZdDmK3GEnKo9YmYaPTHfgFf/OV/cKpguSF5ONFE2zsUbZ6RPj
+ 03Bw==
+X-Gm-Message-State: AOJu0Yx7QSUYXpoupxPfpegOldSj+gDOy0ixyAyBAZjZHkKuRksB97I1
+ 66dm3d4j3lEbnxbpbDoC9YEE+UBbn2intxc9ZOW/rq8+IlMSpi3Xxnjl/m4Xp2UH4JHStcoVYEb
+ T
+X-Google-Smtp-Source: AGHT+IE2rTUxv5BPmAqFPrYqJMHMJNyf3Fzd7ZxRv+oqlunUcrQiThcnv4gMv4vm6zdSiU6hh+DNJQ==
+X-Received: by 2002:a17:903:187:b0:1de:de58:2a55 with SMTP id
+ z7-20020a170903018700b001dede582a55mr6684883plg.26.1710554269156; 
+ Fri, 15 Mar 2024 18:57:49 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- b3-20020a170903228300b001dd42bbb08asm4592985plh.253.2024.03.15.18.57.41
+ b3-20020a170903228300b001dd42bbb08asm4592985plh.253.2024.03.15.18.57.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Mar 2024 18:57:42 -0700 (PDT)
+ Fri, 15 Mar 2024 18:57:48 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH 09/22] plugins: Add PLUGIN_GEN_AFTER_TB
-Date: Fri, 15 Mar 2024 15:57:07 -1000
-Message-Id: <20240316015720.3661236-10-richard.henderson@linaro.org>
+Subject: [PATCH 12/22] plugins: Remove plugin helpers
+Date: Fri, 15 Mar 2024 15:57:10 -1000
+Message-Id: <20240316015720.3661236-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240316015720.3661236-1-richard.henderson@linaro.org>
 References: <20240316015720.3661236-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,86 +95,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Delay test of plugin_tb->mem_helper until the inject pass.
+These placeholder helpers are no longer required.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/plugin-gen.c | 37 ++++++++++++++++---------------------
- 1 file changed, 16 insertions(+), 21 deletions(-)
+ accel/tcg/plugin-helpers.h         |  5 -----
+ include/exec/helper-gen-common.h   |  4 ----
+ include/exec/helper-proto-common.h |  4 ----
+ accel/tcg/plugin-gen.c             | 20 --------------------
+ 4 files changed, 33 deletions(-)
+ delete mode 100644 accel/tcg/plugin-helpers.h
 
+diff --git a/accel/tcg/plugin-helpers.h b/accel/tcg/plugin-helpers.h
+deleted file mode 100644
+index 11796436f3..0000000000
+--- a/accel/tcg/plugin-helpers.h
++++ /dev/null
+@@ -1,5 +0,0 @@
+-#ifdef CONFIG_PLUGIN
+-DEF_HELPER_FLAGS_2(plugin_vcpu_udata_cb_no_wg, TCG_CALL_NO_WG | TCG_CALL_PLUGIN, void, i32, ptr)
+-DEF_HELPER_FLAGS_2(plugin_vcpu_udata_cb_no_rwg, TCG_CALL_NO_RWG | TCG_CALL_PLUGIN, void, i32, ptr)
+-DEF_HELPER_FLAGS_4(plugin_vcpu_mem_cb, TCG_CALL_NO_RWG | TCG_CALL_PLUGIN, void, i32, i32, i64, ptr)
+-#endif
+diff --git a/include/exec/helper-gen-common.h b/include/exec/helper-gen-common.h
+index 5d6d78a625..834590dc4e 100644
+--- a/include/exec/helper-gen-common.h
++++ b/include/exec/helper-gen-common.h
+@@ -11,8 +11,4 @@
+ #include "exec/helper-gen.h.inc"
+ #undef  HELPER_H
+ 
+-#define HELPER_H "accel/tcg/plugin-helpers.h"
+-#include "exec/helper-gen.h.inc"
+-#undef  HELPER_H
+-
+ #endif /* HELPER_GEN_COMMON_H */
+diff --git a/include/exec/helper-proto-common.h b/include/exec/helper-proto-common.h
+index 8b67170a22..16782ef46c 100644
+--- a/include/exec/helper-proto-common.h
++++ b/include/exec/helper-proto-common.h
+@@ -13,8 +13,4 @@
+ #include "exec/helper-proto.h.inc"
+ #undef  HELPER_H
+ 
+-#define HELPER_H "accel/tcg/plugin-helpers.h"
+-#include "exec/helper-proto.h.inc"
+-#undef  HELPER_H
+-
+ #endif /* HELPER_PROTO_COMMON_H */
 diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index f92aa80510..aa74e580bd 100644
+index be7fd548cc..b5261edc38 100644
 --- a/accel/tcg/plugin-gen.c
 +++ b/accel/tcg/plugin-gen.c
-@@ -75,6 +75,7 @@ enum plugin_gen_from {
-     PLUGIN_GEN_FROM_INSN,
-     PLUGIN_GEN_FROM_MEM,
-     PLUGIN_GEN_AFTER_INSN,
-+    PLUGIN_GEN_AFTER_TB,
-     PLUGIN_GEN_N_FROMS,
+@@ -51,11 +51,6 @@
+ #include "exec/exec-all.h"
+ #include "exec/plugin-gen.h"
+ #include "exec/translator.h"
+-#include "exec/helper-proto-common.h"
+-
+-#define HELPER_H  "accel/tcg/plugin-helpers.h"
+-#include "exec/helper-info.c.inc"
+-#undef  HELPER_H
+ 
+ #ifdef CONFIG_SOFTMMU
+ # define CONFIG_SOFTMMU_GATE 1
+@@ -88,21 +83,6 @@ enum plugin_gen_cb {
+     PLUGIN_GEN_N_CBS,
  };
  
-@@ -615,20 +616,9 @@ static void inject_mem_enable_helper(struct qemu_plugin_tb *ptb,
- /* called before finishing a TB with exit_tb, goto_tb or goto_ptr */
- void plugin_gen_disable_mem_helpers(void)
+-/*
+- * These helpers are stubs that get dynamically switched out for calls
+- * direct to the plugin if they are subscribed to.
+- */
+-void HELPER(plugin_vcpu_udata_cb_no_wg)(uint32_t cpu_index, void *udata)
+-{ }
+-
+-void HELPER(plugin_vcpu_udata_cb_no_rwg)(uint32_t cpu_index, void *udata)
+-{ }
+-
+-void HELPER(plugin_vcpu_mem_cb)(unsigned int vcpu_index,
+-                                qemu_plugin_meminfo_t info, uint64_t vaddr,
+-                                void *userdata)
+-{ }
+-
+ static void plugin_gen_empty_callback(enum plugin_gen_from from)
  {
--    /*
--     * We could emit the clearing unconditionally and be done. However, this can
--     * be wasteful if for instance plugins don't track memory accesses, or if
--     * most TBs don't use helpers. Instead, emit the clearing iff the TB calls
--     * helpers that might access guest memory.
--     *
--     * Note: we do not reset plugin_tb->mem_helper here; a TB might have several
--     * exit points, and we want to emit the clearing from all of them.
--     */
--    if (!tcg_ctx->plugin_tb->mem_helper) {
--        return;
-+    if (tcg_ctx->plugin_insn) {
-+        tcg_gen_plugin_cb(PLUGIN_GEN_AFTER_TB);
-     }
--    tcg_gen_st_ptr(tcg_constant_ptr(NULL), tcg_env,
--                   offsetof(CPUState, plugin_mem_cbs) - offsetof(ArchCPU, env));
- }
- 
- static void plugin_gen_insn_udata(const struct qemu_plugin_tb *ptb,
-@@ -679,14 +669,11 @@ static void plugin_gen_enable_mem_helper(struct qemu_plugin_tb *ptb,
-     inject_mem_enable_helper(ptb, insn, begin_op);
- }
- 
--static void gen_disable_mem_helper(struct qemu_plugin_tb *ptb,
--                                   struct qemu_plugin_insn *insn)
-+static void gen_disable_mem_helper(void)
- {
--    if (insn->mem_helper) {
--        tcg_gen_st_ptr(tcg_constant_ptr(0), tcg_env,
--                       offsetof(CPUState, plugin_mem_cbs) -
--                       offsetof(ArchCPU, env));
--    }
-+    tcg_gen_st_ptr(tcg_constant_ptr(0), tcg_env,
-+                   offsetof(CPUState, plugin_mem_cbs) -
-+                   offsetof(ArchCPU, env));
- }
- 
- static void gen_udata_cb(struct qemu_plugin_dyn_cb *cb)
-@@ -812,9 +799,17 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
-             tcg_ctx->emit_before_op = op;
- 
-             switch (from) {
-+            case PLUGIN_GEN_AFTER_TB:
-+                if (plugin_tb->mem_helper) {
-+                    gen_disable_mem_helper();
-+                }
-+                break;
-+
-             case PLUGIN_GEN_AFTER_INSN:
-                 assert(insn != NULL);
--                gen_disable_mem_helper(plugin_tb, insn);
-+                if (insn->mem_helper) {
-+                    gen_disable_mem_helper();
-+                }
-                 break;
- 
-             case PLUGIN_GEN_FROM_TB:
+     switch (from) {
 -- 
 2.34.1
 
