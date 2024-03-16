@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54AE7C54E67
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 Mar 2024 01:59:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE04CC54E67
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 Mar 2024 01:59:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlJIq-0002l4-Ho; Fri, 15 Mar 2024 21:57:40 -0400
+	id 1rlJIq-0002lD-SC; Fri, 15 Mar 2024 21:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rlJIk-0002kP-Au
+ id 1rlJIj-0002kJ-LK
  for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:34 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rlJIe-0000hc-M2
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:31 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-29bc1c64a98so1946826a91.1
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 18:57:28 -0700 (PDT)
+ id 1rlJId-0000hU-DD
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:29 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1ddbad11823so25693925ad.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 18:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710554247; x=1711159047; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=La+2iVCXFm9nixFDLUn8X+dnCJSJftKhHVIhvf5XOuw=;
- b=UbByIborFU+07bEtkql2HaZgGO+2WrNsRwLjU/D/K7pHmbpPFREQahp+EZGsWNK/ST
- r0+cZliaDrPnjfiPqCFFbI16h92UqNx/wo/p6rffM9Bq0nFVJYrX/OzX281aDim4NCW2
- +vnRvPcs2stOmp3hyxl3ggWioKcYFfWJU5piBm5w/59NCL8Fp8u785aVtJ2SraCDEjVJ
- kEhgjMyonW95wjKeW3xFX+ibsRCS2zh37k58oPCUaeByxFB6ydHgEgYKqudzR7VuwenW
- XTJA11DwWcARhcaIZkwZmNgy0RFx0XfhzcXmaj2qh6WAAOZUGTboUbd2ck1UPFd/X8wr
- I2gg==
+ d=linaro.org; s=google; t=1710554245; x=1711159045; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=JG6tKMkxxOXY60ERmQDKbPNxZExc4jAIDV0BFIBUHCA=;
+ b=aJF9QSO10/s889SMILpSxJlgK9NcXGf4PMq/Ixq2Gm3uSQOtr3EiU6h6AF2NVYp18F
+ 7zZlMrzt2+xn6u02PorEZMwvSKMJplu8aT+brPZzS6ZjEcGpEHwr7qvtxxutgOZzuT67
+ qFKDdMM265qESCzIj4oRnjDxIrNUfY9Ez1xqMFivZBK7FQ7/iVbZsnolNDhJNzojAfCE
+ AmDNY3kQ4sTrdCovky/RL5iWuFyLvDAQFUnkjD+rkO4u//mMmPqPuGWwvvnKPoAHg4Sp
+ U7pdmlnqxt7VvZ/r9RPXW4ZckxRySe1CpKOP8+7ifvOrt7xU8GPBU65hgTHVgYb7U/Gn
+ hYNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710554247; x=1711159047;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=La+2iVCXFm9nixFDLUn8X+dnCJSJftKhHVIhvf5XOuw=;
- b=rqX9M/BEYBoAPKMfm3k3tv+OwpOUd8MkdYweDSmKdUx7OSOMG2bURtjTKOqTjCcutO
- aF7k4Bnni3RsYaEXoMuilzDSNRq3fDbA8ryNfVLcoekwuFAuI6Dj8AkjinNGnv+xUUFK
- de2tHR3b3cBxzef+1LYiZMVbqrpjBqws6dpM5sgLNyIjefxzX0snIRmbrUy6wKRzhrVM
- lCBiqsvYOh+L/OcvEPlrUs5rCnfSi6htBSH+QD5nWAxwM8I64TfWA/B5ZhHgfhqMvCyj
- 4l50r0MyIAyuJPfzggdRmvHH+wyXyFNsb5e6+97/0N3zwQmFItOA+FyqPZpOI3HSmqZ6
- EaTQ==
-X-Gm-Message-State: AOJu0YzBThk6B1X0T8JjoHJGJZijLaPyJgOx/FYzMso5ulpEWhs5ngGy
- PB4Aw5CQBf3x8edFXNlrKJsFKSE47uiR9gBVoy1mX151FIgrCCe/aX9Anuyw6h0JSzTF/0kp/e+
- 0
-X-Google-Smtp-Source: AGHT+IFJ4NIMfWexRm6hqRfsRZN1NlYMurPXTK64skz6sFBkiKq6RYLR1ZwGvlUBlawdgW0gDr7oUA==
-X-Received: by 2002:a17:902:e5c3:b0:1dd:66d4:4d46 with SMTP id
- u3-20020a170902e5c300b001dd66d44d46mr4935155plf.66.1710554247145; 
- Fri, 15 Mar 2024 18:57:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710554245; x=1711159045;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JG6tKMkxxOXY60ERmQDKbPNxZExc4jAIDV0BFIBUHCA=;
+ b=izDsvMM7ulou6wkRInq2gX7DMdF+LJBLM52WmUoPHmtHS8ZG9xcFbziWW+H+OrK9IE
+ 76UyZ1GxACLLOkpAunmDtROwXPDFIKeNp/gDK/itcirop1J/KJT/cpllDpiaLV60rFhA
+ XlvmRKaNxN65+QSxObL0VMv4xMe4xI3OxTYAK43b7xeksk8GIMVeQlxJcA7ShWr33OXa
+ Ox/8dw6k7DAkgLMedIO6YM/P/GF5sz6LpVxxXXN9Ie9YfPz5T+45IuN2U88z8DMsUUNz
+ VwK9Vcu/LnZZopvxLcicjrKgMnOmk0eBOwFk1mXDYq2NZAXSZgefbHrU0n49p8QNxOXw
+ pZxQ==
+X-Gm-Message-State: AOJu0Yx6F65v7OKJXjzbLOdxFPIvkAFlAJO0DZDmE0eg7SqwoXOsOBFg
+ xembE7Lr3bvM5t2wwExd1ah0as3XMW19hWQBl+61+FRGtpkk5PTzmvqYTbgSgg3uRnEY/4q4zeS
+ 2
+X-Google-Smtp-Source: AGHT+IHeUkmLxVSvvXmcbVZHgeCPSYm53hzH3JLDc2eirnrsPXAmUYA9QNfTunlsfcijob/XHZgBxQ==
+X-Received: by 2002:a17:903:2644:b0:1dc:3e49:677d with SMTP id
+ je4-20020a170903264400b001dc3e49677dmr6562892plb.26.1710554244724; 
+ Fri, 15 Mar 2024 18:57:24 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- b3-20020a170903228300b001dd42bbb08asm4592985plh.253.2024.03.15.18.57.25
+ b3-20020a170903228300b001dd42bbb08asm4592985plh.253.2024.03.15.18.57.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Mar 2024 18:57:26 -0700 (PDT)
+ Fri, 15 Mar 2024 18:57:23 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH 01/22] tcg: Add TCGContext.emit_before_op
-Date: Fri, 15 Mar 2024 15:56:59 -1000
-Message-Id: <20240316015720.3661236-2-richard.henderson@linaro.org>
+Subject: [PATCH 00/22] plugins: Rewrite plugin code generation
+Date: Fri, 15 Mar 2024 15:56:58 -1000
+Message-Id: <20240316015720.3661236-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240316015720.3661236-1-richard.henderson@linaro.org>
-References: <20240316015720.3661236-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,66 +92,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow operations to be emitted via normal expanders
-into the middle of the opcode stream.
+As I mooted with Pierrick earlier this week:
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/tcg/tcg.h |  1 +
- tcg/tcg.c         | 14 ++++++++++++--
- 2 files changed, 13 insertions(+), 2 deletions(-)
+(1) Add a (trivial) mechanism for emitting code into
+the middle of the opcode sequence: tcg_ctx->emit_before_op.
 
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index 451f3fec41..e9d05f40b0 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -552,6 +552,7 @@ struct TCGContext {
- 
-     QTAILQ_HEAD(, TCGOp) ops, free_ops;
-     QSIMPLEQ_HEAD(, TCGLabel) labels;
-+    TCGOp *emit_before_op;
- 
-     /* Tells which temporary holds a given register.
-        It does not take into account fixed registers */
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index d6670237fb..0c0bb9d169 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1521,6 +1521,7 @@ void tcg_func_start(TCGContext *s)
- 
-     QTAILQ_INIT(&s->ops);
-     QTAILQ_INIT(&s->free_ops);
-+    s->emit_before_op = NULL;
-     QSIMPLEQ_INIT(&s->labels);
- 
-     tcg_debug_assert(s->addr_type == TCG_TYPE_I32 ||
-@@ -2332,7 +2333,11 @@ static void tcg_gen_callN(TCGHelperInfo *info, TCGTemp *ret, TCGTemp **args)
-     op->args[pi++] = (uintptr_t)info;
-     tcg_debug_assert(pi == total_args);
- 
--    QTAILQ_INSERT_TAIL(&tcg_ctx->ops, op, link);
-+    if (tcg_ctx->emit_before_op) {
-+        QTAILQ_INSERT_BEFORE(tcg_ctx->emit_before_op, op, link);
-+    } else {
-+        QTAILQ_INSERT_TAIL(&tcg_ctx->ops, op, link);
-+    }
- 
-     tcg_debug_assert(n_extend < ARRAY_SIZE(extend_free));
-     for (i = 0; i < n_extend; ++i) {
-@@ -3215,7 +3220,12 @@ static TCGOp *tcg_op_alloc(TCGOpcode opc, unsigned nargs)
- TCGOp *tcg_emit_op(TCGOpcode opc, unsigned nargs)
- {
-     TCGOp *op = tcg_op_alloc(opc, nargs);
--    QTAILQ_INSERT_TAIL(&tcg_ctx->ops, op, link);
-+
-+    if (tcg_ctx->emit_before_op) {
-+        QTAILQ_INSERT_BEFORE(tcg_ctx->emit_before_op, op, link);
-+    } else {
-+        QTAILQ_INSERT_TAIL(&tcg_ctx->ops, op, link);
-+    }
-     return op;
- }
- 
+(2) Rip out all of the "empty" generation and "copy"
+to modify those sequences.  Replace with regular code
+generation once we know what values to place.
+
+There's probably still more cleanup that could be done:
+
+There seems to be a lot of artificial separation between
+plugins and the rest of the code base, even between
+plugins/api.c and plugins/core.c.
+
+I suspect that all of plugins could be moved into the
+build-once buckets.
+
+
+r~
+
+
+Richard Henderson (22):
+  tcg: Add TCGContext.emit_before_op
+  tcg: Make tcg/helper-info.h self-contained
+  tcg: Pass function pointer to tcg_gen_call*
+  plugins: Zero new qemu_plugin_dyn_cb entries
+  plugins: Move function pointer in qemu_plugin_dyn_cb
+  plugins: Create TCGHelperInfo for all out-of-line callbacks
+  plugins: Use emit_before_op for PLUGIN_GEN_AFTER_INSN
+  plugins: Use emit_before_op for PLUGIN_GEN_FROM_TB
+  plugins: Add PLUGIN_GEN_AFTER_TB
+  plugins: Use emit_before_op for PLUGIN_GEN_FROM_INSN
+  plugins: Use emit_before_op for PLUGIN_GEN_FROM_MEM
+  plugins: Remove plugin helpers
+  tcg: Remove TCG_CALL_PLUGIN
+  tcg: Remove INDEX_op_plugin_cb_{start,end}
+  plugins: Simplify callback queues
+  plugins: Introduce PLUGIN_CB_MEM_REGULAR
+  plugins: Replace pr_ops with a proper debug dump flag
+  plugins: Split out common cb expanders
+  plugins: Merge qemu_plugin_tb_insn_get to plugin-gen.c
+  plugins: Move qemu_plugin_insn_cleanup_fn to tcg.c
+  plugins: Inline plugin_gen_empty_callback
+  plugins: Update the documentation block for plugin-gen.c
+
+ accel/tcg/plugin-helpers.h         |    5 -
+ include/exec/helper-gen-common.h   |    4 -
+ include/exec/helper-proto-common.h |    4 -
+ include/exec/plugin-gen.h          |    4 -
+ include/qemu/log.h                 |    1 +
+ include/qemu/plugin.h              |   79 +--
+ include/tcg/helper-info.h          |    3 +
+ include/tcg/tcg-op-common.h        |    4 +-
+ include/tcg/tcg-opc.h              |    4 +-
+ include/tcg/tcg.h                  |   27 +-
+ include/exec/helper-gen.h.inc      |   24 +-
+ accel/tcg/plugin-gen.c             | 1008 +++++++---------------------
+ plugins/api.c                      |   26 +-
+ plugins/core.c                     |   61 +-
+ tcg/tcg-op-ldst.c                  |    6 +-
+ tcg/tcg-op.c                       |    8 +-
+ tcg/tcg.c                          |  104 ++-
+ util/log.c                         |    4 +
+ 18 files changed, 424 insertions(+), 952 deletions(-)
+ delete mode 100644 accel/tcg/plugin-helpers.h
+
 -- 
 2.34.1
 
