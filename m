@@ -4,76 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51261C54E67
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 Mar 2024 01:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66DAFC54E6E
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 Mar 2024 01:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlIhm-00059q-1Q; Fri, 15 Mar 2024 21:19:22 -0400
+	id 1rlJJC-0002v5-Ej; Fri, 15 Mar 2024 21:58:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1rlIhg-00059H-UZ
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:19:17 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1rlIha-0001h2-6H
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:19:16 -0400
-Received: from loongson.cn (unknown [10.20.42.32])
- by gateway (Coremail) with SMTP id _____8Dx6uiG8_Rlz7UZAA--.41994S3;
- Sat, 16 Mar 2024 09:19:03 +0800 (CST)
-Received: from [10.20.42.32] (unknown [10.20.42.32])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Cx7xOE8_Rl519bAA--.3931S2; 
- Sat, 16 Mar 2024 09:19:02 +0800 (CST)
-Subject: Re: [PATCH V4 1/1] target/loongarch: Fixed tlb huge page loading issue
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, Song Gao <gaosong@loongson.cn>,
- Xiaojuan Yang <yangxiaojuan@loongson.cn>, zhaotianrui@loongson.cn,
- yijun@loongson.cn, wuruiyang@loongson.cn
-References: <cover.1710379781.git.lixianglai@loongson.cn>
- <0e940b2aee9a5c29bb41d6a9611955482d250325.1710379781.git.lixianglai@loongson.cn>
- <60733d71-daba-4f4a-a184-357526a3b3a0@linaro.org>
- <05a4b109-6e86-6ecf-4399-c0f9d5fd1a6f@loongson.cn>
- <90bde2c9-46fd-458c-9c32-22dac25bb069@linaro.org>
- <874eb7af-d1a0-0777-bc10-555381b85118@loongson.cn>
- <553e5eee-7af5-4ecf-b994-1bdd6ca8a820@linaro.org>
-From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <44ca631d-dae0-0e5d-1566-986a602d3c29@loongson.cn>
-Date: Sat, 16 Mar 2024 09:19:00 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rlJJ6-0002s5-Uh
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:59 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rlJJ5-0000m2-5g
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:56 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1dee5daa236so15052625ad.0
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 18:57:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710554273; x=1711159073; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pfrhB6wtiY1dRspgCcVihnqjgoTQCBAZYhtK1KymQU8=;
+ b=ZDXl6Je7jGLn16nCYdR4z7RTllvyIjvsYUgmSvNxFvajUIegfVv7WS1K3IyT1GRLR0
+ 4vbxdgm5gGq+K1JuqUpTAr8bDOEwh8CX0P2/48gcMoYyd1yCDUzsJ8kBv6J8q0+dvcJd
+ j17DJIvvTZaG69KkbxBzULHRHSEYomgfAiqy/zYSV8nE+Q17iraTBa2sUJ5uH2PNXpVi
+ IqOijzjNkTfsiDec/5jRZbCna1eQIdl4UaUtqm9zoakPfnR8rh5dIB7I8sLA+fyF0+qG
+ E4vxMWGwpr2tKjnBpMA8obUg+mRMR4a/+3iKRz0wYp96Z0n6+MkgeGLSkRmDMgfHCdyY
+ bzhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710554273; x=1711159073;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pfrhB6wtiY1dRspgCcVihnqjgoTQCBAZYhtK1KymQU8=;
+ b=eEMu38Yu0suMy4qqDrvIuTOYIy3pSO6NqKLmd0IXFfYNLoC6i79ZZ1oPkECs1fNdyO
+ /bBBGsoTUfMlAOplqccVc0BlvwkXDTzjlo/3B3Xoz6jhIBryKP3M8VnhcoNkseqqkt/x
+ ZwTvlamAVhFYvkMeU1f8bJ7lbwAvNSGta9+yK7w6MYgsv+P462mtsIIrZ6meIeMjmLNX
+ bLKLJdIrFG1dH3vz2rfOOOvBYcKirgbeWImz24rtAy7YchANvQPszUtUdr8P2JP2Ae+r
+ MV2DtS8g7VNjrWoXBhsi6gn5N3TfzyohdY76kq0/iLEzgoSR022YC0KtTWJ5Sqz01vxz
+ aVbA==
+X-Gm-Message-State: AOJu0Yx126+IM7Xikvo7covqNxSrref0+40kV4fqjL1j1CWBVq17ReF5
+ Up2SCLVUb7/Xs8EUWD83hg/uNT7zJomlfInwyaQi29UdvLqLwqCYp+UHT6hmm8kNnS89qiFn2g7
+ w
+X-Google-Smtp-Source: AGHT+IEq9WsJg7CuaTKFZJ7C0azoW88XvhxDcoUysH22FutYdCk7rhUxe5fCUwncIkmRmUMnDdwzVw==
+X-Received: by 2002:a17:902:d2d0:b0:1dc:6d64:dcff with SMTP id
+ n16-20020a170902d2d000b001dc6d64dcffmr6432966plc.37.1710554272928; 
+ Fri, 15 Mar 2024 18:57:52 -0700 (PDT)
+Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
+ by smtp.gmail.com with ESMTPSA id
+ b3-20020a170903228300b001dd42bbb08asm4592985plh.253.2024.03.15.18.57.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 15 Mar 2024 18:57:52 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org,
+	alex.bennee@linaro.org
+Subject: [PATCH 14/22] tcg: Remove INDEX_op_plugin_cb_{start,end}
+Date: Fri, 15 Mar 2024 15:57:12 -1000
+Message-Id: <20240316015720.3661236-15-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240316015720.3661236-1-richard.henderson@linaro.org>
+References: <20240316015720.3661236-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <553e5eee-7af5-4ecf-b994-1bdd6ca8a820@linaro.org>
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8Cx7xOE8_Rl519bAA--.3931S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Ar1UGF1xuFy5JF1rAFy5GFX_yoW8uFyfpr
- n5JF98Kr98Grn3GFnrKw1jqry5tr1UJ3WUXr1UAFyUJr4Dtrn0qr48Zr1jgF1UJr48Jr4U
- Zr15Jr13Zr1UGrbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Jr0_Gr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUU
- U
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.686,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,68 +95,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+These opcodes are no longer used.
 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/tcg/tcg-op-common.h |  2 --
+ include/tcg/tcg-opc.h       |  2 --
+ accel/tcg/plugin-gen.c      | 18 ------------------
+ tcg/tcg-op.c                | 10 ----------
+ 4 files changed, 32 deletions(-)
 
-在 2024/3/16 上午1:06, Richard Henderson 写道:
-> On 3/14/24 23:01, lixianglai wrote:
->> Hi Richard :
->>
->>> On 3/14/24 20:22, lixianglai wrote:
->>>> Hi Richard:
->>>>> On 3/13/24 15:33, Xianglai Li wrote:
->>>>>> +    if (unlikely((level == 0) || (level > 4))) {
->>>>>> +        return base;
->>>>>> +    }
->>> ...
->>>>> Perhaps it would be worthwhile to add another for the level==0 or > 4 case above?
->>>>>
->>>> A normal level 4 page table should not print an error log,
->>>>
->>>> only if a level 4 page is large, so we should put it in
->>>>
->>>>      if (FIELD_EX64(base, TLBENTRY, HUGE)) {
->>>>          if (unlikely(level == 4)) {
->>>>              qemu_log_mask(LOG_GUEST_ERROR,
->>>>                            "Attempted use of level %lu huge page\n", level);
->>>>          }
->>>>
->>>>          if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
->>>>              return base;
->>>>          } else {
->>>>              return  FIELD_DP64(base, TLBENTRY, LEVEL, level);
->>>>          }
->>>>      }
->>>
->>> A level 5 page table is not normal, nor is a level 0 lddir.
->>>
->>
->> We communicate with the hardware guys that the behavior above level 4 and lddir 0 is undefined behavior.
->>
->> The result of our test on 3A5000 is that it has no any effect on "base",
->>
->> however in future chips the behavior may change since it may support 5-level page table and width for level[13:14] may change also.
->>
->>
->> So in this context,I am not sure which level to use to print logs,
->>
->> which content to print, and where to add these prints,
->>
->> any more detailed advice?
->
-> Yes, right there in the IF that I quoted at the top.
-> What I was trying to spell out is
->
->     if (unlikely(level == 0 || level > 4)) {
->         qemu_log_mask(LOG_GUEST_ERROR,
->                       "Attepted LDDIR with level %"PRId64"\n", level);
->         return base;
->     }
->
-Thank you very much, I will modify it in V6 version of patch.
-
-Thanks,
-Xianglai.
->
-> r~
+diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
+index 72b80b20d0..009e2778c5 100644
+--- a/include/tcg/tcg-op-common.h
++++ b/include/tcg/tcg-op-common.h
+@@ -76,8 +76,6 @@ void tcg_gen_lookup_and_goto_ptr(void);
+ 
+ void tcg_gen_plugin_cb(unsigned from);
+ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo);
+-void tcg_gen_plugin_cb_start(unsigned from, unsigned type, unsigned wr);
+-void tcg_gen_plugin_cb_end(void);
+ 
+ /* 32 bit ops */
+ 
+diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
+index be9e36e386..546eb49c11 100644
+--- a/include/tcg/tcg-opc.h
++++ b/include/tcg/tcg-opc.h
+@@ -199,8 +199,6 @@ DEF(goto_ptr, 0, 1, 0, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
+ 
+ DEF(plugin_cb, 0, 0, 1, TCG_OPF_NOT_PRESENT)
+ DEF(plugin_mem_cb, 0, 1, 1, TCG_OPF_NOT_PRESENT)
+-DEF(plugin_cb_start, 0, 0, 3, TCG_OPF_NOT_PRESENT)
+-DEF(plugin_cb_end, 0, 0, 0, TCG_OPF_NOT_PRESENT)
+ 
+ /* Replicate ld/st ops for 32 and 64-bit guest addresses. */
+ DEF(qemu_ld_a32_i32, 1, 1, 1,
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index b5261edc38..c8f0e0ecaa 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -58,29 +58,11 @@
+ # define CONFIG_SOFTMMU_GATE 0
+ #endif
+ 
+-/*
+- * plugin_cb_start TCG op args[]:
+- * 0: enum plugin_gen_from
+- * 1: enum plugin_gen_cb
+- * 2: set to 1 for mem callback that is a write, 0 otherwise.
+- */
+-
+ enum plugin_gen_from {
+     PLUGIN_GEN_FROM_TB,
+     PLUGIN_GEN_FROM_INSN,
+     PLUGIN_GEN_AFTER_INSN,
+     PLUGIN_GEN_AFTER_TB,
+-    PLUGIN_GEN_N_FROMS,
+-};
+-
+-enum plugin_gen_cb {
+-    PLUGIN_GEN_CB_UDATA,
+-    PLUGIN_GEN_CB_UDATA_R,
+-    PLUGIN_GEN_CB_INLINE,
+-    PLUGIN_GEN_CB_MEM,
+-    PLUGIN_GEN_ENABLE_MEM_HELPER,
+-    PLUGIN_GEN_DISABLE_MEM_HELPER,
+-    PLUGIN_GEN_N_CBS,
+ };
+ 
+ static void plugin_gen_empty_callback(enum plugin_gen_from from)
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index 0ae12fa49d..eff3728622 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -322,16 +322,6 @@ void tcg_gen_plugin_mem_cb(TCGv_i64 addr, unsigned meminfo)
+     tcg_gen_op2(INDEX_op_plugin_mem_cb, tcgv_i64_arg(addr), meminfo);
+ }
+ 
+-void tcg_gen_plugin_cb_start(unsigned from, unsigned type, unsigned wr)
+-{
+-    tcg_gen_op3(INDEX_op_plugin_cb_start, from, type, wr);
+-}
+-
+-void tcg_gen_plugin_cb_end(void)
+-{
+-    tcg_emit_op(INDEX_op_plugin_cb_end, 0);
+-}
+-
+ /* 32 bit ops */
+ 
+ void tcg_gen_discard_i32(TCGv_i32 arg)
+-- 
+2.34.1
 
 
