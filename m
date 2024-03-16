@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 388D0C54E67
-	for <qemu-devel@archiver.kernel.org>; Sat, 16 Mar 2024 02:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE41C54E58
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 Mar 2024 02:01:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlJIs-0002lv-Qt; Fri, 15 Mar 2024 21:57:42 -0400
+	id 1rlJIt-0002nD-R3; Fri, 15 Mar 2024 21:57:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rlJIq-0002l6-La
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:40 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1rlJIs-0002lf-3t
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:42 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rlJIj-0000ht-Ef
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:35 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-29e0229d6b5so711239a91.3
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 18:57:32 -0700 (PDT)
+ id 1rlJIq-0000ia-Eg
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:57:41 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-5ce6b5e3c4eso1787639a12.2
+ for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 18:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710554251; x=1711159051; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710554258; x=1711159058; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dO/ulOB4H8uJBhCl1h5X1j8smU5S71009KZPyttGPV8=;
- b=sYlrfHAwPX+dQigzS46ZO84vvi54+j2px48b3iUHUt76jzC4dAlgu0OyQiMHApxe3g
- XM4UayPBHdAMkrHkFb9efPIJft6jWAghgT2n91cfqj3v0AhmgUN/4/tHhk3fx5UvYDvU
- Uy1roKF7TtnYZDVYBl4N4KxIASDG++FJxEmlMmMPWlHiQWmqJ7g1AasuJJucRVTYb378
- 6PUFb79FyPg+Epu+P2CDei1PaggwCTxnpc7kYB62UyKDKvJKnqi+ChM6JH4Q+tEAeTZH
- S0h2yaUGIfYLNy4iuW8ryaIb4+yU3oExlIazo4QaWiB9nC5r5FDR6z3PjIkqLs6/WSaN
- v8HA==
+ bh=tejnOfEGCIS6beGjus6J1qxofDOH1tfJTZA704n4hj8=;
+ b=ktHZiDj/SgCjaWxtBrbGmpge3WJ4L/3f9rxbjrEROvynoCl2vpQS76Y7IujQihJbwo
+ YHQgDjJ4tH+lv+z6BSCS6XWD9KeHtLwBbCayfwdl5uQvYkk/7Yh9t7k1kHxSwQyvZeXI
+ Qx1L7Zi9WpZwbm1RRW++FxcslC4RjM/8Mm0/Mfq5D5obUQ+B756aMlzOLeGdfN+psCqo
+ ZnTF7l2EzyHL0a1pLLI+YCb4/Ur2CgnYXgNdk8ThAKmo0arWIgx2kzhDpvtLt9LrR8qm
+ qlLTOo63i/D/cd7mOocOvdelAMEXicaZDy2AEiyLbA1eUR3g6/qG49NVFixm2vNjwJ/6
+ w68g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710554251; x=1711159051;
+ d=1e100.net; s=20230601; t=1710554258; x=1711159058;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dO/ulOB4H8uJBhCl1h5X1j8smU5S71009KZPyttGPV8=;
- b=WpShWlCTG3LKwUz6uXOkd9LS9cO0TSRBT6KL6xaIZcBnVwRZkTotBDBkwnj1JTUYXt
- c8CWVXvzJ0Rh8nwrkGIAzVF5hjuGviQZ4c1Ov2zPS8PLUQKlQq2h9S7O4fE1qG1dbrqv
- Fy7Y0CdiUO/nkj1/k61L852yMiU4/5LdQMgSg6mwxdVxvOUqexsMt2YynS+LLrsOJHVV
- rupbAHjxSAJ0kerlaM3bojOF6Em/XmO+nnoLLd3q59bCOHBsSmt2ZBna2q9IkRax+tc8
- B7BSCygeP3TwfW0WRye08l2GDWgURCqbsK5gWfT/o6yr0jlWZybZuBjQk1lBQ3KR43z+
- 1NMQ==
-X-Gm-Message-State: AOJu0YxyDH/XX6yh1MSRuFZp8VXqh2ZYeji2NpggGPU6eIV69vrgVBZE
- o4w50T9IsAvb0YT3c02EYLj56y9/8P9LInc2aAV0Vtz8JNc8A8yTpkqG/16Ce9aFmE8qDsSfp3B
- 9
-X-Google-Smtp-Source: AGHT+IGBDrdJC9kk4z4yR0J0OcWEVDTK7+QxgPd65ycopAfZbDjQpjnyR7nt9t8al/wOBzqMxR09Aw==
-X-Received: by 2002:a17:902:f7d3:b0:1dd:b505:d556 with SMTP id
- h19-20020a170902f7d300b001ddb505d556mr5377907plw.21.1710554251553; 
- Fri, 15 Mar 2024 18:57:31 -0700 (PDT)
+ bh=tejnOfEGCIS6beGjus6J1qxofDOH1tfJTZA704n4hj8=;
+ b=iOcgidQyVGKldAZq6QUlNA+iLfAUMf/tFtmeTyaVD4kL+DZRGCRJoaIrkyp+aXAbUe
+ J/Fg9T1ep49gOzE/ZwR+2a4uQH1n6q283iHzEkMKn9FHhqPk+2ZcWCH7pjJIE0BgkQFo
+ te/YU+GCvbKtmG8vQXnUDCWEmeK6T/cw/fC1f26ZFfT90DL6jyVjsumc40+Jh0jGc12z
+ +gFfbdQOpGAoYdqavySzFg5Zi6cjdSMDXhzzO7/wGgYMzDt4zZ6W9yRtl7vZmGpb9DdI
+ E4Jl8tsu1GNYHgtzxuuWP28iZbF9EjQhx5rBytUkWUxGfVfv3QNdmAnZ3P1A+3tVAl/Q
+ YxjQ==
+X-Gm-Message-State: AOJu0YwFW/0kbrcMUvallSW81OIl27AGzn1nbygUuJPHA1NTm4IK2DsY
+ qk2v1Lmhg+ED2kx/sYdY0g78B7k2JH8frmcUB1FMq7q/lojCiUSj4G7zAFYNuNXeSAK7GyVFiee
+ 4
+X-Google-Smtp-Source: AGHT+IFv0TAY6MwF53Hmvf7/T8L1/Zj27hHGDaVxQxEfz0b5zOgtKy65aWhDztK5f3FPx7C9gvkpoQ==
+X-Received: by 2002:a17:902:ce86:b0:1dd:c7ea:81f3 with SMTP id
+ f6-20020a170902ce8600b001ddc7ea81f3mr5679327plg.1.1710554258139; 
+ Fri, 15 Mar 2024 18:57:38 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- b3-20020a170903228300b001dd42bbb08asm4592985plh.253.2024.03.15.18.57.30
+ b3-20020a170903228300b001dd42bbb08asm4592985plh.253.2024.03.15.18.57.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 15 Mar 2024 18:57:30 -0700 (PDT)
+ Fri, 15 Mar 2024 18:57:37 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	alex.bennee@linaro.org
-Subject: [PATCH 03/22] tcg: Pass function pointer to tcg_gen_call*
-Date: Fri, 15 Mar 2024 15:57:01 -1000
-Message-Id: <20240316015720.3661236-4-richard.henderson@linaro.org>
+Subject: [PATCH 06/22] plugins: Create TCGHelperInfo for all out-of-line
+ callbacks
+Date: Fri, 15 Mar 2024 15:57:04 -1000
+Message-Id: <20240316015720.3661236-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240316015720.3661236-1-richard.henderson@linaro.org>
 References: <20240316015720.3661236-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,238 +96,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For normal helpers, read the function pointer from the
-structure earlier.  For plugins, this will allow the
-function pointer to come from elsewhere.
+TCGHelperInfo includes the ABI for every function call.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg.h             | 21 +++++++++-------
- include/exec/helper-gen.h.inc | 24 ++++++++++++-------
- tcg/tcg.c                     | 45 +++++++++++++++++++----------------
- 3 files changed, 52 insertions(+), 38 deletions(-)
+ include/qemu/plugin.h |  1 +
+ plugins/core.c        | 51 ++++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 46 insertions(+), 6 deletions(-)
 
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index a6e7df146a..95a7f4d010 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -847,19 +847,22 @@ typedef struct TCGTargetOpDef {
- 
- bool tcg_op_supported(TCGOpcode op);
- 
--void tcg_gen_call0(TCGHelperInfo *, TCGTemp *ret);
--void tcg_gen_call1(TCGHelperInfo *, TCGTemp *ret, TCGTemp *);
--void tcg_gen_call2(TCGHelperInfo *, TCGTemp *ret, TCGTemp *, TCGTemp *);
--void tcg_gen_call3(TCGHelperInfo *, TCGTemp *ret, TCGTemp *,
-+void tcg_gen_call0(void *func, TCGHelperInfo *, TCGTemp *ret);
-+void tcg_gen_call1(void *func, TCGHelperInfo *, TCGTemp *ret, TCGTemp *);
-+void tcg_gen_call2(void *func, TCGHelperInfo *, TCGTemp *ret,
-                    TCGTemp *, TCGTemp *);
--void tcg_gen_call4(TCGHelperInfo *, TCGTemp *ret, TCGTemp *, TCGTemp *,
--                   TCGTemp *, TCGTemp *);
--void tcg_gen_call5(TCGHelperInfo *, TCGTemp *ret, TCGTemp *, TCGTemp *,
-+void tcg_gen_call3(void *func, TCGHelperInfo *, TCGTemp *ret,
-                    TCGTemp *, TCGTemp *, TCGTemp *);
--void tcg_gen_call6(TCGHelperInfo *, TCGTemp *ret, TCGTemp *, TCGTemp *,
-+void tcg_gen_call4(void *func, TCGHelperInfo *, TCGTemp *ret,
-                    TCGTemp *, TCGTemp *, TCGTemp *, TCGTemp *);
--void tcg_gen_call7(TCGHelperInfo *, TCGTemp *ret, TCGTemp *, TCGTemp *,
-+void tcg_gen_call5(void *func, TCGHelperInfo *, TCGTemp *ret,
-                    TCGTemp *, TCGTemp *, TCGTemp *, TCGTemp *, TCGTemp *);
-+void tcg_gen_call6(void *func, TCGHelperInfo *, TCGTemp *ret,
-+                   TCGTemp *, TCGTemp *, TCGTemp *, TCGTemp *,
-+                   TCGTemp *, TCGTemp *);
-+void tcg_gen_call7(void *func, TCGHelperInfo *, TCGTemp *ret,
-+                   TCGTemp *, TCGTemp *, TCGTemp *, TCGTemp *,
-+                   TCGTemp *, TCGTemp *, TCGTemp *);
- 
- TCGOp *tcg_emit_op(TCGOpcode opc, unsigned nargs);
- void tcg_op_remove(TCGContext *s, TCGOp *op);
-diff --git a/include/exec/helper-gen.h.inc b/include/exec/helper-gen.h.inc
-index c009641517..f7eb59b6c1 100644
---- a/include/exec/helper-gen.h.inc
-+++ b/include/exec/helper-gen.h.inc
-@@ -14,7 +14,8 @@
- extern TCGHelperInfo glue(helper_info_, name);                          \
- static inline void glue(gen_helper_, name)(dh_retvar_decl0(ret))        \
- {                                                                       \
--    tcg_gen_call0(&glue(helper_info_, name), dh_retvar(ret));           \
-+    tcg_gen_call0(glue(helper_info_,name).func,                         \
-+                  &glue(helper_info_,name), dh_retvar(ret));            \
- }
- 
- #define DEF_HELPER_FLAGS_1(name, flags, ret, t1)                        \
-@@ -22,7 +23,8 @@ extern TCGHelperInfo glue(helper_info_, name);                          \
- static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
-     dh_arg_decl(t1, 1))                                                 \
- {                                                                       \
--    tcg_gen_call1(&glue(helper_info_, name), dh_retvar(ret),            \
-+    tcg_gen_call1(glue(helper_info_,name).func,                         \
-+                  &glue(helper_info_,name), dh_retvar(ret),             \
-                   dh_arg(t1, 1));                                       \
- }
- 
-@@ -31,7 +33,8 @@ extern TCGHelperInfo glue(helper_info_, name);                          \
- static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
-     dh_arg_decl(t1, 1), dh_arg_decl(t2, 2))                             \
- {                                                                       \
--    tcg_gen_call2(&glue(helper_info_, name), dh_retvar(ret),            \
-+    tcg_gen_call2(glue(helper_info_,name).func,                         \
-+                  &glue(helper_info_,name), dh_retvar(ret),             \
-                   dh_arg(t1, 1), dh_arg(t2, 2));                        \
- }
- 
-@@ -40,7 +43,8 @@ extern TCGHelperInfo glue(helper_info_, name);                          \
- static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
-     dh_arg_decl(t1, 1), dh_arg_decl(t2, 2), dh_arg_decl(t3, 3))         \
- {                                                                       \
--    tcg_gen_call3(&glue(helper_info_, name), dh_retvar(ret),            \
-+    tcg_gen_call3(glue(helper_info_,name).func,                         \
-+                  &glue(helper_info_,name), dh_retvar(ret),             \
-                   dh_arg(t1, 1), dh_arg(t2, 2), dh_arg(t3, 3));         \
- }
- 
-@@ -50,7 +54,8 @@ static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
-     dh_arg_decl(t1, 1), dh_arg_decl(t2, 2),                             \
-     dh_arg_decl(t3, 3), dh_arg_decl(t4, 4))                             \
- {                                                                       \
--    tcg_gen_call4(&glue(helper_info_, name), dh_retvar(ret),            \
-+    tcg_gen_call4(glue(helper_info_,name).func,                         \
-+                  &glue(helper_info_,name), dh_retvar(ret),             \
-                   dh_arg(t1, 1), dh_arg(t2, 2),                         \
-                   dh_arg(t3, 3), dh_arg(t4, 4));                        \
- }
-@@ -61,7 +66,8 @@ static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
-     dh_arg_decl(t1, 1), dh_arg_decl(t2, 2), dh_arg_decl(t3, 3),         \
-     dh_arg_decl(t4, 4), dh_arg_decl(t5, 5))                             \
- {                                                                       \
--    tcg_gen_call5(&glue(helper_info_, name), dh_retvar(ret),            \
-+    tcg_gen_call5(glue(helper_info_,name).func,                         \
-+                  &glue(helper_info_,name), dh_retvar(ret),             \
-                   dh_arg(t1, 1), dh_arg(t2, 2), dh_arg(t3, 3),          \
-                   dh_arg(t4, 4), dh_arg(t5, 5));                        \
- }
-@@ -72,7 +78,8 @@ static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
-     dh_arg_decl(t1, 1), dh_arg_decl(t2, 2), dh_arg_decl(t3, 3),         \
-     dh_arg_decl(t4, 4), dh_arg_decl(t5, 5), dh_arg_decl(t6, 6))         \
- {                                                                       \
--    tcg_gen_call6(&glue(helper_info_, name), dh_retvar(ret),            \
-+    tcg_gen_call6(glue(helper_info_,name).func,                         \
-+                  &glue(helper_info_,name), dh_retvar(ret),             \
-                   dh_arg(t1, 1), dh_arg(t2, 2), dh_arg(t3, 3),          \
-                   dh_arg(t4, 4), dh_arg(t5, 5), dh_arg(t6, 6));         \
- }
-@@ -84,7 +91,8 @@ static inline void glue(gen_helper_, name)(dh_retvar_decl(ret)          \
-     dh_arg_decl(t4, 4), dh_arg_decl(t5, 5), dh_arg_decl(t6, 6),         \
-     dh_arg_decl(t7, 7))                                                 \
- {                                                                       \
--    tcg_gen_call7(&glue(helper_info_, name), dh_retvar(ret),            \
-+    tcg_gen_call7(glue(helper_info_,name).func,                         \
-+                  &glue(helper_info_,name), dh_retvar(ret),             \
-                   dh_arg(t1, 1), dh_arg(t2, 2), dh_arg(t3, 3),          \
-                   dh_arg(t4, 4), dh_arg(t5, 5), dh_arg(t6, 6),          \
-                   dh_arg(t7, 7));                                       \
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index 0c0bb9d169..0bf218314b 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -2251,7 +2251,8 @@ bool tcg_op_supported(TCGOpcode op)
- 
- static TCGOp *tcg_op_alloc(TCGOpcode opc, unsigned nargs);
- 
--static void tcg_gen_callN(TCGHelperInfo *info, TCGTemp *ret, TCGTemp **args)
-+static void tcg_gen_callN(void *func, TCGHelperInfo *info,
-+                          TCGTemp *ret, TCGTemp **args)
+diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+index 143262dca8..793c44f1f2 100644
+--- a/include/qemu/plugin.h
++++ b/include/qemu/plugin.h
+@@ -92,6 +92,7 @@ struct qemu_plugin_dyn_cb {
+     union {
+         struct {
+             union qemu_plugin_cb_sig f;
++            TCGHelperInfo *info;
+         } regular;
+         struct {
+             qemu_plugin_u64 entry;
+diff --git a/plugins/core.c b/plugins/core.c
+index 837c373690..b0a2e80874 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -338,12 +338,26 @@ void plugin_register_dyn_cb__udata(GArray **arr,
+                                    enum qemu_plugin_cb_flags flags,
+                                    void *udata)
  {
-     TCGv_i64 extend_free[MAX_CALL_IARGS];
-     int n_extend = 0;
-@@ -2329,7 +2330,7 @@ static void tcg_gen_callN(TCGHelperInfo *info, TCGTemp *ret, TCGTemp **args)
-             g_assert_not_reached();
-         }
-     }
--    op->args[pi++] = (uintptr_t)info->func;
-+    op->args[pi++] = (uintptr_t)func;
-     op->args[pi++] = (uintptr_t)info;
-     tcg_debug_assert(pi == total_args);
+-    struct qemu_plugin_dyn_cb *dyn_cb = plugin_get_dyn_cb(arr);
++    static TCGHelperInfo info[3] = {
++        [QEMU_PLUGIN_CB_NO_REGS].flags = TCG_CALL_NO_RWG | TCG_CALL_PLUGIN,
++        [QEMU_PLUGIN_CB_R_REGS].flags = TCG_CALL_NO_WG | TCG_CALL_PLUGIN,
++        [QEMU_PLUGIN_CB_RW_REGS].flags = TCG_CALL_PLUGIN,
++        /*
++         * Match qemu_plugin_vcpu_udata_cb_t:
++         *   void (*)(uint32_t, void *)
++         */
++        [0 ... 2].typemask = (dh_typemask(void, 0) |
++                              dh_typemask(i32, 1) |
++                              dh_typemask(ptr, 2))
++    };
  
-@@ -2345,56 +2346,58 @@ static void tcg_gen_callN(TCGHelperInfo *info, TCGTemp *ret, TCGTemp **args)
-     }
++    struct qemu_plugin_dyn_cb *dyn_cb = plugin_get_dyn_cb(arr);
+     dyn_cb->userp = udata;
+-    /* Note flags are discarded as unused. */
+-    dyn_cb->regular.f.vcpu_udata = cb;
+     dyn_cb->type = PLUGIN_CB_REGULAR;
++    dyn_cb->regular.f.vcpu_udata = cb;
++
++    assert((unsigned)flags < ARRAY_SIZE(info));
++    dyn_cb->regular.info = &info[flags];
  }
  
--void tcg_gen_call0(TCGHelperInfo *info, TCGTemp *ret)
-+void tcg_gen_call0(void *func, TCGHelperInfo *info, TCGTemp *ret)
+ void plugin_register_vcpu_mem_cb(GArray **arr,
+@@ -352,14 +366,39 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
+                                  enum qemu_plugin_mem_rw rw,
+                                  void *udata)
  {
--    tcg_gen_callN(info, ret, NULL);
-+    tcg_gen_callN(func, info, ret, NULL);
+-    struct qemu_plugin_dyn_cb *dyn_cb;
++    /*
++     * Expect that the underlying type for enum qemu_plugin_meminfo_t
++     * is either int32_t or uint32_t, aka int or unsigned int.
++     */
++    QEMU_BUILD_BUG_ON(
++        !__builtin_types_compatible_p(qemu_plugin_meminfo_t, uint32_t) &&
++        !__builtin_types_compatible_p(qemu_plugin_meminfo_t, int32_t));
+ 
+-    dyn_cb = plugin_get_dyn_cb(arr);
++    static TCGHelperInfo info[3] = {
++        [QEMU_PLUGIN_CB_NO_REGS].flags = TCG_CALL_NO_RWG | TCG_CALL_PLUGIN,
++        [QEMU_PLUGIN_CB_R_REGS].flags = TCG_CALL_NO_WG | TCG_CALL_PLUGIN,
++        [QEMU_PLUGIN_CB_RW_REGS].flags = TCG_CALL_PLUGIN,
++        /*
++         * Match qemu_plugin_vcpu_mem_cb_t:
++         *   void (*)(uint32_t, qemu_plugin_meminfo_t, uint64_t, void *)
++         */
++        [0 ... 2].typemask =
++            (dh_typemask(void, 0) |
++             dh_typemask(i32, 1) |
++             (__builtin_types_compatible_p(qemu_plugin_meminfo_t, uint32_t)
++              ? dh_typemask(i32, 2) : dh_typemask(s32, 2)) |
++             dh_typemask(i64, 3) |
++             dh_typemask(ptr, 4))
++    };
++
++    struct qemu_plugin_dyn_cb *dyn_cb = plugin_get_dyn_cb(arr);
+     dyn_cb->userp = udata;
+-    /* Note flags are discarded as unused. */
+     dyn_cb->type = PLUGIN_CB_REGULAR;
+     dyn_cb->rw = rw;
+     dyn_cb->regular.f.vcpu_mem = cb;
++
++    assert((unsigned)flags < ARRAY_SIZE(info));
++    dyn_cb->regular.info = &info[flags];
  }
  
--void tcg_gen_call1(TCGHelperInfo *info, TCGTemp *ret, TCGTemp *t1)
-+void tcg_gen_call1(void *func, TCGHelperInfo *info, TCGTemp *ret, TCGTemp *t1)
- {
--    tcg_gen_callN(info, ret, &t1);
-+    tcg_gen_callN(func, info, ret, &t1);
- }
- 
--void tcg_gen_call2(TCGHelperInfo *info, TCGTemp *ret, TCGTemp *t1, TCGTemp *t2)
-+void tcg_gen_call2(void *func, TCGHelperInfo *info, TCGTemp *ret,
-+                   TCGTemp *t1, TCGTemp *t2)
- {
-     TCGTemp *args[2] = { t1, t2 };
--    tcg_gen_callN(info, ret, args);
-+    tcg_gen_callN(func, info, ret, args);
- }
- 
--void tcg_gen_call3(TCGHelperInfo *info, TCGTemp *ret, TCGTemp *t1,
--                   TCGTemp *t2, TCGTemp *t3)
-+void tcg_gen_call3(void *func, TCGHelperInfo *info, TCGTemp *ret,
-+                   TCGTemp *t1, TCGTemp *t2, TCGTemp *t3)
- {
-     TCGTemp *args[3] = { t1, t2, t3 };
--    tcg_gen_callN(info, ret, args);
-+    tcg_gen_callN(func, info, ret, args);
- }
- 
--void tcg_gen_call4(TCGHelperInfo *info, TCGTemp *ret, TCGTemp *t1,
--                   TCGTemp *t2, TCGTemp *t3, TCGTemp *t4)
-+void tcg_gen_call4(void *func, TCGHelperInfo *info, TCGTemp *ret,
-+                   TCGTemp *t1, TCGTemp *t2, TCGTemp *t3, TCGTemp *t4)
- {
-     TCGTemp *args[4] = { t1, t2, t3, t4 };
--    tcg_gen_callN(info, ret, args);
-+    tcg_gen_callN(func, info, ret, args);
- }
- 
--void tcg_gen_call5(TCGHelperInfo *info, TCGTemp *ret, TCGTemp *t1,
-+void tcg_gen_call5(void *func, TCGHelperInfo *info, TCGTemp *ret, TCGTemp *t1,
-                    TCGTemp *t2, TCGTemp *t3, TCGTemp *t4, TCGTemp *t5)
- {
-     TCGTemp *args[5] = { t1, t2, t3, t4, t5 };
--    tcg_gen_callN(info, ret, args);
-+    tcg_gen_callN(func, info, ret, args);
- }
- 
--void tcg_gen_call6(TCGHelperInfo *info, TCGTemp *ret, TCGTemp *t1, TCGTemp *t2,
--                   TCGTemp *t3, TCGTemp *t4, TCGTemp *t5, TCGTemp *t6)
-+void tcg_gen_call6(void *func, TCGHelperInfo *info, TCGTemp *ret,
-+                   TCGTemp *t1, TCGTemp *t2, TCGTemp *t3,
-+                   TCGTemp *t4, TCGTemp *t5, TCGTemp *t6)
- {
-     TCGTemp *args[6] = { t1, t2, t3, t4, t5, t6 };
--    tcg_gen_callN(info, ret, args);
-+    tcg_gen_callN(func, info, ret, args);
- }
- 
--void tcg_gen_call7(TCGHelperInfo *info, TCGTemp *ret, TCGTemp *t1,
-+void tcg_gen_call7(void *func, TCGHelperInfo *info, TCGTemp *ret, TCGTemp *t1,
-                    TCGTemp *t2, TCGTemp *t3, TCGTemp *t4,
-                    TCGTemp *t5, TCGTemp *t6, TCGTemp *t7)
- {
-     TCGTemp *args[7] = { t1, t2, t3, t4, t5, t6, t7 };
--    tcg_gen_callN(info, ret, args);
-+    tcg_gen_callN(func, info, ret, args);
- }
- 
- static void tcg_reg_alloc_start(TCGContext *s)
+ /*
 -- 
 2.34.1
 
