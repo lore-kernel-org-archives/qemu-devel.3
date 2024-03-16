@@ -4,89 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14FAC54E58
-	for <qemu-devel@archiver.kernel.org>; Fri, 15 Mar 2024 21:32:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51261C54E67
+	for <qemu-devel@archiver.kernel.org>; Sat, 16 Mar 2024 01:20:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlF9s-00023N-VG; Fri, 15 Mar 2024 17:32:08 -0400
+	id 1rlIhm-00059q-1Q; Fri, 15 Mar 2024 21:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rlF9r-00022p-EU
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 17:32:07 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rlF9q-0006Z1-0L
- for qemu-devel@nongnu.org; Fri, 15 Mar 2024 17:32:07 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-6e6aa5c5a6fso2665524b3a.0
- for <qemu-devel@nongnu.org>; Fri, 15 Mar 2024 14:32:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710538324; x=1711143124; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IXh5m6E+ZhuHfn/lF3iLLRLPMxIt+5/OZWLPgtJ7Ujo=;
- b=DHZAYDhMKc6aPtgMFzwokTHHGdDeupp2uluwe/aC769JUMJlkbVId/NIo0C4H2CkFp
- qQvUtglktHiQBoTpB97NnENmH94O+4v44TbFzldtcDex/12fDiDHN3R326EOJcec1qI6
- VOOSfFpSIijjsjFFVqMrs/CtY5OQj04vpHtW0o1J2wPP0RNZp0BDtAinKYQaqgP2LtRe
- KKvQh/nxZuS7Tne+FN1bEY2dn61NR5eabtcJ8+sk3jx6uMh0BTK3RvMmHXWnQ8MJP7QP
- QocrEVO653wBRyWlmKD5arclvR1yPcVcsei36MQq7zV2jlmMHU2dnZX/jZr5GrxhyxQm
- jXZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710538324; x=1711143124;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IXh5m6E+ZhuHfn/lF3iLLRLPMxIt+5/OZWLPgtJ7Ujo=;
- b=qR4NcMh6T2DktTLpRylcLj8OLJcWTmCWJoVcbTvYbIGISk0bM2yr/XpYuZd6nsU+zO
- oyFwBOiF1ldcrlOh2TnMVHX2M3R4+HBkFcQ7AkrNElGZA+uy5Qih4zS4V96P55aEFKZr
- HkjX97rIa9rI+A0Socke9Q4Q1JA81WQ8nmBM6nyzvPJLwWn0dPyqbO6AcVRz9CseUXbR
- qyWNMiJC9Vb+ynCy44Bf7MDutnjBiWHwONmcnA7xeT4KWIW/l2ec1xP4KoxtUWKu8Chh
- a/eYCKVDfmAq2vnJeGJC51/7HHNmIeDyxR0o8vvtV8GbVTPrQ4LPhsPmAjjc9UypY51J
- 7+Sw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW9ap9ntrMAm0fDmpWln9ObbhcBnADbTSoVVFZIwCWVeqKIEk5tJ64VShVI9cooRIE2Ye6y8Zyivu1+B+Hp9D4k4GFOU9M=
-X-Gm-Message-State: AOJu0YzSKxl7jrKDRW87XEcwkgPK1TG9XCxTLuHwzrZ2BD4RPOO4dygK
- AA9+8hx85d63LpDLTsEmgdg9OHMiVxspxYsTtiUcc6F+XZ4SoY1BQEBbJ2bNeis=
-X-Google-Smtp-Source: AGHT+IE7SLqK5ZNZjFS/v6k+1maDq1nY2ELiQUlr2xmM14xzC39A5LcRep/V7rKrwOTKZ31U7Rb2Yw==
-X-Received: by 2002:a05:6a20:a109:b0:1a3:5322:a86f with SMTP id
- q9-20020a056a20a10900b001a35322a86fmr1661736pzk.38.1710538324479; 
- Fri, 15 Mar 2024 14:32:04 -0700 (PDT)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- r8-20020a62e408000000b006e64c9bc2b3sm3962473pfh.11.2024.03.15.14.32.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 15 Mar 2024 14:32:03 -0700 (PDT)
-Message-ID: <63cf3b97-1637-40e7-9956-461b215f944f@linaro.org>
-Date: Fri, 15 Mar 2024 11:32:00 -1000
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1rlIhg-00059H-UZ
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:19:17 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1rlIha-0001h2-6H
+ for qemu-devel@nongnu.org; Fri, 15 Mar 2024 21:19:16 -0400
+Received: from loongson.cn (unknown [10.20.42.32])
+ by gateway (Coremail) with SMTP id _____8Dx6uiG8_Rlz7UZAA--.41994S3;
+ Sat, 16 Mar 2024 09:19:03 +0800 (CST)
+Received: from [10.20.42.32] (unknown [10.20.42.32])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Cx7xOE8_Rl519bAA--.3931S2; 
+ Sat, 16 Mar 2024 09:19:02 +0800 (CST)
+Subject: Re: [PATCH V4 1/1] target/loongarch: Fixed tlb huge page loading issue
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: maobibo@loongson.cn, Song Gao <gaosong@loongson.cn>,
+ Xiaojuan Yang <yangxiaojuan@loongson.cn>, zhaotianrui@loongson.cn,
+ yijun@loongson.cn, wuruiyang@loongson.cn
+References: <cover.1710379781.git.lixianglai@loongson.cn>
+ <0e940b2aee9a5c29bb41d6a9611955482d250325.1710379781.git.lixianglai@loongson.cn>
+ <60733d71-daba-4f4a-a184-357526a3b3a0@linaro.org>
+ <05a4b109-6e86-6ecf-4399-c0f9d5fd1a6f@loongson.cn>
+ <90bde2c9-46fd-458c-9c32-22dac25bb069@linaro.org>
+ <874eb7af-d1a0-0777-bc10-555381b85118@loongson.cn>
+ <553e5eee-7af5-4ecf-b994-1bdd6ca8a820@linaro.org>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <44ca631d-dae0-0e5d-1566-986a602d3c29@loongson.cn>
+Date: Sat, 16 Mar 2024 09:19:00 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 12/12] exec/poison: Poison CONFIG_SOFTMMU again
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-ppc@nongnu.org
-References: <20240313213339.82071-1-philmd@linaro.org>
- <20240313213339.82071-13-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240313213339.82071-13-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <553e5eee-7af5-4ecf-b994-1bdd6ca8a820@linaro.org>
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Language: en-US
+X-CM-TRANSID: AQAAf8Cx7xOE8_Rl519bAA--.3931S2
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoW7Ar1UGF1xuFy5JF1rAFy5GFX_yoW8uFyfpr
+ n5JF98Kr98Grn3GFnrKw1jqry5tr1UJ3WUXr1UAFyUJr4Dtrn0qr48Zr1jgF1UJr48Jr4U
+ Zr15Jr13Zr1UGrbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Jr0_Gr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUrNtxDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.686,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,46 +90,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/13/24 11:33, Philippe Mathieu-Daudé wrote:
-> Now that the confusion around SOFTMMU vs SYSTEM emulation
-> was clarified, we can restore the CONFIG_SOFTMMU poison
-> pragma.
-> 
-> This reverts commit d31b84041d4353ef310ffde23c87b78c2aa32ead
-> ("exec/poison: Do not poison CONFIG_SOFTMMU").
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/exec/poison.h         | 1 +
->   scripts/make-config-poison.sh | 1 -
->   2 files changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/include/exec/poison.h b/include/exec/poison.h
-> index 1ea5633eb3..fbec710f6c 100644
-> --- a/include/exec/poison.h
-> +++ b/include/exec/poison.h
-> @@ -84,6 +84,7 @@
->   #pragma GCC poison CONFIG_HVF
->   #pragma GCC poison CONFIG_LINUX_USER
->   #pragma GCC poison CONFIG_KVM
-> +#pragma GCC poison CONFIG_SOFTMMU
->   #pragma GCC poison CONFIG_WHPX
->   #pragma GCC poison CONFIG_XEN
->   
-> diff --git a/scripts/make-config-poison.sh b/scripts/make-config-poison.sh
-> index 2b36907e23..6ef5580f84 100755
-> --- a/scripts/make-config-poison.sh
-> +++ b/scripts/make-config-poison.sh
-> @@ -9,7 +9,6 @@ fi
->   exec sed -n \
->     -e' /CONFIG_TCG/d' \
->     -e '/CONFIG_USER_ONLY/d' \
-> -  -e '/CONFIG_SOFTMMU/d' \
->     -e '/^#define / {' \
->     -e    's///' \
->     -e    's/ .*//' \
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
+在 2024/3/16 上午1:06, Richard Henderson 写道:
+> On 3/14/24 23:01, lixianglai wrote:
+>> Hi Richard :
+>>
+>>> On 3/14/24 20:22, lixianglai wrote:
+>>>> Hi Richard:
+>>>>> On 3/13/24 15:33, Xianglai Li wrote:
+>>>>>> +    if (unlikely((level == 0) || (level > 4))) {
+>>>>>> +        return base;
+>>>>>> +    }
+>>> ...
+>>>>> Perhaps it would be worthwhile to add another for the level==0 or > 4 case above?
+>>>>>
+>>>> A normal level 4 page table should not print an error log,
+>>>>
+>>>> only if a level 4 page is large, so we should put it in
+>>>>
+>>>>      if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+>>>>          if (unlikely(level == 4)) {
+>>>>              qemu_log_mask(LOG_GUEST_ERROR,
+>>>>                            "Attempted use of level %lu huge page\n", level);
+>>>>          }
+>>>>
+>>>>          if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
+>>>>              return base;
+>>>>          } else {
+>>>>              return  FIELD_DP64(base, TLBENTRY, LEVEL, level);
+>>>>          }
+>>>>      }
+>>>
+>>> A level 5 page table is not normal, nor is a level 0 lddir.
+>>>
+>>
+>> We communicate with the hardware guys that the behavior above level 4 and lddir 0 is undefined behavior.
+>>
+>> The result of our test on 3A5000 is that it has no any effect on "base",
+>>
+>> however in future chips the behavior may change since it may support 5-level page table and width for level[13:14] may change also.
+>>
+>>
+>> So in this context,I am not sure which level to use to print logs,
+>>
+>> which content to print, and where to add these prints,
+>>
+>> any more detailed advice?
+>
+> Yes, right there in the IF that I quoted at the top.
+> What I was trying to spell out is
+>
+>     if (unlikely(level == 0 || level > 4)) {
+>         qemu_log_mask(LOG_GUEST_ERROR,
+>                       "Attepted LDDIR with level %"PRId64"\n", level);
+>         return base;
+>     }
+>
+Thank you very much, I will modify it in V6 version of patch.
+
+Thanks,
+Xianglai.
+>
+> r~
+
 
