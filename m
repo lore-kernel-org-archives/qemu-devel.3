@@ -4,87 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30CDEC54E68
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 Mar 2024 20:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1785DC54E68
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 Mar 2024 20:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlxHW-00077j-Q2; Sun, 17 Mar 2024 16:38:58 -0400
+	id 1rlxaJ-0002Ez-Ch; Sun, 17 Mar 2024 16:58:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rlxHT-00075o-Ra
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 16:38:56 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rlxHS-00087D-AG
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 16:38:55 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4140efa16caso2852175e9.0
- for <qemu-devel@nongnu.org>; Sun, 17 Mar 2024 13:38:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710707932; x=1711312732; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4tLK6FJu9XnfNBenMVgFM4irD6sMjkIZ10X3kqRT8bA=;
- b=o1yTwqA0h/R9/YQJvQq5T6wh6LEntDVZ7Pb3sPgTONjncr5jdIv7Pw/HXJeXYqx7Zy
- S4Cn6MdFV4PCNIjtUxmWWpDxpM+ani5CbfGE1iAvpoqUZkyiGLlXdD68Sz0p4ktIyWBs
- YEsGQOnq+xXINdJFAfCW3hWVKQkWjL3rR48lZ0gKE90l+rJbPvxlh6tQguOQFrCV6RvF
- ykAWUx1RbtQxTXqM5ehhudcKQPwuVBYKlJxQCNIgypon7er34crJSPQ7G76pnQJABziT
- fAnnvBww0GufloSVvcgvC5SRMfHJhOpw+oHcarB+AC0lnXF4GEG6Nw22ZCP4ZzfoSZa4
- sSqA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rlxaG-0002DY-VH
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 16:58:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rlxaE-0002bG-RP
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 16:58:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710709098;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6UIjggYcWeZ8GItTuth3oRveQdzD9M6dVWkAHyLU+XM=;
+ b=d3b5z17tVdSvPHHmGRN7heLrIKSbMsygZci4WkVNoJqurA3FroGv30YAAj0lrTCBd8Ex5Q
+ fe4mQFUz3jXiaw0ogACJdHOiNUePe5gJBgvgnvaindrgmG2uH7Nr9BiPw6KHFAmHHkIws7
+ 7mYkrNL/2M6vG324hsrEydLyyUf7P88=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-441-voq1F1fUNzqoZV9uFOWyqw-1; Sun, 17 Mar 2024 16:58:16 -0400
+X-MC-Unique: voq1F1fUNzqoZV9uFOWyqw-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-430c76df729so3705261cf.0
+ for <qemu-devel@nongnu.org>; Sun, 17 Mar 2024 13:58:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710707932; x=1711312732;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4tLK6FJu9XnfNBenMVgFM4irD6sMjkIZ10X3kqRT8bA=;
- b=kXcK91ujbZisHRZdAuRDetBv/wafajIh2qGmTDE562DWrE/1WaBekuC+0Dov2o93eo
- S3XbtnGE3zTi3JQ2OYjzLo4qPl5ts2ZGvkoC+olESxKYqsFTfpFtpc54nXRIgK36Z/tj
- H2bXE18XgvD6uW48hUuOLFUJkE2HQuL7H0av7EKdCjKTBwW3aAXEDbh24pDUltvUf0Ln
- SnQIf2VVS2U6qLEa8Tn0CVq1D9teBfvU+kBjUhvO+Y1vfYC2BEYeAauJpRwHEIMhvrw5
- VlaNBY5aYHLmpxXq8vpFyfFR2VzztK6uAiFgCAPc10ORLEcCD+XRnVdFzhaZDPskkfmc
- Lxow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPMu4FZ5QWPdtu7YQr4QFWdDPpB9ApIpIDd4NWO/vaZyAkfUeKJIr4MYD1FqycgTMCgLDrmpdMj+zVrumebxhRTrUwpZA=
-X-Gm-Message-State: AOJu0Yxx/U/eDIUrIN0jaIOnu6JH8+0QezhLoj5KKVAHGOSsKR+E9YLC
- ahAeTwfRXulcKghs9vw16GsS5hlQ2zHINsY1XI6KIDZRY6OisRqiBtfNWjp5yW2CbGFn9FjJd8g
- g
-X-Google-Smtp-Source: AGHT+IHuRttkncVO+UtIk+N4TXSeEv6pf90Sgg0z8c0kj82qrE/OW2Y2gzUflFS/GRY4KbS28MR64w==
-X-Received: by 2002:a05:600c:1c84:b0:413:ff10:cee with SMTP id
- k4-20020a05600c1c8400b00413ff100ceemr6122493wms.13.1710707930984; 
- Sun, 17 Mar 2024 13:38:50 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- j19-20020a05600c191300b00414055f20a9sm6760289wmq.26.2024.03.17.13.38.50
+ d=1e100.net; s=20230601; t=1710709096; x=1711313896;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6UIjggYcWeZ8GItTuth3oRveQdzD9M6dVWkAHyLU+XM=;
+ b=K4t5wlVReupjS95hhGP4kopxM2ql8+Nee63sAZPdsOO/nk7/zoR+8gBI2cPh58Q6Qa
+ IMzbCSQAL+mEHYi06A4FzYMkBl6zDQVTAjzAoLMnONSKNj9VkB5GQABUsYD9YIBSsmcb
+ PMHu+wzWVKgSK+JeSbYw8ssrJdWyPjgqzLKSxQ7f06ksOIsky5N+aNqXFT6Gor1Zc8zZ
+ MSlo0MXEGutLJWmNna1IUSqNWdOipcKfJw69/DiL33X0pFLBjZsiU9kTZWqcDg03wEi2
+ YuBcw8NBN7vBwZIHMy66foHEjQSxEUloGJvx0tmsujFzlq6SK6EvV/PHVosZZH0wy7NW
+ ndRA==
+X-Gm-Message-State: AOJu0YwvhfGqvbpaBZOGxqT77A7VBwEXP+siGhR1l1tjj7yddJQHaPvJ
+ zaiRoc+6xPL3PjdVKolKAcTXNAM3PWo0/9HQEkDO2XM8FB3Lq3U2yzlP3z4BmgppxUv21Dzu7Jg
+ 7tcg9/wilfPvUJiDBu24HqZq5nMOxRGJi6We+pP5MpmoqMgg4r56RhVPscVm7h7m9+Evz74M5PK
+ eRcEj8WKGkPJqrCOn+0tUQPgxTx/uKrHxFOg==
+X-Received: by 2002:a05:6214:2c0a:b0:691:ca1:ce8a with SMTP id
+ qq10-20020a0562142c0a00b006910ca1ce8amr8883382qvb.6.1710709095852; 
+ Sun, 17 Mar 2024 13:58:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGG6717Cl6wCmud2Cm8fiETPePyBDz6w5iAjimAta3jxtXtl1MNb5bacdFVyBemJ+3R08bnQA==
+X-Received: by 2002:a05:6214:2c0a:b0:691:ca1:ce8a with SMTP id
+ qq10-20020a0562142c0a00b006910ca1ce8amr8883361qvb.6.1710709095312; 
+ Sun, 17 Mar 2024 13:58:15 -0700 (PDT)
+Received: from x1n.. ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ ed8-20020ad44ea8000000b00691879d7a50sm2391566qvb.115.2024.03.17.13.58.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 Mar 2024 13:38:50 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 25A325F885;
- Sun, 17 Mar 2024 20:38:50 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Nguyen Dinh Phi <phind.uet@gmail.com>
-Cc: Laurent Vivier <laurent@vivier.eu>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] linux-user: replace calloc() with g_new0()
-In-Reply-To: <20240317171747.1642207-1-phind.uet@gmail.com> (Nguyen Dinh Phi's
- message of "Mon, 18 Mar 2024 01:17:47 +0800")
-References: <20240317171747.1642207-1-phind.uet@gmail.com>
-User-Agent: mu4e 1.12.1; emacs 29.2
-Date: Sun, 17 Mar 2024 20:38:50 +0000
-Message-ID: <87sf0or3tx.fsf@draig.linaro.org>
+ Sun, 17 Mar 2024 13:58:14 -0700 (PDT)
+From: peterx@redhat.com
+To: qemu-devel@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Cc: Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
+ peterx@redhat.com, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>, Kevin Wolf <kwolf@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 06/10] migration: Skip only empty block devices
+Date: Sun, 17 Mar 2024 16:57:59 -0400
+Message-ID: <20240317205803.361163-7-peterx@redhat.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240317205803.361163-1-peterx@redhat.com>
+References: <20240317205803.361163-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,34 +107,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nguyen Dinh Phi <phind.uet@gmail.com> writes:
+From: Cédric Le Goater <clg@redhat.com>
 
-> Use glib allocation as recommended by the coding convention
->
-> Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
-> ---
->  linux-user/main.c | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
->
-> diff --git a/linux-user/main.c b/linux-user/main.c
-> index 9277df2e9d..149e35432e 100644
-> --- a/linux-user/main.c
-> +++ b/linux-user/main.c
-> @@ -928,11 +928,7 @@ int main(int argc, char **argv, char **envp)
->       * Prepare copy of argv vector for target.
->       */
->      target_argc =3D argc - optind;
-> -    target_argv =3D calloc(target_argc + 1, sizeof (char *));
-> -    if (target_argv =3D=3D NULL) {
-> -        (void) fprintf(stderr, "Unable to allocate memory for target_arg=
-v\n");
-> -        exit(EXIT_FAILURE);
-> -    }
-> +    target_argv =3D g_new0(char *, target_argc + 1);
+The block .save_setup() handler calls a helper routine
+init_blk_migration() which builds a list of block devices to take into
+account for migration. When one device is found to be empty (sectors
+== 0), the loop exits and all the remaining devices are ignored. This
+is a regression introduced when bdrv_iterate() was removed.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Change that by skipping only empty devices.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-stable <qemu-stable@nongnu.org>
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
+Fixes: fea68bb6e9fa ("block: Eliminate bdrv_iterate(), use bdrv_next()")
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Link: https://lore.kernel.org/r/20240312120431.550054-1-clg@redhat.com
+[peterx: fix "Suggested-by:"]
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/block.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/migration/block.c b/migration/block.c
+index 8c6ebafacc..2b9054889a 100644
+--- a/migration/block.c
++++ b/migration/block.c
+@@ -402,7 +402,10 @@ static int init_blk_migration(QEMUFile *f)
+         }
+ 
+         sectors = bdrv_nb_sectors(bs);
+-        if (sectors <= 0) {
++        if (sectors == 0) {
++            continue;
++        }
++        if (sectors < 0) {
+             ret = sectors;
+             bdrv_next_cleanup(&it);
+             goto out;
+-- 
+2.44.0
+
 
