@@ -4,73 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F692C54E60
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 Mar 2024 07:10:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9032EC54E67
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 Mar 2024 08:33:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlkds-0003yx-SV; Sun, 17 Mar 2024 03:09:13 -0400
+	id 1rllwb-0005hC-10; Sun, 17 Mar 2024 04:32:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rlkdq-0003yD-Sx; Sun, 17 Mar 2024 03:09:10 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1rllwZ-0005h3-Gc
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 04:32:35 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rlkdp-0004g3-3s; Sun, 17 Mar 2024 03:09:10 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0BED056938;
- Sun, 17 Mar 2024 10:10:13 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id BDD749BB54;
- Sun, 17 Mar 2024 10:09:01 +0300 (MSK)
-Message-ID: <a9e4fac5-2a1e-4d15-afa5-bae42756ec42@tls.msk.ru>
-Date: Sun, 17 Mar 2024 10:09:01 +0300
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1rllwX-0007HJ-6B
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 04:32:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710664353; x=1742200353;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=92hfYwokdeu/YuQ+PkV1vqiKNBjGzAAHo/vUwVuYsRo=;
+ b=AD+2GEar85rqzsLOFZS7Fz//1M2aHApDBNjJEvvOi/CVJeZBa6+5M68t
+ g0Xj9tQ6J+ct1o9KHkj+LpRq4QZr+0gUTKUUI/0h7j4G+bqwAL0mAhIZh
+ NpMXgeQY7/75HeDJLXzc59ZKCdxCwxxUkfb74/ywh2op5R5gFfkAo4Fo3
+ hgMzfYVBT0cmWKHwylt6OCURkDH4OE4q0tfmJl8Sh97wfuLxEAG1wA0a1
+ AvQm7jwAKUl5PXlE+yUcH9WZpg77gOX64KLS/tpjrJTd7wE2sO7le9rq1
+ cibnoQbQuQvsuP5mHcuI6hXAzqONgzt77o37hJjAZC7+4eLEo3+IacEQH w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11015"; a="23006650"
+X-IronPort-AV: E=Sophos;i="6.07,132,1708416000"; d="scan'208";a="23006650"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2024 01:32:28 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,132,1708416000"; d="scan'208";a="13788545"
+Received: from linux.bj.intel.com ([10.238.157.71])
+ by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2024 01:32:26 -0700
+Date: Sun, 17 Mar 2024 16:29:31 +0800
+From: Tao Su <tao1.su@linux.intel.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Tom Lendacky <thomas.lendacky@amd.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org
+Subject: Re: [PATCH v3 2/3] kvm: add support for guest physical bits
+Message-ID: <Zfap1cqJngPblW+x@linux.bj.intel.com>
+References: <20240313132719.939417-1-kraxel@redhat.com>
+ <20240313132719.939417-3-kraxel@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Regression in v7.2.10 - ui-dbus.so requires -fPIC
-Content-Language: en-US
-To: Olaf Hering <olaf@aepfle.de>
-Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20240314220038.1aaae79f.olaf@aepfle.de>
- <4b803768-09df-4b6c-a745-f0158543310d@tls.msk.ru>
- <20240316231945.7bcfac09.olaf@aepfle.de>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240316231945.7bcfac09.olaf@aepfle.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240313132719.939417-3-kraxel@redhat.com>
+Received-SPF: none client-ip=192.198.163.8;
+ envelope-from=tao1.su@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.633,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,19 +80,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-17.03.2024 01:19, Olaf Hering:
-> Sat, 16 Mar 2024 22:40:14 +0300 Michael Tokarev <mjt@tls.msk.ru>:
+On Wed, Mar 13, 2024 at 02:27:18PM +0100, Gerd Hoffmann wrote:
+> Query kvm for supported guest physical address bits, in cpuid
+> function 80000008, eax[23:16].  Usually this is identical to host
+> physical address bits.  With NPT or EPT being used this might be
+> restricted to 48 (max 4-level paging address space size) even if
+> the host cpu supports more physical address bits.
 > 
->>       meson: ensure dbus-display generated code is built before other units
->>       (cherry picked from commit 1222070e772833c6875e0ca63565db12c22df39e)
+> When set pass this to the guest, using cpuid too.  Guest firmware
+> can use this to figure how big the usable guest physical address
+> space is, so PCI bar mapping are actually reachable.
 > 
-> "static_library" is used often. Some use the 'pic' option, which fixes the issue.
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>  target/i386/cpu.h         |  1 +
+>  target/i386/cpu.c         |  1 +
+>  target/i386/kvm/kvm-cpu.c | 32 +++++++++++++++++++++++++++++++-
+>  3 files changed, 33 insertions(+), 1 deletion(-)
 > 
-> I think every usage that ends up in a shared library requires 'pic:true'.
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 952174bb6f52..d427218827f6 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2026,6 +2026,7 @@ struct ArchCPU {
+>  
+>      /* Number of physical address bits supported */
+>      uint32_t phys_bits;
+> +    uint32_t guest_phys_bits;
+>  
+>      /* in order to simplify APIC support, we leave this pointer to the
+>         user */
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 9a210d8d9290..c88c895a5b3e 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -6570,6 +6570,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>          if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
+>              /* 64 bit processor */
+>               *eax |= (cpu_x86_virtual_addr_width(env) << 8);
+> +             *eax |= (cpu->guest_phys_bits << 16);
+>          }
+>          *ebx = env->features[FEAT_8000_0008_EBX];
+>          if (cs->nr_cores * cs->nr_threads > 1) {
+> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+> index 9c791b7b0520..a2b7bfaeadf8 100644
+> --- a/target/i386/kvm/kvm-cpu.c
+> +++ b/target/i386/kvm/kvm-cpu.c
+> @@ -18,10 +18,36 @@
+>  #include "kvm_i386.h"
+>  #include "hw/core/accel-cpu.h"
+>  
+> +static void kvm_set_guest_phys_bits(CPUState *cs)
+> +{
+> +    X86CPU *cpu = X86_CPU(cs);
+> +    uint32_t eax, guest_phys_bits;
+> +
+> +    if (!cpu->host_phys_bits) {
+> +        return;
+> +    }
+> +
+> +    eax = kvm_arch_get_supported_cpuid(cs->kvm_state, 0x80000008, 0, R_EAX);
+> +    guest_phys_bits = (eax >> 16) & 0xff;
+> +    if (!guest_phys_bits) {
+> +        return;
+> +    }
+> +
+> +    if (cpu->guest_phys_bits == 0 ||
+> +        cpu->guest_phys_bits > guest_phys_bits) {
+> +        cpu->guest_phys_bits = guest_phys_bits;
+> +    }
+> +
+> +    if (cpu->guest_phys_bits > cpu->host_phys_bits_limit) {
+> +        cpu->guest_phys_bits = cpu->host_phys_bits_limit;
 
-The prob here seems to be that while fixing other issue (header file isn't generated
-early enough), we all forgot about the fact dbus-display1.o can be used inside a
-shared/loadable object when qemu is built with --enable-modules.
+host_phys_bits_limit is zero by default, so I think it is better to be
+like:
 
-/mjt
+        if (cpu->host_phys_bits_limit &&
+            cpu->guest_phys_bits > cpu->host_phys_bits_limit) {
+            cpu->guest_phys_bits = cpu->host_phys_bits_limit;
+        }
+
+> +    }
+> +}
+> +
+>  static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+>  {
+>      X86CPU *cpu = X86_CPU(cs);
+>      CPUX86State *env = &cpu->env;
+> +    bool ret;
+>  
+>      /*
+>       * The realize order is important, since x86_cpu_realize() checks if
+> @@ -50,7 +76,11 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+>                                                     MSR_IA32_UCODE_REV);
+>          }
+>      }
+> -    return host_cpu_realizefn(cs, errp);
+> +    ret = host_cpu_realizefn(cs, errp);
+> +
+> +    kvm_set_guest_phys_bits(cs);
+> +
+> +    return ret;
+>  }
+>  
+>  static bool lmce_supported(void)
+> -- 
+> 2.44.0
+> 
+> 
 
