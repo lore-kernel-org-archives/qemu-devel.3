@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC8BC54E60
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 Mar 2024 19:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30CDEC54E68
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 Mar 2024 20:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlw1p-00058w-AZ; Sun, 17 Mar 2024 15:18:41 -0400
+	id 1rlxHW-00077j-Q2; Sun, 17 Mar 2024 16:38:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phind.uet@gmail.com>)
- id 1rlu8z-0002Co-DZ
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 13:17:57 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rlxHT-00075o-Ra
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 16:38:56 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phind.uet@gmail.com>)
- id 1rlu8x-0002TG-9z
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 13:17:56 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1dddb160a37so26256805ad.2
- for <qemu-devel@nongnu.org>; Sun, 17 Mar 2024 10:17:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rlxHS-00087D-AG
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 16:38:55 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4140efa16caso2852175e9.0
+ for <qemu-devel@nongnu.org>; Sun, 17 Mar 2024 13:38:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710695872; x=1711300672; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=rPGxsZXrkk+jF7t3i2054TO5zMp+QhBf6N673HPNJBI=;
- b=R//bch3xh+OTQ/Vs2jsJ41tUVbZG+3308sodMCDMhrzmVK0WUjeFaTs6Bu0gUJpW4C
- MkM2kHCuLr8wueXCoEsZUzXdB/YfBpCwAE+l0631W+9MpFTE6lBSdtQkedrZJS9zh5m2
- INtZ+ubms7dQUJPAmprUzvmvgt4Jr5EtiaMQSoR47+5wgu3wfKyiT/E7xNEoEkhVfAp1
- nSqUZ0dgCClzREC6x73WzpPququYkPy2Ql/xPL0KqdWBcmcykCIXFdu1QKC1CWvwLFu5
- 6wr9pWP5p7goUgoykvzSzbbCuDcI875qi8lacGilguD36wtY1ihyuj/A1lcxc2RUPADU
- bkCg==
+ d=linaro.org; s=google; t=1710707932; x=1711312732; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4tLK6FJu9XnfNBenMVgFM4irD6sMjkIZ10X3kqRT8bA=;
+ b=o1yTwqA0h/R9/YQJvQq5T6wh6LEntDVZ7Pb3sPgTONjncr5jdIv7Pw/HXJeXYqx7Zy
+ S4Cn6MdFV4PCNIjtUxmWWpDxpM+ani5CbfGE1iAvpoqUZkyiGLlXdD68Sz0p4ktIyWBs
+ YEsGQOnq+xXINdJFAfCW3hWVKQkWjL3rR48lZ0gKE90l+rJbPvxlh6tQguOQFrCV6RvF
+ ykAWUx1RbtQxTXqM5ehhudcKQPwuVBYKlJxQCNIgypon7er34crJSPQ7G76pnQJABziT
+ fAnnvBww0GufloSVvcgvC5SRMfHJhOpw+oHcarB+AC0lnXF4GEG6Nw22ZCP4ZzfoSZa4
+ sSqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710695872; x=1711300672;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rPGxsZXrkk+jF7t3i2054TO5zMp+QhBf6N673HPNJBI=;
- b=PNw58B3SQi9ItvJuqcHVTKjeVBSmnyNyPDb1+D0aWyPeCekhv7EfUYF2s3t/P1NvYe
- N9ofHPEbkczahow7ufSmgOy2+hdhdg2vS0NErH3YIS9GnmjxxWgNyUwubKdcLBoR2EBJ
- 6qnLRUBPc0axkNgY/tQ8vIfquPtW5jC1N2nouUAgHXtLAyzCs7aZEGf03ecRd8pFdApb
- KvB0SP62lFMeWO6ICv6QM74ydfFhdNth+8tDcOoN+WVuxLNOxaSr+IYByfmfgod7V2ry
- lYHDPl7c/y0RqDBCELWt1+5gBnKdP+ktXiz7uXrhWMieeiqan4mi0X+jv9ZYlvB70F1Q
- 3arQ==
+ d=1e100.net; s=20230601; t=1710707932; x=1711312732;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4tLK6FJu9XnfNBenMVgFM4irD6sMjkIZ10X3kqRT8bA=;
+ b=kXcK91ujbZisHRZdAuRDetBv/wafajIh2qGmTDE562DWrE/1WaBekuC+0Dov2o93eo
+ S3XbtnGE3zTi3JQ2OYjzLo4qPl5ts2ZGvkoC+olESxKYqsFTfpFtpc54nXRIgK36Z/tj
+ H2bXE18XgvD6uW48hUuOLFUJkE2HQuL7H0av7EKdCjKTBwW3aAXEDbh24pDUltvUf0Ln
+ SnQIf2VVS2U6qLEa8Tn0CVq1D9teBfvU+kBjUhvO+Y1vfYC2BEYeAauJpRwHEIMhvrw5
+ VlaNBY5aYHLmpxXq8vpFyfFR2VzztK6uAiFgCAPc10ORLEcCD+XRnVdFzhaZDPskkfmc
+ Lxow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVeLWWNQsuUSNtw6gf0JptWI099AEGfVOPB/n1ZSXPcPF/SR6jqV3JEy+pQhy7mz74KrQpCfR+yJ5C7wZrXwc2688vBKN8=
-X-Gm-Message-State: AOJu0YxrYXBVmujVb2XxFJzH7tgSRktzIBhb84eSkqm53o8CgH3S/w9n
- m1OMTalikmY+ySOGUK/jeU72Po4RbCtK+CFFLLXRvusm+kDrz4Vds5sv+cjk
-X-Google-Smtp-Source: AGHT+IEy6vVp9eDN0rER0ssv2oHErgbZK4aH/HeItbOrcyrwuK9yF3VUUFjb5N/gMUX4phdyB+vgeQ==
-X-Received: by 2002:a17:903:2342:b0:1db:35b5:7e37 with SMTP id
- c2-20020a170903234200b001db35b57e37mr13506595plh.50.1710695872575; 
- Sun, 17 Mar 2024 10:17:52 -0700 (PDT)
-Received: from phi.. ([116.86.31.222]) by smtp.gmail.com with ESMTPSA id
- n18-20020a170902d2d200b001dee0e175c1sm6775416plc.118.2024.03.17.10.17.51
+ AJvYcCWPMu4FZ5QWPdtu7YQr4QFWdDPpB9ApIpIDd4NWO/vaZyAkfUeKJIr4MYD1FqycgTMCgLDrmpdMj+zVrumebxhRTrUwpZA=
+X-Gm-Message-State: AOJu0Yxx/U/eDIUrIN0jaIOnu6JH8+0QezhLoj5KKVAHGOSsKR+E9YLC
+ ahAeTwfRXulcKghs9vw16GsS5hlQ2zHINsY1XI6KIDZRY6OisRqiBtfNWjp5yW2CbGFn9FjJd8g
+ g
+X-Google-Smtp-Source: AGHT+IHuRttkncVO+UtIk+N4TXSeEv6pf90Sgg0z8c0kj82qrE/OW2Y2gzUflFS/GRY4KbS28MR64w==
+X-Received: by 2002:a05:600c:1c84:b0:413:ff10:cee with SMTP id
+ k4-20020a05600c1c8400b00413ff100ceemr6122493wms.13.1710707930984; 
+ Sun, 17 Mar 2024 13:38:50 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ j19-20020a05600c191300b00414055f20a9sm6760289wmq.26.2024.03.17.13.38.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 Mar 2024 10:17:52 -0700 (PDT)
-From: Nguyen Dinh Phi <phind.uet@gmail.com>
-To: Laurent Vivier <laurent@vivier.eu>
-Cc: Nguyen Dinh Phi <phind.uet@gmail.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH] linux-user: replace calloc() with g_new0()
-Date: Mon, 18 Mar 2024 01:17:47 +0800
-Message-Id: <20240317171747.1642207-1-phind.uet@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ Sun, 17 Mar 2024 13:38:50 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 25A325F885;
+ Sun, 17 Mar 2024 20:38:50 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Nguyen Dinh Phi <phind.uet@gmail.com>
+Cc: Laurent Vivier <laurent@vivier.eu>,  qemu-devel@nongnu.org
+Subject: Re: [PATCH] linux-user: replace calloc() with g_new0()
+In-Reply-To: <20240317171747.1642207-1-phind.uet@gmail.com> (Nguyen Dinh Phi's
+ message of "Mon, 18 Mar 2024 01:17:47 +0800")
+References: <20240317171747.1642207-1-phind.uet@gmail.com>
+User-Agent: mu4e 1.12.1; emacs 29.2
+Date: Sun, 17 Mar 2024 20:38:50 +0000
+Message-ID: <87sf0or3tx.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=phind.uet@gmail.com; helo=mail-pl1-x631.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 17 Mar 2024 15:18:40 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,31 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use glib allocation as recommended by the coding convention
+Nguyen Dinh Phi <phind.uet@gmail.com> writes:
 
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
----
- linux-user/main.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+> Use glib allocation as recommended by the coding convention
+>
+> Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+> ---
+>  linux-user/main.c | 6 +-----
+>  1 file changed, 1 insertion(+), 5 deletions(-)
+>
+> diff --git a/linux-user/main.c b/linux-user/main.c
+> index 9277df2e9d..149e35432e 100644
+> --- a/linux-user/main.c
+> +++ b/linux-user/main.c
+> @@ -928,11 +928,7 @@ int main(int argc, char **argv, char **envp)
+>       * Prepare copy of argv vector for target.
+>       */
+>      target_argc =3D argc - optind;
+> -    target_argv =3D calloc(target_argc + 1, sizeof (char *));
+> -    if (target_argv =3D=3D NULL) {
+> -        (void) fprintf(stderr, "Unable to allocate memory for target_arg=
+v\n");
+> -        exit(EXIT_FAILURE);
+> -    }
+> +    target_argv =3D g_new0(char *, target_argc + 1);
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 9277df2e9d..149e35432e 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -928,11 +928,7 @@ int main(int argc, char **argv, char **envp)
-      * Prepare copy of argv vector for target.
-      */
-     target_argc = argc - optind;
--    target_argv = calloc(target_argc + 1, sizeof (char *));
--    if (target_argv == NULL) {
--        (void) fprintf(stderr, "Unable to allocate memory for target_argv\n");
--        exit(EXIT_FAILURE);
--    }
-+    target_argv = g_new0(char *, target_argc + 1);
- 
-     /*
-      * If argv0 is specified (using '-0' switch) we replace
--- 
-2.34.1
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
