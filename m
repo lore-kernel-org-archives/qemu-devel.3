@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54390C54E68
-	for <qemu-devel@archiver.kernel.org>; Sun, 17 Mar 2024 20:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8A5EC54E60
+	for <qemu-devel@archiver.kernel.org>; Sun, 17 Mar 2024 20:59:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rlxaN-0002Fs-Uj; Sun, 17 Mar 2024 16:58:28 -0400
+	id 1rlxaF-0002DC-Ja; Sun, 17 Mar 2024 16:58:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rlxaK-0002FU-L0
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 16:58:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rlxaD-0002CO-NP
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 16:58:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rlxaJ-0002eB-3o
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 16:58:24 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rlxaB-0002aR-S4
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 16:58:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710709102;
+ s=mimecast20190719; t=1710709095;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2/dYvsDyDFOzN5fd9fyhA5B4S0ZtJhXWR0ak14NU83A=;
- b=K6UaqosRW7DFw0IagjLsJYYAEry2PgUEQxlaATD6azyP4rST8GUD3MlZ3SQG3ceZ6nH9tv
- I4yxJ2PFberQ2h4uayJJYIteLOGw6eOLifVMQXkOOLmadvwnjKUfAUj4H97bAySP1IfAQU
- KOfi5+66+kDhyDrHwVpupHAcij0oWYc=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rBrNqzZr7Hr6AbPSVoBq/JdhO106IzGnwVAYkki9vHs=;
+ b=b91thGd7VwN+ZKN2PbQbtcZrcUdxjpnchAaSaH/GXvF1Yxe0OsaGJhAHFcyEnbBakt5lIi
+ eLr0eCfbCimtLshAtL0VMvlKzqgf6kWe4aAs3VZ5pD1dmDh5zxxdQlcuTiVLpM448b2v7L
+ 08xDKJkbJWvlvTmiOaPDidoNFAx7yrk=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-DR4brby5MneDeA9lfEib8g-1; Sun, 17 Mar 2024 16:58:20 -0400
-X-MC-Unique: DR4brby5MneDeA9lfEib8g-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-430b9ee6bfbso4063311cf.0
- for <qemu-devel@nongnu.org>; Sun, 17 Mar 2024 13:58:20 -0700 (PDT)
+ us-mta-622-dj2BnyOlOcmvkq08ABwK-g-1; Sun, 17 Mar 2024 16:58:13 -0400
+X-MC-Unique: dj2BnyOlOcmvkq08ABwK-g-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-430c76df729so3705081cf.0
+ for <qemu-devel@nongnu.org>; Sun, 17 Mar 2024 13:58:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710709100; x=1711313900;
+ d=1e100.net; s=20230601; t=1710709093; x=1711313893;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2/dYvsDyDFOzN5fd9fyhA5B4S0ZtJhXWR0ak14NU83A=;
- b=FW1e6+5y/7mwG3S/ylbtWvotXHykbeYc+lJ9B5bDkwh6bnyYOnXLAVkOy63TXnebtb
- zKC7jlv72MvAKMiZNHKJ1bvNfDFPoutB1Lk6gZKNqVtGVWjdMOm7D8gGmgAiGj7sKHsI
- K808/H8dQH82AqSCP+xrr+hWj4gawB1uNxqE5KY/1c4m3FaXDdLkNxxl9Lf+dplLcsWO
- qxK/W5kElvC52plX2yXY/jquAZ3L4jTctDOaw0L0N3bdF0TRhBECHeahrFzL5Gez876t
- +dP0JCjxHQl5AiGY4Vs26aSG089GYx/ZmQLHM6I7jod5apuAZ07Nf85pZMiadFZbENU7
- z+5w==
-X-Gm-Message-State: AOJu0YzckwzhV39F/2I1+eedgh0fgJ9kVX3QpZPvJcqo2+j+HT+mBSPM
- bnFMJEm70Yy9PWZ99MhBBis7OcJ/EiTVCqJX4zjnJon4eyRueR3io3v9QlxSEn8Zu2qLHsP5LLV
- C7pKn4e2zRM2z/ajGWoXO+qxPzbm1etnsYeZPuwOXGQetjm8JUdd7Czd4dHOtwZNHNGsn/2gTl2
- r1rTalIx60l2e2CXchkA6yRx7eDnryRsPt+g==
-X-Received: by 2002:a05:6214:3d9a:b0:691:456f:415a with SMTP id
- om26-20020a0562143d9a00b00691456f415amr12266806qvb.4.1710709100095; 
- Sun, 17 Mar 2024 13:58:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHATVsL922WTpVpieM6CBIj9hhmoIIY7wU/do2vt1iq6/Y/zKNh54++8r6oTSjtt+c05el91Q==
-X-Received: by 2002:a05:6214:3d9a:b0:691:456f:415a with SMTP id
- om26-20020a0562143d9a00b00691456f415amr12266788qvb.4.1710709099599; 
- Sun, 17 Mar 2024 13:58:19 -0700 (PDT)
+ bh=rBrNqzZr7Hr6AbPSVoBq/JdhO106IzGnwVAYkki9vHs=;
+ b=U/KPGp0vZ7m27GBgrTKsIISjMNklKbexEEYfMXUh5PIdqc/WCk71HO+A66puY1st9O
+ WCI6c3lpOywupSK38Xfgaj4LAZo+IopksHjZEOZ7V28jtmEajG4S/aLeptQiEy/RRz6H
+ JErUXRg7kFXNGNRxeyUNws5+HWo3556nCilrxAO6sIBxbb9GStB7jfip4nEcIfBrU/aT
+ gjq17erp9DA3ahkUwr0y+Qm5VpxMfIBI+kYG3prRDIGazdtzdio21xWGMz8VQACD9w+V
+ p7EcVJcaKVhNOtBPMyDLznyIOsCD1VNElVhQ7egQn4vnab+9jtTUyQYeoA2GfuNh+9lE
+ W9gA==
+X-Gm-Message-State: AOJu0Yw60+AdyH5vX15SHY62zXC9/VlkZh3miC/wl8bsuFVkHEL8TEZ3
+ HMk0I16cipvrNeiiQk0tWf7MUjUiwZpJAcemFSCZIKJLSjYvwDFZF60K197no/vQjxlwrfsY9TD
+ z2rTyPBdpcd23UcrLb0iEo0C6OdvLX+UOpO6mfmn1X8R5/dIBqlERBXW7JSW+dZiXQ4WWm0Daxm
+ Eyz2j5dw8eg61YfoxkJDOHJTruj35puuO0Lg==
+X-Received: by 2002:a05:6214:5345:b0:690:3c85:c5b with SMTP id
+ kv5-20020a056214534500b006903c850c5bmr8961136qvb.3.1710709093146; 
+ Sun, 17 Mar 2024 13:58:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2GXGuZfEQ4KPnVk3RegospeQLPcJekWOLOy2ws/e+5Wn9HY6GSrFBn9Kj8LYmk1rFwfV7Sg==
+X-Received: by 2002:a05:6214:5345:b0:690:3c85:c5b with SMTP id
+ kv5-20020a056214534500b006903c850c5bmr8961106qvb.3.1710709092510; 
+ Sun, 17 Mar 2024 13:58:12 -0700 (PDT)
 Received: from x1n.. ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- ed8-20020ad44ea8000000b00691879d7a50sm2391566qvb.115.2024.03.17.13.58.18
+ ed8-20020ad44ea8000000b00691879d7a50sm2391566qvb.115.2024.03.17.13.58.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 Mar 2024 13:58:19 -0700 (PDT)
+ Sun, 17 Mar 2024 13:58:12 -0700 (PDT)
 From: peterx@redhat.com
 To: qemu-devel@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
 Cc: Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
  peterx@redhat.com, David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 10/10] migration/multifd: Duplicate the fd for the outgoing_args
-Date: Sun, 17 Mar 2024 16:58:03 -0400
-Message-ID: <20240317205803.361163-11-peterx@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 04/10] physmem: Factor cpu_physical_memory_dirty_bits_cleared()
+ out
+Date: Sun, 17 Mar 2024 16:57:57 -0400
+Message-ID: <20240317205803.361163-5-peterx@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240317205803.361163-1-peterx@redhat.com>
 References: <20240317205803.361163-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,60 +107,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-We currently store the file descriptor used during the main outgoing
-channel creation to use it again when creating the multifd
-channels.
-
-Since this fd is used for the first iochannel, there's risk that the
-QIOChannel gets freed and the fd closed while outgoing_args.fd still
-has it available. This could lead to an fd-reuse bug.
-
-Duplicate the outgoing_args fd to avoid this issue.
-
-Suggested-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20240315032040.7974-3-farosas@suse.de
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240219061731.232570-1-npiggin@gmail.com>
+[PMD: Split patch in 2: part 1/2]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20240312201458.79532-3-philmd@linaro.org
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/fd.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ include/exec/ram_addr.h | 9 +++++++++
+ system/physmem.c        | 8 +++-----
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/migration/fd.c b/migration/fd.c
-index c07030f715..fe0d096abd 100644
---- a/migration/fd.c
-+++ b/migration/fd.c
-@@ -49,8 +49,7 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
- {
-     QIOChannel *ioc;
-     int fd = monitor_get_fd(monitor_cur(), fdname, errp);
--
--    outgoing_args.fd = -1;
-+    int newfd;
+diff --git a/include/exec/ram_addr.h b/include/exec/ram_addr.h
+index 90676093f5..b060ea9176 100644
+--- a/include/exec/ram_addr.h
++++ b/include/exec/ram_addr.h
+@@ -25,6 +25,7 @@
+ #include "sysemu/tcg.h"
+ #include "exec/ramlist.h"
+ #include "exec/ramblock.h"
++#include "exec/exec-all.h"
  
-     if (fd == -1) {
-         return;
-@@ -63,7 +62,17 @@ void fd_start_outgoing_migration(MigrationState *s, const char *fdname, Error **
-         return;
+ extern uint64_t total_dirty_pages;
+ 
+@@ -443,6 +444,14 @@ uint64_t cpu_physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+ }
+ #endif /* not _WIN32 */
+ 
++static inline void cpu_physical_memory_dirty_bits_cleared(ram_addr_t start,
++                                                          ram_addr_t length)
++{
++    if (tcg_enabled()) {
++        tlb_reset_dirty_range_all(start, length);
++    }
++
++}
+ bool cpu_physical_memory_test_and_clear_dirty(ram_addr_t start,
+                                               ram_addr_t length,
+                                               unsigned client);
+diff --git a/system/physmem.c b/system/physmem.c
+index 5441480ff0..a4fe3d2bf8 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -881,8 +881,8 @@ bool cpu_physical_memory_test_and_clear_dirty(ram_addr_t start,
+         memory_region_clear_dirty_bitmap(ramblock->mr, mr_offset, mr_size);
      }
  
--    outgoing_args.fd = fd;
-+    /*
-+     * This is dup()ed just to avoid referencing an fd that might
-+     * be already closed by the iochannel.
-+     */
-+    newfd = dup(fd);
-+    if (newfd == -1) {
-+        error_setg_errno(errp, errno, "Could not dup FD %d", fd);
-+        object_unref(ioc);
-+        return;
-+    }
-+    outgoing_args.fd = newfd;
+-    if (dirty && tcg_enabled()) {
+-        tlb_reset_dirty_range_all(start, length);
++    if (dirty) {
++        cpu_physical_memory_dirty_bits_cleared(start, length);
+     }
  
-     qio_channel_set_name(ioc, "migration-fd-outgoing");
-     migration_channel_connect(s, ioc, NULL, NULL);
+     return dirty;
+@@ -929,9 +929,7 @@ DirtyBitmapSnapshot *cpu_physical_memory_snapshot_and_clear_dirty
+         }
+     }
+ 
+-    if (tcg_enabled()) {
+-        tlb_reset_dirty_range_all(start, length);
+-    }
++    cpu_physical_memory_dirty_bits_cleared(start, length);
+ 
+     memory_region_clear_dirty_bitmap(mr, offset, length);
+ 
 -- 
 2.44.0
 
