@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A0FC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 10:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EBCBC54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 10:03:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm9pp-0007b7-15; Mon, 18 Mar 2024 06:03:13 -0400
+	id 1rm9qH-0007xC-6Q; Mon, 18 Mar 2024 06:03:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rm9pm-0007Z3-8A
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:03:11 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1rm9qA-0007wp-W6
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:03:35 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rm9pk-0005Lp-Sk
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:03:10 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a46c2f29325so71413266b.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 03:03:07 -0700 (PDT)
+ id 1rm9q7-0005Pa-Rg
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:03:33 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a44665605f3so454950266b.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 03:03:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710756186; x=1711360986; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710756210; x=1711361010; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hpPm2FRiZFZHJaDq+VXiDxmYT7rGoMt2aSaMaCV4GBg=;
- b=rXWdVyBZ32JIhKy4IWlRDJNQ8pW4YI/rAio/UmLeTgJ9624n+T/A3Y8EwwlBHMKWIy
- TmmSV3vcmP5yEyIkT9bYlhBw6QfWoZ8SO15fiXBVMsCbSPB+fz7cf5JZjzP7SbWR+zSF
- GUqkpQwpbks+f0HILl9UG4/LBh/hxKcSJIRL/h43ZUCzNNg9NNUlQUwAZKTIPD/Dh88p
- L5KimP1QJG4J0BsUf6hHB0Y/9mHvgcp/KtJIm04urVcDlMTXWucRX2/h44ppfTMprqgm
- kksJqCXumRL2Fq1l9jNsZ7JMg/GEDhEy1CosPcBlQDunC6nhGTphCjBZab8xcdb9cLkX
- nNzw==
+ bh=nUQpIw0J7gYJntdrF3+fYQvrBvEG+S/20aOM1DWuFCc=;
+ b=alDI3jd5CH/OAyNX2SP5M7HkwfV8PmsuqFQ7Xp9Hgorc5w/o3g7F7neQuD6YNSkDiE
+ OlRIS/dwVL4BDlTvbxDQNlVIccIx9a6OrkMAztgDHtCTkrTB2ZBxDAL/SBx3y8V19+qn
+ GiPMbyS7SIe9cr6XloslErPqx7Il7wP2PhTH9Ja7NenhXmpPm+Zx1iOcNuSdCzpb7TX4
+ cwlR9/bYOcHkJ9XyhgFvs8h2sgNpsnJ7UboHDzWjxPGB49RaeZqB6UDD1gwqMrZnGpU4
+ Ie3rXAvidOVNtdYMIncBWx1MZ/PwaCKgd/x/47sowuZNYdZTcFsZuy+p7V56HjpTk1zv
+ zEyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710756186; x=1711360986;
+ d=1e100.net; s=20230601; t=1710756210; x=1711361010;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hpPm2FRiZFZHJaDq+VXiDxmYT7rGoMt2aSaMaCV4GBg=;
- b=pj4W+c/KYKINNq7vHpyLgEHYMQy20voMXUr5hKAHsqac+b4yedB4fIjg5jpdJCJ7wL
- DhdtovMLlRI+YbQtK1ccB+pgktsFKXqpVu7hOdeS8Lqcs3DiFWpn3TdC5RWSc8ZLRF5w
- zzqZuuiZOErC6Nc5Aa8HGY9sWkziC06DLEqbA5b2rwn2I63L2VchL/djOfY+dbZbvuys
- vREytP3vFQbcmRfAkBmkbd7IWppVFwqIk25XRB6gK6esdcdogevtnxOdvh/yiFGjplAX
- 0tEZTa6csVG9yV6oE7l2EN3swq08vDtx0v+FnkxdrzXP8J9Mu8zyh3+3sNsqt24ona3W
- c4Eg==
-X-Gm-Message-State: AOJu0YwNnrEbMQlwTkP2Z9PvfTSjsHgN6kd3rkmRX+QM34TWcGIcz1Cq
- UajliZm7P+spB8iq6fZr0iX0bMz4tgjZOhoOqlvuRISm1DF+I74OyTIPLCCY3Df6yVz/fzeKPTd
- D
-X-Google-Smtp-Source: AGHT+IFWQh2bBygpz9o+hrYhkYi9DrroWLs0OewzaDwc8kiFlyu2kEHdAmLzLwRE3jukfCU0HzaCyQ==
-X-Received: by 2002:a17:906:7304:b0:a46:c8e2:40f6 with SMTP id
- di4-20020a170906730400b00a46c8e240f6mr1038236ejc.1.1710756185857; 
- Mon, 18 Mar 2024 03:03:05 -0700 (PDT)
+ bh=nUQpIw0J7gYJntdrF3+fYQvrBvEG+S/20aOM1DWuFCc=;
+ b=VK2hADapotIrB7ArcSu5YDPQjAkwGtGdQVQAVCKweDYXXArNk67/Eo2WgK7DL4oD3u
+ I57y14SKCJTKQQJSi3MoeE8wEXTqVaP7zbsAjigxqAu2zSMFjVjFfdHQc7LNrF8cuQ5W
+ FxBzXtNnUbu5H+iENlpTvgt2dIYiP6/2igGasFeVmEltsiF12LsO+2sxEeue2gPukdx3
+ 7TYzY1nPN4E9VG4HJ1+FNsfF6kCJBqGGD8mq1Dt8hhs1Vu1Gmr6SqvyWhb0VUbg+T/Wj
+ L+RAyZY4Tp0xCwplyfy+qJDojBx0YFZYxAZY6F/5UUx+Tiu5TQs0DAmjmHaj8AEJvqy7
+ Og4g==
+X-Gm-Message-State: AOJu0Yzl1+IzOuOuNkwLLQ3l2JPmC0aR+PCi5PBNU+cbGdOlzwWiAspf
+ MbmHhge9kGGizdiKyabdmTLXLCRBW41boSqvAa36E7kXLX3Q6aoAsvKscPKNsbc=
+X-Google-Smtp-Source: AGHT+IEgNnAmyKaj7MOcboByXYk+emFZUioDsiVtGhca5Pr/0j9ZlEKChesQqV+VKYgftZvmbG9gpg==
+X-Received: by 2002:a17:907:7e8e:b0:a46:ade5:7e67 with SMTP id
+ qb14-20020a1709077e8e00b00a46ade57e67mr3587135ejc.22.1710756210031; 
+ Mon, 18 Mar 2024 03:03:30 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- lm9-20020a170906980900b00a46c0191306sm840347ejb.213.2024.03.18.03.03.05
+ dl5-20020a170907944500b00a46ada81f1bsm1974362ejc.124.2024.03.18.03.03.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 03:03:05 -0700 (PDT)
+ Mon, 18 Mar 2024 03:03:29 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3FB955F7DF;
- Mon, 18 Mar 2024 10:03:05 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 707F85F7DF;
+ Mon, 18 Mar 2024 10:03:29 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
-Subject: Re: [PATCH 02/22] tcg: Make tcg/helper-info.h self-contained
-In-Reply-To: <20240316015720.3661236-3-richard.henderson@linaro.org> (Richard
- Henderson's message of "Fri, 15 Mar 2024 15:57:00 -1000")
+Subject: Re: [PATCH 04/22] plugins: Zero new qemu_plugin_dyn_cb entries
+In-Reply-To: <20240316015720.3661236-5-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Fri, 15 Mar 2024 15:57:02 -1000")
 References: <20240316015720.3661236-1-richard.henderson@linaro.org>
- <20240316015720.3661236-3-richard.henderson@linaro.org>
+ <20240316015720.3661236-5-richard.henderson@linaro.org>
 User-Agent: mu4e 1.12.2; emacs 29.2
-Date: Mon, 18 Mar 2024 10:03:05 +0000
-Message-ID: <87cyrroo12.fsf@draig.linaro.org>
+Date: Mon, 18 Mar 2024 10:03:29 +0000
+Message-ID: <877chzoo0e.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,27 +100,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Richard Henderson <richard.henderson@linaro.org> writes:
 
-> Move MAX_CALL_IARGS from tcg.h and include for
-> the define of TCG_TARGET_REG_BITS.
->
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-This may have broken TCI:
-
-../tcg/tci.c: In function 'tcg_qemu_tb_exec':
-../tcg/tci.c:391:34: error: 'MAX_CALL_IARGS' undeclared (first use in this =
-function)
-  391 |                 void *call_slots[MAX_CALL_IARGS];
-      |                                  ^~~~~~~~~~~~~~
-../tcg/tci.c:391:34: note: each undeclared identifier is reported only once=
- for each function it appears in
-../tcg/tci.c:391:23: error: unused variable 'call_slots' [-Werror=3Dunused-=
-variable]
-  391 |                 void *call_slots[MAX_CALL_IARGS];
-      |                       ^~~~~~~~~~
-cc1: all warnings being treated as errors
-
-the gift that keeps on giving ;-)
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
