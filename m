@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17B78C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 08:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73409C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 08:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm8Bn-0003Yu-Md; Mon, 18 Mar 2024 04:17:48 -0400
+	id 1rm8FQ-0005ZO-5y; Mon, 18 Mar 2024 04:21:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rm8Bh-0003YC-S7; Mon, 18 Mar 2024 04:17:41 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rm8Bf-0003sZ-5k; Mon, 18 Mar 2024 04:17:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710749859; x=1742285859;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=Gp5/N3Kgd9u6t4pstjSRJF2QxivLRDeeRMPxXHWN/cY=;
- b=IVCxkKpHRNb4HDuf8N+HNRtySCNVCFC51LNUOQUkhUBdVyyJI7KQeyS6
- 5sPsnHd+Vj/URhSH648aPmQhF9X7mkfabVI93ZUTzeU7PdgmKYQTdfzQk
- 8nEnW/RggBXOGqMBm303PvhcT9GQfqC7y/PLvP3pvzZ8RTdghrD+/Bl9H
- pjnY/5/3q+wUuJTdxIMXUgHoFX+fufkHOY2lB97eayWCXBLZo3fb3nMYf
- zOiSp9lzEPIDI1hDZnDRpAnXrgTPPSNisYtgFIv+t3inkK3zs4UOSu4mp
- nIMN32cXjySeEmZFO3vddu4MNbe/yGprymotqF7zU5wnzyGwyHY8Wd0Un Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="16271090"
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; d="scan'208";a="16271090"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2024 01:17:33 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; d="scan'208";a="14034331"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 18 Mar 2024 01:17:28 -0700
-Date: Mon, 18 Mar 2024 16:31:19 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Claudio Fontana <cfontana@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [PATCH-for-9.1 05/21] cpus: Open code OBJECT_DECLARE_TYPE() in
- OBJECT_DECLARE_CPU_TYPE()
-Message-ID: <Zff71/46jLOGz9XO@intel.com>
-References: <20240315130910.15750-1-philmd@linaro.org>
- <20240315130910.15750-6-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rm8FO-0005YT-Oc
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 04:21:30 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rm8FM-0004UV-3l
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 04:21:29 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-609f359b7b1so48048917b3.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 01:21:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710750087; x=1711354887; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mpW87qs8sCFW9zaApb8r9nhQGYa10Pb87TZFSlWWg/8=;
+ b=B5frSuRehXBfU/yWPB/Wg/MPL8Jbd6Eoi8KjWX5GkTIN0ozNKqTWxCa8p88ghAjVLW
+ JoShvYFDEg06RWdA9W2kmd6dfrODzrNjg8HtmZpHmpyb1Lt6mFsYGoqtbL/NNTHFU+5H
+ kmMmo1OQuXVN0aMmpurAztzfc4MiXUt1Dz6mETVMcWv0Sgp0hHRs0icr5Lrg7X3LW/ZZ
+ K+TU+2IxblVhSt4jiVH9HUGh8YTRs6SM4s6x7/5euHBKK0uznYUIVMqgnhvHlV0gmEmX
+ 9nBrH9FORVbNAfhO1USQCPT6yomVheLIlDq1tRl4LF1xFtWsTrCM8mZmw6owjeKyl2xR
+ B5FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710750087; x=1711354887;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mpW87qs8sCFW9zaApb8r9nhQGYa10Pb87TZFSlWWg/8=;
+ b=vfU4vtxnZiAB0wh9Vy3+jib9QqB2gsNTesk8IgGMTHiYDjjiZ9jIWCvDGm9A4bV6bB
+ eswIPPVpkt2pecRIaccio46TInK+BWra2WkEvjZB82n2B3nrfrndAf0xPKBLCzwkMC1j
+ Cu6CvBPxJMbGat/Rv6T+92kbOCcTVZAbwRhNzg2qS8kMuvSx3vDLMvBZ0nQ7xYz9UGvK
+ m8rrajc0R8jDJi4QCofgtKm9jg7bHJK0OZVigylgsJXYnPi5vuCq5caOn0o547OwezW7
+ wjR5/io2MpDrBrP4aA4MEmi+J3m1ZSFBGnopzD7MAu4oCuwidf8KhLwslOZji67ZsGeU
+ z5hA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5PGYqIiynYJhBDb3or29h1WdGE2G/DVsg22Fg10A2Hphn3SYzPjGL8Emcldcbgd6CKwWdEBspNITl5pT+H3mJOo2pTPs=
+X-Gm-Message-State: AOJu0Yx/lJK26XEyl8EJitOmAw8NpuyRx5o4vNuOb6KbAh6EtprFeQGN
+ b/4DOvJn0QtwA4krD/hqktrD5yfO3IwXyoRncloa/JzohDailCDxVECZmkGLBp6c+xIpjgQryGr
+ pHWusxN8BZGXjT+uNkLBND8U2K6M=
+X-Google-Smtp-Source: AGHT+IG0BkkwrTbbd09x9m7znUyvQZmXWNLo6bIqo3gK+KzT2u8iZzq6LSwITy9vlFiRNyDOi6WgpF+3ErSIxpIZYN4=
+X-Received: by 2002:a0d:c542:0:b0:60f:9c31:e8a4 with SMTP id
+ h63-20020a0dc542000000b0060f9c31e8a4mr7451094ywd.41.1710750086888; Mon, 18
+ Mar 2024 01:21:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240315130910.15750-6-philmd@linaro.org>
-Received-SPF: none client-ip=192.198.163.9;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20240318-console-v1-0-f4efbfa71253@daynix.com>
+ <20240318-console-v1-2-f4efbfa71253@daynix.com>
+In-Reply-To: <20240318-console-v1-2-f4efbfa71253@daynix.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 18 Mar 2024 12:21:16 +0400
+Message-ID: <CAJ+F1C+PipwudTRDF=BFJyqVkw0ORwpnXfumQ=kUadtf0HEfVA@mail.gmail.com>
+Subject: Re: [PATCH 2/4] ui/vnc: Do not use console_select()
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,104 +94,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe,
+Hi
 
-On Fri, Mar 15, 2024 at 02:08:53PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Fri, 15 Mar 2024 14:08:53 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH-for-9.1 05/21] cpus: Open code OBJECT_DECLARE_TYPE() in
->  OBJECT_DECLARE_CPU_TYPE()
-> X-Mailer: git-send-email 2.41.0
-> 
-> Since the OBJECT_DECLARE_CPU_TYPE() macro uses the abstract ArchCPU
-> type, when declaring multiple CPUs of the same ArchCPU type we get
-> an error related to the indirect G_DEFINE_AUTOPTR_CLEANUP_FUNC()
-> use within OBJECT_DECLARE_TYPE():
-> 
->   target/mips/cpu-qom.h:31:1: error: redefinition of 'glib_autoptr_clear_ArchCPU'
->   OBJECT_DECLARE_CPU_TYPE(MIPS64CPU, MIPSCPUClass, MIPS64_CPU)
->   ^
->   include/hw/core/cpu.h:82:5: note: expanded from macro 'OBJECT_DECLARE_CPU_TYPE'
->       OBJECT_DECLARE_TYPE(ArchCPU, CpuClassType, CPU_MODULE_OBJ_NAME);
->       ^
->   include/qom/object.h:237:5: note: expanded from macro 'OBJECT_DECLARE_TYPE'
->       G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
->       ^
->   /usr/include/glib-2.0/glib/gmacros.h:1371:3: note: expanded from macro 'G_DEFINE_AUTOPTR_CLEANUP_FUNC'
->     _GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS(TypeName, TypeName, func)
->     ^
->   /usr/include/glib-2.0/glib/gmacros.h:1354:36: note: expanded from macro '_GLIB_DEFINE_AUTOPTR_CLEANUP_FUNCS'
->     static G_GNUC_UNUSED inline void _GLIB_AUTOPTR_CLEAR_FUNC_NAME(TypeName) (TypeName *_ptr)                     \
->                                      ^
->   /usr/include/glib-2.0/glib/gmacros.h:1338:49: note: expanded from macro '_GLIB_AUTOPTR_CLEAR_FUNC_NAME'
->   #define _GLIB_AUTOPTR_CLEAR_FUNC_NAME(TypeName) glib_autoptr_clear_##TypeName
->                                                   ^
->   <scratch space>:54:1: note: expanded from here
->   glib_autoptr_clear_ArchCPU
->   ^
->   target/mips/cpu-qom.h:30:1: note: previous definition is here
->   OBJECT_DECLARE_CPU_TYPE(MIPS32CPU, MIPSCPUClass, MIPS32_CPU)
->   ^
-> 
-> Avoid that problem by expanding the OBJECT_DECLARE_TYPE() macro
-> within OBJECT_DECLARE_CPU_TYPE().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Acked-by: Richard Henderson <richard.henderson@linaro.org>
+On Mon, Mar 18, 2024 at 11:58=E2=80=AFAM Akihiko Odaki <akihiko.odaki@dayni=
+x.com> wrote:
+>
+> console_select() is shared by other displays and a console_select() call
+> from one of them triggers console switching also in ui/curses,
+> circumventing key state reinitialization that needs to be performed in
+> preparation and resulting in stuck keys.
+>
+> Use its internal state to track the current active console to prevent
+> such a surprise console switch.
+>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
-> TODO: check rth comment:
-> What about adding an OBJECT_DECLARE_CPU_SUBTYPE that omits half the stuff instead?
-> We don't need another object typedef at all, for instance.
-> ---
->  include/hw/core/cpu.h | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index ec14f74ce5..4c2e5095bf 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -78,7 +78,12 @@ DECLARE_CLASS_CHECKERS(CPUClass, CPU,
+>  include/ui/console.h   |  1 +
+>  include/ui/kbd-state.h | 11 +++++++++++
+>  ui/console.c           | 12 ++++++++++++
+>  ui/kbd-state.c         |  6 ++++++
+>  ui/vnc.c               | 14 +++++++++-----
+>  5 files changed, 39 insertions(+), 5 deletions(-)
+>
+> diff --git a/include/ui/console.h b/include/ui/console.h
+> index a4a49ffc640c..a703f7466499 100644
+> --- a/include/ui/console.h
+> +++ b/include/ui/console.h
+> @@ -413,6 +413,7 @@ void qemu_console_early_init(void);
+>
+>  void qemu_console_set_display_gl_ctx(QemuConsole *con, DisplayGLCtx *ctx=
+);
+>
+> +QemuConsole *qemu_console_lookup_first_graphic_console(void);
+>  QemuConsole *qemu_console_lookup_by_index(unsigned int index);
+>  QemuConsole *qemu_console_lookup_by_device(DeviceState *dev, uint32_t he=
+ad);
+>  QemuConsole *qemu_console_lookup_by_device_name(const char *device_id,
+> diff --git a/include/ui/kbd-state.h b/include/ui/kbd-state.h
+> index fb79776128cf..1f37b932eb62 100644
+> --- a/include/ui/kbd-state.h
+> +++ b/include/ui/kbd-state.h
+> @@ -99,4 +99,15 @@ bool qkbd_state_modifier_get(QKbdState *kbd, QKbdModif=
+ier mod);
 >   */
->  #define OBJECT_DECLARE_CPU_TYPE(CpuInstanceType, CpuClassType, CPU_MODULE_OBJ_NAME) \
->      typedef struct ArchCPU CpuInstanceType; \
-> -    OBJECT_DECLARE_TYPE(ArchCPU, CpuClassType, CPU_MODULE_OBJ_NAME);
-> +    typedef struct CpuClassType CpuClassType; \
-> +    \
-> +    G_DEFINE_AUTOPTR_CLEANUP_FUNC(CpuInstanceType, object_unref) \
-> +    \
-> +    DECLARE_OBJ_CHECKERS(CpuInstanceType, CpuClassType, \
-> +                         CPU_MODULE_OBJ_NAME, TYPE_##CPU_MODULE_OBJ_NAME)
+>  void qkbd_state_lift_all_keys(QKbdState *kbd);
+>
+> +/**
+> + * qkbd_state_switch_console: Switch console.
+> + *
+> + * This sends key up events to the previous console for all keys which a=
+re in
+> + * down state to prevent keys being stuck, and remembers the new console=
+.
+> + *
+> + * @kbd: state tracker state.
+> + * @con: new QemuConsole for this state tracker.
+> + */
+> +void qkbd_state_switch_console(QKbdState *kbd, QemuConsole *con);
+> +
+>  #endif /* QEMU_UI_KBD_STATE_H */
+> diff --git a/ui/console.c b/ui/console.c
+> index 832055675c50..6bf02a23414c 100644
+> --- a/ui/console.c
+> +++ b/ui/console.c
+> @@ -1325,6 +1325,18 @@ void graphic_console_close(QemuConsole *con)
+>      dpy_gfx_replace_surface(con, surface);
+>  }
+>
+> +QemuConsole *qemu_console_lookup_first_graphic_console(void)
+> +{
+> +    QemuConsole *con;
+> +
+> +    QTAILQ_FOREACH(con, &consoles, next) {
+> +        if (QEMU_IS_GRAPHIC_CONSOLE(con)) {
+> +            return con;
+> +        }
+> +    }
+> +    return NULL;
+> +}
+> +
+>  QemuConsole *qemu_console_lookup_by_index(unsigned int index)
+>  {
+>      QemuConsole *con;
+> diff --git a/ui/kbd-state.c b/ui/kbd-state.c
+> index 62d42a7a22e1..52ed28b8a89b 100644
+> --- a/ui/kbd-state.c
+> +++ b/ui/kbd-state.c
+> @@ -117,6 +117,12 @@ void qkbd_state_lift_all_keys(QKbdState *kbd)
+>      }
+>  }
+>
+> +void qkbd_state_switch_console(QKbdState *kbd, QemuConsole *con)
+> +{
+> +    qkbd_state_lift_all_keys(kbd);
+> +    kbd->con =3D con;
+> +}
+> +
+>  void qkbd_state_set_delay(QKbdState *kbd, int delay_ms)
+>  {
+>      kbd->key_delay_ms =3D delay_ms;
+> diff --git a/ui/vnc.c b/ui/vnc.c
+> index fc12b343e254..94564b196ba8 100644
+> --- a/ui/vnc.c
+> +++ b/ui/vnc.c
+> @@ -1872,12 +1872,16 @@ static void do_key_event(VncState *vs, int down, =
+int keycode, int sym)
+>      /* QEMU console switch */
+>      switch (qcode) {
+>      case Q_KEY_CODE_1 ... Q_KEY_CODE_9: /* '1' to '9' keys */
+> -        if (vs->vd->dcl.con =3D=3D NULL && down &&
+> +        if (down &&
+>              qkbd_state_modifier_get(vs->vd->kbd, QKBD_MOD_CTRL) &&
+>              qkbd_state_modifier_get(vs->vd->kbd, QKBD_MOD_ALT)) {
+> -            /* Reset the modifiers sent to the current console */
+> -            qkbd_state_lift_all_keys(vs->vd->kbd);
+> -            console_select(qcode - Q_KEY_CODE_1);
+> +            QemuConsole *con =3D qemu_console_lookup_by_index(qcode - Q_=
+KEY_CODE_1);
+> +            if (con) {
+> +                unregister_displaychangelistener(&vs->vd->dcl);
+> +                qkbd_state_switch_console(vs->vd->kbd, con);
+> +                vs->vd->dcl.con =3D con;
+> +                register_displaychangelistener(&vs->vd->dcl);
+> +            }
+>              return;
+>          }
+>      default:
+> @@ -4206,7 +4210,7 @@ void vnc_display_open(const char *id, Error **errp)
+>              goto fail;
+>          }
+>      } else {
+> -        con =3D NULL;
+> +        con =3D qemu_console_lookup_first_graphic_console();
+
+why this change here?
+
+otherwise, lgtm
+
+>      }
+>
+>      if (con !=3D vd->dcl.con) {
+>
+> --
+> 2.44.0
+>
 >
 
-The OBJECT_DECLARE_TYPE is expaneded as the following:
 
-#define OBJECT_DECLARE_TYPE(InstanceType, ClassType, MODULE_OBJ_NAME) \
-    typedef struct InstanceType InstanceType; \
-    typedef struct ClassType ClassType; \
-    \
-    G_DEFINE_AUTOPTR_CLEANUP_FUNC(InstanceType, object_unref) \
-    \
-    DECLARE_OBJ_CHECKERS(InstanceType, ClassType, \
-                         MODULE_OBJ_NAME, TYPE_##MODULE_OBJ_NAME)
-
-So the above code change deletes a typedef:
-
-    typedef struct ArchCPU ArchCPU;
-
-Will this deletion break the direct uses of ArchCPU? e.g., in
-accel/tcg/translator.c:
-
-static void set_can_do_io(DisasContextBase *db, bool val)
-{
-    if (db->saved_can_do_io != val) {
-        ...
-        tcg_gen_st8_i32(tcg_constant_i32(val), tcg_env,
-                        offsetof(ArchCPU, parent_obj.neg.can_do_io) -
-                        offsetof(ArchCPU, env));
-    }
-}
-
-Thanks,
-Zhao
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
