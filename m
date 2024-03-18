@@ -4,59 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D63C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 14:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2541CC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 14:12:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmDfA-0001Vk-5P; Mon, 18 Mar 2024 10:08:28 -0400
+	id 1rmDik-0004vw-J8; Mon, 18 Mar 2024 10:12:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rmDez-0001TQ-W6; Mon, 18 Mar 2024 10:08:18 -0400
-Received: from muminek.juszkiewicz.com.pl ([213.251.184.221])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rmDet-0006Fo-C5; Mon, 18 Mar 2024 10:08:16 -0400
-Received: from localhost (localhost [127.0.0.1])
- by muminek.juszkiewicz.com.pl (Postfix) with ESMTP id 8A950260CC8;
- Mon, 18 Mar 2024 15:08:07 +0100 (CET)
-X-Virus-Scanned: Debian amavis at juszkiewicz.com.pl
-Received: from muminek.juszkiewicz.com.pl ([127.0.0.1])
- by localhost (muminek.juszkiewicz.com.pl [127.0.0.1]) (amavis, port 10024)
- with ESMTP id WnRG1pdPX_zP; Mon, 18 Mar 2024 15:08:05 +0100 (CET)
-Received: from [172.17.0.1] (83.11.22.169.ipv4.supernova.orange.pl
- [83.11.22.169])
- by muminek.juszkiewicz.com.pl (Postfix) with ESMTPSA id 7367C2600DA;
- Mon, 18 Mar 2024 15:08:04 +0100 (CET)
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Subject: [PATCH v3 0/4] tests/avocado: update sbsa-ref firmware to latest
-Date: Mon, 18 Mar 2024 15:08:00 +0100
-Message-Id: <20240318-sbsa-ref-firmware-update-v3-0-1c33b995a538@linaro.org>
+ (Exim 4.90_1) (envelope-from <jackmanb@google.com>)
+ id 1rmDiI-0004o1-FX
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:11:45 -0400
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jackmanb@google.com>)
+ id 1rmDiF-0006x4-L4
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:11:42 -0400
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-42ee0c326e8so419521cf.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 07:11:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1710771097; x=1711375897; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=rU3zFykgVuweueIsoxzQMtKYDDN5Bjw0bqJ5bY+qA6E=;
+ b=2VQxD3qHFIJQkowAhJC1QwpdtzBbzkRMbWmfT+Llpxq1RCsgqc/gdkbNEY5juLyqob
+ V2gxXJ1ReHKk7wFQuPoxf+UxEVd9UzCgYQbC2t7bqc8a90FFoh+QY5SgFkR3JcTihVJj
+ Y24qmxe43/KLOOwL1Be96qCwMe3454mZtaZeV/+R5+jjMyYB98gMCjHC45QTEj5Hvjay
+ 8dbhcHl6lqbWgyZRmLsTND2C/tbmJ5GDRFlPwHfHL5Z9rEBA60aNn4a44KXtlhbtsGrV
+ W82YQ3F35gyYT48kwDyDn0ncHUgFlwyM2kIbS5dmgL3817VD2kWiW0Jyb1BXfoqKdpNN
+ imxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710771097; x=1711375897;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rU3zFykgVuweueIsoxzQMtKYDDN5Bjw0bqJ5bY+qA6E=;
+ b=QknSoIf8OxnaZGIvUQum83FpvwwSnC6y/QE9FZvOFKqVuIfL4RggvG0kiPvNJcIr4D
+ VLSINdLbpNcF0KDF8VJPmRPQPy8laJAQ8FMeuIlPuNm3u4irqR6lhzpoCtUaZQbI9LgD
+ 1QhWRpjgL5iaI3zzpJSmI0kUKE9op1jLJrx9Hi88lfYO/D5sBn6usqrS0tpAaB75vhs6
+ 90zoAqa/uOjCMFTJAhSo8qpi4ZIdDnIp4DqgkmLLRjUB+2yEwWGGmEGv1/lkFUp4ZnzY
+ /gP8y/zTTHvI08niP/pXz67NhnrYtomFK0LdYJ/PrKCEVecO6tYuvgj6KgN/aVoqnxsE
+ TthA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1PcarUgxQcAkq209/ziDzgOY097f4GZL6hGT3BdMUhsmN9yMmy5QE1d6R5IMmY5pZ+Vg/2Prc+4CjEdz+KADoxhOf0VM=
+X-Gm-Message-State: AOJu0YxOSQ15T2Z/FGNFjdtsaguZmjWrbP1+TtmyzeF17XGRCQF8rCua
+ 04K2e0jdIriFpK+vwGPceUJOFjPOKv5OX0TlFMOvREr+BnAhs+RdxToD+qzJjvatc6FCTnwQOnB
+ LR+UVuEocLfyYdaoT0YCff9zHlgGOwi4X0wj7
+X-Google-Smtp-Source: AGHT+IEP1eDBtV9wwG22o9FLtfUkcC57ZS5hhvLcQHaosamz9mFsDACdCEemZgZ1KW9i0+WwUAZxZDxm/IPXpyAyIxs=
+X-Received: by 2002:ac8:57cd:0:b0:430:9ee1:a8 with SMTP id
+ w13-20020ac857cd000000b004309ee100a8mr330194qta.3.1710771097539; 
+ Mon, 18 Mar 2024 07:11:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAMBK+GUC/43NSw7CIBCA4asY1o7hTXDlPYwLCrQl0dJARU3Tu
- 0u70o1x+U9mvplR9in4jI67GSVfQg5xqMH2O2R7M3QegquNKKYcM8IgN9lA8i20Id0eJnm4j85
- MHpRQ2ulWOqEbVM/HuhSeG32+1O5DnmJ6bZ8KWad/oIUABk+kVJhZwSk/XcNgUjzE1KFVLfRT4
- j8kWqVGCGWFFEJb9yUty/IGeDTaXQsBAAA=
-To: qemu-devel@nongnu.org
-Cc: Radoslaw Biernacki <rad@semihalf.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Leif Lindholm <quic_llindhol@quicinc.com>, Cleber Rosa <crosa@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>, 
- Beraldo Leal <bleal@redhat.com>, Brad Smith <brad@comstyle.com>, 
- qemu-arm@nongnu.org, Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-X-Mailer: b4 0.12.3
-Received-SPF: softfail client-ip=213.251.184.221;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=muminek.juszkiewicz.com.pl
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+References: <cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com>
+ <CA+i-1C34VT5oFQL7en1n+MdRrO7AXaAMdNVvjFPxOaTDGXu9Dw@mail.gmail.com>
+ <CALzav=fO2hpaErSRHGCJCKTrJKD7b9F5oEg7Ljhb0u1gB=VKwg@mail.gmail.com>
+ <8e3c2b45-356d-4ca9-bebc-012505235142@amazon.com>
+In-Reply-To: <8e3c2b45-356d-4ca9-bebc-012505235142@amazon.com>
+From: Brendan Jackman <jackmanb@google.com>
+Date: Mon, 18 Mar 2024 15:11:25 +0100
+Message-ID: <CA+i-1C3DtXzzkatepVvn-E45Gyxb3YmYd-irxfjDL5bL5MhWVA@mail.gmail.com>
+Subject: Re: Unmapping KVM Guest Memory from Host Kernel
+To: "Manwaring, Derek" <derekmn@amazon.com>
+Cc: David Matlack <dmatlack@google.com>, "Gowans, James" <jgowans@amazon.com>, 
+ "seanjc@google.com" <seanjc@google.com>,
+ "akpm@linux-foundation.org" <akpm@linux-foundation.org>, 
+ "Roy, Patrick" <roypat@amazon.co.uk>, 
+ "chao.p.peng@linux.intel.com" <chao.p.peng@linux.intel.com>,
+ "rppt@kernel.org" <rppt@kernel.org>, 
+ "pbonzini@redhat.com" <pbonzini@redhat.com>, "Woodhouse,
+ David" <dwmw@amazon.co.uk>, "Kalyazin, Nikita" <kalyazin@amazon.co.uk>,
+ "lstoakes@gmail.com" <lstoakes@gmail.com>, 
+ "Liam.Howlett@oracle.com" <Liam.Howlett@oracle.com>,
+ "linux-mm@kvack.org" <linux-mm@kvack.org>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>,
+ "vbabka@suse.cz" <vbabka@suse.cz>, 
+ "mst@redhat.com" <mst@redhat.com>, "somlo@cmu.edu" <somlo@cmu.edu>, "Graf (AWS),
+ Alexander" <graf@amazon.de>, "kvm@vger.kernel.org" <kvm@vger.kernel.org>, 
+ "linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
+ kvmarm@lists.linux.dev, tabba@google.com, 
+ qperret@google.com, jason.cj.chen@intel.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=jackmanb@google.com; helo=mail-qt1-x829.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,67 +111,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Updating sbsa-ref firmware for QEMU CI was manual task. Now it is
-replaced by CI job run on CodeLinaro Gitlab instance.
+On Fri, 8 Mar 2024 at 18:36, David Matlack <dmatlack@google.com> wrote:
+> I'm not sure if ASI provides a solution to the problem James is trying
+> to solve. ASI creates a separate "restricted" address spaces where, yes,
+> guest memory can be not mapped. But any access to guest memory is
+>  still allowed. An access will trigger a page fault, the kernel will
+> switch to the "full" kernel address space (flushing hardware buffers
+> along the way to prevent speculation), and then proceed. i.e. ASI
+> doesn't not prevent accessing guest memory through the
+> direct map, it just prevents speculation of guest memory through the
+> direct map.
 
-This patchset updates to current state:
+Yes, there's also a sense in which ASI is a "smaller hammer" in that
+it _only_ protects against hardware-bug exploits.
 
-- Trusted Firmware v2.10.2 (latest LTS)
-- Tianocore EDK2 stable202402 (latest release)
+>  it just prevents speculation of guest memory through the
+> direct map.
 
-And Tianocore EDK2-platforms commit 085c2fb (edk2-platforms does not
-have releases).
+(Although, this is not _all_ it does, because when returning to the
+restricted address space, i.e. right before VM Enter, we have an
+opportunity to flush _data buffers_ too. So ASI also mitigates
+Meltdown-style attacks, e.g. L1TF, where the speculation-related stuff
+all happens on the attacker side)
 
-Firmware images were built using Debian 'bookworm' cross gcc 12.2.0
-compiler.
+On Sat, 9 Mar 2024 at 03:46, Manwaring, Derek <derekmn@amazon.com> wrote:
+> Brendan,
+> I will look into the general ASI approach, thank you. Did you consider
+> memfd_secret or a guest_memfd-based approach for Userspace-ASI?
 
-And while I am in that file I dropped use of 'virtio-rng-pci' device as
-sbsa-ref is supposed to emulate physical hardware.
+I might be misunderstanding you here: I guess you mean using
+memfd_secret as a way for userspace to communicate about which parts
+of userspace memory are "secret"?
 
-Added 'max' tests with 'pauth=off' and 'pauth-impdef=on' variants.
+If I didn't misunderstand: we have not looked into this so far because
+we actually just consider _all_ userspace/guest memory to be "secret"
+from the perspective of other processes/guests.
 
-(01/11) test_sbsaref_edk2_firmware: PASS (2.51 s)
-(02/11) test_sbsaref_alpine_linux_cortex_a57: PASS (23.72 s)
-(03/11) test_sbsaref_alpine_linux_neoverse_n1: PASS (23.70 s)
-(04/11) test_sbsaref_alpine_linux_max_pauth_off: PASS (23.00 s)
-(05/11) test_sbsaref_alpine_linux_max_pauth_impdef: PASS (29.03 s)
-(06/11) test_sbsaref_alpine_linux_max: PASS (80.69 s)
-(07/11) test_sbsaref_openbsd73_cortex_a57: PASS (16.05 s)
-(08/11) test_sbsaref_openbsd73_neoverse_n1: PASS (15.97 s)
-(09/11) test_sbsaref_openbsd73_max_pauth_off: PASS (16.22 s)
-(10/11) test_sbsaref_openbsd73_max_pauth_impdef: PASS (16.11 s)
-(11/11) test_sbsaref_openbsd73_max: PASS (16.08 s)
+> Based on
+> Sean's earlier reply to James it sounds like the vision of guest_memfd
+> aligns with ASI's goals.
 
-Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
----
-Changes in v3:
-- left OpenBSD at 7.3 (7.4+ is known to not boot)
-  https://gitlab.com/qemu-project/qemu/-/issues/2224
-  https://marc.info/?l=openbsd-arm&m=171050428327850&w=2
-- added pauth variants of 'max' to OpenBSD tests
-- Link to v2: https://lore.kernel.org/r/20240314-sbsa-ref-firmware-update-v2-0-b557c56559cd@linaro.org
-
-Changes in v2:
-- disabled 'max' tests on OpenBSD
-- moved tags to 'one tag per line'
-- added 'os:linux' tags to Alpine ones
-- Link to v1: https://lore.kernel.org/r/20240313-sbsa-ref-firmware-update-v1-0-e166703c5424@linaro.org
-
----
-Marcin Juszkiewicz (4):
-      tests/avocado: update sbsa-ref firmware
-      tests/avocado: drop virtio-rng from sbsa-ref tests
-      tests/avocado: sbsa-ref: add Alpine tests for misc 'max' setup
-      tests/avocado: sbsa-ref: add OpenBSD tests for misc 'max' setup
-
- tests/avocado/machine_aarch64_sbsaref.py | 86 +++++++++++++++++++++-----------
- 1 file changed, 58 insertions(+), 28 deletions(-)
----
-base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
-change-id: 20240313-sbsa-ref-firmware-update-7579d9f6d59b
-
-Best regards,
--- 
-Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-
+But yes, the more general point seems to make sense, I think I need to
+research this topic some more, thanks!
 
