@@ -4,90 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE557C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 12:42:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B5BC54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 12:59:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmCIu-0004D4-21; Mon, 18 Mar 2024 08:41:24 -0400
+	id 1rmCZQ-0001Tj-90; Mon, 18 Mar 2024 08:58:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmCIt-0004Cl-7o
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 08:41:23 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rmCZN-0001TD-Nb
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 08:58:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmCIj-0003OO-ST
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 08:41:22 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rmCZL-0006zE-Fn
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 08:58:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710765672;
+ s=mimecast20190719; t=1710766700;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+EqjrbWXQu/j8Y37QpofsM16Thz++0wS7P0g2Jf81Mw=;
- b=bTxIYmcegt3wB7m2yHIDAVYZakyoQoXYM+PA9/WllV9kH3LDUX8qLO+ElwE16gmkc8yutO
- vwOArWNT0TSZCA3vUEwCS0779X5tX5Xepab8Sc+pc1A/bwTFIYxpp8jhZjiPSMQYccZgjP
- 93T4AnnfiQ7wM6Qh6u69pHJsSZ4rN4I=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PUo/387A7bIZnJHF/bPSbFk4N/+iMXb4foU5KSecSTY=;
+ b=Wl/4fl0ONtGOTzFYmlNGhmnMdd6jffMpx+val+jITbc1zoHSiYsUGGxFv7iATf3R8dWKiP
+ WAVmaUcScs0KENSpzVsfqiLZikibu3T6d473cfv1bkAT5sJNa18n7YX/BIfw1IyT3hhAWW
+ j8JLHkAMamhGoaTMcmll2dw0SEU6VbU=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-122-OYjeU6htOIG_5HPpc8WCgw-1; Mon, 18 Mar 2024 08:41:10 -0400
-X-MC-Unique: OYjeU6htOIG_5HPpc8WCgw-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-33ec4fb1a83so1173245f8f.2
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 05:41:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710765669; x=1711370469;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+EqjrbWXQu/j8Y37QpofsM16Thz++0wS7P0g2Jf81Mw=;
- b=rh03Kdwlw7BGLK2ar8VQqmjrjGaQvn5uGLbTc+71St9pYvbOH1k8rgeGqday004qri
- iydThoZRnh5DKNXVV0apvKYe2sXudRpiZUbtXhSAQcYPJsyqRx6DMc5r0zdAxXGitEnc
- 3NAxRbbtKsX8pm0syzye7aUWg2DfiYD1JwOn3evDG6HKX/csSEJ4kkt00HXy1IjWKdAI
- MKF6FJEFttEpJQj1eX7F6bBXUaaN89gR39jVWxL3v15/mIm0hi1Ln0kD6ppEHK8gstaX
- 1IYwZEz47eMVQBQx/hdnHc+pnMXeLwdQJGURaP8Gl+wnrZpVPLQr3Oy1JWIMOEExl/PZ
- gPqA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVr6xdx+xUAjvTIwrGeQi7yzSd7Dd+iRCLQNTE5mkKv2rB5Vc8E5Pu+29eyx1iQQ7Usx7XTBNKmMZXgYzX6le8nSoeJ9FI=
-X-Gm-Message-State: AOJu0YxF7TiHN5/p9Pu1ZRamzbM6xMYMxSZwXAJbubAAYhhSgJeGY0MH
- YCMMPPE2MA/nLd04eUu5jpUh5EOtvEtltvsNOzcYOtfZfhcQU9C/hfYzz+FZwb7lbanmgHPa5ns
- xqOTzQAlx4l+T9mRVFvGldNDTwlO0wWB+aziDafKCWvePAhZwCwZ0
-X-Received: by 2002:adf:fd0d:0:b0:33e:a29d:9672 with SMTP id
- e13-20020adffd0d000000b0033ea29d9672mr8305637wrr.51.1710765669412; 
- Mon, 18 Mar 2024 05:41:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGiynh73wWw52KQ7yKC2SrebNiwRk/QyUTeqq1mMqhrvXe671fegzBem+lYtXn9uJ9jwD5OPg==
-X-Received: by 2002:adf:fd0d:0:b0:33e:a29d:9672 with SMTP id
- e13-20020adffd0d000000b0033ea29d9672mr8305605wrr.51.1710765668580; 
- Mon, 18 Mar 2024 05:41:08 -0700 (PDT)
-Received: from redhat.com ([2.52.5.113]) by smtp.gmail.com with ESMTPSA id
- g14-20020a5d540e000000b0033e95bf4796sm9724077wrv.27.2024.03.18.05.41.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 05:41:07 -0700 (PDT)
-Date: Mon, 18 Mar 2024 08:41:04 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jason Wang <jasowang@redhat.com>
-Cc: Thomas =?iso-8859-1?Q?Wei=DFschuh?= <thomas@t-8ch.de>,
- Hao Chen <chenh@yusur.tech>, qemu-devel@nongnu.org,
- cohuck@redhat.com, pbonzini@redhat.com
-Subject: Re: [PATCH] hw/virtio: Add support for VDPA network simulation devices
-Message-ID: <20240318083932-mutt-send-email-mst@kernel.org>
-References: <20240221073802.2888022-1-chenh@yusur.tech>
- <d9e4f3b4-9c2e-466c-b5f4-3387ce88c6b9@t-8ch.de>
- <20240313155136-mutt-send-email-mst@kernel.org>
- <CACGkMEtSSb-9PsmQKPA4i-UWVJJ4ZVog8rt+1PKoqE+ABhpRTA@mail.gmail.com>
+ us-mta-118-BhgUt5fHOgKIwsCJEbFY4Q-1; Mon, 18 Mar 2024 08:58:16 -0400
+X-MC-Unique: BhgUt5fHOgKIwsCJEbFY4Q-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 47BFD101A523;
+ Mon, 18 Mar 2024 12:58:16 +0000 (UTC)
+Received: from localhost (unknown [10.39.194.125])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 9FFFE1C060A4;
+ Mon, 18 Mar 2024 12:58:15 +0000 (UTC)
+Date: Mon, 18 Mar 2024 08:58:04 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, eblake@redhat.com,
+ aliang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: Re: [PATCH for-9.0] mirror: Don't call job_pause_point() under graph
+ lock
+Message-ID: <20240318125804.GA908758@fedora>
+References: <20240313153000.33121-1-kwolf@redhat.com>
+ <20240314142939.GE611723@fedora> <Zfgnb1b1IHhFYpHr@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="cDpUfw8PCnHUNmDZ"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACGkMEtSSb-9PsmQKPA4i-UWVJJ4ZVog8rt+1PKoqE+ABhpRTA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <Zfgnb1b1IHhFYpHr@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,73 +85,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 14, 2024 at 11:24:33AM +0800, Jason Wang wrote:
-> On Thu, Mar 14, 2024 at 3:52 AM Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > On Wed, Mar 13, 2024 at 07:51:08PM +0100, Thomas Weißschuh wrote:
-> > > On 2024-02-21 15:38:02+0800, Hao Chen wrote:
-> > > > This patch adds support for VDPA network simulation devices.
-> > > > The device is developed based on virtio-net and tap backend,
-> > > > and supports hardware live migration function.
-> > > >
-> > > > For more details, please refer to "docs/system/devices/vdpa-net.rst"
-> > > >
-> > > > Signed-off-by: Hao Chen <chenh@yusur.tech>
-> > > > ---
-> > > >  MAINTAINERS                                 |   5 +
-> > > >  docs/system/device-emulation.rst            |   1 +
-> > > >  docs/system/devices/vdpa-net.rst            | 121 +++++++++++++
-> > > >  hw/net/virtio-net.c                         |  16 ++
-> > > >  hw/virtio/virtio-pci.c                      | 189 +++++++++++++++++++-
-> 
-> I think those modifications should belong to a separate file as it
-> might conflict with virito features in the future.
-> 
-> > > >  hw/virtio/virtio.c                          |  39 ++++
-> > > >  include/hw/virtio/virtio-pci.h              |   5 +
-> > > >  include/hw/virtio/virtio.h                  |  19 ++
-> > > >  include/standard-headers/linux/virtio_pci.h |   7 +
-> > > >  9 files changed, 399 insertions(+), 3 deletions(-)
-> > > >  create mode 100644 docs/system/devices/vdpa-net.rst
-> > >
-> > > [..]
-> > >
-> > > > diff --git a/include/standard-headers/linux/virtio_pci.h b/include/standard-headers/linux/virtio_pci.h
-> > > > index b7fdfd0668..fb5391cef6 100644
-> > > > --- a/include/standard-headers/linux/virtio_pci.h
-> > > > +++ b/include/standard-headers/linux/virtio_pci.h
-> > > > @@ -216,6 +216,13 @@ struct virtio_pci_cfg_cap {
-> > > >  #define VIRTIO_PCI_COMMON_Q_NDATA  56
-> > > >  #define VIRTIO_PCI_COMMON_Q_RESET  58
-> > > >
-> > > > +#define LM_LOGGING_CTRL                 0
-> > > > +#define LM_BASE_ADDR_LOW                4
-> > > > +#define LM_BASE_ADDR_HIGH               8
-> > > > +#define LM_END_ADDR_LOW                 12
-> > > > +#define LM_END_ADDR_HIGH                16
-> > > > +#define LM_VRING_STATE_OFFSET           0x20
-> > >
-> > > These changes are not in upstream Linux and will be undone by
-> > > ./scripts/update-linux-headers.sh.
-> > >
-> > > Are they intentionally in this header?
-> >
-> >
-> > Good point. Pls move.
-> 
-> Right and this part, it's not a part of standard virtio.
-> 
-> Thanks
 
-I'm thinking of reverting this patch unless there's a resolution
-soon, and reapplying later after the release.
+--cDpUfw8PCnHUNmDZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Mar 18, 2024 at 12:37:19PM +0100, Kevin Wolf wrote:
+> Am 14.03.2024 um 15:29 hat Stefan Hajnoczi geschrieben:
+> > On Wed, Mar 13, 2024 at 04:30:00PM +0100, Kevin Wolf wrote:
+> > > Calling job_pause_point() while holding the graph reader lock
+> > > potentially results in a deadlock: bdrv_graph_wrlock() first drains
+> > > everything, including the mirror job, which pauses it. The job is only
+> > > unpaused at the end of the drain section, which is when the graph wri=
+ter
+> > > lock has been successfully taken. However, if the job happens to be
+> > > paused at a pause point where it still holds the reader lock, the wri=
+ter
+> > > lock can't be taken as long as the job is still paused.
+> > >=20
+> > > Mark job_pause_point() as GRAPH_UNLOCKED and fix mirror accordingly.
+> > >=20
+> > > Cc: qemu-stable@nongnu.org
+> > > Buglink: https://issues.redhat.com/browse/RHEL-28125
+> > > Fixes: 004915a96a7a40e942ac85e6d22518cbcd283506
+> > > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> > > ---
+> > >  include/qemu/job.h |  2 +-
+> > >  block/mirror.c     | 10 ++++++----
+> > >  2 files changed, 7 insertions(+), 5 deletions(-)
+> > >=20
+> > > diff --git a/include/qemu/job.h b/include/qemu/job.h
+> > > index 9ea98b5927..2b873f2576 100644
+> > > --- a/include/qemu/job.h
+> > > +++ b/include/qemu/job.h
+> > > @@ -483,7 +483,7 @@ void job_enter(Job *job);
+> > >   *
+> > >   * Called with job_mutex *not* held.
+> > >   */
+> > > -void coroutine_fn job_pause_point(Job *job);
+> > > +void coroutine_fn GRAPH_UNLOCKED job_pause_point(Job *job);
+> > > =20
+> > >  /**
+> > >   * @job: The job that calls the function.
+> > > diff --git a/block/mirror.c b/block/mirror.c
+> > > index 5145eb53e1..1bdce3b657 100644
+> > > --- a/block/mirror.c
+> > > +++ b/block/mirror.c
+> > > @@ -479,9 +479,9 @@ static unsigned mirror_perform(MirrorBlockJob *s,=
+ int64_t offset,
+> > >      return bytes_handled;
+> > >  }
+> > > =20
+> > > -static void coroutine_fn GRAPH_RDLOCK mirror_iteration(MirrorBlockJo=
+b *s)
+> > > +static void coroutine_fn GRAPH_UNLOCKED mirror_iteration(MirrorBlock=
+Job *s)
+> > >  {
+> > > -    BlockDriverState *source =3D s->mirror_top_bs->backing->bs;
+> > > +    BlockDriverState *source;
+> > >      MirrorOp *pseudo_op;
+> > >      int64_t offset;
+> > >      /* At least the first dirty chunk is mirrored in one iteration. =
+*/
+> > > @@ -489,6 +489,10 @@ static void coroutine_fn GRAPH_RDLOCK mirror_ite=
+ration(MirrorBlockJob *s)
+> > >      bool write_zeroes_ok =3D bdrv_can_write_zeroes_with_unmap(blk_bs=
+(s->target));
+> > >      int max_io_bytes =3D MAX(s->buf_size / MAX_IN_FLIGHT, MAX_IO_BYT=
+ES);
+> > > =20
+> > > +    bdrv_graph_co_rdlock();
+> > > +    source =3D s->mirror_top_bs->backing->bs;
+> >=20
+> > Is bdrv_ref(source) needed here so that source cannot go away if someone
+> > else write locks the graph and removes it? Or maybe something else
+> > protects against that. Either way, please add a comment that explains
+> > why this is safe.
+>=20
+> We didn't even get to looking at this level of detail with the graph
+> locking work. We probably should, but this is not the only place in
+> mirror we need to look at then. Commit 004915a9 just took the lazy path
+> of taking the lock for the whole function, and it turns out that this
+> was wrong and causes deadlocks, so I'm reverting it and replacing it
+> with what other parts of the code do - the minimal thing to let it
+> compile.
+>=20
+> I think we already own a reference, we do a block_job_add_bdrv() in
+> mirror_start_job(). But once it changes, we have a reference to the
+> wrong node. So it looks to me that mirror has a problem with a changing
+> source node that is more fundamental than graph locking in one specific
+> function because it stores BDS pointers in its state.
+>=20
+> Active commit already freezes the backing chain between mirror_top_bs
+> and target, maybe other mirror jobs need to freeze the link between
+> mirror_top_bs and source at least.
+>=20
+> So I agree that it might be worth looking into this more, but I consider
+> it unrelated to this patch. We just go back to the state in which it has
+> always been before 8.2 (which might contain a latent bug that apparently
+> never triggered in practice) to fix a regression that we do see in
+> practice.
+>=20
+> Kevin
 
-> >
-> > > > +
-> > > >  #endif /* VIRTIO_PCI_NO_MODERN */
-> > > >
-> > > >  #endif
-> >
+Okay:
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--cDpUfw8PCnHUNmDZ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmX4OlwACgkQnKSrs4Gr
+c8jg7Af/YbjDiPD5AOztYnsJwkdz0ktmPm9qbKnAAc/kvHEbkUXJSLJKlUW6Lt73
+yUjUb6/In/8htWHmg8Kdhy2B3MExbf0zCUWo8GxJiaAdlwY5lR86Ttsjf0V7NyVX
+TeZ0PS4ugvJTFLeUZMDJF4YzdPgcqtdxEde1cWcRTL+T2eecsVF30KJqRc9qZgFJ
+LRRNUDg+YHW27nzqFxSuGTBdSs72paDe3SU2JxeATi7TuuytgXK0Hw4wzTioytC4
+FOk4zIi7+wLH1VbA/3VnWcHw2jiFNru0e6IeqHKJNMBwR1PuJSTQD1KoHm7G7Iu5
+qxSvaOD3AG9jFlrL2j1sgJVOSmRlCQ==
+=i5os
+-----END PGP SIGNATURE-----
+
+--cDpUfw8PCnHUNmDZ--
 
 
