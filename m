@@ -4,69 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB0DC54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 17:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEA0BC54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 18:17:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmHEW-0000VN-Oc; Mon, 18 Mar 2024 13:57:12 -0400
+	id 1rmHX4-0000N0-Hu; Mon, 18 Mar 2024 14:16:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHET-0000Tm-Nm
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.vnet.ibm.com>)
+ id 1rmHX1-0000MD-Rs; Mon, 18 Mar 2024 14:16:19 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHES-00077n-7m
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710784627;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/FdiF6Ay0Y//kEppiR8e/bNkgh8x74HG5F3qOJ903Cc=;
- b=W25HwQM5wKO3Ejco9q5f5YJk770JzKy1xzRNwXs9xq6b9D+8OR+rt1i+l9QjQUzPgzwzC5
- 2Blv5ytXvQlUmv5wLZgC4LruWzR7Cowh29ZhIcnqqMixmjhqFPlGmWjwKy0jcn67RazVG/
- LbvuYtsT9gIh21SveWpCVmflSOAUFbM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-198-dWQPopGVOFSVcJpxmYIW0g-1; Mon, 18 Mar 2024 13:57:04 -0400
-X-MC-Unique: dWQPopGVOFSVcJpxmYIW0g-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C7B3B185A789;
- Mon, 18 Mar 2024 17:57:03 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.155])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 027892166B34;
- Mon, 18 Mar 2024 17:57:01 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Claudio Fontana <cfontana@suse.de>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 1/4] docs/s390: clarify even more that cpu-topology is KVM-only
-Date: Mon, 18 Mar 2024 18:56:52 +0100
-Message-ID: <20240318175655.756084-2-thuth@redhat.com>
-In-Reply-To: <20240318175655.756084-1-thuth@redhat.com>
-References: <20240318175655.756084-1-thuth@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <milesg@linux.vnet.ibm.com>)
+ id 1rmHWy-0002TN-S7; Mon, 18 Mar 2024 14:16:18 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42IHfaJY012761; Mon, 18 Mar 2024 18:16:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ mime-version : content-transfer-encoding; s=pp1;
+ bh=x+2+C/wdmIuQMxQNZFIKEYER90cpmH6hKJ2Mdu2L8XU=;
+ b=VvunnAwDFrowY2aiPg8OWYAqZFCwMR9RVSGpnqrAt6T6THVCZiB2SJ8a6qHwThKGQzGy
+ t4h+nJ/PPeD+NcybMB3NYrEb7y25utM34UAExiOnbD7L+6XHCU6nFlfpQmMeyNThGOjV
+ 20Jmcs01CqVqKO0FWpvtOrRmlm/CJC0VPTfCwVi4mdfSJ3x5yYBdpBP/KQfMw3R/Lbcl
+ pBD2hRXF3zf1RlIStXMzqcdLn4Ol9uQwPNU8cvwpzjmrCDAne+4F8jR8OqDfnLU5vBbu
+ zHXa84hZqQi9bIiiIJoSAnvN9mE9mjrp7insmIB31Yj1AiI3tw7CrPiwyfMBa7qZ04hX 3w== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wxt3r07m7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Mar 2024 18:16:12 +0000
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42IICb8l021283;
+ Mon, 18 Mar 2024 18:16:12 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wxt3r07m5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Mar 2024 18:16:12 +0000
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42IHMWAX017218; Mon, 18 Mar 2024 18:16:11 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wwnrt2ryr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Mar 2024 18:16:11 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42IIG9I019464738
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 18 Mar 2024 18:16:11 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6EEA658056;
+ Mon, 18 Mar 2024 18:16:09 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4AB9F5803F;
+ Mon, 18 Mar 2024 18:16:09 +0000 (GMT)
+Received: from mamboa4.aus.stglabs.ibm.com (unknown [9.3.84.87])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 18 Mar 2024 18:16:09 +0000 (GMT)
+Message-ID: <6f9acf388883bfe15e27ee26dcacff91f330e485.camel@linux.vnet.ibm.com>
+Subject: Re: [PATCH v2] ppc/pnv: I2C controller is not user creatable
+From: Miles Glenn <milesg@linux.vnet.ibm.com>
+To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, Thomas Huth
+ <thuth@redhat.com>
+Date: Mon, 18 Mar 2024 13:16:09 -0500
+In-Reply-To: <20240318155844.224193-1-clg@redhat.com>
+References: <20240318155844.224193-1-clg@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-18.el8) 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: SIaHDDoPcJvQ3yCaVDQQv8hhdWMHeYWa
+X-Proofpoint-ORIG-GUID: Qququ7e4bIcGeqp1asjI77A2i837M4E_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ suspectscore=0 malwarescore=0 adultscore=0 mlxlogscore=999 mlxscore=0
+ phishscore=0 clxscore=1015 impostorscore=0 lowpriorityscore=0 spamscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2403140000 definitions=main-2403180138
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=milesg@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,87 +114,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Claudio Fontana <cfontana@suse.de>
+On Mon, 2024-03-18 at 16:58 +0100, Cédric Le Goater wrote:
 
-At least for now cpu-topology is implemented only for KVM.
+Thanks for fixing that!
 
-We already say this, but this tries to be more explicit,
-and also show it in the examples.
+-Glenn
 
-This adds a new reference in the introduction that we can point to,
-whenever we need to reference accelerators and how to select them.
+Reviewed-by: Glenn Miles <milesg@linux.vnet.ibm.com>
 
-Signed-off-by: Claudio Fontana <cfontana@suse.de>
-Message-ID: <20240314172218.16478-1-cfontana@suse.de>
-Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Tested-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- docs/system/introduction.rst       |  2 ++
- docs/system/s390x/cpu-topology.rst | 14 ++++++++------
- 2 files changed, 10 insertions(+), 6 deletions(-)
-
-diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
-index 51ac132d6c..746707eb00 100644
---- a/docs/system/introduction.rst
-+++ b/docs/system/introduction.rst
-@@ -1,6 +1,8 @@
- Introduction
- ============
- 
-+.. _Accelerators:
-+
- Virtualisation Accelerators
- ---------------------------
- 
-diff --git a/docs/system/s390x/cpu-topology.rst b/docs/system/s390x/cpu-topology.rst
-index 5133fdc362..d5b506ee5c 100644
---- a/docs/system/s390x/cpu-topology.rst
-+++ b/docs/system/s390x/cpu-topology.rst
-@@ -25,17 +25,19 @@ monitor polarization changes, see ``docs/devel/s390-cpu-topology.rst``.
- Prerequisites
- -------------
- 
--To use the CPU topology, you need to run with KVM on a s390x host that
--uses the Linux kernel v6.0 or newer (which provide the so-called
-+To use the CPU topology, you currently need to choose the KVM accelerator.
-+See :ref:`Accelerators` for more details about accelerators and how to select them.
-+
-+The s390x host needs to use a Linux kernel v6.0 or newer (which provides the so-called
- ``KVM_CAP_S390_CPU_TOPOLOGY`` capability that allows QEMU to signal the
- CPU topology facility via the so-called STFLE bit 11 to the VM).
- 
- Enabling CPU topology
- ---------------------
- 
--Currently, CPU topology is only enabled in the host model by default.
-+Currently, CPU topology is enabled by default only in the "host" CPU model.
- 
--Enabling CPU topology in a CPU model is done by setting the CPU flag
-+Enabling CPU topology in another CPU model is done by setting the CPU flag
- ``ctop`` to ``on`` as in:
- 
- .. code-block:: bash
-@@ -132,7 +134,7 @@ In the following machine we define 8 sockets with 4 cores each.
- 
- .. code-block:: bash
- 
--  $ qemu-system-s390x -m 2G \
-+  $ qemu-system-s390x -accel kvm -m 2G \
-     -cpu gen16b,ctop=on \
-     -smp cpus=5,sockets=8,cores=4,maxcpus=32 \
-     -device host-s390x-cpu,core-id=14 \
-@@ -227,7 +229,7 @@ with vertical high entitlement.
- 
- .. code-block:: bash
- 
--  $ qemu-system-s390x -m 2G \
-+  $ qemu-system-s390x -accel kvm -m 2G \
-     -cpu gen16b,ctop=on \
-     -smp cpus=1,sockets=8,cores=4,maxcpus=32 \
-     \
--- 
-2.44.0
+> The I2C controller is a subunit of the processor. Make it so and
+> avoid
+> QEMU crashes.
+> 
+>   $ build/qemu-system-ppc64 -S -machine powernv9 -device pnv-i2c
+>   qemu-system-ppc64: ../hw/ppc/pnv_i2c.c:521: pnv_i2c_realize:
+> Assertion `i2c->chip' failed.
+>   Aborted (core dumped)
+> 
+> Fixes: 263b81ee15af ("ppc/pnv: Add an I2C controller model")
+> Cc: Glenn Miles <milesg@linux.vnet.ibm.com>
+> Reported-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>  hw/ppc/pnv_i2c.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/hw/ppc/pnv_i2c.c b/hw/ppc/pnv_i2c.c
+> index
+> 4581cc5e5d4645ab3e358d983a633e33a214c425..eec5047ce83f842108b53a6e2bd
+> 9869a81f14ac1 100644
+> --- a/hw/ppc/pnv_i2c.c
+> +++ b/hw/ppc/pnv_i2c.c
+> @@ -557,6 +557,9 @@ static void pnv_i2c_class_init(ObjectClass
+> *klass, void *data)
+> 
+>      xscomc->dt_xscom = pnv_i2c_dt_xscom;
+> 
+> +    /* Reason: This device is part of the CPU and cannot be used
+> separately */
+> +    dc->user_creatable = false;
+> +
+>      dc->desc = "PowerNV I2C";
+>      dc->realize = pnv_i2c_realize;
+>      device_class_set_props(dc, pnv_i2c_properties);
 
 
