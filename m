@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E975C54E68
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 14:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 335E5C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 14:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmENy-0003Cl-G8; Mon, 18 Mar 2024 10:54:47 -0400
+	id 1rmER1-0004u0-JG; Mon, 18 Mar 2024 10:57:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmENu-0003Bf-LA
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:54:44 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rmEQz-0004tq-OK
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:57:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmENq-0006tV-6C
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:54:42 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rmEQu-0007fG-NY
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:57:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710773674;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1710773868;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kd/kGOJTpPvIMBzzU3SR6sOxd1gq+FPvPOVzWXj0+n0=;
- b=X4CNuJX1o96j1V7lUm/SmNbJy7BbYx8FXQcE61gl6Ngpc6dQOjlQYrCtpbk4yxB1FlV+IM
- Oe8R8shdmTsdUbV6NlDAy5wuNFuYECa6b9nUkgT6Rl6DXeikdw6ElLLsxEIOgVRkiJJnpZ
- SWoAqMv4HmO1wjIHvx1jWI/YqTyXcCI=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jMIBgqI3MkwAF4ZPtjxTDESi3HDz0gCjneWLhECjKps=;
+ b=cPDjCeCz/25n72u1OaK8LrEw829Rh/y+tSwos6j5A2sG6JEwjKJBCzbk09Kl59yicU8Kcq
+ KzkmIUduzPApRiO5TR0Ypb8FB9bl+OkPpDe+A0qpgoDVRK4HLoIZv60CcbTQCaB5klimVf
+ 3334gLfs7Oi+R5KRNhsSvhoptXm3nqw=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-32-0qkykdN4P4Sh9f3WsFxv-g-1; Mon, 18 Mar 2024 10:54:32 -0400
-X-MC-Unique: 0qkykdN4P4Sh9f3WsFxv-g-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-513d3f026d4so3405304e87.3
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 07:54:32 -0700 (PDT)
+ us-mta-324-kdXGbToEM62HgHwEgBdA6A-1; Mon, 18 Mar 2024 10:57:40 -0400
+X-MC-Unique: kdXGbToEM62HgHwEgBdA6A-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-690e820dd84so81684786d6.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 07:57:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710773671; x=1711378471;
+ d=1e100.net; s=20230601; t=1710773860; x=1711378660;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kd/kGOJTpPvIMBzzU3SR6sOxd1gq+FPvPOVzWXj0+n0=;
- b=Z00f6L/2xWtiNfcmE01p4dwAgDb/MBMQsRSDuQP4UgWQ3jxqb6lpO52E4mawTyU0xX
- xNOSXt+q2I6WE9U9gHngBVy8sKBH2zGye1aFvgGH+sklQ1880jILWnWYqnDiLtAMEmOD
- hf24dsPRVpy9DZu9plOWC1qqWy3qBzy7zgFylgnHjtPzf1p7kgg928rvsyjxBh0nJpoA
- R6zF9s3W6hvTB+jAVG+3hbglObzmlEftAUeIFl8cqvPnUdUdfxdflDIJ4WCkuck5SYF+
- 38weDnDYsC44SWuJIu16rc60rvgY/0xJ6MO2l0dkmZbZKc1AGz0xEUulxAn9KiFtW02j
- piFw==
-X-Gm-Message-State: AOJu0YypLmJomGAFiznEDXePVzPJnbSUK2jYDCz8mvsGABjQ44Zv72bD
- MFF+iWW/96syflk+oq+XD1UHR0u8PFgOHkTHr+L3fuTXTXZK3htxOGF8Qq04fdo6X+yPruPtAra
- a/9kLd9P3Gmj9AU3GXILNFQeWz2YGv2607EJfS6Lh+OslPTWvbvmO
-X-Received: by 2002:ac2:4651:0:b0:513:9f30:e33f with SMTP id
- s17-20020ac24651000000b005139f30e33fmr8166540lfo.23.1710773671444; 
- Mon, 18 Mar 2024 07:54:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHc5qM/iYGgNroKS7LqnIicERJlDdtAFZAFpePqHippvOvJiEmkKcwVuj9TfS5phwAFiFTOGw==
-X-Received: by 2002:ac2:4651:0:b0:513:9f30:e33f with SMTP id
- s17-20020ac24651000000b005139f30e33fmr8166519lfo.23.1710773671107; 
- Mon, 18 Mar 2024 07:54:31 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jMIBgqI3MkwAF4ZPtjxTDESi3HDz0gCjneWLhECjKps=;
+ b=qZpWlX544VIDBisBAUulaqsfCHMzFs6knl4KsMQVmdw7QZUoA8UglRs5qwnV8UisXp
+ wliSdN+SkmLYm0hMTf3+4AUKGEP32U+Nc4l9cPPH2nC2W4nKL+s9IxnAAVkcFw3p2/fV
+ bOEPY1F1DSmAgT5Cm5ApX08+TNYicBU96vnN2+vx22HfU77Y5UYCWm9xh7DxmI68dl1x
+ SX2RXcm9lMm/vhZEQHoOcb8oM4RWBXp8JsUeYx6NGtB6VGpDE5dLd3qcHD8M00NvRZWD
+ I0Uw5TOqYB/kbj2BAfDilbOogKEfzhriLwBGlHKQHt7tCDM7uux1IHdYhNoBEebFBqDT
+ wILg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVoWpvrMlTotqjH2cGLEHpwQcq1wX0AbJj10PItICxV/4eK/oV+d7LcoWvm4ias0cx1H739fB2PG+ZfxVLBmBb4dNyoHbc=
+X-Gm-Message-State: AOJu0YzskxsmVshO27NMfJOKLP17e1Yia7NugyFRJLGo9PojjC4TTY13
+ 0nT524hWpxEvwh8Tjs3U4+ELfCx2+A5Y90PXTTRmvYJYT6+w3qRji5xdy8qfKo8Wtmg4N9IVZ32
+ BRukKiB1hn0XHAOpGzOqagC5EVt04YgZlfC6xZdRA5klEF17Gcg3x
+X-Received: by 2002:a0c:9c0a:0:b0:691:2de1:296c with SMTP id
+ v10-20020a0c9c0a000000b006912de1296cmr17472023qve.11.1710773859978; 
+ Mon, 18 Mar 2024 07:57:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE1YTy0gW5z94WC0hKqeeD7D/OroJPX58zlVDKX3KidzjVLP9dhgPegweN3F0XB7QQwbM0KGA==
+X-Received: by 2002:a0c:9c0a:0:b0:691:2de1:296c with SMTP id
+ v10-20020a0c9c0a000000b006912de1296cmr17471992qve.11.1710773859658; 
+ Mon, 18 Mar 2024 07:57:39 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ck19-20020a5d5e93000000b0033ec81ec4aesm3695916wrb.78.2024.03.18.07.54.30
+ pp26-20020a056214139a00b00691732938a8sm4484902qvb.73.2024.03.18.07.57.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 07:54:30 -0700 (PDT)
-Message-ID: <40d6777a-7d58-4fe1-a441-67df73ca5efd@redhat.com>
-Date: Mon, 18 Mar 2024 15:54:28 +0100
+ Mon, 18 Mar 2024 07:57:39 -0700 (PDT)
+Message-ID: <0d8cba1e-a422-421b-9c02-c60452cf5f80@redhat.com>
+Date: Mon, 18 Mar 2024 15:57:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/25] memory: Add Error** argument to
- .log_global_start() handler
-Content-Language: en-US, fr
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-14-clg@redhat.com> <ZfQukLXQsgFEap4f@x1n>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <ZfQukLXQsgFEap4f@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Subject: Re: [PATCH v1 00/11] Add a host IOMMU device abstraction
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, peterx@redhat.com,
+ jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ yi.y.sun@intel.com, chao.p.peng@intel.com
+References: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -109,47 +108,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/15/24 12:18, Peter Xu wrote:
->> @@ -3009,13 +3045,16 @@ static void listener_add_address_space(MemoryListener *listener,
->>   {
->>       FlatView *view;
->>       FlatRange *fr;
->> +    Error *local_err = NULL;
->>   
->>       if (listener->begin) {
->>           listener->begin(listener);
->>       }
->>       if (global_dirty_tracking) {
->>           if (listener->log_global_start) {
->> -            listener->log_global_start(listener);
->> +            if (!listener->log_global_start(listener, &local_err)) {
->> +                error_report_err(local_err);
->> +            }
-> IMHO we should assert here instead of error report.  We have this to guard
-> hot-plug during migration so I think the assert is justified:
-> 
-> qdev_device_add_from_qdict():
-> 
->      if (!migration_is_idle()) {
->          error_setg(errp, "device_add not allowed while migrating");
->          return NULL;
->      }
-> 
-> If it really happens it's a bug, as listener_add_address_space() will still
-> keep the rest things around even if the hook failed.  It'll start to be a
-> total mess..
 
-It seems that adding a region listener while logging is active has been
-supported from the beginning, commit 7664e80c8470 ("memory: add API for
-observing  updates to the physical memory map"). Can it happen ? if not
-we could simply remove the  log_global_start() call.
 
-Thanks,
+On 2/28/24 04:58, Zhenzhong Duan wrote:
+> Hi,
+>
+> Based on Joao's suggestion, the iommufd nesting prerequisite series [1]
+> is further splitted to host IOMMU device abstract part and vIOMMU
+> check/sync part. This series implements the 1st part.
+>
+> This split also faciliates the dirty tracking series [2] and virtio-iommu
+> series [3] to depend on 1st part.
+>
+> PATCH1-3: Introduce HostIOMMUDevice and two sub class
+> PATCH4: Define HostIOMMUDevice handle in VFIODevice
+> PATCH5-8: Introdcue host_iommu_device_create callback to allocate and intialize HostIOMMUDevice
+Introduce, here and below
 
-C.
-
+Eric
+> PATCH9-10: Introdcue set/unset_iommu_device to pass HostIOMMUDevice to vIOMMU
+> PATCH11: a helper to get host IOMMU info
+>
+> Because it's becoming clear on community's suggestion, I'd like to remove
+> rfc tag from this version.
+>
+> Qemu code can be found at:
+> https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_preq_part1_v1
+>
+> [1] https://lore.kernel.org/qemu-devel/20240201072818.327930-1-zhenzhong.duan@intel.com/
+> [2] https://lore.kernel.org/qemu-devel/20240212135643.5858-1-joao.m.martins@oracle.com/
+> [3] https://lore.kernel.org/qemu-devel/20240117080414.316890-1-eric.auger@redhat.com/
+>
+> Thanks
+> Zhenzhong
+>
+> Changelog:
+> v1:
+> - use HostIOMMUDevice handle instead of union in VFIODevice (Eric)
+> - change host_iommu_device_init to host_iommu_device_create
+> - allocate HostIOMMUDevice in host_iommu_device_create callback
+>   and set the VFIODevice base_hdev handle (Eric)
+> - refine pci_device_set/unset_iommu_device doc (Eric)
+> - use HostIOMMUDevice handle instead of union in VTDHostIOMMUDevice (Eric)
+>
+> rfcv2:
+> - introduce common abstract HostIOMMUDevice and sub struct for different BEs (Eric, Cédric)
+> - remove iommufd_device.[ch] (Cédric)
+> - remove duplicate iommufd/devid define from VFIODevice (Eric)
+> - drop the p in aliased_pbus and aliased_pdevfn (Eric)
+> - assert devfn and iommu_bus in pci_device_get_iommu_bus_devfn (Cédric, Eric)
+> - use errp in iommufd_device_get_info (Eric)
+> - split and simplify cap/ecap check/sync code in intel_iommu.c (Cédric)
+> - move VTDHostIOMMUDevice declaration to intel_iommu_internal.h (Cédric)
+> - make '(vtd->cap_reg >> 16) & 0x3fULL' a MACRO and add missed '+1' (Cédric)
+> - block migration if vIOMMU cap/ecap updated based on host IOMMU cap/ecap
+> - add R-B
+>
+>
+> Yi Liu (1):
+>   hw/pci: Introduce pci_device_set/unset_iommu_device()
+>
+> Zhenzhong Duan (10):
+>   Introduce a common abstract struct HostIOMMUDevice
+>   backends/iommufd: Introduce IOMMUFDDevice
+>   vfio: Introduce IOMMULegacyDevice
+>   vfio: Add HostIOMMUDevice handle into VFIODevice
+>   vfio: Introduce host_iommu_device_create callback
+>   vfio/container: Implement host_iommu_device_create callback in legacy
+>     mode
+>   vfio/iommufd: Implement host_iommu_device_create callback in iommufd
+>     mode
+>   vfio/pci: Allocate and initialize HostIOMMUDevice after attachment
+>   vfio: Pass HostIOMMUDevice to vIOMMU
+>   backends/iommufd: Introduce helper function iommufd_device_get_info()
+>
+>  include/hw/pci/pci.h                  | 38 +++++++++++++++-
+>  include/hw/vfio/vfio-common.h         |  8 ++++
+>  include/hw/vfio/vfio-container-base.h |  1 +
+>  include/sysemu/host_iommu_device.h    | 22 ++++++++++
+>  include/sysemu/iommufd.h              | 19 ++++++++
+>  backends/iommufd.c                    | 32 +++++++++++++-
+>  hw/pci/pci.c                          | 62 +++++++++++++++++++++++++--
+>  hw/vfio/common.c                      |  8 ++++
+>  hw/vfio/container.c                   |  9 ++++
+>  hw/vfio/iommufd.c                     | 10 +++++
+>  hw/vfio/pci.c                         | 24 ++++++++---
+>  11 files changed, 223 insertions(+), 10 deletions(-)
+>  create mode 100644 include/sysemu/host_iommu_device.h
+>
 
 
