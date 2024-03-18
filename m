@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B542AC54E6A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B53EAC54E58
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 16:18:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmFeu-0007Ly-1p; Mon, 18 Mar 2024 12:16:20 -0400
+	id 1rmFfR-00005t-VU; Mon, 18 Mar 2024 12:16:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFec-00078A-37
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:16:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFfJ-00085L-74
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:16:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFeX-0004dD-Gj
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:16:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFfH-0004lg-5v
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:16:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710778556;
+ s=mimecast20190719; t=1710778601;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=G4uSwZ/MizuMlWmoJcnBQJMBFs8dEzQrjhYJsZpx96c=;
- b=PcnVspY13sjiibWlG5XyVoRJ67L3MxB0wLG9YTpT9ceFGVM3imiiFlEVQh2CpfZ+JEjFkM
- pJJXyJVJhEqf4H675s1QzYzEs+3oEXeEsXHgaiU8ORnQMP2hTvt3d/Zhg68lfI71yq9bh1
- B1fp3QL3IMz5czCpTuFRIuP0NT4kjLg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3PquRgok1zJPddWo+hTweh0skOewFWtqO+jh37rKiqc=;
+ b=YrhbaJjDf2cl4f6ZccV5BaQ9W/EXxtHfoZvWS2B3Zlpc95pK/VXY7Nkbr0r1zRsY+CmsOp
+ TeRUzTPSb0FDomXQeukpXBwDCD3mfR3c4XADHVzmGL0C4f62zbHARc+oj7emUDav8mzbWg
+ fMLOZXrzNDADsywk7qGINHU6PBJv4qA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-217-ClFxfxPfOYGE1mfAPBjXBA-1; Mon, 18 Mar 2024 12:15:55 -0400
-X-MC-Unique: ClFxfxPfOYGE1mfAPBjXBA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3417fbb38daso310860f8f.3
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 09:15:55 -0700 (PDT)
+ us-mta-160-s6eihdbTOjitqOEeH2D97Q-1; Mon, 18 Mar 2024 12:16:40 -0400
+X-MC-Unique: s6eihdbTOjitqOEeH2D97Q-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-41413823c1bso3959425e9.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 09:16:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710778554; x=1711383354;
+ d=1e100.net; s=20230601; t=1710778599; x=1711383399;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=G4uSwZ/MizuMlWmoJcnBQJMBFs8dEzQrjhYJsZpx96c=;
- b=dYi5s2LDUXuRogAkZmJOkZV65L3TR7hIr7i07DAOip2L5lxACf0j15hrsLCgswgebg
- Bo7htD5nWjwbTeOlTH0cH7zqbNILh07ebRFezi/s9Ny2lHh7P8YVlxhgWYN5Z6Zvw6mV
- QjjcC2x84qgGGt6pg9Ov9NxawNgbypnz/fr89zBRI3PNEL0gNvYfS2e/8V1pqR6hqu2W
- FLBRGtrlx/kCQ4TzWTQdKk/7+r73h0krQ7UFVSr6WiK1rckPLiL1vuip567e1mCx4jNZ
- o+MEyMywL2glryg+Ak4MdTae9ef/KkXAgmz2j68maa5C3jIARlP1UHnt4Dh9M4WHx0bQ
- PGNw==
-X-Gm-Message-State: AOJu0YyDlNu6Rj11TTClOT1XWERdgZkd62xyU7clkU2atmvjeaSajMiJ
- tMFTGwZ4u6ciXauJVZq43qUE97IUstWSDIinGF+PZbibHszuHF4wafW148nrm2KWDFF+9i4CLgW
- oC0EbZ471WCDyBfn68ixqOVkRuNrLo/nqYRlsrNacTgVb4WS6VogWMMzJxmcyIy1PC1kln7NnN1
- h/91ShcWQxl6OMRFx7VUVTL1m1xOFDgQ==
-X-Received: by 2002:a05:6000:4e4:b0:33e:78c4:3738 with SMTP id
- cr4-20020a05600004e400b0033e78c43738mr10423215wrb.54.1710778553838; 
- Mon, 18 Mar 2024 09:15:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGjfAxQqcnv0UP4PlclIOInFi8dmabiAWEbUq8Miw7LDUHTmljgN/Ct3JGJKRFci78gG+VWMA==
-X-Received: by 2002:a05:6000:4e4:b0:33e:78c4:3738 with SMTP id
- cr4-20020a05600004e400b0033e78c43738mr10423177wrb.54.1710778553285; 
- Mon, 18 Mar 2024 09:15:53 -0700 (PDT)
+ bh=3PquRgok1zJPddWo+hTweh0skOewFWtqO+jh37rKiqc=;
+ b=dt9GqFo4G5BmXKbWLa8W8Kvv0pVzofwpw+ed7EswzGwWF1RcgSCghVDccyvk9i8ONz
+ kqjh/tznCvrJeLB2y8VubDvICxXk1B9LNSU2WvcZ+wvnG17BuU823ppLQghOdTjyU44q
+ /+i6oSm9gYy4jv4jql5gUJl8oEl2BGn6UHrISfDPkx4kDfVPNPExM0yoxPDZG6oCZkXN
+ 0Q660jjfrpOgsfUi8fDeayHh7+QbZE3YMQNgSyISP8G2N38G1AW75WlK+rLwirTzHF4F
+ yeX9u5s9SgvCEHnr8CeAWLYb36vDsA5dFy/ZX2rOAeWWTuSCAg3yDJfJjmbAgDIBPVVt
+ XSJw==
+X-Gm-Message-State: AOJu0YyY+3Hjs8T8OzrXVJ+MBky0ZO6yMm/4ZKasaQAIeNdsGm/h+UML
+ Xw8pj98/vNltCCQYX+0wPv/9VaQUCrtOHHLmFW3nL3DLI/h/x9s/hyUu25k23VlGtz3wJXepzlh
+ 2wFA3/Soa8qGOzQiej3MHcofG4WtRtdL9yxijhngDQWJPo+Jgg4EHBFOuwRRZZbVst1Cov58CSb
+ 6ggCAiHLuIzFM9XDr4dK79v8c5ZjeY5w==
+X-Received: by 2002:a05:600c:4f04:b0:412:e0f7:ef52 with SMTP id
+ l4-20020a05600c4f0400b00412e0f7ef52mr57448wmq.19.1710778599271; 
+ Mon, 18 Mar 2024 09:16:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG3ORGzjXCzfKbfbFOBylAYK6/00IVbsyv1+VlkO7ECWTb6uBUCjoOkRbmYJYJ/DAoUZqzYMQ==
+X-Received: by 2002:a05:600c:4f04:b0:412:e0f7:ef52 with SMTP id
+ l4-20020a05600c4f0400b00412e0f7ef52mr57409wmq.19.1710778598704; 
+ Mon, 18 Mar 2024 09:16:38 -0700 (PDT)
 Received: from redhat.com ([2.52.5.113]) by smtp.gmail.com with ESMTPSA id
- n6-20020a5d4006000000b0033e699fc6b4sm10175671wrp.69.2024.03.18.09.15.50
+ bt3-20020a056000080300b0033f20497d4asm5965569wrb.5.2024.03.18.09.16.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 09:15:52 -0700 (PDT)
-Date: Mon, 18 Mar 2024 12:15:49 -0400
+ Mon, 18 Mar 2024 09:16:38 -0700 (PDT)
+Date: Mon, 18 Mar 2024 12:16:35 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
+ Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 07/24] smbios: cleanup smbios_get_tables() from legacy handling
-Message-ID: <a7bdf7186f8ee5955874438ec2ddb1d28bc084b4.1710778506.git.mst@redhat.com>
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PULL 18/24] smbios: extend smbios-entry-point-type with 'auto' value
+Message-ID: <4901b80e13be62fc8ea2d8844941f336076af266.1710778506.git.mst@redhat.com>
 References: <cover.1710778506.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -81,7 +81,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1710778506.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -89,8 +89,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,56 +108,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Igor Mammedov <imammedo@redhat.com>
 
-smbios_get_tables() bails out right away if leagacy mode is enabled
-and won't generate any SMBIOS tables. At the same time x86 specific
-fw_cfg_build_smbios() will genarate legacy tables and then proceed
-to preparing temporary mem_array for useless call to
-smbios_get_tables() and then discard it.
-
-Drop legacy related check in smbios_get_tables() and return from
-fw_cfg_build_smbios() early if legacy tables where built without
-proceeding to non legacy part of the function.
+later patches will use it to pick SMBIOS version at runtime
+depending on configuration.
 
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Ani Sinha <anisinha@redhat.com>
 Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-Id: <20240314152302.2324164-5-imammedo@redhat.com>
+Message-Id: <20240314152302.2324164-16-imammedo@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/fw_cfg.c   | 1 +
- hw/smbios/smbios.c | 6 ------
- 2 files changed, 1 insertion(+), 6 deletions(-)
+ qapi/machine.json | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-index 98a478c276..a635234e68 100644
---- a/hw/i386/fw_cfg.c
-+++ b/hw/i386/fw_cfg.c
-@@ -74,6 +74,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg)
-     if (smbios_tables) {
-         fw_cfg_add_bytes(fw_cfg, FW_CFG_SMBIOS_ENTRIES,
-                          smbios_tables, smbios_tables_len);
-+        return;
-     }
+diff --git a/qapi/machine.json b/qapi/machine.json
+index bb5a178909..0840c91e70 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1797,10 +1797,13 @@
+ #
+ # @64: SMBIOS version 3.0 (64-bit) Entry Point
+ #
++# @auto: Either 2.x or 3.x SMBIOS version, 2.x if configuration can be
++#     described by it and 3.x otherwise (since: 9.0)
++#
+ # Since: 7.0
+ ##
+ { 'enum': 'SmbiosEntryPointType',
+-  'data': [ '32', '64' ] }
++  'data': [ '32', '64', 'auto' ] }
  
-     /* build the array of physical mem area from e820 table */
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index 949c2d74a1..a1741a64a6 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -1229,12 +1229,6 @@ void smbios_get_tables(MachineState *ms,
- {
-     unsigned i, dimm_cnt, offset;
- 
--    if (smbios_legacy) {
--        *tables = *anchor = NULL;
--        *tables_len = *anchor_len = 0;
--        return;
--    }
--
-     if (!smbios_immutable) {
-         smbios_build_type_0_table();
-         smbios_build_type_1_table();
+ ##
+ # @MemorySizeConfiguration:
 -- 
 MST
 
