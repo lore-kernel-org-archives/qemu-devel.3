@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A8DC54E6A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 16:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E52C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 16:19:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmFet-0007J2-4W; Mon, 18 Mar 2024 12:16:19 -0400
+	id 1rmFfr-0002PF-Kj; Mon, 18 Mar 2024 12:17:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFeT-00075z-6h
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:15:56 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFfq-0002OQ-LK
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:17:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFeR-0004bS-Hz
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:15:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFfp-0004rf-8r
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:17:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710778550;
+ s=mimecast20190719; t=1710778636;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8d1jC5pXP2pg+IhFhot7syCv1JspX4H/Mza9SReTv6M=;
- b=XKSuGiShOVemxrLHANX8aD95c0tIyWNiH1si1xiHxGmSy5BOJFboNx1fKYD7D/517TJdLx
- e8uUy+idyljeHkwa2pqp1TQMSRss3ioUt+GPKlbi9FjOU/idLUd70Vni3j8By/3Uo40SlG
- CGLOPZwap96AOVZ1P1W8xo2kE3wM98c=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UeZ5d5rzVIIFteQdA/cbu9zu3ciyKvxSa3RVrtkb9L4=;
+ b=bCvpnqFjD3khaVKUKv8QYbGRBeIVrGM2X3QWlJpnXFKb/URbDXisxBUL5eGriaSOfyYgnZ
+ AFM1Coo0shv26gOzsc8D6XQODohBewnqBukkWzlraitmDxhC4i49rC40SvzUNdHlkhFqQM
+ sld8Nj1YcEY7nhB4VHiB+rmG0zq8zMI=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-370-_wzDt6T7MBuKIzNAKl0YrA-1; Mon, 18 Mar 2024 12:15:48 -0400
-X-MC-Unique: _wzDt6T7MBuKIzNAKl0YrA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-40e435a606aso24420895e9.3
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 09:15:48 -0700 (PDT)
+ us-mta-44-bk3MCaTgMmC4njHIIivwMg-1; Mon, 18 Mar 2024 12:17:15 -0400
+X-MC-Unique: bk3MCaTgMmC4njHIIivwMg-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-29c7932c5f5so3232638a91.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 09:17:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710778547; x=1711383347;
+ d=1e100.net; s=20230601; t=1710778631; x=1711383431;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8d1jC5pXP2pg+IhFhot7syCv1JspX4H/Mza9SReTv6M=;
- b=Ceb035jxgGx2AOtyPfZtWXYPu8Z1ybAPF9RuDhhj0YCEShXyeik6Uw6qOkNZjdZhrf
- kU3PVBpLok8VBGqQhsxUIAS945iBY6I2+VzDaBxOIC1y3IrhpFoM0dAyk7MvTJqsUMMb
- nreQs6a8vwCDNj1LApfDKibzSzrVA5Jvg16F9uYQtuLOFr5oBkXi8Zhu3s3UEVN5M1Pb
- aT0p2YJFZxTRjMIs0QakEvZAeQkGctk1RT2K2l6HIk9M4cR4YX/4r0vD93wIDq1la/ul
- VlHhsQFVlvlDI63g5w6Ciwr8Qw2pDfrUn5Ob+qfaT9GHQv0L8jAi5CDWeuSPFQp/HtG6
- T0iA==
-X-Gm-Message-State: AOJu0Yxve6rcOvHsIDN/MQlhKXOUW+lR8h9QD4++8wuMDLM4c4scQIqU
- i91kjWiig/EvrWUt1DuTI3ZZTrwdWbP8SAzFw0Q2dDL86YS5+u8l5MtIqDG0g7HSEHmX/+EmcvP
- ymX+YSPX4PVk7dG5dlosFVCdfQ2jE67K9+jiK+laal/rIOSb6g/U6AndgvlwGPba/QZ6khkVtO5
- wC40q8zVJjHUolPon2rxEZnPBNpxL10w==
-X-Received: by 2002:a05:600c:3b24:b0:414:c63:a781 with SMTP id
- m36-20020a05600c3b2400b004140c63a781mr2788653wms.1.1710778546673; 
- Mon, 18 Mar 2024 09:15:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHEw/sgTN9t+PBLuBuLzNZ6aCF0W9/g9KluberChmqPTXSkXcuAjiIOLBuZMw3vswXzUc6EcQ==
-X-Received: by 2002:a05:600c:3b24:b0:414:c63:a781 with SMTP id
- m36-20020a05600c3b2400b004140c63a781mr2788636wms.1.1710778546227; 
- Mon, 18 Mar 2024 09:15:46 -0700 (PDT)
+ bh=UeZ5d5rzVIIFteQdA/cbu9zu3ciyKvxSa3RVrtkb9L4=;
+ b=F90xzUmLuFq0igMpuroZA6DJGKOnxmtIkF9r6RoNrIrXhS8980ciyRxl7NPL8cNArv
+ kmwdgM6l/s5Pi48pGa5TUEppZq1hXt+3opCX+tdSRbK/vVzkXH0U1yiEsRyL/SHyUDLf
+ QA6nJf5AOydW6TTjcB0aeGp/C0X9kJ+aFUFpRK1vZNssuIYlu+YxF/053o2FS42qvt8K
+ I8AYJJYkEbfJV0/9V/isoWSVscGeLXWtqf73ak83657wnp/p7bq16RzcBV+gte2GRLVZ
+ ++VagMBOr73mBTAReo2vuOmqv3VyzswADIBFx5D1Y8kTGIXC8TuhtygAlVs72CtRBk4L
+ 5gIQ==
+X-Gm-Message-State: AOJu0YwcZCLLrTrYKS1a7seesr1hxwpeCyMC7ROPvvpy1x9AIYf2GsQh
+ bbcxP4WPQbHI9K2hezqaXKmY5B1E90P/RXJzbLM8SQee1jd2AAbPwiIAPdlfUmYMB/Vj9ClVj9h
+ NzuKrWMjMcUcVdji3IcTLp2bw9Lk+imQRYGo9I+J9K1FJ3jIC+SROcxJ+v7G5K++wyruFeoBbyO
+ 5qDqeMp/QghzDU6/cPqBXq4VP36+m1+w==
+X-Received: by 2002:a17:90a:d70f:b0:29f:76d4:306a with SMTP id
+ y15-20020a17090ad70f00b0029f76d4306amr95136pju.24.1710778630841; 
+ Mon, 18 Mar 2024 09:17:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHF5MzdmXdTDIjt9SelZTOOy/8UTPKC7Mtw7+npeEpjgginsbYIssEdKu1ldBGXCEMzfMgLbQ==
+X-Received: by 2002:a17:90a:d70f:b0:29f:76d4:306a with SMTP id
+ y15-20020a17090ad70f00b0029f76d4306amr95087pju.24.1710778630185; 
+ Mon, 18 Mar 2024 09:17:10 -0700 (PDT)
 Received: from redhat.com ([2.52.5.113]) by smtp.gmail.com with ESMTPSA id
- n20-20020a05600c4f9400b00414610d9223sm687173wmq.14.2024.03.18.09.15.44
+ v10-20020a17090ac90a00b0029be7922b32sm7959526pjt.26.2024.03.18.09.17.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 09:15:45 -0700 (PDT)
-Date: Mon, 18 Mar 2024 12:15:43 -0400
+ Mon, 18 Mar 2024 09:17:09 -0700 (PDT)
+Date: Mon, 18 Mar 2024 12:17:04 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>
-Subject: [PULL 05/24] tests: smbios: add test for -smbios type=11 option
-Message-ID: <ed75658af39ea29c5bf2d6fd2c645a54c95db78a.1710778506.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL 24/24] smbios: add extra comments to smbios_get_table_legacy()
+Message-ID: <bb949df637bdb6136a9acca55a2371fe1721e109.1710778506.git.mst@redhat.com>
 References: <cover.1710778506.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -105,62 +104,38 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Igor Mammedov <imammedo@redhat.com>
 
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-Id: <20240314152302.2324164-3-imammedo@redhat.com>
+Message-Id: <20240314152302.2324164-22-imammedo@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/bios-tables-test.c |  17 +++++++++++++++++
- tests/data/smbios/type11_blob  | Bin 0 -> 11 bytes
- 2 files changed, 17 insertions(+)
- create mode 100644 tests/data/smbios/type11_blob
+ hw/smbios/smbios_legacy.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index b2992bafa8..a116f88e1d 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2091,6 +2091,21 @@ static void test_acpi_pc_smbios_options(void)
-     free_test_data(&data);
- }
+diff --git a/hw/smbios/smbios_legacy.c b/hw/smbios/smbios_legacy.c
+index 06907cd16c..c37a8ee821 100644
+--- a/hw/smbios/smbios_legacy.c
++++ b/hw/smbios/smbios_legacy.c
+@@ -151,6 +151,9 @@ uint8_t *smbios_get_table_legacy(size_t *length, Error **errp)
+     smbios_entries_len = sizeof(uint16_t);
+     smbios_entries = g_malloc0(smbios_entries_len);
  
-+static void test_acpi_pc_smbios_blob(void)
-+{
-+    uint8_t req_type11[] = { 11 };
-+    test_data data = {
-+        .machine = MACHINE_PC,
-+        .variant = ".pc_smbios_blob",
-+        .required_struct_types = req_type11,
-+        .required_struct_types_len = ARRAY_SIZE(req_type11),
-+    };
-+
-+    test_smbios("-machine smbios-entry-point-type=32 "
-+                "-smbios file=tests/data/smbios/type11_blob", &data);
-+    free_test_data(&data);
-+}
-+
- static void test_oem_fields(test_data *data)
- {
-     int i;
-@@ -2244,6 +2259,8 @@ int main(int argc, char *argv[])
- #endif
-             qtest_add_func("acpi/piix4/smbios-options",
-                            test_acpi_pc_smbios_options);
-+            qtest_add_func("acpi/piix4/smbios-blob",
-+                           test_acpi_pc_smbios_blob);
-         }
-         if (qtest_has_machine(MACHINE_Q35)) {
-             qtest_add_func("acpi/q35", test_acpi_q35_tcg);
-diff --git a/tests/data/smbios/type11_blob b/tests/data/smbios/type11_blob
-new file mode 100644
-index 0000000000000000000000000000000000000000..1d8fea4b0c6f040a13ba99c3fad762538b795614
-GIT binary patch
-literal 11
-Scmd;PW!S(N;u;*nzyJUX)&c?m
-
-literal 0
-HcmV?d00001
-
++    /*
++     * build a set of legacy smbios_table entries using user provided blobs
++     */
+     for (i = 0, usr_offset = 0; usr_blobs_sizes && i < usr_blobs_sizes->len;
+          i++)
+     {
+@@ -166,6 +169,10 @@ uint8_t *smbios_get_table_legacy(size_t *length, Error **errp)
+         table->header.length = cpu_to_le16(sizeof(*table) + size);
+         memcpy(table->data, header, size);
+         smbios_entries_len += sizeof(*table) + size;
++        /*
++         * update number of entries in the blob,
++         * see SeaBIOS: qemu_cfg_legacy():QEMU_CFG_SMBIOS_ENTRIES
++         */
+         (*(uint16_t *)smbios_entries) =
+             cpu_to_le16(le16_to_cpu(*(uint16_t *)smbios_entries) + 1);
+         usr_offset += size;
 -- 
 MST
 
