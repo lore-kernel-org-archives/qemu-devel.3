@@ -4,90 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE105C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 10:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDEC4C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 10:50:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmATS-0005Qs-MX; Mon, 18 Mar 2024 06:44:10 -0400
+	id 1rmAZB-0006p9-2X; Mon, 18 Mar 2024 06:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmATR-0005QR-5Q
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:44:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rmAZ6-0006oY-Jk
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:50:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmATP-00041x-G2
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:44:08 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rmAZ5-0004rX-6n
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:50:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710758645;
+ s=mimecast20190719; t=1710758998;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5iXP/gpd9L7ldbls55N2RB3/MiQOlb1DMl3GAVzVgqE=;
- b=c5dTM1Z9zKmUxYTp/nSWLztbCRecniI3Mk6q6XGsthWO838PhXAni8q2Ukk3vtWsKE7ji8
- 7Rl/YiFO9By+0P9RSK+EEcMBycTArGPwO82LrpxIjr6sh6UL/uPhFQIYkVjy+wE44ctfOc
- zCY0rbPChPEB1loogDH9StDSpBKzqdw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qgKgaJf7Zpx8QRzb+0MDOtHEGNOc6vGxzU0Hm/lP4YI=;
+ b=Q8zV2tUPQtiu083OTv1g4G6bN+xHvdHaEuZOILNThF50m6rQhr8IxHke8SAh36E7IZ2nTv
+ O5Pn4AnBK4baQ0ZXDl4HX61O63DC0Ue+ZdR3J+5RbpJi/8NeCKotPJWMmo5B/O33j+n+k+
+ ET5Za9vuBqeiGKTcUwRKo+9qcfARUhs=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-581-A6cd1vdIMSu6Tv_THv2jTQ-1; Mon, 18 Mar 2024 06:44:03 -0400
-X-MC-Unique: A6cd1vdIMSu6Tv_THv2jTQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-41401eef944so14271625e9.2
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 03:44:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710758642; x=1711363442;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5iXP/gpd9L7ldbls55N2RB3/MiQOlb1DMl3GAVzVgqE=;
- b=qg/CWRQeXmgD2J1v9zsqeGNiyIz3lwcO7uADhNTbyp45oxYs9ECv1uG36aDViGg0KQ
- VR8uY/f90j0qNo33X2jYW9vMRRgAsEiaFMbF/7W/BAYh1wOewWhxjQJx04MDzuqHW2DW
- DEk3wyvAaKEBPPMNGLR0bouuXeWQ+zq26aXn6tGviV7d7ncnSYTTsRyCVEr85hJWlWy8
- BU9bh7Q+xq3qRZshS8l2Z1jJZkkKbbP12fBVh3b4MRaNKFI52oTyLt/qfuanMPkMRdkd
- +aWDWhNOWkgV8KHlP4IFKDKawHcfPFgIR2cz5gccmeIC2BtLhRM9Is1PwEJrHJ8FQQIn
- lSCg==
-X-Gm-Message-State: AOJu0YxfYcLC1tSQwUYgzrhe8btW4dueP0GMKe3iB7Ag21aZfoY+iRvV
- 48yK/JsEiBRQuPM1sGX+67lHBUXdPMNdEEKdcVzVwRYBJe3PJA9/UVYZT72RwWoxlhXtVIsQv/e
- p590sIMxqk+SN8bEezCchQZIU2PV1hOf/tGfycGRjuOH53+G4vazl
-X-Received: by 2002:a05:6000:d04:b0:33d:8c86:e859 with SMTP id
- dt4-20020a0560000d0400b0033d8c86e859mr7219054wrb.60.1710758642084; 
- Mon, 18 Mar 2024 03:44:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0BMOQx76yKKbQiHv6l4zyUKXb7eVrj1uzc+4KODM/s9LDVeq77Nvb+wyzeXMBKA91iYRTsw==
-X-Received: by 2002:a05:6000:d04:b0:33d:8c86:e859 with SMTP id
- dt4-20020a0560000d0400b0033d8c86e859mr7219042wrb.60.1710758641745; 
- Mon, 18 Mar 2024 03:44:01 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- m14-20020adfe94e000000b0033cf60e268fsm9434976wrn.116.2024.03.18.03.44.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 03:44:01 -0700 (PDT)
-Message-ID: <df906e4d-24d3-47db-b1fe-a429907b2f20@redhat.com>
-Date: Mon, 18 Mar 2024 11:43:59 +0100
+ us-mta-520-3iGu4gGDPfaduEtOfaqFNQ-1; Mon, 18 Mar 2024 06:49:54 -0400
+X-MC-Unique: 3iGu4gGDPfaduEtOfaqFNQ-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3E58281A263;
+ Mon, 18 Mar 2024 10:49:54 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.138])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 1D9311C060A4;
+ Mon, 18 Mar 2024 10:49:54 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2006D21E6A28; Mon, 18 Mar 2024 11:49:49 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org,  qemu-block@nongnu.org,  philmd@linaro.org
+Subject: Re: [PATCH 00/10] Reduce usage of QERR_ macros further
+In-Reply-To: <20240312141343.3168265-1-armbru@redhat.com> (Markus Armbruster's
+ message of "Tue, 12 Mar 2024 15:13:33 +0100")
+References: <20240312141343.3168265-1-armbru@redhat.com>
+Date: Mon, 18 Mar 2024 11:49:49 +0100
+Message-ID: <87frwn7r1u.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 14/25] memory: Add Error** argument to the
- global_dirty_log routines
-Content-Language: en-US, fr
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, Hyman Huang <yong.huang@smartx.com>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-15-clg@redhat.com> <ZfQyRu7nt6M6uzTJ@x1n>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <ZfQyRu7nt6M6uzTJ@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -112,44 +82,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->> --- a/migration/ram.c
->> +++ b/migration/ram.c
->> @@ -2836,18 +2836,31 @@ static void migration_bitmap_clear_discarded_pages(RAMState *rs)
->>   
->>   static void ram_init_bitmaps(RAMState *rs)
->>   {
->> +    Error *local_err = NULL;
->> +    bool ret = true;
->> +
->>       qemu_mutex_lock_ramlist();
->>   
->>       WITH_RCU_READ_LOCK_GUARD() {
->>           ram_list_init_bitmaps();
->>           /* We don't use dirty log with background snapshots */
->>           if (!migrate_background_snapshot()) {
->> -            memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION);
->> +            ret = memory_global_dirty_log_start(GLOBAL_DIRTY_MIGRATION,
->> +                                                &local_err);
->> +            if (!ret) {
->> +                error_report_err(local_err);
->> +                goto out_unlock;
-> 
-> Here we may need to free the bitmaps created in ram_list_init_bitmaps().
-> 
-> We can have a helper ram_bitmaps_destroy() for that.
-> 
-> One thing be careful is the new file_bmap can be created but missing in the
-> ram_save_cleanup(), it's because it's freed earlier.  IMHO if we will have
-> a new ram_bitmaps_destroy() we can unconditionally free file_bmap there
-> too, as if it's freed early g_free() is noop.
+Markus Armbruster <armbru@redhat.com> writes:
 
-OK. Let's do that in a new prereq patch. I will change ram_state_init()
-and xbzrle_init() to take an Error ** argument while at it.
+> Philippe posted "[PATCH v2 00/22] qapi: Kill 'qapi/qmp/qerror.h' for
+> good" a couple of months ago.  I cherry-picked just its simplest parts
+> for now.
+>
+> Markus Armbruster (1):
+>   error: Drop superfluous #include "qapi/qmp/qerror.h"
 
-
-Thanks,
-
-C.
-
+Queued for 9.1 with PATCH 08's new error message fixed.  Thanks!
 
 
