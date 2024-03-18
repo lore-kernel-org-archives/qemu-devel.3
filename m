@@ -4,119 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C40C3C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 20:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7490DC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 20:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmJbV-0001JO-3O; Mon, 18 Mar 2024 16:29:05 -0400
+	id 1rmJdz-0002MV-KR; Mon, 18 Mar 2024 16:31:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rmJbT-0001J2-J5
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:29:03 -0400
-Received: from mout.gmx.net ([212.227.17.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rmJbR-00023y-7w
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:29:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1710793736; x=1711398536; i=deller@gmx.de;
- bh=WvsuPrZ0tqAwRzQ/KloEgNBdXl8EKEbqKyYrP8yNifA=;
- h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
- In-Reply-To;
- b=ZqTbiAqhdU0/afz+qagWt6LPQuA75c60pTUNKTuWFsvWcrtWFfLIhqNhsnmL+OyO
- WfOApqbDf8IZ1RPZN0q6lTVRuy078sxCAHhMZIHJFJ+//K9t7MdmyQg/VsWyzwtqi
- M/N8DX+PMiFFiGiSYcSm2+7g3Tqd3SxukRf4ZXlDUJN4mybPxi+fSnuHUiAVEGdax
- DqS/dXbQgEgjmyMl1tyFqiRPKbTdUgGghOjcrz/TMlT10tlwg/cnFhU49yz55WK/j
- 4uQ5ws0lIyyKfaKvRdJbRY2DiYgbLVsRHbaHPG3ZACbrNuVA0eBrSQOprRfjz8Icp
- Kp+NNaqloE80sxNUbg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([94.134.155.237]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mjj87-1r2meJ3EdP-00lE0r; Mon, 18
- Mar 2024 21:28:56 +0100
-Message-ID: <d28de9c4-9bf3-4757-88d9-8f4bb6ef6cb6@gmx.de>
-Date: Mon, 18 Mar 2024 21:28:56 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmJdu-0002LX-Sv
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:31:35 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmJds-0002O3-7r
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:31:34 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-5d3907ff128so3690849a12.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 13:31:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710793889; x=1711398689; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kO0CUlmpmgpgJh9+JhtAcuSOUmI+kDjHnlfeXxl5TbA=;
+ b=qxZDWzeWLRfhaKNQ55/Qae/0N4CQUo8kv9UBg5pTj0prWrssTQDD3fDWXsWTxyfGVj
+ OOZDScQ6ActosdtDT+Cx3kTsAyDcw651Y+jw+x0EoQwaP33TLrTDqRuCIM+GXbQf22qw
+ 4JVMDm4RsuIK16pSph1QBS5MAkfWlxRokQpc4Gt/h++p664BX34+aaCc73ISRMqPjHzI
+ dHxpqyEgG8v5l3QpFIh9tdIW24925wT4zmb1gzOqZqkNt+fJ09gV3FmaenAdUQHAJDwR
+ BdfYclW9t7ilv1e0JHxkGGztywwRm09pBPtRxcHXKwJZoqipjvJczj5y2BPiyZk/f5pK
+ mK8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710793889; x=1711398689;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kO0CUlmpmgpgJh9+JhtAcuSOUmI+kDjHnlfeXxl5TbA=;
+ b=TWSsz4n7P94hHfk/2ABhx2RETiup4J+q5RqGwdmBXvw8hWVdPCOIGXzDssLVCPZIAY
+ ENk0UnqDj8RP88XHcjbH3vCmO3Z50NUKLdovsMxX3/xM0yvsVnJZiPxZ+80WMv5U2WJI
+ 4it4OiXucLAftk4WaN9Tiw9c9tFOXjsiLSGyNGdmGXlzl6ko92pLMUGhPv+H+UnyikMQ
+ jqsDB5pm7n32G4Iqu8y5/lQ7gWZoAEsmaW75dqYytPkP0A4PSZqzHhNTpwQIH4aKo1Zg
+ 3+cEdiifx/fH5EC5QvbLEPTj4BDzGrJrG/ZWBFDvzYk6RP3Ziv/98y7qjntg4HoAgeTJ
+ g/6Q==
+X-Gm-Message-State: AOJu0Yz8kmPDTsJcmyESTXV1Sk3X1afKCs7GJsNYJHY7I8w5ddcRqbhZ
+ a4GygYoi7E8ttlAFVCUDic5KQKHWww8v3XGtWIYTHOJ7HwtlGvCfvGClsq+6YSM=
+X-Google-Smtp-Source: AGHT+IGnKNUsKAZLmF5s7wo6PAlSgUTftdWHOehg/jqT7cAK4ifVMdZPl9pkumAcZ3ZP9I1eav18VA==
+X-Received: by 2002:a17:90a:597:b0:29f:b882:d061 with SMTP id
+ i23-20020a17090a059700b0029fb882d061mr721547pji.40.1710793888866; 
+ Mon, 18 Mar 2024 13:31:28 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ p2-20020a17090a930200b0029c0cc16888sm8230466pjo.1.2024.03.18.13.31.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Mar 2024 13:31:28 -0700 (PDT)
+Message-ID: <2065b6d5-9b2b-4b87-a49f-8e0711f3f2b0@linaro.org>
+Date: Mon, 18 Mar 2024 10:31:24 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] target/hppa: fix shrp for wide mode
+Subject: Re: [PATCH 1/7] target/hppa: ldcw,s uses static shift of 3
 Content-Language: en-US
-To: Sven Schnelle <svens@stackframe.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
+To: Sven Schnelle <svens@stackframe.org>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
 References: <20240317221431.251515-1-svens@stackframe.org>
- <20240317221431.251515-3-svens@stackframe.org>
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
- HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
- r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
- CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
- 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
- dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
- Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
- GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
- aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
- 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
- ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
- FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
- uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
- uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
- REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
- qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
- iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
- gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
- Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
- qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
- 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
- dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
- rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
- UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
- eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
- ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
- dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
- lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
- 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
- xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
- wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
- fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
- Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
- l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
- RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
- BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
- Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
- XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
- MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
- FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
- 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
- ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240317221431.251515-3-svens@stackframe.org>
+ <20240317221431.251515-2-svens@stackframe.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240317221431.251515-2-svens@stackframe.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:qrTEr2QfXj+6//ANy4FvBTzaB14e2NJnCbHqISk2LV0ZtbQbTyH
- ztM51GZEr2oFBrHhon997VMLxkQboJQ1soa8pKIj+3LxuW2Z1DrxkB0U1V9IY7zedBNXSL+
- p3M4fOnrKkyc5JPXm3xKyKNVTmas5uXpFwL34AKBaMrlPed1UFgTiF8G9yd26U0yG5NP7ND
- qbY5EB4/XvLKEKXRMDAyw==
-UI-OutboundReport: notjunk:1;M01:P0:nApgWvJNLFM=;3J6+TLJ2+5Zf/rjNWAB1uQkFQkG
- DIQ+sUOkJSV+eOqQezKfwssSXPdF/CQfeuo1spX4wEe3V5xFr+TWbs8GwwBrKxSCy9z55roze
- RQ1S38OR6CHKqC7QTGgpqnSfqCXvF3esOV1OVGqAivR3QAGWyHsJYx66Tn0rNhhAom6CECv5b
- yxK75dCtuvMeClOXWRtzBTYMa6P3tkOUQMfEw0+z8GrCnE7ILsTRolMzrVy238IK66+2LDtAs
- toQHat8blKpzOkRTzDMzjls50rnfxULC3jeOAzKBGbRuOzVVNMxsjXURdwO5ny6evtqycCIA2
- Ldcy3fIOnbWKBrukdSLU+Rh/jAY4ncI3TEFfIGUxfRKq/HhR4/MsEG2u8BSkVj27Hd3vzQLWB
- xM38Bc4JcRMp41z8wnV/eF6oC4Ez8/CyKPwEpf5RYnEWY+oFFgYOPWq/8VXnwGrBFplEnP6v7
- SwpmNHLViH4FDVsdEqq5nvTBgy1sFObZClUddVfkmvKlyiAWIFw3bzweY7CUfXA2mD3ovebwY
- Yx6uYi7mKkf1hEmNafxSiZR9UCoHfx1T1V9YkDDr6m6CoyosLKIyE5FN3LbXz5mw+phYa5H18
- STCnFWR/T0uZP3Rbucpk1YDD5a776E26sSCVpEBxUIhxOSL8DjtcACMzVIRhQ3duxUT5ldTg3
- 4baICRbHCkQTTjU9/Oegl8cwzq3StUVVpa42w6uv605JVzXFj7aaK2vZCNKHTAtx+Vtzg/OfC
- OQiC5mqaEBBkeZ6dQpIO61NIL5JkTfJwPXxJarGEUXHhIiw/tDzZGdVaqgoeX+NohOuy+8VCS
- XuOoFROHTwzJBXNYXUmj9/PKsgxZh1vsn0ngnvav5Hyf0=
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,40 +96,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/17/24 23:14, Sven Schnelle wrote:
+On 3/17/24 12:14, Sven Schnelle wrote:
 > Signed-off-by: Sven Schnelle <svens@stackframe.org>
-
-Reviewed-by: Helge Deller <deller@gmx.de>
-
-Helge
-
 > ---
->   target/hppa/translate.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
->
+>   target/hppa/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 > diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index 6a513d7d5c..8ba31567e8 100644
+> index eb2046c5ad..6a513d7d5c 100644
 > --- a/target/hppa/translate.c
 > +++ b/target/hppa/translate.c
-> @@ -3462,7 +3462,7 @@ static bool trans_shrp_sar(DisasContext *ctx, arg_=
-shrp_sar *a)
->       /* Install the new nullification.  */
->       cond_free(&ctx->null_cond);
->       if (a->c) {
-> -        ctx->null_cond =3D do_sed_cond(ctx, a->c, false, dest);
-> +        ctx->null_cond =3D do_sed_cond(ctx, a->c, a->d, dest);
+> @@ -3085,7 +3085,7 @@ static bool trans_ldc(DisasContext *ctx, arg_ldst *a)
+>           dest = dest_gpr(ctx, a->t);
 >       }
->       return nullify_end(ctx);
->   }
-> @@ -3505,7 +3505,7 @@ static bool trans_shrp_imm(DisasContext *ctx, arg_=
-shrp_imm *a)
->       /* Install the new nullification.  */
->       cond_free(&ctx->null_cond);
->       if (a->c) {
-> -        ctx->null_cond =3D do_sed_cond(ctx, a->c, false, dest);
-> +        ctx->null_cond =3D do_sed_cond(ctx, a->c, a->d, dest);
->       }
->       return nullify_end(ctx);
->   }
+>   
+> -    form_gva(ctx, &addr, &ofs, a->b, a->x, a->scale ? a->size : 0,
+> +    form_gva(ctx, &addr, &ofs, a->b, a->x, a->scale ? 3 : 0,
+>                a->disp, a->sp, a->m, MMU_DISABLED(ctx));
+>   
+>       /*
 
+Whoops, broken since day one.
+
+Fixes: 96d6407f363 ("target-hppa: Implement loads and stores")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
