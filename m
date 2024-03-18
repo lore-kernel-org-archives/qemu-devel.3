@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB8BC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 16:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCA8CC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 16:28:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmFp2-0001Yg-EY; Mon, 18 Mar 2024 12:26:48 -0400
+	id 1rmFqM-0002Sd-DM; Mon, 18 Mar 2024 12:28:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1rmFp1-0001XC-3Z; Mon, 18 Mar 2024 12:26:47 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmFqG-0002Q6-5t
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:28:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1rmFoy-0006Y4-DV; Mon, 18 Mar 2024 12:26:46 -0400
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42IFxHCZ019374; Mon, 18 Mar 2024 16:26:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=2pCitAtjcFXj2Y6ow4c6rUy2SqwRVagiJ8MCZEo58co=;
- b=Fxf2ACxbhMfs0ezSasj9lb60DPNdNH9Xed1cf7CoZ/wPWhr37+Za4ev91grRCmZ8vyDM
- HEzgg5LGz1qWEvthL+bwPpj7EV5txItTUBiofuBWK+5t4gTnXSUR98XSc2+c8LQLycM2
- oWsBRD63LrF2vOXSvM368/JeMfOLDF2xe7P4Bzg2FZJggNa+VJkXeMZBLUiJ/zCnbZ1M
- Eom1nb/q8eZGvfUe7ZNv/rSD0k5Zc5l9WErUfdlw9R5Dr7IBFapscEl64yBQKHe2sBhT
- bonZ80S5EkcTjf0xCjjHcgT8O7xCmGVVvwe8+cFbyu83LrxSEMoS/i6VaKWy/WTq52tT YQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wxr0hghus-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 18 Mar 2024 16:26:41 +0000
-Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42IGKBFA001601;
- Mon, 18 Mar 2024 16:26:40 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wxr0hghum-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 18 Mar 2024 16:26:40 +0000
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42IGJddH019891; Mon, 18 Mar 2024 16:26:39 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wwqyk9ntb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 18 Mar 2024 16:26:39 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42IGQaUX47645180
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 18 Mar 2024 16:26:38 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E148820043;
- Mon, 18 Mar 2024 16:26:34 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6C1C92006C;
- Mon, 18 Mar 2024 16:26:34 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.85.188])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 18 Mar 2024 16:26:34 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, Ido Plat <ido.plat@ibm.com>, 
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH 1/2] target/s390x: Use mutable temporary value for op_ts
-Date: Mon, 18 Mar 2024 17:26:05 +0100
-Message-ID: <20240318162633.13017-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.44.0
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmFq2-0006e9-Vc
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:28:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710779269;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZCLOZNDcomJZBo0/HPMDP+Rj48VmjAEfEP1kRfGsD1U=;
+ b=bEXiQUskaVeA7Cv0euGmREW3HV3MQ4PqWdgMZWTfTTQYe9F0jLPL/+feEeglzZlpTC71OG
+ 9aQvI0y63clWm5KU3QD2e8mCBnhx7UOqK/+6VYWYIAEb9SuizUpHTGH22/F+1S1vMtvv0S
+ PSWkjkRkkOClFrMOXWldI7ZsNSy+ios=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-77-JOpS0o09OQOD4uqNBo_ayA-1; Mon, 18 Mar 2024 12:27:46 -0400
+X-MC-Unique: JOpS0o09OQOD4uqNBo_ayA-1
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-3c377528ca3so357671b6e.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 09:27:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710779266; x=1711384066;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZCLOZNDcomJZBo0/HPMDP+Rj48VmjAEfEP1kRfGsD1U=;
+ b=vFKSwA/2WFDssAlHvt3VGsd/Eshc9Pi7YWJf6ZUVHFS+QvUhta4xs1wS4pspJc61SM
+ AIDy/qZeEMkCjG96lqsDL0JWxRVgtQlgzi2AsZqfjAkn1e99b5FpMHTbcJI9oHbBFs+1
+ hH4zNszD1UOozz599OPKNbeWMd7VxX7d5klrWWDZ3x033p1lFtFuZa7lR/V+CjKbvH9s
+ d3sSJsUlSAqV4I8YpnzkAQGvEZPTjtx6f7sHUAjfFHYZj5xMGjlO9d2bQlzcM5bLCS13
+ PEyzrGyOaWEMqbIb42bB45lDrePanK9HE1vNU06eQ8vhj0NuuyQej0HLw/Re5RzChvLF
+ dozA==
+X-Gm-Message-State: AOJu0Yxra3Ep7KKdMmmPTOHYyXGgq4R5QoZNaGsyfeMF6+9ZwLQBxBtk
+ VrFCA9bfpikzP3YLj0Lo4I2T2RXoF1Cx+5d5TjgKiiz+LgEeRa9XsiH1BJWjlJZYVo0pX1o0WTL
+ lo0ljMvyBkFoNdiaDsMJDIHTkeCwutJVdJTZLZ171tiwTu5xnkk64
+X-Received: by 2002:a05:6808:3a97:b0:3c3:7dec:8fda with SMTP id
+ fb23-20020a0568083a9700b003c37dec8fdamr6394803oib.4.1710779266026; 
+ Mon, 18 Mar 2024 09:27:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEhk73rLiuTixdnk0lhdZzAfArq0UKj20XuJOzh27yFjGXwM65jzm0wx6BEVjtK+CEXy/gDpQ==
+X-Received: by 2002:a05:6808:3a97:b0:3c3:7dec:8fda with SMTP id
+ fb23-20020a0568083a9700b003c37dec8fdamr6394783oib.4.1710779265607; 
+ Mon, 18 Mar 2024 09:27:45 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ fj5-20020a05622a550500b00430b423f06csm3680832qtb.86.2024.03.18.09.27.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Mar 2024 09:27:45 -0700 (PDT)
+Date: Mon, 18 Mar 2024 12:27:42 -0400
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>,
+ Paul Durrant <paul@xen.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH v4 13/25] memory: Add Error** argument to
+ .log_global_start() handler
+Message-ID: <ZfhrfotENipvXJVr@x1n>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-14-clg@redhat.com> <ZfQukLXQsgFEap4f@x1n>
+ <40d6777a-7d58-4fe1-a441-67df73ca5efd@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: MBjuyuX8RvSWPH4Omt3579QvxNhWbqyQ
-X-Proofpoint-ORIG-GUID: aI_9dMAxYQYK3omYZTAfAxxah0Svqb8-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-18_12,2024-03-18_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 bulkscore=0 impostorscore=0 clxscore=1015 adultscore=0
- mlxscore=0 lowpriorityscore=0 phishscore=0 mlxlogscore=885 spamscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2403140000 definitions=main-2403180122
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+In-Reply-To: <40d6777a-7d58-4fe1-a441-67df73ca5efd@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,34 +110,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ido Plat <ido.plat@ibm.com>
+On Mon, Mar 18, 2024 at 03:54:28PM +0100, Cédric Le Goater wrote:
+> On 3/15/24 12:18, Peter Xu wrote:
+> > > @@ -3009,13 +3045,16 @@ static void listener_add_address_space(MemoryListener *listener,
+> > >   {
+> > >       FlatView *view;
+> > >       FlatRange *fr;
+> > > +    Error *local_err = NULL;
+> > >       if (listener->begin) {
+> > >           listener->begin(listener);
+> > >       }
+> > >       if (global_dirty_tracking) {
+> > >           if (listener->log_global_start) {
+> > > -            listener->log_global_start(listener);
+> > > +            if (!listener->log_global_start(listener, &local_err)) {
+> > > +                error_report_err(local_err);
+> > > +            }
+> > IMHO we should assert here instead of error report.  We have this to guard
+> > hot-plug during migration so I think the assert is justified:
+> > 
+> > qdev_device_add_from_qdict():
+> > 
+> >      if (!migration_is_idle()) {
+> >          error_setg(errp, "device_add not allowed while migrating");
+> >          return NULL;
+> >      }
+> > 
+> > If it really happens it's a bug, as listener_add_address_space() will still
+> > keep the rest things around even if the hook failed.  It'll start to be a
+> > total mess..
+> 
+> It seems that adding a region listener while logging is active has been
+> supported from the beginning, commit 7664e80c8470 ("memory: add API for
+> observing  updates to the physical memory map"). Can it happen ? if not
+> we could simply remove the  log_global_start() call.
 
-Otherwise TCG would assume the register that holds t1 would be constant
-and reuse whenever it needs the value within it.
+IMHO we'd better keep it for the sake of logic completeness, even though I
+don't know when it'll be useful..
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-[iii: Adjust a newline and capitalization]
-Signed-off-by: Ido Plat <ido.plat@ibm.com>
----
- target/s390x/tcg/translate.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I think it's safe to assert because log_global_start() should only be
+triggered by either vhost/vfio with current code base when reaching here.
+It doesn't mean that in the future all log_global_start() hooks are based
+on a device object. E.g., there's the other Xen user, it just won't trigger
+either, afaict.  So the assert should be safe.
 
-diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index 0d0c672c959..3fdddac7684 100644
---- a/target/s390x/tcg/translate.c
-+++ b/target/s390x/tcg/translate.c
-@@ -4781,8 +4781,9 @@ static DisasJumpType op_trXX(DisasContext *s, DisasOps *o)
- 
- static DisasJumpType op_ts(DisasContext *s, DisasOps *o)
- {
--    TCGv_i32 t1 = tcg_constant_i32(0xff);
-+    TCGv_i32 t1 = tcg_temp_new_i32();
- 
-+    tcg_gen_movi_i32(t1, 0xff);
-     tcg_gen_atomic_xchg_i32(t1, o->in2, t1, get_mem_index(s), MO_UB);
-     tcg_gen_extract_i32(cc_op, t1, 7, 1);
-     set_cc_static(s);
+In the future maybe we could allow other things to trigger here besides
+device, but obviously we're not ready for failing it.  Instead of adding
+the failure handling which will never be used for now, IIUC it's simpler we
+just provide an assert until someone add a real user of such.
+
+Thanks,
+
 -- 
-2.44.0
+Peter Xu
 
 
