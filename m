@@ -4,51 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E10F9C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 08:03:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A2EC54E6A
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 08:03:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm7w9-0003gV-5v; Mon, 18 Mar 2024 04:01:37 -0400
+	id 1rm7wB-0003iK-UC; Mon, 18 Mar 2024 04:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1rm7w8-0003fF-3u
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 04:01:36 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1rm7w3-0001SM-1t
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 04:01:34 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxXevT9PdlVUAaAA--.63095S3;
- Mon, 18 Mar 2024 16:01:23 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Bx8OTR9PdliWtcAA--.46553S3; 
- Mon, 18 Mar 2024 16:01:22 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH 1/5] hw/loongarch: Refine acpi srat table for numa memory
-Date: Mon, 18 Mar 2024 16:01:17 +0800
-Message-Id: <20240318080121.2836548-2-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240318080121.2836548-1-maobibo@loongson.cn>
-References: <20240318080121.2836548-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rm7wB-0003hx-1R; Mon, 18 Mar 2024 04:01:39 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rm7w9-0001T7-Ln; Mon, 18 Mar 2024 04:01:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710748897; x=1742284897;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=fZpPZsS9Ek2UYqxKvyku5IJyzfot+3YHcbSDRPzsy1A=;
+ b=VC5CTuSIzjAO40yr8nb3MvYQphSODXXX194FER/Iy542vnl6F7huH55n
+ AaTw1QzVouztFmUTHXWdMxKh/Sa0+r8PX1zocEchJsE8otpNq/VyLmAta
+ 2t66BUavowjrfvDPmq+PVGJmGMGUN6zGU3aDMqQRzk1ImJGtA06iLpoCd
+ 9c9pavPH0wJUBraZ8sGOM6CZ5MsRdzaUaIHWCdMzvj+o7pHocE8jpE39Q
+ saILL+D2KBEvooglIOrgBIcKQ8dDN2UCZvm9tt4lYOU0ZlcWerQWsaRDb
+ niprhifna3dppaQmOV3j21HQPuzrOCJbNf1jido6peaYzK5Swey/mnNUm A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="30982351"
+X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; d="scan'208";a="30982351"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Mar 2024 01:01:31 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; d="scan'208";a="13487922"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa006.fm.intel.com with ESMTP; 18 Mar 2024 01:01:27 -0700
+Date: Mon, 18 Mar 2024 16:15:19 +0800
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Claudio Fontana <cfontana@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Subject: Re: [PATCH-for-9.1 03/21] target/ppc: Declare CPU QOM types using
+ DEFINE_TYPES() macro
+Message-ID: <Zff4F3xCiP7x95wF@intel.com>
+References: <20240315130910.15750-1-philmd@linaro.org>
+ <20240315130910.15750-4-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Bx8OTR9PdliWtcAA--.46553S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <20240315130910.15750-4-philmd@linaro.org>
+Received-SPF: none client-ip=192.198.163.7;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,103 +90,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-One LoongArch virt machine platform, there is limitation for memory
-map information. The minimum memory size is 256M and minimum memory
-size for numa node0 is 256M also. With qemu numa qtest, it is possible
-that memory size of numa node0 is 128M.
+On Fri, Mar 15, 2024 at 02:08:51PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Fri, 15 Mar 2024 14:08:51 +0100
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH-for-9.1 03/21] target/ppc: Declare CPU QOM types using
+>  DEFINE_TYPES() macro
+> X-Mailer: git-send-email 2.41.0
+> 
+> When multiple QOM types are registered in the same file,
+> it is simpler to use the the DEFINE_TYPES() macro. In
+> particular because type array declared with such macro
+> are easier to review.
+> 
+> In few commits we are going to add more types, so replace
+> the type_register_static() to ease further reviews.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Message-Id: <20231013140116.255-16-philmd@linaro.org>
+> ---
+>  target/ppc/cpu_init.c | 52 +++++++++++++++++++------------------------
+>  1 file changed, 23 insertions(+), 29 deletions(-)
 
-Limitations for minimum memory size for both total memory and numa
-node0 is removed for acpi srat table creation.
-
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/loongarch/acpi-build.c | 58 +++++++++++++++++++++++----------------
- 1 file changed, 34 insertions(+), 24 deletions(-)
-
-diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-index e5ab1080af..d0247d93ee 100644
---- a/hw/loongarch/acpi-build.c
-+++ b/hw/loongarch/acpi-build.c
-@@ -165,8 +165,9 @@ static void
- build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
- {
-     int i, arch_id, node_id;
--    uint64_t mem_len, mem_base;
--    int nb_numa_nodes = machine->numa_state->num_nodes;
-+    hwaddr len, base, gap;
-+    NodeInfo *numa_info;
-+    int nodes, nb_numa_nodes = machine->numa_state->num_nodes;
-     LoongArchMachineState *lams = LOONGARCH_MACHINE(machine);
-     MachineClass *mc = MACHINE_GET_CLASS(lams);
-     const CPUArchIdList *arch_ids = mc->possible_cpu_arch_ids(machine);
-@@ -195,35 +196,44 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-         build_append_int_noprefix(table_data, 0, 4); /* Reserved */
-     }
- 
--    /* Node0 */
--    build_srat_memory(table_data, VIRT_LOWMEM_BASE, VIRT_LOWMEM_SIZE,
--                      0, MEM_AFFINITY_ENABLED);
--    mem_base = VIRT_HIGHMEM_BASE;
--    if (!nb_numa_nodes) {
--        mem_len = machine->ram_size - VIRT_LOWMEM_SIZE;
--    } else {
--        mem_len = machine->numa_state->nodes[0].node_mem - VIRT_LOWMEM_SIZE;
-+    base = VIRT_LOWMEM_BASE;
-+    gap = VIRT_LOWMEM_SIZE;
-+    numa_info = machine->numa_state->nodes;
-+    nodes = nb_numa_nodes;
-+    if (!nodes) {
-+        nodes = 1;
-     }
--    if (mem_len)
--        build_srat_memory(table_data, mem_base, mem_len, 0, MEM_AFFINITY_ENABLED);
--
--    /* Node1 - Nodemax */
--    if (nb_numa_nodes) {
--        mem_base += mem_len;
--        for (i = 1; i < nb_numa_nodes; ++i) {
--            if (machine->numa_state->nodes[i].node_mem > 0) {
--                build_srat_memory(table_data, mem_base,
--                                  machine->numa_state->nodes[i].node_mem, i,
--                                  MEM_AFFINITY_ENABLED);
--                mem_base += machine->numa_state->nodes[i].node_mem;
--            }
-+
-+    for (i = 0; i < nodes; i++) {
-+        if (nb_numa_nodes) {
-+            len = numa_info[i].node_mem;
-+        } else {
-+            len = machine->ram_size;
-+        }
-+
-+        /*
-+         * memory for the node splited into two part
-+         *   lowram:  [base, +gap)
-+         *   highram: [VIRT_HIGHMEM_BASE, +(len - gap))
-+         */
-+        if (len >= gap) {
-+            build_srat_memory(table_data, base, len, i, MEM_AFFINITY_ENABLED);
-+            len -= gap;
-+            base = VIRT_HIGHMEM_BASE;
-+            gap = machine->ram_size - VIRT_LOWMEM_SIZE;
-+        }
-+
-+        if (len) {
-+            build_srat_memory(table_data, base, len, i, MEM_AFFINITY_ENABLED);
-+            base += len;
-+            gap  -= len;
-         }
-     }
- 
-     if (machine->device_memory) {
-         build_srat_memory(table_data, machine->device_memory->base,
-                           memory_region_size(&machine->device_memory->mr),
--                          nb_numa_nodes - 1,
-+                          nodes - 1,
-                           MEM_AFFINITY_HOTPLUGGABLE | MEM_AFFINITY_ENABLED);
-     }
- 
--- 
-2.39.3
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
