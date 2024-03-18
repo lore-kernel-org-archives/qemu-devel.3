@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07BBBC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 18:57:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8A32C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 19:10:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmI9U-0002iM-Dd; Mon, 18 Mar 2024 14:56:04 -0400
+	id 1rmIMl-0006JH-4M; Mon, 18 Mar 2024 15:09:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rmI9T-0002ho-6o
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 14:56:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1rmIMj-0006HB-PV
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 15:09:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rmI9R-0001o0-I6
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 14:56:02 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1rmIMf-0005SG-3x
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 15:09:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710788159;
+ s=mimecast20190719; t=1710788978;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=STgw3oqyAMmFa+vXUCtU6SIK4dBGKF7cWf4+emcEJxY=;
- b=Qgi8G+GxaMpDNBXCoyfY+/tKYXy05FY5mAx440eOQpsvuA0aLsZydOQ8ZmwyuKVYWRB1ZU
- vIJyWv1ssJSfhZJf7PMzVZprWxuU7MgOvTiawvXxyS6wMHtEKBiHaBGNnrjFxi0uwvjICn
- tAwS2tHiYPZG4ncFH1J1NKZBEYjgRB0=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kShZ0f8Cwr4bs5F/k6UZsBMSJk3B4gV3T+1MR2srdSU=;
+ b=Rn7EnhopiWluzwn7kAIUR8mF09HPL1BDOinQNYD6XZne805bXFRnPXhF45UYF7PDZLuMph
+ pyc2RMtap+yjqv5lYIQgDvXM2rg9v4aY6lsv751j1Zwfh4Hlm/cQMcostHqEQ92NuQXkTd
+ wV4FBS71OEI4zV9BWNwjhoH7QBj2vks=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-378-oT1WPHmVPN-Gu8PqsoE44Q-1; Mon, 18 Mar 2024 14:55:57 -0400
-X-MC-Unique: oT1WPHmVPN-Gu8PqsoE44Q-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-60a0151f194so79907217b3.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 11:55:57 -0700 (PDT)
+ us-mta-43-7YJUB-kYM7inPHejk0WYXg-1; Mon, 18 Mar 2024 15:09:36 -0400
+X-MC-Unique: 7YJUB-kYM7inPHejk0WYXg-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2d480b8dd54so34843271fa.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 12:09:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710788157; x=1711392957;
+ d=1e100.net; s=20230601; t=1710788975; x=1711393775;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=STgw3oqyAMmFa+vXUCtU6SIK4dBGKF7cWf4+emcEJxY=;
- b=kjRXyQ2CvMY7KxTQMk2JMBNuEPMsgMby16oni+zZlZVVkJ6DyvEWe304wVVLps7aZk
- J6a8Wa4z07W0hOYK2PbHit45OI7L/Ru7QpZoO6piS7QcM5F3ko04PCQcyzT5eTKpio+K
- I2HT1ZV/1pSff6NZS3cg33tOG6ZoJvHg3gNObmbpkq/fxD6xT8aURWEWLUiR+cjhU1MU
- vNunxONWoM1RZkBuWH3UyEUgigj6P3Wnno+CriSrQsXO/ksed1NdGfABbLZKSmYje61a
- 4FdcFo2ULNhpO4TSWXahUfJ1YT1jZiUS+SQ0kXMnNWtksCKjfBdOsRpnQqi2DFPccrK1
- fL6A==
-X-Gm-Message-State: AOJu0Yy4Sup3uGZWs3Z8xNcsGr0WPsG1xVqyXrPZsi/GR3+4e6529npe
- ZoADrvD0S88dGYHbS9MXzfnBWOabZBP/9GyYOsWn8e7JqvtnvpXKLGZdXeawKR2mBLtwR1MlKYt
- DlQiuDL9dUEg1mkGkUgiCAo22MaQCiOE3sKoQd/MvS6v/CIPQEpqlx4bkdyNEjm1KypfVU1OSXO
- QJSq+Dt6FeWNm0OP0KbbOwoALGJ3c=
-X-Received: by 2002:a81:a987:0:b0:60d:a849:7b3b with SMTP id
- g129-20020a81a987000000b0060da8497b3bmr11364791ywh.22.1710788155814; 
- Mon, 18 Mar 2024 11:55:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaikRMvl6UJZrErjOBm/Fxncwx54ekKC7J7j1zFfik9VJ5F2suYojhWyz8rmH8NrYEhhcakpsLvuv/ExKF96U=
-X-Received: by 2002:a81:a987:0:b0:60d:a849:7b3b with SMTP id
- g129-20020a81a987000000b0060da8497b3bmr11364722ywh.22.1710788154074; Mon, 18
- Mar 2024 11:55:54 -0700 (PDT)
+ bh=kShZ0f8Cwr4bs5F/k6UZsBMSJk3B4gV3T+1MR2srdSU=;
+ b=tGpLi794pqkhz2vYIcp6p1pHc6wV4WbUyFOFRi53DrXNu5OkLameznr+rPHYGXE1wL
+ mPcKWwB8gFFjI0DzYcdT18Z8st6rFyWQkEcq3ZgWJIWLIoJsTWqdXNh/uSv8226UtExt
+ 7ef4N9Gd1RA25vdq8ZMqWBI2aqKxTU0YeOgwU9MMg1VNtbED8auyKLepeLkQPvikYLEw
+ HpTxN7cbXSGXKQYyVNiKSpXVt5A0XrjLA/SWbDofiDZEw1gTUcxbCh27CcurQTFXEGlp
+ WFcyINTLEKLX5PqSRy9oicVkaYNwWrvEYD7xMO6pK5rcAJB3dhr7upn1VTWfWuOZ8OV2
+ iC7Q==
+X-Gm-Message-State: AOJu0YydLl/DOEE2jOPUMMR7kTqcTT5nbsFkQKfsbn0VjEyZ2oFaQ/CL
+ /mszOe/JJYf+0jkqE2c3zMo5vc1dswjdLaTPlkPzQnHvRnPhfgxvbkXi4ThCOTtYrlT9UEc55l2
+ nYyRctQ1RmzIsPwjz7eqNqkVlqvtpzLbrTTMU4xy7GgwbyeBCj5pWZC0phIzXzUZ4PoGl+FxFe+
+ Wa1YAPsTq4lX2UPlNADy8URGCo5Uc=
+X-Received: by 2002:a05:651c:1025:b0:2d4:7264:c5c6 with SMTP id
+ w5-20020a05651c102500b002d47264c5c6mr7813141ljm.51.1710788975294; 
+ Mon, 18 Mar 2024 12:09:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHQKW99T7YfDtypHSeqi2x2UZm8yY2cRzyEWvw21wvh7IVUDX6u+UgRySSCSkkyPShbmNoSTWAXCqzh/y6V3Jw=
+X-Received: by 2002:a05:651c:1025:b0:2d4:7264:c5c6 with SMTP id
+ w5-20020a05651c102500b002d47264c5c6mr7813127ljm.51.1710788974864; Mon, 18 Mar
+ 2024 12:09:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240207092702.25242-1-sgarzare@redhat.com>
-In-Reply-To: <20240207092702.25242-1-sgarzare@redhat.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 18 Mar 2024 19:55:18 +0100
-Message-ID: <CAJaqyWdfiJ4LVj=MuJ1i2iNYdH719mXbpN6bxn5ZEZo-LN1xtQ@mail.gmail.com>
-Subject: Re: [PATCH] vhost-vdpa: check vhost_vdpa_set_vring_ready() return
- value
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, lulu@redhat.com, kwolf@redhat.com, 
- Jason Wang <jasowang@redhat.com>
+References: <20240318182330.96738-1-berrange@redhat.com>
+ <20240318182330.96738-3-berrange@redhat.com>
+In-Reply-To: <20240318182330.96738-3-berrange@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 18 Mar 2024 23:09:23 +0400
+Message-ID: <CAMxuvaz6_pRAaNX8zD-EGdTvhPhGcTEs8n+=tZOAYNLVAAc8hw@mail.gmail.com>
+Subject: Re: [PATCH 2/3 for 9.0] Revert "chardev/char-socket: Fix TLS io
+ channels sending too much data to the backend"
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -82,8 +83,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,111 +100,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Feb 7, 2024 at 10:27=E2=80=AFAM Stefano Garzarella <sgarzare@redhat=
-.com> wrote:
->
-> vhost_vdpa_set_vring_ready() could already fail, but if Linux's
-> patch [1] will be merged, it may fail with more chance if
-> userspace does not activate virtqueues before DRIVER_OK when
-> VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated.
->
-> So better check its return value anyway.
->
-> [1] https://lore.kernel.org/virtualization/20240206145154.118044-1-sgarza=
-re@redhat.com/T/#u
->
+Hi
 
-If any, I'd split the patches in CVQ and generic vdpa device. But I
-don't think it is a big deal so
+On Mon, Mar 18, 2024 at 10:23=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com> wrote:
+>
+> This commit results in unexpected termination of the TLS connection.
+> When 'fd_can_read' returns 0, the code goes on to pass a zero length
+> buffer to qio_channel_read. The TLS impl calls into gnutls_recv()
+> with this zero length buffer, at which point GNUTLS returns an error
+> GNUTLS_E_INVALID_REQUEST. This is treated as fatal by QEMU's TLS code
+> resulting in the connection being torn down by the chardev.
+>
+> Simply skipping the qio_channel_read when the buffer length is zero
+> is also not satisfactory, as it results in a high CPU burn busy loop
+> massively slowing QEMU's functionality.
+>
+> The proper solution is to avoid tcp_chr_read being called at all
+> unless the frontend is able to accept more data. This will be done
+> in a followup commit.
+>
+> This reverts commit 1907f4d149c3589ade641423c6a33fd7598fa4d3.
 
-Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+Actually 462945cd22d2bcd233401ed3aa167d83a8e35b05 upstream.
 
-Sorry for the long delay!
-
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 > ---
-> Note: This patch conflicts with [2], but the resolution is simple,
-> so for now I sent a patch for the current master, but I'll rebase
-> this patch if we merge the other one first.
+>  chardev/char-socket.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 >
-> [2] https://lore.kernel.org/qemu-devel/20240202132521.32714-1-kwolf@redha=
-t.com/
-> ---
->  hw/virtio/vdpa-dev.c |  8 +++++++-
->  net/vhost-vdpa.c     | 15 ++++++++++++---
->  2 files changed, 19 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-> index eb9ecea83b..d57cd76c18 100644
-> --- a/hw/virtio/vdpa-dev.c
-> +++ b/hw/virtio/vdpa-dev.c
-> @@ -259,7 +259,11 @@ static int vhost_vdpa_device_start(VirtIODevice *vde=
-v, Error **errp)
->          goto err_guest_notifiers;
+> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+> index 2c4dffc0e6..812d7aa38a 100644
+> --- a/chardev/char-socket.c
+> +++ b/chardev/char-socket.c
+> @@ -496,9 +496,9 @@ static gboolean tcp_chr_read(QIOChannel *chan, GIOCon=
+dition cond, void *opaque)
+>          s->max_size <=3D 0) {
+>          return TRUE;
 >      }
->      for (i =3D 0; i < s->dev.nvqs; ++i) {
-> -        vhost_vdpa_set_vring_ready(&s->vdpa, i);
-> +        ret =3D vhost_vdpa_set_vring_ready(&s->vdpa, i);
-> +        if (ret < 0) {
-> +            error_setg_errno(errp, -ret, "Error starting vring %d", i);
-> +            goto err_dev_stop;
-> +        }
+> -    len =3D tcp_chr_read_poll(opaque);
+> -    if (len > sizeof(buf)) {
+> -        len =3D sizeof(buf);
+> +    len =3D sizeof(buf);
+> +    if (len > s->max_size) {
+> +        len =3D s->max_size;
 >      }
->      s->started =3D true;
->
-> @@ -274,6 +278,8 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev=
-, Error **errp)
->
->      return ret;
->
-> +err_dev_stop:
-> +    vhost_dev_stop(&s->dev, vdev, false);
->  err_guest_notifiers:
->      k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
->  err_host_notifiers:
-> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-> index 3726ee5d67..e3d8036479 100644
-> --- a/net/vhost-vdpa.c
-> +++ b/net/vhost-vdpa.c
-> @@ -381,7 +381,10 @@ static int vhost_vdpa_net_data_load(NetClientState *=
-nc)
->      }
->
->      for (int i =3D 0; i < v->dev->nvqs; ++i) {
-> -        vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
-> +        int ret =3D vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
->      }
->      return 0;
->  }
-> @@ -1213,7 +1216,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState =
-*nc)
->
->      assert(nc->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_VDPA);
->
-> -    vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
-> +    r =3D vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
-> +    if (unlikely(r < 0)) {
-> +        return r;
-> +    }
->
->      if (v->shadow_vqs_enabled) {
->          n =3D VIRTIO_NET(v->dev->vdev);
-> @@ -1252,7 +1258,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState =
-*nc)
->      }
->
->      for (int i =3D 0; i < v->dev->vq_index; ++i) {
-> -        vhost_vdpa_set_vring_ready(v, i);
-> +        r =3D vhost_vdpa_set_vring_ready(v, i);
-> +        if (unlikely(r < 0)) {
-> +            return r;
-> +        }
->      }
->
->      return 0;
+>      size =3D tcp_chr_recv(chr, (void *)buf, len);
+>      if (size =3D=3D 0 || (size =3D=3D -1 && errno !=3D EAGAIN)) {
 > --
 > 2.43.0
 >
