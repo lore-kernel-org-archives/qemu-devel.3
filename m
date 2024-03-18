@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 939CBC54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 15:48:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62C3DC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 15:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmFDF-0003we-Dj; Mon, 18 Mar 2024 11:47:45 -0400
+	id 1rmFDt-0006vX-Hj; Mon, 18 Mar 2024 11:48:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFD7-0003ZH-Fo
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:40 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFDn-0006eX-Pg
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:48:21 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCv-0007uM-Jz
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:37 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6e6cadfffdbso4041896b3a.3
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 08:47:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFDg-0007xM-3d
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:48:17 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6e6bee809b8so4221047b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 08:48:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710776844; x=1711381644; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710776890; x=1711381690; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=578ntQv2qmhtgvuXKuqTSL+k7p3UtnyDqAqXSEUYZKM=;
- b=cayVnvlVbFAQMAOoQVk0InKQgRMaM4qcXiTvXBWXYAHJcn11Wd7RXngYYAu2S5UyKw
- e+dy2T2f8IULdYJ/bh1BhJ5bmekqfCTX32VljrvD8Pd3yWG9spn/NHztGiKbdNod3jo4
- uMIaknkoOpQUBLo6GJmoz86Reun3sTSgFGqJzK/Pv2EgWPSglAtXFU2Q9VxH7CxIPzBC
- SOeb175JDPUfctGjklOX9lF9GyrEn+DsbU5kNAxjwpu2ZnqmM4TxTCZ+KcyKH5fDi6hl
- wfFM10cwuIkTiXJBqR9w3wrYByrjRMI8tgRN37qHdcHXKrNUOQQSTGX8wMir3v+zTgtt
- BB0g==
+ bh=NyLvGmFiLkd1QrQEzobFQyubgUDWC+tz3WyBBbJBYXU=;
+ b=dJfrg8RJ8HbVukWu4sj7Q4gi5a2HAalmBm1EfIrA30jEjtX9+3GFEe6s+NXFEGSYp8
+ 2Obbi3Cl/iUbeLynPX5SsRO/5AlloM/0mIfyPUt6XZ/04NfTuXANtiv+Xki1/TtEHGls
+ VeKNMRnjkoZ8tI5Y5krLh31wsWOa/ykD7mP4L2RCnuMsXSo1M0SBaRgDYwBFX0X4dAKn
+ lWxBw9Wy5pM6615us4VFxcnOAC6ogfVNyTTPjegEWJa0NgHrqrERiBQjnKFhij40koaY
+ wKbLE66EbbQMT+4wxluz+pTTqOIAONzajzxarfTFjH6/QB3puhLtgq9Fhm6joQoqNTdr
+ 7qbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710776844; x=1711381644;
+ d=1e100.net; s=20230601; t=1710776890; x=1711381690;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=578ntQv2qmhtgvuXKuqTSL+k7p3UtnyDqAqXSEUYZKM=;
- b=NQjgentf22rLfeeuR/o1xwenHgpexy/F+S631PhoRvLX0yAYLTJnPeY6pNrw8hoMgu
- /jC0Jx/yzNJXy+FsAc9G5UazzmgiaQH204TaLPiHS9qqbzKEKK4J3iHu76gpVurp09kY
- m+rTxEP6AbGvCiMoLVIf3/rR9AM+ZyRVBXkwsfj5ehElPWmPQ5DBnqSaQ4OuYFqVUPEM
- QSNsqJnPU/weiLtgc0VCIYkpmloPBkyGlzRZOnc2g+/Sq657XPT1l5dtctzLILnohUo/
- e49SKHyO9BgM6OIyOVjkiVTn+bqjtowNbbrT8V89jKy+soHVxoEmMx5gFxR60duSnld9
- EK+g==
-X-Gm-Message-State: AOJu0YxjZbLT5K5IKr5OnqnGRAWHrB4A2b63x3YVwythrubOdE9RMVJm
- eMQW8MTAUC8d+DTawKDJ1zijEaaOmOI0g4imS2C7oPHJ7Ho5XzCM+ElOYPJL0FQ=
-X-Google-Smtp-Source: AGHT+IEIayBF74eVN5Y3h/ZpXSkUNp1ZHlDFti99gVMmUCqc0UIXHAYGOaTvjzrjKODF8hjYcTIAIw==
-X-Received: by 2002:a05:6a20:3942:b0:1a3:463e:af40 with SMTP id
- r2-20020a056a20394200b001a3463eaf40mr11404335pzg.24.1710776844020; 
- Mon, 18 Mar 2024 08:47:24 -0700 (PDT)
+ bh=NyLvGmFiLkd1QrQEzobFQyubgUDWC+tz3WyBBbJBYXU=;
+ b=hQ+PVpnPOkIJ/5dGc0+zb5CQyPWxoo3idPIk/MtQ1r5/y+2y9++Z4IxUPoBQ3EIa7G
+ EUaVfDA0AP7RlFgBJYvg3ptH76Or0+wIvtdzm5SX6ABSmlzByA0vy8KvV/k4OstvoyLZ
+ zfWv9PcpVcvf2KwgXi724fhnRLWMVmJYSUyPMOGUcSCUiiCyoib23TPvH1lHHKQMcgdL
+ N920EPlq0CALtUukeFYu11hmeDZz8OuvsOWmzUPuAfttmHaQ79s0P/kr19/hFxtTQX1n
+ 7hiVL+ykutDh9glJbJvmYeHHW1tpO1dc5rVdibelsLqzanvzeXtbxJqazgo9Gq8btnqG
+ ZeVw==
+X-Gm-Message-State: AOJu0YyjY9Zgz0ThBjf95B+Ei8H7Q8hNskQHi/FIaC/NGzt8p88i6F1J
+ ZC1X8CEL9WeMoyz2+P5lZUx42LDUNVkv26bgbjgkPA5Fj8Vm8ZI+H+2Jmzs55wU=
+X-Google-Smtp-Source: AGHT+IEQzhr6JzmFVuY6L3R02QjO2VcOXBLXHbBTwZAMnLEc5xiyLKCcdPUkKHwV9d+DptY2Ry3gUw==
+X-Received: by 2002:a05:6a21:a58d:b0:1a1:67a6:bba7 with SMTP id
+ gd13-20020a056a21a58d00b001a167a6bba7mr16958566pzc.1.1710776890531; 
+ Mon, 18 Mar 2024 08:48:10 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- v22-20020a634816000000b005dc26144d96sm7332108pga.75.2024.03.18.08.47.18
+ v22-20020a634816000000b005dc26144d96sm7332108pga.75.2024.03.18.08.48.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 08:47:23 -0700 (PDT)
+ Mon, 18 Mar 2024 08:48:10 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,16 +67,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v5 09/24] replay: Fix migration replay_mutex locking
-Date: Tue, 19 Mar 2024 01:46:06 +1000
-Message-ID: <20240318154621.2361161-10-npiggin@gmail.com>
+Subject: [PATCH v5 17/24] tests/avocado: reverse_debugging.py stop VM before
+ sampling icount
+Date: Tue, 19 Mar 2024 01:46:14 +1000
+Message-ID: <20240318154621.2361161-18-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240318154621.2361161-1-npiggin@gmail.com>
 References: <20240318154621.2361161-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,94 +100,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration causes a number of events that need to go in the replay
-trace, such as vm state transitions. The replay_mutex lock needs to
-be held for these.
-
-The simplest approach seems to be just take it up-front when taking
-the bql.
+Rather than sampling icount while the vm is running, stop it before
+sampling icount. This allows the actual last recorded icount in the
+trace to be found.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- migration/migration.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ tests/avocado/reverse_debugging.py | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 2c286ccf63..c7f376ae34 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -24,6 +24,7 @@
- #include "socket.h"
- #include "sysemu/runstate.h"
- #include "sysemu/sysemu.h"
-+#include "sysemu/replay.h"
- #include "sysemu/cpu-throttle.h"
- #include "rdma.h"
- #include "ram.h"
-@@ -2533,6 +2534,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-     }
+diff --git a/tests/avocado/reverse_debugging.py b/tests/avocado/reverse_debugging.py
+index 8a9578ad5a..bdc9082c85 100644
+--- a/tests/avocado/reverse_debugging.py
++++ b/tests/avocado/reverse_debugging.py
+@@ -156,19 +156,20 @@ def reverse_debugging(self, shift=7, args=None):
+             if self.first_step_workaround and i == 0 and self.vm_get_icount(vm) == 0:
+                 logger.warn('failed to take first step, stepping again')
+                 self.gdb_step(g)
+-        if self.vm_get_icount(vm) != self.STEPS:
++        self.gdb_step(g)
++        if self.vm_get_icount(vm) != self.STEPS + 1:
+             self.fail('icount (%d) does not match number of instructions stepped' % self.vm_get_icount(vm))
  
-     trace_postcopy_start();
-+    replay_mutex_lock();
-     bql_lock();
-     trace_postcopy_start_set_run();
+         logger.info('continue running')
+         self.gdb_cont_nowait(g)
  
-@@ -2638,6 +2640,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
-     migration_downtime_end(ms);
+-        while self.vm_get_icount(vm) <= self.STEPS:
+-            pass
++        logger.info('stopping to read final icount')
++        vm.qmp('stop')
+         last_icount = self.vm_get_icount(vm)
+         logger.info('shutdown...')
+         vm.shutdown()
  
-     bql_unlock();
-+    replay_mutex_unlock();
+-        logger.info("recorded log with %s+ steps" % last_icount)
++        logger.info("recorded log with %s steps" % last_icount)
  
-     if (migrate_postcopy_ram()) {
-         /*
-@@ -2679,6 +2682,7 @@ fail:
-     }
-     migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
-     bql_unlock();
-+    replay_mutex_unlock();
-     return -1;
- }
- 
-@@ -2730,6 +2734,7 @@ static int migration_completion_precopy(MigrationState *s,
- {
-     int ret;
- 
-+    replay_mutex_lock();
-     bql_lock();
- 
-     if (!migrate_mode_is_cpr(s)) {
-@@ -2755,6 +2760,7 @@ static int migration_completion_precopy(MigrationState *s,
-                                              s->block_inactive);
- out_unlock:
-     bql_unlock();
-+    replay_mutex_unlock();
-     return ret;
- }
- 
-@@ -3592,6 +3598,7 @@ static void *bg_migration_thread(void *opaque)
- 
-     trace_migration_thread_setup_complete();
- 
-+    replay_mutex_lock();
-     bql_lock();
- 
-     if (migration_stop_vm(s, RUN_STATE_PAUSED)) {
-@@ -3625,6 +3632,7 @@ static void *bg_migration_thread(void *opaque)
-      */
-     migration_bh_schedule(bg_migration_vm_start_bh, s);
-     bql_unlock();
-+    replay_mutex_unlock();
- 
-     while (migration_is_active()) {
-         MigIterateState iter_state = bg_migration_iteration_run(s);
-@@ -3654,6 +3662,7 @@ fail:
-         migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-                 MIGRATION_STATUS_FAILED);
-         bql_unlock();
-+        replay_mutex_unlock();
-     }
- 
-     bg_migration_iteration_finish(s);
+         # replay and run debug commands
+         vm = self.run_vm(False, shift, args, replay_path, image_path, port)
 -- 
 2.42.0
 
