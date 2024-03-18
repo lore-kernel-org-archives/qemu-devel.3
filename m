@@ -4,83 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACCDC54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 08:05:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16AC1C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 08:15:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm7z8-0000Ty-5R; Mon, 18 Mar 2024 04:04:42 -0400
+	id 1rm895-0002Oz-Gx; Mon, 18 Mar 2024 04:14:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rm7z5-0000Tg-Bt
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 04:04:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <olaf@aepfle.de>)
+ id 1rm893-0002NX-Cs; Mon, 18 Mar 2024 04:14:57 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.221])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rm7ys-0001jh-Dd
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 04:04:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710749062;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MKezJqL4w19nBxCNntscYpJbXJ7ro8ADsyqjjBLcNog=;
- b=VAO6ofoARjgRxfjTV0K8H8P6kY8ZetdKlR4mNll5ZqOYTbm1eA+y7EbV52VZx1iu38iU5k
- xqtgDW2UyIoqenO1IkARUH5FcLz4Heoongz2lQEWsuwN9afK6+qyLlAkU0Trku7MrU/UEx
- 6idgkdEfmS+I+9EvhOXM7pO05HI3FuA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-315-F7hsex17ORSgyyPlPPwnTA-1; Mon, 18 Mar 2024 04:04:21 -0400
-X-MC-Unique: F7hsex17ORSgyyPlPPwnTA-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-33ed0a8beb5so1793707f8f.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 01:04:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710749059; x=1711353859;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MKezJqL4w19nBxCNntscYpJbXJ7ro8ADsyqjjBLcNog=;
- b=KKtXpEr/PT9pu7qUUL/6FYHFM3YiCU/HnNBObNcysecS51cpthOz9onRz6JtO1KoC7
- iSKxASn6MLkCY66M+tY29lOJ/pDZ73SkRObEcrUgy21p6LJleoOahpE2pdzPSJxavkqb
- xSZP+MwX0md3jfmA8MqyZe2q+HFal5uGwi6vX/39c8oK9n31rzZCfZQXkusPLUu2IUGB
- vZkikzeUiLEoc1vI7GohaEuY9zdn4qRSLM0vZUn9tzT077fNX7g4TtjuNb4aS56C42FY
- TxY3ndh9TZ1kRQSwQeoRw8jDjWrqzNRO/Q7jxwotCJmIsBUzLVNi+joFZOuv8HkVJU1b
- WOpQ==
-X-Gm-Message-State: AOJu0YzTEtMZykiHYD4TP9TEOUigNJUXHHizue8LnR3mrIAgG2KBrfLf
- oN5n5kc2klsPcRdh6p6MiFn4O7dBhFkY5LBBtaFITtOXf+3iiQzPv4z10ARGKPaB7wzFqW61I12
- pEITxpgr6tZ5+4XMYAMHt/QaQOd/UINwC9PdOTbYe/HAwQ97vMhJA48gks4S+
-X-Received: by 2002:adf:fa87:0:b0:33e:7946:4cd2 with SMTP id
- h7-20020adffa87000000b0033e79464cd2mr6872288wrr.10.1710749058954; 
- Mon, 18 Mar 2024 01:04:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFkr0uPssNWJWwnp5pkdKug8aJ/HKyly1Ewh4Lb046Mda2kJBDtu+abVoHZi3gPWKdcNJ2Qtg==
-X-Received: by 2002:adf:fa87:0:b0:33e:7946:4cd2 with SMTP id
- h7-20020adffa87000000b0033e79464cd2mr6872260wrr.10.1710749058299; 
- Mon, 18 Mar 2024 01:04:18 -0700 (PDT)
-Received: from redhat.com ([2.52.5.113]) by smtp.gmail.com with ESMTPSA id
- w16-20020adfcd10000000b0033e5c54d0d9sm9208566wrm.38.2024.03.18.01.04.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 01:04:17 -0700 (PDT)
-Date: Mon, 18 Mar 2024 04:04:14 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jiqian Chen <Jiqian.Chen@amd.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [QEMU PATCH v6 1/1] virtio-pci: implement No_Soft_Reset bit
-Message-ID: <20240318035505-mutt-send-email-mst@kernel.org>
-References: <20240222034010.887390-1-Jiqian.Chen@amd.com>
- <20240222034010.887390-2-Jiqian.Chen@amd.com>
+ (Exim 4.90_1) (envelope-from <olaf@aepfle.de>)
+ id 1rm891-0003L1-Fh; Mon, 18 Mar 2024 04:14:57 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1710749690; cv=none;
+ d=strato.com; s=strato-dkim-0002;
+ b=U8XPXAX5nNH0Ow2UeMvN4hmQWdt1O0JthA1Zn8dpKhn+ilu/cZ8WzuDucM9O8bv0s2
+ 6vMm90arPaMFY7JzlqIm71CRJVAAGkSjW/DbNg8cwnSnBiV786zR16xgVtMYIX/2LzAZ
+ TAbMS8iUAnYDUrlcATs4jjwWNmJQN5b714hLyF2d9YrbJ7MLMD+bJp9cNV69naXY11nT
+ c5fQWxJkuvkdpkGDo+/d3utv6y5USHp4NfUp7XuuHTHGaYvxhNMUoxgVfe3phM1HlDtM
+ eodKxDY9FTbGugZlpAgzBjb2ztW073EKWT7qqDMpi3U9DHRBXvhmFxwp0EaX9WBMngHz
+ i/eg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1710749690;
+ s=strato-dkim-0002; d=strato.com;
+ h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+ From:Subject:Sender;
+ bh=aB5JtzWUCB4K9dAVzX213ZjUL2cozuT0dstO0lWsREY=;
+ b=ltQEUbr9GaoU9iNefCQ7qcFh7dW/rimR/ZtvlCICKVovV6nhQinlW9tG/zofG2EAVs
+ WtcOdZNyVEum87P32t80lEdT6XeVmN81aF38+RvSL4e8OLW5+H9YEt7qJgiLHEw8bEU1
+ OaX+O2wvYLRtrgT/shVFtooDTzYDDEZOxZgtGPMF83EJt4tfNZ0WE0Uyd8HfFPnqxnKh
+ p+b6tkKAw+aeim2bzNiDCtUQmStk5PYkra72pNy2YKNSOZiLbjS0MqMzxteGFx6gj5xB
+ ABUf5rHyZUj2pA4SKQ9YM4k7dPajf3Pli03LHhUvphQdp3dx2b958yxwedNVSoNIlYDf
+ FR0Q==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1710749690;
+ s=strato-dkim-0002; d=aepfle.de;
+ h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+ From:Subject:Sender;
+ bh=aB5JtzWUCB4K9dAVzX213ZjUL2cozuT0dstO0lWsREY=;
+ b=W/t0vJU2U9B2XhUVRi/NmSfbCUoolF/pMBe1c3FLNNgX3mgrxWREzrexUPS63gH2nt
+ A2+Rwi5XdG7bVcUcQifA5P6r2qMz6OJJzbi+cUQdcHO6Nz3A6QppkDPfTJ87iQKbi+gs
+ 2fKAXxaT+Z4o97Yc/iBqm6SAsLkbiFxk5822lv+ZVHhK5gkjpDbCJTxQDVbZFsJCXUWA
+ LY7iay1yhNlHYBOwoOw3A11+TOx9W9cPxpzznAHo9b8OTRM1bEzDalcu8L6pkDUwa16f
+ sYOBKMuUkk0pLhCg/NjIbAtTn6bRuiu6P2oIRaCsfFQt871sspKM8TV9cXwJBqEJ4aq/
+ IQgw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1710749690;
+ s=strato-dkim-0003; d=aepfle.de;
+ h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+ From:Subject:Sender;
+ bh=aB5JtzWUCB4K9dAVzX213ZjUL2cozuT0dstO0lWsREY=;
+ b=1GI9TK7oQg3SBkh8D8khCl4GQL8+l2t4lazfZK/FsA/nhgFrQiCUakdIKll+yWvLon
+ JEWrnpqMYW4psQt0FjBg==
+X-RZG-AUTH: ":P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QLpd5ylWvMDX3y/OuD5rXVisR5ABaIaxjsvWV3+5zoB6xJde0knZVA/JvNMMXDFQ=="
+Received: from sender by smtp.strato.de (RZmta 50.2.2 AUTH)
+ with ESMTPSA id 6fe76102I8EnAYf
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+ (Client did not present a certificate);
+ Mon, 18 Mar 2024 09:14:49 +0100 (CET)
+Date: Mon, 18 Mar 2024 09:14:41 +0100
+From: Olaf Hering <olaf@aepfle.de>
+To: =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@gmail.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org, qemu-stable
+ <qemu-stable@nongnu.org>
+Subject: Re: Regression in v7.2.10 - ui-dbus.so requires -fPIC
+Message-ID: <20240318091441.54272fbf.olaf@aepfle.de>
+In-Reply-To: <CAJ+F1CJyhEYhXewLV4SOGNfgiA3V2kfotVqYgcGEckvO4XLp7A@mail.gmail.com>
+References: <20240314220038.1aaae79f.olaf@aepfle.de>
+ <4b803768-09df-4b6c-a745-f0158543310d@tls.msk.ru>
+ <20240316231945.7bcfac09.olaf@aepfle.de>
+ <a9e4fac5-2a1e-4d15-afa5-bae42756ec42@tls.msk.ru>
+ <CAJ+F1CJyhEYhXewLV4SOGNfgiA3V2kfotVqYgcGEckvO4XLp7A@mail.gmail.com>
+X-Mailer: Claws Mail (olh) 20240223T214820.cce9f45c hat ein Softwareproblem,
+ kann man nichts machen.
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240222034010.887390-2-Jiqian.Chen@amd.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: multipart/signed; boundary="Sig_/zG=9/E=uwtByW9iCMJTVBVj";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=81.169.146.221; envelope-from=olaf@aepfle.de;
+ helo=mo4-p00-ob.smtp.rzone.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,143 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 22, 2024 at 11:40:10AM +0800, Jiqian Chen wrote:
-> In current code, when guest does S3, virtio devices are reset due to
-> the bit No_Soft_Reset is not set. After resetting, the display resources
-> of virtio-gpu are destroyed, then the display can't come back and only
-> show blank after resuming.
-> 
-> Implement No_Soft_Reset bit of PCI_PM_CTRL register, then guest can check
-> this bit, if this bit is set, the devices resetting will not be done, and
-> then the display can work after resuming.
-> 
-> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
-> ---
->  hw/virtio/virtio-pci.c         | 37 +++++++++++++++++++++++++++++++++-
->  include/hw/virtio/virtio-pci.h |  5 +++++
->  2 files changed, 41 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index 1a7039fb0c68..da5312010345 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -2197,6 +2197,11 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
->              pcie_cap_lnkctl_init(pci_dev);
->          }
->  
-> +        if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
-> +            pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
-> +                         PCI_PM_CTRL_NO_SOFT_RESET);
-> +        }
-> +
->          if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
->              /* Init Power Management Control Register */
->              pci_set_word(pci_dev->wmask + pos + PCI_PM_CTRL,
+--Sig_/zG=9/E=uwtByW9iCMJTVBVj
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Mon, 18 Mar 2024 11:35:54 +0400 Marc-Andr=C3=A9 Lureau <marcandre.lureau@gm=
+ail.com>:
+
+> Alternatively, we could always build with pic: true (or pic:
+> enable_modules), but that's not ideal either.
+
+I'm sure that unconditionally building with -fPIC has no downsides in this =
+context.
 
 
-Don't we need compat machinery to avoid breaking migration for
-existing machine types?
+Olaf
 
-> @@ -2259,18 +2264,46 @@ static void virtio_pci_reset(DeviceState *qdev)
->      }
->  }
->  
-> +static bool device_no_need_reset(PCIDevice *dev)
-> +{
-> +    if (pci_is_express(dev)) {
-> +        uint16_t pmcsr;
-> +
-> +        pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
-> +        /*
-> +         * When No_Soft_Reset bit is set and device
+--Sig_/zG=9/E=uwtByW9iCMJTVBVj
+Content-Type: application/pgp-signature
+Content-Description: Digitale Signatur von OpenPGP
 
-the device
+-----BEGIN PGP SIGNATURE-----
 
-> +         * is in D3hot state, can't reset device
+iQIzBAEBCAAdFiEE97o7Um30LT3B+5b/86SN7mm1DoAFAmX39/EACgkQ86SN7mm1
+DoBGjQ//aMrEw9IVyhElBhDsxHWQ+qfcTDpY10/WAe3h/5C20c2dwzYOl0bqwhGs
+ALHA+sC8Uin+Oni4JCzA9uf7CF47lgZYL2H/fojM36J7fc8x+g/dAOk6HL/vPl1s
+w0WslvZNiUX2np+PjznQPlF1nRP1e5tPfdY3JyY89CR/iHRJQLIIdKQQdEOHsSxs
+/YF5mH/uXZfyj4gBkEcqDKqDHmy2cc0fEkjapyrnEpAB4WrE45P8OQaqCPTIYFrU
+351bLvXU7xO1T3AEYbIFT/d2LrL5JXG4ho7aMctSBVicSnZ6+sBlX0Gwy1mpjz3R
+3P4cW2MOUVfO5K0qKD+oRtKkQczN4xx6vY5NdybnMo1rjrWORfq41BUc1othCOpK
+OkEwVX1HXFciT/N21Aww9h+MT4W7uyHUiXPBH4RW/n62kkgvsdRrJ+10S7vGKjvf
+kUANqaKkztOPZNQLPb/Lp6mJgWNa6JcaJJslnOj8ZMRZN1wg6OwisszGakay9Ezo
+fnYci8pFwJzMFvy5dNEN2Dut4c3OOkK++JC0K9W55p38xbmfxQlKhPrLtf6tgqqt
+Jurr8ugYNoH1gT7GS4z6p1ZhslU52RO+6LjnI+9piDQ8xyEK4ducdyrrdg7h9MQS
+hXAn9GtaXLsxJPxElSuEEsLXs9rHU+Z4tXzuYznZCllsAUU8khA=
+=KPYj
+-----END PGP SIGNATURE-----
 
-can't? or don't?
-
-> +         */
-> +        if ((pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) &&
-> +            (pmcsr & PCI_PM_CTRL_STATE_MASK) == 3)
-> +            return true;
-
-coding style violation
-
-> +    }
-> +
-> +    return false;
-> +}
-> +
->  static void virtio_pci_bus_reset_hold(Object *obj)
->  {
->      PCIDevice *dev = PCI_DEVICE(obj);
->      DeviceState *qdev = DEVICE(obj);
->  
-> +    if (device_no_need_reset(dev))
-> +        return;
-> +
->      virtio_pci_reset(qdev);
->  
->      if (pci_is_express(dev)) {
-> +        uint16_t pmcsr;
-> +        uint16_t val = 0;
-> +
->          pcie_cap_deverr_reset(dev);
->          pcie_cap_lnkctl_reset(dev);
->  
-> -        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
-> +        /* don't reset the RO bits */
-> +        pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
-> +        val = val | (pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) |
-> +                (pmcsr & PCI_PM_CTRL_DATA_SCALE_MASK);
-> +        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, val);
-
-First, we have test and clear for this.
-
-Second, this has to be conditional on the flag, no?
-Without the flag don't we reset everything?
-Or you can reuse wmask for this, also an option.
-
-Also what's going on with PCI_PM_CTRL_DATA_SCALE_MASK?
-Where does that come from?
-
->      }
->  }
->  
-> @@ -2297,6 +2330,8 @@ static Property virtio_pci_properties[] = {
->                      VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
->      DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
->                      VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
-> +    DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
-> +                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, true),
->      DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
->                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
->      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
-> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-> index 59d88018c16a..9e67ba38c748 100644
-> --- a/include/hw/virtio/virtio-pci.h
-> +++ b/include/hw/virtio/virtio-pci.h
-> @@ -43,6 +43,7 @@ enum {
->      VIRTIO_PCI_FLAG_INIT_FLR_BIT,
->      VIRTIO_PCI_FLAG_AER_BIT,
->      VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
-> +    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT,
->  };
->  
->  /* Need to activate work-arounds for buggy guests at vmstate load. */
-> @@ -79,6 +80,10 @@ enum {
->  /* Init Power Management */
->  #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
->  
-> +/* Init The No_Soft_Reset bit of Power Management */
-> +#define VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET \
-> +  (1 << VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT)
-> +
->  /* Init Function Level Reset capability */
->  #define VIRTIO_PCI_FLAG_INIT_FLR (1 << VIRTIO_PCI_FLAG_INIT_FLR_BIT)
->  
-> -- 
-> 2.34.1
-
+--Sig_/zG=9/E=uwtByW9iCMJTVBVj--
 
