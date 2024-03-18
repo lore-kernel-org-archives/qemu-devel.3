@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10CEEC54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 13:50:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04490C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 13:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmDNP-0001gk-Eh; Mon, 18 Mar 2024 09:50:08 -0400
+	id 1rmDPx-0003SX-0t; Mon, 18 Mar 2024 09:52:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rmDN7-0001e9-Ij
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:49:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rmDPt-0003Od-TF
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:52:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rmDN2-0002Lm-Ua
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:49:49 -0400
+ id 1rmDPr-0002yO-Ei
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:52:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710769783;
+ s=mimecast20190719; t=1710769958;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8cA2NQ35D2N52uv049hiZv0mb5GFF7nd/kvH9k2tw/w=;
- b=bNvIaQts6+gN54G5Z8kv1SFbkDQkV1Tar5F5FsuUSmF0sl/VgWUqoq7nEffusCGbnhLXu1
- ApSeCTOxmMaXCM9g1z8ylSOOFJ6aLEOmKO3z5HQ3IVu8K+IJgueELjRG3fzVI3te3hVZwj
- eY2TYLFNqvK5/j2gzNFXvZ1cbJ8bCn0=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bKIDMgt+X4yr6Wx8ftv3fFaZmKTBScinp5s+yF/ElXM=;
+ b=BOTQpTJL4aBeJGQmmY+04/c/hUiEFpbX0sJvl14+JwEMHvWoFapbIxGV+SNHP39dthSuez
+ TXVwWZyClSYyjom2OYPw/Do51N64N1uaXXQTRc3oQ19qfMJrIpMWVu9whIc9x2dZTcmd7M
+ Ch0xPuBgU8LfhvMnaBb6VHdQZJMkpEI=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-REIBwjV8P7WXn1G8_4M82g-1; Mon, 18 Mar 2024 09:49:41 -0400
-X-MC-Unique: REIBwjV8P7WXn1G8_4M82g-1
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-3c388a9eae6so1261103b6e.2
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 06:49:41 -0700 (PDT)
+ us-mta-76-DMIo7vjdMmSKKvIjTd8njQ-1; Mon, 18 Mar 2024 09:52:37 -0400
+X-MC-Unique: DMIo7vjdMmSKKvIjTd8njQ-1
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-dc64f63d768so6905909276.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 06:52:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710769781; x=1711374581;
+ d=1e100.net; s=20230601; t=1710769957; x=1711374757;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8cA2NQ35D2N52uv049hiZv0mb5GFF7nd/kvH9k2tw/w=;
- b=aiv2YqcLU6/STkVHd2hpzmXWIZyjw1fMpDlzyj/+lzM3j5I0vwTxNoprAH7HQFdBBB
- oG1y1R3ksNfO08l8vFhZ+FlzFSNVIe68QdCzsRDdy88ulGrWknl6wkUaxW0z9QKonnxx
- GdvSrb0SQ+4do+AxFZxaYKzDOpfR2dTtk0k3g8FXc+99oJxCk2/G2ElEaq1GoAe4tlU/
- 1hgrd87W+r5XzXI+NCZrR2Nf7phLcCFs7yMkTBRiUmgiHE+57FQuGrxf3xs3uagu2oUp
- VQTvArJgSvZIzO8Q4vYmx4D/a7pgYEVHzyB032GgoKUa2dGBmsEHxx5XnJD19XVpakuc
- JImQ==
+ bh=bKIDMgt+X4yr6Wx8ftv3fFaZmKTBScinp5s+yF/ElXM=;
+ b=ZKcabygYSQuFnFhR5jojO4RlQcy3aA0AQagqa7Y8PUowDONQeKY8UKY8JiMtLhymKS
+ jnbAw+wyBhYQs+IzH6Qzq/GnUMFN7GJIZJe3IfeE7X33zxyG9JHyS75NR5iQKsCIcZcx
+ TWfXxEKhcapqCVYfybF1DunaHxBM3/9iJQr7p3+Bm94Ape94ZeACM0Z0uMPbiNCwgAG1
+ pk3Ci/Hno/9TEdfh/mkFCx0Jy8KDGumM/EK0ARdgXmZ1Y6Q4dM9KCvBi9hxKxiKOeUVJ
+ Cpts/wt01uQ0U6VeOCENeQ3H1NraeX6g+xFTagChNrlZ6xErcA82yR6Dk9DnhydyJ5bv
+ BSLA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXEDkgwE2nQpcgjVHYRDk51mAUa8kJn6kk3RObQZYNYcAy8RfA8K+xSdQ/S/SNtqR70jrVBRZ//xuZ38Q2djb3D9HYAlvs=
-X-Gm-Message-State: AOJu0YxmcwbIN/eSog1gTL5w1u9L3pfllG0g5vb3xCaoWdqzKdSxWVv/
- Yrx12QZdQCN9gRu5xr/vyy3gV3kRp/BEEcbttJgvhIst2uWm9L+suyOzBqm8fst09mSa0VaDhSz
- bpCZfGtadZBEx1kaey11xSsKDm/FziJHJwy8NBHPuZq+A2MGIFrXo
-X-Received: by 2002:a05:6808:1315:b0:3c3:80d9:77da with SMTP id
- y21-20020a056808131500b003c380d977damr8238018oiv.42.1710769781127; 
- Mon, 18 Mar 2024 06:49:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzvPBQBThEKEpZrI/dziaB9Sw8oq4HZP3WRfzDpxXoBFFL7ap6kss5C/gLieUJKFrmFlHZWQ==
-X-Received: by 2002:a05:6808:1315:b0:3c3:80d9:77da with SMTP id
- y21-20020a056808131500b003c380d977damr8237998oiv.42.1710769780838; 
- Mon, 18 Mar 2024 06:49:40 -0700 (PDT)
+ AJvYcCX4f7CwHcmDuYRXIDcxiUIJtCtnYrNAWzP31JM0ni3EvqdzpIIHdO6BRCAJaHDQwvKC8R7i+sdTfMwyb8UIpavABHYcVj8=
+X-Gm-Message-State: AOJu0Yzcrh84FIuszr80QA/Cf+2+YdAHdnTVK5b5ZvaXNsXt9aGvnkpB
+ l2p2wmeXDQUGOoGuP4psIx2He8qKXei2yqqzYGzGrRo60dYM45cO6H1KrqhHiQLpMj0AmnNQma/
+ u55jNKi3K7mwt04JpoPln9D2ldR45qQOVVorKLkL94gctrdy4vn5K
+X-Received: by 2002:a25:acc5:0:b0:dcf:313d:d4ab with SMTP id
+ x5-20020a25acc5000000b00dcf313dd4abmr9505689ybd.54.1710769956913; 
+ Mon, 18 Mar 2024 06:52:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE04HbkPi9lK5Rike1yhJXpd0UgET83qjWeJqz9J2UjMDikC4HuM2dxV6s5IZVfelnamlQfOg==
+X-Received: by 2002:a25:acc5:0:b0:dcf:313d:d4ab with SMTP id
+ x5-20020a25acc5000000b00dcf313dd4abmr9505661ybd.54.1710769956624; 
+ Mon, 18 Mar 2024 06:52:36 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- m26-20020a05620a221a00b00788481cdf4csm4550731qkh.111.2024.03.18.06.49.36
+ t5-20020ac87385000000b00430ac228781sm4188862qtp.67.2024.03.18.06.52.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 06:49:39 -0700 (PDT)
-Message-ID: <44415979-ca17-4f85-9092-aff2f50745b1@redhat.com>
-Date: Mon, 18 Mar 2024 14:49:34 +0100
+ Mon, 18 Mar 2024 06:52:35 -0700 (PDT)
+Message-ID: <d386b8e4-b597-492c-b0ab-4b4246906f94@redhat.com>
+Date: Mon, 18 Mar 2024 14:52:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 04/11] vfio: Add HostIOMMUDevice handle into VFIODevice
+Subject: Re: [PATCH v1 05/11] vfio: Introduce host_iommu_device_create callback
 Content-Language: en-US
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, peterx@redhat.com,
@@ -82,21 +82,21 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, peterx@redhat.com,
  joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  yi.y.sun@intel.com, chao.p.peng@intel.com
 References: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
- <20240228035900.1085727-5-zhenzhong.duan@intel.com>
+ <20240228035900.1085727-6-zhenzhong.duan@intel.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240228035900.1085727-5-zhenzhong.duan@intel.com>
+In-Reply-To: <20240228035900.1085727-6-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,35 +113,64 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
+Hi ZHenzhong,
 
 On 2/28/24 04:58, Zhenzhong Duan wrote:
-> This handle points to either IOMMULegacyDevice or IOMMUFDDevice variant,
-> neither both.
-I would reword into:
-store an handle to the HostIOMMUDevice the VFIODevice is associated with
-. Its actual nature depends on the backend in use (VFIO or IOMMUFD).
-
-Thanks
-
-Eric
+> Introduce host_iommu_device_create callback and a wrapper for it.
+>
+> This callback is used to allocate a host iommu device instance and
+> initialize it based on type.
 >
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > ---
->  include/hw/vfio/vfio-common.h | 1 +
->  1 file changed, 1 insertion(+)
+>  include/hw/vfio/vfio-common.h         | 1 +
+>  include/hw/vfio/vfio-container-base.h | 1 +
+>  hw/vfio/common.c                      | 8 ++++++++
+>  3 files changed, 10 insertions(+)
 >
 > diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index 8bfb9cbe94..b6676c9f79 100644
+> index b6676c9f79..9fefea4b89 100644
 > --- a/include/hw/vfio/vfio-common.h
 > +++ b/include/hw/vfio/vfio-common.h
-> @@ -130,6 +130,7 @@ typedef struct VFIODevice {
->      OnOffAuto pre_copy_dirty_page_tracking;
->      bool dirty_pages_supported;
->      bool dirty_tracking;
-> +    HostIOMMUDevice *base_hdev;
->      int devid;
->      IOMMUFDBackend *iommufd;
->  } VFIODevice;
+> @@ -208,6 +208,7 @@ struct vfio_device_info *vfio_get_device_info(int fd);
+>  int vfio_attach_device(char *name, VFIODevice *vbasedev,
+>                         AddressSpace *as, Error **errp);
+>  void vfio_detach_device(VFIODevice *vbasedev);
+> +void host_iommu_device_create(VFIODevice *vbasedev);
+>  
+>  int vfio_kvm_device_add_fd(int fd, Error **errp);
+>  int vfio_kvm_device_del_fd(int fd, Error **errp);
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index b2813b0c11..dc003f6eb2 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -120,6 +120,7 @@ struct VFIOIOMMUClass {
+>      int (*attach_device)(const char *name, VFIODevice *vbasedev,
+>                           AddressSpace *as, Error **errp);
+>      void (*detach_device)(VFIODevice *vbasedev);
+> +    void (*host_iommu_device_create)(VFIODevice *vbasedev);
+>      /* migration feature */
+>      int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
+>                                     bool start);
+> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+> index 059bfdc07a..41e9031c59 100644
+> --- a/hw/vfio/common.c
+> +++ b/hw/vfio/common.c
+> @@ -1521,3 +1521,11 @@ void vfio_detach_device(VFIODevice *vbasedev)
+>      }
+>      vbasedev->bcontainer->ops->detach_device(vbasedev);
+>  }
+> +
+> +void host_iommu_device_create(VFIODevice *vbasedev)
+> +{
+> +    const VFIOIOMMUClass *ops = vbasedev->bcontainer->ops;
+> +
+> +    assert(ops->host_iommu_device_create);
+at this stage ops actual implementation do not exist yet so this will
+break the bisection
+
+Eric
+> +    ops->host_iommu_device_create(vbasedev);
+> +}
 
 
