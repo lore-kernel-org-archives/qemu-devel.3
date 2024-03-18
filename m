@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E5E5C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 16:19:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CCBAC54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 16:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmFew-0007Q3-9l; Mon, 18 Mar 2024 12:16:22 -0400
+	id 1rmFff-0001eA-KB; Mon, 18 Mar 2024 12:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFeu-0007N6-CH
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:16:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFfe-0001T6-55
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:17:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFes-0004e3-K7
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:16:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rmFfc-0004pJ-Fi
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:17:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710778564;
+ s=mimecast20190719; t=1710778624;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=aoA2peaGF2qOzBoAWlslzkVrIFIZMqTVQz88w0hXmqE=;
- b=JEQ7IhyouN7f/87bZKy7qpm5Mv/GJJy2+GEorxvGE73FZoIkGR2dxLeHyPU5rQZpz0Sy6k
- 0RwfZE4bQIFhsueqJp1l4XBpk66GV4c8T4m+grn+dfAzRdqlZONn0+nOca4DNi5kEN9zS0
- QgJWaVezp/j3ofXwYQD950hbBZ+U8Zs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aVNpxLYgQa8mn+iVqcjp/uygNfGlH8NPfTbHmWsTQGc=;
+ b=gPYeagXK8jLrAbckTWTc0jC8OevYnHkMEk+R5EEJ7odKCQUFDcxibhq0zkWIGbtRqGMPbl
+ aAA3XuiTl2mH9MH9rEeT+wNa3hOpabls96kKHgq590iDuG0tD6x++NvaiLFsq+BPyXqlf0
+ gQy7h7DXuPCrB+s9YlSzf7H4+Qo10u0=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-F6EbXTIOMlGjZUi0GwqVbA-1; Mon, 18 Mar 2024 12:16:02 -0400
-X-MC-Unique: F6EbXTIOMlGjZUi0GwqVbA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3416632aeffso851267f8f.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 09:16:02 -0700 (PDT)
+ us-mta-22-ILjAHalFPSaYfavCG4-EXA-1; Mon, 18 Mar 2024 12:17:02 -0400
+X-MC-Unique: ILjAHalFPSaYfavCG4-EXA-1
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-6e729f8e8c1so867972b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 09:17:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710778561; x=1711383361;
+ d=1e100.net; s=20230601; t=1710778621; x=1711383421;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aoA2peaGF2qOzBoAWlslzkVrIFIZMqTVQz88w0hXmqE=;
- b=shovFH/7OWEW06j+cbITlTgWKi3MZNWr2kWpDP7j824LpWsx9dKuWRGBvLR/+7gWZ6
- Or3ew8laFyGWsaG1xNduTAe+piY3aZflx+CF9LOOID+jeyhxhX6WORiq/4oPNZtE69I5
- kgCkeYwSS3FV/SU6JirApx/LQ+FCeUpX4lVq/CLgK722wYUGT7Bb6dJW9BF1yscudF5N
- +SncxpU1L6O1Ek2nq9spBrmbVA4AdErbQF656MmlWeeaQ1yXz0kF1SOBUyJFf+trzyN4
- /jgpfVsOHGSxnDcR/4+n5YrbCRIAqnvIbW12TdFH9ulsnjUbiG1YAenQFeIP3LJgCisN
- BX8Q==
-X-Gm-Message-State: AOJu0YzJI/HkTS1oYB72cMjngkmxtkdSft+pgL9fFMeRFAQDKKfiP52X
- wglzerNZBzlSI6kWho8izXAGKBHXIWKnW6ik6X+jTUSaLtLq1tJc6TStLUGVWBo9CkhM8YQPpII
- za0Bsraj+tQyJekwVir2tCcA0t7kkA9ApqAVozUYfMOufpSKP82S4lFojOntMNbKmgNhGY3xHRz
- xKNq+y4L2mtmwQKdtqEnoDtGr4FxW9QQ==
-X-Received: by 2002:a5d:42cf:0:b0:33d:4ee2:883d with SMTP id
- t15-20020a5d42cf000000b0033d4ee2883dmr8354328wrr.39.1710778558063; 
- Mon, 18 Mar 2024 09:15:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFLmuJjSB+Q1fhj0qTUO1mcdtqJ23AZiChAccQKv0I7rQuMy5PokGFJ0WFtLCO++RNmVnhhDQ==
-X-Received: by 2002:a5d:42cf:0:b0:33d:4ee2:883d with SMTP id
- t15-20020a5d42cf000000b0033d4ee2883dmr8354298wrr.39.1710778557454; 
- Mon, 18 Mar 2024 09:15:57 -0700 (PDT)
+ bh=aVNpxLYgQa8mn+iVqcjp/uygNfGlH8NPfTbHmWsTQGc=;
+ b=OPx6VoCpLIQDS176Bf7cAk+oBJrk2sktXKILp8mo/r8vrVcV34cpJIoF0N3ybhETIE
+ 4hcuTwYRkWVk+vQcm5tG9VwLdk8e1cZEklGGfdAsMBw84dAX9XSpHO3wj+f1Ah2rC1Ec
+ 62azjMrzoXkUnm3yAVsQ6GaJaqClKEphVCDYrZaLUZvR07H/cuF78SGSLgVHdkpFbwNb
+ nQqS8vhZ4qV1157A7Yw7mAhs9Fp4YN9L2/TAZTFLgrZgXwuA0C5kfoSmSGN+mZgP4XEp
+ XOYARADHJYQ+8T5NPdc7BmfgHFN9hx5seHqrU0jXQR4w087NW45ci+oXj4LmgYqUGVxa
+ 42Tw==
+X-Gm-Message-State: AOJu0YxTjh6ABYKBReiMpXXH0CNPJbKg/+H2s1b9QqtnwBm/0ChZeMtS
+ JCFRSBwL2geG9wvDgVFZ8GAT21Xg5Tvim9Fr7BK6VyZJVpzt9ePjWCchGdq28/IXtpW0OPmXv/+
+ 5vTYQSVzATsQZ0Y7vWjiSxkBTANXxRF1FryVLrJ8lrjf8KL4hEVenODTqXo8XlU0peB32irZxpa
+ 3ikt6LcliwQd+CGZfCyIcTgJ5Hk4wZsQ==
+X-Received: by 2002:a05:6a00:14c4:b0:6e7:8dd:ed8f with SMTP id
+ w4-20020a056a0014c400b006e708dded8fmr189378pfu.21.1710778621019; 
+ Mon, 18 Mar 2024 09:17:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGHbRntzI+EnTG3Khg6393kA9M+61FgoRh4cM3R4DIz2NF67hTmoK46HS/4VkmRSzpVa/IAEQ==
+X-Received: by 2002:a05:6a00:14c4:b0:6e7:8dd:ed8f with SMTP id
+ w4-20020a056a0014c400b006e708dded8fmr189249pfu.21.1710778619093; 
+ Mon, 18 Mar 2024 09:16:59 -0700 (PDT)
 Received: from redhat.com ([2.52.5.113]) by smtp.gmail.com with ESMTPSA id
- a26-20020a5d457a000000b0033e7e9c8657sm10137260wrc.45.2024.03.18.09.15.54
+ a5-20020aa78e85000000b006e6857da474sm8268979pfr.178.2024.03.18.09.16.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 09:15:56 -0700 (PDT)
-Date: Mon, 18 Mar 2024 12:15:53 -0400
+ Mon, 18 Mar 2024 09:16:58 -0700 (PDT)
+Date: Mon, 18 Mar 2024 12:16:52 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Igor Mammedov <imammedo@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 08/24] smbios: get rid of smbios_smp_sockets global
-Message-ID: <e94e0a833b9d909e239829a2030dbb6e7c2db01d.1710778506.git.mst@redhat.com>
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 22/24] pc/q35: set SMBIOS entry point type to 'auto' by default
+Message-ID: <2c7c45b3d0ba097ac99bf4b9a13c6de1d7724032.1710778506.git.mst@redhat.com>
 References: <cover.1710778506.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -81,7 +81,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1710778506.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -108,119 +108,83 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Igor Mammedov <imammedo@redhat.com>
 
-it makes smbios_validate_table() independent from
-smbios_smp_sockets global, which in turn lets
-smbios_get_tables() avoid using not related legacy code.
+Use smbios-entry-point-type='auto' for newer machine types as a workaround
+for Windows not detecting SMBIOS tables. Which makes QEMU pick SMBIOS tables
+based on configuration (with 2.x preferred and fallback to 3.x if the former
+isn't compatible with configuration)
 
+Default compat setting of smbios-entry-point-type after series
+for pc/q35 machines:
+  * 9.0-newer: 'auto'
+  * 8.1-8.2: '64'
+  * 8.0-older: '32'
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2008
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Ani Sinha <anisinha@redhat.com>
 Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-Id: <20240314152302.2324164-6-imammedo@redhat.com>
+Message-Id: <20240314152302.2324164-20-imammedo@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/firmware/smbios.h |  2 +-
- hw/i386/fw_cfg.c             |  2 +-
- hw/smbios/smbios.c           | 22 +++++++++-------------
- 3 files changed, 11 insertions(+), 15 deletions(-)
+ hw/i386/pc.c      | 2 +-
+ hw/i386/pc_piix.c | 4 ++++
+ hw/i386/pc_q35.c  | 3 +++
+ 3 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
-index c21b8d3285..36744b6cc9 100644
---- a/include/hw/firmware/smbios.h
-+++ b/include/hw/firmware/smbios.h
-@@ -313,7 +313,7 @@ void smbios_set_defaults(const char *manufacturer, const char *product,
-                          const char *version, bool legacy_mode,
-                          bool uuid_encoded, SmbiosEntryPointType ep_type);
- void smbios_set_default_processor_family(uint16_t processor_family);
--uint8_t *smbios_get_table_legacy(MachineState *ms, size_t *length);
-+uint8_t *smbios_get_table_legacy(uint32_t expected_t4_count, size_t *length);
- void smbios_get_tables(MachineState *ms,
-                        const struct smbios_phys_mem_area *mem_array,
-                        const unsigned int mem_array_size,
-diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-index a635234e68..fcb4fb0769 100644
---- a/hw/i386/fw_cfg.c
-+++ b/hw/i386/fw_cfg.c
-@@ -70,7 +70,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg)
-     /* tell smbios about cpuid version and features */
-     smbios_set_cpuid(cpu->env.cpuid_version, cpu->env.features[FEAT_1_EDX]);
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 44eb073abd..e80f02bef4 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1832,7 +1832,7 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     mc->nvdimm_supported = true;
+     mc->smp_props.dies_supported = true;
+     mc->default_ram_id = "pc.ram";
+-    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
++    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_AUTO;
  
--    smbios_tables = smbios_get_table_legacy(ms, &smbios_tables_len);
-+    smbios_tables = smbios_get_table_legacy(ms->smp.cpus, &smbios_tables_len);
-     if (smbios_tables) {
-         fw_cfg_add_bytes(fw_cfg, FW_CFG_SMBIOS_ENTRIES,
-                          smbios_tables, smbios_tables_len);
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index a1741a64a6..003c539d76 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -70,7 +70,7 @@ static SmbiosEntryPoint ep;
- static int smbios_type4_count = 0;
- static bool smbios_immutable;
- static bool smbios_have_defaults;
--static uint32_t smbios_cpuid_version, smbios_cpuid_features, smbios_smp_sockets;
-+static uint32_t smbios_cpuid_version, smbios_cpuid_features;
+     object_class_property_add(oc, PC_MACHINE_MAX_RAM_BELOW_4G, "size",
+         pc_machine_get_max_ram_below_4g, pc_machine_set_max_ram_below_4g,
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index c9a6c0aa68..18ba076609 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -525,12 +525,16 @@ DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0", NULL,
  
- static DECLARE_BITMAP(have_binfile_bitmap, SMBIOS_MAX_TYPE+1);
- static DECLARE_BITMAP(have_fields_bitmap, SMBIOS_MAX_TYPE+1);
-@@ -539,14 +539,11 @@ opts_init(smbios_register_config);
-  */
- #define SMBIOS_21_MAX_TABLES_LEN 0xffff
- 
--static void smbios_validate_table(MachineState *ms)
-+static void smbios_validate_table(uint32_t expected_t4_count)
+ static void pc_i440fx_8_2_machine_options(MachineClass *m)
  {
--    uint32_t expect_t4_count = smbios_legacy ?
--                                        ms->smp.cpus : smbios_smp_sockets;
--
--    if (smbios_type4_count && smbios_type4_count != expect_t4_count) {
-+    if (smbios_type4_count && smbios_type4_count != expected_t4_count) {
-         error_report("Expected %d SMBIOS Type 4 tables, got %d instead",
--                     expect_t4_count, smbios_type4_count);
-+                     expected_t4_count, smbios_type4_count);
-         exit(1);
-     }
++    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
++
+     pc_i440fx_9_0_machine_options(m);
+     m->alias = NULL;
+     m->is_default = false;
  
-@@ -634,7 +631,7 @@ static void smbios_build_type_1_fields(void)
-     }
+     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
+     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
++    /* For pc-i44fx-8.2 and 8.1, use SMBIOS 3.X by default */
++    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
  }
  
--uint8_t *smbios_get_table_legacy(MachineState *ms, size_t *length)
-+uint8_t *smbios_get_table_legacy(uint32_t expected_t4_count, size_t *length)
+ DEFINE_I440FX_MACHINE(v8_2, "pc-i440fx-8.2", NULL,
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 8a427c4647..b5922b44af 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -376,11 +376,14 @@ DEFINE_Q35_MACHINE(v9_0, "pc-q35-9.0", NULL,
+ 
+ static void pc_q35_8_2_machine_options(MachineClass *m)
  {
-     if (!smbios_legacy) {
-         *length = 0;
-@@ -644,7 +641,7 @@ uint8_t *smbios_get_table_legacy(MachineState *ms, size_t *length)
-     if (!smbios_immutable) {
-         smbios_build_type_0_fields();
-         smbios_build_type_1_fields();
--        smbios_validate_table(ms);
-+        smbios_validate_table(expected_t4_count);
-         smbios_immutable = true;
-     }
-     *length = smbios_entries_len;
-@@ -1235,10 +1232,9 @@ void smbios_get_tables(MachineState *ms,
-         smbios_build_type_2_table();
-         smbios_build_type_3_table();
++    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_q35_9_0_machine_options(m);
+     m->alias = NULL;
+     m->max_cpus = 1024;
+     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
+     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
++    /* For pc-q35-8.2 and 8.1, use SMBIOS 3.X by default */
++    pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
+ }
  
--        smbios_smp_sockets = ms->smp.sockets;
--        assert(smbios_smp_sockets >= 1);
-+        assert(ms->smp.sockets >= 1);
- 
--        for (i = 0; i < smbios_smp_sockets; i++) {
-+        for (i = 0; i < ms->smp.sockets; i++) {
-             smbios_build_type_4_table(ms, i);
-         }
- 
-@@ -1284,7 +1280,7 @@ void smbios_get_tables(MachineState *ms,
-         smbios_build_type_41_table(errp);
-         smbios_build_type_127_table();
- 
--        smbios_validate_table(ms);
-+        smbios_validate_table(ms->smp.sockets);
-         smbios_entry_point_setup();
-         smbios_immutable = true;
-     }
+ DEFINE_Q35_MACHINE(v8_2, "pc-q35-8.2", NULL,
 -- 
 MST
 
