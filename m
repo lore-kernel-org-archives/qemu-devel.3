@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27ADEC54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 04:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C80C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 04:41:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm4in-0003Xd-QB; Mon, 18 Mar 2024 00:35:43 -0400
+	id 1rm4nG-0004kB-JC; Mon, 18 Mar 2024 00:40:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
- id 1rm4iP-0003Vc-Eq
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 00:35:14 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomoyuki.hirose@igel.co.jp>)
- id 1rm4iH-0003BS-MI
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 00:35:09 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a467d8efe78so370614466b.3
- for <qemu-devel@nongnu.org>; Sun, 17 Mar 2024 21:35:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=igel-co-jp.20230601.gappssmtp.com; s=20230601; t=1710736503; x=1711341303;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y96d3tpINZzGHkJOrUooqARs8TrxjT+BwmuHwGcMZdk=;
- b=HP/Rk0rqptLQnZp7PiS60SFDiQc1hJ53cW70ALLs+5KWg0KMJojwhiUakrBW/WaMLG
- Qu1OBLonNi/t3jVKCCylT/TqB+MOTMEjTQzFdFtk3v+Dhy5gbyT6VyUgsbM2+yzHhFz8
- 63SvjyHtX3cwbDnlqY5N3PLoPLwXBtO/KU5/GBqkf9YPlP9G3tE7AFcCdADbKlEOxPhv
- kQfqDmnt0biLsbyGtY4/VWIcgkSBoGe/qIdJrljkG3ZfBM4CkAIjIMMBD+LD666VW/8W
- V+GGG//crmnuRqQ50PvTRc4KxG3Ecc29dgl8qaBU1qORjt3ZmYHWl9CSdgiMMo82qaAN
- pEdQ==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rm4fa-00032H-4t
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 00:32:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rm4fX-0002tT-1H
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 00:32:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710736334;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AeFcdercmziukKyb6h86YBiyxi/DYlRWYJk1MeZUfEY=;
+ b=HjSGL0pdwsbvGJnv1VxHYY16wZT/1AM5jKfdwkiQedczhkhXF8jtregymHns3Wpql+ZBfN
+ zvrPHv9/j6MJ5PVhd+6TnC8e8suQCEJrCfzuAoYf+qivdrfI8biyMbVJLWvKd+CxouhIPa
+ YP11fJ3V4p07JiGvqxH1PLiVtpM4xzM=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-115-XHqLsDnfPGW4oYAtT9DWGw-1; Mon, 18 Mar 2024 00:32:12 -0400
+X-MC-Unique: XHqLsDnfPGW4oYAtT9DWGw-1
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-29f9bffaa42so557621a91.0
+ for <qemu-devel@nongnu.org>; Sun, 17 Mar 2024 21:32:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710736503; x=1711341303;
+ d=1e100.net; s=20230601; t=1710736331; x=1711341131;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Y96d3tpINZzGHkJOrUooqARs8TrxjT+BwmuHwGcMZdk=;
- b=HWcegyu+Um2BTvn5vMs3Qw4FE8D/e3XLMbgU8YiiRgF6F0eda8gNTCQ6PC2HMyZvBl
- bWy/Lsy4TSRQmxCXZPgn3GU3FR/VaQ8QMk7OTmXNIKM19nySESiJFtH8lTvUYfEatjqK
- X+XamlbA/ZaaId8ciLMr5zMfMWfIS8zDYphB1/W3ZEP2JlGnGAfGIF9dAG7t6Rh/nZo7
- vrcUUEND0B6GcVyZx/IltU7bsx3jM63rpqnWY4TmNg7bKVYQRI+WB+3/E8ZgyKeacVY6
- L9jNZQO7PBZG2gQ4HSEBFCBE47HkqfA5CYVTTWwJKFRVhxWMvMUISgrivA96yubcSvPR
- y74g==
-X-Gm-Message-State: AOJu0YxbZG1umCoW3TmHDxWAR9xxk7IThCPmlDJsKQf0sUeOnmGClVMY
- pP6Ox2cV5pylM0BfwvzvOuYySAsV1l4J6wP34hSlG+9AfekJHNCae5uUoYZZeMsxdCftV9BnxU0
- HpwqZ+QoSGZLBv0wcEjswyVQRylJHp8da2CAQ9YVYa8lEV842
-X-Google-Smtp-Source: AGHT+IHHdQAQ0N18txuwTkbpO/lTXtphxM+tDstK3voZatYyftKS3eEnXZ3+0hoeOT5LxxhJ6d/Vy/JNhRdF8sCwBuE=
-X-Received: by 2002:a17:906:1958:b0:a46:bb98:c853 with SMTP id
- b24-20020a170906195800b00a46bb98c853mr1599660eje.63.1710736502341; Sun, 17
- Mar 2024 21:35:02 -0700 (PDT)
+ bh=AeFcdercmziukKyb6h86YBiyxi/DYlRWYJk1MeZUfEY=;
+ b=WJFa4vCZFWG7AUAUyAy3topbhD5Yzp2e4Pv+dsG/uCj7Gl1OxbuAVcVQFQXxP409As
+ fJ+ISlpTG10Yfnd5ETXsdP1jX5YFwbvWidFnQBARfKg7qurZclaOe1ioDLI37I5MOnRU
+ f2lwdYgDe/TORCqfBwlUDP7gxaRk07KTTPzs5ji/tPuZO8ijQUkB8evj1S9Nzu+9vM13
+ iJ7/vI7lgn08nQ6V/dKqZPqWdoK9w7jmxp0zKU/MOlXQIJNkEmHhaRlAzFqxXtz68T7I
+ dbwJDOPYqA3peIQDfLU+r/vMrDQNws3bFLzpK55r9fA+zAwgCvyCbGNOvIwWdKLI7cJP
+ flZA==
+X-Gm-Message-State: AOJu0Yyw9mUQk7j9wmF50i6AAjt6ctwDQ/8tZFQHJSQmFyOEUrObjpls
+ Ce3dha2GeasGbnIdDVT8qTPALBmo+lmK6HFTT1P30WVk2pnJfuymN/yscEJVt1lfcVEkkDywAVq
+ Eh3bq+1YYrbwbScTclZJGxLEz/VV3hu6t2LGK/OKrE2GguGIFgqXTi0ZJGa7BKLfgGruqTTu8xn
+ Oda+jjCxj1pypp2QoSj5DL8r03zDI=
+X-Received: by 2002:a17:90a:ead3:b0:29c:7537:afbc with SMTP id
+ ev19-20020a17090aead300b0029c7537afbcmr8785634pjb.31.1710736331168; 
+ Sun, 17 Mar 2024 21:32:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGYPfTC8L5Ynx1fuVJlhVT8WzHd6BzRVvbaN7Qb6/ekypgQiSAbSacthWr4DNNh652d4MYij9y40mVBlH2S/6M=
+X-Received: by 2002:a17:90a:ead3:b0:29c:7537:afbc with SMTP id
+ ev19-20020a17090aead300b0029c7537afbcmr8785627pjb.31.1710736330906; Sun, 17
+ Mar 2024 21:32:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240201081313.1339788-1-tomoyuki.hirose@igel.co.jp>
- <20240201081313.1339788-2-tomoyuki.hirose@igel.co.jp>
- <CAFS=Ecm+aY=pswdL4supc8v0NOGbdW7Mz80j1agLAqc3SQWJ4A@mail.gmail.com>
-In-Reply-To: <CAFS=Ecm+aY=pswdL4supc8v0NOGbdW7Mz80j1agLAqc3SQWJ4A@mail.gmail.com>
-From: Tomoyuki Hirose <tomoyuki.hirose@igel.co.jp>
-Date: Mon, 18 Mar 2024 13:34:46 +0900
-Message-ID: <CAFS=Ec=FWab6v2gy6+YJZzqKGcpvfEOdPR0NhijsciFehvKhiQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] system/memory.c: support unaligned access
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+References: <20240207092702.25242-1-sgarzare@redhat.com>
+ <CACGkMEvRizRGOjOz_AVQw8wsGU3g8+-yHtnKM=yn=3RtY-Hayg@mail.gmail.com>
+ <uufps7n6otfwygiszepy76ltohvsqqo45rwyc6axja3isebda2@mn4rjbji66qt>
+In-Reply-To: <uufps7n6otfwygiszepy76ltohvsqqo45rwyc6axja3isebda2@mn4rjbji66qt>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 18 Mar 2024 12:31:59 +0800
+Message-ID: <CACGkMEt-z3YCh81M2yxnCa9PjLpR8qQ8rLQ5rRCMP6=m9yKpFw@mail.gmail.com>
+Subject: Re: [PATCH] vhost-vdpa: check vhost_vdpa_set_vring_ready() return
+ value
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, lulu@redhat.com, kwolf@redhat.com, 
+ eperezma@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=tomoyuki.hirose@igel.co.jp; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,105 +101,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping.
+On Fri, Mar 15, 2024 at 4:23=E2=80=AFPM Stefano Garzarella <sgarzare@redhat=
+.com> wrote:
+>
+> On Thu, Mar 14, 2024 at 11:17:01AM +0800, Jason Wang wrote:
+> >On Wed, Feb 7, 2024 at 5:27=E2=80=AFPM Stefano Garzarella <sgarzare@redh=
+at.com> wrote:
+> >>
+> >> vhost_vdpa_set_vring_ready() could already fail, but if Linux's
+> >> patch [1] will be merged, it may fail with more chance if
+> >> userspace does not activate virtqueues before DRIVER_OK when
+> >> VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated.
+> >
+> >I wonder what happens if we just leave it as is.
+>
+> Are you referring to this patch or the kernel patch?
 
-On Mon, Feb 26, 2024 at 4:28=E2=80=AFPM Tomoyuki Hirose
-<tomoyuki.hirose@igel.co.jp> wrote:
+This patch.
+
 >
-> Hello,
-> I would be happy if you could give me some comments.
+> Here I'm just checking the return value of vhost_vdpa_set_vring_ready().
+> It can return an error also without that kernel patch, so IMHO is
+> better to check the return value here in QEMU.
 >
-> ping.
+> What issue do you see with this patch applied?
+
+For the parent which can enable after driver_ok but not advertise it.
+
+(To say the truth, I'm not sure if we need to care about this)
+
 >
-> On Thu, Feb 1, 2024 at 5:14=E2=80=AFPM Tomoyuki HIROSE
-> <tomoyuki.hirose@igel.co.jp> wrote:
 > >
-> > The previous code ignored 'impl.unaligned' and handled unaligned access=
-es
-> > as is. But this implementation cannot emulate specific registers of som=
-e
-> > devices that allow unaligned access such as xHCI Host Controller Capabi=
-lity
-> > Registers.
-> > This commit checks 'impl.unaligned' and if it is false, QEMU emulates
-> > unaligned access with multiple aligned access.
+> >VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK: We do know enabling could be
+> >done after driver_ok.
+> >Without VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK: We don't know whether
+> >enabling could be done after driver_ok or not.
+>
+> I see your point, indeed I didn't send a v2 of that patch.
+> Maybe we should document that, because it could be interpreted that if
+> VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated the enabling
+> should always be done before driver_ok (which is true for example in
+> VDUSE).
+
+I see, so I think we probably need the fix.
+
+>
+> BTW I think we should discuss it in the kernel patch.
+>
+> Thanks,
+> Stefano
+>
 > >
-> > Signed-off-by: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
-> > ---
-> >  system/memory.c | 38 +++++++++++++++++++++++++-------------
-> >  1 file changed, 25 insertions(+), 13 deletions(-)
+> >Thanks
 > >
-> > diff --git a/system/memory.c b/system/memory.c
-> > index a229a79988..a7ca0c9f54 100644
-> > --- a/system/memory.c
-> > +++ b/system/memory.c
-> > @@ -535,10 +535,17 @@ static MemTxResult access_with_adjusted_size(hwad=
-dr addr,
-> >                                        MemTxAttrs attrs)
-> >  {
-> >      uint64_t access_mask;
-> > +    unsigned access_mask_shift;
-> > +    unsigned access_mask_start_offset;
-> > +    unsigned access_mask_end_offset;
-> >      unsigned access_size;
-> > -    unsigned i;
-> >      MemTxResult r =3D MEMTX_OK;
-> >      bool reentrancy_guard_applied =3D false;
-> > +    bool is_big_endian =3D memory_region_big_endian(mr);
-> > +    signed start_diff;
-> > +    signed current_offset;
-> > +    signed access_shift;
-> > +    hwaddr current_addr;
+> >>
+> >> So better check its return value anyway.
+> >>
+> >> [1] https://lore.kernel.org/virtualization/20240206145154.118044-1-sga=
+rzare@redhat.com/T/#u
+> >>
+> >> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> >> ---
+> >> Note: This patch conflicts with [2], but the resolution is simple,
+> >> so for now I sent a patch for the current master, but I'll rebase
+> >> this patch if we merge the other one first.
+
+Will go through [2].
+
+Thanks
+
+
+> >>
+> >> [2]
+> >> https://lore.kernel.org/qemu-devel/20240202132521.32714-1-kwolf@redhat=
+.com/
+> >> ---
+> >>  hw/virtio/vdpa-dev.c |  8 +++++++-
+> >>  net/vhost-vdpa.c     | 15 ++++++++++++---
+> >>  2 files changed, 19 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+> >> index eb9ecea83b..d57cd76c18 100644
+> >> --- a/hw/virtio/vdpa-dev.c
+> >> +++ b/hw/virtio/vdpa-dev.c
+> >> @@ -259,7 +259,11 @@ static int vhost_vdpa_device_start(VirtIODevice *=
+vdev, Error **errp)
+> >>          goto err_guest_notifiers;
+> >>      }
+> >>      for (i =3D 0; i < s->dev.nvqs; ++i) {
+> >> -        vhost_vdpa_set_vring_ready(&s->vdpa, i);
+> >> +        ret =3D vhost_vdpa_set_vring_ready(&s->vdpa, i);
+> >> +        if (ret < 0) {
+> >> +            error_setg_errno(errp, -ret, "Error starting vring %d", i=
+);
+> >> +            goto err_dev_stop;
+> >> +        }
+> >>      }
+> >>      s->started =3D true;
+> >>
+> >> @@ -274,6 +278,8 @@ static int vhost_vdpa_device_start(VirtIODevice *v=
+dev, Error **errp)
+> >>
+> >>      return ret;
+> >>
+> >> +err_dev_stop:
+> >> +    vhost_dev_stop(&s->dev, vdev, false);
+> >>  err_guest_notifiers:
+> >>      k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
+> >>  err_host_notifiers:
+> >> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> >> index 3726ee5d67..e3d8036479 100644
+> >> --- a/net/vhost-vdpa.c
+> >> +++ b/net/vhost-vdpa.c
+> >> @@ -381,7 +381,10 @@ static int vhost_vdpa_net_data_load(NetClientStat=
+e *nc)
+> >>      }
+> >>
+> >>      for (int i =3D 0; i < v->dev->nvqs; ++i) {
+> >> -        vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
+> >> +        int ret =3D vhost_vdpa_set_vring_ready(v, i + v->dev->vq_inde=
+x);
+> >> +        if (ret < 0) {
+> >> +            return ret;
+> >> +        }
+> >>      }
+> >>      return 0;
+> >>  }
+> >> @@ -1213,7 +1216,10 @@ static int vhost_vdpa_net_cvq_load(NetClientSta=
+te *nc)
+> >>
+> >>      assert(nc->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_VDPA);
+> >>
+> >> -    vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
+> >> +    r =3D vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
+> >> +    if (unlikely(r < 0)) {
+> >> +        return r;
+> >> +    }
+> >>
+> >>      if (v->shadow_vqs_enabled) {
+> >>          n =3D VIRTIO_NET(v->dev->vdev);
+> >> @@ -1252,7 +1258,10 @@ static int vhost_vdpa_net_cvq_load(NetClientSta=
+te *nc)
+> >>      }
+> >>
+> >>      for (int i =3D 0; i < v->dev->vq_index; ++i) {
+> >> -        vhost_vdpa_set_vring_ready(v, i);
+> >> +        r =3D vhost_vdpa_set_vring_ready(v, i);
+> >> +        if (unlikely(r < 0)) {
+> >> +            return r;
+> >> +        }
+> >>      }
+> >>
+> >>      return 0;
+> >> --
+> >> 2.43.0
+> >>
 > >
-> >      if (!access_size_min) {
-> >          access_size_min =3D 1;
-> > @@ -560,19 +567,24 @@ static MemTxResult access_with_adjusted_size(hwad=
-dr addr,
-> >          reentrancy_guard_applied =3D true;
-> >      }
-> >
-> > -    /* FIXME: support unaligned access? */
-> >      access_size =3D MAX(MIN(size, access_size_max), access_size_min);
-> > -    access_mask =3D MAKE_64BIT_MASK(0, access_size * 8);
-> > -    if (memory_region_big_endian(mr)) {
-> > -        for (i =3D 0; i < size; i +=3D access_size) {
-> > -            r |=3D access_fn(mr, addr + i, value, access_size,
-> > -                        (size - access_size - i) * 8, access_mask, att=
-rs);
-> > -        }
-> > -    } else {
-> > -        for (i =3D 0; i < size; i +=3D access_size) {
-> > -            r |=3D access_fn(mr, addr + i, value, access_size, i * 8,
-> > -                        access_mask, attrs);
-> > -        }
-> > +    start_diff =3D mr->ops->impl.unaligned ? 0 : addr & (access_size -=
- 1);
-> > +    current_addr =3D addr - start_diff;
-> > +    for (current_offset =3D -start_diff; current_offset < (signed)size=
-;
-> > +         current_offset +=3D access_size, current_addr +=3D access_siz=
-e) {
-> > +        access_shift =3D is_big_endian
-> > +                          ? (signed)size - (signed)access_size - curre=
-nt_offset
-> > +                          : current_offset;
-> > +        access_mask_shift =3D current_offset > 0 ? 0 : -current_offset=
-;
-> > +        access_mask_start_offset =3D current_offset > 0 ? current_offs=
-et : 0;
-> > +        access_mask_end_offset =3D current_offset + access_size > size
-> > +                                     ? size
-> > +                                     : current_offset + access_size;
-> > +        access_mask =3D MAKE_64BIT_MASK(access_mask_shift * 8,
-> > +            (access_mask_end_offset - access_mask_start_offset) * 8);
-> > +
-> > +        r |=3D access_fn(mr, current_addr, value, access_size, access_=
-shift * 8,
-> > +                       access_mask, attrs);
-> >      }
-> >      if (mr->dev && reentrancy_guard_applied) {
-> >          mr->dev->mem_reentrancy_guard.engaged_in_io =3D false;
-> > --
-> > 2.39.2
-> >
+>
+
 
