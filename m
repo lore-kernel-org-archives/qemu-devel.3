@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D21FCC54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 16:53:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85BF4C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 16:58:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmGDf-0005B9-17; Mon, 18 Mar 2024 12:52:16 -0400
+	id 1rmGJ6-0006xh-JA; Mon, 18 Mar 2024 12:57:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rmGDX-0005AF-M5
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:52:07 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmGJ4-0006vN-Kx
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:57:50 -0400
+Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1rmGDW-0002VX-71
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:52:07 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-609eb3e5a56so49604657b3.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 09:52:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmGJ2-0003Y9-HK
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:57:49 -0400
+Received: by mail-oo1-xc30.google.com with SMTP id
+ 006d021491bc7-5a46abf093cso2519587eaf.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 09:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710780724; x=1711385524; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Vz0r7CrxXAbXAWl8jQv4wux9fTOJzzdZaP8w4NIvRC8=;
- b=ZBXwjGPcBdpwGTwZ56nZaGfkZh8eRGMWhRQ3P0Y3A59U2Fchfv4Bg7zuQa4qVOQ8gy
- 45uz8Pv6JsoHIXP6cQCM8ffpMwCuQg4vfVC+vDDEAFIUNaPSPaTY1LT83OP5n0S51eK+
- YVrNUE4L/aROC+ql/xHppA4leKkcmF2Poousfkb788MH3bp/fOFOKEcu/eVYXU+CiGbO
- 5nRjBMK4Q3PF4eWTn/OhM/oTQmrq2X+jE1EzS0U4sBh/iF6noOyG1iNw7IE2YfPoCSvF
- zprFYRCzxVUz4qR25Q82pA63uD+LBd5nwAFrhe/JxhFDhze9IaB09t+QbtzPxZHx10vx
- wD2g==
+ d=linaro.org; s=google; t=1710781066; x=1711385866; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pxgCY7qfGzpJl2Z8fIrKhCpnuuDWFSELPvzHb/VKpFI=;
+ b=QG5unwQaX8W0wPBocolk/8fnPHxb/o+gj2Bulwc1qn28kxNhdfpcKqfyOrG3Hp84PE
+ FdgltbsHpM8Rbu40lPz5lHP7xtgA8x5OJZYkiz4Hk6jOEpQrckA52l7Xau4M2BsKwWlj
+ YpuhCMxgHOtGMXNaSRAw44CmVVNvIiNBdDOXzNxsb3kiT/Cdqe5iCYgmI8dxurX81afi
+ /4JZYXFLmV7vmeQjDlplZ5qsiMyXCCrOYqmxNSbC4pKyqogYPonjU5C404PqCWM8gfHk
+ cYHTIULSrAu4U5/k/ozdv9I0hYxQPzIbCEPH1A0Mi8eN+FHtl8ROEZul0sKt7KPdkuNi
+ +HQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710780724; x=1711385524;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Vz0r7CrxXAbXAWl8jQv4wux9fTOJzzdZaP8w4NIvRC8=;
- b=UAyjefC8R4nijOPpW60a/tQJLP7gfVDGx7m4yHfd6KvYVxJ5mmQTYne7NOiUjcYNV+
- D4Bsp3l4E9DK4myRXXigUlenDW1yYjoBgYU488/tYeQVsqCnUT7bpHpoizpbTyh6UgL8
- oTGwOPvRcPgx0IuUjidIffKv4XkJqEGkiu31IYR4A1visefyoM7eN29/tp944wWBc/lu
- g6G32yNzWHelavXcAUyNWDgs/TPlb7xAUC5f75gBMtXr/MEhb6O6ZXoWMk7kZzXS4vSS
- dA/5KVYRv4jMd+cXPLc28+6vlFFWIUuwnsGA53pa7v8uIqp8NlBEnIESqWcRjS96GTqN
- zHfA==
+ d=1e100.net; s=20230601; t=1710781066; x=1711385866;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pxgCY7qfGzpJl2Z8fIrKhCpnuuDWFSELPvzHb/VKpFI=;
+ b=HukHDdTsaZlnL3hBZrp+siMM1F6GsZA4KS4hzgv+FHTU4KjyLnlxLHjuC2ylRFTbLI
+ OzujmdcNuXreebeO9/g0Y1hAVluaOxwhaE4bNUtwEDZj1ufmauhAEWsJTr8OcV0bM3bP
+ 7wwwVHSRwu4OI0EuZ7cLQwMNcNEh5VC0xTahibUKTXc4N7HnqJeMMbVF8JXt/dfUrD0Q
+ 2RBERauWR0jeG26PO7Rrf3iS+Hrb9FUFRlh0N4uA3EJ/8d2FbUqqQSItjhZ2Fj/pxO8B
+ lCqhVUzyFUugEleKbPIb8II1Oc8lQxQ5CBsgLY6OIjufIVv3nITp2HuUb0/LOPpOm+D6
+ RR2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW9q9mVb7Acp73LSQptJcbvqSussa+JDTrBIj7CkcUW8SAKdXyzmhwEIpsIoGbJ9UoVugZ7KP/eEktEpsj3UpaO+oEv2ow=
-X-Gm-Message-State: AOJu0YzJX5soEDwMI11nqdLuQGjbDgfp8B/mTTChFrdDHYxmf+2wO4SG
- T2i6ToSPnXYWL8YNc1fWXe7eCaoIT0nkl11XvhrbBZaNaSZuo4c6
-X-Google-Smtp-Source: AGHT+IE74Blc9zBVN0WzDHrovLKlrrSAraGNg67XAavl/JFPJfRSr+e3Xmo8Mk52fM6O7BPN4plgLw==
-X-Received: by 2002:a81:6e8a:0:b0:607:f09a:d298 with SMTP id
- j132-20020a816e8a000000b00607f09ad298mr12423396ywc.42.1710780724301; 
- Mon, 18 Mar 2024 09:52:04 -0700 (PDT)
-Received: from debian ([50.205.20.42]) by smtp.gmail.com with ESMTPSA id
- r123-20020a0de881000000b00609f4a354d2sm2032136ywe.71.2024.03.18.09.52.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 09:52:03 -0700 (PDT)
-From: fan <nifan.cxl@gmail.com>
-X-Google-Original-From: fan <fan@debian>
-Date: Mon, 18 Mar 2024 09:51:36 -0700
-To: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-Cc: ira.weiny@intel.com, jonathan.cameron@huawei.com,
- dan.j.williams@intel.com, linux-cxl@vger.kernel.org,
- linux-kernel@vger.kernel.org, qemu-devel@nongnu.org,
- chenbaozi@phytium.com.cn
-Subject: Re: [PATCH v2 1/1] cxl/mem: Fix for the index of Clear Event Record
- Handle
-Message-ID: <ZfhxGHXCCgWSLqcX@debian>
-References: <20240318022928.509130-1-wangyuquan1236@phytium.com.cn>
- <20240318022928.509130-2-wangyuquan1236@phytium.com.cn>
+ AJvYcCUdgvnM/c0T39fQhxclXzWq9HydpPNs4jS1RBO8Hm6BfImuWluf0wwoNZRW/7emzbe4LO8EF5fZZEmUxH0hofhPiOsWVL4=
+X-Gm-Message-State: AOJu0Yy5lPOARnEDVDs2IztvFTdL+NyhwtP7/2ib6xJZbqxbnYdWoNka
+ 76E4NGoy+p6Zc5SbFrcWd4wRtzLVr+PG17t2Bbv+KP7nOgaXfXOmUklcWm/i/hE=
+X-Google-Smtp-Source: AGHT+IGXo9tIdwGHDy+0U4us4foL58/5k1KHTaXlwqF5zm3BZxsaNthKWPpgC/kZgNmr/7ObhgnkmQ==
+X-Received: by 2002:a05:6358:7f02:b0:17e:6bfc:b31e with SMTP id
+ p2-20020a0563587f0200b0017e6bfcb31emr12865917rwn.31.1710781066650; 
+ Mon, 18 Mar 2024 09:57:46 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ ks11-20020a056a004b8b00b006e647059cccsm8136181pfb.33.2024.03.18.09.57.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Mar 2024 09:57:46 -0700 (PDT)
+Message-ID: <ada7d62a-6e40-4383-bc3c-33140cba2c84@linaro.org>
+Date: Mon, 18 Mar 2024 06:57:42 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240318022928.509130-2-wangyuquan1236@phytium.com.cn>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=nifan.cxl@gmail.com; helo=mail-yw1-x112c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V6] target/loongarch: Fix tlb huge page loading issue
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org,
+ gaosong@loongson.cn
+Cc: maobibo@loongson.cn, yangxiaojuan@loongson.cn, zhaotianrui@loongson.cn,
+ yijun@loongson.cn, wuruiyang@loongson.cn, zltjiangshi@gmail.com
+References: <20240318070332.1273939-1-lixianglai@loongson.cn>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240318070332.1273939-1-lixianglai@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,39 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 18, 2024 at 10:29:28AM +0800, Yuquan Wang wrote:
-> The dev_dbg info for Clear Event Records mailbox command would report
-> the handle of the next record to clear not the current one.
+On 3/17/24 21:03, Xianglai Li wrote:
+> When we use qemu tcg simulation, the page size of bios is 4KB.
+> When using the level 2 super huge page (page size is 1G) to create the page table,
+> it is found that the content of the corresponding address space is abnormal,
+> resulting in the bios can not start the operating system and graphical interface normally.
 > 
-> This was because the index 'i' had incremented before printing the
-> current handle value.
+> The lddir and ldpte instruction emulation has
+> a problem with the use of super huge page processing above level 2.
+> The page size is not correctly calculated,
+> resulting in the wrong page size of the table entry found by tlb.
 > 
-> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+> Signed-off-by: Xianglai Li<lixianglai@loongson.cn>
 > ---
->  drivers/cxl/core/mbox.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-> index 9adda4795eb7..b810a6aa3010 100644
-> --- a/drivers/cxl/core/mbox.c
-> +++ b/drivers/cxl/core/mbox.c
-> @@ -915,7 +915,7 @@ static int cxl_clear_event_record(struct cxl_memdev_state *mds,
->  
->  		payload->handles[i++] = gen->hdr.handle;
->  		dev_dbg(mds->cxlds.dev, "Event log '%d': Clearing %u\n", log,
-> -			le16_to_cpu(payload->handles[i]));
-> +			le16_to_cpu(payload->handles[i-1]));
+>   target/loongarch/cpu-csr.h        |   3 +
+>   target/loongarch/internals.h      |   5 --
+>   target/loongarch/tcg/tlb_helper.c | 113 +++++++++++++++++++++---------
+>   3 files changed, 82 insertions(+), 39 deletions(-)
 
-LGTM except for the space issue mentioned by Jonathan.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-After the fix,
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-
-Fan
->  
->  		if (i == max_handles) {
->  			payload->nr_recs = i;
-> -- 
-> 2.34.1
-> 
+r~
 
