@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 025FAC54E6A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 15:47:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C544C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 15:47:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmFCW-0002iu-S7; Mon, 18 Mar 2024 11:47:00 -0400
+	id 1rmFCO-0002eh-SZ; Mon, 18 Mar 2024 11:46:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCP-0002fI-Er
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:46:53 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCM-0002Ur-Od
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:46:50 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCB-0007op-Tn
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:46:53 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6e6b54a28ebso4510459b3a.2
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 08:46:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCI-0007pk-BO
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:46:50 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6e6ce174d45so3553047b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 08:46:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710776798; x=1711381598; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710776804; x=1711381604; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kHni6ZJIfTKQTizI7ELdR6+vUEfkW9RnizQcyJ2jZu8=;
- b=C5y0McQ2dH9fdiWccdh3T/O4t6JjkEkDiovfBU0+Abr6Lf3BWUdQRsm4Zcz0KBTwAE
- ksEsAiYr+rAYnw1yBq3irKEfUpK07+dw7jOam3jqU84f4lPWLnRWaaKJ0gDzOovDeaV1
- LmUSy3SniE4V+/C8Fs1YAoyREK3SCPGdKhn4PaPUhlr7oX56fRDhVb7lWXfmZuST3wZ2
- 19uR8xZ1T3nl501f4Itg/ixGPQLNo66UPCOHl5AexBIBe21yek0y7k5vr2Pl9iz/++SK
- JY1wG2VeOwaQzBtTV68zzOG+C32zghOc0MkWbwCDihWxmfYhM0eWRbx5qr8vZu/p8oYy
- rtVw==
+ bh=SLLsOmMfH6Hic0UmOy3GbMHG10bAawMzfOEyo9niiZA=;
+ b=Wi13bPoA7Dcu93ipC8Kij6uWH9F+/xHvjgWi+OSFNsMGQ06aFkI8fcEBG04q5tfWt7
+ HIC/lLVQqjG1DA5k+BEOXiYHqRZ6FJimJrmhFNCeUlm/zIH98+PoD8ITh6OPCn94zBCG
+ /f3cAEQJkO0PP+kv1ZROD5WeGHJLtcmKXvdjSwdCnrZxr/V5U3h1wSnhe4EmCNkJ3fUR
+ tP1Tq3qdFC5sV8xWQhU+q55ZKVkknc2yTwchRwa4xf8SPABh+55yi4U8WF9UVQeFq4Up
+ kyo8h5hz/F5gLPEOdJ2MZd/JK+Wdo7sonIsowuBg3mUoxzWOYux+xzxT+K/VlV6O89EH
+ 2hXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710776798; x=1711381598;
+ d=1e100.net; s=20230601; t=1710776804; x=1711381604;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kHni6ZJIfTKQTizI7ELdR6+vUEfkW9RnizQcyJ2jZu8=;
- b=YJFkLicoTLRPpUZxOxmTfsXb/5SAiz0gMJBUVZSe9NMgyvwgdFTs1kXgzB6JpcD4Wq
- IlAqWffYCoFAdcXxtFf6MLAH65DBnkA4pfttFT76vbXyvHBT1dBzNQsd6wboQbKgz4hV
- xmVLzfNy+FRwQlvzzupCCPplu8ZIgDThQwF/bFpFROlOSZuc0i2B+kms2OMRh2cR6Cyv
- nI9NoqxgEisZgogGUK9uaKQBNV6TW2bzHHv6srdZ4qnNKVaEQQGLVhEKsCZso/FFSHah
- mWA6PVYj/tUz6cVZp1PDZ88dLdc4q2uOyoZtz+p8Yt/gTidYYKo/ILwzeWwO4GgzE5dZ
- xkRQ==
-X-Gm-Message-State: AOJu0YxDgdYOw5Xg0c5Lg93CLAgdvlX2MO0dLXnPboQa0UvGUhDMyMbq
- MkQOy9sdxSVjMS8VjlUDu/+STKHsu4aPW3VakyzNhMoMKoQu43kzoIH2iSIKVds=
-X-Google-Smtp-Source: AGHT+IEWOkvHufmKQxPX4pRwMY/qB5cQikvtwsfFuM9xYFtxrU68gTBPe23YUucvo+kYnqw7M2WRBw==
-X-Received: by 2002:a05:6a20:d48f:b0:1a3:4737:42e2 with SMTP id
- im15-20020a056a20d48f00b001a3473742e2mr13088495pzb.19.1710776798419; 
- Mon, 18 Mar 2024 08:46:38 -0700 (PDT)
+ bh=SLLsOmMfH6Hic0UmOy3GbMHG10bAawMzfOEyo9niiZA=;
+ b=WoQcbeWOEEDDVlW5gnj7E6+aMiZFd7cKTFpYIpxpPHeP94jNAKJoZfdlP5TauYAyr+
+ huwqE6ZLhgUiDh6JAL1h/ErURSbOD2gwaSjs23cIFTr8kmtO9axsB2FMrCZ3QPdQIsuF
+ AxV0k1NirxqmtPjXbyVE8ZiEaR+/GLH2KO6wp3IoXwwl2r5pWiRpfdZj8h2M7sDO9W/D
+ sv1x6I5e3uc+ivFl8Z38hjM4Ivq6WXxBD4gCAPZld2YBl6cSksOpFW6COMMDsvXqcV60
+ CMRcFfG+XBrgC4DFsa6ymL0aZaJFvUydDaFSn9IOg8MHWQGip9ZdHEku82ZNQswJaZgn
+ PUUQ==
+X-Gm-Message-State: AOJu0YxtaXkt7laclypiESvlOIAcYFvV2I7r1g2yCHoXRH+k0LeSQaz+
+ Oh2uHYsd0TpswhOtFCiiFy0j24nHwVVMRrtX3eOP0eoc9F+IKU7FusA58ckD2PY=
+X-Google-Smtp-Source: AGHT+IGtjZWBpdak5J334qTOLd36yu1+eU8bR4frRfz/bWLbjlDIqNxpMQnlrZ+/Y9AXusGEI7/JYw==
+X-Received: by 2002:a05:6a21:3986:b0:1a3:67cb:f7c4 with SMTP id
+ ad6-20020a056a21398600b001a367cbf7c4mr2552443pzc.34.1710776804297; 
+ Mon, 18 Mar 2024 08:46:44 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- v22-20020a634816000000b005dc26144d96sm7332108pga.75.2024.03.18.08.46.33
+ v22-20020a634816000000b005dc26144d96sm7332108pga.75.2024.03.18.08.46.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 08:46:38 -0700 (PDT)
+ Mon, 18 Mar 2024 08:46:44 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,24 +67,24 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v5 01/24] scripts/replay-dump.py: Update to current rr record
- format
-Date: Tue, 19 Mar 2024 01:45:58 +1000
-Message-ID: <20240318154621.2361161-2-npiggin@gmail.com>
+Subject: [PATCH v5 02/24] scripts/replay-dump.py: rejig decoders in event
+ number order
+Date: Tue, 19 Mar 2024 01:45:59 +1000
+Message-ID: <20240318154621.2361161-3-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240318154621.2361161-1-npiggin@gmail.com>
 References: <20240318154621.2361161-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,246 +101,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The v12 format support for replay-dump has a few issues still. This
-fixes async decoding; adds event, shutdown, and end decoding; fixes
-audio in / out events, fixes checkpoint checking of following async
-events.
+Sort decoder functions to be ascending in order of event number,
+same as the decoder tables.
 
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- scripts/replay-dump.py | 127 ++++++++++++++++++++++++++++++-----------
- 1 file changed, 93 insertions(+), 34 deletions(-)
+ scripts/replay-dump.py | 56 +++++++++++++++++++++---------------------
+ 1 file changed, 28 insertions(+), 28 deletions(-)
 
 diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
-index d668193e79..419ee3257b 100755
+index 419ee3257b..b82659cfb6 100755
 --- a/scripts/replay-dump.py
 +++ b/scripts/replay-dump.py
-@@ -20,6 +20,7 @@
+@@ -139,6 +139,19 @@ def swallow_bytes(eid, name, dumpfile, nr):
+     """Swallow nr bytes of data without looking at it"""
+     dumpfile.seek(nr, os.SEEK_CUR)
  
- import argparse
- import struct
-+import os
- from collections import namedtuple
- from os import path
- 
-@@ -134,6 +135,17 @@ def swallow_async_qword(eid, name, dumpfile):
-     print("  %s(%d) @ %d" % (name, eid, step_id))
-     return True
- 
-+def swallow_bytes(eid, name, dumpfile, nr):
-+    """Swallow nr bytes of data without looking at it"""
-+    dumpfile.seek(nr, os.SEEK_CUR)
++total_insns = 0
 +
-+def decode_exception(eid, name, dumpfile):
++def decode_instruction(eid, name, dumpfile):
++    global total_insns
++    ins_diff = read_dword(dumpfile)
++    total_insns += ins_diff
++    print_event(eid, name, "+ %d -> %d" % (ins_diff, total_insns))
++    return True
++
++def decode_interrupt(eid, name, dumpfile):
 +    print_event(eid, name)
 +    return True
 +
-+# v12 does away with the additional event byte and encodes it in the main type
-+# Between v8 and v9, REPLAY_ASYNC_BH_ONESHOT was added, but we don't decode
-+# those versions so leave it out.
- async_decode_table = [ Decoder(0, "REPLAY_ASYNC_EVENT_BH", swallow_async_qword),
-                        Decoder(1, "REPLAY_ASYNC_INPUT", decode_unimp),
-                        Decoder(2, "REPLAY_ASYNC_INPUT_SYNC", decode_unimp),
-@@ -142,8 +154,8 @@ def swallow_async_qword(eid, name, dumpfile):
-                        Decoder(5, "REPLAY_ASYNC_EVENT_NET", decode_unimp),
- ]
- # See replay_read_events/replay_read_event
--def decode_async(eid, name, dumpfile):
--    """Decode an ASYNC event"""
-+def decode_async_old(eid, name, dumpfile):
-+    """Decode an ASYNC event (pre-v8)"""
- 
+ def decode_exception(eid, name, dumpfile):
      print_event(eid, name)
- 
-@@ -157,6 +169,35 @@ def decode_async(eid, name, dumpfile):
- 
-     return call_decode(async_decode_table, async_event_kind, dumpfile)
- 
-+def decode_async_bh(eid, name, dumpfile):
-+    op_id = read_qword(dumpfile)
-+    print_event(eid, name)
-+    return True
-+
-+def decode_async_bh_oneshot(eid, name, dumpfile):
-+    op_id = read_qword(dumpfile)
-+    print_event(eid, name)
-+    return True
-+
-+def decode_async_char_read(eid, name, dumpfile):
-+    char_id = read_byte(dumpfile)
-+    size = read_dword(dumpfile)
-+    print_event(eid, name, "device:%x chars:%s" % (char_id, dumpfile.read(size)))
-+    return True
-+
-+def decode_async_block(eid, name, dumpfile):
-+    op_id = read_qword(dumpfile)
-+    print_event(eid, name)
-+    return True
-+
-+def decode_async_net(eid, name, dumpfile):
-+    net_id = read_byte(dumpfile)
-+    flags = read_dword(dumpfile)
-+    size = read_dword(dumpfile)
-+    swallow_bytes(eid, name, dumpfile, size)
-+    print_event(eid, name, "net:%x flags:%x bytes:%d" % (net_id, flags, size))
-+    return True
-+
- total_insns = 0
- 
- def decode_instruction(eid, name, dumpfile):
-@@ -166,6 +207,10 @@ def decode_instruction(eid, name, dumpfile):
-     print_event(eid, name, "+ %d -> %d" % (ins_diff, total_insns))
+     return True
+@@ -198,15 +211,6 @@ def decode_async_net(eid, name, dumpfile):
+     print_event(eid, name, "net:%x flags:%x bytes:%d" % (net_id, flags, size))
      return True
  
-+def decode_shutdown(eid, name, dumpfile):
-+    print_event(eid, name)
-+    return True
-+
- def decode_char_write(eid, name, dumpfile):
-     res = read_dword(dumpfile)
-     offset = read_dword(dumpfile)
-@@ -177,7 +222,7 @@ def decode_audio_out(eid, name, dumpfile):
+-total_insns = 0
+-
+-def decode_instruction(eid, name, dumpfile):
+-    global total_insns
+-    ins_diff = read_dword(dumpfile)
+-    total_insns += ins_diff
+-    print_event(eid, name, "+ %d -> %d" % (ins_diff, total_insns))
+-    return True
+-
+ def decode_shutdown(eid, name, dumpfile):
+     print_event(eid, name)
+     return True
+@@ -222,6 +226,21 @@ def decode_audio_out(eid, name, dumpfile):
      print_event(eid, name, "%d" % (audio_data))
      return True
  
--def decode_checkpoint(eid, name, dumpfile):
-+def __decode_checkpoint(eid, name, dumpfile, old):
-     """Decode a checkpoint.
- 
-     Checkpoints contain a series of async events with their own specific data.
-@@ -189,14 +234,20 @@ def decode_checkpoint(eid, name, dumpfile):
- 
-     # if the next event is EVENT_ASYNC there are a bunch of
-     # async events to read, otherwise we are done
--    if next_event != 3:
--        print_event(eid, name, "no additional data", event_number)
--    else:
-+    if (old and next_event == 3) or (not old and next_event >= 3 and next_event <= 9):
-         print_event(eid, name, "more data follows", event_number)
-+    else:
-+        print_event(eid, name, "no additional data", event_number)
- 
-     replay_state.reuse_event(next_event)
-     return True
- 
-+def decode_checkpoint_old(eid, name, dumpfile):
-+    return __decode_checkpoint(eid, name, dumpfile, False)
-+
-+def decode_checkpoint(eid, name, dumpfile):
-+    return __decode_checkpoint(eid, name, dumpfile, True)
-+
- def decode_checkpoint_init(eid, name, dumpfile):
-     print_event(eid, name)
-     return True
-@@ -212,15 +263,23 @@ def decode_clock(eid, name, dumpfile):
- 
- def decode_random(eid, name, dumpfile):
-     ret = read_dword(dumpfile)
--    data = read_array(dumpfile)
--    print_event(eid, "%d bytes of random data" % len(data))
++def decode_random(eid, name, dumpfile):
++    ret = read_dword(dumpfile)
 +    size = read_dword(dumpfile)
 +    swallow_bytes(eid, name, dumpfile, size)
 +    if (ret):
 +        print_event(eid, name, "%d bytes (getrandom failed)" % (size))
 +    else:
 +        print_event(eid, name, "%d bytes" % (size))
++    return True
++
++def decode_clock(eid, name, dumpfile):
++    clock_data = read_qword(dumpfile)
++    print_event(eid, name, "0x%x" % (clock_data))
++    return True
++
+ def __decode_checkpoint(eid, name, dumpfile, old):
+     """Decode a checkpoint.
+ 
+@@ -252,25 +271,6 @@ def decode_checkpoint_init(eid, name, dumpfile):
+     print_event(eid, name)
      return True
  
-+def decode_end(eid, name, dumpfile):
-+    print_event(eid, name)
-+    return False
-+
- # pre-MTTCG merge
- v5_event_table = [Decoder(0, "EVENT_INSTRUCTION", decode_instruction),
-                   Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
-                   Decoder(2, "EVENT_EXCEPTION", decode_plain),
--                  Decoder(3, "EVENT_ASYNC", decode_async),
-+                  Decoder(3, "EVENT_ASYNC", decode_async_old),
-                   Decoder(4, "EVENT_SHUTDOWN", decode_unimp),
-                   Decoder(5, "EVENT_CHAR_WRITE", decode_char_write),
-                   Decoder(6, "EVENT_CHAR_READ_ALL", decode_unimp),
-@@ -242,7 +301,7 @@ def decode_random(eid, name, dumpfile):
- v6_event_table = [Decoder(0, "EVENT_INSTRUCTION", decode_instruction),
-                   Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
-                   Decoder(2, "EVENT_EXCEPTION", decode_plain),
--                  Decoder(3, "EVENT_ASYNC", decode_async),
-+                  Decoder(3, "EVENT_ASYNC", decode_async_old),
-                   Decoder(4, "EVENT_SHUTDOWN", decode_unimp),
-                   Decoder(5, "EVENT_CHAR_WRITE", decode_char_write),
-                   Decoder(6, "EVENT_CHAR_READ_ALL", decode_unimp),
-@@ -266,7 +325,7 @@ def decode_random(eid, name, dumpfile):
- v7_event_table = [Decoder(0, "EVENT_INSTRUCTION", decode_instruction),
-                   Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
-                   Decoder(2, "EVENT_EXCEPTION", decode_unimp),
--                  Decoder(3, "EVENT_ASYNC", decode_async),
-+                  Decoder(3, "EVENT_ASYNC", decode_async_old),
-                   Decoder(4, "EVENT_SHUTDOWN", decode_unimp),
-                   Decoder(5, "EVENT_SHUTDOWN_HOST_ERR", decode_unimp),
-                   Decoder(6, "EVENT_SHUTDOWN_HOST_QMP", decode_unimp),
-@@ -296,32 +355,31 @@ def decode_random(eid, name, dumpfile):
- 
- v12_event_table = [Decoder(0, "EVENT_INSTRUCTION", decode_instruction),
-                   Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
--                  Decoder(2, "EVENT_EXCEPTION", decode_plain),
--                  Decoder(3, "EVENT_ASYNC", decode_async),
--                  Decoder(4, "EVENT_ASYNC", decode_async),
--                  Decoder(5, "EVENT_ASYNC", decode_async),
--                  Decoder(6, "EVENT_ASYNC", decode_async),
--                  Decoder(6, "EVENT_ASYNC", decode_async),
--                  Decoder(8, "EVENT_ASYNC", decode_async),
--                  Decoder(9, "EVENT_ASYNC", decode_async),
--                  Decoder(10, "EVENT_ASYNC", decode_async),
--                  Decoder(11, "EVENT_SHUTDOWN", decode_unimp),
--                  Decoder(12, "EVENT_SHUTDOWN_HOST_ERR", decode_unimp),
--                  Decoder(13, "EVENT_SHUTDOWN_HOST_QMP_QUIT", decode_unimp),
--                  Decoder(14, "EVENT_SHUTDOWN_HOST_QMP_RESET", decode_unimp),
--                  Decoder(14, "EVENT_SHUTDOWN_HOST_SIGNAL", decode_unimp),
--                  Decoder(15, "EVENT_SHUTDOWN_HOST_UI", decode_unimp),
--                  Decoder(16, "EVENT_SHUTDOWN_GUEST_SHUTDOWN", decode_unimp),
--                  Decoder(17, "EVENT_SHUTDOWN_GUEST_RESET", decode_unimp),
--                  Decoder(18, "EVENT_SHUTDOWN_GUEST_PANIC", decode_unimp),
--                  Decoder(19, "EVENT_SHUTDOWN_GUEST_SUBSYSTEM_RESET", decode_unimp),
--                  Decoder(20, "EVENT_SHUTDOWN_GUEST_SNAPSHOT_LOAD", decode_unimp),
--                  Decoder(21, "EVENT_SHUTDOWN___MAX", decode_unimp),
-+                  Decoder(2, "EVENT_EXCEPTION", decode_exception),
-+                  Decoder(3, "EVENT_ASYNC_BH", decode_async_bh),
-+                  Decoder(4, "EVENT_ASYNC_BH_ONESHOT", decode_async_bh_oneshot),
-+                  Decoder(5, "EVENT_ASYNC_INPUT", decode_unimp),
-+                  Decoder(6, "EVENT_ASYNC_INPUT_SYNC", decode_unimp),
-+                  Decoder(7, "EVENT_ASYNC_CHAR_READ", decode_async_char_read),
-+                  Decoder(8, "EVENT_ASYNC_BLOCK", decode_async_block),
-+                  Decoder(9, "EVENT_ASYNC_NET", decode_async_net),
-+                  Decoder(10, "EVENT_SHUTDOWN", decode_shutdown),
-+                  Decoder(11, "EVENT_SHUTDOWN_HOST_ERR", decode_shutdown),
-+                  Decoder(12, "EVENT_SHUTDOWN_HOST_QMP_QUIT", decode_shutdown),
-+                  Decoder(13, "EVENT_SHUTDOWN_HOST_QMP_RESET", decode_shutdown),
-+                  Decoder(14, "EVENT_SHUTDOWN_HOST_SIGNAL", decode_shutdown),
-+                  Decoder(15, "EVENT_SHUTDOWN_HOST_UI", decode_shutdown),
-+                  Decoder(16, "EVENT_SHUTDOWN_GUEST_SHUTDOWN", decode_shutdown),
-+                  Decoder(17, "EVENT_SHUTDOWN_GUEST_RESET", decode_shutdown),
-+                  Decoder(18, "EVENT_SHUTDOWN_GUEST_PANIC", decode_shutdown),
-+                  Decoder(19, "EVENT_SHUTDOWN_SUBSYS_RESET", decode_shutdown),
-+                  Decoder(20, "EVENT_SHUTDOWN_SNAPSHOT_LOAD", decode_shutdown),
-+                  Decoder(21, "EVENT_SHUTDOWN___MAX", decode_shutdown),
-                   Decoder(22, "EVENT_CHAR_WRITE", decode_char_write),
-                   Decoder(23, "EVENT_CHAR_READ_ALL", decode_unimp),
-                   Decoder(24, "EVENT_CHAR_READ_ALL_ERROR", decode_unimp),
--                  Decoder(25, "EVENT_AUDIO_IN", decode_unimp),
--                  Decoder(26, "EVENT_AUDIO_OUT", decode_audio_out),
-+                  Decoder(25, "EVENT_AUDIO_OUT", decode_audio_out),
-+                  Decoder(26, "EVENT_AUDIO_IN", decode_unimp),
-                   Decoder(27, "EVENT_RANDOM", decode_random),
-                   Decoder(28, "EVENT_CLOCK_HOST", decode_clock),
-                   Decoder(29, "EVENT_CLOCK_VIRTUAL_RT", decode_clock),
-@@ -334,6 +392,7 @@ def decode_random(eid, name, dumpfile):
-                   Decoder(36, "EVENT_CP_CLOCK_VIRTUAL_RT", decode_checkpoint),
-                   Decoder(37, "EVENT_CP_INIT", decode_checkpoint_init),
-                   Decoder(38, "EVENT_CP_RESET", decode_checkpoint),
-+                  Decoder(39, "EVENT_END", decode_end),
- ]
- 
- def parse_arguments():
+-def decode_interrupt(eid, name, dumpfile):
+-    print_event(eid, name)
+-    return True
+-
+-def decode_clock(eid, name, dumpfile):
+-    clock_data = read_qword(dumpfile)
+-    print_event(eid, name, "0x%x" % (clock_data))
+-    return True
+-
+-def decode_random(eid, name, dumpfile):
+-    ret = read_dword(dumpfile)
+-    size = read_dword(dumpfile)
+-    swallow_bytes(eid, name, dumpfile, size)
+-    if (ret):
+-        print_event(eid, name, "%d bytes (getrandom failed)" % (size))
+-    else:
+-        print_event(eid, name, "%d bytes" % (size))
+-    return True
+-
+ def decode_end(eid, name, dumpfile):
+     print_event(eid, name)
+     return False
 -- 
 2.42.0
 
