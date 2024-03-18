@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85185C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 17:57:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF91C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 17:58:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmHEU-0000U8-Lc; Mon, 18 Mar 2024 13:57:10 -0400
+	id 1rmHEa-0000YM-Ut; Mon, 18 Mar 2024 13:57:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHET-0000Tr-Tn
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHEZ-0000Xy-6p
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHER-00077e-VJ
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:09 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHEX-00078t-QB
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710784627;
+ s=mimecast20190719; t=1710784633;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pyDG1697yNmOLATZpCsmYF7vOjj017X+KxrJDV4ddsk=;
- b=LK1OM9LMSdoki4h6/YpiJX1QccmzUwzOlvuTJqaCjLoOE+GenU+/0cFcAPzdOJXlPI7PXc
- zpKGDTjMnk4ahCr5ksD19Fl8tFObWEazErF370DYfklczpPG9LbOEyGIMLqCl2oJ3tH+fE
- O9z6CwshrasB8Bln1Q0kwHb0ft0q6mU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-111-Kv3nalYPMsGJLiyH9nYbMw-1; Mon, 18 Mar 2024 13:57:05 -0400
-X-MC-Unique: Kv3nalYPMsGJLiyH9nYbMw-1
+ bh=xz5P+39VQaj/6mPsDDXaLw8Q7b0zW3e8IuF4GuVzrt8=;
+ b=WaaTa2iY5P/htlOe8LixL+ZqgcLYIBp91whgR7l4gUVCfDrvmNuYHXH4Ff+VbjIENa11Y+
+ 8utHZb+mXaQElTDcgWOaFxRIDxumlWUjOSQWDfdZkBaOU4w2h1mEP7G1NgT2Io7oDJ85yK
+ oXQz0cGx2ZFxBjbwip1zP8xMQo+NxJk=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-256-9mQP87XKOa2J5vJUlnhrKw-1; Mon,
+ 18 Mar 2024 13:57:08 -0400
+X-MC-Unique: 9mQP87XKOa2J5vJUlnhrKw-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 51ACD800262;
- Mon, 18 Mar 2024 17:57:05 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 66C7D282D3C8;
+ Mon, 18 Mar 2024 17:57:08 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.155])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 489172166B34;
- Mon, 18 Mar 2024 17:57:04 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 1CA812166B34;
+ Mon, 18 Mar 2024 17:57:06 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Claudio Fontana <cfontana@suse.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Subject: [PULL 2/4] target/s390x: improve cpu compatibility check error message
-Date: Mon, 18 Mar 2024 18:56:53 +0100
-Message-ID: <20240318175655.756084-3-thuth@redhat.com>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 4/4] travis-ci: Rename SOFTMMU -> SYSTEM
+Date: Mon, 18 Mar 2024 18:56:55 +0100
+Message-ID: <20240318175655.756084-5-thuth@redhat.com>
 In-Reply-To: <20240318175655.756084-1-thuth@redhat.com>
 References: <20240318175655.756084-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -83,78 +82,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Claudio Fontana <cfontana@suse.de>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-some users were confused by this message showing under TCG:
+Since we *might* have user emulation with softmmu,
+rename MAIN_SOFTMMU_TARGETS as MAIN_SYSTEM_TARGETS
+to express 'system emulation targets'.
 
- Selected CPU generation is too new. Maximum supported model
- in the configuration: 'xyz'
-
-Clarify that the maximum can depend on the accel, and add a
-hint to try a different one.
-
-Also add a hint for features mismatch to suggest trying
-different accel, QEMU and kernel versions.
-
-Signed-off-by: Claudio Fontana <cfontana@suse.de>
-Message-ID: <20240314213746.27163-1-cfontana@suse.de>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240313213339.82071-3-philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- target/s390x/cpu_models.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ .travis.yml | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index 1a1c096122..8ed3bb6a27 100644
---- a/target/s390x/cpu_models.c
-+++ b/target/s390x/cpu_models.c
-@@ -500,6 +500,16 @@ static void error_prepend_missing_feat(const char *name, void *opaque)
-     error_prepend((Error **) opaque, "%s ", name);
- }
+diff --git a/.travis.yml b/.travis.yml
+index 76859d48da..597d151b80 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -35,7 +35,7 @@ env:
+     - TEST_BUILD_CMD=""
+     - TEST_CMD="make check V=1"
+     # This is broadly a list of "mainline" system targets which have support across the major distros
+-    - MAIN_SOFTMMU_TARGETS="aarch64-softmmu,mips64-softmmu,ppc64-softmmu,riscv64-softmmu,s390x-softmmu,x86_64-softmmu"
++    - MAIN_SYSTEM_TARGETS="aarch64-softmmu,mips64-softmmu,ppc64-softmmu,riscv64-softmmu,s390x-softmmu,x86_64-softmmu"
+     - CCACHE_SLOPPINESS="include_file_ctime,include_file_mtime"
+     - CCACHE_MAXSIZE=1G
+     - G_MESSAGES_DEBUG=error
+@@ -114,7 +114,7 @@ jobs:
+       env:
+         - TEST_CMD="make check check-tcg V=1"
+         - CONFIG="--disable-containers --enable-fdt=system
+-                  --target-list=${MAIN_SOFTMMU_TARGETS} --cxx=/bin/false"
++                  --target-list=${MAIN_SYSTEM_TARGETS} --cxx=/bin/false"
+         - UNRELIABLE=true
  
-+static void check_compat_model_failed(Error **errp,
-+                                      const S390CPUModel *max_model,
-+                                      const char *msg)
-+{
-+    error_setg(errp, "%s. Maximum supported model in the current configuration: \'%s\'",
-+               msg, max_model->def->name);
-+    error_append_hint(errp, "Consider a different accelerator, try \"-accel help\"\n");
-+    return;
-+}
-+
- static void check_compatibility(const S390CPUModel *max_model,
-                                 const S390CPUModel *model, Error **errp)
- {
-@@ -507,15 +517,11 @@ static void check_compatibility(const S390CPUModel *max_model,
-     S390FeatBitmap missing;
+     - name: "[ppc64] GCC check-tcg"
+@@ -185,7 +185,7 @@ jobs:
+       env:
+         - TEST_CMD="make check check-tcg V=1"
+         - CONFIG="--disable-containers --enable-fdt=system
+-                  --target-list=${MAIN_SOFTMMU_TARGETS},s390x-linux-user"
++                  --target-list=${MAIN_SYSTEM_TARGETS},s390x-linux-user"
+         - UNRELIABLE=true
+       script:
+         - BUILD_RC=0 && make -j${JOBS} || BUILD_RC=$?
+@@ -226,7 +226,7 @@ jobs:
+           - genisoimage
+       env:
+         - CONFIG="--disable-containers --enable-fdt=system --audio-drv-list=sdl
+-                  --disable-user --target-list-exclude=${MAIN_SOFTMMU_TARGETS}"
++                  --disable-user --target-list-exclude=${MAIN_SYSTEM_TARGETS}"
  
-     if (model->def->gen > max_model->def->gen) {
--        error_setg(errp, "Selected CPU generation is too new. Maximum "
--                   "supported model in the configuration: \'%s\'",
--                   max_model->def->name);
-+        check_compat_model_failed(errp, max_model, "Selected CPU generation is too new");
-         return;
-     } else if (model->def->gen == max_model->def->gen &&
-                model->def->ec_ga > max_model->def->ec_ga) {
--        error_setg(errp, "Selected CPU GA level is too new. Maximum "
--                   "supported model in the configuration: \'%s\'",
--                   max_model->def->name);
-+        check_compat_model_failed(errp, max_model, "Selected CPU GA level is too new");
-         return;
-     }
- 
-@@ -537,7 +543,9 @@ static void check_compatibility(const S390CPUModel *max_model,
-     error_setg(errp, " ");
-     s390_feat_bitmap_to_ascii(missing, errp, error_prepend_missing_feat);
-     error_prepend(errp, "Some features requested in the CPU model are not "
--                  "available in the configuration: ");
-+                  "available in the current configuration: ");
-+    error_append_hint(errp,
-+                      "Consider a different accelerator, QEMU, or kernel version\n");
- }
- 
- S390CPUModel *get_max_cpu_model(Error **errp)
+     - name: "[s390x] GCC (user)"
+       arch: s390x
 -- 
 2.44.0
 
