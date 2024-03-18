@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE9B1C54E69
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB0EBC54E5D
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 20:28:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmJaA-0008Qb-JS; Mon, 18 Mar 2024 16:27:42 -0400
+	id 1rmJa6-0008Pj-RF; Mon, 18 Mar 2024 16:27:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1rmJa8-0008QG-4L; Mon, 18 Mar 2024 16:27:40 -0400
+ id 1rmJa4-0008PI-RZ; Mon, 18 Mar 2024 16:27:36 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1rmJa6-0001t8-3K; Mon, 18 Mar 2024 16:27:39 -0400
+ id 1rmJa1-0001sr-Sv; Mon, 18 Mar 2024 16:27:36 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42IK5tNb019408; Mon, 18 Mar 2024 20:27:32 GMT
+ 42IK5uP0019451; Mon, 18 Mar 2024 20:27:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=Rj/Dru9v1iiUhONbRa34Pe88TGw+K4f+Z5rajGHtgIY=;
- b=boyttm31MY47q+oTdMsi+ko23S8PnNtmvd8db7u3uB8RhKxhVmuffMSC35PCzcSGY/kP
- vUpCGd1lQd0uU2IRimqxNQRsESW3aEVGyw3Sxk9ugMP8T+U9eaWcGbyXKQJr+oGz7mh7
- HFiGoWJuKRce9Fo6PuUMLabsibJHwTRsOu6qPj5C+R93N38Imkn5Xzn69vAUDfQjxw5j
- Co5BUbmvD93CiKd7NLfesyu36s5cDpOP71G35ocg/5EfdjCWdyV7ynIY0dsxVUA0Jkb2
- Q0RER1iCEdmbecP3mV5O2fqDbQ2i0onCSlCddcvCh6YDIVX/ZIJeBSDLQ5P+SH//qeYH nA== 
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=6He4HjzjnfBMCl7gVtLvqU5B0mB7QhuK+qGMlO1WXgU=;
+ b=JinaQe59sUjFkuycOUji5yVbBuWPy+PzXJoW81u9qzomZ8zjrNi/pbyLtk0xDR9SO02O
+ IiXMC1c7wXwpjJEggdBdRoSEaNEzq2NEfyzjpl0k5LixfiRFavua2BxgCz8UQGuVZ8ZM
+ LUW9nvmw27cLnLiY4WipI7Kpdfm4UVNus1BFqka4OBWfR/sU5YmFaK/Q/bL9LUy972ts
+ 9KOYl19uu7Z5POPw7xU5yZPUibY6H21ynQtVoSsZ8x88zDpMfMQORgBbWyNYjNamnF5O
+ nuHvDYZLuCfFWvacv6+isQomxnxSQO9a6H7YBZxnjVVLT3ZzXV8+PRvjzIW+FwYnGQ1I PA== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wxumv8ats-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wxumv8atd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 18 Mar 2024 20:27:32 +0000
+ Mon, 18 Mar 2024 20:27:29 +0000
 Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42IKPPx2027088;
- Mon, 18 Mar 2024 20:27:32 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wxumv8atm-1
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42IKPgR4027988;
+ Mon, 18 Mar 2024 20:27:29 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wxumv8at9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 18 Mar 2024 20:27:31 +0000
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42IJ65Lh011606; Mon, 18 Mar 2024 20:27:30 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wwq8ktxr3-1
+ Mon, 18 Mar 2024 20:27:29 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42IJupOK002773; Mon, 18 Mar 2024 20:27:28 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wwrf2amrd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 18 Mar 2024 20:27:30 +0000
+ Mon, 18 Mar 2024 20:27:28 +0000
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42IKRQFC51052878
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42IKROd349676780
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 18 Mar 2024 20:27:28 GMT
+ Mon, 18 Mar 2024 20:27:26 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8AD1120043;
- Mon, 18 Mar 2024 20:27:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7F5C22004B;
+ Mon, 18 Mar 2024 20:27:24 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2F1C620040;
- Mon, 18 Mar 2024 20:27:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 1118220040;
+ Mon, 18 Mar 2024 20:27:24 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.171.85.188])
  by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 18 Mar 2024 20:27:26 +0000 (GMT)
+ Mon, 18 Mar 2024 20:27:23 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Richard Henderson <richard.henderson@linaro.org>,
  David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2 2/2] tests/tcg/s390x: Test TEST AND SET
-Date: Mon, 18 Mar 2024 21:27:11 +0100
-Message-ID: <20240318202722.20675-2-iii@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, Ido Plat <ido.plat@ibm.com>, 
+ qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v2 1/2] target/s390x: Use mutable temporary value for op_ts
+Date: Mon, 18 Mar 2024 21:27:10 +0100
+Message-ID: <20240318202722.20675-1-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240318202722.20675-1-iii@linux.ibm.com>
-References: <20240318202722.20675-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 9t2YczurIOe1cxO-060KKug2PW33ZH8M
-X-Proofpoint-ORIG-GUID: f_klG75pEUpjqSkbC4KffVKzACR38t1S
+X-Proofpoint-GUID: isfHxD47IDppckKsfUigyDk2U2xn2Lka
+X-Proofpoint-ORIG-GUID: vtFgJ8O-NoYbarWKt-1KC1M7lOe8WRg5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  impostorscore=0 phishscore=0
- mlxlogscore=823 mlxscore=0 malwarescore=0 suspectscore=0
+ mlxlogscore=821 mlxscore=0 malwarescore=0 suspectscore=0
  lowpriorityscore=0 adultscore=0 clxscore=1015 priorityscore=1501
  spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2403140000 definitions=main-2403180155
@@ -114,68 +111,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a small test to prevent regressions.
+From: Ido Plat <ido.plat@ibm.com>
 
+Otherwise TCG would assume the register that holds t1 would be constant
+and reuse whenever it needs the value within it.
+
+Cc: qemu-stable@nongnu.org
+Fixes: f1ea739bd598 ("target/s390x: Use tcg_constant_* in local contexts")
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+[iii: Adjust a newline and capitalization, add tags]
+Signed-off-by: Ido Plat <ido.plat@ibm.com>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- tests/tcg/s390x/Makefile.target |  1 +
- tests/tcg/s390x/ts.c            | 35 +++++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+)
- create mode 100644 tests/tcg/s390x/ts.c
+ target/s390x/tcg/translate.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index e2aba2ec274..a8f86c94498 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -47,6 +47,7 @@ TESTS+=add-logical-with-carry
- TESTS+=lae
- TESTS+=cvd
- TESTS+=cvb
-+TESTS+=ts
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index 0d0c672c959..57b7db1ee96 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -4781,9 +4781,10 @@ static DisasJumpType op_trXX(DisasContext *s, DisasOps *o)
  
- cdsg: CFLAGS+=-pthread
- cdsg: LDFLAGS+=-pthread
-diff --git a/tests/tcg/s390x/ts.c b/tests/tcg/s390x/ts.c
-new file mode 100644
-index 00000000000..441faf30d98
---- /dev/null
-+++ b/tests/tcg/s390x/ts.c
-@@ -0,0 +1,35 @@
-+/*
-+ * Test the TEST AND SET instruction.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <stdlib.h>
-+
-+static int ts(char *p)
-+{
-+    int cc;
-+
-+    asm("ts %[p]\n"
-+        "ipm %[cc]"
-+        : [cc] "=r" (cc)
-+        , [p] "+Q" (*p)
-+        : : "cc");
-+
-+    return (cc >> 28) & 3;
-+}
-+
-+int main(void)
-+{
-+    char c;
-+
-+    c = 0x80;
-+    assert(ts(&c) == 1);
-+    assert(c == 0xff);
-+
-+    c = 0x7f;
-+    assert(ts(&c) == 0);
-+    assert(c == 0xff);
-+
-+    return EXIT_SUCCESS;
-+}
+ static DisasJumpType op_ts(DisasContext *s, DisasOps *o)
+ {
+-    TCGv_i32 t1 = tcg_constant_i32(0xff);
++    TCGv_i32 ff = tcg_constant_i32(0xff);
++    TCGv_i32 t1 = tcg_temp_new_i32();
+ 
+-    tcg_gen_atomic_xchg_i32(t1, o->in2, t1, get_mem_index(s), MO_UB);
++    tcg_gen_atomic_xchg_i32(t1, o->in2, ff, get_mem_index(s), MO_UB);
+     tcg_gen_extract_i32(cc_op, t1, 7, 1);
+     set_cc_static(s);
+     return DISAS_NEXT;
 -- 
 2.44.0
 
