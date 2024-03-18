@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BA1C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 15:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12DB8C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 15:48:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmFDF-00042n-F2; Mon, 18 Mar 2024 11:47:45 -0400
+	id 1rmFCh-0002mo-CZ; Mon, 18 Mar 2024 11:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFDA-0003fl-UO
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:40 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCf-0002mR-Pn
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:09 -0400
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFD3-0007un-RR
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:39 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-6e6ce174d45so3553898b3a.3
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 08:47:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCa-0007rF-8B
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:09 -0400
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-6e675db6fbaso2634665a34.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 08:47:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710776850; x=1711381650; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710776821; x=1711381621; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GoDLXObhG4ujv0wbwxxQpClK8TDNZa/JMTih0Qwb1tc=;
- b=ad2rU37ui/oO9hSX3qwv/duKbLJ9NpAMttwkXKRi9uxn0opTTPsfxpL2x3i109Bt2w
- czu73QVgWalufSrKhY5styYlWghQ4ndjm5wdNIY6s0LSyLEHn8phPZ3GFOS2cEeKusoy
- MmcyAU/PjhXLLGwl9tSuK5+1kojvqwGMa7hgJyJCeBezP9rf5+mJIOCjOwX0ZIy24BQ2
- emcKkvaeqjMaJlfbZYKOgC3bxY/NpjAaY5zpFSK7Uaam6u/8A44Afi2FKQyT8BF/f5Lz
- md51JTEyhQSLKtKC47V0iidswpac0y/rY+hPPnf6SLD1XX3M3oFg7h7+tSI4S2dGi4Su
- vzZQ==
+ bh=eKpzpXj/rNwSAlMipdDJMEvIfQrihazLg7YHWN/oksU=;
+ b=cejnqJC2fZhv8J58rFo4uI5m97t+7z3PUOidixe6tBiXd8PC8pxm8Wem+JRviOGBhN
+ dKMn2GYnVy9ssr3CiZnBQAorVsi+HsDZksFpnOkpQUxPCk6fYNqUDXTI9sB1ng4+EvFf
+ YNlxFgd87x45ddJcqXMCFx+vkb5E5RSVtiRkMiEL5u5Mx/iXuPojTXy/V7K2Np2mJ7+P
+ ANCLbwnNX+4BphHZkY20XVGk1AuZqR+C2OAGAHbTujjCeetyVh2GAGccfBTyzo0NZmLl
+ 6H8BWrCnwbzn4jvtVh2bNew8NGWnJ0TK18MzTOiyNBpM781HCVwfrIw0znvyj0uArb7G
+ DRXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710776850; x=1711381650;
+ d=1e100.net; s=20230601; t=1710776821; x=1711381621;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GoDLXObhG4ujv0wbwxxQpClK8TDNZa/JMTih0Qwb1tc=;
- b=RzQw9U+SHOXwnYkn8qyluD/kUC1fL+i4fSk8ymqruWEHQouyP3NhZaA8nzyYYY5G8D
- L/A5tAT0JKLbFshrteNVXYRojla3aNYwSZ9Q3aUnoZikczNldYob+tE83z3G0VNk3rm9
- WcaSgHfRn19IQWyOM5uhLHqV4lm3MaK61XL+sdDkBfGpsb4utiXcnxmHPdfvwtBMRYhK
- 5wGyFmZOQQQY4XACMtLfmMvSUA4QQ53EDWlTz5/ZJpKBkl4Vd2P3bO5rliFqQ+VhSOCH
- 7KKUUHkMFCRHfzmExhhdjMdMZOKzUh9scrLO7JegtUkDKy0Fy4Kboyy0aU1QwVwRWCoh
- tNUQ==
-X-Gm-Message-State: AOJu0Yz+EIUb8PLalRY3g8XcUfbUXhGuW+z+be0TA8cqqalUnTU3IHw5
- 4BTEe3Itw61yg5UKnDoqZbxo8zqACQwWk9c+3QFT+TXpsO4egSIsGUtSzIhxI7M=
-X-Google-Smtp-Source: AGHT+IGWfK+rmzWf5q5aR4t1hEjCHNOz0uM+W+FYn09GuRDdUGyHPGO3v61FT+umbmMHl/5hCANgNg==
-X-Received: by 2002:a05:6a20:d81b:b0:1a3:5235:8e04 with SMTP id
- iv27-20020a056a20d81b00b001a352358e04mr9006341pzb.36.1710776850309; 
- Mon, 18 Mar 2024 08:47:30 -0700 (PDT)
+ bh=eKpzpXj/rNwSAlMipdDJMEvIfQrihazLg7YHWN/oksU=;
+ b=o5Z71DQYPOcX9zoV2Kfps0a1jogAU2do46WxKwCUy37TWAg9Wi04B6r/KHWzBgaWCy
+ 4KazT8GQYAwRrmkrB+9TYYd/eB9z6N4ewd2kNU4q+LOVK54UZQpdhM3h3+PKly5I4MwR
+ yiPCEHB+iS6irabbS/7UwRXWca+hYfFRaXbTi+11EiaLHUnWg7926/ZqhOyWmSVT24q3
+ 0MRcNhTxvwiWl96miNaWLxmrAaT2EG2xbUv50Yi7UEl5FIOXz4UAv4yS8pLDSwAgT2KE
+ V2PGwQQa7Fpv0OPRmIOR+BHid/fQ/nn13D0SHHNZ1bisr866f9NEQZqpO3A8kAS0Estv
+ svaA==
+X-Gm-Message-State: AOJu0YwZ4ZHqT02/ZmmBFHXkH6oPl4NY4ySbYU0/Un59RJDR/uwcWXpm
+ 8aXtvxGqKuzCe9BBs9QDKnesCfG5BJeW4LYftQ55rA6FKtZB7eLn9XehRr50nNg=
+X-Google-Smtp-Source: AGHT+IGkUFdHxsrsNruOAN0Rj049+O1vLPe/LU/3Vi7YHIKGXgOa9KqmeqwBpoJmTiLG/AdBaDHCNA==
+X-Received: by 2002:a05:6870:418d:b0:220:941d:18be with SMTP id
+ y13-20020a056870418d00b00220941d18bemr13353120oac.25.1710776821348; 
+ Mon, 18 Mar 2024 08:47:01 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- v22-20020a634816000000b005dc26144d96sm7332108pga.75.2024.03.18.08.47.24
+ v22-20020a634816000000b005dc26144d96sm7332108pga.75.2024.03.18.08.46.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 08:47:30 -0700 (PDT)
+ Mon, 18 Mar 2024 08:47:01 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,24 +67,23 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v5 10/24] virtio-net: Use replay_schedule_bh_event for bhs
- that affect machine state
-Date: Tue, 19 Mar 2024 01:46:07 +1000
-Message-ID: <20240318154621.2361161-11-npiggin@gmail.com>
+Subject: [PATCH v5 05/24] Revert "replay: stop us hanging in rr_wait_io_event"
+Date: Tue, 19 Mar 2024 01:46:02 +1000
+Message-ID: <20240318154621.2361161-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240318154621.2361161-1-npiggin@gmail.com>
 References: <20240318154621.2361161-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=npiggin@gmail.com; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,71 +99,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The regular qemu_bh_schedule() calls result in non-deterministic
-execution of the bh in record-replay mode, which causes replay failure.
+This reverts commit 1f881ea4a444ef36a8b6907b0b82be4b3af253a2.
+
+That commit causes reverse_debugging.py test failures, and does
+not seem to solve the root cause of the problem x86-64 still
+hangs in record/replay tests.
+
+The problem with short-cutting the iowait that was taken during
+record phase is that related events will not get consumed at the
+same points (e.g., reading the clock).
+
+A hang with zero icount always seems to be a symptom of an earlier
+problem that has caused the recording to become out of synch with
+the execution and consumption of events by replay.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/net/virtio-net.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/sysemu/replay.h      |  5 -----
+ accel/tcg/tcg-accel-ops-rr.c |  2 +-
+ replay/replay.c              | 21 ---------------------
+ 3 files changed, 1 insertion(+), 27 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 9959f1932b..6ac737f2cf 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -40,6 +40,7 @@
- #include "migration/misc.h"
- #include "standard-headers/linux/ethtool.h"
- #include "sysemu/sysemu.h"
-+#include "sysemu/replay.h"
- #include "trace.h"
- #include "monitor/qdev.h"
- #include "monitor/monitor.h"
-@@ -416,7 +417,7 @@ static void virtio_net_set_status(struct VirtIODevice *vdev, uint8_t status)
-                 timer_mod(q->tx_timer,
-                                qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout);
-             } else {
--                qemu_bh_schedule(q->tx_bh);
-+                replay_bh_schedule_event(q->tx_bh);
-             }
-         } else {
-             if (q->tx_timer) {
-@@ -2724,7 +2725,7 @@ static void virtio_net_tx_complete(NetClientState *nc, ssize_t len)
-          */
-         virtio_queue_set_notification(q->tx_vq, 0);
-         if (q->tx_bh) {
--            qemu_bh_schedule(q->tx_bh);
-+            replay_bh_schedule_event(q->tx_bh);
-         } else {
-             timer_mod(q->tx_timer,
-                       qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout);
-@@ -2879,7 +2880,7 @@ static void virtio_net_handle_tx_bh(VirtIODevice *vdev, VirtQueue *vq)
-         return;
+diff --git a/include/sysemu/replay.h b/include/sysemu/replay.h
+index f229b2109c..8102fa54f0 100644
+--- a/include/sysemu/replay.h
++++ b/include/sysemu/replay.h
+@@ -73,11 +73,6 @@ int replay_get_instructions(void);
+ /*! Updates instructions counter in replay mode. */
+ void replay_account_executed_instructions(void);
+ 
+-/**
+- * replay_can_wait: check if we should pause for wait-io
+- */
+-bool replay_can_wait(void);
+-
+ /* Processing clocks and other time sources */
+ 
+ /*! Save the specified clock */
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index 894e73e52c..a942442a33 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -109,7 +109,7 @@ static void rr_wait_io_event(void)
+ {
+     CPUState *cpu;
+ 
+-    while (all_cpu_threads_idle() && replay_can_wait()) {
++    while (all_cpu_threads_idle()) {
+         rr_stop_kick_timer();
+         qemu_cond_wait_bql(first_cpu->halt_cond);
      }
-     virtio_queue_set_notification(vq, 0);
--    qemu_bh_schedule(q->tx_bh);
-+    replay_bh_schedule_event(q->tx_bh);
+diff --git a/replay/replay.c b/replay/replay.c
+index b8564a4813..895fa6b67a 100644
+--- a/replay/replay.c
++++ b/replay/replay.c
+@@ -451,27 +451,6 @@ void replay_start(void)
+     replay_enable_events();
  }
  
- static void virtio_net_tx_timer(void *opaque)
-@@ -2962,7 +2963,7 @@ static void virtio_net_tx_bh(void *opaque)
-     /* If we flush a full burst of packets, assume there are
-      * more coming and immediately reschedule */
-     if (ret >= n->tx_burst) {
--        qemu_bh_schedule(q->tx_bh);
-+        replay_bh_schedule_event(q->tx_bh);
-         q->tx_waiting = 1;
-         return;
-     }
-@@ -2976,7 +2977,7 @@ static void virtio_net_tx_bh(void *opaque)
-         return;
-     } else if (ret > 0) {
-         virtio_queue_set_notification(q->tx_vq, 0);
--        qemu_bh_schedule(q->tx_bh);
-+        replay_bh_schedule_event(q->tx_bh);
-         q->tx_waiting = 1;
-     }
- }
+-/*
+- * For none/record the answer is yes.
+- */
+-bool replay_can_wait(void)
+-{
+-    if (replay_mode == REPLAY_MODE_PLAY) {
+-        /*
+-         * For playback we shouldn't ever be at a point we wait. If
+-         * the instruction count has reached zero and we have an
+-         * unconsumed event we should go around again and consume it.
+-         */
+-        if (replay_state.instruction_count == 0 && replay_state.has_unread_data) {
+-            return false;
+-        } else {
+-            replay_sync_error("Playback shouldn't have to iowait");
+-        }
+-    }
+-    return true;
+-}
+-
+-
+ void replay_finish(void)
+ {
+     if (replay_mode == REPLAY_MODE_NONE) {
 -- 
 2.42.0
 
