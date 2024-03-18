@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EBCBC54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 10:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20F43C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 10:04:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm9qH-0007xC-6Q; Mon, 18 Mar 2024 06:03:41 -0400
+	id 1rm9r3-0000Qy-Jk; Mon, 18 Mar 2024 06:04:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rm9qA-0007wp-W6
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:03:35 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1rm9qy-0000PK-Bz
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:04:24 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rm9q7-0005Pa-Rg
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:03:33 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a44665605f3so454950266b.2
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 03:03:31 -0700 (PDT)
+ id 1rm9qv-0005Y2-MF
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:04:24 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2d4a901e284so16902131fa.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 03:04:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710756210; x=1711361010; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710756260; x=1711361060; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nUQpIw0J7gYJntdrF3+fYQvrBvEG+S/20aOM1DWuFCc=;
- b=alDI3jd5CH/OAyNX2SP5M7HkwfV8PmsuqFQ7Xp9Hgorc5w/o3g7F7neQuD6YNSkDiE
- OlRIS/dwVL4BDlTvbxDQNlVIccIx9a6OrkMAztgDHtCTkrTB2ZBxDAL/SBx3y8V19+qn
- GiPMbyS7SIe9cr6XloslErPqx7Il7wP2PhTH9Ja7NenhXmpPm+Zx1iOcNuSdCzpb7TX4
- cwlR9/bYOcHkJ9XyhgFvs8h2sgNpsnJ7UboHDzWjxPGB49RaeZqB6UDD1gwqMrZnGpU4
- Ie3rXAvidOVNtdYMIncBWx1MZ/PwaCKgd/x/47sowuZNYdZTcFsZuy+p7V56HjpTk1zv
- zEyA==
+ bh=et/UXpKNaqp4THlT+MHUtlJUxfAWwk+TDbvMKEdOZ28=;
+ b=J4MGxZYHO66NnVOGGFlSthdj/WLLaOBRcoIshqHX6XQZl4PIjHMh/0E8wat8f2TUgn
+ 8v750T/sgdj8Zhf8oUikU8tyhcLAF8C1yxDoLbIKrRONGxmsXMyiL81EBRloMJngtTe0
+ TqJlm2JNwPusD9+vto83slk1ITg6oGOSZSzsaiKWy+PmTN5g5oW60E1IwFbX/eCB/28w
+ h7v7gzGE9x4dJToOQE7FN0MPuKmfUNwI+sueOk1JddDNlrCj7gBJK+Tw6bFfeYI3kqOX
+ hrjUdcuHOYQBWVmO1pLwgI72iGeuShud6LW9OzEO6CQvaSG83a/sswLDXT4rPTkAW0mb
+ QsYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710756210; x=1711361010;
+ d=1e100.net; s=20230601; t=1710756260; x=1711361060;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nUQpIw0J7gYJntdrF3+fYQvrBvEG+S/20aOM1DWuFCc=;
- b=VK2hADapotIrB7ArcSu5YDPQjAkwGtGdQVQAVCKweDYXXArNk67/Eo2WgK7DL4oD3u
- I57y14SKCJTKQQJSi3MoeE8wEXTqVaP7zbsAjigxqAu2zSMFjVjFfdHQc7LNrF8cuQ5W
- FxBzXtNnUbu5H+iENlpTvgt2dIYiP6/2igGasFeVmEltsiF12LsO+2sxEeue2gPukdx3
- 7TYzY1nPN4E9VG4HJ1+FNsfF6kCJBqGGD8mq1Dt8hhs1Vu1Gmr6SqvyWhb0VUbg+T/Wj
- L+RAyZY4Tp0xCwplyfy+qJDojBx0YFZYxAZY6F/5UUx+Tiu5TQs0DAmjmHaj8AEJvqy7
- Og4g==
-X-Gm-Message-State: AOJu0Yzl1+IzOuOuNkwLLQ3l2JPmC0aR+PCi5PBNU+cbGdOlzwWiAspf
- MbmHhge9kGGizdiKyabdmTLXLCRBW41boSqvAa36E7kXLX3Q6aoAsvKscPKNsbc=
-X-Google-Smtp-Source: AGHT+IEgNnAmyKaj7MOcboByXYk+emFZUioDsiVtGhca5Pr/0j9ZlEKChesQqV+VKYgftZvmbG9gpg==
-X-Received: by 2002:a17:907:7e8e:b0:a46:ade5:7e67 with SMTP id
- qb14-20020a1709077e8e00b00a46ade57e67mr3587135ejc.22.1710756210031; 
- Mon, 18 Mar 2024 03:03:30 -0700 (PDT)
+ bh=et/UXpKNaqp4THlT+MHUtlJUxfAWwk+TDbvMKEdOZ28=;
+ b=HP6b2cgMRVKKDK/GOUtP2E8dYrxXlglgoPgWiLuBMARt2YhnWoaAvHs7mO8a1UiNY8
+ z6OeC8WKXEuMFYqdClirgeko8W+DBpFa/TyBaz23xyJQz6/lnZ8W64TltXfZP+MadMig
+ teia1/j0O61fKABlkeQVAV5uUPI2QFXCP5nZ3n95U2KCkGplF1S4uKvtksbwpZJ9aF/o
+ 1g9wApAHb5Wi4zbmlBTviipNQAe5FiRWaW+qxLQZXmfNa6iy9PZFBZSEzYFdhqx52Cl4
+ ki6vvd3BbxpRT9nOGHcEgC8vWFyk1V3GxN5A2gPmygYfbm/uJK6+dSAoZ7V97Eq8Egts
+ 4WGw==
+X-Gm-Message-State: AOJu0YwrQDT3n6HOgnE0BNNlM6O2VVo7VEo+3VxqnldCeLKfuXk+vUVT
+ jOpHjFec0TrcHlIqllc0skTjWjB1sr02jILq4W6VC8IL1MbID0sSHQQ1meg8Cbs=
+X-Google-Smtp-Source: AGHT+IHGmSHsWUVa8gdZALAYiby3+xAopzjw71ycey9qpopQAvqiX2Z0wmGbGMLPrp4qMfr+9WTByw==
+X-Received: by 2002:a2e:95d3:0:b0:2d4:68ef:c714 with SMTP id
+ y19-20020a2e95d3000000b002d468efc714mr5193327ljh.38.1710756259731; 
+ Mon, 18 Mar 2024 03:04:19 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- dl5-20020a170907944500b00a46ada81f1bsm1974362ejc.124.2024.03.18.03.03.29
+ o19-20020a17090611d300b00a46bd891b5bsm1063734eja.225.2024.03.18.03.04.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 03:03:29 -0700 (PDT)
+ Mon, 18 Mar 2024 03:04:19 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 707F85F7DF;
- Mon, 18 Mar 2024 10:03:29 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id C48B75F7DF;
+ Mon, 18 Mar 2024 10:04:18 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
-Subject: Re: [PATCH 04/22] plugins: Zero new qemu_plugin_dyn_cb entries
-In-Reply-To: <20240316015720.3661236-5-richard.henderson@linaro.org> (Richard
- Henderson's message of "Fri, 15 Mar 2024 15:57:02 -1000")
+Subject: Re: [PATCH 05/22] plugins: Move function pointer in qemu_plugin_dyn_cb
+In-Reply-To: <20240316015720.3661236-6-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Fri, 15 Mar 2024 15:57:03 -1000")
 References: <20240316015720.3661236-1-richard.henderson@linaro.org>
- <20240316015720.3661236-5-richard.henderson@linaro.org>
+ <20240316015720.3661236-6-richard.henderson@linaro.org>
 User-Agent: mu4e 1.12.2; emacs 29.2
-Date: Mon, 18 Mar 2024 10:03:29 +0000
-Message-ID: <877chzoo0e.fsf@draig.linaro.org>
+Date: Mon, 18 Mar 2024 10:04:18 +0000
+Message-ID: <871q87onz1.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,6 +100,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Richard Henderson <richard.henderson@linaro.org> writes:
 
+> The out-of-line function pointer is mutually exclusive
+> with inline expansion, so move it into the union.
+> Wrap the pointer in a structure named 'regular' to match
+> PLUGIN_CB_REGULAR.
+>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
 Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
