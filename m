@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2D17C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 14:55:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E975C54E68
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 14:55:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmEOA-0003GY-Sw; Mon, 18 Mar 2024 10:54:59 -0400
+	id 1rmENy-0003Cl-G8; Mon, 18 Mar 2024 10:54:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rmEO7-0003Fs-PX
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:54:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmENu-0003Bf-LA
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:54:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rmEO5-0006uL-6V
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:54:55 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmENq-0006tV-6C
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:54:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710773690;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1710773674;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6aEuYRjBQEZI5V8EC4/CRtllUeT8VoS3YDZXi2ULUjk=;
- b=dqsmeMZb60vrL4kqK7dvX4Fz0VWkK1FTsdxPni5uB653Z0Uqb12LHUay9XOu8ZZeE1bCKM
- Hpd1OpiFq+lcG3kFYgkgRokMWhuAl5jUKPie4ekPhiGr/tGC+eqN5PrUfSpPITQUv8JFmJ
- qE2n843tXBk7Bmc/4lvR9G01wJeu1KU=
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kd/kGOJTpPvIMBzzU3SR6sOxd1gq+FPvPOVzWXj0+n0=;
+ b=X4CNuJX1o96j1V7lUm/SmNbJy7BbYx8FXQcE61gl6Ngpc6dQOjlQYrCtpbk4yxB1FlV+IM
+ Oe8R8shdmTsdUbV6NlDAy5wuNFuYECa6b9nUkgT6Rl6DXeikdw6ElLLsxEIOgVRkiJJnpZ
+ SWoAqMv4HmO1wjIHvx1jWI/YqTyXcCI=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-235-i_A-ADz3OVai7AlsNdbizQ-1; Mon, 18 Mar 2024 10:54:49 -0400
-X-MC-Unique: i_A-ADz3OVai7AlsNdbizQ-1
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-dccc49ef73eso5500803276.2
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 07:54:49 -0700 (PDT)
+ us-mta-32-0qkykdN4P4Sh9f3WsFxv-g-1; Mon, 18 Mar 2024 10:54:32 -0400
+X-MC-Unique: 0qkykdN4P4Sh9f3WsFxv-g-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-513d3f026d4so3405304e87.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 07:54:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710773689; x=1711378489;
+ d=1e100.net; s=20230601; t=1710773671; x=1711378471;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6aEuYRjBQEZI5V8EC4/CRtllUeT8VoS3YDZXi2ULUjk=;
- b=QQ6PN1UZEItK3sbmYmzjS9X+ZGaJ9CfymJAQwie+jD+GBiG0E5TaWqwLyZnwoEJIlG
- ltyKlVndX8JjXTY1JpPpTJST0kTgxgMIPqTEySgoQbZuJjh5/xl+5uLtKwF345MUa77t
- 6P++w3Ah2/+1urhV5ZxMZjsxQPHdigTO/LFnVFPEYado/we+CmA71P0nnIHtsWiFjgyi
- KxuISNpnhguf/cT13AP8g/LZ4MV00ioccxi5WS2wgpYmh8249yo5erSO5C0A7vLUr9bM
- xK5ysUe4X3t58yv/MqA1BhH8gLKcwW2x5MtXdJy3dQT1HqSQqCabaBobNTfgvo/+AC65
- 3pOA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXm2xqcF2jq2+wOYjMb3VIxH1yddVwvYxhdFJl0sosVkcFlD18GYlD4M3KHHOjdKBBPIJog2AXtZWdXpVDaqo3XtRMP6lw=
-X-Gm-Message-State: AOJu0Yw5kLQ+1QFy5yPOftcECURT2oOijC4Qsi1k1sc8mX5ghqDPDn+m
- 2nFU3ctdxNY0/lW2+0319YfUq9iC0bS1e8zWZCkjLTYj1AZ+XgVgLFRSG4oVRTEz+5Vtivqnwpx
- LFC5Yak3qJw1ki/1YOAsxzlx564lPfa5lRsZFqL/5sj9pivxVJk3e
-X-Received: by 2002:a05:6902:82:b0:dc2:2041:fc49 with SMTP id
- h2-20020a056902008200b00dc22041fc49mr7149467ybs.5.1710773687494; 
- Mon, 18 Mar 2024 07:54:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYGV+O2/PW24LEV3XLKpAXIwUiWGUaVuxW2YhMnjHwAWakFj1Z0/Q5EIXy2OnuOS8Bv6VukA==
-X-Received: by 2002:a05:6902:82:b0:dc2:2041:fc49 with SMTP id
- h2-20020a056902008200b00dc22041fc49mr7149449ybs.5.1710773687204; 
- Mon, 18 Mar 2024 07:54:47 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kd/kGOJTpPvIMBzzU3SR6sOxd1gq+FPvPOVzWXj0+n0=;
+ b=Z00f6L/2xWtiNfcmE01p4dwAgDb/MBMQsRSDuQP4UgWQ3jxqb6lpO52E4mawTyU0xX
+ xNOSXt+q2I6WE9U9gHngBVy8sKBH2zGye1aFvgGH+sklQ1880jILWnWYqnDiLtAMEmOD
+ hf24dsPRVpy9DZu9plOWC1qqWy3qBzy7zgFylgnHjtPzf1p7kgg928rvsyjxBh0nJpoA
+ R6zF9s3W6hvTB+jAVG+3hbglObzmlEftAUeIFl8cqvPnUdUdfxdflDIJ4WCkuck5SYF+
+ 38weDnDYsC44SWuJIu16rc60rvgY/0xJ6MO2l0dkmZbZKc1AGz0xEUulxAn9KiFtW02j
+ piFw==
+X-Gm-Message-State: AOJu0YypLmJomGAFiznEDXePVzPJnbSUK2jYDCz8mvsGABjQ44Zv72bD
+ MFF+iWW/96syflk+oq+XD1UHR0u8PFgOHkTHr+L3fuTXTXZK3htxOGF8Qq04fdo6X+yPruPtAra
+ a/9kLd9P3Gmj9AU3GXILNFQeWz2YGv2607EJfS6Lh+OslPTWvbvmO
+X-Received: by 2002:ac2:4651:0:b0:513:9f30:e33f with SMTP id
+ s17-20020ac24651000000b005139f30e33fmr8166540lfo.23.1710773671444; 
+ Mon, 18 Mar 2024 07:54:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHc5qM/iYGgNroKS7LqnIicERJlDdtAFZAFpePqHippvOvJiEmkKcwVuj9TfS5phwAFiFTOGw==
+X-Received: by 2002:ac2:4651:0:b0:513:9f30:e33f with SMTP id
+ s17-20020ac24651000000b005139f30e33fmr8166519lfo.23.1710773671107; 
+ Mon, 18 Mar 2024 07:54:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- f3-20020ac84983000000b0042f0504229esm4995727qtq.60.2024.03.18.07.54.44
+ ck19-20020a5d5e93000000b0033ec81ec4aesm3695916wrb.78.2024.03.18.07.54.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 07:54:46 -0700 (PDT)
-Message-ID: <db2f0780-7817-423b-a286-c3c67b95367c@redhat.com>
-Date: Mon, 18 Mar 2024 15:54:43 +0100
+ Mon, 18 Mar 2024 07:54:30 -0700 (PDT)
+Message-ID: <40d6777a-7d58-4fe1-a441-67df73ca5efd@redhat.com>
+Date: Mon, 18 Mar 2024 15:54:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 11/11] backends/iommufd: Introduce helper function
- iommufd_device_get_info()
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, peterx@redhat.com,
- jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- yi.y.sun@intel.com, chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>
-References: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
- <20240228035900.1085727-12-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240228035900.1085727-12-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v4 13/25] memory: Add Error** argument to
+ .log_global_start() handler
+Content-Language: en-US, fr
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
+ Prasad Pandit <pjp@fedoraproject.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+References: <20240306133441.2351700-1-clg@redhat.com>
+ <20240306133441.2351700-14-clg@redhat.com> <ZfQukLXQsgFEap4f@x1n>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <ZfQukLXQsgFEap4f@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -110,85 +109,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
+On 3/15/24 12:18, Peter Xu wrote:
+>> @@ -3009,13 +3045,16 @@ static void listener_add_address_space(MemoryListener *listener,
+>>   {
+>>       FlatView *view;
+>>       FlatRange *fr;
+>> +    Error *local_err = NULL;
+>>   
+>>       if (listener->begin) {
+>>           listener->begin(listener);
+>>       }
+>>       if (global_dirty_tracking) {
+>>           if (listener->log_global_start) {
+>> -            listener->log_global_start(listener);
+>> +            if (!listener->log_global_start(listener, &local_err)) {
+>> +                error_report_err(local_err);
+>> +            }
+> IMHO we should assert here instead of error report.  We have this to guard
+> hot-plug during migration so I think the assert is justified:
+> 
+> qdev_device_add_from_qdict():
+> 
+>      if (!migration_is_idle()) {
+>          error_setg(errp, "device_add not allowed while migrating");
+>          return NULL;
+>      }
+> 
+> If it really happens it's a bug, as listener_add_address_space() will still
+> keep the rest things around even if the hook failed.  It'll start to be a
+> total mess..
 
-On 2/28/24 04:59, Zhenzhong Duan wrote:
-> Introduce a helper function iommufd_device_get_info() to get
-> host IOMMU related information through iommufd uAPI.
-Looks strange to have this patch in this series. I Would rather put it
-in your second series alongs with its user.
+It seems that adding a region listener while logging is active has been
+supported from the beginning, commit 7664e80c8470 ("memory: add API for
+observing  updates to the physical memory map"). Can it happen ? if not
+we could simply remove the  log_global_start() call.
 
-Eric
->
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  include/sysemu/iommufd.h |  4 ++++
->  backends/iommufd.c       | 23 ++++++++++++++++++++++-
->  2 files changed, 26 insertions(+), 1 deletion(-)
->
-> diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
-> index d509ff88ef..518b97bfed 100644
-> --- a/include/sysemu/iommufd.h
-> +++ b/include/sysemu/iommufd.h
-> @@ -4,6 +4,7 @@
->  #include "qom/object.h"
->  #include "exec/hwaddr.h"
->  #include "exec/cpu-common.h"
-> +#include <linux/iommufd.h>
->  #include "sysemu/host_iommu_device.h"
->  
->  #define TYPE_IOMMUFD_BACKEND "iommufd"
-> @@ -48,4 +49,7 @@ typedef struct IOMMUFDDevice {
->  
->  void iommufd_device_init(IOMMUFDDevice *idev,
->                           IOMMUFDBackend *iommufd, int devid);
-> +int iommufd_device_get_info(IOMMUFDDevice *idev,
-> +                            enum iommu_hw_info_type *type,
-> +                            uint32_t len, void *data, Error **errp);
->  #endif
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index 6d280e4aea..69f3f75ea5 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -20,7 +20,6 @@
->  #include "monitor/monitor.h"
->  #include "trace.h"
->  #include <sys/ioctl.h>
-> -#include <linux/iommufd.h>
->  
->  static void iommufd_backend_init(Object *obj)
->  {
-> @@ -240,3 +239,25 @@ void iommufd_device_init(IOMMUFDDevice *idev,
->      idev->iommufd = iommufd;
->      idev->devid = devid;
->  }
-> +
-> +int iommufd_device_get_info(IOMMUFDDevice *idev,
-> +                            enum iommu_hw_info_type *type,
-> +                            uint32_t len, void *data, Error **errp)
-> +{
-> +    struct iommu_hw_info info = {
-> +        .size = sizeof(info),
-> +        .dev_id = idev->devid,
-> +        .data_len = len,
-> +        .data_uptr = (uintptr_t)data,
-> +    };
-> +    int ret;
-> +
-> +    ret = ioctl(idev->iommufd->fd, IOMMU_GET_HW_INFO, &info);
-> +    if (ret) {
-> +        error_setg_errno(errp, errno, "Failed to get hardware info");
-> +    } else {
-> +        *type = info.out_data_type;
-> +    }
-> +
-> +    return ret;
-> +}
+Thanks,
+
+C.
+
 
 
