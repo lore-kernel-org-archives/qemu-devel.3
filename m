@@ -4,78 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5B38C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 20:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE9B1C54E69
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 20:28:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmJTP-0006in-I7; Mon, 18 Mar 2024 16:20:43 -0400
+	id 1rmJaA-0008Qb-JS; Mon, 18 Mar 2024 16:27:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rmJTK-0006ee-2q
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:20:41 -0400
-Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rmJTD-0000kz-I7
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:20:35 -0400
-Received: by mail-qt1-x836.google.com with SMTP id
- d75a77b69052e-430ccb3d65eso10442791cf.2
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 13:20:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710793230; x=1711398030; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EWaOEUQtX0eUqbn2wjO3PWIXcfVldvSXSDCM5unRgyg=;
- b=mVKvIVE4XNWQSuwt9VQQ/WFqoTW7/lUZFjTxa7FoQguCKMZ8cdGeh6MRD89dwwmOkQ
- fBW3+oYzLsPYReymG8jO2SXUNLd3L/yNHCB4MShENL1/A8gzwbqQ/gbgYSRISv8cKx9p
- U79p+bOBIhE+ibRdA3OZsvN6xiN6UdeaZZiJKHpCJoMd7/5yw9jA8A8cJc0aGpKZSHnq
- wRqjcacrET666d3YeQA9qMowYweIBf/qV+l1CKuqSKhuPS2MfmlsG/ysInyt/Tqc8UdM
- bsqPT7qA2SA1YNb8PQuCwS8x9vwJSVaUcX54D5Bf0CxeF2hMBiO+kVdNbZrNAa9U4dEq
- MeCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710793230; x=1711398030;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EWaOEUQtX0eUqbn2wjO3PWIXcfVldvSXSDCM5unRgyg=;
- b=r1j1j+2VnV6pgOpqQHslWSq0hLHpw6uXxJy8qkt4Y7vJmqafELBJWdkfrcm8+drzHG
- N3K87A3BARdby9XxxPKkfGUallt/byEZqBa1bdwtjRXbOlEK0xNRQCCcGNfSikNkDsmG
- 27kEpkCz+f71Ho7INymz/HLyX7uEx899H+VKvE5uXkKsobMuOezzHdJTQ+zuIcZLehsA
- F2cUoM1iJeglZcENTY/nL/yxhQc0RpZPJcN35fLZScz1EmJJXDGO0MwAfYjflbwOVrEq
- 9QOTQmztCxeqAELz56U9pYEEOlzHjLHwpf6O/bkVx2PGiYmLG5o8vkNHh96XEt/84o0o
- DVfA==
-X-Gm-Message-State: AOJu0YzzNaLKMdzrRaXvdZRq5xHSvPAhUqeUvleGEGXQloNWMRr6DfeZ
- 6mdUrMPC/lrf6qUYb9AimLg/CmagxWPZuwIJnlL6Ew/z8RDupGZnnnBrB/Hi/jsZKFt/NYZJ7fR
- qyANjFFJzEh8a8IuC2q/XZmNrpoI=
-X-Google-Smtp-Source: AGHT+IESf9y0QNBYg8rUR7eC/pHwVn0vGBpZzLiMe+QyF4ceUt0NjGzKi63WwFM3yBxUw4KC1Rry0IBwu8ZzIjfo8Fg=
-X-Received: by 2002:a05:622a:11c2:b0:430:e567:ee0a with SMTP id
- n2-20020a05622a11c200b00430e567ee0amr364052qtk.68.1710793230325; Mon, 18 Mar
- 2024 13:20:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1rmJa8-0008QG-4L; Mon, 18 Mar 2024 16:27:40 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1rmJa6-0001t8-3K; Mon, 18 Mar 2024 16:27:39 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42IK5tNb019408; Mon, 18 Mar 2024 20:27:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=Rj/Dru9v1iiUhONbRa34Pe88TGw+K4f+Z5rajGHtgIY=;
+ b=boyttm31MY47q+oTdMsi+ko23S8PnNtmvd8db7u3uB8RhKxhVmuffMSC35PCzcSGY/kP
+ vUpCGd1lQd0uU2IRimqxNQRsESW3aEVGyw3Sxk9ugMP8T+U9eaWcGbyXKQJr+oGz7mh7
+ HFiGoWJuKRce9Fo6PuUMLabsibJHwTRsOu6qPj5C+R93N38Imkn5Xzn69vAUDfQjxw5j
+ Co5BUbmvD93CiKd7NLfesyu36s5cDpOP71G35ocg/5EfdjCWdyV7ynIY0dsxVUA0Jkb2
+ Q0RER1iCEdmbecP3mV5O2fqDbQ2i0onCSlCddcvCh6YDIVX/ZIJeBSDLQ5P+SH//qeYH nA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wxumv8ats-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Mar 2024 20:27:32 +0000
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42IKPPx2027088;
+ Mon, 18 Mar 2024 20:27:32 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wxumv8atm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Mar 2024 20:27:31 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42IJ65Lh011606; Mon, 18 Mar 2024 20:27:30 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wwq8ktxr3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 18 Mar 2024 20:27:30 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42IKRQFC51052878
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 18 Mar 2024 20:27:28 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8AD1120043;
+ Mon, 18 Mar 2024 20:27:26 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2F1C620040;
+ Mon, 18 Mar 2024 20:27:26 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.85.188])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 18 Mar 2024 20:27:26 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v2 2/2] tests/tcg/s390x: Test TEST AND SET
+Date: Mon, 18 Mar 2024 21:27:11 +0100
+Message-ID: <20240318202722.20675-2-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240318202722.20675-1-iii@linux.ibm.com>
+References: <20240318202722.20675-1-iii@linux.ibm.com>
 MIME-Version: 1.0
-References: <20240318182330.96738-1-berrange@redhat.com>
- <20240318182330.96738-4-berrange@redhat.com>
-In-Reply-To: <20240318182330.96738-4-berrange@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 19 Mar 2024 00:20:18 +0400
-Message-ID: <CAJ+F1CLgjRuzBFeBneDmy0j_ZObhYc+xxueyA8k7RHYd+wckeg@mail.gmail.com>
-Subject: Re: [PATCH 3/3 for 9.0] Revert "chardev: use a child source for qio
- input source"
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x836.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 9t2YczurIOe1cxO-060KKug2PW33ZH8M
+X-Proofpoint-ORIG-GUID: f_klG75pEUpjqSkbC4KffVKzACR38t1S
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 phishscore=0
+ mlxlogscore=823 mlxscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2403140000 definitions=main-2403180155
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,226 +114,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Add a small test to prevent regressions.
 
-On Mon, Mar 18, 2024 at 10:25=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
->
-> This reverts commit a7077b8e354d90fec26c2921aa2dea85b90dff90,
-> and add comments to explain why child sources cannot be used.
->
-> When a GSource is added as a child of another GSource, if its
-> 'prepare' function indicates readiness, then the parent's
-> 'prepare' function will never be run. The io_watch_poll_prepare
-> absolutely *must* be run on every iteration of the main loop,
-> to ensure that the chardev backend doesn't feed data to the
-> frontend that it is unable to consume.
->
-> At the time a7077b8e354d90fec26c2921aa2dea85b90dff90 was made,
-> all the child GSource impls were relying on poll'ing an FD,
-> so their 'prepare' functions would never indicate readiness
-> ahead of poll() being invoked. So the buggy behaviour was
-> not noticed and lay dormant.
->
-> Relatively recently the QIOChannelTLS impl introduced a
-> level 2 child GSource, which checks with GNUTLS whether it
-> has cached any data that was decoded but not yet consumed:
->
->   commit ffda5db65aef42266a5053a4be34515106c4c7ee
->   Author: Antoine Damhet <antoine.damhet@shadow.tech>
->   Date:   Tue Nov 15 15:23:29 2022 +0100
->
->     io/channel-tls: fix handling of bigger read buffers
->
->     Since the TLS backend can read more data from the underlying QIOChann=
-el
->     we introduce a minimal child GSource to notify if we still have more
->     data available to be read.
->
->     Signed-off-by: Antoine Damhet <antoine.damhet@shadow.tech>
->     Signed-off-by: Charles Frey <charles.frey@shadow.tech>
->     Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
-> With this, it is now quite common for the 'prepare' function
-> on a QIOChannelTLS GSource to indicate immediate readiness,
-> bypassing the parent GSource 'prepare' function. IOW, the
-> critical 'io_watch_poll_prepare' is being skipped on some
-> iterations of the main loop. As a result chardev frontend
-> asserts are now being triggered as they are fed data they
-> are not ready to consume.
->
-> A reproducer is as follows:
->
->  * In terminal 1 run a GNUTLS *echo* server
->
->    $ gnutls-serv --echo \
->                  --x509cafile ca-cert.pem \
->                  --x509keyfile server-key.pem \
->                  --x509certfile server-cert.pem \
->                  -p 9000
->
->  * In terminal 2 run a QEMU guest
->
->    $ qemu-system-s390x \
->        -nodefaults \
->        -display none \
->        -object tls-creds-x509,id=3Dtls0,dir=3D$PWD,endpoint=3Dclient \
->        -chardev socket,id=3Dcon0,host=3Dlocalhost,port=3D9000,tls-creds=
-=3Dtls0 \
->        -device sclpconsole,chardev=3Dcon0 \
->        -hda Fedora-Cloud-Base-39-1.5.s390x.qcow2
->
-> After the previous patch revert, but before this patch revert,
-> this scenario will crash:
->
->   qemu-system-s390x: ../hw/char/sclpconsole.c:73: chr_read: Assertion
->   `size <=3D SIZE_BUFFER_VT220 - scon->iov_data_len' failed.
->
-> This assert indicates that 'tcp_chr_read' was called without
-> 'tcp_chr_read_poll' having first been checked for ability to
-> receive more data
->
-> QEMU's use of a 'prepare' function to create/delete another
-> GSource is rather a hack and not normally the kind of thing that
-> is expected to be done by a GSource. There is no mechanism to
-> force GLib to always run the 'prepare' function of a parent
-> GSource. The best option is to simply not use the child source
-> concept, and go back to the functional approach previously
-> relied on.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  chardev/char-io.c | 55 ++++++++++++++++++++++++++++++++++++++++++-----
->  1 file changed, 50 insertions(+), 5 deletions(-)
->
-> diff --git a/chardev/char-io.c b/chardev/char-io.c
-> index 4451128cba..3c725f530b 100644
-> --- a/chardev/char-io.c
-> +++ b/chardev/char-io.c
-> @@ -33,6 +33,7 @@ typedef struct IOWatchPoll {
->      IOCanReadHandler *fd_can_read;
->      GSourceFunc fd_read;
->      void *opaque;
-> +    GMainContext *context;
->  } IOWatchPoll;
->
->  static IOWatchPoll *io_watch_poll_from_source(GSource *source)
-> @@ -50,28 +51,58 @@ static gboolean io_watch_poll_prepare(GSource *source=
-,
->          return FALSE;
->      }
->
-> +    /*
-> +     * We do not register the QIOChannel watch as a child GSource.
-> +     * The 'prepare' function on the parent GSource will be
-> +     * skipped if a child GSource's 'prepare' function indicates
-> +     * readiness. We need this prepare function be guaranteed
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ tests/tcg/s390x/Makefile.target |  1 +
+ tests/tcg/s390x/ts.c            | 35 +++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
+ create mode 100644 tests/tcg/s390x/ts.c
 
-argh, indeed
+diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
+index e2aba2ec274..a8f86c94498 100644
+--- a/tests/tcg/s390x/Makefile.target
++++ b/tests/tcg/s390x/Makefile.target
+@@ -47,6 +47,7 @@ TESTS+=add-logical-with-carry
+ TESTS+=lae
+ TESTS+=cvd
+ TESTS+=cvb
++TESTS+=ts
+ 
+ cdsg: CFLAGS+=-pthread
+ cdsg: LDFLAGS+=-pthread
+diff --git a/tests/tcg/s390x/ts.c b/tests/tcg/s390x/ts.c
+new file mode 100644
+index 00000000000..441faf30d98
+--- /dev/null
++++ b/tests/tcg/s390x/ts.c
+@@ -0,0 +1,35 @@
++/*
++ * Test the TEST AND SET instruction.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <assert.h>
++#include <stdlib.h>
++
++static int ts(char *p)
++{
++    int cc;
++
++    asm("ts %[p]\n"
++        "ipm %[cc]"
++        : [cc] "=r" (cc)
++        , [p] "+Q" (*p)
++        : : "cc");
++
++    return (cc >> 28) & 3;
++}
++
++int main(void)
++{
++    char c;
++
++    c = 0x80;
++    assert(ts(&c) == 1);
++    assert(c == 0xff);
++
++    c = 0x7f;
++    assert(ts(&c) == 0);
++    assert(c == 0xff);
++
++    return EXIT_SUCCESS;
++}
+-- 
+2.44.0
 
-I suppose the child 'prepare' could be changed to always return FALSE,
-but that would be hackish too
-
-> +     * to run on *every* iteration of the main loop, because
-> +     * it is critical to ensure we remove the QIOChannel watch
-> +     * if 'fd_can_read' indicates the frontend cannot receive
-> +     * more data.
-> +     */
->      if (now_active) {
->          iwp->src =3D qio_channel_create_watch(
->              iwp->ioc, G_IO_IN | G_IO_ERR | G_IO_HUP | G_IO_NVAL);
->          g_source_set_callback(iwp->src, iwp->fd_read, iwp->opaque, NULL)=
-;
-> -        g_source_add_child_source(source, iwp->src);
-> -        g_source_unref(iwp->src);
-> +        g_source_attach(iwp->src, iwp->context);
->      } else {
-> -        g_source_remove_child_source(source, iwp->src);
-> +        g_source_destroy(iwp->src);
-> +        g_source_unref(iwp->src);
->          iwp->src =3D NULL;
->      }
->      return FALSE;
->  }
->
-> +static gboolean io_watch_poll_check(GSource *source)
-> +{
-> +    return FALSE;
-> +}
-> +
->  static gboolean io_watch_poll_dispatch(GSource *source, GSourceFunc call=
-back,
->                                         gpointer user_data)
->  {
-> -    return G_SOURCE_CONTINUE;
-> +    abort();
-> +}
-> +
-> +static void io_watch_poll_finalize(GSource *source)
-> +{
-> +    /* Due to a glib bug, removing the last reference to a source
-> +     * inside a finalize callback causes recursive locking (and a
-> +     * deadlock).  This is not a problem inside other callbacks,
-> +     * including dispatch callbacks, so we call io_remove_watch_poll
-> +     * to remove this source.  At this point, iwp->src must
-> +     * be NULL, or we would leak it.
-> +     */
-> +    IOWatchPoll *iwp =3D io_watch_poll_from_source(source);
-> +    assert(iwp->src =3D=3D NULL);
->  }
->
->  static GSourceFuncs io_watch_poll_funcs =3D {
->      .prepare =3D io_watch_poll_prepare,
-> +    .check =3D io_watch_poll_check,
->      .dispatch =3D io_watch_poll_dispatch,
-> +    .finalize =3D io_watch_poll_finalize,
->  };
->
->  GSource *io_add_watch_poll(Chardev *chr,
-> @@ -91,6 +122,7 @@ GSource *io_add_watch_poll(Chardev *chr,
->      iwp->ioc =3D ioc;
->      iwp->fd_read =3D (GSourceFunc) fd_read;
->      iwp->src =3D NULL;
-> +    iwp->context =3D context;
->
->      name =3D g_strdup_printf("chardev-iowatch-%s", chr->label);
->      g_source_set_name((GSource *)iwp, name);
-> @@ -101,10 +133,23 @@ GSource *io_add_watch_poll(Chardev *chr,
->      return (GSource *)iwp;
->  }
->
-> +static void io_remove_watch_poll(GSource *source)
-> +{
-> +    IOWatchPoll *iwp;
-> +
-> +    iwp =3D io_watch_poll_from_source(source);
-> +    if (iwp->src) {
-> +        g_source_destroy(iwp->src);
-> +        g_source_unref(iwp->src);
-> +        iwp->src =3D NULL;
-> +    }
-> +    g_source_destroy(&iwp->parent);
-> +}
-> +
->  void remove_fd_in_watch(Chardev *chr)
->  {
->      if (chr->gsource) {
-> -        g_source_destroy(chr->gsource);
-> +        io_remove_watch_poll(chr->gsource);
->          chr->gsource =3D NULL;
->      }
->  }
-> --
-> 2.43.0
->
->
-
-
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-
-
---=20
-Marc-Andr=C3=A9 Lureau
 
