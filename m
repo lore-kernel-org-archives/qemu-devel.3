@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC108C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 10:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E85C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 10:37:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmA1D-0006WC-0c; Mon, 18 Mar 2024 06:14:59 -0400
+	id 1rmAM7-00042t-Qo; Mon, 18 Mar 2024 06:36:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmA1B-0006U0-Dw
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:14:57 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
+ id 1rmAM6-00042b-Ms; Mon, 18 Mar 2024 06:36:34 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmA19-0007O0-HU
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:14:57 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4140870914fso12630165e9.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 03:14:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@gmail.com>)
+ id 1rmAM4-00032b-IY; Mon, 18 Mar 2024 06:36:34 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1e036b76725so1207575ad.1; 
+ Mon, 18 Mar 2024 03:36:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710756894; x=1711361694; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710758190; x=1711362990; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=00wJxC1sW157NhfgpK7sbTQ1K0b+O6UwpIYPdw1hMIU=;
- b=gVo16KULuP6kr5+vYZtBGjBKK5ImkdtI2IgUHIcj4nPng7r6Yhxl5MyeOR7QFQ+w5W
- whlWawRawwcrWFD2jbfl9pnEbGRIZ2OT2eHWLbhD6Yt3RiGHzzKPL38JJsPSa1qSwe8R
- 47MqEy6DKlacelrfnuRzrHd/an/MFt/B7A+3/xg3xAavJoCMQyc6+wQdyGzjv4oKZX4z
- u/xQoT2NunYH2ZO0iEJRi4orBCUJFhhJZKf9Bu0MT1M4h2cDGLg52vlcw1tM6QhT6HNw
- qcxNpQisdoog4jj6j9y/AE6e9X2c1Pgeotq0XNCbhtWqlUWbdem+VigkKACxY9MB+oKq
- gcyA==
+ bh=YLjNEEGj7YutZqv3ska1jpI5LSiCIkPKoN+5SjJg8zA=;
+ b=IZw0hoh4K4lW6AqqoR3XQ4omPjPUCszRm3ccgy2z2XuT6FrsBg7RYisqxh6844xfSc
+ eHhUZWNFckd7f7P+fPNuoZRlt7NepRyCTrDugfd5ZJkSTSH3LG5aZFqbQAyjOcj31+b/
+ a0+8wuJkfwXYtIJDo2nRLGRWXlFGuWWgOmFTMemGDWjZmdfXfYJzbcCI6qfFB0FdG1OP
+ lGQV3k8/WMF7OWcn/4QViIHHNrGePcSt/unIG1E9NRQDm2hLCEJ1oLQAK3tyBFc+l9Tw
+ 2IUxfliwvy1bP0UVeaG94/ieRbyPUEwHmCoQ/n3OCvAqhmH1umdV4434JVtDhTtKw0gY
+ 5F6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710756894; x=1711361694;
+ d=1e100.net; s=20230601; t=1710758190; x=1711362990;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=00wJxC1sW157NhfgpK7sbTQ1K0b+O6UwpIYPdw1hMIU=;
- b=ITTbo2Zkiw9lrJrjjZualpyDMwhNZQ/T6Q8+OUKwyDRkvNhmg4yzJeLd0e1eZEEz1D
- Loj/6VeXosjEVNQc94Dov97LyTWQPOx/2YiAjI9G6xrZB/tpsk+NGt+CWwQa7xow6bvb
- rZsLqMv/lmBkCt1kzur3PgTaUS2j0sHIu1dE1yNegmfuby4pVxVD5nuI8/p7nbdVujMl
- VISLZXH6N1Y0mizwARxRju/KPd+tpzSavJPWQIjOESk2pMiXVUyh5aiSy28oZwzqLL4d
- kexAMiYiQF08cQ6JrZWrqN/eTrURrwviaJ9f6RgecESjohCwkcWcJxzXBSyXZmtaULTD
- 6KeA==
+ bh=YLjNEEGj7YutZqv3ska1jpI5LSiCIkPKoN+5SjJg8zA=;
+ b=HwhcmbMVQV4cVzDB5vwYF7ZRGMQ1zjmyK3XAch1M4fQqWoULd9NlsHk/pbahucC44u
+ snM+26KKBp03h2uURUAP1CX3mqvI08Ufd4E38icLDPkr/XW9LQOH7aLJs+faLtc0BtNu
+ Yn4hyYbpjFf+eSC/XUHzk9pq/KDwGkUKz4UDI6sBss+JxjW0cgub/74D0revMiGKAq+i
+ YTzxN9jhi8GgC/XBlqgcXLxM5Is4XE977tv1LgwVLGkHaEyEMDO5qtMlfJw2IILrpNEK
+ riDcQ0Gt1yULtVBQZklWZGV1Z3zVMd4r5kr4+F7xp8NZPLsyFsofnX/MJRpzBb8q7e5h
+ POiQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNB1XCP3D588O9gVNV8J7MI4HZZ2p4pLIpxbw97PnQ4+AQ+ZkRIerBB93J8kZeRUeSC7GwCP8vJMqTDRyZCaYaP6hgquo=
-X-Gm-Message-State: AOJu0YxmOfWzOZZ7vr/nt2EtYYug7ZHJ5i03SKMGqMyLocv9m8RCLBHx
- o16tTRzECRcAwyBQ6dje6a+QOFlM27lqWR7iIx9iuoWqGJ4JnMArIOdoN+pZNXk=
-X-Google-Smtp-Source: AGHT+IELZVOGTwEzoMsGNtyvhTG9jcNQDIR6WXeEMz4jUJP15dpjAHA7dnGFwh/0zMRLqVeGSy3RqQ==
-X-Received: by 2002:a05:600c:1d09:b0:414:48f:a79f with SMTP id
- l9-20020a05600c1d0900b00414048fa79fmr4975224wms.35.1710756894037; 
- Mon, 18 Mar 2024 03:14:54 -0700 (PDT)
-Received: from [192.168.69.100] (vit94-h02-176-184-29-165.dsl.sta.abo.bbox.fr.
- [176.184.29.165]) by smtp.gmail.com with ESMTPSA id
- ay18-20020a05600c1e1200b0041412fa398bsm1566364wmb.5.2024.03.18.03.14.52
+ AJvYcCXAW/kIxiO7RU5yKiB0/O2WTHjURc9Halj3CrjWQVcPB2B4LaEXXg4QPfNoPReEzoKduGo1J0jjgcgoXnAkDMCYfGHNvD+6KvLlfGDg0btNJNMF0v8J5pcDlv4=
+X-Gm-Message-State: AOJu0Yx05RCSpPrHI4pEFTWaLwd/Bibx8bt9++VfK/0N86+6M8x/DBe4
+ GMO8SUXrPqNQDIOh+O8j+kQYHTjcrzo0zkoS7TI5Ty8sDNVdwM+m
+X-Google-Smtp-Source: AGHT+IFHwnLsUx4EMcF+KW5xFEJsnKVXDV65UR9doblUWPBFT1lPoyr/Odvd1hg31zonHVQEOfbGKA==
+X-Received: by 2002:a17:903:1209:b0:1dd:62c5:b6e2 with SMTP id
+ l9-20020a170903120900b001dd62c5b6e2mr14493721plh.37.1710758190139; 
+ Mon, 18 Mar 2024 03:36:30 -0700 (PDT)
+Received: from [157.82.200.213] ([157.82.200.213])
+ by smtp.gmail.com with ESMTPSA id
+ ky6-20020a170902f98600b001dcfbbb1ddesm8907742plb.7.2024.03.18.03.36.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 03:14:53 -0700 (PDT)
-Message-ID: <635ba27b-48f5-4508-80b4-05e6158035e6@linaro.org>
-Date: Mon, 18 Mar 2024 11:14:52 +0100
+ Mon, 18 Mar 2024 03:36:29 -0700 (PDT)
+Message-ID: <ab5892b3-38ec-43c5-9c82-8595ad4c77e0@gmail.com>
+Date: Mon, 18 Mar 2024 19:36:26 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/10] qapi: Correct error message for 'vcpu_dirty_limit'
- parameter
+Subject: Re: [PATCH-for-9.1 3/3] ui/console: Add 'rotate_arcdegree' field to
+ allow per-console rotation
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, qemu-block@nongnu.org,
- Juan Quintela <quintela@redhat.com>
-References: <20240312141343.3168265-1-armbru@redhat.com>
- <20240312141343.3168265-9-armbru@redhat.com> <ZfB0Oq7SSQgiqbz5@intel.com>
- <4b17e2fa-3b6c-4c7e-a888-661d1bf1324b@linaro.org>
- <87cyrr9ars.fsf@pond.sub.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87cyrr9ars.fsf@pond.sub.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20240318100543.78846-1-philmd@linaro.org>
+ <20240318100543.78846-4-philmd@linaro.org>
+From: Akihiko Odaki <akihiko.odaki@gmail.com>
+In-Reply-To: <20240318100543.78846-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=akihiko.odaki@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,48 +101,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/3/24 09:58, Markus Armbruster wrote:
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
-> 
->> On 12/3/24 16:26, Zhao Liu wrote:
->>> On Tue, Mar 12, 2024 at 03:13:41PM +0100, Markus Armbruster wrote:
->>>> Date: Tue, 12 Mar 2024 15:13:41 +0100
->>>> From: Markus Armbruster <armbru@redhat.com>
->>>> Subject: [PATCH 08/10] qapi: Correct error message for 'vcpu_dirty_limit'
->>>>    parameter
->>>>
->>>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>
->>>> QERR_INVALID_PARAMETER_VALUE is defined as:
->>>>
->>>>     #define QERR_INVALID_PARAMETER_VALUE \
->>>>         "Parameter '%s' expects %s"
->>>>
->>>> The current error is formatted as:
->>>>
->>>>     "Parameter 'vcpu_dirty_limit' expects is invalid, it must greater then 1 MB/s"
->>>>
->>>> Replace by:
->>>>
->>>>     "Parameter 'vcpu_dirty_limit' is invalid, it must greater than 1 MB/s"
->>>
->>> Is there a grammar error here? Maybe
->>> s/it must greater/it must be greater/
->>
->> Oops indeed!
-> 
-> What about dropping "is invalid, "?  I.e. go with
-> 
->      "Parameter 'vcpu_dirty_limit' must be greater than 1 MB/s"
+On 2024/03/18 19:05, Philippe Mathieu-Daudé wrote:
+> Add the 'rotate_arcdegree' field to QemuConsole and remove
+> the use of the 'graphic_rotate' global.
 
-Yes.
+I think QemuGraphicConsole is a better place to put the field.
+
+Regards,
+Akihiko Odaki
 
 > 
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Reviewed-by: Juan Quintela <quintela@redhat.com>
->>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->>>> ---
->>>>    migration/options.c | 5 ++---
->>>>    1 file changed, 2 insertions(+), 3 deletions(-)
-
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   ui/console-priv.h | 1 +
+>   ui/console.c      | 7 +++----
+>   2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/ui/console-priv.h b/ui/console-priv.h
+> index 88569ed2cc..6e54b476d9 100644
+> --- a/ui/console-priv.h
+> +++ b/ui/console-priv.h
+> @@ -31,6 +31,7 @@ struct QemuConsole {
+>       const GraphicHwOps *hw_ops;
+>       void *hw;
+>       CoQueue dump_queue;
+> +    unsigned rotate_arcdegree;
+>   
+>       QTAILQ_ENTRY(QemuConsole) next;
+>   };
+> diff --git a/ui/console.c b/ui/console.c
+> index 84aee76846..a36674bacf 100644
+> --- a/ui/console.c
+> +++ b/ui/console.c
+> @@ -37,7 +37,6 @@
+>   #include "trace.h"
+>   #include "exec/memory.h"
+>   #include "qom/object.h"
+> -#include "sysemu/sysemu.h"
+>   
+>   #include "console-priv.h"
+>   
+> @@ -210,17 +209,17 @@ void qemu_console_set_window_id(QemuConsole *con, int window_id)
+>   
+>   void qemu_console_set_rotate(QemuConsole *con, unsigned arcdegree)
+>   {
+> -    graphic_rotate = arcdegree;
+> +    con->rotate_arcdegree = arcdegree;
+>   }
+>   
+>   bool qemu_console_is_rotated(QemuConsole *con)
+>   {
+> -    return graphic_rotate != 0;
+> +    return con->rotate_arcdegree != 0;
+>   }
+>   
+>   unsigned qemu_console_get_rotate_arcdegree(QemuConsole *con)
+>   {
+> -    return graphic_rotate;
+> +    return con->rotate_arcdegree;
+>   }
+>   
+>   void graphic_hw_invalidate(QemuConsole *con)
 
