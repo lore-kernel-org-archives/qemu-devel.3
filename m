@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE60C54E5D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B102EC54E69
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 09:39:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm9Ql-0003sX-5q; Mon, 18 Mar 2024 05:37:19 -0400
+	id 1rm9Qo-0003tc-EK; Mon, 18 Mar 2024 05:37:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rm9Qh-0003rO-IG; Mon, 18 Mar 2024 05:37:15 -0400
-Received: from szxga01-in.huawei.com ([45.249.212.187])
+ id 1rm9Qk-0003sf-LU; Mon, 18 Mar 2024 05:37:19 -0400
+Received: from szxga03-in.huawei.com ([45.249.212.189])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rm9Qf-0000uL-00; Mon, 18 Mar 2024 05:37:15 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.174])
- by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4TyqSS4gbRzwPfv;
- Mon, 18 Mar 2024 17:34:32 +0800 (CST)
+ id 1rm9Qg-0000x3-A9; Mon, 18 Mar 2024 05:37:17 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.48])
+ by szxga03-in.huawei.com (SkyGuard) with ESMTP id 4TyqTN03mVzNmBx;
+ Mon, 18 Mar 2024 17:35:20 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 1D10A140259;
- Mon, 18 Mar 2024 17:37:03 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 15B3C18006C;
+ Mon, 18 Mar 2024 17:37:11 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 18 Mar
- 2024 17:37:02 +0800
+ 2024 17:37:10 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v8 05/23] target/arm: Support MSR access to ALLINT
-Date: Mon, 18 Mar 2024 09:35:27 +0000
-Message-ID: <20240318093546.2786144-6-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v8 14/23] hw/intc/arm_gicv3_redist: Implement GICR_INMIR0
+Date: Mon, 18 Mar 2024 09:35:36 +0000
+Message-ID: <20240318093546.2786144-15-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240318093546.2786144-1-ruanjinjie@huawei.com>
 References: <20240318093546.2786144-1-ruanjinjie@huawei.com>
@@ -45,13 +45,13 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.187;
- envelope-from=ruanjinjie@huawei.com; helo=szxga01-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.189;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga03-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,79 +70,76 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support ALLINT msr access as follow:
-	mrs <xt>, ALLINT	// read allint
-	msr ALLINT, <xt>	// write allint with imm
+Add GICR_INMIR0 register and support access GICR_INMIR0.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-v5:
+v6:
 - Add Reviewed-by.
 v4:
-- Remove arm_is_el2_enabled() check in allint_check().
-- Change to env->pstate instead of env->allint.
-v3:
-- Remove EL0 check in aa64_allint_access() which alreay checks in .access
-  PL1_RW.
-- Use arm_hcrx_el2_eff() in aa64_allint_access() instead of env->cp15.hcrx_el2.
-- Make ALLINT msr access function controlled by aa64_nmi.
+- Make the GICR_INMIR0 implementation more clearer.
 ---
- target/arm/helper.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ hw/intc/arm_gicv3_redist.c | 19 +++++++++++++++++++
+ hw/intc/gicv3_internal.h   |  1 +
+ 2 files changed, 20 insertions(+)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index b19a0178ce..aa0151c775 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -4752,6 +4752,36 @@ static void aa64_daif_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     env->daif = value & PSTATE_DAIF;
+diff --git a/hw/intc/arm_gicv3_redist.c b/hw/intc/arm_gicv3_redist.c
+index 8153525849..7a16a058b1 100644
+--- a/hw/intc/arm_gicv3_redist.c
++++ b/hw/intc/arm_gicv3_redist.c
+@@ -35,6 +35,15 @@ static int gicr_ns_access(GICv3CPUState *cs, int irq)
+     return extract32(cs->gicr_nsacr, irq * 2, 2);
  }
  
-+static void aa64_allint_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                              uint64_t value)
++static void gicr_write_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
++                                  uint32_t *reg, uint32_t val)
 +{
-+    env->pstate = (env->pstate & ~PSTATE_ALLINT) | (value & PSTATE_ALLINT);
++    /* Helper routine to implement writing to a "set" register */
++    val &= mask_group(cs, attrs);
++    *reg = val;
++    gicv3_redist_update(cs);
 +}
 +
-+static uint64_t aa64_allint_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    return env->pstate & PSTATE_ALLINT;
-+}
-+
-+static CPAccessResult aa64_allint_access(CPUARMState *env,
-+                                         const ARMCPRegInfo *ri, bool isread)
-+{
-+    if (arm_current_el(env) == 1 && (arm_hcrx_el2_eff(env) & HCRX_TALLINT)) {
-+        return CP_ACCESS_TRAP_EL2;
-+    }
-+    return CP_ACCESS_OK;
-+}
-+
-+static const ARMCPRegInfo nmi_reginfo[] = {
-+    { .name = "ALLINT", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 0, .opc2 = 0, .crn = 4, .crm = 3,
-+      .type = ARM_CP_NO_RAW,
-+      .access = PL1_RW, .accessfn = aa64_allint_access,
-+      .fieldoffset = offsetof(CPUARMState, pstate),
-+      .writefn = aa64_allint_write, .readfn = aa64_allint_read,
-+      .resetfn = arm_cp_reset_ignore },
-+};
-+
- static uint64_t aa64_pan_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ static void gicr_write_set_bitmap_reg(GICv3CPUState *cs, MemTxAttrs attrs,
+                                       uint32_t *reg, uint32_t val)
  {
-     return env->pstate & PSTATE_PAN;
-@@ -9889,6 +9919,10 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-     if (cpu_isar_feature(aa64_nv2, cpu)) {
-         define_arm_cp_regs(cpu, nv2_reginfo);
+@@ -406,6 +415,10 @@ static MemTxResult gicr_readl(GICv3CPUState *cs, hwaddr offset,
+         *data = value;
+         return MEMTX_OK;
      }
++    case GICR_INMIR0:
++        *data = cs->gic->nmi_support ?
++                gicr_read_bitmap_reg(cs, attrs, cs->gicr_isuperprio) : 0;
++        return MEMTX_OK;
+     case GICR_ICFGR0:
+     case GICR_ICFGR1:
+     {
+@@ -555,6 +568,12 @@ static MemTxResult gicr_writel(GICv3CPUState *cs, hwaddr offset,
+         gicv3_redist_update(cs);
+         return MEMTX_OK;
+     }
++    case GICR_INMIR0:
++        if (cs->gic->nmi_support) {
++            gicr_write_bitmap_reg(cs, attrs, &cs->gicr_isuperprio, value);
++        }
++        return MEMTX_OK;
 +
-+    if (cpu_isar_feature(aa64_nmi, cpu)) {
-+        define_arm_cp_regs(cpu, nmi_reginfo);
-+    }
- #endif
+     case GICR_ICFGR0:
+         /* Register is all RAZ/WI or RAO/WI bits */
+         return MEMTX_OK;
+diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
+index 29d5cdc1b6..f35b7d2f03 100644
+--- a/hw/intc/gicv3_internal.h
++++ b/hw/intc/gicv3_internal.h
+@@ -109,6 +109,7 @@
+ #define GICR_ICFGR1           (GICR_SGI_OFFSET + 0x0C04)
+ #define GICR_IGRPMODR0        (GICR_SGI_OFFSET + 0x0D00)
+ #define GICR_NSACR            (GICR_SGI_OFFSET + 0x0E00)
++#define GICR_INMIR0           (GICR_SGI_OFFSET + 0x0F80)
  
-     if (cpu_isar_feature(any_predinv, cpu)) {
+ /* VLPI redistributor registers, offsets from VLPI_base */
+ #define GICR_VPROPBASER       (GICR_VLPI_OFFSET + 0x70)
 -- 
 2.34.1
 
