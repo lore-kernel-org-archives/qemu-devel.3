@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2421C54E69
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 10:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32A0FC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 10:03:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm9pC-0006k0-0i; Mon, 18 Mar 2024 06:02:34 -0400
+	id 1rm9pp-0007b7-15; Mon, 18 Mar 2024 06:03:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rm9pA-0006jf-Dw
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:02:32 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ id 1rm9pm-0007Z3-8A
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:03:11 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rm9p8-0005Js-Ts
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:02:32 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2d24a727f78so47896591fa.0
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 03:02:30 -0700 (PDT)
+ id 1rm9pk-0005Lp-Sk
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:03:10 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a46c2f29325so71413266b.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 03:03:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710756149; x=1711360949; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710756186; x=1711360986; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LMvKoy9V5bcSQrl5zQ/CxDXv6WUwmgbWdE7xSOCVh+c=;
- b=GdsVvf4d42gpbgaeLj8FMQTq+CrquEgTjZrR1vgm4BcrkaVNXfDiTzeNLBZ6X+dk5n
- BpXDfOEup2QCZx2bIOEM0iA+CKupxkOOkSTnbgrPtKxp2U89k8ccpeuqOYZKGjzaf2cW
- SkqcRnFZVy8M1s7XTpcQ4MKiHlZ5R8MxkjuBSKL7jlwKDo3PZGpmtNtsKX/2kSs9jMcA
- 9WpOklC6njwJ55fd0H9sY7P5MwLyxRMOZ/4bNaV3mTYaHMos6PRNZc7bJ0oj2v+TrCC0
- Dms5w1cRNGQaXdaEjnu95uK8L3XHgtBYiwFGuBkSTigaBrm9kG0mlfYvWo1wnnPxVEPR
- V42g==
+ bh=hpPm2FRiZFZHJaDq+VXiDxmYT7rGoMt2aSaMaCV4GBg=;
+ b=rXWdVyBZ32JIhKy4IWlRDJNQ8pW4YI/rAio/UmLeTgJ9624n+T/A3Y8EwwlBHMKWIy
+ TmmSV3vcmP5yEyIkT9bYlhBw6QfWoZ8SO15fiXBVMsCbSPB+fz7cf5JZjzP7SbWR+zSF
+ GUqkpQwpbks+f0HILl9UG4/LBh/hxKcSJIRL/h43ZUCzNNg9NNUlQUwAZKTIPD/Dh88p
+ L5KimP1QJG4J0BsUf6hHB0Y/9mHvgcp/KtJIm04urVcDlMTXWucRX2/h44ppfTMprqgm
+ kksJqCXumRL2Fq1l9jNsZ7JMg/GEDhEy1CosPcBlQDunC6nhGTphCjBZab8xcdb9cLkX
+ nNzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710756149; x=1711360949;
+ d=1e100.net; s=20230601; t=1710756186; x=1711360986;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LMvKoy9V5bcSQrl5zQ/CxDXv6WUwmgbWdE7xSOCVh+c=;
- b=SvL0DA8m1mjV9LA1baHwv+eA4FDeO8QLqQ+vYX2wLKU+NVRH/+IkmMwAB9CY3+qzlv
- cmENIuQzfqgImBw26lCA0TVM8we7f/U7SmnpSHgeDNzYIidG8l55ctCFc7HMRc5ccpt1
- 5k3UQiutWj/WO+iNZu2DHa/qiCy2g2jQ9ZE3dxY/SCYiBeaGBfWsH0uO7kSQmbAzeLJb
- rNos+YfEjNFBuPp6pIGn5k1quIEM2RulmN9gf4K9QLknvETgrNH6GN8I9/QWw9fnxop/
- 0kEyDbZ4GqNLxqhkMRGAbz6LCw7cUNpdqp7i4RnkKBMbZT4kTxwDr7YIuDFa5LvMr3f0
- xKTw==
-X-Gm-Message-State: AOJu0Yz5vSY1niGAe8+ZCDXVVqlwufNMpq9uNltm0zd6J4zXm2wMYHmd
- 15VmKmHDwUDvlc9bk17MJ+0aV3qlF/TSejy518mdRNKX/ALy/EQ1KQLxo2Q5IXw=
-X-Google-Smtp-Source: AGHT+IG9FFQ1TEt1DaJXLzhkM7sBoYFVBMb7aUiffYbUa0GjsM9Zi19MC0i2+vsNyoZr2ZsXERUsVQ==
-X-Received: by 2002:a2e:6a07:0:b0:2d4:5ce9:f909 with SMTP id
- f7-20020a2e6a07000000b002d45ce9f909mr7756275ljc.17.1710756148909; 
- Mon, 18 Mar 2024 03:02:28 -0700 (PDT)
+ bh=hpPm2FRiZFZHJaDq+VXiDxmYT7rGoMt2aSaMaCV4GBg=;
+ b=pj4W+c/KYKINNq7vHpyLgEHYMQy20voMXUr5hKAHsqac+b4yedB4fIjg5jpdJCJ7wL
+ DhdtovMLlRI+YbQtK1ccB+pgktsFKXqpVu7hOdeS8Lqcs3DiFWpn3TdC5RWSc8ZLRF5w
+ zzqZuuiZOErC6Nc5Aa8HGY9sWkziC06DLEqbA5b2rwn2I63L2VchL/djOfY+dbZbvuys
+ vREytP3vFQbcmRfAkBmkbd7IWppVFwqIk25XRB6gK6esdcdogevtnxOdvh/yiFGjplAX
+ 0tEZTa6csVG9yV6oE7l2EN3swq08vDtx0v+FnkxdrzXP8J9Mu8zyh3+3sNsqt24ona3W
+ c4Eg==
+X-Gm-Message-State: AOJu0YwNnrEbMQlwTkP2Z9PvfTSjsHgN6kd3rkmRX+QM34TWcGIcz1Cq
+ UajliZm7P+spB8iq6fZr0iX0bMz4tgjZOhoOqlvuRISm1DF+I74OyTIPLCCY3Df6yVz/fzeKPTd
+ D
+X-Google-Smtp-Source: AGHT+IFWQh2bBygpz9o+hrYhkYi9DrroWLs0OewzaDwc8kiFlyu2kEHdAmLzLwRE3jukfCU0HzaCyQ==
+X-Received: by 2002:a17:906:7304:b0:a46:c8e2:40f6 with SMTP id
+ di4-20020a170906730400b00a46c8e240f6mr1038236ejc.1.1710756185857; 
+ Mon, 18 Mar 2024 03:03:05 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ds11-20020a0564021ccb00b005689baaae61sm4427194edb.26.2024.03.18.03.02.28
+ lm9-20020a170906980900b00a46c0191306sm840347ejb.213.2024.03.18.03.03.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 03:02:28 -0700 (PDT)
+ Mon, 18 Mar 2024 03:03:05 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 460CC5F88C;
- Mon, 18 Mar 2024 10:02:28 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 3FB955F7DF;
+ Mon, 18 Mar 2024 10:03:05 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
-Subject: Re: [PATCH 03/22] tcg: Pass function pointer to tcg_gen_call*
-In-Reply-To: <20240316015720.3661236-4-richard.henderson@linaro.org> (Richard
- Henderson's message of "Fri, 15 Mar 2024 15:57:01 -1000")
+Subject: Re: [PATCH 02/22] tcg: Make tcg/helper-info.h self-contained
+In-Reply-To: <20240316015720.3661236-3-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Fri, 15 Mar 2024 15:57:00 -1000")
 References: <20240316015720.3661236-1-richard.henderson@linaro.org>
- <20240316015720.3661236-4-richard.henderson@linaro.org>
+ <20240316015720.3661236-3-richard.henderson@linaro.org>
 User-Agent: mu4e 1.12.2; emacs 29.2
-Date: Mon, 18 Mar 2024 10:02:28 +0000
-Message-ID: <87il1joo23.fsf@draig.linaro.org>
+Date: Mon, 18 Mar 2024 10:03:05 +0000
+Message-ID: <87cyrroo12.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x229.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,13 +101,27 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Richard Henderson <richard.henderson@linaro.org> writes:
 
-> For normal helpers, read the function pointer from the
-> structure earlier.  For plugins, this will allow the
-> function pointer to come from elsewhere.
+> Move MAX_CALL_IARGS from tcg.h and include for
+> the define of TCG_TARGET_REG_BITS.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+This may have broken TCI:
+
+../tcg/tci.c: In function 'tcg_qemu_tb_exec':
+../tcg/tci.c:391:34: error: 'MAX_CALL_IARGS' undeclared (first use in this =
+function)
+  391 |                 void *call_slots[MAX_CALL_IARGS];
+      |                                  ^~~~~~~~~~~~~~
+../tcg/tci.c:391:34: note: each undeclared identifier is reported only once=
+ for each function it appears in
+../tcg/tci.c:391:23: error: unused variable 'call_slots' [-Werror=3Dunused-=
+variable]
+  391 |                 void *call_slots[MAX_CALL_IARGS];
+      |                       ^~~~~~~~~~
+cc1: all warnings being treated as errors
+
+the gift that keeps on giving ;-)
 
 --=20
 Alex Benn=C3=A9e
