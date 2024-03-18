@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23B7FC54E71
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18CAAC54E68
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 03:35:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm3lp-0002xI-BW; Sun, 17 Mar 2024 23:34:41 -0400
+	id 1rm3lr-0002y9-Lq; Sun, 17 Mar 2024 23:34:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rm3ln-0002wg-Mi
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 23:34:39 -0400
+ id 1rm3lq-0002xj-8i
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 23:34:42 -0400
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1rm3ll-0002tD-Mx
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 23:34:39 -0400
+ id 1rm3lo-0002tD-0b
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 23:34:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710732878; x=1742268878;
+ t=1710732880; x=1742268880;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=pzEf35k2DAvA11DdvyXJyAX+HNKyy5imQlrRkrZgDHk=;
- b=bQ4mSpxG9XN0X2LgUkN+eTWDs0SAzVmfNtxdaA00sxTD6rFnvXvL3MLp
- o6ThAZJ4oOAS5Egdr28e+EB5KGejvv0eybu/lnaS0j5oybq3xiz/nFgqj
- PgBJ1+4rBqct/Iiwa48Ib7Zi4MdGErWgjapgM2h5QVyl2GM8pFPb9fr9f
- auShMPYX9co6iRXegrV+J/+vFaISsnKB0nHy14vKX+436O5n2VQh8Cr+6
- yzEHHrxwTT3sW9IDipPpWxAew+YDjHrUiFCf9C9k9Y5yOjHeBNDvQSd63
- R8OnEKhXs+SDezF1uRZ6Pbi5ywKb3ZaE8bqi56857CDWvdEt0/RtAoGYh Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="5403674"
+ bh=qCfBZ1GyPomLTC4f3lRL18KLkS/jDfyHNLok+VS22dA=;
+ b=GibwcUT2EzTDcfF5Z0f/YfszHz2MAM6MKjsHTvPEEUDq6TJGSWPv8ix4
+ bvstFNBCOUlZU20aedp4KtMZ7WypFaNPbDidDMFFgPL2h2mjOQSL0QoGM
+ i9kopY650eRJXu/YlEb7Q7c5HlWGU3IP8dEgAPBheOz5kTiFGhKJ2pm6S
+ 0c6vZqpnbmznSmjWGIh9C4rSn9ETQ//9Pb0T84UrWg1u2rykDBEoyJfAJ
+ cETzPt5OPkfsgIUc9DA3ZESvCLr/bfNc+XFE5ZrQzgVUIMAXqVwkh29Nr
+ 7wbJ/EnRZmFe2WQhIfVItV3tuA4+L5S60rCt3aYb/xPMpysvoMZ7gXBpW A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="5403681"
 X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
-   d="scan'208";a="5403674"
+   d="scan'208";a="5403681"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Mar 2024 20:34:33 -0700
+ 17 Mar 2024 20:34:38 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; d="scan'208";a="13275375"
+X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; d="scan'208";a="13275396"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.124])
  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Mar 2024 20:34:30 -0700
+ 17 Mar 2024 20:34:35 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, berrange@redhat.com, eduardo@habkost.net,
  zhao1.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 1/3] qom/object_interfaces: Remove unnecessary local error
- check
-Date: Mon, 18 Mar 2024 11:32:08 +0800
-Message-Id: <20240318033211.459006-2-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 3/3] qom/object_interfaces: Remove local_err in
+ user_creatable_add_type
+Date: Mon, 18 Mar 2024 11:32:10 +0800
+Message-Id: <20240318033211.459006-4-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240318033211.459006-1-zhenzhong.duan@intel.com>
 References: <20240318033211.459006-1-zhenzhong.duan@intel.com>
@@ -81,59 +81,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The original error handling code indicates "local_err is always set",
-and error_propagate() can handle the case that local_err is NULL.
+In user_creatable_add_type, there is mixed usage of ERRP_GUARD and
+local_err. This makes error_abort not taking effect in those callee
+functions with &local_err passed.
 
-Use err label instead of out label for error path.
+Now that we already use ERRP_GUARD, remove local_err and pass errp.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- qom/object_interfaces.c | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ qom/object_interfaces.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
 diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index e0833c8bfe..70179877f1 100644
+index e17e2de46d..2067bf2230 100644
 --- a/qom/object_interfaces.c
 +++ b/qom/object_interfaces.c
-@@ -111,14 +111,14 @@ Object *user_creatable_add_type(const char *type, const char *id,
+@@ -84,7 +84,6 @@ Object *user_creatable_add_type(const char *type, const char *id,
+     ERRP_GUARD();
+     Object *obj;
+     ObjectClass *klass;
+-    Error *local_err = NULL;
+ 
+     if (id != NULL && !id_wellformed(id)) {
+         error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an identifier");
+@@ -112,16 +111,16 @@ Object *user_creatable_add_type(const char *type, const char *id,
+ 
+     assert(qdict);
      obj = object_new(type);
-     object_set_properties_from_qdict(obj, qdict, v, &local_err);
-     if (local_err) {
--        goto out;
-+        goto err;
+-    if (!object_set_properties_from_qdict(obj, qdict, v, &local_err)) {
++    if (!object_set_properties_from_qdict(obj, qdict, v, errp)) {
+         goto err;
      }
  
-     if (id != NULL) {
-         object_property_try_add_child(object_get_objects_root(),
-                                       id, obj, &local_err);
-         if (local_err) {
--            goto out;
-+            goto err;
-         }
+     if (id != NULL && !object_property_try_add_child(object_get_objects_root(),
+-                                                     id, obj, &local_err)) {
++                                                     id, obj, errp)) {
+             goto err;
      }
  
-@@ -126,15 +126,13 @@ Object *user_creatable_add_type(const char *type, const char *id,
+-    if (!user_creatable_complete(USER_CREATABLE(obj), &local_err)) {
++    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
          if (id != NULL) {
              object_property_del(object_get_objects_root(), id);
          }
--        goto out;
--    }
--out:
--    if (local_err) {
--        error_propagate(errp, local_err);
--        object_unref(obj);
--        return NULL;
-+        goto err;
+@@ -129,7 +128,6 @@ Object *user_creatable_add_type(const char *type, const char *id,
      }
      return obj;
-+err:
-+    error_propagate(errp, local_err);
-+    object_unref(obj);
-+    return NULL;
+ err:
+-    error_propagate(errp, local_err);
+     object_unref(obj);
+     return NULL;
  }
- 
- void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
 -- 
 2.34.1
 
