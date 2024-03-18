@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CCC6C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 09:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3363CC54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 09:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm8vk-0003eD-SF; Mon, 18 Mar 2024 05:05:16 -0400
+	id 1rm90w-00065I-38; Mon, 18 Mar 2024 05:10:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rm8vb-0003as-Qj
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 05:05:09 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rm90r-00064o-QW; Mon, 18 Mar 2024 05:10:33 -0400
+Received: from mail-vs1-xe30.google.com ([2607:f8b0:4864:20::e30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rm8vY-0003Lo-Da
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 05:05:06 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6e6adc557b6so3860225b3a.2
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 02:05:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rm90p-0004Ug-Ma; Mon, 18 Mar 2024 05:10:33 -0400
+Received: by mail-vs1-xe30.google.com with SMTP id
+ ada2fe7eead31-4767bcb4ebdso349348137.0; 
+ Mon, 18 Mar 2024 02:10:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710752702; x=1711357502;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=APVvWu6JG41MhfdZyWYK3Up/zLgMR7OSD5or0zyYsto=;
- b=w+F2VlAfwFSbL9yNAysvnYYm/TXf52t5DZmcgEBc3GuMlowpXXqJfCdV+LdiMr+5HC
- 7FuRoMfga9JLIjaeHuO4kKgm2CIFNWcjz65Dl9O6uuMH50jdmJc1vdBaeErZObz0MLj/
- G/f59AWv1w5Cp09nkQ4StCQ1m3bsKqPvQXheXbIXsAV/Bm5ZHqzXHCy6pHVDb3ytFVOk
- k9CpkYUunSXzJZET5LwGIXgl1RWxqDWKTfBzNwEcZKD4Emimg0JjezZvFSU8odTeNbij
- PF47X7yUSNY9rz3kexoEc7toqzqLteCokeHmjD+zaSkfzhF7LXCghwFVzZ1Q8JqAD4ix
- Siag==
+ d=gmail.com; s=20230601; t=1710753029; x=1711357829; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Qng+qzcHxa9AfBUC0FmA1FM/4z3ZYPTC5vPsa6YWWp4=;
+ b=Rd8QWC8KnF9sklxvc7nW3jvt2Hox6WXGIgwyn5SRJTCX4VLsLn/f5AEsh6cNSCwnwX
+ G5dMZyG68/Gic06hPdcOQi9Hs18slN4Xbu+vtzrygTTdegVz15gg8LKmbExH0ASq4ZIl
+ j0o8xTNdyL24wHmvh/2PlUOVkV+/gWnGyuu4lglDybJaR9dpSBNc7C2x73AUuGQGhFFO
+ 7wcvcVJreiZyvK8PyPRHCIyvqJG1ghYnApE6ODxFZFVyb7HhSbQ1szT5Lu28/I3O8CJf
+ x/BVeOxYSmD84maR9YswhybwQq4+pq9Ny48vW+/8Re8ry6YPB83Q+ZZ9MdYwQBWTfTgW
+ gdvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710752702; x=1711357502;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=APVvWu6JG41MhfdZyWYK3Up/zLgMR7OSD5or0zyYsto=;
- b=vXGaQ4AgapTFzFa7ySHYd3YZUG0iGZWVtHihdFbDmb4KkHHvjdU4X0SdQ27Tot9OFi
- 51ftDg0D1ycPkMfZrdu73+/kJ9dbTksTj+AP68V+BqHHFRS3kHWxfB4dNrFyZ/u/xCGz
- 9ZsrMUE8cYyFxcqcxONlEq0wHuDptgxAVjJSrhdVcgJI4Ntpt+T1fmX92xr8/EaYXRuI
- KK1qCQXk4SED8WxDtJscEfykhTKtBF4c19pNJdh3ci4NPDpT1xt4UOZu/HYaPbikPfK+
- ymcJWKAiZ4AF5Eyv5zoGONqyFnkp9TxTRG0jMiwyiwCXRafsT4k6tcZ1+hEWjbkaj1b5
- RZrA==
+ d=1e100.net; s=20230601; t=1710753029; x=1711357829;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Qng+qzcHxa9AfBUC0FmA1FM/4z3ZYPTC5vPsa6YWWp4=;
+ b=JUvnSJucZhPsonSZ3Njfvw6Dis6riTLjPO4yLFqluzw2FXjVsl5cUGc+nFm8Jo7Fkv
+ W9HtY/GAYShx+r5uP8K4B0NXa+Y+n0h38fmhz+t+PMMj8JKDUX4ZSynEd74VSF3wNDPB
+ 1wgvQOLcl7R5AIgBgEFNEVXSwN8qpNmGMNYVGo5lvQjwMw1UWYVdauxPADG6q7eDEpFg
+ GFlsDlaO8Q3fdRVAXoRoldb3V+5nbka1JA80HUG34jXNlK9kINf2en4LOf6zJ4Z9lOYm
+ CwfDfIsKQRn6cjuj2QKQ7YbDsHMoFSnOOWW35/47V/GgVuixCQTckZW25ei9mLaf9YMK
+ r8tA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzZmh8CFvu9MdOcX7SpC7v0csMZFC5VzRkTY0TRQS5WcqAnKfUA4pFIcCPRU+AuBLaJgxIQj0JHb+Sbzgjv0dvfrPPEiY=
-X-Gm-Message-State: AOJu0YxSp8F5e2YeXfw4pPrGDnfGt23MkaSXaBIphHjig0yeo+tgB+Dz
- PkBvKsdmY95OgApwuRhUp+c0Vxzh1qc06lmcaY0cKhgP+3ErE91WmnSiMQLr5Mc=
-X-Google-Smtp-Source: AGHT+IFgEBD/vMclRIc4f4/NQSsFoP/F8ZC9nAk0NqWWNO5abYvLOZfy6X6V1AeXKs0Cc94YtXbznA==
-X-Received: by 2002:a05:6a00:988:b0:6e5:696d:9eb8 with SMTP id
- u8-20020a056a00098800b006e5696d9eb8mr13704110pfg.3.1710752701789; 
- Mon, 18 Mar 2024 02:05:01 -0700 (PDT)
-Received: from [157.82.200.213] ([157.82.200.213])
- by smtp.gmail.com with ESMTPSA id
- b2-20020a056a00114200b006e6b7124b33sm7399115pfm.209.2024.03.18.02.05.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 02:05:01 -0700 (PDT)
-Message-ID: <e27ee189-3b72-413a-b1ab-f4b26cb37812@daynix.com>
-Date: Mon, 18 Mar 2024 18:04:59 +0900
+ AJvYcCUaxz5xInh+ODH9TjjT144Vj9Aue1ahE7LJEJAVh88DUO2pcfTxevPLlt3vF7ipPpNwdP++sJCZE2O0lEak6lV5nztiVrI=
+X-Gm-Message-State: AOJu0YxiczCzfcpleltVvxIdn7+o5OSMHURWUjmdv7MgE77EdDM9p4BU
+ Qu1GPXbY+WBRO0LNLcxUouvVRUP9j+UVQwZF8b7j8XiMn1cYPOXuCsUmkhLjBFLYnQsUD0qw9yv
+ ScxLozmbxLGFWLxqlQ41GThpRYYg=
+X-Google-Smtp-Source: AGHT+IHhkmWk8bi4dkp343D8vPi82VlxslpXTwCKgO+SnOBfdQDow/vpvVbTKMAwx0k7krMKLvEq6ZvgoIz8wWJlR/U=
+X-Received: by 2002:a67:b64b:0:b0:476:5404:5f11 with SMTP id
+ e11-20020a67b64b000000b0047654045f11mr7469653vsm.25.1710753029062; Mon, 18
+ Mar 2024 02:10:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] ui/vnc: Do not use console_select()
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240318-console-v1-0-f4efbfa71253@daynix.com>
- <20240318-console-v1-2-f4efbfa71253@daynix.com>
- <CAJ+F1C+PipwudTRDF=BFJyqVkw0ORwpnXfumQ=kUadtf0HEfVA@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAJ+F1C+PipwudTRDF=BFJyqVkw0ORwpnXfumQ=kUadtf0HEfVA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::431;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
+References: <20240314175704.478276-1-dbarboza@ventanamicro.com>
+ <20240314175704.478276-6-dbarboza@ventanamicro.com>
+In-Reply-To: <20240314175704.478276-6-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 18 Mar 2024 19:10:03 +1000
+Message-ID: <CAKmqyKMDMS6gHchNbRcQOGjrA8chJqrCTObw+96hyeQyEozxsQ@mail.gmail.com>
+Subject: Re: [PATCH for 9.0 v15 05/10] target/riscv: always clear vstart for
+ ldst_whole insns
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, max.chou@sifive.com, richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e30;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe30.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,149 +94,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/03/18 17:21, Marc-André Lureau wrote:
-> Hi
-> 
-> On Mon, Mar 18, 2024 at 11:58 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> console_select() is shared by other displays and a console_select() call
->> from one of them triggers console switching also in ui/curses,
->> circumventing key state reinitialization that needs to be performed in
->> preparation and resulting in stuck keys.
->>
->> Use its internal state to track the current active console to prevent
->> such a surprise console switch.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   include/ui/console.h   |  1 +
->>   include/ui/kbd-state.h | 11 +++++++++++
->>   ui/console.c           | 12 ++++++++++++
->>   ui/kbd-state.c         |  6 ++++++
->>   ui/vnc.c               | 14 +++++++++-----
->>   5 files changed, 39 insertions(+), 5 deletions(-)
->>
->> diff --git a/include/ui/console.h b/include/ui/console.h
->> index a4a49ffc640c..a703f7466499 100644
->> --- a/include/ui/console.h
->> +++ b/include/ui/console.h
->> @@ -413,6 +413,7 @@ void qemu_console_early_init(void);
->>
->>   void qemu_console_set_display_gl_ctx(QemuConsole *con, DisplayGLCtx *ctx);
->>
->> +QemuConsole *qemu_console_lookup_first_graphic_console(void);
->>   QemuConsole *qemu_console_lookup_by_index(unsigned int index);
->>   QemuConsole *qemu_console_lookup_by_device(DeviceState *dev, uint32_t head);
->>   QemuConsole *qemu_console_lookup_by_device_name(const char *device_id,
->> diff --git a/include/ui/kbd-state.h b/include/ui/kbd-state.h
->> index fb79776128cf..1f37b932eb62 100644
->> --- a/include/ui/kbd-state.h
->> +++ b/include/ui/kbd-state.h
->> @@ -99,4 +99,15 @@ bool qkbd_state_modifier_get(QKbdState *kbd, QKbdModifier mod);
->>    */
->>   void qkbd_state_lift_all_keys(QKbdState *kbd);
->>
->> +/**
->> + * qkbd_state_switch_console: Switch console.
->> + *
->> + * This sends key up events to the previous console for all keys which are in
->> + * down state to prevent keys being stuck, and remembers the new console.
->> + *
->> + * @kbd: state tracker state.
->> + * @con: new QemuConsole for this state tracker.
->> + */
->> +void qkbd_state_switch_console(QKbdState *kbd, QemuConsole *con);
->> +
->>   #endif /* QEMU_UI_KBD_STATE_H */
->> diff --git a/ui/console.c b/ui/console.c
->> index 832055675c50..6bf02a23414c 100644
->> --- a/ui/console.c
->> +++ b/ui/console.c
->> @@ -1325,6 +1325,18 @@ void graphic_console_close(QemuConsole *con)
->>       dpy_gfx_replace_surface(con, surface);
->>   }
->>
->> +QemuConsole *qemu_console_lookup_first_graphic_console(void)
->> +{
->> +    QemuConsole *con;
->> +
->> +    QTAILQ_FOREACH(con, &consoles, next) {
->> +        if (QEMU_IS_GRAPHIC_CONSOLE(con)) {
->> +            return con;
->> +        }
->> +    }
->> +    return NULL;
->> +}
->> +
->>   QemuConsole *qemu_console_lookup_by_index(unsigned int index)
->>   {
->>       QemuConsole *con;
->> diff --git a/ui/kbd-state.c b/ui/kbd-state.c
->> index 62d42a7a22e1..52ed28b8a89b 100644
->> --- a/ui/kbd-state.c
->> +++ b/ui/kbd-state.c
->> @@ -117,6 +117,12 @@ void qkbd_state_lift_all_keys(QKbdState *kbd)
->>       }
->>   }
->>
->> +void qkbd_state_switch_console(QKbdState *kbd, QemuConsole *con)
->> +{
->> +    qkbd_state_lift_all_keys(kbd);
->> +    kbd->con = con;
->> +}
->> +
->>   void qkbd_state_set_delay(QKbdState *kbd, int delay_ms)
->>   {
->>       kbd->key_delay_ms = delay_ms;
->> diff --git a/ui/vnc.c b/ui/vnc.c
->> index fc12b343e254..94564b196ba8 100644
->> --- a/ui/vnc.c
->> +++ b/ui/vnc.c
->> @@ -1872,12 +1872,16 @@ static void do_key_event(VncState *vs, int down, int keycode, int sym)
->>       /* QEMU console switch */
->>       switch (qcode) {
->>       case Q_KEY_CODE_1 ... Q_KEY_CODE_9: /* '1' to '9' keys */
->> -        if (vs->vd->dcl.con == NULL && down &&
->> +        if (down &&
->>               qkbd_state_modifier_get(vs->vd->kbd, QKBD_MOD_CTRL) &&
->>               qkbd_state_modifier_get(vs->vd->kbd, QKBD_MOD_ALT)) {
->> -            /* Reset the modifiers sent to the current console */
->> -            qkbd_state_lift_all_keys(vs->vd->kbd);
->> -            console_select(qcode - Q_KEY_CODE_1);
->> +            QemuConsole *con = qemu_console_lookup_by_index(qcode - Q_KEY_CODE_1);
->> +            if (con) {
->> +                unregister_displaychangelistener(&vs->vd->dcl);
->> +                qkbd_state_switch_console(vs->vd->kbd, con);
->> +                vs->vd->dcl.con = con;
->> +                register_displaychangelistener(&vs->vd->dcl);
->> +            }
->>               return;
->>           }
->>       default:
->> @@ -4206,7 +4210,7 @@ void vnc_display_open(const char *id, Error **errp)
->>               goto fail;
->>           }
->>       } else {
->> -        con = NULL;
->> +        con = qemu_console_lookup_first_graphic_console();
-> 
-> why this change here?
+On Fri, Mar 15, 2024 at 3:57=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> Commit 8ff8ac6329 added a conditional to guard the vext_ldst_whole()
+> helper if vstart >=3D evl. But by skipping the helper we're also not
+> setting vstart =3D 0 at the end of the insns, which is incorrect.
+>
+> We'll move the conditional to vext_ldst_whole(), following in line with
+> the removal of all brconds vstart >=3D vl that the next patch will do. Th=
+e
+> idea is to make the helpers responsible for their own vstart management.
+>
+> Fix ldst_whole isns by:
+>
+> - remove the brcond that skips the helper if vstart is >=3D evl;
+>
+> - vext_ldst_whole() now does an early exit with the same check, where
+>   evl =3D (vlenb * nf) >> log2_esz, but the early exit will also clear
+>   vstart.
+>
+> The 'width' param is now unneeded in ldst_whole_trans() and is also
+> removed. It was used for the evl calculation for the brcond and has no
+> other use now.  The 'width' is reflected in vext_ldst_whole() via
+> log2_esz, which is encoded by GEN_VEXT_LD_WHOLE() as
+> "ctzl(sizeof(ETYPE))".
+>
+> Suggested-by: Max Chou <max.chou@sifive.com>
+> Fixes: 8ff8ac6329 ("target/riscv: rvv: Add missing early exit condition f=
+or whole register load/store")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-console_select() is to change the console that is used when 
-DisplayChangeListener::con is NULL. console_select() is no longer called 
-so DisplayChangeListener::con must not be NULL.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-> 
-> otherwise, lgtm
-> 
->>       }
->>
->>       if (con != vd->dcl.con) {
->>
->> --
->> 2.44.0
->>
->>
-> 
-> 
+Alistair
+
+> ---
+>  target/riscv/insn_trans/trans_rvv.c.inc | 52 +++++++++++--------------
+>  target/riscv/vector_helper.c            |  5 +++
+>  2 files changed, 28 insertions(+), 29 deletions(-)
+>
+> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_=
+trans/trans_rvv.c.inc
+> index 52c26a7834..1366445e1f 100644
+> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+> @@ -1097,13 +1097,9 @@ GEN_VEXT_TRANS(vle64ff_v, MO_64, r2nfvm, ldff_op, =
+ld_us_check)
+>  typedef void gen_helper_ldst_whole(TCGv_ptr, TCGv, TCGv_env, TCGv_i32);
+>
+>  static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+> -                             uint32_t width, gen_helper_ldst_whole *fn,
+> +                             gen_helper_ldst_whole *fn,
+>                               DisasContext *s)
+>  {
+> -    uint32_t evl =3D s->cfg_ptr->vlenb * nf / width;
+> -    TCGLabel *over =3D gen_new_label();
+> -    tcg_gen_brcondi_tl(TCG_COND_GEU, cpu_vstart, evl, over);
+> -
+>      TCGv_ptr dest;
+>      TCGv base;
+>      TCGv_i32 desc;
+> @@ -1120,8 +1116,6 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t =
+rs1, uint32_t nf,
+>
+>      fn(dest, base, tcg_env, desc);
+>
+> -    gen_set_label(over);
+> -
+>      return true;
+>  }
+>
+> @@ -1129,42 +1123,42 @@ static bool ldst_whole_trans(uint32_t vd, uint32_=
+t rs1, uint32_t nf,
+>   * load and store whole register instructions ignore vtype and vl settin=
+g.
+>   * Thus, we don't need to check vill bit. (Section 7.9)
+>   */
+> -#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF, WIDTH)               \
+> +#define GEN_LDST_WHOLE_TRANS(NAME, ARG_NF)                              =
+  \
+>  static bool trans_##NAME(DisasContext *s, arg_##NAME * a)               =
+  \
+>  {                                                                       =
+  \
+>      if (require_rvv(s) &&                                               =
+  \
+>          QEMU_IS_ALIGNED(a->rd, ARG_NF)) {                               =
+  \
+> -        return ldst_whole_trans(a->rd, a->rs1, ARG_NF, WIDTH,           =
+  \
+> +        return ldst_whole_trans(a->rd, a->rs1, ARG_NF,                  =
+  \
+>                                  gen_helper_##NAME, s);                  =
+  \
+>      }                                                                   =
+  \
+>      return false;                                                       =
+  \
+>  }
+>
+> -GEN_LDST_WHOLE_TRANS(vl1re8_v,  1, 1)
+> -GEN_LDST_WHOLE_TRANS(vl1re16_v, 1, 2)
+> -GEN_LDST_WHOLE_TRANS(vl1re32_v, 1, 4)
+> -GEN_LDST_WHOLE_TRANS(vl1re64_v, 1, 8)
+> -GEN_LDST_WHOLE_TRANS(vl2re8_v,  2, 1)
+> -GEN_LDST_WHOLE_TRANS(vl2re16_v, 2, 2)
+> -GEN_LDST_WHOLE_TRANS(vl2re32_v, 2, 4)
+> -GEN_LDST_WHOLE_TRANS(vl2re64_v, 2, 8)
+> -GEN_LDST_WHOLE_TRANS(vl4re8_v,  4, 1)
+> -GEN_LDST_WHOLE_TRANS(vl4re16_v, 4, 2)
+> -GEN_LDST_WHOLE_TRANS(vl4re32_v, 4, 4)
+> -GEN_LDST_WHOLE_TRANS(vl4re64_v, 4, 8)
+> -GEN_LDST_WHOLE_TRANS(vl8re8_v,  8, 1)
+> -GEN_LDST_WHOLE_TRANS(vl8re16_v, 8, 2)
+> -GEN_LDST_WHOLE_TRANS(vl8re32_v, 8, 4)
+> -GEN_LDST_WHOLE_TRANS(vl8re64_v, 8, 8)
+> +GEN_LDST_WHOLE_TRANS(vl1re8_v,  1)
+> +GEN_LDST_WHOLE_TRANS(vl1re16_v, 1)
+> +GEN_LDST_WHOLE_TRANS(vl1re32_v, 1)
+> +GEN_LDST_WHOLE_TRANS(vl1re64_v, 1)
+> +GEN_LDST_WHOLE_TRANS(vl2re8_v,  2)
+> +GEN_LDST_WHOLE_TRANS(vl2re16_v, 2)
+> +GEN_LDST_WHOLE_TRANS(vl2re32_v, 2)
+> +GEN_LDST_WHOLE_TRANS(vl2re64_v, 2)
+> +GEN_LDST_WHOLE_TRANS(vl4re8_v,  4)
+> +GEN_LDST_WHOLE_TRANS(vl4re16_v, 4)
+> +GEN_LDST_WHOLE_TRANS(vl4re32_v, 4)
+> +GEN_LDST_WHOLE_TRANS(vl4re64_v, 4)
+> +GEN_LDST_WHOLE_TRANS(vl8re8_v,  8)
+> +GEN_LDST_WHOLE_TRANS(vl8re16_v, 8)
+> +GEN_LDST_WHOLE_TRANS(vl8re32_v, 8)
+> +GEN_LDST_WHOLE_TRANS(vl8re64_v, 8)
+>
+>  /*
+>   * The vector whole register store instructions are encoded similar to
+>   * unmasked unit-stride store of elements with EEW=3D8.
+>   */
+> -GEN_LDST_WHOLE_TRANS(vs1r_v, 1, 1)
+> -GEN_LDST_WHOLE_TRANS(vs2r_v, 2, 1)
+> -GEN_LDST_WHOLE_TRANS(vs4r_v, 4, 1)
+> -GEN_LDST_WHOLE_TRANS(vs8r_v, 8, 1)
+> +GEN_LDST_WHOLE_TRANS(vs1r_v, 1)
+> +GEN_LDST_WHOLE_TRANS(vs2r_v, 2)
+> +GEN_LDST_WHOLE_TRANS(vs4r_v, 4)
+> +GEN_LDST_WHOLE_TRANS(vs8r_v, 8)
+>
+>  /*
+>   *** Vector Integer Arithmetic Instructions
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index bcc553c0e2..1f4c276b21 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -572,6 +572,11 @@ vext_ldst_whole(void *vd, target_ulong base, CPURISC=
+VState *env, uint32_t desc,
+>      uint32_t vlenb =3D riscv_cpu_cfg(env)->vlenb;
+>      uint32_t max_elems =3D vlenb >> log2_esz;
+>
+> +    if (env->vstart >=3D ((vlenb * nf) >> log2_esz)) {
+> +        env->vstart =3D 0;
+> +        return;
+> +    }
+> +
+>      k =3D env->vstart / max_elems;
+>      off =3D env->vstart % max_elems;
+>
+> --
+> 2.44.0
+>
+>
 
