@@ -4,50 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D05E8C54E69
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 17:58:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB0DC54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 17:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmHET-0000TV-2v; Mon, 18 Mar 2024 13:57:09 -0400
+	id 1rmHEW-0000VN-Oc; Mon, 18 Mar 2024 13:57:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHER-0000T1-H4
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:07 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHET-0000Tm-Nm
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHEP-00076r-Ts
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:07 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHES-00077n-7m
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710784623;
+ s=mimecast20190719; t=1710784627;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=w8cIUJO8ScEMfsYSb0rWH8G6K5GgOtk0GCZLgzIExDM=;
- b=gfq8tze0nodEWtDuqMnU/WpQjCQvjuz8DwVzQ5vOKp8zHq9Q5RfZ3IUw2E8/U+9twWDmaR
- R57ayYHqAOvlb3hpFawefKmvtkNTePq9db2RjCwCtNVdF63FKjNqaqWSfkNJvqSxvvc23l
- bDdp5TowOnWBckbFUmcmOESt462GYgw=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-O8p-ghY6MqiMEmLYD_fYgg-1; Mon,
- 18 Mar 2024 13:57:01 -0400
-X-MC-Unique: O8p-ghY6MqiMEmLYD_fYgg-1
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/FdiF6Ay0Y//kEppiR8e/bNkgh8x74HG5F3qOJ903Cc=;
+ b=W25HwQM5wKO3Ejco9q5f5YJk770JzKy1xzRNwXs9xq6b9D+8OR+rt1i+l9QjQUzPgzwzC5
+ 2Blv5ytXvQlUmv5wLZgC4LruWzR7Cowh29ZhIcnqqMixmjhqFPlGmWjwKy0jcn67RazVG/
+ LbvuYtsT9gIh21SveWpCVmflSOAUFbM=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-198-dWQPopGVOFSVcJpxmYIW0g-1; Mon, 18 Mar 2024 13:57:04 -0400
+X-MC-Unique: dWQPopGVOFSVcJpxmYIW0g-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9C76B3C0CEF7;
- Mon, 18 Mar 2024 17:57:01 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C7B3B185A789;
+ Mon, 18 Mar 2024 17:57:03 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.155])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 0EBBF2166B32;
- Mon, 18 Mar 2024 17:57:00 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 027892166B34;
+ Mon, 18 Mar 2024 17:57:01 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 0/4] s390x and misc patches for 9.0-rc0
-Date: Mon, 18 Mar 2024 18:56:51 +0100
-Message-ID: <20240318175655.756084-1-thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Claudio Fontana <cfontana@suse.de>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 1/4] docs/s390: clarify even more that cpu-topology is KVM-only
+Date: Mon, 18 Mar 2024 18:56:52 +0100
+Message-ID: <20240318175655.756084-2-thuth@redhat.com>
+In-Reply-To: <20240318175655.756084-1-thuth@redhat.com>
+References: <20240318175655.756084-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,41 +83,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- Hi Peter!
+From: Claudio Fontana <cfontana@suse.de>
 
-The following changes since commit ba49d760eb04630e7b15f423ebecf6c871b8f77b:
+At least for now cpu-topology is implemented only for KVM.
 
-  Merge tag 'pull-maintainer-final-130324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-13 15:12:14 +0000)
+We already say this, but this tries to be more explicit,
+and also show it in the examples.
 
-are available in the Git repository at:
+This adds a new reference in the introduction that we can point to,
+whenever we need to reference accelerators and how to select them.
 
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-03-18
-
-for you to fetch changes up to aebe0a8552e8d419c8103e60e593f2778eab41c4:
-
-  travis-ci: Rename SOFTMMU -> SYSTEM (2024-03-18 17:18:05 +0100)
-
-----------------------------------------------------------------
-* Clarify s390x CPU topology docs and CPU compatibility error messages
-* Improve the Sparc CPU help text
-* Rename SOFTMMU to SYSTEM in the travis.yml file
-
-----------------------------------------------------------------
-Claudio Fontana (2):
-      docs/s390: clarify even more that cpu-topology is KVM-only
-      target/s390x: improve cpu compatibility check error message
-
-Philippe Mathieu-Daudé (1):
-      travis-ci: Rename SOFTMMU -> SYSTEM
-
-Thomas Huth (1):
-      target/sparc/cpu: Improve the CPU help text
-
+Signed-off-by: Claudio Fontana <cfontana@suse.de>
+Message-ID: <20240314172218.16478-1-cfontana@suse.de>
+Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Tested-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
  docs/system/introduction.rst       |  2 ++
  docs/system/s390x/cpu-topology.rst | 14 ++++++++------
- target/s390x/cpu_models.c          | 22 +++++++++++++++-------
- target/sparc/cpu.c                 |  5 +++--
- .travis.yml                        |  8 ++++----
- 5 files changed, 32 insertions(+), 19 deletions(-)
+ 2 files changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
+index 51ac132d6c..746707eb00 100644
+--- a/docs/system/introduction.rst
++++ b/docs/system/introduction.rst
+@@ -1,6 +1,8 @@
+ Introduction
+ ============
+ 
++.. _Accelerators:
++
+ Virtualisation Accelerators
+ ---------------------------
+ 
+diff --git a/docs/system/s390x/cpu-topology.rst b/docs/system/s390x/cpu-topology.rst
+index 5133fdc362..d5b506ee5c 100644
+--- a/docs/system/s390x/cpu-topology.rst
++++ b/docs/system/s390x/cpu-topology.rst
+@@ -25,17 +25,19 @@ monitor polarization changes, see ``docs/devel/s390-cpu-topology.rst``.
+ Prerequisites
+ -------------
+ 
+-To use the CPU topology, you need to run with KVM on a s390x host that
+-uses the Linux kernel v6.0 or newer (which provide the so-called
++To use the CPU topology, you currently need to choose the KVM accelerator.
++See :ref:`Accelerators` for more details about accelerators and how to select them.
++
++The s390x host needs to use a Linux kernel v6.0 or newer (which provides the so-called
+ ``KVM_CAP_S390_CPU_TOPOLOGY`` capability that allows QEMU to signal the
+ CPU topology facility via the so-called STFLE bit 11 to the VM).
+ 
+ Enabling CPU topology
+ ---------------------
+ 
+-Currently, CPU topology is only enabled in the host model by default.
++Currently, CPU topology is enabled by default only in the "host" CPU model.
+ 
+-Enabling CPU topology in a CPU model is done by setting the CPU flag
++Enabling CPU topology in another CPU model is done by setting the CPU flag
+ ``ctop`` to ``on`` as in:
+ 
+ .. code-block:: bash
+@@ -132,7 +134,7 @@ In the following machine we define 8 sockets with 4 cores each.
+ 
+ .. code-block:: bash
+ 
+-  $ qemu-system-s390x -m 2G \
++  $ qemu-system-s390x -accel kvm -m 2G \
+     -cpu gen16b,ctop=on \
+     -smp cpus=5,sockets=8,cores=4,maxcpus=32 \
+     -device host-s390x-cpu,core-id=14 \
+@@ -227,7 +229,7 @@ with vertical high entitlement.
+ 
+ .. code-block:: bash
+ 
+-  $ qemu-system-s390x -m 2G \
++  $ qemu-system-s390x -accel kvm -m 2G \
+     -cpu gen16b,ctop=on \
+     -smp cpus=1,sockets=8,cores=4,maxcpus=32 \
+     \
+-- 
+2.44.0
 
 
