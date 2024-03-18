@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08F62C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 13:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51231C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 13:03:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmCcn-0002f1-Hn; Mon, 18 Mar 2024 09:01:58 -0400
+	id 1rmCdN-0002zh-9C; Mon, 18 Mar 2024 09:02:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmCce-0002SD-S8
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:01:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmCcV-0002Oz-1K
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:01:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmCcc-0007ku-6R
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:01:48 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmCcR-0007fp-Uq
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:01:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710766905;
+ s=mimecast20190719; t=1710766894;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Hg39/Aq9sjBU8vmMoFBuN6BbcAIEnVlaFmLkhBq+3pc=;
- b=VYvhsXnEXj0EKCZQGitiaCpZ7jE6L8O3OGhfyGBZDpd55HIHfUaDqGOFHyMpa7uJA0CMbS
- QdL9eAPQ8qznLuRIuODiBX+YepbAxxh2iwZ5d/ktcjhzt8uE4qofGCvWvF1bwQysdS0G66
- Hz4l4q38etgJJhK7cgGwPkjNdz8H19A=
+ bh=INDtconTzYSJwbnROgbgO2i53yEIhKj3QN57h51s8hQ=;
+ b=JSVC9yj2e88GPvPo/8rMWgGyAC0Nbe4nxCunMYnxYW41PXquoQISw7aej5Zyv+OFRs8RLd
+ R1B1cimxqXXDUqrlOVjTMb3Q9NwRE9G/9sm4GbIUhiGV1YE4vj0CuZTfuGwjEDMvlpLFX5
+ 6EofWS/aJRVtE94sLaKCTruiETYRv3I=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-30dZrHVeO2KU-TsrdDbzIw-1; Mon, 18 Mar 2024 09:01:36 -0400
-X-MC-Unique: 30dZrHVeO2KU-TsrdDbzIw-1
+ us-mta-694-_d0JwUHNP9OdiJ6_oEYQFg-1; Mon, 18 Mar 2024 09:01:31 -0400
+X-MC-Unique: _d0JwUHNP9OdiJ6_oEYQFg-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 97B6B8007A4;
- Mon, 18 Mar 2024 13:01:35 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 9FFF8891E74;
+ Mon, 18 Mar 2024 13:01:31 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.39.194.127])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 0A2D52166B33;
- Mon, 18 Mar 2024 13:01:34 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 142DE2166AE9;
+ Mon, 18 Mar 2024 13:01:30 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 12/15] tests/qemu-iotests: Restrict tests that use --image-opts
- to the 'file' protocol
-Date: Mon, 18 Mar 2024 14:01:15 +0100
-Message-ID: <20240318130118.358920-13-kwolf@redhat.com>
+Subject: [PULL 07/15] tests/qemu-iotests: Restrict test 066 to the 'file'
+ protocol
+Date: Mon, 18 Mar 2024 14:01:10 +0100
+Message-ID: <20240318130118.358920-8-kwolf@redhat.com>
 In-Reply-To: <20240318130118.358920-1-kwolf@redhat.com>
 References: <20240318130118.358920-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -83,59 +83,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-These tests 188, 189 and 198 use qemu-io with --image-opts with additional
-hard-coded parameters for the file protocol, so they cannot work for other
-protocols. Thus we have to limit these tests to the file protocol only.
+The hand-crafted json statement in this test only works if the test
+is run with the "file" protocol, so mark this test accordingly.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240315111108.153201-8-thuth@redhat.com>
+Message-ID: <20240315111108.153201-3-thuth@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- tests/qemu-iotests/188 | 2 +-
- tests/qemu-iotests/189 | 2 +-
- tests/qemu-iotests/198 | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ tests/qemu-iotests/066 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/qemu-iotests/188 b/tests/qemu-iotests/188
-index ce087d1873..2950b1dc31 100755
---- a/tests/qemu-iotests/188
-+++ b/tests/qemu-iotests/188
-@@ -38,7 +38,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- . ./common.filter
+diff --git a/tests/qemu-iotests/066 b/tests/qemu-iotests/066
+index cf63144cb9..336d8565dd 100755
+--- a/tests/qemu-iotests/066
++++ b/tests/qemu-iotests/066
+@@ -39,7 +39,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
  
+ # This tests qcow2-specific low-level functionality
  _supported_fmt qcow2
 -_supported_proto generic
 +_supported_proto file
- _supported_os Linux
- _require_working_luks
- 
-diff --git a/tests/qemu-iotests/189 b/tests/qemu-iotests/189
-index 801494c6b9..008f73b07d 100755
---- a/tests/qemu-iotests/189
-+++ b/tests/qemu-iotests/189
-@@ -38,7 +38,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- . ./common.filter
- 
- _supported_fmt qcow2
--_supported_proto generic
-+_supported_proto file
- _supported_os Linux
- _require_working_luks
- 
-diff --git a/tests/qemu-iotests/198 b/tests/qemu-iotests/198
-index 1c93dea1f7..6ddeffddd2 100755
---- a/tests/qemu-iotests/198
-+++ b/tests/qemu-iotests/198
-@@ -38,7 +38,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- . ./common.filter
- 
- _supported_fmt qcow2
--_supported_proto generic
-+_supported_proto file
- _supported_os Linux
- _require_working_luks
- 
+ # We need zero clusters and snapshots
+ # (TODO: Consider splitting the snapshot part into a separate test
+ #        file, so this one runs with refcount_bits=1 and data_file)
 -- 
 2.44.0
 
