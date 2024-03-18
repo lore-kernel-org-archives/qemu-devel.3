@@ -4,80 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511D9C54E67
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 03:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D72F7C54E67
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 03:10:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm3J7-0004ux-7z; Sun, 17 Mar 2024 23:05:01 -0400
+	id 1rm3Nh-0006UP-7X; Sun, 17 Mar 2024 23:09:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maxim.cournoyer@gmail.com>)
- id 1rm3J3-0004uV-4a
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 23:04:57 -0400
-Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <maxim.cournoyer@gmail.com>)
- id 1rm3J1-0007FG-EH
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 23:04:56 -0400
-Received: by mail-qk1-x72c.google.com with SMTP id
- af79cd13be357-789e70d7c07so154403285a.1
- for <qemu-devel@nongnu.org>; Sun, 17 Mar 2024 20:04:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710731092; x=1711335892; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=cfL9cENqmsBlmvoSOl08CkdXFEA/4uL3lNvjfs+j+6o=;
- b=mCFVQZeGNGQlJuHbGf1onriKhDmuyjidnYoNyv/krIea1rTZfr9WzolkJFh0yakU5o
- LblAFh43fWKOlWrzRsTWUW+5NSrfaKj0bbi+sP41ESb90rEUzpQDMiEnpivIYeLPMv6/
- BxnEKTyj8TN0VAtUGlwtEw04SnugaV+yLa7s8ramng2HQcd0yTlspwoH36+oJh41lHOL
- o8SYKjvPJQuIo1jBRFQbxNl43Kj/O3oww1kdwe+pLZKeWs7VVRVmNMMpGm0/zOn4++ee
- z0zGtSBN0JYZGUcpX8iKczq8KH3FX8b+aEUY2BIdW+rht1OLZ/CUGfFutsFOGCf5CJ+d
- oSVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710731092; x=1711335892;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cfL9cENqmsBlmvoSOl08CkdXFEA/4uL3lNvjfs+j+6o=;
- b=clgT/QaW2pezK2SU8utRJk1AZ/sqfF4oerJ1g5T5oFt7w0a2vzVK3p1DvXiQTV8/zV
- AET9IdVu4WuuRF7w6N95065JVom9Ntgi9DkmZFC0YKeYdJBSINiF9jEx8ZPZo2yD7uop
- 34Z3D+Z/lfpLdWy8UOBX5D+wyHKQ0CiZzezvxbkuIcxQMVOviCmD4+d69id4vRerxR2r
- mguI7Q7NbMngwOMZLNcgxvtGLHLJCgSwO4VitkCxw9O/QCo0XAd5419yfDG3MUS6ygGE
- PCqk7hOwKyF7Lh61qS7mGQy4e6qHwmvCL8IZjoMYr+LKY1GxP1HZPFCHaVbKDKy6IUm8
- ePtw==
-X-Gm-Message-State: AOJu0YzRkdsl6kar69tOMYayNQzCEVELSW+fKpA8nwGaFMa+umbZoFWr
- W6ZyGY2c5I/u4nWf6pIIB3UU3VGvKqykMXtSZVmnhcWuxTE/uPBFYGjonibUv08=
-X-Google-Smtp-Source: AGHT+IHA49RE6uuHEpeP/8oUo5Px+asxcZ4g+iMpJ7K/j6dKHUfU8WB1TSV4EF4d2qX18d6FXdDwFg==
-X-Received: by 2002:a05:620a:124d:b0:789:e26b:50c with SMTP id
- a13-20020a05620a124d00b00789e26b050cmr10295863qkl.77.1710731092340; 
- Sun, 17 Mar 2024 20:04:52 -0700 (PDT)
-Received: from localhost.localdomain (dsl-10-148-142.b2b2c.ca. [72.10.148.142])
- by smtp.gmail.com with ESMTPSA id
- c27-20020a05620a11bb00b007882fe32acasm4143505qkk.3.2024.03.17.20.04.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 17 Mar 2024 20:04:51 -0700 (PDT)
-From: Maxim Cournoyer <maxim.cournoyer@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Maxim Cournoyer <maxim.cournoyer@gmail.com>,
- Fabiano Rosas <farosas@suse.de>, John Snow <jsnow@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH] build: Re-introduce an 'info' target to build a Texinfo
- manual.
-Date: Sun, 17 Mar 2024 23:03:24 -0400
-Message-ID: <20240318030437.17503-1-maxim.cournoyer@gmail.com>
-X-Mailer: git-send-email 2.41.0
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rm3Ne-0006U3-Ee
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 23:09:42 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rm3Nb-00086k-NI
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 23:09:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710731380; x=1742267380;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=0SIo5nnH8rXWWo/PKZWu5xaHib3sujSo/4+YK3yVEhE=;
+ b=j7K+jS2sSMnHVJxSIBqLDE2iPLaunYUtHKZgqI8VBWY/+wp6nVj62Vf9
+ /ex9sveDYaK5HJ45XzWpwUThG4Um0P1J4APbX52sVLeTCBQja4Cgq0sBX
+ hfcdULKdKaP5pwiRrLNfVA/BbHn31uS+bsbnd8XEqrnr99RuVhmbdq5QA
+ Y02rZdDEM0HlLB8k6YT/F1PpiOtsTwZc6s4EB97ahBYVK14pCBYMWqRDH
+ eOj119CJYrYSkmYTS6lbYmsb5POXY4IiF5kM9PigU9DUw71m+89z69JRy
+ 3FBw6pDJ2AEMOhOcQJtG/ue82voztr+hMo6hgDtdkauUr4qQY0W7JvBCm Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="5660371"
+X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
+   d="scan'208";a="5660371"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2024 20:09:35 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; d="scan'208";a="44264959"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.238.14])
+ ([10.124.238.14])
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2024 20:09:33 -0700
+Message-ID: <4cbf6d9c-3916-4436-abfe-10b35734b67a@intel.com>
+Date: Mon, 18 Mar 2024 11:09:30 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
- envelope-from=maxim.cournoyer@gmail.com; helo=mail-qk1-x72c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] kvm: add support for guest physical bits
+Content-Language: en-US
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+Cc: Tom Lendacky <thomas.lendacky@amd.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ kvm@vger.kernel.org
+References: <20240313132719.939417-1-kraxel@redhat.com>
+ <20240313132719.939417-3-kraxel@redhat.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20240313132719.939417-3-kraxel@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,60 +85,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reinstates
-<https://lists.gnu.org/archive/html/qemu-devel/2020-09/msg09228.html>,
-which was committed at some point but reverted many years later in
-cleanups that followed the migration from Texinfo sources to the
-ReStructuredText (RST) format.  It's still nice to leave the option for
-users to easily generate a QEMU manual in the Texinfo format, taking
-advantage of the Sphinx texinfo backend.
+On 3/13/2024 9:27 PM, Gerd Hoffmann wrote:
+> Query kvm for supported guest physical address bits, in cpuid
+> function 80000008, eax[23:16].  Usually this is identical to host
+> physical address bits.  With NPT or EPT being used this might be
+> restricted to 48 (max 4-level paging address space size) even if
+> the host cpu supports more physical address bits.
+> 
+> When set pass this to the guest, using cpuid too.  Guest firmware
+> can use this to figure how big the usable guest physical address
+> space is, so PCI bar mapping are actually reachable.
+> 
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> ---
+>   target/i386/cpu.h         |  1 +
+>   target/i386/cpu.c         |  1 +
+>   target/i386/kvm/kvm-cpu.c | 32 +++++++++++++++++++++++++++++++-
+>   3 files changed, 33 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 952174bb6f52..d427218827f6 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2026,6 +2026,7 @@ struct ArchCPU {
+>   
+>       /* Number of physical address bits supported */
+>       uint32_t phys_bits;
+> +    uint32_t guest_phys_bits;
+>   
+>       /* in order to simplify APIC support, we leave this pointer to the
+>          user */
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 9a210d8d9290..c88c895a5b3e 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -6570,6 +6570,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>           if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
+>               /* 64 bit processor */
+>                *eax |= (cpu_x86_virtual_addr_width(env) << 8);
+> +             *eax |= (cpu->guest_phys_bits << 16);
+>           }
+>           *ebx = env->features[FEAT_8000_0008_EBX];
+>           if (cs->nr_cores * cs->nr_threads > 1) {
+> diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+> index 9c791b7b0520..a2b7bfaeadf8 100644
+> --- a/target/i386/kvm/kvm-cpu.c
+> +++ b/target/i386/kvm/kvm-cpu.c
+> @@ -18,10 +18,36 @@
+>   #include "kvm_i386.h"
+>   #include "hw/core/accel-cpu.h"
+>   
+> +static void kvm_set_guest_phys_bits(CPUState *cs)
+> +{
+> +    X86CPU *cpu = X86_CPU(cs);
+> +    uint32_t eax, guest_phys_bits;
+> +
+> +    if (!cpu->host_phys_bits) {
+> +        return;
+> +    }
 
-The Texinfo format is structured and info readers provide advanced
-navigation capabilities such as jumping to indexed topics or nodes and
-is usable even in environments lacking a graphical session.
+This needs explanation of why. What if users set the phys-bits to 
+exactly host's value, via "-cpu xxx,phys-bits=host's value"?
 
-* docs/meson.build (texi, info): New targets.
 
-Signed-off-by: Maxim Cournoyer <maxim.cournoyer@gmail.com>
----
+> +    eax = kvm_arch_get_supported_cpuid(cs->kvm_state, 0x80000008, 0, R_EAX);
+> +    guest_phys_bits = (eax >> 16) & 0xff;
+> +    if (!guest_phys_bits) {
+> +        return;
+> +    }
+> +
+> +    if (cpu->guest_phys_bits == 0 ||
+> +        cpu->guest_phys_bits > guest_phys_bits) {
+> +        cpu->guest_phys_bits = guest_phys_bits;
+> +    }
+> +
+> +    if (cpu->guest_phys_bits > cpu->host_phys_bits_limit) {
+> +        cpu->guest_phys_bits = cpu->host_phys_bits_limit;
+> +    }
+> +}
+> +
+>   static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+>   {
+>       X86CPU *cpu = X86_CPU(cs);
+>       CPUX86State *env = &cpu->env;
+> +    bool ret;
+>   
+>       /*
+>        * The realize order is important, since x86_cpu_realize() checks if
+> @@ -50,7 +76,11 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+>                                                      MSR_IA32_UCODE_REV);
+>           }
+>       }
+> -    return host_cpu_realizefn(cs, errp);
+> +    ret = host_cpu_realizefn(cs, errp);
 
- docs/meson.build | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+We need to check ret and return if !ret;
 
-diff --git a/docs/meson.build b/docs/meson.build
-index 9040f860ae..2ae7886fcb 100644
---- a/docs/meson.build
-+++ b/docs/meson.build
-@@ -98,4 +98,26 @@ if build_docs
-   alias_target('sphinxdocs', sphinxdocs)
-   alias_target('html', sphinxdocs)
-   alias_target('man', sphinxmans)
-+
-+  # Add a target to build and install a Texinfo version of the QEMU
-+  # manual, if 'makeinfo' is available.
-+  makeinfo = find_program(['texi2any', 'makeinfo'])
-+  if makeinfo.found()
-+    sphinxtexi = custom_target(
-+      'qemu.texi',
-+      output: ['qemu.texi', 'sphinxtexi.stamp'],
-+      depfile: 'sphinxtexi.d',
-+      command: [SPHINX_ARGS, '-Ddepfile=@DEPFILE@',
-+               '-Ddepfile_stamp=@OUTPUT1@', '-b', 'texinfo',
-+               '-d', private_dir, input_dir, meson.current_build_dir()])
-+    sphinxinfo = custom_target(
-+      'qemu.info',
-+      input: sphinxtexi,
-+      output: 'qemu.info',
-+      install: true,
-+      install_dir: get_option('infodir'),
-+      command: [makeinfo, '--no-split', '--output=@OUTPUT@', '@INPUT0@'])
-+    alias_target('texi', sphinxtexi)
-+    alias_target('info', sphinxinfo)
-+  endif
- endif
-
-base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
--- 
-2.41.0
+> +    kvm_set_guest_phys_bits(cs);
+> +
+> +    return ret;
+>   }
+>   
+>   static bool lmce_supported(void)
 
 
