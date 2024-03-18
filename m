@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15538C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 07:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E38EC54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 07:53:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm7nx-0002uU-AJ; Mon, 18 Mar 2024 03:53:10 -0400
+	id 1rm7oA-0002xx-46; Mon, 18 Mar 2024 03:53:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rm7nn-0002u2-W4
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:53:01 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rm7nj-0008U8-Lc
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:52:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710748376; x=1742284376;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=WQn8QPeV+2aIGgkNJLr2LGepKhFCY7X2ShJr+Wuilng=;
- b=KLMINBr6dnygcyJA1Qe/W1hogOtBEj2tqsYCRk/KOaDJbAB6L2eOOyWV
- KzOQG2TbQAwcNhPOlN6rE3W2El8Ur5Mgcmh7ic+nH2ug5qN15Z33e6fls
- J2oLRUz3Em2a/YRazGll73kNmd7fZOAJ9r8fVUSKU7xYv4cuel7rn/CvS
- cjRUQATcC8roJLTT0QkSWyRHtUw8hRfhRC2dy0RfVU18PbGnil27yt8Nd
- 0/zEvhfuGTZq8vS1D1ugDC0i9TqMNMOqg4VWGVtQN0tErfdL6XiVPX+46
- YacoQYgA4pmS0rdzSO269DD8fHzjeVd4usDwlGYPr22sUgh88qXQhpxaO w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="16944784"
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; d="scan'208";a="16944784"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2024 00:52:50 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; d="scan'208";a="50827487"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa001.jf.intel.com with ESMTP; 18 Mar 2024 00:52:47 -0700
-Date: Mon, 18 Mar 2024 16:06:38 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
- Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH 03/14] hw/core/machine-smp: Simplify variables'
- initialization in machine_parse_smp_config()
-Message-ID: <Zff2DgJa+eHPBhgJ@intel.com>
-References: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
- <20240306095407.3058909-4-zhao1.liu@linux.intel.com>
- <c2bd5503-7ab1-41b7-af81-2f5bf5992ad3@redhat.com>
- <Zesv4W8DKteGeE/a@intel.com>
- <CAE8KmOxHNTGkE-8Xd+RXOuHNmyHqPwU4HcYRO6qHBGVAy6nAew@mail.gmail.com>
- <Ze6UmDoFD5Qd8AC/@intel.com>
- <CAE8KmOzwrLY5ag_FKvX-ovAopfPeYSqFHc3-sdQj_zt_28tH5A@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rm7o8-0002xe-LP
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:53:20 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rm7o7-000061-1v
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:53:20 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6e6ee9e3cffso2314020b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 00:53:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710748398; x=1711353198;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=AtoTEhnfQvLOFmj6OES89MI4C55bFzE0mr1LF1KLIWc=;
+ b=fl/a+18pY3/Jrqxfpd9rCyNKteMXPdKms94Dz/1tKb+xu08RYSTA2OaG3Lxt1/hEZ9
+ BqPlnHfVA+FDoq7D4kHsWQk+49GhlsXZQXEczaBO8msXQl2cv22ZkWw9RuT03KyYvyW1
+ qhcgksASQAhWLMLgFbEdEG3FBh9yNnAejB6QlQ0/XLAkBFOrX6Sxlf5LtFitspNqWF04
+ Fn9ncnS65qOwM+hNovWso+SJTbDCM2zZ2P3V9y0PMDk5gN776CNRCZB0OZYILc9UQ21p
+ HlCF5BM3Afb4ZaQByadMMnz7vY5nqiGpz8o7RahMxeYwpub1fNM49JL9RsEqyPw+nC6/
+ ZTqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710748398; x=1711353198;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AtoTEhnfQvLOFmj6OES89MI4C55bFzE0mr1LF1KLIWc=;
+ b=weDRao4WUEVlopmZoYURbCmBhb4BAaqMv68LjrsWaSqY9NdX14K8QpvVyBpih1gdwZ
+ VTFOPrA9ZA7mwxCec9k9RBXBGXKneEj+9Ojvm9J9STaz7wZ4dxszOmpPR1J9jZD6tHzJ
+ zgZstlXmNjxLHKf74M1OOGG1W9PNhEfi0HZhbsbWi6oQ25z2d1WSH79iH7NOssuLq0Xi
+ Eu3NxRm89Nd2GN2sLFGoz+nfHBgXI6VtDfnw2prFfAmG2Hy1pg0aSAftUdmxyNh7J9R3
+ H3cJynIHf+fHFcNaQq6AHgIAQZ0Rf9ssp9nBdkLWW+iJqHrmyiXsR2z5izW/xg0yCBJ9
+ WIcQ==
+X-Gm-Message-State: AOJu0Yy4xjjgLw7QGwyj2r446a1zUAt1AbXf23osv4KBxoYlevi6s+Qi
+ dUa/5EMi9rI+BnIP22kUjRz1m+RJRzGjS131S9p/zW11pkLBCQWg3/286IMVktc=
+X-Google-Smtp-Source: AGHT+IHlBlXs60U8nB/1EDgFflfJ+qej5tA5hB92VOMr45YO1GtC1ESZWobSME00btK5xrmyZfeJCg==
+X-Received: by 2002:a05:6a00:21d4:b0:6e7:933:9ecf with SMTP id
+ t20-20020a056a0021d400b006e709339ecfmr8880852pfj.16.1710748397739; 
+ Mon, 18 Mar 2024 00:53:17 -0700 (PDT)
+Received: from localhost ([157.82.200.213])
+ by smtp.gmail.com with UTF8SMTPSA id
+ p13-20020a62ab0d000000b006e53cc789c3sm7258871pff.107.2024.03.18.00.53.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Mar 2024 00:53:17 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Mon, 18 Mar 2024 16:53:02 +0900
+Subject: [PATCH 3/3] ui/cocoa: Use NSTrackingInVisibleRect
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE8KmOzwrLY5ag_FKvX-ovAopfPeYSqFHc3-sdQj_zt_28tH5A@mail.gmail.com>
-Received-SPF: none client-ip=192.198.163.10;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240318-fixes-v1-3-34f1a849b0d9@daynix.com>
+References: <20240318-fixes-v1-0-34f1a849b0d9@daynix.com>
+In-Reply-To: <20240318-fixes-v1-0-34f1a849b0d9@daynix.com>
+To: Peter Maydell <peter.maydell@linaro.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.12.3
+Received-SPF: none client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,122 +96,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 13, 2024 at 04:22:30PM +0530, Prasad Pandit wrote:
-> Date: Wed, 13 Mar 2024 16:22:30 +0530
-> From: Prasad Pandit <ppandit@redhat.com>
-> Subject: Re: [PATCH 03/14] hw/core/machine-smp: Simplify variables'
->  initialization in machine_parse_smp_config()
-> 
-> Hello Zhao,
-> 
-> > (Communicating with you also helped me to understand the QAPI related parts.)
-> 
-> * I'm also visiting QAPI code parts for the first time. Thanks to you. :)
-> 
-> On Mon, 11 Mar 2024 at 10:36, Zhao Liu <zhao1.liu@linux.intel.com> wrote:
-> > SMPConfiguration is created and set in machine_set_smp().
-> > Firstly, it is created by g_autoptr(), and then it is initialized by
-> > visit_type_SMPConfiguration().
-> >
-> > The visit_type_SMPConfiguration() is generated by
-> > gen_visit_object_members() in scripts/qapi/visit.py.
-> >
-> > IIUC, in visit_type_SMPConfiguration() (let's have a look at
-> > gen_visit_object_members()), there's no explicit initialization of
-> > SMPConfiguration() (i.e., the parameter named "%(c_name)s *obj" in
-> > gen_visit_object_members()). For int type, has_* means that the field is
-> > set.
-> >
-> 
-> * Thank you for the above details, appreciate it. I added few
-> fprintf() calls to visit_type_SMPConfiguration() to see what user
-> values it receives
-> ===
-> $ ./qemu-system-x86_64 -smp cores=2,maxcpus=2,cpus=1,sockets=2
-> visit_type_SMPConfiguration: name: smp
->         has_cpus: 1:1
->  has_drawvers: 0:0
->       has_books: 0:0
->   has_sockets: 1:2
->         has_dies: 0:0
->  has_clusters: 0:0
->      has_cores: 1:2
->   has_threads: 0:0
-> has_maxcpus: 1:2
-> qemu-system-x86_64: Invalid CPU topology: product of the hierarchy
-> must match maxcpus: sockets (2) * dies (1) * cores (2) * threads (0)
-> != maxcpus (2)
-> ===
-> * As seen above, undefined -smp fields (both has_xxxx and xxxx) are
-> set to zero(0).
-> 
-> ===
-> main
->  qemu_init
->   qemu_apply_machine_options
->    object_set_properties_from_keyval
->     object_set_properties_from_qdict
->      object_property_set
->       machine_set_smp
->        visit_type_SMPConfiguration
->         visit_start_struct
-> (gdb) p v->start_struct
-> $4 = ... 0x5555570248e4 <qobject_input_start_struct>
-> (gdb)
-> (gdb)
->  qobject_input_start_struct
->    if (obj) {
->         *obj = g_malloc0(size);
->     }
-> ===
-> * Stepping through function calls in gdb(1) revealed above call
-> sequence which leads to  'SMPConfiguration **'  objects allocation by
-> g_malloc0.
+I observed [NSTrackingArea rect] becomes de-synchronized with the view
+frame with some unknown condition. Specify NSTrackingInVisibleRect
+option to let Cocoa automatically update NSTrackingArea, which also
+saves code for synchronization.
 
-Thanks! I misunderstood, it turns out that the initialization is done here.
+Fixes: 91aa508d0274 ("ui/cocoa: Let the platform toggle fullscreen")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ ui/cocoa.m | 48 ++++++++++++++----------------------------------
+ 1 file changed, 14 insertions(+), 34 deletions(-)
 
-> 
-> > This means if user doesn't initialize some field, the the value should
-> > be considerred as unreliable. And I guess for int, the default
-> > initialization value is the same as if we had declared a regular integer
-> > variable. But anyway, fields that are not explicitly initialized should
-> > not be accessed.
-> 
-> * g_malloc0() allocating 'SMPConfiguration **' object above assures us
-> that undefined -smp fields shall always be zero(0).
-> 
-> * 'obj->has_xxxx' field is set only if the user has supplied the
-> variable value, otherwise it remains set to zero(0).
->    visit_type_SMPConfiguration_members
->      ->visit_optional
->        ->v->optional
->         -> qobject_input_optional
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index 1324be6d32fe..1e2b7d931905 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -306,7 +306,6 @@ static void handleAnyDeviceErrors(Error * err)
+ */
+ @interface QemuCocoaView : NSView
+ {
+-    NSTrackingArea *trackingArea;
+     QEMUScreen screen;
+     pixman_image_t *pixman_image;
+     QKbdState *kbd;
+@@ -359,6 +358,19 @@ - (id)initWithFrame:(NSRect)frameRect
+     self = [super initWithFrame:frameRect];
+     if (self) {
+ 
++        NSTrackingAreaOptions options = NSTrackingActiveInKeyWindow |
++                                        NSTrackingMouseEnteredAndExited |
++                                        NSTrackingMouseMoved |
++                                        NSTrackingInVisibleRect;
++
++        NSTrackingArea *trackingArea =
++            [[NSTrackingArea alloc] initWithRect:CGRectZero
++                                         options:options
++                                           owner:self
++                                        userInfo:nil];
++
++        [self addTrackingArea:trackingArea];
++        [trackingArea release];
+         screen.width = frameRect.size.width;
+         screen.height = frameRect.size.height;
+         kbd = qkbd_state_init(dcl.con);
+@@ -392,41 +404,9 @@ - (BOOL) isOpaque
+     return YES;
+ }
+ 
+-- (void) removeTrackingRect
+-{
+-    if (trackingArea) {
+-        [self removeTrackingArea:trackingArea];
+-        [trackingArea release];
+-        trackingArea = nil;
+-    }
+-}
+-
+-- (void) frameUpdated
+-{
+-    [self removeTrackingRect];
+-
+-    if ([self window]) {
+-        NSTrackingAreaOptions options = NSTrackingActiveInKeyWindow |
+-                                        NSTrackingMouseEnteredAndExited |
+-                                        NSTrackingMouseMoved;
+-        trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame]
+-                                                    options:options
+-                                                      owner:self
+-                                                   userInfo:nil];
+-        [self addTrackingArea:trackingArea];
+-        [self updateUIInfo];
+-    }
+-}
+-
+ - (void) viewDidMoveToWindow
+ {
+     [self resizeWindow];
+-    [self frameUpdated];
+-}
+-
+-- (void) viewWillMoveToWindow:(NSWindow *)newWindow
+-{
+-    [self removeTrackingRect];
+ }
+ 
+ - (void) hideCursor
+@@ -1284,7 +1264,7 @@ - (void)windowDidExitFullScreen:(NSNotification *)notification
+ - (void)windowDidResize:(NSNotification *)notification
+ {
+     [cocoaView updateBounds];
+-    [cocoaView frameUpdated];
++    [cocoaView updateUIInfo];
+ }
+ 
+ /* Called when the user clicks on a window's close button */
 
-Yes, you're right!
-
-> 
-> * Overall, I think there is scope to simplify the
-> 'machine_parse_smp_config()' function by using SMPConfiguration
-> field(s) ones.
-
-Indeed, as you say, these items are initialized to 0 by default.
-
-I think, however, that the initialization is so far away from where the
-smp is currently parsed that one can't easily confirm it (thanks for
-your confirmation!).
-
-From a code readability view, the fact that we're explicitly
-initializing to 0 again here brings little overhead, but makes the code
-more readable as well as easier to maintain. I think the small redundancy
-here is worth it.
-
-Also, in other use cases people always relies on fields marked by has_*,
-and there is no (or less?) precedent for direct access to places where
-has_* is not set. I understand that this is also a habit, i.e., fields
-with a has_* of False by default are unreliable and avoid going directly
-to them.
-
-Regards,
-Zhao
+-- 
+2.44.0
 
 
