@@ -4,59 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14698C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 11:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90924C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 11:20:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmAiA-00014F-87; Mon, 18 Mar 2024 06:59:22 -0400
+	id 1rmB1b-0004W9-4j; Mon, 18 Mar 2024 07:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rmAi5-00013u-GW
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:59:18 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1rmB1W-0004Qc-7Y
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 07:19:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rmAi2-0006Wf-J0
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 06:59:16 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4TysKR39Y6z6K6Pg;
- Mon, 18 Mar 2024 18:58:35 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id E181E14322E;
- Mon, 18 Mar 2024 18:59:00 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 18 Mar
- 2024 10:57:48 +0000
-Date: Mon, 18 Mar 2024 10:57:48 +0000
-To: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-CC: <ira.weiny@intel.com>, <dan.j.williams@intel.com>,
- <linux-cxl@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <qemu-devel@nongnu.org>, <chenbaozi@phytium.com.cn>
-Subject: Re: [PATCH v2 1/1] cxl/mem: Fix for the index of Clear Event Record
- Handle
-Message-ID: <20240318105748.000072c5@Huawei.com>
-In-Reply-To: <20240318022928.509130-2-wangyuquan1236@phytium.com.cn>
-References: <20240318022928.509130-1-wangyuquan1236@phytium.com.cn>
- <20240318022928.509130-2-wangyuquan1236@phytium.com.cn>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1rmB1T-0004Hj-JJ
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 07:19:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710760757;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cos00PGSs0Ra6q8T+SiUzy2TYJ6b+6K8ELi5YCQ3iKA=;
+ b=IGqb2iVEO3P9ZhzMQJhfiABPxWZTHs7d8GxAegMARthq6e5J8UHmT6tGTnbOaXXHrw4EQs
+ 5fw6iAdtX6hduLf6HkaJZdCA/pwCke9wPz57nuTHr9nwnpGumNjV8kqSjGFIyW84v9hD9S
+ SXWSr7gXUzhjCeIerXIAJdsURAp/pOs=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-615-vhLaH_vAOD2j9kIaH9r_IQ-1; Mon, 18 Mar 2024 07:19:15 -0400
+X-MC-Unique: vhLaH_vAOD2j9kIaH9r_IQ-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-33ed2f873b4so1565986f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 04:19:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710760754; x=1711365554;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cos00PGSs0Ra6q8T+SiUzy2TYJ6b+6K8ELi5YCQ3iKA=;
+ b=YVOBNm8XGzYGxhiVvdiL9yeICJKsjlolC/s3Zi6CA0NefqeqVeF6tOaDHkh13aguEd
+ yA4bWziADjQdJKJzR1gob2a1jPkj5NzPgHvxXWR4mOpBlUhIJ4W4slh5kjsXjoqE34pg
+ msU9o/ij9qpF+3mejDbS2BZ7u0nsoZGrVv2FoVXgsBj+PX7+PMmeL09kdh3dBkk6EP91
+ sh8yQdqtsSYPnlN3J+6zQkp6qAszh4/Wvpk+1QnrFdT68wJ8bU9trhGeOrTQbnQSC6AZ
+ qDJi7y1hhvECwYJeXxQhomWmbfDUCEcpDOeYRJdOnf5qBzP2jMAA93LMDcFxzYjlEZSO
+ XSgg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVgSY1P0Cf3CFIBw/R57xK65lzkwZaNU/PXpUHKaP656CuaSWq+455ZivV8WABuxh709p8isRumuGQMol/dn+imYH9Z/3s=
+X-Gm-Message-State: AOJu0Yzm6XkiS7Xczvps2tofZejo1VQ5qcVD7PSNl9VxBMQJp6YE/pcv
+ G7e8nL0bX/JWCZC1KMO5Jex2zH7tMp9XhkYJ7878n2ZgBzPLbHXKQa+mxQIqQCUGnf9Ha5OOBk1
+ cDiS5oreoG/RzKDZbc3hUhYqsZ/F3+cjBVZpXdi1QmxdXdxTGCnJiLa7H2N0f6lzpZAq2N8m/AG
+ CNSQRYfkpq3nY4rE6S7WpggANEmcY=
+X-Received: by 2002:a5d:5a0e:0:b0:33e:76db:9bf8 with SMTP id
+ bq14-20020a5d5a0e000000b0033e76db9bf8mr10374147wrb.68.1710760754780; 
+ Mon, 18 Mar 2024 04:19:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkmWW5efbFJfMQx/oE1L4+88UaI5/Je/vcTyHm3syjL56BBpgmzL7c/n5PKdN0MT4RSoKdycQkvQa/ulhMcYU=
+X-Received: by 2002:a5d:5a0e:0:b0:33e:76db:9bf8 with SMTP id
+ bq14-20020a5d5a0e000000b0033e76db9bf8mr10374129wrb.68.1710760754461; Mon, 18
+ Mar 2024 04:19:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240306095407.3058909-1-zhao1.liu@linux.intel.com>
+ <20240306095407.3058909-4-zhao1.liu@linux.intel.com>
+ <c2bd5503-7ab1-41b7-af81-2f5bf5992ad3@redhat.com>
+ <Zesv4W8DKteGeE/a@intel.com>
+ <CAE8KmOxHNTGkE-8Xd+RXOuHNmyHqPwU4HcYRO6qHBGVAy6nAew@mail.gmail.com>
+ <Ze6UmDoFD5Qd8AC/@intel.com>
+ <CAE8KmOzwrLY5ag_FKvX-ovAopfPeYSqFHc3-sdQj_zt_28tH5A@mail.gmail.com>
+ <Zff2DgJa+eHPBhgJ@intel.com>
+In-Reply-To: <Zff2DgJa+eHPBhgJ@intel.com>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Mon, 18 Mar 2024 16:48:58 +0530
+Message-ID: <CAE8KmOyLFfOg7vtrHnrPxS5eaiHq3=9XdZ4qwrNsmJz+zhWdfQ@mail.gmail.com>
+Subject: Re: [PATCH 03/14] hw/core/machine-smp: Simplify variables'
+ initialization in machine_parse_smp_config()
+To: Zhao Liu <zhao1.liu@linux.intel.com>
+Cc: Thomas Huth <thuth@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org, 
+ Xiaoling Song <xiaoling.song@intel.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,45 +109,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Mar 2024 10:29:28 +0800
-Yuquan Wang <wangyuquan1236@phytium.com.cn> wrote:
+Hello,
 
-> The dev_dbg info for Clear Event Records mailbox command would report
-> the handle of the next record to clear not the current one.
-> 
-> This was because the index 'i' had incremented before printing the
-> current handle value.
-> 
-> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-> ---
->  drivers/cxl/core/mbox.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-> index 9adda4795eb7..b810a6aa3010 100644
-> --- a/drivers/cxl/core/mbox.c
-> +++ b/drivers/cxl/core/mbox.c
-> @@ -915,7 +915,7 @@ static int cxl_clear_event_record(struct cxl_memdev_state *mds,
->  
->  		payload->handles[i++] = gen->hdr.handle;
->  		dev_dbg(mds->cxlds.dev, "Event log '%d': Clearing %u\n", log,
-> -			le16_to_cpu(payload->handles[i]));
-> +			le16_to_cpu(payload->handles[i-1]));
-Trivial but needs spaces around the -. e.g.  [i - 1] 
+On Mon, 18 Mar 2024 at 13:23, Zhao Liu <zhao1.liu@linux.intel.com> wrote:
+> Indeed, as you say, these items are initialized to 0 by default.
+>
+> I think, however, that the initialization is so far away from where the
+> smp is currently parsed that one can't easily confirm it (thanks for
+> your confirmation!).
+>
+> From a code readability view, the fact that we're explicitly
+> initializing to 0 again here brings little overhead, but makes the code
+> more readable as well as easier to maintain. I think the small redundancy
+> here is worth it.
+>
+> Also, in other use cases people always relies on fields marked by has_*,
+> and there is no (or less?) precedent for direct access to places where
+> has_* is not set. I understand that this is also a habit, i.e., fields
+> with a has_* of False by default are unreliable and avoid going directly
+> to them.
 
-Maybe Dan can fix up whilst applying.
+* Ummn...okay. (I'm not fully convinced, but that's fine, I'm okay to
+go with you on this.)
 
-Otherwise
-
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
->  
->  		if (i == max_handles) {
->  			payload->nr_recs = i;
+Thank you.
+---
+  - Prasad
 
 
