@@ -4,71 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5149C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 21:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 909EBC54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 21:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmK6l-0001Rt-8Z; Mon, 18 Mar 2024 17:01:23 -0400
+	id 1rmKHe-0003E0-8S; Mon, 18 Mar 2024 17:12:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
- id 1rmK6i-0001RB-Bu
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 17:01:20 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <davydov-max@yandex-team.ru>)
- id 1rmK6f-0007cg-62
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 17:01:20 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:dad:0:640:1761:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id C2B96608FE;
- Tue, 19 Mar 2024 00:01:07 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b660::1:2d] (unknown
- [2a02:6b8:b081:b660::1:2d])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id t0LCk63Ru0U0-TvBjDTvz; Tue, 19 Mar 2024 00:01:06 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1710795666;
- bh=Un+ZBOEXfXJf2RriBtZ1el3F/h3IKWgyQ0ZVSDgNmGo=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=rIq6cKvmgUa3bCQczO0fVfKIveGMotn22o+Xm8vYOkdThOqykWNujUSGgW9fHyy9U
- dzck31LvCPu8uSoi1yFvEk/CY69jCTS2qaq3Y2PB4DzwULPi8Td3qtg4lH0jIRUcOU
- nO3P5aQ8OIkITCV6oD35lgv4yybn8dUcHt1fxVXk=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <28e9e719-0f31-4e85-8834-9d95bd2ff0e1@yandex-team.ru>
-Date: Tue, 19 Mar 2024 00:00:55 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmKHc-0003Dd-Lf
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 17:12:36 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmKHY-00016V-0e
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 17:12:36 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1e0025ef1efso13808835ad.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 14:12:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710796350; x=1711401150; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DSpRcfXXeNAsyspGA3LCbRbgZwe7YcIqg813WgHLL6s=;
+ b=fJIV8BU5YBram6thuy6vyaisQJrsDQnjF7YALRlpebOTfv7TT0Y1cj0G9naMwQjffA
+ yxuOf4WRoJ2k/JTd6cw9/G5P8PY/IrUaFOT7SSZ6dfKia4+fzUoP4KLKYdFIf8MNlJlo
+ EmaeLxeVaLFXIDllmvEzFW3eeckttoG1PcPjLIkuvSksqgczjPiBWoqBc6IPEJ5+zNyu
+ 5qiaz3YYRCEZX8NLrEOx6lopaI5q7Zyt8Jlc9t+4yZB0AfHaEgVV6kyavMBbDMb3MoGY
+ RW0S43j6aHLZT5NL4/9sVmFuAGXUdT1LxsENVF2XjA2R0qHcGI6uaRJQiDzpz18IK8UN
+ TR1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710796350; x=1711401150;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DSpRcfXXeNAsyspGA3LCbRbgZwe7YcIqg813WgHLL6s=;
+ b=X9psUrmNL2vVMRhnexkQHaXWiyAthzuAJZNfOmIdAT9Judwaovu+NgjEEOwMhsT/2e
+ ftbNRq0We3S09pEsczlMGNU2r8afeouukll/hh2u7LKWOvQNZYy4/n7ifoVC4BlZgiOv
+ xPTb3Lz/vNoNkmMXQLuEcLgHD2Bow8lCTAuB4uB4tNv+aUlEArrHKedAVNfdPNzrukFh
+ zQFFmIdl7Y4IUtlYiUrBnHnpCCGa0v/OIZEFdnxrBao3ShzQinOUX5TsFEV0+lNPzgM0
+ JfK5b75aU+1QrhdKd3Jr2DbK5ip59znHHQeTfX/AMwi+Fu64h1FQIw5dlfNJY1IRBR9Q
+ 9M6g==
+X-Gm-Message-State: AOJu0YwHP0D0LCPEcrrySTIGFww8RRZYgKZCpLy5CksEUbOnwS9tc4CZ
+ fliWU+OwFTs1TXIIueLZsGBWO2oFUJHv7BctJr/W/clRL1AyhHS4vgzCMZqg8LY=
+X-Google-Smtp-Source: AGHT+IEyswyvANj89TtikZOjnajyeYBHmN1Lnmw8N9f2MF9Qfy2C5OCSMgMkV2MuytxQ5W69eZTfXQ==
+X-Received: by 2002:a17:902:ccd2:b0:1df:ff0a:70fe with SMTP id
+ z18-20020a170902ccd200b001dfff0a70femr10082234ple.9.1710796350102; 
+ Mon, 18 Mar 2024 14:12:30 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ l3-20020a170902f68300b001dd9090a37bsm7497830plg.197.2024.03.18.14.12.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Mar 2024 14:12:29 -0700 (PDT)
+Message-ID: <1ac51271-1d1b-4623-bc56-0ceb920e7611@linaro.org>
+Date: Mon, 18 Mar 2024 11:12:26 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/4] machine development tool
-To: Peter Xu <peterx@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- vsementsov@yandex-team.ru, jsnow@redhat.com, philmd@linaro.org,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20240304135145.154860-1-davydov-max@yandex-team.ru>
- <CAFEAcA9acSfGP6PcErqp1rTmSd3G+AwUUx_aF-5KJy4iS6BqaQ@mail.gmail.com>
- <874jdkn3he.fsf@pond.sub.org> <ZefNfJ3BwudA-M7t@x1n>
- <117b4556-aadd-4287-909c-e5cf988214b5@yandex-team.ru> <ZeqKZOxF1MlgeRE3@x1n>
+Subject: Re: [PATCH 3/7] target/hppa: fix access_id check
 Content-Language: en-US
-From: Maksim Davydov <davydov-max@yandex-team.ru>
-In-Reply-To: <ZeqKZOxF1MlgeRE3@x1n>
+To: Sven Schnelle <svens@stackframe.org>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
+References: <20240317221431.251515-1-svens@stackframe.org>
+ <20240317221431.251515-4-svens@stackframe.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240317221431.251515-4-svens@stackframe.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=davydov-max@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,146 +96,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 3/17/24 12:14, Sven Schnelle wrote:
+> +static bool match_prot_id(CPUHPPAState *env, uint32_t access_id, uint32_t *_pid)
+> +{
+> +    for (int i = 0; i < 8; i++) {
+> +        uint32_t pid = get_pid(env, i);
 
-On 3/8/24 06:47, Peter Xu wrote:
-> On Thu, Mar 07, 2024 at 12:06:59PM +0300, Maksim Davydov wrote:
->> On 3/6/24 04:57, Peter Xu wrote:
->>> On Tue, Mar 05, 2024 at 03:43:41PM +0100, Markus Armbruster wrote:
->>>> Peter Maydell<peter.maydell@linaro.org>  writes:
->>>>
->>>>> On Mon, 4 Mar 2024 at 13:52, Maksim Davydov<davydov-max@yandex-team.ru>  wrote:
->>>>>> The following changes since commit e1007b6bab5cf97705bf4f2aaec1f607787355b8:
->>>>>>
->>>>>>     Merge tag 'pull-request-2024-03-01' ofhttps://gitlab.com/thuth/qemu  into staging (2024-03-01 10:14:32 +0000)
->>>>>>
->>>>>> are available in the Git repository at:
->>>>>>
->>>>>>     https://gitlab.com/davydov-max/qemu.git  tags/pull-compare-mt-2024-03-04
->>>>>>
->>>>>> for you to fetch changes up to 7693a2e8518811a907d73a85807ee71dac8fabcb:
->>>>>>
->>>>>>     scripts: add script to compare compatibility properties (2024-03-04 14:10:53 +0300)
->>>>>>
->>>>>> ----------------------------------------------------------------
->>>>>> Please note. This is the first pull request from me.
->>>>>> My public GPG key is available here
->>>>>> https://keys.openpgp.org/vks/v1/by-fingerprint/CDB5BEEF8837142579F5CDFE8E927E10F72F78D4
->>>>>>
->>>>>> ----------------------------------------------------------------
->>>>>> scripts: add a new script for machine development
->>>>>>
->>>>>> ----------------------------------------------------------------
->>>>> Hi; I would prefer this to go through some existing submaintainer
->>>>> tree if possible, please.
->>>> Migration?  QOM?  Not sure.  Cc'ing the maintainers anyway.
->>> Yeah this seems like migration relevant.. however now I'm slightly confused
->>> on when this script should be useful.
->>>
->>> According to:
->>>
->>> https://lore.kernel.org/qemu-devel/20240222153912.646053-5-davydov-max@yandex-team.ru/
->>>
->>>           This script runs QEMU to obtain compat_props of machines and
->>>           default values of different types of drivers to produce comparison
->>>           table. This table can be used to compare machine types to choose
->>>           the most suitable machine or compare binaries to be sure that
->>>           migration to the newer version will save all device
->>>           properties. Also the json or csv format of this table can be used
->>>           to check does a new machine affect the previous ones by comparing
->>>           tables with and without the new machine.
->>>
->>> In regards to "choose the most suitable machine": why do you need to choose
->>> a machine?
->>>
->>> If it's pretty standalone setup, shouldn't we always try to use the latest
->>> machine type if possible (as normally compat props are only used to keep
->>> compatible with old machine types, and the default should always be
->>> preferred). If it's a cluster setup, IMHO it should depend on the oldest
->>> QEMU version that plans to be supported.  I don't see how such comparison
->>> helps yet in either of the cases..
->>>
->>> In regards to "compare binaries to be sure that migration to the newer
->>> version will save all device properties": do we even support migrating
->>> _between_ machine types??
->>>
->>> Sololy relying on compat properties to detect device compatibility is also
->>> not reliable.  For example, see VMStateField.field_exists() or similarly,
->>> VMStateDescription.needed(), which are hooks that device can provide to
->>> dynamically decide what device state to be saved/loaded.  Such things are
->>> not reflected in compat properties, so even if compat properties of all
->>> devices are the same between two machine types, it may not mean that the
->>> migration stream will always be compatible.
->>>
->>> Thanks,
->> In fact, the last commit describes the meaning of this series best. Perhaps
->> it should have been moved to the cover letter:
->> Often, many teams have their own "machines" inherited from "upstream" to
->> manage default values of devices. This is done because of the limitations
->> imposed by the compatibility requirements or the desire to help their
->> customers better configure their devices. And since machine type has
->> a hard-to-read structure, it is very easy to make a mistake when
->> transferring
->> default values from one machine to another. For example, when some property
->> is set for the entire abstract class x86_64-cpu (which will be applied to
->> all
->> models), and then rolled back for a specific model. The situation is about
->> the same with changing the default values of devices: if the value changes
->> in the description of the device itself, then you need to make sure that
->> nothing changes when using the current machine.
->> Therefore, there was a desire to make a dev tool that will help quickly
->> expand
->> the definition of a machine or compare several machines from different
->> binary
->> files. It can be used when rebasing to a new version of qemu and/or for
->> automatic tests.
-> OK, thanks.
->
-> So is it a migration compatibility issue that you care (migrating VMs from
-> your old downstream binary to new downstream binary should always succeed),
-> or perhaps you care more on making sure the features you wanted, i.e., you
-> want to make sure some specific devices that you care will have the
-> properties that you expect?
->
-> I think compat properties are mostly used for migration purposes, but
-> indeed it can also be used to keep old behaviors of devices, even if the
-> migration could succed with/without such a compat property entry.
->
-> If it's about migration, I'd like to know whether vmstate-static-checker.py
-> could also help your case (under scripts/), perhaps in a better way,
-> because it directly observes the VMSD structures (which is the ultimate
-> form on wire, after all these compat properties applied to the devices).
->
-> If it's not about migration, then maybe it's more QOM-relevant, and if so I
-> don't have a strong opinion. It seems still make some sense to have a tool
-> simply dump the QOM tree for a machine type with all properties and compare
-> them between machines with some binaries.  For that I'll leave that to
-> Markus to decide.
->
-> Btw, I tried to apply the patches and build, but failed:
->
-> In file included from ../qapi/qapi-schema.json:70:
-> ../qapi/machine.json:224: text required after 'Example:'
-> [40/2810] Generating trace/trace-hw_ide.h with a custom command
-> [41/2810] Generating trace/trace-hw_isa.h with a custom command
-> [42/2810] Generating trace/trace-hw_intc.c with a custom command
-> [43/2810] Generating trace/trace-hw_mem.h with a custom command
-> [44/2810] Generating trace/trace-hw_isa.c with a custom command
-> [45/2810] Generating trace/trace-hw_intc.h with a custom command
-> [46/2810] Generating trace/trace-hw_mem.c with a custom command
-> ninja: build stopped: subcommand failed.
-> make: *** [Makefile:162: run-ninja] Error 1
->
-> There also seems to have an assumption that QEMU is built under "build/" in
-> the script.
->
-> +default_qemu_binary = 'build/qemu-system-x86_64'
->
-Sorry for late response
-This is the default value, the script has the option to redefine the path to
-the binary `--qemu-binary`
+There are only 4 pid's for pa1.x.
 
--- 
-Best regards,
-Maksim Davydov
+> +static uint32_t get_pid(CPUHPPAState *env, int num)
+> +{
+> +    const struct pid_map {
+> +        int reg;
+> +        bool shift;
+> +    } *pid;
+> +
+> +    const struct pid_map pids64[] = {
+> +        { .reg = 8,  .shift = true  },
+> +        { .reg = 8,  .shift = false },
+> +        { .reg = 9,  .shift = true  },
+> +        { .reg = 9,  .shift = false },
+> +        { .reg = 12, .shift = true  },
+> +        { .reg = 12, .shift = false },
+> +        { .reg = 13, .shift = true  },
+> +        { .reg = 13, .shift = false }
+> +    };
+> +
+> +    const struct pid_map pids32[] = {
+> +        { .reg = 8,  .shift = false  },
+> +        { .reg = 9,  .shift = false  },
+> +        { .reg = 12, .shift = false  },
+> +        { .reg = 13, .shift = false  },
+> +    };
+> +
+> +    if (hppa_is_pa20(env)) {
 
+This predicate is fairly expensive -- you don't want to put it deep inside a loop.
+The table is very predictable.  Moreover, you don't need to test these in any particular 
+order.
+
+>          /* If bits [31:1] match, and bit 0 is set, suppress write.  */
+> -        int match = ent->access_id * 2 + 1;
+> -
+> -        if (match == env->cr[CR_PID1] || match == env->cr[CR_PID2] ||
+> -            match == env->cr[CR_PID3] || match == env->cr[CR_PID4]) {
+> -            prot &= PAGE_READ | PAGE_EXEC;
+> -            if (type == PAGE_WRITE) {
+> -                ret = EXCP_DMPI;
+> -                goto egress;
+> +        uint32_t pid;
+> +        if (match_prot_id(env, ent->access_id, &pid)) {
+> +            if ((pid & 1) && (prot & PROT_WRITE)) {
+> +                prot &= ~PROT_WRITE;
+>              }
+> +        } else {
+> +            prot = 0;
+>          }
+
+You're losing the data memory protection id trap.
+
+Therefore I suggest
+
+/* Return the set of protections allowed by a PID match. */
+static int match_prot_id_1(uint32_t access_id, uint32_t prot_id)
+{
+     if (((access_id ^ (prot_id >> 1) & ACCESS_ID_MASK) == 0) {
+         return (prot_id & 1
+                 ? PROT_EXEC | PROT_READ
+                 : PROT_EXEC | PROT_READ | PROT_WRITE);
+     }
+     return 0;
+}
+
+static int match_prot_id32(CPUHPPAState *env, uint32_t access_id)
+{
+     int r, i;
+     for (i = CR_PID1; i <= CR_PID4; ++i) {
+         r = match_prot_id_1(access_id, env->cr[i]);
+         if (r) {
+             return r;
+         }
+     }
+     return 0;
+}
+
+static int match_prot_id64(CPUHPPAState *env, uint32_t access_id)
+{
+     int r, i;
+     for (i = CR_PID1; i <= CR_PID4; ++i) {
+         r = match_prot_id_1(access_id, env->cr[i]);
+         if (r) {
+             return r;
+         }
+         r = match_prot_id_1(access_id, env->cr[i] >> 32);
+         if (r) {
+             return r;
+         }
+     }
+     return 0;
+}
+
+---
+
+     if (ent->access_id && MMU_IDX_TO_P(mmu_idx)) {
+         int access_prot = (hppa_is_pa20(env)
+                            ? match_prot_id64(env, ent->access_id)
+                            : match_prot_id32(env, ent->access_id));
+         if (prot & ~access_prot) {
+             ret = EXCP_DMPI;
+             goto egress;
+         }
+     }
+
+At this point there are now a couple of hppa_is_pa20() calls within 
+hppa_get_physical_address, which could be unified to a single local bool.
+
+
+r~
 
