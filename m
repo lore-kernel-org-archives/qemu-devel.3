@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9E36C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 20:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B72D1C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 20:45:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmJow-000680-8c; Mon, 18 Mar 2024 16:42:58 -0400
+	id 1rmJrF-00079d-S5; Mon, 18 Mar 2024 16:45:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rmJok-00066V-Sl
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:42:48 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rmJrD-00079V-Kl
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:45:20 -0400
 Received: from mout.gmx.net ([212.227.17.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rmJof-0004N8-6k
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:42:44 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rmJrA-00057m-Ex
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:45:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1710794558; x=1711399358; i=deller@gmx.de;
- bh=W6eN3FgxLgY2PbDFMFT6LJe4gOtKyDRK02n94wFWF20=;
+ s=s31663417; t=1710794713; x=1711399513; i=deller@gmx.de;
+ bh=+Vhe3ybfi7sU8n0Kmk+CeoRM4m92AKhUTXho9MZnuZc=;
  h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
  In-Reply-To;
- b=RvLbpzprLTbYqo9N897XUeRZ1x182YAG+SBaaIULFyzDQZk8hod402o818Nl2FmP
- UGh6PHFGDDMvkAfQMPTZuv0es5nkUxsx5BMx+ImZxiFs3yria4PWXSIunnnlX7A6N
- WdNLNsomsEwrrXJefp36julI5L6ZhWUdMKl7JYTMlKtve82rFPRqQF+KKoksPl94m
- L9aoFfW2+4rZg3P2JQqMNKj2qIsAZZDoZNWS+/X2AyaZ0/yD67DaYegbU4qnmzur2
- eb58qW3Vhc/AzyX2A3hZHLviByBmsEUiL1Bg6ivKtuG9YI+mrriZ4Z8xmP/3GEDXc
- tjpgFqDPWVijoeQvYg==
+ b=GE+LarrDJ2RlwEA65Koq/ZP9rJnjI2h9ypoDhEe3gF5g4SYJGAyOy0B7xTFOnKq1
+ FUMDCfm6ki3KpGy0l+uBz2VPA9xoU1E5o7Ha438lJcCKk/kYrSi+qC/GjjxNTBLM/
+ cuSa670Iw5ExN80+md5uVVX9F8YABZRaiv9weVTkTIh6LJyC6sRASxyiSDGpsJrI3
+ 34P60Yn0q4qWaaRsYur/BZX/cGF1V7vdDp8+vdmuERVLtPy8aRI4ohq2zcRxLemKe
+ qzADK9gLNdCNCEG418+lqyQcShf29Z1pILF+kzbkrp9Eb2lvjHVQ/+FOnbHgc2iKU
+ C9RJgsdu7tHZ1Q2/aw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [192.168.20.55] ([94.134.155.237]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mwwdf-1qphZu3pPP-00yPLF; Mon, 18
- Mar 2024 21:42:37 +0100
-Message-ID: <3d775a25-c082-427c-9a7d-967852fa197e@gmx.de>
-Date: Mon, 18 Mar 2024 21:42:37 +0100
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJVDM-1rSb6v13kW-00JrTd; Mon, 18
+ Mar 2024 21:45:13 +0100
+Message-ID: <298a0835-ff36-48f1-bf98-6b3d8c54f10e@gmx.de>
+Date: Mon, 18 Mar 2024 21:45:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] target/hppa: exit tb on flush cache instructions
+Subject: Re: [PATCH 6/7] target/hppa: mask privilege bits in mfia
 Content-Language: en-US
 To: Sven Schnelle <svens@stackframe.org>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20240317221431.251515-1-svens@stackframe.org>
- <20240317221431.251515-5-svens@stackframe.org>
+ <20240317221431.251515-7-svens@stackframe.org>
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
  xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
@@ -88,26 +88,26 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240317221431.251515-5-svens@stackframe.org>
+In-Reply-To: <20240317221431.251515-7-svens@stackframe.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:t26kqNWXwMFh3B/hqqWVryqmSVfNqZG4uXV0tclIO9g+57tGjha
- Uo3kl9Hj5biBoyUEe3EALLSkyBY1hpcEEy71SlXIvdqGTvX+IGcccFmmjydIVWxrzm0BCix
- Em4JbEeNIVkUAef8mKEcOebiM1Zvqid7jRjAKo9GHQ7M2PRJPdwOBXobpesnLaOpFDgFnwy
- DUM5vrd6ZX50kVpYfhu4A==
-UI-OutboundReport: notjunk:1;M01:P0:dWLV8P1fyYI=;UwSfBURu7kX5bixGn8XZXkftK61
- R3BJ0MeVzj3LrUe6DorZSQ92oh/PjSIOVm7YwCiVGhF7ju60KJqi7hpwtGFCj1mUzCH7BBlXw
- Df+NWJJmJmxNHMWBzxEIlVtlpQ4QYKJ0zBGWzTQ/CRHDv3vpFp9pudsKtWSqAISLKdoPfy91V
- tGhtyIVOv5el/8yokTXKveYmVB416tNnn3oZD6ldHoSMkxpHeePWl01kn6kfC/AWiXsymo7SD
- A8UGJPgiksHcrLR86shFyBJ9BqLApljKRCQT/1IAr+Lue6ev0O910rwIl31vA+QXCU0Ig6ce9
- zyP1P9MS06KPc5ziSAUd6UBfWS7XXTQmyB6tk88Ze7UfEKiStJR9ycLXxlka8IdA6DUtXJN8e
- qHn7ryYnz+8ij020cmSEtxhZqeYVoX5PCXsCd5miDTFrfgaTHOEcfX4wBPopdrQa2RlW5AcuB
- RAUlFT75CDnJoFVVcyOBtKPpwwBaMGbLVUr7Grv0tXJPCK1FmL/fburViJQXoPNfvSLfVxQSn
- lkbq9GEQcAQ4Xah392bNgwYVYko9by/IuCDF4DNMDLkT6dwEMfNGkhK+evqnpQzmcsa//XEF7
- 4ssIZYaOUBazrgf63CMh/Uec+ssxb3mzQHqsfTUW3Kwt8nh0lJMv1yluxa8ZzA3TXytl7S41K
- +uZ6b45QMBtFwMwKqh9AAouDOeWqXf4N2NNRfCLr1UhaCfkNftsc6nzsx9285zmb3xmADlbHk
- 9zSpx1vqA1XcllflW8rcArjQ91ESIYYK3RvZkZ01TVzyPL2K19dgd+7uqOzHvLe6T2+01h0Q5
- T5BNHXQN3axYEGJTW6f0FBdBkV27YR8zopOAIRGVnGB6Q=
+X-Provags-ID: V03:K1:OvzOBorg+Uj7OK1X6MEGIsCt+NB5u9s0iDbk+Y1tCWLJ9r26FRu
+ /5Nfx9jzdfqiFKQ1Ri2qA/11ohiqzMZ7GBPq0+n46g19Kwv2DzjkVsuUWQSf4i6pjcbYSIO
+ aze+jZfhmTk1eTmD/pzf9vYfWMLBbhdb6cQjGnM1lRGrWhTfbtWLW7m1r69ySlPGtkcUcST
+ zaWv1DksEz2byXE8Z5DEw==
+UI-OutboundReport: notjunk:1;M01:P0:dwH6Q4NZlmg=;f8gSp5kakD7pAYXptzWJWddwFFy
+ D0FgbfHPMU972GS5sLgaDQZId1z2WkqlCsfLTQNOw1lIdoxLtrNwpIiwDY6gjC0KaVDGXuZyp
+ q+Gb+Vqx1JAgxZoq6DiLgXCti5CCdOC0Whrv3c3anN+fvDuxnDgSSC+nm3sIakjVZJPNdsGO9
+ F8ZIdwMVTagx39jKz2cPL8HZl85BTP0k09E8rQ19ohUWuijSHNpTDIe94mcgI/ebqf9B13hoP
+ VkvLX9d+MQNBr306FzY6AY65GIVgPA7wvOVQ6FafTrrdikOiOJNFubfrwdHlGOEu5fxGEMjRw
+ u2BT3SW+MqsGIrvyJxu2t4e0wy4rADHAf3DW0NHDWAgPhMmXTb+RfOX4tzu3a0SwV0oabIxIj
+ aLd7M+Dx0AxCyZ93hbfJJlm7j4W4XerfquSiyJUYM+UmHBu8dmdBnHSOKlUx7I+zB9jNK8otQ
+ Mht0hVcdpr56+OqIF2xP85fIJ19lpTpLBws7i4USUX2iNxAuWnDloe9kYpXvMjsgIH5PIJZUD
+ XfYXHYFvULqOIeFZyaMN8MOEIDTqyggQLyGDURbwW8U2puv8coigBZJY+uLgnOsgtM3xu8gYK
+ 28MGw4BS6PYPD0lZvvNZhdnzttH0S8wNTn2drne9zp7P/cGdgEVnfFFvTzg7EDR6C2g6SzHKp
+ bkBOcd+E9FkoB90wRV1e7LMnjK1HAP0OGLoZ+PnBQ/TOCCgX1PVaKFbExCpbvQV4bcv1Z0lgg
+ 5sy9EtFzvMrhABR6zQWe4X5ODn0s20V0HAXSuQVhgeHzLY54QaN0MtXB9dq8ctRGoBh7XdL+X
+ Qw9BNZFPZ8FC7rSZ5ztvvUoeVBADzW5Ia7D0pmVmshX2Q=
 Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
@@ -134,39 +134,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/17/24 23:14, Sven Schnelle wrote:
-> When the guest modifies the tb it is currently executing from,
-> it executes a fic instruction. Exit the tb on such instruction,
-> otherwise we might execute stale code.
+> mfia should return only the iaoq bits without privilege
+> bits.
 >
 > Signed-off-by: Sven Schnelle <svens@stackframe.org>
-> ---
->   target/hppa/translate.c | 2 ++
->   1 file changed, 2 insertions(+)
->
-> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index 8ba31567e8..58d7ec1ade 100644
-> --- a/target/hppa/translate.c
-> +++ b/target/hppa/translate.c
-> @@ -1940,6 +1940,7 @@ static void do_page_zero(DisasContext *ctx)
->   static bool trans_nop(DisasContext *ctx, arg_nop *a)
->   {
->       cond_free(&ctx->null_cond);
-> +    ctx->base.is_jmp =3D DISAS_IAQ_N_STALE;
->       return true;
->   }
->
-> @@ -2290,6 +2291,7 @@ static bool trans_nop_addrx(DisasContext *ctx, arg=
-_ldst *a)
->           save_gpr(ctx, a->b, dest);
->       }
->       cond_free(&ctx->null_cond);
-> +    ctx->base.is_jmp =3D DISAS_IAQ_N_STALE;
 
-I wonder if it makes sense to rename trans_nop() and trans_nop_addrx()
-to something like trans_cache_flush() and trans_cache_flush_addrx() ?
-
-Other than that:
 Reviewed-by: Helge Deller <deller@gmx.de>
 
 Helge
+
+
+> ---
+>   target/hppa/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index a09112e4ae..e47f8f9f47 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -1962,7 +1962,7 @@ static bool trans_mfia(DisasContext *ctx, arg_mfia=
+ *a)
+>   {
+>       unsigned rt =3D a->t;
+>       TCGv_i64 tmp =3D dest_gpr(ctx, rt);
+> -    tcg_gen_movi_i64(tmp, ctx->iaoq_f);
+> +    tcg_gen_movi_i64(tmp, ctx->iaoq_f & ~3ULL);
+>       save_gpr(ctx, rt, tmp);
+>
+>       cond_free(&ctx->null_cond);
+
 
