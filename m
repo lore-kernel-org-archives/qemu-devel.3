@@ -4,84 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA319C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 17:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85185C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 17:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmH2I-0004As-31; Mon, 18 Mar 2024 13:44:34 -0400
+	id 1rmHEU-0000U8-Lc; Mon, 18 Mar 2024 13:57:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmH2G-00049t-6j
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:44:32 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmH2A-0004c5-6b
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:44:29 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a28a6cef709so699122566b.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 10:44:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710783863; x=1711388663; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+JVxF+9Fn2CBZqEc5cVMjIAZykPNOYMGBJCn69nOpEQ=;
- b=SffREY7KMqaqAun7nkXzjfpLPWPztvlZzMNu34UfAQwxQiQWAuAoUxIIHpFtMEp8l7
- NDm+eg9j8ckytskk2sG2GYZt+VR+mTvw0F0o3VWnxoeLHWtTId3hKg6NX91/S4elcTie
- +uitHuDUpW4LVRuE52ysaBnajKonkYlrw1mNapZ5RaWizlKEpm+onmrqkmVL4aD34lql
- MvaDNsVJMCOHV/HBzknJIdY5cun5KgoNGkqEoPA5m7+eafoI5uejZhTZksWsSX55Aspj
- BbTQw5NLSaL3RCo5kcEAYiqj09feUu9AJRXKDdx+3J/ZVsNDlnuQIDmSPSzgOVNhsR67
- USRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710783863; x=1711388663;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+JVxF+9Fn2CBZqEc5cVMjIAZykPNOYMGBJCn69nOpEQ=;
- b=lMjAGwFGGX/ys297HVLuYhQqkU0Xn6s65pwIZEuaQUAc7NYFrjvlxHFDQ0JRg3ALUy
- OTeFbmtBEFgg3a+6kRskBx/O/fvw/2avksXoOjIu4DUvm4DAOtpZI0/NBM0zBw63sLmE
- 7S908DrZ3KOX0fB+lL9iYjjDLmPGyz9W1k899Lv6jGk4QJDVLPtSL+dJT+K7/rh0dRYa
- x9VUgvkgHh5VKvNBBDAlQ/N73MtpEkCkLkdL0dmqzpaYvV3b76jl1mSw/9RJjArUF1k2
- 0JzVawZIfdp/A01pDc2VOFnCaxZHvn7Xim/tQdJuxqYp4Cx8vzut841lLp0rYz7V+mMu
- h5lg==
-X-Gm-Message-State: AOJu0YxhwIpDFjprS+tBW8a7Z7zzqvueCVoTST4hBBTK8WUekmFofgJm
- TS76ulkUFEuqBiIO/13k5zcWjN09LsYNnmtIPr/lLL+Sb1UpAt5UBoXuscVcT08=
-X-Google-Smtp-Source: AGHT+IHvU2aRRXGxieAvvzTeBST+BxwwLjNtvmdHe7AusK3Wq2IiUbZk/McWls4ZITdV1VC28l8Ukw==
-X-Received: by 2002:a17:906:4c43:b0:a46:d592:43ea with SMTP id
- d3-20020a1709064c4300b00a46d59243eamr377382ejw.76.1710783862739; 
- Mon, 18 Mar 2024 10:44:22 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- go34-20020a1709070da200b00a44180ab871sm5033788ejc.50.2024.03.18.10.44.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 10:44:22 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EE3D05F856;
- Mon, 18 Mar 2024 17:44:21 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org
-Subject: Re: [PATCH 20/22] plugins: Move qemu_plugin_insn_cleanup_fn to tcg.c
-In-Reply-To: <20240316015720.3661236-21-richard.henderson@linaro.org> (Richard
- Henderson's message of "Fri, 15 Mar 2024 15:57:18 -1000")
-References: <20240316015720.3661236-1-richard.henderson@linaro.org>
- <20240316015720.3661236-21-richard.henderson@linaro.org>
-User-Agent: mu4e 1.12.2; emacs 29.2
-Date: Mon, 18 Mar 2024 17:44:21 +0000
-Message-ID: <87il1j5tai.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHET-0000Tr-Tn
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHER-00077e-VJ
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710784627;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pyDG1697yNmOLATZpCsmYF7vOjj017X+KxrJDV4ddsk=;
+ b=LK1OM9LMSdoki4h6/YpiJX1QccmzUwzOlvuTJqaCjLoOE+GenU+/0cFcAPzdOJXlPI7PXc
+ zpKGDTjMnk4ahCr5ksD19Fl8tFObWEazErF370DYfklczpPG9LbOEyGIMLqCl2oJ3tH+fE
+ O9z6CwshrasB8Bln1Q0kwHb0ft0q6mU=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-111-Kv3nalYPMsGJLiyH9nYbMw-1; Mon, 18 Mar 2024 13:57:05 -0400
+X-MC-Unique: Kv3nalYPMsGJLiyH9nYbMw-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 51ACD800262;
+ Mon, 18 Mar 2024 17:57:05 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.155])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 489172166B34;
+ Mon, 18 Mar 2024 17:57:04 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Claudio Fontana <cfontana@suse.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Subject: [PULL 2/4] target/s390x: improve cpu compatibility check error message
+Date: Mon, 18 Mar 2024 18:56:53 +0100
+Message-ID: <20240318175655.756084-3-thuth@redhat.com>
+In-Reply-To: <20240318175655.756084-1-thuth@redhat.com>
+References: <20240318175655.756084-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,80 +83,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+From: Claudio Fontana <cfontana@suse.de>
 
-> This is only used in one place, and usage requires an
-> out-of-line function.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  include/qemu/plugin.h | 12 ------------
->  tcg/tcg.c             | 12 ++++++++++++
->  2 files changed, 12 insertions(+), 12 deletions(-)
->
-> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-> index 07b1755990..201889cbee 100644
-> --- a/include/qemu/plugin.h
-> +++ b/include/qemu/plugin.h
-> @@ -116,18 +116,6 @@ struct qemu_plugin_scoreboard {
->      QLIST_ENTRY(qemu_plugin_scoreboard) entry;
->  };
->=20=20
-> -/*
-> - * qemu_plugin_insn allocate and cleanup functions. We don't expect to
-> - * cleanup many of these structures. They are reused for each fresh
-> - * translation.
-> - */
-> -
-> -static inline void qemu_plugin_insn_cleanup_fn(gpointer data)
-> -{
-> -    struct qemu_plugin_insn *insn =3D (struct qemu_plugin_insn *) data;
-> -    g_byte_array_free(insn->data, true);
-> -}
-> -
->  /* Internal context for this TranslationBlock */
->  struct qemu_plugin_tb {
->      GPtrArray *insns;
-> diff --git a/tcg/tcg.c b/tcg/tcg.c
-> index d248c52e96..d7abc514c4 100644
-> --- a/tcg/tcg.c
-> +++ b/tcg/tcg.c
-> @@ -761,6 +761,18 @@ QEMU_BUILD_BUG_ON((int)(offsetof(CPUNegativeOffsetSt=
-ate, tlb.f[0]) -
->                    < MIN_TLB_MASK_TABLE_OFS);
->  #endif
->=20=20
-> +#ifdef CONFIG_PLUGIN
-> +/*
-> + * We don't expect to cleanup many of these structures.
-> + * They are reused for each fresh translation.
-> + */
-> +static void qemu_plugin_insn_cleanup_fn(gpointer data)
-> +{
-> +    struct qemu_plugin_insn *insn =3D (struct qemu_plugin_insn *) data;
-> +    g_byte_array_free(insn->data, true);
-> +}
-> +#endif
-> +
+some users were confused by this message showing under TCG:
 
-You could expand the ifdef to the next function and make an alternate
-empty alloc_tcg_plugin_context. Alternatively maybe we should consider
-dropping the CONFIG_PLUGIN gymnastics and make it a first class TCG
-feature?
+ Selected CPU generation is too new. Maximum supported model
+ in the configuration: 'xyz'
 
-Is the null case still visible on the code generation benchmarks? Does
-anyone using TCG actually --disable-plugins?
+Clarify that the maximum can depend on the accel, and add a
+hint to try a different one.
 
-Anyway:
+Also add a hint for features mismatch to suggest trying
+different accel, QEMU and kernel versions.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Signed-off-by: Claudio Fontana <cfontana@suse.de>
+Message-ID: <20240314213746.27163-1-cfontana@suse.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ target/s390x/cpu_models.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index 1a1c096122..8ed3bb6a27 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -500,6 +500,16 @@ static void error_prepend_missing_feat(const char *name, void *opaque)
+     error_prepend((Error **) opaque, "%s ", name);
+ }
+ 
++static void check_compat_model_failed(Error **errp,
++                                      const S390CPUModel *max_model,
++                                      const char *msg)
++{
++    error_setg(errp, "%s. Maximum supported model in the current configuration: \'%s\'",
++               msg, max_model->def->name);
++    error_append_hint(errp, "Consider a different accelerator, try \"-accel help\"\n");
++    return;
++}
++
+ static void check_compatibility(const S390CPUModel *max_model,
+                                 const S390CPUModel *model, Error **errp)
+ {
+@@ -507,15 +517,11 @@ static void check_compatibility(const S390CPUModel *max_model,
+     S390FeatBitmap missing;
+ 
+     if (model->def->gen > max_model->def->gen) {
+-        error_setg(errp, "Selected CPU generation is too new. Maximum "
+-                   "supported model in the configuration: \'%s\'",
+-                   max_model->def->name);
++        check_compat_model_failed(errp, max_model, "Selected CPU generation is too new");
+         return;
+     } else if (model->def->gen == max_model->def->gen &&
+                model->def->ec_ga > max_model->def->ec_ga) {
+-        error_setg(errp, "Selected CPU GA level is too new. Maximum "
+-                   "supported model in the configuration: \'%s\'",
+-                   max_model->def->name);
++        check_compat_model_failed(errp, max_model, "Selected CPU GA level is too new");
+         return;
+     }
+ 
+@@ -537,7 +543,9 @@ static void check_compatibility(const S390CPUModel *max_model,
+     error_setg(errp, " ");
+     s390_feat_bitmap_to_ascii(missing, errp, error_prepend_missing_feat);
+     error_prepend(errp, "Some features requested in the CPU model are not "
+-                  "available in the configuration: ");
++                  "available in the current configuration: ");
++    error_append_hint(errp,
++                      "Consider a different accelerator, QEMU, or kernel version\n");
+ }
+ 
+ S390CPUModel *get_max_cpu_model(Error **errp)
+-- 
+2.44.0
 
->  static void alloc_tcg_plugin_context(TCGContext *s)
->  {
->  #ifdef CONFIG_PLUGIN
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
