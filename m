@@ -4,57 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41C12C54E68
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 02:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 511D9C54E67
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 03:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm2lG-00074S-9P; Sun, 17 Mar 2024 22:30:02 -0400
+	id 1rm3J7-0004ux-7z; Sun, 17 Mar 2024 23:05:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1rm2lB-000748-7E
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 22:29:58 -0400
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1rm2l9-0001aR-3r
- for qemu-devel@nongnu.org; Sun, 17 Mar 2024 22:29:56 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCXEkAap_dlAVvTBg--.27015S2;
- Mon, 18 Mar 2024 10:29:46 +0800 (CST)
-Received: from phytium.com.cn (unknown [123.150.8.50])
- by mail (Coremail) with SMTP id AQAAfwDXXNEPp_dlAEUAAA--.183S4;
- Mon, 18 Mar 2024 10:29:39 +0800 (CST)
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-To: ira.weiny@intel.com, jonathan.cameron@huawei.com, dan.j.williams@intel.com
-Cc: linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org,
- qemu-devel@nongnu.org, chenbaozi@phytium.com.cn,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>
-Subject: [PATCH v2 1/1] cxl/mem: Fix for the index of Clear Event Record Handle
-Date: Mon, 18 Mar 2024 10:29:28 +0800
-Message-Id: <20240318022928.509130-2-wangyuquan1236@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240318022928.509130-1-wangyuquan1236@phytium.com.cn>
-References: <20240318022928.509130-1-wangyuquan1236@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <maxim.cournoyer@gmail.com>)
+ id 1rm3J3-0004uV-4a
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 23:04:57 -0400
+Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <maxim.cournoyer@gmail.com>)
+ id 1rm3J1-0007FG-EH
+ for qemu-devel@nongnu.org; Sun, 17 Mar 2024 23:04:56 -0400
+Received: by mail-qk1-x72c.google.com with SMTP id
+ af79cd13be357-789e70d7c07so154403285a.1
+ for <qemu-devel@nongnu.org>; Sun, 17 Mar 2024 20:04:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710731092; x=1711335892; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=cfL9cENqmsBlmvoSOl08CkdXFEA/4uL3lNvjfs+j+6o=;
+ b=mCFVQZeGNGQlJuHbGf1onriKhDmuyjidnYoNyv/krIea1rTZfr9WzolkJFh0yakU5o
+ LblAFh43fWKOlWrzRsTWUW+5NSrfaKj0bbi+sP41ESb90rEUzpQDMiEnpivIYeLPMv6/
+ BxnEKTyj8TN0VAtUGlwtEw04SnugaV+yLa7s8ramng2HQcd0yTlspwoH36+oJh41lHOL
+ o8SYKjvPJQuIo1jBRFQbxNl43Kj/O3oww1kdwe+pLZKeWs7VVRVmNMMpGm0/zOn4++ee
+ z0zGtSBN0JYZGUcpX8iKczq8KH3FX8b+aEUY2BIdW+rht1OLZ/CUGfFutsFOGCf5CJ+d
+ oSVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710731092; x=1711335892;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cfL9cENqmsBlmvoSOl08CkdXFEA/4uL3lNvjfs+j+6o=;
+ b=clgT/QaW2pezK2SU8utRJk1AZ/sqfF4oerJ1g5T5oFt7w0a2vzVK3p1DvXiQTV8/zV
+ AET9IdVu4WuuRF7w6N95065JVom9Ntgi9DkmZFC0YKeYdJBSINiF9jEx8ZPZo2yD7uop
+ 34Z3D+Z/lfpLdWy8UOBX5D+wyHKQ0CiZzezvxbkuIcxQMVOviCmD4+d69id4vRerxR2r
+ mguI7Q7NbMngwOMZLNcgxvtGLHLJCgSwO4VitkCxw9O/QCo0XAd5419yfDG3MUS6ygGE
+ PCqk7hOwKyF7Lh61qS7mGQy4e6qHwmvCL8IZjoMYr+LKY1GxP1HZPFCHaVbKDKy6IUm8
+ ePtw==
+X-Gm-Message-State: AOJu0YzRkdsl6kar69tOMYayNQzCEVELSW+fKpA8nwGaFMa+umbZoFWr
+ W6ZyGY2c5I/u4nWf6pIIB3UU3VGvKqykMXtSZVmnhcWuxTE/uPBFYGjonibUv08=
+X-Google-Smtp-Source: AGHT+IHA49RE6uuHEpeP/8oUo5Px+asxcZ4g+iMpJ7K/j6dKHUfU8WB1TSV4EF4d2qX18d6FXdDwFg==
+X-Received: by 2002:a05:620a:124d:b0:789:e26b:50c with SMTP id
+ a13-20020a05620a124d00b00789e26b050cmr10295863qkl.77.1710731092340; 
+ Sun, 17 Mar 2024 20:04:52 -0700 (PDT)
+Received: from localhost.localdomain (dsl-10-148-142.b2b2c.ca. [72.10.148.142])
+ by smtp.gmail.com with ESMTPSA id
+ c27-20020a05620a11bb00b007882fe32acasm4143505qkk.3.2024.03.17.20.04.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 17 Mar 2024 20:04:51 -0700 (PDT)
+From: Maxim Cournoyer <maxim.cournoyer@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Maxim Cournoyer <maxim.cournoyer@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, John Snow <jsnow@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] build: Re-introduce an 'info' target to build a Texinfo
+ manual.
+Date: Sun, 17 Mar 2024 23:03:24 -0400
+Message-ID: <20240318030437.17503-1-maxim.cournoyer@gmail.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwDXXNEPp_dlAEUAAA--.183S4
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQAIAWX3ReYBDQAAs1
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvdXoW7Jw1rXryDuFW7uFWfGF18uFg_yoWfAFb_CF
- 10qF1xuw4YkFnak342krsYvrySvw1rWF4S9r1qqFW5J347Zw13JFZ09rnFyrnxXrWUAr17
- ZFy3XryFkrnxWjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf9Il3svdxBIdaVrnU
- Uv73VFW2AGmfu7jjvjm3AaLaJ3UjIYCTnIWjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRUUUUU
- UUUU=
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
+ envelope-from=maxim.cournoyer@gmail.com; helo=mail-qk1-x72c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,31 +93,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The dev_dbg info for Clear Event Records mailbox command would report
-the handle of the next record to clear not the current one.
+This reinstates
+<https://lists.gnu.org/archive/html/qemu-devel/2020-09/msg09228.html>,
+which was committed at some point but reverted many years later in
+cleanups that followed the migration from Texinfo sources to the
+ReStructuredText (RST) format.  It's still nice to leave the option for
+users to easily generate a QEMU manual in the Texinfo format, taking
+advantage of the Sphinx texinfo backend.
 
-This was because the index 'i' had incremented before printing the
-current handle value.
+The Texinfo format is structured and info readers provide advanced
+navigation capabilities such as jumping to indexed topics or nodes and
+is usable even in environments lacking a graphical session.
 
-Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+* docs/meson.build (texi, info): New targets.
+
+Signed-off-by: Maxim Cournoyer <maxim.cournoyer@gmail.com>
 ---
- drivers/cxl/core/mbox.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index 9adda4795eb7..b810a6aa3010 100644
---- a/drivers/cxl/core/mbox.c
-+++ b/drivers/cxl/core/mbox.c
-@@ -915,7 +915,7 @@ static int cxl_clear_event_record(struct cxl_memdev_state *mds,
- 
- 		payload->handles[i++] = gen->hdr.handle;
- 		dev_dbg(mds->cxlds.dev, "Event log '%d': Clearing %u\n", log,
--			le16_to_cpu(payload->handles[i]));
-+			le16_to_cpu(payload->handles[i-1]));
- 
- 		if (i == max_handles) {
- 			payload->nr_recs = i;
+ docs/meson.build | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/docs/meson.build b/docs/meson.build
+index 9040f860ae..2ae7886fcb 100644
+--- a/docs/meson.build
++++ b/docs/meson.build
+@@ -98,4 +98,26 @@ if build_docs
+   alias_target('sphinxdocs', sphinxdocs)
+   alias_target('html', sphinxdocs)
+   alias_target('man', sphinxmans)
++
++  # Add a target to build and install a Texinfo version of the QEMU
++  # manual, if 'makeinfo' is available.
++  makeinfo = find_program(['texi2any', 'makeinfo'])
++  if makeinfo.found()
++    sphinxtexi = custom_target(
++      'qemu.texi',
++      output: ['qemu.texi', 'sphinxtexi.stamp'],
++      depfile: 'sphinxtexi.d',
++      command: [SPHINX_ARGS, '-Ddepfile=@DEPFILE@',
++               '-Ddepfile_stamp=@OUTPUT1@', '-b', 'texinfo',
++               '-d', private_dir, input_dir, meson.current_build_dir()])
++    sphinxinfo = custom_target(
++      'qemu.info',
++      input: sphinxtexi,
++      output: 'qemu.info',
++      install: true,
++      install_dir: get_option('infodir'),
++      command: [makeinfo, '--no-split', '--output=@OUTPUT@', '@INPUT0@'])
++    alias_target('texi', sphinxtexi)
++    alias_target('info', sphinxinfo)
++  endif
+ endif
+
+base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
 -- 
-2.34.1
+2.41.0
 
 
