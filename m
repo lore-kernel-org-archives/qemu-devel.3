@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA02BC54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 07:59:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9305C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 07:59:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm7u1-0007XO-LN; Mon, 18 Mar 2024 03:59:25 -0400
+	id 1rm7t6-0006Gy-S2; Mon, 18 Mar 2024 03:58:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rm7tv-0007Db-UJ; Mon, 18 Mar 2024 03:59:21 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rm7tu-00014J-HJ; Mon, 18 Mar 2024 03:59:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710748758; x=1742284758;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=K3oyBVjD9yERzrexxJjy+LSwuy7gM46KXG2e0fpWMCY=;
- b=Sr/bcVkKMFiwerAmPvyY+itDvUjSL3FDzru5nUfyUhb1LDvgEp6KmcWz
- 3zPxEQ6CQXJ02G3y74rDu8qkAyEpdKlHiHG7sPcyBE1Sk1kg6zo1hOdma
- CM2xmqOeyXlz/Cf9HACOj0NQRyQl5ckicJE7nbPPby5iDjCOowL2FJl16
- c1r+JQOxY9whHnFcmJMB5hS8x8n2iqFRTBAjt+zNMD2ydhDKX0TztJgtQ
- bc1QCmYDstYmHo7rzzfvvf5DYz15rD7VKZyHgHMFM12Ym68sEBbmp4eh0
- MveMBqg/3hDo7KAVmADssA5xio18Fm9upt2UvpTmoqTLbvMslsLNVUhDn w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="5678421"
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
-   d="scan'208";a="5678421"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2024 00:59:15 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; d="scan'208";a="18072582"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa005.jf.intel.com with ESMTP; 18 Mar 2024 00:59:10 -0700
-Date: Mon, 18 Mar 2024 16:13:01 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Claudio Fontana <cfontana@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
-Subject: Re: [PATCH-for-9.1 02/21] target/mips: Declare CPU QOM types using
- DEFINE_TYPES() macro
-Message-ID: <Zff3jcV6H6u2zwtQ@intel.com>
-References: <20240315130910.15750-1-philmd@linaro.org>
- <20240315130910.15750-3-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rm7sX-00062v-Ij
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:57:53 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rm7sW-0000kS-7Q
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:57:53 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6e6adc557b6so3817435b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 00:57:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710748670; x=1711353470;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=bqiVcWk+QPelPVCWArv8qjPW16I407GHPXqES+lc6zE=;
+ b=u//WHzeKc6oGSu2/8I3ToM9iXnSR1OTiLhNsuq6zo9Nw2DfRR6duUUZiJCtOQ66lsf
+ +7EIdW/EDGFlzunZGFoC86m94RZpAZgVTaH1NQk6Nq/UwdGfwRwprLJBZE+ZNr4ynxK6
+ BceEjVYgH0+cLjAPKhE7eZ+HxFZlKSJSdtRPl0dCbPePKJbT1Y2gYvtIOpygCHhxNA5x
+ buMis4Wa5BpBPfL99y0y3kCdNTQ2m765w29V9SSenvy3NdSVzX3QfHNspAh6Tn+e5HqP
+ 6VGO9+l0Ugr7IaGUSj2HSBzkehrlOvxbvWDS86ST0fpODSH/Ev7VuAzfKQEITISvGJTH
+ Aw6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710748670; x=1711353470;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bqiVcWk+QPelPVCWArv8qjPW16I407GHPXqES+lc6zE=;
+ b=FbnBxPmEaAUaLK2J0SQSzzQKCr5KuPIKuMsycceq6gX84JK0CLtf+SNz4igUKHi1XJ
+ uuldZSWW8wJWIsYgixXN9IbJnCOOh1/qqyQ8zsnOGZaHQ3ffPrYQXefVV4EC+scvZ4Jn
+ v94xaExBJy1ysroRjvVq9lSRG8y7JpOB3xve4VKJ9fTC8qcwhPG6hPsQEsVR9YDzQ4D2
+ 8rxx9KCazDXk7KUcxC86cGENjQXaRS/7hCoboiL+3hvOniOS4BowxWe0jT3Sk8rJ6fLw
+ mRU8lC4Thx4VU6bl2xu184veqZ5G7PXfQeygw44C4yUvdiOumfxNgbEVbnASxQyexAg2
+ I8OA==
+X-Gm-Message-State: AOJu0YzvOwA2dXwfSARJEbYvi4Jo4KkUprerU8aRi7JchcqClAqv41/o
+ jdaxaWA5P19o5DTbIj5K/KuyPqYYZnMaqinAK5DYUybGFXpRxHE6JvlalM4/ASo=
+X-Google-Smtp-Source: AGHT+IFx4IOT08QmWZ798sWG1j7X/yo8oscEfc0l1dGvHIJ+plR7oN3ri1yHNyYjGFzikAyQjPCbwQ==
+X-Received: by 2002:aa7:9805:0:b0:6e6:f1f0:c55d with SMTP id
+ e5-20020aa79805000000b006e6f1f0c55dmr11919650pfl.4.1710748670476; 
+ Mon, 18 Mar 2024 00:57:50 -0700 (PDT)
+Received: from localhost ([157.82.200.213])
+ by smtp.gmail.com with UTF8SMTPSA id
+ m24-20020a63f618000000b005e43cb66a7asm6652825pgh.87.2024.03.18.00.57.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Mar 2024 00:57:50 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Mon, 18 Mar 2024 16:57:42 +0900
+Subject: [PATCH 1/4] ui/vc: Do not inherit the size of active console
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240315130910.15750-3-philmd@linaro.org>
-Received-SPF: none client-ip=198.175.65.18;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240318-console-v1-1-f4efbfa71253@daynix.com>
+References: <20240318-console-v1-0-f4efbfa71253@daynix.com>
+In-Reply-To: <20240318-console-v1-0-f4efbfa71253@daynix.com>
+To: Gerd Hoffmann <kraxel@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.12.3
+Received-SPF: none client-ip=2607:f8b0:4864:20::430;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,28 +96,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 15, 2024 at 02:08:50PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Fri, 15 Mar 2024 14:08:50 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH-for-9.1 02/21] target/mips: Declare CPU QOM types using
->  DEFINE_TYPES() macro
-> X-Mailer: git-send-email 2.41.0
-> 
-> When multiple QOM types are registered in the same file,
-> it is simpler to use the the DEFINE_TYPES() macro. In
-> particular because type array declared with such macro
-> are easier to review.
-> 
-> In few commits we are going to add more types, so replace
-> the type_register_static() to ease further reviews.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Message-Id: <20231013140116.255-15-philmd@linaro.org>
-> ---
->  target/mips/cpu.c | 23 +++++++++++++----------
->  1 file changed, 13 insertions(+), 10 deletions(-)
+A chardev-vc used to inherit the size of a graphic console when its
+size not explicitly specified, but it often did not make sense. If a
+chardev-vc is instantiated during the startup, the active graphic
+console has no content at the time, so it will have the size of graphic
+console placeholder, which contains no useful information. It's better
+to have the standard size of text console instead.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ ui/console-vc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index 9c13cc2981b0..f22c8e23c2ed 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -990,8 +990,8 @@ static void vc_chr_open(Chardev *chr,
+     trace_console_txt_new(width, height);
+     if (width == 0 || height == 0) {
+         s = QEMU_TEXT_CONSOLE(object_new(TYPE_QEMU_TEXT_CONSOLE));
+-        width = qemu_console_get_width(NULL, 80 * FONT_WIDTH);
+-        height = qemu_console_get_height(NULL, 24 * FONT_HEIGHT);
++        width = 80 * FONT_WIDTH;
++        height = 24 * FONT_HEIGHT;
+     } else {
+         s = QEMU_TEXT_CONSOLE(object_new(TYPE_QEMU_FIXED_TEXT_CONSOLE));
+     }
+
+-- 
+2.44.0
 
 
