@@ -4,93 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5FB1C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 08:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 584E5C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 08:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm8LC-00074E-6G; Mon, 18 Mar 2024 04:27:30 -0400
+	id 1rm8Ow-00088b-Om; Mon, 18 Mar 2024 04:31:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rm8LA-00073w-0W
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 04:27:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rm8L7-0005Os-A4
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 04:27:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710750443;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vnLpjykGS5Hn0jKQbYvXy8JIlp3tqQsy4OEEWvAFYJY=;
- b=UW+AjRESlzBtQC9ZK6CwMAx0qxMBfnOa2CtjdGag4adJkMphhG9W31f2VOBbtuezK3LIMS
- 4l+LqJQ5/Poj1OSBkyf/mHGSPt2ezYOKyBdVRxy47EGN9nHo06o+a1lmuH7ibEcM8rJR/7
- eY9QDu/440g1I676Qx0Ncvtwet1aiVw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-660-0NL8KRTyOjib1jzNURlKVA-1; Mon, 18 Mar 2024 04:27:21 -0400
-X-MC-Unique: 0NL8KRTyOjib1jzNURlKVA-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-414058eef24so10652975e9.0
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 01:27:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rm8Oo-00087k-4X; Mon, 18 Mar 2024 04:31:15 -0400
+Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rm8Om-0005xA-I0; Mon, 18 Mar 2024 04:31:13 -0400
+Received: by mail-vk1-xa2c.google.com with SMTP id
+ 71dfb90a1353d-4d43d602cd6so515579e0c.0; 
+ Mon, 18 Mar 2024 01:31:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710750671; x=1711355471; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MjPhb7w4dmQcA3V7iijrR2fatnw1z9jDT7J6T384WGw=;
+ b=J3cKXdyXkhndqejE4uGJadU9lrZ/+mVKXbAHHo3YDv/U7b9UHcZ3F8386R/AfFmpjp
+ bfKXLwSWi2m/s82LkrcwXAwsT1/pGb79kS1KIvLnHeCJnR02rdzH4rHKA0iRi1Fk7RKS
+ aYw2MX3Nx0HLFhcCEJxSrE7eAEHz8X0pyhv3mAJrX0jZqHo8JI14uU0ALlrQ1RiHyN2T
+ r6hamkMnWhNtQyAIL9FhQRLh/2ilXLuOr6n+AFTXEggPPK6Xy29EvW/w0hMSwu5N9BlH
+ Ugk9D/9G/fxWJjL2AUkHslXhToVErESGkJ+xP4fc04qwAenHf6vPAPFnoJmTCl9WqmyK
+ iAcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710750440; x=1711355240;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vnLpjykGS5Hn0jKQbYvXy8JIlp3tqQsy4OEEWvAFYJY=;
- b=OYNECv31Yh6DVMr3FVaNdqiCNePd0Tze6jmXxnYZzCBhSSDMxUhite7rqv0gluRJsZ
- ezQb5YAD5rREYkj9MxkC8awmZ8esjsW76PPE32ihlNo1exUTpHkzYw0axEohcClnpN7V
- fLU4PtIe+VAU+b0AR+GqKcQmF7I2tHkcfCdXqK6QrRxmpqYF7e9CQFxwpybpQA+RL89f
- nHp6mn2ATr9un2ggLuSa1qVQhR7kKfwVXApZ/jOh9eF1Md2uol9bCHhtoKuPjetDkgHl
- Nnsdj9PfmwhvEnWHnpe9xW6EQ0riIWfxTOPFMItl6pSNg8quP6LUwt8Nohtpb72OnjZq
- ENSQ==
-X-Gm-Message-State: AOJu0Ywf0lf1MCus8HmGXTKxLGwt28a1Sfz5TW7+EZCglMvrHxTA5CP5
- nWX5zaF1gLmaRraVAv5xkolKLW9RBQxHL7OS4xx6CWf2YJvtXsqaRivrmq6Zk0hv6NIuM2B1nFl
- pI1WIx6qhAnqtgQXyYRkoiy7vJtdC3LPgzAf3mvIYkmeT/YpVZYuL
-X-Received: by 2002:a05:600c:524c:b0:414:cd1:e46d with SMTP id
- fc12-20020a05600c524c00b004140cd1e46dmr2363750wmb.23.1710750440520; 
- Mon, 18 Mar 2024 01:27:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXswg1bfr3RTrv0LRWauMJ9hJHh7I/TxvFvr8qkQI9e+ExzqpozS6x8E1ZwZ9iQhBkPPqTdA==
-X-Received: by 2002:a05:600c:524c:b0:414:cd1:e46d with SMTP id
- fc12-20020a05600c524c00b004140cd1e46dmr2363732wmb.23.1710750440153; 
- Mon, 18 Mar 2024 01:27:20 -0700 (PDT)
-Received: from sgarzare-redhat (host-87-12-25-33.business.telecomitalia.it.
- [87.12.25.33]) by smtp.gmail.com with ESMTPSA id
- fb4-20020a05600c520400b004132901d73asm13961147wmb.46.2024.03.18.01.27.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 01:27:19 -0700 (PDT)
-Date: Mon, 18 Mar 2024 09:27:11 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, lulu@redhat.com, 
- kwolf@redhat.com, eperezma@redhat.com
-Subject: Re: [PATCH] vhost-vdpa: check vhost_vdpa_set_vring_ready() return
- value
-Message-ID: <uofjifqnl57vxigv4ebplfk4menefsgplnvvbprisubkywujbw@273bn7kc5hjg>
-References: <20240207092702.25242-1-sgarzare@redhat.com>
- <CACGkMEvRizRGOjOz_AVQw8wsGU3g8+-yHtnKM=yn=3RtY-Hayg@mail.gmail.com>
- <uufps7n6otfwygiszepy76ltohvsqqo45rwyc6axja3isebda2@mn4rjbji66qt>
- <CACGkMEt-z3YCh81M2yxnCa9PjLpR8qQ8rLQ5rRCMP6=m9yKpFw@mail.gmail.com>
+ d=1e100.net; s=20230601; t=1710750671; x=1711355471;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MjPhb7w4dmQcA3V7iijrR2fatnw1z9jDT7J6T384WGw=;
+ b=sI+xEK425JZKsjfK6i4/3gjH/Yu0p+mrkWGNp1ySe/EkskeB77gLYS1pZqxXcjJlwd
+ DvjPWaG4cJozoKq439iKTqV8qICacvIzuxjVSws61Ues4fRjGqfKrpu0ut0f9ZhJ03oZ
+ hZdB5U3NEVvszzqdl6vSfJDMmkii45w0TYZffMivDKZ2acjfT3Nwktq2E3ihQLBm2Fmv
+ o0213f5sYThtdQkGtsR86y5z6HFbpnGu63MG3Wb8s57HXpHIA//vJOKIbP82tYos7Mz0
+ xfvMIYhgn7zSgmVDKrXEgfp+P7hopVJRdeKKD+oJ2CYPG/3xEhMv0QMm45xfhTobmAKE
+ bV4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVZujMTQCSlr3h2m85EEUBP5tte+PBHJPevKM9A42CJaMYO0nkfwnM/6Z8fLzZIWyQpUhD+qLuE+Zucp1yErogMlkA8QLE=
+X-Gm-Message-State: AOJu0Yywnw8Ukk/e0InljIooycdNmvPS5J/mXkBKc6EZS/DgkgGjJsEx
+ /AAhCyjzvviNeKWk9ROvBfI2rffVCIUW1hGg0eu5qLoV2/DB5KzgkiMa5GU/3/dH26Zb1H/xfuY
+ HJp7qaw8QOuMxyi/NrcFSC0dIO9M=
+X-Google-Smtp-Source: AGHT+IGFVdXCtlNlPD6ey/Lcj+xvUFfYCoK3AYAc8kI7a1rn8J95KCfDDtqC6TehasS7wG4n/PaNqH++/Flp4YT1vgg=
+X-Received: by 2002:a1f:fc42:0:b0:4c0:1bb6:322 with SMTP id
+ a63-20020a1ffc42000000b004c01bb60322mr6628430vki.15.1710750670991; Mon, 18
+ Mar 2024 01:31:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACGkMEt-z3YCh81M2yxnCa9PjLpR8qQ8rLQ5rRCMP6=m9yKpFw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240314175704.478276-1-dbarboza@ventanamicro.com>
+ <20240314175704.478276-3-dbarboza@ventanamicro.com>
+In-Reply-To: <20240314175704.478276-3-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 18 Mar 2024 18:30:44 +1000
+Message-ID: <CAKmqyKOdQ_iFpVd-RahRD_hXw8Vk7YhBqhC-dZhR-GfRn_8FeA@mail.gmail.com>
+Subject: Re: [PATCH for 9.0 v15 02/10] trans_rvv.c.inc: set vstart = 0 in int
+ scalar move insns
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com, max.chou@sifive.com, richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,180 +94,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 18, 2024 at 12:31:59PM +0800, Jason Wang wrote:
->On Fri, Mar 15, 2024 at 4:23 PM Stefano Garzarella <sgarzare@redhat.com> wrote:
->>
->> On Thu, Mar 14, 2024 at 11:17:01AM +0800, Jason Wang wrote:
->> >On Wed, Feb 7, 2024 at 5:27 PM Stefano Garzarella <sgarzare@redhat.com> wrote:
->> >>
->> >> vhost_vdpa_set_vring_ready() could already fail, but if Linux's
->> >> patch [1] will be merged, it may fail with more chance if
->> >> userspace does not activate virtqueues before DRIVER_OK when
->> >> VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated.
->> >
->> >I wonder what happens if we just leave it as is.
->>
->> Are you referring to this patch or the kernel patch?
+On Fri, Mar 15, 2024 at 3:59=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
->This patch.
+> trans_vmv_x_s, trans_vmv_s_x, trans_vfmv_f_s and trans_vfmv_s_f aren't
+> setting vstart =3D 0 after execution. This is usually done by a helper in
+> vector_helper.c but these functions don't use helpers.
 >
->>
->> Here I'm just checking the return value of vhost_vdpa_set_vring_ready().
->> It can return an error also without that kernel patch, so IMHO is
->> better to check the return value here in QEMU.
->>
->> What issue do you see with this patch applied?
+> We'll set vstart after any potential 'over' brconds, and that will also
+> mandate a mark_vs_dirty() too.
 >
->For the parent which can enable after driver_ok but not advertise it.
+> Fixes: dedc53cbc9 ("target/riscv: rvv-1.0: integer scalar move instructio=
+ns")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-But this patch is not changing anything in that sense, it just controls
-the return value of the VHOST_VDPA_SET_VRING_ENABLE ioctl.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Why would QEMU ignore an error if it can't activate vrings?
-If we really want to ignore it we should document it both in QEMU, but
-also in the kernel, because honestly the way the code is now it
-shouldn't fail from what I understand.
+Alistair
 
-That said, even if we ignore it, IMHO we should at least print a warning
-in QEMU.
-
+> ---
+>  target/riscv/insn_trans/trans_rvv.c.inc | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 >
->(To say the truth, I'm not sure if we need to care about this)
-
-I agree on that, but this is related to the patch in the kernel, not
-this simple patch to fix QEMU error path, right?
-
+> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_=
+trans/trans_rvv.c.inc
+> index e42728990e..8c16a9f5b3 100644
+> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+> @@ -3373,6 +3373,8 @@ static bool trans_vmv_x_s(DisasContext *s, arg_vmv_=
+x_s *a)
+>          vec_element_loadi(s, t1, a->rs2, 0, true);
+>          tcg_gen_trunc_i64_tl(dest, t1);
+>          gen_set_gpr(s, a->rd, dest);
+> +        tcg_gen_movi_tl(cpu_vstart, 0);
+> +        mark_vs_dirty(s);
+>          return true;
+>      }
+>      return false;
+> @@ -3399,8 +3401,9 @@ static bool trans_vmv_s_x(DisasContext *s, arg_vmv_=
+s_x *a)
+>          s1 =3D get_gpr(s, a->rs1, EXT_NONE);
+>          tcg_gen_ext_tl_i64(t1, s1);
+>          vec_element_storei(s, a->rd, 0, t1);
+> -        mark_vs_dirty(s);
+>          gen_set_label(over);
+> +        tcg_gen_movi_tl(cpu_vstart, 0);
+> +        mark_vs_dirty(s);
+>          return true;
+>      }
+>      return false;
+> @@ -3427,6 +3430,8 @@ static bool trans_vfmv_f_s(DisasContext *s, arg_vfm=
+v_f_s *a)
+>          }
 >
->>
->> >
->> >VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK: We do know enabling could be
->> >done after driver_ok.
->> >Without VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK: We don't know whether
->> >enabling could be done after driver_ok or not.
->>
->> I see your point, indeed I didn't send a v2 of that patch.
->> Maybe we should document that, because it could be interpreted that if
->> VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated the enabling
->> should always be done before driver_ok (which is true for example in
->> VDUSE).
+>          mark_fs_dirty(s);
+> +        tcg_gen_movi_tl(cpu_vstart, 0);
+> +        mark_vs_dirty(s);
+>          return true;
+>      }
+>      return false;
+> @@ -3452,8 +3457,9 @@ static bool trans_vfmv_s_f(DisasContext *s, arg_vfm=
+v_s_f *a)
+>          do_nanbox(s, t1, cpu_fpr[a->rs1]);
 >
->I see, so I think we probably need the fix.
->
->>
->> BTW I think we should discuss it in the kernel patch.
->>
->> Thanks,
->> Stefano
->>
->> >
->> >Thanks
->> >
->> >>
->> >> So better check its return value anyway.
->> >>
->> >> [1] https://lore.kernel.org/virtualization/20240206145154.118044-1-sgarzare@redhat.com/T/#u
->> >>
->> >> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
->> >> ---
->> >> Note: This patch conflicts with [2], but the resolution is simple,
->> >> so for now I sent a patch for the current master, but I'll rebase
->> >> this patch if we merge the other one first.
->
->Will go through [2].
-
-Here I meant that the conflict is only in the code touched, because
-Kevin's patch remove/move some of the code touched by this patch.
-And rightly he checked the return value of the ioctl as I would like to
-do in the other places where we call the same ioctl.
-
-So honestly I still don't understand what's wrong with this patch...
-
-Thanks,
-Stefano
-
->
->Thanks
+>          vec_element_storei(s, a->rd, 0, t1);
+> -        mark_vs_dirty(s);
+>          gen_set_label(over);
+> +        tcg_gen_movi_tl(cpu_vstart, 0);
+> +        mark_vs_dirty(s);
+>          return true;
+>      }
+>      return false;
+> --
+> 2.44.0
 >
 >
->> >>
->> >> [2]
->> >> https://lore.kernel.org/qemu-devel/20240202132521.32714-1-kwolf@redhat.com/
->> >> ---
->> >>  hw/virtio/vdpa-dev.c |  8 +++++++-
->> >>  net/vhost-vdpa.c     | 15 ++++++++++++---
->> >>  2 files changed, 19 insertions(+), 4 deletions(-)
->> >>
->> >> diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
->> >> index eb9ecea83b..d57cd76c18 100644
->> >> --- a/hw/virtio/vdpa-dev.c
->> >> +++ b/hw/virtio/vdpa-dev.c
->> >> @@ -259,7 +259,11 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev, Error **errp)
->> >>          goto err_guest_notifiers;
->> >>      }
->> >>      for (i = 0; i < s->dev.nvqs; ++i) {
->> >> -        vhost_vdpa_set_vring_ready(&s->vdpa, i);
->> >> +        ret = vhost_vdpa_set_vring_ready(&s->vdpa, i);
->> >> +        if (ret < 0) {
->> >> +            error_setg_errno(errp, -ret, "Error starting vring %d", i);
->> >> +            goto err_dev_stop;
->> >> +        }
->> >>      }
->> >>      s->started = true;
->> >>
->> >> @@ -274,6 +278,8 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev, Error **errp)
->> >>
->> >>      return ret;
->> >>
->> >> +err_dev_stop:
->> >> +    vhost_dev_stop(&s->dev, vdev, false);
->> >>  err_guest_notifiers:
->> >>      k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
->> >>  err_host_notifiers:
->> >> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
->> >> index 3726ee5d67..e3d8036479 100644
->> >> --- a/net/vhost-vdpa.c
->> >> +++ b/net/vhost-vdpa.c
->> >> @@ -381,7 +381,10 @@ static int vhost_vdpa_net_data_load(NetClientState *nc)
->> >>      }
->> >>
->> >>      for (int i = 0; i < v->dev->nvqs; ++i) {
->> >> -        vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
->> >> +        int ret = vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
->> >> +        if (ret < 0) {
->> >> +            return ret;
->> >> +        }
->> >>      }
->> >>      return 0;
->> >>  }
->> >> @@ -1213,7 +1216,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState *nc)
->> >>
->> >>      assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
->> >>
->> >> -    vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
->> >> +    r = vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
->> >> +    if (unlikely(r < 0)) {
->> >> +        return r;
->> >> +    }
->> >>
->> >>      if (v->shadow_vqs_enabled) {
->> >>          n = VIRTIO_NET(v->dev->vdev);
->> >> @@ -1252,7 +1258,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState *nc)
->> >>      }
->> >>
->> >>      for (int i = 0; i < v->dev->vq_index; ++i) {
->> >> -        vhost_vdpa_set_vring_ready(v, i);
->> >> +        r = vhost_vdpa_set_vring_ready(v, i);
->> >> +        if (unlikely(r < 0)) {
->> >> +            return r;
->> >> +        }
->> >>      }
->> >>
->> >>      return 0;
->> >> --
->> >> 2.43.0
->> >>
->> >
->>
->
-
 
