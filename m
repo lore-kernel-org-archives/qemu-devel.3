@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF91C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 17:58:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3701C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 17:58:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmHEa-0000YM-Ut; Mon, 18 Mar 2024 13:57:16 -0400
+	id 1rmHEW-0000Vb-D8; Mon, 18 Mar 2024 13:57:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHEZ-0000Xy-6p
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHEU-0000U9-Pm
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHEX-00078t-QB
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmHET-00078C-Eh
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:57:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710784633;
+ s=mimecast20190719; t=1710784628;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xz5P+39VQaj/6mPsDDXaLw8Q7b0zW3e8IuF4GuVzrt8=;
- b=WaaTa2iY5P/htlOe8LixL+ZqgcLYIBp91whgR7l4gUVCfDrvmNuYHXH4Ff+VbjIENa11Y+
- 8utHZb+mXaQElTDcgWOaFxRIDxumlWUjOSQWDfdZkBaOU4w2h1mEP7G1NgT2Io7oDJ85yK
- oXQz0cGx2ZFxBjbwip1zP8xMQo+NxJk=
+ bh=IlmCn9L0BVplQdOy/vjL33uKo/SSaW9NaQF26dxzgn8=;
+ b=FzUvHHL1rEY7mYbYnKnd91o+yJoojRoRjZ41Z/Pbhf9tNvQ1Fqd3kuY9YSzfT/v+puwWzr
+ jCsQmxHrCNFIEsNSluHnl061gtlA4l1VORs+XhVuMQ/6yn1JaaBGYmW5NZer78HUlfOHNI
+ pPX7c5n3KtF40XWG29O9ZFv4QtMOlHY=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-256-9mQP87XKOa2J5vJUlnhrKw-1; Mon,
- 18 Mar 2024 13:57:08 -0400
-X-MC-Unique: 9mQP87XKOa2J5vJUlnhrKw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-ygQnxjG0Nfu5fF6jDceHAA-1; Mon,
+ 18 Mar 2024 13:57:07 -0400
+X-MC-Unique: ygQnxjG0Nfu5fF6jDceHAA-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 66C7D282D3C8;
- Mon, 18 Mar 2024 17:57:08 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.155])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 1CA812166B34;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C582929AC036;
  Mon, 18 Mar 2024 17:57:06 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.155])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id B0D222166B32;
+ Mon, 18 Mar 2024 17:57:05 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 4/4] travis-ci: Rename SOFTMMU -> SYSTEM
-Date: Mon, 18 Mar 2024 18:56:55 +0100
-Message-ID: <20240318175655.756084-5-thuth@redhat.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 3/4] target/sparc/cpu: Improve the CPU help text
+Date: Mon, 18 Mar 2024 18:56:54 +0100
+Message-ID: <20240318175655.756084-4-thuth@redhat.com>
 In-Reply-To: <20240318175655.756084-1-thuth@redhat.com>
 References: <20240318175655.756084-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -82,61 +82,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Remove the unnecessary "Sparc" at the beginning of the line and
+put the chip information into parentheses so that it is clearer
+which part of the line have to be passed to "-cpu" to specify a
+different CPU.
 
-Since we *might* have user emulation with softmmu,
-rename MAIN_SOFTMMU_TARGETS as MAIN_SYSTEM_TARGETS
-to express 'system emulation targets'.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240313213339.82071-3-philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240307174334.130407-4-thuth@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- .travis.yml | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/sparc/cpu.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/.travis.yml b/.travis.yml
-index 76859d48da..597d151b80 100644
---- a/.travis.yml
-+++ b/.travis.yml
-@@ -35,7 +35,7 @@ env:
-     - TEST_BUILD_CMD=""
-     - TEST_CMD="make check V=1"
-     # This is broadly a list of "mainline" system targets which have support across the major distros
--    - MAIN_SOFTMMU_TARGETS="aarch64-softmmu,mips64-softmmu,ppc64-softmmu,riscv64-softmmu,s390x-softmmu,x86_64-softmmu"
-+    - MAIN_SYSTEM_TARGETS="aarch64-softmmu,mips64-softmmu,ppc64-softmmu,riscv64-softmmu,s390x-softmmu,x86_64-softmmu"
-     - CCACHE_SLOPPINESS="include_file_ctime,include_file_mtime"
-     - CCACHE_MAXSIZE=1G
-     - G_MESSAGES_DEBUG=error
-@@ -114,7 +114,7 @@ jobs:
-       env:
-         - TEST_CMD="make check check-tcg V=1"
-         - CONFIG="--disable-containers --enable-fdt=system
--                  --target-list=${MAIN_SOFTMMU_TARGETS} --cxx=/bin/false"
-+                  --target-list=${MAIN_SYSTEM_TARGETS} --cxx=/bin/false"
-         - UNRELIABLE=true
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index dc9ead21fc..e820f50acf 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -574,9 +574,10 @@ void sparc_cpu_list(void)
+ {
+     unsigned int i;
  
-     - name: "[ppc64] GCC check-tcg"
-@@ -185,7 +185,7 @@ jobs:
-       env:
-         - TEST_CMD="make check check-tcg V=1"
-         - CONFIG="--disable-containers --enable-fdt=system
--                  --target-list=${MAIN_SOFTMMU_TARGETS},s390x-linux-user"
-+                  --target-list=${MAIN_SYSTEM_TARGETS},s390x-linux-user"
-         - UNRELIABLE=true
-       script:
-         - BUILD_RC=0 && make -j${JOBS} || BUILD_RC=$?
-@@ -226,7 +226,7 @@ jobs:
-           - genisoimage
-       env:
-         - CONFIG="--disable-containers --enable-fdt=system --audio-drv-list=sdl
--                  --disable-user --target-list-exclude=${MAIN_SOFTMMU_TARGETS}"
-+                  --disable-user --target-list-exclude=${MAIN_SYSTEM_TARGETS}"
- 
-     - name: "[s390x] GCC (user)"
-       arch: s390x
++    qemu_printf("Available CPU types:\n");
+     for (i = 0; i < ARRAY_SIZE(sparc_defs); i++) {
+-        qemu_printf("Sparc %16s IU " TARGET_FMT_lx
+-                    " FPU %08x MMU %08x NWINS %d ",
++        qemu_printf(" %-20s (IU " TARGET_FMT_lx
++                    " FPU %08x MMU %08x NWINS %d) ",
+                     sparc_defs[i].name,
+                     sparc_defs[i].iu_version,
+                     sparc_defs[i].fpu_version,
 -- 
 2.44.0
 
