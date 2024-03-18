@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F4AC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 13:04:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E84D9C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 13:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmCee-0005PD-Ff; Mon, 18 Mar 2024 09:03:52 -0400
+	id 1rmCf0-0007RB-7x; Mon, 18 Mar 2024 09:04:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmCca-0002RG-RU
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:01:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmCch-0002WI-DM
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:01:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmCcU-0007fz-NE
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:01:43 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmCce-0007ja-CL
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:01:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710766895;
+ s=mimecast20190719; t=1710766902;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6nWAzz1RAVU1AEDOfP3SmXehriEBqKGen3g6vfNyr8Y=;
- b=T40V0oOEKCen+WSqMjIrspf1XeQ1Lo08a4yXN73rsTc7p74mqo6SNGQl0xO8tkMb424nBl
- bpH/1X51S21O7X/s1e4DMtfcVYqx+y/GjNXo64eFQi0hz5JqId44ZIgJdAF+KgtfTThiHu
- dK1GxICp4DRNfHsenm4o0ue9d0egt4I=
+ bh=UGKKjvaXxYmFKHQMdtSjAoUHjNEkrd8PSJrjEXtTN2M=;
+ b=SgrrrCr7BgrQ8mddKSk4U1o2SkXKoqFyFUu2wkHO3AeSmxJmYdAh8xfVIF6lQhfGv2l/oX
+ QOj+Go0j33wEoQRJcZ/YY8XG7W8vRVuUIyRFIOx8LL9gnQKMG0cmLigV4yfFyI9X0d4tMw
+ 1q7HOVTXiHcQpVOvs/6qaCIiB24F5Ic=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-573-N5p_8Do-Mfu5_pSFO43szg-1; Mon,
- 18 Mar 2024 09:01:32 -0400
-X-MC-Unique: N5p_8Do-Mfu5_pSFO43szg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-FsilWBCDP3afuQUFoVe2ow-1; Mon,
+ 18 Mar 2024 09:01:39 -0400
+X-MC-Unique: FsilWBCDP3afuQUFoVe2ow-1
 Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
  [10.11.54.6])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 732C61C01429;
- Mon, 18 Mar 2024 13:01:32 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 001843C0D7CD;
+ Mon, 18 Mar 2024 13:01:39 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.39.194.127])
- by smtp.corp.redhat.com (Postfix) with ESMTP id D53702166B5D;
- Mon, 18 Mar 2024 13:01:31 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 677842166B5D;
+ Mon, 18 Mar 2024 13:01:37 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 08/15] tests/qemu-iotests: Restrict test 114 to the 'file'
- protocol
-Date: Mon, 18 Mar 2024 14:01:11 +0100
-Message-ID: <20240318130118.358920-9-kwolf@redhat.com>
+Subject: [PULL 15/15] iotests: adapt to output change for recently introduced
+ 'detached header' field
+Date: Mon, 18 Mar 2024 14:01:18 +0100
+Message-ID: <20240318130118.358920-16-kwolf@redhat.com>
 In-Reply-To: <20240318130118.358920-1-kwolf@redhat.com>
 References: <20240318130118.358920-1-kwolf@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -81,38 +82,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-iotest 114 uses "truncate" and the qcow2.py script on the destination file,
-which both cannot deal with URIs. Thus this test needs the "file" protocol,
-otherwise it fails with an error message like this:
+Failure was noticed when running the tests for the qcow2 image format.
 
- truncate: cannot open 'ssh://127.0.0.1/tmp/qemu-build/tests/qemu-iotests/scratch/qcow2-ssh-114/t.qcow2.orig'
-  for writing: No such file or directory
-
-Thus mark this test for "file protocol only" accordingly.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240315111108.153201-4-thuth@redhat.com>
+Fixes: 0bd779e27e ("crypto: Introduce 'detached-header' field in QCryptoBlockInfoLUKS")
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20240216101415.293769-1-f.ebner@proxmox.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- tests/qemu-iotests/114 | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qemu-iotests/198.out | 2 ++
+ tests/qemu-iotests/206.out | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/tests/qemu-iotests/114 b/tests/qemu-iotests/114
-index de6fd327ee..dccc71008b 100755
---- a/tests/qemu-iotests/114
-+++ b/tests/qemu-iotests/114
-@@ -38,7 +38,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- . ./common.filter
- 
- _supported_fmt qcow2
--_supported_proto generic
-+_supported_proto file
- # At least OpenBSD doesn't seem to have truncate
- _supported_os Linux
- # qcow2.py does not work too well with external data files
+diff --git a/tests/qemu-iotests/198.out b/tests/qemu-iotests/198.out
+index 805494916f..62fb73fa3e 100644
+--- a/tests/qemu-iotests/198.out
++++ b/tests/qemu-iotests/198.out
+@@ -39,6 +39,7 @@ Format specific information:
+     compression type: COMPRESSION_TYPE
+     encrypt:
+         ivgen alg: plain64
++        detached header: false
+         hash alg: sha256
+         cipher alg: aes-256
+         uuid: 00000000-0000-0000-0000-000000000000
+@@ -84,6 +85,7 @@ Format specific information:
+     compression type: COMPRESSION_TYPE
+     encrypt:
+         ivgen alg: plain64
++        detached header: false
+         hash alg: sha256
+         cipher alg: aes-256
+         uuid: 00000000-0000-0000-0000-000000000000
+diff --git a/tests/qemu-iotests/206.out b/tests/qemu-iotests/206.out
+index 7e95694777..979f00f9bf 100644
+--- a/tests/qemu-iotests/206.out
++++ b/tests/qemu-iotests/206.out
+@@ -114,6 +114,7 @@ Format specific information:
+     refcount bits: 16
+     encrypt:
+         ivgen alg: plain64
++        detached header: false
+         hash alg: sha1
+         cipher alg: aes-128
+         uuid: XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
 -- 
 2.44.0
 
