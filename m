@@ -4,173 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E77AC54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 22:17:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44A39C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 23:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmLHo-0005b6-D8; Mon, 18 Mar 2024 18:16:52 -0400
+	id 1rmMON-0000nN-DZ; Mon, 18 Mar 2024 19:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
- id 1rmLHl-0005as-S6
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 18:16:49 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmMOL-0000mo-2m
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 19:27:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
- id 1rmLHj-000324-Jl
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 18:16:49 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42ILxCgk016199; Mon, 18 Mar 2024 22:16:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=AfAcoALQNTMx09l3Z4Lq4PhrvVfmAlTWZYakdarEHGU=;
- b=K8s6JXZuKCypBufQECJroOP5CYILGOmNCHVOF40Bdh2hPz+dKKDNRkq+0kP3WgD/W2Js
- mFDpfezNOc0Ov5Gj2aAaxwSHdKX3sqwGDgzKhRl0FoulrlThzJh7qqWbslZO/PBw7MqJ
- QEuuNLi8tLjcX4YPProGgU/uA/ko49VFXl1Q6rW21Mc8LV44GAhGmJT82ivgxGW8LhBp
- 1YELDlbcku30IVRbh1g0WM0OGVWllkfgq/pKYMTQSMk2gd5fd0a7xZVcww/yoNfE5qbH
- atsRpAr23Eoj1VWCuEyxclcDLd22s7eWaaXtIUDhXcGKiM7AWKuVUSy/vH8SVxn6HdCd KA== 
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3ww31tm53g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 18 Mar 2024 22:16:44 +0000
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 42ILGfVQ024305; Mon, 18 Mar 2024 22:16:44 GMT
-Received: from nam04-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam04lp2169.outbound.protection.outlook.com [104.47.73.169])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3ww1v5q2tb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 18 Mar 2024 22:16:43 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=A/6cGPuf0t74EQ4dZU0EArzOCvvZIxgVzYEwbewGCJejTAQAMe5Pk2kikkLH2B9eNSu9Z1cll0UuzFE3xVsyMxl5GoDo+mTiYDp3tVFNSQm4sr/nIIIV08kV2GgPfXA8tSx41Rha97EU73QdOMtvwVB4G7/PcpQWfE2W6rDT+skW6ZkwXRfOr94QwDTYuPvOam9p9j8I2xM0ynRGw15dgZJsCyLKzr6ls2z4yfH+wnqhXw2mU4ffBtkUt6EzcuVMhJtavlEkKJ7AXKZLTdqHaY4JjFyfLJQ6KoKyNfrn79ipkOqaYaFAR1F1sXQTrIKbXMH0+8Mi7q96g7Necnwr1Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=AfAcoALQNTMx09l3Z4Lq4PhrvVfmAlTWZYakdarEHGU=;
- b=gSOkLpINFUnrJCKNDd+I7MujidIbHneJQ2wh9K7WCTBmzqa0C9GZV2LxdxAFhBLZr6AESkTgYRdqczfaC/KSWSL0Y62KAa91v1i64MLmfEpRIfdrCl62WX1GgLm6xGDZmSxQKTIlnnIq5vbsp/iEDnJO6aNR5P6W+evvhpD8WAX2NDW57E3t7rcs58Yrd6ESi+YK6Y5m2bRyYr2akTZVGSyFPgJg/3yNBWIEtKB+OmDa+cNBVJ+Qs5wtCWi/nTlQfwJTlV9GHR9EoyZf0UTK8biTCgxILEnIUABd4OZHatZ0K57cBaPrpZJmH4FhdkZfkuEajHHBYnKNAfNDILLxPQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=AfAcoALQNTMx09l3Z4Lq4PhrvVfmAlTWZYakdarEHGU=;
- b=xOMw2tVXjfYUokH0o+936Gdj8O1PVYH0hTSpUl8WNanAHE8J6Sd0MdvpQKviiKXTnSZWg3O6uH2VsJwHT3hu6ZvQpVHBUoASdHeRGCwSS+kq7cGMRGlt3jnHDO6foB2yi3Ss5IpjCsvFEVwmy+wa3TUixNfbRyLryX2Lc8Fbjc8=
-Received: from MW4PR10MB6535.namprd10.prod.outlook.com (2603:10b6:303:225::12)
- by BN0PR10MB5174.namprd10.prod.outlook.com (2603:10b6:408:126::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.27; Mon, 18 Mar
- 2024 22:16:41 +0000
-Received: from MW4PR10MB6535.namprd10.prod.outlook.com
- ([fe80::bf6e:420b:90be:3cff]) by MW4PR10MB6535.namprd10.prod.outlook.com
- ([fe80::bf6e:420b:90be:3cff%4]) with mapi id 15.20.7386.025; Mon, 18 Mar 2024
- 22:16:41 +0000
-Message-ID: <0dec84ec-289b-4026-8098-010ec4c5c315@oracle.com>
-Date: Mon, 18 Mar 2024 15:16:38 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] vhost: Perform memory section dirty scans once per
- iteration
-Content-Language: en-US
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, eperezma@redhat.com,
- joao.m.martins@oracle.com
-References: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
- <1710448055-11709-2-git-send-email-si-wei.liu@oracle.com>
- <CACGkMEukLmTSfuXxSMsZuO_B7o7623x=gmLD5s-xoinEq=dWYQ@mail.gmail.com>
- <d6c1769c-049e-47a3-8705-bdfe1b2a6fd8@oracle.com>
- <CACGkMEtEtmOZB53xibp5G7ZeVdKpZogEnetfnfj1QCSX-RWY8w@mail.gmail.com>
-From: Si-Wei Liu <si-wei.liu@oracle.com>
-Organization: Oracle Corporation
-In-Reply-To: <CACGkMEtEtmOZB53xibp5G7ZeVdKpZogEnetfnfj1QCSX-RWY8w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BY5PR17CA0001.namprd17.prod.outlook.com
- (2603:10b6:a03:1b8::14) To MW4PR10MB6535.namprd10.prod.outlook.com
- (2603:10b6:303:225::12)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmMOJ-0005HV-2W
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 19:27:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710804457;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Tz4rZrOAnV5BFMENb1hPCzeQZvusSgbLFaXI22NiMok=;
+ b=aESUtmj5XEqGmNe3qM06hXWpKvI6lLXykPs6+Q3Zyu3jj+KNXgaiMTwb0e7CeDsgCf3uBP
+ 5a+KsP19pkuFiR/Hv9Usu3kOLHRU40urv0Ssdp+/xxb/izLmz8kY6n8JFgFxL0R89vpD8a
+ FNsMVRYG2DktEe2QlYeiec0Gc73sAaQ=
+Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
+ [209.85.221.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-168-tepcVpu5NhyM1xSa_dNG9w-1; Mon, 18 Mar 2024 19:27:35 -0400
+X-MC-Unique: tepcVpu5NhyM1xSa_dNG9w-1
+Received: by mail-vk1-f197.google.com with SMTP id
+ 71dfb90a1353d-4d453adea04so208736e0c.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 16:27:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710804455; x=1711409255;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Tz4rZrOAnV5BFMENb1hPCzeQZvusSgbLFaXI22NiMok=;
+ b=TROjh0R8CURc3KwnrD4RPy2bNCzNAv8IrJ2HVus/KSMkisYyFthk0ZNzlQaNm9oL5O
+ +KXYmK6QHMQxxFHUMmMZDMBhVG2IGHizmQoHQRCZ6w/hu9hhtQD1b/aXMdl1guyCgTBY
+ UVt0Fqd7hF4DYkPMTT0W+dMFDkjvkqBFS0tM517jY0VTWDxSNXnYA6G8oh74RnGSFcRA
+ eM+Os9nbeAUeNZDNSdH5cS/e0OdubGmr7gUkPoZqcSm6P0YwOL5LzbUHAR1gIiZX4+6G
+ mDZYE2appzN25GI7N1K79Swhbkj1/OA6my6+CKJKXDw+z5G7w5Vue5xOCL8Fl+JmqS8w
+ 9T6Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcGFYiBqMVmVunpxgYjaY/q0D0V1i4d4Ma5Fb5lmu6tvBr7fNOWSLdthrRIXKgRP2+640oB1bylmvjzgc5L4nn+d12Ris=
+X-Gm-Message-State: AOJu0YzLdrS039trDuxSkYh9q7CenLPPUiXQV7rC8MznLHS+XxTu7SZT
+ qP2uOpGGkSLzsA3oa3hCR6hbjIWcATD7PXUAqqqGrQlfLBzQtPQKvDUWKdUez4OpY4m2/kJUXmw
+ 4HM5NcQgumc8QWXTXQcRBVNxb7lyQOzRfJXySWygEA+QO6bsLUaIU
+X-Received: by 2002:a05:6122:e61:b0:4c9:225d:cece with SMTP id
+ bj33-20020a0561220e6100b004c9225dcecemr559317vkb.1.1710804454812; 
+ Mon, 18 Mar 2024 16:27:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3YjTxaejo4QCs/6mgxulopr7jY2WamEDJcVnMAb7FFiutcU8GMmJdxRZUmTTVkTNnWA0NDw==
+X-Received: by 2002:a05:6122:e61:b0:4c9:225d:cece with SMTP id
+ bj33-20020a0561220e6100b004c9225dcecemr559298vkb.1.1710804454254; 
+ Mon, 18 Mar 2024 16:27:34 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ jx12-20020a0562142b0c00b0068ff8bda6c7sm5773198qvb.92.2024.03.18.16.27.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Mar 2024 16:27:33 -0700 (PDT)
+Date: Mon, 18 Mar 2024 19:27:32 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Maksim Davydov <davydov-max@yandex-team.ru>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ jsnow@redhat.com, philmd@linaro.org, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PULL 0/4] machine development tool
+Message-ID: <ZfjN5LYZgymP8Tp2@x1n>
+References: <20240304135145.154860-1-davydov-max@yandex-team.ru>
+ <CAFEAcA9acSfGP6PcErqp1rTmSd3G+AwUUx_aF-5KJy4iS6BqaQ@mail.gmail.com>
+ <874jdkn3he.fsf@pond.sub.org> <ZefNfJ3BwudA-M7t@x1n>
+ <117b4556-aadd-4287-909c-e5cf988214b5@yandex-team.ru>
+ <ZeqKZOxF1MlgeRE3@x1n>
+ <91a88010-8822-4628-9deb-bc581e536c44@yandex-team.ru>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW4PR10MB6535:EE_|BN0PR10MB5174:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: OwJyaCO/v9s1+VpCq07W4hZC+W4o4Mzhcb6avZgsuxXxYXzPlG0CK/MbzrKp5Xmu3ynIbS6fyjN/7YNNrv7N/T3GeidHSzt7WPr1zkuOs0jaWBC/5pECJ0qK3LK9fR/pkK88JW4FXlDNbRWs9DCcskcbMOS8baDCcd86AuKz5nKWe1eb6GYKiqOrhjAa66T7WfDWkWzLxeHMZgXSjRmLPx+9iGCHq29AeCwXebOL1Uf5iILgxCRz/F/UJ87kpeCwxBhakb9CTDTzrjbTGGNIh3ulQvN6m0IEfZDMpKlUO3L7wmK7QdRl1Hs0Ir+Huwoo8b9Win5KT0vclb8BCLbszA30uA17R0v5Pn7YpGJ4YhwrxxOaLEtOm+9SrIekOMxNUIdNbDSz2Jn0w3M35ERs4KCH/XHlJy8umTPnRDzOD9Ey+PUlkQBkQrcZnn3f3VNZuoBIjo4nIsZNeLZg7fM6GfSkh8L9BWY4/Mw2MmWGBdjQX6nDQ2kqq9GDVuvzWkHQG/AKJLqOB6t4wc4iLcmgO7sbsp3ngP4IkLpWcPXKxKjsbpSuwn+Q42b5PnOS4ycwR6pswm2e1mrBTGmsU0T9KHDHivKYP3uZdva9TTDkgu5FMJADTCktQwYd66+oH53mpeXZm7v0yTeqH2vLxybtigRYGGG7mlc+wvhQDh2I46w=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW4PR10MB6535.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(1800799015)(376005); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QXl2YmM4VWlQdHVsR2tFNFc1WHpJK3NlQjh1bCttOG1qekhtNS9iV0h0cVUx?=
- =?utf-8?B?R0VuMVgvNlJrNmtxaWxLNS85VHNCOEFma1hKdmRqYUU3bWdnNXdpVHQ1WDVj?=
- =?utf-8?B?OTduakVpUVArWkRIVEZQYlpzak1uS2JVNU9hU1llN1NOTnUzRng4MEZteStj?=
- =?utf-8?B?RXpmVDZRbW9jY2xlNEs4N0hTNGlXdWhMcEVUdjJoYzFjdU1jT0ozNXVKdTFv?=
- =?utf-8?B?ajRPdjNOVWFSYXpvSXlVRmI2MWJPRU01Z3JqZG1vMU5UcGl5UjZ3aktWaUJB?=
- =?utf-8?B?SWpybTlzT1VpMzViWjhsTW1RTTRKQkRaQjlyWXVNTFdkSzl3VzcwNU94QXhO?=
- =?utf-8?B?SmN5ZTVodkh3TGVjSUh5R1BkRlk0RWRiWlMxaE5QNWpvWmExZXVneUNqc3pa?=
- =?utf-8?B?bEg0TktnMTg0ZjlPcjVQYWdmSXdHa1RQZHV1MDFwREUxOU0rTUpkRXdBZmgr?=
- =?utf-8?B?UG5FVkl5OHluWGliNURrVExBNnlpcEFHQTk2R0pEeGlHOUdFOGx0clIvZEZY?=
- =?utf-8?B?QkhpZkRnV1k1RWJ5a1VjSHNVM1hJNEVqQWpKTTlHL0lFTW9jRzhRaHN1S09R?=
- =?utf-8?B?Wjk0ZWIxWnQrNjFOdVVSZ0RJaWRuYmk3ZldQL3U4RmYvZ3Y5MTU5SWY2a0d2?=
- =?utf-8?B?UFRETVdvbU02TFdDTVNhUFp2TUR5WFFiWC9ZN0h5KytOS1BGOExUTUtzbVI2?=
- =?utf-8?B?NmtidTdCbGpXZmR6T2t6TWJjUEM1NDRINWRtZXpNZTcrbzV2MzNxWXhxdmJX?=
- =?utf-8?B?TlRWaUVvY0hRNVU5UGc4c3k1MzBSV0wrK1FwUmNHSkE0WDhxbldiMFdTSE43?=
- =?utf-8?B?ZjVnRWRDQW9mZnpIM1NkcnJ1OFdYeUpLcXpDMWh6QWlreTd2ZHI3b2ovRXpM?=
- =?utf-8?B?VTQrSDBxWkhqazNLellWNFlLeGZCWFA0dENRbDVJaWM5U091dzRhR0xWNjhV?=
- =?utf-8?B?dnJ4c3hyemFpVm5GRXJzRitzUEJUUkZUN3RlT2dsVzdzTlVBanVmWDE4dnR5?=
- =?utf-8?B?MFRDdXdld0x3SUVIVGh2UDg2UkNBWWg2b1JCc0RwNFluWWFIN3UxQ3lYZGVM?=
- =?utf-8?B?OFl0Y05aa1JiR0pUSGpIdFg3bGl1d2dtVnBzTlZ6aGcvVDBwK2hrNDRsQzdM?=
- =?utf-8?B?bXNodllmVUNvaFpoNFVjZEp6aDRFWngxY3RwMjUwYVZQNlRCcVdObDZEQmZY?=
- =?utf-8?B?Q0lWaGFtS1RlR2IzSGg0cmxLU0dQV01kOVFyaE9oeW8xYmhUSkVhM3haUE1P?=
- =?utf-8?B?b3Y1L0J6M0pFNEVVYmhGai9ycDczZUxMdWxzQVVRU0JZeDRmbnBZVTNLR3BJ?=
- =?utf-8?B?WDZRYnJxK0FSeFh5dXJXNzJ6Q0V6QTFoZUEvdUNkaGdmQkp0K2ZMeXdDeEhi?=
- =?utf-8?B?VTZ0aWpuRXN0QjlpbFd3VkorN2xRbEFoamo3NnBncWFUVXc0SFRJMk44dlNV?=
- =?utf-8?B?a21RZWVLOCtpYXdtQ05PeWlDNE5yUW9ONVEyZ3hkanJDd0svWThKQ2o4bnNp?=
- =?utf-8?B?MVNTRWc3WnhnY0kxMWczT1F2MjgzRWlqRDVHcXQ1Rnd0SUpwUXVEWXQ5Zkkw?=
- =?utf-8?B?NHQ3eHN2UjJwYlJUWGJ6REloejRrbFpuSVZJSEtzTmppalYyVzRWenNiVEFN?=
- =?utf-8?B?dlk3OGlnWjczbDNKSFFFdkY0TDlmU0VCaFZDWTZtL0duT3pzUXo3dkxITEFB?=
- =?utf-8?B?NS9NalBBOW5DVy9YL2twbTNTNGc1SDJ3SXpkZW5jWUxibGFsZUNoQXhHTFdv?=
- =?utf-8?B?R2RPYk1sRnZOcGRtWW5XYS9Vd2w1REhiMWVoc1A1SzVBM3EwR1kzbDlEVUty?=
- =?utf-8?B?RXEvTWhMcyt1Q0pkN05KN29yNE5EeXdnU2FIVzErRkxlQ21sbUZOYUdVS1V2?=
- =?utf-8?B?OGVGeGNwOG51NnlidW14UzVYWmlGNk5tcHBuNHdIQ2JxSlpRcTBsdjY5aEt1?=
- =?utf-8?B?VDFLNVRjOVJ2eUJha0pUcnFBSVJIaEI2cnc2WDdocHJjdlNsWTdKSjBBSDkv?=
- =?utf-8?B?RTQrbFlTd3J3djZkUWt4NW1PRTFaWTBTVGhSNnJqQU44cEF1ekhSa1QzZVVD?=
- =?utf-8?B?d0tFS3lqQTRTSFZNdGZCckpjUzQrRWRWalFRN2lzakZSU1VZZUpDQ3lOV0pS?=
- =?utf-8?Q?B0ehHxJ8thI0elZUXoX3ii5da?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 8bXgkQ/8A9ZKufX1XjN5/MQ/8h5wzvxNaAuiWZ1X9ASh+wOiTtoe9sEPV+ElBPJvnMj+WoOjZVlv7x0moD3RtSYGtNWgTZx7M6/sA0/Jj/EuK27KaybFky/Ks8M03x85QRBiSekmFBawL5t8uhg7ZxrDDduVxFu95P4fCI6jIhtwTIckI9rtRATjyAtRmXH8PAlGg1WFDDIXzNXPSkKVQ6i1Ulhadru0V8Z2NyDzNGqccvcpY1jyglmpSI//rV/dcAg4exX7MrLeBtFpGrIk+hcbj+04Th2Ax/5ex2zadgv/xVPDkcBk+uBMH2gl6Z9CUlHK7Uir7bn8Cwm3gJGuFrYkERQetymHiqouDgowL8p3vfRLJ0I8ZuYut4gdDuiUa+ahhOizLekyUi/uKilfo2tLLtJcuQkdt48qhsUD66FF+Q/vQAlKEmW620oPcwCbfp1mTWT6qqTmbGHjBnpH5D2q17uBu8gDS7x+vw8XuovI0esuvHob/W8eSDUwxeMIDZXCfGRbB6JVspqpP0veaDgYn/wWBIu/MxxiafFnXa2iFwwvl0hDD7C8YyQBUXcTjiS6lBXpbGbg2NolboNb1ik01jbqTcrFMXJhqDH7VY0=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 169312ce-c703-410e-f566-08dc47991663
-X-MS-Exchange-CrossTenant-AuthSource: MW4PR10MB6535.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Mar 2024 22:16:41.3200 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KClTSNYZNEEXMjxdWiAgJR4Ct8j723vjSCTthGloogIxAHRbhYwng1pef6fBpOiYf19B2bkY/200BwnSPvh2lg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN0PR10MB5174
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxlogscore=999
- phishscore=0 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2403140000 definitions=main-2403180168
-X-Proofpoint-ORIG-GUID: uHRIuyhah6hHZHdMeSzIGuWm1ScwEmh4
-X-Proofpoint-GUID: uHRIuyhah6hHZHdMeSzIGuWm1ScwEmh4
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=si-wei.liu@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <91a88010-8822-4628-9deb-bc581e536c44@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -188,128 +110,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Mar 18, 2024 at 08:08:29PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 08.03.24 06:47, Peter Xu wrote:
+> > On Thu, Mar 07, 2024 at 12:06:59PM +0300, Maksim Davydov wrote:
+> > > 
+> > > On 3/6/24 04:57, Peter Xu wrote:
+> > > > On Tue, Mar 05, 2024 at 03:43:41PM +0100, Markus Armbruster wrote:
+> > > > > Peter Maydell<peter.maydell@linaro.org>  writes:
+> > > > > 
+> > > > > > On Mon, 4 Mar 2024 at 13:52, Maksim Davydov<davydov-max@yandex-team.ru>  wrote:
+> > > > > > > The following changes since commit e1007b6bab5cf97705bf4f2aaec1f607787355b8:
+> > > > > > > 
+> > > > > > >     Merge tag 'pull-request-2024-03-01' ofhttps://gitlab.com/thuth/qemu  into staging (2024-03-01 10:14:32 +0000)
+> > > > > > > 
+> > > > > > > are available in the Git repository at:
+> > > > > > > 
+> > > > > > >     https://gitlab.com/davydov-max/qemu.git  tags/pull-compare-mt-2024-03-04
+> > > > > > > 
+> > > > > > > for you to fetch changes up to 7693a2e8518811a907d73a85807ee71dac8fabcb:
+> > > > > > > 
+> > > > > > >     scripts: add script to compare compatibility properties (2024-03-04 14:10:53 +0300)
+> > > > > > > 
+> > > > > > > ----------------------------------------------------------------
+> > > > > > > Please note. This is the first pull request from me.
+> > > > > > > My public GPG key is available here
+> > > > > > > https://keys.openpgp.org/vks/v1/by-fingerprint/CDB5BEEF8837142579F5CDFE8E927E10F72F78D4
+> > > > > > > 
+> > > > > > > ----------------------------------------------------------------
+> > > > > > > scripts: add a new script for machine development
+> > > > > > > 
+> > > > > > > ----------------------------------------------------------------
+> > > > > > Hi; I would prefer this to go through some existing submaintainer
+> > > > > > tree if possible, please.
+> > > > > Migration?  QOM?  Not sure.  Cc'ing the maintainers anyway.
+> > > > Yeah this seems like migration relevant.. however now I'm slightly confused
+> > > > on when this script should be useful.
+> > > > 
+> > > > According to:
+> > > > 
+> > > > https://lore.kernel.org/qemu-devel/20240222153912.646053-5-davydov-max@yandex-team.ru/
+> > > > 
+> > > >           This script runs QEMU to obtain compat_props of machines and
+> > > >           default values of different types of drivers to produce comparison
+> > > >           table. This table can be used to compare machine types to choose
+> > > >           the most suitable machine or compare binaries to be sure that
+> > > >           migration to the newer version will save all device
+> > > >           properties. Also the json or csv format of this table can be used
+> > > >           to check does a new machine affect the previous ones by comparing
+> > > >           tables with and without the new machine.
+> > > > 
+> > > > In regards to "choose the most suitable machine": why do you need to choose
+> > > > a machine?
+> > > > 
+> > > > If it's pretty standalone setup, shouldn't we always try to use the latest
+> > > > machine type if possible (as normally compat props are only used to keep
+> > > > compatible with old machine types, and the default should always be
+> > > > preferred). If it's a cluster setup, IMHO it should depend on the oldest
+> > > > QEMU version that plans to be supported.  I don't see how such comparison
+> > > > helps yet in either of the cases..
+> > > > 
+> > > > In regards to "compare binaries to be sure that migration to the newer
+> > > > version will save all device properties": do we even support migrating
+> > > > _between_ machine types??
+> > > > 
+> > > > Sololy relying on compat properties to detect device compatibility is also
+> > > > not reliable.  For example, see VMStateField.field_exists() or similarly,
+> > > > VMStateDescription.needed(), which are hooks that device can provide to
+> > > > dynamically decide what device state to be saved/loaded.  Such things are
+> > > > not reflected in compat properties, so even if compat properties of all
+> > > > devices are the same between two machine types, it may not mean that the
+> > > > migration stream will always be compatible.
+> > > > 
+> > > > Thanks,
+> > > 
+> > > In fact, the last commit describes the meaning of this series best. Perhaps
+> > > it should have been moved to the cover letter:
+> > > Often, many teams have their own "machines" inherited from "upstream" to
+> > > manage default values of devices. This is done because of the limitations
+> > > imposed by the compatibility requirements or the desire to help their
+> > > customers better configure their devices. And since machine type has
+> > > a hard-to-read structure, it is very easy to make a mistake when
+> > > transferring
+> > > default values from one machine to another. For example, when some property
+> > > is set for the entire abstract class x86_64-cpu (which will be applied to
+> > > all
+> > > models), and then rolled back for a specific model. The situation is about
+> > > the same with changing the default values of devices: if the value changes
+> > > in the description of the device itself, then you need to make sure that
+> > > nothing changes when using the current machine.
+> > > Therefore, there was a desire to make a dev tool that will help quickly
+> > > expand
+> > > the definition of a machine or compare several machines from different
+> > > binary
+> > > files. It can be used when rebasing to a new version of qemu and/or for
+> > > automatic tests.
+> > 
+> > OK, thanks.
+> > 
+> > So is it a migration compatibility issue that you care (migrating VMs from
+> > your old downstream binary to new downstream binary should always succeed),
+> > or perhaps you care more on making sure the features you wanted, i.e., you
+> > want to make sure some specific devices that you care will have the
+> > properties that you expect?
+> 
+> Actually both things.
+> 
+> 1. We need a tool to analyze, what exactly changes between MT-s. Do we want to move on new upstream MT or not, how much it is different from our downstream MT and so on.
+> 2. It also could be used to check, that new MT is correctly defined (not breaking old MT's)
+> 
+> > 
+> > I think compat properties are mostly used for migration purposes, but
+> > indeed it can also be used to keep old behaviors of devices, even if the
+> > migration could succed with/without such a compat property entry.
+> > 
+> > If it's about migration, I'd like to know whether vmstate-static-checker.py
+> > could also help your case (under scripts/), perhaps in a better way,
+> > because it directly observes the VMSD structures (which is the ultimate
+> > form on wire, after all these compat properties applied to the devices).
+> 
+> Hmm, vmstate-static-checker.py checks a concrete device configuration. So it's a different thing.
 
+I don't think so - 'qemu -dump-vmstate' should dump all device states that
+it ever supports.  Feel free to have a look at dump_vmstate_json_to_file(),
+or just try give it a dump.
 
-On 3/17/2024 8:22 PM, Jason Wang wrote:
-> On Sat, Mar 16, 2024 at 2:45 AM Si-Wei Liu <si-wei.liu@oracle.com> wrote:
->>
->>
->> On 3/14/2024 9:03 PM, Jason Wang wrote:
->>> On Fri, Mar 15, 2024 at 5:39 AM Si-Wei Liu <si-wei.liu@oracle.com> wrote:
->>>> On setups with one or more virtio-net devices with vhost on,
->>>> dirty tracking iteration increases cost the bigger the number
->>>> amount of queues are set up e.g. on idle guests migration the
->>>> following is observed with virtio-net with vhost=on:
->>>>
->>>> 48 queues -> 78.11%  [.] vhost_dev_sync_region.isra.13
->>>> 8 queues -> 40.50%   [.] vhost_dev_sync_region.isra.13
->>>> 1 queue -> 6.89%     [.] vhost_dev_sync_region.isra.13
->>>> 2 devices, 1 queue -> 18.60%  [.] vhost_dev_sync_region.isra.14
->>>>
->>>> With high memory rates the symptom is lack of convergence as soon
->>>> as it has a vhost device with a sufficiently high number of queues,
->>>> the sufficient number of vhost devices.
->>>>
->>>> On every migration iteration (every 100msecs) it will redundantly
->>>> query the *shared log* the number of queues configured with vhost
->>>> that exist in the guest. For the virtqueue data, this is necessary,
->>>> but not for the memory sections which are the same. So essentially
->>>> we end up scanning the dirty log too often.
->>>>
->>>> To fix that, select a vhost device responsible for scanning the
->>>> log with regards to memory sections dirty tracking. It is selected
->>>> when we enable the logger (during migration) and cleared when we
->>>> disable the logger. If the vhost logger device goes away for some
->>>> reason, the logger will be re-selected from the rest of vhost
->>>> devices.
->>>>
->>>> After making mem-section logger a singleton instance, constant cost
->>>> of 7%-9% (like the 1 queue report) will be seen, no matter how many
->>>> queues or how many vhost devices are configured:
->>>>
->>>> 48 queues -> 8.71%    [.] vhost_dev_sync_region.isra.13
->>>> 2 devices, 8 queues -> 7.97%   [.] vhost_dev_sync_region.isra.14
->>>>
->>>> Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
->>>> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
->>>> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
->>>>
->>>> ---
->>>> v3 -> v4:
->>>>     - add comment to clarify effect on cache locality and
->>>>       performance
->>>>
->>>> v2 -> v3:
->>>>     - add after-fix benchmark to commit log
->>>>     - rename vhost_log_dev_enabled to vhost_dev_should_log
->>>>     - remove unneeded comparisons for backend_type
->>>>     - use QLIST array instead of single flat list to store vhost
->>>>       logger devices
->>>>     - simplify logger election logic
->>>> ---
->>>>    hw/virtio/vhost.c         | 67 ++++++++++++++++++++++++++++++++++++++++++-----
->>>>    include/hw/virtio/vhost.h |  1 +
->>>>    2 files changed, 62 insertions(+), 6 deletions(-)
->>>>
->>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->>>> index 612f4db..58522f1 100644
->>>> --- a/hw/virtio/vhost.c
->>>> +++ b/hw/virtio/vhost.c
->>>> @@ -45,6 +45,7 @@
->>>>
->>>>    static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
->>>>    static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
->>>> +static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
->>>>
->>>>    /* Memslots used by backends that support private memslots (without an fd). */
->>>>    static unsigned int used_memslots;
->>>> @@ -149,6 +150,47 @@ bool vhost_dev_has_iommu(struct vhost_dev *dev)
->>>>        }
->>>>    }
->>>>
->>>> +static inline bool vhost_dev_should_log(struct vhost_dev *dev)
->>>> +{
->>>> +    assert(dev->vhost_ops);
->>>> +    assert(dev->vhost_ops->backend_type > VHOST_BACKEND_TYPE_NONE);
->>>> +    assert(dev->vhost_ops->backend_type < VHOST_BACKEND_TYPE_MAX);
->>>> +
->>>> +    return dev == QLIST_FIRST(&vhost_log_devs[dev->vhost_ops->backend_type]);
->>> A dumb question, why not simple check
->>>
->>> dev->log == vhost_log_shm[dev->vhost_ops->backend_type]
->> Because we are not sure if the logger comes from vhost_log_shm[] or
->> vhost_log[]. Don't want to complicate the check here by calling into
->> vhost_dev_log_is_shared() everytime when the .log_sync() is called.
-> It has very low overhead, isn't it?
-Whether this has low overhead will have to depend on the specific 
-backend's implementation for .vhost_requires_shm_log(), which the common 
-vhost layer should not assume upon or rely on the current implementation.
+> 
+> > 
+> > If it's not about migration, then maybe it's more QOM-relevant, and if so I
+> > don't have a strong opinion. It seems still make some sense to have a tool
+> > simply dump the QOM tree for a machine type with all properties and compare
+> > them between machines with some binaries.  For that I'll leave that to
+> > Markus to decide.
+> 
+> Markus ACKed :)
 
->
-> static bool vhost_dev_log_is_shared(struct vhost_dev *dev)
-> {
->      return dev->vhost_ops->vhost_requires_shm_log &&
->             dev->vhost_ops->vhost_requires_shm_log(dev);
-> }
->
-> And it helps to simplify the logic.
-Generally yes, but when it comes to hot path operations the performance 
-consideration could override this principle. I think there's no harm to 
-check against logger device cached in vhost layer itself, and the 
-current patch does not create a lot of complexity or performance side 
-effect (actually I think the conditional should be very straightforward 
-to turn into just a couple of assembly compare and branch instructions 
-rather than indirection through another jmp call).
+I didn't see Markus acked all the patches yet, but if so that's okay then.
+Even if so, I think what Peter Maydell suggested is then this series should
+go through the QOM tree, rather than a separate pull.
 
--Siwei
+Thanks,
 
->
-> Thanks
->
->> -Siwei
->>> ?
->>>
->>> Thanks
->>>
+-- 
+Peter Xu
 
 
