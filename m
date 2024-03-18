@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F589C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 15:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9BA1C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 15:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmFCe-0002ln-Kz; Mon, 18 Mar 2024 11:47:08 -0400
+	id 1rmFDF-00042n-F2; Mon, 18 Mar 2024 11:47:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCW-0002j6-JP
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:00 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFDA-0003fl-UO
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:40 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCT-0007qp-DP
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:00 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5cf2d73a183so3725403a12.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 08:46:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFD3-0007un-RR
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:39 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6e6ce174d45so3553898b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 08:47:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710776816; x=1711381616; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710776850; x=1711381650; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SaaO9SZsKEZz6NFFljqKDw7YBSQBKN32a+oOPm6wNWc=;
- b=VQ8JuSZorzEpV1lWWLO3T/j1tttnkMl5OGdNZnkK0HYmMD05n0U3YH+OYcwCj3isya
- BL1Z4HZSe4pDKYK7KOj72otbgkTEpWGZjoDnNsVAiZ7LZIdm3f6XzVY2sGMI0vWarW6T
- lJ5iXFLoHdvE8U5bOlwAfaxEpcikgQTP7BRa7rb7fPzWnCf01BhsWngds9yon056r3jA
- MY2cNCxzP4A1QZhAXAVxCqtfsmTYhXxvrZGZzraN4dDwSz0orv5sd+WXgoGWWoTx1adz
- QSUniuh/h85diuteuifFJf9toF4zSxNvDgFGAgx4kTln76p75uzkQJbXBAQMug2vxKvi
- +GUQ==
+ bh=GoDLXObhG4ujv0wbwxxQpClK8TDNZa/JMTih0Qwb1tc=;
+ b=ad2rU37ui/oO9hSX3qwv/duKbLJ9NpAMttwkXKRi9uxn0opTTPsfxpL2x3i109Bt2w
+ czu73QVgWalufSrKhY5styYlWghQ4ndjm5wdNIY6s0LSyLEHn8phPZ3GFOS2cEeKusoy
+ MmcyAU/PjhXLLGwl9tSuK5+1kojvqwGMa7hgJyJCeBezP9rf5+mJIOCjOwX0ZIy24BQ2
+ emcKkvaeqjMaJlfbZYKOgC3bxY/NpjAaY5zpFSK7Uaam6u/8A44Afi2FKQyT8BF/f5Lz
+ md51JTEyhQSLKtKC47V0iidswpac0y/rY+hPPnf6SLD1XX3M3oFg7h7+tSI4S2dGi4Su
+ vzZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710776816; x=1711381616;
+ d=1e100.net; s=20230601; t=1710776850; x=1711381650;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SaaO9SZsKEZz6NFFljqKDw7YBSQBKN32a+oOPm6wNWc=;
- b=YlwFuVEJxLVRGU+AALyd/FTQXReg3Fd9LyGoCwlFnu3Vp7EssnkcqWIUzj+rMv1/EA
- aCgMHWQdcT2BhJEwLbXjhzk425IFsRJlsQ4MnzkM/dfTRCxByda6i6ibJCSOZ3o4vWco
- 2d1a3YV9DA5bw5uOeFJawESvcqEAz5g+NBufstRYdxcTjjlb03EuNDUKVdt/tCE8mCSa
- pcf3eqrGKskATX/gPnPdKqBk8135bIWA/9a6VRNH2/boAtHVQvJbffeQ/rv6UHi7kboV
- 02k542GcM0koc58PtV5+kveu6PxNvEBXlpsPh8SQNrBBz5JXjcKokVGSVvEPHCurSXq/
- /Vdg==
-X-Gm-Message-State: AOJu0Yw6CYqChtPveg8z6dCZJ8SpYNRZjw0U6MivY4WfakydC6y60KEz
- kCQzPf7dQhNr1obytXpX1l+HqMxhmRVUZY5ckYiaJA0djj0pZuc4flNd1Nk6w8w=
-X-Google-Smtp-Source: AGHT+IHSOTr/2u6EkLz5/ck5gYpngRGlREmPs99jsA/1P1jPYsWVpLVuF8CDdT9H06jNHjpZlRjxiQ==
-X-Received: by 2002:a17:90b:34c:b0:29e:89b:9446 with SMTP id
- fh12-20020a17090b034c00b0029e089b9446mr18621pjb.1.1710776815695; 
- Mon, 18 Mar 2024 08:46:55 -0700 (PDT)
+ bh=GoDLXObhG4ujv0wbwxxQpClK8TDNZa/JMTih0Qwb1tc=;
+ b=RzQw9U+SHOXwnYkn8qyluD/kUC1fL+i4fSk8ymqruWEHQouyP3NhZaA8nzyYYY5G8D
+ L/A5tAT0JKLbFshrteNVXYRojla3aNYwSZ9Q3aUnoZikczNldYob+tE83z3G0VNk3rm9
+ WcaSgHfRn19IQWyOM5uhLHqV4lm3MaK61XL+sdDkBfGpsb4utiXcnxmHPdfvwtBMRYhK
+ 5wGyFmZOQQQY4XACMtLfmMvSUA4QQ53EDWlTz5/ZJpKBkl4Vd2P3bO5rliFqQ+VhSOCH
+ 7KKUUHkMFCRHfzmExhhdjMdMZOKzUh9scrLO7JegtUkDKy0Fy4Kboyy0aU1QwVwRWCoh
+ tNUQ==
+X-Gm-Message-State: AOJu0Yz+EIUb8PLalRY3g8XcUfbUXhGuW+z+be0TA8cqqalUnTU3IHw5
+ 4BTEe3Itw61yg5UKnDoqZbxo8zqACQwWk9c+3QFT+TXpsO4egSIsGUtSzIhxI7M=
+X-Google-Smtp-Source: AGHT+IGWfK+rmzWf5q5aR4t1hEjCHNOz0uM+W+FYn09GuRDdUGyHPGO3v61FT+umbmMHl/5hCANgNg==
+X-Received: by 2002:a05:6a20:d81b:b0:1a3:5235:8e04 with SMTP id
+ iv27-20020a056a20d81b00b001a352358e04mr9006341pzb.36.1710776850309; 
+ Mon, 18 Mar 2024 08:47:30 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- v22-20020a634816000000b005dc26144d96sm7332108pga.75.2024.03.18.08.46.50
+ v22-20020a634816000000b005dc26144d96sm7332108pga.75.2024.03.18.08.47.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 08:46:55 -0700 (PDT)
+ Mon, 18 Mar 2024 08:47:30 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,18 +67,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v5 04/24] replay: allow runstate shutdown->running when
- replaying trace
-Date: Tue, 19 Mar 2024 01:46:01 +1000
-Message-ID: <20240318154621.2361161-5-npiggin@gmail.com>
+Subject: [PATCH v5 10/24] virtio-net: Use replay_schedule_bh_event for bhs
+ that affect machine state
+Date: Tue, 19 Mar 2024 01:46:07 +1000
+Message-ID: <20240318154621.2361161-11-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240318154621.2361161-1-npiggin@gmail.com>
 References: <20240318154621.2361161-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,105 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When replaying a trace, it is possible to go from shutdown to running
-with a reverse-debugging step. This can be useful if the problem being
-debugged triggers a reset or shutdown.
+The regular qemu_bh_schedule() calls result in non-deterministic
+execution of the bh in record-replay mode, which causes replay failure.
 
-This can be tested by making a recording of a machine that shuts down,
-then using -action shutdown=pause when replaying it. Continuing to the
-end of the trace then reverse-stepping in gdb crashes due to invalid
-runstate transition.
-
-Just permitting the transition seems to be all that's necessary for
-reverse-debugging to work well in such a state.
-
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/sysemu/runstate.h |  1 +
- replay/replay.c           |  2 ++
- system/runstate.c         | 31 ++++++++++++++++++++++++++++---
- 3 files changed, 31 insertions(+), 3 deletions(-)
+ hw/net/virtio-net.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
-index 0117d243c4..fe25eed3c0 100644
---- a/include/sysemu/runstate.h
-+++ b/include/sysemu/runstate.h
-@@ -9,6 +9,7 @@ void runstate_set(RunState new_state);
- RunState runstate_get(void);
- bool runstate_is_running(void);
- bool runstate_needs_reset(void);
-+void runstate_replay_enable(void);
- 
- typedef void VMChangeStateHandler(void *opaque, bool running, RunState state);
- 
-diff --git a/replay/replay.c b/replay/replay.c
-index a2c576c16e..b8564a4813 100644
---- a/replay/replay.c
-+++ b/replay/replay.c
-@@ -385,6 +385,8 @@ static void replay_enable(const char *fname, int mode)
-         replay_fetch_data_kind();
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 9959f1932b..6ac737f2cf 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -40,6 +40,7 @@
+ #include "migration/misc.h"
+ #include "standard-headers/linux/ethtool.h"
+ #include "sysemu/sysemu.h"
++#include "sysemu/replay.h"
+ #include "trace.h"
+ #include "monitor/qdev.h"
+ #include "monitor/monitor.h"
+@@ -416,7 +417,7 @@ static void virtio_net_set_status(struct VirtIODevice *vdev, uint8_t status)
+                 timer_mod(q->tx_timer,
+                                qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout);
+             } else {
+-                qemu_bh_schedule(q->tx_bh);
++                replay_bh_schedule_event(q->tx_bh);
+             }
+         } else {
+             if (q->tx_timer) {
+@@ -2724,7 +2725,7 @@ static void virtio_net_tx_complete(NetClientState *nc, ssize_t len)
+          */
+         virtio_queue_set_notification(q->tx_vq, 0);
+         if (q->tx_bh) {
+-            qemu_bh_schedule(q->tx_bh);
++            replay_bh_schedule_event(q->tx_bh);
+         } else {
+             timer_mod(q->tx_timer,
+                       qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout);
+@@ -2879,7 +2880,7 @@ static void virtio_net_handle_tx_bh(VirtIODevice *vdev, VirtQueue *vq)
+         return;
      }
- 
-+    runstate_replay_enable();
-+
-     replay_init_events();
+     virtio_queue_set_notification(vq, 0);
+-    qemu_bh_schedule(q->tx_bh);
++    replay_bh_schedule_event(q->tx_bh);
  }
  
-diff --git a/system/runstate.c b/system/runstate.c
-index d6ab860eca..8f9ee034de 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -182,6 +182,12 @@ static const RunStateTransition runstate_transitions_def[] = {
-     { RUN_STATE__MAX, RUN_STATE__MAX },
- };
- 
-+static const RunStateTransition replay_play_runstate_transitions_def[] = {
-+    { RUN_STATE_SHUTDOWN, RUN_STATE_RUNNING},
-+
-+    { RUN_STATE__MAX, RUN_STATE__MAX },
-+};
-+
- static bool runstate_valid_transitions[RUN_STATE__MAX][RUN_STATE__MAX];
- 
- bool runstate_check(RunState state)
-@@ -189,14 +195,33 @@ bool runstate_check(RunState state)
-     return current_run_state == state;
- }
- 
--static void runstate_init(void)
-+static void transitions_set_valid(const RunStateTransition *rst)
- {
-     const RunStateTransition *p;
- 
--    memset(&runstate_valid_transitions, 0, sizeof(runstate_valid_transitions));
--    for (p = &runstate_transitions_def[0]; p->from != RUN_STATE__MAX; p++) {
-+    for (p = rst; p->from != RUN_STATE__MAX; p++) {
-         runstate_valid_transitions[p->from][p->to] = true;
+ static void virtio_net_tx_timer(void *opaque)
+@@ -2962,7 +2963,7 @@ static void virtio_net_tx_bh(void *opaque)
+     /* If we flush a full burst of packets, assume there are
+      * more coming and immediately reschedule */
+     if (ret >= n->tx_burst) {
+-        qemu_bh_schedule(q->tx_bh);
++        replay_bh_schedule_event(q->tx_bh);
+         q->tx_waiting = 1;
+         return;
      }
-+}
-+
-+void runstate_replay_enable(void)
-+{
-+    assert(replay_mode != REPLAY_MODE_NONE);
-+
-+    if (replay_mode == REPLAY_MODE_PLAY) {
-+        /*
-+         * When reverse-debugging, it is possible to move state from
-+         * shutdown to running.
-+         */
-+        transitions_set_valid(&replay_play_runstate_transitions_def[0]);
-+    }
-+}
-+
-+static void runstate_init(void)
-+{
-+    memset(&runstate_valid_transitions, 0, sizeof(runstate_valid_transitions));
-+
-+    transitions_set_valid(&runstate_transitions_def[0]);
- 
-     qemu_mutex_init(&vmstop_lock);
+@@ -2976,7 +2977,7 @@ static void virtio_net_tx_bh(void *opaque)
+         return;
+     } else if (ret > 0) {
+         virtio_queue_set_notification(q->tx_vq, 0);
+-        qemu_bh_schedule(q->tx_bh);
++        replay_bh_schedule_event(q->tx_bh);
+         q->tx_waiting = 1;
+     }
  }
 -- 
 2.42.0
