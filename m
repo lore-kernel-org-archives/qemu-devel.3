@@ -4,63 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB76C54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E23C54E5D
 	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 18:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmHeK-0002DP-UU; Mon, 18 Mar 2024 14:23:52 -0400
+	id 1rmHeE-0002Ax-Pd; Mon, 18 Mar 2024 14:23:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmHeH-0002Cx-Vi
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 14:23:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rmHeD-0002A3-RE
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 14:23:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmHeB-0003jS-SY
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 14:23:49 -0400
+ id 1rmHe9-0003j0-8N
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 14:23:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710786222;
+ s=mimecast20190719; t=1710786219;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qWv0N87mex1mgDV6ALULC06NKBETKhw3uvoJ4y4Jqkg=;
- b=UEuefUka0y+cY6vrjcyEdSy02TrshyAKS18R/dXl1gVOlEZ34rgCvUQZAPeEVb6CwlM3ci
- zmKgk0tn8ZQcLNY5wLrWgEpFmFFlKepWAEfa8AsTZ8L9NgIu/9QIEve0tYfgXGDDmEQZl4
- LFf6tZVx7o6rey41Ppj28vfvpjHkawE=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=3Rq8qA9wFTOqwueklBZgafNhF22LkdA+IQy8uPN2odU=;
+ b=jFZE+uzqJBgCR3FBenuqa4H/0k7nedgc8aZhb0RFEil6m4p/cV02gw6jEb8MXwd3UPA7po
+ XysG1IYCJjv00iQNEm46cw5pqqDM3ctc0aqo0YCcby1nG7KD2ie6LhKuZssVPrYrzt10Gb
+ aqNo0jvx09UASrmAGLbsbIWZ1K2QuBE=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-232-CAXZNPMfOzad0pp12XJ0Fw-1; Mon, 18 Mar 2024 14:23:40 -0400
-X-MC-Unique: CAXZNPMfOzad0pp12XJ0Fw-1
+ us-mta-425-Xe5Rgf9CNFOEXoSHey0nUg-1; Mon, 18 Mar 2024 14:23:37 -0400
+X-MC-Unique: Xe5Rgf9CNFOEXoSHey0nUg-1
 Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
  [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 291A81869D0C
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 18:23:40 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 000D08007C0
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 18:23:36 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.59])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 956DF17AAF;
- Mon, 18 Mar 2024 18:23:38 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 751B917B3A;
+ Mon, 18 Mar 2024 18:23:35 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 2/3 for 9.0] Revert "chardev/char-socket: Fix TLS io channels
- sending too much data to the backend"
-Date: Mon, 18 Mar 2024 18:23:29 +0000
-Message-ID: <20240318182330.96738-3-berrange@redhat.com>
-In-Reply-To: <20240318182330.96738-1-berrange@redhat.com>
-References: <20240318182330.96738-1-berrange@redhat.com>
+Subject: [PATCH 0/3 for 9.0] Fix TLS support for chardevs and incoming data
+ loss on EOF
+Date: Mon, 18 Mar 2024 18:23:27 +0000
+Message-ID: <20240318182330.96738-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -85,45 +82,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit results in unexpected termination of the TLS connection.
-When 'fd_can_read' returns 0, the code goes on to pass a zero length
-buffer to qio_channel_read. The TLS impl calls into gnutls_recv()
-with this zero length buffer, at which point GNUTLS returns an error
-GNUTLS_E_INVALID_REQUEST. This is treated as fatal by QEMU's TLS code
-resulting in the connection being torn down by the chardev.
+This fixes a problem with TLS support on chardevs that Thomas has
+previously attempted to deal with:
 
-Simply skipping the qio_channel_read when the buffer length is zero
-is also not satisfactory, as it results in a high CPU burn busy loop
-massively slowing QEMU's functionality.
+  https://lists.nongnu.org/archive/html/qemu-devel/2024-02/msg06915.html
 
-The proper solution is to avoid tcp_chr_read being called at all
-unless the frontend is able to accept more data. This will be done
-in a followup commit.
+Unfortunately that fix caused unexpected side effects that resulted
+in premature termination of the TLS connection. See patch 2 for
+details.
 
-This reverts commit 1907f4d149c3589ade641423c6a33fd7598fa4d3.
+I've since identified the root cause of the problem that Thomas was
+trying to fix - bad assumptions about GSource 'prepare' functions
+always being run. See patch 3 for details.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- chardev/char-socket.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Patch 3 re-exposed a bug we've know about for a while whereby incoming
+data on chardevs is sometimes discarded when POLLHUP is reported at the
+same time. This required patch 1 to be applied before doing the revert
+in patch 3, otherwise test-char would now very frequently fail.
 
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index 2c4dffc0e6..812d7aa38a 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -496,9 +496,9 @@ static gboolean tcp_chr_read(QIOChannel *chan, GIOCondition cond, void *opaque)
-         s->max_size <= 0) {
-         return TRUE;
-     }
--    len = tcp_chr_read_poll(opaque);
--    if (len > sizeof(buf)) {
--        len = sizeof(buf);
-+    len = sizeof(buf);
-+    if (len > s->max_size) {
-+        len = s->max_size;
-     }
-     size = tcp_chr_recv(chr, (void *)buf, len);
-     if (size == 0 || (size == -1 && errno != EAGAIN)) {
+So we get 2 bug fixes for the price of one :-)
+
+Daniel P. Berrangé (3):
+  chardev: lower priority of the HUP GSource in socket chardev
+  Revert "chardev/char-socket: Fix TLS io channels sending too much data
+    to the backend"
+  Revert "chardev: use a child source for qio input source"
+
+ chardev/char-io.c     | 55 +++++++++++++++++++++++++++++++++++++++----
+ chardev/char-socket.c | 22 ++++++++++++++---
+ 2 files changed, 69 insertions(+), 8 deletions(-)
+
 -- 
 2.43.0
 
