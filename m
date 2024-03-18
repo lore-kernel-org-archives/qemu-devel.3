@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E510C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 14:34:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F2B3C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 14:51:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmE3d-0005VA-2n; Mon, 18 Mar 2024 10:33:45 -0400
+	id 1rmEJ4-0001Qn-O9; Mon, 18 Mar 2024 10:49:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmE3b-0005UA-FL
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:33:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rmEIy-0001QU-OI
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:49:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmE3X-000341-59
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:33:43 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rmEIu-00061V-Av
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:49:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710772418;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1710773370;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VGH+NjWA5UAnM+HV6NW2yB4hXpmesnla1CwQOwAZq9Y=;
- b=YaMtOsqQWoc8W6LVUIacTVbJdW9lBbZmMCvSy/PVBjVW6qoKRppHcqy0kByOqE4eisB8pP
- BzoiCKZUt+UbZFlgTnvLmSPW0aOHHT9yrT8+wA9bg8Z3kr8nU5kQH5upV79vHx9PIoPVC2
- P3trB5oSeWy1qTNdh4RKLBSP3naodE4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KAhMlN+4Flnq/DqiBhtf/48VNc9Up6YS7bao/jvU/Gg=;
+ b=G3/vPCuHtxVf0PixHmCgg7uGUKWmQ268XKXbhNe0ArPfT0JyYR/qZLthadb+bRb0xu9T+w
+ sfRcKBQ7c2oE9aQayGmJqNaXh68SMeV37kjSpzpNI4qoBAbrsd8hAJZYeC6uvEeQk6h06z
+ TLIGrpfOGZuvk2GUeQlkHWUdN7+XJKo=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-240-jmdBEj31OpSSI8ZyL3sGdw-1; Mon, 18 Mar 2024 10:33:37 -0400
-X-MC-Unique: jmdBEj31OpSSI8ZyL3sGdw-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-33ed26afd99so1567984f8f.0
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 07:33:36 -0700 (PDT)
+ us-mta-35-y3tI_8xCPWScK0h1qfmvsw-1; Mon, 18 Mar 2024 10:49:28 -0400
+X-MC-Unique: y3tI_8xCPWScK0h1qfmvsw-1
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-3c37f2c8d21so2228696b6e.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 07:49:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710772416; x=1711377216;
+ d=1e100.net; s=20230601; t=1710773363; x=1711378163;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VGH+NjWA5UAnM+HV6NW2yB4hXpmesnla1CwQOwAZq9Y=;
- b=kxUUvDAN2EhekqHnnOMVSqeLfGucqruunchX//s+dHRvXWsJrAbaUXVPqADhYoAHiz
- NIWkOhIWTYTFkD7tLFDY/Y7G4KG1/UAVgTgrNXI6+lffWJSpzqhmDux9bOMcHgwoUl0J
- D3awISaff8XRlv9y00UDsU50p6eh4tFF3HZdnZCxkuJfvBR+SSEc87k5Du5Zs1ipDPAC
- LaL7H480DDQoZWTXqFbaqzyQw/3S0l4VJlngyNyBuynXQPOKLmpNJboNO6g7lRjGyyoT
- XXMBjbPe+uLCH8nfkZs63cedsiL2urB9PeAcqABW0iMWjZ+ARGshridvV/6e3cHhKXBe
- vaCg==
-X-Gm-Message-State: AOJu0YxzUGzzWfCJsQ0vADfNo8JeY5XdOBU8/fG5mdaiUrxgDgIyROvs
- JD9exfBscg5X5fV6mC1xbkO++SPunOVNhMRXVTOS9OZcl2WjkGuPSzlRqEcLbxUzhPFNB9BZB5C
- 1U1F8mksDBiyG0KTz0oAi8ySWKy7DUsoNF69fuqdYIWkYQE8t6WGV
-X-Received: by 2002:adf:a494:0:b0:33e:6a17:3e63 with SMTP id
- g20-20020adfa494000000b0033e6a173e63mr6732597wrb.47.1710772416016; 
- Mon, 18 Mar 2024 07:33:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHa9BsmubdRGP7DBCI4wtCwrKm92yg5LMBy1thbSSHPXvDRcbTf7LW0ViHqOGmIAY8PvHFADA==
-X-Received: by 2002:adf:a494:0:b0:33e:6a17:3e63 with SMTP id
- g20-20020adfa494000000b0033e6a173e63mr6732569wrb.47.1710772415301; 
- Mon, 18 Mar 2024 07:33:35 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KAhMlN+4Flnq/DqiBhtf/48VNc9Up6YS7bao/jvU/Gg=;
+ b=HsI8BIuyLm0nuvZbRzYlDt1l5u20a9aVP9XnKyPlNmhlqji549PYhZ24gReX5Yk0VE
+ M9qdtSQfM+Prw8fuGGiY2xczxILXnk+cxejRi1pnaYjW8btBLhuDwYD/KY5RqjNLGyit
+ A+dKVEXwA6xquriVQCMCK38/6Vg/cmdoyV6HiX0dW1Pe7oLO5LfW8waaf45sthBWi/8b
+ 3cZJl90ZrYFDEGMaiUy5XDkWIdDA2emM8AmiMRPt6eYjRciki/wHbEtaRwXlMsyeqHAh
+ 94zPzTqsaPHAyqbWkVwj3NGHPflHRfvfFHrWBUM5Gxs8Q5GQVZrhwy0s43YODjaU8m3a
+ Nn7Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXR33+gKNxJU5wa406WJCoKPjlOuwFW1jUSps0dehPYDUagiKquJ2jB7vAfNfNtNiR+zMTBBEzfGg5GrATowsj8fPuvyis=
+X-Gm-Message-State: AOJu0Ywf2ATMJc8tAPmYGxL+Ltu2KM8loQbiLV4LUoFPMA+CYvzyPSky
+ sEsv6dz3JbluY5hh5OP6sd9yz34ziDZW94cD3TYytxzzAJrIW5VFkepWmJtP+Vnmm4Z+LlZknBX
+ yNOcGfR37JWY+EBi1W99GS2iYgnpshK55jdGkrDeDs+06NVNgDk7i
+X-Received: by 2002:a05:6808:6412:b0:3c3:582f:3005 with SMTP id
+ fg18-20020a056808641200b003c3582f3005mr17677414oib.46.1710773363179; 
+ Mon, 18 Mar 2024 07:49:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGVR4yMkfIm5rde54MB652Zik3f6RPNXmFntMldtzDcVjKwOR8f6y3Gu+ykFhwaUe0d4mHz8g==
+X-Received: by 2002:a05:6808:6412:b0:3c3:582f:3005 with SMTP id
+ fg18-20020a056808641200b003c3582f3005mr17677388oib.46.1710773362917; 
+ Mon, 18 Mar 2024 07:49:22 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- w10-20020adff9ca000000b0033e72e104c5sm9905659wrr.34.2024.03.18.07.33.34
+ bj31-20020a05620a191f00b00789eec76e58sm2136901qkb.50.2024.03.18.07.49.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 07:33:34 -0700 (PDT)
-Message-ID: <7ab998d7-1963-49a7-92ea-69a7f4739824@redhat.com>
-Date: Mon, 18 Mar 2024 15:33:33 +0100
+ Mon, 18 Mar 2024 07:49:22 -0700 (PDT)
+Message-ID: <12e21f3f-c425-4f8a-9dd9-d81f95afb4fd@redhat.com>
+Date: Mon, 18 Mar 2024 15:49:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 13/25] memory: Add Error** argument to
- .log_global_start() handler
-Content-Language: en-US, fr
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>
-References: <20240306133441.2351700-1-clg@redhat.com>
- <20240306133441.2351700-14-clg@redhat.com> <ZfQukLXQsgFEap4f@x1n>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <ZfQukLXQsgFEap4f@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Subject: Re: [PATCH v1 09/11] hw/pci: Introduce
+ pci_device_set/unset_iommu_device()
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, peterx@redhat.com,
+ jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ yi.y.sun@intel.com, chao.p.peng@intel.com, Yi Sun
+ <yi.y.sun@linux.intel.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
+ <20240228035900.1085727-10-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240228035900.1085727-10-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -109,129 +111,189 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/15/24 12:18, Peter Xu wrote:
-> On Wed, Mar 06, 2024 at 02:34:28PM +0100, Cédric Le Goater wrote:
->> diff --git a/system/memory.c b/system/memory.c
->> index a229a79988fce2aa3cb77e3a130db4c694e8cd49..3600e716149407c10a1f6bf8f0a81c2611cf15ba 100644
->> --- a/system/memory.c
->> +++ b/system/memory.c
->> @@ -2914,9 +2914,27 @@ static unsigned int postponed_stop_flags;
->>   static VMChangeStateEntry *vmstate_change;
->>   static void memory_global_dirty_log_stop_postponed_run(void);
->>   
->> +/*
->> + * Stop dirty logging on all listeners where it was previously enabled.
->> + */
->> +static void memory_global_dirty_log_rollback(MemoryListener *listener,
->> +                                             unsigned int flags)
->> +{
->> +    global_dirty_tracking &= ~flags;
-> 
-> Having a hook rollback function to touch the global_dirty_tracking flag is
-> IMHO tricky.
-> 
-> Can we instead provide a helper to call all log_global_start() hooks, but
-> allow a gracefully fail (so rollback will be called if it fails)?
-> 
->    bool memory_global_dirty_log_start_hooks(...)
-> 
-> Or any better names..  Leaving global_dirty_tracking rollback to
-> memory_global_dirty_log_start() when it returns false.
-> 
-> Would this be cleaner?
+Hi Zhenzhong,
 
-I will introduce a memory_global_dirty_log_do_start() helper to call
-the log_global_start() handlers and to do the rollback in case of
-error. Modification of the global_dirty_tracking flag will stay local
-to memory_global_dirty_log_start() to avoid any futur errors.
-
-
->> +    trace_global_dirty_changed(global_dirty_tracking);
->> +
->> +    while (listener) {
->> +        if (listener->log_global_stop) {
->> +            listener->log_global_stop(listener);
->> +        }
->> +        listener = QTAILQ_PREV(listener, link);
->> +    }
->> +}
->> +
->>   void memory_global_dirty_log_start(unsigned int flags)
->>   {
->>       unsigned int old_flags;
->> +    Error *local_err = NULL;
->>   
->>       assert(flags && !(flags & (~GLOBAL_DIRTY_MASK)));
->>   
->> @@ -2936,7 +2954,25 @@ void memory_global_dirty_log_start(unsigned int flags)
->>       trace_global_dirty_changed(global_dirty_tracking);
->>   
->>       if (!old_flags) {
->> -        MEMORY_LISTENER_CALL_GLOBAL(log_global_start, Forward);
->> +        MemoryListener *listener;
->> +        bool ret = true;
->> +
->> +        QTAILQ_FOREACH(listener, &memory_listeners, link) {
->> +            if (listener->log_global_start) {
->> +                ret = listener->log_global_start(listener, &local_err);
->> +                if (!ret) {
->> +                    break;
->> +                }
->> +            }
->> +        }
->> +
->> +        if (!ret) {
->> +            memory_global_dirty_log_rollback(QTAILQ_PREV(listener, link),
->> +                                             flags);
->> +            error_report_err(local_err);
->> +            return;
->> +        }
->> +
->>           memory_region_transaction_begin();
->>           memory_region_update_pending = true;
->>           memory_region_transaction_commit();
->> @@ -3009,13 +3045,16 @@ static void listener_add_address_space(MemoryListener *listener,
->>   {
->>       FlatView *view;
->>       FlatRange *fr;
->> +    Error *local_err = NULL;
->>   
->>       if (listener->begin) {
->>           listener->begin(listener);
->>       }
->>       if (global_dirty_tracking) {
->>           if (listener->log_global_start) {
->> -            listener->log_global_start(listener);
->> +            if (!listener->log_global_start(listener, &local_err)) {
->> +                error_report_err(local_err);
->> +            }
-> 
-> IMHO we should assert here instead of error report.  We have this to guard
-> hot-plug during migration so I think the assert is justified:
-> 
-> qdev_device_add_from_qdict():
-> 
->      if (!migration_is_idle()) {
->          error_setg(errp, "device_add not allowed while migrating");
->          return NULL;
+On 2/28/24 04:58, Zhenzhong Duan wrote:
+> From: Yi Liu <yi.l.liu@intel.com>
+>
+> This adds pci_device_set/unset_iommu_device() to set/unset
+> HostIOMMUDevice for a given PCIe device. Caller of set
+> should fail if set operation fails.
+>
+> Extract out pci_device_get_iommu_bus_devfn() to facilitate
+> implementation of pci_device_set/unset_iommu_device().
+>
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  include/hw/pci/pci.h | 38 ++++++++++++++++++++++++++-
+>  hw/pci/pci.c         | 62 +++++++++++++++++++++++++++++++++++++++++---
+>  2 files changed, 96 insertions(+), 4 deletions(-)
+>
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index fa6313aabc..8fe6f746d7 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -3,6 +3,7 @@
+>  
+>  #include "exec/memory.h"
+>  #include "sysemu/dma.h"
+> +#include "sysemu/host_iommu_device.h"
+>  
+>  /* PCI includes legacy ISA access.  */
+>  #include "hw/isa/isa.h"
+> @@ -384,10 +385,45 @@ typedef struct PCIIOMMUOps {
+>       *
+>       * @devfn: device and function number
+>       */
+> -   AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
+> +    AddressSpace * (*get_address_space)(PCIBus *bus, void *opaque, int devfn);
+> +    /**
+> +     * @set_iommu_device: attach a HostIOMMUDevice to a vIOMMU
+> +     *
+> +     * Optional callback, if not implemented in vIOMMU, then vIOMMU can't
+> +     * retrieve host information from the associated HostIOMMUDevice.
+> +     *
+> +     * Return true if HostIOMMUDevice is attached, or else return false
+> +     * with errp set.
+> +     *
+> +     * @bus: the #PCIBus of the PCI device.
+> +     *
+> +     * @opaque: the data passed to pci_setup_iommu().
+> +     *
+> +     * @devfn: device and function number of the PCI device.
+> +     *
+> +     * @dev: the data structure representing host IOMMU device.
+@errp is missing
+> +     *
+> +     */
+> +    int (*set_iommu_device)(PCIBus *bus, void *opaque, int devfn,
+> +                            HostIOMMUDevice *dev, Error **errp);
+> +    /**
+> +     * @unset_iommu_device: detach a HostIOMMUDevice from a vIOMMU
+> +     *
+> +     * Optional callback.
+> +     *
+> +     * @bus: the #PCIBus of the PCI device.
+> +     *
+> +     * @opaque: the data passed to pci_setup_iommu().
+> +     *
+> +     * @devfn: device and function number of the PCI device.
+> +     */
+> +    void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
+>  } PCIIOMMUOps;
+>  
+>  AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
+> +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *base_dev,
+> +                                Error **errp);
+> +void pci_device_unset_iommu_device(PCIDevice *dev);
+>  
+>  /**
+>   * pci_setup_iommu: Initialize specific IOMMU handlers for a PCIBus
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 76080af580..8078307963 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -2672,11 +2672,14 @@ static void pci_device_class_base_init(ObjectClass *klass, void *data)
 >      }
-> 
-> If it really happens it's a bug, as listener_add_address_space() will still
-> keep the rest things around even if the hook failed.  It'll start to be a
-> total mess..
+>  }
+>  
+I would write some comments describing the output params and also
+explicitly saying some are optional
+> -AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+> +static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
+> +                                           PCIBus **aliased_bus,
+> +                                           PCIBus **piommu_bus,
 
-OK. I will change the Error parameter to error_abort in that case.
+piommu_bus is not an optional parameter. I would put it before aliased_bus. 
 
-However, It would be useful to catch errors of the .region_add() handler
-for VFIO. Let's address that later.
+> +                                           int *aliased_devfn)
+>  {
+>      PCIBus *bus = pci_get_bus(dev);
+>      PCIBus *iommu_bus = bus;
+> -    uint8_t devfn = dev->devfn;
+> +    int devfn = dev->devfn;
+>  
+>      while (iommu_bus && !iommu_bus->iommu_ops && iommu_bus->parent_dev) {
+>          PCIBus *parent_bus = pci_get_bus(iommu_bus->parent_dev);
+> @@ -2717,13 +2720,66 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+>  
+>          iommu_bus = parent_bus;
+>      }
+> -    if (!pci_bus_bypass_iommu(bus) && iommu_bus->iommu_ops) {
+> +
+> +    assert(0 <= devfn && devfn < PCI_DEVFN_MAX);
+> +    assert(iommu_bus);
+> +
+> +    if (pci_bus_bypass_iommu(bus) || !iommu_bus->iommu_ops) {
+> +        iommu_bus = NULL;
+> +    }
+> +
+> +    *piommu_bus = iommu_bus;
+> +
+> +    if (aliased_bus) {
+> +        *aliased_bus = bus;
+> +    }
+> +
+> +    if (aliased_devfn) {
+> +        *aliased_devfn = devfn;
+> +    }
+> +}
+> +
+> +AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+> +{
+> +    PCIBus *bus;
+> +    PCIBus *iommu_bus;
+> +    int devfn;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
+> +    if (iommu_bus) {
+>          return iommu_bus->iommu_ops->get_address_space(bus,
+>                                   iommu_bus->iommu_opaque, devfn);
+>      }
+>      return &address_space_memory;
+>  }
+>  
+> +int pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *base_dev,
+> +                                Error **errp)
+> +{
+> +    PCIBus *iommu_bus;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, NULL, &iommu_bus, NULL);
+I would add a comment explaining why you don't care about aliased bus
+and devfn
+> +    if (iommu_bus && iommu_bus->iommu_ops->set_iommu_device) {
+> +        return iommu_bus->iommu_ops->set_iommu_device(pci_get_bus(dev),
+> +                                                      iommu_bus->iommu_opaque,
+> +                                                      dev->devfn, base_dev,
+> +                                                      errp);
+> +    }
+> +    return 0;
+> +}
+> +
+> +void pci_device_unset_iommu_device(PCIDevice *dev)
+> +{
+> +    PCIBus *iommu_bus;
+> +
+> +    pci_device_get_iommu_bus_devfn(dev, NULL, &iommu_bus, NULL);
+> +    if (iommu_bus && iommu_bus->iommu_ops->unset_iommu_device) {
+> +        return iommu_bus->iommu_ops->unset_iommu_device(pci_get_bus(dev),
+> +                                                        iommu_bus->iommu_opaque,
+> +                                                        dev->devfn);
+> +    }
+> +}
+> +
+>  void pci_setup_iommu(PCIBus *bus, const PCIIOMMUOps *ops, void *opaque)
+>  {
+>      /*
+Thanks
 
-Thanks,
-
-C.
-
-
+Eric
 
 
