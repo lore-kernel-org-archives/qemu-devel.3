@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83A82C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 07:53:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FA94C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 07:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm7o6-0002x3-Nx; Mon, 18 Mar 2024 03:53:18 -0400
+	id 1rm7o5-0002w7-Gp; Mon, 18 Mar 2024 03:53:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rm7o5-0002vo-6x
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:53:17 -0400
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ id 1rm7o2-0002v8-Pd
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:53:14 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rm7o3-0008WN-PO
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:53:16 -0400
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-3c38855957cso601455b6e.3
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 00:53:15 -0700 (PDT)
+ id 1rm7o1-0008W7-3Z
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:53:14 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1dd10ae77d8so24332435ad.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 00:53:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710748394; x=1711353194;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710748391; x=1711353191;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Gjy0iQjWgIZLIa9AZQWBmLKx4VYA0d/vzgnq4H2fgLY=;
- b=FtETl3gzt1O4YqE4UdqsfNF4cQZdKMAq2x80KaNWaPrAzcajOadsjgNFQ0KZ7g51yo
- j7G89I79pUvs2XfvJHqgeoGEgCO8XtE3yBKYz4ftri0FcGiHJ7FPGpB/Q9l+ul4rHig/
- DXE8VH2ToK2z6L9ayaOWOFIENZjAcLbn8ehFpa6UHEVWNS2mbJ9gafnIDDxvK4MXnVky
- dVOLmzqUN46sofhmrkWNs2I2XZchWN0z1XoTPLcZZjss3jJoGj/R8HrXLKgSdeZuWGtz
- ++fVpQC3cAmfaq65igccdC1T+5lP16+rp7F+022V2hFTPNfokxuZllwmkX3bWPn2VEx8
- hSvg==
+ :reply-to; bh=g9Ua7pWiHoWuYMxwrSKvZGIZMCnickF81dt6ppg4bLA=;
+ b=sfGQ3fQBt8FiFdYaZMcTkoD9S6qrPoEeFckkxSVPXcX48Np+98TGr6yP/wQlUXG6+h
+ /NDbt+RxAcX2gTZshuQ1Kipxwm4/rgj2ascr3nrBjQsvBSmo66cuZXNe95Q9jjhkSNa1
+ tCscSPsi1UhLPccUdMZR446VlYvRbRlE/2KTu0bEq1uMNgLOnu0BstSe6YzTA18x4SBo
+ oj3mmBF6wUJeySyPcOndsY5N4Mf5NGcN0Bzs1DBjA7hhFRNYoI07HpEH/bvMmiMBGfg8
+ JPsIEZl68/aRVro6vuhEdWSZBLQNlAn6G3uVvdchIAt3bl7YKgfRdm/VaPtDnL3SvOpU
+ uAEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710748394; x=1711353194;
+ d=1e100.net; s=20230601; t=1710748391; x=1711353191;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Gjy0iQjWgIZLIa9AZQWBmLKx4VYA0d/vzgnq4H2fgLY=;
- b=GwhCpDaVNjdM5OX0hGpzojyglC4g5jDrI0juW2E0E3tfBhLTPEc2R51QDRNQzj90bp
- ftch+abqjQW3/12V9Zye5epaLpsohF9OMgdLdIFgJ6Epe4I47A5tZa0V+ahNaQbQyhJl
- 8xSxLDUBDUraCrQRFgpKgxUSkJLaUxV+zrRHH+5wq7s2SYwLF8DlxTOM5J+LnENFoJrz
- /sMmpgQaE8DkeXF9elgTL/mOjBEFUwTWKPSxZvdPwp2inHSanOA6BKJr0isn5tqKvtrl
- 5QX7RGlugfQ3aHij/QI6nYE5rEnVKHWwLyxMGpzzcJYN1ZTDZDV8n6xBAULH8xJX7lPW
- secg==
-X-Gm-Message-State: AOJu0YxTNvgzvi8XY37V8VBuLm2L7Q5Q0cOo2yFJavflnTRhs06JcJgz
- OBUXvmGMsoJgOgDof221mpBrTdhAe0JIC56GklA8gwcMQDvW6vfg+FnDF6LnnyE=
-X-Google-Smtp-Source: AGHT+IFk1eXoi865iE+hGOtbhZmI95vKmzluYra71ibzf54zR27uj+i3bnE6sMJs7NhXd9GH5Izz3g==
-X-Received: by 2002:a05:6808:394a:b0:3c3:76d4:b687 with SMTP id
- en10-20020a056808394a00b003c376d4b687mr9730335oib.22.1710748394647; 
- Mon, 18 Mar 2024 00:53:14 -0700 (PDT)
+ bh=g9Ua7pWiHoWuYMxwrSKvZGIZMCnickF81dt6ppg4bLA=;
+ b=dJAbRt7SY6UMr/TzE4VM5VdlAkXjmsqUWc6dZL5Ve4aOL5k6DWuIJMiSra2uQ6C8wY
+ vNAmbIr196v5RCEjZcMskcmunZ02G9hA4JUAOcsxCF8EyWBdi28Upycf7cGh2XtE+sVq
+ IeIun0ng8eABooMCzNPxkOBU5YYL3s7BrQFXF3Z0nnzLgCvu+dGu5KeJL4Aa9FsW9Dtm
+ TLBVuoBlBGxLr1eEwL0GguIOrtCpi35HS/Q2xqvb8ZbDGKjelV6cj6TcQH9X1Qha6Dwd
+ BCWQ4WHretnAHrqad4G9YbOD4maZCwn2ySVvQuVD1ySaCRYoHau5zQRv6EmXYqivXXrI
+ gHhA==
+X-Gm-Message-State: AOJu0YwpX1X1ueGPd1VL6m8c6K84REPGMMMt1W3zf5Em+fSi29qNyENc
+ jdM8o0COnx7+Gnmb/trVbVZRi6FrbwBAjF8WS814rKfMnZsV/AdG8PzT+nmLhvU=
+X-Google-Smtp-Source: AGHT+IGkSACDk8LvYz29gEti3PvleXDUtJ6PYseLptjmUWV0QTJ5V40YJzE5/37k3fiMkEjsYJnPbA==
+X-Received: by 2002:a17:903:13ce:b0:1df:fa1a:529f with SMTP id
+ kd14-20020a17090313ce00b001dffa1a529fmr6936177plb.24.1710748391279; 
+ Mon, 18 Mar 2024 00:53:11 -0700 (PDT)
 Received: from localhost ([157.82.200.213])
  by smtp.gmail.com with UTF8SMTPSA id
- i2-20020a632202000000b005e2b0671987sm6542630pgi.51.2024.03.18.00.53.13
+ z7-20020a170903018700b001def777afc5sm5602806plg.77.2024.03.18.00.53.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 00:53:14 -0700 (PDT)
+ Mon, 18 Mar 2024 00:53:11 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Mon, 18 Mar 2024 16:53:01 +0900
-Subject: [PATCH 2/3] ui/cocoa: Resize window after toggling zoom-to-fit
+Date: Mon, 18 Mar 2024 16:53:00 +0900
+Subject: [PATCH 1/3] ui/cocoa: Fix aspect ratio
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240318-fixes-v1-2-34f1a849b0d9@daynix.com>
+Message-Id: <20240318-fixes-v1-1-34f1a849b0d9@daynix.com>
 References: <20240318-fixes-v1-0-34f1a849b0d9@daynix.com>
 In-Reply-To: <20240318-fixes-v1-0-34f1a849b0d9@daynix.com>
 To: Peter Maydell <peter.maydell@linaro.org>, 
@@ -73,8 +73,8 @@ To: Peter Maydell <peter.maydell@linaro.org>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.12.3
-Received-SPF: none client-ip=2607:f8b0:4864:20::231;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x231.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::630;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,26 +96,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Resize the window so that the content will fit without zooming.
+[NSWindow setContentAspectRatio:] does not trigger window resize itself,
+so the wrong aspect ratio will persist if nothing resizes the window.
+Call [NSWindow setContentSize:] in such a case.
 
 Fixes: 91aa508d0274 ("ui/cocoa: Let the platform toggle fullscreen")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- ui/cocoa.m | 1 +
- 1 file changed, 1 insertion(+)
+ ui/cocoa.m | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/ui/cocoa.m b/ui/cocoa.m
-index d6a5b462f78b..1324be6d32fe 100644
+index fa879d7dcd4b..d6a5b462f78b 100644
 --- a/ui/cocoa.m
 +++ b/ui/cocoa.m
-@@ -1378,6 +1378,7 @@ - (void)zoomToFit:(id) sender
- 
-     [[cocoaView window] setStyleMask:styleMask];
-     [sender setState:styleMask & NSWindowStyleMaskResizable ? NSControlStateValueOn : NSControlStateValueOff];
-+    [cocoaView resizeWindow];
+@@ -508,6 +508,25 @@ - (void) drawRect:(NSRect) rect
+     }
  }
  
- - (void)toggleZoomInterpolation:(id) sender
++- (NSSize)fixAspectRatio:(NSSize)original
++{
++    NSSize scaled;
++    NSSize fixed;
++
++    scaled.width = screen.width * original.height;
++    scaled.height = screen.height * original.width;
++
++    if (scaled.width < scaled.height) {
++        fixed.width = scaled.width / screen.height;
++        fixed.height = original.height;
++    } else {
++        fixed.width = original.width;
++        fixed.height = scaled.height / screen.width;
++    }
++
++    return fixed;
++}
++
+ - (NSSize) screenSafeAreaSize
+ {
+     NSSize size = [[[self window] screen] frame].size;
+@@ -525,8 +544,10 @@ - (void) resizeWindow
+         [[self window] setContentSize:NSMakeSize(screen.width, screen.height)];
+         [[self window] center];
+     } else if ([[self window] styleMask] & NSWindowStyleMaskFullScreen) {
+-        [[self window] setContentSize:[self screenSafeAreaSize]];
++        [[self window] setContentSize:[self fixAspectRatio:[self screenSafeAreaSize]]];
+         [[self window] center];
++    } else {
++        [[self window] setContentSize:[self fixAspectRatio:[self frame].size]];
+     }
+ }
+ 
 
 -- 
 2.44.0
