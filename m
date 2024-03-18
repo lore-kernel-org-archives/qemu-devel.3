@@ -4,52 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413E0C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 07:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94133C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 07:37:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm72J-0002Ej-0u; Mon, 18 Mar 2024 03:03:55 -0400
+	id 1rm7Xe-0007yu-Li; Mon, 18 Mar 2024 03:36:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1rm72D-0002E9-GO
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:03:49 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1rm72A-0000t5-J2
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 03:03:49 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxrutG5_dlLT0aAA--.62864S3;
- Mon, 18 Mar 2024 15:03:34 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxPs9E5_dlDWVcAA--.45593S2; 
- Mon, 18 Mar 2024 15:03:33 +0800 (CST)
-From: Xianglai Li <lixianglai@loongson.cn>
-To: qemu-devel@nongnu.org,
-	gaosong@loongson.cn
-Cc: richard.henderson@linaro.org, maobibo@loongson.cn,
- yangxiaojuan@loongson.cn, zhaotianrui@loongson.cn, yijun@loongson.cn,
- wuruiyang@loongson.cn, zltjiangshi@gmail.com, lixianglai@loongson.cn
-Subject: [PATCH V6] target/loongarch: Fix tlb huge page loading issue
-Date: Mon, 18 Mar 2024 15:03:32 +0800
-Message-Id: <20240318070332.1273939-1-lixianglai@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rm7XX-0007yD-CE; Mon, 18 Mar 2024 03:36:15 -0400
+Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rm7XV-0005vA-FV; Mon, 18 Mar 2024 03:36:11 -0400
+Received: by mail-qt1-x836.google.com with SMTP id
+ d75a77b69052e-430ca04b09bso6881451cf.1; 
+ Mon, 18 Mar 2024 00:36:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710747366; x=1711352166; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s9UyfahqH/o+NUwLUIWz1me0FxA9omKJwbxcre7d/ZE=;
+ b=T1MpPItSYLK6uptViWO3mvcqtnAdceCN93VbrHthmWtQl14QTGz+t6WHn4Mk3Of+Ym
+ FISenz5fjCSEJMndzuAFuG6BCZ6bX1M9gJNo2BEBX5yCgVKpFoEAVmLoK3jlrLglWaTw
+ idWv3bv7GH6w6ACgLFu+Y9cAoPoQuGAdzGyFjFZxR6oE4Yg5PAe7ChayU8/LVutU+ks1
+ VGxaroUnjw8j/DVRe5QkMLO3l3VKdUKUa2McZrT6SdXjJnCDW1kPebBUe/PBVLGk8Jzk
+ i/EtJPGto9VH6I9tl5oD5YOQMD6SiYEDeLg5RCVdBAdWv3XEEBDyVQCgFfmelxfZ8Z2L
+ R5Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710747366; x=1711352166;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=s9UyfahqH/o+NUwLUIWz1me0FxA9omKJwbxcre7d/ZE=;
+ b=Qc4WKvyQvImLPNE5JjURrIv78XrIToEy0XyZtif4Lwp8xRB6d/9AxAmXGGFc4vduhH
+ lWO37YVOoxsVwgr+ntwsY/r7OcbctkIh4/W6I2RX91jVQVCJp2tXzYnvdOspfzrJSH2X
+ NRZZed8foh7RC4h4CAo5ddUJmY/8hzuNIGdlEIlXeWrzcROwkF0/0UJbumkPtnlSPrmN
+ 43tmu3Ew9RaaEh5kLexqCY1xaKDFXgayiJqk2gWWBq9p8pblXmRs904gLRUnYLKxOS8A
+ 8q1/ChvPw22FxvJyDlDjdGRCLQOVPS8y8V0/kNd5ROBlg3PwahS+H93TFE5E1gO2S454
+ XEVg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWAUyTfrWaKv1s12fNY+DEchv6bY3ZNVfVCXfpTranErMh9YG7l9WVbJT941OfNUJ3vo7dazDAVpVY20fFGQniP+J2+fKB/4fg8bPO+f/V/6CSC1ATbyYbCTgQx9Oo=
+X-Gm-Message-State: AOJu0YzOZUb1IGbArVyGXWr4QME3/W70Fz4jCHpOP00zJFfseb7lXM41
+ 3BAboliMg0M5HHvu+jF47SgJFqv2jkxE8Fjf3yrqfHIkvDUFH9E5VUStYeNh+UenA/WOXu+rKZ2
+ Qj/H5kKDZUk4fPf062gO7qzTAhVvYkxBRYetlZg==
+X-Google-Smtp-Source: AGHT+IHYgrwQEqfIA9AEealiGnB/hdAmc0k2f6Pydq3S1HHp2RqpUdhyHVyK1Dqng6xWiGT3WkGZmHKdy32la9Lc63A=
+X-Received: by 2002:a05:622a:8ca:b0:430:d8ef:3325 with SMTP id
+ i10-20020a05622a08ca00b00430d8ef3325mr613675qte.47.1710747366390; Mon, 18 Mar
+ 2024 00:36:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxPs9E5_dlDWVcAA--.45593S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240314220038.1aaae79f.olaf@aepfle.de>
+ <4b803768-09df-4b6c-a745-f0158543310d@tls.msk.ru>
+ <20240316231945.7bcfac09.olaf@aepfle.de>
+ <a9e4fac5-2a1e-4d15-afa5-bae42756ec42@tls.msk.ru>
+In-Reply-To: <a9e4fac5-2a1e-4d15-afa5-bae42756ec42@tls.msk.ru>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 18 Mar 2024 11:35:54 +0400
+Message-ID: <CAJ+F1CJyhEYhXewLV4SOGNfgiA3V2kfotVqYgcGEckvO4XLp7A@mail.gmail.com>
+Subject: Re: Regression in v7.2.10 - ui-dbus.so requires -fPIC
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Olaf Hering <olaf@aepfle.de>, qemu-devel@nongnu.org, 
+ qemu-stable <qemu-stable@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x836.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,223 +93,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we use qemu tcg simulation, the page size of bios is 4KB.
-When using the level 2 super huge page (page size is 1G) to create the page table,
-it is found that the content of the corresponding address space is abnormal,
-resulting in the bios can not start the operating system and graphical interface normally.
+Hi
 
-The lddir and ldpte instruction emulation has
-a problem with the use of super huge page processing above level 2.
-The page size is not correctly calculated,
-resulting in the wrong page size of the table entry found by tlb.
+On Sun, Mar 17, 2024 at 11:10=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> w=
+rote:
+>
+> 17.03.2024 01:19, Olaf Hering:
+> > Sat, 16 Mar 2024 22:40:14 +0300 Michael Tokarev <mjt@tls.msk.ru>:
+> >
+> >>       meson: ensure dbus-display generated code is built before other =
+units
+> >>       (cherry picked from commit 1222070e772833c6875e0ca63565db12c22df=
+39e)
+> >
+> > "static_library" is used often. Some use the 'pic' option, which fixes =
+the issue.
+> >
+> > I think every usage that ends up in a shared library requires 'pic:true=
+'.
+>
+> The prob here seems to be that while fixing other issue (header file isn'=
+t generated
+> early enough), we all forgot about the fact dbus-display1.o can be used i=
+nside a
+> shared/loadable object when qemu is built with --enable-modules.
+>
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
----
- target/loongarch/cpu-csr.h        |   3 +
- target/loongarch/internals.h      |   5 --
- target/loongarch/tcg/tlb_helper.c | 113 +++++++++++++++++++++---------
- 3 files changed, 82 insertions(+), 39 deletions(-)
+dbus-display1 is also used with static linking for the unit test.
 
-Changes log:
-V5->V6:
-Add some necessary log printing to patch.
+It looks like the simplest is to let the actual target decide how it
+is built, even if it is compiled multiple time then:
 
-V4->V5:
-Modifying the patch Title.
-Fix incorrect usage of FIELD macro and code logic errors in patch.
+-  dbus_display1_lib =3D static_library('dbus-display1', dbus_display1,
+dependencies: gio)
+-  dbus_display1_dep =3D declare_dependency(link_with:
+dbus_display1_lib, sources: dbus_display1[0])
++  dbus_display1_dep =3D declare_dependency(sources: dbus_display1,
+dependencies: gio)
 
-V3->V4:
-Optimize the huge page calculation method,
-use the FIELD macro for bit calculation.
+This makes commit 186acfbaf7 ("tests/qtest: Depend on
+dbus_display1_dep") no longer relevant, as dbus-display1.c will be
+recompiled.
 
-V2->V3:
-Delete the intermediate variable LDDIR_PS, and implement lddir and ldpte
-huge pages by referring to the latest architecture reference manual.
+Alternatively, we could always build with pic: true (or pic:
+enable_modules), but that's not ideal either.
 
-V1->V2:
-Modified the patch title format and Enrich the commit mesg description
-
-diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
-index c59d7a9fcb..0834e91f30 100644
---- a/target/loongarch/cpu-csr.h
-+++ b/target/loongarch/cpu-csr.h
-@@ -67,6 +67,9 @@ FIELD(TLBENTRY, D, 1, 1)
- FIELD(TLBENTRY, PLV, 2, 2)
- FIELD(TLBENTRY, MAT, 4, 2)
- FIELD(TLBENTRY, G, 6, 1)
-+FIELD(TLBENTRY, HUGE, 6, 1)
-+FIELD(TLBENTRY, HGLOBAL, 12, 1)
-+FIELD(TLBENTRY, LEVEL, 13, 2)
- FIELD(TLBENTRY_32, PPN, 8, 24)
- FIELD(TLBENTRY_64, PPN, 12, 36)
- FIELD(TLBENTRY_64, NR, 61, 1)
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index a2fc54c8a7..944153b180 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -16,11 +16,6 @@
- #define TARGET_PHYS_MASK MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS)
- #define TARGET_VIRT_MASK MAKE_64BIT_MASK(0, TARGET_VIRT_ADDR_SPACE_BITS)
- 
--/* Global bit used for lddir/ldpte */
--#define LOONGARCH_PAGE_HUGE_SHIFT   6
--/* Global bit for huge page */
--#define LOONGARCH_HGLOBAL_SHIFT     12
--
- void loongarch_translate_init(void);
- 
- void loongarch_cpu_dump_state(CPUState *cpu, FILE *f, int flags);
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 22be031ac7..57f5308632 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -17,6 +17,34 @@
- #include "exec/log.h"
- #include "cpu-csr.h"
- 
-+static void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-+                               uint64_t *dir_width, target_ulong level)
-+{
-+    switch (level) {
-+    case 1:
-+        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_BASE);
-+        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_WIDTH);
-+        break;
-+    case 2:
-+        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_BASE);
-+        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_WIDTH);
-+        break;
-+    case 3:
-+        *dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_BASE);
-+        *dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_WIDTH);
-+        break;
-+    case 4:
-+        *dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_BASE);
-+        *dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_WIDTH);
-+        break;
-+    default:
-+        /* level may be zero for ldpte */
-+        *dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
-+        *dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
-+        break;
-+    }
-+}
-+
- static void raise_mmu_exception(CPULoongArchState *env, target_ulong address,
-                                 MMUAccessType access_type, int tlb_error)
- {
-@@ -485,7 +513,25 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-     target_ulong badvaddr, index, phys, ret;
-     int shift;
-     uint64_t dir_base, dir_width;
--    bool huge = (base >> LOONGARCH_PAGE_HUGE_SHIFT) & 0x1;
-+
-+    if (unlikely((level == 0) || (level > 4))) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "Attepted LDDIR with level %"PRId64"\n", level);
-+        return base;
-+    }
-+
-+    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
-+        if (unlikely(level == 4)) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "Attempted use of level 4 huge page\n");
-+        }
-+
-+        if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
-+            return base;
-+        } else {
-+            return FIELD_DP64(base, TLBENTRY, LEVEL, level);
-+        }
-+    }
- 
-     badvaddr = env->CSR_TLBRBADV;
-     base = base & TARGET_PHYS_MASK;
-@@ -494,30 +540,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-     shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
-     shift = (shift + 1) * 3;
- 
--    if (huge) {
--        return base;
--    }
--    switch (level) {
--    case 1:
--        dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_BASE);
--        dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR1_WIDTH);
--        break;
--    case 2:
--        dir_base = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_BASE);
--        dir_width = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, DIR2_WIDTH);
--        break;
--    case 3:
--        dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_BASE);
--        dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR3_WIDTH);
--        break;
--    case 4:
--        dir_base = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_BASE);
--        dir_width = FIELD_EX64(env->CSR_PWCH, CSR_PWCH, DIR4_WIDTH);
--        break;
--    default:
--        do_raise_exception(env, EXCCODE_INE, GETPC());
--        return 0;
--    }
-+    get_dir_base_width(env, &dir_base, &dir_width, level);
-     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
-     phys = base | index << shift;
-     ret = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
-@@ -530,20 +553,42 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-     CPUState *cs = env_cpu(env);
-     target_ulong phys, tmp0, ptindex, ptoffset0, ptoffset1, ps, badv;
-     int shift;
--    bool huge = (base >> LOONGARCH_PAGE_HUGE_SHIFT) & 0x1;
-     uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
-     uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
-+    uint64_t dir_base, dir_width;
- 
-+    /*
-+     * The parameter "base" has only two types,
-+     * one is the page table base address,
-+     * whose bit 6 should be 0,
-+     * and the other is the huge page entry,
-+     * whose bit 6 should be 1.
-+     */
-     base = base & TARGET_PHYS_MASK;
-+    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
-+        /*
-+         * Gets the huge page level and Gets huge page size.
-+         * Clears the huge page level information in the entry.
-+         * Clears huge page bit.
-+         * Move HGLOBAL bit to GLOBAL bit.
-+         */
-+        get_dir_base_width(env, &dir_base, &dir_width,
-+                           FIELD_EX64(base, TLBENTRY, LEVEL));
-+
-+        base = FIELD_DP64(base, TLBENTRY, LEVEL, 0);
-+        base = FIELD_DP64(base, TLBENTRY, HUGE, 0);
-+        if (FIELD_EX64(base, TLBENTRY, HGLOBAL)) {
-+            base = FIELD_DP64(base, TLBENTRY, HGLOBAL, 0);
-+            base = FIELD_DP64(base, TLBENTRY, G, 1);
-+        }
- 
--    if (huge) {
--        /* Huge Page. base is paddr */
--        tmp0 = base ^ (1 << LOONGARCH_PAGE_HUGE_SHIFT);
--        /* Move Global bit */
--        tmp0 = ((tmp0 & (1 << LOONGARCH_HGLOBAL_SHIFT))  >>
--                LOONGARCH_HGLOBAL_SHIFT) << R_TLBENTRY_G_SHIFT |
--                (tmp0 & (~(1 << LOONGARCH_HGLOBAL_SHIFT)));
--        ps = ptbase + ptwidth - 1;
-+        ps = dir_base + dir_width - 1;
-+        /*
-+         * Huge pages are evenly split into parity pages
-+         * when loaded into the tlb,
-+         * so the tlb page size needs to be divided by 2.
-+         */
-+        tmp0 = base;
-         if (odd) {
-             tmp0 += MAKE_64BIT_MASK(ps, 1);
-         }
--- 
-2.39.1
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
