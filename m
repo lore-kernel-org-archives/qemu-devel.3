@@ -4,79 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC58C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 19:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45910C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 19:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmIUI-0001kx-AZ; Mon, 18 Mar 2024 15:17:34 -0400
+	id 1rmIeh-00041b-DK; Mon, 18 Mar 2024 15:28:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rmIUH-0001ko-0g
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 15:17:33 -0400
-Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rmIUF-0006sK-4b
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 15:17:32 -0400
-Received: by mail-qt1-x82d.google.com with SMTP id
- d75a77b69052e-429de32dad9so30147651cf.2
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 12:17:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710789450; x=1711394250; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7uvCuaTulmkw/4RJTvN/0eKVq69C4CrXjNljs0myPnc=;
- b=U/Vb/CkvtPK9213lNb5W/PZ5q+18XTQe865ge8IJw3evlek8E/LeqJt4xDNSR0qTcE
- mHThBV5GdmgWmVhpB4q4rfYSFdR7Jxdp1TeLiZ8c1D3pddQlgDDtdAgW6uKrcq/1dKOW
- a64R00tv/uMrRqn4i72F62Tu5Q4Rud8ud6YZjYdOcaGolZVrCov1A7pl0YNortYWnr82
- B1znuUIaxH2i52/ug2f14GdkSC2RV6IpDAxBrp07QBRygXNM4Fw68sFT2znPlzCfSX50
- QeRwJNt2S2omJ92+ymJJRSgAXyBLCpELc6frtzr2OcRZiLYkl0u9aZcBACax9lTss3AN
- SKsA==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rmIed-0003y4-BU
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 15:28:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rmIea-0000Hq-0i
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 15:28:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710790090;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=M5thT1Ym/hbl8f5Mbq1rU87om0GJoVjSqRhDD6eXEXo=;
+ b=iymclq6xcJNZ3iVlihX3VcAjowYeLHLkDTjbwiXGdJrWJD5lsXKwDeijZMkcO8TOM6lhM1
+ QcakoFBLNZ/Xg9Z7x6Bc+hUp0JQeq53/rvmyGUiTj3VYLIyh+G+e330L8VY5QPX5ED5lf7
+ qGJbuWz2mvUmF9UPcbOYYdIgnVyJIJA=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-690-EkaxMRRiPZ6BX8hkh3ruUQ-1; Mon, 18 Mar 2024 15:28:08 -0400
+X-MC-Unique: EkaxMRRiPZ6BX8hkh3ruUQ-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-60cc8d4e1a4so88897247b3.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 12:28:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710789450; x=1711394250;
+ d=1e100.net; s=20230601; t=1710790088; x=1711394888;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7uvCuaTulmkw/4RJTvN/0eKVq69C4CrXjNljs0myPnc=;
- b=Ft7IxyPCi5El//uIi5zEscIsruEcyME8Hl3a+KzUUIz4+RuCq+1FW793lhouIfHLOE
- 5JxEypfXjPq99BUiZvjPM5UqmBLNP6KYpycfXqO1Q8OMd8QMQDGY5Ftp0XSbuOIHeFFK
- v8KLX3hO694XCx665+SxOZ1LWkIDyN/9COp/EbbppdaXU0OWGkuKSEA+ecSRn6m6fIbm
- OPJJATSlWXjY0HQDM5nQbNdSoz+EkEnZAkMjt2rXUqlXUJ1eJno8gcNVLha3tbzvmv8T
- 2m+CMhJHl4LHj2vuUCfGid1iXYsb2Qnm3ItrB+pAJqu1sJRjDWFQSCWkl24Vk/Emckyt
- IbWw==
-X-Gm-Message-State: AOJu0Yyu3ZIU/h9ORZsEkDWHTf7HTRKU+od4ex+tyTjjDQfkzEChvHM8
- daKxZiULQU/zRfhP/vw+Xd/IlyN2Rk74ZwdpXXs2LEj7KH9vc9yfWhz9GzOQTFnoSVbQGaHOEwv
- Ts7TF4j8riqNm5RVstkKeK7TF5+M=
-X-Google-Smtp-Source: AGHT+IF10Xj5llWnL4ooqWVcFM3zSxJOP5SRsechUPmcC/VX/23wR0kEKt1iYnYX/N6KHcktRnt2uwrqAxaBKPyukQ4=
-X-Received: by 2002:ac8:5f07:0:b0:42f:200b:450c with SMTP id
- x7-20020ac85f07000000b0042f200b450cmr255458qta.64.1710789449694; Mon, 18 Mar
- 2024 12:17:29 -0700 (PDT)
+ bh=M5thT1Ym/hbl8f5Mbq1rU87om0GJoVjSqRhDD6eXEXo=;
+ b=a9b7Tsv2/BSFSPVtvT8cztVTgYhUziHFLbGL0KPdoXt+dqM+b9Hhv1GjUn2ohCmgvB
+ ZYQBBxbtUVFuPEWPemBaCZHky2x+dQPL8aRZ46Z2Jh8nOsGRx8aTKsdnuOofBnzV9o5m
+ kZf+HtnTGcqzvn7TjBL+XUIe6OIVMnkhTAfjINeuVoWujmMEza4rZBW0gavY7e9TYbWw
+ vtFyAt/IIoVveyw0+hUy/m8J0XKwyEAhCpgX04xeZeiff82QzCY+VJnUmwnawu0MsAue
+ lvQG2fLd1gKvHtIwrh51jm7B8IApycfnXNb3K/y94V3dzPxSgRP6nN3jjHK0unRBHMsV
+ ds9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbeI0tEHoF6zRx4/os2pXDSNngSsf6RP+LonXqrT+aknvBW3Q9lhLw8a5plHQZ2FhamphUxhW4G/SrrSlVrbn8vjKsbWY=
+X-Gm-Message-State: AOJu0YwGLSEuLJxuzrLXD/sDk6wLoKPxtAjftgBGSDb0yd1FN7z5Bi1P
+ db6WxsQ188IMVNn/QAY7egmw4kZxsa+QD+1lWPjhmLrFNTv7cEZpO9W75pr9oAPB+Or33S9k/dt
+ R1pSP8PwwLsRDaEzT5yJWZB4VdU/fXESh3fEeLETsu+LD7WkVu0e0nJdPrnUJ1kSvMEORjEH8W5
+ W5Es05YcTBuVrDRV9OVNhyNNtahQI=
+X-Received: by 2002:a81:524f:0:b0:610:b259:9fa7 with SMTP id
+ g76-20020a81524f000000b00610b2599fa7mr696574ywb.36.1710790087909; 
+ Mon, 18 Mar 2024 12:28:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFCcpDp3A2u95J15hdFL+unqJiYtF3gPN/tTS5MNX0C3Z25WfnLusbp3Ndthr3QZsM8hZXUu5iIBuoaQwRSwBY=
+X-Received: by 2002:a81:524f:0:b0:610:b259:9fa7 with SMTP id
+ g76-20020a81524f000000b00610b2599fa7mr696555ywb.36.1710790087612; Mon, 18 Mar
+ 2024 12:28:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240318182330.96738-1-berrange@redhat.com>
- <20240318182330.96738-2-berrange@redhat.com>
-In-Reply-To: <20240318182330.96738-2-berrange@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 18 Mar 2024 23:17:17 +0400
-Message-ID: <CAJ+F1CKVnSckG-R2wK5YXNUvMgqmk3VgMY2e5C6FvOLohVD0kA@mail.gmail.com>
-Subject: Re: [PATCH 1/3 for 9.0] chardev: lower priority of the HUP GSource in
- socket chardev
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Thomas Huth <thuth@redhat.com>
+References: <20240315155949.86066-1-kwolf@redhat.com>
+ <CACGkMEvuu4rkgZr7sBFwXztZLHdamBKML++6cvA+GDKyGDGibA@mail.gmail.com>
+ <20240318050212-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240318050212-mutt-send-email-mst@kernel.org>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 18 Mar 2024 20:27:31 +0100
+Message-ID: <CAJaqyWc5_T=c+i0EvoYJ4Ly9XOaRBLvUE8w0n6duhm-b2Si0FA@mail.gmail.com>
+Subject: Re: [PATCH for-9.0 v3] vdpa-dev: Fix initialisation order to restore
+ VDUSE compatibility
+To: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, sgarzare@redhat.com, 
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,74 +103,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 18, 2024 at 10:25=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
+On Mon, Mar 18, 2024 at 10:02=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com=
+> wrote:
 >
-> The socket chardev often has 2 GSource object registered against the
-> same FD. One is registered all the time and is just intended to handle
-> POLLHUP events, while the other gets registered & unregistered on the
-> fly as the frontend is ready to receive more data or not.
+> On Mon, Mar 18, 2024 at 12:31:26PM +0800, Jason Wang wrote:
+> > On Fri, Mar 15, 2024 at 11:59=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> =
+wrote:
+> > >
+> > > VDUSE requires that virtqueues are first enabled before the DRIVER_OK
+> > > status flag is set; with the current API of the kernel module, it is
+> > > impossible to enable the opposite order in our block export code beca=
+use
+> > > userspace is not notified when a virtqueue is enabled.
+> > >
+> > > This requirement also mathces the normal initialisation order as done=
+ by
+> > > the generic vhost code in QEMU. However, commit 6c482547 accidentally
+> > > changed the order for vdpa-dev and broke access to VDUSE devices with
+> > > this.
+> > >
+> > > This changes vdpa-dev to use the normal order again and use the stand=
+ard
+> > > vhost callback .vhost_set_vring_enable for this. VDUSE devices can be
+> > > used with vdpa-dev again after this fix.
+> > >
+> > > vhost_net intentionally avoided enabling the vrings for vdpa and does
+> > > this manually later while it does enable them for other vhost backend=
+s.
+> > > Reflect this in the vhost_net code and return early for vdpa, so that
+> > > the behaviour doesn't change for this device.
+> > >
+> > > Cc: qemu-stable@nongnu.org
+> > > Fixes: 6c4825476a4351530bcac17abab72295b75ffe98
+> > > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> > > ---
+> > > v2:
+> > > - Actually make use of the @enable parameter
+> > > - Change vhost_net to preserve the current behaviour
+> > >
+> > > v3:
+> > > - Updated trace point [Stefano]
+> > > - Fixed typo in comment [Stefano]
+> > >
+> > >  hw/net/vhost_net.c     | 10 ++++++++++
+> > >  hw/virtio/vdpa-dev.c   |  5 +----
+> > >  hw/virtio/vhost-vdpa.c | 29 ++++++++++++++++++++++++++---
+> > >  hw/virtio/vhost.c      |  8 +++++++-
+> > >  hw/virtio/trace-events |  2 +-
+> > >  5 files changed, 45 insertions(+), 9 deletions(-)
+> > >
+> > > diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+> > > index e8e1661646..fd1a93701a 100644
+> > > --- a/hw/net/vhost_net.c
+> > > +++ b/hw/net/vhost_net.c
+> > > @@ -541,6 +541,16 @@ int vhost_set_vring_enable(NetClientState *nc, i=
+nt enable)
+> > >      VHostNetState *net =3D get_vhost_net(nc);
+> > >      const VhostOps *vhost_ops =3D net->dev.vhost_ops;
+> > >
+> > > +    /*
+> > > +     * vhost-vdpa network devices need to enable dataplane virtqueue=
+s after
+> > > +     * DRIVER_OK, so they can recover device state before starting d=
+ataplane.
+> > > +     * Because of that, we don't enable virtqueues here and leave it=
+ to
+> > > +     * net/vhost-vdpa.c.
+> > > +     */
+> > > +    if (nc->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_VDPA) {
+> > > +        return 0;
+> > > +    }
+> >
+> > I think we need some inputs from Eugenio, this is only needed for
+> > shadow virtqueue during live migration but not other cases.
+> >
+> > Thanks
 >
-> It is very common for poll() to signal a POLLHUP event at the same time
-> as there is pending incoming data from the disconnected client. It is
-> therefore essential to process incoming data prior to processing HUP.
-> The problem with having 2 GSource on the same FD is that there is no
-> guaranteed ordering of execution between them, so the chardev code may
-> process HUP first and thus discard data.
 >
-> This failure scenario is non-deterministic but can be seen fairly
-> reliably by reverting a7077b8e354d90fec26c2921aa2dea85b90dff90, and
-> then running 'tests/unit/test-char', which will sometimes fail with
-> missing data.
+> Yes I think we had a backend flag for this, right? Eugenio can you
+> comment please?
 >
-> Ideally QEMU would only have 1 GSource, but that's a complex code
-> refactoring job. The next best solution is to try to ensure ordering
-> between the 2 GSource objects. This can be achieved by lowering the
-> priority of the HUP GSource, so that it is never dispatched if the
-> main GSource is also ready to dispatch. Counter-intuitively, lowering
-> the priority of a GSource is done by raising its priority number.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+We have the VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK backend flag,
+right. If the backend does not offer it, it is better to enable all
+the queues here and add a migration blocker in net/vhost-vdpa.c.
 
-> ---
->  chardev/char-socket.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
->
-> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-> index 8a0406cc1e..2c4dffc0e6 100644
-> --- a/chardev/char-socket.c
-> +++ b/chardev/char-socket.c
-> @@ -601,6 +601,22 @@ static void update_ioc_handlers(SocketChardev *s)
->
->      remove_hup_source(s);
->      s->hup_source =3D qio_channel_create_watch(s->ioc, G_IO_HUP);
-> +    /*
-> +     * poll() is liable to return POLLHUP even when there is
-> +     * still incoming data available to read on the FD. If
-> +     * we have the hup_source at the same priority as the
-> +     * main io_add_watch_poll GSource, then we might end up
-> +     * processing the POLLHUP event first, closing the FD,
-> +     * and as a result silently discard data we should have
-> +     * read.
-> +     *
-> +     * By setting the hup_source to G_PRIORITY_DEFAULT + 1,
-> +     * we ensure that io_add_watch_poll GSource will always
-> +     * be dispatched first, thus guaranteeing we will be
-> +     * able to process all incoming data before closing the
-> +     * FD
-> +     */
-> +    g_source_set_priority(s->hup_source, G_PRIORITY_DEFAULT + 1);
->      g_source_set_callback(s->hup_source, (GSourceFunc)tcp_chr_hup,
->                            chr, NULL);
->      g_source_attach(s->hup_source, chr->gcontext);
-> --
-> 2.43.0
->
->
+So the check should be:
+nc->info->type =3D=3D VHOST_VDPA && (backend_features &
+VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK).
 
+I can manage to add the migration blocker on top of this patch.
 
---=20
-Marc-Andr=C3=A9 Lureau
+Thanks!
+
 
