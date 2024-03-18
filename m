@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 040DBC54E6A
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 15:47:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B557AC54E71
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 15:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmFCw-0003F5-Qo; Mon, 18 Mar 2024 11:47:26 -0400
+	id 1rmFCs-00039p-W4; Mon, 18 Mar 2024 11:47:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCt-0003CC-Dj
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:23 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCk-0002ol-Ey
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:21 -0400
+Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCm-0007tR-K8
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:23 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6e704078860so1812006b3a.0
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 08:47:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmFCg-0007rY-6E
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 11:47:14 -0400
+Received: by mail-oa1-x2b.google.com with SMTP id
+ 586e51a60fabf-221a9e5484aso3189679fac.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 08:47:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710776833; x=1711381633; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1710776827; x=1711381627; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zYd02SLfgP/LCWG+Mrru0HvWw0TZYZU2hsjtTtlA/n0=;
- b=A3hpw+62g8JTeGjhd2syXQTIG5zkJqqHAhwQsrO27rM7WtFm51xZRQ1eHtFpwgVXpb
- ywwL3RMAfIz1WFhOFg5AlN4DGYjUEf5UkxhJoqfxAgTXQvH6+Qlw5HFuOCywoSJsXrUE
- 8lg9YEAb4yINbvRbj4tTEgbKSGWG2qZ1ahPdI1VRu729Fs2BD3NtnK3KOkEe+r40sBdW
- UcIlSi5Sph/Y6165aN+8/0f+0AFnrpNPZM+wfyiYqtXIj/3AK6WjQbmuGWYMpKzlxNLJ
- obrZP99pOFhD0/HGKpIYm/v1BxJBsJiS+/DmBXHgoyx4F3ayj70LDwDRKaIRKFcCn/0g
- PaJw==
+ bh=sIxDj8qxQ1Vf3naQ804ZZJDX1uKqMaOn1Ozd3HpaNjM=;
+ b=eTXGfCSTzffVTMtFeP+bhXY6otFj/3Q5gb3bbQq37a0N18Q1DQOYKg4iI0wQ410dIk
+ VGTVWVbxxI5bwGI8d73xE7K/LC5fR5+MJ/pAncOirA1PEzx1pQHKTdK/ZMQBADuWnc4x
+ qmA3qiiZ2AcsUybj0a5VXviM7Bvg/qRGzTkZltPQZ38KsGZQDGF1yPbUgZX5Jx0cWH/r
+ 6rxCPh8MDwH5/ARNa8FIKFok+tvFMWycafKF0EtFZZDAXyMM0OKnXXanyESHxfg2Sc4I
+ R2tIgbkotv+L+0+7bkJyzN3wtIBATKdPKHd0zva1yocrW/h4mxs8Z+4xJQzoN+nr0gp1
+ 7izg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710776833; x=1711381633;
+ d=1e100.net; s=20230601; t=1710776827; x=1711381627;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zYd02SLfgP/LCWG+Mrru0HvWw0TZYZU2hsjtTtlA/n0=;
- b=DxRjXjOnaBt+3l9tcuxx3uuUin3pdu8UjsZd9BbBYaGSJXDW+rYTzw92q+UTdLEhgW
- Caxi4Tlnv/wRLnzjGBAfjIU4qZXeThLdEe+fa+edcW28O1PSfDt3Lcyb4AUW7gsWPE4w
- NPezLojQMf6vg0VDJunE8r5oV217sQgg5V5f7DdCg7dkpKH4ay+9QSI5gDUrh9as+sT+
- hBBPalZe1DaYIP1C5LghJ9WwD4P748+tWLMnLvFS1WSMHEcd37U2z3rk9YRGP/Hoc4nq
- uCxAO2RJcioQqXK5n54//Kri27F6Bfjpgyz/LHt2adukt9IqJtDgV3CQnJTBW3NxaRcS
- tSWw==
-X-Gm-Message-State: AOJu0YyzTlL2+OYjFABjX3aE1Ws5EStN1bUinbCtcS1BlV9L0Q8i10Hk
- JEom3qb5xvQ+6GLp8/jvCBOU8TmxQXlOA5qq/KfQM2RVthsunRTif+rAp/AoWZs=
-X-Google-Smtp-Source: AGHT+IEKuRcuYR7c6NU7hrI0O/CSDi2bOSbcQ4DZEZW6z9T0qG3B+8JsuJliYd635ZlBOEVTEzvo7g==
-X-Received: by 2002:a05:6a20:3d12:b0:1a3:63f4:104a with SMTP id
- y18-20020a056a203d1200b001a363f4104amr3484137pzi.13.1710776832897; 
- Mon, 18 Mar 2024 08:47:12 -0700 (PDT)
+ bh=sIxDj8qxQ1Vf3naQ804ZZJDX1uKqMaOn1Ozd3HpaNjM=;
+ b=OQEd2+GrZdPL6leuTaFR3j75FDWywiX8I/z9IYKtiHezVJhzKbNANCdarHxLITei9R
+ Vngcof7MnT7vRW3Xe/jfY5euWv/uEqAJ8W5nnhVDBIhEMjAMT5FbKXt41fqA/664uInz
+ pIAnQMtNchulOWrA7s+C9LhYgVwtJOfkWQzv5wZxYS0QOADiwJbHfMwbRmkbU9VOtF/J
+ lUWlEj017XDyE4gYeZQrGJHZ1kpl25ommTBb+fO82Q5RP5KLYcdFDmLLjaYa2iPcmxS8
+ vVm42XSnX9n96IGSJ4B6r/4S9HhttYo3K8Z/IxDlToyHrTu/IhiwV6MQsP1EyfCVn1tm
+ IkvQ==
+X-Gm-Message-State: AOJu0Yyd0X0DP2ESNfoLHjT/H61ukqQ+nxQVBrY5hfoxmFNFh/LoegUU
+ nelSbtDNWTGWaE/TXit3x/FyEo8H1ZXkbEy0uk6yqlhZh+6ZYLuyzbK1FB8SbXk=
+X-Google-Smtp-Source: AGHT+IE1YrZDHhWLsIo/w2Pw8OQ6KQwBeLSkS/4KqGCJGMwVnFnjpU7j7gL3TgTVay8mkPHevo9/eA==
+X-Received: by 2002:a05:6871:146:b0:221:9635:da6d with SMTP id
+ z6-20020a056871014600b002219635da6dmr13884243oab.47.1710776827079; 
+ Mon, 18 Mar 2024 08:47:07 -0700 (PDT)
 Received: from wheely.local0.net ([118.208.155.46])
  by smtp.gmail.com with ESMTPSA id
- v22-20020a634816000000b005dc26144d96sm7332108pga.75.2024.03.18.08.47.07
+ v22-20020a634816000000b005dc26144d96sm7332108pga.75.2024.03.18.08.47.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 18 Mar 2024 08:47:12 -0700 (PDT)
+ Mon, 18 Mar 2024 08:47:06 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,24 +67,24 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v5 07/24] chardev: set record/replay on the base device of a
- muxed device
-Date: Tue, 19 Mar 2024 01:46:04 +1000
-Message-ID: <20240318154621.2361161-8-npiggin@gmail.com>
+Subject: [PATCH v5 06/24] tests/avocado: replay_kernel.py add x86-64 q35
+ machine test
+Date: Tue, 19 Mar 2024 01:46:03 +1000
+Message-ID: <20240318154621.2361161-7-npiggin@gmail.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20240318154621.2361161-1-npiggin@gmail.com>
 References: <20240318154621.2361161-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2b;
+ envelope-from=npiggin@gmail.com; helo=mail-oa1-x2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,150 +100,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-chardev events to a muxed device don't get recorded because e.g.,
-qemu_chr_be_write() checks whether the base device has the record flag
-set.
-
-This can be seen when replaying a trace that has characters typed into
-the console, an examination of the log shows they are not recorded.
-
-Setting QEMU_CHAR_FEATURE_REPLAY on the base chardev fixes the problem.
+The x86-64 pc machine is flaky with record/replay, but q35 is more
+stable. Add a q35 test to replay_kernel.py.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- chardev/char.c | 71 +++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 50 insertions(+), 21 deletions(-)
+ tests/avocado/replay_kernel.py | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/chardev/char.c b/chardev/char.c
-index 3c43fb1278..ba847b6e9e 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -615,11 +615,24 @@ ChardevBackend *qemu_chr_parse_opts(QemuOpts *opts, Error **errp)
-     return backend;
- }
+diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
+index 22032f3230..df0ea0678f 100644
+--- a/tests/avocado/replay_kernel.py
++++ b/tests/avocado/replay_kernel.py
+@@ -110,7 +110,7 @@ def test_i386_pc(self):
+         self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
  
--Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
--                                Error **errp)
-+static void qemu_chardev_set_replay(Chardev *chr, Error **errp)
-+{
-+    if (replay_mode != REPLAY_MODE_NONE) {
-+        if (CHARDEV_GET_CLASS(chr)->chr_ioctl) {
-+            error_setg(errp, "Replay: ioctl is not supported "
-+                             "for serial devices yet");
-+            return;
-+        }
-+        qemu_chr_set_feature(chr, QEMU_CHAR_FEATURE_REPLAY);
-+        replay_register_char_driver(chr);
-+    }
-+}
+     # See https://gitlab.com/qemu-project/qemu/-/issues/2094
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test sometimes gets stuck')
++    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'pc machine is unstable with replay')
+     def test_x86_64_pc(self):
+         """
+         :avocado: tags=arch:x86_64
+@@ -128,6 +128,22 @@ def test_x86_64_pc(self):
+ 
+         self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
+ 
++    def test_x86_64_q35(self):
++        """
++        :avocado: tags=arch:x86_64
++        :avocado: tags=machine:q35
++        """
++        kernel_url = ('https://archives.fedoraproject.org/pub/archive/fedora'
++                      '/linux/releases/29/Everything/x86_64/os/images/pxeboot'
++                      '/vmlinuz')
++        kernel_hash = '23bebd2680757891cf7adedb033532163a792495'
++        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
 +
-+static Chardev *__qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
-+                                         bool replay, Error **errp)
- {
-     const ChardevClass *cc;
--    Chardev *chr = NULL;
-+    Chardev *base = NULL, *chr = NULL;
-     ChardevBackend *backend = NULL;
-     const char *name = qemu_opt_get(opts, "backend");
-     const char *id = qemu_opts_id(opts);
-@@ -657,11 +670,11 @@ Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
-     chr = qemu_chardev_new(bid ? bid : id,
-                            object_class_get_name(OBJECT_CLASS(cc)),
-                            backend, context, errp);
--
-     if (chr == NULL) {
-         goto out;
-     }
- 
-+    base = chr;
-     if (bid) {
-         Chardev *mux;
-         qapi_free_ChardevBackend(backend);
-@@ -681,11 +694,25 @@ Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
- out:
-     qapi_free_ChardevBackend(backend);
-     g_free(bid);
++        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
++        console_pattern = 'VFS: Cannot open root device'
 +
-+    if (replay && base) {
-+        /* RR should be set on the base device, not the mux */
-+        qemu_chardev_set_replay(base, errp);
-+    }
++        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
 +
-     return chr;
- }
- 
--Chardev *qemu_chr_new_noreplay(const char *label, const char *filename,
--                               bool permit_mux_mon, GMainContext *context)
-+Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
-+                                Error **errp)
-+{
-+    /* XXX: should this really not record/replay? */
-+    return __qemu_chr_new_from_opts(opts, context, false, errp);
-+}
-+
-+static Chardev *__qemu_chr_new(const char *label, const char *filename,
-+                               bool permit_mux_mon, GMainContext *context,
-+                               bool replay)
- {
-     const char *p;
-     Chardev *chr;
-@@ -693,14 +720,22 @@ Chardev *qemu_chr_new_noreplay(const char *label, const char *filename,
-     Error *err = NULL;
- 
-     if (strstart(filename, "chardev:", &p)) {
--        return qemu_chr_find(p);
-+        chr = qemu_chr_find(p);
-+        if (replay) {
-+            qemu_chardev_set_replay(chr, &err);
-+            if (err) {
-+                error_report_err(err);
-+                return NULL;
-+            }
-+        }
-+        return chr;
-     }
- 
-     opts = qemu_chr_parse_compat(label, filename, permit_mux_mon);
-     if (!opts)
-         return NULL;
- 
--    chr = qemu_chr_new_from_opts(opts, context, &err);
-+    chr = __qemu_chr_new_from_opts(opts, context, replay, &err);
-     if (!chr) {
-         error_report_err(err);
-         goto out;
-@@ -722,24 +757,18 @@ out:
-     return chr;
- }
- 
-+Chardev *qemu_chr_new_noreplay(const char *label, const char *filename,
-+                               bool permit_mux_mon, GMainContext *context)
-+{
-+    return __qemu_chr_new(label, filename, permit_mux_mon, context, false);
-+}
-+
- static Chardev *qemu_chr_new_permit_mux_mon(const char *label,
-                                           const char *filename,
-                                           bool permit_mux_mon,
-                                           GMainContext *context)
- {
--    Chardev *chr;
--    chr = qemu_chr_new_noreplay(label, filename, permit_mux_mon, context);
--    if (chr) {
--        if (replay_mode != REPLAY_MODE_NONE) {
--            qemu_chr_set_feature(chr, QEMU_CHAR_FEATURE_REPLAY);
--        }
--        if (qemu_chr_replay(chr) && CHARDEV_GET_CLASS(chr)->chr_ioctl) {
--            error_report("Replay: ioctl is not supported "
--                         "for serial devices yet");
--        }
--        replay_register_char_driver(chr);
--    }
--    return chr;
-+    return __qemu_chr_new(label, filename, permit_mux_mon, context, true);
- }
- 
- Chardev *qemu_chr_new(const char *label, const char *filename,
+     def test_mips_malta(self):
+         """
+         :avocado: tags=arch:mips
 -- 
 2.42.0
 
