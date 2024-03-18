@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A538CC54E69
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 20:38:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9E36C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 20:44:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmJkM-0004uv-Ha; Mon, 18 Mar 2024 16:38:14 -0400
+	id 1rmJow-000680-8c; Mon, 18 Mar 2024 16:42:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rmJkJ-0004s3-Lk
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:38:12 -0400
-Received: from mout.gmx.net ([212.227.17.21])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rmJok-00066V-Sl
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:42:48 -0400
+Received: from mout.gmx.net ([212.227.17.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rmJk7-0003d0-18
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:38:10 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rmJof-0004N8-6k
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:42:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1710794274; x=1711399074; i=deller@gmx.de;
- bh=6mRGcJbchJZP/Ou/8LVNgj8pHdGBYCYeBzVwGkTRE4U=;
+ s=s31663417; t=1710794558; x=1711399358; i=deller@gmx.de;
+ bh=W6eN3FgxLgY2PbDFMFT6LJe4gOtKyDRK02n94wFWF20=;
  h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
  In-Reply-To;
- b=jTcLxkcXtHgHpwekOzhg7exdpz8GBuZ1yCd4+88YmN+FXteK2BRbBaaIGyyl+gSd
- /nq5k8Xe+XgKQb897ouukRqWRsF2OZMXAC2rodooyUNcsxl0bgdTRCc60t/u0hDUc
- CNkzZuP325UwmyuFOnXUMM7YC4bZGT3heidIV9IFvWVs2yOpbrta/WZEUAMDNPPCt
- p9DR1XtvhVG+jEMZXH7gJTmvkb1fwtzK4negVhhKg2paYXm8heTaPbTMcN12aEopi
- 2Aegi+Jv4HC46rPQFbAJnQCX+gB4rEfYfqaR6Ckxz3iJhm3CanAwfYIbwgB1gNnU/
- +zulXYIQ1NjZ3R1JUQ==
+ b=RvLbpzprLTbYqo9N897XUeRZ1x182YAG+SBaaIULFyzDQZk8hod402o818Nl2FmP
+ UGh6PHFGDDMvkAfQMPTZuv0es5nkUxsx5BMx+ImZxiFs3yria4PWXSIunnnlX7A6N
+ WdNLNsomsEwrrXJefp36julI5L6ZhWUdMKl7JYTMlKtve82rFPRqQF+KKoksPl94m
+ L9aoFfW2+4rZg3P2JQqMNKj2qIsAZZDoZNWS+/X2AyaZ0/yD67DaYegbU4qnmzur2
+ eb58qW3Vhc/AzyX2A3hZHLviByBmsEUiL1Bg6ivKtuG9YI+mrriZ4Z8xmP/3GEDXc
+ tjpgFqDPWVijoeQvYg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [192.168.20.55] ([94.134.155.237]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MPXdC-1rQx8q0ihu-00MaDj; Mon, 18
- Mar 2024 21:37:54 +0100
-Message-ID: <2318429f-c8f5-41ed-b21b-e47f5d8f3759@gmx.de>
-Date: Mon, 18 Mar 2024 21:37:53 +0100
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mwwdf-1qphZu3pPP-00yPLF; Mon, 18
+ Mar 2024 21:42:37 +0100
+Message-ID: <3d775a25-c082-427c-9a7d-967852fa197e@gmx.de>
+Date: Mon, 18 Mar 2024 21:42:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] target/hppa: fix access_id check
+Subject: Re: [PATCH 4/7] target/hppa: exit tb on flush cache instructions
 Content-Language: en-US
 To: Sven Schnelle <svens@stackframe.org>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20240317221431.251515-1-svens@stackframe.org>
- <20240317221431.251515-4-svens@stackframe.org>
+ <20240317221431.251515-5-svens@stackframe.org>
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
  xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
@@ -88,35 +88,36 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240317221431.251515-4-svens@stackframe.org>
+In-Reply-To: <20240317221431.251515-5-svens@stackframe.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:YsZeHSQOPsSE1FITuxlIU5uDhHBHxZcu6N21zyjjClvohdgbjN8
- vmIQXEdBm80uC3iXhJvb/+oizT6vbQICJTVUjP175+vxYGiJ6yIFvqrBfwJPbF0vIx8kbTa
- Eue2axABxUipzedANPPWJIlIyxpOgL9E6rCnmb2Bgs7bz8H5/0iLHVAfpMIdOObQvj5iFde
- +O4VYJRLQq1XakHyYfV8Q==
-UI-OutboundReport: notjunk:1;M01:P0:gSKgVNjkUNE=;se2pOlCWYrf4lPzrYrQaCnEn8Z/
- tPN8USJ5AK4d/rnW1w3W16I7Z9j6tZnkgui0Y6SLfXSaWeZX2EmAZeAVdFzMpBzFQ/W4pM0RI
- NhjX8Clk3KLWv7bDuVvbPL1eYFdRBtNrrtQKuxwfz3QBfmDQVYMohSSWp/mb9mN6EmGJeNFHt
- BUD+90KyVe0rlQwRJgWsmREhuTqGFCE+56oD3MPMafEatCf4h+7RgWLOVGw6uJybckStCs68C
- y+CmBsQRFz4RNUHzRPim6rKaK58dNbMVwtv6lrhbP9zNHQvrRnKNjFdZiWG2WtVNWp9mkMYRX
- /phWGSUHhVxI0EyE6m+mrLOzmighTZz3I67+Tdtv2o0e/OvnYo745FxtFGSIsRoGVCOBU+1Xw
- hoKVq+0TSVjxhAXg0rGv1sX35c0j/bhh/BXh6PkmQJ0ZyCrnPd3kRW3qgIWwvlL7xt4qddMqM
- XIYVtG50cPboheDj3PP9EdQQ97YpMoU8+y+nrI+tcQWMZxsw/vcc9+izahdW+CUp0VNsKoFVX
- e/+AV1Div41YoZDKam7CKdUCtXzLP+ZbDZJdhDMPyB1EX+9TauWcDoaSsT2lG0AWga/8+ngMk
- h8qIzEr7HD/Ury3qO+kbqEq/blxRrSNhJKPr84gTc8lMTiyknXd8WraK0owVzO/DwC1aLmUlU
- n8f3SztnXz3pri4zgzWEZYsIPgqiWARlGc68wrX7rfgTF9cevUHCsI9l7mn1qt9XziYdNcZ1f
- NcmWqq3/Yc/ui7keyGu8/aNvixjBnA/uB5RoF+aJDQ13Ajcwr1X5GFKnD1g5UfjL1MkgOru6f
- g9KVW0tGo9aiNh0Wx8TBcAXme4zdttU8B3+1v59v67s90=
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:t26kqNWXwMFh3B/hqqWVryqmSVfNqZG4uXV0tclIO9g+57tGjha
+ Uo3kl9Hj5biBoyUEe3EALLSkyBY1hpcEEy71SlXIvdqGTvX+IGcccFmmjydIVWxrzm0BCix
+ Em4JbEeNIVkUAef8mKEcOebiM1Zvqid7jRjAKo9GHQ7M2PRJPdwOBXobpesnLaOpFDgFnwy
+ DUM5vrd6ZX50kVpYfhu4A==
+UI-OutboundReport: notjunk:1;M01:P0:dWLV8P1fyYI=;UwSfBURu7kX5bixGn8XZXkftK61
+ R3BJ0MeVzj3LrUe6DorZSQ92oh/PjSIOVm7YwCiVGhF7ju60KJqi7hpwtGFCj1mUzCH7BBlXw
+ Df+NWJJmJmxNHMWBzxEIlVtlpQ4QYKJ0zBGWzTQ/CRHDv3vpFp9pudsKtWSqAISLKdoPfy91V
+ tGhtyIVOv5el/8yokTXKveYmVB416tNnn3oZD6ldHoSMkxpHeePWl01kn6kfC/AWiXsymo7SD
+ A8UGJPgiksHcrLR86shFyBJ9BqLApljKRCQT/1IAr+Lue6ev0O910rwIl31vA+QXCU0Ig6ce9
+ zyP1P9MS06KPc5ziSAUd6UBfWS7XXTQmyB6tk88Ze7UfEKiStJR9ycLXxlka8IdA6DUtXJN8e
+ qHn7ryYnz+8ij020cmSEtxhZqeYVoX5PCXsCd5miDTFrfgaTHOEcfX4wBPopdrQa2RlW5AcuB
+ RAUlFT75CDnJoFVVcyOBtKPpwwBaMGbLVUr7Grv0tXJPCK1FmL/fburViJQXoPNfvSLfVxQSn
+ lkbq9GEQcAQ4Xah392bNgwYVYko9by/IuCDF4DNMDLkT6dwEMfNGkhK+evqnpQzmcsa//XEF7
+ 4ssIZYaOUBazrgf63CMh/Uec+ssxb3mzQHqsfTUW3Kwt8nh0lJMv1yluxa8ZzA3TXytl7S41K
+ +uZ6b45QMBtFwMwKqh9AAouDOeWqXf4N2NNRfCLr1UhaCfkNftsc6nzsx9285zmb3xmADlbHk
+ 9zSpx1vqA1XcllflW8rcArjQ91ESIYYK3RvZkZ01TVzyPL2K19dgd+7uqOzHvLe6T2+01h0Q5
+ T5BNHXQN3axYEGJTW6f0FBdBkV27YR8zopOAIRGVnGB6Q=
+Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,132 +134,39 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/17/24 23:14, Sven Schnelle wrote:
-> PA2.0 provides 8 instead of 4 PID registers.
+> When the guest modifies the tb it is currently executing from,
+> it executes a fic instruction. Exit the tb on such instruction,
+> otherwise we might execute stale code.
 >
 > Signed-off-by: Sven Schnelle <svens@stackframe.org>
-
-Reviewed-by: Helge Deller <deller@gmx.de>
-with a few comments below...
-
-Helge
-
 > ---
->   roms/SLOF                |  2 +-
->   target/hppa/mem_helper.c | 67 +++++++++++++++++++++++++++++++++++-----
->   2 files changed, 60 insertions(+), 9 deletions(-)
+>   target/hppa/translate.c | 2 ++
+>   1 file changed, 2 insertions(+)
 >
-> diff --git a/roms/SLOF b/roms/SLOF
-> index 3a259df244..6b6c16b4b4 160000
-> --- a/roms/SLOF
-> +++ b/roms/SLOF
-> @@ -1 +1 @@
-> -Subproject commit 3a259df2449fc4a4e43ab5f33f0b2c66484b4bc3
-> +Subproject commit 6b6c16b4b40763507cf1f518096f3c3883c5cf2d
-
-this doesn't belong here.
-
-
-> diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-> index 80f51e753f..e4e3f6cdbe 100644
-> --- a/target/hppa/mem_helper.c
-> +++ b/target/hppa/mem_helper.c
-> @@ -152,6 +152,59 @@ static HPPATLBEntry *hppa_alloc_tlb_ent(CPUHPPAStat=
-e *env)
->       return ent;
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index 8ba31567e8..58d7ec1ade 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -1940,6 +1940,7 @@ static void do_page_zero(DisasContext *ctx)
+>   static bool trans_nop(DisasContext *ctx, arg_nop *a)
+>   {
+>       cond_free(&ctx->null_cond);
+> +    ctx->base.is_jmp =3D DISAS_IAQ_N_STALE;
+>       return true;
 >   }
 >
-> +static uint32_t get_pid(CPUHPPAState *env, int num)
-> +{
-> +    const struct pid_map {
-> +        int reg;
-> +        bool shift;
+> @@ -2290,6 +2291,7 @@ static bool trans_nop_addrx(DisasContext *ctx, arg=
+_ldst *a)
+>           save_gpr(ctx, a->b, dest);
+>       }
+>       cond_free(&ctx->null_cond);
+> +    ctx->base.is_jmp =3D DISAS_IAQ_N_STALE;
 
-does it makes sense to condense it, e.g.:
-  +        unsigned char reg:7,
-  +        unsigned char shift:1;
+I wonder if it makes sense to rename trans_nop() and trans_nop_addrx()
+to something like trans_cache_flush() and trans_cache_flush_addrx() ?
+
+Other than that:
+Reviewed-by: Helge Deller <deller@gmx.de>
 
 Helge
-
-
-> +    } *pid;
-> +
-> +    const struct pid_map pids64[] =3D {
-> +        { .reg =3D 8,  .shift =3D true  },
-> +        { .reg =3D 8,  .shift =3D false },
-> +        { .reg =3D 9,  .shift =3D true  },
-> +        { .reg =3D 9,  .shift =3D false },
-> +        { .reg =3D 12, .shift =3D true  },
-> +        { .reg =3D 12, .shift =3D false },
-> +        { .reg =3D 13, .shift =3D true  },
-> +        { .reg =3D 13, .shift =3D false }
-> +    };
-> +
-> +    const struct pid_map pids32[] =3D {
-> +        { .reg =3D 8,  .shift =3D false  },
-> +        { .reg =3D 9,  .shift =3D false  },
-> +        { .reg =3D 12, .shift =3D false  },
-> +        { .reg =3D 13, .shift =3D false  },
-> +    };
-> +
-> +    if (hppa_is_pa20(env)) {
-> +        pid =3D pids64 + num;
-> +    } else {
-> +        pid =3D pids32 + num;
-> +    }
-> +    uint64_t cr =3D env->cr[pid->reg];
-> +    if (pid->shift) {
-> +        cr >>=3D 32;
-> +    } else {
-> +        cr &=3D 0xffffffff;
-> +    }
-> +    return cr;
-> +}
-> +
-> +#define ACCESS_ID_MASK 0xffff
-> +
-> +static bool match_prot_id(CPUHPPAState *env, uint32_t access_id, uint32=
-_t *_pid)
-> +{
-> +    for (int i =3D 0; i < 8; i++) {
-> +        uint32_t pid =3D get_pid(env, i);
-> +        if ((access_id & ACCESS_ID_MASK) =3D=3D ((pid >> 1) & ACCESS_ID=
-_MASK)) {
-> +            *_pid =3D pid;
-> +            return true;
-> +        }
-> +    }
-> +    return false;
-> +}
-> +
->   int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_i=
-dx,
->                                 int type, hwaddr *pphys, int *pprot,
->                                 HPPATLBEntry **tlb_entry)
-> @@ -227,15 +280,13 @@ int hppa_get_physical_address(CPUHPPAState *env, v=
-addr addr, int mmu_idx,
->       /* access_id =3D=3D 0 means public page and no check is performed =
-*/
->       if (ent->access_id && MMU_IDX_TO_P(mmu_idx)) {
->           /* If bits [31:1] match, and bit 0 is set, suppress write.  */
-> -        int match =3D ent->access_id * 2 + 1;
-> -
-> -        if (match =3D=3D env->cr[CR_PID1] || match =3D=3D env->cr[CR_PI=
-D2] ||
-> -            match =3D=3D env->cr[CR_PID3] || match =3D=3D env->cr[CR_PI=
-D4]) {
-> -            prot &=3D PAGE_READ | PAGE_EXEC;
-> -            if (type =3D=3D PAGE_WRITE) {
-> -                ret =3D EXCP_DMPI;
-> -                goto egress;
-> +        uint32_t pid;
-> +        if (match_prot_id(env, ent->access_id, &pid)) {
-> +            if ((pid & 1) && (prot & PROT_WRITE)) {
-> +                prot &=3D ~PROT_WRITE;
->               }
-> +        } else {
-> +            prot =3D 0;
->           }
->       }
->
-
 
