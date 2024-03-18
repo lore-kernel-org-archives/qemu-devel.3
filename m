@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45910C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 19:29:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7913C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 19:48:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmIeh-00041b-DK; Mon, 18 Mar 2024 15:28:19 -0400
+	id 1rmIx9-0008GV-RS; Mon, 18 Mar 2024 15:47:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rmIed-0003y4-BU
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 15:28:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rmIea-0000Hq-0i
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 15:28:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710790090;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=M5thT1Ym/hbl8f5Mbq1rU87om0GJoVjSqRhDD6eXEXo=;
- b=iymclq6xcJNZ3iVlihX3VcAjowYeLHLkDTjbwiXGdJrWJD5lsXKwDeijZMkcO8TOM6lhM1
- QcakoFBLNZ/Xg9Z7x6Bc+hUp0JQeq53/rvmyGUiTj3VYLIyh+G+e330L8VY5QPX5ED5lf7
- qGJbuWz2mvUmF9UPcbOYYdIgnVyJIJA=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-690-EkaxMRRiPZ6BX8hkh3ruUQ-1; Mon, 18 Mar 2024 15:28:08 -0400
-X-MC-Unique: EkaxMRRiPZ6BX8hkh3ruUQ-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-60cc8d4e1a4so88897247b3.3
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 12:28:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1rmIx8-0008Fv-9i
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 15:47:22 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1rmIx6-0003Vx-AF
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 15:47:22 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1e01c38f98cso8304055ad.3
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 12:47:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710791238; x=1711396038; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iBI01Rwy1TqApQvjIM/vnv3YHAdaYDpOZ1drr5VJmW8=;
+ b=K7vYk+/BAfURnXLVV2ZRQFY0X4yereAltkRK3QgAGGm/8MRs0bTzQzOOqBYJ8+Zpyt
+ 23u6d94OiI4D4J+sZvyK8/HDJwkOogv4DmK208n3AbEOb3+78jlQxbXDihnfZQTP6aLA
+ pAMYP+BefsgjGChSaYZud6HBJRKGdbVW7SDMwjZn4EAjER8hVY0ZorUVnOYh9nB/nHZj
+ fcvlSarigen47Wq9wUoGuCtkcqz5lQZNWWZ5peZKd6248eIXvd7KqGTey1/vC+mMrL55
+ G2m8HNtJvayff31nwlZYAtvrhqVilPlVaJzjXK/C326G+WaIr3hqK2rpdqu/kaLlgl4/
+ rOpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710790088; x=1711394888;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1710791238; x=1711396038;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=M5thT1Ym/hbl8f5Mbq1rU87om0GJoVjSqRhDD6eXEXo=;
- b=a9b7Tsv2/BSFSPVtvT8cztVTgYhUziHFLbGL0KPdoXt+dqM+b9Hhv1GjUn2ohCmgvB
- ZYQBBxbtUVFuPEWPemBaCZHky2x+dQPL8aRZ46Z2Jh8nOsGRx8aTKsdnuOofBnzV9o5m
- kZf+HtnTGcqzvn7TjBL+XUIe6OIVMnkhTAfjINeuVoWujmMEza4rZBW0gavY7e9TYbWw
- vtFyAt/IIoVveyw0+hUy/m8J0XKwyEAhCpgX04xeZeiff82QzCY+VJnUmwnawu0MsAue
- lvQG2fLd1gKvHtIwrh51jm7B8IApycfnXNb3K/y94V3dzPxSgRP6nN3jjHK0unRBHMsV
- ds9Q==
+ bh=iBI01Rwy1TqApQvjIM/vnv3YHAdaYDpOZ1drr5VJmW8=;
+ b=n39caT84LXhwmz6tjfSsktIeDoBn42D9//5cKUf10WCY/thcbVFhcAjhMnW5Hv3i3W
+ FjnzAQJQcOzN+Y1awG2Ox2BiU2kUxqRtJYs0SeWNrjqciFYNuq0ng5zrOv2cFtlaS8/n
+ ITKhyGJ26BAC9/u1FX/e+LBjWUwfA8ZIPzfwF5viO+lqtlTl6Y6pJDdojRpqwLnK1nrp
+ DZCTrRZ6pFOWgPYIp/8s0dmFAc2s1Q3GAustIXdIjCRh3wJAFcGC76wWP1NYdcfxN16X
+ mqhrNGWG488+aKuBtTMufZGZuLdAyi6o9hm+uD0xJpkX4zSXe3iHZXMip+vMwF1/m+zy
+ amuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWbeI0tEHoF6zRx4/os2pXDSNngSsf6RP+LonXqrT+aknvBW3Q9lhLw8a5plHQZ2FhamphUxhW4G/SrrSlVrbn8vjKsbWY=
-X-Gm-Message-State: AOJu0YwGLSEuLJxuzrLXD/sDk6wLoKPxtAjftgBGSDb0yd1FN7z5Bi1P
- db6WxsQ188IMVNn/QAY7egmw4kZxsa+QD+1lWPjhmLrFNTv7cEZpO9W75pr9oAPB+Or33S9k/dt
- R1pSP8PwwLsRDaEzT5yJWZB4VdU/fXESh3fEeLETsu+LD7WkVu0e0nJdPrnUJ1kSvMEORjEH8W5
- W5Es05YcTBuVrDRV9OVNhyNNtahQI=
-X-Received: by 2002:a81:524f:0:b0:610:b259:9fa7 with SMTP id
- g76-20020a81524f000000b00610b2599fa7mr696574ywb.36.1710790087909; 
- Mon, 18 Mar 2024 12:28:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFCcpDp3A2u95J15hdFL+unqJiYtF3gPN/tTS5MNX0C3Z25WfnLusbp3Ndthr3QZsM8hZXUu5iIBuoaQwRSwBY=
-X-Received: by 2002:a81:524f:0:b0:610:b259:9fa7 with SMTP id
- g76-20020a81524f000000b00610b2599fa7mr696555ywb.36.1710790087612; Mon, 18 Mar
- 2024 12:28:07 -0700 (PDT)
+ AJvYcCWjphCd/j0nieKDGbR6Ky6UnBKZYp4bKU+h4ARuu3QUa9v70XNaHeE5aYH+M8MAhfJJ6FtjGnt5odoDrVDhXU7x06J2FMk=
+X-Gm-Message-State: AOJu0YxuKc3KO1445YXVOIKH01pGKLl93wTWLSNhjulpk53lB4yguBn7
+ ZNyeh5NwLF8zNAwOELJv31z9Fzuz8SWcLFVHIHoncvRfNaVeZ0n4
+X-Google-Smtp-Source: AGHT+IEyRByeHaqgt5UsSI3/ao4UDH37E7LKT/NMGN92u+wQBpOrSgztbNCh+HcfS/1++IALUp+zWA==
+X-Received: by 2002:a17:902:c949:b0:1e0:2c15:f31a with SMTP id
+ i9-20020a170902c94900b001e02c15f31amr3232896pla.3.1710791238256; 
+ Mon, 18 Mar 2024 12:47:18 -0700 (PDT)
+Received: from valdaarhun.localnet ([223.233.82.185])
+ by smtp.gmail.com with ESMTPSA id
+ p20-20020a170902ead400b001db9cb62f7bsm9659854pld.153.2024.03.18.12.47.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Mar 2024 12:47:17 -0700 (PDT)
+From: Sahil <icegambit91@gmail.com>
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>,
+ qemu-level <qemu-devel@nongnu.org>
+Subject: Re: Intention to work on GSoC project
+Date: Tue, 19 Mar 2024 01:17:15 +0530
+Message-ID: <3291749.44csPzL39Z@valdaarhun>
+In-Reply-To: <9252283.CDJkKcVGEf@valdaarhun>
+References: <13625712.uLZWGnKmhe@valdaarhun>
+ <CAJaqyWdmGbYj1KjN6zcu-fRij9X6mNG-xKHqQiaVsY1zu1T-Ag@mail.gmail.com>
+ <9252283.CDJkKcVGEf@valdaarhun>
 MIME-Version: 1.0
-References: <20240315155949.86066-1-kwolf@redhat.com>
- <CACGkMEvuu4rkgZr7sBFwXztZLHdamBKML++6cvA+GDKyGDGibA@mail.gmail.com>
- <20240318050212-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240318050212-mutt-send-email-mst@kernel.org>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 18 Mar 2024 20:27:31 +0100
-Message-ID: <CAJaqyWc5_T=c+i0EvoYJ4Ly9XOaRBLvUE8w0n6duhm-b2Si0FA@mail.gmail.com>
-Subject: Re: [PATCH for-9.0 v3] vdpa-dev: Fix initialisation order to restore
- VDUSE compatibility
-To: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org, sgarzare@redhat.com, 
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=icegambit91@gmail.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,97 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 18, 2024 at 10:02=E2=80=AFAM Michael S. Tsirkin <mst@redhat.com=
-> wrote:
->
-> On Mon, Mar 18, 2024 at 12:31:26PM +0800, Jason Wang wrote:
-> > On Fri, Mar 15, 2024 at 11:59=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> =
-wrote:
-> > >
-> > > VDUSE requires that virtqueues are first enabled before the DRIVER_OK
-> > > status flag is set; with the current API of the kernel module, it is
-> > > impossible to enable the opposite order in our block export code beca=
-use
-> > > userspace is not notified when a virtqueue is enabled.
-> > >
-> > > This requirement also mathces the normal initialisation order as done=
- by
-> > > the generic vhost code in QEMU. However, commit 6c482547 accidentally
-> > > changed the order for vdpa-dev and broke access to VDUSE devices with
-> > > this.
-> > >
-> > > This changes vdpa-dev to use the normal order again and use the stand=
-ard
-> > > vhost callback .vhost_set_vring_enable for this. VDUSE devices can be
-> > > used with vdpa-dev again after this fix.
-> > >
-> > > vhost_net intentionally avoided enabling the vrings for vdpa and does
-> > > this manually later while it does enable them for other vhost backend=
-s.
-> > > Reflect this in the vhost_net code and return early for vdpa, so that
-> > > the behaviour doesn't change for this device.
-> > >
-> > > Cc: qemu-stable@nongnu.org
-> > > Fixes: 6c4825476a4351530bcac17abab72295b75ffe98
-> > > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> > > ---
-> > > v2:
-> > > - Actually make use of the @enable parameter
-> > > - Change vhost_net to preserve the current behaviour
-> > >
-> > > v3:
-> > > - Updated trace point [Stefano]
-> > > - Fixed typo in comment [Stefano]
-> > >
-> > >  hw/net/vhost_net.c     | 10 ++++++++++
-> > >  hw/virtio/vdpa-dev.c   |  5 +----
-> > >  hw/virtio/vhost-vdpa.c | 29 ++++++++++++++++++++++++++---
-> > >  hw/virtio/vhost.c      |  8 +++++++-
-> > >  hw/virtio/trace-events |  2 +-
-> > >  5 files changed, 45 insertions(+), 9 deletions(-)
-> > >
-> > > diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-> > > index e8e1661646..fd1a93701a 100644
-> > > --- a/hw/net/vhost_net.c
-> > > +++ b/hw/net/vhost_net.c
-> > > @@ -541,6 +541,16 @@ int vhost_set_vring_enable(NetClientState *nc, i=
-nt enable)
-> > >      VHostNetState *net =3D get_vhost_net(nc);
-> > >      const VhostOps *vhost_ops =3D net->dev.vhost_ops;
-> > >
-> > > +    /*
-> > > +     * vhost-vdpa network devices need to enable dataplane virtqueue=
-s after
-> > > +     * DRIVER_OK, so they can recover device state before starting d=
-ataplane.
-> > > +     * Because of that, we don't enable virtqueues here and leave it=
- to
-> > > +     * net/vhost-vdpa.c.
-> > > +     */
-> > > +    if (nc->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_VDPA) {
-> > > +        return 0;
-> > > +    }
-> >
-> > I think we need some inputs from Eugenio, this is only needed for
-> > shadow virtqueue during live migration but not other cases.
-> >
-> > Thanks
->
->
-> Yes I think we had a backend flag for this, right? Eugenio can you
-> comment please?
->
+Hi,
 
-We have the VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK backend flag,
-right. If the backend does not offer it, it is better to enable all
-the queues here and add a migration blocker in net/vhost-vdpa.c.
+I was reading the "Virtqueues and virtio ring: How the data travels"
+article [1]. There are a few things that I have not understood in the
+"avail rings" section.
 
-So the check should be:
-nc->info->type =3D=3D VHOST_VDPA && (backend_features &
-VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK).
+Q1.
+Step 2 in the "Process to make a buffer available" diagram depicts
+how the virtio driver writes the descriptor index in the avail ring.
+In the example, the descriptor index #0 is written in the first entry.
+But in figure 2, the number 0 is in the 4th position in the avail ring.
+Is the avail ring queue an array of "struct virtq_avail" which maintains
+metadata such as the number of descriptor indexes in the header?
 
-I can manage to add the migration blocker on top of this patch.
+Also, in the second position, the number changes from 0 (figure 1) to
+1 (figure 2). I haven't understood what idx, 0 (later 1) and ring[] represent
+in the figures. Does this number represent the number of descriptors
+that are currently in the avail ring?
 
-Thanks!
+Q2.
+
+There's this paragraph in the article right below the above mentioned
+diagram:
+
+> The avail ring must be able to hold the same number of descriptors
+> as the descriptor area, and the descriptor area must have a size power
+> of two, so idx wraps naturally at some point. For example, if the ring
+> size is 256 entries, idx 1 references the same descriptor as idx 257, 513...
+> And it will wrap at a 16 bit boundary. This way, neither side needs to
+> worry about processing an invalid idx: They are all valid.
+
+I haven't really understood this. I have understood that idx is calculated
+as idx mod queue_length. But I haven't understood the "16 bit boundary"
+part.
+
+I am also not very clear on how a queue length that is not a power of 2
+might cause trouble. Could you please expand on this?
+
+Q3.
+I have started going through the source code in "drivers/virtio/virtio_ring.c".
+I have understood that the virtio driver runs in the guest's kernel. Does that
+mean the drivers in "drivers/virtio/*" are enabled when linux is being run in
+a guest VM?
+
+Thanks,
+Sahil
+
+[1] https://www.redhat.com/en/blog/virtqueues-and-virtio-ring-how-data-travels
+
+
+
 
 
