@@ -4,78 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02B99C54E71
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 08:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACCDC54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 08:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm7xK-0005zO-7b; Mon, 18 Mar 2024 04:02:50 -0400
+	id 1rm7z8-0000Ty-5R; Mon, 18 Mar 2024 04:04:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rm7xG-0005nN-BX; Mon, 18 Mar 2024 04:02:46 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rm7z5-0000Tg-Bt
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 04:04:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rm7xE-0001a8-VB; Mon, 18 Mar 2024 04:02:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710748965; x=1742284965;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=cqJcvdL48VXuIbNfE+AI+q7sdsjFin1f18ojzEELhDk=;
- b=U3Hm0fj/w0hWOtM3ca+1zLXhzPawCVw3Kmd5fZjuUSPcXzoO4TckCeb5
- Blgx/5INvXzYzu8Cde5anmb6gg6MjPhXlaFSkIkGcy508miy0uO5hLqsh
- zgI3EqcwCCxn29a7tYI0I8gRG6BuaaQmaIWc8c0lBOEpehlvLsf2wFXUX
- IcX52OL9M9l88Ut24rhAXrQYzWgYi1Qfdf69iUk4Z5FSY52BQI+K/j3tU
- hYfTykTI+xOvS9QmeBFKSHnKmshmQtKVj5HA1XUTf2oY1WaqXGaPBDEXv
- ZJRrssSjPX92teSwShVvPUMNNCerQ1U0oZ/TYaD/QV5TZs9B+FSCwFuKC g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11016"; a="5421379"
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; 
-   d="scan'208";a="5421379"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2024 01:02:41 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,134,1708416000"; d="scan'208";a="18000418"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 18 Mar 2024 01:02:36 -0700
-Date: Mon, 18 Mar 2024 16:16:27 +0800
-From: Zhao Liu <zhao1.liu@linux.intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Claudio Fontana <cfontana@suse.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: Re: [PATCH-for-9.1 04/21] target/sparc: Declare CPU QOM types using
- DEFINE_TYPES() macro
-Message-ID: <Zff4WwMvwfMXLurF@intel.com>
-References: <20240315130910.15750-1-philmd@linaro.org>
- <20240315130910.15750-5-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rm7ys-0001jh-Dd
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 04:04:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710749062;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=MKezJqL4w19nBxCNntscYpJbXJ7ro8ADsyqjjBLcNog=;
+ b=VAO6ofoARjgRxfjTV0K8H8P6kY8ZetdKlR4mNll5ZqOYTbm1eA+y7EbV52VZx1iu38iU5k
+ xqtgDW2UyIoqenO1IkARUH5FcLz4Heoongz2lQEWsuwN9afK6+qyLlAkU0Trku7MrU/UEx
+ 6idgkdEfmS+I+9EvhOXM7pO05HI3FuA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-315-F7hsex17ORSgyyPlPPwnTA-1; Mon, 18 Mar 2024 04:04:21 -0400
+X-MC-Unique: F7hsex17ORSgyyPlPPwnTA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-33ed0a8beb5so1793707f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 01:04:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710749059; x=1711353859;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MKezJqL4w19nBxCNntscYpJbXJ7ro8ADsyqjjBLcNog=;
+ b=KKtXpEr/PT9pu7qUUL/6FYHFM3YiCU/HnNBObNcysecS51cpthOz9onRz6JtO1KoC7
+ iSKxASn6MLkCY66M+tY29lOJ/pDZ73SkRObEcrUgy21p6LJleoOahpE2pdzPSJxavkqb
+ xSZP+MwX0md3jfmA8MqyZe2q+HFal5uGwi6vX/39c8oK9n31rzZCfZQXkusPLUu2IUGB
+ vZkikzeUiLEoc1vI7GohaEuY9zdn4qRSLM0vZUn9tzT077fNX7g4TtjuNb4aS56C42FY
+ TxY3ndh9TZ1kRQSwQeoRw8jDjWrqzNRO/Q7jxwotCJmIsBUzLVNi+joFZOuv8HkVJU1b
+ WOpQ==
+X-Gm-Message-State: AOJu0YzTEtMZykiHYD4TP9TEOUigNJUXHHizue8LnR3mrIAgG2KBrfLf
+ oN5n5kc2klsPcRdh6p6MiFn4O7dBhFkY5LBBtaFITtOXf+3iiQzPv4z10ARGKPaB7wzFqW61I12
+ pEITxpgr6tZ5+4XMYAMHt/QaQOd/UINwC9PdOTbYe/HAwQ97vMhJA48gks4S+
+X-Received: by 2002:adf:fa87:0:b0:33e:7946:4cd2 with SMTP id
+ h7-20020adffa87000000b0033e79464cd2mr6872288wrr.10.1710749058954; 
+ Mon, 18 Mar 2024 01:04:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkr0uPssNWJWwnp5pkdKug8aJ/HKyly1Ewh4Lb046Mda2kJBDtu+abVoHZi3gPWKdcNJ2Qtg==
+X-Received: by 2002:adf:fa87:0:b0:33e:7946:4cd2 with SMTP id
+ h7-20020adffa87000000b0033e79464cd2mr6872260wrr.10.1710749058299; 
+ Mon, 18 Mar 2024 01:04:18 -0700 (PDT)
+Received: from redhat.com ([2.52.5.113]) by smtp.gmail.com with ESMTPSA id
+ w16-20020adfcd10000000b0033e5c54d0d9sm9208566wrm.38.2024.03.18.01.04.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Mar 2024 01:04:17 -0700 (PDT)
+Date: Mon, 18 Mar 2024 04:04:14 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jiqian Chen <Jiqian.Chen@amd.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [QEMU PATCH v6 1/1] virtio-pci: implement No_Soft_Reset bit
+Message-ID: <20240318035505-mutt-send-email-mst@kernel.org>
+References: <20240222034010.887390-1-Jiqian.Chen@amd.com>
+ <20240222034010.887390-2-Jiqian.Chen@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240315130910.15750-5-philmd@linaro.org>
-Received-SPF: none client-ip=198.175.65.20;
- envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+In-Reply-To: <20240222034010.887390-2-Jiqian.Chen@amd.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.316,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,29 +97,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 15, 2024 at 02:08:52PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Fri, 15 Mar 2024 14:08:52 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH-for-9.1 04/21] target/sparc: Declare CPU QOM types using
->  DEFINE_TYPES() macro
-> X-Mailer: git-send-email 2.41.0
+On Thu, Feb 22, 2024 at 11:40:10AM +0800, Jiqian Chen wrote:
+> In current code, when guest does S3, virtio devices are reset due to
+> the bit No_Soft_Reset is not set. After resetting, the display resources
+> of virtio-gpu are destroyed, then the display can't come back and only
+> show blank after resuming.
 > 
-> When multiple QOM types are registered in the same file,
-> it is simpler to use the the DEFINE_TYPES() macro. In
-> particular because type array declared with such macro
-> are easier to review.
+> Implement No_Soft_Reset bit of PCI_PM_CTRL register, then guest can check
+> this bit, if this bit is set, the devices resetting will not be done, and
+> then the display can work after resuming.
 > 
-> In few commits we are going to add more types, so replace
-> the type_register_static() to ease further reviews.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Message-Id: <20231013140116.255-17-philmd@linaro.org>
+> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
 > ---
->  target/sparc/cpu.c | 23 +++++++++++++----------
->  1 file changed, 13 insertions(+), 10 deletions(-)
+>  hw/virtio/virtio-pci.c         | 37 +++++++++++++++++++++++++++++++++-
+>  include/hw/virtio/virtio-pci.h |  5 +++++
+>  2 files changed, 41 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index 1a7039fb0c68..da5312010345 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -2197,6 +2197,11 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+>              pcie_cap_lnkctl_init(pci_dev);
+>          }
+>  
+> +        if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
+> +            pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
+> +                         PCI_PM_CTRL_NO_SOFT_RESET);
+> +        }
+> +
+>          if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
+>              /* Init Power Management Control Register */
+>              pci_set_word(pci_dev->wmask + pos + PCI_PM_CTRL,
 
-Reviewed-by: Zhao Liu <zhao1liu@intel.com>
+
+Don't we need compat machinery to avoid breaking migration for
+existing machine types?
+
+> @@ -2259,18 +2264,46 @@ static void virtio_pci_reset(DeviceState *qdev)
+>      }
+>  }
+>  
+> +static bool device_no_need_reset(PCIDevice *dev)
+> +{
+> +    if (pci_is_express(dev)) {
+> +        uint16_t pmcsr;
+> +
+> +        pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
+> +        /*
+> +         * When No_Soft_Reset bit is set and device
+
+the device
+
+> +         * is in D3hot state, can't reset device
+
+can't? or don't?
+
+> +         */
+> +        if ((pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) &&
+> +            (pmcsr & PCI_PM_CTRL_STATE_MASK) == 3)
+> +            return true;
+
+coding style violation
+
+> +    }
+> +
+> +    return false;
+> +}
+> +
+>  static void virtio_pci_bus_reset_hold(Object *obj)
+>  {
+>      PCIDevice *dev = PCI_DEVICE(obj);
+>      DeviceState *qdev = DEVICE(obj);
+>  
+> +    if (device_no_need_reset(dev))
+> +        return;
+> +
+>      virtio_pci_reset(qdev);
+>  
+>      if (pci_is_express(dev)) {
+> +        uint16_t pmcsr;
+> +        uint16_t val = 0;
+> +
+>          pcie_cap_deverr_reset(dev);
+>          pcie_cap_lnkctl_reset(dev);
+>  
+> -        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
+> +        /* don't reset the RO bits */
+> +        pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
+> +        val = val | (pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) |
+> +                (pmcsr & PCI_PM_CTRL_DATA_SCALE_MASK);
+> +        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, val);
+
+First, we have test and clear for this.
+
+Second, this has to be conditional on the flag, no?
+Without the flag don't we reset everything?
+Or you can reuse wmask for this, also an option.
+
+Also what's going on with PCI_PM_CTRL_DATA_SCALE_MASK?
+Where does that come from?
+
+>      }
+>  }
+>  
+> @@ -2297,6 +2330,8 @@ static Property virtio_pci_properties[] = {
+>                      VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+>      DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
+>                      VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
+> +    DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
+> +                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, true),
+>      DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
+>                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+>      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
+> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+> index 59d88018c16a..9e67ba38c748 100644
+> --- a/include/hw/virtio/virtio-pci.h
+> +++ b/include/hw/virtio/virtio-pci.h
+> @@ -43,6 +43,7 @@ enum {
+>      VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+>      VIRTIO_PCI_FLAG_AER_BIT,
+>      VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
+> +    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT,
+>  };
+>  
+>  /* Need to activate work-arounds for buggy guests at vmstate load. */
+> @@ -79,6 +80,10 @@ enum {
+>  /* Init Power Management */
+>  #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
+>  
+> +/* Init The No_Soft_Reset bit of Power Management */
+> +#define VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET \
+> +  (1 << VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT)
+> +
+>  /* Init Function Level Reset capability */
+>  #define VIRTIO_PCI_FLAG_INIT_FLR (1 << VIRTIO_PCI_FLAG_INIT_FLR_BIT)
+>  
+> -- 
+> 2.34.1
 
 
