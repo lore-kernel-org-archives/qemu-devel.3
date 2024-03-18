@@ -4,67 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75B36C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 11:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0072C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 11:56:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmBZF-00081H-CO; Mon, 18 Mar 2024 07:54:13 -0400
+	id 1rmBab-0000LI-AB; Mon, 18 Mar 2024 07:55:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmBZE-000818-M3
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 07:54:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmBZA-0002Fj-Mz
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 07:54:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710762845;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RK6/ZpyUIpklykF27CrP8/IcJR4+w72uv+cR4qPjBNg=;
- b=dxAwSFO70NU7y0QZSVXn13H3v5/bvER6SxsyvfxSAamgXbSyUa6fM1iAWip8zxaLG3hsnM
- cwdriZJfW6bl0JM97gg9zIFdiP96ck08EEfyDT1r0CmKrJh62rVpQ5S30tcxRVhmcntK+y
- neWN/2yoK4NFhQ4On8eHof6ai6g2B9E=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-CPUrz0m5MTye2jm7mJ9JUQ-1; Mon, 18 Mar 2024 07:54:04 -0400
-X-MC-Unique: CPUrz0m5MTye2jm7mJ9JUQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 02E4D101A552;
- Mon, 18 Mar 2024 11:54:04 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.194.127])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 6A42B1C060A6;
- Mon, 18 Mar 2024 11:54:03 +0000 (UTC)
-Date: Mon, 18 Mar 2024 12:53:58 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Abhiram Tilak <atp.exp@gmail.com>
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com
-Subject: Re: [PATCH v4] qemu-img: Fix Column Width and Improve Formatting in
- snapshot list
-Message-ID: <ZfgrVsVSnHVUARcp@redhat.com>
-References: <20240123050354.22152-2-atp.exp@gmail.com>
+ (Exim 4.90_1) (envelope-from <jiri@resnulli.us>) id 1rmBaZ-0000Ka-Ss
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 07:55:35 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jiri@resnulli.us>) id 1rmBaP-0002QN-Gd
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 07:55:34 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-512f3e75391so3221754e87.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 04:55:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=resnulli-us.20230601.gappssmtp.com; s=20230601; t=1710762922; x=1711367722;
+ darn=nongnu.org; 
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=GW5y8fNL3N/3morbKABzGjIncGz4LjPASv+Wo+zVV4k=;
+ b=SK7xhpUkXXWlw7XQWfKG/go6224CJ2tzwciz3JeJy1219FmkRk9ZNF2xBtWwzbNTsx
+ s1pe0wWvUdqRJ2FsSYs6ASugCG9wZAiiFkm5efXqeBawFNlEXXW4hwe+0yHlHgGGMUvU
+ xICQdPzCjYH7V32znzOCiGjFhG6kslG5ebzxLTZC0VkQSON45m0fBfBbiZ6FbaBTe6Gp
+ BZVJSCpE+ZZvbivuCNcAdykJmavW9sJh3rbH62E09u6KodPWjwcUbZxo7z25QOcK9TWS
+ BpT4mswOYeSKFqVfgZ4SaFTHr61KTn6jG759K9rqa4OA7RmGZtDDvZe8HZiv1st+TMpP
+ gs/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710762922; x=1711367722;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GW5y8fNL3N/3morbKABzGjIncGz4LjPASv+Wo+zVV4k=;
+ b=pwzcz7FIwJLPJtcXm0Od0X/lpcjznNrDS0iBGxtaTkFQyCUsInq0a3Lf2CicvwoITH
+ eW5ZxpbuApZu1igeZkl/3Ivr9w7GxnHWW86nxiyYISpOFrmPMs8/Rh7o8suSrSM0NBZ/
+ 3CAOAkhXDh0xbPjLyKc6+mraHTt983a9utamuX+GYr1KopCznza7FgoPx2skyZQbBSc9
+ y9FtEt250cXq+18Padp/fTKksaaMOXW0sNQz7UxOeUSjpKrlrLWRPLASWnjlmojE68fw
+ F2jQBWajhRjnS51isL/MlvMw1SXTBRB+bSeF2zvWLXV8Y9Ft3g3b3qipfubTlB5XAnzF
+ R8pg==
+X-Gm-Message-State: AOJu0YzQlpYAPZogV3yZ6H01cgK6Xnl4LTmljAJ1cmtxlQqzgm7weIMU
+ KScdjbGsBMIEtpw7Pi61AOKkDOlFMXlQOhm3JypbvmJyVOsFwAj24GJ6VFIWjUs=
+X-Google-Smtp-Source: AGHT+IEWy1ryDBZIH4c3Gnuv/Dku7Y8iPOJCiJu/lUCAsOCAWpu41RhR1BO6xK2lg3Yazruu8hHzOg==
+X-Received: by 2002:ac2:4ac6:0:b0:513:5af1:9d7b with SMTP id
+ m6-20020ac24ac6000000b005135af19d7bmr7767772lfp.47.1710762921520; 
+ Mon, 18 Mar 2024 04:55:21 -0700 (PDT)
+Received: from localhost ([193.47.165.251]) by smtp.gmail.com with ESMTPSA id
+ ld8-20020a170906f94800b00a46754900a4sm4479799ejb.33.2024.03.18.04.55.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 18 Mar 2024 04:55:20 -0700 (PDT)
+Date: Mon, 18 Mar 2024 12:55:17 +0100
+From: Jiri Pirko <jiri@resnulli.us>
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, jasowang@redhat.com,
+ eperezma@redhat.com, si-wei.liu@oracle.com,
+ boris.ostrovsky@oracle.com, raphael@enfabrica.net, kwolf@redhat.com,
+ hreitz@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, thuth@redhat.com,
+ richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
+ cohuck@redhat.com, pbonzini@redhat.com, fam@euphon.net,
+ stefanha@redhat.com, qemu-block@nongnu.org, qemu-s390x@nongnu.org,
+ leiyang@redhat.com, schalla@marvell.com, vattunuru@marvell.com,
+ jerinj@marvell.com, dtatulea@nvidia.com, virtio-fs@lists.linux.dev
+Subject: Re: [PATCH v3 for 9.1 0/6] virtio, vhost: Add
+ VIRTIO_F_NOTIFICATION_DATA support
+Message-ID: <ZfgrpS0mxLW2LMVE@nanopsycho>
+References: <20240315165557.26942-1-jonah.palmer@oracle.com>
+ <ZfW-tO4zXeAWDgFg@nanopsycho>
+ <89dea52f-b4cc-4a8b-986b-68d73df180fd@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240123050354.22152-2-atp.exp@gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <89dea52f-b4cc-4a8b-986b-68d73df180fd@oracle.com>
+Received-SPF: none client-ip=2a00:1450:4864:20::133;
+ envelope-from=jiri@resnulli.us; helo=mail-lf1-x133.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,33 +102,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 23.01.2024 um 06:03 hat Abhiram Tilak geschrieben:
-> When running the command `qemu-img snapshot -l SNAPSHOT` the output of
-> VM_CLOCK (measures the offset between host and VM clock) cannot to
-> accommodate values in the order of thousands (4-digit).
-> 
-> This line [1] hints on the problem. Additionally, the column width for
-> the VM_CLOCK field was reduced from 15 to 13 spaces in commit b39847a5
-> in line [2], resulting in a shortage of space.
-> 
-> [1]:
-> https://gitlab.com/qemu-project/qemu/-/blob/master/block/qapi.c?ref_type=heads#L753
-> [2]:
-> https://gitlab.com/qemu-project/qemu/-/blob/master/block/qapi.c?ref_type=heads#L763
-> 
-> This patch restores the column width to 15 spaces and makes adjustments
-> to the affected iotests accordingly. Furthermore, addresses a potential
-> source
-> of confusion by removing whitespace in column headers. Example, VM CLOCK
-> is modified to VM_CLOCK. Additionally a '--' symbol is introduced when
-> ICOUNT returns no output for clarity.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2062
-> Fixes: b39847a50553 (migration: introduce icount field for snapshots )
-> Signed-off-by: Abhiram Tilak <atp.exp@gmail.com>
+Mon, Mar 18, 2024 at 12:22:02PM CET, jonah.palmer@oracle.com wrote:
+>
+>
+>On 3/16/24 11:45 AM, Jiri Pirko wrote:
+>> Fri, Mar 15, 2024 at 05:55:51PM CET, jonah.palmer@oracle.com wrote:
+>> > The goal of these patches are to add support to a variety of virtio and
+>> > vhost devices for the VIRTIO_F_NOTIFICATION_DATA transport feature. This
+>> > feature indicates that a driver will pass extra data (instead of just a
+>> > virtqueue's index) when notifying the corresponding device.
+>> > 
+>> > The data passed in by the driver when this feature is enabled varies in
+>> > format depending on if the device is using a split or packed virtqueue
+>> > layout:
+>> > 
+>> > Split VQ
+>> >   - Upper 16 bits: shadow_avail_idx
+>> >   - Lower 16 bits: virtqueue index
+>> > 
+>> > Packed VQ
+>> >   - Upper 16 bits: 1-bit wrap counter & 15-bit shadow_avail_idx
+>> >   - Lower 16 bits: virtqueue index
+>> > 
+>> > Also, due to the limitations of ioeventfd not being able to carry the
+>> > extra provided by the driver, having both VIRTIO_F_NOTIFICATION_DATA
+>> > feature and ioeventfd enabled is a functional mismatch. The user must
+>> > explicitly disable ioeventfd for the device in the Qemu arguments when
+>> > using this feature, else the device will fail to complete realization.
+>> > 
+>> > For example, a device must explicitly enable notification_data as well
+>> > as disable ioeventfd:
+>> > 
+>> >     -device virtio-scsi-pci,...,ioeventfd=off,notification_data=on
+>> > 
+>> > A significant aspect of this effort has been to maintain compatibility
+>> > across different backends. As such, the feature is offered by backend
+>> > devices only when supported, with fallback mechanisms where backend
+>> > support is absent.
+>> > 
+>> > v3: Validate VQ idx via. virtio_queue_get_num() (pci, mmio, ccw)
+>> >     Rename virtio_queue_set_shadow_avail_data
+>> >     Only pass in upper 16 bits of 32-bit extra data (was redundant)
+>> >     Make notification compatibility check function static
+>> >     Drop tags on patches 1/6, 3/6, and 4/6
+>> > 
+>> > v2: Don't disable ioeventfd by default, user must disable it
+>> >     Drop tags on patch 2/6
+>> > 
+>> > Jonah Palmer (6):
+>> >   virtio/virtio-pci: Handle extra notification data
+>> >   virtio: Prevent creation of device using notification-data with ioeventfd
+>> >   virtio-mmio: Handle extra notification data
+>> >   virtio-ccw: Handle extra notification data
+>> >   vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to vhost feature bits
+>> >   virtio: Add VIRTIO_F_NOTIFICATION_DATA property definition
+>> 
+>> Jonah, do you have kernel patches to add this feature as well?
+>> 
+>> Thanks!
+>
+>Hi Jiri! I think there are already kernel patches for
+>VIRTIO_F_NOTIFICATION_DATA, unless you're referring to something more
+>specific that wasn't included in these patches:
+>
+>[1]: virtio: add VIRTIO_F_NOTIFICATION_DATA feature support
+>https://lore.kernel.org/lkml/20230324195029.2410503-1-viktor@daynix.com/
+>
+>[2]: virtio-vdpa: add VIRTIO_F_NOTIFICATION_DATA feature support
+>https://lore.kernel.org/lkml/20230413081855.36643-3-alvaro.karsz@solid-run.com/
 
-Thanks, applied to the block branch.
+I missed this. Thx!
 
-Kevin
-
+>
+>Jonah
 
