@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7490DC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 20:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1315DC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 20:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmJdz-0002MV-KR; Mon, 18 Mar 2024 16:31:39 -0400
+	id 1rmJhM-0003ja-TJ; Mon, 18 Mar 2024 16:35:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmJdu-0002LX-Sv
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:31:35 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1rmJhM-0003hw-8N
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:35:08 -0400
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmJds-0002O3-7r
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:31:34 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-5d3907ff128so3690849a12.3
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 13:31:30 -0700 (PDT)
+ id 1rmJhJ-00032O-RF
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 16:35:07 -0400
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-5a485724ddaso2157296eaf.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 13:35:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710793889; x=1711398689; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710794104; x=1711398904; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kO0CUlmpmgpgJh9+JhtAcuSOUmI+kDjHnlfeXxl5TbA=;
- b=qxZDWzeWLRfhaKNQ55/Qae/0N4CQUo8kv9UBg5pTj0prWrssTQDD3fDWXsWTxyfGVj
- OOZDScQ6ActosdtDT+Cx3kTsAyDcw651Y+jw+x0EoQwaP33TLrTDqRuCIM+GXbQf22qw
- 4JVMDm4RsuIK16pSph1QBS5MAkfWlxRokQpc4Gt/h++p664BX34+aaCc73ISRMqPjHzI
- dHxpqyEgG8v5l3QpFIh9tdIW24925wT4zmb1gzOqZqkNt+fJ09gV3FmaenAdUQHAJDwR
- BdfYclW9t7ilv1e0JHxkGGztywwRm09pBPtRxcHXKwJZoqipjvJczj5y2BPiyZk/f5pK
- mK8A==
+ bh=2gdo81WfvXy4EOfmihfDpZqTVKi1ScawRoXS0ecuKUI=;
+ b=GszBmjqqJd8BZYtaNXgjSQj9FX3Rpu7cGVr+Yai2O0X/WYPCV6tQ/S7HZ5mv5bGyNV
+ iaTudHt2CHDCMftngXDLkcnANIuP1UvcjTjvks+i3854w+ap7bj8l7kHEMFHd78rUlXZ
+ EEiYnqP9IRNN9eYIGuJZ3kdL1t7fpkq1hWRQfTe/HUwBJBl4FsW48kYQJpw1JgqOD7XN
+ NpSYTGl0s0G0qXyTebPzvHYyi70Ne9ONnaYzZ1kzKTCs6wPNmYlj6y+x8HXftMRKl+j0
+ VClRESB1UG1f9vDwnVazSf/bHl8bNRnKc5NvXW87HzAq5mMSNyAHXd+KvRXNSBGDAFvF
+ zvPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710793889; x=1711398689;
+ d=1e100.net; s=20230601; t=1710794104; x=1711398904;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kO0CUlmpmgpgJh9+JhtAcuSOUmI+kDjHnlfeXxl5TbA=;
- b=TWSsz4n7P94hHfk/2ABhx2RETiup4J+q5RqGwdmBXvw8hWVdPCOIGXzDssLVCPZIAY
- ENk0UnqDj8RP88XHcjbH3vCmO3Z50NUKLdovsMxX3/xM0yvsVnJZiPxZ+80WMv5U2WJI
- 4it4OiXucLAftk4WaN9Tiw9c9tFOXjsiLSGyNGdmGXlzl6ko92pLMUGhPv+H+UnyikMQ
- jqsDB5pm7n32G4Iqu8y5/lQ7gWZoAEsmaW75dqYytPkP0A4PSZqzHhNTpwQIH4aKo1Zg
- 3+cEdiifx/fH5EC5QvbLEPTj4BDzGrJrG/ZWBFDvzYk6RP3Ziv/98y7qjntg4HoAgeTJ
- g/6Q==
-X-Gm-Message-State: AOJu0Yz8kmPDTsJcmyESTXV1Sk3X1afKCs7GJsNYJHY7I8w5ddcRqbhZ
- a4GygYoi7E8ttlAFVCUDic5KQKHWww8v3XGtWIYTHOJ7HwtlGvCfvGClsq+6YSM=
-X-Google-Smtp-Source: AGHT+IGnKNUsKAZLmF5s7wo6PAlSgUTftdWHOehg/jqT7cAK4ifVMdZPl9pkumAcZ3ZP9I1eav18VA==
-X-Received: by 2002:a17:90a:597:b0:29f:b882:d061 with SMTP id
- i23-20020a17090a059700b0029fb882d061mr721547pji.40.1710793888866; 
- Mon, 18 Mar 2024 13:31:28 -0700 (PDT)
+ bh=2gdo81WfvXy4EOfmihfDpZqTVKi1ScawRoXS0ecuKUI=;
+ b=JBWqKITCkydAPvDo18tydwIRXQj0I5kERkVc/MEf7PScKc6BOrGt8WhNQveDc34nrd
+ A66xgYiDdcIQ5CeCoMfPitnR4v51bJN/Cvk5mCDkjb8JddaLgoyu5xDdy19pJ8cJj6Hu
+ aOlD6ee4by1QcQJwylSo4wCGUodwT/sJBNqm+P/Qa+BM9c+UEhpvdflcuTEknHU3/NoN
+ NFwp8hVIAAXv63qw1epHmHYJjzVdgVN3igX6H1ZGM1Oz1GiQ4mAtuCY/NBoFKxx8vdj3
+ u7h7Xn4OiN1eYmp+hknIwmRmHcQQhBKR5aIpR1EQKRZorxsrRCuxYpnzIK+obXgr2qst
+ zksg==
+X-Gm-Message-State: AOJu0YyATQEI3/wSV1keWSKWLDKvvOPoShIKbvsbaUPoWdHlipHrGzsP
+ xQx96Me5qvzoqmGHlbvS2tx+pJ5noprKrpb4//4I/gn7ue0A1ctFYT6+jylpfBY=
+X-Google-Smtp-Source: AGHT+IEeo/KR68S1S5q24192hGXBU3cpdiFQzWArnldBSssPDjDf+ASglWxqmfloS3jpJ2vD5FAd+Q==
+X-Received: by 2002:a05:6359:1a08:b0:17e:b867:cb94 with SMTP id
+ rt8-20020a0563591a0800b0017eb867cb94mr9312021rwb.17.1710794104024; 
+ Mon, 18 Mar 2024 13:35:04 -0700 (PDT)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- p2-20020a17090a930200b0029c0cc16888sm8230466pjo.1.2024.03.18.13.31.27
+ g2-20020a62f942000000b006e6cddb9299sm8064661pfm.45.2024.03.18.13.35.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 13:31:28 -0700 (PDT)
-Message-ID: <2065b6d5-9b2b-4b87-a49f-8e0711f3f2b0@linaro.org>
-Date: Mon, 18 Mar 2024 10:31:24 -1000
+ Mon, 18 Mar 2024 13:35:03 -0700 (PDT)
+Message-ID: <b03a84d7-579d-4dcd-be1e-949a29cb9326@linaro.org>
+Date: Mon, 18 Mar 2024 10:35:00 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] target/hppa: ldcw,s uses static shift of 3
+Subject: Re: [PATCH 2/7] target/hppa: fix shrp for wide mode
 Content-Language: en-US
 To: Sven Schnelle <svens@stackframe.org>
 Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
 References: <20240317221431.251515-1-svens@stackframe.org>
- <20240317221431.251515-2-svens@stackframe.org>
+ <20240317221431.251515-3-svens@stackframe.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240317221431.251515-2-svens@stackframe.org>
+In-Reply-To: <20240317221431.251515-3-svens@stackframe.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,28 +97,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/17/24 12:14, Sven Schnelle wrote:
-> Signed-off-by: Sven Schnelle <svens@stackframe.org>
+> Signed-off-by: Sven Schnelle<svens@stackframe.org>
 > ---
->   target/hppa/translate.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index eb2046c5ad..6a513d7d5c 100644
-> --- a/target/hppa/translate.c
-> +++ b/target/hppa/translate.c
-> @@ -3085,7 +3085,7 @@ static bool trans_ldc(DisasContext *ctx, arg_ldst *a)
->           dest = dest_gpr(ctx, a->t);
->       }
->   
-> -    form_gva(ctx, &addr, &ofs, a->b, a->x, a->scale ? a->size : 0,
-> +    form_gva(ctx, &addr, &ofs, a->b, a->x, a->scale ? 3 : 0,
->                a->disp, a->sp, a->m, MMU_DISABLED(ctx));
->   
->       /*
+>   target/hppa/translate.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Whoops, broken since day one.
-
-Fixes: 96d6407f363 ("target-hppa: Implement loads and stores")
+Fixes: f7b775a9c075 ("target/hppa: Implement SHRPD")
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
