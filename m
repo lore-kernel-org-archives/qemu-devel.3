@@ -4,63 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E94C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 17:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7146CC54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 17:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmGTg-0001M7-DZ; Mon, 18 Mar 2024 13:08:48 -0400
+	id 1rmGUj-0001jb-Am; Mon, 18 Mar 2024 13:09:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rmGTc-0001Lq-MP
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:08:44 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1rmGTY-0005TN-GF
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:08:44 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c18:486:0:640:cf34:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 2846860C96;
- Mon, 18 Mar 2024 20:08:31 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b501::1:3a] (unknown
- [2a02:6b8:b081:b501::1:3a])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id T8HXfV7OhOs0-cFJYE0Hi; Mon, 18 Mar 2024 20:08:30 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1710781710;
- bh=CAH3wwUMzCewEbX+QJ3UbdnNlpAIEZsxZ+APqCdCMWA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=zd1jKruRr48LEeeczz8oCJcgu/4rDZcgDfLuC+46vUWDfBV7/gx+brYxVa4NeuPM+
- 0QPWO4pQ0ZorImz5IIHVbNSZGMycphE8XY8R6Ch5AQVZKBt/FzTsEgVge+SFtUDmcU
- O0//Rb8xBuZTlVAABghrTC220mEOc9AZKj3jCPzM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <91a88010-8822-4628-9deb-bc581e536c44@yandex-team.ru>
-Date: Mon, 18 Mar 2024 20:08:29 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmGUh-0001gO-52
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:09:51 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmGUf-0005aD-6H
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 13:09:50 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1e036b76725so5404025ad.1
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 10:09:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710781787; x=1711386587; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MWnQGFFggnDL0umUTjk/Br6lRKLYQ129nftTmiDoAlk=;
+ b=k3bJJUUproFofHHFLeJqIzWl0FBQVe+DLwdJrc9g+MK+wxACdGjOejjC07rIaABF1v
+ CgPVJxEgvHQr3XW4AQdlm6rHmPu3AW+QXOhw21jqKHrz0fzSsctZAHSoicdDckT8iAVO
+ gscBZcybo13HvoQGTva6JYH+tdnRfU9i1BAvuyAyDsgPdfSvHbcq4yzF+IWbAu2kRsID
+ PbXzBbWpWJsiw/0IN0Z1Ppkjx3dzADLEu/u1bU5SpJ3OKXMVeCdchpVE/+wuV7PiTyqz
+ aw9Tg8gKON7sHkC4SuumOVGEJj6o+YgBD7ggo8Go24lggIO8L3A1pNOmb3K4PNS37Hbv
+ VXiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710781787; x=1711386587;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MWnQGFFggnDL0umUTjk/Br6lRKLYQ129nftTmiDoAlk=;
+ b=r9ILOpStrBXOnGiiAfMpJUf3QCpRnOHto+xB8faNLVPB+kR2e1pYAfTarhVD7BGFEa
+ eGqMtnzqEXAC38RipxCoZe218yzVXM8RvlPTv5TXV5hRl7HRd1sCGKJdt4eKMJJRuJwd
+ 9shvy0KeL3ZinPpByZmArlJQMDl5w8KVT7nSjgtlV79myJW+MYhxKzCSWWIKw3uTak6d
+ 8tXcGmULCZoSER58opYz0lsGf3LZCdd04qOL4tdPub0bpnyUqEDiYUnZzOLQC0+6Wank
+ kp1tkz8DVzm5SduTHOyxpPVkcKhlsvjS8tsN/swjE7+5WfkuIWoPrYlv75R6Mw4J3Qtx
+ PYCg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUfDDrOuklmJAY1pcm88vMSXJLzehErX6CeCE2yyXs+dq96EBKnq0JsHF1d04OcUqEGnpvrrKI3rLkVT7Mje1SENgvdH+0=
+X-Gm-Message-State: AOJu0YzTbTrTAWFB67nzvwK3EQozaRzrqD3ichZ2gGRLNZ8Hln+p1tyb
+ QmrWVip3R2MpvVhUQVFgOfHx0F08GJjOJlbBPZQsZpMsRrHzhIo6RnxbGZRE+pJbGiXKM/WoK0J
+ z
+X-Google-Smtp-Source: AGHT+IFVWDVIZ+yfvrPhhdWGkLKcu5kwRApzX0hOCfyHCbESEeZilaH1fIedmQeVuMj7YWDyDum9kg==
+X-Received: by 2002:a17:903:2281:b0:1df:ff0a:7130 with SMTP id
+ b1-20020a170903228100b001dfff0a7130mr308331plh.33.1710781787617; 
+ Mon, 18 Mar 2024 10:09:47 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ b10-20020a170903228a00b001e01c1124absm2928654plh.171.2024.03.18.10.09.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Mar 2024 10:09:47 -0700 (PDT)
+Message-ID: <60c3fc50-9b48-4f79-b9b5-2ba08c2faffc@linaro.org>
+Date: Mon, 18 Mar 2024 07:09:44 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/4] machine development tool
+Subject: Re: [PATCH 0/3] 64 Bit support for hppa gdbstub
 Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>, Maksim Davydov <davydov-max@yandex-team.ru>
-Cc: Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- jsnow@redhat.com, philmd@linaro.org, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-References: <20240304135145.154860-1-davydov-max@yandex-team.ru>
- <CAFEAcA9acSfGP6PcErqp1rTmSd3G+AwUUx_aF-5KJy4iS6BqaQ@mail.gmail.com>
- <874jdkn3he.fsf@pond.sub.org> <ZefNfJ3BwudA-M7t@x1n>
- <117b4556-aadd-4287-909c-e5cf988214b5@yandex-team.ru> <ZeqKZOxF1MlgeRE3@x1n>
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <ZeqKZOxF1MlgeRE3@x1n>
+To: Sven Schnelle <svens@stackframe.org>
+Cc: Helge Deller <deller@gmx.de>, qemu-devel@nongnu.org
+References: <20240228201434.1515893-1-svens@stackframe.org>
+ <87sf0ouk1u.fsf@t14.stackframe.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <87sf0ouk1u.fsf@t14.stackframe.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -83,164 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.03.24 06:47, Peter Xu wrote:
-> On Thu, Mar 07, 2024 at 12:06:59PM +0300, Maksim Davydov wrote:
+On 3/17/24 20:32, Sven Schnelle wrote:
+> Hi Richard,
+> 
+> Sven Schnelle <svens@stackframe.org> writes:
+> 
+>> Hi List,
 >>
->> On 3/6/24 04:57, Peter Xu wrote:
->>> On Tue, Mar 05, 2024 at 03:43:41PM +0100, Markus Armbruster wrote:
->>>> Peter Maydell<peter.maydell@linaro.org>  writes:
->>>>
->>>>> On Mon, 4 Mar 2024 at 13:52, Maksim Davydov<davydov-max@yandex-team.ru>  wrote:
->>>>>> The following changes since commit e1007b6bab5cf97705bf4f2aaec1f607787355b8:
->>>>>>
->>>>>>     Merge tag 'pull-request-2024-03-01' ofhttps://gitlab.com/thuth/qemu  into staging (2024-03-01 10:14:32 +0000)
->>>>>>
->>>>>> are available in the Git repository at:
->>>>>>
->>>>>>     https://gitlab.com/davydov-max/qemu.git  tags/pull-compare-mt-2024-03-04
->>>>>>
->>>>>> for you to fetch changes up to 7693a2e8518811a907d73a85807ee71dac8fabcb:
->>>>>>
->>>>>>     scripts: add script to compare compatibility properties (2024-03-04 14:10:53 +0300)
->>>>>>
->>>>>> ----------------------------------------------------------------
->>>>>> Please note. This is the first pull request from me.
->>>>>> My public GPG key is available here
->>>>>> https://keys.openpgp.org/vks/v1/by-fingerprint/CDB5BEEF8837142579F5CDFE8E927E10F72F78D4
->>>>>>
->>>>>> ----------------------------------------------------------------
->>>>>> scripts: add a new script for machine development
->>>>>>
->>>>>> ----------------------------------------------------------------
->>>>> Hi; I would prefer this to go through some existing submaintainer
->>>>> tree if possible, please.
->>>> Migration?  QOM?  Not sure.  Cc'ing the maintainers anyway.
->>> Yeah this seems like migration relevant.. however now I'm slightly confused
->>> on when this script should be useful.
->>>
->>> According to:
->>>
->>> https://lore.kernel.org/qemu-devel/20240222153912.646053-5-davydov-max@yandex-team.ru/
->>>
->>>           This script runs QEMU to obtain compat_props of machines and
->>>           default values of different types of drivers to produce comparison
->>>           table. This table can be used to compare machine types to choose
->>>           the most suitable machine or compare binaries to be sure that
->>>           migration to the newer version will save all device
->>>           properties. Also the json or csv format of this table can be used
->>>           to check does a new machine affect the previous ones by comparing
->>>           tables with and without the new machine.
->>>
->>> In regards to "choose the most suitable machine": why do you need to choose
->>> a machine?
->>>
->>> If it's pretty standalone setup, shouldn't we always try to use the latest
->>> machine type if possible (as normally compat props are only used to keep
->>> compatible with old machine types, and the default should always be
->>> preferred). If it's a cluster setup, IMHO it should depend on the oldest
->>> QEMU version that plans to be supported.  I don't see how such comparison
->>> helps yet in either of the cases..
->>>
->>> In regards to "compare binaries to be sure that migration to the newer
->>> version will save all device properties": do we even support migrating
->>> _between_ machine types??
->>>
->>> Sololy relying on compat properties to detect device compatibility is also
->>> not reliable.  For example, see VMStateField.field_exists() or similarly,
->>> VMStateDescription.needed(), which are hooks that device can provide to
->>> dynamically decide what device state to be saved/loaded.  Such things are
->>> not reflected in compat properties, so even if compat properties of all
->>> devices are the same between two machine types, it may not mean that the
->>> migration stream will always be compatible.
->>>
->>> Thanks,
+>> this patchset allows to debug the hppa target when running in wide (64 bit)
+>> mode. gdb needs a small patch to switch to 64 bit mode. I pushed the
+>> patch to https://github.com/bminor/binutils-gdb/commit/fd8662ec282d688d1f8100b4365823e57516857b
+>> With this patch gdb will switch to the appropriate mode when connecting
+>> to qemu/gdbstub.
 >>
->> In fact, the last commit describes the meaning of this series best. Perhaps
->> it should have been moved to the cover letter:
->> Often, many teams have their own "machines" inherited from "upstream" to
->> manage default values of devices. This is done because of the limitations
->> imposed by the compatibility requirements or the desire to help their
->> customers better configure their devices. And since machine type has
->> a hard-to-read structure, it is very easy to make a mistake when
->> transferring
->> default values from one machine to another. For example, when some property
->> is set for the entire abstract class x86_64-cpu (which will be applied to
->> all
->> models), and then rolled back for a specific model. The situation is about
->> the same with changing the default values of devices: if the value changes
->> in the description of the device itself, then you need to make sure that
->> nothing changes when using the current machine.
->> Therefore, there was a desire to make a dev tool that will help quickly
->> expand
->> the definition of a machine or compare several machines from different
->> binary
->> files. It can be used when rebasing to a new version of qemu and/or for
->> automatic tests.
+>> Sven Schnelle (3):
+>>    Revert "target/hppa: Drop attempted gdbstub support for hppa64"
+>>    target/hppa: add 64 bit support to gdbstub
+>>    target/hppa: mask CR_SAR register writes to 5/6 bit in gdbstub
+>>
+>>   target/hppa/gdbstub.c | 66 +++++++++++++++++++++++++++++--------------
+>>   1 file changed, 45 insertions(+), 21 deletions(-)
 > 
-> OK, thanks.
-> 
-> So is it a migration compatibility issue that you care (migrating VMs from
-> your old downstream binary to new downstream binary should always succeed),
-> or perhaps you care more on making sure the features you wanted, i.e., you
-> want to make sure some specific devices that you care will have the
-> properties that you expect?
+> gentle ping - if i followed correctly only one patch was reviewed so far.
 
-Actually both things.
-
-1. We need a tool to analyze, what exactly changes between MT-s. Do we want to move on new upstream MT or not, how much it is different from our downstream MT and so on.
-2. It also could be used to check, that new MT is correctly defined (not breaking old MT's)
-
-> 
-> I think compat properties are mostly used for migration purposes, but
-> indeed it can also be used to keep old behaviors of devices, even if the
-> migration could succed with/without such a compat property entry.
-> 
-> If it's about migration, I'd like to know whether vmstate-static-checker.py
-> could also help your case (under scripts/), perhaps in a better way,
-> because it directly observes the VMSD structures (which is the ultimate
-> form on wire, after all these compat properties applied to the devices).
-
-Hmm, vmstate-static-checker.py checks a concrete device configuration. So it's a different thing.
-
-> 
-> If it's not about migration, then maybe it's more QOM-relevant, and if so I
-> don't have a strong opinion. It seems still make some sense to have a tool
-> simply dump the QOM tree for a machine type with all properties and compare
-> them between machines with some binaries.  For that I'll leave that to
-> Markus to decide.
-
-Markus ACKed :)
-
-> 
-> Btw, I tried to apply the patches and build, but failed:
-> 
-> In file included from ../qapi/qapi-schema.json:70:
-> ../qapi/machine.json:224: text required after 'Example:'
-> [40/2810] Generating trace/trace-hw_ide.h with a custom command
-> [41/2810] Generating trace/trace-hw_isa.h with a custom command
-> [42/2810] Generating trace/trace-hw_intc.c with a custom command
-> [43/2810] Generating trace/trace-hw_mem.h with a custom command
-> [44/2810] Generating trace/trace-hw_isa.c with a custom command
-> [45/2810] Generating trace/trace-hw_intc.h with a custom command
-> [46/2810] Generating trace/trace-hw_mem.c with a custom command
-> ninja: build stopped: subcommand failed.
-> make: *** [Makefile:162: run-ninja] Error 1
-> 
-
-The series missed change in QAPI documentation requirements. I see, we need 4 spaces indentation for Examples text.
-Max, could you fix and resend as patches again? We also have to replace "Since: 9.0" -> "Since: 9.1".
+We can't really proceed until you get your gdb patch reviewed upstream.
+All that will happen in the meantime is that qemu make-check will fail.
 
 
-> There also seems to have an assumption that QEMU is built under "build/" in
-> the script.
-> 
-> +default_qemu_binary = 'build/qemu-system-x86_64'
-> 
-
-I think it's not a problem for now. Could be changed later if needed.
-
--- 
-Best regards,
-Vladimir
-
+r~
 
