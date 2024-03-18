@@ -4,134 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74F47C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 16:33:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA6FBC54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 16:34:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmFvd-0006Co-SW; Mon, 18 Mar 2024 12:33:37 -0400
+	id 1rmFwe-0006tK-Mx; Mon, 18 Mar 2024 12:34:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmFvc-0006Bw-A4
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:33:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmFvb-0007zn-20
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:33:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710779611;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UnZffsyauYHMcbIbdKA3ZBDtRYHfjw8WQzs1+cXN1Pk=;
- b=Dw8giiWFA5zDqea6Hse0L9TQgtBOQp+yLmItX8sm1Q7hLFYqVri/CifVibySlEoTCEkaBs
- xxUMpGI9X0e64qI1JQ8o67Pbp40mOQcbxLjoEy5awsqdVF7EYRas95plriYKcXnsG2BW7I
- MTIjkLpdG/0S7NyocqmX8siZjyJtUcw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-272-cDghAFylMFuNrXFqs57znw-1; Mon, 18 Mar 2024 12:33:30 -0400
-X-MC-Unique: cDghAFylMFuNrXFqs57znw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-33d8d208be9so3170198f8f.2
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 09:33:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmFwY-0006mv-BZ
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:34:37 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmFwV-00084s-VF
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 12:34:34 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-41461c256c4so961405e9.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 09:34:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710779670; x=1711384470; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cpPFFJa8cvDdNdwT2sHbXlHUgI/e81jfthWWDxVTtYU=;
+ b=KtHfuq7875KM6UsU9pKKkvNPVsfSlYrm2YybvJYL1r8v0qXqdguKh8jEd6IVJ2bZBc
+ h4aCyD+F8M0LhkNF+rnS6wCh9B+kmXohC7NwS0AUWvLQKr5waBVAqxpoHEjvt3YuTaBd
+ psPJumlI/KoSj5a0JAMJfGYYijCqGAwwTHeUgXIEJ7dGFnmNZ8ttqkCJuO7rXnn3RduT
+ hGy8nPL9XTSvPnMQnCm86NMxaKjDL7EYYOkAIutfHncQil5LVmT123BVDW+8HatFQ5IN
+ DZI1bYcp0K8hfnhUNqsT3MQYz0V+jeUEVBN76f9VFlQ811UXP/3suCf3W+pGvGXJm/Xx
+ viyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710779609; x=1711384409;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1710779670; x=1711384470;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UnZffsyauYHMcbIbdKA3ZBDtRYHfjw8WQzs1+cXN1Pk=;
- b=sEgku7nHpRbR/lZYgwmsDJsCPSCe7IkiR/JpQpXMbL2BfocsR9vlwxyQZ+ULDlZV8O
- TJQG3xtvRCE4mB6tPf5fQ9YrePfST4Soc4em0F509+KhBhrZa57/dGRWYHLwGMszNuaW
- HxmFNNt2xYG/NwZyl5QNRKGPHJfGN8lb4TGxz9j8PUqZL5QZYwi3KsU7lry07g6J8mKJ
- Ax0wcjbUL42zQ0hT6F2Ssc+sDMdi8pJn0EOg19RE70OucVGl4tycm7l6ebjvvnds/ttL
- ggmy+c3zXgn+6PbF7hqA7IlRtoBfRqZhTxAh/N+Ls7GXJnw7kJV7qL/1dasiYqf1gUJY
- cZnQ==
+ bh=cpPFFJa8cvDdNdwT2sHbXlHUgI/e81jfthWWDxVTtYU=;
+ b=of9B5ou7CjT0uQGtwaEOS6KtTGPAOHWlLu/IYdE+MJ/HXHvIw9KmvoXks7PSdK/DvZ
+ fUNginr1YkeK5W15AMpTvY1skFDnxF5GRtJEzgqJCPNH9vVB44SNO1s/dAjo/9x5msoy
+ 1yjPLah9LxFPVRsB8xIyqSENgrazbeDwBXgBPsg2g/ZS5V7op7fYBedeZoo3X5wisTrj
+ 9wPJLZRzzsGXMn1xxKRCtxCEIdjU1FCYJCqyZXoftLd6bGqTpRXm7mVdBhQ5ICJS6zDL
+ 0ZHaFbcscLvHK4BM2mHc7Omw8weo+rGdPk0s6EhCMZAlyktb0IQ53ukFAoEi+YJ4LR3Y
+ Tx5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW62Ekw+KxmeR2o95Z8WjHk9N3b+9DHRzOwc4Nj+aYi9ohZCKGjzM8nOKeayReoXUj3MP/c/aXovnUjtsGNXe3hoUgMdWk=
-X-Gm-Message-State: AOJu0YymbahRUocyhH6429elwVjL6HOfEBeOiHEj6+Ri0cqiTGRKqZqV
- 8mwWdarPkPi3mNo2f6rz/uBzRSkCXiAVyDSwPaR06DTk5ND6ID1CTAxrXIoat0a5XGJcM04R3wq
- TnJlWSktUEa7BdYaUwRGQlJEfy9ZFh6TN8P131gwxqAZQro3vkEy+
-X-Received: by 2002:a5d:4b50:0:b0:33e:76a1:d031 with SMTP id
- w16-20020a5d4b50000000b0033e76a1d031mr5713009wrs.50.1710779609300; 
- Mon, 18 Mar 2024 09:33:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0xis8mah5dR4IvxpV5DODYPzUhXParIbtUA7XP1Xq8Zo1F1p9kt8OqLaLVGIL7V+HCvIkXQ==
-X-Received: by 2002:a5d:4b50:0:b0:33e:76a1:d031 with SMTP id
- w16-20020a5d4b50000000b0033e76a1d031mr5712991wrs.50.1710779609026; 
- Mon, 18 Mar 2024 09:33:29 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-176-251.web.vodafone.de.
- [109.43.176.251]) by smtp.gmail.com with ESMTPSA id
- ck7-20020a5d5e87000000b0033b48190e5esm4920748wrb.67.2024.03.18.09.33.28
+ AJvYcCWxCkwTXcgnabX+2FTRh1G5K02R+qGiILQJKKZSSq7Q5Yklw1+HPabAS18f9JEvVKAX4t4/MiLk5aZWrnhPu45/XQ9XEGs=
+X-Gm-Message-State: AOJu0Ywpl76NcdfS7lPT++1NN930W1guZ1PhwPVYj6sTrh+Ny8sT6aKi
+ CT0Gi0jZ8fFX74u3+e2z6Y2Pi5hu9lMPYp/ut6RVEgA2UaBtKVl1k13q1JnDjZ4=
+X-Google-Smtp-Source: AGHT+IHJeBWDuilAflJsNSrxSDd2az9b+9aBEbCYosPWrx2/zLQ0BmbMiBjGjQ1GEiLhWtxQIUt9tQ==
+X-Received: by 2002:a05:600c:314e:b0:413:ee58:db7e with SMTP id
+ h14-20020a05600c314e00b00413ee58db7emr27061wmo.3.1710779670295; 
+ Mon, 18 Mar 2024 09:34:30 -0700 (PDT)
+Received: from [192.168.69.100] (vit94-h02-176-184-29-165.dsl.sta.abo.bbox.fr.
+ [176.184.29.165]) by smtp.gmail.com with ESMTPSA id
+ bg28-20020a05600c3c9c00b0041330d49604sm18520814wmb.45.2024.03.18.09.34.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 09:33:28 -0700 (PDT)
-Message-ID: <ad171290-3ae7-4948-8eac-7732df8a47c0@redhat.com>
-Date: Mon, 18 Mar 2024 17:33:27 +0100
+ Mon, 18 Mar 2024 09:34:29 -0700 (PDT)
+Message-ID: <a8598fb4-7551-4614-b9ec-5b93931c6c78@linaro.org>
+Date: Mon, 18 Mar 2024 17:34:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/s390x: Use mutable temporary value for op_ts
+Subject: Re: [PATCH v3 4/4] tests/avocado: sbsa-ref: add OpenBSD tests for
+ misc 'max' setup
 Content-Language: en-US
-To: Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, Ido Plat <ido.plat@ibm.com>
-References: <20240318162633.13017-1-iii@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240318162633.13017-1-iii@linux.ibm.com>
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org
+Cc: Radoslaw Biernacki <rad@semihalf.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Brad Smith <brad@comstyle.com>,
+ qemu-arm@nongnu.org
+References: <20240318-sbsa-ref-firmware-update-v3-0-1c33b995a538@linaro.org>
+ <20240318-sbsa-ref-firmware-update-v3-4-1c33b995a538@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240318-sbsa-ref-firmware-update-v3-4-1c33b995a538@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 9
-X-Spam_score: 0.9
-X-Spam_bar: /
-X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,22 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/03/2024 17.26, Ilya Leoshkevich wrote:
-> From: Ido Plat <ido.plat@ibm.com>
+On 18/3/24 15:08, Marcin Juszkiewicz wrote:
+> PAuth makes run timeout on CI so add tests using 'max' without
+> it and with impdef one.
 > 
-> Otherwise TCG would assume the register that holds t1 would be constant
-> and reuse whenever it needs the value within it.
+> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> ---
+>   tests/avocado/machine_aarch64_sbsaref.py | 20 +++++++++++++++++++-
+>   1 file changed, 19 insertions(+), 1 deletion(-)
 > 
-> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> [iii: Adjust a newline and capitalization]
-> Signed-off-by: Ido Plat <ido.plat@ibm.com>
+> diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
+> index cf8954d02e..98c76c1ff7 100644
+> --- a/tests/avocado/machine_aarch64_sbsaref.py
+> +++ b/tests/avocado/machine_aarch64_sbsaref.py
+> @@ -203,18 +203,36 @@ def boot_openbsd73(self, cpu):
+>       def test_sbsaref_openbsd73_cortex_a57(self):
+>           """
+>           :avocado: tags=cpu:cortex-a57
+> +        :avocado: tags=os:openbsd
+>           """
+>           self.boot_openbsd73("cortex-a57")
+>   
+>       def test_sbsaref_openbsd73_neoverse_n1(self):
+>           """
+>           :avocado: tags=cpu:neoverse-n1
+> +        :avocado: tags=os:openbsd
+>           """
+>           self.boot_openbsd73("neoverse-n1")
+>   
+> +    def test_sbsaref_openbsd73_max_pauth_off(self):
+> +        """
+> +        :avocado: tags=cpu:max
+> +        :avocado: tags=os:openbsd
+> +        """
+> +        self.boot_openbsd73("max,pauth=off")
+> +
+> +    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
 
-  Hi Ilya,
+This one worked well,
 
-please add your Signed-off-by as well when the patch is sent out by you.
+> +    def test_sbsaref_openbsd73_max_pauth_impdef(self):
+> +        """
+> +        :avocado: tags=cpu:max
+> +        :avocado: tags=os:openbsd
+> +        """
+> +        self.boot_openbsd73("max,pauth-impdef=on")
+> +
+> +    @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
 
-  Thanks,
-   Thomas
+and also this one. Do we still expect timeout?
 
+>       def test_sbsaref_openbsd73_max(self):
+>           """
+>           :avocado: tags=cpu:max
+> +        :avocado: tags=os:openbsd
+>           """
+>           self.boot_openbsd73("max")
+> -
+> 
+
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
