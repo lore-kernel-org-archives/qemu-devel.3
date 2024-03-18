@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD667C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 09:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C32ACC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 09:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rm9R3-000416-92; Mon, 18 Mar 2024 05:37:37 -0400
+	id 1rm9R3-000414-8f; Mon, 18 Mar 2024 05:37:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rm9R0-0003yM-0Y; Mon, 18 Mar 2024 05:37:34 -0400
-Received: from szxga02-in.huawei.com ([45.249.212.188])
+ id 1rm9Qm-0003tO-DK; Mon, 18 Mar 2024 05:37:21 -0400
+Received: from szxga05-in.huawei.com ([45.249.212.191])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rm9Qn-0000zG-O7; Mon, 18 Mar 2024 05:37:33 -0400
-Received: from mail.maildlp.com (unknown [172.19.88.105])
- by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4TyqSj2QXnzXhyd;
- Mon, 18 Mar 2024 17:34:45 +0800 (CST)
+ id 1rm9Qh-0000uw-IM; Mon, 18 Mar 2024 05:37:20 -0400
+Received: from mail.maildlp.com (unknown [172.19.88.214])
+ by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4TyqSV1sTjz1h2hj;
+ Mon, 18 Mar 2024 17:34:34 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id C69B814011F;
- Mon, 18 Mar 2024 17:37:18 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id A90DD1A016F;
+ Mon, 18 Mar 2024 17:37:05 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 18 Mar
- 2024 17:37:18 +0800
+ 2024 17:37:05 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v8 23/23] hw/arm/virt: Add FEAT_GICv3_NMI feature support
- in virt GIC
-Date: Mon, 18 Mar 2024 09:35:45 +0000
-Message-ID: <20240318093546.2786144-24-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v8 08/23] target/arm: Handle IS/FS in ISR_EL1 for NMI
+Date: Mon, 18 Mar 2024 09:35:30 +0000
+Message-ID: <20240318093546.2786144-9-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240318093546.2786144-1-ruanjinjie@huawei.com>
 References: <20240318093546.2786144-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.188;
- envelope-from=ruanjinjie@huawei.com; helo=szxga02-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.191;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,61 +70,75 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A PE that implements FEAT_NMI and FEAT_GICv3 also implements
-FEAT_GICv3_NMI. A PE that does not implement FEAT_NMI, does not implement
-FEAT_GICv3_NMI
-
-So included support FEAT_GICv3_NMI feature as part of virt platform
-GIC initialization if FEAT_NMI and FEAT_GICv3 supported.
+Add IS and FS bit in ISR_EL1 and handle the read. With CPU_INTERRUPT_NMI or
+CPU_INTERRUPT_VNMI, both CPSR_I and ISR_IS must be set. With
+CPU_INTERRUPT_VFIQ and HCRX_EL2.VFNMI set, both CPSR_F and ISR_FS must be set.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-v4:
+v7:
+- env->cp15.hcrx_el2 -> arm_hcrx_el2_eff().
 - Add Reviewed-by.
+v6:
+- Verify that HCR_EL2.VF is set before checking VFNMI.
+v4；
+- Also handle VNMI.
 v3:
-- Adjust to be the last after add FEAT_NMI to max.
-- Check whether support FEAT_NMI and FEAT_GICv3 for FEAT_GICv3_NMI.
+- CPU_INTERRUPT_NMI do not set FIQ, so remove it.
+- With CPU_INTERRUPT_NMI, both CPSR_I and ISR_IS must be set.
 ---
- hw/arm/virt.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ target/arm/cpu.h    |  2 ++
+ target/arm/helper.c | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index dc7959e164..680a8a3eb6 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -729,6 +729,19 @@ static void create_v2m(VirtMachineState *vms)
-     vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
- }
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 629221e1a9..fba0a364db 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1396,6 +1396,8 @@ void pmu_init(ARMCPU *cpu);
+ #define CPSR_N (1U << 31)
+ #define CPSR_NZCV (CPSR_N | CPSR_Z | CPSR_C | CPSR_V)
+ #define CPSR_AIF (CPSR_A | CPSR_I | CPSR_F)
++#define ISR_FS (1U << 9)
++#define ISR_IS (1U << 10)
  
-+/*
-+ * A PE that implements FEAT_NMI and FEAT_GICv3 also implements
-+ * FEAT_GICv3_NMI. A PE that does not implement FEAT_NMI, does not implement
-+ * FEAT_GICv3_NMI.
-+ */
-+static bool gicv3_nmi_present(VirtMachineState *vms)
-+{
-+    ARMCPU *cpu = ARM_CPU(qemu_get_cpu(0));
-+
-+    return cpu_isar_feature(aa64_nmi, cpu) &&
-+           (vms->gic_version != VIRT_GIC_VERSION_2);
-+}
-+
- static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
- {
-     MachineState *ms = MACHINE(vms);
-@@ -802,6 +815,11 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
-                               vms->virt);
+ #define CPSR_IT (CPSR_IT_0_1 | CPSR_IT_2_7)
+ #define CACHED_CPSR_BITS (CPSR_T | CPSR_AIF | CPSR_GE | CPSR_IT | CPSR_Q \
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 5c637f3413..4bc63bf7ca 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -2021,15 +2021,29 @@ static uint64_t isr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+         if (cs->interrupt_request & CPU_INTERRUPT_VIRQ) {
+             ret |= CPSR_I;
          }
++        if (cs->interrupt_request & CPU_INTERRUPT_VNMI) {
++            ret |= ISR_IS;
++            ret |= CPSR_I;
++        }
+     } else {
+         if (cs->interrupt_request & CPU_INTERRUPT_HARD) {
+             ret |= CPSR_I;
+         }
++
++        if (cs->interrupt_request & CPU_INTERRUPT_NMI) {
++            ret |= ISR_IS;
++            ret |= CPSR_I;
++        }
      }
+ 
+     if (hcr_el2 & HCR_FMO) {
+         if (cs->interrupt_request & CPU_INTERRUPT_VFIQ) {
+             ret |= CPSR_F;
 +
-+    if (gicv3_nmi_present(vms)) {
-+        qdev_prop_set_bit(vms->gic, "has-nmi", true);
-+    }
-+
-     gicbusdev = SYS_BUS_DEVICE(vms->gic);
-     sysbus_realize_and_unref(gicbusdev, &error_fatal);
-     sysbus_mmio_map(gicbusdev, 0, vms->memmap[VIRT_GIC_DIST].base);
++            if ((arm_hcr_el2_eff(env) & HCR_VF) &&
++                (arm_hcrx_el2_eff(env) & HCRX_VFNMI)) {
++                ret |= ISR_FS;
++            }
+         }
+     } else {
+         if (cs->interrupt_request & CPU_INTERRUPT_FIQ) {
 -- 
 2.34.1
 
