@@ -4,99 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04490C54E5D
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 13:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57AB8C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 13:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmDPx-0003SX-0t; Mon, 18 Mar 2024 09:52:45 -0400
+	id 1rmDTG-0004so-8S; Mon, 18 Mar 2024 09:56:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rmDPt-0003Od-TF
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:52:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rmDPr-0002yO-Ei
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 09:52:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710769958;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bKIDMgt+X4yr6Wx8ftv3fFaZmKTBScinp5s+yF/ElXM=;
- b=BOTQpTJL4aBeJGQmmY+04/c/hUiEFpbX0sJvl14+JwEMHvWoFapbIxGV+SNHP39dthSuez
- TXVwWZyClSYyjom2OYPw/Do51N64N1uaXXQTRc3oQ19qfMJrIpMWVu9whIc9x2dZTcmd7M
- Ch0xPuBgU8LfhvMnaBb6VHdQZJMkpEI=
-Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
- [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-76-DMIo7vjdMmSKKvIjTd8njQ-1; Mon, 18 Mar 2024 09:52:37 -0400
-X-MC-Unique: DMIo7vjdMmSKKvIjTd8njQ-1
-Received: by mail-yb1-f199.google.com with SMTP id
- 3f1490d57ef6-dc64f63d768so6905909276.2
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 06:52:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710769957; x=1711374757;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bKIDMgt+X4yr6Wx8ftv3fFaZmKTBScinp5s+yF/ElXM=;
- b=ZKcabygYSQuFnFhR5jojO4RlQcy3aA0AQagqa7Y8PUowDONQeKY8UKY8JiMtLhymKS
- jnbAw+wyBhYQs+IzH6Qzq/GnUMFN7GJIZJe3IfeE7X33zxyG9JHyS75NR5iQKsCIcZcx
- TWfXxEKhcapqCVYfybF1DunaHxBM3/9iJQr7p3+Bm94Ape94ZeACM0Z0uMPbiNCwgAG1
- pk3Ci/Hno/9TEdfh/mkFCx0Jy8KDGumM/EK0ARdgXmZ1Y6Q4dM9KCvBi9hxKxiKOeUVJ
- Cpts/wt01uQ0U6VeOCENeQ3H1NraeX6g+xFTagChNrlZ6xErcA82yR6Dk9DnhydyJ5bv
- BSLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4f7CwHcmDuYRXIDcxiUIJtCtnYrNAWzP31JM0ni3EvqdzpIIHdO6BRCAJaHDQwvKC8R7i+sdTfMwyb8UIpavABHYcVj8=
-X-Gm-Message-State: AOJu0Yzcrh84FIuszr80QA/Cf+2+YdAHdnTVK5b5ZvaXNsXt9aGvnkpB
- l2p2wmeXDQUGOoGuP4psIx2He8qKXei2yqqzYGzGrRo60dYM45cO6H1KrqhHiQLpMj0AmnNQma/
- u55jNKi3K7mwt04JpoPln9D2ldR45qQOVVorKLkL94gctrdy4vn5K
-X-Received: by 2002:a25:acc5:0:b0:dcf:313d:d4ab with SMTP id
- x5-20020a25acc5000000b00dcf313dd4abmr9505689ybd.54.1710769956913; 
- Mon, 18 Mar 2024 06:52:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE04HbkPi9lK5Rike1yhJXpd0UgET83qjWeJqz9J2UjMDikC4HuM2dxV6s5IZVfelnamlQfOg==
-X-Received: by 2002:a25:acc5:0:b0:dcf:313d:d4ab with SMTP id
- x5-20020a25acc5000000b00dcf313dd4abmr9505661ybd.54.1710769956624; 
- Mon, 18 Mar 2024 06:52:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- t5-20020ac87385000000b00430ac228781sm4188862qtp.67.2024.03.18.06.52.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 06:52:35 -0700 (PDT)
-Message-ID: <d386b8e4-b597-492c-b0ab-4b4246906f94@redhat.com>
-Date: Mon, 18 Mar 2024 14:52:31 +0100
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
+ id 1rmDTA-0004r9-G9; Mon, 18 Mar 2024 09:56:04 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cfontana@suse.de>)
+ id 1rmDSt-0003dm-3Z; Mon, 18 Mar 2024 09:56:04 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7A2CE34AC5;
+ Mon, 18 Mar 2024 13:55:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710770142; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TiBGKTg/un8GUlyX+t2Z1wteiuQqe1aidWMoXtDtmHo=;
+ b=gDMmMvs6O+cdnMV7UcC5tS9aMoR0C82t75cZvYGH+IYyrl947UyQbIGWI3sv//mCRB80NS
+ La9irtLYVoRC3c2g400zNf/9cpaQ3H+6fEiprUwv2gwlvHNkq9hhZq3IJxs0U/p2j1xApn
+ DWwhksK8GyyhxqbxyUUJfwU5pJLzoQw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710770142;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TiBGKTg/un8GUlyX+t2Z1wteiuQqe1aidWMoXtDtmHo=;
+ b=+10c6i8YX793jDr95rHpROfkpFYWS5JsMw+BJjaM2BC7LshyXsYJH6c9EGeRdeqDAEBE/A
+ 2CT0RzB+4q8Py6Dw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710770142; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TiBGKTg/un8GUlyX+t2Z1wteiuQqe1aidWMoXtDtmHo=;
+ b=gDMmMvs6O+cdnMV7UcC5tS9aMoR0C82t75cZvYGH+IYyrl947UyQbIGWI3sv//mCRB80NS
+ La9irtLYVoRC3c2g400zNf/9cpaQ3H+6fEiprUwv2gwlvHNkq9hhZq3IJxs0U/p2j1xApn
+ DWwhksK8GyyhxqbxyUUJfwU5pJLzoQw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710770142;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TiBGKTg/un8GUlyX+t2Z1wteiuQqe1aidWMoXtDtmHo=;
+ b=+10c6i8YX793jDr95rHpROfkpFYWS5JsMw+BJjaM2BC7LshyXsYJH6c9EGeRdeqDAEBE/A
+ 2CT0RzB+4q8Py6Dw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3EB5C1349D;
+ Mon, 18 Mar 2024 13:55:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id L/jXDN5H+GXmLQAAD6G6ig
+ (envelope-from <cfontana@suse.de>); Mon, 18 Mar 2024 13:55:42 +0000
+Message-ID: <6d416a97-eaa2-87d2-d2ed-cfb5a42d83f4@suse.de>
+Date: Mon, 18 Mar 2024 14:55:41 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 05/11] vfio: Introduce host_iommu_device_create callback
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.4.0
 Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, peterx@redhat.com,
- jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- yi.y.sun@intel.com, chao.p.peng@intel.com
-References: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
- <20240228035900.1085727-6-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240228035900.1085727-6-zhenzhong.duan@intel.com>
+To: Kevin Wolf <kwolf@redhat.com>, Max Reitz <mreitz@redhat.com>
+Cc: "qemu-block@nongnu.org" <qemu-block@nongnu.org>,
+ qemu-devel <qemu-devel@nongnu.org>
+From: Claudio Fontana <cfontana@suse.de>
+Subject: qemu-img: very bad performance with the default number of coroutines
+ (8) in presence of compression. Fixed adding "-m 1" to the cmdline.
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-1.58 / 50.00]; ARC_NA(0.00)[];
+ TO_DN_EQ_ADDR_SOME(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_GOOD(-0.10)[text/plain];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; BAYES_HAM(-0.07)[62.03%];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=gDMmMvs6;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=+10c6i8Y
+X-Rspamd-Queue-Id: 7A2CE34AC5
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=cfontana@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,68 +121,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi ZHenzhong,
+Hello,
 
-On 2/28/24 04:58, Zhenzhong Duan wrote:
-> Introduce host_iommu_device_create callback and a wrapper for it.
->
-> This callback is used to allocate a host iommu device instance and
-> initialize it based on type.
->
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->  include/hw/vfio/vfio-common.h         | 1 +
->  include/hw/vfio/vfio-container-base.h | 1 +
->  hw/vfio/common.c                      | 8 ++++++++
->  3 files changed, 10 insertions(+)
->
-> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-> index b6676c9f79..9fefea4b89 100644
-> --- a/include/hw/vfio/vfio-common.h
-> +++ b/include/hw/vfio/vfio-common.h
-> @@ -208,6 +208,7 @@ struct vfio_device_info *vfio_get_device_info(int fd);
->  int vfio_attach_device(char *name, VFIODevice *vbasedev,
->                         AddressSpace *as, Error **errp);
->  void vfio_detach_device(VFIODevice *vbasedev);
-> +void host_iommu_device_create(VFIODevice *vbasedev);
->  
->  int vfio_kvm_device_add_fd(int fd, Error **errp);
->  int vfio_kvm_device_del_fd(int fd, Error **errp);
-> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-> index b2813b0c11..dc003f6eb2 100644
-> --- a/include/hw/vfio/vfio-container-base.h
-> +++ b/include/hw/vfio/vfio-container-base.h
-> @@ -120,6 +120,7 @@ struct VFIOIOMMUClass {
->      int (*attach_device)(const char *name, VFIODevice *vbasedev,
->                           AddressSpace *as, Error **errp);
->      void (*detach_device)(VFIODevice *vbasedev);
-> +    void (*host_iommu_device_create)(VFIODevice *vbasedev);
->      /* migration feature */
->      int (*set_dirty_page_tracking)(const VFIOContainerBase *bcontainer,
->                                     bool start);
-> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-> index 059bfdc07a..41e9031c59 100644
-> --- a/hw/vfio/common.c
-> +++ b/hw/vfio/common.c
-> @@ -1521,3 +1521,11 @@ void vfio_detach_device(VFIODevice *vbasedev)
->      }
->      vbasedev->bcontainer->ops->detach_device(vbasedev);
->  }
-> +
-> +void host_iommu_device_create(VFIODevice *vbasedev)
-> +{
-> +    const VFIOIOMMUClass *ops = vbasedev->bcontainer->ops;
-> +
-> +    assert(ops->host_iommu_device_create);
-at this stage ops actual implementation do not exist yet so this will
-break the bisection
+pretty much the $Subject.
 
-Eric
-> +    ops->host_iommu_device_create(vbasedev);
-> +}
+We had reports of very bad performance with the default options when running:
+
+$ time qemu-img convert -c -p -O qcow2 file.qcow2 file.disk
+real	7m13.220s
+user	6m56.682s
+sys	0m13.038s
+
+I studied this and noticed that for every coroutine a thread was created. But at no point ever were two coroutines making progress at the same time.
+On the countrary, they constantly competed to run, leading to very slow task progress.
+
+The workaround we found here was to just add "-m 1" to the command line, leading to a halving of the time taken for running the command:
+
+$ time qemu-img convert -c --m 1 p -O qcow2 file.qcow2 file.disk
+real	3m22.212s
+user	3m13.744s
+sys	0m7.881s
+
+We repeated this test on a variety of hardware configurations, and the relative results are always the same.
+
+Have you witnessed the same situation?
+
+Should we change the default in qemu-img from 8 coroutines to 1, at least for the "-c" case?
+
+In case I can submit a simple patch that does that, but looking forward for your thoughts.
+It is possible that coroutines were added in an attempt to improve performance,
+so maybe there is more here to fix, although in my view already fixing the existing bad default would already be a big improvement in the meantime.
+
+Thoughts?
+
+Thanks,
+
+Claudio
 
 
