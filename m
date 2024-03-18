@@ -4,139 +4,171 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7072C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 22:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE712C54E5D
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 22:07:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmL5H-0002LI-1I; Mon, 18 Mar 2024 18:03:55 -0400
+	id 1rmL7l-0003Ls-Pp; Mon, 18 Mar 2024 18:06:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rmL5G-0002L2-0U
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 18:03:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
+ id 1rmL7i-0003Lk-Tr
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 18:06:27 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rmL5E-0000nu-LM
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 18:03:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710799431;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rDpjV1L28qTgtomOPX4SdPUQrZdO9QPNN8VOb8VFKo4=;
- b=D1geDgO9iuvV0BJen2kjfW4aXvQA740Zb/u7YrqQa3oNUtQCCiG2MfnHiNrJI+JQaH+PT6
- NKNJBS8iD8ZwSwp3rQrYfTDmrWySkpL3psMFtduLkcMr3cckEkHA0u82D6lnuQCK8zkSxK
- C4jkytKXKr1Hg8zEWH4qH7e/PdAIVA8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-xRph8_jAOFa9NMCPjoAV8Q-1; Mon, 18 Mar 2024 18:03:49 -0400
-X-MC-Unique: xRph8_jAOFa9NMCPjoAV8Q-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-41403d4de74so18774035e9.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 15:03:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710799428; x=1711404228;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :references:cc:to:content-language:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rDpjV1L28qTgtomOPX4SdPUQrZdO9QPNN8VOb8VFKo4=;
- b=eQrzciRhr69YSRSNw62KR5UmktJGpzOSFwohifwmUjR4/9PrRDZKfLPglT0QA68O9k
- wLoIBRgUEq3jYFxUrSfzkiEA6oE0nmtD4VrwBGIja5N0Uqfr7wlp5joggFeys3LSzkzJ
- VW9kwPWTI3zYTXlGuJeVVz1Zf8F7/KHZqwGSLIB31ZCmt57q240e+bLsV/ahRhKPFzWa
- cnPrhIBWIRrApDk7lX/zXzUz3ySxlsbfcQwW1ksi8WmrsqCBzCIOyd6n9S7Rzb5YKt6+
- UMEmeVAKr5sd4vnD0pnsE5kpqnsc7L/16/LYmwbc3u8bW0Cos79vOvYnMZjzE+0l51CO
- RRYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhNdefmXWLhvlkdc32/Jv80INOzicZoRb8LlUI/QfzjfrW1U1nvN/5iE2eB3k30o0ao2UQx8PPttgJgBk9jbi/eutdRoM=
-X-Gm-Message-State: AOJu0Yxl1y4F2N5bCjJ2smLivrahay6+VkHIsKey2nziz4pCn7h1t//0
- I6ZQ8XqAaYSJi0l2Pl6Yt6ymUcIiYpCtDSdMN1JqveXcEtlqsOGnV/g3M9qKTA09hFTIKG9aM0G
- oBFTL8OdBUnGTzTXMOYGg84RDWgBKa7p2Rsb7qFnZOZWQIW3TF+31
-X-Received: by 2002:a05:600c:4f88:b0:413:1318:b5d9 with SMTP id
- n8-20020a05600c4f8800b004131318b5d9mr570846wmq.13.1710799428511; 
- Mon, 18 Mar 2024 15:03:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGyS7fVLfuqR7wuJ/h2fjAK1P5zOWyXAe3pm4xA04i/KyLTR29zSHSYHIO7npppBnxMUN19qQ==
-X-Received: by 2002:a05:600c:4f88:b0:413:1318:b5d9 with SMTP id
- n8-20020a05600c4f8800b004131318b5d9mr570829wmq.13.1710799428084; 
- Mon, 18 Mar 2024 15:03:48 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c737:1f00:94ff:246b:30d0:686b?
- (p200300cbc7371f0094ff246b30d0686b.dip0.t-ipconnect.de.
- [2003:cb:c737:1f00:94ff:246b:30d0:686b])
- by smtp.gmail.com with ESMTPSA id
- fa21-20020a05600c519500b004140f9f6f5bsm4998717wmb.25.2024.03.18.15.03.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 15:03:47 -0700 (PDT)
-Message-ID: <29279d88-64e9-417c-a137-c508057762c7@redhat.com>
-Date: Mon, 18 Mar 2024 23:03:47 +0100
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <si-wei.liu@oracle.com>)
+ id 1rmL7g-0001EX-WD
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 18:06:26 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42ILxCHb016219; Mon, 18 Mar 2024 22:06:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-11-20;
+ bh=YTK78D95k2J3hpOvtICPrEbcFsP/b20AwzAQkM+uAKg=;
+ b=gIb9gKUnqG9OVeN2peIZ6IbYSRy9y1wdkaB2IJwjzzrbIbamKv79cPFVPuUwYG9ZC/iC
+ aq5uT81GnhwbqF9ihym1hfydDi1Bjy1eilGxtxKVvnnJXfkLAscih1WQ6Vm9a1OpaFMV
+ ovx5CAGmpAOzGSQBIx4kIUFd5n4Rlb2wYnozhbSLycqtCdISG/So/+e6yZOZQv04s9nf
+ zoKM+5hHhHd/cWYDOdvOJStx+lbwnFhCl+Cq8SAoxQ11X/YWDXumtTKb3C+TgdjMD/sh
+ BjqqB7ad+L0u56PRTluMmcKMOKVjXQb04olm58Kv/gIguWppNkYztDBYem5byKzziogH 6g== 
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3ww31tm4qk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 18 Mar 2024 22:06:20 +0000
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 42IL8G9C007524; Mon, 18 Mar 2024 22:06:19 GMT
+Received: from nam04-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam04lp2041.outbound.protection.outlook.com [104.47.74.41])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 3ww1v5ekqa-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 18 Mar 2024 22:06:19 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=P14aKXzp2k5CxwvaCIOyVf3NhVhZl/5PnTiMvhGLOJMN96VuFEh5xJCpJ44BNRnHU92io6CwaEOUIZXQtmcTjgiGBvjPheLytPTBemeJVTlyMVhIiwkf25AMbif91oay3L6NNRnkP83su2sCFcqJTgYCleRGQLyRicBUvs5mQYxk/1Te2zNZTo+rmOzWqavqvTkAh9nz68ohBHYDxO9ql6Mr7GJDUg8nSuZc2WFbshU5mi5XrLB2UXie6bSk2kCGLZYdWX18PUmpG13ygiiYQAejCVFf++GWpHJ6CwfgYW3glBoryp7/3R8jXNRv7+PNKlewjVZcyK1TFSh4NzG2kg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YTK78D95k2J3hpOvtICPrEbcFsP/b20AwzAQkM+uAKg=;
+ b=FN+fIUVAdw8S6YZmGDjdp1gI6heCiFBYK0T6LnUGAXJAagwk0cDItj4y+6vgSTR1IM31Hzy92Q0hphd94LwEPmhsW7mCwXl4Idr0JEbpW8hOMAK9AiTODWsVxaN3o/8GVLc6HxUTBqSDwrxltPDOj6NtuDPL/cwBnXUm+uGHqgnDvwzI4DxKIk3FSB9eapq22yD8tXGOpLTIP7N3ddbDIuXcDe/Z8KCHGl08DK4uqjH7OOy/J0j3YGNKvPKSiZEnClwSWNEgzx3S0nUdVCJvJRBVqRP4WHFNhCdNDsz6cN1Qn9IVx6IutCSpNYt8d47kWyaY6x0n/GKiOpj2K9nHUQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YTK78D95k2J3hpOvtICPrEbcFsP/b20AwzAQkM+uAKg=;
+ b=l9ghGA6CZ54R4Lc7azKUHOSELFYHw5kq2dXBewafcsL0b0H25+AEm0IqRXFSfX867rKvmtAcW0W5FaKFbyV9NRxeSFp2KAHO/GYf1OLwNkrBj8St4R1aqdYD5hUKH/TXMIeAAx+CzQOxMvdBbfviY6RjqFwzpONLMG79y2rwLO8=
+Received: from MW4PR10MB6535.namprd10.prod.outlook.com (2603:10b6:303:225::12)
+ by PH8PR10MB6575.namprd10.prod.outlook.com (2603:10b6:510:225::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.25; Mon, 18 Mar
+ 2024 22:06:17 +0000
+Received: from MW4PR10MB6535.namprd10.prod.outlook.com
+ ([fe80::bf6e:420b:90be:3cff]) by MW4PR10MB6535.namprd10.prod.outlook.com
+ ([fe80::bf6e:420b:90be:3cff%4]) with mapi id 15.20.7386.025; Mon, 18 Mar 2024
+ 22:06:17 +0000
+Message-ID: <7c118fa7-2288-45f1-aa67-5bf650d65b51@oracle.com>
+Date: Mon, 18 Mar 2024 15:06:14 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] target/s390x: Use mutable temporary value for op_ts
+Subject: Re: [PATCH v4 1/2] vhost: dirty log should be per backend type
 Content-Language: en-US
-To: Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, Ido Plat
- <ido.plat@ibm.com>, qemu-stable@nongnu.org
-References: <20240318202722.20675-1-iii@linux.ibm.com>
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240318202722.20675-1-iii@linux.ibm.com>
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, eperezma@redhat.com,
+ joao.m.martins@oracle.com
+References: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
+ <CACGkMEt2-naXvHjCcPyQAoSfto44OVaSUqPtg_gvS8-wrhNwZA@mail.gmail.com>
+ <9cb9fe47-f173-4cf1-8bc0-01971e47559c@oracle.com>
+ <CACGkMEvjB45RzonvWMQ=OnDpm5M04u6ab6tT7b0=sMsEyBB-Vg@mail.gmail.com>
+From: Si-Wei Liu <si-wei.liu@oracle.com>
+Organization: Oracle Corporation
+In-Reply-To: <CACGkMEvjB45RzonvWMQ=OnDpm5M04u6ab6tT7b0=sMsEyBB-Vg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PH7PR13CA0001.namprd13.prod.outlook.com
+ (2603:10b6:510:174::7) To MW4PR10MB6535.namprd10.prod.outlook.com
+ (2603:10b6:303:225::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW4PR10MB6535:EE_|PH8PR10MB6575:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: +8P3h/55wPTRJo1hLKRsNiXmoZHRJ0idCIMamBLq9RQDkJLmID9+7B3zxSp7TcaNILwWXTMJbMXXMvkOZ6lrClBSN7FCz47exb9ZV0pfzleE9oUM8gLDGHr5r/iUHBPNiQAUcbyOQ0z7IJLHeB/Z8SQaO2fgqlijF3uyZJvfIU6ZtpDuCoHT86TXtDEgEQwWdlrZU2QM6X9jjnahkGoTpxkdY0LelX9puSsdq80HWb3u4NK+MEKT2ayfS4NSMt8Ec9lWr9VkfB5+O563iEsbhAU/rQWf0ZW4KwgEMpTxgmRCJoDk4hzo6PMUQ0hGuUTKsuzqUEI9fwOsubeTqGE/Wexw3GEvIClVwbBWfP0ci9y+frkv6mBkCBaEwamJM0JxH8DEoMhZzykbCjEs+95tnrC3aFrMubKS037Gagt+6ITMQcQQQ3zka8ay+Wp5scWUc8OYXRvEzu+6c0I8EheB/7h7TR3ih7ovvU5k4wGR8KLFDrxq9iKw0FItx0RDQ6z3YugCsuYk0lG9DpZvuGHd6mD/7PxibLqMhalNZEs2/rg71DK+2IJNQ8dN8yECa0gUQfom1L6bKPs9wlV3aSBVzqCXH/S919wjC/NAG6GCnJ/4DpnFCOGIJtdrTOv5FVcmt7l9l0i+k4YbdJUsLqaYLVQr3dlNF3PxcnHuMu/PfgQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MW4PR10MB6535.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(1800799015)(366007); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aUpEWXBNMVEzSmZ1cjZkT0Rma2pVYVFiU1V3ZURYZ1pSYkE1VTlIRmJ0Vkd4?=
+ =?utf-8?B?Uk5nM2ZNMnZFN0FxeDJvd1pZcFhyNkZMWHZLWStnUUY5YzFwRlRic04waXVV?=
+ =?utf-8?B?azlIdXdISU9JZmV1T2ZXUHBWVnM0UU8xQlpRUGIvWUR4VVhZODdnU2hyaVA3?=
+ =?utf-8?B?K08zeUFkUjdYTGx5c1hlV1djMm1KOFI2cnlZOUpHTFo3VFJycjQybEtleXpD?=
+ =?utf-8?B?WWc5T25NUEF4d3lwN2twaWdER3RHT3FQVDFJRjQ5RUprUzB0Y2Nhc2RTWVNR?=
+ =?utf-8?B?cXFRbzYzRERVMXVrcThvaEJaeGZrLzlWSFV0eFZCbW9vbitDbWFUL3lKZzZm?=
+ =?utf-8?B?RGlPYzk4K0J5bWt5WVBEUjJ1eUNaRnFuY2s5RDFTTWV0aHdBTG0vYnV5cTNC?=
+ =?utf-8?B?bkRCMURDQURnK2JMOWtqMEx0NDJYVnVBcTE1bExGV3JSNUh0d0dvbzZXZW1y?=
+ =?utf-8?B?U3JMUkRNSlhiYXA3RW0vQ3RsYk5jQW0ra1I5RWxnSXBsYnFDbkIyVHl6MDJO?=
+ =?utf-8?B?L3VlZGo0WS9uY0Y5SUhURlpTVjRTNi91RVBvZHl6ems0Y1hPRnFCNTJiTlZ5?=
+ =?utf-8?B?NGVZbEdkTy95ZGxNa2h1OEJ6Sm1HRGM3ejcvVERMeWFnTENJZC9tb093SG5n?=
+ =?utf-8?B?YXJ0SlQyUitFVGVIcDFRS3JFeFJ6TS9VYUR4MHZ6cU03N0hiWnBXMzhKTzYz?=
+ =?utf-8?B?V1VvNHZpbllyTUgrVEJUdVZLMWhCOGliZmFOK25RSmhuRXd3UEZIYzVhNkc4?=
+ =?utf-8?B?dzcxcmExVEYraWhSd3VYcjhQQ3B5Zm1iK1lkbUw1cVY0Rmp3K25aM0JvdmJ3?=
+ =?utf-8?B?VEttVmhkZnBnSU1XK2hsTFhadzJLM0VjajM1QitaMldUc0dTRDYvamprV3cv?=
+ =?utf-8?B?SkdBeDZkeExzdDR2KzNoN2xhNDlkaU5aRmxvRTB1dndMY1hsQ2V3SzZjaElm?=
+ =?utf-8?B?aCtxak1vSE9VR2JkdXJhYkhkODhTMXhKWXA3a1ZydWQ3cFVjNUYyUE5pS3NU?=
+ =?utf-8?B?Q0tHVFVsT3NEWVJocDl5NEdrNVZ0V1RtV0Y4cGN3YWZQSEpGMnYxaHVlMmtP?=
+ =?utf-8?B?K3Z2bHlFUExKRU96MFJzVitGSkF5YUFXMzhYN24wZVFIUE5wWDFIQ3RRTEVN?=
+ =?utf-8?B?QUJKbnVyS1VMbVpmaEJNeTRjOGJnTVBva01BMlhZQy9yUDJka3U5cS9IQzJF?=
+ =?utf-8?B?NUpRbkRJZS9lUlRhQzFwNTg4OGFTRURBL24rbHEralQ0Vm9qQWJpMS9zQ0FB?=
+ =?utf-8?B?YzUzdEdwL1JsT3N1THR0ajNZY09xWG5mL3QraTkzSURIaTlEOXRzOUdXUlI2?=
+ =?utf-8?B?U1RiS0lpOHFzNGxUMk5DdVZaTFl2SFJSWHJhTk1pam85eGd6RnF5c0VrRkpq?=
+ =?utf-8?B?S0JZdzRsenprYkdWRUlaRmU2eE5WeGNYVHVreWhOc3J0Sk1wU0w4ZmJuMWxF?=
+ =?utf-8?B?Y0VPVWtHRlZ5Uk1xQ1NtTHFyQTlFdmtuZE1MR2tGVmdNM2dRSUNKL1N2YjdF?=
+ =?utf-8?B?MjNrZXl2d1dRWHBtVVBUcHB1VDNxb0xXZ1AzckFqYVFqVjNpcGhVRGdxK2la?=
+ =?utf-8?B?QXdFNGdOTXY2WUxwazAzQlJTVDc3R2dRTlg3Sy9Qa3JGdll1ajgyUmVzY2Zl?=
+ =?utf-8?B?a2p0a2crSWtqM1RNOUZkdlQxWUdaRGc1USt0dFN3ck9BRW9sbmhjTzJpQ1ll?=
+ =?utf-8?B?amF2T2xEWVRSSEphNlF3WjZ6eUZsa2c5UUc0eGpaVXNtY0dGck9ZQWlLK3VY?=
+ =?utf-8?B?SS8vQloyNmUwK2VGRkUvSzRiL3liQksyN0ZuT2pVMTRVYllvc2tQelpnRFhx?=
+ =?utf-8?B?clM0MG91dHMzRzFCeGEvaTJnSmpIWmdrbk1YTkUzemFSZVpqZXEreHVwOTZY?=
+ =?utf-8?B?dzJpM0VSbS9KaDQ4eGpwbis0QVA5V0ZrcEtyRFZNVmhRNlhhNWpwbVlrZjlz?=
+ =?utf-8?B?Mk1pLy80aGVOVW0xbjV2bTRucXNzNUt3aFpmQXYvOURJN2RrQmZVam5uUTBq?=
+ =?utf-8?B?eFhJVHJMd2l6N2VWdVpzRXJtREphSDU3aURBdy8rRlFacXU0bVZqTG1oWWF2?=
+ =?utf-8?B?NG5Md0JHRVRoU3B4a21tU3U1NTBVajAxZk9Gb2lSTUF4SGhPUEw0MTYvQmI2?=
+ =?utf-8?Q?bTXra8LvwaYSQQOVm05iECdhp?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: vRuKUX6UiS9nxEtF8NDtInxYzf121wQD1vqCDSB2nyPkutTJY3QyCWGdYXv9DSCPyn6BYrIIHTL8EwE8+xxnPMCTNhfPHWNhkubd33sg6UOAzwGRKW7349c87CvytSI3fkuuT/yr/IuCMi4GGbMsFHvFgHc9WrZ2f9kN+offDg3230/O/AYqVRBsZlWR3TQdZJLpSF1AU7Vj6I7RQb21GWQZ882XQcE1UG8ilVvC6sH4i0Fgyn5afxMOAxbAMH1smlMwVv3oOrhFOAJwTmY3/zQ0kk94r2MpZVVnrxczV67ZkLrAtFBnyqigFwKpMgqDAMLZuclu7hoYXcsn9VSgM/nWaUk1i5E5ytX23g9KLGUrtQSuQiRbwO6/fbM+WmzR5GFKskC82D+BSpVlt16SZVaiqbTTvfaSNKh+CbsiRx/uoaPE81i4lZ4wF95tZyV3SpG7yP3j9kt96mQbsVaqtA6nNxE5UyeisYwrXcrP0ii1KnzYk8JIywrNb/Fv12K9OrxyH6AzV+oJ+wRHOa7yLFxV6xa3cEdhbi6sh20/KXP4jZ7h2kt3TPBu4zQOQdndf3xwDAkKIY/v2rBn/jbN1z8pvkiu0yWzsyr+Mmk85Fw=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e10fc5e9-f402-4594-6304-08dc4797a24b
+X-MS-Exchange-CrossTenant-AuthSource: MW4PR10MB6535.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Mar 2024 22:06:17.0256 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: JlZRNgJPsRoZBcvG1IkgrSkxub9bzz3tp6WBh26/2QHBnBOt6tcSFHWGuxUQ6oWFwFTkN1DFerbyZtlfXSBFnw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR10MB6575
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-18_12,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxlogscore=999
+ malwarescore=0 adultscore=0 suspectscore=0 mlxscore=0 phishscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2403140000 definitions=main-2403180167
+X-Proofpoint-ORIG-GUID: 3lGs9f9aBJyI6M6vglzv2efpof-e3B6q
+X-Proofpoint-GUID: 3lGs9f9aBJyI6M6vglzv2efpof-e3B6q
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=si-wei.liu@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -154,26 +186,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.03.24 21:27, Ilya Leoshkevich wrote:
-> From: Ido Plat <ido.plat@ibm.com>
-> 
-> Otherwise TCG would assume the register that holds t1 would be constant
-> and reuse whenever it needs the value within it.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: f1ea739bd598 ("target/s390x: Use tcg_constant_* in local contexts")
-> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> [iii: Adjust a newline and capitalization, add tags]
-> Signed-off-by: Ido Plat <ido.plat@ibm.com>
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
 
--- 
-Cheers,
+On 3/17/2024 8:20 PM, Jason Wang wrote:
+> On Sat, Mar 16, 2024 at 2:33 AM Si-Wei Liu <si-wei.liu@oracle.com> wrote:
+>>
+>>
+>> On 3/14/2024 8:50 PM, Jason Wang wrote:
+>>> On Fri, Mar 15, 2024 at 5:39 AM Si-Wei Liu <si-wei.liu@oracle.com> wrote:
+>>>> There could be a mix of both vhost-user and vhost-kernel clients
+>>>> in the same QEMU process, where separate vhost loggers for the
+>>>> specific vhost type have to be used. Make the vhost logger per
+>>>> backend type, and have them properly reference counted.
+>>> It's better to describe what's the advantage of doing this.
+>> Yes, I can add that to the log. Although it's a niche use case, it was
+>> actually a long standing limitation / bug that vhost-user and
+>> vhost-kernel loggers can't co-exist per QEMU process, but today it's
+>> just silent failure that may be ended up with. This bug fix removes that
+>> implicit limitation in the code.
+> Ok.
+>
+>>>> Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+>>>> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+>>>>
+>>>> ---
+>>>> v3->v4:
+>>>>     - remove checking NULL return value from vhost_log_get
+>>>>
+>>>> v2->v3:
+>>>>     - remove non-effective assertion that never be reached
+>>>>     - do not return NULL from vhost_log_get()
+>>>>     - add neccessary assertions to vhost_log_get()
+>>>> ---
+>>>>    hw/virtio/vhost.c | 45 +++++++++++++++++++++++++++++++++------------
+>>>>    1 file changed, 33 insertions(+), 12 deletions(-)
+>>>>
+>>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>>>> index 2c9ac79..612f4db 100644
+>>>> --- a/hw/virtio/vhost.c
+>>>> +++ b/hw/virtio/vhost.c
+>>>> @@ -43,8 +43,8 @@
+>>>>        do { } while (0)
+>>>>    #endif
+>>>>
+>>>> -static struct vhost_log *vhost_log;
+>>>> -static struct vhost_log *vhost_log_shm;
+>>>> +static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
+>>>> +static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
+>>>>
+>>>>    /* Memslots used by backends that support private memslots (without an fd). */
+>>>>    static unsigned int used_memslots;
+>>>> @@ -287,6 +287,10 @@ static int vhost_set_backend_type(struct vhost_dev *dev,
+>>>>            r = -1;
+>>>>        }
+>>>>
+>>>> +    if (r == 0) {
+>>>> +        assert(dev->vhost_ops->backend_type == backend_type);
+>>>> +    }
+>>>> +
+>>> Under which condition could we hit this?
+>> Just in case some other function inadvertently corrupted this earlier,
+>> we have to capture discrepancy in the first place... On the other hand,
+>> it will be helpful for other vhost backend writers to diagnose day-one
+>> bug in the code. I feel just code comment here will not be
+>> sufficient/helpful.
+> See below.
+>
+>>>    It seems not good to assert a local logic.
+>> It seems to me quite a few local asserts are in the same file already,
+>> vhost_save_backend_state,
+> For example it has assert for
+>
+> assert(!dev->started);
+>
+> which is not the logic of the function itself but require
+> vhost_dev_start() not to be called before.
+>
+> But it looks like this patch you assert the code just a few lines
+> above the assert itself?
+Yes, that was the intent - for e.g. xxx_ops may contain corrupted 
+xxx_ops.backend_type already before coming to this 
+vhost_set_backend_type() function. And we may capture this corrupted 
+state by asserting the expected xxx_ops.backend_type (to be consistent 
+with the backend_type passed in), which needs be done in the first place 
+when this discrepancy is detected. In practice I think there should be 
+no harm to add this assert, but this will add warranted guarantee to the 
+current code.
 
-David / dhildenb
+Regards,
+-Siwei
+
+>
+> dev->vhost_ops = &xxx_ops;
+>
+> ...
+>
+> assert(dev->vhost_ops->backend_type == backend_type)
+>
+> ?
+>
+> Thanks
+>
+>> vhost_load_backend_state,
+>> vhost_virtqueue_mask, vhost_config_mask, just to name a few. Why local
+>> assert a problem?
+>>
+>> Thanks,
+>> -Siwei
+>>
+>>> Thanks
+>>>
 
 
