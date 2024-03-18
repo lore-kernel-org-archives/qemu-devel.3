@@ -4,98 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2541CC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 14:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A5E4C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 18 Mar 2024 14:17:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmDik-0004vw-J8; Mon, 18 Mar 2024 10:12:12 -0400
+	id 1rmDn0-0007Ru-7S; Mon, 18 Mar 2024 10:16:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jackmanb@google.com>)
- id 1rmDiI-0004o1-FX
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:11:45 -0400
-Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rmDmr-0007QC-VF
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:16:30 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jackmanb@google.com>)
- id 1rmDiF-0006x4-L4
- for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:11:42 -0400
-Received: by mail-qt1-x829.google.com with SMTP id
- d75a77b69052e-42ee0c326e8so419521cf.0
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 07:11:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1710771097; x=1711375897; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rU3zFykgVuweueIsoxzQMtKYDDN5Bjw0bqJ5bY+qA6E=;
- b=2VQxD3qHFIJQkowAhJC1QwpdtzBbzkRMbWmfT+Llpxq1RCsgqc/gdkbNEY5juLyqob
- V2gxXJ1ReHKk7wFQuPoxf+UxEVd9UzCgYQbC2t7bqc8a90FFoh+QY5SgFkR3JcTihVJj
- Y24qmxe43/KLOOwL1Be96qCwMe3454mZtaZeV/+R5+jjMyYB98gMCjHC45QTEj5Hvjay
- 8dbhcHl6lqbWgyZRmLsTND2C/tbmJ5GDRFlPwHfHL5Z9rEBA60aNn4a44KXtlhbtsGrV
- W82YQ3F35gyYT48kwDyDn0ncHUgFlwyM2kIbS5dmgL3817VD2kWiW0Jyb1BXfoqKdpNN
- imxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710771097; x=1711375897;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rU3zFykgVuweueIsoxzQMtKYDDN5Bjw0bqJ5bY+qA6E=;
- b=QknSoIf8OxnaZGIvUQum83FpvwwSnC6y/QE9FZvOFKqVuIfL4RggvG0kiPvNJcIr4D
- VLSINdLbpNcF0KDF8VJPmRPQPy8laJAQ8FMeuIlPuNm3u4irqR6lhzpoCtUaZQbI9LgD
- 1QhWRpjgL5iaI3zzpJSmI0kUKE9op1jLJrx9Hi88lfYO/D5sBn6usqrS0tpAaB75vhs6
- 90zoAqa/uOjCMFTJAhSo8qpi4ZIdDnIp4DqgkmLLRjUB+2yEwWGGmEGv1/lkFUp4ZnzY
- /gP8y/zTTHvI08niP/pXz67NhnrYtomFK0LdYJ/PrKCEVecO6tYuvgj6KgN/aVoqnxsE
- TthA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1PcarUgxQcAkq209/ziDzgOY097f4GZL6hGT3BdMUhsmN9yMmy5QE1d6R5IMmY5pZ+Vg/2Prc+4CjEdz+KADoxhOf0VM=
-X-Gm-Message-State: AOJu0YxOSQ15T2Z/FGNFjdtsaguZmjWrbP1+TtmyzeF17XGRCQF8rCua
- 04K2e0jdIriFpK+vwGPceUJOFjPOKv5OX0TlFMOvREr+BnAhs+RdxToD+qzJjvatc6FCTnwQOnB
- LR+UVuEocLfyYdaoT0YCff9zHlgGOwi4X0wj7
-X-Google-Smtp-Source: AGHT+IEP1eDBtV9wwG22o9FLtfUkcC57ZS5hhvLcQHaosamz9mFsDACdCEemZgZ1KW9i0+WwUAZxZDxm/IPXpyAyIxs=
-X-Received: by 2002:ac8:57cd:0:b0:430:9ee1:a8 with SMTP id
- w13-20020ac857cd000000b004309ee100a8mr330194qta.3.1710771097539; 
- Mon, 18 Mar 2024 07:11:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rmDmm-0007lF-Jc
+ for qemu-devel@nongnu.org; Mon, 18 Mar 2024 10:16:23 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 82BFB5C5EA;
+ Mon, 18 Mar 2024 14:16:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710771377; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CBGAO0DBMcjFbhDCyiGsKZPdnS8c2wL9ynmKGk7JUbk=;
+ b=Wrd2slXcQE9uZlK2MDWXKY6OdJHpT3R9dV9F5SbVHaOWe1tSRaaMgjSsQZ8C+Yzu6vQptw
+ iKS6qHKi0bbDpEGYFX0/fEjaLQCXN6jfmJHiehRtb1neZClxzIOYHJvq/rq1NrYIXZy1n7
+ mUIaMQW4xtum2TZJrXVqqVOeAOb+KAA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710771377;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CBGAO0DBMcjFbhDCyiGsKZPdnS8c2wL9ynmKGk7JUbk=;
+ b=50p26qRXohYslpnVjUEXx7DVyfYIexF+xFFTyiHmhEDQvIUQiJQ2W1+YZ0qrl1gv6p1xN/
+ 45+7vVFB2u+xKJAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710771377; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CBGAO0DBMcjFbhDCyiGsKZPdnS8c2wL9ynmKGk7JUbk=;
+ b=Wrd2slXcQE9uZlK2MDWXKY6OdJHpT3R9dV9F5SbVHaOWe1tSRaaMgjSsQZ8C+Yzu6vQptw
+ iKS6qHKi0bbDpEGYFX0/fEjaLQCXN6jfmJHiehRtb1neZClxzIOYHJvq/rq1NrYIXZy1n7
+ mUIaMQW4xtum2TZJrXVqqVOeAOb+KAA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710771377;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=CBGAO0DBMcjFbhDCyiGsKZPdnS8c2wL9ynmKGk7JUbk=;
+ b=50p26qRXohYslpnVjUEXx7DVyfYIexF+xFFTyiHmhEDQvIUQiJQ2W1+YZ0qrl1gv6p1xN/
+ 45+7vVFB2u+xKJAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0D7581349D;
+ Mon, 18 Mar 2024 14:16:16 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id TvuBMbBM+GULNgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 18 Mar 2024 14:16:16 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Het Gala <het.gala@nutanix.com>, qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
+ pbonzini@redhat.com, peterx@redhat.com
+Subject: Re: [PATCH v7 3/8] tests/qtest/migration: Replace
+ migrate_get_connect_uri inplace of migrate_get_socket_address
+In-Reply-To: <c25c8cf7-ea28-4c5f-962a-1fe5abc51870@nutanix.com>
+References: <20240312202634.63349-1-het.gala@nutanix.com>
+ <20240312202634.63349-4-het.gala@nutanix.com> <871q8b8xeg.fsf@suse.de>
+ <c25c8cf7-ea28-4c5f-962a-1fe5abc51870@nutanix.com>
+Date: Mon, 18 Mar 2024 11:16:14 -0300
+Message-ID: <87bk7baamp.fsf@suse.de>
 MIME-Version: 1.0
-References: <cc1bb8e9bc3e1ab637700a4d3defeec95b55060a.camel@amazon.com>
- <CA+i-1C34VT5oFQL7en1n+MdRrO7AXaAMdNVvjFPxOaTDGXu9Dw@mail.gmail.com>
- <CALzav=fO2hpaErSRHGCJCKTrJKD7b9F5oEg7Ljhb0u1gB=VKwg@mail.gmail.com>
- <8e3c2b45-356d-4ca9-bebc-012505235142@amazon.com>
-In-Reply-To: <8e3c2b45-356d-4ca9-bebc-012505235142@amazon.com>
-From: Brendan Jackman <jackmanb@google.com>
-Date: Mon, 18 Mar 2024 15:11:25 +0100
-Message-ID: <CA+i-1C3DtXzzkatepVvn-E45Gyxb3YmYd-irxfjDL5bL5MhWVA@mail.gmail.com>
-Subject: Re: Unmapping KVM Guest Memory from Host Kernel
-To: "Manwaring, Derek" <derekmn@amazon.com>
-Cc: David Matlack <dmatlack@google.com>, "Gowans, James" <jgowans@amazon.com>, 
- "seanjc@google.com" <seanjc@google.com>,
- "akpm@linux-foundation.org" <akpm@linux-foundation.org>, 
- "Roy, Patrick" <roypat@amazon.co.uk>, 
- "chao.p.peng@linux.intel.com" <chao.p.peng@linux.intel.com>,
- "rppt@kernel.org" <rppt@kernel.org>, 
- "pbonzini@redhat.com" <pbonzini@redhat.com>, "Woodhouse,
- David" <dwmw@amazon.co.uk>, "Kalyazin, Nikita" <kalyazin@amazon.co.uk>,
- "lstoakes@gmail.com" <lstoakes@gmail.com>, 
- "Liam.Howlett@oracle.com" <Liam.Howlett@oracle.com>,
- "linux-mm@kvack.org" <linux-mm@kvack.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "kirill.shutemov@linux.intel.com" <kirill.shutemov@linux.intel.com>,
- "vbabka@suse.cz" <vbabka@suse.cz>, 
- "mst@redhat.com" <mst@redhat.com>, "somlo@cmu.edu" <somlo@cmu.edu>, "Graf (AWS),
- Alexander" <graf@amazon.de>, "kvm@vger.kernel.org" <kvm@vger.kernel.org>, 
- "linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>,
- kvmarm@lists.linux.dev, tabba@google.com, 
- qperret@google.com, jason.cj.chen@intel.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
- envelope-from=jackmanb@google.com; helo=mail-qt1-x829.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.29 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-0.99)[-0.994];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_SEVEN(0.00)[7];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Authentication-Results: smtp-out2.suse.de;
+	none
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,46 +115,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 8 Mar 2024 at 18:36, David Matlack <dmatlack@google.com> wrote:
-> I'm not sure if ASI provides a solution to the problem James is trying
-> to solve. ASI creates a separate "restricted" address spaces where, yes,
-> guest memory can be not mapped. But any access to guest memory is
->  still allowed. An access will trigger a page fault, the kernel will
-> switch to the "full" kernel address space (flushing hardware buffers
-> along the way to prevent speculation), and then proceed. i.e. ASI
-> doesn't not prevent accessing guest memory through the
-> direct map, it just prevents speculation of guest memory through the
-> direct map.
+Het Gala <het.gala@nutanix.com> writes:
 
-Yes, there's also a sense in which ASI is a "smaller hammer" in that
-it _only_ protects against hardware-bug exploits.
+> On 15/03/24 6:28 pm, Fabiano Rosas wrote:
+>> Het Gala<het.gala@nutanix.com>  writes:
+>>
+>>> Refactor migrate_get_socket_address to internally utilize 'socket-address'
+>>> parameter, reducing redundancy in the function definition.
+>>>
+>>> migrate_get_socket_address implicitly converts SocketAddress into str.
+>>> Move migrate_get_socket_address inside migrate_get_connect_uri which
+>>> should return the uri string instead.
+>>>
+>>> Signed-off-by: Het Gala<het.gala@nutanix.com>
+>>> Suggested-by: Fabiano Rosas<farosas@suse.de>
+>>> Reviewed-by: Fabiano Rosas<farosas@suse.de>
+>>> ---
+>>>   tests/qtest/migration-helpers.c | 29 +++++++++++++++++++----------
+>>>   1 file changed, 19 insertions(+), 10 deletions(-)
+>>>
+>>> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+>>> index 3e8c19c4de..8806dc841e 100644
+>>> --- a/tests/qtest/migration-helpers.c
+>>> +++ b/tests/qtest/migration-helpers.c
+>>> @@ -48,28 +48,37 @@ static char *SocketAddress_to_str(SocketAddress *addr)
+>>>       }
+>>>   }
+>>>   
+>>> -static char *
+>>> -migrate_get_socket_address(QTestState *who, const char *parameter)
+>>> +static SocketAddress *migrate_get_socket_address(QTestState *who)
+>>>   {
+>>>       QDict *rsp;
+>>> -    char *result;
+>>>       SocketAddressList *addrs;
+>>> +    SocketAddress *addr;
+>>>       Visitor *iv = NULL;
+>>>       QObject *object;
+>>>   
+>>>       rsp = migrate_query(who);
+>>> -    object = qdict_get(rsp, parameter);
+>>> +    object = qdict_get(rsp, "socket-address");
+>> Just a heads up, none of what I'm about to say applies to current
+>> master.
+>>
+>> This can return NULL if there is no socket-address, such as with a file
+>> migration. Then the visitor code below just barfs. It would be nice if
+>> we touched this up eventually.
+>
+> Yes. I agree this is not full proof solution and covers for all the cases.
+> It would only for 'socket-address'. Could you elaborate on what other than
+> socket-address the QObject can have ?
 
->  it just prevents speculation of guest memory through the
-> direct map.
+I can just not have the socket-address, AFAICS. We'd just need to not
+crash if that's the case.
 
-(Although, this is not _all_ it does, because when returning to the
-restricted address space, i.e. right before VM Enter, we have an
-opportunity to flush _data buffers_ too. So ASI also mitigates
-Meltdown-style attacks, e.g. L1TF, where the speculation-related stuff
-all happens on the attacker side)
+>
+>> I only noticed this because I was fiddling with the file migration API
+>> and this series helped me a lot to test my changes. So thanks for that,
+>> Het.
+>>
+>> Another point is: we really need to encourage people to write tests
+>> using the new channels API. I added the FileMigrationArgs with the
+>> 'offset' as a required parameter, not even knowing optional parameters
+>> were a thing. So it's obviously not enough to write support for the new
+>> API if no tests ever touch it.
+> Yes, definitely we need more tests with the new channels API to test other
+> than just tcp connection. I could give a try for vsock and unix with the
+> new QAPI syntax, and add some tests.
+>
+> I also wanted to bring in attention that, this solution I what i feel is 
+> also
+> not complete. If we are using new channel syntax for migrate_qmp, then the
+> same syntax should also be used for migrate_qmp_incoming. But we haven't
+> touch that, and it still prints the old syntax. We might need a lot changes
+> in design maybe to incorporate that too in new tests totally with the new
+> syntax.
 
-On Sat, 9 Mar 2024 at 03:46, Manwaring, Derek <derekmn@amazon.com> wrote:
-> Brendan,
-> I will look into the general ASI approach, thank you. Did you consider
-> memfd_secret or a guest_memfd-based approach for Userspace-ASI?
+Adding migrate_qmp_incoming support should be relatively simple. You had
+patches for that in another version, no?
 
-I might be misunderstanding you here: I guess you mean using
-memfd_secret as a way for userspace to communicate about which parts
-of userspace memory are "secret"?
-
-If I didn't misunderstand: we have not looked into this so far because
-we actually just consider _all_ userspace/guest memory to be "secret"
-from the perspective of other processes/guests.
-
-> Based on
-> Sean's earlier reply to James it sounds like the vision of guest_memfd
-> aligns with ASI's goals.
-
-But yes, the more general point seems to make sense, I think I need to
-research this topic some more, thanks!
+>
+> Another thing that you also noted down while discussing on the patches that
+> we should have a standard pattern on how to define the migration tests. Even
+> that would be helpful for the users, on how to add new tests, where to add
+> new tests in the file, and which test is needed to run if a specific change
+> needs to be tested.
+>
+>>>   
+>>>       iv = qobject_input_visitor_new(object);
+>>>       visit_type_SocketAddressList(iv, NULL, &addrs, &error_abort);
+>>> +    addr = addrs->value;
+>>>       visit_free(iv);
+>>>   
+>>> -    /* we are only using a single address */
+>>> -    result = SocketAddress_to_str(addrs->value);
+>>> -
+>>> -    qapi_free_SocketAddressList(addrs);
+>>>       qobject_unref(rsp);
+>>> -    return result;
+>>> +    return addr;
+>>> +}
+>>> +
+>>> +static char *
+>>> +migrate_get_connect_uri(QTestState *who)
+>>> +{
+>>> +    SocketAddress *addrs;
+>>> +    char *connect_uri;
+>>> +
+>>> +    addrs = migrate_get_socket_address(who);
+>>> +    connect_uri = SocketAddress_to_str(addrs);
+>>> +
+>>> +    qapi_free_SocketAddress(addrs);
+>>> +    return connect_uri;
+>>>   }
+>>>   
+>>>   bool migrate_watch_for_events(QTestState *who, const char *name,
+>>> @@ -129,7 +138,7 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
+>>>   
+>>>       g_assert(!qdict_haskey(args, "uri"));
+>>>       if (!uri) {
+>>> -        connect_uri = migrate_get_socket_address(to, "socket-address");
+>>> +        connect_uri = migrate_get_connect_uri(to);
+>>>       }
+>>>       qdict_put_str(args, "uri", uri ? uri : connect_uri);
+>
+> Regards,
+> Het Gala
 
