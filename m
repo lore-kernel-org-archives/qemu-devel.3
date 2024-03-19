@@ -4,83 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 724FDC54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 13:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 384DEC54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 13:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmZgH-0007TB-IJ; Tue, 19 Mar 2024 09:39:05 -0400
+	id 1rmZkp-0000LC-Uo; Tue, 19 Mar 2024 09:43:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rmZgE-0007SG-Qo
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:39:03 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rmZgB-0002j2-1I
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:39:01 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-414633f7a52so8583725e9.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 06:38:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710855537; x=1711460337; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=p10IT2dEiJDNmetNsX1HEPbxwuymKt0UA3QUZ2RMpmE=;
- b=pMSX+BS2ZVj+Dhlyc91ef7fxYWv0b91urMwWJpwp/zBrrR3ZUE7dtaxlCGdDoWmEZq
- 9wfo6+Mq5omAWP6zYAWF9ODyczGj4Q9idrJsw1mhau+7DWg82EWSGFASes1lOqAtIht/
- mm0Nxy9TA3SwBfKY79RoGlJ20mvhu6X7KDktuWJjE6GUo+xJZd6aHnAL4fXGY+J6a1BC
- CbmC6+Fw59Ph5OAwJ2/ZPy5AjFc+B3C9HVEDKc9SNDkjtheH4bTxd1V1ZTMf64y9OI0v
- v4V4BSXgCHC3MJQ6W5oTRrbflatOCkvoQbidzwCTPEtVTTZPUGNEkBiyXVyaO/lwCAGH
- D65g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710855537; x=1711460337;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=p10IT2dEiJDNmetNsX1HEPbxwuymKt0UA3QUZ2RMpmE=;
- b=rqm2bresZy8Eq7XZelkiGB/vYhlTVNeyk0NJPg6OxvNgDgVzvaXfLuFHqmbI6apeMu
- NiBr3IaRCRtuDFOq9hZ4v/gEFPQuCqpiPuyDRD4sKs1yYl7dmq5yUSmuOsECqZiqvvOC
- gU4Xfqp7ZhmylFM27Cgom9dq3IGvJvvogp+1Lhv0AYaf3Vb7SvAcrOWOnerr/3iaFR1o
- nagl2zBDo+Gypd5aj0z00c6+6sMrPNWq8jq7G77pTtIqqKBH0pvtnhTmh0ntsncA6Ygl
- d4WJ3KyM6TGJg0txyI7nFbWVB9SAJzW0psnrP4SbfB72sjv5tX8dpJbEREp5bhcK3nEG
- QNWw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5vROB8mJKRy5NEN2rlk+NyYLx79ES29xYBw88EKDH0ZIJlxAot9212TpIUWcpvyk/9PJGelGbnOxaEV6JXIiDTZLu4qM=
-X-Gm-Message-State: AOJu0YzianZkz+vvVBqLMYB0Dm7uRCBMym4VXPAiCr6wsFOAaFA/MJ3d
- K+Fw7VmS78Ih5US55JC72VElGMZTW+4RFUbxN+bvyPzYh9su6zp2qWS0yCG9C9U=
-X-Google-Smtp-Source: AGHT+IFoT573erizKNN3z3mN2uwbyuyFW4AhrhgBYH4oZACij2VDWwr+nI6aL8S7W5/souAcoTnQ5w==
-X-Received: by 2002:a05:600c:a0b:b0:414:21b:9a92 with SMTP id
- z11-20020a05600c0a0b00b00414021b9a92mr8736708wmp.8.1710855537400; 
- Tue, 19 Mar 2024 06:38:57 -0700 (PDT)
-Received: from [192.168.1.24] ([102.35.208.160])
- by smtp.gmail.com with ESMTPSA id
- s9-20020a05600c45c900b00412e3717ae6sm21850169wmo.36.2024.03.19.06.38.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 06:38:57 -0700 (PDT)
-Message-ID: <4ce855b4-3b8f-4888-adea-21f0ca47e1f5@linaro.org>
-Date: Tue, 19 Mar 2024 17:38:53 +0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmZko-0000Kp-FE
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:43:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmZkm-0003Xd-Dd
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:43:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710855822;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=txDTDRa29mOwqVwt1WygCy1tWyRzi+Udm6UuwF7lexU=;
+ b=HBJU7G1+7kefHIywemUNSWeKUvcBHZeU/YO5hiHbltH5iI40YteCEgUEY7dEsrry3/WSXE
+ rBGhyKdFd4fT4m0bOofkE7WTNkGNgdm3iIltjHVabFWJBSjMpqVIQFhE+djFUC9NV5c0sg
+ iVhx+4PB8SqlPwH4IHw/sdLTrhPv1E0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-690-w7JwCYhtMluEvvO6cwN2eA-1; Tue, 19 Mar 2024 09:43:40 -0400
+X-MC-Unique: w7JwCYhtMluEvvO6cwN2eA-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C3683800268
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 13:43:39 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.88])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id EB6C41C060A4;
+ Tue, 19 Mar 2024 13:43:38 +0000 (UTC)
+Date: Tue, 19 Mar 2024 13:43:32 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Sanjay Rao <srao@redhat.com>, Boaz Ben Shabat <bbenshab@redhat.com>,
+ Joe Mario <jmario@redhat.com>
+Subject: Re: [PATCH] coroutine: cap per-thread local pool size
+Message-ID: <ZfmWhDaG5mN-GCeO@redhat.com>
+References: <20240318183429.1039340-1-stefanha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/22] plugins: Rewrite plugin code generation
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org
-References: <20240316015720.3661236-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240316015720.3661236-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240318183429.1039340-1-stefanha@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,78 +81,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/16/24 05:56, Richard Henderson wrote:
-> As I mooted with Pierrick earlier this week:
+On Mon, Mar 18, 2024 at 02:34:29PM -0400, Stefan Hajnoczi wrote:
+> The coroutine pool implementation can hit the Linux vm.max_map_count
+> limit, causing QEMU to abort with "failed to allocate memory for stack"
+> or "failed to set up stack guard page" during coroutine creation.
 > 
-> (1) Add a (trivial) mechanism for emitting code into
-> the middle of the opcode sequence: tcg_ctx->emit_before_op.
+> This happens because per-thread pools can grow to tens of thousands of
+> coroutines. Each coroutine causes 2 virtual memory areas to be created.
+
+This sounds quite alarming. What usage scenario is justified in
+creating so many coroutines ?
+
+IIUC, coroutine stack size is 1 MB, and so tens of thousands of
+coroutines implies 10's of GB of memory just on stacks alone.
+
+> Eventually vm.max_map_count is reached and memory-related syscalls fail.
+
+On my system max_map_count is 1048576, quite alot higher than
+10's of 1000's. Hitting that would imply ~500,000 coroutines and
+~500 GB of stacks !
+
+> diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
+> index 5fd2dbaf8b..2790959eaf 100644
+> --- a/util/qemu-coroutine.c
+> +++ b/util/qemu-coroutine.c
+
+> +static unsigned int get_global_pool_hard_max_size(void)
+> +{
+> +#ifdef __linux__
+> +    g_autofree char *contents = NULL;
+> +    int max_map_count;
+> +
+> +    /*
+> +     * Linux processes can have up to max_map_count virtual memory areas
+> +     * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit. We
+> +     * must limit the coroutine pool to a safe size to avoid running out of
+> +     * VMAs.
+> +     */
+> +    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents, NULL,
+> +                            NULL) &&
+> +        qemu_strtoi(contents, NULL, 10, &max_map_count) == 0) {
+> +        /*
+> +         * This is a conservative upper bound that avoids exceeding
+> +         * max_map_count. Leave half for non-coroutine users like library
+> +         * dependencies, vhost-user, etc. Each coroutine takes up 2 VMAs so
+> +         * halve the amount again.
+> +         */
+> +        return max_map_count / 4;
+
+That's 256,000 coroutines, which still sounds incredibly large
+to me.
+
+> +    }
+> +#endif
+> +
+> +    return UINT_MAX;
+
+Why UINT_MAX as a default ?  If we can't read procfs, we should
+assume some much smaller sane default IMHO, that corresponds to
+what current linux default max_map_count would be.
+
+> +}
+> +
+> +static void __attribute__((constructor)) qemu_coroutine_init(void)
+> +{
+> +    qemu_mutex_init(&global_pool_lock);
+> +    global_pool_hard_max_size = get_global_pool_hard_max_size();
+>  }
+> -- 
+> 2.44.0
 > 
-> (2) Rip out all of the "empty" generation and "copy"
-> to modify those sequences.  Replace with regular code
-> generation once we know what values to place.
-> 
-> There's probably still more cleanup that could be done:
-> 
-> There seems to be a lot of artificial separation between
-> plugins and the rest of the code base, even between
-> plugins/api.c and plugins/core.c.
-> 
-> I suspect that all of plugins could be moved into the
-> build-once buckets.
-> 
-> 
-> r~
-> 
-> 
-> Richard Henderson (22):
->    tcg: Add TCGContext.emit_before_op
->    tcg: Make tcg/helper-info.h self-contained
->    tcg: Pass function pointer to tcg_gen_call*
->    plugins: Zero new qemu_plugin_dyn_cb entries
->    plugins: Move function pointer in qemu_plugin_dyn_cb
->    plugins: Create TCGHelperInfo for all out-of-line callbacks
->    plugins: Use emit_before_op for PLUGIN_GEN_AFTER_INSN
->    plugins: Use emit_before_op for PLUGIN_GEN_FROM_TB
->    plugins: Add PLUGIN_GEN_AFTER_TB
->    plugins: Use emit_before_op for PLUGIN_GEN_FROM_INSN
->    plugins: Use emit_before_op for PLUGIN_GEN_FROM_MEM
->    plugins: Remove plugin helpers
->    tcg: Remove TCG_CALL_PLUGIN
->    tcg: Remove INDEX_op_plugin_cb_{start,end}
->    plugins: Simplify callback queues
->    plugins: Introduce PLUGIN_CB_MEM_REGULAR
->    plugins: Replace pr_ops with a proper debug dump flag
->    plugins: Split out common cb expanders
->    plugins: Merge qemu_plugin_tb_insn_get to plugin-gen.c
->    plugins: Move qemu_plugin_insn_cleanup_fn to tcg.c
->    plugins: Inline plugin_gen_empty_callback
->    plugins: Update the documentation block for plugin-gen.c
-> 
->   accel/tcg/plugin-helpers.h         |    5 -
->   include/exec/helper-gen-common.h   |    4 -
->   include/exec/helper-proto-common.h |    4 -
->   include/exec/plugin-gen.h          |    4 -
->   include/qemu/log.h                 |    1 +
->   include/qemu/plugin.h              |   79 +--
->   include/tcg/helper-info.h          |    3 +
->   include/tcg/tcg-op-common.h        |    4 +-
->   include/tcg/tcg-opc.h              |    4 +-
->   include/tcg/tcg.h                  |   27 +-
->   include/exec/helper-gen.h.inc      |   24 +-
->   accel/tcg/plugin-gen.c             | 1008 +++++++---------------------
->   plugins/api.c                      |   26 +-
->   plugins/core.c                     |   61 +-
->   tcg/tcg-op-ldst.c                  |    6 +-
->   tcg/tcg-op.c                       |    8 +-
->   tcg/tcg.c                          |  104 ++-
->   util/log.c                         |    4 +
->   18 files changed, 424 insertions(+), 952 deletions(-)
->   delete mode 100644 accel/tcg/plugin-helpers.h
 > 
 
-Really great series. Not only the final code is much simpler, but it's 
-faster as well (from the few tests I ran).
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
