@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DAF9C54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 17:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 141F8C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 17:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmcsF-00079J-T1; Tue, 19 Mar 2024 13:03:39 -0400
+	id 1rmczv-0000qb-TE; Tue, 19 Mar 2024 13:11:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmcsE-000789-F7
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:03:38 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmcs0-00046l-Tv
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:03:38 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-512e39226efso4970417e87.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 10:03:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710867803; x=1711472603; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2b3jASX7RFyVohiA/6seRvyBdIah23RfJM1oQS2Tbxw=;
- b=RRZHwZA2mbNmYv+lJg25Ast331NSKJ3VPAnIez2GAgGAmaK6O7zOSdhr9wayYCYqEF
- dYaHSZDwN7JtDd7+0gfMSBL7NeAotLsEIv539SkEjO6Fmrn7L6TUpDCkSSD7yFx5Yilb
- U7e4Uxtj5wMLgr6Quv/Av2rSgPgo6sZ0kAlZqGICbagcVAheKhdlHiJ6zbkx6KKExE6v
- iy2CRSN3g2Z5/HAbUNTjYM9GGtQuR09eIZuts44UxisdEzVUGlX0g8dsLZAtUu/f9THb
- RE7SeyIiWAYV2HL3bK8zMahH4oZeqzbW/b2/MLkSMvW55lt7R/jOlO4rhzsTJOatiiTY
- Lj7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710867803; x=1711472603;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2b3jASX7RFyVohiA/6seRvyBdIah23RfJM1oQS2Tbxw=;
- b=coPMx4n8O847Ocojh+qUi/3FCQrpUGHjtXiMy3sUm4BAt336P2EsXiWpNRCnIDTpnF
- R6eQT9hAQmkGTbnc1eTZZ2ksDzZ6akbh0csfcYhSr/Jfjh78wTn/QgGTfUSLNzIEvlxY
- Sb/VyW7uO4/VjnuKLDxBmr9Q0DkvQtmBpocU3B2uNRAOGngR6FtFrVq+cgvPv7udiq0n
- BU1KQLtWK7++8nYCkzjRxC6404cXez9TCRw5MXgmC/PUA8AGyxNoNKVWjaqqqJXD+6uA
- xelQKHXtLGNqhAFboUi8BUTikd6uac55ddV2HZO0WqweRM8Itoy6A1fg69L1H0RcewZM
- duNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV+hRzxf9Z0XGoLjK636BcwMs1cxgz8KkWVxGkZPkwbTp8WZKFbNnJDrqKCzKkXHs/s9e+TIKjLp2WR7+xxTdVPxwbgAMs=
-X-Gm-Message-State: AOJu0YzplMtQMAQViQEMO8Ekn2s9l5kzoCT2uD/UgbvYPxkbOSzaqsxt
- P43QMTBiPf1KE3PKugXG/rlltC454vZCvSjCamLUi0Id0QKTn7RNsF8ytjQqDLF89ugtWhAcNYt
- 5mndkLKYGgpauRKMlAV3V8N1c5v8fVwQ1Wjm6NQ==
-X-Google-Smtp-Source: AGHT+IF8vA8NNnqe6Q9FmER1WZJ63I4wctLr+ouQ6jwcIIMTwQaMF94gy403vTpeTiNXX500DT+fVfgzUkLn3JcgyoQ=
-X-Received: by 2002:a19:9104:0:b0:513:dc90:7d1c with SMTP id
- t4-20020a199104000000b00513dc907d1cmr8101164lfd.18.1710867802807; Tue, 19 Mar
- 2024 10:03:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmczm-0000pt-BW
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:11:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmczW-0005h9-5l
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:11:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710868268;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z8+W5Bmsq9efqKtkSW5sMB8RuaP5rXbcpiN6k+G5xZQ=;
+ b=bqLt2Nqz12KA2I6MBl7omfIdFizBFIZakvMiRX3QRbJV48CDQimncdBBzM6cAjwlbX5WK6
+ G9WLw7JjFqMVA0GKQ+VfJrgqxlUQjSNgN3YfXkzyYEVXczVqeeF+4OZNHe1J+/CheVMqIa
+ VArOnmJGXyQZv240OK842uaCvVvgotc=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-76-5BOvJtXONUGajZsD801YVw-1; Tue, 19 Mar 2024 13:11:06 -0400
+X-MC-Unique: 5BOvJtXONUGajZsD801YVw-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id EA2E680026B
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 17:11:05 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.88])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B9368492BC8;
+ Tue, 19 Mar 2024 17:11:04 +0000 (UTC)
+Date: Tue, 19 Mar 2024 17:10:58 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Sanjay Rao <srao@redhat.com>, Boaz Ben Shabat <bbenshab@redhat.com>,
+ Joe Mario <jmario@redhat.com>
+Subject: Re: [PATCH] coroutine: cap per-thread local pool size
+Message-ID: <ZfnHIv9W-tVoF4Bm@redhat.com>
+References: <20240318183429.1039340-1-stefanha@redhat.com>
+ <ZfmWhDaG5mN-GCeO@redhat.com> <ZfnDTkh5CCHX1WFK@redhat.com>
 MIME-Version: 1.0
-References: <20240229131039.1868904-1-ruanjinjie@huawei.com>
- <20240229131039.1868904-7-ruanjinjie@huawei.com>
- <8d494fe8-c0f0-47b3-9f59-ac69f10c1e64@linaro.org>
-In-Reply-To: <8d494fe8-c0f0-47b3-9f59-ac69f10c1e64@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Mar 2024 17:03:12 +0000
-Message-ID: <CAFEAcA93HZEvVxFWE8GoCEZwOMjCVX-_EdOoubyGSyoMc+f6LQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v5 06/22] target/arm: Add support for Non-maskable
- Interrupt
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Jinjie Ruan <ruanjinjie@huawei.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, 
- philmd@linaro.org, wangyanan55@huawei.com, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZfnDTkh5CCHX1WFK@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,26 +84,132 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 Feb 2024 at 23:02, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 2/29/24 03:10, Jinjie Ruan via wrote:
-> > +    bool new_state = ((env->cp15.hcr_el2 & HCR_VI) &&
-> > +                      (env->cp15.hcrx_el2 & HCRX_VINMI)) ||
-> > +                     ((env->cp15.hcr_el2 & HCR_VF) &&
-> > +                      (env->cp15.hcrx_el2 & HCRX_VFNMI)) ||
-> > +        (env->irq_line_state & CPU_INTERRUPT_VNMI);
->
-> Because the GIC cannot signal an FIQ with superpriority, I think you should not include VF
-> && VFNMI in CPU_INTERRUPT_VNMI.
+On Tue, Mar 19, 2024 at 05:54:38PM +0100, Kevin Wolf wrote:
+> Am 19.03.2024 um 14:43 hat Daniel P. Berrangé geschrieben:
+> > On Mon, Mar 18, 2024 at 02:34:29PM -0400, Stefan Hajnoczi wrote:
+> > > The coroutine pool implementation can hit the Linux vm.max_map_count
+> > > limit, causing QEMU to abort with "failed to allocate memory for stack"
+> > > or "failed to set up stack guard page" during coroutine creation.
+> > > 
+> > > This happens because per-thread pools can grow to tens of thousands of
+> > > coroutines. Each coroutine causes 2 virtual memory areas to be created.
+> > 
+> > This sounds quite alarming. What usage scenario is justified in
+> > creating so many coroutines?
+> 
+> Basically we try to allow pooling coroutines for as many requests as
+> there can be in flight at the same time. That is, adding a virtio-blk
+> device increases the maximum pool size by num_queues * queue_size. If
+> you have a guest with many CPUs, the default num_queues is relatively
+> large (the bug referenced by Stefan had 64), and queue_size is 256 by
+> default. That's 16k potential requests in flight per disk.
 
-The GIC can't, but a hypervisor can -- it just sets the
-VF and VFNMI bits if it wants one. (Architecturally, the CPU
-has a FIQ-with-superpriority, it's only the GIC that doesn't.)
+If we have more than 1 virtio-blk device, does that scale
+up the max coroutines too ?
 
-thanks
--- PMM
+eg would 32 virtio-blks devices imply 16k * 32 -> 512k potential
+requests/coroutines ?
+
+> > IIUC, coroutine stack size is 1 MB, and so tens of thousands of
+> > coroutines implies 10's of GB of memory just on stacks alone.
+> 
+> That's only virtual memory, though. Not sure how much of it is actually
+> used in practice.
+
+True, by default Linux wouldn't care too much about virtual memory,
+Only if 'vm.overcommit_memory' is changed from its default, such
+that Linux applies an overcommit ratio on RAM, then total virtual
+memory would be relevant.
+
+
+
+> > > Eventually vm.max_map_count is reached and memory-related syscalls fail.
+> > 
+> > On my system max_map_count is 1048576, quite alot higher than
+> > 10's of 1000's. Hitting that would imply ~500,000 coroutines and
+> > ~500 GB of stacks !
+> 
+> Did you change the configuration some time in the past, or is this just
+> a newer default? I get 65530, and that's the same default number I've
+> seen in the bug reports.
+
+It turns out it is a Fedora change, rather than a kernel change:
+
+  https://fedoraproject.org/wiki/Changes/IncreaseVmMaxMapCount
+
+> > > diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
+> > > index 5fd2dbaf8b..2790959eaf 100644
+> > > --- a/util/qemu-coroutine.c
+> > > +++ b/util/qemu-coroutine.c
+> > 
+> > > +static unsigned int get_global_pool_hard_max_size(void)
+> > > +{
+> > > +#ifdef __linux__
+> > > +    g_autofree char *contents = NULL;
+> > > +    int max_map_count;
+> > > +
+> > > +    /*
+> > > +     * Linux processes can have up to max_map_count virtual memory areas
+> > > +     * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit. We
+> > > +     * must limit the coroutine pool to a safe size to avoid running out of
+> > > +     * VMAs.
+> > > +     */
+> > > +    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents, NULL,
+> > > +                            NULL) &&
+> > > +        qemu_strtoi(contents, NULL, 10, &max_map_count) == 0) {
+> > > +        /*
+> > > +         * This is a conservative upper bound that avoids exceeding
+> > > +         * max_map_count. Leave half for non-coroutine users like library
+> > > +         * dependencies, vhost-user, etc. Each coroutine takes up 2 VMAs so
+> > > +         * halve the amount again.
+> > > +         */
+> > > +        return max_map_count / 4;
+> > 
+> > That's 256,000 coroutines, which still sounds incredibly large
+> > to me.
+> 
+> The whole purpose of the limitation is that you won't ever get -ENOMEM
+> back, which will likely crash your VM. Even if this hard limit is high,
+> that doesn't mean that it's fully used. Your setting of 1048576 probably
+> means that you would never have hit the crash anyway.
+> 
+> Even the benchmarks that used to hit the problem don't even get close to
+> this hard limit any more because the actual number of coroutines stays
+> much smaller after applying this patch.
+
+I'm more thinking about what's the worst case behaviour that a
+malicious guest can inflict on QEMU, and cause unexpectedly
+high memory usage in the host.
+
+ENOMEM is bad for a friendy VM, but there's also the risk to
+the host from a unfriendly VM exploiting the high limits
+
+> 
+> > > +    }
+> > > +#endif
+> > > +
+> > > +    return UINT_MAX;
+> > 
+> > Why UINT_MAX as a default ?  If we can't read procfs, we should
+> > assume some much smaller sane default IMHO, that corresponds to
+> > what current linux default max_map_count would be.
+> 
+> I don't think we should artificially limit the pool size and with this
+> potentially limit the performance with it even if the host could do more
+> if we only allowed it to. If we can't read it from procfs, then it's
+> your responsibility as a user to make sure that it's large enough for
+> your VM configuration.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
