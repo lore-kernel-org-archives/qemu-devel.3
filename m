@@ -4,80 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E77C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:25:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFB0C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmaOC-0006CI-A8; Tue, 19 Mar 2024 10:24:28 -0400
+	id 1rmaPD-00075h-Kz; Tue, 19 Mar 2024 10:25:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmaO4-00068e-S0
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:24:24 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ id 1rmaP8-0006yQ-CI
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:25:26 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmaNp-0005cJ-OD
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:24:19 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2d109e82bd0so74214571fa.3
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 07:24:04 -0700 (PDT)
+ id 1rmaP3-0006Ch-Ua
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:25:24 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2d23114b19dso68817021fa.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 07:25:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710858243; x=1711463043; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710858320; x=1711463120; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=F78pYZuEIlcMyE8oVto9/SRkyo4tMJX9S1Xx3WTQN18=;
- b=GQNGYrBav6tk+VSVB1WDFI+WiCyoHIeT2uG+jR7B8be/ZZpanq3qNC4oDg1gQhgETN
- 6DGkqSP4Qyiaz/XLd6PkcdcKnbShBCSMtR/gvLZNQi4xXdU04BuSEO+adh8T3G+4Co1N
- jJ9h6hm9EfMAmL06VZn7V44/CNHmWw1fgoBW/uasealRkibljLRw+oesZENEgmxLeLkf
- B/3ogG96pGMiLTEvwbqAEGbXjRmgO2x6zyP5gKri6Czs4+ospwt8ilQbw/PVB7FbtADj
- vxe5mJVIiMxuvRdSdWL6z01mWUX9sbWnGbGw8cBveqAfnJFCjOrOujEJONU3hKt5M/bT
- 68Wg==
+ bh=GBm4ZLRN5LUdojuR0nWlqBhCP643bCu+gA6N3tStEgA=;
+ b=UIVoeWZ2YdSLh7gkmg9KCZ/6xakyL/vURocBMGsh+HJYRKPpRufYvwqLYboGlRIZf/
+ ytaUabAGXoMFCOt3S/qcAcyz7JFPiaq+/AyfqG1icKdGmtgMHFPTQJDr/XT8hDyAIEG5
+ oY6ExzgZcRUhMYYT2Bg5AuPP0PDYvESk3zBVeHFgmS+nr1Wgr0XwMGJLUQi/mYdGS4oV
+ S0+XHxrvx9uAxkr7N9+BCfsZ3CVxaKiMNaz2qyfApNBEU6uOPoama0tZUmvXKwrueKiA
+ 4wWNPLhLfagUqpRC//bhN1Qiw16oI18B5C2yQPcXwqvCawoYgwJxvYacBui2sjwP4dys
+ g2iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710858243; x=1711463043;
+ d=1e100.net; s=20230601; t=1710858320; x=1711463120;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=F78pYZuEIlcMyE8oVto9/SRkyo4tMJX9S1Xx3WTQN18=;
- b=jgUEgRoEFzYUmB7ZFdbIStG7v3nV3waQX4AVbNK3+PXFO9OFs2cydtDi0gzoh2SoKl
- cf+/ASJ+0a3AS7+CuLR6z5kL/6HPkUmFyTI4JGkyq2Zl51Kugr6ZLqqXgzeW+ip1X/SX
- QLukUikOq05ei/Ea60a0GuMnDbE6HWQ13teEzXGvRfIGjRxhEoKoCygo2PvsfT/7F1j7
- 1ZbQavm91QIEFpxiZtOX107D2DL+2jTXCYc7pRBNsK0T7MPr39R5Kjd+nHSZXb7KxpKf
- UpwsQLk1cR4j0/F2upCcn8+Lr/efuJCRH014XTqMcjtiVx1pW1IiAuCqcMi45LP62P//
- Uq5Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWol/2Hko4u+EB0m+nF5tQY83zjtGjE5BzpgxmuQr0KsmUeiPYoJbbs4MFr3xP9m4pSrn6MOmh5vHWbt4aEU7+OPch8/Zo=
-X-Gm-Message-State: AOJu0YxnSTT1jacD+aXKhu0GTcPyZDGPD8aBClcriLwpg4xeFmJA+FAU
- bxCDqBqDSkHyUtZjOge0rT9aGlceaCBpUwra+e1fi1rz4V1+Tno6zrdJLYK3pnymQcEj99gkATb
- VID54Q6Ng3W6CPgMW67iTYnHnZbS0rywoQxG4Og==
-X-Google-Smtp-Source: AGHT+IHRDpoJs4z0lPz/Ku/I4P+Uy5cY/maQ4AP/tCeEJnywf/PYNT1BZX63jqKzb0CdbA6lmOu+4koimeVlaTqFrBg=
-X-Received: by 2002:a2e:9211:0:b0:2d2:cb43:bc86 with SMTP id
- k17-20020a2e9211000000b002d2cb43bc86mr1766825ljg.45.1710858243015; Tue, 19
- Mar 2024 07:24:03 -0700 (PDT)
+ bh=GBm4ZLRN5LUdojuR0nWlqBhCP643bCu+gA6N3tStEgA=;
+ b=Rk3WqUSAenNDXn7xtH65Aeme4GDKehELYEfxLR6udfZ26UdLOTqzUfthCXLFHPAbYp
+ BWOtVQ4fVeMiBSXwBapeLVWxP6DLUnzU8nl2dJeu2a1/kcUzOLA6H7QKy9w4JUBJjhxp
+ r+fD+XaLDdwOduPGSBM6uMIPt9+IDFnpqKpUGfspeiJKCWjZGp5v2P7tGi7ONT3BVtsG
+ WlKeuhf7bYc+8DVXhCHQd2cJjinUfVG8E09WbfMlL/V8PuFvMx6E4yLRmIa4XzgfNPUL
+ VZbvOGFuRnzoq5yGa+4ypX2LG5duvwqyjTaxq86hiskxBy71TDHJPrsnYt3i9CAceNJu
+ kHlg==
+X-Gm-Message-State: AOJu0YzNoePEkl7jKZZnwk7OVyVs2S+9fil1fSL4XW9E3H+nYlZZXSzq
+ SoSfsL6lXiyFoVD3wsmdjEvX4ohwC0yt8xCEUI33nyBZf8Lf33FaGlZh/9hpPreQWOKT9/h4npL
+ DPYfpREynBQv5vMr/S5qoYEnlpd4X3H5Eks3J3A==
+X-Google-Smtp-Source: AGHT+IEhi76qhH6txqO5M1B6yYOjs+S65Xk7LRnQK0ghMRD6vaQNqD9xp5CraR37EwMuy/qLueBWtoUtCJQ6SQGjwUE=
+X-Received: by 2002:a2e:8912:0:b0:2d2:2c3e:70e with SMTP id
+ d18-20020a2e8912000000b002d22c3e070emr10738620lji.4.1710858320192; Tue, 19
+ Mar 2024 07:25:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240317083704.23244-1-zhukeqian1@huawei.com>
- <20240317083704.23244-2-zhukeqian1@huawei.com>
- <4d7795bb-1dfa-40e7-a98e-4c0bafdf3db0@redhat.com>
- <7387988008764735b2f1dd5f2c83a45a@huawei.com>
- <7cc3c19c-00f0-4ad2-b0de-ba42e9b20c2a@redhat.com>
-In-Reply-To: <7cc3c19c-00f0-4ad2-b0de-ba42e9b20c2a@redhat.com>
+References: <cover.1710778506.git.mst@redhat.com>
+In-Reply-To: <cover.1710778506.git.mst@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Mar 2024 14:23:52 +0000
-Message-ID: <CAFEAcA9iBPBvZ-9cFVRdAJaFPZmPK3adn10v2LiS90+1iUzwXA@mail.gmail.com>
-Subject: =?UTF-8?B?UmU6IOetlOWkjTogW1BBVENIIHYxIDEvMl0gc3lzdGVtL2NwdXM6IEZpeCBwYXVzZV9hbA==?=
- =?UTF-8?B?bF92Y3B1cygpIHVuZGVyIGNvbmN1cnJlbnQgZW52aXJvbm1lbnQ=?=
-To: David Hildenbrand <david@redhat.com>
-Cc: zhukeqian <zhukeqian1@huawei.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- Igor Mammedov <imammedo@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- "Wanghaibin (D)" <wanghaibin.wang@huawei.com>, yuzenghui <yuzenghui@huawei.com>,
- jiangkunkun <jiangkunkun@huawei.com>, Salil Mehta <salil.mehta@huawei.com>, 
- Jonathan Cameron <jonathan.cameron@huawei.com>,
- "Zengtao (B)" <prime.zeng@hisilicon.com>
+Date: Tue, 19 Mar 2024 14:25:09 +0000
+Message-ID: <CAFEAcA-5ahotZduJTsUndKMyKKvpKKnY_wK_2qzCwnKuNZFHPg@mail.gmail.com>
+Subject: Re: [PULL 00/24] virtio,pc,pci: bugfixes
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,20 +87,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 Mar 2024 at 09:24, David Hildenbrand <david@redhat.com> wrote:
-> I spotted new pause_all_vcpus() / resume_all_vcpus() calls in hw/intc/arm_gicv3_kvm.c and
-> thought they would be the problematic bit.
+On Mon, 18 Mar 2024 at 16:15, Michael S. Tsirkin <mst@redhat.com> wrote:
 >
-> Yeah, that's going to be problematic. Further note that a lot of code does not expect
-> that the BQL is suddenly dropped.
+> The following changes since commit ba49d760eb04630e7b15f423ebecf6c871b8f77b:
+>
+>   Merge tag 'pull-maintainer-final-130324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-13 15:12:14 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+>
+> for you to fetch changes up to bb949df637bdb6136a9acca55a2371fe1721e109:
+>
+>   smbios: add extra comments to smbios_get_table_legacy() (2024-03-18 08:42:46 -0400)
+>
+> ----------------------------------------------------------------
+> virtio,pc,pci: bugfixes
+>
+> Some minor fixes plus a big patchset from Igor fixing
+> a regression with windows.
+>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>
+> ----------------------------------------------------------------
 
-Agreed; we already have one nasty set of bugs in the framebuffer
-devices because a function drops the BQL briefly:
-https://lore.kernel.org/qemu-devel/CAFEAcA9odnPo2LPip295Uztri7JfoVnQbkJ=Wn+k8dQneB_ynQ@mail.gmail.com/T/#u
-so let's avoid introducing any more of a similar kind.
 
-Side note, the pause_all_vcpus()/resume_all_vcpus() calls in
-hw/i386/vapic.c are probably a bit suspect for similar reasons.
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
 
 -- PMM
 
