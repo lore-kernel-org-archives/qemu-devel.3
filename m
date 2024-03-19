@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C41EC54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70AA1CD11DB
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:34:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmrNz-0004XG-Gp; Wed, 20 Mar 2024 04:33:24 -0400
+	id 1rmrO7-0004Xh-DU; Wed, 20 Mar 2024 04:33:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rmrNs-0004W6-J5
+ id 1rmrNt-0004WA-0R
  for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:33:18 -0400
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rmrNq-0005U3-4n
+ id 1rmrNr-0005UI-C3
  for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:33:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710923595; x=1742459595;
+ t=1710923596; x=1742459596;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=CIWnqF9EoTF2zMvqZ/+tNdqB3NlIMG2yD3I2MMICmII=;
- b=PxxUPcM30cdkSDuWfzDPRl6CKRXYB7TxMBjSba1yfS+9Wa6MQ3dVDDgv
- vBedKcd6Hgtu/7+kMqHoE8OjA529N7BwmWFyR60q9IvjyGtnh6PBxGm2O
- a/WRvHpyogAOMq8zPcPvyTWI3VwjjexzFw/uxxbVkFSlkWvH3XBE1vgd/
- /VN2ClIRjvTzUCm0ot6CnpTfsVvjlbifv3VCxV/fxfgKQ4ZcXViuSayED
- g1frDTzyqYcoaJBWsbkW24AOAQgi0BOuK6yl1cAJn3ty0gujxRUIHK3im
- Y6iHB0xi+AlvdBSj79eX/HqqEfb4vuh/1BD/AG09jTqfOo6FzrTXhMhfQ A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11018"; a="5952927"
+ bh=mz9Bf/tG16d1JBIuhsfID5eXSf48Pqg0iXFjNioFLYQ=;
+ b=XSsF0yMzWgEIaZG4BABfuAtEtiqBUrOJKjLSV4rpoTloCg6KCPpiDIiR
+ wZ9EDAYm9C5ZD9JuG6W/bkC2Iq1Q2wfvpaRso8EUMP+Px2cgfdGHMreyR
+ JWnt4m8djUVz7imofCTXomsNbv8RLk5gKXEl3racsO16DMwNnAh7CM0gZ
+ 9wHiI5wIdiGPg8MZE9L7oNIPh95QP+qam0w3+rgcvvs6j44+DdAPjK9YP
+ oCD3RXoJak3VDUEtaHwyFrWUlxEm9a9P6nGZ/zAlJCKFtEl6anzXK2hL/
+ inpYQ3M9BZfVqa1rhyL/dAkeuKnyMGE3gwjpvu1LLrImuz9mL0U+iVHTj Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11018"; a="5952939"
 X-IronPort-AV: E=Sophos;i="6.07,139,1708416000"; 
-   d="scan'208";a="5952927"
+   d="scan'208";a="5952939"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Mar 2024 01:33:10 -0700
+ 20 Mar 2024 01:33:13 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,139,1708416000"; d="scan'208";a="13986718"
+X-IronPort-AV: E=Sophos;i="6.07,139,1708416000"; d="scan'208";a="13986727"
 Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by orviesa010.jf.intel.com with ESMTP; 20 Mar 2024 01:33:07 -0700
+ by orviesa010.jf.intel.com with ESMTP; 20 Mar 2024 01:33:10 -0700
 From: Yuan Liu <yuan1.liu@intel.com>
 To: peterx@redhat.com,
 	farosas@suse.de
 Cc: qemu-devel@nongnu.org, hao.xiang@bytedance.com, bryan.zhang@bytedance.com,
  yuan1.liu@intel.com, nanhai.zou@intel.com
-Subject: [PATCH v5 3/7] configure: add --enable-qpl build option
-Date: Wed, 20 Mar 2024 00:45:23 +0800
-Message-Id: <20240319164527.1873891-4-yuan1.liu@intel.com>
+Subject: [PATCH v5 4/7] migration/multifd: add qpl compression method
+Date: Wed, 20 Mar 2024 00:45:24 +0800
+Message-Id: <20240319164527.1873891-5-yuan1.liu@intel.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240319164527.1873891-1-yuan1.liu@intel.com>
 References: <20240319164527.1873891-1-yuan1.liu@intel.com>
@@ -79,102 +79,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-add --enable-qpl and --disable-qpl options to enable and disable
-the QPL compression method for multifd migration.
+add the Query Processing Library (QPL) compression method
 
-the Query Processing Library (QPL) is an open-source library
-that supports data compression and decompression features.
+Although both qpl and zlib support deflate compression, qpl will
+only use the In-Memory Analytics Accelerator(IAA) for compression
+and decompression, and IAA is not compatible with the Zlib in
+migration, so qpl is used as a new compression method for migration.
 
-The QPL compression is based on the deflate compression algorithm
-and use Intel In-Memory Analytics Accelerator(IAA) hardware for
-compression and decompression acceleration.
+How to enable qpl compression during migration:
+migrate_set_parameter multifd-compression qpl
 
-Please refer to the following for more information about QPL
-https://intel.github.io/qpl/documentation/introduction_docs/introduction.html
+The qpl only supports one compression level, there is no qpl
+compression level parameter added, users do not need to specify
+the qpl compression level.
 
 Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
 Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
 ---
- meson.build                   | 16 ++++++++++++++++
- meson_options.txt             |  2 ++
- scripts/meson-buildoptions.sh |  3 +++
- 3 files changed, 21 insertions(+)
+ hw/core/qdev-properties-system.c |  2 +-
+ migration/meson.build            |  1 +
+ migration/multifd-qpl.c          | 20 ++++++++++++++++++++
+ migration/multifd.h              |  1 +
+ qapi/migration.json              |  7 ++++++-
+ 5 files changed, 29 insertions(+), 2 deletions(-)
+ create mode 100644 migration/multifd-qpl.c
 
-diff --git a/meson.build b/meson.build
-index b375248a76..bee7dcd53b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1200,6 +1200,20 @@ if not get_option('zstd').auto() or have_block
-                     required: get_option('zstd'),
-                     method: 'pkg-config')
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index d79d6f4b53..6ccd7224f6 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -659,7 +659,7 @@ const PropertyInfo qdev_prop_fdc_drive_type = {
+ const PropertyInfo qdev_prop_multifd_compression = {
+     .name = "MultiFDCompression",
+     .description = "multifd_compression values, "
+-                   "none/zlib/zstd",
++                   "none/zlib/zstd/qpl",
+     .enum_table = &MultiFDCompression_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+diff --git a/migration/meson.build b/migration/meson.build
+index 1eeb915ff6..cb177de1d2 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -41,6 +41,7 @@ if get_option('live_block_migration').allowed()
+   system_ss.add(files('block.c'))
  endif
-+qpl = not_found
-+if not get_option('qpl').auto()
-+  libqpl = cc.find_library('qpl', required: false)
-+  if not libqpl.found()
-+    error('libqpl not found, please install it from ' +
-+    'https://intel.github.io/qpl/documentation/get_started_docs/installation.html')
-+  endif
-+  libaccel = dependency('libaccel-config', version: '>=4.0.0',
-+                        required: true,
-+                        method: 'pkg-config')
-+  qpl = declare_dependency(dependencies: [libqpl, libaccel,
-+        cc.find_library('dl', required: get_option('qpl'))],
-+        link_args: ['-lstdc++'])
-+endif
- virgl = not_found
+ system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
++system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
  
- have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
-@@ -2305,6 +2319,7 @@ config_host_data.set('CONFIG_MALLOC_TRIM', has_malloc_trim)
- config_host_data.set('CONFIG_STATX', has_statx)
- config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
- config_host_data.set('CONFIG_ZSTD', zstd.found())
-+config_host_data.set('CONFIG_QPL', qpl.found())
- config_host_data.set('CONFIG_FUSE', fuse.found())
- config_host_data.set('CONFIG_FUSE_LSEEK', fuse_lseek.found())
- config_host_data.set('CONFIG_SPICE_PROTOCOL', spice_protocol.found())
-@@ -4462,6 +4477,7 @@ summary_info += {'snappy support':    snappy}
- summary_info += {'bzip2 support':     libbzip2}
- summary_info += {'lzfse support':     liblzfse}
- summary_info += {'zstd support':      zstd}
-+summary_info += {'Query Processing Library support': qpl}
- summary_info += {'NUMA host support': numa}
- summary_info += {'capstone':          capstone}
- summary_info += {'libpmem support':   libpmem}
-diff --git a/meson_options.txt b/meson_options.txt
-index 0a99a059ec..06cd675572 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -259,6 +259,8 @@ option('xkbcommon', type : 'feature', value : 'auto',
-        description: 'xkbcommon support')
- option('zstd', type : 'feature', value : 'auto',
-        description: 'zstd compression support')
-+option('qpl', type : 'feature', value : 'auto',
-+       description: 'Query Processing Library support')
- option('fuse', type: 'feature', value: 'auto',
-        description: 'FUSE block device export')
- option('fuse_lseek', type : 'feature', value : 'auto',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 680fa3f581..784f74fde9 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -222,6 +222,7 @@ meson_options_help() {
-   printf "%s\n" '                  Xen PCI passthrough support'
-   printf "%s\n" '  xkbcommon       xkbcommon support'
-   printf "%s\n" '  zstd            zstd compression support'
-+  printf "%s\n" '  qpl             Query Processing Library support'
- }
- _meson_option_parse() {
-   case $1 in
-@@ -562,6 +563,8 @@ _meson_option_parse() {
-     --disable-xkbcommon) printf "%s" -Dxkbcommon=disabled ;;
-     --enable-zstd) printf "%s" -Dzstd=enabled ;;
-     --disable-zstd) printf "%s" -Dzstd=disabled ;;
-+    --enable-qpl) printf "%s" -Dqpl=enabled ;;
-+    --disable-qpl) printf "%s" -Dqpl=disabled ;;
-     *) return 1 ;;
-   esac
- }
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+                 if_true: files('ram.c',
+diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
+new file mode 100644
+index 0000000000..056a68a060
+--- /dev/null
++++ b/migration/multifd-qpl.c
+@@ -0,0 +1,20 @@
++/*
++ * Multifd qpl compression accelerator implementation
++ *
++ * Copyright (c) 2023 Intel Corporation
++ *
++ * Authors:
++ *  Yuan Liu<yuan1.liu@intel.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++#include "qemu/osdep.h"
++#include "qemu/module.h"
++
++static void multifd_qpl_register(void)
++{
++    /* noop */
++}
++
++migration_init(multifd_qpl_register);
+diff --git a/migration/multifd.h b/migration/multifd.h
+index c9d9b09239..5b7d9b15f8 100644
+--- a/migration/multifd.h
++++ b/migration/multifd.h
+@@ -40,6 +40,7 @@ MultiFDRecvData *multifd_get_recv_data(void);
+ #define MULTIFD_FLAG_NOCOMP (0 << 1)
+ #define MULTIFD_FLAG_ZLIB (1 << 1)
+ #define MULTIFD_FLAG_ZSTD (2 << 1)
++#define MULTIFD_FLAG_QPL (4 << 1)
+ 
+ /* This value needs to be a multiple of qemu_target_page_size() */
+ #define MULTIFD_PACKET_SIZE (512 * 1024)
+diff --git a/qapi/migration.json b/qapi/migration.json
+index aa1b39bce1..dceb35db5b 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -629,11 +629,16 @@
+ #
+ # @zstd: use zstd compression method.
+ #
++# @qpl: use qpl compression method. Query Processing Library(qpl) is based on
++#       the deflate compression algorithm and use the Intel In-Memory Analytics
++#       Accelerator(IAA) accelerated compression and decompression. (Since 9.0)
++#
+ # Since: 5.0
+ ##
+ { 'enum': 'MultiFDCompression',
+   'data': [ 'none', 'zlib',
+-            { 'name': 'zstd', 'if': 'CONFIG_ZSTD' } ] }
++            { 'name': 'zstd', 'if': 'CONFIG_ZSTD' },
++            { 'name': 'qpl', 'if': 'CONFIG_QPL' } ] }
+ 
+ ##
+ # @MigMode:
 -- 
 2.39.3
 
