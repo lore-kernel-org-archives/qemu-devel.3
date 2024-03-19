@@ -4,68 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C42BACD11C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 15:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE05CD11BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 15:41:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmbYk-00031m-7F; Tue, 19 Mar 2024 11:39:26 -0400
+	id 1rmbaF-0003qy-LZ; Tue, 19 Mar 2024 11:40:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmbYi-00031Y-OB
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:39:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmbYh-00042w-Ce
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:39:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710862755;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=C14dZd56YxXu7YRsqu6W/W3IkVqFoIgSmoO0MpClqdM=;
- b=AVXN6HKZtxgzXcm719kbTJe6Mh6kkHevBCe9rjuXoaFWm7KiXhACPJioKa1KVLkVjmRO+/
- stMZD6BREgi1JquA9Pj71TafxWDGmqHzDnhkJmX0PLfTd3vnituCFAoe2uRDkJyh91MU4K
- rA8TkjdX7L/otiOLzdtAtDcQDIQ41Xs=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-332-0KKyUTU-OmiwgGgC1BhrFQ-1; Tue, 19 Mar 2024 11:39:14 -0400
-X-MC-Unique: 0KKyUTU-OmiwgGgC1BhrFQ-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C771A185A786
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 15:39:13 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.88])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 2F17A200B3BD;
- Tue, 19 Mar 2024 15:39:12 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH for-9.0] qapi: drop unused
- QCryptoBlockCreateOptionsLUKS.detached-header
-Date: Tue, 19 Mar 2024 15:39:08 +0000
-Message-ID: <20240319153908.194975-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmbaE-0003qc-E4
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:40:58 -0400
+Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmbaC-0004Wa-VU
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:40:58 -0400
+Received: by mail-oa1-x31.google.com with SMTP id
+ 586e51a60fabf-222ba2a19bdso1742167fac.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 08:40:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710862855; x=1711467655; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cptbcDRdwDDZRyUio5HkEBYIV0GY23oMsOket/3lj5Y=;
+ b=W1EVLmoOX8KlqASDvT3JWlHYSYa9LS7KSfAwblbNvvPdbJ/rBCk1Fi+BPkeNyHqHPw
+ q4tAEfXZmAJp9w9f4foXiP9QbXTHWgKrAxb0LjIMLaMob3XmIHP/2dqkk+6pseGRF6zy
+ k79ktP3eIk0VNCyD0zbo13PA2tAJ3bOaWqfafGkNISzuzqFGwX45MOnMYNpQlL0iaPRv
+ 5DwS9Ovh4YL/7eC9BhmUFyEejXJopk/OLynQfu574LFfK/YviNBqYc+7CVcAw1RDxAyQ
+ fM++/uGvU3jtpEWUAoZEpppP+sqjUV270AQs9JdFEgRmgvywOc4sv7N1GZtRWVE9R3Zy
+ 3LqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710862855; x=1711467655;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cptbcDRdwDDZRyUio5HkEBYIV0GY23oMsOket/3lj5Y=;
+ b=rjFuleWvTqyGmCzvF0f1WRmELoteiIFubh7uV0RPdm9J3bPjUx7Eyxvl1u6QcSjx3p
+ uBzpWaNjPrRZs1QCxAozRtbjkjUSFriFugrRTwJcS7JbSU4blR7ssskZD4TkQlmXwxTp
+ 9yEqSK60qcgH+uRaQ14fVGVaDI6eVFM4FcBIaqWv+y6vJrX7ZM/I9YNk9NUB1Znecxp9
+ YwHVeEBbk/JYw44/ovRNytWN0WALWaVCl9v7rmLPFzcbP8BtO35RWUX7zBeSJ9H1GKLW
+ TuXCrW/fnZZZ0un+/dX23Dy1lUIL7gMF0jZKeeWX1awz3i0z8gDDD+nNAC4xcwiAeHRc
+ Luqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUK5ybngDBAuwHWL8Tp1ZeZb8TOYL0omA6smudhV8YZOP4aIqIjNYfl3iEclgI2xcDdybxxjPHcZ6fybAnw+FAd1epqPb0=
+X-Gm-Message-State: AOJu0YwYBhZEE1e+Qz5xQv7vAIaL30X0MUsVwLd7zh7S9SnXnhDEefN2
+ fgLsl5l7nXA+jH40xdRN2poY/Yy7CRxseS60ULsGeJzk2pllWntMHYiqkjvSa60=
+X-Google-Smtp-Source: AGHT+IHGgRPpG89phpiK8Wfa+3/RDlLwLdpbWxPosX3v3uvcN6GAB1HhsiFEIt3yMQADECPf7K6dYA==
+X-Received: by 2002:a05:6870:238f:b0:220:d080:ff68 with SMTP id
+ e15-20020a056870238f00b00220d080ff68mr16570875oap.44.1710862855589; 
+ Tue, 19 Mar 2024 08:40:55 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ g20-20020a63dd54000000b005ce998b9391sm9146581pgj.67.2024.03.19.08.40.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 08:40:55 -0700 (PDT)
+Message-ID: <74470370-9fd1-4342-b8d7-c2252f14dae7@linaro.org>
+Date: Tue, 19 Mar 2024 05:40:52 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/tricore/helper: Use correct string format in
+ cpu_tlb_fill()
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+References: <20240319051413.6956-1-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240319051413.6956-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2001:4860:4864:20::31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,38 +99,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'detached-header' field in QCryptoBlockCreateOptionsLUKS
-was left over from earlier patch iterations.
+On 3/18/24 19:14, Philippe Mathieu-Daudé wrote:
+> 'address' got converted from target_ulong to vaddr in commit
+> 68d6eee73c ("target/tricore: Convert to CPUClass::tlb_fill").
+> Use the corresponding format string to avoid casting.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   target/tricore/helper.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- qapi/crypto.json | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index 931c88e688..ad9e3d0297 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -226,8 +226,6 @@
- # @iter-time: number of milliseconds to spend in PBKDF passphrase
- #     processing.  Currently defaults to 2000. (since 2.8)
- #
--# @detached-header: create a detached LUKS header. (since 9.0)
--#
- # Since: 2.6
- ##
- { 'struct': 'QCryptoBlockCreateOptionsLUKS',
-@@ -237,8 +235,7 @@
-             '*ivgen-alg': 'QCryptoIVGenAlgorithm',
-             '*ivgen-hash-alg': 'QCryptoHashAlgorithm',
-             '*hash-alg': 'QCryptoHashAlgorithm',
--            '*iter-time': 'int',
--            '*detached-header': 'bool'}}
-+            '*iter-time': 'int' }}
- 
- ##
- # @QCryptoBlockOpenOptions:
--- 
-2.43.0
-
+r~
 
