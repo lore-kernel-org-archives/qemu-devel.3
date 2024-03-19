@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71CD1CD11DB
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 15:52:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAC8CCD11BF
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 15:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmbl3-0004kJ-3x; Tue, 19 Mar 2024 11:52:09 -0400
+	id 1rmbm5-0007fS-Qj; Tue, 19 Mar 2024 11:53:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1rmbkr-0004Qd-17
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:51:58 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1rmbm2-0007eb-RR
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:53:11 -0400
 Received: from rev.ng ([5.9.113.41])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1rmbkp-0006tE-1v
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:51:56 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1rmbm1-00079y-C3
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:53:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive;
- bh=lZapTB7uIvBZ/rkcRNjiHr0xGC6XXgImEMweN9A/43Y=; b=WG3Qv/GS+vP5wc1R7KGLmqxyu/
- EQBLzIbJPgRcr0AY9Lw/NE2nVM5L7CebTd1qMqsS84EUZh52VSlZvanUdSLxjGp6iw0zEiYOXuCmv
- RhIzLvmwrjvFOdx66eS6mU6foygCbKFnSg47ESi+aRogTCdbEC1UBbLZfDotpOtMzR2c=;
-Date: Tue, 19 Mar 2024 16:52:33 +0100
+ bh=aoCBc3ZAow2kmob2Q/FAd+E/ZccO1cwzdOzlHvzZVQE=; b=nfp8ca81J1vKgW19ZmhwY5278Y
+ S6zKcAFiDmeSj+uLJ+KIC0xu5yzc42W7i4+OrNR2Fmp8Bh6kI+UmMVyp6ac1pps6RQKWi9YwvEtBD
+ FYVgmJxuAwIYNaAGfJczWsj4bGD3wiQc3AskjkQiQNc3cGW7Hy8hR9FV5nEtJjZWPnmE=;
+Date: Tue, 19 Mar 2024 16:53:58 +0100
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
  Laurent Vivier <laurent@vivier.eu>, Alistair Francis <alistair@alistair23.me>
-Subject: Re: [PATCH-for-9.1 1/8] target/microblaze: Use correct string format
- in do_unaligned_access()
-Message-ID: <twwnjcapdjqwd4yhfmpzv75op7unsrzoialxa3jc5r73kmu2xt@7fqr6frphdkk>
+Subject: Re: [PATCH-for-9.1 2/8] target/microblaze: Use hwaddr/vaddr in
+ cpu_get_phys_page_attrs_debug()
+Message-ID: <hlrl7d2i67bwcjqlcaox5onnrixxfx2zovqd7wygpv25tedv4n@u5gigfutk57f>
 References: <20240319062855.8025-1-philmd@linaro.org>
- <20240319062855.8025-2-philmd@linaro.org>
+ <20240319062855.8025-3-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240319062855.8025-2-philmd@linaro.org>
+In-Reply-To: <20240319062855.8025-3-philmd@linaro.org>
 Received-SPF: pass client-ip=5.9.113.41; envelope-from=anjo@rev.ng; helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,30 +67,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19/03/24, Philippe Mathieu-Daudé wrote:
-> 'addr' is of type 'vaddr'; no need to cast, use the
-> corresponding format string.
-> 
-> Fixes: ab0c8d0f5b ("target/microblaze: Use cc->do_unaligned_access")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  target/microblaze/helper.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  target/microblaze/helper.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
 > diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-> index d25c9eb4d3..0a12c4ea94 100644
+> index 0a12c4ea94..3f410fc7b5 100644
 > --- a/target/microblaze/helper.c
 > +++ b/target/microblaze/helper.c
-> @@ -279,8 +279,8 @@ void mb_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
->      iflags = cpu->env.iflags;
->  
->      qemu_log_mask(CPU_LOG_INT,
-> -                  "Unaligned access addr=" TARGET_FMT_lx " pc=%x iflags=%x\n",
-> -                  (target_ulong)addr, cpu->env.pc, iflags);
-> +                  "Unaligned access addr=0x%"VADDR_PRIx" pc=0x%x iflags=0x%x\n",
-> +                  addr, cpu->env.pc, iflags);
->  
->      esr = ESR_EC_UNALIGNED_DATA;
->      if (likely(iflags & ESR_ESS_FLAG)) {
+> @@ -228,7 +228,8 @@ hwaddr mb_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
+>                                          MemTxAttrs *attrs)
+>  {
+>      MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
+> -    target_ulong vaddr, paddr = 0;
+> +    vaddr vaddr;
+> +    hwaddr paddr = 0;
+>      MicroBlazeMMULookup lu;
+>      int mmu_idx = cpu_mmu_index(cs, false);
+>      unsigned int hit;
 > -- 
 > 2.41.0
 > 
