@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDEEC54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 16:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA25AC54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 16:50:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmcci-0000Hm-OJ; Tue, 19 Mar 2024 12:47:36 -0400
+	id 1rmcf5-0001nx-0v; Tue, 19 Mar 2024 12:50:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmcci-0000HM-19
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 12:47:36 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmccg-0000f6-IG
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 12:47:35 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-5101cd91017so9041320e87.2
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 09:47:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710866853; x=1711471653; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=IBaiRPredbqYgZQPnp8ZalF7vsr6iFg3y624z8HxiP4=;
- b=iJVJ291AO+U+a3FShLV8c5YWjPArzntXat3elJ0qldTuQL71rJuWaFJ7lT9ex9VAR6
- j492L09go6eUJtI5ypqlYczhHrtCfBkv28UM1oEjkMn6C0WDRCxIPdjavwhLPpXpOzaX
- KVg3K+VBWNoYQR1oM209Tlp6NONYWPSNNAOe3SYqQFrHFpFeQHHDcIEFcDsGeDq5pCKW
- v3DkT3t/SPszpKBKrRLHOxmi9kVOND/DLetZLx4RxLFO9jO7lcLuHTCVxnkCvf5byT9h
- JAcIHSh28ymSv/ErPZr2JXVECd8zqXD5YO9MknYE/nJRKmbF3iZNYsihj+B+z7Mw+k5T
- dPoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710866853; x=1711471653;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IBaiRPredbqYgZQPnp8ZalF7vsr6iFg3y624z8HxiP4=;
- b=F1PKKFmWBOFOdRhj9rF14jwrlxOZrY4+xuG3Cfm8Bgtf1oZTxc30X8RpWxmXEE22W5
- 21+SFG7tuQ0Nyb1gws4JKvmfa4dwqwr73hyq7KkWUm4BBDq72uKhQVlgDkMhDL6t4xuY
- MFcUM035YsJHzMd3rV3kEpb3+ySoFefQsQiTCNNgN7toewcVFehiwT0uNYqGJr6Azm6E
- NYs73vnjrM09EAaijlGiqOtrD24KS/snpavA307MWyEdUBbqY52x7h8/xC051c2BHyAZ
- ZiPymmYUFxnydkGe5phco1i8sLYTc4QKTYBIs8Job9kkV1HcX5PjKMVWp0LzJ6xJw0g3
- sp/w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxwM1DvRoT+jH7NsVk0cymWaB9pHv7ndLRQkKIrns4wRiR9txMdZPWScLuz0H5YDS1k6e8E882L03aRAY6LwFRmFX9bJs=
-X-Gm-Message-State: AOJu0YxHHxG1i65Mns4Nu8NHl82xvMh8y4ildTOAoAP7RGnmi4LDPXZT
- QlMFieYwPIV9Lo9Le95XQOSUwgIkphlUcL4hyXfd50V2AMcPy60FGacCM4heY12yAHkiVz1aYH6
- n1gv5jeD3KYM0OOf1A5EPMgQLtIO9RXAgWIMK1g==
-X-Google-Smtp-Source: AGHT+IGlbEFcrJM7Eph8TMmpDLkP93r2gPHASDtryoXbwzKzTDAXxmKHzTeH/9N6wTIXDO+UqstRRFuoU1ktD6fTnY8=
-X-Received: by 2002:a05:6512:102a:b0:512:e00b:8da4 with SMTP id
- r10-20020a056512102a00b00512e00b8da4mr10010759lfr.53.1710866852637; Tue, 19
- Mar 2024 09:47:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rmcez-0001mj-HW; Tue, 19 Mar 2024 12:49:57 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rmceu-0000vy-UW; Tue, 19 Mar 2024 12:49:55 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 078EF57349;
+ Tue, 19 Mar 2024 19:50:57 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3C4589D360;
+ Tue, 19 Mar 2024 19:49:40 +0300 (MSK)
+Message-ID: <98bbd87a-1846-4644-9cab-13fb48d85335@tls.msk.ru>
+Date: Tue, 19 Mar 2024 19:49:39 +0300
 MIME-Version: 1.0
-References: <20240318093546.2786144-1-ruanjinjie@huawei.com>
- <20240318093546.2786144-10-ruanjinjie@huawei.com>
-In-Reply-To: <20240318093546.2786144-10-ruanjinjie@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Mar 2024 16:47:21 +0000
-Message-ID: <CAFEAcA8_2U6bydhixx+j84FUBY3tT5rN8Y4c6KHGjbbAX+1v3Q@mail.gmail.com>
-Subject: Re: [RFC PATCH v8 09/23] target/arm: Handle PSTATE.ALLINT on taking
- an exception
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
- wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.0 1/2] nbd/server: Fix race in draining the export
+Content-Language: en-US
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: stefanha@redhat.com, hreitz@redhat.com, eblake@redhat.com,
+ aliang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20240314165825.40261-1-kwolf@redhat.com>
+ <20240314165825.40261-2-kwolf@redhat.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240314165825.40261-2-kwolf@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,51 +86,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Mar 2024 at 09:37, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
->
-> Set or clear PSTATE.ALLINT on taking an exception to ELx according to the
-> SCTLR_ELx.SPINTMASK bit.
->
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-> v3:
-> - Add Reviewed-by.
-> ---
->  target/arm/helper.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 4bc63bf7ca..81f4a8f194 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -11705,6 +11705,15 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
->          }
->      }
->
-> +    if (cpu_isar_feature(aa64_nmi, cpu) &&
-> +        (env->cp15.sctlr_el[new_el] & SCTLR_NMI)) {
+14.03.2024 19:58, Kevin Wolf wrote:
+> When draining an NBD export, nbd_drained_begin() first sets
+> client->quiescing so that nbd_client_receive_next_request() won't start
+> any new request coroutines. Then nbd_drained_poll() tries to makes sure
+> that we wait for any existing request coroutines by checking that
+> client->nb_requests has become 0.
+> 
+> However, there is a small window between creating a new request
+> coroutine and increasing client->nb_requests. If a coroutine is in this
+> state, it won't be waited for and drain returns too early.
+> 
+> In the context of switching to a different AioContext, this means that
+> blk_aio_attached() will see client->recv_coroutine != NULL and fail its
+> assertion.
+> 
+> Fix this by increasing client->nb_requests immediately when starting the
+> coroutine. Doing this after the checks if we should create a new
+> coroutine is okay because client->lock is held.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: fd6afc501a019682d1b8468b562355a2887087bd
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 
-This shouldn't be checking the value of SCTLR_NMI here:
-the new PSTATE.ALLINT is set to !SPINTMASK even if NMI == 0.
-(The SPINTMASK bit description is a bit confusing, but
-the correct behaviour is clear in the AArch64.TakeException()
-pseudocode.)
+Kevin, Stefan,
 
-> +        if (!(env->cp15.sctlr_el[new_el] & SCTLR_SPINTMASK)) {
-> +            new_mode |= PSTATE_ALLINT;
-> +        } else {
-> +            new_mode &= ~PSTATE_ALLINT;
-> +        }
-> +    }
+This change in master, which is Cc'ed stable, touches (refines) exactly the
+same areas as f816310d0c32c "nbd/server: only traverse NBDExport->clients
+from main loop thread", which is not (yet?) in stable, neither 7.2 nor 8.2.
+
+Also, 7075d235114b4 "nbd/server: introduce NBDClient->lock to protect fields"
+touches one of the places too.
+
+I can try to construct something out of the two, but I think it is better
+if either of you can do that, - if this seems a good thing to do anyway.
+This way it is definitely much saner than my possible attempts.
+
+Or we can just pick f816310d0c32c and 7075d235114b4 into stable too, - when
+I evaluated f816310d0c32c for stable before I thought it isn't needed there
+because AioContext lock isn't removed in 8.2 yet.  And I haven't thought
+about 7075d235114b4 at all.  All 3 applies cleanly and the result passes
+check-block, but it smells a bit too much for stable.
+
+What do you think?
+
+Thanks,
+
+/mjt
+
+> diff --git a/nbd/server.c b/nbd/server.c
+> index 941832f178..c3484cc1eb 100644
+> --- a/nbd/server.c
+> +++ b/nbd/server.c
+> @@ -3007,8 +3007,8 @@ static coroutine_fn int nbd_handle_request(NBDClient *client,
+>   /* Owns a reference to the NBDClient passed as opaque.  */
+>   static coroutine_fn void nbd_trip(void *opaque)
+>   {
+> -    NBDClient *client = opaque;
+> -    NBDRequestData *req = NULL;
+> +    NBDRequestData *req = opaque;
+> +    NBDClient *client = req->client;
+>       NBDRequest request = { 0 };    /* GCC thinks it can be used uninitialized */
+>       int ret;
+>       Error *local_err = NULL;
+> @@ -3037,8 +3037,6 @@ static coroutine_fn void nbd_trip(void *opaque)
+>           goto done;
+>       }
+>   
+> -    req = nbd_request_get(client);
+> -
+>       /*
+>        * nbd_co_receive_request() returns -EAGAIN when nbd_drained_begin() has
+>        * set client->quiescing but by the time we get back nbd_drained_end() may
+> @@ -3112,9 +3110,7 @@ static coroutine_fn void nbd_trip(void *opaque)
+>       }
+>   
+>   done:
+> -    if (req) {
+> -        nbd_request_put(req);
+> -    }
+> +    nbd_request_put(req);
+>   
+>       qemu_mutex_unlock(&client->lock);
+>   
+> @@ -3143,10 +3139,13 @@ disconnect:
+>    */
+>   static void nbd_client_receive_next_request(NBDClient *client)
+>   {
+> +    NBDRequestData *req;
 > +
->      pstate_write(env, PSTATE_DAIF | new_mode);
->      env->aarch64 = true;
->      aarch64_restore_sp(env, new_el);
-> --
-> 2.34.1
->
+>       if (!client->recv_coroutine && client->nb_requests < MAX_NBD_REQUESTS &&
+>           !client->quiescing) {
+>           nbd_client_get(client);
+> -        client->recv_coroutine = qemu_coroutine_create(nbd_trip, client);
+> +        req = nbd_request_get(client);
+> +        client->recv_coroutine = qemu_coroutine_create(nbd_trip, req);
+>           aio_co_schedule(client->exp->common.ctx, client->recv_coroutine);
+>       }
+>   }
 
-thanks
--- PMM
 
