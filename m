@@ -4,70 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 858B8C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E77C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:25:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmaGW-0002Qk-Pu; Tue, 19 Mar 2024 10:16:32 -0400
+	id 1rmaOC-0006CI-A8; Tue, 19 Mar 2024 10:24:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmaGM-0002Py-ML
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:16:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmaGL-0003Zb-0d
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:16:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710857780;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=BB6KXKeRy6uwGzGwxzxZd3SldYiDoDwzvLmFdjU0g7I=;
- b=SjEnA6j9LF6Zv+2AXbwG6tlkr7+S996cRaeXowLXh8WOCA6eiVGJSvIbwbtQ1QPUBdJ6ro
- ZN6pvwYuUi4Ta1HV9ybnzH035T6+W4d9OpNFJ2hG0abKQvnlYwVcegf3zgqxssA/Z9lrZD
- U/519ry+2YmvXihbbVq/wWGbOZ+0hsQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-681-CQOfO2K-Ow-kVPP8AYasOw-1; Tue, 19 Mar 2024 10:16:18 -0400
-X-MC-Unique: CQOfO2K-Ow-kVPP8AYasOw-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id ABDFD88FC85;
- Tue, 19 Mar 2024 14:16:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.88])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id ED247492C2D;
- Tue, 19 Mar 2024 14:16:12 +0000 (UTC)
-Date: Tue, 19 Mar 2024 14:16:07 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, xiaoyao.li@intel.com, michael.roth@amd.com
-Subject: Re: [PATCH 2/7] runstate: skip initial CPU reset if reset is not
- actually possible
-Message-ID: <ZfmeJ9c_TMSb12Z1@redhat.com>
-References: <20240319140000.1014247-1-pbonzini@redhat.com>
- <20240319140000.1014247-3-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmaO4-00068e-S0
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:24:24 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmaNp-0005cJ-OD
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:24:19 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2d109e82bd0so74214571fa.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 07:24:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710858243; x=1711463043; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=F78pYZuEIlcMyE8oVto9/SRkyo4tMJX9S1Xx3WTQN18=;
+ b=GQNGYrBav6tk+VSVB1WDFI+WiCyoHIeT2uG+jR7B8be/ZZpanq3qNC4oDg1gQhgETN
+ 6DGkqSP4Qyiaz/XLd6PkcdcKnbShBCSMtR/gvLZNQi4xXdU04BuSEO+adh8T3G+4Co1N
+ jJ9h6hm9EfMAmL06VZn7V44/CNHmWw1fgoBW/uasealRkibljLRw+oesZENEgmxLeLkf
+ B/3ogG96pGMiLTEvwbqAEGbXjRmgO2x6zyP5gKri6Czs4+ospwt8ilQbw/PVB7FbtADj
+ vxe5mJVIiMxuvRdSdWL6z01mWUX9sbWnGbGw8cBveqAfnJFCjOrOujEJONU3hKt5M/bT
+ 68Wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710858243; x=1711463043;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=F78pYZuEIlcMyE8oVto9/SRkyo4tMJX9S1Xx3WTQN18=;
+ b=jgUEgRoEFzYUmB7ZFdbIStG7v3nV3waQX4AVbNK3+PXFO9OFs2cydtDi0gzoh2SoKl
+ cf+/ASJ+0a3AS7+CuLR6z5kL/6HPkUmFyTI4JGkyq2Zl51Kugr6ZLqqXgzeW+ip1X/SX
+ QLukUikOq05ei/Ea60a0GuMnDbE6HWQ13teEzXGvRfIGjRxhEoKoCygo2PvsfT/7F1j7
+ 1ZbQavm91QIEFpxiZtOX107D2DL+2jTXCYc7pRBNsK0T7MPr39R5Kjd+nHSZXb7KxpKf
+ UpwsQLk1cR4j0/F2upCcn8+Lr/efuJCRH014XTqMcjtiVx1pW1IiAuCqcMi45LP62P//
+ Uq5Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWol/2Hko4u+EB0m+nF5tQY83zjtGjE5BzpgxmuQr0KsmUeiPYoJbbs4MFr3xP9m4pSrn6MOmh5vHWbt4aEU7+OPch8/Zo=
+X-Gm-Message-State: AOJu0YxnSTT1jacD+aXKhu0GTcPyZDGPD8aBClcriLwpg4xeFmJA+FAU
+ bxCDqBqDSkHyUtZjOge0rT9aGlceaCBpUwra+e1fi1rz4V1+Tno6zrdJLYK3pnymQcEj99gkATb
+ VID54Q6Ng3W6CPgMW67iTYnHnZbS0rywoQxG4Og==
+X-Google-Smtp-Source: AGHT+IHRDpoJs4z0lPz/Ku/I4P+Uy5cY/maQ4AP/tCeEJnywf/PYNT1BZX63jqKzb0CdbA6lmOu+4koimeVlaTqFrBg=
+X-Received: by 2002:a2e:9211:0:b0:2d2:cb43:bc86 with SMTP id
+ k17-20020a2e9211000000b002d2cb43bc86mr1766825ljg.45.1710858243015; Tue, 19
+ Mar 2024 07:24:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240319140000.1014247-3-pbonzini@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20240317083704.23244-1-zhukeqian1@huawei.com>
+ <20240317083704.23244-2-zhukeqian1@huawei.com>
+ <4d7795bb-1dfa-40e7-a98e-4c0bafdf3db0@redhat.com>
+ <7387988008764735b2f1dd5f2c83a45a@huawei.com>
+ <7cc3c19c-00f0-4ad2-b0de-ba42e9b20c2a@redhat.com>
+In-Reply-To: <7cc3c19c-00f0-4ad2-b0de-ba42e9b20c2a@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 19 Mar 2024 14:23:52 +0000
+Message-ID: <CAFEAcA9iBPBvZ-9cFVRdAJaFPZmPK3adn10v2LiS90+1iUzwXA@mail.gmail.com>
+Subject: =?UTF-8?B?UmU6IOetlOWkjTogW1BBVENIIHYxIDEvMl0gc3lzdGVtL2NwdXM6IEZpeCBwYXVzZV9hbA==?=
+ =?UTF-8?B?bF92Y3B1cygpIHVuZGVyIGNvbmN1cnJlbnQgZW52aXJvbm1lbnQ=?=
+To: David Hildenbrand <david@redhat.com>
+Cc: zhukeqian <zhukeqian1@huawei.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ Igor Mammedov <imammedo@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ "Wanghaibin (D)" <wanghaibin.wang@huawei.com>, yuzenghui <yuzenghui@huawei.com>,
+ jiangkunkun <jiangkunkun@huawei.com>, Salil Mehta <salil.mehta@huawei.com>, 
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "Zengtao (B)" <prime.zeng@hisilicon.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x230.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,68 +97,23 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 19, 2024 at 02:59:55PM +0100, Paolo Bonzini wrote:
-> Right now, the system reset is concluded by a call to
-> cpu_synchronize_all_post_reset() in order to sync any changes
-> that the machine reset callback applied to the CPU state.
-> 
-> However, for VMs with encrypted state such as SEV-ES guests (currently
-> the only case of guests with non-resettable CPUs) this cannot be done,
-> because guest state has already been finalized by machine-init-done notifiers.
-> cpu_synchronize_all_post_reset() does nothing on these guests, and actually
-> we would like to make it fail if called once guest has been encrypted.
-> So, assume that boards that support non-resettable CPUs do not touch
-> CPU state and that all such setup is done before, at the time of
-> cpu_synchronize_all_post_init().
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  system/runstate.c | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/system/runstate.c b/system/runstate.c
-> index d6ab860ecaa..843e2b9853d 100644
-> --- a/system/runstate.c
-> +++ b/system/runstate.c
-> @@ -501,7 +501,20 @@ void qemu_system_reset(ShutdownCause reason)
->      default:
->          qapi_event_send_reset(shutdown_caused_by_guest(reason), reason);
->      }
-> -    cpu_synchronize_all_post_reset();
-> +
-> +    /*
-> +     * Some boards us the machine reset callback to point CPUs to the firmware
+On Tue, 19 Mar 2024 at 09:24, David Hildenbrand <david@redhat.com> wrote:
+> I spotted new pause_all_vcpus() / resume_all_vcpus() calls in hw/intc/arm_gicv3_kvm.c and
+> thought they would be the problematic bit.
+>
+> Yeah, that's going to be problematic. Further note that a lot of code does not expect
+> that the BQL is suddenly dropped.
 
-ITYM s/us/use/
+Agreed; we already have one nasty set of bugs in the framebuffer
+devices because a function drops the BQL briefly:
+https://lore.kernel.org/qemu-devel/CAFEAcA9odnPo2LPip295Uztri7JfoVnQbkJ=Wn+k8dQneB_ynQ@mail.gmail.com/T/#u
+so let's avoid introducing any more of a similar kind.
 
-> +     * entry point.  Assume that this is not the case for boards that support
-> +     * non-resettable CPUs (currently used only for confidential guests), in
-> +     * which case cpu_synchronize_all_post_init() is enough because
-> +     * it does _more_  than cpu_synchronize_all_post_reset().
-> +     */
-> +    if (cpus_are_resettable()) {
-> +        cpu_synchronize_all_post_reset();
-> +    } else {
-> +        assert(runstate_check(RUN_STATE_PRELAUNCH));
-> +    }
-> +
->      vm_set_suspended(false);
->  }
->  
-> -- 
-> 2.44.0
-> 
-> 
+Side note, the pause_all_vcpus()/resume_all_vcpus() calls in
+hw/i386/vapic.c are probably a bit suspect for similar reasons.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+-- PMM
 
