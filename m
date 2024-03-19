@@ -4,66 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC84C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 13:32:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16278C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 13:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmZZr-0002eM-2v; Tue, 19 Mar 2024 09:32:27 -0400
+	id 1rmZaM-0003ZE-8b; Tue, 19 Mar 2024 09:32:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmZZj-0002cm-DC
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:32:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmZZh-0001RE-93
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:32:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710855135;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FbjzmZ1U0Mwt0hmu8IXDW+MwyY5qt9tbclQufJ6L3gA=;
- b=X18ml0SyJps0FzC43SvXZc40Jz3YaWSMxeX4ZBdiv2goTZgRRjc/DEYpsS4TBp4wFEYVDQ
- sSdjkzNAHTFmbWJvDWc0a5Obqcdx2ryMfXmrk4bw4glWwSLm5iPFWz1VEfA7GOiypouQEj
- SlWgZ+hKdiNwU1p9jSkBKdwCqeXGQVQ=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462-dK0d34KnN5u2WuJeoQAihQ-1; Tue, 19 Mar 2024 09:32:13 -0400
-X-MC-Unique: dK0d34KnN5u2WuJeoQAihQ-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 532D6800267
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 13:32:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.194.166])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 803C01C060A4;
- Tue, 19 Mar 2024 13:32:11 +0000 (UTC)
-Date: Tue, 19 Mar 2024 14:32:06 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Sanjay Rao <srao@redhat.com>,
- Boaz Ben Shabat <bbenshab@redhat.com>, Joe Mario <jmario@redhat.com>
-Subject: Re: [PATCH] coroutine: cap per-thread local pool size
-Message-ID: <ZfmT1s8hcW48KIn1@redhat.com>
-References: <20240318183429.1039340-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rmZaL-0003YL-CO
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:32:57 -0400
+Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rmZaJ-0001Vv-9f
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:32:57 -0400
+Received: by mail-lf1-x131.google.com with SMTP id
+ 2adb3069b0e04-513e25afabaso2979121e87.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 06:32:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710855173; x=1711459973; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fsBvvrqM00WWftJWOlKbmFrLIuby75/+RsN4sAl2i+8=;
+ b=vlumG4IrLHkhS7jPkCSFM7yNSiKZ0Xlf40IOdWHVpY5c6YAflCUKZS/wpWuWNpJ0Ve
+ +xANy34A81v6UINDckVoKbgG6WCFAKYgWvTmwkMJdrZsQSliFkKD/GADsr+nFHteUqVJ
+ +OApJ7GS2Lh0nc75iboXa+p6TLr561F/vxBKndEYItczYycKyfl7CB38i5rvYdfZyc3o
+ /JqNB9ng3rXbkGX2iymlxlglfRBc2RqZWqJMgS94MGu5Fdos7EEdAG0+GYI1UXgB9VgN
+ DJMkdG3XOjj+lY5gWYK7JOzmVFB0nrLgkmOvAchX9qrM6WJ5E7fyiU1oevqPfVvfItSL
+ q8fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710855173; x=1711459973;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fsBvvrqM00WWftJWOlKbmFrLIuby75/+RsN4sAl2i+8=;
+ b=wOr/gKuWnOiOGC/J0GxWm4d9f50V+tuIWyiPNUWkN41dWB9wrE6W4FEcYfSbbxqUKb
+ PMsDcKKtMLthLJn1NiysbZDWz2zZxTxsq0Q8LHBL6/e9lkGHyJIxP8DU/aaGa1r6+2qh
+ feX88DyE1XeSt/+6LJ2nD30Q28WAtpbNksp0ABF45XZU7wUtfx8oVuX8d/ZsvD/smOCJ
+ p6ewhwbJKOYs32pb60u4L6fqPq0jQgI+XaEhyzr6/3JZu2Ek3czliQ8t9GSTCJJjjzfA
+ 4vKFh1nw9Oky7Lin3x/h7dyzWHWrw6iiQ4z0/ptKDm++4tkkyRpsZo6TtUmUXKUPZY7d
+ 7H2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXh4bMeWkCDDF3UemU9OQSAGIlxmVMInIG/pPNYzPokXIGmE6GNU8jfX0e364PEr5sL9AIxcEBdggY91QxM2mx/CMgQkUw=
+X-Gm-Message-State: AOJu0YyQ620TTKFvca/lY62lsfaLSK+zVoAe4VldKynIWxHgBeTjMCgl
+ /ql9wxd4Ya6g+GBxXj9kDNFxNy4XC/EZ08JBPu1fprTzHH+lVwBXDQ4GgGRShH8=
+X-Google-Smtp-Source: AGHT+IGigG/uMM+3Ob59pXMHEp63HF7b34LJx2kneJE6j5heFfrE+kQjqLT1zBndpCTmtwgQ1AXQwg==
+X-Received: by 2002:a19:914e:0:b0:513:93dd:9ecd with SMTP id
+ y14-20020a19914e000000b0051393dd9ecdmr9490702lfj.21.1710855172962; 
+ Tue, 19 Mar 2024 06:32:52 -0700 (PDT)
+Received: from [192.168.1.24] ([102.35.208.160])
+ by smtp.gmail.com with ESMTPSA id
+ o18-20020a05600c4fd200b004140bece5d1sm8844879wmq.8.2024.03.19.06.32.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 06:32:52 -0700 (PDT)
+Message-ID: <5b9ff51d-439f-4e65-acb5-909bdfaf350c@linaro.org>
+Date: Tue, 19 Mar 2024 17:32:49 +0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240318183429.1039340-1-stefanha@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/22] plugins: Use emit_before_op for
+ PLUGIN_GEN_AFTER_INSN
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org
+References: <20240316015720.3661236-1-richard.henderson@linaro.org>
+ <20240316015720.3661236-8-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240316015720.3661236-8-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::131;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-lf1-x131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,77 +99,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 18.03.2024 um 19:34 hat Stefan Hajnoczi geschrieben:
-> The coroutine pool implementation can hit the Linux vm.max_map_count
-> limit, causing QEMU to abort with "failed to allocate memory for stack"
-> or "failed to set up stack guard page" during coroutine creation.
+On 3/16/24 05:57, Richard Henderson wrote:
+> Introduce a new plugin_cb op and migrate one operation.
+> By using emit_before_op, we do not need to emit opcodes
+> early and modify them later -- we can simply emit the
+> final set of opcodes once.
 > 
-> This happens because per-thread pools can grow to tens of thousands of
-> coroutines. Each coroutine causes 2 virtual memory areas to be created.
-> Eventually vm.max_map_count is reached and memory-related syscalls fail.
-> The per-thread pool sizes are non-uniform and depend on past coroutine
-> usage in each thread, so it's possible for one thread to have a large
-> pool while another thread's pool is empty.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/tcg/tcg-op-common.h |  1 +
+>   include/tcg/tcg-opc.h       |  1 +
+>   accel/tcg/plugin-gen.c      | 74 +++++++++++++++++++++----------------
+>   tcg/tcg-op.c                |  5 +++
+>   4 files changed, 50 insertions(+), 31 deletions(-)
 > 
-> Switch to a new coroutine pool implementation with a global pool that
-> grows to a maximum number of coroutines and per-thread local pools that
-> are capped at hardcoded small number of coroutines.
-> 
-> This approach does not leave large numbers of coroutines pooled in a
-> thread that may not use them again. In order to perform well it
-> amortizes the cost of global pool accesses by working in batches of
-> coroutines instead of individual coroutines.
-> 
-> The global pool is a list. Threads donate batches of coroutines to when
-> they have too many and take batches from when they have too few:
-> 
-> .-----------------------------------.
-> | Batch 1 | Batch 2 | Batch 3 | ... | global_pool
-> `-----------------------------------'
-> 
-> Each thread has up to 2 batches of coroutines:
-> 
-> .-------------------.
-> | Batch 1 | Batch 2 | per-thread local_pool (maximum 2 batches)
-> `-------------------'
-> 
-> The goal of this change is to reduce the excessive number of pooled
-> coroutines that cause QEMU to abort when vm.max_map_count is reached
-> without losing the performance of an adequately sized coroutine pool.
-> 
-> Here are virtio-blk disk I/O benchmark results:
-> 
->       RW BLKSIZE IODEPTH    OLD    NEW CHANGE
-> randread      4k       1 113725 117451 +3.3%
-> randread      4k       8 192968 198510 +2.9%
-> randread      4k      16 207138 209429 +1.1%
-> randread      4k      32 212399 215145 +1.3%
-> randread      4k      64 218319 221277 +1.4%
-> randread    128k       1  17587  17535 -0.3%
-> randread    128k       8  17614  17616 +0.0%
-> randread    128k      16  17608  17609 +0.0%
-> randread    128k      32  17552  17553 +0.0%
-> randread    128k      64  17484  17484 +0.0%
-> 
-> See files/{fio.sh,test.xml.j2} for the benchmark configuration:
-> https://gitlab.com/stefanha/virt-playbooks/-/tree/coroutine-pool-fix-sizing
-> 
-> Buglink: https://issues.redhat.com/browse/RHEL-28947
-> Reported-by: Sanjay Rao <srao@redhat.com>
-> Reported-by: Boaz Ben Shabat <bbenshab@redhat.com>
-> Reported-by: Joe Mario <jmario@redhat.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
+> index 2d932a515e..9de5a7f280 100644
+> --- a/include/tcg/tcg-op-common.h
+> +++ b/include/tcg/tcg-op-common.h
+> @@ -74,6 +74,7 @@ void tcg_gen_goto_tb(unsigned idx);
+>    */
+>   void tcg_gen_lookup_and_goto_ptr(void);
+>   
+> +void tcg_gen_plugin_cb(unsigned from);
+>   void tcg_gen_plugin_cb_start(unsigned from, unsigned type, unsigned wr);
+>   void tcg_gen_plugin_cb_end(void);
+>   
+> diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
+> index b80227fa1c..3b7cb2bce1 100644
+> --- a/include/tcg/tcg-opc.h
+> +++ b/include/tcg/tcg-opc.h
+> @@ -197,6 +197,7 @@ DEF(exit_tb, 0, 0, 1, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
+>   DEF(goto_tb, 0, 0, 1, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
+>   DEF(goto_ptr, 0, 1, 0, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
+>   
+> +DEF(plugin_cb, 0, 0, 1, TCG_OPF_NOT_PRESENT)
+>   DEF(plugin_cb_start, 0, 0, 3, TCG_OPF_NOT_PRESENT)
+>   DEF(plugin_cb_end, 0, 0, 0, TCG_OPF_NOT_PRESENT)
+>   
+> diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+> index c56f104aee..8fa342b425 100644
+> --- a/accel/tcg/plugin-gen.c
+> +++ b/accel/tcg/plugin-gen.c
+> @@ -207,8 +207,7 @@ static void plugin_gen_empty_callback(enum plugin_gen_from from)
+>   {
+>       switch (from) {
+>       case PLUGIN_GEN_AFTER_INSN:
+> -        gen_wrapped(from, PLUGIN_GEN_DISABLE_MEM_HELPER,
+> -                    gen_empty_mem_helper);
+> +        tcg_gen_plugin_cb(from);
+>           break;
+>       case PLUGIN_GEN_FROM_INSN:
+>           /*
+> @@ -614,16 +613,6 @@ static void inject_mem_enable_helper(struct qemu_plugin_tb *ptb,
+>       inject_mem_helper(begin_op, arr);
+>   }
+>   
+> -static void inject_mem_disable_helper(struct qemu_plugin_insn *plugin_insn,
+> -                                      TCGOp *begin_op)
+> -{
+> -    if (likely(!plugin_insn->mem_helper)) {
+> -        rm_ops(begin_op);
+> -        return;
+> -    }
+> -    inject_mem_helper(begin_op, NULL);
+> -}
+> -
+>   /* called before finishing a TB with exit_tb, goto_tb or goto_ptr */
+>   void plugin_gen_disable_mem_helpers(void)
+>   {
+> @@ -709,11 +698,14 @@ static void plugin_gen_enable_mem_helper(struct qemu_plugin_tb *ptb,
+>       inject_mem_enable_helper(ptb, insn, begin_op);
+>   }
+>   
+> -static void plugin_gen_disable_mem_helper(struct qemu_plugin_tb *ptb,
+> -                                          TCGOp *begin_op, int insn_idx)
+> +static void gen_disable_mem_helper(struct qemu_plugin_tb *ptb,
+> +                                   struct qemu_plugin_insn *insn)
+>   {
+> -    struct qemu_plugin_insn *insn = g_ptr_array_index(ptb->insns, insn_idx);
+> -    inject_mem_disable_helper(insn, begin_op);
+> +    if (insn->mem_helper) {
+> +        tcg_gen_st_ptr(tcg_constant_ptr(0), tcg_env,
+> +                       offsetof(CPUState, plugin_mem_cbs) -
+> +                       offsetof(ArchCPU, env));
+> +    }
+>   }
+>   
+>   /* #define DEBUG_PLUGIN_GEN_OPS */
+> @@ -772,16 +764,49 @@ static void pr_ops(void)
+>   
+>   static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
+>   {
+> -    TCGOp *op;
+> +    TCGOp *op, *next;
+>       int insn_idx = -1;
+>   
+>       pr_ops();
+>   
+> -    QTAILQ_FOREACH(op, &tcg_ctx->ops, link) {
+> +    /*
+> +     * While injecting code, we cannot afford to reuse any ebb temps
+> +     * that might be live within the existing opcode stream.
+> +     * The simplest solution is to release them all and create new.
+> +     */
+> +    memset(tcg_ctx->free_temps, 0, sizeof(tcg_ctx->free_temps));
+> +
 
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Not an expert at this, but wouldn't that break an existing TB that 
+already has some ops on those temps?
 
-Though I do wonder if we can do something about the slight performance
-degradation that Sanjay reported. We seem to stay well under the hard
-limit, so the reduced global pool size shouldn't be the issue. Maybe
-it's the locking?
-
-Either way, even though it could be called a fix, I don't think this is
-for 9.0, right?
-
-Kevin
-
+> +    QTAILQ_FOREACH_SAFE(op, &tcg_ctx->ops, link, next) {
+>           switch (op->opc) {
+>           case INDEX_op_insn_start:
+>               insn_idx++;
+>               break;
+> +
+> +        case INDEX_op_plugin_cb:
+> +        {
+> +            enum plugin_gen_from from = op->args[0];
+> +            struct qemu_plugin_insn *insn = NULL;
+> +
+> +            if (insn_idx >= 0) {
+> +                insn = g_ptr_array_index(plugin_tb->insns, insn_idx);
+> +            }
+> +
+> +            tcg_ctx->emit_before_op = op;
+> +
+> +            switch (from) {
+> +            case PLUGIN_GEN_AFTER_INSN:
+> +                assert(insn != NULL);
+> +                gen_disable_mem_helper(plugin_tb, insn);
+> +                break;
+> +            default:
+> +                g_assert_not_reached();
+> +            }
+> +
+> +            tcg_ctx->emit_before_op = NULL;
+> +            tcg_op_remove(tcg_ctx, op);
+> +            break;
+> +        }
+> +
+>           case INDEX_op_plugin_cb_start:
+>           {
+>               enum plugin_gen_from from = op->args[0];
+> @@ -846,19 +871,6 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
+>   
+>                   break;
+>               }
+> -            case PLUGIN_GEN_AFTER_INSN:
+> -            {
+> -                g_assert(insn_idx >= 0);
+> -
+> -                switch (type) {
+> -                case PLUGIN_GEN_DISABLE_MEM_HELPER:
+> -                    plugin_gen_disable_mem_helper(plugin_tb, op, insn_idx);
+> -                    break;
+> -                default:
+> -                    g_assert_not_reached();
+> -                }
+> -                break;
+> -            }
+>               default:
+>                   g_assert_not_reached();
+>               }
+> diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+> index aa6bc6f57d..0f2026c91c 100644
+> --- a/tcg/tcg-op.c
+> +++ b/tcg/tcg-op.c
+> @@ -312,6 +312,11 @@ void tcg_gen_mb(TCGBar mb_type)
+>       }
+>   }
+>   
+> +void tcg_gen_plugin_cb(unsigned from)
+> +{
+> +    tcg_gen_op1(INDEX_op_plugin_cb, from);
+> +}
+> +
+>   void tcg_gen_plugin_cb_start(unsigned from, unsigned type, unsigned wr)
+>   {
+>       tcg_gen_op3(INDEX_op_plugin_cb_start, from, type, wr);
 
