@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 491DCC54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 21:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88F9EC54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 21:17:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmgmy-0002JT-Qx; Tue, 19 Mar 2024 17:14:28 -0400
+	id 1rmgp1-0003Uy-96; Tue, 19 Mar 2024 17:16:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmgmw-0002Hz-Tp
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:14:26 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1rmgp0-0003UA-96
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:16:34 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmgmt-0008Cm-GR
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:14:26 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6e6b22af648so225228b3a.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 14:14:22 -0700 (PDT)
+ id 1rmgox-00005r-PV
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:16:34 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1dffa5e3f2dso21313955ad.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 14:16:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710882861; x=1711487661; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710882990; x=1711487790; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mNvi2tmZ8zJngxfI5KhlPbVp84w4oyI5JdITFeSXGR8=;
- b=TylFaU36l1QVDUTppyWw4V/pbaB3INFAKBsPiDaLtDTy9WTef1pG1sn8nzBU5QQjdo
- Y1/ymDhaiZugTJ12zHhnwgRQawlse9cRDkQ0O2yfcfvAFMSQv3T7/zbXdg4G0ehZeG0B
- PFVKPybtLLvAeZuxlWsrWrvX7lbNTjk1lJs7QUAVuLw/BCU4YfV/808IsPJzfNzggiYl
- N70rWh++BZ8mKUcaMUcGva2h7j45jvdovyEBTIUl3LV9OREW8+7FIf6W5Lnntr9j5TZ/
- 1rE6hIhu/PjmdYOg9lVm72e8KB5HCwbmamZILRbT9FMKo2B8FUNwFvW686pCQ/uDbrpn
- 3rTA==
+ bh=OzXNFRQy4obpYoDpWQot9takJN/KNaAfNdmPPTGfPTw=;
+ b=VEIkDuG7zgn+NpCTl7v7pVNnWtupvA6M3RPKNFArgltEDdFe4/I/9AQg1tUc6D878/
+ L9fWhdrK9rQzzHhpKiH02UpSMyIjfo1iULE/eamjNviYnMAPAaOp1lWM4y0RWy/HMfLt
+ DnPixkQBkQ87QZ0m2/iF8gvgC+0wa9ifZn/WCQJerKW95mjMFgS4EN/AvRSmL0BDWTFx
+ jZrBL9+LpYuUdtXUb6E/+ClFSd1X0hwM+M6cGgJWDIUXQpEhjCKN8LeGPbwD2JYQdv66
+ F24MVX9M0yh1Qgomq8Qg5KwPZf2q58iRyuutcLzOn0bBGeFLXfRDX/HZtsOEHik+qXeH
+ AN6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710882861; x=1711487661;
+ d=1e100.net; s=20230601; t=1710882990; x=1711487790;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mNvi2tmZ8zJngxfI5KhlPbVp84w4oyI5JdITFeSXGR8=;
- b=jrZzTm5IKRzfo9ts+j0LNZ9KYbCizvM/Kq/ezfzLW3EtsdoufGdIJcUydPuRYfIzUV
- lqfaERBeI4lKrgPU/jNfE2PX529xuiNDSlmUgLYVNpQ4LSVwsjLDfxwpcPIgJaf7MJWT
- bK6YsaxyH9HpseapoAR6QwcgHSNowsuGwcxHC6oIRFCYTaoGpm2imbb6yFF3dZdYtCJw
- uBlDa9QmjcHxwmykh6+7rxBixxtXsb8iJK00BLwymIFk1bufaf5/wzVSFeksFx08WJAz
- X6KJWXCIuVonAssz0noo0JOOi65LSdASB8iPa0KE0YDR5Phq91cc4Kf5nwEACUS6mSQt
- uO4A==
+ bh=OzXNFRQy4obpYoDpWQot9takJN/KNaAfNdmPPTGfPTw=;
+ b=LZdJLQhfpUmmZd8NVvHwS68pZc0WhInz665YFMJFuoXMHfLyTE4RPI9tw5u1Sq4jWC
+ /2V1LnIKB6vnelu79nbbSSUsfR7+S0KznuyaXgEqZEXhMvOhHujA0R3cQKodzzkC8zVt
+ Ct9fxZtB5w2f2ILReIrIRDX46LeNEKTjF/WubtYgzED6YQCCSYDRx7d/O+wmLPaJpzW5
+ 7y5FU2NZ4x2M781nDskkAUFqB67/bXXn443a4bsiuf89MFuql+KnH2f0BzcAGuR7NiDw
+ C3MAyYREsfkxZ/udrc88MvtwyP13RPzMANkeiciELb+YwBS9hYzuzSMsytU+iYSe5+mR
+ NXwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZTMvkswKcsOqsOgRu3zmDxDPPbK9lNlOiF5CLBjwOFMDi3Yt7K4j6ZhLsEmZHXcRNc3VeVUAWekUAUIpcp3v9YHbBnz0=
-X-Gm-Message-State: AOJu0YxvFesLYbd+ee1Mh+bf61I6o4TV7GZNLTdQG+VI5QNZEN50ad7V
- S5JTPGxL2gINiDYTlvf8ahrXav3seA9C9Rafm5sk4KS87Xoqon8nfjEuyoOx6Oc=
-X-Google-Smtp-Source: AGHT+IGCYV9Z/bxiIAC6PB4I+CCedOi4j/ITh+O85iRlB7FvzQYPOOGOGghToGhjNSms0BhvovF1uA==
-X-Received: by 2002:a05:6a20:2d11:b0:1a3:6644:df05 with SMTP id
- g17-20020a056a202d1100b001a36644df05mr5750034pzl.16.1710882861462; 
- Tue, 19 Mar 2024 14:14:21 -0700 (PDT)
+ AJvYcCWu27UXMDMZGh4vmGMcDUQIHRjoIsJPSc1xcrty/iZwBu0uhtsg0R13ya/HcOvl0nbqR7NibYfK03Vny2c1L7NfAxgsli0=
+X-Gm-Message-State: AOJu0YxDJcy6PNu45j7pmZaSQgSno1WiXsuIRJPFMT6D9bntLnC4PTq+
+ faeR+3fjDRYPVcFFFJ0oiD6uPouQej5ZIQ9VIfG2THN6tPErJr5s9SZLTHoRSIU=
+X-Google-Smtp-Source: AGHT+IHzwEIxU66MqffiG8iwfijkFN5JmLaL9eD9OD/frstvwkoManrkt0fc5aM2X9YTT2QVyqWwWA==
+X-Received: by 2002:a17:902:b70e:b0:1dd:de1a:bd02 with SMTP id
+ d14-20020a170902b70e00b001ddde1abd02mr3441417pls.41.1710882990023; 
+ Tue, 19 Mar 2024 14:16:30 -0700 (PDT)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- h3-20020a654043000000b005dc49afed53sm8259622pgp.55.2024.03.19.14.14.18
+ i17-20020a17090332d100b001dd7a97a266sm11708110plr.282.2024.03.19.14.16.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 14:14:20 -0700 (PDT)
-Message-ID: <9b23f721-7ea4-4f12-8f8c-3d87aa9ebefd@linaro.org>
-Date: Tue, 19 Mar 2024 11:14:16 -1000
+ Tue, 19 Mar 2024 14:16:29 -0700 (PDT)
+Message-ID: <f53deaf6-6b83-4eeb-aae1-3ef5925e3897@linaro.org>
+Date: Tue, 19 Mar 2024 11:16:26 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 24/27] target/sparc: Convert to
- TCGCPUOps::get_cpu_state()
+Subject: Re: [PATCH-for-9.1 00/27] accel/tcg: Introduce
+ TCGCPUOps::get_cpu_state() handler
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
+ qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>
 References: <20240319154258.71206-1-philmd@linaro.org>
- <20240319154258.71206-25-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240319154258.71206-25-philmd@linaro.org>
+In-Reply-To: <20240319154258.71206-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,16 +101,38 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/19/24 05:42, Philippe Mathieu-Daudé wrote:
-> Convert cpu_get_tb_cpu_state() to TCGCPUOps::get_cpu_state().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   target/sparc/cpu.h       | 37 ++-----------------------------------
->   target/sparc/cpu.c       |  1 +
->   target/sparc/translate.c | 33 +++++++++++++++++++++++++++++++++
->   3 files changed, 36 insertions(+), 35 deletions(-)
+> Philippe Mathieu-Daudé (27):
+>    accel/tcg: Ensure frontends define restore_state_to_opc handler
+>    accel/tcg: Introduce TCGCPUOps::get_cpu_state() handler
+>    target/alpha: Convert to TCGCPUOps::get_cpu_state()
+>    target/arm: Restrict TCG-specific declarations
+>    target/arm: Convert to TCGCPUOps::get_cpu_state()
+>    target/avr: Convert to TCGCPUOps::get_cpu_state()
+>    target/cris: Convert to TCGCPUOps::get_cpu_state()
+>    target/hexagon: Convert to TCGCPUOps::get_cpu_state()
+>    target/hppa: Convert to TCGCPUOps::get_cpu_state()
+>    target/i386: Convert to TCGCPUOps::get_cpu_state()
+>    target/loongarch: Convert to TCGCPUOps::get_cpu_state()
+>    target/m68k: Convert to TCGCPUOps::get_cpu_state()
+>    target/microblaze: Convert to TCGCPUOps::get_cpu_state()
+>    target/mips: Convert to TCGCPUOps::get_cpu_state()
+>    target/nios2: Convert to TCGCPUOps::get_cpu_state()
+>    target/openrisc: Convert to TCGCPUOps::get_cpu_state()
+>    target/ppc: Indent ppc_tcg_ops[] with 4 spaces
+>    target/ppc: Convert to TCGCPUOps::get_cpu_state()
+>    target/riscv: Convert to TCGCPUOps::get_cpu_state()
+>    target/rx: Convert to TCGCPUOps::get_cpu_state()
+>    target/s390x: Restrict TCG-specific declarations
+>    target/s390x: Convert to TCGCPUOps::get_cpu_state()
+>    target/sh4: Convert to TCGCPUOps::get_cpu_state()
+>    target/sparc: Convert to TCGCPUOps::get_cpu_state()
+>    target/tricore: Convert to TCGCPUOps::get_cpu_state()
+>    target/xtensa: Convert to TCGCPUOps::get_cpu_state()
+>    accel/tcg: Remove check on TARGET_HAS_CPU_GET_TB_CPU_STATE
 
-Again, why translate.c?
+Modulo 3 notes,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
