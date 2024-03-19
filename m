@@ -4,60 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19458C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 08:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B220C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 08:17:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmUbN-0003oA-7A; Tue, 19 Mar 2024 04:13:42 -0400
+	id 1rmUeg-0004vy-EK; Tue, 19 Mar 2024 04:17:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1rmUbL-0003nc-2U; Tue, 19 Mar 2024 04:13:39 -0400
-Received: from out30-100.freemail.mail.aliyun.com ([115.124.30.100])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmUec-0004vZ-Rf
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:17:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1rmUbG-0007vb-Ib; Tue, 19 Mar 2024 04:13:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1710836004; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=VMxGg/HglIseeNwydchbhH/8VOT54s9BYAGz/q0SMqo=;
- b=a8NuhIYaRlAdVLkwoWt+nXAeq97DsDgQkRGMEAgl5hrNs0cUL9klwRAq3X3elI27fqBHyMdIEG1r7NddAeIhEx1NPhjNPhN6SCqjWy9Z3Yt80bt7X8UcMEpRxuWzv+u8GqdfeWzeFWhlooVlb27jd0PuiLzp0tQh+xNr1G/WiC0=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R411e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046059;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W2sMZ1d_1710836001; 
-Received: from 30.198.0.148(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W2sMZ1d_1710836001) by smtp.aliyun-inc.com;
- Tue, 19 Mar 2024 16:13:22 +0800
-Message-ID: <58752d39-25fb-467a-8e9b-15361539720d@linux.alibaba.com>
-Date: Tue, 19 Mar 2024 16:13:19 +0800
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmUeO-0000GE-Kj
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:17:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710836206;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tGBZ1NodGkw1twMe2bHAbus80Q+dbCq/LWCLgEri9RM=;
+ b=HsUf8WxP3/lylu+8VY4nvCKa7pj2n2O88vqXK+2z12aJDV1v1QX0Lq1kee7dMunIsL2ymc
+ JtGxUWWhmHOIVeP+t4lVZVi8Y0xguvWVB0T4CEpYOmdAlFX/8QBuwo33DOW6J+eYgEmwXA
+ dCGz1AjnQtM+WtvEFbKJRcmVMo2egLM=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-425-uehHy28SMs2Ys3FhW5cl8w-1; Tue, 19 Mar 2024 04:16:43 -0400
+X-MC-Unique: uehHy28SMs2Ys3FhW5cl8w-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-430bde4b347so39326761cf.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 01:16:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710836203; x=1711441003;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tGBZ1NodGkw1twMe2bHAbus80Q+dbCq/LWCLgEri9RM=;
+ b=SARXJ7wODZOM1vqe/AmxBeQsGKSPTGTEOtQ4ZEQnvtB5rH7WGkiDpOloecLHZld/46
+ ATYxfi09GIsVTYPHH0AtIl8bX7jR7i/K1aaUoPjkgA1B8Mx7sAl2nsGwDDsCMUkzE9h/
+ cp/X1SUsFRq+0MPYCjaL4or/6p7c0LZTNuTChIM3n8EfOLpdR7nUc9OwEKpVyFUlFPCc
+ iICnkK+D/phM8yk5gUiR5Vu4vaTrFZJiIqbO6sqozSrgG/DIa7zO9Zn+Tfx13Xf/tXgK
+ L2em7kOQ1WFB0qebEeT3IEFizr7pmoAQnm1xUDwSMpcCR6YfGB/gyyPJiw1+Q9rL7FkG
+ fYkA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcB+t5Ry483+iAKxnC4Ggr56tPMVFRP17J/OZdrLexNSctyrMdgumTX4TKWvg5I26sUd84HGSJLJvDHINubg8Yrk6N3z8=
+X-Gm-Message-State: AOJu0Yw+7DZr2huqlgUzuN2/PnvnaNQMr1PvHQXLPR2kQmKWvSxRQcL5
+ vqdP04qlqPE06IZiF6ZDFtmp76ML2eLBSAA6uHi+TKgMJFaWME8VAbPyoXPqWPIKq0asS9ymK+Z
+ 3e6Fhttq4vh0PJZxQHGuQvy2oJixPIQJvNtT+IJ+V5UeqexcODgVv
+X-Received: by 2002:a05:622a:40b:b0:430:95e4:7c12 with SMTP id
+ n11-20020a05622a040b00b0043095e47c12mr15847442qtx.55.1710836203191; 
+ Tue, 19 Mar 2024 01:16:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFibSsJgdd+2SE1pGuu6cCic6KmiRSmU7eywm/rD3FkCR8BJ/WgDlUNW9JYn8N319R53rvEBw==
+X-Received: by 2002:a05:622a:40b:b0:430:95e4:7c12 with SMTP id
+ n11-20020a05622a040b00b0043095e47c12mr15847433qtx.55.1710836202945; 
+ Tue, 19 Mar 2024 01:16:42 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ay29-20020a05622a229d00b00430b385f721sm4369373qtb.15.2024.03.19.01.16.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 01:16:42 -0700 (PDT)
+Message-ID: <e6af68f4-f38d-413f-a63c-d1ae7254d802@redhat.com>
+Date: Tue, 19 Mar 2024 09:16:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 9.0 v15 04/10] target/riscv: always clear vstart in
- whole vec move insns
-Content-Language: en-US
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, palmer@rivosinc.com, max.chou@sifive.com,
- richard.henderson@linaro.org
-References: <20240314175704.478276-1-dbarboza@ventanamicro.com>
- <20240314175704.478276-5-dbarboza@ventanamicro.com>
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240314175704.478276-5-dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v1 01/11] Introduce a common abstract struct
+ HostIOMMUDevice
+Content-Language: en-US, fr
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, peterx@redhat.com,
+ jasowang@redhat.com, mst@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ joao.m.martins@oracle.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ yi.y.sun@intel.com, chao.p.peng@intel.com
+References: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
+ <20240228035900.1085727-2-zhenzhong.duan@intel.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240228035900.1085727-2-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=115.124.30.100;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-100.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,71 +108,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Zhenzhong,
 
-On 2024/3/15 1:56, Daniel Henrique Barboza wrote:
-> These insns have 2 paths: we'll either have vstart already cleared if
-> vstart_eq_zero or we'll do a brcond to check if vstart >= maxsz to call
-> the 'vmvr_v' helper. The helper will clear vstart if it executes until
-> the end, or if vstart >= vl.
->
-> For starters, the check itself is wrong: we're checking vstart >= maxsz,
-> when in fact we should use vstart in bytes, or 'startb' like 'vmvr_v' is
-> calling, to do the comparison. But even after fixing the comparison we'll
-> still need to clear vstart in the end, which isn't happening too.
->
-> We want to make the helpers responsible to manage vstart, including
-> these corner cases, precisely to avoid these situations:
->
-> - remove the wrong vstart >= maxsz cond from the translation;
-> - add a 'startb >= maxsz' cond in 'vmvr_v', and clear vstart if that
->    happens.
->
-> This way we're now sure that vstart is being cleared in the end of the
-> execution, regardless of the path taken.
->
-> Fixes: f714361ed7 ("target/riscv: rvv-1.0: implement vstart CSR")
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-
-Zhiwei
-
+On 2/28/24 04:58, Zhenzhong Duan wrote:
+> HostIOMMUDevice will be inherited by two sub classes,
+> legacy and iommufd currently.
+> 
+> Introduce a helper function host_iommu_base_device_init to initialize it.
+> 
+> Suggested-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > ---
->   target/riscv/insn_trans/trans_rvv.c.inc | 3 ---
->   target/riscv/vector_helper.c            | 5 +++++
->   2 files changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-> index 8c16a9f5b3..52c26a7834 100644
-> --- a/target/riscv/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-> @@ -3664,12 +3664,9 @@ static bool trans_##NAME(DisasContext *s, arg_##NAME * a)               \
->                                vreg_ofs(s, a->rs2), maxsz, maxsz);        \
->               mark_vs_dirty(s);                                           \
->           } else {                                                        \
-> -            TCGLabel *over = gen_new_label();                           \
-> -            tcg_gen_brcondi_tl(TCG_COND_GEU, cpu_vstart, maxsz, over);  \
->               tcg_gen_gvec_2_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2), \
->                                  tcg_env, maxsz, maxsz, 0, gen_helper_vmvr_v); \
->               mark_vs_dirty(s);                                           \
-> -            gen_set_label(over);                                        \
->           }                                                               \
->           return true;                                                    \
->       }                                                                   \
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 34ac4aa808..bcc553c0e2 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -5075,6 +5075,11 @@ void HELPER(vmvr_v)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
->       uint32_t startb = env->vstart * sewb;
->       uint32_t i = startb;
->   
-> +    if (startb >= maxsz) {
-> +        env->vstart = 0;
-> +        return;
-> +    }
+>   include/sysemu/host_iommu_device.h | 22 ++++++++++++++++++++++
+>   1 file changed, 22 insertions(+)
+>   create mode 100644 include/sysemu/host_iommu_device.h
+> 
+> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+> new file mode 100644
+> index 0000000000..fe80ab25fb
+> --- /dev/null
+> +++ b/include/sysemu/host_iommu_device.h
+> @@ -0,0 +1,22 @@
+> +#ifndef HOST_IOMMU_DEVICE_H
+> +#define HOST_IOMMU_DEVICE_H
 > +
->       if (HOST_BIG_ENDIAN && i % 8 != 0) {
->           uint32_t j = ROUND_UP(i, 8);
->           memcpy((uint8_t *)vd + H1(j - 1),
+> +typedef enum HostIOMMUDevice_Type {
+> +    HID_LEGACY,
+> +    HID_IOMMUFD,
+> +    HID_MAX,
+> +} HostIOMMUDevice_Type;
+> +
+> +typedef struct HostIOMMUDevice {
+> +    HostIOMMUDevice_Type type;
+
+A type field is not a good sign and that's where QOM is useful.
+
+Is vtd_check_hdev() the only use of this field ? If so, can we simplify
+with a QOM interface in any way ?
+
+Thanks,
+
+C.
+
+  
+
+
+> +    size_t size;
+> +} HostIOMMUDevice;
+> +
+> +static inline void host_iommu_base_device_init(HostIOMMUDevice *dev,
+> +                                               HostIOMMUDevice_Type type,
+> +                                               size_t size)
+> +{
+> +    dev->type = type;
+> +    dev->size = size;
+> +}
+> +#endif
+
 
