@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16278C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 13:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64AAFC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 13:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmZaM-0003ZE-8b; Tue, 19 Mar 2024 09:32:58 -0400
+	id 1rmZb4-0004Lr-2o; Tue, 19 Mar 2024 09:33:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rmZaL-0003YL-CO
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:32:57 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ id 1rmZb2-0004KG-8j
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:33:40 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rmZaJ-0001Vv-9f
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:32:57 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-513e25afabaso2979121e87.2
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 06:32:54 -0700 (PDT)
+ id 1rmZb0-0001Xp-NR
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:33:40 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-41464711dc8so5715315e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 06:33:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710855173; x=1711459973; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710855217; x=1711460017; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fsBvvrqM00WWftJWOlKbmFrLIuby75/+RsN4sAl2i+8=;
- b=vlumG4IrLHkhS7jPkCSFM7yNSiKZ0Xlf40IOdWHVpY5c6YAflCUKZS/wpWuWNpJ0Ve
- +xANy34A81v6UINDckVoKbgG6WCFAKYgWvTmwkMJdrZsQSliFkKD/GADsr+nFHteUqVJ
- +OApJ7GS2Lh0nc75iboXa+p6TLr561F/vxBKndEYItczYycKyfl7CB38i5rvYdfZyc3o
- /JqNB9ng3rXbkGX2iymlxlglfRBc2RqZWqJMgS94MGu5Fdos7EEdAG0+GYI1UXgB9VgN
- DJMkdG3XOjj+lY5gWYK7JOzmVFB0nrLgkmOvAchX9qrM6WJ5E7fyiU1oevqPfVvfItSL
- q8fw==
+ bh=5v4XH0pkldfByQ1yCmAtbPt7BhoeRoQpXlOBflGX6dw=;
+ b=yx+nUsEFFO2c92PxV+fFzy16Ys8S4Ykkur0KoWXQqJ29fWiqatJ8unIF3vArUICaxO
+ ljNuMPNMZwYPpsGSMi0rK4PXCqq6BpHJdIyoabwB1FfLs35mVIlrxM8FfRNl/FxsK+yu
+ 3bJF/jEtvGC9Fa+eo/WcCvTHTiNB5s3UIJ5AbkQqlXXnZv3yBBZ7BKDT4ggjxpXJqUFr
+ Mn5M1K8MnhJKthZjkEBw8bzJk3FXaGJTCBRaHSyVdcz41a+DxuZ5GBLgk5MEO/7l5R4c
+ Z3UYwOnupTOE4/HXyGpArCpMekZp/d215jRlI+9dS5jTw+OaoEgX3N5hQRy17UUIkL+r
+ X+cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710855173; x=1711459973;
+ d=1e100.net; s=20230601; t=1710855217; x=1711460017;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fsBvvrqM00WWftJWOlKbmFrLIuby75/+RsN4sAl2i+8=;
- b=wOr/gKuWnOiOGC/J0GxWm4d9f50V+tuIWyiPNUWkN41dWB9wrE6W4FEcYfSbbxqUKb
- PMsDcKKtMLthLJn1NiysbZDWz2zZxTxsq0Q8LHBL6/e9lkGHyJIxP8DU/aaGa1r6+2qh
- feX88DyE1XeSt/+6LJ2nD30Q28WAtpbNksp0ABF45XZU7wUtfx8oVuX8d/ZsvD/smOCJ
- p6ewhwbJKOYs32pb60u4L6fqPq0jQgI+XaEhyzr6/3JZu2Ek3czliQ8t9GSTCJJjjzfA
- 4vKFh1nw9Oky7Lin3x/h7dyzWHWrw6iiQ4z0/ptKDm++4tkkyRpsZo6TtUmUXKUPZY7d
- 7H2w==
+ bh=5v4XH0pkldfByQ1yCmAtbPt7BhoeRoQpXlOBflGX6dw=;
+ b=X2tf7SdjXnjQzlJkGMaJVZgNU2oeeY1J1twi5mTvOK7S/R3aw5OH6o9D6Y1dc4Gnfl
+ T8wB30Rv2x80VE7+BgadMSI2s4PjSe+hszs9OgEUF/8NDnpmaaet7ClUjhW980VW85tK
+ MiiwqIq4ljEX2e51O5Ly5+/vPaiWTS0vMD6/JC+316pPNClQp+CwdeJ91JZyb6Zoe28f
+ wlI434qSl86seV+XOfIFgMmLAZGIjjKoKCj/MjVSxHDGjFHSjViMhnkdbJSpJ0in8MOz
+ 8pgaS6tdIviD9LswwLlKyiSn4GxggXIzoGAjvNULb8LzDIlH7PP1jmD9l6DwFmacrlE7
+ re/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXh4bMeWkCDDF3UemU9OQSAGIlxmVMInIG/pPNYzPokXIGmE6GNU8jfX0e364PEr5sL9AIxcEBdggY91QxM2mx/CMgQkUw=
-X-Gm-Message-State: AOJu0YyQ620TTKFvca/lY62lsfaLSK+zVoAe4VldKynIWxHgBeTjMCgl
- /ql9wxd4Ya6g+GBxXj9kDNFxNy4XC/EZ08JBPu1fprTzHH+lVwBXDQ4GgGRShH8=
-X-Google-Smtp-Source: AGHT+IGigG/uMM+3Ob59pXMHEp63HF7b34LJx2kneJE6j5heFfrE+kQjqLT1zBndpCTmtwgQ1AXQwg==
-X-Received: by 2002:a19:914e:0:b0:513:93dd:9ecd with SMTP id
- y14-20020a19914e000000b0051393dd9ecdmr9490702lfj.21.1710855172962; 
- Tue, 19 Mar 2024 06:32:52 -0700 (PDT)
+ AJvYcCVwKGVmYX1NnYPXzb2VntY8mkb2nmfaM5rZGzAy8WuEmy/Y5NxhwnMqY3a4EWEMlmdMMnAPt7cSfBXKEporAr9PRWoyGhk=
+X-Gm-Message-State: AOJu0YyTi4n9TmvAqWsbieA5/+wkK3fA7TLUKTG90nGc/WwsPPE7C+nB
+ K3KwR1pd+g3PL65Cx6D6zHaQIGfc+WpLSSvC7eR9wnaeCxlr0z1hUyHdBu4JF0Q=
+X-Google-Smtp-Source: AGHT+IFLxR/roaGXvWyOzqE+Ywahhq/IEowzA8MixlNC1tqLSgoOAkBMuAJCWzKWqYqK0UZSPoV0VQ==
+X-Received: by 2002:a05:600c:3b04:b0:414:a54:ec04 with SMTP id
+ m4-20020a05600c3b0400b004140a54ec04mr1929404wms.4.1710855217136; 
+ Tue, 19 Mar 2024 06:33:37 -0700 (PDT)
 Received: from [192.168.1.24] ([102.35.208.160])
  by smtp.gmail.com with ESMTPSA id
- o18-20020a05600c4fd200b004140bece5d1sm8844879wmq.8.2024.03.19.06.32.51
+ o18-20020a05600c4fd200b004140bece5d1sm8844879wmq.8.2024.03.19.06.33.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 06:32:52 -0700 (PDT)
-Message-ID: <5b9ff51d-439f-4e65-acb5-909bdfaf350c@linaro.org>
-Date: Tue, 19 Mar 2024 17:32:49 +0400
+ Tue, 19 Mar 2024 06:33:36 -0700 (PDT)
+Message-ID: <cd395590-873e-467c-a6e1-8360d81b4904@linaro.org>
+Date: Tue, 19 Mar 2024 17:33:35 +0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/22] plugins: Use emit_before_op for
- PLUGIN_GEN_AFTER_INSN
+Subject: Re: [PATCH 09/22] plugins: Add PLUGIN_GEN_AFTER_TB
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org
 References: <20240316015720.3661236-1-richard.henderson@linaro.org>
- <20240316015720.3661236-8-richard.henderson@linaro.org>
+ <20240316015720.3661236-10-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240316015720.3661236-8-richard.henderson@linaro.org>
+In-Reply-To: <20240316015720.3661236-10-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,183 +99,86 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/16/24 05:57, Richard Henderson wrote:
-> Introduce a new plugin_cb op and migrate one operation.
-> By using emit_before_op, we do not need to emit opcodes
-> early and modify them later -- we can simply emit the
-> final set of opcodes once.
+> Delay test of plugin_tb->mem_helper until the inject pass.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/tcg/tcg-op-common.h |  1 +
->   include/tcg/tcg-opc.h       |  1 +
->   accel/tcg/plugin-gen.c      | 74 +++++++++++++++++++++----------------
->   tcg/tcg-op.c                |  5 +++
->   4 files changed, 50 insertions(+), 31 deletions(-)
+>   accel/tcg/plugin-gen.c | 37 ++++++++++++++++---------------------
+>   1 file changed, 16 insertions(+), 21 deletions(-)
 > 
-> diff --git a/include/tcg/tcg-op-common.h b/include/tcg/tcg-op-common.h
-> index 2d932a515e..9de5a7f280 100644
-> --- a/include/tcg/tcg-op-common.h
-> +++ b/include/tcg/tcg-op-common.h
-> @@ -74,6 +74,7 @@ void tcg_gen_goto_tb(unsigned idx);
->    */
->   void tcg_gen_lookup_and_goto_ptr(void);
->   
-> +void tcg_gen_plugin_cb(unsigned from);
->   void tcg_gen_plugin_cb_start(unsigned from, unsigned type, unsigned wr);
->   void tcg_gen_plugin_cb_end(void);
->   
-> diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
-> index b80227fa1c..3b7cb2bce1 100644
-> --- a/include/tcg/tcg-opc.h
-> +++ b/include/tcg/tcg-opc.h
-> @@ -197,6 +197,7 @@ DEF(exit_tb, 0, 0, 1, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
->   DEF(goto_tb, 0, 0, 1, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
->   DEF(goto_ptr, 0, 1, 0, TCG_OPF_BB_EXIT | TCG_OPF_BB_END)
->   
-> +DEF(plugin_cb, 0, 0, 1, TCG_OPF_NOT_PRESENT)
->   DEF(plugin_cb_start, 0, 0, 3, TCG_OPF_NOT_PRESENT)
->   DEF(plugin_cb_end, 0, 0, 0, TCG_OPF_NOT_PRESENT)
->   
 > diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-> index c56f104aee..8fa342b425 100644
+> index f92aa80510..aa74e580bd 100644
 > --- a/accel/tcg/plugin-gen.c
 > +++ b/accel/tcg/plugin-gen.c
-> @@ -207,8 +207,7 @@ static void plugin_gen_empty_callback(enum plugin_gen_from from)
->   {
->       switch (from) {
->       case PLUGIN_GEN_AFTER_INSN:
-> -        gen_wrapped(from, PLUGIN_GEN_DISABLE_MEM_HELPER,
-> -                    gen_empty_mem_helper);
-> +        tcg_gen_plugin_cb(from);
->           break;
->       case PLUGIN_GEN_FROM_INSN:
->           /*
-> @@ -614,16 +613,6 @@ static void inject_mem_enable_helper(struct qemu_plugin_tb *ptb,
->       inject_mem_helper(begin_op, arr);
->   }
+> @@ -75,6 +75,7 @@ enum plugin_gen_from {
+>       PLUGIN_GEN_FROM_INSN,
+>       PLUGIN_GEN_FROM_MEM,
+>       PLUGIN_GEN_AFTER_INSN,
+> +    PLUGIN_GEN_AFTER_TB,
+>       PLUGIN_GEN_N_FROMS,
+>   };
 >   
-> -static void inject_mem_disable_helper(struct qemu_plugin_insn *plugin_insn,
-> -                                      TCGOp *begin_op)
-> -{
-> -    if (likely(!plugin_insn->mem_helper)) {
-> -        rm_ops(begin_op);
-> -        return;
-> -    }
-> -    inject_mem_helper(begin_op, NULL);
-> -}
-> -
+> @@ -615,20 +616,9 @@ static void inject_mem_enable_helper(struct qemu_plugin_tb *ptb,
 >   /* called before finishing a TB with exit_tb, goto_tb or goto_ptr */
 >   void plugin_gen_disable_mem_helpers(void)
 >   {
-> @@ -709,11 +698,14 @@ static void plugin_gen_enable_mem_helper(struct qemu_plugin_tb *ptb,
+> -    /*
+> -     * We could emit the clearing unconditionally and be done. However, this can
+> -     * be wasteful if for instance plugins don't track memory accesses, or if
+> -     * most TBs don't use helpers. Instead, emit the clearing iff the TB calls
+> -     * helpers that might access guest memory.
+> -     *
+> -     * Note: we do not reset plugin_tb->mem_helper here; a TB might have several
+> -     * exit points, and we want to emit the clearing from all of them.
+> -     */
+> -    if (!tcg_ctx->plugin_tb->mem_helper) {
+> -        return;
+> +    if (tcg_ctx->plugin_insn) {
+> +        tcg_gen_plugin_cb(PLUGIN_GEN_AFTER_TB);
+>       }
+> -    tcg_gen_st_ptr(tcg_constant_ptr(NULL), tcg_env,
+> -                   offsetof(CPUState, plugin_mem_cbs) - offsetof(ArchCPU, env));
+>   }
+>   
+>   static void plugin_gen_insn_udata(const struct qemu_plugin_tb *ptb,
+> @@ -679,14 +669,11 @@ static void plugin_gen_enable_mem_helper(struct qemu_plugin_tb *ptb,
 >       inject_mem_enable_helper(ptb, insn, begin_op);
 >   }
 >   
-> -static void plugin_gen_disable_mem_helper(struct qemu_plugin_tb *ptb,
-> -                                          TCGOp *begin_op, int insn_idx)
-> +static void gen_disable_mem_helper(struct qemu_plugin_tb *ptb,
-> +                                   struct qemu_plugin_insn *insn)
+> -static void gen_disable_mem_helper(struct qemu_plugin_tb *ptb,
+> -                                   struct qemu_plugin_insn *insn)
+> +static void gen_disable_mem_helper(void)
 >   {
-> -    struct qemu_plugin_insn *insn = g_ptr_array_index(ptb->insns, insn_idx);
-> -    inject_mem_disable_helper(insn, begin_op);
-> +    if (insn->mem_helper) {
-> +        tcg_gen_st_ptr(tcg_constant_ptr(0), tcg_env,
-> +                       offsetof(CPUState, plugin_mem_cbs) -
-> +                       offsetof(ArchCPU, env));
-> +    }
+> -    if (insn->mem_helper) {
+> -        tcg_gen_st_ptr(tcg_constant_ptr(0), tcg_env,
+> -                       offsetof(CPUState, plugin_mem_cbs) -
+> -                       offsetof(ArchCPU, env));
+> -    }
+> +    tcg_gen_st_ptr(tcg_constant_ptr(0), tcg_env,
+> +                   offsetof(CPUState, plugin_mem_cbs) -
+> +                   offsetof(ArchCPU, env));
 >   }
 >   
->   /* #define DEBUG_PLUGIN_GEN_OPS */
-> @@ -772,16 +764,49 @@ static void pr_ops(void)
+>   static void gen_udata_cb(struct qemu_plugin_dyn_cb *cb)
+> @@ -812,9 +799,17 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
+>               tcg_ctx->emit_before_op = op;
 >   
->   static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
->   {
-> -    TCGOp *op;
-> +    TCGOp *op, *next;
->       int insn_idx = -1;
->   
->       pr_ops();
->   
-> -    QTAILQ_FOREACH(op, &tcg_ctx->ops, link) {
-> +    /*
-> +     * While injecting code, we cannot afford to reuse any ebb temps
-> +     * that might be live within the existing opcode stream.
-> +     * The simplest solution is to release them all and create new.
-> +     */
-> +    memset(tcg_ctx->free_temps, 0, sizeof(tcg_ctx->free_temps));
-> +
-
-Not an expert at this, but wouldn't that break an existing TB that 
-already has some ops on those temps?
-
-> +    QTAILQ_FOREACH_SAFE(op, &tcg_ctx->ops, link, next) {
->           switch (op->opc) {
->           case INDEX_op_insn_start:
->               insn_idx++;
->               break;
-> +
-> +        case INDEX_op_plugin_cb:
-> +        {
-> +            enum plugin_gen_from from = op->args[0];
-> +            struct qemu_plugin_insn *insn = NULL;
-> +
-> +            if (insn_idx >= 0) {
-> +                insn = g_ptr_array_index(plugin_tb->insns, insn_idx);
-> +            }
-> +
-> +            tcg_ctx->emit_before_op = op;
-> +
-> +            switch (from) {
-> +            case PLUGIN_GEN_AFTER_INSN:
-> +                assert(insn != NULL);
-> +                gen_disable_mem_helper(plugin_tb, insn);
+>               switch (from) {
+> +            case PLUGIN_GEN_AFTER_TB:
+> +                if (plugin_tb->mem_helper) {
+> +                    gen_disable_mem_helper();
+> +                }
 > +                break;
-> +            default:
-> +                g_assert_not_reached();
-> +            }
 > +
-> +            tcg_ctx->emit_before_op = NULL;
-> +            tcg_op_remove(tcg_ctx, op);
-> +            break;
-> +        }
-> +
->           case INDEX_op_plugin_cb_start:
->           {
->               enum plugin_gen_from from = op->args[0];
-> @@ -846,19 +871,6 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
->   
+>               case PLUGIN_GEN_AFTER_INSN:
+>                   assert(insn != NULL);
+> -                gen_disable_mem_helper(plugin_tb, insn);
+> +                if (insn->mem_helper) {
+> +                    gen_disable_mem_helper();
+> +                }
 >                   break;
->               }
-> -            case PLUGIN_GEN_AFTER_INSN:
-> -            {
-> -                g_assert(insn_idx >= 0);
-> -
-> -                switch (type) {
-> -                case PLUGIN_GEN_DISABLE_MEM_HELPER:
-> -                    plugin_gen_disable_mem_helper(plugin_tb, op, insn_idx);
-> -                    break;
-> -                default:
-> -                    g_assert_not_reached();
-> -                }
-> -                break;
-> -            }
->               default:
->                   g_assert_not_reached();
->               }
-> diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-> index aa6bc6f57d..0f2026c91c 100644
-> --- a/tcg/tcg-op.c
-> +++ b/tcg/tcg-op.c
-> @@ -312,6 +312,11 @@ void tcg_gen_mb(TCGBar mb_type)
->       }
->   }
 >   
-> +void tcg_gen_plugin_cb(unsigned from)
-> +{
-> +    tcg_gen_op1(INDEX_op_plugin_cb, from);
-> +}
-> +
->   void tcg_gen_plugin_cb_start(unsigned from, unsigned type, unsigned wr)
->   {
->       tcg_gen_op3(INDEX_op_plugin_cb_start, from, type, wr);
+>               case PLUGIN_GEN_FROM_TB:
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
