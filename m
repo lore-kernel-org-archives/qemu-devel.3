@@ -4,91 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C1A2C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 17:59:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E2CC54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 17:59:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmdjn-0007Lq-Ut; Tue, 19 Mar 2024 13:59:03 -0400
+	id 1rmdk0-0007do-Ei; Tue, 19 Mar 2024 13:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmdjU-0007Fi-Uw
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:58:43 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmdjS-0006cd-2h
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:58:40 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-513e134f73aso3703265e87.2
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 10:58:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710871116; x=1711475916; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W78Zc6G5lsi0HCi6vbvdjkDkkRnTZ4lv1NHIrHicZJw=;
- b=c8w6Ym/jXznkT6+93q3MWjscbUrcLoGjEulcdxWWvAO3f6n2IipDYXWo9i0oN0ZqLG
- qI7/rn7nv42uwNXv3+0EOlEVzpVGjPFiO39qaiU6irjU1B9fRFVDebG34+gxgltDadIL
- X+URNIila8b9prGHL12NMLCV0OQrH70+oWTdUxV1ip+GC71DAPZXi9ihnO5XkU0EM/qF
- BM8mbTYPeT2jNgJii8sa7geq6PHdM6MpR0HwN7BVAvPbHJBfJOAmod80KasuxAK3mFDi
- EFM2v6qA0bw/Bxah38CQYK32GZcW432IqjiXQq6jgWKiduszUq+Ea3oZxfaha/Txi7kb
- KnfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710871116; x=1711475916;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=W78Zc6G5lsi0HCi6vbvdjkDkkRnTZ4lv1NHIrHicZJw=;
- b=a5U6mMerbOVbGaZs3PS1FRxaloWR6BbjSfFgty8Ol8jc6sOkEv000qIowZY0PN588X
- oVwoDVF/30stWF+d6/zzFn0eZR91jQbhA76xo4cGgX/qX4TQcDXcWVQUXbIwgR2YCGKo
- tPXwvlV0HexU/iqre9rGvOihKCfQMuzlpfJD5lUXf1hTOUiSgsuxRcEoGPt1SM/5Gxiw
- hQFe/1dKlxcuVnfkRDe/RTXy5I80DVdDiYichuE+oaqcsbh1pbikM3PnTamrjG+FFLat
- C5x+vvhYbLFP9BZ3iffHpYmVrM2DsN8pPVts1N+rXC2S9pgEpY/Tdah4qg2/Ltb89kMW
- GWmw==
-X-Gm-Message-State: AOJu0YxGzeLwg9zxmxHihyEw4kUlGn4zRk9uO8xSxzahd0vY+mzXnVwx
- Y39ypKZTAfuJ1olVlS3R2WZm5fG0yJUSHIgvxMcF6GvinyzIeWOoJjNWEwuEGO4=
-X-Google-Smtp-Source: AGHT+IEJrWNVfyUf0veAX04Dy6ikcGWp7I+IggTiJsfz6k4/H8RaFCzbQOJzdhSZCLB9tR9st8xb6A==
-X-Received: by 2002:a05:6512:419:b0:513:d22c:419a with SMTP id
- u25-20020a056512041900b00513d22c419amr2376756lfk.61.1710871116011; 
- Tue, 19 Mar 2024 10:58:36 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- l3-20020a1709061c4300b00a46a3ad035esm4381473ejg.179.2024.03.19.10.58.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Mar 2024 10:58:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 454825F75D;
- Tue, 19 Mar 2024 17:58:35 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Richard
- Henderson
- <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Wainer
- dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
- <bleal@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [PATCH v5 06/24] tests/avocado: replay_kernel.py add x86-64 q35
- machine test
-In-Reply-To: <20240318154621.2361161-7-npiggin@gmail.com> (Nicholas Piggin's
- message of "Tue, 19 Mar 2024 01:46:03 +1000")
-References: <20240318154621.2361161-1-npiggin@gmail.com>
- <20240318154621.2361161-7-npiggin@gmail.com>
-User-Agent: mu4e 1.12.2; emacs 29.2
-Date: Tue, 19 Mar 2024 17:58:35 +0000
-Message-ID: <875xxi3xys.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmdjv-0007U3-H7
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:59:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmdjs-0006kj-JP
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:59:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710871144;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3Yc8hr0XaRMOw4N3/THzVSkTYnXDYazvcyWDlJ7R7bk=;
+ b=FDr7EC3VidbYg2bmCj29wN135cCH0xw3+V2PQrR5G+6dSINqfkpTlpxf+PjW7e1eYLZ85F
+ JZM1BHkA2twrh/lPXCs3nYmQ3UkXM3ENnxNkI0tF/6lMK2XLKKlq43QS6Tju9EEVV6zfxr
+ fOfae2hz6lhuXVXAKggwGYmtr5ZhxtA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-bdIdhKe_M-WmsINbveGF4w-1; Tue,
+ 19 Mar 2024 13:59:00 -0400
+X-MC-Unique: bdIdhKe_M-WmsINbveGF4w-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6AF853806710;
+ Tue, 19 Mar 2024 17:59:00 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.88])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 24D5340C6DAD;
+ Tue, 19 Mar 2024 17:58:59 +0000 (UTC)
+Date: Tue, 19 Mar 2024 17:58:37 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com,
+ marcandre.lureau@redhat.com, philmd@linaro.org, den@virtuozzo.com
+Subject: Re: [PATCH v3 4/7] qga/commands-posix: qmp_guest_set_time: use
+ ga_run_command helper
+Message-ID: <ZfnSTVzH_nr1sDtc@redhat.com>
+References: <20240315122946.39168-1-andrey.drobyshev@virtuozzo.com>
+ <20240315122946.39168-5-andrey.drobyshev@virtuozzo.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240315122946.39168-5-andrey.drobyshev@virtuozzo.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,20 +85,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nicholas Piggin <npiggin@gmail.com> writes:
+On Fri, Mar 15, 2024 at 02:29:43PM +0200, Andrey Drobyshev wrote:
+> There's no need to check for the existence of "/sbin/hwclock", the
+> exec() call will do that for us.
+> 
+> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> ---
+>  qga/commands-posix.c | 43 +++----------------------------------------
+>  1 file changed, 3 insertions(+), 40 deletions(-)
 
-> The x86-64 pc machine is flaky with record/replay, but q35 is more
-> stable. Add a q35 test to replay_kernel.py.
->
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
