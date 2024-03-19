@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 544B6C54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 21:59:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE51C54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 23:33:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmhTy-0000cm-MV; Tue, 19 Mar 2024 17:58:54 -0400
+	id 1rmiwU-0007Zy-2x; Tue, 19 Mar 2024 19:32:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmhTv-0000Jl-Me
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:58:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmhTu-0007T3-0Z
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:58:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710885525;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GIk5J7CpQI0UXNcNqudC5xQrfsvmP3CttfdE+h8eye8=;
- b=IygkX4/oB5AJXcEKvL4EuHo0mr32YuVhw5naDtKU51eoDiUJ92pSekRvLvTUVyrb5ngpqZ
- W0/dP1TfsGKQXvUtG8CD8wPcDoK2v0yzc6q6rqfpfWGIZ7iU9a1R+4zmhdMLZAUHKJ9xY9
- FQIBlTZrtHGJUy4q+Ov8361sFxkJ7pI=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-601-IQUvKr3OMumDKM-VT5Hx9g-1; Tue, 19 Mar 2024 17:58:43 -0400
-X-MC-Unique: IQUvKr3OMumDKM-VT5Hx9g-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7830635331bso164555685a.1
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 14:58:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmiwK-0007ZM-VI
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 19:32:20 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmiwJ-0002F5-GJ
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 19:32:16 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1def3340682so39646835ad.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 16:32:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710891133; x=1711495933; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bNxUHF1e16qod2GhTFZlB6cQuWrS4eO940/YtcLJmaI=;
+ b=sGh4ClH4gtTgT2ZhuTzZyxbECABpZM86Y4DM14VSibzp2iyoz4cpzrcWljWG6mUd66
+ qC/wI6AVtSQd8XamBnbAytjzn04TKm/T5Y/DwlopghhUObo6vJuJd35j2EhjAG2H9K7K
+ bCDYCZEI1stWliI2JyWqKvJQPvPd0qRG/3khfnk7hoSRm4l6sajQRH2WuPOCElqhlOhj
+ glrAhtz/nifnX3daf2p299oXLedYymy7aMsCRP1KW7EEcZxuT+Q8+ySTb1OWletEM0H7
+ ZpDis/cNGlC8GzXdVut6xyR6VUgOR4PPs3PTL2H7UbSRdH+PwyMFux9I3S6SotFUE0Wm
+ uyNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710885522; x=1711490322;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GIk5J7CpQI0UXNcNqudC5xQrfsvmP3CttfdE+h8eye8=;
- b=sNiVN4mOxH9BWvs13phJm8aUvctgjFyjfsya6E9JSLN+6byITJfm4+DtNig9OIXXFT
- Ekk0v6enqwBajbNEprbbm9x6vr1arWJZ7EoUYhnqOFBi+D9kzabm+4XLfre+MyHqt4g+
- LcNnvxgg1tLmitXt5O5Ou4YxYAR18dxW2Q8jEihAJscJKoAr7Jcxt/iuqb0Xk2KBAoTK
- 8LY8UgZmqD+PQfJbZA/tGCv52H47rMG3lGio3SUFKp/QmWNU/rT0ZsKHtdrF5g5RBOUd
- pjEIzcxwPCFx/aFdz8iXhs97SJbLNrMMw1DyBZeqbYn/38hE5IDsyE6/L/HSZUnbu1G8
- Lg3w==
-X-Gm-Message-State: AOJu0YwgchYcaV2zXQB4SaYC/59LtmkowYMxF2/7v8eju0See9Yo29tD
- +j3sjU4djno6PN2Os5XSq3g85h1/RhjqAqvwY/8GDB50AJJ6IFwQ/e3EyHB/GLE44VzzrCXOR7x
- h8DQr98weMYzWNLZs13nPrR+k5ymamej5syURGfe8JaSHcNbR8Pah
-X-Received: by 2002:a05:620a:29d6:b0:789:f544:bfc2 with SMTP id
- s22-20020a05620a29d600b00789f544bfc2mr12835qkp.0.1710885522300; 
- Tue, 19 Mar 2024 14:58:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFjCrPpD7F1gsBokZ+mSbPiATSjr08VtxyR0ZhraKdX36D6tREf4Y1aMyP5994EsWeUY7JcUg==
-X-Received: by 2002:a05:620a:29d6:b0:789:f544:bfc2 with SMTP id
- s22-20020a05620a29d600b00789f544bfc2mr12822qkp.0.1710885521834; 
- Tue, 19 Mar 2024 14:58:41 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- m26-20020a05620a221a00b00788481cdf4csm5909373qkh.111.2024.03.19.14.58.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Mar 2024 14:58:41 -0700 (PDT)
-Date: Tue, 19 Mar 2024 17:58:34 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] Revert mapped-ram multifd support to fd: URI
-Message-ID: <ZfoKigb85ul-gju5@x1n>
-References: <20240319210941.1907-1-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1710891133; x=1711495933;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bNxUHF1e16qod2GhTFZlB6cQuWrS4eO940/YtcLJmaI=;
+ b=q3oxUe3giBhrRRRn0RwEO5VqD+eqiZMcUsXKBg2g7Bx28J2AsCm7osh7T2oyWBtlqO
+ 2+bybQFDVIwWeUSUqcw0uS/Dcmy59ozaAvAIQA6JQe1RlZN5AcuHNkFN9rN6vIpe9SB+
+ x5f/O6oNC0iS+CVQ8tUwpFMNSO8sWTTklsY6TeL3MA63Uad6l7nLGGT27iW1K7aWbXQY
+ CHJKUFOneyb73JeAIj8fvxpkpIgwCG3PZce8Otpmpq48GgsZMibONznKIcxMXotgvvQT
+ jcJPSMfIAJfnvT16Sd0itnGbDNg1NsUqUyvJX4bq9eDpbZD9Z0T2hdVDL6QLDkbgeMm7
+ EFdw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVTwNYb8tKljSgpr7wMn/83zNZIRtoKENuK++gNYwANnzVfE4N0W/AOgHD1dgmqieWqRxtpj3NSWC7cXc2XU3m2AZ7t3u4=
+X-Gm-Message-State: AOJu0YyJ+SsagZBUP3HkeehuD53mQAaYFMDeW8e0KqmpfkHd5susvQV6
+ JAyO52RvT680BHcZ8BERclYZiykYe390Yf7jrOCusApBqAK/cg3anPw+mhSheKg=
+X-Google-Smtp-Source: AGHT+IEd8Mfd93qgpOIZ+LhU9ySYLq7VjnFID9Ze900W37pbR4MGOGhgXa1trhv3Qtl0+Muk9KjxIw==
+X-Received: by 2002:a17:903:2686:b0:1e0:3b86:34ca with SMTP id
+ jf6-20020a170903268600b001e03b8634camr3570898plb.38.1710891132766; 
+ Tue, 19 Mar 2024 16:32:12 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ s14-20020a170902ea0e00b001dbac604e4dsm12048816plg.146.2024.03.19.16.32.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 16:32:12 -0700 (PDT)
+Message-ID: <675f13e6-4030-4099-a97b-f5bd38d030e9@linaro.org>
+Date: Tue, 19 Mar 2024 13:32:08 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240319210941.1907-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] target/riscv: Add right functions to set agnostic
+ elements
+Content-Language: en-US
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Huang Tao <eric.huang@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
+ bin.meng@windriver.com, alistair.francis@wdc.com, palmer@dabbelt.com
+References: <20240306092013.21231-1-eric.huang@linux.alibaba.com>
+ <20240306092013.21231-3-eric.huang@linux.alibaba.com>
+ <c765adcb-2702-45d3-b875-6eaa6b6d7d0c@ventanamicro.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <c765adcb-2702-45d3-b875-6eaa6b6d7d0c@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,34 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 19, 2024 at 06:09:41PM -0300, Fabiano Rosas wrote:
-> This reverts commit decdc76772c453ff1444612e910caa0d45cd8eac in full
-> and also the relevant migration-tests from
-> 7a09f092834641b7a793d50a3a261073bbb404a6.
+On 3/19/24 11:57, Daniel Henrique Barboza wrote:
+> This seems correct but a bit over complicated at first glance. I wonder if we have
+> something simpler already done somewhere.
 > 
-> After the addition of the new QAPI-based migration address API in 8.2
-> we've been converting an "fd:" URI into a SocketAddress, missing the
-> fact that the "fd:" syntax could also be used for a plain file instead
-> of a socket. This is a problem because the SocketAddress is part of
-> the API, so we're effectively asking users to create a "socket"
-> channel to pass in a plain file.
-> 
-> The easiest way to fix this situation is to deprecate the usage of
-> both SocketAddress and "fd:" when used with a plain file for
-> migration. Since this has been possible since 8.2, we can wait until
-> 9.1 to deprecate it.
-> 
-> For 9.0, however, we should avoid adding further support to migration
-> to a plain file using the old "fd:" syntax or the new SocketAddress
-> API, and instead require the usage of either the old-style "file:" URI
-> or the FileMigrationArgs::filename field of the new API with the
-> "/dev/fdset/NN" syntax, both of which are already supported.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Richard, does ARM (or any other arch) do anything of the sort? Aside from more trivial
+> byte swaps using bswap64() I didn't find anything similar.
 
-queued for 9.0-rc1.
+No, nothing quite like.
 
--- 
-Peter Xu
+> We recently posted a big endian related fix here:
+> 
+> [PATCH for 9.0 v15 03/10] target/riscv/vector_helper.c: fix 'vmvr_v' memcpy endianess
+> 
+> But not sure how to apply it here.
 
+It's almost exactly the same, only with memset instead of memcpy.
+
+     if (HOST_BIG_ENDIAN && idx % 8 != 0) {
+         uint32_t j = ROUND_UP(idx, 8);
+         memset(vd + H(j - 1), -1, j - idx);
+         idx = j;
+     }
+     memset(vd + idx, -1, tot - idx);
+
+
+I'll note that you don't need to change the api of vext_set_elems_1s -- so most of these 
+patches are not required.
+
+
+r~
 
