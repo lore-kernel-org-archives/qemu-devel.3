@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 965ABCD11BF
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 15:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81BECCD11C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 15:46:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmbdl-0007HH-W2; Tue, 19 Mar 2024 11:44:38 -0400
+	id 1rmbeK-0000uv-OX; Tue, 19 Mar 2024 11:45:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmbdY-00068e-Il
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:44:26 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmbeI-0000lD-Hk
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:45:11 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmbdM-00058f-U2
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:44:16 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2d48d75ab70so60890771fa.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 08:44:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmbe7-0005RB-JO
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:45:10 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-41467d86184so3576275e9.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 08:44:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710863051; x=1711467851; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710863096; x=1711467896; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dfAUn7JpYvclLzB4k+47U+LtLO2gvCUyK6vzKcLd+98=;
- b=JBEbn6mw/a0KI8BBAso4Oe4WjWydFjcRSGsMmIIE0Oyi7y4u2uTjo2V6o4Corg3kPe
- tTYWLKKnRrqCLAl58QNzd5qbOznF2MtPqqmbdawEOweTC4pOhLFoXF8hMrDkkn2RZoic
- qz80K6WtFcknrtFBPsaBhqc5xTKUKNBO7r2NNyzO2e07sP6dwOBStjOIsmxceOVvABXE
- ph/HJm0sVTKu7alP2AxvAnGG9nb4cOKCKiCAw5U8hUn0t872w1xiknHsCjkDQnpjipgq
- qhDW7O0YEU1NPtKUFsgjGfZPal8oROV/Q62jnveMIr/E7v5bdWNyaG3h/QYKVO0JLOYL
- aAMw==
+ bh=hwhHMygx0mLENqv0dOkZHirx9fre16Z9mIHYSdz8fsE=;
+ b=ZVbjAZg3IT4dLTFQEn9z+KNAMhyeL1YMm274oUPff629OaFDbtEqUAdXzB/O4ggtLq
+ KkLzetDMwZIoqio5Y0qCvrfKziorPTkyLP1kjfpVRIR3qmxUGP4sp7hmIEAC+QSxfNKc
+ B2BD1gfhPLRszkSseY/Ww5YGMBmrX+RKl4GLEuhi+QkNfBT2dIIiXvp750kzBYDyXDzv
+ gSyjOeeo6nWK5aL7c1do6/612hsEtmisVSVsEaYP55/4HlMSS3YO/fdH9ZBuA2iWFpM0
+ otZgzCTPAxWlxvE82dUhqD09ZbkWdlq8Hgqe1BNwyUWK2b2yPmUyJ89mNDlBgZ2JuCfi
+ kbjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710863051; x=1711467851;
+ d=1e100.net; s=20230601; t=1710863096; x=1711467896;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dfAUn7JpYvclLzB4k+47U+LtLO2gvCUyK6vzKcLd+98=;
- b=JEQESCSQ5LNQJl0rbu8+T7dkvKRXrEPRYngaXvwjrwKTASfLQG4jbMnqMxJ5v3vPyb
- LMLSHQdbcUgt/rk0dp3YuH2k2QcQaPLcHPH+qoUAhY29yzNVjzQXZgZ/HrH1QJ+kDscb
- a5mKJvzWkNSXMfPKZwT8F2sq+Ye4UY8uOfop0lUUOga2kmdnHoi3xqtpnBkdfc2Ps+Y9
- 4JlYZOp9Hu9aKB9lkWkVngzPHWVHxqygpiPbFfWdQeBSn8YU91MxMKTnKN/ramchCmEw
- 8neSnP8R6scAzx1x1oPpCFwntIrKh8Y9Bi5OQqX+SIHwq4sO9YOQYfaH0mdA19bTC/xY
- fdHQ==
-X-Gm-Message-State: AOJu0YwnNVt8sszvoMWwteIHXH+Fkw1652kaGuXRaCC4yhT24zdFWbjr
- mifKMvvhbUByH1X1dIoyHSHSwuv+jXDnhSE8sJ8HFjQDO42y2MliMz/6fZIdYWg6h8KtWeaD+ft
- w
-X-Google-Smtp-Source: AGHT+IHEPddFNzixiX/RNPVpVxkOmbDZ/5YQd7XJjNPV34NBokux8UAeiscILHKbMYTvNbQoStyuyw==
-X-Received: by 2002:a2e:8645:0:b0:2d4:51f4:dbee with SMTP id
- i5-20020a2e8645000000b002d451f4dbeemr9931008ljj.53.1710863050839; 
- Tue, 19 Mar 2024 08:44:10 -0700 (PDT)
+ bh=hwhHMygx0mLENqv0dOkZHirx9fre16Z9mIHYSdz8fsE=;
+ b=DRGnNKq7l84HxPIt6mSAq7Z/ckOjVrN4EmF87HzsZBXycLDnGFeWIJEBuPy+KIeAyC
+ 2ioCBXvW/Ze1WW19XKdf+iCRco6C8hp6QBUvJQJPateup0Ao0086+4/RSj7BCaFGrsc/
+ aNuKnraHO93ltNjaM3VLa9wQg/amt8/UbWc0cUCxwEiC7TaIA+oByl9rceXS6OiRNsRt
+ zoS3OOg9O1C1vWEGWWCPxriAK73pA0zbWehXS7wkjlM5/btHvGVOCAa4iq9FLpJBhzPR
+ X88BUlaSCbbosWi6m26lGREoD0wsAj6YswZDObjJMT4kxvaIRnh8LPcFt9ZdKy3BoM7Y
+ CTJQ==
+X-Gm-Message-State: AOJu0YyGcxiEm2MK986Y37wy8GYkhB/qBdf16OP7XSXRBE6eIOttUTTV
+ ijWiQIBMaDfywDK0m1brBvST6VB4Rt1Y2VDtmd8YrTm+O02DyOPzrFdVkb9iFq0AawHYUlscOfF
+ M
+X-Google-Smtp-Source: AGHT+IHkjBKpGTnD9xGvDLnsbpHdmwJ5rXo3GW/dIYSKuVupjs6xCFKUVD0+6LiHJf4pkYi3w7g9pA==
+X-Received: by 2002:adf:ed4f:0:b0:33d:c217:e8a4 with SMTP id
+ u15-20020adfed4f000000b0033dc217e8a4mr11113184wro.14.1710863096299; 
+ Tue, 19 Mar 2024 08:44:56 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.166.129])
  by smtp.gmail.com with ESMTPSA id
- g6-20020a05600c4ec600b004140726eac3sm11900174wmq.6.2024.03.19.08.44.09
+ i18-20020adffc12000000b0033e786abf84sm12655011wrr.54.2024.03.19.08.44.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 19 Mar 2024 08:44:10 -0700 (PDT)
+ Tue, 19 Mar 2024 08:44:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  qemu-ppc@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Anton Johansson <anjo@rev.ng>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH-for-9.1 12/27] target/m68k: Convert to
- TCGCPUOps::get_cpu_state()
-Date: Tue, 19 Mar 2024 16:42:41 +0100
-Message-ID: <20240319154258.71206-13-philmd@linaro.org>
+ Yoshinori Sato <ysato@users.sourceforge.jp>
+Subject: [PATCH-for-9.1 20/27] target/rx: Convert to TCGCPUOps::get_cpu_state()
+Date: Tue, 19 Mar 2024 16:42:49 +0100
+Message-ID: <20240319154258.71206-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240319154258.71206-1-philmd@linaro.org>
 References: <20240319154258.71206-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,74 +101,60 @@ Convert cpu_get_tb_cpu_state() to TCGCPUOps::get_cpu_state().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/m68k/cpu.h | 18 ------------------
- target/m68k/cpu.c | 17 +++++++++++++++++
- 2 files changed, 17 insertions(+), 18 deletions(-)
+ target/rx/cpu.h | 11 -----------
+ target/rx/cpu.c | 10 ++++++++++
+ 2 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-index 2790d61115..2f5f973bd4 100644
---- a/target/m68k/cpu.h
-+++ b/target/m68k/cpu.h
-@@ -604,24 +604,6 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
- #define TB_FLAGS_TRACE          16
- #define TB_FLAGS_TRACE_BIT      (1 << TB_FLAGS_TRACE)
+diff --git a/target/rx/cpu.h b/target/rx/cpu.h
+index 996f121bcd..dcda762212 100644
+--- a/target/rx/cpu.h
++++ b/target/rx/cpu.h
+@@ -149,17 +149,6 @@ void rx_cpu_unpack_psw(CPURXState *env, uint32_t psw, int rte);
+ #define RX_CPU_IRQ 0
+ #define RX_CPU_FIR 1
  
 -#define TARGET_HAS_CPU_GET_TB_CPU_STATE
 -
--static inline void cpu_get_tb_cpu_state(CPUM68KState *env, vaddr *pc,
+-static inline void cpu_get_tb_cpu_state(CPURXState *env, vaddr *pc,
 -                                        uint64_t *cs_base, uint32_t *flags)
 -{
 -    *pc = env->pc;
 -    *cs_base = 0;
--    *flags = (env->macsr >> 4) & TB_FLAGS_MACSR;
--    if (env->sr & SR_S) {
--        *flags |= TB_FLAGS_MSR_S;
--        *flags |= (env->sfc << (TB_FLAGS_SFC_S_BIT - 2)) & TB_FLAGS_SFC_S;
--        *flags |= (env->dfc << (TB_FLAGS_DFC_S_BIT - 2)) & TB_FLAGS_DFC_S;
--    }
--    if (M68K_SR_TRACE(env->sr) == M68K_SR_TRACE_ANY_INS) {
--        *flags |= TB_FLAGS_TRACE;
--    }
+-    *flags = FIELD_DP32(0, PSW, PM, env->psw_pm);
+-    *flags = FIELD_DP32(*flags, PSW, U, env->psw_u);
 -}
 -
- void dump_mmu(CPUM68KState *env);
- 
- #endif
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index 7c8efbb42c..3bb9f58651 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -51,6 +51,22 @@ static void m68k_restore_state_to_opc(CPUState *cs,
-     }
+ static inline uint32_t rx_cpu_pack_psw(CPURXState *env)
+ {
+     uint32_t psw = 0;
+diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+index da673a595d..3b55b09e64 100644
+--- a/target/rx/cpu.c
++++ b/target/rx/cpu.c
+@@ -58,6 +58,15 @@ static void rx_restore_state_to_opc(CPUState *cs,
+     cpu->env.pc = data[0];
  }
  
-+static void m68k_get_cpu_state(CPUM68KState *env, vaddr *pc,
-+                               uint64_t *cs_base, uint32_t *flags)
++static void rx_get_cpu_state(CPURXState *env, vaddr *pc,
++                             uint64_t *cs_base, uint32_t *flags)
 +{
 +    *pc = env->pc;
 +    *cs_base = 0;
-+    *flags = (env->macsr >> 4) & TB_FLAGS_MACSR;
-+    if (env->sr & SR_S) {
-+        *flags |= TB_FLAGS_MSR_S;
-+        *flags |= (env->sfc << (TB_FLAGS_SFC_S_BIT - 2)) & TB_FLAGS_SFC_S;
-+        *flags |= (env->dfc << (TB_FLAGS_DFC_S_BIT - 2)) & TB_FLAGS_DFC_S;
-+    }
-+    if (M68K_SR_TRACE(env->sr) == M68K_SR_TRACE_ANY_INS) {
-+        *flags |= TB_FLAGS_TRACE;
-+    }
++    *flags = FIELD_DP32(0, PSW, PM, env->psw_pm);
++    *flags = FIELD_DP32(*flags, PSW, U, env->psw_u);
 +}
 +
- static bool m68k_cpu_has_work(CPUState *cs)
+ static bool rx_cpu_has_work(CPUState *cs)
  {
-     return cs->interrupt_request & CPU_INTERRUPT_HARD;
-@@ -524,6 +540,7 @@ static const struct SysemuCPUOps m68k_sysemu_ops = {
- static const TCGCPUOps m68k_tcg_ops = {
-     .initialize = m68k_tcg_init,
-     .restore_state_to_opc = m68k_restore_state_to_opc,
-+    .get_cpu_state = m68k_get_cpu_state,
+     return cs->interrupt_request &
+@@ -187,6 +196,7 @@ static const TCGCPUOps rx_tcg_ops = {
+     .initialize = rx_translate_init,
+     .synchronize_from_tb = rx_cpu_synchronize_from_tb,
+     .restore_state_to_opc = rx_restore_state_to_opc,
++    .get_cpu_state = rx_get_cpu_state,
+     .tlb_fill = rx_cpu_tlb_fill,
  
  #ifndef CONFIG_USER_ONLY
-     .tlb_fill = m68k_cpu_tlb_fill,
 -- 
 2.41.0
 
