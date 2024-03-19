@@ -4,146 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72026C54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 20:49:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13F2BC54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 20:50:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmgOT-0005JB-Vq; Tue, 19 Mar 2024 16:49:10 -0400
+	id 1rmgOe-0005LE-Jj; Tue, 19 Mar 2024 16:49:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rmgOL-0005HD-Hc
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:49:01 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <het.gala@nutanix.com>)
- id 1rmgOI-0003f8-CB
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:48:59 -0400
-Received: from pps.filterd (m0127839.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 42JKOw6r011175; Tue, 19 Mar 2024 13:48:56 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- from:to:cc:subject:date:message-id:in-reply-to:references
- :content-transfer-encoding:content-type:mime-version; s=
- proofpoint20171006; bh=4Jec0bWh62sEWr3eB0M134CnnwPwsbzvlCstBaRfZ
- 2c=; b=nCfsnJNwrPqHEaqSFM7hwkB/WKbiSru49Rwx+l3SVs6bS69/V/0ALRvjg
- aYqugtEBjdqA1keEpKwDRj8PLgjWboyrKMm9LmP9/nORXtjEmFCJXqC2ct+bs+YR
- RWkuiwaNYVJTeby/KiP0xqxXZFDwz595nFHpLl2TEBL14qRRomaxDQPbHcaKSv1e
- OKJwzjx8ZkAL5pclOHtJAZLBrzsYBt6ZT9jzZPFF6z2QiXSI2dPUHZ1LsIW9JKP7
- X1QDUjc0y7CBDszft2NpvmnfPq0fUUb33zGO98hEeuFSW6GHgGYlvlYDBYN9n+GJ
- oxLNA+Hgphh1xDZXLGkvZA+qUmMsQ==
-Received: from nam02-bn1-obe.outbound.protection.outlook.com
- (mail-bn1nam02lp2040.outbound.protection.outlook.com [104.47.51.40])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 3wyhqmr1f2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 19 Mar 2024 13:48:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=LtVbuckXgwdlZ5G4RReOqFtk77TjwfXpCrOeVwotUrXZvlrx/etxFTnKVimZjnlwPFWDvx45O+nNh/V1ZjhEnWA30grszUgDKgT/4QHLPIz6hv0pFa+Zs5O3rCNmruH3wQlpVbZMe+jNK0lKZRqilXlNqcIfeZ9ehfldD58Dm+snml6Fw1rT/G9kMHC9E28ciUEkBJSJ9RzbCEqpsUYyKqz1doevwlG4C64XCjLYVFFwULHhVBA9z55DxhoBqjOlxto0VSKo/i0eLhG60s8ecu6XIL7U6NgPq+koQr1uP8ea0R0brIn9JFsowiZaAmDRLU2gTkL+BpfqyiWUVU+9aA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4Jec0bWh62sEWr3eB0M134CnnwPwsbzvlCstBaRfZ2c=;
- b=UgMvXt8BaXamMMdbCDmW9/SPBvf9xWkVUR+QtRBWfGkI4PyVdRHHdtUwjM+4yNIayUzz9ZV/r6IrFpo4E08qlq+PRvb6JUzhOQxFPLPiQQmuRbdVRvGGWp778VYz76EnU0CvrWrlenuVjyNVloMOnEBQsvzN/Wz5U3DtOQy3adzOxk2lGWhToUmNCmDZ9zohx/6m+xBV4cvPZH5v0MFW+XKDiMc5YzdU0bzI8QVgGXJOuXl8nNMY8/dWmeB6sNVUD6crWCrNAs2HFPgKVYoBOHTUglcJY7Q6K8sKh0EtSjG8t+BwERdiQ8VorAYc8yQVMLtcwAFWT+yg0c3P+0k5rQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4Jec0bWh62sEWr3eB0M134CnnwPwsbzvlCstBaRfZ2c=;
- b=dmFiswSBVKG1TKpwdA/s4IPP2fmKhE8H9amsNeSsiTCLWe51zK0PcEItiY0kymHY1AievznK4RfvzE8zWdRW9ANlD6nnnwiDeC8T49sW3lrBOvKTtcUdXrkDo8O3VmQsVtizJLU4EZwmWEWdRFXj8S4gWN9E0m0tPKWKcokR0l6beENQS9UZmjIq94pN0MbJXFIp0WWjAO5dlRfJRizyu8HJA2VNA39HhQ91+/3JjQtQ12RxJCu813pFXZcruJTxtVLSGtAgEz4FrYL/BYIX4Nu+ssuU7osbKtc1+OnLC6EH52Kw9WpGBqf8vcEIb370TcZQ0n/bDdaKtROOfzXVCg==
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com (2603:10b6:a03:55f::16)
- by DM6PR02MB6732.namprd02.prod.outlook.com (2603:10b6:5:219::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.30; Tue, 19 Mar
- 2024 20:48:54 +0000
-Received: from SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0]) by SJ2PR02MB9955.namprd02.prod.outlook.com
- ([fe80::225c:2edd:87e:7cf0%7]) with mapi id 15.20.7386.025; Tue, 19 Mar 2024
- 20:48:54 +0000
-From: Het Gala <het.gala@nutanix.com>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com, peterx@redhat.com, farosas@suse.de,
- Het Gala <het.gala@nutanix.com>
-Subject: [PATCH 2/2] tests/qtest/migration: Fix typo for vsock in
- SocketAddress_to_str
-Date: Tue, 19 Mar 2024 20:48:40 +0000
-Message-Id: <20240319204840.211632-2-het.gala@nutanix.com>
-X-Mailer: git-send-email 2.22.3
-In-Reply-To: <20240319204840.211632-1-het.gala@nutanix.com>
-References: <20240319204840.211632-1-het.gala@nutanix.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR05CA0118.namprd05.prod.outlook.com
- (2603:10b6:a03:334::33) To SJ2PR02MB9955.namprd02.prod.outlook.com
- (2603:10b6:a03:55f::16)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rmgOc-0005Kx-HF
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:49:19 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1rmgOb-0003jz-1g
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:49:18 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-56ba6e3c3e8so636016a12.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 13:49:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710881355; x=1711486155; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bLPTdxlzmER5M5Sc/XJz4f03vupPruuUGYQF9p+kgAU=;
+ b=y0YLaXrTQVaGZnj0SM4CbBQ0gXjb5hh2SNpy5VzCxLwTRkX3u5nPqxM2twE2o3iLyb
+ Jn5TShrquHuZZ7fvE8PM3Hemc3g8KtV3jniOLfe846Zn9yV594keU03bWQnC3IlFuBp7
+ ekgFxk+tFGvANoYmRpJ+DeQou+Lcs6b63WfcLSLgArLdjp/BQ6s016FO75sGHztnL5Us
+ EI6sLPndzpYvChNjF3cP50Yx7OLyYasymAXtEJ2olYV2hFmSdymG9eYXdB6ZbaMl3UGy
+ eSkJ8ORjtpQfdFjET5UMHTwVD3DWilFlcRb5gcOPiYAOOV0XgsP93ReN0CYJ/8ZeDfy3
+ zUOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710881355; x=1711486155;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=bLPTdxlzmER5M5Sc/XJz4f03vupPruuUGYQF9p+kgAU=;
+ b=unzqwJWDlxPKuQJNCZdYRpHS50PXF0iJFSMW8kd4HR+oLmzctaOeRvNpzrLRB8unHu
+ 1LCAIaJzXCLSjJntkb1YQJeyD9Uxv3nF29qYmOfUYdFisRaF9pwioUpRw+464hteAf3i
+ t3Yp0wP2Rjd4LkLqMPbImVDJaqfyEaAQSeE5+dG3TTVSo/d+p3kF5tQD2/tiOWy25Zh0
+ HeZr1Un4ARYv54Xj+o1w2D30zaP/tybsV8vywfgADfo64XEvf9CpzzuTcF9lS34PO6qm
+ IG1fEFyQJQ6Cw1lzPG5haBJp1ihSAECgMfW1gGmIuQ4HvfL3QnuVPR0jWfaVSVqQvta8
+ ncmQ==
+X-Gm-Message-State: AOJu0Yy41uI8ZVUA+OvYljAOvRtYSIDc+DAig8ugKybao62SE7N/5dUP
+ fPeQ76p9jCDgzUryqj2M+52uBK4UIID5WxAkVBe50pHUhAeCUfZfZYV+6hiL4+w=
+X-Google-Smtp-Source: AGHT+IGW6eVzb6HIpt/JzpzM7kPH4XHTTuAJP8Nr8ILztaUO/6V/QV34ttaNr/dFDdKufuiPigIklw==
+X-Received: by 2002:a05:6402:5414:b0:568:a438:3642 with SMTP id
+ ev20-20020a056402541400b00568a4383642mr53287edb.2.1710881355000; 
+ Tue, 19 Mar 2024 13:49:15 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ e11-20020a50a68b000000b005667a11b951sm6429820edc.86.2024.03.19.13.49.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Mar 2024 13:49:14 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4A22C5F785;
+ Tue, 19 Mar 2024 20:49:14 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Richard
+ Henderson
+ <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Wainer
+ dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
+ <bleal@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>
+Subject: Re: [PATCH v5 12/24] savevm: Fix load_snapshot error path crash
+In-Reply-To: <20240318154621.2361161-13-npiggin@gmail.com> (Nicholas Piggin's
+ message of "Tue, 19 Mar 2024 01:46:09 +1000")
+References: <20240318154621.2361161-1-npiggin@gmail.com>
+ <20240318154621.2361161-13-npiggin@gmail.com>
+User-Agent: mu4e 1.12.2; emacs 29.2
+Date: Tue, 19 Mar 2024 20:49:14 +0000
+Message-ID: <87il1i2bhx.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR02MB9955:EE_|DM6PR02MB6732:EE_
-X-MS-Office365-Filtering-Correlation-Id: abe6ed21-ac2c-42eb-9a12-08dc4855fd5f
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: qgs5HCPcU4nSZYgRfjG/kU/WrqP3tX1JQb8ch7HbO7kgPYj4c56WfUhHOC/6YtqZvyjFACe7fLo+nZbWC724svlxXtfD+X/PTOla586oIJwD6ZAjNIRrvBbKVNqB3ixun92WSdzqrGHnu7tsVOtEq3Td0fVMPV0WIeC2Y2YHVobQBULz/k9Pb4VL7Igj4AWMiw2V3WnrVqw+7gq7nhqZrmOnRYKsPiLwPWT22jXlcGEjGvX3spkG0bBbFP7bb5fGCgjg2TBObCtP2nCVwi7E2F/TJ+kNnFPF5dFJ8BMdIYcEI/oaCrj8lSJgfQbBWFXdbxdPByU0sSc/eA/ig0QViQp2iJGfDJvv91J3r98XETV4j0oqEE87cssfeRvQ3+uthajIH5SQ+quJXckNs0UQoAThYNosif//u1UVHqgLCV3Iqf7EAJdBDhFQRTWsGckeP51j/baYWJJPcoFCaYEn02qe1YiKiXc1EvBh0/2FKK6zgUfLL8+zr3pBiCYsoVZv2IuCiZWmFsnjGe6Tq6vgdVw6l/GxxqH7lIcajus0sE047re6Jve96oTeiWc281eiiTUIIK5SJQIPTmgdBh4bNChyTRDB9qhgYdum56rzo6sAVhk2j+UJbM2HDLU+oQYnMNHnwtBsJYrMyBwaX9Kj/UVrZ0OLmZd39o49glIvAx7kXyVgJIre+/kHzr5H5ioHm/89ameWdthdQiG84FhoahwPI7T2PYlT4Bia3wDBArY=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR02MB9955.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(1800799015)(376005)(52116005)(38350700005); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?DnKSJOoV+qa3lQUrBPHGEZAaENYRWERjlQug4FkyxkN12HIiYXTICzruKys6?=
- =?us-ascii?Q?E4HbNyM/YTVM0AJxJmdPqJKBkFFKnteg0bGQfQz0FB06HwLtgtZJSgXqtCM7?=
- =?us-ascii?Q?2WGaFrjGKjddKZlMGUTAI3OYV0yClYIAKqg7Kf/dP/mOI+XVQgB1pZRQAbEp?=
- =?us-ascii?Q?JK4LR9NcMnitFsS1Dro8F5+mt8nd3brFcA6O+AOt6n7UhpSFXYiLPVlt9Ami?=
- =?us-ascii?Q?Kpmn+iTONef7cyguFDB7eBGSyxCi9/q9u7qZUPTqaQdZGnRVwktprHe+vX+A?=
- =?us-ascii?Q?bMpDCQNVcwan3BbSh7lgtbYFGkkeJqGIUHuDR8U5hx/ne2xHpgVBvPdPjZIj?=
- =?us-ascii?Q?DaAn+YKOt7O+DPJg/FDN/U0rrpG+PzZyt7yckoH5wLtyN9FgrgI9kSYBVtf9?=
- =?us-ascii?Q?9QWfitZKUzaWevaLPZrvVKg8ihRdY6et+gE+yoyb2duo+YeXwb7xZ85Kvgsg?=
- =?us-ascii?Q?Omvrgoa6FM53Tm1SBENflWgmyUzRq+G9pPIf5lu6y3KaJ/CcYA28pGQgOq7z?=
- =?us-ascii?Q?BnsbCuIw2wyw3TqgCB9j8KGuAqNi9WCyB9m20erV2QV+QGbEx0KPnvp/aH0r?=
- =?us-ascii?Q?vasoha77FsvQJJqK/UXk6TH412PRqZI5jx3EjT3zKt5T5Tdps2OdwcEW88Ls?=
- =?us-ascii?Q?ueiPtXlipAMueaoln5EdvTrgs93j/LeNZtpRo26p7mu8mLx1NMjd2ney+JMg?=
- =?us-ascii?Q?MjPRWzo6aNflhIyuYwAREdlQPROonf9JJjIERVI+F+q0vSzBPgS80e5/cB8G?=
- =?us-ascii?Q?Bo05PgwmmDaCSWcQ+sNP/vs/jWMUsRGhDoYg6W4hv3QOBksmqYBaDWqpmHO4?=
- =?us-ascii?Q?XvdwwGBlRE8m4Ads58ODUgXdngEyHsYA0k7x0Og86yCuHMx4I964MeUzP9E5?=
- =?us-ascii?Q?xhSWMvNebiVpAqnv7C/bD+JcuxVAnn54GPw9ASPc46ExLCr/WQE/5DS10f2L?=
- =?us-ascii?Q?scsn43h31vJRxiT62hPT2BbtLm9cX9b4RqEOcjuog4IVFkivstlexcp8TCJC?=
- =?us-ascii?Q?79IA64m81xGtrvi9DPX0s+z5ajDLcrPZY6sDgMiLNngEoD0BCYnTKioBJokc?=
- =?us-ascii?Q?ah/hZW7tDJhnxWnuQtiKEc+UY22GvZJ6hKAhm3BEu0e/IvBWETXB9MWhQ16O?=
- =?us-ascii?Q?IBdvW3GlAt5eQm58zU12PPmLgVMxtLXAhgFb2ZLNddolRhAazYU1znZfmlo8?=
- =?us-ascii?Q?0M16n4jCIvmsb26xjA3DaQEYWtic7j7/k1BDPRM7BAyXbj8XMJl5vOdPu8Yw?=
- =?us-ascii?Q?IOfFvLAcD1Dz9jJT9M7pLlPEySSf9sfYuGA3CPxIu+knEcWDLBYBSiHXVmsg?=
- =?us-ascii?Q?MyLzFP03QFdGfo+fU150/HGwNJDPZHVqEqKVhzMZTpFj1gMHttOuTK9FNi1X?=
- =?us-ascii?Q?Ppb/f0kvy+L2tojmVUK//yH8S6WcLDcJjMS/VyKYRiktn773vFejy/bV4/ZV?=
- =?us-ascii?Q?xN1ABLolG1bB9DH/YKw0zfMjbEdtC2Q5T1akYJV3wLtY6npy3pZJCm91U1wa?=
- =?us-ascii?Q?m0rBR8UqSO4YQKupI7P0b4KZpIS/vDvvx4A2XfL+XhgwgWbfO6gOa3EjW+Pp?=
- =?us-ascii?Q?/1883KthPUYGdiWeItavCtsMNpbRAe9AcnepZwC4?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: abe6ed21-ac2c-42eb-9a12-08dc4855fd5f
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9955.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Mar 2024 20:48:54.1740 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eMgtfmTqsnpKYA2Q8YW+ehXooJ885B1Fbr1ePPTRR1AyEPbTJD0gNtaY23K98aAUvt1jFe8SIrJJSwUthgT3KQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR02MB6732
-X-Proofpoint-ORIG-GUID: ExkcjpyxHImKr15jRFijNd8oaG5H_0db
-X-Proofpoint-GUID: ExkcjpyxHImKr15jRFijNd8oaG5H_0db
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-19_08,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68; envelope-from=het.gala@nutanix.com;
- helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,25 +104,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Het Gala <het.gala@nutanix.com>
----
- tests/qtest/migration-helpers.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Nicholas Piggin <npiggin@gmail.com> writes:
 
-diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-index fb7156f09a..651c6c555a 100644
---- a/tests/qtest/migration-helpers.c
-+++ b/tests/qtest/migration-helpers.c
-@@ -42,7 +42,7 @@ static char *SocketAddress_to_str(SocketAddress *addr)
-     case SOCKET_ADDRESS_TYPE_FD:
-         return g_strdup_printf("fd:%s", addr->u.fd.str);
-     case SOCKET_ADDRESS_TYPE_VSOCK:
--        return g_strdup_printf("tcp:%s:%s",
-+        return g_strdup_printf("vsock:%s:%s",
-                                addr->u.vsock.cid,
-                                addr->u.vsock.port);
-     default:
--- 
-2.22.3
+> An error path missed setting *errp, which can cause a NULL deref.
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
