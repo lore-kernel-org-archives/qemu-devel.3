@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ED3DC54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 20:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3154BC54E68
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 20:42:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmgGg-0002Fk-BK; Tue, 19 Mar 2024 16:41:07 -0400
+	id 1rmgHX-00035q-0O; Tue, 19 Mar 2024 16:41:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmgGZ-0002ES-4S
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:41:01 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1rmgHV-00035a-80
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:41:57 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmgGU-0002EE-Mz
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:40:57 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-563cb3ba9daso6880621a12.3
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 13:40:54 -0700 (PDT)
+ id 1rmgHT-0002J0-Oy
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:41:56 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5684db9147dso7780014a12.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 13:41:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710880853; x=1711485653; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710880913; x=1711485713; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fbtDOa3NlD/Nf/f3d2LdXd/AGDQOdVk0+twfh8yWUrs=;
- b=IYPfIJ61ZMqkGL2OqkIiFCsR9WTm9wqQpGfDfaPFDZKXUNsZWiZnWIjX/+5PhvsBno
- kIIGsPyzbfU0QhpF3Ekk9S05NvqK5SVbMo3Dm9gBD8PtRHNjHT1BalUgj5w/YL3EQRaW
- n+G/G9ntfPZNW4dlcWG56YYRay+Yalx3+gag132kZW1xA7/1X7jnatagpye8FrHHUyDc
- JQ8MBxQcy6jUZJNTt3IJehWBE5TIuH5iRUObJtsOzOaYpoQDJ0yq+gPhfcOGTUI0MX7i
- yUlAH4OQnHAj3mYxqKamjFzqDa6DyqdZYaP+5Cs0MF5euF7G5L6Fs1GrGdSZqSs5I0hb
- F+9g==
+ bh=+N34bjtlE0MBwRIPDHnN0vLSoKG8RvsMm2IbeepiPyI=;
+ b=WbUJpXIXG8zTy2RUvGzNMTA9hp67M82wDjewJ0I/ohdvLF//dVHBBqGkG4GBM7HTDW
+ z7fL+6g6nmsXjpYmVekPt4blWvg6yB0L0zrU00si0mCYZMJK0rfys0tY70rftjtOuMK5
+ zTDdBPPg3Me86iKEw7zMMCs2/46EAG56yfcJtGCbFHNzjiemO0+++nafvY77plMLfKmd
+ lPdfQFViHlhGBLvo0vHOzclSBo2HPCewdvm4pOd3KQLcdt1ZAmrLrWQOArsAdN7tHZqH
+ RkRXt5oST3RDJm2PlpjCxZRL77coArBY6YXNa1DYhi30hE9hTMoqzO4ZCf/69zoA6ihw
+ ri/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710880853; x=1711485653;
+ d=1e100.net; s=20230601; t=1710880913; x=1711485713;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fbtDOa3NlD/Nf/f3d2LdXd/AGDQOdVk0+twfh8yWUrs=;
- b=wE85WRmasuG+jp5zGQh4rhBGsTNaIMdAQ13nu0r7d6HAtsBRsos41ZiRFB6yM0uiPz
- YzstZceHr9imuBSd1wmQ9fw6Z5YMenlqjjbUg5aaiX+QJqakol2gf/zlz0cu7RDZKJNf
- dpP3tDgvBbr2KvQ5wuv2Qwk9cQ+iRfUhxlTa/KISRAuvAdC8igF3frI8HOLbhLGz4n7T
- 25Rq03stQ9wH5yPiDOJtM6hrG8t94aIwVBUiI8FMD8M5Aakc8NFakT2q1rHX6pFNGDiA
- RU1XjzBMYVF/5FUyNhlvt0oz/Bz721haquwqIcLtZpKPxd5/lEvO0v545CTapo9ppIvd
- MQgQ==
-X-Gm-Message-State: AOJu0Yy7hXmaspMcHmSZ/YwnD/C9n2TxMLugUaEMM4804WvY9GVjWGq6
- lxAhDSdmxK9JDGXhg6B1ERnGrrfNr+CFHvnJbclTAteK7RnAsAjw4wHCVjIzWrg=
-X-Google-Smtp-Source: AGHT+IFn+jPANdUjBMbRSI2R5Ks/N0TEgQK1iYJdqw7hpBRUyaeK7pN2qJo/7AqgpQHs9uCMg/lZqA==
-X-Received: by 2002:a05:6402:5516:b0:567:23a2:5b1e with SMTP id
- fi22-20020a056402551600b0056723a25b1emr3270740edb.23.1710880852918; 
- Tue, 19 Mar 2024 13:40:52 -0700 (PDT)
+ bh=+N34bjtlE0MBwRIPDHnN0vLSoKG8RvsMm2IbeepiPyI=;
+ b=la+fMTUZtVY492JNADk3I4FfpXoj7nQh0UHOBDyqygrsG1K358eyGAcrCBXdmZDb7M
+ qEnXyO7XS0UlvVg3EOxSYisAsuaAZBDnr3HhmtUZ77fth9/iCZ02LAkyEX9R3URd/24j
+ ZGpuvRdkaEtCAJgiwTlNOdHFl5Ns2bWXnmZ3fKmjfQPYKWDWKHXEWLf87pzomulp2zb1
+ PPgINizQMdPpyowKFBG0cHjyv7+5765yZ0kVmMIMSahDdwvpPg3Xb7LqGSBIxy3eRPHI
+ BxoLNRiiMytoRQDT6qB36nmhJXzDb8vuR3I7h1PE6eerc+6tB8M0c48YDuZ0YeGn8Wxc
+ cysQ==
+X-Gm-Message-State: AOJu0YwHCG+LRJj3Wrfj8bQEZGJjLgJvHh4qZsQype3+hmt/7KKfHjyl
+ eqKcZQQmYdmRwOPGVOwFsI8pw5ouktrzmLRi+SVqUT0/ieb7BocWsto+s5Ahupg=
+X-Google-Smtp-Source: AGHT+IHbG8DEcXuQCuETvDT7VPk4CV+qH+bMBcmdYtNcM67gMr0Jbld84sag9UylMyE1TdwhV+3ATQ==
+X-Received: by 2002:a05:6402:1f8c:b0:568:9b15:112e with SMTP id
+ c12-20020a0564021f8c00b005689b15112emr10995306edc.19.1710880913584; 
+ Tue, 19 Mar 2024 13:41:53 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- c94-20020a509fe7000000b00568b49389e8sm5123663edf.44.2024.03.19.13.40.52
+ p8-20020aa7c888000000b00567fa27e75fsm6107011eds.32.2024.03.19.13.41.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Mar 2024 13:40:52 -0700 (PDT)
+ Tue, 19 Mar 2024 13:41:53 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 29F1F5F737;
- Tue, 19 Mar 2024 20:40:52 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id D12845F737;
+ Tue, 19 Mar 2024 20:41:52 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Nicholas Piggin <npiggin@gmail.com>
 Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
@@ -69,19 +69,20 @@ Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
  John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Wainer
  dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
  <bleal@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [PATCH v5 08/24] replay: Fix migration use of clock
-In-Reply-To: <20240318154621.2361161-9-npiggin@gmail.com> (Nicholas Piggin's
- message of "Tue, 19 Mar 2024 01:46:05 +1000")
+Subject: Re: [PATCH v5 10/24] virtio-net: Use replay_schedule_bh_event for
+ bhs that affect machine state
+In-Reply-To: <20240318154621.2361161-11-npiggin@gmail.com> (Nicholas Piggin's
+ message of "Tue, 19 Mar 2024 01:46:07 +1000")
 References: <20240318154621.2361161-1-npiggin@gmail.com>
- <20240318154621.2361161-9-npiggin@gmail.com>
+ <20240318154621.2361161-11-npiggin@gmail.com>
 User-Agent: mu4e 1.12.2; emacs 29.2
-Date: Tue, 19 Mar 2024 20:40:52 +0000
-Message-ID: <87ttl22bvv.fsf@draig.linaro.org>
+Date: Tue, 19 Mar 2024 20:41:52 +0000
+Message-ID: <87o7ba2bu7.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,64 +107,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Nicholas Piggin <npiggin@gmail.com> writes:
 
-> Migration reads host clocks when not holding the replay_mutex, which
-> asserts when recording a trace. It seems that these migration times
-> should be host times like other statistics in MigrationState.
-
-s/host/CLOCK_HOST/ and s/host/CLOCK_REALTIME/ but its a confusing
-sentence. If the MigrationState is guest visible it should be
-QEMU_CLOCK_VIRTUAL surely?
-
-> These
-> do not require the replay_mutex.
+> The regular qemu_bh_schedule() calls result in non-deterministic
+> execution of the bh in record-replay mode, which causes replay failure.
 >
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->  migration/migration.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 644e073b7d..2c286ccf63 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -3424,7 +3424,7 @@ static void *migration_thread(void *opaque)
->  {
->      MigrationState *s =3D opaque;
->      MigrationThread *thread =3D NULL;
-> -    int64_t setup_start =3D qemu_clock_get_ms(QEMU_CLOCK_HOST);
-> +    int64_t setup_start =3D qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
->      MigThrError thr_error;
->      bool urgent =3D false;
->=20=20
-> @@ -3476,7 +3476,7 @@ static void *migration_thread(void *opaque)
->      qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
->                                 MIGRATION_STATUS_ACTIVE);
->=20=20
-> -    s->setup_time =3D qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
-> +    s->setup_time =3D qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - setup_sta=
-rt;
->=20=20
->      trace_migration_thread_setup_complete();
->=20=20
-> @@ -3555,7 +3555,7 @@ static void *bg_migration_thread(void *opaque)
->=20=20
->      migration_rate_set(RATE_LIMIT_DISABLED);
->=20=20
-> -    setup_start =3D qemu_clock_get_ms(QEMU_CLOCK_HOST);
-> +    setup_start =3D qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
->      /*
->       * We want to save vmstate for the moment when migration has been
->       * initiated but also we want to save RAM content while VM is runnin=
-g.
-> @@ -3588,7 +3588,7 @@ static void *bg_migration_thread(void *opaque)
->      qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
->                                 MIGRATION_STATUS_ACTIVE);
->=20=20
-> -    s->setup_time =3D qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
-> +    s->setup_time =3D qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - setup_sta=
-rt;
->=20=20
->      trace_migration_thread_setup_complete();
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
