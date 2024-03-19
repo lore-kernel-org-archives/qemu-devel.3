@@ -4,87 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62BBEC54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 19:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81468C54E68
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 20:12:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmfal-0001mI-Hx; Tue, 19 Mar 2024 15:57:47 -0400
+	id 1rmfnh-0005R8-Dq; Tue, 19 Mar 2024 16:11:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmfai-0001lp-W9
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 15:57:46 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmfag-00037f-S1
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 15:57:44 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dff837d674so27198855ad.3
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 12:57:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710878261; x=1711483061; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DrF0Hi+4fGNFB1tZ191Iyd8pAROhM69lDy8Rj41/7NM=;
- b=ssH1P4tCtEWh0TJ3A/bPJ9ZK10i21kNhYDyTu6xguz9P9PUWa8gi/vhwxWmltg1J+c
- XDNsQ2HGsK21rvPz761nsGMrcerK8gzAHvaJ1HK+Ah95Wuar5seq6ws3AbguJIzv0hO+
- pFPwTy12nduYbrSQOOHCJnJXQfD5RBWfAKy8Z/ttHQ8i7vmOO/pfU6qjlf/p1felJa4w
- BJmUxQAsP6KriWhOaMZFBItAGoQY/F2ys960tBh9ThPp/Y0GuLSISuzDbtaem7BC2feT
- dZ5uhAqZ4rDBOlrlU0A/GIJP+Rh8lQya7em5UP3Dt0hYD/2orc6T1wdvsGHvZLIoKphM
- WD8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710878261; x=1711483061;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DrF0Hi+4fGNFB1tZ191Iyd8pAROhM69lDy8Rj41/7NM=;
- b=MQs9JEgtdVT0AtvhxmXTn+ZfPThN7/SOT4YvNlWEM+E6n6gbELsJyRyUHNGzi6O3/b
- RdOG3QZ2GqnYJVlvvrE7lcPAvTVMHyxKzzmaAb3up0ZjGmjf0c9uVilrCG1NvexqJBVm
- 2/qpWzglvcJL2DGjFe/FqsxDZvmxfoynRqbCQxmK2DGtCsWPxt2ZTn/9E4+DEfUHas+d
- /x3D3IA8JNauC/cOLYiX+8e8BAuyBFQmR5hyMrmoJz7oE+43swP2zTlltt+cxY1HWLhe
- 1Xqia6TGeLtAdXMixVbanCDtOv95SnKdCkdNKcVh3fh03WKIdrZVnpUYFxKrpSf95A7P
- hFWw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX27AX1Xt9P8nSsZDXXWc0p6rOPq/vHnf+TLGasiwunjzzPilp3kYf6vgpig1az1yyhdT0ZAFEk4lRR1P9O4pSsIGknGC0=
-X-Gm-Message-State: AOJu0Yzu3JpDGY7vktJ7AzAbPJ8JGuXSyIf5gVA+16rOu8yHNOJNOcZR
- 4Dl7sv1QcZHKhr2jC2LjllBJy/17y01tam8vNi0WM9R6k/TeX9fRM3Vjmpp0tWnzC0NBGf70f92
- f
-X-Google-Smtp-Source: AGHT+IHI159PJr1XaQQXKB+hbTxvygB6Bk7aO4SADkHsREPlicRTm4FYLGgbytrDMUUtTrc9m/j0Xg==
-X-Received: by 2002:a17:903:1108:b0:1de:f95a:2677 with SMTP id
- n8-20020a170903110800b001def95a2677mr221838plh.52.1710878261428; 
- Tue, 19 Mar 2024 12:57:41 -0700 (PDT)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- j14-20020a170903024e00b001dd66e6ec91sm11816048plh.140.2024.03.19.12.57.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 12:57:40 -0700 (PDT)
-Message-ID: <565ccdaa-f90b-4d69-bbfa-8563cf7b5ac9@linaro.org>
-Date: Tue, 19 Mar 2024 09:57:37 -1000
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmfnf-0005Qb-JP
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:11:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmfna-00066U-1V
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:11:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710879059;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FIH2thBsdCLtvn9JL/wA1qRuXz3hbuia94rBza8MxDE=;
+ b=KRTZAcywd56GTqjZZGpc4nZEkBPWbkNCjPOkjLbdd4YsvKOf1kJMRUHg0ZhWbb1M4AMfqk
+ GgRCCFjvIzzKE2G6YqtT8VuQCY5P1YYe78e6T1oVBysbRohoHZJluciBh5mi4ZtiBBgRxT
+ UGxW3ZlgmlDYx02aqahjbKDeES6MiE8=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-I-3cbx9KN5CpqPWfwUMFkg-1; Tue,
+ 19 Mar 2024 16:10:57 -0400
+X-MC-Unique: I-3cbx9KN5CpqPWfwUMFkg-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8C0333C0252F
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 20:10:57 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.88])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 2F574492BC8;
+ Tue, 19 Mar 2024 20:10:55 +0000 (UTC)
+Date: Tue, 19 Mar 2024 20:10:49 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Sanjay Rao <srao@redhat.com>, Boaz Ben Shabat <bbenshab@redhat.com>,
+ Joe Mario <jmario@redhat.com>
+Subject: Re: [PATCH] coroutine: cap per-thread local pool size
+Message-ID: <ZfnxSd4lseZuWoQ5@redhat.com>
+References: <20240318183429.1039340-1-stefanha@redhat.com>
+ <ZfmWhDaG5mN-GCeO@redhat.com> <20240319175510.GA1127203@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/22] plugins: Use emit_before_op for PLUGIN_GEN_FROM_TB
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org
-References: <20240316015720.3661236-1-richard.henderson@linaro.org>
- <20240316015720.3661236-9-richard.henderson@linaro.org>
- <199426d0-deea-4bfc-b2cd-8150fc5f21d2@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <199426d0-deea-4bfc-b2cd-8150fc5f21d2@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <20240319175510.GA1127203@fedora>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,41 +84,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/19/24 03:22, Pierrick Bouvier wrote:
->> @@ -798,6 +816,25 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
->>                   assert(insn != NULL);
->>                   gen_disable_mem_helper(plugin_tb, insn);
->>                   break;
->> +
->> +            case PLUGIN_GEN_FROM_TB:
->> +                assert(insn == NULL);
->> +
->> +                cbs = plugin_tb->cbs[PLUGIN_CB_REGULAR];
->> +                for (i = 0, n = (cbs ? cbs->len : 0); i < n; i++) {
->> +                    struct qemu_plugin_dyn_cb *cb =
->> +                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i);
->> +                    gen_udata_cb(cb);
->> +                }
->> +
->> +                cbs = plugin_tb->cbs[PLUGIN_CB_INLINE];
->> +                for (i = 0, n = (cbs ? cbs->len : 0); i < n; i++) {
->> +                    struct qemu_plugin_dyn_cb *cb =
->> +                        &g_array_index(cbs, struct qemu_plugin_dyn_cb, i);
->> +                    gen_inline_cb(cb);
->> +                }
->> +                break;
->> +
+On Tue, Mar 19, 2024 at 01:55:10PM -0400, Stefan Hajnoczi wrote:
+> On Tue, Mar 19, 2024 at 01:43:32PM +0000, Daniel P. Berrangé wrote:
+> > On Mon, Mar 18, 2024 at 02:34:29PM -0400, Stefan Hajnoczi wrote:
+> > > diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
+> > > index 5fd2dbaf8b..2790959eaf 100644
+> > > --- a/util/qemu-coroutine.c
+> > > +++ b/util/qemu-coroutine.c
+> > 
+> > > +static unsigned int get_global_pool_hard_max_size(void)
+> > > +{
+> > > +#ifdef __linux__
+> > > +    g_autofree char *contents = NULL;
+> > > +    int max_map_count;
+> > > +
+> > > +    /*
+> > > +     * Linux processes can have up to max_map_count virtual memory areas
+> > > +     * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit. We
+> > > +     * must limit the coroutine pool to a safe size to avoid running out of
+> > > +     * VMAs.
+> > > +     */
+> > > +    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents, NULL,
+> > > +                            NULL) &&
+> > > +        qemu_strtoi(contents, NULL, 10, &max_map_count) == 0) {
+> > > +        /*
+> > > +         * This is a conservative upper bound that avoids exceeding
+> > > +         * max_map_count. Leave half for non-coroutine users like library
+> > > +         * dependencies, vhost-user, etc. Each coroutine takes up 2 VMAs so
+> > > +         * halve the amount again.
+
+Leaving half for loaded libraries, etc is quite conservative
+if max_map_count is the small-ish 64k default.
+
+That reservation could perhaps a fixed number like 5,000 ?
+
+> > > +         */
+> > > +        return max_map_count / 4;
+> > 
+> > That's 256,000 coroutines, which still sounds incredibly large
+> > to me.
 > 
-> Maybe I am missing something, but couldn't we simply mix all cbs possible. This way, the 
-> order mentioned by user when registering is the only one that matters, and he can select 
-> to mix callbacks and inline ops freely.
-> Just checking the type of callback would be needed to know which gen_* fn should be used.
+> Any ideas for tweaking this heuristic?
 
-See patch 15.  :-)
+The awkward thing about this limit is that its hardcoded, and
+since it is indeed a "heuristic", we know it is going to be
+sub-optimal for some use cases / scenarios.
+
+The worst case upper limit is
+
+   num virtio-blk * num threads * num queues
+
+Reducing the number of devices isn't practical if the guest
+genuinely needs that many volumes.
+
+Reducing the threads or queues artificially limits the peak
+performance of a single disk handling in isolation, while
+other disks are idle, so that's not desirable.
+
+So there's no way to cap the worst case scenario, while
+still maximising the single disk performance possibilities.
+
+With large VMs with many CPUs and many disks, it could be
+reasonable to not expect a real guest to need to maximise
+I/O on every disk at the same time, and thus want to put
+some cap there to control worst case resource usage.
+
+It feels like it leans towards being able to control the
+coroutine pool limit explicitly, as a CLI option, to override
+this default hueristic.
+
+> > > +    }
+> > > +#endif
+> > > +
+> > > +    return UINT_MAX;
+> > 
+> > Why UINT_MAX as a default ?  If we can't read procfs, we should
+> > assume some much smaller sane default IMHO, that corresponds to
+> > what current linux default max_map_count would be.
+> 
+> This line is not Linux-specific. I don't know if other OSes have an
+> equivalent to max_map_count.
+> 
+> I agree with defaulting to 64k-ish on Linux.
 
 
-r~
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
