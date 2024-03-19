@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC31EC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 17:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 466ABC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 17:34:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmdIU-0006I6-VO; Tue, 19 Mar 2024 13:30:47 -0400
+	id 1rmdLa-0007j9-Sj; Tue, 19 Mar 2024 13:33:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmdIJ-0006GM-2T
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:30:35 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1rmdLW-0007hD-VE
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:33:55 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmdIF-0001Df-5A
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:30:34 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-56845954ffeso7818369a12.2
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 10:30:30 -0700 (PDT)
+ id 1rmdLG-0001qs-PL
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:33:54 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-56b93b45779so1403632a12.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 10:33:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710869429; x=1711474229; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JdpTIk9+f5e71+MYsNfHufuXiNazSlSND9bnfl+T+Sw=;
- b=dUuAM/ur1TQAyA2FjuGsbgQNwBCNEdnLXW8Njk+t2+t1wD0F3G+X/zHEfMg3aPrHm9
- hM8ysJ1k/U2jmLN6p1ypQ6Q8hzbmT+It2c8e/9PU6+ugSfT2/Vm6thDuiSFwrk9Xshdc
- HAmB5IQb2+UbMgQnX10hfRPhSVdYr0tKEOxKLbJaK7NAEhkSQaSCRlHHiY+WWaMskpH7
- 5tj690Vk+PqTQ3xd3sVpvSchzicuSRO+CjZg5Gz41YyDEonXWALG1i5DcfPk/tAAXV8l
- 2Tlqduz5RAhm9KtjggncPk0B+iHs4jJiDNsVfN+itZFwOmv51FpXE/BazTe6LJlqNbxF
- RHFg==
+ d=linaro.org; s=google; t=1710869617; x=1711474417; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xb2kN7tNLKMZqybzrWSJqalMpAWmlnTYrYR+QQJgOTA=;
+ b=mUBftqEyrhPmKkvrGXQMdbbk7eoBAFwRxxMjn7UIEIrIZW1FB5dNAwa+G/C7IDrL7J
+ BdB9KnUJxD+AUquwo0B3a5Ps8bGXEHPL1eVrysoMUI3NpJheFVzyXRX3autVQiBQlNkP
+ warnxmwhoR1qMShgDaGDJMtD1V/qFtZgEodOm9FghT2rA9MKzOCyJMLOLqDCA73Fhixd
+ 5pzRcPe4mmAc/CnrDgpgzKG8zEJdwsLWdHGNjt6KrsnIUW/OS254PEQ/J4vWlJBaCQHM
+ yY0w2cIwoa4+7/47SV1gHLtUArZs5hTMcfdYPwNUgS8n/u/ctieKFZwV3M8dxAaguN/R
+ r97Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710869429; x=1711474229;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JdpTIk9+f5e71+MYsNfHufuXiNazSlSND9bnfl+T+Sw=;
- b=jBCuH+z/gfMrnPYDhlYvQ1fKzPZAAW+EUJQFVPtjWGuLKv/tRt+RdVXg57aM8OJK+g
- K/Gx8AvHlBX6ej06YJHYGHQFN7lOV94Rsszjbfd+JMlCi9ErkHdYfqofXwaBnvnHN4TR
- x9OIqbCEXZGzfAHf/ExRzw8n8V5vYRoX1WrlKIKeKKifqRw70E8M4PqF9koV8JAtuiJJ
- oz6nqu8hMRkJoMI3fnjfd7bz0Y0zaaompZA8eGbru+XIJ1t4hedYcE0c8k3pIDsimWdD
- ghkcPAfsOQuIaCvwoJvPoxt+y3AGvudAQqPiweyiEaFsUB1AkYb/YuRbk6IYcq1ivNdg
- it5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXMCCEXqYC6bT7lRyxeWF7pqmY7GAU3eAAa4+G0s+R8D+nPefb6Dzu3pw7YlMKqPw4iYkA9/66qzx5F5XjQxxuAiRYcSJw=
-X-Gm-Message-State: AOJu0YxaIDOlgBspzyRoVnPWyJsNuCnrsg/bzacFdAsCi6MtiVlhfpYZ
- XiWzq3MZvfJe5YMQvqwBbi7n/gQARSDLyfyxXfldHDZHS8XmJqgKNjp6Y5M/MftvszAF9JWe/i0
- BFEehJiqRXcpY7WuYTlKp5Kgx6g7Joa25/genSg==
-X-Google-Smtp-Source: AGHT+IHeQWck9xE5x1KfUfGsxeUoHiSb/Yfo60aFpCxeU96IIAQpWtcWdP2/HjA36BSSHUKzlcyD+eo4xio2iuOf13s=
-X-Received: by 2002:a05:6402:2421:b0:566:f5d6:4b4 with SMTP id
- t33-20020a056402242100b00566f5d604b4mr2332387eda.12.1710869428791; Tue, 19
- Mar 2024 10:30:28 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710869617; x=1711474417;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xb2kN7tNLKMZqybzrWSJqalMpAWmlnTYrYR+QQJgOTA=;
+ b=dSx1pyGVGuQUZ11SRjzYGjzi6fdfmWHHIxrEmnmejG/UYd5LMAo0ATX0jP43bWufIU
+ X+S3q3Wtfv4U9KdDNEEWOzKgSwaGBiKQABWJ9ragEZXd+fJkxjjvfO6+egUPFRzCfXoZ
+ 1tXWPNW/yLfJITiW5zPPPLivV42lbQz7v8oKrwh4Rvs0wKcAgUJC3szOhimTgu9tead3
+ kkSbLJatvGThhAaw25dkr+hK9dROHuRaACq3dE1cLw0tyvYKvb/liY7DHTf362Fcqz0V
+ 9kAUDY9aYXleSbebbThknrr3RboF3DYnMeneZbaNk/4a1cfM8q+XV8cVj8jmCaH2TJk+
+ kFhQ==
+X-Gm-Message-State: AOJu0YwRyXs4w+NgWF/+/95Jhd8uuYKi4RDEgZmPci2knEF+F7RL9uGK
+ tHsRpYwwAwInPlQ7b1upwRF5zSfmf/QcXLi2b1Ce/z3JI8SB6A0L+WVuMiMEGyul6zBVF78zI0E
+ xu1Cz3uwWAO7cRVQWQahshNInGxi6+okslQZYLQ==
+X-Google-Smtp-Source: AGHT+IFr1NCaKnLF2UfX+CT2rbVQw2mBl9W6qTgBtzrXPDaMGDD+o9DPhw23yJSLYAZHgmkJNLoxBEf2Ujwpp4cv9Ys=
+X-Received: by 2002:a05:6402:1512:b0:56a:2c28:dd86 with SMTP id
+ f18-20020a056402151200b0056a2c28dd86mr3997768edw.23.1710869617104; Tue, 19
+ Mar 2024 10:33:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240318093546.2786144-1-ruanjinjie@huawei.com>
- <20240318093546.2786144-6-ruanjinjie@huawei.com>
-In-Reply-To: <20240318093546.2786144-6-ruanjinjie@huawei.com>
+References: <20240319140516.392542-1-clg@redhat.com>
+In-Reply-To: <20240319140516.392542-1-clg@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Mar 2024 17:30:18 +0000
-Message-ID: <CAFEAcA9LnJJDsC8WZzd2ZYGgwqYkbH-FmxKHy0CXKcS2tEonJA@mail.gmail.com>
-Subject: Re: [RFC PATCH v8 05/23] target/arm: Support MSR access to ALLINT
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
- wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org
+Date: Tue, 19 Mar 2024 17:33:26 +0000
+Message-ID: <CAFEAcA9YTne-VJ9htBU9zvy+_fXjEWM_LZRQuxJ2y9am-c1gWw@mail.gmail.com>
+Subject: Re: [PULL 0/3] for-9.0 queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,62 +88,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Mar 2024 at 09:37, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+On Tue, 19 Mar 2024 at 14:06, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
 >
-> Support ALLINT msr access as follow:
->         mrs <xt>, ALLINT        // read allint
->         msr ALLINT, <xt>        // write allint with imm
+> The following changes since commit 4511400fb78e72d4d9916ed60e04f4e99e594f=
+65:
 >
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-> v5:
-> - Add Reviewed-by.
-> v4:
-> - Remove arm_is_el2_enabled() check in allint_check().
-> - Change to env->pstate instead of env->allint.
-> v3:
-> - Remove EL0 check in aa64_allint_access() which alreay checks in .access
->   PL1_RW.
-> - Use arm_hcrx_el2_eff() in aa64_allint_access() instead of env->cp15.hcrx_el2.
-> - Make ALLINT msr access function controlled by aa64_nmi.
-> ---
->  target/arm/helper.c | 34 ++++++++++++++++++++++++++++++++++
->  1 file changed, 34 insertions(+)
+>   Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging =
+(2024-03-18 17:16:08 +0000)
 >
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index b19a0178ce..aa0151c775 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -4752,6 +4752,36 @@ static void aa64_daif_write(CPUARMState *env, const ARMCPRegInfo *ri,
->      env->daif = value & PSTATE_DAIF;
->  }
+> are available in the Git repository at:
 >
-> +static void aa64_allint_write(CPUARMState *env, const ARMCPRegInfo *ri,
-> +                              uint64_t value)
-> +{
-> +    env->pstate = (env->pstate & ~PSTATE_ALLINT) | (value & PSTATE_ALLINT);
-> +}
-> +
-> +static uint64_t aa64_allint_read(CPUARMState *env, const ARMCPRegInfo *ri)
-> +{
-> +    return env->pstate & PSTATE_ALLINT;
-> +}
-> +
-> +static CPAccessResult aa64_allint_access(CPUARMState *env,
-> +                                         const ARMCPRegInfo *ri, bool isread)
-> +{
-> +    if (arm_current_el(env) == 1 && (arm_hcrx_el2_eff(env) & HCRX_TALLINT)) {
-> +        return CP_ACCESS_TRAP_EL2;
-> +    }
-> +    return CP_ACCESS_OK;
+>   https://github.com/legoater/qemu/ tags/pull-for-9.0-20240319
+>
+> for you to fetch changes up to a7538ca0791880b6aeb2cc4cc8c00305e2d975f8:
+>
+>   aspeed/smc: Only wire flash devices at reset (2024-03-19 11:58:15 +0100=
+)
+>
+> ----------------------------------------------------------------
+> aspeed, pnv, vfio queue:
+>
+> * user device fixes for Aspeed and PowerNV machines
+> * coverity fix for iommufd
+>
 
-Forgot to note in my earlier email: HCRX_EL2.TALLINT traps
-only writes to ALLINT, not reads, so the condition
-here needs to also look at 'isread'.
 
-> +}
+Applied, thanks.
 
-thanks
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
+
 -- PMM
 
