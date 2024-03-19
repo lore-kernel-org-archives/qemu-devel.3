@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBDDEC54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 06:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB47C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 06:31:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmT0D-0000q8-Q8; Tue, 19 Mar 2024 02:31:14 -0400
+	id 1rmSyQ-00056k-5w; Tue, 19 Mar 2024 02:29:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmSzy-0000Xe-4K
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:31:02 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmSyN-000540-Il
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:29:19 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmSzw-00063z-M9
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:30:57 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4146562a839so1544245e9.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 23:30:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmSyM-0005dC-6H
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:29:19 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-513e14b2bd9so3256018e87.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 23:29:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710829854; x=1711434654; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5Bb+GXmBWHdatwI7O6RV1jb3mbhh0LofMjw/ebApDRY=;
- b=G0fVK9xNaKPeQfzAln7OvA9hpTjuesk/NosfTMPiGeaa7Wr+MabiAHtwifXvAnN3Su
- aq6wKboM4FU0vne69GTswpTSZiWz5VTdGtgNbLKVnm+uo11EzMY5e9u0UzaVBxXneWFP
- 13DW/kX/uS3nUAVBTxZb89UZn9VVCw8IbPBKf5aSdsTtecun4l6kpZ7PaC1FDExGZ7dn
- 9LsWuA4yY+uljHP8opWtd80NSPWXVK+2JSk2+PYlo9nfWYe06uhTbRWfVYd3YU8kNn61
- 7Xf6/+3XPizO6HEqL98eIDXGOfvrDsDrTrRw0ckmw62VvRuMOBbXtCu6rKBYNeWrGkft
- clqA==
+ d=linaro.org; s=google; t=1710829755; x=1711434555; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zLi8HPYzQKK0ulsJCWUrgKiQfFdRxTHI+3UszDXzaTk=;
+ b=oYEfSHzdZLrDQZlnB93SNcjUv1dBWlwx9Bg1DE1rosXuNVy9OT9Y024aZB3KSBTwqZ
+ dxSh8lcy7xnJlyzLlcpS6vAM/17lRu/dGoraOalZVQ9dGAnV2F2YGxzirqsV8IDwxco3
+ cjh60n/rouRFfk9c3QTgLaeSs00svvfeP7IWKno1ApuW1Hn3S6Kl6v1Mz378MfOJmbQx
+ sPvYl/swyCNq7ZHgHq1sj/1KAPxEB8c9/sowOxTCFuErJD1TjrD9Ja6pYsweoyj/n7wo
+ 1aD7d05CUkAzxLBgWHAvQkdQx07Dt33y0ANtSoRfRbqtAQFAVAv1+ZeDZ4U0g06CaMpV
+ YsPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710829854; x=1711434654;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5Bb+GXmBWHdatwI7O6RV1jb3mbhh0LofMjw/ebApDRY=;
- b=XkRbtoCzI1eBXWbnznTrsZD0GNTPVdaCVdrBFQSezGGNCqlX1P3TjWMbeZpNug4asv
- esPv3humL3c6WQKuiRg4Fpf+5Kq7Cxz16b5YtrD2+DwjO3hCbLawR7XYR5MgUaST3DyH
- nV+IkAKB+KEn/vx3jsY7hhC6whbYaahB86wfA+SzsHuZB3rgfcZrCKu0KVIVPc81P/BF
- /vj8jzUtHqPczBXDoSejTQlQX9rSPmRhaHxHPm0Q7Q3SmEQkkz5qUDge0dQ5vrgkY7Yc
- VDtG+pZSZgijXRYti2Z/42kDyiJOwLkelywTgfRIbpzTDs2uZ6fDev+k/cXXN6gPMTFy
- k9KA==
-X-Gm-Message-State: AOJu0YzR/o4XG6IgSpj6FWr/W4Spxte/mEBVl3r+wIkJVdA+WbR9Q6tM
- 1I6PSxOKI3etnWw5BAlSIS4XUZoIQoU2tsKte6sILVRWDAScwVM+QiihKgfbab6AAu1aBNaROal
- 8
-X-Google-Smtp-Source: AGHT+IEf3EgCEFRDrTbkWIeTqlrPKdlViLL6wAv3vxKa8y3Wl1BVTeo+z7rO+JBeWfuBgjoR25r1Tg==
-X-Received: by 2002:a05:600c:35ca:b0:414:1a5:2085 with SMTP id
- r10-20020a05600c35ca00b0041401a52085mr1124795wmq.31.1710829854308; 
- Mon, 18 Mar 2024 23:30:54 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.166.129])
+ d=1e100.net; s=20230601; t=1710829755; x=1711434555;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zLi8HPYzQKK0ulsJCWUrgKiQfFdRxTHI+3UszDXzaTk=;
+ b=Jb8pRa3Y6Gu7oq4synAy4/U0ba0z0ISx+H+0Ynu9MeYIHEi6anXGw0cLUNCS98YfCc
+ mH76Zoe2ypbiCYYqHwcLuBlVlt8VmAXnSHICWi5gefziQHdpyRdnwy5v2DqWCthFr+iQ
+ akak3WF5r0/IGVKgUhR0JGhmUS6GWHma8wuc2NL6butvGtXatmxL6EHBwlX8VSrYU7mb
+ HzYMGDmNOr7lfCZpKEQI306tH+Zl1wsvwxMug7YxRZJWUMLBBywlHRDUVpv9q7qey99C
+ I8Y+t6PwaUiXQSx2T4KluYNaB/FhpDlo1BQbhmkN5YaYVeKwXp3JkAeUWtR/wvC8TH4A
+ T7OA==
+X-Gm-Message-State: AOJu0YyVHJYNL3Kq+IXwC4qrp8tGhCVv1damZnZEVaIAxubzndCM82L8
+ sjeAn/ltBTpP67k0nkCDBKmV63oWeSIPj+ONIbzdmmgtvkSrs0c59+sy9tkA9pkcCru53Wxk2jY
+ o
+X-Google-Smtp-Source: AGHT+IH990QOXS0xm+rmL/RFHVv4DCA1J7clmAFB+CoDE2gDtWceUhfA0KWECfXWbhnAhWN8ZdSmWw==
+X-Received: by 2002:a19:8c4d:0:b0:513:cc24:c464 with SMTP id
+ i13-20020a198c4d000000b00513cc24c464mr9866935lfj.15.1710829754972; 
+ Mon, 18 Mar 2024 23:29:14 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.166.129])
  by smtp.gmail.com with ESMTPSA id
- v15-20020a05600c470f00b004128fa77216sm20446328wmo.1.2024.03.18.23.30.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 18 Mar 2024 23:30:53 -0700 (PDT)
-Message-ID: <3e5aec48-0849-4f24-8c5c-4e109aef0329@linaro.org>
-Date: Tue, 19 Mar 2024 07:30:53 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 0/8] target/microblaze: Sprint housekeeping
-Content-Language: en-US
+ k3-20020adff5c3000000b0033e7eba040dsm11624669wrp.97.2024.03.18.23.29.13
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 18 Mar 2024 23:29:14 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Laurent Vivier <laurent@vivier.eu>, Anton Johansson <anjo@rev.ng>,
- Alistair Francis <alistair@alistair23.me>
-References: <20240319062855.8025-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ Alistair Francis <alistair@alistair23.me>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-9.1 3/8] target/microblaze: Widen vaddr in mmu_translate()
+Date: Tue, 19 Mar 2024 07:28:50 +0100
+Message-ID: <20240319062855.8025-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240319062855.8025-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20240319062855.8025-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,22 +97,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-s/sprint/spring/ in Subject ;)
+Use 'vaddr' type for virtual addresses.
 
-On 19/3/24 07:28, Philippe Mathieu-Daudé wrote:
-> Cleanups while trying to remove non-essential target_ulong uses.
-> 
-> Last use is in helper_stackprot(), but I couldn't figure what
-> to do there yet.
-> 
-> Philippe Mathieu-Daudé (8):
->    target/microblaze: Use correct string format in do_unaligned_access()
->    target/microblaze: Use hwaddr/vaddr in cpu_get_phys_page_attrs_debug()
->    target/microblaze: Widen vaddr in mmu_translate()
->    target/microblaze: Use 32-bit destination in gen_goto_tb()
->    target/microblaze: Restrict 64-bit 'res_addr' to system emulation
->    target/microblaze: Rename helper.c -> sys_helper.c
->    target/microblaze: Move MMU helpers to sys_helper.c
->    target/microblaze: Widen $ear to 64-bit
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/microblaze/mmu.h | 2 +-
+ target/microblaze/mmu.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/target/microblaze/mmu.h b/target/microblaze/mmu.h
+index 1068bd2d52..2aca39c923 100644
+--- a/target/microblaze/mmu.h
++++ b/target/microblaze/mmu.h
+@@ -86,7 +86,7 @@ typedef struct {
+ } MicroBlazeMMULookup;
+ 
+ unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
+-                           target_ulong vaddr, MMUAccessType rw, int mmu_idx);
++                           vaddr vaddr, MMUAccessType rw, int mmu_idx);
+ uint32_t mmu_read(CPUMBState *env, bool ea, uint32_t rn);
+ void mmu_write(CPUMBState *env, bool ea, uint32_t rn, uint32_t v);
+ void mmu_init(MicroBlazeMMU *mmu);
+diff --git a/target/microblaze/mmu.c b/target/microblaze/mmu.c
+index 234006634e..eb7c683020 100644
+--- a/target/microblaze/mmu.c
++++ b/target/microblaze/mmu.c
+@@ -75,7 +75,7 @@ static void mmu_change_pid(CPUMBState *env, unsigned int newpid)
+ 
+ /* rw - 0 = read, 1 = write, 2 = fetch.  */
+ unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
+-                           target_ulong vaddr, MMUAccessType rw, int mmu_idx)
++                           vaddr vaddr, MMUAccessType rw, int mmu_idx)
+ {
+     MicroBlazeMMU *mmu = &cpu->env.mmu;
+     unsigned int i, hit = 0;
+-- 
+2.41.0
 
 
