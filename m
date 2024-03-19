@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46E65C54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 17:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C1A2C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 17:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmdj4-0006gZ-9Z; Tue, 19 Mar 2024 13:58:14 -0400
+	id 1rmdjn-0007Lq-Ut; Tue, 19 Mar 2024 13:59:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmdj2-0006eH-4g
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:58:12 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1rmdjU-0007Fi-Uw
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:58:43 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmdj0-0006bk-KR
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:58:11 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a3ddc13bbb3so21675166b.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 10:58:10 -0700 (PDT)
+ id 1rmdjS-0006cd-2h
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:58:40 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-513e134f73aso3703265e87.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 10:58:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710871089; x=1711475889; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710871116; x=1711475916; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XIzJ0MlYTeAqrvebZ9zPQC8YI+EGPXH5EFCGUk6b4CQ=;
- b=hFDsSJ9pkRUijPtJWZuXfNmZ4c8gJ8AlBKxY+cotHO+zjlE+8MmEG/YT14wBPAmmFD
- 8GPx/csQxzuCITpfj6uSii4XohVUsxUohLOqpu8uvOqLhltmsxncu88h6hwYp9SWD6tH
- o3XLNtD0d1qyE4HdynG2EQXKyNq1QowVJyXHadUod3/DFahEq2Ei2/egTq6oz6N46pKo
- cZ0LgZumwAWw+TxsmPAr5kOMa+hA1hnXUtZcRyOEzV8GrChcywUt6nrcFO0fTbW/dNoK
- nEK9Z7qixj4S3ZthLTUtXJCYChO/O90oe5RXvzlRCqOq6c7lgoP9ampAbl1i2t9b5iGk
- 1/MA==
+ bh=W78Zc6G5lsi0HCi6vbvdjkDkkRnTZ4lv1NHIrHicZJw=;
+ b=c8w6Ym/jXznkT6+93q3MWjscbUrcLoGjEulcdxWWvAO3f6n2IipDYXWo9i0oN0ZqLG
+ qI7/rn7nv42uwNXv3+0EOlEVzpVGjPFiO39qaiU6irjU1B9fRFVDebG34+gxgltDadIL
+ X+URNIila8b9prGHL12NMLCV0OQrH70+oWTdUxV1ip+GC71DAPZXi9ihnO5XkU0EM/qF
+ BM8mbTYPeT2jNgJii8sa7geq6PHdM6MpR0HwN7BVAvPbHJBfJOAmod80KasuxAK3mFDi
+ EFM2v6qA0bw/Bxah38CQYK32GZcW432IqjiXQq6jgWKiduszUq+Ea3oZxfaha/Txi7kb
+ KnfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710871089; x=1711475889;
+ d=1e100.net; s=20230601; t=1710871116; x=1711475916;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XIzJ0MlYTeAqrvebZ9zPQC8YI+EGPXH5EFCGUk6b4CQ=;
- b=WDEqgUPFUR5c4k3GlHlknjehwFAg7AYQ8msThYXRUtzge8xCnd98tzPXWcGHfeAgJh
- XfkfPvIZDA77nkd+bFV/KGoa8wCWU4J8JgV/T3Sn6jrmb7cWGZFhQ48iRjDDDlWZJeoa
- t61HmYGRt+cRr3HE2tg3wtl4UYRXrFWGifj4dAUY0S4ftV07huDYq9uCDAZ9+kfd7xmO
- Gf1m11EHsnrJLF4p8/Gu1BckjhWpHMZoySPmnUWA7jd8DHgINYM0vNHS4ED2qmFW190E
- 1ntGKpMKZadKxhMJqSQ4yEab3Uz8DOLuKXSvEg5ve9iqFHiMRxNODOq8OqcEs9QfeBd8
- tqCQ==
-X-Gm-Message-State: AOJu0Yxenccoy5wIDziuPjtjl7NLX5242Z93ELAvaRg+m89WGrtelyzR
- DC2UKcEWMMz/w29ZrmU/Q+oRtAtvRPh1SdVpavX1CTyLLGjOBHj17BoNIub+Ybo=
-X-Google-Smtp-Source: AGHT+IHGcI4h4HE5ihojCSROY6YWxho900M1tKSH2gffea9ZSi/0sorb7pT3BqTQIi6WV1MJ0Tc9Gg==
-X-Received: by 2002:a17:906:8a58:b0:a45:40e4:8c8 with SMTP id
- gx24-20020a1709068a5800b00a4540e408c8mr3022992ejc.16.1710871089091; 
- Tue, 19 Mar 2024 10:58:09 -0700 (PDT)
+ bh=W78Zc6G5lsi0HCi6vbvdjkDkkRnTZ4lv1NHIrHicZJw=;
+ b=a5U6mMerbOVbGaZs3PS1FRxaloWR6BbjSfFgty8Ol8jc6sOkEv000qIowZY0PN588X
+ oVwoDVF/30stWF+d6/zzFn0eZR91jQbhA76xo4cGgX/qX4TQcDXcWVQUXbIwgR2YCGKo
+ tPXwvlV0HexU/iqre9rGvOihKCfQMuzlpfJD5lUXf1hTOUiSgsuxRcEoGPt1SM/5Gxiw
+ hQFe/1dKlxcuVnfkRDe/RTXy5I80DVdDiYichuE+oaqcsbh1pbikM3PnTamrjG+FFLat
+ C5x+vvhYbLFP9BZ3iffHpYmVrM2DsN8pPVts1N+rXC2S9pgEpY/Tdah4qg2/Ltb89kMW
+ GWmw==
+X-Gm-Message-State: AOJu0YxGzeLwg9zxmxHihyEw4kUlGn4zRk9uO8xSxzahd0vY+mzXnVwx
+ Y39ypKZTAfuJ1olVlS3R2WZm5fG0yJUSHIgvxMcF6GvinyzIeWOoJjNWEwuEGO4=
+X-Google-Smtp-Source: AGHT+IEJrWNVfyUf0veAX04Dy6ikcGWp7I+IggTiJsfz6k4/H8RaFCzbQOJzdhSZCLB9tR9st8xb6A==
+X-Received: by 2002:a05:6512:419:b0:513:d22c:419a with SMTP id
+ u25-20020a056512041900b00513d22c419amr2376756lfk.61.1710871116011; 
+ Tue, 19 Mar 2024 10:58:36 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ww2-20020a170907084200b00a46cc48ab07sm2052514ejb.221.2024.03.19.10.58.08
+ l3-20020a1709061c4300b00a46a3ad035esm4381473ejg.179.2024.03.19.10.58.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Mar 2024 10:58:08 -0700 (PDT)
+ Tue, 19 Mar 2024 10:58:35 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 83BE65F75D;
- Tue, 19 Mar 2024 17:58:08 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 454825F75D;
+ Tue, 19 Mar 2024 17:58:35 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Nicholas Piggin <npiggin@gmail.com>
 Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
@@ -69,20 +69,20 @@ Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
  John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Wainer
  dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
  <bleal@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [PATCH v5 05/24] Revert "replay: stop us hanging in
- rr_wait_io_event"
-In-Reply-To: <20240318154621.2361161-6-npiggin@gmail.com> (Nicholas Piggin's
- message of "Tue, 19 Mar 2024 01:46:02 +1000")
+Subject: Re: [PATCH v5 06/24] tests/avocado: replay_kernel.py add x86-64 q35
+ machine test
+In-Reply-To: <20240318154621.2361161-7-npiggin@gmail.com> (Nicholas Piggin's
+ message of "Tue, 19 Mar 2024 01:46:03 +1000")
 References: <20240318154621.2361161-1-npiggin@gmail.com>
- <20240318154621.2361161-6-npiggin@gmail.com>
+ <20240318154621.2361161-7-npiggin@gmail.com>
 User-Agent: mu4e 1.12.2; emacs 29.2
-Date: Tue, 19 Mar 2024 17:58:08 +0000
-Message-ID: <87bk7a3xzj.fsf@draig.linaro.org>
+Date: Tue, 19 Mar 2024 17:58:35 +0000
+Message-ID: <875xxi3xys.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,23 +107,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Nicholas Piggin <npiggin@gmail.com> writes:
 
-> This reverts commit 1f881ea4a444ef36a8b6907b0b82be4b3af253a2.
->
-> That commit causes reverse_debugging.py test failures, and does
-> not seem to solve the root cause of the problem x86-64 still
-> hangs in record/replay tests.
->
-> The problem with short-cutting the iowait that was taken during
-> record phase is that related events will not get consumed at the
-> same points (e.g., reading the clock).
->
-> A hang with zero icount always seems to be a symptom of an earlier
-> problem that has caused the recording to become out of synch with
-> the execution and consumption of events by replay.
+> The x86-64 pc machine is flaky with record/replay, but q35 is more
+> stable. Add a q35 test to replay_kernel.py.
 >
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
