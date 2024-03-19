@@ -4,71 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E98C8C54E68
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 18:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167D2C54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 18:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmeYF-0004YD-LY; Tue, 19 Mar 2024 14:51:08 -0400
+	id 1rmeZ4-0004rv-4P; Tue, 19 Mar 2024 14:51:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rmeYB-0004XT-4R
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:51:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rmeY9-0007su-0y
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:51:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710874259;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RSbqtND9/mjwNUd9Dgm2TGpPJGE+aWvOrCqrjJnBnJk=;
- b=eJgd8wbTdFwsYJRApYzSmVa2sXJKo3CQDxEoHNPAnXGPWTOmUL0zEBx8d9xI5sVgp9AjsM
- aVpZouAgiTIGhvSDUjh3v8cguUMWe4srAjf2h8wD0qvvmxfkfGKeBSkOMrWaejNk84RPT3
- Lnyk2pSlveVQ++y/fePieL0zfUPd32M=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-307-Cu-hB8kLMG2UF6M8yWdDEA-1; Tue, 19 Mar 2024 14:50:57 -0400
-X-MC-Unique: Cu-hB8kLMG2UF6M8yWdDEA-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8B89E8007A6;
- Tue, 19 Mar 2024 18:50:56 +0000 (UTC)
-Received: from localhost (unknown [10.39.195.82])
- by smtp.corp.redhat.com (Postfix) with ESMTP id CA6A63C20;
- Tue, 19 Mar 2024 18:50:55 +0000 (UTC)
-Date: Tue, 19 Mar 2024 14:50:34 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hreitz@redhat.com,
- kwolf@redhat.com, fam@euphon.net, t.lamprecht@proxmox.com,
- w.bumiller@proxmox.com
-Subject: Re: [PATCH] block/io: accept NULL qiov in bdrv_pad_request
-Message-ID: <20240319185034.GC1127203@fedora>
-References: <20240319091341.303414-1-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmeZ0-0004nh-CS
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:51:54 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rmeYy-0007ua-M2
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:51:53 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-29c731ba369so4493748a91.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 11:51:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710874311; x=1711479111; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6p7+/y+sGFcXDnS2Rurl1GYR0YUYkAkZTkGg5ALOT2k=;
+ b=plp0uXNwj4LcVL7JOGQeqCiXtS22gCUNTrG8YXGt0VbGwskfI52n+wvB7eFtL0Xyrb
+ xHTGXEoRJ5VGtyI6FtWPltaEa5Edlkvo+hpC4K/ojkGrLIH6hl22Jaz4cNUdh6OLqkD4
+ pflRsUq0JW5cNxj5DVIdGG+uHdkq+9RiuO39x4qo/2ONEfEkvMhUhIMCtYqeRdbxxsje
+ QADdYA6WFXLItq0S6IxbKSB24zjHQ7OR/PmNLxDXUS4tafOLRm/mrBvlsiTzwqiruxVA
+ X5tYZmS21+p5OCepZ6xoK+nw9wy+UFILBSB5XeSgZ4xicP+STZNV8kkDVJcCLqQI/+n6
+ xjuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710874311; x=1711479111;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6p7+/y+sGFcXDnS2Rurl1GYR0YUYkAkZTkGg5ALOT2k=;
+ b=RRL1zJT09LxYCDA0YcVfSXivRUHESj9R2IcD8+aegFktsFo1FI5GlqI0gZc/Rg9GLU
+ dNk11iTLEtV1ZbrG89mW5i4C9/5RqmfnaCcCvOO8XnTfdVkyUPyIMJbN9SCUVY9Dee9A
+ vWEI2MaREeIKRo2kbSEqsxeJwg8wEacTpmhGcQ9O21oB14iICvwpFI47+ZZYUObQTZbo
+ ZWT4DOkotiXvfPC5jGs36ZwF/ow3vOEnEZ5H4qOMBAnETfx7OtZ7VVIWU2O4d8dnz8vW
+ RJ5ANYG3QdvyImpyT8TKuzgSuKbXGE/8IXTtTTTXF+F3TYeLZj5hvQmT2LQn5UL56bg5
+ auGg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUU3SOBZ2d+HIM/9R5nH+8EKN9Gq6QWSv+rY2G3278azsxOexF3vjOlkyuoLIzZFflinL7fhTllW/cOfOOiy6CXMmesQag=
+X-Gm-Message-State: AOJu0YxZI8Xp6bnkX6GeNPRwE4QiPUl4aInfonDFnwunBnAa//EuEhcv
+ j2pD4Eu4u0l3/wbX9L2ivLUkBdV0hzJu081W44H+r1Da+lhJXyyTMoAPMOHNbR0=
+X-Google-Smtp-Source: AGHT+IFeAYnBNFrUW3N+NhFG+VRKjkXl80pCagL9yQuKsRzD8ue0lxRvJbCTHIv35y8VeetBkTvX3g==
+X-Received: by 2002:a17:90a:8b17:b0:29c:776f:8911 with SMTP id
+ y23-20020a17090a8b1700b0029c776f8911mr47097pjn.21.1710874311097; 
+ Tue, 19 Mar 2024 11:51:51 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ w13-20020a17090ad60d00b0029baef194f7sm9953012pju.38.2024.03.19.11.51.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 11:51:50 -0700 (PDT)
+Message-ID: <cb5d981a-6db4-479c-9eaa-bca49c40bc72@linaro.org>
+Date: Tue, 19 Mar 2024 08:51:46 -1000
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="J9S/dtcBNMOND2p9"
-Content-Disposition: inline
-In-Reply-To: <20240319091341.303414-1-f.ebner@proxmox.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v8 06/23] target/arm: Add support for Non-maskable
+ Interrupt
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240318093546.2786144-1-ruanjinjie@huawei.com>
+ <20240318093546.2786144-7-ruanjinjie@huawei.com>
+ <CAFEAcA_xSHAJnn0_O9=zGo9u8omzhuB_WvuMo9gf7wKt8OVDmw@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA_xSHAJnn0_O9=zGo9u8omzhuB_WvuMo9gf7wKt8OVDmw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,128 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 3/19/24 07:28, Peter Maydell wrote:
+>>       switch (excp_idx) {
+>> +    case EXCP_NMI:
+>> +        pstate_unmasked = !allIntMask;
+>> +        break;
+>> +
+>> +    case EXCP_VNMI:
+>> +        if ((!(hcr_el2 & HCR_IMO) && !(hcr_el2 & HCR_FMO)) ||
+>> +             (hcr_el2 & HCR_TGE)) {
+>> +            /* VNMIs(VIRQs or VFIQs) are only taken when hypervized.  */
+>> +            return false;
+>> +        }
+> 
+> VINMI and VFNMI aren't the same thing: do we definitely want to
+> merge them into one EXCP_VNMI ?
 
---J9S/dtcBNMOND2p9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+We do not, which is why VFNMI is going through EXCP_VFIQ.  A previous version did, and I 
+see the comment did not change to match the new implementation.
 
-On Tue, Mar 19, 2024 at 10:13:41AM +0100, Fiona Ebner wrote:
-> From: Stefan Reiter <s.reiter@proxmox.com>
->=20
-> Some operations, e.g. block-stream, perform reads while discarding the
-> results (only copy-on-read matters). In this case, they will pass NULL
-> as the target QEMUIOVector, which will however trip bdrv_pad_request,
-> since it wants to extend its passed vector. In particular, this is the
-> case for the blk_co_preadv() call in stream_populate().
->=20
-> If there is no qiov, no operation can be done with it, but the bytes
-> and offset still need to be updated, so the subsequent aligned read
-> will actually be aligned and not run into an assertion failure.
->=20
-> In particular, this can happen when the request alignment of the top
-> node is larger than the allocated part of the bottom node, in which
-> case padding becomes necessary. For example:
->=20
-> > ./qemu-img create /tmp/backing.qcow2 -f qcow2 64M -o cluster_size=3D327=
-68
-> > ./qemu-io -c "write -P42 0x0 0x1" /tmp/backing.qcow2
-> > ./qemu-img create /tmp/top.qcow2 -f qcow2 64M -b /tmp/backing.qcow2 -F =
-qcow2
-> > ./qemu-system-x86_64 --qmp stdio \
-> > --blockdev qcow2,node-name=3Dnode0,file.driver=3Dfile,file.filename=3D/=
-tmp/top.qcow2 \
-> > <<EOF
-> > {"execute": "qmp_capabilities"}
-> > {"execute": "blockdev-add", "arguments": { "driver": "compress", "file"=
-: "node0", "node-name": "node1" } }
-> > {"execute": "block-stream", "arguments": { "job-id": "stream0", "device=
-": "node1" } }
-> > EOF
+> The use of the _eff() versions of the functions here is
+> correct but it introduces a new case where we need to
+> reevaluate the status of the VNMI etc interrupt status:
+> when we change from Secure to NonSecure or when we change
+> SCR_EL3.EEL2 or SCR_EL3.HXEN. We either need to make sure
+> we reevaluate when we drop from EL3 to EL2 (which would be
+> OK since VINMI and VFNMI can't be taken at EL3 and none of
+> these bits can change except at EL3) or else make the calls
+> to reevaluate them when we write to SCR_EL3. At least, I don't
+> think we currently reevaluate these bits on an EL change.
 
-Hi Fiona,
-Can you add a qemu-iotests test case for this issue?
+We re-evaluate these bits on EL change via gicv3_cpuif_el_change_hook.
 
-Thanks,
-Stefan
 
->=20
-> Originally-by: Stefan Reiter <s.reiter@proxmox.com>
-> Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
-> [FE: do update bytes and offset in any case
->      add reproducer to commit message]
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
->  block/io.c | 31 +++++++++++++++++++------------
->  1 file changed, 19 insertions(+), 12 deletions(-)
->=20
-> diff --git a/block/io.c b/block/io.c
-> index 33150c0359..395bea3bac 100644
-> --- a/block/io.c
-> +++ b/block/io.c
-> @@ -1726,22 +1726,29 @@ static int bdrv_pad_request(BlockDriverState *bs,
->          return 0;
->      }
-> =20
-> -    sliced_iov =3D qemu_iovec_slice(*qiov, *qiov_offset, *bytes,
-> -                                  &sliced_head, &sliced_tail,
-> -                                  &sliced_niov);
-> +    /*
-> +     * For prefetching in stream_populate(), no qiov is passed along, be=
-cause
-> +     * only copy-on-read matters.
-> +     */
-> +    if (qiov && *qiov) {
-> +        sliced_iov =3D qemu_iovec_slice(*qiov, *qiov_offset, *bytes,
-> +                                      &sliced_head, &sliced_tail,
-> +                                      &sliced_niov);
-> =20
-> -    /* Guaranteed by bdrv_check_request32() */
-> -    assert(*bytes <=3D SIZE_MAX);
-> -    ret =3D bdrv_create_padded_qiov(bs, pad, sliced_iov, sliced_niov,
-> -                                  sliced_head, *bytes);
-> -    if (ret < 0) {
-> -        bdrv_padding_finalize(pad);
-> -        return ret;
-> +        /* Guaranteed by bdrv_check_request32() */
-> +        assert(*bytes <=3D SIZE_MAX);
-> +        ret =3D bdrv_create_padded_qiov(bs, pad, sliced_iov, sliced_niov,
-> +                                      sliced_head, *bytes);
-> +        if (ret < 0) {
-> +            bdrv_padding_finalize(pad);
-> +            return ret;
-> +        }
-> +        *qiov =3D &pad->local_qiov;
-> +        *qiov_offset =3D 0;
->      }
-> +
->      *bytes +=3D pad->head + pad->tail;
->      *offset -=3D pad->head;
-> -    *qiov =3D &pad->local_qiov;
-> -    *qiov_offset =3D 0;
->      if (padded) {
->          *padded =3D true;
->      }
-> --=20
-> 2.39.2
->=20
->=20
-
---J9S/dtcBNMOND2p9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmX53noACgkQnKSrs4Gr
-c8iatAf8DP/oO0mZvaGXV8KnpTNaEdnvJYrd5/UHgMca0IiSK7ZWH0YfiHb09w8t
-vbFIr4hrLzwdpygmAexav01B+J0bdV1jBxBcxYPRoVha2axq2ABUmxhMoROxXfcG
-EOKlTz0xgnxhmGwQ77/UtltepKzbm+cHmT0+raLNa+R3wLBZxtavZpK8EAqbHkjQ
-WmT+MToQnE+fGeZkz+3hRuTkoVJJh0Udez/dwgIa3hh0azDQGx4G9Bs47xhA6Kxi
-FAo0XbgW0mfItim+xDJRbCcEDKedsa7FMKZnNpDj2vLaPYvMvE5Zf1apgVt+/6Vm
-/PwMQllMiKqe5TcKu53yZL9sAgjBJg==
-=+b+3
------END PGP SIGNATURE-----
-
---J9S/dtcBNMOND2p9--
-
+r~
 
