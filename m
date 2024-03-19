@@ -4,80 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4198DC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 05:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD4FC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 05:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmRk5-0005YK-CX; Tue, 19 Mar 2024 01:10:29 -0400
+	id 1rmRlg-0006NM-MI; Tue, 19 Mar 2024 01:12:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmRk3-0005Xd-6Z
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 01:10:27 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmRk1-0008G8-Iq
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 01:10:26 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4140aadfe2eso16746875e9.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 22:10:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710825023; x=1711429823; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ucpFIq95XGQD+XTDk/kf76iNWRMaho6XDtchMvg0EnA=;
- b=F9OubvCBiDMZG8SHLxvjjVtS1188T2Dv+5Yverz5zKoSJwlSyFkWk0DvbprSnOmtpF
- LnMRlIGhAycpI+mfUKpUY6mdsgoppci+KOcgP5L9UUSpKfFVUWW2P2fK7W8FbnjzsLVi
- ufYXV/pvy1L2icMSCYO08VMKoq3+1cIc4FT95K5NpUVHOzuEtS0TVRQxIMbEqOrCLPgu
- rr37/UvPu431crYTFwjqYs4jABYf3b9Ek3X4oBTu86v4pkQj7MomQla8fJJiysuBtjkv
- KdfHVuhA9YKMOXf/71yYf7mNSn3OMWs3o4OtVatm3gtMbToyvgVQMvrWHP9TiEdR+e/E
- J7cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710825023; x=1711429823;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ucpFIq95XGQD+XTDk/kf76iNWRMaho6XDtchMvg0EnA=;
- b=bH/Obg3GsIxOnAYuA3k+bCK89YbelUV0v5P+RmROPRLkNh4jCV9wWiHeotvDvu6Lxv
- Z6PfWVp+OBQG0ayNTsMkM5TNU6lNLmGd3I7dpQucMtEhjiq41Ph3xKy3K2Isp2cdjlrl
- m4aWqNJ+OyFOnyhX8H9XAIoAAiKpB6ZTl2WvN13RwQnodUdrXLAafQ5W8aTK46Hl0o0G
- DaJ0B+xNWnxsZiqcWzNPdXbf1117xSnKGIvlGLHoTEpQB2HFOBBaLtjytlwdPiMNejOr
- CN1E4RdGkdz0qcrp+a07RZpVrIriWKlPRiUd+OFvxo/OiPclEuIZHKg/pRVG3j9ZI2os
- 1CWQ==
-X-Gm-Message-State: AOJu0YyR2gr41NVjOYRVrsWAk2yx6ZdT7Bl063xzyZ1YtIhun2eydH0B
- eb2YcnN5AhwV4zapsAEO1J/jsJceq69nxOSbjagYjEGpOEqjxsmDJVmxfZeGq3auqjOl2AYCM9g
- t
-X-Google-Smtp-Source: AGHT+IEKZWNOlEt10auwO3wQqNvgo9wTSgMIPunJ4TiKpMgRIx1o0Iw87XQWaglYvYxSURjWwnLLyQ==
-X-Received: by 2002:a05:600c:450e:b0:414:653f:26cd with SMTP id
- t14-20020a05600c450e00b00414653f26cdmr362003wmo.18.1710825023511; 
- Mon, 18 Mar 2024 22:10:23 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.166.129])
- by smtp.gmail.com with ESMTPSA id
- jg24-20020a05600ca01800b0041408d77ae8sm9368279wmb.20.2024.03.18.22.10.22
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 18 Mar 2024 22:10:23 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Leandro Lupori <leandro.lupori@eldorado.org.br>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] target/ppc/mmu-radix64: Use correct string format in
- walk_tree()
-Date: Tue, 19 Mar 2024 06:10:20 +0100
-Message-ID: <20240319051021.6752-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ (Exim 4.90_1) (envelope-from <zhukeqian1@huawei.com>)
+ id 1rmRlb-0006Mu-8S
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 01:12:03 -0400
+Received: from szxga06-in.huawei.com ([45.249.212.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhukeqian1@huawei.com>)
+ id 1rmRlT-0008Vd-IC
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 01:12:02 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.17])
+ by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4TzKZ30n7tz1vx9R;
+ Tue, 19 Mar 2024 13:11:07 +0800 (CST)
+Received: from kwepemm000015.china.huawei.com (unknown [7.193.23.180])
+ by mail.maildlp.com (Postfix) with ESMTPS id CCFF41A0172;
+ Tue, 19 Mar 2024 13:11:52 +0800 (CST)
+Received: from kwepemi500026.china.huawei.com (7.221.188.247) by
+ kwepemm000015.china.huawei.com (7.193.23.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Tue, 19 Mar 2024 13:11:52 +0800
+Received: from kwepemi500026.china.huawei.com ([7.221.188.247]) by
+ kwepemi500026.china.huawei.com ([7.221.188.247]) with mapi id 15.01.2507.035; 
+ Tue, 19 Mar 2024 13:11:52 +0800
+To: David Hildenbrand <david@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, "Igor
+ Mammedov" <imammedo@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+CC: "Wanghaibin (D)" <wanghaibin.wang@huawei.com>, yuzenghui
+ <yuzenghui@huawei.com>, jiangkunkun <jiangkunkun@huawei.com>, Salil Mehta
+ <salil.mehta@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "Zengtao (B)" <prime.zeng@hisilicon.com>
+Subject: =?utf-8?B?562U5aSNOiBbUEFUQ0ggdjEgMi8yXSBzeXN0ZW0vY3B1czogRml4IHJlc3Vt?=
+ =?utf-8?B?ZV9hbGxfdmNwdXMoKSB1bmRlciB2Q1BVIGhvdHBsdWcgY29uZGl0aW9u?=
+Thread-Topic: [PATCH v1 2/2] system/cpus: Fix resume_all_vcpus() under vCPU
+ hotplug condition
+Thread-Index: AQHaeEZ8RsoorYucWEqsCM8nsDv5s7E8w3cAgAHCplA=
+Date: Tue, 19 Mar 2024 05:11:52 +0000
+Message-ID: <60ed0bd01fc346088f48bcce1c92a6d3@huawei.com>
+References: <20240317083704.23244-1-zhukeqian1@huawei.com>
+ <20240317083704.23244-3-zhukeqian1@huawei.com>
+ <57c8506e-3f6a-4d1d-9720-c9b030781109@redhat.com>
+In-Reply-To: <57c8506e-3f6a-4d1d-9720-c9b030781109@redhat.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.174.187.224]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=45.249.212.32; envelope-from=zhukeqian1@huawei.com;
+ helo=szxga06-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,45 +79,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  zhukeqian <zhukeqian1@huawei.com>
+From:  zhukeqian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'mask', 'nlb' and 'base_addr' are all uin64_t types.
-Use the corresponding PRIx64 format.
-
-Fixes: d2066bc50d ("target/ppc: Check page dir/table base alignment")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/ppc/mmu-radix64.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
-index 5823e039e6..690dff7a49 100644
---- a/target/ppc/mmu-radix64.c
-+++ b/target/ppc/mmu-radix64.c
-@@ -300,8 +300,8 @@ static int ppc_radix64_next_level(AddressSpace *as, vaddr eaddr,
- 
-         if (nlb & mask) {
-             qemu_log_mask(LOG_GUEST_ERROR,
--                "%s: misaligned page dir/table base: 0x"TARGET_FMT_lx
--                " page dir size: 0x"TARGET_FMT_lx"\n",
-+                "%s: misaligned page dir/table base: 0x%" PRIx64
-+                " page dir size: 0x%" PRIx64 "\n",
-                 __func__, nlb, mask + 1);
-             nlb &= ~mask;
-         }
-@@ -324,8 +324,8 @@ static int ppc_radix64_walk_tree(AddressSpace *as, vaddr eaddr,
- 
-     if (base_addr & mask) {
-         qemu_log_mask(LOG_GUEST_ERROR,
--            "%s: misaligned page dir base: 0x"TARGET_FMT_lx
--            " page dir size: 0x"TARGET_FMT_lx"\n",
-+            "%s: misaligned page dir base: 0x%" PRIx64
-+            " page dir size: 0x%" PRIx64 "\n",
-             __func__, base_addr, mask + 1);
-         base_addr &= ~mask;
-     }
--- 
-2.41.0
-
+SGkgRGF2aWQsDQoNCk9uIDE3LjAzLjI0IDA5OjM3LCBLZXFpYW4gWmh1IHZpYSB3cm90ZToNCj4+
+IEZvciB2Q1BVIGJlaW5nIGhvdHBsdWdnZWQsIHFlbXVfaW5pdF92Y3B1KCkgaXMgY2FsbGVkLiBJ
+biB0aGlzIA0KPj4gZnVuY3Rpb24sIHdlIHNldCB2Y3B1IHN0YXRlIGFzIHN0b3BwZWQsIGFuZCB0
+aGVuIHdhaXQgdmNwdSB0aHJlYWQgdG8gDQo+PiBiZSBjcmVhdGVkLg0KPj4gDQo+PiBBcyB0aGUg
+dmNwdSBzdGF0ZSBpcyBzdG9wcGVkLCBpdCB3aWxsIGluZm9ybSB1cyBpdCBoYXMgYmVlbiBjcmVh
+dGVkIA0KPj4gYW5kIHRoZW4gd2FpdCBvbiBoYWx0X2NvbmQuIEFmdGVyIHdlIGhhcyByZWFsaXpl
+ZCB2Y3B1IG9iamVjdCwgd2Ugd2lsbCANCj4+IHJlc3VtZSB0aGUgdmNwdSB0aHJlYWQuDQo+PiAN
+Cj4+IEhvd2V2ZXIsIGR1cmluZyB3ZSB3YWl0IHZjcHUgdGhyZWFkIHRvIGJlIGNyZWF0ZWQsIHRo
+ZSBicWwgaXMgDQo+PiB1bmxvY2tlZCwgYW5kIG90aGVyIHRocmVhZCBpcyBhbGxvd2VkIHRvIGNh
+bGwgcmVzdW1lX2FsbF92Y3B1cygpLCANCj4+IHdoaWNoIHdpbGwgcmVzdW1lIHRoZSB1bi1yZWFs
+aXplZCB2Y3B1Lg0KPj4gDQo+PiBUaGlzIGZpeGVzIHRoZSBpc3N1ZSBieSBmaWx0ZXIgb3V0IHVu
+LXJlYWxpemVkIHZjcHUgZHVyaW5nIA0KPj4gcmVzdW1lX2FsbF92Y3B1cygpLg0KPg0KPlNpbWls
+YXIgcXVlc3Rpb246IGlzIHRoZXJlIGEgcmVwcm9kdWNlcj8gDQo+DQo+SG93IGNvdWxkIHdlIGN1
+cnJlbnRseSBob3RwbHVnIGEgVkNQVSwgYW5kIHdoaWxlIGl0IGlzIGJlaW5nIGNyZWF0ZWQsIHNl
+ZSBwYXVzZV9hbGxfdmNwdXMoKS9yZXN1bWVfYWxsX3ZjcHVzKCkgZ2V0dGluZyBjbGFsZWQuIA0K
+Pg0KSSBkZXNjcmliZWQgdGhlIHJlYXNvbiBmb3IgdGhpcyBhdCBwYXRjaCAxLg0KDQo+SWYgSSBh
+bSBub3QgZ2V0dGluZyB0aGlzIHdyb25nLCB0aGVyZSBzZWVtcyB0byBiZSBzb21lIG90aGVyIG1l
+Y2hhbmlzbSBtaXNzaW5nIHRoYXQgbWFrZXMgc3VyZSB0aGF0IHRoaXMgY2Fubm90IGhhcHBlbi4g
+RHJvcHBpbmcgdGhlIEJRTCBoYWxmLXdheSB0aHJvdWdoIGNyZWF0aW5nIGEgVkNQVSBtaWdodCBi
+ZSB0aGUgcHJvYmxlbS4NCj4NCldoZW4gd2UgYWRkIHJldHJ5IG1lY2hhbmlzbSBpbiBwYXVzZV9h
+bGxfdmNwdXMoKSwgd2UgY2FuIHNvbHZlIHRoaXMgcHJvYmxlbS4gV2l0aCB0aGUgc2VtYXRpYyB1
+bmNoYW5nZWQgZm9yIHVzZXIsIHdoaWNoIG1lYW5zOg0KV2l0aCBicWwsIHdlIGNhbiBtYWtlIHN1
+cmUgYWxsIHZjcHVzIGFyZSBwYXVzZWQgYWZ0ZXIgcGF1c2VfYWxsX3ZjcHVzKCkgZmluaXNoLCAg
+YW5kIGFsbCB2Y3B1cyBhcmUgcmVzdW1lZCBhZnRlciByZXN1bWVfYWxsX3ZjcHVzKCkgZmluaXNo
+Lg0KDQpUaGFua3MsDQpLZXFpYW4NCg0KPg0KPg0KLS0NCkNoZWVycywNCg0KRGF2aWQgLyBkaGls
+ZGVuYg0KDQo=
 
