@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48C4FC54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 08:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC566C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 08:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmUQY-00019q-70; Tue, 19 Mar 2024 04:02:30 -0400
+	id 1rmUXC-0002Me-SK; Tue, 19 Mar 2024 04:09:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmUQW-00019J-MR
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:02:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmUXA-0002MW-UP
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:09:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmUQT-0005oS-VX
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:02:28 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmUX9-00073i-G7
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:09:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710835345;
+ s=mimecast20190719; t=1710835758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6v410EBpftyyuKfXSszObZvMSIhKs2gYmA87nWtbCAE=;
- b=QaOLrprlCOvNRX3R3jQPlDsOouUi2iNf5ed0nmkEE7yESSptAD+RTdRn6Ppg4u+aJUONfX
- m71hYrmCML+ob/j/F+naUEQOFJrJ7mngaoJmof3BkV2Waa9H0QGoYM8E+AGCH4TnvwKPxG
- nz2rRiSDcpprlAP3IeD8Ya+fZ/6/pvA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=e2THwgrrEg+cEAQhXwUzOHDKeE71vIwnBdhpgoUd8rI=;
+ b=fLV2i/f21Ea/nFO2C/wWDlS1YS8wghCKydgf39+FrdKly9YLT8ORjCIC+n4mZnsTMvHudi
+ BvWfyyiPGcwmlxrJ0HAKftRnSAEa9wGXOmQhTqU9D4kU7SgS42huGw3HOjaMuZbahFZL+J
+ dAwmZZW0N4KqWddE+W1f6xbmynqumC8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-46-yLVdONy8NquYSUUk6TMtDw-1; Tue, 19 Mar 2024 04:02:23 -0400
-X-MC-Unique: yLVdONy8NquYSUUk6TMtDw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4140dd880b2so12146565e9.2
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 01:02:23 -0700 (PDT)
+ us-mta-313-JwUfkFyMO1KhzBpXHR2CiA-1; Tue, 19 Mar 2024 04:09:16 -0400
+X-MC-Unique: JwUfkFyMO1KhzBpXHR2CiA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33ed26afd99so1984726f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 01:09:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710835342; x=1711440142;
+ d=1e100.net; s=20230601; t=1710835755; x=1711440555;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6v410EBpftyyuKfXSszObZvMSIhKs2gYmA87nWtbCAE=;
- b=IQeTKLEl6z7SnwYXrk3PiLmD4827RhPF3x/V5XR2dHBSVWClQ6kpIxSX/AgDIQYqAc
- RD0VRW7gBWoXGvO0wDE7/0CQdorvNJgXBoU2trE4zVh+LBqohTjDjPrb4J8MCq/K/CgG
- IUAOwHa0JJxbb6avZ0tIxert6pA7C54pXcgOpKIhgclgT/+hXKia91KvkUhuqulZQwHs
- P8Rp7El7Eb53t7N9netP7aeN3ewDP9pb5P6WH02OolzsZ0gLgAG2cLOv/C732Vqxo15r
- T+jp0yvQM8EwAztex2/1cj/MyOLuGrJNCpfVywWQ5GFXiZ3cnIVWMGCtUvmTu5ylknDy
- W1yQ==
+ bh=e2THwgrrEg+cEAQhXwUzOHDKeE71vIwnBdhpgoUd8rI=;
+ b=q/kBOUwV0Vyx0XbQ17etGZW2ElJLVQpWtYEeLsGl18h3CJTTHJwPOnCjZ3JYUvka9j
+ pM4Q5mT0h0ZxOu13vFpnUz4mK/alDOzU1fdT3gziPYIOZatmMZ74ZI8wliTGLGTuIecz
+ I5fXI+gvDTeJA28mf8g1UU5X1Apexcxya0c7wfDLUyVSV5jfjQDjtTZR1tYUFaIup3rW
+ hO4UDTKZ1T7abD2VINC7tC8uiweh4xBA31nwYU3ZW/GSi3V+qUMinHsCDwLdbrsDI6ia
+ r+lDTbaXhI/N2lHPO7g1iZKRoUFLiLpwEs2SbPkEkwiph3DW8G3nzBBaSKVZqL2z1Ifx
+ UlgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVSMwsjFQUphUa+RzHhszFdTLiC3ieT7VgTOUVDpjryF5qjZx1BlBEiAxxMAKxWtXR/d6VE/h6rw/5GDlYoM4e46cAXpMs=
-X-Gm-Message-State: AOJu0Yw7ievzeyYug6PClvqwuqpaw63KlJu1+TZmGwu/oCea5B4SgHVy
- 4JSWx4d57bDKm02yUg7gH6Qtl9f8PjykdsFASShsiTrsGr04luw/pwLzSb6VxqWSAujRRioCxiX
- D+jJf463p8ObIikwOjRa6/PB7sxowrA8lELnrBYwhW84AwQl0vs4c
-X-Received: by 2002:a05:600c:4f53:b0:414:ed4:e959 with SMTP id
- m19-20020a05600c4f5300b004140ed4e959mr4946289wmq.41.1710835342046; 
- Tue, 19 Mar 2024 01:02:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMZmPUr9ijEZIosDTUIHUb9JsAAIaKnCbtlmLSUA/z34jZyRWIg3QniljJUa9yXzlU1uWSJw==
-X-Received: by 2002:a05:600c:4f53:b0:414:ed4:e959 with SMTP id
- m19-20020a05600c4f5300b004140ed4e959mr4946258wmq.41.1710835341632; 
- Tue, 19 Mar 2024 01:02:21 -0700 (PDT)
+ AJvYcCVcO7Q6s6Lpx43kGQlVzXDKi+tFjlIgUCT2evzgsvEjF46gzXmdS/GNKtF8a1ZAtJxUYm3Ae03CT12VOnbHntTIQ2vSZ6Q=
+X-Gm-Message-State: AOJu0YxhZzf8Dck1RyAoeWnIPLGsdi7g76GGr8NFK0dqecWyMlFYZLFm
+ a5Z0j/JR5lpc1Hr7FKDFVACmDcs/IE9yApXVk+3s3JSIomvfVO2pcakBJTrcizADxaduqfQiIJH
+ PGBOJTl2a7FJ6c8XNLHXPqNM+Z6lubUqfGItukS+ezQ65eREaUn9+
+X-Received: by 2002:a5d:6daa:0:b0:341:8c29:20c6 with SMTP id
+ u10-20020a5d6daa000000b003418c2920c6mr496148wrs.50.1710835755363; 
+ Tue, 19 Mar 2024 01:09:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE60YNm8qJFvMl5PJgsLzou01zOK2zX8JOeEzZFtfpdkOMr2VxlLojCMifdETJez9D4aHkZDA==
+X-Received: by 2002:a5d:6daa:0:b0:341:8c29:20c6 with SMTP id
+ u10-20020a5d6daa000000b003418c2920c6mr496134wrs.50.1710835755072; 
+ Tue, 19 Mar 2024 01:09:15 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-50.web.vodafone.de.
  [109.43.177.50]) by smtp.gmail.com with ESMTPSA id
- e2-20020a05600c4e4200b004146762c289sm315541wmq.16.2024.03.19.01.02.20
+ ba12-20020a0560001c0c00b0033fc06f2d84sm7487216wrb.109.2024.03.19.01.09.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 01:02:21 -0700 (PDT)
-Message-ID: <dfb5d303-a143-472d-a1f8-a029c975e360@redhat.com>
-Date: Tue, 19 Mar 2024 09:02:19 +0100
+ Tue, 19 Mar 2024 01:09:14 -0700 (PDT)
+Message-ID: <a9adea00-0917-4820-8da9-bde251ad099e@redhat.com>
+Date: Tue, 19 Mar 2024 09:09:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] aspeed/smc: Only wire flash devices at reset
+Subject: Re: [PATCH 2/3 for 9.0] Revert "chardev/char-socket: Fix TLS io
+ channels sending too much data to the backend"
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240319073320.315170-1-clg@redhat.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20240318182330.96738-1-berrange@redhat.com>
+ <20240318182330.96738-3-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -124,10 +121,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240319073320.315170-1-clg@redhat.com>
+In-Reply-To: <20240318182330.96738-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
 X-Spam_score: 0.9
@@ -152,33 +149,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/03/2024 08.33, Cédric Le Goater wrote:
-> The Aspeed machines have many Static Memory Controllers (SMC), up to
-> 8, which can only drive flash memory devices. Commit 27a2c66c92ec
-> ("aspeed/smc: Wire CS lines at reset") tried to ease the definitions
-> of these devices by allowing flash devices from the command line to be
-> attached to a SSI bus. For that, the wiring of the CS lines of the
-> Aspeed SMC controller was moved at reset. Two assumptions are made
-> though, first that the device has a SSI_GPIO_CS GPIO line, which is
-> not always the case, and second that it is flash device.
+On 18/03/2024 19.23, Daniel P. Berrangé wrote:
+> This commit results in unexpected termination of the TLS connection.
+> When 'fd_can_read' returns 0, the code goes on to pass a zero length
+> buffer to qio_channel_read. The TLS impl calls into gnutls_recv()
+> with this zero length buffer, at which point GNUTLS returns an error
+> GNUTLS_E_INVALID_REQUEST. This is treated as fatal by QEMU's TLS code
+> resulting in the connection being torn down by the chardev.
 > 
-> Correct this problem by ensuring that the devices attached to the bus
-> are the correct flash type. This fixes a QEMU abort when devices
-> without a CS line, such as the max111x, are passed on the command
-> line.
+> Simply skipping the qio_channel_read when the buffer length is zero
+> is also not satisfactory, as it results in a high CPU burn busy loop
+> massively slowing QEMU's functionality.
 > 
-> While at it, export TYPE_M25P80 used in the Xilinx Versal Virtual
-> machine.
+> The proper solution is to avoid tcp_chr_read being called at all
+> unless the frontend is able to accept more data. This will be done
+> in a followup commit.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2228
-> Fixes: 27a2c66c92ec ("aspeed/smc: Wire CS lines at reset")
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> This reverts commit 1907f4d149c3589ade641423c6a33fd7598fa4d3.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
-
-Thanks!
+>   chardev/char-socket.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
 
 
