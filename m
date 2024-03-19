@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC566C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 08:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D8AFC54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 08:11:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmUXC-0002Me-SK; Tue, 19 Mar 2024 04:09:22 -0400
+	id 1rmUYg-0002zk-9u; Tue, 19 Mar 2024 04:10:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmUXA-0002MW-UP
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:09:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmUYf-0002zc-Am
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:10:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmUX9-00073i-G7
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:09:20 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmUYd-0007dV-TY
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:10:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710835758;
+ s=mimecast20190719; t=1710835851;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=e2THwgrrEg+cEAQhXwUzOHDKeE71vIwnBdhpgoUd8rI=;
- b=fLV2i/f21Ea/nFO2C/wWDlS1YS8wghCKydgf39+FrdKly9YLT8ORjCIC+n4mZnsTMvHudi
- BvWfyyiPGcwmlxrJ0HAKftRnSAEa9wGXOmQhTqU9D4kU7SgS42huGw3HOjaMuZbahFZL+J
- dAwmZZW0N4KqWddE+W1f6xbmynqumC8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dEmvhT7VW8fpzVmhzK4eUAKWs92qKL+AwFEcxfM0KlI=;
+ b=MwJzdD4VZ6j1MesnZ18TtTv7x6bDRx9bWGEEFfE1bQg2ZsVScyOrnaE2NbforQqf/6rPZA
+ cq70tQfLT78VUqemp6JSz7CU1g5msBEwsUTie8TWjlTK8spUWnTkd6wTIQKdgDGU5XrySY
+ 1XHGnVR7VPSXAi/T48EazYHp8NJyrqE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-313-JwUfkFyMO1KhzBpXHR2CiA-1; Tue, 19 Mar 2024 04:09:16 -0400
-X-MC-Unique: JwUfkFyMO1KhzBpXHR2CiA-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-33ed26afd99so1984726f8f.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 01:09:16 -0700 (PDT)
+ us-mta-372-DGESZiU1MzWlDDwefdCesA-1; Tue, 19 Mar 2024 04:10:49 -0400
+X-MC-Unique: DGESZiU1MzWlDDwefdCesA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-33ed5ddd744so883563f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 01:10:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710835755; x=1711440555;
+ d=1e100.net; s=20230601; t=1710835848; x=1711440648;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=e2THwgrrEg+cEAQhXwUzOHDKeE71vIwnBdhpgoUd8rI=;
- b=q/kBOUwV0Vyx0XbQ17etGZW2ElJLVQpWtYEeLsGl18h3CJTTHJwPOnCjZ3JYUvka9j
- pM4Q5mT0h0ZxOu13vFpnUz4mK/alDOzU1fdT3gziPYIOZatmMZ74ZI8wliTGLGTuIecz
- I5fXI+gvDTeJA28mf8g1UU5X1Apexcxya0c7wfDLUyVSV5jfjQDjtTZR1tYUFaIup3rW
- hO4UDTKZ1T7abD2VINC7tC8uiweh4xBA31nwYU3ZW/GSi3V+qUMinHsCDwLdbrsDI6ia
- r+lDTbaXhI/N2lHPO7g1iZKRoUFLiLpwEs2SbPkEkwiph3DW8G3nzBBaSKVZqL2z1Ifx
- UlgA==
+ bh=dEmvhT7VW8fpzVmhzK4eUAKWs92qKL+AwFEcxfM0KlI=;
+ b=IBrhJjopDsHlPJjc/YrHP3bamMUe5DhpwbROKOCFP7RPhE5zGa58+L571YLHBYOB3p
+ 8On5FuRPVoWaY8UoNIoeJeIMgfktX+MK6e23H2OnsJkMoqJ92yHKqjwSnRC1HsTkBD9L
+ Cs1hQcko519Mhf4BveGheQRBiWGWx9I4kKIaajqbKNw/x9adnN+XAJIlYWQ7oRM9Ni76
+ 6brO6MUeTdbIHxzDdhxHE+RLC1a1CM7cCr5IWM4p1VImBDR846Q8Z99zB2xdl2luvGG0
+ OBzVrA/cln9Rh75in6vlC1UlyYrOj+wr0jNdUAVBACwF0/UKijtzKML1uUoD047VZDvr
+ nz8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVcO7Q6s6Lpx43kGQlVzXDKi+tFjlIgUCT2evzgsvEjF46gzXmdS/GNKtF8a1ZAtJxUYm3Ae03CT12VOnbHntTIQ2vSZ6Q=
-X-Gm-Message-State: AOJu0YxhZzf8Dck1RyAoeWnIPLGsdi7g76GGr8NFK0dqecWyMlFYZLFm
- a5Z0j/JR5lpc1Hr7FKDFVACmDcs/IE9yApXVk+3s3JSIomvfVO2pcakBJTrcizADxaduqfQiIJH
- PGBOJTl2a7FJ6c8XNLHXPqNM+Z6lubUqfGItukS+ezQ65eREaUn9+
-X-Received: by 2002:a5d:6daa:0:b0:341:8c29:20c6 with SMTP id
- u10-20020a5d6daa000000b003418c2920c6mr496148wrs.50.1710835755363; 
- Tue, 19 Mar 2024 01:09:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE60YNm8qJFvMl5PJgsLzou01zOK2zX8JOeEzZFtfpdkOMr2VxlLojCMifdETJez9D4aHkZDA==
-X-Received: by 2002:a5d:6daa:0:b0:341:8c29:20c6 with SMTP id
- u10-20020a5d6daa000000b003418c2920c6mr496134wrs.50.1710835755072; 
- Tue, 19 Mar 2024 01:09:15 -0700 (PDT)
+ AJvYcCUPEhHb4Ls1gkCwQ+OHwl30cnVUNfr1J6jFf/yO4OW/RDQsD1N905ctBEKsIApAHdOM2T9HFhQAhd6CgztlLbyI2wgFrJU=
+X-Gm-Message-State: AOJu0YxM4LAosfAhH0+LwLguRun+UDtobOtamV5mGiAJ7WCF0NQ3Veyb
+ DtqYwuI2xuTJ2naKLbBEO2VpxztFXAKwKrBzSfM4lHFy4VYnquig5QxezgsumvSjQVwqaZcXJBN
+ FBmEWlouAykb0XAIhzxJaBzbTj3ITerlGBF1VJoqweJXCBOzzh0Z8
+X-Received: by 2002:a05:6000:904:b0:341:8688:a0ae with SMTP id
+ cw4-20020a056000090400b003418688a0aemr1054251wrb.50.1710835847996; 
+ Tue, 19 Mar 2024 01:10:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHbA6lv+RpaD3oKobQOW4QlpZfaGALSLelBtt1mbkLiyGjx9+FzvWdn468fNCV+GekULTHXgA==
+X-Received: by 2002:a05:6000:904:b0:341:8688:a0ae with SMTP id
+ cw4-20020a056000090400b003418688a0aemr1054236wrb.50.1710835847674; 
+ Tue, 19 Mar 2024 01:10:47 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-50.web.vodafone.de.
  [109.43.177.50]) by smtp.gmail.com with ESMTPSA id
- ba12-20020a0560001c0c00b0033fc06f2d84sm7487216wrb.109.2024.03.19.01.09.14
+ ba12-20020a0560001c0c00b0033fc06f2d84sm7487216wrb.109.2024.03.19.01.10.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 01:09:14 -0700 (PDT)
-Message-ID: <a9adea00-0917-4820-8da9-bde251ad099e@redhat.com>
-Date: Tue, 19 Mar 2024 09:09:13 +0100
+ Tue, 19 Mar 2024 01:10:47 -0700 (PDT)
+Message-ID: <47044645-3b72-4c86-8406-19a2e01f2d57@redhat.com>
+Date: Tue, 19 Mar 2024 09:10:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3 for 9.0] Revert "chardev/char-socket: Fix TLS io
- channels sending too much data to the backend"
+Subject: Re: [PATCH 1/3 for 9.0] chardev: lower priority of the HUP GSource in
+ socket chardev
 Content-Language: en-US
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20240318182330.96738-1-berrange@redhat.com>
- <20240318182330.96738-3-berrange@redhat.com>
+ <20240318182330.96738-2-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -121,10 +121,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240318182330.96738-3-berrange@redhat.com>
+In-Reply-To: <20240318182330.96738-2-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 9
 X-Spam_score: 0.9
@@ -150,27 +150,34 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/03/2024 19.23, Daniel P. Berrangé wrote:
-> This commit results in unexpected termination of the TLS connection.
-> When 'fd_can_read' returns 0, the code goes on to pass a zero length
-> buffer to qio_channel_read. The TLS impl calls into gnutls_recv()
-> with this zero length buffer, at which point GNUTLS returns an error
-> GNUTLS_E_INVALID_REQUEST. This is treated as fatal by QEMU's TLS code
-> resulting in the connection being torn down by the chardev.
+> The socket chardev often has 2 GSource object registered against the
+> same FD. One is registered all the time and is just intended to handle
+> POLLHUP events, while the other gets registered & unregistered on the
+> fly as the frontend is ready to receive more data or not.
 > 
-> Simply skipping the qio_channel_read when the buffer length is zero
-> is also not satisfactory, as it results in a high CPU burn busy loop
-> massively slowing QEMU's functionality.
+> It is very common for poll() to signal a POLLHUP event at the same time
+> as there is pending incoming data from the disconnected client. It is
+> therefore essential to process incoming data prior to processing HUP.
+> The problem with having 2 GSource on the same FD is that there is no
+> guaranteed ordering of execution between them, so the chardev code may
+> process HUP first and thus discard data.
 > 
-> The proper solution is to avoid tcp_chr_read being called at all
-> unless the frontend is able to accept more data. This will be done
-> in a followup commit.
+> This failure scenario is non-deterministic but can be seen fairly
+> reliably by reverting a7077b8e354d90fec26c2921aa2dea85b90dff90, and
+> then running 'tests/unit/test-char', which will sometimes fail with
+> missing data.
 > 
-> This reverts commit 1907f4d149c3589ade641423c6a33fd7598fa4d3.
+> Ideally QEMU would only have 1 GSource, but that's a complex code
+> refactoring job. The next best solution is to try to ensure ordering
+> between the 2 GSource objects. This can be achieved by lowering the
+> priority of the HUP GSource, so that it is never dispatched if the
+> main GSource is also ready to dispatch. Counter-intuitively, lowering
+> the priority of a GSource is done by raising its priority number.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   chardev/char-socket.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>   chardev/char-socket.c | 16 ++++++++++++++++
+>   1 file changed, 16 insertions(+)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
