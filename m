@@ -4,78 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D361FC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 18:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 746BCC54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 18:14:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmdsO-0005KO-Gs; Tue, 19 Mar 2024 14:07:52 -0400
+	id 1rmdxL-0006l2-In; Tue, 19 Mar 2024 14:12:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmdsN-0005Ja-6a
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:07:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmdsK-0008EA-9T
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:07:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710871667;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VWp7xEBQhmkS/WPvgx1mvlXZVR4gYbNBkwlsQq0v4mw=;
- b=FG1ohEhxw5x4EF9dJej1PO84dN5ONE/zk/tiHxhktcWldSdIeBBaITJjlVT/q/VF86U4gb
- HeapjwYAV9G1yrgeUrZL+4NQXXhPkD00H4wG98r5NZxSy6va8yAY8xdkRVQVIuHcBq4l41
- CruNXOOROG10aHMpQCBZJEeyQt18two=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-q2iMwBpROIuABlfBz2jwkQ-1; Tue, 19 Mar 2024 14:07:42 -0400
-X-MC-Unique: q2iMwBpROIuABlfBz2jwkQ-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4E72285CE41;
- Tue, 19 Mar 2024 18:07:42 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.88])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8D5AA492BD0;
- Tue, 19 Mar 2024 18:07:39 +0000 (UTC)
-Date: Tue, 19 Mar 2024 18:07:32 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Eric Auger <eauger@redhat.com>
-Cc: Shaoqin Huang <shahuang@redhat.com>, qemu-arm@nongnu.org,
- Sebastian Ott <sebott@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [PATCH v7] arm/kvm: Enable support for KVM_ARM_VCPU_PMU_V3_FILTER
-Message-ID: <ZfnUZKf3p8jv2yEM@redhat.com>
-References: <20240221063431.76992-1-shahuang@redhat.com>
- <ZfmtxxlATpvhK61y@redhat.com>
- <84e01fa8-0de6-4d2b-8696-53cd3c3f42fa@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmdxJ-0006kJ-5F
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:12:57 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmdxG-0000hL-0q
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:12:56 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-512f54fc2dbso5486541e87.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 11:12:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710871970; x=1711476770; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FB3YqW4Uz4oF+ZT7QZKeFJc7YepbHj5rdBwBsiNNT74=;
+ b=tOeYp17dx9iQFPd1lCtxQWWEAe7HuUGTf3hqReLzMjq81nhyYW7Mj/vDoX8sBJiEye
+ bUJT+tvcfVYTLGdcitva+3TIDdOWgei9sa9KAFnTVEunGPYgttD0eTGVYWOJXrHbGIIL
+ IEVgHuy9D1e7C5LHxn5ikPVYrWzi5TH9ghOl8Q8gHrn/z/RD7eBYhCVXWIXbgyIdIhnI
+ DxFuBj08qhrtNQnpB990ceU72kef9BqLsFF77gVX+P+dqDenluFif+pqkwqbMx5yx+Ix
+ HK1S5zwWUhqAF4Tiin2iwyeIWgfu1JkgDcZz15ind+CjzqX+CBNdVPNTrMWarnjxxdTK
+ y4bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710871970; x=1711476770;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FB3YqW4Uz4oF+ZT7QZKeFJc7YepbHj5rdBwBsiNNT74=;
+ b=OqAm4XBFRa6MfmUyTgS817uYqLjXlaxrgqb8yojR0BP22nlxtIJ7PJXdVOhc89LkT3
+ KGlyWP/3f3oXjrfHI5CgfL6u7qEkWU9HT+1bLBucRCK44eo2RFzuIC1xA0Ee0h8VnNkg
+ 4AAGhlC0KY6zdSk/OBt5Kd2fD7ik88e7cnH4sUQmpJOlwJYrEJf3E6fmYnTzAlATojS4
+ zmazeHZFhAf5OfoB/Hv9ueEkcKegN3frl6X+eQpY1sUTeyROaMslTfgl3T8l+Nse+Ggr
+ GMYUeY79k9QmWRGHQMKbybPjeiqBbTj1/0JWdbgdR0FAkEXB/CEEAuKNsN4vBKjQl8Lb
+ hK0Q==
+X-Gm-Message-State: AOJu0Yw9Nke9U3ls6HyKcMIY1s9vxwfERwifRh24pMrEbHQqarNnXegv
+ t7+Zv4G1dOrNIj7JxTRtcxpl1ZUUgnyFXPUSVudf0NV95ev4OHnF6TASqocoC7oy1g4Uq6tSB0z
+ Y
+X-Google-Smtp-Source: AGHT+IHoKELfbuECkuyLTUglf/dSA5ERaIVTmAVO/Cip6Uc4c6+9VYEZkr434C24QN3zzUUzDRX9Ww==
+X-Received: by 2002:a05:6512:20c6:b0:513:bf23:ce3 with SMTP id
+ u6-20020a05651220c600b00513bf230ce3mr11096828lfr.62.1710871969986; 
+ Tue, 19 Mar 2024 11:12:49 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.166.129])
+ by smtp.gmail.com with ESMTPSA id
+ bw9-20020a170906c1c900b00a45ff821e09sm6328790ejb.150.2024.03.19.11.12.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 11:12:49 -0700 (PDT)
+Message-ID: <53e1f69f-3a52-4972-b1ba-6ad07507b197@linaro.org>
+Date: Tue, 19 Mar 2024 19:12:46 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.1 07/21] target/mips: Make MIPS_CPU common to new
+ MIPS32_CPU / MIPS64_CPU types
+Content-Language: en-US
+To: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>,
+ qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Claudio Fontana <cfontana@suse.de>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Huacai Chen <chenhuacai@kernel.org>
+References: <20240315130910.15750-1-philmd@linaro.org>
+ <20240315130910.15750-8-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240315130910.15750-8-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <84e01fa8-0de6-4d2b-8696-53cd3c3f42fa@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,141 +106,132 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 19, 2024 at 06:58:33PM +0100, Eric Auger wrote:
-> Hi Daniel,
+On 15/3/24 14:08, Philippe Mathieu-Daudé wrote:
+> "target/foo/cpu-qom.h" can not use any target specific definitions.
 > 
-> On 3/19/24 16:22, Daniel P. Berrangé wrote:
-> > On Wed, Feb 21, 2024 at 01:34:31AM -0500, Shaoqin Huang wrote:
-> >> The KVM_ARM_VCPU_PMU_V3_FILTER provides the ability to let the VMM decide
-> >> which PMU events are provided to the guest. Add a new option
-> >> `kvm-pmu-filter` as -cpu sub-option to set the PMU Event Filtering.
-> >> Without the filter, all PMU events are exposed from host to guest by
-> >> default. The usage of the new sub-option can be found from the updated
-> >> document (docs/system/arm/cpu-features.rst).
-> >>
-> >> Here is an example which shows how to use the PMU Event Filtering, when
-> >> we launch a guest by use kvm, add such command line:
-> >>
-> >>   # qemu-system-aarch64 \
-> >>         -accel kvm \
-> >>         -cpu host,kvm-pmu-filter="D:0x11-0x11"
-> > 
-> > snip
-> > 
-> >> @@ -517,6 +533,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
-> >>                               kvm_steal_time_set);
-> >>      object_property_set_description(obj, "kvm-steal-time",
-> >>                                      "Set off to disable KVM steal time.");
-> >> +
-> >> +    object_property_add_str(obj, "kvm-pmu-filter", kvm_pmu_filter_get,
-> >> +                            kvm_pmu_filter_set);
-> >> +    object_property_set_description(obj, "kvm-pmu-filter",
-> >> +                                    "PMU Event Filtering description for "
-> >> +                                    "guest PMU. (default: NULL, disabled)");
-> >>  }
-> > 
-> > Passing a string property, but....[1]
-> > 
-> >>  
-> >>  bool kvm_arm_pmu_supported(void)
-> >> @@ -1706,6 +1728,62 @@ static bool kvm_arm_set_device_attr(ARMCPU *cpu, struct kvm_device_attr *attr,
-> >>      return true;
-> >>  }
-> >>  
-> >> +static void kvm_arm_pmu_filter_init(ARMCPU *cpu)
-> >> +{
-> >> +    static bool pmu_filter_init;
-> >> +    struct kvm_pmu_event_filter filter;
-> >> +    struct kvm_device_attr attr = {
-> >> +        .group      = KVM_ARM_VCPU_PMU_V3_CTRL,
-> >> +        .attr       = KVM_ARM_VCPU_PMU_V3_FILTER,
-> >> +        .addr       = (uint64_t)&filter,
-> >> +    };
-> >> +    int i;
-> >> +    g_auto(GStrv) event_filters;
-> >> +
-> >> +    if (!cpu->kvm_pmu_filter) {
-> >> +        return;
-> >> +    }
-> >> +    if (kvm_vcpu_ioctl(CPU(cpu), KVM_HAS_DEVICE_ATTR, &attr)) {
-> >> +        warn_report("The KVM doesn't support the PMU Event Filter!");
-> > 
-> > If the user requested a filter and it can't be supported, QEMU
-> > must exit with an error, not ignore the user's request.
-> > 
-> >> +        return;
-> >> +    }
-> >> +
-> >> +    /*
-> >> +     * The filter only needs to be initialized through one vcpu ioctl and it
-> >> +     * will affect all other vcpu in the vm.
-> >> +     */
-> >> +    if (pmu_filter_init) {
-> >> +        return;
-> >> +    } else {
-> >> +        pmu_filter_init = true;
-> >> +    }
-> >> +
-> >> +    event_filters = g_strsplit(cpu->kvm_pmu_filter, ";", -1);
-> >> +    for (i = 0; event_filters[i]; i++) {
-> >> +        unsigned short start = 0, end = 0;
-> >> +        char act;
-> >> +
-> >> +        if (sscanf(event_filters[i], "%c:%hx-%hx", &act, &start, &end) != 3) {
-> >> +            warn_report("Skipping invalid PMU filter %s", event_filters[i]);
-> >> +            continue;
-> > 
-> > Warning on user syntax errors is undesirable - it should be a fatal
-> > error of the user gets this wrong.
-> > 
-> >> +        }
-> >> +
-> >> +        if ((act != 'A' && act != 'D') || start > end) {
-> >> +            warn_report("Skipping invalid PMU filter %s", event_filters[i]);
-> >> +            continue;
-> > 
-> > Likewise should be fatal.
-> > 
-> >> +        }
-> >> +
-> >> +        filter.base_event = start;
-> >> +        filter.nevents = end - start + 1;
-> >> +        filter.action = (act == 'A') ? KVM_PMU_EVENT_ALLOW :
-> >> +                                       KVM_PMU_EVENT_DENY;
-> >> +
-> >> +        if (!kvm_arm_set_device_attr(cpu, &attr, "PMU_V3_FILTER")) {
-> >> +            break;
-> >> +        }
-> >> +    }
-> >> +}
-> > 
-> > ..[1] then implementing a custom parser is rather a QEMU design anti-pattern,
-> > especially when the proposed syntax is incapable of being mapped into the
-> > normal QAPI syntax for a list of structs should we want to fully convert
-> > -cpu to QAPI parsing later. I wonder if can we model this property with
-> > QAPI now ?
-> I guess you mean creating a new property like those in
-> hw/core/qdev-properties-system.c for instance  and populating an array
-> of those at CPU object level?
+> Currently "target/mips/cpu-qom.h" defines TYPE_MIPS_CPU depending
+> on the mips(32)/mips64 build type. This doesn't scale in a
+> heterogeneous context where we need to access both types concurrently.
+> 
+> In order to do that, introduce the new MIPS32_CPU / MIPS64_CPU types,
+> both inheriting a common TYPE_MIPS_CPU base type.
+> 
+> Keep the current CPU types registered in mips_register_cpudef_type()
+> as 32 or 64-bit, but instead of depending on the binary built being
+> targeting 32/64-bit, check whether the CPU is 64-bit by looking at
+> the CPU_MIPS64 bit.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/mips/cpu-qom.h              | 13 +++++++------
+>   target/mips/cpu.c                  | 11 ++++++++++-
+>   target/mips/sysemu/mips-qmp-cmds.c | 26 ++------------------------
+>   3 files changed, 19 insertions(+), 31 deletions(-)
+> 
+> diff --git a/target/mips/cpu-qom.h b/target/mips/cpu-qom.h
+> index 0eea2a2598..bf464f16b6 100644
+> --- a/target/mips/cpu-qom.h
+> +++ b/target/mips/cpu-qom.h
+> @@ -1,5 +1,5 @@
+>   /*
+> - * QEMU MIPS CPU
+> + * QEMU MIPS CPU QOM header (target agnostic)
+>    *
+>    * Copyright (c) 2012 SUSE LINUX Products GmbH
+>    *
+> @@ -22,14 +22,15 @@
+>   
+>   #include "hw/core/cpu.h"
+>   
+> -#ifdef TARGET_MIPS64
+> -#define TYPE_MIPS_CPU "mips64-cpu"
+> -#else
+> -#define TYPE_MIPS_CPU "mips-cpu"
+> -#endif
+> +#define TYPE_MIPS_CPU   "mips-cpu"
+> +#define TYPE_MIPS32_CPU "mips32-cpu"
+> +#define TYPE_MIPS64_CPU "mips64-cpu"
+>   
+>   OBJECT_DECLARE_CPU_TYPE(MIPSCPU, MIPSCPUClass, MIPS_CPU)
+>   
+> +OBJECT_DECLARE_CPU_TYPE(MIPS32CPU, MIPSCPUClass, MIPS32_CPU)
+> +OBJECT_DECLARE_CPU_TYPE(MIPS64CPU, MIPSCPUClass, MIPS64_CPU)
+> +
+>   #define MIPS_CPU_TYPE_SUFFIX "-" TYPE_MIPS_CPU
+>   #define MIPS_CPU_TYPE_NAME(model) model MIPS_CPU_TYPE_SUFFIX
+>   
+> diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+> index c096d97fe3..f3ea6175f2 100644
+> --- a/target/mips/cpu.c
+> +++ b/target/mips/cpu.c
+> @@ -604,6 +604,14 @@ static const TypeInfo mips_cpu_types[] = {
+>           .abstract       = true,
+>           .class_size     = sizeof(MIPSCPUClass),
+>           .class_init     = mips_cpu_class_init,
+> +    }, {
+> +        .name           = TYPE_MIPS32_CPU,
+> +        .parent         = TYPE_MIPS_CPU,
+> +        .abstract       = true,
+> +    }, {
+> +        .name           = TYPE_MIPS64_CPU,
+> +        .parent         = TYPE_MIPS_CPU,
+> +        .abstract       = true,
+>       }
+>   };
+>   
+> @@ -620,7 +628,8 @@ static void mips_register_cpudef_type(const struct mips_def_t *def)
+>       char *typename = mips_cpu_type_name(def->name);
+>       TypeInfo ti = {
+>           .name = typename,
+> -        .parent = TYPE_MIPS_CPU,
+> +        .parent = def->insn_flags & CPU_MIPS64
+> +                  ? TYPE_MIPS64_CPU : TYPE_MIPS32_CPU,
+>           .class_init = mips_cpu_cpudef_class_init,
+>           .class_data = (void *)def,
+>       };
 
-Yeah, something like the IOThreadVirtQueueMapping data type would
-be the more QAPI like code pattern.
+Oops, I got 2 commits squashed by mistake here...
 
-> Note there is v8 but most of your comments still apply
-> https://lore.kernel.org/all/20240312074849.71475-1-shahuang@redhat.com/
-
-Yes, sorry I just saw Peter's query about libvirt on this v7 and
-didn't think to look for a newer version
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> diff --git a/target/mips/sysemu/mips-qmp-cmds.c b/target/mips/sysemu/mips-qmp-cmds.c
+> index 7340ac70ba..329db3a028 100644
+> --- a/target/mips/sysemu/mips-qmp-cmds.c
+> +++ b/target/mips/sysemu/mips-qmp-cmds.c
+> @@ -8,31 +8,9 @@
+>   
+>   #include "qemu/osdep.h"
+>   #include "qapi/qapi-commands-machine-target.h"
+> -#include "cpu.h"
+> -
+> -static void mips_cpu_add_definition(gpointer data, gpointer user_data)
+> -{
+> -    ObjectClass *oc = data;
+> -    CpuDefinitionInfoList **cpu_list = user_data;
+> -    CpuDefinitionInfo *info;
+> -    const char *typename;
+> -
+> -    typename = object_class_get_name(oc);
+> -    info = g_malloc0(sizeof(*info));
+> -    info->name = cpu_model_from_type(typename);
+> -    info->q_typename = g_strdup(typename);
+> -
+> -    QAPI_LIST_PREPEND(*cpu_list, info);
+> -}
+> +#include "qapi/commands-target-compat.h"
+>   
+>   CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
+>   {
+> -    CpuDefinitionInfoList *cpu_list = NULL;
+> -    GSList *list;
+> -
+> -    list = object_class_get_list(TYPE_MIPS_CPU, false);
+> -    g_slist_foreach(list, mips_cpu_add_definition, &cpu_list);
+> -    g_slist_free(list);
+> -
+> -    return cpu_list;
+> +    return generic_query_cpu_definitions(errp);
+>   }
 
 
