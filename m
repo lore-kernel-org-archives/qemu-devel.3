@@ -4,80 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 251E1C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 08:30:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 598B2C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 09:15:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmUrA-0006gv-4A; Tue, 19 Mar 2024 04:30:00 -0400
+	id 1rmVXu-0005d6-PU; Tue, 19 Mar 2024 05:14:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rmUr8-0006gV-Mo
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:29:58 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rmUr7-0002dv-3b
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 04:29:58 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-609f1f97864so57455357b3.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 01:29:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710836995; x=1711441795; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gATCHIpK7JyeKYB0rPRVwBGCL2Zpfl/yuvvoKlJBZI8=;
- b=ibT2agpwTe9leAEUdZzLNLvv6yLI8WKU2yQDYlT4MqaN3k/wKCR2kCxoAP9AvG7v1R
- 4c1zmo0XI5Atk26yCtqZhMTkWaBiOGoqIgcgkGuyg81weum/W3yKDlPUVtNDrdWWS2Rj
- UNLUIWwUlR1v4Ka1BBR/4MiFlMbYcVfY890FYTBYOcP86FVpyLTFTvolADxsDDYEDNsU
- UJEzkhrlD/kNlcU0jBNM96eHbr6S7JI2L1ZJIC7Gbt+RFwSeEjxcLBWdZ1OEKtZ8epo8
- AWVOTOt4iIUf+hmR8IXNvloVVEMeldMiqVbysIgBM2FOAvmbzHp3IAOEewWR1KyqSjm4
- sqgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710836995; x=1711441795;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gATCHIpK7JyeKYB0rPRVwBGCL2Zpfl/yuvvoKlJBZI8=;
- b=J4o3dGr5BUgpkK8UKrjWCJgIKVb4jHjqA3dKIQPO2q34jTJ15g+706+jYBlU7W67Sc
- 8BObMA3tN/5OhAuELUgWA2/19IKTpeKgWRrATktHbm3i8eLBwUhWpB0nc1lsJHi5yWLM
- uqRAJ/M7c7Hhcbawcjrc3qDlm0XArbRsyBlMZeQUj5VeOBK93QqGx1Ytbt7pmiJQsxUh
- 5qv1gwNgMB9o7zRkPbO1B/t6j1wOiIFTVb+JUPjtuslkGO5BsRIyB7J1DWr6ggzQfZi2
- cJthNy+euDlX3S5hZb/uTa5NcOnUDbwxnR0tOvSaNbGAiMERxDug7TlL3hzQy3FvVzqb
- qGBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7yLkZQIaOb0m79+NuHNtwYuQkxrgj51oljsxuYYYnaJMdB3FXjaewDTW5jzVkKtxrGPbDKj6VQtgyCoNyP55d5eKa8oY=
-X-Gm-Message-State: AOJu0YyNICc4uHQWyfC5lTdNdk6LYveLOr5KZtBwB7MGuHTKgF34tymI
- n38uQ066dfMoovZb+i+/9hdi0pQJ0lUILN5TboD88Y6oE9Rcf+GRbeypyksbqm+N+F3+1lDX78U
- oRK9ktEpyQK54nEfnmlj+7soCbOU=
-X-Google-Smtp-Source: AGHT+IFFZru5WvkXraWfufsy7KUFxz90G99wuYK6B/gF8R7K8iBZce1HfGabWlk4HIhb4vX1S32B6mHyAK1zf8LebIc=
-X-Received: by 2002:a25:904:0:b0:dbe:9509:141c with SMTP id
- 4-20020a250904000000b00dbe9509141cmr1371150ybj.30.1710836994875; Tue, 19 Mar
- 2024 01:29:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rmVXs-0005cB-RZ; Tue, 19 Mar 2024 05:14:08 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1rmVXg-00039J-VJ; Tue, 19 Mar 2024 05:14:07 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 0C5E6476AD;
+ Tue, 19 Mar 2024 10:13:46 +0100 (CET)
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, kwolf@redhat.com, fam@euphon.net,
+ stefanha@redhat.com, t.lamprecht@proxmox.com, w.bumiller@proxmox.com
+Subject: [PATCH] block/io: accept NULL qiov in bdrv_pad_request
+Date: Tue, 19 Mar 2024 10:13:41 +0100
+Message-Id: <20240319091341.303414-1-f.ebner@proxmox.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-References: <20240319-console-v2-0-3fd6feef321a@daynix.com>
-In-Reply-To: <20240319-console-v2-0-3fd6feef321a@daynix.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 19 Mar 2024 12:29:43 +0400
-Message-ID: <CAJ+F1CKOuZR5nZxcxRzZyoE56p_nNW11cySEmnFvRgiPv5OAdw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] ui/console: Remove console_select()
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-yw1-x1134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,80 +53,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Akihiko
+From: Stefan Reiter <s.reiter@proxmox.com>
 
-On Tue, Mar 19, 2024 at 7:09=E2=80=AFAM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
->
-> ui/console has a concept of "active" console; the active console is used
-> when NULL is set for DisplayListener::con, and console_select() updates
-> the active console state. However, the global nature of the state cause
-> odd behaviors, and replacing NULL with the active console also resulted
-> in extra code. Remove it to solve these problems.
->
-> The active console state is shared, so if there are two displays
-> referring to the active console, switching the console for one will also
-> affect the other. All displays that use the active console state,
-> namely cocoa, curses, and vnc, need to reset some of its state before
-> switching the console, and such a reset operation cannot be performed if
-> the console is switched by another display. This can result in stuck
-> keys, for example.
->
-> While the active console state is shared, displays other than cocoa,
-> curses, and vnc don't update the state. A chardev-vc inherits the
-> size of the active console, but it does not make sense for such a
-> display.
->
-> This series removes the shared "active" console state from ui/console.
-> curses, cocoa, and vnc will hold the reference to the console currently
-> shown with DisplayListener::con. This also eliminates the need to
-> replace NULL with the active console and save code.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Some operations, e.g. block-stream, perform reads while discarding the
+results (only copy-on-read matters). In this case, they will pass NULL
+as the target QEMUIOVector, which will however trip bdrv_pad_request,
+since it wants to extend its passed vector. In particular, this is the
+case for the blk_co_preadv() call in stream_populate().
 
-lgtm
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+If there is no qiov, no operation can be done with it, but the bytes
+and offset still need to be updated, so the subsequent aligned read
+will actually be aligned and not run into an assertion failure.
 
-I am willing to take that for 9.0. Is there any bug already opened
-about the issues it solves?
+In particular, this can happen when the request alignment of the top
+node is larger than the allocated part of the bottom node, in which
+case padding becomes necessary. For example:
 
-> ---
-> Changes in v2:
-> - Changed to fall back to a text console if there is no graphical
->   console as previously done.
-> - Link to v1: https://lore.kernel.org/r/20240318-console-v1-0-f4efbfa7125=
-3@daynix.com
->
-> ---
-> Akihiko Odaki (4):
->       ui/vc: Do not inherit the size of active console
->       ui/vnc: Do not use console_select()
->       ui/cocoa: Do not use console_select()
->       ui/curses: Do not use console_select()
->
->  include/ui/console.h   |   2 +-
->  include/ui/kbd-state.h |  11 ++++
->  ui/console-priv.h      |   2 +-
->  ui/console-vc-stubs.c  |   2 +-
->  ui/console-vc.c        |   7 ++-
->  ui/console.c           | 133 ++++++++++++-------------------------------=
-------
->  ui/curses.c            |  48 ++++++++++--------
->  ui/kbd-state.c         |   6 +++
->  ui/vnc.c               |  14 ++++--
->  ui/cocoa.m             |  37 ++++++++++----
->  10 files changed, 118 insertions(+), 144 deletions(-)
-> ---
-> base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
-> change-id: 20240317-console-6744d4ab8ba6
->
-> Best regards,
-> --
-> Akihiko Odaki <akihiko.odaki@daynix.com>
->
->
+> ./qemu-img create /tmp/backing.qcow2 -f qcow2 64M -o cluster_size=32768
+> ./qemu-io -c "write -P42 0x0 0x1" /tmp/backing.qcow2
+> ./qemu-img create /tmp/top.qcow2 -f qcow2 64M -b /tmp/backing.qcow2 -F qcow2
+> ./qemu-system-x86_64 --qmp stdio \
+> --blockdev qcow2,node-name=node0,file.driver=file,file.filename=/tmp/top.qcow2 \
+> <<EOF
+> {"execute": "qmp_capabilities"}
+> {"execute": "blockdev-add", "arguments": { "driver": "compress", "file": "node0", "node-name": "node1" } }
+> {"execute": "block-stream", "arguments": { "job-id": "stream0", "device": "node1" } }
+> EOF
+
+Originally-by: Stefan Reiter <s.reiter@proxmox.com>
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+[FE: do update bytes and offset in any case
+     add reproducer to commit message]
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+---
+ block/io.c | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
+
+diff --git a/block/io.c b/block/io.c
+index 33150c0359..395bea3bac 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -1726,22 +1726,29 @@ static int bdrv_pad_request(BlockDriverState *bs,
+         return 0;
+     }
+ 
+-    sliced_iov = qemu_iovec_slice(*qiov, *qiov_offset, *bytes,
+-                                  &sliced_head, &sliced_tail,
+-                                  &sliced_niov);
++    /*
++     * For prefetching in stream_populate(), no qiov is passed along, because
++     * only copy-on-read matters.
++     */
++    if (qiov && *qiov) {
++        sliced_iov = qemu_iovec_slice(*qiov, *qiov_offset, *bytes,
++                                      &sliced_head, &sliced_tail,
++                                      &sliced_niov);
+ 
+-    /* Guaranteed by bdrv_check_request32() */
+-    assert(*bytes <= SIZE_MAX);
+-    ret = bdrv_create_padded_qiov(bs, pad, sliced_iov, sliced_niov,
+-                                  sliced_head, *bytes);
+-    if (ret < 0) {
+-        bdrv_padding_finalize(pad);
+-        return ret;
++        /* Guaranteed by bdrv_check_request32() */
++        assert(*bytes <= SIZE_MAX);
++        ret = bdrv_create_padded_qiov(bs, pad, sliced_iov, sliced_niov,
++                                      sliced_head, *bytes);
++        if (ret < 0) {
++            bdrv_padding_finalize(pad);
++            return ret;
++        }
++        *qiov = &pad->local_qiov;
++        *qiov_offset = 0;
+     }
++
+     *bytes += pad->head + pad->tail;
+     *offset -= pad->head;
+-    *qiov = &pad->local_qiov;
+-    *qiov_offset = 0;
+     if (padded) {
+         *padded = true;
+     }
+-- 
+2.39.2
 
 
---=20
-Marc-Andr=C3=A9 Lureau
 
