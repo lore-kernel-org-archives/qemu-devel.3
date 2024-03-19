@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCEB5C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 09:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12182C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 09:25:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmVhr-0000a0-1P; Tue, 19 Mar 2024 05:24:27 -0400
+	id 1rmVj2-0001Om-Qo; Tue, 19 Mar 2024 05:25:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rmVhq-0000ZS-0r
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 05:24:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rmVj1-0001ON-1T
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 05:25:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rmVhn-0004v9-P7
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 05:24:25 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rmViz-0005Mt-Kj
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 05:25:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710840262;
+ s=mimecast20190719; t=1710840337;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7GSp6UqM6cddHswubyUHHGm1W1p6YffXI6TbOu7lS4s=;
- b=fBF+oe1HUbipFxLdeH4fNedP/OMGJNXAfMfNjJ2eCOj/5rfhaKHLzWwlY6JiR65+NBpJqI
- gYc2PHbgAW9E6IJaH1hIddXfWSYcDqzqPfzjoZGhmh8s3XPNmXfg6wW+bNF7X7o98OvRi7
- edqjvwB0FgntThu/hFnzi59Eo1/DE7A=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=I9qupZUBKSESwdPmUrykmiCwbYxNnSgb6TP821+LROk=;
+ b=FMumFfNC8uKjJ/FzgjaHtNRmWmug441jUfbfYjoOjNxpmWsaK1CVt92a6TbOMqDe8tcdKf
+ psmmOTs3MgupOY02HCvVrrpu+Tb4Hs9E9+5IL+NZ1je63a+7HDtLzSDiSTzm7gGlOyZrrJ
+ OR6hZrpiHfoaAuRjYrcj5qYe2rYZxM8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-481-pOYvwvsMPt2_5Ltv0gVvRw-1; Tue, 19 Mar 2024 05:24:18 -0400
-X-MC-Unique: pOYvwvsMPt2_5Ltv0gVvRw-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-515297de3fdso617796e87.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 02:24:18 -0700 (PDT)
+ us-mta-82-wH3qteuZOBOuyXSpX433-g-1; Tue, 19 Mar 2024 05:25:35 -0400
+X-MC-Unique: wH3qteuZOBOuyXSpX433-g-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-41463be093aso3100785e9.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 02:25:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710840257; x=1711445057;
+ d=1e100.net; s=20230601; t=1710840334; x=1711445134;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
  :references:cc:to:content-language:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7GSp6UqM6cddHswubyUHHGm1W1p6YffXI6TbOu7lS4s=;
- b=Aly1KCObelitT1IFV25PPMg/snV/fy92fi7e6HWA0Esj3By8QO9zlJQtqx2p5ycpEY
- B34ys4cSrqbK5GbtteWchAFBrlWNGMwRQSpTFnWWJ7KcGao+gbFPHozmvihYL/WmqzHd
- lWqyBMkg/AQ8I0B/AkbekYUldZH7CGJmI7F5hftfw4qPfiPiqu7vMOEwM6szprrDFmLz
- A8h/WCdiOxaFUofs3KgVynTXJ2LqCncbvVXD0jRlZjAXq+9vZ4Tk6k63YYMhZam4MaJW
- hDmSe8prue7kz/aOwW6T2ck82sDZxcS+h1tVG4oS1OnIt63m2DbuFrXuVunga+r0AIR/
- xa0A==
+ bh=I9qupZUBKSESwdPmUrykmiCwbYxNnSgb6TP821+LROk=;
+ b=DLqT/JrSAkcmSf6QOlDjtxMf7MMO58Id9vUh+kjwq39UUIlmQRWMe/Eqe0wRJwk9xX
+ dSzxdLH7T9CuKAj8RRr5Qg6A3/VMXdmB2VIg9UMmTGUgnSUz+eNq/o4pLtn5IOrfsFYU
+ MuA2hbAY06ic/ZOf2lYNemw4W1JbDGUGmK7T/rCciSfifZ3qZcYfsx6jT3M3avdcUGog
+ rAanHVlAh2bUcXw7cLJp49xRp1wTlk+lBJKYrxD9mNJN1poDlSdNxMh376RRzmivTdrh
+ KFFxkxj1+n5bTmrl0yymyPnsha92PoPE/hNZvXJbBXSgUHVrd7KSrDBQk/zqVnIeWIKt
+ L6YA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWh5UaijbXhqmTTXJWwZo7sD+vm4K3TgNw0uJ2GiiJ8nhlSPs3VGaJURAKf0zOKIJmuKLhaDKiZ8w06XtjdYPEeeBSHcA0=
-X-Gm-Message-State: AOJu0YxD7IojLm+TsH25oSPIdkupS0Oyr43G7VBnFj1BwmHkuRGvkuvL
- hMAmBMeYMDfDKuP8bQW5b0DLxpcjVp8z3LO/l4jMvNRRGDV4t2WcZIkL69afbFIlt1+A/ycLZgM
- VuIf1zTAjkKEA4j1o8qGFtQjy+cb6gpH2fR40jR17GS2A26gR6jBx
-X-Received: by 2002:a05:6512:310a:b0:513:c4b8:388b with SMTP id
- n10-20020a056512310a00b00513c4b8388bmr9134990lfb.27.1710840256979; 
- Tue, 19 Mar 2024 02:24:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrhRVmjfnLYiKuZFdhh+8s+w+XnVZp4jL9kPig4PGWvQi5SZ6DkUxL8Zrv4pwr6mdIVx7UGA==
-X-Received: by 2002:a05:6512:310a:b0:513:c4b8:388b with SMTP id
- n10-20020a056512310a00b00513c4b8388bmr9134967lfb.27.1710840256515; 
- Tue, 19 Mar 2024 02:24:16 -0700 (PDT)
+ AJvYcCUNF5LdnnHQvfcAh5DqexLLY7GK8OX39GWDW2H+Kg2ogELuh53g0deYwaUgiSbbvZp/2N0BGNpzO+6gKkP7LhZE6yKApbQ=
+X-Gm-Message-State: AOJu0YzzYDEfcBWq+8IT21mYZ9xNjySUpPfEuUpyyBF7u2ZMy6KMUDqT
+ CEmkpo4xmlRcTtEPEXxBNBPLHvYTdrpAw2Nda9cyvW9gr2fCO749RDeoGURXDEl68XGwOoZ91XJ
+ OmkBHfvb+4e47zsAA9UvIlYcIQXQnONC8Dsu3Z6wIcSs2EspELYfA
+X-Received: by 2002:a05:600c:1c15:b0:414:c64:f3d0 with SMTP id
+ j21-20020a05600c1c1500b004140c64f3d0mr4356403wms.27.1710840333994; 
+ Tue, 19 Mar 2024 02:25:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG59GmfknbX+5BtUcsMDulCtGkU+zSgpFKALDtpbj6wiCKkPFr+XJkbcODfvTxAHPFbJW6mPw==
+X-Received: by 2002:a05:600c:1c15:b0:414:c64:f3d0 with SMTP id
+ j21-20020a05600c1c1500b004140c64f3d0mr4356384wms.27.1710840333592; 
+ Tue, 19 Mar 2024 02:25:33 -0700 (PDT)
 Received: from ?IPV6:2003:cb:c741:2200:2adc:9a8d:ae91:2e9f?
  (p200300cbc74122002adc9a8dae912e9f.dip0.t-ipconnect.de.
  [2003:cb:c741:2200:2adc:9a8d:ae91:2e9f])
  by smtp.gmail.com with ESMTPSA id
- t14-20020a05600c450e00b0041409db0349sm9396242wmo.48.2024.03.19.02.24.15
+ t14-20020a05600c450e00b0041409db0349sm9396242wmo.48.2024.03.19.02.25.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 02:24:16 -0700 (PDT)
-Message-ID: <7cc3c19c-00f0-4ad2-b0de-ba42e9b20c2a@redhat.com>
-Date: Tue, 19 Mar 2024 10:24:14 +0100
+ Tue, 19 Mar 2024 02:25:33 -0700 (PDT)
+Message-ID: <5a997b02-207b-4d8d-b9e1-8c85ae468cfb@redhat.com>
+Date: Tue, 19 Mar 2024 10:25:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?B?UmU6IOetlOWkjTogW1BBVENIIHYxIDEvMl0gc3lzdGVtL2NwdXM6IEZp?=
- =?UTF-8?Q?x_pause=5Fall=5Fvcpus=28=29_under_concurrent_environment?=
+Subject: =?UTF-8?B?UmU6IOetlOWkjTogW1BBVENIIHYxIDIvMl0gc3lzdGVtL2NwdXM6IEZp?=
+ =?UTF-8?Q?x_resume=5Fall=5Fvcpus=28=29_under_vCPU_hotplug_condition?=
 Content-Language: en-US
 To: zhukeqian <zhukeqian1@huawei.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
@@ -85,9 +85,9 @@ Cc: "Wanghaibin (D)" <wanghaibin.wang@huawei.com>,
  Jonathan Cameron <jonathan.cameron@huawei.com>,
  "Zengtao (B)" <prime.zeng@hisilicon.com>
 References: <20240317083704.23244-1-zhukeqian1@huawei.com>
- <20240317083704.23244-2-zhukeqian1@huawei.com>
- <4d7795bb-1dfa-40e7-a98e-4c0bafdf3db0@redhat.com>
- <7387988008764735b2f1dd5f2c83a45a@huawei.com>
+ <20240317083704.23244-3-zhukeqian1@huawei.com>
+ <57c8506e-3f6a-4d1d-9720-c9b030781109@redhat.com>
+ <60ed0bd01fc346088f48bcce1c92a6d3@huawei.com>
 From: David Hildenbrand <david@redhat.com>
 Autocrypt: addr=david@redhat.com; keydata=
  xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
@@ -134,10 +134,10 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <7387988008764735b2f1dd5f2c83a45a@huawei.com>
+In-Reply-To: <60ed0bd01fc346088f48bcce1c92a6d3@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -162,192 +162,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.03.24 06:06, zhukeqian wrote:
+On 19.03.24 06:11, zhukeqian wrote:
 > Hi David,
 > 
-> Thanks for reviewing.
-> 
 > On 17.03.24 09:37, Keqian Zhu via wrote:
->>> Both main loop thread and vCPU thread are allowed to call
->>> pause_all_vcpus(), and in general resume_all_vcpus() is called after
->>> it. Two issues live in pause_all_vcpus():
->>
->> In general, calling pause_all_vcpus() from VCPU threads is quite dangerous.
->>
->> Do we have reproducers for the cases below?
->>
-> 
-> I produce the issues by testing ARM vCPU hotplug feature:
-> QEMU changes for vCPU hotplug could be cloned from below site,
->       https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v2
-> Guest Kernel changes (by James Morse, ARM) are available here:
->       https://git.kernel.org/pub/scm/linux/kernel/git/morse/linux.git virtual_cpu_hotplug/rfc/v2
-> 
-
-Thanks for these infos (would be reasonable to include that in the cover letter).
-
-Okay, so likely this is not actually a "fix" for upstream as it is. Understood.
-
-> The procedure to produce problems:
-> 1. Startup a Linux VM (e.g., called OS-vcpuhotplug) with 32 possible vCPUs and 16 current vCPUs.
-> 2. Log in guestOS and run script[1] to continuously online/offline CPU.
-> 3. At host side, run script[2] to continuously hotplug/unhotplug vCPU.
-> After several minutes, we can hit these problems.
-> 
-> Script[1] to online/offline CPU:
-> for ((time=1;time<10000000;time++));
-> do
->          for ((cpu=16;cpu<32;cpu++));
->          do
->                  echo 1 > /sys/devices/system/cpu/cpu$cpu/online
->          done
-> 
->          for ((cpu=16;cpu<32;cpu++));
->          do
->                  echo 0 > /sys/devices/system/cpu/cpu$cpu/online
->          done
-> done
-> 
-> Script[2] to hotplug/unhotplug vCPU:
-> for ((time=1;time<1000000;time++));
-> do
->          echo $time
->          for ((cpu=16;cpu<=32;cpu++));
->          do
->                  echo "virsh setvcpus OS-vcpuhotplug --count  $cpu --live"
->                  virsh setvcpus OS-vcpuhotplug --count  $cpu --live
->                  sleep 2
->          done
-> 
->          for ((cpu=32;cpu>=16;cpu--));
->          do
->                  echo "virsh setvcpus OS-vcpuhotplug --count  $cpu --live"
->                  virsh setvcpus OS-vcpuhotplug --count  $cpu --live
->                  sleep 2
->          done
-> 
->          for ((cpu=16;cpu<=32;cpu+=2));
->          do
->                  echo "virsh setvcpus OS-vcpuhotplug --count  $cpu --live"
->                  virsh setvcpus OS-vcpuhotplug --count  $cpu --live
->                  sleep 2
->          done
-> 
->          for ((cpu=32;cpu>=16;cpu-=2));
->          do
->                  echo "virsh setvcpus OS-vcpuhotplug --count  $cpu --live"
->                  virsh setvcpus OS-vcpuhotplug --count  $cpu --live
->                  sleep 2
->          done
-> done
-> 
-> The script[1] will call PSCI CPU_ON which emulated by QEMU, which result in calling cpu_reset() on vCPU thread.
-
-I spotted new pause_all_vcpus() / resume_all_vcpus() calls in hw/intc/arm_gicv3_kvm.c and
-thought they would be the problematic bit.
-
-Yeah, that's going to be problematic. Further note that a lot of code does not expect
-that the BQL is suddenly dropped.
-
-We had issues with that in different context where we ended up wanting to use pause/resume from VCPU context:
-
-https://lore.kernel.org/all/294a987d-b0ef-1b58-98ac-0d4d43075d6e@redhat.com/
-
-This sounds like a bad idea. Read below.
-
-> For ARM architecture, it needs to reset GICC registers, which is only possible when all vcpus paused. So script[1]
-> will call pause_all_vcpus() in vCPU thread.
-> The script[2] also calls cpu_reset() for newly hotplugged vCPU, which is done in main loop thread.
-> So this scenario causes problems as I state in commit message.
-> 
+>>> For vCPU being hotplugged, qemu_init_vcpu() is called. In this
+>>> function, we set vcpu state as stopped, and then wait vcpu thread to
+>>> be created.
 >>>
->>> 1. There is possibility that during thread T1 waits on qemu_pause_cond
->>> with bql unlocked, other thread has called
->>> pause_all_vcpus() and resume_all_vcpus(), then thread T1 will stuck,
->>> because the condition all_vcpus_paused() is always false.
+>>> As the vcpu state is stopped, it will inform us it has been created
+>>> and then wait on halt_cond. After we has realized vcpu object, we will
+>>> resume the vcpu thread.
+>>>
+>>> However, during we wait vcpu thread to be created, the bql is
+>>> unlocked, and other thread is allowed to call resume_all_vcpus(),
+>>> which will resume the un-realized vcpu.
+>>>
+>>> This fixes the issue by filter out un-realized vcpu during
+>>> resume_all_vcpus().
 >>
->> How can this happen?
+>> Similar question: is there a reproducer?
 >>
->> Two threads calling pause_all_vcpus() is borderline broken, as you note.
+>> How could we currently hotplug a VCPU, and while it is being created, see pause_all_vcpus()/resume_all_vcpus() getting claled.
 >>
->> IIRC, we should call pause_all_vcpus() only if some other mechanism prevents these races. For example, based on runstate changes.
->>
+> I described the reason for this at patch 1.
 > 
-> We already has bql to prevent concurrent calling of pause_all_vcpus() and resume_all_vcpus(). But pause_all_vcpus() will
-> unlock bql in the half way, which gives change for other thread to call pause and resume. In the  past, code does not consider
-> this problem, now I add retry mechanism to fix it.
-
-Note that BQL did not prevent concurrent calling of pause_all_vcpus(). There had to be something else. Likely that was runstate transitions.
-
-> 
+>> If I am not getting this wrong, there seems to be some other mechanism missing that makes sure that this cannot happen. Dropping the BQL half-way through creating a VCPU might be the problem.
 >>
->> Just imagine one thread calling pause_all_vcpus() while another one
->> calls resume_all_vcpus(). It cannot possibly work.
-> 
+> When we add retry mechanism in pause_all_vcpus(), we can solve this problem. With the sematic unchanged for user, which means:
 > With bql, we can make sure all vcpus are paused after pause_all_vcpus() finish,  and all vcpus are resumed after resume_all_vcpus() finish.
-> 
-> For example, the following situation may occur:
-> Thread T1:     lock bql  ->    pause_all_vcpus ->   wait on cond and unlock bql  ->   wait T2 unlock bql to lock bql                                            -> lock bql  &&  all_vcpu_paused ->   success and do other work -> unlock bql
-> Thread T2:                             wait T1 unlock bql to lock bql            ->   lock bql    ->      resume_all_vcpus   ->   success  and do other work   -> unlock bql
 
-
-Now trow in another thread and it all gets really complicated :)
-
-Finding ways to avoid pause_all_vcpus() on the ARM reset code would be preferable.
-
-I guess you simply want to do something similar to what KVM does to avoid messing
-with pause_all_vcpus(): inhibiting certain IOCTLs.
-
-
-commit f39b7d2b96e3e73c01bb678cd096f7baf0b9ab39
-Author: David Hildenbrand <david@redhat.com>
-Date:   Fri Nov 11 10:47:58 2022 -0500
-
-     kvm: Atomic memslot updates
-     
-     If we update an existing memslot (e.g., resize, split), we temporarily
-     remove the memslot to re-add it immediately afterwards. These updates
-     are not atomic, especially not for KVM VCPU threads, such that we can
-     get spurious faults.
-     
-     Let's inhibit most KVM ioctls while performing relevant updates, such
-     that we can perform the update just as if it would happen atomically
-     without additional kernel support.
-     
-     We capture the add/del changes and apply them in the notifier commit
-     stage instead. There, we can check for overlaps and perform the ioctl
-     inhibiting only if really required (-> overlap).
-     
-     To keep things simple we don't perform additional checks that wouldn't
-     actually result in an overlap -- such as !RAM memory regions in some
-     cases (see kvm_set_phys_mem()).
-     
-     To minimize cache-line bouncing, use a separate indicator
-     (in_ioctl_lock) per CPU.  Also, make sure to hold the kvm_slots_lock
-     while performing both actions (removing+re-adding).
-     
-     We have to wait until all IOCTLs were exited and block new ones from
-     getting executed.
-     
-     This approach cannot result in a deadlock as long as the inhibitor does
-     not hold any locks that might hinder an IOCTL from getting finished and
-     exited - something fairly unusual. The inhibitor will always hold the BQL.
-     
-     AFAIKs, one possible candidate would be userfaultfd. If a page cannot be
-     placed (e.g., during postcopy), because we're waiting for a lock, or if the
-     userfaultfd thread cannot process a fault, because it is waiting for a
-     lock, there could be a deadlock. However, the BQL is not applicable here,
-     because any other guest memory access while holding the BQL would already
-     result in a deadlock.
-     
-     Nothing else in the kernel should block forever and wait for userspace
-     intervention.
-     
-     Note: pause_all_vcpus()/resume_all_vcpus() or
-     start_exclusive()/end_exclusive() cannot be used, as they either drop
-     the BQL or require to be called without the BQL - something inhibitors
-     cannot handle. We need a low-level locking mechanism that is
-     deadlock-free even when not releasing the BQL.
+Okay, got it. As just replied to #1, please see if you can avoid messing 
+with pause_all_vcpus() by inhibiting KVM IOCTLs like KVM does. That 
+would be preferable.
 
 -- 
 Cheers,
