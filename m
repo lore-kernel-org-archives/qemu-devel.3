@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89668CD11C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 15:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EDEFCD11C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 15:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmbKj-0006RF-7g; Tue, 19 Mar 2024 11:24:57 -0400
+	id 1rmbR3-0008Hm-Kt; Tue, 19 Mar 2024 11:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rmbKh-0006Qv-Sl
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:24:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rmbQq-0008FS-65
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:31:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rmbKg-0001QK-9F
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:24:55 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rmbQl-0002ZI-Q0
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:31:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710861893;
+ s=mimecast20190719; t=1710862267;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=P5iZ9A1H2hAPKUK0OQWotwuY5hXUf0wEzUmR35o9c20=;
- b=MxMoy7g0loC0Ttsd01lkdI/XqNEu51mYiSEDSM2UtQzI+fPeGvQmPo9N2mwtgvYHXZi0S3
- yX8vxT443hbTK8MXYg3yQ0wqZ6DZPBKQeCebShlwO/nHE9TdtHrE98iJqvGxXXKdc6P7lP
- Co6acrUvcWTiphUiTYr3q1Qog2znV5c=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iGWjjGr997LVBjLLFPRncequwPhUDZF7nClH4loSotw=;
+ b=CfIn1vU0OuWhCe64n8mMcNypS6TG5gr3eqmh2FsDSWzgTL/Fhg6Hxj52Skpv+7vta3XwIZ
+ CeUzE3vwZsxpt2gVzchUwGCNkybnrHZWXAVqT2+1rMae+UGnAIbZM/1JZFt8lDNM/tgl0P
+ 84SO/BY4wH5RYWtI9jAyz4vgZd8RKlg=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-hqlQMIPNOE21Waxenz0spA-1; Tue, 19 Mar 2024 11:24:50 -0400
-X-MC-Unique: hqlQMIPNOE21Waxenz0spA-1
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-5cec8bc5c66so3555183a12.1
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 08:24:50 -0700 (PDT)
+ us-mta-428-IGITSao4Puy8th5kk6nuLg-1; Tue, 19 Mar 2024 11:31:04 -0400
+X-MC-Unique: IGITSao4Puy8th5kk6nuLg-1
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-29dfa2c256fso3067009a91.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 08:31:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710861890; x=1711466690;
+ d=1e100.net; s=20230601; t=1710862263; x=1711467063;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=P5iZ9A1H2hAPKUK0OQWotwuY5hXUf0wEzUmR35o9c20=;
- b=mlGP3eO1AnZkBeKcJkwL0rBg7CsP+Qxrtmzan7N0pKDi9YTU3+RMMifMY5YoqaUyhy
- hi8ivVjQea+ZI8TRHdBy73r2XecgsnZQB6jKH5txch2R7OoJ32yqJDAmWc7BKSoooO/J
- cXxyCx5mO2CqrzlPWwGDPZnN7ueFT6K06tAQCjBS0VoNtOWvQAI1w90HDVnEaJr8NeBC
- RZQNmpy5UWt6EzGYoqowCSlwplBakWUw1m/bFFqOeTDB+4/vraOdoytWwW9tD4uPjOWz
- t0x8dBZ/3QqcuFh2Wfhmjv+PST1hQGXwKXqMh/RJAy7vYt0w7z5I7zEvxuAnOj43nWTs
- pomA==
-X-Gm-Message-State: AOJu0Ywp1nfVjPpZ+LlK6PnjG+Wz3RN4Xx8mhejQY1Wex1+Z2wr5LcMS
- 7469w01v7RwgKvtQiEMtr4ChFEcoXbA6TAVqyE7XV0EWHg3SsSzAryuHaJharE8hk0rYO6sFDAU
- NuECCe6rhRWYIPjDnz/tRN01gDFdrClgx8cWFxockJxqqhfcxagPkAU3P5QyhR+U4/wUGAYCNZr
- SPiDcSn1r2EYIqEpthjOs7KUZA2yc=
-X-Received: by 2002:a17:90a:fd95:b0:29e:e0a:e8c8 with SMTP id
- cx21-20020a17090afd9500b0029e0e0ae8c8mr7789018pjb.5.1710861889902; 
- Tue, 19 Mar 2024 08:24:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFsf+1r7qtBfwPXP+omtrJf0uim6X/H9ScZ5vgOx4Ab4v6xfPofxC+jPS5GsW6HNeJ+Rv9dPOCXrAYGjTF2fh8=
-X-Received: by 2002:a17:90a:fd95:b0:29e:e0a:e8c8 with SMTP id
- cx21-20020a17090afd9500b0029e0e0ae8c8mr7789002pjb.5.1710861889535; Tue, 19
- Mar 2024 08:24:49 -0700 (PDT)
+ bh=iGWjjGr997LVBjLLFPRncequwPhUDZF7nClH4loSotw=;
+ b=FHsa5vj5erOS+jUwq4RkWlNKOlEgc9WmrxbDBXDqv+ZQ7glYaaAlskNr+biCHKukpq
+ UWn0MHlXPFzP1z84WYPbILNQ/JH7kn8ReZD6z/kS6BxJXG4zarFFyVlvhx/sWZ8GOnv6
+ 429otMvzyeR7MouQuOdBmScFf7n9N7gUXUO9MploHBY/dpbiSuEIBV/4t9+7q/pCJ1gW
+ OKdmtvx6jI6aj5H2iZ0MS7lmjEeEbIKAo2AcIjVYKcTkORNsrrta7ycyccq0/rz30OUb
+ hwcBT5DAJgU6L2a6drybpmRnfFaW2Nh+1T8HNBIOBGCquT2P6DOOnbW5Tk0R380veiZj
+ TPPw==
+X-Gm-Message-State: AOJu0Yzn7eBRmiCgoHj5gV/Qc+Re145nGzp8J4eIwsoM2ASnKOxS881F
+ 5zOXbCe4i3SG6pbcUeRT/YPBKD6uI+yXXdapYBbG52YYl0fe3MLQ5xw9Rycr8HXv4N3c4hhL1qh
+ KbI9DxoRL5hxQb05ozgumUeZtzuQm9qgnFADMy/SMId6q+l0FHRESoXEEtv/F1YRITIiyh1IbQM
+ Twug0hJPh6Li6yZD5AZ58ErepVldc=
+X-Received: by 2002:a17:90b:fcb:b0:29b:9f1e:ab2d with SMTP id
+ gd11-20020a17090b0fcb00b0029b9f1eab2dmr13846953pjb.36.1710862263216; 
+ Tue, 19 Mar 2024 08:31:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGSBZg54i4mJwHW9TxEHgp7M4+jG1CeqJgBELlzEDbwABjm/OUBX61bW2/V6KTDwtGt5FwuZiFIYL8Lc3ygJJ4=
+X-Received: by 2002:a17:90b:fcb:b0:29b:9f1e:ab2d with SMTP id
+ gd11-20020a17090b0fcb00b0029b9f1eab2dmr13846927pjb.36.1710862262875; Tue, 19
+ Mar 2024 08:31:02 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240315152301.3621858-1-armbru@redhat.com>
- <20240315152301.3621858-13-armbru@redhat.com>
-In-Reply-To: <20240315152301.3621858-13-armbru@redhat.com>
+ <20240315152301.3621858-25-armbru@redhat.com>
+In-Reply-To: <20240315152301.3621858-25-armbru@redhat.com>
 From: John Snow <jsnow@redhat.com>
-Date: Tue, 19 Mar 2024 11:24:37 -0400
-Message-ID: <CAFn=p-aoo3T8S-EOvHT8whMy=ov_qX4cAAHs5qtUN9Kbjh30Jg@mail.gmail.com>
-Subject: Re: [PATCH v5 12/25] qapi: Assert built-in types exist
+Date: Tue, 19 Mar 2024 11:30:50 -0400
+Message-ID: <CAFn=p-YuKWRvGcxDApVt3kXg22c1YJDogWJG9g4AXud_tgbZag@mail.gmail.com>
+Subject: Re: [PATCH v5 24/25] qapi: Tighten check whether implicit object type
+ already exists
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="0000000000002fa2b70614051343"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Content-Type: multipart/alternative; boundary="000000000000704bc506140529bd"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -96,129 +97,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002fa2b70614051343
+--000000000000704bc506140529bd
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 15, 2024, 11:24=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+On Fri, Mar 15, 2024, 11:23=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
 > wrote:
 
-> QAPISchema.lookup_type('FOO') returns a QAPISchemaType when type 'FOO'
-> exists, else None.  It won't return None for built-in types like
-> 'int'.
->
-> Since mypy can't see that, it'll complain that we assign the
-> Optional[QAPISchemaType] returned by .lookup_type() to QAPISchemaType
-> variables.
->
-> Add assertions to help it over the hump.
+> Entities with names starting with q_obj_ are implicit object types.
+> Therefore, QAPISchema._make_implicit_object_type()'s .lookup_entity()
+> can only return a QAPISchemaObjectType.  Assert that.
 >
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  scripts/qapi/introspect.py | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
+>  scripts/qapi/schema.py | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
-> index 67c7d89aae..4679b1bc2c 100644
-> --- a/scripts/qapi/introspect.py
-> +++ b/scripts/qapi/introspect.py
-> @@ -227,10 +227,14 @@ def _use_type(self, typ: QAPISchemaType) -> str:
->
->          # Map the various integer types to plain int
->          if typ.json_type() =3D=3D 'int':
-> -            typ =3D self._schema.lookup_type('int')
-> +            type_int =3D self._schema.lookup_type('int')
-> +            assert type_int
-> +            typ =3D type_int
->          elif (isinstance(typ, QAPISchemaArrayType) and
->                typ.element_type.json_type() =3D=3D 'int'):
-> -            typ =3D self._schema.lookup_type('intList')
-> +            type_intList =3D self._schema.lookup_type('intList')
-> +            assert type_intList
-> +            typ =3D type_intList
->          # Add type to work queue if new
->          if typ not in self._used_types:
->              self._used_types.append(typ)
+> diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+> index e52930a48a..a6180f93c6 100644
+> --- a/scripts/qapi/schema.py
+> +++ b/scripts/qapi/schema.py
+> @@ -1297,8 +1297,9 @@ def _make_implicit_object_type(
+>              return None
+>          # See also QAPISchemaObjectTypeMember.describe()
+>          name =3D 'q_obj_%s-%s' % (name, role)
+> -        typ =3D self.lookup_entity(name, QAPISchemaObjectType)
+> +        typ =3D self.lookup_entity(name)
+>          if typ:
+> +            assert(isinstance(typ, QAPISchemaObjectType))
+>              # The implicit object type has multiple users.  This can
+>              # only be a duplicate definition, which will be flagged
+>              # later.
 > --
 > 2.44.0
 >
 
-Yeah, if you like this more, go ahead. I know it works because I did it
-this way at one point!
-
-Matter of taste and preference etc.
+Seems obviously fine, though I don't suppose this narrowing will be
+"remembered" by the type system. Do we care?
 
 Reviewed-by: John Snow <jsnow@redhat.com>
 
 >
 
---0000000000002fa2b70614051343
+--000000000000704bc506140529bd
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Fri, Mar 15, 2024, 11:24=E2=80=AFAM Markus Armbrust=
+class=3D"gmail_attr">On Fri, Mar 15, 2024, 11:23=E2=80=AFAM Markus Armbrust=
 er &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote=
 :<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bor=
-der-left:1px #ccc solid;padding-left:1ex">QAPISchema.lookup_type(&#39;FOO&#=
-39;) returns a QAPISchemaType when type &#39;FOO&#39;<br>
-exists, else None.=C2=A0 It won&#39;t return None for built-in types like<b=
+der-left:1px #ccc solid;padding-left:1ex">Entities with names starting with=
+ q_obj_ are implicit object types.<br>
+Therefore, QAPISchema._make_implicit_object_type()&#39;s .lookup_entity()<b=
 r>
-&#39;int&#39;.<br>
-<br>
-Since mypy can&#39;t see that, it&#39;ll complain that we assign the<br>
-Optional[QAPISchemaType] returned by .lookup_type() to QAPISchemaType<br>
-variables.<br>
-<br>
-Add assertions to help it over the hump.<br>
+can only return a QAPISchemaObjectType.=C2=A0 Assert that.<br>
 <br>
 Signed-off-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" t=
 arget=3D"_blank" rel=3D"noreferrer">armbru@redhat.com</a>&gt;<br>
 ---<br>
-=C2=A0scripts/qapi/introspect.py | 8 ++++++--<br>
-=C2=A01 file changed, 6 insertions(+), 2 deletions(-)<br>
+=C2=A0scripts/qapi/schema.py | 3 ++-<br>
+=C2=A01 file changed, 2 insertions(+), 1 deletion(-)<br>
 <br>
-diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py<br>
-index 67c7d89aae..4679b1bc2c 100644<br>
---- a/scripts/qapi/introspect.py<br>
-+++ b/scripts/qapi/introspect.py<br>
-@@ -227,10 +227,14 @@ def _use_type(self, typ: QAPISchemaType) -&gt; str:<b=
-r>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# Map the various integer types to plain =
-int<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if typ.json_type() =3D=3D &#39;int&#39;:<=
-br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typ =3D self._schema.lookup_type=
-(&#39;int&#39;)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type_int =3D self._schema.lookup=
-_type(&#39;int&#39;)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 assert type_int<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typ =3D type_int<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0elif (isinstance(typ, QAPISchemaArrayType=
-) and<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0typ.element_type.jso=
-n_type() =3D=3D &#39;int&#39;):<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typ =3D self._schema.lookup_type=
-(&#39;intList&#39;)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type_intList =3D self._schema.lo=
-okup_type(&#39;intList&#39;)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 assert type_intList<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typ =3D type_intList<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# Add type to work queue if new<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if typ not in self._used_types:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0self._used_types.append(typ=
-)<br>
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py<br>
+index e52930a48a..a6180f93c6 100644<br>
+--- a/scripts/qapi/schema.py<br>
++++ b/scripts/qapi/schema.py<br>
+@@ -1297,8 +1297,9 @@ def _make_implicit_object_type(<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return None<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# See also QAPISchemaObjectTypeMember.des=
+cribe()<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0name =3D &#39;q_obj_%s-%s&#39; % (name, r=
+ole)<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 typ =3D self.lookup_entity(name, QAPISchemaObj=
+ectType)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 typ =3D self.lookup_entity(name)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if typ:<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 assert(isinstance(typ, QAPISchem=
+aObjectType))<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# The implicit object type =
+has multiple users.=C2=A0 This can<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# only be a duplicate defin=
+ition, which will be flagged<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# later.<br>
 -- <br>
 2.44.0<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"=
-auto">Yeah, if you like this more, go ahead. I know it works because I did =
-it this way at one point!=C2=A0</div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">Matter of taste and preference etc.</div><div dir=3D"auto"><br></=
-div><div dir=3D"auto">Reviewed-by: John Snow &lt;<a href=3D"mailto:jsnow@re=
-dhat.com">jsnow@redhat.com</a>&gt;</div><div dir=3D"auto"><div class=3D"gma=
-il_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
-er-left:1px #ccc solid;padding-left:1ex"></blockquote></div></div></div>
+auto">Seems obviously fine, though I don&#39;t suppose this narrowing will =
+be &quot;remembered&quot; by the type system. Do we care?</div><div dir=3D"=
+auto"><br></div><div dir=3D"auto">Reviewed-by: John Snow &lt;<a href=3D"mai=
+lto:jsnow@redhat.com">jsnow@redhat.com</a>&gt;</div><div dir=3D"auto"><div =
+class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0=
+ 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"></blockquote></div></d=
+iv></div>
 
---0000000000002fa2b70614051343--
+--000000000000704bc506140529bd--
 
 
