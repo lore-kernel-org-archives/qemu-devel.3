@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C431C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 06:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE82C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 06:30:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmSy7-00052K-4k; Tue, 19 Mar 2024 02:29:03 -0400
+	id 1rmSyy-0006X0-SU; Tue, 19 Mar 2024 02:29:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmSy6-000521-23
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:29:02 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmSyw-0006Mp-TT
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:29:54 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmSy4-0005bl-FU
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:29:01 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-33ec7e1d542so2816837f8f.1
- for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 23:29:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmSyh-0005gL-Ib
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:29:54 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-41461c256c4so5250535e9.0
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 23:29:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710829738; x=1711434538; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Yzwu8Bi0D3UNtFLlf6Zo9X6jTLsaWPc1Ocv5RRkNU2Q=;
- b=NBhywOqqhRWlFzOnf0EEvso+dvnE3gD1XBukmAZw9yxUsbHoecOPKU2LMeTGrvXOyc
- PINTRjRXhYUIM7IK+q5k8Q0fT3HsNQOaIbKvJQF0WwhbsS1ErCcO4FRc6WlaJpTA6AJb
- R5JI5XDnpai1ijhnfYqMBERrwr8+yKFMe4LUWhUrTFN0dF4qneSYzVq8PBrHGXH4QZFF
- bxEANQg9NCoZIpypg4wC6NHWvyTALi7rwyS9RWUdC82vxyY3eiNIqAzYznhf+16ASge5
- jsd1BiXcnttGOzTF7MwcbuBxNdn1UuSu8xExnQ6T3Ctp2X6n3THDQy4OsLHdfuzFwePi
- GT6w==
+ d=linaro.org; s=google; t=1710829777; x=1711434577; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qcBm1WCPymqKaSwa7fzwzI3+ewkz+Zw4jwIqPMQqMRg=;
+ b=W7OcNObLAT1qv5oSj4Lvp4rPID97WylZ1KXmKJOGcK21H13v9FkkMLH4gllWemOenr
+ U1f9BKLEIAf7bO0gynpf/CsJH/tk7nf0CuNmSSi/3XLm1VZyGwmA+lrFQ4VkJpAK4IhG
+ dJTkVKqNFE0O6lyXM1XJHCtSuBgtj1Sz30fTdxUQJU224hIGck4rHGFaIOpQHqKMJRmC
+ 98MKHE4b3YF6EXi6ArKBv8wKsiD2ixOmNT/VZiGqDmgg43rPvnE/kdEZhmu81dXVjqFB
+ 20DuOE5DshAsAJVBaEWeiQSbp9ksmK5341O9bqBfFIEkahJnoYGy5Bb/XWiCUXHlwX4z
+ Gb/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710829738; x=1711434538;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Yzwu8Bi0D3UNtFLlf6Zo9X6jTLsaWPc1Ocv5RRkNU2Q=;
- b=Ld1L32JVmGjzTJFLjnLYVtRkmxV+CeUce9LZG2+w07yg+ho/oTTe/jRdCXKIsKdXec
- nxHg8RYOmHUY5+IPk2vxnL5zvzYFUffXYI9oPCMz+ExdsrDlk4mB8YERnGWbMhm72qy3
- 6nVfb6T8IJQ7bx1W7PM/N3t/LvMJHxCAZYRCnyTBPOraNHotVj7/dvWhCAnqqh9YiGtJ
- /J3h2YzySv71+VGgPRvkNvxWLmpRVav0LTZhyxy81T4mUA8ZyGEpGNI9r3hXpCp9lJwL
- v+ROC+v1E0WJbf3SgipDDoYOrxH6Ia7P2OhXY/eG9jcsG9/zmLLfXmbfQ4nGz5DdB+hU
- RZSg==
-X-Gm-Message-State: AOJu0YwgK/2Cj7X8wyjuy8Dera3ad6P0V4PiojzkP48q/IGYNkzoHtdH
- aW6RRCCltIMsHMg7NMdFhmV4/1G1sr33WD2+pR4ketxHoSHi5WrMvGlB5dKIerbvoxgAUtgtm0W
- b
-X-Google-Smtp-Source: AGHT+IFAfIy/TdgXZEjpbOhC5Gpv0opa7LsJDzTKpQ1n1r6rwZXweN4Rd1+o07yaxZYy5k0MW+f08w==
-X-Received: by 2002:adf:f58b:0:b0:33e:7065:78f2 with SMTP id
- f11-20020adff58b000000b0033e706578f2mr1020884wro.40.1710829738346; 
- Mon, 18 Mar 2024 23:28:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710829777; x=1711434577;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qcBm1WCPymqKaSwa7fzwzI3+ewkz+Zw4jwIqPMQqMRg=;
+ b=W6Ih8otiw/ZUHW97AD8iH75W/Zt4RFtbBue+aCaeJtYEaq0sekRZJLHnD72Ci4S/VG
+ 4wO6f21Gi1xUBmD+xysXIIP55H8yJCf4VSBW/52CFYqEjpqQ6ruPvoqJFDB+Ant68Xz0
+ TYMcGRiMM/AO0iSQn4ambWC9HXM6UXojWukB7oB3BPfqetcD8XyQ57mIU/C++ga47cMm
+ Enq0GzQNQjV7FeDeHntOcHFyjsCxiHB3V98izQ5O5AXWAUeIvGJuJTCQwPs29igPiL2w
+ swd8If0VmXyanPewolZwKYaYohXdvW4nNRNZiUGIYG9N9EUmnRVEitU7dKqD/XMtHTJZ
+ iI4w==
+X-Gm-Message-State: AOJu0Yy4gxZF7VCTePEUFHBuTPyru/337ubFk7YmT8I7lg6r95I1Q7ig
+ ur5Dehqbrzkw3FHav9gr1mcn5zJT7X+vhuSyXDPcAtKUdnKYs8AW3TflCcPbtZa1XjWSngWGKFF
+ w
+X-Google-Smtp-Source: AGHT+IFA9Pc4RYrnUJoxJSw4zZvp9hFZUiqVU/oZX3Uj7ejQzCg1KvulmHGK9Q04q0jvZnFtdSmFXg==
+X-Received: by 2002:a5d:4112:0:b0:33e:48f9:169d with SMTP id
+ l18-20020a5d4112000000b0033e48f9169dmr944178wrp.31.1710829777460; 
+ Mon, 18 Mar 2024 23:29:37 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.166.129])
  by smtp.gmail.com with ESMTPSA id
- l15-20020a5d410f000000b0033cf4e47496sm11456672wrp.51.2024.03.18.23.28.57
+ y4-20020a5d4704000000b0033e7603987dsm11513647wrq.12.2024.03.18.23.29.36
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 18 Mar 2024 23:28:57 -0700 (PDT)
+ Mon, 18 Mar 2024 23:29:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -63,22 +64,24 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>, Anton Johansson <anjo@rev.ng>,
  Alistair Francis <alistair@alistair23.me>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 0/8] target/microblaze: Sprint housekeeping
-Date: Tue, 19 Mar 2024 07:28:47 +0100
-Message-ID: <20240319062855.8025-1-philmd@linaro.org>
+Subject: [PATCH-for-9.1 7/8] target/microblaze: Move MMU helpers to
+ sys_helper.c
+Date: Tue, 19 Mar 2024 07:28:54 +0100
+Message-ID: <20240319062855.8025-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240319062855.8025-1-philmd@linaro.org>
+References: <20240319062855.8025-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,35 +97,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cleanups while trying to remove non-essential target_ulong uses.
+MMU helpers are only used during system emulation,
+move them to sys_helper.c.
 
-Last use is in helper_stackprot(), but I couldn't figure what
-to do there yet.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/microblaze/op_helper.c  | 48 ----------------------------------
+ target/microblaze/sys_helper.c | 47 +++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+), 48 deletions(-)
 
-Philippe Mathieu-Daudé (8):
-  target/microblaze: Use correct string format in do_unaligned_access()
-  target/microblaze: Use hwaddr/vaddr in cpu_get_phys_page_attrs_debug()
-  target/microblaze: Widen vaddr in mmu_translate()
-  target/microblaze: Use 32-bit destination in gen_goto_tb()
-  target/microblaze: Restrict 64-bit 'res_addr' to system emulation
-  target/microblaze: Rename helper.c -> sys_helper.c
-  target/microblaze: Move MMU helpers to sys_helper.c
-  target/microblaze: Widen $ear to 64-bit
-
- target/microblaze/cpu.h                      | 12 ++--
- target/microblaze/mmu.h                      |  2 +-
- linux-user/elfload.c                         |  2 +-
- target/microblaze/cpu.c                      |  2 +
- target/microblaze/gdbstub.c                  |  2 +-
- target/microblaze/machine.c                  |  2 +-
- target/microblaze/mmu.c                      |  2 +-
- target/microblaze/op_helper.c                | 48 ----------------
- target/microblaze/{helper.c => sys_helper.c} | 59 +++++++++++++++++---
- target/microblaze/translate.c                | 13 +++--
- target/microblaze/meson.build                |  2 +-
- 11 files changed, 75 insertions(+), 71 deletions(-)
- rename target/microblaze/{helper.c => sys_helper.c} (84%)
-
+diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
+index f6378030b7..45dbed4aaa 100644
+--- a/target/microblaze/op_helper.c
++++ b/target/microblaze/op_helper.c
+@@ -381,51 +381,3 @@ void helper_stackprot(CPUMBState *env, target_ulong addr)
+         cpu_loop_exit_restore(cs, GETPC());
+     }
+ }
+-
+-#if !defined(CONFIG_USER_ONLY)
+-/* Writes/reads to the MMU's special regs end up here.  */
+-uint32_t helper_mmu_read(CPUMBState *env, uint32_t ext, uint32_t rn)
+-{
+-    return mmu_read(env, ext, rn);
+-}
+-
+-void helper_mmu_write(CPUMBState *env, uint32_t ext, uint32_t rn, uint32_t v)
+-{
+-    mmu_write(env, ext, rn, v);
+-}
+-
+-void mb_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+-                               unsigned size, MMUAccessType access_type,
+-                               int mmu_idx, MemTxAttrs attrs,
+-                               MemTxResult response, uintptr_t retaddr)
+-{
+-    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
+-    CPUMBState *env = &cpu->env;
+-
+-    qemu_log_mask(CPU_LOG_INT, "Transaction failed: vaddr 0x%" VADDR_PRIx
+-                  " physaddr 0x" HWADDR_FMT_plx " size %d access type %s\n",
+-                  addr, physaddr, size,
+-                  access_type == MMU_INST_FETCH ? "INST_FETCH" :
+-                  (access_type == MMU_DATA_LOAD ? "DATA_LOAD" : "DATA_STORE"));
+-
+-    if (!(env->msr & MSR_EE)) {
+-        return;
+-    }
+-
+-    if (access_type == MMU_INST_FETCH) {
+-        if (!cpu->cfg.iopb_bus_exception) {
+-            return;
+-        }
+-        env->esr = ESR_EC_INSN_BUS;
+-    } else {
+-        if (!cpu->cfg.dopb_bus_exception) {
+-            return;
+-        }
+-        env->esr = ESR_EC_DATA_BUS;
+-    }
+-
+-    env->ear = addr;
+-    cs->exception_index = EXCP_HW_EXCP;
+-    cpu_loop_exit_restore(cs, retaddr);
+-}
+-#endif
+diff --git a/target/microblaze/sys_helper.c b/target/microblaze/sys_helper.c
+index 5180500354..7531f95ca7 100644
+--- a/target/microblaze/sys_helper.c
++++ b/target/microblaze/sys_helper.c
+@@ -21,6 +21,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "exec/exec-all.h"
++#include "exec/helper-proto.h"
+ #include "qemu/host-utils.h"
+ #include "exec/log.h"
+ 
+@@ -292,3 +293,49 @@ void mb_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+     cs->exception_index = EXCP_HW_EXCP;
+     cpu_loop_exit(cs);
+ }
++
++/* Writes/reads to the MMU's special regs end up here.  */
++uint32_t helper_mmu_read(CPUMBState *env, uint32_t ext, uint32_t rn)
++{
++    return mmu_read(env, ext, rn);
++}
++
++void helper_mmu_write(CPUMBState *env, uint32_t ext, uint32_t rn, uint32_t v)
++{
++    mmu_write(env, ext, rn, v);
++}
++
++void mb_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
++                               unsigned size, MMUAccessType access_type,
++                               int mmu_idx, MemTxAttrs attrs,
++                               MemTxResult response, uintptr_t retaddr)
++{
++    MicroBlazeCPU *cpu = MICROBLAZE_CPU(cs);
++    CPUMBState *env = &cpu->env;
++
++    qemu_log_mask(CPU_LOG_INT, "Transaction failed: vaddr 0x%" VADDR_PRIx
++                  " physaddr 0x" HWADDR_FMT_plx " size %d access type %s\n",
++                  addr, physaddr, size,
++                  access_type == MMU_INST_FETCH ? "INST_FETCH" :
++                  (access_type == MMU_DATA_LOAD ? "DATA_LOAD" : "DATA_STORE"));
++
++    if (!(env->msr & MSR_EE)) {
++        return;
++    }
++
++    if (access_type == MMU_INST_FETCH) {
++        if (!cpu->cfg.iopb_bus_exception) {
++            return;
++        }
++        env->esr = ESR_EC_INSN_BUS;
++    } else {
++        if (!cpu->cfg.dopb_bus_exception) {
++            return;
++        }
++        env->esr = ESR_EC_DATA_BUS;
++    }
++
++    env->ear = addr;
++    cs->exception_index = EXCP_HW_EXCP;
++    cpu_loop_exit_restore(cs, retaddr);
++}
 -- 
 2.41.0
 
