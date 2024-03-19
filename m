@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68DD9C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 21:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B4C4CD11DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 21:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmhST-0007KH-2e; Tue, 19 Mar 2024 17:57:21 -0400
+	id 1rmhSn-0007PG-2J; Tue, 19 Mar 2024 17:57:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rmhSR-0007Jm-BG
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:57:19 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rmhSP-0007Ey-Hi
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:57:18 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-6e6b6e000a4so277437b3a.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 14:57:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1710885436; x=1711490236; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=s+coWbZC9Fqk/3NbdQiMdaupeB27AyeDTeZ71l0t9hc=;
- b=gEwo4fQUYJQ1BWDojBYhAyiIatHhRhFVtijTpNWfE4Yuy57lTow7LFzK5OMqb4SUr5
- OSGwkuWX5LSofH8YhjPtdlx8rs5sHAisJu9Db4HNQWTjx8bz/r+xTMj1WRo65ts6r0kX
- 5979H4cmRnJ3QlAVW8oh3RZ90CElyo+jbYSRFpriOx/Un7ycO2VCbH1rzZ2VW5IDYrAh
- FBhalQy+fWUMxhwXGbzrUs9hSvDQhSErl7cYDEzfyXkMxbbWnTybiHWjUBUI+uvQWcT5
- AW2y+gC4ZZ9DXt05BvEHtfagXsuPGlFoGjC1XHVspz0wZh832pL/wEhHjuQLxHMBkY7+
- IwOQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmhSk-0007Mj-IP
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:57:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmhSj-0007Fv-3d
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:57:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710885456;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PQON40HmMvKUBjLdWHB6cunt6US3Hyg+9PVDUnvKtCY=;
+ b=Bs0G4IyiI4sOQoteVWr3X1FGz0yFesNKTYEkS81GKMN2rWuLV++5xs3mt6eTpcV9/ZKkhL
+ SSJcjx97LtF3X05n+TYNppMnKkIwV0bzz1qOwms0JrPZM83Il8yVzfqP+sREx13RwfGgov
+ mXPY1/PbVzl+KOo++plbbGNcO2fOZMs=
+Received: from mail-yb1-f200.google.com (mail-yb1-f200.google.com
+ [209.85.219.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-693-52_Hw1HxPfOrSpSIYHvXrA-1; Tue, 19 Mar 2024 17:57:34 -0400
+X-MC-Unique: 52_Hw1HxPfOrSpSIYHvXrA-1
+Received: by mail-yb1-f200.google.com with SMTP id
+ 3f1490d57ef6-dc6c5a52a3fso1912510276.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 14:57:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710885436; x=1711490236;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=s+coWbZC9Fqk/3NbdQiMdaupeB27AyeDTeZ71l0t9hc=;
- b=LbR0nFPzSI3h2xSHXVBfBQiVIRCvPd0BrN0Lt3rUcnxCQz+VEc8/uuIM9LlE6l8MHL
- V8O3PvayuOhnHJ9Q6K1xFaIrjSWjrRl46ocCuz24hZNG+Po2KHirTpm215KJ0q8eP/5t
- cjui/5MMWA4yFWKPRq2w8PIRttqDGfHIF+LEc+fnyppSqRTNRyZKCTaKTu0+BL4qKQSF
- +e5eSWAHaV/WxFDbAEWB+L0ln0Jg9wJrW4fVvmnyFh2QIvZo9oVSk2+Ke5OxkC7lFCUI
- WKEDlBN4AV5mOKflAmLh0TN/UcrwUJsqXGIzp4GlQIOWQs2FG7zJkUgA5+NM8LAwl/CB
- ckjQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX9LYDjrZQ0ZRF62LBS7HWKWrNbWGru8Oirp1IF3aw3dcEhFsxkK9B1j2CLQTSUwvPsWkBD/I4jvnPyn0xzjQHC6U4X1jo=
-X-Gm-Message-State: AOJu0Yw9I4aceBnmGtxrj/wAxqzlW25W6IWsuVG1O9/DxPmZ73ywd7iL
- y+cwQ7eWb2eWv8RffLvkGGasIFL8QbxrgyvGgLkrd9fbSfL5U1D65lfgzjFKPQA=
-X-Google-Smtp-Source: AGHT+IFx8xTvXEnW8eb4b3vsBQncpNmhgPqcT2Ha0C+056vthqAnMpYrDmSQ6VmpMm5cGJsV/d7K6Q==
-X-Received: by 2002:a05:6a00:3d0c:b0:6e7:ad5:622c with SMTP id
- lo12-20020a056a003d0c00b006e70ad5622cmr5860610pfb.1.1710885436217; 
- Tue, 19 Mar 2024 14:57:16 -0700 (PDT)
-Received: from [192.168.68.110] ([177.94.15.159])
- by smtp.gmail.com with ESMTPSA id
- fn15-20020a056a002fcf00b006e091a254adsm10129446pfb.30.2024.03.19.14.57.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 14:57:15 -0700 (PDT)
-Message-ID: <c765adcb-2702-45d3-b875-6eaa6b6d7d0c@ventanamicro.com>
-Date: Tue, 19 Mar 2024 18:57:12 -0300
+ d=1e100.net; s=20230601; t=1710885454; x=1711490254;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PQON40HmMvKUBjLdWHB6cunt6US3Hyg+9PVDUnvKtCY=;
+ b=SXHzXubJcI1PidDyYNCO6NTDe16Rfx0YTa7vPDuLHk9+juBXheUPhuTUAFHeOS9RM/
+ 2ZBBofEfAk6rIbqjEoQKQBeXuWuuipbSqzrp9svjS/cLqOBsMyblraF0rbJUcG7dGvYS
+ MSb9apAgm0rapl2J6VjCsobhqbZREFcNg4GFJmawJa5m4SZsV++EYBmD8DfPvNwz7MkJ
+ aBinVZuuA+XmxXMlX+cG/425hWp1nimsY1VJ1+asHMqwlJDtWHRKsWw42TsgVleT3heE
+ f/59/LllvBb2jN14rAkUOEJgJS7lHLmc70kPDsp1mAYAZ2ezsKD5l0j4jk0eZgx4gD8Q
+ PfrQ==
+X-Gm-Message-State: AOJu0Ywg+l75stxNiCdhyIFYYvkbPPsXe10YeLm1nQVkDdPj5YeiaLtO
+ IzzFDSBK1/c1v+AKTRuTsXiY6npn2CnaCenZLXajt4BO6AjY+Y3G0phguUovqiZnkw0cIeUo2KV
+ uKlCzTmiGw7NOHp3hZ4GXdXSmthTavA99WyWwY5L4UbZee8G+kYhK
+X-Received: by 2002:a25:e047:0:b0:dcc:f9ce:ec1d with SMTP id
+ x68-20020a25e047000000b00dccf9ceec1dmr6345ybg.0.1710885453776; 
+ Tue, 19 Mar 2024 14:57:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUbcN25PCF3wjsHiENmKEXtKt32wtuBiN7sEmrWuQGncUtxQys9DvXx1iOrwuBvBW1e2/LzA==
+X-Received: by 2002:a25:e047:0:b0:dcc:f9ce:ec1d with SMTP id
+ x68-20020a25e047000000b00dccf9ceec1dmr6331ybg.0.1710885453304; 
+ Tue, 19 Mar 2024 14:57:33 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ fp41-20020a05622a50a900b0042f3fa77602sm6637192qtb.2.2024.03.19.14.57.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Mar 2024 14:57:33 -0700 (PDT)
+Date: Tue, 19 Mar 2024 17:57:30 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Het Gala <het.gala@nutanix.com>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, thuth@redhat.com,
+ lvivier@redhat.com, pbonzini@redhat.com, farosas@suse.de
+Subject: Re: [PATCH 1/2] tests/qtest/migration: Ignore if socket-address is
+ missing to avoid crash below
+Message-ID: <ZfoKSgJ9LN1Q7R1V@x1n>
+References: <20240319204840.211632-1-het.gala@nutanix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] target/riscv: Add right functions to set agnostic
- elements
-Content-Language: en-US
-To: Huang Tao <eric.huang@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
- bin.meng@windriver.com, alistair.francis@wdc.com, palmer@dabbelt.com,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240306092013.21231-1-eric.huang@linux.alibaba.com>
- <20240306092013.21231-3-eric.huang@linux.alibaba.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240306092013.21231-3-eric.huang@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240319204840.211632-1-het.gala@nutanix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,117 +99,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(--- CCing Richard ---)
-
-On 3/6/24 06:20, Huang Tao wrote:
-> We add vext_set_elems_1s to set agnostic elements to 1s in both big
-> and little endian situation.
-> In the function vext_set_elems_1s. We using esz argument to get the first
-> element to set. 'cnt' is just idx * esz.
+On Tue, Mar 19, 2024 at 08:48:39PM +0000, Het Gala wrote:
+> 'object' can return NULL if there is no socket-address, such as with a
+> file migration. Then the visitor code below fails and the test crashes.
 > 
-> Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
-> ---
->   target/riscv/vector_internals.c | 53 +++++++++++++++++++++++++++++++++
->   target/riscv/vector_internals.h |  2 ++
->   2 files changed, 55 insertions(+)
-> 
-> diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
-> index 349b24f4ae..455be96996 100644
-> --- a/target/riscv/vector_internals.c
-> +++ b/target/riscv/vector_internals.c
-> @@ -20,6 +20,59 @@
->   #include "vector_internals.h"
->   
->   /* set agnostic elements to 1s */
-> +#if HOST_BIG_ENDIAN
-> +void vext_set_elems_1s(void *vd, uint32_t is_agnostic, uint32_t esz,
-> +                       uint32_t idx, uint32_t tot)
-> +{
-> +    if (is_agnostic == 0) {
-> +        /* policy undisturbed */
-> +        return;
-> +    }
-> +    void *base = NULL;
-> +    switch (esz) {
-> +    case 1:
-> +        base = ((int8_t *)vd + H1(idx));
-> +    break;
-> +    case 2:
-> +        base = ((int16_t *)vd + H2(idx));
-> +    break;
-> +    case 4:
-> +        base = ((int32_t *)vd + H4(idx));
-> +    break;
-> +    case 8:
-> +        base = ((int64_t *)vd + H8(idx));
-> +    break;
-> +    default:
-> +        g_assert_not_reached();
-> +    break;
-> +    }
-> +    /*
-> +     * spilt the elements into 2 parts
-> +     * part_begin: the memory need to be set in the first uint64_t unit
-> +     * part_allign: the memory need to be set begins from next uint64_t
-> +     *              unit and alligned to 8
-> +     */
-> +    uint32_t cnt = idx * esz;
-> +    int part_begin, part_allign;
-> +    part_begin = MIN(tot - cnt, 8 - (cnt % 8));
-> +    part_allign = ((tot - cnt - part_begin) / 8) * 8;
-> +
-> +    memset(base - part_begin + 1, -1, part_begin);
-> +    memset(QEMU_ALIGN_PTR_UP(base, 8), -1, part_allign);
+> Ignore and return NULL when socket-address is missing in the reply so
+> we don't break future tests that use a non-socket type.
 
+Hmm, this patch isn't as clear to me.  Even if this can return NULL now,
+it'll soon crash at some later point, no?
 
-This seems correct but a bit over complicated at first glance. I wonder if we have
-something simpler already done somewhere.
-
-Richard, does ARM (or any other arch) do anything of the sort? Aside from more trivial
-byte swaps using bswap64() I didn't find anything similar.
-
-We recently posted a big endian related fix here:
-
-[PATCH for 9.0 v15 03/10] target/riscv/vector_helper.c: fix 'vmvr_v' memcpy endianess
-
-But not sure how to apply it here.
-
-
+IMHO such patch is more suitable to be included in the same patch where
+such new tests will be introduced, then we're addressing some real test
+code changes that will work, rather than worrying on what will happen in
+the future (and as I mentioned, i don't think it fully resolved that either..)
 
 Thanks,
 
-Daniel
-
-
-
-> +}
-> +#else
-> +void vext_set_elems_1s(void *vd, uint32_t is_agnostic, uint32_t esz,
-> +                       uint32_t idx, uint32_t tot)
-> +{
-> +    if (is_agnostic == 0) {
-> +        /* policy undisturbed */
-> +        return;
-> +    }
-> +    uint32_t cnt = idx * esz;
-> +    memset(vd + cnt, -1, tot - cnt);
-> +}
-> +#endif
+> 
+> Suggested-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Het Gala <het.gala@nutanix.com>
+> ---
+>  tests/qtest/migration-helpers.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+> index b2a90469fb..fb7156f09a 100644
+> --- a/tests/qtest/migration-helpers.c
+> +++ b/tests/qtest/migration-helpers.c
+> @@ -90,6 +90,10 @@ static SocketAddress *migrate_get_socket_address(QTestState *who)
+>      QObject *object;
+>  
+>      rsp = migrate_query(who);
 > +
->   void vext_set_elems_1s_le(void *base, uint32_t is_agnostic, uint32_t cnt,
->                          uint32_t tot)
->   {
-> diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
-> index fa599f60ca..c96e52f926 100644
-> --- a/target/riscv/vector_internals.h
-> +++ b/target/riscv/vector_internals.h
-> @@ -114,6 +114,8 @@ static inline uint32_t vext_get_total_elems(CPURISCVState *env, uint32_t desc,
->   }
->   
->   /* set agnostic elements to 1s */
-> +void vext_set_elems_1s(void *vd, uint32_t is_agnostic, uint32_t esz,
-> +                       uint32_t idx, uint32_t tot);
->   void vext_set_elems_1s_le(void *base, uint32_t is_agnostic, uint32_t cnt,
->                          uint32_t tot);
->   
+> +    if (!qdict_haskey(rsp, "socket-address")) {
+> +        return NULL;
+> +    }
+>      object = qdict_get(rsp, "socket-address");
+>  
+>      iv = qobject_input_visitor_new(object);
+> -- 
+> 2.22.3
+> 
+
+-- 
+Peter Xu
+
 
