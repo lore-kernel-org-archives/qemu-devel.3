@@ -4,72 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E212FC54E69
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 13:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41226C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 13:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmZGe-0008Dv-P9; Tue, 19 Mar 2024 09:12:36 -0400
+	id 1rmZGr-0008Fm-13; Tue, 19 Mar 2024 09:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmZGa-0008DP-TT
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:12:33 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rmZGo-0008FY-VT
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:12:46 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmZGY-00067R-9z
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:12:32 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-56b85146589so2448231a12.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 06:12:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rmZGn-00069R-8N
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:12:46 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-56ba6c83805so53917a12.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 06:12:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710853948; x=1711458748; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=BI5NCQC0D/VwA3OMYGlCK/6otl+pj0AK7i6Cxt1V3lg=;
- b=jbPK2bXUMZYanjMQTZeHs/9dXrGNt76JUzbugrP3zNXmEPa2H3+LcMXvFVRiB68exh
- r4L2SPDOSF04d9nsPHx2ZMy/R+Tptl9LRyxBMRYBg9woMNwYG0sdTOBdTY9LuvqPZpKt
- FY8Gsu+fg2wcoszmhdYYMLJ7/6ZlwG6V8vg1UuGEHcKYP8QxVfn/0HPw6E2cXFKt13t6
- S5kVYaS4F4TEl/kP9YT00pHbaRxwua6vyrxfLYOZ3PMY0X7ae8QHWAYyKess3+Rsub6B
- oEZbLgazCiLbmBoxfmm0fNUpH3yQlaGjWvNj1rCpRV7UDhdXOl5a4HpurVa25/Nslsu2
- AYHw==
+ d=linaro.org; s=google; t=1710853963; x=1711458763; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WfKPU/MNZF0rvwYCuG3/a6UB090EvsdzGfO7tmpsLtI=;
+ b=dExLTtjvlan3GsRmT0jOpnJTbkdvGQmzrAqKvBDTLoqfCOxLF7PjkuoyDX4rRT9+y6
+ caiy0Dir/a3/dtQOkU4TW4RcLBijdgcJGNzryn710tlv30r6bN8dvCQrbJfU8GFRLvlh
+ NB6QiT1hAJaNsxXWSK7+ciUedn72jwHWuZ+ew6Bn7Vomdt+H4Ltoq0jgh0pkbhE3a87q
+ 2NOOq8C2+2yNYnzcP+DDySDofjBhOq4iguBFOEpzKzXRawFuHZgS//r+f8h95VTGp9Tc
+ mnuTWP0vQnQYrPnEfYyoD2QXkH2DfOIzgMqqd5v5eNMntUkGIK/KZJwt6HS/N2aUMSPi
+ Xo/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710853948; x=1711458748;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BI5NCQC0D/VwA3OMYGlCK/6otl+pj0AK7i6Cxt1V3lg=;
- b=O/pvgDGNyob/LadM5+wklahGbDXc/gRQ5yAWxRsFUPnCq4EO3HmCWKU0ogBbToeCuP
- 00gwXQIBwee26Ybj5zfWpD1LYDIBbWMxUKIbVS9fvaztAygI1UqAso7lvgOb6DNpxDFf
- VZPIDZ6zTzWuuID0o6FPbUaW4PxKOkeUNjyXS1nC4SDvmK8GyHAOyY4tx5P7ZNi1G3eP
- GHCJr6jG8QWuyjWpg7iHfPOCyFwsqQqrIFzR63CFg/qrdrrm97EtMMSYT3uQdVWXBeeM
- W2mlU6MdGdL2svgo1Zu+wE0C4Cui5eEucabJ/6PCp7H/PWFgFgzKM/3mB06m+dKiwKx/
- n+0Q==
+ d=1e100.net; s=20230601; t=1710853963; x=1711458763;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WfKPU/MNZF0rvwYCuG3/a6UB090EvsdzGfO7tmpsLtI=;
+ b=UMsMImaY3/TExj3Uy635zfsAXtMjzTXPDh4oo4cTwPAtMgSUJK6+VDRHIlL9Mw1Kss
+ SZa6osfDGc/dP69r0ltvkBB5Z+8BPZB0aOKeGnkz2iWyMnviQwZMIQd/f5dS+G4DM7b1
+ N0iyZ8UuUxZMeMiDfCW8X571RHzrUmE80uDQ7llUbom0zZAzpD5rbhGgGQ6eZneweL8l
+ SCODMzHRqqmTDijxaafPX50EDbfJAaxV912kHz6sW8zpWCDX6WNJ7+XeYfThq4WhqfIt
+ u23vrAy0zcQs/BoRUWHC27S4+2cha5BYl7LlXjUmsYit7shTuyCiZj53bOZh4CyxMpe8
+ gzbQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXsof10OXquZdT/VXiqTsZCN9nzqcwU67kwK6JzmsbiYVy6reygZByzDO6lDuOqRGVAdqPwHb0ZgG9ViCsPXSgO619VMqk=
-X-Gm-Message-State: AOJu0Yxs3av/csRvvgbSco07FiWvMDmWJr3Yx6wryN86ovZ+78KaBNLY
- UuoLY4VxT7XXbXdrJlThopCpPO3DyfqG+5tO9WgSnzK9O8RMYitLWdqoK/cz98uKC6Arh52ujer
- 0Lea5KbC9aAI3X73exNSq59KIUNnjt82BgodQJQ==
-X-Google-Smtp-Source: AGHT+IGo5eBhrrq9hnm0Dx0oKhMXXEtjnOuBeSUQep4E8Qq+C2eLtCfH18FdlxSmxnPx9Q+95oaJx4TjKtglbeg581M=
-X-Received: by 2002:a50:a6d9:0:b0:568:aced:e5a0 with SMTP id
- f25-20020a50a6d9000000b00568acede5a0mr2600859edc.14.1710853948339; Tue, 19
- Mar 2024 06:12:28 -0700 (PDT)
+ AJvYcCV3tiflGQS7MW9xgnvmsN2qJ8MFJcGyKpVFu00grXhuOWOamnX5+5D25bROM5LtC8boyTLBaQnR6ZKcZkb00lvCo120H7k=
+X-Gm-Message-State: AOJu0YyAPvJbYDqTVMbX2PYQ4DGwR/6BEnhI6s8xlmFqdvYaXZhaMxn/
+ ekGrfX1WMO+PZWKJ7BO3b7Pj+8G9Pp/1FdyrwG81UXkCSi1QiD60Jh9eASmWRYyrL0MbVyd7wcu
+ qa8o=
+X-Google-Smtp-Source: AGHT+IE+/WX1Cp1TFIjqBVaUB+y0sFYbWljW7NEvvu515vIlscv3wvJNER6q5QQ3/RM9ZGB2UeqfzA==
+X-Received: by 2002:a05:6402:1945:b0:566:fbf5:a279 with SMTP id
+ f5-20020a056402194500b00566fbf5a279mr11239175edz.20.1710853963599; 
+ Tue, 19 Mar 2024 06:12:43 -0700 (PDT)
+Received: from [192.168.1.24] ([102.35.208.160])
+ by smtp.gmail.com with ESMTPSA id
+ f6-20020a056402194600b0056b98d7ba00sm630712edz.90.2024.03.19.06.12.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 06:12:43 -0700 (PDT)
+Message-ID: <9eec79a8-6ebd-4d41-af8f-459c1a83499f@linaro.org>
+Date: Tue, 19 Mar 2024 17:12:39 +0400
 MIME-Version: 1.0
-References: <20240308060034.139670-1-thuth@redhat.com>
-In-Reply-To: <20240308060034.139670-1-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Mar 2024 13:12:17 +0000
-Message-ID: <CAFEAcA_L7FQB9dUe1pCTTRN6XKbKa6ne2KZu6=-4YgTDzWW1aA@mail.gmail.com>
-Subject: Re: [PATCH] configure: Fix error message when C compiler is not
- working
-To: Thomas Huth <thuth@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/22] plugins: Create TCGHelperInfo for all out-of-line
+ callbacks
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org
+References: <20240316015720.3661236-1-richard.henderson@linaro.org>
+ <20240316015720.3661236-7-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240316015720.3661236-7-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,60 +100,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 8 Mar 2024 at 06:01, Thomas Huth <thuth@redhat.com> wrote:
->
-> If you try to run the configure script on a system without a working
-> C compiler, you get a very misleading error message:
->
->  ERROR: Unrecognized host OS (uname -s reports 'Linux')
->
-> We should rather tell the user that we were not able to use the C
-> compiler instead, otherwise they will have a hard time to figure
-> out what was going wrong.
->
-> Fixes: 264b803721 ("configure: remove compiler sanity check")
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On 3/16/24 05:57, Richard Henderson wrote:
+> TCGHelperInfo includes the ABI for every function call.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  configure | 12 +++++++-----
->  1 file changed, 7 insertions(+), 5 deletions(-)
->
-> diff --git a/configure b/configure
-> index 3cd736b139..a036923dee 100755
-> --- a/configure
-> +++ b/configure
-> @@ -411,7 +411,7 @@ else
->    # Using uname is really broken, but it is just a fallback for architectures
->    # that are going to use TCI anyway
->    cpu=$(uname -m)
-> -  echo "WARNING: unrecognized host CPU, proceeding with 'uname -m' output '$cpu'"
-> +  echo "WARNING: could not determine host CPU, proceeding with 'uname -m' output '$cpu'"
->  fi
->
->  # Normalise host CPU name to the values used by Meson cross files and in source
-> @@ -1000,10 +1000,12 @@ if test -z "$ninja"; then
->  fi
->
->  if test "$host_os" = "bogus"; then
-> -    # Now that we know that we're not printing the help and that
-> -    # the compiler works (so the results of the check_defines we used
-> -    # to identify the OS are reliable), if we didn't recognize the
-> -    # host OS we should stop now.
-> +    # Now that we know that we're not printing the help, we should stop now
-> +    # if we didn't recognize the host OS (or the C compiler is not working).
-> +    write_c_skeleton;
-> +    if ! compile_object ; then
-> +        error_exit "C compiler \"$cc\" is not usable"
-> +    fi
->      error_exit "Unrecognized host OS (uname -s reports '$(uname -s)')"
->  fi
+>   include/qemu/plugin.h |  1 +
+>   plugins/core.c        | 51 ++++++++++++++++++++++++++++++++++++++-----
+>   2 files changed, 46 insertions(+), 6 deletions(-)
+> 
+> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+> index 143262dca8..793c44f1f2 100644
+> --- a/include/qemu/plugin.h
+> +++ b/include/qemu/plugin.h
+> @@ -92,6 +92,7 @@ struct qemu_plugin_dyn_cb {
+>       union {
+>           struct {
+>               union qemu_plugin_cb_sig f;
+> +            TCGHelperInfo *info;
+>           } regular;
+>           struct {
+>               qemu_plugin_u64 entry;
+> diff --git a/plugins/core.c b/plugins/core.c
+> index 837c373690..b0a2e80874 100644
+> --- a/plugins/core.c
+> +++ b/plugins/core.c
+> @@ -338,12 +338,26 @@ void plugin_register_dyn_cb__udata(GArray **arr,
+>                                      enum qemu_plugin_cb_flags flags,
+>                                      void *udata)
+>   {
+> -    struct qemu_plugin_dyn_cb *dyn_cb = plugin_get_dyn_cb(arr);
+> +    static TCGHelperInfo info[3] = {
+> +        [QEMU_PLUGIN_CB_NO_REGS].flags = TCG_CALL_NO_RWG | TCG_CALL_PLUGIN,
+> +        [QEMU_PLUGIN_CB_R_REGS].flags = TCG_CALL_NO_WG | TCG_CALL_PLUGIN,
+> +        [QEMU_PLUGIN_CB_RW_REGS].flags = TCG_CALL_PLUGIN,
+> +        /*
+> +         * Match qemu_plugin_vcpu_udata_cb_t:
+> +         *   void (*)(uint32_t, void *)
+> +
 
-I think I would prefer as a structure:
+Any chance we could have a static assert ensuring this?
+I know it's possible in C11, but I don't know if glib offers something 
+for this.
 
-(1) suppress the "unrecognized host CPU" message if "$host_os" == "bogus"
-(2) do the "check the C compiler works" test as its own test immediately
-    after we print the help message (and not guarded by testing $host_os)
-(3) leave the "Unrecognized host OS" check code as it is
+          */
+> +        [0 ... 2].typemask = (dh_typemask(void, 0) |
+> +                              dh_typemask(i32, 1) |
+> +                              dh_typemask(ptr, 2))
+> +    };
+>   
+> +    struct qemu_plugin_dyn_cb *dyn_cb = plugin_get_dyn_cb(arr);
+>       dyn_cb->userp = udata;
+> -    /* Note flags are discarded as unused. */
+> -    dyn_cb->regular.f.vcpu_udata = cb;
+>       dyn_cb->type = PLUGIN_CB_REGULAR;
+> +    dyn_cb->regular.f.vcpu_udata = cb;
+> +
+> +    assert((unsigned)flags < ARRAY_SIZE(info));
+> +    dyn_cb->regular.info = &info[flags];
+>   }
+>   
+>   void plugin_register_vcpu_mem_cb(GArray **arr,
+> @@ -352,14 +366,39 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
+>                                    enum qemu_plugin_mem_rw rw,
+>                                    void *udata)
+>   {
+> -    struct qemu_plugin_dyn_cb *dyn_cb;
+> +    /*
+> +     * Expect that the underlying type for enum qemu_plugin_meminfo_t
+> +     * is either int32_t or uint32_t, aka int or unsigned int.
+> +     */
+> +    QEMU_BUILD_BUG_ON(
+> +        !__builtin_types_compatible_p(qemu_plugin_meminfo_t, uint32_t) &&
+> +        !__builtin_types_compatible_p(qemu_plugin_meminfo_t, int32_t));
+>   
+> -    dyn_cb = plugin_get_dyn_cb(arr);
+> +    static TCGHelperInfo info[3] = {
+> +        [QEMU_PLUGIN_CB_NO_REGS].flags = TCG_CALL_NO_RWG | TCG_CALL_PLUGIN,
+> +        [QEMU_PLUGIN_CB_R_REGS].flags = TCG_CALL_NO_WG | TCG_CALL_PLUGIN,
+> +        [QEMU_PLUGIN_CB_RW_REGS].flags = TCG_CALL_PLUGIN,
+> +        /*
+> +         * Match qemu_plugin_vcpu_mem_cb_t:
+> +         *   void (*)(uint32_t, qemu_plugin_meminfo_t, uint64_t, void *)
+> +         */
+> +        [0 ... 2].typemask =
+> +            (dh_typemask(void, 0) |
+> +             dh_typemask(i32, 1) |
+> +             (__builtin_types_compatible_p(qemu_plugin_meminfo_t, uint32_t)
+> +              ? dh_typemask(i32, 2) : dh_typemask(s32, 2)) |
+> +             dh_typemask(i64, 3) |
+> +             dh_typemask(ptr, 4))
+> +    };
+> +
+> +    struct qemu_plugin_dyn_cb *dyn_cb = plugin_get_dyn_cb(arr);
+>       dyn_cb->userp = udata;
+> -    /* Note flags are discarded as unused. */
+>       dyn_cb->type = PLUGIN_CB_REGULAR;
+>       dyn_cb->rw = rw;
+>       dyn_cb->regular.f.vcpu_mem = cb;
+> +
+> +    assert((unsigned)flags < ARRAY_SIZE(info));
+> +    dyn_cb->regular.info = &info[flags];
+>   }
+>   
+>   /*
 
-thanks
--- PMM
+else,
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
