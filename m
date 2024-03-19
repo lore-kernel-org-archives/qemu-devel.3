@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D31FCD11DC
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:34:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BBFAC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:34:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmrOF-0004c7-MU; Wed, 20 Mar 2024 04:33:39 -0400
+	id 1rmrNz-0004Ww-0U; Wed, 20 Mar 2024 04:33:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rmrOA-0004am-Hx
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:33:34 -0400
+ id 1rmrNr-0004VY-1S
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:33:15 -0400
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1rmrO5-0005XU-04
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:33:30 -0400
+ id 1rmrNn-0005UI-Bm
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:33:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710923609; x=1742459609;
+ t=1710923592; x=1742459592;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ojS7//kmXedbnaPprHSWdUIukwbzAZV70hqMHOhV4NQ=;
- b=RTHq2iA41H94oAS4yqD1qq4xKRUsRLQC3F2tdLHBFrXrMnrhMcmdZXAh
- WEsHlgpzwt1//WTUyRICF8Baf5EJCqPavE5aZsI4BHSDzFXBmchR9K3bA
- rxoaHDC3jCd+U75dwn77Vmb0kJldreztb955BujFIzaGJcNezpRtK2Eqt
- y8rJbM18C56PnGnxFmZutgbQgM7ah3c9ViifVBq6RT3iK2FOBd7FnFfJD
- DpvNWMXS2jiuQAGfBJ3/VFfxQn2xZ/y9bA3WKQUObz7V0QyUDG3UYPOVg
- +eanlXZ3ay3HvtHlRIyBWUYmJKu/VBSGl8+R+Ge1Tin90VoKgrf71gmrB w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11018"; a="5952974"
+ bh=6D6zFZg6n7LP7yFNxtj2KPov5L9k6CTzYGh4pC8iT8s=;
+ b=bNgFWiOrc1SQOk+MKxv73FVoa7FE3K5wDZNtFNHTBjaEdvRLuU122vKr
+ 1ol5jsZW03YYpq/rdhjXVi4p5XE6HXZDj2PNEKLxmT5XOxN7OpdGrWgfP
+ 0fmxsK2QT5kdTzc8P7MKpBVOJ57RSP2rVfqIa1tNk7hNlz/972OVF8G/8
+ fKkCQLg95suEVZMdpEAKV3UEAsDjxQUcDUyOKL3uvYGZrzIF/7d901YVz
+ rO3G3y1CldOnIO89gVz76oSgAb7zc+wb487BtOAWCAM+MSqSW9qs+V8Ez
+ fdkSybkJhUMKnayUfcz+S6cbyffFoJ8UvJoVAxHxmn8pDgeiXSrf4y4Em w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11018"; a="5952917"
 X-IronPort-AV: E=Sophos;i="6.07,139,1708416000"; 
-   d="scan'208";a="5952974"
+   d="scan'208";a="5952917"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Mar 2024 01:33:28 -0700
+ 20 Mar 2024 01:33:06 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,139,1708416000"; d="scan'208";a="13986755"
+X-IronPort-AV: E=Sophos;i="6.07,139,1708416000"; d="scan'208";a="13986709"
 Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by orviesa010.jf.intel.com with ESMTP; 20 Mar 2024 01:33:26 -0700
+ by orviesa010.jf.intel.com with ESMTP; 20 Mar 2024 01:33:04 -0700
 From: Yuan Liu <yuan1.liu@intel.com>
 To: peterx@redhat.com,
 	farosas@suse.de
 Cc: qemu-devel@nongnu.org, hao.xiang@bytedance.com, bryan.zhang@bytedance.com,
  yuan1.liu@intel.com, nanhai.zou@intel.com
-Subject: [PATCH v5 7/7] tests/migration-test: add qpl compression test
-Date: Wed, 20 Mar 2024 00:45:27 +0800
-Message-Id: <20240319164527.1873891-8-yuan1.liu@intel.com>
+Subject: [PATCH v5 2/7] migration/multifd: put IOV initialization into
+ compression method
+Date: Wed, 20 Mar 2024 00:45:22 +0800
+Message-Id: <20240319164527.1873891-3-yuan1.liu@intel.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240319164527.1873891-1-yuan1.liu@intel.com>
 References: <20240319164527.1873891-1-yuan1.liu@intel.com>
@@ -79,67 +80,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-add qpl to compression method test for multifd migration
-
-the migration with qpl compression needs to access IAA hardware
-resource, please run "check-qtest" with sudo or root permission,
-otherwise migration test will fail
+Different compression methods may require different numbers of IOVs.
+Based on streaming compression of zlib and zstd, all pages will be
+compressed to a data block, so two IOVs are needed for packet header
+and compressed data block.
 
 Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
 Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
 ---
- tests/qtest/migration-test.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ migration/multifd-zlib.c | 4 ++++
+ migration/multifd-zstd.c | 6 +++++-
+ migration/multifd.c      | 8 +++++---
+ 3 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 71895abb7f..052d0d60fd 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -2815,6 +2815,15 @@ test_migrate_precopy_tcp_multifd_zstd_start(QTestState *from,
- }
- #endif /* CONFIG_ZSTD */
- 
-+#ifdef CONFIG_QPL
-+static void *
-+test_migrate_precopy_tcp_multifd_qpl_start(QTestState *from,
-+                                            QTestState *to)
-+{
-+    return test_migrate_precopy_tcp_multifd_start_common(from, to, "qpl");
-+}
-+#endif /* CONFIG_QPL */
+diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
+index 99821cd4d5..8095ef8e28 100644
+--- a/migration/multifd-zlib.c
++++ b/migration/multifd-zlib.c
+@@ -70,6 +70,10 @@ static int zlib_send_setup(MultiFDSendParams *p, Error **errp)
+         goto err_free_zbuff;
+     }
+     p->compress_data = z;
 +
- static void test_multifd_tcp_none(void)
- {
-     MigrateCommon args = {
-@@ -2880,6 +2889,17 @@ static void test_multifd_tcp_zstd(void)
- }
- #endif
++    assert(p->iov == NULL);
++    /* For packet header and zlib streaming compression block */
++    p->iov = g_new0(struct iovec, 2);
+     return 0;
  
-+#ifdef CONFIG_QPL
-+static void test_multifd_tcp_qpl(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = test_migrate_precopy_tcp_multifd_qpl_start,
-+    };
-+    test_precopy_common(&args);
-+}
-+#endif
+ err_free_zbuff:
+diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
+index 02112255ad..9c9217794e 100644
+--- a/migration/multifd-zstd.c
++++ b/migration/multifd-zstd.c
+@@ -52,7 +52,6 @@ static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
+     struct zstd_data *z = g_new0(struct zstd_data, 1);
+     int res;
+ 
+-    p->compress_data = z;
+     z->zcs = ZSTD_createCStream();
+     if (!z->zcs) {
+         g_free(z);
+@@ -77,6 +76,11 @@ static int zstd_send_setup(MultiFDSendParams *p, Error **errp)
+         error_setg(errp, "multifd %u: out of memory for zbuff", p->id);
+         return -1;
+     }
++    p->compress_data = z;
 +
- #ifdef CONFIG_GNUTLS
- static void *
- test_migrate_multifd_tcp_tls_psk_start_match(QTestState *from,
-@@ -3789,6 +3809,10 @@ int main(int argc, char **argv)
-     migration_test_add("/migration/multifd/tcp/plain/zstd",
-                        test_multifd_tcp_zstd);
- #endif
-+#ifdef CONFIG_QPL
-+    migration_test_add("/migration/multifd/tcp/plain/qpl",
-+                       test_multifd_tcp_qpl);
-+#endif
- #ifdef CONFIG_GNUTLS
-     migration_test_add("/migration/multifd/tcp/tls/psk/match",
-                        test_multifd_tcp_tls_psk_match);
++    assert(p->iov == NULL);
++    /* For packet header and zstd streaming compression block */
++    p->iov = g_new0(struct iovec, 2);
+     return 0;
+ }
+ 
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 0179422f6d..5155e02ae3 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1181,9 +1181,11 @@ bool multifd_send_setup(void)
+             p->packet = g_malloc0(p->packet_len);
+             p->packet->magic = cpu_to_be32(MULTIFD_MAGIC);
+             p->packet->version = cpu_to_be32(MULTIFD_VERSION);
+-
+-            /* We need one extra place for the packet header */
+-            p->iov = g_new0(struct iovec, page_count + 1);
++            /* IOVs are initialized in send_setup of compression method */
++            if (!migrate_multifd_compression()) {
++                /* We need one extra place for the packet header */
++                p->iov = g_new0(struct iovec, page_count + 1);
++            }
+         } else {
+             p->iov = g_new0(struct iovec, page_count);
+         }
 -- 
 2.39.3
 
