@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CFB0C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52CEC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:26:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmaPD-00075h-Kz; Tue, 19 Mar 2024 10:25:32 -0400
+	id 1rmaPT-0007Wy-5a; Tue, 19 Mar 2024 10:25:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmaP8-0006yQ-CI
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:25:26 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ id 1rmaPL-0007LQ-DB
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:25:39 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmaP3-0006Ch-Ua
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:25:24 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2d23114b19dso68817021fa.3
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 07:25:21 -0700 (PDT)
+ id 1rmaPH-0006KK-8s
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:25:36 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2d49f7e5c2cso38045941fa.2
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 07:25:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710858320; x=1711463120; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710858334; x=1711463134; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=GBm4ZLRN5LUdojuR0nWlqBhCP643bCu+gA6N3tStEgA=;
- b=UIVoeWZ2YdSLh7gkmg9KCZ/6xakyL/vURocBMGsh+HJYRKPpRufYvwqLYboGlRIZf/
- ytaUabAGXoMFCOt3S/qcAcyz7JFPiaq+/AyfqG1icKdGmtgMHFPTQJDr/XT8hDyAIEG5
- oY6ExzgZcRUhMYYT2Bg5AuPP0PDYvESk3zBVeHFgmS+nr1Wgr0XwMGJLUQi/mYdGS4oV
- S0+XHxrvx9uAxkr7N9+BCfsZ3CVxaKiMNaz2qyfApNBEU6uOPoama0tZUmvXKwrueKiA
- 4wWNPLhLfagUqpRC//bhN1Qiw16oI18B5C2yQPcXwqvCawoYgwJxvYacBui2sjwP4dys
- g2iw==
+ bh=OvIVuYEc42sbI7db0SJG6CEZxtBUTb1N01BNbC0VBG8=;
+ b=UCbCK5+dVeEC1PrYAybeFE5NzZ1YmVH+jOrd6XrG7DlyNanLXPhoQ1wAkbdhzQFQ2t
+ 0eVh278TLd4Pwy+uDM0SdTQwJPs4uX5Mz+yE37y1nN73DivQh4aKHHpX2IgIQEfsAG1N
+ jJj3bqpiDsovaQEAdJR5GGVSZtKVR/nHScq19JMIgvRDFpRTrxGOj7XMGS+uWzyTrrhs
+ /X7nCGY9CcUTEDmYrBb3nGs/sypRml+ehKVOUVzzSHKNFCwzIwMnEdTnA16kAdZrPuex
+ rrI3R6fypwLuOZbxeeE3d1qHSSJQO/Dgzq9C4R/tR4emJwwz6ZBW4TojtqD5BEzKOMBU
+ 4LeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710858320; x=1711463120;
+ d=1e100.net; s=20230601; t=1710858334; x=1711463134;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GBm4ZLRN5LUdojuR0nWlqBhCP643bCu+gA6N3tStEgA=;
- b=Rk3WqUSAenNDXn7xtH65Aeme4GDKehELYEfxLR6udfZ26UdLOTqzUfthCXLFHPAbYp
- BWOtVQ4fVeMiBSXwBapeLVWxP6DLUnzU8nl2dJeu2a1/kcUzOLA6H7QKy9w4JUBJjhxp
- r+fD+XaLDdwOduPGSBM6uMIPt9+IDFnpqKpUGfspeiJKCWjZGp5v2P7tGi7ONT3BVtsG
- WlKeuhf7bYc+8DVXhCHQd2cJjinUfVG8E09WbfMlL/V8PuFvMx6E4yLRmIa4XzgfNPUL
- VZbvOGFuRnzoq5yGa+4ypX2LG5duvwqyjTaxq86hiskxBy71TDHJPrsnYt3i9CAceNJu
- kHlg==
-X-Gm-Message-State: AOJu0YzNoePEkl7jKZZnwk7OVyVs2S+9fil1fSL4XW9E3H+nYlZZXSzq
- SoSfsL6lXiyFoVD3wsmdjEvX4ohwC0yt8xCEUI33nyBZf8Lf33FaGlZh/9hpPreQWOKT9/h4npL
- DPYfpREynBQv5vMr/S5qoYEnlpd4X3H5Eks3J3A==
-X-Google-Smtp-Source: AGHT+IEhi76qhH6txqO5M1B6yYOjs+S65Xk7LRnQK0ghMRD6vaQNqD9xp5CraR37EwMuy/qLueBWtoUtCJQ6SQGjwUE=
-X-Received: by 2002:a2e:8912:0:b0:2d2:2c3e:70e with SMTP id
- d18-20020a2e8912000000b002d22c3e070emr10738620lji.4.1710858320192; Tue, 19
- Mar 2024 07:25:20 -0700 (PDT)
+ bh=OvIVuYEc42sbI7db0SJG6CEZxtBUTb1N01BNbC0VBG8=;
+ b=KI56Qd9QZJIF8x56w97kD3YWuDBpLjfH7he4F4EZX5DpyGxK+C1PB3BABktGwlx1DJ
+ d9e6aiTrulrkvolvWRjm7Hrofu6ga1nyF+S01aODSlvbz9qHAHG8r3H5JVnOh8DhR897
+ GFEHpjWCt/uYy/2JGuQOS8cvX/fyd8lXSOvTAfWpLc6i8FR86dhsoHm0fU0tRllQVC3n
+ 08dzg/mxHMz22Rm1swx6y5bM+aEMlo9+OdatjJuo7pnsemOpUj7i447rPVDf8Ec+sxWK
+ kYdKYzfE2cskSLIY7hM6LrOcBvlHeXPImjtiFrq6BL/1D6mZK2alrfOysNAdYRWx7mP9
+ mGmQ==
+X-Gm-Message-State: AOJu0YyU+eBhNDfnn/NK8Yyb/AqJ8LVewqO2bxuBguiK/8BlxK7yViyY
+ vkmWa7zFHQllC8Ju6/3b5CARNDCh9XkK11cib7GtHVj9oJrZVEWsWQKZSiWEDFLqakNMUx6kxFb
+ 7l3BngzknQKGUsyhPApKHH4grWJTWA2GOtg6skg==
+X-Google-Smtp-Source: AGHT+IG6TU2Qs8M+3x+KDZUr+JmNKGF4tcwSNI4TylnNXDRteFD3ov3L5lGVwIdhSmKioAN6Y7cL/pliMpXh/MqEPXI=
+X-Received: by 2002:a2e:8605:0:b0:2d3:ca91:c357 with SMTP id
+ a5-20020a2e8605000000b002d3ca91c357mr9205621lji.15.1710858333550; Tue, 19 Mar
+ 2024 07:25:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1710778506.git.mst@redhat.com>
-In-Reply-To: <cover.1710778506.git.mst@redhat.com>
+References: <20240318175655.756084-1-thuth@redhat.com>
+In-Reply-To: <20240318175655.756084-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Mar 2024 14:25:09 +0000
-Message-ID: <CAFEAcA-5ahotZduJTsUndKMyKKvpKKnY_wK_2qzCwnKuNZFHPg@mail.gmail.com>
-Subject: Re: [PULL 00/24] virtio,pc,pci: bugfixes
-To: "Michael S. Tsirkin" <mst@redhat.com>
+Date: Tue, 19 Mar 2024 14:25:22 +0000
+Message-ID: <CAFEAcA84sfJZ_5bfewHkE1mMCwPT-WS0hCNJm5o4CQu0GZp_CQ@mail.gmail.com>
+Subject: Re: [PULL 0/4] s390x and misc patches for 9.0-rc0
+To: Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,7 +87,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 18 Mar 2024 at 16:15, Michael S. Tsirkin <mst@redhat.com> wrote:
+On Mon, 18 Mar 2024 at 17:57, Thomas Huth <thuth@redhat.com> wrote:
+>
+>  Hi Peter!
 >
 > The following changes since commit ba49d760eb04630e7b15f423ebecf6c871b8f77b:
 >
@@ -95,22 +97,17 @@ On Mon, 18 Mar 2024 at 16:15, Michael S. Tsirkin <mst@redhat.com> wrote:
 >
 > are available in the Git repository at:
 >
->   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2024-03-18
 >
-> for you to fetch changes up to bb949df637bdb6136a9acca55a2371fe1721e109:
+> for you to fetch changes up to aebe0a8552e8d419c8103e60e593f2778eab41c4:
 >
->   smbios: add extra comments to smbios_get_table_legacy() (2024-03-18 08:42:46 -0400)
->
-> ----------------------------------------------------------------
-> virtio,pc,pci: bugfixes
->
-> Some minor fixes plus a big patchset from Igor fixing
-> a regression with windows.
->
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>   travis-ci: Rename SOFTMMU -> SYSTEM (2024-03-18 17:18:05 +0100)
 >
 > ----------------------------------------------------------------
-
+> * Clarify s390x CPU topology docs and CPU compatibility error messages
+> * Improve the Sparc CPU help text
+> * Rename SOFTMMU to SYSTEM in the travis.yml file
+>
 
 Applied, thanks.
 
