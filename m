@@ -4,67 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BECFC54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 20:15:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD791C54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 20:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmfr5-0006v7-Nt; Tue, 19 Mar 2024 16:14:39 -0400
+	id 1rmfrv-0007M2-JX; Tue, 19 Mar 2024 16:15:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmfr3-0006ue-Ku
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:14:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmfrt-0007FI-EX
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:15:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmfr1-0006ME-M9
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:14:37 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmfrr-0006fg-5q
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 16:15:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710879273;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1710879325;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UF4RMbUm4t87SXmkcLtBo3KXqDfJAcRX1SzHsZiLv9k=;
- b=FPjPoMDO2SD0a5NCOYC9mp79rXSVwOWXnSTpOKjCEd8YEZOvVpV8q6kC8aWuz2UuvFwkyX
- aMM8a+uSZ8HytmWcn5+mtM5TqWex2Yp/yLEz3fdHH8FeQAXLd5+7gnXadHbepmFyLrnCLD
- YReoxftdq2lTrtv+jDBdHfqqG9U7idc=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-482-izDYrgw6PyqJyYiZFvs0QA-1; Tue,
- 19 Mar 2024 16:14:31 -0400
-X-MC-Unique: izDYrgw6PyqJyYiZFvs0QA-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 85803299E768
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 20:14:31 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.88])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C33873C20;
- Tue, 19 Mar 2024 20:14:29 +0000 (UTC)
-Date: Tue, 19 Mar 2024 20:14:12 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Sanjay Rao <srao@redhat.com>, Boaz Ben Shabat <bbenshab@redhat.com>,
- Joe Mario <jmario@redhat.com>
-Subject: Re: [PATCH] coroutine: cap per-thread local pool size
-Message-ID: <ZfnyFOKI3uEXJ0xB@redhat.com>
-References: <20240318183429.1039340-1-stefanha@redhat.com>
- <ZfmWhDaG5mN-GCeO@redhat.com> <ZfnDTkh5CCHX1WFK@redhat.com>
- <ZfnHIv9W-tVoF4Bm@redhat.com> <ZfnOSKk4C6e4VSUX@redhat.com>
+ bh=d3Km3zthjTJ2X4w4a9sXT7ieqazOORF+q9x8wTj8Jsw=;
+ b=i8Kv5nh08vfvJwNye3SH35Sg7R27+vgBjSftM9GPl046TZTGnpS5Jb8bVifZSirjHYD5ea
+ hOSVDoTNfZMD+G139NW3ujNhSjr/wP2OGAWdv5TE+MVenG452si78dAYRo0uklgIBwgOtC
+ Si1tsXRSC6arBqPBf2dhJqKOLogJ6W0=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-390-B7FDdgerNcubVFEj1N8-1Q-1; Tue, 19 Mar 2024 16:15:23 -0400
+X-MC-Unique: B7FDdgerNcubVFEj1N8-1Q-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-69120b349c9so15737436d6.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 13:15:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710879323; x=1711484123;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=d3Km3zthjTJ2X4w4a9sXT7ieqazOORF+q9x8wTj8Jsw=;
+ b=gt6nZo+J7OE12voh9eoAWLmqhuhetL9glRwh1iaqIZIhvHqawbuL/AFizunJ8aPqiW
+ n2ftGwNewLmeTwwdfR4NtFuj+Oa3gw/8Erh/EfOg3EH3XdFpqcPLxumzwhJEuJ0kufmN
+ QSoxB3YGGQ8/HaRk0fM65tcN36kJOpIvE9hvivV4HlUBBgYAAlNhj2pRLela63wVVV6A
+ 4AzdWUr06OKT+6hVGBDktJWmrtjdxa+N8cAchcNIfQ2iHdFTyrLXcPi5s8W8RjbL/hys
+ dp7a4t5e9IpiKwcHRqslSogG+9aR2BWXdrlEaPIGFCgSjZsEXP9mpl/LfeJtcam6lMgQ
+ emog==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCURr5j33pU95hd7IE4feltECc/2l8yovnvM7vqwVyAanOrLa0Cklzl5OxuO+sVukHgsjOwkk6lEj54H/xkBrexo63Fcr2w=
+X-Gm-Message-State: AOJu0YxMX8xnhs1/iNEeH0K14l6REYwUw1TexizOV5kMg0GB8oFVOcPA
+ YIwuB6mMGb9tceJHHD0poZ5xIVNoROYyNN1fmnusrKVS62EsWVUIIZbQtj2raZ9dA402BBEfNN1
+ RzunDYriiWdbUqEsBK5w75dpZvNVSTuVdfqamVWh3v3f/npzBdsZg
+X-Received: by 2002:a05:6214:5409:b0:691:402f:510a with SMTP id
+ ql9-20020a056214540900b00691402f510amr3789211qvb.0.1710879323322; 
+ Tue, 19 Mar 2024 13:15:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGJ1RLSUMsM1bkTVj+gBNpcRtNoE2uqsH/ClYIiDPIle8ACMSil5qBehmfBPGWLnufsCjSJ/g==
+X-Received: by 2002:a05:6214:5409:b0:691:402f:510a with SMTP id
+ ql9-20020a056214540900b00691402f510amr3789184qvb.0.1710879322818; 
+ Tue, 19 Mar 2024 13:15:22 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ iu10-20020ad45cca000000b006914cd7a8b1sm6847700qvb.48.2024.03.19.13.15.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Mar 2024 13:15:22 -0700 (PDT)
+Date: Tue, 19 Mar 2024 16:15:20 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [RFC PATCH v3 3/3] migration: Add fd to FileMigrationArgs
+Message-ID: <ZfnyWHh1MWRKFaOH@x1n>
+References: <20240315032040.7974-1-farosas@suse.de>
+ <20240315032040.7974-4-farosas@suse.de>
+ <ZfQNDv--4BnN5zYx@redhat.com> <ZfRxwml7m0DQVO2b@x1n>
+ <87y1aj74t6.fsf@suse.de> <ZfS1g8YvZ7if9j5M@x1n>
+ <Zfm8fCqyNMfkq9Jw@redhat.com> <Zfnmni5bZ7q_UQcx@x1n>
+ <ZfntD00Mz3i9vOky@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZfnOSKk4C6e4VSUX@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <ZfntD00Mz3i9vOky@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -86,151 +104,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 19, 2024 at 06:41:28PM +0100, Kevin Wolf wrote:
-> Am 19.03.2024 um 18:10 hat Daniel P. Berrangé geschrieben:
-> > On Tue, Mar 19, 2024 at 05:54:38PM +0100, Kevin Wolf wrote:
-> > > Am 19.03.2024 um 14:43 hat Daniel P. Berrangé geschrieben:
-> > > > On Mon, Mar 18, 2024 at 02:34:29PM -0400, Stefan Hajnoczi wrote:
-> > > > > The coroutine pool implementation can hit the Linux vm.max_map_count
-> > > > > limit, causing QEMU to abort with "failed to allocate memory for stack"
-> > > > > or "failed to set up stack guard page" during coroutine creation.
+On Tue, Mar 19, 2024 at 07:52:47PM +0000, Daniel P. Berrangé wrote:
+> On Tue, Mar 19, 2024 at 03:25:18PM -0400, Peter Xu wrote:
+> > On Tue, Mar 19, 2024 at 04:25:32PM +0000, Daniel P. Berrangé wrote:
+> > > On Fri, Mar 15, 2024 at 04:54:27PM -0400, Peter Xu wrote:
+> > > > On Fri, Mar 15, 2024 at 03:01:09PM -0300, Fabiano Rosas wrote:
+> > > > > Peter Xu <peterx@redhat.com> writes:
 > > > > > 
-> > > > > This happens because per-thread pools can grow to tens of thousands of
-> > > > > coroutines. Each coroutine causes 2 virtual memory areas to be created.
+> > > > > > [I queued patch 1-2 into -stable, leaving this patch for further
+> > > > > >  discussions]
+> > > > > >
+> > > > > > On Fri, Mar 15, 2024 at 08:55:42AM +0000, Daniel P. Berrangé wrote:
+> > > > > >> The 'file:' protocol eventually calls into qemu_open, and this
+> > > > > >> transparently allows for FD passing using /dev/fdset/NNN syntax
+> > > > > >> to pass in FDs. 
+> > > > > >
+> > > > > > If it always use /dev/fdsets for files, does it mean that the newly added
+> > > > > > SOCKET_ADDRESS_TYPE_FD support on mapped-ram will never be used (so we can
+> > > > > > drop them)?
+> > > > > 
+> > > > > We already have SOCKET_ADDRESS_TYPE_FD + file since 8.2 when the
+> > > > > MigrationAddress was added. So this:
+> > > > > 
+> > > > > 'channels': [ { 'channel-type': 'main',
+> > > > >                 'addr': { 'transport': 'socket',
+> > > > >                 'type': 'fd',
+> > > > >                 'str': 'fdname' } } ]
+> > > > > 
+> > > > > works without multifd and without mapped-ram if the fd is a file or
+> > > > > socket.
+> > > > > 
+> > > > > So yes, you're correct, but given we already have this^ it would be
+> > > > > perhaps more confusing for users to allow it, but not allow the very
+> > > > > same JSON when multifd=true, mapped-ram=true.
 > > > > 
-> > > > This sounds quite alarming. What usage scenario is justified in
-> > > > creating so many coroutines?
-> > > 
-> > > Basically we try to allow pooling coroutines for as many requests as
-> > > there can be in flight at the same time. That is, adding a virtio-blk
-> > > device increases the maximum pool size by num_queues * queue_size. If
-> > > you have a guest with many CPUs, the default num_queues is relatively
-> > > large (the bug referenced by Stefan had 64), and queue_size is 256 by
-> > > default. That's 16k potential requests in flight per disk.
-> > 
-> > If we have more than 1 virtio-blk device, does that scale up the max
-> > coroutines too ?
-> > 
-> > eg would 32 virtio-blks devices imply 16k * 32 -> 512k potential
-> > requests/coroutines ?
-> 
-> Yes. This is the number of request descriptors that fit in the
-> virtqueues, and if you add another device with additional virtqueues,
-> then obviously that increases the number of theoretically possible
-> parallel requests.
-> 
-> The limits of what you can actually achieve in practice might be lower
-> because I/O might complete faster than the time we need to process all
-> of the queued requests, depending on how many vcpus are trying to
-> "compete" with how many iothreads. Of course, the practical limits in
-> five years might be different from today.
-> 
-> > > > IIUC, coroutine stack size is 1 MB, and so tens of thousands of
-> > > > coroutines implies 10's of GB of memory just on stacks alone.
-> > > 
-> > > That's only virtual memory, though. Not sure how much of it is actually
-> > > used in practice.
-> > 
-> > True, by default Linux wouldn't care too much about virtual memory,
-> > Only if 'vm.overcommit_memory' is changed from its default, such
-> > that Linux applies an overcommit ratio on RAM, then total virtual
-> > memory would be relevant.
-> 
-> That's a good point and one that I don't have a good answer for, short
-> of just replacing the whole QEMU block layer with rsd and switching to
-> stackless coroutines/futures this way.
-> 
-> > > > > Eventually vm.max_map_count is reached and memory-related syscalls fail.
+> > > > I don't think the fd: protocol (no matter the old "fd:", or the new JSON
+> > > > format) is trivial to use. If libvirt didn't use it I won't be surprised to
+> > > > see nobody using it.  I want us to avoid working on things that nobody is
+> > > > using, or has a better replacement.
 > > > > 
-> > > > On my system max_map_count is 1048576, quite alot higher than
-> > > > 10's of 1000's. Hitting that would imply ~500,000 coroutines and
-> > > > ~500 GB of stacks !
+> > > > So even if Libvirt supports both, I'm wondering whether /dev/fdset/ works
+> > > > for all the cases that libvirt needs.  I am aware that the old getfd has
+> > > > the monitor limitation so that if the QMP disconnected and reconnect, the
+> > > > fd can be gone.  However I'm not sure whether that's the only reason to
+> > > > have add-fd, and also not sure whether it means add-fd is always preferred,
+> > > > so that maybe we can consider obsolete getfd?
 > > > 
-> > > Did you change the configuration some time in the past, or is this just
-> > > a newer default? I get 65530, and that's the same default number I've
-> > > seen in the bug reports.
-> > 
-> > It turns out it is a Fedora change, rather than a kernel change:
-> > 
-> >   https://fedoraproject.org/wiki/Changes/IncreaseVmMaxMapCount
-> 
-> Good to know, thanks.
-> 
-> > > > > diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
-> > > > > index 5fd2dbaf8b..2790959eaf 100644
-> > > > > --- a/util/qemu-coroutine.c
-> > > > > +++ b/util/qemu-coroutine.c
-> > > > 
-> > > > > +static unsigned int get_global_pool_hard_max_size(void)
-> > > > > +{
-> > > > > +#ifdef __linux__
-> > > > > +    g_autofree char *contents = NULL;
-> > > > > +    int max_map_count;
-> > > > > +
-> > > > > +    /*
-> > > > > +     * Linux processes can have up to max_map_count virtual memory areas
-> > > > > +     * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit. We
-> > > > > +     * must limit the coroutine pool to a safe size to avoid running out of
-> > > > > +     * VMAs.
-> > > > > +     */
-> > > > > +    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents, NULL,
-> > > > > +                            NULL) &&
-> > > > > +        qemu_strtoi(contents, NULL, 10, &max_map_count) == 0) {
-> > > > > +        /*
-> > > > > +         * This is a conservative upper bound that avoids exceeding
-> > > > > +         * max_map_count. Leave half for non-coroutine users like library
-> > > > > +         * dependencies, vhost-user, etc. Each coroutine takes up 2 VMAs so
-> > > > > +         * halve the amount again.
-> > > > > +         */
-> > > > > +        return max_map_count / 4;
-> > > > 
-> > > > That's 256,000 coroutines, which still sounds incredibly large
-> > > > to me.
+> > > Historically libvirt primariily uses the 'fd:' protocol, with a
+> > > socket FD. It never gives QEMU a plain file FD, since it has
+> > > always added its "iohelper" as a MITM, in order to add O_DIRECT
+> > > on top.
 > > > 
-> > > The whole purpose of the limitation is that you won't ever get -ENOMEM
-> > > back, which will likely crash your VM. Even if this hard limit is high,
-> > > that doesn't mean that it's fully used. Your setting of 1048576 probably
-> > > means that you would never have hit the crash anyway.
+> > > The 'getfd' command is something that is needed when talking to
+> > > QEMU for any API that involves a "SocketAddress" QAPI type,
+> > > which is applicable for migration.
 > > > 
-> > > Even the benchmarks that used to hit the problem don't even get close to
-> > > this hard limit any more because the actual number of coroutines stays
-> > > much smaller after applying this patch.
+> > > With the introduction of 'MigrationAddress', the 'socket' protocol
+> > > is backed by 'SocketAddress' and thus supports FD passing for
+> > > sockets (or potentally pipes too), in combination with 'getfd'.
+> > > 
+> > > With the 'file' protocol in 'MigrationAddress', since it gets
+> > > backed by qemu_open(), then /dev/fdset/NN and 'add-fd' provide
+> > > passing for plain files.
 > > 
-> > I'm more thinking about what's the worst case behaviour that a
-> > malicious guest can inflict on QEMU, and cause unexpectedly high
-> > memory usage in the host.
+> > I see.  I assume it means we still have multiple users of getfd so it's
+> > still in use where add-fd is not yet avaiable.
 > > 
-> > ENOMEM is bad for a friendy VM, but there's also the risk to the host
-> > from a unfriendly VM exploiting the high limits
+> > But then, SOCKET_ADDRESS_TYPE_FD is then not used for libvirt in the whole
+> > mapped-ram effort, neither do we need any support on file migrations over
+> > "fd", e.g. fd_start_incoming_migration() for files. So we can drop these
+> > parts, am I right?
 > 
-> But from a QEMU perspective, what is the difference between a friendly
-> high-performance VM that exhausts the available bandwidth to do its job
-> as good and fast as possible, and a malicious VM that does that same
-> just to waste host resources? I don't think QEMU can decide this, they
-> look the same.
+> Correct, libvirt hasn't got any impl for 'mapped-ram' yet, at least
+> not something merged.
 > 
-> If you want a VM not to send 16k requests in parallel, you can configure
-> its disk to expose less queues or a smaller queue size. The values I
-> mentioned above are only defaults that allow friendly VMs to perform
-> well out of the box, nothing prevents you from changing them to restrict
-> the amount of resources a VM can use.
+> Since this is new functionality, libvirt could go straight for the
+> 'file' protocol / address type.
+> 
+> At some point I think we can stop using 'fd' for traditional migration
+> too and pass the socket address to QEMU and let QEMU open the socket.
 
-Reducing queues is a no-win scenario, as it limits the performance of
-a single disk when used in isolation, in order to cap the worst case
-when all disks are used concurrently :-( It would be nice to allow a
-single disk to burst to a high level, and only limit coroutines if
-many disks are all trying to concurrently burst to a high level.
+Thanks for confirming this, that sounds good.  I quickly discussed this
+with Fabiano just now, I think there's a plan we start to mark fd migration
+deprecated for the next release (9.1), then there is a chance we drop it in
+migration for 9.3.  That'll copy libvirt list so we can re-check there.
 
+Fabiano will then prepare patches to remove the "fd:" support on file
+migrations; that will be for 9.0.
 
-With regards,
-Daniel
+Thanks,
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
