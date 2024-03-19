@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD3A3C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 18:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 564BDC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 18:01:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmdl7-0002F3-Uc; Tue, 19 Mar 2024 14:00:22 -0400
+	id 1rmdlz-0003DM-5j; Tue, 19 Mar 2024 14:01:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmdl6-0002Ej-6u
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:00:20 -0400
+ id 1rmdlu-0003Cm-Rd
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:01:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmdl3-00071b-On
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:00:19 -0400
+ id 1rmdlt-0007H5-Ak
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:01:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710871217;
+ s=mimecast20190719; t=1710871268;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GZUp92xS7HPN9arHtGHy5OEZ2uVPwM9lw0OEAwg2qHA=;
- b=BzdBcahI6cR2Lw6wcbC5Q/21RO7UYVniv2U9bXJm4bUc9F6uFEPgnIshJ7iMyaic3b3kUq
- N1EaNDiEvQKpT8fNyyKPk2WYykhjreoK1Badq4GrsOxpByV0MYXBpnrD6+qH/NHTkpuuA7
- /4BT4Ep9szelNjI4WVAN9CfHLVEmlbw=
+ bh=5rBifEquAFtoDOJFnA7231r9vCy5RbULeAKz5+AdEVw=;
+ b=VdWtYRSKtF67WeunxotaDnyMVSCkHTp3dx7tXHnLyz/BfzoGfPWOoK2o9c48jXVR1wRcV8
+ aKD9cjERG1CWneTy651xS8IGw3NnaYxOe1K25zTjAoCPgF/pNXPiLEFajRUuZLYio8Iwza
+ Go4inwdBKvIua5/kV/UIeUoA7RwRJzU=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-128-Vkf6YH6NNo2HeIBuoeVRmQ-1; Tue, 19 Mar 2024 14:00:15 -0400
-X-MC-Unique: Vkf6YH6NNo2HeIBuoeVRmQ-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
+ us-mta-6-wCeoEQTWOSKX3oUgfiIqTw-1; Tue, 19 Mar 2024 14:01:07 -0400
+X-MC-Unique: wCeoEQTWOSKX3oUgfiIqTw-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 35698800262;
- Tue, 19 Mar 2024 18:00:15 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 165448007A1;
+ Tue, 19 Mar 2024 18:01:07 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.88])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B356A17A90;
- Tue, 19 Mar 2024 18:00:12 +0000 (UTC)
-Date: Tue, 19 Mar 2024 18:00:06 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id D74C41C060D0;
+ Tue, 19 Mar 2024 18:01:05 +0000 (UTC)
+Date: Tue, 19 Mar 2024 18:00:59 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Cc: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com,
  marcandre.lureau@redhat.com, philmd@linaro.org, den@virtuozzo.com
-Subject: Re: [PATCH v3 5/7] qga/commands-posix: execute_fsfreeze_hook: use
- ga_run_command helper
-Message-ID: <ZfnSpjibqpxFI8Qd@redhat.com>
+Subject: Re: [PATCH v3 7/7] qga/commands-posix: qmp_guest_set_user_password:
+ use ga_run_command helper
+Message-ID: <ZfnS2_p5g25oY4K7@redhat.com>
 References: <20240315122946.39168-1-andrey.drobyshev@virtuozzo.com>
- <20240315122946.39168-6-andrey.drobyshev@virtuozzo.com>
+ <20240315122946.39168-8-andrey.drobyshev@virtuozzo.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240315122946.39168-6-andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <20240315122946.39168-8-andrey.drobyshev@virtuozzo.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -89,14 +89,14 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 15, 2024 at 02:29:44PM +0200, Andrey Drobyshev wrote:
-> There's no need to check for the existence of the hook executable, as the
-> exec() call will do that for us.
+On Fri, Mar 15, 2024 at 02:29:46PM +0200, Andrey Drobyshev wrote:
+> There's no need to check for the existence of the "chpasswd", "pw"
+> executables, as the exec() call will do that for us.
 > 
 > Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 > ---
->  qga/commands-posix.c | 35 +++--------------------------------
->  1 file changed, 3 insertions(+), 32 deletions(-)
+>  qga/commands-posix.c | 96 ++++++--------------------------------------
+>  1 file changed, 13 insertions(+), 83 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
