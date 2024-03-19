@@ -4,107 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF64C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 07:18:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E93B5C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 07:34:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmTjk-0008GM-S6; Tue, 19 Mar 2024 03:18:16 -0400
+	id 1rmTz3-0003un-Ah; Tue, 19 Mar 2024 03:34:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rmTji-0008Fj-B6
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 03:18:14 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmTyu-0003tY-Ci
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 03:33:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rmTjg-00062d-OT
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 03:18:13 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmTyr-0000Z6-Pi
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 03:33:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710832691;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U4sdXSW45nBgWCZIyAJz6Z+o1J8/TMLZXWw4tTHORRI=;
- b=agM4Nu9z3p9pTKMWIUW0+4E0pJCxjroHQx1iKhhaUIN40pW35gWyBYSM3etE/b+BQQkcfo
- Unj9F8D3PSgxBm5I3KrzR82FWnpLRmCpeGJmFF6d3O/vP7qcyqN29vK+B7kz3gXftEIXZ1
- wNQTC3jn+BUOOA2TjF/8PqyPhFeRc38=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1710833633;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=gw7AqvkdEkFkQaEkj3AAmMlWcj6KLK6J/UQxKNb7WNA=;
+ b=d9lYns++6tP4p8vH3lIsEaxGFb0IWqI3dFiprM7n6LNbtrKgBXQp1cYnxbL8V24SYOglhF
+ BTB90wPRr2SibX0eurQg40SOjDwA+eKIB6Gpesymi3hORgWIP2JnUWoVbfzmZ9f7WuPVAt
+ lMbwGaJhIkZPOcQx86Z8iu2Bs4tcctw=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-6uID0N7MOomJetmI7Ir-nA-1; Tue, 19 Mar 2024 03:18:10 -0400
-X-MC-Unique: 6uID0N7MOomJetmI7Ir-nA-1
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-430bde4b347so38877381cf.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 00:18:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710832690; x=1711437490;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=U4sdXSW45nBgWCZIyAJz6Z+o1J8/TMLZXWw4tTHORRI=;
- b=ORO6zcoLD6UapZAXxKkUBO2DhFjpYeGSDHliQ+58363sjtGTu2chn+HcKw295K31KI
- BW4Lprv6b2cf0h+fl2xiX1KqmOLbpM2lnLSShQt455ZWffij7NrXXPtZxYJwEpVdBfcX
- bi1ucdfCjdUgCjUVMPKJo1kPPvP552SO1xRa+9WkWiuQzEAbsp0BBwXR9e5cWEhUDQbI
- lEwKT/zwGAhNqj1dqHTCEjZZPSJFdrOpI0qJI7zsuWFf9t4BGRLrBvh43BLqFyHwuptZ
- MHVrpIIMJuXGMvxa8eXKFfLhAo4wti/+JGiivNOELivLFx+eSL+U4aHQ0qF1HaowFBNk
- 3FNQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVxeI4LfWyO7q4P9U2vlhmqgu028EEU/krIrD49E0P0QLJLfarBh65ChRm0OXcCCbwVvYowz4OSxHWiFi7wf/qOlm4kAfU=
-X-Gm-Message-State: AOJu0YwXdfqtQ1G6BEb0Dvl6bIqQ2mha32nKy1oxFendS8KxjGZ2yR1Z
- pzOQevBhpN+GMtYXMQQay98xl7ywWziZOejGiCNnBR/zfeGOdq4f9FdAqQARfZa3SzrtokXjW75
- AFK7OGw4CH5manDXxt1Y4Wz3NZhd4XdBzkAhcg2vU7gifPXZMRgc/
-X-Received: by 2002:a05:622a:1b8b:b0:42e:6dc1:baea with SMTP id
- bp11-20020a05622a1b8b00b0042e6dc1baeamr15411096qtb.67.1710832689877; 
- Tue, 19 Mar 2024 00:18:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEEXyLxWpRbw2RFo1WAJqdNTS8VtkX1RzWRBSGTDfEzK6dm84HTk99rJKLOCWr9jMu5lV8sVg==
-X-Received: by 2002:a05:622a:1b8b:b0:42e:6dc1:baea with SMTP id
- bp11-20020a05622a1b8b00b0042e6dc1baeamr15411081qtb.67.1710832689640; 
- Tue, 19 Mar 2024 00:18:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- fd6-20020a05622a4d0600b00430d8ca2a82sm1349318qtb.66.2024.03.19.00.18.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 00:18:08 -0700 (PDT)
-Message-ID: <ac190a19-afb3-4cd9-a9f8-130567636ece@redhat.com>
-Date: Tue, 19 Mar 2024 08:18:05 +0100
+ us-mta-390-GrCjKjE-MnyQSfhC_DaTqg-1; Tue, 19 Mar 2024 03:33:47 -0400
+X-MC-Unique: GrCjKjE-MnyQSfhC_DaTqg-1
+Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.2])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 69706101A523;
+ Tue, 19 Mar 2024 07:33:46 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.59])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id D98D040C6DB3;
+ Tue, 19 Mar 2024 07:33:43 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: [PATCH] aspeed/smc: Only wire flash devices at reset
+Date: Tue, 19 Mar 2024 08:33:20 +0100
+Message-ID: <20240319073320.315170-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 08/11] vfio/pci: Allocate and initialize
- HostIOMMUDevice after attachment
-Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Sun, Yi Y" <yi.y.sun@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
-References: <20240228035900.1085727-1-zhenzhong.duan@intel.com>
- <20240228035900.1085727-9-zhenzhong.duan@intel.com>
- <750d1d70-37cd-4e00-a092-204f0dbbe61c@redhat.com>
- <SJ0PR11MB6744FC5D025D73D474838F90922C2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <SJ0PR11MB6744FC5D025D73D474838F90922C2@SJ0PR11MB6744.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.374,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,85 +83,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The Aspeed machines have many Static Memory Controllers (SMC), up to
+8, which can only drive flash memory devices. Commit 27a2c66c92ec
+("aspeed/smc: Wire CS lines at reset") tried to ease the definitions
+of these devices by allowing flash devices from the command line to be
+attached to a SSI bus. For that, the wiring of the CS lines of the
+Aspeed SMC controller was moved at reset. Two assumptions are made
+though, first that the device has a SSI_GPIO_CS GPIO line, which is
+not always the case, and second that it is flash device.
 
+Correct this problem by ensuring that the devices attached to the bus
+are the correct flash type. This fixes a QEMU abort when devices
+without a CS line, such as the max111x, are passed on the command
+line.
 
-On 3/19/24 04:46, Duan, Zhenzhong wrote:
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Subject: Re: [PATCH v1 08/11] vfio/pci: Allocate and initialize
->> HostIOMMUDevice after attachment
->>
->>
->>
->> On 2/28/24 04:58, Zhenzhong Duan wrote:
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> ---
->>>  hw/vfio/pci.c | 4 ++++
->>>  1 file changed, 4 insertions(+)
->>>
->>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>> index 4fa387f043..6cc7de5d10 100644
->>> --- a/hw/vfio/pci.c
->>> +++ b/hw/vfio/pci.c
->>> @@ -3006,6 +3006,9 @@ static void vfio_realize(PCIDevice *pdev, Error
->> **errp)
->>>          goto error;
->>>      }
->>>
->>> +    /* Allocate and initialize HostIOMMUDevice after attachment succeed
->> */
->> after successful attachment?
->>> +    host_iommu_device_create(vbasedev);
->>> +
->> you shall free on error: as well
-> I free it in vfio_instance_finalize().
-> Vfio-pci's design is special, it didn't free all allocated resources in realize's error path,
-> They are freed in _finalize(). e.g., vdev->emulated_config_bits, vdev->rom, devices and group resources(vfio_detach_device).
-> I'm following the same way. I'm fine to free it as you suggested something like below:
+While at it, export TYPE_M25P80 used in the Xilinx Versal Virtual
+machine.
 
-Oh yes I remember now. I had exactly the same question some months ago
-:-/ So that's fine then
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2228
+Fixes: 27a2c66c92ec ("aspeed/smc: Wire CS lines at reset")
+Reported-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/block/flash.h  | 2 ++
+ hw/arm/xlnx-versal-virt.c | 3 ++-
+ hw/block/m25p80.c         | 1 -
+ hw/ssi/aspeed_smc.c       | 9 +++++++++
+ 4 files changed, 13 insertions(+), 2 deletions(-)
 
-Eric
->
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3246,6 +3246,7 @@ out_teardown:
->      vfio_teardown_msi(vdev);
->      vfio_bars_exit(vdev);
->  error:
-> +    g_free(vdev->vbasedev.base_hdev);
->      error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
->  }
->
-> @@ -3288,6 +3289,7 @@ static void vfio_exitfn(PCIDevice *pdev)
->      vfio_bars_exit(vdev);
->      vfio_migration_exit(vbasedev);
->      pci_device_unset_iommu_device(pdev);
-> +    g_free(vdev->vbasedev.base_hdev);
->  }
->
->> Eric
->>>      vfio_populate_device(vdev, &err);
->>>      if (err) {
->>>          error_propagate(errp, err);
->>> @@ -3244,6 +3247,7 @@ static void vfio_instance_finalize(Object *obj)
->>>
->>>      vfio_display_finalize(vdev);
->>>      vfio_bars_finalize(vdev);
->>> +    g_free(vdev->vbasedev.base_hdev);
-> I free it here.
->
-> Thanks
-> Zhenzhong
->
->>>      g_free(vdev->emulated_config_bits);
->>>      g_free(vdev->rom);
->>>      /*
+diff --git a/include/hw/block/flash.h b/include/hw/block/flash.h
+index de93756cbe8f..2b5ccd92f463 100644
+--- a/include/hw/block/flash.h
++++ b/include/hw/block/flash.h
+@@ -78,6 +78,8 @@ extern const VMStateDescription vmstate_ecc_state;
+ 
+ /* m25p80.c */
+ 
++#define TYPE_M25P80 "m25p80-generic"
++
+ BlockBackend *m25p80_get_blk(DeviceState *dev);
+ 
+ #endif
+diff --git a/hw/arm/xlnx-versal-virt.c b/hw/arm/xlnx-versal-virt.c
+index bfaed1aebfc6..962f98fee2ea 100644
+--- a/hw/arm/xlnx-versal-virt.c
++++ b/hw/arm/xlnx-versal-virt.c
+@@ -13,6 +13,7 @@
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "sysemu/device_tree.h"
++#include "hw/block/flash.h"
+ #include "hw/boards.h"
+ #include "hw/sysbus.h"
+ #include "hw/arm/fdt.h"
+@@ -759,7 +760,7 @@ static void versal_virt_init(MachineState *machine)
+             flash_klass = object_class_by_name(s->ospi_model);
+             if (!flash_klass ||
+                 object_class_is_abstract(flash_klass) ||
+-                !object_class_dynamic_cast(flash_klass, "m25p80-generic")) {
++                !object_class_dynamic_cast(flash_klass, TYPE_M25P80)) {
+                 error_setg(&error_fatal, "'%s' is either abstract or"
+                        " not a subtype of m25p80", s->ospi_model);
+                 return;
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 08a00a6d9b89..8dec134832a1 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -515,7 +515,6 @@ struct M25P80Class {
+     FlashPartInfo *pi;
+ };
+ 
+-#define TYPE_M25P80 "m25p80-generic"
+ OBJECT_DECLARE_TYPE(Flash, M25P80Class, M25P80)
+ 
+ static inline Manufacturer get_man(Flash *s)
+diff --git a/hw/ssi/aspeed_smc.c b/hw/ssi/aspeed_smc.c
+index 0dff1d910778..de57e690e124 100644
+--- a/hw/ssi/aspeed_smc.c
++++ b/hw/ssi/aspeed_smc.c
+@@ -23,6 +23,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "hw/block/flash.h"
+ #include "hw/sysbus.h"
+ #include "migration/vmstate.h"
+ #include "qemu/log.h"
+@@ -711,6 +712,14 @@ static void aspeed_smc_reset(DeviceState *d)
+     for (i = 0; i < asc->cs_num_max; i++) {
+         DeviceState *dev = ssi_get_cs(s->spi, i);
+         if (dev) {
++            Object *o = OBJECT(dev);
++
++            if (!object_dynamic_cast(o, TYPE_M25P80)) {
++                warn_report("Aspeed SMC %s.%d : Invalid %s device type",
++                            BUS(s->spi)->name, i, object_get_typename(o));
++                continue;
++            }
++
+             qemu_irq cs_line = qdev_get_gpio_in_named(dev, SSI_GPIO_CS, 0);
+             qdev_connect_gpio_out_named(DEVICE(s), "cs", i, cs_line);
+         }
+-- 
+2.44.0
 
 
