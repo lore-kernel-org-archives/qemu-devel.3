@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A9FC54E68
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68DD9C6FD1F
 	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 21:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmhT3-0007SY-Hr; Tue, 19 Mar 2024 17:57:57 -0400
+	id 1rmhST-0007KH-2e; Tue, 19 Mar 2024 17:57:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmhT0-0007SH-5f
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:57:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmhSy-0007Hb-P7
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:57:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710885471;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=++i/QIppHyT8SWXVP1mOSo6XdapxsHqVuH/tc9iCfWg=;
- b=EPfecKshvG6dxAoYQ62HSjhAorBgwvoj9P3G57FTS+1Rfmc9tMGAR91QTUwLgUoCQolvJ8
- FolB5//pc0+zcLHbelg5fDDCkVLuDko5/tV9Sa/a5MeHcxUwwjJbxf2bWfV+wZrXngKsUV
- Bftn6Byi6f93r8fFAWN4Hjte5Z6x21A=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-322-rVByGepmNvqi8o-Vj-WfIg-1; Tue, 19 Mar 2024 17:57:47 -0400
-X-MC-Unique: rVByGepmNvqi8o-Vj-WfIg-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-69152af7760so9048006d6.1
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 14:57:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rmhSR-0007Jm-BG
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:57:19 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rmhSP-0007Ey-Hi
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 17:57:18 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-6e6b6e000a4so277437b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 14:57:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1710885436; x=1711490236; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=s+coWbZC9Fqk/3NbdQiMdaupeB27AyeDTeZ71l0t9hc=;
+ b=gEwo4fQUYJQ1BWDojBYhAyiIatHhRhFVtijTpNWfE4Yuy57lTow7LFzK5OMqb4SUr5
+ OSGwkuWX5LSofH8YhjPtdlx8rs5sHAisJu9Db4HNQWTjx8bz/r+xTMj1WRo65ts6r0kX
+ 5979H4cmRnJ3QlAVW8oh3RZ90CElyo+jbYSRFpriOx/Un7ycO2VCbH1rzZ2VW5IDYrAh
+ FBhalQy+fWUMxhwXGbzrUs9hSvDQhSErl7cYDEzfyXkMxbbWnTybiHWjUBUI+uvQWcT5
+ AW2y+gC4ZZ9DXt05BvEHtfagXsuPGlFoGjC1XHVspz0wZh832pL/wEhHjuQLxHMBkY7+
+ IwOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710885467; x=1711490267;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=++i/QIppHyT8SWXVP1mOSo6XdapxsHqVuH/tc9iCfWg=;
- b=jJtvmly+dJAU94ZrSwmd+AlEBeahXeV/WzrUwZT9PdhrOAMtRiZKMTaKtC3VtyYyUf
- lzOJKEy88b0DpPflkGU/mnbP5eK2mVzdOmU/z6gA5ugVAemxggr/JSAImaS8305r0neA
- BkcJ1m4/8pNTqUfhsCgcigTRIJiJb4BenVDFuzTEpSiFArtC0TwVM6/70mHHzvrWRTKr
- eNmFQmLvhuS7viP9FqDLOQ9fPzq5mGC6r4PI638/PJ7eoif41VYEeuGRPcxNJ3Mn2Wju
- XXwU7njVHnHlIdRxbvV4XBtTJBjQhMkC/95YG2rr18KdQ+rCaymJ8BedrUeuiC18Ctk9
- OsiQ==
-X-Gm-Message-State: AOJu0Ywqd/fU3HIBfR7vUZQTOQObpJmMuQSAfZsJqTyeaA4vaEmPnA/w
- OyP5U/8sgk3hMCdvDmI9ELY8EmtuBQYRDgC8ajnhju/4hFqUavoDVWJ0Nd0D7njK7wDC/oQ+IpJ
- towWR+BFO692SfowkRJEMSzuJDfOUVadCmTKF6U29jwN3vh2M/lr6
-X-Received: by 2002:a05:6214:5345:b0:690:3c85:c5b with SMTP id
- kv5-20020a056214534500b006903c850c5bmr15172532qvb.3.1710885466685; 
- Tue, 19 Mar 2024 14:57:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHY1e2st36yy+J/BfKXfZDylFuO4HCsF0tWMXTOxNGIwe4X6dwjo81h9IpHF6sGO15MLGYDtQ==
-X-Received: by 2002:a05:6214:5345:b0:690:3c85:c5b with SMTP id
- kv5-20020a056214534500b006903c850c5bmr15172509qvb.3.1710885466241; 
- Tue, 19 Mar 2024 14:57:46 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- i14-20020a0c9c8e000000b0069160557ec1sm6843648qvf.136.2024.03.19.14.57.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Mar 2024 14:57:45 -0700 (PDT)
-Date: Tue, 19 Mar 2024 17:57:44 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Het Gala <het.gala@nutanix.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, thuth@redhat.com,
- lvivier@redhat.com, pbonzini@redhat.com, farosas@suse.de
-Subject: Re: [PATCH 2/2] tests/qtest/migration: Fix typo for vsock in
- SocketAddress_to_str
-Message-ID: <ZfoKWHF4SeyN18Gw@x1n>
-References: <20240319204840.211632-1-het.gala@nutanix.com>
- <20240319204840.211632-2-het.gala@nutanix.com>
+ d=1e100.net; s=20230601; t=1710885436; x=1711490236;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=s+coWbZC9Fqk/3NbdQiMdaupeB27AyeDTeZ71l0t9hc=;
+ b=LbR0nFPzSI3h2xSHXVBfBQiVIRCvPd0BrN0Lt3rUcnxCQz+VEc8/uuIM9LlE6l8MHL
+ V8O3PvayuOhnHJ9Q6K1xFaIrjSWjrRl46ocCuz24hZNG+Po2KHirTpm215KJ0q8eP/5t
+ cjui/5MMWA4yFWKPRq2w8PIRttqDGfHIF+LEc+fnyppSqRTNRyZKCTaKTu0+BL4qKQSF
+ +e5eSWAHaV/WxFDbAEWB+L0ln0Jg9wJrW4fVvmnyFh2QIvZo9oVSk2+Ke5OxkC7lFCUI
+ WKEDlBN4AV5mOKflAmLh0TN/UcrwUJsqXGIzp4GlQIOWQs2FG7zJkUgA5+NM8LAwl/CB
+ ckjQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX9LYDjrZQ0ZRF62LBS7HWKWrNbWGru8Oirp1IF3aw3dcEhFsxkK9B1j2CLQTSUwvPsWkBD/I4jvnPyn0xzjQHC6U4X1jo=
+X-Gm-Message-State: AOJu0Yw9I4aceBnmGtxrj/wAxqzlW25W6IWsuVG1O9/DxPmZ73ywd7iL
+ y+cwQ7eWb2eWv8RffLvkGGasIFL8QbxrgyvGgLkrd9fbSfL5U1D65lfgzjFKPQA=
+X-Google-Smtp-Source: AGHT+IFx8xTvXEnW8eb4b3vsBQncpNmhgPqcT2Ha0C+056vthqAnMpYrDmSQ6VmpMm5cGJsV/d7K6Q==
+X-Received: by 2002:a05:6a00:3d0c:b0:6e7:ad5:622c with SMTP id
+ lo12-20020a056a003d0c00b006e70ad5622cmr5860610pfb.1.1710885436217; 
+ Tue, 19 Mar 2024 14:57:16 -0700 (PDT)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ fn15-20020a056a002fcf00b006e091a254adsm10129446pfb.30.2024.03.19.14.57.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 14:57:15 -0700 (PDT)
+Message-ID: <c765adcb-2702-45d3-b875-6eaa6b6d7d0c@ventanamicro.com>
+Date: Tue, 19 Mar 2024 18:57:12 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240319204840.211632-2-het.gala@nutanix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] target/riscv: Add right functions to set agnostic
+ elements
+Content-Language: en-US
+To: Huang Tao <eric.huang@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
+ bin.meng@windriver.com, alistair.francis@wdc.com, palmer@dabbelt.com,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240306092013.21231-1-eric.huang@linux.alibaba.com>
+ <20240306092013.21231-3-eric.huang@linux.alibaba.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240306092013.21231-3-eric.huang@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,29 +101,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 19, 2024 at 08:48:40PM +0000, Het Gala wrote:
-> Signed-off-by: Het Gala <het.gala@nutanix.com>
-> ---
->  tests/qtest/migration-helpers.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+(--- CCing Richard ---)
+
+On 3/6/24 06:20, Huang Tao wrote:
+> We add vext_set_elems_1s to set agnostic elements to 1s in both big
+> and little endian situation.
+> In the function vext_set_elems_1s. We using esz argument to get the first
+> element to set. 'cnt' is just idx * esz.
 > 
-> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
-> index fb7156f09a..651c6c555a 100644
-> --- a/tests/qtest/migration-helpers.c
-> +++ b/tests/qtest/migration-helpers.c
-> @@ -42,7 +42,7 @@ static char *SocketAddress_to_str(SocketAddress *addr)
->      case SOCKET_ADDRESS_TYPE_FD:
->          return g_strdup_printf("fd:%s", addr->u.fd.str);
->      case SOCKET_ADDRESS_TYPE_VSOCK:
-> -        return g_strdup_printf("tcp:%s:%s",
-> +        return g_strdup_printf("vsock:%s:%s",
->                                 addr->u.vsock.cid,
->                                 addr->u.vsock.port);
->      default:
+> Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
+> ---
+>   target/riscv/vector_internals.c | 53 +++++++++++++++++++++++++++++++++
+>   target/riscv/vector_internals.h |  2 ++
+>   2 files changed, 55 insertions(+)
+> 
+> diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
+> index 349b24f4ae..455be96996 100644
+> --- a/target/riscv/vector_internals.c
+> +++ b/target/riscv/vector_internals.c
+> @@ -20,6 +20,59 @@
+>   #include "vector_internals.h"
+>   
+>   /* set agnostic elements to 1s */
+> +#if HOST_BIG_ENDIAN
+> +void vext_set_elems_1s(void *vd, uint32_t is_agnostic, uint32_t esz,
+> +                       uint32_t idx, uint32_t tot)
+> +{
+> +    if (is_agnostic == 0) {
+> +        /* policy undisturbed */
+> +        return;
+> +    }
+> +    void *base = NULL;
+> +    switch (esz) {
+> +    case 1:
+> +        base = ((int8_t *)vd + H1(idx));
+> +    break;
+> +    case 2:
+> +        base = ((int16_t *)vd + H2(idx));
+> +    break;
+> +    case 4:
+> +        base = ((int32_t *)vd + H4(idx));
+> +    break;
+> +    case 8:
+> +        base = ((int64_t *)vd + H8(idx));
+> +    break;
+> +    default:
+> +        g_assert_not_reached();
+> +    break;
+> +    }
+> +    /*
+> +     * spilt the elements into 2 parts
+> +     * part_begin: the memory need to be set in the first uint64_t unit
+> +     * part_allign: the memory need to be set begins from next uint64_t
+> +     *              unit and alligned to 8
+> +     */
+> +    uint32_t cnt = idx * esz;
+> +    int part_begin, part_allign;
+> +    part_begin = MIN(tot - cnt, 8 - (cnt % 8));
+> +    part_allign = ((tot - cnt - part_begin) / 8) * 8;
+> +
+> +    memset(base - part_begin + 1, -1, part_begin);
+> +    memset(QEMU_ALIGN_PTR_UP(base, 8), -1, part_allign);
 
-Queued for 9.1, thanks.
 
--- 
-Peter Xu
+This seems correct but a bit over complicated at first glance. I wonder if we have
+something simpler already done somewhere.
 
+Richard, does ARM (or any other arch) do anything of the sort? Aside from more trivial
+byte swaps using bswap64() I didn't find anything similar.
+
+We recently posted a big endian related fix here:
+
+[PATCH for 9.0 v15 03/10] target/riscv/vector_helper.c: fix 'vmvr_v' memcpy endianess
+
+But not sure how to apply it here.
+
+
+
+Thanks,
+
+Daniel
+
+
+
+> +}
+> +#else
+> +void vext_set_elems_1s(void *vd, uint32_t is_agnostic, uint32_t esz,
+> +                       uint32_t idx, uint32_t tot)
+> +{
+> +    if (is_agnostic == 0) {
+> +        /* policy undisturbed */
+> +        return;
+> +    }
+> +    uint32_t cnt = idx * esz;
+> +    memset(vd + cnt, -1, tot - cnt);
+> +}
+> +#endif
+> +
+>   void vext_set_elems_1s_le(void *base, uint32_t is_agnostic, uint32_t cnt,
+>                          uint32_t tot)
+>   {
+> diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
+> index fa599f60ca..c96e52f926 100644
+> --- a/target/riscv/vector_internals.h
+> +++ b/target/riscv/vector_internals.h
+> @@ -114,6 +114,8 @@ static inline uint32_t vext_get_total_elems(CPURISCVState *env, uint32_t desc,
+>   }
+>   
+>   /* set agnostic elements to 1s */
+> +void vext_set_elems_1s(void *vd, uint32_t is_agnostic, uint32_t esz,
+> +                       uint32_t idx, uint32_t tot);
+>   void vext_set_elems_1s_le(void *base, uint32_t is_agnostic, uint32_t cnt,
+>                          uint32_t tot);
+>   
 
