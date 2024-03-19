@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA25AC54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 16:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A83CDC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 16:55:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmcf5-0001nx-0v; Tue, 19 Mar 2024 12:50:03 -0400
+	id 1rmcjs-00049W-MR; Tue, 19 Mar 2024 12:55:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rmcez-0001mj-HW; Tue, 19 Mar 2024 12:49:57 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmcjl-00042q-MB
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 12:54:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rmceu-0000vy-UW; Tue, 19 Mar 2024 12:49:55 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 078EF57349;
- Tue, 19 Mar 2024 19:50:57 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3C4589D360;
- Tue, 19 Mar 2024 19:49:40 +0300 (MSK)
-Message-ID: <98bbd87a-1846-4644-9cab-13fb48d85335@tls.msk.ru>
-Date: Tue, 19 Mar 2024 19:49:39 +0300
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmcjj-0001fw-58
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 12:54:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710867290;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hWXRWqBZ9AWU1IKKDrBwHQ5Lgrl1tMmZMkdt7cSZwpE=;
+ b=Z/S+vOdvro28PLMWUmhZk5KxmkEk4Hl6GmnbVfagZ/2R6oa73nBvxJQwZek2s80ZL7W50s
+ cjjxQ61+oLnWNDHkZYffuvFSuWSYLpjJlv4aTU/XkDqXPjF3Efd56QsrCz31NZn8TR1wmu
+ QMol+Jnww3igrdU+ah6vFyWca0VgDYs=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-132-nvl3j_JqNZqF1S1vae32zA-1; Tue, 19 Mar 2024 12:54:48 -0400
+X-MC-Unique: nvl3j_JqNZqF1S1vae32zA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 726BF8007B8
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 16:54:48 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.166])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B8130492BD0;
+ Tue, 19 Mar 2024 16:54:46 +0000 (UTC)
+Date: Tue, 19 Mar 2024 17:54:38 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Sanjay Rao <srao@redhat.com>, Boaz Ben Shabat <bbenshab@redhat.com>,
+ Joe Mario <jmario@redhat.com>
+Subject: Re: [PATCH] coroutine: cap per-thread local pool size
+Message-ID: <ZfnDTkh5CCHX1WFK@redhat.com>
+References: <20240318183429.1039340-1-stefanha@redhat.com>
+ <ZfmWhDaG5mN-GCeO@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 1/2] nbd/server: Fix race in draining the export
-Content-Language: en-US
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: stefanha@redhat.com, hreitz@redhat.com, eblake@redhat.com,
- aliang@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20240314165825.40261-1-kwolf@redhat.com>
- <20240314165825.40261-2-kwolf@redhat.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240314165825.40261-2-kwolf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZfmWhDaG5mN-GCeO@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -86,103 +84,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-14.03.2024 19:58, Kevin Wolf wrote:
-> When draining an NBD export, nbd_drained_begin() first sets
-> client->quiescing so that nbd_client_receive_next_request() won't start
-> any new request coroutines. Then nbd_drained_poll() tries to makes sure
-> that we wait for any existing request coroutines by checking that
-> client->nb_requests has become 0.
+Am 19.03.2024 um 14:43 hat Daniel P. Berrangé geschrieben:
+> On Mon, Mar 18, 2024 at 02:34:29PM -0400, Stefan Hajnoczi wrote:
+> > The coroutine pool implementation can hit the Linux vm.max_map_count
+> > limit, causing QEMU to abort with "failed to allocate memory for stack"
+> > or "failed to set up stack guard page" during coroutine creation.
+> > 
+> > This happens because per-thread pools can grow to tens of thousands of
+> > coroutines. Each coroutine causes 2 virtual memory areas to be created.
 > 
-> However, there is a small window between creating a new request
-> coroutine and increasing client->nb_requests. If a coroutine is in this
-> state, it won't be waited for and drain returns too early.
+> This sounds quite alarming. What usage scenario is justified in
+> creating so many coroutines?
+
+Basically we try to allow pooling coroutines for as many requests as
+there can be in flight at the same time. That is, adding a virtio-blk
+device increases the maximum pool size by num_queues * queue_size. If
+you have a guest with many CPUs, the default num_queues is relatively
+large (the bug referenced by Stefan had 64), and queue_size is 256 by
+default. That's 16k potential requests in flight per disk.
+
+Another part of it is just that our calculation didn't make a lot of
+sense. Instead of applying this number to the pool size of the iothread
+that would actually get the requests, we applied it to _every_ iothread.
+This is fixed with this patch, it's a global number applied to a global
+pool now.
+
+> IIUC, coroutine stack size is 1 MB, and so tens of thousands of
+> coroutines implies 10's of GB of memory just on stacks alone.
+
+That's only virtual memory, though. Not sure how much of it is actually
+used in practice.
+
+> > Eventually vm.max_map_count is reached and memory-related syscalls fail.
 > 
-> In the context of switching to a different AioContext, this means that
-> blk_aio_attached() will see client->recv_coroutine != NULL and fail its
-> assertion.
+> On my system max_map_count is 1048576, quite alot higher than
+> 10's of 1000's. Hitting that would imply ~500,000 coroutines and
+> ~500 GB of stacks !
+
+Did you change the configuration some time in the past, or is this just
+a newer default? I get 65530, and that's the same default number I've
+seen in the bug reports.
+
+> > diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
+> > index 5fd2dbaf8b..2790959eaf 100644
+> > --- a/util/qemu-coroutine.c
+> > +++ b/util/qemu-coroutine.c
 > 
-> Fix this by increasing client->nb_requests immediately when starting the
-> coroutine. Doing this after the checks if we should create a new
-> coroutine is okay because client->lock is held.
+> > +static unsigned int get_global_pool_hard_max_size(void)
+> > +{
+> > +#ifdef __linux__
+> > +    g_autofree char *contents = NULL;
+> > +    int max_map_count;
+> > +
+> > +    /*
+> > +     * Linux processes can have up to max_map_count virtual memory areas
+> > +     * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit. We
+> > +     * must limit the coroutine pool to a safe size to avoid running out of
+> > +     * VMAs.
+> > +     */
+> > +    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents, NULL,
+> > +                            NULL) &&
+> > +        qemu_strtoi(contents, NULL, 10, &max_map_count) == 0) {
+> > +        /*
+> > +         * This is a conservative upper bound that avoids exceeding
+> > +         * max_map_count. Leave half for non-coroutine users like library
+> > +         * dependencies, vhost-user, etc. Each coroutine takes up 2 VMAs so
+> > +         * halve the amount again.
+> > +         */
+> > +        return max_map_count / 4;
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: fd6afc501a019682d1b8468b562355a2887087bd
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> That's 256,000 coroutines, which still sounds incredibly large
+> to me.
 
-Kevin, Stefan,
+The whole purpose of the limitation is that you won't ever get -ENOMEM
+back, which will likely crash your VM. Even if this hard limit is high,
+that doesn't mean that it's fully used. Your setting of 1048576 probably
+means that you would never have hit the crash anyway.
 
-This change in master, which is Cc'ed stable, touches (refines) exactly the
-same areas as f816310d0c32c "nbd/server: only traverse NBDExport->clients
-from main loop thread", which is not (yet?) in stable, neither 7.2 nor 8.2.
+Even the benchmarks that used to hit the problem don't even get close to
+this hard limit any more because the actual number of coroutines stays
+much smaller after applying this patch.
 
-Also, 7075d235114b4 "nbd/server: introduce NBDClient->lock to protect fields"
-touches one of the places too.
+> > +    }
+> > +#endif
+> > +
+> > +    return UINT_MAX;
+> 
+> Why UINT_MAX as a default ?  If we can't read procfs, we should
+> assume some much smaller sane default IMHO, that corresponds to
+> what current linux default max_map_count would be.
 
-I can try to construct something out of the two, but I think it is better
-if either of you can do that, - if this seems a good thing to do anyway.
-This way it is definitely much saner than my possible attempts.
+I don't think we should artificially limit the pool size and with this
+potentially limit the performance with it even if the host could do more
+if we only allowed it to. If we can't read it from procfs, then it's
+your responsibility as a user to make sure that it's large enough for
+your VM configuration.
 
-Or we can just pick f816310d0c32c and 7075d235114b4 into stable too, - when
-I evaluated f816310d0c32c for stable before I thought it isn't needed there
-because AioContext lock isn't removed in 8.2 yet.  And I haven't thought
-about 7075d235114b4 at all.  All 3 applies cleanly and the result passes
-check-block, but it smells a bit too much for stable.
-
-What do you think?
-
-Thanks,
-
-/mjt
-
-> diff --git a/nbd/server.c b/nbd/server.c
-> index 941832f178..c3484cc1eb 100644
-> --- a/nbd/server.c
-> +++ b/nbd/server.c
-> @@ -3007,8 +3007,8 @@ static coroutine_fn int nbd_handle_request(NBDClient *client,
->   /* Owns a reference to the NBDClient passed as opaque.  */
->   static coroutine_fn void nbd_trip(void *opaque)
->   {
-> -    NBDClient *client = opaque;
-> -    NBDRequestData *req = NULL;
-> +    NBDRequestData *req = opaque;
-> +    NBDClient *client = req->client;
->       NBDRequest request = { 0 };    /* GCC thinks it can be used uninitialized */
->       int ret;
->       Error *local_err = NULL;
-> @@ -3037,8 +3037,6 @@ static coroutine_fn void nbd_trip(void *opaque)
->           goto done;
->       }
->   
-> -    req = nbd_request_get(client);
-> -
->       /*
->        * nbd_co_receive_request() returns -EAGAIN when nbd_drained_begin() has
->        * set client->quiescing but by the time we get back nbd_drained_end() may
-> @@ -3112,9 +3110,7 @@ static coroutine_fn void nbd_trip(void *opaque)
->       }
->   
->   done:
-> -    if (req) {
-> -        nbd_request_put(req);
-> -    }
-> +    nbd_request_put(req);
->   
->       qemu_mutex_unlock(&client->lock);
->   
-> @@ -3143,10 +3139,13 @@ disconnect:
->    */
->   static void nbd_client_receive_next_request(NBDClient *client)
->   {
-> +    NBDRequestData *req;
-> +
->       if (!client->recv_coroutine && client->nb_requests < MAX_NBD_REQUESTS &&
->           !client->quiescing) {
->           nbd_client_get(client);
-> -        client->recv_coroutine = qemu_coroutine_create(nbd_trip, client);
-> +        req = nbd_request_get(client);
-> +        client->recv_coroutine = qemu_coroutine_create(nbd_trip, req);
->           aio_co_schedule(client->exp->common.ctx, client->recv_coroutine);
->       }
->   }
+Kevin
 
 
