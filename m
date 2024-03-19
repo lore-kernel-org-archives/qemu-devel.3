@@ -4,84 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB22DC54F7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA07DC54F61
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:40:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmacr-0000ex-VG; Tue, 19 Mar 2024 10:39:37 -0400
+	id 1rmadB-0000uY-CY; Tue, 19 Mar 2024 10:39:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rmacq-0000du-08
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:39:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmad8-0000u1-QQ
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:39:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rmaco-0001bl-6Y
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:39:35 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmad6-0001iU-Vl
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:39:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710859173;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1710859192;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hgG0NZ+0z0biH2pbA6OYlxjpwUaDcFiE13+7TcVLAyY=;
- b=icT1w0QlFEClmbWZVnIZZH/LJSohJT1cZv7DJ26JRQmHECBHVPGGiRIi8Zf7mYB12KxMPx
- TGAs50mx4bjEJznXHgktZykUKE/vEhkecOTaWB/JL14sU530NzCXIJtOJFZ9IMB1X58Srl
- HyR7Ey3FzCjfdHqzZb4Rm9GFP5DS+QA=
-Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
- [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=P8fui8DKb2PbdlfbAsPH76xrkRsbFKCrzW6uuxI81us=;
+ b=M2FkYbYd9JXtDshR84PRHef0ilAdNM32zupB4rnyj/MzNgRtKWBQWTyJUakPYE62ZbapBs
+ REzdzx6ehfR/mdR7Gu6UjJ506PHd18H1faK98CFde7m9oKUocf5gRDUbZjokIyGY9y7uEk
+ DSTdlgPRbXDX+bjkUBQ/UmTUs9tktK8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-132-i7BHK4_bN62p6u14cFCYGQ-1; Tue, 19 Mar 2024 10:39:31 -0400
-X-MC-Unique: i7BHK4_bN62p6u14cFCYGQ-1
-Received: by mail-yb1-f197.google.com with SMTP id
- 3f1490d57ef6-dcc4563611cso8006754276.3
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 07:39:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710859171; x=1711463971;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hgG0NZ+0z0biH2pbA6OYlxjpwUaDcFiE13+7TcVLAyY=;
- b=vzket4hX9BtJxnGHT9PpiqFqP19EHTyAYTvPZd0MOyaQhUPoeYx/32KdVVMI05aN3E
- Km5kK1GeCxy5JpkoUPiwFb1qgUykTVW64UzDFUAwTk/XbiZo5HXLM8Ud2iKfK8w65m/C
- q8DwHLxn0DIai7YCkNg32+mlxIQ5B88A6stpruhkOYxOTjgcA7uLkYW4JlRGOTUA3LG5
- IYe7M0E/A5GIxR5o+UL6eZ2qIzsIfRHqdO4RCTpwfdOCIMfGE6SxLFQFQRmmhS0Agpy3
- fg5BfEatlMjsW2+738QgZvcwstBcrxPt3w1aKcM/uODGYU01J1d1vJOAolZfIFhU5yYP
- jD6Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW0sKtSIaRrkniiTgHSkA1Vvt1S24fiqnTXsLA/6mSmZq+yL0gGmZh0nGG4KwwE9Y7nqyE49Y94ecxcNWyUAfQVL9OQeTI=
-X-Gm-Message-State: AOJu0Yy9txYYf2LJihBC9uhzrE6LRkmLIZ2q96fxeOsemsNOzhZQilV/
- qBkWfjpzTejjVKMWrYTcNItfYKMxsPvvE+/0tT7IX4XFb65nrll8pvvgvghjVTp+r1VG8wSwoME
- 87QDrwbg4RIVoDuLQtn2ieKCJgvGYwqAduB6jzKYwE1fdJ6wJ9gRMO2NJkWmgLyYiNwDOUBM98r
- xna74z0zDrXEG5+LvW2SAdf4CdXx0=
-X-Received: by 2002:a5b:444:0:b0:dc6:9daf:35c7 with SMTP id
- s4-20020a5b0444000000b00dc69daf35c7mr9839589ybp.28.1710859171238; 
- Tue, 19 Mar 2024 07:39:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IENO5Yw+aZRHZQbHRR4Kmy3/AKFsggJXKrUySF1WYoat5fuiDQBrER6zFnfGYex050q6CtMy04wrbdPEj+Gcqo=
-X-Received: by 2002:a5b:444:0:b0:dc6:9daf:35c7 with SMTP id
- s4-20020a5b0444000000b00dc69daf35c7mr9839573ybp.28.1710859170981; Tue, 19 Mar
- 2024 07:39:30 -0700 (PDT)
+ us-mta-161-M9051_TgOyKHZ4OYbX2Uww-1; Tue, 19 Mar 2024 10:39:49 -0400
+X-MC-Unique: M9051_TgOyKHZ4OYbX2Uww-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D84E018813D2;
+ Tue, 19 Mar 2024 14:39:48 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.88])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 3E07F492BF0;
+ Tue, 19 Mar 2024 14:39:48 +0000 (UTC)
+Date: Tue, 19 Mar 2024 14:39:42 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, xiaoyao.li@intel.com, michael.roth@amd.com
+Subject: Re: [PATCH 6/7] target/i386: Implement mc->kvm_type() to get VM type
+Message-ID: <ZfmjrpoOSmgwWXhW@redhat.com>
+References: <20240319140000.1014247-1-pbonzini@redhat.com>
+ <20240319140000.1014247-7-pbonzini@redhat.com>
+ <Zfmd55tus3nV5DJV@redhat.com>
+ <CABgObfZ7ikZHG3EEQHoPKoMo+1JpF6Ntb_QXsYTgEw6zF1zXmQ@mail.gmail.com>
+ <ZfmgybXHbCTbisum@redhat.com>
+ <CABgObfaKe=EE0N6YHTqpaoK-LaACpzSWykWB+mo=_KDMCnFd1Q@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240315155949.86066-1-kwolf@redhat.com>
- <CACGkMEvuu4rkgZr7sBFwXztZLHdamBKML++6cvA+GDKyGDGibA@mail.gmail.com>
- <20240318050212-mutt-send-email-mst@kernel.org>
- <CAJaqyWc5_T=c+i0EvoYJ4Ly9XOaRBLvUE8w0n6duhm-b2Si0FA@mail.gmail.com>
- <ZfliRJ-7ueG0_OlJ@redhat.com>
-In-Reply-To: <ZfliRJ-7ueG0_OlJ@redhat.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 19 Mar 2024 15:38:54 +0100
-Message-ID: <CAJaqyWd+aafjz02NdwSKWZZ_1=4OzKbaAsNb-DP3PWt9RSY_Mg@mail.gmail.com>
-Subject: Re: [PATCH for-9.0 v3] vdpa-dev: Fix initialisation order to restore
- VDUSE compatibility
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- qemu-block@nongnu.org, 
- sgarzare@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfaKe=EE0N6YHTqpaoK-LaACpzSWykWB+mo=_KDMCnFd1Q@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -103,128 +87,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 19, 2024 at 11:00=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrot=
-e:
->
-> Am 18.03.2024 um 20:27 hat Eugenio Perez Martin geschrieben:
-> > On Mon, Mar 18, 2024 at 10:02=E2=80=AFAM Michael S. Tsirkin <mst@redhat=
-.com> wrote:
-> > >
-> > > On Mon, Mar 18, 2024 at 12:31:26PM +0800, Jason Wang wrote:
-> > > > On Fri, Mar 15, 2024 at 11:59=E2=80=AFPM Kevin Wolf <kwolf@redhat.c=
-om> wrote:
-> > > > >
-> > > > > VDUSE requires that virtqueues are first enabled before the DRIVE=
-R_OK
-> > > > > status flag is set; with the current API of the kernel module, it=
- is
-> > > > > impossible to enable the opposite order in our block export code =
-because
-> > > > > userspace is not notified when a virtqueue is enabled.
-> > > > >
-> > > > > This requirement also mathces the normal initialisation order as =
-done by
-> > > > > the generic vhost code in QEMU. However, commit 6c482547 accident=
-ally
-> > > > > changed the order for vdpa-dev and broke access to VDUSE devices =
-with
-> > > > > this.
-> > > > >
-> > > > > This changes vdpa-dev to use the normal order again and use the s=
-tandard
-> > > > > vhost callback .vhost_set_vring_enable for this. VDUSE devices ca=
-n be
-> > > > > used with vdpa-dev again after this fix.
-> > > > >
-> > > > > vhost_net intentionally avoided enabling the vrings for vdpa and =
-does
-> > > > > this manually later while it does enable them for other vhost bac=
-kends.
-> > > > > Reflect this in the vhost_net code and return early for vdpa, so =
-that
-> > > > > the behaviour doesn't change for this device.
-> > > > >
-> > > > > Cc: qemu-stable@nongnu.org
-> > > > > Fixes: 6c4825476a4351530bcac17abab72295b75ffe98
-> > > > > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> > > > > ---
-> > > > > v2:
-> > > > > - Actually make use of the @enable parameter
-> > > > > - Change vhost_net to preserve the current behaviour
-> > > > >
-> > > > > v3:
-> > > > > - Updated trace point [Stefano]
-> > > > > - Fixed typo in comment [Stefano]
-> > > > >
-> > > > >  hw/net/vhost_net.c     | 10 ++++++++++
-> > > > >  hw/virtio/vdpa-dev.c   |  5 +----
-> > > > >  hw/virtio/vhost-vdpa.c | 29 ++++++++++++++++++++++++++---
-> > > > >  hw/virtio/vhost.c      |  8 +++++++-
-> > > > >  hw/virtio/trace-events |  2 +-
-> > > > >  5 files changed, 45 insertions(+), 9 deletions(-)
-> > > > >
-> > > > > diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-> > > > > index e8e1661646..fd1a93701a 100644
-> > > > > --- a/hw/net/vhost_net.c
-> > > > > +++ b/hw/net/vhost_net.c
-> > > > > @@ -541,6 +541,16 @@ int vhost_set_vring_enable(NetClientState *n=
-c, int enable)
-> > > > >      VHostNetState *net =3D get_vhost_net(nc);
-> > > > >      const VhostOps *vhost_ops =3D net->dev.vhost_ops;
-> > > > >
-> > > > > +    /*
-> > > > > +     * vhost-vdpa network devices need to enable dataplane virtq=
-ueues after
-> > > > > +     * DRIVER_OK, so they can recover device state before starti=
-ng dataplane.
-> > > > > +     * Because of that, we don't enable virtqueues here and leav=
-e it to
-> > > > > +     * net/vhost-vdpa.c.
-> > > > > +     */
-> > > > > +    if (nc->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_VDPA) {
-> > > > > +        return 0;
-> > > > > +    }
+On Tue, Mar 19, 2024 at 03:29:14PM +0100, Paolo Bonzini wrote:
+> On Tue, Mar 19, 2024 at 3:27 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Tue, Mar 19, 2024 at 03:25:53PM +0100, Paolo Bonzini wrote:
+> > > On Tue, Mar 19, 2024 at 3:15 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > > > > +int kvm_get_vm_type(MachineState *ms, const char *vm_type)
 > > > >
-> > > > I think we need some inputs from Eugenio, this is only needed for
-> > > > shadow virtqueue during live migration but not other cases.
-> > > >
-> > > > Thanks
+> > > > The 'vm_type' parameter is never used here. What value is it expected
+> > > > to have, and should be diagnosing an error if some unexpected value
+> > > > is provided.
 > > >
-> > >
-> > > Yes I think we had a backend flag for this, right? Eugenio can you
-> > > comment please?
-> > >
+> > > It's the value of the kvm-type machine property, if any; but no x86
+> > > machine defines one, so right now it's always NULL. I left it in
+> > > because then it's clearer than this is an implementation of
+> > > mc->kvm_type, but I can remove it or pass it down to
+> > > x86_confidential_guest_kvm_type().
 > >
-> > We have the VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK backend flag,
-> > right. If the backend does not offer it, it is better to enable all
-> > the queues here and add a migration blocker in net/vhost-vdpa.c.
-> >
-> > So the check should be:
-> > nc->info->type =3D=3D VHOST_VDPA && (backend_features &
-> > VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK).
-> >
-> > I can manage to add the migration blocker on top of this patch.
->
-> Note that my patch preserves the current behaviour for vhost_net. The
-> callback wasn't implemented for vdpa so far, so we never called anything
-> even if the flag wasn't set. This patch adds an implementation for the
-> callback, so we have to skip it here to have everything in vhost_net
-> work as before - which is what the condition as written does.
->
-> If we add a check for the flag now (I don't know if that's correct or
-> not), that would be a second, unrelated change of behaviour in the same
-> patch. So if it's necessary, that's a preexisting problem and I'd argue
-> it doesn't belong in this patch, but should be done separately.
->
+> > If we expect it to always be NULL, lets validate that is the
+> > case and error_report + exit, if not.
+> 
+> I think it's enough to have an assertion in x86_kvm_type():
+> 
+>     /*
+>      * No x86 machine has a kvm-type property.  If one is added that has
+>      * it, it should call kvm_get_vm_type() directly or not use it at all.
+>      */
+>     assert(vm_type == NULL);
 
-Right, that's a very good point. I'll add proper checking on top of
-your patch when it is merged.
+Sure, that's fine too.
 
-Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
 
-Thanks!
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
