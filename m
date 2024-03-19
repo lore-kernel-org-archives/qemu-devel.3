@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93D04C54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 17:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46E65C54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 17:58:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmdin-0006QN-M1; Tue, 19 Mar 2024 13:57:57 -0400
+	id 1rmdj4-0006gZ-9Z; Tue, 19 Mar 2024 13:58:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmdim-0006OQ-69
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:57:56 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1rmdj2-0006eH-4g
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:58:12 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmdik-0006ZX-Gi
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:57:55 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-56b93b45779so1437443a12.1
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 10:57:52 -0700 (PDT)
+ id 1rmdj0-0006bk-KR
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 13:58:11 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a3ddc13bbb3so21675166b.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 10:58:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710871071; x=1711475871; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710871089; x=1711475889; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JlcRRynTmpL9IMC4HDXotCzYQJy69q+QUKQEx/wcOK4=;
- b=vatvv+c4pn/LdmdQjV64qvHLk0NMk5tT9ZpNDIAzNPEiPMgD9/xsN85B4QmN/To6D2
- ZQa5j1/zOq6uzpIO29temAfwBzzxlCG18nDpcniPQdiUnb831XtYUX77WvtgtK42V0me
- eebb/I/Mij87YRGQj3qVTA0ht80fMNt5sP5foEHsbjkAk+wMJ8ehy5TcCuDiGOdpuSH1
- GnEDNdYOfUXz1Ua/Pv9OBfXwxApqbvieJjiWpqCsD9iIkmbsMw18/5wKYWTgKwMFaB5C
- pJGJEBZj4Gk3/25bpI7sF8yfefvcGaqEbXwj+vj4z4NFXjlPjorHp4Ir/maefL8XV9+3
- 1qyQ==
+ bh=XIzJ0MlYTeAqrvebZ9zPQC8YI+EGPXH5EFCGUk6b4CQ=;
+ b=hFDsSJ9pkRUijPtJWZuXfNmZ4c8gJ8AlBKxY+cotHO+zjlE+8MmEG/YT14wBPAmmFD
+ 8GPx/csQxzuCITpfj6uSii4XohVUsxUohLOqpu8uvOqLhltmsxncu88h6hwYp9SWD6tH
+ o3XLNtD0d1qyE4HdynG2EQXKyNq1QowVJyXHadUod3/DFahEq2Ei2/egTq6oz6N46pKo
+ cZ0LgZumwAWw+TxsmPAr5kOMa+hA1hnXUtZcRyOEzV8GrChcywUt6nrcFO0fTbW/dNoK
+ nEK9Z7qixj4S3ZthLTUtXJCYChO/O90oe5RXvzlRCqOq6c7lgoP9ampAbl1i2t9b5iGk
+ 1/MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710871071; x=1711475871;
+ d=1e100.net; s=20230601; t=1710871089; x=1711475889;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JlcRRynTmpL9IMC4HDXotCzYQJy69q+QUKQEx/wcOK4=;
- b=GLQsIDv7gL03f18NAtblj54sE8f66KQrpRhHGPBe1VMelS2nEtMlDHR373uBmXMAgd
- BgYGjkKSDezlecbPU0vf90TO5RM4gkh36ZscA6cCspw3DSHUH5sLOUS1pE2ZmE0daCeV
- CTef2gYdRucnTGt22uz4NmoQy4fd7IhgUcLPjujEv8VdSo09CwLx6w8CJvh+8ozXQf60
- GTPyNu/JPkt3+I00qN1t57QSVaLJCwtVzDU4Zl1o8gmo4kXuEx6yosZz9ftcKoqsUdFO
- AbS8oWwv0yaiP0OxQkHWFkdepDY2PRBp9fwQ/Y9+BtLfSHbwdcbEXOOl3hTNCye/PYmC
- W21g==
-X-Gm-Message-State: AOJu0YxGTwOK9tWUstouoBHDqwO4V/6f6znx/IvLVJiX7fV13fiziq7D
- NAKyTFLzAzK7arWEqv4z7GiZp0y2HPpNEO+JRooSn0EaeLxdvT2Eu6z52Lhz9hw=
-X-Google-Smtp-Source: AGHT+IH2fIn40Y0iDv2svBhhomfmJQBrPQorCZTaS3tWIYOQBR4uzSaJ9uYUw1lzlRgp7ov9Cm2VHQ==
-X-Received: by 2002:a17:906:22cd:b0:a46:5a46:7512 with SMTP id
- q13-20020a17090622cd00b00a465a467512mr10263969eja.74.1710871070995; 
- Tue, 19 Mar 2024 10:57:50 -0700 (PDT)
+ bh=XIzJ0MlYTeAqrvebZ9zPQC8YI+EGPXH5EFCGUk6b4CQ=;
+ b=WDEqgUPFUR5c4k3GlHlknjehwFAg7AYQ8msThYXRUtzge8xCnd98tzPXWcGHfeAgJh
+ XfkfPvIZDA77nkd+bFV/KGoa8wCWU4J8JgV/T3Sn6jrmb7cWGZFhQ48iRjDDDlWZJeoa
+ t61HmYGRt+cRr3HE2tg3wtl4UYRXrFWGifj4dAUY0S4ftV07huDYq9uCDAZ9+kfd7xmO
+ Gf1m11EHsnrJLF4p8/Gu1BckjhWpHMZoySPmnUWA7jd8DHgINYM0vNHS4ED2qmFW190E
+ 1ntGKpMKZadKxhMJqSQ4yEab3Uz8DOLuKXSvEg5ve9iqFHiMRxNODOq8OqcEs9QfeBd8
+ tqCQ==
+X-Gm-Message-State: AOJu0Yxenccoy5wIDziuPjtjl7NLX5242Z93ELAvaRg+m89WGrtelyzR
+ DC2UKcEWMMz/w29ZrmU/Q+oRtAtvRPh1SdVpavX1CTyLLGjOBHj17BoNIub+Ybo=
+X-Google-Smtp-Source: AGHT+IHGcI4h4HE5ihojCSROY6YWxho900M1tKSH2gffea9ZSi/0sorb7pT3BqTQIi6WV1MJ0Tc9Gg==
+X-Received: by 2002:a17:906:8a58:b0:a45:40e4:8c8 with SMTP id
+ gx24-20020a1709068a5800b00a4540e408c8mr3022992ejc.16.1710871089091; 
+ Tue, 19 Mar 2024 10:58:09 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- pv27-20020a170907209b00b00a44fcdf20d1sm6323130ejb.189.2024.03.19.10.57.50
+ ww2-20020a170907084200b00a46cc48ab07sm2052514ejb.221.2024.03.19.10.58.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Mar 2024 10:57:50 -0700 (PDT)
+ Tue, 19 Mar 2024 10:58:08 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2217C5F75D;
- Tue, 19 Mar 2024 17:57:50 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 83BE65F75D;
+ Tue, 19 Mar 2024 17:58:08 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Nicholas Piggin <npiggin@gmail.com>
 Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
@@ -69,20 +69,20 @@ Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
  John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Wainer
  dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
  <bleal@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [PATCH v5 13/24] tests/avocado: replay_linux.py remove the
- timeout expected guards
-In-Reply-To: <20240318154621.2361161-14-npiggin@gmail.com> (Nicholas Piggin's
- message of "Tue, 19 Mar 2024 01:46:10 +1000")
+Subject: Re: [PATCH v5 05/24] Revert "replay: stop us hanging in
+ rr_wait_io_event"
+In-Reply-To: <20240318154621.2361161-6-npiggin@gmail.com> (Nicholas Piggin's
+ message of "Tue, 19 Mar 2024 01:46:02 +1000")
 References: <20240318154621.2361161-1-npiggin@gmail.com>
- <20240318154621.2361161-14-npiggin@gmail.com>
+ <20240318154621.2361161-6-npiggin@gmail.com>
 User-Agent: mu4e 1.12.2; emacs 29.2
-Date: Tue, 19 Mar 2024 17:57:50 +0000
-Message-ID: <87h6h23y01.fsf@draig.linaro.org>
+Date: Tue, 19 Mar 2024 17:58:08 +0000
+Message-ID: <87bk7a3xzj.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,97 +107,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Nicholas Piggin <npiggin@gmail.com> writes:
 
-> replay_linux tests with virtio on aarch64 gciv3 and x86-64 q35 machines
-> seems to be more reliable now, so timeouts are no longer expected.
-> pc_i440fx, gciv2, and non-virtio still have problems, so mark them as
-> flaky: they are not just long-running, but can hang indefinitely.
+> This reverts commit 1f881ea4a444ef36a8b6907b0b82be4b3af253a2.
 >
-> These tests take about 400 seconds each, so add the SPEED=3Dslow guard.
+> That commit causes reverse_debugging.py test failures, and does
+> not seem to solve the root cause of the problem x86-64 still
+> hangs in record/replay tests.
+>
+> The problem with short-cutting the iowait that was taken during
+> record phase is that related events will not get consumed at the
+> same points (e.g., reading the clock).
+>
+> A hang with zero icount always seems to be a symptom of an earlier
+> problem that has caused the recording to become out of synch with
+> the execution and consumption of events by replay.
 >
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->  tests/avocado/replay_linux.py | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
->
-> diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux.py
-> index b3b91ddd9a..b3b74a367c 100644
-> --- a/tests/avocado/replay_linux.py
-> +++ b/tests/avocado/replay_linux.py
-> @@ -118,7 +118,7 @@ def run_replay_dump(self, replay_path):
->          except subprocess.CalledProcessError:
->              self.fail('replay-dump.py failed')
->=20=20
-> -@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
-> +@skipUnless(os.getenv('SPEED') =3D=3D 'slow', 'runtime limited')
->  class ReplayLinuxX8664(ReplayLinux):
->      """
->      :avocado: tags=3Darch:x86_64
-> @@ -127,19 +127,21 @@ class ReplayLinuxX8664(ReplayLinux):
->=20=20
->      chksum =3D 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f=
-3c5c27a0'
->=20=20
-> +    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable')
->      def test_pc_i440fx(self):
->          """
->          :avocado: tags=3Dmachine:pc
->          """
->          self.run_rr(shift=3D1)
->=20=20
-> +    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable')
->      def test_pc_q35(self):
->          """
->          :avocado: tags=3Dmachine:q35
->          """
->          self.run_rr(shift=3D3)
->=20=20
-> -@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
-> +@skipUnless(os.getenv('SPEED') =3D=3D 'slow', 'runtime limited')
->  class ReplayLinuxX8664Virtio(ReplayLinux):
->      """
->      :avocado: tags=3Darch:x86_64
-> @@ -153,6 +155,7 @@ class ReplayLinuxX8664Virtio(ReplayLinux):
->=20=20
->      chksum =3D 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f=
-3c5c27a0'
->=20=20
-> +    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable')
->      def test_pc_i440fx(self):
->          """
->          :avocado: tags=3Dmachine:pc
-> @@ -165,7 +168,7 @@ def test_pc_q35(self):
->          """
->          self.run_rr(shift=3D3)
->=20=20
-> -@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
-> +@skipUnless(os.getenv('SPEED') =3D=3D 'slow', 'runtime limited')
->  class ReplayLinuxAarch64(ReplayLinux):
->      """
->      :avocado: tags=3Daccel:tcg
-> @@ -187,6 +190,7 @@ def get_common_args(self):
->                  '-device', 'virtio-rng-pci,rng=3Drng0',
->                  '-object', 'rng-builtin,id=3Drng0')
->=20=20
-> +    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is
-> unstable')
 
-This needs to apply to both I think:
-
-(5/7) ./tests/avocado/replay_linux.py:ReplayLinuxAarch64.test_virt_gicv2: S=
-KIP: Test is unstable
- (6/7)
- ./tests/avocado/replay_linux.py:ReplayLinuxAarch64.test_virt_gicv3:
- INTERRUPTED: Test interrupted by SIGTERM\nRunner error occurred:
- Timeout reached\nOriginal status: ERROR\n{'name':
- '6-./tests/avocado/replay_linux.py:ReplayLinuxAarch64.test_virt_gicv3',
- 'logdir':
- '/home/alex/avocado/job-results/job-2024-03-19T16.50-686495d/test-results/=
-...
- (1800.17 s)
-
-With that:
-
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 --=20
 Alex Benn=C3=A9e
