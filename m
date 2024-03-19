@@ -4,76 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E54B8C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8225FC54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:15:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmaBd-0008RW-8I; Tue, 19 Mar 2024 10:11:29 -0400
+	id 1rmaFT-0001lw-Me; Tue, 19 Mar 2024 10:15:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmaAa-0007yg-Ca
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:10:29 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmaA6-0000yk-7S
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:10:14 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-566e869f631so6363284a12.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 07:09:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710857347; x=1711462147; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XxQvUt2uI2IhUP1FT7oId3U60tlbSgrIj/rYEOujcW8=;
- b=H5M4ISx5eGNOeGjq3xIvW8s+0MuqpY/h6CfXEVuwj1EtI8Z+LEZQB/bIbMNA5BhQ3A
- EBaklY7VtIpadMnCTMmGug3kAzlYpI7T8JNyHgjkfMswaLM/RFn2a+IPl/Kye+XQFgAr
- owVg4zbf7zUoGIGP0L5ErmmIX2XJqMJ6nbF0QC5NOYKsbZkuhtR2QSw2Xu8g0qdIZDhz
- T9CqPt1Kig4KnegCdUaCVoslXbemPzz4K9hAUh6xG0zfsbPKVGgr68Vael9StMqSZplm
- v9TCtSJ0FPcydetdNfYcvGrmXV5nDZRQ9HM4sccet6XCsAvxM+hOl//bfItsMwbGskmz
- KFBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710857347; x=1711462147;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XxQvUt2uI2IhUP1FT7oId3U60tlbSgrIj/rYEOujcW8=;
- b=RtFyd4F5hhGmyChqCAH8zHezviK6LElakc9jcbClEZgpQJWHz22Bzo1BZZSc7b++AH
- 2TbzGkMOZdvAeUPQgZLh1JmmVuF+BLeWS73Ns+7SkTwhysLUZLSds+2jJIy207u/t/vq
- AU+5I+3VhwIFehNLPtEwvC2Z3HR8vaQtkXIcYJNeUyw9pL7YqW9N3bomw5K+X1hW4F8T
- e6t1bj9RBgrgqK3lgIs8ZK0BsBw0urL0Cuf1OncWTKqjWXxf0JteJpHpKTKD9vxGRkei
- 0VbuW/qElBUpXpUiMe3hwrf1/z0pjQjdh38fSLQtFPkP7eYh7pD3yVgbqAAAQmmsfgDI
- AabQ==
-X-Gm-Message-State: AOJu0YxB0tTWJ22BPiZnKlq9fZ2jOUp3iguMrqxr9YAOXEVL5p3igE1f
- 4ss7cW/6v60oEA3wQkWIpOXL1HGAnoeBb1F+85F1eNra7kq8/QZJ/Cb9IWIA0eTKUzhpjSWAlA/
- 0VpEm/Xw8PtHuR1Fdw2WLB25zCILZDm06GBxv4w==
-X-Google-Smtp-Source: AGHT+IEdYtzt/V/W39LlmbTi8RxkdvCW5TbR6RncsOsdWWNpqxXZhA+u3Q4rwXYpT3VSrQj9WsGj5IQHY1ka8JHWtHQ=
-X-Received: by 2002:a05:6402:3645:b0:568:af3d:4a5f with SMTP id
- em5-20020a056402364500b00568af3d4a5fmr2640438edb.22.1710857347052; Tue, 19
- Mar 2024 07:09:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmaFO-0001kl-71
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:15:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmaFH-00037o-Pu
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:15:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710857712;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=U3k1szDgkBmVCxczl3PRQZVYiTM0z0OWoBqF7mQu2hs=;
+ b=DIDHw0IrA17ACJnMIxPMZKhTxXmOO+/ZgkLkRLl42HuAdZNVqIhnwDvFvy2mzGP/D2OvG2
+ p1dP2J+/2a71da+BgixxawUh3VLbGYBQG2mzXhZxGzfbtvkgwL3I/3BvUq6STZF9RmKQlq
+ 5KZR02/1Sor8DZdcnjxJfrCPJXC8s8U=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687-ZwmitBaHPdOqnWp8HpbRgg-1; Tue, 19 Mar 2024 10:15:10 -0400
+X-MC-Unique: ZwmitBaHPdOqnWp8HpbRgg-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 59141889064;
+ Tue, 19 Mar 2024 14:15:10 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.88])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id A2C4610F53;
+ Tue, 19 Mar 2024 14:15:09 +0000 (UTC)
+Date: Tue, 19 Mar 2024 14:15:03 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, xiaoyao.li@intel.com, michael.roth@amd.com
+Subject: Re: [PATCH 6/7] target/i386: Implement mc->kvm_type() to get VM type
+Message-ID: <Zfmd55tus3nV5DJV@redhat.com>
+References: <20240319140000.1014247-1-pbonzini@redhat.com>
+ <20240319140000.1014247-7-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20240201081313.1339788-1-tomoyuki.hirose@igel.co.jp>
- <20240201081313.1339788-2-tomoyuki.hirose@igel.co.jp>
-In-Reply-To: <20240201081313.1339788-2-tomoyuki.hirose@igel.co.jp>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 19 Mar 2024 14:08:55 +0000
-Message-ID: <CAFEAcA9Z8CbD2U9D0=DBrmRbV_OiVbeUUmTLdwRExhnS0HRnhQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] system/memory.c: support unaligned access
-To: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240319140000.1014247-7-pbonzini@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,107 +80,197 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 1 Feb 2024 at 08:15, Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp> wrote:
->
-> The previous code ignored 'impl.unaligned' and handled unaligned accesses
-> as is. But this implementation cannot emulate specific registers of some
-> devices that allow unaligned access such as xHCI Host Controller Capability
-> Registers.
-> This commit checks 'impl.unaligned' and if it is false, QEMU emulates
-> unaligned access with multiple aligned access.
->
-> Signed-off-by: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
+On Tue, Mar 19, 2024 at 02:59:59PM +0100, Paolo Bonzini wrote:
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> 
+> KVM is introducing a new API to create confidential guests, which
+> will be used by TDX and SEV-SNP but is also available for SEV and
+> SEV-ES.  The API uses the VM type argument to KVM_CREATE_VM to
+> identify which confidential computing technology to use.
+> 
+> Since there are no other expected uses of VM types, delegate
+> mc->kvm_type() for x86 boards to the confidential-guest-support
+> object pointed to by ms->cgs.
+> 
+> For example, if a sev-guest object is specified to confidential-guest-support,
+> like,
+> 
+>   qemu -machine ...,confidential-guest-support=sev0 \
+>        -object sev-guest,id=sev0,...
+> 
+> it will check if a VM type KVM_X86_SEV_VM or KVM_X86_SEV_ES_VM
+> is supported, and if so use them together with the KVM_SEV_INIT2
+> function of the KVM_MEMORY_ENCRYPT_OP ioctl. If not, it will fall back to
+> KVM_SEV_INIT and KVM_SEV_ES_INIT.
+> 
+> This is a preparatory work towards TDX and SEV-SNP support, but it
+> will also enable support for VMSA features such as DebugSwap, which
+> are only available via KVM_SEV_INIT2.
+> 
+> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  system/memory.c | 38 +++++++++++++++++++++++++-------------
->  1 file changed, 25 insertions(+), 13 deletions(-)
->
-> diff --git a/system/memory.c b/system/memory.c
-> index a229a79988..a7ca0c9f54 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -535,10 +535,17 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
->                                        MemTxAttrs attrs)
->  {
->      uint64_t access_mask;
-> +    unsigned access_mask_shift;
-> +    unsigned access_mask_start_offset;
-> +    unsigned access_mask_end_offset;
->      unsigned access_size;
-> -    unsigned i;
->      MemTxResult r = MEMTX_OK;
->      bool reentrancy_guard_applied = false;
-> +    bool is_big_endian = memory_region_big_endian(mr);
-> +    signed start_diff;
-> +    signed current_offset;
-> +    signed access_shift;
-
-"signed foo" is a weird way to specify this type, which we use almost
-nowhere else in the codebase -- this is equivalent to "int foo".
-
-> +    hwaddr current_addr;
->
->      if (!access_size_min) {
->          access_size_min = 1;
-> @@ -560,19 +567,24 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
->          reentrancy_guard_applied = true;
->      }
->
-> -    /* FIXME: support unaligned access? */
->      access_size = MAX(MIN(size, access_size_max), access_size_min);
-
-This still has a problem I noted for the v1 patch:
-we compute the access_size without thinking about the alignment,
-so for an access like:
- * addr = 2, size = 4, access_size_min = 2, access_size_max = 8
-we will calculate access_size = 4 and do two 4-byte accesses
-(at addresses 0 and 4) when we should do two 2-byte accesses
-(at addresses 2 and 4).
-
-> -    access_mask = MAKE_64BIT_MASK(0, access_size * 8);
-> -    if (memory_region_big_endian(mr)) {
-> -        for (i = 0; i < size; i += access_size) {
-> -            r |= access_fn(mr, addr + i, value, access_size,
-> -                        (size - access_size - i) * 8, access_mask, attrs);
-> -        }
-> -    } else {
-> -        for (i = 0; i < size; i += access_size) {
-> -            r |= access_fn(mr, addr + i, value, access_size, i * 8,
-> -                        access_mask, attrs);
-> -        }
-> +    start_diff = mr->ops->impl.unaligned ? 0 : addr & (access_size - 1);
-> +    current_addr = addr - start_diff;
-> +    for (current_offset = -start_diff; current_offset < (signed)size;
-> +         current_offset += access_size, current_addr += access_size) {
-> +        access_shift = is_big_endian
-> +                          ? (signed)size - (signed)access_size - current_offset
-> +                          : current_offset;
-> +        access_mask_shift = current_offset > 0 ? 0 : -current_offset;
-> +        access_mask_start_offset = current_offset > 0 ? current_offset : 0;
-> +        access_mask_end_offset = current_offset + access_size > size
-> +                                     ? size
-> +                                     : current_offset + access_size;
-> +        access_mask = MAKE_64BIT_MASK(access_mask_shift * 8,
-> +            (access_mask_end_offset - access_mask_start_offset) * 8);
-
-I don't understand here why the access_mask_shift and the
-access_mask_start_offset are different. Aren't we trying to create
-a mask value with 1s from start through to end ?
-
+>  target/i386/confidential-guest.h | 19 ++++++++++++++
+>  target/i386/kvm/kvm_i386.h       |  2 ++
+>  hw/i386/x86.c                    |  6 +++++
+>  target/i386/kvm/kvm.c            | 44 ++++++++++++++++++++++++++++++++
+>  4 files changed, 71 insertions(+)
+> 
+> diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+> index ca12d5a8fba..532e172a60b 100644
+> --- a/target/i386/confidential-guest.h
+> +++ b/target/i386/confidential-guest.h
+> @@ -36,5 +36,24 @@ struct X86ConfidentialGuest {
+>  struct X86ConfidentialGuestClass {
+>      /* <private> */
+>      ConfidentialGuestSupportClass parent;
 > +
-> +        r |= access_fn(mr, current_addr, value, access_size, access_shift * 8,
-> +                       access_mask, attrs);
->      }
->      if (mr->dev && reentrancy_guard_applied) {
->          mr->dev->mem_reentrancy_guard.engaged_in_io = false;
+> +    /* <public> */
+> +    int (*kvm_type)(X86ConfidentialGuest *cg);
+>  };
+> +
+> +/**
+> + * x86_confidential_guest_kvm_type:
+> + *
+> + * Calls #X86ConfidentialGuestClass.unplug callback of @plug_handler.
+> + */
+> +static inline int x86_confidential_guest_kvm_type(X86ConfidentialGuest *cg)
+> +{
+> +    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
+> +
+> +    if (klass->kvm_type) {
+> +        return klass->kvm_type(cg);
+> +    } else {
+> +        return 0;
+> +    }
+> +}
+>  #endif
+> diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
+> index 30fedcffea3..02168122787 100644
+> --- a/target/i386/kvm/kvm_i386.h
+> +++ b/target/i386/kvm/kvm_i386.h
+> @@ -37,6 +37,7 @@ bool kvm_hv_vpindex_settable(void);
+>  bool kvm_enable_sgx_provisioning(KVMState *s);
+>  bool kvm_hyperv_expand_features(X86CPU *cpu, Error **errp);
+>  
+> +int kvm_get_vm_type(MachineState *ms, const char *vm_type);
+>  void kvm_arch_reset_vcpu(X86CPU *cs);
+>  void kvm_arch_after_reset_vcpu(X86CPU *cpu);
+>  void kvm_arch_do_init_vcpu(X86CPU *cs);
+> @@ -49,6 +50,7 @@ void kvm_request_xsave_components(X86CPU *cpu, uint64_t mask);
+>  
+>  #ifdef CONFIG_KVM
+>  
+> +bool kvm_is_vm_type_supported(int type);
+>  bool kvm_has_adjust_clock_stable(void);
+>  bool kvm_has_exception_payload(void);
+>  void kvm_synchronize_all_tsc(void);
+> diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+> index ffbda48917f..2d4b148cd25 100644
+> --- a/hw/i386/x86.c
+> +++ b/hw/i386/x86.c
+> @@ -1389,6 +1389,11 @@ static void machine_set_sgx_epc(Object *obj, Visitor *v, const char *name,
+>      qapi_free_SgxEPCList(list);
+>  }
+>  
+> +static int x86_kvm_type(MachineState *ms, const char *vm_type)
+> +{
+> +    return kvm_enabled() ? kvm_get_vm_type(ms, vm_type) : 0;
+> +}
+> +
+>  static void x86_machine_initfn(Object *obj)
+>  {
+>      X86MachineState *x86ms = X86_MACHINE(obj);
+> @@ -1413,6 +1418,7 @@ static void x86_machine_class_init(ObjectClass *oc, void *data)
+>      mc->cpu_index_to_instance_props = x86_cpu_index_to_props;
+>      mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
+>      mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
+> +    mc->kvm_type = x86_kvm_type;
+>      x86mc->save_tsc_khz = true;
+>      x86mc->fwcfg_dma_enabled = true;
+>      nc->nmi_monitor_handler = x86_nmi;
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 0ec69109a2b..e109648f260 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -31,6 +31,7 @@
+>  #include "sysemu/kvm_int.h"
+>  #include "sysemu/runstate.h"
+>  #include "kvm_i386.h"
+> +#include "../confidential-guest.h"
+>  #include "sev.h"
+>  #include "xen-emu.h"
+>  #include "hyperv.h"
+> @@ -161,6 +162,49 @@ static KVMMSRHandlers msr_handlers[KVM_MSR_FILTER_MAX_RANGES];
+>  static RateLimit bus_lock_ratelimit_ctrl;
+>  static int kvm_get_one_msr(X86CPU *cpu, int index, uint64_t *value);
+>  
+> +static const char *vm_type_name[] = {
+> +    [KVM_X86_DEFAULT_VM] = "default",
+> +};
+> +
+> +bool kvm_is_vm_type_supported(int type)
+> +{
+> +    uint32_t machine_types;
+> +
+> +    /*
+> +     * old KVM doesn't support KVM_CAP_VM_TYPES but KVM_X86_DEFAULT_VM
+> +     * is always supported
+> +     */
+> +    if (type == KVM_X86_DEFAULT_VM) {
+> +        return true;
+> +    }
+> +
+> +    machine_types = kvm_check_extension(KVM_STATE(current_machine->accelerator),
+> +                                        KVM_CAP_VM_TYPES);
+> +    return !!(machine_types & BIT(type));
+> +}
+> +
+> +int kvm_get_vm_type(MachineState *ms, const char *vm_type)
 
-I agree with Philippe that we could be a lot more confident in
-this change if we had some unit tests that tested whether
-various combinations of unaligned accesses turned into the
-right sequence of accesses to the underlying device.
+The 'vm_type' parameter is never used here. What value is it expected
+to have, and should be diagnosing an error if some unexpected value
+is provided.
 
-thanks
--- PMM
+> +{
+> +    int kvm_type = KVM_X86_DEFAULT_VM;
+> +
+> +    if (ms->cgs) {
+> +        if (!object_dynamic_cast(OBJECT(ms->cgs), TYPE_X86_CONFIDENTIAL_GUEST)) {
+> +            error_report("configuration type %s not supported for x86 guests",
+> +                         object_get_typename(OBJECT(ms->cgs)));
+> +            exit(1);
+> +        }
+> +        kvm_type = x86_confidential_guest_kvm_type(
+> +            X86_CONFIDENTIAL_GUEST(ms->cgs));
+> +    }
+> +
+> +    if (!kvm_is_vm_type_supported(kvm_type)) {
+> +        error_report("vm-type %s not supported by KVM", vm_type_name[kvm_type]);
+> +        exit(1);
+> +    }
+> +
+> +    return kvm_type;
+> +}
+> +
+>  bool kvm_has_smm(void)
+>  {
+>      return kvm_vm_check_extension(kvm_state, KVM_CAP_X86_SMM);
+> -- 
+> 2.44.0
+> 
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
