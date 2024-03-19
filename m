@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC869C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 12:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50302C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 12:54:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmYw8-0007JH-8T; Tue, 19 Mar 2024 08:51:24 -0400
+	id 1rmYzG-0000MU-9j; Tue, 19 Mar 2024 08:54:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmYw6-0007J7-0z
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 08:51:22 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmYzD-0000M1-Ds
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 08:54:36 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmYw3-0002Ab-GG
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 08:51:21 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-413f76fcf41so41237915e9.3
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 05:51:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmYzB-0002qe-Qa
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 08:54:35 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-41465864644so3196515e9.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 05:54:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710852676; x=1711457476; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1710852872; x=1711457672; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ee8to+l0RqVF6uBDTyoio40vVyqZSIm6JrEx7OyFtrw=;
- b=lSEnFDuz8TQWyc8XuIVyhgu/N3j6Xyu24Y5OrQh1QKbgHbEGxl4WSyJ6BY2yPYswI+
- drxkIcnKSal+1E+D2mehoQPTWQFdDK8MinuN6JBTw1kHLeWrj/Q8vIdM/cNU8KBcBQoX
- 4sIdF4VlaJZf5bJ79VmRiaLmezL/nHUh5GOp+5INZI4liP0PnrAmAaHsJkzlzqA+RcFS
- CcTusJ6w2mynv6VoHxVgNenzRINSaP+yABwyQrOzvNx2t/xHFh5MfH4F4Bh7RD+308ck
- fTuVOMPqq6mHxXUnOADwsYJ0ZIQfgLaBhs3daNmzI4xdLknQDzIfKrCGNhejUzL/W5ni
- DpiA==
+ bh=EG9fPADsK9KF9HCW1kMDIU7fDHxKBh/+fo0PZPsFexc=;
+ b=Jn/5G4gWKPrYUEFJGF6hvdGpvqpGLaig5REFxjXtebs2kbOijaxX3+mfMHnH8nWO+F
+ kY9RjlmmuKq+Wknu44M7fhgXN9n7uHJVXWAc/pHbtB13+opkMX/r5nLm6Bts1ucsiGt3
+ eWqNpWwfx9+YSzs9YHJCur2Hy44860/tykI/2A4FUrIVx+eMuw+fGyydxmOGeeOs6zvN
+ 39H7LL5pQdRwA+wLMBZNWeHR9IW0Opua5fuJi5r57CFwMY/jn6fjZ4Llw7eLBLpZyigK
+ /2gOyCkjy+2b7W90yVQqrHTRH9t+mklyRomGb6uCMQ/QiOqv/gupo8n9QI3xQJOPG4Lw
+ pe2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710852676; x=1711457476;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1710852872; x=1711457672;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ee8to+l0RqVF6uBDTyoio40vVyqZSIm6JrEx7OyFtrw=;
- b=gYUnXJ4FCm++TG6Sroz4x4n5vwu0OmPYzbXMIAk/mS93wcChBKCSG31xZoboZVFy0G
- b8rCu7ke2aXfTyhPE2LNwiG0JKypGhGAWBytcD9R8RnVy58pMD5yHKwMvJweV5ratXOA
- +KrUdLZr6yZpMOIvsChU02LFfM4xbt+MuDiUGADqs07qo6inVBH+1GZ2XtrEDgcB2jlW
- apisi2NlLmQmMx3S1QWQtFQGNFVQBVc2AP5ztxEOFFP2dj+MGKmOd4WJ/fN64M0wb67y
- CwNTBGswJZXWrFuQzY7hjjCBda2FrmqnU5rzA67l2oQRBjW9fQg0qdipNHSDWOJmtJ6N
- SAPg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWsOYV/4UP6pvlX5ogQqMBSDUfeIYN3Jbu/HfajMr8y5fjzNkNWznLsl/2MmsWbVu4vl34Sn02vjzUgN9WK+37+Qskh7YA=
-X-Gm-Message-State: AOJu0Yw+Byb4pOi5gF12KfYuU1s0ssXqvF1+my+SyX91zpUJLYtQUPLs
- DRsqR0uprRcvephjfJqH6Mw74i1GAm/F+iRnTbc3YBVWNS7pfgMvCJRB9JYjax8=
-X-Google-Smtp-Source: AGHT+IHtOejukVwmwXZ+53uhhr/v25jHKLsKqgk5HfBezb1ZGWQSx0TYPceok+3xP6efiIgBVDIn9Q==
-X-Received: by 2002:a05:6000:2c7:b0:33d:9c3d:f930 with SMTP id
- o7-20020a05600002c700b0033d9c3df930mr2424023wry.66.1710852675948; 
- Tue, 19 Mar 2024 05:51:15 -0700 (PDT)
+ bh=EG9fPADsK9KF9HCW1kMDIU7fDHxKBh/+fo0PZPsFexc=;
+ b=Rw2NtnCd1SNFvMckVYL04S0wTbjOOdNssCFSAkqvJ+UN3kSetQg4VcBD9W+2PnYKhC
+ 3Z/d0YwcLfR6FkRoBwOUMZFW+JuJ3TGNIC1Ha01Wdy/P3ZtOxC4rQoVXMGgm8bXU3UfT
+ n3wPPGN83Oq8Yinm1dxDzJOZv8PtD0LTf6fsk+IHIcT72TL/7hhLUIDKtmyaxJOUoSKg
+ R5xXObVTIWvDFQvHnd+3QCqDOpGHylRduIMJa6k81rnm6AP7dSti98uU4hTEMT13Amme
+ s87kCQhdJtvKlRrNJEBHX0qgAfZQhh3Y5FoUnZgqVgCXlVQwTrg34Z/bneL4vwS8Vbg1
+ wt9A==
+X-Gm-Message-State: AOJu0Yygvtb8LgFeupEM7oZ27azNg4hRtmleCXGbyDxleo2rbv/T0JI7
+ +io5pSwC1VvRi2OYExxFV9Px6O5MYpPfpYaiua5elL+KdV2ugPUMr3JDOUgwKmkIAg/zI5HPZSH
+ Y
+X-Google-Smtp-Source: AGHT+IEpXXjV3B1A33uSM0yIkSLKVeugRWuWAyuSfplz+mHpuvVCjFrorIa/D2SktK9ij/CRnfV8jg==
+X-Received: by 2002:a05:600c:3d13:b0:413:fae6:4d3b with SMTP id
+ bh19-20020a05600c3d1300b00413fae64d3bmr2407305wmb.12.1710852872191; 
+ Tue, 19 Mar 2024 05:54:32 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.166.129])
  by smtp.gmail.com with ESMTPSA id
- az23-20020adfe197000000b0033e9d9f891csm5587518wrb.58.2024.03.19.05.51.14
+ jg24-20020a05600ca01800b0041468cb6389sm314674wmb.9.2024.03.19.05.54.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 05:51:15 -0700 (PDT)
-Message-ID: <c3455d9f-dbf4-43dd-a693-30ffb65a646a@linaro.org>
-Date: Tue, 19 Mar 2024 13:51:14 +0100
+ Tue, 19 Mar 2024 05:54:31 -0700 (PDT)
+Message-ID: <c7cd0119-0c8b-45fa-93d5-de25fb8f6a6e@linaro.org>
+Date: Tue, 19 Mar 2024 13:54:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] vl: convert qemu_machine_creation_done() to Error **
+Subject: Re: [PATCH-for-9.0] monitor/hmp-cmds-target.c: append a space in
+ error message in gpa2hva()
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240318215641.978308-1-pbonzini@redhat.com>
- <20240318215641.978308-2-pbonzini@redhat.com>
+To: Shiyang Ruan <ruansy.fnst@fujitsu.com>, dave@treblig.org
+Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
+ Yao Xingtao <yaoxt.fnst@fujitsu.com>
+References: <20240319021610.2423844-1-ruansy.fnst@fujitsu.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240318215641.978308-2-pbonzini@redhat.com>
+In-Reply-To: <20240319021610.2423844-1-ruansy.fnst@fujitsu.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,15 +96,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/3/24 22:56, Paolo Bonzini wrote:
-> Allow using Error ** to pass an error string up to qmp_x_exit_preconfig()
-> and possibly main().
+On 19/3/24 03:16, Shiyang Ruan via wrote:
+> From: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> In qemu monitor mode, when we use gpa2hva command to print the host
+> virtual address corresponding to a guest physical address, if the gpa is
+> not in RAM, the error message is below:
+> 
+> (qemu) gpa2hva 0x750000000
+> Memory at address 0x750000000is not RAM
+> 
+> a space is missed between '0x750000000' and 'is'.
+> 
+> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 > ---
->   system/vl.c | 10 +++++++---
->   1 file changed, 7 insertions(+), 3 deletions(-)
+>   monitor/hmp-cmds-target.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
+> index 9338ae8440..ff01cf9d8d 100644
+> --- a/monitor/hmp-cmds-target.c
+> +++ b/monitor/hmp-cmds-target.c
+> @@ -261,7 +261,7 @@ void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp)
+>       }
+>   
+>       if (!memory_region_is_ram(mrs.mr) && !memory_region_is_romd(mrs.mr)) {
+> -        error_setg(errp, "Memory at address 0x%" HWADDR_PRIx "is not RAM", addr);
+> +        error_setg(errp, "Memory at address 0x%" HWADDR_PRIx " is not RAM", addr);
+>           memory_region_unref(mrs.mr);
+>           return NULL;
+>       }
 
+Fixes: e9628441df ("hmp: gpa2hva and gpa2hpa hostaddr command")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
