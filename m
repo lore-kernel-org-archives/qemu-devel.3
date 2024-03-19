@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6178BC54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148BDC54E7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:37:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmaTO-0003WQ-VV; Tue, 19 Mar 2024 10:29:53 -0400
+	id 1rmaZz-0006gl-6L; Tue, 19 Mar 2024 10:36:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmaTE-0003G9-DA
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:29:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmaT8-00079n-To
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:29:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710858571;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ec7NB2+MiS/DMWbVRGMZXRvjrpRY3OTt7saiH+5YDk4=;
- b=dwgbEGCSIdBEcgkXBjf4PwPnQWsCH2EVHsl2LvX6GP24bwZu/RC+MGuDlRHmn6mBrzvdbu
- fxqk25ndpdkBJ+7XND+YD2/ZPscuSmC+HgXZy+ssvH71ZwxHhc17nfqlWdBb3ioE+B7D2c
- Q358zm7Ounro9hMU/9QXgaooXh5Bf2E=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231-Sh7sD5pzMOiUmkUpJasnAQ-1; Tue, 19 Mar 2024 10:29:29 -0400
-X-MC-Unique: Sh7sD5pzMOiUmkUpJasnAQ-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-33ed44854ddso1772259f8f.2
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 07:29:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmaZx-0006gP-P0
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:36:37 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmaZv-0000my-9D
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:36:37 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-33eee0258abso1498473f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 07:36:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710858993; x=1711463793; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0efgDKKkLGerMPweoEieQnx14k1OlzDjgpUUyMAKWC0=;
+ b=DVLQmZkuHPlaV2TxzpmFUc351BLeWj8UR8cBjKGOCZynUwx/dxIj7ioG5ZKGMtUvlq
+ 4fAPvjqLPstDM6NduufIq6LVTdYNUq2tPUgKeUyE2dlPO9z3U8+W1yqqMiIaxLvK4Oao
+ EVTdKvvT7hrS3pySIQmI1Z8gFOU0+ypwREVe3G9hdRUO/eViMHHUY++6NjCh1/r348b5
+ 9v4hySK3Xayo61nUtf0fTTPJW8TuQlJFmMmQxnMv67tJ2C1Rk19MmcjtOKjjpOkE0zp2
+ QcBpVMWz0iFWago4JLPA7ksnTAn03Z4OvmjIKDQw8/ah00eBFAeuws2CdxhFGWkuijrF
+ iqRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710858567; x=1711463367;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ec7NB2+MiS/DMWbVRGMZXRvjrpRY3OTt7saiH+5YDk4=;
- b=os06FPsN9O1xkeIJYl/S5T5ILpa/Sx9+UHtCLAUKrKEtNtmGOmgBuWroE+9kv+R77l
- D1DNR80VCGEaUNATUU1PZfeE+zS0Cs6H1ZbR0Pl5zhF8CM93AmWM4jDbZ2CRBMyRzlzp
- WxhqRJniDjFgEvMiCTbWJp1+Lluej6Nty+lscdw5+Z1EfyvopkQZMGJ2X/c33ciaztif
- AKJo7sCAON9Dz6lTO72d3mb0DDOnJnyoSn5bdh9OuI888nZwOcd4RoQCZWgx4bu6V32r
- 1rJn9JeXLb9OaPSG+zEfX3Qluol+JVFJtiGGJIeEV/XMmZcZrY5yFkAvoXpr1nHv6rKY
- szOg==
-X-Gm-Message-State: AOJu0Yz/mzk4E/vN1hYZBIVJHRi9il8Rf493y/lDiAWnyRYkHoO3/qyE
- gKroM4kW4B//4I8B9hhc/gNWWFacmvEI6o3+y7b2JH5Pc+RkG9eGyJlPzk6TSMPVj4/DMx2w5QG
- L1intG8fJ2KVqiMZmyZdM0UBKsEvSHlmZkufBxi2w+exWgYnHYuFh4UGNYNPS8hYHjNuH2U2Fm3
- 9UkREjjT1ScfuYjmV9UoTcO07uXTkYUVxOlKHXGQ==
-X-Received: by 2002:a05:6000:1805:b0:33e:5310:820f with SMTP id
- m5-20020a056000180500b0033e5310820fmr2012763wrh.67.1710858567384; 
- Tue, 19 Mar 2024 07:29:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE+ECSOIkAiAsV0kIfj/almq4cAaxqhVJ9G0yu3y3msTgWA06CRmHGV3rfG31H5b/gw0HqrafTbcHdebFRkZdI=
-X-Received: by 2002:a05:6000:1805:b0:33e:5310:820f with SMTP id
- m5-20020a056000180500b0033e5310820fmr2012746wrh.67.1710858567064; Tue, 19 Mar
- 2024 07:29:27 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710858993; x=1711463793;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0efgDKKkLGerMPweoEieQnx14k1OlzDjgpUUyMAKWC0=;
+ b=XOYbgNtND47LyiXJsXXZlozxCTBD8ukF6/JGPSKtMuiZtHAjkP4LaLe59qo4gOydxN
+ 2162IUWX+aJ2OcvXTpp5OdXdr0CDmXDSMIkfgYL12udEklSmZsgZi0IYKJjuXWAwW6a7
+ tSkKLvWek75fUe/Ttcb454mVHAszeo6wrpBJlyulkH+GPQ1yRwGKvJc0MzLVtUH5C8JK
+ w8uxYB0yOb/fiG0WdKu4CjwslWgNnbNxcC+hdBNOgUk8O3yyMcnP6iR8td35fL9J4J5r
+ DTx8GKG5Gz+EQZ7lTGmIUdJNvxEFu/9BcIhVNe9fbJyebj4qTkc9+7Wn2WUoe/uG3P+d
+ uFtQ==
+X-Gm-Message-State: AOJu0Yzq6SGcWoEUP/SPu+tYdHabHCLXZ8uT3YKvDyX85rReL4YR+oeA
+ EbdIn+MLX0Fvac6m6KTJjpdXKeCzYzATjNlQ2sHWEalq4r2AWj4dRVAwh5iY744=
+X-Google-Smtp-Source: AGHT+IFQ2AO8+WjjsFwxyYigYtouP0IjZjLRKMSlkApWghbKMjzW1pMLApEgEzmayBJZW2WbZi62lA==
+X-Received: by 2002:a5d:46c2:0:b0:341:7656:d358 with SMTP id
+ g2-20020a5d46c2000000b003417656d358mr3423310wrs.38.1710858993357; 
+ Tue, 19 Mar 2024 07:36:33 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.166.129])
+ by smtp.gmail.com with ESMTPSA id
+ bt14-20020a056000080e00b003417893ef1asm4051601wrb.14.2024.03.19.07.36.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 07:36:32 -0700 (PDT)
+Message-ID: <adb7c11b-cf09-471f-9ddb-43bd32b47895@linaro.org>
+Date: Tue, 19 Mar 2024 15:36:30 +0100
 MIME-Version: 1.0
-References: <20240319140000.1014247-1-pbonzini@redhat.com>
- <20240319140000.1014247-7-pbonzini@redhat.com>
- <Zfmd55tus3nV5DJV@redhat.com>
- <CABgObfZ7ikZHG3EEQHoPKoMo+1JpF6Ntb_QXsYTgEw6zF1zXmQ@mail.gmail.com>
- <ZfmgybXHbCTbisum@redhat.com>
-In-Reply-To: <ZfmgybXHbCTbisum@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 19 Mar 2024 15:29:14 +0100
-Message-ID: <CABgObfaKe=EE0N6YHTqpaoK-LaACpzSWykWB+mo=_KDMCnFd1Q@mail.gmail.com>
-Subject: Re: [PATCH 6/7] target/i386: Implement mc->kvm_type() to get VM type
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, xiaoyao.li@intel.com, michael.roth@amd.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 0/4] machine development tool
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Maksim Davydov <davydov-max@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, jsnow@redhat.com,
+ armbru@redhat.com, peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com,
+ berrange@redhat.com, eduardo@habkost.net
+References: <20240318213550.155573-1-davydov-max@yandex-team.ru>
+ <CAFEAcA9Kcowzuy84SeBqi9zQv6e9Ojo57Wknw2BON2NKms=JcA@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA9Kcowzuy84SeBqi9zQv6e9Ojo57Wknw2BON2NKms=JcA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,35 +97,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 19, 2024 at 3:27=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Tue, Mar 19, 2024 at 03:25:53PM +0100, Paolo Bonzini wrote:
-> > On Tue, Mar 19, 2024 at 3:15=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com> wrote:
-> > > > +int kvm_get_vm_type(MachineState *ms, const char *vm_type)
-> > >
-> > > The 'vm_type' parameter is never used here. What value is it expected
-> > > to have, and should be diagnosing an error if some unexpected value
-> > > is provided.
-> >
-> > It's the value of the kvm-type machine property, if any; but no x86
-> > machine defines one, so right now it's always NULL. I left it in
-> > because then it's clearer than this is an implementation of
-> > mc->kvm_type, but I can remove it or pass it down to
-> > x86_confidential_guest_kvm_type().
->
-> If we expect it to always be NULL, lets validate that is the
-> case and error_report + exit, if not.
+Hi Maksim,
 
-I think it's enough to have an assertion in x86_kvm_type():
+On 19/3/24 11:24, Peter Maydell wrote:
+> On Mon, 18 Mar 2024 at 21:36, Maksim Davydov <davydov-max@yandex-team.ru> wrote:
+>>
+>> The following changes since commit ba49d760eb04630e7b15f423ebecf6c871b8f77b:
+>>
+>>    Merge tag 'pull-maintainer-final-130324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-13 15:12:14 +0000)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://gitlab.com/davydov-max/qemu.git tags/pull-compare-mt-2024-03-19
+>>
+>> for you to fetch changes up to e12b89f71ba5b93877b6a3adc379a6369d0c9bab:
+>>
+>>    scripts: add script to compare compatibility properties (2024-03-19 00:13:54 +0300)
+>>
+>> ----------------------------------------------------------------
+>> Please note. This is the first pull request from me.
+>> My public GPG key is available here
+>> https://keys.openpgp.org/vks/v1/by-fingerprint/CDB5BEEF8837142579F5CDFE8E927E10F72F78D4
+>>
+>> ----------------------------------------------------------------
+>> scripts: add a new script for machine development
+>>
+> 
+> I said I wanted this to go via some other sub-maintainer's tree.
 
-    /*
-     * No x86 machine has a kvm-type property.  If one is added that has
-     * it, it should call kvm_get_vm_type() directly or not use it at all.
-     */
-    assert(vm_type =3D=3D NULL);
+I'm OK to take the first 3 machine-core patches, but the
+tree is currently frozen to stabilize before the next release.
+Since your patches add a new feature, I'll merge them once the
+tree re-opens in ~1 month, see the announced schedule:
+https://lore.kernel.org/qemu-devel/CAFEAcA_ncrw8nsD50Ov=Fse=gYFw3CabpURWM9yK3yWmL5CTQw@mail.gmail.com/
 
-Paolo
+I haven't looked at the last patch yet, at a glance I'm not objecting
+to it, but having an Ack-by tag by John (Python maintainer) would be nice.
 
+Regards,
+
+Phil.
 
