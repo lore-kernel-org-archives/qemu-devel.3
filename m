@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37157C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 12:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0DB4C54E5D
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 13:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmZ1V-0001Td-VB; Tue, 19 Mar 2024 08:56:57 -0400
+	id 1rmZ4N-0002kE-SJ; Tue, 19 Mar 2024 08:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rmZ1R-0001S0-Jb
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 08:56:54 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1rmZ4K-0002k0-72
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 08:59:52 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rmZ1P-0003YA-L5
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 08:56:53 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-41412411672so14334165e9.3
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 05:56:48 -0700 (PDT)
+ id 1rmZ4I-0003zJ-0i
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 08:59:51 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-41467d697a2so2222635e9.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 05:59:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710853007; x=1711457807; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710853186; x=1711457986; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=J5Sv9/suZ6LdYP7CJpL2Ej8ZarSFRVTKG+3v9aCGdOU=;
- b=kSSkCgwZPhGFpV4MD+gdKTVyKdALbCC7lAsRpmgaZo40KBRp6vNBwstG7IkRn6NNvY
- cbbNIyULp/1Dvwlkoih9eze6KtPp0x/zpOh/yLflUNAwfcnqiNruEaNUl5yyAhJhE0yL
- Sdx3cu2ux7//Sp/53PmJu33rJND2Y9rc2ep/Owrj7SR0tEYCcPlwZg6oduY5It7+Df5h
- 9FvAHVd5jyrmWaM7DT+kaZvTjJTmHvgLrXfmaEevmqu170zFZ6o33WpSnRnD3RSWxtgQ
- F3rZjiCpNMzgpPToosMTisZM1vmXvQYCCArmLmgDv3y50Txryvu5Jaf/HPcqEMXy+t+7
- gDug==
+ bh=8RicTkEZEqbbpIn8TxjLQzuftbzXWlhEZxFvomlQNZE=;
+ b=xZah3n4O1VcD0og+BFH1+4HDAsjBGRlfwORDaeOXzKWveFP/PZdRYH/7l3QvhOUF7C
+ 2zgmtznpJEMIIDoxSmzcLKwatPPV5UBHpJcV7alSsUSdE2SYiUg7cOAzF2lydS+dOk5I
+ hbq8wRHfnHGrZDQbZq3qvozok8ytuMrS5mfAqgV2yWG7vBJ669ZDS6QVtQK/gk9mVM5n
+ xu0PJ8OQ7A5Z5rcqrJpS2bqKYXki4mkPKX/IIkEnKaRn2q9ct2kQFfWEBxv2u/8EKMSi
+ ua7FbpglOM24FQaKmGNla8M9slrGUaTMaa9hYqh0B0ILVaQSV/Mc03i/UAqJ6pKw1mue
+ LFoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710853007; x=1711457807;
+ d=1e100.net; s=20230601; t=1710853186; x=1711457986;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=J5Sv9/suZ6LdYP7CJpL2Ej8ZarSFRVTKG+3v9aCGdOU=;
- b=Mct1y27Uz1pNFt2Uw0lGboh1lkZi9YNKRgTOGHfeRZJYFsW8gT1jExWLn2Bku6lgBq
- P0hcwIeU0CmFwl/NFd1svzvUzIu1IMhrHyDqbmn77he+mzlpw78FsdwqQtaGFtyYGt5Q
- mv6Skka0HcxGfUjrS1P9N+GiUH/Ls5xKH7ZrSCEHl39eZycO61NgMOGjy1N1q92v0MfW
- HJkR3ynmdJ0KxKaFVPUZgiJv87hzJh4dW1m7DY09UoQfhb92bdhAYYvRL7dqL2KSgN/R
- y8QTBOAcrgtyvutueKcgMR9rJtBGVrHdymagspRY6cmd+iwEjv5G59FdFl8bqvAMEI2q
- Wt7g==
+ bh=8RicTkEZEqbbpIn8TxjLQzuftbzXWlhEZxFvomlQNZE=;
+ b=Z08DbxvgyPOQ7mNJzEXiOJNpBr4g8GNogyLIt/CLFWjOj+UAU4Tt3vkrWCECRyaaLX
+ hCXqWwLI37Y/Y5SWAkPF+alsPdvIO+j5kWjX9KsdC4W7V4/n+mQOLrHR9zfOSqnZ3FAt
+ qdWvmqoLSqglsiX50QoCLcGzPWs4jNskNqe77u1IaNwxCSHgzDlW2b77oBfPd+hP/X1Y
+ gLajVisqXVFex+rpzPeaun/7LBL5Ad9Mbq8iPwvw3sTpNUNGcG/u4j5llyUR6tOf3s3s
+ gAmIvVHzePsWJjGe0a4FzD9x80nN95+D+i5haHW94R5x9gbBJiXZ7YiHASFocd51R8Y6
+ c1jA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWFBz47imHAfvbaJaZvIN/MmzRpcfhT21Eq+1/zJtrXxd5C0nNRD4bKe6AdD8QxsTdutMRuptDy+8598kF6nZz+uc/3UKc=
-X-Gm-Message-State: AOJu0YxQySThFgKEQkCFkQyOV8Kubkys/EGf9h58k9gBVwKMuMnur0qN
- UFEFcUc8vq4rXRTN5jDuOR0MCkDGWhrmlajdAn4b/vPQtGNgYTdN0BniPsyHUPZ6XxpijLQNkJR
- j8PU=
-X-Google-Smtp-Source: AGHT+IFRQ7LiRER+3OQu0TXcSYdgMWk893pBT3MjYKdFps9S647drLlpqNC9f3Unb8oKEHCgdCK9gA==
-X-Received: by 2002:a05:600c:4594:b0:413:fc09:7b19 with SMTP id
- r20-20020a05600c459400b00413fc097b19mr9653128wmo.40.1710853007204; 
- Tue, 19 Mar 2024 05:56:47 -0700 (PDT)
+ AJvYcCWmiNtFBpLNaNFNbNYHwS5z3K8EiNapsRz0bBijVhiM1ectKD90BMv+hhDdmr/tHZvVu+hS5LORsAA1YVVE5ja5dxh4oak=
+X-Gm-Message-State: AOJu0Yzq4KjLyvzBUxfvcVCLIlxzfKOmHiO3hxQ9phNd9bPUdjX0MbIF
+ C5Nb+4DjjbFLLycSZvavAQBpind4gNm7qZx4ExIRtUZ/jfx+skzCfXTM2dkpygvvpVVGnQQJFY7
+ ZVmc=
+X-Google-Smtp-Source: AGHT+IEGdxhx6uBYDhamaQrUr7jL67E8GWoQBOsuG6OcRaAoWL5nls0WibizBZssoRkHSTPI8I60Pw==
+X-Received: by 2002:a05:600c:4f96:b0:414:65cb:7e99 with SMTP id
+ n22-20020a05600c4f9600b0041465cb7e99mr1180574wmq.26.1710853186580; 
+ Tue, 19 Mar 2024 05:59:46 -0700 (PDT)
 Received: from [192.168.1.24] ([102.35.208.160])
  by smtp.gmail.com with ESMTPSA id
- u6-20020a05600c19c600b0041413546e5bsm5258854wmq.0.2024.03.19.05.56.45
+ r8-20020a05600c458800b0041409c1af05sm10159697wmo.21.2024.03.19.05.59.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 05:56:46 -0700 (PDT)
-Message-ID: <78dc8b48-cf8f-470b-96ba-ea39b699a8ba@linaro.org>
-Date: Tue, 19 Mar 2024 16:56:43 +0400
+ Tue, 19 Mar 2024 05:59:46 -0700 (PDT)
+Message-ID: <3d77c835-0620-4b54-ab3b-6dbcd4ff325f@linaro.org>
+Date: Tue, 19 Mar 2024 16:59:43 +0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/22] plugins: Update the documentation block for
- plugin-gen.c
+Subject: Re: [PATCH 17/22] plugins: Replace pr_ops with a proper debug dump
+ flag
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org
 References: <20240316015720.3661236-1-richard.henderson@linaro.org>
- <20240316015720.3661236-23-richard.henderson@linaro.org>
+ <20240316015720.3661236-18-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240316015720.3661236-23-richard.henderson@linaro.org>
+In-Reply-To: <20240316015720.3661236-18-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,53 +101,215 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/16/24 05:57, Richard Henderson wrote:
+> The DEBUG_PLUGIN_GEN_OPS ifdef is replaced with "-d op_plugin".
+> The second pr_ops call can be obtained with "-d op".
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   accel/tcg/plugin-gen.c | 31 ++++---------------------------
->   1 file changed, 4 insertions(+), 27 deletions(-)
+>   include/qemu/log.h     |  1 +
+>   include/tcg/tcg.h      |  1 +
+>   accel/tcg/plugin-gen.c | 68 ++++++++----------------------------------
+>   tcg/tcg.c              | 29 +++++++++++++++++-
+>   util/log.c             |  4 +++
+>   5 files changed, 46 insertions(+), 57 deletions(-)
 > 
+> diff --git a/include/qemu/log.h b/include/qemu/log.h
+> index df59bfabcd..e10e24cd4f 100644
+> --- a/include/qemu/log.h
+> +++ b/include/qemu/log.h
+> @@ -36,6 +36,7 @@ bool qemu_log_separate(void);
+>   #define LOG_STRACE         (1 << 19)
+>   #define LOG_PER_THREAD     (1 << 20)
+>   #define CPU_LOG_TB_VPU     (1 << 21)
+> +#define LOG_TB_OP_PLUGIN   (1 << 22)
+>   
+>   /* Lock/unlock output. */
+>   
+> diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
+> index df66e8f012..753d7ca3e0 100644
+> --- a/include/tcg/tcg.h
+> +++ b/include/tcg/tcg.h
+> @@ -1065,5 +1065,6 @@ static inline const TCGOpcode *tcg_swap_vecop_list(const TCGOpcode *n)
+>   }
+>   
+>   bool tcg_can_emit_vecop_list(const TCGOpcode *, TCGType, unsigned);
+> +void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs);
+>   
+>   #endif /* TCG_H */
 > diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-> index fd52ea3987..c354825779 100644
+> index 6f0731b479..10d917abd3 100644
 > --- a/accel/tcg/plugin-gen.c
 > +++ b/accel/tcg/plugin-gen.c
-> @@ -14,33 +14,10 @@
->    * Injecting the desired instrumentation could be done with a second
->    * translation pass that combined the instrumentation requests, but that
->    * would be ugly and inefficient since we would decode the guest code twice.
-> - * Instead, during TB translation we add "empty" instrumentation calls for all
-> - * possible instrumentation events, and then once we collect the instrumentation
-> - * requests from plugins, we either "fill in" those empty events or remove them
-> - * if they have no requests.
-> - *
-> - * When "filling in" an event we first copy the empty callback's TCG ops. This
-> - * might seem unnecessary, but it is done to support an arbitrary number
-> - * of callbacks per event. Take for example a regular instruction callback.
-> - * We first generate a callback to an empty helper function. Then, if two
-> - * plugins register one callback each for this instruction, we make two copies
-> - * of the TCG ops generated for the empty callback, substituting the function
-> - * pointer that points to the empty helper function with the plugins' desired
-> - * callback functions. After that we remove the empty callback's ops.
-> - *
-> - * Note that the location in TCGOp.args[] of the pointer to a helper function
-> - * varies across different guest and host architectures. Instead of duplicating
-> - * the logic that figures this out, we rely on the fact that the empty
-> - * callbacks point to empty functions that are unique pointers in the program.
-> - * Thus, to find the right location we just have to look for a match in
-> - * TCGOp.args[]. This is the main reason why we first copy an empty callback's
-> - * TCG ops and then fill them in; regardless of whether we have one or many
-> - * callbacks for that event, the logic to add all of them is the same.
-> - *
-> - * When generating more than one callback per event, we make a small
-> - * optimization to avoid generating redundant operations. For instance, for the
-> - * second and all subsequent callbacks of an event, we do not need to reload the
-> - * CPU's index into a TCG temp, since the first callback did it already.
-> + * Instead, during TB translation we add "plugin_cb" marker opcodes
-> + * for all possible instrumentation events, and then once we collect the
-> + * instrumentation requests from plugins, we generate code for those markers
-> + * or remove them if they have no requests.
+> @@ -44,6 +44,7 @@
 >    */
 >   #include "qemu/osdep.h"
 >   #include "qemu/plugin.h"
+> +#include "qemu/log.h"
+>   #include "cpu.h"
+>   #include "tcg/tcg.h"
+>   #include "tcg/tcg-temp-internal.h"
+> @@ -58,6 +59,7 @@
+>   # define CONFIG_SOFTMMU_GATE 0
+>   #endif
+>   
+> +/* Update plugin_from_name in tcg.c. */
+>   enum plugin_gen_from {
+>       PLUGIN_GEN_FROM_TB,
+>       PLUGIN_GEN_FROM_INSN,
+> @@ -192,66 +194,21 @@ static void gen_mem_cb(struct qemu_plugin_dyn_cb *cb,
+>       tcg_temp_free_i32(cpu_index);
+>   }
+>   
+> -/* #define DEBUG_PLUGIN_GEN_OPS */
+> -static void pr_ops(void)
+> -{
+> -#ifdef DEBUG_PLUGIN_GEN_OPS
+> -    TCGOp *op;
+> -    int i = 0;
+> -
+> -    QTAILQ_FOREACH(op, &tcg_ctx->ops, link) {
+> -        const char *name = "";
+> -        const char *type = "";
+> -
+> -        if (op->opc == INDEX_op_plugin_cb_start) {
+> -            switch (op->args[0]) {
+> -            case PLUGIN_GEN_FROM_TB:
+> -                name = "tb";
+> -                break;
+> -            case PLUGIN_GEN_FROM_INSN:
+> -                name = "insn";
+> -                break;
+> -            case PLUGIN_GEN_FROM_MEM:
+> -                name = "mem";
+> -                break;
+> -            case PLUGIN_GEN_AFTER_INSN:
+> -                name = "after insn";
+> -                break;
+> -            default:
+> -                break;
+> -            }
+> -            switch (op->args[1]) {
+> -            case PLUGIN_GEN_CB_UDATA:
+> -                type = "udata";
+> -                break;
+> -            case PLUGIN_GEN_CB_INLINE:
+> -                type = "inline";
+> -                break;
+> -            case PLUGIN_GEN_CB_MEM:
+> -                type = "mem";
+> -                break;
+> -            case PLUGIN_GEN_ENABLE_MEM_HELPER:
+> -                type = "enable mem helper";
+> -                break;
+> -            case PLUGIN_GEN_DISABLE_MEM_HELPER:
+> -                type = "disable mem helper";
+> -                break;
+> -            default:
+> -                break;
+> -            }
+> -        }
+> -        printf("op[%2i]: %s %s %s\n", i, tcg_op_defs[op->opc].name, name, type);
+> -        i++;
+> -    }
+> -#endif
+> -}
+> -
+>   static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
+>   {
+>       TCGOp *op, *next;
+>       int insn_idx = -1;
+>   
+> -    pr_ops();
+> +    if (unlikely(qemu_loglevel_mask(LOG_TB_OP_PLUGIN)
+> +                 && qemu_log_in_addr_range(plugin_tb->vaddr))) {
+> +        FILE *logfile = qemu_log_trylock();
+> +        if (logfile) {
+> +            fprintf(logfile, "OP before plugin injection:\n");
+> +            tcg_dump_ops(tcg_ctx, logfile, false);
+> +            fprintf(logfile, "\n");
+> +            qemu_log_unlock(logfile);
+> +        }
+> +    }
+>   
+>       /*
+>        * While injecting code, we cannot afford to reuse any ebb temps
+> @@ -389,7 +346,6 @@ static void plugin_gen_inject(struct qemu_plugin_tb *plugin_tb)
+>               break;
+>           }
+>       }
+> -    pr_ops();
+>   }
+>   
+>   bool plugin_gen_tb_start(CPUState *cpu, const DisasContextBase *db,
+> diff --git a/tcg/tcg.c b/tcg/tcg.c
+> index 363a065e28..d248c52e96 100644
+> --- a/tcg/tcg.c
+> +++ b/tcg/tcg.c
+> @@ -2540,6 +2540,15 @@ static const char bswap_flag_name[][6] = {
+>       [TCG_BSWAP_IZ | TCG_BSWAP_OS] = "iz,os",
+>   };
+>   
+> +#ifdef CONFIG_PLUGIN
+> +static const char * const plugin_from_name[] = {
+> +    "from-tb",
+> +    "from-insn",
+> +    "after-insn",
+> +    "after-tb",
+> +};
+> +#endif
+> +
+>   static inline bool tcg_regset_single(TCGRegSet d)
+>   {
+>       return (d & (d - 1)) == 0;
+> @@ -2558,7 +2567,7 @@ static inline TCGReg tcg_regset_first(TCGRegSet d)
+>   #define ne_fprintf(...) \
+>       ({ int ret_ = fprintf(__VA_ARGS__); ret_ >= 0 ? ret_ : 0; })
+>   
+> -static void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
+> +void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
+>   {
+>       char buf[128];
+>       TCGOp *op;
+> @@ -2714,6 +2723,24 @@ static void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
+>                       i = k = 1;
+>                   }
+>                   break;
+> +#ifdef CONFIG_PLUGIN
+> +            case INDEX_op_plugin_cb:
+> +                {
+> +                    TCGArg from = op->args[k++];
+> +                    const char *name = NULL;
+> +
+> +                    if (from < ARRAY_SIZE(plugin_from_name)) {
+> +                        name = plugin_from_name[from];
+> +                    }
+> +                    if (name) {
+> +                        col += ne_fprintf(f, "%s", name);
+> +                    } else {
+> +                        col += ne_fprintf(f, "$0x%" TCG_PRIlx, from);
+> +                    }
+> +                    i = 1;
+> +                }
+> +                break;
+> +#endif
+>               default:
+>                   i = 0;
+>                   break;
+> diff --git a/util/log.c b/util/log.c
+> index d36c98da0b..6219819855 100644
+> --- a/util/log.c
+> +++ b/util/log.c
+> @@ -466,6 +466,10 @@ const QEMULogItem qemu_log_items[] = {
+>         "show micro ops after optimization" },
+>       { CPU_LOG_TB_OP_IND, "op_ind",
+>         "show micro ops before indirect lowering" },
+> +#ifdef CONFIG_PLUGIN
+> +    { LOG_TB_OP_PLUGIN, "op_plugin",
+> +      "show micro ops before plugin injection" },
+> +#endif
+>       { CPU_LOG_INT, "int",
+>         "show interrupts/exceptions in short format" },
+>       { CPU_LOG_EXEC, "exec",
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
