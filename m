@@ -4,93 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ACB5CD11C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 15:24:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89668CD11C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 15:25:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmbJs-0005Xp-0N; Tue, 19 Mar 2024 11:24:04 -0400
+	id 1rmbKj-0006RF-7g; Tue, 19 Mar 2024 11:24:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1rmbJq-0005VO-OK
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:24:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rmbKh-0006Qv-Sl
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:24:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eauger@redhat.com>) id 1rmbJo-0001GG-8W
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:24:02 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1rmbKg-0001QK-9F
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 11:24:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710861839;
+ s=mimecast20190719; t=1710861893;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bKKfxprg0OibH8731+5gTBZ7AmKnVcb+BK5nzCHPeb4=;
- b=NuH/IB5V6VmKzl9Xp6oi1D7IdBnXyRZuVlu8Q1cQiWltkopdHjrHKQdgFxAkpkRtSP6jqX
- bPCBE3ik+oA4H57zSMWoxGUEGhrbidfvwPKMHircf435Blg6G8/QnyK4ua8aEIU0hW6VKb
- b8awq/OXwoDicGJqGBxVoF0jIf56Mt0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=P5iZ9A1H2hAPKUK0OQWotwuY5hXUf0wEzUmR35o9c20=;
+ b=MxMoy7g0loC0Ttsd01lkdI/XqNEu51mYiSEDSM2UtQzI+fPeGvQmPo9N2mwtgvYHXZi0S3
+ yX8vxT443hbTK8MXYg3yQ0wqZ6DZPBKQeCebShlwO/nHE9TdtHrE98iJqvGxXXKdc6P7lP
+ Co6acrUvcWTiphUiTYr3q1Qog2znV5c=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-670-sVSOe-PZO0quZORQIC7-AQ-1; Tue, 19 Mar 2024 11:23:58 -0400
-X-MC-Unique: sVSOe-PZO0quZORQIC7-AQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-41407d66b11so16249515e9.1
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 08:23:57 -0700 (PDT)
+ us-mta-627-hqlQMIPNOE21Waxenz0spA-1; Tue, 19 Mar 2024 11:24:50 -0400
+X-MC-Unique: hqlQMIPNOE21Waxenz0spA-1
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-5cec8bc5c66so3555183a12.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 08:24:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710861837; x=1711466637;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bKKfxprg0OibH8731+5gTBZ7AmKnVcb+BK5nzCHPeb4=;
- b=OHp/6U7owSYn+bo/wMfacb3ghT0cW7XLxN060hiWSWHYiNHs+7S2WVbf9gCzS1axBR
- Vn362mYEQcJwV6FAIN/lNSIyTi1Ai7zVcCkw4YAA6O92IhQTObE4icZuGNZ0M6ojXJX6
- QwjLsVIlf1qymakvGsYr47WGywKUhhBJ12hl+cuP5aNFM453f3eP7PL8FJGbiihwzfmK
- KZJO56JN2Ep/BgUBCKe1OLaEH9nr/yXgia5+f3aZRqMYD07d6Ys390BvThjs/odWI6Ti
- OiynvhtcXxcHxcZU+5ufQ3j8xWybu0Wng9Gq/FGVOnxSUzk932S/ZCBXGpv4gTJIolD3
- xTMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQ9+9VExApM4q+d81DV7nf3+8AD2hBZ04LHTqcxI1NO4dUkR5Cxm0SloGQj7x3tfqGzLhoT8CudvCUA9SMXZuQgM0ebJA=
-X-Gm-Message-State: AOJu0YxVB7yiTW1aS/UchJDhJee+ToZ5eGNeJywa+CZ7pzn+XtqNCmCv
- lxnqwL2I3oNIF1lyqCUzftJMx0pTIORDMtmBqyzs1y4jIjiDV+xDGF83OiDuchwjGA45MYU2qVV
- uuN9GbPi5KZ4rmfK/Y3Q1Bh+Glxck4WVBqZu71f/BhSwV0FMs5TWe
-X-Received: by 2002:a05:600c:46c9:b0:414:64c8:5523 with SMTP id
- q9-20020a05600c46c900b0041464c85523mr1800771wmo.3.1710861836643; 
- Tue, 19 Mar 2024 08:23:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZPzg2jZAHYLGSLgSGmPeSZqT44Ys75VdFIsKW7y3Zso7UeL5AyjYFSdgOKuZ5CVdpu9yalw==
-X-Received: by 2002:a05:600c:46c9:b0:414:64c8:5523 with SMTP id
- q9-20020a05600c46c900b0041464c85523mr1800745wmo.3.1710861836087; 
- Tue, 19 Mar 2024 08:23:56 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- f11-20020a05600c4e8b00b0041461cce1cbsm3523325wmq.46.2024.03.19.08.23.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 08:23:55 -0700 (PDT)
-Message-ID: <901a0623-c93b-4930-9ef5-89adf505929d@redhat.com>
-Date: Tue, 19 Mar 2024 16:23:54 +0100
+ d=1e100.net; s=20230601; t=1710861890; x=1711466690;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=P5iZ9A1H2hAPKUK0OQWotwuY5hXUf0wEzUmR35o9c20=;
+ b=mlGP3eO1AnZkBeKcJkwL0rBg7CsP+Qxrtmzan7N0pKDi9YTU3+RMMifMY5YoqaUyhy
+ hi8ivVjQea+ZI8TRHdBy73r2XecgsnZQB6jKH5txch2R7OoJ32yqJDAmWc7BKSoooO/J
+ cXxyCx5mO2CqrzlPWwGDPZnN7ueFT6K06tAQCjBS0VoNtOWvQAI1w90HDVnEaJr8NeBC
+ RZQNmpy5UWt6EzGYoqowCSlwplBakWUw1m/bFFqOeTDB+4/vraOdoytWwW9tD4uPjOWz
+ t0x8dBZ/3QqcuFh2Wfhmjv+PST1hQGXwKXqMh/RJAy7vYt0w7z5I7zEvxuAnOj43nWTs
+ pomA==
+X-Gm-Message-State: AOJu0Ywp1nfVjPpZ+LlK6PnjG+Wz3RN4Xx8mhejQY1Wex1+Z2wr5LcMS
+ 7469w01v7RwgKvtQiEMtr4ChFEcoXbA6TAVqyE7XV0EWHg3SsSzAryuHaJharE8hk0rYO6sFDAU
+ NuECCe6rhRWYIPjDnz/tRN01gDFdrClgx8cWFxockJxqqhfcxagPkAU3P5QyhR+U4/wUGAYCNZr
+ SPiDcSn1r2EYIqEpthjOs7KUZA2yc=
+X-Received: by 2002:a17:90a:fd95:b0:29e:e0a:e8c8 with SMTP id
+ cx21-20020a17090afd9500b0029e0e0ae8c8mr7789018pjb.5.1710861889902; 
+ Tue, 19 Mar 2024 08:24:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFsf+1r7qtBfwPXP+omtrJf0uim6X/H9ScZ5vgOx4Ab4v6xfPofxC+jPS5GsW6HNeJ+Rv9dPOCXrAYGjTF2fh8=
+X-Received: by 2002:a17:90a:fd95:b0:29e:e0a:e8c8 with SMTP id
+ cx21-20020a17090afd9500b0029e0e0ae8c8mr7789002pjb.5.1710861889535; Tue, 19
+ Mar 2024 08:24:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8] arm/kvm: Enable support for KVM_ARM_VCPU_PMU_V3_FILTER
-Content-Language: en-US
-To: Shaoqin Huang <shahuang@redhat.com>, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-References: <20240312074849.71475-1-shahuang@redhat.com>
-From: Eric Auger <eauger@redhat.com>
-In-Reply-To: <20240312074849.71475-1-shahuang@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eauger@redhat.com;
+References: <20240315152301.3621858-1-armbru@redhat.com>
+ <20240315152301.3621858-13-armbru@redhat.com>
+In-Reply-To: <20240315152301.3621858-13-armbru@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 19 Mar 2024 11:24:37 -0400
+Message-ID: <CAFn=p-aoo3T8S-EOvHT8whMy=ov_qX4cAAHs5qtUN9Kbjh30Jg@mail.gmail.com>
+Subject: Re: [PATCH v5 12/25] qapi: Assert built-in types exist
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>
+Content-Type: multipart/alternative; boundary="0000000000002fa2b70614051343"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,440 +96,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shaoqin,
+--0000000000002fa2b70614051343
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 3/12/24 08:48, Shaoqin Huang wrote:
-> The KVM_ARM_VCPU_PMU_V3_FILTER provides the ability to let the VMM decide
-> which PMU events are provided to the guest. Add a new option
-> `kvm-pmu-filter` as -cpu sub-option to set the PMU Event Filtering.
-> Without the filter, all PMU events are exposed from host to guest by
-> default. The usage of the new sub-option can be found from the updated
-> document (docs/system/arm/cpu-features.rst).
-> 
-> Here is an example which shows how to use the PMU Event Filtering, when
-> we launch a guest by use kvm, add such command line:
-> 
->   # qemu-system-aarch64 \
->         -accel kvm \
->         -cpu host,kvm-pmu-filter="D:0x11-0x11"
-> 
-> Since the first action is deny, we have a global allow policy. This
-> filters out the cycle counter (event 0x11 being CPU_CYCLES).
-> 
-> And then in guest, use the perf to count the cycle:
-> 
->   # perf stat sleep 1
-> 
->    Performance counter stats for 'sleep 1':
-> 
->               1.22 msec task-clock                       #    0.001 CPUs utilized
->                  1      context-switches                 #  820.695 /sec
->                  0      cpu-migrations                   #    0.000 /sec
->                 55      page-faults                      #   45.138 K/sec
->    <not supported>      cycles
->            1128954      instructions
->             227031      branches                         #  186.323 M/sec
->               8686      branch-misses                    #    3.83% of all branches
-> 
->        1.002492480 seconds time elapsed
-> 
->        0.001752000 seconds user
->        0.000000000 seconds sys
-> 
-> As we can see, the cycle counter has been disabled in the guest, but
-> other pmu events do still work.
-> 
-> Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
+On Fri, Mar 15, 2024, 11:24=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
+
+> QAPISchema.lookup_type('FOO') returns a QAPISchemaType when type 'FOO'
+> exists, else None.  It won't return None for built-in types like
+> 'int'.
+>
+> Since mypy can't see that, it'll complain that we assign the
+> Optional[QAPISchemaType] returned by .lookup_type() to QAPISchemaType
+> variables.
+>
+> Add assertions to help it over the hump.
+>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
-> v7->v8:
->   - Add qtest for kvm-pmu-filter.
->   - Do the kvm-pmu-filter syntax checking up-front in the kvm_pmu_filter_set()
->   function. And store the filter information at there. When kvm_pmu_filter_get()
->   reconstitute it.
-> 
-> v6->v7:
->   - Check return value of sscanf.
->   - Improve the check condition.
-> 
-> v5->v6:
->   - Commit message improvement.
->   - Remove some unused code.
->   - Collect Reviewed-by, thanks Sebastian.
->   - Use g_auto(Gstrv) to replace the gchar **.          [Eric]
-> 
-> v4->v5:
->   - Change the kvm-pmu-filter as a -cpu sub-option.     [Eric]
->   - Comment tweak.                                      [Gavin]
->   - Rebase to the latest branch.
-> 
-> v3->v4:
->   - Fix the wrong check for pmu_filter_init.            [Sebastian]
->   - Fix multiple alignment issue.                       [Gavin]
->   - Report error by warn_report() instead of error_report(), and don't use
->   abort() since the PMU Event Filter is an add-on and best-effort feature.
->                                                         [Gavin]
->   - Add several missing {  } for single line of code.   [Gavin]
->   - Use the g_strsplit() to replace strtok().           [Gavin]
-> 
-> v2->v3:
->   - Improve commits message, use kernel doc wording, add more explaination on
->     filter example, fix some typo error.                [Eric]
->   - Add g_free() in kvm_arch_set_pmu_filter() to prevent memory leak. [Eric]
->   - Add more precise error message report.              [Eric]
->   - In options doc, add pmu-filter rely on KVM_ARM_VCPU_PMU_V3_FILTER support in
->     KVM.                                                [Eric]
-> 
-> v1->v2:
->   - Add more description for allow and deny meaning in 
->     commit message.                                     [Sebastian]
->   - Small improvement.                                  [Sebastian]
-> ---
->  docs/system/arm/cpu-features.rst |  23 +++++++
->  target/arm/arm-qmp-cmds.c        |   2 +-
->  target/arm/cpu.h                 |   3 +
->  target/arm/kvm.c                 | 115 +++++++++++++++++++++++++++++++
->  tests/qtest/arm-cpu-features.c   |  51 ++++++++++++++
->  5 files changed, 193 insertions(+), 1 deletion(-)
-> 
-> diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-> index a5fb929243..f3930f34b3 100644
-> --- a/docs/system/arm/cpu-features.rst
-> +++ b/docs/system/arm/cpu-features.rst
-> @@ -204,6 +204,29 @@ the list of KVM VCPU features and their descriptions.
->    the guest scheduler behavior and/or be exposed to the guest
->    userspace.
->  
-> +``kvm-pmu-filter``
-> +  By default kvm-pmu-filter is disabled. This means that by default all PMU
-> +  events will be exposed to guest.
-> +
-> +  KVM implements PMU Event Filtering to prevent a guest from being able to
-> +  sample certain events. It depends on the KVM_ARM_VCPU_PMU_V3_FILTER
-> +  attribute supported in KVM. It has the following format:
-> +
-> +  kvm-pmu-filter="{A,D}:start-end[;{A,D}:start-end...]"
-> +
-> +  The A means "allow" and D means "deny", start is the first event of the
-> +  range and the end is the last one. The first registered range defines
-> +  the global policy (global ALLOW if the first action is DENY, global DENY
-> +  if the first action is ALLOW). The start and end only support hexadecimal
-> +  format. For example:
-> +
-> +  kvm-pmu-filter="A:0x11-0x11;A:0x23-0x3a;D:0x30-0x30"
-> +
-> +  Since the first action is allow, we have a global deny policy. It
-> +  will allow event 0x11 (the cycle counter), events 0x23 to 0x3a are
-> +  also allowed except the event 0x30 which is denied, and all the other
-> +  events are denied.
-> +
->  TCG VCPU Features
->  =================
->  
-> diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-> index 2250cd7ddf..36df2e4820 100644
-> --- a/target/arm/arm-qmp-cmds.c
-> +++ b/target/arm/arm-qmp-cmds.c
-> @@ -94,7 +94,7 @@ static const char *cpu_model_advertised_features[] = {
->      "sve128", "sve256", "sve384", "sve512",
->      "sve640", "sve768", "sve896", "sve1024", "sve1152", "sve1280",
->      "sve1408", "sve1536", "sve1664", "sve1792", "sve1920", "sve2048",
-> -    "kvm-no-adjvtime", "kvm-steal-time",
-> +    "kvm-no-adjvtime", "kvm-steal-time", "kvm-pmu-filter",
->      "pauth", "pauth-impdef", "pauth-qarma3",
->      NULL
->  };
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 63f31e0d98..b810a80e67 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -948,6 +948,9 @@ struct ArchCPU {
->  
->      /* KVM steal time */
->      OnOffAuto kvm_steal_time;
-> +
-> +    /* KVM PMU Filter */
-> +    GArray *kvm_pmu_filter;
->  #endif /* CONFIG_KVM */
->  
->      /* Uniprocessor system with MP extensions */
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 81813030a5..7f62fad029 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -496,6 +496,72 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
->      ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
->  }
->  
-> +static char *kvm_pmu_filter_get(Object *obj, Error **errp)
-> +{
-> +    ARMCPU *cpu = ARM_CPU(obj);
-> +    g_autoptr(GString) pmu_filter = g_string_new(NULL);
-> +    struct kvm_pmu_event_filter *filter;
-> +    char action;
-> +    int i;
-> +
-> +    if (!cpu->kvm_pmu_filter) {
-> +        return NULL;
-> +    }
-> +
-> +    for (i = 0; i < cpu->kvm_pmu_filter->len; i++) {
-> +        filter = &g_array_index(cpu->kvm_pmu_filter,
-> +                                struct kvm_pmu_event_filter, i);
-> +        if (i) {
-> +            g_string_append_c(pmu_filter, ';');
-> +        }
-> +        action = filter->action == KVM_PMU_EVENT_ALLOW ? 'A' : 'D';
-> +        g_string_append_printf(pmu_filter, "%c:0x%hx-0x%hx", action,
-> +                               filter->base_event,
-> +                               filter->base_event + filter->nevents - 1);
-> +    }
-> +
-> +    return g_strdup(pmu_filter->str);
-> +}
-> +
-> +static void kvm_pmu_filter_set(Object *obj, const char *pmu_filter,
-> +                               Error **errp)
-> +{
-> +    ARMCPU *cpu = ARM_CPU(obj);
-> +    struct kvm_pmu_event_filter filter;
-> +    g_auto(GStrv) event_filters;
-> +    int i;
-> +
-> +    if (cpu->kvm_pmu_filter) {
-> +        g_array_free(cpu->kvm_pmu_filter, true);
-> +    }
-> +
-> +    cpu->kvm_pmu_filter = g_array_new(false, false,
-> +                                      sizeof(struct kvm_pmu_event_filter));
-> +
-> +    event_filters = g_strsplit(pmu_filter, ";", -1);
-> +    for (i = 0; event_filters[i]; i++) {
-> +        unsigned short start = 0, end = 0;
-> +        char act;
-> +
-> +        if (sscanf(event_filters[i], "%c:%hx-%hx", &act, &start, &end) != 3) {
-> +            warn_report("Skipping invalid PMU filter %s", event_filters[i]);
-> +            continue;
-> +        }
-> +
-> +        if ((act != 'A' && act != 'D') || start > end) {
-> +            warn_report("Skipping invalid PMU filter %s", event_filters[i]);
-> +            continue;
-if both conditions above lead to the same outcome, I think you can merge
-"or" them.
+>  scripts/qapi/introspect.py | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
+> index 67c7d89aae..4679b1bc2c 100644
+> --- a/scripts/qapi/introspect.py
+> +++ b/scripts/qapi/introspect.py
+> @@ -227,10 +227,14 @@ def _use_type(self, typ: QAPISchemaType) -> str:
+>
+>          # Map the various integer types to plain int
+>          if typ.json_type() =3D=3D 'int':
+> -            typ =3D self._schema.lookup_type('int')
+> +            type_int =3D self._schema.lookup_type('int')
+> +            assert type_int
+> +            typ =3D type_int
+>          elif (isinstance(typ, QAPISchemaArrayType) and
+>                typ.element_type.json_type() =3D=3D 'int'):
+> -            typ =3D self._schema.lookup_type('intList')
+> +            type_intList =3D self._schema.lookup_type('intList')
+> +            assert type_intList
+> +            typ =3D type_intList
+>          # Add type to work queue if new
+>          if typ not in self._used_types:
+>              self._used_types.append(typ)
+> --
+> 2.44.0
+>
 
-on v7 Peter suggested we should rather fail if the user passes us an
-option that can't be applied. This sounds even more sensible now we
-handle things on "set". Then you can use error_setg on errp and return.
-> +        }
-> +
-> +        filter.base_event = start;
-> +        filter.nevents = end - start + 1;
-> +        filter.action = (act == 'A') ? KVM_PMU_EVENT_ALLOW :
-> +                                       KVM_PMU_EVENT_DENY;
-> +
-> +        g_array_append_vals(cpu->kvm_pmu_filter, &filter, 1);
-> +    }
-> +}
-> +
->  /* KVM VCPU properties should be prefixed with "kvm-". */
->  void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
->  {
-> @@ -517,6 +583,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
->                               kvm_steal_time_set);
->      object_property_set_description(obj, "kvm-steal-time",
->                                      "Set off to disable KVM steal time.");
-> +
-> +    object_property_add_str(obj, "kvm-pmu-filter", kvm_pmu_filter_get,
-> +                            kvm_pmu_filter_set);
-> +    object_property_set_description(obj, "kvm-pmu-filter",
-> +                                    "PMU Event Filtering description for "
-> +                                    "guest PMU. (default: NULL, disabled)");
->  }
->  
->  bool kvm_arm_pmu_supported(void)
-> @@ -1706,6 +1778,47 @@ static bool kvm_arm_set_device_attr(ARMCPU *cpu, struct kvm_device_attr *attr,
->      return true;
->  }
->  
-> +static void kvm_arm_pmu_filter_init(ARMCPU *cpu)
-> +{
-> +    static bool pmu_filter_init;
-> +    struct kvm_device_attr attr = {
-> +        .group      = KVM_ARM_VCPU_PMU_V3_CTRL,
-> +        .attr       = KVM_ARM_VCPU_PMU_V3_FILTER,
-> +    };
-> +    int i;
-> +
-> +    /*
-> +     * The filter only needs to be initialized through one vcpu ioctl and it
-> +     * will affect all other vcpu in the vm.
-> +     * It can be referred from kernel commit d7eec2360e3 ("KVM: arm64: Add PMU
-> +     * event filtering infrastructure"):
-> +     * Note that although the ioctl is per-vcpu, the map of allowed events is
-> +     * global to the VM (it can be setup from any vcpu until the vcpu PMU is
-> +     * initialized).
-Personnally I would just say:
+Yeah, if you like this more, go ahead. I know it works because I did it
+this way at one point!
 
-although the ioctl is per-vcpu,  the map of allowed events is global to
-the VM (and can be setup from any vcpu until the vcpu PMU is initialized
-> +     */
-> +    if (pmu_filter_init) {
-> +        return;
-> +    } else {
-> +        pmu_filter_init = true;
-> +    }
-> +
-> +    if (!cpu->kvm_pmu_filter) {
-> +        return;
-> +    }
-> +    if (kvm_vcpu_ioctl(CPU(cpu), KVM_HAS_DEVICE_ATTR, &attr)) {
-> +        error_report("KVM doesn't support the PMU Event Filter!");
-> +        return;
-> +    }
-> +
-> +    for (i = 0; i < cpu->kvm_pmu_filter->len; i++) {
-> +        attr.addr = (uint64_t)&g_array_index(cpu->kvm_pmu_filter,
-> +                                             struct kvm_pmu_event_filter, i);
-> +        if (!kvm_arm_set_device_attr(cpu, &attr, "PMU_V3_FILTER")) {
-> +            break;
-I think Peter requested it to fail. Here it doesn't.
-> +        }
-> +    }
-> +}
-> +
->  void kvm_arm_pmu_init(ARMCPU *cpu)
->  {
->      struct kvm_device_attr attr = {
-> @@ -1716,6 +1829,8 @@ void kvm_arm_pmu_init(ARMCPU *cpu)
->      if (!cpu->has_pmu) {
->          return;
->      }
-> +
-> +    kvm_arm_pmu_filter_init(cpu);
->      if (!kvm_arm_set_device_attr(cpu, &attr, "PMU")) {
->          error_report("failed to init PMU");
->          abort();
-> diff --git a/tests/qtest/arm-cpu-features.c b/tests/qtest/arm-cpu-features.c
-> index a8a4c668ad..60a5e32eb8 100644
-> --- a/tests/qtest/arm-cpu-features.c
-> +++ b/tests/qtest/arm-cpu-features.c
-> @@ -127,6 +127,17 @@ static bool resp_get_feature(QDict *resp, const char *feature)
->      return qdict_get_bool(props, feature);
->  }
->  
-> +static const char *resp_get_feature_str(QDict *resp, const char *feature)
-> +{
-> +    QDict *props;
-> +
-> +    g_assert(resp);
-> +    g_assert(resp_has_props(resp));
-> +    props = resp_get_props(resp);
-> +    g_assert(qdict_get(props, feature));
-> +    return qdict_get_str(props, feature);
-> +}
-> +
->  #define assert_has_feature(qts, cpu_type, feature)                     \
->  ({                                                                     \
->      QDict *_resp = do_query_no_props(qts, cpu_type);                   \
-> @@ -156,6 +167,18 @@ static bool resp_get_feature(QDict *resp, const char *feature)
->      g_assert(qdict_get_bool(_props, feature) == (expected_value));     \
->  })
->  
-> +#define resp_assert_feature_str(resp, feature, expected_value)         \
-> +({                                                                     \
-> +    QDict *_props;                                                     \
-> +                                                                       \
-> +    g_assert(_resp);                                                   \
-> +    g_assert(resp_has_props(_resp));                                   \
-> +    _props = resp_get_props(_resp);                                    \
-> +    g_assert(qdict_get(_props, feature));                              \
-> +    g_assert_cmpstr(qdict_get_str(_props, feature),                    \
-> +                    ==, (expected_value));                             \
-> +})
-> +
->  #define assert_feature(qts, cpu_type, feature, expected_value)         \
->  ({                                                                     \
->      QDict *_resp;                                                      \
-> @@ -177,6 +200,17 @@ static bool resp_get_feature(QDict *resp, const char *feature)
->      qobject_unref(_resp);                                              \
->  })
->  
-> +#define assert_set_feature_str(qts, cpu_type, feature, value)          \
-> +({                                                                     \
-> +    const char *_fmt = "{ %s: %s }";                                   \
-> +    QDict *_resp;                                                      \
-> +                                                                       \
-> +    _resp = do_query(qts, cpu_type, _fmt, feature, value);             \
-> +    g_assert(_resp);                                                   \
-> +    resp_assert_feature_str(_resp, feature, value);                    \
-> +    qobject_unref(_resp);                                              \
-> +})
-> +
->  #define assert_has_feature_enabled(qts, cpu_type, feature)             \
->      assert_feature(qts, cpu_type, feature, true)
->  
-> @@ -461,6 +495,7 @@ static void test_query_cpu_model_expansion(const void *data)
->  
->      assert_has_not_feature(qts, "max", "kvm-no-adjvtime");
->      assert_has_not_feature(qts, "max", "kvm-steal-time");
-> +    assert_has_not_feature(qts, "max", "kvm-pmu-filter");
->  
->      if (g_str_equal(qtest_get_arch(), "aarch64")) {
->          assert_has_feature_enabled(qts, "max", "aarch64");
-> @@ -508,6 +543,7 @@ static void test_query_cpu_model_expansion_kvm(const void *data)
->      assert_set_feature(qts, "host", "kvm-no-adjvtime", false);
->  
->      if (g_str_equal(qtest_get_arch(), "aarch64")) {
-> +        const char *kvm_supports_pmu_filter;
->          bool kvm_supports_steal_time;
->          bool kvm_supports_sve;
->          char max_name[8], name[8];
-> @@ -546,15 +582,29 @@ static void test_query_cpu_model_expansion_kvm(const void *data)
->           * because this instance of KVM doesn't support them. Test that the
->           * features are present, and, when enabled, issue further tests.
->           */
-> +        assert_has_feature(qts, "host", "kvm-pmu-filter");
->          assert_has_feature(qts, "host", "kvm-steal-time");
->          assert_has_feature(qts, "host", "sve");
->  
->          resp = do_query_no_props(qts, "host");
-> +        kvm_supports_pmu_filter = resp_get_feature_str(resp, "kvm-pmu-filter");
->          kvm_supports_steal_time = resp_get_feature(resp, "kvm-steal-time");
->          kvm_supports_sve = resp_get_feature(resp, "sve");
->          vls = resp_get_sve_vls(resp);
->          qobject_unref(resp);
->  
-> +        if (kvm_supports_pmu_filter) {
-> +            assert_set_feature_str(qts, "host", "kvm-pmu-filter", "");
-> +            assert_set_feature_str(qts, "host", "kvm-pmu-filter",
-> +                                   "A:0x11-0x11");
-> +            assert_set_feature_str(qts, "host", "kvm-pmu-filter",
-> +                                   "D:0x11-0x11");
-> +            assert_set_feature_str(qts, "host", "kvm-pmu-filter",
-> +                                   "A:0x11-0x11;A:0x12-0x20");
-> +            assert_set_feature_str(qts, "host", "kvm-pmu-filter",
-> +                                   "D:0x11-0x11;A:0x12-0x20;D:0x12-0x15");
-Just to double check this set the filter and checks the filter is
-applied, is that correct?
-I see you set some ranges of events. Are you sure those events are
-supported on host PMU and won't create a failure on setting the PMU filter?
+Matter of taste and preference etc.
 
-Thanks
+Reviewed-by: John Snow <jsnow@redhat.com>
 
-Eric
-> +        }
-> +
->          if (kvm_supports_steal_time) {
->              /* If we have steal-time then we should be able to toggle it. */
->              assert_set_feature(qts, "host", "kvm-steal-time", false);
-> @@ -622,6 +672,7 @@ static void test_query_cpu_model_expansion_kvm(const void *data)
->          assert_has_not_feature(qts, "host", "pmu");
->          assert_has_not_feature(qts, "host", "sve");
->          assert_has_not_feature(qts, "host", "kvm-steal-time");
-> +        assert_has_not_feature(qts, "host", "kvm-pmu-filter");
->      }
->  
->      qtest_quit(qts);
+>
+
+--0000000000002fa2b70614051343
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Fri, Mar 15, 2024, 11:24=E2=80=AFAM Markus Armbrust=
+er &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote=
+:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bor=
+der-left:1px #ccc solid;padding-left:1ex">QAPISchema.lookup_type(&#39;FOO&#=
+39;) returns a QAPISchemaType when type &#39;FOO&#39;<br>
+exists, else None.=C2=A0 It won&#39;t return None for built-in types like<b=
+r>
+&#39;int&#39;.<br>
+<br>
+Since mypy can&#39;t see that, it&#39;ll complain that we assign the<br>
+Optional[QAPISchemaType] returned by .lookup_type() to QAPISchemaType<br>
+variables.<br>
+<br>
+Add assertions to help it over the hump.<br>
+<br>
+Signed-off-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" t=
+arget=3D"_blank" rel=3D"noreferrer">armbru@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0scripts/qapi/introspect.py | 8 ++++++--<br>
+=C2=A01 file changed, 6 insertions(+), 2 deletions(-)<br>
+<br>
+diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py<br>
+index 67c7d89aae..4679b1bc2c 100644<br>
+--- a/scripts/qapi/introspect.py<br>
++++ b/scripts/qapi/introspect.py<br>
+@@ -227,10 +227,14 @@ def _use_type(self, typ: QAPISchemaType) -&gt; str:<b=
+r>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# Map the various integer types to plain =
+int<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if typ.json_type() =3D=3D &#39;int&#39;:<=
+br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typ =3D self._schema.lookup_type=
+(&#39;int&#39;)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type_int =3D self._schema.lookup=
+_type(&#39;int&#39;)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 assert type_int<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typ =3D type_int<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0elif (isinstance(typ, QAPISchemaArrayType=
+) and<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0typ.element_type.jso=
+n_type() =3D=3D &#39;int&#39;):<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typ =3D self._schema.lookup_type=
+(&#39;intList&#39;)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 type_intList =3D self._schema.lo=
+okup_type(&#39;intList&#39;)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 assert type_intList<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 typ =3D type_intList<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# Add type to work queue if new<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if typ not in self._used_types:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0self._used_types.append(typ=
+)<br>
+-- <br>
+2.44.0<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"=
+auto">Yeah, if you like this more, go ahead. I know it works because I did =
+it this way at one point!=C2=A0</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Matter of taste and preference etc.</div><div dir=3D"auto"><br></=
+div><div dir=3D"auto">Reviewed-by: John Snow &lt;<a href=3D"mailto:jsnow@re=
+dhat.com">jsnow@redhat.com</a>&gt;</div><div dir=3D"auto"><div class=3D"gma=
+il_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
+er-left:1px #ccc solid;padding-left:1ex"></blockquote></div></div></div>
+
+--0000000000002fa2b70614051343--
 
 
