@@ -4,86 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 298C0C54E5D
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 13:31:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC84C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 13:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmZYc-0001us-2Q; Tue, 19 Mar 2024 09:31:10 -0400
+	id 1rmZZr-0002eM-2v; Tue, 19 Mar 2024 09:32:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rmZYK-0001rE-9G
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:30:55 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rmZYI-00015c-GF
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:30:51 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-33ed7ef0ae8so1897103f8f.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 06:30:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710855048; x=1711459848; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GdltQKzqSsi7h7oD+tW5aVqxPCwN6NcQsTjsq0G+waI=;
- b=Z3M+s3cq2s4nmDTc38Ee+JasrMeC0VB9v7HiggwEi8Ug8NgL4V/mUxzyc0js0UQ0+u
- wma8/4tJS09h9UM4VIiT/XDzZx1EZBGyf9yXEZ0FBcep+0TMmYbVVCvPlJte1juj8AYD
- VqWg703ph/Zu/X3hKtHUFUXMHd/6Uz3H4wcxlQt3mltrn90KNJqTcYx4FN2iEiiHKJUO
- VrYE5iWLF7pBXsgiT1OuDFIVDoiwQoQgco5XoGT8VnKL09eE0TuG7UUTtQkq6Ava8+Mq
- hlhAiVmaDJ77havYjj6WtWCoazsvhuMyBcjStAQ2L1619EJWxgWlJa52lmip58ch7aab
- 43uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710855048; x=1711459848;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GdltQKzqSsi7h7oD+tW5aVqxPCwN6NcQsTjsq0G+waI=;
- b=BHbnuqsCFoE60KA3JNiIlIkLoKAH2qiRaiC4Mt2j+loT1loXytE8VB3nSua/7HoTQe
- y/43NEgKlkOiULp4bt0AVWDZgGnIogZcQqlD/qnR7qJ9PkTGRjbkYadSyURQVT7cuZWt
- hTPNpC3MLd3E+K4/wpiNNKK5iKJsZPsKPM4XPidw1X6cjejUggySGU+dMPEXviE/ThM3
- zphlFnK4xGnfHKoRUCbva8QMpvqsyIDUefjyvb4mNgJlZDvvBb5KSZBRmX6ud2vovP18
- 0vAPK/0o9jVKBM3Td94YiLdmRc6N+NrSdgTQGLOZwOxg+OQnil46Tr0WxHXSCF54R2VW
- Kjxg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4evqxFcO1EsLK/YaX7qYm4YcvbBcSVQuKaZvlmZgBM3drlTsvtuh6xUuyGmNMpiIHWWrXbQoUwOETv1UlxVBwvaSC4LA=
-X-Gm-Message-State: AOJu0YwOCwb+27RUHKB7judCexWO2n+yz+YQJKIQQ4bOdAn8Sl4IoeBv
- 2lxPgU/MhNgVJstpXB+2Y2F1foKCXkkB0PQsqvz90oZX7h4K6LUIZ8/I5AaSLhbN93aB6vS+ovG
- uaao=
-X-Google-Smtp-Source: AGHT+IGpc3C4h3DssHbyPFvZMU2XEIDMRTtSj2dXG5yCyAHF7tQeaEo1Z2Gk+GF4DRsNYx2fO4iO2g==
-X-Received: by 2002:a5d:590b:0:b0:33e:7f67:5dd8 with SMTP id
- v11-20020a5d590b000000b0033e7f675dd8mr2080717wrd.54.1710855047700; 
- Tue, 19 Mar 2024 06:30:47 -0700 (PDT)
-Received: from [192.168.1.24] ([102.35.208.160])
- by smtp.gmail.com with ESMTPSA id
- dw11-20020a0560000dcb00b0033b66c2d61esm12316405wrb.48.2024.03.19.06.30.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 06:30:47 -0700 (PDT)
-Message-ID: <d809c08b-0e9b-4c1e-b362-55ba51f1916d@linaro.org>
-Date: Tue, 19 Mar 2024 17:30:46 +0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmZZj-0002cm-DC
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:32:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rmZZh-0001RE-93
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 09:32:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710855135;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FbjzmZ1U0Mwt0hmu8IXDW+MwyY5qt9tbclQufJ6L3gA=;
+ b=X18ml0SyJps0FzC43SvXZc40Jz3YaWSMxeX4ZBdiv2goTZgRRjc/DEYpsS4TBp4wFEYVDQ
+ sSdjkzNAHTFmbWJvDWc0a5Obqcdx2ryMfXmrk4bw4glWwSLm5iPFWz1VEfA7GOiypouQEj
+ SlWgZ+hKdiNwU1p9jSkBKdwCqeXGQVQ=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-462-dK0d34KnN5u2WuJeoQAihQ-1; Tue, 19 Mar 2024 09:32:13 -0400
+X-MC-Unique: dK0d34KnN5u2WuJeoQAihQ-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 532D6800267
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 13:32:13 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.166])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 803C01C060A4;
+ Tue, 19 Mar 2024 13:32:11 +0000 (UTC)
+Date: Tue, 19 Mar 2024 14:32:06 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Sanjay Rao <srao@redhat.com>,
+ Boaz Ben Shabat <bbenshab@redhat.com>, Joe Mario <jmario@redhat.com>
+Subject: Re: [PATCH] coroutine: cap per-thread local pool size
+Message-ID: <ZfmT1s8hcW48KIn1@redhat.com>
+References: <20240318183429.1039340-1-stefanha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 19/22] plugins: Merge qemu_plugin_tb_insn_get to
- plugin-gen.c
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org
-References: <20240316015720.3661236-1-richard.henderson@linaro.org>
- <20240316015720.3661236-20-richard.henderson@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240316015720.3661236-20-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240318183429.1039340-1-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,138 +80,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/16/24 05:57, Richard Henderson wrote:
-> Merge qemu_plugin_insn_alloc and qemu_plugin_tb_insn_get into
-> plugin_gen_insn_start, since it is used nowhere else.
+Am 18.03.2024 um 19:34 hat Stefan Hajnoczi geschrieben:
+> The coroutine pool implementation can hit the Linux vm.max_map_count
+> limit, causing QEMU to abort with "failed to allocate memory for stack"
+> or "failed to set up stack guard page" during coroutine creation.
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/qemu/plugin.h  | 39 ---------------------------------------
->   accel/tcg/plugin-gen.c | 39 ++++++++++++++++++++++++++++++++-------
->   2 files changed, 32 insertions(+), 46 deletions(-)
+> This happens because per-thread pools can grow to tens of thousands of
+> coroutines. Each coroutine causes 2 virtual memory areas to be created.
+> Eventually vm.max_map_count is reached and memory-related syscalls fail.
+> The per-thread pool sizes are non-uniform and depend on past coroutine
+> usage in each thread, so it's possible for one thread to have a large
+> pool while another thread's pool is empty.
 > 
-> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-> index 34498da717..07b1755990 100644
-> --- a/include/qemu/plugin.h
-> +++ b/include/qemu/plugin.h
-> @@ -128,14 +128,6 @@ static inline void qemu_plugin_insn_cleanup_fn(gpointer data)
->       g_byte_array_free(insn->data, true);
->   }
->   
-> -static inline struct qemu_plugin_insn *qemu_plugin_insn_alloc(void)
-> -{
-> -    struct qemu_plugin_insn *insn = g_new0(struct qemu_plugin_insn, 1);
-> -
-> -    insn->data = g_byte_array_sized_new(4);
-> -    return insn;
-> -}
-> -
->   /* Internal context for this TranslationBlock */
->   struct qemu_plugin_tb {
->       GPtrArray *insns;
-> @@ -152,37 +144,6 @@ struct qemu_plugin_tb {
->       GArray *cbs;
->   };
->   
-> -/**
-> - * qemu_plugin_tb_insn_get(): get next plugin record for translation.
-> - * @tb: the internal tb context
-> - * @pc: address of instruction
-> - */
-> -static inline
-> -struct qemu_plugin_insn *qemu_plugin_tb_insn_get(struct qemu_plugin_tb *tb,
-> -                                                 uint64_t pc)
-> -{
-> -    struct qemu_plugin_insn *insn;
-> -
-> -    if (unlikely(tb->n == tb->insns->len)) {
-> -        struct qemu_plugin_insn *new_insn = qemu_plugin_insn_alloc();
-> -        g_ptr_array_add(tb->insns, new_insn);
-> -    }
-> -
-> -    insn = g_ptr_array_index(tb->insns, tb->n++);
-> -    g_byte_array_set_size(insn->data, 0);
-> -    insn->calls_helpers = false;
-> -    insn->mem_helper = false;
-> -    insn->vaddr = pc;
-> -    if (insn->insn_cbs) {
-> -        g_array_set_size(insn->insn_cbs, 0);
-> -    }
-> -    if (insn->mem_cbs) {
-> -        g_array_set_size(insn->mem_cbs, 0);
-> -    }
-> -
-> -    return insn;
-> -}
-> -
->   /**
->    * struct CPUPluginState - per-CPU state for plugins
->    * @event_mask: plugin event bitmap. Modified only via async work.
-> diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-> index 28414c4ff1..70914c3bf8 100644
-> --- a/accel/tcg/plugin-gen.c
-> +++ b/accel/tcg/plugin-gen.c
-> @@ -380,11 +380,34 @@ bool plugin_gen_tb_start(CPUState *cpu, const DisasContextBase *db,
->   void plugin_gen_insn_start(CPUState *cpu, const DisasContextBase *db)
->   {
->       struct qemu_plugin_tb *ptb = tcg_ctx->plugin_tb;
-> -    struct qemu_plugin_insn *pinsn;
-> +    struct qemu_plugin_insn *insn;
-> +    size_t n = db->num_insns;
-> +    vaddr pc;
->   
-> -    pinsn = qemu_plugin_tb_insn_get(ptb, db->pc_next);
-> -    tcg_ctx->plugin_insn = pinsn;
-> -    plugin_gen_empty_callback(PLUGIN_GEN_FROM_INSN);
-> +    assert(n >= 1);
-> +    ptb->n = n;
-> +    if (n <= ptb->insns->len) {
-> +        insn = g_ptr_array_index(ptb->insns, n - 1);
-> +        g_byte_array_set_size(insn->data, 0);
-> +    } else {
-> +        assert(n - 1 == ptb->insns->len);
-> +        insn = g_new0(struct qemu_plugin_insn, 1);
-> +        insn->data = g_byte_array_sized_new(4);
-> +        g_ptr_array_add(ptb->insns, insn);
-> +    }
-> +
-> +    tcg_ctx->plugin_insn = insn;
-> +    insn->calls_helpers = false;
-> +    insn->mem_helper = false;
-> +    if (insn->insn_cbs) {
-> +        g_array_set_size(insn->insn_cbs, 0);
-> +    }
-> +    if (insn->mem_cbs) {
-> +        g_array_set_size(insn->mem_cbs, 0);
-> +    }
-> +
-> +    pc = db->pc_next;
-> +    insn->vaddr = pc;
->   
->       /*
->        * Detect page crossing to get the new host address.
-> @@ -392,16 +415,18 @@ void plugin_gen_insn_start(CPUState *cpu, const DisasContextBase *db)
->        * fetching instructions from a region not backed by RAM.
->        */
->       if (ptb->haddr1 == NULL) {
-> -        pinsn->haddr = NULL;
-> +        insn->haddr = NULL;
->       } else if (is_same_page(db, db->pc_next)) {
-> -        pinsn->haddr = ptb->haddr1 + pinsn->vaddr - ptb->vaddr;
-> +        insn->haddr = ptb->haddr1 + pc - ptb->vaddr;
->       } else {
->           if (ptb->vaddr2 == -1) {
->               ptb->vaddr2 = TARGET_PAGE_ALIGN(db->pc_first);
->               get_page_addr_code_hostp(cpu_env(cpu), ptb->vaddr2, &ptb->haddr2);
->           }
-> -        pinsn->haddr = ptb->haddr2 + pinsn->vaddr - ptb->vaddr2;
-> +        insn->haddr = ptb->haddr2 + pc - ptb->vaddr2;
->       }
-> +
-> +    plugin_gen_empty_callback(PLUGIN_GEN_FROM_INSN);
->   }
->   
->   void plugin_gen_insn_end(void)
+> Switch to a new coroutine pool implementation with a global pool that
+> grows to a maximum number of coroutines and per-thread local pools that
+> are capped at hardcoded small number of coroutines.
+> 
+> This approach does not leave large numbers of coroutines pooled in a
+> thread that may not use them again. In order to perform well it
+> amortizes the cost of global pool accesses by working in batches of
+> coroutines instead of individual coroutines.
+> 
+> The global pool is a list. Threads donate batches of coroutines to when
+> they have too many and take batches from when they have too few:
+> 
+> .-----------------------------------.
+> | Batch 1 | Batch 2 | Batch 3 | ... | global_pool
+> `-----------------------------------'
+> 
+> Each thread has up to 2 batches of coroutines:
+> 
+> .-------------------.
+> | Batch 1 | Batch 2 | per-thread local_pool (maximum 2 batches)
+> `-------------------'
+> 
+> The goal of this change is to reduce the excessive number of pooled
+> coroutines that cause QEMU to abort when vm.max_map_count is reached
+> without losing the performance of an adequately sized coroutine pool.
+> 
+> Here are virtio-blk disk I/O benchmark results:
+> 
+>       RW BLKSIZE IODEPTH    OLD    NEW CHANGE
+> randread      4k       1 113725 117451 +3.3%
+> randread      4k       8 192968 198510 +2.9%
+> randread      4k      16 207138 209429 +1.1%
+> randread      4k      32 212399 215145 +1.3%
+> randread      4k      64 218319 221277 +1.4%
+> randread    128k       1  17587  17535 -0.3%
+> randread    128k       8  17614  17616 +0.0%
+> randread    128k      16  17608  17609 +0.0%
+> randread    128k      32  17552  17553 +0.0%
+> randread    128k      64  17484  17484 +0.0%
+> 
+> See files/{fio.sh,test.xml.j2} for the benchmark configuration:
+> https://gitlab.com/stefanha/virt-playbooks/-/tree/coroutine-pool-fix-sizing
+> 
+> Buglink: https://issues.redhat.com/browse/RHEL-28947
+> Reported-by: Sanjay Rao <srao@redhat.com>
+> Reported-by: Boaz Ben Shabat <bbenshab@redhat.com>
+> Reported-by: Joe Mario <jmario@redhat.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+
+Though I do wonder if we can do something about the slight performance
+degradation that Sanjay reported. We seem to stay well under the hard
+limit, so the reduced global pool size shouldn't be the issue. Maybe
+it's the locking?
+
+Either way, even though it could be called a fix, I don't think this is
+for 9.0, right?
+
+Kevin
+
 
