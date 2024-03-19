@@ -4,65 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68D19C54E71
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 18:03:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D361FC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 18:08:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmdnM-0003zp-RC; Tue, 19 Mar 2024 14:02:40 -0400
+	id 1rmdsO-0005KO-Gs; Tue, 19 Mar 2024 14:07:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmdnI-0003zS-QO
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:02:39 -0400
+ id 1rmdsN-0005Ja-6a
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:07:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmdnB-0007Ok-00
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:02:36 -0400
+ id 1rmdsK-0008EA-9T
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 14:07:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710871347;
+ s=mimecast20190719; t=1710871667;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tmYCQ9k4fNsyxQYNhV2s9IWffrO3e8BfxyQmwKCj6v0=;
- b=jQ+E7XR3BNPHkN4hGYozwXBb3PomFOTwBZbHDWnZu01CD96bHSFTvA9Lf8ccZhU5GBjRu/
- dsVlCEHimwwyZ2RXvp4jK3yk4TvJ1grnf2t5vbwzpZi2rDeP3BfylLcC3lvxDhDFqrUQlt
- U4ONFZfv6CgigOEvU/mJPeyPE43XcrQ=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-12-yyOkum5HNkeNg2gv8XI_Vw-1; Tue,
- 19 Mar 2024 14:02:16 -0400
-X-MC-Unique: yyOkum5HNkeNg2gv8XI_Vw-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ bh=VWp7xEBQhmkS/WPvgx1mvlXZVR4gYbNBkwlsQq0v4mw=;
+ b=FG1ohEhxw5x4EF9dJej1PO84dN5ONE/zk/tiHxhktcWldSdIeBBaITJjlVT/q/VF86U4gb
+ HeapjwYAV9G1yrgeUrZL+4NQXXhPkD00H4wG98r5NZxSy6va8yAY8xdkRVQVIuHcBq4l41
+ CruNXOOROG10aHMpQCBZJEeyQt18two=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-620-q2iMwBpROIuABlfBz2jwkQ-1; Tue, 19 Mar 2024 14:07:42 -0400
+X-MC-Unique: q2iMwBpROIuABlfBz2jwkQ-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 241203C0D7C5;
- Tue, 19 Mar 2024 18:02:16 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4E72285CE41;
+ Tue, 19 Mar 2024 18:07:42 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.88])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id EC103492BC8;
- Tue, 19 Mar 2024 18:02:14 +0000 (UTC)
-Date: Tue, 19 Mar 2024 18:02:09 +0000
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8D5AA492BD0;
+ Tue, 19 Mar 2024 18:07:39 +0000 (UTC)
+Date: Tue, 19 Mar 2024 18:07:32 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com,
- marcandre.lureau@redhat.com, philmd@linaro.org, den@virtuozzo.com
-Subject: Re: [PATCH v3 6/7] qga/commands-posix: don't do fork()/exec() when
- suspending via sysfs
-Message-ID: <ZfnTIbXiGrVhTlQQ@redhat.com>
-References: <20240315122946.39168-1-andrey.drobyshev@virtuozzo.com>
- <20240315122946.39168-7-andrey.drobyshev@virtuozzo.com>
+To: Eric Auger <eauger@redhat.com>
+Cc: Shaoqin Huang <shahuang@redhat.com>, qemu-arm@nongnu.org,
+ Sebastian Ott <sebott@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH v7] arm/kvm: Enable support for KVM_ARM_VCPU_PMU_V3_FILTER
+Message-ID: <ZfnUZKf3p8jv2yEM@redhat.com>
+References: <20240221063431.76992-1-shahuang@redhat.com>
+ <ZfmtxxlATpvhK61y@redhat.com>
+ <84e01fa8-0de6-4d2b-8696-53cd3c3f42fa@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240315122946.39168-7-andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <84e01fa8-0de6-4d2b-8696-53cd3c3f42fa@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -89,92 +92,131 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 15, 2024 at 02:29:45PM +0200, Andrey Drobyshev wrote:
-> Since commit 246d76eba ("qga: guest_suspend: decoupling pm-utils and sys
-> logic") pm-utils logic is running in a separate child from the sysfs
-> logic.  Now when suspending via sysfs we don't really need to do that in
-> a separate process as we only need to perform one write to /sys/power/state.
+On Tue, Mar 19, 2024 at 06:58:33PM +0100, Eric Auger wrote:
+> Hi Daniel,
 > 
-> Let's just use g_file_set_contents() to simplify things here.
-> 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> ---
->  qga/commands-posix.c | 41 +++++------------------------------------
->  1 file changed, 5 insertions(+), 36 deletions(-)
+> On 3/19/24 16:22, Daniel P. Berrangé wrote:
+> > On Wed, Feb 21, 2024 at 01:34:31AM -0500, Shaoqin Huang wrote:
+> >> The KVM_ARM_VCPU_PMU_V3_FILTER provides the ability to let the VMM decide
+> >> which PMU events are provided to the guest. Add a new option
+> >> `kvm-pmu-filter` as -cpu sub-option to set the PMU Event Filtering.
+> >> Without the filter, all PMU events are exposed from host to guest by
+> >> default. The usage of the new sub-option can be found from the updated
+> >> document (docs/system/arm/cpu-features.rst).
+> >>
+> >> Here is an example which shows how to use the PMU Event Filtering, when
+> >> we launch a guest by use kvm, add such command line:
+> >>
+> >>   # qemu-system-aarch64 \
+> >>         -accel kvm \
+> >>         -cpu host,kvm-pmu-filter="D:0x11-0x11"
+> > 
+> > snip
+> > 
+> >> @@ -517,6 +533,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+> >>                               kvm_steal_time_set);
+> >>      object_property_set_description(obj, "kvm-steal-time",
+> >>                                      "Set off to disable KVM steal time.");
+> >> +
+> >> +    object_property_add_str(obj, "kvm-pmu-filter", kvm_pmu_filter_get,
+> >> +                            kvm_pmu_filter_set);
+> >> +    object_property_set_description(obj, "kvm-pmu-filter",
+> >> +                                    "PMU Event Filtering description for "
+> >> +                                    "guest PMU. (default: NULL, disabled)");
+> >>  }
+> > 
+> > Passing a string property, but....[1]
+> > 
+> >>  
+> >>  bool kvm_arm_pmu_supported(void)
+> >> @@ -1706,6 +1728,62 @@ static bool kvm_arm_set_device_attr(ARMCPU *cpu, struct kvm_device_attr *attr,
+> >>      return true;
+> >>  }
+> >>  
+> >> +static void kvm_arm_pmu_filter_init(ARMCPU *cpu)
+> >> +{
+> >> +    static bool pmu_filter_init;
+> >> +    struct kvm_pmu_event_filter filter;
+> >> +    struct kvm_device_attr attr = {
+> >> +        .group      = KVM_ARM_VCPU_PMU_V3_CTRL,
+> >> +        .attr       = KVM_ARM_VCPU_PMU_V3_FILTER,
+> >> +        .addr       = (uint64_t)&filter,
+> >> +    };
+> >> +    int i;
+> >> +    g_auto(GStrv) event_filters;
+> >> +
+> >> +    if (!cpu->kvm_pmu_filter) {
+> >> +        return;
+> >> +    }
+> >> +    if (kvm_vcpu_ioctl(CPU(cpu), KVM_HAS_DEVICE_ATTR, &attr)) {
+> >> +        warn_report("The KVM doesn't support the PMU Event Filter!");
+> > 
+> > If the user requested a filter and it can't be supported, QEMU
+> > must exit with an error, not ignore the user's request.
+> > 
+> >> +        return;
+> >> +    }
+> >> +
+> >> +    /*
+> >> +     * The filter only needs to be initialized through one vcpu ioctl and it
+> >> +     * will affect all other vcpu in the vm.
+> >> +     */
+> >> +    if (pmu_filter_init) {
+> >> +        return;
+> >> +    } else {
+> >> +        pmu_filter_init = true;
+> >> +    }
+> >> +
+> >> +    event_filters = g_strsplit(cpu->kvm_pmu_filter, ";", -1);
+> >> +    for (i = 0; event_filters[i]; i++) {
+> >> +        unsigned short start = 0, end = 0;
+> >> +        char act;
+> >> +
+> >> +        if (sscanf(event_filters[i], "%c:%hx-%hx", &act, &start, &end) != 3) {
+> >> +            warn_report("Skipping invalid PMU filter %s", event_filters[i]);
+> >> +            continue;
+> > 
+> > Warning on user syntax errors is undesirable - it should be a fatal
+> > error of the user gets this wrong.
+> > 
+> >> +        }
+> >> +
+> >> +        if ((act != 'A' && act != 'D') || start > end) {
+> >> +            warn_report("Skipping invalid PMU filter %s", event_filters[i]);
+> >> +            continue;
+> > 
+> > Likewise should be fatal.
+> > 
+> >> +        }
+> >> +
+> >> +        filter.base_event = start;
+> >> +        filter.nevents = end - start + 1;
+> >> +        filter.action = (act == 'A') ? KVM_PMU_EVENT_ALLOW :
+> >> +                                       KVM_PMU_EVENT_DENY;
+> >> +
+> >> +        if (!kvm_arm_set_device_attr(cpu, &attr, "PMU_V3_FILTER")) {
+> >> +            break;
+> >> +        }
+> >> +    }
+> >> +}
+> > 
+> > ..[1] then implementing a custom parser is rather a QEMU design anti-pattern,
+> > especially when the proposed syntax is incapable of being mapped into the
+> > normal QAPI syntax for a list of structs should we want to fully convert
+> > -cpu to QAPI parsing later. I wonder if can we model this property with
+> > QAPI now ?
+> I guess you mean creating a new property like those in
+> hw/core/qdev-properties-system.c for instance  and populating an array
+> of those at CPU object level?
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Yeah, something like the IOThreadVirtQueueMapping data type would
+be the more QAPI like code pattern.
 
-> 
-> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index 610d225d30..e0ea377f65 100644
-> --- a/qga/commands-posix.c
-> +++ b/qga/commands-posix.c
-> @@ -1928,52 +1928,21 @@ static bool linux_sys_state_supports_mode(SuspendMode mode, Error **errp)
->  
->  static void linux_sys_state_suspend(SuspendMode mode, Error **errp)
->  {
-> -    Error *local_err = NULL;
-> +    GError *local_gerr = NULL;
->      const char *sysfile_strs[3] = {"disk", "mem", NULL};
->      const char *sysfile_str = sysfile_strs[mode];
-> -    pid_t pid;
-> -    int status;
->  
->      if (!sysfile_str) {
->          error_setg(errp, "unknown guest suspend mode");
->          return;
->      }
->  
-> -    pid = fork();
-> -    if (!pid) {
-> -        /* child */
-> -        int fd;
-> -
-> -        setsid();
-> -        reopen_fd_to_null(0);
-> -        reopen_fd_to_null(1);
-> -        reopen_fd_to_null(2);
-> -
-> -        fd = open(LINUX_SYS_STATE_FILE, O_WRONLY);
-> -        if (fd < 0) {
-> -            _exit(EXIT_FAILURE);
-> -        }
-> -
-> -        if (write(fd, sysfile_str, strlen(sysfile_str)) < 0) {
-> -            _exit(EXIT_FAILURE);
-> -        }
-> -
-> -        _exit(EXIT_SUCCESS);
-> -    } else if (pid < 0) {
-> -        error_setg_errno(errp, errno, "failed to create child process");
-> -        return;
-> -    }
-> -
-> -    ga_wait_child(pid, &status, &local_err);
-> -    if (local_err) {
-> -        error_propagate(errp, local_err);
-> +    if (!g_file_set_contents(LINUX_SYS_STATE_FILE, sysfile_str,
-> +                             -1, &local_gerr)) {
-> +        error_setg(errp, "suspend: cannot write to '%s': %s",
-> +                   LINUX_SYS_STATE_FILE, local_gerr->message);
+> Note there is v8 but most of your comments still apply
+> https://lore.kernel.org/all/20240312074849.71475-1-shahuang@redhat.com/
 
-You need to declare with "g_autoptr(GError) local_gerr = NULL" to
-avoid a leak here.
-
->          return;
->      }
-> -
-> -    if (WEXITSTATUS(status)) {
-> -        error_setg(errp, "child process has failed to suspend");
-> -    }
-> -
->  }
->  
->  static void guest_suspend(SuspendMode mode, Error **errp)
-> -- 
-> 2.39.3
-> 
+Yes, sorry I just saw Peter's query about libvirt on this v7 and
+didn't think to look for a newer version
 
 With regards,
 Daniel
