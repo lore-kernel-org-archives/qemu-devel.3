@@ -4,75 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C051BC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 16:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB17C54E71
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 16:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmcI6-0005zn-7y; Tue, 19 Mar 2024 12:26:23 -0400
+	id 1rmcJL-0006ya-BX; Tue, 19 Mar 2024 12:27:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmcHu-0005yb-1W
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 12:26:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmcHq-0005aX-1A
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 12:26:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710865560;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iUKFiS7NKtvbnw2CM4O4UHJywDpb/3d1m2NdU6BeRO0=;
- b=Q4LPN4tXV7deUEUfiKcoopb04h4Bhi3+OF8SDhrdfM7Rp87tlJjvPP+3QMTF9I4pcCe8IW
- 5Oiop1Da4LTDKv63hsdRADpGXdqWeUNJb5mGGlkHqgeTRr2bIhKmT6G2OrdaoqMPBVYbJQ
- S2/plQse0yEKkE6QZuhsNjqCqdYkNW4=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-464-oOoQ5SLIMJiSDSUsUyFH-g-1; Tue,
- 19 Mar 2024 12:25:56 -0400
-X-MC-Unique: oOoQ5SLIMJiSDSUsUyFH-g-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 098AF285F99C;
- Tue, 19 Mar 2024 16:25:56 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.88])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 374803C21;
- Tue, 19 Mar 2024 16:25:54 +0000 (UTC)
-Date: Tue, 19 Mar 2024 16:25:32 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [RFC PATCH v3 3/3] migration: Add fd to FileMigrationArgs
-Message-ID: <Zfm8fCqyNMfkq9Jw@redhat.com>
-References: <20240315032040.7974-1-farosas@suse.de>
- <20240315032040.7974-4-farosas@suse.de>
- <ZfQNDv--4BnN5zYx@redhat.com> <ZfRxwml7m0DQVO2b@x1n>
- <87y1aj74t6.fsf@suse.de> <ZfS1g8YvZ7if9j5M@x1n>
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1rmcJJ-0006yD-Ul
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 12:27:33 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1rmcJI-0005gp-ES
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 12:27:33 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-51381021af1so8395150e87.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 09:27:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710865650; x=1711470450; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=4CnI4OJ+Mu7USDVO7zhXd32fpbmAfaMlKRv1FQ8aBMw=;
+ b=JzHhlVoyeYgr/11ryJMI4LCDcAE5foA1NLNGaef5M5wSd9La9L40CwFREJu718iKQz
+ c5v1JZJFTEgprRMSWn5jAlocgqae59vTwMlhATPq60v0c5roeUUtLydHoJv8iM4izECz
+ gGDusOsHX0wUE4fiQoSKLrPF/tPeiHO0ShM7KKczrylA8DOHJWmFdkq60H54niMJ8PRN
+ V3cSjlslObQ4Y/Z3GgCQtKKTIvsCYlPmjiLZfIeVfwV/eJkDwQTpHLtPQx4P9g8I3eQG
+ 0Lb8TayyTOEV7FdCzzO0fiX+PuZoskVO0Gsh41Rq7CCVUYuRNPpm0wCcAXgTeOQYwQMr
+ vv4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710865650; x=1711470450;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4CnI4OJ+Mu7USDVO7zhXd32fpbmAfaMlKRv1FQ8aBMw=;
+ b=Y9zv2BN83gAu4urPR6YBeEPGcSHNplp9hcjCa04sQfH/RDK6l0Q1GVzXEBX+Jnz+yT
+ xuGLmyRVEReguvadmyUMNmxZkhHwZeJ38xQuSmWLRR6QGa5Y5puFDDA5ASBheU7nf3Ps
+ Ws5wge+9CkmzdQMNi+lPwyvKJlG+my6syGsYsBsVYFz/MD9NOsoyGA1Jvy2abAlpQsVZ
+ vkW7w6++zms0o7nI9qfIj5b0uGn6jIoIjr1OIRJeHymR4pF7miI7p4TZrVbdbt+OsLUF
+ ypn6fiPJATe7N3kV0jgfY2WjOgJ2Zbo5LHYOlgfiDL73smo+HS6pbrANmEk9kfRVk4+E
+ t25Q==
+X-Gm-Message-State: AOJu0Ywa5PgfPD6I0pHPpLCgmt1kesmAEyi3FQeJt8/qUF+oNUw4EoIs
+ zUNVxcd31gyEbKfkP9lBMXROOOtBIIgNEfL15kPw2jPlVbzOCn05HXiiJTApic5loQ==
+X-Google-Smtp-Source: AGHT+IGQaFs0McGvQ3WogCXp5Bnbv0tjNHmDFtCyBMTChjCDP6OjqkAwmLNjMSALn7SGoUBT1uWwTA==
+X-Received: by 2002:a05:6512:b9e:b0:513:ed17:af03 with SMTP id
+ b30-20020a0565120b9e00b00513ed17af03mr5607735lfv.59.1710865649507; 
+ Tue, 19 Mar 2024 09:27:29 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ v23-20020ac25597000000b00513a9d105a3sm2000148lfg.262.2024.03.19.09.27.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 19 Mar 2024 09:27:29 -0700 (PDT)
+Date: Tue, 19 Mar 2024 17:27:28 +0100
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Anton Johansson <anjo@rev.ng>,
+ Alistair Francis <alistair@alistair23.me>
+Subject: Re: [PATCH-for-9.1 5/8] target/microblaze: Restrict 64-bit
+ 'res_addr' to system emulation
+Message-ID: <Zfm88Hit3Kni1f_4@toto>
+References: <20240319062855.8025-1-philmd@linaro.org>
+ <20240319062855.8025-6-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZfS1g8YvZ7if9j5M@x1n>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+In-Reply-To: <20240319062855.8025-6-philmd@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,77 +95,114 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 15, 2024 at 04:54:27PM -0400, Peter Xu wrote:
-> On Fri, Mar 15, 2024 at 03:01:09PM -0300, Fabiano Rosas wrote:
-> > Peter Xu <peterx@redhat.com> writes:
-> > 
-> > > [I queued patch 1-2 into -stable, leaving this patch for further
-> > >  discussions]
-> > >
-> > > On Fri, Mar 15, 2024 at 08:55:42AM +0000, Daniel P. BerrangÃ© wrote:
-> > >> The 'file:' protocol eventually calls into qemu_open, and this
-> > >> transparently allows for FD passing using /dev/fdset/NNN syntax
-> > >> to pass in FDs. 
-> > >
-> > > If it always use /dev/fdsets for files, does it mean that the newly added
-> > > SOCKET_ADDRESS_TYPE_FD support on mapped-ram will never be used (so we can
-> > > drop them)?
-> > 
-> > We already have SOCKET_ADDRESS_TYPE_FD + file since 8.2 when the
-> > MigrationAddress was added. So this:
-> > 
-> > 'channels': [ { 'channel-type': 'main',
-> >                 'addr': { 'transport': 'socket',
-> >                 'type': 'fd',
-> >                 'str': 'fdname' } } ]
-> > 
-> > works without multifd and without mapped-ram if the fd is a file or
-> > socket.
-> > 
-> > So yes, you're correct, but given we already have this^ it would be
-> > perhaps more confusing for users to allow it, but not allow the very
-> > same JSON when multifd=true, mapped-ram=true.
+On Tue, Mar 19, 2024 at 07:28:52AM +0100, Philippe Mathieu-Daudé wrote:
+> 'res_addr' is only used in system emulation, where we have
+> TARGET_LONG_BITS = 64, so we can directly use the native
+> uint64_t type instead of target_ulong.
+
+
+Hi Philippe,
+
+This breaks linux-user, lwx and swx are valid user-mode insns.
+
+Best regards,
+Edgar
+
+
 > 
-> I don't think the fd: protocol (no matter the old "fd:", or the new JSON
-> format) is trivial to use. If libvirt didn't use it I won't be surprised to
-> see nobody using it.  I want us to avoid working on things that nobody is
-> using, or has a better replacement.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  target/microblaze/cpu.h       | 10 +++++-----
+>  target/microblaze/cpu.c       |  2 ++
+>  target/microblaze/machine.c   |  2 +-
+>  target/microblaze/translate.c |  9 +++++++--
+>  4 files changed, 15 insertions(+), 8 deletions(-)
 > 
-> So even if Libvirt supports both, I'm wondering whether /dev/fdset/ works
-> for all the cases that libvirt needs.  I am aware that the old getfd has
-> the monitor limitation so that if the QMP disconnected and reconnect, the
-> fd can be gone.  However I'm not sure whether that's the only reason to
-> have add-fd, and also not sure whether it means add-fd is always preferred,
-> so that maybe we can consider obsolete getfd?
-
-Historically libvirt primariily uses the 'fd:' protocol, with a
-socket FD. It never gives QEMU a plain file FD, since it has
-always added its "iohelper" as a MITM, in order to add O_DIRECT
-on top.
-
-The 'getfd' command is something that is needed when talking to
-QEMU for any API that involves a "SocketAddress" QAPI type,
-which is applicable for migration.
-
-With the introduction of 'MigrationAddress', the 'socket' protocol
-is backed by 'SocketAddress' and thus supports FD passing for
-sockets (or potentally pipes too), in combination with 'getfd'.
-
-With the 'file' protocol in 'MigrationAddress', since it gets
-backed by qemu_open(), then /dev/fdset/NN and 'add-fd' provide
-passing for plain files.
-
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+> diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
+> index c0c7574dbd..c3e2aba0ec 100644
+> --- a/target/microblaze/cpu.h
+> +++ b/target/microblaze/cpu.h
+> @@ -260,11 +260,6 @@ struct CPUArchState {
+>      /* Stack protectors. Yes, it's a hw feature.  */
+>      uint32_t slr, shr;
+>  
+> -    /* lwx/swx reserved address */
+> -#define RES_ADDR_NONE 0xffffffff /* Use 0xffffffff to indicate no reservation */
+> -    target_ulong res_addr;
+> -    uint32_t res_val;
+> -
+>      /* Internal flags.  */
+>  #define IMM_FLAG        (1 << 0)
+>  #define BIMM_FLAG       (1 << 1)
+> @@ -286,6 +281,11 @@ struct CPUArchState {
+>      uint32_t iflags;
+>  
+>  #if !defined(CONFIG_USER_ONLY)
+> +    /* lwx/swx reserved address */
+> +#define RES_ADDR_NONE 0xffffffff /* Use 0xffffffff to indicate no reservation */
+> +    uint64_t res_addr;
+> +    uint32_t res_val;
+> +
+>      /* Unified MMU.  */
+>      MicroBlazeMMU mmu;
+>  #endif
+> diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+> index 96c2b71f7f..9e393cf217 100644
+> --- a/target/microblaze/cpu.c
+> +++ b/target/microblaze/cpu.c
+> @@ -193,7 +193,9 @@ static void mb_cpu_reset_hold(Object *obj)
+>      }
+>  
+>      memset(env, 0, offsetof(CPUMBState, end_reset_fields));
+> +#ifndef CONFIG_USER_ONLY
+>      env->res_addr = RES_ADDR_NONE;
+> +#endif
+>  
+>      /* Disable stack protector.  */
+>      env->shr = ~0;
+> diff --git a/target/microblaze/machine.c b/target/microblaze/machine.c
+> index 51705e4f5c..4daf8a2471 100644
+> --- a/target/microblaze/machine.c
+> +++ b/target/microblaze/machine.c
+> @@ -78,7 +78,7 @@ static const VMStateField vmstate_env_fields[] = {
+>      VMSTATE_UINT32(iflags, CPUMBState),
+>  
+>      VMSTATE_UINT32(res_val, CPUMBState),
+> -    VMSTATE_UINTTL(res_addr, CPUMBState),
+> +    VMSTATE_UINT64(res_addr, CPUMBState),
+>  
+>      VMSTATE_STRUCT(mmu, CPUMBState, 0, vmstate_mmu, MicroBlazeMMU),
+>  
+> diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+> index d6a42381bb..493850c544 100644
+> --- a/target/microblaze/translate.c
+> +++ b/target/microblaze/translate.c
+> @@ -1872,7 +1872,9 @@ void mb_tcg_init(void)
+>          SP(iflags),
+>          SP(bvalue),
+>          SP(btarget),
+> +#if !defined(CONFIG_USER_ONLY)
+>          SP(res_val),
+> +#endif
+>      };
+>  
+>  #undef R
+> @@ -1883,6 +1885,9 @@ void mb_tcg_init(void)
+>            tcg_global_mem_new_i32(tcg_env, i32s[i].ofs, i32s[i].name);
+>      }
+>  
+> -    cpu_res_addr =
+> -        tcg_global_mem_new(tcg_env, offsetof(CPUMBState, res_addr), "res_addr");
+> +#if !defined(CONFIG_USER_ONLY)
+> +    cpu_res_addr = tcg_global_mem_new_i64(tcg_env,
+> +                                          offsetof(CPUMBState, res_addr),
+> +                                          "res_addr");
+> +#endif
+>  }
+> -- 
+> 2.41.0
+> 
 
