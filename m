@@ -4,51 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48355C54E60
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 06:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1374C54E60
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 06:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmT1E-0003WC-Pa; Tue, 19 Mar 2024 02:32:16 -0400
+	id 1rmTCW-0006n0-1r; Tue, 19 Mar 2024 02:43:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rmT1C-0003W3-6p
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:32:14 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rmT19-0006JQ-GQ
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:32:13 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxbOljMfll1agaAA--.53753S3;
- Tue, 19 Mar 2024 14:32:03 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxVMxiMflltDBdAA--.51886S2; 
- Tue, 19 Mar 2024 14:32:02 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, c@jia.je, philmd@linaro.org,
- maobibo@loongson.cn, lixing@loongson.cn
-Subject: [PATCH v1] target/loongarch: Fix qemu-loongarch64 hang when executing
- 'll.d $t0, $t0, 0'
-Date: Tue, 19 Mar 2024 14:32:02 +0800
-Message-Id: <20240319063202.1313243-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmTCR-0006jp-Sx
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:43:53 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmTCQ-0008DU-11
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 02:43:51 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5684db9147dso6660328a12.2
+ for <qemu-devel@nongnu.org>; Mon, 18 Mar 2024 23:43:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710830627; x=1711435427; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xV0hVgZJ9TvKR7Mra9EFKINgPQ1sLswvRxNXudXdlKg=;
+ b=SQz9PaeGWKFsRI0+vm6Fx8hlWJT4sUD9PIxSRWZhLNuYX2mmjDLXfFBMWUhlgXQZrn
+ 2dbtz2gcRrXH2TNxIahFlOZDIEGAPtjaZuIuJz9FTFYdBHy54xsTKy2nhKOZ3AjcbUY8
+ /IX8hW/tFnHieyN7LheEMVrUz6zQWGCK4Cs/StA85GdV87hZ67e0DJB3pzV5ZV8kCbCq
+ hw5EIRXtjFTrW/50KJgc90hrG5qPkdcP4D6ULY5ppU3B41zuGfqpXC/OfOZmFGQ8bFVx
+ H5asYL2tVREwggmJqDiEXrzv7NkRzdE+mfomlHKpYNX9e0YbKzBe4nINTZwyNZ3kxMNi
+ rvxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710830627; x=1711435427;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xV0hVgZJ9TvKR7Mra9EFKINgPQ1sLswvRxNXudXdlKg=;
+ b=Jc3HbhB9npMpSzkZ8YDRVHEwRu2j90bmzKucdDzroyfGjZ709fIQwGIfz5X0Y3sC9U
+ 0ff/qfOxmfqx+1YIe81vPlpNOnIX0219fpAIhdpXBxXE8/3VUFGTC1SGDQrEyF4N6Pi3
+ 9tO2faA8wtqnnY75MjzW5BTlwmlNMd9bgm+k1Qy3m8+A4hSh27/mY1NQvEYQewS3kp/U
+ ePfbdmRIR5X1pV2Fcou+XYWy6MVtvyh9u8q3dFLWT8dyrPTVdth7+Qr4qzqvAxbPf9JC
+ 3u2d4wxeKDIi22DlLS8Kc0E+XDrSN8iZnV7jgyH4ah0WS7IU9NuGKMan8YNS8pU4iOnx
+ cA+A==
+X-Gm-Message-State: AOJu0YxK6SeFLmYyuAr1qhX+1hXqzjokC7fuLSIMmEwX//W5GAo0oR9m
+ uCbFnlVuomp+8f9Apl+YaP+xCEwu8VYrsC8+PCmdwJm0U5jiUX/iQ/8LI5eQ/uY=
+X-Google-Smtp-Source: AGHT+IGqCBbt8K67jxrj3e9ReMofU00d6CIIbBlCMxtaRBVHOGpdKpDkUBTSGGgySK5GD+A7EqOPWA==
+X-Received: by 2002:a05:6402:3648:b0:568:1b94:fb88 with SMTP id
+ em8-20020a056402364800b005681b94fb88mr11563424edb.23.1710830627598; 
+ Mon, 18 Mar 2024 23:43:47 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.166.129])
+ by smtp.gmail.com with ESMTPSA id
+ a89-20020a509ee2000000b00568c299eaedsm3384332edf.81.2024.03.18.23.43.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 18 Mar 2024 23:43:47 -0700 (PDT)
+Message-ID: <fca8ecfc-f6b0-48f2-9590-867b0f8e4d9f@linaro.org>
+Date: Tue, 19 Mar 2024 07:43:44 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxVMxiMflltDBdAA--.51886S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] system/memory.c: support unaligned access
+Content-Language: en-US
+To: Peter Xu <peterx@redhat.com>, Tomoyuki HIROSE
+ <tomoyuki.hirose@igel.co.jp>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Andrew Jeffery <andrew@aj.id.au>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240201081313.1339788-1-tomoyuki.hirose@igel.co.jp>
+ <20240201081313.1339788-2-tomoyuki.hirose@igel.co.jp> <ZfholB7fuWEbuBss@x1n>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZfholB7fuWEbuBss@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,35 +99,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On gen_ll, if a->imm is 0, The value of t0 should be src1.
+On 18/3/24 17:15, Peter Xu wrote:
+> Hi,
+> 
+> On Thu, Feb 01, 2024 at 05:13:12PM +0900, Tomoyuki HIROSE wrote:
+>> The previous code ignored 'impl.unaligned' and handled unaligned accesses
+>> as is. But this implementation cannot emulate specific registers of some
+>> devices that allow unaligned access such as xHCI Host Controller Capability
+>> Registers.
+>> This commit checks 'impl.unaligned' and if it is false, QEMU emulates
+>> unaligned access with multiple aligned access.
+> 
+> This patch looks mostly good to me.  Just a few trivial comments.
+> 
+> Firstly, can we provide the USB example here (or also the bug link) so that
+> we can still pick up the context of why this will start to be useful when
+> people read about this commit separately?
+> 
+>>
+>> Signed-off-by: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
+>> ---
+>>   system/memory.c | 38 +++++++++++++++++++++++++-------------
+>>   1 file changed, 25 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/system/memory.c b/system/memory.c
+>> index a229a79988..a7ca0c9f54 100644
+>> --- a/system/memory.c
+>> +++ b/system/memory.c
+>> @@ -535,10 +535,17 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
+>>                                         MemTxAttrs attrs)
+>>   {
+>>       uint64_t access_mask;
+>> +    unsigned access_mask_shift;
+>> +    unsigned access_mask_start_offset;
+>> +    unsigned access_mask_end_offset;
+>>       unsigned access_size;
+>> -    unsigned i;
+>>       MemTxResult r = MEMTX_OK;
+>>       bool reentrancy_guard_applied = false;
+>> +    bool is_big_endian = memory_region_big_endian(mr);
+>> +    signed start_diff;
+>> +    signed current_offset;
+>> +    signed access_shift;
+>> +    hwaddr current_addr;
+>>   
+>>       if (!access_size_min) {
+>>           access_size_min = 1;
+>> @@ -560,19 +567,24 @@ static MemTxResult access_with_adjusted_size(hwaddr addr,
+>>           reentrancy_guard_applied = true;
+>>       }
+>>   
+>> -    /* FIXME: support unaligned access? */
+>>       access_size = MAX(MIN(size, access_size_max), access_size_min);
+>> -    access_mask = MAKE_64BIT_MASK(0, access_size * 8);
+>> -    if (memory_region_big_endian(mr)) {
+>> -        for (i = 0; i < size; i += access_size) {
+>> -            r |= access_fn(mr, addr + i, value, access_size,
+>> -                        (size - access_size - i) * 8, access_mask, attrs);
+>> -        }
+>> -    } else {
+>> -        for (i = 0; i < size; i += access_size) {
+>> -            r |= access_fn(mr, addr + i, value, access_size, i * 8,
+>> -                        access_mask, attrs);
+>> -        }
+>> +    start_diff = mr->ops->impl.unaligned ? 0 : addr & (access_size - 1);
+>> +    current_addr = addr - start_diff;
+>> +    for (current_offset = -start_diff; current_offset < (signed)size;
+>> +         current_offset += access_size, current_addr += access_size) {
+>> +        access_shift = is_big_endian
+>> +                          ? (signed)size - (signed)access_size - current_offset
+>> +                          : current_offset;
+>> +        access_mask_shift = current_offset > 0 ? 0 : -current_offset;
+>> +        access_mask_start_offset = current_offset > 0 ? current_offset : 0;
+>> +        access_mask_end_offset = current_offset + access_size > size
+>> +                                     ? size
+>> +                                     : current_offset + access_size;
+> 
+> Maybe this looks slightly easier to read?
+> 
+>          if (current_offset < 0) {
+>              access_mask_shift = -current_offset;
+>              access_mask_start_offset = 0;
+>          } else {
+>              access_mask_shift = 0;
+>              access_mask_start_offset = current_offset;
+>          }
+>          access_mask_end_offset = MIN(current_offset + access_size, size);
+> 
+> But I confess this can be pretty subjective..
+> 
+> Since PeterM used to comment, please remember to copy PeterM too in the
+> future post in case this got overlooked.
+> 
+> Peter, do you still have any other comments or concerns?
 
-Links: https://www.openwall.com/lists/musl/2024/03/12/4
+See also this thread:
+https://lore.kernel.org/qemu-devel/20200331144225.67dadl6crwd57qvi@sirius.home.kraxel.org/
+->
+https://www.mail-archive.com/qemu-devel@nongnu.org/msg461247.html
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/tcg/insn_trans/trans_atomic.c.inc | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+Also I guess remembering Richard mentioning we should unify this
+code for softmmu / physmem, but I might be wrong ...
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-index 80c2e286fd..fab951a892 100644
---- a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-@@ -7,7 +7,13 @@ static bool gen_ll(DisasContext *ctx, arg_rr_i *a, MemOp mop)
- {
-     TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
--    TCGv t0 = make_address_i(ctx, src1, a->imm);
-+    TCGv t0 = tcg_temp_new();
-+
-+    if (a->imm) {
-+        t0 = make_address_i(ctx, src1, a->imm);
-+    } else {
-+        tcg_gen_mov_tl(t0, src1);
-+    }
- 
-     tcg_gen_qemu_ld_i64(dest, t0, ctx->mem_idx, mop);
-     tcg_gen_st_tl(t0, tcg_env, offsetof(CPULoongArchState, lladdr));
--- 
-2.25.1
+> 
+> Thanks,
+> 
+>> +        access_mask = MAKE_64BIT_MASK(access_mask_shift * 8,
+>> +            (access_mask_end_offset - access_mask_start_offset) * 8);
+>> +
+>> +        r |= access_fn(mr, current_addr, value, access_size, access_shift * 8,
+>> +                       access_mask, attrs);
+>>       }
+>>       if (mr->dev && reentrancy_guard_applied) {
+>>           mr->dev->mem_reentrancy_guard.engaged_in_io = false;
+>> -- 
+>> 2.39.2
+>>
+> 
 
 
