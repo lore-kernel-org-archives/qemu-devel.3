@@ -4,86 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EA6DC54F7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:38:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB22DC54F7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 19 Mar 2024 14:40:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmabI-0007oQ-Lo; Tue, 19 Mar 2024 10:38:01 -0400
+	id 1rmacr-0000ex-VG; Tue, 19 Mar 2024 10:39:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srao@redhat.com>) id 1rmaP8-0006xf-Bs
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:25:26 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rmacq-0000du-08
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:39:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srao@redhat.com>) id 1rmaP2-00069g-Mx
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:25:24 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rmaco-0001bl-6Y
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 10:39:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710858315;
+ s=mimecast20190719; t=1710859173;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vs0zNQPuS0zQTBOWdcl3A3HpTkGapmcuFc28uU/bnNI=;
- b=TP7CHC/w+NNzsfQlWhEdKYch3mdyyqZ39sq1MSdxddWq165X5rRWG0cFNUaoFsHUDQnEwR
- jRE4dcZC0zeunbolahTudH/eXIOqQyH7/59dq8d9CcCxcs0BEJR+KhhogV2i/Jq5+ARoAE
- Q0YaTBPkkyPAIJmEw7/KdAwayi1XALQ=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hgG0NZ+0z0biH2pbA6OYlxjpwUaDcFiE13+7TcVLAyY=;
+ b=icT1w0QlFEClmbWZVnIZZH/LJSohJT1cZv7DJ26JRQmHECBHVPGGiRIi8Zf7mYB12KxMPx
+ TGAs50mx4bjEJznXHgktZykUKE/vEhkecOTaWB/JL14sU530NzCXIJtOJFZ9IMB1X58Srl
+ HyR7Ey3FzCjfdHqzZb4Rm9GFP5DS+QA=
+Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
+ [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-410-Sn7l0sa0M1elL5UMc8K3rA-1; Tue, 19 Mar 2024 10:24:02 -0400
-X-MC-Unique: Sn7l0sa0M1elL5UMc8K3rA-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-29fbe1089b8so1325619a91.2
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 07:24:02 -0700 (PDT)
+ us-mta-132-i7BHK4_bN62p6u14cFCYGQ-1; Tue, 19 Mar 2024 10:39:31 -0400
+X-MC-Unique: i7BHK4_bN62p6u14cFCYGQ-1
+Received: by mail-yb1-f197.google.com with SMTP id
+ 3f1490d57ef6-dcc4563611cso8006754276.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 07:39:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710858240; x=1711463040;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vs0zNQPuS0zQTBOWdcl3A3HpTkGapmcuFc28uU/bnNI=;
- b=doL2ePvkMfLl6WyQPPR4ITpNhuGSMXqtZjnBrB4pocNkWsfTEOr3zQrdJz6VTJEeN1
- csDo9G6m5L71j+gWlRGTiQBmq1/fSM4gFfZQjw+QMGnBsPrwIO7ZvZMNqxHPipq9XIfh
- f3tYoFACc/7GhS7aHUzZLFVGb8dK9wmOXEWXzJtcx9hg7LpcTIRjBP+VZIt8NHjl3WbC
- z/7+S2cjp5zhx6P70Y7Udd6W1uYZfY/cLykGo+980OnZrTEps/p8GzxMh5nLR9/FFlrN
- yHiNRDonKekkUg21Ir2wA+XcTD4lfUf0ukDSWrsy8/+fYT29Hz0orYlB3JCGshIhqpjP
- fXRQ==
+ d=1e100.net; s=20230601; t=1710859171; x=1711463971;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hgG0NZ+0z0biH2pbA6OYlxjpwUaDcFiE13+7TcVLAyY=;
+ b=vzket4hX9BtJxnGHT9PpiqFqP19EHTyAYTvPZd0MOyaQhUPoeYx/32KdVVMI05aN3E
+ Km5kK1GeCxy5JpkoUPiwFb1qgUykTVW64UzDFUAwTk/XbiZo5HXLM8Ud2iKfK8w65m/C
+ q8DwHLxn0DIai7YCkNg32+mlxIQ5B88A6stpruhkOYxOTjgcA7uLkYW4JlRGOTUA3LG5
+ IYe7M0E/A5GIxR5o+UL6eZ2qIzsIfRHqdO4RCTpwfdOCIMfGE6SxLFQFQRmmhS0Agpy3
+ fg5BfEatlMjsW2+738QgZvcwstBcrxPt3w1aKcM/uODGYU01J1d1vJOAolZfIFhU5yYP
+ jD6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXqEpZKXygVXJjsH9gaxu0AcB/G12PdyPFOZVxbxTQjAs1C+eQo0JP001r+OhJyCah5HcVGod+FgHfVGmWujmouPJcI6mI=
-X-Gm-Message-State: AOJu0YycvQww+vJxOwOrr5fQqAeHqGnU3tyE5N6ZFpF5mGwwH6alLrrX
- 5T0qJn2YeGVSXcgsQxoWR890EB8Sx/jbo+f5ZMa/MKmfumxosY2t2jaye60p8taOZWEJ1XUqQ+z
- DQz7in1AtJ4wY4qsP6hnTVI+KtaMlhdkRUjBJ36RrYYZLEYX4lYFGUEgZ5I48H9WGowBnxPj2sT
- QtwlujPszjVAX6fzT1W2KSGh1p9kM=
-X-Received: by 2002:a17:90b:1487:b0:29b:e26a:3239 with SMTP id
- js7-20020a17090b148700b0029be26a3239mr9240397pjb.47.1710858240235; 
- Tue, 19 Mar 2024 07:24:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGPwe3rN96lp9P2/m4pAH0RWz6fBSgKG/Z6BcGRXRe9FIWVyAxURrWpsMry5aoGWLRpTGWYBHM1mq2nPiOobTw=
-X-Received: by 2002:a17:90b:1487:b0:29b:e26a:3239 with SMTP id
- js7-20020a17090b148700b0029be26a3239mr9240378pjb.47.1710858239866; Tue, 19
- Mar 2024 07:23:59 -0700 (PDT)
+ AJvYcCW0sKtSIaRrkniiTgHSkA1Vvt1S24fiqnTXsLA/6mSmZq+yL0gGmZh0nGG4KwwE9Y7nqyE49Y94ecxcNWyUAfQVL9OQeTI=
+X-Gm-Message-State: AOJu0Yy9txYYf2LJihBC9uhzrE6LRkmLIZ2q96fxeOsemsNOzhZQilV/
+ qBkWfjpzTejjVKMWrYTcNItfYKMxsPvvE+/0tT7IX4XFb65nrll8pvvgvghjVTp+r1VG8wSwoME
+ 87QDrwbg4RIVoDuLQtn2ieKCJgvGYwqAduB6jzKYwE1fdJ6wJ9gRMO2NJkWmgLyYiNwDOUBM98r
+ xna74z0zDrXEG5+LvW2SAdf4CdXx0=
+X-Received: by 2002:a5b:444:0:b0:dc6:9daf:35c7 with SMTP id
+ s4-20020a5b0444000000b00dc69daf35c7mr9839589ybp.28.1710859171238; 
+ Tue, 19 Mar 2024 07:39:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENO5Yw+aZRHZQbHRR4Kmy3/AKFsggJXKrUySF1WYoat5fuiDQBrER6zFnfGYex050q6CtMy04wrbdPEj+Gcqo=
+X-Received: by 2002:a5b:444:0:b0:dc6:9daf:35c7 with SMTP id
+ s4-20020a5b0444000000b00dc69daf35c7mr9839573ybp.28.1710859170981; Tue, 19 Mar
+ 2024 07:39:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240318183429.1039340-1-stefanha@redhat.com>
- <ZfmT1s8hcW48KIn1@redhat.com>
-In-Reply-To: <ZfmT1s8hcW48KIn1@redhat.com>
-From: Sanjay Rao <srao@redhat.com>
-Date: Tue, 19 Mar 2024 10:23:48 -0400
-Message-ID: <CACt6rRD0AMVOh5TKLy+g8wGv_r_egpkbBZE3SO6F0EhskevCqw@mail.gmail.com>
-Subject: Re: [PATCH] coroutine: cap per-thread local pool size
+References: <20240315155949.86066-1-kwolf@redhat.com>
+ <CACGkMEvuu4rkgZr7sBFwXztZLHdamBKML++6cvA+GDKyGDGibA@mail.gmail.com>
+ <20240318050212-mutt-send-email-mst@kernel.org>
+ <CAJaqyWc5_T=c+i0EvoYJ4Ly9XOaRBLvUE8w0n6duhm-b2Si0FA@mail.gmail.com>
+ <ZfliRJ-7ueG0_OlJ@redhat.com>
+In-Reply-To: <ZfliRJ-7ueG0_OlJ@redhat.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 19 Mar 2024 15:38:54 +0100
+Message-ID: <CAJaqyWd+aafjz02NdwSKWZZ_1=4OzKbaAsNb-DP3PWt9RSY_Mg@mail.gmail.com>
+Subject: Re: [PATCH for-9.0 v3] vdpa-dev: Fix initialisation order to restore
+ VDUSE compatibility
 To: Kevin Wolf <kwolf@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
- Boaz Ben Shabat <bbenshab@redhat.com>, Joe Mario <jmario@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000a61cda061404394a"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=srao@redhat.com;
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ qemu-block@nongnu.org, 
+ sgarzare@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 19 Mar 2024 10:37:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,246 +106,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a61cda061404394a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Mar 19, 2024 at 9:32=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrote=
-:
-
-> Am 18.03.2024 um 19:34 hat Stefan Hajnoczi geschrieben:
-> > The coroutine pool implementation can hit the Linux vm.max_map_count
-> > limit, causing QEMU to abort with "failed to allocate memory for stack"
-> > or "failed to set up stack guard page" during coroutine creation.
-> >
-> > This happens because per-thread pools can grow to tens of thousands of
-> > coroutines. Each coroutine causes 2 virtual memory areas to be created.
-> > Eventually vm.max_map_count is reached and memory-related syscalls fail=
-.
-> > The per-thread pool sizes are non-uniform and depend on past coroutine
-> > usage in each thread, so it's possible for one thread to have a large
-> > pool while another thread's pool is empty.
-> >
-> > Switch to a new coroutine pool implementation with a global pool that
-> > grows to a maximum number of coroutines and per-thread local pools that
-> > are capped at hardcoded small number of coroutines.
-> >
-> > This approach does not leave large numbers of coroutines pooled in a
-> > thread that may not use them again. In order to perform well it
-> > amortizes the cost of global pool accesses by working in batches of
-> > coroutines instead of individual coroutines.
-> >
-> > The global pool is a list. Threads donate batches of coroutines to when
-> > they have too many and take batches from when they have too few:
-> >
-> > .-----------------------------------.
-> > | Batch 1 | Batch 2 | Batch 3 | ... | global_pool
-> > `-----------------------------------'
-> >
-> > Each thread has up to 2 batches of coroutines:
-> >
-> > .-------------------.
-> > | Batch 1 | Batch 2 | per-thread local_pool (maximum 2 batches)
-> > `-------------------'
-> >
-> > The goal of this change is to reduce the excessive number of pooled
-> > coroutines that cause QEMU to abort when vm.max_map_count is reached
-> > without losing the performance of an adequately sized coroutine pool.
-> >
-> > Here are virtio-blk disk I/O benchmark results:
-> >
-> >       RW BLKSIZE IODEPTH    OLD    NEW CHANGE
-> > randread      4k       1 113725 117451 +3.3%
-> > randread      4k       8 192968 198510 +2.9%
-> > randread      4k      16 207138 209429 +1.1%
-> > randread      4k      32 212399 215145 +1.3%
-> > randread      4k      64 218319 221277 +1.4%
-> > randread    128k       1  17587  17535 -0.3%
-> > randread    128k       8  17614  17616 +0.0%
-> > randread    128k      16  17608  17609 +0.0%
-> > randread    128k      32  17552  17553 +0.0%
-> > randread    128k      64  17484  17484 +0.0%
-> >
-> > See files/{fio.sh,test.xml.j2} for the benchmark configuration:
-> >
-> https://gitlab.com/stefanha/virt-playbooks/-/tree/coroutine-pool-fix-sizi=
-ng
-> >
-> > Buglink: https://issues.redhat.com/browse/RHEL-28947
-> > Reported-by: Sanjay Rao <srao@redhat.com>
-> > Reported-by: Boaz Ben Shabat <bbenshab@redhat.com>
-> > Reported-by: Joe Mario <jmario@redhat.com>
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+On Tue, Mar 19, 2024 at 11:00=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrot=
+e:
 >
-> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+> Am 18.03.2024 um 20:27 hat Eugenio Perez Martin geschrieben:
+> > On Mon, Mar 18, 2024 at 10:02=E2=80=AFAM Michael S. Tsirkin <mst@redhat=
+.com> wrote:
+> > >
+> > > On Mon, Mar 18, 2024 at 12:31:26PM +0800, Jason Wang wrote:
+> > > > On Fri, Mar 15, 2024 at 11:59=E2=80=AFPM Kevin Wolf <kwolf@redhat.c=
+om> wrote:
+> > > > >
+> > > > > VDUSE requires that virtqueues are first enabled before the DRIVE=
+R_OK
+> > > > > status flag is set; with the current API of the kernel module, it=
+ is
+> > > > > impossible to enable the opposite order in our block export code =
+because
+> > > > > userspace is not notified when a virtqueue is enabled.
+> > > > >
+> > > > > This requirement also mathces the normal initialisation order as =
+done by
+> > > > > the generic vhost code in QEMU. However, commit 6c482547 accident=
+ally
+> > > > > changed the order for vdpa-dev and broke access to VDUSE devices =
+with
+> > > > > this.
+> > > > >
+> > > > > This changes vdpa-dev to use the normal order again and use the s=
+tandard
+> > > > > vhost callback .vhost_set_vring_enable for this. VDUSE devices ca=
+n be
+> > > > > used with vdpa-dev again after this fix.
+> > > > >
+> > > > > vhost_net intentionally avoided enabling the vrings for vdpa and =
+does
+> > > > > this manually later while it does enable them for other vhost bac=
+kends.
+> > > > > Reflect this in the vhost_net code and return early for vdpa, so =
+that
+> > > > > the behaviour doesn't change for this device.
+> > > > >
+> > > > > Cc: qemu-stable@nongnu.org
+> > > > > Fixes: 6c4825476a4351530bcac17abab72295b75ffe98
+> > > > > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> > > > > ---
+> > > > > v2:
+> > > > > - Actually make use of the @enable parameter
+> > > > > - Change vhost_net to preserve the current behaviour
+> > > > >
+> > > > > v3:
+> > > > > - Updated trace point [Stefano]
+> > > > > - Fixed typo in comment [Stefano]
+> > > > >
+> > > > >  hw/net/vhost_net.c     | 10 ++++++++++
+> > > > >  hw/virtio/vdpa-dev.c   |  5 +----
+> > > > >  hw/virtio/vhost-vdpa.c | 29 ++++++++++++++++++++++++++---
+> > > > >  hw/virtio/vhost.c      |  8 +++++++-
+> > > > >  hw/virtio/trace-events |  2 +-
+> > > > >  5 files changed, 45 insertions(+), 9 deletions(-)
+> > > > >
+> > > > > diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+> > > > > index e8e1661646..fd1a93701a 100644
+> > > > > --- a/hw/net/vhost_net.c
+> > > > > +++ b/hw/net/vhost_net.c
+> > > > > @@ -541,6 +541,16 @@ int vhost_set_vring_enable(NetClientState *n=
+c, int enable)
+> > > > >      VHostNetState *net =3D get_vhost_net(nc);
+> > > > >      const VhostOps *vhost_ops =3D net->dev.vhost_ops;
+> > > > >
+> > > > > +    /*
+> > > > > +     * vhost-vdpa network devices need to enable dataplane virtq=
+ueues after
+> > > > > +     * DRIVER_OK, so they can recover device state before starti=
+ng dataplane.
+> > > > > +     * Because of that, we don't enable virtqueues here and leav=
+e it to
+> > > > > +     * net/vhost-vdpa.c.
+> > > > > +     */
+> > > > > +    if (nc->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_VDPA) {
+> > > > > +        return 0;
+> > > > > +    }
+> > > >
+> > > > I think we need some inputs from Eugenio, this is only needed for
+> > > > shadow virtqueue during live migration but not other cases.
+> > > >
+> > > > Thanks
+> > >
+> > >
+> > > Yes I think we had a backend flag for this, right? Eugenio can you
+> > > comment please?
+> > >
+> >
+> > We have the VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK backend flag,
+> > right. If the backend does not offer it, it is better to enable all
+> > the queues here and add a migration blocker in net/vhost-vdpa.c.
+> >
+> > So the check should be:
+> > nc->info->type =3D=3D VHOST_VDPA && (backend_features &
+> > VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK).
+> >
+> > I can manage to add the migration blocker on top of this patch.
 >
-> Though I do wonder if we can do something about the slight performance
-> degradation that Sanjay reported. We seem to stay well under the hard
-> limit, so the reduced global pool size shouldn't be the issue. Maybe
-> it's the locking?
+> Note that my patch preserves the current behaviour for vhost_net. The
+> callback wasn't implemented for vdpa so far, so we never called anything
+> even if the flag wasn't set. This patch adds an implementation for the
+> callback, so we have to skip it here to have everything in vhost_net
+> work as before - which is what the condition as written does.
 >
-> We are only seeing a slight fall off from our much improved numbers with
-the addition of iothreads. I am not very concerned. With database
-workloads, there's always a run to run variation. Especially when there's a
-lot of idle cpus on the host. To reduce the run to run variation, we use
-cpu / numa pinning and other methods like pci passthru. If I get a chance,
-I will do some runs with cpu pinning to see what the numbers look like.
-
-
-
-> Either way, even though it could be called a fix, I don't think this is
-> for 9.0, right?
->
-> Kevin
->
+> If we add a check for the flag now (I don't know if that's correct or
+> not), that would be a second, unrelated change of behaviour in the same
+> patch. So if it's necessary, that's a preexisting problem and I'd argue
+> it doesn't belong in this patch, but should be done separately.
 >
 
---=20
+Right, that's a very good point. I'll add proper checking on top of
+your patch when it is merged.
 
-Sanjay Rao
-Sr. Principal Performance Engineer                   Phone: 978-392-2479
-Red Hat, Inc.                                    FAX: 978-392-1001
-314 Littleton Road                               Email: srao@redhat.com
-Westford, MA 01886
+Reviewed-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
 
---000000000000a61cda061404394a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 19, 2024 at 9:32=E2=80=AF=
-AM Kevin Wolf &lt;<a href=3D"mailto:kwolf@redhat.com">kwolf@redhat.com</a>&=
-gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
-px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Am 18=
-.03.2024 um 19:34 hat Stefan Hajnoczi geschrieben:<br>
-&gt; The coroutine pool implementation can hit the Linux vm.max_map_count<b=
-r>
-&gt; limit, causing QEMU to abort with &quot;failed to allocate memory for =
-stack&quot;<br>
-&gt; or &quot;failed to set up stack guard page&quot; during coroutine crea=
-tion.<br>
-&gt; <br>
-&gt; This happens because per-thread pools can grow to tens of thousands of=
-<br>
-&gt; coroutines. Each coroutine causes 2 virtual memory areas to be created=
-.<br>
-&gt; Eventually vm.max_map_count is reached and memory-related syscalls fai=
-l.<br>
-&gt; The per-thread pool sizes are non-uniform and depend on past coroutine=
-<br>
-&gt; usage in each thread, so it&#39;s possible for one thread to have a la=
-rge<br>
-&gt; pool while another thread&#39;s pool is empty.<br>
-&gt; <br>
-&gt; Switch to a new coroutine pool implementation with a global pool that<=
-br>
-&gt; grows to a maximum number of coroutines and per-thread local pools tha=
-t<br>
-&gt; are capped at hardcoded small number of coroutines.<br>
-&gt; <br>
-&gt; This approach does not leave large numbers of coroutines pooled in a<b=
-r>
-&gt; thread that may not use them again. In order to perform well it<br>
-&gt; amortizes the cost of global pool accesses by working in batches of<br=
->
-&gt; coroutines instead of individual coroutines.<br>
-&gt; <br>
-&gt; The global pool is a list. Threads donate batches of coroutines to whe=
-n<br>
-&gt; they have too many and take batches from when they have too few:<br>
-&gt; <br>
-&gt; .-----------------------------------.<br>
-&gt; | Batch 1 | Batch 2 | Batch 3 | ... | global_pool<br>
-&gt; `-----------------------------------&#39;<br>
-&gt; <br>
-&gt; Each thread has up to 2 batches of coroutines:<br>
-&gt; <br>
-&gt; .-------------------.<br>
-&gt; | Batch 1 | Batch 2 | per-thread local_pool (maximum 2 batches)<br>
-&gt; `-------------------&#39;<br>
-&gt; <br>
-&gt; The goal of this change is to reduce the excessive number of pooled<br=
->
-&gt; coroutines that cause QEMU to abort when vm.max_map_count is reached<b=
-r>
-&gt; without losing the performance of an adequately sized coroutine pool.<=
-br>
-&gt; <br>
-&gt; Here are virtio-blk disk I/O benchmark results:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0RW BLKSIZE IODEPTH=C2=A0 =C2=A0 OLD=C2=A0 =
-=C2=A0 NEW CHANGE<br>
-&gt; randread=C2=A0 =C2=A0 =C2=A0 4k=C2=A0 =C2=A0 =C2=A0 =C2=A01 113725 117=
-451 +3.3%<br>
-&gt; randread=C2=A0 =C2=A0 =C2=A0 4k=C2=A0 =C2=A0 =C2=A0 =C2=A08 192968 198=
-510 +2.9%<br>
-&gt; randread=C2=A0 =C2=A0 =C2=A0 4k=C2=A0 =C2=A0 =C2=A0 16 207138 209429 +=
-1.1%<br>
-&gt; randread=C2=A0 =C2=A0 =C2=A0 4k=C2=A0 =C2=A0 =C2=A0 32 212399 215145 +=
-1.3%<br>
-&gt; randread=C2=A0 =C2=A0 =C2=A0 4k=C2=A0 =C2=A0 =C2=A0 64 218319 221277 +=
-1.4%<br>
-&gt; randread=C2=A0 =C2=A0 128k=C2=A0 =C2=A0 =C2=A0 =C2=A01=C2=A0 17587=C2=
-=A0 17535 -0.3%<br>
-&gt; randread=C2=A0 =C2=A0 128k=C2=A0 =C2=A0 =C2=A0 =C2=A08=C2=A0 17614=C2=
-=A0 17616 +0.0%<br>
-&gt; randread=C2=A0 =C2=A0 128k=C2=A0 =C2=A0 =C2=A0 16=C2=A0 17608=C2=A0 17=
-609 +0.0%<br>
-&gt; randread=C2=A0 =C2=A0 128k=C2=A0 =C2=A0 =C2=A0 32=C2=A0 17552=C2=A0 17=
-553 +0.0%<br>
-&gt; randread=C2=A0 =C2=A0 128k=C2=A0 =C2=A0 =C2=A0 64=C2=A0 17484=C2=A0 17=
-484 +0.0%<br>
-&gt; <br>
-&gt; See files/{fio.sh,test.xml.j2} for the benchmark configuration:<br>
-&gt; <a href=3D"https://gitlab.com/stefanha/virt-playbooks/-/tree/coroutine=
--pool-fix-sizing" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/s=
-tefanha/virt-playbooks/-/tree/coroutine-pool-fix-sizing</a><br>
-&gt; <br>
-&gt; Buglink: <a href=3D"https://issues.redhat.com/browse/RHEL-28947" rel=
-=3D"noreferrer" target=3D"_blank">https://issues.redhat.com/browse/RHEL-289=
-47</a><br>
-&gt; Reported-by: Sanjay Rao &lt;<a href=3D"mailto:srao@redhat.com" target=
-=3D"_blank">srao@redhat.com</a>&gt;<br>
-&gt; Reported-by: Boaz Ben Shabat &lt;<a href=3D"mailto:bbenshab@redhat.com=
-" target=3D"_blank">bbenshab@redhat.com</a>&gt;<br>
-&gt; Reported-by: Joe Mario &lt;<a href=3D"mailto:jmario@redhat.com" target=
-=3D"_blank">jmario@redhat.com</a>&gt;<br>
-&gt; Signed-off-by: Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@redhat.c=
-om" target=3D"_blank">stefanha@redhat.com</a>&gt;<br>
-<br>
-Reviewed-by: Kevin Wolf &lt;<a href=3D"mailto:kwolf@redhat.com" target=3D"_=
-blank">kwolf@redhat.com</a>&gt;<br>
-<br>
-Though I do wonder if we can do something about the slight performance<br>
-degradation that Sanjay reported. We seem to stay well under the hard<br>
-limit, so the reduced global pool size shouldn&#39;t be the issue. Maybe<br=
->
-it&#39;s the locking?<br>
-<br></blockquote><div>We are only seeing a slight fall off from our much im=
-proved numbers with the addition of iothreads. I am not very concerned. Wit=
-h database workloads, there&#39;s always a run to run variation. Especially=
- when there&#39;s a lot of idle cpus on the host. To reduce the run to run =
-variation, we use cpu / numa pinning and other methods like pci passthru. I=
-f I get a chance, I will do some runs with cpu pinning to see what the numb=
-ers look like.</div><div><br></div><div>=C2=A0</div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">
-Either way, even though it could be called a fix, I don&#39;t think this is=
-<br>
-for 9.0, right?<br>
-<br>
-Kevin<br>
-<br>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
-iv dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><pre cols=3D"72"=
->Sanjay Rao=20
-Sr. Principal Performance Engineer                   Phone: 978-392-2479=20
-Red Hat, Inc.                                    FAX: 978-392-1001=20
-314 Littleton Road                               Email: <a href=3D"mailto:s=
-rao@redhat.com" target=3D"_blank">srao@redhat.com</a>=20
-Westford, MA 01886 </pre></div></div></div></div></div></div></div>
-
---000000000000a61cda061404394a--
+Thanks!
 
 
