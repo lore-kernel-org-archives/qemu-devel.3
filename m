@@ -4,84 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58746CD11BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 17:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2678C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 17:20:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmzar-0003HM-HW; Wed, 20 Mar 2024 13:19:13 -0400
+	id 1rmzas-0003Hg-3b; Wed, 20 Mar 2024 13:19:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1rmzap-0003FY-WB; Wed, 20 Mar 2024 13:19:12 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1rmzao-0006de-1I; Wed, 20 Mar 2024 13:19:11 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-565c6cf4819so2071101a12.1; 
- Wed, 20 Mar 2024 10:19:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710955146; x=1711559946; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7nInynHLgmsZQVaTOvTBwe6136gOIvfQkQAoCQ5NVmY=;
- b=BG0/8j/hhv8V8gwm7NlQpukafTehg3Zig8apJ5IBTINjrsA3F6CCG7bCZdi/76rcBi
- IaRPzZSoVIAcbU0jJwFtB2wx3h+GxtKZA5SjcZNr+sfSqFu+XucnjLN9VXe881OBnMIh
- OUfSmN3WLTA+Fe/wJ5dFBNV/ZtXkMI8RIXhs+IgfZQ50LxdEA/RdmUdDEtOQ3bHJX8pN
- 6m3+W87H/44GdQRT3b+JhkrzaW7dx9o/J7e3i7QmzFBZKr8FGaP5qSYp8BO8X+DT7mQc
- CIQWxVo7xOSC/ZaAWEG+ZQPsG8YUElwUkxxbhIit6pa57LT7UPpm4JdZ4sRCUp80zo7e
- sNRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710955146; x=1711559946;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7nInynHLgmsZQVaTOvTBwe6136gOIvfQkQAoCQ5NVmY=;
- b=IfVsxU/kmSiNxC11zARe5QflCRY7D3rYK5GDQKsAxmNZtf5B37BEZ2d5/CyU7AFvib
- GnW6zsH5iFnj+WFuTVrM8oPtrQ3GfGKTgTwWkBMSX/nkNBdQwn9Jq6qNxhEWfW/Uvd6W
- lZuxsGFj+hR/SiBHkk9SQGn/kJ/8rnhsXiRQXUZxzWbw2O/ICUkgikJU1VrHlRObO/kX
- /ptPS8eaDlkxFcT9mWp7Ad+qv0y3lPKVZCFJx8Zt5I4fAnwrJx3UvhR2jsRsfdloVita
- 53k192oaB3vvleWJPqk9M4O5WDvNYz4t177XheOGaX1dLsAK4r8NmZwA3IpzNgBIBKk9
- iEJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXI4gVzLd1N6ObMRLPj/Jd4O2/lT5aJDSpZHcqJ3rKHm0vQSsgwyzHRMlz0gENUP+NELzC2RDcSy7SAxz1wV4RVToHzqkGU4YzXdHAzcMAtqzTmT/d8wlVXkX4/cQ==
-X-Gm-Message-State: AOJu0YyvNpWk7Kx108pqBIcT7BXdoBd/MruBfhzg7S1G0ew6WWj2FLKg
- /YT5Httcymxfuo1y4Rag3lf5z0xkixn3tn78jSPGj3EjmJrkRaLv
-X-Google-Smtp-Source: AGHT+IHWMWAfuKmdfMPW23LTSjcrmEa6G9tM8KEYgBb2xWOCHCiiKZtThYVkiCsJ9cYABGLkl29ajQ==
-X-Received: by 2002:a17:906:b2cf:b0:a46:ba8f:bcdc with SMTP id
- cf15-20020a170906b2cf00b00a46ba8fbcdcmr259895ejb.8.1710955146597; 
- Wed, 20 Mar 2024 10:19:06 -0700 (PDT)
-Received: from freya.midgard (broadband-188-255-126-251.ip.moscow.rt.ru.
- [188.255.126.251]) by smtp.gmail.com with ESMTPSA id
- pv27-20020a170907209b00b00a4576dd5a8csm7481639ejb.201.2024.03.20.10.19.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Mar 2024 10:19:05 -0700 (PDT)
-From: Alexey Baturo <baturo.alexey@gmail.com>
-X-Google-Original-From: Alexey Baturo <me@deliversmonkey.space>
-To: 
-Cc: baturo.alexey@gmail.com, richard.henderson@linaro.org,
- space.monkey.delivers@gmail.com, palmer@dabbelt.com,
- Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v8 4/6] target/riscv: Add pointer masking tb flags
-Date: Wed, 20 Mar 2024 20:18:48 +0300
-Message-Id: <20240320171850.1197824-5-me@deliversmonkey.space>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240320171850.1197824-1-me@deliversmonkey.space>
-References: <20240320171850.1197824-1-me@deliversmonkey.space>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmzap-0003FE-T0
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:19:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmzan-0006di-On
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:19:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710955148;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=G8dI5tDDLn/3mQXzIakLZqiPC3iqYHKSu6Q2ybNPOn8=;
+ b=WzNkztPNQAOBhFvrT0uoROkNvUiNVraBsreoP3iM30yTifAaoKHLNbWN0gAN4x6WsnTQdM
+ w3vRl7+WpMLAZ4TcPu3rLOZzkqIHuwkG+CAOuhtxkMfOGzV1z1YF2b6hKt+46uTE4sVvsw
+ BS3LhH9w6jnyd279//DNVDPBeHTbf58=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-434-EFMGMpzsOtCKvu0T9_YyjQ-1; Wed,
+ 20 Mar 2024 13:19:06 -0400
+X-MC-Unique: EFMGMpzsOtCKvu0T9_YyjQ-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 41E971C2CEC1
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 17:19:06 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.205])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 2C5C22022C24;
+ Wed, 20 Mar 2024 17:19:05 +0000 (UTC)
+Date: Wed, 20 Mar 2024 17:18:59 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Anthony Harivel <aharivel@redhat.com>
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, qemu-devel@nongnu.org,
+ vchundur@redhat.com, rjarry@redhat.com
+Subject: Re: [PATCH v4 1/3] qio: add support for SO_PEERCRED for socket channel
+Message-ID: <Zfsag9_HJ3h8QlWP@redhat.com>
+References: <20240318151216.32833-1-aharivel@redhat.com>
+ <20240318151216.32833-2-aharivel@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=baturo.alexey@gmail.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240318151216.32833-2-aharivel@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,80 +81,152 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexey Baturo <space.monkey.delivers@gmail.com>
+On Mon, Mar 18, 2024 at 04:12:14PM +0100, Anthony Harivel wrote:
+> The function qio_channel_get_peercred() returns a pointer to the
+> credentials of the peer process connected to this socket.
+> 
+> This credentials structure is defined in <sys/socket.h> as follows:
+> 
+> struct ucred {
+> 	pid_t pid;    /* Process ID of the sending process */
+> 	uid_t uid;    /* User ID of the sending process */
+> 	gid_t gid;    /* Group ID of the sending process */
+> };
+> 
+> The use of this function is possible only for connected AF_UNIX stream
+> sockets and for AF_UNIX stream and datagram socket pairs.
+> 
+> On platform other than Linux, the function return 0.
+> 
+> Signed-off-by: Anthony Harivel <aharivel@redhat.com>
+> ---
+>  include/io/channel.h | 21 +++++++++++++++++++++
+>  io/channel-socket.c  | 24 ++++++++++++++++++++++++
+>  io/channel.c         | 12 ++++++++++++
+>  3 files changed, 57 insertions(+)
+> 
+> diff --git a/include/io/channel.h b/include/io/channel.h
+> index 7986c49c713a..01ad7bd7e430 100644
+> --- a/include/io/channel.h
+> +++ b/include/io/channel.h
+> @@ -160,6 +160,9 @@ struct QIOChannelClass {
+>                                    void *opaque);
+>      int (*io_flush)(QIOChannel *ioc,
+>                      Error **errp);
+> +    void (*io_peerpid)(QIOChannel *ioc,
+> +                       unsigned int *pid,
+> +                       Error **errp);
+>  };
+>  
+>  /* General I/O handling functions */
+> @@ -981,4 +984,22 @@ int coroutine_mixed_fn qio_channel_writev_full_all(QIOChannel *ioc,
+>  int qio_channel_flush(QIOChannel *ioc,
+>                        Error **errp);
+>  
+> +/**
+> + * qio_channel_get_peercred:
+> + * @ioc: the channel object
+> + * @pid: pointer to pid
+> + * @errp: pointer to a NULL-initialized error object
+> + *
+> + * Returns the pid of the peer process connected to this socket.
+> + *
+> + * The use of this function is possible only for connected
+> + * AF_UNIX stream sockets and for AF_UNIX stream and datagram
+> + * socket pairs on Linux.
+> + * Return an error with pid -1 for the non-Linux OS.
+> + *
+> + */
+> +void qio_channel_get_peerpid(QIOChannel *ioc,
+> +                             unsigned int *pid,
+> +                             Error **errp);
+> +
+>  #endif /* QIO_CHANNEL_H */
+> diff --git a/io/channel-socket.c b/io/channel-socket.c
+> index 3a899b060858..fcff92ecc151 100644
+> --- a/io/channel-socket.c
+> +++ b/io/channel-socket.c
+> @@ -841,6 +841,29 @@ qio_channel_socket_set_cork(QIOChannel *ioc,
+>      socket_set_cork(sioc->fd, v);
+>  }
+>  
+> +static void
+> +qio_channel_socket_get_peerpid(QIOChannel *ioc,
+> +                               unsigned int *pid,
+> +                               Error **errp)
+> +{
+> +#ifdef CONFIG_LINUX
+> +    QIOChannelSocket *sioc = QIO_CHANNEL_SOCKET(ioc);
+> +    Error *err = NULL;
+> +    socklen_t len = sizeof(struct ucred);
+> +
+> +    struct ucred cred;
+> +    if (getsockopt(sioc->fd,
+> +               SOL_SOCKET, SO_PEERCRED,
+> +               &cred, &len) == -1) {
 
-Signed-off-by: Alexey Baturo <space.monkey.delivers@gmail.com>
+Set '*pid = -1'
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/cpu.h        | 3 +++
- target/riscv/cpu_helper.c | 3 +++
- target/riscv/translate.c  | 5 +++++
- 3 files changed, 11 insertions(+)
+> +        error_setg_errno(&err, errno, "Unable to get peer credentials");
+> +        error_propagate(errp, err);
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 0112b568a0..404f6ec50d 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -566,6 +566,9 @@ FIELD(TB_FLAGS, ITRIGGER, 20, 1)
- FIELD(TB_FLAGS, VIRT_ENABLED, 21, 1)
- FIELD(TB_FLAGS, PRIV, 22, 2)
- FIELD(TB_FLAGS, AXL, 24, 2)
-+/* If pointer masking should be applied and address sign extended */
-+FIELD(TB_FLAGS, PM_PMM, 26, 2)
-+FIELD(TB_FLAGS, PM_SIGNEXTEND, 28, 1)
- 
- #ifdef TARGET_RISCV32
- #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index a563451c48..4dea564fd8 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -68,6 +68,7 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
-     RISCVCPU *cpu = env_archcpu(env);
-     RISCVExtStatus fs, vs;
-     uint32_t flags = 0;
-+    bool pm_signext = riscv_cpu_virt_mem_enabled(env);
- 
-     *pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc;
-     *cs_base = 0;
-@@ -138,6 +139,8 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
-     flags = FIELD_DP32(flags, TB_FLAGS, VS, vs);
-     flags = FIELD_DP32(flags, TB_FLAGS, XL, env->xl);
-     flags = FIELD_DP32(flags, TB_FLAGS, AXL, cpu_address_xl(env));
-+    flags = FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
-+    flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
- 
-     *pflags = flags;
- }
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 3382eb0a5f..a85a2abf2e 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -103,6 +103,9 @@ typedef struct DisasContext {
-     bool vl_eq_vlmax;
-     CPUState *cs;
-     TCGv zero;
-+    /* actual address width */
-+    uint8_t addr_width;
-+    bool addr_signed;
-     /* Ztso */
-     bool ztso;
-     /* Use icount trigger for native debug */
-@@ -1180,6 +1183,8 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->xl = FIELD_EX32(tb_flags, TB_FLAGS, XL);
-     ctx->address_xl = FIELD_EX32(tb_flags, TB_FLAGS, AXL);
-     ctx->cs = cs;
-+    ctx->addr_width = 0;
-+    ctx->addr_signed = false;
-     ctx->ztso = cpu->cfg.ext_ztso;
-     ctx->itrigger = FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
-     ctx->zero = tcg_constant_tl(0);
+and 'return;' here, since accessing 'cred.pid' below
+is undefined behaviour if getsockopt failed.
+
+> +    }
+> +    *pid = (unsigned int)cred.pid;
+> +#else
+> +    error_setg(errp, "Unsupported feature");
+> +    *pid = -1;
+> +#endif
+> +}
+>  
+>  static int
+>  qio_channel_socket_close(QIOChannel *ioc,
+> @@ -938,6 +961,7 @@ static void qio_channel_socket_class_init(ObjectClass *klass,
+>  #ifdef QEMU_MSG_ZEROCOPY
+>      ioc_klass->io_flush = qio_channel_socket_flush;
+>  #endif
+> +    ioc_klass->io_peerpid = qio_channel_socket_get_peerpid;
+>  }
+>  
+>  static const TypeInfo qio_channel_socket_info = {
+> diff --git a/io/channel.c b/io/channel.c
+> index a1f12f8e9096..777989bc9a81 100644
+> --- a/io/channel.c
+> +++ b/io/channel.c
+> @@ -548,6 +548,18 @@ void qio_channel_set_cork(QIOChannel *ioc,
+>      }
+>  }
+>  
+> +void qio_channel_get_peerpid(QIOChannel *ioc,
+> +                             unsigned int *pid,
+> +                             Error **errp)
+> +{
+> +    QIOChannelClass *klass = QIO_CHANNEL_GET_CLASS(ioc);
+> +
+> +    if (!klass->io_peerpid) {
+> +        error_setg(errp, "Channel does not support peer pid");
+> +        return;
+> +    }
+> +    klass->io_peerpid(ioc, pid, errp);
+> +}
+>  
+>  off_t qio_channel_io_seek(QIOChannel *ioc,
+>                            off_t offset,
+> -- 
+> 2.44.0
+> 
+
+With regards,
+Daniel
 -- 
-2.34.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
