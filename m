@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C262C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC0BC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:45:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmrYd-0007pm-8d; Wed, 20 Mar 2024 04:44:23 -0400
+	id 1rmrZ6-0000C2-So; Wed, 20 Mar 2024 04:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrYZ-0007o5-3a
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:44:19 -0400
-Received: from mail-dm6nam12on20601.outbound.protection.outlook.com
- ([2a01:111:f403:2417::601]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ id 1rmrZ5-00009E-C1
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:44:51 -0400
+Received: from mail-mw2nam04on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:240a::601]
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrYI-0007tw-4Y
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:44:17 -0400
+ id 1rmrYy-00083q-Gm
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:44:51 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Rz8v6XJsQk9kW9CVHcCuPQIQp2E0h5nk59CI8mmUgbGXr7yoiAlSepc+Dpg7wk6/H0bQW7xlldCGXtLQjaKK3k1vUJ5IDVlkPZq3WHu2uFmv0eN5LWAUGUt6qA31u1XZvHdAB6Ulxs89+Gd4MLnJ+gxvHP188k0YxmNq72HEcZP04bKj6gUNeg6jnhrSqLWT3oFhG9dLslyXtmO+C4pRjdpx960KC5LJXRX7D8CnJEM2I5jX/UQBAMwC3OvI4QOkRh4oC1AJjPUOS/pyjzoBPscBJvKv9O9prmQSL/+la5PnqAceBTvk8qK+3qstYwCTRzfvz48bOr2vPsAyw8PC4A==
+ b=Vk9xaW5e+eprpioY6hFO1ODy46mNy7+Mg9PB7LXB6g3UcseSJf8mxWwwkEcEmvYygPSUFmYH6u/iiAtqNlTGAvdisQiyLZ7yJBgJHokbZo++bnCtBCLY/X22IuBnviIVQqgyUhuYu0Hq+5nH3kJBFu79cnlrVnMLCu59vSGCVilT8VF+Z4APas6WL8MSrVt32vnESddpL9idM+q3TEoSnH0eQ9RCA0H/J4UGokO0L09yWe/NcI+hfQyxktegLCEQbruUMZpiqFhQc97giIuaD/xNe5dnads3LhUqi5XHMdUT/5oCG/IJqT9X/1I88nVUuVj2WyTO3326YsJzGw/GCQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dSrmrJQbHUAMRL8clL1jsbrz1sxVZn/0yeZ/G0uTirA=;
- b=SOHMYBuG5LtqFK+aFTSMLO44QIxWQtLGnZTaWI/fjNmn+XPieuR0sTX3jEH2FqDW1sLnQl4JTTvUspPqFNpyQx4xeMB5dzFq8syyJuX3FNsUQ9U9KoLyiGBeGDcooHzSm0lgok9o7/VjvDNwePfPG8Zx2LHi4eV4/mGBqg1QTLFIpfUhfR0hxXpfQPCNx3Ef3l38/7DKB0NKT81VKzz41FHuBaXuyYJtR6/jgM/A2DtCsFNhA4gf+V20XsnwNV7eYWRFtQXoQpeg1ExUwLBBhIGYgIqwjtC31x2VSOV0Ie6No563fG/fhUh69EfCHdbVbQh2FjtqMa7rzRr0P9CIng==
+ bh=PZXSYLqzazsjQqsL8guAe/PDsMZiZI6uZP4O0rA8/oQ=;
+ b=OaqkRBLA9pfEH9b5hSl/+WFNGxLvLveV+sFnglv090wCR8uW7N6bmUx/lR+vP7eCihh9/DNKs//KUIRvNpPrW4q/ZUs36khIS5Go9akfEOYJdowQca0Wlk5vu6AlLV2OVUl7fySaa0lI81wEEiX5RuoY5DfEEqNZjdB7XwDuwO3EVkpRol/1bXgCX3csW4WJVmSyfWY48WTQx/9aIdmBJd38hKUqHXWwrZlFXm7z0C3RJ7U/P/hUAslXjz3jFO1Ydyoz82As1U6/skB0H1DrzT1wBqsG2FHtECj+75K6ZFFNtqugoIxdsfFN8mcvtfXL1MkcUzGFWJc62GbGh3lQFQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dSrmrJQbHUAMRL8clL1jsbrz1sxVZn/0yeZ/G0uTirA=;
- b=tFPWASVdcMGSrZGZrq0wzeP1lZA/oDqGdnQn5ysKry2u+XpD02xghojbA7D3w6X9DxkLl7pQd0lkR2NpiI1oWnyFt2QCXS59dolXIHduMO6G77RCrdy3Yuhi/3JDsJrcuPjhRMsbgGlX1/4vsbeTILAayZFUwBpjPf2mO00XYl8=
-Received: from PR0P264CA0093.FRAP264.PROD.OUTLOOK.COM (2603:10a6:100:18::33)
- by CY5PR12MB6345.namprd12.prod.outlook.com (2603:10b6:930:22::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.27; Wed, 20 Mar
- 2024 08:43:58 +0000
-Received: from SN1PEPF0002529D.namprd05.prod.outlook.com
- (2603:10a6:100:18:cafe::4e) by PR0P264CA0093.outlook.office365.com
- (2603:10a6:100:18::33) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.29 via Frontend
- Transport; Wed, 20 Mar 2024 08:43:58 +0000
+ bh=PZXSYLqzazsjQqsL8guAe/PDsMZiZI6uZP4O0rA8/oQ=;
+ b=Eim9g7n3wxzF9hILrND5BHzQmPME1rrSwHvQ0AJniBiiXpIrhKuICAaJyCXtnByvj5fPzg09UZFs2bU3OicWLd7BOsemKVH83rF/9chIvDbKc9c8OYSC+/6uwFTgixjeQhL1KMFkxB6DeH7xytNvfTiRmSAmVcsGw9FM36yTmD0=
+Received: from BYAPR11CA0086.namprd11.prod.outlook.com (2603:10b6:a03:f4::27)
+ by PH0PR12MB8822.namprd12.prod.outlook.com (2603:10b6:510:28d::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.30; Wed, 20 Mar
+ 2024 08:44:38 +0000
+Received: from MWH0EPF000A6731.namprd04.prod.outlook.com
+ (2603:10b6:a03:f4:cafe::74) by BYAPR11CA0086.outlook.office365.com
+ (2603:10b6:a03:f4::27) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.27 via Frontend
+ Transport; Wed, 20 Mar 2024 08:44:38 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,24 +54,24 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- SN1PEPF0002529D.mail.protection.outlook.com (10.167.242.4) with Microsoft
+ MWH0EPF000A6731.mail.protection.outlook.com (10.167.249.23) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:43:57 +0000
+ 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:44:38 +0000
 Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 20 Mar
- 2024 03:43:55 -0500
+ 2024 03:44:37 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <kvm@vger.kernel.org>, Tom Lendacky <thomas.lendacky@amd.com>, "Paolo
  Bonzini" <pbonzini@redhat.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Pankaj Gupta
  <pankaj.gupta@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>, Isaku Yamahata
- <isaku.yamahata@linux.intel.com>
-Subject: [PATCH v3 16/49] memory: Introduce
- memory_region_init_ram_guest_memfd()
-Date: Wed, 20 Mar 2024 03:39:12 -0500
-Message-ID: <20240320083945.991426-17-michael.roth@amd.com>
+ <isaku.yamahata@linux.intel.com>, Sean Christopherson
+ <sean.j.christopherson@intel.com>
+Subject: [PATCH v3 18/49] q35: Introduce smm_ranges property for q35-pci-host
+Date: Wed, 20 Mar 2024 03:39:14 -0500
+Message-ID: <20240320083945.991426-19-michael.roth@amd.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240320083945.991426-1-michael.roth@amd.com>
 References: <20240320083945.991426-1-michael.roth@amd.com>
@@ -83,29 +83,29 @@ X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF0002529D:EE_|CY5PR12MB6345:EE_
-X-MS-Office365-Filtering-Correlation-Id: 70e605d4-8ac9-46e9-7353-08dc48b9e19e
+X-MS-TrafficTypeDiagnostic: MWH0EPF000A6731:EE_|PH0PR12MB8822:EE_
+X-MS-Office365-Filtering-Correlation-Id: 937a9cd3-f0d6-4054-c2d3-08dc48b9fa54
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: f/W8UtLvqFlkTugE9YUplWeyQBakIaTLYh56iS68VPf9BUgWng9wFwnSLAizsESXGLHZiwIzJUaaFBzRGJDtSlXsFhF3oWL4n0iriXev544Jmnx3l2Is7z30+KorCBTVb53LkyG1jkVNkk/3xoGf0wDTYdKuyu21ofQ00DjN2ChSXMqoxphPWd284qRJqpy/G+3vns1kBbL2arN3p45C4LbCp/WUAAR2wwF0UeB6QAclwPUpFEzqiI1JZV5J4fFO8gZeB5bBHQRpLOqyI/wvoBD0GNuJrXn0sbBdnVh1o+s7lcV0ZurbGqWuFCFaSTPG0VIKAVtbJB3ko1lqiHpbpLbgD8Brz3eYHYOBVcwfkqhQMV5XY4U8irKNMPWS9TXBOosj8M6isGtDKX/7HjneEpx/znFCXhQ2O9T6gBAV72IAGNxUiSSxSb/FDNbwj4e6UsSkAGf9HOJVwtRhLq8mzgLiWVGm1dEnL2LKZckEki25QwGIR3uODn+g8+sXUZ+nOnMe7W5py3Phw0d98wlQk6AnHOM4aQamjQNHYEElu8KW0lU3ZDXFm1i1Yvqps5wezpZCHZJ+OTEKRndteCw2mr7LP0IP683fkF+JfRpVpWq2La+lxINd1zsMYCiM+/YlfpNIveSxuaRiribFA+bEbpLCtpi8Kre/z+0b1cFuR2jqKkIs4UTcUpsedBTgYMjn0AhndokzKwaE5csKxM6b5AQrs3gqNnF+js0QWPmVANWJtAeCx8clXJVCFNEtbIJh
+X-Microsoft-Antispam-Message-Info: PJCHAwcp46/2I8twpNQvSwBRMx6RSNGPv6Ho0R9Yj39j/8zj7ErnxOgBqgdksdNidKyF6jqTUpehCPUPtarrQskguowwP30aMwXjBJ3KfiR5iaWbdbYYWc/3GwBBORgkc0swW4cuGXi5sIPOYQDP/HSMlaQ2tNDSY7CjyUrdUuXRJUo6De2EmZxZpj6pb9QebvZQHFx20t7x8p/VAtU+KrXJvg0SBqFoxn1daZm2BvFzzMKmSeAyt0ZnvMZIovMZ8jN7OjXQo7gl2PpAZSuXHwx4t/L+etgA/aKpyBbrfG2b+U8teRh1Bo+zHs129na/sAK4ns3Hpuw+CxiDcYadIeTZqTRcYKzi+R7+RNvoJ6zkAYxxWGXm3bp4LrlCK+pvW8stu0qBqA5AfVQSJEC0T1lOmndz5uzBok+0LwVg4UibslLLyszBr+HEAq7Jv3iy4A1z9vl7BS3I5ru3mFsmC66FhTjBqfkeP+ZFp11h+KMdlg/wPhX5Eq7ENVXjXWo4Oc6F+88iqq9xaV0CPtanV2n/jb9vY4l9htRp4ADn9sVyaN1M66QicKrso3T3KBYLXARUiOAoF2Yi5Xn6SVE8cIO4PSGNtFBiFK4rQssMQkcpUbXxOa63o+kjw7gCmlWDLz8ks96LvKjzQPWmOXNwISkdBUm72h59WmXcPS0RJUoB9sHRy9gueRG0n0y9n96sSu7cpde9yL/KebU4Szd76dqlGAeHTxgwhnSnI2uMUzZoug3KK5wlwwqJrkBwA4IX
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(1800799015)(36860700004)(376005)(82310400014); DIR:OUT;
+ SFS:(13230031)(376005)(36860700004)(82310400014)(1800799015); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:43:57.0706 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 70e605d4-8ac9-46e9-7353-08dc48b9e19e
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:44:38.4213 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 937a9cd3-f0d6-4054-c2d3-08dc48b9fa54
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF0002529D.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A6731.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6345
-Received-SPF: permerror client-ip=2a01:111:f403:2417::601;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8822
+Received-SPF: permerror client-ip=2a01:111:f403:240a::601;
  envelope-from=Michael.Roth@amd.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -128,77 +128,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Isaku Yamahata <isaku.yamahata@linux.intel.com>
 
-Introduce memory_region_init_ram_guest_memfd() to allocate private
-guset memfd on the MemoryRegion initialization. It's for the use case of
-TDVF, which must be private on TDX case.
+Add a q35 property to check whether or not SMM ranges, e.g. SMRAM, TSEG,
+etc... exist for the target platform.  TDX doesn't support SMM and doesn't
+play nice with QEMU modifying related guest memory ranges.
 
+Signed-off-by: Isaku Yamahata <isaku.yamahata@linux.intel.com>
+Co-developed-by: Sean Christopherson <sean.j.christopherson@intel.com>
+Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
----
-Changes in v5:
-- drop memory_region_set_default_private() because this function is
-  dropped in this v5 series;
-
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- include/exec/memory.h |  6 ++++++
- system/memory.c       | 25 +++++++++++++++++++++++++
- 2 files changed, 31 insertions(+)
+ hw/i386/pc_q35.c          |  2 ++
+ hw/pci-host/q35.c         | 42 +++++++++++++++++++++++++++------------
+ include/hw/i386/pc.h      |  1 +
+ include/hw/pci-host/q35.h |  1 +
+ 4 files changed, 33 insertions(+), 13 deletions(-)
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 679a847685..1e351f6fc8 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -1603,6 +1603,12 @@ bool memory_region_init_ram(MemoryRegion *mr,
-                             uint64_t size,
-                             Error **errp);
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 8a427c4647..42324448d7 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -219,6 +219,8 @@ static void pc_q35_init(MachineState *machine)
+                             x86ms->above_4g_mem_size, NULL);
+     object_property_set_bool(phb, PCI_HOST_BYPASS_IOMMU,
+                              pcms->default_bus_bypass_iommu, NULL);
++    object_property_set_bool(phb, PCI_HOST_PROP_SMM_RANGES,
++                             x86_machine_is_smm_enabled(x86ms), NULL);
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(phb), &error_fatal);
  
-+bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
-+                                        Object *owner,
-+                                        const char *name,
-+                                        uint64_t size,
-+                                        Error **errp);
+     /* pci */
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index 98d4a7c253..0b6cbaed7e 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -179,6 +179,8 @@ static Property q35_host_props[] = {
+                      mch.below_4g_mem_size, 0),
+     DEFINE_PROP_SIZE(PCI_HOST_ABOVE_4G_MEM_SIZE, Q35PCIHost,
+                      mch.above_4g_mem_size, 0),
++    DEFINE_PROP_BOOL(PCI_HOST_PROP_SMM_RANGES, Q35PCIHost,
++                     mch.has_smm_ranges, true),
+     DEFINE_PROP_BOOL("x-pci-hole64-fix", Q35PCIHost, pci_hole64_fix, true),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+@@ -214,6 +216,7 @@ static void q35_host_initfn(Object *obj)
+     /* mch's object_initialize resets the default value, set it again */
+     qdev_prop_set_uint64(DEVICE(s), PCI_HOST_PROP_PCI_HOLE64_SIZE,
+                          Q35_PCI_HOST_HOLE64_SIZE_DEFAULT);
 +
- /**
-  * memory_region_init_rom: Initialize a ROM memory region.
-  *
-diff --git a/system/memory.c b/system/memory.c
-index c756950c0c..85a22408e9 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3606,6 +3606,31 @@ bool memory_region_init_ram(MemoryRegion *mr,
-     return true;
- }
+     object_property_add(obj, PCI_HOST_PROP_PCI_HOLE_START, "uint32",
+                         q35_host_get_pci_hole_start,
+                         NULL, NULL, NULL);
+@@ -476,6 +479,10 @@ static void mch_write_config(PCIDevice *d,
+         mch_update_pciexbar(mch);
+     }
  
-+bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
-+                                        Object *owner,
-+                                        const char *name,
-+                                        uint64_t size,
-+                                        Error **errp)
-+{
-+    DeviceState *owner_dev;
-+
-+    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name, size,
-+                                                RAM_GUEST_MEMFD, errp)) {
-+        return false;
++    if (!mch->has_smm_ranges) {
++        return;
 +    }
 +
-+    /* This will assert if owner is neither NULL nor a DeviceState.
-+     * We only want the owner here for the purposes of defining a
-+     * unique name for migration. TODO: Ideally we should implement
-+     * a naming scheme for Objects which are not DeviceStates, in
-+     * which case we can relax this restriction.
-+     */
-+    owner_dev = DEVICE(owner);
-+    vmstate_register_ram(mr, owner_dev);
+     if (ranges_overlap(address, len, MCH_HOST_BRIDGE_SMRAM,
+                        MCH_HOST_BRIDGE_SMRAM_SIZE)) {
+         mch_update_smram(mch);
+@@ -494,10 +501,13 @@ static void mch_write_config(PCIDevice *d,
+ static void mch_update(MCHPCIState *mch)
+ {
+     mch_update_pciexbar(mch);
 +
-+    return true;
-+}
+     mch_update_pam(mch);
+-    mch_update_smram(mch);
+-    mch_update_ext_tseg_mbytes(mch);
+-    mch_update_smbase_smram(mch);
++    if (mch->has_smm_ranges) {
++        mch_update_smram(mch);
++        mch_update_ext_tseg_mbytes(mch);
++        mch_update_smbase_smram(mch);
++    }
+ 
+     /*
+      * pci hole goes from end-of-low-ram to io-apic.
+@@ -538,18 +548,20 @@ static void mch_reset(DeviceState *qdev)
+     pci_set_quad(d->config + MCH_HOST_BRIDGE_PCIEXBAR,
+                  MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT);
+ 
+-    d->config[MCH_HOST_BRIDGE_SMRAM] = MCH_HOST_BRIDGE_SMRAM_DEFAULT;
+-    d->config[MCH_HOST_BRIDGE_ESMRAMC] = MCH_HOST_BRIDGE_ESMRAMC_DEFAULT;
+-    d->wmask[MCH_HOST_BRIDGE_SMRAM] = MCH_HOST_BRIDGE_SMRAM_WMASK;
+-    d->wmask[MCH_HOST_BRIDGE_ESMRAMC] = MCH_HOST_BRIDGE_ESMRAMC_WMASK;
++    if (mch->has_smm_ranges) {
++        d->config[MCH_HOST_BRIDGE_SMRAM] = MCH_HOST_BRIDGE_SMRAM_DEFAULT;
++        d->config[MCH_HOST_BRIDGE_ESMRAMC] = MCH_HOST_BRIDGE_ESMRAMC_DEFAULT;
++        d->wmask[MCH_HOST_BRIDGE_SMRAM] = MCH_HOST_BRIDGE_SMRAM_WMASK;
++        d->wmask[MCH_HOST_BRIDGE_ESMRAMC] = MCH_HOST_BRIDGE_ESMRAMC_WMASK;
+ 
+-    if (mch->ext_tseg_mbytes > 0) {
+-        pci_set_word(d->config + MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
+-                     MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_QUERY);
+-    }
++        if (mch->ext_tseg_mbytes > 0) {
++            pci_set_word(d->config + MCH_HOST_BRIDGE_EXT_TSEG_MBYTES,
++                        MCH_HOST_BRIDGE_EXT_TSEG_MBYTES_QUERY);
++        }
+ 
+-    d->config[MCH_HOST_BRIDGE_F_SMBASE] = 0;
+-    d->wmask[MCH_HOST_BRIDGE_F_SMBASE] = 0xff;
++        d->config[MCH_HOST_BRIDGE_F_SMBASE] = 0;
++        d->wmask[MCH_HOST_BRIDGE_F_SMBASE] = 0xff;
++    }
+ 
+     mch_update(mch);
+ }
+@@ -578,6 +590,10 @@ static void mch_realize(PCIDevice *d, Error **errp)
+                  PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+     }
+ 
++    if (!mch->has_smm_ranges) {
++        return;
++    }
 +
- bool memory_region_init_rom(MemoryRegion *mr,
-                             Object *owner,
-                             const char *name,
+     /* if *disabled* show SMRAM to all CPUs */
+     memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
+                              mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 27a68071d7..fb1d4106e5 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -161,6 +161,7 @@ void pc_acpi_smi_interrupt(void *opaque, int irq, int level);
+ #define PCI_HOST_PROP_PCI_HOLE64_SIZE  "pci-hole64-size"
+ #define PCI_HOST_BELOW_4G_MEM_SIZE     "below-4g-mem-size"
+ #define PCI_HOST_ABOVE_4G_MEM_SIZE     "above-4g-mem-size"
++#define PCI_HOST_PROP_SMM_RANGES       "smm-ranges"
+ 
+ 
+ void pc_pci_as_mapping_init(MemoryRegion *system_memory,
+diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
+index bafcbe6752..22fadfa3ed 100644
+--- a/include/hw/pci-host/q35.h
++++ b/include/hw/pci-host/q35.h
+@@ -50,6 +50,7 @@ struct MCHPCIState {
+     MemoryRegion tseg_blackhole, tseg_window;
+     MemoryRegion smbase_blackhole, smbase_window;
+     bool has_smram_at_smbase;
++    bool has_smm_ranges;
+     Range pci_hole;
+     uint64_t below_4g_mem_size;
+     uint64_t above_4g_mem_size;
 -- 
 2.25.1
 
