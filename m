@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE295C54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB763C54E67
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 07:09:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmq4i-0005C0-Qh; Wed, 20 Mar 2024 03:09:24 -0400
+	id 1rmq4g-0005BT-J1; Wed, 20 Mar 2024 03:09:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rmq4d-0005Az-VA
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 03:09:20 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rmq4d-0005Ay-SA
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 03:09:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rmq4c-000737-Ga
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rmq4c-000736-5a
  for qemu-devel@nongnu.org; Wed, 20 Mar 2024 03:09:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1710918557;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RN378LBciNz3SPfxHyk8OuNHw06Gmus29kjmKACDUxk=;
- b=IAIjY8EjPvx3dEMzskQMdDsrrg3ckq2fLadvZnFxKSwTzZ9UbB4bVO5NA/AHyU3q2YSHfr
- wHgbOejW7kabvw5rSw8ENFFHwsW8Z35A4Pwt6JjedoVLLePgAmCUM6s+xZuJtdslGUNtKO
- gK8NewYWRTkEkdUVd3OKpqSjrHXd4kA=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=QewaxpjhlPhqABmE4vjjO119Hp2LR1bEu5oVOQyA9aI=;
+ b=JytaDbAqBESKeOVi5aKIg5iX2h/AZvXgtek0pVre59DtyjonFLgvdzCqPakU0IMYjdo9U2
+ PYdOU6ERJjbXnJAlMrFcEUD0D5qplFtLPF8LHj8RToQew8wJqqSR4AWATwjyNRD+ViYP71
+ vjfajsKZjIpHaKVv/h9jxqsblz3LD7A=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-412-OPYziv4PPtKL-uE4IQGZHA-1; Wed, 20 Mar 2024 03:09:13 -0400
-X-MC-Unique: OPYziv4PPtKL-uE4IQGZHA-1
+ us-mta-172-SyskY3eFMfm4UaeDli1pjg-1; Wed, 20 Mar 2024 03:09:13 -0400
+X-MC-Unique: SyskY3eFMfm4UaeDli1pjg-1
 Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
  [10.11.54.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0441789F9E4;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0464E89F9ED;
  Wed, 20 Mar 2024 07:09:13 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.134])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 9AE023C20;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 9AE203C21;
  Wed, 20 Mar 2024 07:09:12 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 96A801800DD6; Wed, 20 Mar 2024 08:08:51 +0100 (CET)
+ id 8B4891800D4F; Wed, 20 Mar 2024 08:08:51 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 1/5] roms/efi: clean up edk2 build config
-Date: Wed, 20 Mar 2024 08:08:44 +0100
-Message-ID: <20240320070851.18933-2-kraxel@redhat.com>
-In-Reply-To: <20240320070851.18933-1-kraxel@redhat.com>
-References: <20240320070851.18933-1-kraxel@redhat.com>
+Subject: [PULL 0/5] Edk2 20240320 patches
+Date: Wed, 20 Mar 2024 08:08:43 +0100
+Message-ID: <20240320070851.18933-1-kraxel@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
@@ -83,27 +80,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Needed to avoid stale toolchain configurations breaking firmware builds.
+The following changes since commit ba49d760eb04630e7b15f423ebecf6c871b8f77b:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240314115307.628118-2-kraxel@redhat.com>
----
- roms/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+  Merge tag 'pull-maintainer-final-130324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-13 15:12:14 +0000)
 
-diff --git a/roms/Makefile b/roms/Makefile
-index 8e5d8d26a9a0..edc234a0e886 100644
---- a/roms/Makefile
-+++ b/roms/Makefile
-@@ -187,6 +187,7 @@ clean:
- 	rm -rf seabios/.config seabios/out seabios/builds
- 	$(MAKE) -C ipxe/src veryclean
- 	$(MAKE) -C edk2/BaseTools clean
-+	rm -rf edk2/Conf/{.cache,BuildEnv.sh,build_rule.txt,target.txt,tools_def.txt}
- 	$(MAKE) -C SLOF clean
- 	rm -rf u-boot/build-e500
- 	$(MAKE) -C u-boot-sam460ex distclean
+are available in the Git repository at:
+
+  https://gitlab.com/kraxel/qemu.git tags/edk2-20240320-pull-request
+
+for you to fetch changes up to 4a1babe58a1b3cd2c493ee6e0d774e70f62ad9c3:
+
+  update edk2 binaries for arm, risc-v and x86 secure boot. (2024-03-19 16:42:10 +0100)
+
+----------------------------------------------------------------
+edk2: cleanup fix, update build config, rebuild binaries.
+
+----------------------------------------------------------------
+
+Gerd Hoffmann (5):
+  roms/efi: clean up edk2 build config
+  roms/efi: drop workaround for edk2-stable202308
+  roms/efi: exclude efi shell from secure boot builds
+  roms/efi: use pure 64-bit build for edk2-x86_64-secure-code.fd
+  update edk2 binaries for arm, risc-v and x86 secure boot.
+
+ pc-bios/edk2-aarch64-code.fd.bz2     | Bin 1589320 -> 1589310 bytes
+ pc-bios/edk2-arm-code.fd.bz2         | Bin 1571418 -> 1571693 bytes
+ pc-bios/edk2-i386-secure-code.fd.bz2 | Bin 2130741 -> 1876986 bytes
+ pc-bios/edk2-riscv-code.fd.bz2       | Bin 1345420 -> 1289160 bytes
+ roms/Makefile                        |   1 +
+ roms/edk2-build.config               |  13 ++++---------
+ 6 files changed, 5 insertions(+), 9 deletions(-)
+
 -- 
 2.44.0
 
