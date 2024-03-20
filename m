@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 009ADC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A57AC54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:18:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmyd9-0007uI-7f; Wed, 20 Mar 2024 12:17:31 -0400
+	id 1rmydA-0007we-9W; Wed, 20 Mar 2024 12:17:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rmycc-0007TH-SA
+ id 1rmycc-0007TF-IY
  for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:16:59 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rmyca-0003sr-GD
+ id 1rmyca-0003so-GJ
  for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:16:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=Content-Type:MIME-Version:Message-Id:Date:Subject
- :From; bh=J5GA2ToeZpS4Nt6uAUdq29B5O4s8bwbyayEo8FiUTnc=; b=FgYUp7iGSk9URz/J9LK
- JV+7UUGYfoObLGjakl2FmAfpS+z6BwIbkZB6sCUiMt40nZ5dpiH//OGAVrd+aQ4dXiXnSWLUQvtZe
- GlHiMnywrUGsKvZ1+b2u+26nK2bqWlBVog+O7bL99h/1aRm10GrjKXgV6pzcigvkn/1y+lXNuOD1v
- mQATcE2JggD0mtZ7wBMcWSDePeEPRyov2LePYCXphHtRbhkvrh+zbaWJ7qgF+Xs5H+dXLyKr9EZ71
- Gr5z3gz9d/H0814vnLqFIdSXgmsmXn7shoKsmrYiGfjDwzZX9B0rzKDR1BbSpiKNdLJ6GouvvDgcw
- v9iozL8xn+3THsw==;
+ :From; bh=Ybawgp3HB/lt6ntluJk4fefmKWRuTfu4uftbmnHrdyw=; b=pfT9rU6c04JSKfkQELd
+ JqroWpxH/dIggoPUiQnCYke9NmK1oaxwzcdDNIJmcwNwTrfodK6hRLbDxC75xNRbg14VYfvQ+jdCO
+ YMEUOhDLICysXXkEwJc5CM3H+Ap8CA1CzvGbNKJtR5HxpzS3NqkilQKDpdIJ7d45i7RjSn1WQcoPw
+ NM+d30izrBk9HL2ZacAR42k6/oAZfkGW90oEVZy16gDAnPVhhnSuFfht9W0BJvPtZN9XeMVnEdMI0
+ PGZ6EHc1AXZlb7wAr6jgDaUt1jEqs/aYoa1GOxA7TH2eJHcHztFQ4U648MxWbUCswN1ymfYN/1Aqn
+ OgNNh/Ca7aWqGTw==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rmyaM-006TNN-2H;
- Wed, 20 Mar 2024 17:16:38 +0100
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rmyaM-006TNN-1M;
+ Wed, 20 Mar 2024 17:16:37 +0100
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, michael.roth@amd.com, kkostiuk@redhat.com,
  marcandre.lureau@redhat.com, philmd@linaro.org,
  andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v4 5/7] qga/commands-posix: execute_fsfreeze_hook: use
- ga_run_command helper
-Date: Wed, 20 Mar 2024 18:16:46 +0200
-Message-Id: <20240320161648.158226-6-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v4 0/7] qga/commands-posix: replace code duplicating commands
+ with a helper
+Date: Wed, 20 Mar 2024 18:16:41 +0200
+Message-Id: <20240320161648.158226-1-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240320161648.158226-1-andrey.drobyshev@virtuozzo.com>
-References: <20240320161648.158226-1-andrey.drobyshev@virtuozzo.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,74 +69,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There's no need to check for the existence of the hook executable, as the
-exec() call will do that for us.
+v3 -> v4:
+  * Patch 1/7:
+    - Replaced "since 8.3" with "since 9.0" as we're now at v9.0.0-rc0;
+    - Renamed the field to 'total-bytes-privileged';
+    - Got rid of the implementation details in the docs;
+  * Patch 6/7: added g_autoptr macro to local error declaration.
 
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
----
- qga/commands-posix.c | 35 +++--------------------------------
- 1 file changed, 3 insertions(+), 32 deletions(-)
+v3: https://lists.nongnu.org/archive/html/qemu-devel/2024-03/msg04068.html
 
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 545f3c99dc..9b993772f5 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -736,8 +736,6 @@ static const char *fsfreeze_hook_arg_string[] = {
- 
- static void execute_fsfreeze_hook(FsfreezeHookArg arg, Error **errp)
- {
--    int status;
--    pid_t pid;
-     const char *hook;
-     const char *arg_str = fsfreeze_hook_arg_string[arg];
-     Error *local_err = NULL;
-@@ -746,42 +744,15 @@ static void execute_fsfreeze_hook(FsfreezeHookArg arg, Error **errp)
-     if (!hook) {
-         return;
-     }
--    if (access(hook, X_OK) != 0) {
--        error_setg_errno(errp, errno, "can't access fsfreeze hook '%s'", hook);
--        return;
--    }
- 
--    slog("executing fsfreeze hook with arg '%s'", arg_str);
--    pid = fork();
--    if (pid == 0) {
--        setsid();
--        reopen_fd_to_null(0);
--        reopen_fd_to_null(1);
--        reopen_fd_to_null(2);
--
--        execl(hook, hook, arg_str, NULL);
--        _exit(EXIT_FAILURE);
--    } else if (pid < 0) {
--        error_setg_errno(errp, errno, "failed to create child process");
--        return;
--    }
-+    const char *argv[] = {hook, arg_str, NULL};
- 
--    ga_wait_child(pid, &status, &local_err);
-+    slog("executing fsfreeze hook with arg '%s'", arg_str);
-+    ga_run_command(argv, NULL, "execute fsfreeze hook", &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return;
-     }
--
--    if (!WIFEXITED(status)) {
--        error_setg(errp, "fsfreeze hook has terminated abnormally");
--        return;
--    }
--
--    status = WEXITSTATUS(status);
--    if (status) {
--        error_setg(errp, "fsfreeze hook has failed with status %d", status);
--        return;
--    }
- }
- 
- /*
+Andrey Drobyshev (7):
+  qga: guest-get-fsinfo: add optional 'total-bytes-privileged' field
+  qga: introduce ga_run_command() helper for guest cmd execution
+  qga/commands-posix: qmp_guest_shutdown: use ga_run_command helper
+  qga/commands-posix: qmp_guest_set_time: use ga_run_command helper
+  qga/commands-posix: execute_fsfreeze_hook: use ga_run_command helper
+  qga/commands-posix: don't do fork()/exec() when suspending via sysfs
+  qga/commands-posix: qmp_guest_set_user_password: use ga_run_command
+    helper
+
+ qga/commands-posix.c | 404 +++++++++++++++++++------------------------
+ qga/commands-win32.c |   1 +
+ qga/qapi-schema.json |   7 +-
+ 3 files changed, 187 insertions(+), 225 deletions(-)
+
 -- 
 2.39.3
 
