@@ -4,165 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2534DC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 15:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E097C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 15:46:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmy3T-0005W5-9X; Wed, 20 Mar 2024 11:40:39 -0400
+	id 1rmy8C-0007SP-Aj; Wed, 20 Mar 2024 11:45:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mburton@qti.qualcomm.com>)
- id 1rmy3R-0005SL-9W; Wed, 20 Mar 2024 11:40:37 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mburton@qti.qualcomm.com>)
- id 1rmy3P-00057O-HR; Wed, 20 Mar 2024 11:40:36 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 42KEjVEl023071; Wed, 20 Mar 2024 15:40:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- from:to:cc:subject:date:message-id:references:in-reply-to
- :content-type:content-id:content-transfer-encoding:mime-version;
- s=qcppdkim1; bh=WNs/GXD2G2gNPejYhmw/9L9jjVSlTpuHzTh5KecV6m4=; b=
- cnj97e5NQkjb6SSMBwL1c9I3QWQdeouZI51LInE9C7gwkVIWt5Bpna41nqgmWkn0
- 5ZM2ULJ4SUMQhwKm4ey6uIz8aDbXurMhXpLOotPVT6gWYP8VA08QVh29tuicdqOo
- NXGOs+oX8qUoZ2lzoq/IPKz2lqiLsNaJw9qiLLM5BAz2ilZzzZqAfEeOWk+ElfNl
- /Wkz4wQ9cxJezMDiQRDQW6WvEkaD7t2+XGfr62tjn6i1Lbn94J/xZIQq8I3hGK6Z
- atwM04QoYbv46e4XCFY3W0sO/56AnaMi+0My6cbWLhNCQmz8Bfyd0T1NFTLO0aF2
- 8pN04BYvLlyT73KTNwS54w==
-Received: from nam12-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam12lp2041.outbound.protection.outlook.com [104.47.66.41])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wyy76gja1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 15:40:31 +0000 (GMT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FFfUD2vZPMHoDwIJ6DauidAw3jPRBTOe8iA0xRhTrLyJtJ9vEd669sX6MSPbWR0gRdQlP/nkeT1EQFFJlrkTv6CMeER3AI0tEhSnukkTlhG2eSGqnXgPYGIqr7u4Z4b9hOBBLInmu9RNmfMtbmaWqL/4Gd9GNbZEYM687MB5cn62Pz5fl5htkhuIQY4z5Tzv5z3XOd4QgSNFat4lmKE+QD5gc9jc9+rTn9D560aSKrs8VvzmhgIMS6nFwz3R5ok8hz/CgjwPLE1XrbTMvGjef8/SdMaEGLh0KZFtd/ApjsnPzOUb97HOH6zY4r4QkywjHH344hnD3vpEJrEcy95wJA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WNs/GXD2G2gNPejYhmw/9L9jjVSlTpuHzTh5KecV6m4=;
- b=RbFD16nHSfFoBEmt5T1kSzCMFx00n609+MFxGdVYS9nPZSrYP0tVDhtAEk4l+SDJMbWND7QnKecQscM4/v+s5HohiK6REwDmiAGsxcHG1nSZxfnW5SZrQqdaYXppJ+aXLWoUxITWhlSLgvH0J+1Iu4DnHRCjtD9Um7UmfUKullgawe6HxKgJFtAB3ohdxGf0zcQC/6GgRKt+bkkcOTVJqJRTCrLJu9a+KyN3EuUAv+55U8jnhxEdDmBYDKplUo14XmLKHuNB/0k3YpvYRwwmjL3HA5tTL0s63YEu5DtKj1D8ZHP8+9Plwdk99S53bKL4lK7c0WBtt1stVZ/sBKS3Cg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=qti.qualcomm.com; dmarc=pass action=none
- header.from=qti.qualcomm.com; dkim=pass header.d=qti.qualcomm.com; arc=none
-Received: from SJ2PR02MB9884.namprd02.prod.outlook.com (2603:10b6:a03:53a::21)
- by DM8PR02MB8296.namprd02.prod.outlook.com (2603:10b6:8:7::21) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7386.34; Wed, 20 Mar 2024 15:40:27 +0000
-Received: from SJ2PR02MB9884.namprd02.prod.outlook.com
- ([fe80::f655:6bb8:2692:cb0f]) by SJ2PR02MB9884.namprd02.prod.outlook.com
- ([fe80::f655:6bb8:2692:cb0f%3]) with mapi id 15.20.7386.030; Wed, 20 Mar 2024
- 15:40:27 +0000
-From: Mark Burton <mburton@qti.qualcomm.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Thomas
- Huth <thuth@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Markus Armbruster <armbru@redhat.com>, "qemu-s390x@nongnu.org"
- <qemu-s390x@nongnu.org>, "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>
-Subject: Re: [PATCH 0/4] hw/nmi: Remove @cpu_index argument
-Thread-Topic: [PATCH 0/4] hw/nmi: Remove @cpu_index argument
-Thread-Index: AQHaerh97y9neLDZOEe71DBZx3RqVrFAhvkAgAAIqYCAABd6gIAAA/qAgAAOOgCAAAsPgA==
-Date: Wed, 20 Mar 2024 15:40:27 +0000
-Message-ID: <7B18B8A2-B72A-42D5-AF97-1EA621F43DCA@qti.qualcomm.com>
-References: <20240220150833.13674-1-philmd@linaro.org>
- <f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com>
- <cc132404-dcd5-4aed-a481-b46d6e3115b0@linaro.org>
- <CAFEAcA_0qUFW0MewHC+v+pSOisE-kQDt9Wv4F3RafEkyQ0DGJA@mail.gmail.com>
- <59C20F1A-FCFE-4E26-B511-A6C0E1EF6F61@qti.qualcomm.com>
- <CAFEAcA8MVbKqv-TgaO7Vv95f0p164Gao+LT-CM5+92cXjkpmTw@mail.gmail.com>
- <23BCD870-16A1-4AF9-9308-2788178F511B@qti.qualcomm.com>
- <CAFEAcA8=H=xD75T-e6JFnz9RtT2kG2nM5HbqE0AsTiWFe+0a-w@mail.gmail.com>
-In-Reply-To: <CAFEAcA8=H=xD75T-e6JFnz9RtT2kG2nM5HbqE0AsTiWFe+0a-w@mail.gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ2PR02MB9884:EE_|DM8PR02MB8296:EE_
-x-ms-office365-filtering-correlation-id: c5f794fc-e227-44f1-80e4-08dc48f41118
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: KOfGuaqqDseWb1CPuwyKKE1N5rdRt52jakEO4YYhmwBDt6zNj5kjDO69Dw0zntEQEv7WVimN45qnD/b6yLsxGYBHQeqfk13YaeLodJQzY8RdIkZbDH5vSvZ3QDNdi3QV4m81s0YENBXZYK4E7BpM+cxkWfc8RpSkZgRgOC6pN/JUZPCKkT5oMepVCXrZ4d8WteMXaoOmDZj4I1H3tBLtQ+n88ajWFTmjihHlSOgpNQcmUbGE/vfJ4hpd5dwtPh1yg2uGYhVOLPrD3rxjX9fkS6H98Z2m9UAYNPSNdPqtKVXohPLvLiC8AfpEbNYq7SsyvSMJR1M1JKF7fjp4IqYe1J3sGazeKkEnPiI2vEYRaijPDULolNKNUyiQjEUPjco8KTw5t6+hNJYyFel0Gcd4TIZi0EtoPxtno5QIm5ls25ALJx9XD2w8aev5Alh7Jq5grVVvReVqHdRhLE9GxQGRuc3joK9iaIHOtuEzhadOiMzFffI+Md8qRW8FvwLEfid9zvABxHqhdYNPszr1RuWW7CNdpyfrO+uM/HGuqvLxUPIaXXd0gh4fDTsqo3kC/b7SM+YQiTL+9hEQ80t0mhuIzUxvlJwWXKfXeVGdi9haQouJhaHCr9ApMRr36pw4JdTwFQB12Z2QJorBoIbR5AogwJYNLyNZ+eH3KjowcEOY2V4l3udnLerLdKiWrMdU7GhtaPrue5N248ql6ZCzfYgWFTLuTtiXwg9eVF157Z/AEDM=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR02MB9884.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(1800799015)(366007)(38070700009); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?ZFI3aWRDdkVWZDRvRnl0UXBhYTZkTm43bmNPSzg4ZGlCWUo5dUZJTWt1RkVm?=
- =?utf-8?B?OFVpSW5hc09maXYvOE5vVmFyczRTYVBnK3pLaEg2UUtpVy8yY2tRMTlMb3Yv?=
- =?utf-8?B?SXBUWTlsbUhJdFJuWlZnMW5KZUZrS3VITlFtTVpwRGJXR2RSeExraUxhVmpp?=
- =?utf-8?B?NjZmWEhTeERvUkNkT05id2oyTXQ2NElUWXAxZ1VtMGN5M1dQaVIzSjV5SUFN?=
- =?utf-8?B?Vjc2L0swSGZOcFNxS3B1bG9VVmEvWlRGQm9abXN6cEpxSDU3NVdSVERUYkkw?=
- =?utf-8?B?eDBlMnRURmVlN1Z6Mk5zamRhQkFNdTFXWEtQSW9PMlh0Uy9CUm04TWJ5ci9C?=
- =?utf-8?B?WHZOYTlEMXgrYUtiRTRVdjJYdzFLUkQ5RzRSdXRmb2p3aHlaSTMwVmFDWFNH?=
- =?utf-8?B?UHFYUHkrbW1EK1ZjUUdEKzdUQnhxZU13WVQwOXZxN1BUeVVqVTd5TnZwVVdp?=
- =?utf-8?B?YnVQaEkrYU1qQ3hZb3QwSDRKKzhqRVJKNkxhMmtaM0NaeCtjL3NQamtyUGg0?=
- =?utf-8?B?OXhkSDJ4Z0NWNFA0Yi9TUzhtUHlIL1FuSUxQaklvWm1waUR3ang2QVNLVUVs?=
- =?utf-8?B?MHd3UkpJVWI3R0NmUXcySHIwbGdwNGJKNy9jeUIySnNhUUgxdjY2QVlObitI?=
- =?utf-8?B?Q3o0c3BqT0t1VS95b0hoaGFPaTQ2aE43NE8yeFZmTGhwMDNKWnBZSVNlN0dU?=
- =?utf-8?B?MUMxYkc5TmFDYnF0MXUzVTJVM2dGR1V5VDFqenFIbVZkNndjeGw5SFdISk5D?=
- =?utf-8?B?YTdsTks5dHg1amFLeElBUFFVRnV5d0UyY09BakQ1SWVtNWd0eWQvQ0Z6aG5o?=
- =?utf-8?B?dkN4c1N3Y0hYOHRVU2dUamg5TXVNOHduM1Q3SjJlSG5lRm82ZHFQWGJRUjlH?=
- =?utf-8?B?clJaYVlhbVlCcy8xTllEQzRxRHdVOFBRREtURXJ1SGdOekN0R3lHS2VtTVkw?=
- =?utf-8?B?cXAzaU1LYklZWEhhekFTT3lmc3IyV3F6dS8yNmdmZTJjWTRJbDc1OWV2K2lO?=
- =?utf-8?B?MTVxR2p0b1pzZFBUakNtbktyaXBLSG9xcG0xVFk1SGx3Wmx5S01QSWxSMCtl?=
- =?utf-8?B?a05rZUZyQkpoQkNWYWVNekVPOHdVQkFOTzBjYmwvcGV1Q0N2a2FMbkpSOUl1?=
- =?utf-8?B?N0ZPNkh2RHNIbHhSVjZMbDVoMFpXcGdHeXo1cmtnVHFranY5OG1Kb1lJbkdt?=
- =?utf-8?B?bHlwY1BET2tUdS9SZkFMdTRLbkxTa3JsVlhMS0VEdTJsUG5EUlh3amF1Y0xM?=
- =?utf-8?B?V3dPemV2NjRoWGdtKzNoNEcvSG40R05TQUpyRC9GYU9velFKek40dHhJZzZn?=
- =?utf-8?B?eWNYRzlGdjFnY29mL2lPRm1pZXcvbjkxMkRQcjBrWDdUMTdubFdQZU5pL3Jj?=
- =?utf-8?B?azlmTmI0UVhCb3YxWUlteXNBVjlRODZwWjFBRCt1MnNnWDlKZ2RpSDRZUUoz?=
- =?utf-8?B?R0dqY0dmRlJZSGw1WVNKc2VsellnclM0bUdDV0lyZHh4N3VJTlQ2K0owNlJj?=
- =?utf-8?B?OHY1b1FvUlgxME0vTmh4WVNXQWI0d3hoS2FZWW1PNlNrSGlOQTF4UGYwSGlu?=
- =?utf-8?B?WTdiMStua0Uwc0RYMG9ZeVNtSUJWNml0Y3lIMmVJb2tUZ3FVekc1NW1PMWly?=
- =?utf-8?B?VzZBMG0vQjNrUENQRXdSSGZ0TE56R0k2UUlPVzlDUjVMZHlsUDlvMUEvNFJC?=
- =?utf-8?B?ZGM4QXRBRVB0dEFNaVFHa2xpQU04NU95eFlaNXdQcWhQZHl3eEFmWHNKTzRM?=
- =?utf-8?B?MHRtQTVpejVwWU5sMCs5K20zMWxBODB4WG9ERlJMdnN0YVkvT1NlZXQ2dlU3?=
- =?utf-8?B?K1ZpRHEyeDNMNWg3UlU2cTV1SHkvZU5kbXU3UWI3N3VvaHdlWHlHOG93Y21L?=
- =?utf-8?B?Uzc5WGdycHFIOHMwaUkyUzBTdXh3Yko0RGFPdGpaNC9jcjBTaFQrS2JaRmNJ?=
- =?utf-8?B?RlBZWmQwR1NEb1JPUFpaMUdsY1F5SHJxajRjOGZOdW9ZZmhmMkpRRnE4Qkd5?=
- =?utf-8?B?dmZRQVRVZ2N2TGI5QUMzc2FRM3dsTTV3ZllSaFhPZjVmTnltMkExLzFiK256?=
- =?utf-8?B?STFXdUVMdDVhZzZKYlduMEJmcVFtMENOY3RlU2E3M3BlRTN1a0dETGE0MlM1?=
- =?utf-8?B?bktUbE5PcTcrSlA5eUFLdFdZOUJhL1IzZmx0djd1MWp6MWp5R0lqa3RNVHVl?=
- =?utf-8?B?YXc9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <6649A5B499324447931BE28AD1EB871F@namprd02.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1rmy8A-0007S0-Ay
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:45:30 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1rmy88-0006HV-5q
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:45:30 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-565c6cf4819so1895752a12.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 08:45:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=suse.com; s=google; t=1710949526; x=1711554326; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:autocrypt
+ :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=U2gasiC/qhxM/mCDkzHcsdpHyOBwrr+cNja+FCcCynk=;
+ b=RvKROz6HF1ZlsqJu/R021qcJz/E0Q0bKhYg/XgjDSRIQwYZM8l7aqfX7PrV707QZ9O
+ f6cWyfI5KSkVLj9FigWdUtTokpnco4vBQuLDrdWZbIjIHtFeutCl976gWFJYPEDfviJb
+ +s9lhjoAqOo0B+oRQlRTYhCVRUcUbDGk+3/5NFSVR2SuirOuA1iNw89kOZTX14Zx7i5j
+ KVi/tQyuzKofKYIXHKjP8tMWZjzAXSZ6CooReiNSo4hfhL/YzhxgpC1yaD00jXWS4SGj
+ /qe5QvsKkwx2pdwW7MBDHjGennTzj2ydQbeAqZkJaNZIZ5s0KdVohDlaxtmffqZeZmMr
+ wRUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710949526; x=1711554326;
+ h=mime-version:user-agent:content-transfer-encoding:autocrypt
+ :references:in-reply-to:date:cc:to:from:subject:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=U2gasiC/qhxM/mCDkzHcsdpHyOBwrr+cNja+FCcCynk=;
+ b=sJ7P+oUFgk37BdhLkc7Lu71sgLqBzQN7o0kCmwMghZyXwE5fySKElYfRoVWaArD4TV
+ YBOpybwfA1365ju1x4vjMun0/sxAePpQzqF+2syqkqIhYMC1ta5r4+F1IIRHUFK5m46g
+ BcltPFTTGUKkIMftFQkSBGxEA+5diDL+obT4Eak1rbC/MhsEsEe3AjosRNl5BuOYlFfB
+ 8CeR/RjMZCsCYEyvei9Cut2dYANSnY0KTdZKBzGgobUTRyaokiSjC4Th+i4+l/emcY5T
+ nHV1W+5M2WrlLTGVbFgk18rQN7wpLZ8WE9otHwszIOxiugvouFXUOXkRwCajBeD5evtY
+ Sazg==
+X-Gm-Message-State: AOJu0Yytht3YJf/sb4T/fAjVjJspLsBMm+NCepN24pGz/GUhjbeufHJb
+ 67a+p41jD/EUAJiN/z36FSjZr6q97BTm9XeDqWMhiCznMc0/Sas7xEXaEQtZ59w=
+X-Google-Smtp-Source: AGHT+IFoJUVgTyZj4BqYDJ5aw9JmzV4hOcMSUs9sBmCgjV01gGr/TbgZsD21KXDlTfohm2LA4f5EWg==
+X-Received: by 2002:a17:906:595:b0:a46:9be4:6037 with SMTP id
+ 21-20020a170906059500b00a469be46037mr39329ejn.30.1710949525979; 
+ Wed, 20 Mar 2024 08:45:25 -0700 (PDT)
+Received: from [192.168.7.120]
+ (cpc81487-lanc8-2-0-cust139.3-3.cable.virginm.net. [81.110.179.140])
+ by smtp.gmail.com with ESMTPSA id
+ ho16-20020a1709070e9000b00a4672fb2a03sm7377844ejc.10.2024.03.20.08.45.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 Mar 2024 08:45:25 -0700 (PDT)
+Message-ID: <e101c3b1c171a828ef34983aa448ced52bb934ee.camel@suse.com>
+Subject: Re: [PATCH 9/9] docs/system: Add documentation on support for IGVM
+From: Roy Hopkins <roy.hopkins@suse.com>
+To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Marcelo
+ Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, Igor
+ Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,  =?ISO-8859-1?Q?J=F6rg?= Roedel
+ <jroedel@suse.com>
+Date: Wed, 20 Mar 2024 15:45:24 +0000
+In-Reply-To: <ZfhqEL0-wCiDJJtm@redhat.com>
+References: <cover.1709044754.git.roy.hopkins@suse.com>
+ <2f98be192cf6ffd36b984266570ea2eed4dfe364.1709044754.git.roy.hopkins@suse.com>
+ <ZeIL9Tco7PCRxdg-@redhat.com>
+ <46d91ba880f566e7ced7c01b18682b749185c9ba.camel@suse.com>
+ <ZfhqEL0-wCiDJJtm@redhat.com>
+Autocrypt: addr=roy.hopkins@suse.com; prefer-encrypt=mutual;
+ keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.2 
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: T+kTVhDdef2EGgXlgttfuZCTaP4WE7TQTslIxwe8+agcfWebp0iAHQyOKlxD7maZv6h83zonPpUegrzeNYZxXCUmoG5gbnyKgjssH1H/sxcNMtMO2XqRUAs8JqxtFwA6H+PqpHJjY+ETJ+/uxIWhq12n+yxPU97Vvnq9XxBOxsTwbbM4rUCscVc3ffhRI/+pJAhA+T7tphWJ7nuL2NEPepP8AuXbDt8x4+yMrSrUhx6lcE9fzNr8MrcTuM+WzUx6YSGDrBGCwCDG87e8N1RaklKQ/UuP+EWdu/TahPRleahVBwdALudChkCDBL0Xh7yzD89+HQWFUUbHOMqZzHoW81I2w8O8jv4y9JIyt0Ntw2EtCGiBziaQ9toJmG5DBjNdLR/BVfcaM6dSjybAoRfLqXC0N+G0a6UIhaHZETAkI0V+tpA33xDD59T5g1zUFYSK/9Wk19Uxzwsc6tPCQPJAUlBxV/zfvkXjcojMKlekrPUv45+DXdiLPgpc7J2NoNrBh/evYEHvHpe08le7PhksUX8cp0MKKdW7rRibgOgtdGgRYVDL9pARkUcfdf8F7ebDG1tqICIp27J8fu20cb57yesHoJZZwW/GCy+IwYuT54VjpNONSJFbFuHO/hC9nrL6
-X-OriginatorOrg: qti.qualcomm.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9884.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c5f794fc-e227-44f1-80e4-08dc48f41118
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Mar 2024 15:40:27.5548 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: kGop9JEtlwQkpHwO9jfeqcMX4aZ5efLenvOuw9AoSUzs0xIvfpa6fyrNxdebN72UoO9vsM0HqGXUsEGNW5iXjzUAMqEfNE96g3Zu8qs+tT4=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR02MB8296
-X-Proofpoint-GUID: gQTRWF97N2rZeQEbIQFCx7jbnAjVpLbY
-X-Proofpoint-ORIG-GUID: gQTRWF97N2rZeQEbIQFCx7jbnAjVpLbY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-20_10,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- suspectscore=0 malwarescore=0 bulkscore=0 spamscore=0 mlxscore=0
- priorityscore=1501 adultscore=0 clxscore=1015 mlxlogscore=999 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2403140001 definitions=main-2403200125
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=mburton@qti.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: permerror client-ip=2a00:1450:4864:20::52b;
+ envelope-from=roy.hopkins@suse.com; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -179,36 +115,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gT24gMjAgTWFyIDIwMjQsIGF0IDE2OjAwLCBQZXRlciBNYXlkZWxsIDxwZXRlci5tYXlk
-ZWxsQGxpbmFyby5vcmc+IHdyb3RlOg0KPiANCj4gV0FSTklORzogVGhpcyBlbWFpbCBvcmlnaW5h
-dGVkIGZyb20gb3V0c2lkZSBvZiBRdWFsY29tbS4gUGxlYXNlIGJlIHdhcnkgb2YgYW55IGxpbmtz
-IG9yIGF0dGFjaG1lbnRzLCBhbmQgZG8gbm90IGVuYWJsZSBtYWNyb3MuDQo+IA0KPiBPbiBXZWQs
-IDIwIE1hciAyMDI0IGF0IDE0OjEwLCBNYXJrIEJ1cnRvbiA8bWJ1cnRvbkBxdGkucXVhbGNvbW0u
-Y29tPiB3cm90ZToNCj4+IEnigJlkIGJyb2FkZW4gdGhpcyB0byBhbGwg4oCZc2lnbmFsc+KAmSAo
-SVJRLCBSZXNldCBldGMpIC0gYW5kIEkgZ3Vlc3MNCj4+IHNpbWlsYXIgc3RhdGVtZW50cyBhcHBs
-eSwgd2l0aCB0aGUg4oCcYnJpZGdl4oCdIGJldHdlZW4gdGhlIGZ1bmN0aW9uDQo+PiBhbmQgdGhl
-IEdQSU8gbWVjaGFuaXNtIG1vdmVkIGNsb3NlciBvciBmdXJ0aGVyIGZyb20gdGhlIG9yaWdpbmF0
-b3IocykNCj4+IG9mIHRoZSBhY3Rpdml0eS4NCj4+IA0KPj4gVGhlIGlzc3VlIGlzbuKAmXQgbXkg
-4oCcbWFjaGluZeKAnSBtb2RlbCwgcmF0aGVyIHRoZSBjb21wb3NlLWFiaWxpdHkgb2YNCj4+IChh
-bnkpIHN1Y2ggbWFjaGluZS4gIEEtcHJpb3JpLCBhIG1vZGVsIHdyaXRlciBkb2VzbuKAmXQga25v
-dyBpZiB0aGV5DQo+PiBzaG91bGQgcmVzcG9uZCBkaXJlY3RseSB0byBhbiBOTUkgb3Igbm90IC0g
-SGVuY2UgdGhleSBkb250IGtub3cgaWYNCj4+IHRoZXkgc2hvdWxkIGltcGxlbWVudCB0aGUgVFlQ
-RV9OTUkgb3Igbm90LiBUaGF04oCZcyBhIGRlY2lzaW9uIG9ubHkNCj4+IHRoZSBtYWNoaW5lIGNv
-bXBvc2VyIGtub3dzLg0KPj4gTXkgc3VnZ2VzdGlvbiB3b3VsZCBiZSB0byB1c2UgYSBHUElPIGlu
-dGVyZmFjZSB0byBtb2RlbHMsIHdoaWNoIGNhbg0KPj4gdGhlbiBiZSBhcHByb3ByaWF0ZWx5IHdp
-cmVkLiAoQW5kLCBoZW5jZSwgdG8gaGF2ZSBhIHNpbmdsZSBwbGFjZQ0KPj4gdGhhdCBpbXBsZW1l
-bnRzIHRoZSBUWVBFX05NSSBpbnRlcmZhY2UgYW5kIHByb3ZpZGVzIHRoZSBHUElPIHdpcmUNCj4+
-IHJlYWR5IGZvciB3aXJpbmcgdG8gYXBwcm9wcmlhdGUgZGV2aWNlcykuDQo+IA0KPiBJIGZlZWwg
-bGlrZSB0aGF0J3MgYSBsb25nIHdheSBpbiB0aGUgZnV0dXJlLCBidXQgbXkgYmFjay1vZi10aGUt
-ZW52ZWxvcGUNCj4gZGVzaWduIHNrZXRjaCBvZiB0aGF0IGlzIHRoYXQgdGhlIFRZUEVfTUFDSElO
-RSBjbGFzcyB0aGF0J3MgaW1wbGVtZW50aW5nDQo+IHRoZSAiSSBhbSBqdXN0IGEgY29udGFpbmVy
-IGZvciBhbGwgdGhlIGRldmljZXMgdGhhdCB0aGUgdXNlciBoYXMNCj4gc3BlY2lmaWVkIGFuZCB3
-aXJlZCB0b2dldGhlciIgbWFjaGluZSB3b3VsZCBpdHNlbGYgaW1wbGVtZW50IFRZUEVfTk1JIGFu
-ZA0KPiB3aGVuIGFuIE5NSSBjYW1lIGluIGl0IHdvdWxkIGFzc2VydCBhIEdQSU8gbGluZSB0aGF0
-IHRoZSB1c2VyIGNvdWxkDQo+IHdpcmUgdXAsIG9yIG5vdCB3aXJlIHVwLCBhcyB0aGV5IGNob3Nl
-Lg0KPiANCg0KWWVhaCAtIG1ha2VzIHNlbnNlLg0KQ2hlZXJzDQpNYXJrLg0KDQoNCg0KPiBSaWdo
-dCBub3cgd2UgY2FuJ3QgZG8gdGhhdCB0aG91Z2gsIGJlY2F1c2UsIGFtb25nIG90aGVyIHJlYXNv
-bnMsDQo+IFRZUEVfTUFDSElORSBpc24ndCBhIFRZUEVfREVWSUNFLiAoSSBkbyB3YW50IHRvIGZp
-eCB0aGF0LCB0aG91Z2g6DQo+IEknbSBob3BpbmcgaXQgd29uJ3QgYmUgdG9vIGRpZmZpY3VsdC4p
-DQo+IA0KPiB0aGFua3MNCj4gLS0gUE1NDQoNCg==
+On Mon, 2024-03-18 at 16:21 +0000, Daniel P. Berrang=C3=A9 wrote:
+> On Mon, Mar 18, 2024 at 03:59:31PM +0000, Roy Hopkins wrote:
+> > On Fri, 2024-03-01 at 17:10 +0000, Daniel P. Berrang=C3=A9 wrote:
+> > > On Tue, Feb 27, 2024 at 02:50:15PM +0000, Roy Hopkins wrote:
+> > > > IGVM support has been implemented for Confidential Guests that supp=
+ort
+> > > > AMD SEV and AMD SEV-ES. Add some documentation that gives some
+> > > > background on the IGVM format and how to use it to configure a
+> > > > confidential guest.
+> > > >=20
+> > > > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> > > > ---
+> > > > =C2=A0docs/system/igvm.rst=C2=A0 | 58 +++++++++++++++++++++++++++++=
+++++++++++++++
+> > > > =C2=A0docs/system/index.rst |=C2=A0 1 +
+> > > > =C2=A02 files changed, 59 insertions(+)
+> > > > =C2=A0create mode 100644 docs/system/igvm.rst
+> > >=20
+> > >=20
+> > > > +Firmware Images with IGVM
+> > > > +-------------------------
+> > > > +
+> > > > +When an IGVM filename is specified for a Confidential Guest Suppor=
+t
+> > > > object
+> > > > it
+> > > > +overrides the default handling of system firmware: the firmware im=
+age,
+> > > > such
+> > > > as
+> > > > +an OVMF binary should be contained as a payload of the IGVM file a=
+nd
+> > > > not
+> > > > +provided as a flash drive. The default QEMU firmware is not
+> > > > automatically
+> > > > mapped
+> > > > +into guest memory.
+> > >=20
+> > > IIUC, in future the IGVM file could contain both the OVMF and SVSM
+> > > binaries ?
+> > >=20
+> > > I'm also wondering if there can be dependancies between the IGVM
+> > > file and the broader QEMU configuration ?=C2=A0 eg if SVSM gains suup=
+port
+> > > for data persistence, potentially we might need some pflash device
+> > > exposed as storage for SVSM to use. Would such a dependancy be
+> > > something expressed in the IGVM file, or would it be knowledge that
+> > > is out of band ?
+> > >=20
+> > Yes, the IGVM file can indeed contain both OVMF and SVSM binaries. In f=
+act,
+> > that
+> > is exactly what we are doing with the COCONUT-SVSM project. See [1] for=
+ the
+> > IGVM
+> > builder we use to package OVMF, bootloader components and the SVSM ELF
+> > binary.
+> >=20
+> > Data persistence is something that is definitely going to be needed in =
+the
+> > SVSM.
+> > At present, this cannot be configured using any of the directives in th=
+e
+> > IGVM
+> > specification but instead requires QEMU to be configured correctly to
+> > support
+> > the application embedded within the IGVM file itself. You could however
+> > populate
+> > metadata pages using IGVM that describe the storage that is _expected_ =
+to be
+> > present, and validate that within the firmware itself.=20
+> >=20
+> > The real value from IGVM comes from the ability to describe the initial
+> > memory
+> > and initial CPU state which all forms part of the launch measurement an=
+d
+> > initial
+> > boot procedure, allowing the expected launch measurement to be calculat=
+ed
+> > from a
+> > single IGVM file for multiple virtualisation stacks or configurations. =
+Thus,
+> > most of the directives in the IGVM file directly have an effect on the
+> > launch
+> > measurement. I'm not sure configuring a storage device or other hardwar=
+e
+> > configuration fits well with this.
+>=20
+> Yeah, I can understand if IGVM scope should be limited to just memory
+> and CPU setup.
+>=20
+> If we use the firmeware descriptor files, we could define capabilities
+> in that to express a need for a particular type of persistent storage
+> to back the vTPM. So having this info in IGVM files isn't critical.
+
+I'll need to look into firmware descriptor files as I'm unfamiliar with how=
+ they
+work. Would I need to make any additions to this patch series to support th=
+is in
+QEMU? Or is this all handled by libvirt?
+
+>=20
+> > > Finally, if we think of the IGVM file as simply yet another firmware
+> > > file format, then it raises of question of integration into the
+> > > QEMU firmware descriptors.
+> > >=20
+> > > Right now when defining a guest in libvirt if you can say 'type=3Dbio=
+s'
+> > > or 'type=3Duefi', and libvirt consults the firmware descriptors to fi=
+nd
+> > > the binary to use.
+> > >=20
+> > > If the OS distro provides IGVM files instead of traditional raw OVMF
+> > > binaries for SEV/TDX/etc, then from libvirt's POV I think having this
+> > > expressed in the firmware descriptors is highly desirable.
+> > >=20
+> >=20
+> > Whether IGVM is just another firmware file format or not, it certainly =
+is
+> > used
+> > mutually exclusively with other firmware files. Integration with firmwa=
+re
+> > descriptors does seem to make sense.=C2=A0
+> >=20
+> > One further question if this is the case, would we want to switch from
+> > specifying an "igvm-file" as a parameter on the "ConfidentialGuestSuppo=
+rt"
+> > object to providing the file using the "-bios" parameter, or maybe even=
+ a
+> > dedicated "-igvm" parameter?
+>=20
+> If the IGVM format is flexible enough that it could be used for any VM
+> type, even non-confidential VMs, then having its config be separate from
+> ConfidentialGuestSUpport would make sense. If it is fundamentally tied
+> to CVMs, then just a property is fine I guess.
+>=20
+> Probably best to stay away from -bios, to avoid overloading new semantics
+> onto a long standing argument.
+>=20
+> With regards,
+> Daniel
+
+Currently, the IGVM specification only contains support for confidential
+platforms.=C2=A0It could theoretically be used for non-confidential platfor=
+ms but
+that would require changes to the IGVM specification itself to support this=
+. I
+don't think it makes sense to extend this to non-confidential VMs until the
+specification supports this, so I'll leave it as a property of
+ConfidentialGuestSupport.
+
+
+Regards,
+Roy
 
