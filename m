@@ -4,115 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7044C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 795D1C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmrf4-0004te-UP; Wed, 20 Mar 2024 04:51:02 -0400
+	id 1rmrfC-0004y5-7i; Wed, 20 Mar 2024 04:51:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrf3-0004tO-G9
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:51:01 -0400
-Received: from mail-sn1nam02on20608.outbound.protection.outlook.com
- ([2a01:111:f400:7ea9::608]
- helo=NAM02-SN1-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrf1-00019K-Ak
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:51:01 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=GIGoYE25qyBi4tBSQEXOTgKpUEVOzaumQKlZyplu7qgKGJkmSvJO6ybnJy/nzGt1ra/DKGUbs20bVY3tQf66jBnprTOpm3325SlN6koXEMEnQXM8mRqI/6Cex0ZGX+D5Z6cH3AQ2Rlf7IbiLHB0GUhkGNF3i7IankG8sjx7Y82aU9o6YzCeTPTahVNtmyj71cBydNaTAXC3TOm87OEDqh9axz6+UvdeS3n3UW+N3vmgt5o6mKKhi+9BHvuXq89IAE7bZLEfHupZmO1dAf6E2/rgkcurLQsOsbMN6PXdHU+uJl80VAeUiV5rFtaBfmOxGYkIeG6ip4CPU6jsFxV8/Ew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KlIQYJOoXidCNOb2sQQuAUDRz0tgA6k+4/7j+Dhpo8g=;
- b=AqYzzdLgrNSZlJ0ZXHMwDGY9dwBrEOVv36Ju04zMhiRmmfhaLiyyZGcqVYmYABPYyciyx73FJ0okOFJxq2Qd8g3lhWLau6tIlMUzV//i/Ut0a4IACgDmNV+AvNQxP2FuYSmMORPyJbFivTr+RZKO+RqGlc5RFRywxbFFEsIBLm/arNo6K7WruMSdCpLr4Al5UBxNTGlsA5L3YWE5r4r1J1Ed7aQM/MBgUmKKiRUIDj47qejZ5TBQVmSIaPJ59hxElZr6BP8O+Gdc5mH3W/slPOOy8dSmZp/TA2ZiKTyw+VZ1YTol6Hf78mqs4Y8KWj0kBf0CFLqiWGSn3r9TetC6og==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KlIQYJOoXidCNOb2sQQuAUDRz0tgA6k+4/7j+Dhpo8g=;
- b=ERPUC+XMTB2/+jHaSj4MRwrs3b0K3rxfHEt3zNVh7hW8vSUrGFFs64vpILMyQTmT8zCcpuTpRBTvEPH5/6FGrbFkL3GDuJ/7kQmAWvfyXt+3LWW1DASGU0KN9x/CQiflyTx4xFS+2b6uOp/gNkJtkfDWi6ZAoadlSBfUDvp1gkY=
-Received: from BN9PR03CA0190.namprd03.prod.outlook.com (2603:10b6:408:f9::15)
- by DM6PR12MB4122.namprd12.prod.outlook.com (2603:10b6:5:214::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.30; Wed, 20 Mar
- 2024 08:50:55 +0000
-Received: from BN1PEPF00004686.namprd03.prod.outlook.com
- (2603:10b6:408:f9:cafe::90) by BN9PR03CA0190.outlook.office365.com
- (2603:10b6:408:f9::15) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.28 via Frontend
- Transport; Wed, 20 Mar 2024 08:50:55 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN1PEPF00004686.mail.protection.outlook.com (10.167.243.91) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:50:55 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 20 Mar
- 2024 03:50:55 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <kvm@vger.kernel.org>, Tom Lendacky <thomas.lendacky@amd.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Pankaj Gupta
- <pankaj.gupta@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>, Isaku Yamahata
- <isaku.yamahata@linux.intel.com>
-Subject: [PATCH v3 34/49] i386/sev: Add KVM_EXIT_VMGEXIT handling for Page
- State Changes
-Date: Wed, 20 Mar 2024 03:39:30 -0500
-Message-ID: <20240320083945.991426-35-michael.roth@amd.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240320083945.991426-1-michael.roth@amd.com>
-References: <20240320083945.991426-1-michael.roth@amd.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rmrfA-0004wO-Ek
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:51:08 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rmrf7-0001AL-0S
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:51:08 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1def89f0cfdso5519625ad.0
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 01:51:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710924663; x=1711529463;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qsASAfGcmdcmGwebu10xUh05YrkgqP1B6utGVC9PIgU=;
+ b=wFZtJf+mNVcWuvIMJlftiHtNQEKzy9ZNlpYEEt87gmDn/FEX3C6vral5FigW4ArFCZ
+ Ay5StFj8asqy3sTBGVPzuW4tiMOZhMa1Ei2ny2m0UY+87ZgnR1qtmZ0vEWK76b197J2e
+ c71rWsSve1lUuv+iNZX55ny0S8RV0KoUoJAA7T/nS6FZjH6zPJBwq+Xb9bJVVOtLu8Kr
+ VanuBhvxkWazHxAoQf8wz4sxcM+mJtocTbGfhHLwx7X/x+g9S8sXxMIei2DtPrOA2Ovf
+ /4ZB5DYg14o5iRlLNcfXJ+0kbtVkNGWFoQFsSjM9d5rMQcSXgE52u009YmzFQhmxDJIA
+ UMJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710924663; x=1711529463;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qsASAfGcmdcmGwebu10xUh05YrkgqP1B6utGVC9PIgU=;
+ b=tniSmxSP0LmqwaWXSTnjWaLdjHPNFmlGq8UQ0yGqDzmrPQ5GrrLW0rbebU4gGJe2mT
+ kqtpoRPNyT4v72GnQcO/y5oVX7HB0tI/5yqgt4pSbPnr2b0KoHS22LedGTG16PHnbGDj
+ 4h5jWQz6bYDuJ0irGHvZajfxNzBcXmjJULoGE/HHWusk1gRlU/dacUHNR+d7EiExYt+R
+ uH9AmMhKZLiMdF7zpyPmRrOGtA1yaYTmQetEb4R0zMv/rtaWtO2dWp8EbqmEVVSOwWUu
+ jcCPziSYMnqshcEPjleV/hK4eX3eooIbVInyFpTSRB8cK3vFxDDQhJeanbsdOkhnKDBC
+ 9dzw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV+RPfLOWi4vGgqf4hU8idBkqAck1nNDaucyk2OblgnHoCVsolnhoAo9Hezgoekz67QojWHR4QH1iBPhw1BrE6tDz7w/Eg=
+X-Gm-Message-State: AOJu0YwUccUgWPs+ic62jPfTM0mhA8+V+u3zVpnfou3h+Qy6pImtiRdk
+ nf+1+P03EPPQa2OReqrUrzysUZvdL+imLJtVIpxuQxprlb99BsMQ5fJB2v5Fdgg=
+X-Google-Smtp-Source: AGHT+IHU9K6U84JN+YU6DZiw/DZhA+W7ItrI7+39Gnj+jmg6AWrPiF+Ny3YvXnHdbiersFTJEP5FIA==
+X-Received: by 2002:a17:902:e849:b0:1e0:3861:9e41 with SMTP id
+ t9-20020a170902e84900b001e038619e41mr2759820plg.19.1710924663277; 
+ Wed, 20 Mar 2024 01:51:03 -0700 (PDT)
+Received: from [157.82.200.213] ([157.82.200.213])
+ by smtp.gmail.com with ESMTPSA id
+ u7-20020a17090341c700b001dde004b31bsm8414200ple.166.2024.03.20.01.51.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 Mar 2024 01:51:02 -0700 (PDT)
+Message-ID: <9fcc5c14-130e-420b-88cf-af8c9fde0097@daynix.com>
+Date: Wed, 20 Mar 2024 17:50:59 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] ui/console: Remove console_select()
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240319-console-v2-0-3fd6feef321a@daynix.com>
+ <CAJ+F1CKOuZR5nZxcxRzZyoE56p_nNW11cySEmnFvRgiPv5OAdw@mail.gmail.com>
+ <5b8160c8-6774-47b3-a495-f7dc64ebd28d@daynix.com>
+ <CAJ+F1CLP_LNwWQ_4M2w7cVK-DSBy6+92SY5m37fUnZMXN6oBaQ@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CAJ+F1CLP_LNwWQ_4M2w7cVK-DSBy6+92SY5m37fUnZMXN6oBaQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00004686:EE_|DM6PR12MB4122:EE_
-X-MS-Office365-Filtering-Correlation-Id: f72474fd-e66c-4137-be23-08dc48badb1d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: KK+hkd5ByJq+uBPGh89DD/HSNhbda70+eTtoVdCgKMdc+6d/a/ys6VloxAOFH5Nqf9yqWbUKpfxrIzW27heAaT/Qwvq3MiGI8CZ+UmBx8Ib9v+iwz9PxxEiBh+do0r+C+tiGbaHYslP549tW48vOUMZ0mhgxMuXcJa67Y0XxHPJxVlGR46IWIYwcxP6hmAqs3bImQUoHGDto48vI5TRw70cqHRhCPz+Mmo+ZVFgGNe5nstlIH1cLzf5tt2J+WTvlBMC+cI2WznIOr0mUf12GkndD5sa+6C94viNg+a5NPYYsKkJG8W5w2k7z151k7zQQVSKlWPwbNn0PnEiaZG0okBVkZct5eaZuYc4aRDqApGfTJ7TL/qFknTPksUDntSnRSGHAlCxl1h2GLlpSzjyjKr9b04LmOihYUFqL7jLBMErRooYjtIG9FyUSJH5XxhPy8OPNtUOsWjmXMLtVGo3SK1REm+dEzgEwEN9KH3N8nzVrSMuwy9qlvWHCuIZmOjs7zsgo+1s1nDWQ3TFUUQsQsbACtiKnHAE2bHmUTp5J5IZEBFZ1L41Oec3aoPUpBikg6AbC40vsbkgR24GckCxlWDiKKBcE+P0IDAC0lZzfD2cRJyDts5v//XKnk0uuGof+Fxri578dlU/M0jpWV0klokMEhizTdPWNS9MOwCGRNlCHbrdhy4NAFa/C8PQzS1BLzvniMi2shOTG7mXi1bLOxA==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(376005)(36860700004)(82310400014)(1800799015); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:50:55.6575 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f72474fd-e66c-4137-be23-08dc48badb1d
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004686.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4122
-Received-SPF: permerror client-ip=2a01:111:f400:7ea9::608;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM02-SN1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,218 +103,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When running SEV-SNP guests, the kernel may forward some subset of
-VMGEXIT-based guest hypercalls to userspace. One of these is for Page
-State Change requests, as documented by the GHCB specification[1].
+On 2024/03/20 16:00, Marc-André Lureau wrote:
+> Hi
+> 
+> On Wed, Mar 20, 2024 at 7:20 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>
+>> On 2024/03/19 17:29, Marc-André Lureau wrote:
+>>> Hi Akihiko
+>>>
+>>> On Tue, Mar 19, 2024 at 7:09 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>>>
+>>>> ui/console has a concept of "active" console; the active console is used
+>>>> when NULL is set for DisplayListener::con, and console_select() updates
+>>>> the active console state. However, the global nature of the state cause
+>>>> odd behaviors, and replacing NULL with the active console also resulted
+>>>> in extra code. Remove it to solve these problems.
+>>>>
+>>>> The active console state is shared, so if there are two displays
+>>>> referring to the active console, switching the console for one will also
+>>>> affect the other. All displays that use the active console state,
+>>>> namely cocoa, curses, and vnc, need to reset some of its state before
+>>>> switching the console, and such a reset operation cannot be performed if
+>>>> the console is switched by another display. This can result in stuck
+>>>> keys, for example.
+>>>>
+>>>> While the active console state is shared, displays other than cocoa,
+>>>> curses, and vnc don't update the state. A chardev-vc inherits the
+>>>> size of the active console, but it does not make sense for such a
+>>>> display.
+>>>>
+>>>> This series removes the shared "active" console state from ui/console.
+>>>> curses, cocoa, and vnc will hold the reference to the console currently
+>>>> shown with DisplayListener::con. This also eliminates the need to
+>>>> replace NULL with the active console and save code.
+>>>>
+>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>
+>>> lgtm
+>>> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>
+>>> I am willing to take that for 9.0. Is there any bug already opened
+>>> about the issues it solves?
+>>
+>> No, I'm not aware of one.
+> 
+> The first patch "Do not inherit the size of active console" is not
+> directly related and may not be suitable for merge during freeze. Are
+> you ok with merging the rest for 9.0 or delay it for 9.1?
 
-Userspace does not directly have control over the SNP RMP table to
-actually satisfy these requests, but will instead make use of the
-kvm_convert_memory() interface, which makes use of the
-KVM_SET_MEMORY_ATTRIBUTES ioctl to instruct KVM to map these these
-GPAs using private/shared memory and make the appropriate RMP changes
-via the associated kernel hooks.
+The first patch needs to be applied before the others.
 
-Add the basic infrastructure for handling KVM_EXIT_VMGEXIT events, and
-then implement handling for Page State Change requests on top of that.
-
-[1] https://www.amd.com/content/dam/amd/en/documents/epyc-technical-docs/specifications/56421.pdf
-
-Signed-off-by: Michael Roth <michael.roth@amd.com>
----
- target/i386/kvm/kvm.c |   3 +
- target/i386/sev.c     | 152 ++++++++++++++++++++++++++++++++++++++++++
- target/i386/sev.h     |   2 +
- 3 files changed, 157 insertions(+)
-
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 59e9048e61..22eb21a2f3 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5409,6 +5409,9 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
-         ret = kvm_xen_handle_exit(cpu, &run->xen);
-         break;
- #endif
-+    case KVM_EXIT_VMGEXIT:
-+        ret = kvm_handle_vmgexit(run);
-+        break;
-     default:
-         fprintf(stderr, "KVM: unknown exit reason %d\n", run->exit_reason);
-         ret = -1;
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 0c8e4bdb4c..0c6a253138 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1423,6 +1423,158 @@ bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp)
-     return ret;
- }
- 
-+typedef struct __attribute__((__packed__)) PscHdr {
-+    uint16_t cur_entry;
-+    uint16_t end_entry;
-+    uint32_t reserved;
-+} PscHdr;
-+
-+typedef struct __attribute__((__packed__)) PscEntry {
-+    uint64_t cur_page    : 12,
-+             gfn         : 40,
-+             operation   : 4,
-+             pagesize    : 1,
-+             reserved    : 7;
-+} PscEntry;
-+
-+#define VMGEXIT_PSC_MAX_ENTRY 253
-+
-+typedef struct __attribute__((__packed__)) SnpPscDesc {
-+    PscHdr hdr;
-+    PscEntry entries[VMGEXIT_PSC_MAX_ENTRY];
-+} SnpPscDesc;
-+
-+static int next_contig_gpa_range(SnpPscDesc *desc, uint16_t *entries_processed,
-+                                 hwaddr *gfn_base, int *gfn_count,
-+                                 bool *range_to_private)
-+{
-+    int i;
-+
-+    *entries_processed = 0;
-+    *gfn_base = 0;
-+    *gfn_count = 0;
-+    *range_to_private = false;
-+
-+    for (i = desc->hdr.cur_entry; i <= desc->hdr.end_entry; i++) {
-+        PscEntry *entry = &desc->entries[i];
-+        bool to_private = entry->operation == 1;
-+        int page_count = entry->pagesize ? 512 : 1;
-+
-+        if (!*gfn_count) {
-+            *range_to_private = to_private;
-+            *gfn_base = entry->gfn;
-+        }
-+
-+        /* When first non-adjacent entry is seen, report the previous range */
-+        if (entry->gfn != *gfn_base + *gfn_count || (to_private != *range_to_private)) {
-+            return 0;
-+        }
-+
-+        *gfn_count += page_count;
-+
-+        /*
-+         * Currently entry-specific PSC_ERROR_INVALID_ENTRY errors are not
-+         * returned. Instead only the more general GENERIC/INVALID_HDR
-+         * errors are returned. If support for PSC_ERROR_INVALID_ENTRY errors
-+         * are added, this logic will need to be re-worked to either not
-+         * increment entries_processed until the request is issued
-+         * successfully, or to rewind it after failure. Guests don't
-+         * currently do anything useful with entry-specific errors so vs.
-+         * the other errors types so this is unlikely to be an issue in the
-+         * meantime.
-+         */
-+        entry->cur_page = page_count;
-+        *entries_processed += 1;
-+    }
-+
-+    return *gfn_count ? 0 : -ENOENT;
-+}
-+
-+#define GHCB_SHARED_BUF_SIZE    0x7f0
-+#define PSC_ERROR_GENERIC       (0x100UL << 32)
-+#define PSC_ERROR_INVALID_HDR   ((0x1UL << 32) | 1)
-+#define PSC_ERROR_INVALID_ENTRY ((0x1UL << 32) | 2)
-+#define PSC_ENTRY_COUNT_MAX     253
-+
-+static int kvm_handle_vmgexit_psc(__u64 shared_gpa, __u64 *psc_ret)
-+{
-+    hwaddr len = GHCB_SHARED_BUF_SIZE;
-+    MemTxAttrs attrs = { 0 };
-+    SnpPscDesc *desc;
-+    void *ghcb_shared_buf;
-+    uint8_t shared_buf[GHCB_SHARED_BUF_SIZE];
-+    uint16_t entries_processed;
-+    hwaddr gfn_base = 0;
-+    int gfn_count = 0;
-+    bool range_to_private;
-+
-+    *psc_ret = 0;
-+    ghcb_shared_buf = address_space_map(&address_space_memory, shared_gpa,
-+                                        &len, true, attrs);
-+    if (len < GHCB_SHARED_BUF_SIZE) {
-+        g_warning("unable to map entire shared GHCB buffer, mapped size %ld (expected %d)",
-+                  len, GHCB_SHARED_BUF_SIZE);
-+        *psc_ret = PSC_ERROR_GENERIC;
-+        goto out_unmap;
-+    }
-+    memcpy(shared_buf, ghcb_shared_buf, GHCB_SHARED_BUF_SIZE);
-+    address_space_unmap(&address_space_memory, ghcb_shared_buf, len, true, len);
-+
-+    desc = (SnpPscDesc *)shared_buf;
-+
-+    if (desc->hdr.end_entry >= PSC_ENTRY_COUNT_MAX) {
-+        *psc_ret = PSC_ERROR_INVALID_HDR;
-+        goto out_unmap;
-+    }
-+
-+    /* No more entries left to process. */
-+    if (desc->hdr.cur_entry > desc->hdr.end_entry) {
-+        goto out_unmap;
-+    }
-+
-+    while (!next_contig_gpa_range(desc, &entries_processed,
-+                                  &gfn_base, &gfn_count, &range_to_private)) {
-+        int ret = kvm_convert_memory(gfn_base * 0x1000, gfn_count * 0x1000,
-+                                     range_to_private);
-+        if (ret) {
-+            *psc_ret = 0x100ULL << 32; /* Indicate interrupted processing */
-+            g_warning("error doing memory conversion: %d", ret);
-+            break;
-+        }
-+
-+        desc->hdr.cur_entry += entries_processed;
-+    }
-+
-+    ghcb_shared_buf = address_space_map(&address_space_memory, shared_gpa,
-+                                        &len, true, attrs);
-+    if (len < GHCB_SHARED_BUF_SIZE) {
-+        g_warning("unable to map entire shared GHCB buffer, mapped size %ld (expected %d)",
-+                  len, GHCB_SHARED_BUF_SIZE);
-+        *psc_ret = PSC_ERROR_GENERIC;
-+        goto out_unmap;
-+    }
-+    memcpy(ghcb_shared_buf, shared_buf, GHCB_SHARED_BUF_SIZE);
-+out_unmap:
-+    address_space_unmap(&address_space_memory, ghcb_shared_buf, len, true, len);
-+
-+    return 0;
-+}
-+
-+int kvm_handle_vmgexit(struct kvm_run *run)
-+{
-+    int ret;
-+
-+    if (run->vmgexit.type == KVM_USER_VMGEXIT_PSC) {
-+        ret = kvm_handle_vmgexit_psc(run->vmgexit.psc.shared_gpa,
-+                                     &run->vmgexit.psc.ret);
-+    } else {
-+        warn_report("KVM: unknown vmgexit type: %d", run->vmgexit.type);
-+        ret = -1;
-+    }
-+
-+    return ret;
-+}
-+
- static char *
- sev_common_get_sev_device(Object *obj, Error **errp)
- {
-diff --git a/target/i386/sev.h b/target/i386/sev.h
-index 5dc4767b1e..5cbfc3365b 100644
---- a/target/i386/sev.h
-+++ b/target/i386/sev.h
-@@ -66,4 +66,6 @@ int sev_inject_launch_secret(const char *hdr, const char *secret,
- int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size);
- void sev_es_set_reset_vector(CPUState *cpu);
- 
-+int kvm_handle_vmgexit(struct kvm_run *run);
-+
- #endif
--- 
-2.25.1
-
+It removes qemu_console_get_width()/qemu_console_get_height() calls with 
+NULL as QemuConsole *con argument, which is intended to be replaced with 
+the active console. The calls will make no sense after the other patches 
+are applied since the concept of the active console will be gone.
 
