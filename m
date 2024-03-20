@@ -4,51 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1796C54E67
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0030DCD11C2
 	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 20:52:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rn2um-0006ok-RG; Wed, 20 Mar 2024 16:52:00 -0400
+	id 1rn2ur-0006qJ-K6; Wed, 20 Mar 2024 16:52:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rn2ul-0006oQ-IP
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 16:51:59 -0400
+ id 1rn2up-0006pc-R7
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 16:52:03 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rn2uj-0004VV-Lk
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 16:51:59 -0400
+ id 1rn2uo-0004VV-1J
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 16:52:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710967918; x=1742503918;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=TKFwaVe+fY4l7ro+ePlHg0i7gBdTSoLXtY5RRyXH5p8=;
- b=BBgNazR9Cp8jcbAnKeQA3PPT/buINNmfnc8t1Crey7TLQzHlZ3U7ppUW
- oXtR6ELo/+x6HLv0Ym0i5Ka6AdhXFW3QOaEUne2r4CvkXUyayybKWOnVB
- P1jMZJmbDhREeON6ixFYSt1AXEP9GzvzBIK5UjXdbvhpRr8vNqBtknxVP
- Kpinf8kwtCmUgKCOzrrbmJawGAFnHX5x7Vcx+CEB/IObImf+z87KKNAg0
- Tw69rDw5MYVttpRNX4xVD+/TisWQ/WuoVF5MPGX0yZVTjLMV3Wma9bonZ
- +qjhyR/ME//cjvacnImKoNznM7vwFATfoDv8msAHPv8jtkIEFoLFeHwKK g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11019"; a="16463562"
-X-IronPort-AV: E=Sophos;i="6.07,141,1708416000"; d="scan'208";a="16463562"
+ t=1710967922; x=1742503922;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=L3vTPYUk5DmYw8gzl3iAc70BwhOAQ4bK8DaLyOprJrQ=;
+ b=nH4MRn6x+X3ERTnC5SEd3fXQoTXpeCPEgpog74ifBG5mI9j0W7xMMey3
+ I3XL74SZOabtIANTm1bWCuwXQIPqqtIzv0aRRp4UHJ9AjWmEyGb7Bs7Si
+ 4nuBjU9KXIEoHYJ0UdXdrXKPurpDrPSNi2JbX9Tn3ch2dWA2SGJGdaRH1
+ LXa1v3OP00Tvqmkk7lS5usmpLI+quJnQ+aqyz2Qh4J1iXziUd23+T+Vm5
+ v/Wqxq+CF5u22vqSsdwWOuuUmSPy5kLURNZ6k8tRSU5iuKb7xxRolaRtX
+ z0I5uGDKhOFqPyI0MWkZ3dHvvxHsMkm+RF1aXJjJRP1ShnA85WXQIbSyw A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11019"; a="16463570"
+X-IronPort-AV: E=Sophos;i="6.07,141,1708416000"; d="scan'208";a="16463570"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Mar 2024 13:51:54 -0700
+ 20 Mar 2024 13:51:55 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,141,1708416000"; d="scan'208";a="14679714"
+X-IronPort-AV: E=Sophos;i="6.07,141,1708416000"; d="scan'208";a="14679718"
 Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by orviesa007.jf.intel.com with ESMTP; 20 Mar 2024 13:51:54 -0700
+ by orviesa007.jf.intel.com with ESMTP; 20 Mar 2024 13:51:55 -0700
 From: dongwon.kim@intel.com
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	marcandre.lureau@redhat.com
-Subject: [PATCH 0/3] ui/console: initialize QemuDmaBuf in ui/console
-Date: Wed, 20 Mar 2024 13:50:15 -0700
-Message-Id: <20240320205018.3351984-1-dongwon.kim@intel.com>
+Subject: [PATCH 3/3] ui/console: add methods for allocating,
+ intializing and accessing QemuDmaBuf
+Date: Wed, 20 Mar 2024 13:50:18 -0700
+Message-Id: <20240320205018.3351984-4-dongwon.kim@intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240320205018.3351984-1-dongwon.kim@intel.com>
+References: <20240320205018.3351984-1-dongwon.kim@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,35 +81,121 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dongwon Kim <dongwon.kim@intel.com>
 
-QemuDmaBuf struct is defined and primarily used by ui/console/gl so it is
-better to handle its creation, initialization and access within ui/console
-rather than within hw modules such as hw/display/virtio-gpu and
-hw/vfio/display.
+This commit introduces new methods within ui/console to handle the allocation,
+initialization, and field retrieval of QemuDmaBuf. By isolating these
+operations within ui/console, it enhances safety and encapsulation of
+the struct.
 
-To achieve this, new methods for allocating, initializing the struct, and
-accessing certain fields necessary for hardware modules have been introduced
-in ui/console.c.
-(3rd patch)
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+---
+ include/ui/console.h | 10 ++++++++
+ ui/console.c         | 55 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 65 insertions(+)
 
-Furthermore, modifications have been made to hw/display/virtio-gpu and
-hw/vfio/display to utilize these new methods instead of setting up the struct
-independently.
-(1st and 2nd patches)
-
-Dongwon Kim (3):
-  hw/virtio: intialize QemuDmaBuf using the function from ui/console
-  hw/vfio: intialize QemuDmaBuf using the function from ui/console
-  ui/console: add methods for allocating, intializing and accessing
-    QemuDmaBuf
-
- hw/display/virtio-gpu-udmabuf.c | 27 +++++++---------
- hw/vfio/display.c               | 35 ++++++++++++---------
- include/hw/vfio/vfio-common.h   |  2 +-
- include/hw/virtio/virtio-gpu.h  |  2 +-
- include/ui/console.h            | 10 ++++++
- ui/console.c                    | 55 +++++++++++++++++++++++++++++++++
- 6 files changed, 98 insertions(+), 33 deletions(-)
-
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 0bc7a00ac0..70903f1b0d 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -279,6 +279,7 @@ typedef struct DisplayChangeListenerOps {
+     /* optional */
+     void (*dpy_gl_cursor_position)(DisplayChangeListener *dcl,
+                                    uint32_t pos_x, uint32_t pos_y);
++
+     /* optional */
+     void (*dpy_gl_release_dmabuf)(DisplayChangeListener *dcl,
+                                   QemuDmaBuf *dmabuf);
+@@ -358,6 +359,15 @@ void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
+                           bool have_hot, uint32_t hot_x, uint32_t hot_y);
+ void dpy_gl_cursor_position(QemuConsole *con,
+                             uint32_t pos_x, uint32_t pos_y);
++QemuDmaBuf *dpy_gl_create_dmabuf(uint32_t width, uint32_t height,
++                                 uint32_t stride, uint32_t x,
++                                 uint32_t y, uint32_t backing_width,
++                                 uint32_t backing_height, uint32_t fourcc,
++                                 uint32_t modifier, uint32_t dmabuf_fd,
++                                 bool allow_fences);
++uint32_t dpy_gl_dmabuf_get_width(QemuDmaBuf *dmabuf);
++uint32_t dpy_gl_dmabuf_get_height(QemuDmaBuf *dmabuf);
++int32_t dpy_gl_dmabuf_get_fd(QemuDmaBuf *dmabuf);
+ void dpy_gl_release_dmabuf(QemuConsole *con,
+                            QemuDmaBuf *dmabuf);
+ void dpy_gl_update(QemuConsole *con,
+diff --git a/ui/console.c b/ui/console.c
+index 43226c5c14..bac24756f0 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -1132,6 +1132,60 @@ void dpy_gl_cursor_position(QemuConsole *con,
+     }
+ }
+ 
++QemuDmaBuf *dpy_gl_create_dmabuf(uint32_t width, uint32_t height,
++                                 uint32_t stride, uint32_t x,
++                                 uint32_t y, uint32_t backing_width,
++                                 uint32_t backing_height, uint32_t fourcc,
++                                 uint32_t modifier, uint32_t dmabuf_fd,
++                                 bool allow_fences)
++{
++    QemuDmaBuf *dmabuf;
++
++    dmabuf = g_new0(QemuDmaBuf, 1);
++
++    dmabuf->width = width;
++    dmabuf->height = height;
++    dmabuf->stride = stride;
++    dmabuf->x = x;
++    dmabuf->y = y;
++    dmabuf->backing_width = backing_width;
++    dmabuf->backing_height = backing_height;
++    dmabuf->fourcc = fourcc;
++    dmabuf->modifier = modifier;
++    dmabuf->fd = dmabuf_fd;
++    dmabuf->allow_fences = allow_fences;
++    dmabuf->fence_fd = -1;
++
++    return dmabuf;
++}
++
++uint32_t dpy_gl_dmabuf_get_width(QemuDmaBuf *dmabuf)
++{
++    if (dmabuf) {
++        return dmabuf->width;
++    }
++
++    return 0;
++}
++
++uint32_t dpy_gl_dmabuf_get_height(QemuDmaBuf *dmabuf)
++{
++    if (dmabuf) {
++        return dmabuf->height;
++    }
++
++    return 0;
++}
++
++int32_t dpy_gl_dmabuf_get_fd(QemuDmaBuf *dmabuf)
++{
++    if (dmabuf) {
++        return dmabuf->fd;
++    }
++
++    return -1;
++}
++
+ void dpy_gl_release_dmabuf(QemuConsole *con,
+                           QemuDmaBuf *dmabuf)
+ {
+@@ -1145,6 +1199,7 @@ void dpy_gl_release_dmabuf(QemuConsole *con,
+         if (dcl->ops->dpy_gl_release_dmabuf) {
+             dcl->ops->dpy_gl_release_dmabuf(dcl, dmabuf);
+         }
++        g_free(dmabuf);
+     }
+ }
+ 
 -- 
 2.34.1
 
