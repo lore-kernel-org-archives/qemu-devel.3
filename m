@@ -4,107 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17865C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 03:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1506CC54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 03:20:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmmPh-0004E3-Ep; Tue, 19 Mar 2024 23:14:49 -0400
+	id 1rmmUx-0005fP-9J; Tue, 19 Mar 2024 23:20:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmmPe-00045X-20
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 23:14:47 -0400
-Received: from mail-dm3nam02on2088.outbound.protection.outlook.com
- ([40.107.95.88] helo=NAM02-DM3-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmmPc-0005zO-4a
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 23:14:45 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=K1jiFk7pkPBXBVVoQ2fDgMzt5vT1vGalgOW1eaiyVvhlxPuXSpvdJCigsKCIP54JoD6JWGScnB5+IApt+9I/PT5Hf21NqONrWHJrJipALAfa9kAHmzKGy8/rnT1tuJjjnWIdRO4xsKCnlMowdgrsd0Nj1DolMHPhZ3KeAqv1G+aOf+946g07geNKce7X6tQkJL4ajNFM15PaCZS5kE5JCqIDe+m8jVOMVYgdeWmA582Q8pt177PSz0AP/GKbrGSlp4k1nAFLw55OaPpEX9PzUqZM8WY9lry+HVbwZNFFqAy6K+XSY46jWQGpfxQ9C5pr5xs3WWuGGVbdPE03bkB5gA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OQ24fwAYdvNl/hejg+d51uz8y7cckk4n6lvMw6Tir1A=;
- b=ZQ2GmEsdWU8bBf6wiHcfwF45pxFOi3MrjUpE2zxyY2UxshevXXGvE+GPgq+i9kBR0otGiLbC1Q7yshcd4yzHecSgUUqfa0CctXxdkudAhPcwGGXBFYEu1uIkOtTVwslyItrZMYRYjj09MKEAE4/PvjxD48NjXMD2Fj8RxDBLAg8kJFE6Um5OPLrLOyFJcROmLdrn56UFxjI03bx8+GDnZNd4+xEeyeoupGPHRo4DBx9TmBE4a2QUtOdn9+JsC2QlYgJur/h7rAsqQdl7biSKPPSpkKnyh74aU6wP44XD7tyvzCeD2XKHwCuqkn6f7+MUCFoRC1gB3gQoDPCbwYfDmw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OQ24fwAYdvNl/hejg+d51uz8y7cckk4n6lvMw6Tir1A=;
- b=AH2bNjFZLCVeNURUmewMtYZLvOOoYodXTb64XmxEd4cfmo7I1oZTedik2TprMpOzcsca53N8sIdqLdOIN1sabEkVBYioH5S/kEvww8tO5f0ossAF7BpCVy8ZmhlMsrnnXjckE+SLfSfRffqBqI4mhdSs4hZkSMXGXM3xkAkD2t8=
-Received: from CH5P222CA0002.NAMP222.PROD.OUTLOOK.COM (2603:10b6:610:1ee::22)
- by CY5PR12MB6274.namprd12.prod.outlook.com (2603:10b6:930:21::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.23; Wed, 20 Mar
- 2024 03:09:36 +0000
-Received: from CH1PEPF0000AD78.namprd04.prod.outlook.com
- (2603:10b6:610:1ee:cafe::fc) by CH5P222CA0002.outlook.office365.com
- (2603:10b6:610:1ee::22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.27 via Frontend
- Transport; Wed, 20 Mar 2024 03:09:36 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CH1PEPF0000AD78.mail.protection.outlook.com (10.167.244.56) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 03:09:36 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Tue, 19 Mar
- 2024 22:09:35 -0500
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rmmUu-0005f5-Ch
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 23:20:12 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rmmUs-0007BS-5R
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 23:20:12 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-5c66b093b86so379549a12.0
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 20:20:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710904807; x=1711509607;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+7gSRZQKqTYhIIVhro9hV6j8lyLELp80FOk4YvnWdV0=;
+ b=TlEVsX6nZtcKXCXf8sfT5Bozz46A6s65Z4gqzfcaXF1ul/Aqp9tWwtZmfA9yw3f/Oj
+ DVNX5Kt6U9lYcM0W3wk+E3Qjx22fRBRNwOZdxFs427Di6QhhUerwbSgdWl29avnezgVj
+ KNNaMQi2p49QfeUaCl9J69fFUZ0YkU1YtI6raKno7oiQ06WPBUisGHd45RHSf/8YwTPb
+ +jh41lFkrm0tSAuLng3oPUJmFDZIKSY9n1Z+RPHJeGR0NADd5x2pBZ4cHIGouLs6NRyu
+ hbw1TxFDvmcN2S0Vp/GO/uvV6conlG1OvOsR+a00Y4mAZupYvZISY7ue/Ud2ZLeqvTro
+ GcRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710904807; x=1711509607;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+7gSRZQKqTYhIIVhro9hV6j8lyLELp80FOk4YvnWdV0=;
+ b=MBBPgVXGBKOIZxPRyPGuHo6On5+rsnZktpbzPkjlzRb56N8+y7+c6dZiR8OQaZVPlZ
+ fH0LnGWo3mKhAuNmd/boHNuLHrRvinlOiG5LtnxdMfAROGzEVjhiD8D4x8O299y+ti8j
+ NteNXkENzDGJp3CXejzykvr7+XqWa70lTzgSz9i6UCGuuJ3dC/fcecaZRKs3JTxcD8CU
+ v6rChR67IZUR9Ai02xgATk20TiMNk3ExZ5RaB3tRVtyEcDiq/eGElI2tNGLG8R7KflBx
+ 5N/hRaDtQBp1YFbnuBQP/5lCwa/EGj/uOw8U2MM6K3wA1si2ARHSf0DGJ8zB2BjwpcIn
+ MmZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWKftPXtsCaexEZHP23JTKV/zUTsIhQjJLCWyXS2WBK0ymeTttCR+zdIalpEM3HimXIiwelcwIEPlYNUTOvoKaMeLNO5kE=
+X-Gm-Message-State: AOJu0Yxt88Nn5dRf48rCfoUcpiwp4gCy9g+cZXAT32qrcb/pR3EwHPHk
+ fuOcCiVTtmsQvII8JGVeZH9Y+EvlYr6Eji96sHmIPCegOp1+0cS7LMFqmJoXSfc=
+X-Google-Smtp-Source: AGHT+IG6f/Pyv3J/PQjc4stxjlz2BF4p3j9jqTvHA6JHIUNH/IQmcnJirYn3DzUGvR7MQdVjpnvlCw==
+X-Received: by 2002:a17:90a:2f42:b0:2a0:298:536 with SMTP id
+ s60-20020a17090a2f4200b002a002980536mr331853pjd.19.1710904807446; 
+ Tue, 19 Mar 2024 20:20:07 -0700 (PDT)
+Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
+ ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
+ by smtp.gmail.com with ESMTPSA id
+ m9-20020a17090ade0900b0029bc9c34a39sm357750pjv.50.2024.03.19.20.20.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 20:20:07 -0700 (PDT)
+Message-ID: <5b8160c8-6774-47b3-a495-f7dc64ebd28d@daynix.com>
+Date: Wed, 20 Mar 2024 12:20:03 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Subject: [ANNOUNCE] QEMU 9.0.0-rc0 is now available
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <peter.maydell@linaro.org>
-Date: Tue, 19 Mar 2024 22:09:13 -0500
-Message-ID: <171090415390.975466.1974348748307170830@amd.com>
-User-Agent: alot/0.9
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD78:EE_|CY5PR12MB6274:EE_
-X-MS-Office365-Filtering-Correlation-Id: 06d239b7-54b8-438e-3131-08dc488b2c7d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: hBlyfWPAwL/TyOnxRqypseBaXbaPuH0ReiSqDps83G7cJAbnS8NJFf0Eq3mOe55Sabj8ZquZTgPMcwPKL7uv8qDNI0ZT8QQBpL/r96GxtUHIP8ejKLJ3yla7y+kkw4Yr9Tpgcf0TarCxHlEW6LE0oNPBPBY6rSCqx4gEGmvS4hkkEFGwfP8JR1Rwd3ThIL0gNFz8TgZN+ppiZQlb8uvQt3TwFnJ2tsUcfNQVN82ZD4dqmHxRWn4M8ehmYAyoBa3RbsC/hZ3155YDtkQijjtvJ91MZcfx9TIMiuV145GS9gBA0Xw9ySHRYhSJqkWuuhLEmhkpALDzJ3DXhcpdhSUu0WkvLF81eYBjlkZ9t9ABl7RUyqefmOi1vuTyvGattWk+DslBhrqVGyWIaYD7AlP8scUsECej6q15+ywxIdj4SCFen+L+cIECeZPQ8ZLXu69fTkgOdoloMASSSwknGVAu07OJr0/k6tuDN72X8f/Ey9XggCGXKM8WmaPqcIEj2qiKYfd8EvXW3WMyBrLj4XSQqzBjyigHpdt93drwjvhiHLXs49rf1EA4R+QXng8bA898cyA1kReFIHAMER5tGJUbO4grjKlQIQzeDacBhjpBIC/24gT61ZyOxPjtVHXXS26GcfGKWaFH+mMlCn7FCVX/nbYOOmJMhpQ05kZsp5G4jRe7b5c5hNaw9g91Fb66vOJfLOJQJx3zBQUNE/XUHY+WIA==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(82310400014)(36860700004)(376005)(1800799015); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 03:09:36.3042 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 06d239b7-54b8-438e-3131-08dc488b2c7d
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD78.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6274
-Received-SPF: permerror client-ip=40.107.95.88;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM02-DM3-obe.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] ui/console: Remove console_select()
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240319-console-v2-0-3fd6feef321a@daynix.com>
+ <CAJ+F1CKOuZR5nZxcxRzZyoE56p_nNW11cySEmnFvRgiPv5OAdw@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CAJ+F1CKOuZR5nZxcxRzZyoE56p_nNW11cySEmnFvRgiPv5OAdw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::532;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,28 +102,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On 2024/03/19 17:29, Marc-André Lureau wrote:
+> Hi Akihiko
+> 
+> On Tue, Mar 19, 2024 at 7:09 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>
+>> ui/console has a concept of "active" console; the active console is used
+>> when NULL is set for DisplayListener::con, and console_select() updates
+>> the active console state. However, the global nature of the state cause
+>> odd behaviors, and replacing NULL with the active console also resulted
+>> in extra code. Remove it to solve these problems.
+>>
+>> The active console state is shared, so if there are two displays
+>> referring to the active console, switching the console for one will also
+>> affect the other. All displays that use the active console state,
+>> namely cocoa, curses, and vnc, need to reset some of its state before
+>> switching the console, and such a reset operation cannot be performed if
+>> the console is switched by another display. This can result in stuck
+>> keys, for example.
+>>
+>> While the active console state is shared, displays other than cocoa,
+>> curses, and vnc don't update the state. A chardev-vc inherits the
+>> size of the active console, but it does not make sense for such a
+>> display.
+>>
+>> This series removes the shared "active" console state from ui/console.
+>> curses, cocoa, and vnc will hold the reference to the console currently
+>> shown with DisplayListener::con. This also eliminates the need to
+>> replace NULL with the active console and save code.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> 
+> lgtm
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> I am willing to take that for 9.0. Is there any bug already opened
+> about the issues it solves?
 
-On behalf of the QEMU Team, I'd like to announce the availability of the
-first release candidate for the QEMU 9.0 release. This release is meant
-for testing purposes and should not be used in a production environment.
-
-  http://download.qemu.org/qemu-9.0.0-rc0.tar.xz
-  http://download.qemu.org/qemu-9.0.0-rc0.tar.xz.sig
-
-You can help improve the quality of the QEMU 9.0 release by testing this
-release and reporting bugs using our GitLab issue tracker:
-
-  https://gitlab.com/qemu-project/qemu/-/milestones/11
-
-The release plan, as well a documented known issues for release
-candidates, are available at:
-
-  http://wiki.qemu.org/Planning/9.0
-
-Please add entries to the ChangeLog for the 9.0 release below:
-
-  http://wiki.qemu.org/ChangeLog/9.0
-
-Thank you to everyone involved!
+No, I'm not aware of one.
 
