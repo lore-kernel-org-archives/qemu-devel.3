@@ -4,121 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E05C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4441DC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 09:07:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmrmd-0003vC-De; Wed, 20 Mar 2024 04:58:51 -0400
+	id 1rmruO-0005cx-JH; Wed, 20 Mar 2024 05:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmrmb-0003uE-H1
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:58:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rmruJ-0005cg-LK
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 05:06:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmrma-000396-3p
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:58:49 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rmruG-0005cg-2g
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 05:06:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710925126;
+ s=mimecast20190719; t=1710925598;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wQDZtMbY+JWVnRii+RiA+HNGn+8BKQoCCXR2CaoP1hc=;
- b=WaojCDGaUV45ecOc1fWdphxoP57h0ZYcr7rDa+baTi7QEzJ5YtrlvWEL9v98zz6i987A1h
- 9vYZkXOTq6pQSGsnzfVVq/iUrtDB/ZHqP5hQGEhpU9XnOZeHbRbSHZnBNwOb3W24AUJozZ
- dY2/16aZnnw8UR1WpCf8ZRWv1+vYVv0=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=iE5IMFbumI3UueFs/ByUxSkpPd6mdS/V6qBD2cc/xaY=;
+ b=OztNeUYB2MRxe5616nBC1kPeah3g+N0a10aGmK3IuDzqCpVSKs07acTxDWQbkpqqdwMWOS
+ tgxvnO0EwvxGyMLdMg/uJGVZepFJaNUzmY+kwrWQvrLjhSKRudGyYDYrwi9WgY6AwHG1ob
+ BN4HsqrdqiP/SEtggv4EF0/HNrOhGiQ=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-373-n3tZiGisPpqLmSq7EptKVg-1; Wed, 20 Mar 2024 04:58:44 -0400
-X-MC-Unique: n3tZiGisPpqLmSq7EptKVg-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a469d3547c7so66937066b.0
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 01:58:44 -0700 (PDT)
+ us-mta-530-F3bgAf6XOniOZR04uZCZzQ-1; Wed, 20 Mar 2024 05:06:36 -0400
+X-MC-Unique: F3bgAf6XOniOZR04uZCZzQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a46ba1a19fdso231934666b.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 02:06:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710925123; x=1711529923;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1710925595; x=1711530395;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wQDZtMbY+JWVnRii+RiA+HNGn+8BKQoCCXR2CaoP1hc=;
- b=ea7apDOMzXQCWof4L8JDCZPjgsS3nGvgNPruEedSQofJrsqLTfAsjjSQbJfshJdDRO
- sCfRHlAOC7Lz95RRDXjwz9jBjVKT9BpQPyV74EL5+DXPRCkH+VNMJTxSlJ7LhYjufj8T
- b8q/rMt9nM5lHHc9S7IHxr61vEoyH8ish/AF2k3B7yHXcKH/9xGxpaMVyaG5Jgpi3aEb
- sKv3RxVJBKodNTYgXxxdffMasMek2h8vd70ZKq6A1HviTUHE8aKnuL56S+dxumbIfZJd
- JruNLaR9hP1f/Eb50KJjmJLLUTdMxFUNYx/+V/R5QgfweT8f2i7N/nYKVyfdV7PPZhpU
- zRDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVH4Gido9VNJpf8IYTglFPHtRO8iujAGDaeqjFeqzekMkYtF5u8AxrygHucirGo3SZW+48Vc9xQuvr2Sdy9gBEQMop2n1k=
-X-Gm-Message-State: AOJu0Yx7vgqa4KX82t1aIS0EcnpuTFgkt1yKkV9aRE/MkcfZ71n+k5g4
- +REZKWO5DbpNPJw90yyWfUXfu5SYWWQzH26+akPVtLuVks8GRan3KyAt0kPYSCI+2R6Wj8Cj1Up
- ycYCpmIilQms0TxLaKZYhB86MbSLzyFFj3Z+ElQ4O4hWmn5axJQap
-X-Received: by 2002:a17:906:dfe5:b0:a46:a929:8432 with SMTP id
- lc5-20020a170906dfe500b00a46a9298432mr4558659ejc.4.1710925123382; 
- Wed, 20 Mar 2024 01:58:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGe8y4Fy2LR8hpIO7lRb98twjhHE8d8mXCCtRkO7HKN7qyZkazprV2HxDS+OdjlvFLBc7gorw==
-X-Received: by 2002:a17:906:dfe5:b0:a46:a929:8432 with SMTP id
- lc5-20020a170906dfe500b00a46a9298432mr4558644ejc.4.1710925123064; 
- Wed, 20 Mar 2024 01:58:43 -0700 (PDT)
-Received: from [192.168.10.118] ([151.95.49.219])
- by smtp.googlemail.com with ESMTPSA id
- g17-20020a17090670d100b00a46a04d7dc4sm5104428ejk.61.2024.03.20.01.58.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Mar 2024 01:58:42 -0700 (PDT)
-Message-ID: <af9cdba4-ef07-4b91-8371-94f3f3b46812@redhat.com>
-Date: Wed, 20 Mar 2024 09:58:40 +0100
+ bh=iE5IMFbumI3UueFs/ByUxSkpPd6mdS/V6qBD2cc/xaY=;
+ b=Tukgf/d0YB3rPYjaI82AvJLHzk5lzlFagVevsUtRIP07Kc9lFwfF1TozKLEquBGITk
+ Dap/R5MUYdE60SIQ8IOqx7aM82hhcFNkp0HxFKdvvrE7ADVJA0CuDxiElcIs2WETSXUZ
+ CSCXQpiJ0U/Vu+m//hPwaO+KrASBlsAbU+RjTg0dQeMjshZ0vREadHtch0WGNhykaasW
+ VFiRxlpQ89eOd9gTYZ7QS8FMS/uHt+V2F5v/7KCC79PtUYPXsZReIYCJcprawclaYuNE
+ oLG0eHhCi3/yx/SgfY/7uGUSGp67JTWCoYXi6PWWdfzma/34A4V8zUkRJckgTpQJv+DV
+ Tieg==
+X-Gm-Message-State: AOJu0YySTTA7lsnHrzvFybiNUmbSJPZ+GRDwPhciYM9gwY99oMRYuVWV
+ iAElkT/q5XQxmhIiQQetUlOV3uopb0XdLHtHwQPZ1zFGMHdhQnkR47RZHSUirYf7jsZxUNymQdf
+ pIJLtymxZpncOr/80WM8airG+Tz2aNj6bTbVVygX22xDyWyLnfP68
+X-Received: by 2002:a17:906:dfeb:b0:a45:cedb:5564 with SMTP id
+ lc11-20020a170906dfeb00b00a45cedb5564mr3128898ejc.37.1710925595306; 
+ Wed, 20 Mar 2024 02:06:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFPow5rdIt9LQiVqpBJ+xUM0OlfWm7/4PhOiXwodhjCbGaIC2+GdNVWvYxwg6bEXTR/4vZAmQ==
+X-Received: by 2002:a17:906:dfeb:b0:a45:cedb:5564 with SMTP id
+ lc11-20020a170906dfeb00b00a45cedb5564mr3128891ejc.37.1710925594887; 
+ Wed, 20 Mar 2024 02:06:34 -0700 (PDT)
+Received: from sgarzare-redhat (host-87-12-25-33.business.telecomitalia.it.
+ [87.12.25.33]) by smtp.gmail.com with ESMTPSA id
+ bw9-20020a170906c1c900b00a45ff821e09sm7010415ejb.150.2024.03.20.02.06.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 Mar 2024 02:06:34 -0700 (PDT)
+Date: Wed, 20 Mar 2024 10:06:29 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, lulu@redhat.com, 
+ kwolf@redhat.com, eperezma@redhat.com
+Subject: Re: [PATCH] vhost-vdpa: check vhost_vdpa_set_vring_ready() return
+ value
+Message-ID: <5afa5xwifj43bsbfuzb2r4clndun7s5jj33rkfg2cao6dky4ah@m6y4bnmot2hy>
+References: <20240207092702.25242-1-sgarzare@redhat.com>
+ <CACGkMEvRizRGOjOz_AVQw8wsGU3g8+-yHtnKM=yn=3RtY-Hayg@mail.gmail.com>
+ <uufps7n6otfwygiszepy76ltohvsqqo45rwyc6axja3isebda2@mn4rjbji66qt>
+ <CACGkMEt-z3YCh81M2yxnCa9PjLpR8qQ8rLQ5rRCMP6=m9yKpFw@mail.gmail.com>
+ <uofjifqnl57vxigv4ebplfk4menefsgplnvvbprisubkywujbw@273bn7kc5hjg>
+ <CACGkMEusWU9d3hp7m1hzhH9PayfYcw5DTDYn9SEbCdBT7evvAg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 32/68] hw/virtio: Add support for VDPA network simulation
- devices
-Content-Language: en-US
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Hao Chen <chenh@yusur.tech>,
- Jason Wang <jasowang@redhat.com>, Cornelia Huck <cohuck@redhat.com>
-References: <cover.1710282274.git.mst@redhat.com>
- <cd341fd1ffded978b2aa0b5309b00be7c42e347c.1710282274.git.mst@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <cd341fd1ffded978b2aa0b5309b00be7c42e347c.1710282274.git.mst@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACGkMEusWU9d3hp7m1hzhH9PayfYcw5DTDYn9SEbCdBT7evvAg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -143,28 +109,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/24 23:27, Michael S. Tsirkin wrote:
-> diff --git a/include/standard-headers/linux/virtio_pci.h b/include/standard-headers/linux/virtio_pci.h
-> index 3e2bc2c97e..86733278ba 100644
-> --- a/include/standard-headers/linux/virtio_pci.h
-> +++ b/include/standard-headers/linux/virtio_pci.h
-> @@ -221,6 +221,13 @@ struct virtio_pci_cfg_cap {
->   #define VIRTIO_PCI_COMMON_ADM_Q_IDX	60
->   #define VIRTIO_PCI_COMMON_ADM_Q_NUM	62
->   
-> +#define LM_LOGGING_CTRL                 0
-> +#define LM_BASE_ADDR_LOW                4
-> +#define LM_BASE_ADDR_HIGH               8
-> +#define LM_END_ADDR_LOW                 12
-> +#define LM_END_ADDR_HIGH                16
-> +#define LM_VRING_STATE_OFFSET           0x20
+On Wed, Mar 20, 2024 at 12:18:14PM +0800, Jason Wang wrote:
+>On Mon, Mar 18, 2024 at 4:27 PM Stefano Garzarella <sgarzare@redhat.com> wrote:
+>>
+>> On Mon, Mar 18, 2024 at 12:31:59PM +0800, Jason Wang wrote:
+>> >On Fri, Mar 15, 2024 at 4:23 PM Stefano Garzarella <sgarzare@redhat.com> wrote:
+>> >>
+>> >> On Thu, Mar 14, 2024 at 11:17:01AM +0800, Jason Wang wrote:
+>> >> >On Wed, Feb 7, 2024 at 5:27 PM Stefano Garzarella <sgarzare@redhat.com> wrote:
+>> >> >>
+>> >> >> vhost_vdpa_set_vring_ready() could already fail, but if Linux's
+>> >> >> patch [1] will be merged, it may fail with more chance if
+>> >> >> userspace does not activate virtqueues before DRIVER_OK when
+>> >> >> VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated.
+>> >> >
+>> >> >I wonder what happens if we just leave it as is.
+>> >>
+>> >> Are you referring to this patch or the kernel patch?
+>> >
+>> >This patch.
+>> >
+>> >>
+>> >> Here I'm just checking the return value of vhost_vdpa_set_vring_ready().
+>> >> It can return an error also without that kernel patch, so IMHO is
+>> >> better to check the return value here in QEMU.
+>> >>
+>> >> What issue do you see with this patch applied?
+>> >
+>> >For the parent which can enable after driver_ok but not advertise it.
+>>
+>> But this patch is not changing anything in that sense, it just controls
+>> the return value of the VHOST_VDPA_SET_VRING_ENABLE ioctl.
+>>
+>> Why would QEMU ignore an error if it can't activate vrings?
+>> If we really want to ignore it we should document it both in QEMU, but
+>> also in the kernel, because honestly the way the code is now it
+>> shouldn't fail from what I understand.
+>>
+>> That said, even if we ignore it, IMHO we should at least print a warning
+>> in QEMU.
+>
+>Right.
+>
+>>
+>> >
+>> >(To say the truth, I'm not sure if we need to care about this)
+>>
+>> I agree on that, but this is related to the patch in the kernel, not
+>.> this simple patch to fix QEMU error path, right?
+>
+>Or it's the charge of the Qemu vDPA layer to avoid calling
+>set_vq_ready() after driver_ok if no
+>VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK. Or it might be too late.
 
-I cannot find these constants in upstream Linux (what will be 6.9). Is 
-there a tree that defines these constants, or should they be moved to 
-include/hw/virtio/vdpa-dev.h (or something like that)?
+Yeah, maybe is too late. We already released several versions without
+that.
 
-Thanks,
+>
+>>
+>> >
+>> >>
+>> >> >
+>> >> >VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK: We do know enabling could 
+>> >> >be
+>> >> >done after driver_ok.
+>> >> >Without VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK: We don't know whether
+>> >> >enabling could be done after driver_ok or not.
+>> >>
+>> >> I see your point, indeed I didn't send a v2 of that patch.
+>> >> Maybe we should document that, because it could be interpreted that if
+>> >> VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated the enabling
+>> >> should always be done before driver_ok (which is true for example 
+>> >> in
+>> >> VDUSE).
+>> >
+>> >I see, so I think we probably need the fix.
+>> >
+>> >>
+>> >> BTW I think we should discuss it in the kernel patch.
+>> >>
+>> >> Thanks,
+>> >> Stefano
+>> >>
+>> >> >
+>> >> >Thanks
+>> >> >
+>> >> >>
+>> >> >> So better check its return value anyway.
+>> >> >>
+>> >> >> [1] https://lore.kernel.org/virtualization/20240206145154.118044-1-sgarzare@redhat.com/T/#u
+>> >> >>
+>> >> >> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+>> >> >> ---
+>> >> >> Note: This patch conflicts with [2], but the resolution is simple,
+>> >> >> so for now I sent a patch for the current master, but I'll rebase
+>> >> >> this patch if we merge the other one first.
+>> >
+>> >Will go through [2].
+>>
+>> Here I meant that the conflict is only in the code touched, because
+>> Kevin's patch remove/move some of the code touched by this patch.
+>> And rightly he checked the return value of the ioctl as I would like to
+>> do in the other places where we call the same ioctl.
+>>
+>> So honestly I still don't understand what's wrong with this patch...
+>
+>Nothing wrong now.
+>
+>Acked-by: Jason Wang <jasowang@redhat.com>
 
-Paolo
+Thanks for the review,
+I'll send a v2 carrying your and Eugenio acks, rebasing on top of 
+Kevin's patch, so it should be easy to merge.
+
+Stefano
 
 
