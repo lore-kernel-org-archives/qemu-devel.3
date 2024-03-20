@@ -4,108 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FB13C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 04:33:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E751C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 04:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmne8-00089C-81; Wed, 20 Mar 2024 00:33:48 -0400
+	id 1rmnf6-0000bG-Ad; Wed, 20 Mar 2024 00:34:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bgray@linux.ibm.com>)
- id 1rmndy-00087S-Gg; Wed, 20 Mar 2024 00:33:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bgray@linux.ibm.com>)
- id 1rmndt-0004IT-8b; Wed, 20 Mar 2024 00:33:36 -0400
-Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42K3Rdjp008291; Wed, 20 Mar 2024 04:33:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=exZOxHuPu1owq4dH7IQDLxpCY8Xv3CdMd/nEPcrGaCM=;
- b=cLdWMRWknyPBejkMa084X79Sbc2UPIa3afnTcV3xv96mKR0WqzztmismqhMTI6mAgOyv
- N1PgOKVnunZ5fc8Ogi8Mjh0fu7keP/Baq2c+VlE59+97cvJu5drhPrNRYJRpkZUoSVxh
- RPWq4Rbfrx1LkD7H01WDmWbDUS/aAuNui+2dFzWcJfo+VPqBsyHlcdUWf1tnQImCMFiu
- bwuk/Er74SGi/PANzsvgfU+crlbhhiaG62DjbPBB89aP+P19TEj+OVnefV6p//I3B5gq
- KdoPbIMC4ZMlb3GbOs+v0YVdbGiV+gwh+4Gr85Zem7rQNycl3iwyjc9hqdKlF0gXfy2d nQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wyqwh82u7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 04:33:30 +0000
-Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42K4XUkN014183;
- Wed, 20 Mar 2024 04:33:30 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wyqwh82u5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 04:33:30 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42K3AEb4002773; Wed, 20 Mar 2024 04:33:29 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wwrf2kme3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 04:33:29 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42K4XPbw50397524
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 Mar 2024 04:33:27 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C4EE52004E;
- Wed, 20 Mar 2024 04:33:25 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EBE4A20040;
- Wed, 20 Mar 2024 04:33:24 +0000 (GMT)
-Received: from ozlabs.au.ibm.com (unknown [9.192.253.14])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 Mar 2024 04:33:24 +0000 (GMT)
-Received: from [10.61.2.107] (haven.au.ibm.com [9.192.254.114])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ozlabs.au.ibm.com (Postfix) with ESMTPSA id 2237960305;
- Wed, 20 Mar 2024 15:33:22 +1100 (AEDT)
-Message-ID: <648b18644fe587cc3ae70e6a3081a0835f80a4c0.camel@linux.ibm.com>
-Subject: Re: [PATCH 1/2] target/ppc: Restore [H]DEXCR to 64-bits
-From: Benjamin Gray <bgray@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Date: Wed, 20 Mar 2024 15:33:21 +1100
-In-Reply-To: <CZYANK3U3EOT.2S7V8APCPDKSS@wheely>
-References: <20240320015025.372056-1-bgray@linux.ibm.com>
- <CZYANK3U3EOT.2S7V8APCPDKSS@wheely>
-Autocrypt: addr=bgray@linux.ibm.com; prefer-encrypt=mutual;
- keydata=mDMEYzuwexYJKwYBBAHaRw8BAQdAsgBYEqW6nNaL7i0B3z1RqyMl8ADupDef+5Sfe+JbzeC0I0JlbmphbWluIEdyYXkgPGJncmF5QGxpbnV4LmlibS5jb20+iJMEExYKADsWIQQ9K5v9I+L06Hi4yOJ5xrdpFsvehAUCYzuwewIbAwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgAAKCRB5xrdpFsvehCiCAP4g7CDkmsakpwv9QxU2D8dophyCIS8meDOQX4/83/sjHgEA5HWbUsbRCpVmeIgu0iNwhw3cmqhkv7ZkBGe3HhHaXg65Ay4EYzuwkREIAJjQ1EDAmLbOENucLy7VUzyNNCHkBirK/+FbjwOW7VIphc8zgsbZ26ZjIu5vC1NY7U7DpOvLAfR0g4+2QeKiQ8EEcuxLhif5X+jsekq0oSTVLcyNYXArJ3mhmV7jRhz8wBueMoXY/k+P3HCVLi4vzroJzN06Hrnmeu5ELlC4MbuvGRTvW751Y/o7gTa6hyyLb2P4pQ+sj/PuIn2Ly1RJPF839HVcOOERkjZ2QZNJnXEhlpfDD7LyRsy9Xm6MxGKRE5VsfjaO+Q8B6ByhXIy5/QK41AF1uSIPBfkZ8+AsBFw8Z87VGQ61tDdzi0U77IdYr98KsgRJ30vHInfKKdSj4csBALzNKjOFmp7dS8mefp3viouy4vWPla8+XZU6ZrRNtD8hB/9FsE7KVTdIBp4xqf6oN1ieTD7PNsQsBQWdDA/rg2bP7IJQkf4Pvn0yoATOFgqhQwadkwT7fwWAfk0YPEE+DPom1V3JwNM6wPaEJeNaMjleqTfAfauLaB9Sc+zJvN5cORrEjSL/0jfJBBdjW5j5BmdUDM1mGuBNVQhGlWHc/Rf7qokMoZAfYiPi/z44rB9zvNfb8t6sVNqHbC2fKRBn/0k8cZ9+qBEIj6vbkqUuih8xNDA+TU+FxPqJxyahqFv+LL9cfZelC0v3D
- mjW5LaBPOdGiiDE1w95Ri9HRK27S2dRZpyib9L4mkfYWPAF41mTudjKmVpgtBLO//rO+zmF04OMB/4sWJhLfvhq1CXULDqw5dcuIAIYwf2ughOtyAPFK1ViDcMO5X1bVpNAFO5m4VBpZvFDQ0j0JfqfVBdL68uH05W1/8dMj76RaWj5m0rLM5slY1FQUPddSU+ic9vaZhlDepjU3ZyI8fmioofNGHaxJq6uNTytKdj87kwDV6PQ4hmuGtY56C7JCgjp053sRJ6sXqgKBWfe4ZOJH17mQm+fws93byLoZvvz4Z3im0Rb0MlFo/WirNyhu+TmTNLpnzFUZfenoKrqAkZLY8u1iCFquhgqA321P+sfYew66DtwQmaoi2GKmF89y2enXXzjLNKfLDKkuVoKxFSPeizYqrLi22R9iO8EGBYKACAWIQQ9K5v9I+L06Hi4yOJ5xrdpFsvehAUCYzuwkQIbAgCBCRB5xrdpFsvehHYgBBkRCAAdFiEESFUlaLYscsf4Dt5gaavCcpI6D/8FAmM7sJEACgkQaavCcpI6D/95UgEAqfSj0QhCrYfazQiLDKJstrz3oIKFjhB6+FYMZqt+K1MA/2ioFtHbypeeWbsqYYRhRyTjAKcvE1NZGtH/YWLgkViUidoBAN6gFX/P+VWB77/w8S/BnPmnJx45wmphlkCL8ckOyopFAQCj9eWamHCl2DSaASMSuoZed6C6Gm0OFtuZh/r8K485BQ==
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmnf4-0000al-QI
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 00:34:46 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1rmnf3-0004Td-2H
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 00:34:46 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6e6c0098328so5170048b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 21:34:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710909283; x=1711514083; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=M6FQIGA8JStx9X9I34Q1TVbzh9rgLQH+hIzRj+naRA8=;
+ b=LftQLyVQSjVI4fdMJZ7zaoDO0UWxaLb0Un3WedIFD7cHb5d7zofmqesLKlBuvYRTkY
+ sjXJMVRzLAsj+YgCSEVe695V/TZDozouWcVYidIKGaggUHSuStflf7KBknBRe93naFLF
+ 3aeyprdDtUSj6zK6s9mGPmLeHk1/ZCl8rJ8VbCzDqxa5Q0n6TXRL9ov0Rjck/8eH1iwY
+ YyU1JiNakmw4mq07FSwTFyHwHc/Sc76g63NKHPcB+3/cNDCC4veHvIUWFhoTfCl49jGJ
+ Z8PsvPW3wPzhK60U4dz3o5niS3dXCq/EQLnfVp8LV0qLwSvuc/u2978wwmn2y9ViZGdD
+ ZP1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710909283; x=1711514083;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=M6FQIGA8JStx9X9I34Q1TVbzh9rgLQH+hIzRj+naRA8=;
+ b=vW0uDuo3Q+ujpgeBBrrLwDK99XeHQgm/yNq7Pbax6YZIu+uEKsHoqH7uA2CWY9bLtM
+ C0qa9fyMODeSaWguWA4yFgDRGE1UrJcfwuGerqOMGlCgPY01aJP7NgeZEDd9bxvVg0AJ
+ hq0Isz3zhZUt8oZ1Y1FbLTg+yR1FKOWwaImb/wT/vdLapyf6NcXaPwOpuYJW7Obc2hNs
+ BozbYZrXNZC+ur1fSjDeGw2r3jC0foo5eeCZH3vFxHcekByJPa17bXhKCQrDBw33FAf6
+ qJZ+K4zY5mAlbL2TI6lV9h/lwGHLiBnvoDTxCK59PuLJjfvszp+8FDXMr0gAb1QD+Pa6
+ cmzA==
+X-Gm-Message-State: AOJu0Yz4LtopJ7xSb6qLspusImOe2NMVEiu6m9WXAMxVC3SB77Kct5u2
+ MB7HmWwwowhqrQZlJ2wXjncfDBlqOIpSWTGfY47Y/BImhQAHM0R4
+X-Google-Smtp-Source: AGHT+IGCsufb64e8+r8chUO2d9cK/mN3Gp9QvGp5cszLZn6yL9mVysGX6HgKZCqUs6F4Bjo38TDnbg==
+X-Received: by 2002:a05:6a20:8427:b0:1a3:636d:642d with SMTP id
+ c39-20020a056a20842700b001a3636d642dmr1031770pzd.45.1710909283347; 
+ Tue, 19 Mar 2024 21:34:43 -0700 (PDT)
+Received: from localhost (193-116-208-39.tpgi.com.au. [193.116.208.39])
+ by smtp.gmail.com with ESMTPSA id
+ t22-20020a17090ae51600b002a000f06db4sm306615pjy.5.2024.03.19.21.34.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 21:34:43 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
-MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: pIUuBPf3yH7fKTukPX1hdeumkj2aXKnj
-X-Proofpoint-GUID: fUq7cTpMMGKfHUmyvOjCJQ70iJ_zXd73
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-20_01,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- mlxlogscore=999 malwarescore=0 suspectscore=0 impostorscore=0 spamscore=0
- phishscore=0 adultscore=0 bulkscore=0 clxscore=1015 mlxscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2403140000 definitions=main-2403200033
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=bgray@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 20 Mar 2024 14:34:36 +1000
+Message-Id: <CZYAPZ3RDQVU.2BHTMBKV41JH3@wheely>
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: <qemu-devel@nongnu.org>, "Pavel Dovgalyuk" <Pavel.Dovgalyuk@ispras.ru>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Richard
+ Henderson" <richard.henderson@linaro.org>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, "John Snow" <jsnow@redhat.com>, "Cleber Rosa"
+ <crosa@redhat.com>, "Wainer dos Santos Moschetta" <wainersm@redhat.com>,
+ "Beraldo Leal" <bleal@redhat.com>, "Michael Tokarev" <mjt@tls.msk.ru>
+Subject: Re: [PATCH v5 13/24] tests/avocado: replay_linux.py remove the
+ timeout expected guards
+X-Mailer: aerc 0.15.2
+References: <20240318154621.2361161-1-npiggin@gmail.com>
+ <20240318154621.2361161-14-npiggin@gmail.com>
+ <87h6h23y01.fsf@draig.linaro.org>
+In-Reply-To: <87h6h23y01.fsf@draig.linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,63 +100,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2024-03-20 at 14:31 +1000, Nicholas Piggin wrote:
-> On Wed Mar 20, 2024 at 11:50 AM AEST, Benjamin Gray wrote:
-> > The DEXCR emulation was recently changed to a 32-bit register,
-> > possibly
-> > because it does have a 32-bit read-only view. It is a full 64-bit
-> > SPR though, so use the corresponding 64-bit write functions.
-> >=20
->=20
-> Thanks, paper bag for me.
->=20
-> > Fixes: c9de140c2171 ("target/ppc: Fix width of some 32-bit SPRs")
->=20
-> Should that hash be fbda88f7abdee?
->=20
-
-Oops, yeah, somehow pasted the local commit hash for this patch itself
-
-> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
->=20
-> > Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
+On Wed Mar 20, 2024 at 3:57 AM AEST, Alex Benn=C3=A9e wrote:
+> Nicholas Piggin <npiggin@gmail.com> writes:
+>
+> > replay_linux tests with virtio on aarch64 gciv3 and x86-64 q35 machines
+> > seems to be more reliable now, so timeouts are no longer expected.
+> > pc_i440fx, gciv2, and non-virtio still have problems, so mark them as
+> > flaky: they are not just long-running, but can hang indefinitely.
+> >
+> > These tests take about 400 seconds each, so add the SPEED=3Dslow guard.
+> >
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > > ---
-> > =C2=A0target/ppc/cpu_init.c | 4 ++--
-> > =C2=A01 file changed, 2 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-> > index 7e65f08147..22fdea093b 100644
-> > --- a/target/ppc/cpu_init.c
-> > +++ b/target/ppc/cpu_init.c
-> > @@ -5820,7 +5820,7 @@ static void
-> > register_power10_dexcr_sprs(CPUPPCState *env)
-> > =C2=A0{
-> > =C2=A0=C2=A0=C2=A0=C2=A0 spr_register(env, SPR_DEXCR, "DEXCR",
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 SPR_NOACCESS, SPR_NOACCESS,
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &sp=
-r_read_generic, &spr_write_generic32,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &sp=
-r_read_generic, &spr_write_generic,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 0);
-> > =C2=A0
-> > =C2=A0=C2=A0=C2=A0=C2=A0 spr_register(env, SPR_UDEXCR, "UDEXCR",
-> > @@ -5831,7 +5831,7 @@ static void
-> > register_power10_dexcr_sprs(CPUPPCState *env)
-> > =C2=A0=C2=A0=C2=A0=C2=A0 spr_register_hv(env, SPR_HDEXCR, "HDEXCR",
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 SPR_NOACCESS, SPR_NOACCESS,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 SPR_NOACCESS, SPR_NOACCESS,
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &sp=
-r_read_generic, &spr_write_generic32,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &sp=
-r_read_generic, &spr_write_generic,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 0);
-> > =C2=A0
-> > =C2=A0=C2=A0=C2=A0=C2=A0 spr_register(env, SPR_UHDEXCR, "UHDEXCR",
->=20
+> >  tests/avocado/replay_linux.py | 10 +++++++---
+> >  1 file changed, 7 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux=
+.py
+> > index b3b91ddd9a..b3b74a367c 100644
+> > --- a/tests/avocado/replay_linux.py
+> > +++ b/tests/avocado/replay_linux.py
+> > @@ -118,7 +118,7 @@ def run_replay_dump(self, replay_path):
+> >          except subprocess.CalledProcessError:
+> >              self.fail('replay-dump.py failed')
+> > =20
+> > -@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout=
+')
+> > +@skipUnless(os.getenv('SPEED') =3D=3D 'slow', 'runtime limited')
+> >  class ReplayLinuxX8664(ReplayLinux):
+> >      """
+> >      :avocado: tags=3Darch:x86_64
+> > @@ -127,19 +127,21 @@ class ReplayLinuxX8664(ReplayLinux):
+> > =20
+> >      chksum =3D 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc02695=
+4f3c5c27a0'
+> > =20
+> > +    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable'=
+)
+> >      def test_pc_i440fx(self):
+> >          """
+> >          :avocado: tags=3Dmachine:pc
+> >          """
+> >          self.run_rr(shift=3D1)
+> > =20
+> > +    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable'=
+)
+> >      def test_pc_q35(self):
+> >          """
+> >          :avocado: tags=3Dmachine:q35
+> >          """
+> >          self.run_rr(shift=3D3)
+> > =20
+> > -@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout=
+')
+> > +@skipUnless(os.getenv('SPEED') =3D=3D 'slow', 'runtime limited')
+> >  class ReplayLinuxX8664Virtio(ReplayLinux):
+> >      """
+> >      :avocado: tags=3Darch:x86_64
+> > @@ -153,6 +155,7 @@ class ReplayLinuxX8664Virtio(ReplayLinux):
+> > =20
+> >      chksum =3D 'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc02695=
+4f3c5c27a0'
+> > =20
+> > +    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable'=
+)
+> >      def test_pc_i440fx(self):
+> >          """
+> >          :avocado: tags=3Dmachine:pc
+> > @@ -165,7 +168,7 @@ def test_pc_q35(self):
+> >          """
+> >          self.run_rr(shift=3D3)
+> > =20
+> > -@skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout=
+')
+> > +@skipUnless(os.getenv('SPEED') =3D=3D 'slow', 'runtime limited')
+> >  class ReplayLinuxAarch64(ReplayLinux):
+> >      """
+> >      :avocado: tags=3Daccel:tcg
+> > @@ -187,6 +190,7 @@ def get_common_args(self):
+> >                  '-device', 'virtio-rng-pci,rng=3Drng0',
+> >                  '-object', 'rng-builtin,id=3Drng0')
+> > =20
+> > +    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is
+> > unstable')
+>
+> This needs to apply to both I think:
+>
+> (5/7) ./tests/avocado/replay_linux.py:ReplayLinuxAarch64.test_virt_gicv2:=
+ SKIP: Test is unstable
+>  (6/7)
+>  ./tests/avocado/replay_linux.py:ReplayLinuxAarch64.test_virt_gicv3:
+>  INTERRUPTED: Test interrupted by SIGTERM\nRunner error occurred:
+>  Timeout reached\nOriginal status: ERROR\n{'name':
+>  '6-./tests/avocado/replay_linux.py:ReplayLinuxAarch64.test_virt_gicv3',
+>  'logdir':
+>  '/home/alex/avocado/job-results/job-2024-03-19T16.50-686495d/test-result=
+s/...
+>  (1800.17 s)
+
+Oh, aarch64 is hanging for you too? It was passing for me... But I'll
+guard it out for now and maybe we can get back to it later.
+
+Thanks,
+Nick
+
+>
+> With that:
+>
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
 
