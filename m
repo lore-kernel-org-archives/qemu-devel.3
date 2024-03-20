@@ -4,74 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 444DBC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 13:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF30C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 13:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmwPg-0005RB-JH; Wed, 20 Mar 2024 09:55:30 -0400
+	id 1rmwQ2-0007Yz-8d; Wed, 20 Mar 2024 09:55:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rmwPD-0005Db-LD
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:55:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rmwPC-0000Ep-3h
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:54:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710942897;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vfM5qhRsMgeZ9ObyeIq+96OOE4ZTxePrPvMEn3jqxjU=;
- b=T5DmBOLSRovj4rtUzNFS5JU8g9X//6H812308xCj6rxGKJ5VBhXVpBNznkmHnwKqnvgUl4
- q4nYtRgtuxOIP+55Sf/1ZIYhnx3Y9AW/qVdR3+vtpD/dOHrZhUT950f6g7olv1cpXp6Cap
- 23hzu+e1dgsmvakQwR3z/rFWi2RjkrE=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-145-DXKRI6AjNiOnw40HDfCFeA-1; Wed, 20 Mar 2024 09:54:53 -0400
-X-MC-Unique: DXKRI6AjNiOnw40HDfCFeA-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 73FAE186E28B;
- Wed, 20 Mar 2024 13:54:53 +0000 (UTC)
-Received: from localhost (unknown [10.39.208.32])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 2781140C6DB7;
- Wed, 20 Mar 2024 13:54:51 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 5/5] ui: compile dbus-display1.c with -fPIC as necessary
-Date: Wed, 20 Mar 2024 17:53:49 +0400
-Message-ID: <20240320135349.2139402-6-marcandre.lureau@redhat.com>
-In-Reply-To: <20240320135349.2139402-1-marcandre.lureau@redhat.com>
-References: <20240320135349.2139402-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmwQ0-0007RI-OC
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:55:48 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmwPy-0000if-M8
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:55:48 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-566e869f631so7665732a12.0
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 06:55:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710942944; x=1711547744; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Z4GKj2LUrRSpGgh2xdfRJL46b+460ygZgMLHeHbOItY=;
+ b=w4mWqOJrfDCcuh7Ssyw0KCaUqQhpzAEI7cV4Ne7fxpuG/Zij4ykr33tAAC3LIr9dOd
+ fcAEttQsRwDkAh9yxA7DZL9AuVPIq7cJPS+LQF9TbF+YQ9Df1YxCw4UvXpsAaXa2souw
+ CGgClnOqZzGOp4bpV13Hj+gC0cvpXe/PYiiNldpta7M8z+wr4lKBpRbRutQ8xSYRIXjc
+ 2senYisD7e8m1VEzCjx6wrAKma1FFp6gOSht3wEd6NUIgqFEn1bwexNN7UqSDvk80G7I
+ WoZoA53SZZmxcTwjqqljts1a3QSEdcjZQ6B3Nr8ZSe/2iJ+yvaiIw3FP9CD4auXjAtX/
+ x4KQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710942944; x=1711547744;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Z4GKj2LUrRSpGgh2xdfRJL46b+460ygZgMLHeHbOItY=;
+ b=xNYrpl/optcuQpY/7N60Jo/BuXqpkDtX+V742K5+RQkH2VPyncVSFtVx+naenqXOyZ
+ USfekzjH3cj2mRwzm93f9wdJ2R5l8ArI2Zpkm9HrQ3yzFx05g9wZH1T75e/WWtzrQDha
+ 9GzaQfcoCLcxrPBJFUSVztwDguQ/ZzyNzsH+IQFCwvNM+rpIEJrCrQJ28ou/YeCYxbBy
+ YpUP787XHddkO+TAdt1RLlyAiF7V96KlyQaFZ8s4zk80crXr5lSqj+9VXKJFWLMZUIV3
+ xP5C3fnxfJcdXRFIqDc0LalfNWjbpr9GjzSf//CF+mG+eHmyHYmTzgWqj1i9p87q8D7B
+ 0xBQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3XZatGsxkg16rQNWS4K1oF1jBJgKvzpLXoLycxQOiLYY0F+4tozDiudaCuBnJWQoUw8X1gVEqacFQRe3qi7FGERl5kvk=
+X-Gm-Message-State: AOJu0YyohDKgkuVSlkXv/nvlv9iN5yC0EjeqpYNamsYu9sLz1lwsbyso
+ UNk9lRIqOdKZ9V9dFg/blB5NIxcIIdNZow2Rg40IU7sAoHotlVjV/dZM/pgT48gMllxqmeRSAS+
+ 1NPqmPB/rjBwJ28e0TpuqZLYpS5RlYbuZSfN9qw==
+X-Google-Smtp-Source: AGHT+IFqU/OllHShdIn5HY5X0pGz2VsCmtW9ge9rSjnVqdeawm2VsCI9X6tYQjloIcYgtYnPqTf0hBgLRlIo2M0uCpw=
+X-Received: by 2002:a05:6402:500e:b0:567:9fef:f7ee with SMTP id
+ p14-20020a056402500e00b005679feff7eemr5261307eda.16.1710942944496; Wed, 20
+ Mar 2024 06:55:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20240220150833.13674-1-philmd@linaro.org>
+ <f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com>
+ <cc132404-dcd5-4aed-a481-b46d6e3115b0@linaro.org>
+ <CAFEAcA_0qUFW0MewHC+v+pSOisE-kQDt9Wv4F3RafEkyQ0DGJA@mail.gmail.com>
+ <59C20F1A-FCFE-4E26-B511-A6C0E1EF6F61@qti.qualcomm.com>
+In-Reply-To: <59C20F1A-FCFE-4E26-B511-A6C0E1EF6F61@qti.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 20 Mar 2024 13:55:33 +0000
+Message-ID: <CAFEAcA8MVbKqv-TgaO7Vv95f0p164Gao+LT-CM5+92cXjkpmTw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] hw/nmi: Remove @cpu_index argument
+To: Mark Burton <mburton@qti.qualcomm.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>, 
+ "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,41 +101,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Wed, 20 Mar 2024 at 12:31, Mark Burton <mburton@qti.qualcomm.com> wrote:
+> > On 20 Mar 2024, at 13:00, Peter Maydell <peter.maydell@linaro.org> wrot=
+e:
+> > What NMI probably ought to be is board-specific: so it's like
+> > having some notional front panel switch labeled "NMI", and the
+>
+> Do the youngsters of today know what one of those is ?
+>         :-)
+>
+>
+> Is there a reason for not using a GPIO interface for =E2=80=99NMI=E2=80=
+=99 - wiring it up like any other wire?
 
-Building dbus-display1.c explicitly as a static library drops -fPIC by
-default, which may not be correct if it ends up linked to a shared
-library.
+The places we want to generate 'NMI' are:
+ * when the user uses the 'nmi' command in the monitor
+ * in the generic "a watchdog timer expired" handling code (in the
+   case where the user used a monitor command to say "trigger an NMI
+   if the watchdog times out")
+ * when the user requested to send the VM an NMI via IPMI
 
-Let the target decide how to build the unit, with or without -fPIC. This
-makes commit 186acfbaf7 ("tests/qtest: Depend on dbus_display1_dep") no
-longer relevant, as dbus-display1.c will be recompiled.
+In all those cases we don't have a pointer to the board or
+any kind of idea of what a GPIO wire would be, and because at
+the moment TYPE_MACHINE is not a subclass of TYPE_DEVICE a
+machine model can't have external GPIO lines anyway. From
+a convenience point of view all those callsites simply want
+to be able to call a function to say "trigger an NMI please"
+(which is what nmi_monitor_handle() does). Beyond that the
+implementation of that function is just whatever is convenient.
 
-Fixes: c172136ea33 ("meson: ensure dbus-display generated code is built
-before other units")
+If in your particular machine model it makes sense to have NMI
+be something you deal with via GPIO wiring, you can implement the
+TYPE_NMI interface on your machine class to work by raising a
+GPIO line.
 
-Reported-by: Olaf Hering <olaf@aepfle.de>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- ui/meson.build | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/ui/meson.build b/ui/meson.build
-index 0b7e2b6f6b..a5ce22a678 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -90,8 +90,7 @@ if dbus_display
-                                           '--interface-prefix', 'org.qemu.',
-                                           '--c-namespace', 'QemuDBus',
-                                           '--generate-c-code', '@BASENAME@'])
--  dbus_display1_lib = static_library('dbus-display1', dbus_display1, dependencies: gio)
--  dbus_display1_dep = declare_dependency(link_with: dbus_display1_lib, sources: dbus_display1[0])
-+  dbus_display1_dep = declare_dependency(sources: dbus_display1, dependencies: gio)
-   dbus_ss.add(when: [gio, dbus_display1_dep],
-               if_true: [files(
-                 'dbus-chardev.c',
--- 
-2.44.0
-
+thanks
+-- PMM
 
