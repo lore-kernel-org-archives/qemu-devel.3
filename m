@@ -4,70 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27C9C54E68
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 00:33:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65BB6CD11DB
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 00:33:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmjsd-0008Ud-Jy; Tue, 19 Mar 2024 20:32:31 -0400
+	id 1rmjsi-00004q-1W; Tue, 19 Mar 2024 20:32:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmjsb-0008UB-T5
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:29 -0400
-Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ id 1rmjsg-0008W0-KR
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:34 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmjsa-0005WD-4L
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:29 -0400
-Received: by mail-oo1-xc30.google.com with SMTP id
- 006d021491bc7-5a46abf093cso3592785eaf.2
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 17:32:26 -0700 (PDT)
+ id 1rmjsf-0005XB-4w
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:34 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-6e6afb754fcso5876874b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 17:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710894746; x=1711499546; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=zxKLRwGt/Yd9jhWxRIakTso69321P1/S3JEGr1phd9Q=;
- b=uewdy6JGQ/7eBfNgwP6PdWWdLC64ns7IW71MZ8rClFwAMliohWcy6AIBlMtAEDbdrA
- iRPZDIP/4OAstODMUN46lOJjepIZpAHve0VWCtMooTyBWz+tZ8BYqZ7U+9cndWtL50Vp
- 5H3Fa8JM+bDX3BEjQy8hAf7xc/eF1yqbDNR/LFNOBZdWAIoJIXvNDNOCXG/t4cA2ePKJ
- 8CcZZlJWs8LLSmDOF/US/Tew75nnftqvUnPhb0pmNxlRvwILygn/N3c79qNknDCkgHwD
- dg8o7fB4SfArM0yZyIuIFCDJTzt5l8ISWtl1xJpuk98n4KDUfv3fAAUcnAqjsRXprU97
- tJzg==
+ d=linaro.org; s=google; t=1710894752; x=1711499552; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=02J+igt5o8+h2PP+0HZoPaFUg0nUo/WrdtySb2LvSHk=;
+ b=LRnPt6hTKt80yKhLCvjqc+4OtR5kdLoQuDm6MS972S6dXNUrHkWuJ+9jCm0MN+DBA8
+ QxIKiCVJtgNdwcxc5y4FRRt6OXKE0AxTXWr4dGM9QsNOucbEd2LPTORB445qYCxQCtDS
+ +8756Hjoq6PALeW2QIazwF78PFuwmoWAcFoIVHrO1y2zx3NNhgsonjP6sgSjiLHybdOZ
+ h87TFXZSpsnFORkXj1xdb4q1FjqqKf1CIph17CQlG2rU7HQhmVC6U/IK8mYxFtZul9bv
+ ONTlQzkmLjuV7RTIF91XPoVszZBXqEmcRB1dGHVtB/hcmOQzxY3q2z0dEkf4n9Dzbdj5
+ yqZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710894746; x=1711499546;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zxKLRwGt/Yd9jhWxRIakTso69321P1/S3JEGr1phd9Q=;
- b=sqC4m9+IugcGS2GXZqoRdF0+haGhPpSHhehlE8kCwFWCNlj+n9LNaLypOnr8BC35vi
- bQU+gDEGk6M4NIEe1XQBRPwmI2uJZCRoalOZX2+fcosIVXX9BQXDE8a63LYS/Y35+HMV
- fXodKSfKMYYHFuWEn42J6eDTjPDwbmHfNtITnX4sRRsVeghtpAw3SWOxb+9nFO1WyxUD
- 4ND3ibffQPv2v06VCmLDDwMLIms0jEynfmdRECbEQEzDz3uWciXM02KlBp1ExXoxpkTF
- QdtGoRqMJa5W+3PFxksM2RrrzpuHxkqkG6bY5dPQQ4PXXefxUQPPciW8AxfauAtaj51f
- sRcQ==
-X-Gm-Message-State: AOJu0YxziguPSeeChoZXusIrohvDLletc8JxQdJfiKq66MY4Wva1r+dj
- grMez4WJBLkdaTw+EK1Q8gC7gGGgVaiFBtlN5vJX9VSgIi/2+MROe90yOtBA9P+OTcrxGt1DJ9K
- n
-X-Google-Smtp-Source: AGHT+IFUyn/ym+Jw7eLLoWIWLwAb79ar+MABtyHGQcfa7ufpMsFXcXe4OPh6aC1qC0Kq8xN3acyg1w==
-X-Received: by 2002:a05:6358:7214:b0:17b:78f1:b4ea with SMTP id
- h20-20020a056358721400b0017b78f1b4eamr19774345rwa.28.1710894746025; 
- Tue, 19 Mar 2024 17:32:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710894752; x=1711499552;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=02J+igt5o8+h2PP+0HZoPaFUg0nUo/WrdtySb2LvSHk=;
+ b=ZyLy2//Nwx5v4Td0/56/VwhvBu68GsWDMvn/6YPHwAuVwWG64iBuCGRKiT7pKELpXm
+ 9e1orsdpWoCpFe9jX6Tpsyw4MiQx5sSBoUOiuBxoqISsNzPnKNylSErV8yJoP4ZBDiHu
+ IfJ2xpUViDPvQrtI0J2tp3KY7oH8Q+zmELxklJ3pea71VNIW6lS2voXsVpcpAHeIAT3U
+ HjRXJ693QpxUukvKBS7b3Cmy7/ay/pXfeHGv8/FD6xz2AZr0JhSHH7sE6pV31pCFQmwY
+ RVlaaSEhr914p9Vn4/P0Mx4cSGZ424FJznCqcvJWPVXw3BCRaTK3JVR/2xk3txntSCLJ
+ /eVQ==
+X-Gm-Message-State: AOJu0YwsEu+bLweks/d+P8kWsPTUcGBX6aw2hQCc1kQjk5ZfFD2cr5GJ
+ +MLHE1v6vV0nA2DW83wKuqihC/c6GecRfw/JcolU+hvNeoxcZ7Y9igf53vkkQiLKdoOB1Uc2rZn
+ G
+X-Google-Smtp-Source: AGHT+IE/8zCzKXxnNpjB9Fk64LBYiZGwaGCXqqFNJe7788Qdlut6kfdEtnrMncEgRd3DL+6KNI8djA==
+X-Received: by 2002:a05:6a00:4648:b0:6e6:5343:c165 with SMTP id
+ kp8-20020a056a00464800b006e65343c165mr723033pfb.16.1710894751641; 
+ Tue, 19 Mar 2024 17:32:31 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- d19-20020a63d653000000b005d553239b16sm8475645pgj.20.2024.03.19.17.32.25
- for <qemu-devel@nongnu.org>
+ d19-20020a63d653000000b005d553239b16sm8475645pgj.20.2024.03.19.17.32.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Mar 2024 17:32:25 -0700 (PDT)
+ Tue, 19 Mar 2024 17:32:31 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/9] target/hppa fixes for 9.0
-Date: Tue, 19 Mar 2024 14:32:14 -1000
-Message-Id: <20240320003223.554145-1-richard.henderson@linaro.org>
+Cc: Sven Schnelle <svens@stackframe.org>
+Subject: [PULL 4/9] target/hppa: ldcw,s uses static shift of 3
+Date: Tue, 19 Mar 2024 14:32:18 -1000
+Message-Id: <20240320003223.554145-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240320003223.554145-1-richard.henderson@linaro.org>
+References: <20240320003223.554145-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,44 +94,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit c62d54d0a8067ffb3d5b909276f7296d7df33fa7:
+From: Sven Schnelle <svens@stackframe.org>
 
-  Update version for v9.0.0-rc0 release (2024-03-19 19:13:52 +0000)
+Fixes: 96d6407f363 ("target-hppa: Implement loads and stores")
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240319161921.487080-2-svens@stackframe.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/hppa/translate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-are available in the Git repository at:
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index be0b0494d0..47c6db78c7 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -3135,7 +3135,7 @@ static bool trans_ldc(DisasContext *ctx, arg_ldst *a)
+         dest = dest_gpr(ctx, a->t);
+     }
+ 
+-    form_gva(ctx, &addr, &ofs, a->b, a->x, a->scale ? a->size : 0,
++    form_gva(ctx, &addr, &ofs, a->b, a->x, a->scale ? 3 : 0,
+              a->disp, a->sp, a->m, MMU_DISABLED(ctx));
+ 
+     /*
+-- 
+2.34.1
 
-  https://gitlab.com/rth7680/qemu.git tags/pull-pa-20240319
-
-for you to fetch changes up to 518d2f4300e5c50a3e6416fd46e58373781a5267:
-
-  target/hppa: fix do_stdby_e() (2024-03-19 14:08:02 -1000)
-
-----------------------------------------------------------------
-target/hppa: Fix load/store offset assembly for wide mode
-target/hppa: Fix LDCW,S shift
-target/hppa: Fix SHRPD conditions
-target/hppa: Fix access_id checks
-target/hppa: Exit TB after Flush Instruction Cache
-target/hppa: Fix MFIA result
-target hppa: Fix STDBY,E
-
-----------------------------------------------------------------
-Richard Henderson (3):
-      target/hppa: Fix assemble_16 insns for wide mode
-      target/hppa: Fix assemble_11a insns for wide mode
-      target/hppa: Fix assemble_12a insns for wide mode
-
-Sven Schnelle (6):
-      target/hppa: ldcw,s uses static shift of 3
-      target/hppa: fix shrp for wide mode
-      target/hppa: fix access_id check
-      target/hppa: exit tb on flush cache instructions
-      target/hppa: mask privilege bits in mfia
-      target/hppa: fix do_stdby_e()
-
- target/hppa/insns.decode | 55 +++++++++++++++++++--------------
- target/hppa/mem_helper.c | 80 +++++++++++++++++++++++++++++++++++++-----------
- target/hppa/op_helper.c  | 10 +++---
- target/hppa/translate.c  | 77 ++++++++++++++++++++++++++++++++++++++++------
- 4 files changed, 166 insertions(+), 56 deletions(-)
 
