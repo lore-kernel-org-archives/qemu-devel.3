@@ -4,70 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A52E4C54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 02:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95222C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 03:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmm2G-0008OS-7T; Tue, 19 Mar 2024 22:50:36 -0400
+	id 1rmmOW-0003Xl-B2; Tue, 19 Mar 2024 23:13:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.jaloo@gmail.com>)
- id 1rmm2E-0008OE-C7
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:50:34 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <liu.jaloo@gmail.com>)
- id 1rmm2C-0000Pw-Tt
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:50:34 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2d46dd8b0b8so82806941fa.2
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 19:50:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710903028; x=1711507828; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=4DasSimlPOzKfBBzUwG6cinBhfPfrlmp9ZuMad4xts4=;
- b=VJzm1UaqpwzVSbXrVeV9x9WPFPB3c23Qe/UJZscg8CAdGVBY0kziC1lGft6SpehevG
- rk3H9ZVg+kd9K9QfhNRxpigbrjQo0TeG5sFrHmfbDvqoSdlnlpktc2BirLhUIHs/WYUC
- CtZ9PRIKZZoTS4hRn4MXVcz7FCX5b9hVFCVz0YO4zP1KdyrOGAcDpy1wLQozlhnvDMYp
- uhRd/ZPdBCfDNLx2FoCwYVkdxO/jX5wTL+qcunUbsL6/IMfHSfjWrckdHIj7cI/I4I3F
- Gk3LCswIC1qQ/ZqOW5OauIBdnFXHhp/7u6Px1NEaiU4G/3MVXTgXYTwbADeLgZiysSmk
- 2uHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710903028; x=1711507828;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4DasSimlPOzKfBBzUwG6cinBhfPfrlmp9ZuMad4xts4=;
- b=TcsRaLH22VEm3QgC9NLS70+hM6ENfxZXHMljBLshKt5TwcKOtM6tXJp2cTqjxgakES
- 4LG6dIDsUnoknZHekQJNRut9Wv7jWSMqinMJdsnN/DUL5yTsh16el82tbFLhBSMw644s
- BOJI9hjNk9fQPwbzDDZxs8LFApdKgVQJtp6fO9TyuOPCLw0qDsycoAi5c3w678GryFkw
- xrJOWOnxpJFQmOZThiVHPIX9CrIeatbXjxeVT7CE3DFiJxtPw5ZeZFvMP4SAsoF2RsQI
- +bgHG0TEiiUuvMwqxEZtm73zmUWs/7eNEuaxh3Lh+NcNlMopdyirVZLqkyurmNz44o5v
- tOlg==
-X-Gm-Message-State: AOJu0Yx+k1fWGL23xg08hwhuv7EPx5c5+/x5RWc43WBHM1EStBQvJuvd
- yJqehuDM4Rszz0rzazjHLieMC0u5xarBmtFLhQRdJTE19sQ1zX3iDtJWnADiCOtKBw2RDpiA1CO
- o6jeu+nDrVxzEO3xxq0y6r0Jp/o675K9rjRc2
-X-Google-Smtp-Source: AGHT+IHFsBFbcZiSTfbldIknRvYcLQOhKhlclPCxGjvJLWH+cLqFaECokW8vLuZZ63fmHnoEBxFkK9LNyyl/O6KksO8=
-X-Received: by 2002:a2e:a592:0:b0:2d4:6bad:69cd with SMTP id
- m18-20020a2ea592000000b002d46bad69cdmr12725073ljp.22.1710903028238; Tue, 19
- Mar 2024 19:50:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rmmOP-0003Vc-40; Tue, 19 Mar 2024 23:13:30 -0400
+Received: from szxga07-in.huawei.com ([45.249.212.35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rmmOM-0005nB-7m; Tue, 19 Mar 2024 23:13:28 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+ by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4TztrT56hdz1R7Rb;
+ Wed, 20 Mar 2024 11:10:33 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id 301B214013B;
+ Wed, 20 Mar 2024 11:13:07 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ kwepemi500008.china.huawei.com (7.221.188.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Wed, 20 Mar 2024 11:13:06 +0800
+Message-ID: <d871b00d-9b77-4e31-b2a7-168d9209e286@huawei.com>
+Date: Wed, 20 Mar 2024 11:13:05 +0800
 MIME-Version: 1.0
-From: Liu Jaloo <liu.jaloo@gmail.com>
-Date: Wed, 20 Mar 2024 10:53:11 +0800
-Message-ID: <CAOYM0N1MZfB7rkEcdwO3r=f-95LmU9jw4BV4hKL6Xh=Lo7=imw@mail.gmail.com>
-Subject: How to compile QEMU with glib source code?
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000003e4fec06140ea782"
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=liu.jaloo@gmail.com; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [RFC PATCH v8 05/23] target/arm: Support MSR access to ALLINT
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: <eduardo@habkost.net>, <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, 
+ <wangyanan55@huawei.com>, <richard.henderson@linaro.org>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+References: <20240318093546.2786144-1-ruanjinjie@huawei.com>
+ <20240318093546.2786144-6-ruanjinjie@huawei.com>
+ <CAFEAcA8ft7eeh0oT-imh-L7m0nPo3TekPUYdcdwYA0xK-qd5gA@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA8ft7eeh0oT-imh-L7m0nPo3TekPUYdcdwYA0xK-qd5gA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.67.109.254]
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.35; envelope-from=ruanjinjie@huawei.com;
+ helo=szxga07-in.huawei.com
+X-Spam_score_int: -65
+X-Spam_score: -6.6
+X-Spam_bar: ------
+X-Spam_report: (-6.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.417,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,20 +69,109 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003e4fec06140ea782
-Content-Type: text/plain; charset="UTF-8"
 
-How to compile QEMU with glib source code? But not with the glib library
-I want to debug QEMU by stepping into glib internally.
-Thanks.
 
---0000000000003e4fec06140ea782
-Content-Type: text/html; charset="UTF-8"
+On 2024/3/20 0:45, Peter Maydell wrote:
+> On Mon, 18 Mar 2024 at 09:37, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+>>
+>> Support ALLINT msr access as follow:
+>>         mrs <xt>, ALLINT        // read allint
+>>         msr ALLINT, <xt>        // write allint with imm
+>>
+>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>> v5:
+>> - Add Reviewed-by.
+>> v4:
+>> - Remove arm_is_el2_enabled() check in allint_check().
+>> - Change to env->pstate instead of env->allint.
+>> v3:
+>> - Remove EL0 check in aa64_allint_access() which alreay checks in .access
+>>   PL1_RW.
+>> - Use arm_hcrx_el2_eff() in aa64_allint_access() instead of env->cp15.hcrx_el2.
+>> - Make ALLINT msr access function controlled by aa64_nmi.
+>> ---
+>>  target/arm/helper.c | 34 ++++++++++++++++++++++++++++++++++
+>>  1 file changed, 34 insertions(+)
+> 
+> If you configure with --target-list=aarch64-softmmu,arm-softmmu
+> you'll find this fails to build:
+> 
+>>
+>> diff --git a/target/arm/helper.c b/target/arm/helper.c
+>> index b19a0178ce..aa0151c775 100644
+>> --- a/target/arm/helper.c
+>> +++ b/target/arm/helper.c
+>> @@ -4752,6 +4752,36 @@ static void aa64_daif_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>>      env->daif = value & PSTATE_DAIF;
+>>  }
+>>
+>> +static void aa64_allint_write(CPUARMState *env, const ARMCPRegInfo *ri,
+>> +                              uint64_t value)
+>> +{
+>> +    env->pstate = (env->pstate & ~PSTATE_ALLINT) | (value & PSTATE_ALLINT);
+>> +}
+>> +
+>> +static uint64_t aa64_allint_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>> +{
+>> +    return env->pstate & PSTATE_ALLINT;
+>> +}
+>> +
+>> +static CPAccessResult aa64_allint_access(CPUARMState *env,
+>> +                                         const ARMCPRegInfo *ri, bool isread)
+>> +{
+>> +    if (arm_current_el(env) == 1 && (arm_hcrx_el2_eff(env) & HCRX_TALLINT)) {
+>> +        return CP_ACCESS_TRAP_EL2;
+>> +    }
+>> +    return CP_ACCESS_OK;
+>> +}
+>> +
+>> +static const ARMCPRegInfo nmi_reginfo[] = {
+>> +    { .name = "ALLINT", .state = ARM_CP_STATE_AA64,
+>> +      .opc0 = 3, .opc1 = 0, .opc2 = 0, .crn = 4, .crm = 3,
+>> +      .type = ARM_CP_NO_RAW,
+>> +      .access = PL1_RW, .accessfn = aa64_allint_access,
+>> +      .fieldoffset = offsetof(CPUARMState, pstate),
+>> +      .writefn = aa64_allint_write, .readfn = aa64_allint_read,
+>> +      .resetfn = arm_cp_reset_ignore },
+>> +};
+> 
+> These functions and the array have been put in a bit of the
+> file that is built whether TARGET_AARCH64 is defined or not...
+> 
+>> +
+>>  static uint64_t aa64_pan_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>>  {
+>>      return env->pstate & PSTATE_PAN;
+>> @@ -9889,6 +9919,10 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+>>      if (cpu_isar_feature(aa64_nv2, cpu)) {
+>>          define_arm_cp_regs(cpu, nv2_reginfo);
+>>      }
+>> +
+>> +    if (cpu_isar_feature(aa64_nmi, cpu)) {
+>> +        define_arm_cp_regs(cpu, nmi_reginfo);
+>> +    }
+>>  #endif
+> 
+> ...but the only reference to them is inside an ifdef TARGET_AARCH64.
+> 
+> Moving the nmi_reginfo[] and the functions so they are next to
+> some other TARGET_AARCH64-only reginfo array inside one of the
+> existing ifdef blocks is probably the nicest fix.
 
-<div dir="ltr"><div>How to compile QEMU with glib source code? But not with the glib library</div><div>I want to debug QEMU by stepping into glib internally.</div><div>Thanks.<br></div></div>
+Thank you! I'll fix it.
 
---0000000000003e4fec06140ea782--
+> 
+>>
+>>      if (cpu_isar_feature(any_predinv, cpu)) {
+>> --
+> 
+> thanks
+> -- PMM
 
