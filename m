@@ -4,52 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83ED2C54E68
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 02:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98CC0C54E68
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 02:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmlsO-0003Hx-HB; Tue, 19 Mar 2024 22:40:24 -0400
+	id 1rmltj-0005cs-Vc; Tue, 19 Mar 2024 22:41:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rmlsL-0003HZ-M4
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:40:21 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rmlsI-0005yq-NU
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:40:20 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxXOmOTPpltg4bAA--.54899S3;
- Wed, 20 Mar 2024 10:40:14 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxfROLTPplkAFeAA--.18372S3; 
- Wed, 20 Mar 2024 10:40:14 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org,
-	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 1/3] hw/intc/loongarch_extioi: Fix interrupt routing update
-Date: Wed, 20 Mar 2024 10:40:08 +0800
-Message-Id: <20240320024010.1659193-2-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20240320024010.1659193-1-gaosong@loongson.cn>
-References: <20240320024010.1659193-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rmlti-0005c6-Fw; Tue, 19 Mar 2024 22:41:46 -0400
+Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rmltg-0006BT-41; Tue, 19 Mar 2024 22:41:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1710902489; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=zUQbuKIGDIGmQijVfWwtup6rm2YaudwQCJMVWSxE/3U=;
+ b=cUoTSOxzUzRHV90pXjzjCn5GbBwfnaJ+uKz0CS/Om25FrMh9U9VCz7+NMsdclTtSeQUALZDF7DlT4MmaLtNvk+U/L9Nc9JB4aMHR7YDf+r7dA63n7VhjPBRnQhZJ00R46s8pSNtGVVU6EkXHHTSmBzqhkgWYZH1jTSGBsDNtenc=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R921e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046050;
+ MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W2vb3IZ_1710902487; 
+Received: from 30.21.185.204(mailfrom:eric.huang@linux.alibaba.com
+ fp:SMTPD_---0W2vb3IZ_1710902487) by smtp.aliyun-inc.com;
+ Wed, 20 Mar 2024 10:41:28 +0800
+Message-ID: <c7487e4c-2d9a-42db-b920-30f1463e8a34@linux.alibaba.com>
+Date: Wed, 20 Mar 2024 10:41:26 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] target/riscv: Add right functions to set agnostic
+ elements
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, 
+ bin.meng@windriver.com, alistair.francis@wdc.com, palmer@dabbelt.com
+References: <20240306092013.21231-1-eric.huang@linux.alibaba.com>
+ <20240306092013.21231-3-eric.huang@linux.alibaba.com>
+ <c765adcb-2702-45d3-b875-6eaa6b6d7d0c@ventanamicro.com>
+ <675f13e6-4030-4099-a97b-f5bd38d030e9@linaro.org>
+From: Huang Tao <eric.huang@linux.alibaba.com>
+In-Reply-To: <675f13e6-4030-4099-a97b-f5bd38d030e9@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxfROLTPplkAFeAA--.18372S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.101;
+ envelope-from=eric.huang@linux.alibaba.com;
+ helo=out30-101.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,35 +74,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+I will rewrite the patch, and send a new version soon.
 
-Interrupt number in loop sentence should be base irq plus
-loop index, it is missing on checking whether the irq
-is pending.
+Thanks,
 
-Fixes: 428a6ef4396 ("Add vmstate post_load support")
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240313093932.2653518-1-maobibo@loongson.cn>
----
- hw/intc/loongarch_extioi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Huang Tao
 
-diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
-index bdfa3b481e..0b358548eb 100644
---- a/hw/intc/loongarch_extioi.c
-+++ b/hw/intc/loongarch_extioi.c
-@@ -151,7 +151,7 @@ static inline void extioi_update_sw_coremap(LoongArchExtIOI *s, int irq,
-             continue;
-         }
- 
--        if (notify && test_bit(irq, (unsigned long *)s->isr)) {
-+        if (notify && test_bit(irq + i, (unsigned long *)s->isr)) {
-             /*
-              * lower irq at old cpu and raise irq at new cpu
-              */
--- 
-2.25.1
-
+On 2024/3/20 07:32, Richard Henderson wrote:
+> On 3/19/24 11:57, Daniel Henrique Barboza wrote:
+>> This seems correct but a bit over complicated at first glance. I 
+>> wonder if we have
+>> something simpler already done somewhere.
+>>
+>> Richard, does ARM (or any other arch) do anything of the sort? Aside 
+>> from more trivial
+>> byte swaps using bswap64() I didn't find anything similar.
+>
+> No, nothing quite like.
+>
+>> We recently posted a big endian related fix here:
+>>
+>> [PATCH for 9.0 v15 03/10] target/riscv/vector_helper.c: fix 'vmvr_v' 
+>> memcpy endianess
+>>
+>> But not sure how to apply it here.
+>
+> It's almost exactly the same, only with memset instead of memcpy.
+>
+>     if (HOST_BIG_ENDIAN && idx % 8 != 0) {
+>         uint32_t j = ROUND_UP(idx, 8);
+>         memset(vd + H(j - 1), -1, j - idx);
+>         idx = j;
+>     }
+>     memset(vd + idx, -1, tot - idx);
+>
+>
+> I'll note that you don't need to change the api of vext_set_elems_1s 
+> -- so most of these patches are not required.
+>
+>
+> r~
 
