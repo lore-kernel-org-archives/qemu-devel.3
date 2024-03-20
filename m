@@ -4,77 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C92C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 04:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD0B1C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 05:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmnzJ-0006dh-RT; Wed, 20 Mar 2024 00:55:41 -0400
+	id 1rmo4Y-0008FX-JT; Wed, 20 Mar 2024 01:01:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rmnzH-0006aK-Sb; Wed, 20 Mar 2024 00:55:39 -0400
-Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rmo4P-0008D4-NJ; Wed, 20 Mar 2024 01:00:59 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rmnzG-0008UV-4G; Wed, 20 Mar 2024 00:55:39 -0400
-Received: by mail-vk1-xa29.google.com with SMTP id
- 71dfb90a1353d-4d43c633fecso1812474e0c.3; 
- Tue, 19 Mar 2024 21:55:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rmo4N-0001Ph-2V; Wed, 20 Mar 2024 01:00:57 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6e88e4c8500so99793b3a.2; 
+ Tue, 19 Mar 2024 22:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710910536; x=1711515336; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1710910848; x=1711515648; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HIDewJjTRJw+8XwTOGg/nyEY1+qiHPhh6s0eVWkqr8k=;
- b=Y7ITVVHAhk0AjaqKxyxdKj0w7uHXYGOMP7QnELmL7PAZ5wpTizaovEFFuANK4IAH6i
- jyBa6ESZFL4am3ao/1lXF0mQgbAQPzpdtFyjfBd0sS2mWigndOQBLgJ4tS9nbdPRHVaR
- LgtKHzSVHsWEoM8BVF9pW+e+YHHCZgm7xX8XIkI/eEmf7O+pp7PsIUTOgrtuz3lQUI/O
- 3Z7lhp8pMDV/rj8RXx4B+KFrSsQ/yDvkTXqeH/8IuXplAC2HFsysUjD8qJfTPh7jJ8qi
- snLGdQZCrvlSGl7CRGLNk/Fktp2uBnvIccU9m9LMVZ9+rUhgpnp6BkkF+UPIJ/Y/+0oJ
- OHgQ==
+ bh=IpOWB7Meyyi+PEQciVfates0LsJ+rJAWX/JqT+qExl0=;
+ b=EYj5nTi3zg2dzOkGSaXmKonzUHFlGb0lGirFoO4FBr2XPoD+UNmPHURumMq/eKeZcO
+ U/f6WJ3UoRA7xe+fYWTLXogP1Bs+48sRpYkz7UAusbsm+CEYW7TXkvl6XR39fW4jt1At
+ Fqm2KD7ypGMILLPCt1Lno3Fy2k9+kKa+1VG0DtgZhFUpqOinikqLDzgZFIvt+OfsiSXi
+ rCrDGcJuuVr/GMUCgqTFPftf9YuTiPBO9D9YSN+qQ7PQV4l87xlrLqbNRF6qjSrGgGMa
+ qWIW8ztgnqTuNbLW3C8Zs3nQzqoFbblVc1kX1W0KdyixT382uzRYaFlzo8zm71/Eqdt1
+ dOjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710910536; x=1711515336;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HIDewJjTRJw+8XwTOGg/nyEY1+qiHPhh6s0eVWkqr8k=;
- b=YVhKhoiEj8OFDFHKNDBqP9pcCVACpivfc/rw9avJexAwCvEi1JSjwe8b3VxJhxu9c6
- aQPOwRH1DuGUPplTHUmNrqZKjSfRuG+V6Dg9vW8yX3LaN/lXaL5DzhwTRzrafQd0EPiu
- eYAdeNe6jn7p8A08oNrYaVLac9z4XlSVpymXjyTvs6O6X3dddfSDrz4YqwkznjMul+S0
- 3pT1/KXwHLKkdpPNV0QAyNdOmMhLm/P+X4un2do/8meZKbBS3C5mEwDfvlH8b8iNAYY/
- WqXESTV/e8T3RKDPb1k4e+nRfVQ99EUkTQrqlxws/JfFCn3iDdq/x3UjCwNvmxSRHI+x
- RKGg==
+ d=1e100.net; s=20230601; t=1710910848; x=1711515648;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=IpOWB7Meyyi+PEQciVfates0LsJ+rJAWX/JqT+qExl0=;
+ b=S3Tg+wgaCBEELSlVJuX7hGUfJdUAk8+5OhwT1VxY6ac0GxaJqZ0N6im7JREVwR738R
+ CXkxsNOEU7Bm3AVaxkkzdvm+IM94TwBb/vHJ/bJP9a+hrcp9+l9mIaigcaVqjl/G6UrD
+ oUoUkb/h4b/pa/o63Fx8vvULPS+tQ+ckXJuk6Viw1eRKPpe4kVeRe5/RKUt/uSU3Y4r/
+ tLuwdOwEE9OhyN6MxVBXsgI+t+jzLbimMUy7mmekSo2QiJefF3MccPT098UJLL+FdFj7
+ wnSzbBKs0bsRi/36wS13SOykHu+BVHy9Bci+v+bS95AK4uwawuYtdRXjAKBEkDnMsQo9
+ oXYA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX9azSrxuXHIeUf6wYsTMKK25+wAbiFpa35VufvdZ/eP5in1MwgsZFzspdj9oyiHFdOH4TY+sVEkNNFfL1vZ5BP/kYqMmY=
-X-Gm-Message-State: AOJu0Yxb36/MAMBmc2VFHI86H6MmqByUtlO2r80le/W+zfYD4WngiPAO
- rihjIEamJ4kB7x1CwK8cgDTmh3yhzvNqqsJsUyvVuiak0I5+DNfCzy3EKokJO6b7YIHsZHcPshj
- vHhMPFsEvI99B8ds3M5VQ8xv8w24EjZBycbw=
-X-Google-Smtp-Source: AGHT+IEglcq+8xFDB3B9NRFeqQtm9cmb+3P7iAoivnQqgFM9iM3fhVD54hxy8WagzKed7UFSgrtHkcQuxF86tfXYo8o=
-X-Received: by 2002:a05:6122:200f:b0:4ca:615e:1b61 with SMTP id
- l15-20020a056122200f00b004ca615e1b61mr4996667vkd.10.1710910536132; Tue, 19
- Mar 2024 21:55:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240314175704.478276-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20240314175704.478276-1-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 20 Mar 2024 14:55:10 +1000
-Message-ID: <CAKmqyKMYiA3CoE4H=YMho-Udzji=kv=w_5N56RM4BEyN-Y0osA@mail.gmail.com>
-Subject: Re: [PATCH for 9.0 v15 00/10] target/riscv: vector fixes
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, max.chou@sifive.com, richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCUVemLIN2Ba4abqq/girQ3EDVDNOZLfni6mApvgywiFJeRN+8ZdGOmxBPlBQAA5oguuMo1m6xv1Lv8ntKOAY1y3d+dSZIGIYzzACielFvP5TvC/xkTG77fF9FUxgoIerFbZYT/Vu3CaEE/HlfiF3NqsTPIoElu9Ibj5ckxbm8pIvUwcApduyA==
+X-Gm-Message-State: AOJu0YxJEf4kPcCe2mojUyUhWd84a6KfQN4XRAXgVXc+tU/B4uq891nl
+ GKpbAAUH2lI/ba/TJdES/sCTpjCcXG9+3VUrCAbroWy5rNH2ZUZH
+X-Google-Smtp-Source: AGHT+IHmBuWNXIgQPrrQT9ZywdJYkgxE8mIchY1DPXFQExfq7vuQwv8FovBFbRVNxBuit/2OQ97QLQ==
+X-Received: by 2002:a05:6a21:3406:b0:1a3:6940:82ea with SMTP id
+ yn6-20020a056a21340600b001a3694082eamr6597267pzb.31.1710910848031; 
+ Tue, 19 Mar 2024 22:00:48 -0700 (PDT)
+Received: from localhost (193-116-208-39.tpgi.com.au. [193.116.208.39])
+ by smtp.gmail.com with ESMTPSA id
+ ey1-20020a056a0038c100b006e6b12d650asm10675761pfb.31.2024.03.19.22.00.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 19 Mar 2024 22:00:47 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 20 Mar 2024 15:00:42 +1000
+Message-Id: <CZYB9YB3MYGQ.4T8I8FJO64AO@wheely>
+Cc: <qemu-s390x@nongnu.org>, "Richard Henderson"
+ <richard.henderson@linaro.org>, <qemu-ppc@nongnu.org>,
+ <qemu-arm@nongnu.org>, <qemu-riscv@nongnu.org>, "Anton Johansson"
+ <anjo@rev.ng>, "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH-for-9.1 18/27] target/ppc: Convert to
+ TCGCPUOps::get_cpu_state()
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.15.2
+References: <20240319154258.71206-1-philmd@linaro.org>
+ <20240319154258.71206-19-philmd@linaro.org>
+In-Reply-To: <20240319154258.71206-19-philmd@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,77 +100,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 15, 2024 at 3:59=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> Hi,
->
-> The series was renamed to reflect that at this point we're fixing more
-> things than just vstart management.
->
-> In this new version a couple fixes were added:
->
-> - patch 3 (new) fixes the memcpy endianess in 'vmvr_v', as suggested by
->   Richard;
->
-> - patch 5 (new) fixes ldst_whole insns to now clear vstart in all cases.
->   The fix was proposed by Max.
->
-> Another notable change was made in patch 6 (patch 4 from v14). We're not
-> doing early exits in helpers that are gated by vstart_eq_zero. This was
-> found to cause side-effects with insns that wants to send faults if vl =
-=3D
-> 0, and for the rest it becomes a moot check since vstart is granted to
-> be zero beforehand.
->
-> Series based on master.
->
-> Patches missing acks: 3, 4, 5
->
-> Changes from v14:
-> - patch 3 (new):
->   - make 'vmvr_v' big endian compliant
-> - patch 5 (new):
->   - make ldst_whole insns clear vstart in all code paths
-> - patch 6 (patch 4 from v14):
->   - do not add early exits on helpers that are gated with vstart_eq_zero
-> - v14 link: https://lore.kernel.org/qemu-riscv/20240313220141.427730-1-db=
-arboza@ventanamicro.com/
->
-> Daniel Henrique Barboza (9):
->   target/riscv/vector_helper.c: set vstart =3D 0 in GEN_VEXT_VSLIDEUP_VX(=
-)
->   trans_rvv.c.inc: set vstart =3D 0 in int scalar move insns
->   target/riscv/vector_helper.c: fix 'vmvr_v' memcpy endianess
->   target/riscv: always clear vstart in whole vec move insns
->   target/riscv: always clear vstart for ldst_whole insns
->   target/riscv/vector_helpers: do early exit when vstart >=3D vl
->   target/riscv: remove 'over' brconds from vector trans
->   trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
->   target/riscv/vector_helper.c: optimize loops in ldst helpers
->
-> Ivan Klokov (1):
->   target/riscv: enable 'vstart_eq_zero' in the end of insns
+On Wed Mar 20, 2024 at 1:42 AM AEST, Philippe Mathieu-Daud=C3=A9 wrote:
+> Convert cpu_get_tb_cpu_state() to TCGCPUOps::get_cpu_state(),
+> unifying with the method declared in target/ppc/helper_regs.c.
 
-Thanks!
+Looks okay AFAIKS.
 
-Applied to riscv-to-apply.next
-
-Alistair
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
 >
->  target/riscv/insn_trans/trans_rvbf16.c.inc |  18 +-
->  target/riscv/insn_trans/trans_rvv.c.inc    | 244 ++++++---------------
->  target/riscv/insn_trans/trans_rvvk.c.inc   |  30 +--
->  target/riscv/translate.c                   |   6 +
->  target/riscv/vcrypto_helper.c              |  32 +++
->  target/riscv/vector_helper.c               |  93 +++++++-
->  target/riscv/vector_internals.c            |   4 +
->  target/riscv/vector_internals.h            |   9 +
->  8 files changed, 220 insertions(+), 216 deletions(-)
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  target/ppc/cpu.h         | 16 +++-------------
+>  target/ppc/cpu_init.c    |  1 +
+>  target/ppc/helper_regs.c | 13 +++++++------
+>  3 files changed, 11 insertions(+), 19 deletions(-)
 >
-> --
-> 2.44.0
->
->
+> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> index ced4e53024..6aa18db335 100644
+> --- a/target/ppc/cpu.h
+> +++ b/target/ppc/cpu.h
+> @@ -2716,19 +2716,9 @@ void cpu_write_xer(CPUPPCState *env, target_ulong =
+xer);
+>   */
+>  #define is_book3s_arch2x(ctx) (!!((ctx)->insns_flags & PPC_SEGMENT_64B))
+> =20
+> -#define TARGET_HAS_CPU_GET_TB_CPU_STATE
+> -
+> -#ifdef CONFIG_DEBUG_TCG
+> -void cpu_get_tb_cpu_state(CPUPPCState *env, vaddr *pc,
+> -                          uint64_t *cs_base, uint32_t *flags);
+> -#else
+> -static inline void cpu_get_tb_cpu_state(CPUPPCState *env, vaddr *pc,
+> -                                        uint64_t *cs_base, uint32_t *fla=
+gs)
+> -{
+> -    *pc =3D env->nip;
+> -    *cs_base =3D 0;
+> -    *flags =3D env->hflags;
+> -}
+> +#ifdef CONFIG_TCG
+> +void ppc_get_cpu_state(CPUPPCState *env, vaddr *pc,
+> +                       uint64_t *cs_base, uint32_t *flags);
+>  #endif
+> =20
+>  G_NORETURN void raise_exception(CPUPPCState *env, uint32_t exception);
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index 464e91faa2..673559b444 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -7362,6 +7362,7 @@ static const struct SysemuCPUOps ppc_sysemu_ops =3D=
+ {
+>  static const TCGCPUOps ppc_tcg_ops =3D {
+>      .initialize =3D ppc_translate_init,
+>      .restore_state_to_opc =3D ppc_restore_state_to_opc,
+> +    .get_cpu_state =3D ppc_get_cpu_state,
+> =20
+>  #ifdef CONFIG_USER_ONLY
+>      .record_sigsegv =3D ppc_cpu_record_sigsegv,
+> diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+> index 25258986e3..e62591067c 100644
+> --- a/target/ppc/helper_regs.c
+> +++ b/target/ppc/helper_regs.c
+> @@ -217,25 +217,26 @@ void hreg_update_pmu_hflags(CPUPPCState *env)
+>      env->hflags |=3D hreg_compute_pmu_hflags_value(env);
+>  }
+> =20
+> -#ifdef CONFIG_DEBUG_TCG
+> -void cpu_get_tb_cpu_state(CPUPPCState *env, vaddr *pc,
+> -                          uint64_t *cs_base, uint32_t *flags)
+> +#ifdef CONFIG_TCG
+> +void ppc_get_cpu_state(CPUPPCState *env, vaddr *pc,
+> +                       uint64_t *cs_base, uint32_t *flags)
+>  {
+>      uint32_t hflags_current =3D env->hflags;
+> -    uint32_t hflags_rebuilt;
+> =20
+>      *pc =3D env->nip;
+>      *cs_base =3D 0;
+>      *flags =3D hflags_current;
+> =20
+> -    hflags_rebuilt =3D hreg_compute_hflags_value(env);
+> +#ifdef CONFIG_DEBUG_TCG
+> +    uint32_t hflags_rebuilt =3D hreg_compute_hflags_value(env);
+>      if (unlikely(hflags_current !=3D hflags_rebuilt)) {
+>          cpu_abort(env_cpu(env),
+>                    "TCG hflags mismatch (current:0x%08x rebuilt:0x%08x)\n=
+",
+>                    hflags_current, hflags_rebuilt);
+>      }
+> -}
+>  #endif
+> +}
+> +#endif /* CONFIG_TCG */
+> =20
+>  void cpu_interrupt_exittb(CPUState *cs)
+>  {
+
 
