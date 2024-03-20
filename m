@@ -4,105 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A530C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 17:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D934C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 17:56:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rn06L-0008Mx-0O; Wed, 20 Mar 2024 13:51:45 -0400
+	id 1rn0AJ-0001L3-7B; Wed, 20 Mar 2024 13:55:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>) id 1rn06H-0008MI-NG
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:51:41 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <isaku.yamahata@intel.com>)
+ id 1rn0AG-0001It-59
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:55:48 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>) id 1rn06D-0005QA-N8
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:51:41 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42KGlGpI024988; Wed, 20 Mar 2024 17:51:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=spYKK4dmAdLl5x4n8P28q0el7XZlhTpHN1RSLB7vjFk=;
- b=AeDCBv2QYSNlSBf7Abv/qUwPRmjMqnebFNOKNKAKaQnEJEzMnCJp5rvSxuKjzoC7KSfu
- ayf+O8PxVxROlGcvxC7RGH1XCycX5A+LCotHdI21bb5VpUbmVVU9oYXA10MyK/5A8wez
- xmOR3D2nhY4x9QAwZh5ciTDUhOiPEbE2Jx1XDoI6POTfxkBHVezOrvmGJfgiz2Zst2le
- JtayiCmQV209auNlBMYOz7JtWeufU8kdYYURZPurvIA2nrW8p+ZKpYaGnvEyBx4CojD4
- /E+ww1yY0tmGH/tMisHNJNWhausIGKul2vheHTaFL1hvvs/NDi15HdyVskjOS7HZUENH 0w== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x03mdg5t4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 17:51:33 +0000
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42KHk80b032361;
- Wed, 20 Mar 2024 17:51:32 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x03mdg5t3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 17:51:32 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42KGMGJB010139; Wed, 20 Mar 2024 17:51:31 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wxvav4txw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 17:51:31 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42KHpRY710158348
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 Mar 2024 17:51:29 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6D4752004B;
- Wed, 20 Mar 2024 17:51:27 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2CBBD20040;
- Wed, 20 Mar 2024 17:51:27 +0000 (GMT)
-Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
- [9.152.224.238])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 Mar 2024 17:51:27 +0000 (GMT)
-Message-ID: <bc88f4572649084cd38a0880d7e096a939f80b14.camel@linux.ibm.com>
-Subject: Re: [PATCH 2/3] migration: Drop unnecessary check in ram's
- pending_exact()
-From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-To: peterx@redhat.com, qemu-devel@nongnu.org
-Cc: Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Bandan Das <bdas@redhat.com>, Julia Suvorova <jusual@redhat.com>, Thomas
- Huth <thuth@redhat.com>, Juan Quintela <quintela@redhat.com>
-Date: Wed, 20 Mar 2024 18:51:26 +0100
-In-Reply-To: <20240117075848.139045-3-peterx@redhat.com>
-References: <20240117075848.139045-1-peterx@redhat.com>
- <20240117075848.139045-3-peterx@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: _a4-OsmSf1zCMq22SOyeNv9rJ7iMANIh
-X-Proofpoint-GUID: WNpBT4b7dx7ZCPW5F1nzMEV_VYKsKZ1a
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <isaku.yamahata@intel.com>)
+ id 1rn0AA-0005zA-HG
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:55:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710957342; x=1742493342;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=jMWF46sbhfs/k1gmIhnSS7Ujnub/iP1jOCKSSBybAsg=;
+ b=iqP9v3kzb80+RnGLLhyX3gIljx7uRMWsJzP4RRVGJgZy+rzwyCiGAJJa
+ F1pnfWCx3WwuFP+LTr+Astz7u2D9X79dcyuxQamMXb3yW4/7iHWjBB1t3
+ O6VQpUdMDn18HvRr4UM3qCCPlwvfA855PhZlOrLN4e4Us7nCvGIbHXdUy
+ Z/kMfC0iTZtrstmpTz5VoIQPl9oW22q3rG6rKRQggVNDZhIFMjq7pmIUN
+ 2IcBX+0xM6LIB+Ce77X1izVUth/1Vd8cOr/6iKapiOFEhsybrxftYz+Nb
+ HS2+z8bE7CEGTT6yxefl6W7n1VUhkmH2qnsyh9qDqr8sApCrsoYcGhOzm w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11019"; a="5840929"
+X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; 
+   d="scan'208";a="5840929"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Mar 2024 10:55:36 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; d="scan'208";a="14634905"
+Received: from ls.sc.intel.com (HELO localhost) ([172.25.112.31])
+ by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Mar 2024 10:55:37 -0700
+Date: Wed, 20 Mar 2024 10:55:35 -0700
+From: Isaku Yamahata <isaku.yamahata@intel.com>
+To: Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>,
+ Isaku Yamahata <isaku.yamahata@linux.intel.com>,
+ Brijesh Singh <brijesh.singh@amd.com>, isaku.yamahata@intel.com
+Subject: Re: [PATCH v3 40/49] hw/i386/sev: Add function to get SEV metadata
+ from OVMF header
+Message-ID: <20240320175535.GF1994522@ls.amr.corp.intel.com>
+References: <20240320083945.991426-1-michael.roth@amd.com>
+ <20240320083945.991426-41-michael.roth@amd.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-20_10,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 mlxlogscore=999
- spamscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 impostorscore=0
- phishscore=0 priorityscore=1501 clxscore=1011 suspectscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2403140000
- definitions=main-2403200143
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240320083945.991426-41-michael.roth@amd.com>
+Received-SPF: pass client-ip=198.175.65.21;
+ envelope-from=isaku.yamahata@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,86 +87,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2024-01-17 at 15:58 +0800, peterx@redhat.com wrote:
-> From: Peter Xu <peterx@redhat.com>
->=20
-> When the migration frameworks fetches the exact pending sizes, it means
-> this check:
->=20
->   remaining_size < s->threshold_size
->=20
-> Must have been done already, actually at migration_iteration_run():
->=20
->     if (must_precopy <=3D s->threshold_size) {
->         qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
->=20
-> That should be after one round of ram_state_pending_estimate().  It makes
-> the 2nd check meaningless and can be dropped.
->=20
-> To say it in another way, when reaching ->state_pending_exact(), we
-> unconditionally sync dirty bits for precopy.
->=20
-> Then we can drop migrate_get_current() there too.
->=20
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+On Wed, Mar 20, 2024 at 03:39:36AM -0500,
+Michael Roth <michael.roth@amd.com> wrote:
 
-Hi Peter,
-
-could you have a look at this issue:
-https://gitlab.com/qemu-project/qemu/-/issues/1565
-
-which I reopened. Previous thread here:
-
-https://lore.kernel.org/qemu-devel/20230324184129.3119575-1-nsg@linux.ibm.c=
-om/
-
-I'm seeing migration failures with s390x TCG again, which look the same to =
-me
-as those a while back.
-
+> From: Brijesh Singh <brijesh.singh@amd.com>
+> 
+> A recent version of OVMF expanded the reset vector GUID list to add
+> SEV-specific metadata GUID. The SEV metadata describes the reserved
+> memory regions such as the secrets and CPUID page used during the SEV-SNP
+> guest launch.
+> 
+> The pc_system_get_ovmf_sev_metadata_ptr() is used to retieve the SEV
+> metadata pointer from the OVMF GUID list.
+> 
+> Signed-off-by: Brijesh Singh <brijesh.singh@amd.com>
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
 > ---
->  migration/ram.c | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
->=20
-> diff --git a/migration/ram.c b/migration/ram.c
-> index c0cdcccb75..d5b7cd5ac2 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -3213,21 +3213,20 @@ static void ram_state_pending_estimate(void *opaq=
-ue, uint64_t *must_precopy,
->  static void ram_state_pending_exact(void *opaque, uint64_t *must_precopy,
->                                      uint64_t *can_postcopy)
->  {
-> -    MigrationState *s =3D migrate_get_current();
->      RAMState **temp =3D opaque;
->      RAMState *rs =3D *temp;
-> +    uint64_t remaining_size;
->=20=20
-> -    uint64_t remaining_size =3D rs->migration_dirty_pages * TARGET_PAGE_=
-SIZE;
-> -
-> -    if (!migration_in_postcopy() && remaining_size < s->threshold_size) {
-> +    if (!migration_in_postcopy()) {
->          bql_lock();
->          WITH_RCU_READ_LOCK_GUARD() {
->              migration_bitmap_sync_precopy(rs, false);
->          }
->          bql_unlock();
-> -        remaining_size =3D rs->migration_dirty_pages * TARGET_PAGE_SIZE;
->      }
->=20=20
-> +    remaining_size =3D rs->migration_dirty_pages * TARGET_PAGE_SIZE;
+>  hw/i386/pc_sysfw_ovmf.c | 33 +++++++++++++++++++++++++++++++++
+>  include/hw/i386/pc.h    | 26 ++++++++++++++++++++++++++
+>  2 files changed, 59 insertions(+)
+> 
+> diff --git a/hw/i386/pc_sysfw_ovmf.c b/hw/i386/pc_sysfw_ovmf.c
+> index 07a4c267fa..32efa34614 100644
+> --- a/hw/i386/pc_sysfw_ovmf.c
+> +++ b/hw/i386/pc_sysfw_ovmf.c
+> @@ -35,6 +35,31 @@ static const int bytes_after_table_footer = 32;
+>  static bool ovmf_flash_parsed;
+>  static uint8_t *ovmf_table;
+>  static int ovmf_table_len;
+> +static OvmfSevMetadata *ovmf_sev_metadata_table;
 > +
->      if (migrate_postcopy_ram()) {
->          /* We can do postcopy, and all the data is postcopiable */
->          *can_postcopy +=3D remaining_size;
+> +#define OVMF_SEV_META_DATA_GUID "dc886566-984a-4798-A75e-5585a7bf67cc"
+> +typedef struct __attribute__((__packed__)) OvmfSevMetadataOffset {
+> +    uint32_t offset;
+> +} OvmfSevMetadataOffset;
+> +
+> +static void pc_system_parse_sev_metadata(uint8_t *flash_ptr, size_t flash_size)
+> +{
+> +    OvmfSevMetadata     *metadata;
+> +    OvmfSevMetadataOffset  *data;
+> +
+> +    if (!pc_system_ovmf_table_find(OVMF_SEV_META_DATA_GUID, (uint8_t **)&data,
+> +                                   NULL)) {
+> +        return;
+> +    }
+> +
+> +    metadata = (OvmfSevMetadata *)(flash_ptr + flash_size - data->offset);
+> +    if (memcmp(metadata->signature, "ASEV", 4) != 0) {
+> +        return;
+> +    }
+> +
+> +    ovmf_sev_metadata_table = g_malloc(metadata->len);
+> +    memcpy(ovmf_sev_metadata_table, metadata, metadata->len);
+> +}
+>  
+>  void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size)
+>  {
+> @@ -90,6 +115,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size)
+>       */
+>      memcpy(ovmf_table, ptr - tot_len, tot_len);
+>      ovmf_table += tot_len;
+> +
+> +    /* Copy the SEV metadata table (if exist) */
+> +    pc_system_parse_sev_metadata(flash_ptr, flash_size);
+>  }
 
-This basically reverts 28ef5339c3 ("migration: fix ram_state_pending_exact(=
-)"), which originally
-made the issue disappear.
+Can we move this call to x86_firmware_configure() @ pc_sysfw.c, and move sev
+specific bits to somewhere to sev specific file?  We don't have to parse sev
+metadata for non-SEV case, right?
 
-Any thoughts on the matter appreciated.
+We don't have to touch common ovmf file. It also will be consistent with tdx
+case.  TDX patch series adds tdx_parse_tdvf() to x86_firmware_configure().
 
-Thanks,
-Nina
+thanks,
+
+>  
+>  /**
+> @@ -159,3 +187,8 @@ bool pc_system_ovmf_table_find(const char *entry, uint8_t **data,
+>      }
+>      return false;
+>  }
+> +
+> +OvmfSevMetadata *pc_system_get_ovmf_sev_metadata_ptr(void)
+> +{
+> +    return ovmf_sev_metadata_table;
+> +}
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index fb1d4106e5..df9a61540d 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -163,6 +163,32 @@ void pc_acpi_smi_interrupt(void *opaque, int irq, int level);
+>  #define PCI_HOST_ABOVE_4G_MEM_SIZE     "above-4g-mem-size"
+>  #define PCI_HOST_PROP_SMM_RANGES       "smm-ranges"
+>  
+> +typedef enum {
+> +    SEV_DESC_TYPE_UNDEF,
+> +    /* The section contains the region that must be validated by the VMM. */
+> +    SEV_DESC_TYPE_SNP_SEC_MEM,
+> +    /* The section contains the SNP secrets page */
+> +    SEV_DESC_TYPE_SNP_SECRETS,
+> +    /* The section contains address that can be used as a CPUID page */
+> +    SEV_DESC_TYPE_CPUID,
+> +
+> +} ovmf_sev_metadata_desc_type;
+> +
+> +typedef struct __attribute__((__packed__)) OvmfSevMetadataDesc {
+> +    uint32_t base;
+> +    uint32_t len;
+> +    ovmf_sev_metadata_desc_type type;
+> +} OvmfSevMetadataDesc;
+> +
+> +typedef struct __attribute__((__packed__)) OvmfSevMetadata {
+> +    uint8_t signature[4];
+> +    uint32_t len;
+> +    uint32_t version;
+> +    uint32_t num_desc;
+> +    OvmfSevMetadataDesc descs[];
+> +} OvmfSevMetadata;
+> +
+> +OvmfSevMetadata *pc_system_get_ovmf_sev_metadata_ptr(void);
+>  
+>  void pc_pci_as_mapping_init(MemoryRegion *system_memory,
+>                              MemoryRegion *pci_address_space);
+> -- 
+> 2.25.1
+> 
+> 
+
+-- 
+Isaku Yamahata <isaku.yamahata@intel.com>
 
