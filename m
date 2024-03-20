@@ -4,77 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAD8CC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 15:05:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40AF6C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 15:05:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmxVC-0006fX-EO; Wed, 20 Mar 2024 11:05:14 -0400
+	id 1rmxVO-0006wH-Ee; Wed, 20 Mar 2024 11:05:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmxV9-0006ad-71
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:05:11 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rmxVM-0006vl-Kd
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:05:24 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmxV7-0006XJ-DZ
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:05:10 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-56ba6c83805so1726350a12.0
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 08:05:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710947106; x=1711551906; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5TwREnoFguuc4bHCWYG9YC9AfNOvRRdOdH1BCOSOsUA=;
- b=bJvBBHu88WSA3jmo+OVsHuc1qzNJotCW6pJ/r6lNKzkHM+734i/m45v4PPhBhOec3o
- t7QkhmcyWqPsCQQ1rhNgEzz0INmfUcyttjIwdowVtREZOpk9ZUYKdpFkvwbozdiwNxKG
- KuzM+iTU/6UpahuIaytLdxy3V2w8gZ1kcWts8CeOEYWWLTIhlUaMY2hRWHJegcn4F7Lz
- bKJjQ64iAKAIj9H/8QODtTWsW0/lj0pScvLkGq2p10eMe9cEtFhY0MMzQucB9f5FC9CO
- awmYoo18ux6uwC4WpnSuyzsIHfC3BaEv7Z1gCqyBl1J4eD+RKVQuWQ2d4NBN9Nc/A00d
- VBsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710947106; x=1711551906;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5TwREnoFguuc4bHCWYG9YC9AfNOvRRdOdH1BCOSOsUA=;
- b=R+W0RvdR9TfbMof5yHtqBIpWiHiLdzQkM0T29VTO2rUhXHEXZ2wcbW56fDLFzHkRnb
- +bq1ISvpPp6rAMuRZFDl65nROsD5PddeY41V9W6n5JRO8VG/me4vg1qQFdu0dkNgWOIo
- AeXjqZFI2ZTw3bzTHnM9AmqtLPeB4pJ4vmiUi4CLsSN5/VvCi7ti7H8Gk0XmfjQnwsce
- JOEpMRyl2T8q2hrD2QRosaG4eZf6tQ2syCaqm1slNCua4SDnpg0TYIQY9EcPaMyyaa6w
- sNB0RlxCZK1V2F9PT83e/o4eat8ClYhZOzMtmbNYiyDgQn+AytT6XAYhTpr824D3bOhq
- 441g==
-X-Gm-Message-State: AOJu0YwjK41xiwHwvhPtqtI5JCA8+ElWvtytdEDKyuc+CJUAy9DI77YZ
- nq9nJgEJ54yvdtorBCSduTJtfe2UIQgZsjc5EhtYrtG7JCiMVAoZRoJ9wMiHCN9/4lVqjM7VqI7
- iBT6uQywK66apmIASVlMq1sMd1T/Ef4/I2nzy8w==
-X-Google-Smtp-Source: AGHT+IEddrE1rvL9rWaqtplkXrJo2J91vi1dOLfPI7HKtxiVBdKXbeWlkaoB1s3fA1GoPdwQqLjqUoIBTWYHeAH6kJ4=
-X-Received: by 2002:a05:6402:4290:b0:565:980d:5ba9 with SMTP id
- g16-20020a056402429000b00565980d5ba9mr11018886edc.32.1710947106469; Wed, 20
- Mar 2024 08:05:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rmxVH-0006Zt-40
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:05:20 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1E4AA34684;
+ Wed, 20 Mar 2024 15:05:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710947117; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DDcLYm72HQhutcU6yTV8kxBqGCt+voCwdXLg5XBQnQM=;
+ b=GhyxpIpcAvzcfXfAdOH6/0jE4+H/m33Nt8ZA3jhq08YnnzdungIf+84GfusAUkI91fe55r
+ yBncfsYxSBvIohbS0LR+p5hK1v8t4C1d6dmxtz0ybdzvxKwIh3NixCur1G7+GudV8MTQUr
+ hH7d159NvV9isEoqUFj3YAPPcINsPvs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710947117;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DDcLYm72HQhutcU6yTV8kxBqGCt+voCwdXLg5XBQnQM=;
+ b=vO2GSwUZ5xjYmSw3v7KIX4kA+xhPaK63s6GS4MKInTH+4miXVkSo7aaxoRzxhZK07jNeef
+ y1vZo5l8Io/u4HBQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1710947117; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DDcLYm72HQhutcU6yTV8kxBqGCt+voCwdXLg5XBQnQM=;
+ b=GhyxpIpcAvzcfXfAdOH6/0jE4+H/m33Nt8ZA3jhq08YnnzdungIf+84GfusAUkI91fe55r
+ yBncfsYxSBvIohbS0LR+p5hK1v8t4C1d6dmxtz0ybdzvxKwIh3NixCur1G7+GudV8MTQUr
+ hH7d159NvV9isEoqUFj3YAPPcINsPvs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1710947117;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DDcLYm72HQhutcU6yTV8kxBqGCt+voCwdXLg5XBQnQM=;
+ b=vO2GSwUZ5xjYmSw3v7KIX4kA+xhPaK63s6GS4MKInTH+4miXVkSo7aaxoRzxhZK07jNeef
+ y1vZo5l8Io/u4HBQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9C58F136CD;
+ Wed, 20 Mar 2024 15:05:16 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 0NiZGCz7+mXzSwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 20 Mar 2024 15:05:16 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>, Avihai Horon
+ <avihaih@nvidia.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Markus
+ Armbruster <armbru@redhat.com>, Prasad Pandit <pjp@fedoraproject.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Subject: Re: [PATCH for-9.1 v5 14/14] migration: Modify ram_init_bitmaps()
+ to report dirty tracking errors
+In-Reply-To: <20240320064911.545001-15-clg@redhat.com>
+References: <20240320064911.545001-1-clg@redhat.com>
+ <20240320064911.545001-15-clg@redhat.com>
+Date: Wed, 20 Mar 2024 12:05:14 -0300
+Message-ID: <87edc5lz9x.fsf@suse.de>
 MIME-Version: 1.0
-References: <20240319202121.233130-1-berrange@redhat.com>
-In-Reply-To: <20240319202121.233130-1-berrange@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 20 Mar 2024 15:04:55 +0000
-Message-ID: <CAFEAcA-o65bd7JZVu5XjkAz9_05cPhooW7DeL-T_ARP6yGHVZg@mail.gmail.com>
-Subject: Re: [PULL 0/8] Misc fixes patches
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spamd-Result: default: False [-4.29 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-2.99)[99.96%];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; RCPT_COUNT_SEVEN(0.00)[9];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Authentication-Results: smtp-out1.suse.de;
+	none
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,39 +124,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 19 Mar 2024 at 20:22, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> The following changes since commit c62d54d0a8067ffb3d5b909276f7296d7df33f=
-a7:
->
->   Update version for v9.0.0-rc0 release (2024-03-19 19:13:52 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/berrange/qemu tags/misc-fixes-pull-request
->
-> for you to fetch changes up to c3b1aa1c1ae66e0174704072b1fb7d10d6e4a4b7:
->
->   crypto: report which ciphers are being skipped during tests (2024-03-19=
- 20:17:12 +0000)
->
-> ----------------------------------------------------------------
->  * Use EPERM for seccomp filter instead of killing QEMU when
->    an attempt to spawn child process is made
->  * Reduce priority of POLLHUP handling for socket chardevs
->    to increase likelihood of pending data being processed
->  * Fix chardev I/O main loop integration when TLS is enabled
->  * Fix broken crypto test suite when distro disables
->    SM4 algorithm
->  * Improve diagnosis of failed crypto tests
->
+C=C3=A9dric Le Goater <clg@redhat.com> writes:
 
+> The .save_setup() handler has now an Error** argument that we can use
+> to propagate errors reported by the .log_global_start() handler. Do
+> that for the RAM. The caller qemu_savevm_state_setup() will store the
+> error under the migration stream for later detection in the migration
+> sequence.
+>
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
-
--- PMM
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
