@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCCC2C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:45:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E2E4CD11DB
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:46:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmrZq-0001TI-UA; Wed, 20 Mar 2024 04:45:38 -0400
+	id 1rmraQ-0002P1-Lm; Wed, 20 Mar 2024 04:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrZh-0001DM-US
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:45:29 -0400
-Received: from mail-co1nam11on20601.outbound.protection.outlook.com
- ([2a01:111:f403:2416::601]
- helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ id 1rmra1-0002ES-Lo
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:45:53 -0400
+Received: from mail-bn8nam11on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::600]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrZc-0008Kv-Go
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:45:29 -0400
+ id 1rmrZz-00005g-Br
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:45:49 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=J11K8/FYWFcjaa8DWWxykkw7maywhNRDTvcIEt0TP+HWe5uaV00MZ3b3xxedYLOrtBDE+hJ8CH1+Vcuo6YIUIo64ZkGyfgG+Nw4UwZdkU2QKD+EJipg2rUhf1Q5bjKM3T6tkGXaeL4oJm3+Kog6b5jrmK2A5BUX1lHyen9JWSBAIC/n/4rlSQb3o6+Re1Pn7xpzW0pQhe9PJdNzYgReyNtuH851wtdCJ9qN1bCGXqshRAc8wX7Lp+S3DP4TEjl0xOfuurAZ/PRg3Osq1SsANyQ6VI3K7wJ2NBq1ndRBbSRHu8e2iJYqy4s1Ac4EMrL1AOBogpL0HIgZTVHNK6IbGNA==
+ b=OyqcTASDmTOY4hkTbHNP1NbfV4Zv6g1Dei62zVAaXOf/6AfAId5iY1OR+u7txAzzHZ6Yvu7r48420DyVE730eOMNRrAzE2fLuU1RsU2idCd167cCupoOkjKBa2YqZP8NjLtSNj362X1tR36ovzDO9pGpoQGhoUY5nWj34IZXTGHaNcR9o5v8u7NwYtCGpUbg4F1Z/glj8LngW3cHzAp4H7x0SQ2Y5xi23yv+uXV5mkNHt6u/iv9HklGOyZqHkQ6HjeP+DEBv56asPKqrtWRmew/IOwXKB6a7WBINpL7+U7t4yQi+e+Omx0LhdDrB6zBinIM7/fjhBM3oF8wdzZZDBA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SxUlZfCZKFxzZ51lHY8et/IBOA6GjxRKwAqzIFVFHmw=;
- b=GFO9/cB6yKf2Tuo99Uyyfk9U0+URilzrrvf7F109grbFnfR7J7CWWgKNpvPEgTTAfh4AI3+/UtHAWO0w+geRLDI+ZiM9Nc+obr8QC9Q6ASjkEr1AbNpdeWQA8Bb330ra4JSFoW7ypiXh9PVdN7eu3pD/vVROg2l79jEH3PiIazSZJZEx9W0ZcY/wn+2lDht+d0uTHe2pSV3/nLbY8xlH5c4q7kICz4G0A/LNs0R9x3lLsNFonKsAFkpgv2XKfYtchbNaoS1RQVyzR+XCajMuwVxVf3N9zKbmAwKzby7Oe/BWRz2cUEhOUD/toaJ52H7xfbQ0OveUi+VqCVPfcuhISQ==
+ bh=hgqQeEk4/yxOnObN4oS7g1WBS8gHjZbQRquku8TOVwE=;
+ b=nFlLxVJj4lAl3qXIHkMluT3h+2T2d7nJGjaNEGENY6SJY1QE7owhhh4aPxS7HSeD+NSCR7sGP1ELoPhv03f1syBRgs11r6Z6vpXygEG3mJ+4J1p43tUm3UqkAcv/PTWVXo6GM8RIIc4wz5CkBDQfq1+2Bej6hUWsFL5IH11QkFJ23yH3UE1EYD9XcTfRH7yD4LfsBF+g2VxMSG5gSMKPf4FhXWwtvOq2FGwE9xD7UyUVlUzw6R2tk8z2xV2L/Dpb09I8E2vvoOUyT/p35O45onfp6OsKQEQqM8WapVVnbUNfW6c/23L2ZEKdRxyaiixAU+wwmrzVpKiB/lA1LwueTQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SxUlZfCZKFxzZ51lHY8et/IBOA6GjxRKwAqzIFVFHmw=;
- b=xmOXEMb7HW7vdGQopYJUtVx2ojDOfHTI74spD7lLL0tPfOIfo1T4ik5fO4A7qmwv7ck9h0sz/2wvS5DhMeN5XI7e6elB6e6qoUvSJRlCuz9G+o9yY6t/VkWD6oyLR6lldnCF0cdaoTCymjEaxfr21nEVHlx+bdV1u5zP3EwaYDc=
-Received: from BY3PR05CA0056.namprd05.prod.outlook.com (2603:10b6:a03:39b::31)
- by SA0PR12MB7464.namprd12.prod.outlook.com (2603:10b6:806:24b::18)
+ bh=hgqQeEk4/yxOnObN4oS7g1WBS8gHjZbQRquku8TOVwE=;
+ b=FdoiOHtQpVhZ+3rv2dyhfoPPS8w3aUXBqKcx8oRhGo2cIL9PChQKW6im75qODpJLm6uLoDfT+qtaUA1sFfyoiJk6WxHmNW9wfm8bSNh4R4c5Tdwq/eJccgj1AZUboKFHT0ol939exUx7G5+uBWK8lFkyWAgqddluQ7AVS2YLVuw=
+Received: from MW4PR03CA0289.namprd03.prod.outlook.com (2603:10b6:303:b5::24)
+ by SJ2PR12MB8737.namprd12.prod.outlook.com (2603:10b6:a03:545::21)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.28; Wed, 20 Mar
- 2024 08:45:21 +0000
-Received: from MWH0EPF000A6730.namprd04.prod.outlook.com
- (2603:10b6:a03:39b:cafe::a6) by BY3PR05CA0056.outlook.office365.com
- (2603:10b6:a03:39b::31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.12 via Frontend
- Transport; Wed, 20 Mar 2024 08:45:21 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.34; Wed, 20 Mar
+ 2024 08:45:42 +0000
+Received: from MWH0EPF000A672F.namprd04.prod.outlook.com
+ (2603:10b6:303:b5:cafe::57) by MW4PR03CA0289.outlook.office365.com
+ (2603:10b6:303:b5::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.26 via Frontend
+ Transport; Wed, 20 Mar 2024 08:45:41 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,13 +54,13 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- MWH0EPF000A6730.mail.protection.outlook.com (10.167.249.22) with Microsoft
+ MWH0EPF000A672F.mail.protection.outlook.com (10.167.249.21) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:45:21 +0000
+ 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:45:41 +0000
 Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 20 Mar
- 2024 03:45:19 -0500
+ 2024 03:45:40 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <kvm@vger.kernel.org>, Tom Lendacky <thomas.lendacky@amd.com>, "Paolo
@@ -68,9 +68,9 @@ CC: <kvm@vger.kernel.org>, Tom Lendacky <thomas.lendacky@amd.com>, "Paolo
  <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Pankaj Gupta
  <pankaj.gupta@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>, Isaku Yamahata
  <isaku.yamahata@linux.intel.com>
-Subject: [PATCH v3 20/49] trace/kvm: Add trace for KVM_EXIT_MEMORY_FAULT
-Date: Wed, 20 Mar 2024 03:39:16 -0500
-Message-ID: <20240320083945.991426-21-michael.roth@amd.com>
+Subject: [PATCH v3 01/49] Revert "linux-headers hack" from sevinit2 base tree
+Date: Wed, 20 Mar 2024 03:38:57 -0500
+Message-ID: <20240320083945.991426-2-michael.roth@amd.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240320083945.991426-1-michael.roth@amd.com>
 References: <20240320083945.991426-1-michael.roth@amd.com>
@@ -82,36 +82,36 @@ X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000A6730:EE_|SA0PR12MB7464:EE_
-X-MS-Office365-Filtering-Correlation-Id: aaab97b4-14ac-4150-5487-08dc48ba13c4
+X-MS-TrafficTypeDiagnostic: MWH0EPF000A672F:EE_|SJ2PR12MB8737:EE_
+X-MS-Office365-Filtering-Correlation-Id: 34965a5c-78c1-4656-a00d-08dc48ba2009
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: r7/iU8P5DmtqFbofk+jDMUWSk7tzJOLjQsMwOOYTBxL+rNd4/hjs1QFoiQJQKLISDY+2hiB9JqTtQdy7y4aYTUR3RnaxusETrHiSd7D5oN6/xMXKWBfJ18VZKoAtsc72ki7tgr4rYHoyPaNvgr9YRZrFMSUbafFT3BCSWvqexxkf0z4ObODScs5XHm/B1038cArQh45rwA7H/22EggyTNkaG9IucjEewsfAs9DS4kbhxUemUA8jENcyM2WPCQyeiazqSEq8orBGgx4Gdv595YNvpJsv1agFz5L+ugRRv0tt8yS6zXXvaBuIirIm5281dd8VJ7SR9xXqj6Hguw1rZ3SrgZDycOAC96DiPRmubVjClBeXi43sOJmBcBl8LtoA2IPT+Q6Yq5nwKcmuHK4IBoeA3vYfnEof/KSAWh3X3t44aRdAmF8C96io9YC3RjTvZfu6SG6ZShA5fFw3U7MdaeIgq7/+h3pK+QS7eYuxc7rTyGmbcKUxsaSIjxS3n1kRFyytdlTDrZaJKeYc1wwlmZwo5oWL2WwMJbvuhVsH/h5FNswLje1ue6LnaZYB94JtJolfWI9uf+ieS6x89tf+2suSjrNhilX48RtHElMya07DaCFHQM1VdetlQX1sU281ww79I/WWZEJUkiyvQUfqvfaChtqOPBpXPZCOlsgLuVVCllNCkY06OYBhACjxC63lEkk9i/6P+rHlROADia7S/eRQ/wtCM1uI0J78IMTLAlBvpEdXYeePDVLS9b1m72S0W
+X-Microsoft-Antispam-Message-Info: nljCWTAUP942QdTqIU7DPmGgTGf0yTFFURTiG1bfK2oVFoc2Bls0+UC19aVQUjeL8eB02KHLIkV8leBqTJJ4e026IM9LZO5SHaqTxjTF7mw0U0ZvNARuUlp7aDGOSnyFhwcqHNB3XFrs3gFQC65QYx2zQvoN6G93Mgz3WRHfkkSi2snZ1/Mv0ZExG31lV2YvdtrfkZzuoXYUuZvzPjFSskH1zuQzi9N6xZAZqbXdOweAgKM28f6CGSbGoaoO6UGNPCFllAkBpt4LzIXfLIzKnLsFU+HlPe+0/1HnM69c4miy2jX/HC63wRiYx3XUVakeYn5mlQhj//Kd/PwBDOiCK/3uS6lko6wNwZMXfX17jqNtX2/AP38nWY32mQvDZAK5MWqfd5XOQvGAukeQofNPDVfA/lWM3TCIecONFyKGlf4Ja7IjMMuSl514Eqy14uKgYSrheDneRVpxuNxTTZ0hHIXZHJ/fSm+ax3V0wm4dBVSgaUKlIuAO6VnF/QGepfcKWcb3Ps52Y1Aao+qz26PM5sz9pqDkI86EM1gSwjos2JX0/BtceNN7OzguLNd0xZWZfyKDpFeKJ+TF46XUfhZ+zwQu0dyAo+ixVMso8kmZaTu8fHoDrZ8F00/gtwwIil7XVS4TSxEwIwWCMrE5mroFZ39pzaQle2kaUn0sGXoqtpYksNUxChSx0VJwTXMrmnGimpiOnp/kSTScRqPEuftsb1aSSPAL1ywHNgpsYkCJIPlVshWtArPOawAajCG8JsxD
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(82310400014)(376005)(36860700004)(1800799015); DIR:OUT;
+ SFS:(13230031)(36860700004)(376005)(82310400014)(1800799015); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:45:21.0956 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: aaab97b4-14ac-4150-5487-08dc48ba13c4
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:45:41.6823 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 34965a5c-78c1-4656-a00d-08dc48ba2009
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A6730.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A672F.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB7464
-Received-SPF: permerror client-ip=2a01:111:f403:2416::601;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8737
+Received-SPF: permerror client-ip=2a01:111:f403:2414::600;
  envelope-from=Michael.Roth@amd.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,35 +127,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+TODO: Either apply this in advance of sevinit2 patches, or drop this in
+favor of a separate preceeding sync of 6.8 kvm-next.
+
+A separate standalone linux-headers sync will be used instead.
+
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- accel/kvm/kvm-all.c    | 3 +++
- accel/kvm/trace-events | 1 +
- 2 files changed, 4 insertions(+)
+ linux-headers/asm-x86/kvm.h | 8 --------
+ linux-headers/linux/kvm.h   | 2 --
+ 2 files changed, 10 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 6ae03c880f..b5872fdc07 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3145,6 +3145,9 @@ int kvm_cpu_exec(CPUState *cpu)
-             }
-             break;
-         case KVM_EXIT_MEMORY_FAULT:
-+            trace_kvm_memory_fault(run->memory_fault.gpa,
-+                                   run->memory_fault.size,
-+                                   run->memory_fault.flags);
-             if (run->memory_fault.flags & ~KVM_MEMORY_EXIT_FLAG_PRIVATE) {
-                 error_report("KVM_EXIT_MEMORY_FAULT: Unknown flag 0x%" PRIx64,
-                              (uint64_t)run->memory_fault.flags);
-diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
-index 31175fed97..681ccb667d 100644
---- a/accel/kvm/trace-events
-+++ b/accel/kvm/trace-events
-@@ -32,3 +32,4 @@ kvm_interrupt_exit_request(void) ""
- kvm_io_window_exit(void) ""
- kvm_run_exit_system_event(int cpu_index, uint32_t event_type) "cpu_index %d, system_even_type %"PRIu32
- kvm_convert_memory(uint64_t start, uint64_t size, const char *msg) "start 0x%" PRIx64 " size 0x%" PRIx64 " %s"
-+kvm_memory_fault(uint64_t start, uint64_t size, uint64_t flags) "start 0x%" PRIx64 " size 0x%" PRIx64 " flags 0x%" PRIx64
+diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
+index 8f58c32d37..003fb74534 100644
+--- a/linux-headers/asm-x86/kvm.h
++++ b/linux-headers/asm-x86/kvm.h
+@@ -562,13 +562,5 @@ struct kvm_pmu_event_filter {
+ 
+ #define KVM_X86_DEFAULT_VM	0
+ #define KVM_X86_SW_PROTECTED_VM	1
+-#define KVM_X86_SEV_VM          2
+-#define KVM_X86_SEV_ES_VM       3
+-
+-struct kvm_sev_init {
+-        __u64 vmsa_features;
+-        __u32 flags;
+-        __u32 pad[9];
+-};
+ 
+ #endif /* _ASM_X86_KVM_H */
+diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+index 5fd84fd7d0..17839229b2 100644
+--- a/linux-headers/linux/kvm.h
++++ b/linux-headers/linux/kvm.h
+@@ -1865,8 +1865,6 @@ enum sev_cmd_id {
+ 	/* Guest Migration Extension */
+ 	KVM_SEV_SEND_CANCEL,
+ 
+-	KVM_SEV_INIT2,
+-
+ 	KVM_SEV_NR_MAX,
+ };
+ 
 -- 
 2.25.1
 
