@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3E4DC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 17:18:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C361C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 17:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmzZh-0002GT-88; Wed, 20 Mar 2024 13:18:01 -0400
+	id 1rmzal-00039t-0H; Wed, 20 Mar 2024 13:19:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmzZg-0002Fw-4R
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:18:00 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
+ id 1rmzah-00035C-U8; Wed, 20 Mar 2024 13:19:03 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rmzZd-0006Wg-4V
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:17:59 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-56bb22ff7baso1130871a12.3
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 10:17:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
+ id 1rmzag-0006cl-5D; Wed, 20 Mar 2024 13:19:03 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-568a53d2ce0so51176a12.0; 
+ Wed, 20 Mar 2024 10:19:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710955075; x=1711559875; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=33F1//D2fVsuIjqVnoLzC6cYCRfMhnqisnhO1dhobsc=;
- b=wTjIEk5wqDvhqN5pP56g0QGFTNkHtDmBDsrgHwcnmZtfWNV5qWtoZJAk6YpM7+4UoJ
- /g4YXsB6Y24TW/HpziSl1BFQauJfzR5EceQAdWrrnZO69LMoKgseQ2ryMzZoj0bqq7Xr
- ciZTfpi2p1IYJs4bxBZNrFpEe0usWAEDUAzPsThHm2Am3tQTGdL1wtE2ThVfjMTqtc21
- 2ouv+NMC8kPljNHuriboxNiPQK+lZVfxTmz6V9z0881ulIJ4LhR4rarF3pnhoORr3t3j
- 5EAK+2VP0vpdQuHanFR+yxJj8Cb0KpepPzzqTgzhF3h15JKWiLFLqYC2r6RFkQzjGsX8
- s9JA==
+ d=gmail.com; s=20230601; t=1710955140; x=1711559940; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=d648cIqv4adrDGQLSyAe4RYTDK5Brk0bN+L7RP5Dtnk=;
+ b=YBuY7xM9D6ih/AlgWTlK8PSDASuYqoawEhioSXiIMigd2vBh1hDvge/iWIynHD9nuO
+ yocwhpsSf22xMzcv5wXaeZcOjYB1FHE1Y1lNaEnRfGvm9+BQi2QXBC1yBjA0vTQvi5Ld
+ hXf9Tqmf19rezm4nBCh+66D53zjWMTagYx/a9gMqIPvb3tNq5S2OagQf/pBMyAeqCS2O
+ J9GjbQjK6qXsJ6B+BrZCQ5fiFCAvN9wTAkaPbwXv5sjPKyr1bqUiK1hrBH0DrUUIOgVK
+ d+cFANY0xUXIyiYO2AIKGz/Vu7sL3qRKONoHrX6wR2O7To0HtQLHYcxV3XCC9BiEHu0q
+ 7U6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710955075; x=1711559875;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=33F1//D2fVsuIjqVnoLzC6cYCRfMhnqisnhO1dhobsc=;
- b=I+3czMXRSdxqHOizX/ROiAFSdB9W5h1utFIo3SyKF1mB81cFRVGCzuPf1AW2NPeMyV
- o0VLS0GrEIMXZMRBSBHD7knNKQ5l+VO51Le7RIF/ULH4lXNGXFnK3ce15O1ddAbsY9U3
- fRbJjdhaWH748lpVramDSmjrma90k0LLh+JGI2SqL09SvB4mpRNJxRcnhq94Nih0MFnu
- GoRPnnrAeKWxdhrzMZh2kJzBE2fWQU1pvxLwRny8MT/evkWIveWUoJZE+fmMOjpz1iEp
- cvsxesfiVjE5yiCBvlyFGULgPoKUW9nOaVscpY/UdzyUGHol/h6cVCbQFjA9j0bvuThQ
- uvvQ==
-X-Gm-Message-State: AOJu0Yxuc50/Yx/ZnXinGXXGruTJlwJWjVR5sGVzDvPO0eFOo05MzBdA
- O8N3otGBaP/zBzX3AUY15rxfo1cqShes4XyxzC9XLKTPZUMS+8DtgJA/ylDuO0UBn4VkPHHlF/7
- +lwZIDZrxjSB/LayhDn+gvnr+3mGBl559ae3oqCKZA9dOnXo/
-X-Google-Smtp-Source: AGHT+IGypr6vcyDFxgdjfErmrgzvn4GBXX5EaJq2Nl7edaxdaUO/tMFMWVp58UUqCiH3ayzi3eDB4SKSW5VnMt7yPYw=
-X-Received: by 2002:a05:6402:4346:b0:56a:ae8a:acb3 with SMTP id
- n6-20020a056402434600b0056aae8aacb3mr5817083edc.42.1710955075311; Wed, 20 Mar
- 2024 10:17:55 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1710955140; x=1711559940;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=d648cIqv4adrDGQLSyAe4RYTDK5Brk0bN+L7RP5Dtnk=;
+ b=iqEEtJ4dtgWfwuD3RJGA9S/uOuLeLpK+wbiNiiapCLYwNFmjN+xKbEYPa8NpwYs0W0
+ ZkhajVS2IiGwtIByUYchuF15rDQO39LOu0xjjPwxCJwdrap0sjO3ku8p0LaHEOqz4jzz
+ uGfYFsiEqCMYQy3Y7QrUGjlZ+Hmhyt/ET8QUIiZFuzovX//4/KwJl4RUhjCAb16vVobU
+ krI3ovA107i/Pf77UHDWziS9GOBJIOMwAZQ9Ee0bOjSEA21+Y5S1l94gN4wa1lnM69o8
+ PJY+KNUj1VourZl6rKSPs6RcrF5jnClVIURNgEJUwuEtYdEOGdSY2sT9d7asPkZBEc4a
+ c7aA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVAe8W1cfvhBgMhJRobJCRdo+A7uf0F+7+TMOzH1ysiSBeEbQmlkWe7+EmtH0qSzrNJc3QKwXwLors3mZuYg5ygpsMduJKiiwhY2npmUllzcpiol1BTiMGgA2ALYA==
+X-Gm-Message-State: AOJu0YzwSW3K56K64qmzm5MbDmdmxdc8RsCcmAaGktBfD137C55L4P1o
+ c8CW2F8KePT976dPJRScHaxH/cd7QJJ9x1myZhs1w4btoZ4pUW3G
+X-Google-Smtp-Source: AGHT+IHZ+p8vTBBwXU7lcKWO+htpvdsHiUncHav9ytESk1u7d5+6mhZ6i47zcij87nvx+XipXKhL1w==
+X-Received: by 2002:a17:906:a153:b0:a45:6cc0:8f19 with SMTP id
+ bu19-20020a170906a15300b00a456cc08f19mr12050055ejb.38.1710955139213; 
+ Wed, 20 Mar 2024 10:18:59 -0700 (PDT)
+Received: from freya.midgard (broadband-188-255-126-251.ip.moscow.rt.ru.
+ [188.255.126.251]) by smtp.gmail.com with ESMTPSA id
+ pv27-20020a170907209b00b00a4576dd5a8csm7481639ejb.201.2024.03.20.10.18.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 Mar 2024 10:18:58 -0700 (PDT)
+From: Alexey Baturo <baturo.alexey@gmail.com>
+X-Google-Original-From: Alexey Baturo <me@deliversmonkey.space>
+To: 
+Cc: baturo.alexey@gmail.com, richard.henderson@linaro.org,
+ space.monkey.delivers@gmail.com, palmer@dabbelt.com,
+ Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Subject: [PATCH v8 0/6] Pointer Masking update for Zjpm v0.8
+Date: Wed, 20 Mar 2024 20:18:44 +0300
+Message-Id: <20240320171850.1197824-1-me@deliversmonkey.space>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240320164055.60319-1-philmd@linaro.org>
- <CAFEAcA81u9J9iijs-CNDbsANb6c0Cdb4qQKmBd=DiQAoFA4U=w@mail.gmail.com>
- <5deec986-7a22-402d-abe1-4e40f5bb427a@linaro.org>
-In-Reply-To: <5deec986-7a22-402d-abe1-4e40f5bb427a@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 20 Mar 2024 17:17:43 +0000
-Message-ID: <CAFEAcA_4J32gpUgxXxND8ZVhrEEhFK=gPG2SF8xsVJ+jpkV0WA@mail.gmail.com>
-Subject: Re: [PATCH-for-9.0 0/2] target/monitor: Deprecate 'info tlb/mem' in
- favor of 'info mmu'
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-ppc@nongnu.org, 
- Thomas Huth <thuth@redhat.com>, devel@lists.libvirt.org, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=baturo.alexey@gmail.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,100 +95,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 Mar 2024 at 17:06, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> +Alex/Daniel
->
-> On 20/3/24 17:53, Peter Maydell wrote:
-> > On Wed, 20 Mar 2024 at 16:40, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
-o.org> wrote:
-> >>
-> >> 'info tlb' and 'info mem' commands don't scale in heterogeneous
-> >> emulation. They will be reworked after the next release, hidden
-> >> behind the 'info mmu' command. It is not too late to deprecate
-> >> commands, so add the 'info mmu' command as wrapper to the other
-> >> ones, but already deprecate them.
-> >>
-> >> Philippe Mathieu-Daud=C3=A9 (2):
-> >>    target/monitor: Introduce 'info mmu' command
-> >>    target/monitor: Deprecate 'info tlb' and 'info mem' commands
-> >
-> > This seems to replace "info tlb" and "info mem" with "info mmu -t"
-> > and "info mmu -m", but it doesn't really say anything about:
-> >   * what the difference is between these two things
->
-> I really don't know; I'm only trying to keep the monitor interface
-> identical.
+From: Alexey Baturo <space.monkey.delivers@gmail.com>
 
-You don't, though: you change it from "info tlb" to "info mmu -t" etc.
+Hi,
 
-> >   * which targets implement which and why
->
-> This one is easy to answer:
->
-> #if defined(TARGET_I386) || defined(TARGET_SH4) || defined(TARGET_SPARC)
-> || \
->      defined(TARGET_PPC) || defined(TARGET_XTENSA) || defined(TARGET_M68K=
-)
->      {
->          .name       =3D "tlb",
->
-> #if defined(TARGET_I386) || defined(TARGET_RISCV)
->      {
->          .name       =3D "mem",
->
-> >   * what the plan is for the future
->
-> My problem is with linking a single QEMU binary, as these two symbols
-> (hmp_info_mem and hmp_info_tlb) clash.
+Rebasing patches on current qemu branch and resubmitting them.
 
-Yes, but they both (implicitly) operate on the current HMP CPU,
-so the problem with linking into a single binary is that they're
-not indirected through a method on the CPU object, not the syntax
-used in the monitor to invoke them, presumably.
+Thanks.
 
-> I'm indeed only postponing the problem, without looking at what
-> this code does. I did it adding hmp_info_mmu_tlb/mem hooks in
-> TCGCPUOps ("hw/core/tcg-cpu-ops.h"), so the command can be
-> dispatched per target vcpu as target-agnostic code in
-> monitor/hmp-cmds.c:
->
-> +#include "hw/core/tcg-cpu-ops.h"
-> +
-> +static void hmp_info_mmu_tlb(Monitor *mon, CPUState *cpu)
-> +{
-> +    const TCGCPUOps *tcg_ops =3D cpu->cc->tcg_ops;
-> +
-> +    if (tcg_ops->hmp_info_mmu_tlb) {
-> +        tcg_ops->hmp_info_mmu_tlb(mon, cpu_env(cpu));
-> +    } else {
-> +        monitor_puts(mon, "No per-CPU information available on this
-> target\n");
-> +    }
-> +}
+[v7]:
+I'm terribly sorry, but previous rebase went wrong and somehow I missed it.
+This time I double-checked rebased version.
+This patch series is properly rebased on https://github.com/alistair23/qemu/tree/riscv-to-apply.next 
 
-These aren't TCG specific though, so why TCGCPUOps ?
+[v6]:
+This patch series is rebased on https://github.com/alistair23/qemu/tree/riscv-to-apply.next 
 
-> > I am definitely not a fan of either of these commands, because
-> > (as we currently implement them) they effectively require each
-> > target architecture to implement a second copy of the page table
-> > walking code. But before we can deprecate them we need to be
-> > pretty sure that "info mmu" is what we want to replace them with.
->
-> An alternative is to just deprecate them, without adding "info mmu" :)
->
-> It is OK to un-deprecate stuff if we realize its usefulness.
+[v5]:
+This patch series targets Zjpm v0.8 extension.
+The spec itself could be found here: https://github.com/riscv/riscv-j-extension/blob/8088461d8d66a7676872b61c908cbeb7cf5c5d1d/zjpm-spec.pdf
+This patch series is updated after the suggested comments:
+- add "x-" to the extension names to indicate experimental
 
-The commands are there because some users find them useful.
-I just dislike them because I think they're a bit niche and
-annoying to implement and not consistent across target
-architectures and not very well documented...
+[v4]:
+Patch series updated after the suggested comments:
+- removed J-letter extension as it's unused
+- renamed and fixed function to detect if address should be sign-extended
+- zeroed unused context variables and moved computation logic to another patch
+- bumped pointer masking version_id and minimum_version_id by 1
 
-By the way, we have no obligation to follow the deprecate-and-drop
-process for HMP commands; unlike QMP, we give ourselves the
-license to vary it when we feel like it, because the users are
-humans, not programs or scripts.
+[v3]:
+There patches are updated after Richard's comments:
+- moved new tb flags to the end
+- used tcg_gen_(s)extract to get the final address
+- properly handle CONFIG_USER_ONLY
 
--- PMM
+[v2]:
+As per Richard's suggestion I made pmm field part of tb_flags.
+It allowed to get rid of global variable to store pmlen.
+Also it allowed to simplify all the machinery around it.
+
+[v1]:
+It looks like Zjpm v0.8 is almost frozen and we don't expect it change drastically anymore.
+Compared to the original implementation with explicit base and mask CSRs, we now only have
+several fixed options for number of masked bits which are set using existing CSRs.
+The changes have been tested with handwritten assembly tests and LLVM HWASAN
+test suite.
+
+Alexey Baturo (6):
+  target/riscv: Remove obsolete pointer masking  extension code.
+  target/riscv: Add new CSR fields for S{sn,mn,m}pm extensions as part
+    of Zjpm v0.8
+  target/riscv: Add helper functions to calculate current number of
+    masked bits for pointer masking
+  target/riscv: Add pointer masking tb flags
+  target/riscv: Update address modify functions to take into account
+    pointer masking
+  target/riscv: Enable updates for pointer masking variables and thus
+    enable pointer masking extension
+
+ target/riscv/cpu.c           |  21 +--
+ target/riscv/cpu.h           |  45 +++--
+ target/riscv/cpu_bits.h      |  90 +---------
+ target/riscv/cpu_cfg.h       |   3 +
+ target/riscv/cpu_helper.c    |  97 +++++-----
+ target/riscv/csr.c           | 337 ++---------------------------------
+ target/riscv/machine.c       |  20 +--
+ target/riscv/pmp.c           |  13 +-
+ target/riscv/pmp.h           |  11 +-
+ target/riscv/tcg/tcg-cpu.c   |   5 +-
+ target/riscv/translate.c     |  46 ++---
+ target/riscv/vector_helper.c |  15 +-
+ 12 files changed, 157 insertions(+), 546 deletions(-)
+
+-- 
+2.34.1
+
 
