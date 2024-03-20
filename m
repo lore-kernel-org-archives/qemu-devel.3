@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A282AC54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 02:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83ED2C54E68
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 02:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmlsR-0003Jr-Qe; Tue, 19 Mar 2024 22:40:27 -0400
+	id 1rmlsO-0003Hx-HB; Tue, 19 Mar 2024 22:40:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rmlsN-0003I1-P7
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:40:23 -0400
+ id 1rmlsL-0003HZ-M4
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:40:21 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rmlsM-0005z9-0N
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:40:23 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1rmlsI-0005yq-NU
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:40:20 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxPOmQTPpluQ4bAA--.54675S3;
- Wed, 20 Mar 2024 10:40:16 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxXOmOTPpltg4bAA--.54899S3;
+ Wed, 20 Mar 2024 10:40:14 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8DxfROLTPplkAFeAA--.18372S5; 
- Wed, 20 Mar 2024 10:40:15 +0800 (CST)
+ AQAAf8DxfROLTPplkAFeAA--.18372S3; 
+ Wed, 20 Mar 2024 10:40:14 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 3/3] target/loongarch: Fix qemu-loongarch64 hang when executing
- 'll.d $t0, $t0, 0'
-Date: Wed, 20 Mar 2024 10:40:10 +0800
-Message-Id: <20240320024010.1659193-4-gaosong@loongson.cn>
+Cc: peter.maydell@linaro.org,
+	Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 1/3] hw/intc/loongarch_extioi: Fix interrupt routing update
+Date: Wed, 20 Mar 2024 10:40:08 +0800
+Message-Id: <20240320024010.1659193-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20240320024010.1659193-1-gaosong@loongson.cn>
 References: <20240320024010.1659193-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DxfROLTPplkAFeAA--.18372S5
+X-CM-TRANSID: AQAAf8DxfROLTPplkAFeAA--.18372S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,42 +65,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On gen_ll, if a->imm is zero, make_address_x return src1,
-but the load to destination may clobber src1. We use a new
-destination to fix this problem.
+From: Bibo Mao <maobibo@loongson.cn>
 
-Fixes: c5af6628f4be (target/loongarch: Extract make_address_i() helper)
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Interrupt number in loop sentence should be base irq plus
+loop index, it is missing on checking whether the irq
+is pending.
+
+Fixes: 428a6ef4396 ("Add vmstate post_load support")
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20240320013955.1561311-1-gaosong@loongson.cn>
+Message-Id: <20240313093932.2653518-1-maobibo@loongson.cn>
 ---
- target/loongarch/tcg/insn_trans/trans_atomic.c.inc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/intc/loongarch_extioi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-index 80c2e286fd..974bc2a70f 100644
---- a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
-@@ -5,14 +5,14 @@
+diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
+index bdfa3b481e..0b358548eb 100644
+--- a/hw/intc/loongarch_extioi.c
++++ b/hw/intc/loongarch_extioi.c
+@@ -151,7 +151,7 @@ static inline void extioi_update_sw_coremap(LoongArchExtIOI *s, int irq,
+             continue;
+         }
  
- static bool gen_ll(DisasContext *ctx, arg_rr_i *a, MemOp mop)
- {
--    TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
-+    TCGv t1 = tcg_temp_new();
-     TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
-     TCGv t0 = make_address_i(ctx, src1, a->imm);
- 
--    tcg_gen_qemu_ld_i64(dest, t0, ctx->mem_idx, mop);
-+    tcg_gen_qemu_ld_i64(t1, t0, ctx->mem_idx, mop);
-     tcg_gen_st_tl(t0, tcg_env, offsetof(CPULoongArchState, lladdr));
--    tcg_gen_st_tl(dest, tcg_env, offsetof(CPULoongArchState, llval));
--    gen_set_gpr(a->rd, dest, EXT_NONE);
-+    tcg_gen_st_tl(t1, tcg_env, offsetof(CPULoongArchState, llval));
-+    gen_set_gpr(a->rd, t1, EXT_NONE);
- 
-     return true;
- }
+-        if (notify && test_bit(irq, (unsigned long *)s->isr)) {
++        if (notify && test_bit(irq + i, (unsigned long *)s->isr)) {
+             /*
+              * lower irq at old cpu and raise irq at new cpu
+              */
 -- 
 2.25.1
 
