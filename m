@@ -4,104 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F975C54E68
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 01:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CCABC54E68
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 02:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rml6v-0001m4-6O; Tue, 19 Mar 2024 21:51:21 -0400
+	id 1rmlJV-0005RG-Gn; Tue, 19 Mar 2024 22:04:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bgray@linux.ibm.com>)
- id 1rml6p-0001kU-GE; Tue, 19 Mar 2024 21:51:15 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1rmlJU-0005R5-HZ
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:04:20 -0400
+Received: from esa11.hc1455-7.c3s2.iphmx.com ([207.54.90.137])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bgray@linux.ibm.com>)
- id 1rml6n-0003ZQ-Np; Tue, 19 Mar 2024 21:51:15 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42K1m1EY000815; Wed, 20 Mar 2024 01:51:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=arIDBPpYPV6z8dhAwKHfGFKXPQMbpwYcJJrTRca4nSM=;
- b=an5esHVsVotxyGuPHc2EYV9tyvMDMZ+ilZZNSqWZZ71EbjpEhsOkPgf3rQdcyIjdQoio
- lr1dA/yBh4DrYKzSUPkV7WHmfseD1UwHZKto206bYDnskno5RB+OZ1rSYRheQF/VaC7a
- DMg3RkaqsMILt4qH1mByQ9KHcqTJtlltQieKJa1x6Cj3v513Vp69zyCYuH1xVG5YdofS
- uXgVsl3RecKrMQ7iY0Iq+91yPSoi1Sebdux1vcckoO3Vcaks1IA5/AlmEOiTe6DddwhJ
- 0eiKNpLgG+2r8UJICZ4i4KfT76m6jJwYY63rnF98L+eucYNeASBrDRiQtBW1nTPMuDwU nw== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wym3fg6uh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 01:51:11 +0000
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42K1pBNP006291;
- Wed, 20 Mar 2024 01:51:11 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wym3fg6u0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 01:51:11 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42K16Vkn015829; Wed, 20 Mar 2024 01:50:46 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wwp503jwa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 01:50:46 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42K1ogNV16253264
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 Mar 2024 01:50:44 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1AE9520043;
- Wed, 20 Mar 2024 01:50:42 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9BCAE20040;
- Wed, 20 Mar 2024 01:50:41 +0000 (GMT)
-Received: from ozlabs.au.ibm.com (unknown [9.192.253.14])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 Mar 2024 01:50:41 +0000 (GMT)
-Received: from bgray-lenovo-p15.ozlabs.ibm.com (haven.au.ibm.com
- [9.192.254.114])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ozlabs.au.ibm.com (Postfix) with ESMTPSA id AC48C6033D;
- Wed, 20 Mar 2024 12:50:38 +1100 (AEDT)
-From: Benjamin Gray <bgray@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: npiggin@gmail.com, Benjamin Gray <bgray@linux.ibm.com>
-Subject: [PATCH 2/2] target/ppc: Fix GDB register indexing on secondary CPUs
-Date: Wed, 20 Mar 2024 12:50:25 +1100
-Message-ID: <20240320015025.372056-2-bgray@linux.ibm.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240320015025.372056-1-bgray@linux.ibm.com>
-References: <20240320015025.372056-1-bgray@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1rmlJS-0006fn-It
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:04:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1710900258; x=1742436258;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=vyG/HEl8aYHT4LtGcSxGyZuwg7vJ11LLCg+TgsHPV88=;
+ b=W018HgpKvOLhfvxzzG0t7w3yGw6ZO0ODSeN+Q8WeJfGPcoP9e+pKV1k1
+ CaWVbc8iRAAmj+JNn/oRi1upD7iFXQ6+cDir5Gx82tavkcwDuJiZwiP+g
+ hj2mEFUCCVGJ8ExWqPy+En9e2JAEmX8WeQytc9ShvF3P/2vN2eq8c6svS
+ Tau7UILJONqjlTSj6kNQOhtiTT6+mDIGnHI437H2VUW2Ph8u7dxKWrxvc
+ AK/6Grq0tBpqJJvWHD94a0cvPFpgxbw4mBZKzZnnRmdz4PTyqX9Dl9P70
+ t+zSd1hevQ/TRSsmgwW0Ke22xPkrv92SUY+JdT4nz1J/Fzr6ozWpl4GgS Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11018"; a="132128569"
+X-IronPort-AV: E=Sophos;i="6.07,138,1708354800"; d="scan'208";a="132128569"
+Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
+ by esa11.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Mar 2024 11:04:11 +0900
+Received: from oym-m2.gw.nic.fujitsu.com (oym-nat-oym-m2.gw.nic.fujitsu.com
+ [192.168.87.59])
+ by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id 8C4AA5AF9A
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 11:04:09 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by oym-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id C1B59BF4A7
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 11:04:08 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 649D721FC42
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 11:04:08 +0900 (JST)
+Received: from localhost.localdomain (unknown [10.167.225.88])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id A7E441A006A;
+ Wed, 20 Mar 2024 10:04:07 +0800 (CST)
+To: alex.bennee@linaro.org, erdnaxe@crans.org, ma.mandourr@gmail.com,
+ pierrick.bouvier@linaro.org
+Cc: qemu-devel@nongnu.org,
+	Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Subject: [PATCH] contrib/plugins/execlog: Fix compiler warning
+Date: Tue, 19 Mar 2024 22:01:15 -0400
+Message-Id: <20240320020115.18801-1-yaoxt.fnst@fujitsu.com>
+X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 5aPjemQht95ZJEFYb8dYpyhXUEFBFE0N
-X-Proofpoint-GUID: FljCP_p8WGCL-biEScPSa43-Lhvb7PW-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-19_10,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0
- adultscore=0 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- clxscore=1015 phishscore=0 lowpriorityscore=0 suspectscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2403140000 definitions=main-2403200012
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=bgray@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28262.004
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28262.004
+X-TMASE-Result: 10--10.242300-10.000000
+X-TMASE-MatchedRID: N/ZbbLCcPKAPmP3FESo1jx1kSRHxj+Z5C//1TMV5chP1xrH5kKK/riC2
+ FZ19GZhejDVMw6TJvuFqZQlTWBYkGK7NRB06WtQS9Ib/6w+1lWQ81ck8U80WlhzTkVRa1gtO3UT
+ KRPNMe+si+t+0AiFaYvL3NxFKQpq1T12Hc9FhVjUK3Ma88LL+bhZSD+Gbjz3IGxDxAG8HwlajxY
+ yRBa/qJUl4W8WVUOR/joczmuoPCq2CC+YDrt+JtuLo5lYlQRrYaQlFQo703sNkbtsHuvfDlS0Q5
+ BNGaY3x
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=207.54.90.137;
+ envelope-from=yaoxt.fnst@fujitsu.com; helo=esa11.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,87 +94,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
+From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GDB server protocol assigns an arbitrary numbering of the SPRs.
-We track this correspondence on each SPR with gdb_id, using it to
-resolve any SPR requests GDB makes.
+1. The g_pattern_match_string() is deprecated when glib2 version >= 2.70.
+   Use g_pattern_spec_match_string() instead to avoid this problem.
 
-Early on we generate an XML representation of the SPRs to give GDB,
-including this numbering. However the XML is cached globally, and we
-skip setting the SPR gdb_id values on subsequent threads if we detect
-it is cached. This causes QEMU to fail to resolve SPR requests against
-secondary CPUs because it cannot find the matching gdb_id value on that
-thread's SPRs.
+2. The type of second parameter in g_ptr_array_add() is
+   'gpointer' {aka 'void *'}, but the type of reg->name is 'const char*'.
+   Cast the type of reg->name to 'gpointer' to avoid this problem.
 
-This is a minimal fix to first assign the gdb_id values, then return
-early if the XML is cached. Otherwise we generate the XML using the
-now already initialised gdb_id values.
+compiler warning message:
+/root/qemu/contrib/plugins/execlog.c:330:17: warning: ‘g_pattern_match_string’
+is deprecated: Use 'g_pattern_spec_match_string'
+instead [-Wdeprecated-declarations]
+  330 |                 if (g_pattern_match_string(pat, rd->name) ||
+      |                 ^~
+In file included from /usr/include/glib-2.0/glib.h:67,
+                 from /root/qemu/contrib/plugins/execlog.c:9:
+/usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
+   57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
+      |               ^~~~~~~~~~~~~~~~~~~~~~
+/root/qemu/contrib/plugins/execlog.c:331:21: warning: ‘g_pattern_match_string’
+is deprecated: Use 'g_pattern_spec_match_string'
+instead [-Wdeprecated-declarations]
+  331 |                     g_pattern_match_string(pat, rd_lower)) {
+      |                     ^~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
+   57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
+      |               ^~~~~~~~~~~~~~~~~~~~~~
+/root/qemu/contrib/plugins/execlog.c:339:63: warning: passing argument 2 of
+‘g_ptr_array_add’ discards ‘const’ qualifier from pointer target type
+[-Wdiscarded-qualifiers]
+  339 |                             g_ptr_array_add(all_reg_names, reg->name);
+      |                                                            ~~~^~~~~~
+In file included from /usr/include/glib-2.0/glib.h:33:
+/usr/include/glib-2.0/glib/garray.h:198:62: note: expected
+‘gpointer’ {aka ‘void *’} but argument is of type ‘const char *’
+  198 |                                            gpointer          data);
+      |                                            ~~~~~~~~~~~~~~~~~~^~~~
 
-Fixes: 1b53948ff8f7 ("target/ppc: Use GDBFeature for dynamic XML")
-Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
+Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 ---
- target/ppc/gdbstub.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ contrib/plugins/execlog.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
-index 3f1e61bdb7..3b28d4e21c 100644
---- a/target/ppc/gdbstub.c
-+++ b/target/ppc/gdbstub.c
-@@ -305,14 +305,6 @@ static void gdb_gen_spr_feature(CPUState *cs)
-     unsigned int num_regs = 0;
-     int i;
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index a1dfd59ab7..41f6774116 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -327,8 +327,13 @@ static GPtrArray *registers_init(int vcpu_index)
+             for (int p = 0; p < rmatches->len; p++) {
+                 g_autoptr(GPatternSpec) pat = g_pattern_spec_new(rmatches->pdata[p]);
+                 g_autofree gchar *rd_lower = g_utf8_strdown(rd->name, -1);
++#if GLIB_VERSION_MAX_ALLOWED < G_ENCODE_VERSION(2, 70)
+                 if (g_pattern_match_string(pat, rd->name) ||
+                     g_pattern_match_string(pat, rd_lower)) {
++#else
++                if (g_pattern_spec_match_string(pat, rd->name) ||
++                    g_pattern_spec_match_string(pat, rd_lower)) {
++#endif
+                     Register *reg = init_vcpu_register(rd);
+                     g_ptr_array_add(registers, reg);
  
--    if (pcc->gdb_spr.xml) {
--        return;
--    }
--
--    gdb_feature_builder_init(&builder, &pcc->gdb_spr,
--                             "org.qemu.power.spr", "power-spr.xml",
--                             cs->gdb_num_regs);
--
-     for (i = 0; i < ARRAY_SIZE(env->spr_cb); i++) {
-         ppc_spr_t *spr = &env->spr_cb[i];
- 
-@@ -320,9 +312,6 @@ static void gdb_gen_spr_feature(CPUState *cs)
-             continue;
-         }
- 
--        gdb_feature_builder_append_reg(&builder, g_ascii_strdown(spr->name, -1),
--                                       TARGET_LONG_BITS, num_regs,
--                                       "int", "spr");
-         /*
-          * GDB identifies registers based on the order they are
-          * presented in the XML. These ids will not match QEMU's
-@@ -335,6 +324,26 @@ static void gdb_gen_spr_feature(CPUState *cs)
-         num_regs++;
-     }
- 
-+    if (pcc->gdb_spr.xml) {
-+        return;
-+    }
-+
-+    gdb_feature_builder_init(&builder, &pcc->gdb_spr,
-+                             "org.qemu.power.spr", "power-spr.xml",
-+                             cs->gdb_num_regs);
-+
-+    for (i = 0; i < ARRAY_SIZE(env->spr_cb); i++) {
-+        ppc_spr_t *spr = &env->spr_cb[i];
-+
-+        if (!spr->name) {
-+            continue;
-+        }
-+
-+        gdb_feature_builder_append_reg(&builder, g_ascii_strdown(spr->name, -1),
-+                                       TARGET_LONG_BITS, spr->gdb_id,
-+                                       "int", "spr");
-+    }
-+
-     gdb_feature_builder_end(&builder);
- }
- #endif
+@@ -336,7 +341,7 @@ static GPtrArray *registers_init(int vcpu_index)
+                     if (disas_assist) {
+                         g_mutex_lock(&add_reg_name_lock);
+                         if (!g_ptr_array_find(all_reg_names, reg->name, NULL)) {
+-                            g_ptr_array_add(all_reg_names, reg->name);
++                            g_ptr_array_add(all_reg_names, (gpointer)reg->name);
+                         }
+                         g_mutex_unlock(&add_reg_name_lock);
+                     }
 -- 
-2.44.0
+2.37.3
 
 
