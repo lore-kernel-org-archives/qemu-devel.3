@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C2E5C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 06:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22431C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 06:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmplj-00029S-68; Wed, 20 Mar 2024 02:49:47 -0400
+	id 1rmpls-0002BQ-J6; Wed, 20 Mar 2024 02:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmplh-00028l-D9
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:49:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmplq-0002Ai-Jy
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:49:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmplf-0001SY-JL
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:49:45 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmpln-0001Uk-H9
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:49:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710917383;
+ s=mimecast20190719; t=1710917390;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Qc8+kwIplriLMJjmvgiN/RV8fauIBBcW/1ePlQepQTY=;
- b=M0kswbUnoce95quUN43nOJKcZN2KdxqphHQqgRY15myXnef0syLMWSZtnO/d6hMW4Ii6Ug
- 81fvywBUP/foH5b2/lxnvYEsRelMJumyPp7FpAqB1uDrHTv0qK3cKw1uOLkHQn7CZ7p+Vu
- WJR61GVcs6u6mBOColmeZ07oJNK7hY8=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-580-a1u6__2NNqWE7_F6U5Uhkg-1; Wed, 20 Mar 2024 02:49:41 -0400
-X-MC-Unique: a1u6__2NNqWE7_F6U5Uhkg-1
+ bh=/1xsCesGr8DmRI05FnWGd3Fvm5jcY0vbWbDDFmosFLo=;
+ b=O+8RAh+CTIbVuMOeo9nO77vDtWr+rweqZSmCc0ZwfvTnrvCIJ7hdPDBgLD/wIqSqTHF05q
+ HbZYlgphAEivOLug9DoO/5WuzgM0O1qtFpJyb3d9wSzxLEv4jFriV7czxbXt+wmzgQZIy8
+ QLcdV264V0wb6r+AT7VMZwrsglPRuUc=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-539-PBUPMybKO3i41YP6mxB3DA-1; Wed,
+ 20 Mar 2024 02:49:49 -0400
+X-MC-Unique: PBUPMybKO3i41YP6mxB3DA-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C32AA872807;
- Wed, 20 Mar 2024 06:49:40 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 8EFCE3CBDF60;
+ Wed, 20 Mar 2024 06:49:48 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.59])
- by smtp.corp.redhat.com (Postfix) with ESMTP id C59331C060A4;
- Wed, 20 Mar 2024 06:49:38 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 960761C060A4;
+ Wed, 20 Mar 2024 06:49:46 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
+To: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Cc: Avihai Horon <avihaih@nvidia.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH for-9.1 v5 06/14] migration: Add Error** argument to
- qemu_savevm_state_setup()
-Date: Wed, 20 Mar 2024 07:49:02 +0100
-Message-ID: <20240320064911.545001-7-clg@redhat.com>
+ Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PATCH for-9.1 v5 08/14] migration: Add Error** argument to
+ .load_setup() handler
+Date: Wed, 20 Mar 2024 07:49:04 +0100
+Message-ID: <20240320064911.545001-9-clg@redhat.com>
 In-Reply-To: <20240320064911.545001-1-clg@redhat.com>
 References: <20240320064911.545001-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -87,207 +86,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This prepares ground for the changes coming next which add an Error**
-argument to the .save_setup() handler. Callers of qemu_savevm_state_setup()
-now handle the error and fail earlier setting the migration state from
-MIGRATION_STATUS_SETUP to MIGRATION_STATUS_FAILED.
+This will be useful to report errors at a higher level, mostly in VFIO
+today.
 
-In qemu_savevm_state(), move the cleanup to preserve the error
-reported by .save_setup() handlers.
-
-Since the previous behavior was to ignore errors at this step of
-migration, this change should be examined closely to check that
-cleanups are still correctly done.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
+ include/migration/register.h |  3 ++-
+ hw/vfio/migration.c          |  9 +++++++--
+ migration/ram.c              |  3 ++-
+ migration/savevm.c           | 11 +++++++----
+ 4 files changed, 18 insertions(+), 8 deletions(-)
 
- Changes in v5:
+diff --git a/include/migration/register.h b/include/migration/register.h
+index 64fc7c11036c82edd6d69513e56a0216d36c17aa..f60e797894e5faacdf55d2d6de175074ac58944f 100644
+--- a/include/migration/register.h
++++ b/include/migration/register.h
+@@ -234,10 +234,11 @@ typedef struct SaveVMHandlers {
+      *
+      * @f: QEMUFile where to receive the data
+      * @opaque: data pointer passed to register_savevm_live()
++     * @errp: pointer to Error*, to store an error if it happens.
+      *
+      * Returns zero to indicate success and negative for error
+      */
+-    int (*load_setup)(QEMUFile *f, void *opaque);
++    int (*load_setup)(QEMUFile *f, void *opaque, Error **errp);
  
- - Removed Fabiano's R-b because of changes 
- - Handled qemu_savevm_state_setup() failures after waiting for
-   virtio-net-failover devices to unplug.
-   
- migration/savevm.h    |  2 +-
- migration/migration.c | 33 +++++++++++++++++++++++++++++++--
- migration/savevm.c    | 26 +++++++++++++++-----------
- 3 files changed, 47 insertions(+), 14 deletions(-)
-
-diff --git a/migration/savevm.h b/migration/savevm.h
-index 74669733dd63a080b765866c703234a5c4939223..9ec96a995c93a42aad621595f0ed58596c532328 100644
---- a/migration/savevm.h
-+++ b/migration/savevm.h
-@@ -32,7 +32,7 @@
- bool qemu_savevm_state_blocked(Error **errp);
- void qemu_savevm_non_migratable_list(strList **reasons);
- int qemu_savevm_state_prepare(Error **errp);
--void qemu_savevm_state_setup(QEMUFile *f);
-+int qemu_savevm_state_setup(QEMUFile *f, Error **errp);
- bool qemu_savevm_state_guest_unplug_pending(void);
- int qemu_savevm_state_resume_prepare(MigrationState *s);
- void qemu_savevm_state_header(QEMUFile *f);
-diff --git a/migration/migration.c b/migration/migration.c
-index f60bd371e3f896a74df8be4282a15b4280eba732..cd6b6120e31798de9361d02ee43d89989c8d30ce 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3427,6 +3427,8 @@ static void *migration_thread(void *opaque)
-     int64_t setup_start = qemu_clock_get_ms(QEMU_CLOCK_HOST);
-     MigThrError thr_error;
-     bool urgent = false;
-+    Error *local_err = NULL;
+     /**
+      * @load_cleanup
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index 5763c0b68376b1e24ef3e77c3d19fcd406922c79..06ae40969b6c19037e190008e14f28be646278cd 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -588,12 +588,17 @@ static void vfio_save_state(QEMUFile *f, void *opaque)
+     }
+ }
+ 
+-static int vfio_load_setup(QEMUFile *f, void *opaque)
++static int vfio_load_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
+     VFIODevice *vbasedev = opaque;
 +    int ret;
  
-     thread = migration_threads_add("live_migration", qemu_get_thread_id());
- 
-@@ -3470,12 +3472,24 @@ static void *migration_thread(void *opaque)
-     }
- 
-     bql_lock();
--    qemu_savevm_state_setup(s->to_dst_file);
-+    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
-     bql_unlock();
- 
-     qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
-                                MIGRATION_STATUS_ACTIVE);
- 
-+    /*
-+     * Handle SETUP failures after waiting for virtio-net-failover
-+     * devices to unplug. This to preserve migration state transitions.
-+     */
+-    return vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
++    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_RESUMING,
+                                    vbasedev->migration->device_state);
 +    if (ret) {
-+        migrate_set_error(s, local_err);
-+        error_free(local_err);
-+        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-+                          MIGRATION_STATUS_FAILED);
-+        goto out;
++        error_setg(errp, "%s: Failed to set RESUMING state", vbasedev->name);
 +    }
-+
-     s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
++    return ret;
+ }
  
-     trace_migration_thread_setup_complete();
-@@ -3549,6 +3563,8 @@ static void *bg_migration_thread(void *opaque)
-     MigThrError thr_error;
-     QEMUFile *fb;
-     bool early_fail = true;
-+    Error *local_err = NULL;
-+    int ret;
- 
-     rcu_register_thread();
-     object_ref(OBJECT(s));
-@@ -3582,12 +3598,24 @@ static void *bg_migration_thread(void *opaque)
- 
-     bql_lock();
-     qemu_savevm_state_header(s->to_dst_file);
--    qemu_savevm_state_setup(s->to_dst_file);
-+    ret = qemu_savevm_state_setup(s->to_dst_file, &local_err);
-     bql_unlock();
- 
-     qemu_savevm_wait_unplug(s, MIGRATION_STATUS_SETUP,
-                                MIGRATION_STATUS_ACTIVE);
- 
-+    /*
-+     * Handle SETUP failures after waiting for virtio-net-failover
-+     * devices to unplug. This to preserve migration state transitions.
-+     */
-+    if (ret) {
-+        migrate_set_error(s, local_err);
-+        error_free(local_err);
-+        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-+                          MIGRATION_STATUS_FAILED);
-+        goto fail_setup;
-+    }
-+
-     s->setup_time = qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start;
- 
-     trace_migration_thread_setup_complete();
-@@ -3656,6 +3684,7 @@ fail:
-         bql_unlock();
-     }
- 
-+fail_setup:
-     bg_migration_iteration_finish(s);
- 
-     qemu_fclose(fb);
+ static int vfio_load_cleanup(void *opaque)
+diff --git a/migration/ram.c b/migration/ram.c
+index 6ea5a06e00e30d0d1e4d8a6defdeb86c81fa707b..4cd4f0158c8675e1515ef8476c64d1203eed4458 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3704,8 +3704,9 @@ void colo_release_ram_cache(void)
+  *
+  * @f: QEMUFile where to receive the data
+  * @opaque: RAMState pointer
++ * @errp: pointer to Error*, to store an error if it happens.
+  */
+-static int ram_load_setup(QEMUFile *f, void *opaque)
++static int ram_load_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
+     xbzrle_load_setup();
+     ramblock_recv_map_init();
 diff --git a/migration/savevm.c b/migration/savevm.c
-index 1a7b5cb78a912c36ae16db703afc90ef2906b61f..0eb94e61f888adba2c0732c2cb701b110814c455 100644
+index 535ad5a32d67057dd172ce25d561a66a07172e97..8f42999a15d1685957de9ed517d6bc9ba49c3f11 100644
 --- a/migration/savevm.c
 +++ b/migration/savevm.c
-@@ -1310,11 +1310,11 @@ int qemu_savevm_state_prepare(Error **errp)
-     return 0;
+@@ -2747,8 +2747,9 @@ static void qemu_loadvm_state_switchover_ack_needed(MigrationIncomingState *mis)
+     trace_loadvm_state_switchover_ack_needed(mis->switchover_ack_pending_num);
  }
  
--void qemu_savevm_state_setup(QEMUFile *f)
-+int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
+-static int qemu_loadvm_state_setup(QEMUFile *f)
++static int qemu_loadvm_state_setup(QEMUFile *f, Error **errp)
  {
-+    ERRP_GUARD();
-     MigrationState *ms = migrate_get_current();
++    ERRP_GUARD(); /* error_prepend use */
      SaveStateEntry *se;
--    Error *local_err = NULL;
-     int ret = 0;
+     int ret;
  
-     json_writer_int64(ms->vmdesc, "page_size", qemu_target_page_size());
-@@ -1323,10 +1323,9 @@ void qemu_savevm_state_setup(QEMUFile *f)
-     trace_savevm_state_setup();
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
-         if (se->vmsd && se->vmsd->early_setup) {
--            ret = vmstate_save(f, se, ms->vmdesc, &local_err);
-+            ret = vmstate_save(f, se, ms->vmdesc, errp);
-             if (ret) {
--                migrate_set_error(ms, local_err);
--                error_report_err(local_err);
-+                migrate_set_error(ms, *errp);
-                 qemu_file_set_error(f, ret);
-                 break;
+@@ -2763,10 +2764,11 @@ static int qemu_loadvm_state_setup(QEMUFile *f)
              }
-@@ -1346,18 +1345,19 @@ void qemu_savevm_state_setup(QEMUFile *f)
-         ret = se->ops->save_setup(f, se->opaque);
-         save_section_footer(f, se);
+         }
+ 
+-        ret = se->ops->load_setup(f, se->opaque);
++        ret = se->ops->load_setup(f, se->opaque, errp);
          if (ret < 0) {
-+            error_setg(errp, "failed to setup SaveStateEntry with id(name): "
-+                       "%d(%s): %d", se->section_id, se->idstr, ret);
++            error_prepend(errp, "Load state of device %s failed: ",
++                          se->idstr);
              qemu_file_set_error(f, ret);
-             break;
+-            error_report("Load state of device %s failed", se->idstr);
+             return ret;
          }
      }
- 
-     if (ret) {
--        return;
-+        return ret;
+@@ -2947,7 +2949,8 @@ int qemu_loadvm_state(QEMUFile *f)
+         return ret;
      }
  
--    if (precopy_notify(PRECOPY_NOTIFY_SETUP, &local_err)) {
--        error_report_err(local_err);
--    }
-+    /* TODO: Should we check that errp is set in case of failure ? */
-+    return precopy_notify(PRECOPY_NOTIFY_SETUP, errp);
- }
- 
- int qemu_savevm_state_resume_prepare(MigrationState *s)
-@@ -1725,7 +1725,10 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
-     ms->to_dst_file = f;
- 
-     qemu_savevm_state_header(f);
--    qemu_savevm_state_setup(f);
-+    ret = qemu_savevm_state_setup(f, errp);
-+    if (ret) {
-+        goto cleanup;
-+    }
- 
-     while (qemu_file_get_error(f) == 0) {
-         if (qemu_savevm_state_iterate(f, false) > 0) {
-@@ -1738,10 +1741,11 @@ static int qemu_savevm_state(QEMUFile *f, Error **errp)
-         qemu_savevm_state_complete_precopy(f, false, false);
-         ret = qemu_file_get_error(f);
+-    if (qemu_loadvm_state_setup(f) != 0) {
++    if (qemu_loadvm_state_setup(f, &local_err) != 0) {
++        error_report_err(local_err);
+         return -EINVAL;
      }
--    qemu_savevm_state_cleanup();
-     if (ret != 0) {
-         error_setg_errno(errp, -ret, "Error while writing VM state");
-     }
-+cleanup:
-+    qemu_savevm_state_cleanup();
  
-     if (ret != 0) {
-         status = MIGRATION_STATUS_FAILED;
 -- 
 2.44.0
 
