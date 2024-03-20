@@ -4,80 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 783AFC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C796C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:39:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmypV-0007kh-Vi; Wed, 20 Mar 2024 12:30:18 -0400
+	id 1rmyxv-0002EH-Ge; Wed, 20 Mar 2024 12:39:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rmypR-0007kT-S4
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:30:13 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rmyxu-0002E4-CM
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:38:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1rmypO-0006Kd-Sp
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:30:12 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rmyxs-0007xe-00
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:38:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710952210;
+ s=mimecast20190719; t=1710952732;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yghPF/eNyveDIzWzZpBJ3uoxGXkclFbrrZ0YAsa1Bp0=;
- b=WPakRub+r7TX/afVTWLkF98sGmd2mx4a3zQAXDyNbLw+3QTxvyxFBpsMB2OGJhKKleAy53
- A57dJaLGabR7nzRPsbxFkqSpROwIC+a5O5cUI/+hCpb8SlEjVPoMutdXGa8nJ6KfINkfCT
- noi2L2gBUAaQsCswOq/goErstPVdFRI=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=K5r5p+TdefoFVY2Sm9HFnen4qIuY7gJN6xyg80IowfU=;
+ b=J6jckVBTXug/9Y7H/3O1sNMZC4i/JBsEwZUNMt8YOnqte+MsbVhqblJrRVMpr3nJyUGwz/
+ ID0tRg3GoIcwt4mqWbiYsw7TFPXQnnIrYkklzRu4i5NocpNU2xnBeMLz1lqkRORgWzGSf7
+ LMRD4axC9CeKcNpEnUAdQZJdJR8HAGg=
+Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
+ [209.85.217.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-116-BT12HsJcN8y1W0RrGIRVgw-1; Wed, 20 Mar 2024 12:30:07 -0400
-X-MC-Unique: BT12HsJcN8y1W0RrGIRVgw-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-60a0b18e52dso888897b3.1
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 09:30:07 -0700 (PDT)
+ us-mta-90-8QfkvD_IP2yVYhRACOP9CQ-1; Wed, 20 Mar 2024 12:38:51 -0400
+X-MC-Unique: 8QfkvD_IP2yVYhRACOP9CQ-1
+Received: by mail-vs1-f70.google.com with SMTP id
+ ada2fe7eead31-4767d683821so1220569137.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 09:38:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710952207; x=1711557007;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yghPF/eNyveDIzWzZpBJ3uoxGXkclFbrrZ0YAsa1Bp0=;
- b=FLUdjKHM+VBzkxp+kTwdQj8C7iVqkAM7AlLPuvi3QNsU2X8OWKkiR4SS4k+v3fJ39w
- 5004OPx/mwc6ml31KX8PpOaVABOPHIngj+WH8+f48a9xpD+4FvyCpK/uL+LTVV98W9at
- YugYzZMpPwj2iW/poo9Z9U/RVRBCWJxDB6Fe/dxEXR813d8hmNhConkcfCbqtzc3jJ9T
- x3xjDsR1+Cti2/EAlEnN3748QoLVPkFOqJYYuj2BiM1WqB9ZEDY+MHXAYol0WYSpHfp7
- COqbcsd9mwOWjpGBbDCHfUJxPe7Fi1FitBlMl0+bbCeNlowMAajqZSBM+azOnO1DUkrq
- lTWg==
+ d=1e100.net; s=20230601; t=1710952730; x=1711557530;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=K5r5p+TdefoFVY2Sm9HFnen4qIuY7gJN6xyg80IowfU=;
+ b=iwHjt9G0oQkZabrFSciQvtSeMX+ElhQuBtmmEB8l3dITllGLpR42+IN9UpTnG9qEBD
+ ZRk4k4uVq7TDjZi6KkTVPY91WRLGawk3JXFSy1PTPjtbD8ah/iJourNfubj2CnWLxIsi
+ LaYxw6dj2GE/9zVCyt9ELP/NVZbljIke6T+lYsLByJe4tE0iEjHNK9aDIcMAKY8NPSGD
+ uGuJ2PPES96xRp022e60Pv5fxG0oGbYSziRgJY5q+60tqCP/RpTae/WHSFEvaQsGEA0C
+ oIJJcPvXyeJQaU8lLksLXbDwWrHHGRABS09Sw7qXoUjX/BbF1OYlnQRANzfHMqKkp9rH
+ JzlA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAYdM34kc2u45c/Yi516LEk4n+G7sYbZ39qVc99G0HhfzK3ddYXKaoGsl0/7ry7t01QhxWGs5n1BSi3FKDsVRlekdESSo=
-X-Gm-Message-State: AOJu0YyrUS/pBYcfUanfr/djuvgxhqtjfdmxO758fruWP13wJdzXx/HF
- imOpg9NBF+6jWInPe1e3DXTX0FZ+Cp6wEqa6bJZUMOJPyM+z/bad/4Q+i/HdGKdAojFeYD97Gvp
- gyKaZGcV1Tc12YxmckZPvvHB4Uqc2yMWo9bxNXrGovcGahUhX+WiMjbb0ljmDqZs7DPZyPnzBGl
- VjByfQtQcde0upWxR2YHokhDm37Tw=
-X-Received: by 2002:a81:4f11:0:b0:610:f9dc:87d with SMTP id
- d17-20020a814f11000000b00610f9dc087dmr145449ywb.3.1710952206935; 
- Wed, 20 Mar 2024 09:30:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMGRZJ71AKFQ367f8JVFYlUG+IDhib574y0P903Ihgc46d0pFP/98yfhGXcMX3h3jvCSvrI6XYjtH08diqbvg=
-X-Received: by 2002:a81:4f11:0:b0:610:f9dc:87d with SMTP id
- d17-20020a814f11000000b00610f9dc087dmr145426ywb.3.1710952206570; Wed, 20 Mar
- 2024 09:30:06 -0700 (PDT)
+ AJvYcCXOdTUypK/hytT/HKvcPchjzwHvXAYV9SORGrZg0vX+sKpDPwDT+W52sGYK9BPHV0LpC0rQ6oty/CMwYCWQHuiE/JzGhfA=
+X-Gm-Message-State: AOJu0YxImLgQ1131Dx27zSu/rrpXQTRgvCMLBHJ/Ievyq/t9D/tTKzAF
+ +MWbRLJmvwX8mDc/KW+JdOHwY8j10ng9OWvGHHGzE9zfoKc/o/990v5HgRbQfAgNuTDTWElR599
+ dZs6RBJdvg0TXCrZIBLOomgUeBlMrO/85MpkYhUst5ICrWM20Ls0x
+X-Received: by 2002:a67:f744:0:b0:475:fb4c:7945 with SMTP id
+ w4-20020a67f744000000b00475fb4c7945mr17255619vso.26.1710952730753; 
+ Wed, 20 Mar 2024 09:38:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHjdSZzCVJ68iThyIsGzMXH+YUdcqituas/ZbaBs84fPj14wkD26kaOdp/88pPYCe+J59FWmg==
+X-Received: by 2002:a67:f744:0:b0:475:fb4c:7945 with SMTP id
+ w4-20020a67f744000000b00475fb4c7945mr17255600vso.26.1710952730493; 
+ Wed, 20 Mar 2024 09:38:50 -0700 (PDT)
+Received: from [192.168.10.118] ([151.95.49.219])
+ by smtp.googlemail.com with ESMTPSA id
+ d24-20020ab07258000000b007dc1a45e05fsm1572801uap.39.2024.03.20.09.38.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 Mar 2024 09:38:49 -0700 (PDT)
+Message-ID: <08fc19f0-fa0a-40c5-b77f-90ea55c140a2@redhat.com>
+Date: Wed, 20 Mar 2024 17:38:46 +0100
 MIME-Version: 1.0
-References: <13625712.uLZWGnKmhe@valdaarhun>
- <CAJaqyWdmGbYj1KjN6zcu-fRij9X6mNG-xKHqQiaVsY1zu1T-Ag@mail.gmail.com>
- <9252283.CDJkKcVGEf@valdaarhun> <3291749.44csPzL39Z@valdaarhun>
-In-Reply-To: <3291749.44csPzL39Z@valdaarhun>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 20 Mar 2024 17:29:30 +0100
-Message-ID: <CAJaqyWdhsXUXdP+3GN81hw9tqccy6+3=WVvigxu2yU-8F=x04A@mail.gmail.com>
-Subject: Re: Intention to work on GSoC project
-To: Sahil <icegambit91@gmail.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- qemu-level <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 06/49] RAMBlock: Add support of KVM private guest memfd
+Content-Language: en-US
+To: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, Tom Lendacky <thomas.lendacky@amd.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>,
+ Isaku Yamahata <isaku.yamahata@linux.intel.com>,
+ David Hildenbrand <david@redhat.com>
+References: <20240320083945.991426-1-michael.roth@amd.com>
+ <20240320083945.991426-7-michael.roth@amd.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20240320083945.991426-7-michael.roth@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -102,110 +146,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 18, 2024 at 8:47=E2=80=AFPM Sahil <icegambit91@gmail.com> wrote=
-:
->
-> Hi,
->
-> I was reading the "Virtqueues and virtio ring: How the data travels"
-> article [1]. There are a few things that I have not understood in the
-> "avail rings" section.
->
-> Q1.
-> Step 2 in the "Process to make a buffer available" diagram depicts
-> how the virtio driver writes the descriptor index in the avail ring.
-> In the example, the descriptor index #0 is written in the first entry.
-> But in figure 2, the number 0 is in the 4th position in the avail ring.
-> Is the avail ring queue an array of "struct virtq_avail" which maintains
-> metadata such as the number of descriptor indexes in the header?
->
+On 3/20/24 09:39, Michael Roth wrote:
+> @@ -1842,6 +1842,17 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+>           }
+>       }
+>   
+> +    if (kvm_enabled() && (new_block->flags & RAM_GUEST_MEMFD)) {
+> +        assert(new_block->guest_memfd < 0);
+> +
+> +        new_block->guest_memfd = kvm_create_guest_memfd(new_block->max_length,
+> +                                                        0, errp);
+> +        if (new_block->guest_memfd < 0) {
+> +            qemu_mutex_unlock_ramlist();
+> +            return;
+> +        }
+> +    }
+> +
 
-struct virtq_avail has two members: uint16_t idx and ring[]. To be in
-the first position of the avail ring means to be in ring[0] there.
+This potentially leaks new_block->host.  This can be squashed into the patch:
 
-Idx and ring[] are just headers in the figure, not actual positions.
-Same as Avail. Now that you mention maybe there is a better way to
-represent that, yes.
-
-Let me know if I didn't explain it well.
-
-> Also, in the second position, the number changes from 0 (figure 1) to
-> 1 (figure 2). I haven't understood what idx, 0 (later 1) and ring[] repre=
-sent
-> in the figures. Does this number represent the number of descriptors
-> that are currently in the avail ring?
->
-
-It is the position in ring[] where the device needs to stop looking
-for descriptors. It starts at 0, and when the device sees 1 it means
-ring[0] has a descriptor to process.
-
-Now you need to apply a "modulo virtqueue size" to that index. So if
-the virtqueue is 256, avail_idx 257 means the last valid descriptor is
-at 0. This happens naturally when the driver keeps adding descriptors
-and wraps the queue.
-
-The authoritative source of this is the VirtQueues section of the
-virtio standard [1], feel free to check it in case it clarifies
-something better.
-
-> Q2.
->
-> There's this paragraph in the article right below the above mentioned
-> diagram:
->
-> > The avail ring must be able to hold the same number of descriptors
-> > as the descriptor area, and the descriptor area must have a size power
-> > of two, so idx wraps naturally at some point. For example, if the ring
-> > size is 256 entries, idx 1 references the same descriptor as idx 257, 5=
-13...
-> > And it will wrap at a 16 bit boundary. This way, neither side needs to
-> > worry about processing an invalid idx: They are all valid.
->
-> I haven't really understood this. I have understood that idx is calculate=
-d
-> as idx mod queue_length. But I haven't understood the "16 bit boundary"
-> part.
->
-
-avail_idx is an uin16_t, so ((uint16_t)-1) + 1 =3D=3D 0.
-
-> I am also not very clear on how a queue length that is not a power of 2
-> might cause trouble. Could you please expand on this?
->
-
-That's a limitation in the standard, but I'm not sure where it comes
-from beyond being computationally easier to calculate ring position
-with a mask than with a remainder of a random non-power-of-two number.
-Packed virtqueue removes that limitation.
-
-> Q3.
-> I have started going through the source code in "drivers/virtio/virtio_ri=
-ng.c".
-> I have understood that the virtio driver runs in the guest's kernel. Does=
- that
-> mean the drivers in "drivers/virtio/*" are enabled when linux is being ru=
-n in
-> a guest VM?
->
-
-For PCI devices, as long as it detects a device with vendor =3D=3D Red
-Hat, Inc. (0x1AF4) and device ID 0x1000 through 0x107F inclusive, yes.
-You can also load and unload manually with modprobe as other drivers.
-
-Let me know if you have more doubts. Thanks!
-
-[1] https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html
-
-
-> Thanks,
-> Sahil
->
-> [1] https://www.redhat.com/en/blog/virtqueues-and-virtio-ring-how-data-tr=
-avels
->
->
->
->
+diff --git a/system/physmem.c b/system/physmem.c
+index 3a4a3f10d5a..0836aff190e 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1810,6 +1810,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+      const bool shared = qemu_ram_is_shared(new_block);
+      RAMBlock *block;
+      RAMBlock *last_block = NULL;
++    bool free_on_error = false;
+      ram_addr_t old_ram_size, new_ram_size;
+      Error *err = NULL;
+  
+@@ -1839,6 +1841,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+                  return;
+              }
+              memory_try_enable_merging(new_block->host, new_block->max_length);
++            free_on_error = true;
+          }
+      }
+  
+@@ -1849,7 +1852,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+                                                          0, errp);
+          if (new_block->guest_memfd < 0) {
+              qemu_mutex_unlock_ramlist();
+-            return;
++            goto out_free;
+          }
+      }
+  
+@@ -1901,6 +1904,13 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+          ram_block_notify_add(new_block->host, new_block->used_length,
+                               new_block->max_length);
+      }
++    return;
++
++out_free:
++    if (free_on_error) {
++        qemu_anon_ram_free(new_block->host, new_block->max_length);
++        new_block->host = NULL;
++    }
+  }
+  
+  #ifdef CONFIG_POSIX
 
 
