@@ -4,74 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F4E1C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 11:45:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28BE8C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 11:46:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmuNA-0001Kf-Dm; Wed, 20 Mar 2024 07:44:44 -0400
+	id 1rmuNy-0001Tf-Eh; Wed, 20 Mar 2024 07:45:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmuN9-0001KT-1q
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 07:44:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mburton@qti.qualcomm.com>)
+ id 1rmuNv-0001TL-I4; Wed, 20 Mar 2024 07:45:31 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmuN6-0008Ha-CE
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 07:44:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710935079;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=caJB97+iohvjmPt5J8Pk8XyfnDlkj9PniJFqzu0+JW4=;
- b=GYyF3puN7NlUBdgvx/2Xru5zEAMD+MtEuHROv2UF/7J9AV//5WAo4j1xocbjT2zOW13gis
- MHkQrN1q/ZRSD+K51spLjCQF20ZrOScwgMGNFgN6pc186WqDdaoholx3YkL/VyQKrO5rTp
- Bt1OkckjrZbAJxvmxOfAcOpaCmQUPFI=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-pd-k7ZWIMm6_f9L5o9HK4g-1; Wed, 20 Mar 2024 07:44:37 -0400
-X-MC-Unique: pd-k7ZWIMm6_f9L5o9HK4g-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C245C803F61;
- Wed, 20 Mar 2024 11:44:36 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.205])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 1292540C6DB7;
- Wed, 20 Mar 2024 11:44:34 +0000 (UTC)
-Date: Wed, 20 Mar 2024 11:44:13 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Pankaj Gupta <pankaj.gupta@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Isaku Yamahata <isaku.yamahata@linux.intel.com>
-Subject: Re: [PATCH v3 21/49] i386/sev: Introduce "sev-common" type to
- encapsulate common SEV state
-Message-ID: <ZfrMDYk-gSQF04gQ@redhat.com>
-References: <20240320083945.991426-1-michael.roth@amd.com>
- <20240320083945.991426-22-michael.roth@amd.com>
+ (Exim 4.90_1) (envelope-from <mburton@qti.qualcomm.com>)
+ id 1rmuNm-0000N3-DQ; Wed, 20 Mar 2024 07:45:31 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
+ 42KBUHBY007878; Wed, 20 Mar 2024 11:45:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ from:to:cc:subject:date:message-id:references:in-reply-to
+ :content-type:content-id:content-transfer-encoding:mime-version;
+ s=qcppdkim1; bh=RS0wveTTHq3jp/pSIIvpp9p73S2iPrDVS0DQOsN9axI=; b=
+ V2I7X0z5hklMNTEcmfSkvLWpp4NS4CnSGvuHwZ1GAXzGGF5Sd32gFt9qYt3AL9mK
+ UPGVPBOq8CQtks8GESc/hkOOz4bV83czYRv0q49X8OrQ471VlJP+b1sxjjbh6DLJ
+ PzLt6Q+XWzw0pxdaXPIlMz3Cu487cAfLS7+Ar1nSB3f0A8MICZ3gp+Jgvx0N/lZ0
+ btL1p9akMX83jGCAziRwSzgktrEyrGs2/zaqMJJU9x7ScMWEflvNBg4rnlkuJiAf
+ 1mnjYj4wY4UCWFwRp54KR+vWpCpNUH9ofzeTSDD3SMwBAxtp2QqFOeBmkTy3Mctr
+ LLWgVpKXxyfnmsiMyXxgtg==
+Received: from nam12-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam12lp2169.outbound.protection.outlook.com [104.47.59.169])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3wypxq11kj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Mar 2024 11:45:12 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=gExNFFdDn1NfwCIzwjaNsjC7E/f8uvx1EXGubr8i7onE2iSpX/Xw6J+rRzIUqSxSyfW0HDSbm7QnyDr/aBy7Hc7xnzLuVeLW0Fkii8CfNzym9aFnnATUz3eSEq9LTZlsN1LHJv9Mqq0JfzEQICw3H3ME4gwGKzolhgEpRzrUFvoX9bkDEDp/CbSc0xiPXXJrpKJKGXvfMGm+a/dsC/t+Pgu113v2kSbnKH4BAGOlV/ieC3JKMJSFw/fandrf7e1FhSd7ZU5fSzrcRbh5aA3kgjxsw8KSjsxXH84LxlNfwoOmmtEV7o2LbX0REJcFyukqr2HarrufvwWbMYAAIbgScg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RS0wveTTHq3jp/pSIIvpp9p73S2iPrDVS0DQOsN9axI=;
+ b=cb+Bh3qBfEXcFl2+8Njyc9R34hjish79oUMl6QH4Y+WnqaXscYZVBmzQ8uzRg2XVMXjYTBeRc9ouNXZxFl0bxYWK5KZCvYHNwjttcQLb0DqDU22Ry7qti5tmbarNryiGRUR88c3sqE5W+W/HgrDSV5PquuqytBfxd/shF0DKNZjb7FbiBPwWSVr6lKrJLO9zOeCEMkxp62825wFNqUhH/01ouKkl0VJI+MO0voyrFIGOGanBg0sqkYfx0t5J7RmAhwgZZKchkTejqjqsNvOLnY5noJwsdViG/nCGMA6VDIjNttSNds07kH2jBPk4cZgrwPeL0GvTWLjQfJqGw2qGOg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=qti.qualcomm.com; dmarc=pass action=none
+ header.from=qti.qualcomm.com; dkim=pass header.d=qti.qualcomm.com; arc=none
+Received: from SJ2PR02MB9884.namprd02.prod.outlook.com (2603:10b6:a03:53a::21)
+ by CH2PR02MB6918.namprd02.prod.outlook.com (2603:10b6:610:89::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.31; Wed, 20 Mar
+ 2024 11:44:56 +0000
+Received: from SJ2PR02MB9884.namprd02.prod.outlook.com
+ ([fe80::f655:6bb8:2692:cb0f]) by SJ2PR02MB9884.namprd02.prod.outlook.com
+ ([fe80::f655:6bb8:2692:cb0f%3]) with mapi id 15.20.7386.030; Wed, 20 Mar 2024
+ 11:44:56 +0000
+From: Mark Burton <mburton@qti.qualcomm.com>
+To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+CC: Thomas Huth <thuth@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Markus Armbruster <armbru@redhat.com>,
+ "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>, "qemu-ppc@nongnu.org"
+ <qemu-ppc@nongnu.org>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: Re: [PATCH 0/4] hw/nmi: Remove @cpu_index argument
+Thread-Topic: [PATCH 0/4] hw/nmi: Remove @cpu_index argument
+Thread-Index: AQHaerh97y9neLDZOEe71DBZx3RqVrFAgpGA
+Date: Wed, 20 Mar 2024 11:44:56 +0000
+Message-ID: <328B70A2-6B3A-4AE2-ABB7-F6EE4363F8C2@qti.qualcomm.com>
+References: <20240220150833.13674-1-philmd@linaro.org>
+ <f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com>
+ <cc132404-dcd5-4aed-a481-b46d6e3115b0@linaro.org>
+In-Reply-To: <cc132404-dcd5-4aed-a481-b46d6e3115b0@linaro.org>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ2PR02MB9884:EE_|CH2PR02MB6918:EE_
+x-ms-office365-filtering-correlation-id: 79c61aef-d391-43c5-0cfe-08dc48d32a22
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: p1Vy64twf9D8XDwbzVUe2yILTN8NgXc0ryJfKwxGWF2ThqkI+Y96rm7nAACL6wrN6h+bu/QFmlrmmm+oqsdEc+OJX9rlAMP0i7blG6h9OemIbAXA1iFbKXdfPtJlKsFNjUxXZHxkFd0urB0moDlgQpvukylb4F4WreWsk0pswwBxR8qRONBQNKDln7yRDS1jduT4RWlkTntqjhSCVufg6T6uvRyvcENl53iOT9//h1KVWs/scgN96s15JUef8nbk9HN3GKkf4dz84iQF2IqOyvmJPVEKZurzCiCFMyxP2KIxvkl2AKL9xR3sYnshOuHj+KDXD6fGs2bwzCEe4l/xZtsi53X8Z7e8GGrnYzEnh9MttE0598yZ9Wo1NbeBssvg6OpT3I4SHUn7dbmaC9BXaPp+jciOSff2pE/MVu7XgunF6Eu7RcFcmzAyGS4t06WzlxZa3SsyV2howrl4s3eK28utlP1aVD8zLKqgI/Nndy9FyKF49JcxtmstugZ3ZbD7EI006fKHbop6+UwNkzyebf9ctnRx2gDuZ7RBA2MD9EmDIShKd3SFHwaxJZWtKhyKvAM9ZGGP03AsXw3KAZhp1oRGFRLhfZZaBdDZb0p8szpBHgvRvVu99/pMCl70x/yWc0lnkJZnw6RyhmgJeQ665droHezIZWLmvhUgIfzyH/CjqPuyITNv30kMPPjPwGXnItPoawlDC7Mc2kJ2xH4MZZANRAmB/Ye/GQ5snxVelhI=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ2PR02MB9884.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(366007)(1800799015)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cnZWb3lNRTlYbTd2OHl6ODlKcy9JNy9CcEpsYUxiYzdBbWNBeXpBZ3Y1SHBj?=
+ =?utf-8?B?QXBDZjR5cTUvL0kxTVU5ZEZEQ2lKb3JDK3A4SHptTkIzanlWc2hhZ1pDSkVp?=
+ =?utf-8?B?ZWNIR0hPSGVKUEhsOVVWa2thZEZQR0s3M2dEQkxqMnpkcmFubUxDa1Q3b2ln?=
+ =?utf-8?B?b05JcWdibE9TTUVoTWhLby9MRUVrVnpZUHVBU09vZXp3TUluSVdZVDZYV0Fz?=
+ =?utf-8?B?SCtjSXdDaHJSSllKRzJHaFRUVHdjQWg4VFRCWk9ZamNPRnlzQnpTTURrWGFr?=
+ =?utf-8?B?ckxoT0xPOTU3TXNmY0dEY3ppT2tVSnprRi9CZzJ0aTJvSWVSUDVQc3ZZQ3NK?=
+ =?utf-8?B?b2VuVFN6TVNwdUNYMUxnVEt6czVJYnhYUUFhUHNBQjVzeWVsMitSZktMWDRw?=
+ =?utf-8?B?NEhLUExMRUcza3EwVlJ3VTAyQXFEakp0V0RmS2M5b0drLysvQmk4ZjB6WlFy?=
+ =?utf-8?B?Vk5STm0rTFlYTjN2MGNYYVFtT0pxSDFwQmhmd1FQTmVZdXR4SWN2WEJTY3Vh?=
+ =?utf-8?B?UlQwb091Q05NYUFOR0UxV0JISlYxa21qNmZBM3BCYXdUc2IrREFqdXpNRzBv?=
+ =?utf-8?B?SnVJVTFnR21vNW8vazNGbHZQSk1lVXBGbEpaTE5FOXoxSFZEQUdQU3U1Qkhz?=
+ =?utf-8?B?WW9JVFBLZmFLdTVFYUg3ckZBamxPajB0eTZhSlI5aWY2Sk5hcnhMVy92QVdw?=
+ =?utf-8?B?V1VIY3FkUTBEaUlDSmNhSTBjcEtHQkZWcENsY3JqSDdrMmgxaUZLdjF5VndG?=
+ =?utf-8?B?QVExbWVJcE9CamRkeDZDYnBrS0lLQ3llUkgxZVY5RW5kckU0L1FncFR0Tnh6?=
+ =?utf-8?B?ajdEVzV5RVVMNUxKZURtSzZ6elNFS1l6dlAxT21RaXRISnlWVG1Sb3FSMlZq?=
+ =?utf-8?B?c2F2M1VDMUxjZHFic3ZmcnUzdnBRbHNyRzJ2bEl2NUhXY1kyK2lySStvUTZ5?=
+ =?utf-8?B?TEVkSEFqOFp6QThCTU5qYmUyQWsxSUN0eVlEK0hLbjhYZXRueStvb1gvdFM1?=
+ =?utf-8?B?aUhUL2NGcnljbEUweTgxUE1LVnppY08rYmVPeXlhQnZwUXlTU25tYllyTjVM?=
+ =?utf-8?B?aXlyMjNXZ2FGT1hEdlBxT056aW55a0lMa3Bnb0RCRXhOQnNibnd4emJ2eEsr?=
+ =?utf-8?B?ZXZhdnNqdXNqOU9uVjdHVUsyZXlhNms5WitlQmZOSjYxMytpOXJNN0JDOFBi?=
+ =?utf-8?B?a3U5UWgrNXN0SlB4d0VnNTNtTklLb3IxcTVUSStMUURtcjg5Mlh3K3lTTFNZ?=
+ =?utf-8?B?dmRaaGROZXhIZWhyeXREZ1pjVjBqclY0aXUwK3VEbW9Dd2VvVGk0ZVpPOENU?=
+ =?utf-8?B?Q2NkeTN5Uk1uK0lqSXVlNnF3eXVPa3A0MCsyM2YydzVaZ1FTM015OG4zNUta?=
+ =?utf-8?B?TC83cmJlWDlsUzBGWHNpWFNqZnRQa3ZWYmJ0emVvVGJNaVlTbE0vbjE0L000?=
+ =?utf-8?B?MjNIZFFRUWZUaTkveGsxMk50WVpaTk4rZDhSWTREZExLazIxd204U3Y4UUxm?=
+ =?utf-8?B?eWkwWFFPVzJZKzZhYmljRVdvSzZoRmxxVDRiRXE1Szk2R1I1TjFxSDlGVDZh?=
+ =?utf-8?B?NnEvc3lUb3ZNNW1QbjFOeVp6MVN6TUIyOTI4cmhRUGtGQ2ZFT0JZcDZiVk1L?=
+ =?utf-8?B?ekhGaThBSlZFMmNhZk0yVmEwQVFTRFBCSDRid0tYSllQeVUybWtxMDBXR2l4?=
+ =?utf-8?B?ajBnTG4ydm1SUDl0VFpFZ0txSHU4RWhYL1d0cnlZNXl3TlhSQlMwSjN5MWk0?=
+ =?utf-8?B?cmNJNzg0VzNnSkJEaElCNnZVdkNZdVhDQ1FUZjB5Q2ppM1d1L1BEM3JRaEcw?=
+ =?utf-8?B?NFBNTTRJd0JQck40VHprOHdhVFFUdnZiWVlZWExPdHhpa3paVVA3TitPR3RM?=
+ =?utf-8?B?TW1JQiswSnNKYUFsYUFxUWRCdXZObklqcE1XdWpXSW11VkQydlpJbmxjSXA1?=
+ =?utf-8?B?NGJCRWw4SHMzMFhiR3Zmc3MxbE41V1pScHN6V3U1MEJ4Ri94eFVZNE11STgr?=
+ =?utf-8?B?TlpnK1dVNlFuYnB3dEJhb1M2WmlBMllEWGFpVk5VeHdCSkl0azM0aTZaWXVh?=
+ =?utf-8?B?YndVODh4amhEM1pjbllqS1Qzb3VrRC9CV1lNQ05MeDZ0NnR1OXpDTU1TenRi?=
+ =?utf-8?B?TVNVRTlRSzh3K0dXTUoyUy90LzEzMmFFZ0MveVFCemtObEZDNkhWUlBaQjdq?=
+ =?utf-8?B?SHc9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <2615A1875F018C4B8FFE6F955D107AE3@namprd02.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240320083945.991426-22-michael.roth@amd.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: BrsHXgJgOIYgorD9Uguz7sphtnQtkRrLiYnlhJqUAnEx252vx0epenrxa7e7V35Mapk2e8nfust6WgQoSsuzmB0PKD+ZsL/lsuiTPrWF3t8ED2I+jI6HXeEdeRv2tgN3bXYIzFQ87YRszpaP1a7EveL34gON9g5XckN12wJVAd4D+4N8ZiL8B+kKGC2g5UbuOz69e0J13lr1xGjP3uyipRDek+zupuWbGO02Xkb2EMp6Nf0513lgiIRT3AGdm1BmsDkPMFHfYwzomwXhE9e5IaIcf6UPmQh3M3SGvbKo7nuG2uTD6+YKdXzVYI3d9H9CqjcLTRYo7r5ZmYD+/JMGjN69yxFsNJ9TiXz4jvpV5WiXzx5mPZX+jZg/8RtTz0l1L2DcKCV4ZdxYO2n/XBteodDOMnOYc8UK03PohTWc2ptEusSkWXJgGpC5b5OCr8aTISCyAt93/x7TpNvYshpgk8z88OGh+w9Pmf6M6xpOQpJS30HIfMIqJl5xfwoqoW/5woVKL/GE5OviHm/KI/CyakiGFPHnZy3wh1UAQhVrbD3JeXWrcN2tkzZoZD46nz15Wh7h98aVraDpMVUnBjQZytAJ1WSGFUE2UFKAQvaUt+6w8SBRwwsgVQ53s/8tHMw2
+X-OriginatorOrg: qti.qualcomm.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR02MB9884.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 79c61aef-d391-43c5-0cfe-08dc48d32a22
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Mar 2024 11:44:56.1446 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: qpXu13Um9Qwbqb09lmdMaIqwwaX1iziVf3iz8hW7UUVSIpiEQy2Naqt2d8dgTYAXsYLPFRsOw7zAVe7DBu9PHCRHPj2jJO6pZqg9R8UaPm0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR02MB6918
+X-Proofpoint-ORIG-GUID: xS0CCxWoP7IvBrGfp8Mc0HViF_gCr7E4
+X-Proofpoint-GUID: xS0CCxWoP7IvBrGfp8Mc0HViF_gCr7E4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-20_08,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0
+ lowpriorityscore=0 phishscore=0 clxscore=1011 malwarescore=0
+ priorityscore=1501 mlxlogscore=999 adultscore=0 suspectscore=0 mlxscore=0
+ bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2403140001 definitions=main-2403200093
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=mburton@qti.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,505 +170,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 20, 2024 at 03:39:17AM -0500, Michael Roth wrote:
-> Currently all SEV/SEV-ES functionality is managed through a single
-> 'sev-guest' QOM type. With upcoming support for SEV-SNP, taking this
-> same approach won't work well since some of the properties/state
-> managed by 'sev-guest' is not applicable to SEV-SNP, which will instead
-> rely on a new QOM type with its own set of properties/state.
-> 
-> To prepare for this, this patch moves common state into an abstract
-> 'sev-common' parent type to encapsulate properties/state that are
-> common to both SEV/SEV-ES and SEV-SNP, leaving only SEV/SEV-ES-specific
-> properties/state in the current 'sev-guest' type. This should not
-> affect current behavior or command-line options.
-> 
-> As part of this patch, some related changes are also made:
-> 
->   - a static 'sev_guest' variable is currently used to keep track of
->     the 'sev-guest' instance. SEV-SNP would similarly introduce an
->     'sev_snp_guest' static variable. But these instances are now
->     available via qdev_get_machine()->cgs, so switch to using that
->     instead and drop the static variable.
-> 
->   - 'sev_guest' is currently used as the name for the static variable
->     holding a pointer to the 'sev-guest' instance. Re-purpose the name
->     as a local variable referring the 'sev-guest' instance, and use
->     that consistently throughout the code so it can be easily
->     distinguished from sev-common/sev-snp-guest instances.
-> 
->   - 'sev' is generally used as the name for local variables holding a
->     pointer to the 'sev-guest' instance. In cases where that now points
->     to common state, use the name 'sev_common'; in cases where that now
->     points to state specific to 'sev-guest' instance, use the name
->     'sev_guest'
-> 
-> Signed-off-by: Michael Roth <michael.roth@amd.com>
-> ---
->  qapi/qom.json     |  32 ++--
->  target/i386/sev.c | 457 ++++++++++++++++++++++++++--------------------
->  target/i386/sev.h |   3 +
->  3 files changed, 281 insertions(+), 211 deletions(-)
-> 
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index baae3a183f..66b5781ca6 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -875,12 +875,29 @@
->    'data': { '*filename': 'str' } }
->  
->  ##
-> -# @SevGuestProperties:
-> +# @SevCommonProperties:
->  #
-> -# Properties for sev-guest objects.
-> +# Properties common to objects that are derivatives of sev-common.
->  #
->  # @sev-device: SEV device to use (default: "/dev/sev")
->  #
-> +# @cbitpos: C-bit location in page table entry (default: 0)
-> +#
-> +# @reduced-phys-bits: number of bits in physical addresses that become
-> +#     unavailable when SEV is enabled
-> +#
-> +# Since: 2.12
-
-Not quite sure what we've done in this scenario before.
-It feels wierd to use '2.12' for the new base type, even
-though in effect the properties all existed since 2.12 in
-the sub-class.
-
-Perhaps 'Since: 9.1' for the type, but 'Since: 2.12' for the
-properties, along with an explanatory comment about stuff
-moving into the new base type ?
-
-Markus, opinions ?
-
-> +##
-> +{ 'struct': 'SevCommonProperties',
-> +  'data': { '*sev-device': 'str',
-> +            '*cbitpos': 'uint32',
-> +            'reduced-phys-bits': 'uint32' } }
-> +
-> +##
-> +# @SevGuestProperties:
-> +#
-> +# Properties for sev-guest objects.
-> +#
->  # @dh-cert-file: guest owners DH certificate (encoded with base64)
->  #
->  # @session-file: guest owners session parameters (encoded with base64)
-> @@ -889,11 +906,6 @@
->  #
->  # @handle: SEV firmware handle (default: 0)
->  #
-> -# @cbitpos: C-bit location in page table entry (default: 0)
-> -#
-> -# @reduced-phys-bits: number of bits in physical addresses that become
-> -#     unavailable when SEV is enabled
-> -#
->  # @kernel-hashes: if true, add hashes of kernel/initrd/cmdline to a
->  #     designated guest firmware page for measured boot with -kernel
->  #     (default: false) (since 6.2)
-> @@ -901,13 +913,11 @@
->  # Since: 2.12
->  ##
->  { 'struct': 'SevGuestProperties',
-> -  'data': { '*sev-device': 'str',
-> -            '*dh-cert-file': 'str',
-> +  'base': 'SevCommonProperties',
-> +  'data': { '*dh-cert-file': 'str',
->              '*session-file': 'str',
->              '*policy': 'uint32',
->              '*handle': 'uint32',
-> -            '*cbitpos': 'uint32',
-> -            'reduced-phys-bits': 'uint32',
->              '*kernel-hashes': 'bool' } }
->  
->  ##
-
-> diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index 9dab4060b8..63a220de5e 100644
-> --- a/target/i386/sev.c
-> +++ b/target/i386/sev.c
-> @@ -40,48 +40,53 @@
->  #include "hw/i386/pc.h"
->  #include "exec/address-spaces.h"
->  
-> -#define TYPE_SEV_GUEST "sev-guest"
-> +OBJECT_DECLARE_SIMPLE_TYPE(SevCommonState, SEV_COMMON)
->  OBJECT_DECLARE_SIMPLE_TYPE(SevGuestState, SEV_GUEST)
->  
-> -
-> -/**
-> - * SevGuestState:
-> - *
-> - * The SevGuestState object is used for creating and managing a SEV
-> - * guest.
-> - *
-> - * # $QEMU \
-> - *         -object sev-guest,id=sev0 \
-> - *         -machine ...,memory-encryption=sev0
-> - */
-> -struct SevGuestState {
-> +struct SevCommonState {
->      X86ConfidentialGuest parent_obj;
->  
->      int kvm_type;
->  
->      /* configuration parameters */
->      char *sev_device;
-> -    uint32_t policy;
-> -    char *dh_cert_file;
-> -    char *session_file;
->      uint32_t cbitpos;
->      uint32_t reduced_phys_bits;
-> -    bool kernel_hashes;
->  
->      /* runtime state */
-> -    uint32_t handle;
->      uint8_t api_major;
->      uint8_t api_minor;
->      uint8_t build_id;
->      int sev_fd;
->      SevState state;
-> -    gchar *measurement;
->  
->      uint32_t reset_cs;
->      uint32_t reset_ip;
->      bool reset_data_valid;
->  };
->  
-> +/**
-> + * SevGuestState:
-> + *
-> + * The SevGuestState object is used for creating and managing a SEV
-> + * guest.
-> + *
-> + * # $QEMU \
-> + *         -object sev-guest,id=sev0 \
-> + *         -machine ...,memory-encryption=sev0
-> + */
-> +struct SevGuestState {
-> +    SevCommonState sev_common;
-> +    gchar *measurement;
-> +
-> +    /* configuration parameters */
-> +    uint32_t handle;
-> +    uint32_t policy;
-> +    char *dh_cert_file;
-> +    char *session_file;
-> +    bool kernel_hashes;
-> +};
-> +
->  #define DEFAULT_GUEST_POLICY    0x1 /* disable debug */
->  #define DEFAULT_SEV_DEVICE      "/dev/sev"
->  
-> @@ -127,7 +132,6 @@ typedef struct QEMU_PACKED PaddedSevHashTable {
->  
->  QEMU_BUILD_BUG_ON(sizeof(PaddedSevHashTable) % 16 != 0);
->  
-> -static SevGuestState *sev_guest;
->  static Error *sev_mig_blocker;
->  
->  static const char *const sev_fw_errlist[] = {
-> @@ -208,21 +212,21 @@ fw_error_to_str(int code)
->  }
->  
->  static bool
-> -sev_check_state(const SevGuestState *sev, SevState state)
-> +sev_check_state(const SevCommonState *sev_common, SevState state)
->  {
-> -    assert(sev);
-> -    return sev->state == state ? true : false;
-> +    assert(sev_common);
-> +    return sev_common->state == state ? true : false;
->  }
->  
->  static void
-> -sev_set_guest_state(SevGuestState *sev, SevState new_state)
-> +sev_set_guest_state(SevCommonState *sev_common, SevState new_state)
->  {
->      assert(new_state < SEV_STATE__MAX);
-> -    assert(sev);
-> +    assert(sev_common);
->  
-> -    trace_kvm_sev_change_state(SevState_str(sev->state),
-> +    trace_kvm_sev_change_state(SevState_str(sev_common->state),
->                                 SevState_str(new_state));
-> -    sev->state = new_state;
-> +    sev_common->state = new_state;
->  }
->  
->  static void
-> @@ -289,111 +293,61 @@ static struct RAMBlockNotifier sev_ram_notifier = {
->      .ram_block_removed = sev_ram_block_removed,
->  };
->  
-> -static void
-> -sev_guest_finalize(Object *obj)
-> -{
-> -}
-> -
-> -static char *
-> -sev_guest_get_session_file(Object *obj, Error **errp)
-> -{
-> -    SevGuestState *s = SEV_GUEST(obj);
-> -
-> -    return s->session_file ? g_strdup(s->session_file) : NULL;
-> -}
-> -
-> -static void
-> -sev_guest_set_session_file(Object *obj, const char *value, Error **errp)
-> -{
-> -    SevGuestState *s = SEV_GUEST(obj);
-> -
-> -    s->session_file = g_strdup(value);
-> -}
-> -
-> -static char *
-> -sev_guest_get_dh_cert_file(Object *obj, Error **errp)
-> -{
-> -    SevGuestState *s = SEV_GUEST(obj);
-> -
-> -    return g_strdup(s->dh_cert_file);
-> -}
-> -
-> -static void
-> -sev_guest_set_dh_cert_file(Object *obj, const char *value, Error **errp)
-> -{
-> -    SevGuestState *s = SEV_GUEST(obj);
-> -
-> -    s->dh_cert_file = g_strdup(value);
-> -}
-> -
-> -static char *
-> -sev_guest_get_sev_device(Object *obj, Error **errp)
-> -{
-> -    SevGuestState *sev = SEV_GUEST(obj);
-> -
-> -    return g_strdup(sev->sev_device);
-> -}
-> -
-> -static void
-> -sev_guest_set_sev_device(Object *obj, const char *value, Error **errp)
-> -{
-> -    SevGuestState *sev = SEV_GUEST(obj);
-> -
-> -    sev->sev_device = g_strdup(value);
-> -}
-> -
-> -static bool sev_guest_get_kernel_hashes(Object *obj, Error **errp)
-> -{
-> -    SevGuestState *sev = SEV_GUEST(obj);
-> -
-> -    return sev->kernel_hashes;
-> -}
-> -
-> -static void sev_guest_set_kernel_hashes(Object *obj, bool value, Error **errp)
-> -{
-> -    SevGuestState *sev = SEV_GUEST(obj);
-> -
-> -    sev->kernel_hashes = value;
-> -}
-> -
->  bool
->  sev_enabled(void)
->  {
-> -    return !!sev_guest;
-> +    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
-> +
-> +    return !!object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON);
->  }
->  
->  bool
->  sev_es_enabled(void)
->  {
-> -    return sev_enabled() && (sev_guest->policy & SEV_POLICY_ES);
-> +    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
-> +
-> +    return sev_enabled() && (SEV_GUEST(cgs)->policy & SEV_POLICY_ES);
->  }
->  
->  uint32_t
->  sev_get_cbit_position(void)
->  {
-> -    return sev_guest ? sev_guest->cbitpos : 0;
-> +    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-> +
-> +    return sev_common ? sev_common->cbitpos : 0;
->  }
->  
->  uint32_t
->  sev_get_reduced_phys_bits(void)
->  {
-> -    return sev_guest ? sev_guest->reduced_phys_bits : 0;
-> +    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-> +
-> +    return sev_common ? sev_common->reduced_phys_bits : 0;
->  }
->  
->  static SevInfo *sev_get_info(void)
->  {
->      SevInfo *info;
-> +    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-> +    SevGuestState *sev_guest =
-> +        (SevGuestState *)object_dynamic_cast(OBJECT(sev_common),
-> +                                             TYPE_SEV_GUEST);
->  
->      info = g_new0(SevInfo, 1);
->      info->enabled = sev_enabled();
->  
->      if (info->enabled) {
-> -        info->api_major = sev_guest->api_major;
-> -        info->api_minor = sev_guest->api_minor;
-> -        info->build_id = sev_guest->build_id;
-> -        info->policy = sev_guest->policy;
-> -        info->state = sev_guest->state;
-> -        info->handle = sev_guest->handle;
-> +        if (sev_guest) {
-> +            info->handle = sev_guest->handle;
-> +        }
-> +        info->api_major = sev_common->api_major;
-> +        info->api_minor = sev_common->api_minor;
-> +        info->build_id = sev_common->build_id;
-> +        info->state = sev_common->state;
-> +        /* we only report the lower 32-bits of policy for SNP, ok for now... */
-> +        info->policy =
-> +            (uint32_t)object_property_get_uint(OBJECT(sev_common),
-> +                                               "policy", NULL);
->      }
-
-I think we can change this 'policy' field to 'int64'.
-
-Going from int32 to int64 doesn't change the encoding in JSON
-or cli properites. SEV/SEV-ES guests will still only use values
-that fit within int32, so existing users of QEMU won't notice
-a change.
-
-Apps that want to use SEV-SNP will know that they can have
-policy values exceeding int32, but since that's net new code
-to suupport SEV-SNP there's no back compat issue.
-
-
-> @@ -519,6 +473,8 @@ static SevCapability *sev_get_capabilities(Error **errp)
->      size_t pdh_len = 0, cert_chain_len = 0, cpu0_id_len = 0;
->      uint32_t ebx;
->      int fd;
-> +    SevCommonState *sev_common;
-> +    char *sev_device;
-
-Declare 'g_autofree char *sev_device = NULL;'
-
->  
->      if (!kvm_enabled()) {
->          error_setg(errp, "KVM not enabled");
-> @@ -529,12 +485,21 @@ static SevCapability *sev_get_capabilities(Error **errp)
->          return NULL;
->      }
->  
-> -    fd = open(DEFAULT_SEV_DEVICE, O_RDWR);
-> +    sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-> +    if (!sev_common) {
-> +        error_setg(errp, "SEV is not configured");
-> +    }
-
-Missing 'return' ?
-
-> +
-> +    sev_device = object_property_get_str(OBJECT(sev_common), "sev-device",
-> +                                         &error_abort);
-> +    fd = open(sev_device, O_RDWR);
->      if (fd < 0) {
->          error_setg_errno(errp, errno, "SEV: Failed to open %s",
->                           DEFAULT_SEV_DEVICE);
-> +        g_free(sev_device);
->          return NULL;
->      }
-> +    g_free(sev_device);
-
-These 'g_free' are redundant with g_autofree usage on the declaration.
-
->  
->      if (sev_get_pdh_info(fd, &pdh_data, &pdh_len,
->                           &cert_chain_data, &cert_chain_len, errp)) {
-> @@ -577,7 +542,7 @@ static SevAttestationReport *sev_get_attestation_report(const char *mnonce,
->  {
->      struct kvm_sev_attestation_report input = {};
->      SevAttestationReport *report = NULL;
-> -    SevGuestState *sev = sev_guest;
-> +    SevCommonState *sev_common;
-
-I think it would have been nicer to just keep the variable
-just called 'sev', except in the few cases where you needed to
-have variables for both parent & subclass in the same method.
-This diff would be much smaller too.
-
-That's a bit bikeshedding though, so not too bothered either
-way.
-
->      g_autofree guchar *data = NULL;
->      g_autofree guchar *buf = NULL;
->      gsize len;
-> @@ -602,8 +567,10 @@ static SevAttestationReport *sev_get_attestation_report(const char *mnonce,
->          return NULL;
->      }
->  
-> +    sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-> +
->      /* Query the report length */
-> -    ret = sev_ioctl(sev->sev_fd, KVM_SEV_GET_ATTESTATION_REPORT,
-> +    ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_GET_ATTESTATION_REPORT,
->              &input, &err);
->      if (ret < 0) {
->          if (err != SEV_RET_INVALID_LEN) {
-> @@ -619,7 +586,7 @@ static SevAttestationReport *sev_get_attestation_report(const char *mnonce,
->      memcpy(input.mnonce, buf, sizeof(input.mnonce));
->  
->      /* Query the report */
-> -    ret = sev_ioctl(sev->sev_fd, KVM_SEV_GET_ATTESTATION_REPORT,
-> +    ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_GET_ATTESTATION_REPORT,
->              &input, &err);
->      if (ret) {
->          error_setg_errno(errp, errno, "SEV: Failed to get attestation report"
-
-> +
-> +/* sev guest info common to sev/sev-es/sev-snp */
-> +static const TypeInfo sev_common_info = {
-> +    .parent = TYPE_X86_CONFIDENTIAL_GUEST,
-> +    .name = TYPE_SEV_COMMON,
-> +    .instance_size = sizeof(SevCommonState),
-> +    .class_init = sev_common_class_init,
-> +    .instance_init = sev_common_instance_init,
-> +    .abstract = true,
-> +    .interfaces = (InterfaceInfo[]) {
-> +        { TYPE_USER_CREATABLE },
-> +        { }
-> +    }
-> +};
-
-It feels wierd to declare a type as "abstract", and at
-the same time declare it "user creatable". I know this
-was a simple short-cut to avoid repeating the .interfaces
-on every sub-class, but I still think it would be better
-to put the "user creatable" marker on the concrete impls
-instead.
-
-Also how about using OBJECT_DEFINE_ABSTRACT_TYPE here
-and also converting the subclasses to use
-OBJECT_DEFINE_TYPE_WITH_INTERFACES ?
-
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+DQoNCj4gT24gMjAgTWFyIDIwMjQsIGF0IDEyOjE5LCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8
+cGhpbG1kQGxpbmFyby5vcmc+IHdyb3RlOg0KPiANCj4gV0FSTklORzogVGhpcyBlbWFpbCBvcmln
+aW5hdGVkIGZyb20gb3V0c2lkZSBvZiBRdWFsY29tbS4gUGxlYXNlIGJlIHdhcnkgb2YgYW55IGxp
+bmtzIG9yIGF0dGFjaG1lbnRzLCBhbmQgZG8gbm90IGVuYWJsZSBtYWNyb3MuDQo+IA0KPiBPbiAy
+MC8yLzI0IDE2OjE5LCBUaG9tYXMgSHV0aCB3cm90ZToNCj4+IE9uIDIwLzAyLzIwMjQgMTYuMDgs
+IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPj4+IEhhdmUgczM5MHggYWx3YXlzIGRl
+bGl2ZXIgTk1JIHRvIHRoZSBmaXJzdCBDUFUsDQo+Pj4gcmVtb3ZlIHRoZSBAY3B1X2luZGV4IGFy
+Z3VtZW50IGZyb20gaGFuZGxlciwNCj4+PiByZW5hbWUgQVBJIGFzIG5taV90cmlnZ2VyKCkgKG5v
+dCBtb25pdG9yIHNwZWNpZmljKS4NCj4+IA0KPj4gQ291bGQgeW91IHBsZWFzZSBhZGQgc29tZSBy
+YXRpb25hbGUgaGVyZSB3aHkgdGhpcyBpcyBuZWVkZWQgLyBkZXNpcmVkPw0KPiANCj4gSSdtIG5v
+dCBzdXJlIGl0IGlzIGRlc2lyZWQuLi4gSSdtIHRyeWluZyB0byBnZXQgdGhlIE5NSSBkZWxpdmVy
+eQ0KPiB3b3JraW5nIGluIGhldGVyb2dlbmVvdXMgbWFjaGluZSwgYnV0IG5vdyBJJ20gd29uZGVy
+aW5nIHdoZXRoZXINCj4gaHcvY29yZS9ubWkuYyB3YXMgZGVzaWduZWQgd2l0aCB0aGF0IGluIG1p
+bmQgb3IgbGlrZWx5IG5vdC4NCj4gDQo+IEkgc3VwcG9zZSBpbiBhIGNvbXBsZXggbWFjaGluZSB5
+b3UgZXhwbGljaXRseSB3aXJlIElSUSBsaW5lcyBzdWNoDQo+IE5NSSwgc28gdGhleSBhcmUgZGVs
+aXZlcmVkIHRvIGEgcGFydGljdWxhciBJTlRDIG9yIENQVSBjb3JlLCBhbmQNCj4gdGhlcmUgaXMg
+bm8gImJyb2FkY2FzdCB0aGlzIHNpZ25hbCB0byBhbGwgbGlzdGVuZXJzIHJlZ2lzdGVyZWQNCj4g
+Zm9yIE5NSSBldmVudHMiLg0KPiANCg0KSSB0aGluayB0aG9zZSB0d28gdGhpbmdzIGFyZSBzb3J0
+IG9mIHNpbWlsYXIuIGUuZy4gd2UgY291bGQgaGF2ZSBhIG1hY2hpbmUgaW4gd2hpY2ggbWFueSBv
+ZiB0aGUgY29tcG9uZW50cyBhbGwgcmVjZWl2ZSBhIOKAmHJlc2V04oCZIHNpZ25hbCwgYnV0IHRo
+YXQgd291bGQgaW5kZWVkIGJlIHdpcmVkIHVwIGV4cGxpY2l0bHkgZnJvbSB0aGUgdGhpbmcgZ2Vu
+ZXJhdGluZyB0aGF0IHJlc2V0IHNpZ25hbCBhbmQgYWxsIHRoZSBjb21wb25lbnRzIHdhbnRpbmcg
+dG8gcmVjZWl2ZSBpdC4gQW5kLCB5ZXMsIHRoZXJlIG1heSBiZSBjb21wb25lbnRzIHRoYXQgYXJl
+IG5vdCByZXNldCBieSB0aGF0IHNpZ25hbOKApi4NCg0KQ2hlZXJzDQpNYXJrLg0KDQoNCj4+IA0K
+Pj4gVGhhbmtzLA0KPj4gIFRob21hcw0KPj4gDQo+PiANCj4+PiBQaGlsaXBwZSBNYXRoaWV1LURh
+dWTDqSAoNCk6DQo+Pj4gICBody9ubWk6IFVzZSBvYmplY3RfY2hpbGRfZm9yZWFjaF9yZWN1cnNp
+dmUoKSBpbiBubWlfY2hpbGRyZW4oKQ0KPj4+ICAgaHcvczM5MHgvdmlydGlvLWNjdzogQWx3YXlz
+IGRlbGl2ZXIgTk1JIHRvIGZpcnN0IENQVQ0KPj4+ICAgaHcvbm1pOiBSZW1vdmUgQGNwdV9pbmRl
+eCBhcmd1bWVudCBmcm9tIE5NSUNsYXNzOjpubWlfaGFuZGxlcigpDQo+Pj4gICBody9ubWk6IFJl
+bW92ZSBAY3B1X2luZGV4IGFyZ3VtZW50IGZyb20gbm1pX3RyaWdnZXIoKQ0KPiANCg0K
 
