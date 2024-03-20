@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D6D1C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 06:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90723C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 07:02:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmpmL-0002Ug-5D; Wed, 20 Mar 2024 02:50:25 -0400
+	id 1rmpwk-0003WD-Na; Wed, 20 Mar 2024 03:01:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmpm4-0002Jp-Rc
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:50:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmpm3-0001ke-Am
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:50:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710917406;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3dK0oZTvcqn0RlRQ+2sj7u85Oit8BnOYCOjlvqO3HYw=;
- b=HJXf3VNJZ7dEDGlFXfCyK0VSo/rHxgfKu8ALNVHpcK273EuavkzjOi6aL0y6yNoNkumD/T
- YVP0kXXG/onTT2cLiGwF3sfIwZ2a66A8UrHEDAKA0lNp19NNNos+Ipv4CwSa31LEsHk8Qz
- VTGrm8efynpBB0tD9XntDAZmA0+OzoE=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-_L05SnoBM_ecmTfv0jphcg-1; Wed, 20 Mar 2024 02:50:04 -0400
-X-MC-Unique: _L05SnoBM_ecmTfv0jphcg-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id F1C4A101A596;
- Wed, 20 Mar 2024 06:50:03 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.59])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 05B851C060CE;
- Wed, 20 Mar 2024 06:50:01 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH for-9.1 v5 13/14] migration: Add Error** argument to
- xbzrle_init()
-Date: Wed, 20 Mar 2024 07:49:09 +0100
-Message-ID: <20240320064911.545001-14-clg@redhat.com>
-In-Reply-To: <20240320064911.545001-1-clg@redhat.com>
-References: <20240320064911.545001-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rmpwi-0003Vq-DS
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 03:01:08 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rmpwg-0004rl-OH
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 03:01:08 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-609ff069a40so75203047b3.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 00:01:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710918065; x=1711522865; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EgA/RoSDD92C1lm2cc9wCVJeqV18BxuBCchTTG3+6PM=;
+ b=d9I8EXz3wy+lduA5lFURAVCy6jSgatBPdO1wM0uP2Sd4aNTgW2dHTvvfMuUoV8sVOQ
+ LK7yS9MGFQTStgQ/I7knCHY8egixdtr9SHxoHVhShb+20SPl5HECKn72upn3c5iZDt8W
+ K1sfD5DymPRDFjMg6jW5W0U6Wdp2hPpugG77do8mYSjcm0E85jDxNRZBK4SpZoCV+d68
+ UscqSYPPJih232y2uh11Rf6MMSketoqCvPh5OSJck4+oVStwmwaol53dgq5+avz6A2oC
+ Vy8IGyWUswcnNDr1nxvrB6vTmYpHpRcPgyB3yYUCilK3fbzf952JujCSZjmM6tXv849V
+ lLnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710918065; x=1711522865;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EgA/RoSDD92C1lm2cc9wCVJeqV18BxuBCchTTG3+6PM=;
+ b=KxyUfMfS3JkqkOZD/NqZz33z3aOfe3vvAVXbQilzhVxvLtp7IqqvUmjHPP47JdCDrR
+ 7k6Ff9OPcjn7g13BqnUSkoY5C8aqM6PFpI/R5pcLSKQlTpIOwRToV/2unbhX7CZlxfiw
+ jZLjcANYD+Fvvb2xr+y64Xs3/6IXn3k/wZJi0P7D1Gvq5W+FjXk4TKnVSxuZL6TVOtLq
+ zyJ5C4KUZ/26d3WKqUAd/t1PS6ABnUMkkaO+MZ8G+SLu2JDii+QsHlaiIcO/n3AC454S
+ ulAMs+Gf3eg4pfcenhXKaRbGkT6Rs1RKbDls5YAbQY58WIImWqQkmPiAIK2IoiMsfRGQ
+ 2/Qg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUJj79GgiSxf3P+BqBdkL9GXZNb5VnsKCL65QCLoPIwpO1J46JxnJn6nSNgyloIjfHPI6bw5BfaeaHcDVXHZh6XaVSsDlA=
+X-Gm-Message-State: AOJu0YxzbXS8QJk5pOfcXWL8XlgdqxWWV7fUTsGUJR8K6MovnMuN1gT5
+ jN0m7lSHIEB3gYmVTLnQkHla2CnU8Q0bHNYerSHuRP9YbGlsO0gp/5fGuEAfMqHZRxQdxX+cG2J
+ YRMhFEJxx+ts3DDGJgdT0rKXXWW0=
+X-Google-Smtp-Source: AGHT+IGPkW6aawy8sDp2+LJxXNWfx2nceXrO0aNIF20/NYqbrhzb1Yq2UqGqilD1+MRbSmewXgM1/gVFTOlJa3Kt5Sc=
+X-Received: by 2002:a25:a3a2:0:b0:dcc:4b84:67cd with SMTP id
+ e31-20020a25a3a2000000b00dcc4b8467cdmr10795262ybi.9.1710918065503; Wed, 20
+ Mar 2024 00:01:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20240319-console-v2-0-3fd6feef321a@daynix.com>
+ <CAJ+F1CKOuZR5nZxcxRzZyoE56p_nNW11cySEmnFvRgiPv5OAdw@mail.gmail.com>
+ <5b8160c8-6774-47b3-a495-f7dc64ebd28d@daynix.com>
+In-Reply-To: <5b8160c8-6774-47b3-a495-f7dc64ebd28d@daynix.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 20 Mar 2024 11:00:54 +0400
+Message-ID: <CAJ+F1CLP_LNwWQ_4M2w7cVK-DSBy6+92SY5m37fUnZMXN6oBaQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] ui/console: Remove console_select()
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,90 +95,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the return value (-ENOMEM) is not exploited, follow the
-recommendations of qapi/error.h and change it to a bool
+Hi
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- migration/ram.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+On Wed, Mar 20, 2024 at 7:20=E2=80=AFAM Akihiko Odaki <akihiko.odaki@daynix=
+.com> wrote:
+>
+> On 2024/03/19 17:29, Marc-Andr=C3=A9 Lureau wrote:
+> > Hi Akihiko
+> >
+> > On Tue, Mar 19, 2024 at 7:09=E2=80=AFAM Akihiko Odaki <akihiko.odaki@da=
+ynix.com> wrote:
+> >>
+> >> ui/console has a concept of "active" console; the active console is us=
+ed
+> >> when NULL is set for DisplayListener::con, and console_select() update=
+s
+> >> the active console state. However, the global nature of the state caus=
+e
+> >> odd behaviors, and replacing NULL with the active console also resulte=
+d
+> >> in extra code. Remove it to solve these problems.
+> >>
+> >> The active console state is shared, so if there are two displays
+> >> referring to the active console, switching the console for one will al=
+so
+> >> affect the other. All displays that use the active console state,
+> >> namely cocoa, curses, and vnc, need to reset some of its state before
+> >> switching the console, and such a reset operation cannot be performed =
+if
+> >> the console is switched by another display. This can result in stuck
+> >> keys, for example.
+> >>
+> >> While the active console state is shared, displays other than cocoa,
+> >> curses, and vnc don't update the state. A chardev-vc inherits the
+> >> size of the active console, but it does not make sense for such a
+> >> display.
+> >>
+> >> This series removes the shared "active" console state from ui/console.
+> >> curses, cocoa, and vnc will hold the reference to the console currentl=
+y
+> >> shown with DisplayListener::con. This also eliminates the need to
+> >> replace NULL with the active console and save code.
+> >>
+> >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> >
+> > lgtm
+> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > I am willing to take that for 9.0. Is there any bug already opened
+> > about the issues it solves?
+>
+> No, I'm not aware of one.
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 26ce11a3379056d38062c1fb63166c6e3155bd8c..70797ef5d80c6ccf61fee987bbe3969041664c69 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -2727,44 +2727,41 @@ int ram_discard_range(const char *rbname, uint64_t start, size_t length)
-  * For every allocation, we will try not to crash the VM if the
-  * allocation failed.
-  */
--static int xbzrle_init(void)
-+static bool xbzrle_init(Error **errp)
- {
--    Error *local_err = NULL;
--
-     if (!migrate_xbzrle()) {
--        return 0;
-+        return true;
-     }
- 
-     XBZRLE_cache_lock();
- 
-     XBZRLE.zero_target_page = g_try_malloc0(TARGET_PAGE_SIZE);
-     if (!XBZRLE.zero_target_page) {
--        error_report("%s: Error allocating zero page", __func__);
-+        error_setg(errp, "%s: Error allocating zero page", __func__);
-         goto err_out;
-     }
- 
-     XBZRLE.cache = cache_init(migrate_xbzrle_cache_size(),
--                              TARGET_PAGE_SIZE, &local_err);
-+                              TARGET_PAGE_SIZE, errp);
-     if (!XBZRLE.cache) {
--        error_report_err(local_err);
-         goto free_zero_page;
-     }
- 
-     XBZRLE.encoded_buf = g_try_malloc0(TARGET_PAGE_SIZE);
-     if (!XBZRLE.encoded_buf) {
--        error_report("%s: Error allocating encoded_buf", __func__);
-+        error_setg(errp, "%s: Error allocating encoded_buf", __func__);
-         goto free_cache;
-     }
- 
-     XBZRLE.current_buf = g_try_malloc(TARGET_PAGE_SIZE);
-     if (!XBZRLE.current_buf) {
--        error_report("%s: Error allocating current_buf", __func__);
-+        error_setg(errp, "%s: Error allocating current_buf", __func__);
-         goto free_encoded_buf;
-     }
- 
-     /* We are all good */
-     XBZRLE_cache_unlock();
--    return 0;
-+    return true;
- 
- free_encoded_buf:
-     g_free(XBZRLE.encoded_buf);
-@@ -2777,7 +2774,7 @@ free_zero_page:
-     XBZRLE.zero_target_page = NULL;
- err_out:
-     XBZRLE_cache_unlock();
--    return -ENOMEM;
-+    return false;
- }
- 
- static bool ram_state_init(RAMState **rsp, Error **errp)
-@@ -2904,7 +2901,8 @@ static int ram_init_all(RAMState **rsp)
-         return -1;
-     }
- 
--    if (xbzrle_init()) {
-+    if (!xbzrle_init(&local_err)) {
-+        error_report_err(local_err);
-         ram_state_cleanup(rsp);
-         return -1;
-     }
--- 
-2.44.0
+The first patch "Do not inherit the size of active console" is not
+directly related and may not be suitable for merge during freeze. Are
+you ok with merging the rest for 9.0 or delay it for 9.1?
 
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
