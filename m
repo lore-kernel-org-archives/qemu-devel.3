@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 492CDC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 13:55:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A915C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 13:55:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmwOc-00041X-6C; Wed, 20 Mar 2024 09:54:22 -0400
+	id 1rmwOs-0004C8-4e; Wed, 20 Mar 2024 09:54:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rmwOa-00041L-Rg
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:54:20 -0400
+ id 1rmwOn-0004Bl-Se
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:54:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1rmwOZ-0000AO-Bu
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:54:20 -0400
+ id 1rmwOl-0000Bf-Bi
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:54:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710942858;
+ s=mimecast20190719; t=1710942870;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LS1W3pnEANMqrFyxGYWHsBrgCl9/zTnLL3xr58UeMCk=;
- b=Krmie0KBFsxEk9LqCRDYVe2FyG53fQdbwnOZbusr7hXlRAeh25VRKGjbIhw88sZNKK4n5K
- 2/MR+cx4cwAPx2rqxeNmJ1MV6lb/EBD5xgm08umCj+pVv5GGqDQDmceJscI1htqlxOvEWD
- mwDnPLricj/6VZMXECZDufKqcxTApCk=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-418-XWfW41nLP-28htymPsncMg-1; Wed,
- 20 Mar 2024 09:54:14 -0400
-X-MC-Unique: XWfW41nLP-28htymPsncMg-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ bh=SHEnHfylghBzIMQGOk7vhNe9UGGywR41T/OdqdkcH5Y=;
+ b=cANmPU+Inn8WyiRkVgAh4K38p4iSjBrtRsye+nxOqdy/Gy7PUDw0ohAnYZa3vjAuKj23kD
+ d+EUxOSypK/5pRMfc5XE4OO+nPj8lyKig2pKWTZ5I19wp7AVvpEHMwuI28qZzAw5cIQb+x
+ YbEdr7XRLaGieKFE91ECm3SEQxlC4Yk=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-146-YTBdF8YTNPCXojFr9TXJWA-1; Wed, 20 Mar 2024 09:54:29 -0400
+X-MC-Unique: YTBdF8YTNPCXojFr9TXJWA-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 34D5338157A0;
- Wed, 20 Mar 2024 13:54:14 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 182D5887E41;
+ Wed, 20 Mar 2024 13:54:29 +0000 (UTC)
 Received: from localhost (unknown [10.39.208.32])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 5651A492BCA;
- Wed, 20 Mar 2024 13:54:12 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 9C47F200E1B2;
+ Wed, 20 Mar 2024 13:54:26 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -53,15 +53,15 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 2/5] ui/vnc: Do not use console_select()
-Date: Wed, 20 Mar 2024 17:53:46 +0400
-Message-ID: <20240320135349.2139402-3-marcandre.lureau@redhat.com>
+Subject: [PULL 4/5] ui/curses: Do not use console_select()
+Date: Wed, 20 Mar 2024 17:53:48 +0400
+Message-ID: <20240320135349.2139402-5-marcandre.lureau@redhat.com>
 In-Reply-To: <20240320135349.2139402-1-marcandre.lureau@redhat.com>
 References: <20240320135349.2139402-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -90,131 +90,567 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-console_select() is shared by other displays and a console_select() call
-from one of them triggers console switching also in ui/curses,
-circumventing key state reinitialization that needs to be performed in
-preparation and resulting in stuck keys.
-
-Use its internal state to track the current active console to prevent
-such a surprise console switch.
+ui/curses is the only user of console_select(). Move the implementation
+to ui/curses.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20240319-console-v2-2-3fd6feef321a@daynix.com>
+Message-Id: <20240319-console-v2-4-3fd6feef321a@daynix.com>
 ---
- include/ui/console.h   |  1 +
- include/ui/kbd-state.h | 11 +++++++++++
- ui/console.c           | 12 ++++++++++++
- ui/kbd-state.c         |  6 ++++++
- ui/vnc.c               | 14 +++++++++-----
- 5 files changed, 39 insertions(+), 5 deletions(-)
+ include/ui/console.h  |   1 -
+ ui/console-priv.h     |   2 +-
+ ui/console-vc-stubs.c |   2 +-
+ ui/console-vc.c       |   3 +-
+ ui/console.c          | 121 ++++++++----------------------------------
+ ui/curses.c           |  48 +++++++++--------
+ 6 files changed, 51 insertions(+), 126 deletions(-)
 
 diff --git a/include/ui/console.h b/include/ui/console.h
-index a4a49ffc64..3729d2db29 100644
+index 3729d2db29..0bc7a00ac0 100644
 --- a/include/ui/console.h
 +++ b/include/ui/console.h
-@@ -413,6 +413,7 @@ void qemu_console_early_init(void);
+@@ -433,7 +433,6 @@ int qemu_console_get_window_id(QemuConsole *con);
+ /* Set the low-level window id for the console */
+ void qemu_console_set_window_id(QemuConsole *con, int window_id);
  
- void qemu_console_set_display_gl_ctx(QemuConsole *con, DisplayGLCtx *ctx);
+-void console_select(unsigned int index);
+ void qemu_console_resize(QemuConsole *con, int width, int height);
+ DisplaySurface *qemu_console_surface(QemuConsole *con);
+ void coroutine_fn qemu_console_co_wait_update(QemuConsole *con);
+diff --git a/ui/console-priv.h b/ui/console-priv.h
+index 88569ed2cc..43ceb8122f 100644
+--- a/ui/console-priv.h
++++ b/ui/console-priv.h
+@@ -35,7 +35,7 @@ struct QemuConsole {
+     QTAILQ_ENTRY(QemuConsole) next;
+ };
  
-+QemuConsole *qemu_console_lookup_default(void);
- QemuConsole *qemu_console_lookup_by_index(unsigned int index);
- QemuConsole *qemu_console_lookup_by_device(DeviceState *dev, uint32_t head);
- QemuConsole *qemu_console_lookup_by_device_name(const char *device_id,
-diff --git a/include/ui/kbd-state.h b/include/ui/kbd-state.h
-index fb79776128..1f37b932eb 100644
---- a/include/ui/kbd-state.h
-+++ b/include/ui/kbd-state.h
-@@ -99,4 +99,15 @@ bool qkbd_state_modifier_get(QKbdState *kbd, QKbdModifier mod);
-  */
- void qkbd_state_lift_all_keys(QKbdState *kbd);
+-void qemu_text_console_select(QemuTextConsole *c);
++void qemu_text_console_update_size(QemuTextConsole *c);
+ const char * qemu_text_console_get_label(QemuTextConsole *c);
+ void qemu_text_console_update_cursor(void);
+ void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym);
+diff --git a/ui/console-vc-stubs.c b/ui/console-vc-stubs.c
+index 2afc52329f..b63e2fb234 100644
+--- a/ui/console-vc-stubs.c
++++ b/ui/console-vc-stubs.c
+@@ -10,7 +10,7 @@
+ #include "chardev/char.h"
+ #include "ui/console-priv.h"
  
-+/**
-+ * qkbd_state_switch_console: Switch console.
-+ *
-+ * This sends key up events to the previous console for all keys which are in
-+ * down state to prevent keys being stuck, and remembers the new console.
-+ *
-+ * @kbd: state tracker state.
-+ * @con: new QemuConsole for this state tracker.
-+ */
-+void qkbd_state_switch_console(QKbdState *kbd, QemuConsole *con);
-+
- #endif /* QEMU_UI_KBD_STATE_H */
+-void qemu_text_console_select(QemuTextConsole *c)
++void qemu_text_console_update_size(QemuTextConsole *c)
+ {
+ }
+ 
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index f22c8e23c2..899fa11c94 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -958,10 +958,9 @@ static void vc_chr_set_echo(Chardev *chr, bool echo)
+     drv->console->echo = echo;
+ }
+ 
+-void qemu_text_console_select(QemuTextConsole *c)
++void qemu_text_console_update_size(QemuTextConsole *c)
+ {
+     dpy_text_resize(QEMU_CONSOLE(c), c->width, c->height);
+-    qemu_text_console_update_cursor();
+ }
+ 
+ static void vc_chr_open(Chardev *chr,
 diff --git a/ui/console.c b/ui/console.c
-index 832055675c..fbc1b9b8b5 100644
+index fbc1b9b8b5..43226c5c14 100644
 --- a/ui/console.c
 +++ b/ui/console.c
-@@ -1325,6 +1325,18 @@ void graphic_console_close(QemuConsole *con)
-     dpy_gfx_replace_surface(con, surface);
+@@ -66,7 +66,6 @@ struct DisplayState {
+ };
+ 
+ static DisplayState *display_state;
+-static QemuConsole *active_console;
+ static QTAILQ_HEAD(, QemuConsole) consoles =
+     QTAILQ_HEAD_INITIALIZER(consoles);
+ 
+@@ -135,7 +134,6 @@ void graphic_hw_update_done(QemuConsole *con)
+ void graphic_hw_update(QemuConsole *con)
+ {
+     bool async = false;
+-    con = con ? con : active_console;
+     if (!con) {
+         return;
+     }
+@@ -209,9 +207,6 @@ void qemu_console_set_window_id(QemuConsole *con, int window_id)
+ 
+ void graphic_hw_invalidate(QemuConsole *con)
+ {
+-    if (!con) {
+-        con = active_console;
+-    }
+     if (con && con->hw_ops->invalidate) {
+         con->hw_ops->invalidate(con->hw);
+     }
+@@ -219,9 +214,6 @@ void graphic_hw_invalidate(QemuConsole *con)
+ 
+ void graphic_hw_text_update(QemuConsole *con, console_ch_t *chardata)
+ {
+-    if (!con) {
+-        con = active_console;
+-    }
+     if (con && con->hw_ops->text_update) {
+         con->hw_ops->text_update(con->hw, chardata);
+     }
+@@ -265,12 +257,12 @@ static void dpy_gfx_update_texture(QemuConsole *con, DisplaySurface *surface,
  }
  
-+QemuConsole *qemu_console_lookup_default(void)
-+{
-+    QemuConsole *con;
-+
-+    QTAILQ_FOREACH(con, &consoles, next) {
-+        if (QEMU_IS_GRAPHIC_CONSOLE(con)) {
-+            return con;
-+        }
-+    }
-+    return QTAILQ_FIRST(&consoles);
-+}
-+
- QemuConsole *qemu_console_lookup_by_index(unsigned int index)
+ static void displaychangelistener_display_console(DisplayChangeListener *dcl,
+-                                                  QemuConsole *con,
+                                                   Error **errp)
  {
-     QemuConsole *con;
-diff --git a/ui/kbd-state.c b/ui/kbd-state.c
-index 62d42a7a22..52ed28b8a8 100644
---- a/ui/kbd-state.c
-+++ b/ui/kbd-state.c
-@@ -117,6 +117,12 @@ void qkbd_state_lift_all_keys(QKbdState *kbd)
+     static const char nodev[] =
+         "This VM has no graphic display device.";
+     static DisplaySurface *dummy;
++    QemuConsole *con = dcl->con;
+ 
+     if (!con || !console_compatible_with(con, dcl, errp)) {
+         if (!dummy) {
+@@ -305,39 +297,8 @@ static void displaychangelistener_display_console(DisplayChangeListener *dcl,
      }
  }
  
-+void qkbd_state_switch_console(QKbdState *kbd, QemuConsole *con)
-+{
-+    qkbd_state_lift_all_keys(kbd);
-+    kbd->con = con;
-+}
-+
- void qkbd_state_set_delay(QKbdState *kbd, int delay_ms)
+-void console_select(unsigned int index)
+-{
+-    DisplayChangeListener *dcl;
+-    QemuConsole *s;
+-
+-    trace_console_select(index);
+-    s = qemu_console_lookup_by_index(index);
+-    if (s) {
+-        DisplayState *ds = s->ds;
+-
+-        active_console = s;
+-        QLIST_FOREACH (dcl, &ds->listeners, next) {
+-            if (dcl->con != NULL) {
+-                continue;
+-            }
+-            displaychangelistener_display_console(dcl, s, NULL);
+-        }
+-
+-        if (QEMU_IS_TEXT_CONSOLE(s)) {
+-            qemu_text_console_select(QEMU_TEXT_CONSOLE(s));
+-        }
+-    }
+-}
+-
+ void qemu_text_console_put_keysym(QemuTextConsole *s, int keysym)
  {
-     kbd->key_delay_ms = delay_ms;
-diff --git a/ui/vnc.c b/ui/vnc.c
-index fc12b343e2..b3fd78022b 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -1872,12 +1872,16 @@ static void do_key_event(VncState *vs, int down, int keycode, int sym)
-     /* QEMU console switch */
-     switch (qcode) {
-     case Q_KEY_CODE_1 ... Q_KEY_CODE_9: /* '1' to '9' keys */
--        if (vs->vd->dcl.con == NULL && down &&
-+        if (down &&
-             qkbd_state_modifier_get(vs->vd->kbd, QKBD_MOD_CTRL) &&
-             qkbd_state_modifier_get(vs->vd->kbd, QKBD_MOD_ALT)) {
--            /* Reset the modifiers sent to the current console */
--            qkbd_state_lift_all_keys(vs->vd->kbd);
--            console_select(qcode - Q_KEY_CODE_1);
-+            QemuConsole *con = qemu_console_lookup_by_index(qcode - Q_KEY_CODE_1);
-+            if (con) {
-+                unregister_displaychangelistener(&vs->vd->dcl);
-+                qkbd_state_switch_console(vs->vd->kbd, con);
-+                vs->vd->dcl.con = con;
-+                register_displaychangelistener(&vs->vd->dcl);
-+            }
-             return;
+-    if (!s) {
+-        if (!QEMU_IS_TEXT_CONSOLE(active_console)) {
+-            return;
+-        }
+-        s = QEMU_TEXT_CONSOLE(active_console);
+-    }
+-
+     qemu_text_console_handle_keysym(s, keysym);
+ }
+ 
+@@ -392,11 +353,6 @@ qemu_console_register(QemuConsole *c)
+ {
+     int i;
+ 
+-    if (!active_console || (!QEMU_IS_GRAPHIC_CONSOLE(active_console) &&
+-                            QEMU_IS_GRAPHIC_CONSOLE(c))) {
+-        active_console = c;
+-    }
+-
+     if (QTAILQ_EMPTY(&consoles)) {
+         c->index = 0;
+         QTAILQ_INSERT_TAIL(&consoles, c, next);
+@@ -751,8 +707,6 @@ dcl_set_graphic_cursor(DisplayChangeListener *dcl, QemuGraphicConsole *con)
+ 
+ void register_displaychangelistener(DisplayChangeListener *dcl)
+ {
+-    QemuConsole *con;
+-
+     assert(!dcl->ds);
+ 
+     trace_displaychangelistener_register(dcl, dcl->ops->dpy_name);
+@@ -761,13 +715,12 @@ void register_displaychangelistener(DisplayChangeListener *dcl)
+     gui_setup_refresh(dcl->ds);
+     if (dcl->con) {
+         dcl->con->dcls++;
+-        con = dcl->con;
+-    } else {
+-        con = active_console;
+     }
+-    displaychangelistener_display_console(dcl, con, dcl->con ? &error_fatal : NULL);
+-    if (QEMU_IS_GRAPHIC_CONSOLE(con)) {
+-        dcl_set_graphic_cursor(dcl, QEMU_GRAPHIC_CONSOLE(con));
++    displaychangelistener_display_console(dcl, &error_fatal);
++    if (QEMU_IS_GRAPHIC_CONSOLE(dcl->con)) {
++        dcl_set_graphic_cursor(dcl, QEMU_GRAPHIC_CONSOLE(dcl->con));
++    } else if (QEMU_IS_TEXT_CONSOLE(dcl->con)) {
++        qemu_text_console_update_size(QEMU_TEXT_CONSOLE(dcl->con));
+     }
+     qemu_text_console_update_cursor();
+ }
+@@ -805,9 +758,6 @@ static void dpy_set_ui_info_timer(void *opaque)
+ 
+ bool dpy_ui_info_supported(const QemuConsole *con)
+ {
+-    if (con == NULL) {
+-        con = active_console;
+-    }
+     if (con == NULL) {
+         return false;
+     }
+@@ -819,19 +769,11 @@ const QemuUIInfo *dpy_get_ui_info(const QemuConsole *con)
+ {
+     assert(dpy_ui_info_supported(con));
+ 
+-    if (con == NULL) {
+-        con = active_console;
+-    }
+-
+     return &con->ui_info;
+ }
+ 
+ int dpy_set_ui_info(QemuConsole *con, QemuUIInfo *info, bool delay)
+ {
+-    if (con == NULL) {
+-        con = active_console;
+-    }
+-
+     if (!dpy_ui_info_supported(con)) {
+         return -1;
+     }
+@@ -870,7 +812,7 @@ void dpy_gfx_update(QemuConsole *con, int x, int y, int w, int h)
+     }
+     dpy_gfx_update_texture(con, con->surface, x, y, w, h);
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
          }
-     default:
-@@ -4206,7 +4210,7 @@ void vnc_display_open(const char *id, Error **errp)
-             goto fail;
+         if (dcl->ops->dpy_gfx_update) {
+@@ -916,7 +858,7 @@ void dpy_gfx_replace_surface(QemuConsole *con,
+     con->surface = new_surface;
+     dpy_gfx_create_texture(con, new_surface);
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
          }
+         displaychangelistener_gfx_switch(dcl, new_surface, surface ? FALSE : TRUE);
+@@ -970,7 +912,7 @@ void dpy_text_cursor(QemuConsole *con, int x, int y)
+         return;
+     }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_text_cursor) {
+@@ -988,7 +930,7 @@ void dpy_text_update(QemuConsole *con, int x, int y, int w, int h)
+         return;
+     }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_text_update) {
+@@ -1006,7 +948,7 @@ void dpy_text_resize(QemuConsole *con, int w, int h)
+         return;
+     }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_text_resize) {
+@@ -1028,7 +970,7 @@ void dpy_mouse_set(QemuConsole *c, int x, int y, int on)
+         return;
+     }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (c != (dcl->con ? dcl->con : active_console)) {
++        if (c != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_mouse_set) {
+@@ -1049,7 +991,7 @@ void dpy_cursor_define(QemuConsole *c, QEMUCursor *cursor)
+         return;
+     }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (c != (dcl->con ? dcl->con : active_console)) {
++        if (c != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_cursor_define) {
+@@ -1099,7 +1041,7 @@ void dpy_gl_scanout_disable(QemuConsole *con)
+         con->scanout.kind = SCANOUT_NONE;
+     }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_gl_scanout_disable) {
+@@ -1126,7 +1068,7 @@ void dpy_gl_scanout_texture(QemuConsole *con,
+         x, y, width, height, d3d_tex2d,
+     };
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_gl_scanout_texture) {
+@@ -1148,7 +1090,7 @@ void dpy_gl_scanout_dmabuf(QemuConsole *con,
+     con->scanout.kind = SCANOUT_DMABUF;
+     con->scanout.dmabuf = dmabuf;
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_gl_scanout_dmabuf) {
+@@ -1164,7 +1106,7 @@ void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
+     DisplayChangeListener *dcl;
+ 
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_gl_cursor_dmabuf) {
+@@ -1181,7 +1123,7 @@ void dpy_gl_cursor_position(QemuConsole *con,
+     DisplayChangeListener *dcl;
+ 
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_gl_cursor_position) {
+@@ -1197,7 +1139,7 @@ void dpy_gl_release_dmabuf(QemuConsole *con,
+     DisplayChangeListener *dcl;
+ 
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_gl_release_dmabuf) {
+@@ -1216,7 +1158,7 @@ void dpy_gl_update(QemuConsole *con,
+ 
+     graphic_hw_gl_block(con, true);
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+-        if (con != (dcl->con ? dcl->con : active_console)) {
++        if (con != dcl->con) {
+             continue;
+         }
+         if (dcl->ops->dpy_gl_update) {
+@@ -1415,30 +1357,21 @@ static QemuConsole *qemu_graphic_console_lookup_unused(void)
+ 
+ QEMUCursor *qemu_console_get_cursor(QemuConsole *con)
+ {
+-    if (con == NULL) {
+-        con = active_console;
+-    }
+     return QEMU_IS_GRAPHIC_CONSOLE(con) ? QEMU_GRAPHIC_CONSOLE(con)->cursor : NULL;
+ }
+ 
+ bool qemu_console_is_visible(QemuConsole *con)
+ {
+-    return (con == active_console) || (con->dcls > 0);
++    return con->dcls > 0;
+ }
+ 
+ bool qemu_console_is_graphic(QemuConsole *con)
+ {
+-    if (con == NULL) {
+-        con = active_console;
+-    }
+     return con && QEMU_IS_GRAPHIC_CONSOLE(con);
+ }
+ 
+ bool qemu_console_is_fixedsize(QemuConsole *con)
+ {
+-    if (con == NULL) {
+-        con = active_console;
+-    }
+     return con && (QEMU_IS_GRAPHIC_CONSOLE(con) || QEMU_IS_FIXED_TEXT_CONSOLE(con));
+ }
+ 
+@@ -1505,17 +1438,11 @@ char *qemu_console_get_label(QemuConsole *con)
+ 
+ int qemu_console_get_index(QemuConsole *con)
+ {
+-    if (con == NULL) {
+-        con = active_console;
+-    }
+     return con ? con->index : -1;
+ }
+ 
+ uint32_t qemu_console_get_head(QemuConsole *con)
+ {
+-    if (con == NULL) {
+-        con = active_console;
+-    }
+     if (con == NULL) {
+         return -1;
+     }
+@@ -1527,9 +1454,6 @@ uint32_t qemu_console_get_head(QemuConsole *con)
+ 
+ int qemu_console_get_width(QemuConsole *con, int fallback)
+ {
+-    if (con == NULL) {
+-        con = active_console;
+-    }
+     if (con == NULL) {
+         return fallback;
+     }
+@@ -1547,9 +1471,6 @@ int qemu_console_get_width(QemuConsole *con, int fallback)
+ 
+ int qemu_console_get_height(QemuConsole *con, int fallback)
+ {
+-    if (con == NULL) {
+-        con = active_console;
+-    }
+     if (con == NULL) {
+         return fallback;
+     }
+diff --git a/ui/curses.c b/ui/curses.c
+index 8bde8c5cf7..ec61615f7c 100644
+--- a/ui/curses.c
++++ b/ui/curses.c
+@@ -98,7 +98,7 @@ static void curses_update(DisplayChangeListener *dcl,
+ 
+ static void curses_calc_pad(void)
+ {
+-    if (qemu_console_is_fixedsize(NULL)) {
++    if (qemu_console_is_fixedsize(dcl->con)) {
+         width = gwidth;
+         height = gheight;
      } else {
--        con = NULL;
-+        con = qemu_console_lookup_default();
+@@ -201,7 +201,7 @@ static void curses_cursor_position(DisplayChangeListener *dcl,
+             curs_set(1);
+             /* it seems that curs_set(1) must always be called before
+              * curs_set(2) for the latter to have effect */
+-            if (!qemu_console_is_graphic(NULL)) {
++            if (!qemu_console_is_graphic(dcl->con)) {
+                 curs_set(2);
+             }
+             return;
+@@ -274,11 +274,11 @@ static void curses_refresh(DisplayChangeListener *dcl)
+         clear();
+         refresh();
+         curses_calc_pad();
+-        graphic_hw_invalidate(NULL);
++        graphic_hw_invalidate(dcl->con);
+         invalidate = 0;
      }
  
-     if (con != vd->dcl.con) {
+-    graphic_hw_text_update(NULL, screen);
++    graphic_hw_text_update(dcl->con, screen);
+ 
+     while (1) {
+         /* while there are any pending key strokes to process */
+@@ -318,11 +318,16 @@ static void curses_refresh(DisplayChangeListener *dcl)
+                     /* process keys reserved for qemu */
+                     if (keycode >= QEMU_KEY_CONSOLE0 &&
+                             keycode < QEMU_KEY_CONSOLE0 + 9) {
+-                        erase();
+-                        wnoutrefresh(stdscr);
+-                        console_select(keycode - QEMU_KEY_CONSOLE0);
+-
+-                        invalidate = 1;
++                        QemuConsole *con = qemu_console_lookup_by_index(keycode - QEMU_KEY_CONSOLE0);
++                        if (con) {
++                            erase();
++                            wnoutrefresh(stdscr);
++                            unregister_displaychangelistener(dcl);
++                            dcl->con = con;
++                            register_displaychangelistener(dcl);
++
++                            invalidate = 1;
++                        }
+                         continue;
+                     }
+                 }
+@@ -354,45 +359,45 @@ static void curses_refresh(DisplayChangeListener *dcl)
+         if (keycode == -1)
+             continue;
+ 
+-        if (qemu_console_is_graphic(NULL)) {
++        if (qemu_console_is_graphic(dcl->con)) {
+             /* since terminals don't know about key press and release
+              * events, we need to emit both for each key received */
+             if (keycode & SHIFT) {
+-                qemu_input_event_send_key_number(NULL, SHIFT_CODE, true);
++                qemu_input_event_send_key_number(dcl->con, SHIFT_CODE, true);
+                 qemu_input_event_send_key_delay(0);
+             }
+             if (keycode & CNTRL) {
+-                qemu_input_event_send_key_number(NULL, CNTRL_CODE, true);
++                qemu_input_event_send_key_number(dcl->con, CNTRL_CODE, true);
+                 qemu_input_event_send_key_delay(0);
+             }
+             if (keycode & ALT) {
+-                qemu_input_event_send_key_number(NULL, ALT_CODE, true);
++                qemu_input_event_send_key_number(dcl->con, ALT_CODE, true);
+                 qemu_input_event_send_key_delay(0);
+             }
+             if (keycode & ALTGR) {
+-                qemu_input_event_send_key_number(NULL, GREY | ALT_CODE, true);
++                qemu_input_event_send_key_number(dcl->con, GREY | ALT_CODE, true);
+                 qemu_input_event_send_key_delay(0);
+             }
+ 
+-            qemu_input_event_send_key_number(NULL, keycode & KEY_MASK, true);
++            qemu_input_event_send_key_number(dcl->con, keycode & KEY_MASK, true);
+             qemu_input_event_send_key_delay(0);
+-            qemu_input_event_send_key_number(NULL, keycode & KEY_MASK, false);
++            qemu_input_event_send_key_number(dcl->con, keycode & KEY_MASK, false);
+             qemu_input_event_send_key_delay(0);
+ 
+             if (keycode & ALTGR) {
+-                qemu_input_event_send_key_number(NULL, GREY | ALT_CODE, false);
++                qemu_input_event_send_key_number(dcl->con, GREY | ALT_CODE, false);
+                 qemu_input_event_send_key_delay(0);
+             }
+             if (keycode & ALT) {
+-                qemu_input_event_send_key_number(NULL, ALT_CODE, false);
++                qemu_input_event_send_key_number(dcl->con, ALT_CODE, false);
+                 qemu_input_event_send_key_delay(0);
+             }
+             if (keycode & CNTRL) {
+-                qemu_input_event_send_key_number(NULL, CNTRL_CODE, false);
++                qemu_input_event_send_key_number(dcl->con, CNTRL_CODE, false);
+                 qemu_input_event_send_key_delay(0);
+             }
+             if (keycode & SHIFT) {
+-                qemu_input_event_send_key_number(NULL, SHIFT_CODE, false);
++                qemu_input_event_send_key_number(dcl->con, SHIFT_CODE, false);
+                 qemu_input_event_send_key_delay(0);
+             }
+         } else {
+@@ -400,7 +405,7 @@ static void curses_refresh(DisplayChangeListener *dcl)
+             if (keysym == -1)
+                 keysym = chr;
+ 
+-            qemu_text_console_put_keysym(NULL, keysym);
++            qemu_text_console_put_keysym(QEMU_TEXT_CONSOLE(dcl->con), keysym);
+         }
+     }
+ }
+@@ -798,6 +803,7 @@ static void curses_display_init(DisplayState *ds, DisplayOptions *opts)
+     curses_winch_init();
+ 
+     dcl = g_new0(DisplayChangeListener, 1);
++    dcl->con = qemu_console_lookup_default();
+     dcl->ops = &dcl_ops;
+     register_displaychangelistener(dcl);
+ 
 -- 
 2.44.0
 
