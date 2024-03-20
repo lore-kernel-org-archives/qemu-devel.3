@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C34C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 06:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212F1C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 06:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmpm0-0002JQ-Tw; Wed, 20 Mar 2024 02:50:04 -0400
+	id 1rmplh-00028k-3r; Wed, 20 Mar 2024 02:49:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmplz-0002HY-1T
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:50:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmplf-00027u-Pr
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:49:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmplx-0001X3-Gw
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:50:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmple-0001SK-9f
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:49:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710917400;
+ s=mimecast20190719; t=1710917381;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lVTZKiKFhelwGsQo2+M0pXPKEtWBAHgU3lcxi8iyvF0=;
- b=f8BbuaovM31PSDDdyhalPNqXYOTZuZQSkBlE/bWmuPHc25BgWaFY+ehqijitVNc8zqwPVx
- sAOd1AqU23kEw0TxehQQVaFY3Gok4g9WRKXOJ8iPUka/0v5+A3LwSzFbRtyKd58hl9T+v2
- 01z9a3Qprh+K5v9Hoxzj62m/QgJPRFw=
+ bh=CNMmB6yyUsytDhCm7nfitLmmtGZ74w4pG32k0qd59oQ=;
+ b=I1Z4T8ujijRmgX+zyd7vkNfp2nbccKYuacicR5rV/gv1AohEIN/WbXlRQ1j2SlvdnYbgOZ
+ yc1nRmVrq0+JJrZAZKcwCkuTaNJ+q3UR8/HtQxTfnHTz8gGLevSNAX4fbB/Rbj6mez8YF/
+ oxUJyqDN2eFCWIEWN/ls2WaHYfU4Q+c=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-U_mj-5d3Pd6mmPNthnXezw-1; Wed, 20 Mar 2024 02:49:55 -0400
-X-MC-Unique: U_mj-5d3Pd6mmPNthnXezw-1
+ us-mta-203-FuHdDsyJMGqvMOc4D6AEcw-1; Wed, 20 Mar 2024 02:49:38 -0400
+X-MC-Unique: FuHdDsyJMGqvMOc4D6AEcw-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1E994185A789;
- Wed, 20 Mar 2024 06:49:55 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 72777800265;
+ Wed, 20 Mar 2024 06:49:38 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.59])
- by smtp.corp.redhat.com (Postfix) with ESMTP id DB3FA1C060A4;
- Wed, 20 Mar 2024 06:49:52 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 7967E1C060A6;
+ Wed, 20 Mar 2024 06:49:36 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
@@ -52,16 +52,17 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  Prasad Pandit <pjp@fedoraproject.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH for-9.1 v5 10/14] migration: Introduce ram_bitmaps_destroy()
-Date: Wed, 20 Mar 2024 07:49:06 +0100
-Message-ID: <20240320064911.545001-11-clg@redhat.com>
+Subject: [PATCH for-9.1 v5 05/14] migration: Add Error** argument to
+ vmstate_save()
+Date: Wed, 20 Mar 2024 07:49:01 +0100
+Message-ID: <20240320064911.545001-6-clg@redhat.com>
 In-Reply-To: <20240320064911.545001-1-clg@redhat.com>
 References: <20240320064911.545001-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -86,57 +87,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We will use it in ram_init_bitmaps() to clear the allocated bitmaps when
-support for error reporting is added to memory_global_dirty_log_start().
+This will prepare ground for future changes adding an Error** argument
+to qemu_savevm_state_setup().
 
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- migration/ram.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ migration/savevm.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 4cd4f0158c8675e1515ef8476c64d1203eed4458..f0bd71438a4f7212118593b51648b645737933d4 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -2438,10 +2438,23 @@ static void xbzrle_cleanup(void)
-     XBZRLE_cache_unlock();
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 388d7af7cdd842ec94fe782ed53979b800ffd4f6..1a7b5cb78a912c36ae16db703afc90ef2906b61f 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1009,11 +1009,10 @@ static void save_section_footer(QEMUFile *f, SaveStateEntry *se)
+     }
  }
  
-+static void ram_bitmaps_destroy(void)
-+{
-+    RAMBlock *block;
-+
-+    RAMBLOCK_FOREACH_NOT_IGNORED(block) {
-+        g_free(block->clear_bmap);
-+        block->clear_bmap = NULL;
-+        g_free(block->bmap);
-+        block->bmap = NULL;
-+        g_free(block->file_bmap);
-+        block->file_bmap = NULL;
-+    }
-+}
-+
- static void ram_save_cleanup(void *opaque)
+-static int vmstate_save(QEMUFile *f, SaveStateEntry *se, JSONWriter *vmdesc)
++static int vmstate_save(QEMUFile *f, SaveStateEntry *se, JSONWriter *vmdesc,
++                        Error **errp)
  {
-     RAMState **rsp = opaque;
--    RAMBlock *block;
+     int ret;
+-    Error *local_err = NULL;
+-    MigrationState *s = migrate_get_current();
  
-     /* We don't use dirty log with background snapshots */
-     if (!migrate_background_snapshot()) {
-@@ -2458,12 +2471,7 @@ static void ram_save_cleanup(void *opaque)
+     if ((!se->ops || !se->ops->save_state) && !se->vmsd) {
+         return 0;
+@@ -1035,10 +1034,9 @@ static int vmstate_save(QEMUFile *f, SaveStateEntry *se, JSONWriter *vmdesc)
+     if (!se->vmsd) {
+         vmstate_save_old_style(f, se, vmdesc);
+     } else {
+-        ret = vmstate_save_state_with_err(f, se->vmsd, se->opaque, vmdesc, &local_err);
++        ret = vmstate_save_state_with_err(f, se->vmsd, se->opaque, vmdesc,
++                                          errp);
+         if (ret) {
+-            migrate_set_error(s, local_err);
+-            error_report_err(local_err);
+             return ret;
          }
      }
+@@ -1325,8 +1323,10 @@ void qemu_savevm_state_setup(QEMUFile *f)
+     trace_savevm_state_setup();
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+         if (se->vmsd && se->vmsd->early_setup) {
+-            ret = vmstate_save(f, se, ms->vmdesc);
++            ret = vmstate_save(f, se, ms->vmdesc, &local_err);
+             if (ret) {
++                migrate_set_error(ms, local_err);
++                error_report_err(local_err);
+                 qemu_file_set_error(f, ret);
+                 break;
+             }
+@@ -1542,6 +1542,7 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
+     JSONWriter *vmdesc = ms->vmdesc;
+     int vmdesc_len;
+     SaveStateEntry *se;
++    Error *local_err = NULL;
+     int ret;
  
--    RAMBLOCK_FOREACH_NOT_IGNORED(block) {
--        g_free(block->clear_bmap);
--        block->clear_bmap = NULL;
--        g_free(block->bmap);
--        block->bmap = NULL;
--    }
-+    ram_bitmaps_destroy();
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+@@ -1552,8 +1553,10 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
  
-     xbzrle_cleanup();
-     compress_threads_save_cleanup();
+         start_ts_each = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
+ 
+-        ret = vmstate_save(f, se, vmdesc);
++        ret = vmstate_save(f, se, vmdesc, &local_err);
+         if (ret) {
++            migrate_set_error(ms, local_err);
++            error_report_err(local_err);
+             qemu_file_set_error(f, ret);
+             return ret;
+         }
+@@ -1568,7 +1571,6 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
+          * bdrv_activate_all() on the other end won't fail. */
+         ret = bdrv_inactivate_all();
+         if (ret) {
+-            Error *local_err = NULL;
+             error_setg(&local_err, "%s: bdrv_inactivate_all() failed (%d)",
+                        __func__, ret);
+             migrate_set_error(ms, local_err);
+@@ -1764,6 +1766,8 @@ void qemu_savevm_live_state(QEMUFile *f)
+ 
+ int qemu_save_device_state(QEMUFile *f)
+ {
++    MigrationState *ms = migrate_get_current();
++    Error *local_err = NULL;
+     SaveStateEntry *se;
+ 
+     if (!migration_in_colo_state()) {
+@@ -1778,8 +1782,10 @@ int qemu_save_device_state(QEMUFile *f)
+         if (se->is_ram) {
+             continue;
+         }
+-        ret = vmstate_save(f, se, NULL);
++        ret = vmstate_save(f, se, NULL, &local_err);
+         if (ret) {
++            migrate_set_error(ms, local_err);
++            error_report_err(local_err);
+             return ret;
+         }
+     }
 -- 
 2.44.0
 
