@@ -4,105 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E9BDC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 18:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1AB2C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 18:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rn0JQ-00037X-13; Wed, 20 Mar 2024 14:05:16 -0400
+	id 1rn0Qr-00053C-Rh; Wed, 20 Mar 2024 14:12:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>) id 1rn0JM-000373-Jd
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 14:05:13 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <isaku.yamahata@intel.com>)
+ id 1rn0Qn-00052F-Ge
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 14:12:54 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>) id 1rn0JK-0007vB-Ti
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 14:05:12 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42KHLuc1018977; Wed, 20 Mar 2024 18:05:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=oCqsQOg9a9GWGwX5ar56+8hBbWrcY0+ijdFkdIu0pHI=;
- b=NOVmgNrwk/bIjRbTsSm4EFjBEWzpBJDioe9ECa596OZQfeA8CCH9TBA4eAEA3wkpQ66I
- +t9Rvq65FJ9ESE3RCe46FNWP+D3Z8WbWDPCM1HOHp5YquolewlrOYswspf+3gXKzYqIW
- 1rVZmVDtS3+gwyHza9Xk2coVSNvmI/7CcVGvp4GRIz6nDqSAwhEEWe5tBcBu+FF6/HSv
- VbvLl/UR2b7GmCSHWuP5z6jNS/vwlFlXV/gHuSXIruaPtXIvS8DtcMGl/uCGoQsW7g+k
- NBKEazs06cHbUA0gYy7KUtJXyCkkQq2nypFK2Vbsg8vXx9nY81rSgejdQ3D8qRFtbMrj tg== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x044s84nf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 18:05:08 +0000
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42KI57bd028352;
- Wed, 20 Mar 2024 18:05:07 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x044s84nb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 18:05:07 +0000
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42KGwo1C015781; Wed, 20 Mar 2024 18:05:06 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wwp50845e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 20 Mar 2024 18:05:06 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42KI526Y10092856
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 Mar 2024 18:05:04 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7C3DA20040;
- Wed, 20 Mar 2024 18:05:02 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 452AE20065;
- Wed, 20 Mar 2024 18:05:02 +0000 (GMT)
-Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
- [9.152.224.238])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 20 Mar 2024 18:05:02 +0000 (GMT)
-Message-ID: <87e832c1aa59b81860f4c6a7fa6935d5c1268e85.camel@linux.ibm.com>
-Subject: Re: [PATCH 2/3] migration: Drop unnecessary check in ram's
- pending_exact()
-From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-To: peterx@redhat.com, qemu-devel@nongnu.org
-Cc: Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Bandan Das <bdas@redhat.com>, Julia Suvorova <jusual@redhat.com>, Thomas
- Huth <thuth@redhat.com>
-Date: Wed, 20 Mar 2024 19:05:01 +0100
-In-Reply-To: <bc88f4572649084cd38a0880d7e096a939f80b14.camel@linux.ibm.com>
-References: <20240117075848.139045-1-peterx@redhat.com>
- <20240117075848.139045-3-peterx@redhat.com>
- <bc88f4572649084cd38a0880d7e096a939f80b14.camel@linux.ibm.com>
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
+ (Exim 4.90_1) (envelope-from <isaku.yamahata@intel.com>)
+ id 1rn0QQ-0000ac-F1
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 14:12:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710958351; x=1742494351;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Vnbag9q3xQRvF0qzbjgLy7tYXm8Ph98PFJ3DvYqpeYA=;
+ b=PhnYYZ/fd7zBS6E2wL44Ufz0sqC3+7PoOI9Ifut0zE8OweCVZ+PiVppl
+ dS4bdBsEvoNrE3diYJ3kl/pnaJqOYiPKH5pOrda8mh6oRavl2bT1lxKsP
+ NQNN3HKx+chjjG6tsb+X4KurJd+lwwXEC3TzAPP+71S1rhhnCo+t1TS+A
+ Cp9TJBg/rbjgfFjCUAzTSFE7cXLXOddk7fsvTiIRArvXB2Ha0uUiRw8Uz
+ XLQ1tP2u+YTHElprM4zas30QXslIKpVihvJptFJpT0k5TplMyIJBvj9Mf
+ +tV9iwcb7LDyiAY6tkQOIlgddm1FHiT9W2j1JZMkTDlJuHT1QhHsKnimh w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11019"; a="9697215"
+X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; 
+   d="scan'208";a="9697215"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Mar 2024 11:12:24 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; d="scan'208";a="14142999"
+Received: from ls.sc.intel.com (HELO localhost) ([172.25.112.31])
+ by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Mar 2024 11:12:24 -0700
+Date: Wed, 20 Mar 2024 11:12:23 -0700
+From: Isaku Yamahata <isaku.yamahata@intel.com>
+To: Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>,
+ Isaku Yamahata <isaku.yamahata@linux.intel.com>, isaku.yamahata@intel.com
+Subject: Re: [PATCH v3 48/49] hw/i386/sev: Use guest_memfd for legacy ROMs
+Message-ID: <20240320181223.GG1994522@ls.amr.corp.intel.com>
+References: <20240320083945.991426-1-michael.roth@amd.com>
+ <20240320083945.991426-49-michael.roth@amd.com>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ZYaae2uyHhXamDd_4CEbz7vE2f9G70bT
-X-Proofpoint-ORIG-GUID: wHWjOQZCpOLcNGJnj1lZPrVRTDM8Zk1J
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-20_10,2024-03-18_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 phishscore=0 clxscore=1015 spamscore=0 malwarescore=0
- mlxlogscore=516 lowpriorityscore=0 suspectscore=0 mlxscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2403140000 definitions=main-2403200144
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240320083945.991426-49-michael.roth@amd.com>
+Received-SPF: pass client-ip=198.175.65.15;
+ envelope-from=isaku.yamahata@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,6 +85,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I cc'ed Juan, but it looks like he is no longer with Redhat.
+On Wed, Mar 20, 2024 at 03:39:44AM -0500,
+Michael Roth <michael.roth@amd.com> wrote:
 
+> TODO: make this SNP-specific if TDX disables legacy ROMs in general
+
+TDX disables pc.rom, not disable isa-bios. IIRC, TDX doesn't need pc pflash.
+Xiaoyao can chime in.
+
+Thanks,
+
+> 
+> Current SNP guest kernels will attempt to access these regions with
+> with C-bit set, so guest_memfd is needed to handle that. Otherwise,
+> kvm_convert_memory() will fail when the guest kernel tries to access it
+> and QEMU attempts to call KVM_SET_MEMORY_ATTRIBUTES to set these ranges
+> to private.
+> 
+> Whether guests should actually try to access ROM regions in this way (or
+> need to deal with legacy ROM regions at all), is a separate issue to be
+> addressed on kernel side, but current SNP guest kernels will exhibit
+> this behavior and so this handling is needed to allow QEMU to continue
+> running existing SNP guest kernels.
+> 
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
+> ---
+>  hw/i386/pc.c       | 13 +++++++++----
+>  hw/i386/pc_sysfw.c | 13 ++++++++++---
+>  2 files changed, 19 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index feb7a93083..5feaeb43ee 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -1011,10 +1011,15 @@ void pc_memory_init(PCMachineState *pcms,
+>      pc_system_firmware_init(pcms, rom_memory);
+>  
+>      option_rom_mr = g_malloc(sizeof(*option_rom_mr));
+> -    memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
+> -                           &error_fatal);
+> -    if (pcmc->pci_enabled) {
+> -        memory_region_set_readonly(option_rom_mr, true);
+> +    if (machine_require_guest_memfd(machine)) {
+> +        memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
+> +                                           PC_ROM_SIZE, &error_fatal);
+> +    } else {
+> +        memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
+> +                               &error_fatal);
+> +        if (pcmc->pci_enabled) {
+> +            memory_region_set_readonly(option_rom_mr, true);
+> +        }
+>      }
+>      memory_region_add_subregion_overlap(rom_memory,
+>                                          PC_ROM_MIN_VGA,
+> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+> index 9dbb3f7337..850f86edd4 100644
+> --- a/hw/i386/pc_sysfw.c
+> +++ b/hw/i386/pc_sysfw.c
+> @@ -54,8 +54,13 @@ static void pc_isa_bios_init(MemoryRegion *rom_memory,
+>      /* map the last 128KB of the BIOS in ISA space */
+>      isa_bios_size = MIN(flash_size, 128 * KiB);
+>      isa_bios = g_malloc(sizeof(*isa_bios));
+> -    memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
+> -                           &error_fatal);
+> +    if (machine_require_guest_memfd(current_machine)) {
+> +        memory_region_init_ram_guest_memfd(isa_bios, NULL, "isa-bios",
+> +                                           isa_bios_size, &error_fatal);
+> +    } else {
+> +        memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
+> +                               &error_fatal);
+> +    }
+>      memory_region_add_subregion_overlap(rom_memory,
+>                                          0x100000 - isa_bios_size,
+>                                          isa_bios,
+> @@ -68,7 +73,9 @@ static void pc_isa_bios_init(MemoryRegion *rom_memory,
+>             ((uint8_t*)flash_ptr) + (flash_size - isa_bios_size),
+>             isa_bios_size);
+>  
+> -    memory_region_set_readonly(isa_bios, true);
+> +    if (!machine_require_guest_memfd(current_machine)) {
+> +        memory_region_set_readonly(isa_bios, true);
+> +    }
+>  }
+>  
+>  static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
+> -- 
+> 2.25.1
+> 
+> 
+
+-- 
+Isaku Yamahata <isaku.yamahata@intel.com>
 
