@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B25F1C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 10:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B72E4C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 10:35:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmtH0-0003Pk-Fh; Wed, 20 Mar 2024 06:34:18 -0400
+	id 1rmtHl-00042E-GV; Wed, 20 Mar 2024 06:35:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmtGz-0003PX-M1
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:34:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rmtHi-00041j-WF
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:35:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmtGx-0004gE-D8
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:34:17 -0400
+ id 1rmtHg-0004yN-I7
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:35:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710930854;
+ s=mimecast20190719; t=1710930900;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
  bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=KZfD2GtsRpQoQV3qywW/tD3DFAaqViFbe0U8kllo6YgHg7+xi0SB0l6t4TUl8qi/EZQemg
- YZrDoxPoLsIJdpqNvY3gZo58gfJRiSB1g0dZJeywYyj9cAw/T6ibxMvxsSoOUJh/EysHXN
- xNPkoQasJxow/gPEl9OsU0F4DCk5i+w=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ b=IxMkpudkYanl7VUD1mRpX62IBuGxjsXZl+F3x0Mc9l1/n756YwWT9NxrVWx9IbGtnk0Yq/
+ Shy166oeXibPxdUMhGjRlYc4xDD9aXutpXcU4hU+VYWYf3CaynJ+zXaG/2EMZUXUjGpFgD
+ aVHLkDIcJ4g5xGhhbOWjFO186Z6JmYw=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-MPhClSEIPviJIHYcv1TflA-1; Wed, 20 Mar 2024 06:34:13 -0400
-X-MC-Unique: MPhClSEIPviJIHYcv1TflA-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a466d8ad648so396667866b.3
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 03:34:12 -0700 (PDT)
+ us-mta-632-Sa8bHFF2P2O4DkhvHg9bWw-1; Wed, 20 Mar 2024 06:34:58 -0400
+X-MC-Unique: Sa8bHFF2P2O4DkhvHg9bWw-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-513e214be2aso3623285e87.0
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 03:34:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710930851; x=1711535651;
+ d=1e100.net; s=20230601; t=1710930897; x=1711535697;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
  bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=QLHZhQPBIWGR2l79AyZfTPScCxcRN4XI2NiF8g1sFZkcncSXgODPL3qeFGQdHjlJdi
- Fw86ai5k/tfRQLsFdGqEkFKabnDDb9hpaV0NCbTszM00arre245gsJ7VJKhTJxe0I0hJ
- jLl3T5Ls4A7HrJ3TfXvss+atAqe9kwdjkau6+cD+nmIJ3nlX+0mqsFjlPe2mSpxB6LFy
- osITZ/vDgVD1vM/PeoOX8dOymctDrWVWIeyg9rUVmWcnTEsamvWBuokRHKHmrogOraB+
- UbdawqkgRtaMsTgEIjKhHcal9OO2d0Elrwg246MhNE17OA+k852nylbQkN6uoHMEqmL2
- NN0g==
-X-Gm-Message-State: AOJu0YxxJhvTif6elskkEC4w04zbaSKsouoZvCmfd/VwfbcoG1efKWXd
- +p7S0Jj6fVJjKysRSQelhXmq3aDMkHEAw0m+h10y+QdcSd+bV7IBMyLZz7nQzEQzbEa/Usn3th0
- RNKpwQVxHlAbuvbpUkwVhV/uNT/FK7TNK7wm7OQBlmjxR8hx0BvW2NIEAZBD3
-X-Received: by 2002:a17:906:264e:b0:a46:c11d:dd05 with SMTP id
- i14-20020a170906264e00b00a46c11ddd05mr3925386ejc.57.1710930851294; 
- Wed, 20 Mar 2024 03:34:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGK/cRf9Ps0QNzeovSr2JcRpKI2b8Ff9I5B22GEDnKq6rTksEwtBtfbrTHO/JxT8Gor+D9C6A==
-X-Received: by 2002:a17:906:264e:b0:a46:c11d:dd05 with SMTP id
- i14-20020a170906264e00b00a46c11ddd05mr3925370ejc.57.1710930850960; 
- Wed, 20 Mar 2024 03:34:10 -0700 (PDT)
+ b=XCH0fnWoLyXiOlKmPb4RpyOlXRbJHleFmPCqTYdB1GBNpycWl46H8I/ZG5bukAIY+J
+ y0kejVn0xLwwIRCffchjNIfi7GPQUov4uHCuXxkaWTqrIZ/OjCbr6CxVsp1gbs/FC8Ut
+ 3RN3tszAemxzQkQanWD0MLssk2kHLedzTesERJBWDTJRzjOfm8EeNf+mHJouIg5piL03
+ 0//cMttoNYwCdG9aQw6qRcrNt9OuOgDI+bCery3YF+47fXzcNJkmEucCG5D3GzhjmtrL
+ eW14Faw71CDXhXQviNYagaOmN9HPCncZg8P5CqC2na+r4/cwX9n5TjLdhWnAbXpIumVa
+ zg6Q==
+X-Gm-Message-State: AOJu0YwVAFZbI+KStcS8TGwh5IgtyJ19Rd0gTRzU4Gt6/w8qYe56f897
+ 9GHb0XfaCYzuB/e/gsjT6I/Fkr5Gjv/B6yliKwcr+uH4vJiv7y7zGu2Fpjdztkystpy3Sm31UwU
+ zgQt3ojOr9oGNttNaNrjke+rKGjCP0yzcgy+qk/6nY6utyJoAH2gX
+X-Received: by 2002:a05:6512:2394:b0:513:e348:fbc0 with SMTP id
+ c20-20020a056512239400b00513e348fbc0mr12009179lfv.20.1710930897308; 
+ Wed, 20 Mar 2024 03:34:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEdi/Fdl/VLw3IIq4dNTxqrlhWFVMyC2wjy6GXpKSDgSxS3RByHYYOGhH2jlL+k0NqBQ6QKNQ==
+X-Received: by 2002:a05:6512:2394:b0:513:e348:fbc0 with SMTP id
+ c20-20020a056512239400b00513e348fbc0mr12009158lfv.20.1710930896930; 
+ Wed, 20 Mar 2024 03:34:56 -0700 (PDT)
 Received: from [192.168.10.118] ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- be5-20020a1709070a4500b00a46a9425fe5sm4845011ejc.212.2024.03.20.03.34.10
+ og40-20020a1709071de800b00a4663450fa9sm7140904ejc.188.2024.03.20.03.34.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Mar 2024 03:34:10 -0700 (PDT)
+ Wed, 20 Mar 2024 03:34:56 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, xiaoyao.li@intel.com,
- xiangfeix.ma@intel.com, chao.p.peng@intel.com
-Subject: Re: [PATCH v3 0/1] Introduce Icelake-Server-v7 to enable TSX
-Date: Wed, 20 Mar 2024 11:34:09 +0100
-Message-ID: <20240320103409.1048570-1-pbonzini@redhat.com>
+To: Tao Su <tao1.su@linux.intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, imammedo@redhat.com,
+ xiaoyao.li@intel.com, zhao1.liu@intel.com
+Subject: Re: [PATCH v2] target/i386: Add new CPU model SierraForest
+Date: Wed, 20 Mar 2024 11:34:55 +0100
+Message-ID: <20240320103455.1048663-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240320093138.80267-1-zhenzhong.duan@intel.com>
+In-Reply-To: <20240320021044.508263-1-tao1.su@linux.intel.com>
 References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
