@@ -4,101 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86316C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 17:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77376C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 17:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmzur-0004hw-Ft; Wed, 20 Mar 2024 13:39:53 -0400
+	id 1rmzvn-0005Dr-Nc; Wed, 20 Mar 2024 13:40:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmzun-0004hi-Jm
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:39:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmzum-0002Nu-6g
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:39:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710956386;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LadTrEs32q6JuiUng9QgE0IesXnTjqGpv9qfMYEDVbA=;
- b=NGSt1YyFQB0yWpKGR3oh4O/N1xt2p/YHEC8Icy+jILdN2VccPUTDeR92+hGWX1W6P7Dkhi
- e8Fzq705RHrqy33pmmHTR1Pzw+Ctyg6+QtcUIRgUKeIpcjQPcdCcWn0BTCSalobhrkvIKf
- gduSB83EufGenWo5E3vUSTxO5DXe2Dw=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-Kps6Nz2JN7KXf8tagPnJFA-1; Wed, 20 Mar 2024 13:39:45 -0400
-X-MC-Unique: Kps6Nz2JN7KXf8tagPnJFA-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4311dd10102so244281cf.0
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 10:39:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1rmzvb-00059f-MQ
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:40:39 -0400
+Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1rmzvX-0002mV-Jl
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:40:39 -0400
+Received: by mail-oo1-xc2c.google.com with SMTP id
+ 006d021491bc7-5a485724ddaso71931eaf.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 10:40:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1710956433; x=1711561233; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=gG8tDD70qjH8tEUTkZZNu/A5lFJ/cn1XnBlvMkLynGM=;
+ b=H0p6beWGt2ueruY865Jcz92IDLCmOm1UHC7P8Cuqg0IE6lXzlTg6pgLwSYgoHVZExU
+ jP8MtBlv/cWrJkppL2MTGOZQwmbp6knkg0NGMA5bU1/x8bzcbpkuENr/aB3xlpz3yih4
+ 1hc5CqyHnDIWUgxgX7uL9PojW2WmUTGvbr8XwwKBR3SkQJhMTKt4NxBOF3ywrYFWJETa
+ vvTOxzgmn9K2mdlaXTyDBXKiNUHBUPsqxSR5Z12m75jgbB+etZXiIeexF4TwQ/cKrSGA
+ x2pNs9ycIt5SyK+p9cGDJ3hIvdtzVRx/owAU98d0AlfWwe4pE35tGpiVv8+n6sQxKpw7
+ KUhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710956385; x=1711561185;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LadTrEs32q6JuiUng9QgE0IesXnTjqGpv9qfMYEDVbA=;
- b=KtKkLpQG1GEk76C8W5ADnzheEPS5paGSoxSUCZQGYSY6gV9hXrk6KaP59J5YuLMEKN
- ZjDzLytcy8VkdU7vnUwOmnZ8AH9KdD4boOtlVu7olPmfgLJaRmHdT867dNmrUlIihoiR
- wz51BQMUU3YzAiDWjwDk0et3GnHScI65u9s212uoq1MhxOm8Y1pFEd9fzHve+RjXSd8V
- uNXAiDG+ZTHh50Mj8v/NJ+CyNiYan1MIKkCbYxmo6pcofqJ7GvDl91BMCmi0vKIVWxdC
- icrBox+LVPQUSyWuCHDpcWru6nOT8N3QSP7iTPi5XcL2UVqKqiqE/K9RWZ4NDnJ2SpI0
- qutA==
-X-Gm-Message-State: AOJu0YzuA3EUcswI6WjvlINgvlrcI3co7FMbVL2KFGmIB0wk1e+b3wH5
- Yo34lYiEAhXPAT/MpCYt5ihp2VwaPJfaYf1xUNRWbqLW2pOx45+4Xy5+EO7oOqktpb424CRlhMY
- iCg51I2CsK8sHKkZyLHF/jANOHDuz64D/kGzhP/4zoEc6KKDyF329
-X-Received: by 2002:a05:6214:3f85:b0:690:9db6:f410 with SMTP id
- ow5-20020a0562143f8500b006909db6f410mr6764872qvb.3.1710956384656; 
- Wed, 20 Mar 2024 10:39:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFLZ2jRy2HZB5vFRERmbsQfn7UkuWfj7vRUfuSEG/rE4h7BJgEFptrr/T99J5Y/I3ZjhMxHSg==
-X-Received: by 2002:a05:6214:3f85:b0:690:9db6:f410 with SMTP id
- ow5-20020a0562143f8500b006909db6f410mr6764835qvb.3.1710956384209; 
- Wed, 20 Mar 2024 10:39:44 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- jn10-20020ad45dea000000b00690dd47a41csm8107560qvb.86.2024.03.20.10.39.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Mar 2024 10:39:43 -0700 (PDT)
-Date: Wed, 20 Mar 2024 13:39:41 -0400
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>,
- Paul Durrant <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Avihai Horon <avihaih@nvidia.com>,
- Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH for-9.1 v5 09/14] memory: Add Error** argument to
- .log_global_start() handler
-Message-ID: <ZfsfXX48CEV5IfiJ@x1n>
-References: <20240320064911.545001-1-clg@redhat.com>
- <20240320064911.545001-10-clg@redhat.com> <Zfr10JG2dTChsLVj@x1n>
- <d58d5134-dbfb-4c07-956a-5e8f3e230798@redhat.com>
+ d=1e100.net; s=20230601; t=1710956433; x=1711561233;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gG8tDD70qjH8tEUTkZZNu/A5lFJ/cn1XnBlvMkLynGM=;
+ b=S2RxoXsV2qQ5dPdvf6ffjeA4REp8k1fAL8CfZpcMjwUuehLZbmPyKLUzs36kEFbbl6
+ Ml3N7dcx1VBb7gMi5lt4XE3619dmVF0EFTLbOWYasqJ/OHW7N66I7jTYrR90Lumc6j5n
+ 1yueBIG5yJ7+lgicO9TyVAuxqgdVPxyxM1styhj1TfbLb5urXqVjiEbgNkFpk2q33i5v
+ ZfTgU9Cu2Lg19o2v0M7x4ZRYS4wPGxJ/L75ZZi8nswFiTCswIsAc9MybbN0ozeyPACu/
+ YiGWXrGspamWrvb9qji0Va5v3ccGneHDvYlLddzsn0OkFrozAB+CY4qmxRR1AM50rnoP
+ JRig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWCGgWdnRP9Kdx6y831iOGoRc4Gd0PaiDlGNAL6qBgrR91Jqn7SHXlgGuESz254eQJQjm9FzCK5Y5xmjHtetmzQIlVnQ4A=
+X-Gm-Message-State: AOJu0YwskTz6bqmYKZAWaAjJ+SnFQM65zbWbFG5BLofqmC4fpN1kHno6
+ rIsRIhAhWUINVveq5up3+aT9HKfpK2TA1+5/NeJTpdd4HyvFH1Tskjcj0Z8CdpB4njIMnbByrvY
+ HkuPHrmLiyVRfeqc9tDMIMOgYG74=
+X-Google-Smtp-Source: AGHT+IETfy7CpR4I9gJvmTkVNXZQr961WcJJsuqbbXhXEtmEpJsPQuIqKKjVshky/gxansH9bxqlqsjczsvLMrdgutU=
+X-Received: by 2002:a4a:7614:0:b0:5a4:75f2:54d0 with SMTP id
+ t20-20020a4a7614000000b005a475f254d0mr12725754ooc.9.1710956433437; Wed, 20
+ Mar 2024 10:40:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d58d5134-dbfb-4c07-956a-5e8f3e230798@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+References: <20240320090442.267525-1-zheyuma97@gmail.com>
+In-Reply-To: <20240320090442.267525-1-zheyuma97@gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 20 Mar 2024 13:40:21 -0400
+Message-ID: <CAJSP0QU5GU56T1ffaAkpdx03aZtM71+e-gEC3uYERxFj991RMA@mail.gmail.com>
+Subject: Re: [PATCH] libqos/virtio.c: Correct 'flags' reading in
+ qvirtqueue_kick
+To: Zheyu Ma <zheyuma97@gmail.com>
+Cc: thuth@redhat.com, lvivier@redhat.com, pbonzini@redhat.com, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2c;
+ envelope-from=stefanha@gmail.com; helo=mail-oo1-xc2c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,12 +91,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 20, 2024 at 05:15:06PM +0100, Cédric Le Goater wrote:
-> Sure, or I will in a v6. Markus had a comment on 8/14.
+On Wed, 20 Mar 2024 at 09:10, Zheyu Ma <zheyuma97@gmail.com> wrote:
+>
+> In qvirtqueue_kick(), the 'flags' were previously being incorrectly read from
+> vq->avail instead of the correct vq->used location. This update ensures 'flags'
+> are read from the correct location as per the virtio standard.
+>
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> ---
+>  tests/qtest/libqos/virtio.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yeah, I can handle both if they're the only ones.  Thanks,
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
--- 
-Peter Xu
-
+> diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
+> index 82a6e122bf..a21b6eee9c 100644
+> --- a/tests/qtest/libqos/virtio.c
+> +++ b/tests/qtest/libqos/virtio.c
+> @@ -394,7 +394,7 @@ void qvirtqueue_kick(QTestState *qts, QVirtioDevice *d, QVirtQueue *vq,
+>      qvirtio_writew(d, qts, vq->avail + 2, idx + 1);
+>
+>      /* Must read after idx is updated */
+> -    flags = qvirtio_readw(d, qts, vq->avail);
+> +    flags = qvirtio_readw(d, qts, vq->used);
+>      avail_event = qvirtio_readw(d, qts, vq->used + 4 +
+>                                  sizeof(struct vring_used_elem) * vq->size);
+>
+> --
+> 2.34.1
+>
+>
 
