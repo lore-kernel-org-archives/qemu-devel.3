@@ -4,85 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 072A9C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 11:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E81C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 11:21:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmtym-0003VW-1y; Wed, 20 Mar 2024 07:19:32 -0400
+	id 1rmu0Q-0004OQ-11; Wed, 20 Mar 2024 07:21:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmtyi-0003SR-SX
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 07:19:29 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rmu0N-0004Nv-Qq
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 07:21:12 -0400
+Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmtyh-0000k9-9n
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 07:19:28 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33e1d327595so4371097f8f.2
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 04:19:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rmu0L-0001Ja-74
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 07:21:10 -0400
+Received: by mail-qt1-x82c.google.com with SMTP id
+ d75a77b69052e-43107ccd7b9so2847601cf.3
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 04:21:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710933565; x=1711538365; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Lj+zkkGMQz/HhiRz/nq+wThBF91u9rXrZSwBR5Boelc=;
- b=DmgnqaqC9tmmN6gX+VaBV5Zq1TDO9xTg4T9A6zsC7DyyWqLQ47WTDTmeE8XH6ISY9z
- 8md5N8O8OtV9cxCuCj+DReNbsseqS+qaY6kag7PNx61XA8+VCfXBNhFkPaO4XziYefZL
- toea5ovJ7bvMSX0z61fjg7UR/2PRm26GTlE+THB8ITGjSrJfgPhP8UVG4CvOfvLSf8fo
- v++hX7mOMhLlSeo1SlAY7KVeyNGX/K1++CUTm9tRiMzmY2asu3863QWSfvT/s3KHR45u
- XnuK9yVKed5jkWl+F1VtNhgXipgWedpF4t1pflSUyKSwLZKJZGQ/j3opgG69oE5FT/c2
- 0rmg==
+ d=gmail.com; s=20230601; t=1710933667; x=1711538467; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QaJSo7yYRcQ2aS9IUfIXzodPoVg/Aejstb6SX5ENnCI=;
+ b=Tg4YG5Y8RfVuDMs+HdiIBBQnqxmlsFwedODaBVCqXfXSvsr/wDrT91C8t2ynXmhV4+
+ HgiSjTsT2TJUzTMTO7nK205e3UTJWyGff/krPtCXRDAAesboBso069pWsLiRvCvsXjit
+ 9tZZtzlbMA/IiEtJacDfuGZWOBSWK+vheyG4LXeL5DaAmEvNolXFtHab/QsnCl6VBcDC
+ cf5Sp3slu4Avgrm1CJFeAEvGktCPfnKMhwKWGH7KiwLjxlLChjD7zyponauMaO5Ty9Hl
+ mSA7o8LQnqFq+kjPbpqkya+O8LXmR5E6nc7kEK2BjhRd5W4By6ovprca6Y0q/3pKuqLO
+ dKAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710933565; x=1711538365;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Lj+zkkGMQz/HhiRz/nq+wThBF91u9rXrZSwBR5Boelc=;
- b=SnANtrAU/5wkb1s7hvoAXQLuNXJOt60OQ5YXRy13NGRZFKzzvOwwMzIi/0JGttLoNg
- OUWrkyzzjRejjUlDHgC8z4MLRgt/oLaBFyw0bkUdD0ouRS2Kb0RYOsTxul2KgXvfELbm
- zS16EIQoqTxkMw8O2Q6CQLPLfIUOywY2gi2wIM6DTQC8CjZYFmsdR2Cg4WhOrHJmfx2e
- DVrlBEVKTmWHUxj0pdQJh2BOQXvQIcjuXkCrBZd3MyUO7J5fAOvwEd4q8fj+FbUI4It3
- LOxmNIKZfl7KOUXiiWjePudvtAnR9fPJVG51L1GerQUxrDkvv6K1dn3mCsEE5Q0LmKwY
- pkgA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWn0rIbGkNb0NWNYCOefw4Lc01ldk2mmnuqYeVXIaWCL6m8l6NSJEoKm9nV25RDlcNscZzrV0aOdLzxbzql8fXA+N8kTPg=
-X-Gm-Message-State: AOJu0YyPEqgZ6ct0jW2lEghGP8/TgYShj9xnJ4GphPnzaA8MI1eQ7m5K
- 1tjwmHpdQ7JGMNBq05GJSIXCcO51u94dP5hv+Zh73xC1JWRC6BJ9IHeiYfS+a40pmD/Bg0gueO4
- m
-X-Google-Smtp-Source: AGHT+IF/KDpLEbAehUpiGLGYeeZS99BJqd/1yYJFkH627MblSe/TuguMHn7kLvvhZRlp/LXgs4rmlw==
-X-Received: by 2002:adf:e5d1:0:b0:33e:c604:dd3a with SMTP id
- a17-20020adfe5d1000000b0033ec604dd3amr9573447wrn.58.1710933565334; 
- Wed, 20 Mar 2024 04:19:25 -0700 (PDT)
-Received: from [192.168.64.175] ([92.88.170.201])
- by smtp.gmail.com with ESMTPSA id
- t17-20020a5d49d1000000b0033ec91c9eadsm14583999wrs.53.2024.03.20.04.19.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Mar 2024 04:19:24 -0700 (PDT)
-Message-ID: <cc132404-dcd5-4aed-a481-b46d6e3115b0@linaro.org>
-Date: Wed, 20 Mar 2024 12:19:22 +0100
+ d=1e100.net; s=20230601; t=1710933667; x=1711538467;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QaJSo7yYRcQ2aS9IUfIXzodPoVg/Aejstb6SX5ENnCI=;
+ b=wy3P6WxXReqSlgDra1u3Patw+Xaw197CWOPB/X5MpCvucdXlPB1MHP+UT2zRSjK0kZ
+ RmsVQwb3nhEjuZ9tc0vSBOxt9vQGE5/Ky7VRwn7kinPVDmjkDTrAMTNsBKPXW6cmvBfo
+ ExS2+P/dbRSLdf1wldwYYlNnPqfVaQnmkMvtEGaWeg0YHFEOrAo9wgjVFHuaRDJn+xq8
+ 44Cw7HbkL73DqUAVE7eAnuo1HT5GrceSE5ZVwuC3EGL9WFfATPghK1QdyE7nTV/6/sSj
+ UCLz6I7mZ38gLQXfCuwO5Zn5Dd0DkmesdPlfXMUABQLbonxVdGeRW51MD5Gv3HtYNo1o
+ hnUQ==
+X-Gm-Message-State: AOJu0YxllBdizt/el6kiZyNyVIbem1k0mONgudBqUxt16C3yBo2hJPD0
+ fuXrHhqr58wxSI4zO2WZKBOwre7IYo7fO5mEp2oZoNIIBXcq32uS6LVDKNr79+3u2IOyECTspNV
+ bTEpnuJvjjD3V22cJAKt9t53BpVo=
+X-Google-Smtp-Source: AGHT+IFDeu+j7WKWlf1LZ6gCKVUlF6Ux8IsvO6hxY1kozZgBU4eHJbDDTnL+KzxiVxsuCT1/pHuiwKuIWhWoFeblaJs=
+X-Received: by 2002:ac8:7f4e:0:b0:431:9d:2050 with SMTP id
+ g14-20020ac87f4e000000b00431009d2050mr2047168qtk.60.1710933667606; 
+ Wed, 20 Mar 2024 04:21:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] hw/nmi: Remove @cpu_index argument
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
- qemu-ppc@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Mark Burton <mburton@qti.qualcomm.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20240220150833.13674-1-philmd@linaro.org>
- <f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+References: <20240319181724.212753-1-aidan_leuck@selinc.com>
+In-Reply-To: <20240319181724.212753-1-aidan_leuck@selinc.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 20 Mar 2024 15:20:56 +0400
+Message-ID: <CAJ+F1CLWCpHSgzuXVaV6EBWRQKM42UaSiivCHjzJGkbW26UNLA@mail.gmail.com>
+Subject: Re: [PATCH] Implement SSH commands in QEMU GA for Windows
+To: aidan_leuck@selinc.com
+Cc: qemu-devel@nongnu.org, micheal.roth@amd.com, kkostiuk@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,32 +89,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/2/24 16:19, Thomas Huth wrote:
-> On 20/02/2024 16.08, Philippe Mathieu-Daudé wrote:
->> Have s390x always deliver NMI to the first CPU,
->> remove the @cpu_index argument from handler,
->> rename API as nmi_trigger() (not monitor specific).
-> 
-> Could you please add some rationale here why this is needed / desired?
+Hi
 
-I'm not sure it is desired... I'm trying to get the NMI delivery
-working in heterogeneous machine, but now I'm wondering whether
-hw/core/nmi.c was designed with that in mind or likely not.
+On Wed, Mar 20, 2024 at 12:39=E2=80=AFAM <aidan_leuck@selinc.com> wrote:
+> +// Converts from a standard string to a Windows wide string.
+> +// it is a 16-bit wide character used to store Unicode encoded as UTF-16=
+LE/
+> +// some Windows API functions require this format of the string as oppos=
+ed to just
+> +// the normal c char*. This function attempts to convert a standard stri=
+ng to
+> +// a wide string if it is possible. Some multibyte characters are not su=
+pported
+> +// so it could throw an error.
+> +// Read more here:
+> +// https://learn.microsoft.com/en-us/cpp/cpp/char-wchar-t-char16-t-char3=
+2-t?view=3Dmsvc-170
+> +// parameters:
+> +// string - String to convert to a wchar.
+> +// errp - Error pointer that will set errors if they are converted
+> +// returns - The converted string or NULL if an error occurs.
+> +static wchar_t *string_to_wide(const char *string, Error **errp)
+> +{
 
-I suppose in a complex machine you explicitly wire IRQ lines such
-NMI, so they are delivered to a particular INTC or CPU core, and
-there is no "broadcast this signal to all listeners registered
-for NMI events".
+There is g_utf8_to_utf16() which can be cast to wchar_t, iirc, that's
+how glib converts string for w32 api
 
-> 
-> Thanks,
->   Thomas
-> 
-> 
->> Philippe Mathieu-Daudé (4):
->>    hw/nmi: Use object_child_foreach_recursive() in nmi_children()
->>    hw/s390x/virtio-ccw: Always deliver NMI to first CPU
->>    hw/nmi: Remove @cpu_index argument from NMIClass::nmi_handler()
->>    hw/nmi: Remove @cpu_index argument from nmi_trigger()
 
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
