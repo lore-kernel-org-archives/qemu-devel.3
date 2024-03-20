@@ -4,76 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 738E3C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83313C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmzEC-00028x-QV; Wed, 20 Mar 2024 12:55:48 -0400
+	id 1rmzGh-0002xx-QO; Wed, 20 Mar 2024 12:58:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmzEB-00028l-FX
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:55:47 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmzGg-0002xZ-5R
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:58:22 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmzE7-0002ok-IF
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:55:47 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-33e672e10cfso19336f8f.0
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 09:55:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmzGe-0003Mw-4A
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:58:21 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-56a2bb1d84eso171010a12.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 09:58:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710953740; x=1711558540; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oWMB2p5eJiO2VVBRipyPskEQHb1oHz4BULZQJjBao/E=;
- b=Qo8P07fQtJbtIgGMC0UV4GZfg2JA9wr4ua4cUG0DZbQOFWvoPDulJuk2sfFVN1xsvR
- U/uAs+si8rUwWJ9CKFNFUDX8vhDGNYEia9IUoVUBR0sHFRa89APRh55ANqJVtmIbAQ/A
- okDT0NF3rp/XcyFSDH3rSdzE8nVPX9n7oPUJ1wpjC9JYNNP908bkHj7fAkYQHKVfTvDf
- D1jLQZYqMA/EmFWcB+Uix84q0XxNZNShebyGA9UchcOnnCx9UIFjMy7JgQWFgCdr78CQ
- SvoFRXgUy1pKc2TqJ48kLiNA0mgDq9YNcgsO9Y3+Wr7XK65FTOCG2ORYL54IuJtxhwiJ
- qGmA==
+ d=linaro.org; s=google; t=1710953898; x=1711558698; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jKtII4c2DDPJdzQEvjeziL2qfN7YH+yrGDSBf6hDSrg=;
+ b=HmU3kfkUtR7GcLyubwEFGVX7/fYe0pDx/1BvZyYw0Qgf/Nn5zT4zpqUSYx8s6hgPQV
+ ZkKuY+Sz6MtdY/EqZd3lmNWTkOAqHx4jZA1zBfN6WYkZCp+OFPIoxXslXjJUyxQbjSr2
+ eJrhd8urb0tgR1RGz5yne5gCku1d1TKenyHsO1lVhpFq/pjgcrRBClSGmRG6ZEGhDvOf
+ I8n+vyFpMAnlJ+zq/EtyMP3yNxnnO8YtbtpYGB1Idm/esUzTobOwddlp0KYBdT5EGED+
+ 40Zql7PX/8HuKBNXFXR7gBPpj7qiozWykFUlt7rrGtDn7Pw7pDylkLvi1KFv6JljBypz
+ XqNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710953740; x=1711558540;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oWMB2p5eJiO2VVBRipyPskEQHb1oHz4BULZQJjBao/E=;
- b=rDXtE4pKFG8iOR2c8s0JrLooKNBtyZVpbH8sarvINTss/ihHblBeKzzvno/pszmO4J
- opqC6xhVsbPwVHXplkPX/7qNBOvl61fawblZz2/CPwCtpVGbJ9CBsEHZN4YOT8DTJrRO
- WkQ4NBtMWZli6gBKj21yf5EsDKUMi3U0mldmTfLW+0Q84OzQ+tyDsE2gpjLNJq7OQuuF
- x+kisrA58PFdI4rKcElUfz2GHJ+9wwXOYjWfMBY6dCtuaAXUKcRBO8xTLW4FWGGGB5fy
- UTsflEsW2v1e/byrn87MvbReKSsNesMOEKT7YBmWYIrncvctNjSiOxPmgR3hbc9V0gZ3
- 4zPQ==
-X-Gm-Message-State: AOJu0YynfoNFVnZQYjB3mGtcemTkS/W4UJ7R6Wr55Oh7T0J/wAEeC0PK
- eviHfDKgw1u8rRAyw9I8Ev6bcS/pIg31C+0d6zWV12q6V2jA2PRg5rzRPCtrElo=
-X-Google-Smtp-Source: AGHT+IGlFE+Sk0hTGkScd1wTqYajSIe8qrtu5+zzpxKSJtl1h+ub6TvzisW/yfJMDvKAUeh585eDvw==
-X-Received: by 2002:adf:f9cc:0:b0:33e:89ad:efbe with SMTP id
- w12-20020adff9cc000000b0033e89adefbemr1731683wrr.45.1710953740310; 
- Wed, 20 Mar 2024 09:55:40 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.156.105])
- by smtp.gmail.com with ESMTPSA id
- bs18-20020a056000071200b0034181bea3b0sm5563171wrb.3.2024.03.20.09.55.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Mar 2024 09:55:39 -0700 (PDT)
-Message-ID: <8209b18b-ac78-48aa-8189-4d0afdc8e7c2@linaro.org>
-Date: Wed, 20 Mar 2024 17:55:37 +0100
+ d=1e100.net; s=20230601; t=1710953898; x=1711558698;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jKtII4c2DDPJdzQEvjeziL2qfN7YH+yrGDSBf6hDSrg=;
+ b=BvCgQoRL/NvBDaz0JGJCvXZMd8HP4wAnuDFNHz/H3tHVjTpoE9JpaQexovJqzKCllT
+ UN0BsxCwdVrJkGUs6yJ9ArfGB0vz5W5UcB7gB/hElhaA+Ay6syMuQoFWXLmlEeGiuz4d
+ GQGh2fB1VGNY54/EvIgm1CfpJt4Cc5keO/ziNv4aYnUUF1blXj1JUnvYOlmMTq2/A0Ui
+ 5P9PqRrr8OyZqXmuD335wFqswfYP8KV597eGUO7luVcZ3x2dQ0ipoNs8Y/oMrdYcLifG
+ hB+Ua0CIy113GszfKZdvGtYVpq+lihUjrQOgEFNgEdXKXtsp6A6X4iSAniex9c3RVfMb
+ XeUA==
+X-Gm-Message-State: AOJu0YzoFb73tWZOBGaXECen4xJlhs9IThY09pIolPy7kT8ikRXG2y07
+ q0k+tecGHEY8xecM0bir8R534qbIp3ENKV12ylStP0acQft7mQXeccyyIZucT0aSXdNiDGIjG8+
+ Rav78OvPNGs8ptNkoRjtzxSpZ7R4kf1xh27Xseuu4l10HNJXD
+X-Google-Smtp-Source: AGHT+IEbgSlzZoXz0EObQMplQJpVxoouSKhA/BV17dhL5+3DEEJ6xSck6+RWsGVeiGdoTxPufc4vF9RVUPhQSge+IK8=
+X-Received: by 2002:a50:d5d3:0:b0:568:d6a2:716 with SMTP id
+ g19-20020a50d5d3000000b00568d6a20716mr226809edj.7.1710953898547; Wed, 20 Mar
+ 2024 09:58:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] libqos/virtio.c: Correct 'flags' reading in
- qvirtqueue_kick
-Content-Language: en-US
-To: Zheyu Ma <zheyuma97@gmail.com>, thuth@redhat.com, lvivier@redhat.com,
- pbonzini@redhat.com
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?Marc_Mar=C3=AD?= <marc.mari.barcelo@gmail.com>
-References: <20240320090442.267525-1-zheyuma97@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240320090442.267525-1-zheyuma97@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+References: <20240320070851.18933-1-kraxel@redhat.com>
+In-Reply-To: <20240320070851.18933-1-kraxel@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 20 Mar 2024 16:58:07 +0000
+Message-ID: <CAFEAcA9y34vDEwy3tvv3h6PndZCjkyoVEPPchvkY2hoJQaif1g@mail.gmail.com>
+Subject: Re: [PULL 0/5] Edk2 20240320 patches
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,33 +88,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing Marc & Stefan for commit 1053587c3f ("libqos: Added EVENT_IDX 
-support").
+On Wed, 20 Mar 2024 at 07:09, Gerd Hoffmann <kraxel@redhat.com> wrote:
+>
+> The following changes since commit ba49d760eb04630e7b15f423ebecf6c871b8f77b:
+>
+>   Merge tag 'pull-maintainer-final-130324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-13 15:12:14 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/kraxel/qemu.git tags/edk2-20240320-pull-request
+>
+> for you to fetch changes up to 4a1babe58a1b3cd2c493ee6e0d774e70f62ad9c3:
+>
+>   update edk2 binaries for arm, risc-v and x86 secure boot. (2024-03-19 16:42:10 +0100)
+>
+> ----------------------------------------------------------------
+> edk2: cleanup fix, update build config, rebuild binaries.
+>
+> ----------------------------------------------------------------
 
-On 20/3/24 10:04, Zheyu Ma wrote:
-> In qvirtqueue_kick(), the 'flags' were previously being incorrectly read from
-> vq->avail instead of the correct vq->used location. This update ensures 'flags'
-> are read from the correct location as per the virtio standard.
-> 
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-> ---
->   tests/qtest/libqos/virtio.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
-> index 82a6e122bf..a21b6eee9c 100644
-> --- a/tests/qtest/libqos/virtio.c
-> +++ b/tests/qtest/libqos/virtio.c
-> @@ -394,7 +394,7 @@ void qvirtqueue_kick(QTestState *qts, QVirtioDevice *d, QVirtQueue *vq,
->       qvirtio_writew(d, qts, vq->avail + 2, idx + 1);
->   
->       /* Must read after idx is updated */
-> -    flags = qvirtio_readw(d, qts, vq->avail);
-> +    flags = qvirtio_readw(d, qts, vq->used);
->       avail_event = qvirtio_readw(d, qts, vq->used + 4 +
->                                   sizeof(struct vring_used_elem) * vq->size);
->   
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Applied, thanks.
 
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
+
+-- PMM
 
