@@ -4,73 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5275EC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84C35CD11BF
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmyZZ-0002zg-1Y; Wed, 20 Mar 2024 12:13:49 -0400
+	id 1rmyZX-0002yi-5Q; Wed, 20 Mar 2024 12:13:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmyZX-0002yj-9A
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:13:47 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1rmyZV-0002ya-V6
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:13:45 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1rmyZU-00035I-Ch
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:13:47 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a468004667aso777809066b.2
+ id 1rmyZU-00035M-CM
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:13:45 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a46db55e64fso274465566b.1
  for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 09:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1710951222; x=1711556022; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xjVvDV3TsrlgDiYhLHud51GePd1hYOBaGg3ow4DDNys=;
- b=ukHGBE7S+nqWjjE1qSsaIHhb8U0IMpv5cid0iz0bGT2R/JxuI8hp8RFfoigPJHHYQH
- mJMQRVdzN3E7pP3a46P51ZJgaEl0g4uRgdB/ndDpzYGQjd852uR41rymf2tMdz4IrIkb
- UlTy+4cQZNBuGfJuTHpCYKhDHmb6RR0VDT69S7/52rcagMJlm33YezxzfQml6SUoSLXe
- z7pISdx28K3Td5LWTTLPb6Cf9yKTsbCyg17JhFqY8YPMX/cOZJPFjCIyTVRiwvQswXKa
- QZ8ryZv3cl7G4yGye+xzL3y4YviQev7ysP3Cfqn5N09XkebZw6VoQiztIqsL+bf9FK7/
- gUuA==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OxFF+lXeHd0yKI0Ua/EbWo5MYrhYmKhteKonFtX7/6E=;
+ b=UYUusye8mqKGJe+0Zog8qq84r9yQSf2f8VdlNPlgqgfVTEDybf7cdKnCk3fEXsj1RY
+ 0DQ1p0dIg/MAD6SR90FNJA+ubgt0KRZvS2b7lBt7bUsd9o0Wka4NzlRvi+q0zZcP0uuA
+ mDrPkzF0GNlPHLGL9KruUNrK9TzD89YxNWyyNAa7eHbfcuxExNU+1orOiJgr7ZY1qkG5
+ OQgqYIv65JZkjBkcZYTf2EKnyvvE+dVVFcOcF1A5YlNIkRVb6F5NPWl5+S0kkpgRQDMc
+ i/rm6YRvPODi15l5yvpXb8O+Zjij5hSZEUAM+4DwdVFmaZP+qp8+C9uGYJ5nq4pORiZX
+ Nisg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1710951222; x=1711556022;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xjVvDV3TsrlgDiYhLHud51GePd1hYOBaGg3ow4DDNys=;
- b=HZIOiuy1Buhx043S+jxzgR1ZZh7KtJarr7G+RHG2PXvk2J7qPEIExLfScZ7pjFtfTE
- NXnPGwEnJozJXotZ9XU7X4VnBmwBJ7wu/tKvUrClEeVrMG5OUPfz/GGL1zj4lhQOWg6e
- P4E6gY7lu+poTXQKTVILvveKE572MWkSMcu7mCiBDBTSpJxyEHa43nSRHk1rIzuWlq7f
- m+sptDwpGMSff+lYTnM4PCfEiKA7SQQX8iRTafPcuYIX/rb3RYE8WRUCr9kiJj6ShYz5
- HivD+7vq3dBCab/g4HnQcwWn6zy9jWZY3CaDFgkeNlz9NYUG9AD362GUiu4SUhkdDdNx
- nlqA==
-X-Gm-Message-State: AOJu0YxxfYKc/SQgI8YmE46pcgqOSwbJb1QYKcEL7CLCcCiIR+grINap
- 7mspHqv55mw9kc7gf0q478oE1rnlgW+IZTVPJm5OmcUAkqKLjNADpt7psJwTDKg=
-X-Google-Smtp-Source: AGHT+IG+KqS46ndZxmmyBoo253EEB5B45tUu+CTg/3n2NN6AUHop1zT+QfIvRjoFGkYSWrUdNUsaiQ==
-X-Received: by 2002:a17:906:3508:b0:a46:d47e:eefe with SMTP id
- r8-20020a170906350800b00a46d47eeefemr4278327eja.36.1710951221640; 
- Wed, 20 Mar 2024 09:13:41 -0700 (PDT)
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OxFF+lXeHd0yKI0Ua/EbWo5MYrhYmKhteKonFtX7/6E=;
+ b=BmnsUYBnB680I221a7wDpNCyGuHms1N26fLRLhVm6c31tEdVih/0Vw1SrtjQMhHKNo
+ pQuft9AqSRQFgvuhENvUbz3QVEsPBlfNl8b5zdIdEh+1ogSgoy34WMg7x8qMLlWWPpl5
+ +m4DYsjBZb+dT/i+NLyviR3RANnQEPJIupFLWQrpyhF4JswjKN6h0BAYihmnYeFKKd8F
+ 0u69AjajXVZZLhd4qYaK0/9c5Vs1kguY3PIowNNGhEGNKEhIADIsIqPei0UHfdQQ9wnU
+ hX4LDln8toB2OFN9ytxZ/PY0u5Cwvo02TxNW1AAgnV7vhoPiI1juasgWfy5UvYCjqRFZ
+ ea5g==
+X-Gm-Message-State: AOJu0Yw8W4SJDDxkYs1SskB9R74C5EI7VL9DIR20XLRt/TIJ5KlFCEzG
+ dXAeEkXNtqhUvmjFQNXqoXZuI9fcc12ZfG9cq6zEinaYHtu4nfYh1gkhoHrO974=
+X-Google-Smtp-Source: AGHT+IE5gzyKXVTa3S93dRUtPoBZtGMvGH2W39MChXIfJWWnkLO80NqNJRrvqdYrQ6AljztcYtMfpA==
+X-Received: by 2002:a17:906:1856:b0:a46:643d:9a3 with SMTP id
+ w22-20020a170906185600b00a46643d09a3mr10914707eje.61.1710951222070; 
+ Wed, 20 Mar 2024 09:13:42 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- qk26-20020a170906d9da00b00a45bb14b1a5sm7395559ejb.89.2024.03.20.09.13.41
+ u16-20020a1709063b9000b00a46e35bef66sm1940559ejf.219.2024.03.20.09.13.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 20 Mar 2024 09:13:41 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F2AC75F78B;
- Wed, 20 Mar 2024 16:13:40 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 3D7735FB8A;
+ Wed, 20 Mar 2024 16:13:41 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 0/5] more maintainer updates (git, avocado)
-Date: Wed, 20 Mar 2024 16:13:35 +0000
-Message-Id: <20240320161340.391798-1-alex.bennee@linaro.org>
+Cc: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, qemu-arm@nongnu.org (open list:SBSA-REF)
+Subject: [PULL 3/5] tests/avocado: drop virtio-rng from sbsa-ref tests
+Date: Wed, 20 Mar 2024 16:13:38 +0000
+Message-Id: <20240320161340.391798-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240320161340.391798-1-alex.bennee@linaro.org>
+References: <20240320161340.391798-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,42 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit c62d54d0a8067ffb3d5b909276f7296d7df33fa7:
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
 
-  Update version for v9.0.0-rc0 release (2024-03-19 19:13:52 +0000)
+sbsa-ref is supposed to emulate real hardware so virtio-rng-pci
+does not fit here
 
-are available in the Git repository at:
+Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Message-Id: <20240318-sbsa-ref-firmware-update-v3-2-1c33b995a538@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-  https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-final-for-real-this-time-200324-1
-
-for you to fetch changes up to 55900f5dcc3205b87609d9be452c6c76c48b863b:
-
-  tests/avocado: sbsa-ref: add OpenBSD tests for misc 'max' setup (2024-03-20 09:52:27 +0000)
-
-----------------------------------------------------------------
-maintainer updates (gitlab, avocado):
-
-  - avoid extra git data on gitlab checkouts
-  - update sbsa-ref tests
-
-----------------------------------------------------------------
-Alex Bennée (1):
-      gitlab: aggressively avoid extra GIT data
-
-Marcin Juszkiewicz (4):
-      tests/avocado: update sbsa-ref firmware
-      tests/avocado: drop virtio-rng from sbsa-ref tests
-      tests/avocado: sbsa-ref: add Alpine tests for misc 'max' setup
-      tests/avocado: sbsa-ref: add OpenBSD tests for misc 'max' setup
-
- .gitlab-ci.d/base.yml                    |  4 ++
- .gitlab-ci.d/buildtest-template.yml      |  1 +
- .gitlab-ci.d/buildtest.yml               |  2 +
- .gitlab-ci.d/custom-runners.yml          |  5 +-
- .gitlab-ci.d/windows.yml                 |  2 +
- tests/avocado/machine_aarch64_sbsaref.py | 86 +++++++++++++++++++++-----------
- 6 files changed, 70 insertions(+), 30 deletions(-)
-
+diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
+index cbab793455..259225f15f 100644
+--- a/tests/avocado/machine_aarch64_sbsaref.py
++++ b/tests/avocado/machine_aarch64_sbsaref.py
+@@ -132,10 +132,6 @@ def boot_alpine_linux(self, cpu):
+             cpu,
+             "-drive",
+             f"file={iso_path},format=raw",
+-            "-device",
+-            "virtio-rng-pci,rng=rng0",
+-            "-object",
+-            "rng-random,id=rng0,filename=/dev/urandom",
+         )
+ 
+         self.vm.launch()
+@@ -179,10 +175,6 @@ def boot_openbsd73(self, cpu):
+             cpu,
+             "-drive",
+             f"file={img_path},format=raw",
+-            "-device",
+-            "virtio-rng-pci,rng=rng0",
+-            "-object",
+-            "rng-random,id=rng0,filename=/dev/urandom",
+         )
+ 
+         self.vm.launch()
 -- 
 2.39.2
 
