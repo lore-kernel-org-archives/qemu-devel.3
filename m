@@ -4,77 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03A7AC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 10:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17601CD11DF
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 10:32:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmtCL-000515-8w; Wed, 20 Mar 2024 06:29:29 -0400
+	id 1rmtEU-000725-75; Wed, 20 Mar 2024 06:31:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmtCK-00050w-19
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:29:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmtES-00071T-07
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:31:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmtCI-0003Ix-Hc
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:29:27 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmtEL-0003zc-1d
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:31:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710930564;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=qlJALeFak8LDWasQZpn/A/aSh2fPuC1/BRI+JrlavMU=;
- b=OqZhmQg9HBXvaApvSbXzFOx/uB0Zrok4Xi/PDRfMTyAyozqh3+4ebu7gBChc5091NNmyn5
- 6IpVpRPXzjQodQUVBRupUDiwRXKbu8cRHtjYaAhR6W0vb0UZjbnCJbP4cKHE0cwe9npFU5
- eGhZzBv8+PeGZ6IwvZtHp4f1sGL5zIc=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1710930692;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=jN8WXvFjEPo7LmwV9YPae69LYdDC7e6gr8Uf2LP2p0Q=;
+ b=eo5+nNoS3fM2RiTvT/L/aV5QSiNXvcjOCsmJztbImIgjnw2hveH8G3DDWJCULDLKWJrvGc
+ PXV2OsOeJ9WHlp4hC/s5YVVSVu8LLW43HkXvgF4UfpUx5raZ8LQbCqA2mwZm7C6S8/dVFT
+ +2gnRT6Le6dtq+izSIFvvMcLB8CUv/8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-507-1LEmhRscMIaNh-QRAz72PQ-1; Wed, 20 Mar 2024 06:29:22 -0400
-X-MC-Unique: 1LEmhRscMIaNh-QRAz72PQ-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-5148eaa60acso2755800e87.0
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 03:29:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710930560; x=1711535360;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qlJALeFak8LDWasQZpn/A/aSh2fPuC1/BRI+JrlavMU=;
- b=fSUw/okILaSWaBrHSjvQmoBx1Db5l1RCg5GbnXdRM3ITJTReQrmN3xrYFWoUFKLk5e
- 8eGFfe0nc7Qv4CytkZ9st4SKLrAl8JFezTYxGgb1r/UsQ8E1HGK39uE7SZkN6lloE/OH
- 7aLGaizNpUFpIoep9LcqEcpVHnDXJVeNsPlUDUJ/LWJlF76juI3KLUy9rV7VRoLQlTdT
- FvotfWN6kh5zMWKxqCvyYODG0xLXpqNP7yQ4Fk9+bAmKEBTRyhVWJl0LKc72hYkOtVGF
- xJ96jqhJ5zDdTnUyeLsAFepLMYtefkXSDzpI/coPR371Z90YtWUF9xqjB4jI6Ncg8VCX
- L9Uw==
-X-Gm-Message-State: AOJu0YztXQyUscTKtXU+C9L7zw+pO8doGqh96U2yIQd1HaogyB2FPhFk
- 7ObL994eC8QONeIhh644xMey4pDjOqq55XWUlFZgPHwDE9YDdzCYRWEDfbZZZgM6mY9pSfco9zx
- KDTyuaO7US0aXug3xmRBnsayT5h6TvZS49JceHVigIfYwEScWZtH+Hnvy9bv9IHdBNkD/dGUvFX
- zdZSWi5ic77Rr1cPvVcFS8rIf5TIZA9oP2avil
-X-Received: by 2002:a05:6512:466:b0:513:201c:5dc6 with SMTP id
- x6-20020a056512046600b00513201c5dc6mr1239000lfd.61.1710930560567; 
- Wed, 20 Mar 2024 03:29:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFSUAVqEVWojnV3/HoBAGGiuIoG8MUSdyjefQ4xN7fBD8X97t8UKNpjYEFlEtciVPY4jPs5Ug==
-X-Received: by 2002:a05:6512:466:b0:513:201c:5dc6 with SMTP id
- x6-20020a056512046600b00513201c5dc6mr1238975lfd.61.1710930559917; 
- Wed, 20 Mar 2024 03:29:19 -0700 (PDT)
-Received: from [192.168.10.118] ([151.95.49.219])
- by smtp.gmail.com with ESMTPSA id
- i31-20020a0564020f1f00b0056ba017ca7fsm1238619eda.87.2024.03.20.03.29.19
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Mar 2024 03:29:19 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] meson: remove dead dictionary access
-Date: Wed, 20 Mar 2024 11:29:19 +0100
-Message-ID: <20240320102919.1047984-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.44.0
+ us-mta-110-MJee4OhaMsi7UCPNRhkm7Q-1; Wed, 20 Mar 2024 06:31:30 -0400
+X-MC-Unique: MJee4OhaMsi7UCPNRhkm7Q-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B9DCE8007A6;
+ Wed, 20 Mar 2024 10:31:29 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.205])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 343F02166B34;
+ Wed, 20 Mar 2024 10:31:28 +0000 (UTC)
+Date: Wed, 20 Mar 2024 10:31:22 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Yuan Liu <yuan1.liu@intel.com>
+Cc: peterx@redhat.com, farosas@suse.de, qemu-devel@nongnu.org,
+ hao.xiang@bytedance.com, bryan.zhang@bytedance.com, nanhai.zou@intel.com
+Subject: Re: [PATCH v5 3/7] configure: add --enable-qpl build option
+Message-ID: <Zfq6-s9xRse06R6k@redhat.com>
+References: <20240319164527.1873891-1-yuan1.liu@intel.com>
+ <20240319164527.1873891-4-yuan1.liu@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240319164527.1873891-4-yuan1.liu@intel.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -96,36 +81,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "link_depends" key has not been used since commit c46f76d1586
-("meson: specify fuzz linker script as a project arg", 2020-09-08),
-and even before that it was only used for fork-fuzzing which we
-removed in commit d2e6f9272d3 ("fuzz: remove fork-fuzzing scaffolding",
-2023-02-16).
+On Wed, Mar 20, 2024 at 12:45:23AM +0800, Yuan Liu wrote:
+> add --enable-qpl and --disable-qpl options to enable and disable
+> the QPL compression method for multifd migration.
+> 
+> the Query Processing Library (QPL) is an open-source library
+> that supports data compression and decompression features.
+> 
+> The QPL compression is based on the deflate compression algorithm
+> and use Intel In-Memory Analytics Accelerator(IAA) hardware for
+> compression and decompression acceleration.
+> 
+> Please refer to the following for more information about QPL
+> https://intel.github.io/qpl/documentation/introduction_docs/introduction.html
+> 
+> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+> ---
+>  meson.build                   | 16 ++++++++++++++++
+>  meson_options.txt             |  2 ++
+>  scripts/meson-buildoptions.sh |  3 +++
+>  3 files changed, 21 insertions(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index b375248a76..bee7dcd53b 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1200,6 +1200,20 @@ if not get_option('zstd').auto() or have_block
+>                      required: get_option('zstd'),
+>                      method: 'pkg-config')
+>  endif
+> +qpl = not_found
+> +if not get_option('qpl').auto()
+> +  libqpl = cc.find_library('qpl', required: false)
+> +  if not libqpl.found()
+> +    error('libqpl not found, please install it from ' +
+> +    'https://intel.github.io/qpl/documentation/get_started_docs/installation.html')
+> +  endif
+> +  libaccel = dependency('libaccel-config', version: '>=4.0.0',
+> +                        required: true,
+> +                        method: 'pkg-config')
+> +  qpl = declare_dependency(dependencies: [libqpl, libaccel,
+> +        cc.find_library('dl', required: get_option('qpl'))],
+> +        link_args: ['-lstdc++'])
+> +endif
 
-So, remove it for a very small simplification of meson.build.
+Are either of these libraries present in any mainstream Linux
+distro ? If not, then this feature will not get any CI build
+coverage from QEMU.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Needing to manually add '-lstdc++' & '-ldl' is presumably a
+requirement from 'qpl'. As a future enhancement it would be
+much better if 'qpl' provided a pkg-config file, so this
+list of dependencies didn't have to be hardcoded by apps
+using qpl
 
-diff --git a/meson.build b/meson.build
-index b375248a761..c9c3217ba4b 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3951,7 +3951,7 @@ foreach target : target_dirs
-                c_args: c_args,
-                dependencies: arch_deps + deps + exe['dependencies'],
-                objects: lib.extract_all_objects(recursive: true),
--               link_depends: [block_syms, qemu_syms] + exe.get('link_depends', []),
-+               link_depends: [block_syms, qemu_syms],
-                link_args: link_args,
-                win_subsystem: exe['win_subsystem'])
- 
+
+With regards,
+Daniel
 -- 
-2.44.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
