@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C58C54E68
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 00:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E79DDC54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 00:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmjsm-00006h-79; Tue, 19 Mar 2024 20:32:40 -0400
+	id 1rmjse-0008Ut-6F; Tue, 19 Mar 2024 20:32:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmjsk-00006F-F6
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:38 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1rmjsc-0008UK-Kz
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:30 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmjsi-0005Xu-WF
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:38 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-5ca29c131ebso3987028a12.0
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 17:32:36 -0700 (PDT)
+ id 1rmjsb-0005WK-2g
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:30 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6e6ee9e3cffso284120b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 17:32:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710894756; x=1711499556; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710894747; x=1711499547; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mTE2FKSZqlvO2R4dKYXHZtvyEeZnXSdobAEuMGCaYVg=;
- b=RyAZXhS59DKberbZor594y5tpuFrc5vkgRh7drDtREM9KiRjUrvflxk/hGyAnbStm+
- o6gIK4KxsNsgVNVLdGgoPVIcWUiZxp99CXzRzQwyl3+NVhDTw/zqRBQZUju6iaahR+nG
- 1wCsRusLdMF1uZfrf3tLQRx+A/E4bLYqXTMo73tuIiRxUAD4AhPFrCcxyKPfi3+g/xjR
- mbL1WcTHoAfbKv4qEgWf4Nv3ZfvKeGiHbr0XOtNIFt5XAnKLbdycZoYzTSIIx063ICSi
- 7dPNGTtxShn+qn9f/rVdTIjRvvuuDZ4dX+dTOKTc7A2nNrsmpiCBieAuFj429lTusQeP
- qTuQ==
+ bh=k5PnQhFXfvSe92fnLRbZ5TBOd12ifIZn+pMwnRQCRuU=;
+ b=QYV+A2ssMwBE2QTBfTdLU5Io6vlELcb3AleNKYzcBEy42TbLrrX+xahpfZad5g314i
+ gU8kzxQJ7Iu6bkn6wrYJdWdboz/jrzIMKSSQwr+T1dOUZu0Pt5OOcwaMMb1GMrT5oztR
+ YOxWpZbIrPYsV0yHsXjX4XX9EJ2WI5d0gOTzALFEk9Dt0zC7PUX6S5jJOeombmC86CiU
+ 6CJjqE7nF91Tkr4yIeufC7ba6YYts0idUH7RSZ6wxDv9qPaeBFnkLoJTghIG2+uPN/Jz
+ Yy1UNdvqxaCfYqYlKGXVz9WL85a6L/dY1J0l/OxuumjXF+QkOiQ2TC7rqwT6Ny+7G3iq
+ 7wFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710894756; x=1711499556;
+ d=1e100.net; s=20230601; t=1710894747; x=1711499547;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mTE2FKSZqlvO2R4dKYXHZtvyEeZnXSdobAEuMGCaYVg=;
- b=gtJJkLAVcWbgJb+tvu4hZpVFAvZseGbhXZsrDtOnNHVnf1yFeHuwwZX2d9QRnBrMId
- Yusp84jmp2OLbFYiS5PzWPFaoihNqoIGsFznJoXUfSYDP6I4LzPkdwtPrpanV1gVR/rb
- cvWFG1M/Efs+f7l/1pS6G8uqClWUA4LRGXT6ghLl5PhrndLvPsipDuzxJjQe2TSPL8Is
- qgA7PBS3Egc6MiDP+eCzzGgcq9YypkuEnlAivyXuoQqDdJhTvSWH7OVruMSXH1IxLZzo
- ebFshsYZN/C+N8BOmPZhgd8sRVZxApTNbh/y9ox7sHlkeeDDcfzU6IJUL+M3LbXV4Zt7
- lYgA==
-X-Gm-Message-State: AOJu0YydOMWsin+K3aB5nTmPy6NvNeTQKhoxPH/YbD61iWJZw4NnVoZ8
- 4yJoakbmvFFgDncT8BRKrpjotySQyESdlwL0C0elmFQB3voxEJjyZP9wu09QV3swQ0mXubXGKxe
- n
-X-Google-Smtp-Source: AGHT+IFmc4sI5vnUkuwowkiBDjET2BPUpeauOlzzX1g9SDYPr8U63ERyJnbbhQfcT381954Fx38HcQ==
-X-Received: by 2002:a05:6a20:748f:b0:1a3:6397:e253 with SMTP id
- p15-20020a056a20748f00b001a36397e253mr666510pzd.28.1710894755679; 
- Tue, 19 Mar 2024 17:32:35 -0700 (PDT)
+ bh=k5PnQhFXfvSe92fnLRbZ5TBOd12ifIZn+pMwnRQCRuU=;
+ b=KysUkeNrYET6YS9LtqfaKDo/zdLicihLpsBr64lE87FriyEUotVf+eT8tPr9JFyiFw
+ n2SMa7/E05un/wrZwY52T4Bu97cM5eD2u2YdtQi8bqAnH6Rrug8UWcQ+mqH+HihYRPcM
+ 8kSTGSJ/Y7pSLj+66kbJT2zJvQtJyUSZ6Bn/eydpzhG14BErfjp+UqIVuP61py8Rb8W0
+ TWqQT8rFjEs3zkd7eBY50X+PaH5agiZXeMf/2CfxXH9XCrVnPJWXeJSJJ3r2NwhBtYrA
+ fsXRydNqiEeqWGk0C77vsKKtTMRHyCeExn1P2n/5Bz2qzNdkURtqb2hnMGTZCnSI34q9
+ VdrA==
+X-Gm-Message-State: AOJu0Yxsz90cQHd++zCg4gI3M6NaUP932ps9K6ligfzWHAnzerjRaP1C
+ OvzVKO8lpoqLglk2O/hBe7Vi1aA9aPGLGdiyo4AJbNbWYknQsdPrwz57c2cAr4+zl5Hd1IuV+vz
+ O
+X-Google-Smtp-Source: AGHT+IFazcmXmkIAnebDR0MNuliLyA9I7FbSYPpSL3vIP6YOI1ryk0Tao0WnU84+j/Gy77dczbxaqw==
+X-Received: by 2002:a05:6a00:14c4:b0:6e6:ba5a:2c4e with SMTP id
+ w4-20020a056a0014c400b006e6ba5a2c4emr5668979pfu.7.1710894747394; 
+ Tue, 19 Mar 2024 17:32:27 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- d19-20020a63d653000000b005d553239b16sm8475645pgj.20.2024.03.19.17.32.34
+ d19-20020a63d653000000b005d553239b16sm8475645pgj.20.2024.03.19.17.32.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Mar 2024 17:32:35 -0700 (PDT)
+ Tue, 19 Mar 2024 17:32:27 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Sven Schnelle <svens@stackframe.org>
-Subject: [PULL 7/9] target/hppa: exit tb on flush cache instructions
-Date: Tue, 19 Mar 2024 14:32:21 -1000
-Message-Id: <20240320003223.554145-8-richard.henderson@linaro.org>
+Cc: Sven Schnelle <svens@stackframe.org>,
+	Helge Deller <deller@gmx.de>
+Subject: [PULL 1/9] target/hppa: Fix assemble_16 insns for wide mode
+Date: Tue, 19 Mar 2024 14:32:15 -1000
+Message-Id: <20240320003223.554145-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240320003223.554145-1-richard.henderson@linaro.org>
 References: <20240320003223.554145-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,55 +95,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sven Schnelle <svens@stackframe.org>
-
-When the guest modifies the tb it is currently executing from,
-it executes a fic instruction. Exit the tb on such instruction,
-otherwise we might execute stale code.
-
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
-Message-Id: <20240319161921.487080-5-svens@stackframe.org>
+Reported-by: Sven Schnelle <svens@stackframe.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/insns.decode | 6 +++---
- target/hppa/translate.c  | 7 +++++++
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ target/hppa/insns.decode | 15 +++++++++------
+ target/hppa/translate.c  | 22 ++++++++++++++++++++++
+ 2 files changed, 31 insertions(+), 6 deletions(-)
 
 diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
-index 5412ff9836..f58455dfdb 100644
+index f5a3f02fd1..0d9f8159ec 100644
 --- a/target/hppa/insns.decode
 +++ b/target/hppa/insns.decode
-@@ -144,9 +144,9 @@ getshadowregs   1111 1111 1111 1101 1110 1010 1101 0010
- nop             000001 ----- ----- -- 11001010 0 -----         # fdc, disp
- nop_addrx       000001 ..... ..... -- 01001010 . -----  @addrx # fdc, index
- nop_addrx       000001 ..... ..... -- 01001011 . -----  @addrx # fdce
--nop_addrx       000001 ..... ..... --- 0001010 . -----  @addrx # fic 0x0a
--nop_addrx       000001 ..... ..... -- 01001111 . 00000  @addrx # fic 0x4f
--nop_addrx       000001 ..... ..... --- 0001011 . -----  @addrx # fice
-+fic             000001 ..... ..... --- 0001010 . -----  @addrx # fic 0x0a
-+fic             000001 ..... ..... -- 01001111 . 00000  @addrx # fic 0x4f
-+fic             000001 ..... ..... --- 0001011 . -----  @addrx # fice
- nop_addrx       000001 ..... ..... -- 01001110 . 00000  @addrx # pdc
+@@ -27,13 +27,14 @@
+ %assemble_11a   0:s1 4:10            !function=expand_shl3
+ %assemble_12    0:s1 2:1 3:10        !function=expand_shl2
+ %assemble_12a   0:s1 3:11            !function=expand_shl2
++%assemble_16    0:16                 !function=expand_16
+ %assemble_17    0:s1 16:5 2:1 3:10   !function=expand_shl2
+ %assemble_22    0:s1 16:10 2:1 3:10  !function=expand_shl2
++%assemble_sp    14:2                 !function=sp0_if_wide
  
- probe           000001 b:5 ri:5 sp:2 imm:1 100011 write:1 0 t:5
+ %assemble_21    0:s1 1:11 14:2 16:5 12:2  !function=expand_shl11
+ 
+ %lowsign_11     0:s1 1:10
+-%lowsign_14     0:s1 1:13
+ 
+ %sm_imm         16:10 !function=expand_sm_imm
+ 
+@@ -221,7 +222,7 @@ sub_b_tsv       000010 ..... ..... .... 110100 . .....  @rrr_cf_d
+ 
+ ldil            001000 t:5 .....................        i=%assemble_21
+ addil           001010 r:5 .....................        i=%assemble_21
+-ldo             001101 b:5 t:5 -- ..............        i=%lowsign_14
++ldo             001101 b:5 t:5  ................        i=%assemble_16
+ 
+ addi            101101 ..... ..... .... 0 ...........   @rri_cf
+ addi_tsv        101101 ..... ..... .... 1 ...........   @rri_cf
+@@ -306,10 +307,12 @@ fstd            001011 ..... ..... .. . 1 -- 100 0 . .....      @fldstdi
+ 
+ @ldstim11       ...... b:5 t:5 sp:2 ..............      \
+                 &ldst disp=%assemble_11a m=%ma2_to_m x=0 scale=0 size=3
+-@ldstim14       ...... b:5 t:5 sp:2 ..............      \
+-                &ldst disp=%lowsign_14 x=0 scale=0 m=0
+-@ldstim14m      ...... b:5 t:5 sp:2 ..............      \
+-                &ldst disp=%lowsign_14 x=0 scale=0 m=%neg_to_m
++@ldstim14       ...... b:5 t:5 ................          \
++                &ldst sp=%assemble_sp disp=%assemble_16  \
++                x=0 scale=0 m=0
++@ldstim14m      ...... b:5 t:5 ................          \
++                &ldst sp=%assemble_sp disp=%assemble_16  \
++                x=0 scale=0 m=%neg_to_m
+ @ldstim12m      ...... b:5 t:5 sp:2 ..............      \
+                 &ldst disp=%assemble_12a x=0 scale=0 m=%pos_to_m
+ 
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 29ef061baf..107d7f1a85 100644
+index eb2046c5ad..cbe44ef75a 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -2343,6 +2343,13 @@ static bool trans_nop_addrx(DisasContext *ctx, arg_ldst *a)
-     return true;
+@@ -144,6 +144,28 @@ static int assemble_6(DisasContext *ctx, int val)
+     return (val ^ 31) + 1;
  }
  
-+static bool trans_fic(DisasContext *ctx, arg_ldst *a)
++/* Expander for assemble_16(s,im14). */
++static int expand_16(DisasContext *ctx, int val)
 +{
-+    /* End TB for flush instruction cache, so we pick up new insns. */
-+    ctx->base.is_jmp = DISAS_IAQ_N_STALE;
-+    return trans_nop_addrx(ctx, a);
++    /*
++     * @val is bits [0:15], containing both im14 and s.
++     * Swizzle thing around depending on PSW.W.
++     */
++    int s = extract32(val, 14, 2);
++    int i = (-(val & 1) << 13) | extract32(val, 1, 13);
++
++    if (ctx->tb_flags & PSW_W) {
++        i ^= s << 13;
++    }
++    return i;
 +}
 +
- static bool trans_probe(DisasContext *ctx, arg_probe *a)
++/* The sp field is only present with !PSW_W. */
++static int sp0_if_wide(DisasContext *ctx, int sp)
++{
++    return ctx->tb_flags & PSW_W ? 0 : sp;
++}
++
+ /* Translate CMPI doubleword conditions to standard. */
+ static int cmpbid_c(DisasContext *ctx, int val)
  {
-     TCGv_i64 dest, ofs;
 -- 
 2.34.1
 
