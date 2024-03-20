@@ -4,114 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 662F1CD11DB
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:55:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A386C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:55:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmrjU-0004j0-H1; Wed, 20 Mar 2024 04:55:36 -0400
+	id 1rmrjV-0004j4-4i; Wed, 20 Mar 2024 04:55:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrjT-0004hJ-EC
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmrjT-0004ha-KJ
  for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:55:35 -0400
-Received: from mail-dm6nam12on20601.outbound.protection.outlook.com
- ([2a01:111:f403:2417::601]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrjR-0002I4-Af
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:55:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hba/c/kxHH0UJA1s2cnBQ+iXxH1BtZF1qxtq7GfmPCnBztlmgamNRZ4Zc9KDY+IT3b/r95zGmy2//pr3XKkn4lJRlWoe849cM9eTHhQ6eyDzK1TYoCj/RH/7LPVS0eNdYFb1vyEKyYAORbeZyFoJGdmBKcN+Oz7glRzSm6SbNz0PeKCLzxPGzYI76F3nvAwpnQASel6dWEqqYjSoJAd3RtncXxcCBRd8aCqh6nnlvjmXtiDFJZ58bDRZVZYno4nxy+E7oeY4MsOtX9K8JacLiqptLCHeCnRzwVnYCTn9dg6VqP/AED7n0JJLuXONMRKKHT/frrhKhIaudFmFUMuJaQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=m1GjgWN+0ziFXpiGnyC60nIhOfw2pfPyQgo0dSBqZxc=;
- b=D8BNlB2gRRtR/qtlQRWtqAGJCkWMHL96hgcMI+tw4Qpq7aerlJFsp73u+qraXlwMDeADvEMgT2eGXfwFR9jGIiZoD5QUv14+4uyUJ1EGMNkL5Q53I5G3proOL2h46Z+tVslM0xApOWbyWFHUQXcxOKtVmp2aFg2i8dFOCO8hxkCktiJxnngWHonEJhjeikaW2pE5unOfJYtWZsuhX/6zErWP8bWe+ZOmfp1O0iQS+SN5Xe3DPa2SHK/g8V2+IvScja5ZQcKuf1rIZZRr9+BN9zQGKY5HmgK0RYKnODztuH23Lz5jAbzQgF/e7+9HTg9cSDUrBSdL5zlF5kAwRlBjFw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=m1GjgWN+0ziFXpiGnyC60nIhOfw2pfPyQgo0dSBqZxc=;
- b=ExKzrtIU1NZAx/qJUzXZ+yoHiZG0Pf8jBAyvQgxIFYUe0QwRyZXwlorymNBLYzr/g4wq6mj0l47Ztlmir/Kb4iOrtNzCshH1YJfSnif2ZI17wDr5LKK9FcAnVaI32rYxgtLUYnetvWRo2T8Ji4k1w/5tN5bxZjG0CAtTqGaCzKs=
-Received: from SJ0PR03CA0109.namprd03.prod.outlook.com (2603:10b6:a03:333::24)
- by PH7PR12MB7212.namprd12.prod.outlook.com (2603:10b6:510:207::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.28; Wed, 20 Mar
- 2024 08:55:29 +0000
-Received: from CO1PEPF000044EE.namprd05.prod.outlook.com
- (2603:10b6:a03:333:cafe::20) by SJ0PR03CA0109.outlook.office365.com
- (2603:10b6:a03:333::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.26 via Frontend
- Transport; Wed, 20 Mar 2024 08:55:28 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CO1PEPF000044EE.mail.protection.outlook.com (10.167.241.68) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:55:28 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 20 Mar
- 2024 03:55:27 -0500
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <kvm@vger.kernel.org>, Tom Lendacky <thomas.lendacky@amd.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Pankaj Gupta
- <pankaj.gupta@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>, Isaku Yamahata
- <isaku.yamahata@linux.intel.com>, Dov Murik <dovmurik@linux.ibm.com>
-Subject: [PATCH v3 46/49] i386/sev: Allow measured direct kernel boot on SNP
-Date: Wed, 20 Mar 2024 03:39:42 -0500
-Message-ID: <20240320083945.991426-47-michael.roth@amd.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240320083945.991426-1-michael.roth@amd.com>
-References: <20240320083945.991426-1-michael.roth@amd.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmrjM-0001yl-Ce
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:55:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710924917;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=jT0WMqvhzo7oE0EGNsiQoQcxm6uetUBEz6/cnlj+r9g=;
+ b=TaHaqitBehJilpwC5IXPOyc0cCK8IOkN9gEg67bdzFam4AAyRESAjXIUrgRIpSVGZ9RG1M
+ Mu+fdONhKpTWyV5z4HSIOaoq4MHlQtIvrXoqTt16vtorapRC8WpKY6WzVP8yfxDJwOgYHK
+ YEGEi3eBdPP28yRxEyCK8Q3j4ywdC4U=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-584-kxq1oKYlPhiyQQ2K18D0Vg-1; Wed, 20 Mar 2024 04:55:15 -0400
+X-MC-Unique: kxq1oKYlPhiyQQ2K18D0Vg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a46ba1a19fdso231083866b.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 01:55:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710924913; x=1711529713;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jT0WMqvhzo7oE0EGNsiQoQcxm6uetUBEz6/cnlj+r9g=;
+ b=nTuffhbTZa2KmPe2jJKwkSJzdTVTmtlFLYFiTjidX2XullbOoB1xZjYNONKvnUjxcy
+ x7QwgRODvSmB+yLvF6XSMTLqHCSAcJbHcZUr8zmNEchMsCyPag5GyCgTGfoDr/rHO6rX
+ TNo3VvobcHTXd8RT8i2X7JPUu7DgDYK61kP9VbYblHy/TLxJ3lmw8woR/y6bqcumkdWb
+ rCFIJ9laaGYGJFuuB1W8cv47zbUSo2YDGDzRxDz3F1PXKs7hwNjbjYqPLfVM0YSvqcK3
+ 4wKngl2inyDlNKXR6puXcpA8IzoW9XFqaaYtLcSyXqK/VQn5aUUBr8Idr3HKsg4LTwfm
+ fpjg==
+X-Gm-Message-State: AOJu0Ywvm2Uh8KvSUq82czvHrJTAFJzEDwYc4bCI0SylsGitUdrTeuuB
+ F6UlmZydENc+zhOAjpCCK9JQYEbEe/MxsoyZqlxo6AY7ULP0D4/wd99xmzxvKEdj7yo42T9meVz
+ nc9Wuck3x0pvKJbO4qArRzyAktS8z3fwnO3rTk6DI4YWDybIQuHz+
+X-Received: by 2002:a17:906:39c9:b0:a46:cea6:a7f1 with SMTP id
+ i9-20020a17090639c900b00a46cea6a7f1mr3079992eje.51.1710924912975; 
+ Wed, 20 Mar 2024 01:55:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEzKct3DfQPqOHFQkj3BBhLlJFsFmhcT2gTNoUKvfTPzk8YuCMrlLh5dppu24SDkCS3e/ehHQ==
+X-Received: by 2002:a17:906:39c9:b0:a46:cea6:a7f1 with SMTP id
+ i9-20020a17090639c900b00a46cea6a7f1mr3079971eje.51.1710924912618; 
+ Wed, 20 Mar 2024 01:55:12 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-177-50.web.vodafone.de.
+ [109.43.177.50]) by smtp.gmail.com with ESMTPSA id
+ hz13-20020a1709072ced00b00a46a9cdcfa5sm4710252ejc.162.2024.03.20.01.55.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 Mar 2024 01:55:12 -0700 (PDT)
+Message-ID: <a7e38ec4-641f-409b-86d7-ea09d9ac1b18@redhat.com>
+Date: Wed, 20 Mar 2024 09:55:10 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000044EE:EE_|PH7PR12MB7212:EE_
-X-MS-Office365-Filtering-Correlation-Id: 304193d4-6a46-4e3d-36f1-08dc48bb7de2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 0Cn7DEeqqq4bdIdg+9PdBq8R0mOFr1mZ+WvICaNoIxSVdEEU+Hh5VsgJpE1DzS2qSAFG2QKP4Y5QFUzxg8VVIMXH6b3eoNsrxXf6MQQrU1ay2BXhcDSkE5oKRlPQ65fD0KPQmRN4Cds0VS/iJDuz8BfyGXRcsQfcwvPZ2kTAqp5Wu+wp9IQixiuSTPUkrdVD86PREmL7vNaghXK+GH4Xjyc4Elr0Tw5ClMWCyapUbQOLM/Sp1ZkPa0AReOP69qSUpCtarIG0JHQ68I+/PPK79UlfZxEnCSpmL0sHLv+bmfav/uKcELlpcz9LOOvbMYn1h3ov3+CT23g+CDqH8WFApU0bF25p1rQ6J0a3Kgj8Kqb3ZABpdS6w9LWJY+9KPx+04cxWj9nc2MZSjU2YlehoyZql6+ntgByjEHbe1zii2BJKB+NtnekXpFEcPayDAciabFlOMU5TASwBWi1TLQn1f3JqAA2HH6INiNJHUbJh1ceepH8QPyt7t3iHAOs7byi7PAJozv11NWzS7fynmEtPzo/MdMrrJp77RAi1m3FbWODrCzU+p1N5o1jfzvkC86BDI38IlkkkOEFpID7SSTnfh3Rfqz2ggG3eq/PTfaImR7bBNR651CJgWR2jCH0BWpnTfdyTMg2WXW0x8NqN0vnomOzLFCADqsoWjPjrCUABF3RdzhsxZFU/LhM22xnoHV4xchn3BWQsg0HdZE2jxywOtRbzucBL/+0dWkNoutvBiNIVTvrRVIwAu366TokRLPvO
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(1800799015)(376005)(36860700004)(82310400014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:55:28.6266 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 304193d4-6a46-4e3d-36f1-08dc48bb7de2
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044EE.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7212
-Received-SPF: permerror client-ip=2a01:111:f403:2417::601;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/7] configure: add --enable-qpl build option
+Content-Language: en-US
+To: Yuan Liu <yuan1.liu@intel.com>, peterx@redhat.com, farosas@suse.de
+Cc: qemu-devel@nongnu.org, hao.xiang@bytedance.com,
+ bryan.zhang@bytedance.com, nanhai.zou@intel.com
+References: <20240319164527.1873891-1-yuan1.liu@intel.com>
+ <20240319164527.1873891-4-yuan1.liu@intel.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240319164527.1873891-4-yuan1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,121 +144,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dov Murik <dovmurik@linux.ibm.com>
+On 19/03/2024 17.45, Yuan Liu wrote:
+> add --enable-qpl and --disable-qpl options to enable and disable
+> the QPL compression method for multifd migration.
+> 
+> the Query Processing Library (QPL) is an open-source library
+> that supports data compression and decompression features.
+> 
+> The QPL compression is based on the deflate compression algorithm
+> and use Intel In-Memory Analytics Accelerator(IAA) hardware for
+> compression and decompression acceleration.
+> 
+> Please refer to the following for more information about QPL
+> https://intel.github.io/qpl/documentation/introduction_docs/introduction.html
+> 
+> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+> ---
+>   meson.build                   | 16 ++++++++++++++++
+>   meson_options.txt             |  2 ++
+>   scripts/meson-buildoptions.sh |  3 +++
+>   3 files changed, 21 insertions(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index b375248a76..bee7dcd53b 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1200,6 +1200,20 @@ if not get_option('zstd').auto() or have_block
+>                       required: get_option('zstd'),
+>                       method: 'pkg-config')
+>   endif
+> +qpl = not_found
+> +if not get_option('qpl').auto()
 
-In SNP, the hashes page designated with a specific metadata entry
-published in AmdSev OVMF.
+Do you really only want to enable this if the user explicitly specified 
+"--enable-qpl" ? Otherwise, I think this should be:
 
-Therefore, if the user enabled kernel hashes (for measured direct boot),
-QEMU should prepare the content of hashes table, and during the
-processing of the metadata entry it copy the content into the designated
-page and encrypt it.
+  if not get_option('qpl').auto() or have_system
 
-Note that in SNP (unlike SEV and SEV-ES) the measurements is done in
-whole 4KB pages.  Therefore QEMU zeros the whole page that includes the
-hashes table, and fills in the kernel hashes area in that page, and then
-encrypts the whole page.  The rest of the page is reserved for SEV
-launch secrets which are not usable anyway on SNP.
+?
 
-If the user disabled kernel hashes, QEMU pre-validates the kernel hashes
-page as a zero page.
+  Thomas
 
-Signed-off-by: Dov Murik <dovmurik@linux.ibm.com>
-Signed-off-by: Michael Roth <michael.roth@amd.com>
----
- include/hw/i386/pc.h |  2 ++
- target/i386/sev.c    | 36 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index df9a61540d..d9d3a5b5b8 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -171,6 +171,8 @@ typedef enum {
-     SEV_DESC_TYPE_SNP_SECRETS,
-     /* The section contains address that can be used as a CPUID page */
-     SEV_DESC_TYPE_CPUID,
-+    /* The section contains the region for kernel hashes for measured direct boot */
-+    SEV_DESC_TYPE_SNP_KERNEL_HASHES = 0x10,
- 
- } ovmf_sev_metadata_desc_type;
- 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 4bc6004037..e2506f74da 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -129,6 +129,9 @@ struct SevSnpGuestState {
- 
-     struct kvm_sev_snp_launch_start kvm_start_conf;
-     struct kvm_sev_snp_launch_finish kvm_finish_conf;
-+
-+    uint32_t kernel_hashes_offset;
-+    PaddedSevHashTable *kernel_hashes_data;
- };
- 
- #define DEFAULT_GUEST_POLICY    0x1 /* disable debug */
-@@ -1117,6 +1120,23 @@ snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, uint32_t cpuid_len)
-     return snp_launch_update_data(cpuid_addr, hva, cpuid_len, KVM_SEV_SNP_PAGE_TYPE_CPUID);
- }
- 
-+static int
-+snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp, uint32_t addr,
-+                                void *hva, uint32_t len)
-+{
-+    int type = KVM_SEV_SNP_PAGE_TYPE_ZERO;
-+    if (sev_snp->sev_common.kernel_hashes) {
-+        assert(sev_snp->kernel_hashes_data);
-+        assert((sev_snp->kernel_hashes_offset +
-+                sizeof(*sev_snp->kernel_hashes_data)) <= len);
-+        memset(hva, 0, len);
-+        memcpy(hva + sev_snp->kernel_hashes_offset, sev_snp->kernel_hashes_data,
-+               sizeof(*sev_snp->kernel_hashes_data));
-+        type = KVM_SEV_SNP_PAGE_TYPE_NORMAL;
-+    }
-+    return snp_launch_update_data(addr, hva, len, type);
-+}
-+
- static int
- snp_metadata_desc_to_page_type(int desc_type)
- {
-@@ -1125,6 +1145,7 @@ snp_metadata_desc_to_page_type(int desc_type)
-     case SEV_DESC_TYPE_SNP_SEC_MEM: return KVM_SEV_SNP_PAGE_TYPE_ZERO;
-     case SEV_DESC_TYPE_SNP_SECRETS: return KVM_SEV_SNP_PAGE_TYPE_SECRETS;
-     case SEV_DESC_TYPE_CPUID: return KVM_SEV_SNP_PAGE_TYPE_CPUID;
-+    case SEV_DESC_TYPE_SNP_KERNEL_HASHES: return KVM_SEV_SNP_PAGE_TYPE_NORMAL;
-     default: return -1;
-     }
- }
-@@ -1155,6 +1176,9 @@ snp_populate_metadata_pages(SevSnpGuestState *sev_snp, OvmfSevMetadata *metadata
- 
-         if (type == KVM_SEV_SNP_PAGE_TYPE_CPUID) {
-             ret = snp_launch_update_cpuid(desc->base, hva, desc->len);
-+        } else if (desc->type == SEV_DESC_TYPE_SNP_KERNEL_HASHES) {
-+            ret = snp_launch_update_kernel_hashes(sev_snp, desc->base, hva,
-+                                                  desc->len);
-         } else {
-             ret = snp_launch_update_data(desc->base, hva, desc->len, type);
-         }
-@@ -1781,6 +1805,18 @@ bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp)
-         return false;
-     }
- 
-+    if (sev_snp_enabled()) {
-+        /*
-+         * SNP: Populate the hashes table in an area that later in
-+         * snp_launch_update_kernel_hashes() will be copied to the guest memory
-+         * and encrypted.
-+         */
-+        SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(sev_common);
-+        sev_snp_guest->kernel_hashes_offset = area->base & ~TARGET_PAGE_MASK;
-+        sev_snp_guest->kernel_hashes_data = g_new0(PaddedSevHashTable, 1);
-+        return build_kernel_loader_hashes(sev_snp_guest->kernel_hashes_data, ctx, errp);
-+    }
-+
-     /*
-      * Populate the hashes table in the guest's memory at the OVMF-designated
-      * area for the SEV hashes table
--- 
-2.25.1
+
+
+> +  libqpl = cc.find_library('qpl', required: false)
+> +  if not libqpl.found()
+> +    error('libqpl not found, please install it from ' +
+> +    'https://intel.github.io/qpl/documentation/get_started_docs/installation.html')
+> +  endif
+> +  libaccel = dependency('libaccel-config', version: '>=4.0.0',
+> +                        required: true,
+> +                        method: 'pkg-config')
+> +  qpl = declare_dependency(dependencies: [libqpl, libaccel,
+> +        cc.find_library('dl', required: get_option('qpl'))],
+> +        link_args: ['-lstdc++'])
+> +endif
+>   virgl = not_found
 
 
