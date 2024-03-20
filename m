@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5877DC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 009ADC54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:18:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmyd7-0007ja-Kw; Wed, 20 Mar 2024 12:17:29 -0400
+	id 1rmyd9-0007uI-7f; Wed, 20 Mar 2024 12:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rmyce-0007Tg-2D
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:17:01 -0400
+ id 1rmycc-0007TH-SA
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:16:59 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rmyca-0003sp-He
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:16:59 -0400
+ id 1rmyca-0003sr-GD
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:16:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=Content-Type:MIME-Version:Message-Id:Date:Subject
- :From; bh=Qql1rspuc0/h/RwK0YXD5Wmgrn8PkgxM1TGmLutTWRc=; b=aWHoRJGI4jxnOLuqAm4
- 0wXvSNk6XQiP44iY4JDF2raPUfpWKGXNKHjiE1hRofB77V9OcjSXcrAGSOikuPIytMcyzZxJK6aK/
- CtM64vSvPYn//9NlZpQr1TWsRGBEy4RhWnpSkxTpfK/DejMguEg4qCdN/ORtZOPrKFe6so3lceg6B
- /GgjD+UfBGiapvcmx5H4zDpUNGazjxmQ5As1PHbH5Rgl1brG4/suDJOdkbgjBgRr0j2nrzpLTNhL0
- 6sYv+0s8b96SW5BZKDjL9QEph5TcRoOUkRSILssXoXgOkdUo8YG9+sNJAntbprJAbl/vLIYB2FQ7O
- XsuDO/76jXySlVQ==;
+ :From; bh=J5GA2ToeZpS4Nt6uAUdq29B5O4s8bwbyayEo8FiUTnc=; b=FgYUp7iGSk9URz/J9LK
+ JV+7UUGYfoObLGjakl2FmAfpS+z6BwIbkZB6sCUiMt40nZ5dpiH//OGAVrd+aQ4dXiXnSWLUQvtZe
+ GlHiMnywrUGsKvZ1+b2u+26nK2bqWlBVog+O7bL99h/1aRm10GrjKXgV6pzcigvkn/1y+lXNuOD1v
+ mQATcE2JggD0mtZ7wBMcWSDePeEPRyov2LePYCXphHtRbhkvrh+zbaWJ7qgF+Xs5H+dXLyKr9EZ71
+ Gr5z3gz9d/H0814vnLqFIdSXgmsmXn7shoKsmrYiGfjDwzZX9B0rzKDR1BbSpiKNdLJ6GouvvDgcw
+ v9iozL8xn+3THsw==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rmyaM-006TNN-2d;
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rmyaM-006TNN-2H;
  Wed, 20 Mar 2024 17:16:38 +0100
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, michael.roth@amd.com, kkostiuk@redhat.com,
  marcandre.lureau@redhat.com, philmd@linaro.org,
  andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v4 7/7] qga/commands-posix: qmp_guest_set_user_password: use
+Subject: [PATCH v4 5/7] qga/commands-posix: execute_fsfreeze_hook: use
  ga_run_command helper
-Date: Wed, 20 Mar 2024 18:16:48 +0200
-Message-Id: <20240320161648.158226-8-andrey.drobyshev@virtuozzo.com>
+Date: Wed, 20 Mar 2024 18:16:46 +0200
+Message-Id: <20240320161648.158226-6-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240320161648.158226-1-andrey.drobyshev@virtuozzo.com>
 References: <20240320161648.158226-1-andrey.drobyshev@virtuozzo.com>
@@ -71,143 +71,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There's no need to check for the existence of the "chpasswd", "pw"
-executables, as the exec() call will do that for us.
+There's no need to check for the existence of the hook executable, as the
+exec() call will do that for us.
 
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qga/commands-posix.c | 96 ++++++--------------------------------------
- 1 file changed, 13 insertions(+), 83 deletions(-)
+ qga/commands-posix.c | 35 +++--------------------------------
+ 1 file changed, 3 insertions(+), 32 deletions(-)
 
 diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 9910957ff5..7a065c4085 100644
+index 545f3c99dc..9b993772f5 100644
 --- a/qga/commands-posix.c
 +++ b/qga/commands-posix.c
-@@ -2151,14 +2151,8 @@ void qmp_guest_set_user_password(const char *username,
-                                  Error **errp)
+@@ -736,8 +736,6 @@ static const char *fsfreeze_hook_arg_string[] = {
+ 
+ static void execute_fsfreeze_hook(FsfreezeHookArg arg, Error **errp)
  {
-     Error *local_err = NULL;
--    char *passwd_path = NULL;
--    pid_t pid;
 -    int status;
--    int datafd[2] = { -1, -1 };
--    char *rawpasswddata = NULL;
-+    g_autofree char *rawpasswddata = NULL;
-     size_t rawpasswdlen;
--    char *chpasswddata = NULL;
--    size_t chpasswdlen;
- 
-     rawpasswddata = (char *)qbase64_decode(password, -1, &rawpasswdlen, errp);
-     if (!rawpasswddata) {
-@@ -2169,95 +2163,31 @@ void qmp_guest_set_user_password(const char *username,
- 
-     if (strchr(rawpasswddata, '\n')) {
-         error_setg(errp, "forbidden characters in raw password");
--        goto out;
-+        return;
+-    pid_t pid;
+     const char *hook;
+     const char *arg_str = fsfreeze_hook_arg_string[arg];
+     Error *local_err = NULL;
+@@ -746,42 +744,15 @@ static void execute_fsfreeze_hook(FsfreezeHookArg arg, Error **errp)
+     if (!hook) {
+         return;
      }
- 
-     if (strchr(username, '\n') ||
-         strchr(username, ':')) {
-         error_setg(errp, "forbidden characters in username");
--        goto out;
-+        return;
-     }
- 
- #ifdef __FreeBSD__
--    chpasswddata = g_strdup(rawpasswddata);
--    passwd_path = g_find_program_in_path("pw");
-+    g_autofree char *chpasswdata = g_strdup(rawpasswddata);
-+    const char *crypt_flag = crypted ? "-H" : "-h";
-+    const char *argv[] = {"pw", "usermod", "-n", username,
-+                          crypt_flag, "0", NULL};
- #else
--    chpasswddata = g_strdup_printf("%s:%s\n", username, rawpasswddata);
--    passwd_path = g_find_program_in_path("chpasswd");
-+    g_autofree char *chpasswddata = g_strdup_printf("%s:%s\n", username,
-+                                                    rawpasswddata);
-+    const char *crypt_flag = crypted ? "-e" : NULL;
-+    const char *argv[] = {"chpasswd", crypt_flag, NULL};
- #endif
- 
--    chpasswdlen = strlen(chpasswddata);
--
--    if (!passwd_path) {
--        error_setg(errp, "cannot find 'passwd' program in PATH");
--        goto out;
+-    if (access(hook, X_OK) != 0) {
+-        error_setg_errno(errp, errno, "can't access fsfreeze hook '%s'", hook);
+-        return;
 -    }
--
--    if (!g_unix_open_pipe(datafd, FD_CLOEXEC, NULL)) {
--        error_setg(errp, "cannot create pipe FDs");
--        goto out;
--    }
--
+ 
+-    slog("executing fsfreeze hook with arg '%s'", arg_str);
 -    pid = fork();
 -    if (pid == 0) {
--        close(datafd[1]);
--        /* child */
 -        setsid();
--        dup2(datafd[0], 0);
+-        reopen_fd_to_null(0);
 -        reopen_fd_to_null(1);
 -        reopen_fd_to_null(2);
 -
--#ifdef __FreeBSD__
--        const char *h_arg;
--        h_arg = (crypted) ? "-H" : "-h";
--        execl(passwd_path, "pw", "usermod", "-n", username, h_arg, "0", NULL);
--#else
--        if (crypted) {
--            execl(passwd_path, "chpasswd", "-e", NULL);
--        } else {
--            execl(passwd_path, "chpasswd", NULL);
--        }
--#endif
+-        execl(hook, hook, arg_str, NULL);
 -        _exit(EXIT_FAILURE);
 -    } else if (pid < 0) {
 -        error_setg_errno(errp, errno, "failed to create child process");
--        goto out;
+-        return;
 -    }
--    close(datafd[0]);
--    datafd[0] = -1;
--
--    if (qemu_write_full(datafd[1], chpasswddata, chpasswdlen) != chpasswdlen) {
--        error_setg_errno(errp, errno, "cannot write new account password");
--        goto out;
--    }
--    close(datafd[1]);
--    datafd[1] = -1;
--
++    const char *argv[] = {hook, arg_str, NULL};
+ 
 -    ga_wait_child(pid, &status, &local_err);
-+    ga_run_command(argv, chpasswddata, "set user password", &local_err);
++    slog("executing fsfreeze hook with arg '%s'", arg_str);
++    ga_run_command(argv, NULL, "execute fsfreeze hook", &local_err);
      if (local_err) {
          error_propagate(errp, local_err);
--        goto out;
--    }
+         return;
+     }
 -
 -    if (!WIFEXITED(status)) {
--        error_setg(errp, "child process has terminated abnormally");
--        goto out;
+-        error_setg(errp, "fsfreeze hook has terminated abnormally");
+-        return;
 -    }
 -
--    if (WEXITSTATUS(status)) {
--        error_setg(errp, "child process has failed to set user password");
--        goto out;
+-    status = WEXITSTATUS(status);
+-    if (status) {
+-        error_setg(errp, "fsfreeze hook has failed with status %d", status);
+-        return;
 -    }
--
--out:
--    g_free(chpasswddata);
--    g_free(rawpasswddata);
--    g_free(passwd_path);
--    if (datafd[0] != -1) {
--        close(datafd[0]);
--    }
--    if (datafd[1] != -1) {
--        close(datafd[1]);
-+        return;
-     }
  }
- #else /* __linux__ || __FreeBSD__ */
+ 
+ /*
 -- 
 2.39.3
 
