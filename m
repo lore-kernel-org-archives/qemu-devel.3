@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30E8FC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 09:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8DBBC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 09:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmsWw-0000Fy-5D; Wed, 20 Mar 2024 05:46:42 -0400
+	id 1rmsZ1-0001Ef-1C; Wed, 20 Mar 2024 05:48:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmsWu-0000Fj-2W
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 05:46:40 -0400
+ id 1rmsYz-0001EW-F6
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 05:48:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmsWs-0008DU-IR
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 05:46:39 -0400
+ id 1rmsYy-0000Cu-4N
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 05:48:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710927996;
+ s=mimecast20190719; t=1710928127;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+WZs6qFUYItA5gvCkkHLzU1au93L0AnahHvuXruBMKk=;
- b=Pca+aJ7gfPKR0N7yyBbzMEj5P5AygC7Lf3Cfgr+iLemBbAMNtBYF68GpXNG6mSgvYfyJ9V
- 5DLar09yvyBSxV3f1bOel+N2Thsse/WsCdflXwmHxPgBM9jeXCQyXmYF7hJ99zDEEicdWJ
- 2Dhzo6pd3Jb4WDuIKBOFgGf/Z210J7Q=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BQPHNj5HNBSMyuoftz28f+ScBc7BnpscC2alH68qkWQ=;
+ b=TKVXZWlgi21Pr2/fkuL6JWEKnrkpbqPqyoYxABUYuXeVJ5R12miqkXOfOIz4/0NR+tDrm2
+ Qoius7jmJk1uHeqXe72fw8t363keGPctwvm7mTW+7045pKSSP9Z6360iorCzxeqgEDNiuu
+ IWloyGc01RbZAPflT2Kfr1o8zsddpMU=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-402-qQ_NAtBeON63xK-WyBanLA-1; Wed, 20 Mar 2024 05:46:32 -0400
-X-MC-Unique: qQ_NAtBeON63xK-WyBanLA-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a469d3547c7so71707366b.0
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 02:46:31 -0700 (PDT)
+ us-mta-6-gX47eNk4N92TUZbhwRL8Uw-1; Wed, 20 Mar 2024 05:48:45 -0400
+X-MC-Unique: gX47eNk4N92TUZbhwRL8Uw-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5685d83ec51so3097057a12.3
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 02:48:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710927991; x=1711532791;
+ d=1e100.net; s=20230601; t=1710928124; x=1711532924;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+WZs6qFUYItA5gvCkkHLzU1au93L0AnahHvuXruBMKk=;
- b=xNvFlgaJE8jYmjrRXnaC7NTVd3lkd+u5hMquItoVuGm3Z0AqoFUqlDpw0fWVU2Re7z
- pq8tsd5htjhDTXfVbldII4+0nhHpDBORnNLBn/xwFXIsxeHRPGbDR9fmUfwKosCYSrpn
- rcACf2vCbZrlA7V0jfO/tICm096BTTi2K2QnEACwUzIAb0QtIilMjVWimTFRRc9mqcIF
- ner2ER10JGQnVna+oCxsZS51rrMKZvuc1krIAWejZtsz2lBe1WiDE1NgexI5uIKdNpW/
- Fc0FmBYXa1b0kmDQlhkhtmpN+ahK1UTG93fllb10kvVJP6P6Dfo0ATAMJ60EDQX6m20i
- 9h1A==
+ bh=BQPHNj5HNBSMyuoftz28f+ScBc7BnpscC2alH68qkWQ=;
+ b=XzRXCySKaEj5tojR0K0eTUsCJd0eL+eIJ8dR48p9Gy1NN2R6G4obTqAb87mKgChVvJ
+ WVkhnokoCJAs3850pgCXoAUc9veEF0Wttd0uAl5PhDm0kS7ytWa/5MCMwxJilLzV5Wxm
+ uROhnFXfAzz5uWB8fzWCceJqgOZt17aBFKPceLp6rc5HfyJJFNavI6DZBw6kqMejMeN7
+ KnlbB2IRuib2coDY/8qd5BDqsFdzYaJvXv/DIY9aAD7gOYza08Tlb5yiohsS+dhExhYy
+ sK/jyi9sQTpu8z5sPCWkk1YNpofTVq7vCc2Bok00gR3TawYW6HE/zigG1GlXj/W+//TD
+ KYJQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVYStiU89mZyb4qACtqPYqyA8DyL+gowDAHQZTesYL4Y81pr0lf9EKmNE3p8wN8jV+sIb6Ytgy16CnkYBvpr9n9cbZp97Y=
-X-Gm-Message-State: AOJu0YzEnq2IDdrXrmheMiEnQzHcYArU+GKSmw2FlzHfzsZG8PjXh87y
- N+hpwwh2fSsw31m+0/p9lY0hM/ECOqPmNCt84eBlyn8pyHyRWi4PkRjgEkG/2r/luB6vSN1u8JH
- cC1T/J4ue81lpllMQYrosxvS4DFlCRQOP5fcBYpPWmQskzVNje9mp
-X-Received: by 2002:a17:906:af8a:b0:a45:bde1:a334 with SMTP id
- mj10-20020a170906af8a00b00a45bde1a334mr1652425ejb.27.1710927990922; 
- Wed, 20 Mar 2024 02:46:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHYWyHr39ieL8VW6sq78MqBLPco9oQ7sYS8RNzT+os3VOZljrCtsjVKViXIi+OETXikeC19vw==
-X-Received: by 2002:a17:906:af8a:b0:a45:bde1:a334 with SMTP id
- mj10-20020a170906af8a00b00a45bde1a334mr1652414ejb.27.1710927990617; 
- Wed, 20 Mar 2024 02:46:30 -0700 (PDT)
+ AJvYcCWfpzM+KRXcMQEX49MSMevt3ZMjXjsb4Zf5gH3C8Y+e4vfpsdsYjjIBpoCTwgZVunHiHcqJ1PfAlv/yECiOUnf7HGquGRU=
+X-Gm-Message-State: AOJu0Yyz6KGS4Cw79WpHBMxi//Req9Eamx+asLC0OGBldtSPHtTEEUAN
+ eVCk/XGdwxFO2yVJ+zpedH2L16PXr6+SxCJcYrPmKq3sPnyG7+3yADNF0T7V5nDAE6aWKXQTdqe
+ aMZTPLu7zzKKfxkIaETJ24lOLIwmWj2x9Jnd1foI+tCHTXH6EjYDy
+X-Received: by 2002:aa7:dac3:0:b0:56b:b5a2:f8bb with SMTP id
+ x3-20020aa7dac3000000b0056bb5a2f8bbmr407502eds.3.1710928124592; 
+ Wed, 20 Mar 2024 02:48:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERx4OIqJeH1xeNZL2HDSL0K9OjfpG6J7/cAG0JM1w8983tChGajXSMWG/nuORYnUhGGTQtGQ==
+X-Received: by 2002:aa7:dac3:0:b0:56b:b5a2:f8bb with SMTP id
+ x3-20020aa7dac3000000b0056bb5a2f8bbmr407492eds.3.1710928124289; 
+ Wed, 20 Mar 2024 02:48:44 -0700 (PDT)
 Received: from [192.168.10.118] ([151.95.49.219])
  by smtp.googlemail.com with ESMTPSA id
- j1-20020a1709062a0100b00a46af0fbf5dsm4271330eje.103.2024.03.20.02.46.29
+ a89-20020a509ee2000000b00568c299eaedsm4763686edf.81.2024.03.20.02.48.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Mar 2024 02:46:30 -0700 (PDT)
-Message-ID: <7727f1f2-2a30-45d2-85a9-db22ec5a9be5@redhat.com>
-Date: Wed, 20 Mar 2024 10:46:29 +0100
+ Wed, 20 Mar 2024 02:48:43 -0700 (PDT)
+Message-ID: <45d636a5-c3b2-4125-9837-097b07bbc963@redhat.com>
+Date: Wed, 20 Mar 2024 10:48:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 25/49] i386/sev: Skip RAMBlock notifiers for SNP
+Subject: Re: [PATCH v3 27/49] i386/sev: Set ms->require_guest_memfd for SNP
 Content-Language: en-US
 To: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
 Cc: kvm@vger.kernel.org, Tom Lendacky <thomas.lendacky@amd.com>,
@@ -80,7 +80,7 @@ Cc: kvm@vger.kernel.org, Tom Lendacky <thomas.lendacky@amd.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>,
  Isaku Yamahata <isaku.yamahata@linux.intel.com>
 References: <20240320083945.991426-1-michael.roth@amd.com>
- <20240320083945.991426-26-michael.roth@amd.com>
+ <20240320083945.991426-28-michael.roth@amd.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Autocrypt: addr=pbonzini@redhat.com; keydata=
  xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
@@ -117,7 +117,7 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20240320083945.991426-26-michael.roth@amd.com>
+In-Reply-To: <20240320083945.991426-28-michael.roth@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -146,47 +146,42 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/20/24 09:39, Michael Roth wrote:
-> SEV uses these notifiers to register/pin pages prior to guest use, since
-> they could potentially be used for private memory where page migration
-> is not supported. But SNP only uses guest_memfd-provided pages for
-> private memory, which has its own kernel-internal mechanisms for
-> registering/pinning memory.
+> SNP requires guest_memfd for private guest memory, so enable it so that
+> the appropriate guest_memfd backend will be available for normal RAM
+> regions.
 > 
 > Signed-off-by: Michael Roth <michael.roth@amd.com>
 > ---
->   target/i386/sev.c | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
+>   target/i386/sev.c | 5 +++++
+>   1 file changed, 5 insertions(+)
 > 
 > diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index 61af312a11..774262d834 100644
+> index e4deb7b41e..b06c796aae 100644
 > --- a/target/i386/sev.c
 > +++ b/target/i386/sev.c
-> @@ -982,7 +982,15 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
->           goto err;
+> @@ -880,6 +880,7 @@ out:
+>   static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+>   {
+>       SevCommonState *sev_common = SEV_COMMON(cgs);
+> +    MachineState *ms = MACHINE(qdev_get_machine());
+>       char *devname;
+>       int ret, fw_error, cmd;
+>       uint32_t ebx;
+> @@ -1000,6 +1001,10 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+>           qemu_add_machine_init_done_notifier(&sev_machine_done_notify);
 >       }
 >   
-> -    ram_block_notifier_add(&sev_ram_notifier);
-> +    if (!sev_snp_enabled()) {
-> +        /*
-> +         * SEV uses these notifiers to register/pin pages prior to guest use,
-> +         * but SNP relies on guest_memfd for private pages, which has it's
-> +         * own internal mechanisms for registering/pinning private memory.
-> +         */
-> +        ram_block_notifier_add(&sev_ram_notifier);
+> +    if (sev_snp_enabled()) {
+> +        ms->require_guest_memfd = true;
 > +    }
-> +
->       qemu_add_machine_init_done_notifier(&sev_machine_done_notify);
->       qemu_add_vm_change_state_handler(sev_vm_state_change, sev_common);
->   
 
-These three lines can be done in any order, so I suggest removing 
-ram_block_notifier_add + qemu_add_machine_init_done_notifier from the 
-sev-common implementation of kvm_init (let's call it 
-sev_common_kvm_init); and add an override in sev-guest that calls them 
-if sev_common_kvm_init() succeeds.
-
-(treat this as a review for 25/26/29).
+Likewise, this and the following patch should be done in the 
+sev-snp-guest's override of kvm_init.
 
 Paolo
+
+>       qemu_add_vm_change_state_handler(sev_vm_state_change, sev_common);
+>   
+>       cgs->ready = true;
 
 
