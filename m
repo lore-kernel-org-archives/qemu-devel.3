@@ -4,71 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CFC9C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 06:51:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 070EEC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 06:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmplv-0002EC-70; Wed, 20 Mar 2024 02:49:59 -0400
+	id 1rmply-0002Er-5k; Wed, 20 Mar 2024 02:50:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmplr-0002Ax-Ka
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:49:55 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmplw-0002EX-BS
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:50:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmplo-0001V3-7j
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:49:55 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rmplu-0001WP-IB
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 02:50:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710917391;
+ s=mimecast20190719; t=1710917398;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+RxF7GYEqgTMszQ7nhAz66zVQ47fShpXFUmx3kTobtA=;
- b=ChEoKmmvcxwKJfPRFJiCbAoeuxX+Ti+eBHYBS+b9UWZFiYuhlthXWmYMltKatwTkQ4xvAZ
- 2EG0qmAcZEhhrzOeWmDB8nxCMcEzpiml16t578YbEFPIAYCYpFh02Lyh5XML9sWTUAay4r
- KSv+jeUxEOA/kvoa/PvYgw/cpYvkVhE=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644--BQariQ5OdSu6ywB-Lnt8A-1; Wed, 20 Mar 2024 02:49:47 -0400
-X-MC-Unique: -BQariQ5OdSu6ywB-Lnt8A-1
+ bh=YdM+8DlBSfQGNojw2NWBbBFEkSwJYFiGvC2NciZ76U0=;
+ b=LZI++9fZXhaLOckpwJh7w8/l3JoY2cXyvbsswbBOkKU3pJHN3UN0ZMU/0cHJvKhkndIAkG
+ aZywoGOmem5SD4Y9p5AfhliD2qEThKgAVkDjKynE8BwA9yrQyVA0hU8t5pfIFbtLanjANj
+ we0mecQr+7QJCMebhkUoWJFCuJ6ZkXs=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-erG_ZhkbPw68buUwpoSCoA-1; Wed,
+ 20 Mar 2024 02:49:53 -0400
+X-MC-Unique: erG_ZhkbPw68buUwpoSCoA-1
 Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
  [10.11.54.7])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 445D2872808;
- Wed, 20 Mar 2024 06:49:46 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 963471C06901;
+ Wed, 20 Mar 2024 06:49:52 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.59])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 328A71C060A6;
- Wed, 20 Mar 2024 06:49:41 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id E851A1C060A6;
+ Wed, 20 Mar 2024 06:49:48 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+To: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>
-Cc: Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Fabiano Rosas <farosas@suse.de>, Avihai Horon <avihaih@nvidia.com>,
  Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>, qemu-ppc@nongnu.org,
- qemu-s390x@nongnu.org, qemu-block@nongnu.org
-Subject: [PATCH for-9.1 v5 07/14] migration: Add Error** argument to
- .save_setup() handler
-Date: Wed, 20 Mar 2024 07:49:03 +0100
-Message-ID: <20240320064911.545001-8-clg@redhat.com>
+ Prasad Pandit <pjp@fedoraproject.org>, xen-devel@lists.xenproject.org
+Subject: [PATCH for-9.1 v5 09/14] memory: Add Error** argument to
+ .log_global_start() handler
+Date: Wed, 20 Mar 2024 07:49:05 +0100
+Message-ID: <20240320064911.545001-10-clg@redhat.com>
 In-Reply-To: <20240320064911.545001-1-clg@redhat.com>
 References: <20240320064911.545001-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,7 +77,7 @@ X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,295 +93,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The purpose is to record a potential error in the migration stream if
-qemu_savevm_state_setup() fails. Most of the current .save_setup()
-handlers can be modified to use the Error argument instead of managing
-their own and calling locally error_report().
+Modify all .log_global_start() handlers to take an Error** parameter
+and return a bool. Adapt memory_global_dirty_log_start() to interrupt
+on the first error the loop on handlers. In such case, a rollback is
+performed to stop dirty logging on all listeners where it was
+previously enabled.
 
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: Halil Pasic <pasic@linux.ibm.com>
-Cc: Thomas Huth <thuth@redhat.com>
-Cc: Eric Blake <eblake@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: John Snow <jsnow@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Stefano Stabellini <sstabellini@kernel.org>
+Cc: Anthony Perard <anthony.perard@citrix.com>
+Cc: Paul Durrant <paul@xen.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: David Hildenbrand <david@redhat.com>
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/migration/register.h   |  3 ++-
- hw/ppc/spapr.c                 |  2 +-
- hw/s390x/s390-stattrib.c       |  6 ++----
- hw/vfio/migration.c            | 17 ++++++++---------
- migration/block-dirty-bitmap.c |  4 +++-
- migration/block.c              | 13 ++++---------
- migration/ram.c                | 15 ++++++++-------
- migration/savevm.c             |  4 +---
- 8 files changed, 29 insertions(+), 35 deletions(-)
 
-diff --git a/include/migration/register.h b/include/migration/register.h
-index d7b70a8be68c9df47c7843bda7d430989d7ca384..64fc7c11036c82edd6d69513e56a0216d36c17aa 100644
---- a/include/migration/register.h
-+++ b/include/migration/register.h
-@@ -60,10 +60,11 @@ typedef struct SaveVMHandlers {
+ Changes in v5:
+
+ - Removed memory_global_dirty_log_rollback
+ - Introduced memory_global_dirty_log_do_start() to call
+   .log_global_start() handlers and do the rollback in case of error.
+ - Kept modification of the global_dirty_tracking flag within
+   memory_global_dirty_log_start()  
+ - Added an assert on error of a .log_global_start() handler in
+   listener_add_address_space()
+
+ include/exec/memory.h |  5 ++++-
+ hw/i386/xen/xen-hvm.c |  3 ++-
+ hw/vfio/common.c      |  4 +++-
+ hw/virtio/vhost.c     |  3 ++-
+ system/memory.c       | 37 +++++++++++++++++++++++++++++++++++--
+ 5 files changed, 46 insertions(+), 6 deletions(-)
+
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index 8626a355b310ed7b1a1db7978ba4b394032c2f15..5555567bc4c9fdb53e8f63487f1400980275687d 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -998,8 +998,11 @@ struct MemoryListener {
+      * active at that time.
       *
-      * @f: QEMUFile where to send the data
-      * @opaque: data pointer passed to register_savevm_live()
+      * @listener: The #MemoryListener.
 +     * @errp: pointer to Error*, to store an error if it happens.
-      *
-      * Returns zero to indicate success and negative for error
++     *
++     * Return: true on success, else false setting @errp with error.
       */
--    int (*save_setup)(QEMUFile *f, void *opaque);
-+    int (*save_setup)(QEMUFile *f, void *opaque, Error **errp);
+-    void (*log_global_start)(MemoryListener *listener);
++    bool (*log_global_start)(MemoryListener *listener, Error **errp);
  
      /**
-      * @save_cleanup
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index c417f9dd523547eabf6d66a8f505093758e80461..144a3f2b604872e09268b509b9b79ee5b2226136 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -2171,7 +2171,7 @@ static const VMStateDescription vmstate_spapr = {
-     }
- };
+      * @log_global_stop:
+diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+index 7745cb39631ea423aeb6e5d3eb7f7bcbe27ec6fa..f6e9a1bc86491783077b5cb5aafdb19ab294e392 100644
+--- a/hw/i386/xen/xen-hvm.c
++++ b/hw/i386/xen/xen-hvm.c
+@@ -457,11 +457,12 @@ static void xen_log_sync(MemoryListener *listener, MemoryRegionSection *section)
+                           int128_get64(section->size));
+ }
  
--static int htab_save_setup(QEMUFile *f, void *opaque)
-+static int htab_save_setup(QEMUFile *f, void *opaque, Error **errp)
+-static void xen_log_global_start(MemoryListener *listener)
++static bool xen_log_global_start(MemoryListener *listener, Error **errp)
  {
-     SpaprMachineState *spapr = opaque;
+     if (xen_enabled()) {
+         xen_in_migration = true;
+     }
++    return true;
+ }
  
-diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
-index b743e8a2fee84c7374460ccea6df1cf447cda44b..bc04187b2b69226db80219da1a964a87428adc0c 100644
---- a/hw/s390x/s390-stattrib.c
-+++ b/hw/s390x/s390-stattrib.c
-@@ -168,19 +168,17 @@ static int cmma_load(QEMUFile *f, void *opaque, int version_id)
+ static void xen_log_global_stop(MemoryListener *listener)
+diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+index 011ceaab89433de4496dffadc737286e053f321d..8f9cbdc0264044ce587877a7d19d14b28527291b 100644
+--- a/hw/vfio/common.c
++++ b/hw/vfio/common.c
+@@ -1066,7 +1066,8 @@ out:
      return ret;
  }
  
--static int cmma_save_setup(QEMUFile *f, void *opaque)
-+static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
+-static void vfio_listener_log_global_start(MemoryListener *listener)
++static bool vfio_listener_log_global_start(MemoryListener *listener,
++                                           Error **errp)
  {
-     S390StAttribState *sas = S390_STATTRIB(opaque);
-     S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
--    Error *local_err = NULL;
-     int res;
-     /*
-      * Signal that we want to start a migration, thus needing PGSTE dirty
-      * tracking.
-      */
--    res = sac->set_migrationmode(sas, true, &local_err);
-+    res = sac->set_migrationmode(sas, true, errp);
-     if (res) {
--        error_report_err(local_err);
-         return res;
+     VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
+                                                  listener);
+@@ -1083,6 +1084,7 @@ static void vfio_listener_log_global_start(MemoryListener *listener)
+                      ret, strerror(-ret));
+         vfio_set_migration_error(ret);
      }
-     qemu_put_be64(f, STATTR_FLAG_EOS);
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index bf5a29ddc15b0dbc7ae9c44f289539dd0cdddb0d..5763c0b68376b1e24ef3e77c3d19fcd406922c79 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -376,7 +376,7 @@ static int vfio_save_prepare(void *opaque, Error **errp)
-     return 0;
++    return !ret;
  }
  
--static int vfio_save_setup(QEMUFile *f, void *opaque)
-+static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
- {
-     VFIODevice *vbasedev = opaque;
-     VFIOMigration *migration = vbasedev->migration;
-@@ -390,8 +390,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
-                                       stop_copy_size);
-     migration->data_buffer = g_try_malloc0(migration->data_buffer_size);
-     if (!migration->data_buffer) {
--        error_report("%s: Failed to allocate migration data buffer",
--                     vbasedev->name);
-+        error_setg(errp, "%s: Failed to allocate migration data buffer",
-+                   vbasedev->name);
-         return -ENOMEM;
-     }
- 
-@@ -401,8 +401,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
-             ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_PRE_COPY,
-                                            VFIO_DEVICE_STATE_RUNNING);
-             if (ret) {
--                error_report("%s: Failed to set new PRE_COPY state",
--                             vbasedev->name);
-+                error_setg(errp, "%s: Failed to set new PRE_COPY state",
-+                           vbasedev->name);
-                 return ret;
-             }
- 
-@@ -413,8 +413,8 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
-             /* vfio_save_complete_precopy() will go to STOP_COPY */
-             break;
-         default:
--            error_report("%s: Invalid device state %d", vbasedev->name,
--                         migration->device_state);
-+            error_setg(errp, "%s: Invalid device state %d", vbasedev->name,
-+                       migration->device_state);
-             return -EINVAL;
-         }
-     }
-@@ -425,8 +425,7 @@ static int vfio_save_setup(QEMUFile *f, void *opaque)
- 
-     ret = qemu_file_get_error(f);
-     if (ret < 0) {
--        error_report("%s: save setup failed : %s", vbasedev->name,
--                     strerror(-ret));
-+        error_setg_errno(errp, -ret, "%s: save setup failed", vbasedev->name);
-     }
- 
-     return ret;
-diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
-index 2708abf3d762de774ed294d3fdb8e56690d2974c..542a8c297b329abc30d1b3a205d29340fa59a961 100644
---- a/migration/block-dirty-bitmap.c
-+++ b/migration/block-dirty-bitmap.c
-@@ -1213,12 +1213,14 @@ fail:
-     return ret;
+ static void vfio_listener_log_global_stop(MemoryListener *listener)
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 2e4e040db87acf45166da86d268077f54511d82c..d405f03caf2fd3a5ea23bdc0392f4c6c072bc10b 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1044,7 +1044,7 @@ check_dev_state:
+     return r;
  }
  
--static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque)
-+static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque, Error **errp)
+-static void vhost_log_global_start(MemoryListener *listener)
++static bool vhost_log_global_start(MemoryListener *listener, Error **errp)
  {
-     DBMSaveState *s = &((DBMState *)opaque)->save;
-     SaveBitmapState *dbms = NULL;
+     int r;
  
-     if (init_dirty_bitmap_migration(s) < 0) {
-+        error_setg(errp,
-+                   "Failed to initialize dirty tracking bitmap for blocks");
-         return -1;
+@@ -1052,6 +1052,7 @@ static void vhost_log_global_start(MemoryListener *listener)
+     if (r < 0) {
+         abort();
      }
- 
-diff --git a/migration/block.c b/migration/block.c
-index f8a11beb37dac3df5c2cc654db6440509d1181ea..bae6e94891f371302d7a78b2ec54449fd8cfe0b3 100644
---- a/migration/block.c
-+++ b/migration/block.c
-@@ -711,10 +711,9 @@ static void block_migration_cleanup(void *opaque)
-     blk_mig_unlock();
++    return true;
  }
  
--static int block_save_setup(QEMUFile *f, void *opaque)
-+static int block_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ static void vhost_log_global_stop(MemoryListener *listener)
+diff --git a/system/memory.c b/system/memory.c
+index a229a79988fce2aa3cb77e3a130db4c694e8cd49..ca4d91484fb3d06f4b902486fea49dba86dc141b 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2914,9 +2914,33 @@ static unsigned int postponed_stop_flags;
+ static VMChangeStateEntry *vmstate_change;
+ static void memory_global_dirty_log_stop_postponed_run(void);
+ 
++static bool memory_global_dirty_log_do_start(Error **errp)
++{
++    MemoryListener *listener;
++
++    QTAILQ_FOREACH(listener, &memory_listeners, link) {
++        if (listener->log_global_start) {
++            if (!listener->log_global_start(listener, errp)) {
++                goto err;
++            }
++        }
++    }
++    return true;
++
++err:
++    while ((listener = QTAILQ_PREV(listener, link)) != NULL) {
++        if (listener->log_global_stop) {
++            listener->log_global_stop(listener);
++        }
++    }
++
++    return false;
++}
++
+ void memory_global_dirty_log_start(unsigned int flags)
  {
-     int ret;
--    Error *local_err = NULL;
+     unsigned int old_flags;
++    Error *local_err = NULL;
  
-     trace_migration_block_save("setup", block_mig_state.submitted,
-                                block_mig_state.transferred);
-@@ -722,25 +721,21 @@ static int block_save_setup(QEMUFile *f, void *opaque)
-     warn_report("block migration is deprecated;"
-                 " use blockdev-mirror with NBD instead");
+     assert(flags && !(flags & (~GLOBAL_DIRTY_MASK)));
  
--    ret = init_blk_migration(f, &local_err);
-+    ret = init_blk_migration(f, errp);
-     if (ret < 0) {
--        error_report_err(local_err);
-         return ret;
+@@ -2936,7 +2960,13 @@ void memory_global_dirty_log_start(unsigned int flags)
+     trace_global_dirty_changed(global_dirty_tracking);
+ 
+     if (!old_flags) {
+-        MEMORY_LISTENER_CALL_GLOBAL(log_global_start, Forward);
++        if (!memory_global_dirty_log_do_start(&local_err)) {
++            global_dirty_tracking &= ~flags;
++            trace_global_dirty_changed(global_dirty_tracking);
++            error_report_err(local_err);
++            return;
++        }
++
+         memory_region_transaction_begin();
+         memory_region_update_pending = true;
+         memory_region_transaction_commit();
+@@ -3014,8 +3044,11 @@ static void listener_add_address_space(MemoryListener *listener,
+         listener->begin(listener);
      }
- 
-     /* start track dirty blocks */
-     ret = set_dirty_tracking();
-     if (ret) {
--        error_setg_errno(&local_err, -ret,
--                         "Failed to start block dirty tracking");
--        error_report_err(local_err);
-+        error_setg_errno(errp, -ret, "Failed to start block dirty tracking");
-         return ret;
-     }
- 
-     ret = flush_blks(f);
-     if (ret) {
--        error_setg_errno(&local_err, -ret, "Flushing block failed");
--        error_report_err(local_err);
-+        error_setg_errno(errp, -ret, "Flushing block failed");
-         return ret;
-     }
-     blk_mig_reset_dirty_cursor();
-diff --git a/migration/ram.c b/migration/ram.c
-index 44d7073730c67fa09ab9a59a712e74d8b088bff4..6ea5a06e00e30d0d1e4d8a6defdeb86c81fa707b 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3066,22 +3066,23 @@ static bool mapped_ram_read_header(QEMUFile *file, MappedRamHeader *header,
-  *
-  * @f: QEMUFile where to send the data
-  * @opaque: RAMState pointer
-+ * @errp: pointer to Error*, to store an error if it happens.
-  */
--static int ram_save_setup(QEMUFile *f, void *opaque)
-+static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
- {
-     RAMState **rsp = opaque;
-     RAMBlock *block;
-     int ret, max_hg_page_size;
- 
-     if (compress_threads_save_setup()) {
--        error_report("%s: failed to start compress threads", __func__);
-+        error_setg(errp, "%s: failed to start compress threads", __func__);
-         return -1;
-     }
- 
-     /* migration has already setup the bitmap, reuse it. */
-     if (!migration_in_colo_state()) {
-         if (ram_init_all(rsp) != 0) {
--            error_report("%s: failed to setup RAM for migration", __func__);
-+            error_setg(errp, "%s: failed to setup RAM for migration", __func__);
-             compress_threads_save_cleanup();
-             return -1;
+     if (global_dirty_tracking) {
++        /*
++         * Migration has already started. Assert on any error.
++         */
+         if (listener->log_global_start) {
+-            listener->log_global_start(listener);
++            listener->log_global_start(listener, &error_abort);
          }
-@@ -3118,14 +3119,14 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
- 
-     ret = rdma_registration_start(f, RAM_CONTROL_SETUP);
-     if (ret < 0) {
--        error_report("%s: failed to start RDMA registration", __func__);
-+        error_setg(errp, "%s: failed to start RDMA registration", __func__);
-         qemu_file_set_error(f, ret);
-         return ret;
      }
  
-     ret = rdma_registration_stop(f, RAM_CONTROL_SETUP);
-     if (ret < 0) {
--        error_report("%s: failed to stop RDMA registration", __func__);
-+        error_setg(errp, "%s: failed to stop RDMA registration", __func__);
-         qemu_file_set_error(f, ret);
-         return ret;
-     }
-@@ -3142,7 +3143,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
-     ret = multifd_send_sync_main();
-     bql_lock();
-     if (ret < 0) {
--        error_report("%s: multifd synchronization failed", __func__);
-+        error_setg(errp, "%s: multifd synchronization failed", __func__);
-         return ret;
-     }
- 
-@@ -3154,7 +3155,7 @@ static int ram_save_setup(QEMUFile *f, void *opaque)
-     qemu_put_be64(f, RAM_SAVE_FLAG_EOS);
-     ret = qemu_fflush(f);
-     if (ret < 0) {
--        error_report("%s failed : %s", __func__, strerror(-ret));
-+        error_setg_errno(errp, -ret, "%s failed", __func__);
-     }
-     return ret;
- }
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 0eb94e61f888adba2c0732c2cb701b110814c455..535ad5a32d67057dd172ce25d561a66a07172e97 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1342,11 +1342,9 @@ int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
-         }
-         save_section_header(f, se, QEMU_VM_SECTION_START);
- 
--        ret = se->ops->save_setup(f, se->opaque);
-+        ret = se->ops->save_setup(f, se->opaque, errp);
-         save_section_footer(f, se);
-         if (ret < 0) {
--            error_setg(errp, "failed to setup SaveStateEntry with id(name): "
--                       "%d(%s): %d", se->section_id, se->idstr, ret);
-             qemu_file_set_error(f, ret);
-             break;
-         }
 -- 
 2.44.0
 
