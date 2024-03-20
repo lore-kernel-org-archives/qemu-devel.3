@@ -4,73 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA78FC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 13:36:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 561D1C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 13:50:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmw6z-00086g-S4; Wed, 20 Mar 2024 09:36:09 -0400
+	id 1rmwJx-0002mR-C9; Wed, 20 Mar 2024 09:49:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rmw6x-00084h-KP
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:36:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rmwJv-0002mD-S1
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:49:31 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1rmw6v-0005SV-NC
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:36:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710941764;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=v6S04FVBGBHFrUXZwpGM/mUPd4tC7ugDzVhOtiaWOZ4=;
- b=hpqXpUhK/VuFETT6KpttAmol3rrc8Xuc5D6L+mxVa+PINJg/pWzp6niXdAvQtM4pys1q45
- WxE+372H5CM0ag6ExX3y4257009A5JakxI1mBM2rkQnoIPUPHLNcHePotG9Hcp/5Tz9sWX
- Ds0mFvPH+Rm2WiRnCeIDcS+Zy5KcCwA=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-Kyg1UGk0Pr2JHDs2Jv5i3w-1; Wed,
- 20 Mar 2024 09:36:01 -0400
-X-MC-Unique: Kyg1UGk0Pr2JHDs2Jv5i3w-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4AB9F2801E6A
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 13:36:01 +0000 (UTC)
-Received: from localhost (unknown [10.39.194.238])
- by smtp.corp.redhat.com (Postfix) with ESMTP id A11723C20;
- Wed, 20 Mar 2024 13:36:00 +0000 (UTC)
-Date: Wed, 20 Mar 2024 09:35:39 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Sanjay Rao <srao@redhat.com>, Boaz Ben Shabat <bbenshab@redhat.com>,
- Joe Mario <jmario@redhat.com>
-Subject: Re: [PATCH] coroutine: cap per-thread local pool size
-Message-ID: <20240320133539.GA1190824@fedora>
-References: <20240318183429.1039340-1-stefanha@redhat.com>
- <ZfmWhDaG5mN-GCeO@redhat.com> <20240319175510.GA1127203@fedora>
- <ZfnxSd4lseZuWoQ5@redhat.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rmwJs-0007eN-8C
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:49:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710942568; x=1742478568;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=2PyOioHoVuIYBj44Mj1+uT2DsWCfdpZ3lXhTE0B8L9A=;
+ b=gtFFfAm3MMbyAaYgYSjdKeIzff+DNH+f5CJ3ZXgUhNUQRkMjDWeL0av1
+ g5OVZ+xK6g14WFMPFf7fD2mUu++O9s6FQ4Z1je5bEIlsejfEa/Trv6UqZ
+ uAP4UJT87cen2bB2QcaYp8MC/PGtTGuPGkABWF6deBPLawH9meFia/wJl
+ wfR6cHVIEdF43a3fWe9xghEgBqndBFd7FfuzwL96Sj7jsmHBZMETbVHAw
+ IoLRkFcEIvz2nuoXw6/xW2DvYHrXfCzfM6syNshjfaPOwGPEHaHeM/zXh
+ Kdsp0QTBkKf/lU1/k3STvt3jiVHlV08JqFxYeXfIFzgJ38DgkhftGDp0t A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11018"; a="9680704"
+X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; 
+   d="scan'208";a="9680704"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Mar 2024 06:49:24 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; d="scan'208";a="45137674"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.242.48])
+ ([10.124.242.48])
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Mar 2024 06:49:18 -0700
+Message-ID: <8a7f5bf5-9a4e-4e03-9e43-bbab53efefe9@intel.com>
+Date: Wed, 20 Mar 2024 21:49:14 +0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="diEhgda288nGRzYs"
-Content-Disposition: inline
-In-Reply-To: <ZfnxSd4lseZuWoQ5@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 08/65] kvm: handle KVM_EXIT_MEMORY_FAULT
+Content-Language: en-US
+To: "Wang, Lei" <lei4.wang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+Cc: kvm@vger.kernel.org, qemu-devel@nongnu.org,
+ Michael Roth <michael.roth@amd.com>, Claudio Fontana <cfontana@suse.de>,
+ Gerd Hoffmann <kraxel@redhat.com>, Isaku Yamahata
+ <isaku.yamahata@gmail.com>, Chenyi Qiang <chenyi.qiang@intel.com>
+References: <20240229063726.610065-1-xiaoyao.li@intel.com>
+ <20240229063726.610065-9-xiaoyao.li@intel.com>
+ <3d2655c7-74ad-49d9-a527-7648f8e565da@intel.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <3d2655c7-74ad-49d9-a527-7648f8e565da@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,137 +97,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 3/19/2024 10:14 AM, Wang, Lei wrote:
+> On 2/29/2024 14:36, Xiaoyao Li wrote:
+>> From: Chao Peng <chao.p.peng@linux.intel.com>
+>>
+>> When geeting KVM_EXIT_MEMORY_FAULT exit, it indicates userspace needs to
+>> do the memory conversion on the RAMBlock to turn the memory into desired
+>> attribute, i.e., private/shared.
+>>
+>> Currently only KVM_MEMORY_EXIT_FLAG_PRIVATE in flags is valid when
+>> KVM_EXIT_MEMORY_FAULT happens.
+>>
+>> Note, KVM_EXIT_MEMORY_FAULT makes sense only when the RAMBlock has
+>> guest_memfd memory backend.
+>>
+>> Note, KVM_EXIT_MEMORY_FAULT returns with -EFAULT, so special handling is
+>> added.
+>>
+>> When page is converted from shared to private, the original shared
+>> memory can be discarded via ram_block_discard_range(). Note, shared
+>> memory can be discarded only when it's not back'ed by hugetlb because
+>> hugetlb is supposed to be pre-allocated and no need for discarding.
+>>
+>> Signed-off-by: Chao Peng <chao.p.peng@linux.intel.com>
+>> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>
+>> ---
+>> Changes in v4:
+>> - open-coded ram_block_discard logic;
+>> - change warn_report() to error_report(); (Daniel)
+>> ---
+>>   accel/kvm/kvm-all.c | 94 ++++++++++++++++++++++++++++++++++++++++-----
+>>   1 file changed, 84 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>> index 70d482a2c936..87e4275932a7 100644
+>> --- a/accel/kvm/kvm-all.c
+>> +++ b/accel/kvm/kvm-all.c
+>> @@ -2903,6 +2903,68 @@ static void kvm_eat_signals(CPUState *cpu)
+>>       } while (sigismember(&chkset, SIG_IPI));
+>>   }
+>>   
+>> +static int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+>> +{
+>> +    MemoryRegionSection section;
+>> +    ram_addr_t offset;
+>> +    MemoryRegion *mr;
+>> +    RAMBlock *rb;
+>> +    void *addr;
+>> +    int ret = -1;
+>> +
+>> +    if (!QEMU_PTR_IS_ALIGNED(start, qemu_host_page_size) ||
+>> +        !QEMU_PTR_IS_ALIGNED(size, qemu_host_page_size)) {
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (!size) {
+>> +        return -1;
+>> +    }
+>> +
+>> +    section = memory_region_find(get_system_memory(), start, size);
+>> +    mr = section.mr;
+>> +    if (!mr) {
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (memory_region_has_guest_memfd(mr)) {
+>> +        if (to_private) {
+>> +            ret = kvm_set_memory_attributes_private(start, size);
+>> +        } else {
+>> +            ret = kvm_set_memory_attributes_shared(start, size);
+>> +        }
+>> +
+>> +        if (ret) {
+>> +            memory_region_unref(section.mr);
+>> +            return ret;
+>> +        }
+>> +
+>> +        addr = memory_region_get_ram_ptr(mr) + section.offset_within_region;
+>> +        rb = qemu_ram_block_from_host(addr, false, &offset);
+>> +
+>> +        if (to_private) {
+>> +            if (rb->page_size != qemu_host_page_size) {
+>> +                /*
+>> +                * shared memory is back'ed by  hugetlb, which is supposed to be
+>> +                * pre-allocated and doesn't need to be discarded
+>> +                */
+> 
+> Nit: comment indentation is broken here.
+> 
+>> +                return 0;
+>> +            } else {
+>> +                ret = ram_block_discard_range(rb, offset, size);
+>> +            }
+>> +        } else {
+>> +            ret = ram_block_discard_guest_memfd_range(rb, offset, size);
+>> +        }
+>> +    } else {
+>> +        error_report("Convert non guest_memfd backed memory region "
+>> +                    "(0x%"HWADDR_PRIx" ,+ 0x%"HWADDR_PRIx") to %s",
+> 
+> Same as above.
+> 
 
---diEhgda288nGRzYs
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Fixed.
 
-On Tue, Mar 19, 2024 at 08:10:49PM +0000, Daniel P. Berrang=E9 wrote:
-> On Tue, Mar 19, 2024 at 01:55:10PM -0400, Stefan Hajnoczi wrote:
-> > On Tue, Mar 19, 2024 at 01:43:32PM +0000, Daniel P. Berrang=E9 wrote:
-> > > On Mon, Mar 18, 2024 at 02:34:29PM -0400, Stefan Hajnoczi wrote:
-> > > > diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
-> > > > index 5fd2dbaf8b..2790959eaf 100644
-> > > > --- a/util/qemu-coroutine.c
-> > > > +++ b/util/qemu-coroutine.c
-> > >=20
-> > > > +static unsigned int get_global_pool_hard_max_size(void)
-> > > > +{
-> > > > +#ifdef __linux__
-> > > > +    g_autofree char *contents =3D NULL;
-> > > > +    int max_map_count;
-> > > > +
-> > > > +    /*
-> > > > +     * Linux processes can have up to max_map_count virtual memory=
- areas
-> > > > +     * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond t=
-his limit. We
-> > > > +     * must limit the coroutine pool to a safe size to avoid runni=
-ng out of
-> > > > +     * VMAs.
-> > > > +     */
-> > > > +    if (g_file_get_contents("/proc/sys/vm/max_map_count", &content=
-s, NULL,
-> > > > +                            NULL) &&
-> > > > +        qemu_strtoi(contents, NULL, 10, &max_map_count) =3D=3D 0) {
-> > > > +        /*
-> > > > +         * This is a conservative upper bound that avoids exceeding
-> > > > +         * max_map_count. Leave half for non-coroutine users like =
-library
-> > > > +         * dependencies, vhost-user, etc. Each coroutine takes up =
-2 VMAs so
-> > > > +         * halve the amount again.
->=20
-> Leaving half for loaded libraries, etc is quite conservative
-> if max_map_count is the small-ish 64k default.
->=20
-> That reservation could perhaps a fixed number like 5,000 ?
-
-While I don't want QEMU to abort, once this heuristic is in the code it
-will be scary to make it more optimistic and we may never change it. So
-now is the best time to try 5,000.
-
-I'll send a follow-up patch that reserves 5,000 mappings. If that turns
-out to be too optimistic we can increase the reservation.
-
-> > > > +         */
-> > > > +        return max_map_count / 4;
-> > >=20
-> > > That's 256,000 coroutines, which still sounds incredibly large
-> > > to me.
-> >=20
-> > Any ideas for tweaking this heuristic?
->=20
-> The awkward thing about this limit is that its hardcoded, and
-> since it is indeed a "heuristic", we know it is going to be
-> sub-optimal for some use cases / scenarios.
->=20
-> The worst case upper limit is
->=20
->    num virtio-blk * num threads * num queues
->=20
-> Reducing the number of devices isn't practical if the guest
-> genuinely needs that many volumes.
->=20
-> Reducing the threads or queues artificially limits the peak
-> performance of a single disk handling in isolation, while
-> other disks are idle, so that's not desirable.
->=20
-> So there's no way to cap the worst case scenario, while
-> still maximising the single disk performance possibilities.
->=20
-> With large VMs with many CPUs and many disks, it could be
-> reasonable to not expect a real guest to need to maximise
-> I/O on every disk at the same time, and thus want to put
-> some cap there to control worst case resource usage.
->=20
-> It feels like it leans towards being able to control the
-> coroutine pool limit explicitly, as a CLI option, to override
-> this default hueristic.
->=20
-> > > > +    }
-> > > > +#endif
-> > > > +
-> > > > +    return UINT_MAX;
-> > >=20
-> > > Why UINT_MAX as a default ?  If we can't read procfs, we should
-> > > assume some much smaller sane default IMHO, that corresponds to
-> > > what current linux default max_map_count would be.
-> >=20
-> > This line is not Linux-specific. I don't know if other OSes have an
-> > equivalent to max_map_count.
-> >=20
-> > I agree with defaulting to 64k-ish on Linux.
->=20
->=20
->=20
-> With regards,
-> Daniel
-> --=20
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
-ge :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
-om :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
-ge :|
->=20
-
---diEhgda288nGRzYs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmX65isACgkQnKSrs4Gr
-c8j9pAf/Tk1LrTrnVCdjF7Zl2OT5mRDXmzPlOaBoCH/pEDVkec89ZY5Nj9QHN9vw
-alhNG9J015WlKkWqttBMBSNHAILKy3HCw0n/DyQFWX8Hx1ubn9X3ar08KQEt/vlo
-2RzZfJeGLeML9gGsvmVlCejChvQrUUmuwB/DYvHu6JdCQZi3a/0SWegpBA25Cln2
-1NnxIZPA5go7uy5pWDBmHMcLWsLjz14+XZEHtIFF9OsHiQwunStmSrxkPhAPnFQU
-lw8p5iFtY5jlIaQ3q9HFPSwfv94N89vsbpqVD2vL5pkJTrRtPBFAn4/FaDJ0BFPj
-ys3UMWd8EaV4zjHi2lw7KaSJbTWeiw==
-=LPlI
------END PGP SIGNATURE-----
-
---diEhgda288nGRzYs--
+thanks!
 
 
