@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7371DC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57830C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:44:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmrXz-0006uM-UL; Wed, 20 Mar 2024 04:43:43 -0400
+	id 1rmrYh-0007sJ-Ay; Wed, 20 Mar 2024 04:44:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrXx-0006r2-Ov
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:43:41 -0400
+ id 1rmrYf-0007rr-MI
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:44:25 -0400
 Received: from mail-mw2nam10on20600.outbound.protection.outlook.com
  ([2a01:111:f403:2412::600]
  helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrXv-0007q4-Vc
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:43:41 -0400
+ id 1rmrYb-0007xv-U5
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:44:25 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BIVcXwEY6KI1YTNOVA7QpmPqov9Xe0SV6+UXp1TDSZO8n2DflpVpk3FZgH9C/q0k29xejpC3InRgdwkdq5xA5AQkbfYZj5ClQxtyZzIm3fSWZncGp/s0rghtOVVbWpZczoUuxOzq9G+w1UiRrxvcKDWLEgl8+j6aBdLfmZ3FWEK32vVdS5fIO4DesNypC1aJ1GOtOuxo5ib3QyZzqd48HQZWLBUCjvrtuXy9nv8lP3fBpAbwT96dvGo5P/gXElKm4rEf7OGWIvorm88aCSzl+nD6NsmJ4hBQqHSeuHgOKjfl+vWCivjE8UOhOCxoJQ5IXlzLV/ejTAQK5LSzKAdKww==
+ b=CengPR3DbByT0r33AT8ribI9wVhrOtyyp3i4a3t6xJeRKU0TEcmaT/e2rDk8Iv64Rt7E9GqOyQ6cW964ivTfE9M3yzHNBjMRzbyqDQwtV6rBzRWyDIfdEkZwqvXOoZG35Py/2QjQHUKusNrrv8oRejslCTLj3ipqC7xveasYw48ECDr0Ltj2FDmFrBZHESDWebGRPlQM/FlP90m5K/Ao35BPEufefHwymK6mvt41/vwsaqAKaCHiGrmx6Do0nt/T5AR+bBLVbpBeZPspVtlKtHGKa7DZlgCE37CyizQ2MNU0l+05SI8dNGIAGQ8JKYyUH/mzfKxKfzMUE3ni8woNgg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fTqtcVZjp5Czz38jYigxgL9NCDNjryBgjRqYPmRRX3g=;
- b=Qx4ebsWwJZM3c1/jFRay9haLEub0zUB0cfqVZ6NmHsMhkzLQLNTylOYnYfakvGg0IvyURvadt+hRzqGquwXPn/InHCukCffdIwx28onhlwFCK0ijL+qO65xqPOvuABT5CFMq0QNIpAhUtN1a/kwZP9FJTBDS6/Cfa+F4V65EKP07oJdOVAjepzMRLtvUIJRvySfY2pHSe2C7yGnk1vDGjUPzOECg+xonX8I8SKK5UFbnrU+lBIyXNLZ75T3B3D62/mgzU5jiHIFe2WtxqmfL8+H4qoymAwpgRRxaiidEpO2p/ls0mX+u9w6S035hhwDYXRYr1HLW2qDgRD5SZVYIfw==
+ bh=HILu8zKv5gIRtw1eQPy3a+lxRUBPKHDNxM2VhGKvB2s=;
+ b=cp/u9IDO38bvo2aThGmUg3vayXnEkw+4mlRFaO1bPlc8bx0j399shAN55q+hQJWRT8MWNbivCmAOQmqLuwQAmv+mnw3vljvdGTJAL8Z6ow2Bv2tYjyUsjsWccb4CR7h9DRydnE+Z9IouMv5aM3io94tmjMgGVG1Ng6Q8q3MG9wup2+zOYhhLbj32sdvP4E5yUfRsuPZe5iwQG0liQfVzbGltOHvMNeqsOdJbgtyAsQ0Zi8Hs/MUg5WvlfJ2NEefMldBdMA3oCgx4AAvYa7BWcqj+HPoyXj3Vceghth7OVX9iluxeU650e7ZK1IHSqag+hzJ6RMBCzR4ntwRCHi6aYw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fTqtcVZjp5Czz38jYigxgL9NCDNjryBgjRqYPmRRX3g=;
- b=mO5aasD6was/9ZE+WbLpwwdf5gYSKJDY9oJNqNiy17j8e+CDOstuDLuOZtSRp8zBXhwP32LUtwqow/+BpSiRokKytCcAPHknP9Ls1Xa1eRqRB4ljOE1fr5VgMbdttA+qjYu4QC/T9nHq3aW4rmXXInJxPVIBYrOD6BPPyuGgVRU=
-Received: from PR0P264CA0083.FRAP264.PROD.OUTLOOK.COM (2603:10a6:100:18::23)
- by SN7PR12MB7324.namprd12.prod.outlook.com (2603:10b6:806:29b::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.27; Wed, 20 Mar
- 2024 08:43:36 +0000
-Received: from SN1PEPF0002529D.namprd05.prod.outlook.com
- (2603:10a6:100:18:cafe::aa) by PR0P264CA0083.outlook.office365.com
- (2603:10a6:100:18::23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.28 via Frontend
- Transport; Wed, 20 Mar 2024 08:43:35 +0000
+ bh=HILu8zKv5gIRtw1eQPy3a+lxRUBPKHDNxM2VhGKvB2s=;
+ b=DMW+MTmsuqqW35N5i7HLoVcRdOpaCUiG2mEStvEsGF7ONtP4UkaJGVYUpTbAVHcSsGTz8+U2qzK1dcArhFSwpcior0+0MMolKMglhqkN31jTGGqb07f2neNA1jWnn8k/8eILZQUy+R6Q7k4tXL3iVVqo4ZDfAMQqTdBZjL7e1g4=
+Received: from MW4PR03CA0293.namprd03.prod.outlook.com (2603:10b6:303:b5::28)
+ by IA1PR12MB6652.namprd12.prod.outlook.com (2603:10b6:208:38a::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.30; Wed, 20 Mar
+ 2024 08:44:18 +0000
+Received: from MWH0EPF000A672F.namprd04.prod.outlook.com
+ (2603:10b6:303:b5:cafe::d7) by MW4PR03CA0293.outlook.office365.com
+ (2603:10b6:303:b5::28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.27 via Frontend
+ Transport; Wed, 20 Mar 2024 08:44:17 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,24 +54,24 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- SN1PEPF0002529D.mail.protection.outlook.com (10.167.242.4) with Microsoft
+ MWH0EPF000A672F.mail.protection.outlook.com (10.167.249.21) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:43:35 +0000
+ 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:44:17 +0000
 Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 20 Mar
- 2024 03:43:34 -0500
+ 2024 03:44:16 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <kvm@vger.kernel.org>, Tom Lendacky <thomas.lendacky@amd.com>, "Paolo
  Bonzini" <pbonzini@redhat.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Pankaj Gupta
  <pankaj.gupta@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>, Isaku Yamahata
- <isaku.yamahata@linux.intel.com>
-Subject: [PATCH v3 15/49] kvm/memory: Make memory type private by default if
- it has guest memfd backend
-Date: Wed, 20 Mar 2024 03:39:11 -0500
-Message-ID: <20240320083945.991426-16-michael.roth@amd.com>
+ <isaku.yamahata@linux.intel.com>, Isaku Yamahata <isaku.yamahata@intel.com>
+Subject: [PATCH v3 17/49] pci-host/q35: Move PAM initialization above SMRAM
+ initialization
+Date: Wed, 20 Mar 2024 03:39:13 -0500
+Message-ID: <20240320083945.991426-18-michael.roth@amd.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240320083945.991426-1-michael.roth@amd.com>
 References: <20240320083945.991426-1-michael.roth@amd.com>
@@ -83,26 +83,26 @@ X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF0002529D:EE_|SN7PR12MB7324:EE_
-X-MS-Office365-Filtering-Correlation-Id: 14b6ec9d-d6af-44d8-81b2-08dc48b9d4a0
+X-MS-TrafficTypeDiagnostic: MWH0EPF000A672F:EE_|IA1PR12MB6652:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5d020731-a33f-4ebe-839d-08dc48b9edd4
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: miuzvejBctE+hSNFvabJuddQsm7nnWVcz2cLwsqJeGPcvG6/geias7G1NM0sbUvxumsuJcmyh4xFxFOdEsrs9cLiqfSpn0Z7ZFDsEfOc3Fjycr8y9JBUIuS+esPOiKuhu54LhtIlZdvVJd3SKXjwaHMDKoWAHawz128lBsTab1TaT1csvqC7TOPZbcKf+isIvr+hg2zwY47dKh9js5C59lvSbu/V7l95Jc99hku8nWgtyTY7hJvTBjUgpm2E/JsMobTqfZcOm+ifhjX/GsJ/Zm8V92lxec61M6FotCmNdKk8eY5uqind45x/zn6vcI7ztTwg/Z3o9oROZLQ672MXqlzsoDzU8wiKQkBQc8Oe4TEUNVst+KsF9ZDhKUb8VkeBPhbCv158J9WY3PWl7gafBfv5Wqxk1eTSGNJf0QvnTscFdSH0l1eOODvwtTpD4J8uGRxMCaKWGv/HCR1kmFIj+8R1AMU4guBPGbHeAYDNHBQYfe7tznT7qxI5Atlv7K2H69ieYc4jvIRTZ+Rk/Nubl3xG80gkPS3FuaLpqUtqo3xzaniYJf/84vA3oD1kjfGLxP7dcY9TlN+JwkxTujYh8bz8h4cKSewHXnRrq4k7K+7GFya97m8RJtvquJ/Jnx8jiNPGqJiWeJb2N9nHfL0I73qoKXETsWi++7dFzhyZ0W2n0jPu/D9fCRuLVWEtJRqXfBm59SxWw3cXMXULj3ba5yjfQCWEFzxPpupwZDA3hMnkzy+0vXD5DUFDBwg9FHE9
+X-Microsoft-Antispam-Message-Info: 0mulvIQFUeiAC5TB9TJ6UmuVGUBqGZFYpELY6CY5kiW/tkw6VHqqTEEPzZQE+2U1KN+n/+K6/7zT11XNpTdVxokk0gBOyva+OH0VhHGszRVAoWaFUpVCBTUJx5cPuaenZui8qV2pSVrIJL/c0phRH62K9wn45UIXkyLDp2v5W/nAvCZbstFSgGfEstCUk7YgL06hX/MztzQsDHzbA9lT8tAhe+EiM0YfXRMhP/S0UZltgNgNqKnR21aaxSDGfowmgBeh83QyF4pUP1ChEHjHee8hnaxZbaDLHf4Jwxf4MfXVARAdHAqU3cg9jTB/nxy3nhiuXBEE5HuVbJpvtotQGKEmgLs1pc3lcdkEpIA+9RVNKqENyZfZbMFFU2g45Cr76SPEGFZuMx8tcPObwwgtUNCqkFVycZolIu20Qw0eUk1Lda4S8zQTq1IajYvNKvZ1dzCI5uatwvPjLY7g/nYhTD1BIaeRDwuf0D9aTRH8sPJ3fMI4g30rtQRyUGbUpBhJtHZwyf9h8WgPjD68ZwDGNwh+6lxJZB7ZyGEQGJZI3XT2SviO6RE76gq7P5585NuyBxLFRA+fqG29HTWoVm576BIqb42Xs6fwIIjNGxyBUxGQRLEJz3xOhm8DfAjielvc2H30jRr03arAOCXc0RQHM/pDr+ZG/cT+Tq1vCJA1sM1aGnB0U2Fm2rXY1emh5aw6IxRJnHzZS8AqTnMCE8TVzZh/tpPSbc1URaQQWUaOylZebDsPnBWdgXExtM/qCyNV
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(1800799015)(82310400014)(376005)(36860700004); DIR:OUT;
+ SFS:(13230031)(1800799015)(82310400014)(36860700004)(376005); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:43:35.2581 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 14b6ec9d-d6af-44d8-81b2-08dc48b9d4a0
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:44:17.4482 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5d020731-a33f-4ebe-839d-08dc48b9edd4
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF0002529D.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A672F.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7324
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6652
 Received-SPF: permerror client-ip=2a01:111:f403:2412::600;
  envelope-from=Michael.Roth@amd.com;
  helo=NAM10-MW2-obe.outbound.protection.outlook.com
@@ -128,43 +128,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Isaku Yamahata <isaku.yamahata@intel.com>
 
-KVM side leaves the memory to shared by default, while may incur the
-overhead of paging conversion on the first visit of each page. Because
-the expectation is that page is likely to private for the VMs that
-require private memory (has guest memfd).
+In mch_realize(), process PAM initialization before SMRAM initialization so
+that later patch can skill all the SMRAM related with a single check.
 
-Explicitly set the memory to private when memory region has valid
-guest memfd backend.
-
+Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- accel/kvm/kvm-all.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/pci-host/q35.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 9a8b365a69..53ce4f091e 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -1451,6 +1451,16 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-                     strerror(-err));
-             abort();
-         }
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index 0d7d4e3f08..98d4a7c253 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -568,6 +568,16 @@ static void mch_realize(PCIDevice *d, Error **errp)
+     /* setup pci memory mapping */
+     pc_pci_as_mapping_init(mch->system_memory, mch->pci_address_space);
+ 
++    /* PAM */
++    init_pam(&mch->pam_regions[0], OBJECT(mch), mch->ram_memory,
++             mch->system_memory, mch->pci_address_space,
++             PAM_BIOS_BASE, PAM_BIOS_SIZE);
++    for (i = 0; i < ARRAY_SIZE(mch->pam_regions) - 1; ++i) {
++        init_pam(&mch->pam_regions[i + 1], OBJECT(mch), mch->ram_memory,
++                 mch->system_memory, mch->pci_address_space,
++                 PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
++    }
 +
-+        if (memory_region_has_guest_memfd(mr)) {
-+            err = kvm_set_memory_attributes_private(start_addr, slot_size);
-+            if (err) {
-+                error_report("%s: failed to set memory attribute private: %s\n",
-+                             __func__, strerror(-err));
-+                exit(1);
-+            }
-+        }
-+
-         start_addr += slot_size;
-         ram_start_offset += slot_size;
-         ram += slot_size;
+     /* if *disabled* show SMRAM to all CPUs */
+     memory_region_init_alias(&mch->smram_region, OBJECT(mch), "smram-region",
+                              mch->pci_address_space, MCH_HOST_BRIDGE_SMRAM_C_BASE,
+@@ -634,15 +644,6 @@ static void mch_realize(PCIDevice *d, Error **errp)
+ 
+     object_property_add_const_link(qdev_get_machine(), "smram",
+                                    OBJECT(&mch->smram));
+-
+-    init_pam(&mch->pam_regions[0], OBJECT(mch), mch->ram_memory,
+-             mch->system_memory, mch->pci_address_space,
+-             PAM_BIOS_BASE, PAM_BIOS_SIZE);
+-    for (i = 0; i < ARRAY_SIZE(mch->pam_regions) - 1; ++i) {
+-        init_pam(&mch->pam_regions[i + 1], OBJECT(mch), mch->ram_memory,
+-                 mch->system_memory, mch->pci_address_space,
+-                 PAM_EXPAN_BASE + i * PAM_EXPAN_SIZE, PAM_EXPAN_SIZE);
+-    }
+ }
+ 
+ uint64_t mch_mcfg_base(void)
 -- 
 2.25.1
 
