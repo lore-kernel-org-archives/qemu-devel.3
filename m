@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9DD4C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CCC5C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:17:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmydC-000838-CX; Wed, 20 Mar 2024 12:17:34 -0400
+	id 1rmyd8-0007qA-ER; Wed, 20 Mar 2024 12:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rmyce-0007Tj-MW
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:17:01 -0400
+ id 1rmycg-0007Wj-Tu
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:17:03 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rmyca-0003ss-Ga
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:17:00 -0400
+ id 1rmyca-0003sm-Hd
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:17:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=virtuozzo.com; s=relay; h=Content-Type:MIME-Version:Message-Id:Date:Subject
- :From; bh=g1L3K5RZwrk4E61zfl//L6cqUbhJNBwq9TJTO8pP1iQ=; b=u6pomiDLuI3uk68P59H
- d3HLabb9lQAXofdRdioTItlKWSUcgB18QGkWdoEQaPA23D/uhuxon/PjlTyd0p0IR/xmRH5iFXElO
- aCvIl+DKG49V5aHLIFvw5ZbR1VP7FwHRIoaWcIpKufzbYDTVvt4IP+keM8U2qyiKMI+GseCy9Au5n
- O8VyL2mysaHnb+9sbOCo1GbbZiU9/7oLb0s13kbONb+CBqto29KnLflbAZefJUv0IhabF2guoERmJ
- cRzzl+jFCpS3vW+anXPl3UdfLNVi2lc2PxSfqA5BuU0JsmaL4WEVHOJCbY1aOJbTgobmzSTzGTyez
- Q4exuToPOETDz2A==;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
+ Content-Type; bh=piGTOfCHKlELerBHzZWEUaD5O2g+W0Jy64FNMvCKDD4=; b=NeGCnap3RWld
+ XKXeTg6Tstkh2dx1uaKdxw32ize/zUuL81fMfsUWC+z/+XGip1yIMQjH4K4nLQAanSOt5mYXMCNCV
+ 9UZCht3WWNr2k5zSke+OFiuzi4I6kv7rjE4lVTSRjoGk/JN1cMRteTduxB7YdXf0MOnV3huzf6xeJ
+ EFBHaO1WF6Br6Sn1onZw+z3sbZ3wUFYb3PlMotomLX3zuvi/BWgwOOKgY8A3k1IjvSPxXQ8c5yfDh
+ uYQ3vbVqngOLEp7qFrios6iXsFtoodOaqtY0jzd9AvX3368bjM2oOtwaBGTw4iWHPXocax5RF6g8e
+ Rk6l3LQjDDyz2D7h4yk94w==;
 Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rmyaM-006TNN-25;
+ (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1rmyaM-006TNN-1Y;
  Wed, 20 Mar 2024 17:16:37 +0100
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: berrange@redhat.com, michael.roth@amd.com, kkostiuk@redhat.com,
  marcandre.lureau@redhat.com, philmd@linaro.org,
  andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH v4 4/7] qga/commands-posix: qmp_guest_set_time: use
- ga_run_command helper
-Date: Wed, 20 Mar 2024 18:16:45 +0200
-Message-Id: <20240320161648.158226-5-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v4 1/7] qga: guest-get-fsinfo: add optional
+ 'total-bytes-privileged' field
+Date: Wed, 20 Mar 2024 18:16:42 +0200
+Message-Id: <20240320161648.158226-2-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240320161648.158226-1-andrey.drobyshev@virtuozzo.com>
 References: <20240320161648.158226-1-andrey.drobyshev@virtuozzo.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=130.117.225.111;
  envelope-from=andrey.drobyshev@virtuozzo.com; helo=relay.virtuozzo.com
@@ -54,8 +53,8 @@ X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,82 +70,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There's no need to check for the existence of "/sbin/hwclock", the
-exec() call will do that for us.
+Since the commit 25b5ff1a86 ("qga: add mountpoint usage info to
+GuestFilesystemInfo") we have 2 values reported in guest-get-fsinfo:
+used = (f_blocks - f_bfree), total = (f_blocks - f_bfree + f_bavail) as
+returned by statvfs(3).  While on Windows guests that's all we can get
+with GetDiskFreeSpaceExA(), on POSIX guests we might also be interested in
+total file system size, as it's visible for root user.  Let's add an
+optional field 'total-bytes-privileged' to GuestFilesystemInfo struct,
+which'd only be reported on POSIX and represent f_blocks value as returned
+by statvfs(3).
+
+While here, also tweak the docs to reflect better where those values
+come from.
 
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qga/commands-posix.c | 43 +++----------------------------------------
- 1 file changed, 3 insertions(+), 40 deletions(-)
+ qga/commands-posix.c | 2 ++
+ qga/commands-win32.c | 1 +
+ qga/qapi-schema.json | 7 +++++--
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index cb9eed9a0b..545f3c99dc 100644
+index 26008db497..7df2d72e9f 100644
 --- a/qga/commands-posix.c
 +++ b/qga/commands-posix.c
-@@ -279,21 +279,9 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
- void qmp_guest_set_time(bool has_time, int64_t time_ns, Error **errp)
- {
-     int ret;
--    int status;
--    pid_t pid;
-     Error *local_err = NULL;
-     struct timeval tv;
--    static const char hwclock_path[] = "/sbin/hwclock";
--    static int hwclock_available = -1;
--
--    if (hwclock_available < 0) {
--        hwclock_available = (access(hwclock_path, X_OK) == 0);
--    }
--
--    if (!hwclock_available) {
--        error_setg(errp, QERR_UNSUPPORTED);
--        return;
--    }
-+    const char *argv[] = {"/sbin/hwclock", has_time ? "-w" : "-s", NULL};
+@@ -1569,8 +1569,10 @@ static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount,
+         nonroot_total = used + buf.f_bavail;
+         fs->used_bytes = used * fr_size;
+         fs->total_bytes = nonroot_total * fr_size;
++        fs->total_bytes_privileged = buf.f_blocks * fr_size;
  
-     /* If user has passed a time, validate and set it. */
-     if (has_time) {
-@@ -324,37 +312,12 @@ void qmp_guest_set_time(bool has_time, int64_t time_ns, Error **errp)
-      * just need to synchronize the hardware clock. However, if no time was
-      * passed, user is requesting the opposite: set the system time from the
-      * hardware clock (RTC). */
--    pid = fork();
--    if (pid == 0) {
--        setsid();
--        reopen_fd_to_null(0);
--        reopen_fd_to_null(1);
--        reopen_fd_to_null(2);
--
--        /* Use '/sbin/hwclock -w' to set RTC from the system time,
--         * or '/sbin/hwclock -s' to set the system time from RTC. */
--        execl(hwclock_path, "hwclock", has_time ? "-w" : "-s", NULL);
--        _exit(EXIT_FAILURE);
--    } else if (pid < 0) {
--        error_setg_errno(errp, errno, "failed to create child process");
--        return;
--    }
--
--    ga_wait_child(pid, &status, &local_err);
-+    ga_run_command(argv, NULL, "set hardware clock to system time",
-+                   &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return;
+         fs->has_total_bytes = true;
++        fs->has_total_bytes_privileged = true;
+         fs->has_used_bytes = true;
      }
--
--    if (!WIFEXITED(status)) {
--        error_setg(errp, "child process has terminated abnormally");
--        return;
--    }
--
--    if (WEXITSTATUS(status)) {
--        error_setg(errp, "hwclock failed to set hardware clock to system time");
--        return;
--    }
- }
  
- typedef enum {
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+index 6242737b00..6fee0e1e6f 100644
+--- a/qga/commands-win32.c
++++ b/qga/commands-win32.c
+@@ -1143,6 +1143,7 @@ static GuestFilesystemInfo *build_guest_fsinfo(char *guid, Error **errp)
+     fs = g_malloc(sizeof(*fs));
+     fs->name = g_strdup(guid);
+     fs->has_total_bytes = false;
++    fs->has_total_bytes_privileged = false;
+     fs->has_used_bytes = false;
+     if (len == 0) {
+         fs->mountpoint = g_strdup("System Reserved");
+diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+index 9554b566a7..dcc469b268 100644
+--- a/qga/qapi-schema.json
++++ b/qga/qapi-schema.json
+@@ -1026,7 +1026,10 @@
+ #
+ # @used-bytes: file system used bytes (since 3.0)
+ #
+-# @total-bytes: non-root file system total bytes (since 3.0)
++# @total-bytes: filesystem capacity in bytes for unprivileged users (since 3.0)
++#
++# @total-bytes-privileged: filesystem capacity in bytes for privileged users
++#     (since 9.0)
+ #
+ # @disk: an array of disk hardware information that the volume lies
+ #     on, which may be empty if the disk type is not supported
+@@ -1036,7 +1039,7 @@
+ { 'struct': 'GuestFilesystemInfo',
+   'data': {'name': 'str', 'mountpoint': 'str', 'type': 'str',
+            '*used-bytes': 'uint64', '*total-bytes': 'uint64',
+-           'disk': ['GuestDiskAddress']} }
++           '*total-bytes-privileged': 'uint64', 'disk': ['GuestDiskAddress']} }
+ 
+ ##
+ # @guest-get-fsinfo:
 -- 
 2.39.3
 
