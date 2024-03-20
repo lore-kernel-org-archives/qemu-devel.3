@@ -4,92 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDCBC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DBCAC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 16:54:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmz67-0007Wp-3V; Wed, 20 Mar 2024 12:47:27 -0400
+	id 1rmzC8-00011G-Fq; Wed, 20 Mar 2024 12:53:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmz65-0007WD-3h
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:47:25 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmzC6-00010d-PV
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:53:38 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmz60-0001Nm-5b
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:47:24 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-33ed4d8e9edso2279f8f.2
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 09:47:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmzC0-0002L2-K9
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 12:53:38 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-56a2bb1d84eso161738a12.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 09:53:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710953238; x=1711558038; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=f28Lgve7cs5P6UUvlZuM8MvqzXkoUlGVTVgJRaeDumw=;
- b=bSpX+hrZWSnwmuZ9Uoy6OIphsXexWaLIffQo5OZPJhlv0hyaxOw5iOCmkKHJ0Dn9d0
- 2pyipC+a66Pex7qTfXU4s37psxVzOnhWtPO5bpdBmPKd+L+0JZXA0EXU9hpa2pnx+ttE
- XhlGFCYWaZlCXW8T89SxRJwih6d/aA7ZhthIVFl25F56wlq8gZcVaVlHazr1TLRT4V8o
- jzcGsEdD1oC2nDHT0rR/Bp+AMCTFdiCVa56J9TqeWF4Q8WgWDTRyXiUWKCBYVo+XxVWw
- s2U3oBAx+kQzqnkadv4dXOA+1ZyWjDds1hmPab8pU+RKzlxabdLPyS8fxzC/PURLRLvg
- yb1A==
+ d=linaro.org; s=google; t=1710953610; x=1711558410; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=97WJ94tVaWyQDS20RBk5pqdtF/qrZ18uATSOj44Z0Yw=;
+ b=WPA9QDjAdcMLKMcxHV7CKZFSNnNIpImqLzor0DO0PDnZsUnvXz1SXa4YK6zN5sY3nB
+ Rh0UQPKe2UGHYhS+JFpGvijoSVde37SfzL6DqzXM/P0QfUr1gA9Ttc7hqKwYAaBnwRTL
+ XSvcPRTSL2T30udc2WPuNRTHRi/F+ygb9mQU2c3n55Hv2TAQcqRIXi68hdJau6K1Ih19
+ eBIvTM4uMBDTbUOPOQ1iuBlAvkiQ1W42/VV1B4lklB98BmnCXqeIcp9ejxjD9wb1KpA8
+ 2RPjSmJG2Pa6kFzNe/jzyVoLFwW1Ej9ec5js/sjmbQyQM7wp4gmoaQgFdQ7IwUCG5g85
+ gq8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710953238; x=1711558038;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f28Lgve7cs5P6UUvlZuM8MvqzXkoUlGVTVgJRaeDumw=;
- b=cMLiTOxF1jx3eKCSmYG7x9ekhcVzCRRsNW+DLw/8Fw0lcdbopVUZcuaGP8JMpWwuYV
- FhRoVSWkcl+bTI07R4WOvCMTMNK0nNPeG047faFIXmWG9elN8y57QKPW6RAx91B2Zj3m
- FXh5rU4YkzBI6b7xE0O/NY85uaVrgn7FA+aN+9LwLRbOcvzlJfnBjZ5Uy1FzzgH/M6Mu
- PeOqf/gyoc/q0OxuL5DgwT2xGpnBDFhEbMVPa/vycxWw4Tl0LsNuLxSarMHk+vTgQlxk
- wDwe953YLsyb2libpykpUOAx27I+a1OyX6aP7Z+QGTZ93K/jWUZV3rPd8WyYcV0d/C4W
- dTaA==
-X-Gm-Message-State: AOJu0YwALVRDn6QjM+9qWa3bvaHye/QEfAz1MkcMAknxOM/33QmoG+Qy
- AZQ+nE5GCLP1fnHo2PAo7boonAmWHGfNFjY3IXLALYoSf68lVO5Ds7oCjBPi4zI=
-X-Google-Smtp-Source: AGHT+IHQt7tMeDI1IZ4ADzjhPkFE0HsMdCGGe9U4nc+Ahw1xVybgLb7OZCBz9I3oukmJJeSIDWV6sg==
-X-Received: by 2002:a5d:6505:0:b0:33e:1e0:2679 with SMTP id
- x5-20020a5d6505000000b0033e01e02679mr12789608wru.47.1710953238539; 
- Wed, 20 Mar 2024 09:47:18 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.156.105])
- by smtp.gmail.com with ESMTPSA id
- bq24-20020a5d5a18000000b0033ed8643638sm11860260wrb.106.2024.03.20.09.47.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Mar 2024 09:47:18 -0700 (PDT)
-Message-ID: <52f35af0-4b18-48c8-8e18-aa7b01f53848@linaro.org>
-Date: Wed, 20 Mar 2024 17:47:14 +0100
+ d=1e100.net; s=20230601; t=1710953610; x=1711558410;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=97WJ94tVaWyQDS20RBk5pqdtF/qrZ18uATSOj44Z0Yw=;
+ b=WA2cxKTblhMw4mnwyIL0ppbwp/kFP80I3vF34NgUFRE0aJTCVUrm9NwFJNWO8BuxA6
+ gwyviYscu9nNU6Vs4e0SnmCUfqwpkVQ75kTrP82yVEYFs8amatpvejrmpF/WSsSUkSaI
+ dogtt/89eSJly7STw977ZYCGB+Icoa4tbMoPlhMr4gG36hyV3RoNBqis9hDHzy5DSHqn
+ XFgPQjE6FN27qFicFgts+8l9qV31dn/ycRCdeni4shYQmLi9J4A+FTqfpjFRQLnMKSU6
+ bKzoEYaMhthP1WTdtBO50rYh/eyXEZPukkaA7rR8yy4ULR7TRPeSxbx1aOLb0b+OTyzC
+ /Y6A==
+X-Gm-Message-State: AOJu0YyyMBFedlMjcHxBFjj858sxLvkmiEI1KmVUnZCUuW9RYOCrLUMO
+ uZGRvQu/LM/Y5p3t3NGTGMqMJxbaLdAHT/JvO7nFNAPhYJtTi9pykA3FMkTaKL1sYyk0s9gIFAv
+ Ijol5f07pfM5iGMppuNkskeZWgXUXhS6SL4Iqzg==
+X-Google-Smtp-Source: AGHT+IGfA+e/uejiuGPf1l9dSFjzQADCHE4VWpMn/O+sno8Klvk/y4uAEZWUysKaoE2ak7djYhw5g5lqwkt+cjGaq9g=
+X-Received: by 2002:a50:cd93:0:b0:568:b0f4:fe69 with SMTP id
+ p19-20020a50cd93000000b00568b0f4fe69mr200254edi.12.1710953610599; Wed, 20 Mar
+ 2024 09:53:30 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] hw/nmi: Remove @cpu_index argument from
- NMIClass::nmi_handler()
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
+References: <20240320164055.60319-1-philmd@linaro.org>
+In-Reply-To: <20240320164055.60319-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 20 Mar 2024 16:53:19 +0000
+Message-ID: <CAFEAcA81u9J9iijs-CNDbsANb6c0Cdb4qQKmBd=DiQAoFA4U=w@mail.gmail.com>
+Subject: Re: [PATCH-for-9.0 0/2] target/monitor: Deprecate 'info tlb/mem' in
+ favor of 'info mmu'
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Laurent Vivier <laurent@vivier.eu>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>, Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20240220150833.13674-1-philmd@linaro.org>
- <20240220150833.13674-4-philmd@linaro.org>
- <CAFEAcA9kVkM16paZQfH1voNNjWRT3DmchepiMs045w+YA61Fzw@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA9kVkM16paZQfH1voNNjWRT3DmchepiMs045w+YA61Fzw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-ppc@nongnu.org, 
+ Thomas Huth <thuth@redhat.com>, devel@lists.libvirt.org, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,78 +95,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/3/24 14:23, Peter Maydell wrote:
-> On Tue, 20 Feb 2024 at 15:09, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> Only s390x was using the 'cpu_index' argument, but since the
->> previous commit it isn't anymore (it use the first cpu).
->> Since this argument is now completely unused, remove it. Have
->> the callback return a boolean indicating failure.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/hw/nmi.h           | 11 ++++++++++-
->>   hw/core/nmi.c              |  3 +--
->>   hw/hppa/machine.c          |  8 +++++---
->>   hw/i386/x86.c              |  7 ++++---
->>   hw/intc/m68k_irqc.c        |  6 ++++--
->>   hw/m68k/q800-glue.c        |  6 ++++--
->>   hw/misc/macio/gpio.c       |  6 ++++--
->>   hw/ppc/pnv.c               |  6 ++++--
->>   hw/ppc/spapr.c             |  6 ++++--
->>   hw/s390x/s390-virtio-ccw.c |  6 ++++--
->>   10 files changed, 44 insertions(+), 21 deletions(-)
->>
->> diff --git a/include/hw/nmi.h b/include/hw/nmi.h
->> index fff41bebc6..c70db941c9 100644
->> --- a/include/hw/nmi.h
->> +++ b/include/hw/nmi.h
->> @@ -37,7 +37,16 @@ typedef struct NMIState NMIState;
->>   struct NMIClass {
->>       InterfaceClass parent_class;
->>
->> -    void (*nmi_monitor_handler)(NMIState *n, int cpu_index, Error **errp);
->> +    /**
->> +     * nmi_handler: Callback to handle NMI notifications.
->> +     *
->> +     * @n: Class #NMIState state
->> +     * @errp: pointer to error object
->> +     *
->> +     * On success, return %true.
->> +     * On failure, store an error through @errp and return %false.
->> +     */
->> +    bool (*nmi_handler)(NMIState *n, Error **errp);
-> 
-> Any particular reason to change the method name here?
-> 
-> Do we really need to indicate failure both through the bool return
-> and the Error** ?
+On Wed, 20 Mar 2024 at 16:40, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> 'info tlb' and 'info mem' commands don't scale in heterogeneous
+> emulation. They will be reworked after the next release, hidden
+> behind the 'info mmu' command. It is not too late to deprecate
+> commands, so add the 'info mmu' command as wrapper to the other
+> ones, but already deprecate them.
+>
+> Philippe Mathieu-Daud=C3=A9 (2):
+>   target/monitor: Introduce 'info mmu' command
+>   target/monitor: Deprecate 'info tlb' and 'info mem' commands
 
-No, but this is the style *recommended* by the Error API since
-commit e3fe3988d7 ("error: Document Error API usage rules"):
+This seems to replace "info tlb" and "info mem" with "info mmu -t"
+and "info mmu -m", but it doesn't really say anything about:
+ * what the difference is between these two things
+ * which targets implement which and why
+ * what the plan is for the future
 
-     error: Document Error API usage rules
+I am definitely not a fan of either of these commands, because
+(as we currently implement them) they effectively require each
+target architecture to implement a second copy of the page table
+walking code. But before we can deprecate them we need to be
+pretty sure that "info mmu" is what we want to replace them with.
 
-     This merely codifies existing practice, with one exception: the rule
-     advising against returning void, where existing practice is mixed.
-
-     When the Error API was created, we adopted the (unwritten) rule to
-     return void when the function returns no useful value on success,
-     unlike GError, which recommends to return true on success and false
-     on error then.
-
-     [...]
-
-     Make the rule advising against returning void official by putting it
-     in writing.  This will hopefully reduce confusion.
-
-   * - Whenever practical, also return a value that indicates success /
-   *   failure.  This can make the error checking more concise, and can
-   *   avoid useless error object creation and destruction.  Note that
-   *   we still have many functions returning void.  We recommend
-   *   • bool-valued functions return true on success / false on failure,
-   *   • pointer-valued functions return non-null / null pointer, and
-   *   • integer-valued functions return non-negative / negative.
-
-Anyway I'll respin removing @cpu_index as a single change :)
+thanks
+-- PMM
 
