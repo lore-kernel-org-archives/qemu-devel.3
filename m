@@ -4,85 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1728CC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 15:52:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5733C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 15:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmyF8-0001uc-QX; Wed, 20 Mar 2024 11:52:42 -0400
+	id 1rmyJN-0003CA-Qe; Wed, 20 Mar 2024 11:57:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmyF2-0001sZ-Br
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:52:37 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rmyJM-0003Bu-9t
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:57:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rmyEz-0007aw-Kg
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:52:35 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rmyJ8-0008QC-8q
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:57:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710949952;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1710950208;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZX7qZcZ09Lrt5s38ndUqX1DDuH+RaYQkOx//x49wLAw=;
- b=DfcRbYoS/RLyWBQ0ziB2BwGf/ujsy2Jr42hRrceOu0QTEAcLFsF8plLCfppaqKYoKHrn26
- xv7ak4+a+dAWw91xbGEQusBwfRyaJ4VHEWKAzoHuRs7sOVUi6fjAd6NeaPlVfhLl18/801
- TqsowY0xy/Ihq3sdlw1fhQuKEtYOpQY=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-EFWDbTvuMjygHjQivbQEaQ-1; Wed,
- 20 Mar 2024 11:52:28 -0400
-X-MC-Unique: EFWDbTvuMjygHjQivbQEaQ-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C9FC938157A6;
- Wed, 20 Mar 2024 15:52:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.205])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id AA976200E1AD;
- Wed, 20 Mar 2024 15:52:24 +0000 (UTC)
-Date: Wed, 20 Mar 2024 15:52:18 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Roy Hopkins <roy.hopkins@suse.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>,
- =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
-Subject: Re: [PATCH 9/9] docs/system: Add documentation on support for IGVM
-Message-ID: <ZfsGMoa_6REEsTkG@redhat.com>
-References: <cover.1709044754.git.roy.hopkins@suse.com>
- <2f98be192cf6ffd36b984266570ea2eed4dfe364.1709044754.git.roy.hopkins@suse.com>
- <ZeIL9Tco7PCRxdg-@redhat.com>
- <46d91ba880f566e7ced7c01b18682b749185c9ba.camel@suse.com>
- <ZfhqEL0-wCiDJJtm@redhat.com>
- <e101c3b1c171a828ef34983aa448ced52bb934ee.camel@suse.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qrzp2WX9G4fGi7FWFHFjHhR3/T8Nfe24Fjm+GgjHxDE=;
+ b=NToduvWhHTC+My6rg8xWINop1aB6z3oYCE/p9zhe+GH9M6/RLVoqGQhDzJmjTFc/7pr6Wo
+ ZdZ0cXz9EZMMLK05M20cjEIp7bco41Psg70lV14yc7TKUAIQv81omTPjf0lNiZyslwaqUK
+ o5PPYn8OQ7OzK3zrz0ElCcBmg0tgedA=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-516-hlzL9zjfO0CE1XT0bZzLuQ-1; Wed, 20 Mar 2024 11:56:46 -0400
+X-MC-Unique: hlzL9zjfO0CE1XT0bZzLuQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a466c77307eso100407466b.0
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 08:56:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710950205; x=1711555005;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qrzp2WX9G4fGi7FWFHFjHhR3/T8Nfe24Fjm+GgjHxDE=;
+ b=SDmTmZDCVudvvfJ7mrDoVmDKVzATm6c1fuklPVq08KDfE61m12mquon2QgpHNTAuzo
+ hzIDO5zdymVO2EBSa7Zz7Sg8FZfxzoDPyGXKczRxJHk7h8hs72h2rYltJgCPZVuDK4xW
+ LTMDwkIsOayWwXAOw3bonADaE9gLogLCxh84kwzmrlDboOOQY7++aSvRttVDRTUNWwYF
+ ZbS6erAllElt2x7Rj33l0Bsowv+9Ojo8joUL3wffdFvgQYp9bj205Idu01DzgCgZLtHh
+ L7bkZ3hLIgwmSVXvx8VM584cN3H4q+Be489+UgNMFgL1iJ+M6L6SqS2RMO5YVmGKPA8H
+ vZQQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXn3z4JU/b+CRqHKXPdp7Yx9Dlto1h7LMMXBSJCyq4iIqyNFWCEIF/Rgmy5Ny1vN0a0ieAMJtJhCPehhancNN/1uNsRPNU=
+X-Gm-Message-State: AOJu0Yz65ue+Q5sT7DVL2Puo/cDuSc5mr4iqHg9zQlzpIo12qj3cigbF
+ qGQ9edfw4jhAnQvhhuZL36km4UE8jgCDwoFvE4XdGLxOKvi28CFDyHwwPQuy3z1N0McjUNvp7rR
+ FcvIu1i4dlmgzAu8h9/SIAq5qe2nNaua8xOuHhAkS3g/yTbC+wQp9
+X-Received: by 2002:a17:906:fd3:b0:a46:d786:3672 with SMTP id
+ c19-20020a1709060fd300b00a46d7863672mr79687ejk.13.1710950205112; 
+ Wed, 20 Mar 2024 08:56:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFL9lb9JU6u29HDH1ruhW2E+dvTvzRu/d44yRA/zPFQeK1CKRp96jbDh+2Z61dbYWZINepF3A==
+X-Received: by 2002:a17:906:fd3:b0:a46:d786:3672 with SMTP id
+ c19-20020a1709060fd300b00a46d7863672mr79667ejk.13.1710950204786; 
+ Wed, 20 Mar 2024 08:56:44 -0700 (PDT)
+Received: from [192.168.10.118] ([151.95.49.219])
+ by smtp.googlemail.com with ESMTPSA id
+ gf9-20020a170906e20900b00a46a27794f6sm5377774ejb.123.2024.03.20.08.56.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 Mar 2024 08:56:42 -0700 (PDT)
+Message-ID: <86baf9cb-ba7b-4701-a96d-b34edfe3d1de@redhat.com>
+Date: Wed, 20 Mar 2024 16:56:40 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e101c3b1c171a828ef34983aa448ced52bb934ee.camel@suse.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/49] kvm: Enable KVM_SET_USER_MEMORY_REGION2 for
+ memslot
+Content-Language: en-US
+To: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
+Cc: kvm@vger.kernel.org, Tom Lendacky <thomas.lendacky@amd.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>,
+ Isaku Yamahata <isaku.yamahata@linux.intel.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>
+References: <20240320083945.991426-1-michael.roth@amd.com>
+ <20240320083945.991426-10-michael.roth@amd.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20240320083945.991426-10-michael.roth@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,135 +143,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 20, 2024 at 03:45:24PM +0000, Roy Hopkins wrote:
-> On Mon, 2024-03-18 at 16:21 +0000, Daniel P. Berrangé wrote:
-> > On Mon, Mar 18, 2024 at 03:59:31PM +0000, Roy Hopkins wrote:
-> > > On Fri, 2024-03-01 at 17:10 +0000, Daniel P. Berrangé wrote:
-> > > > On Tue, Feb 27, 2024 at 02:50:15PM +0000, Roy Hopkins wrote:
-> > > > > IGVM support has been implemented for Confidential Guests that support
-> > > > > AMD SEV and AMD SEV-ES. Add some documentation that gives some
-> > > > > background on the IGVM format and how to use it to configure a
-> > > > > confidential guest.
-> > > > > 
-> > > > > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
-> > > > > ---
-> > > > >  docs/system/igvm.rst  | 58 +++++++++++++++++++++++++++++++++++++++++++
-> > > > >  docs/system/index.rst |  1 +
-> > > > >  2 files changed, 59 insertions(+)
-> > > > >  create mode 100644 docs/system/igvm.rst
-> > > > 
-> > > > 
-> > > > > +Firmware Images with IGVM
-> > > > > +-------------------------
-> > > > > +
-> > > > > +When an IGVM filename is specified for a Confidential Guest Support
-> > > > > object
-> > > > > it
-> > > > > +overrides the default handling of system firmware: the firmware image,
-> > > > > such
-> > > > > as
-> > > > > +an OVMF binary should be contained as a payload of the IGVM file and
-> > > > > not
-> > > > > +provided as a flash drive. The default QEMU firmware is not
-> > > > > automatically
-> > > > > mapped
-> > > > > +into guest memory.
-> > > > 
-> > > > IIUC, in future the IGVM file could contain both the OVMF and SVSM
-> > > > binaries ?
-> > > > 
-> > > > I'm also wondering if there can be dependancies between the IGVM
-> > > > file and the broader QEMU configuration ?  eg if SVSM gains suupport
-> > > > for data persistence, potentially we might need some pflash device
-> > > > exposed as storage for SVSM to use. Would such a dependancy be
-> > > > something expressed in the IGVM file, or would it be knowledge that
-> > > > is out of band ?
-> > > > 
-> > > Yes, the IGVM file can indeed contain both OVMF and SVSM binaries. In fact,
-> > > that
-> > > is exactly what we are doing with the COCONUT-SVSM project. See [1] for the
-> > > IGVM
-> > > builder we use to package OVMF, bootloader components and the SVSM ELF
-> > > binary.
-> > > 
-> > > Data persistence is something that is definitely going to be needed in the
-> > > SVSM.
-> > > At present, this cannot be configured using any of the directives in the
-> > > IGVM
-> > > specification but instead requires QEMU to be configured correctly to
-> > > support
-> > > the application embedded within the IGVM file itself. You could however
-> > > populate
-> > > metadata pages using IGVM that describe the storage that is _expected_ to be
-> > > present, and validate that within the firmware itself. 
-> > > 
-> > > The real value from IGVM comes from the ability to describe the initial
-> > > memory
-> > > and initial CPU state which all forms part of the launch measurement and
-> > > initial
-> > > boot procedure, allowing the expected launch measurement to be calculated
-> > > from a
-> > > single IGVM file for multiple virtualisation stacks or configurations. Thus,
-> > > most of the directives in the IGVM file directly have an effect on the
-> > > launch
-> > > measurement. I'm not sure configuring a storage device or other hardware
-> > > configuration fits well with this.
-> > 
-> > Yeah, I can understand if IGVM scope should be limited to just memory
-> > and CPU setup.
-> > 
-> > If we use the firmeware descriptor files, we could define capabilities
-> > in that to express a need for a particular type of persistent storage
-> > to back the vTPM. So having this info in IGVM files isn't critical.
-> 
-> I'll need to look into firmware descriptor files as I'm unfamiliar with how they
-> work. Would I need to make any additions to this patch series to support this in
-> QEMU? Or is this all handled by libvirt?
+On 3/20/24 09:39, Michael Roth wrote:
+> +    if (cap_user_memory2 == -1) {
+> +        cap_user_memory2 = kvm_check_extension(s, KVM_CAP_USER_MEMORY2);
+> +    }
+> +
+> +    if (!cap_user_memory2 && slot->guest_memfd >= 0) {
+> +        error_report("%s, KVM doesn't support KVM_CAP_USER_MEMORY2,"
+> +                     " which is required by guest memfd!", __func__);
+> +        exit(1);
+> +    }
 
-Probably little more than change docs/interop/firmware.json
-to add 'igvm' as a FirmwareDevice option to indicate this is
-a new way of exposing it to the guest.
+It's easier and more robust (for error reporting purposes) to check both
+KVM_CAP_GUEST_MEMFD and KVM_CAP_USER_MEMORY2 at once in the earlier
+patches:
 
-At some point we might also want to expand FirmwareFeature
-eg to report a "vtpm" feature.
+-    kvm_guest_memfd_supported = kvm_check_extension(s, KVM_CAP_GUEST_MEMFD);
++    kvm_guest_memfd_supported =
++        kvm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
++        kvm_check_extension(s, KVM_CAP_USER_MEMORY2);
 
+since KVM cannot really support guest_memfd if it cannot then use it
+to create private memory slots.
 
-> > > Whether IGVM is just another firmware file format or not, it certainly is
-> > > used
-> > > mutually exclusively with other firmware files. Integration with firmware
-> > > descriptors does seem to make sense. 
-> > > 
-> > > One further question if this is the case, would we want to switch from
-> > > specifying an "igvm-file" as a parameter on the "ConfidentialGuestSupport"
-> > > object to providing the file using the "-bios" parameter, or maybe even a
-> > > dedicated "-igvm" parameter?
-> > 
-> > If the IGVM format is flexible enough that it could be used for any VM
-> > type, even non-confidential VMs, then having its config be separate from
-> > ConfidentialGuestSUpport would make sense. If it is fundamentally tied
-> > to CVMs, then just a property is fine I guess.
-> > 
-> > Probably best to stay away from -bios, to avoid overloading new semantics
-> > onto a long standing argument.
-> 
-> Currently, the IGVM specification only contains support for confidential
-> platforms. It could theoretically be used for non-confidential platforms but
-> that would require changes to the IGVM specification itself to support this. I
-> don't think it makes sense to extend this to non-confidential VMs until the
-> specification supports this, so I'll leave it as a property of
-> ConfidentialGuestSupport.
+And then, this one can be changed to also use kvm_guest_memfd_supported:
 
-Sounds good.
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index e83429b31eb..afcf6f87045 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -284,19 +284,8 @@ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, boo
+  {
+      KVMState *s = kvm_state;
+      struct kvm_userspace_memory_region2 mem;
+-    static int cap_user_memory2 = -1;
+      int ret;
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+-    if (cap_user_memory2 == -1) {
+-        cap_user_memory2 = kvm_check_extension(s, KVM_CAP_USER_MEMORY2);
+-    }
+-
+-    if (!cap_user_memory2 && slot->guest_memfd >= 0) {
+-        error_report("%s, KVM doesn't support KVM_CAP_USER_MEMORY2,"
+-                     " which is required by guest memfd!", __func__);
+-        exit(1);
+-    }
+-
+      mem.slot = slot->slot | (kml->as_id << 16);
+      mem.guest_phys_addr = slot->start_addr;
+      mem.userspace_addr = (unsigned long)slot->ram;
+@@ -309,7 +298,7 @@ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, boo
+           * value. This is needed based on KVM commit 75d61fbc. */
+          mem.memory_size = 0;
+
+-        if (cap_user_memory2) {
++        if (kvm_guest_memfd_supported) {
+              ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION2, &mem);
+          } else {
+              ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION, &mem);
+@@ -319,7 +308,7 @@ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, boo
+          }
+      }
+      mem.memory_size = slot->memory_size;
+-    if (cap_user_memory2) {
++    if (kvm_guest_memfd_supported) {
+          ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION2, &mem);
+      } else {
+          ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION, &mem);
+@@ -331,7 +320,7 @@ err:
+                                mem.userspace_addr, mem.guest_memfd,
+                                mem.guest_memfd_offset, ret);
+      if (ret < 0) {
+-        if (cap_user_memory2) {
++        if (kvm_guest_memfd_supported) {
+                  error_report("%s: KVM_SET_USER_MEMORY_REGION2 failed, slot=%d,"
+                          " start=0x%" PRIx64 ", size=0x%" PRIx64 ","
+                          " flags=0x%" PRIx32 ", guest_memfd=%" PRId32 ","
+@@ -501,6 +490,7 @@ static int kvm_mem_flags(MemoryRegion *mr)
+          flags |= KVM_MEM_READONLY;
+      }
+      if (memory_region_has_guest_memfd(mr)) {
++        assert(kvm_guest_memfd_supported);
+          flags |= KVM_MEM_GUEST_MEMFD;
+      }
+      return flags;
 
 
