@@ -4,90 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 795D1C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7F0C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:51:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmrfC-0004y5-7i; Wed, 20 Mar 2024 04:51:10 -0400
+	id 1rmrfY-0005MT-QQ; Wed, 20 Mar 2024 04:51:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rmrfA-0004wO-Ek
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:51:08 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rmrf7-0001AL-0S
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:51:08 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1def89f0cfdso5519625ad.0
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 01:51:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1710924663; x=1711529463;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qsASAfGcmdcmGwebu10xUh05YrkgqP1B6utGVC9PIgU=;
- b=wFZtJf+mNVcWuvIMJlftiHtNQEKzy9ZNlpYEEt87gmDn/FEX3C6vral5FigW4ArFCZ
- Ay5StFj8asqy3sTBGVPzuW4tiMOZhMa1Ei2ny2m0UY+87ZgnR1qtmZ0vEWK76b197J2e
- c71rWsSve1lUuv+iNZX55ny0S8RV0KoUoJAA7T/nS6FZjH6zPJBwq+Xb9bJVVOtLu8Kr
- VanuBhvxkWazHxAoQf8wz4sxcM+mJtocTbGfhHLwx7X/x+g9S8sXxMIei2DtPrOA2Ovf
- /4ZB5DYg14o5iRlLNcfXJ+0kbtVkNGWFoQFsSjM9d5rMQcSXgE52u009YmzFQhmxDJIA
- UMJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710924663; x=1711529463;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qsASAfGcmdcmGwebu10xUh05YrkgqP1B6utGVC9PIgU=;
- b=tniSmxSP0LmqwaWXSTnjWaLdjHPNFmlGq8UQ0yGqDzmrPQ5GrrLW0rbebU4gGJe2mT
- kqtpoRPNyT4v72GnQcO/y5oVX7HB0tI/5yqgt4pSbPnr2b0KoHS22LedGTG16PHnbGDj
- 4h5jWQz6bYDuJ0irGHvZajfxNzBcXmjJULoGE/HHWusk1gRlU/dacUHNR+d7EiExYt+R
- uH9AmMhKZLiMdF7zpyPmRrOGtA1yaYTmQetEb4R0zMv/rtaWtO2dWp8EbqmEVVSOwWUu
- jcCPziSYMnqshcEPjleV/hK4eX3eooIbVInyFpTSRB8cK3vFxDDQhJeanbsdOkhnKDBC
- 9dzw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV+RPfLOWi4vGgqf4hU8idBkqAck1nNDaucyk2OblgnHoCVsolnhoAo9Hezgoekz67QojWHR4QH1iBPhw1BrE6tDz7w/Eg=
-X-Gm-Message-State: AOJu0YwUccUgWPs+ic62jPfTM0mhA8+V+u3zVpnfou3h+Qy6pImtiRdk
- nf+1+P03EPPQa2OReqrUrzysUZvdL+imLJtVIpxuQxprlb99BsMQ5fJB2v5Fdgg=
-X-Google-Smtp-Source: AGHT+IHU9K6U84JN+YU6DZiw/DZhA+W7ItrI7+39Gnj+jmg6AWrPiF+Ny3YvXnHdbiersFTJEP5FIA==
-X-Received: by 2002:a17:902:e849:b0:1e0:3861:9e41 with SMTP id
- t9-20020a170902e84900b001e038619e41mr2759820plg.19.1710924663277; 
- Wed, 20 Mar 2024 01:51:03 -0700 (PDT)
-Received: from [157.82.200.213] ([157.82.200.213])
- by smtp.gmail.com with ESMTPSA id
- u7-20020a17090341c700b001dde004b31bsm8414200ple.166.2024.03.20.01.51.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Mar 2024 01:51:02 -0700 (PDT)
-Message-ID: <9fcc5c14-130e-420b-88cf-af8c9fde0097@daynix.com>
-Date: Wed, 20 Mar 2024 17:50:59 +0900
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1rmrfR-00059f-OY
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:51:26 -0400
+Received: from mail-co1nam11on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::601]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1rmrfN-0001CS-RP
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:51:25 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=oQtp4xyMnO0tbdc7ql4kb7fyMEXijqvRRkz7zvbg8lFoqCgGMGPJgZcCekKqu30rssXGSkQE9AatypENfMhIeAiZTbsB1WhPeKuNRqu3JhAHZppzRvDPyDqYu9FAx9RXtExzwHrz24Z0CaWGf9NttcLXsDv3TgmDds8nm99GoTf8Gj1KiYR7MLvys+/lnWVO8Q4fPnbOogUav2qRa0UrG2KbDwsWCmzpFnCAD9Rk/JNgqZFY/CZzXCE0kgDbPW8GZSOnTRw1KNFiW51pQas0+EIHevtc3e5QTgHzDUQPC89z4HJQLfYxhS3eGn4QDBu4JoBJUPO9K7g6LBTYHvaIvA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rGRYDkRxuhjt7XwOcdG8t4p65Q79QnZet15tqh210vk=;
+ b=E9xdp2PXlKRT3yhfLHEsKzWK0qyrn1F0fHQTMx+IQf7/EWDor5T0cq/jJ02cml/8dJHmf+9p3g21Vt4rsTTc7j/hNTgfGoodNrl8W+IIF0H1Eco3N6sQh1pCA6qynz1e0lARnLUdHWK8NJzZ72Ip0Gv7ZVPzIoWVmfA5FbAfrRCD+HQ2HSdV8nmidCYuhg4uE/bMV3w3uc//qx36Cy0FyvfJzW/j2WxZ+m1toepJ/ruGf5SzUlTvWMrMaHRe3tL4vfj0hu2cMjCySgfihk49OakKsyIr7YOOtEOA6mv7cd9vI9k97m4oZ7dW2fIrQ1XNut5igMfnqmt4Jg2SXYvA1A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rGRYDkRxuhjt7XwOcdG8t4p65Q79QnZet15tqh210vk=;
+ b=Xy/Pa4CDSxZD39yDNTVr+a29E5U3sTZaEmTJUEKPqXRjcVgliMvlTkr89TFVEmw3WkGJcxbVtOOCOfY0hKsCDdXhNbyEbX/9vkON7QSzztmULCdWR+9tBofRaDfN9dZuD2ZFG/Ov7AWAEmYKCrx/jhmJeyiHkcmO6jfo8qjI1RQ=
+Received: from BN8PR15CA0023.namprd15.prod.outlook.com (2603:10b6:408:c0::36)
+ by DM4PR12MB6494.namprd12.prod.outlook.com (2603:10b6:8:ba::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.34; Wed, 20 Mar
+ 2024 08:51:17 +0000
+Received: from BN1PEPF00004685.namprd03.prod.outlook.com
+ (2603:10b6:408:c0:cafe::a2) by BN8PR15CA0023.outlook.office365.com
+ (2603:10b6:408:c0::36) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.27 via Frontend
+ Transport; Wed, 20 Mar 2024 08:51:16 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BN1PEPF00004685.mail.protection.outlook.com (10.167.243.86) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:51:16 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 20 Mar
+ 2024 03:51:16 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <kvm@vger.kernel.org>, Tom Lendacky <thomas.lendacky@amd.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Pankaj Gupta
+ <pankaj.gupta@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>, Isaku Yamahata
+ <isaku.yamahata@linux.intel.com>
+Subject: [PATCH v3 35/49] i386/sev: Add KVM_EXIT_VMGEXIT handling for Page
+ State Changes (MSR-based)
+Date: Wed, 20 Mar 2024 03:39:31 -0500
+Message-ID: <20240320083945.991426-36-michael.roth@amd.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240320083945.991426-1-michael.roth@amd.com>
+References: <20240320083945.991426-1-michael.roth@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] ui/console: Remove console_select()
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240319-console-v2-0-3fd6feef321a@daynix.com>
- <CAJ+F1CKOuZR5nZxcxRzZyoE56p_nNW11cySEmnFvRgiPv5OAdw@mail.gmail.com>
- <5b8160c8-6774-47b3-a495-f7dc64ebd28d@daynix.com>
- <CAJ+F1CLP_LNwWQ_4M2w7cVK-DSBy6+92SY5m37fUnZMXN6oBaQ@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAJ+F1CLP_LNwWQ_4M2w7cVK-DSBy6+92SY5m37fUnZMXN6oBaQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::62d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF00004685:EE_|DM4PR12MB6494:EE_
+X-MS-Office365-Filtering-Correlation-Id: d22e9a2c-ef91-44fb-8f59-08dc48bae7a9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: MSuBxKsViFHt1D/KCXEz+5Uvcnv1KjV2rbD82UPaON+tC8orzp515uwXvMDmLnKYlXF/EtPAz1u+sXP5s+z1FjxBJ4WLG6yLoeuGR3Xo7s2yk9U9NSjZf1arBBgG74jCt7X3KHJ7/32+zFiUXEJmFZigEeIaK0Tar3elfRyW1WpWmKf1WZNqxjxFVUJx+dLQKC/P346D1aqPqtbS+zYp2ll3oBKwoiB+1YVsMug8WLMk/4zkZWeMirXhtgVNCkWe64L9iAhTyZhvmGqpEfx11uCJT3jnRo7FLY9gB2iaWlILTZANGpwX9AwMQ9oDhFJvWcMVWkmxB1NRbEq8x3D2OynvajhT0dO/u92thb0d1nqr7C2lhCxJVtYiciGeK1OW+d6FASJk6K8ildgcKAeV/Uzabxfiu7lmOeTKs/jAiioQqNU/c+gGk376hnskletSmI00gHkriqWwe9AaZc3zuTwjGxI2yUT8LO4O6ePPWWnjq/fsekSdD7/4K71BdQbw0ohGc3IIVIpm3P4nXTwe8OpWkUVoE+Dw7AMyBMUS6YdGMrQmcPDErUdFg/FX0Z6TnSl8tR3TZ3gkJEZS0zN95P320Rmsm8F5lt3euqNvlg8Y+0UYNCWG08102brYBV/KihB4yxzRevKl1Myzk2B15vBo94nqPdDtzy4zjUC8ZYukERBVlU2PIqqgeb9hYHmS1XokyLWOyxQ8AWNfqyu/yNS/ox3qIiT595Tmob9VzxoKHJ8n1DIwd6+3Oedf62fL
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(82310400014)(36860700004)(376005)(1800799015); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:51:16.7066 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d22e9a2c-ef91-44fb-8f59-08dc48bae7a9
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004685.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6494
+Received-SPF: permerror client-ip=2a01:111:f403:2416::601;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,58 +128,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/03/20 16:00, Marc-André Lureau wrote:
-> Hi
-> 
-> On Wed, Mar 20, 2024 at 7:20 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> On 2024/03/19 17:29, Marc-André Lureau wrote:
->>> Hi Akihiko
->>>
->>> On Tue, Mar 19, 2024 at 7:09 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>>>
->>>> ui/console has a concept of "active" console; the active console is used
->>>> when NULL is set for DisplayListener::con, and console_select() updates
->>>> the active console state. However, the global nature of the state cause
->>>> odd behaviors, and replacing NULL with the active console also resulted
->>>> in extra code. Remove it to solve these problems.
->>>>
->>>> The active console state is shared, so if there are two displays
->>>> referring to the active console, switching the console for one will also
->>>> affect the other. All displays that use the active console state,
->>>> namely cocoa, curses, and vnc, need to reset some of its state before
->>>> switching the console, and such a reset operation cannot be performed if
->>>> the console is switched by another display. This can result in stuck
->>>> keys, for example.
->>>>
->>>> While the active console state is shared, displays other than cocoa,
->>>> curses, and vnc don't update the state. A chardev-vc inherits the
->>>> size of the active console, but it does not make sense for such a
->>>> display.
->>>>
->>>> This series removes the shared "active" console state from ui/console.
->>>> curses, cocoa, and vnc will hold the reference to the console currently
->>>> shown with DisplayListener::con. This also eliminates the need to
->>>> replace NULL with the active console and save code.
->>>>
->>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>
->>> lgtm
->>> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>>
->>> I am willing to take that for 9.0. Is there any bug already opened
->>> about the issues it solves?
->>
->> No, I'm not aware of one.
-> 
-> The first patch "Do not inherit the size of active console" is not
-> directly related and may not be suitable for merge during freeze. Are
-> you ok with merging the rest for 9.0 or delay it for 9.1?
+SEV-SNP guests might issue MSR-based Page State Changes for situations
+like early boot where it might not be easily able to make use of a GHCB
+page to issue the request. Just as with GHCB-based Page State Changes,
+these are forwarded to userspace as KVM_EXIT_VMGEXITs. Add handling for
+these.
 
-The first patch needs to be applied before the others.
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+---
+ target/i386/sev.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-It removes qemu_console_get_width()/qemu_console_get_height() calls with 
-NULL as QemuConsole *con argument, which is intended to be replaced with 
-the active console. The calls will make no sense after the other patches 
-are applied since the concept of the active console will be gone.
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 0c6a253138..b54422b28e 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -1560,6 +1560,18 @@ out_unmap:
+     return 0;
+ }
+ 
++static int kvm_handle_vmgexit_psc_msr_protocol(__u64 gpa, __u8 op, __u32 *psc_ret)
++{
++    int ret;
++
++    ret = kvm_convert_memory(gpa, TARGET_PAGE_SIZE,
++                             op == KVM_USER_VMGEXIT_PSC_MSR_OP_PRIVATE);
++
++    *psc_ret = ret;
++
++    return ret;
++}
++
+ int kvm_handle_vmgexit(struct kvm_run *run)
+ {
+     int ret;
+@@ -1567,6 +1579,10 @@ int kvm_handle_vmgexit(struct kvm_run *run)
+     if (run->vmgexit.type == KVM_USER_VMGEXIT_PSC) {
+         ret = kvm_handle_vmgexit_psc(run->vmgexit.psc.shared_gpa,
+                                      &run->vmgexit.psc.ret);
++    } else if (run->vmgexit.type == KVM_USER_VMGEXIT_PSC_MSR) {
++        ret = kvm_handle_vmgexit_psc_msr_protocol(run->vmgexit.psc_msr.gpa,
++                                                  run->vmgexit.psc_msr.op,
++                                                  &run->vmgexit.psc_msr.ret);
+     } else {
+         warn_report("KVM: unknown vmgexit type: %d", run->vmgexit.type);
+         ret = -1;
+-- 
+2.25.1
+
 
