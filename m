@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0030DCD11C2
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 20:52:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E35BC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 20:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rn2ur-0006qJ-K6; Wed, 20 Mar 2024 16:52:05 -0400
+	id 1rn2uq-0006qE-KV; Wed, 20 Mar 2024 16:52:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rn2up-0006pc-R7
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 16:52:03 -0400
+ id 1rn2un-0006pA-KQ
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 16:52:01 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rn2uo-0004VV-1J
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 16:52:03 -0400
+ id 1rn2ul-0004VV-Tj
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 16:52:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710967922; x=1742503922;
+ t=1710967920; x=1742503920;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=L3vTPYUk5DmYw8gzl3iAc70BwhOAQ4bK8DaLyOprJrQ=;
- b=nH4MRn6x+X3ERTnC5SEd3fXQoTXpeCPEgpog74ifBG5mI9j0W7xMMey3
- I3XL74SZOabtIANTm1bWCuwXQIPqqtIzv0aRRp4UHJ9AjWmEyGb7Bs7Si
- 4nuBjU9KXIEoHYJ0UdXdrXKPurpDrPSNi2JbX9Tn3ch2dWA2SGJGdaRH1
- LXa1v3OP00Tvqmkk7lS5usmpLI+quJnQ+aqyz2Qh4J1iXziUd23+T+Vm5
- v/Wqxq+CF5u22vqSsdwWOuuUmSPy5kLURNZ6k8tRSU5iuKb7xxRolaRtX
- z0I5uGDKhOFqPyI0MWkZ3dHvvxHsMkm+RF1aXJjJRP1ShnA85WXQIbSyw A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11019"; a="16463570"
-X-IronPort-AV: E=Sophos;i="6.07,141,1708416000"; d="scan'208";a="16463570"
+ bh=CVxup2GfKsbv1zvZ7npDH2anHuHqKqtF8wfEpZWZZaQ=;
+ b=lT7H6MizOhUo4CkE2IewhVg+F/jniW05oanEGtZyZ2DDrV3Y8C9fEmQH
+ Zks74gW/+ASgvjVKZwHZ8w3IPTFIST/3XT9ZDQk2BEuiuygMQPpsmNxBg
+ 4/+wM2s9gLGr6s21BimOt5HLruYXLMAhGeeuBLM9LcfEVGgaRXTOoueor
+ aaKA52N6vpnm2r4Uq0ChdXMmmzT+9BSl1OSrywb1LIhsF6lsBpXd6eHUw
+ ioqesQw6VZrFHVuFSLp/2fyCXpLEXyjOnDyWK4CfIGaDBPA1d1VvHKAHK
+ WAhOCAYGzO5g45kkyacbanplZFQmfmfvazZ5T1Soe58AOQoNo747ORznZ Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11019"; a="16463564"
+X-IronPort-AV: E=Sophos;i="6.07,141,1708416000"; d="scan'208";a="16463564"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Mar 2024 13:51:55 -0700
+ 20 Mar 2024 13:51:54 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,141,1708416000"; d="scan'208";a="14679718"
+X-IronPort-AV: E=Sophos;i="6.07,141,1708416000"; d="scan'208";a="14679715"
 Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by orviesa007.jf.intel.com with ESMTP; 20 Mar 2024 13:51:55 -0700
+ by orviesa007.jf.intel.com with ESMTP; 20 Mar 2024 13:51:54 -0700
 From: dongwon.kim@intel.com
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org,
 	marcandre.lureau@redhat.com
-Subject: [PATCH 3/3] ui/console: add methods for allocating,
- intializing and accessing QemuDmaBuf
-Date: Wed, 20 Mar 2024 13:50:18 -0700
-Message-Id: <20240320205018.3351984-4-dongwon.kim@intel.com>
+Subject: [PATCH 1/3] hw/virtio: initialize QemuDmaBuf using the function from
+ ui/console
+Date: Wed, 20 Mar 2024 13:50:16 -0700
+Message-Id: <20240320205018.3351984-2-dongwon.kim@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240320205018.3351984-1-dongwon.kim@intel.com>
 References: <20240320205018.3351984-1-dongwon.kim@intel.com>
@@ -81,121 +81,95 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dongwon Kim <dongwon.kim@intel.com>
 
-This commit introduces new methods within ui/console to handle the allocation,
-initialization, and field retrieval of QemuDmaBuf. By isolating these
-operations within ui/console, it enhances safety and encapsulation of
-the struct.
+QemuDmaBuf is an abstraction of dmabuf specifically for ui/console usage.
+To enhance safety and maintainability, it is needed to centralizes its
+creation and initialization within ui/console using newly introduced methods.
 
 Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
 Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 ---
- include/ui/console.h | 10 ++++++++
- ui/console.c         | 55 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 65 insertions(+)
+ hw/display/virtio-gpu-udmabuf.c | 27 +++++++++++----------------
+ include/hw/virtio/virtio-gpu.h  |  2 +-
+ 2 files changed, 12 insertions(+), 17 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 0bc7a00ac0..70903f1b0d 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -279,6 +279,7 @@ typedef struct DisplayChangeListenerOps {
-     /* optional */
-     void (*dpy_gl_cursor_position)(DisplayChangeListener *dcl,
-                                    uint32_t pos_x, uint32_t pos_y);
-+
-     /* optional */
-     void (*dpy_gl_release_dmabuf)(DisplayChangeListener *dcl,
-                                   QemuDmaBuf *dmabuf);
-@@ -358,6 +359,15 @@ void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
-                           bool have_hot, uint32_t hot_x, uint32_t hot_y);
- void dpy_gl_cursor_position(QemuConsole *con,
-                             uint32_t pos_x, uint32_t pos_y);
-+QemuDmaBuf *dpy_gl_create_dmabuf(uint32_t width, uint32_t height,
-+                                 uint32_t stride, uint32_t x,
-+                                 uint32_t y, uint32_t backing_width,
-+                                 uint32_t backing_height, uint32_t fourcc,
-+                                 uint32_t modifier, uint32_t dmabuf_fd,
-+                                 bool allow_fences);
-+uint32_t dpy_gl_dmabuf_get_width(QemuDmaBuf *dmabuf);
-+uint32_t dpy_gl_dmabuf_get_height(QemuDmaBuf *dmabuf);
-+int32_t dpy_gl_dmabuf_get_fd(QemuDmaBuf *dmabuf);
- void dpy_gl_release_dmabuf(QemuConsole *con,
-                            QemuDmaBuf *dmabuf);
- void dpy_gl_update(QemuConsole *con,
-diff --git a/ui/console.c b/ui/console.c
-index 43226c5c14..bac24756f0 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1132,6 +1132,60 @@ void dpy_gl_cursor_position(QemuConsole *con,
-     }
- }
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
+index d51184d658..dde6c8e9d9 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-udmabuf.c
+@@ -162,7 +162,7 @@ static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
+     struct virtio_gpu_scanout *scanout;
  
-+QemuDmaBuf *dpy_gl_create_dmabuf(uint32_t width, uint32_t height,
-+                                 uint32_t stride, uint32_t x,
-+                                 uint32_t y, uint32_t backing_width,
-+                                 uint32_t backing_height, uint32_t fourcc,
-+                                 uint32_t modifier, uint32_t dmabuf_fd,
-+                                 bool allow_fences)
-+{
-+    QemuDmaBuf *dmabuf;
-+
-+    dmabuf = g_new0(QemuDmaBuf, 1);
-+
-+    dmabuf->width = width;
-+    dmabuf->height = height;
-+    dmabuf->stride = stride;
-+    dmabuf->x = x;
-+    dmabuf->y = y;
-+    dmabuf->backing_width = backing_width;
-+    dmabuf->backing_height = backing_height;
-+    dmabuf->fourcc = fourcc;
-+    dmabuf->modifier = modifier;
-+    dmabuf->fd = dmabuf_fd;
-+    dmabuf->allow_fences = allow_fences;
-+    dmabuf->fence_fd = -1;
-+
-+    return dmabuf;
-+}
-+
-+uint32_t dpy_gl_dmabuf_get_width(QemuDmaBuf *dmabuf)
-+{
-+    if (dmabuf) {
-+        return dmabuf->width;
-+    }
-+
-+    return 0;
-+}
-+
-+uint32_t dpy_gl_dmabuf_get_height(QemuDmaBuf *dmabuf)
-+{
-+    if (dmabuf) {
-+        return dmabuf->height;
-+    }
-+
-+    return 0;
-+}
-+
-+int32_t dpy_gl_dmabuf_get_fd(QemuDmaBuf *dmabuf)
-+{
-+    if (dmabuf) {
-+        return dmabuf->fd;
-+    }
-+
-+    return -1;
-+}
-+
- void dpy_gl_release_dmabuf(QemuConsole *con,
-                           QemuDmaBuf *dmabuf)
+     scanout = &g->parent_obj.scanout[dmabuf->scanout_id];
+-    dpy_gl_release_dmabuf(scanout->con, &dmabuf->buf);
++    dpy_gl_release_dmabuf(scanout->con, dmabuf->buf);
+     QTAILQ_REMOVE(&g->dmabuf.bufs, dmabuf, next);
+     g_free(dmabuf);
+ }
+@@ -181,17 +181,10 @@ static VGPUDMABuf
+     }
+ 
+     dmabuf = g_new0(VGPUDMABuf, 1);
+-    dmabuf->buf.width = r->width;
+-    dmabuf->buf.height = r->height;
+-    dmabuf->buf.stride = fb->stride;
+-    dmabuf->buf.x = r->x;
+-    dmabuf->buf.y = r->y;
+-    dmabuf->buf.backing_width = fb->width;
+-    dmabuf->buf.backing_height = fb->height;
+-    dmabuf->buf.fourcc = qemu_pixman_to_drm_format(fb->format);
+-    dmabuf->buf.fd = res->dmabuf_fd;
+-    dmabuf->buf.allow_fences = true;
+-    dmabuf->buf.draw_submitted = false;
++    dmabuf->buf = dpy_gl_create_dmabuf(r->width, r->height, fb->stride,
++                                       r->x, r->y, fb->width, fb->height,
++                                       qemu_pixman_to_drm_format(fb->format),
++                                       0, res->dmabuf_fd, false);
+     dmabuf->scanout_id = scanout_id;
+     QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
+ 
+@@ -206,21 +199,23 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
  {
-@@ -1145,6 +1199,7 @@ void dpy_gl_release_dmabuf(QemuConsole *con,
-         if (dcl->ops->dpy_gl_release_dmabuf) {
-             dcl->ops->dpy_gl_release_dmabuf(dcl, dmabuf);
-         }
-+        g_free(dmabuf);
-     }
- }
+     struct virtio_gpu_scanout *scanout = &g->parent_obj.scanout[scanout_id];
+     VGPUDMABuf *new_primary, *old_primary = NULL;
++    uint32_t width, height;
  
+     new_primary = virtio_gpu_create_dmabuf(g, scanout_id, res, fb, r);
+     if (!new_primary) {
+         return -EINVAL;
+     }
+ 
++    width = dpy_gl_dmabuf_get_width(new_primary->buf);
++    height = dpy_gl_dmabuf_get_height(new_primary->buf);
++
+     if (g->dmabuf.primary[scanout_id]) {
+         old_primary = g->dmabuf.primary[scanout_id];
+     }
+ 
+     g->dmabuf.primary[scanout_id] = new_primary;
+-    qemu_console_resize(scanout->con,
+-                        new_primary->buf.width,
+-                        new_primary->buf.height);
+-    dpy_gl_scanout_dmabuf(scanout->con, &new_primary->buf);
++    qemu_console_resize(scanout->con, width, height);
++    dpy_gl_scanout_dmabuf(scanout->con, new_primary->buf);
+ 
+     if (old_primary) {
+         virtio_gpu_free_dmabuf(g, old_primary);
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index ed44cdad6b..010083e8e3 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -169,7 +169,7 @@ struct VirtIOGPUBaseClass {
+     DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
+ 
+ typedef struct VGPUDMABuf {
+-    QemuDmaBuf buf;
++    QemuDmaBuf *buf;
+     uint32_t scanout_id;
+     QTAILQ_ENTRY(VGPUDMABuf) next;
+ } VGPUDMABuf;
 -- 
 2.34.1
 
