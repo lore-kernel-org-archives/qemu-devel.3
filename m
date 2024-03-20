@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E79DDC54E71
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 00:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41BFC54E71
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 00:33:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmjse-0008Ut-6F; Tue, 19 Mar 2024 20:32:32 -0400
+	id 1rmjss-00008F-CR; Tue, 19 Mar 2024 20:32:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmjsc-0008UK-Kz
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:30 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1rmjsq-00007s-C4
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:44 -0400
+Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmjsb-0005WK-2g
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:30 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6e6ee9e3cffso284120b3a.1
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 17:32:28 -0700 (PDT)
+ id 1rmjsl-0005Ya-O5
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:44 -0400
+Received: by mail-oo1-xc2a.google.com with SMTP id
+ 006d021491bc7-5a4817189c8so2641977eaf.1
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 17:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710894747; x=1711499547; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710894758; x=1711499558; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=k5PnQhFXfvSe92fnLRbZ5TBOd12ifIZn+pMwnRQCRuU=;
- b=QYV+A2ssMwBE2QTBfTdLU5Io6vlELcb3AleNKYzcBEy42TbLrrX+xahpfZad5g314i
- gU8kzxQJ7Iu6bkn6wrYJdWdboz/jrzIMKSSQwr+T1dOUZu0Pt5OOcwaMMb1GMrT5oztR
- YOxWpZbIrPYsV0yHsXjX4XX9EJ2WI5d0gOTzALFEk9Dt0zC7PUX6S5jJOeombmC86CiU
- 6CJjqE7nF91Tkr4yIeufC7ba6YYts0idUH7RSZ6wxDv9qPaeBFnkLoJTghIG2+uPN/Jz
- Yy1UNdvqxaCfYqYlKGXVz9WL85a6L/dY1J0l/OxuumjXF+QkOiQ2TC7rqwT6Ny+7G3iq
- 7wFg==
+ bh=BhOWQohjArqAQE2458CrIktVxPOWZvRPD9t4+1OeJxA=;
+ b=N85ty/y/u6oN3Rd6/FxduBnywisHKLKODM2cqMrHHmVO65S1FU7QeP5Fb+t8oi0yiB
+ +Mqp0tXVuGQAgxhpK079RAZDYo7E8VryP9uSFZFPst1SPM0u3RIxovjJCsD9KkRsjYj3
+ qdUe7U6u2pj4yLLFgjpLMIuHNlg/qzlN8657RfKQwKFbmJZUERXmcGAQOkFo/FfHjqVS
+ BTvzh/JzWw7nDmAdh8/oeHE0e0iqlh79I7U/teBekhw99X30oiFkdC7JqMyuzSUWR0qL
+ s13qBKJrC1VaE/8AHhQeoglkxsO+fW9eQM4BCDNRVcpDTGCw8yDOwP7t5moGlsDVO66U
+ H1HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710894747; x=1711499547;
+ d=1e100.net; s=20230601; t=1710894758; x=1711499558;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=k5PnQhFXfvSe92fnLRbZ5TBOd12ifIZn+pMwnRQCRuU=;
- b=KysUkeNrYET6YS9LtqfaKDo/zdLicihLpsBr64lE87FriyEUotVf+eT8tPr9JFyiFw
- n2SMa7/E05un/wrZwY52T4Bu97cM5eD2u2YdtQi8bqAnH6Rrug8UWcQ+mqH+HihYRPcM
- 8kSTGSJ/Y7pSLj+66kbJT2zJvQtJyUSZ6Bn/eydpzhG14BErfjp+UqIVuP61py8Rb8W0
- TWqQT8rFjEs3zkd7eBY50X+PaH5agiZXeMf/2CfxXH9XCrVnPJWXeJSJJ3r2NwhBtYrA
- fsXRydNqiEeqWGk0C77vsKKtTMRHyCeExn1P2n/5Bz2qzNdkURtqb2hnMGTZCnSI34q9
- VdrA==
-X-Gm-Message-State: AOJu0Yxsz90cQHd++zCg4gI3M6NaUP932ps9K6ligfzWHAnzerjRaP1C
- OvzVKO8lpoqLglk2O/hBe7Vi1aA9aPGLGdiyo4AJbNbWYknQsdPrwz57c2cAr4+zl5Hd1IuV+vz
- O
-X-Google-Smtp-Source: AGHT+IFazcmXmkIAnebDR0MNuliLyA9I7FbSYPpSL3vIP6YOI1ryk0Tao0WnU84+j/Gy77dczbxaqw==
-X-Received: by 2002:a05:6a00:14c4:b0:6e6:ba5a:2c4e with SMTP id
- w4-20020a056a0014c400b006e6ba5a2c4emr5668979pfu.7.1710894747394; 
- Tue, 19 Mar 2024 17:32:27 -0700 (PDT)
+ bh=BhOWQohjArqAQE2458CrIktVxPOWZvRPD9t4+1OeJxA=;
+ b=pT/YZ2oeQtV4FMdtG0/O79mhEl6kntWliA/GwbbibRjcNvZxNFV54rQ/C67o3SuXY1
+ FwKcMpMxEzYNjreFfiPUiO8Xt9+OqSST3P7GSRRKbcMttwY/0HbYsp29E2sNtO4Fhiwp
+ SG6gSF2OGXjork6ksZoQKPZwqVkR/aHbJELFl15qsuxD2+viAD5WrriTmX7ufdsayy1a
+ kl1mJ6Sf7CP4nOl1RfN3w+1dduZDY5Np9o5dUZUn4PNb7P8BqHsGX86GSGoIoPQ2GTUu
+ K06pyUDJyzXlb20/J1MbNyCMrZpkut4YByxrJ+3gl97i5aGNFyUfFRkQwXoP6mJvSHhi
+ pIhg==
+X-Gm-Message-State: AOJu0YygYLm2BShxXvZCX0HLF/oaAvO97JxWkcoz4c/AXlLD19Q4rnfZ
+ Ck1X+PlEe5YS+LMsQtEcplJAurMnNGGyuVmgcc+l6SjZlhGmMCUW287grKLIgvfJ4fjNQPphO+0
+ Z
+X-Google-Smtp-Source: AGHT+IGswSzZVWeIz4Wgdpkxs3WR7PR1MIVk4iY9pZo/EBhIdY2ew9uSTlVuNEzOgSvjoRbxvKuk9Q==
+X-Received: by 2002:a05:6820:2018:b0:5a4:d7df:9233 with SMTP id
+ by24-20020a056820201800b005a4d7df9233mr4038772oob.2.1710894758554; 
+ Tue, 19 Mar 2024 17:32:38 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- d19-20020a63d653000000b005d553239b16sm8475645pgj.20.2024.03.19.17.32.26
+ d19-20020a63d653000000b005d553239b16sm8475645pgj.20.2024.03.19.17.32.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Mar 2024 17:32:27 -0700 (PDT)
+ Tue, 19 Mar 2024 17:32:38 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Sven Schnelle <svens@stackframe.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PULL 1/9] target/hppa: Fix assemble_16 insns for wide mode
-Date: Tue, 19 Mar 2024 14:32:15 -1000
-Message-Id: <20240320003223.554145-2-richard.henderson@linaro.org>
+Cc: Sven Schnelle <svens@stackframe.org>
+Subject: [PULL 9/9] target/hppa: fix do_stdby_e()
+Date: Tue, 19 Mar 2024 14:32:23 -1000
+Message-Id: <20240320003223.554145-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240320003223.554145-1-richard.henderson@linaro.org>
 References: <20240320003223.554145-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,93 +94,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reported-by: Sven Schnelle <svens@stackframe.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
+From: Sven Schnelle <svens@stackframe.org>
+
+stdby,e,m was writing data from the wrong half of the register
+into memory for cases 0-3.
+
+Fixes: 25460fc5a71 ("target/hppa: Implement STDBY")
+Signed-off-by: Sven Schnelle <svens@stackframe.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240319161921.487080-7-svens@stackframe.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/insns.decode | 15 +++++++++------
- target/hppa/translate.c  | 22 ++++++++++++++++++++++
- 2 files changed, 31 insertions(+), 6 deletions(-)
+ target/hppa/op_helper.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
-index f5a3f02fd1..0d9f8159ec 100644
---- a/target/hppa/insns.decode
-+++ b/target/hppa/insns.decode
-@@ -27,13 +27,14 @@
- %assemble_11a   0:s1 4:10            !function=expand_shl3
- %assemble_12    0:s1 2:1 3:10        !function=expand_shl2
- %assemble_12a   0:s1 3:11            !function=expand_shl2
-+%assemble_16    0:16                 !function=expand_16
- %assemble_17    0:s1 16:5 2:1 3:10   !function=expand_shl2
- %assemble_22    0:s1 16:10 2:1 3:10  !function=expand_shl2
-+%assemble_sp    14:2                 !function=sp0_if_wide
- 
- %assemble_21    0:s1 1:11 14:2 16:5 12:2  !function=expand_shl11
- 
- %lowsign_11     0:s1 1:10
--%lowsign_14     0:s1 1:13
- 
- %sm_imm         16:10 !function=expand_sm_imm
- 
-@@ -221,7 +222,7 @@ sub_b_tsv       000010 ..... ..... .... 110100 . .....  @rrr_cf_d
- 
- ldil            001000 t:5 .....................        i=%assemble_21
- addil           001010 r:5 .....................        i=%assemble_21
--ldo             001101 b:5 t:5 -- ..............        i=%lowsign_14
-+ldo             001101 b:5 t:5  ................        i=%assemble_16
- 
- addi            101101 ..... ..... .... 0 ...........   @rri_cf
- addi_tsv        101101 ..... ..... .... 1 ...........   @rri_cf
-@@ -306,10 +307,12 @@ fstd            001011 ..... ..... .. . 1 -- 100 0 . .....      @fldstdi
- 
- @ldstim11       ...... b:5 t:5 sp:2 ..............      \
-                 &ldst disp=%assemble_11a m=%ma2_to_m x=0 scale=0 size=3
--@ldstim14       ...... b:5 t:5 sp:2 ..............      \
--                &ldst disp=%lowsign_14 x=0 scale=0 m=0
--@ldstim14m      ...... b:5 t:5 sp:2 ..............      \
--                &ldst disp=%lowsign_14 x=0 scale=0 m=%neg_to_m
-+@ldstim14       ...... b:5 t:5 ................          \
-+                &ldst sp=%assemble_sp disp=%assemble_16  \
-+                x=0 scale=0 m=0
-+@ldstim14m      ...... b:5 t:5 ................          \
-+                &ldst sp=%assemble_sp disp=%assemble_16  \
-+                x=0 scale=0 m=%neg_to_m
- @ldstim12m      ...... b:5 t:5 sp:2 ..............      \
-                 &ldst disp=%assemble_12a x=0 scale=0 m=%pos_to_m
- 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index eb2046c5ad..cbe44ef75a 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -144,6 +144,28 @@ static int assemble_6(DisasContext *ctx, int val)
-     return (val ^ 31) + 1;
- }
- 
-+/* Expander for assemble_16(s,im14). */
-+static int expand_16(DisasContext *ctx, int val)
-+{
-+    /*
-+     * @val is bits [0:15], containing both im14 and s.
-+     * Swizzle thing around depending on PSW.W.
-+     */
-+    int s = extract32(val, 14, 2);
-+    int i = (-(val & 1) << 13) | extract32(val, 1, 13);
-+
-+    if (ctx->tb_flags & PSW_W) {
-+        i ^= s << 13;
-+    }
-+    return i;
-+}
-+
-+/* The sp field is only present with !PSW_W. */
-+static int sp0_if_wide(DisasContext *ctx, int sp)
-+{
-+    return ctx->tb_flags & PSW_W ? 0 : sp;
-+}
-+
- /* Translate CMPI doubleword conditions to standard. */
- static int cmpbid_c(DisasContext *ctx, int val)
- {
+diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
+index 480fe80844..6cf49f33b7 100644
+--- a/target/hppa/op_helper.c
++++ b/target/hppa/op_helper.c
+@@ -281,17 +281,17 @@ static void do_stdby_e(CPUHPPAState *env, target_ulong addr, uint64_t val,
+     case 3:
+         /* The 3 byte store must appear atomic.  */
+         if (parallel) {
+-            atomic_store_mask32(env, addr - 3, val, 0xffffff00u, ra);
++            atomic_store_mask32(env, addr - 3, val >> 32, 0xffffff00u, ra);
+         } else {
+-            cpu_stw_data_ra(env, addr - 3, val >> 16, ra);
+-            cpu_stb_data_ra(env, addr - 1, val >> 8, ra);
++            cpu_stw_data_ra(env, addr - 3, val >> 48, ra);
++            cpu_stb_data_ra(env, addr - 1, val >> 40, ra);
+         }
+         break;
+     case 2:
+-        cpu_stw_data_ra(env, addr - 2, val >> 16, ra);
++        cpu_stw_data_ra(env, addr - 2, val >> 48, ra);
+         break;
+     case 1:
+-        cpu_stb_data_ra(env, addr - 1, val >> 24, ra);
++        cpu_stb_data_ra(env, addr - 1, val >> 56, ra);
+         break;
+     default:
+         /* Nothing is stored, but protection is checked and the
 -- 
 2.34.1
 
