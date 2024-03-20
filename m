@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAC2FC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 21:46:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B990BC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 22:00:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rn3k7-00044Z-LB; Wed, 20 Mar 2024 17:45:03 -0400
+	id 1rn3yT-0007OH-Ry; Wed, 20 Mar 2024 17:59:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rn3k6-000444-1r
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 17:45:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1rn3yR-0007NO-Re; Wed, 20 Mar 2024 17:59:52 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rn3k4-00060H-AJ
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 17:45:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710971099;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Xue1l6ti/1XxFYgKeVbSHWUqMibW0qilWZUtfgWpjjs=;
- b=aM1lBKtyttfNFgY95KwnaCF8eDcU2mMGqN4knfguY0qKDI1pSB6c8Q0KIytqEdsiNv8c3e
- k++xSSfM57ubD3OSR15H48qxG0x7PJzfpwHkYk+3URWADZ6non4TAcGg3Eux6hFMmlJDbV
- qmBJqTuk+WHk3EvCwIyVZWE9//oIJPU=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-83-vrj6rz24NZuzGnNQhWEJ3g-1; Wed, 20 Mar 2024 17:44:57 -0400
-X-MC-Unique: vrj6rz24NZuzGnNQhWEJ3g-1
-Received: by mail-ot1-f69.google.com with SMTP id
- 46e09a7af769-6e6b0efc193so2786a34.0
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 14:44:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710971096; x=1711575896;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Xue1l6ti/1XxFYgKeVbSHWUqMibW0qilWZUtfgWpjjs=;
- b=bexMKUSOb11k2eccsN971tnH4KTLVqc3mDTbWXZMb8tusA8IX4hyr3X5wxnVtjfAt3
- S6iCCt/F0iRzHmOuvSsvSz3SaGovGO8v2czZ4kR257qYK3+rnDC9MmKIJrCL7Ol2zbtn
- 4cNVeBv5Fj9Vuu36QreiFnqdVDl3q52cQ8t2nRpUa5+nzeyGnQysqzxx+xF3Aev6Qm1d
- jxurtFij3k47MjQvwdXU0MqCrYYdLswuhB3iwTxSJWZOOoAQ1BOMX5SQQJxHO4kwd8nD
- T6YLTPpX2mpPJsSoXly3IycS50ABB2DLS0bbmX6spqNA4H9V/Xi0WabxbL2d9KGgXLCC
- D/Xw==
-X-Gm-Message-State: AOJu0YyTxZq8uyBi+nNVrkKCMt1qB5IzhoVFxOqqPwiwWJhF8x95P80A
- A0rNcpG/1K87rm/l7amfDxbcBJ40nT2adS8zc5hqa+UfH2H01h1QDRw7pfysqTr70pd4jejRbY9
- KYuAmt3V5pV1iLB6WjXLEfW01BeaJtnL3xi6Alh29Bw3qd1Q3MDSW1nJvFmBEqHvtgspvySitYB
- 2oxBRdKPjPUSyFZ0QKtgjUpa8/9FCDc3eGgw==
-X-Received: by 2002:a9d:4b0a:0:b0:6e6:9b39:b1e with SMTP id
- q10-20020a9d4b0a000000b006e69b390b1emr7143203otf.0.1710971095855; 
- Wed, 20 Mar 2024 14:44:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJJpieanTngXZv42KQjFUWpB4V99e10q8y0Gyxw+NJxq5PkesqL7fMRIHoPouuqMQSEpQj6g==
-X-Received: by 2002:a9d:4b0a:0:b0:6e6:9b39:b1e with SMTP id
- q10-20020a9d4b0a000000b006e69b390b1emr7143184otf.0.1710971095352; 
- Wed, 20 Mar 2024 14:44:55 -0700 (PDT)
-Received: from x1n.redhat.com ([99.254.121.117])
- by smtp.gmail.com with ESMTPSA id
- dy4-20020a05620a60c400b00787fd080d28sm6920408qkb.74.2024.03.20.14.44.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Mar 2024 14:44:55 -0700 (PDT)
-From: peterx@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, peterx@redhat.com,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Subject: [PATCH] migration/postcopy: Fix high frequency sync
-Date: Wed, 20 Mar 2024 17:44:53 -0400
-Message-ID: <20240320214453.584374-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.44.0
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1rn3yM-0000Lb-0x; Wed, 20 Mar 2024 17:59:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
+ MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+ Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=BXcp6nmYQiOnkyo3239WHF4QCUPILYG3e0Ystupic7U=; b=OCN7BK/Uc6HGM5dW/cbK0m1ioN
+ zQ1IUSCI1QBaEfh0CiWfAQQb1YhAyhVzmhyNu4YNzW0hzX65FjovxdiVscQnD7PfBozAzjy4Loz13
+ VDSdH+wRFP/B9hCpb0J93Xc5GGhMf/8LOzjuShW16Nv/nBPNVelERIsbMz2hLxZY3cNpsPeidbosq
+ kdgNHOU3q12LMfETPo9ZV+eBkSHv/41gOXFFlj0AZdIF3r+M50Q567lqxQs+qpM8fxL2eMDlP/rRH
+ r4YQZrPoilcEpdwwQQ7APFv3eoYssXrVjwCyesfBpLH/jcnusMprgQ6EVrixmG0qwn7OZYSWi3tZ6
+ pxUSZ0bQ==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1rn3yH-00DZue-13;
+ Wed, 20 Mar 2024 21:59:41 +0000
+Date: Wed, 20 Mar 2024 21:59:41 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-ppc@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ devel@lists.libvirt.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [PATCH-for-9.0 0/2] target/monitor: Deprecate 'info tlb/mem' in
+ favor of 'info mmu'
+Message-ID: <ZftcTb2_O8zHPd3Z@gallifrey>
+References: <20240320164055.60319-1-philmd@linaro.org>
+ <CAFEAcA81u9J9iijs-CNDbsANb6c0Cdb4qQKmBd=DiQAoFA4U=w@mail.gmail.com>
+ <5deec986-7a22-402d-abe1-4e40f5bb427a@linaro.org>
+ <CAFEAcA_4J32gpUgxXxND8ZVhrEEhFK=gPG2SF8xsVJ+jpkV0WA@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+In-Reply-To: <CAFEAcA_4J32gpUgxXxND8ZVhrEEhFK=gPG2SF8xsVJ+jpkV0WA@mail.gmail.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-17-amd64 (x86_64)
+X-Uptime: 21:59:13 up 78 days, 48 min,  1 user,  load average: 0.00, 0.00, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,74 +84,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+* Peter Maydell (peter.maydell@linaro.org) wrote:
+> On Wed, 20 Mar 2024 at 17:06, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+> >
+> > +Alex/Daniel
+> >
+> > On 20/3/24 17:53, Peter Maydell wrote:
+> > > On Wed, 20 Mar 2024 at 16:40, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+> > >>
+> > >> 'info tlb' and 'info mem' commands don't scale in heterogeneous
+> > >> emulation. They will be reworked after the next release, hidden
+> > >> behind the 'info mmu' command. It is not too late to deprecate
+> > >> commands, so add the 'info mmu' command as wrapper to the other
+> > >> ones, but already deprecate them.
+> > >>
+> > >> Philippe Mathieu-Daudé (2):
+> > >>    target/monitor: Introduce 'info mmu' command
+> > >>    target/monitor: Deprecate 'info tlb' and 'info mem' commands
+> > >
+> > > This seems to replace "info tlb" and "info mem" with "info mmu -t"
+> > > and "info mmu -m", but it doesn't really say anything about:
+> > >   * what the difference is between these two things
+> >
+> > I really don't know; I'm only trying to keep the monitor interface
+> > identical.
+> 
+> You don't, though: you change it from "info tlb" to "info mmu -t" etc.
+> 
+> > >   * which targets implement which and why
+> >
+> > This one is easy to answer:
+> >
+> > #if defined(TARGET_I386) || defined(TARGET_SH4) || defined(TARGET_SPARC)
+> > || \
+> >      defined(TARGET_PPC) || defined(TARGET_XTENSA) || defined(TARGET_M68K)
+> >      {
+> >          .name       = "tlb",
+> >
+> > #if defined(TARGET_I386) || defined(TARGET_RISCV)
+> >      {
+> >          .name       = "mem",
+> >
+> > >   * what the plan is for the future
+> >
+> > My problem is with linking a single QEMU binary, as these two symbols
+> > (hmp_info_mem and hmp_info_tlb) clash.
+> 
+> Yes, but they both (implicitly) operate on the current HMP CPU,
+> so the problem with linking into a single binary is that they're
+> not indirected through a method on the CPU object, not the syntax
+> used in the monitor to invoke them, presumably.
+> 
+> > I'm indeed only postponing the problem, without looking at what
+> > this code does. I did it adding hmp_info_mmu_tlb/mem hooks in
+> > TCGCPUOps ("hw/core/tcg-cpu-ops.h"), so the command can be
+> > dispatched per target vcpu as target-agnostic code in
+> > monitor/hmp-cmds.c:
+> >
+> > +#include "hw/core/tcg-cpu-ops.h"
+> > +
+> > +static void hmp_info_mmu_tlb(Monitor *mon, CPUState *cpu)
+> > +{
+> > +    const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+> > +
+> > +    if (tcg_ops->hmp_info_mmu_tlb) {
+> > +        tcg_ops->hmp_info_mmu_tlb(mon, cpu_env(cpu));
+> > +    } else {
+> > +        monitor_puts(mon, "No per-CPU information available on this
+> > target\n");
+> > +    }
+> > +}
+> 
+> These aren't TCG specific though, so why TCGCPUOps ?
+> 
+> > > I am definitely not a fan of either of these commands, because
+> > > (as we currently implement them) they effectively require each
+> > > target architecture to implement a second copy of the page table
+> > > walking code. But before we can deprecate them we need to be
+> > > pretty sure that "info mmu" is what we want to replace them with.
+> >
+> > An alternative is to just deprecate them, without adding "info mmu" :)
+> >
+> > It is OK to un-deprecate stuff if we realize its usefulness.
+> 
+> The commands are there because some users find them useful.
+> I just dislike them because I think they're a bit niche and
+> annoying to implement and not consistent across target
+> architectures and not very well documented...
+> 
+> By the way, we have no obligation to follow the deprecate-and-drop
+> process for HMP commands; unlike QMP, we give ourselves the
+> license to vary it when we feel like it, because the users are
+> humans, not programs or scripts.
 
-On current code base I can observe extremely high sync count during
-precopy, as long as one enables postcopy-ram=on before switchover to
-postcopy.
+Right, so no rush to get the deprecation in; change it when you agree
+what you'd like a replacement to look like.
 
-To provide some context of when we decide to do a full sync: we check
-must_precopy (which implies "data must be sent during precopy phase"), and
-as long as it is lower than the threshold size we calculated (out of
-bandwidth and expected downtime) we will kick off the slow sync.
+Dave
 
-However, when postcopy is enabled (even if still during precopy phase), RAM
-only reports all pages as can_postcopy, and report must_precopy==0.  Then
-"must_precopy <= threshold_size" mostly always triggers and enforces a slow
-sync for every call to migration_iteration_run() when postcopy is enabled
-even if not used.  That is insane.
-
-It turns out it was a regress bug introduced in the previous refactoring in
-QEMU 8.0 in late 2022. Fix this by checking the whole RAM size rather than
-must_precopy, like before.  Not copy stable yet as many things changed, and
-even if this should be a major performance regression, no functional change
-has observed (and that's also probably why nobody found it).  I only notice
-this when looking for another bug reported by Nina.
-
-When at it, cleanup a little bit on the lines around.
-
-Cc: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Fixes: c8df4a7aef ("migration: Split save_live_pending() into state_pending_*")
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
-
-Nina: I copied you only because this might still be relevant, as this issue
-also misteriously points back to c8df4a7aef..  However I don't think it
-should be a fix of your problem, at most it can change the possibility of
-reproducability.
-
-This is not a regression for this release, but I still want to have it for
-9.0.  Fabiano, any opinions / objections?
----
- migration/migration.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/migration/migration.c b/migration/migration.c
-index 047b6b49cf..9fe8fd2afd 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3199,17 +3199,16 @@ typedef enum {
-  */
- static MigIterateState migration_iteration_run(MigrationState *s)
- {
--    uint64_t must_precopy, can_postcopy;
-+    uint64_t must_precopy, can_postcopy, pending_size;
-     Error *local_err = NULL;
-     bool in_postcopy = s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE;
-     bool can_switchover = migration_can_switchover(s);
- 
-     qemu_savevm_state_pending_estimate(&must_precopy, &can_postcopy);
--    uint64_t pending_size = must_precopy + can_postcopy;
--
-+    pending_size = must_precopy + can_postcopy;
-     trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
- 
--    if (must_precopy <= s->threshold_size) {
-+    if (pending_size < s->threshold_size) {
-         qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
-         pending_size = must_precopy + can_postcopy;
-         trace_migrate_pending_exact(pending_size, must_precopy, can_postcopy);
+> -- PMM
 -- 
-2.44.0
-
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
