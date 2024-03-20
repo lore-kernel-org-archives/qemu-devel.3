@@ -4,137 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5BA8C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 15:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1728CC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 15:52:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmyDO-00012b-If; Wed, 20 Mar 2024 11:50:54 -0400
+	id 1rmyF8-0001uc-QX; Wed, 20 Mar 2024 11:52:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rmyDL-000120-DJ
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:50:51 -0400
-Received: from mail-db8eur05on2111.outbound.protection.outlook.com
- ([40.107.20.111] helo=EUR05-DB8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmyF2-0001sZ-Br
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:52:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1rmyDJ-0007TE-7O
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:50:50 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=T4R9vWQl625BAUnInnBHHUGx6XDyYPZPsyXBIg+v+Syukcv3S0PY7InQy6ATiwmbTR3jp1CHA3Zr7uExVddqPCnavhQcBceT0OTY76M99Mj2UmvWDfw2YRYbfgNS8JO6HWGAtRNpbRAlOqILQJxR4snoCEfPI2Y6X30P719hp9KWgUZUNRVSULxWjANiYe+L6RLy+b0ulnF7dDdYCsCWX06eTCC5OE7rH/+rlRAsJu5ss9sMHspOc7nS9+Q0TSNipd2Bpd2TZayNmr6FuFSSnqKCtTFKYDwSvPP0FftV/hRwjHxUc2DM/8aBKryfcJNgE5VqtA8mOvMsI9hW5wxgbg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KtFcD+gsVPN36rZ4if3QJ5ZM8uZp0qzE5FfpOgqZR7A=;
- b=W7PHEiQhMdImOKcISVp+yZFq7Ztg6cNHjZxF0jDf+3YeR4OCHfEMtBz4F+7y2/R0rqVBWUkuxICKn2H/b0lyYbfaznbN+qsc+cu5EnuDgXZsIpX37tPG07gcROgH1EuVSPjcm8zmYSsH3qv/7gHMtCSiYBG6bT7dDcxxUcGoUPuahgKAj444Kw623CYWkQnX0436RFLdBseIcPvhDvmrdy9y4Dr5vFa2a5Y9S3fafGAKhnd4ZB6QDzpcLF6jyYIAVmAvGiPbbbxV/bsWIeEUGNHvwGMJxz+UJ1qQ+H7c5Bl19UZL06YGUZbHrX/MrDjZHSBZFH0W/EEZoPGiZmj+og==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=KtFcD+gsVPN36rZ4if3QJ5ZM8uZp0qzE5FfpOgqZR7A=;
- b=I9n1Mt9BBRXDII4YkhUrcvaKEQ6u135Avnmn3Cy6yCNmJL7sVqap1P0xmHHDEauJA7fnM8Konuaciu7EAScgctRE8d8EUn9obplC993EnDGkKvRiF8LTGEckFgLSGkSxlUdvGd+mvG/wMmjw9cVh9lppGBjijK7j9NOcTGV81wST7+r+M+G1z4EKRfL8FIL/rzvxdIOMgQcTAwQ8w6rL+2LuEeSr3jDN+PLTrF1pKS3VI6q0wD1K0Aw8kTuHEMTXDlrn0gCAf+KqbKx48+l6d2Pa50zY0NOm7AUQGmPpiQbRfTU5CJT+dx8gak4ocpLhpDBqEuUHxWwiPsxFZ94JMQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by PAVPR08MB9700.eurprd08.prod.outlook.com
- (2603:10a6:102:31f::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.27; Wed, 20 Mar
- 2024 15:45:38 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::787d:7732:63b:ff4d]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::787d:7732:63b:ff4d%6]) with mapi id 15.20.7386.025; Wed, 20 Mar 2024
- 15:45:37 +0000
-Message-ID: <6abcd883-cb0d-4b11-a82b-33c515f7d4e6@virtuozzo.com>
-Date: Wed, 20 Mar 2024 17:45:45 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/7] qga: guest-get-fsinfo: add optional
- 'total-bytes-root' field
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com,
- marcandre.lureau@redhat.com, philmd@linaro.org, den@virtuozzo.com
-References: <20240315122946.39168-1-andrey.drobyshev@virtuozzo.com>
- <20240315122946.39168-2-andrey.drobyshev@virtuozzo.com>
- <ZfnNbpubB0HpFDnj@redhat.com>
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-In-Reply-To: <ZfnNbpubB0HpFDnj@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR0P281CA0017.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:15::22) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rmyEz-0007aw-Kg
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 11:52:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710949952;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZX7qZcZ09Lrt5s38ndUqX1DDuH+RaYQkOx//x49wLAw=;
+ b=DfcRbYoS/RLyWBQ0ziB2BwGf/ujsy2Jr42hRrceOu0QTEAcLFsF8plLCfppaqKYoKHrn26
+ xv7ak4+a+dAWw91xbGEQusBwfRyaJ4VHEWKAzoHuRs7sOVUi6fjAd6NeaPlVfhLl18/801
+ TqsowY0xy/Ihq3sdlw1fhQuKEtYOpQY=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-EFWDbTvuMjygHjQivbQEaQ-1; Wed,
+ 20 Mar 2024 11:52:28 -0400
+X-MC-Unique: EFWDbTvuMjygHjQivbQEaQ-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C9FC938157A6;
+ Wed, 20 Mar 2024 15:52:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.205])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id AA976200E1AD;
+ Wed, 20 Mar 2024 15:52:24 +0000 (UTC)
+Date: Wed, 20 Mar 2024 15:52:18 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roy Hopkins <roy.hopkins@suse.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH 9/9] docs/system: Add documentation on support for IGVM
+Message-ID: <ZfsGMoa_6REEsTkG@redhat.com>
+References: <cover.1709044754.git.roy.hopkins@suse.com>
+ <2f98be192cf6ffd36b984266570ea2eed4dfe364.1709044754.git.roy.hopkins@suse.com>
+ <ZeIL9Tco7PCRxdg-@redhat.com>
+ <46d91ba880f566e7ced7c01b18682b749185c9ba.camel@suse.com>
+ <ZfhqEL0-wCiDJJtm@redhat.com>
+ <e101c3b1c171a828ef34983aa448ced52bb934ee.camel@suse.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|PAVPR08MB9700:EE_
-X-MS-Office365-Filtering-Correlation-Id: d54260ed-e000-426f-c889-08dc48f4c9e5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: kLuZXC587s0wW7s3sJLxT78dP1WJwsftPiH1icdoAmWGkYNOQD39HjxJoVzaqfOMc6z8zHv4C3CUC3iih1f153S7Qu4sWbClAZ6fqBk6n9ZyAAN969KMjZYO6ftSceOLX57HBMPIi2xBg5VsFpIub9QuEQuEJWqzI50syehS2qE/EC9mqkaj35rGUBFWNBPtgRbfIR7CtYhm2nL2s29AYQ9cCjdvVApUNmJfltCbjrUXxPcQsWSKP4mzXE+FkBmjgluMJYsLRdkfpQnKA30mA58U5UFT+oxmVEtvl3ZwfBfcKr4z7hrdvSLJt/Hbl4R4WiS/3S04nVnoPniXI/rnI8uXcUQQ2b3TXQp7+rvkcWzG2qFrI8t360dyQYcPlEoYNwB8VpUKSx0SBNWBps+I2FzokMyunwBjI16Aia5fAuvolvDdwtNDKd95afCTFfSGuzcZTVxe1+76C68EE4zy1EPItF0C69U8mk8soVZphyCPJNcdndDXzHoRe9YYNLYc0+1GXjjJUxHEqJGrE2VtSQhvnDubzxP1Ddp3xeW15LDPyOMWRKrFO9auJjazawSj6Dl9+LUwCqdcef8AyBHD/SibnclxtqieWo2pSy5VJUc=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(1800799015)(366007)(376005); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NG1QNFJVQnlOekdMclNGUEs3MXl0SUhYT3ZMSVBQcTF6WUhyajg3Vkw2TU9t?=
- =?utf-8?B?VmRJeFB1QlY5S1h6UXN4ZnoyQjllYjB0NnhxVFJnTVhsajNWY2VSZ3N0cmlL?=
- =?utf-8?B?bXJEZWVRZUp1THk3cDJ6SkQwdnE2L1l6S2NsWDlvWTJRL3VVTEg0ZUttQzhG?=
- =?utf-8?B?c3dTelpPT1J0bGlaWTlTOWt1RnI1VXlLWTRGTDJoVzRlYS9SbTZBOStNaVIr?=
- =?utf-8?B?YnRuZGo5clhIOXo5OFF1NkhHcnVkcjZ1UDZJL0FFV2g5eFdXWUJzUXlBWHRu?=
- =?utf-8?B?ZElUaStNOGMrRHgrVVlTZ2VoYzNTQzFhdjZMYThycEo4M0VHRFF6d2c4MWw0?=
- =?utf-8?B?Y3lUS25ZeFllaE95Z3FvUXBaNmZHa2taTHR5alUzK3NGVktmek1RajdlTFFl?=
- =?utf-8?B?cC8rcVNqWEQraWhlT3MyRkg2QTNRNGZkRHVqNDJUdGhhRm4rZzF5VE4zNDg1?=
- =?utf-8?B?YWJtaWl1ZlJPeHIxSWdxam0vNjBOSGNzb0MwaWNyNWdiRmZYMURXaVE3UTJU?=
- =?utf-8?B?UVBJcXcvUWIwVFRtdUxEcEhpY2g3QTRQdjA4TG5RY1N2S01kcWxIRzhXZjA2?=
- =?utf-8?B?QndiNERZaGZYTjdIb2MwV2N5cFBSYklxckRRcFFvRUplbG9oKzlmK1Z6emJh?=
- =?utf-8?B?ZjJCYnJzZG9mRW1uaFdMUEUrc2U3TXNNUVRBb2tMY0RpNmx3KzdQenRKSFVS?=
- =?utf-8?B?Mm9STDg3R1h5T0NpYmphVWZVejhGVmpzeitUSmYwbHJSOFRuVHk3OEE4NHJV?=
- =?utf-8?B?cTBBYUdidXRYNnpWa2dqaFpFUmxMdCtsNDZHOEh2MFBoYnZjbnQySkc3djAw?=
- =?utf-8?B?MDBoVkZMaXlhaW5ENnY1ODljL0lQanhaWXFvMW90Kzc5czhoRGFzT1A3ZlJF?=
- =?utf-8?B?QzNxVk04bXFlWFNEeit0TW1SbThtbVdMV0FlcWFWNUowbG9nYXRkTG9PMUxu?=
- =?utf-8?B?cHpnbjRja1lWMWUzM01pdDFUajJEUHM2WkRWTk1jQTYwamZ3YjJCS3VaUTkz?=
- =?utf-8?B?ZEtvdklBOWFkQUpNOFJtMkxVNkdsZVZjN0RqSTZUNjdQdXduOURlK0hvaFBK?=
- =?utf-8?B?WHM2dUFMWE8xMkJjYUtUUTR4NmJ3TzRUSXVlRFY2WlIxVm9yckZOWit2SFdX?=
- =?utf-8?B?L3ZJNFRsUzhNT2M4SEYwSjFmR011WTVMTCtrRklDTzZqRmtlR1F6K2xKNmtp?=
- =?utf-8?B?Y0ZRTzNxbVBsK2YrTHdtWWhQTmNhbzkzM3NmdnhFeERJNmw0TmFSd1ZITGxB?=
- =?utf-8?B?aXl4RWRYS1dDeFFDMklNY2ZFcEIrUmppc2ZOSUcyT2FVRnNHUGxWSG9JWkZo?=
- =?utf-8?B?dE5zejBROS9YMU5zd2hiVHJ3bEdGYStKVXkzWUxsMU8rT0RIZFVqbDVzNFhr?=
- =?utf-8?B?djVEMGVPZTdzWU9Cemw3NmtlalVDN1RXbmdUNktBR2hTQ1V4S1FCNzB5cTJR?=
- =?utf-8?B?K3lFUXloT2RTSFIwRlNHVUhPdjIwOEFGSGtnL3BuUHQ2eStGZUxKQTdzYkNq?=
- =?utf-8?B?VFBoZHo3aVRUTEpEWGM4VkRmRVpIRjhaeTZrdk5ZR1hXaXFKK05UbWtsWWRZ?=
- =?utf-8?B?RXgvbTN4THQyeUg1OFIvYlNxZHdQa2JYY3EzY01nbjBEK2dhMEJBVjZtcHNs?=
- =?utf-8?B?czhSdXN0cUlGV0IwZUo4RE5lNjVLZjdFRnY2MWNMMmQrTVpIQTF3cTdZWXQ1?=
- =?utf-8?B?blNlWGpuMnpsaGxBbmFnYVl2aVgyQnVqMWJFTTVaNWsxcGNDSHVwTWNsMUJn?=
- =?utf-8?B?TnJaSUpqdGY1RlpRNGp1MDdHMmtUaFpHbHoxSEFWZFZPOGFKYkc5aEpKKzMz?=
- =?utf-8?B?VjhvUjd6UkR6aTl5WlBCWmNlZE96VkpCSWNadkpyOTdxdjFsY0NjcHk2RWFY?=
- =?utf-8?B?c3Q0YVNTUDVHZFNtOHllVURoeEJwcXlWQzduQ0k0eDc5NEZUTDA3blFNaTdD?=
- =?utf-8?B?OStWcmFJUHNzY2dLMnNqNGMyVWdMZ3pLTjc2cTJibms3SlF4NmFvekVCZnY5?=
- =?utf-8?B?OWZNenp2b2VvK1hFOE5DalVteExKR252RllUMHFURlo3RTNpTXhaekt4Vlov?=
- =?utf-8?B?S3RYNm1abjJ0V1Ftd0tnSzJUMVR0eVk2YWVLRC9hazQ5VlhFRXUxcHlWVTJq?=
- =?utf-8?B?TXdpUTNLU2xZdHRKd0VzbW82QTFVajFXUndkWk1YdjZsWnFaMExFV1RxY2tz?=
- =?utf-8?B?Ymc9PQ==?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d54260ed-e000-426f-c889-08dc48f4c9e5
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 15:45:37.7621 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: PdLRAvnx2byZUJXvVbx5xtygLgV2obEUMYovi/1qPsLuyyR1AONGwbjS07WmXdiS7q+KBnf5GzzETg3iugcKflZErWbJrViXEmaNeORte5E=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAVPR08MB9700
-Received-SPF: pass client-ip=40.107.20.111;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=EUR05-DB8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e101c3b1c171a828ef34983aa448ced52bb934ee.camel@suse.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -147,131 +97,135 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/19/24 19:37, Daniel P. Berrangé wrote:
-> On Fri, Mar 15, 2024 at 02:29:40PM +0200, Andrey Drobyshev wrote:
->> Since the commit 25b5ff1a86 ("qga: add mountpoint usage info to
->> GuestFilesystemInfo") we have 2 values reported in guest-get-fsinfo:
->> used = (f_blocks - f_bfree), total = (f_blocks - f_bfree + f_bavail) as
->> returned by statvfs(3).  While on Windows guests that's all we can get
->> with GetDiskFreeSpaceExA(), on POSIX guests we might also be interested in
->> total file system size, as it's visible for root user.  Let's add an
->> optional field 'total-bytes-root' to GuestFilesystemInfo struct, which'd
->> only be reported on POSIX and represent f_blocks value as returned by
->> statvfs(3).
->>
->> While here, let's document better where those values come from in both
->> POSIX and Windows.
->>
->> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->> ---
->>  qga/commands-posix.c |  2 ++
->>  qga/commands-win32.c |  1 +
->>  qga/qapi-schema.json | 12 +++++++++++-
->>  3 files changed, 14 insertions(+), 1 deletion(-)
->>
->> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
->> index 26008db497..8207c4c47e 100644
->> --- a/qga/commands-posix.c
->> +++ b/qga/commands-posix.c
->> @@ -1569,8 +1569,10 @@ static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount,
->>          nonroot_total = used + buf.f_bavail;
->>          fs->used_bytes = used * fr_size;
->>          fs->total_bytes = nonroot_total * fr_size;
->> +        fs->total_bytes_root = buf.f_blocks * fr_size;
->>  
->>          fs->has_total_bytes = true;
->> +        fs->has_total_bytes_root = true;
->>          fs->has_used_bytes = true;
->>      }
->>  
->> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
->> index a1015757d8..9e820aad8d 100644
->> --- a/qga/commands-win32.c
->> +++ b/qga/commands-win32.c
->> @@ -1143,6 +1143,7 @@ static GuestFilesystemInfo *build_guest_fsinfo(char *guid, Error **errp)
->>      fs = g_malloc(sizeof(*fs));
->>      fs->name = g_strdup(guid);
->>      fs->has_total_bytes = false;
->> +    fs->has_total_bytes_root = false;
+On Wed, Mar 20, 2024 at 03:45:24PM +0000, Roy Hopkins wrote:
+> On Mon, 2024-03-18 at 16:21 +0000, Daniel P. Berrangé wrote:
+> > On Mon, Mar 18, 2024 at 03:59:31PM +0000, Roy Hopkins wrote:
+> > > On Fri, 2024-03-01 at 17:10 +0000, Daniel P. Berrangé wrote:
+> > > > On Tue, Feb 27, 2024 at 02:50:15PM +0000, Roy Hopkins wrote:
+> > > > > IGVM support has been implemented for Confidential Guests that support
+> > > > > AMD SEV and AMD SEV-ES. Add some documentation that gives some
+> > > > > background on the IGVM format and how to use it to configure a
+> > > > > confidential guest.
+> > > > > 
+> > > > > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> > > > > ---
+> > > > >  docs/system/igvm.rst  | 58 +++++++++++++++++++++++++++++++++++++++++++
+> > > > >  docs/system/index.rst |  1 +
+> > > > >  2 files changed, 59 insertions(+)
+> > > > >  create mode 100644 docs/system/igvm.rst
+> > > > 
+> > > > 
+> > > > > +Firmware Images with IGVM
+> > > > > +-------------------------
+> > > > > +
+> > > > > +When an IGVM filename is specified for a Confidential Guest Support
+> > > > > object
+> > > > > it
+> > > > > +overrides the default handling of system firmware: the firmware image,
+> > > > > such
+> > > > > as
+> > > > > +an OVMF binary should be contained as a payload of the IGVM file and
+> > > > > not
+> > > > > +provided as a flash drive. The default QEMU firmware is not
+> > > > > automatically
+> > > > > mapped
+> > > > > +into guest memory.
+> > > > 
+> > > > IIUC, in future the IGVM file could contain both the OVMF and SVSM
+> > > > binaries ?
+> > > > 
+> > > > I'm also wondering if there can be dependancies between the IGVM
+> > > > file and the broader QEMU configuration ?  eg if SVSM gains suupport
+> > > > for data persistence, potentially we might need some pflash device
+> > > > exposed as storage for SVSM to use. Would such a dependancy be
+> > > > something expressed in the IGVM file, or would it be knowledge that
+> > > > is out of band ?
+> > > > 
+> > > Yes, the IGVM file can indeed contain both OVMF and SVSM binaries. In fact,
+> > > that
+> > > is exactly what we are doing with the COCONUT-SVSM project. See [1] for the
+> > > IGVM
+> > > builder we use to package OVMF, bootloader components and the SVSM ELF
+> > > binary.
+> > > 
+> > > Data persistence is something that is definitely going to be needed in the
+> > > SVSM.
+> > > At present, this cannot be configured using any of the directives in the
+> > > IGVM
+> > > specification but instead requires QEMU to be configured correctly to
+> > > support
+> > > the application embedded within the IGVM file itself. You could however
+> > > populate
+> > > metadata pages using IGVM that describe the storage that is _expected_ to be
+> > > present, and validate that within the firmware itself. 
+> > > 
+> > > The real value from IGVM comes from the ability to describe the initial
+> > > memory
+> > > and initial CPU state which all forms part of the launch measurement and
+> > > initial
+> > > boot procedure, allowing the expected launch measurement to be calculated
+> > > from a
+> > > single IGVM file for multiple virtualisation stacks or configurations. Thus,
+> > > most of the directives in the IGVM file directly have an effect on the
+> > > launch
+> > > measurement. I'm not sure configuring a storage device or other hardware
+> > > configuration fits well with this.
+> > 
+> > Yeah, I can understand if IGVM scope should be limited to just memory
+> > and CPU setup.
+> > 
+> > If we use the firmeware descriptor files, we could define capabilities
+> > in that to express a need for a particular type of persistent storage
+> > to back the vTPM. So having this info in IGVM files isn't critical.
 > 
-> Can we use GetDiskSpaceInformationA to return this information
-> on Windows ? In contrast to GetDiskFreeSpaceExA(), the
-> DISK_SPACE_INFORMATION struct details both the real sizes
-> and the current user available sizes.
+> I'll need to look into firmware descriptor files as I'm unfamiliar with how they
+> work. Would I need to make any additions to this patch series to support this in
+> QEMU? Or is this all handled by libvirt?
+
+Probably little more than change docs/interop/firmware.json
+to add 'igvm' as a FirmwareDevice option to indicate this is
+a new way of exposing it to the guest.
+
+At some point we might also want to expand FirmwareFeature
+eg to report a "vtpm" feature.
+
+
+> > > Whether IGVM is just another firmware file format or not, it certainly is
+> > > used
+> > > mutually exclusively with other firmware files. Integration with firmware
+> > > descriptors does seem to make sense. 
+> > > 
+> > > One further question if this is the case, would we want to switch from
+> > > specifying an "igvm-file" as a parameter on the "ConfidentialGuestSupport"
+> > > object to providing the file using the "-bios" parameter, or maybe even a
+> > > dedicated "-igvm" parameter?
+> > 
+> > If the IGVM format is flexible enough that it could be used for any VM
+> > type, even non-confidential VMs, then having its config be separate from
+> > ConfidentialGuestSUpport would make sense. If it is fundamentally tied
+> > to CVMs, then just a property is fine I guess.
+> > 
+> > Probably best to stay away from -bios, to avoid overloading new semantics
+> > onto a long standing argument.
 > 
+> Currently, the IGVM specification only contains support for confidential
+> platforms. It could theoretically be used for non-confidential platforms but
+> that would require changes to the IGVM specification itself to support this. I
+> don't think it makes sense to extend this to non-confidential VMs until the
+> specification supports this, so I'll leave it as a property of
+> ConfidentialGuestSupport.
 
-It seems that this API has only been included in mingw64 recently:
-https://github.com/mingw-w64/mingw-w64/commit/66546556
+Sounds good.
 
-Apparently since it happened there hasn't been a new release of mingw64,
-so the latest version v11.0.1 still doesn't have it.  So I guess we have
-no choice but to leave Win fields as-is for now and switch to the new
-API later.
-
->>      fs->has_used_bytes = false;
->>      if (len == 0) {
->>          fs->mountpoint = g_strdup("System Reserved");
->> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
->> index b8efe31897..093a5ab602 100644
->> --- a/qga/qapi-schema.json
->> +++ b/qga/qapi-schema.json
->> @@ -1031,8 +1031,18 @@
->>  # @type: file system type string
->>  #
->>  # @used-bytes: file system used bytes (since 3.0)
->> +#     * POSIX: (f_blocks - f_bfree) * f_frsize, as returned by statvfs(3)
->> +#     * Windows: (TotalNumberOfBytes - TotalNumberOfFreeBytes), as returned
->> +#       by GetDiskFreeSpaceEx()
->>  #
->>  # @total-bytes: non-root file system total bytes (since 3.0)
->> +#     * POSIX: (f_blocks - f_bfree + f_bavail) * f_frsize, as returned by
->> +#       statvfs(3)
->> +#     * Windows: TotalNumberOfBytes, as returned by GetDiskFreeSpaceEx()
->> +#
->> +# @total-bytes-root: total file system size in bytes (as visible for a
->> +#     priviledged user) (since 8.3)
->> +#     * POSIX only: (f_blocks * f_frsize), returned by statvfs(3)
-> 
-> I tend to wonder whether it is really a good idea to document
-> our specific implementation details in the public API
-> 
-> I might suggest
-> 
->   @total-bytes: filesystem capacity in bytes for unprivileged users
->   @total-bytes-root: filesystem capacity in bytes for privileged users
->
-
-My initial intent was to get rid of the necessity to dig into the
-sources in order to understand what those values mean.  But since we're
-discussing changes in the implementation, I guess it is wise not to
-mention those details indeed.
-
-> also should we call it 'total-bytes-privilegd', to avoid UNIX specific
-> terminology.
-> 
-
-Agreed.
-
->>  #
->>  # @disk: an array of disk hardware information that the volume lies
->>  #     on, which may be empty if the disk type is not supported
->> @@ -1042,7 +1052,7 @@
->>  { 'struct': 'GuestFilesystemInfo',
->>    'data': {'name': 'str', 'mountpoint': 'str', 'type': 'str',
->>             '*used-bytes': 'uint64', '*total-bytes': 'uint64',
->> -           'disk': ['GuestDiskAddress']} }
->> +           '*total-bytes-root': 'uint64', 'disk': ['GuestDiskAddress']} }
->>  
->>  ##
->>  # @guest-get-fsinfo:
->> -- 
->> 2.39.3
->>
-> 
-> With regards,
-> Daniel
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
