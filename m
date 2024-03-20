@@ -4,82 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8103CC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 04:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FB13C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 04:33:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmndH-0007X0-Pr; Wed, 20 Mar 2024 00:32:55 -0400
+	id 1rmne8-00089C-81; Wed, 20 Mar 2024 00:33:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rmndF-0007Sy-Q7; Wed, 20 Mar 2024 00:32:53 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rmndE-0004DN-73; Wed, 20 Mar 2024 00:32:53 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1dde26f7e1dso46016435ad.1; 
- Tue, 19 Mar 2024 21:32:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710909170; x=1711513970; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h9rtxvCIzETuZUnS9W1quvxjGH0fkoLHMA2qUuv7fwk=;
- b=Fxq3SGVUAA6gb3pXWyXQJxNFMp4s/lXv0Pa24yY3a1FfDZuecVN3kg5jPIXYbI1JEP
- +WdoEb2LWo7BQpy3ukbC7cbHNsOpUDD/q6PP1BGG+xifFsOI0OzPOvYWtb0QG8bPvNN1
- Sld90hRm1DwuPv1PyQJz49oHwXUDF8Bw74+EZBMLMaePHJnKOQTlutNFGnV3RJiQ6xgp
- ZsiU53Vkwipuw78bRB19KdpYgcQfsQYC4K2y8YaVZPjMATvNt0+msW2XqKjr8OwIM5Uw
- Es0KMEjd10i7XpomKXgqDzGAN7YsZetBIyKBsp0mUz3aWeT6LWaYOeRJlm7TaA8fAihE
- M9TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710909170; x=1711513970;
- h=in-reply-to:references:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=h9rtxvCIzETuZUnS9W1quvxjGH0fkoLHMA2qUuv7fwk=;
- b=dUO00CmCaFktJwdhHYx7hAsjh7bU8tH4VzWMIuDwfNNp10YU6kNizoQVCd1bAyfjoY
- qFtXNPUAfgPDUy3C8dYerQt8ikIDU2m286X/E74wFebKLQgWb9e6cfYF/o2KnZyd7Myj
- 2bre/jJqUYsHNRWtLkEycHlUSFcd/xLMQ90uj8q1ZQClFAmAlTo0Y5a0g0wj75mxXuhK
- T1PrWaaCQC2O7wGrCYy/dB7gbYI7tA/EeLAFwe2reVGZthJpWy/bwmrpaNCPmmfzMgr3
- FXVoj2C8X+eOyZvMwDm81AaTGozeBpQ2FIm3hhjAzE3sYUQUfBeRitsnFYjFLEFLyw+F
- j1Fg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWi2KdY+5sy8RHvppUHTJUo5MnRcPOW2AIfHxmxiTPxxQDlB9uQEWizg0V0gvAL7VwATxSnubrwrsF3hBtumurG67RRPQCAAk9B2QGJa8QsRfc+lNT0ccOsurE=
-X-Gm-Message-State: AOJu0YytL7FtB2W4G9LIcMI93pw+L5kV43LP4QsDuVSP4cMkiyXfgyNh
- q9vNoru7c9LNUxJ3RGtA3nNaJTO4wR2elbHFG2DF44l1T3iLGp/YHXIHuPW7Xl8=
-X-Google-Smtp-Source: AGHT+IGmfjnLrP1lNbWHKstXSyXuFPUaxHFNI9wXOw+sn6T20ezipDX4+ypKiH3zoAe+y4J1m84+Bg==
-X-Received: by 2002:a17:902:ec88:b0:1df:f8a4:5485 with SMTP id
- x8-20020a170902ec8800b001dff8a45485mr14427736plg.57.1710909170234; 
- Tue, 19 Mar 2024 21:32:50 -0700 (PDT)
-Received: from localhost (193-116-208-39.tpgi.com.au. [193.116.208.39])
- by smtp.gmail.com with ESMTPSA id
- o1-20020a170902d4c100b001dd8d7d4a5csm6130175plg.90.2024.03.19.21.32.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 19 Mar 2024 21:32:49 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 20 Mar 2024 14:32:45 +1000
-Message-Id: <CZYAOK7KXUIF.A67FWNEYD5VI@wheely>
-Subject: Re: [PATCH 2/2] target/ppc: Fix GDB register indexing on secondary
- CPUs
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Benjamin Gray" <bgray@linux.ibm.com>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.15.2
+ (Exim 4.90_1) (envelope-from <bgray@linux.ibm.com>)
+ id 1rmndy-00087S-Gg; Wed, 20 Mar 2024 00:33:38 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bgray@linux.ibm.com>)
+ id 1rmndt-0004IT-8b; Wed, 20 Mar 2024 00:33:36 -0400
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42K3Rdjp008291; Wed, 20 Mar 2024 04:33:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=exZOxHuPu1owq4dH7IQDLxpCY8Xv3CdMd/nEPcrGaCM=;
+ b=cLdWMRWknyPBejkMa084X79Sbc2UPIa3afnTcV3xv96mKR0WqzztmismqhMTI6mAgOyv
+ N1PgOKVnunZ5fc8Ogi8Mjh0fu7keP/Baq2c+VlE59+97cvJu5drhPrNRYJRpkZUoSVxh
+ RPWq4Rbfrx1LkD7H01WDmWbDUS/aAuNui+2dFzWcJfo+VPqBsyHlcdUWf1tnQImCMFiu
+ bwuk/Er74SGi/PANzsvgfU+crlbhhiaG62DjbPBB89aP+P19TEj+OVnefV6p//I3B5gq
+ KdoPbIMC4ZMlb3GbOs+v0YVdbGiV+gwh+4Gr85Zem7rQNycl3iwyjc9hqdKlF0gXfy2d nQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wyqwh82u7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Mar 2024 04:33:30 +0000
+Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42K4XUkN014183;
+ Wed, 20 Mar 2024 04:33:30 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wyqwh82u5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Mar 2024 04:33:30 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42K3AEb4002773; Wed, 20 Mar 2024 04:33:29 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wwrf2kme3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Mar 2024 04:33:29 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42K4XPbw50397524
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 20 Mar 2024 04:33:27 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C4EE52004E;
+ Wed, 20 Mar 2024 04:33:25 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EBE4A20040;
+ Wed, 20 Mar 2024 04:33:24 +0000 (GMT)
+Received: from ozlabs.au.ibm.com (unknown [9.192.253.14])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 20 Mar 2024 04:33:24 +0000 (GMT)
+Received: from [10.61.2.107] (haven.au.ibm.com [9.192.254.114])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ozlabs.au.ibm.com (Postfix) with ESMTPSA id 2237960305;
+ Wed, 20 Mar 2024 15:33:22 +1100 (AEDT)
+Message-ID: <648b18644fe587cc3ae70e6a3081a0835f80a4c0.camel@linux.ibm.com>
+Subject: Re: [PATCH 1/2] target/ppc: Restore [H]DEXCR to 64-bits
+From: Benjamin Gray <bgray@linux.ibm.com>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Date: Wed, 20 Mar 2024 15:33:21 +1100
+In-Reply-To: <CZYANK3U3EOT.2S7V8APCPDKSS@wheely>
 References: <20240320015025.372056-1-bgray@linux.ibm.com>
- <20240320015025.372056-2-bgray@linux.ibm.com>
-In-Reply-To: <20240320015025.372056-2-bgray@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ <CZYANK3U3EOT.2S7V8APCPDKSS@wheely>
+Autocrypt: addr=bgray@linux.ibm.com; prefer-encrypt=mutual;
+ keydata=mDMEYzuwexYJKwYBBAHaRw8BAQdAsgBYEqW6nNaL7i0B3z1RqyMl8ADupDef+5Sfe+JbzeC0I0JlbmphbWluIEdyYXkgPGJncmF5QGxpbnV4LmlibS5jb20+iJMEExYKADsWIQQ9K5v9I+L06Hi4yOJ5xrdpFsvehAUCYzuwewIbAwULCQgHAgIiAgYVCgkICwIEFgIDAQIeBwIXgAAKCRB5xrdpFsvehCiCAP4g7CDkmsakpwv9QxU2D8dophyCIS8meDOQX4/83/sjHgEA5HWbUsbRCpVmeIgu0iNwhw3cmqhkv7ZkBGe3HhHaXg65Ay4EYzuwkREIAJjQ1EDAmLbOENucLy7VUzyNNCHkBirK/+FbjwOW7VIphc8zgsbZ26ZjIu5vC1NY7U7DpOvLAfR0g4+2QeKiQ8EEcuxLhif5X+jsekq0oSTVLcyNYXArJ3mhmV7jRhz8wBueMoXY/k+P3HCVLi4vzroJzN06Hrnmeu5ELlC4MbuvGRTvW751Y/o7gTa6hyyLb2P4pQ+sj/PuIn2Ly1RJPF839HVcOOERkjZ2QZNJnXEhlpfDD7LyRsy9Xm6MxGKRE5VsfjaO+Q8B6ByhXIy5/QK41AF1uSIPBfkZ8+AsBFw8Z87VGQ61tDdzi0U77IdYr98KsgRJ30vHInfKKdSj4csBALzNKjOFmp7dS8mefp3viouy4vWPla8+XZU6ZrRNtD8hB/9FsE7KVTdIBp4xqf6oN1ieTD7PNsQsBQWdDA/rg2bP7IJQkf4Pvn0yoATOFgqhQwadkwT7fwWAfk0YPEE+DPom1V3JwNM6wPaEJeNaMjleqTfAfauLaB9Sc+zJvN5cORrEjSL/0jfJBBdjW5j5BmdUDM1mGuBNVQhGlWHc/Rf7qokMoZAfYiPi/z44rB9zvNfb8t6sVNqHbC2fKRBn/0k8cZ9+qBEIj6vbkqUuih8xNDA+TU+FxPqJxyahqFv+LL9cfZelC0v3D
+ mjW5LaBPOdGiiDE1w95Ri9HRK27S2dRZpyib9L4mkfYWPAF41mTudjKmVpgtBLO//rO+zmF04OMB/4sWJhLfvhq1CXULDqw5dcuIAIYwf2ughOtyAPFK1ViDcMO5X1bVpNAFO5m4VBpZvFDQ0j0JfqfVBdL68uH05W1/8dMj76RaWj5m0rLM5slY1FQUPddSU+ic9vaZhlDepjU3ZyI8fmioofNGHaxJq6uNTytKdj87kwDV6PQ4hmuGtY56C7JCgjp053sRJ6sXqgKBWfe4ZOJH17mQm+fws93byLoZvvz4Z3im0Rb0MlFo/WirNyhu+TmTNLpnzFUZfenoKrqAkZLY8u1iCFquhgqA321P+sfYew66DtwQmaoi2GKmF89y2enXXzjLNKfLDKkuVoKxFSPeizYqrLi22R9iO8EGBYKACAWIQQ9K5v9I+L06Hi4yOJ5xrdpFsvehAUCYzuwkQIbAgCBCRB5xrdpFsvehHYgBBkRCAAdFiEESFUlaLYscsf4Dt5gaavCcpI6D/8FAmM7sJEACgkQaavCcpI6D/95UgEAqfSj0QhCrYfazQiLDKJstrz3oIKFjhB6+FYMZqt+K1MA/2ioFtHbypeeWbsqYYRhRyTjAKcvE1NZGtH/YWLgkViUidoBAN6gFX/P+VWB77/w8S/BnPmnJx45wmphlkCL8ckOyopFAQCj9eWamHCl2DSaASMSuoZed6C6Gm0OFtuZh/r8K485BQ==
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: pIUuBPf3yH7fKTukPX1hdeumkj2aXKnj
+X-Proofpoint-GUID: fUq7cTpMMGKfHUmyvOjCJQ70iJ_zXd73
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-20_01,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ mlxlogscore=999 malwarescore=0 suspectscore=0 impostorscore=0 spamscore=0
+ phishscore=0 adultscore=0 bulkscore=0 clxscore=1015 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2403140000 definitions=main-2403200033
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=bgray@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,88 +122,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Mar 20, 2024 at 11:50 AM AEST, Benjamin Gray wrote:
-> The GDB server protocol assigns an arbitrary numbering of the SPRs.
-> We track this correspondence on each SPR with gdb_id, using it to
-> resolve any SPR requests GDB makes.
->
-> Early on we generate an XML representation of the SPRs to give GDB,
-> including this numbering. However the XML is cached globally, and we
-> skip setting the SPR gdb_id values on subsequent threads if we detect
-> it is cached. This causes QEMU to fail to resolve SPR requests against
-> secondary CPUs because it cannot find the matching gdb_id value on that
-> thread's SPRs.
->
-> This is a minimal fix to first assign the gdb_id values, then return
-> early if the XML is cached. Otherwise we generate the XML using the
-> now already initialised gdb_id values.
+On Wed, 2024-03-20 at 14:31 +1000, Nicholas Piggin wrote:
+> On Wed Mar 20, 2024 at 11:50 AM AEST, Benjamin Gray wrote:
+> > The DEXCR emulation was recently changed to a 32-bit register,
+> > possibly
+> > because it does have a 32-bit read-only view. It is a full 64-bit
+> > SPR though, so use the corresponding 64-bit write functions.
+> >=20
+>=20
+> Thanks, paper bag for me.
+>=20
+> > Fixes: c9de140c2171 ("target/ppc: Fix width of some 32-bit SPRs")
+>=20
+> Should that hash be fbda88f7abdee?
+>=20
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Oops, yeah, somehow pasted the local commit hash for this patch itself
 
->
-> Fixes: 1b53948ff8f7 ("target/ppc: Use GDBFeature for dynamic XML")
-> Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
-> ---
->  target/ppc/gdbstub.c | 31 ++++++++++++++++++++-----------
->  1 file changed, 20 insertions(+), 11 deletions(-)
->
-> diff --git a/target/ppc/gdbstub.c b/target/ppc/gdbstub.c
-> index 3f1e61bdb7..3b28d4e21c 100644
-> --- a/target/ppc/gdbstub.c
-> +++ b/target/ppc/gdbstub.c
-> @@ -305,14 +305,6 @@ static void gdb_gen_spr_feature(CPUState *cs)
->      unsigned int num_regs =3D 0;
->      int i;
-> =20
-> -    if (pcc->gdb_spr.xml) {
-> -        return;
-> -    }
-> -
-> -    gdb_feature_builder_init(&builder, &pcc->gdb_spr,
-> -                             "org.qemu.power.spr", "power-spr.xml",
-> -                             cs->gdb_num_regs);
-> -
->      for (i =3D 0; i < ARRAY_SIZE(env->spr_cb); i++) {
->          ppc_spr_t *spr =3D &env->spr_cb[i];
-> =20
-> @@ -320,9 +312,6 @@ static void gdb_gen_spr_feature(CPUState *cs)
->              continue;
->          }
-> =20
-> -        gdb_feature_builder_append_reg(&builder, g_ascii_strdown(spr->na=
-me, -1),
-> -                                       TARGET_LONG_BITS, num_regs,
-> -                                       "int", "spr");
->          /*
->           * GDB identifies registers based on the order they are
->           * presented in the XML. These ids will not match QEMU's
-> @@ -335,6 +324,26 @@ static void gdb_gen_spr_feature(CPUState *cs)
->          num_regs++;
->      }
-> =20
-> +    if (pcc->gdb_spr.xml) {
-> +        return;
-> +    }
-> +
-> +    gdb_feature_builder_init(&builder, &pcc->gdb_spr,
-> +                             "org.qemu.power.spr", "power-spr.xml",
-> +                             cs->gdb_num_regs);
-> +
-> +    for (i =3D 0; i < ARRAY_SIZE(env->spr_cb); i++) {
-> +        ppc_spr_t *spr =3D &env->spr_cb[i];
-> +
-> +        if (!spr->name) {
-> +            continue;
-> +        }
-> +
-> +        gdb_feature_builder_append_reg(&builder, g_ascii_strdown(spr->na=
-me, -1),
-> +                                       TARGET_LONG_BITS, spr->gdb_id,
-> +                                       "int", "spr");
-> +    }
-> +
->      gdb_feature_builder_end(&builder);
->  }
->  #endif
+> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+>=20
+> > Signed-off-by: Benjamin Gray <bgray@linux.ibm.com>
+> > ---
+> > =C2=A0target/ppc/cpu_init.c | 4 ++--
+> > =C2=A01 file changed, 2 insertions(+), 2 deletions(-)
+> >=20
+> > diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> > index 7e65f08147..22fdea093b 100644
+> > --- a/target/ppc/cpu_init.c
+> > +++ b/target/ppc/cpu_init.c
+> > @@ -5820,7 +5820,7 @@ static void
+> > register_power10_dexcr_sprs(CPUPPCState *env)
+> > =C2=A0{
+> > =C2=A0=C2=A0=C2=A0=C2=A0 spr_register(env, SPR_DEXCR, "DEXCR",
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 SPR_NOACCESS, SPR_NOACCESS,
+> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &sp=
+r_read_generic, &spr_write_generic32,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &sp=
+r_read_generic, &spr_write_generic,
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 0);
+> > =C2=A0
+> > =C2=A0=C2=A0=C2=A0=C2=A0 spr_register(env, SPR_UDEXCR, "UDEXCR",
+> > @@ -5831,7 +5831,7 @@ static void
+> > register_power10_dexcr_sprs(CPUPPCState *env)
+> > =C2=A0=C2=A0=C2=A0=C2=A0 spr_register_hv(env, SPR_HDEXCR, "HDEXCR",
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 SPR_NOACCESS, SPR_NOACCESS,
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 SPR_NOACCESS, SPR_NOACCESS,
+> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &sp=
+r_read_generic, &spr_write_generic32,
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &sp=
+r_read_generic, &spr_write_generic,
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 0);
+> > =C2=A0
+> > =C2=A0=C2=A0=C2=A0=C2=A0 spr_register(env, SPR_UHDEXCR, "UHDEXCR",
+>=20
 
 
