@@ -4,133 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC31BC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 23:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46018C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 23:29:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rn5Ar-0006gd-D0; Wed, 20 Mar 2024 19:16:45 -0400
+	id 1rn5MF-00016d-9g; Wed, 20 Mar 2024 19:28:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=780965bb6d=aidan_leuck@selinc.com>)
- id 1rn5Ao-0006dE-P9
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 19:16:42 -0400
-Received: from mx0a-000e8d01.pphosted.com ([148.163.147.191])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=780965bb6d=aidan_leuck@selinc.com>)
- id 1rn5Al-0005BT-Th
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 19:16:42 -0400
-Received: from pps.filterd (m0136172.ppops.net [127.0.0.1])
- by mx0b-000e8d01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
- 42KLmLO5021832; Wed, 20 Mar 2024 16:16:37 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=selinc.com; h=
- from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding:content-type; s=sel1; bh=TIWswMUwU708
- 5K4slczuCu0C5wzCwy1y7XFU5sR4T40=; b=X8tQ2J5FDpTH29HHfzCGaa/Y3r9U
- aE3U1UMjTdRkZf0jgSIb60CaMOlX9Qb+LCrq/K3/60NA3GY5xhR0h0SUJgSVNFhS
- sycIehOhcV3tccAm7oW8E91EaAYNkhYriesmo8efjw7emltCfGLel+EvSrk0TWX+
- uNvHxXM8EwCrwditfcfZx1Rbo4+N39dG9sos6rd8c24ZiXEyHaK3IfPIAz2sWc9q
- 9R0nYsxTSjRS7HtnW3IasSo/iVKVF8BeCNKptHhoq9IN2rm8RFp5AGckaS58etJ3
- MPCofsW9ij0fLuX1PP93lm7Q2uO6hGerjqQg7NdzaQZnwk6wEQMkE18fIw==
-Received: from nam12-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam12lp2041.outbound.protection.outlook.com [104.47.66.41])
- by mx0b-000e8d01.pphosted.com (PPS) with ESMTPS id 3x07y601qt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 20 Mar 2024 16:16:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ELXlKtwzEVLWmMmbjl5mbIEOp0xoc5QeJQm88a7m801YWs28gAf0bnZfmDCJ2fqZymgyimGHzD5EH4MtQdSZToGUo0y24FXGzCcBFe7KR4Lmc/Q3FSy6BlitudBaqX0RWkPAOkzuZdJ/YYqw21rEXO25MyuwR+hMkzMmS8qZE172wYqFz4UXY9wouvfHy8UtVxlyodRbbyc1J56V7c/LQa92mdHp71EkpHxba6SRWkKA4OLgBjZZkCrAtzSRJm5bnwwJFrUE++502fCweux9BQR4b7Div71Dsn4501+QVMFb5bmQkQRmYIZzQpd3tS0eh8jfZQQzuK53bqknkEozDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TIWswMUwU7085K4slczuCu0C5wzCwy1y7XFU5sR4T40=;
- b=CMFA9+t0Ey7WOPQ223w124vUfkNOewDhaiV9Vys/dOGpqGhghfkjjbZAFe+ldgz3nYFAzIUrxy/Q0aMFA3u4cq58AfaRyhJVKOv87jCJWENKiP1CcEeXLGYT7XVEBNkAATDzzNN6UoSzkt68IRMQ5JBHaiIG1ZFU3lhIwl7Uf2ZDtamTEIsZgcI7Prz12IFmdc6UGyGuUZJjx5qWy9+QRcqanZRpnNwKPbMPxc5xuAhi1cHL9RUziC+lbqno3Y8orZrZFmE5UnPUS2UrO/fi5U/AteV4KwDbuzfDKkLZZwuRw4Xt3nMXuiQ9LqkikwYWztsEaQuKr94LHl04M+jlSQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 74.117.212.83) smtp.rcpttodomain=nongnu.org smtp.mailfrom=selinc.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=selinc.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=selinc.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TIWswMUwU7085K4slczuCu0C5wzCwy1y7XFU5sR4T40=;
- b=LTUQ9At/kt1b0HP91pnciAhZtjfxgUPZsbhDiIlVWS4A8zPqSTIRyjyeNbr23ks3YeB4JyyMlm056voyw6ubS1nDHGwTeW+n463FbkdKNXDbTczXWyTY3vLZomCkGIpQ+K8mv+WC7JEZTQwVtIVzN7l0W+8tErKX21M09+CRBL0hs/Jbf/SLCB1F5VUWBlm5dF7xnTeXRkTBeZoTPgFbbSztxIwUd93G7GSzk0e0gIxbr5fBTRmPA88NXB9ewXj8uKxfRi/cSvlyw8nRWnD2yJJL6DUGp/E49ijBEfa9m1hs25upCUBdpKV8S/fB9vhjg9oon5npeV1Z05W7J3x+lQ==
-Received: from BN9PR03CA0198.namprd03.prod.outlook.com (2603:10b6:408:f9::23)
- by EA2PR22MB5357.namprd22.prod.outlook.com (2603:10b6:303:250::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.34; Wed, 20 Mar
- 2024 23:16:34 +0000
-Received: from BN2PEPF000044A2.namprd02.prod.outlook.com
- (2603:10b6:408:f9:cafe::26) by BN9PR03CA0198.outlook.office365.com
- (2603:10b6:408:f9::23) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.27 via Frontend
- Transport; Wed, 20 Mar 2024 23:16:34 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 74.117.212.83)
- smtp.mailfrom=selinc.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=selinc.com;
-Received-SPF: Pass (protection.outlook.com: domain of selinc.com designates
- 74.117.212.83 as permitted sender) receiver=protection.outlook.com;
- client-ip=74.117.212.83; helo=email.selinc.com; pr=C
-Received: from email.selinc.com (74.117.212.83) by
- BN2PEPF000044A2.mail.protection.outlook.com (10.167.243.153) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 23:16:34 +0000
-Received: from AIDALEUCPC3.ad.selinc.com (10.100.90.200) by
- wpul-exchange1.ad.selinc.com (10.53.14.22) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 20 Mar 2024 16:16:31 -0700
-From: <aidan_leuck@selinc.com>
-To: <qemu-devel@nongnu.org>
-CC: <kkostiuk@redhat.com>, Aidan Leuck <aidan_leuck@selinc.com>
-Subject: [PATCH v2 2/2] Implement QEMU GA commands for Windows
-Date: Wed, 20 Mar 2024 17:16:23 -0600
-Message-ID: <20240320231623.2005756-1-aidan_leuck@selinc.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rn5MC-00016D-Sa
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 19:28:28 -0400
+Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rn5Lz-00070z-HG
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 19:28:28 -0400
+Received: by mail-yb1-xb33.google.com with SMTP id
+ 3f1490d57ef6-d9b9adaf291so327698276.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 16:28:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1710977291; x=1711582091; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zJzBq5JYuB2XAGJ0KALCMa2K2ac89AEZaVfd/fyT9P0=;
+ b=Tokzkw+cLTaltMHI3tZlm1fw48xon8QRngujuBxidiA7BHJlroHszQTfF/C4tE5XF9
+ vpKxtTRBJjIbIMmSioEaXa4w/F3wiR2wwLugN1v20OwfVPW1vpvO4heoOHjSPQ9Plfq/
+ Hn91UUohy1vc96J4ottYKwn7k72OkY8ljTGsZxOnMThu/diglkrQvAw0PBhaCJuOCr1H
+ x4H7cItgCqUi03wiT5EVNY/JG7zsl6f3K5RF2IhM5LPCExVBWTkfKYfPBx/jHQJ654IY
+ pjPpDIuKiQSjvv5T93Y+AVfyTmxJgxtEwEF0Wp+j1getN7OHO0jxVp3wTc5vHi9glzgc
+ rafQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710977291; x=1711582091;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zJzBq5JYuB2XAGJ0KALCMa2K2ac89AEZaVfd/fyT9P0=;
+ b=eOduTGw3X0qY1LmILFE02pnmQDxvnisgbGJeYkl37hsneN4nnNsSe+Iyfka8c/q2Nl
+ kcJ9IrcjmKRloAeyxHYh4E8aN8iQCVL4lGDBrhXsr7w6Ld+rMEXM1T1O8MF4nhMmgXBd
+ bJ16qG0roTUspWgoBRjucsRs8wKukqykWxKmsT0GxrvLsfNU7qFMCU32ckkLMxl0sQ/W
+ Cy0W9/JCOJk89VxQsy1W5i7IU/Olg9KHBsTz/VYftyITqs9TeBLmNMj2imB4KV6iFE6L
+ 38m7KOPhFQg9xwzGfiZGGzcQaGQt/Nt9ul2py5m6PMNN4iMQFA8Eb6zUsUYSp0n7pTbb
+ b46w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIIhWbiad2KgLwhgHy7y2ur90BxxlC4eHNCBbwtOLzyu0wqv0RFUp8leYW23RMm0TOgoVdkibzmTlKX9I3G1VqYfogGUk=
+X-Gm-Message-State: AOJu0Yyq8a4DoJUiz70q4n6FDO04ybDRSIE4V9dBbgNwEl1+lYhc+PGi
+ IiSoLBqoXWpc5jnifS6CRLQx/a1rZecquZ34RDEGCuV+pHEnqNL5wPVI2Y07DXzReye1wyib+la
+ WT+lP9szH77CzP0mdwjEIp3Lqe2vBui+AfWevvQ==
+X-Google-Smtp-Source: AGHT+IFGJliSrDOUQ4ErqYoYgEzAjB2StnHNHTXjgXve2MnBnRyAPXbxRVaPnc6fOZEVfVxO8SzIJ0MjV2hraKOtNuk=
+X-Received: by 2002:a25:fe03:0:b0:dd1:517b:571d with SMTP id
+ k3-20020a25fe03000000b00dd1517b571dmr314816ybe.16.1710977290644; Wed, 20 Mar
+ 2024 16:28:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.100.90.200]
-X-ClientProxiedBy: wpul-exchange1.ad.selinc.com (10.53.14.22) To
- wpul-exchange1.ad.selinc.com (10.53.14.22)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF000044A2:EE_|EA2PR22MB5357:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0b51c7b8-7869-4ea5-3a76-08dc4933c8ea
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: lKaqT+SvhgNIoOg5FfIvkrAPnnbd4GV0mohQtSJ9EVJruJuZ6polAXmHv+1cJ2s6JIrP/W/AZBZnhqDqzPfn3RRhHIoBgxUTKwv8HeVPM+w4G3mf1zFIWmCx/8Y96jH8M9KYTPoT9m9XacZifnRGG14JkosRdASRuZiQTS6e5xqSmOFcdG1Cv+JJpUgeVARzXtoyyA4hojxnaRCV054axaLwDZEui2x663x0YnpiAG7XRPT5KnYAyQ0zDpNm14Nm7ukegzm8XH0CPEh6VqeSZNcykmkp1+DlzpAjK5sj4Lg12FWhF9Gm+CB73s/njqMd1ZSlzUtzyNVXskDaMd9AkmrOE9jS+tNkl6TGFL/i8WY2SLWDwyUtJfqkQ4QjoyjKfN8mKHGxFWYgszW15e+f9WBg9+/z0os4sAqUkwS5o5M+zVpZSk5tr1A6aLBBzFuFZM0659Ce02ZLNxMQORUhWO7zF+AN8CHW0MS5zzArz8Dq5QiGdAy57T66aGz/s2A9yfvA8dqgdJuvYhXnwQnFAZ6+6eQxWOu0wDlqduxuPrE71lzvqMkFnzj98LrYmI7Vu1pdj8d3iG7k6VGr6DVUd1tROOKkEsfs+7Z+RqBqQHHxE8SWiWljnyRKFS7/jQ4Qsw1mSC6/VUhi1+Y7B/8PWRh1PSipfdEqqi8uL+FYvLaCuCLOEtBJARzJEW2plShs0ewNk7OaGNp2hwCypDb2c0N54dhT4IExNBhaFi6TIQ+FCeGVyOgt4FO/GEFMs7Bs
-X-Forefront-Antispam-Report: CIP:74.117.212.83; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:email.selinc.com; PTR:wpul-exchange1.selinc.com; CAT:NONE;
- SFS:(13230031)(376005)(1800799015)(36860700004)(82310400014); DIR:OUT;
- SFP:1102; 
-X-OriginatorOrg: selinc.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 23:16:34.0689 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b51c7b8-7869-4ea5-3a76-08dc4933c8ea
-X-MS-Exchange-CrossTenant-Id: 12381f30-10fe-4e2c-aa3a-5e03ebeb59ec
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=12381f30-10fe-4e2c-aa3a-5e03ebeb59ec; Ip=[74.117.212.83];
- Helo=[email.selinc.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044A2.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: EA2PR22MB5357
-X-Proofpoint-GUID: OEIJDJ1rwNNBO_FEHjKasejxyVhuGIgz
-X-Proofpoint-ORIG-GUID: OEIJDJ1rwNNBO_FEHjKasejxyVhuGIgz
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0
- lowpriorityscore=0 mlxscore=0 priorityscore=1501 bulkscore=0 adultscore=0
- mlxlogscore=996 spamscore=0 clxscore=1015 phishscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2403140001
- definitions=main-2403200185
-Received-SPF: pass client-ip=148.163.147.191;
- envelope-from=prvs=780965bb6d=aidan_leuck@selinc.com;
- helo=mx0a-000e8d01.pphosted.com
+References: <20240320061041.3246828-1-horenchuang@bytedance.com>
+ <20240320061041.3246828-2-horenchuang@bytedance.com>
+ <87edc5s7ea.fsf@yhuang6-desk2.ccr.corp.intel.com>
+In-Reply-To: <87edc5s7ea.fsf@yhuang6-desk2.ccr.corp.intel.com>
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Date: Wed, 20 Mar 2024 16:27:59 -0700
+Message-ID: <CAKPbEqrfdJwHCuc9yvSBXa2jR-KwXwaa-dFD6iMmXT_OiweYmg@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v3 1/2] memory tier: dax/kmem: create
+ CPUless memory tiers after obtaining HMAT info
+To: "Huang, Ying" <ying.huang@intel.com>
+Cc: Gregory Price <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com, 
+ tj@kernel.org, john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
+ Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
+ Alistair Popple <apopple@nvidia.com>,
+ Srinivasulu Thanneeru <sthanneeru@micron.com>, 
+ Dan Williams <dan.j.williams@intel.com>,
+ Vishal Verma <vishal.l.verma@intel.com>, 
+ Dave Jiang <dave.jiang@intel.com>, Andrew Morton <akpm@linux-foundation.org>,
+ nvdimm@lists.linux.dev, 
+ linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+ "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org, 
+ Hao Xiang <hao.xiang@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
+ envelope-from=horenchuang@bytedance.com; helo=mail-yb1-xb33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,302 +108,419 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aidan Leuck <aidan_leuck@selinc.com>
+On Wed, Mar 20, 2024 at 12:15=E2=80=AFAM Huang, Ying <ying.huang@intel.com>=
+ wrote:
+>
+> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+>
+> > The current implementation treats emulated memory devices, such as
+> > CXL1.1 type3 memory, as normal DRAM when they are emulated as normal me=
+mory
+> > (E820_TYPE_RAM). However, these emulated devices have different
+> > characteristics than traditional DRAM, making it important to
+> > distinguish them. Thus, we modify the tiered memory initialization proc=
+ess
+> > to introduce a delay specifically for CPUless NUMA nodes. This delay
+> > ensures that the memory tier initialization for these nodes is deferred
+> > until HMAT information is obtained during the boot process. Finally,
+> > demotion tables are recalculated at the end.
+> >
+> > More details:
+>
+> You have done several stuff in one patch.  So you need "more details".
+> You may separate them into multiple patches.  One for echo "*" below.
+> But I have no strong opinion on that.
+>
+> > * late_initcall(memory_tier_late_init);
+> > Some device drivers may have initialized memory tiers between
+> > `memory_tier_init()` and `memory_tier_late_init()`, potentially bringin=
+g
+> > online memory nodes and configuring memory tiers. They should be exclud=
+ed
+> > in the late init.
+> >
+> > * Abstract common functions into `mt_find_alloc_memory_type()`
+> > Since different memory devices require finding or allocating a memory t=
+ype,
+> > these common steps are abstracted into a single function,
+> > `mt_find_alloc_memory_type()`, enhancing code scalability and concisene=
+ss.
+> >
+> > * Handle cases where there is no HMAT when creating memory tiers
+> > There is a scenario where a CPUless node does not provide HMAT informat=
+ion.
+> > If no HMAT is specified, it falls back to using the default DRAM tier.
+> >
+> > * Change adist calculation code to use another new lock, `mt_perf_lock`=
+.
+> > In the current implementation, iterating through CPUlist nodes requires
+> > holding the `memory_tier_lock`. However, `mt_calc_adistance()` will end=
+ up
+> > trying to acquire the same lock, leading to a potential deadlock.
+> > Therefore, we propose introducing a standalone `mt_perf_lock` to protec=
+t
+> > `default_dram_perf`. This approach not only avoids deadlock but also
+> > prevents holding a large lock simultaneously.
+> >
+> > * Upgrade `set_node_memory_tier` to support additional cases, including
+> >   default DRAM, late CPUless, and hot-plugged initializations.
+> > To cover hot-plugged memory nodes, `mt_calc_adistance()` and
+> > `mt_find_alloc_memory_type()` are moved into `set_node_memory_tier()` t=
+o
+> > handle cases where memtype is not initialized and where HMAT informatio=
+n is
+> > available.
+> >
+> > * Introduce `default_memory_types` for those memory types that are not
+> >   initialized by device drivers.
+> > Because late initialized memory and default DRAM memory need to be mana=
+ged,
+> > a default memory type is created for storing all memory types that are
+> > not initialized by device drivers and as a fallback.
+> >
+> > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> > ---
+> >  drivers/dax/kmem.c           | 13 +----
+> >  include/linux/memory-tiers.h |  7 +++
+> >  mm/memory-tiers.c            | 94 +++++++++++++++++++++++++++++++++---
+> >  3 files changed, 95 insertions(+), 19 deletions(-)
+> >
+> > diff --git a/drivers/dax/kmem.c b/drivers/dax/kmem.c
+> > index 42ee360cf4e3..de1333aa7b3e 100644
+> > --- a/drivers/dax/kmem.c
+> > +++ b/drivers/dax/kmem.c
+> > @@ -55,21 +55,10 @@ static LIST_HEAD(kmem_memory_types);
+> >
+> >  static struct memory_dev_type *kmem_find_alloc_memory_type(int adist)
+> >  {
+> > -     bool found =3D false;
+> >       struct memory_dev_type *mtype;
+> >
+> >       mutex_lock(&kmem_memory_type_lock);
+> > -     list_for_each_entry(mtype, &kmem_memory_types, list) {
+> > -             if (mtype->adistance =3D=3D adist) {
+> > -                     found =3D true;
+> > -                     break;
+> > -             }
+> > -     }
+> > -     if (!found) {
+> > -             mtype =3D alloc_memory_type(adist);
+> > -             if (!IS_ERR(mtype))
+> > -                     list_add(&mtype->list, &kmem_memory_types);
+> > -     }
+> > +     mtype =3D mt_find_alloc_memory_type(adist, &kmem_memory_types);
+> >       mutex_unlock(&kmem_memory_type_lock);
+> >
+> >       return mtype;
+>
+> It seems that there's some miscommunication about my previous comments
+> about this.  What I suggested is to create one separate patch, which
+> moves mt_find_alloc_memory_type() and mt_put_memory_types() into
+> memory-tiers.c.  And make this patch the first one of the series.
+>
 
-Signed-off-by: Aidan Leuck <aidan_leuck@selinc.com>
----
- qga/commands-posix-ssh.c   | 47 +---------------------------
- qga/commands-ssh-core.c    | 57 +++++++++++++++++++++++++++++++++
- qga/commands-ssh-core.h    | 15 +++++++++
- qga/commands-windows-ssh.c | 64 --------------------------------------
- qga/commands-windows-ssh.h | 15 ++++-----
- qga/meson.build            |  5 +++
- 6 files changed, 86 insertions(+), 117 deletions(-)
- create mode 100644 qga/commands-ssh-core.c
- create mode 100644 qga/commands-ssh-core.h
+I will make mt_find_alloc/mt_put_memory_type changes as
+a separate patch and the first of my patch series. Thanks.
 
-diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-ssh.c
-index 236f80de44..9a71b109f9 100644
---- a/qga/commands-posix-ssh.c
-+++ b/qga/commands-posix-ssh.c
-@@ -9,6 +9,7 @@
- #include <locale.h>
- #include <pwd.h>
- 
-+#include "commands-ssh-core.h"
- #include "qapi/error.h"
- #include "qga-qapi-commands.h"
- 
-@@ -80,37 +81,6 @@ mkdir_for_user(const char *path, const struct passwd *p,
-     return true;
- }
- 
--static bool
--check_openssh_pub_key(const char *key, Error **errp)
--{
--    /* simple sanity-check, we may want more? */
--    if (!key || key[0] == '#' || strchr(key, '\n')) {
--        error_setg(errp, "invalid OpenSSH public key: '%s'", key);
--        return false;
--    }
--
--    return true;
--}
--
--static bool
--check_openssh_pub_keys(strList *keys, size_t *nkeys, Error **errp)
--{
--    size_t n = 0;
--    strList *k;
--
--    for (k = keys; k != NULL; k = k->next) {
--        if (!check_openssh_pub_key(k->value, errp)) {
--            return false;
--        }
--        n++;
--    }
--
--    if (nkeys) {
--        *nkeys = n;
--    }
--    return true;
--}
--
- static bool
- write_authkeys(const char *path, const GStrv keys,
-                const struct passwd *p, Error **errp)
-@@ -139,21 +109,6 @@ write_authkeys(const char *path, const GStrv keys,
-     return true;
- }
- 
--static GStrv
--read_authkeys(const char *path, Error **errp)
--{
--    g_autoptr(GError) err = NULL;
--    g_autofree char *contents = NULL;
--
--    if (!g_file_get_contents(path, &contents, NULL, &err)) {
--        error_setg(errp, "failed to read '%s': %s", path, err->message);
--        return NULL;
--    }
--
--    return g_strsplit(contents, "\n", -1);
--
--}
--
- void
- qmp_guest_ssh_add_authorized_keys(const char *username, strList *keys,
-                                   bool has_reset, bool reset,
-diff --git a/qga/commands-ssh-core.c b/qga/commands-ssh-core.c
-new file mode 100644
-index 0000000000..c77cee8a11
---- /dev/null
-+++ b/qga/commands-ssh-core.c
-@@ -0,0 +1,57 @@
-+ /*
-+  * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+  * See the COPYING file in the top-level directory.
-+  */
-+
-+#include "qemu/osdep.h"
-+#include <qga-qapi-types.h>
-+#include <stdbool.h>
-+#include "qapi/error.h"
-+#include "commands-ssh-core.h"
-+
-+GStrv read_authkeys(const char *path, Error **errp)
-+{
-+    g_autoptr(GError) err = NULL;
-+    g_autofree char *contents = NULL;
-+
-+    if (!g_file_get_contents(path, &contents, NULL, &err))
-+    {
-+        error_setg(errp, "failed to read '%s': %s", path, err->message);
-+        return NULL;
-+    }
-+
-+    return g_strsplit(contents, "\n", -1);
-+}
-+
-+bool check_openssh_pub_keys(strList *keys, size_t *nkeys, Error **errp)
-+{
-+    size_t n = 0;
-+    strList *k;
-+
-+    for (k = keys; k != NULL; k = k->next)
-+    {
-+        if (!check_openssh_pub_key(k->value, errp))
-+        {
-+            return false;
-+        }
-+        n++;
-+    }
-+
-+    if (nkeys)
-+    {
-+        *nkeys = n;
-+    }
-+    return true;
-+}
-+
-+bool check_openssh_pub_key(const char *key, Error **errp)
-+{
-+    /* simple sanity-check, we may want more? */
-+    if (!key || key[0] == '#' || strchr(key, '\n'))
-+    {
-+        error_setg(errp, "invalid OpenSSH public key: '%s'", key);
-+        return false;
-+    }
-+
-+    return true;
-+}
-diff --git a/qga/commands-ssh-core.h b/qga/commands-ssh-core.h
-new file mode 100644
-index 0000000000..9c9e992c62
---- /dev/null
-+++ b/qga/commands-ssh-core.h
-@@ -0,0 +1,15 @@
+
+> > diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.=
+h
+> > index 69e781900082..b2135334ac18 100644
+> > --- a/include/linux/memory-tiers.h
+> > +++ b/include/linux/memory-tiers.h
+> > @@ -48,6 +48,8 @@ int mt_calc_adistance(int node, int *adist);
+> >  int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+> >                            const char *source);
+> >  int mt_perf_to_adistance(struct access_coordinate *perf, int *adist);
+> > +struct memory_dev_type *mt_find_alloc_memory_type(int adist,
+> > +                                                     struct list_head =
+*memory_types);
+> >  #ifdef CONFIG_MIGRATION
+> >  int next_demotion_node(int node);
+> >  void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets);
+> > @@ -136,5 +138,10 @@ static inline int mt_perf_to_adistance(struct acce=
+ss_coordinate *perf, int *adis
+> >  {
+> >       return -EIO;
+> >  }
+> > +
+> > +struct memory_dev_type *mt_find_alloc_memory_type(int adist, struct li=
+st_head *memory_types)
+> > +{
+> > +     return NULL;
+> > +}
+> >  #endif       /* CONFIG_NUMA */
+> >  #endif  /* _LINUX_MEMORY_TIERS_H */
+> > diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+> > index 0537664620e5..d9b96b21b65a 100644
+> > --- a/mm/memory-tiers.c
+> > +++ b/mm/memory-tiers.c
+> > @@ -6,6 +6,7 @@
+> >  #include <linux/memory.h>
+> >  #include <linux/memory-tiers.h>
+> >  #include <linux/notifier.h>
+> > +#include <linux/acpi.h>
+>
+> We don't need this anymore.
+>
+
+Thanks. I will remove it.
+
+> >  #include "internal.h"
+> >
+> > @@ -36,6 +37,11 @@ struct node_memory_type_map {
+> >
+> >  static DEFINE_MUTEX(memory_tier_lock);
+> >  static LIST_HEAD(memory_tiers);
+> > +/*
+> > + * The list is used to store all memory types that are not created
+> > + * by a device driver.
+> > + */
+> > +static LIST_HEAD(default_memory_types);
+> >  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
+> >  struct memory_dev_type *default_dram_type;
+> >
+> > @@ -505,7 +511,8 @@ static inline void __init_node_memory_type(int node=
+, struct memory_dev_type *mem
+> >  static struct memory_tier *set_node_memory_tier(int node)
+> >  {
+> >       struct memory_tier *memtier;
+> > -     struct memory_dev_type *memtype;
+> > +     struct memory_dev_type *memtype, *mtype =3D NULL;
+>
+> It seems unnecessary to introduce another variable, just use memtype?
+>
+
+Yes, I will consolidate them.
+
+
+> > +     int adist =3D MEMTIER_ADISTANCE_DRAM;
+> >       pg_data_t *pgdat =3D NODE_DATA(node);
+> >
+> >
+> > @@ -514,7 +521,18 @@ static struct memory_tier *set_node_memory_tier(in=
+t node)
+> >       if (!node_state(node, N_MEMORY))
+> >               return ERR_PTR(-EINVAL);
+> >
+> > -     __init_node_memory_type(node, default_dram_type);
+> > +     mt_calc_adistance(node, &adist);
+> > +     if (adist !=3D MEMTIER_ADISTANCE_DRAM &&
+> > +                     node_memory_types[node].memtype =3D=3D NULL) {
+> > +             mtype =3D mt_find_alloc_memory_type(adist, &default_memor=
+y_types);
+> > +             if (IS_ERR(mtype)) {
+> > +                     mtype =3D default_dram_type;
+> > +                     pr_info("Failed to allocate a memory type. Fall b=
+ack.\n");
+> > +             }
+> > +     } else
+> > +             mtype =3D default_dram_type;
+>
+> This can be simplified to
+>
+>         mt_calc_adistance(node, &adist);
+>         if (node_memory_types[node].memtype =3D=3D NULL) {
+>                 mtype =3D mt_find_alloc_memory_type(adist, &default_memor=
+y_types);
+>                 if (IS_ERR(mtype)) {
+>                         mtype =3D default_dram_type;
+>                         pr_info("Failed to allocate a memory type. Fall b=
+ack.\n");
+>                 }
+>         }
+>
+
+Sounds good! I will do.
+
+
+> > +     __init_node_memory_type(node, mtype);
+> >
+> >       memtype =3D node_memory_types[node].memtype;
+> >       node_set(node, memtype->nodes);
+> > @@ -623,6 +641,55 @@ void clear_node_memory_type(int node, struct memor=
+y_dev_type *memtype)
+> >  }
+> >  EXPORT_SYMBOL_GPL(clear_node_memory_type);
+> >
+> > +struct memory_dev_type *mt_find_alloc_memory_type(int adist, struct li=
+st_head *memory_types)
+> > +{
+> > +     bool found =3D false;
+> > +     struct memory_dev_type *mtype;
+> > +
+> > +     list_for_each_entry(mtype, memory_types, list) {
+> > +             if (mtype->adistance =3D=3D adist) {
+> > +                     found =3D true;
+> > +                     break;
+> > +             }
+> > +     }
+> > +     if (!found) {
+> > +             mtype =3D alloc_memory_type(adist);
+> > +             if (!IS_ERR(mtype))
+> > +                     list_add(&mtype->list, memory_types);
+> > +     }
+> > +
+> > +     return mtype;
+> > +}
+> > +EXPORT_SYMBOL_GPL(mt_find_alloc_memory_type);
+> > +
+> > +/*
+> > + * This is invoked via late_initcall() to create
+> > + * CPUless memory tiers after HMAT info is ready or
+> > + * when there is no HMAT.
+>
+> Better to avoid HMAT in general code.  How about something as below?
+>
+> This is invoked via late_initcall() to initialize memory tiers for
+> CPU-less memory nodes after drivers initialization.  Which is
+> expect to provide adistance algorithms.
+>
+
+Got it. Thanks.
+"
+This is invoked via `late_initcall()` to initialize memory tiers for
+CPU-less memory nodes after driver initialization, which is
+expected to provide `adistance` algorithms.
+"
+
+
+> > + */
+> > +static int __init memory_tier_late_init(void)
+> > +{
+> > +     int nid;
+> > +
+> > +     mutex_lock(&memory_tier_lock);
+> > +     for_each_node_state(nid, N_MEMORY)
+> > +             if (!node_state(nid, N_CPU) &&
+> > +                     node_memory_types[nid].memtype =3D=3D NULL)
+> > +                     /*
+> > +                      * Some device drivers may have initialized memor=
+y tiers
+> > +                      * between `memory_tier_init()` and `memory_tier_=
+late_init()`,
+> > +                      * potentially bringing online memory nodes and
+> > +                      * configuring memory tiers. Exclude them here.
+> > +                      */
+> > +                     set_node_memory_tier(nid);
+> > +
+> > +     establish_demotion_targets();
+> > +     mutex_unlock(&memory_tier_lock);
+> > +
+> > +     return 0;
+> > +}
+> > +late_initcall(memory_tier_late_init);
+> > +
+> >  static void dump_hmem_attrs(struct access_coordinate *coord, const cha=
+r *prefix)
+> >  {
+> >       pr_info(
+> > @@ -631,12 +698,16 @@ static void dump_hmem_attrs(struct access_coordin=
+ate *coord, const char *prefix)
+> >               coord->read_bandwidth, coord->write_bandwidth);
+> >  }
+> >
+> > +/*
+> > + * The lock is used to protect the default_dram_perf.
+> > + */
+> > +static DEFINE_MUTEX(mt_perf_lock);
+>
+> Miscommunication here too.  Should be moved to near the
+> "default_dram_perf" definition.  And it protects not only
+> default_dram_perf.
+>
+
+I will move it closer to default_dram_perf*.
+And change it to:
 +/*
-+ * Header file for commands-ssh-core.c
-+ *
-+ * Copyright IBM Corp. 2024
-+ *
-+ * Authors:
-+ *  Aidan Leuck <aidan_leuck@selinc.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
++ * The lock is used to protect default_dram_perf*.
 + */
-+
-+GStrv read_authkeys(const char *path, Error **errp);
-+bool check_openssh_pub_keys(strList *keys, size_t *nkeys, Error **errp);
-+bool check_openssh_pub_key(const char *key, Error **errp);
-\ No newline at end of file
-diff --git a/qga/commands-windows-ssh.c b/qga/commands-windows-ssh.c
-index e9faae90fc..0739d694ed 100644
---- a/qga/commands-windows-ssh.c
-+++ b/qga/commands-windows-ssh.c
-@@ -23,7 +23,6 @@
- #include "lmapibuf.h"
- #include "lmerr.h"
- #include "qapi/error.h"
--
- #include "qga-qapi-commands.h"
- #include "sddl.h"
- #include "shlobj.h"
-@@ -35,69 +34,6 @@
- #define ADMIN_SID "S-1-5-32-544"
- #define WORLD_SID "S-1-1-0"
- 
--/*
-- * Reads the authorized_keys file and returns an array of strings for each entry
-- * parameters:
-- * path -> Path to the authorized_keys file
-- * errp -> Error structure that will contain errors upon failure.
-- * returns: Array of strings, where each entry is an authorized key.
-- */
--static GStrv read_authkeys(const char *path, Error **errp)
--{
--  g_autoptr(GError) err = NULL;
--  g_autofree char *contents = NULL;
--
--  if (!g_file_get_contents(path, &contents, NULL, &err)) {
--    error_setg(errp, "failed to read '%s': %s", path, err->message);
--    return NULL;
--  }
--
--  return g_strsplit(contents, "\n", -1);
--}
--
--/*
-- * Checks if a OpenSSH key is valid
-- * parameters:
-- * key* Key to check for validity
-- * errp -> Error structure that will contain errors upon failure.
-- * returns: true if key is valid, false otherwise
-- */
--static bool check_openssh_pub_key(const char *key, Error **errp)
--{
--  /* simple sanity-check, we may want more? */
--  if (!key || key[0] == '#' || strchr(key, '\n')) {
--    error_setg(errp, "invalid OpenSSH public key: '%s'", key);
--    return false;
--  }
--
--  return true;
--}
--
--/*
-- * Checks if all openssh keys in the array are valid
-- * parameters:
-- * keys -> Array of keys to check
-- * errp -> Error structure that will contain errors upon failure.
-- * returns: true if all keys are valid, false otherwise
-- */
--static bool check_openssh_pub_keys(strList *keys, size_t *nkeys, Error **errp)
--{
--  size_t n = 0;
--  strList *k;
--
--  for (k = keys; k != NULL; k = k->next) {
--    if (!check_openssh_pub_key(k->value, errp)) {
--      return false;
--    }
--    n++;
--  }
--
--  if (nkeys) {
--    *nkeys = n;
--  }
--  return true;
--}
--
- /*
-  * Frees userInfo structure. This implements the g_auto cleanup
-  * for the structure.
-diff --git a/qga/commands-windows-ssh.h b/qga/commands-windows-ssh.h
-index 7d68a1bcef..6b457524e2 100644
---- a/qga/commands-windows-ssh.h
-+++ b/qga/commands-windows-ssh.h
-@@ -11,13 +11,14 @@
-  */
- 
- #include <glib/gstrfuncs.h>
--#include <stdbool.h>
--typedef struct WindowsUserInfo {
--  char *sshDirectory;
--  char *authorizedKeyFile;
--  char *username;
--  char *SSID;
--  bool isAdmin;
-+
-+typedef struct WindowsUserInfo
-+{
-+    char *sshDirectory;
-+    char *authorizedKeyFile;
-+    char *username;
-+    char *SSID;
-+    bool isAdmin;
- } WindowsUserInfo;
- 
- typedef WindowsUserInfo *PWindowsUserInfo;
-diff --git a/qga/meson.build b/qga/meson.build
-index 4c4a493ec5..2fca6f34fc 100644
---- a/qga/meson.build
-+++ b/qga/meson.build
-@@ -65,7 +65,12 @@ qga_ss.add(files(
-   'commands.c',
-   'guest-agent-command-state.c',
-   'main.c',
-+<<<<<<< HEAD
-   'cutils.c'
-+=======
-+  'cutils.c',
-+  'commands-ssh-core.c'
-+>>>>>>> windows-ssh-refactor
- ))
- if host_os == 'windows'
-   qga_ss.add(files(
--- 
-2.34.1
+
+
+> >  int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+> >                            const char *source)
+> >  {
+> >       int rc =3D 0;
+> >
+> > -     mutex_lock(&memory_tier_lock);
+> > +     mutex_lock(&mt_perf_lock);
+> >       if (default_dram_perf_error) {
+> >               rc =3D -EIO;
+> >               goto out;
+> > @@ -684,7 +755,7 @@ int mt_set_default_dram_perf(int nid, struct access=
+_coordinate *perf,
+> >       }
+> >
+> >  out:
+> > -     mutex_unlock(&memory_tier_lock);
+> > +     mutex_unlock(&mt_perf_lock);
+> >       return rc;
+> >  }
+> >
+> > @@ -700,7 +771,7 @@ int mt_perf_to_adistance(struct access_coordinate *=
+perf, int *adist)
+> >           perf->read_bandwidth + perf->write_bandwidth =3D=3D 0)
+> >               return -EINVAL;
+> >
+> > -     mutex_lock(&memory_tier_lock);
+> > +     mutex_lock(&mt_perf_lock);
+> >       /*
+> >        * The abstract distance of a memory node is in direct proportion=
+ to
+> >        * its memory latency (read + write) and inversely proportional t=
+o its
+> > @@ -713,7 +784,7 @@ int mt_perf_to_adistance(struct access_coordinate *=
+perf, int *adist)
+> >               (default_dram_perf.read_latency + default_dram_perf.write=
+_latency) *
+> >               (default_dram_perf.read_bandwidth + default_dram_perf.wri=
+te_bandwidth) /
+> >               (perf->read_bandwidth + perf->write_bandwidth);
+> > -     mutex_unlock(&memory_tier_lock);
+> > +     mutex_unlock(&mt_perf_lock);
+> >
+> >       return 0;
+> >  }
+> > @@ -826,7 +897,8 @@ static int __init memory_tier_init(void)
+> >        * For now we can have 4 faster memory tiers with smaller adistan=
+ce
+> >        * than default DRAM tier.
+> >        */
+> > -     default_dram_type =3D alloc_memory_type(MEMTIER_ADISTANCE_DRAM);
+> > +     default_dram_type =3D mt_find_alloc_memory_type(
+> > +                                     MEMTIER_ADISTANCE_DRAM, &default_=
+memory_types);
+> >       if (IS_ERR(default_dram_type))
+> >               panic("%s() failed to allocate default DRAM tier\n", __fu=
+nc__);
+> >
+> > @@ -836,6 +908,14 @@ static int __init memory_tier_init(void)
+> >        * types assigned.
+> >        */
+> >       for_each_node_state(node, N_MEMORY) {
+> > +             if (!node_state(node, N_CPU))
+> > +                     /*
+> > +                      * Defer memory tier initialization on CPUless nu=
+ma nodes.
+> > +                      * These will be initialized after firmware and d=
+evices are
+> > +                      * initialized.
+> > +                      */
+> > +                     continue;
+> > +
+> >               memtier =3D set_node_memory_tier(node);
+> >               if (IS_ERR(memtier))
+> >                       /*
+>
+> --
+> Best Regards,
+> Huang, Ying
+
+
+
+--=20
+Best regards,
+Ho-Ren (Jack) Chuang
+=E8=8E=8A=E8=B3=80=E4=BB=BB
 
