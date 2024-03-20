@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B74FCC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 10:32:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCDFC54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 10:33:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmtFN-0007ab-BO; Wed, 20 Mar 2024 06:32:37 -0400
+	id 1rmtFP-0007eT-24; Wed, 20 Mar 2024 06:32:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmtFH-0007PY-Jd
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:32:32 -0400
+ id 1rmtFC-0007Oz-GZ
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:32:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rmtFE-0004IC-HH
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:32:30 -0400
+ id 1rmtFA-0004H8-8u
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 06:32:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710930747;
+ s=mimecast20190719; t=1710930743;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tP3AQ3pbPz8m6UOga6Zsv2ln7wozO0aBuqOElcXzXaQ=;
- b=Q7nLzq+T27FMwKVZr9Zt5cHGxDtskenD0Tir7lgORPzg/pEwYnZZ2Ss5ZpLka6BTmhv52Z
- 7rhenb8BhhLhUjHq8TvxTJkHl2Hv3Hnk8Yql6r94uUnQ28oVUzhxzAYrNFgZ/P+AlTUbQk
- pd9n6zzBOY+o1n3kWCrSxm4bNJMDEJ4=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WNPPEhUqNxc++TdG1DRwfNWJJ5hRnAz956SbDwj5H6w=;
+ b=i/EkhbselR9k2LjGput0c6G8sfI6+Gs42FmPUulig0e75mzN5O/IjizMAycQKwSfjGMA6y
+ h+ONVMDHHxeP9jcy6R0G1x8WgHeLx3FoDzWbr0OtAZDj3o8UiLF4THyqt7JO9KAG8fSakK
+ ycLPlbLLt74UubEdXD+MhaI8F/1gfW0=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-356-x3VMJdPkPFC8G37QMFCYJg-1; Wed, 20 Mar 2024 06:32:26 -0400
-X-MC-Unique: x3VMJdPkPFC8G37QMFCYJg-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a46fd54fbc1so5647266b.3
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 03:32:26 -0700 (PDT)
+ us-mta-346-9fW11EPxNaGrrZPuTjM28A-1; Wed, 20 Mar 2024 06:32:22 -0400
+X-MC-Unique: 9fW11EPxNaGrrZPuTjM28A-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-568cd600ee6so1788938a12.0
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 03:32:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710930745; x=1711535545;
+ d=1e100.net; s=20230601; t=1710930740; x=1711535540;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tP3AQ3pbPz8m6UOga6Zsv2ln7wozO0aBuqOElcXzXaQ=;
- b=Y2p+BHEf2gHIEq5aVQIoIeOWzPFUSPoTD5Vy3jS0aVT+PG1cULmuwBWR18dwXt97Jl
- coHLd4HnHVMjl/AFVstwVwOkb8PyYBTZdKJNDmzvlDoxLc5S8/cZkjWslINEE4w0S8zI
- Mjl/I9/A3P40VbHifD5GoHTr4PZ+OCAPl9pHD9P2e9dQ8D3aMuVO3wVZBLk/LwwEsSxZ
- d6D9wg1dDljZv5rkpIZpahxcue3RU/I4nUCambohWJi0p3ic0qd3bcNLoQ/Gr5PkKgy7
- orAv0xTlGAAJ6leSFIMXcWqoXielFm6RXnPyRzF3h4MoRxLsyNzm3QHdpgtOBnm2M4A6
- maWQ==
-X-Gm-Message-State: AOJu0YzZSMhvm4mL7Qx+Fko0Jw99oqwAdI48nwTsZsKWY6Dlcsf2cc1d
- yvrdwr7Bp7jcGzxDIBCjj8vSQcHKsW+NDAQtTns8FruL2C8rObMkcBZorhcvObR/i5AIVkKbCWr
- 4rPZV+xIqpCRu6/8fOiqdQ/hCD4yKsMYEPLsEIzSvlbLGdFm8GUcHk0jOYVV4W0u3IhCun0W4dt
- gI/jOPTtH59YC8jy+6T7cVh+K6TMtJNaQHX8T0
-X-Received: by 2002:a05:6402:528c:b0:568:c624:9177 with SMTP id
- en12-20020a056402528c00b00568c6249177mr10709816edb.35.1710930745156; 
- Wed, 20 Mar 2024 03:32:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE1pzCibz8Uhdu+ZMuSMseOfPsBi64Hi7C2qmjOdz0qzDHzGrZkEXyOGQJV7LhNxDpiTboHKA==
-X-Received: by 2002:a05:6402:528c:b0:568:c624:9177 with SMTP id
- en12-20020a056402528c00b00568c6249177mr10709795edb.35.1710930744698; 
- Wed, 20 Mar 2024 03:32:24 -0700 (PDT)
+ bh=WNPPEhUqNxc++TdG1DRwfNWJJ5hRnAz956SbDwj5H6w=;
+ b=fk06wZ6qGU8PSgazrTHYuNmrziKqpXdxvSKlrpqkQ4Zm6xCj4K60CW8peFSSYlwcbP
+ A0veuJYZ1GojVuNd1FEZGwfjC50dKN976uUYHqQaavmq9PEoGa9nF7sazv2dMTvF+2f5
+ 6skUrf2S7a4Cre2iyenqKoYxu9FCM8MMmKkbJkGVVi8B+C2bzWD3Y8B0Q+JDaBoy2Ip5
+ gT5/Ly5GIWJ7KRzh3lAY8LK8gdnA9nXQA2qV8h+KdpJi6jD4n6PTjHx9S8t0tIEV53e1
+ k/qggveAmgOUlna28S6VbEOffJLq6Rdd9ve7V9u2P1YBch/fcYPm48MbXtMHkoC0mO+7
+ 2ttQ==
+X-Gm-Message-State: AOJu0YwMJQxM4CunTmSpSq+LsX+9EvhGxYNmLBycvFBUfzXhn7WCG2n6
+ PCub0qlWpm1qBTMSIRTRflD2CVVVdSnf4VqHzqO6zXIkzS0xHW4XodkXaQYtVpGFQCFSrn2Mdxh
+ OmA2Hf08SScR7xQivz4zsVzAacCk5cxAnOGPLxKwBIVPKlhFikNQgODfXWjJYRjq83Oi2mAlzDh
+ B1dGg+NZvjlRIn9TUev46o4OMCTWgXZOsVjZSH
+X-Received: by 2002:a05:6402:2486:b0:566:c572:6fa0 with SMTP id
+ q6-20020a056402248600b00566c5726fa0mr14862899eda.15.1710930740271; 
+ Wed, 20 Mar 2024 03:32:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHelUNNEi5ltwH4SQQLwP2l2wU2AlmxsZ+ZlYfh6zaUmwYi/FqO2XReLVo4voOWKtY/dcGzIQ==
+X-Received: by 2002:a05:6402:2486:b0:566:c572:6fa0 with SMTP id
+ q6-20020a056402248600b00566c5726fa0mr14862878eda.15.1710930739786; 
+ Wed, 20 Mar 2024 03:32:19 -0700 (PDT)
 Received: from [192.168.10.118] ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- cn25-20020a0564020cb900b00568c3a2f4f8sm4527242edb.74.2024.03.20.03.32.22
+ m24-20020aa7d358000000b0056729e902f7sm6762655edr.56.2024.03.20.03.32.17
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Mar 2024 03:32:22 -0700 (PDT)
+ Wed, 20 Mar 2024 03:32:17 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Tao Su <tao1.su@linux.intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 4/6] target/i386: Revert monitor_puts() in do_inject_x86_mce()
-Date: Wed, 20 Mar 2024 11:32:11 +0100
-Message-ID: <20240320103213.1048405-5-pbonzini@redhat.com>
+Subject: [PULL 2/6] vl: convert qemu_machine_creation_done() to Error **
+Date: Wed, 20 Mar 2024 11:32:09 +0100
+Message-ID: <20240320103213.1048405-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240320103213.1048405-1-pbonzini@redhat.com>
 References: <20240320103213.1048405-1-pbonzini@redhat.com>
@@ -104,36 +103,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Su <tao1.su@linux.intel.com>
+Allow using Error ** to pass an error string up to qmp_x_exit_preconfig()
+and possibly main().
 
-monitor_puts() doesn't check the monitor pointer, but do_inject_x86_mce()
-may have a parameter with NULL monitor pointer. Revert monitor_puts() in
-do_inject_x86_mce() to fix, then the fact that we send the same message to
-monitor and log is again more obvious.
-
-Fixes: bf0c50d4aa85 (monitor: expose monitor_puts to rest of code)
-Reviwed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Tao Su <tao1.su@linux.intel.com>
-Message-ID: <20240320083640.523287-1-tao1.su@linux.intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ system/vl.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index 2070dd0dda1..23ccb23a5b4 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -430,7 +430,7 @@ static void do_inject_x86_mce(CPUState *cs, run_on_cpu_data data)
-         if (need_reset) {
-             emit_guest_memory_failure(MEMORY_FAILURE_ACTION_RESET, ar,
-                                       recursive);
--            monitor_puts(params->mon, msg);
-+            monitor_printf(params->mon, "%s", msg);
-             qemu_log_mask(CPU_LOG_RESET, "%s\n", msg);
-             qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-             return;
+diff --git a/system/vl.c b/system/vl.c
+index 70f4cece7f9..0c970cf0203 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2653,7 +2653,7 @@ static void qemu_create_cli_devices(void)
+     rom_reset_order_override();
+ }
+ 
+-static void qemu_machine_creation_done(void)
++static bool qemu_machine_creation_done(Error **errp)
+ {
+     MachineState *machine = MACHINE(qdev_get_machine());
+ 
+@@ -2684,7 +2684,8 @@ static void qemu_machine_creation_done(void)
+     }
+ 
+     if (foreach_device_config(DEV_GDB, gdbserver_start) < 0) {
+-        exit(1);
++        error_setg(errp, "could not start gdbserver");
++        return false;
+     }
+     if (!vga_interface_created && !default_vga &&
+         vga_interface_type != VGA_NONE) {
+@@ -2692,6 +2693,7 @@ static void qemu_machine_creation_done(void)
+                     "type does not use that option; "
+                     "No VGA device has been created");
+     }
++    return true;
+ }
+ 
+ void qmp_x_exit_preconfig(Error **errp)
+@@ -2703,7 +2705,9 @@ void qmp_x_exit_preconfig(Error **errp)
+ 
+     qemu_init_board();
+     qemu_create_cli_devices();
+-    qemu_machine_creation_done();
++    if (!qemu_machine_creation_done(errp)) {
++        return;
++    }
+ 
+     if (loadvm) {
+         RunState state = autostart ? RUN_STATE_RUNNING : runstate_get();
 -- 
 2.44.0
 
