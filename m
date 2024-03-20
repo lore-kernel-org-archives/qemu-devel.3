@@ -4,54 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E48C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 18:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1240CC54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 18:58:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rn0zA-0003gb-MA; Wed, 20 Mar 2024 14:48:24 -0400
+	id 1rn17z-0007Cn-Pa; Wed, 20 Mar 2024 14:57:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balbi@kernel.org>) id 1rn0z8-0003g0-MP
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 14:48:23 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rn17x-0007CN-80
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 14:57:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balbi@kernel.org>) id 1rn0z5-0007KY-J3
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 14:48:22 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 283C560FDD;
- Wed, 20 Mar 2024 18:48:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECAAC43390;
- Wed, 20 Mar 2024 18:48:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1710960490;
- bh=vEJseGEGOfaRgubWOgywJBa+3ifeIYRNEezqXa5TSho=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=EeSICF2S1yZvJkE4C9OPTpFkQJGZ7NbkBT1rKj/MlmZTib9rNnttFDoB15kEWaLjZ
- HRBEAVR61QJH1iCLyYY19xYZ8K3RtgZtYqZV5b5z6PRAD1qP7vwyBohiHVkOnlADze
- +xYRhHVDnv++BRqt1Y1enXZFQOpr2CP8WdaNFXeNFOPYqgFc1E0hDxI0Ikj50B1vdK
- 0RY1LXI7nIh6vAggzGbg7pd8qw+PkEVARGZt/6ztg4Be/3AVErLPhbiTOFhT16FKth
- YqRd2/HAEisFMPjnYC3r70orcrKRIC67mCaQHQ9OWVVxGGp4Er74o6xvRJivCYCIHz
- 5RrG671i6onZQ==
-From: Felipe Balbi <balbi@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Felipe Balbi <felipe@balbi.sh>
-Subject: [PATCH 1/2] hw/arm: Add support for stm32g000 SoC family
-Date: Wed, 20 Mar 2024 20:47:58 +0200
-Message-ID: <20240320184759.754619-2-balbi@kernel.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240320184759.754619-1-balbi@kernel.org>
-References: <20240320184759.754619-1-balbi@kernel.org>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rn17t-00016o-J0
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 14:57:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710961044;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zmvww3LzCjKeexNxgdfwJzX3TPo+pwR1ag2WnPC49os=;
+ b=UeSTJ9Xtg1VqcMLsITWNpo36hUhvoi8uzfv5yRKchOuPqbIwyafRB9JA3PvbA9QuHcBSMD
+ JmOTL3PxJ2EHG9r9MfVxFpm0aLh0aJZDzgMOB4AMPdxV2ywxHo5/AaEEdJYv3WV9qFEB2d
+ HM5n8T9H/kPGsR9IGFvHRSTaEW0BIuY=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-504-Jn0b1HddM42S4qVXdvjnTQ-1; Wed, 20 Mar 2024 14:57:23 -0400
+X-MC-Unique: Jn0b1HddM42S4qVXdvjnTQ-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4311dd10102so467091cf.0
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 11:57:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710961042; x=1711565842;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zmvww3LzCjKeexNxgdfwJzX3TPo+pwR1ag2WnPC49os=;
+ b=TUhS+XbSXsfgv0C7LOydNbQNSaMej/Y1L8Q34Xfkzd6XUl6PeT2mlSvU+XSwfbjVHd
+ DcdVLRdgEpatsO2Ph6uNEN11FlFzmr8lRYQvuUnd8qMr/XsTOj5jWYmiKO0zSpQSFdmP
+ SM7QCfEZW9AvFUVSrAs4pA3X2ZiTYSXa3QNrIWIXqjCRpAxGWC56KmqaSzHLbHUHiH4o
+ iPdMmKu5WnyZ3Fp/z5Jy8efss/bZua6hic6Kqc3Xjf241maIchJgmL28lYNXH+heXLAT
+ RXSTRLUL5Y7r4F6qPY+oKYrzhU2Hqjgj/Md44emM6oDoPgvC5eoJ+ZJ5h8ZmTZX6lYSq
+ BC+w==
+X-Gm-Message-State: AOJu0YzT5S/Hh/XOU7OtrEOBUbO1MnZys4UV3pZgptF+eZfkWdGoZADn
+ VXtYDuYUaG7gFzQ/2Hld3zmm+f+wHXRMRXZkrYdU94U93vquCsiyV0EfB6w9MD072QP1H7PhpCG
+ sMPfSBrXc62AbxgHdLzzJ+pJCEDPMcttINjy0Y6dqu8YkcKBXOjyJ
+X-Received: by 2002:a05:6214:2e49:b0:690:d02f:f5df with SMTP id
+ my9-20020a0562142e4900b00690d02ff5dfmr6886210qvb.5.1710961042457; 
+ Wed, 20 Mar 2024 11:57:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEqSunSz/3FcPvf08YIQOWHZHVL4GQz37SKRDW6pFy6dJvqKybk4Mr37HzW5A/+pdJT1m7kNQ==
+X-Received: by 2002:a05:6214:2e49:b0:690:d02f:f5df with SMTP id
+ my9-20020a0562142e4900b00690d02ff5dfmr6886196qvb.5.1710961041998; 
+ Wed, 20 Mar 2024 11:57:21 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ jf14-20020a0562142a4e00b00690afbf56d5sm8056819qvb.66.2024.03.20.11.57.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 Mar 2024 11:57:19 -0700 (PDT)
+Date: Wed, 20 Mar 2024 14:57:17 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Prasad Pandit <ppandit@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Bandan Das <bdas@redhat.com>,
+ Julia Suvorova <jusual@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Juan Quintela <quintela@redhat.com>
+Subject: Re: [PATCH 2/3] migration: Drop unnecessary check in ram's
+ pending_exact()
+Message-ID: <ZfsxjS4Phkf34f4J@x1n>
+References: <20240117075848.139045-1-peterx@redhat.com>
+ <20240117075848.139045-3-peterx@redhat.com>
+ <bc88f4572649084cd38a0880d7e096a939f80b14.camel@linux.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217; envelope-from=balbi@kernel.org;
- helo=dfw.source.kernel.org
-X-Spam_score_int: -74
-X-Spam_score: -7.5
-X-Spam_bar: -------
-X-Spam_report: (-7.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <bc88f4572649084cd38a0880d7e096a939f80b14.camel@linux.ibm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,371 +103,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Felipe Balbi <felipe@balbi.sh>
+On Wed, Mar 20, 2024 at 06:51:26PM +0100, Nina Schoetterl-Glausch wrote:
+> On Wed, 2024-01-17 at 15:58 +0800, peterx@redhat.com wrote:
+> > From: Peter Xu <peterx@redhat.com>
+> > 
+> > When the migration frameworks fetches the exact pending sizes, it means
+> > this check:
+> > 
+> >   remaining_size < s->threshold_size
+> > 
+> > Must have been done already, actually at migration_iteration_run():
+> > 
+> >     if (must_precopy <= s->threshold_size) {
+> >         qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
+> > 
+> > That should be after one round of ram_state_pending_estimate().  It makes
+> > the 2nd check meaningless and can be dropped.
+> > 
+> > To say it in another way, when reaching ->state_pending_exact(), we
+> > unconditionally sync dirty bits for precopy.
+> > 
+> > Then we can drop migrate_get_current() there too.
+> > 
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> 
+> Hi Peter,
 
-Minimal support with USARTs and SPIs working. This SoC will be used to
-create and nucleo-g071rb board.
+Hi, Nina,
 
-Signed-off-by: Felipe Balbi <felipe@balbi.sh>
----
- hw/arm/Kconfig                 |   6 +
- hw/arm/meson.build             |   1 +
- hw/arm/stm32g000_soc.c         | 246 +++++++++++++++++++++++++++++++++
- include/hw/arm/stm32g000_soc.h |  62 +++++++++
- 4 files changed, 315 insertions(+)
- create mode 100644 hw/arm/stm32g000_soc.c
- create mode 100644 include/hw/arm/stm32g000_soc.h
+> 
+> could you have a look at this issue:
+> https://gitlab.com/qemu-project/qemu/-/issues/1565
+> 
+> which I reopened. Previous thread here:
+> 
+> https://lore.kernel.org/qemu-devel/20230324184129.3119575-1-nsg@linux.ibm.com/
+> 
+> I'm seeing migration failures with s390x TCG again, which look the same to me
+> as those a while back.
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 893a7bff66b9..28a46d2b1ad3 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -463,6 +463,12 @@ config STM32F405_SOC
-     select STM32F4XX_SYSCFG
-     select STM32F4XX_EXTI
- 
-+config STM32G000_SOC
-+    bool
-+    select ARM_V7M
-+    select STM32F2XX_USART
-+    select STM32F2XX_SPI
-+
- config B_L475E_IOT01A
-     bool
-     default y
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 6808135c1f79..9c4137a988e1 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -34,6 +34,7 @@ arm_ss.add(when: ['CONFIG_RASPI', 'TARGET_AARCH64'], if_true: files('bcm2838.c',
- arm_ss.add(when: 'CONFIG_STM32F100_SOC', if_true: files('stm32f100_soc.c'))
- arm_ss.add(when: 'CONFIG_STM32F205_SOC', if_true: files('stm32f205_soc.c'))
- arm_ss.add(when: 'CONFIG_STM32F405_SOC', if_true: files('stm32f405_soc.c'))
-+arm_ss.add(when: 'CONFIG_STM32G000_SOC', if_true: files('stm32g000_soc.c'))
- arm_ss.add(when: 'CONFIG_B_L475E_IOT01A', if_true: files('b-l475e-iot01a.c'))
- arm_ss.add(when: 'CONFIG_STM32L4X5_SOC', if_true: files('stm32l4x5_soc.c'))
- arm_ss.add(when: 'CONFIG_XLNX_ZYNQMP_ARM', if_true: files('xlnx-zynqmp.c', 'xlnx-zcu102.c'))
-diff --git a/hw/arm/stm32g000_soc.c b/hw/arm/stm32g000_soc.c
-new file mode 100644
-index 000000000000..8f97d8c89ad9
---- /dev/null
-+++ b/hw/arm/stm32g000_soc.c
-@@ -0,0 +1,246 @@
-+/*
-+ * STM32G000 SoC
-+ *
-+ * Copyright (c) 2024 Felipe Balbi <felipe@balbi.sh>
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/module.h"
-+#include "hw/arm/boot.h"
-+#include "exec/address-spaces.h"
-+#include "hw/arm/stm32g000_soc.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-clock.h"
-+#include "hw/misc/unimp.h"
-+#include "sysemu/sysemu.h"
-+
-+/* stm32g000_soc implementation is derived from stm32f100_soc */
-+
-+struct stm32g0_ip_config {
-+    const char	*name;
-+    uint32_t	addr;
-+    uint32_t	irq;
-+};
-+
-+#define STM32G0_DEFINE_IP(n, a, i)    \
-+{                                     \
-+    .name = (n),                      \
-+    .addr = (a),                      \
-+    .irq = (i),                       \
-+}
-+
-+static const struct stm32g0_ip_config usart_config[STM_NUM_USARTS] = {
-+    STM32G0_DEFINE_IP("USART1", 0x40013800, 27),
-+    STM32G0_DEFINE_IP("USART2", 0x40004000, 28),
-+    STM32G0_DEFINE_IP("USART3", 0x40004400, 29),
-+    STM32G0_DEFINE_IP("USART4", 0x40004800, 29),
-+    STM32G0_DEFINE_IP("USART5", 0x40004c00, 29),
-+    STM32G0_DEFINE_IP("USART6", 0x40005000, 29),
-+    STM32G0_DEFINE_IP("LPUSART1", 0x40008000, 29),
-+    STM32G0_DEFINE_IP("LPUSART2", 0x40008400, 28),
-+};
-+
-+static const struct stm32g0_ip_config spi_config[STM_NUM_SPIS] = {
-+    STM32G0_DEFINE_IP("SPI1", 0x40013000, 25),
-+    STM32G0_DEFINE_IP("SPI2", 0x40003800, 26),
-+    /* STM32G0_DEFINE_IP("SPI3", 0x4003c000, 26), only on STM32G0B1xx and STM32G0C1xx */
-+};
-+
-+static void stm32g000_soc_initfn(Object *obj)
-+{
-+    STM32G000State *s = STM32G000_SOC(obj);
-+    int i;
-+
-+    object_initialize_child(obj, "armv7m", &s->armv7m, TYPE_ARMV7M);
-+
-+    for (i = 0; i < STM_NUM_USARTS; i++) {
-+        object_initialize_child(obj, "usart[*]", &s->usart[i],
-+                                TYPE_STM32F2XX_USART);
-+    }
-+
-+    for (i = 0; i < STM_NUM_SPIS; i++) {
-+        object_initialize_child(obj, "spi[*]", &s->spi[i], TYPE_STM32F2XX_SPI);
-+    }
-+
-+    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
-+    s->refclk = qdev_init_clock_in(DEVICE(s), "refclk", NULL, NULL, 0);
-+}
-+
-+static void stm32g000_soc_realize(DeviceState *dev_soc, Error **errp)
-+{
-+    STM32G000State *s = STM32G000_SOC(dev_soc);
-+    DeviceState *dev, *armv7m;
-+    SysBusDevice *busdev;
-+
-+    MemoryRegion *system_memory = get_system_memory();
-+
-+    /*
-+     * We use s->refclk internally and only define it with qdev_init_clock_in()
-+     * so it is correctly parented and not leaked on an init/deinit; it is not
-+     * intended as an externally exposed clock.
-+     */
-+    if (clock_has_source(s->refclk)) {
-+        error_setg(errp, "refclk clock must not be wired up by the board code");
-+        return;
-+    }
-+
-+    if (!clock_has_source(s->sysclk)) {
-+        error_setg(errp, "sysclk clock must be wired up by the board code");
-+        return;
-+    }
-+
-+    /*
-+     * TODO: ideally we should model the SoC RCC and its ability to
-+     * change the sysclk frequency and define different sysclk sources.
-+     */
-+
-+    /* The refclk always runs at frequency HCLK / 8 */
-+    clock_set_mul_div(s->refclk, 8, 1);
-+    clock_set_source(s->refclk, s->sysclk);
-+
-+    /*
-+     * Init flash region
-+     * Flash starts at 0x08000000 and then is aliased to boot memory at 0x0
-+     */
-+    memory_region_init_rom(&s->flash, OBJECT(dev_soc), "STM32G000.flash",
-+                           FLASH_SIZE, &error_fatal);
-+    memory_region_init_alias(&s->flash_alias, OBJECT(dev_soc),
-+                             "STM32G000.flash.alias", &s->flash, 0, FLASH_SIZE);
-+    memory_region_add_subregion(system_memory, FLASH_BASE_ADDRESS, &s->flash);
-+    memory_region_add_subregion(system_memory, 0, &s->flash_alias);
-+
-+    /* Init SRAM region */
-+    memory_region_init_ram(&s->sram, NULL, "STM32G000.sram", SRAM_SIZE,
-+                           &error_fatal);
-+    memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
-+
-+    /* Init ARMv7m */
-+    armv7m = DEVICE(&s->armv7m);
-+    qdev_prop_set_uint32(armv7m, "num-irq", 61);
-+    qdev_prop_set_uint8(armv7m, "num-prio-bits", 4);
-+    qdev_prop_set_string(armv7m, "cpu-type", ARM_CPU_TYPE_NAME("cortex-m0"));
-+    qdev_prop_set_bit(armv7m, "enable-bitband", true);
-+    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-+    qdev_connect_clock_in(armv7m, "refclk", s->refclk);
-+    object_property_set_link(OBJECT(&s->armv7m), "memory",
-+                             OBJECT(get_system_memory()), &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m), errp)) {
-+        return;
-+    }
-+
-+    /* Attach UART (uses USART registers) and USART controllers */
-+    for (unsigned i = 0; i < STM_NUM_USARTS; i++) {
-+        dev = DEVICE(&(s->usart[i]));
-+        qdev_prop_set_chr(dev, "chardev", serial_hd(i));
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usart[i]), errp)) {
-+            return;
-+        }
-+        busdev = SYS_BUS_DEVICE(dev);
-+        sysbus_mmio_map(busdev, 0, usart_config[i].addr);
-+        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, usart_config[i].irq));
-+    }
-+
-+    /* SPI 1 and 2
-+     *
-+     * REVISIT: STM32G0B1xx and STM32G0C1xx have a 3rd SPI
-+     */
-+    for (unsigned i = 0; i < STM_NUM_SPIS; i++) {
-+        dev = DEVICE(&(s->spi[i]));
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), errp)) {
-+            return;
-+        }
-+        busdev = SYS_BUS_DEVICE(dev);
-+        sysbus_mmio_map(busdev, 0, spi_config[i].addr);
-+        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, spi_config[i].irq));
-+    }
-+
-+    /* Review addresses */
-+    create_unimplemented_device("timer[2]",  0x40000000, 0x400);
-+    create_unimplemented_device("timer[3]",  0x40000400, 0x400);
-+    create_unimplemented_device("timer[4]",  0x40000800, 0x400);
-+    create_unimplemented_device("timer[6]",  0x40001000, 0x400);
-+    create_unimplemented_device("timer[7]",  0x40001400, 0x400);
-+    create_unimplemented_device("RTC",       0x40002800, 0x400);
-+    create_unimplemented_device("WWDG",      0x40002c00, 0x400);
-+    create_unimplemented_device("IWDG",      0x40003000, 0x400);
-+    create_unimplemented_device("USB",       0x40005000, 0x400);
-+    create_unimplemented_device("FDCAN1",    0x40006400, 0x400);
-+    create_unimplemented_device("FDCAN2",    0x40006800, 0x400);
-+    create_unimplemented_device("CRS",       0x40006c00, 0x400);
-+    create_unimplemented_device("PWR",       0x40007000, 0x400);
-+    create_unimplemented_device("DAC",       0x40007400, 0x400);
-+    create_unimplemented_device("CEC",       0x40007800, 0x400);
-+    create_unimplemented_device("LPTIM1",    0x40007c00, 0x400);
-+    create_unimplemented_device("LPUART1",   0x40008000, 0x400);
-+    create_unimplemented_device("LPUART2",   0x40008400, 0x400);
-+    create_unimplemented_device("I2C3",      0x40008800, 0x400);
-+    create_unimplemented_device("LPTIM2",    0x40009400, 0x400);
-+    create_unimplemented_device("USB RAM1",  0x40009800, 0x400);
-+    create_unimplemented_device("USB RAM2",  0x40009c00, 0x400);
-+    create_unimplemented_device("UCPD1",     0x4000a000, 0x400);
-+    create_unimplemented_device("UCPD2",     0x4000a400, 0x400);
-+    create_unimplemented_device("TAMP",      0x4000b000, 0x400);
-+    create_unimplemented_device("FDCAN",     0x4000b400, 0x800);
-+    create_unimplemented_device("ADC",       0x40012400, 0x400);
-+    create_unimplemented_device("timer[1]",  0x40012C00, 0x400);
-+    create_unimplemented_device("timer[15]", 0x40014000, 0x400);
-+    create_unimplemented_device("timer[16]", 0x40014400, 0x400);
-+    create_unimplemented_device("timer[17]", 0x40014800, 0x400);
-+    create_unimplemented_device("DMA1",      0x40020000, 0x400);
-+    create_unimplemented_device("DMA2",      0x40020400, 0x400);
-+    create_unimplemented_device("DMAMUX",    0x40020800, 0x800);
-+    create_unimplemented_device("RCC",       0x40021000, 0x400);
-+    create_unimplemented_device("EXTI",      0x40021800, 0x400);
-+    create_unimplemented_device("FLASH",     0x40022000, 0x400);
-+    create_unimplemented_device("CRC",       0x40023000, 0x400);
-+    create_unimplemented_device("RNG",       0x40025000, 0x400);
-+    create_unimplemented_device("AES",       0x40026000, 0x400);
-+    create_unimplemented_device("GPIOA",     0x50000000, 0x400);
-+    create_unimplemented_device("GPIOB",     0x50000400, 0x400);
-+    create_unimplemented_device("GPIOC",     0x50000800, 0x400);
-+    create_unimplemented_device("GPIOD",     0x50000c00, 0x400);
-+    create_unimplemented_device("GPIOE",     0x50001000, 0x400);
-+    create_unimplemented_device("GPIOF",     0x50001400, 0x400);
-+}
-+
-+static void stm32g000_soc_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = stm32g000_soc_realize;
-+    /* No vmstate or reset required: device has no internal state */
-+}
-+
-+static const TypeInfo stm32g000_soc_info = {
-+    .name          = TYPE_STM32G000_SOC,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(STM32G000State),
-+    .instance_init = stm32g000_soc_initfn,
-+    .class_init    = stm32g000_soc_class_init,
-+};
-+
-+static void stm32g000_soc_types(void)
-+{
-+    type_register_static(&stm32g000_soc_info);
-+}
-+
-+type_init(stm32g000_soc_types)
-diff --git a/include/hw/arm/stm32g000_soc.h b/include/hw/arm/stm32g000_soc.h
-new file mode 100644
-index 000000000000..dd3857c87189
---- /dev/null
-+++ b/include/hw/arm/stm32g000_soc.h
-@@ -0,0 +1,62 @@
-+/*
-+ * STM32G000 SoC
-+ *
-+ * Copyright (c) 2024 Felipe Balbi <felipe@balbi.sh>
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+
-+#ifndef HW_ARM_STM32G000_SOC_H
-+#define HW_ARM_STM32G000_SOC_H
-+
-+#include "hw/gpio/stm32l4x5_gpio.h"
-+#include "hw/char/stm32f2xx_usart.h"
-+#include "hw/ssi/stm32f2xx_spi.h"
-+#include "hw/arm/armv7m.h"
-+#include "qom/object.h"
-+#include "hw/clock.h"
-+
-+#define TYPE_STM32G000_SOC "stm32g000-soc"
-+OBJECT_DECLARE_SIMPLE_TYPE(STM32G000State, STM32G000_SOC)
-+
-+#define STM_NUM_USARTS 8
-+#define STM_NUM_SPIS 2
-+
-+#define FLASH_BASE_ADDRESS 0x08000000
-+#define FLASH_SIZE (128 * 1024)
-+#define SRAM_BASE_ADDRESS 0x20000000
-+#define SRAM_SIZE (36 * 1024)
-+
-+struct STM32G000State {
-+    SysBusDevice parent_obj;
-+
-+    ARMv7MState armv7m;
-+
-+    STM32F2XXUsartState usart[STM_NUM_USARTS];
-+    STM32F2XXSPIState spi[STM_NUM_SPIS];
-+
-+    MemoryRegion sram;
-+    MemoryRegion flash;
-+    MemoryRegion flash_alias;
-+
-+    Clock *sysclk;
-+    Clock *refclk;
-+};
-+
-+#endif
+I'm still quite confused how that could be caused of this.
+
+What you described in the previous bug report seems to imply some page was
+leftover in migration so some page got corrupted after migrated.
+
+However what this patch mostly does is it can sync more than before even if
+I overlooked the condition check there (I still think the check is
+redundant, there's one outlier when remaining_size == threshold_size, but I
+don't think it should matter here as of now).  It'll make more sense if
+this patch made the sync less, but that's not the case but vice versa.
+
+> 
+> > ---
+> >  migration/ram.c | 9 ++++-----
+> >  1 file changed, 4 insertions(+), 5 deletions(-)
+> > 
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index c0cdcccb75..d5b7cd5ac2 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -3213,21 +3213,20 @@ static void ram_state_pending_estimate(void *opaque, uint64_t *must_precopy,
+> >  static void ram_state_pending_exact(void *opaque, uint64_t *must_precopy,
+> >                                      uint64_t *can_postcopy)
+> >  {
+> > -    MigrationState *s = migrate_get_current();
+> >      RAMState **temp = opaque;
+> >      RAMState *rs = *temp;
+> > +    uint64_t remaining_size;
+> >  
+> > -    uint64_t remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
+> > -
+> > -    if (!migration_in_postcopy() && remaining_size < s->threshold_size) {
+> > +    if (!migration_in_postcopy()) {
+> >          bql_lock();
+> >          WITH_RCU_READ_LOCK_GUARD() {
+> >              migration_bitmap_sync_precopy(rs, false);
+> >          }
+> >          bql_unlock();
+> > -        remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
+> >      }
+> >  
+> > +    remaining_size = rs->migration_dirty_pages * TARGET_PAGE_SIZE;
+> > +
+> >      if (migrate_postcopy_ram()) {
+> >          /* We can do postcopy, and all the data is postcopiable */
+> >          *can_postcopy += remaining_size;
+> 
+> This basically reverts 28ef5339c3 ("migration: fix ram_state_pending_exact()"), which originally
+> made the issue disappear.
+> 
+> Any thoughts on the matter appreciated.
+
+In the previous discussion, you mentioned that you bisected to the commit
+and also verified the fix.  Now you also mentioned in the bz that you can't
+reporduce this bug manually.
+
+Is it still possible to be reproduced with some scripts?  Do you also mean
+that it's harder to reproduce comparing to before?  In all cases, some way
+to reproduce it would definitely be helpful.
+
+Even if we want to revert this change, we'll need to know whether this will
+fix your case so we need something to verify it before a revert.  I'll
+consider that the last though as I had a feeling this is papering over
+something else.
+
+Thanks,
+
 -- 
-2.44.0
+Peter Xu
 
 
