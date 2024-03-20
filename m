@@ -4,131 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A386C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80044C54E58
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:56:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmrjV-0004j4-4i; Wed, 20 Mar 2024 04:55:37 -0400
+	id 1rmrjq-0005wg-Gr; Wed, 20 Mar 2024 04:55:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmrjT-0004ha-KJ
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:55:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1rmrjo-0005r7-5E
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:55:56 -0400
+Received: from mail-mw2nam12on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:200a::600]
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rmrjM-0001yl-Ce
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:55:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710924917;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jT0WMqvhzo7oE0EGNsiQoQcxm6uetUBEz6/cnlj+r9g=;
- b=TaHaqitBehJilpwC5IXPOyc0cCK8IOkN9gEg67bdzFam4AAyRESAjXIUrgRIpSVGZ9RG1M
- Mu+fdONhKpTWyV5z4HSIOaoq4MHlQtIvrXoqTt16vtorapRC8WpKY6WzVP8yfxDJwOgYHK
- YEGEi3eBdPP28yRxEyCK8Q3j4ywdC4U=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-kxq1oKYlPhiyQQ2K18D0Vg-1; Wed, 20 Mar 2024 04:55:15 -0400
-X-MC-Unique: kxq1oKYlPhiyQQ2K18D0Vg-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a46ba1a19fdso231083866b.1
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 01:55:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710924913; x=1711529713;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jT0WMqvhzo7oE0EGNsiQoQcxm6uetUBEz6/cnlj+r9g=;
- b=nTuffhbTZa2KmPe2jJKwkSJzdTVTmtlFLYFiTjidX2XullbOoB1xZjYNONKvnUjxcy
- x7QwgRODvSmB+yLvF6XSMTLqHCSAcJbHcZUr8zmNEchMsCyPag5GyCgTGfoDr/rHO6rX
- TNo3VvobcHTXd8RT8i2X7JPUu7DgDYK61kP9VbYblHy/TLxJ3lmw8woR/y6bqcumkdWb
- rCFIJ9laaGYGJFuuB1W8cv47zbUSo2YDGDzRxDz3F1PXKs7hwNjbjYqPLfVM0YSvqcK3
- 4wKngl2inyDlNKXR6puXcpA8IzoW9XFqaaYtLcSyXqK/VQn5aUUBr8Idr3HKsg4LTwfm
- fpjg==
-X-Gm-Message-State: AOJu0Ywvm2Uh8KvSUq82czvHrJTAFJzEDwYc4bCI0SylsGitUdrTeuuB
- F6UlmZydENc+zhOAjpCCK9JQYEbEe/MxsoyZqlxo6AY7ULP0D4/wd99xmzxvKEdj7yo42T9meVz
- nc9Wuck3x0pvKJbO4qArRzyAktS8z3fwnO3rTk6DI4YWDybIQuHz+
-X-Received: by 2002:a17:906:39c9:b0:a46:cea6:a7f1 with SMTP id
- i9-20020a17090639c900b00a46cea6a7f1mr3079992eje.51.1710924912975; 
- Wed, 20 Mar 2024 01:55:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEzKct3DfQPqOHFQkj3BBhLlJFsFmhcT2gTNoUKvfTPzk8YuCMrlLh5dppu24SDkCS3e/ehHQ==
-X-Received: by 2002:a17:906:39c9:b0:a46:cea6:a7f1 with SMTP id
- i9-20020a17090639c900b00a46cea6a7f1mr3079971eje.51.1710924912618; 
- Wed, 20 Mar 2024 01:55:12 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-177-50.web.vodafone.de.
- [109.43.177.50]) by smtp.gmail.com with ESMTPSA id
- hz13-20020a1709072ced00b00a46a9cdcfa5sm4710252ejc.162.2024.03.20.01.55.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Mar 2024 01:55:12 -0700 (PDT)
-Message-ID: <a7e38ec4-641f-409b-86d7-ea09d9ac1b18@redhat.com>
-Date: Wed, 20 Mar 2024 09:55:10 +0100
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1rmrjl-0002O6-VV
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:55:55 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=WCxlwSCgiU4nC3r8sMLAXL/sBtFGzjajO3VVSAEgB7uF9AWTHU2ipxNEM5eCV/uQ2DPm+QRziPZiSBdaoSG8bmVZBDZcU6ssu4sFSA/UWSNJ1aM9JdDrGj7mRM0sjEHPRx30LlBx1pljJWds3qYzMRP3+iPY+VQrt6CW4M+4M4Twc7wVUEHCwCgBG3/B1jyEGViTBugooyCGbKRPv5PX3WKV8nztQO3Hh1GWJTZUGwQMWI/G9Qls4n1z1mQEbqYFodTfa4xOcYEzXiSSN43ZJGvgbKvmgaS3TEYnqG3gC9RHDJrmFEVg8nNpDCMLqTVB0bRd1ZzqlrNUjMFIrnJkqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BQPDiZM6u49YLOOuOVH8cA/W1WwHxBkgenoMkfrl3jc=;
+ b=a5E+kLAv7dd5qEDHUTpUyMoEpCLIsyLgMCkYbhWYMt4IXqMrgFiOoUIZJXmHilM/bf4u3ha+QB1YroDzyP7u+cs/R7fi2P9TWYjxz9GbbYIyTMpFRuUpqJZxle27GvlxBiKfTI9oJ2SNUDh5EEd6wWI/Sbl8Ji7RPYi9x4MNy88T3GGz1lytPdLsYkmz7vW5SCuNI8T+SjW9vl9rK+DDvArzn+tOnPpqA0ZTGL1P12T10wYLVM3TpaNgpcPyZSeltzqBw8+44baKD9vnwNldPgWncs9XoPyoJQxKsG5K3I5XSQZb8aVhHf3ay6gWivlzOW9ER1qEWPJKc4VBlwYGJA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BQPDiZM6u49YLOOuOVH8cA/W1WwHxBkgenoMkfrl3jc=;
+ b=QfXfgAzKMVpH7zqdeNODwBSNyyLeWnh3b8nkWuHD7ggwQFXrHtgSqkQbljgBBeZyJYGkpp7SiUTCqTFF0K8x1M1j+4M67U6DhtAhyNDHch5wVV9QCcHtYxEa/jVCMkhQrW4dw0aDO7ckdofHOZmJq28UBIChdM0IfwQLhB2u7U0=
+Received: from BYAPR07CA0057.namprd07.prod.outlook.com (2603:10b6:a03:60::34)
+ by PH8PR12MB6842.namprd12.prod.outlook.com (2603:10b6:510:1c9::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.28; Wed, 20 Mar
+ 2024 08:55:49 +0000
+Received: from CO1PEPF000044F3.namprd05.prod.outlook.com
+ (2603:10b6:a03:60:cafe::ea) by BYAPR07CA0057.outlook.office365.com
+ (2603:10b6:a03:60::34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.26 via Frontend
+ Transport; Wed, 20 Mar 2024 08:55:49 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CO1PEPF000044F3.mail.protection.outlook.com (10.167.241.73) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:55:49 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 20 Mar
+ 2024 03:55:48 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <kvm@vger.kernel.org>, Tom Lendacky <thomas.lendacky@amd.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Pankaj Gupta
+ <pankaj.gupta@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>, Isaku Yamahata
+ <isaku.yamahata@linux.intel.com>
+Subject: [PATCH v3 47/49] hw/i386/sev: Add support to encrypt BIOS when
+ SEV-SNP is enabled
+Date: Wed, 20 Mar 2024 03:39:43 -0500
+Message-ID: <20240320083945.991426-48-michael.roth@amd.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240320083945.991426-1-michael.roth@amd.com>
+References: <20240320083945.991426-1-michael.roth@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/7] configure: add --enable-qpl build option
-Content-Language: en-US
-To: Yuan Liu <yuan1.liu@intel.com>, peterx@redhat.com, farosas@suse.de
-Cc: qemu-devel@nongnu.org, hao.xiang@bytedance.com,
- bryan.zhang@bytedance.com, nanhai.zou@intel.com
-References: <20240319164527.1873891-1-yuan1.liu@intel.com>
- <20240319164527.1873891-4-yuan1.liu@intel.com>
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240319164527.1873891-4-yuan1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000044F3:EE_|PH8PR12MB6842:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3d2c1fe5-34e8-4cf4-1997-08dc48bb8a58
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: uIVsm6e9Qzjx/69NnJo/+kjClghbATXQ1L1VUYIBZ7EicO9hWZpFqWjI+S1jG+QGJH+dhzwYm0ZnjO6wDy1t6+bskaxvm0DxfztNSMylniHHwN99rGYzZqVObm0rG4z8mmAchtHfqrmRC/2aBcUk1vrkpP2aumg0hlg717/scVGzlb1pq9m2hDYjkY9fJjkyVTTovEIMDd2oXmFg5C2y6TMrWyWUSY7cHYXulbXCdqJugJ0o9KfwZl3Nmi9CKAEdfqngGw6KoIvWw96GcLArvyb9k3x+qo4pOf7537TTonRDB9UfzXSzVhzRmR+Ew8WJRUQAKKGcnwIPe2NGGKDR29deHohqGMvpRchz2qunRAmScc0X690LBEUCJZlPIP4gfFxJMEgQ/AwGtQKxHVmEmUF5qH0PkRq8ZuJ6/meCbIXvI3ZjKMzHz1PlrlPfHLxVhuUWAtKWpDkV6WarhEvTT6u3u5GoP/xegcxcnsFzPn+1YeIkHOwFcdwoR6XebovGEujQeLmM0g0JRyzPpQnbJWgdFSMSkGEuzTcuXFj5DGsDfdGTDA3eBEWXEkIMezMLt5T/m6Rn5K33yS5cXQxAwM/tyrrHuoOrrUWu9VUgtCvTGeYtJD4tmJv8MnVKYIktk6RmUi6VddI0e7NSQdW/rZ/WAh0leflfSaLk9a4TrZGFErHQsQe9IZTi8VOFGnWoXQlT3XnbI+Sli8NTg0A7MLvOsZ4BbiV4GKYrFu/8uN4GEPz9JtA580G/G1eQOOLR
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(376005)(36860700004)(1800799015)(82310400014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:55:49.5162 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3d2c1fe5-34e8-4cf4-1997-08dc48bb8a58
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044F3.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6842
+Received-SPF: permerror client-ip=2a01:111:f403:200a::600;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,63 +128,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/03/2024 17.45, Yuan Liu wrote:
-> add --enable-qpl and --disable-qpl options to enable and disable
-> the QPL compression method for multifd migration.
-> 
-> the Query Processing Library (QPL) is an open-source library
-> that supports data compression and decompression features.
-> 
-> The QPL compression is based on the deflate compression algorithm
-> and use Intel In-Memory Analytics Accelerator(IAA) hardware for
-> compression and decompression acceleration.
-> 
-> Please refer to the following for more information about QPL
-> https://intel.github.io/qpl/documentation/introduction_docs/introduction.html
-> 
-> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
-> ---
->   meson.build                   | 16 ++++++++++++++++
->   meson_options.txt             |  2 ++
->   scripts/meson-buildoptions.sh |  3 +++
->   3 files changed, 21 insertions(+)
-> 
-> diff --git a/meson.build b/meson.build
-> index b375248a76..bee7dcd53b 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1200,6 +1200,20 @@ if not get_option('zstd').auto() or have_block
->                       required: get_option('zstd'),
->                       method: 'pkg-config')
->   endif
-> +qpl = not_found
-> +if not get_option('qpl').auto()
+TODO: Brijesh as author, me as co-author (vice-versa depending)
+      drop flash handling? we only support BIOS now
 
-Do you really only want to enable this if the user explicitly specified 
-"--enable-qpl" ? Otherwise, I think this should be:
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+---
+ hw/i386/pc_sysfw.c            | 12 +++++++-----
+ hw/i386/x86.c                 |  2 +-
+ include/hw/i386/x86.h         |  2 +-
+ target/i386/sev-sysemu-stub.c |  2 +-
+ target/i386/sev.c             | 15 +++++++++++----
+ target/i386/sev.h             |  2 +-
+ 6 files changed, 22 insertions(+), 13 deletions(-)
 
-  if not get_option('qpl').auto() or have_system
-
-?
-
-  Thomas
-
-
-
-
-> +  libqpl = cc.find_library('qpl', required: false)
-> +  if not libqpl.found()
-> +    error('libqpl not found, please install it from ' +
-> +    'https://intel.github.io/qpl/documentation/get_started_docs/installation.html')
-> +  endif
-> +  libaccel = dependency('libaccel-config', version: '>=4.0.0',
-> +                        required: true,
-> +                        method: 'pkg-config')
-> +  qpl = declare_dependency(dependencies: [libqpl, libaccel,
-> +        cc.find_library('dl', required: get_option('qpl'))],
-> +        link_args: ['-lstdc++'])
-> +endif
->   virgl = not_found
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index 3efabbbab2..9dbb3f7337 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -149,6 +149,8 @@ static void pc_system_flash_map(PCMachineState *pcms,
+     assert(PC_MACHINE_GET_CLASS(pcms)->pci_enabled);
+ 
+     for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
++        hwaddr gpa;
++
+         system_flash = pcms->flash[i];
+         blk = pflash_cfi01_get_blk(system_flash);
+         if (!blk) {
+@@ -178,11 +180,11 @@ static void pc_system_flash_map(PCMachineState *pcms,
+         }
+ 
+         total_size += size;
++        gpa = 0x100000000ULL - total_size; /* where the flash is mapped */
+         qdev_prop_set_uint32(DEVICE(system_flash), "num-blocks",
+                              size / FLASH_SECTOR_SIZE);
+         sysbus_realize_and_unref(SYS_BUS_DEVICE(system_flash), &error_fatal);
+-        sysbus_mmio_map(SYS_BUS_DEVICE(system_flash), 0,
+-                        0x100000000ULL - total_size);
++        sysbus_mmio_map(SYS_BUS_DEVICE(system_flash), 0, gpa);
+ 
+         if (i == 0) {
+             flash_mem = pflash_cfi01_get_memory(system_flash);
+@@ -192,7 +194,7 @@ static void pc_system_flash_map(PCMachineState *pcms,
+             if (sev_enabled()) {
+                 flash_ptr = memory_region_get_ram_ptr(flash_mem);
+                 flash_size = memory_region_size(flash_mem);
+-                x86_firmware_configure(flash_ptr, flash_size);
++                x86_firmware_configure(gpa, flash_ptr, flash_size);
+             }
+         }
+     }
+@@ -245,7 +247,7 @@ void pc_system_firmware_init(PCMachineState *pcms,
+     pc_system_flash_cleanup_unused(pcms);
+ }
+ 
+-void x86_firmware_configure(void *ptr, int size)
++void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
+ {
+     int ret;
+ 
+@@ -262,6 +264,6 @@ void x86_firmware_configure(void *ptr, int size)
+             exit(1);
+         }
+ 
+-        sev_encrypt_flash(ptr, size, &error_fatal);
++        sev_encrypt_flash(gpa, ptr, size, &error_fatal);
+     }
+ }
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index 825dc4c735..e3ddc39133 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -1161,7 +1161,7 @@ void x86_bios_rom_init(MachineState *ms, const char *default_firmware,
+          */
+         void *ptr = memory_region_get_ram_ptr(bios);
+         load_image_size(filename, ptr, bios_size);
+-        x86_firmware_configure(ptr, bios_size);
++        x86_firmware_configure(0x100000000ULL - bios_size, ptr, bios_size);
+     } else {
+         if (!isapc_ram_fw) {
+             memory_region_set_readonly(bios, true);
+diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+index 4dc30dcb4d..53dfd95cb2 100644
+--- a/include/hw/i386/x86.h
++++ b/include/hw/i386/x86.h
+@@ -143,6 +143,6 @@ void ioapic_init_gsi(GSIState *gsi_state, Object *parent);
+ DeviceState *ioapic_init_secondary(GSIState *gsi_state);
+ 
+ /* pc_sysfw.c */
+-void x86_firmware_configure(void *ptr, int size);
++void x86_firmware_configure(hwaddr gpa, void *ptr, int size);
+ 
+ #endif
+diff --git a/target/i386/sev-sysemu-stub.c b/target/i386/sev-sysemu-stub.c
+index 96e1c15cc3..6af643e3a1 100644
+--- a/target/i386/sev-sysemu-stub.c
++++ b/target/i386/sev-sysemu-stub.c
+@@ -42,7 +42,7 @@ void qmp_sev_inject_launch_secret(const char *packet_header, const char *secret,
+     error_setg(errp, "SEV is not available in this QEMU");
+ }
+ 
+-int sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp)
++int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
+ {
+     g_assert_not_reached();
+ }
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index e2506f74da..d8e6aba67c 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -1449,7 +1449,7 @@ err:
+ }
+ 
+ int
+-sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp)
++sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
+ {
+     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+ 
+@@ -1459,7 +1459,14 @@ sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp)
+ 
+     /* if SEV is in update state then encrypt the data else do nothing */
+     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
+-        int ret = sev_launch_update_data(SEV_GUEST(sev_common), ptr, len);
++        int ret;
++
++        if (sev_snp_enabled()) {
++            ret = snp_launch_update_data(gpa, ptr, len,
++                                         KVM_SEV_SNP_PAGE_TYPE_NORMAL);
++        } else {
++            ret = sev_launch_update_data(SEV_GUEST(sev_common), ptr, len);
++        }
+         if (ret < 0) {
+             error_setg(errp, "SEV: Failed to encrypt pflash rom");
+             return ret;
+@@ -1829,8 +1836,8 @@ bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp)
+     }
+ 
+     if (build_kernel_loader_hashes(padded_ht, ctx, errp)) {
+-        if (sev_encrypt_flash((uint8_t *)padded_ht, sizeof(*padded_ht),
+-                              errp) < 0) {
++        if (sev_encrypt_flash(area->base, (uint8_t *)padded_ht,
++                              sizeof(*padded_ht), errp) < 0) {
+             ret = false;
+         }
+     } else {
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index 5cbfc3365b..d570777769 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -59,7 +59,7 @@ uint32_t sev_get_cbit_position(void);
+ uint32_t sev_get_reduced_phys_bits(void);
+ bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp);
+ 
+-int sev_encrypt_flash(uint8_t *ptr, uint64_t len, Error **errp);
++int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp);
+ int sev_inject_launch_secret(const char *hdr, const char *secret,
+                              uint64_t gpa, Error **errp);
+ 
+-- 
+2.25.1
 
 
