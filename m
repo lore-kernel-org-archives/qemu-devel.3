@@ -4,73 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D934C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 17:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E9BDC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 18:06:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rn0AJ-0001L3-7B; Wed, 20 Mar 2024 13:55:51 -0400
+	id 1rn0JQ-00037X-13; Wed, 20 Mar 2024 14:05:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <isaku.yamahata@intel.com>)
- id 1rn0AG-0001It-59
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:55:48 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>) id 1rn0JM-000373-Jd
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 14:05:13 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <isaku.yamahata@intel.com>)
- id 1rn0AA-0005zA-HG
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 13:55:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1710957342; x=1742493342;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=jMWF46sbhfs/k1gmIhnSS7Ujnub/iP1jOCKSSBybAsg=;
- b=iqP9v3kzb80+RnGLLhyX3gIljx7uRMWsJzP4RRVGJgZy+rzwyCiGAJJa
- F1pnfWCx3WwuFP+LTr+Astz7u2D9X79dcyuxQamMXb3yW4/7iHWjBB1t3
- O6VQpUdMDn18HvRr4UM3qCCPlwvfA855PhZlOrLN4e4Us7nCvGIbHXdUy
- Z/kMfC0iTZtrstmpTz5VoIQPl9oW22q3rG6rKRQggVNDZhIFMjq7pmIUN
- 2IcBX+0xM6LIB+Ce77X1izVUth/1Vd8cOr/6iKapiOFEhsybrxftYz+Nb
- HS2+z8bE7CEGTT6yxefl6W7n1VUhkmH2qnsyh9qDqr8sApCrsoYcGhOzm w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11019"; a="5840929"
-X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; 
-   d="scan'208";a="5840929"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Mar 2024 10:55:36 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,140,1708416000"; d="scan'208";a="14634905"
-Received: from ls.sc.intel.com (HELO localhost) ([172.25.112.31])
- by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Mar 2024 10:55:37 -0700
-Date: Wed, 20 Mar 2024 10:55:35 -0700
-From: Isaku Yamahata <isaku.yamahata@intel.com>
-To: Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>,
- Isaku Yamahata <isaku.yamahata@linux.intel.com>,
- Brijesh Singh <brijesh.singh@amd.com>, isaku.yamahata@intel.com
-Subject: Re: [PATCH v3 40/49] hw/i386/sev: Add function to get SEV metadata
- from OVMF header
-Message-ID: <20240320175535.GF1994522@ls.amr.corp.intel.com>
-References: <20240320083945.991426-1-michael.roth@amd.com>
- <20240320083945.991426-41-michael.roth@amd.com>
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>) id 1rn0JK-0007vB-Ti
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 14:05:12 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42KHLuc1018977; Wed, 20 Mar 2024 18:05:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=oCqsQOg9a9GWGwX5ar56+8hBbWrcY0+ijdFkdIu0pHI=;
+ b=NOVmgNrwk/bIjRbTsSm4EFjBEWzpBJDioe9ECa596OZQfeA8CCH9TBA4eAEA3wkpQ66I
+ +t9Rvq65FJ9ESE3RCe46FNWP+D3Z8WbWDPCM1HOHp5YquolewlrOYswspf+3gXKzYqIW
+ 1rVZmVDtS3+gwyHza9Xk2coVSNvmI/7CcVGvp4GRIz6nDqSAwhEEWe5tBcBu+FF6/HSv
+ VbvLl/UR2b7GmCSHWuP5z6jNS/vwlFlXV/gHuSXIruaPtXIvS8DtcMGl/uCGoQsW7g+k
+ NBKEazs06cHbUA0gYy7KUtJXyCkkQq2nypFK2Vbsg8vXx9nY81rSgejdQ3D8qRFtbMrj tg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x044s84nf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Mar 2024 18:05:08 +0000
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42KI57bd028352;
+ Wed, 20 Mar 2024 18:05:07 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x044s84nb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Mar 2024 18:05:07 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42KGwo1C015781; Wed, 20 Mar 2024 18:05:06 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wwp50845e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 20 Mar 2024 18:05:06 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42KI526Y10092856
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 20 Mar 2024 18:05:04 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7C3DA20040;
+ Wed, 20 Mar 2024 18:05:02 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 452AE20065;
+ Wed, 20 Mar 2024 18:05:02 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.152.224.238])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 20 Mar 2024 18:05:02 +0000 (GMT)
+Message-ID: <87e832c1aa59b81860f4c6a7fa6935d5c1268e85.camel@linux.ibm.com>
+Subject: Re: [PATCH 2/3] migration: Drop unnecessary check in ram's
+ pending_exact()
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: peterx@redhat.com, qemu-devel@nongnu.org
+Cc: Prasad Pandit <ppandit@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Bandan Das <bdas@redhat.com>, Julia Suvorova <jusual@redhat.com>, Thomas
+ Huth <thuth@redhat.com>
+Date: Wed, 20 Mar 2024 19:05:01 +0100
+In-Reply-To: <bc88f4572649084cd38a0880d7e096a939f80b14.camel@linux.ibm.com>
+References: <20240117075848.139045-1-peterx@redhat.com>
+ <20240117075848.139045-3-peterx@redhat.com>
+ <bc88f4572649084cd38a0880d7e096a939f80b14.camel@linux.ibm.com>
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+User-Agent: Evolution 3.48.4 (3.48.4-1.fc38) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240320083945.991426-41-michael.roth@amd.com>
-Received-SPF: pass client-ip=198.175.65.21;
- envelope-from=isaku.yamahata@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: ZYaae2uyHhXamDd_4CEbz7vE2f9G70bT
+X-Proofpoint-ORIG-GUID: wHWjOQZCpOLcNGJnj1lZPrVRTDM8Zk1J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-20_10,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ impostorscore=0 phishscore=0 clxscore=1015 spamscore=0 malwarescore=0
+ mlxlogscore=516 lowpriorityscore=0 suspectscore=0 mlxscore=0 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2403140000 definitions=main-2403200144
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,133 +119,6 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 20, 2024 at 03:39:36AM -0500,
-Michael Roth <michael.roth@amd.com> wrote:
+I cc'ed Juan, but it looks like he is no longer with Redhat.
 
-> From: Brijesh Singh <brijesh.singh@amd.com>
-> 
-> A recent version of OVMF expanded the reset vector GUID list to add
-> SEV-specific metadata GUID. The SEV metadata describes the reserved
-> memory regions such as the secrets and CPUID page used during the SEV-SNP
-> guest launch.
-> 
-> The pc_system_get_ovmf_sev_metadata_ptr() is used to retieve the SEV
-> metadata pointer from the OVMF GUID list.
-> 
-> Signed-off-by: Brijesh Singh <brijesh.singh@amd.com>
-> Signed-off-by: Michael Roth <michael.roth@amd.com>
-> ---
->  hw/i386/pc_sysfw_ovmf.c | 33 +++++++++++++++++++++++++++++++++
->  include/hw/i386/pc.h    | 26 ++++++++++++++++++++++++++
->  2 files changed, 59 insertions(+)
-> 
-> diff --git a/hw/i386/pc_sysfw_ovmf.c b/hw/i386/pc_sysfw_ovmf.c
-> index 07a4c267fa..32efa34614 100644
-> --- a/hw/i386/pc_sysfw_ovmf.c
-> +++ b/hw/i386/pc_sysfw_ovmf.c
-> @@ -35,6 +35,31 @@ static const int bytes_after_table_footer = 32;
->  static bool ovmf_flash_parsed;
->  static uint8_t *ovmf_table;
->  static int ovmf_table_len;
-> +static OvmfSevMetadata *ovmf_sev_metadata_table;
-> +
-> +#define OVMF_SEV_META_DATA_GUID "dc886566-984a-4798-A75e-5585a7bf67cc"
-> +typedef struct __attribute__((__packed__)) OvmfSevMetadataOffset {
-> +    uint32_t offset;
-> +} OvmfSevMetadataOffset;
-> +
-> +static void pc_system_parse_sev_metadata(uint8_t *flash_ptr, size_t flash_size)
-> +{
-> +    OvmfSevMetadata     *metadata;
-> +    OvmfSevMetadataOffset  *data;
-> +
-> +    if (!pc_system_ovmf_table_find(OVMF_SEV_META_DATA_GUID, (uint8_t **)&data,
-> +                                   NULL)) {
-> +        return;
-> +    }
-> +
-> +    metadata = (OvmfSevMetadata *)(flash_ptr + flash_size - data->offset);
-> +    if (memcmp(metadata->signature, "ASEV", 4) != 0) {
-> +        return;
-> +    }
-> +
-> +    ovmf_sev_metadata_table = g_malloc(metadata->len);
-> +    memcpy(ovmf_sev_metadata_table, metadata, metadata->len);
-> +}
->  
->  void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size)
->  {
-> @@ -90,6 +115,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size)
->       */
->      memcpy(ovmf_table, ptr - tot_len, tot_len);
->      ovmf_table += tot_len;
-> +
-> +    /* Copy the SEV metadata table (if exist) */
-> +    pc_system_parse_sev_metadata(flash_ptr, flash_size);
->  }
-
-Can we move this call to x86_firmware_configure() @ pc_sysfw.c, and move sev
-specific bits to somewhere to sev specific file?  We don't have to parse sev
-metadata for non-SEV case, right?
-
-We don't have to touch common ovmf file. It also will be consistent with tdx
-case.  TDX patch series adds tdx_parse_tdvf() to x86_firmware_configure().
-
-thanks,
-
->  
->  /**
-> @@ -159,3 +187,8 @@ bool pc_system_ovmf_table_find(const char *entry, uint8_t **data,
->      }
->      return false;
->  }
-> +
-> +OvmfSevMetadata *pc_system_get_ovmf_sev_metadata_ptr(void)
-> +{
-> +    return ovmf_sev_metadata_table;
-> +}
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index fb1d4106e5..df9a61540d 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -163,6 +163,32 @@ void pc_acpi_smi_interrupt(void *opaque, int irq, int level);
->  #define PCI_HOST_ABOVE_4G_MEM_SIZE     "above-4g-mem-size"
->  #define PCI_HOST_PROP_SMM_RANGES       "smm-ranges"
->  
-> +typedef enum {
-> +    SEV_DESC_TYPE_UNDEF,
-> +    /* The section contains the region that must be validated by the VMM. */
-> +    SEV_DESC_TYPE_SNP_SEC_MEM,
-> +    /* The section contains the SNP secrets page */
-> +    SEV_DESC_TYPE_SNP_SECRETS,
-> +    /* The section contains address that can be used as a CPUID page */
-> +    SEV_DESC_TYPE_CPUID,
-> +
-> +} ovmf_sev_metadata_desc_type;
-> +
-> +typedef struct __attribute__((__packed__)) OvmfSevMetadataDesc {
-> +    uint32_t base;
-> +    uint32_t len;
-> +    ovmf_sev_metadata_desc_type type;
-> +} OvmfSevMetadataDesc;
-> +
-> +typedef struct __attribute__((__packed__)) OvmfSevMetadata {
-> +    uint8_t signature[4];
-> +    uint32_t len;
-> +    uint32_t version;
-> +    uint32_t num_desc;
-> +    OvmfSevMetadataDesc descs[];
-> +} OvmfSevMetadata;
-> +
-> +OvmfSevMetadata *pc_system_get_ovmf_sev_metadata_ptr(void);
->  
->  void pc_pci_as_mapping_init(MemoryRegion *system_memory,
->                              MemoryRegion *pci_address_space);
-> -- 
-> 2.25.1
-> 
-> 
-
--- 
-Isaku Yamahata <isaku.yamahata@intel.com>
 
