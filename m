@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9538FC54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 13:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E106FC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 13:10:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmvhk-0005Ow-Om; Wed, 20 Mar 2024 09:10:07 -0400
+	id 1rmvhF-0005C0-Va; Wed, 20 Mar 2024 09:09:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1rms1C-00071N-TU
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 05:13:54 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmvhD-0005AW-Ie
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:09:31 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1rms1A-0007SA-1m
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 05:13:54 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a466fc8fcccso783640566b.1
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 02:13:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmvhA-00071p-U7
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:09:31 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5688eaf1165so9750368a12.1
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 06:09:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1710926030; x=1711530830; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=4X7UGJU0c/S1jV5qTDHfvL2iI1yqhVnKXQplMriEpBo=;
- b=lQhuLvJecIgImJiU0ZSeBHoZ5mKmyO32AivFrYbLU+PYY0i3hjm6C/bn1JWEOtADN5
- AoYBCCtEaVrg3ZXG1Pf8ibbJC4w2UzJYylhG/6t+AI3JdkqY2CJPPijVQ1cU1uL3l2YM
- kfmEvdX0B4HU4zusqPHzHS4mJcBvvfPvO7s+vJVcsue7YgM4mS/2oUIL93ZQGE4146Sx
- MWdngsQX7VJht/QN9vKTTWka9n42t6UUV/JVAPu+jVCTs06uKN292YWd4Z2RetSbCAUJ
- qMVtKGuGTe4nkKDMtj55z88j6ZutIQIlL5BpQy/TTFWLJftnxD7tt0eu2D7ay3BRBeFS
- qXaQ==
+ d=linaro.org; s=google; t=1710940167; x=1711544967; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tRraJwP29+saB9sTWcZU+jSEmRlRY/GgiHVYDTj8WfM=;
+ b=Rcj9gXMcUKTRKosMal3h4KcB9GrH4Hdk1IgdQhYZg+J6khBI42v3Um1+vQ4KrCShcn
+ 3P45MzhqYby5vN7yS6+F+3UmfTwiYVjB9Rl2nlPR88k8+zRSaCevYLggEj7/bmcfasHK
+ uSMDtLN/1QcUQjBjLl5QRE188/71hMwsxTsPSwIkMLWkBREWDogd+Rdl9aYVlhGKkABK
+ Pf6SroLjFaId/8Kd9Y7kxt0nHg14B8Kf5DoGlrEXar7I8Gt1ijRjwO7tPxZj4KvT8CYf
+ 76F0Ph9P6KUyv8ebdxN5cSrTXhux+BZ0jcMrPVVt/lXSvqfYOoynydvEWf8BxNlrbdtH
+ bYtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710926030; x=1711530830;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4X7UGJU0c/S1jV5qTDHfvL2iI1yqhVnKXQplMriEpBo=;
- b=JtGm3fYA9A8eduAlFhv1eO2L2JPs25I7LLZYYFOkqw88RXYWFbn/PgS/tkbHI0zZgk
- 10Sl+aBOX03JsM64YV2hI6aV98IjBCaH+HYHTXf9fAKqShB/PEPJYq7nk+enhCYp6q1c
- PIuPOvbN1xqUBn13JOSvlyUQaKy5vhEKS7TknPBg4TXXSIP4ETSaljANPk40jxyldNeA
- kYZdEL+0wiaQ31DB8GpbwbLkJkxzL+qDawq1n48TFEjMaNpyPLFVrv7C7mZzn0Z1KsaC
- a5LYwaSe8/9haHJA/v65WMoS/psb/VnRim0tfBAUvZBRVEvfZ+e2Rk4zMDc81m8OsQ1s
- CooQ==
-X-Gm-Message-State: AOJu0YwDf+fFULz3DoRdsH7nRnW8uisOoO6QjEIPbwt5iArFV4r4pbv/
- uaImESieYjC1ydMBE7ktbXJgVxc7IFzIXM2kOVHn+aihcPm7tpo=
-X-Google-Smtp-Source: AGHT+IHefPvEoF7zz1UOayOUKX14wD2WzOzwLKaAInRYDTpG0BQbT3E/QVUp+5BRAu8g2Pcv20h57w==
-X-Received: by 2002:a17:906:2b50:b0:a46:f6ac:22e5 with SMTP id
- b16-20020a1709062b5000b00a46f6ac22e5mr609064ejg.7.1710926029699; 
- Wed, 20 Mar 2024 02:13:49 -0700 (PDT)
-Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
- by smtp.gmail.com with ESMTPSA id
- wr6-20020a170907700600b00a4623030893sm6925696ejb.126.2024.03.20.02.13.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Mar 2024 02:13:49 -0700 (PDT)
-From: Zheyu Ma <zheyuma97@gmail.com>
-To: thuth@redhat.com,
-	lvivier@redhat.com,
-	pbonzini@redhat.com
-Cc: qemu-devel@nongnu.org,
-	zheyuma97@gmail.com
-Subject: [PATCH] libqos/virtio.c: Correct 'flags' reading in qvirtqueue_kick
-Date: Wed, 20 Mar 2024 10:04:42 +0100
-Message-Id: <20240320090442.267525-1-zheyuma97@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1710940167; x=1711544967;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tRraJwP29+saB9sTWcZU+jSEmRlRY/GgiHVYDTj8WfM=;
+ b=eq/boLWlcsPiTsOTDUyqXPt6z7QGXyBqtY2reaUItX0SvMBeTPJ/p2EwMKLoGRH3ec
+ s8x8R67k9rUmIXbVsk+YUCicrn0EfTC1QiaFc39gjogN5ePqXJt9y9TNWwK4yGgfu4DQ
+ Cpi7jJSJtPhZ7Or3IUZOSfnHKr0qJnIMHEI3pdj8BlyQjFcUf+cah1K8mD4Os4MpXFnI
+ qsvZZjCGFMfsRn8f00QsG5jRlgn1qSwuwNMORcq4BpHgUSsGpnvoyWI6qKqpcevDtBZU
+ Voyo5P7uYlghhXdHm4EQ594MNbkt02pBmMRWfsTxHiT/BTwku9ov06abnJi/FiswVoXx
+ oPrQ==
+X-Gm-Message-State: AOJu0YxlvmlZlec49dxsZLb2vUYsHMvlq4agOizKkivugex7X4OT/6aI
+ XRNuf+N5famf/IhahMAWgVLQ+xKb7FR4wRzaqivL15x25fr3lIInzk/JKfi3PbfEitXK6rAPQ2Y
+ 0eIJj7ut5vXiYKcbtA0fJM27Fxwdbe7KsSPHB/Q==
+X-Google-Smtp-Source: AGHT+IEVVoMrrMhoyvbMIB9gigmIoGH97vrcJ1vezQGQhbFeNENjkLST4/lbpk2hn7mDRsGlaqQgg73hKiSF8WXqmk4=
+X-Received: by 2002:a05:6402:1588:b0:568:b41c:92aa with SMTP id
+ ij8-20020a056402158800b00568b41c92aamr4680718edb.15.1710940167318; Wed, 20
+ Mar 2024 06:09:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=zheyuma97@gmail.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240220150833.13674-1-philmd@linaro.org>
+ <20240220150833.13674-2-philmd@linaro.org>
+In-Reply-To: <20240220150833.13674-2-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 20 Mar 2024 13:09:15 +0000
+Message-ID: <CAFEAcA-eXk5OMXa+AgL8uzNp4KVvmOVdic6E_p3L+XLxvABdYg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] hw/nmi: Use object_child_foreach_recursive() in
+ nmi_children()
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 20 Mar 2024 09:09:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,29 +93,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In qvirtqueue_kick(), the 'flags' were previously being incorrectly read from
-vq->avail instead of the correct vq->used location. This update ensures 'flags'
-are read from the correct location as per the virtio standard.
+On Tue, 20 Feb 2024 at 15:08, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Replace object_child_foreach() and recursion by a single
+> object_child_foreach_recursive() call.
+> Propagate the returned value so callers can check it.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
----
- tests/qtest/libqos/virtio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
-index 82a6e122bf..a21b6eee9c 100644
---- a/tests/qtest/libqos/virtio.c
-+++ b/tests/qtest/libqos/virtio.c
-@@ -394,7 +394,7 @@ void qvirtqueue_kick(QTestState *qts, QVirtioDevice *d, QVirtQueue *vq,
-     qvirtio_writew(d, qts, vq->avail + 2, idx + 1);
- 
-     /* Must read after idx is updated */
--    flags = qvirtio_readw(d, qts, vq->avail);
-+    flags = qvirtio_readw(d, qts, vq->used);
-     avail_event = qvirtio_readw(d, qts, vq->used + 4 +
-                                 sizeof(struct vring_used_elem) * vq->size);
- 
--- 
-2.34.1
-
+thanks
+-- PMM
 
