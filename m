@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E62C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 13:17:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E977C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 13:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmvnX-000175-Sl; Wed, 20 Mar 2024 09:16:03 -0400
+	id 1rmvnv-0001Jy-5F; Wed, 20 Mar 2024 09:16:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmvnW-00016m-02
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:16:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rmvnG-0000V0-Bm
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:16:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710940545;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xHPHIJGvn/8X+JXs0HRdKTFulwQJyL+u/3kk1jywDQQ=;
- b=c5hveBeH6dAb5bfVUr3XG8qDbBANXLgVQGNQmzEeuqhzanjyCpxAf/X3wh+mVY7mZepYFO
- jSaKmhw9xTu1S+EfiOtMf1aRzzOkBlTAMtSPX3KX0p58UVPZh5tZiAoPAp+tfzmQf2Tmwz
- SAaa3Pys2t/xInMN1QU6atBRm/ulM6c=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-350-Vu6AoWgxMqyeliaENgnyiA-1; Wed, 20 Mar 2024 09:15:43 -0400
-X-MC-Unique: Vu6AoWgxMqyeliaENgnyiA-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7830635331bso178940985a.1
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 06:15:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710940543; x=1711545343;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmvnq-0001H9-3h
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:16:22 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rmvnn-0000eW-Ft
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 09:16:20 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-56890b533aaso7645992a12.3
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 06:16:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1710940577; x=1711545377; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xHPHIJGvn/8X+JXs0HRdKTFulwQJyL+u/3kk1jywDQQ=;
- b=jOIlnSDGuhOdtasv6LxlDZWbTEU3wjeT1Xuh5lJX47bMFx/CICokkDTpDmunQLjvU5
- BI7UD2giW9xhup9lsFDySLLkSasmOaD0hTwVQWm8cbXgtHugdJN+XpovuvafRvKW3Bmx
- 98B9vD8DMmdqXhBVVJDe64auu7qNArTkezVhIZmFJIZKnAJFttFOC+YRsZ/YEXDt5uD2
- wJVB0DnGAxYw46Bkk/Gk8S/ce4SeZlyVdklupGBb1H02sSWhl30TAh6e6CF4lzsSHsSE
- YF61vq1YDQhWg+XLtNgnGpL+XDEOEeHo/AHKu8H7sJy3F3nAVbp0+pocwsoHt/Z8sztn
- JyyA==
-X-Gm-Message-State: AOJu0Yz2McC271CKyDvlEmj/eMiuPBEZ1uEAVsXxkNA8xYkMVs7eY9LV
- Z2uhRwko7oiLcQQvADjA06MLeNQzCXTOqSuH+HQbXqoACLB6uDUTrn/N1KcLYxBoQTbTGm0WaY6
- TI74ZAc61b2JHcThNfnE+e5S0X7avu2Kuy3KyJmVM1cweikKNt9wG
-X-Received: by 2002:a05:620a:40d4:b0:78a:2a9a:46e6 with SMTP id
- g20-20020a05620a40d400b0078a2a9a46e6mr27870qko.4.1710940543234; 
- Wed, 20 Mar 2024 06:15:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFNIiQPkvQUGZQ+0L1bnapy0+rAVQ0v9yzDuDinW7lmkOrxHE9l6hJCq2t9P0j1qLX/BI/QhQ==
-X-Received: by 2002:a05:620a:40d4:b0:78a:2a9a:46e6 with SMTP id
- g20-20020a05620a40d400b0078a2a9a46e6mr27841qko.4.1710940542870; 
- Wed, 20 Mar 2024 06:15:42 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- g20-20020ae9e114000000b00788428c2a97sm1032331qkm.64.2024.03.20.06.15.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 20 Mar 2024 06:15:42 -0700 (PDT)
-Date: Wed, 20 Mar 2024 09:15:40 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Het Gala <het.gala@nutanix.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, thuth@redhat.com,
- lvivier@redhat.com, pbonzini@redhat.com, farosas@suse.de
-Subject: Re: [PATCH 1/2] tests/qtest/migration: Ignore if socket-address is
- missing to avoid crash below
-Message-ID: <ZfrhfOLpjcOySS__@x1n>
-References: <20240319204840.211632-1-het.gala@nutanix.com>
- <ZfoKSgJ9LN1Q7R1V@x1n>
- <56ed1452-87ed-4cfb-912f-b15bc74609c1@nutanix.com>
+ bh=PsRYT1HRMt2r17mBvQ9bRL50YsCuqo96buii4qi2KtE=;
+ b=kV9ciY3KebhOVc87zJKLt84dVNLwhkkS+k4ySzt6sQn9xQzxPpFmHqlxsz1zP6Omwa
+ Z+geU+k+8Dg/NAnMTxyiUdaFVuJ7l5RyG72OD08t/WChMIbZbs06nmm1ASIrzb2Qglt7
+ taP3kmABw1iCibPNVUj7rl9sVqNQlrXUADXvGrKvmWn5CFq+YOUk76TgntZh3gf6Btp3
+ lD8Cg3D8mvCmGqQSHeALy5yVFoD9prQyyUt5R0iJdGX5aQSnREf3L0eUWZXyaAiNFCW4
+ ImKU7X+ZmSkjFDcWx64LRwDsY60lT39PK+5GrV2qFbX/U8voLXjfS1Xg41xLqZxxFPfO
+ X/TA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710940577; x=1711545377;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PsRYT1HRMt2r17mBvQ9bRL50YsCuqo96buii4qi2KtE=;
+ b=WV/Ww8eSAHzJ/BCO48AFbO51v/Bmy6aqGJUAfz2jwfgMgLdVJreWHpJImtb/O6KO3U
+ rDEm4fba8uhl/QEF6eb/GkCxWwP1NEtJt+nx4DO4voob0JU82u7AOzli4pmJi2BsyDwX
+ Q8Er+bMnVZzkKjPNJ/2xrWxcv3n8sBD7VWafPPsNpN4ElG5UPegGquUDaK3yJBmnzKRu
+ 48JMsfLLmuVqCmLAt3RZSV0WH4oTtGBxVzcUlRgjimppH00KZPrFwJnwWZYOK3RwY0lR
+ AEX7ARfttNigDmTXaxxVV6uicmMzibRIrp9GFQ29/xCF+BvXz2W0lksuHfAX9WM23gIG
+ LUsA==
+X-Gm-Message-State: AOJu0YylVEiTh18ko8xH8+THHyTJWozh+bur3BPmmht89RmTveSI1iLd
+ t4c4EZwDY6X64ZnC+Y8mirfWZ7Bfk7aweW5PywARkEhihPmYXej7ld7ySPYQ3dhvanRFGpXW71c
+ NmaNC+d6NUWTJe8Uk++6mpu4nOVvNvu1XizkEwA==
+X-Google-Smtp-Source: AGHT+IEyk+jviDbh/t/v74Rq6UgzQ02bSJtzlH7c/Xa+1T8F8mRP1I3+sPiF9+ADBEOveFWS+sTuWC4l0BXKBGnVbXs=
+X-Received: by 2002:a05:6402:43c5:b0:568:bc48:5f27 with SMTP id
+ p5-20020a05640243c500b00568bc485f27mr3820732edc.39.1710940577355; Wed, 20 Mar
+ 2024 06:16:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <56ed1452-87ed-4cfb-912f-b15bc74609c1@nutanix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <20240220150833.13674-1-philmd@linaro.org>
+ <20240220150833.13674-3-philmd@linaro.org>
+In-Reply-To: <20240220150833.13674-3-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 20 Mar 2024 13:16:06 +0000
+Message-ID: <CAFEAcA9yvS1UCiszV3NqkYq91Rcv9w_=rZqOBLueX_+NiDmTKg@mail.gmail.com>
+Subject: Re: [PATCH 2/4] hw/s390x/virtio-ccw: Always deliver NMI to first CPU
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, 
+ Eric Farman <farman@linux.ibm.com>, Eric Blake <eblake@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,16 +98,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 20, 2024 at 10:47:18AM +0530, Het Gala wrote:
-> It won't crash IMO, the next function SocketAddress_to_str for a non-socket
-> type would return an proper error ?
+On Tue, 20 Feb 2024 at 15:09, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> We can trigger NMI from HMP or QMP.
+>
+> QEMU maps the NMI to the s390x per-CPU 'RESTART' interrupt.
+> Linux guests usually setup this interrupt to trigger kdump
+> or crash. Such crashdump can be triggered in QEMU by HMP
+> "nmi" or QMP "inject-nmi" commands.
+>
+> Using QMP, since we can not select a particular CPU, the first
+> CPU is used (CPU#0). See the documentation from commit 795dc6e4
+> ("watchdog: Add new Virtual Watchdog action INJECT-NMI"):
+>
+>   @inject-nmi: a non-maskable interrupt is injected into the
+>                first VCPU (all VCPUS on x86) (since 2.4)
+>
+> While we can select a particular CPU on HMP, the guest behavior
+> is expected to be the same if using CPU #N or CPU #0. Since
+> always using CPU#0 simplifies API maintainance, update s390_nmi()
+> to deliver NMI to the first CPU.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  qapi/run-state.json        | 5 +++--
+>  hw/s390x/s390-virtio-ccw.c | 4 +---
+>  hmp-commands.hx            | 2 +-
+>  3 files changed, 5 insertions(+), 6 deletions(-)
+>
+> diff --git a/qapi/run-state.json b/qapi/run-state.json
+> index 08bc99cb85..a2542f1a50 100644
+> --- a/qapi/run-state.json
+> +++ b/qapi/run-state.json
+> @@ -320,8 +320,9 @@
+>  #
+>  # @none: nothing is done
+>  #
+> -# @inject-nmi: a non-maskable interrupt is injected into the first
+> -#     VCPU (all VCPUS on x86) (since 2.4)
+> +# @inject-nmi: a non-maskable interrupt is injected (architecture
+> +#     specific: on s390x only the first vCPU receive the NMI, on
 
-Both SocketAddress_to_str() and SocketAddress_to_qdict() will crash with a
-NULL pointer passed in right now.
+"receives"
 
-Thanks,
 
--- 
-Peter Xu
+> +#     other architectures all vCPUs receive it). (since 2.4)
 
+This part isn't really true, because it's machine-specific rather
+than architecture-specific (and many architectures don't implement
+it at all). But I don't think we want to introduce that doc cleanup into
+this patch. Maybe we should leave it as only saying "all vCPUs on x86",
+though.
+
+>  #
+>  # Since: 2.1
+>  ##
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 62804cc228..ba1fa6472f 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -605,9 +605,7 @@ static HotplugHandler *s390_get_hotplug_handler(Machi=
+neState *machine,
+>
+>  static void s390_nmi(NMIState *n, int cpu_index, Error **errp)
+>  {
+> -    CPUState *cs =3D qemu_get_cpu(cpu_index);
+> -
+> -    s390_cpu_restart(S390_CPU(cs));
+> +    s390_cpu_restart(S390_CPU(first_cpu));
+>  }
+>
+>  static ram_addr_t s390_fixup_ram_size(ram_addr_t sz)
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index 17b5ea839d..2b01bb5926 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -851,7 +851,7 @@ ERST
+>      },
+>  SRST
+>  ``nmi`` *cpu*
+> -  Inject an NMI on the default CPU (x86/s390) or all CPUs (ppc64).
+> +  Inject an NMI.
+>  ERST
+>
+>      {
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
+-- PMM
 
