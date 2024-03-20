@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3701C54E68
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 00:34:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F3E2CD11DB
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 00:34:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmjsj-00005s-RC; Tue, 19 Mar 2024 20:32:37 -0400
+	id 1rmjse-0008VE-H2; Tue, 19 Mar 2024 20:32:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmjsh-0008WV-Uc
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:35 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1rmjsd-0008UX-Ei
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:31 -0400
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rmjsg-0005XS-FM
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:35 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6e780830bdcso237683b3a.1
- for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 17:32:34 -0700 (PDT)
+ id 1rmjsb-0005WU-SR
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 20:32:31 -0400
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-3c39579af51so934250b6e.3
+ for <qemu-devel@nongnu.org>; Tue, 19 Mar 2024 17:32:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710894753; x=1711499553; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710894749; x=1711499549; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zJMpmIWK2dum6qCC+4K2slypl3etpIyoaJqh1QCO4fw=;
- b=G2kDDZ3b4/wwumYWRsELKF0iV5J+KDRae70gJ5XLzWkkUvxIShFx3hezHVLNDyBux6
- MHUHjzi9cEdfQQe2B1gmaxD0Ev5IAW/MkCDy/4FvurZsRDq8DP4Q1Ifk4GFCJDLlRRaD
- VmakxDpcvY9/q7W/TNJ3UvWAzg1m7BRAGV+pDM3T73R5XpgHa1qOdZPIaS6EVjpvlHUx
- ut1ZCLfvkaQNnfnGCO8vbub9S3ZQoodV9dU+TQo60vIgO3q7rnPQCslYIcSlM7BI4+pC
- njSag7Hj25t7bIEIBSs65Q7N37kg/iDrYXPZUBsQFB6LeJVcpk5FAGcdM1bHZEPS8Pp3
- mtrA==
+ bh=ukEfuyWQnP9Sb76LI5tjGbSBopWDatLwKjWYccct6BU=;
+ b=GyzHEBp6naIADOy44Q+stQboeD7n7ysIs6SiXWyMgr2/GGYImpe7CQReSZo6GbmrQX
+ wKhotJu94egf4+iu8sMHjdPgL/mVw0vOq/fRPrOFtpLr6RtertWYdmpdKZbymuI4Z20/
+ TBhN6EYdgrhxHOSA20rqARdn4Asn226/41RuRgEG49oXvuF7potEe6Pgr0RAmtNuNAHv
+ zXAZZauivVWknZEBIqWDbVtM3r86LVt3qdWGW8BRSnVKOVX0ETzGYgVNmxNejnxKHlIK
+ Si7qyxCapYciBWUyHWC3aF16y32Cv7u64LOkcFvh5uspsmsR6bwtV8MPN67/q7aLmA7u
+ /OYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710894753; x=1711499553;
+ d=1e100.net; s=20230601; t=1710894749; x=1711499549;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zJMpmIWK2dum6qCC+4K2slypl3etpIyoaJqh1QCO4fw=;
- b=k0BAYbdQ4+Tlv000Hm3TVNcNR5oUaImfNM3OKH37GrrJn6xfK970Hw0yLC98Q23QY8
- Vp4CH0jNSXzHW+Mt3Pb0ZaoelAePRjeSdlxJEoNOk+ILB4JzVKB9zYvSRwPe/B68xQJx
- vMlNRmjEMpTuzUnPQVKUUPNARmBm4IBnOlIsWx3QUh4vrUXAIzfZ7zeex9mzgiPHjUUD
- pb0u8sxlNwtTgw/iCxo4FOcgblBxw1pIze/blHVF6TV1lOr/Fl2TGfBH5ug8mVzGqbnp
- ljLhJcDUBQUuQm4DORHm1n1cljKWekTsrhPXkvx3VYTV0Cl3IiETpG+EeGbchRTZ66DH
- CdrQ==
-X-Gm-Message-State: AOJu0YzStt1lp+8CIbr+fw2rktp/H2z5I84bkTxouoEIFB7rxtKt4AFw
- PdCbxDZ3rEOnGWc3WsfEl587m6rGEL31oHK/tKuniT3CAf25tABIE63qYsXD1bjurFMhsGGrs2B
- q
-X-Google-Smtp-Source: AGHT+IGGM7JHf1/BgqObM7QIeygLZeAN+w0mClCfvFK1RNTHhgFGslhEtCg3xX4IVqVh4MWQLh9G0Q==
-X-Received: by 2002:a05:6a20:3ca4:b0:1a3:5402:d5bd with SMTP id
- b36-20020a056a203ca400b001a35402d5bdmr1476982pzj.1.1710894753055; 
- Tue, 19 Mar 2024 17:32:33 -0700 (PDT)
+ bh=ukEfuyWQnP9Sb76LI5tjGbSBopWDatLwKjWYccct6BU=;
+ b=pvsy15ynd/oy90IUorIgNgxo+YTZ++ZUKiYCT6VgQSvHWsDWtw6dSZ3rs1SrQIVGRG
+ taEtxievAvmXR9TtMalj23ZyOOWVFAz3PIzLHJqBBmWB7HApfNN4RWNZo3pmN8Uzkd6L
+ q+fbjItQvqHTmFp0VgWJa6ijFudy6gjQSNDiLEU2XyP1P9lsds1wJqbjEMK0qlSvfa1y
+ jhtSe4x44sSE+N8gcmkrauyKzVostMAbiZiejtRhNfoYZsfRvXA8y6guKXsKprUlaF61
+ Hdezl3yuVi3lCpdR5lhfZBC4aHOt+/lya76XrJhiBlrsUTeTWhaPpapl+YWJRNCyhGQZ
+ I1Dg==
+X-Gm-Message-State: AOJu0YxxGrgZoqf/3TlmrHP3wBuVHWQM5Ru9IIUj0i7Aa7AFIajjHJj4
+ CuJaAcLL+imP+pkd58VvOjqu+CTCm0eg6beC4hOiLf6r0c+iMstWA+3w5G2O/D09BrXIL8sKv6j
+ A
+X-Google-Smtp-Source: AGHT+IGEAct/PNd1V5TKiD4xnNqxOtrNxnFeWAFmTcAuYBnwJVr867SwLM12bZiDRA+O9JAktRy/Dw==
+X-Received: by 2002:a05:6358:5207:b0:17e:76a1:8b7e with SMTP id
+ b7-20020a056358520700b0017e76a18b7emr16489706rwa.4.1710894748706; 
+ Tue, 19 Mar 2024 17:32:28 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- d19-20020a63d653000000b005d553239b16sm8475645pgj.20.2024.03.19.17.32.31
+ d19-20020a63d653000000b005d553239b16sm8475645pgj.20.2024.03.19.17.32.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 19 Mar 2024 17:32:32 -0700 (PDT)
+ Tue, 19 Mar 2024 17:32:28 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Sven Schnelle <svens@stackframe.org>,
-	Helge Deller <deller@gmx.de>
-Subject: [PULL 5/9] target/hppa: fix shrp for wide mode
-Date: Tue, 19 Mar 2024 14:32:19 -1000
-Message-Id: <20240320003223.554145-6-richard.henderson@linaro.org>
+Cc: Helge Deller <deller@gmx.de>,
+	Sven Schnelle <svens@stackframe.org>
+Subject: [PULL 2/9] target/hppa: Fix assemble_11a insns for wide mode
+Date: Tue, 19 Mar 2024 14:32:16 -1000
+Message-Id: <20240320003223.554145-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240320003223.554145-1-richard.henderson@linaro.org>
 References: <20240320003223.554145-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,40 +95,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sven Schnelle <svens@stackframe.org>
-
-Fixes: f7b775a9c075 ("target/hppa: Implement SHRPD")
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Helge Deller <deller@gmx.de>
 Reviewed-by: Helge Deller <deller@gmx.de>
-Message-Id: <20240319161921.487080-3-svens@stackframe.org>
+Reported-by: Sven Schnelle <svens@stackframe.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/translate.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/hppa/insns.decode |  7 ++++---
+ target/hppa/translate.c  | 23 +++++++++++++++++------
+ 2 files changed, 21 insertions(+), 9 deletions(-)
 
+diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
+index 0d9f8159ec..9c6f92444c 100644
+--- a/target/hppa/insns.decode
++++ b/target/hppa/insns.decode
+@@ -24,7 +24,7 @@
+ %assemble_sr3   13:1 14:2
+ %assemble_sr3x  13:1 14:2 !function=expand_sr3x
+ 
+-%assemble_11a   0:s1 4:10            !function=expand_shl3
++%assemble_11a   4:12 0:1             !function=expand_11a
+ %assemble_12    0:s1 2:1 3:10        !function=expand_shl2
+ %assemble_12a   0:s1 3:11            !function=expand_shl2
+ %assemble_16    0:16                 !function=expand_16
+@@ -305,8 +305,9 @@ fstd            001011 ..... ..... .. . 1 -- 100 0 . .....      @fldstdi
+ # Offset Mem
+ ####
+ 
+-@ldstim11       ...... b:5 t:5 sp:2 ..............      \
+-                &ldst disp=%assemble_11a m=%ma2_to_m x=0 scale=0 size=3
++@ldstim11       ...... b:5 t:5 ................          \
++                &ldst sp=%assemble_sp disp=%assemble_11a \
++                m=%ma2_to_m x=0 scale=0 size=3
+ @ldstim14       ...... b:5 t:5 ................          \
+                 &ldst sp=%assemble_sp disp=%assemble_16  \
+                 x=0 scale=0 m=0
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 47c6db78c7..29ef061baf 100644
+index cbe44ef75a..40b9ff6d59 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -3512,7 +3512,7 @@ static bool trans_shrp_sar(DisasContext *ctx, arg_shrp_sar *a)
-     /* Install the new nullification.  */
-     cond_free(&ctx->null_cond);
-     if (a->c) {
--        ctx->null_cond = do_sed_cond(ctx, a->c, false, dest);
-+        ctx->null_cond = do_sed_cond(ctx, a->c, a->d, dest);
-     }
-     return nullify_end(ctx);
+@@ -121,12 +121,6 @@ static int expand_shl2(DisasContext *ctx, int val)
+     return val << 2;
  }
-@@ -3555,7 +3555,7 @@ static bool trans_shrp_imm(DisasContext *ctx, arg_shrp_imm *a)
-     /* Install the new nullification.  */
-     cond_free(&ctx->null_cond);
-     if (a->c) {
--        ctx->null_cond = do_sed_cond(ctx, a->c, false, dest);
-+        ctx->null_cond = do_sed_cond(ctx, a->c, a->d, dest);
-     }
-     return nullify_end(ctx);
+ 
+-/* Used for fp memory ops.  */
+-static int expand_shl3(DisasContext *ctx, int val)
+-{
+-    return val << 3;
+-}
+-
+ /* Used for assemble_21.  */
+ static int expand_shl11(DisasContext *ctx, int val)
+ {
+@@ -144,6 +138,23 @@ static int assemble_6(DisasContext *ctx, int val)
+     return (val ^ 31) + 1;
  }
+ 
++/* Expander for assemble_16a(s,cat(im10a,0),i). */
++static int expand_11a(DisasContext *ctx, int val)
++{
++    /*
++     * @val is bit 0 and bits [4:15].
++     * Swizzle thing around depending on PSW.W.
++     */
++    int im10a = extract32(val, 1, 10);
++    int s = extract32(val, 11, 2);
++    int i = (-(val & 1) << 13) | (im10a << 3);
++
++    if (ctx->tb_flags & PSW_W) {
++        i ^= s << 13;
++    }
++    return i;
++}
++
+ /* Expander for assemble_16(s,im14). */
+ static int expand_16(DisasContext *ctx, int val)
+ {
 -- 
 2.34.1
 
