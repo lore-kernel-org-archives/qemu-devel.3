@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4436CD11DB
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D76C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 08:58:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmrm1-0001bD-Eq; Wed, 20 Mar 2024 04:58:19 -0400
+	id 1rmrmJ-00025p-CV; Wed, 20 Mar 2024 04:58:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrlp-0001QN-9O
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:58:01 -0400
-Received: from mail-dm6nam10on2061e.outbound.protection.outlook.com
- ([2a01:111:f400:7e88::61e]
- helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ id 1rmrmD-0001rF-Gl
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:58:27 -0400
+Received: from mail-bn8nam11on20600.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::600]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1rmrln-00030F-6n
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:58:01 -0400
+ id 1rmrm9-00033L-W3
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 04:58:24 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=YPnRA/tFE+2CWt/uDAbomN70SFdn3xIviy4ZkKcmCiiSwocOwnVklidWHuAEVk8h+FGj1oTeP/7pyedbPB9nlBMi6XlzfHEFvKvaEsDWiNSaWeo6DDhrTvAj+squX4RutvFCy3FJ+RisM50aUTmYwKYCGqfzusDe1fU9MmoK7cJiiLOar2bA5YcYbp9NqsvfxonP+3Q4Vc0voXgsrJQQcxMeJyZEdRNV9UCluipLNtyc+oWbvyxSlyNMqTi3VWdY77WFP9GPkpSKfTZBKhb0EWirq9gtW7TEfzNjH+uKFY8ELCi470nfqs6h/MnWAVQBpzZKDXb9I26qB3bg4ELz5A==
+ b=oOVzZhCMNdeJv0l6pEQ5HT+YrrQt+ngfptQPPXtW78G0lJKO4SW9Z82nb22i/zZTtfesjvFUelYSN+WFvLMcDvsnifZafJuzGlmaxUEgc0iRxK55BLIbIIIgDUGOC1ibdOlobt4BeCfFefqcj6dl6nTIiu8ENWn2vbDQD3+IKYzIjM8mFjdwAfGNjaQlSS8QwM0WBtkttaFanQpy5Kwv13lQDVnTPFUwdF2nL/3cOhjKdno774P6vfFO3rXUBuvlhxoAkXcH/chMUm4JmD6tD93+5cfieKnVuXg0/JvGlRnMhUoSRT1WSSjGtwUYKQMdMVwE74yrw3w3mNo4ijlC8g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fXrSi7n4QUdmX4kfC5CFibSP4rf6lZBrf1DZTp6Qlz4=;
- b=iTu0s7N4+oOLKlgUGn7ouB0qBhIX39JD/hXvZIPN3E17lGNz4man/wXHE9U6bqGS2eq4IkwnLN03hCmYYpGaWbQImXJuWckl0wD1MFaig2+HzvNLzP7Cyu1+xFF+aJyrudzicsZdnd1rFjp3bRDvkfTeWFwI5cyeIK7FVjrMOB8fHbhhM0objSKkFm9DJ5lB/u5RUXuso0XN477N0uCqZnON2g6KbSssS5uduD/xxZS8o6FlWX3dEKkuqCAlyFmzYZILN/lKeI11tllbDBFISvxHwz+uSXqMUDCpChYvUwI/B2VAzmHYN1Z2I/ru9wXduLiXmBlqfMn8qRbUP3WpcQ==
+ bh=XyC8UNRWo9Trf6WIFCzcD+w1cyVM/VMsHML0mDc3vZE=;
+ b=Vcj5/GAbNG9/spm1f6PaMoUcNh9M2eu4ZFdI42BS7kmW4yeDDnrExAjb8rH/cGo7WeEx0hwEW09hnNEYqEWFuIlK9RX9MmNEUawKap9t/6memgz8QJHvsRfziJ5J2xDvekV6VWzU+SEeZDXWmiAj/pvF1A7InQmkyfzSMTYZZYfjjtlSspCiCxJwEWT30WPpP+/KDJcWW11UkdJCXdA6qK6QWfdfpCiIKBnDVSPEjJol1b1VZebt0AmudaCS41s2x1GY2yajHggNZc/rAVD0IPerBkyeSBhXiRplv0jxPEJsP++l3shm1J0jsG1PnYLsphQ0WwVIZMi9YZq8zusUZg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fXrSi7n4QUdmX4kfC5CFibSP4rf6lZBrf1DZTp6Qlz4=;
- b=gsauBePy2sU+kPZAhvKNmG77oMrr0MnsgMo5h+SRqUS/lRr2rqP9Padi1kfWSjIs+RvmFbhCAX6yuHNjO0DaExk6ECfNsnh308RJsDYE0vK/OVNtrCC+tuEHrCOyQ3ihkFgKDikhsrElt6LpBv2NZ8Jghz1R+X1MUsne/3HPruA=
-Received: from SJ0PR05CA0128.namprd05.prod.outlook.com (2603:10b6:a03:33d::13)
- by SJ1PR12MB6121.namprd12.prod.outlook.com (2603:10b6:a03:45c::6)
+ bh=XyC8UNRWo9Trf6WIFCzcD+w1cyVM/VMsHML0mDc3vZE=;
+ b=jIMOAdsVI8Ztn/92VAC9+ZY6X3gZtbR+D2PoZMV3eQ31pHIfUE59PBmRKvx7Nfe7ojv34IL0n5jAj9yB3KiVijehKf4WjReIowaJcHB5f2imkMTwBZJfrdClqcky09mlFPbTzK2/QKWXE7TOrtVlH4Xj4n/WwBLGae2/1AxUj3I=
+Received: from SJ0PR05CA0129.namprd05.prod.outlook.com (2603:10b6:a03:33d::14)
+ by MW5PR12MB5682.namprd12.prod.outlook.com (2603:10b6:303:19f::20)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.30; Wed, 20 Mar
- 2024 08:57:55 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.27; Wed, 20 Mar
+ 2024 08:58:17 +0000
 Received: from CO1PEPF000044F1.namprd05.prod.outlook.com
- (2603:10b6:a03:33d:cafe::cf) by SJ0PR05CA0128.outlook.office365.com
- (2603:10b6:a03:33d::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.12 via Frontend
- Transport; Wed, 20 Mar 2024 08:57:55 +0000
+ (2603:10b6:a03:33d:cafe::ce) by SJ0PR05CA0129.outlook.office365.com
+ (2603:10b6:a03:33d::14) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.11 via Frontend
+ Transport; Wed, 20 Mar 2024 08:58:17 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -56,22 +56,22 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
  CO1PEPF000044F1.mail.protection.outlook.com (10.167.241.71) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:57:54 +0000
+ 15.20.7409.10 via Frontend Transport; Wed, 20 Mar 2024 08:58:16 +0000
 Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 20 Mar
- 2024 03:57:54 -0500
+ 2024 03:58:15 -0500
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <kvm@vger.kernel.org>, Tom Lendacky <thomas.lendacky@amd.com>, "Paolo
  Bonzini" <pbonzini@redhat.com>, =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?=
  <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Pankaj Gupta
  <pankaj.gupta@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>, Isaku Yamahata
- <isaku.yamahata@linux.intel.com>, David Hildenbrand <david@redhat.com>
-Subject: [PATCH v3 07/49] HostMem: Add mechanism to opt in kvm guest memfd via
- MachineState
-Date: Wed, 20 Mar 2024 03:39:03 -0500
-Message-ID: <20240320083945.991426-8-michael.roth@amd.com>
+ <isaku.yamahata@linux.intel.com>
+Subject: [PATCH v3 08/49] trace/kvm: Split address space and slot id in
+ trace_kvm_set_user_memory()
+Date: Wed, 20 Mar 2024 03:39:04 -0500
+Message-ID: <20240320083945.991426-9-michael.roth@amd.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240320083945.991426-1-michael.roth@amd.com>
 References: <20240320083945.991426-1-michael.roth@amd.com>
@@ -83,29 +83,29 @@ X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000044F1:EE_|SJ1PR12MB6121:EE_
-X-MS-Office365-Filtering-Correlation-Id: f3696f69-5a2e-4aed-b7a2-08dc48bbd528
+X-MS-TrafficTypeDiagnostic: CO1PEPF000044F1:EE_|MW5PR12MB5682:EE_
+X-MS-Office365-Filtering-Correlation-Id: ed068838-dda3-4314-7c12-08dc48bbe21f
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 2rCvsHQOGWi8udxrmbRKgPNYHfHz4N1uh9m4UYQ35wqh1Fw7oA7yEnoECW4EwlR/Flxrz4UtdKgN92gUWDrsrz/Xi6zMOufhgIMbvJu4kD9xPAVEKP8hgb5SA12FV+NP5lZZa3ahnS51udG7BEnTECSuwJX/pDlKdCAiTtOz3vJusfn5JC//2gML0xvsiog/fFz5ivIcrJVafyY5kpF0bQYVZEOgtVJfQfqv+56fIdQs7OloLZmTe9GxqsLtyVQvTiJo39qzdoY2vQzroy0BmgNCckbOmP5Y2t0TDd8vQ+7N+f4pjcG42lLoc9fAkG1XtOi+BlJ+igtS1NKJ/z1lO/P25CSih1ufMEZ/PwA+CxYy+K77X+1mr6KYek5k8746BHP4tN79T+fip+TNt28KLqA7KwiDeuFvgp4mm42ty86UtRLF7nTDNWI9jdFjELb5333WxiCZdKnSu6giwYaxhTBcnj9lkgOZS1JYV6vsG0UYYsAJMSD7Euh6Hvdz8UMmQYOEQe9ArwjYm/vf/h9dC2nyYutoYEAwwkj8CRmvlGCZ6YccC1j7zM7q2PYkeBI2T4YWKb1mVQTsVcRylY6vFNyNOtTISlvU8z/yHwD5ouqZIvTo+hOgKOr+qRLiL2477chMTP3DkxnM5cFIf+X/5LFLDLSnCVTX0iECQlxIRVOQlx37aMANyPiJi9akGWfVYUSiXoz4g40P6mJsf7BEopja2+Xb7N5ea2lkbxAQNJFR11OnQW5xDkFzhZT26ONB
+X-Microsoft-Antispam-Message-Info: 00BFDDhe18etKv++dIwucK3RJ7IgpfftOz8ksSG5S4Oija4AFX0MycCrqt1aEaN0D9pa2rxCCemvSQK62kzWVPE5H/WDxx+SpT9ucx2tSbD9S3LsrRtn7oz+BlfuPPBpbEu3usxjEJLFgKWGBLpqYqDHg43R3Ccx9zT031SmuVx8QRBZzR8SuaEaUeu9G3g1QrRD71wn4snco5ME/TUOb2HopheIR5do2TUAWUgeVrLkmXm9/ibmToZd2695nl978uQ1pwJltVW6Qpx2sI38JQf9tgaYTmveFLIw/18Bzl4CLQGcdqrP0oDT5kQPI4WCx0g+eTf48wkMDwkxeambNZ5iyukdkwLcFnmrWdFYqOxt2f9XbTrPbb0y9YUE6KXbpr+U134L540T3pYbnxWBCiX9t7oSdG8csiVd0/GQiyNwp2Bj/7ncd+dW9chy4imWvXI8UjAX9+pnLsLyh1mLWEdG0JXIr6Neinqd1kcLs3TxJ0b59b+XbyogakD08L12TcfYl3fcDB51KM/Rdcdz9XdTS/AnYUZXbFgzgdCJ30dUL7StdVoQJfSfqWIiglGqxdMxq1E27OBskkFghCHLnGBSiWeoQQ1kgdGcz0qyu9Z+unGyP5YbVHK4h3UvDOxv/8WMJlHSTghEks+qk5TynlSRQia03OXnPzXWdh1IYKmRa+4NJXrvcJQp/EeKF+zPwaociMNteC9Cu4IquHyBY3A+So1wuwYcJ6aig491lPmWfWMa3cqmtSU0q7VdfeZH
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230031)(376005)(36860700004)(1800799015)(82310400014); DIR:OUT;
+ SFS:(13230031)(1800799015)(36860700004)(376005)(82310400014); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:57:54.9723 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: f3696f69-5a2e-4aed-b7a2-08dc48bbd528
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2024 08:58:16.3941 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ed068838-dda3-4314-7c12-08dc48bbe21f
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044F1.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6121
-Received-SPF: permerror client-ip=2a01:111:f400:7e88::61e;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR12MB5682
+Received-SPF: permerror client-ip=2a01:111:f403:2414::600;
  envelope-from=Michael.Roth@amd.com;
- helo=NAM10-DM6-obe.outbound.protection.outlook.com
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -130,129 +130,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Add a new member "guest_memfd" to memory backends. When it's set
-to true, it enables RAM_GUEST_MEMFD in ram_flags, thus private kvm
-guest_memfd will be allocated during RAMBlock allocation.
-
-Memory backend's @guest_memfd is wired with @require_guest_memfd
-field of MachineState. It avoid looking up the machine in phymem.c.
-
-MachineState::require_guest_memfd is supposed to be set by any VMs
-that requires KVM guest memfd as private memory, e.g., TDX VM.
+The upper 16 bits of kvm_userspace_memory_region::slot are
+address space id. Parse it separately in trace_kvm_set_user_memory().
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
----
-Changes in v4:
- - rename "require_guest_memfd" to "guest_memfd" in struct
-   HostMemoryBackend;	(David Hildenbrand)
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- backends/hostmem-file.c  | 1 +
- backends/hostmem-memfd.c | 1 +
- backends/hostmem-ram.c   | 1 +
- backends/hostmem.c       | 1 +
- hw/core/machine.c        | 5 +++++
- include/hw/boards.h      | 2 ++
- include/sysemu/hostmem.h | 1 +
- 7 files changed, 12 insertions(+)
+ accel/kvm/kvm-all.c    | 5 +++--
+ accel/kvm/trace-events | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
-index ac3e433cbd..3c69db7946 100644
---- a/backends/hostmem-file.c
-+++ b/backends/hostmem-file.c
-@@ -85,6 +85,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
-     ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
-     ram_flags |= RAM_NAMED_FILE;
-     return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index 3923ea9364..745ead0034 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -55,6 +55,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     name = host_memory_backend_get_name(backend);
-     ram_flags = backend->share ? RAM_SHARED : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
-                                           backend->size, ram_flags, fd, 0, errp);
- }
-diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
-index d121249f0f..f7d81af783 100644
---- a/backends/hostmem-ram.c
-+++ b/backends/hostmem-ram.c
-@@ -30,6 +30,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     name = host_memory_backend_get_name(backend);
-     ram_flags = backend->share ? RAM_SHARED : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
-                                                   name, backend->size,
-                                                   ram_flags, errp);
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index 81a72ce40b..eb9682b4a8 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -277,6 +277,7 @@ static void host_memory_backend_init(Object *obj)
-     /* TODO: convert access to globals to compat properties */
-     backend->merge = machine_mem_merge(machine);
-     backend->dump = machine_dump_guest_core(machine);
-+    backend->guest_memfd = machine_require_guest_memfd(machine);
-     backend->reserve = true;
-     backend->prealloc_threads = machine->smp.cpus;
- }
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 37ede0e7d4..73ce9da835 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1198,6 +1198,11 @@ bool machine_mem_merge(MachineState *machine)
-     return machine->mem_merge;
- }
- 
-+bool machine_require_guest_memfd(MachineState *machine)
-+{
-+    return machine->require_guest_memfd;
-+}
-+
- static char *cpu_slot_to_string(const CPUArchId *cpu)
- {
-     GString *s = g_string_new(NULL);
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 8b8f6d5c00..44c2a4e1ec 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -36,6 +36,7 @@ bool machine_usb(MachineState *machine);
- int machine_phandle_start(MachineState *machine);
- bool machine_dump_guest_core(MachineState *machine);
- bool machine_mem_merge(MachineState *machine);
-+bool machine_require_guest_memfd(MachineState *machine);
- HotpluggableCPUList *machine_query_hotpluggable_cpus(MachineState *machine);
- void machine_set_cpu_numa_node(MachineState *machine,
-                                const CpuInstanceProperties *props,
-@@ -370,6 +371,7 @@ struct MachineState {
-     char *dt_compatible;
-     bool dump_guest_core;
-     bool mem_merge;
-+    bool require_guest_memfd;
-     bool usb;
-     bool usb_disabled;
-     char *firmware;
-diff --git a/include/sysemu/hostmem.h b/include/sysemu/hostmem.h
-index 0e411aaa29..04b884bf42 100644
---- a/include/sysemu/hostmem.h
-+++ b/include/sysemu/hostmem.h
-@@ -74,6 +74,7 @@ struct HostMemoryBackend {
-     uint64_t size;
-     bool merge, dump, use_canonical_path;
-     bool prealloc, is_mapped, share, reserve;
-+    bool guest_memfd;
-     uint32_t prealloc_threads;
-     ThreadContext *prealloc_context;
-     DECLARE_BITMAP(host_nodes, MAX_NODES + 1);
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 132ab65df5..d2856dd736 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -304,8 +304,9 @@ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, boo
+     ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION, &mem);
+     slot->old_flags = mem.flags;
+ err:
+-    trace_kvm_set_user_memory(mem.slot, mem.flags, mem.guest_phys_addr,
+-                              mem.memory_size, mem.userspace_addr, ret);
++    trace_kvm_set_user_memory(mem.slot >> 16, (uint16_t)mem.slot, mem.flags,
++                              mem.guest_phys_addr, mem.memory_size,
++                              mem.userspace_addr, ret);
+     if (ret < 0) {
+         error_report("%s: KVM_SET_USER_MEMORY_REGION failed, slot=%d,"
+                      " start=0x%" PRIx64 ", size=0x%" PRIx64 ": %s",
+diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
+index a25902597b..9f599abc17 100644
+--- a/accel/kvm/trace-events
++++ b/accel/kvm/trace-events
+@@ -15,7 +15,7 @@ kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=%d"
+ kvm_irqchip_release_virq(int virq) "virq %d"
+ kvm_set_ioeventfd_mmio(int fd, uint64_t addr, uint32_t val, bool assign, uint32_t size, bool datamatch) "fd: %d @0x%" PRIx64 " val=0x%x assign: %d size: %d match: %d"
+ kvm_set_ioeventfd_pio(int fd, uint16_t addr, uint32_t val, bool assign, uint32_t size, bool datamatch) "fd: %d @0x%x val=0x%x assign: %d size: %d match: %d"
+-kvm_set_user_memory(uint32_t slot, uint32_t flags, uint64_t guest_phys_addr, uint64_t memory_size, uint64_t userspace_addr, int ret) "Slot#%d flags=0x%x gpa=0x%"PRIx64 " size=0x%"PRIx64 " ua=0x%"PRIx64 " ret=%d"
++kvm_set_user_memory(uint16_t as, uint16_t slot, uint32_t flags, uint64_t guest_phys_addr, uint64_t memory_size, uint64_t userspace_addr, int ret) "AddrSpace#%d Slot#%d flags=0x%x gpa=0x%"PRIx64 " size=0x%"PRIx64 " ua=0x%"PRIx64 " ret=%d"
+ kvm_clear_dirty_log(uint32_t slot, uint64_t start, uint32_t size) "slot#%"PRId32" start 0x%"PRIx64" size 0x%"PRIx32
+ kvm_resample_fd_notify(int gsi) "gsi %d"
+ kvm_dirty_ring_full(int id) "vcpu %d"
 -- 
 2.25.1
 
