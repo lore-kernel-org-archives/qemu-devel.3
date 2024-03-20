@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EBB1C54E58
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 11:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 072A9C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 11:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmtsZ-0001oE-11; Wed, 20 Mar 2024 07:13:07 -0400
+	id 1rmtym-0003VW-1y; Wed, 20 Mar 2024 07:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmtsX-0001nz-Ph
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 07:13:05 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmtyi-0003SR-SX
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 07:19:29 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmtsU-0007dv-5j
- for qemu-devel@nongnu.org; Wed, 20 Mar 2024 07:13:05 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-341730bfc46so1946435f8f.3
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 04:13:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rmtyh-0000k9-9n
+ for qemu-devel@nongnu.org; Wed, 20 Mar 2024 07:19:28 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-33e1d327595so4371097f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 04:19:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1710933180; x=1711537980; darn=nongnu.org;
+ d=linaro.org; s=google; t=1710933565; x=1711538365; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SLT36zFAQpFoqG862E+tL4q0VZzLaRuVRd3ZBpHKoys=;
- b=agQys1dSKOOoSGUQJ0j728ZsDTjGadZoP4fsCt2YFcR45lz4d9ZSApjhQOvgCmSJUj
- 7GRuMvn+QdHTXIt0fWf2C/PBEv8NSdLgzBzuJpdKI5xqzzkZhjuoWTvHMJ0Ti29kDn+q
- 8Qwdp4PzIV1i3tx/dIyLSX00leBHFMLv+j1QwrcA8ZtWv0cHboznngnfS6nvy5DlvGV+
- 9X4XsWJLo2anstO4P4z9owIsguSmj2LmjlKAt3E+uZBhCU7C9pX1Dp8RPnP+Om03z/13
- NjEHGfkwwrYrZx3r+vxtZ8IJgYz06xpDmdj3wOf3KeIQPLRQZvBfpuknoLzLJtG1Tvqf
- /+tg==
+ bh=Lj+zkkGMQz/HhiRz/nq+wThBF91u9rXrZSwBR5Boelc=;
+ b=DmgnqaqC9tmmN6gX+VaBV5Zq1TDO9xTg4T9A6zsC7DyyWqLQ47WTDTmeE8XH6ISY9z
+ 8md5N8O8OtV9cxCuCj+DReNbsseqS+qaY6kag7PNx61XA8+VCfXBNhFkPaO4XziYefZL
+ toea5ovJ7bvMSX0z61fjg7UR/2PRm26GTlE+THB8ITGjSrJfgPhP8UVG4CvOfvLSf8fo
+ v++hX7mOMhLlSeo1SlAY7KVeyNGX/K1++CUTm9tRiMzmY2asu3863QWSfvT/s3KHR45u
+ XnuK9yVKed5jkWl+F1VtNhgXipgWedpF4t1pflSUyKSwLZKJZGQ/j3opgG69oE5FT/c2
+ 0rmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710933180; x=1711537980;
+ d=1e100.net; s=20230601; t=1710933565; x=1711538365;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SLT36zFAQpFoqG862E+tL4q0VZzLaRuVRd3ZBpHKoys=;
- b=Ajj8mH3iKVtmsIdLZrynCwf4LQN/XmNlXFRnXxlW2fS12JCgPAAwoEMCKTKcJNN1o6
- NW5VGrfWAxccDcTa+y3JGjMAD2QC8aynwl56MroKLrlF0UxtyhX+If94YS5/pBXUgm+C
- /AP54UWVZpam9ksbI9X0bDXYV++DPHU8NKEJsIKUm07umwM41UDnyhApDIqUiQyxWjQv
- VuZqQeL07ppa+AbNvYMyrgeX2OiYdBL/MWO4k21kTq6Vk1exxg0637Gjtyl6Qc+aUN4D
- z2AcYlH6Ez4Dj+qBA6uBRhrBvmkvt9bHaX31jeSn/MeJoQCNl2T6u+ivbnZyf+Q51QbL
- 0Ljw==
+ bh=Lj+zkkGMQz/HhiRz/nq+wThBF91u9rXrZSwBR5Boelc=;
+ b=SnANtrAU/5wkb1s7hvoAXQLuNXJOt60OQ5YXRy13NGRZFKzzvOwwMzIi/0JGttLoNg
+ OUWrkyzzjRejjUlDHgC8z4MLRgt/oLaBFyw0bkUdD0ouRS2Kb0RYOsTxul2KgXvfELbm
+ zS16EIQoqTxkMw8O2Q6CQLPLfIUOywY2gi2wIM6DTQC8CjZYFmsdR2Cg4WhOrHJmfx2e
+ DVrlBEVKTmWHUxj0pdQJh2BOQXvQIcjuXkCrBZd3MyUO7J5fAOvwEd4q8fj+FbUI4It3
+ LOxmNIKZfl7KOUXiiWjePudvtAnR9fPJVG51L1GerQUxrDkvv6K1dn3mCsEE5Q0LmKwY
+ pkgA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXU5gVDbM/i8vzcFakbemiCAPHqD9GF57rgarjWOdRAwYQAZz2jZHPmdJVHZbZsr5LED7dNG1epnUvw3QS8HwkIinS3cxc=
-X-Gm-Message-State: AOJu0YxMzLu5ME1sL7XsXqzbz8pNA4Wibitj7yQ3jAgLp8KhqCKLjvsY
- zAQo+6r6ZR6gX8198Fpvw7kn8XoqaDZ00Tsvx5BfgQ/50Fn4QkUT4SqT917+BOI=
-X-Google-Smtp-Source: AGHT+IGMdaFGmMw4JKZc3R2FDyx3KM7IASF8ZHrhZo3oA/g4S1EH8eZY2Myrnoq6+2P8iYgQaksaXg==
-X-Received: by 2002:a05:6000:184b:b0:33f:8e6d:ab75 with SMTP id
- c11-20020a056000184b00b0033f8e6dab75mr12884789wri.59.1710933180192; 
- Wed, 20 Mar 2024 04:13:00 -0700 (PDT)
+ AJvYcCWn0rIbGkNb0NWNYCOefw4Lc01ldk2mmnuqYeVXIaWCL6m8l6NSJEoKm9nV25RDlcNscZzrV0aOdLzxbzql8fXA+N8kTPg=
+X-Gm-Message-State: AOJu0YyPEqgZ6ct0jW2lEghGP8/TgYShj9xnJ4GphPnzaA8MI1eQ7m5K
+ 1tjwmHpdQ7JGMNBq05GJSIXCcO51u94dP5hv+Zh73xC1JWRC6BJ9IHeiYfS+a40pmD/Bg0gueO4
+ m
+X-Google-Smtp-Source: AGHT+IF/KDpLEbAehUpiGLGYeeZS99BJqd/1yYJFkH627MblSe/TuguMHn7kLvvhZRlp/LXgs4rmlw==
+X-Received: by 2002:adf:e5d1:0:b0:33e:c604:dd3a with SMTP id
+ a17-20020adfe5d1000000b0033ec604dd3amr9573447wrn.58.1710933565334; 
+ Wed, 20 Mar 2024 04:19:25 -0700 (PDT)
 Received: from [192.168.64.175] ([92.88.170.201])
  by smtp.gmail.com with ESMTPSA id
- t11-20020adfe44b000000b0033e122a9a91sm14463049wrm.105.2024.03.20.04.12.59
+ t17-20020a5d49d1000000b0033ec91c9eadsm14583999wrs.53.2024.03.20.04.19.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 20 Mar 2024 04:12:59 -0700 (PDT)
-Message-ID: <08726125-8e4b-4ae0-a095-f58d6c175144@linaro.org>
-Date: Wed, 20 Mar 2024 12:12:58 +0100
+ Wed, 20 Mar 2024 04:19:24 -0700 (PDT)
+Message-ID: <cc132404-dcd5-4aed-a481-b46d6e3115b0@linaro.org>
+Date: Wed, 20 Mar 2024 12:19:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] .travis.yml: Update the jobs to Ubuntu 22.04
+Subject: Re: [PATCH 0/4] hw/nmi: Remove @cpu_index argument
 Content-Language: en-US
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Vaibhav Jain <vaibhav@linux.ibm.com>
-References: <20240320104144.823425-1-thuth@redhat.com>
- <20240320104144.823425-5-thuth@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-s390x@nongnu.org,
+ qemu-ppc@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Mark Burton <mburton@qti.qualcomm.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20240220150833.13674-1-philmd@linaro.org>
+ <f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240320104144.823425-5-thuth@redhat.com>
+In-Reply-To: <f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,27 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/3/24 11:41, Thomas Huth wrote:
-> According to our support policy, we'll soon drop our official support
-> for Ubuntu 20.04 ("Focal Fossa") in QEMU. Thus we should update the
-> Travis jobs now to a newer release (Ubuntu 22.04 - "Jammy Jellyfish")
-> for future testing. Since all jobs are using this release now, we
-> can drop the entries from the individual jobs and use the global
-> setting again.
+On 20/2/24 16:19, Thomas Huth wrote:
+> On 20/02/2024 16.08, Philippe Mathieu-Daudé wrote:
+>> Have s390x always deliver NMI to the first CPU,
+>> remove the @cpu_index argument from handler,
+>> rename API as nmi_trigger() (not monitor specific).
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   .travis.yml | 13 +++----------
->   1 file changed, 3 insertions(+), 10 deletions(-)
-> 
-> diff --git a/.travis.yml b/.travis.yml
-> index 8da88c4360..16cf706c07 100644
-> --- a/.travis.yml
-> +++ b/.travis.yml
-> @@ -1,5 +1,5 @@
->   os: linux
-> -dist: focal
-> +dist: jammy
+> Could you please add some rationale here why this is needed / desired?
 
-FYI Peter suggested to Alex on IRC to wait for the v9.0 release tag.
+I'm not sure it is desired... I'm trying to get the NMI delivery
+working in heterogeneous machine, but now I'm wondering whether
+hw/core/nmi.c was designed with that in mind or likely not.
+
+I suppose in a complex machine you explicitly wire IRQ lines such
+NMI, so they are delivered to a particular INTC or CPU core, and
+there is no "broadcast this signal to all listeners registered
+for NMI events".
+
+> 
+> Thanks,
+>   Thomas
+> 
+> 
+>> Philippe Mathieu-Daudé (4):
+>>    hw/nmi: Use object_child_foreach_recursive() in nmi_children()
+>>    hw/s390x/virtio-ccw: Always deliver NMI to first CPU
+>>    hw/nmi: Remove @cpu_index argument from NMIClass::nmi_handler()
+>>    hw/nmi: Remove @cpu_index argument from nmi_trigger()
+
 
