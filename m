@@ -4,84 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CCABC54E68
-	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 02:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E56C54E68
+	for <qemu-devel@archiver.kernel.org>; Wed, 20 Mar 2024 02:12:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rmlJV-0005RG-Gn; Tue, 19 Mar 2024 22:04:21 -0400
+	id 1rmlQq-0007WN-Sx; Tue, 19 Mar 2024 22:11:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1rmlJU-0005R5-HZ
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:04:20 -0400
-Received: from esa11.hc1455-7.c3s2.iphmx.com ([207.54.90.137])
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1rmlQo-0007VW-CJ
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:11:54 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1rmlJS-0006fn-It
- for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:04:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1710900258; x=1742436258;
+ (Exim 4.90_1) (envelope-from <tao1.su@linux.intel.com>)
+ id 1rmlQl-00007A-QC
+ for qemu-devel@nongnu.org; Tue, 19 Mar 2024 22:11:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1710900712; x=1742436712;
  h=from:to:cc:subject:date:message-id:mime-version:
  content-transfer-encoding;
- bh=vyG/HEl8aYHT4LtGcSxGyZuwg7vJ11LLCg+TgsHPV88=;
- b=W018HgpKvOLhfvxzzG0t7w3yGw6ZO0ODSeN+Q8WeJfGPcoP9e+pKV1k1
- CaWVbc8iRAAmj+JNn/oRi1upD7iFXQ6+cDir5Gx82tavkcwDuJiZwiP+g
- hj2mEFUCCVGJ8ExWqPy+En9e2JAEmX8WeQytc9ShvF3P/2vN2eq8c6svS
- Tau7UILJONqjlTSj6kNQOhtiTT6+mDIGnHI437H2VUW2Ph8u7dxKWrxvc
- AK/6Grq0tBpqJJvWHD94a0cvPFpgxbw4mBZKzZnnRmdz4PTyqX9Dl9P70
- t+zSd1hevQ/TRSsmgwW0Ke22xPkrv92SUY+JdT4nz1J/Fzr6ozWpl4GgS Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11018"; a="132128569"
-X-IronPort-AV: E=Sophos;i="6.07,138,1708354800"; d="scan'208";a="132128569"
-Received: from unknown (HELO oym-r4.gw.nic.fujitsu.com) ([210.162.30.92])
- by esa11.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Mar 2024 11:04:11 +0900
-Received: from oym-m2.gw.nic.fujitsu.com (oym-nat-oym-m2.gw.nic.fujitsu.com
- [192.168.87.59])
- by oym-r4.gw.nic.fujitsu.com (Postfix) with ESMTP id 8C4AA5AF9A
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 11:04:09 +0900 (JST)
-Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
- [192.51.206.22])
- by oym-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id C1B59BF4A7
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 11:04:08 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 649D721FC42
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 11:04:08 +0900 (JST)
-Received: from localhost.localdomain (unknown [10.167.225.88])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id A7E441A006A;
- Wed, 20 Mar 2024 10:04:07 +0800 (CST)
-To: alex.bennee@linaro.org, erdnaxe@crans.org, ma.mandourr@gmail.com,
- pierrick.bouvier@linaro.org
-Cc: qemu-devel@nongnu.org,
-	Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Subject: [PATCH] contrib/plugins/execlog: Fix compiler warning
-Date: Tue, 19 Mar 2024 22:01:15 -0400
-Message-Id: <20240320020115.18801-1-yaoxt.fnst@fujitsu.com>
-X-Mailer: git-send-email 2.37.3
+ bh=gqJUXZjlnDWkYvP2GsAVJ0nIzO8BqMLDQs9PnEHvNdo=;
+ b=B2huodz4jjnw8kiIwdf5QqqcFS/3OUidDKWxOf4u2ACGt3gJedbF7iXU
+ vPk59aIGVSaXmWc6fb/qwETAm+U8Hl/od9APmtsThlwrr5ozXv891t25I
+ 2zsS3x6eEG8srbyx0ur4qg/F2x5xj5a/NTtI1LQZhEO8LlSV/CBv95Kv+
+ KkYl1orrQgOy+j9Z2MMRjvfOOQ/pVc+j2T7erIo/SBRLvUkgyHO60aHcG
+ Z0lejFTRUONPnDVrAcvnN6UK9evv38FWoWCKerFWHz9rSINcPyQZ3ZN5V
+ us861Lr3a6N/kCDrNakdlZBx9suZHnpgaoza8p+N7jMCAUSLYFzu+cZHy g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11018"; a="16540098"
+X-IronPort-AV: E=Sophos;i="6.07,138,1708416000"; d="scan'208";a="16540098"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Mar 2024 19:11:47 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,138,1708416000"; d="scan'208";a="18660683"
+Received: from st-server.bj.intel.com ([10.240.193.102])
+ by orviesa004.jf.intel.com with ESMTP; 19 Mar 2024 19:11:45 -0700
+From: Tao Su <tao1.su@linux.intel.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, imammedo@redhat.com, xiaoyao.li@intel.com,
+ zhao1.liu@intel.com, tao1.su@linux.intel.com
+Subject: [PATCH v2] target/i386: Add new CPU model SierraForest
+Date: Wed, 20 Mar 2024 10:10:44 +0800
+Message-Id: <20240320021044.508263-1-tao1.su@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28262.004
-X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28262.004
-X-TMASE-Result: 10--10.242300-10.000000
-X-TMASE-MatchedRID: N/ZbbLCcPKAPmP3FESo1jx1kSRHxj+Z5C//1TMV5chP1xrH5kKK/riC2
- FZ19GZhejDVMw6TJvuFqZQlTWBYkGK7NRB06WtQS9Ib/6w+1lWQ81ck8U80WlhzTkVRa1gtO3UT
- KRPNMe+si+t+0AiFaYvL3NxFKQpq1T12Hc9FhVjUK3Ma88LL+bhZSD+Gbjz3IGxDxAG8HwlajxY
- yRBa/qJUl4W8WVUOR/joczmuoPCq2CC+YDrt+JtuLo5lYlQRrYaQlFQo703sNkbtsHuvfDlS0Q5
- BNGaY3x
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=207.54.90.137;
- envelope-from=yaoxt.fnst@fujitsu.com; helo=esa11.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=192.198.163.9;
+ envelope-from=tao1.su@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.422,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,81 +74,213 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
-From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-1. The g_pattern_match_string() is deprecated when glib2 version >= 2.70.
-   Use g_pattern_spec_match_string() instead to avoid this problem.
+According to table 1-2 in Intel Architecture Instruction Set Extensions and
+Future Features (rev 051) [1], SierraForest has the following new features
+which have already been virtualized:
 
-2. The type of second parameter in g_ptr_array_add() is
-   'gpointer' {aka 'void *'}, but the type of reg->name is 'const char*'.
-   Cast the type of reg->name to 'gpointer' to avoid this problem.
+- CMPCCXADD CPUID.(EAX=7,ECX=1):EAX[bit 7]
+- AVX-IFMA CPUID.(EAX=7,ECX=1):EAX[bit 23]
+- AVX-VNNI-INT8 CPUID.(EAX=7,ECX=1):EDX[bit 4]
+- AVX-NE-CONVERT CPUID.(EAX=7,ECX=1):EDX[bit 5]
 
-compiler warning message:
-/root/qemu/contrib/plugins/execlog.c:330:17: warning: ‘g_pattern_match_string’
-is deprecated: Use 'g_pattern_spec_match_string'
-instead [-Wdeprecated-declarations]
-  330 |                 if (g_pattern_match_string(pat, rd->name) ||
-      |                 ^~
-In file included from /usr/include/glib-2.0/glib.h:67,
-                 from /root/qemu/contrib/plugins/execlog.c:9:
-/usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
-   57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
-      |               ^~~~~~~~~~~~~~~~~~~~~~
-/root/qemu/contrib/plugins/execlog.c:331:21: warning: ‘g_pattern_match_string’
-is deprecated: Use 'g_pattern_spec_match_string'
-instead [-Wdeprecated-declarations]
-  331 |                     g_pattern_match_string(pat, rd_lower)) {
-      |                     ^~~~~~~~~~~~~~~~~~~~~~
-/usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
-   57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
-      |               ^~~~~~~~~~~~~~~~~~~~~~
-/root/qemu/contrib/plugins/execlog.c:339:63: warning: passing argument 2 of
-‘g_ptr_array_add’ discards ‘const’ qualifier from pointer target type
-[-Wdiscarded-qualifiers]
-  339 |                             g_ptr_array_add(all_reg_names, reg->name);
-      |                                                            ~~~^~~~~~
-In file included from /usr/include/glib-2.0/glib.h:33:
-/usr/include/glib-2.0/glib/garray.h:198:62: note: expected
-‘gpointer’ {aka ‘void *’} but argument is of type ‘const char *’
-  198 |                                            gpointer          data);
-      |                                            ~~~~~~~~~~~~~~~~~~^~~~
+Add above features to new CPU model SierraForest. Comparing with GraniteRapids
+CPU model, SierraForest bare-metal removes the following features:
 
-Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+- HLE CPUID.(EAX=7,ECX=0):EBX[bit 4]
+- RTM CPUID.(EAX=7,ECX=0):EBX[bit 11]
+- AVX512F CPUID.(EAX=7,ECX=0):EBX[bit 16]
+- AVX512DQ CPUID.(EAX=7,ECX=0):EBX[bit 17]
+- AVX512_IFMA CPUID.(EAX=7,ECX=0):EBX[bit 21]
+- AVX512CD CPUID.(EAX=7,ECX=0):EBX[bit 28]
+- AVX512BW CPUID.(EAX=7,ECX=0):EBX[bit 30]
+- AVX512VL CPUID.(EAX=7,ECX=0):EBX[bit 31]
+- AVX512_VBMI CPUID.(EAX=7,ECX=0):ECX[bit 1]
+- AVX512_VBMI2 CPUID.(EAX=7,ECX=0):ECX[bit 6]
+- AVX512_VNNI CPUID.(EAX=7,ECX=0):ECX[bit 11]
+- AVX512_BITALG CPUID.(EAX=7,ECX=0):ECX[bit 12]
+- AVX512_VPOPCNTDQ CPUID.(EAX=7,ECX=0):ECX[bit 14]
+- LA57 CPUID.(EAX=7,ECX=0):ECX[bit 16]
+- TSXLDTRK CPUID.(EAX=7,ECX=0):EDX[bit 16]
+- AMX-BF16 CPUID.(EAX=7,ECX=0):EDX[bit 22]
+- AVX512_FP16 CPUID.(EAX=7,ECX=0):EDX[bit 23]
+- AMX-TILE CPUID.(EAX=7,ECX=0):EDX[bit 24]
+- AMX-INT8 CPUID.(EAX=7,ECX=0):EDX[bit 25]
+- AVX512_BF16 CPUID.(EAX=7,ECX=1):EAX[bit 5]
+- fast zero-length MOVSB CPUID.(EAX=7,ECX=1):EAX[bit 10]
+- fast short CMPSB, SCASB CPUID.(EAX=7,ECX=1):EAX[bit 12]
+- AMX-FP16 CPUID.(EAX=7,ECX=1):EAX[bit 21]
+- PREFETCHI CPUID.(EAX=7,ECX=1):EDX[bit 14]
+- XFD CPUID.(EAX=0xD,ECX=1):EAX[bit 4]
+- EPT_PAGE_WALK_LENGTH_5 VMX_EPT_VPID_CAP(0x48c)[bit 7]
+
+Add all features of GraniteRapids CPU model except above features to
+SierraForest CPU model.
+
+SierraForest doesn’t support TSX and RTM but supports TAA_NO. When RTM is
+not enabled in host, KVM will not report TAA_NO. So, just don't include
+TAA_NO in SierraForest CPU model.
+
+[1] https://cdrdv2.intel.com/v1/dl/getContent/671368
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Tao Su <tao1.su@linux.intel.com>
 ---
- contrib/plugins/execlog.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+v1 -> v2:
+ - Specify the spec rev and table which says the contained features.
+ - Fix commit message to make it clearer.
+ - Move the spec link above --- line so that it won’t be gone after commit.
+ - Add Reviewed-by of Zhao and Xiaoyao.
 
-diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
-index a1dfd59ab7..41f6774116 100644
---- a/contrib/plugins/execlog.c
-+++ b/contrib/plugins/execlog.c
-@@ -327,8 +327,13 @@ static GPtrArray *registers_init(int vcpu_index)
-             for (int p = 0; p < rmatches->len; p++) {
-                 g_autoptr(GPatternSpec) pat = g_pattern_spec_new(rmatches->pdata[p]);
-                 g_autofree gchar *rd_lower = g_utf8_strdown(rd->name, -1);
-+#if GLIB_VERSION_MAX_ALLOWED < G_ENCODE_VERSION(2, 70)
-                 if (g_pattern_match_string(pat, rd->name) ||
-                     g_pattern_match_string(pat, rd_lower)) {
-+#else
-+                if (g_pattern_spec_match_string(pat, rd->name) ||
-+                    g_pattern_spec_match_string(pat, rd_lower)) {
-+#endif
-                     Register *reg = init_vcpu_register(rd);
-                     g_ptr_array_add(registers, reg);
- 
-@@ -336,7 +341,7 @@ static GPtrArray *registers_init(int vcpu_index)
-                     if (disas_assist) {
-                         g_mutex_lock(&add_reg_name_lock);
-                         if (!g_ptr_array_find(all_reg_names, reg->name, NULL)) {
--                            g_ptr_array_add(all_reg_names, reg->name);
-+                            g_ptr_array_add(all_reg_names, (gpointer)reg->name);
-                         }
-                         g_mutex_unlock(&add_reg_name_lock);
-                     }
+v1:
+ - https://lore.kernel.org/all/20231206131923.1192066-1-tao1.su@linux.intel.com/
+---
+ target/i386/cpu.c | 126 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 126 insertions(+)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 9a210d8d92..8b86698939 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -4099,6 +4099,132 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+             { /* end of list */ },
+         },
+     },
++    {
++        .name = "SierraForest",
++        .level = 0x23,
++        .vendor = CPUID_VENDOR_INTEL,
++        .family = 6,
++        .model = 175,
++        .stepping = 0,
++        /*
++         * please keep the ascending order so that we can have a clear view of
++         * bit position of each feature.
++         */
++        .features[FEAT_1_EDX] =
++            CPUID_FP87 | CPUID_VME | CPUID_DE | CPUID_PSE | CPUID_TSC |
++            CPUID_MSR | CPUID_PAE | CPUID_MCE | CPUID_CX8 | CPUID_APIC |
++            CPUID_SEP | CPUID_MTRR | CPUID_PGE | CPUID_MCA | CPUID_CMOV |
++            CPUID_PAT | CPUID_PSE36 | CPUID_CLFLUSH | CPUID_MMX | CPUID_FXSR |
++            CPUID_SSE | CPUID_SSE2,
++        .features[FEAT_1_ECX] =
++            CPUID_EXT_SSE3 | CPUID_EXT_PCLMULQDQ | CPUID_EXT_SSSE3 |
++            CPUID_EXT_FMA | CPUID_EXT_CX16 | CPUID_EXT_PCID | CPUID_EXT_SSE41 |
++            CPUID_EXT_SSE42 | CPUID_EXT_X2APIC | CPUID_EXT_MOVBE |
++            CPUID_EXT_POPCNT | CPUID_EXT_TSC_DEADLINE_TIMER | CPUID_EXT_AES |
++            CPUID_EXT_XSAVE | CPUID_EXT_AVX | CPUID_EXT_F16C | CPUID_EXT_RDRAND,
++        .features[FEAT_8000_0001_EDX] =
++            CPUID_EXT2_SYSCALL | CPUID_EXT2_NX | CPUID_EXT2_PDPE1GB |
++            CPUID_EXT2_RDTSCP | CPUID_EXT2_LM,
++        .features[FEAT_8000_0001_ECX] =
++            CPUID_EXT3_LAHF_LM | CPUID_EXT3_ABM | CPUID_EXT3_3DNOWPREFETCH,
++        .features[FEAT_8000_0008_EBX] =
++            CPUID_8000_0008_EBX_WBNOINVD,
++        .features[FEAT_7_0_EBX] =
++            CPUID_7_0_EBX_FSGSBASE | CPUID_7_0_EBX_BMI1 | CPUID_7_0_EBX_AVX2 |
++            CPUID_7_0_EBX_SMEP | CPUID_7_0_EBX_BMI2 | CPUID_7_0_EBX_ERMS |
++            CPUID_7_0_EBX_INVPCID | CPUID_7_0_EBX_RDSEED | CPUID_7_0_EBX_ADX |
++            CPUID_7_0_EBX_SMAP | CPUID_7_0_EBX_CLFLUSHOPT | CPUID_7_0_EBX_CLWB |
++            CPUID_7_0_EBX_SHA_NI,
++        .features[FEAT_7_0_ECX] =
++            CPUID_7_0_ECX_UMIP | CPUID_7_0_ECX_PKU | CPUID_7_0_ECX_GFNI |
++            CPUID_7_0_ECX_VAES | CPUID_7_0_ECX_VPCLMULQDQ |
++            CPUID_7_0_ECX_RDPID | CPUID_7_0_ECX_BUS_LOCK_DETECT,
++        .features[FEAT_7_0_EDX] =
++            CPUID_7_0_EDX_FSRM | CPUID_7_0_EDX_SERIALIZE |
++            CPUID_7_0_EDX_SPEC_CTRL | CPUID_7_0_EDX_ARCH_CAPABILITIES |
++            CPUID_7_0_EDX_SPEC_CTRL_SSBD,
++        .features[FEAT_ARCH_CAPABILITIES] =
++            MSR_ARCH_CAP_RDCL_NO | MSR_ARCH_CAP_IBRS_ALL |
++            MSR_ARCH_CAP_SKIP_L1DFL_VMENTRY | MSR_ARCH_CAP_MDS_NO |
++            MSR_ARCH_CAP_PSCHANGE_MC_NO | MSR_ARCH_CAP_SBDR_SSDP_NO |
++            MSR_ARCH_CAP_FBSDP_NO | MSR_ARCH_CAP_PSDP_NO |
++            MSR_ARCH_CAP_PBRSB_NO,
++        .features[FEAT_XSAVE] =
++            CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XSAVEC |
++            CPUID_XSAVE_XGETBV1 | CPUID_XSAVE_XSAVES,
++        .features[FEAT_6_EAX] =
++            CPUID_6_EAX_ARAT,
++        .features[FEAT_7_1_EAX] =
++            CPUID_7_1_EAX_AVX_VNNI | CPUID_7_1_EAX_CMPCCXADD |
++            CPUID_7_1_EAX_FSRS | CPUID_7_1_EAX_AVX_IFMA,
++        .features[FEAT_7_1_EDX] =
++            CPUID_7_1_EDX_AVX_VNNI_INT8 | CPUID_7_1_EDX_AVX_NE_CONVERT,
++        .features[FEAT_7_2_EDX] =
++            CPUID_7_2_EDX_MCDT_NO,
++        .features[FEAT_VMX_BASIC] =
++            MSR_VMX_BASIC_INS_OUTS | MSR_VMX_BASIC_TRUE_CTLS,
++        .features[FEAT_VMX_ENTRY_CTLS] =
++            VMX_VM_ENTRY_LOAD_DEBUG_CONTROLS | VMX_VM_ENTRY_IA32E_MODE |
++            VMX_VM_ENTRY_LOAD_IA32_PERF_GLOBAL_CTRL |
++            VMX_VM_ENTRY_LOAD_IA32_PAT | VMX_VM_ENTRY_LOAD_IA32_EFER,
++        .features[FEAT_VMX_EPT_VPID_CAPS] =
++            MSR_VMX_EPT_EXECONLY | MSR_VMX_EPT_PAGE_WALK_LENGTH_4 |
++            MSR_VMX_EPT_WB | MSR_VMX_EPT_2MB | MSR_VMX_EPT_1GB |
++            MSR_VMX_EPT_INVEPT | MSR_VMX_EPT_AD_BITS |
++            MSR_VMX_EPT_INVEPT_SINGLE_CONTEXT | MSR_VMX_EPT_INVEPT_ALL_CONTEXT |
++            MSR_VMX_EPT_INVVPID | MSR_VMX_EPT_INVVPID_SINGLE_ADDR |
++            MSR_VMX_EPT_INVVPID_SINGLE_CONTEXT |
++            MSR_VMX_EPT_INVVPID_ALL_CONTEXT |
++            MSR_VMX_EPT_INVVPID_SINGLE_CONTEXT_NOGLOBALS,
++        .features[FEAT_VMX_EXIT_CTLS] =
++            VMX_VM_EXIT_SAVE_DEBUG_CONTROLS |
++            VMX_VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |
++            VMX_VM_EXIT_ACK_INTR_ON_EXIT | VMX_VM_EXIT_SAVE_IA32_PAT |
++            VMX_VM_EXIT_LOAD_IA32_PAT | VMX_VM_EXIT_SAVE_IA32_EFER |
++            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER,
++        .features[FEAT_VMX_MISC] =
++            MSR_VMX_MISC_STORE_LMA | MSR_VMX_MISC_ACTIVITY_HLT |
++            MSR_VMX_MISC_VMWRITE_VMEXIT,
++        .features[FEAT_VMX_PINBASED_CTLS] =
++            VMX_PIN_BASED_EXT_INTR_MASK | VMX_PIN_BASED_NMI_EXITING |
++            VMX_PIN_BASED_VIRTUAL_NMIS | VMX_PIN_BASED_VMX_PREEMPTION_TIMER |
++            VMX_PIN_BASED_POSTED_INTR,
++        .features[FEAT_VMX_PROCBASED_CTLS] =
++            VMX_CPU_BASED_VIRTUAL_INTR_PENDING |
++            VMX_CPU_BASED_USE_TSC_OFFSETING | VMX_CPU_BASED_HLT_EXITING |
++            VMX_CPU_BASED_INVLPG_EXITING | VMX_CPU_BASED_MWAIT_EXITING |
++            VMX_CPU_BASED_RDPMC_EXITING | VMX_CPU_BASED_RDTSC_EXITING |
++            VMX_CPU_BASED_CR3_LOAD_EXITING | VMX_CPU_BASED_CR3_STORE_EXITING |
++            VMX_CPU_BASED_CR8_LOAD_EXITING | VMX_CPU_BASED_CR8_STORE_EXITING |
++            VMX_CPU_BASED_TPR_SHADOW | VMX_CPU_BASED_VIRTUAL_NMI_PENDING |
++            VMX_CPU_BASED_MOV_DR_EXITING | VMX_CPU_BASED_UNCOND_IO_EXITING |
++            VMX_CPU_BASED_USE_IO_BITMAPS | VMX_CPU_BASED_MONITOR_TRAP_FLAG |
++            VMX_CPU_BASED_USE_MSR_BITMAPS | VMX_CPU_BASED_MONITOR_EXITING |
++            VMX_CPU_BASED_PAUSE_EXITING |
++            VMX_CPU_BASED_ACTIVATE_SECONDARY_CONTROLS,
++        .features[FEAT_VMX_SECONDARY_CTLS] =
++            VMX_SECONDARY_EXEC_VIRTUALIZE_APIC_ACCESSES |
++            VMX_SECONDARY_EXEC_ENABLE_EPT | VMX_SECONDARY_EXEC_DESC |
++            VMX_SECONDARY_EXEC_RDTSCP |
++            VMX_SECONDARY_EXEC_VIRTUALIZE_X2APIC_MODE |
++            VMX_SECONDARY_EXEC_ENABLE_VPID | VMX_SECONDARY_EXEC_WBINVD_EXITING |
++            VMX_SECONDARY_EXEC_UNRESTRICTED_GUEST |
++            VMX_SECONDARY_EXEC_APIC_REGISTER_VIRT |
++            VMX_SECONDARY_EXEC_VIRTUAL_INTR_DELIVERY |
++            VMX_SECONDARY_EXEC_RDRAND_EXITING |
++            VMX_SECONDARY_EXEC_ENABLE_INVPCID |
++            VMX_SECONDARY_EXEC_ENABLE_VMFUNC | VMX_SECONDARY_EXEC_SHADOW_VMCS |
++            VMX_SECONDARY_EXEC_RDSEED_EXITING | VMX_SECONDARY_EXEC_ENABLE_PML |
++            VMX_SECONDARY_EXEC_XSAVES,
++        .features[FEAT_VMX_VMFUNC] =
++            MSR_VMX_VMFUNC_EPT_SWITCHING,
++        .xlevel = 0x80000008,
++        .model_id = "Intel Xeon Processor (SierraForest)",
++        .versions = (X86CPUVersionDefinition[]) {
++            { .version = 1 },
++            { /* end of list */ },
++        },
++    },
+     {
+         .name = "Denverton",
+         .level = 21,
+
+base-commit: c62d54d0a8067ffb3d5b909276f7296d7df33fa7
 -- 
-2.37.3
+2.34.1
 
 
