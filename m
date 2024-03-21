@@ -4,81 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 442FFC54E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 10:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB9E0CD11DB
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 10:05:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnFDW-0005Cx-7s; Thu, 21 Mar 2024 06:00:10 -0400
+	id 1rnFI5-0006zA-IQ; Thu, 21 Mar 2024 06:04:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rnFDV-0005CB-5M
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 06:00:09 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rnFDQ-0006tm-7u
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 06:00:08 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-56b857bac38so397583a12.0
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 03:00:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711015202; x=1711620002; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VoKRH/EywjLkbCKh6mWJyNVhDWMOYCJQkBm9THdcC9Y=;
- b=mf4ec/YyNHpAnho/F2RIV5ASkJk5bXDVvEXGhAkfrWbJUd6TKMnzS4sn9UJ4ce3Rag
- Nq7tkBVhwuOYD29NVJjMKHLe0ecrR9EsN37VMP6zxDKuvDCJvCauTvKT0/SfVGcZmy//
- J6biilZ9wOPo3Y96a1rATngkPCRElaENkiwyLOKtsloCK+LqPMTzXuutEFZtN//YZ4L0
- +rNS5lSaqBqKAtwOZ7gCTfrahYKm2JiqGM8YWVriiPNaT5W9/kluP2uoTZtv0y79WTdx
- vU5Q4oLSXX8CZeFaxIoF9+51Txy7lx2WmdwthGlg5sCSnkJmBox2Lf5sBtsT4KcvYcGw
- wVnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711015202; x=1711620002;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VoKRH/EywjLkbCKh6mWJyNVhDWMOYCJQkBm9THdcC9Y=;
- b=aMQ0i3QQ9u66gf2uGuvKSKt7v4orPLd07jRvXRHsfvH5N5lh/d1VZKHnsk4kBE/scq
- /sjUYyo81RHNsEbDLRGyrjB8y+WLC2To+m/UPl3FAQt79PI+OXPQs5mKw10lSz3CNvev
- zKyJx459bONzvvDY2XgurmrYjB8sGrr2S7LwyekHflX1LmOzv6Z5vJLCmPQY8C/blB3N
- iZZRMeHCrrY5aE8KBhnsjhlSaXsheKri6/ObSORjWJUGhOsKfh/GaaWeElqtJMrWXeZN
- 9T7OIfiRtB5kZ19F02L8QVAawzwhdIHlrGZg8raMLAX0j/OlWpfNAjbEXXJq0hymajiE
- JeQg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWGsoE4+CaQefzMsExPACbpDwo3d4wh7EMm+iC1GMh6Ay4S7T9oj8agbq4i8po4zJ9HrQA+PrHyAYqrWs4cFpL9JNwf57E=
-X-Gm-Message-State: AOJu0YwL5vtXWh4KYVMU2DLOsGOjkAt6kbYISG7T6xVxB42P8/NmkJfO
- Sc7le7IGqwP6+vE5RibgB9MsT9eOmm9WS5K2UoEv+bkW8s8XDBy+pl696/i1CRc3KyM4cDUAqNa
- kcpDk9ajEGUjQdSPwS8knDNT1RGL+lhJ3zUoCrg==
-X-Google-Smtp-Source: AGHT+IHWaNHLcifyfFnTy4Ut84tUQ/5g4YQ+uX5RnGmkYN1IJNWePScSw4kwhRW1mkmhXUWaHAYkS+qeuL1y8+uN6f4=
-X-Received: by 2002:a50:d6cb:0:b0:568:b5d3:2b89 with SMTP id
- l11-20020a50d6cb000000b00568b5d32b89mr1464840edj.31.1711015202388; Thu, 21
- Mar 2024 03:00:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1rnFI3-0006yT-O2; Thu, 21 Mar 2024 06:04:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1rnFI2-0007ZG-6u; Thu, 21 Mar 2024 06:04:51 -0400
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42L8xj1x019472; Thu, 21 Mar 2024 10:04:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=5Pru400Bab22YQoPrfRbBsv6HdwOVVwOb1Gr3mkgcIc=;
+ b=ZHU4TUhqH3BvqRjbBQtGKLxiLd/P3KINCvCYWQrdVgtClwL8EBNIFjQ6Vr3oSDBJFeSM
+ 6ErJ7QVdpP1Utgdztj4YSQEzJKKm11HX5cRWWLTUfVFlCjBLND19BPbofVvxsjbSkjvz
+ 9zseONAUL6wr0rCyOB0XHdPwVuHiJY130xGfBiKFkeA32OxZkeATv8DHbBO9e92Gm2fr
+ 5jtUSX4MlWPtA59hMBsmDOZ8dUhijm29PKsXFN8horqomYIzXpk55rAwA1JK8/Y2mgwO
+ aSaoo/iXxKUukPODz2wFJcNt+oWSCFawzitfcbusyJwbHJBS+wX8OUoEhW1ZLgbNE4mq cw== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x0hve85f0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Mar 2024 10:04:41 +0000
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42LA4fvX015044;
+ Thu, 21 Mar 2024 10:04:41 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x0hve85ev-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Mar 2024 10:04:41 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42L989Fu015807; Thu, 21 Mar 2024 10:04:40 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wwp50cfk8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 21 Mar 2024 10:04:40 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42LA4bJ358065278
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 21 Mar 2024 10:04:39 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5A9C058064;
+ Thu, 21 Mar 2024 10:04:37 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DD1F758069;
+ Thu, 21 Mar 2024 10:04:36 +0000 (GMT)
+Received: from gfwr516.rchland.ibm.com (unknown [9.10.239.105])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 21 Mar 2024 10:04:36 +0000 (GMT)
+From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, saif.abrar@linux.vnet.ibm.com
+Subject: [PATCH 07/10] pnv/phb4: Set link speed and width in the DLP training
+ control register
+Date: Thu, 21 Mar 2024 05:04:19 -0500
+Message-Id: <20240321100422.5347-8-saif.abrar@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
+References: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
 MIME-Version: 1.0
-References: <20240318093546.2786144-1-ruanjinjie@huawei.com>
- <20240318093546.2786144-7-ruanjinjie@huawei.com>
- <CAFEAcA_xSHAJnn0_O9=zGo9u8omzhuB_WvuMo9gf7wKt8OVDmw@mail.gmail.com>
- <90475c65-f148-9f49-8c5b-ea55137e1a6f@huawei.com>
-In-Reply-To: <90475c65-f148-9f49-8c5b-ea55137e1a6f@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 21 Mar 2024 09:59:51 +0000
-Message-ID: <CAFEAcA-3O2p3MPMGbV3TBAzjrWncSp7XzE+N4KV_Y7wS1RmRoQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v8 06/23] target/arm: Add support for Non-maskable
- Interrupt
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
- wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: GmeS-rL3pzEFGC2OpPXT7_z_KhECocFa
+X-Proofpoint-ORIG-GUID: KzlHthrTuVkWM386X7f01Y_cjD7sQNev
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-21_06,2024-03-18_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 mlxlogscore=999
+ lowpriorityscore=0 clxscore=1015 bulkscore=0 malwarescore=0 suspectscore=0
+ impostorscore=0 priorityscore=1501 mlxscore=0 spamscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2403140000
+ definitions=main-2403210069
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,99 +115,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 21 Mar 2024 at 09:27, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
->
->
->
-> On 2024/3/20 1:28, Peter Maydell wrote:
-> > On Mon, 18 Mar 2024 at 09:37, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
-> >>
-> >> This only implements the external delivery method via the GICv3.
-> >>
-> >> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> >> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> >> ---
-> >> v8:
-> >> - Fix the rcu stall after sending a VNMI in qemu VM.
-> >> v7:
-> >> - Add Reviewed-by.
-> >> v6:
-> >> - env->cp15.hcr_el2 -> arm_hcr_el2_eff().
-> >> - env->cp15.hcrx_el2 -> arm_hcrx_el2_eff().
-> >> - Not include VF && VFNMI in CPU_INTERRUPT_VNMI.
-> >> v4:
-> >> - Accept NMI unconditionally for arm_cpu_has_work() but add comment.
-> >> - Change from & to && for EXCP_IRQ or EXCP_FIQ.
-> >> - Refator nmi mask in arm_excp_unmasked().
-> >> - Also handle VNMI in arm_cpu_exec_interrupt() and arm_cpu_set_irq().
-> >> - Rename virtual to Virtual.
-> >> v3:
-> >> - Not include CPU_INTERRUPT_NMI when FEAT_NMI not enabled
-> >> - Add ARM_CPU_VNMI.
-> >> - Refator nmi mask in arm_excp_unmasked().
-> >> - Test SCTLR_ELx.NMI for ALLINT mask for NMI.
-> >> ---
-> >>  target/arm/cpu-qom.h   |  4 +-
-> >>  target/arm/cpu.c       | 85 +++++++++++++++++++++++++++++++++++++++---
-> >>  target/arm/cpu.h       |  4 ++
-> >>  target/arm/helper.c    |  2 +
-> >>  target/arm/internals.h |  9 +++++
-> >>  5 files changed, 97 insertions(+), 7 deletions(-)
-> >>
-> >> diff --git a/target/arm/cpu-qom.h b/target/arm/cpu-qom.h
-> >> index 8e032691db..e0c9e18036 100644
-> >> --- a/target/arm/cpu-qom.h
-> >> +++ b/target/arm/cpu-qom.h
-> >> @@ -36,11 +36,13 @@ DECLARE_CLASS_CHECKERS(AArch64CPUClass, AARCH64_CPU,
-> >>  #define ARM_CPU_TYPE_SUFFIX "-" TYPE_ARM_CPU
-> >>  #define ARM_CPU_TYPE_NAME(name) (name ARM_CPU_TYPE_SUFFIX)
-> >>
-> >> -/* Meanings of the ARMCPU object's four inbound GPIO lines */
-> >> +/* Meanings of the ARMCPU object's six inbound GPIO lines */
-> >>  #define ARM_CPU_IRQ 0
-> >>  #define ARM_CPU_FIQ 1
-> >>  #define ARM_CPU_VIRQ 2
-> >>  #define ARM_CPU_VFIQ 3
-> >> +#define ARM_CPU_NMI 4
-> >> +#define ARM_CPU_VNMI 5
-> >>
-> >>  /* For M profile, some registers are banked secure vs non-secure;
-> >>   * these are represented as a 2-element array where the first element
-> >
-> >> @@ -678,13 +687,31 @@ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
-> >>          return false;
-> >>      }
-> >>
-> >> +    if (cpu_isar_feature(aa64_nmi, env_archcpu(env)) &&
-> >> +        env->cp15.sctlr_el[target_el] & SCTLR_NMI && cur_el == target_el) {
-> >> +        allIntMask = env->pstate & PSTATE_ALLINT ||
-> >> +                     ((env->cp15.sctlr_el[target_el] & SCTLR_SPINTMASK) &&
-> >> +                      (env->pstate & PSTATE_SP));
-> >> +    }
-> >> +
-> >>      switch (excp_idx) {
-> >> +    case EXCP_NMI:
-> >> +        pstate_unmasked = !allIntMask;
-> >> +        break;
-> >> +
-> >> +    case EXCP_VNMI:
-> >> +        if ((!(hcr_el2 & HCR_IMO) && !(hcr_el2 & HCR_FMO)) ||
-> >> +             (hcr_el2 & HCR_TGE)) {
-> >> +            /* VNMIs(VIRQs or VFIQs) are only taken when hypervized.  */
-> >> +            return false;
-> >> +        }
-> >
-> > VINMI and VFNMI aren't the same thing: do we definitely want to
-> > merge them into one EXCP_VNMI ? It feels like it would be simpler
-> > to keep them separate. Similarly CPU_INTERRUPT_VNMI, and
-> > arm_cpu_update_vnmi() probably want VINMI and VFNMI versions.
->
-> It's not like that. The VFNMI cannot be reported from the GIC, there
-> will be no opportunity to call arm_cpu_update_vfnmi().
+Get the current link-status from PCIE macro.
+Extract link-speed and link-width from the link-status
+and set in the DLP training control (PCIE_DLP_TCR) register.
 
-The GIC can't trigger it, but the hypervisor can by setting
-the HCRX_EL2.VFNMI bit. So writes to HCRX_EL2 (and HCR_EL2)
-would need to call arm_cpu_update_vfnmi().
+Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+---
+ hw/pci-host/pnv_phb4.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
--- PMM
+diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+index 7b3d75bae6..6823ffab54 100644
+--- a/hw/pci-host/pnv_phb4.c
++++ b/hw/pci-host/pnv_phb4.c
+@@ -980,10 +980,27 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+         val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
+         break;
+ 
+-    /* Link training always appears trained */
+     case PHB_PCIE_DLP_TRAIN_CTL:
+-        /* TODO: Do something sensible with speed ? */
++        /* Link training always appears trained */
+         val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
++
++        /* Get the current link-status from PCIE */
++        uint32_t exp_offset = get_exp_offset(phb);
++        uint32_t lnkstatus = bswap32(pnv_phb4_rc_config_read(phb,
++                                exp_offset + PCI_EXP_LNKSTA, 4));
++
++        /* Extract link-speed from the link-status */
++        uint32_t v = lnkstatus & PCI_EXP_LNKSTA_CLS;
++        /* Set the current link-speed at the LINK_SPEED position */
++        val = SETFIELD(PHB_PCIE_DLP_LINK_SPEED, val, v);
++
++        /*
++         * Extract link-width from the link-status,
++         * after shifting the required bitfields.
++         */
++        v = (lnkstatus & PCI_EXP_LNKSTA_NLW) >> PCI_EXP_LNKSTA_NLW_SHIFT;
++        /* Set the current link-width at the LINK_WIDTH position */
++        val = SETFIELD(PHB_PCIE_DLP_LINK_WIDTH, val, v);
+         return val;
+ 
+     /*
+-- 
+2.39.3
+
 
