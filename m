@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EC8FC54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8108CD11C2
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 14:29:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnJPY-0002Yg-SS; Thu, 21 Mar 2024 10:28:52 -0400
+	id 1rnJOs-0008Fy-O5; Thu, 21 Mar 2024 10:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rnJPX-0002Wl-1y
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:28:51 -0400
+ id 1rnJOr-0008Fq-JN
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:28:09 -0400
 Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rnJPP-0002zv-LB
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:28:49 -0400
+ id 1rnJOm-0002mA-TQ
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:28:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711031324; x=1742567324;
+ t=1711031285; x=1742567285;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=HUiubSzJlMLcLfNXXyuk0yFmZuwsf2/TjXrm4sqjpjo=;
- b=Ffm+YB6VmfFWYXBNeI0krv2aZkquAOmYmBPjXzCwAi+xP0+JAmHoA2o/
- wvZ1JIfs3Eg51dMA3DxDCn7ew4S7zN/TPuxQQL3EnNID0C9vi9/yyTmLT
- NbTorOnMvi5ODrzBgRZvC+C9FMRRRxnlQZWs2B4kX/sk8oRr9M2CYhL3r
- eRLIimQoAaf/31V+dCtf5JeG4K2CekBbgLr4hANKtCYDdBDKhG+7S7lpN
- 00oLtzjjTcqQd9Z7+ayuHwW6uoQH6k1mSGZAIm977Z51Ct9Vb5Rd6A/lG
- Ogsc4FeXMNM/oON8vdIygGj200aWaMPGFIC+Qrm5ZXzQby+ld3Q08W1/j g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="9806648"
+ bh=JxmKg9znHiM4ZxOUvsstDqgH6lgWIoCF2yjSUZdkR8o=;
+ b=mg5duF6nbpN1e4bQomXd3cOAKHrygDwth2xRymlcKMruX+LP6gSqYwqA
+ /+Y9hl4c8PW+fwdc/tfPEe+wJmkyJxWZgEZxb2sQwZtlpvdzxcoEP4+Se
+ VzjaByrUySnhjg/jhuRI7vwCOb3cN1snGBGuXiw80vbZ+I0Scf+aNxW9n
+ 4F6pq03Lp/k/blPdDstS4VUXTBVVuNALmwklJPZd+7NmV5R44gAwkboEe
+ hfcgNU2Qpc7/MZUF6qFGd4BbOMW4orpzcIAgeiCN7+gEoXWEnBiOJeO+d
+ U9gkaUbwC0dYzGW5yXmqE35kroqVEWwIDbAdAD0Qs1UfjgvuPN7UjC8F9 w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="9806496"
 X-IronPort-AV: E=Sophos;i="6.07,143,1708416000"; 
-   d="scan'208";a="9806648"
+   d="scan'208";a="9806496"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Mar 2024 07:28:44 -0700
+ 21 Mar 2024 07:28:03 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,143,1708416000"; d="scan'208";a="14528425"
+X-IronPort-AV: E=Sophos;i="6.07,143,1708416000"; d="scan'208";a="14528048"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa009.jf.intel.com with ESMTP; 21 Mar 2024 07:28:38 -0700
+ by orviesa009.jf.intel.com with ESMTP; 21 Mar 2024 07:27:57 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -58,13 +58,15 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v10 18/21] hw/i386/pc: Support smp.modules for x86 PC machine
-Date: Thu, 21 Mar 2024 22:40:45 +0800
-Message-Id: <20240321144048.3699388-19-zhao1.liu@linux.intel.com>
+Subject: [PATCH v10 10/21] i386: Split topology types of CPUID[0x1F] from the
+ definitions of CPUID[0xB]
+Date: Thu, 21 Mar 2024 22:40:37 +0800
+Message-Id: <20240321144048.3699388-11-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240321144048.3699388-1-zhao1.liu@linux.intel.com>
 References: <20240321144048.3699388-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: none client-ip=198.175.65.15;
  envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
@@ -92,105 +94,110 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-As module-level topology support is added to X86CPU, now we can enable
-the support for the modules parameter on PC machines. With this support,
-we can define a 5-level x86 CPU topology with "-smp":
+CPUID[0xB] defines SMT, Core and Invalid types, and this leaf is shared
+by Intel and AMD CPUs.
 
--smp cpus=*,maxcpus=*,sockets=*,dies=*,modules=*,cores=*,threads=*.
+But for extended topology levels, Intel CPU (in CPUID[0x1F]) and AMD CPU
+(in CPUID[0x80000026]) have the different definitions with different
+enumeration values.
 
-So, add the 5-level topology example in description of "-smp".
+Though CPUID[0x80000026] hasn't been implemented in QEMU, to avoid
+possible misunderstanding, split topology types of CPUID[0x1F] from the
+definitions of CPUID[0xB] and introduce CPUID[0x1F]-specific topology
+types.
 
-Additionally, add the missed drawers and books options in previous
-example.
-
-Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Co-developed-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
-Signed-off-by: Zhuocheng Ding <zhuocheng.ding@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Tested-by: Yongwei Ma <yongwei.ma@intel.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Babu Moger <babu.moger@amd.com>
-Reviewed-by: Babu Moger <babu.moger@amd.com>
 ---
-Changes since v9:
- * Mentioned the change about adding missed drawers and books. (Babu)
-
 Changes since v8:
- * Added missing "modules" parameter in -smp example.
+ * Add Philippe's reviewed-by tag.
 
-Changes since v7:
- * Supported modules instead of clusters for PC.
- * Dropped Michael/Babu/Yanan's ACKed/Tested/Reviewed tags since the
-   code change.
- * Re-added Yongwei's Tested tag For his re-testing.
+Changes since v3:
+ * New commit to prepare to refactor CPUID[0x1F] encoding.
 ---
- hw/i386/pc.c    |  1 +
- qemu-options.hx | 18 ++++++++++--------
- 2 files changed, 11 insertions(+), 8 deletions(-)
+ target/i386/cpu.c | 14 +++++++-------
+ target/i386/cpu.h | 13 +++++++++----
+ 2 files changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index e80f02bef41c..f4e75069d47d 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1831,6 +1831,7 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
-     mc->default_cpu_type = TARGET_DEFAULT_CPU_TYPE;
-     mc->nvdimm_supported = true;
-     mc->smp_props.dies_supported = true;
-+    mc->smp_props.modules_supported = true;
-     mc->default_ram_id = "pc.ram";
-     pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_AUTO;
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 6b159298fea5..d030b45f9c3e 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6266,17 +6266,17 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         case 0:
+             *eax = apicid_core_offset(&topo_info);
+             *ebx = topo_info.threads_per_core;
+-            *ecx |= CPUID_TOPOLOGY_LEVEL_SMT;
++            *ecx |= CPUID_B_ECX_TOPO_LEVEL_SMT << 8;
+             break;
+         case 1:
+             *eax = apicid_pkg_offset(&topo_info);
+             *ebx = threads_per_pkg;
+-            *ecx |= CPUID_TOPOLOGY_LEVEL_CORE;
++            *ecx |= CPUID_B_ECX_TOPO_LEVEL_CORE << 8;
+             break;
+         default:
+             *eax = 0;
+             *ebx = 0;
+-            *ecx |= CPUID_TOPOLOGY_LEVEL_INVALID;
++            *ecx |= CPUID_B_ECX_TOPO_LEVEL_INVALID << 8;
+         }
  
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 7fd1713fa83c..783df2e53523 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -281,7 +281,8 @@ ERST
+         assert(!(*eax & ~0x1f));
+@@ -6301,22 +6301,22 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         case 0:
+             *eax = apicid_core_offset(&topo_info);
+             *ebx = topo_info.threads_per_core;
+-            *ecx |= CPUID_TOPOLOGY_LEVEL_SMT;
++            *ecx |= CPUID_1F_ECX_TOPO_LEVEL_SMT << 8;
+             break;
+         case 1:
+             *eax = apicid_die_offset(&topo_info);
+             *ebx = topo_info.cores_per_die * topo_info.threads_per_core;
+-            *ecx |= CPUID_TOPOLOGY_LEVEL_CORE;
++            *ecx |= CPUID_1F_ECX_TOPO_LEVEL_CORE << 8;
+             break;
+         case 2:
+             *eax = apicid_pkg_offset(&topo_info);
+             *ebx = threads_per_pkg;
+-            *ecx |= CPUID_TOPOLOGY_LEVEL_DIE;
++            *ecx |= CPUID_1F_ECX_TOPO_LEVEL_DIE << 8;
+             break;
+         default:
+             *eax = 0;
+             *ebx = 0;
+-            *ecx |= CPUID_TOPOLOGY_LEVEL_INVALID;
++            *ecx |= CPUID_1F_ECX_TOPO_LEVEL_INVALID << 8;
+         }
+         assert(!(*eax & ~0x1f));
+         *ebx &= 0xffff; /* The count doesn't need to be reliable. */
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 60ebc6378064..2e24f457468d 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1017,10 +1017,15 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+ #define CPUID_MWAIT_EMX     (1U << 0) /* enumeration supported */
  
- DEF("smp", HAS_ARG, QEMU_OPTION_smp,
-     "-smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets]\n"
--    "               [,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]\n"
-+    "               [,dies=dies][,clusters=clusters][,modules=modules][,cores=cores]\n"
-+    "               [,threads=threads]\n"
-     "                set the number of initial CPUs to 'n' [default=1]\n"
-     "                maxcpus= maximum number of total CPUs, including\n"
-     "                offline CPUs for hotplug, etc\n"
-@@ -290,7 +291,8 @@ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
-     "                sockets= number of sockets in one book\n"
-     "                dies= number of dies in one socket\n"
-     "                clusters= number of clusters in one die\n"
--    "                cores= number of cores in one cluster\n"
-+    "                modules= number of modules in one cluster\n"
-+    "                cores= number of cores in one module\n"
-     "                threads= number of threads in one core\n"
-     "Note: Different machines may have different subsets of the CPU topology\n"
-     "      parameters supported, so the actual meaning of the supported parameters\n"
-@@ -306,7 +308,7 @@ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
-     "      must be set as 1 in the purpose of correct parsing.\n",
-     QEMU_ARCH_ALL)
- SRST
--``-smp [[cpus=]n][,maxcpus=maxcpus][,sockets=sockets][,dies=dies][,clusters=clusters][,cores=cores][,threads=threads]``
-+``-smp [[cpus=]n][,maxcpus=maxcpus][,drawers=drawers][,books=books][,sockets=sockets][,dies=dies][,clusters=clusters][,modules=modules][,cores=cores][,threads=threads]``
-     Simulate a SMP system with '\ ``n``\ ' CPUs initially present on
-     the machine type board. On boards supporting CPU hotplug, the optional
-     '\ ``maxcpus``\ ' parameter can be set to enable further CPUs to be
-@@ -345,14 +347,14 @@ SRST
-         -smp 8,sockets=2,cores=2,threads=2,maxcpus=8
+ /* CPUID[0xB].ECX level types */
+-#define CPUID_TOPOLOGY_LEVEL_INVALID  (0U << 8)
+-#define CPUID_TOPOLOGY_LEVEL_SMT      (1U << 8)
+-#define CPUID_TOPOLOGY_LEVEL_CORE     (2U << 8)
+-#define CPUID_TOPOLOGY_LEVEL_DIE      (5U << 8)
++#define CPUID_B_ECX_TOPO_LEVEL_INVALID  0
++#define CPUID_B_ECX_TOPO_LEVEL_SMT      1
++#define CPUID_B_ECX_TOPO_LEVEL_CORE     2
++
++/* COUID[0x1F].ECX level types */
++#define CPUID_1F_ECX_TOPO_LEVEL_INVALID  CPUID_B_ECX_TOPO_LEVEL_INVALID
++#define CPUID_1F_ECX_TOPO_LEVEL_SMT      CPUID_B_ECX_TOPO_LEVEL_SMT
++#define CPUID_1F_ECX_TOPO_LEVEL_CORE     CPUID_B_ECX_TOPO_LEVEL_CORE
++#define CPUID_1F_ECX_TOPO_LEVEL_DIE      5
  
-     The following sub-option defines a CPU topology hierarchy (2 sockets
--    totally on the machine, 2 dies per socket, 2 cores per die, 2 threads
--    per core) for PC machines which support sockets/dies/cores/threads.
--    Some members of the option can be omitted but their values will be
--    automatically computed:
-+    totally on the machine, 2 dies per socket, 2 modules per die, 2 cores per
-+    module, 2 threads per core) for PC machines which support sockets/dies
-+    /modules/cores/threads. Some members of the option can be omitted but
-+    their values will be automatically computed:
- 
-     ::
- 
--        -smp 16,sockets=2,dies=2,cores=2,threads=2,maxcpus=16
-+        -smp 32,sockets=2,dies=2,modules=2,cores=2,threads=2,maxcpus=32
- 
-     The following sub-option defines a CPU topology hierarchy (2 sockets
-     totally on the machine, 2 clusters per socket, 2 cores per cluster,
+ /* MSR Feature Bits */
+ #define MSR_ARCH_CAP_RDCL_NO            (1U << 0)
 -- 
 2.34.1
 
