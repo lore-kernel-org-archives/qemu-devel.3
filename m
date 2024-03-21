@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A135BC54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:50:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E013FCD11C2
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnKfx-0006E8-3Q; Thu, 21 Mar 2024 11:49:53 -0400
+	id 1rnKfU-0004sm-JY; Thu, 21 Mar 2024 11:49:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKfs-000634-9m
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:48 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKfQ-0004ds-64
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:20 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKfq-0001SO-FJ
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:48 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4146e9e45c8so10115745e9.1
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:49:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKfH-0001Fv-GA
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:16 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4146feb33e1so8759355e9.2
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711036184; x=1711640984; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711036146; x=1711640946; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ixdOqShX9KqafF5GwQuaCwGyEwXeRiDzckfnzkN3U94=;
- b=UnID0Ae5MKyY/fyy2cT6RVtXoxlZIiT1eHYasi+L/YHRmrlqdj0FlTcA20DE5NiKkn
- YTpJeDk7uEOjqFQWqcLHdmLRVwFx4OiXzqUjgxxDsIfuqjTMNrkbLVfKokjZp9nZ/Gsg
- ybg60pfuoJK4V9nH1+roAteeBwDReeBVQJ5DDo0LdtZd1x46D0ZDzqdFBDaWBH4OzQPB
- oCiiIWP3ebeTz9A9ut9YeFjwAyxQnGA+V4UEvJhzkwT+MzL45hAkmXKsOHuNup1d1N9V
- iE+NvN0II3+7hSaGUskMbCbs8vX8ygDZVJW9e+Rwb399yyFjNnZ4S952QZOVbUK/TH60
- jlcA==
+ bh=3Uml8evcLi9xkWgCFD8gP1/OkUGdeyARM6PHY5ELWBs=;
+ b=dTeYg3U/cwhEnshK10ojj7HgizCwdzRaO+SjS/8d4AHMV3Gtg7H+hwp+TiM90wlYkN
+ N87nFIjtmoj9i9u67lWZjOjcKW992T9kuu2q01UebM1RMpc/1ECcFip9tLk+NodTiTi7
+ QpH/nfdl+2Bv6j6d8YgKPbS6xre3d2K2j/QYlqQwe4mhuyxbWEZSSbT/C22ZLRxXdS51
+ zIXx5x6BgqDN7zNuig46DeWiWHVhh0mRn9cvKMdQDYIRKad3x3OtxuutvsJ69lmIJxVm
+ BODuy1ALwcsIX6RUGHO3QXpDUHnDaTPvJ9lc8ALGk+QO33/TsuDtAS0w2DSTF4i5WU4J
+ x0QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711036184; x=1711640984;
+ d=1e100.net; s=20230601; t=1711036146; x=1711640946;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ixdOqShX9KqafF5GwQuaCwGyEwXeRiDzckfnzkN3U94=;
- b=Rj8mnlCoofCudkCFmMuW09eYcDWJsU1XHcoUz/d2617hvDxChejLJ3xHN25iY/ZCZ9
- snHm3U6xbeiORdS2EasazAzpAEhJvubghg2k82iw4hd7ovwlrM5qyVfQwDpnsu89WesV
- Tmd60mxj1jpPOiBomUCsTYLVRYuBtrxuaZFDWcPt2e182Y5hyBmIQ8z3AYODfsTcmzyv
- NhINQajiyEfjxmVLOURZz5Tn8O41viU/FGVrFaOrcxJjpaNOrV3KvzsyQngpIQmaw4JU
- Ocj/s6rfFI6aweJX4AheKEoEyGSSL7Z8YK9FStuziqkBrOBsUXLir26NMnnhJXmM1WD2
- ltEA==
-X-Gm-Message-State: AOJu0YzsqLy5fxB6L9HbqkGo31ENoQtdFSZwkQey3h4N/PoMXIAzUpOL
- aAc5ol3ohEzENUReoBU4srOBHYrMXVZEuS/KC48SWhKioY8YtwBVQOb9e6OhFjAQAL45vY43cVX
- 8ObU=
-X-Google-Smtp-Source: AGHT+IH1e8ZCLVrNBKv4WDP5qrb8VyO1+oOpzNQpMrOCWQd/FkIrDa1qMU/yHh886xDnLuyjt3Sv0A==
-X-Received: by 2002:a5d:52d1:0:b0:33e:6a81:d8b9 with SMTP id
- r17-20020a5d52d1000000b0033e6a81d8b9mr2590546wrv.20.1711036184109; 
- Thu, 21 Mar 2024 08:49:44 -0700 (PDT)
+ bh=3Uml8evcLi9xkWgCFD8gP1/OkUGdeyARM6PHY5ELWBs=;
+ b=hPOL1bx49Ij/+y4Rk5VdRsrp4qwwZQ2s2MIIlGfpuNCqHvQwBSUzhgJnKafZW0iZ3T
+ lySVn+VFg/IqOYFb3lkgBlIoLqOb/0T9M7YMFiS7JMK/w1zczSf7imC9/JgTUd3Ft854
+ OIN9jzr0QkCeBaR5R/LqGMBNmk3d6LQnbniROu+OvE9MFip0hctFNng8Bs3JaYJpyac7
+ ymjNmAEEf2BLsiCoGgObI5S0ffK98C+brjBEHO5i18jedglTN0E86Mt0UywHZaq6ZO1I
+ gpE0CMm3/onHmhwIcIvq4sckTM/VBzT+9LtDr3in7WDDsyxC3nLFEhOjyfpMOqOQ4Juu
+ vXNQ==
+X-Gm-Message-State: AOJu0YyTHM9i2ha5IqtiKr41MONfRzC7d5f0TXwdhG6+5fZLIb3Tyxv+
+ aITxQuetXHxPLIxQZo25Fre/Td40vYBNAfsIcRhtY4niGHKzU17rPaT7N5ucssKZsPIBOyDqgc+
+ w2D0=
+X-Google-Smtp-Source: AGHT+IFAw5OqL09R7bmcyeZ9YyOFejxWkGzyRzgg8/RdS1yUB7jjDdFHJRAFWdetwbNp/D/m0mJFLQ==
+X-Received: by 2002:a05:600c:4ecf:b0:413:ee4c:57e4 with SMTP id
+ g15-20020a05600c4ecf00b00413ee4c57e4mr7568498wmq.8.1711036145816; 
+ Thu, 21 Mar 2024 08:49:05 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.222])
  by smtp.gmail.com with ESMTPSA id
- o9-20020adfe809000000b0033ec6ebf878sm17419893wrm.93.2024.03.21.08.49.41
+ fc12-20020a05600c524c00b0041477d83499sm136619wmb.16.2024.03.21.08.49.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 21 Mar 2024 08:49:43 -0700 (PDT)
+ Thu, 21 Mar 2024 08:49:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
@@ -72,24 +72,25 @@ Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 08/21] target/microblaze: Prefix MMU API with 'mb_'
-Date: Thu, 21 Mar 2024 16:48:24 +0100
-Message-ID: <20240321154838.95771-9-philmd@linaro.org>
+Subject: [PATCH-for-9.1 03/21] target/i386: Move APIC related code to
+ cpu-apic.c
+Date: Thu, 21 Mar 2024 16:48:19 +0100
+Message-ID: <20240321154838.95771-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240321154838.95771-1-philmd@linaro.org>
 References: <20240321154838.95771-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,145 +106,293 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MicroBlaze MMU API is exposed in "mmu.h". In order to avoid
-name clashing with other targets, prefix the API with 'mb_'.
+Move APIC related code split in cpu-sysemu.c and
+monitor.c to cpu-apic.c.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/microblaze/mmu.h       | 10 +++++-----
- target/microblaze/cpu.c       |  2 +-
- target/microblaze/helper.c    |  4 ++--
- target/microblaze/mmu.c       | 14 +++++++-------
- target/microblaze/op_helper.c |  4 ++--
- 5 files changed, 17 insertions(+), 17 deletions(-)
+ target/i386/cpu-apic.c   | 112 +++++++++++++++++++++++++++++++++++++++
+ target/i386/cpu-sysemu.c |  77 ---------------------------
+ target/i386/monitor.c    |  25 ---------
+ target/i386/meson.build  |   1 +
+ 4 files changed, 113 insertions(+), 102 deletions(-)
+ create mode 100644 target/i386/cpu-apic.c
 
-diff --git a/target/microblaze/mmu.h b/target/microblaze/mmu.h
-index 1068bd2d52..5b51e0a9c6 100644
---- a/target/microblaze/mmu.h
-+++ b/target/microblaze/mmu.h
-@@ -85,10 +85,10 @@ typedef struct {
-     } err;
- } MicroBlazeMMULookup;
+diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
+new file mode 100644
+index 0000000000..d397ec94dc
+--- /dev/null
++++ b/target/i386/cpu-apic.c
+@@ -0,0 +1,112 @@
++/*
++ * QEMU x86 CPU <-> APIC
++ *
++ * Copyright (c) 2003-2004 Fabrice Bellard
++ *
++ * SPDX-License-Identifier: MIT
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/qmp/qdict.h"
++#include "qapi/error.h"
++#include "monitor/monitor.h"
++#include "monitor/hmp-target.h"
++#include "sysemu/hw_accel.h"
++#include "sysemu/kvm.h"
++#include "sysemu/xen.h"
++#include "exec/address-spaces.h"
++#include "hw/qdev-properties.h"
++#include "hw/i386/apic_internal.h"
++#include "cpu-internal.h"
++
++APICCommonClass *apic_get_class(Error **errp)
++{
++    const char *apic_type = "apic";
++
++    /* TODO: in-kernel irqchip for hvf */
++    if (kvm_enabled()) {
++        if (!kvm_irqchip_in_kernel()) {
++            error_setg(errp, "KVM does not support userspace APIC");
++            return NULL;
++        }
++        apic_type = "kvm-apic";
++    } else if (xen_enabled()) {
++        apic_type = "xen-apic";
++    } else if (whpx_apic_in_platform()) {
++        apic_type = "whpx-apic";
++    }
++
++    return APIC_COMMON_CLASS(object_class_by_name(apic_type));
++}
++
++void x86_cpu_apic_create(X86CPU *cpu, Error **errp)
++{
++    APICCommonState *apic;
++    APICCommonClass *apic_class = apic_get_class(errp);
++
++    if (!apic_class) {
++        return;
++    }
++
++    cpu->apic_state = DEVICE(object_new_with_class(OBJECT_CLASS(apic_class)));
++    object_property_add_child(OBJECT(cpu), "lapic",
++                              OBJECT(cpu->apic_state));
++    object_unref(OBJECT(cpu->apic_state));
++
++    /* TODO: convert to link<> */
++    apic = APIC_COMMON(cpu->apic_state);
++    apic->cpu = cpu;
++    apic->apicbase = APIC_DEFAULT_ADDRESS | MSR_IA32_APICBASE_ENABLE;
++
++    /*
++     * apic_common_set_id needs to check if the CPU has x2APIC
++     * feature in case APIC ID >= 255, so we need to set apic->cpu
++     * before setting APIC ID
++     */
++    qdev_prop_set_uint32(cpu->apic_state, "id", cpu->apic_id);
++}
++
++void x86_cpu_apic_realize(X86CPU *cpu, Error **errp)
++{
++    APICCommonState *apic;
++    static bool apic_mmio_map_once;
++
++    if (cpu->apic_state == NULL) {
++        return;
++    }
++    qdev_realize(DEVICE(cpu->apic_state), NULL, errp);
++
++    /* Map APIC MMIO area */
++    apic = APIC_COMMON(cpu->apic_state);
++    if (!apic_mmio_map_once) {
++        memory_region_add_subregion_overlap(get_system_memory(),
++                                            apic->apicbase &
++                                            MSR_IA32_APICBASE_BASE,
++                                            &apic->io_memory,
++                                            0x1000);
++        apic_mmio_map_once = true;
++     }
++}
++
++void hmp_info_local_apic(Monitor *mon, const QDict *qdict)
++{
++    CPUState *cs;
++
++    if (qdict_haskey(qdict, "apic-id")) {
++        int id = qdict_get_try_int(qdict, "apic-id", 0);
++
++        cs = cpu_by_arch_id(id);
++        if (cs) {
++            cpu_synchronize_state(cs);
++        }
++    } else {
++        cs = mon_get_cpu(mon);
++    }
++
++
++    if (!cs) {
++        monitor_printf(mon, "No CPU available\n");
++        return;
++    }
++    x86_cpu_dump_local_apic_state(cs, CPU_DUMP_FPU);
++}
+diff --git a/target/i386/cpu-sysemu.c b/target/i386/cpu-sysemu.c
+index 3f9093d285..227ac021f6 100644
+--- a/target/i386/cpu-sysemu.c
++++ b/target/i386/cpu-sysemu.c
+@@ -19,19 +19,12 @@
  
--unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
--                           target_ulong vaddr, MMUAccessType rw, int mmu_idx);
--uint32_t mmu_read(CPUMBState *env, bool ea, uint32_t rn);
--void mmu_write(CPUMBState *env, bool ea, uint32_t rn, uint32_t v);
--void mmu_init(MicroBlazeMMU *mmu);
-+unsigned int mb_mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
-+                              target_ulong vaddr, MMUAccessType rw, int mmu_idx);
-+uint32_t mb_mmu_read(CPUMBState *env, bool ea, uint32_t rn);
-+void mb_mmu_write(CPUMBState *env, bool ea, uint32_t rn, uint32_t v);
-+void mb_mmu_init(MicroBlazeMMU *mmu);
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "sysemu/kvm.h"
+-#include "sysemu/xen.h"
+-#include "sysemu/whpx.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-visit-run-state.h"
+ #include "qapi/qmp/qdict.h"
+ #include "qapi/qobject-input-visitor.h"
+ #include "qom/qom-qobject.h"
+ #include "qapi/qapi-commands-machine-target.h"
+-#include "hw/qdev-properties.h"
+-
+-#include "exec/address-spaces.h"
+-#include "hw/i386/apic_internal.h"
  
- #endif
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index 96c2b71f7f..59bfb5c45d 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -205,7 +205,7 @@ static void mb_cpu_reset_hold(Object *obj)
-     mb_cpu_write_msr(env, MSR_EE | MSR_IE | MSR_VM | MSR_UM);
- #else
-     mb_cpu_write_msr(env, 0);
--    mmu_init(&env->mmu);
-+    mb_mmu_init(&env->mmu);
- #endif
+ #include "cpu-internal.h"
+ 
+@@ -273,75 +266,6 @@ void x86_cpu_machine_reset_cb(void *opaque)
+     cpu_reset(CPU(cpu));
  }
  
-diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-index d25c9eb4d3..961687bae7 100644
---- a/target/microblaze/helper.c
-+++ b/target/microblaze/helper.c
-@@ -57,7 +57,7 @@ bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         return true;
-     }
- 
--    hit = mmu_translate(cpu, &lu, address, access_type, mmu_idx);
-+    hit = mb_mmu_translate(cpu, &lu, address, access_type, mmu_idx);
-     if (likely(hit)) {
-         uint32_t vaddr = address & TARGET_PAGE_MASK;
-         uint32_t paddr = lu.paddr + vaddr - lu.vaddr;
-@@ -238,7 +238,7 @@ hwaddr mb_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
-     attrs->secure = mb_cpu_access_is_secure(cpu, MMU_DATA_LOAD);
- 
-     if (mmu_idx != MMU_NOMMU_IDX) {
--        hit = mmu_translate(cpu, &lu, addr, 0, 0);
-+        hit = mb_mmu_translate(cpu, &lu, addr, 0, 0);
-         if (hit) {
-             vaddr = addr & TARGET_PAGE_MASK;
-             paddr = lu.paddr + vaddr - lu.vaddr;
-diff --git a/target/microblaze/mmu.c b/target/microblaze/mmu.c
-index 234006634e..5fb8ee8418 100644
---- a/target/microblaze/mmu.c
-+++ b/target/microblaze/mmu.c
-@@ -74,8 +74,8 @@ static void mmu_change_pid(CPUMBState *env, unsigned int newpid)
- }
- 
- /* rw - 0 = read, 1 = write, 2 = fetch.  */
--unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
--                           target_ulong vaddr, MMUAccessType rw, int mmu_idx)
-+unsigned int mb_mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
-+                              target_ulong vaddr, MMUAccessType rw, int mmu_idx)
+-APICCommonClass *apic_get_class(Error **errp)
+-{
+-    const char *apic_type = "apic";
+-
+-    /* TODO: in-kernel irqchip for hvf */
+-    if (kvm_enabled()) {
+-        if (!kvm_irqchip_in_kernel()) {
+-            error_setg(errp, "KVM does not support userspace APIC");
+-            return NULL;
+-        }
+-        apic_type = "kvm-apic";
+-    } else if (xen_enabled()) {
+-        apic_type = "xen-apic";
+-    } else if (whpx_apic_in_platform()) {
+-        apic_type = "whpx-apic";
+-    }
+-
+-    return APIC_COMMON_CLASS(object_class_by_name(apic_type));
+-}
+-
+-void x86_cpu_apic_create(X86CPU *cpu, Error **errp)
+-{
+-    APICCommonState *apic;
+-    APICCommonClass *apic_class = apic_get_class(errp);
+-
+-    if (!apic_class) {
+-        return;
+-    }
+-
+-    cpu->apic_state = DEVICE(object_new_with_class(OBJECT_CLASS(apic_class)));
+-    object_property_add_child(OBJECT(cpu), "lapic",
+-                              OBJECT(cpu->apic_state));
+-    object_unref(OBJECT(cpu->apic_state));
+-
+-    /* TODO: convert to link<> */
+-    apic = APIC_COMMON(cpu->apic_state);
+-    apic->cpu = cpu;
+-    apic->apicbase = APIC_DEFAULT_ADDRESS | MSR_IA32_APICBASE_ENABLE;
+-
+-    /*
+-     * apic_common_set_id needs to check if the CPU has x2APIC
+-     * feature in case APIC ID >= 255, so we need to set apic->cpu
+-     * before setting APIC ID
+-     */
+-    qdev_prop_set_uint32(cpu->apic_state, "id", cpu->apic_id);
+-}
+-
+-void x86_cpu_apic_realize(X86CPU *cpu, Error **errp)
+-{
+-    APICCommonState *apic;
+-    static bool apic_mmio_map_once;
+-
+-    if (cpu->apic_state == NULL) {
+-        return;
+-    }
+-    qdev_realize(DEVICE(cpu->apic_state), NULL, errp);
+-
+-    /* Map APIC MMIO area */
+-    apic = APIC_COMMON(cpu->apic_state);
+-    if (!apic_mmio_map_once) {
+-        memory_region_add_subregion_overlap(get_system_memory(),
+-                                            apic->apicbase &
+-                                            MSR_IA32_APICBASE_BASE,
+-                                            &apic->io_memory,
+-                                            0x1000);
+-        apic_mmio_map_once = true;
+-     }
+-}
+-
+ GuestPanicInformation *x86_cpu_get_crash_info(CPUState *cs)
  {
-     MicroBlazeMMU *mmu = &cpu->env.mmu;
-     unsigned int i, hit = 0;
-@@ -175,7 +175,7 @@ done:
+     X86CPU *cpu = X86_CPU(cs);
+@@ -385,4 +309,3 @@ void x86_cpu_get_crash_info_qom(Object *obj, Visitor *v,
+                                      errp);
+     qapi_free_GuestPanicInformation(panic_info);
  }
- 
- /* Writes/reads to the MMU's special regs end up here.  */
--uint32_t mmu_read(CPUMBState *env, bool ext, uint32_t rn)
-+uint32_t mb_mmu_read(CPUMBState *env, bool ext, uint32_t rn)
+-
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index 3a281dab02..2d766b2637 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -28,8 +28,6 @@
+ #include "monitor/hmp-target.h"
+ #include "monitor/hmp.h"
+ #include "qapi/qmp/qdict.h"
+-#include "sysemu/hw_accel.h"
+-#include "sysemu/kvm.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-misc-target.h"
+ #include "qapi/qapi-commands-misc.h"
+@@ -647,26 +645,3 @@ const MonitorDef *target_monitor_defs(void)
  {
-     MicroBlazeCPU *cpu = env_archcpu(env);
-     unsigned int i;
-@@ -228,7 +228,7 @@ uint32_t mmu_read(CPUMBState *env, bool ext, uint32_t rn)
-     return r;
+     return monitor_defs;
  }
- 
--void mmu_write(CPUMBState *env, bool ext, uint32_t rn, uint32_t v)
-+void mb_mmu_write(CPUMBState *env, bool ext, uint32_t rn, uint32_t v)
- {
-     MicroBlazeCPU *cpu = env_archcpu(env);
-     uint64_t tmp64;
-@@ -304,8 +304,8 @@ void mmu_write(CPUMBState *env, bool ext, uint32_t rn, uint32_t v)
-                 return;
-             }
- 
--            hit = mmu_translate(cpu, &lu, v & TLB_EPN_MASK,
--                                0, cpu_mmu_index(env_cpu(env), false));
-+            hit = mb_mmu_translate(cpu, &lu, v & TLB_EPN_MASK,
-+                                   0, cpu_mmu_index(env_cpu(env), false));
-             if (hit) {
-                 env->mmu.regs[MMU_R_TLBX] = lu.idx;
-             } else {
-@@ -319,7 +319,7 @@ void mmu_write(CPUMBState *env, bool ext, uint32_t rn, uint32_t v)
-    }
- }
- 
--void mmu_init(MicroBlazeMMU *mmu)
-+void mb_mmu_init(MicroBlazeMMU *mmu)
- {
-     int i;
-     for (i = 0; i < ARRAY_SIZE(mmu->regs); i++) {
-diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
-index f6378030b7..58475a3af5 100644
---- a/target/microblaze/op_helper.c
-+++ b/target/microblaze/op_helper.c
-@@ -386,12 +386,12 @@ void helper_stackprot(CPUMBState *env, target_ulong addr)
- /* Writes/reads to the MMU's special regs end up here.  */
- uint32_t helper_mmu_read(CPUMBState *env, uint32_t ext, uint32_t rn)
- {
--    return mmu_read(env, ext, rn);
-+    return mb_mmu_read(env, ext, rn);
- }
- 
- void helper_mmu_write(CPUMBState *env, uint32_t ext, uint32_t rn, uint32_t v)
- {
--    mmu_write(env, ext, rn, v);
-+    mb_mmu_write(env, ext, rn, v);
- }
- 
- void mb_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+-
+-void hmp_info_local_apic(Monitor *mon, const QDict *qdict)
+-{
+-    CPUState *cs;
+-
+-    if (qdict_haskey(qdict, "apic-id")) {
+-        int id = qdict_get_try_int(qdict, "apic-id", 0);
+-
+-        cs = cpu_by_arch_id(id);
+-        if (cs) {
+-            cpu_synchronize_state(cs);
+-        }
+-    } else {
+-        cs = mon_get_cpu(mon);
+-    }
+-
+-
+-    if (!cs) {
+-        monitor_printf(mon, "No CPU available\n");
+-        return;
+-    }
+-    x86_cpu_dump_local_apic_state(cs, CPU_DUMP_FPU);
+-}
+diff --git a/target/i386/meson.build b/target/i386/meson.build
+index 7c74bfa859..ba8dc68a34 100644
+--- a/target/i386/meson.build
++++ b/target/i386/meson.build
+@@ -18,6 +18,7 @@ i386_system_ss.add(files(
+   'arch_memory_mapping.c',
+   'machine.c',
+   'monitor.c',
++  'cpu-apic.c',
+   'cpu-sysemu.c',
+ ))
+ i386_system_ss.add(when: 'CONFIG_SEV', if_true: files('sev.c'), if_false: files('sev-sysemu-stub.c'))
 -- 
 2.41.0
 
