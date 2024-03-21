@@ -4,72 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5C7C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 12:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 753AEC54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 12:33:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnHQn-0004Jm-RK; Thu, 21 Mar 2024 08:22:01 -0400
+	id 1rnHbG-0007JP-HB; Thu, 21 Mar 2024 08:32:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rnHQm-0004JL-6i
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:22:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rnHQk-0000ef-IU
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:21:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711023715;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6se4CDp8h70BmZ1U6kGDLvwRISNEpWizbtokJPzYwsk=;
- b=iOVgifyl6AvO5vGHjJqCL/tzjrLeRe8KU1OdyUj/0e2C9FykYx8QFoUyHBWH2CAU0Eu1S6
- kgSc3674qV4vT3QMLjJDPhH06rbTBaA1AHmVd/mslYWifmdVCRSZucgsBWh/6BfET5gSXZ
- 3IAgzRUyeiOjGox/pWqrQ+DS5EKaIv0=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-425-FBj7t3QnNLO6JM3KUp79ZQ-1; Thu, 21 Mar 2024 08:21:53 -0400
-X-MC-Unique: FBj7t3QnNLO6JM3KUp79ZQ-1
-Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
- [10.11.54.6])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rnHbF-0007JD-Cx
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:32:49 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rnHbD-0002Uy-Kb
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:32:49 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 430388007AD
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 12:21:53 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.194.51])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 0774C2166B4F;
- Thu, 21 Mar 2024 12:21:51 +0000 (UTC)
-Date: Thu, 21 Mar 2024 13:21:46 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Sanjay Rao <srao@redhat.com>, Boaz Ben Shabat <bbenshab@redhat.com>,
- Joe Mario <jmario@redhat.com>
-Subject: Re: [PATCH] coroutine: cap per-thread local pool size
-Message-ID: <ZfwmWmwI_ApQSdNi@redhat.com>
-References: <20240318183429.1039340-1-stefanha@redhat.com>
- <ZfmWhDaG5mN-GCeO@redhat.com> <20240319175510.GA1127203@fedora>
- <ZfnxSd4lseZuWoQ5@redhat.com> <20240320133539.GA1190824@fedora>
- <ZfruHHh9tEr-1zI6@redhat.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id A17345CE2A;
+ Thu, 21 Mar 2024 12:32:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1711024364; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rUZu4t2HMv48gNjndZa3eeiKbo2Pmi4qcgTSr1XxWLk=;
+ b=InpWAVDNR5r5KxJLD0vHf/h5hI8AU/h5x8UsIVQKB2uZ5YmNtXP6UdMso8+1Kof4+O6MMa
+ IUmfzwfCdHuvzqqyxmE10ub1WjVF7D14uwzfOy/SX9foHXK3eP4t+ZpUyiURZEbYOnXtnq
+ +IuSx0uvDSUspsHDujaj0ZLoOaX47TE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1711024364;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rUZu4t2HMv48gNjndZa3eeiKbo2Pmi4qcgTSr1XxWLk=;
+ b=STv9g+D95ytCpcQBfJIBn9WE3NOsg/a+YWT0KIr1be/wY31Wsw1jDEG5dHiM1ipJLhc2QY
+ MW2bOzkXv2vXaNBw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1711024364; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rUZu4t2HMv48gNjndZa3eeiKbo2Pmi4qcgTSr1XxWLk=;
+ b=InpWAVDNR5r5KxJLD0vHf/h5hI8AU/h5x8UsIVQKB2uZ5YmNtXP6UdMso8+1Kof4+O6MMa
+ IUmfzwfCdHuvzqqyxmE10ub1WjVF7D14uwzfOy/SX9foHXK3eP4t+ZpUyiURZEbYOnXtnq
+ +IuSx0uvDSUspsHDujaj0ZLoOaX47TE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1711024364;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rUZu4t2HMv48gNjndZa3eeiKbo2Pmi4qcgTSr1XxWLk=;
+ b=STv9g+D95ytCpcQBfJIBn9WE3NOsg/a+YWT0KIr1be/wY31Wsw1jDEG5dHiM1ipJLhc2QY
+ MW2bOzkXv2vXaNBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 22F4113976;
+ Thu, 21 Mar 2024 12:32:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 3VDRNuso/GU0SAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 21 Mar 2024 12:32:43 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: peterx@redhat.com, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Subject: Re: [PATCH] migration/postcopy: Fix high frequency sync
+In-Reply-To: <20240320214453.584374-1-peterx@redhat.com>
+References: <20240320214453.584374-1-peterx@redhat.com>
+Date: Thu, 21 Mar 2024 09:32:41 -0300
+Message-ID: <878r2bn4t2.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZfruHHh9tEr-1zI6@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.372,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,69 +113,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 20.03.2024 um 15:09 hat Daniel P. Berrangé geschrieben:
-> On Wed, Mar 20, 2024 at 09:35:39AM -0400, Stefan Hajnoczi wrote:
-> > On Tue, Mar 19, 2024 at 08:10:49PM +0000, Daniel P. Berrangé wrote:
-> > > On Tue, Mar 19, 2024 at 01:55:10PM -0400, Stefan Hajnoczi wrote:
-> > > > On Tue, Mar 19, 2024 at 01:43:32PM +0000, Daniel P. Berrangé wrote:
-> > > > > On Mon, Mar 18, 2024 at 02:34:29PM -0400, Stefan Hajnoczi wrote:
-> > > > > > diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
-> > > > > > index 5fd2dbaf8b..2790959eaf 100644
-> > > > > > --- a/util/qemu-coroutine.c
-> > > > > > +++ b/util/qemu-coroutine.c
-> > > > > 
-> > > > > > +static unsigned int get_global_pool_hard_max_size(void)
-> > > > > > +{
-> > > > > > +#ifdef __linux__
-> > > > > > +    g_autofree char *contents = NULL;
-> > > > > > +    int max_map_count;
-> > > > > > +
-> > > > > > +    /*
-> > > > > > +     * Linux processes can have up to max_map_count virtual memory areas
-> > > > > > +     * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit. We
-> > > > > > +     * must limit the coroutine pool to a safe size to avoid running out of
-> > > > > > +     * VMAs.
-> > > > > > +     */
-> > > > > > +    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents, NULL,
-> > > > > > +                            NULL) &&
-> > > > > > +        qemu_strtoi(contents, NULL, 10, &max_map_count) == 0) {
-> > > > > > +        /*
-> > > > > > +         * This is a conservative upper bound that avoids exceeding
-> > > > > > +         * max_map_count. Leave half for non-coroutine users like library
-> > > > > > +         * dependencies, vhost-user, etc. Each coroutine takes up 2 VMAs so
-> > > > > > +         * halve the amount again.
-> > > 
-> > > Leaving half for loaded libraries, etc is quite conservative
-> > > if max_map_count is the small-ish 64k default.
-> > > 
-> > > That reservation could perhaps a fixed number like 5,000 ?
-> > 
-> > While I don't want QEMU to abort, once this heuristic is in the code it
-> > will be scary to make it more optimistic and we may never change it. So
-> > now is the best time to try 5,000.
-> > 
-> > I'll send a follow-up patch that reserves 5,000 mappings. If that turns
-> > out to be too optimistic we can increase the reservation.
-> 
-> BTW, I suggested 5,000, because I looked at a few QEM processes I have
-> running on Fedora and saw just under 1,000 lines in /proc/$PID/maps,
-> of which only a subset is library mappings. So multiplying that x5 felt
-> like a fairly generous overhead for more complex build configurations.
+peterx@redhat.com writes:
 
-On my system, the boring desktop VM with no special hardware or other
-advanced configuration takes ~1500 mappings, most of which are
-libraries. I'm not concerned about the library mappings, it's unlikely
-that we'll double the number of libraries soon.
+> From: Peter Xu <peterx@redhat.com>
+>
+> On current code base I can observe extremely high sync count during
+> precopy, as long as one enables postcopy-ram=on before switchover to
+> postcopy.
+>
+> To provide some context of when we decide to do a full sync: we check
+> must_precopy (which implies "data must be sent during precopy phase"), and
+> as long as it is lower than the threshold size we calculated (out of
+> bandwidth and expected downtime) we will kick off the slow sync.
+>
+> However, when postcopy is enabled (even if still during precopy phase), RAM
+> only reports all pages as can_postcopy, and report must_precopy==0.  Then
+> "must_precopy <= threshold_size" mostly always triggers and enforces a slow
+> sync for every call to migration_iteration_run() when postcopy is enabled
+> even if not used.  That is insane.
+>
+> It turns out it was a regress bug introduced in the previous refactoring in
+> QEMU 8.0 in late 2022. Fix this by checking the whole RAM size rather than
+> must_precopy, like before.  Not copy stable yet as many things changed, and
+> even if this should be a major performance regression, no functional change
+> has observed (and that's also probably why nobody found it).  I only notice
+> this when looking for another bug reported by Nina.
+>
+> When at it, cleanup a little bit on the lines around.
+>
+> Cc: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+> Fixes: c8df4a7aef ("migration: Split save_live_pending() into state_pending_*")
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-But I'm not sure about dynamic mappings outside of coroutines, maybe
-when enabling features my simple desktop VM doesn't even use at all. If
-we're sure that nothing else uses any number worth mentioning, fine with
-me. But I couldn't tell.
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
-Staying the area we know reasonably well, how many libblkio bounce
-buffers could be in use at the same time? I think each one is an
-individual mmap(), right?
+> ---
+>
+> Nina: I copied you only because this might still be relevant, as this issue
+> also misteriously points back to c8df4a7aef..  However I don't think it
+> should be a fix of your problem, at most it can change the possibility of
+> reproducability.
+>
+> This is not a regression for this release, but I still want to have it for
+> 9.0.  Fabiano, any opinions / objections?
 
-Kevin
+Go for it.
 
+> ---
+>  migration/migration.c | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+>
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 047b6b49cf..9fe8fd2afd 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3199,17 +3199,16 @@ typedef enum {
+>   */
+>  static MigIterateState migration_iteration_run(MigrationState *s)
+>  {
+> -    uint64_t must_precopy, can_postcopy;
+> +    uint64_t must_precopy, can_postcopy, pending_size;
+>      Error *local_err = NULL;
+>      bool in_postcopy = s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE;
+>      bool can_switchover = migration_can_switchover(s);
+>  
+>      qemu_savevm_state_pending_estimate(&must_precopy, &can_postcopy);
+> -    uint64_t pending_size = must_precopy + can_postcopy;
+> -
+> +    pending_size = must_precopy + can_postcopy;
+>      trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
+>  
+> -    if (must_precopy <= s->threshold_size) {
+> +    if (pending_size < s->threshold_size) {
+>          qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
+>          pending_size = must_precopy + can_postcopy;
+>          trace_migrate_pending_exact(pending_size, must_precopy, can_postcopy);
 
