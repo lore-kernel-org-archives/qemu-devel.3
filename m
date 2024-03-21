@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C302C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 16:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9582CC54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 16:56:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnLTk-0007aa-35; Thu, 21 Mar 2024 12:41:20 -0400
+	id 1rnLhB-0003wB-8E; Thu, 21 Mar 2024 12:55:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rnLTd-0007Yi-9U
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 12:41:14 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
+ id 1rnLh5-0003w0-0I
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 12:55:07 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rnLTY-0006vk-P5
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 12:41:12 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-56bc753f58eso1250163a12.3
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 09:41:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711039266; x=1711644066; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1c5pfsClmOJ8Doe6EgVON5gxkIKYiCXcYmDvoJErD3c=;
- b=PDDT88ItTMLrcOMMaRXnIBRHd4WCw1qDx2GLf+rDIg/19jxIJ8i1Umo8aKHeUyhmaT
- kOE4md8CRiQvQkcO3A2z1h875PrZjsUhgEGrKcdrV5tym8H0EXla4vjo3or1n4swn4DK
- D4vkGq4FLr/0xkrGhSTW+uzPJeA3dpFSU4hobP3wymmz8JJ47YkgZHDdqgZvL88oaJ6H
- sSeBQkEUUlXyVGLCBntdFuCcE3GA9zOlHiTixKd4G85VAOfP4mZLFH26C8RjaiBb5Jy2
- nWQ4Mgdt+VGR47/ZJaN6D3VcJF5kvXgxcxTAWm+hW31XRrSTUIk6Jqn+IlvL704yafPg
- JynQ==
+ (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
+ id 1rnLgz-0001S9-NC
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 12:55:06 -0400
+Received: by mail-ed1-f41.google.com with SMTP id
+ 4fb4d7f45d1cf-56ba6c83805so1500039a12.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 09:55:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711039266; x=1711644066;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1711040099; x=1711644899;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=1c5pfsClmOJ8Doe6EgVON5gxkIKYiCXcYmDvoJErD3c=;
- b=k81Q6uHh6BMfMVMg6uSyXgkTjIoZauAjpaqHApXiQJ3G5SVtXqayxfTgweNItVJeZI
- xwGkIBQETa3VvlVWsUILBeco5WI/EgJM1SnNs7t8RmTCby8+aSVWDZcPlITIHoQq77Jn
- FuEzQuKx/XBXHfFv5wPSsCT7PjkGn4rm4h6lS7S7Ot3QMwk20c/lGeqs6PH1KARELPFT
- 507ksZt6CXmbkAXk5FGWRuZqzo594kreM0Vkop0eNCVFm5OBdS1yG3k/rYqxNIWlo5Ku
- KWZDWoYDXOHJlmWniI5HdKPd1/BRlrUJdfrFV4RofVK95omp9ENQz8J7t1IVKUpQuHs2
- CRrQ==
+ bh=ccIASRuLFeE03wCjAHLbamrjeo4bc7XautdiMnRXVho=;
+ b=xN2E0Q2Oi3YtY7Wav61BFfe7k7CfHEew9ALiJLp4uYKNYbwtp3IGe4aMGymyttN61B
+ 1hg2ztcFpX9ByK4KxDxtIKq4VwcEIzwAgH/MiyxWDRGIQL3ePtbPXX9VwgIBQk6EHnfv
+ Y/MrOxGWIpJ0u6WOuMOKJdBvDLhpUnwlrF660pLsbPCuBy7CIhh4CMrrojCrOU4zbiBS
+ o50z+x3+K1P/7rlLDtklQZXPx36w+3Kf2Gmerz7+EWoltiK0cvwwPoSKzPH1vOgUE/4T
+ vY0u5PhzbQsDkSBKSj0G8CkzzTGP9yYRcgh6IHXwxPLLtKJB8LKXuW14rme5Pc8HwJ7m
+ L5SQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhbprzNlK9gP1SMqPGRhqwgLgPaUwkkeqUM0BF4t1n82tith27+aJElqBXGWeOtYATPswocsmyVmItjEewo7+phx3HN20=
-X-Gm-Message-State: AOJu0YzzcShkG+U7KtREibwipJkdzX4Y5j7KdfrkVs13r6UFDUDDFnYh
- dwf1R1XTBrRmBK18xU/dxolGDXkRXqKJ6YPCxV1LU6XE1Sn2899YtPfdo7P425GqJq2nBzRXrUZ
- SnVqml0rFamN/xrJQXoczI1HdQviJa5uOfWHejw==
-X-Google-Smtp-Source: AGHT+IHvTp0KnUocP8uYKu54nlhGZx/uK5shT2UJtZT0TYn5EY4pP0sZiDBFtmCCV5UI/JKbYdDTscnZq5q8x7+MNYo=
-X-Received: by 2002:a05:6402:4496:b0:568:ac09:4a5c with SMTP id
- er22-20020a056402449600b00568ac094a5cmr3971754edb.11.1711039266395; Thu, 21
- Mar 2024 09:41:06 -0700 (PDT)
+ AJvYcCVYzxnkwGTjLENxmRrOyWBjZ3wGQ1PYwGHAX5h9lGsA4GsIBBKyluBuvGhV/F6LAqcfGpLzvdoFPquBjMtbyKButfW4bck=
+X-Gm-Message-State: AOJu0YwVVRW4tXg7ErHnbG3vs9a7SKkKTvZHVEpSCe0HbSDh2ooGl1jx
+ 6k+YKJmbHWKK22F0TsbuRL3T6b9g5a7Ng5aNNSD3lAWrqNx2+kEu
+X-Google-Smtp-Source: AGHT+IHe9TCxSTl6z2Gms7re62jr63VC4NJfpI1DXxe/3yVX/mluDaq35PbXeDEagIXyoqmGKtJLsQ==
+X-Received: by 2002:a05:6402:5409:b0:56a:fbe9:80a4 with SMTP id
+ ev9-20020a056402540900b0056afbe980a4mr5910560edb.1.1711040099434; 
+ Thu, 21 Mar 2024 09:54:59 -0700 (PDT)
+Received: from localhost (fwdproxy-lla-118.fbsv.net.
+ [2a03:2880:30ff:76::face:b00c]) by smtp.gmail.com with ESMTPSA id
+ d16-20020a056402401000b005686037bc12sm63505eda.29.2024.03.21.09.54.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 Mar 2024 09:54:59 -0700 (PDT)
+From: Breno Leitao <leitao@debian.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Andrew Melnychenko <andrew@daynix.com>
+Cc: rbc@meta.com, riel@surriel.com, stable@vger.kernel.org,
+ qemu-devel@nongnu.org,
+ virtualization@lists.linux.dev (open list:VIRTIO CORE AND NET DRIVERS),
+ netdev@vger.kernel.org (open list:NETWORKING DRIVERS),
+ linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] virtio_net: Do not send RSS key if it is not supported
+Date: Thu, 21 Mar 2024 09:54:30 -0700
+Message-ID: <20240321165431.3517868-1-leitao@debian.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20240321130812.2983113-1-ruanjinjie@huawei.com>
-In-Reply-To: <20240321130812.2983113-1-ruanjinjie@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 21 Mar 2024 16:40:54 +0000
-Message-ID: <CAFEAcA_J662fz9HxTFhRkM9otdEbWCZW6fXoCi_5kfqn3hkDeQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v9 00/23] target/arm: Implement FEAT_NMI and
- FEAT_GICv3_NMI
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
- wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=209.85.208.41;
+ envelope-from=breno.debian@gmail.com; helo=mail-ed1-f41.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,50 +90,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 21 Mar 2024 at 13:10, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
->
-> This patch set implements FEAT_NMI and FEAT_GICv3_NMI for armv8. These
-> introduce support for a new category of interrupts in the architecture
-> which we can use to provide NMI like functionality.
->
-> There are two modes for using this FEAT_NMI. When PSTATE.ALLINT or
-> PSTATE.SP & SCTLR_ELx.SCTLR_SPINTMASK is set, any entry to ELx causes all
-> interrupts including those with superpriority to be masked on entry to ELn
-> until the mask is explicitly removed by software or hardware. PSTATE.ALLINT
-> can be managed by software using the new register control ALLINT.ALLINT.
-> Independent controls are provided for this feature at each EL, usage at EL1
-> should not disrupt EL2 or EL3.
->
-> I have tested it with the following linux patches which try to support
-> FEAT_NMI in linux kernel:
->
->         https://lore.kernel.org/linux-arm-kernel/Y4sH5qX5bK9xfEBp@lpieralisi/T/#mb4ba4a2c045bf72c10c2202c1dd1b82d3240dc88
->
-> In the test, SGI, PPI and SPI interrupts can all be set to have super priority
-> to be converted to a hardware NMI interrupt. The SGI is tested with kernel
-> IPI as NMI framework, softlockup, hardlockup and kgdb test cases, and the PPI
-> interrupt is tested with "perf top" command with hardware NMI enabled, and
-> the SPI interrupt is tested with a custom test module, in which NMI interrupts
-> can be received and sent normally.
+There is a bug when setting the RSS options in virtio_net that can break
+the whole machine, getting the kernel into an infinite loop.
 
-It looks like your changes to the GIC have missed the handling
-of NMIs in the active priority registers and the running
-priority registers (both ICC and ICV versions). The way this
-works is that the ICH_AP1R0 and ICC_AP1R0 registers get an
-extra bit for NMI status in bit 63 (luckily we had the foresight
-to make these struct fields be uint64_t). When we activate
-an NMI IRQ, instead of setting the ICC_APR bit according to
-its priority, we set the NMI bit instead. Similarly, on
-deactivate we clear the NMI bit, not the priority-related bit.
-The ICC_RPR register also has new bits in bit 63 and 62 for
-whether there's an active NMI. On read of the RPR we figure
-out the values for these bits based on the NMI bits in
-ICC_AP1R_EL1S.NMI and ICC_AP1R_EL1NS.NMI (you might find the
-pseudocode functions for ICC_RPR_EL1 in chapter 13 helpful to
-look at here). The icc_highest_active_prio() likely also needs
-changes to handle NMI. Similarly for all the ICV versions of
-these registers and functions.
+Running the following command in any QEMU virtual machine with virtionet
+will reproduce this problem:
 
-thanks
--- PMM
+	# ethtool -X eth0  hfunc toeplitz
+
+This is how the problem happens:
+
+1) ethtool_set_rxfh() calls virtnet_set_rxfh()
+
+2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
+
+3) virtnet_commit_rss_command() populates 4 entries for the rss
+   scatter-gather
+
+4) Since the command above does not have a key, then the last
+   scatter-gatter entry will be zeroed, since rss_key_size == 0.
+    sg_buf_size = vi->rss_key_size;
+
+5) This buffer is passed to qemu, but qemu is not happy with a buffer
+   with zero length, and do the following in virtqueue_map_desc() (QEMU
+   function):
+
+      if (!sz) {
+          virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+
+6) virtio_error() (also QEMU function) set the device as broken
+
+	vdev->broken = true;
+
+7) Qemu bails out, and do not repond this crazy kernel.
+
+8) The kernel is waiting for the response to come back (function
+   virtnet_send_command())
+
+9) The kernel is waiting doing the following :
+
+          while (!virtqueue_get_buf(vi->cvq, &tmp) &&
+                 !virtqueue_is_broken(vi->cvq))
+                  cpu_relax();
+
+10) None of the following functions above is true, thus, the kernel
+    loops here forever. Keeping in mind that virtqueue_is_broken() does
+    not look at the qemu `vdev->broken`, so, it never realizes that the
+    vitio is broken at QEMU side.
+
+Fix it by not sending the key scatter-gatter key if it is not set.
+
+Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Cc: stable@vger.kernel.org
+Cc: qemu-devel@nongnu.org
+---
+ drivers/net/virtio_net.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index d7ce4a1011ea..5a7700b103f8 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3041,11 +3041,16 @@ static int virtnet_set_ringparam(struct net_device *dev,
+ static bool virtnet_commit_rss_command(struct virtnet_info *vi)
+ {
+ 	struct net_device *dev = vi->dev;
++	int has_key = vi->rss_key_size;
+ 	struct scatterlist sgs[4];
+ 	unsigned int sg_buf_size;
++	int nents = 3;
++
++	if (has_key)
++		nents += 1;
+ 
+ 	/* prepare sgs */
+-	sg_init_table(sgs, 4);
++	sg_init_table(sgs, nents);
+ 
+ 	sg_buf_size = offsetof(struct virtio_net_ctrl_rss, indirection_table);
+ 	sg_set_buf(&sgs[0], &vi->ctrl->rss, sg_buf_size);
+@@ -3057,8 +3062,13 @@ static bool virtnet_commit_rss_command(struct virtnet_info *vi)
+ 			- offsetof(struct virtio_net_ctrl_rss, max_tx_vq);
+ 	sg_set_buf(&sgs[2], &vi->ctrl->rss.max_tx_vq, sg_buf_size);
+ 
+-	sg_buf_size = vi->rss_key_size;
+-	sg_set_buf(&sgs[3], vi->ctrl->rss.key, sg_buf_size);
++	if (has_key) {
++		/* Only populate if key is available, otherwise
++		 * populating a buffer with zero size breaks virtio
++		 */
++		sg_buf_size = vi->rss_key_size;
++		sg_set_buf(&sgs[3], vi->ctrl->rss.key, sg_buf_size);
++	}
+ 
+ 	if (!virtnet_send_command(vi, VIRTIO_NET_CTRL_MQ,
+ 				  vi->has_rss ? VIRTIO_NET_CTRL_MQ_RSS_CONFIG
+-- 
+2.43.0
+
 
