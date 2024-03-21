@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FA0FC54E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:50:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0EF4C54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:50:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnKg3-0006V3-Bq; Thu, 21 Mar 2024 11:49:59 -0400
+	id 1rnKfe-0005BI-KT; Thu, 21 Mar 2024 11:49:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKg1-0006Oq-DS
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:57 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKfd-00053b-1K
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:33 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKfy-0001UM-P8
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:56 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-414700cffd6so8776605e9.1
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:49:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKfb-0001N5-HG
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:32 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2d23114b19dso16605011fa.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:49:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711036192; x=1711640992; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711036169; x=1711640969; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/ByGtnAj40FIgzzc5+9YA5mVdDA+/CNg+MM7X/H831Q=;
- b=eouEY2oGgzd5llVOOxZvaytQsD+HTpAg69ASK6D8w7e17YeBjS7YfBi15/2szVz9Gu
- vywRw+Te3UkA9J+IbhNtZaO5kMxaLvpN2ufnwQ4cspPC5r0i+3vYoXqkVy1tct8vTxlk
- XWEOFEkfGGJ5IEO+zjbeaS1g7Dn/lNJoFtWfmnq5hblBJTvsVCeIJpmX49sjIySItBRF
- UeWLmOMqSxMvsZtZn36NngJ9U3ZJFkATujAhzos83/skqcaAJOUAWazoAY87cisTVT8s
- bg+dCPeyJTOuo7rPgHLia2elJ/OfUoh4xy2X4428nlJXNg1A67ETnzmICgQVlDrg6FyW
- UgqA==
+ bh=xtEYan//81EtbsPaWQKotnbuaiGDwRNY8wJpHHZftjo=;
+ b=Wku3XQxQuTrrTfU9SDHTMjvCfVXwMkDhw3/xkTzDRd48qF3Zg815r3L7suIfL7LlDV
+ sNJKsNRRrwj5Kufu+to1kWwCH8XtBG5WsUZlqSwqNa2/L1dc/E+M5cT7EUu8qmxTf6j+
+ cYt3BmdirCA+JZHRscApikUwbOVezz7A3dMIUz2yzp2LksfBOPt3yv74zhx4JKf6tDZW
+ PgONOU4+DanuuPjNBDq66xMR9OEDyhZsLck/+JDC0DOktmwtj7OoXGw6Wd9v1EdUZhpP
+ imKme1FjA0pPpVCW6huY/6+vo6J8uLI3yzM2jcNtZG/LQC5VzaLdbHb9NBHKZBJQK1vR
+ 1PzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711036192; x=1711640992;
+ d=1e100.net; s=20230601; t=1711036169; x=1711640969;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/ByGtnAj40FIgzzc5+9YA5mVdDA+/CNg+MM7X/H831Q=;
- b=iXTVruPlFy201zBkx2ZBLdXQ0pWM3y99H/I819yL02G12UkE8nnrUVU4sY61dj9jyR
- AuVHZSZp1VRAGkTz6nIPQNI6ZbYSwFMe+De1hHvo/SXY8tluxG/+nUjnnanxLXP3eSKh
- 77SiNovsXJ+vo/m92DNSqiJ9+/rCqtLkTa5yFeyBiZJV4mk6FF/emawIjbV6ulbwCCeZ
- mxYqrL/5SzCAVWUqF87fV6WkrUsBFuiRpSFlsDqTMjWcgVp1Tjojxm24v7t4SdWleI2o
- bHuaJS1Uj1Cv9MsBEASMmA3RXQe0x4RxtxSaiv5kDQVoUveffN5wmkvmSHbNdK5aEwfg
- hQBg==
-X-Gm-Message-State: AOJu0YwuxpidNh+KLXxq9LApeWwjAtnSmNvegJnpCc8UQuYTVP60NUv9
- RkigaCDObHgwMDcSasNK48vVq3u7zVnTmGKs9C0lHtSQ9xKayNUxVIvWC52kSsPM8udU/qy8YDn
- Mf9E=
-X-Google-Smtp-Source: AGHT+IH/yAHOFp/p/fI7IC+W6jUuAkkKiFdF0KGxCo9t+wlbViIM7IhRlXMf1UHUz2YzS+/8U1P9pQ==
-X-Received: by 2002:a05:600c:a4b:b0:414:85f:1f72 with SMTP id
- c11-20020a05600c0a4b00b00414085f1f72mr4265147wmq.6.1711036191940; 
- Thu, 21 Mar 2024 08:49:51 -0700 (PDT)
+ bh=xtEYan//81EtbsPaWQKotnbuaiGDwRNY8wJpHHZftjo=;
+ b=IXX1phTFj3KslVpL2oBgts91Kclcm7IRCt0jbTsXACR1bwgaXwAC3ThAPbj0Xmh5FN
+ kr1SsdmeGomNbfHGA5++JXlcPMSpE6dZme2Bfzw16NHeh1mYKxU34ofI2J1dBH3UApbw
+ 2eyLmyZ61rOpZwZPyiNKbP8exogEirnXd2hPWemMeh3Jc1xvE8Myw13mpcREScXu8u+j
+ 9KRNAjt2im45sWjr6uPyRlQM0WxRWF0nRPvFU9tp0Jd5xh61EqYfr1e/751M5KWhIWTx
+ Xk8/9KbXuFgSFmhfbHdNc/jC1YjPDVMSuxAUTE9cOWFd8jvIB2cl53UbOD+bn1TWrrUe
+ Kd8g==
+X-Gm-Message-State: AOJu0YxX/cqW+LrjYUiqVxst2xMwnomgXqUtyOCqYPfjv7TUizGr78eH
+ EJibdLGUjTifkQH6YhvZSIctwRpJtir/8pLKEASp/vgJ9ThLdn4Q4SJ98oBVaetGIYovoUUrRKl
+ I/DU=
+X-Google-Smtp-Source: AGHT+IFBPR/Pr+XbGKhCvPp0NGCaJSK4lXMlzsD5cUSrTyGZOKbh/UIHZyhyiNbuVk1m7v7sep95ug==
+X-Received: by 2002:a2e:9c50:0:b0:2d4:6c08:5f94 with SMTP id
+ t16-20020a2e9c50000000b002d46c085f94mr15024512ljj.37.1711036168978; 
+ Thu, 21 Mar 2024 08:49:28 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.222])
  by smtp.gmail.com with ESMTPSA id
- g8-20020a05600c4ec800b0041408451874sm5958377wmq.17.2024.03.21.08.49.48
+ r14-20020a05600c35ce00b004146aac1d2asm5952403wmq.27.2024.03.21.08.49.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 21 Mar 2024 08:49:51 -0700 (PDT)
+ Thu, 21 Mar 2024 08:49:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
@@ -71,20 +71,19 @@ Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
  Laurent Vivier <laurent@vivier.eu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>
-Subject: [PATCH-for-9.1 09/21] target/mips: Prefix MMU API with 'mips_'
-Date: Thu, 21 Mar 2024 16:48:25 +0100
-Message-ID: <20240321154838.95771-10-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-9.1 06/21] target/m68k: Have dump_ttr() take a
+ @description argument
+Date: Thu, 21 Mar 2024 16:48:22 +0100
+Message-ID: <20240321154838.95771-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240321154838.95771-1-philmd@linaro.org>
 References: <20240321154838.95771-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,56 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MIPS MMU API declared in tcg-internal.h has public linkage.
-In order to avoid name clashing with other targets, prefix
-the API with 'mips_'.
+Slightly simplify dump_mmu() by passing the description as
+argument to dump_ttr().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/tcg/tcg-internal.h      | 2 +-
- target/mips/cpu.c                   | 2 +-
- target/mips/tcg/sysemu/tlb_helper.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ target/m68k/helper.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/target/mips/tcg/tcg-internal.h b/target/mips/tcg/tcg-internal.h
-index aef032c48d..2dc9d9100f 100644
---- a/target/mips/tcg/tcg-internal.h
-+++ b/target/mips/tcg/tcg-internal.h
-@@ -43,7 +43,7 @@ void do_raise_exception(CPUMIPSState *env,
- void mips_cpu_do_interrupt(CPUState *cpu);
- bool mips_cpu_exec_interrupt(CPUState *cpu, int int_req);
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index 310e26dfa1..cf9d83e47e 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -578,8 +578,9 @@ static void dump_address_map(Monitor *mon, CPUM68KState *env,
+         break; \
+     }
  
--void mmu_init(CPUMIPSState *env, const mips_def_t *def);
-+void mips_mmu_init(CPUMIPSState *env, const mips_def_t *def);
- 
- void update_pagemask(CPUMIPSState *env, target_ulong arg1, int32_t *pagemask);
- 
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index 8d8f690a53..8acf691b0b 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -485,7 +485,7 @@ static void mips_cpu_realizefn(DeviceState *dev, Error **errp)
-     env->exception_base = (int32_t)0xBFC00000;
- 
- #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
--    mmu_init(env, env->cpu_model);
-+    mips_mmu_init(env, env->cpu_model);
- #endif
-     fpu_init(env, env->cpu_model);
-     mvp_init(env);
-diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
-index 119eae771e..0167b1162f 100644
---- a/target/mips/tcg/sysemu/tlb_helper.c
-+++ b/target/mips/tcg/sysemu/tlb_helper.c
-@@ -464,7 +464,7 @@ static void r4k_mmu_init(CPUMIPSState *env, const mips_def_t *def)
-     env->tlb->helper_tlbinvf = r4k_helper_tlbinvf;
- }
- 
--void mmu_init(CPUMIPSState *env, const mips_def_t *def)
-+void mips_mmu_init(CPUMIPSState *env, const mips_def_t *def)
+-static void dump_ttr(Monitor *mon, uint32_t ttr)
++static void dump_ttr(Monitor *mon, const char *desc, uint32_t ttr)
  {
-     env->tlb = g_malloc0(sizeof(CPUMIPSTLBContext));
++    monitor_printf(mon, "%s: ", desc);
+     if ((ttr & M68K_TTR_ENABLED) == 0) {
+         monitor_puts(mon, "disabled\n");
+         return;
+@@ -663,14 +664,10 @@ void dump_mmu(Monitor *mon, CPUM68KState *env)
+         monitor_puts(mon, "\n");
+     }
  
+-    monitor_puts(mon, "ITTR0: ");
+-    dump_ttr(mon, env->mmu.ttr[M68K_ITTR0]);
+-    monitor_puts(mon, "ITTR1: ");
+-    dump_ttr(mon, env->mmu.ttr[M68K_ITTR1]);
+-    monitor_puts(mon, "DTTR0: ");
+-    dump_ttr(mon, env->mmu.ttr[M68K_DTTR0]);
+-    monitor_puts(mon, "DTTR1: ");
+-    dump_ttr(mon, env->mmu.ttr[M68K_DTTR1]);
++    dump_ttr(mon, "ITTR0", env->mmu.ttr[M68K_ITTR0]);
++    dump_ttr(mon, "ITTR1", env->mmu.ttr[M68K_ITTR1]);
++    dump_ttr(mon, "DTTR0", env->mmu.ttr[M68K_DTTR0]);
++    dump_ttr(mon, "DTTR1", env->mmu.ttr[M68K_DTTR1]);
+ 
+     monitor_printf(mon, "SRP: 0x%08x\n", env->mmu.srp);
+     dump_address_map(mon, env, env->mmu.srp);
 -- 
 2.41.0
 
