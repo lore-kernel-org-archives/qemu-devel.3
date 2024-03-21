@@ -4,83 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A10C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 12:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5C7C54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 12:22:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnHQb-000469-0z; Thu, 21 Mar 2024 08:21:50 -0400
+	id 1rnHQn-0004Jm-RK; Thu, 21 Mar 2024 08:22:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnHQY-0003tj-KR
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:21:46 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnHQW-0000dg-Po
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:21:46 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-414700cffd6so6971605e9.1
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 05:21:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711023703; x=1711628503; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=t2KEG4iM1wy5ywBKDstOhLY/YSmX6x6uyrXSWofvWJo=;
- b=uCiN8Ed1LzLGzGxOt9EN9iM4u0jur6rDwF14RK3xjUtWdG46jRsMSTGaErbjn7RkDw
- N0PgAKg5jvOceZJVV6jmb/JVS7L0/fX6zZ/2G98BzFkTywNsJ9mV/UR6VeLbjsw+VM3Z
- 4acIgDBWygUMl4yS4KUexe6wwYSoBLEH4aV7YmPB36r2KiZt7R0FZhPKeQc0RpJPRiCI
- Y9wS7flCLHgnB/xFm8ztPQthZpl6jvOVAn24v38r9XljYvdI+Dv+C18kZvhHtvRfkKsL
- mW5UWIVvCYLZ6WkgbpMzNLif9LgFdU00hdr+z3EAuabI9ZUsysPt8Zh7erdpyJTpOjd8
- Vatg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711023703; x=1711628503;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=t2KEG4iM1wy5ywBKDstOhLY/YSmX6x6uyrXSWofvWJo=;
- b=tCaeJ3VHYCL3LuBdcS5fznwIydjA+ZXGpg63EhtbaSTgD+eHS++OTeUhY0sdKgq83N
- jX9PuBCZ+/qJ6yB9tPjaCPhoUBf7aK2vnw8tCRicy2gUw1IM/dfCzoNl2jvnHmqAzwcj
- lBLp1NADqKNKXt5TwDAPtwwKzuZ8+3yNGk9kitIdfmyFdOmTSNad2BBHIfKGd5uerudA
- hdC+Kh2a8HAsErAm+LeBo68jbWbpPA7AtgWOXnmCkdjKqN/ZwchUGI9Cb32XihYiFhHi
- jEbBON/SeAD54PncrwYiCJq9RwDvveY2Xl67mVTczkn0KV2Z1wBSwEWb+rxDhgFrsu1O
- ZDsQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWzxQVf4afQJhd5CfMqbsUTS9HhaCR06P76jHzzPmy37i4yDqgNTlvhcTcO/+tjMooE/gRIsCEn9fc2omPis7vkWVhthOQ=
-X-Gm-Message-State: AOJu0YzyBRCfshdBtU8rwfpJ89htDlYFDW6ExlBdQAO51gWPp4L3xfpa
- dcB0evMph8a9ZiSpPruOiy+NmqSlolAt2NQ2qxtoysGiHIozmFWLVV38i6zvu9E=
-X-Google-Smtp-Source: AGHT+IFB/ELJOb2BGsDt5RmEqk5zLlsbFe4rqHiZefJhIo0K8LejE0eYjs67kO30sfKmtyYe9WvXuA==
-X-Received: by 2002:a05:600c:3b98:b0:413:e63b:b244 with SMTP id
- n24-20020a05600c3b9800b00413e63bb244mr4014597wms.7.1711023703083; 
- Thu, 21 Mar 2024 05:21:43 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.206.222])
- by smtp.gmail.com with ESMTPSA id
- m2-20020a05600c3b0200b0041463c2c6ccsm5502168wms.4.2024.03.21.05.21.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Mar 2024 05:21:42 -0700 (PDT)
-Message-ID: <fe843b04-e562-4147-bb0d-89df7ad4ba05@linaro.org>
-Date: Thu, 21 Mar 2024 13:21:40 +0100
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rnHQm-0004JL-6i
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:22:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rnHQk-0000ef-IU
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:21:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711023715;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6se4CDp8h70BmZ1U6kGDLvwRISNEpWizbtokJPzYwsk=;
+ b=iOVgifyl6AvO5vGHjJqCL/tzjrLeRe8KU1OdyUj/0e2C9FykYx8QFoUyHBWH2CAU0Eu1S6
+ kgSc3674qV4vT3QMLjJDPhH06rbTBaA1AHmVd/mslYWifmdVCRSZucgsBWh/6BfET5gSXZ
+ 3IAgzRUyeiOjGox/pWqrQ+DS5EKaIv0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-425-FBj7t3QnNLO6JM3KUp79ZQ-1; Thu, 21 Mar 2024 08:21:53 -0400
+X-MC-Unique: FBj7t3QnNLO6JM3KUp79ZQ-1
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.6])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 430388007AD
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 12:21:53 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.51])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0774C2166B4F;
+ Thu, 21 Mar 2024 12:21:51 +0000 (UTC)
+Date: Thu, 21 Mar 2024 13:21:46 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Sanjay Rao <srao@redhat.com>, Boaz Ben Shabat <bbenshab@redhat.com>,
+ Joe Mario <jmario@redhat.com>
+Subject: Re: [PATCH] coroutine: cap per-thread local pool size
+Message-ID: <ZfwmWmwI_ApQSdNi@redhat.com>
+References: <20240318183429.1039340-1-stefanha@redhat.com>
+ <ZfmWhDaG5mN-GCeO@redhat.com> <20240319175510.GA1127203@fedora>
+ <ZfnxSd4lseZuWoQ5@redhat.com> <20240320133539.GA1190824@fedora>
+ <ZfruHHh9tEr-1zI6@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/loongarch: Fix qemu-system-loongarch64 assert
- failed with the option '-d int'
-Content-Language: en-US
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, maobibo@loongson.cn
-References: <20240321063106.1700330-1-gaosong@loongson.cn>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240321063106.1700330-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZfruHHh9tEr-1zI6@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.372,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,93 +85,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/3/24 07:31, Song Gao wrote:
-> qemu-system-loongarch64 assert failed with the option '-d int',
-> the helper_idle() raise an exception EXCP_HLT, but the exception name is undefined.
+Am 20.03.2024 um 15:09 hat Daniel P. Berrangé geschrieben:
+> On Wed, Mar 20, 2024 at 09:35:39AM -0400, Stefan Hajnoczi wrote:
+> > On Tue, Mar 19, 2024 at 08:10:49PM +0000, Daniel P. Berrangé wrote:
+> > > On Tue, Mar 19, 2024 at 01:55:10PM -0400, Stefan Hajnoczi wrote:
+> > > > On Tue, Mar 19, 2024 at 01:43:32PM +0000, Daniel P. Berrangé wrote:
+> > > > > On Mon, Mar 18, 2024 at 02:34:29PM -0400, Stefan Hajnoczi wrote:
+> > > > > > diff --git a/util/qemu-coroutine.c b/util/qemu-coroutine.c
+> > > > > > index 5fd2dbaf8b..2790959eaf 100644
+> > > > > > --- a/util/qemu-coroutine.c
+> > > > > > +++ b/util/qemu-coroutine.c
+> > > > > 
+> > > > > > +static unsigned int get_global_pool_hard_max_size(void)
+> > > > > > +{
+> > > > > > +#ifdef __linux__
+> > > > > > +    g_autofree char *contents = NULL;
+> > > > > > +    int max_map_count;
+> > > > > > +
+> > > > > > +    /*
+> > > > > > +     * Linux processes can have up to max_map_count virtual memory areas
+> > > > > > +     * (VMAs). mmap(2), mprotect(2), etc fail with ENOMEM beyond this limit. We
+> > > > > > +     * must limit the coroutine pool to a safe size to avoid running out of
+> > > > > > +     * VMAs.
+> > > > > > +     */
+> > > > > > +    if (g_file_get_contents("/proc/sys/vm/max_map_count", &contents, NULL,
+> > > > > > +                            NULL) &&
+> > > > > > +        qemu_strtoi(contents, NULL, 10, &max_map_count) == 0) {
+> > > > > > +        /*
+> > > > > > +         * This is a conservative upper bound that avoids exceeding
+> > > > > > +         * max_map_count. Leave half for non-coroutine users like library
+> > > > > > +         * dependencies, vhost-user, etc. Each coroutine takes up 2 VMAs so
+> > > > > > +         * halve the amount again.
+> > > 
+> > > Leaving half for loaded libraries, etc is quite conservative
+> > > if max_map_count is the small-ish 64k default.
+> > > 
+> > > That reservation could perhaps a fixed number like 5,000 ?
+> > 
+> > While I don't want QEMU to abort, once this heuristic is in the code it
+> > will be scary to make it more optimistic and we may never change it. So
+> > now is the best time to try 5,000.
+> > 
+> > I'll send a follow-up patch that reserves 5,000 mappings. If that turns
+> > out to be too optimistic we can increase the reservation.
 > 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/cpu.c | 76 +++++++++++++++++++++++-------------------
->   1 file changed, 42 insertions(+), 34 deletions(-)
-> 
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index f6ffb3aadb..c56e606d28 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -45,33 +45,47 @@ const char * const fregnames[32] = {
->       "f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31",
->   };
->   
-> -static const char * const excp_names[] = {
-> -    [EXCCODE_INT] = "Interrupt",
-> -    [EXCCODE_PIL] = "Page invalid exception for load",
-> -    [EXCCODE_PIS] = "Page invalid exception for store",
-> -    [EXCCODE_PIF] = "Page invalid exception for fetch",
-> -    [EXCCODE_PME] = "Page modified exception",
-> -    [EXCCODE_PNR] = "Page Not Readable exception",
-> -    [EXCCODE_PNX] = "Page Not Executable exception",
-> -    [EXCCODE_PPI] = "Page Privilege error",
-> -    [EXCCODE_ADEF] = "Address error for instruction fetch",
-> -    [EXCCODE_ADEM] = "Address error for Memory access",
-> -    [EXCCODE_SYS] = "Syscall",
-> -    [EXCCODE_BRK] = "Break",
-> -    [EXCCODE_INE] = "Instruction Non-Existent",
-> -    [EXCCODE_IPE] = "Instruction privilege error",
-> -    [EXCCODE_FPD] = "Floating Point Disabled",
-> -    [EXCCODE_FPE] = "Floating Point Exception",
-> -    [EXCCODE_DBP] = "Debug breakpoint",
-> -    [EXCCODE_BCE] = "Bound Check Exception",
-> -    [EXCCODE_SXD] = "128 bit vector instructions Disable exception",
-> -    [EXCCODE_ASXD] = "256 bit vector instructions Disable exception",
-> +struct TypeExcp {
-> +    int32_t exccode;
-> +    const char *name;
-> +};
-> +
-> +static const struct TypeExcp excp_names[] = {
-> +    {EXCCODE_INT, "Interrupt"},
-> +    {EXCCODE_PIL, "Page invalid exception for load"},
-> +    {EXCCODE_PIS, "Page invalid exception for store"},
-> +    {EXCCODE_PIF, "Page invalid exception for fetch"},
-> +    {EXCCODE_PME, "Page modified exception"},
-> +    {EXCCODE_PNR, "Page Not Readable exception"},
-> +    {EXCCODE_PNX, "Page Not Executable exception"},
-> +    {EXCCODE_PPI, "Page Privilege error"},
-> +    {EXCCODE_ADEF, "Address error for instruction fetch"},
-> +    {EXCCODE_ADEM, "Address error for Memory access"},
-> +    {EXCCODE_SYS, "Syscall"},
-> +    {EXCCODE_BRK, "Break"},
-> +    {EXCCODE_INE, "Instruction Non-Existent"},
-> +    {EXCCODE_IPE, "Instruction privilege error"},
-> +    {EXCCODE_FPD, "Floating Point Disabled"},
-> +    {EXCCODE_FPE, "Floating Point Exception"},
-> +    {EXCCODE_DBP, "Debug breakpoint"},
-> +    {EXCCODE_BCE, "Bound Check Exception"},
-> +    {EXCCODE_SXD, "128 bit vector instructions Disable exception"},
-> +    {EXCCODE_ASXD, "256 bit vector instructions Disable exception"},
-> +    {EXCP_HLT, "EXCP_HLT"},
->   };
->   
->   const char *loongarch_exception_name(int32_t exception)
->   {
-> -    assert(excp_names[exception]);
-> -    return excp_names[exception];
-> +    int i;
-> +    const char *name = NULL;
-> +
-> +    for (i = 0; i < ARRAY_SIZE(excp_names); i++) {
-> +        if (excp_names[i].exccode == exception) {
+> BTW, I suggested 5,000, because I looked at a few QEM processes I have
+> running on Fedora and saw just under 1,000 lines in /proc/$PID/maps,
+> of which only a subset is library mappings. So multiplying that x5 felt
+> like a fairly generous overhead for more complex build configurations.
 
-               return excp_names[i].name;
+On my system, the boring desktop VM with no special hardware or other
+advanced configuration takes ~1500 mappings, most of which are
+libraries. I'm not concerned about the library mappings, it's unlikely
+that we'll double the number of libraries soon.
 
-> +            name = excp_names[i].name;
-> +            break;
-> +        }
-> +    }
+But I'm not sure about dynamic mappings outside of coroutines, maybe
+when enabling features my simple desktop VM doesn't even use at all. If
+we're sure that nothing else uses any number worth mentioning, fine with
+me. But I couldn't tell.
 
-        return "Unknown";
+Staying the area we know reasonably well, how many libblkio bounce
+buffers could be in use at the same time? I think each one is an
+individual mmap(), right?
 
-> +    return name;
->   }
+Kevin
 
 
