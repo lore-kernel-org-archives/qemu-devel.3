@@ -4,59 +4,161 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16CCECD11BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 23:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3BE3C54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 23:47:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnS5C-0007Oh-14; Thu, 21 Mar 2024 19:44:26 -0400
+	id 1rnS7T-0001R5-Rb; Thu, 21 Mar 2024 19:46:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rnS5A-0007OA-EE
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 19:44:24 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
+ id 1rnS7S-0001Qs-81
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 19:46:46 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1rnS58-0007iR-AQ
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 19:44:24 -0400
+ id 1rnS7Q-0008SE-0M
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 19:46:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711064663; x=1742600663;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=XHxenZTiVD2BMTHBPjnXxu1VWCcBYKNP5NgVKpP821k=;
- b=UKHtQ5+EGv/Ey7IQ42jzRL70w/ah3twt8xrOv2vY0DEVsfh/PQLKWycE
- ++5oiQw4i9TmcfAWphjZr7pOz5n0RniQP4P/w7bOPbuMSrKKxDAqAkpE2
- hhKfeWVYaX41Fgz1subKJqjjo1APc2sz59GvZ/8aagC3EbKA/VV81JNsM
- uL3Zkao92lse1qq+q2p+wnriYW2dgyWTIIX+bGQNmRXFvl5FLCPZOcCdb
- g+2laKpDLwxDMZ39LIDc4zinYYgsN7trwDdlOyt1GKwcYI/z4grZEJ725
- NIhdNGUb1z02G9TrFYMGsJUYyCRdn4v4ytiid8mEREXZIIzENZj2nMjQ7 A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="6217231"
-X-IronPort-AV: E=Sophos;i="6.07,144,1708416000"; 
-   d="scan'208";a="6217231"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Mar 2024 16:44:15 -0700
+ t=1711064804; x=1742600804;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=RcRiUW0dlRXyiNSsrLO438o26Ut6E/okRmlznrPVCD8=;
+ b=T4MIvc6axwRGrt8X674sk3cEBr0tLz/Ry7lxum0tiwHWm+sW5nidpGDC
+ qR6YboD6cKEwcEhX15h4DkYQVsQMSsvfUvOGX9/Hdnt5iJodue+YaR/Fz
+ Rp2zAe3FrNtcjYlok9WfOb7LGY3HfPV97NXkILjx3nrk3bjtqRM03fhl2
+ U5yoYY2PQJoIkPDTj0Vcm14JHqntwxuh1Qs/fS4TVaTKhGtY9EevQJnS5
+ 9vGL1PZ9uDZcWn2GyBlKvxjTfGJrailG62S8uCSM7DqffwtQlr5ATqkKM
+ 6W8MfZPILlWLex8cl/DMAohh0DBLwPVEhhCKUrkPOcuqsgqC4eFV4hhpt w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="16732978"
+X-IronPort-AV: E=Sophos;i="6.07,144,1708416000"; d="scan'208";a="16732978"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Mar 2024 16:46:42 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,144,1708416000"; d="scan'208";a="14743277"
-Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
- by fmviesa006.fm.intel.com with ESMTP; 21 Mar 2024 16:44:13 -0700
-From: dongwon.kim@intel.com
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,
-	marcandre.lureau@redhat.com
-Subject: [PATCH v4 3/3] ui/console: Introduce dpy_gl_create_dmabuf() helper
-Date: Thu, 21 Mar 2024 16:42:36 -0700
-Message-Id: <20240321234236.3476163-4-dongwon.kim@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240321234236.3476163-1-dongwon.kim@intel.com>
-References: <20240321234236.3476163-1-dongwon.kim@intel.com>
+X-IronPort-AV: E=Sophos;i="6.07,144,1708416000"; d="scan'208";a="45694345"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+ by orviesa002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 21 Mar 2024 16:46:42 -0700
+Received: from fmsmsx601.amr.corp.intel.com (10.18.126.81) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35; Thu, 21 Mar 2024 16:46:41 -0700
+Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.35 via Frontend Transport; Thu, 21 Mar 2024 16:46:41 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.169)
+ by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.35; Thu, 21 Mar 2024 16:46:40 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=faO6ADdbXGx3vPEHJaFBeoMBgXPFtmZBkjkhuSckN+rxied1g2Et3/v3+0xvpcO/GM5LJ2Zn8MFNGR4RqEMkty9SjE9mvPGafHAw9W4UKAq1cHysvPyqCRls/szcukWAvaiTwVVo7EGNr35CCcvaKVM62GXl5LCsQMTHMpTiSKnibZSwet2anBb5t5/HV5+M0FXPncvxsYhO/NPfm6UFMRsW6wnutanougMhCOXWMqENAnciDXbTdX7FEyQTDlBrKWim/lrOzVf/KxRMd/yUyB5pmAboDlh0AUhzcPM4nIKBacxBIuB++ilxGUUlZn9WL6a2kOl+7BegS+RiUguSjA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RcRiUW0dlRXyiNSsrLO438o26Ut6E/okRmlznrPVCD8=;
+ b=NJ9vVeTx+FnmS+riRpPniv5GqlFkGgqnw8pXCI5IuVuydYg3CN+TlkYfnxGn15RlrbD/lIRCmDqghv3OjQN6gFIU+GGE4CW+G9wcOpHeWTgRIdueMYY842cPXnj6rr6bz03su9uoxHcPSrtghnFV2yvv6jEmgqZ8IHL42KXcaLTqWEDWZKok7DOYH6AOIPEiZYOUF2tWo+c8cuOm1Jn17nuSKI+dRB3uOz+Xt7YK1QojQCYMvxuBynSMPLpwThO/gNGXfKUVZtbJe6gNO+mirUrS2/Gp6t8iIA8hyAOOZpZyqfJxRrt24CnXRQ2zPgqVJEtVs4j9Qn/VDlzVWO7cow==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from PH8PR11MB6879.namprd11.prod.outlook.com (2603:10b6:510:229::22)
+ by CYYPR11MB8305.namprd11.prod.outlook.com (2603:10b6:930:c1::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.24; Thu, 21 Mar
+ 2024 23:46:38 +0000
+Received: from PH8PR11MB6879.namprd11.prod.outlook.com
+ ([fe80::6e15:2e:4421:ba9f]) by PH8PR11MB6879.namprd11.prod.outlook.com
+ ([fe80::6e15:2e:4421:ba9f%4]) with mapi id 15.20.7409.010; Thu, 21 Mar 2024
+ 23:46:38 +0000
+From: "Kim, Dongwon" <dongwon.kim@intel.com>
+To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
+ =?utf-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>,
+ "Kasireddy, Vivek" <vivek.kasireddy@intel.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: RE: [INCOMPLETE PATCH v3 3/3] ui/console: Introduce
+ dpy_gl_create_dmabuf() helper
+Thread-Topic: [INCOMPLETE PATCH v3 3/3] ui/console: Introduce
+ dpy_gl_create_dmabuf() helper
+Thread-Index: AQHae3eTdQkVTmXVwUW84k68m2CKqLFC3JAA
+Date: Thu, 21 Mar 2024 23:46:38 +0000
+Message-ID: <PH8PR11MB6879C519C326B947FCA463BBFA322@PH8PR11MB6879.namprd11.prod.outlook.com>
+References: <20240321100635.64950-1-philmd@linaro.org>
+ <20240321100635.64950-4-philmd@linaro.org>
+In-Reply-To: <20240321100635.64950-4-philmd@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH8PR11MB6879:EE_|CYYPR11MB8305:EE_
+x-ms-office365-filtering-correlation-id: 900fe900-5a9c-44a8-68ff-08dc4a0126ab
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: UR3Hx6NAzgHa3oJsw226CPS3FRqbNt93HMzXn3UL4D0B06sAZZpygAx2CUCktekUW+eMhoqIzD/JcoSCfEJXZbNTJklaikg5mZGTBb1R8bW+l/12qbPqRhmMyaDkODqX4j0o9fLup0xGh0aDJTczwVdXQ01hRB/zchZYxb65XVNqoMI+TmF1YGmlj3sslhUxp+fL/tjBc6kFWzbOxHMCChmX6OFKV01Sn4yE+YQdUDZNpbAcSUYg9f48viTn+ob/lE8/xXNh2UyyPhRs2G+hzFOp5Q5Eh/I436iVDx9tKA4BvP+otk01KAAoXtSDhW2xb7Pn7ZN51HspT88ogHhoCEtW3blm7FK27z26ijAp6e3Kyb2hpx8oXxwp2hePq2iGGMXfaGGJanqlDMAOH3Drq82WDs6Z3aYWlyZPU2ApFzUEzFdjY3pui7E33l7WicY678dhAtL699O9v5jsdAoP63pioHiuCyN7ZsxhpxtcbIWBEzP3kLkQyhSeOgNwUEOA/PN/Dk3CB4UYzPG8rj7UbAJmg6DoUzBXdbsikpaxeygL0m6oeti8e2g8ZZOoVVBGvKfkhxIbaPXey+Eqj8mtPS1R3fJ1+vBPddG1TjfIK9VOYTjq0nk6N3f+v2mwg5AyTvlohGxjV4bdAuhu1IGzxggUQPdyiVbfK8TO5fPr5xZqABr6GNfWOK0lIcguugyzDsviI8wmMsLZpUeZ4H66ZL8N6DJzIEyzISdzT6KAoR4=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH8PR11MB6879.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(1800799015)(366007)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Sjg5eVJxcW1nWTVkMzE5TFM2RmJnNnZlVXB6ZjcxS284WXp1dnBkVlBVcklB?=
+ =?utf-8?B?eFJwRlFKSWR0VmJLQVVkSFROUEhwL041Q3dReEtYVHowWmZPVm1iK3V1R2U1?=
+ =?utf-8?B?cWVINVl0aE5JVnV6eXN4d25STDU2QWhNcFdmbGd5NTNYOGNRSjFyZkhhT21n?=
+ =?utf-8?B?LzVCUXJTVVl1dTBNL3A2Um02WDdEcHB6RWZwSE5qS3pGckNYUFlhZWJ3SUxs?=
+ =?utf-8?B?S3VmQWkxRGNGRCtLTzRaR2NnNU4xVktSOG5rVDNCTGtTT2VzNi8yRDhobGtK?=
+ =?utf-8?B?bmluL2lhWlRSOTM3M1NiODBKOE1TeHIvdEQwdXpKWW9hZ21sUkhUZ1hBWVJ2?=
+ =?utf-8?B?R21ROFFhUnYyZlR2ZWRmNVdacEdVR0hQYXdreWJORzkxdERTb3hmSjVsd1JX?=
+ =?utf-8?B?WU9iZ3hiRnI4YUpESTRIQlhMOEpXb2hBOTQ0QXZ2Z213Ly9OdmNBNmVGaGkr?=
+ =?utf-8?B?WVd2VzB4UkVWMDA0d05sVTI0Nnd4SS9nZXlNTFZ2UmFieHlGdlRxUEN3QzRh?=
+ =?utf-8?B?djNqRGwzclZOTmJZT2E0c2dVRDRPakxscWZZcStaZzZjSmo2QXpvd3R3WnFQ?=
+ =?utf-8?B?ampwOThXWlpVM2gxL0V6WjJKTzNIK055WkhYVFVreit1Nmt2dm55b3pWMjJi?=
+ =?utf-8?B?N3h5SUhXTUNCZGxMd002VlFRTHo0eVA2c3FrOVZCa0dBa242NHBWWjhTeTh5?=
+ =?utf-8?B?dzdQRTh2M0FjUnRRaWFzOEpvZzlFSENOL1RxV2lmOUthZ3MrTTJkT3J4M1Vi?=
+ =?utf-8?B?L3QveGJ5M0JsMllNTUhPTEE5SWY2QXlQSUdmOTduZDhwdnRTWmRQbWJjVzBk?=
+ =?utf-8?B?OWI0Nldsd0VySlZBcGZtbjhiemJxdThiUEo3dDljSlR4Mk55YUVsZG4ydHpM?=
+ =?utf-8?B?Z0gxMTVod1JpRmFsTmtRMUxMTHRCZzVpSmhQSkVMSTFaOWU5cVhHeEhRVnV5?=
+ =?utf-8?B?T05xSWg4MEVtTFZXUGhwdXMzRGQyZGZCQ2tOOEtYR29VRWd4ODhFWHYyMDU0?=
+ =?utf-8?B?VHNnMERvUDU2Zmw1WnNDVGgxWHFCK3pDM1ZQdXJFUFV5cUxsVlRWK0RnKzNT?=
+ =?utf-8?B?R05YMGFZQU1YUHdid21OUW9kdDFMOEZWamVTQlVhM2FNbmw1YzFNWW1BeVkx?=
+ =?utf-8?B?Z2dUOFdBMUVLU0ttQTlWNUJlamxqUVF5ejFzSnpOcXJtd1F3dHU5SUJXQWpv?=
+ =?utf-8?B?QkUxZjRFZC9TUUwxQzU4YnFKWW9COCt4RVlURTVtN25xL2VrbFBBMEF4dzZr?=
+ =?utf-8?B?NU4rdkEzU28wWWZrZzg1QTR3b1ZIL2UzTzB3Q053TFNUSVN0TmVJQkQyR2Rk?=
+ =?utf-8?B?NUxGbGFYaHRMVXhYWVdHUE5RNktlc25ybFJ1SlhBcGxHdXpBQ3psdkd4OU8v?=
+ =?utf-8?B?cDEvZnU5S1NDSWtsa0F6Tmd6WjNNbG4wOG5CdXNnQWVJekd1UmZkMmxGUmor?=
+ =?utf-8?B?UzJiMStNK1JXcHd3YXg3Z2NickxmMThKRThJenF3QXRySTdWdEJyYVF4Ylgx?=
+ =?utf-8?B?YVB2TWg3KzNXdmQzUXVmT2xlb3hGT0pvRkdsRkZJMWVFM01ieXhUSXJ0R0Uy?=
+ =?utf-8?B?dWcvUDZORGlZNmN2Z2QweXE1YkcxSnZMbndaMzdDeDZpRjhFbVE5c3BaOVll?=
+ =?utf-8?B?eG9PNG4rL1JyVlJEVlowRFRvWUZmNnRJYm0zWFlZc3FwbmJUbnlBK28vS3BV?=
+ =?utf-8?B?V0RHOGJXOWNDNEhnWStQYlpyeklNT2E5K3FiOUFlL3lSM2F0NEdkc0FqV1VO?=
+ =?utf-8?B?TnA5WXhKbko2T0FMbnZMZzZwTjQvcGNWckxPN1RRc2VJckJYWlpiQlo4ckt2?=
+ =?utf-8?B?Z080OVh0UXlSZUtjNThId1puWFlXSGtJWjZMOUcyaUlUdVZuKzNRWlpxSVRN?=
+ =?utf-8?B?bGF6Y3huOExpOS9GTXpCeTA3bGpWcDR3aHQwOGh4OWdEb3NIV3psSzI4ZXFQ?=
+ =?utf-8?B?dWozYVUrTXJZZERZMUpzK2RBcmpNSk5GN0Y5ME5TbFNKdlFCWUdQMHo5UGZr?=
+ =?utf-8?B?bUYvWWR0RkxXM1Q5TkQzb3NjVHVLZDZJelpIck5XcVRnb0tsS3ppQ1kra0FT?=
+ =?utf-8?B?UlVZUUhIUW14MmV4L0txUlZvRGRjNVU0bENLSjZQTThVY250bmo0K2xTZFJY?=
+ =?utf-8?Q?GLA/Xr9XcH2Us9fzlnMBEjhcs?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.16; envelope-from=dongwon.kim@intel.com;
- helo=mgamail.intel.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB6879.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 900fe900-5a9c-44a8-68ff-08dc4a0126ab
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Mar 2024 23:46:38.3648 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: p4BinS/lgBWFTDFAWGbrFFRQHDe7iGQZrXGHeWHBH5K+ephN9Z3qP3Khkxhkkd9UiS5Q2P+Zvsyxao5psKRmKw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR11MB8305
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.11;
+ envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -79,348 +181,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
-
-dpy_gl_create_dmabuf() allocates QemuDmaBuf and initialize fields.
-hw/display modules, hw/vfio and ui/dbus-listener now use this method
-to create QemuDmaBuf instead of declaring and initializing it on their
-own.
-
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
----
- include/hw/vfio/vfio-common.h   |  2 +-
- include/hw/virtio/virtio-gpu.h  |  4 ++--
- include/ui/console.h            |  6 ++++++
- hw/display/vhost-user-gpu.c     | 33 ++++++++++++++++++---------------
- hw/display/virtio-gpu-udmabuf.c | 23 ++++++++---------------
- hw/vfio/display.c               | 26 +++++++++++---------------
- ui/console.c                    | 28 ++++++++++++++++++++++++++++
- ui/dbus-listener.c              | 28 ++++++++++++----------------
- 8 files changed, 86 insertions(+), 64 deletions(-)
-
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index b9da6c08ef..d66e27db02 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -148,7 +148,7 @@ typedef struct VFIOGroup {
- } VFIOGroup;
- 
- typedef struct VFIODMABuf {
--    QemuDmaBuf buf;
-+    QemuDmaBuf *buf;
-     uint32_t pos_x, pos_y, pos_updates;
-     uint32_t hot_x, hot_y, hot_updates;
-     int dmabuf_id;
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index ed44cdad6b..56d6e821bf 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -169,7 +169,7 @@ struct VirtIOGPUBaseClass {
-     DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
- 
- typedef struct VGPUDMABuf {
--    QemuDmaBuf buf;
-+    QemuDmaBuf *buf;
-     uint32_t scanout_id;
-     QTAILQ_ENTRY(VGPUDMABuf) next;
- } VGPUDMABuf;
-@@ -238,7 +238,7 @@ struct VhostUserGPU {
-     VhostUserBackend *vhost;
-     int vhost_gpu_fd; /* closed by the chardev */
-     CharBackend vhost_chr;
--    QemuDmaBuf dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
-+    QemuDmaBuf *dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
-     bool backend_blocked;
- };
- 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index d5334a806c..01e998264b 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -358,6 +358,12 @@ void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
-                           bool have_hot, uint32_t hot_x, uint32_t hot_y);
- void dpy_gl_cursor_position(QemuConsole *con,
-                             uint32_t pos_x, uint32_t pos_y);
-+QemuDmaBuf *dpy_gl_create_dmabuf(uint32_t width, uint32_t height,
-+                                 uint32_t stride, uint32_t x,
-+                                 uint32_t y, uint32_t backing_width,
-+                                 uint32_t backing_height, uint32_t fourcc,
-+                                 uint64_t modifier, uint32_t dmabuf_fd,
-+                                 bool allow_fences, bool y0_top);
- uint32_t dpy_gl_dmabuf_get_width(QemuDmaBuf *dmabuf);
- uint32_t dpy_gl_dmabuf_get_height(QemuDmaBuf *dmabuf);
- int32_t dpy_gl_dmabuf_get_fd(QemuDmaBuf *dmabuf);
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index 709c8a02a1..0e49a934ed 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -249,6 +249,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-     case VHOST_USER_GPU_DMABUF_SCANOUT: {
-         VhostUserGpuDMABUFScanout *m = &msg->payload.dmabuf_scanout;
-         int fd = qemu_chr_fe_get_msgfd(&g->vhost_chr);
-+        uint64_t modifier = 0;
-         QemuDmaBuf *dmabuf;
- 
-         if (m->scanout_id >= g->parent_obj.conf.max_outputs) {
-@@ -261,30 +262,32 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
- 
-         g->parent_obj.enable = 1;
-         con = g->parent_obj.scanout[m->scanout_id].con;
--        dmabuf = &g->dmabuf[m->scanout_id];
--        if (dmabuf->fd >= 0) {
--            close(dmabuf->fd);
--            dmabuf->fd = -1;
-+        dmabuf = g->dmabuf[m->scanout_id];
-+        if (dmabuf) {
-+            int dmabuf_fd = dpy_gl_dmabuf_get_fd(dmabuf);
-+            if (dmabuf_fd >= 0) {
-+                close(dmabuf_fd);
-+            }
-+            dpy_gl_release_dmabuf(con, dmabuf);
-         }
--        dpy_gl_release_dmabuf(con, dmabuf);
-+
-         if (fd == -1) {
-             dpy_gl_scanout_disable(con);
-             break;
-         }
--        *dmabuf = (QemuDmaBuf) {
--            .fd = fd,
--            .width = m->fd_width,
--            .height = m->fd_height,
--            .stride = m->fd_stride,
--            .fourcc = m->fd_drm_fourcc,
--            .y0_top = m->fd_flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP,
--        };
-+
-         if (msg->request == VHOST_USER_GPU_DMABUF_SCANOUT2) {
-             VhostUserGpuDMABUFScanout2 *m2 = &msg->payload.dmabuf_scanout2;
--            dmabuf->modifier = m2->modifier;
-+            modifier = m2->modifier;
-         }
- 
--        dpy_gl_scanout_dmabuf(con, dmabuf);
-+        dmabuf = dpy_gl_create_dmabuf(m->fd_width, m->fd_height, m->fd_stride,
-+                                      0, 0, 0, 0, m->fd_drm_fourcc, modifier,
-+                                      fd, false, m->fd_flags &
-+                                      VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP);
-+
-+        dpy_gl_scanout_dmabuf(con, g->dmabuf[m->scanout_id]);
-+        g->dmabuf[m->scanout_id] = dmabuf;
-         break;
-     }
-     case VHOST_USER_GPU_DMABUF_UPDATE: {
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index a4ebf828ec..2bc8697d86 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -162,7 +162,7 @@ static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
-     struct virtio_gpu_scanout *scanout;
- 
-     scanout = &g->parent_obj.scanout[dmabuf->scanout_id];
--    dpy_gl_release_dmabuf(scanout->con, &dmabuf->buf);
-+    dpy_gl_release_dmabuf(scanout->con, dmabuf->buf);
-     QTAILQ_REMOVE(&g->dmabuf.bufs, dmabuf, next);
-     g_free(dmabuf);
- }
-@@ -181,17 +181,10 @@ static VGPUDMABuf
-     }
- 
-     dmabuf = g_new0(VGPUDMABuf, 1);
--    dmabuf->buf.width = r->width;
--    dmabuf->buf.height = r->height;
--    dmabuf->buf.stride = fb->stride;
--    dmabuf->buf.x = r->x;
--    dmabuf->buf.y = r->y;
--    dmabuf->buf.backing_width = fb->width;
--    dmabuf->buf.backing_height = fb->height;
--    dmabuf->buf.fourcc = qemu_pixman_to_drm_format(fb->format);
--    dmabuf->buf.fd = res->dmabuf_fd;
--    dmabuf->buf.allow_fences = true;
--    dmabuf->buf.draw_submitted = false;
-+    dmabuf->buf = dpy_gl_create_dmabuf(r->width, r->height, fb->stride,
-+                                       r->x, r->y, fb->width, fb->height,
-+                                       qemu_pixman_to_drm_format(fb->format),
-+                                       0, res->dmabuf_fd, false, 0);
-     dmabuf->scanout_id = scanout_id;
-     QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
- 
-@@ -217,11 +210,11 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
-         old_primary = g->dmabuf.primary[scanout_id];
-     }
- 
--    width = dpy_gl_dmabuf_get_width(&new_primary->buf);
--    height = dpy_gl_dmabuf_get_height(&new_primary->buf);
-+    width = dpy_gl_dmabuf_get_width(new_primary->buf);
-+    height = dpy_gl_dmabuf_get_height(new_primary->buf);
-     g->dmabuf.primary[scanout_id] = new_primary;
-     qemu_console_resize(scanout->con, width, height);
--    dpy_gl_scanout_dmabuf(scanout->con, &new_primary->buf);
-+    dpy_gl_scanout_dmabuf(scanout->con, new_primary->buf);
- 
-     if (old_primary) {
-         virtio_gpu_free_dmabuf(g, old_primary);
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index 676b2fc5f3..62f5db2d54 100644
---- a/hw/vfio/display.c
-+++ b/hw/vfio/display.c
-@@ -240,15 +240,11 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPCIDevice *vdev,
-     }
- 
-     dmabuf = g_new0(VFIODMABuf, 1);
--    dmabuf->dmabuf_id  = plane.dmabuf_id;
--    dmabuf->buf.width  = plane.width;
--    dmabuf->buf.height = plane.height;
--    dmabuf->buf.backing_width = plane.width;
--    dmabuf->buf.backing_height = plane.height;
--    dmabuf->buf.stride = plane.stride;
--    dmabuf->buf.fourcc = plane.drm_format;
--    dmabuf->buf.modifier = plane.drm_format_mod;
--    dmabuf->buf.fd     = fd;
-+    dmabuf->dmabuf_id = plane.dmabuf_id;
-+    dmabuf->buf = dpy_gl_create_dmabuf(plane.width, plane.height, plane.stride,
-+                                       0, 0, plane.width, plane.height,
-+                                       plane.drm_format, plane.drm_format_mod,
-+                                       fd, false, 0);
-     if (plane_type == DRM_PLANE_TYPE_CURSOR) {
-         vfio_display_update_cursor(dmabuf, &plane);
-     }
-@@ -262,12 +258,12 @@ static void vfio_display_free_one_dmabuf(VFIODisplay *dpy, VFIODMABuf *dmabuf)
-     int fd;
- 
-     QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
--    fd = dpy_gl_dmabuf_get_fd(&dmabuf->buf);
-+    fd = dpy_gl_dmabuf_get_fd(dmabuf->buf);
-     if (fd > -1) {
-         close(fd);
-     }
- 
--    dpy_gl_release_dmabuf(dpy->con, &dmabuf->buf);
-+    dpy_gl_release_dmabuf(dpy->con, dmabuf->buf);
-     g_free(dmabuf);
- }
- 
-@@ -303,13 +299,13 @@ static void vfio_display_dmabuf_update(void *opaque)
-         return;
-     }
- 
--    width = dpy_gl_dmabuf_get_width(&primary->buf);
--    height = dpy_gl_dmabuf_get_height(&primary->buf);
-+    width = dpy_gl_dmabuf_get_width(primary->buf);
-+    height = dpy_gl_dmabuf_get_height(primary->buf);
- 
-     if (dpy->dmabuf.primary != primary) {
-         dpy->dmabuf.primary = primary;
-         qemu_console_resize(dpy->con, width, height);
--        dpy_gl_scanout_dmabuf(dpy->con, &primary->buf);
-+        dpy_gl_scanout_dmabuf(dpy->con, primary->buf);
-         free_bufs = true;
-     }
- 
-@@ -323,7 +319,7 @@ static void vfio_display_dmabuf_update(void *opaque)
-     if (cursor && (new_cursor || cursor->hot_updates)) {
-         bool have_hot = (cursor->hot_x != 0xffffffff &&
-                          cursor->hot_y != 0xffffffff);
--        dpy_gl_cursor_dmabuf(dpy->con, &cursor->buf, have_hot,
-+        dpy_gl_cursor_dmabuf(dpy->con, cursor->buf, have_hot,
-                              cursor->hot_x, cursor->hot_y);
-         cursor->hot_updates = 0;
-     } else if (!cursor && new_cursor) {
-diff --git a/ui/console.c b/ui/console.c
-index 69560aac7e..f3920e7713 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1132,6 +1132,33 @@ void dpy_gl_cursor_position(QemuConsole *con,
-     }
- }
- 
-+QemuDmaBuf *dpy_gl_create_dmabuf(uint32_t width, uint32_t height,
-+                                 uint32_t stride, uint32_t x,
-+                                 uint32_t y, uint32_t backing_width,
-+                                 uint32_t backing_height, uint32_t fourcc,
-+                                 uint64_t modifier, uint32_t dmabuf_fd,
-+                                 bool allow_fences, bool y0_top) {
-+    QemuDmaBuf *dmabuf;
-+
-+    dmabuf = g_new0(QemuDmaBuf, 1);
-+
-+    dmabuf->width = width;
-+    dmabuf->height = height;
-+    dmabuf->stride = stride;
-+    dmabuf->x = x;
-+    dmabuf->y = y;
-+    dmabuf->backing_width = backing_width;
-+    dmabuf->backing_height = backing_height;
-+    dmabuf->fourcc = fourcc;
-+    dmabuf->modifier = modifier;
-+    dmabuf->fd = dmabuf_fd;
-+    dmabuf->allow_fences = allow_fences;
-+    dmabuf->y0_top = y0_top;
-+    dmabuf->fence_fd = -1;
-+
-+    return dmabuf;
-+}
-+
- uint32_t dpy_gl_dmabuf_get_width(QemuDmaBuf *dmabuf)
- {
-     if (dmabuf) {
-@@ -1164,6 +1191,7 @@ void dpy_gl_release_dmabuf(QemuConsole *con,
-             dcl->ops->dpy_gl_release_dmabuf(dcl, dmabuf);
-         }
-     }
-+    g_free(dmabuf);
- }
- 
- void dpy_gl_update(QemuConsole *con,
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 4a0a5d78f9..a2145704cc 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -438,28 +438,24 @@ static void dbus_scanout_texture(DisplayChangeListener *dcl,
-     trace_dbus_scanout_texture(tex_id, backing_y_0_top,
-                                backing_width, backing_height, x, y, w, h);
- #ifdef CONFIG_GBM
--    QemuDmaBuf dmabuf = {
--        .width = w,
--        .height = h,
--        .y0_top = backing_y_0_top,
--        .x = x,
--        .y = y,
--        .backing_width = backing_width,
--        .backing_height = backing_height,
--    };
-+    int32_t fd;
-+    uint32_t stride, fourcc;
-+    uint64_t modifier;
-+    QemuDmaBuf *dmabuf;
- 
-     assert(tex_id);
--    dmabuf.fd = egl_get_fd_for_texture(
--        tex_id, (EGLint *)&dmabuf.stride,
--        (EGLint *)&dmabuf.fourcc,
--        &dmabuf.modifier);
--    if (dmabuf.fd < 0) {
-+    fd = egl_get_fd_for_texture(tex_id, (EGLint *)&stride, (EGLint *)&fourcc,
-+                                &modifier);
-+    if (fd < 0) {
-         error_report("%s: failed to get fd for texture", __func__);
-         return;
-     }
-+    dmabuf = dpy_gl_create_dmabuf(w, h, stride, x, y, backing_width,
-+                                  backing_height, fourcc, modifier, fd,
-+                                  false, backing_y_0_top);
- 
--    dbus_scanout_dmabuf(dcl, &dmabuf);
--    close(dmabuf.fd);
-+    dbus_scanout_dmabuf(dcl, dmabuf);
-+    close(fd);
- #endif
- 
- #ifdef WIN32
--- 
-2.34.1
-
+SGkgUGhpbCwNCg0KSSBzdWJtaXR0ZWQgcmV2aXNlZCBzZXJpZXMgKHY0KSBiYXNlZCBvbiB5b3Vy
+IHYzIHdvcmsuIEkgdHJpZWQgdG8gYWRkcmVzcyAyIG9yIDMgbWFqb3IgaXNzdWVzIHlvdSBtZW50
+aW9uZWQgdGhlcmUgYW5kIHNvbWUgbWlub3IgY29ycmVjdGlvbnMuDQpQbGVhc2UgY2hlY2sgaXQu
+IEkgYXBwcmVjaWF0ZSB5b3VyIGhlbHAgYW5kIGZlZWRiYWNrLg0KDQpbUEFUQ0ggdjQgMC8zXSB1
+aS9jb25zb2xlOiBJbnRyb2R1Y2UgaGVscGVycyBmb3IgY3JlYXRpbmcgYW5kDQoNCj4gLS0tLS1P
+cmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBo
+aWxtZEBsaW5hcm8ub3JnPg0KPiBTZW50OiBUaHVyc2RheSwgTWFyY2ggMjEsIDIwMjQgMzowNyBB
+TQ0KPiBUbzogS2ltLCBEb25nd29uIDxkb25nd29uLmtpbUBpbnRlbC5jb20+OyBxZW11LWRldmVs
+QG5vbmdudS5vcmcNCj4gQ2M6IEFsZXggV2lsbGlhbXNvbiA8YWxleC53aWxsaWFtc29uQHJlZGhh
+dC5jb20+OyBDw6lkcmljIExlIEdvYXRlcg0KPiA8Y2xnQHJlZGhhdC5jb20+OyBNYXJjLUFuZHLD
+qSBMdXJlYXUgPG1hcmNhbmRyZS5sdXJlYXVAcmVkaGF0LmNvbT47DQo+IEthc2lyZWRkeSwgVml2
+ZWsgPHZpdmVrLmthc2lyZWRkeUBpbnRlbC5jb20+OyBNaWNoYWVsIFMuIFRzaXJraW4NCj4gPG1z
+dEByZWRoYXQuY29tPjsgR2VyZCBIb2ZmbWFubiA8a3JheGVsQHJlZGhhdC5jb20+OyBQaGlsaXBw
+ZSBNYXRoaWV1LQ0KPiBEYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3JnPg0KPiBTdWJqZWN0OiBbSU5D
+T01QTEVURSBQQVRDSCB2MyAzLzNdIHVpL2NvbnNvbGU6IEludHJvZHVjZQ0KPiBkcHlfZ2xfY3Jl
+YXRlX2RtYWJ1ZigpIGhlbHBlcg0KPiANCj4gRnJvbTogRG9uZ3dvbiBLaW0gPGRvbmd3b24ua2lt
+QGludGVsLmNvbT4NCj4gDQo+IEl0IGlzIHNhZmVyIHRvIGNyZWF0ZSwgaW5pdGlhbGl6ZSwgYW5k
+IGFjY2VzcyBhbGwgdGhlIHBhcmFtZXRlcnMgaW4gUWVtdURtYUJ1Zg0KPiBmcm9tIGEgY2VudHJh
+bCBsb2NhdGlvbiwgdWkvY29uc29sZSwgaW5zdGVhZCBvZiBody92aXJ0aW8tZ3B1IG9yIGh3L3Zm
+aW8gbW9kdWxlcy4NCj4gDQo+IFNpZ25lZC1vZmYtYnk6IERvbmd3b24gS2ltIDxkb25nd29uLmtp
+bUBpbnRlbC5jb20+DQo+IE1lc3NhZ2UtSWQ6IDwyMDI0MDMyMDAzNDIyOS4zMzQ3MTMwLTEtZG9u
+Z3dvbi5raW1AaW50ZWwuY29tPg0KPiBbUE1EOiBTcGxpdCBwYXRjaCBpbiAzLCBwYXJ0IDMvM10N
+Cj4gU2lnbmVkLW9mZi1ieTogUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8u
+b3JnPg0KPiAtLS0NCj4gSW5jb21wbGV0ZS4uLiBWaG9zdFVzZXJHUFUgZG9lc24ndCBhbGxvY2F0
+ZSwNCj4gdmhvc3RfdXNlcl9ncHVfaGFuZGxlX2Rpc3BsYXkoKSBjcmFzaGVzLg0KPiAtLS0NCj4g
+IGluY2x1ZGUvaHcvdmZpby92ZmlvLWNvbW1vbi5oICAgfCAgMiArLQ0KPiAgaW5jbHVkZS9ody92
+aXJ0aW8vdmlydGlvLWdwdS5oICB8ICAyICstDQo+ICBpbmNsdWRlL3VpL2NvbnNvbGUuaCAgICAg
+ICAgICAgIHwgIDcgKysrKysrKw0KPiAgaHcvZGlzcGxheS92aXJ0aW8tZ3B1LXVkbWFidWYuYyB8
+IDIzICsrKysrKysrLS0tLS0tLS0tLS0tLS0tDQo+ICBody92ZmlvL2Rpc3BsYXkuYyAgICAgICAg
+ICAgICAgIHwgMjQgKysrKysrKysrKy0tLS0tLS0tLS0tLS0tDQo+ICB1aS9jb25zb2xlLmMgICAg
+ICAgICAgICAgICAgICAgIHwgMjggKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0KPiAgNiBm
+aWxlcyBjaGFuZ2VkLCA1NSBpbnNlcnRpb25zKCspLCAzMSBkZWxldGlvbnMoLSkNCj4gDQo+IGRp
+ZmYgLS1naXQgYS9pbmNsdWRlL2h3L3ZmaW8vdmZpby1jb21tb24uaCBiL2luY2x1ZGUvaHcvdmZp
+by92ZmlvLWNvbW1vbi5oDQo+IGluZGV4IGI5ZGE2YzA4ZWYuLmQ2NmUyN2RiMDIgMTAwNjQ0DQo+
+IC0tLSBhL2luY2x1ZGUvaHcvdmZpby92ZmlvLWNvbW1vbi5oDQo+ICsrKyBiL2luY2x1ZGUvaHcv
+dmZpby92ZmlvLWNvbW1vbi5oDQo+IEBAIC0xNDgsNyArMTQ4LDcgQEAgdHlwZWRlZiBzdHJ1Y3Qg
+VkZJT0dyb3VwIHsgIH0gVkZJT0dyb3VwOw0KPiANCj4gIHR5cGVkZWYgc3RydWN0IFZGSU9ETUFC
+dWYgew0KPiAtICAgIFFlbXVEbWFCdWYgYnVmOw0KPiArICAgIFFlbXVEbWFCdWYgKmJ1ZjsNCj4g
+ICAgICB1aW50MzJfdCBwb3NfeCwgcG9zX3ksIHBvc191cGRhdGVzOw0KPiAgICAgIHVpbnQzMl90
+IGhvdF94LCBob3RfeSwgaG90X3VwZGF0ZXM7DQo+ICAgICAgaW50IGRtYWJ1Zl9pZDsNCj4gZGlm
+ZiAtLWdpdCBhL2luY2x1ZGUvaHcvdmlydGlvL3ZpcnRpby1ncHUuaCBiL2luY2x1ZGUvaHcvdmly
+dGlvL3ZpcnRpby1ncHUuaCBpbmRleA0KPiBlZDQ0Y2RhZDZiLi4wMTAwODNlOGUzIDEwMDY0NA0K
+PiAtLS0gYS9pbmNsdWRlL2h3L3ZpcnRpby92aXJ0aW8tZ3B1LmgNCj4gKysrIGIvaW5jbHVkZS9o
+dy92aXJ0aW8vdmlydGlvLWdwdS5oDQo+IEBAIC0xNjksNyArMTY5LDcgQEAgc3RydWN0IFZpcnRJ
+T0dQVUJhc2VDbGFzcyB7DQo+ICAgICAgREVGSU5FX1BST1BfVUlOVDMyKCJ5cmVzIiwgX3N0YXRl
+LCBfY29uZi55cmVzLCA4MDApDQo+IA0KPiAgdHlwZWRlZiBzdHJ1Y3QgVkdQVURNQUJ1ZiB7DQo+
+IC0gICAgUWVtdURtYUJ1ZiBidWY7DQo+ICsgICAgUWVtdURtYUJ1ZiAqYnVmOw0KPiAgICAgIHVp
+bnQzMl90IHNjYW5vdXRfaWQ7DQo+ICAgICAgUVRBSUxRX0VOVFJZKFZHUFVETUFCdWYpIG5leHQ7
+DQo+ICB9IFZHUFVETUFCdWY7DQo+IGRpZmYgLS1naXQgYS9pbmNsdWRlL3VpL2NvbnNvbGUuaCBi
+L2luY2x1ZGUvdWkvY29uc29sZS5oIGluZGV4DQo+IDFmM2QwMjU1NDguLjBiODIzZWZiMmUgMTAw
+NjQ0DQo+IC0tLSBhL2luY2x1ZGUvdWkvY29uc29sZS5oDQo+ICsrKyBiL2luY2x1ZGUvdWkvY29u
+c29sZS5oDQo+IEBAIC0yNzksNiArMjc5LDcgQEAgdHlwZWRlZiBzdHJ1Y3QgRGlzcGxheUNoYW5n
+ZUxpc3RlbmVyT3BzIHsNCj4gICAgICAvKiBvcHRpb25hbCAqLw0KPiAgICAgIHZvaWQgKCpkcHlf
+Z2xfY3Vyc29yX3Bvc2l0aW9uKShEaXNwbGF5Q2hhbmdlTGlzdGVuZXIgKmRjbCwNCj4gICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludDMyX3QgcG9zX3gsIHVpbnQzMl90IHBv
+c195KTsNCj4gKw0KPiAgICAgIC8qIG9wdGlvbmFsICovDQo+ICAgICAgdm9pZCAoKmRweV9nbF9y
+ZWxlYXNlX2RtYWJ1ZikoRGlzcGxheUNoYW5nZUxpc3RlbmVyICpkY2wsDQo+ICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgUWVtdURtYUJ1ZiAqZG1hYnVmKTsgQEAgLTM1OCw2ICsz
+NTksMTIgQEAgdm9pZA0KPiBkcHlfZ2xfY3Vyc29yX2RtYWJ1ZihRZW11Q29uc29sZSAqY29uLCBR
+ZW11RG1hQnVmICpkbWFidWYsDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIGJvb2wgaGF2
+ZV9ob3QsIHVpbnQzMl90IGhvdF94LCB1aW50MzJfdCBob3RfeSk7ICB2b2lkDQo+IGRweV9nbF9j
+dXJzb3JfcG9zaXRpb24oUWVtdUNvbnNvbGUgKmNvbiwNCj4gICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICB1aW50MzJfdCBwb3NfeCwgdWludDMyX3QgcG9zX3kpOw0KPiArUWVtdURtYUJ1ZiAq
+ZHB5X2dsX2NyZWF0ZV9kbWFidWYodWludDMyX3Qgd2lkdGgsIHVpbnQzMl90IGhlaWdodCwNCj4g
+KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVpbnQzMl90IHN0cmlkZSwgdWludDMy
+X3QgeCwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVpbnQzMl90IHksIHVp
+bnQzMl90IGJhY2tpbmdfd2lkdGgsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICB1aW50MzJfdCBiYWNraW5nX2hlaWdodCwgdWludDMyX3QgZm91cmNjLA0KPiArICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgdWludDMyX3QgbW9kaWZpZXIsIHVpbnQzMl90IGRtYWJ1
+Zl9mZCwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGJvb2wgYWxsb3dfZmVu
+Y2VzKTsNCj4gIHVpbnQzMl90IGRweV9nbF9kbWFidWZfZ2V0X3dpZHRoKFFlbXVEbWFCdWYgKmRt
+YWJ1Zik7ICB1aW50MzJfdA0KPiBkcHlfZ2xfZG1hYnVmX2dldF9oZWlnaHQoUWVtdURtYUJ1ZiAq
+ZG1hYnVmKTsgIGludDMyX3QNCj4gZHB5X2dsX2RtYWJ1Zl9nZXRfZmQoUWVtdURtYUJ1ZiAqZG1h
+YnVmKTsgZGlmZiAtLWdpdCBhL2h3L2Rpc3BsYXkvdmlydGlvLQ0KPiBncHUtdWRtYWJ1Zi5jIGIv
+aHcvZGlzcGxheS92aXJ0aW8tZ3B1LXVkbWFidWYuYyBpbmRleA0KPiBkNjgwZTg3MWMxLi5kZGU2
+YzhlOWQ5IDEwMDY0NA0KPiAtLS0gYS9ody9kaXNwbGF5L3ZpcnRpby1ncHUtdWRtYWJ1Zi5jDQo+
+ICsrKyBiL2h3L2Rpc3BsYXkvdmlydGlvLWdwdS11ZG1hYnVmLmMNCj4gQEAgLTE2Miw3ICsxNjIs
+NyBAQCBzdGF0aWMgdm9pZCB2aXJ0aW9fZ3B1X2ZyZWVfZG1hYnVmKFZpcnRJT0dQVSAqZywNCj4g
+VkdQVURNQUJ1ZiAqZG1hYnVmKQ0KPiAgICAgIHN0cnVjdCB2aXJ0aW9fZ3B1X3NjYW5vdXQgKnNj
+YW5vdXQ7DQo+IA0KPiAgICAgIHNjYW5vdXQgPSAmZy0+cGFyZW50X29iai5zY2Fub3V0W2RtYWJ1
+Zi0+c2Nhbm91dF9pZF07DQo+IC0gICAgZHB5X2dsX3JlbGVhc2VfZG1hYnVmKHNjYW5vdXQtPmNv
+biwgJmRtYWJ1Zi0+YnVmKTsNCj4gKyAgICBkcHlfZ2xfcmVsZWFzZV9kbWFidWYoc2Nhbm91dC0+
+Y29uLCBkbWFidWYtPmJ1Zik7DQo+ICAgICAgUVRBSUxRX1JFTU9WRSgmZy0+ZG1hYnVmLmJ1ZnMs
+IGRtYWJ1ZiwgbmV4dCk7DQo+ICAgICAgZ19mcmVlKGRtYWJ1Zik7DQo+ICB9DQo+IEBAIC0xODEs
+MTcgKzE4MSwxMCBAQCBzdGF0aWMgVkdQVURNQUJ1Zg0KPiAgICAgIH0NCj4gDQo+ICAgICAgZG1h
+YnVmID0gZ19uZXcwKFZHUFVETUFCdWYsIDEpOw0KPiAtICAgIGRtYWJ1Zi0+YnVmLndpZHRoID0g
+ci0+d2lkdGg7DQo+IC0gICAgZG1hYnVmLT5idWYuaGVpZ2h0ID0gci0+aGVpZ2h0Ow0KPiAtICAg
+IGRtYWJ1Zi0+YnVmLnN0cmlkZSA9IGZiLT5zdHJpZGU7DQo+IC0gICAgZG1hYnVmLT5idWYueCA9
+IHItPng7DQo+IC0gICAgZG1hYnVmLT5idWYueSA9IHItPnk7DQo+IC0gICAgZG1hYnVmLT5idWYu
+YmFja2luZ193aWR0aCA9IGZiLT53aWR0aDsNCj4gLSAgICBkbWFidWYtPmJ1Zi5iYWNraW5nX2hl
+aWdodCA9IGZiLT5oZWlnaHQ7DQo+IC0gICAgZG1hYnVmLT5idWYuZm91cmNjID0gcWVtdV9waXht
+YW5fdG9fZHJtX2Zvcm1hdChmYi0+Zm9ybWF0KTsNCj4gLSAgICBkbWFidWYtPmJ1Zi5mZCA9IHJl
+cy0+ZG1hYnVmX2ZkOw0KPiAtICAgIGRtYWJ1Zi0+YnVmLmFsbG93X2ZlbmNlcyA9IHRydWU7DQo+
+IC0gICAgZG1hYnVmLT5idWYuZHJhd19zdWJtaXR0ZWQgPSBmYWxzZTsNCj4gKyAgICBkbWFidWYt
+PmJ1ZiA9IGRweV9nbF9jcmVhdGVfZG1hYnVmKHItPndpZHRoLCByLT5oZWlnaHQsIGZiLT5zdHJp
+ZGUsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICByLT54LCByLT55
+LCBmYi0+d2lkdGgsIGZiLT5oZWlnaHQsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICBxZW11X3BpeG1hbl90b19kcm1fZm9ybWF0KGZiLT5mb3JtYXQpLA0KPiArICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgMCwgcmVzLT5kbWFidWZfZmQsIGZh
+bHNlKTsNCj4gICAgICBkbWFidWYtPnNjYW5vdXRfaWQgPSBzY2Fub3V0X2lkOw0KPiAgICAgIFFU
+QUlMUV9JTlNFUlRfSEVBRCgmZy0+ZG1hYnVmLmJ1ZnMsIGRtYWJ1ZiwgbmV4dCk7DQo+IA0KPiBA
+QCAtMjEzLDggKzIwNiw4IEBAIGludCB2aXJ0aW9fZ3B1X3VwZGF0ZV9kbWFidWYoVmlydElPR1BV
+ICpnLA0KPiAgICAgICAgICByZXR1cm4gLUVJTlZBTDsNCj4gICAgICB9DQo+IA0KPiAtICAgIHdp
+ZHRoID0gZHB5X2dsX2RtYWJ1Zl9nZXRfd2lkdGgoJm5ld19wcmltYXJ5LT5idWYpOw0KPiAtICAg
+IGhlaWdodCA9IGRweV9nbF9kbWFidWZfZ2V0X2hlaWdodCgmbmV3X3ByaW1hcnktPmJ1Zik7DQo+
+ICsgICAgd2lkdGggPSBkcHlfZ2xfZG1hYnVmX2dldF93aWR0aChuZXdfcHJpbWFyeS0+YnVmKTsN
+Cj4gKyAgICBoZWlnaHQgPSBkcHlfZ2xfZG1hYnVmX2dldF9oZWlnaHQobmV3X3ByaW1hcnktPmJ1
+Zik7DQo+IA0KPiAgICAgIGlmIChnLT5kbWFidWYucHJpbWFyeVtzY2Fub3V0X2lkXSkgew0KPiAg
+ICAgICAgICBvbGRfcHJpbWFyeSA9IGctPmRtYWJ1Zi5wcmltYXJ5W3NjYW5vdXRfaWRdOyBAQCAt
+MjIyLDcgKzIxNSw3IEBAIGludA0KPiB2aXJ0aW9fZ3B1X3VwZGF0ZV9kbWFidWYoVmlydElPR1BV
+ICpnLA0KPiANCj4gICAgICBnLT5kbWFidWYucHJpbWFyeVtzY2Fub3V0X2lkXSA9IG5ld19wcmlt
+YXJ5Ow0KPiAgICAgIHFlbXVfY29uc29sZV9yZXNpemUoc2Nhbm91dC0+Y29uLCB3aWR0aCwgaGVp
+Z2h0KTsNCj4gLSAgICBkcHlfZ2xfc2Nhbm91dF9kbWFidWYoc2Nhbm91dC0+Y29uLCAmbmV3X3By
+aW1hcnktPmJ1Zik7DQo+ICsgICAgZHB5X2dsX3NjYW5vdXRfZG1hYnVmKHNjYW5vdXQtPmNvbiwg
+bmV3X3ByaW1hcnktPmJ1Zik7DQo+IA0KPiAgICAgIGlmIChvbGRfcHJpbWFyeSkgew0KPiAgICAg
+ICAgICB2aXJ0aW9fZ3B1X2ZyZWVfZG1hYnVmKGcsIG9sZF9wcmltYXJ5KTsgZGlmZiAtLWdpdCBh
+L2h3L3ZmaW8vZGlzcGxheS5jDQo+IGIvaHcvdmZpby9kaXNwbGF5LmMgaW5kZXggNjc2YjJmYzVm
+My4uYTNiZGIwMTc4OSAxMDA2NDQNCj4gLS0tIGEvaHcvdmZpby9kaXNwbGF5LmMNCj4gKysrIGIv
+aHcvdmZpby9kaXNwbGF5LmMNCj4gQEAgLTI0MSwxNCArMjQxLDEwIEBAIHN0YXRpYyBWRklPRE1B
+QnVmDQo+ICp2ZmlvX2Rpc3BsYXlfZ2V0X2RtYWJ1ZihWRklPUENJRGV2aWNlICp2ZGV2LA0KPiAN
+Cj4gICAgICBkbWFidWYgPSBnX25ldzAoVkZJT0RNQUJ1ZiwgMSk7DQo+ICAgICAgZG1hYnVmLT5k
+bWFidWZfaWQgID0gcGxhbmUuZG1hYnVmX2lkOw0KPiAtICAgIGRtYWJ1Zi0+YnVmLndpZHRoICA9
+IHBsYW5lLndpZHRoOw0KPiAtICAgIGRtYWJ1Zi0+YnVmLmhlaWdodCA9IHBsYW5lLmhlaWdodDsN
+Cj4gLSAgICBkbWFidWYtPmJ1Zi5iYWNraW5nX3dpZHRoID0gcGxhbmUud2lkdGg7DQo+IC0gICAg
+ZG1hYnVmLT5idWYuYmFja2luZ19oZWlnaHQgPSBwbGFuZS5oZWlnaHQ7DQo+IC0gICAgZG1hYnVm
+LT5idWYuc3RyaWRlID0gcGxhbmUuc3RyaWRlOw0KPiAtICAgIGRtYWJ1Zi0+YnVmLmZvdXJjYyA9
+IHBsYW5lLmRybV9mb3JtYXQ7DQo+IC0gICAgZG1hYnVmLT5idWYubW9kaWZpZXIgPSBwbGFuZS5k
+cm1fZm9ybWF0X21vZDsNCj4gLSAgICBkbWFidWYtPmJ1Zi5mZCAgICAgPSBmZDsNCj4gKyAgICBk
+bWFidWYtPmJ1ZiA9IGRweV9nbF9jcmVhdGVfZG1hYnVmKHBsYW5lLndpZHRoLCBwbGFuZS5oZWln
+aHQsDQo+IHBsYW5lLnN0cmlkZSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIDAsIDAsIHBsYW5lLndpZHRoLCBwbGFuZS5oZWlnaHQsDQo+ICsgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICBwbGFuZS5kcm1fZm9ybWF0LCBwbGFuZS5kcm1fZm9y
+bWF0X21vZCwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZkLCBm
+YWxzZSk7DQo+ICAgICAgaWYgKHBsYW5lX3R5cGUgPT0gRFJNX1BMQU5FX1RZUEVfQ1VSU09SKSB7
+DQo+ICAgICAgICAgIHZmaW9fZGlzcGxheV91cGRhdGVfY3Vyc29yKGRtYWJ1ZiwgJnBsYW5lKTsN
+Cj4gICAgICB9DQo+IEBAIC0yNjIsMTIgKzI1OCwxMiBAQCBzdGF0aWMgdm9pZA0KPiB2ZmlvX2Rp
+c3BsYXlfZnJlZV9vbmVfZG1hYnVmKFZGSU9EaXNwbGF5ICpkcHksIFZGSU9ETUFCdWYgKmRtYWJ1
+ZikNCj4gICAgICBpbnQgZmQ7DQo+IA0KPiAgICAgIFFUQUlMUV9SRU1PVkUoJmRweS0+ZG1hYnVm
+LmJ1ZnMsIGRtYWJ1ZiwgbmV4dCk7DQo+IC0gICAgZmQgPSBkcHlfZ2xfZG1hYnVmX2dldF9mZCgm
+ZG1hYnVmLT5idWYpOw0KPiArICAgIGZkID0gZHB5X2dsX2RtYWJ1Zl9nZXRfZmQoZG1hYnVmLT5i
+dWYpOw0KPiAgICAgIGlmIChmZCA+IC0xKSB7DQo+ICAgICAgICAgIGNsb3NlKGZkKTsNCj4gICAg
+ICB9DQo+IA0KPiAtICAgIGRweV9nbF9yZWxlYXNlX2RtYWJ1ZihkcHktPmNvbiwgJmRtYWJ1Zi0+
+YnVmKTsNCj4gKyAgICBkcHlfZ2xfcmVsZWFzZV9kbWFidWYoZHB5LT5jb24sIGRtYWJ1Zi0+YnVm
+KTsNCj4gICAgICBnX2ZyZWUoZG1hYnVmKTsNCj4gIH0NCj4gDQo+IEBAIC0zMDMsMTMgKzI5OSwx
+MyBAQCBzdGF0aWMgdm9pZCB2ZmlvX2Rpc3BsYXlfZG1hYnVmX3VwZGF0ZSh2b2lkDQo+ICpvcGFx
+dWUpDQo+ICAgICAgICAgIHJldHVybjsNCj4gICAgICB9DQo+IA0KPiAtICAgIHdpZHRoID0gZHB5
+X2dsX2RtYWJ1Zl9nZXRfd2lkdGgoJnByaW1hcnktPmJ1Zik7DQo+IC0gICAgaGVpZ2h0ID0gZHB5
+X2dsX2RtYWJ1Zl9nZXRfaGVpZ2h0KCZwcmltYXJ5LT5idWYpOw0KPiArICAgIHdpZHRoID0gZHB5
+X2dsX2RtYWJ1Zl9nZXRfd2lkdGgocHJpbWFyeS0+YnVmKTsNCj4gKyAgICBoZWlnaHQgPSBkcHlf
+Z2xfZG1hYnVmX2dldF9oZWlnaHQocHJpbWFyeS0+YnVmKTsNCj4gDQo+ICAgICAgaWYgKGRweS0+
+ZG1hYnVmLnByaW1hcnkgIT0gcHJpbWFyeSkgew0KPiAgICAgICAgICBkcHktPmRtYWJ1Zi5wcmlt
+YXJ5ID0gcHJpbWFyeTsNCj4gICAgICAgICAgcWVtdV9jb25zb2xlX3Jlc2l6ZShkcHktPmNvbiwg
+d2lkdGgsIGhlaWdodCk7DQo+IC0gICAgICAgIGRweV9nbF9zY2Fub3V0X2RtYWJ1ZihkcHktPmNv
+biwgJnByaW1hcnktPmJ1Zik7DQo+ICsgICAgICAgIGRweV9nbF9zY2Fub3V0X2RtYWJ1ZihkcHkt
+PmNvbiwgcHJpbWFyeS0+YnVmKTsNCj4gICAgICAgICAgZnJlZV9idWZzID0gdHJ1ZTsNCj4gICAg
+ICB9DQo+IA0KPiBAQCAtMzIzLDcgKzMxOSw3IEBAIHN0YXRpYyB2b2lkIHZmaW9fZGlzcGxheV9k
+bWFidWZfdXBkYXRlKHZvaWQgKm9wYXF1ZSkNCj4gICAgICBpZiAoY3Vyc29yICYmIChuZXdfY3Vy
+c29yIHx8IGN1cnNvci0+aG90X3VwZGF0ZXMpKSB7DQo+ICAgICAgICAgIGJvb2wgaGF2ZV9ob3Qg
+PSAoY3Vyc29yLT5ob3RfeCAhPSAweGZmZmZmZmZmICYmDQo+ICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgY3Vyc29yLT5ob3RfeSAhPSAweGZmZmZmZmZmKTsNCj4gLSAgICAgICAgZHB5X2dsX2N1
+cnNvcl9kbWFidWYoZHB5LT5jb24sICZjdXJzb3ItPmJ1ZiwgaGF2ZV9ob3QsDQo+ICsgICAgICAg
+IGRweV9nbF9jdXJzb3JfZG1hYnVmKGRweS0+Y29uLCBjdXJzb3ItPmJ1ZiwgaGF2ZV9ob3QsDQo+
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGN1cnNvci0+aG90X3gsIGN1cnNvci0+aG90
+X3kpOw0KPiAgICAgICAgICBjdXJzb3ItPmhvdF91cGRhdGVzID0gMDsNCj4gICAgICB9IGVsc2Ug
+aWYgKCFjdXJzb3IgJiYgbmV3X2N1cnNvcikgeyBkaWZmIC0tZ2l0IGEvdWkvY29uc29sZS5jIGIv
+dWkvY29uc29sZS5jDQo+IGluZGV4IDEwYWJlYjk3ODAuLjYxNmQ2MzY5MTIgMTAwNjQ0DQo+IC0t
+LSBhL3VpL2NvbnNvbGUuYw0KPiArKysgYi91aS9jb25zb2xlLmMNCj4gQEAgLTExOTAsNiArMTE5
+MCwzMyBAQCB2b2lkIGRweV9nbF9jdXJzb3JfcG9zaXRpb24oUWVtdUNvbnNvbGUgKmNvbiwNCj4g
+ICAgICB9DQo+ICB9DQo+IA0KPiArUWVtdURtYUJ1ZiAqZHB5X2dsX2NyZWF0ZV9kbWFidWYodWlu
+dDMyX3Qgd2lkdGgsIHVpbnQzMl90IGhlaWdodCwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgIHVpbnQzMl90IHN0cmlkZSwgdWludDMyX3QgeCwNCj4gKyAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIHVpbnQzMl90IHksIHVpbnQzMl90IGJhY2tpbmdfd2lkdGgsDQo+
+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB1aW50MzJfdCBiYWNraW5nX2hlaWdo
+dCwgdWludDMyX3QgZm91cmNjLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+dWludDMyX3QgbW9kaWZpZXIsIHVpbnQzMl90IGRtYWJ1Zl9mZCwNCj4gKyAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgIGJvb2wgYWxsb3dfZmVuY2VzKSB7DQo+ICsgICAgUWVtdURtYUJ1
+ZiAqZG1hYnVmOw0KPiArDQo+ICsgICAgZG1hYnVmID0gZ19uZXcwKFFlbXVEbWFCdWYsIDEpOw0K
+PiArDQo+ICsgICAgZG1hYnVmLT53aWR0aCA9IHdpZHRoOw0KPiArICAgIGRtYWJ1Zi0+aGVpZ2h0
+ID0gaGVpZ2h0Ow0KPiArICAgIGRtYWJ1Zi0+c3RyaWRlID0gc3RyaWRlOw0KPiArICAgIGRtYWJ1
+Zi0+eCA9IHg7DQo+ICsgICAgZG1hYnVmLT55ID0geTsNCj4gKyAgICBkbWFidWYtPmJhY2tpbmdf
+d2lkdGggPSBiYWNraW5nX3dpZHRoOw0KPiArICAgIGRtYWJ1Zi0+YmFja2luZ19oZWlnaHQgPSBi
+YWNraW5nX2hlaWdodDsNCj4gKyAgICBkbWFidWYtPmZvdXJjYyA9IGZvdXJjYzsNCj4gKyAgICBk
+bWFidWYtPm1vZGlmaWVyID0gbW9kaWZpZXI7DQo+ICsgICAgZG1hYnVmLT5mZCA9IGRtYWJ1Zl9m
+ZDsNCj4gKyAgICBkbWFidWYtPmFsbG93X2ZlbmNlcyA9IGFsbG93X2ZlbmNlczsNCj4gKyAgICBk
+bWFidWYtPmZlbmNlX2ZkID0gLTE7DQo+ICsNCj4gKyAgICByZXR1cm4gZG1hYnVmOw0KPiArfQ0K
+PiArDQo+ICB1aW50MzJfdCBkcHlfZ2xfZG1hYnVmX2dldF93aWR0aChRZW11RG1hQnVmICpkbWFi
+dWYpICB7DQo+ICAgICAgaWYgKGRtYWJ1Zikgew0KPiBAQCAtMTIzMCw2ICsxMjU3LDcgQEAgdm9p
+ZCBkcHlfZ2xfcmVsZWFzZV9kbWFidWYoUWVtdUNvbnNvbGUgKmNvbiwNCj4gICAgICAgICAgaWYg
+KGRjbC0+b3BzLT5kcHlfZ2xfcmVsZWFzZV9kbWFidWYpIHsNCj4gICAgICAgICAgICAgIGRjbC0+
+b3BzLT5kcHlfZ2xfcmVsZWFzZV9kbWFidWYoZGNsLCBkbWFidWYpOw0KPiAgICAgICAgICB9DQo+
+ICsgICAgICAgIGdfZnJlZShkbWFidWYpOw0KPiAgICAgIH0NCj4gIH0NCj4gDQo+IC0tDQo+IDIu
+NDEuMA0KDQo=
 
