@@ -4,84 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE20C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 17:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55CBDC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 17:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnM4A-0007Uy-EK; Thu, 21 Mar 2024 13:18:58 -0400
+	id 1rnM8M-0000fO-Fp; Thu, 21 Mar 2024 13:23:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rnM48-0007UU-12
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:18:56 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rnM46-0007Z9-Bb
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:18:55 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1dddbeac9f9so8035295ad.3
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 10:18:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711041532; x=1711646332; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2tmTZrDBjxE6lExAyOPcBmlsnOAnDptfD48lW8AcXzc=;
- b=GP+zDBE7ccPcyKNe6ZLzyDOtskXZUCCUN2XQCYM6R7jTAakNUE/FLmm4THNAIzb24n
- ltsKcn//xeSEN3Vdu6turKCigNIyQozVisEcefyTH1HS2zmye9hpZV4vt4N8RAbuBgG/
- aEJyrYjh4rVKTgdb+qojGBxBeWoj7awy0aIFmVze7aX+SG70psy9dPoeTtYOoT34IELE
- SMPj3unvXyX/Lhd4RDKWDV0Zu76IdD+SaXI76vw0lnmDzm/dh3V1AL9nIxgv82IlJqIa
- t6ia7Y0fE1HpmJ04k371viSzODwXgarHUdzqRmDj8qIgbCzJpxNzeYQLvQ1WXylkWIPR
- n1yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711041532; x=1711646332;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2tmTZrDBjxE6lExAyOPcBmlsnOAnDptfD48lW8AcXzc=;
- b=dy72CTC6SVeH6M0g8LKMxTjzsuDxP9EB/ZtPnQ6M2f2YFmIv8D33xbrUkXYPleKBoK
- YbXEnaSC/wIVEj432xV46Mi1VL1iGXz+61djSAJCM/2ifk90AeHDy34xgmw/g9MqkCFO
- H4Q10+MEi472u8K6Ih5rZCI6Hjpqzy10vj+zIdYULySJZAL8u63xKT+lp2PLCOKVqrfZ
- q2smC300tnVNlx3cnUU23yMiE5xxQ8vw+9bpnMskboMcqgx+6+x8PDC1BH2b4cefjx/I
- 91TMnrD3VVF0wMr1m3ID/NS4jf/YW2JeB3cJ34GAgezxwawS6k2QlO0hY++BozMYZHJC
- +ymw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXcPuRCPwWQas3HPu6LHYBOEWH4oGdWIRNwU6UKj+MEuENQLBR2Gx1TyYFEG8i1CF8fEoprk+t2s9S/WlmdapuYYv1QM4g=
-X-Gm-Message-State: AOJu0YwrDDmWwvdsfdL6KjDdWs8ySpo/xLl2VZ05jc2XY9yZaBwuaVDe
- BiNypeXZaFgwH7FqgXTUe3SBw3PocJwcmvufK4I1Rvvw4UVg6K0Z0LKsasrR+j4=
-X-Google-Smtp-Source: AGHT+IGqtIXHSSAVq4tzJsK6l1TlD6JVoYXGZ1RXJg5VAO+rzmmioNp2S+ohu7eaPFDTrDPEKTAeEw==
-X-Received: by 2002:a17:902:e84f:b0:1de:fbe1:bea9 with SMTP id
- t15-20020a170902e84f00b001defbe1bea9mr44868plg.19.1711041531760; 
- Thu, 21 Mar 2024 10:18:51 -0700 (PDT)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- u6-20020a170902e80600b001dc71ead7e5sm66332plg.165.2024.03.21.10.18.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Mar 2024 10:18:51 -0700 (PDT)
-Message-ID: <a896620e-d0c1-47c0-9609-56a30c4f4f3e@linaro.org>
-Date: Thu, 21 Mar 2024 07:18:48 -1000
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rnM8A-0000Yq-Vz
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:23:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rnM89-0000O1-4J
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:23:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711041783;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=oWcijEwKBz/n9paWirD20Zty5f+AZvAacZg+o1zUOvQ=;
+ b=DMEd+TBiUk0XvYN24BZqltdAIfz2y1U26U+PQrsMxmlCgqFyN0Aw+2BWtBfXU3KD9oOsKs
+ UFypO8lpaJt39SOcgjqkmrrNT0MGRKAVdTM+rs+ROkqkX4FD1adWFJDR2qTC6ACxj/mm+r
+ X19tI1HZXlDUdEi5THW2V4yQfUzAYhM=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-635-bnZguoyCPjWPag9s5MKMug-1; Thu, 21 Mar 2024 13:23:00 -0400
+X-MC-Unique: bnZguoyCPjWPag9s5MKMug-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A0638800270;
+ Thu, 21 Mar 2024 17:22:58 +0000 (UTC)
+Received: from localhost (unknown [10.39.194.39])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id EEFEF2022C1D;
+ Thu, 21 Mar 2024 17:22:56 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL for-9.0 0/1] Block patches
+Date: Thu, 21 Mar 2024 13:22:50 -0400
+Message-ID: <20240321172251.1542718-1-stefanha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: change QARMA3 default for aarch64?
-Content-Language: en-US
-To: Michael Tokarev <mjt@tls.msk.ru>, QEMU Developers
- <qemu-devel@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>
-References: <5e6e2c5b-70bc-4a9b-a5ce-353607e42ac6@tls.msk.ru>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <5e6e2c5b-70bc-4a9b-a5ce-353607e42ac6@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.372,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,49 +81,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/20/24 23:32, Michael Tokarev wrote:
-> Since commit v8.1.0-511-g399e5e7125 "target/arm: Implement FEAT_PACQARMA3",
-> pauth-qarma3 is the default pauth scheme.  However this one is very slow.
+The following changes since commit fea445e8fe9acea4f775a832815ee22bdf2b0222:
 
-That patch only introduced qarma3, it didn't make it the default:
+  Merge tag 'pull-maintainer-final-for-real-this-time-200324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-21 10:31:56 +0000)
 
-  static Property arm_cpu_pauth_property =
-      DEFINE_PROP_BOOL("pauth", ARMCPU, prop_pauth, true);
-  static Property arm_cpu_pauth_impdef_property =
-      DEFINE_PROP_BOOL("pauth-impdef", ARMCPU, prop_pauth_impdef, false);
-+static Property arm_cpu_pauth_qarma3_property =
-+    DEFINE_PROP_BOOL("pauth-qarma3", ARMCPU, prop_pauth_qarma3, false);
+are available in the Git repository at:
 
-Per the first line, default is still qarma5 (which is the slowest, afaik).
+  https://gitlab.com/stefanha/qemu.git tags/block-pull-request
 
-I have not done any benchmarking for qarma3 at all, but it still *looks* significantly 
-more complex than impdef.
+for you to fetch changes up to 9352f80cd926fe2dde7c89b93ee33bb0356ff40e:
 
-> When people run aarch64 code in qemu tcg, an immediate reaction is like,
-> "this seems to be a bug somewhere", since the code run insanely slower than
-> it was before.
-> 
-> And this is very difficult to find as well, - the reason for that slowdown
-> is usually well hidden from an average soul.
-> 
-> When the reason is actually discovered, people start changing settings in
-> various tools and configs to work around this issue.  Qemu itself has
-> overrides, pauth-impdef=on, in various tests, to make the test run at
-> saner speed.
-> 
-> After seeing how many issues people are having in debian with that, I'm
-> about to switch the default in debian build of qemu, because impdef,
-> while makes certain arm64-specific protection feature less effective,
-> is actually significantly more practical.  I dislike changing the
-> defaults, but this is a situation when it needs to be done, imho.
-> 
-> But before doing that, maybe it's better to change qemu default
-> instead?  What do you think?
+  coroutine: reserve 5,000 mappings (2024-03-21 13:14:30 -0400)
 
-I think it might be worth having -cpu max default to impdef.
+----------------------------------------------------------------
+Pull request
 
-Peter?
+I was too quick in sending the coroutine pool sizing change for -rc0 and still
+needed to address feedback from Daniel Berrangé.
 
+----------------------------------------------------------------
 
-r~
+Stefan Hajnoczi (1):
+  coroutine: reserve 5,000 mappings
+
+ util/qemu-coroutine.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
+
+-- 
+2.44.0
+
 
