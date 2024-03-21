@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A9F5C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 20:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44644C54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 21:07:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnPCH-00005o-E3; Thu, 21 Mar 2024 16:39:34 -0400
+	id 1rnPcJ-0004zB-6c; Thu, 21 Mar 2024 17:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rnPCB-00005G-7G
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 16:39:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rnPC8-0001xT-3T
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 16:39:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711053562;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gjyu8Fzt1dpbvaD5N/5UL7bx8QXQvb/Wl7BpsWSHXQE=;
- b=NvrpZRCD8aRZKQ9GR+kKqbP7Z1jb+W8tS2T6BeisJSyn5CZzjK8bCnVKYezhYyEiQSTOF7
- MoElRGsVDRIZOs7/MdG5N0BvYPPTzFHTMOU5VGbw2qZr8/n0uYjVzaH6NnZphCuUnO3+db
- H/NxJIoYWEdcTI/N9j33JsDfwzC+9Tc=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-25-YO76wnLjOW--JnTcC94KMA-1; Thu, 21 Mar 2024 16:39:20 -0400
-X-MC-Unique: YO76wnLjOW--JnTcC94KMA-1
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-430c9bbe925so2759341cf.0
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 13:39:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rnPcG-0004yk-UZ
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 17:06:24 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rnPcD-0006DU-Pb
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 17:06:24 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1dff837d674so11937555ad.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 14:06:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711055180; x=1711659980; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9uDg7JpxWzxo8zZq+P+MctUosVMT/EUBcSM5l9VJuqo=;
+ b=QwL/wfJ+Mhu40ABrdZEzYY2Kybv80PmP7SLW8AfuDbgh+SHacitHM9R6bDPJvl21wJ
+ kUTe85rN+KjtezVTCcys7HKNrCBb+xIjEKDPFFVm0SycPPrPRLs6bTabET9bYk+zwFjZ
+ KwBYtc8oLcSXeskPLZ40aFc34Q93k6PurcTPwCv5TxTuFAm0AtZOerc8zEsoNfk70+SR
+ JHO7wKbhVGYFEShmc1THjCd3RikNKa0Pu/40m9/shLT7IZ/NDXNPt8ANXN1qh99mBqo2
+ XUlPLaPU5fLO1mFE04vs63k01pbP8HiWE8lzroS/f7UDdbKf+rXaTQEHQrYYyjDm6e3W
+ G0XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711053560; x=1711658360;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gjyu8Fzt1dpbvaD5N/5UL7bx8QXQvb/Wl7BpsWSHXQE=;
- b=mBkcR8+AYHVIfv9E4HBn5SjFpIASdSOlqSjaEB2IWSSnhmpc8XQG68nRL9eb+8I4Ib
- NyRym3P+cLJWdTa5eSDgyvRtlpVz6lEM82GyONQy/QBuP5FUY9hGHovhMkQ7pcqhJ6re
- Gq/Rm2Ye38sEAnN/cmNls8JxFdlbLWtxRc+y5zoWIV8uHQpY8sWqAzehG7SehBRIws/x
- MoLvNj0k7P0wxDWr0DshwX+OA6kBWv0KDJd0hwfBvlPVyXPwdAcLEadQ/s0O7QYrHchs
- uXCmfRn9IRWeq4r9QgO6DeH9WWqORYgPiriSXobtiLfyqxkaE7KWg4h/ZJJiUqAbbp61
- u1Zg==
-X-Gm-Message-State: AOJu0Yzy3h5AHsAF/nZuG4o4d+43uJHtdeM6RukLF8gm3up7QSr2rUQd
- IdYEvoDanNiMoM3rOXbQZ/DPfBCfEhkyO5+NESVodI4vfOtj/CzcqFYF7MCHuOAyyQ5tpvWzZzk
- dd/aowA+qx9gdzwdnZHFehSIVlnkFYsKcBpBF2pkeerPFnx+RCkB8
-X-Received: by 2002:ac8:57c3:0:b0:430:e974:b94d with SMTP id
- w3-20020ac857c3000000b00430e974b94dmr296965qta.3.1711053559958; 
- Thu, 21 Mar 2024 13:39:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHReVDECQ23mTgI9/oeTraRPPL1WMm3dVeQwht64vk7FWa2CEw73QkA/VKGa+Z/2Ioqc43GnQ==
-X-Received: by 2002:ac8:57c3:0:b0:430:e974:b94d with SMTP id
- w3-20020ac857c3000000b00430e974b94dmr296941qta.3.1711053559536; 
- Thu, 21 Mar 2024 13:39:19 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- g10-20020ac842ca000000b004312a406460sm232705qtm.38.2024.03.21.13.39.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Mar 2024 13:39:19 -0700 (PDT)
-Date: Thu, 21 Mar 2024 16:39:17 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Hao Xiang <hao.xiang@bytedance.com>
-Subject: Re: [PATCH] migration/multifd: Fix clearing of mapped-ram zero pages
-Message-ID: <Zfya9XpgJhCNc_z3@x1n>
-References: <20240321201242.6009-1-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1711055180; x=1711659980;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9uDg7JpxWzxo8zZq+P+MctUosVMT/EUBcSM5l9VJuqo=;
+ b=NYiZnOHeZN+EJt2ohzRjRnIuui9jfxAVCBoZpQijKNrIyw82GNjtypm3TpbGUxxpBE
+ iRbF/57/Hf88kgdQ+xBnZ4Mw9MZLNlcZ8DK3hnVtrR9fej0qOEmR9OXbnkc2I1W4kHFr
+ BaociV3+hz/Lylnzc86kmqfERf0b+i2XIg2yHtnHcL5eep1lmcnagcwCwahHp5vFZkrM
+ GVfI6ta7CsoQwI7uOSrPMCiPiGyKdkWbeqmIkdBlJ+fUDlZrayZVlj7JltyT0E4cJW56
+ Nshh8RSv7xImUo8aRiHpXMnBOnUTHIaiXO0ncSJwv7kOq7lw7jhold6tHtWIuYeqhKD5
+ Tr3A==
+X-Gm-Message-State: AOJu0YyYGswYh1E1RNxHwuRXHUjE9Sy5+5PoyS0BessHpezpHMsVpgmF
+ oorNeaUsHbUBB/R00jFeCc91cscscO+AS0zkCkc0xFmmWRKsoRBciOWlwIQGVDI=
+X-Google-Smtp-Source: AGHT+IFL1nknkDv9yeyJp69KB3gZ+OiRHnjlaZkYSdC2ewajWqSDwDJhCczVuMCLBX7WTYcE9S02tw==
+X-Received: by 2002:a17:902:d501:b0:1dd:6780:179 with SMTP id
+ b1-20020a170902d50100b001dd67800179mr651595plg.68.1711055179834; 
+ Thu, 21 Mar 2024 14:06:19 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ z6-20020a170903018600b001dd7321036csm288494plg.195.2024.03.21.14.06.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 Mar 2024 14:06:19 -0700 (PDT)
+Message-ID: <48897a44-72ec-4c46-ae85-26528360daf8@linaro.org>
+Date: Thu, 21 Mar 2024 11:06:16 -1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240321201242.6009-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] target/hppa: add unit conditions for wide mode
+Content-Language: en-US
+To: Sven Schnelle <svens@stackframe.org>
+Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
+References: <20240321184228.611897-1-svens@stackframe.org>
+ <134f8055-6b5a-4610-93d3-524d2f3de003@linaro.org>
+ <874jczmjlk.fsf@t14.stackframe.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <874jczmjlk.fsf@t14.stackframe.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.372,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,52 +97,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 21, 2024 at 05:12:42PM -0300, Fabiano Rosas wrote:
-> When the zero page detection is done in the multifd threads, we need
-> to iterate the second part of the pages->offset array and clear the
-> file bitmap for each zero page. The piece of code we merged to do that
-> is wrong.
+On 3/21/24 10:10, Sven Schnelle wrote:
+> Richard Henderson <richard.henderson@linaro.org> writes:
 > 
-> The reason this has passed all the tests is because the bitmap is
-> initialized with zeroes already, so clearing the bits only really has
-> an effect during live migration and when a data page goes from having
-> data to no data.
+>> On 3/21/24 08:42, Sven Schnelle wrote:
+>>> Wide mode provides two more conditions, add them.
+>>> Signed-off-by: Sven Schnelle <svens@stackframe.org>
+>>> ---
+>>>    target/hppa/translate.c | 25 +++++++++++++++++++++++--
+>>>    1 file changed, 23 insertions(+), 2 deletions(-)
+>>> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+>>> index 8a87996fc1..f493e207e1 100644
+>>> --- a/target/hppa/translate.c
+>>> +++ b/target/hppa/translate.c
+>>> @@ -963,11 +963,22 @@ static DisasCond do_unit_cond(unsigned cf, bool d, TCGv_i64 res,
+>>>          switch (cf >> 1) {
+>>>        case 0: /* never / TR */
+>>> -    case 1: /* undefined */
+>>> -    case 5: /* undefined */
+>>>            cond = cond_make_f();
+>>>            break;
+>>>    +    case 1:
+>>
+>> Wants a comment for /* SWZ / NWZ */
+>>
+>>> +    case 5:
+>>
+>> /* SWC / NWC */
 > 
-> Fixes: 303e6f54f9 ("migration/multifd: Implement zero page transmission on the multifd thread.")
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
-> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1222882269
-> ---
->  migration/multifd.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index d2f0238f70..2802afe79d 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -111,7 +111,6 @@ void multifd_send_channel_created(void)
->  static void multifd_set_file_bitmap(MultiFDSendParams *p)
->  {
->      MultiFDPages_t *pages = p->pages;
-> -    uint32_t zero_num = p->pages->num - p->pages->normal_num;
->  
->      assert(pages->block);
->  
-> @@ -119,7 +118,7 @@ static void multifd_set_file_bitmap(MultiFDSendParams *p)
->          ramblock_set_file_bmap_atomic(pages->block, pages->offset[i], true);
->      }
->  
-> -    for (int i = p->pages->num; i < zero_num; i++) {
-> +    for (int i = p->pages->normal_num; i < p->pages->num; i++) {
->          ramblock_set_file_bmap_atomic(pages->block, pages->offset[i], false);
->      }
->  }
+> Are you going to fix that up, or should i send a v2?
 
-Hmm, a challenging one even if it reads obvious.. :)
+I'll fix it up.
 
-queued for 9.0-rc1, thanks.
 
--- 
-Peter Xu
-
+r~
 
