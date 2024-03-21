@@ -4,81 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74CBBC54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 18:29:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 692FAC54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 18:32:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnNA2-0007aj-FY; Thu, 21 Mar 2024 14:29:06 -0400
+	id 1rnND2-0000QN-80; Thu, 21 Mar 2024 14:32:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rnN9z-0007aH-DP
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 14:29:03 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rnN9x-0003t1-I7
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 14:29:03 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-56a2bb1d84eso2413972a12.1
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 11:29:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711045740; x=1711650540; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pCZe9c97mSPduNcttPxhwF3ZnoIb0Wd8cTRIAbH1CTg=;
- b=dPrfS9cdPoknkoInZTVL8P+IcgrWyF+4GRxWo+NCwRXs9fYaooMnz/Q53APBtHX3Bh
- q5NiwYGYVz3mOXJnMZe3/UdLFSGcB/+wexIqsF2pUG8KmbVP5HQt3dc41eTs6yD4jeC0
- EAwaH3S+2vQhCGwzt1PoEuRLp4owcymcYSCjrw8FyriT9V1X6Jil4a5VjTff2M0odqmN
- IKhzhZi615X/8jE9cbW77aRTZ3omsz+5rXvfJBTEdcwGuhkecwQQ8nQ5FobJSg6CrH/M
- m7HntkO26IL8z9m2AKJ/m6fY+A4mMOEWHtiVdNj9qv38RYqxGRcTs9b3q5fDMx0PmJLg
- SH0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711045740; x=1711650540;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pCZe9c97mSPduNcttPxhwF3ZnoIb0Wd8cTRIAbH1CTg=;
- b=ODRpOB+AlYfmxr32dvKwU5lhidEYwo2EQIuydHWyK9L6C9wZ6SoPGbh5ClEkWL02cB
- yRwL14LuzfPSwzV2rnO99LxKdUEbkO/JJz0BJp/Q15KHecAn1gYZ/4qaGjzoaD0I6q21
- abGOiebGqTV+vFknTd3IVj/T2M9CKyy9bf7WtruJT2WmdXjZBIHANEAvbEYAH34ExjWk
- M1TyrCWv4lMvb4WO4YmM6c/SXgSxgSVkqEjF5Vh55AOjlHHlu1orkgtWHXStMWO+8hr9
- Dj09ohyJFqj7macirw/YhkgxTRA0AFFrgcFfqYQv5fMC7+EgFp7NQE1aTrA0n2M19G81
- kVlA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXeA0m+Ox2ViCfrGKbL/HfdsUzNy+qrpYbvbpsoA6VYQighh9FuUNXr2ItxRuyLdCfKPxwOWdvmAgAeQIIW42JmiR2ZLwo=
-X-Gm-Message-State: AOJu0Yyxvpmyi3R+dfXAqthm633J97GxshzLGE4Yy1TStNzF+4KRJzK0
- PZhogO8U+HWf+W3tUXJIiHDAgZ8yTZZE6OPvzVedu8gXabNd2veDo4012iAdi1fZjRN/TaMXv8e
- v9pqr/CkH4jCdjivuBpeeKWX20IIdRGSHbXtUOw==
-X-Google-Smtp-Source: AGHT+IEc0QUfAhto+Ob5eSv9JXQk1wfN5nKjoy0owKd9IBUvLItEBwIQXue64VrKZlKR8H+MefSrdVFEtKrqA0k5Skw=
-X-Received: by 2002:a50:d508:0:b0:56b:d1c6:66a5 with SMTP id
- u8-20020a50d508000000b0056bd1c666a5mr1397813edi.6.1711045739781; Thu, 21 Mar
- 2024 11:28:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rnND0-0000QD-LP
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 14:32:10 -0400
+Received: from mout.gmx.net ([212.227.17.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rnNCy-0004Zs-NB
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 14:32:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1711045923; x=1711650723; i=deller@gmx.de;
+ bh=HM68tCejQ1XydybTN+wteNZtPSHOQ+ipT7KfDFhN6Xs=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+ In-Reply-To;
+ b=LeTfLARiKoYC2hTgWK5qkL0MtaSDgOAv27UzeMqxevg8l9flpO448t+ovXxfQXGb
+ /qwwh92M/GcMqPFR8JQQpWg0+vjpKZqm/3szoJyq0iqdUASlXMe6IYsDuFQ7DV9h0
+ sNrhQy9E/srjKcdRt13Rewcpx4psAfmUPehUlpb2OZUrXddb9t8H+hH6kAa+nIpiG
+ YhiXLwUlLJAVCLj4aLRniFLD/u3jf0/0e2t2yLv8Tuzh5tIS8lYUZFNm8KkxGKsIO
+ 1RMIQ/X+hftj54r8rOLbEZ6WSRNSSnFaNCIZlsnTZRzAff2joCjEBhJeiTXBJvxuz
+ hCPO+76wDeSKt+9PnQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([89.244.183.166]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MYNJq-1rJ0Vs3R4c-00VSgF; Thu, 21
+ Mar 2024 19:32:02 +0100
+Message-ID: <ebd05b86-ba9c-4d66-8a4a-f28dc03d15a8@gmx.de>
+Date: Thu, 21 Mar 2024 19:32:01 +0100
 MIME-Version: 1.0
-References: <20240321130812.2983113-1-ruanjinjie@huawei.com>
- <20240321130812.2983113-7-ruanjinjie@huawei.com>
- <CAFEAcA-SO3akirm+jgKGRvKH1bcsf1bLJE2uOCOoXi1h78WwFA@mail.gmail.com>
-In-Reply-To: <CAFEAcA-SO3akirm+jgKGRvKH1bcsf1bLJE2uOCOoXi1h78WwFA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 21 Mar 2024 18:28:48 +0000
-Message-ID: <CAFEAcA8+9Xd-GDNzBqGfDxoc7Bg-+wK59vcsyyNmrXrvAitAuQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v9 06/23] target/arm: Add support for Non-maskable
- Interrupt
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org, 
- wangyanan55@huawei.com, richard.henderson@linaro.org, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/9] target/hppa fixes for 9.0
+Content-Language: en-US
+To: Sven Schnelle <svens@stackframe.org>, Michael Tokarev <mjt@tls.msk.ru>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240320003223.554145-1-richard.henderson@linaro.org>
+ <812ed94a-1231-492c-bcbb-60a72c059eb4@tls.msk.ru>
+ <87cyrnmoha.fsf@t14.stackframe.org>
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
+ HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
+ r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
+ CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
+ 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
+ dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
+ Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
+ GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
+ aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
+ 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
+ ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
+ FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
+ uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
+ uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
+ REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
+ qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
+ iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
+ gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
+ Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
+ qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
+ 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
+ dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
+ rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
+ UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
+ eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
+ ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
+ dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
+ lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
+ 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
+ xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
+ wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
+ fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
+ Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
+ l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
+ RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
+ BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
+ Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
+ XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
+ MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
+ FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
+ 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
+ ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
+In-Reply-To: <87cyrnmoha.fsf@t14.stackframe.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:+/bNcRjfzgC73zvyD0H7QQy0TVigLfQLacthi5m/E+RoKC4ILLY
+ +fY5AqnewEYV0s0RUBx8OGKvnjBNo9dq/TZ7k5dK1w0RXChFdoCOg/JQveob0B/CfAFpHNz
+ bcH/4QSFEstG1uxPai4OLmNr7mYclZVY31Ojuky8FPp9/7mzA9GS1WhSgyJLWiiRZ8EN+zF
+ GPfu54CBJLOWbu6EK2euA==
+UI-OutboundReport: notjunk:1;M01:P0:63xM739lqes=;lqTzubR5rvTurncOP2k2r8Wcufd
+ rYIvgFdMX3kjFZQHb59efUqp1bICHob8Ras79yIrcX6bi9oMgfG5Yx8vxHZM1LGr0KLgy5APv
+ ibW6SfZmN8aJcu9XoX7uvw7ylQgzs4SEk8Wj0Ri5NnsWwa+h5lapAE472BpgpQM3ikUwgpkzj
+ 4tCy3f6Gk89G/h/vvFBqCmNh2weFQbGL+H06/cqmgtZEZWFtVlILIe/SUuJ3KVxLOyk3pMe3Z
+ E1Kcq6DNqf0JgTdwEt5a8Ya2OMCN/F2R0DfhYDdqZHQ5wpfJ7POtKGmrH3nGfRZCmg/elCUp0
+ IGkcUiqwcvy7f7NghDqbioqE4c44X6zNXm7rId4TsUnlZHRBpIsfn+JO/dNgappzG+WLkFrJ4
+ vOhSv7+qjccHEg7iLvgwZzWxoGdCLSdFwI3lSbmxlZ4vpSVkBEN6P8e+6Q6+tRXY9w/gDsf8B
+ JVcE4fLFlErfNybenKTij4S2obdsn/VLGoMn55fQ2qcVkKEC6FqwqkptLrp4EQlUGx/H8kD3+
+ QFl/zfl9NAhlRquNaAGBNsJY2sz4Qw0Ko0c49QV12VhhGHhY9+iDGkLQlCkzujIiKIlflnanr
+ aNs6OmmoyXYwn1/OZDZQjhBPT2L6u+V3gwxYw3l1mVc6C1t0u+iZ5fwqAuClLzrmG3mvrxKwp
+ pm/6uiHmnnTLSaiw2JeW6yT0OtJRToiyOay3/lDc2c/e2HiGbxcWp4/+OVrzpAcRq40aPC3+z
+ Py93CJ2TGHu0xY5tFc+lNdR9IGzFQTOcx1SzuMnS2PdWgv0EhA9vvS20QytwZD+SqlR+WiHqE
+ 63rzYx4Pns135ZzIf1vBYtk+CZYChJScmV71Ta+mx84Q4=
+Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,120 +132,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 21 Mar 2024 at 15:46, Peter Maydell <peter.maydell@linaro.org> wrote:
-> Something somewhere needs to implement "if SCTLR_ELx.NMI is 0 then
-> we don't take EXCP_VINMI etc but instead (maybe) EXCP_VIRQ etc".
-> At the moment nothing does that:
->  * arm_cpu_update_vinmi() doesn't look at the NMI bit before
->    deciding whether to set CPU_INTERRUPT_VINMI
->  * in arm_excp_unmasked() if NMI is 0 then allIntMask takes its
->    default value of false and so arm_excp_unmasked() returns true,
->    so VINMI is not masked
->  * arm_cpu_exec_interrupt() doesn't look at the NMI bit before
->    deciding whether to check the CPU_INTERRUPT_VINMI bit in interrupt_request
+On 3/21/24 19:25, Sven Schnelle wrote:
+> Michael Tokarev <mjt@tls.msk.ru> writes:
 >
-> So even if SCTLR_ELx.NMI is 0 we'll still try to take a VINMI
-> if it's set up in the HCR_EL2 bits.
+>> 20.03.2024 03:32, Richard Henderson :
+>>
+>>> Richard Henderson (3):
+>>>         target/hppa: Fix assemble_16 insns for wide mode
+>>>         target/hppa: Fix assemble_11a insns for wide mode
+>>>         target/hppa: Fix assemble_12a insns for wide mode
+>>> Sven Schnelle (6):
+>>>         target/hppa: ldcw,s uses static shift of 3
+>>>         target/hppa: fix shrp for wide mode
+>>>         target/hppa: fix access_id check
+>>>         target/hppa: exit tb on flush cache instructions
+>>>         target/hppa: mask privilege bits in mfia
+>>>         target/hppa: fix do_stdby_e()
+>>
+>> Is it all -stable material (when appropriate)?
 >
-> However we do this the required behaviour is that if NMI is 0
-> then it is as if the interrupt doesn't have superpriority and
-> it falls back to being handled as an ordinary IRQ, VIRQ, VFIQ etc.
-> I think the best place to do this is probably here in
-> arm_cpu_exec_interrupt() -- if SCTLR_ELx.NMI isn't set then
-> treat the VFNMI bit like VFIQ, the VINMI bit like VIRQ, and
-> the NMI bit like IRQ.
+> I'd say yes.
 
-Folding in something like this I think will work:
+Yes.
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 91c2896de0f..797ae3eb805 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -837,7 +837,8 @@ static bool arm_cpu_exec_interrupt(CPUState *cs,
-int interrupt_request)
-
-     /* The prioritization of interrupts is IMPLEMENTATION DEFINED. */
-
--    if (cpu_isar_feature(aa64_nmi, env_archcpu(env))) {
-+    if (cpu_isar_feature(aa64_nmi, env_archcpu(env)) &&
-+        (arm_sctlr(env, cur_el) & SCTLR_NMI)) {
-         if (interrupt_request & CPU_INTERRUPT_NMI) {
-             excp_idx = EXCP_NMI;
-             target_el = arm_phys_excp_target_el(cs, excp_idx, cur_el, secure);
-@@ -862,7 +863,22 @@ static bool arm_cpu_exec_interrupt(CPUState *cs,
-int interrupt_request)
-                 goto found;
-             }
-         }
-+    } else {
-+        /*
-+         * NMI disabled: interrupts with superpriority are handled
-+         * as if they didn't have it
-+         */
-+        if (interrupt_request & CPU_INTERRUPT_NMI) {
-+            interrupt_request |= CPU_INTERRUPT_HARD;
-+        }
-+        if (interrupt_request & CPU_INTERRUPT_VINMI) {
-+            interrupt_request |= CPU_INTERRUPT_VIRQ;
-+        }
-+        if (interrupt_request & CPU_INTERRUPT_VFNMI) {
-+            interrupt_request |= CPU_INTERRUPT_VFIQ;
-+        }
-     }
-+
-     if (interrupt_request & CPU_INTERRUPT_FIQ) {
-         excp_idx = EXCP_FIQ;
-         target_el = arm_phys_excp_target_el(cs, excp_idx, cur_el, secure);
-
-
-> What semantics do we intend for the VINMI/VFNMI bits in interrupt_request
-> and for the incoming IRQ, FIQ, NMI lines? The GIC spec suggests
-> (but doesn't mandate) that NMI could be signalled by asserting
-> both NMI and IRQ, and plain IRQ by asserting just IRQ (table 4-6
-> in the GIC spec). I think the GIC changes in this patchset assert
-> only the NMI line for an IRQNMI, and not both NMI and IRQ. That's OK
-> and I think makes more sense for QEMU than signalling both lines,
-> but it's not the same as what we wind up doing with the handling
-> of the HCR_EL2 bits in these functions, because you don't change
-> the existing arm_cpu_update_virq() so that it only sets the
-> CPU_INTERRUPT_VIRQ bit if this is a VIRQ and not a VIRQNMI.
-> So if the guest sets HCR_EL2.VI and HCRX_EL2.VINMI then
-> arm_cpu_update_virq() will say "this is a VIRQ" and also
-> arm_cpu_update_vinmi() will say "This is a VINMI" and so both bits
-> get set in the interrupt_request field.
->
-> I think the fix for this is probably to have arm_cpu_update_virq()
-> and arm_cpu_update_vfiq() check that this is not a VINMI/VFNMI,
-> so we only set 1 bit in interrupt_request, not 2.
-
-And for this a change like:
-
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 03a48a41366..91c2896de0f 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -926,7 +926,8 @@ void arm_cpu_update_virq(ARMCPU *cpu)
-     CPUARMState *env = &cpu->env;
-     CPUState *cs = CPU(cpu);
-
--    bool new_state = (env->cp15.hcr_el2 & HCR_VI) ||
-+    bool new_state = ((arm_hcr_el2_eff(env) & HCR_VI) &&
-+                      !(arm_hcrx_el2_eff(env) & HCRX_VINMI)) ||
-         (env->irq_line_state & CPU_INTERRUPT_VIRQ);
-
-     if (new_state != ((cs->interrupt_request & CPU_INTERRUPT_VIRQ) != 0)) {
-@@ -947,7 +948,8 @@ void arm_cpu_update_vfiq(ARMCPU *cpu)
-     CPUARMState *env = &cpu->env;
-     CPUState *cs = CPU(cpu);
-
--    bool new_state = (env->cp15.hcr_el2 & HCR_VF) ||
-+    bool new_state = ((arm_hcr_el2_eff(env) & HCR_VF) &&
-+                      !(arm_hcrx_el2_eff(env) & HCRX_VFNMI)) ||
-         (env->irq_line_state & CPU_INTERRUPT_VFIQ);
-
-     if (new_state != ((cs->interrupt_request & CPU_INTERRUPT_VFIQ) != 0)) {
-
-
-thanks
--- PMM
+Helge
 
