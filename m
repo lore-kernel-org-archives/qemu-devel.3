@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A794C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D518C54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:51:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnKgg-0008Eb-00; Thu, 21 Mar 2024 11:50:38 -0400
+	id 1rnKhp-0002N6-2b; Thu, 21 Mar 2024 11:51:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgc-0007sa-NG
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:35 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKhW-0001cp-MV
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:51:31 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgY-000201-RX
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:34 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-568a53d2ce0so1551729a12.0
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:50:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKhO-0002DG-Ir
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:51:27 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a471f86dcd3so27479766b.2
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:51:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711036229; x=1711641029; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711036264; x=1711641064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2zDd1vJ1m0kg+6reKiJJAv3Gd7RU3RjeGbW9KAoTqqc=;
- b=u2rQNocduOI+t1ABSpdjW3mvJpfffGYmGgPrJVlFVeDA3vtsDLVcP5Cxx93Tr7L9qz
- hTNbCMpaZ8cvsb/UbkofxlsdwT3hdM+rwC4+61rTStbUCPyniEOZIPeqTStEzlN6OM5T
- vTrY7zF8tGoLmWPFpo67vXHHMTQOCBgE7bfWVwyeJ05NDA4370uH+HAdvNwi0FqlVP3/
- okWJcwPgn5lEC3tu/ADITvHQtCkkL7sx58fnHs5rVQth2bBcDzFur8DtMqyMvUljBu8+
- aZbFK/ew7Z8NBibcoevMEh5Cm4gDB4qwCNH1Ty6GXCe3FDrVHaNEpoLhs52dFqFttGyd
- bZSg==
+ bh=Ie3mfp1m/rRKvj+8OELX2ynuCGg82V7qLs9kfFYvM/A=;
+ b=x2r+5suXYj2OJFynwLooTTT/G1/nFqtcu6I19wZwOk6fJjz9M8vEXYlv+fbrMK4jG6
+ QjudyUBsGu+u8Ycfu4qiAPOB5yL4ndbkg/zj8S3YZ9pVW/WeEFcIJxV2fbqqyCdbo1QO
+ ojOKKvSX/a24RoTMiGY43EDNSynqPsdoJhRB5kuHsXLBb3r04q+HFmuB+P8JuAd/dgqe
+ w5d00MmZW/kA0T2gmuAWU7XOTKXHux2GDkm1JjGyShFTAwv/W42+5S+o6cpUT9AtTg/P
+ rtgdfQyIcnBUKXXFbLBCzB01pNbrx/bJmblJgCPYxTKJ1q7/5eOO3c7EcijqRKJa9Wo7
+ XztA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711036229; x=1711641029;
+ d=1e100.net; s=20230601; t=1711036264; x=1711641064;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2zDd1vJ1m0kg+6reKiJJAv3Gd7RU3RjeGbW9KAoTqqc=;
- b=Ku5ToJc+3RH/nEmi4KPjO1DX4PjhO6joE6GvCrCFq9jeTjaKq5ZhhRxMk4wVbXNqgF
- TG5dfBO7M3MVMog6hbKMMalqpN87AfMld7yQxk9JrkANfq3rjtFEKyIdt0AfQBxzkqb4
- ivxOfnZn3AloBsRxBF96C3o5kOnpyPtrnpQFhzASXRL4BTqA50m3STQX1mAlrIvG3cgW
- yexsqRxv+AVJW6k+UMByxRvZG+LVYDGSS0qF6Px2H/beQ4tOz9SAhu5619uGGIkwBE5t
- BCDsELUuACPQX5WprHsghYIGnrzxsdXDsA3wVGqNbelOmTVgzSiopFGP6atKWL7IfS9Q
- yjUw==
-X-Gm-Message-State: AOJu0YwefEHyTM4H5oQO4DI0PgTkoizOBsKTnM34o0GYM301Ldwq7QIU
- vS1QjvkqbhL/DtTztTSkycLkxHrxLMuDWAQPeUxWbKOXYi7KsRXVF4dKppPigTG4jgQYw/6MQ01
- 6/RA=
-X-Google-Smtp-Source: AGHT+IE2nkP3/s+ZVl7OIbnsBZ7cJXuE1J4tybtt6Fys94AA+96zHcj+6baTb+fsUqIjIJvE7tyf0Q==
-X-Received: by 2002:a17:906:a44c:b0:a47:e19:81c7 with SMTP id
- cb12-20020a170906a44c00b00a470e1981c7mr1678931ejb.21.1711036228996; 
- Thu, 21 Mar 2024 08:50:28 -0700 (PDT)
+ bh=Ie3mfp1m/rRKvj+8OELX2ynuCGg82V7qLs9kfFYvM/A=;
+ b=oEQxE7OwCeJCb6OfE7IlEIB+AxeFyeQUpkQwP7y1vBtORM7n/G+Uw8M5ThtWNLBzN2
+ jG3PgDQ8qsTYg4KLwWBCi8bxqCrXt77KJKg34xfqXMAhvTnjAPrwXMQLLvN74L2GLBl1
+ dOvFgxX6uElkrpnN5vT+evYUF9x0nw+vIS6+IPkOuTq7LTZUGsDu+2O11BXLidaTlASn
+ uJcPvS1UbeZxe9Aj3mVHlYQ1LRTSERJ8+3n4KrQgpZctw8bWwEc9diuzW5D2fvxTrgeB
+ qvyJvfBwOZ6xmC7u0Bfp0n5Kc4kyPMp0OPCAVmZmTx5GPt29J9IVgcVAEK178ZocfKNe
+ eZSw==
+X-Gm-Message-State: AOJu0Yzhxjgqqz8D82AuvklJh7b6CbkThzGOarX/KG5gv7p7dcT2i0K4
+ sVx+jztk/OVZstlDaYVswe5MQVWQV9PMyWtKurH3LHxxbjo1JGYiIHoRjV44So1ZAzZbgkohUok
+ hhPE=
+X-Google-Smtp-Source: AGHT+IHBIEjNNoQWciGMRReYDUJ+2KBY59lWDsKhCAXVV+pZNY4VmyPe+35g936JWxQSLM+SygqP2g==
+X-Received: by 2002:a17:906:119b:b0:a46:d776:645a with SMTP id
+ n27-20020a170906119b00b00a46d776645amr6338524eja.52.1711036263951; 
+ Thu, 21 Mar 2024 08:51:03 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.222])
  by smtp.gmail.com with ESMTPSA id
- o26-20020a17090637da00b00a46e68a1fa0sm54362ejc.53.2024.03.21.08.50.26
+ c5-20020a170906694500b00a4131367204sm55036ejs.80.2024.03.21.08.51.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 21 Mar 2024 08:50:28 -0700 (PDT)
+ Thu, 21 Mar 2024 08:51:03 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
@@ -72,18 +72,18 @@ Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 14/21] target/sh4: Extract sh4_dump_mmu() from
- hmp_info_tlb()
-Date: Thu, 21 Mar 2024 16:48:30 +0100
-Message-ID: <20240321154838.95771-15-philmd@linaro.org>
+Subject: [PATCH-for-9.1 19/21] target/xtensa: Simplify dump_mpu() and
+ dump_tlb()
+Date: Thu, 21 Mar 2024 16:48:35 +0100
+Message-ID: <20240321154838.95771-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240321154838.95771-1-philmd@linaro.org>
 References: <20240321154838.95771-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,66 +106,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract sh4_dump_mmu() from hmp_info_tlb(), replacing
-monitor_printf(FIXED_STRING_WITHOUT_FORMAT) by monitor_puts().
+Remove few qemu_printf() calls in xtensa_dump_mmu()
+by slightly reworking dump_mpu() and dump_tlb().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sh4/cpu.h     |  2 ++
- target/sh4/monitor.c | 22 +++++++++++++++-------
- 2 files changed, 17 insertions(+), 7 deletions(-)
+ target/xtensa/mmu_helper.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
-index 9211da6bde..4e2e9ffd66 100644
---- a/target/sh4/cpu.h
-+++ b/target/sh4/cpu.h
-@@ -385,4 +385,6 @@ static inline void cpu_get_tb_cpu_state(CPUSH4State *env, vaddr *pc,
- #endif
- }
+diff --git a/target/xtensa/mmu_helper.c b/target/xtensa/mmu_helper.c
+index 8be8d79dcd..3b4f53feb0 100644
+--- a/target/xtensa/mmu_helper.c
++++ b/target/xtensa/mmu_helper.c
+@@ -203,6 +203,7 @@ static void dump_tlb(CPUXtensaState *env, bool dtlb)
+         xtensa_option_enabled(env->config, XTENSA_OPTION_MMU) ?
+         mmu_attr_to_access : region_attr_to_access;
  
-+void sh4_dump_mmu(Monitor *mon, CPUSH4State *env);
-+
- #endif /* SH4_CPU_H */
-diff --git a/target/sh4/monitor.c b/target/sh4/monitor.c
-index 2da6a5426e..1befb42b07 100644
---- a/target/sh4/monitor.c
-+++ b/target/sh4/monitor.c
-@@ -39,20 +39,28 @@ static void print_tlb(Monitor *mon, int idx, tlb_t *tlb)
-                    tlb->d, tlb->wt);
- }
- 
-+void sh4_dump_mmu(Monitor *mon, CPUSH4State *env)
-+{
-+    int i;
-+
-+    monitor_puts(mon, "ITLB:\n");
-+    for (i = 0 ; i < ITLB_SIZE ; i++) {
-+        print_tlb (mon, i, &env->itlb[i]);
-+    }
-+    monitor_puts(mon, "UTLB:\n");
-+    for (i = 0 ; i < UTLB_SIZE ; i++) {
-+        print_tlb (mon, i, &env->utlb[i]);
-+    }
-+}
-+
- void hmp_info_tlb(Monitor *mon, const QDict *qdict)
- {
-     CPUArchState *env = mon_get_cpu_env(mon);
--    int i;
- 
-     if (!env) {
-         monitor_printf(mon, "No CPU available\n");
-         return;
++    qemu_printf("%s:\n", dtlb ? "DTLB" : "IBLB");
+     for (wi = 0; wi < conf->nways; ++wi) {
+         uint32_t sz = ~xtensa_tlb_get_addr_mask(env, dtlb, wi) + 1;
+         const char *sz_text;
+@@ -252,11 +253,12 @@ static void dump_tlb(CPUXtensaState *env, bool dtlb)
      }
- 
--    monitor_printf (mon, "ITLB:\n");
--    for (i = 0 ; i < ITLB_SIZE ; i++)
--        print_tlb (mon, i, &env->itlb[i]);
--    monitor_printf (mon, "UTLB:\n");
--    for (i = 0 ; i < UTLB_SIZE ; i++)
--        print_tlb (mon, i, &env->utlb[i]);
-+    sh4_dump_mmu(mon, env);
  }
+ 
+-static void dump_mpu(CPUXtensaState *env,
++static void dump_mpu(CPUXtensaState *env, const char *map_desc,
+                      const xtensa_mpu_entry *entry, unsigned n)
+ {
+     unsigned i;
+ 
++    qemu_printf("%s map:\n", map_desc);
+     qemu_printf("\t%s  Vaddr       Attr        Ring0  Ring1  System Type    CPU cache\n"
+                 "\t%s  ----------  ----------  -----  -----  -------------  ---------\n",
+                 env ? "En" : "  ",
+@@ -316,15 +318,15 @@ void xtensa_dump_mmu(CPUXtensaState *env)
+                 XTENSA_OPTION_BIT(XTENSA_OPTION_REGION_TRANSLATION) |
+                 XTENSA_OPTION_BIT(XTENSA_OPTION_MMU))) {
+ 
+-        qemu_printf("ITLB:\n");
+         dump_tlb(env, false);
+-        qemu_printf("\nDTLB:\n");
++        qemu_printf("\n");
+         dump_tlb(env, true);
+     } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_MPU)) {
+-        qemu_printf("Foreground map:\n");
+-        dump_mpu(env, env->mpu_fg, env->config->n_mpu_fg_segments);
+-        qemu_printf("\nBackground map:\n");
+-        dump_mpu(NULL, env->config->mpu_bg, env->config->n_mpu_bg_segments);
++        dump_mpu(env, "Foreground",
++                 env->mpu_fg, env->config->n_mpu_fg_segments);
++        qemu_printf("\n");
++        dump_mpu(NULL, "Background",
++                 env->config->mpu_bg, env->config->n_mpu_bg_segments);
+     } else {
+         qemu_printf("No TLB for this CPU core\n");
+     }
 -- 
 2.41.0
 
