@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0EF4C54E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CBE8C54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:50:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnKfe-0005BI-KT; Thu, 21 Mar 2024 11:49:34 -0400
+	id 1rnKfp-0005jT-44; Thu, 21 Mar 2024 11:49:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKfd-00053b-1K
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:33 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKfn-0005WT-5f
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:43 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKfb-0001N5-HG
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:32 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2d23114b19dso16605011fa.3
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:49:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKfi-0001QX-QF
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:49:42 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-41466e01965so7937905e9.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:49:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711036169; x=1711640969; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711036176; x=1711640976; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xtEYan//81EtbsPaWQKotnbuaiGDwRNY8wJpHHZftjo=;
- b=Wku3XQxQuTrrTfU9SDHTMjvCfVXwMkDhw3/xkTzDRd48qF3Zg815r3L7suIfL7LlDV
- sNJKsNRRrwj5Kufu+to1kWwCH8XtBG5WsUZlqSwqNa2/L1dc/E+M5cT7EUu8qmxTf6j+
- cYt3BmdirCA+JZHRscApikUwbOVezz7A3dMIUz2yzp2LksfBOPt3yv74zhx4JKf6tDZW
- PgONOU4+DanuuPjNBDq66xMR9OEDyhZsLck/+JDC0DOktmwtj7OoXGw6Wd9v1EdUZhpP
- imKme1FjA0pPpVCW6huY/6+vo6J8uLI3yzM2jcNtZG/LQC5VzaLdbHb9NBHKZBJQK1vR
- 1PzA==
+ bh=sC//v5zJC26L5oJBPuaKUrq0r2OoFOjOzcD/UQcspDw=;
+ b=rLh1W1Od7zUegQVnLB1jrDqxPHf1d6D5npeVhFkEp4oLnUq7aY65Y9e34KL6Vba1NU
+ ULgytPFa7qlfesSywN4X3umHx9JBRaYygYG9mB4zGnwA0pAfiFDcTqz26gl2o4Hphngi
+ Kcu8+nTlKw7lvK3oKfS58nyNUzRExYdmr9UX2q0LmAC2xnmGtK15YqQZ2owCXHqu9tiL
+ nbehf3VitkANQBlMH9dJHVkWYHHI0aH0iBIizLWJllL7XzMXDC7jaCgM4Lf65aQrN4Rm
+ dNPFJIU/4A/+wRIrkvEkGmYJmD6WKperO/3qnJs4TU/vu64ZZNVqQaztmfzuVKvFQpe/
+ bqkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711036169; x=1711640969;
+ d=1e100.net; s=20230601; t=1711036176; x=1711640976;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xtEYan//81EtbsPaWQKotnbuaiGDwRNY8wJpHHZftjo=;
- b=IXX1phTFj3KslVpL2oBgts91Kclcm7IRCt0jbTsXACR1bwgaXwAC3ThAPbj0Xmh5FN
- kr1SsdmeGomNbfHGA5++JXlcPMSpE6dZme2Bfzw16NHeh1mYKxU34ofI2J1dBH3UApbw
- 2eyLmyZ61rOpZwZPyiNKbP8exogEirnXd2hPWemMeh3Jc1xvE8Myw13mpcREScXu8u+j
- 9KRNAjt2im45sWjr6uPyRlQM0WxRWF0nRPvFU9tp0Jd5xh61EqYfr1e/751M5KWhIWTx
- Xk8/9KbXuFgSFmhfbHdNc/jC1YjPDVMSuxAUTE9cOWFd8jvIB2cl53UbOD+bn1TWrrUe
- Kd8g==
-X-Gm-Message-State: AOJu0YxX/cqW+LrjYUiqVxst2xMwnomgXqUtyOCqYPfjv7TUizGr78eH
- EJibdLGUjTifkQH6YhvZSIctwRpJtir/8pLKEASp/vgJ9ThLdn4Q4SJ98oBVaetGIYovoUUrRKl
- I/DU=
-X-Google-Smtp-Source: AGHT+IFBPR/Pr+XbGKhCvPp0NGCaJSK4lXMlzsD5cUSrTyGZOKbh/UIHZyhyiNbuVk1m7v7sep95ug==
-X-Received: by 2002:a2e:9c50:0:b0:2d4:6c08:5f94 with SMTP id
- t16-20020a2e9c50000000b002d46c085f94mr15024512ljj.37.1711036168978; 
- Thu, 21 Mar 2024 08:49:28 -0700 (PDT)
+ bh=sC//v5zJC26L5oJBPuaKUrq0r2OoFOjOzcD/UQcspDw=;
+ b=Jrx9GS0qbfbN32Vb564s4HnpAHwtnSNLXFxQ/bxo61mUgGlskZ2bb8bF3JVCxHxKGO
+ 5bqDkNy5p96jQp2NKbUpRWcTpT2X1ov3/xOgFa42+WV1KcybWfNDvhL1a0rJ1pG07nJh
+ RAMQqOYxwVZfQSu3hseGWw5l0KL/6QH7ctbmbmYHUekzReV9xialY94GbFpV2JvdH7FB
+ AYe/p/8RgZubbpKAzLmvrwRLCRg6zQsVNJoB9lHSf47v0HZAf6YEhAdRJE2ky76KXNX2
+ PsTSBXEKCmSnjm2fBxLgwP8ppae+c8Nr3cYMq1B/TrNL2R4wAg8cmclmlcPdC8z17qzT
+ nvhQ==
+X-Gm-Message-State: AOJu0YyoJWU7CbA32iwvvA+YhRVnsTXtiyeMdsL+pkIpbSkzLJIEMtFq
+ aw2C/Q1ie41roGM7hjK6PzY7dKN6ivbh/txPUNUQPs8ujBE0o6O9jwY1MmPcY4gE4GqMELqsVXU
+ V+Eo=
+X-Google-Smtp-Source: AGHT+IFw0k53MJIEDoEtj/96Ez8pi/LpbXoIDbS/169t1A8FKaf2xVKWSjv2p94mK18bkZO+A1abiA==
+X-Received: by 2002:a05:600c:3b19:b0:414:f50:3587 with SMTP id
+ m25-20020a05600c3b1900b004140f503587mr9936764wms.8.1711036176449; 
+ Thu, 21 Mar 2024 08:49:36 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.222])
  by smtp.gmail.com with ESMTPSA id
- r14-20020a05600c35ce00b004146aac1d2asm5952403wmq.27.2024.03.21.08.49.26
+ e13-20020a05600c4e4d00b004146750314csm6021722wmq.3.2024.03.21.08.49.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 21 Mar 2024 08:49:28 -0700 (PDT)
+ Thu, 21 Mar 2024 08:49:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
@@ -72,18 +72,18 @@ Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 06/21] target/m68k: Have dump_ttr() take a
- @description argument
-Date: Thu, 21 Mar 2024 16:48:22 +0100
-Message-ID: <20240321154838.95771-7-philmd@linaro.org>
+Subject: [PATCH-for-9.1 07/21] target/m68k: Move MMU monitor commands from
+ helper.c to monitor.c
+Date: Thu, 21 Mar 2024 16:48:23 +0100
+Message-ID: <20240321154838.95771-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240321154838.95771-1-philmd@linaro.org>
 References: <20240321154838.95771-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,48 +106,515 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Slightly simplify dump_mmu() by passing the description as
-argument to dump_ttr().
+Keep all HMP commands in monitor.c.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/m68k/helper.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ target/m68k/cpu.h     |   3 +-
+ target/m68k/helper.c  | 222 -----------------------------------------
+ target/m68k/monitor.c | 223 +++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 223 insertions(+), 225 deletions(-)
 
+diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+index 4e4307956d..0c2a9fa717 100644
+--- a/target/m68k/cpu.h
++++ b/target/m68k/cpu.h
+@@ -589,6 +589,7 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+                                  unsigned size, MMUAccessType access_type,
+                                  int mmu_idx, MemTxAttrs attrs,
+                                  MemTxResult response, uintptr_t retaddr);
++void m68k_dump_mmu(Monitor *mon, CPUM68KState *env);
+ #endif
+ 
+ #include "exec/cpu-all.h"
+@@ -620,6 +621,4 @@ static inline void cpu_get_tb_cpu_state(CPUM68KState *env, vaddr *pc,
+     }
+ }
+ 
+-void dump_mmu(Monitor *mon, CPUM68KState *env);
+-
+ #endif
 diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index 310e26dfa1..cf9d83e47e 100644
+index cf9d83e47e..bd833aed5d 100644
 --- a/target/m68k/helper.c
 +++ b/target/m68k/helper.c
-@@ -578,8 +578,9 @@ static void dump_address_map(Monitor *mon, CPUM68KState *env,
-         break; \
-     }
+@@ -25,7 +25,6 @@
+ #include "exec/helper-proto.h"
+ #include "gdbstub/helpers.h"
+ #include "fpu/softfloat.h"
+-#include "monitor/monitor.h"
  
--static void dump_ttr(Monitor *mon, uint32_t ttr)
-+static void dump_ttr(Monitor *mon, const char *desc, uint32_t ttr)
+ #define SIGNBIT (1u << 31)
+ 
+@@ -455,227 +454,6 @@ void m68k_switch_sp(CPUM68KState *env)
+ #if !defined(CONFIG_USER_ONLY)
+ /* MMU: 68040 only */
+ 
+-static void print_address_zone(Monitor *mon,
+-                               uint32_t logical, uint32_t physical,
+-                               uint32_t size, int attr)
+-{
+-    monitor_printf(mon, "%08x - %08x -> %08x - %08x %c ",
+-                   logical, logical + size - 1,
+-                   physical, physical + size - 1,
+-                   attr & 4 ? 'W' : '-');
+-    size >>= 10;
+-    if (size < 1024) {
+-        monitor_printf(mon, "(%d KiB)\n", size);
+-    } else {
+-        size >>= 10;
+-        if (size < 1024) {
+-            monitor_printf(mon, "(%d MiB)\n", size);
+-        } else {
+-            size >>= 10;
+-            monitor_printf(mon, "(%d GiB)\n", size);
+-        }
+-    }
+-}
+-
+-static void dump_address_map(Monitor *mon, CPUM68KState *env,
+-                             uint32_t root_pointer)
+-{
+-    int i, j, k;
+-    int tic_size, tic_shift;
+-    uint32_t tib_mask;
+-    uint32_t tia, tib, tic;
+-    uint32_t logical = 0xffffffff, physical = 0xffffffff;
+-    uint32_t first_logical = 0xffffffff, first_physical = 0xffffffff;
+-    uint32_t last_logical, last_physical;
+-    int32_t size;
+-    int last_attr = -1, attr = -1;
+-    CPUState *cs = env_cpu(env);
+-    MemTxResult txres;
+-
+-    if (env->mmu.tcr & M68K_TCR_PAGE_8K) {
+-        /* 8k page */
+-        tic_size = 32;
+-        tic_shift = 13;
+-        tib_mask = M68K_8K_PAGE_MASK;
+-    } else {
+-        /* 4k page */
+-        tic_size = 64;
+-        tic_shift = 12;
+-        tib_mask = M68K_4K_PAGE_MASK;
+-    }
+-    for (i = 0; i < M68K_ROOT_POINTER_ENTRIES; i++) {
+-        tia = address_space_ldl(cs->as, M68K_POINTER_BASE(root_pointer) + i * 4,
+-                                MEMTXATTRS_UNSPECIFIED, &txres);
+-        if (txres != MEMTX_OK || !M68K_UDT_VALID(tia)) {
+-            continue;
+-        }
+-        for (j = 0; j < M68K_ROOT_POINTER_ENTRIES; j++) {
+-            tib = address_space_ldl(cs->as, M68K_POINTER_BASE(tia) + j * 4,
+-                                    MEMTXATTRS_UNSPECIFIED, &txres);
+-            if (txres != MEMTX_OK || !M68K_UDT_VALID(tib)) {
+-                continue;
+-            }
+-            for (k = 0; k < tic_size; k++) {
+-                tic = address_space_ldl(cs->as, (tib & tib_mask) + k * 4,
+-                                        MEMTXATTRS_UNSPECIFIED, &txres);
+-                if (txres != MEMTX_OK || !M68K_PDT_VALID(tic)) {
+-                    continue;
+-                }
+-                if (M68K_PDT_INDIRECT(tic)) {
+-                    tic = address_space_ldl(cs->as, M68K_INDIRECT_POINTER(tic),
+-                                            MEMTXATTRS_UNSPECIFIED, &txres);
+-                    if (txres != MEMTX_OK) {
+-                        continue;
+-                    }
+-                }
+-
+-                last_logical = logical;
+-                logical = (i << M68K_TTS_ROOT_SHIFT) |
+-                          (j << M68K_TTS_POINTER_SHIFT) |
+-                          (k << tic_shift);
+-
+-                last_physical = physical;
+-                physical = tic & ~((1 << tic_shift) - 1);
+-
+-                last_attr = attr;
+-                attr = tic & ((1 << tic_shift) - 1);
+-
+-                if ((logical != (last_logical + (1 << tic_shift))) ||
+-                    (physical != (last_physical + (1 << tic_shift))) ||
+-                    (attr & 4) != (last_attr & 4)) {
+-
+-                    if (first_logical != 0xffffffff) {
+-                        size = last_logical + (1 << tic_shift) -
+-                               first_logical;
+-                        print_address_zone(mon, first_logical,
+-                                           first_physical, size, last_attr);
+-                    }
+-                    first_logical = logical;
+-                    first_physical = physical;
+-                }
+-            }
+-        }
+-    }
+-    if (first_logical != logical || (attr & 4) != (last_attr & 4)) {
+-        size = logical + (1 << tic_shift) - first_logical;
+-        print_address_zone(mon, first_logical, first_physical, size, last_attr);
+-    }
+-}
+-
+-#define DUMP_CACHEFLAGS(a) \
+-    switch (a & M68K_DESC_CACHEMODE) { \
+-    case M68K_DESC_CM_WRTHRU: /* cacheable, write-through */ \
+-        monitor_puts(mon, "T"); \
+-        break; \
+-    case M68K_DESC_CM_COPYBK: /* cacheable, copyback */ \
+-        monitor_puts(mon, "C"); \
+-        break; \
+-    case M68K_DESC_CM_SERIAL: /* noncachable, serialized */ \
+-        monitor_puts(mon, "S"); \
+-        break; \
+-    case M68K_DESC_CM_NCACHE: /* noncachable */ \
+-        monitor_puts(mon, "N"); \
+-        break; \
+-    }
+-
+-static void dump_ttr(Monitor *mon, const char *desc, uint32_t ttr)
+-{
+-    monitor_printf(mon, "%s: ", desc);
+-    if ((ttr & M68K_TTR_ENABLED) == 0) {
+-        monitor_puts(mon, "disabled\n");
+-        return;
+-    }
+-    monitor_printf(mon, "Base: 0x%08x Mask: 0x%08x Control: ",
+-                   ttr & M68K_TTR_ADDR_BASE,
+-                   (ttr & M68K_TTR_ADDR_MASK) << M68K_TTR_ADDR_MASK_SHIFT);
+-    switch (ttr & M68K_TTR_SFIELD) {
+-    case M68K_TTR_SFIELD_USER:
+-        monitor_puts(mon, "U");
+-        break;
+-    case M68K_TTR_SFIELD_SUPER:
+-        monitor_puts(mon, "S");
+-        break;
+-    default:
+-        monitor_puts(mon, "*");
+-        break;
+-    }
+-    DUMP_CACHEFLAGS(ttr);
+-    if (ttr & M68K_DESC_WRITEPROT) {
+-        monitor_puts(mon, "R");
+-    } else {
+-        monitor_puts(mon, "W");
+-    }
+-    monitor_printf(mon, " U: %d\n", (ttr & M68K_DESC_USERATTR) >>
+-                               M68K_DESC_USERATTR_SHIFT);
+-}
+-
+-void dump_mmu(Monitor *mon, CPUM68KState *env)
+-{
+-    if ((env->mmu.tcr & M68K_TCR_ENABLED) == 0) {
+-        monitor_puts(mon, "Translation disabled\n");
+-        return;
+-    }
+-    monitor_puts(mon, "Page Size: ");
+-    if (env->mmu.tcr & M68K_TCR_PAGE_8K) {
+-        monitor_puts(mon, "8kB\n");
+-    } else {
+-        monitor_puts(mon, "4kB\n");
+-    }
+-
+-    monitor_puts(mon, "MMUSR: ");
+-    if (env->mmu.mmusr & M68K_MMU_B_040) {
+-        monitor_puts(mon, "BUS ERROR\n");
+-    } else {
+-        monitor_printf(mon, "Phy=%08x Flags: ", env->mmu.mmusr & 0xfffff000);
+-        /* flags found on the page descriptor */
+-        if (env->mmu.mmusr & M68K_MMU_G_040) {
+-            monitor_puts(mon, "G"); /* Global */
+-        } else {
+-            monitor_puts(mon, ".");
+-        }
+-        if (env->mmu.mmusr & M68K_MMU_S_040) {
+-            monitor_puts(mon, "S"); /* Supervisor */
+-        } else {
+-            monitor_puts(mon, ".");
+-        }
+-        if (env->mmu.mmusr & M68K_MMU_M_040) {
+-            monitor_puts(mon, "M"); /* Modified */
+-        } else {
+-            monitor_puts(mon, ".");
+-        }
+-        if (env->mmu.mmusr & M68K_MMU_WP_040) {
+-            monitor_puts(mon, "W"); /* Write protect */
+-        } else {
+-            monitor_puts(mon, ".");
+-        }
+-        if (env->mmu.mmusr & M68K_MMU_T_040) {
+-            monitor_puts(mon, "T"); /* Transparent */
+-        } else {
+-            monitor_puts(mon, ".");
+-        }
+-        if (env->mmu.mmusr & M68K_MMU_R_040) {
+-            monitor_puts(mon, "R"); /* Resident */
+-        } else {
+-            monitor_puts(mon, ".");
+-        }
+-        monitor_puts(mon, " Cache: ");
+-        DUMP_CACHEFLAGS(env->mmu.mmusr);
+-        monitor_printf(mon, " U: %d\n", (env->mmu.mmusr >> 8) & 3);
+-        monitor_puts(mon, "\n");
+-    }
+-
+-    dump_ttr(mon, "ITTR0", env->mmu.ttr[M68K_ITTR0]);
+-    dump_ttr(mon, "ITTR1", env->mmu.ttr[M68K_ITTR1]);
+-    dump_ttr(mon, "DTTR0", env->mmu.ttr[M68K_DTTR0]);
+-    dump_ttr(mon, "DTTR1", env->mmu.ttr[M68K_DTTR1]);
+-
+-    monitor_printf(mon, "SRP: 0x%08x\n", env->mmu.srp);
+-    dump_address_map(mon, env, env->mmu.srp);
+-
+-    monitor_printf(mon, "URP: 0x%08x\n", env->mmu.urp);
+-    dump_address_map(mon, env, env->mmu.urp);
+-}
+-
+ static int check_TTR(uint32_t ttr, int *prot, target_ulong addr,
+                      int access_type)
  {
-+    monitor_printf(mon, "%s: ", desc);
-     if ((ttr & M68K_TTR_ENABLED) == 0) {
-         monitor_puts(mon, "disabled\n");
-         return;
-@@ -663,14 +664,10 @@ void dump_mmu(Monitor *mon, CPUM68KState *env)
-         monitor_puts(mon, "\n");
-     }
+diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
+index 623c6ab635..c225846540 100644
+--- a/target/m68k/monitor.c
++++ b/target/m68k/monitor.c
+@@ -10,6 +10,227 @@
+ #include "monitor/hmp-target.h"
+ #include "monitor/monitor.h"
  
--    monitor_puts(mon, "ITTR0: ");
--    dump_ttr(mon, env->mmu.ttr[M68K_ITTR0]);
--    monitor_puts(mon, "ITTR1: ");
--    dump_ttr(mon, env->mmu.ttr[M68K_ITTR1]);
--    monitor_puts(mon, "DTTR0: ");
--    dump_ttr(mon, env->mmu.ttr[M68K_DTTR0]);
--    monitor_puts(mon, "DTTR1: ");
--    dump_ttr(mon, env->mmu.ttr[M68K_DTTR1]);
++static void print_address_zone(Monitor *mon,
++                               uint32_t logical, uint32_t physical,
++                               uint32_t size, int attr)
++{
++    monitor_printf(mon, "%08x - %08x -> %08x - %08x %c ",
++                   logical, logical + size - 1,
++                   physical, physical + size - 1,
++                   attr & 4 ? 'W' : '-');
++    size >>= 10;
++    if (size < 1024) {
++        monitor_printf(mon, "(%d KiB)\n", size);
++    } else {
++        size >>= 10;
++        if (size < 1024) {
++            monitor_printf(mon, "(%d MiB)\n", size);
++        } else {
++            size >>= 10;
++            monitor_printf(mon, "(%d GiB)\n", size);
++        }
++    }
++}
++
++static void dump_address_map(Monitor *mon, CPUM68KState *env,
++                             uint32_t root_pointer)
++{
++    int i, j, k;
++    int tic_size, tic_shift;
++    uint32_t tib_mask;
++    uint32_t tia, tib, tic;
++    uint32_t logical = 0xffffffff, physical = 0xffffffff;
++    uint32_t first_logical = 0xffffffff, first_physical = 0xffffffff;
++    uint32_t last_logical, last_physical;
++    int32_t size;
++    int last_attr = -1, attr = -1;
++    CPUState *cs = env_cpu(env);
++    MemTxResult txres;
++
++    if (env->mmu.tcr & M68K_TCR_PAGE_8K) {
++        /* 8k page */
++        tic_size = 32;
++        tic_shift = 13;
++        tib_mask = M68K_8K_PAGE_MASK;
++    } else {
++        /* 4k page */
++        tic_size = 64;
++        tic_shift = 12;
++        tib_mask = M68K_4K_PAGE_MASK;
++    }
++    for (i = 0; i < M68K_ROOT_POINTER_ENTRIES; i++) {
++        tia = address_space_ldl(cs->as, M68K_POINTER_BASE(root_pointer) + i * 4,
++                                MEMTXATTRS_UNSPECIFIED, &txres);
++        if (txres != MEMTX_OK || !M68K_UDT_VALID(tia)) {
++            continue;
++        }
++        for (j = 0; j < M68K_ROOT_POINTER_ENTRIES; j++) {
++            tib = address_space_ldl(cs->as, M68K_POINTER_BASE(tia) + j * 4,
++                                    MEMTXATTRS_UNSPECIFIED, &txres);
++            if (txres != MEMTX_OK || !M68K_UDT_VALID(tib)) {
++                continue;
++            }
++            for (k = 0; k < tic_size; k++) {
++                tic = address_space_ldl(cs->as, (tib & tib_mask) + k * 4,
++                                        MEMTXATTRS_UNSPECIFIED, &txres);
++                if (txres != MEMTX_OK || !M68K_PDT_VALID(tic)) {
++                    continue;
++                }
++                if (M68K_PDT_INDIRECT(tic)) {
++                    tic = address_space_ldl(cs->as, M68K_INDIRECT_POINTER(tic),
++                                            MEMTXATTRS_UNSPECIFIED, &txres);
++                    if (txres != MEMTX_OK) {
++                        continue;
++                    }
++                }
++
++                last_logical = logical;
++                logical = (i << M68K_TTS_ROOT_SHIFT) |
++                          (j << M68K_TTS_POINTER_SHIFT) |
++                          (k << tic_shift);
++
++                last_physical = physical;
++                physical = tic & ~((1 << tic_shift) - 1);
++
++                last_attr = attr;
++                attr = tic & ((1 << tic_shift) - 1);
++
++                if ((logical != (last_logical + (1 << tic_shift))) ||
++                    (physical != (last_physical + (1 << tic_shift))) ||
++                    (attr & 4) != (last_attr & 4)) {
++
++                    if (first_logical != 0xffffffff) {
++                        size = last_logical + (1 << tic_shift) -
++                               first_logical;
++                        print_address_zone(mon, first_logical,
++                                           first_physical, size, last_attr);
++                    }
++                    first_logical = logical;
++                    first_physical = physical;
++                }
++            }
++        }
++    }
++    if (first_logical != logical || (attr & 4) != (last_attr & 4)) {
++        size = logical + (1 << tic_shift) - first_logical;
++        print_address_zone(mon, first_logical, first_physical, size, last_attr);
++    }
++}
++
++#define DUMP_CACHEFLAGS(a) \
++    switch (a & M68K_DESC_CACHEMODE) { \
++    case M68K_DESC_CM_WRTHRU: /* cacheable, write-through */ \
++        monitor_puts(mon, "T"); \
++        break; \
++    case M68K_DESC_CM_COPYBK: /* cacheable, copyback */ \
++        monitor_puts(mon, "C"); \
++        break; \
++    case M68K_DESC_CM_SERIAL: /* noncachable, serialized */ \
++        monitor_puts(mon, "S"); \
++        break; \
++    case M68K_DESC_CM_NCACHE: /* noncachable */ \
++        monitor_puts(mon, "N"); \
++        break; \
++    }
++
++static void dump_ttr(Monitor *mon, const char *desc, uint32_t ttr)
++{
++    monitor_printf(mon, "%s: ", desc);
++    if ((ttr & M68K_TTR_ENABLED) == 0) {
++        monitor_puts(mon, "disabled\n");
++        return;
++    }
++    monitor_printf(mon, "Base: 0x%08x Mask: 0x%08x Control: ",
++                   ttr & M68K_TTR_ADDR_BASE,
++                   (ttr & M68K_TTR_ADDR_MASK) << M68K_TTR_ADDR_MASK_SHIFT);
++    switch (ttr & M68K_TTR_SFIELD) {
++    case M68K_TTR_SFIELD_USER:
++        monitor_puts(mon, "U");
++        break;
++    case M68K_TTR_SFIELD_SUPER:
++        monitor_puts(mon, "S");
++        break;
++    default:
++        monitor_puts(mon, "*");
++        break;
++    }
++    DUMP_CACHEFLAGS(ttr);
++    if (ttr & M68K_DESC_WRITEPROT) {
++        monitor_puts(mon, "R");
++    } else {
++        monitor_puts(mon, "W");
++    }
++    monitor_printf(mon, " U: %d\n", (ttr & M68K_DESC_USERATTR) >>
++                               M68K_DESC_USERATTR_SHIFT);
++}
++
++void m68k_dump_mmu(Monitor *mon, CPUM68KState *env)
++{
++    if ((env->mmu.tcr & M68K_TCR_ENABLED) == 0) {
++        monitor_puts(mon, "Translation disabled\n");
++        return;
++    }
++    monitor_puts(mon, "Page Size: ");
++    if (env->mmu.tcr & M68K_TCR_PAGE_8K) {
++        monitor_puts(mon, "8kB\n");
++    } else {
++        monitor_puts(mon, "4kB\n");
++    }
++
++    monitor_puts(mon, "MMUSR: ");
++    if (env->mmu.mmusr & M68K_MMU_B_040) {
++        monitor_puts(mon, "BUS ERROR\n");
++    } else {
++        monitor_printf(mon, "Phy=%08x Flags: ", env->mmu.mmusr & 0xfffff000);
++        /* flags found on the page descriptor */
++        if (env->mmu.mmusr & M68K_MMU_G_040) {
++            monitor_puts(mon, "G"); /* Global */
++        } else {
++            monitor_puts(mon, ".");
++        }
++        if (env->mmu.mmusr & M68K_MMU_S_040) {
++            monitor_puts(mon, "S"); /* Supervisor */
++        } else {
++            monitor_puts(mon, ".");
++        }
++        if (env->mmu.mmusr & M68K_MMU_M_040) {
++            monitor_puts(mon, "M"); /* Modified */
++        } else {
++            monitor_puts(mon, ".");
++        }
++        if (env->mmu.mmusr & M68K_MMU_WP_040) {
++            monitor_puts(mon, "W"); /* Write protect */
++        } else {
++            monitor_puts(mon, ".");
++        }
++        if (env->mmu.mmusr & M68K_MMU_T_040) {
++            monitor_puts(mon, "T"); /* Transparent */
++        } else {
++            monitor_puts(mon, ".");
++        }
++        if (env->mmu.mmusr & M68K_MMU_R_040) {
++            monitor_puts(mon, "R"); /* Resident */
++        } else {
++            monitor_puts(mon, ".");
++        }
++        monitor_puts(mon, " Cache: ");
++        DUMP_CACHEFLAGS(env->mmu.mmusr);
++        monitor_printf(mon, " U: %d\n", (env->mmu.mmusr >> 8) & 3);
++        monitor_puts(mon, "\n");
++    }
++
 +    dump_ttr(mon, "ITTR0", env->mmu.ttr[M68K_ITTR0]);
 +    dump_ttr(mon, "ITTR1", env->mmu.ttr[M68K_ITTR1]);
 +    dump_ttr(mon, "DTTR0", env->mmu.ttr[M68K_DTTR0]);
 +    dump_ttr(mon, "DTTR1", env->mmu.ttr[M68K_DTTR1]);
++
++    monitor_printf(mon, "SRP: 0x%08x\n", env->mmu.srp);
++    dump_address_map(mon, env, env->mmu.srp);
++
++    monitor_printf(mon, "URP: 0x%08x\n", env->mmu.urp);
++    dump_address_map(mon, env, env->mmu.urp);
++}
++
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+ {
+     CPUArchState *env1 = mon_get_cpu_env(mon);
+@@ -19,7 +240,7 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+         return;
+     }
  
-     monitor_printf(mon, "SRP: 0x%08x\n", env->mmu.srp);
-     dump_address_map(mon, env, env->mmu.srp);
+-    dump_mmu(mon, env1);
++    m68k_dump_mmu(mon, env1);
+ }
+ 
+ static const MonitorDef monitor_defs[] = {
 -- 
 2.41.0
 
