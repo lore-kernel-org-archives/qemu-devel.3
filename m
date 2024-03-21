@@ -4,51 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23EF9C54E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 12:36:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C66E5CD11BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 13:10:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnHef-0008Kh-RW; Thu, 21 Mar 2024 08:36:21 -0400
+	id 1rnIAz-0007Gt-J3; Thu, 21 Mar 2024 09:09:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rnHed-0008KY-JA
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:36:19 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rnHeW-0003Yn-SH
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:36:19 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxmfC3KfxlZOAbAA--.1515S3;
- Thu, 21 Mar 2024 20:36:07 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxVMy3KfxltQ5gAA--.59468S2; 
- Thu, 21 Mar 2024 20:36:07 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	philmd@linaro.org,
-	maobibo@loongson.cn
-Subject: [PATCH v3] target/loongarch: Fix qemu-system-loongarch64 assert
- failed with the option '-d int'
-Date: Thu, 21 Mar 2024 20:36:06 +0800
-Message-Id: <20240321123606.1704900-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rnIAx-0007F4-RH; Thu, 21 Mar 2024 09:09:43 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
+ id 1rnIAv-0002tg-NZ; Thu, 21 Mar 2024 09:09:43 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.17])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4V0m2H41nwz2Bgj1;
+ Thu, 21 Mar 2024 21:07:03 +0800 (CST)
+Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
+ by mail.maildlp.com (Postfix) with ESMTPS id E94361A0172;
+ Thu, 21 Mar 2024 21:09:37 +0800 (CST)
+Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
+ (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 21 Mar
+ 2024 21:09:37 +0800
+To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
+ <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
+ <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
+ <qemu-arm@nongnu.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [RFC PATCH v9 16/23] hw/intc: Enable FEAT_GICv3_NMI Feature
+Date: Thu, 21 Mar 2024 13:08:05 +0000
+Message-ID: <20240321130812.2983113-17-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240321130812.2983113-1-ruanjinjie@huawei.com>
+References: <20240321130812.2983113-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxVMy3KfxltQ5gAA--.59468S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Originating-IP: [10.67.174.55]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ kwepemi500008.china.huawei.com (7.221.188.139)
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -62,127 +65,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jinjie Ruan <ruanjinjie@huawei.com>
+From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu-system-loongarch64 assert failed with the option '-d int',
-the helper_idle() raise an exception EXCP_HLT, but the exception name is undefined.
+Added properties to enable FEAT_GICv3_NMI feature, setup distributor
+and redistributor registers to indicate NMI support.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/loongarch/cpu.c | 74 +++++++++++++++++++++++-------------------
- 1 file changed, 40 insertions(+), 34 deletions(-)
+v4:
+- Add Reviewed-by.
+---
+ hw/intc/arm_gicv3_common.c         | 1 +
+ hw/intc/arm_gicv3_dist.c           | 2 ++
+ hw/intc/gicv3_internal.h           | 1 +
+ include/hw/intc/arm_gicv3_common.h | 1 +
+ 4 files changed, 5 insertions(+)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index f6ffb3aadb..4d681a733e 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -45,33 +45,45 @@ const char * const fregnames[32] = {
-     "f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31",
- };
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index c52f060026..2d2cea6858 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -569,6 +569,7 @@ static Property arm_gicv3_common_properties[] = {
+     DEFINE_PROP_UINT32("num-irq", GICv3State, num_irq, 32),
+     DEFINE_PROP_UINT32("revision", GICv3State, revision, 3),
+     DEFINE_PROP_BOOL("has-lpi", GICv3State, lpi_enable, 0),
++    DEFINE_PROP_BOOL("has-nmi", GICv3State, nmi_support, 0),
+     DEFINE_PROP_BOOL("has-security-extensions", GICv3State, security_extn, 0),
+     /*
+      * Compatibility property: force 8 bits of physical priority, even
+diff --git a/hw/intc/arm_gicv3_dist.c b/hw/intc/arm_gicv3_dist.c
+index 9739404e35..c4e28d209a 100644
+--- a/hw/intc/arm_gicv3_dist.c
++++ b/hw/intc/arm_gicv3_dist.c
+@@ -412,6 +412,7 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
+          *                      by GICD_TYPER.IDbits)
+          * MBIS == 0 (message-based SPIs not supported)
+          * SecurityExtn == 1 if security extns supported
++         * NMI = 1 if Non-maskable interrupt property is supported
+          * CPUNumber == 0 since for us ARE is always 1
+          * ITLinesNumber == (((max SPI IntID + 1) / 32) - 1)
+          */
+@@ -425,6 +426,7 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
+         bool dvis = s->revision >= 4;
  
--static const char * const excp_names[] = {
--    [EXCCODE_INT] = "Interrupt",
--    [EXCCODE_PIL] = "Page invalid exception for load",
--    [EXCCODE_PIS] = "Page invalid exception for store",
--    [EXCCODE_PIF] = "Page invalid exception for fetch",
--    [EXCCODE_PME] = "Page modified exception",
--    [EXCCODE_PNR] = "Page Not Readable exception",
--    [EXCCODE_PNX] = "Page Not Executable exception",
--    [EXCCODE_PPI] = "Page Privilege error",
--    [EXCCODE_ADEF] = "Address error for instruction fetch",
--    [EXCCODE_ADEM] = "Address error for Memory access",
--    [EXCCODE_SYS] = "Syscall",
--    [EXCCODE_BRK] = "Break",
--    [EXCCODE_INE] = "Instruction Non-Existent",
--    [EXCCODE_IPE] = "Instruction privilege error",
--    [EXCCODE_FPD] = "Floating Point Disabled",
--    [EXCCODE_FPE] = "Floating Point Exception",
--    [EXCCODE_DBP] = "Debug breakpoint",
--    [EXCCODE_BCE] = "Bound Check Exception",
--    [EXCCODE_SXD] = "128 bit vector instructions Disable exception",
--    [EXCCODE_ASXD] = "256 bit vector instructions Disable exception",
-+struct TypeExcp {
-+    int32_t exccode;
-+    const char *name;
-+};
-+
-+static const struct TypeExcp excp_names[] = {
-+    {EXCCODE_INT, "Interrupt"},
-+    {EXCCODE_PIL, "Page invalid exception for load"},
-+    {EXCCODE_PIS, "Page invalid exception for store"},
-+    {EXCCODE_PIF, "Page invalid exception for fetch"},
-+    {EXCCODE_PME, "Page modified exception"},
-+    {EXCCODE_PNR, "Page Not Readable exception"},
-+    {EXCCODE_PNX, "Page Not Executable exception"},
-+    {EXCCODE_PPI, "Page Privilege error"},
-+    {EXCCODE_ADEF, "Address error for instruction fetch"},
-+    {EXCCODE_ADEM, "Address error for Memory access"},
-+    {EXCCODE_SYS, "Syscall"},
-+    {EXCCODE_BRK, "Break"},
-+    {EXCCODE_INE, "Instruction Non-Existent"},
-+    {EXCCODE_IPE, "Instruction privilege error"},
-+    {EXCCODE_FPD, "Floating Point Disabled"},
-+    {EXCCODE_FPE, "Floating Point Exception"},
-+    {EXCCODE_DBP, "Debug breakpoint"},
-+    {EXCCODE_BCE, "Bound Check Exception"},
-+    {EXCCODE_SXD, "128 bit vector instructions Disable exception"},
-+    {EXCCODE_ASXD, "256 bit vector instructions Disable exception"},
-+    {EXCP_HLT, "EXCP_HLT"},
- };
+         *data = (1 << 25) | (1 << 24) | (dvis << 18) | (sec_extn << 10) |
++            (s->nmi_support << GICD_TYPER_NMI_SHIFT) |
+             (s->lpi_enable << GICD_TYPER_LPIS_SHIFT) |
+             (0xf << 19) | itlinesnumber;
+         return true;
+diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
+index a1fc34597e..8d793243f4 100644
+--- a/hw/intc/gicv3_internal.h
++++ b/hw/intc/gicv3_internal.h
+@@ -70,6 +70,7 @@
+ #define GICD_CTLR_E1NWF             (1U << 7)
+ #define GICD_CTLR_RWP               (1U << 31)
  
- const char *loongarch_exception_name(int32_t exception)
- {
--    assert(excp_names[exception]);
--    return excp_names[exception];
-+    int i;
-+
-+    for (i = 0; i < ARRAY_SIZE(excp_names); i++) {
-+        if (excp_names[i].exccode == exception) {
-+            return excp_names[i].name;
-+        }
-+    }
-+    return "Unknown";
- }
++#define GICD_TYPER_NMI_SHIFT           9
+ #define GICD_TYPER_LPIS_SHIFT          17
  
- void G_NORETURN do_raise_exception(CPULoongArchState *env,
-@@ -80,7 +92,7 @@ void G_NORETURN do_raise_exception(CPULoongArchState *env,
- {
-     CPUState *cs = env_cpu(env);
- 
--    qemu_log_mask(CPU_LOG_INT, "%s: %d (%s)\n",
-+    qemu_log_mask(CPU_LOG_INT, "%s: expection: %d (%s)\n",
-                   __func__,
-                   exception,
-                   loongarch_exception_name(exception));
-@@ -154,22 +166,16 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-     CPULoongArchState *env = cpu_env(cs);
-     bool update_badinstr = 1;
-     int cause = -1;
--    const char *name;
-     bool tlbfill = FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
-     uint32_t vec_size = FIELD_EX64(env->CSR_ECFG, CSR_ECFG, VS);
- 
-     if (cs->exception_index != EXCCODE_INT) {
--        if (cs->exception_index < 0 ||
--            cs->exception_index >= ARRAY_SIZE(excp_names)) {
--            name = "unknown";
--        } else {
--            name = excp_names[cs->exception_index];
--        }
--
-         qemu_log_mask(CPU_LOG_INT,
-                      "%s enter: pc " TARGET_FMT_lx " ERA " TARGET_FMT_lx
--                     " TLBRERA " TARGET_FMT_lx " %s exception\n", __func__,
--                     env->pc, env->CSR_ERA, env->CSR_TLBRERA, name);
-+                     " TLBRERA " TARGET_FMT_lx " exception: %d (%s)\n",
-+                     __func__, env->pc, env->CSR_ERA, env->CSR_TLBRERA,
-+                     cs->exception_index,
-+                     loongarch_exception_name(cs->exception_index));
-     }
- 
-     switch (cs->exception_index) {
+ /* 16 bits EventId */
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index df4380141d..16c5fa7256 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -251,6 +251,7 @@ struct GICv3State {
+     uint32_t num_irq;
+     uint32_t revision;
+     bool lpi_enable;
++    bool nmi_support;
+     bool security_extn;
+     bool force_8bit_prio;
+     bool irq_reset_nonsecure;
 -- 
-2.25.1
+2.34.1
 
 
