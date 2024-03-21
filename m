@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7CCCD11C2
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B37CC54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnKhz-00037x-FX; Thu, 21 Mar 2024 11:51:59 -0400
+	id 1rnKgZ-0007Vl-WB; Thu, 21 Mar 2024 11:50:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKhS-0001Yy-UM
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:51:28 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgT-0007D7-Pr
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:27 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKhM-0002Eh-2A
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:51:23 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2d28051376eso23474901fa.0
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:51:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgM-0001nA-79
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:20 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-414633f7a52so11074275e9.0
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:50:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711036271; x=1711641071; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711036215; x=1711641015; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8h5t/FA85YtkYkt5jLzh3FCMifcHYByW2n7FfuuxlSE=;
- b=NNYMF4P7+0rvbRQgPuHTkgYYjjr3wzT8Pwm5/SX0I5LzCQUzHnvQRSelseRfjOM9rR
- YZy2egRi6XFPab6IxMJ+G+SuFdRX650D42N+VpwXspDOZ5EaPi7slK9K7AMjaivNyANd
- Ut1y+Oy4NpXutPUUh8S3Zm03LBUGEHUXk54l3p3eIb3nk1cywN4QTYStAhtCip0mFxfi
- Qm9FAIUD7kwDZMfZ5ejDLVWhG57ryZBOeFNV0g9ZLZEjn2X+lJO1D6NOIvltQz0MUlNy
- 6I0QS8nNKR3FEAUZWy2YGQDpyqAo5IyJcGtGOHdlzRtG46/ExozC6CEN5aMbKvVjvtoa
- aEQw==
+ bh=4LWS7xvFoegnF0mSZFeKjpH3HSq3m0fIT12twQQtV6g=;
+ b=GIJEQf922Ov9ko0AHycgKkxdholgPW4TsZEYJIp/JtC+udhgtiBLppSC6DU9/YiIV8
+ Moj4MlkPnPNxe9jAlF3mFtTcnwmjQNYFcPx+iHLDJ60Zl3YD1o52r8KyVGCcBW3sxfDh
+ iiEkt3eNlNl9gSanFoiAPZB/S7+3J6oQxI2Zv7XqdPg09yDUlcCDyXZYf5dZ40lSbmuI
+ BuaCPDmfnmbhvL0uWvQPU820GE3d0i/lXJ8tQ12q7VJD1v14R8mxLbyxjm66gTf2oXr3
+ 03Lk2CVMV5RyOjX6aCKLR/ur2E7Naet5SfMCaBkCcdoTRjimWet7TUqjMkZ11jlrdyxd
+ FnJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711036271; x=1711641071;
+ d=1e100.net; s=20230601; t=1711036215; x=1711641015;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8h5t/FA85YtkYkt5jLzh3FCMifcHYByW2n7FfuuxlSE=;
- b=TA9baR6rnEgrR/uegMHNecd/Zf5rleyiIklaKFK4OVOvmTJf3mfA6h/3m2RuBz/g3u
- JLwX0NAkc5HkHCT844BT48LU4kdLnh095pLoyHxz5n80bqbPKDiqQqV0CWwnqgA30+oM
- BdX+926TpFCbFeNEae+WabxjRhaFZMgmWJAeDK/QMXwEBhez7NpjdEhapJCHVXa5J0Md
- ZzRB9mEMtfEmYLYF0JD0TB4qAZKcjvhKGXoNz5XwXAoeLuIilZPxc5WzLExTUflL/2W5
- gf9HTbFR2MapviPeFHjhOmGhUoZ4nNyr7HSTr4JEt3omEO2HtZ8iaE6xmhlkUreQpBMC
- lPzg==
-X-Gm-Message-State: AOJu0YzrvYpWjkjT/YmYgt3fvK34YkROPgirKXV13uE/OQ69zhkrfoE9
- 083TuL43oxFs97teh8yq5kIWQ/G3QNjyyR7Skunw+1M386/g02AM+DtTpVau3TuhO5GDhcYbl0K
- ggKw=
-X-Google-Smtp-Source: AGHT+IHBplfjpFB1vOCGbIjl6ktfDRjEjyU1MULPF6t37s/XrZTWksZKQ9OFd/03Vz5z4YtjEImoig==
-X-Received: by 2002:a05:651c:87:b0:2d4:714b:4c5d with SMTP id
- 7-20020a05651c008700b002d4714b4c5dmr2030881ljq.44.1711036270926; 
- Thu, 21 Mar 2024 08:51:10 -0700 (PDT)
+ bh=4LWS7xvFoegnF0mSZFeKjpH3HSq3m0fIT12twQQtV6g=;
+ b=w5qgDKXdBE2VNFwDtTI/jIS0T5R/MqIn6xd5UMxt6zFPUbMle7UsDjVoT+h4PxYp6T
+ tAxXnKHmQoam3T82IJsBwDTt+hfqij1ffHhoTNY9agP3Jha3qOCdm5PdhY9V/cHM+NIS
+ lM/lAzQCqL6y9phjMxiAFBm/vcUwjHUVQuwjimSSJIqmWGJ9KDr8dE+l2cTaHMdN6rr0
+ IvYgYTsrOWQxbE1xmZZJRvtSHiDqtEjkLd3qcouOmgYAGAc8+lm0C6l66L9/70ka0FPD
+ Q1ibQ8D9GAJUKuQIAPDms6eFNQy8miNl2WxrIQPXlgMTf0kDbuzyKru3ss4rklPa5Cfj
+ VG4A==
+X-Gm-Message-State: AOJu0Yz/0RrWgw75hp2556XG4QchdwrLuBr/uWXLTFQkilfccwVmT3rf
+ juS6LenuKZpw58A5G0J7LENAWGZEBt62xQoXBYoKqJA50p0oFjAvZOpnFQfT18IUIvaizueo/g8
+ hS18=
+X-Google-Smtp-Source: AGHT+IEeQPhUy7k5Ot/s/fwB1HmG9WBBgDKW6+YXl8dX+9y6uFk/adnRBaAFqSwIZ5/3x8GqHetqlA==
+X-Received: by 2002:a05:600c:4e8f:b0:414:1fc:2ef3 with SMTP id
+ f15-20020a05600c4e8f00b0041401fc2ef3mr2378590wmq.29.1711036215092; 
+ Thu, 21 Mar 2024 08:50:15 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.222])
  by smtp.gmail.com with ESMTPSA id
- e7-20020a170906314700b00a46e3669dd3sm48752eje.128.2024.03.21.08.51.08
+ iv13-20020a05600c548d00b0041463334822sm134735wmb.26.2024.03.21.08.50.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 21 Mar 2024 08:51:10 -0700 (PDT)
+ Thu, 21 Mar 2024 08:50:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
@@ -72,25 +72,25 @@ Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 20/21] target/xtensa: Move monitor commands to
- monitor.c
-Date: Thu, 21 Mar 2024 16:48:36 +0100
-Message-ID: <20240321154838.95771-21-philmd@linaro.org>
+Subject: [PATCH-for-9.1 12/21] target/nios2: Replace qemu_printf() by
+ monitor_printf() in monitor
+Date: Thu, 21 Mar 2024 16:48:28 +0100
+Message-ID: <20240321154838.95771-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240321154838.95771-1-philmd@linaro.org>
 References: <20240321154838.95771-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,323 +108,61 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/xtensa/mmu_helper.c | 140 ------------------------------------
- target/xtensa/monitor.c    | 144 ++++++++++++++++++++++++++++++++++++-
- 2 files changed, 143 insertions(+), 141 deletions(-)
+ target/nios2/monitor.c | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/target/xtensa/mmu_helper.c b/target/xtensa/mmu_helper.c
-index 3b4f53feb0..892730f0f0 100644
---- a/target/xtensa/mmu_helper.c
-+++ b/target/xtensa/mmu_helper.c
-@@ -26,8 +26,6 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "qemu/qemu-print.h"
--#include "qemu/units.h"
- #include "exec/helper-proto.h"
- #include "exec/exec-all.h"
- #include "cpu.h"
-@@ -193,141 +191,3 @@ uint32_t HELPER(pptlb)(CPUXtensaState *env, uint32_t v)
-         return env->config->mpu_bg[bg_segment].attr | segment;
-     }
- }
--
--static void dump_tlb(CPUXtensaState *env, bool dtlb)
--{
--    unsigned wi, ei;
--    const xtensa_tlb *conf =
--        dtlb ? &env->config->dtlb : &env->config->itlb;
--    unsigned (*attr_to_access)(uint32_t) =
--        xtensa_option_enabled(env->config, XTENSA_OPTION_MMU) ?
--        mmu_attr_to_access : region_attr_to_access;
--
--    qemu_printf("%s:\n", dtlb ? "DTLB" : "IBLB");
--    for (wi = 0; wi < conf->nways; ++wi) {
--        uint32_t sz = ~xtensa_tlb_get_addr_mask(env, dtlb, wi) + 1;
--        const char *sz_text;
--        bool print_header = true;
--
--        if (sz >= 0x100000) {
--            sz /= MiB;
--            sz_text = "MB";
--        } else {
--            sz /= KiB;
--            sz_text = "KB";
--        }
--
--        for (ei = 0; ei < conf->way_size[wi]; ++ei) {
--            const xtensa_tlb_entry *entry =
--                xtensa_tlb_get_entry(env, dtlb, wi, ei);
--
--            if (entry->asid) {
--                static const char * const cache_text[8] = {
--                    [PAGE_CACHE_BYPASS >> PAGE_CACHE_SHIFT] = "Bypass",
--                    [PAGE_CACHE_WT >> PAGE_CACHE_SHIFT] = "WT",
--                    [PAGE_CACHE_WB >> PAGE_CACHE_SHIFT] = "WB",
--                    [PAGE_CACHE_ISOLATE >> PAGE_CACHE_SHIFT] = "Isolate",
--                };
--                unsigned access = attr_to_access(entry->attr);
--                unsigned cache_idx = (access & PAGE_CACHE_MASK) >>
--                    PAGE_CACHE_SHIFT;
--
--                if (print_header) {
--                    print_header = false;
--                    qemu_printf("Way %u (%d %s)\n", wi, sz, sz_text);
--                    qemu_printf("\tVaddr       Paddr       ASID  Attr RWX Cache\n"
--                                "\t----------  ----------  ----  ---- --- -------\n");
--                }
--                qemu_printf("\t0x%08x  0x%08x  0x%02x  0x%02x %c%c%c %s\n",
--                            entry->vaddr,
--                            entry->paddr,
--                            entry->asid,
--                            entry->attr,
--                            (access & PAGE_READ) ? 'R' : '-',
--                            (access & PAGE_WRITE) ? 'W' : '-',
--                            (access & PAGE_EXEC) ? 'X' : '-',
--                            cache_text[cache_idx] ?
--                            cache_text[cache_idx] : "Invalid");
--            }
--        }
--    }
--}
--
--static void dump_mpu(CPUXtensaState *env, const char *map_desc,
--                     const xtensa_mpu_entry *entry, unsigned n)
--{
--    unsigned i;
--
--    qemu_printf("%s map:\n", map_desc);
--    qemu_printf("\t%s  Vaddr       Attr        Ring0  Ring1  System Type    CPU cache\n"
--                "\t%s  ----------  ----------  -----  -----  -------------  ---------\n",
--                env ? "En" : "  ",
--                env ? "--" : "  ");
--
--    for (i = 0; i < n; ++i) {
--        uint32_t attr = entry[i].attr;
--        unsigned access0 = mpu_attr_to_access(attr, 0);
--        unsigned access1 = mpu_attr_to_access(attr, 1);
--        unsigned type = mpu_attr_to_type(attr);
--        char cpu_cache = (type & XTENSA_MPU_TYPE_CPU_CACHE) ? '-' : ' ';
--
--        qemu_printf("\t %c  0x%08x  0x%08x   %c%c%c    %c%c%c   ",
--                    env ?
--                    ((env->sregs[MPUENB] & (1u << i)) ? '+' : '-') : ' ',
--                    entry[i].vaddr, attr,
--                    (access0 & PAGE_READ) ? 'R' : '-',
--                    (access0 & PAGE_WRITE) ? 'W' : '-',
--                    (access0 & PAGE_EXEC) ? 'X' : '-',
--                    (access1 & PAGE_READ) ? 'R' : '-',
--                    (access1 & PAGE_WRITE) ? 'W' : '-',
--                    (access1 & PAGE_EXEC) ? 'X' : '-');
--
--        switch (type & XTENSA_MPU_SYSTEM_TYPE_MASK) {
--        case XTENSA_MPU_SYSTEM_TYPE_DEVICE:
--            qemu_printf("Device %cB %3s\n",
--                        (type & XTENSA_MPU_TYPE_B) ? ' ' : 'n',
--                        (type & XTENSA_MPU_TYPE_INT) ? "int" : "");
--            break;
--        case XTENSA_MPU_SYSTEM_TYPE_NC:
--            qemu_printf("Sys NC %cB      %c%c%c\n",
--                        (type & XTENSA_MPU_TYPE_B) ? ' ' : 'n',
--                        (type & XTENSA_MPU_TYPE_CPU_R) ? 'r' : cpu_cache,
--                        (type & XTENSA_MPU_TYPE_CPU_W) ? 'w' : cpu_cache,
--                        (type & XTENSA_MPU_TYPE_CPU_C) ? 'c' : cpu_cache);
--            break;
--        case XTENSA_MPU_SYSTEM_TYPE_C:
--            qemu_printf("Sys  C %c%c%c     %c%c%c\n",
--                        (type & XTENSA_MPU_TYPE_SYS_R) ? 'R' : '-',
--                        (type & XTENSA_MPU_TYPE_SYS_W) ? 'W' : '-',
--                        (type & XTENSA_MPU_TYPE_SYS_C) ? 'C' : '-',
--                        (type & XTENSA_MPU_TYPE_CPU_R) ? 'r' : cpu_cache,
--                        (type & XTENSA_MPU_TYPE_CPU_W) ? 'w' : cpu_cache,
--                        (type & XTENSA_MPU_TYPE_CPU_C) ? 'c' : cpu_cache);
--            break;
--        default:
--            qemu_printf("Unknown\n");
--            break;
--        }
--    }
--}
--
--void xtensa_dump_mmu(CPUXtensaState *env)
--{
--    if (xtensa_option_bits_enabled(env->config,
--                XTENSA_OPTION_BIT(XTENSA_OPTION_REGION_PROTECTION) |
--                XTENSA_OPTION_BIT(XTENSA_OPTION_REGION_TRANSLATION) |
--                XTENSA_OPTION_BIT(XTENSA_OPTION_MMU))) {
--
--        dump_tlb(env, false);
--        qemu_printf("\n");
--        dump_tlb(env, true);
--    } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_MPU)) {
--        dump_mpu(env, "Foreground",
--                 env->mpu_fg, env->config->n_mpu_fg_segments);
--        qemu_printf("\n");
--        dump_mpu(NULL, "Background",
--                 env->config->mpu_bg, env->config->n_mpu_bg_segments);
--    } else {
--        qemu_printf("No TLB for this CPU core\n");
--    }
--}
-diff --git a/target/xtensa/monitor.c b/target/xtensa/monitor.c
-index ce1b791a5c..9ba068d624 100644
---- a/target/xtensa/monitor.c
-+++ b/target/xtensa/monitor.c
-@@ -22,10 +22,152 @@
+diff --git a/target/nios2/monitor.c b/target/nios2/monitor.c
+index c6043769e4..983c16d7f8 100644
+--- a/target/nios2/monitor.c
++++ b/target/nios2/monitor.c
+@@ -22,7 +22,6 @@
   * THE SOFTWARE.
   */
  #include "qemu/osdep.h"
--#include "cpu.h"
-+#include "qemu/qemu-print.h"
-+#include "qemu/units.h"
+-#include "qemu/qemu-print.h"
+ #include "cpu.h"
  #include "monitor/monitor.h"
  #include "monitor/hmp-target.h"
- #include "monitor/hmp.h"
-+#include "cpu.h"
-+#include "mmu.h"
-+
-+
-+static void dump_tlb(CPUXtensaState *env, bool dtlb)
-+{
-+    unsigned wi, ei;
-+    const xtensa_tlb *conf =
-+        dtlb ? &env->config->dtlb : &env->config->itlb;
-+    unsigned (*attr_to_access)(uint32_t) =
-+        xtensa_option_enabled(env->config, XTENSA_OPTION_MMU) ?
-+        mmu_attr_to_access : region_attr_to_access;
-+
-+    qemu_printf("%s:\n", dtlb ? "DTLB" : "IBLB");
-+    for (wi = 0; wi < conf->nways; ++wi) {
-+        uint32_t sz = ~xtensa_tlb_get_addr_mask(env, dtlb, wi) + 1;
-+        const char *sz_text;
-+        bool print_header = true;
-+
-+        if (sz >= 0x100000) {
-+            sz /= MiB;
-+            sz_text = "MB";
-+        } else {
-+            sz /= KiB;
-+            sz_text = "KB";
-+        }
-+
-+        for (ei = 0; ei < conf->way_size[wi]; ++ei) {
-+            const xtensa_tlb_entry *entry =
-+                xtensa_tlb_get_entry(env, dtlb, wi, ei);
-+
-+            if (entry->asid) {
-+                static const char * const cache_text[8] = {
-+                    [PAGE_CACHE_BYPASS >> PAGE_CACHE_SHIFT] = "Bypass",
-+                    [PAGE_CACHE_WT >> PAGE_CACHE_SHIFT] = "WT",
-+                    [PAGE_CACHE_WB >> PAGE_CACHE_SHIFT] = "WB",
-+                    [PAGE_CACHE_ISOLATE >> PAGE_CACHE_SHIFT] = "Isolate",
-+                };
-+                unsigned access = attr_to_access(entry->attr);
-+                unsigned cache_idx = (access & PAGE_CACHE_MASK) >>
-+                    PAGE_CACHE_SHIFT;
-+
-+                if (print_header) {
-+                    print_header = false;
-+                    qemu_printf("Way %u (%d %s)\n", wi, sz, sz_text);
-+                    qemu_printf("\tVaddr       Paddr       ASID  Attr RWX Cache\n"
-+                                "\t----------  ----------  ----  ---- --- -------\n");
-+                }
-+                qemu_printf("\t0x%08x  0x%08x  0x%02x  0x%02x %c%c%c %s\n",
-+                            entry->vaddr,
-+                            entry->paddr,
-+                            entry->asid,
-+                            entry->attr,
-+                            (access & PAGE_READ) ? 'R' : '-',
-+                            (access & PAGE_WRITE) ? 'W' : '-',
-+                            (access & PAGE_EXEC) ? 'X' : '-',
-+                            cache_text[cache_idx] ?
-+                            cache_text[cache_idx] : "Invalid");
-+            }
-+        }
-+    }
-+}
-+
-+static void dump_mpu(CPUXtensaState *env, const char *map_desc,
-+                     const xtensa_mpu_entry *entry, unsigned n)
-+{
-+    unsigned i;
-+
-+    qemu_printf("%s map:\n", map_desc);
-+    qemu_printf("\t%s  Vaddr       Attr        Ring0  Ring1  System Type    CPU cache\n"
-+                "\t%s  ----------  ----------  -----  -----  -------------  ---------\n",
-+                env ? "En" : "  ",
-+                env ? "--" : "  ");
-+
-+    for (i = 0; i < n; ++i) {
-+        uint32_t attr = entry[i].attr;
-+        unsigned access0 = mpu_attr_to_access(attr, 0);
-+        unsigned access1 = mpu_attr_to_access(attr, 1);
-+        unsigned type = mpu_attr_to_type(attr);
-+        char cpu_cache = (type & XTENSA_MPU_TYPE_CPU_CACHE) ? '-' : ' ';
-+
-+        qemu_printf("\t %c  0x%08x  0x%08x   %c%c%c    %c%c%c   ",
-+                    env ?
-+                    ((env->sregs[MPUENB] & (1u << i)) ? '+' : '-') : ' ',
-+                    entry[i].vaddr, attr,
-+                    (access0 & PAGE_READ) ? 'R' : '-',
-+                    (access0 & PAGE_WRITE) ? 'W' : '-',
-+                    (access0 & PAGE_EXEC) ? 'X' : '-',
-+                    (access1 & PAGE_READ) ? 'R' : '-',
-+                    (access1 & PAGE_WRITE) ? 'W' : '-',
-+                    (access1 & PAGE_EXEC) ? 'X' : '-');
-+
-+        switch (type & XTENSA_MPU_SYSTEM_TYPE_MASK) {
-+        case XTENSA_MPU_SYSTEM_TYPE_DEVICE:
-+            qemu_printf("Device %cB %3s\n",
-+                        (type & XTENSA_MPU_TYPE_B) ? ' ' : 'n',
-+                        (type & XTENSA_MPU_TYPE_INT) ? "int" : "");
-+            break;
-+        case XTENSA_MPU_SYSTEM_TYPE_NC:
-+            qemu_printf("Sys NC %cB      %c%c%c\n",
-+                        (type & XTENSA_MPU_TYPE_B) ? ' ' : 'n',
-+                        (type & XTENSA_MPU_TYPE_CPU_R) ? 'r' : cpu_cache,
-+                        (type & XTENSA_MPU_TYPE_CPU_W) ? 'w' : cpu_cache,
-+                        (type & XTENSA_MPU_TYPE_CPU_C) ? 'c' : cpu_cache);
-+            break;
-+        case XTENSA_MPU_SYSTEM_TYPE_C:
-+            qemu_printf("Sys  C %c%c%c     %c%c%c\n",
-+                        (type & XTENSA_MPU_TYPE_SYS_R) ? 'R' : '-',
-+                        (type & XTENSA_MPU_TYPE_SYS_W) ? 'W' : '-',
-+                        (type & XTENSA_MPU_TYPE_SYS_C) ? 'C' : '-',
-+                        (type & XTENSA_MPU_TYPE_CPU_R) ? 'r' : cpu_cache,
-+                        (type & XTENSA_MPU_TYPE_CPU_W) ? 'w' : cpu_cache,
-+                        (type & XTENSA_MPU_TYPE_CPU_C) ? 'c' : cpu_cache);
-+            break;
-+        default:
-+            qemu_printf("Unknown\n");
-+            break;
-+        }
-+    }
-+}
-+
-+void xtensa_dump_mmu(CPUXtensaState *env)
-+{
-+    if (xtensa_option_bits_enabled(env->config,
-+                XTENSA_OPTION_BIT(XTENSA_OPTION_REGION_PROTECTION) |
-+                XTENSA_OPTION_BIT(XTENSA_OPTION_REGION_TRANSLATION) |
-+                XTENSA_OPTION_BIT(XTENSA_OPTION_MMU))) {
-+
-+        dump_tlb(env, false);
-+        qemu_printf("\n");
-+        dump_tlb(env, true);
-+    } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_MPU)) {
-+        dump_mpu(env, "Foreground",
-+                 env->mpu_fg, env->config->n_mpu_fg_segments);
-+        qemu_printf("\n");
-+        dump_mpu(NULL, "Background",
-+                 env->config->mpu_bg, env->config->n_mpu_bg_segments);
-+    } else {
-+        qemu_printf("No TLB for this CPU core\n");
-+    }
-+}
- 
- void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+@@ -32,24 +31,24 @@ void nios2_info_mmu(Monitor *mon, CPUNios2State *env)
  {
+     Nios2CPU *cpu = env_archcpu(env);
+ 
+-    qemu_printf("MMU: ways %d, entries %d, pid bits %d\n",
+-                cpu->tlb_num_ways, cpu->tlb_num_entries,
+-                cpu->pid_num_bits);
++    monitor_printf(mon, "MMU: ways %d, entries %d, pid bits %d\n",
++                   cpu->tlb_num_ways, cpu->tlb_num_entries,
++                   cpu->pid_num_bits);
+ 
+     for (int i = 0; i < cpu->tlb_num_entries; i++) {
+         Nios2TLBEntry *entry = &env->mmu.tlb[i];
+-        qemu_printf("TLB[%d] = %08X %08X %c VPN %05X "
+-                    "PID %02X %c PFN %05X %c%c%c%c\n",
+-                    i, entry->tag, entry->data,
+-                    (entry->tag & (1 << 10)) ? 'V' : '-',
+-                    entry->tag >> 12,
+-                    entry->tag & ((1 << cpu->pid_num_bits) - 1),
+-                    (entry->tag & (1 << 11)) ? 'G' : '-',
+-                    FIELD_EX32(entry->data, CR_TLBACC, PFN),
+-                    (entry->data & CR_TLBACC_C) ? 'C' : '-',
+-                    (entry->data & CR_TLBACC_R) ? 'R' : '-',
+-                    (entry->data & CR_TLBACC_W) ? 'W' : '-',
+-                    (entry->data & CR_TLBACC_X) ? 'X' : '-');
++        monitor_printf(mon, "TLB[%d] = %08X %08X %c VPN %05X "
++                       "PID %02X %c PFN %05X %c%c%c%c\n",
++                       i, entry->tag, entry->data,
++                       (entry->tag & (1 << 10)) ? 'V' : '-',
++                       entry->tag >> 12,
++                       entry->tag & ((1 << cpu->pid_num_bits) - 1),
++                       (entry->tag & (1 << 11)) ? 'G' : '-',
++                       FIELD_EX32(entry->data, CR_TLBACC, PFN),
++                       (entry->data & CR_TLBACC_C) ? 'C' : '-',
++                       (entry->data & CR_TLBACC_R) ? 'R' : '-',
++                       (entry->data & CR_TLBACC_W) ? 'W' : '-',
++                       (entry->data & CR_TLBACC_X) ? 'X' : '-');
+     }
+ }
+ 
 -- 
 2.41.0
 
