@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA3F7C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B12BCD11C2
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnKgZ-0007Qd-9V; Thu, 21 Mar 2024 11:50:31 -0400
+	id 1rnKhq-0002Qw-S9; Thu, 21 Mar 2024 11:51:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgH-00070o-Qf
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:14 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgy-000165-P1
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:57 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgE-0001ko-9V
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:12 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-414776775d3so2813905e9.3
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:50:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgu-000299-IS
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:54 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-56bc753f58eso1160596a12.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:50:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711036207; x=1711641007; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711036249; x=1711641049; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kaYDCoOXgjCF3J0hi/NBXkeoqt0AB2bCPsQIdEK8J3A=;
- b=beIQHEzsMkZHTnO66WKDRpglA39EuEcATRPxx/Fj3DZJu4HCENmfm51036hrCVrwE8
- AsAlRaA8tzvgRTYQfnoIer1h0cieAy4hhSTKS0DRoovqnJfuSPYjvtekA4GtDS9zs26n
- diolqu7sCCrxGs08ZAFhIb+U1tniflycdUlG2pSsNQUOUe2OssgFBC+Y1gtsdy6QwRla
- gkuR2XZZmDXvTN98qNJIj/t+LOWrmJBERq6L4sqS2uQlRRjXUGrluzsRWya/vRmU4xdn
- 3cQElUiPEdBCj94BdGVPCG0TtLcxrOH+XyCEG806Ng4/NOvSByKXUCI74yfJwMqNAIcr
- HaLg==
+ bh=HBTm7fX0XnajgMEHRoXg20PUgOsEK5tp5uuFAd0ZnLA=;
+ b=H1qzqjlxkFgeWoyQSFcTFl3TEpIWfvk9T4J1EQEwiTf0GuSzHlYQtWdNpZW40t9ZEo
+ I6Oi62JeJe+extwbnPA2gvgFiPUsaOiE/2HoiqIU5AL1msL6rFuT9q1xHm9qd22hlmwH
+ E0X80XzKOGgxRx2tJ5hwxLe4OxkgYdwvXcNngYX4jET7zCBKeQO0Pw/JgJr9MpVGikxk
+ Rsw6blJCj5VxuOsN3EB6hjCEoyDcgnR+0Xmc8KUcgiKtduXfZ8eFzVlgf0/kUyrg4CjC
+ rYEgs/tjkJvJ3xUR56XSestV8IVGeKCeWzvOMmZb4q04h9edFUD3fgr3ShkNdWbcKdDC
+ yKrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711036207; x=1711641007;
+ d=1e100.net; s=20230601; t=1711036249; x=1711641049;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kaYDCoOXgjCF3J0hi/NBXkeoqt0AB2bCPsQIdEK8J3A=;
- b=XPueGN7nIHd+ReadXcacNWzyHF4T8KUqmOSvgRQaZogb5gWi1J08woWS4MT4Yl2zeb
- 4uU4gCAHl1sJSibG9Ptc5GHKXcbkxhC+JJNve6Mb1o/XT4nYxDSeAhJRh70Z2X+EbfJn
- Y+lS96rb9aCMFpR6Ob2f5xhF3OT2evvuCDzlYlsWfjfrEGJlSBBjt8c0tziB8/u2tPy/
- 7cm02IsiOKiOmWZm9QanTjLqOANZOKSEOds/sqiixJ9UTKx+5xz0PdVj2cXiYCWFMU2r
- d+45c4iGv45tEOmyQTSgyU154LLpna/xrrKJYBI/TKkY1Xao8geNFA8a1OFH3q4A/dzk
- 4F7A==
-X-Gm-Message-State: AOJu0YxR8CpVeCrBdXr9YBNTnhVDxxnYJx3YH9zynwbWLfAV5gI/I3Kp
- iB+wjO4KB3oKmZUuYrfuHO9/Ge9Gr7nhLhtQJPE8qX9bfNq3jPbmGsfh/AoDmLinUBvidfULXRl
- mlas=
-X-Google-Smtp-Source: AGHT+IECdpN4aGFS4wOtGuEHJ/tngZrGDJvB0eP2LElCYBc2wi28sHD7ORsHzU6O1p3ZiIqxr5lUfA==
-X-Received: by 2002:a05:600c:1c20:b0:414:645c:33cd with SMTP id
- j32-20020a05600c1c2000b00414645c33cdmr1714797wms.32.1711036207350; 
- Thu, 21 Mar 2024 08:50:07 -0700 (PDT)
+ bh=HBTm7fX0XnajgMEHRoXg20PUgOsEK5tp5uuFAd0ZnLA=;
+ b=mNk0+3kveJ9HxWOYUzGsg2kBpGIxC0i5j6o0CWe/saWeGJ0ABKQh5bN1EPBRcIE+xC
+ sPOAMuxlvxPgddxvxNdRv4ckhIeFiX14XvHgx5GVwgeVh4M+spX6tEXYcLDO3eUDCqU7
+ uGEAqjxRRTqaHmHpY3MngkhcIk5SGZQkBdql44aCVjg2Zhq3EGi+0YRIN324qe1vj7LQ
+ oyXI1cSHzjZXZhQ/nmARzDZdtFACkksNFN3hDcSx40KKNaeRQv/uuPyeyItv71OnAFh7
+ 1QCdnrvC44RbKVzla681PlbI1I4C2MyD/qiryx9P7kvE1IoU3yxn0k1Zjv5+PaN8VQFX
+ 4gMA==
+X-Gm-Message-State: AOJu0Yzb8YtSUSqEHCaNzVSX76kMLR/wwYd+hb3lLiw5Fejt2KdUl2+2
+ AW7BmGo5ndlhs4I822baTS97TjoIQTRq+BHxR+8c8Li6VzHWWnRFNFZKkQWSEsMA3f7/8U38Fvm
+ Sc5A=
+X-Google-Smtp-Source: AGHT+IG0y8L0mGnPrFKMTIUU0M1hBiRNav6XsB7ffIMx0E+AmGpLpKoEjlnLiJMwx0BhB6oYf9DiRg==
+X-Received: by 2002:a05:6402:159a:b0:568:9fc9:ec72 with SMTP id
+ ij26-20020a056402159a00b005689fc9ec72mr3999872edb.35.1711036249579; 
+ Thu, 21 Mar 2024 08:50:49 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.222])
  by smtp.gmail.com with ESMTPSA id
- n18-20020a05600c501200b004146bdce3fesm5885327wmr.4.2024.03.21.08.50.04
+ l9-20020a056402028900b00568d4cf3288sm17978edv.7.2024.03.21.08.50.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 21 Mar 2024 08:50:06 -0700 (PDT)
+ Thu, 21 Mar 2024 08:50:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
@@ -72,24 +72,24 @@ Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 11/21] target/nios2: Move monitor commands to monitor.c
-Date: Thu, 21 Mar 2024 16:48:27 +0100
-Message-ID: <20240321154838.95771-12-philmd@linaro.org>
+Subject: [PATCH-for-9.1 17/21] target/xtensa: Prefix MMU API with 'xtensa_'
+Date: Thu, 21 Mar 2024 16:48:33 +0100
+Message-ID: <20240321154838.95771-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240321154838.95771-1-philmd@linaro.org>
 References: <20240321154838.95771-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,116 +105,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move 'info tlb' monitor commands to monitor.c,
-rename dump_mmu() as nios2_info_mmu().
+In order to extract the MMU API to a new "mmu.h" header,
+prefix it with the target name.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/nios2/cpu.h     |  2 +-
- target/nios2/mmu.c     | 27 ---------------------------
- target/nios2/monitor.c | 28 +++++++++++++++++++++++++++-
- 3 files changed, 28 insertions(+), 29 deletions(-)
+ target/xtensa/cpu.h        |  4 ++--
+ target/xtensa/cpu.c        |  2 +-
+ target/xtensa/mmu_helper.c | 41 +++++++++++++++++++++-----------------
+ target/xtensa/monitor.c    |  2 +-
+ 4 files changed, 27 insertions(+), 22 deletions(-)
 
-diff --git a/target/nios2/cpu.h b/target/nios2/cpu.h
-index 4164a3432e..27e835cf40 100644
---- a/target/nios2/cpu.h
-+++ b/target/nios2/cpu.h
-@@ -250,7 +250,7 @@ static inline void nios2_update_crs(CPUNios2State *env)
+diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
+index 6b8d0636d2..b2cfc78e9d 100644
+--- a/target/xtensa/cpu.h
++++ b/target/xtensa/cpu.h
+@@ -692,8 +692,8 @@ static inline int xtensa_get_cring(const CPUXtensaState *env)
+ int xtensa_get_physical_addr(CPUXtensaState *env, bool update_tlb,
+         uint32_t vaddr, int is_write, int mmu_idx,
+         uint32_t *paddr, uint32_t *page_size, unsigned *access);
+-void reset_mmu(CPUXtensaState *env);
+-void dump_mmu(CPUXtensaState *env);
++void xtensa_reset_mmu(CPUXtensaState *env);
++void xtensa_dump_mmu(CPUXtensaState *env);
  
- void nios2_tcg_init(void);
- void nios2_cpu_do_interrupt(CPUState *cs);
--void dump_mmu(CPUNios2State *env);
-+void nios2_info_mmu(Monitor *mon, CPUNios2State *env);
- void nios2_cpu_dump_state(CPUState *cpu, FILE *f, int flags);
- G_NORETURN void nios2_cpu_do_unaligned_access(CPUState *cpu, vaddr addr,
-                                               MMUAccessType access_type, int mmu_idx,
-diff --git a/target/nios2/mmu.c b/target/nios2/mmu.c
-index 272bd9fc6a..278eba1b0a 100644
---- a/target/nios2/mmu.c
-+++ b/target/nios2/mmu.c
-@@ -19,7 +19,6 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "qemu/qemu-print.h"
- #include "cpu.h"
- #include "exec/exec-all.h"
- #include "mmu.h"
-@@ -187,29 +186,3 @@ void nios2_mmu_init(CPUNios2State *env)
-     mmu->tlb_entry_mask = (cpu->tlb_num_entries / cpu->tlb_num_ways) - 1;
-     mmu->tlb = g_new0(Nios2TLBEntry, cpu->tlb_num_entries);
- }
--
--void dump_mmu(CPUNios2State *env)
--{
--    Nios2CPU *cpu = env_archcpu(env);
--    int i;
--
--    qemu_printf("MMU: ways %d, entries %d, pid bits %d\n",
--                cpu->tlb_num_ways, cpu->tlb_num_entries,
--                cpu->pid_num_bits);
--
--    for (i = 0; i < cpu->tlb_num_entries; i++) {
--        Nios2TLBEntry *entry = &env->mmu.tlb[i];
--        qemu_printf("TLB[%d] = %08X %08X %c VPN %05X "
--                    "PID %02X %c PFN %05X %c%c%c%c\n",
--                    i, entry->tag, entry->data,
--                    (entry->tag & (1 << 10)) ? 'V' : '-',
--                    entry->tag >> 12,
--                    entry->tag & ((1 << cpu->pid_num_bits) - 1),
--                    (entry->tag & (1 << 11)) ? 'G' : '-',
--                    FIELD_EX32(entry->data, CR_TLBACC, PFN),
--                    (entry->data & CR_TLBACC_C) ? 'C' : '-',
--                    (entry->data & CR_TLBACC_R) ? 'R' : '-',
--                    (entry->data & CR_TLBACC_W) ? 'W' : '-',
--                    (entry->data & CR_TLBACC_X) ? 'X' : '-');
--    }
--}
-diff --git a/target/nios2/monitor.c b/target/nios2/monitor.c
-index 0152dec3fa..c6043769e4 100644
---- a/target/nios2/monitor.c
-+++ b/target/nios2/monitor.c
-@@ -22,14 +22,40 @@
-  * THE SOFTWARE.
-  */
- #include "qemu/osdep.h"
-+#include "qemu/qemu-print.h"
- #include "cpu.h"
- #include "monitor/monitor.h"
- #include "monitor/hmp-target.h"
- #include "monitor/hmp.h"
- 
-+void nios2_info_mmu(Monitor *mon, CPUNios2State *env)
-+{
-+    Nios2CPU *cpu = env_archcpu(env);
-+
-+    qemu_printf("MMU: ways %d, entries %d, pid bits %d\n",
-+                cpu->tlb_num_ways, cpu->tlb_num_entries,
-+                cpu->pid_num_bits);
-+
-+    for (int i = 0; i < cpu->tlb_num_entries; i++) {
-+        Nios2TLBEntry *entry = &env->mmu.tlb[i];
-+        qemu_printf("TLB[%d] = %08X %08X %c VPN %05X "
-+                    "PID %02X %c PFN %05X %c%c%c%c\n",
-+                    i, entry->tag, entry->data,
-+                    (entry->tag & (1 << 10)) ? 'V' : '-',
-+                    entry->tag >> 12,
-+                    entry->tag & ((1 << cpu->pid_num_bits) - 1),
-+                    (entry->tag & (1 << 11)) ? 'G' : '-',
-+                    FIELD_EX32(entry->data, CR_TLBACC, PFN),
-+                    (entry->data & CR_TLBACC_C) ? 'C' : '-',
-+                    (entry->data & CR_TLBACC_R) ? 'R' : '-',
-+                    (entry->data & CR_TLBACC_W) ? 'W' : '-',
-+                    (entry->data & CR_TLBACC_X) ? 'X' : '-');
-+    }
-+}
-+
- void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+ static inline MemoryRegion *xtensa_get_er_region(CPUXtensaState *env)
  {
-     CPUArchState *env1 = mon_get_cpu_env(mon);
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index 875cf843c9..ae0c4aab24 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -130,7 +130,7 @@ static void xtensa_cpu_reset_hold(Object *obj)
+     env->exclusive_addr = -1;
  
+ #ifndef CONFIG_USER_ONLY
+-    reset_mmu(env);
++    xtensa_reset_mmu(env);
+     cs->halted = env->runstall;
+ #endif
+     set_no_signaling_nans(!dfpu, &env->fp_status);
+diff --git a/target/xtensa/mmu_helper.c b/target/xtensa/mmu_helper.c
+index 47063b0a57..31ee3fa957 100644
+--- a/target/xtensa/mmu_helper.c
++++ b/target/xtensa/mmu_helper.c
+@@ -139,7 +139,8 @@ static uint32_t xtensa_tlb_get_addr_mask(const CPUXtensaState *env,
+  * Get bit mask for the 'VPN without index' field.
+  * See ISA, 4.6.5.6, data format for RxTLB0
+  */
+-static uint32_t get_vpn_mask(const CPUXtensaState *env, bool dtlb, uint32_t way)
++static uint32_t xtensa_get_vpn_mask(const CPUXtensaState *env, bool dtlb,
++                                    uint32_t way)
+ {
+     if (way < 4) {
+         bool is32 = (dtlb ?
+@@ -168,9 +169,10 @@ static uint32_t get_vpn_mask(const CPUXtensaState *env, bool dtlb, uint32_t way)
+  * Split virtual address into VPN (with index) and entry index
+  * for the given TLB way
+  */
+-static void split_tlb_entry_spec_way(const CPUXtensaState *env, uint32_t v,
+-                                     bool dtlb, uint32_t *vpn,
+-                                     uint32_t wi, uint32_t *ei)
++static void xtensa_split_tlb_entry_spec_way(const CPUXtensaState *env,
++                                            uint32_t v,
++                                            bool dtlb, uint32_t *vpn,
++                                            uint32_t wi, uint32_t *ei)
+ {
+     bool varway56 = dtlb ?
+         env->config->dtlb.varway56 :
+@@ -224,13 +226,15 @@ static void split_tlb_entry_spec_way(const CPUXtensaState *env, uint32_t v,
+  * Split TLB address into TLB way, entry index and VPN (with index).
+  * See ISA, 4.6.5.5 - 4.6.5.8 for the TLB addressing format
+  */
+-static bool split_tlb_entry_spec(CPUXtensaState *env, uint32_t v, bool dtlb,
+-                                 uint32_t *vpn, uint32_t *wi, uint32_t *ei)
++static bool xtensa_split_tlb_entry_spec(CPUXtensaState *env,
++                                        uint32_t v, bool dtlb,
++                                        uint32_t *vpn, uint32_t *wi,
++                                        uint32_t *ei)
+ {
+     if (xtensa_option_enabled(env->config, XTENSA_OPTION_MMU)) {
+         *wi = v & (dtlb ? 0xf : 0x7);
+         if (*wi < (dtlb ? env->config->dtlb.nways : env->config->itlb.nways)) {
+-            split_tlb_entry_spec_way(env, v, dtlb, vpn, *wi, ei);
++            xtensa_split_tlb_entry_spec_way(env, v, dtlb, vpn, *wi, ei);
+             return true;
+         } else {
+             return false;
+@@ -254,14 +258,14 @@ static xtensa_tlb_entry *xtensa_tlb_get_entry(CPUXtensaState *env, bool dtlb,
+         env->itlb[wi] + ei;
+ }
+ 
+-static xtensa_tlb_entry *get_tlb_entry(CPUXtensaState *env,
++static xtensa_tlb_entry *xtensa_get_tlb_entry(CPUXtensaState *env,
+         uint32_t v, bool dtlb, uint32_t *pwi)
+ {
+     uint32_t vpn;
+     uint32_t wi;
+     uint32_t ei;
+ 
+-    if (split_tlb_entry_spec(env, v, dtlb, &vpn, &wi, &ei)) {
++    if (xtensa_split_tlb_entry_spec(env, v, dtlb, &vpn, &wi, &ei)) {
+         if (pwi) {
+             *pwi = wi;
+         }
+@@ -405,7 +409,7 @@ static void reset_tlb_region_way0(CPUXtensaState *env,
+     }
+ }
+ 
+-void reset_mmu(CPUXtensaState *env)
++void xtensa_reset_mmu(CPUXtensaState *env)
+ {
+     if (xtensa_option_enabled(env->config, XTENSA_OPTION_MMU)) {
+         env->sregs[RASID] = 0x04030201;
+@@ -470,7 +474,7 @@ static int xtensa_tlb_lookup(const CPUXtensaState *env,
+     for (wi = 0; wi < tlb->nways; ++wi) {
+         uint32_t vpn;
+         uint32_t ei;
+-        split_tlb_entry_spec_way(env, addr, dtlb, &vpn, wi, &ei);
++        xtensa_split_tlb_entry_spec_way(env, addr, dtlb, &vpn, wi, &ei);
+         if (entry[wi][ei].vaddr == vpn && entry[wi][ei].asid) {
+             unsigned ring = get_ring(env, entry[wi][ei].asid);
+             if (ring < 4) {
+@@ -493,10 +497,11 @@ uint32_t HELPER(rtlb0)(CPUXtensaState *env, uint32_t v, uint32_t dtlb)
+ {
+     if (xtensa_option_enabled(env->config, XTENSA_OPTION_MMU)) {
+         uint32_t wi;
+-        const xtensa_tlb_entry *entry = get_tlb_entry(env, v, dtlb, &wi);
++        const xtensa_tlb_entry *entry = xtensa_get_tlb_entry(env, v, dtlb, &wi);
+ 
+         if (entry) {
+-            return (entry->vaddr & get_vpn_mask(env, dtlb, wi)) | entry->asid;
++            return (entry->vaddr & xtensa_get_vpn_mask(env, dtlb, wi))
++                   | entry->asid;
+         } else {
+             return 0;
+         }
+@@ -507,7 +512,7 @@ uint32_t HELPER(rtlb0)(CPUXtensaState *env, uint32_t v, uint32_t dtlb)
+ 
+ uint32_t HELPER(rtlb1)(CPUXtensaState *env, uint32_t v, uint32_t dtlb)
+ {
+-    const xtensa_tlb_entry *entry = get_tlb_entry(env, v, dtlb, NULL);
++    const xtensa_tlb_entry *entry = xtensa_get_tlb_entry(env, v, dtlb, NULL);
+ 
+     if (entry) {
+         return entry->paddr | entry->attr;
+@@ -520,7 +525,7 @@ void HELPER(itlb)(CPUXtensaState *env, uint32_t v, uint32_t dtlb)
+ {
+     if (xtensa_option_enabled(env->config, XTENSA_OPTION_MMU)) {
+         uint32_t wi;
+-        xtensa_tlb_entry *entry = get_tlb_entry(env, v, dtlb, &wi);
++        xtensa_tlb_entry *entry = xtensa_get_tlb_entry(env, v, dtlb, &wi);
+         if (entry && entry->variable && entry->asid) {
+             tlb_flush_page(env_cpu(env), entry->vaddr);
+             entry->asid = 0;
+@@ -559,7 +564,7 @@ void HELPER(wtlb)(CPUXtensaState *env, uint32_t p, uint32_t v, uint32_t dtlb)
+     uint32_t vpn;
+     uint32_t wi;
+     uint32_t ei;
+-    if (split_tlb_entry_spec(env, v, dtlb, &vpn, &wi, &ei)) {
++    if (xtensa_split_tlb_entry_spec(env, v, dtlb, &vpn, &wi, &ei)) {
+         xtensa_tlb_set_entry(env, dtlb, wi, ei, vpn, p);
+     }
+ }
+@@ -818,7 +823,7 @@ static int get_physical_addr_mmu(CPUXtensaState *env, bool update_tlb,
+         may_lookup_pt && get_pte(env, vaddr, &pte)) {
+         ring = (pte >> 4) & 0x3;
+         wi = 0;
+-        split_tlb_entry_spec_way(env, vaddr, dtlb, &vpn, wi, &ei);
++        xtensa_split_tlb_entry_spec_way(env, vaddr, dtlb, &vpn, wi, &ei);
+ 
+         if (update_tlb) {
+             wi = ++env->autorefill_idx & 0x3;
+@@ -1192,7 +1197,7 @@ static void dump_mpu(CPUXtensaState *env,
+     }
+ }
+ 
+-void dump_mmu(CPUXtensaState *env)
++void xtensa_dump_mmu(CPUXtensaState *env)
+ {
+     if (xtensa_option_bits_enabled(env->config,
+                 XTENSA_OPTION_BIT(XTENSA_OPTION_REGION_PROTECTION) |
+diff --git a/target/xtensa/monitor.c b/target/xtensa/monitor.c
+index fbf60d5553..ce1b791a5c 100644
+--- a/target/xtensa/monitor.c
++++ b/target/xtensa/monitor.c
+@@ -35,5 +35,5 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+         monitor_printf(mon, "No CPU available\n");
+         return;
+     }
 -    dump_mmu(env1);
-+    nios2_info_mmu(mon, env1);
++    xtensa_dump_mmu(env1);
  }
 -- 
 2.41.0
