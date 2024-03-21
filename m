@@ -4,99 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 753AEC54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 12:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23EF9C54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 12:36:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnHbG-0007JP-HB; Thu, 21 Mar 2024 08:32:50 -0400
+	id 1rnHef-0008Kh-RW; Thu, 21 Mar 2024 08:36:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rnHbF-0007JD-Cx
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:32:49 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rnHbD-0002Uy-Kb
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:32:49 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id A17345CE2A;
- Thu, 21 Mar 2024 12:32:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1711024364; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rUZu4t2HMv48gNjndZa3eeiKbo2Pmi4qcgTSr1XxWLk=;
- b=InpWAVDNR5r5KxJLD0vHf/h5hI8AU/h5x8UsIVQKB2uZ5YmNtXP6UdMso8+1Kof4+O6MMa
- IUmfzwfCdHuvzqqyxmE10ub1WjVF7D14uwzfOy/SX9foHXK3eP4t+ZpUyiURZEbYOnXtnq
- +IuSx0uvDSUspsHDujaj0ZLoOaX47TE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1711024364;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rUZu4t2HMv48gNjndZa3eeiKbo2Pmi4qcgTSr1XxWLk=;
- b=STv9g+D95ytCpcQBfJIBn9WE3NOsg/a+YWT0KIr1be/wY31Wsw1jDEG5dHiM1ipJLhc2QY
- MW2bOzkXv2vXaNBw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1711024364; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rUZu4t2HMv48gNjndZa3eeiKbo2Pmi4qcgTSr1XxWLk=;
- b=InpWAVDNR5r5KxJLD0vHf/h5hI8AU/h5x8UsIVQKB2uZ5YmNtXP6UdMso8+1Kof4+O6MMa
- IUmfzwfCdHuvzqqyxmE10ub1WjVF7D14uwzfOy/SX9foHXK3eP4t+ZpUyiURZEbYOnXtnq
- +IuSx0uvDSUspsHDujaj0ZLoOaX47TE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1711024364;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rUZu4t2HMv48gNjndZa3eeiKbo2Pmi4qcgTSr1XxWLk=;
- b=STv9g+D95ytCpcQBfJIBn9WE3NOsg/a+YWT0KIr1be/wY31Wsw1jDEG5dHiM1ipJLhc2QY
- MW2bOzkXv2vXaNBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 22F4113976;
- Thu, 21 Mar 2024 12:32:43 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 3VDRNuso/GU0SAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 21 Mar 2024 12:32:43 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: peterx@redhat.com, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Subject: Re: [PATCH] migration/postcopy: Fix high frequency sync
-In-Reply-To: <20240320214453.584374-1-peterx@redhat.com>
-References: <20240320214453.584374-1-peterx@redhat.com>
-Date: Thu, 21 Mar 2024 09:32:41 -0300
-Message-ID: <878r2bn4t2.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rnHed-0008KY-JA
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:36:19 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rnHeW-0003Yn-SH
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 08:36:19 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8DxmfC3KfxlZOAbAA--.1515S3;
+ Thu, 21 Mar 2024 20:36:07 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxVMy3KfxltQ5gAA--.59468S2; 
+ Thu, 21 Mar 2024 20:36:07 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org,
+	philmd@linaro.org,
+	maobibo@loongson.cn
+Subject: [PATCH v3] target/loongarch: Fix qemu-system-loongarch64 assert
+ failed with the option '-d int'
+Date: Thu, 21 Mar 2024 20:36:06 +0800
+Message-Id: <20240321123606.1704900-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-4.30 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; BAYES_HAM(-3.00)[100.00%];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8BxVMy3KfxltQ5gAA--.59468S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,79 +65,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-peterx@redhat.com writes:
+qemu-system-loongarch64 assert failed with the option '-d int',
+the helper_idle() raise an exception EXCP_HLT, but the exception name is undefined.
 
-> From: Peter Xu <peterx@redhat.com>
->
-> On current code base I can observe extremely high sync count during
-> precopy, as long as one enables postcopy-ram=on before switchover to
-> postcopy.
->
-> To provide some context of when we decide to do a full sync: we check
-> must_precopy (which implies "data must be sent during precopy phase"), and
-> as long as it is lower than the threshold size we calculated (out of
-> bandwidth and expected downtime) we will kick off the slow sync.
->
-> However, when postcopy is enabled (even if still during precopy phase), RAM
-> only reports all pages as can_postcopy, and report must_precopy==0.  Then
-> "must_precopy <= threshold_size" mostly always triggers and enforces a slow
-> sync for every call to migration_iteration_run() when postcopy is enabled
-> even if not used.  That is insane.
->
-> It turns out it was a regress bug introduced in the previous refactoring in
-> QEMU 8.0 in late 2022. Fix this by checking the whole RAM size rather than
-> must_precopy, like before.  Not copy stable yet as many things changed, and
-> even if this should be a major performance regression, no functional change
-> has observed (and that's also probably why nobody found it).  I only notice
-> this when looking for another bug reported by Nina.
->
-> When at it, cleanup a little bit on the lines around.
->
-> Cc: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-> Fixes: c8df4a7aef ("migration: Split save_live_pending() into state_pending_*")
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/cpu.c | 74 +++++++++++++++++++++++-------------------
+ 1 file changed, 40 insertions(+), 34 deletions(-)
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index f6ffb3aadb..4d681a733e 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -45,33 +45,45 @@ const char * const fregnames[32] = {
+     "f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31",
+ };
+ 
+-static const char * const excp_names[] = {
+-    [EXCCODE_INT] = "Interrupt",
+-    [EXCCODE_PIL] = "Page invalid exception for load",
+-    [EXCCODE_PIS] = "Page invalid exception for store",
+-    [EXCCODE_PIF] = "Page invalid exception for fetch",
+-    [EXCCODE_PME] = "Page modified exception",
+-    [EXCCODE_PNR] = "Page Not Readable exception",
+-    [EXCCODE_PNX] = "Page Not Executable exception",
+-    [EXCCODE_PPI] = "Page Privilege error",
+-    [EXCCODE_ADEF] = "Address error for instruction fetch",
+-    [EXCCODE_ADEM] = "Address error for Memory access",
+-    [EXCCODE_SYS] = "Syscall",
+-    [EXCCODE_BRK] = "Break",
+-    [EXCCODE_INE] = "Instruction Non-Existent",
+-    [EXCCODE_IPE] = "Instruction privilege error",
+-    [EXCCODE_FPD] = "Floating Point Disabled",
+-    [EXCCODE_FPE] = "Floating Point Exception",
+-    [EXCCODE_DBP] = "Debug breakpoint",
+-    [EXCCODE_BCE] = "Bound Check Exception",
+-    [EXCCODE_SXD] = "128 bit vector instructions Disable exception",
+-    [EXCCODE_ASXD] = "256 bit vector instructions Disable exception",
++struct TypeExcp {
++    int32_t exccode;
++    const char *name;
++};
++
++static const struct TypeExcp excp_names[] = {
++    {EXCCODE_INT, "Interrupt"},
++    {EXCCODE_PIL, "Page invalid exception for load"},
++    {EXCCODE_PIS, "Page invalid exception for store"},
++    {EXCCODE_PIF, "Page invalid exception for fetch"},
++    {EXCCODE_PME, "Page modified exception"},
++    {EXCCODE_PNR, "Page Not Readable exception"},
++    {EXCCODE_PNX, "Page Not Executable exception"},
++    {EXCCODE_PPI, "Page Privilege error"},
++    {EXCCODE_ADEF, "Address error for instruction fetch"},
++    {EXCCODE_ADEM, "Address error for Memory access"},
++    {EXCCODE_SYS, "Syscall"},
++    {EXCCODE_BRK, "Break"},
++    {EXCCODE_INE, "Instruction Non-Existent"},
++    {EXCCODE_IPE, "Instruction privilege error"},
++    {EXCCODE_FPD, "Floating Point Disabled"},
++    {EXCCODE_FPE, "Floating Point Exception"},
++    {EXCCODE_DBP, "Debug breakpoint"},
++    {EXCCODE_BCE, "Bound Check Exception"},
++    {EXCCODE_SXD, "128 bit vector instructions Disable exception"},
++    {EXCCODE_ASXD, "256 bit vector instructions Disable exception"},
++    {EXCP_HLT, "EXCP_HLT"},
+ };
+ 
+ const char *loongarch_exception_name(int32_t exception)
+ {
+-    assert(excp_names[exception]);
+-    return excp_names[exception];
++    int i;
++
++    for (i = 0; i < ARRAY_SIZE(excp_names); i++) {
++        if (excp_names[i].exccode == exception) {
++            return excp_names[i].name;
++        }
++    }
++    return "Unknown";
+ }
+ 
+ void G_NORETURN do_raise_exception(CPULoongArchState *env,
+@@ -80,7 +92,7 @@ void G_NORETURN do_raise_exception(CPULoongArchState *env,
+ {
+     CPUState *cs = env_cpu(env);
+ 
+-    qemu_log_mask(CPU_LOG_INT, "%s: %d (%s)\n",
++    qemu_log_mask(CPU_LOG_INT, "%s: expection: %d (%s)\n",
+                   __func__,
+                   exception,
+                   loongarch_exception_name(exception));
+@@ -154,22 +166,16 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     CPULoongArchState *env = cpu_env(cs);
+     bool update_badinstr = 1;
+     int cause = -1;
+-    const char *name;
+     bool tlbfill = FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
+     uint32_t vec_size = FIELD_EX64(env->CSR_ECFG, CSR_ECFG, VS);
+ 
+     if (cs->exception_index != EXCCODE_INT) {
+-        if (cs->exception_index < 0 ||
+-            cs->exception_index >= ARRAY_SIZE(excp_names)) {
+-            name = "unknown";
+-        } else {
+-            name = excp_names[cs->exception_index];
+-        }
+-
+         qemu_log_mask(CPU_LOG_INT,
+                      "%s enter: pc " TARGET_FMT_lx " ERA " TARGET_FMT_lx
+-                     " TLBRERA " TARGET_FMT_lx " %s exception\n", __func__,
+-                     env->pc, env->CSR_ERA, env->CSR_TLBRERA, name);
++                     " TLBRERA " TARGET_FMT_lx " exception: %d (%s)\n",
++                     __func__, env->pc, env->CSR_ERA, env->CSR_TLBRERA,
++                     cs->exception_index,
++                     loongarch_exception_name(cs->exception_index));
+     }
+ 
+     switch (cs->exception_index) {
+-- 
+2.25.1
 
-> ---
->
-> Nina: I copied you only because this might still be relevant, as this issue
-> also misteriously points back to c8df4a7aef..  However I don't think it
-> should be a fix of your problem, at most it can change the possibility of
-> reproducability.
->
-> This is not a regression for this release, but I still want to have it for
-> 9.0.  Fabiano, any opinions / objections?
-
-Go for it.
-
-> ---
->  migration/migration.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
->
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 047b6b49cf..9fe8fd2afd 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -3199,17 +3199,16 @@ typedef enum {
->   */
->  static MigIterateState migration_iteration_run(MigrationState *s)
->  {
-> -    uint64_t must_precopy, can_postcopy;
-> +    uint64_t must_precopy, can_postcopy, pending_size;
->      Error *local_err = NULL;
->      bool in_postcopy = s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE;
->      bool can_switchover = migration_can_switchover(s);
->  
->      qemu_savevm_state_pending_estimate(&must_precopy, &can_postcopy);
-> -    uint64_t pending_size = must_precopy + can_postcopy;
-> -
-> +    pending_size = must_precopy + can_postcopy;
->      trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
->  
-> -    if (must_precopy <= s->threshold_size) {
-> +    if (pending_size < s->threshold_size) {
->          qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
->          pending_size = must_precopy + can_postcopy;
->          trace_migrate_pending_exact(pending_size, must_precopy, can_postcopy);
 
