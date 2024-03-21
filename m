@@ -4,86 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 145D8C54E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 08:19:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4449C54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 08:32:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnDct-00015d-SK; Thu, 21 Mar 2024 04:18:16 -0400
+	id 1rnDpw-00042q-62; Thu, 21 Mar 2024 04:31:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rnDcq-00015B-E0
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 04:18:13 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rnDco-0005TO-TR
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 04:18:12 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1dee5daa236so5039005ad.0
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 01:18:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rnDpg-00041n-7j; Thu, 21 Mar 2024 04:31:38 -0400
+Received: from out30-132.freemail.mail.aliyun.com ([115.124.30.132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
+ id 1rnDpd-0008Nr-OF; Thu, 21 Mar 2024 04:31:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711009089; x=1711613889; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=e22/WRojH77uUxTiZE4vkI+RCNjduJDHrgnxZNbBYNc=;
- b=y9aWNFnTvb4HzL8O6OBwgvkMRH9HVdfv+01YlMCapSQIMCLbW2dzxPviqvFqXWUD6O
- 2NQftS1PzYi5nK3mCGAOjxwK1HdgAekTjzk59G4FDk3z75yrJHZ7bRJRFrhOl1JYluxR
- e5XRZBAPf4maxjUmWzRF6nu6265OWqNDed5i/z9xPuxbJ0VUG9U6G6ZSA2hxMQeR7DMN
- 1sESwPHvanDJD/IERsrdi1KUL0BDb6WFEK+oKGOXMAIp2z379EeECPWbVH68GWuvhyXn
- IWu8DH5H4SoLywd+Xl5wEiyx1HZzZ4F97LnK23plkf9yPVB3CAunPzy4FPEvWtnA66jP
- II9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711009089; x=1711613889;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=e22/WRojH77uUxTiZE4vkI+RCNjduJDHrgnxZNbBYNc=;
- b=j5aTuSn8ty/gWDMfYzebfqlJBN13pDInfROJsd1OgrNPi6HdYo0PtsKovIYs26B95j
- bTcwmls4SDkB0KJGQM8jZ0dGTfNlqbcYR7dTMJLOWSnpaoM2S1YZzoNryqAKsWIkOV16
- fLrUVZydiCx14rKz49VvPvW90kx7LVud7gDxoAeGu+/Lss51qg/TUEpHfOdKwUO78uVE
- SbY5bqwYRZ6b4yY7d/DmMuOLnpA11RaD4hUwJugevOsXbwBfA2o3kVd2iOyegGqunOpH
- yR9hxzZaz1BTB+lF4COr0YFJLJ4dVzh1Gu3JrK1fKvzq3JnBVHgAe1WSPhPnlUO75SZ2
- yKhA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUuLCyvDUDlkTGXRufyW1JxUzAUPqMREuhoNHUDMNLZH4oBBa/jbVkRR9qPclAXpKZBBnR1ujMwn/vkvNUGnBVDUdKJB/0=
-X-Gm-Message-State: AOJu0YxSsLyMcwAl7WFXhWC+lhG2BnFvDa0IGcugY92Cn3U08ag8i4gc
- Y2XKucTGUlNMGFBM1rga+bMU13AiqjZcZh04Kjdva+ME0BdIaCA066REJqeg7xY=
-X-Google-Smtp-Source: AGHT+IEimOKmM7E/hMZ9MZbbV0m1VeEXhAWuMq/QJy5uw0FOS0aZUC9Urq8nyy3k1uHENqmYEDwAeA==
-X-Received: by 2002:a17:902:b08f:b0:1e0:27e5:449c with SMTP id
- p15-20020a170902b08f00b001e027e5449cmr3994558plr.67.1711009089170; 
- Thu, 21 Mar 2024 01:18:09 -0700 (PDT)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- b7-20020a170902650700b001e0648dfd68sm2258032plk.296.2024.03.21.01.18.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 21 Mar 2024 01:18:08 -0700 (PDT)
-Message-ID: <ed5675bc-f82b-4d4e-95e4-1a3045dd1870@linaro.org>
-Date: Wed, 20 Mar 2024 22:18:04 -1000
+ d=linux.alibaba.com; s=default;
+ t=1711009874; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=FuW58n5UxtdOQUlpaE5I8ecHkdr/LWyJ9sJqO9JqRH4=;
+ b=aUocw5LMGXpcB/vFQD/AjjzNVI3PZQIvv9L5k7waGYf/3OGklxzIopVzjJ2vR/7kkCfsCqMgkwWmLCrIGUstBDqr1J0yCb4t4M7TnTqPYnigtn/fnisb0JVownwYourDAfPlwGJRP+BC1ar74bwJla0mGfm2lSBMBgowu0xi7D8=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R841e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018045192;
+ MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W3-5zGG_1711009872; 
+Received: from 30.21.186.11(mailfrom:eric.huang@linux.alibaba.com
+ fp:SMTPD_---0W3-5zGG_1711009872) by smtp.aliyun-inc.com;
+ Thu, 21 Mar 2024 16:31:13 +0800
+Message-ID: <73db23e8-fa6c-425e-bb0b-4db9213bbbbb@linux.alibaba.com>
+Date: Thu, 21 Mar 2024 16:31:11 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] target/riscv: Fix the element agnostic function problem
-To: Huang Tao <eric.huang@linux.alibaba.com>, qemu-devel@nongnu.org
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
  alistair.francis@wdc.com, palmer@dabbelt.com
 References: <20240321035816.99983-1-eric.huang@linux.alibaba.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240321035816.99983-1-eric.huang@linux.alibaba.com>
+ <ed5675bc-f82b-4d4e-95e4-1a3045dd1870@linaro.org>
+From: Huang Tao <eric.huang@linux.alibaba.com>
+In-Reply-To: <ed5675bc-f82b-4d4e-95e4-1a3045dd1870@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.132;
+ envelope-from=eric.huang@linux.alibaba.com;
+ helo=out30-132.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,47 +71,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/20/24 17:58, Huang Tao wrote:
-> In RVV and vcrypto instructions, the masked and tail elements are set to 1s
-> using vext_set_elems_1s function if the vma/vta bit is set. It is the element
-> agnostic policy.
-> 
-> However, this function can't deal the big endian situation. This patch fixes
-> the problem by adding handling of such case.
-> 
-> Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-> Changes in v2:
-> - Keep the api of vext_set_elems_1s
-> - Reduce the number of patches.
-> ---
->   target/riscv/vector_internals.c | 22 ++++++++++++++++++++++
->   1 file changed, 22 insertions(+)
-> 
-> diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
-> index 12f5964fbb..3e45b9b4a7 100644
-> --- a/target/riscv/vector_internals.c
-> +++ b/target/riscv/vector_internals.c
-> @@ -30,6 +30,28 @@ void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
->       if (tot - cnt == 0) {
->           return ;
->       }
-> +
-> +#if HOST_BIG_ENDIAN
-> +    /*
-> +     * Deal the situation when the elements are insdie
-> +     * only one uint64 block including setting the
-> +     * masked-off element.
-> +     */
-> +    if ((tot - 1) ^ cnt < 8) {
-> +        memset(base + H1(tot - 1), -1, tot - cnt);
-> +        return;
-> +    }
 
-(1) tot will always be a multiple of 8, afaik, so there's no need for this first block.
-(2) Using if not #if means that the code is always compile-tested, even if it is eliminated.
+On 2024/3/21 16:18, Richard Henderson wrote:
+> On 3/20/24 17:58, Huang Tao wrote:
+>> In RVV and vcrypto instructions, the masked and tail elements are set 
+>> to 1s
+>> using vext_set_elems_1s function if the vma/vta bit is set. It is the 
+>> element
+>> agnostic policy.
+>>
+>> However, this function can't deal the big endian situation. This 
+>> patch fixes
+>> the problem by adding handling of such case.
+>>
+>> Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
+>> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>> Changes in v2:
+>> - Keep the api of vext_set_elems_1s
+>> - Reduce the number of patches.
+>> ---
+>>   target/riscv/vector_internals.c | 22 ++++++++++++++++++++++
+>>   1 file changed, 22 insertions(+)
+>>
+>> diff --git a/target/riscv/vector_internals.c 
+>> b/target/riscv/vector_internals.c
+>> index 12f5964fbb..3e45b9b4a7 100644
+>> --- a/target/riscv/vector_internals.c
+>> +++ b/target/riscv/vector_internals.c
+>> @@ -30,6 +30,28 @@ void vext_set_elems_1s(void *base, uint32_t 
+>> is_agnostic, uint32_t cnt,
+>>       if (tot - cnt == 0) {
+>>           return ;
+>>       }
+>> +
+>> +#if HOST_BIG_ENDIAN
+>> +    /*
+>> +     * Deal the situation when the elements are insdie
+>> +     * only one uint64 block including setting the
+>> +     * masked-off element.
+>> +     */
+>> +    if ((tot - 1) ^ cnt < 8) {
+>> +        memset(base + H1(tot - 1), -1, tot - cnt);
+>> +        return;
+>> +    }
+>
+> (1) tot will always be a multiple of 8, afaik, so there's no need for 
+> this first block.
+> (2) Using if not #if means that the code is always compile-tested, 
+> even if it is eliminated.
+>
+>
+> r~
+
+tot is not always be a multiple of 8. In the vector instructions, the 
+helper fuinctions will use vext_set_elems_1s to set one masked-off 
+element. In that case, tot = cnt + esz, and tot is not the end of a 
+vector register.
+
+There is an example in GEN_VEXT_SHIFT_VV:
+
+     for (i = env->vstart; i < vl; i++) {
+         if (!vm && !vext_elem_mask(v0, i)) {
+             /* set masked-off elements to 1s */
+             vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);
+             continue;
+         }
+
+As for the second point, I will use if instead of #if in the next version.
+
+Thanks,
+
+Huang Tao
 
 
-r~
 
