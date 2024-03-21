@@ -4,52 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9159C54E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 06:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8032EC54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 06:58:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnBxN-0000e2-PI; Thu, 21 Mar 2024 02:31:17 -0400
+	id 1rnCMQ-00057o-LQ; Thu, 21 Mar 2024 02:57:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rnBxL-0000dt-Ma
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 02:31:15 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1rnBxJ-0001I0-8C
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 02:31:15 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxXesr1Ptlt7YbAA--.675S3;
- Thu, 21 Mar 2024 14:31:07 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxTRMq1PtlXY5fAA--.54450S2; 
- Thu, 21 Mar 2024 14:31:06 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org,
-	philmd@linaro.org,
-	maobibo@loongson.cn
-Subject: [PATCH v2] target/loongarch: Fix qemu-system-loongarch64 assert
- failed with the option '-d int'
-Date: Thu, 21 Mar 2024 14:31:06 +0800
-Message-Id: <20240321063106.1700330-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnCMP-00057g-6q
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 02:57:09 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnCMN-00069k-Fk
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 02:57:08 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4146f2bf8ecso4263405e9.3
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 23:57:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711004225; x=1711609025; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rrRYwR55NiY1Cvn85AP8/S7wGxZY+Y2NuNxJaJGUMXg=;
+ b=f3oqM3M2TtTgUenJSHMsIMh5NDlhHAOdpdq4q2lxagJu2mOp+uaJPtj4p7K5RJBOHx
+ Ofv/6pAoJ78XroNPXGxhd0jQQK2E4gdmDntU5KIiDO3F6FeCR/DVq1XYiCQrSt7CTnSU
+ 66ymYn1NaoxRnx3GwW7NbRRQ9v5etX6w2MsnsYot6ytHn0dDbPMC9YWmQxtFiIxfCIVb
+ spKhrvoP1TKK8cuZnk5Pyt/33tk6b5dbmQUdbrtqAsc4g0838zMwp7e+413i0wpolJVQ
+ FK31qncZuTgaVtCscmvywEA4Wq1E4MTe75uw9+lL37H0H6oL5w/kkJqhZPZrIxLhLHU6
+ 4PCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711004225; x=1711609025;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rrRYwR55NiY1Cvn85AP8/S7wGxZY+Y2NuNxJaJGUMXg=;
+ b=u4e60EeMoeDPa83mIULVSfM12MDlwPTDdvU3Q88DIEx/qZnPMdHWRZjqfmUniOXQDW
+ fhKHXi57NOZa8/baNOsKyfkE1V1t5yVtCcDf6PZqIg0mzg8Leze8VuzxK8gevW6H0gVg
+ 7cgGZvwnB+tg8x3qLYJOS8oAED9EFk8N3J5yg9k51P0qW3ZF3d+g+h2W+md5JSMurrQS
+ hX6O3+UJSW0EgLbJwQqyyjHwnh3mUR+/qtqr1d7n1WVKgJAjntE47hh8XXZB2RCndWi0
+ Ph3m6FarvH+lTdgfcGY4JH/FN5kshVOHvlYvPeq3qeV6R4pVhEARWP8erHlS0ECSETy4
+ UIMQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXuA7MACjFaBJkPJ15z5ABUThNoNDroarFw+CxS1nmes+N4ltL5Pc8qG37ewiWrz2hUP6Ia1ULb10wSfq145mDrLOMRw58=
+X-Gm-Message-State: AOJu0YyKDilJssXHgQLKrETbkwBuwP5r0siqF5c/kYfZ+auv5ft+pAda
+ ZKzZ8PD8XeUZqPCe6qTpAaC170QVNFz+eG1yEqkr2/UvZanoX8d+UGAhs81pBpE=
+X-Google-Smtp-Source: AGHT+IGosq1yAErrE/aGOgPGW0qDZBDNZPDpud/meEIBg9Zj++OrZ2dERc840NzkzdRTqea1lAoK6g==
+X-Received: by 2002:a05:600c:524a:b0:414:f6b:f8fc with SMTP id
+ fc10-20020a05600c524a00b004140f6bf8fcmr8927855wmb.2.1711004225192; 
+ Wed, 20 Mar 2024 23:57:05 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.206.222])
+ by smtp.gmail.com with ESMTPSA id
+ bu27-20020a056000079b00b0033ecbfc6941sm16233834wrb.110.2024.03.20.23.57.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 20 Mar 2024 23:57:04 -0700 (PDT)
+Message-ID: <9617e174-1aef-4caf-9f15-2ce3c455527c@linaro.org>
+Date: Thu, 21 Mar 2024 07:57:02 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxTRMq1PtlXY5fAA--.54450S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] ui/console: initialize QemuDmaBuf in ui/console
+Content-Language: en-US
+To: dongwon.kim@intel.com, qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com
+References: <20240320205018.3351984-1-dongwon.kim@intel.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240320205018.3351984-1-dongwon.kim@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,126 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu-system-loongarch64 assert failed with the option '-d int',
-the helper_idle() raise an exception EXCP_HLT, but the exception name is undefined.
+Hi Dongwon,
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/cpu.c | 76 +++++++++++++++++++++++-------------------
- 1 file changed, 42 insertions(+), 34 deletions(-)
+On 20/3/24 21:50, dongwon.kim@intel.com wrote:
+> From: Dongwon Kim <dongwon.kim@intel.com>
+> 
+> QemuDmaBuf struct is defined and primarily used by ui/console/gl so it is
+> better to handle its creation, initialization and access within ui/console
+> rather than within hw modules such as hw/display/virtio-gpu and
+> hw/vfio/display.
+> 
+> To achieve this, new methods for allocating, initializing the struct, and
+> accessing certain fields necessary for hardware modules have been introduced
+> in ui/console.c.
+> (3rd patch)
+> 
+> Furthermore, modifications have been made to hw/display/virtio-gpu and
+> hw/vfio/display to utilize these new methods instead of setting up the struct
+> independently.
+> (1st and 2nd patches)
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index f6ffb3aadb..c56e606d28 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -45,33 +45,47 @@ const char * const fregnames[32] = {
-     "f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31",
- };
- 
--static const char * const excp_names[] = {
--    [EXCCODE_INT] = "Interrupt",
--    [EXCCODE_PIL] = "Page invalid exception for load",
--    [EXCCODE_PIS] = "Page invalid exception for store",
--    [EXCCODE_PIF] = "Page invalid exception for fetch",
--    [EXCCODE_PME] = "Page modified exception",
--    [EXCCODE_PNR] = "Page Not Readable exception",
--    [EXCCODE_PNX] = "Page Not Executable exception",
--    [EXCCODE_PPI] = "Page Privilege error",
--    [EXCCODE_ADEF] = "Address error for instruction fetch",
--    [EXCCODE_ADEM] = "Address error for Memory access",
--    [EXCCODE_SYS] = "Syscall",
--    [EXCCODE_BRK] = "Break",
--    [EXCCODE_INE] = "Instruction Non-Existent",
--    [EXCCODE_IPE] = "Instruction privilege error",
--    [EXCCODE_FPD] = "Floating Point Disabled",
--    [EXCCODE_FPE] = "Floating Point Exception",
--    [EXCCODE_DBP] = "Debug breakpoint",
--    [EXCCODE_BCE] = "Bound Check Exception",
--    [EXCCODE_SXD] = "128 bit vector instructions Disable exception",
--    [EXCCODE_ASXD] = "256 bit vector instructions Disable exception",
-+struct TypeExcp {
-+    int32_t exccode;
-+    const char *name;
-+};
-+
-+static const struct TypeExcp excp_names[] = {
-+    {EXCCODE_INT, "Interrupt"},
-+    {EXCCODE_PIL, "Page invalid exception for load"},
-+    {EXCCODE_PIS, "Page invalid exception for store"},
-+    {EXCCODE_PIF, "Page invalid exception for fetch"},
-+    {EXCCODE_PME, "Page modified exception"},
-+    {EXCCODE_PNR, "Page Not Readable exception"},
-+    {EXCCODE_PNX, "Page Not Executable exception"},
-+    {EXCCODE_PPI, "Page Privilege error"},
-+    {EXCCODE_ADEF, "Address error for instruction fetch"},
-+    {EXCCODE_ADEM, "Address error for Memory access"},
-+    {EXCCODE_SYS, "Syscall"},
-+    {EXCCODE_BRK, "Break"},
-+    {EXCCODE_INE, "Instruction Non-Existent"},
-+    {EXCCODE_IPE, "Instruction privilege error"},
-+    {EXCCODE_FPD, "Floating Point Disabled"},
-+    {EXCCODE_FPE, "Floating Point Exception"},
-+    {EXCCODE_DBP, "Debug breakpoint"},
-+    {EXCCODE_BCE, "Bound Check Exception"},
-+    {EXCCODE_SXD, "128 bit vector instructions Disable exception"},
-+    {EXCCODE_ASXD, "256 bit vector instructions Disable exception"},
-+    {EXCP_HLT, "EXCP_HLT"},
- };
- 
- const char *loongarch_exception_name(int32_t exception)
- {
--    assert(excp_names[exception]);
--    return excp_names[exception];
-+    int i;
-+    const char *name = NULL;
-+
-+    for (i = 0; i < ARRAY_SIZE(excp_names); i++) {
-+        if (excp_names[i].exccode == exception) {
-+            name = excp_names[i].name;
-+            break;
-+        }
-+    }
-+    return name;
- }
- 
- void G_NORETURN do_raise_exception(CPULoongArchState *env,
-@@ -80,7 +94,7 @@ void G_NORETURN do_raise_exception(CPULoongArchState *env,
- {
-     CPUState *cs = env_cpu(env);
- 
--    qemu_log_mask(CPU_LOG_INT, "%s: %d (%s)\n",
-+    qemu_log_mask(CPU_LOG_INT, "%s: expection: %d (%s)\n",
-                   __func__,
-                   exception,
-                   loongarch_exception_name(exception));
-@@ -154,22 +168,16 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
-     CPULoongArchState *env = cpu_env(cs);
-     bool update_badinstr = 1;
-     int cause = -1;
--    const char *name;
-     bool tlbfill = FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
-     uint32_t vec_size = FIELD_EX64(env->CSR_ECFG, CSR_ECFG, VS);
- 
-     if (cs->exception_index != EXCCODE_INT) {
--        if (cs->exception_index < 0 ||
--            cs->exception_index >= ARRAY_SIZE(excp_names)) {
--            name = "unknown";
--        } else {
--            name = excp_names[cs->exception_index];
--        }
--
-         qemu_log_mask(CPU_LOG_INT,
-                      "%s enter: pc " TARGET_FMT_lx " ERA " TARGET_FMT_lx
--                     " TLBRERA " TARGET_FMT_lx " %s exception\n", __func__,
--                     env->pc, env->CSR_ERA, env->CSR_TLBRERA, name);
-+                     " TLBRERA " TARGET_FMT_lx " exception: %d (%s)\n",
-+                     __func__, env->pc, env->CSR_ERA, env->CSR_TLBRERA,
-+                     cs->exception_index,
-+                     loongarch_exception_name(cs->exception_index));
-     }
- 
-     switch (cs->exception_index) {
--- 
-2.25.1
+Thanks for splitting, unfortunately the series isn't buildable /
+bisectable since the methods use in patches 1&2 are only introduced
+in patch 3 :/
+
+> Dongwon Kim (3):
+>    hw/virtio: intialize QemuDmaBuf using the function from ui/console
+>    hw/vfio: intialize QemuDmaBuf using the function from ui/console
+>    ui/console: add methods for allocating, intializing and accessing
+>      QemuDmaBuf
 
 
