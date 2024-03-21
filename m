@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D11F9C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA3F7C54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:52:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnKhY-0001Z0-2W; Thu, 21 Mar 2024 11:51:33 -0400
+	id 1rnKgZ-0007Qd-9V; Thu, 21 Mar 2024 11:50:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgt-0000wR-BH
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:52 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgH-00070o-Qf
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:14 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgp-000278-10
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:49 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a46dec5d00cso156135466b.0
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:50:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKgE-0001ko-9V
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:50:12 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-414776775d3so2813905e9.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:50:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711036243; x=1711641043; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711036207; x=1711641007; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nqft4MZU81mkCnglNplHbu0cFdrcwFTH3/wy+rtkBXE=;
- b=DlfN+nahn/vEBs4KpwZ654fRF4kZiWGzvaJlXAeYe9PkOQqLcVUwy0DRiINmfjkXNM
- xZozK4V2nYcmOpmF9LUDmouB/XoYklfTFC2+jGYiCZC8+msvxQFPF6C2m8MUXda+0jDE
- 2k+K66jzqglvlxfIphRhUFieLMi6EMGoS1uPCHXAbfxSZU/wPW0Qkh+KPGl9ugSfHi9D
- zrC61cHZQV3XY+xTMoMVT/Ua48LMmgWNrceygVKZnbg/HK4b0Vaoo+yZGtUcYFWVswvy
- xkmXA9qziLe4jCkqYSA9QgVLgQhWrqqMDS0ZE6DC2mCd1IvllyMiURmYXRv/NHMrFQjD
- zCCQ==
+ bh=kaYDCoOXgjCF3J0hi/NBXkeoqt0AB2bCPsQIdEK8J3A=;
+ b=beIQHEzsMkZHTnO66WKDRpglA39EuEcATRPxx/Fj3DZJu4HCENmfm51036hrCVrwE8
+ AsAlRaA8tzvgRTYQfnoIer1h0cieAy4hhSTKS0DRoovqnJfuSPYjvtekA4GtDS9zs26n
+ diolqu7sCCrxGs08ZAFhIb+U1tniflycdUlG2pSsNQUOUe2OssgFBC+Y1gtsdy6QwRla
+ gkuR2XZZmDXvTN98qNJIj/t+LOWrmJBERq6L4sqS2uQlRRjXUGrluzsRWya/vRmU4xdn
+ 3cQElUiPEdBCj94BdGVPCG0TtLcxrOH+XyCEG806Ng4/NOvSByKXUCI74yfJwMqNAIcr
+ HaLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711036243; x=1711641043;
+ d=1e100.net; s=20230601; t=1711036207; x=1711641007;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nqft4MZU81mkCnglNplHbu0cFdrcwFTH3/wy+rtkBXE=;
- b=Wyhck7enh8p536mWDLAEpuAH0I69Vh/32e0xBy3iKdmNbRxqa2xNuM+WEDr6rzVC9S
- 0xTUvYjatOBVxcbNFAxbgm/G0WLoEPvhZaiKZAEm37BRX4knuxHVoXOEpkclcn3FD3Cc
- mUy58Ga4P1fJkyiAWFz9r6YXbmLTkQdcCXFW3B+/crSIGjfKs8TKh40ExPYV2sKxH/eO
- 0JcgmY3RAaOyLkTzGXi0tfJosgQNmrZ5Nz0F0bBVAV1yWrOhsbdFjgiJMUzNMiXr09es
- WuQKecngPMAyIDMYKu46RyQUSB2iUN3VKgyV32pPmWsf7OBRM9XYy1OTXBI61llENXxO
- SiyQ==
-X-Gm-Message-State: AOJu0Yzn4cDnc/yNqgwAZU/LgFrWFW6Garktofugd/wGevni0j0abOXh
- Hz5PH/RYW1H1ZzeO8vz114Zmt+n1XzTc+aGxxf5NS3qqoVstTDsVtwkcItpja338pXa6yrmLttR
- zZUM=
-X-Google-Smtp-Source: AGHT+IFC+603+0zXjXAdG4HWaTIUS/dH/fvyFL+gcZp+Ho3JRr0cQ7lQy0en+QoMITehIBuIBHPe+w==
-X-Received: by 2002:a17:906:cecc:b0:a46:1f6d:3047 with SMTP id
- si12-20020a170906cecc00b00a461f6d3047mr1899905ejb.4.1711036242798; 
- Thu, 21 Mar 2024 08:50:42 -0700 (PDT)
+ bh=kaYDCoOXgjCF3J0hi/NBXkeoqt0AB2bCPsQIdEK8J3A=;
+ b=XPueGN7nIHd+ReadXcacNWzyHF4T8KUqmOSvgRQaZogb5gWi1J08woWS4MT4Yl2zeb
+ 4uU4gCAHl1sJSibG9Ptc5GHKXcbkxhC+JJNve6Mb1o/XT4nYxDSeAhJRh70Z2X+EbfJn
+ Y+lS96rb9aCMFpR6Ob2f5xhF3OT2evvuCDzlYlsWfjfrEGJlSBBjt8c0tziB8/u2tPy/
+ 7cm02IsiOKiOmWZm9QanTjLqOANZOKSEOds/sqiixJ9UTKx+5xz0PdVj2cXiYCWFMU2r
+ d+45c4iGv45tEOmyQTSgyU154LLpna/xrrKJYBI/TKkY1Xao8geNFA8a1OFH3q4A/dzk
+ 4F7A==
+X-Gm-Message-State: AOJu0YxR8CpVeCrBdXr9YBNTnhVDxxnYJx3YH9zynwbWLfAV5gI/I3Kp
+ iB+wjO4KB3oKmZUuYrfuHO9/Ge9Gr7nhLhtQJPE8qX9bfNq3jPbmGsfh/AoDmLinUBvidfULXRl
+ mlas=
+X-Google-Smtp-Source: AGHT+IECdpN4aGFS4wOtGuEHJ/tngZrGDJvB0eP2LElCYBc2wi28sHD7ORsHzU6O1p3ZiIqxr5lUfA==
+X-Received: by 2002:a05:600c:1c20:b0:414:645c:33cd with SMTP id
+ j32-20020a05600c1c2000b00414645c33cdmr1714797wms.32.1711036207350; 
+ Thu, 21 Mar 2024 08:50:07 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.222])
  by smtp.gmail.com with ESMTPSA id
- g27-20020a170906395b00b00a466fccbe96sm48234eje.122.2024.03.21.08.50.40
+ n18-20020a05600c501200b004146bdce3fesm5885327wmr.4.2024.03.21.08.50.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 21 Mar 2024 08:50:42 -0700 (PDT)
+ Thu, 21 Mar 2024 08:50:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
@@ -72,25 +72,24 @@ Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 16/21] target/sparc: Replace qemu_printf() by
- monitor_printf() in monitor
-Date: Thu, 21 Mar 2024 16:48:32 +0100
-Message-ID: <20240321154838.95771-17-philmd@linaro.org>
+Subject: [PATCH-for-9.1 11/21] target/nios2: Move monitor commands to monitor.c
+Date: Thu, 21 Mar 2024 16:48:27 +0100
+Message-ID: <20240321154838.95771-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240321154838.95771-1-philmd@linaro.org>
 References: <20240321154838.95771-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,299 +105,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace qemu_printf() by monitor_printf() in monitor.c.
-Rename dump_mmu() as sparc_dump_mmu().
+Move 'info tlb' monitor commands to monitor.c,
+rename dump_mmu() as nios2_info_mmu().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/sparc/cpu.h         |   2 +-
- target/sparc/ldst_helper.c |  18 +++----
- target/sparc/mmu_helper.c  | 102 ++++++++++++++++++-------------------
- target/sparc/monitor.c     |   2 +-
- 4 files changed, 62 insertions(+), 62 deletions(-)
+ target/nios2/cpu.h     |  2 +-
+ target/nios2/mmu.c     | 27 ---------------------------
+ target/nios2/monitor.c | 28 +++++++++++++++++++++++++++-
+ 3 files changed, 28 insertions(+), 29 deletions(-)
 
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index f3cdd17c62..55589c8ae4 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -601,7 +601,7 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-                         MMUAccessType access_type, int mmu_idx,
-                         bool probe, uintptr_t retaddr);
- target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev);
--void dump_mmu(CPUSPARCState *env);
-+void sparc_dump_mmu(Monitor *mon, CPUSPARCState *env);
+diff --git a/target/nios2/cpu.h b/target/nios2/cpu.h
+index 4164a3432e..27e835cf40 100644
+--- a/target/nios2/cpu.h
++++ b/target/nios2/cpu.h
+@@ -250,7 +250,7 @@ static inline void nios2_update_crs(CPUNios2State *env)
  
- #if !defined(TARGET_SPARC64) && !defined(CONFIG_USER_ONLY)
- int sparc_cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
-diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
-index 064390d1d4..44f8b2bb7a 100644
---- a/target/sparc/ldst_helper.c
-+++ b/target/sparc/ldst_helper.c
-@@ -195,7 +195,7 @@ static void demap_tlb(SparcTLBEntry *tlb, target_ulong demap_addr,
-             replace_tlb_entry(&tlb[i], 0, 0, env1);
- #ifdef DEBUG_MMU
-             DPRINTF_MMU("%s demap invalidated entry [%02u]\n", strmmu, i);
--            dump_mmu(env1);
-+            sparc_dump_mmu(env1);
- #endif
-         }
-     }
-@@ -257,7 +257,7 @@ static void replace_tlb_1bit_lru(SparcTLBEntry *tlb,
-             replace_tlb_entry(&tlb[i], tlb_tag, tlb_tte, env1);
- #ifdef DEBUG_MMU
-             DPRINTF_MMU("%s lru replaced invalid entry [%i]\n", strmmu, i);
--            dump_mmu(env1);
-+            sparc_dump_mmu(env1);
- #endif
-             return;
-         }
-@@ -276,7 +276,7 @@ static void replace_tlb_1bit_lru(SparcTLBEntry *tlb,
- #ifdef DEBUG_MMU
-                 DPRINTF_MMU("%s lru replaced unlocked %s entry [%i]\n",
-                             strmmu, (replace_used ? "used" : "unused"), i);
--                dump_mmu(env1);
-+                sparc_dump_mmu(env1);
- #endif
-                 return;
-             }
-@@ -995,7 +995,7 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
-                 break;
-             }
- #ifdef DEBUG_MMU
--            dump_mmu(env);
-+            sparc_dump_mmu(env);
- #endif
-         }
-         break;
-@@ -1050,7 +1050,7 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, uint64_t val,
-                             reg, oldreg, env->mmuregs[reg]);
-             }
- #ifdef DEBUG_MMU
--            dump_mmu(env);
-+            sparc_dump_mmu(env);
- #endif
-         }
-         break;
-@@ -1736,7 +1736,7 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, target_ulong val,
-                             PRIx64 "\n", reg, oldreg, env->immu.mmuregs[reg]);
-             }
- #ifdef DEBUG_MMU
--            dump_mmu(env);
-+            sparc_dump_mmu(env);
- #endif
-             return;
-         }
-@@ -1760,7 +1760,7 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, target_ulong val,
-             }
- #ifdef DEBUG_MMU
-             DPRINTF_MMU("immu data access replaced entry [%i]\n", i);
--            dump_mmu(env);
-+            sparc_dump_mmu(env);
- #endif
-             return;
-         }
-@@ -1820,7 +1820,7 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, target_ulong val,
-                             PRIx64 "\n", reg, oldreg, env->dmmu.mmuregs[reg]);
-             }
- #ifdef DEBUG_MMU
--            dump_mmu(env);
-+            sparc_dump_mmu(env);
- #endif
-             return;
-         }
-@@ -1842,7 +1842,7 @@ void helper_st_asi(CPUSPARCState *env, target_ulong addr, target_ulong val,
-             }
- #ifdef DEBUG_MMU
-             DPRINTF_MMU("dmmu data access replaced entry [%i]\n", i);
--            dump_mmu(env);
-+            sparc_dump_mmu(env);
- #endif
-             return;
-         }
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index ad1591d9fd..f325c9a4cc 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -21,7 +21,7 @@
- #include "qemu/log.h"
+ void nios2_tcg_init(void);
+ void nios2_cpu_do_interrupt(CPUState *cs);
+-void dump_mmu(CPUNios2State *env);
++void nios2_info_mmu(Monitor *mon, CPUNios2State *env);
+ void nios2_cpu_dump_state(CPUState *cpu, FILE *f, int flags);
+ G_NORETURN void nios2_cpu_do_unaligned_access(CPUState *cpu, vaddr addr,
+                                               MMUAccessType access_type, int mmu_idx,
+diff --git a/target/nios2/mmu.c b/target/nios2/mmu.c
+index 272bd9fc6a..278eba1b0a 100644
+--- a/target/nios2/mmu.c
++++ b/target/nios2/mmu.c
+@@ -19,7 +19,6 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/qemu-print.h"
  #include "cpu.h"
  #include "exec/exec-all.h"
--#include "qemu/qemu-print.h"
-+#include "monitor/monitor.h"
- #include "trace.h"
- 
- /* Sparc MMU emulation */
-@@ -344,7 +344,7 @@ target_ulong mmu_probe(CPUSPARCState *env, target_ulong address, int mmulev)
-     return 0;
+ #include "mmu.h"
+@@ -187,29 +186,3 @@ void nios2_mmu_init(CPUNios2State *env)
+     mmu->tlb_entry_mask = (cpu->tlb_num_entries / cpu->tlb_num_ways) - 1;
+     mmu->tlb = g_new0(Nios2TLBEntry, cpu->tlb_num_entries);
  }
+-
+-void dump_mmu(CPUNios2State *env)
+-{
+-    Nios2CPU *cpu = env_archcpu(env);
+-    int i;
+-
+-    qemu_printf("MMU: ways %d, entries %d, pid bits %d\n",
+-                cpu->tlb_num_ways, cpu->tlb_num_entries,
+-                cpu->pid_num_bits);
+-
+-    for (i = 0; i < cpu->tlb_num_entries; i++) {
+-        Nios2TLBEntry *entry = &env->mmu.tlb[i];
+-        qemu_printf("TLB[%d] = %08X %08X %c VPN %05X "
+-                    "PID %02X %c PFN %05X %c%c%c%c\n",
+-                    i, entry->tag, entry->data,
+-                    (entry->tag & (1 << 10)) ? 'V' : '-',
+-                    entry->tag >> 12,
+-                    entry->tag & ((1 << cpu->pid_num_bits) - 1),
+-                    (entry->tag & (1 << 11)) ? 'G' : '-',
+-                    FIELD_EX32(entry->data, CR_TLBACC, PFN),
+-                    (entry->data & CR_TLBACC_C) ? 'C' : '-',
+-                    (entry->data & CR_TLBACC_R) ? 'R' : '-',
+-                    (entry->data & CR_TLBACC_W) ? 'W' : '-',
+-                    (entry->data & CR_TLBACC_X) ? 'X' : '-');
+-    }
+-}
+diff --git a/target/nios2/monitor.c b/target/nios2/monitor.c
+index 0152dec3fa..c6043769e4 100644
+--- a/target/nios2/monitor.c
++++ b/target/nios2/monitor.c
+@@ -22,14 +22,40 @@
+  * THE SOFTWARE.
+  */
+ #include "qemu/osdep.h"
++#include "qemu/qemu-print.h"
+ #include "cpu.h"
+ #include "monitor/monitor.h"
+ #include "monitor/hmp-target.h"
+ #include "monitor/hmp.h"
  
--void dump_mmu(CPUSPARCState *env)
-+void sparc_dump_mmu(Monitor *mon, CPUSPARCState *env)
++void nios2_info_mmu(Monitor *mon, CPUNios2State *env)
++{
++    Nios2CPU *cpu = env_archcpu(env);
++
++    qemu_printf("MMU: ways %d, entries %d, pid bits %d\n",
++                cpu->tlb_num_ways, cpu->tlb_num_entries,
++                cpu->pid_num_bits);
++
++    for (int i = 0; i < cpu->tlb_num_entries; i++) {
++        Nios2TLBEntry *entry = &env->mmu.tlb[i];
++        qemu_printf("TLB[%d] = %08X %08X %c VPN %05X "
++                    "PID %02X %c PFN %05X %c%c%c%c\n",
++                    i, entry->tag, entry->data,
++                    (entry->tag & (1 << 10)) ? 'V' : '-',
++                    entry->tag >> 12,
++                    entry->tag & ((1 << cpu->pid_num_bits) - 1),
++                    (entry->tag & (1 << 11)) ? 'G' : '-',
++                    FIELD_EX32(entry->data, CR_TLBACC, PFN),
++                    (entry->data & CR_TLBACC_C) ? 'C' : '-',
++                    (entry->data & CR_TLBACC_R) ? 'R' : '-',
++                    (entry->data & CR_TLBACC_W) ? 'W' : '-',
++                    (entry->data & CR_TLBACC_X) ? 'X' : '-');
++    }
++}
++
+ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
  {
-     CPUState *cs = env_cpu(env);
-     target_ulong va, va1, va2;
-@@ -352,29 +352,29 @@ void dump_mmu(CPUSPARCState *env)
-     hwaddr pa;
-     uint32_t pde;
+     CPUArchState *env1 = mon_get_cpu_env(mon);
  
--    qemu_printf("Root ptr: " HWADDR_FMT_plx ", ctx: %d\n",
--                (hwaddr)env->mmuregs[1] << 4, env->mmuregs[2]);
-+    monitor_printf(mon, "Root ptr: " HWADDR_FMT_plx ", ctx: %d\n",
-+                   (hwaddr)env->mmuregs[1] << 4, env->mmuregs[2]);
-     for (n = 0, va = 0; n < 256; n++, va += 16 * 1024 * 1024) {
-         pde = mmu_probe(env, va, 2);
-         if (pde) {
-             pa = cpu_get_phys_page_debug(cs, va);
--            qemu_printf("VA: " TARGET_FMT_lx ", PA: " HWADDR_FMT_plx
--                        " PDE: " TARGET_FMT_lx "\n", va, pa, pde);
-+            monitor_printf(mon, "VA: " TARGET_FMT_lx ", PA: " HWADDR_FMT_plx
-+                           " PDE: " TARGET_FMT_lx "\n", va, pa, pde);
-             for (m = 0, va1 = va; m < 64; m++, va1 += 256 * 1024) {
-                 pde = mmu_probe(env, va1, 1);
-                 if (pde) {
-                     pa = cpu_get_phys_page_debug(cs, va1);
--                    qemu_printf(" VA: " TARGET_FMT_lx ", PA: "
--                                HWADDR_FMT_plx " PDE: " TARGET_FMT_lx "\n",
--                                va1, pa, pde);
-+                    monitor_printf(mon, " VA: " TARGET_FMT_lx ", PA: "
-+                                   HWADDR_FMT_plx " PDE: " TARGET_FMT_lx "\n",
-+                                   va1, pa, pde);
-                     for (o = 0, va2 = va1; o < 64; o++, va2 += 4 * 1024) {
-                         pde = mmu_probe(env, va2, 0);
-                         if (pde) {
-                             pa = cpu_get_phys_page_debug(cs, va2);
--                            qemu_printf("  VA: " TARGET_FMT_lx ", PA: "
--                                        HWADDR_FMT_plx " PTE: "
--                                        TARGET_FMT_lx "\n",
--                                        va2, pa, pde);
-+                            monitor_printf(mon, "  VA: " TARGET_FMT_lx ", PA: "
-+                                           HWADDR_FMT_plx " PTE: "
-+                                           TARGET_FMT_lx "\n",
-+                                           va2, pa, pde);
-                         }
-                     }
-                 }
-@@ -777,21 +777,21 @@ bool sparc_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     cpu_loop_exit_restore(cs, retaddr);
- }
- 
--void dump_mmu(CPUSPARCState *env)
-+void sparc_dump_mmu(Monitor *mon, CPUSPARCState *env)
- {
-     unsigned int i;
-     const char *mask;
- 
--    qemu_printf("MMU contexts: Primary: %" PRId64 ", Secondary: %"
--                PRId64 "\n",
--                env->dmmu.mmu_primary_context,
--                env->dmmu.mmu_secondary_context);
--    qemu_printf("DMMU Tag Access: %" PRIx64 ", TSB Tag Target: %" PRIx64
--                "\n", env->dmmu.tag_access, env->dmmu.tsb_tag_target);
-+    monitor_printf(mon, "MMU contexts: Primary: %" PRId64 ", Secondary: %"
-+                   PRId64 "\n",
-+                   env->dmmu.mmu_primary_context,
-+                   env->dmmu.mmu_secondary_context);
-+    monitor_printf(mon, "DMMU Tag Access: %" PRIx64 ", TSB Tag Target: %" PRIx64
-+                   "\n", env->dmmu.tag_access, env->dmmu.tsb_tag_target);
-     if ((env->lsu & DMMU_E) == 0) {
--        qemu_printf("DMMU disabled\n");
-+        monitor_printf(mon, "DMMU disabled\n");
-     } else {
--        qemu_printf("DMMU dump\n");
-+        monitor_printf(mon, "DMMU dump\n");
-         for (i = 0; i < 64; i++) {
-             switch (TTE_PGSIZE(env->dtlb[i].tte)) {
-             default:
-@@ -809,28 +809,28 @@ void dump_mmu(CPUSPARCState *env)
-                 break;
-             }
-             if (TTE_IS_VALID(env->dtlb[i].tte)) {
--                qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
--                            ", %s, %s, %s, %s, ie %s, ctx %" PRId64 " %s\n",
--                            i,
--                            env->dtlb[i].tag & (uint64_t)~0x1fffULL,
--                            TTE_PA(env->dtlb[i].tte),
--                            mask,
--                            TTE_IS_PRIV(env->dtlb[i].tte) ? "priv" : "user",
--                            TTE_IS_W_OK(env->dtlb[i].tte) ? "RW" : "RO",
--                            TTE_IS_LOCKED(env->dtlb[i].tte) ?
--                            "locked" : "unlocked",
--                            TTE_IS_IE(env->dtlb[i].tte) ?
--                            "yes" : "no",
--                            env->dtlb[i].tag & (uint64_t)0x1fffULL,
--                            TTE_IS_GLOBAL(env->dtlb[i].tte) ?
--                            "global" : "local");
-+                monitor_printf(mon, "[%02u] VA: %" PRIx64 ", PA: %llx"
-+                               ", %s, %s, %s, %s, ie %s, ctx %" PRId64 " %s\n",
-+                               i,
-+                               env->dtlb[i].tag & (uint64_t)~0x1fffULL,
-+                               TTE_PA(env->dtlb[i].tte),
-+                               mask,
-+                               TTE_IS_PRIV(env->dtlb[i].tte) ? "priv" : "user",
-+                               TTE_IS_W_OK(env->dtlb[i].tte) ? "RW" : "RO",
-+                               TTE_IS_LOCKED(env->dtlb[i].tte) ?
-+                               "locked" : "unlocked",
-+                               TTE_IS_IE(env->dtlb[i].tte) ?
-+                               "yes" : "no",
-+                               env->dtlb[i].tag & (uint64_t)0x1fffULL,
-+                               TTE_IS_GLOBAL(env->dtlb[i].tte) ?
-+                               "global" : "local");
-             }
-         }
-     }
-     if ((env->lsu & IMMU_E) == 0) {
--        qemu_printf("IMMU disabled\n");
-+        monitor_printf(mon, "IMMU disabled\n");
-     } else {
--        qemu_printf("IMMU dump\n");
-+        monitor_printf(mon, "IMMU dump\n");
-         for (i = 0; i < 64; i++) {
-             switch (TTE_PGSIZE(env->itlb[i].tte)) {
-             default:
-@@ -848,18 +848,18 @@ void dump_mmu(CPUSPARCState *env)
-                 break;
-             }
-             if (TTE_IS_VALID(env->itlb[i].tte)) {
--                qemu_printf("[%02u] VA: %" PRIx64 ", PA: %llx"
--                            ", %s, %s, %s, ctx %" PRId64 " %s\n",
--                            i,
--                            env->itlb[i].tag & (uint64_t)~0x1fffULL,
--                            TTE_PA(env->itlb[i].tte),
--                            mask,
--                            TTE_IS_PRIV(env->itlb[i].tte) ? "priv" : "user",
--                            TTE_IS_LOCKED(env->itlb[i].tte) ?
--                            "locked" : "unlocked",
--                            env->itlb[i].tag & (uint64_t)0x1fffULL,
--                            TTE_IS_GLOBAL(env->itlb[i].tte) ?
--                            "global" : "local");
-+                monitor_printf(mon, "[%02u] VA: %" PRIx64 ", PA: %llx"
-+                               ", %s, %s, %s, ctx %" PRId64 " %s\n",
-+                               i,
-+                               env->itlb[i].tag & (uint64_t)~0x1fffULL,
-+                               TTE_PA(env->itlb[i].tte),
-+                               mask,
-+                               TTE_IS_PRIV(env->itlb[i].tte) ? "priv" : "user",
-+                               TTE_IS_LOCKED(env->itlb[i].tte) ?
-+                               "locked" : "unlocked",
-+                               env->itlb[i].tag & (uint64_t)0x1fffULL,
-+                               TTE_IS_GLOBAL(env->itlb[i].tte) ?
-+                               "global" : "local");
-             }
-         }
-     }
-diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
-index 73f15aa272..4fcdf75932 100644
---- a/target/sparc/monitor.c
-+++ b/target/sparc/monitor.c
-@@ -36,7 +36,7 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
-         monitor_printf(mon, "No CPU available\n");
-         return;
-     }
 -    dump_mmu(env1);
-+    sparc_dump_mmu(mon, env1);
++    nios2_info_mmu(mon, env1);
  }
- 
- #ifndef TARGET_SPARC64
 -- 
 2.41.0
 
