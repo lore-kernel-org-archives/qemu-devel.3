@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C07C54E68
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BFD6CD11DE
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:59:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnKnj-0002nj-Cw; Thu, 21 Mar 2024 11:57:55 -0400
+	id 1rnKnr-0002pt-VD; Thu, 21 Mar 2024 11:58:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rnKnY-0002fE-IC; Thu, 21 Mar 2024 11:57:44 -0400
+ id 1rnKnZ-0002gC-KP; Thu, 21 Mar 2024 11:57:46 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rnKnU-00041J-40; Thu, 21 Mar 2024 11:57:43 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ id 1rnKnW-00043e-95; Thu, 21 Mar 2024 11:57:45 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42LCmR8M019819; Thu, 21 Mar 2024 15:57:28 GMT
+ 42LCmOn8011468; Thu, 21 Mar 2024 15:57:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
  h=from : to : cc :
  subject : date : message-id : in-reply-to : references : mime-version :
  content-transfer-encoding; s=corp-2023-11-20;
- bh=C5cfPqclQmEI1p44dvfQN4gtBbzXWqK+9bQ8ubInWk4=;
- b=OPs+0iROHCSP0X1cccabf+8b8OCrlQ1Iti8XrqBvRRi7sE18lak4Hi0Mv1hr08UQXAWM
- XdTw0+QhiVMUPIRparAgfNl4YW36QMwQOJtPCFC9o768KXVwIx8aZrdvLJ2bY1zPeoyg
- zRcQ5MCXFTJC+Yu4qnYPifRv+RpttnHTxfpSdV4WhmyuMpdg3hwjb9Z3bAs96bPHIb0k
- mH3WQgmpT6jbI/PRNnXyljyUHckqXs8QDXyoT6GpLFQ/9V5dr6jC39r1/WPBfBZyQMJQ
- vV7Pb44TkfQ0ifvFOew6fQEGpI551ST5p2kZVFT19b/GKnv3Q08t1eCTVAuDpnbEg+QR 5Q== 
+ bh=kHHLzNZpzFwG0begk9NZBoke/5eS3mm7ATo9SrgfNeA=;
+ b=bdiosN7YLlRn9aaU5ng/Tx6/1uCbfP7ALACL+3riiuaXP6NGc/fJ4Ug0/e59xzl+MdCY
+ DLzbXqYCEi19gJTbPG/+rN9VQMufSpfXEt92k41NSSzfXIUKM/yTJJAjnKnDXSgSa2Qa
+ qmgMe1dKpj8FJXMlfJ0siSiZThZyECXpZy8wG95HWgAJaUzfR9mymdhrz5fzPAh6Uwmj
+ ZzJALVho7AKvo6NRNlJit9c5W8LXtkZOsusNJLBH26Fm9s74EY5uEDBYaOrmos/iajNO
+ Qgf/VB+MMgs8ARxQcfhBXTPvMkjOPwJrCq7/m66aIkK8d9R25iGXGEIFXMSxvzfCrB1p 9Q== 
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3ww1udjrbw-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3ww31ttvmc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 21 Mar 2024 15:57:28 +0000
+ Thu, 21 Mar 2024 15:57:31 +0000
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 42LF8fiV006144; Thu, 21 Mar 2024 15:57:27 GMT
+ with ESMTP id 42LFbqJj006204; Thu, 21 Mar 2024 15:57:31 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3ww1v9q1ss-1
+ 3ww1v9q1ug-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 21 Mar 2024 15:57:27 +0000
+ Thu, 21 Mar 2024 15:57:30 +0000
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42LFsWZQ005094;
- Thu, 21 Mar 2024 15:57:27 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42LFsWZW005094;
+ Thu, 21 Mar 2024 15:57:30 GMT
 Received: from jonah-ol8.us.oracle.com (dhcp-10-39-211-118.vpn.oracle.com
  [10.39.211.118])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 3ww1v9q1p9-6; Thu, 21 Mar 2024 15:57:27 +0000
+ 3ww1v9q1p9-9; Thu, 21 Mar 2024 15:57:30 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, raphael@enfabrica.net, kwolf@redhat.com, hreitz@redhat.com,
@@ -60,9 +60,9 @@ Cc: mst@redhat.com, raphael@enfabrica.net, kwolf@redhat.com, hreitz@redhat.com,
  eperezma@redhat.com, stefanha@redhat.com, qemu-block@nongnu.org,
  schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev,
  si-wei.liu@oracle.com, boris.ostrovsky@oracle.com, jonah.palmer@oracle.com
-Subject: [RFC 5/8] virtio-net: in-order handling
-Date: Thu, 21 Mar 2024 11:57:14 -0400
-Message-Id: <20240321155717.1392787-6-jonah.palmer@oracle.com>
+Subject: [RFC 8/8] virtio: Add VIRTIO_F_IN_ORDER property definition
+Date: Thu, 21 Mar 2024 11:57:17 -0400
+Message-Id: <20240321155717.1392787-9-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240321155717.1392787-1-jonah.palmer@oracle.com>
 References: <20240321155717.1392787-1-jonah.palmer@oracle.com>
@@ -76,8 +76,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
  phishscore=0 malwarescore=0 mlxscore=0 spamscore=0 adultscore=0
  suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2403140000 definitions=main-2403210115
-X-Proofpoint-GUID: _kPmQFJpMWiUWmn-sbvlklxr5k2dQPtH
-X-Proofpoint-ORIG-GUID: _kPmQFJpMWiUWmn-sbvlklxr5k2dQPtH
+X-Proofpoint-ORIG-GUID: GAiVoORW16prOmtoWjJW2Ik_KZbKLRX-
+X-Proofpoint-GUID: GAiVoORW16prOmtoWjJW2Ik_KZbKLRX-
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -102,40 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implements in-order handling for the virtio-net device.
+Extend the virtio device property definitions to include the
+VIRTIO_F_IN_ORDER feature.
 
-Since virtio-net utilizes batching for its Rx VirtQueue, the device is
-responsible for calling virtqueue_flush once it has completed its
-batching operation.
-
-Note:
------
-It's unclear if this implementation is really necessary to "guarantee"
-that used VirtQueueElements are put on the used ring in-order since, by
-design, virtio-net already does this with its Rx VirtQueue.
+The default state of this feature is disabled, allowing it to be
+explicitly enabled where it's supported.
 
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- hw/net/virtio-net.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/hw/virtio/virtio.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 9959f1932b..b0375f7e5e 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2069,7 +2069,11 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index eeeda397a9..ffd78830a3 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -400,7 +400,9 @@ typedef struct VirtIORNGConf VirtIORNGConf;
+     DEFINE_PROP_BIT64("packed", _state, _field, \
+                       VIRTIO_F_RING_PACKED, false), \
+     DEFINE_PROP_BIT64("queue_reset", _state, _field, \
+-                      VIRTIO_F_RING_RESET, true)
++                      VIRTIO_F_RING_RESET, true), \
++    DEFINE_PROP_BIT64("in_order", _state, _field, \
++                      VIRTIO_F_IN_ORDER, false)
  
-     for (j = 0; j < i; j++) {
-         /* signal other side */
--        virtqueue_fill(q->rx_vq, elems[j], lens[j], j);
-+        if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
-+            virtqueue_order_element(q->rx_vq, elems[j], lens[j], j, 0);
-+        } else {
-+            virtqueue_fill(q->rx_vq, elems[j], lens[j], j);
-+        }
-         g_free(elems[j]);
-     }
- 
+ hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);
+ bool virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
 -- 
 2.39.3
 
