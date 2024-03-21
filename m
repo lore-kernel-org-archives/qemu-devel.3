@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16127C54E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 10:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E0D7C54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 10:06:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnFIe-0007B6-HH; Thu, 21 Mar 2024 06:05:30 -0400
+	id 1rnFI8-000702-6S; Thu, 21 Mar 2024 06:04:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1rnFIA-00070R-J9; Thu, 21 Mar 2024 06:04:59 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1rnFI5-0006z9-EG; Thu, 21 Mar 2024 06:04:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
- id 1rnFI8-0007Yq-VO; Thu, 21 Mar 2024 06:04:58 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1rnFI4-0007Yj-0g; Thu, 21 Mar 2024 06:04:53 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42L8xBGN027838; Thu, 21 Mar 2024 10:04:44 GMT
+ 42L909GO029214; Thu, 21 Mar 2024 10:04:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
  h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=uANCeZgXqXhB6w96wEupYPLK13hQ3ZQrNGy4uOq33DY=;
- b=XpZ5dhfoqNCGebqyDNZ4iWUNPyISH2v4+shEhQ70BSGAHUPCJgpTjnbCD9WVLFNjXDK8
- Ul2D2ufWM8gx8ksks4dL9qAoQtW+toFTTCw7FDMfGJIrhFY3V1q3aBVQfjn0NOPfwXfu
- td6JitLI3bxPg+md3CxuVodz1ZnQ7L13JRZZhkHdtaOnHcHQ0HuVjWb59RaxUscBiZfe
- CqRnEavkIJjstaft8E2QJB4b79PDzScRqzLM8UTZMwJYnHpUgTtbRqcvOyNHz9CVdMC6
- a7FcnH2wauRnjduEtBFcCivgmS2dXaTAbr1yUspYZ7gaj4qhANHxHttprZEgBBoG7jWi qw== 
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=wVLaWr76AoctQk49cJDQDzreMkcU6eOg5rvm4HCvmvM=;
+ b=duJvqyjXTnEWwlSoesSbAQQexIyPnuUbMgtvLDhCFVnSK5R2bZrBO62TrDjc5Oe9K5sd
+ xopxvrSJBd0wpK50XX6js4IQXy6HqPthKfCkuF/JOyPPMNf07GiyqdZv9DUnGBv62qqm
+ +TWd4gyRFaf9wGcGcUhszLXWWXEE7dI/bj3Jv1pamqpw9p3u1/BGKcLT+GqkeL9TUYdA
+ LxOKScg7xsXarj/tvba+sGMjb+mejdfbVQ0q/75nKdZUWkQopbHPjtvY2OYO1/oU/HMO
+ Mdu9d44Gh4Hd7RE755sImeg0qBRvUoON5TpGBtbuRKuxzoklUGO+D9+bSWLEd0YD/8yd gQ== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x0gc80bu8-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x0hvg84v1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 Mar 2024 10:04:43 +0000
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42LA4h38003485;
- Thu, 21 Mar 2024 10:04:43 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x0gc80bu4-1
+ Thu, 21 Mar 2024 10:04:37 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42LA4bXk020292;
+ Thu, 21 Mar 2024 10:04:37 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x0hvg84v0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 Mar 2024 10:04:43 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42L7jC9T002779; Thu, 21 Mar 2024 10:04:42 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3wwrf2uuae-1
+ Thu, 21 Mar 2024 10:04:37 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42L8t9uv015781; Thu, 21 Mar 2024 10:04:36 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3wwp50cfk0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 21 Mar 2024 10:04:42 +0000
+ Thu, 21 Mar 2024 10:04:36 +0000
 Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
  [10.241.53.103])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42LA4cvP11600542
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42LA4X0H16188048
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 21 Mar 2024 10:04:40 GMT
+ Thu, 21 Mar 2024 10:04:35 GMT
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6655758066;
- Thu, 21 Mar 2024 10:04:38 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8009758056;
+ Thu, 21 Mar 2024 10:04:33 +0000 (GMT)
 Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E937758069;
- Thu, 21 Mar 2024 10:04:37 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0C6AD5805A;
+ Thu, 21 Mar 2024 10:04:33 +0000 (GMT)
 Received: from gfwr516.rchland.ibm.com (unknown [9.10.239.105])
  by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 21 Mar 2024 10:04:37 +0000 (GMT)
+ Thu, 21 Mar 2024 10:04:32 +0000 (GMT)
 From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
  marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
  thuth@redhat.com, lvivier@redhat.com, saif.abrar@linux.vnet.ibm.com
-Subject: [PATCH 09/10] hw/pci: Set write-mask bits for PCIE Link-Control-2
- register
-Date: Thu, 21 Mar 2024 05:04:21 -0500
-Message-Id: <20240321100422.5347-10-saif.abrar@linux.vnet.ibm.com>
+Subject: [PATCH 00/10] pnv/phb4: Update PHB4 to the latest spec PH5
+Date: Thu, 21 Mar 2024 05:04:12 -0500
+Message-Id: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
-References: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 21ry7I3VE5mL2z_iAwIHN4U05MC9bwCd
-X-Proofpoint-GUID: 1YzBzkFti0jm5hOR5nyfSpxlHwfCy6V7
+X-Proofpoint-ORIG-GUID: FAejxHE-HZ0nvWfeDt4fefPGh_vuaM52
+X-Proofpoint-GUID: kUoUT43k_OCnnCqYUc-PCO2s33WeV6wW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
  definitions=2024-03-21_06,2024-03-18_03,2023-05-22_02
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=773
- impostorscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 phishscore=0
- mlxscore=0 bulkscore=0 clxscore=1015 adultscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2403140000 definitions=main-2403210069
-Received-SPF: none client-ip=148.163.156.1;
- envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+ malwarescore=0
+ mlxlogscore=829 priorityscore=1501 clxscore=1011 mlxscore=0
+ impostorscore=0 spamscore=0 adultscore=0 phishscore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2403140000 definitions=main-2403210069
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -115,47 +111,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PHB updates the register PCIE Link-Control-2.
-Set the write-mask bits for TLS, ENTER_COMP, TX_MARGIN,
-HASD, MOD_COMP, COMP_SOS and COMP_P_DE.
+Hello,
 
-Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
----
- hw/pci/pcie.c                             | 6 ++++++
- include/standard-headers/linux/pci_regs.h | 3 +++
- 2 files changed, 9 insertions(+)
+This series updates the existing PHB4 model to the latest spec:
+"Power Systems Host Bridge 5 (PHB5) Functional Specification Version 0.5_00".
 
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 4b2f0805c6..e3081f6b84 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -212,6 +212,12 @@ int pcie_cap_init(PCIDevice *dev, uint8_t offset,
- 
-     pci_set_word(dev->wmask + pos + PCI_EXP_DEVCTL2, PCI_EXP_DEVCTL2_EETLPPB);
- 
-+    pci_set_word(dev->wmask + pos + PCI_EXP_LNKCTL2,
-+            PCI_EXP_LNKCTL2_TLS | PCI_EXP_LNKCTL2_ENTER_COMP |
-+            PCI_EXP_LNKCTL2_TX_MARGIN | PCI_EXP_LNKCTL2_HASD |
-+            PCI_EXP_LNKCTL2_MOD_COMP | PCI_EXP_LNKCTL2_COMP_SOS |
-+            PCI_EXP_LNKCTL2_COMP_P_DE);
-+
-     if (dev->cap_present & QEMU_PCIE_EXTCAP_INIT) {
-         /* read-only to behave like a 'NULL' Extended Capability Header */
-         pci_set_long(dev->wmask + PCI_CONFIG_SPACE_SIZE, 0);
-diff --git a/include/standard-headers/linux/pci_regs.h b/include/standard-headers/linux/pci_regs.h
-index a39193213f..f743defe91 100644
---- a/include/standard-headers/linux/pci_regs.h
-+++ b/include/standard-headers/linux/pci_regs.h
-@@ -694,6 +694,9 @@
- #define  PCI_EXP_LNKCTL2_ENTER_COMP	0x0010 /* Enter Compliance */
- #define  PCI_EXP_LNKCTL2_TX_MARGIN	0x0380 /* Transmit Margin */
- #define  PCI_EXP_LNKCTL2_HASD		0x0020 /* HW Autonomous Speed Disable */
-+#define  PCI_EXP_LNKCTL2_MOD_COMP	0x0400 /* Enter Modified Compliance */
-+#define  PCI_EXP_LNKCTL2_COMP_SOS	0x0800 /* Compliance SOS */
-+#define  PCI_EXP_LNKCTL2_COMP_P_DE	0xF000 /* Compliance Preset/De-emphasis */
- #define PCI_EXP_LNKSTA2		0x32	/* Link Status 2 */
- #define  PCI_EXP_LNKSTA2_FLIT		0x0400 /* Flit Mode Status */
- #define PCI_CAP_EXP_ENDPOINT_SIZEOF_V2	0x32	/* end of v2 EPs w/ link */
+Updates include the following:
+- implemented sticky reset logic
+- implemented read-only, write-only, W1C and WxC logic
+- return all 1's on read to unimplemented registers
+- update PCIE registers for link status, speed and width
+- implement IODA PCT debug table without any functionality
+- set write-mask bits for PCIE Link-Control-2 register that is read/written by PHB4
+- update LSI Source-ID register based on small/big PHB number of interrupts
+
+Also, a new testbench for PHB4 model is added that does XSCOM read/writes
+to various registers of interest and verifies the values.
+
+Regards.
+
+Saif Abrar (10):
+  qtest/phb4: Add testbench for PHB4
+  pnv/phb4: Add reset logic to PHB4
+  pnv/phb4: Implement sticky reset logic in PHB4
+  pnv/phb4: Implement read-only and write-only bits of registers
+  pnv/phb4: Implement write-clear and return 1's on unimplemented reg read
+  pnv/phb4: Set link-active status in HPSTAT and LMR registers
+  pnv/phb4: Set link speed and width in the DLP training control register
+  pnv/phb4: Implement IODA PCT table
+  hw/pci: Set write-mask bits for PCIE Link-Control-2 register
+  pnv/phb4: Mask off LSI Source-ID based on number of interrupts
+
+ hw/pci-host/pnv_phb4.c                    | 601 ++++++++++++++++++++--
+ hw/pci/pcie.c                             |   6 +
+ include/hw/pci-host/pnv_phb4.h            |   9 +
+ include/hw/pci-host/pnv_phb4_regs.h       |  66 ++-
+ include/standard-headers/linux/pci_regs.h |   3 +
+ tests/qtest/meson.build                   |   1 +
+ tests/qtest/pnv-phb4-test.c               | 177 +++++++
+ 7 files changed, 805 insertions(+), 58 deletions(-)
+ create mode 100644 tests/qtest/pnv-phb4-test.c
+
 -- 
 2.39.3
 
