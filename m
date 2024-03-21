@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4361FC54E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 14:29:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8870C54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 14:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnJON-0007za-PQ; Thu, 21 Mar 2024 10:27:39 -0400
+	id 1rnJOG-0007yD-In; Thu, 21 Mar 2024 10:27:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rnJOM-0007zP-Ss
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:27:38 -0400
+ id 1rnJOE-0007xo-JN
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:27:30 -0400
 Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rnJOL-0002mA-A7
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:27:38 -0400
+ id 1rnJOB-0002mA-7Z
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:27:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711031258; x=1742567258;
+ t=1711031248; x=1742567248;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=O2KStJE5a2MoPMypMlBC3/x2H33PnsUliJtrKXRTlFY=;
- b=JDGF9kGFKR6SxoTkTjTFOD1/2XAhQcej6dWEFDqyAb3DZ8iDCKrHgwKi
- 1QB4q3mUify8T3r2PZjMZ0vbwYGRh6vRUtopLM0cXE058jSLizrn4MJsH
- pFcHRtiscSaV4eIWTyIs8hQ2LMznAWCGfRFwp+Qjrq/eyoU8gW2Q3KLYA
- vRY/YMOpW5nhVTzTXwIFxiuMe4+xRGgNLNtFBQmiXZAH4orcbwBM5Ywag
- tyHc7r7noExMjEvTMeeAmx6JLioyP5zIlmpQwUe0mcTTbtLrF1yw5nDmT
- p3hRpNADeg12CpJp4zOEWdihRYRQXbWT+8QIBgTbt1leP2SPWJqOwox1N g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="9806429"
+ bh=pozxmkQYFmo9TvNo/qUS3XdyUCJrRFtdxe3SYZYL0jA=;
+ b=eIobNBFwEpaHyjXNLEzaTQlcfPTNx9xrluVdeN1fa/YZiVeMPXuoDQ9p
+ eV71it0qHwvBNLhyuVUrSkKh6Wt5W2g+lGWGkYIZcTRQgz4a2jdNfouua
+ RhMQ/QbOI3kgGbYl1E3xruAPF6SpTGKkVqB17dHaq6e38vWn4GtsbiLAh
+ 01E07AqDAJlY7uVIoyNGkcbKNFDCZi4RnfRQoHx7n085YD91ChxqQXuj3
+ 8iXIwqsT+iP6wgAMs+YrYrJtmiEb3m2goljeb1JYMi5hMQvEKxqeJSkRl
+ G1mL/tmbY+tgMeSkVPIy4iHdsYOzRFzHuMAcU4ZBswylCz8BZvvTNpvK3 g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="9806388"
 X-IronPort-AV: E=Sophos;i="6.07,143,1708416000"; 
-   d="scan'208";a="9806429"
+   d="scan'208";a="9806388"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Mar 2024 07:27:37 -0700
+ 21 Mar 2024 07:27:27 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,143,1708416000"; d="scan'208";a="14527882"
+X-IronPort-AV: E=Sophos;i="6.07,143,1708416000"; d="scan'208";a="14527827"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa009.jf.intel.com with ESMTP; 21 Mar 2024 07:27:31 -0700
+ by orviesa009.jf.intel.com with ESMTP; 21 Mar 2024 07:27:22 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -57,12 +57,11 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
- Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Robert Hoo <robert.hu@linux.intel.com>
-Subject: [PATCH v10 05/21] i386/cpu: Fix i/d-cache topology to core level for
- Intel CPU
-Date: Thu, 21 Mar 2024 22:40:32 +0800
-Message-Id: <20240321144048.3699388-6-zhao1.liu@linux.intel.com>
+ Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v10 03/21] hw/core: Introduce module-id as the topology
+ subindex
+Date: Thu, 21 Mar 2024 22:40:30 +0800
+Message-Id: <20240321144048.3699388-4-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240321144048.3699388-1-zhao1.liu@linux.intel.com>
 References: <20240321144048.3699388-1-zhao1.liu@linux.intel.com>
@@ -94,70 +93,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-For i-cache and d-cache, current QEMU hardcodes the maximum IDs for CPUs
-sharing cache (CPUID.04H.00H:EAX[bits 25:14] and CPUID.04H.01H:EAX[bits
-25:14]) to 0, and this means i-cache and d-cache are shared in the SMT
+Add module-id in CpuInstanceProperties, to locate the CPU with module
 level.
 
-This is correct if there's single thread per core, but is wrong for the
-hyper threading case (one core contains multiple threads) since the
-i-cache and d-cache are shared in the core level other than SMT level.
-
-For AMD CPU, commit 8f4202fb1080 ("i386: Populate AMD Processor Cache
-Information for cpuid 0x8000001D") has already introduced i/d cache
-topology as core level by default.
-
-Therefore, in order to be compatible with both multi-threaded and
-single-threaded situations, we should set i-cache and d-cache be shared
-at the core level by default.
-
-This fix changes the default i/d cache topology from per-thread to
-per-core. Potentially, this change in L1 cache topology may affect the
-performance of the VM if the user does not specifically specify the
-topology or bind the vCPU. However, the way to achieve optimal
-performance should be to create a reasonable topology and set the
-appropriate vCPU affinity without relying on QEMU's default topology
-structure.
-
-Fixes: 7e3482f82480 ("i386: Helpers to encode cache information consistently")
-Suggested-by: Robert Hoo <robert.hu@linux.intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Tested-by: Babu Moger <babu.moger@amd.com>
+Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
-Changes since v3:
- * Changed the description of current i/d cache encoding status to avoid
-   misleading to "architectural rules". (Xiaoyao)
-
-Changes since v1:
- * Split this fix from the patch named "i386/cpu: Fix number of
-   addressable IDs in CPUID.04H".
- * Added the explanation of the impact on performance. (Xiaoyao)
+Changes since v7:
+ * New commit to introduce module_id to locate the CPU with module
+   level.
 ---
- target/i386/cpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/core/machine-hmp-cmds.c | 4 ++++
+ qapi/machine.json          | 4 ++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 33760a2ee163..eedc2c5ea6e0 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6113,12 +6113,12 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             switch (count) {
-             case 0: /* L1 dcache info */
-                 encode_cache_cpuid4(env->cache_info_cpuid4.l1d_cache,
--                                    1, cs->nr_cores,
-+                                    cs->nr_threads, cs->nr_cores,
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 1: /* L1 icache info */
-                 encode_cache_cpuid4(env->cache_info_cpuid4.l1i_cache,
--                                    1, cs->nr_cores,
-+                                    cs->nr_threads, cs->nr_cores,
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 2: /* L2 cache info */
+diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
+index a6ff6a487583..8701f00cc7cc 100644
+--- a/hw/core/machine-hmp-cmds.c
++++ b/hw/core/machine-hmp-cmds.c
+@@ -87,6 +87,10 @@ void hmp_hotpluggable_cpus(Monitor *mon, const QDict *qdict)
+             monitor_printf(mon, "    cluster-id: \"%" PRIu64 "\"\n",
+                            c->cluster_id);
+         }
++        if (c->has_module_id) {
++            monitor_printf(mon, "    module-id: \"%" PRIu64 "\"\n",
++                           c->module_id);
++        }
+         if (c->has_core_id) {
+             monitor_printf(mon, "    core-id: \"%" PRIu64 "\"\n", c->core_id);
+         }
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 3f6a5af10ba8..366da6244ab6 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -925,6 +925,9 @@
+ # @cluster-id: cluster number within the parent container the CPU
+ #     belongs to (since 7.1)
+ #
++# @module-id: module number within the parent container the CPU
++#     belongs to (since 9.1)
++#
+ # @core-id: core number within the parent container the CPU
+ #     belongs to
+ #
+@@ -943,6 +946,7 @@
+             '*socket-id': 'int',
+             '*die-id': 'int',
+             '*cluster-id': 'int',
++            '*module-id': 'int',
+             '*core-id': 'int',
+             '*thread-id': 'int'
+   }
 -- 
 2.34.1
 
