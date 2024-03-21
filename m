@@ -4,72 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09DFCC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 17:16:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE20C54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 17:19:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnM1j-00059B-OR; Thu, 21 Mar 2024 13:16:36 -0400
+	id 1rnM4A-0007Uy-EK; Thu, 21 Mar 2024 13:18:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rnM1a-00052c-Jo
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:16:20 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rnM1Y-00072i-Vj
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:16:18 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B81AE57DDB;
- Thu, 21 Mar 2024 20:17:34 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id EE4489FDE8;
- Thu, 21 Mar 2024 20:16:13 +0300 (MSK)
-Message-ID: <299d87df-d256-43f2-90eb-1b55c7c80d1a@tls.msk.ru>
-Date: Thu, 21 Mar 2024 20:16:13 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rnM48-0007UU-12
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:18:56 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rnM46-0007Z9-Bb
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:18:55 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1dddbeac9f9so8035295ad.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 10:18:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711041532; x=1711646332; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2tmTZrDBjxE6lExAyOPcBmlsnOAnDptfD48lW8AcXzc=;
+ b=GP+zDBE7ccPcyKNe6ZLzyDOtskXZUCCUN2XQCYM6R7jTAakNUE/FLmm4THNAIzb24n
+ ltsKcn//xeSEN3Vdu6turKCigNIyQozVisEcefyTH1HS2zmye9hpZV4vt4N8RAbuBgG/
+ aEJyrYjh4rVKTgdb+qojGBxBeWoj7awy0aIFmVze7aX+SG70psy9dPoeTtYOoT34IELE
+ SMPj3unvXyX/Lhd4RDKWDV0Zu76IdD+SaXI76vw0lnmDzm/dh3V1AL9nIxgv82IlJqIa
+ t6ia7Y0fE1HpmJ04k371viSzODwXgarHUdzqRmDj8qIgbCzJpxNzeYQLvQ1WXylkWIPR
+ n1yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711041532; x=1711646332;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2tmTZrDBjxE6lExAyOPcBmlsnOAnDptfD48lW8AcXzc=;
+ b=dy72CTC6SVeH6M0g8LKMxTjzsuDxP9EB/ZtPnQ6M2f2YFmIv8D33xbrUkXYPleKBoK
+ YbXEnaSC/wIVEj432xV46Mi1VL1iGXz+61djSAJCM/2ifk90AeHDy34xgmw/g9MqkCFO
+ H4Q10+MEi472u8K6Ih5rZCI6Hjpqzy10vj+zIdYULySJZAL8u63xKT+lp2PLCOKVqrfZ
+ q2smC300tnVNlx3cnUU23yMiE5xxQ8vw+9bpnMskboMcqgx+6+x8PDC1BH2b4cefjx/I
+ 91TMnrD3VVF0wMr1m3ID/NS4jf/YW2JeB3cJ34GAgezxwawS6k2QlO0hY++BozMYZHJC
+ +ymw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXcPuRCPwWQas3HPu6LHYBOEWH4oGdWIRNwU6UKj+MEuENQLBR2Gx1TyYFEG8i1CF8fEoprk+t2s9S/WlmdapuYYv1QM4g=
+X-Gm-Message-State: AOJu0YwrDDmWwvdsfdL6KjDdWs8ySpo/xLl2VZ05jc2XY9yZaBwuaVDe
+ BiNypeXZaFgwH7FqgXTUe3SBw3PocJwcmvufK4I1Rvvw4UVg6K0Z0LKsasrR+j4=
+X-Google-Smtp-Source: AGHT+IGqtIXHSSAVq4tzJsK6l1TlD6JVoYXGZ1RXJg5VAO+rzmmioNp2S+ohu7eaPFDTrDPEKTAeEw==
+X-Received: by 2002:a17:902:e84f:b0:1de:fbe1:bea9 with SMTP id
+ t15-20020a170902e84f00b001defbe1bea9mr44868plg.19.1711041531760; 
+ Thu, 21 Mar 2024 10:18:51 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ u6-20020a170902e80600b001dc71ead7e5sm66332plg.165.2024.03.21.10.18.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 21 Mar 2024 10:18:51 -0700 (PDT)
+Message-ID: <a896620e-d0c1-47c0-9609-56a30c4f4f3e@linaro.org>
+Date: Thu, 21 Mar 2024 07:18:48 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/i386: Revert monitor_puts() in
- do_inject_x86_mce()
+Subject: Re: change QARMA3 default for aarch64?
 Content-Language: en-US
-To: Tao Su <tao1.su@linux.intel.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, xiaoyao.li@intel.com, alex.bennee@linaro.org,
- armbru@redhat.com, philmd@linaro.org
-References: <20240320083640.523287-1-tao1.su@linux.intel.com>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240320083640.523287-1-tao1.su@linux.intel.com>
+To: Michael Tokarev <mjt@tls.msk.ru>, QEMU Developers
+ <qemu-devel@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>
+References: <5e6e2c5b-70bc-4a9b-a5ce-353607e42ac6@tls.msk.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <5e6e2c5b-70bc-4a9b-a5ce-353607e42ac6@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,20 +97,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-20.03.2024 11:36, Tao Su :
-> monitor_puts() doesn't check the monitor pointer, but do_inject_x86_mce()
-> may have a parameter with NULL monitor pointer. Revert monitor_puts() in
-> do_inject_x86_mce() to fix, then the fact that we send the same message to
-> monitor and log is again more obvious.
+On 3/20/24 23:32, Michael Tokarev wrote:
+> Since commit v8.1.0-511-g399e5e7125 "target/arm: Implement FEAT_PACQARMA3",
+> pauth-qarma3 is the default pauth scheme.  However this one is very slow.
+
+That patch only introduced qarma3, it didn't make it the default:
+
+  static Property arm_cpu_pauth_property =
+      DEFINE_PROP_BOOL("pauth", ARMCPU, prop_pauth, true);
+  static Property arm_cpu_pauth_impdef_property =
+      DEFINE_PROP_BOOL("pauth-impdef", ARMCPU, prop_pauth_impdef, false);
++static Property arm_cpu_pauth_qarma3_property =
++    DEFINE_PROP_BOOL("pauth-qarma3", ARMCPU, prop_pauth_qarma3, false);
+
+Per the first line, default is still qarma5 (which is the slowest, afaik).
+
+I have not done any benchmarking for qarma3 at all, but it still *looks* significantly 
+more complex than impdef.
+
+> When people run aarch64 code in qemu tcg, an immediate reaction is like,
+> "this seems to be a bug somewhere", since the code run insanely slower than
+> it was before.
 > 
-> Fixes: bf0c50d4aa85 (monitor: expose monitor_puts to rest of code)
-> Reviwed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Tao Su <tao1.su@linux.intel.com>
+> And this is very difficult to find as well, - the reason for that slowdown
+> is usually well hidden from an average soul.
+> 
+> When the reason is actually discovered, people start changing settings in
+> various tools and configs to work around this issue.  Qemu itself has
+> overrides, pauth-impdef=on, in various tests, to make the test run at
+> saner speed.
+> 
+> After seeing how many issues people are having in debian with that, I'm
+> about to switch the default in debian build of qemu, because impdef,
+> while makes certain arm64-specific protection feature less effective,
+> is actually significantly more practical.  I dislike changing the
+> defaults, but this is a situation when it needs to be done, imho.
+> 
+> But before doing that, maybe it's better to change qemu default
+> instead?  What do you think?
 
-Smells like a -stable material, is it not?
+I think it might be worth having -cpu max default to impdef.
 
-Thanks,
+Peter?
 
-/mjt
+
+r~
 
