@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A1C6CD11DB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D5FC54E58
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 19:29:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnO5O-0005H5-PO; Thu, 21 Mar 2024 15:28:22 -0400
+	id 1rnO5S-0005Ju-Pt; Thu, 21 Mar 2024 15:28:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rnO5L-0005Gh-Fr
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 15:28:19 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1rnO5P-0005HW-Ql
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 15:28:23 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rnO5J-0006n5-Vi
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 15:28:19 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1dddad37712so11768295ad.3
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 12:28:17 -0700 (PDT)
+ id 1rnO5N-0006nW-HE
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 15:28:23 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1dee27acf7aso9459245ad.2
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 12:28:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711049296; x=1711654096; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=O0ekOmRrQ+fpx5FSwZGStmzTGu3jdCzlHx+IpElHWIM=;
- b=LzKHMl4XmevMkk1OCTgdFXWO1tkexY6OlppABqtxZ1WDElxS0SPjAxBD4Kw8o1SbrU
- h2yUgQGUoM6M5zSgmzdNCMkmOTTaX0Br0Lel+GJwTY+bGqJ5Qj9u+mkHMDnREv7oLkhg
- UxgqVmFKFX4YTrqPAqpqdGru/D8j5nxai3CltTMk+PM246MEmXTTR8Dn7QYtDEjENtqk
- eiqr8mOW5+gnhAzbNHIuI7J8hasjdhrHo+4uO/WSy6eemNsMVGN/D2fKiv3c27wl1HwO
- wdViuoLDdMY8en1eGZI/DpBzfYNl5PIHl2Ln8RzBhyzCUAp5WV7KEE8u0xB660pArpjs
- AxDQ==
+ d=linaro.org; s=google; t=1711049299; x=1711654099; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j3kLKwxrLH+M2Nw+NGqU18RKQy972773C7GhxsV0pgI=;
+ b=kkk33ffqZjGF2lcP5G4BmL3AA8FcUaA3gEo5s1MgV02acoVDTZfeEsJi9/4hOuUlqK
+ iFYL7rUdXcfem43U8CatSdna2OWMbkFdIqKoXHHSa/yNVDF64dD6H8NrzHkiJo/Rd1te
+ Te0s34qHY5gy+HzBkwvEsMt5u1/bOLJzaR3Dm9dLj6StQYcbp8XGJp6Rot9mJ2J4uBRa
+ K4bLUi8Mr/FuIXgcf/tQvNVZ+wX4xtqcMmueyis6t+YRLlvIk8Adc6NwM18CGun7nYv4
+ CAFIRVKrgjfbWnhsMRF3gq7Pef0cl+o43aG3UxMuTv+5v2D/MlUxc1cfCdPk5Fc/BkkP
+ 7L0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711049296; x=1711654096;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=O0ekOmRrQ+fpx5FSwZGStmzTGu3jdCzlHx+IpElHWIM=;
- b=h+gMogBXyDCaCFZE+ENNmqcre1roSYMMR1HznOIgqDoppndBoTdPs9uxlw1B/tGmzz
- Po03zVb7WJRKOy18kTOcwzS6yiUiSuYwaiy6EZXA6oTh7qGv0EIXG7vQKiRcGsJQt3r4
- +KTz49XHMOKXRugX/8q3o60I+XeI8tze3GCRcevALxpIPKUuxSpYIUVYo4PZ6PVWKI4e
- Zv0MAlLmnaDqZ4ZaYRgThY0tBG1CpkvYwLuXqgE8qqw2yENycE4FxJpKavZzuxhH3M+O
- jws0gQSgFzdKk2WHhksI4bMd2zZX9ep1zvlpUEs8lsAQoIJ52cIQoMyf4hkcPlRj0LZl
- TJIw==
-X-Gm-Message-State: AOJu0YxZqhY0gwubyW40q/P84hDP3C1I0paCT9w/P4178vvEEFQ08Z+w
- wxSyNxicsPBjOjcDOTJgGwcZgIeWjw/buPPL3iPIeRX8/50SXaAf1176TAG/re0soSIQ2K1UHvR
- 2
-X-Google-Smtp-Source: AGHT+IEVm7RUoT8p7G9M3SjwZzFfKGFjtkVY/5riP7WL/Pkf0H+77or8MqqBO6IuGzXzHaMseuNa0Q==
-X-Received: by 2002:a17:902:e984:b0:1de:f59a:4e6 with SMTP id
- f4-20020a170902e98400b001def59a04e6mr372182plb.24.1711049296230; 
- Thu, 21 Mar 2024 12:28:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711049299; x=1711654099;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=j3kLKwxrLH+M2Nw+NGqU18RKQy972773C7GhxsV0pgI=;
+ b=scB6JP7I/1QPu42o7TYVdVzBPxc2vI9KYZh9h44O12tB7ANqoIxYjB9+q9+Clx6usA
+ ZjuIXBfSMLxFkhDsYPLBqgT7zwwsp5fvvvjisf+kXmhzAZ3v6iD7LrUl27eZIS5TkDJJ
+ +lOf6PgVR2Og455mgd9PQvD10+REGLETiDExoSgm2NTQp9EC7k0xpmt3u/GRiCN86rDP
+ HkR70UYLBbXe36YvrIplbIJ3XL6qWRNuZljJk7cAsFrUkW3PAy5NM2GTJeikC+80Oq0+
+ /rDc1K8/Jqbtz5t0Ile8MDqJKUi5f+6+LSvcS/goqfDLy1akgKVuauCPHI123cin+H5x
+ uKRQ==
+X-Gm-Message-State: AOJu0Yw+4h9b2tHSLnwZOVT1TnBrJq+1uSLprKWZ2HgWSwxPgqVTaws1
+ /1RhDQxRegv+az5n33IVVuk3R2ntvfRWeQxJeQ+UasGPR8uBBTxw2yQVUgkEROueQQqmu08xWJ8
+ I
+X-Google-Smtp-Source: AGHT+IENh3S9HBZYRL2Lcr4bx3d6dNsM9FEsfKCO5tgT7LECF809rHrn+Ul4QBLtbOU2wQS+54NRyQ==
+X-Received: by 2002:a17:902:7248:b0:1de:e5aa:5ce with SMTP id
+ c8-20020a170902724800b001dee5aa05cemr337569pll.41.1711049299140; 
+ Thu, 21 Mar 2024 12:28:19 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- p8-20020a1709027ec800b001e06c1eed85sm207303plb.141.2024.03.21.12.28.15
+ p8-20020a1709027ec800b001e06c1eed85sm207303plb.141.2024.03.21.12.28.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 21 Mar 2024 12:28:15 -0700 (PDT)
+ Thu, 21 Mar 2024 12:28:18 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de,
 	svens@stackframe.org
-Subject: [PATCH for-9.0 0/2] target/hppa: two more simple fixes
-Date: Thu, 21 Mar 2024 09:28:11 -1000
-Message-Id: <20240321192813.371526-1-richard.henderson@linaro.org>
+Subject: [PATCH 2/2] target/hppa: Fix B,GATE for wide mode
+Date: Thu, 21 Mar 2024 09:28:13 -1000
+Message-Id: <20240321192813.371526-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240321192813.371526-1-richard.henderson@linaro.org>
+References: <20240321192813.371526-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,31 +95,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using the correct space for BE,L linkage might make the difference
-for a cpu stress test.  I believe triggering this would require
-something like
+Do not clobber the high bits of the address by using a 32-bit deposit.
 
-					f=(seg,ofs), b=(seg,ofs+4)
-	be	0(sr1,r1)		f=(seg,ofs+4), b=(sr1,r1)
-	be,l,n	0(sr2,r2),sr0,r31	f=(sr1,r1), b=(sr2,r2)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/hppa/translate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-and then validating the contents of sr0 on return.
-
-Linux only places B,GATE in the zero page, so amusingly there were
-never any high bits to clobber.  But I can imagine HP-UX making
-more use of gateway pages, and certainly a cpu stress test would.
-
-
-r~
-
-
-Richard Henderson (2):
-  target/hppa: Fix BE,L set of sr0
-  target/hppa: Fix B,GATE for wide mode
-
- target/hppa/translate.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
+diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+index 1766a63001..f875d76a23 100644
+--- a/target/hppa/translate.c
++++ b/target/hppa/translate.c
+@@ -3880,7 +3880,7 @@ static bool trans_b_gate(DisasContext *ctx, arg_b_gate *a)
+         }
+         /* No change for non-gateway pages or for priv decrease.  */
+         if (type >= 4 && type - 4 < ctx->privilege) {
+-            dest = deposit32(dest, 0, 2, type - 4);
++            dest = deposit64(dest, 0, 2, type - 4);
+         }
+     } else {
+         dest &= -4;  /* priv = 0 */
 -- 
 2.34.1
 
