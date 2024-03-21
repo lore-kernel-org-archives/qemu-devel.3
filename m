@@ -4,56 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB347C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 03:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D51FDC54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 04:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rn9Zl-0000gs-VD; Wed, 20 Mar 2024 23:58:45 -0400
+	id 1rn9bo-0001Z6-0U; Thu, 21 Mar 2024 00:00:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rn9Zj-0000gK-QT; Wed, 20 Mar 2024 23:58:43 -0400
-Received: from out30-113.freemail.mail.aliyun.com ([115.124.30.113])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rn9bi-0001XH-Cx
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 00:00:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.huang@linux.alibaba.com>)
- id 1rn9Zf-0001xm-Sn; Wed, 20 Mar 2024 23:58:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1710993506; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=Pug4F6r1CfiMSzEkl8em54qDpzwKLGZq/dMlcjabCJA=;
- b=xS2xahhFsoFmeaDqF5guawDaa5UHu70/zbQmOnVFYENvB4ifHfOn+rZnhOyddVTD07tLl7i8O5W98Et3BmFeQ8fIVi8XV8X+yqaFGgzsGxiwIzkGNF78C0dm0ZyZdTpvfI0oThsIlTghkc1Lj/5kVZvSQC6cMexSa4hV8AbkU30=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R811e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046049;
- MF=eric.huang@linux.alibaba.com; NM=1; PH=DS; RN=10; SR=0;
- TI=SMTPD_---0W2zHuTn_1710993503; 
-Received: from localhost.localdomain(mailfrom:eric.huang@linux.alibaba.com
- fp:SMTPD_---0W2zHuTn_1710993503) by smtp.aliyun-inc.com;
- Thu, 21 Mar 2024 11:58:24 +0800
-From: Huang Tao <eric.huang@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bin.meng@windriver.com,
- alistair.francis@wdc.com, palmer@dabbelt.com,
- Huang Tao <eric.huang@linux.alibaba.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2] target/riscv: Fix the element agnostic function problem
-Date: Thu, 21 Mar 2024 11:58:16 +0800
-Message-ID: <20240321035816.99983-1-eric.huang@linux.alibaba.com>
-X-Mailer: git-send-email 2.41.0
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rn9bf-0002bn-Jl
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 00:00:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1710993642;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=XoEfbVUA4oeshnBTHztVo9G5+Fh187KCdU5FooIUy5w=;
+ b=OKNgGD/x4X6kmwwy4G1RyvKaVDbjvGgu1lth5IZPyojIV7zu0OcEngluZinps/1UHaCzJO
+ Bmri4aUQ/r9is+L7I3M2FqSKP37sMZ3w3Q/2z24qYvYrjxrlOIqfp9y/GCKBD9fk/r8T0+
+ MoolmWB1aFkiYjTqmnUdgrbZBNs8sD8=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-222-Ok2SLqubNzSTpdFUSPHnHw-1; Thu, 21 Mar 2024 00:00:41 -0400
+X-MC-Unique: Ok2SLqubNzSTpdFUSPHnHw-1
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-6e6cced0068so514220b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 21:00:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1710993640; x=1711598440;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XoEfbVUA4oeshnBTHztVo9G5+Fh187KCdU5FooIUy5w=;
+ b=BxqIcsNWIXJUT7jx6hdUO1LU9T7vgWlzjz/9Ih4gXl6o04b+jVK2l0yhqOG8zVDq5W
+ gubgUWAOdCfMLh1RQA9s3a2DcAQ4r1Mi1osoVdSGyZYVXbS7Q6dHbCPePrxA1m9qXQu/
+ wdpBIfSSEyl3U8nRkH3bMRAWcC/iOaDplnimP76C1iMX8X5YUWMnqM8XkX+dw3ETsxsn
+ MEXXVSVwoFkpHjbVgEI2Bj5+fRBip/3V0Ibrs/J9uJ1uMAsCfXxJQWhjX5zIXeFHfhYS
+ VY+shoN+StO9KegCtOO27V8lXnZiFjx3mBapzz/SZ6X9FYzDIbet2ypS+qGatevhZPiw
+ Vo2w==
+X-Gm-Message-State: AOJu0YxNOwP0yTxyb6TemhhrQobjh5uL7p/WVoKKW+v/e2llCAlwvCIq
+ uiB9PXR3hwvf+L3B119xhk2T0HWBRZZgjwJhYLM5GKtS/xEMi+xzKKt4tIBAboN9AabdmSFY6Cz
+ /kHrQ4/AhyKwDMYn4cESEPnhCqfzvQrCXBdtR7KSG9yOGb1PQa8UFW3nFacUVliuijIGUGXJGeR
+ pHYtTk6MWnWIyfyWVnkiPRUWZN3gv6eKYPOy260Q==
+X-Received: by 2002:a17:902:eb45:b0:1dd:96ca:e1ae with SMTP id
+ i5-20020a170902eb4500b001dd96cae1aemr3931971pli.69.1710993639635; 
+ Wed, 20 Mar 2024 21:00:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEOkaPi333lSGZOdk7yAa/SfSJVXPogeIZsv313fjs2EslYIoUTcUR/QX+FCjylB5lhD84A3Xh4RWSRIQptRdI=
+X-Received: by 2002:a05:6a20:a903:b0:1a3:3e30:a7e6 with SMTP id
+ cd3-20020a056a20a90300b001a33e30a7e6mr3393745pzb.59.1710993199087; Wed, 20
+ Mar 2024 20:53:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.113;
- envelope-from=eric.huang@linux.alibaba.com;
- helo=out30-113.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+References: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
+ <CACGkMEt2-naXvHjCcPyQAoSfto44OVaSUqPtg_gvS8-wrhNwZA@mail.gmail.com>
+ <9cb9fe47-f173-4cf1-8bc0-01971e47559c@oracle.com>
+ <CACGkMEvjB45RzonvWMQ=OnDpm5M04u6ab6tT7b0=sMsEyBB-Vg@mail.gmail.com>
+ <7c118fa7-2288-45f1-aa67-5bf650d65b51@oracle.com>
+ <CACGkMEsHY+1752e0tt58uQevUkoAcSRgZRNoMPPYgXZ5SEkWMw@mail.gmail.com>
+ <318cef20-96a6-4476-a8f5-1653b1465a69@oracle.com>
+In-Reply-To: <318cef20-96a6-4476-a8f5-1653b1465a69@oracle.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Thu, 21 Mar 2024 11:53:07 +0800
+Message-ID: <CACGkMEsLXLfz_sA2adX6ZF0wcNmKfeoDq4KD-X5Q2oK47ANw0Q@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] vhost: dirty log should be per backend type
+To: Si-Wei Liu <si-wei.liu@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, eperezma@redhat.com, 
+ joao.m.martins@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,57 +104,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In RVV and vcrypto instructions, the masked and tail elements are set to 1s
-using vext_set_elems_1s function if the vma/vta bit is set. It is the element
-agnostic policy.
+On Thu, Mar 21, 2024 at 4:29=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com> =
+wrote:
+>
+>
+>
+> On 3/19/2024 8:25 PM, Jason Wang wrote:
+> > On Tue, Mar 19, 2024 at 6:06=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.c=
+om> wrote:
+> >>
+> >>
+> >> On 3/17/2024 8:20 PM, Jason Wang wrote:
+> >>> On Sat, Mar 16, 2024 at 2:33=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle=
+.com> wrote:
+> >>>>
+> >>>> On 3/14/2024 8:50 PM, Jason Wang wrote:
+> >>>>> On Fri, Mar 15, 2024 at 5:39=E2=80=AFAM Si-Wei Liu <si-wei.liu@orac=
+le.com> wrote:
+> >>>>>> There could be a mix of both vhost-user and vhost-kernel clients
+> >>>>>> in the same QEMU process, where separate vhost loggers for the
+> >>>>>> specific vhost type have to be used. Make the vhost logger per
+> >>>>>> backend type, and have them properly reference counted.
+> >>>>> It's better to describe what's the advantage of doing this.
+> >>>> Yes, I can add that to the log. Although it's a niche use case, it w=
+as
+> >>>> actually a long standing limitation / bug that vhost-user and
+> >>>> vhost-kernel loggers can't co-exist per QEMU process, but today it's
+> >>>> just silent failure that may be ended up with. This bug fix removes =
+that
+> >>>> implicit limitation in the code.
+> >>> Ok.
+> >>>
+> >>>>>> Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+> >>>>>> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+> >>>>>>
+> >>>>>> ---
+> >>>>>> v3->v4:
+> >>>>>>      - remove checking NULL return value from vhost_log_get
+> >>>>>>
+> >>>>>> v2->v3:
+> >>>>>>      - remove non-effective assertion that never be reached
+> >>>>>>      - do not return NULL from vhost_log_get()
+> >>>>>>      - add neccessary assertions to vhost_log_get()
+> >>>>>> ---
+> >>>>>>     hw/virtio/vhost.c | 45 +++++++++++++++++++++++++++++++++------=
+------
+> >>>>>>     1 file changed, 33 insertions(+), 12 deletions(-)
+> >>>>>>
+> >>>>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> >>>>>> index 2c9ac79..612f4db 100644
+> >>>>>> --- a/hw/virtio/vhost.c
+> >>>>>> +++ b/hw/virtio/vhost.c
+> >>>>>> @@ -43,8 +43,8 @@
+> >>>>>>         do { } while (0)
+> >>>>>>     #endif
+> >>>>>>
+> >>>>>> -static struct vhost_log *vhost_log;
+> >>>>>> -static struct vhost_log *vhost_log_shm;
+> >>>>>> +static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
+> >>>>>> +static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
+> >>>>>>
+> >>>>>>     /* Memslots used by backends that support private memslots (wi=
+thout an fd). */
+> >>>>>>     static unsigned int used_memslots;
+> >>>>>> @@ -287,6 +287,10 @@ static int vhost_set_backend_type(struct vhos=
+t_dev *dev,
+> >>>>>>             r =3D -1;
+> >>>>>>         }
+> >>>>>>
+> >>>>>> +    if (r =3D=3D 0) {
+> >>>>>> +        assert(dev->vhost_ops->backend_type =3D=3D backend_type);
+> >>>>>> +    }
+> >>>>>> +
+> >>>>> Under which condition could we hit this?
+> >>>> Just in case some other function inadvertently corrupted this earlie=
+r,
+> >>>> we have to capture discrepancy in the first place... On the other ha=
+nd,
+> >>>> it will be helpful for other vhost backend writers to diagnose day-o=
+ne
+> >>>> bug in the code. I feel just code comment here will not be
+> >>>> sufficient/helpful.
+> >>> See below.
+> >>>
+> >>>>>     It seems not good to assert a local logic.
+> >>>> It seems to me quite a few local asserts are in the same file alread=
+y,
+> >>>> vhost_save_backend_state,
+> >>> For example it has assert for
+> >>>
+> >>> assert(!dev->started);
+> >>>
+> >>> which is not the logic of the function itself but require
+> >>> vhost_dev_start() not to be called before.
+> >>>
+> >>> But it looks like this patch you assert the code just a few lines
+> >>> above the assert itself?
+> >> Yes, that was the intent - for e.g. xxx_ops may contain corrupted
+> >> xxx_ops.backend_type already before coming to this
+> >> vhost_set_backend_type() function. And we may capture this corrupted
+> >> state by asserting the expected xxx_ops.backend_type (to be consistent
+> >> with the backend_type passed in),
+> > This can happen for all variables. Not sure why backend_ops is special.
+> The assert is just checking the backend_type field only. The other op
+> fields in backend_ops have similar assert within the op function itself
+> also. For e.g. vhost_user_requires_shm_log() and a lot of other
+> vhost_user ops have the following:
+>
+>      assert(dev->vhost_ops->backend_type =3D=3D VHOST_BACKEND_TYPE_USER);
+>
+> vhost_vdpa_vq_get_addr() and a lot of other vhost_vdpa ops have:
+>
+>      assert(dev->vhost_ops->backend_type =3D=3D VHOST_BACKEND_TYPE_VDPA);
+>
+> vhost_kernel ops has similar assertions as well.
+>
+> The reason why it has to be checked against here is now the callers of
+> vhost_log_get(), would pass in dev->vhost_ops->backend_type to the API,
+> which are unable to verify the validity of the backend_type by
+> themselves. The vhost_log_get() has necessary asserts to make bound
+> check for the vhost_log[] or vhost_log_shm[] array, but specific assert
+> against the exact backend type in vhost_set_backend_type() will further
+> harden the implementation in vhost_log_get() and other backend ops.
 
-However, this function can't deal the big endian situation. This patch fixes
-the problem by adding handling of such case.
+As discussed, those assertions are to make sure of the logic
+dependencies of other functions. (The assignment of vhost_ops doesn't
+happen in those functions).
 
-Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
----
-Changes in v2:
-- Keep the api of vext_set_elems_1s
-- Reduce the number of patches.
----
- target/riscv/vector_internals.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+>
+> >
+> >> which needs be done in the first place
+> >> when this discrepancy is detected. In practice I think there should be
+> >> no harm to add this assert, but this will add warranted guarantee to t=
+he
+> >> current code.
+> > For example, such corruption can happen after the assert() so a TOCTOU =
+issue.
+> Sure, it's best effort only. As pointed out earlier, I think together
+> with this, there are other similar asserts already in various backend
+> ops, which could be helpful to nail down the earliest point or a
+> specific range where things may go wrong in the first place.
 
-diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
-index 12f5964fbb..3e45b9b4a7 100644
---- a/target/riscv/vector_internals.c
-+++ b/target/riscv/vector_internals.c
-@@ -30,6 +30,28 @@ void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
-     if (tot - cnt == 0) {
-         return ;
-     }
-+
-+#if HOST_BIG_ENDIAN
-+    /*
-+     * Deal the situation when the elements are insdie
-+     * only one uint64 block including setting the
-+     * masked-off element.
-+     */
-+    if ((tot - 1) ^ cnt < 8) {
-+        memset(base + H1(tot - 1), -1, tot - cnt);
-+        return;
-+    }
-+    /*
-+     * Otherwise, at least cross two uint64_t blocks.
-+     * Set first unaligned block.
-+     */
-+    if (cnt % 8 != 0) {
-+        uint32_t j = ROUND_UP(cnt, 8);
-+        memset(base + H1(j - 1), -1, j - cnt);
-+        cnt = j;
-+    }
-+    /* Set other 64bit aligend blocks */
-+#endif
-     memset(base + cnt, -1, tot - cnt);
- }
- 
--- 
-2.41.0
+Ok, I think I'd leave the decision to Michael.
+
+Thanks
+
+>
+> Thanks,
+> -Siwei
+>
+> >
+> > Thanks
+> >
+> >> Regards,
+> >> -Siwei
+> >>
+> >>> dev->vhost_ops =3D &xxx_ops;
+> >>>
+> >>> ...
+> >>>
+> >>> assert(dev->vhost_ops->backend_type =3D=3D backend_type)
+> >>>
+> >>> ?
+> >>>
+> >>> Thanks
+> >>>
+> >>>> vhost_load_backend_state,
+> >>>> vhost_virtqueue_mask, vhost_config_mask, just to name a few. Why loc=
+al
+> >>>> assert a problem?
+> >>>>
+> >>>> Thanks,
+> >>>> -Siwei
+> >>>>
+> >>>>> Thanks
+> >>>>>
+>
 
 
