@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D406C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:49:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C9EC54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 15:49:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnKev-0004IT-Ct; Thu, 21 Mar 2024 11:48:49 -0400
+	id 1rnKf3-0004Jn-AN; Thu, 21 Mar 2024 11:48:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKeu-0004I3-2P
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:48:48 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKf1-0004JT-Iq
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:48:55 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKer-00019M-7a
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:48:47 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-33e570ef661so558779f8f.1
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:48:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnKez-0001BU-Lb
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 11:48:55 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-41466e01965so7931095e9.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 08:48:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711036123; x=1711640923; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Zh/FaIsWmIi3a25Yrb9MOaHVvh0tuDxkCn+67cE8e8k=;
- b=aAgM9Whgg92GwEMr1jUMu/+LHM22nW7V284d2zpS3y0ckp7wwZZiSH9UhJKqgTy+Pk
- qLg8qqUXRli37p4FTOIcsFqz5QQQdYriAS9nP3vO8g/5ihl12UFfMTNfyrsUJ7une6cU
- +mvdafQfE0IYQwACnNXsfFHHk9aJboxkdP12VND0aNkgF9DS+gg/zsOkttH01weSA3Gm
- ey2r6dOJRODTULYUDnfHALGb7evB9zgI9Jp4PVgiI2HyTLIw+H37qYke0byiHB1Rn0r9
- R1ZkYdrCgX7g9w8q2rhBX5QnBaXUQBJsg+DAEskXrBMWhuOXsQSWHtqc93J9tXpgLWHK
- HKmQ==
+ d=linaro.org; s=google; t=1711036131; x=1711640931; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bTgCkgY7q586A21zu0JSDs5UTTpVyxNoAlIlHHAmSdk=;
+ b=d2jICh1dd4XIjkMWk8imYmpKT9o4rOLdhDCls43AAKP3nsU9riB59s0ZTYeXFMY9dj
+ FS0F7q8MMIxsR1dvd7n4pvSj0PORqRshsN9wiYCNwyNHME3hGoGIiPVX9FPF16X3kPFI
+ 2ZE1ORKaloEMfv6+/wfpA5EurTUEeMDAzfRseHysj8mG+ujmy/HO8rMIH+TAOBZNx+05
+ Mb6RHetRCj2peiAKX/IgH5Y0YGZBHmKyD0OgqwgJ8v1Xc+n65CuYLzPX8SPJPvypByrE
+ 8ag0DPjWoSYpDGROeS2Mza34EuAYjYeLurz4Y0a4kcLHqeAQP/7gNoSbCf/lyKS/g/Fi
+ rkZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711036123; x=1711640923;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Zh/FaIsWmIi3a25Yrb9MOaHVvh0tuDxkCn+67cE8e8k=;
- b=blt9qhFA9vRmpG+KCE7/3x7pwcRqZ5l0k1fkY2kW52NjuO6ID7yXQ8gaThtx8RpPTM
- oQEMzwEYjsOo0Uupa7Vzo3acFPRmlRDIQkEbxbmwEeuzbOXkW5weBjlV3bKqA7u2gZCA
- VmrKSz89cH0+opLPam6MkfrTRaoZwbQ7TKhosNuhsRhKDIsosklZEkeLkjL8VzDWkg5i
- hwWjiztkUlmHf0gsO6nEXZa7tN8HQaZgjouPOpDWsHJxf0wprMXFIHAllE7Iq8tT/FRW
- f4931AdOtiSoN/TbnQxRVaYJ1YK0QvRbSZHS3BDfUn9j6qz6weeBH2KL1wCnfBHGd9Zy
- GvHA==
-X-Gm-Message-State: AOJu0YxLAYHZlRVrOR1AnZj+E1fp1gasXC1YzGrE/2lYp6c+TrFaXDZT
- j39vwLrsgziMYNFIqMiS1ue2UUzpYpoXuOb9+bE3nrf7B33i0gaosIeuEP/VQDsT0Ew7DEY5OVx
- J8Do=
-X-Google-Smtp-Source: AGHT+IE0j0GHohj7TY3zQ9i/2Vc5AK/dh9s56mMhx1SAyqHJyGmeUOfxoMBpNPcqu136EpMwMolWkA==
-X-Received: by 2002:adf:fed2:0:b0:33e:cc27:a9b8 with SMTP id
- q18-20020adffed2000000b0033ecc27a9b8mr18568258wrs.32.1711036123344; 
- Thu, 21 Mar 2024 08:48:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711036131; x=1711640931;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bTgCkgY7q586A21zu0JSDs5UTTpVyxNoAlIlHHAmSdk=;
+ b=xNNcF7V1MkV/6pw6mzeZzTncyizEb5mwLZh+xWh3Mj2ympw0c4TIj/OszloDtK70Uo
+ HB4va3NVTswdObdhPii8EXrPG6qdDcpQC1dZxEH/fOWXUEqFHiTK4qvKpxDNI7TDh6BI
+ TWDFlYlyeNufNqApNoy97g23ZtnYztz+iXfbaGsysaCSXdy7iZX8fd69dBbNuxDdavMg
+ MH6dif4zXBo5pFtrKEvOiI4wpu8dvpMqVP0THSZ9eA5i8pmOv0nyzV6Sf/wZs4SiqNP6
+ 14S6s4MxStkPIafBNtx5sOusZ3ifsYxwX9957dGVxHFMWljeptz25xKM+BhOUfMeFQjh
+ tRTg==
+X-Gm-Message-State: AOJu0YxXup4WrKglA2WXN3pzkJEdO+Ma02hwniCCktgtIuMcuHukaZAw
+ CCx5ivDF5GIrYLpPji7HOk3gDjcWEmqdhaiHWi+ajZhE7CPe7s2W/pXLLFKpaRjfeGiJevSAGUa
+ wCKs=
+X-Google-Smtp-Source: AGHT+IE92dHNbX39E5CpL6fzghojPWn69hg0rMxVmayS2tpnQqnqbNz6dlTYqB9LpiS/OQbj/28ECQ==
+X-Received: by 2002:a05:600c:3514:b0:414:63c4:c40d with SMTP id
+ h20-20020a05600c351400b0041463c4c40dmr6529657wmq.40.1711036130799; 
+ Thu, 21 Mar 2024 08:48:50 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.206.222])
  by smtp.gmail.com with ESMTPSA id
- t4-20020a0560001a4400b0033e756ed840sm17411892wry.47.2024.03.21.08.48.40
+ t6-20020a05600c198600b004131310a29fsm141401wmq.15.2024.03.21.08.48.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 21 Mar 2024 08:48:42 -0700 (PDT)
+ Thu, 21 Mar 2024 08:48:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
@@ -71,22 +72,25 @@ Cc: Artyom Tarasenko <atar4qemu@gmail.com>, Chris Wulff <crwulff@gmail.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 00/21] target/monitor: Cleanup around hmp_info_tlb()
-Date: Thu, 21 Mar 2024 16:48:16 +0100
-Message-ID: <20240321154838.95771-1-philmd@linaro.org>
+Subject: [PATCH-for-9.0? 01/21] host/atomic128: Include missing
+ 'qemu/atomic.h' header
+Date: Thu, 21 Mar 2024 16:48:17 +0100
+Message-ID: <20240321154838.95771-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240321154838.95771-1-philmd@linaro.org>
+References: <20240321154838.95771-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,93 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+qatomic_cmpxchg__nocheck(), qatomic_read__nocheck(),
+qatomic_set__nocheck() are defined in "qemu/atomic.h".
+Include it in order to avoid:
 
-In [*] I posted preliminary steps to unify hmp_info_tlb()
-and hmp_info_mem() after making them per-CPU handler,
-rather than target-specific method (which break single
-binary). Since there is no rush and we need to figure
-the usefulness of 'info tlb/mem' and what we want to do
-with it, I dropped the series but salvaged these cleanup
-patches.
+  In file included from include/exec/helper-proto.h:10:
+  In file included from include/exec/helper-proto-common.h:10:
+  In file included from include/qemu/atomic128.h:61:
+  In file included from host/include/aarch64/host/atomic128-cas.h:16:
+  host/include/generic/host/atomic128-cas.h:23:11: error: call to undeclared function 'qatomic_cmpxchg__nocheck'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    r.i = qatomic_cmpxchg__nocheck(ptr_align, c.i, n.i);
+          ^
 
-Regards,
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ host/include/generic/host/atomic128-cas.h  | 2 ++
+ host/include/generic/host/atomic128-ldst.h | 2 ++
+ 2 files changed, 4 insertions(+)
 
-Phil.
-
-[*] https://lore.kernel.org/qemu-devel/20240320164055.60319-1-philmd@linaro.org/
-
-Philippe Mathieu-Daudé (21):
-  host/atomic128: Include missing 'qemu/atomic.h' header
-  hw/core: Remove check on NEED_CPU_H in tcg-cpu-ops.h
-  target/i386: Move APIC related code to cpu-apic.c
-  target/i386: Extract x86_dump_mmu() from hmp_info_tlb()
-  target/m68k: Replace qemu_printf() by monitor_printf() in monitor
-  target/m68k: Have dump_ttr() take a @description argument
-  target/m68k: Move MMU monitor commands from helper.c to monitor.c
-  target/microblaze: Prefix MMU API with 'mb_'
-  target/mips: Prefix MMU API with 'mips_'
-  target/nios2: Prefix MMU API with 'nios2_'
-  target/nios2: Move monitor commands to monitor.c
-  target/nios2: Replace qemu_printf() by monitor_printf() in monitor
-  target/ppc: Replace qemu_printf() by monitor_printf() in monitor
-  target/sh4: Extract sh4_dump_mmu() from hmp_info_tlb()
-  target/sparc: Fix string format errors when DEBUG_MMU is defined
-  target/sparc: Replace qemu_printf() by monitor_printf() in monitor
-  target/xtensa: Prefix MMU API with 'xtensa_'
-  target/xtensa: Extract MMU API to new mmu.c/mmu.h files
-  target/xtensa: Simplify dump_mpu() and dump_tlb()
-  target/xtensa: Move monitor commands to monitor.c
-  target/xtensa: Replace qemu_printf() by monitor_printf() in monitor
-
- host/include/generic/host/atomic128-cas.h  |    2 +
- host/include/generic/host/atomic128-ldst.h |    2 +
- include/hw/core/tcg-cpu-ops.h              |    2 -
- target/i386/cpu.h                          |    7 +
- target/m68k/cpu.h                          |    3 +-
- target/microblaze/mmu.h                    |   10 +-
- target/mips/tcg/tcg-internal.h             |    2 +-
- target/nios2/cpu.h                         |    2 +-
- target/nios2/mmu.h                         |   11 +-
- target/ppc/cpu.h                           |    2 +-
- target/sh4/cpu.h                           |    2 +
- target/sparc/cpu.h                         |    2 +-
- target/xtensa/cpu.h                        |   32 +-
- target/xtensa/mmu.h                        |   95 ++
- target/i386/cpu-apic.c                     |  112 +++
- target/i386/cpu-sysemu.c                   |   77 --
- target/i386/mmu.c                          |  231 +++++
- target/i386/monitor.c                      |  240 -----
- target/m68k/helper.c                       |  223 -----
- target/m68k/monitor.c                      |  225 ++++-
- target/microblaze/cpu.c                    |    2 +-
- target/microblaze/helper.c                 |    4 +-
- target/microblaze/mmu.c                    |   14 +-
- target/microblaze/op_helper.c              |    4 +-
- target/mips/cpu.c                          |    2 +-
- target/mips/tcg/sysemu/tlb_helper.c        |    2 +-
- target/nios2/cpu.c                         |    2 +-
- target/nios2/helper.c                      |    4 +-
- target/nios2/mmu.c                         |   34 +-
- target/nios2/monitor.c                     |   27 +-
- target/ppc/mmu_common.c                    |  147 +--
- target/ppc/ppc-qmp-cmds.c                  |    2 +-
- target/sh4/monitor.c                       |   22 +-
- target/sparc/ldst_helper.c                 |   26 +-
- target/sparc/mmu_helper.c                  |  102 +-
- target/sparc/monitor.c                     |    2 +-
- target/xtensa/cpu.c                        |    2 +-
- target/xtensa/mmu.c                        |  889 +++++++++++++++++
- target/xtensa/mmu_helper.c                 | 1037 +-------------------
- target/xtensa/monitor.c                    |  149 ++-
- target/i386/meson.build                    |    2 +
- target/xtensa/meson.build                  |    1 +
- 42 files changed, 1943 insertions(+), 1815 deletions(-)
- create mode 100644 target/xtensa/mmu.h
- create mode 100644 target/i386/cpu-apic.c
- create mode 100644 target/i386/mmu.c
- create mode 100644 target/xtensa/mmu.c
-
+diff --git a/host/include/generic/host/atomic128-cas.h b/host/include/generic/host/atomic128-cas.h
+index 6b40cc2271..4824f14659 100644
+--- a/host/include/generic/host/atomic128-cas.h
++++ b/host/include/generic/host/atomic128-cas.h
+@@ -11,6 +11,8 @@
+ #ifndef HOST_ATOMIC128_CAS_H
+ #define HOST_ATOMIC128_CAS_H
+ 
++#include "qemu/atomic.h"
++
+ #if defined(CONFIG_ATOMIC128)
+ static inline Int128 ATTRIBUTE_ATOMIC128_OPT
+ atomic16_cmpxchg(Int128 *ptr, Int128 cmp, Int128 new)
+diff --git a/host/include/generic/host/atomic128-ldst.h b/host/include/generic/host/atomic128-ldst.h
+index 691e6a8531..12e4aca2da 100644
+--- a/host/include/generic/host/atomic128-ldst.h
++++ b/host/include/generic/host/atomic128-ldst.h
+@@ -11,6 +11,8 @@
+ #ifndef HOST_ATOMIC128_LDST_H
+ #define HOST_ATOMIC128_LDST_H
+ 
++#include "qemu/atomic.h"
++
+ #if defined(CONFIG_ATOMIC128)
+ # define HAVE_ATOMIC128_RO 1
+ # define HAVE_ATOMIC128_RW 1
 -- 
 2.41.0
 
