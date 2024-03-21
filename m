@@ -4,154 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 224CDC54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 18:43:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B908C54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 19:09:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnNNP-0003YE-Vt; Thu, 21 Mar 2024 14:42:56 -0400
+	id 1rnNmT-0000dU-KX; Thu, 21 Mar 2024 15:08:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rnNNK-0003Ws-J5
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 14:42:50 -0400
-Received: from bongo.birch.relay.mailchannels.net ([23.83.209.21])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rnNmR-0000dK-Gz
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 15:08:47 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1rnNND-0006ao-Hl
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 14:42:49 -0400
-X-Sender-Id: _forwarded-from|134.3.94.10
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 474C7C20FC
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 18:42:41 +0000 (UTC)
-Received: from outbound5f.eu.mailhop.org (unknown [127.0.0.6])
- (Authenticated sender: duocircle)
- by relay.mailchannels.net (Postfix) with ESMTPA id 9244EC21AF
- for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 18:42:40 +0000 (UTC)
-ARC-Seal: i=2; s=arc-2022; d=mailchannels.net; t=1711046560; a=rsa-sha256;
- cv=pass;
- b=5draw1tdoXCsrQ3Nf7sNsCzlT9OTuNu3n85tAnt79+7jj+3yhCMZMhevv21jPl9/GMHOwB
- eeXlbxq4oXwSwlzivTxPRlMPJPRoPgasRG5NxLhZOK8YXQMJ0w6fedA5xNpDkRC5W4G7ER
- EFNqnBH4+kge2fWrQnvYA97RpVoAYRJai84yC1yGDvJG+PeoPHadzW+LCDZAPj/VfXuecw
- GmlElW9d7KXzivZWWteaUHBSKx/aaE3BaCDu0MXXzIvTGfJMIiAb9qk6uWDEMO0+M5YaFX
- bpUoK0guzd70b6dKNz12QXQaQlERM8ij9dKx8jRg78+cRl7EOLQMAvjech2VDA==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net; s=arc-2022; t=1711046560;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=Xtf50j+DlfNozbMDgzegCVRznHt1CNihl0mHsKkCUmk=;
- b=syj3m8d+L0l3EAO9mBh0BaLEb1oWqNdqg4IZcW9V0Wfqf1+0gE/Yff61DbjSgmoy9gtOJZ
- xiZldlvpvpBwItbSKgefAAER0p6jV8mAOl6Am96ssONCpLA82bOnga4mwcm04WtRiiCpI7
- 5qvp+wKXaGrEoWHRx3Hn2Gfn76ejQW/M54t/3NSFoXhiYdkrQcQFtWrtZOsuIPgoJ93bZ4
- UsoBm0lGMjNTZEquKTpFK3Xdu9EwTvssLDdogvOAiVbSndbn9D3mGt0Id80V62rReviFsa
- P22tw6HV//32qPS0degm2xoT9zHcNYkUhjoAuPZrlJ+A5+dMhDTd3SDeeifWYQ==
-ARC-Authentication-Results: i=2; rspamd-b46fcdc5-v5kc4;
- arc=pass ("outbound.mailhop.org:s=arc-outbound20181012:i=1");
- auth=pass smtp.auth=duocircle smtp.mailfrom=svens@stackframe.org
-X-Sender-Id: _forwarded-from|134.3.94.10
-X-MC-Relay: Forwarding
-X-MailChannels-SenderId: _forwarded-from|134.3.94.10
-X-MailChannels-Auth-Id: duocircle
-X-Cold-Lonely: 2ae42426480f3eba_1711046561113_2795044585
-X-MC-Loop-Signature: 1711046561113:836880450
-X-MC-Ingress-Time: 1711046561112
-Received: from outbound5f.eu.mailhop.org (outbound5f.eu.mailhop.org
- [3.127.8.113]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.126.173.87 (trex/6.9.2); Thu, 21 Mar 2024 18:42:41 +0000
-ARC-Seal: i=1; a=rsa-sha256; t=1711046441; cv=none;
- d=outbound.mailhop.org; s=arc-outbound20181012;
- b=BeNG4z20k2ESSjAGsC6T34sYRxKiY8D6U79J2HaAVWrRo46JX8ABs76+xXxdNGgOchdvReiK+Anjq
- vIPK1G3oj1TweOgpt0TTFHSfggHSNdcQEHkOX50i54lCSE2wjdZgCqxAFMLji+KoFzz9bLL+PBbgYv
- 0MM5sdvg98NYt54F609P2gjhb7s1Ggnfj0RGsmIk9qOPWPMQxHhLYYYPtcU4F4tT5q2NeAEXsE7hSd
- u4NaJRoNxL6WRl8uozd8YF9FxcVujnptNcokINRAWyaN3aKvgApoS3WuDrDa7t7iroINVygRORKCi2
- j0gqLS+FKzxxuX6wp4NUJG+eRs+BJhA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=arc-outbound20181012;
- h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
- subject:cc:to:from:dkim-signature:dkim-signature:dkim-signature:from;
- bh=Xtf50j+DlfNozbMDgzegCVRznHt1CNihl0mHsKkCUmk=;
- b=eQcSlxuXplvwWKt2HvcsZRF6ar9wn7ROgNvrPoo30dSTawMDmGcBYz1btKjd93WCVU0P+cDR+VAj8
- FI+LIMxmzPRni38LXStrIqT1m1SeJg4SuUHzjPxAdBr1HZXoXeW8+vh5BqmiRSK/J8amPUs1qYAXcS
- ttxCdYKX1+VYCP+Dw0VTHmYn3zoScHBNEVyDLbE60ag40WRE2jJuLP3aqkB6yefYYfhxmSajxOUM7n
- hk7jXWppKl+25E3U/rI8mnEASEniRgfJyPHQ9t0HqZsWUQlo7utWTxwSv/3AhT8h5g7N6961/4n4Fl
- ioiPLsQSUYsfVxskRY59ErwHb035hvQ==
-ARC-Authentication-Results: i=1; outbound2.eu.mailhop.org;
- spf=pass smtp.mailfrom=stackframe.org smtp.remote-ip=130.180.31.158;
- dkim=pass header.d=stackframe.org header.s=dkim1 header.a=rsa-sha256
- header.b=mFpD3jl2; 
- dmarc=none header.from=stackframe.org;
- arc=none header.oldest-pass=0;
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=stackframe.org; s=duo-1634547266507-560c42ae;
- h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
- subject:cc:to:from:from;
- bh=Xtf50j+DlfNozbMDgzegCVRznHt1CNihl0mHsKkCUmk=;
- b=gwcD1+4RyzaO6hwjXq4BZgeuPGn7BA4ryQj+kDtD9rrLEzCuQb0nZ6zWHdUH7R7XQeCtJN3krO8V5
- qEUk1d7hmxJ9RzdbGbjH790hZV3TeQ9zIUfwq6NlwDx8X7T5gyE3UHMNyCDT72gtIofEiZJ5AQmxmk
- g8STz7OckRDlv+no=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=dkim-high;
- h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
- subject:cc:to:from:from;
- bh=Xtf50j+DlfNozbMDgzegCVRznHt1CNihl0mHsKkCUmk=;
- b=iEy/Pj6Bv4WnUkGNCEruHpFD/EXY/W7R2zxdAewZ5m8NYvxBhsKCv+/Jkqe9+Y++qXnTLtCaPEnGZ
- 3tSa58tyQScjYirB/2LxL6YhfjmrNKOm3DcBsrUflidV4eMFeZfEQLv9xmsvBKfkMbZldScUywyZ+r
- Wm4Jr0OeDeE2qxlBtX3ds1qXiZtblyUVHsSfbMsVO8OfzR1Wh9Dn4HC7iOiM2wfL2Ss1/O0+t9mpWf
- gab7tUqiuyL7LTjxOCkZ/oVip7DKVWQOWaXjA3ertyDlPGktZw/Uc/tUQy+Eh3v4bvl6gGtuaIMGQ2
- PqJH/IbYHwZj86XhR1EKUBipKKEemeA==
-X-Originating-IP: 130.180.31.158
-X-MHO-RoutePath: dG9ta2lzdG5lcm51
-X-MHO-User: 8343f0f2-e7b2-11ee-b810-9b9d9be6ef2c
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Mail-Handler: DuoCircle Outbound SMTP
-Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
- by outbound2.eu.mailhop.org (Halon) with ESMTPSA
- id 8343f0f2-e7b2-11ee-b810-9b9d9be6ef2c;
- Thu, 21 Mar 2024 18:40:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=Xtf50j+DlfNozbMDgzegCVRznHt1CNihl0mHsKkCUmk=; b=mFpD3jl29P7lHhkQrDyDLh6/iR
- LRTdAlXpxaolNlv0kv+/IC43BoZuCqpGpfKBzrj6G1XRcxXbwLd0RW2HVCxgy9P/PXcbQ9Bf5nDo3
- 6VYMJUMz3tInu2UranVRmTx2vgxb4Tm7bgxdSLyyCkFjuBQmh3j8pFnr6QjJurxIiPFp82lLGhApT
- l3QLIbXb/0boppWc6ZwMwte7ZVmO5BungrzKZkzkknEfU8ZtBK15rF1oSsUTYhMwNWUeDcwWVI7UV
- UwW4nk/DRPYZdf4L67bR4WT6sbpJH8fueuh+wB1scTJIi0MXmBHlZMlfi9mppo2s44Bhz3Ae7ckbi
- xMP3gCBA==;
-Received: from ip-134-003-094-010.um41.pools.vodafone-ip.de ([134.3.94.10]
- helo=t14.stackframe.org)
- by mail.duncanthrax.net with esmtpa (Exim 4.96)
- (envelope-from <svens@stackframe.org>) id 1rnNN2-004uGo-1I;
- Thu, 21 Mar 2024 19:42:32 +0100
-From: Sven Schnelle <svens@stackframe.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>,
- Sven Schnelle <svens@stackframe.org>
-Subject: [PATCH 2/3] target/hppa: sub: fix trap on overflow for narrow mode
-Date: Thu, 21 Mar 2024 19:42:27 +0100
-Message-ID: <20240321184228.611897-2-svens@stackframe.org>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240321184228.611897-1-svens@stackframe.org>
-References: <20240321184228.611897-1-svens@stackframe.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rnNmI-00032B-Gl
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 15:08:47 -0400
+Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:5428:0:640:7351:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 094A960D79;
+ Thu, 21 Mar 2024 22:08:30 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:6408::1:2c] (unknown
+ [2a02:6b8:b081:6408::1:2c])
+ by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id R8M0ma1IZKo0-GF46nvdE; Thu, 21 Mar 2024 22:08:29 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1711048109;
+ bh=QnPSiOe0eHWA0sK+kywYGaxjZh81/muyzRxH8pVF+HI=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=MTx5XNzS/+FghgjcDgM/ZJn3vKj42RPjKDG8nssjoScg++bI1fN0ovduvvZHSgqnT
+ JRRFX4RrtcCCojW8K3by2ryeKhexVmS+4DtiQwtLb6i7E3zm7QGTnYG8858rOsYcpU
+ h1X/pveVQke3Mq+u/yOjyxRSlreph9p/rGgMIuBI=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <b1deba9f-566c-4d77-ade5-f6dcf7ab3ff1@yandex-team.ru>
+Date: Thu, 21 Mar 2024 22:08:27 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=23.83.209.21; envelope-from=svens@stackframe.org;
- helo=bongo.birch.relay.mailchannels.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: qemu fuzz crash in virtio_net_queue_reset()
+Content-Language: en-US
+To: Alexander Bulekov <alxndr@bu.edu>
+Cc: xuanzhuo@linux.alibaba.com, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, kangjie.xu@linux.alibaba.com,
+ qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ bsd@redhat.com, Stefan Hajnoczi <stefanha@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, darren.kenny@oracle.com,
+ Qiuhao.Li@outlook.com, si-wei.liu@oracle.com, yc-core@yandex-team.ru,
+ Denis Plotnikov <den-plotnikov@yandex-team.ru>
+References: <25d616db-6db5-47ed-afc7-8e285d069d8a@yandex-team.ru>
+ <20240321150122.jcsw6djmeq6xu2yb@mozz.bu.edu>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240321150122.jcsw6djmeq6xu2yb@mozz.bu.edu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -163,26 +84,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
----
- target/hppa/translate.c | 3 +++
- 1 file changed, 3 insertions(+)
+On 21.03.24 18:01, Alexander Bulekov wrote:
+> On 240320 0024, Vladimir Sementsov-Ogievskiy wrote:
+>> Hi all!
+>>
+>>  From fuzzing I've got a fuzz-data, which produces the following crash:
+>>
+>> qemu-fuzz-x86_64: ../hw/net/virtio-net.c:134: void flush_or_purge_queued_packets(NetClientState *): Assertion `!virtio_net_get_subqueue(nc)->async_tx.elem' failed.
+>> ==2172308== ERROR: libFuzzer: deadly signal
+>>      #0 0x5bd8c748b5a1 in __sanitizer_print_stack_trace (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x26f05a1) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>      #1 0x5bd8c73fde38 in fuzzer::PrintStackTrace() (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x2662e38) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>      #2 0x5bd8c73e38b3 in fuzzer::Fuzzer::CrashCallback() (/home/settlements/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x26488b3) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>      #3 0x739eec84251f  (/lib/x86_64-linux-gnu/libc.so.6+0x4251f) (BuildId: c289da5071a3399de893d2af81d6a30c62646e1e)
+>>      #4 0x739eec8969fb in __pthread_kill_implementation nptl/./nptl/pthread_kill.c:43:17
+>>      #5 0x739eec8969fb in __pthread_kill_internal nptl/./nptl/pthread_kill.c:78:10
+>>      #6 0x739eec8969fb in pthread_kill nptl/./nptl/pthread_kill.c:89:10
+>>      #7 0x739eec842475 in gsignal signal/../sysdeps/posix/raise.c:26:13
+>>      #8 0x739eec8287f2 in abort stdlib/./stdlib/abort.c:79:7
+>>      #9 0x739eec82871a in __assert_fail_base assert/./assert/assert.c:92:3
+>>      #10 0x739eec839e95 in __assert_fail assert/./assert/assert.c:101:3
+>>      #11 0x5bd8c995d9e2 in flush_or_purge_queued_packets /home/vsementsov/work/src/qemu/yc7-fuzz/build/../hw/net/virtio-net.c:134:5
+>>      #12 0x5bd8c9918a5f in virtio_net_queue_reset /home/vsementsov/work/src/qemu/yc7-fuzz/build/../hw/net/virtio-net.c:563:5
+>>      #13 0x5bd8c9b724e5 in virtio_queue_reset /home/vsementsov/work/src/qemu/yc7-fuzz/build/../hw/virtio/virtio.c:2492:9
+>>      #14 0x5bd8c8bcfb7c in virtio_pci_common_write /home/vsementsov/work/src/qemu/yc7-fuzz/build/../hw/virtio/virtio-pci.c:1372:13
+>>      #15 0x5bd8c9e19cf3 in memory_region_write_accessor /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/memory.c:492:5
+>>      #16 0x5bd8c9e19631 in access_with_adjusted_size /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/memory.c:554:18
+>>      #17 0x5bd8c9e17f3c in memory_region_dispatch_write /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/memory.c:1514:16
+>>      #18 0x5bd8c9ea3bbe in flatview_write_continue /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/physmem.c:2825:23
+>>      #19 0x5bd8c9e91aab in flatview_write /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/physmem.c:2867:12
+>>      #20 0x5bd8c9e91568 in address_space_write /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/physmem.c:2963:18
+>>      #21 0x5bd8c74c8a90 in __wrap_qtest_writeq /home/vsementsov/work/src/qemu/yc7-fuzz/build/../tests/qtest/fuzz/qtest_wrappers.c:187:9
+>>      #22 0x5bd8c74dc4da in op_write /home/vsementsov/work/src/qemu/yc7-fuzz/build/../tests/qtest/fuzz/generic_fuzz.c:487:13
+>>      #23 0x5bd8c74d942e in generic_fuzz /home/vsementsov/work/src/qemu/yc7-fuzz/build/../tests/qtest/fuzz/generic_fuzz.c:714:17
+>>      #24 0x5bd8c74c016e in LLVMFuzzerTestOneInput /home/vsementsov/work/src/qemu/yc7-fuzz/build/../tests/qtest/fuzz/fuzz.c:152:5
+>>      #25 0x5bd8c73e4e43 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x2649e43) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>      #26 0x5bd8c73cebbf in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x2633bbf) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>      #27 0x5bd8c73d4916 in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x2639916) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>      #28 0x5bd8c73fe732 in main (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x2663732) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>      #29 0x739eec829d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+>>      #30 0x739eec829e3f in __libc_start_main csu/../csu/libc-start.c:392:3
+>>      #31 0x5bd8c73c9484 in _start (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x262e484) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>
+>>
+>>
+> 
+> Hello Vladimir,
+> This looks like a similar crash.
+> https://gitlab.com/qemu-project/qemu/-/issues/1451
+> 
+> That issue has a qtest reproducer that does not require a fuzzer to
+> reproduce.
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index f493e207e1..4d2b96f876 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -1213,6 +1213,9 @@ static void do_sub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
-     if (is_tsv || cond_need_sv(c)) {
-         sv = do_sub_sv(ctx, dest, in1, in2);
-         if (is_tsv) {
-+            if (!d) {
-+                tcg_gen_ext32s_i64(sv, sv);
-+            }
-             gen_helper_tsv(tcg_env, sv);
-         }
-     }
+Right, looks very similar, thanks! 1 year ago and still no news.. It's not encouraging.
+
+> 
+> The fuzzer should run fine under gdb. e.g.
+> gdb ./qemu-fuzz-i386
+> r  --fuzz-target=generic-fuzz-virtio-net-pci-slirp ~/generic-fuzz-virtio-net-pci-slirp.crash-7707e14adea64d129be88faeb6ca57dab6118ec5
+> 
+
+Yes, I tried this. But somehow when it crashes, qemu-fuzz just prints the backtrace and exists, I can't debug a crash in gdb as usual. But anyway, reproducer in gitlab is better point to start.
+
+> There are instructions in docs/devel/fuzzing.rst for building
+> reproducers from fuzzer inputs in section "Building Crash Reproducers",
+> however those instructions might not always work and the input might
+> require some further tweaks to ensure that DMA activity does not extend
+> past the physical memory limits of a normal qemu system.
+> 
+> Let me know if I can provide any other info
+> -Alex
+> 
+>> How to reproduce:
+>> ./configure --target-list=x86_64-softmmu --enable-debug --disable-docs --cc=clang --cxx=clang++ --enable-fuzzing --enable-sanitizers --enable-slirp
+>> make -j20 qemu-fuzz-x86_64
+>> ./build/qemu-fuzz-x86_64 --fuzz-target=generic-fuzz-virtio-net-pci-slirp ../generic-fuzz-virtio-net-pci-slirp.crash-7707e14adea64d129be88faeb6ca57dab6118ec5
+>>
+>>
+>> This ...crash-7707... file is attached.
+>>
+>> git-bisect points to 7dc6be52f4ead25e7da8fb758900bdcb527996f7 "virtio-net: support queue reset" as a first bad commit. That's a commit which introduces virtio_net_queue_reset() function.
+>>
+>>
+>> I'm a newbie in qemu-fuzzing, and don't know virtio-net code, so I've no idea how to debug this thing further. I even don't know, how to get a normal coredump file to open it in gdb, it's not produced from fuzzing process...
+>>
+>>
+>> I tried to search for "async_tx.elem" in git log, and found two commits, fixing similar crashes:
+>>
+>>    bc5add1dadcc140fef9af4fe215167e796cd1a58 "vhost-vdpa: fix assert !virtio_net_get_subqueue(nc)->async_tx.elem in virtio_net_reset"
+>> and
+>>
+>>    5fe19fb81839ea42b592b409f725349cf3c73551 "net: use peer when purging queue in qemu_flush_or_purge_queue_packets()"
+>>
+>> but I failed to get helping idea from them.
+>>
+>>
+>>
+>> Could someone please help with this?
+>>
+>>
+>> -- 
+>> Best regards,
+>> Vladimir
+> 
+> 
+
 -- 
-2.43.2
+Best regards,
+Vladimir
 
 
