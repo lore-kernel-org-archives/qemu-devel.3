@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC8D2CD11BF
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 13:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9851CD11DC
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 13:11:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnIAq-00077c-3v; Thu, 21 Mar 2024 09:09:36 -0400
+	id 1rnIB6-0007Lz-P8; Thu, 21 Mar 2024 09:09:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rnIAn-00075h-Qw; Thu, 21 Mar 2024 09:09:33 -0400
-Received: from szxga06-in.huawei.com ([45.249.212.32])
+ id 1rnIB4-0007KF-Lc; Thu, 21 Mar 2024 09:09:50 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rnIAj-0002o3-RS; Thu, 21 Mar 2024 09:09:33 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.44])
- by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4V0m433b6sz1vx69;
- Thu, 21 Mar 2024 21:08:35 +0800 (CST)
+ id 1rnIB2-0002v4-7w; Thu, 21 Mar 2024 09:09:50 -0400
+Received: from mail.maildlp.com (unknown [172.19.88.163])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4V0m2P4fR3z2Bgj1;
+ Thu, 21 Mar 2024 21:07:09 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 3DA5B1402CC;
- Thu, 21 Mar 2024 21:09:22 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 09A04180060;
+ Thu, 21 Mar 2024 21:09:44 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Thu, 21 Mar
- 2024 21:09:21 +0800
+ 2024 21:09:38 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [RFC PATCH v9 00/23] target/arm: Implement FEAT_NMI and FEAT_GICv3_NMI
-Date: Thu, 21 Mar 2024 13:07:49 +0000
-Message-ID: <20240321130812.2983113-1-ruanjinjie@huawei.com>
+Subject: [RFC PATCH v9 17/23] hw/intc/arm_gicv3: Add NMI handling CPU
+ interface registers
+Date: Thu, 21 Mar 2024 13:08:06 +0000
+Message-ID: <20240321130812.2983113-18-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240321130812.2983113-1-ruanjinjie@huawei.com>
+References: <20240321130812.2983113-1-ruanjinjie@huawei.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.32; envelope-from=ruanjinjie@huawei.com;
- helo=szxga06-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -68,182 +71,174 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch set implements FEAT_NMI and FEAT_GICv3_NMI for armv8. These
-introduce support for a new category of interrupts in the architecture
-which we can use to provide NMI like functionality.
+Add the NMIAR CPU interface registers which deal with acknowledging NMI.
 
-There are two modes for using this FEAT_NMI. When PSTATE.ALLINT or
-PSTATE.SP & SCTLR_ELx.SCTLR_SPINTMASK is set, any entry to ELx causes all
-interrupts including those with superpriority to be masked on entry to ELn
-until the mask is explicitly removed by software or hardware. PSTATE.ALLINT
-can be managed by software using the new register control ALLINT.ALLINT.
-Independent controls are provided for this feature at each EL, usage at EL1
-should not disrupt EL2 or EL3.
+When introduce NMI interrupt, there are some updates to the semantics for the
+register ICC_IAR1_EL1 and ICC_HPPIR1_EL1. For ICC_IAR1_EL1 register, it
+should return 1022 if the intid has super priority. And for ICC_NMIAR1_EL1
+register, it should return 1023 if the intid do not have super priority.
+Howerever, these are not necessary for ICC_HPPIR1_EL1 register.
 
-I have tested it with the following linux patches which try to support
-FEAT_NMI in linux kernel:
-
-	https://lore.kernel.org/linux-arm-kernel/Y4sH5qX5bK9xfEBp@lpieralisi/T/#mb4ba4a2c045bf72c10c2202c1dd1b82d3240dc88
-
-In the test, SGI, PPI and SPI interrupts can all be set to have super priority
-to be converted to a hardware NMI interrupt. The SGI is tested with kernel
-IPI as NMI framework, softlockup, hardlockup and kgdb test cases, and the PPI
-interrupt is tested with "perf top" command with hardware NMI enabled, and
-the SPI interrupt is tested with a custom test module, in which NMI interrupts
-can be received and sent normally.
-
-And the Virtual NMI(VNMI) SGI, PPI and SPI interrupt has also been tested
-by accessing the GICD_INMIR, GICR_INMIR0, GICR_ISPENDR0 and GICD_ISPENDR
-registers with devmem command.
-
-         +-------------------------------------------------+
-         |               Distributor                       |
-         +-------------------------------------------------+
-             SPI |  NMI                         |  NMI
-                \/                            \/
-            +--------+                     +-------+
-            | Redist |                     | Redist|
-            +--------+                     +-------+
-            SGI  | NMI                     PPI | NMI
-                \/                            \/
-          +-------------+             +---------------+
-          |CPU Interface|   ...       | CPU Interface |
-          +-------------+             +---------------+
-               | NMI                         | NMI
-              \/                            \/
-            +-----+                       +-----+
-            |  PE |                       |  PE |
-            +-----+                       +-----+
-
-Changes in v9:
-- Move nmi_reginfo and related functions inside an existing ifdef
-  TARGET_AARCH64 to solve the --target-list=aarch64-softmmu,arm-softmmu
-  compilation problem.
-- Check 'isread' when writing to ALLINT.
-- Update the GPIOs passed in the arm_cpu_kvm_set_irq, and update the comment.
-- Definitely not merge VINMI and VFNMI into EXCP_VNMI.
-- ARM_CPU_VNMI -> ARM_CPU_VINMI, CPU_INTERRUPT_VNMI -> CPU_INTERRUPT_VINMI.
-- Update VINMI and VFNMI when writing HCR_EL2 or HCRX_EL2.
-- Update the commit subject and message, VNMI -> VINMI.
-- Handle CPSR_F and ISR_FS according to CPU_INTERRUPT_VFNMI instead of
-  CPU_INTERRUPT_VFIQ and HCRX_EL2.VFNMI.
-- Not check SCTLR_NMI in arm_cpu_do_interrupt_aarch64().
-- Correct the INTID_NMI logic.
-- Declare cpu variable to reuse latter.
-
-Changes in v8:
-- Fix the rcu stall after sending a VNMI in qemu VM.
-- Fix an unexpected interrupt bug when sending VNMI by running qemu VM.
-- Test the VNMI interrupt.
-- Update the commit message.
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+v7:
 - Add Reviewed-by.
+v4:
+- Define ICC_NMIAR1_EL1 only if FEAT_GICv3_NMI is implemented.
+- Check sctrl_elx.SCTLR_NMI to return 1022 for icc_iar1_read().
+- Add gicv3_icc_nmiar1_read() trace event.
+- Do not check icc_hppi_can_preempt() for icc_nmiar1_read().
+- Add icv_nmiar1_read() and call it when EL2Enabled() and HCR_EL2.IMO == '1'
+---
+ hw/intc/arm_gicv3_cpuif.c | 59 +++++++++++++++++++++++++++++++++++++--
+ hw/intc/gicv3_internal.h  |  1 +
+ hw/intc/trace-events      |  1 +
+ 3 files changed, 58 insertions(+), 3 deletions(-)
 
-Changes in v7:
-- env->cp15.hcrx_el2 -> arm_hcrx_el2_eff().
-- Reorder the irqbetter() code for clarity.
-- Eliminate the has_superprio local variable for gicv3_get_priority().
-- false -> cs->hpplpi.superprio in gicv3_redist_update_noirqset().
-- 0x0 -> false in arm_gicv3_common_reset_hold().
-- Clear superprio in several places for hppi, hpplpi and hppvlpi.
-- Add Reviewed-by.
-
-Changes in v6:
-- Fix DISAS_TOO_MANY to DISAS_UPDATE_EXIT for ALLINT MSR (immediate).
-- Verify that HCR_EL2.VF is set before checking VFNMI.
-- env->cp15.hcr_el2 -> arm_hcr_el2_eff().
-- env->cp15.hcrx_el2 -> arm_hcrx_el2_eff().
-- Not combine VFNMI with CPU_INTERRUPT_VNMI.
-- Implement icv_nmiar1_read().
-- Put the "extract superprio info" code into gicv3_get_priority().
-- Update the comment in irqbetter().
-- Reset the cs->hppi.superprio to 0x0.
-- Set hppi.superprio to false for LPI.
-- Add Reviewed-by.
-
-Changes in v5:
-- Remove the comment for ALLINT in cpu.h.
-- Merge allint_check() to msr_i_allint to clear the ALLINT MSR (immediate)
-  implementation.
-- Rename msr_i_allint() to msr_set_allint_el1() to make it clearer.
-- Drop the & 1 in trans_MSR_i_ALLINT().
-- Add Reviewed-by.
-
-Changes in v4:
-- Handle VNMI within the CPU and the GIC.
-- Keep PSTATE.ALLINT in env->pstate but not env->allint.
-- Fix the ALLINT MSR (immediate) decodetree implementation.
-- Accept NMI unconditionally for arm_cpu_has_work() but add comment.
-- Improve nmi mask in arm_excp_unmasked().
-- Make the GICR_INMIR0 and GICD_INMIR implementation more clearer.
-- Improve ICC_NMIAR1_EL1 implementation
-- Extract gicv3_get_priority() to avoid priority code repetition.
-- Add Reviewed-by.
-
-Changes in v3:
-- Remove the FIQ NMI.
-- Adjust the patches Sequence.
-- Reomve the patch "Set pstate.ALLINT in arm_cpu_reset_hold".
-- Check whether support FEAT_NMI and FEAT_GICv3 for FEAT_GICv3_NMI.
-- With CPU_INTERRUPT_NMI, both CPSR_I and ISR_IS must be set.
-- Not include NMI logic when FEAT_NMI or SCTLR_ELx.NMI not enabled.
-- Refator nmi mask in arm_excp_unmasked().
-- Add VNMI definitions, add HCRX_VINMI and HCRX_VFNMI support in HCRX_EL2.
-- Add Reviewed-by and Acked-by.
-- Update the commit message.
-
-Changes in v2:
-- Break up the patches so that each one does only one thing.
-- Remove the command line option and just implement it in "max" cpu.
-
-Jinjie Ruan (23):
-  target/arm: Handle HCR_EL2 accesses for bits introduced with FEAT_NMI
-  target/arm: Add PSTATE.ALLINT
-  target/arm: Add support for FEAT_NMI, Non-maskable Interrupt
-  target/arm: Implement ALLINT MSR (immediate)
-  target/arm: Support MSR access to ALLINT
-  target/arm: Add support for Non-maskable Interrupt
-  target/arm: Add support for NMI in arm_phys_excp_target_el()
-  target/arm: Handle IS/FS in ISR_EL1 for NMI, VINMI and VFNMI
-  target/arm: Handle PSTATE.ALLINT on taking an exception
-  hw/arm/virt: Wire NMI and VINMI irq lines from GIC to CPU
-  hw/intc/arm_gicv3: Add external IRQ lines for NMI
-  target/arm: Handle NMI in arm_cpu_do_interrupt_aarch64()
-  hw/intc/arm_gicv3: Add irq superpriority information
-  hw/intc/arm_gicv3_redist: Implement GICR_INMIR0
-  hw/intc/arm_gicv3: Implement GICD_INMIR
-  hw/intc: Enable FEAT_GICv3_NMI Feature
-  hw/intc/arm_gicv3: Add NMI handling CPU interface registers
-  hw/intc/arm_gicv3: Handle icv_nmiar1_read() for icc_nmiar1_read()
-  hw/intc/arm_gicv3: Implement NMI interrupt prioirty
-  hw/intc/arm_gicv3: Report the NMI interrupt in gicv3_cpuif_update()
-  hw/intc/arm_gicv3: Report the VINMI interrupt
-  target/arm: Add FEAT_NMI to max
-  hw/arm/virt: Add FEAT_GICv3_NMI feature support in virt GIC
-
- docs/system/arm/emulation.rst      |   1 +
- hw/arm/virt.c                      |  25 +++++-
- hw/intc/arm_gicv3.c                |  69 ++++++++++++++--
- hw/intc/arm_gicv3_common.c         |  10 +++
- hw/intc/arm_gicv3_cpuif.c          | 127 +++++++++++++++++++++++++++--
- hw/intc/arm_gicv3_dist.c           |  36 ++++++++
- hw/intc/arm_gicv3_redist.c         |  22 +++++
- hw/intc/gicv3_internal.h           |   8 ++
- hw/intc/trace-events               |   2 +
- include/hw/intc/arm_gic_common.h   |   2 +
- include/hw/intc/arm_gicv3_common.h |   7 ++
- target/arm/cpu-features.h          |   5 ++
- target/arm/cpu-qom.h               |   5 +-
- target/arm/cpu.c                   | 124 ++++++++++++++++++++++++++--
- target/arm/cpu.h                   |   9 ++
- target/arm/helper.c                | 102 +++++++++++++++++++++--
- target/arm/internals.h             |  21 +++++
- target/arm/tcg/a64.decode          |   1 +
- target/arm/tcg/cpu64.c             |   1 +
- target/arm/tcg/helper-a64.c        |  12 +++
- target/arm/tcg/helper-a64.h        |   1 +
- target/arm/tcg/translate-a64.c     |  19 +++++
- 22 files changed, 575 insertions(+), 34 deletions(-)
-
+diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
+index e1a60d8c15..df82a413c6 100644
+--- a/hw/intc/arm_gicv3_cpuif.c
++++ b/hw/intc/arm_gicv3_cpuif.c
+@@ -795,6 +795,13 @@ static uint64_t icv_iar_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     return intid;
+ }
+ 
++static uint64_t icv_nmiar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    /* todo */
++    uint64_t intid = INTID_SPURIOUS;
++    return intid;
++}
++
+ static uint32_t icc_fullprio_mask(GICv3CPUState *cs)
+ {
+     /*
+@@ -1097,7 +1104,8 @@ static uint64_t icc_hppir0_value(GICv3CPUState *cs, CPUARMState *env)
+     return cs->hppi.irq;
+ }
+ 
+-static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
++static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env,
++                                 bool is_nmi, bool is_hppi)
+ {
+     /* Return the highest priority pending interrupt register value
+      * for group 1.
+@@ -1108,6 +1116,19 @@ static uint64_t icc_hppir1_value(GICv3CPUState *cs, CPUARMState *env)
+         return INTID_SPURIOUS;
+     }
+ 
++    if (!is_hppi) {
++        int el = arm_current_el(env);
++
++        if (is_nmi && (!cs->hppi.superprio)) {
++            return INTID_SPURIOUS;
++        }
++
++        if ((!is_nmi) && cs->hppi.superprio
++            && env->cp15.sctlr_el[el] & SCTLR_NMI) {
++            return INTID_NMI;
++        }
++    }
++
+     /* Check whether we can return the interrupt or if we should return
+      * a special identifier, as per the CheckGroup1ForSpecialIdentifiers
+      * pseudocode. (We can simplify a little because for us ICC_SRE_EL1.RM
+@@ -1168,7 +1189,7 @@ static uint64_t icc_iar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     if (!icc_hppi_can_preempt(cs)) {
+         intid = INTID_SPURIOUS;
+     } else {
+-        intid = icc_hppir1_value(cs, env);
++        intid = icc_hppir1_value(cs, env, false, false);
+     }
+ 
+     if (!gicv3_intid_is_special(intid)) {
+@@ -1179,6 +1200,25 @@ static uint64_t icc_iar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     return intid;
+ }
+ 
++static uint64_t icc_nmiar1_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    GICv3CPUState *cs = icc_cs_from_env(env);
++    uint64_t intid;
++
++    if (icv_access(env, HCR_IMO)) {
++        return icv_nmiar1_read(env, ri);
++    }
++
++    intid = icc_hppir1_value(cs, env, true, false);
++
++    if (!gicv3_intid_is_special(intid)) {
++        icc_activate_irq(cs, intid);
++    }
++
++    trace_gicv3_icc_nmiar1_read(gicv3_redist_affid(cs), intid);
++    return intid;
++}
++
+ static void icc_drop_prio(GICv3CPUState *cs, int grp)
+ {
+     /* Drop the priority of the currently active interrupt in
+@@ -1555,7 +1595,7 @@ static uint64_t icc_hppir1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+         return icv_hppir_read(env, ri);
+     }
+ 
+-    value = icc_hppir1_value(cs, env);
++    value = icc_hppir1_value(cs, env, false, true);
+     trace_gicv3_icc_hppir1_read(gicv3_redist_affid(cs), value);
+     return value;
+ }
+@@ -2482,6 +2522,15 @@ static const ARMCPRegInfo gicv3_cpuif_icc_apxr23_reginfo[] = {
+     },
+ };
+ 
++static const ARMCPRegInfo gicv3_cpuif_gicv3_nmi_reginfo[] = {
++    { .name = "ICC_NMIAR1_EL1", .state = ARM_CP_STATE_BOTH,
++      .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 9, .opc2 = 5,
++      .type = ARM_CP_IO | ARM_CP_NO_RAW,
++      .access = PL1_R, .accessfn = gicv3_irq_access,
++      .readfn = icc_nmiar1_read,
++    },
++};
++
+ static uint64_t ich_ap_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+     GICv3CPUState *cs = icc_cs_from_env(env);
+@@ -2838,6 +2887,10 @@ void gicv3_init_cpuif(GICv3State *s)
+          */
+         define_arm_cp_regs(cpu, gicv3_cpuif_reginfo);
+ 
++        if (s->nmi_support) {
++            define_arm_cp_regs(cpu, gicv3_cpuif_gicv3_nmi_reginfo);
++        }
++
+         /*
+          * The CPU implementation specifies the number of supported
+          * bits of physical priority. For backwards compatibility
+diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
+index 8d793243f4..93e56b3726 100644
+--- a/hw/intc/gicv3_internal.h
++++ b/hw/intc/gicv3_internal.h
+@@ -511,6 +511,7 @@ FIELD(VTE, RDBASE, 42, RDBASE_PROCNUM_LENGTH)
+ /* Special interrupt IDs */
+ #define INTID_SECURE 1020
+ #define INTID_NONSECURE 1021
++#define INTID_NMI 1022
+ #define INTID_SPURIOUS 1023
+ 
+ /* Functions internal to the emulated GICv3 */
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index 1ef29d0256..94030550d5 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -116,6 +116,7 @@ gicv3_cpuif_set_irqs(uint32_t cpuid, int fiqlevel, int irqlevel) "GICv3 CPU i/f
+ gicv3_icc_generate_sgi(uint32_t cpuid, int irq, int irm, uint32_t aff, uint32_t targetlist) "GICv3 CPU i/f 0x%x generating SGI %d IRM %d target affinity 0x%xxx targetlist 0x%x"
+ gicv3_icc_iar0_read(uint32_t cpu, uint64_t val) "GICv3 ICC_IAR0 read cpu 0x%x value 0x%" PRIx64
+ gicv3_icc_iar1_read(uint32_t cpu, uint64_t val) "GICv3 ICC_IAR1 read cpu 0x%x value 0x%" PRIx64
++gicv3_icc_nmiar1_read(uint32_t cpu, uint64_t val) "GICv3 ICC_NMIAR1 read cpu 0x%x value 0x%" PRIx64
+ gicv3_icc_eoir_write(int grp, uint32_t cpu, uint64_t val) "GICv3 ICC_EOIR%d write cpu 0x%x value 0x%" PRIx64
+ gicv3_icc_hppir0_read(uint32_t cpu, uint64_t val) "GICv3 ICC_HPPIR0 read cpu 0x%x value 0x%" PRIx64
+ gicv3_icc_hppir1_read(uint32_t cpu, uint64_t val) "GICv3 ICC_HPPIR1 read cpu 0x%x value 0x%" PRIx64
 -- 
 2.34.1
 
