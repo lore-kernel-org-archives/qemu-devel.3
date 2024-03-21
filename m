@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA879C54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 17:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11887C54E58
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 17:11:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnLsL-0008S6-Ss; Thu, 21 Mar 2024 13:06:46 -0400
+	id 1rnLwF-0001bK-Si; Thu, 21 Mar 2024 13:10:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rnLsK-0008RG-Gx
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:06:44 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rnLwD-0001Zp-SE
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:10:45 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rnLsH-0004ob-Lx
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:06:44 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rnLwC-0005xc-6k
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:10:45 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CF9EB57DCF;
- Thu, 21 Mar 2024 20:07:54 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E985057DD3;
+ Thu, 21 Mar 2024 20:12:01 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4F4D59FDD6;
- Thu, 21 Mar 2024 20:06:34 +0300 (MSK)
-Message-ID: <812ed94a-1231-492c-bcbb-60a72c059eb4@tls.msk.ru>
-Date: Thu, 21 Mar 2024 20:06:33 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id DB0579FDDF;
+ Thu, 21 Mar 2024 20:10:40 +0300 (MSK)
+Message-ID: <a6416e86-591f-4b85-a353-dd1dbad9e5a6@tls.msk.ru>
+Date: Thu, 21 Mar 2024 20:10:39 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/9] target/hppa fixes for 9.0
+Subject: Re: [PULL 2/3] target/loongarch: Fix tlb huge page loading issue
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240320003223.554145-1-richard.henderson@linaro.org>
-Cc: Helge Deller <deller@gmx.de>, Sven Schnelle <svens@stackframe.org>
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, Xianglai Li <lixianglai@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240320024010.1659193-1-gaosong@loongson.cn>
+ <20240320024010.1659193-3-gaosong@loongson.cn>
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
@@ -58,7 +60,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240320003223.554145-1-richard.henderson@linaro.org>
+In-Reply-To: <20240320024010.1659193-3-gaosong@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -83,23 +85,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-20.03.2024 03:32, Richard Henderson :
+20.03.2024 05:40, Song Gao :
+> From: Xianglai Li <lixianglai@loongson.cn>
 
-> Richard Henderson (3):
->        target/hppa: Fix assemble_16 insns for wide mode
->        target/hppa: Fix assemble_11a insns for wide mode
->        target/hppa: Fix assemble_12a insns for wide mode
-> 
-> Sven Schnelle (6):
->        target/hppa: ldcw,s uses static shift of 3
->        target/hppa: fix shrp for wide mode
->        target/hppa: fix access_id check
->        target/hppa: exit tb on flush cache instructions
->        target/hppa: mask privilege bits in mfia
->        target/hppa: fix do_stdby_e()
 
-Is it all -stable material (when appropriate)?
+> +    if (unlikely((level == 0) || (level > 4))) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "Attepted LDDIR with level %"PRId64"\n", level);
+
+Attempted.  FWIW, it's applied already.
 
 /mjt
-
 
