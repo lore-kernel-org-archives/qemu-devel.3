@@ -4,71 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6898EC54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 17:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65138C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 17:15:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnLyV-0002ns-Un; Thu, 21 Mar 2024 13:13:08 -0400
+	id 1rnM0f-0004Fm-Vv; Thu, 21 Mar 2024 13:15:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rnLyT-0002k7-QK
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:13:05 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rnM0d-0004FB-4a
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:15:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rnLyS-0006Nv-8G
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:13:05 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B72C357DD5;
- Thu, 21 Mar 2024 20:14:21 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9354F9FDE2;
- Thu, 21 Mar 2024 20:13:01 +0300 (MSK)
-Message-ID: <d46fd950-287a-4d13-8891-bd2fffa91327@tls.msk.ru>
-Date: Thu, 21 Mar 2024 20:13:01 +0300
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1rnM0b-0006si-Fb
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 13:15:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711041316;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1KSGTchd580cYd4dbbZVRfeAGQy4t+Px2RCVYO9fBOA=;
+ b=RPF6G9EbYHICG6Fn0gjpOZpCPGUcigxiOHi4LEpKlw9BHxdUYQ1FhTpqv0HRcAqqb5k5lO
+ f4NWntJp17C2l+1u+NBGVK24kEVqN9j2zKTvl9GbwVYfH/bZ2uUcaklrlPMxAlg+oTsMXu
+ wgrXEQ4N2mEb1D/szQ5AerT+JEMxOl4=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-8O9_TjOyP866HmGNEJEfpQ-1; Thu,
+ 21 Mar 2024 13:15:14 -0400
+X-MC-Unique: 8O9_TjOyP866HmGNEJEfpQ-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CA82B1C0515C
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 17:15:13 +0000 (UTC)
+Received: from localhost (unknown [10.39.194.39])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 3124810189;
+ Thu, 21 Mar 2024 17:15:12 +0000 (UTC)
+Date: Thu, 21 Mar 2024 13:15:07 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH] coroutine: reserve 5,000 mappings
+Message-ID: <20240321171507.GB1537715@fedora>
+References: <20240320181232.1464819-1-stefanha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 3/3] target/loongarch: Fix qemu-loongarch64 hang when
- executing 'll.d $t0, $t0, 0'
-Content-Language: en-US
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20240320024010.1659193-1-gaosong@loongson.cn>
- <20240320024010.1659193-4-gaosong@loongson.cn>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240320024010.1659193-4-gaosong@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="6ILooQJJ3/0NNwu2"
+Content-Disposition: inline
+In-Reply-To: <20240320181232.1464819-1-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.372,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,20 +81,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-20.03.2024 05:40, Song Gao :
-> On gen_ll, if a->imm is zero, make_address_x return src1,
-> but the load to destination may clobber src1. We use a new
-> destination to fix this problem.
-> 
-> Fixes: c5af6628f4be (target/loongarch: Extract make_address_i() helper)
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> Message-Id: <20240320013955.1561311-1-gaosong@loongson.cn>
 
-Is it a stable-8.2 material?
+--6ILooQJJ3/0NNwu2
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
+On Wed, Mar 20, 2024 at 02:12:32PM -0400, Stefan Hajnoczi wrote:
+> Daniel P. Berrang=E9 <berrange@redhat.com> pointed out that the coroutine
+> pool size heuristic is very conservative. Instead of halving
+> max_map_count, he suggested reserving 5,000 mappings for non-coroutine
+> users based on observations of guests he has access to.
+>=20
+> Fixes: 86a637e48104 ("coroutine: cap per-thread local pool size")
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  util/qemu-coroutine.c | 15 ++++++++++-----
+>  1 file changed, 10 insertions(+), 5 deletions(-)
 
-/mjt
+Discussed with Kevin and applied to my block tree:
+https://gitlab.com/stefanha/qemu/commits/block
+
+Stefan
+
+--6ILooQJJ3/0NNwu2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmX8axsACgkQnKSrs4Gr
+c8iBoAf+K2uncoMa0RaHdAhllTHCXDhaTvKKlz6Hx87WIfvMBOmECKxy80cMX+Ro
+ZhBeWshJxH5U+TcKde4/YLirUXRWc21v0VWx7tW4U9Q0YO3xNnLMTAFYVnMPWG8j
+IAo7q6mwWezV/Zvd3OPiBacYL5edeC2jcTjA/D8kK9MnesQSr5ZRhM3DhhC0THGi
+86S07hPuIQaFlKQYBcUxyJAs4a8egppSuYRE4lneF77QTwVDunXo8xZMpe1fOlXF
+E8uGZnDM3wcorj2WrlWv5JpRrC93GqPEEBtZWeXg8rn/aTFfQHuHYN1K5FRwx0xo
+DpoDk8t36CV/JHHmm8yrBaBEZ8LOPQ==
+=umYY
+-----END PGP SIGNATURE-----
+
+--6ILooQJJ3/0NNwu2--
+
 
