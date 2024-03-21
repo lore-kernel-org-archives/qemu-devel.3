@@ -4,172 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39835C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 21:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BD9CD11BF
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 21:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnPvN-0000PT-2B; Thu, 21 Mar 2024 17:26:09 -0400
+	id 1rnQC3-00040r-3m; Thu, 21 Mar 2024 17:43:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rnPvH-0000Oz-1t; Thu, 21 Mar 2024 17:26:03 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1rnPvE-0001hJ-3l; Thu, 21 Mar 2024 17:26:02 -0400
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42LKY7F2020033; Thu, 21 Mar 2024 21:25:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com;
- h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=corp-2023-11-20;
- bh=Gm4SD2+0LBHYf6XMwT0rSK16+YAMSLT0UK+XGSDnYQY=;
- b=UUZgdiI7M55Hff6tAifxy5d+fneKgpMuAJswrFdng5EegP2VBRqudZoi0OWWDXq1WZPs
- MKMK2CgHycQ5AQFrdyY8Ud1lUbm8r5I6DKQFSAt1lAM/qgh5zVZCgep0S9+2cm0Stnhl
- vmv3OHlBFVZtYwcJdJM+bScsBuhngSg+dAIMhe7Gt1ZWadcsVR8YoJwuThyVt3nLG9HA
- Bq4MvQlKEnK264gwjqVMwAXDCnDOly/lJMDEQZmLugoTJbyhbTzK4Llhj+YxXqTbEyFk
- A8XZ2UAizGREeyr1C6EjoXqN638Q7zUibNGDorsBaHTVnJAtKHIPg195K01u2aDOyDa4 +w== 
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3ww1udkecp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 21 Mar 2024 21:25:47 +0000
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 42LK0wID007916; Thu, 21 Mar 2024 21:25:46 GMT
-Received: from nam11-co1-obe.outbound.protection.outlook.com
- (mail-co1nam11lp2169.outbound.protection.outlook.com [104.47.56.169])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 3ww1v9uvya-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 21 Mar 2024 21:25:46 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WrKjOdP6ArOl/Hb+LXR0ME3xM4HFps+QuZd4gx1njhn0hFeQOan5tHoC/vWzqg5qPY4Ciw4XVlG7kmu2A7KQNLnpdf5GwLGz2WncsHaBcCt36us/K9yhukbG0hFvf8zpTZtCvrzQFTOSSdDxDY8EtfniZeTa86DFmqhPEp66yVIFnq34qBpwsgIvq6PDMCnvYz93N7ELXst2Cy3EX8BydWic951f02ieIvV8p2acsYeYx+WBw74roQsTdVesfd0QrIpic0rrlZNHv7uM7qCB0N8AXChqoDMQNn59S0mYeU2ykCZTZNopxtR97DvfzOOCcJvpXj/ckx6L3+bA5t1WFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Gm4SD2+0LBHYf6XMwT0rSK16+YAMSLT0UK+XGSDnYQY=;
- b=Fs+louoVhTaTJa9Oic1TqF9aBl54Ev/ekzJRN8w9xIX+86GdC81Lo5jYXsB/cUviUD67hXd4mLVE6ZSDcCPDl+bWz5AfGvWx/wgVgmHwmM7f7KMZcQSIK8pICM9wHS2T63YcQwC0I6w2ZW/tXAc7fBS752v4b8KIaUIoHDLAweKfN6e4zimGFHlpUWk5I+9k2LbHvdE0+9XiHbG/lWaFbNVc8prWD0i+dsoC/pHR1l3ZBb+jSzXwjimsIrUt6vfCh4RKcyzzCR+An3I10bGmerAq6FBny5IYPdxLIjKHRITZmIjSbLKcBJbU2wEFzZDAu4FHxVTX7twYxK2cH7iLTQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1rnQC1-00040i-UA
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 17:43:21 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1rnQC0-0004RR-EI
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 17:43:21 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-512f892500cso1825980e87.3
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 14:43:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Gm4SD2+0LBHYf6XMwT0rSK16+YAMSLT0UK+XGSDnYQY=;
- b=ANoNSpa+GfX175ZWPIwGciNUKZeL1hR1whHxzhpFbN4AIFVL1JeOsVY7ifL+fQsZwKSMfGl3/OFl5iuAQjmm3Arxc1H2Y+U87GwvjfjWZnR72SZMXAqE55SD8th0uJrn2dt+Vrh6Wq7j7+5307R61gl07bO57rbVFLPjqhv86BQ=
-Received: from PH0PR10MB4664.namprd10.prod.outlook.com (2603:10b6:510:41::11)
- by CH3PR10MB7235.namprd10.prod.outlook.com (2603:10b6:610:124::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.31; Thu, 21 Mar
- 2024 21:25:43 +0000
-Received: from PH0PR10MB4664.namprd10.prod.outlook.com
- ([fe80::75a:a398:452a:90a9]) by PH0PR10MB4664.namprd10.prod.outlook.com
- ([fe80::75a:a398:452a:90a9%6]) with mapi id 15.20.7386.031; Thu, 21 Mar 2024
- 21:25:43 +0000
-Message-ID: <d38ce388-41db-4838-a27b-58f905dc11f2@oracle.com>
-Date: Thu, 21 Mar 2024 17:25:37 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 0/8] virtio,vhost: Add VIRTIO_F_IN_ORDER support
-Content-Language: en-US
-To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, raphael@enfabrica.net, kwolf@redhat.com, hreitz@redhat.com,
- jasowang@redhat.com, pbonzini@redhat.com, fam@euphon.net,
- eperezma@redhat.com, stefanha@redhat.com, qemu-block@nongnu.org,
- schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev,
- si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
-References: <20240321155717.1392787-1-jonah.palmer@oracle.com>
- <bd4083c3-863a-bd52-7880-2709afe73873@oracle.com>
-From: Jonah Palmer <jonah.palmer@oracle.com>
-In-Reply-To: <bd4083c3-863a-bd52-7880-2709afe73873@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BL0PR01CA0004.prod.exchangelabs.com (2603:10b6:208:71::17)
- To PH0PR10MB4664.namprd10.prod.outlook.com
- (2603:10b6:510:41::11)
+ d=gmail.com; s=20230601; t=1711057398; x=1711662198; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=tZKMOnFmzQ9+WH5L4lnnMm+yPXbw1TkGocGT+XU0FKI=;
+ b=Peq4TQlps1MrijFxS8XZK2blFigXJuMAjSJ7BgoeRhdPhxYT0mJW1kgSUKhpIfkCbf
+ CwF3n9zDgMzQbNQoRQ2AZApw2bDNrgDmA1yRfWy5oKISB96oNVg2uIquM+DGD1lnhkOO
+ kFvJagcjYePEdyXmoDjyLH+0TSQ3Mdtyoh8fH9Uo/j2QPHQ/TXRiGl8MHdc/OqkggLru
+ Xw9Yn8F3pJFpWYfe716J5MTWzd5MwUHfMjq7avK4hv2F0LJDzen4ld2TWbbT7Q+cv0A4
+ 92VDeXbaQi5sgiFl34fpBuz/B495awzqS8HFTWt4YFZaGeU9VFlcFb8QiORZBvHJldQg
+ IkSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711057398; x=1711662198;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tZKMOnFmzQ9+WH5L4lnnMm+yPXbw1TkGocGT+XU0FKI=;
+ b=GMcQkhVyz0l5WaYpWK1RXjGSD5OFrYdbQM+xY8ktiXq7dO8MGXOqfRsiJe4Bm4IGIY
+ dmVlTKsz4wcR4u9o4pmKqIwMjnanVgQNJYNTSWumPoZg4ytFS3CoWYFrVKbVz/3L2oz8
+ KQ3rqYrWdaSGYqPOKiYlOMinYZdqliJzrKZgpJRO04eAOPOd2G0jvWuXr5L/A3uXO/Mk
+ rn2XbtSlpvEiGTyXO8NJXM1AFHd+eO6P/T6mD1szv4+44fk8rQs1Rhrr+mgufQbcQkDm
+ z91JWYAPLsWzU20Hea25U39pDtenu8ikcu7AjeLMEbPKs4/4wMxpF2FlDMTUssU1NMhF
+ 0Ofw==
+X-Gm-Message-State: AOJu0YyXIVezj/313lEpG7HlyJPifY6gwSbCud0zLUMp3537leMbhp1g
+ g9fbM6D0i/s9dDXUcWmHt7glT94t+jLeb+5MY2FAa2S35atkMQs=
+X-Google-Smtp-Source: AGHT+IERhKj3G9CbCARcgBFT9ujtYsRhjpDOtODMRGSyf3DK1OvrX6YQSxMg2ekYEsbHCQaKaIw44g==
+X-Received: by 2002:a05:6512:1cc:b0:513:80cd:e80b with SMTP id
+ f12-20020a05651201cc00b0051380cde80bmr499869lfp.29.1711057397776; 
+ Thu, 21 Mar 2024 14:43:17 -0700 (PDT)
+Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ by smtp.gmail.com with ESMTPSA id
+ l12-20020a1709062a8c00b00a46f95f5849sm328963eje.106.2024.03.21.14.43.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 21 Mar 2024 14:43:17 -0700 (PDT)
+From: Zheyu Ma <zheyuma97@gmail.com>
+To: mst@redhat.com,
+	kraxel@redhat.com,
+	manos.pitsidianakis@linaro.org
+Cc: qemu-devel@nongnu.org,
+	Zheyu Ma <zheyuma97@gmail.com>
+Subject: [PATCH] virtio-snd: Skip invalid message sizes and null streams
+Date: Thu, 21 Mar 2024 22:42:59 +0100
+Message-Id: <20240321214259.518560-1-zheyuma97@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB4664:EE_|CH3PR10MB7235:EE_
-X-MS-Office365-Filtering-Correlation-Id: 88ca293b-fda1-4e5c-d808-08dc49ed772c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: n7TDLhsl+xzvdqwikQy3Ua/rBujJA1uYOXrWmkFSIGkVZTImH1Zh604E448zQwfy1krlRPct4GaJA4s6Af1M4f3WM27W0Zz7WrgqO9vbm84ruIj9QAjL2UwHwhfl5DzTs9yPoOY5Y8VfsQikMn+GKQ4yZddnnaCNCRBYVfeaiHsHISctarSUoeReFDKrSGB6mQHacQmASelTy8q31gZLSvb4+asHWkpEwH1fv6d7U3zdxGMEIKWHuGnpxbXuVIPz1172a5r5pbyLV5PB/0zPXG5aPvGvzP58oxhjViOxZ/U0XMNoQoJ7A76Y8YRGv7wwphgZWMR/ixvnfR6t+sVdSZnHtGJ/dmshlK0UWy8W4TTdKlBsaFKMxukAgjZTvXjn4x4s9JTub7Jt51TiZClE2hAO+qTOZgL+lsHniuUKFN+Y9Qpy20EuNXPur3DKJthUA0TN+sDx+/2ViCU7nIMcatUYaw1ocXeWWiMCxdDXUwg9v3s539uSZ4M0dpfVzwYFbIowh7cK0y2r8zbmmxymE3UU7xVHJrBFb1owK2Pqpaq0AmmE1NxJKKxJNi9+3+ZWHhJhMef4BvtSrsjthamIijd/cRcWxDDdCv0qrcCSVjYildgpwSud4DC/z0OJjXOt
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB4664.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(366007)(376005)(1800799015)(7416005); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MUlkRTliMUplOHBzMTZGTS9PQSt2TExyNi9sQVcyN3VZTm5pVWhTV2hpNU1M?=
- =?utf-8?B?b1RzQjNOMCtxWHZsQ1BQaStEYksxL2RoTkk0eWphZmtpTExDOHI0NzI3K0Fm?=
- =?utf-8?B?QjkxL2htWTVyY1hvZGIxbm1ybjRZNkZqVU9nUkNBcWhHS2RwTTEyTmJ1S0x0?=
- =?utf-8?B?OTgvM1FKbmtmQjZ3Uk1QVHZzT2lyNDVEOXJtcEY4UWFOTkhXdnN1d2dLTUpu?=
- =?utf-8?B?SG9JeDUwSnREeHhvbkRuN1dRelFHQjRobVM3WjhWUUFheUp5bFRTWGg2QU5L?=
- =?utf-8?B?czN1Z3BDKy90dWk5K05aZUoyL2JQQUdTQUZWUHE3UStNZXdIQjZLeWRtSzlK?=
- =?utf-8?B?SEk1ZUx3YlhIMTZ5Q00zUVY4Q0Q1TWdGalVJRmdTU2l4L1pYaFkvZmRPdC9m?=
- =?utf-8?B?Vm16M2N5eStDL1BMblY5YXhkNExjVU1iMGw2bFhJNS9sQXBnR0laSW1yRHN5?=
- =?utf-8?B?ZVgycWRBcXdLRUMvMTErdDBCeTl4bmxQKzRna3JoaUtOL2xGT2hXdEVxTlE5?=
- =?utf-8?B?WEpUMXFYUWVtNnhBMmFZVmZCdHNKOTIrZWFVYXBiUGQzaVVtak1nck14WnM4?=
- =?utf-8?B?MnlBaUo0ZEFxTXNUVGlCZFJHQ0d5ODJ2SFMxYVJuSitUMVlkM3ZsMENMb05v?=
- =?utf-8?B?RFRUQ2ZjTUZBeXBrRGdZanZudGhpK2FZRWNKVzcyOGk4cEgxNHN2eDM0MElj?=
- =?utf-8?B?cnpWUWtMcDM0aTFZZExNcjVqeCtKVGVZb2E4V3BBTk9QNHZraDZuL2J1d2pi?=
- =?utf-8?B?TDdmMFVPaVdyaDdRa3pQZUY3V3pjOHFseTk1Y08vckszVXYwRjl6cU5nS3Az?=
- =?utf-8?B?TllCNlNDSmJMNGtzU1RKdm4ya0FVUnFRNVRleXZEV0p0eFpFaEE3bE5laXRF?=
- =?utf-8?B?RnJkeHEvRUtYYWR4TXBxbkQ3dndiZzlGdHVXU1h3ejN1TkVGNUVocS9hcHJ0?=
- =?utf-8?B?SEkrVnFhUitGOG91YlV2TkROaGpzWGdLSEQwcXRCN0NxYUZXbHh4RXl2NXBl?=
- =?utf-8?B?bWp3Y0NTcU9ab08xQ1VoeC9SVjN0QXovQzMwS0dydytnSndVMVlHZXMydlNu?=
- =?utf-8?B?cy9TaVFHQmlmUTFGNkRIbDE3bVlKbE1qU1o4b0hPeExCR01yVXlQeVVrbVFt?=
- =?utf-8?B?OWdGQk40SW51YzdNMHllMG82ZDUxaVUvN2pBNTlYaXh5Y010N01BaExVVUVx?=
- =?utf-8?B?T2xwRzJaVjdQUkQ3Q2pBbU10ZnpBdWV1TVVWOEllNkZkVVV1WXBUSTAxVG5L?=
- =?utf-8?B?VmZlMHhGUHdtaEFVS21GbVVWK2tsaXFhU0g0RDFwQi9Vc1MwVFdxeUFrMmZL?=
- =?utf-8?B?UmxyYXBPTTZIbDNyWGd3eDkyekZ1QVlHbCtOR0tQVW9TRDBXcElYTTFHdEZQ?=
- =?utf-8?B?TXhrTnl2ZGYvWlNDUWcxSjczWUZYbTdkRG5GNUR6eUpsb3dGYUl6VEJCdUgy?=
- =?utf-8?B?VWd2UnlEM2xDcTFJUkxPb2hZOWRpU3VtRllvZUFsa2ZoTU5DdlJPL1NPU002?=
- =?utf-8?B?ZHFLMlorTlM4R3BaVDNjQlhJenZLNlFMMXdzeEFFbXQvdFR0U1FVbmQ2RHpX?=
- =?utf-8?B?QTdHTGVldDluS3kvWHlqVmdta1F6S2tRODJ0bmx3WERORHNHa3FGRFZGN0Ju?=
- =?utf-8?B?czJiTTRZdGtiSFhlYkUySlgwS0Qwd0RzV0x5SXgyVFBjdWVCREJoZk9uV1R1?=
- =?utf-8?B?Mkd3d2J2VEd1L2RyV09FVVNuanFmbmxVNVEyWmowcWJpRzZ4WlZnRG5ZempQ?=
- =?utf-8?B?eml0Q3hjdHNjeW95dGlDeEhyVkY3c0NwM0pIYmpYRTFRRnpQK2hnMGdNUEFG?=
- =?utf-8?B?WHJzR1dNSHI0NTNnbXgvOGIxN3NEVGYrMXhLZ0hQblJ6c1hQZ2Zzb3hLd2N0?=
- =?utf-8?B?NWlxZjhnYXJveGFqMUI2UmlDeUU3VDlVS1l2R1dsMUlvYnZIYllWM1BIWFlt?=
- =?utf-8?B?ek90ei9IYWR4dWdGaWtMbnNpaXFRcTBCa0NOcWFJbWZ1VDdDWnNyamdqbXlu?=
- =?utf-8?B?YXE3endxUE84UEo0djN6NlR6Qk9Od0gwTnUxYkZhczB4SFhVTFJNS0pLMGd5?=
- =?utf-8?B?UXU4cVV0OWlkLzJic0YwQ3NNbDJpbjJWeTdQU1hFQjRldlhyNHlNK2xRZDl5?=
- =?utf-8?B?azFhbXgrTkR6cERXTFN3WWxyWmhHb3BVdUpkMDZCUkNyQVYzbFN4dk43Y1NI?=
- =?utf-8?Q?joOSTcr495g8TF6n4Ok7qFg=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: rTSCpVeKPQOI/8pIaSl3OetoHdfpWQlTgOKhWHa7vpjqLADNYQaT1RVb05Odec88klpi4kVUQDNT20PbkBjETfQjebxpHHC5p45vBNO9VLLfbMVp8HY3Ar0kyzBDU3k72nLAum1+Mpee8hcSATzbTJO5eXuDXPtdi28lATqVGMkqldm7neh8XXaMU6c2e8LZOn/AhcZXHcCaGo/Kl8xKB0pZFHSryI4OSN8alLVmrFWsM0soS8HvN7jDnp+Zvi7GCRB3Di1Zre9Mdk738qGbhPff1pYzHjs0xDWNPPFkqVwGOeMJB8tR1RFnVhflQ9tPDojkZK0MjeMzY6ZN318oWKGwh8v+nV6O6LelvAWI0BIBOR+Q0Z2W9QHjrw3KDiLHf9A4+cqn8lG3jRssryFsP3kRERYvkc/F4lX4Vnh7P9D+qXUrX5b1nyiBDYTb4lO8HhVuQKFHW1/ONMtPvgdkD8Q4N71DsXj+BF+fyARJu4xNyBYotefisnPPwc13sDWGolaXp8xHVcaTBbuLIzrNQcLpX9VaFbfcdAl7qzmOwNEfqOUBYWb7ZUl2mqbGjG/N8Ixs8ekz1j/XVPeCEN6HVwfOFFvBYVaj9g9S1ysG8r0=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 88ca293b-fda1-4e5c-d808-08dc49ed772c
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4664.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Mar 2024 21:25:43.6541 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: C/jM5DtEPBOjQjQfzyF5J2yQzLEKJvgk9NKw+Cqsqi2o3i7+x/QkkXAbR1XuDPPqDUkbpIW6GiArTCkUiohOlQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB7235
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-21_12,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- mlxscore=0 adultscore=0
- spamscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2403140000
- definitions=main-2403210161
-X-Proofpoint-GUID: N0IlGWd02wM5Pb--dCzrcZVyfGb8Nphv
-X-Proofpoint-ORIG-GUID: N0IlGWd02wM5Pb--dCzrcZVyfGb8Nphv
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=zheyuma97@gmail.com; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -185,192 +94,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This update changes how virtio_snd_handle_tx_xfer handles message size
+discrepancies and null streams. Instead of using error handling paths
+which led to unnecessary processing and potential null pointer dereferences,
+the function now continues to the next loop iteration.
 
+ASAN log illustrating the issue addressed:
 
-On 3/21/24 3:48 PM, Dongli Zhang wrote:
-> Hi Jonah,
-> 
-> Would you mind helping explain how does VIRTIO_F_IN_ORDER improve the performance?
-> 
-> https://lore.kernel.org/all/20240321155717.1392787-1-jonah.palmer@oracle.com/#t
-> 
-> I tried to look for it from prior discussions but could not find why.
-> 
-> https://lore.kernel.org/all/BYAPR18MB2791DF7E6C0F61E2D8698E8FA08DA@BYAPR18MB2791.namprd18.prod.outlook.com/
-> 
-> Thank you very much!
-> 
-> Dongli Zhang
-> 
+ERROR: AddressSanitizer: SEGV on unknown address 0x0000000000b4 (pc 0x57cea39967b8 bp 0x7ffce84d51b0 sp 0x7ffce84d5160 T0)
+    #0 0x57cea39967b8 in qemu_mutex_lock_impl qemu/util/qemu-thread-posix.c:92:5
+    #1 0x57cea128c462 in qemu_mutex_lock qemu/include/qemu/thread.h:122:5
+    #2 0x57cea128d72f in qemu_lockable_lock qemu/include/qemu/lockable.h:95:5
+    #3 0x57cea128c294 in qemu_lockable_auto_lock qemu/include/qemu/lockable.h:105:5
+    #4 0x57cea1285eb2 in virtio_snd_handle_rx_xfer qemu/hw/audio/virtio-snd.c:1026:9
+    #5 0x57cea2caebbc in virtio_queue_notify_vq qemu/hw/virtio/virtio.c:2268:9
+    #6 0x57cea2cae412 in virtio_queue_host_notifier_read qemu/hw/virtio/virtio.c:3671:9
+    #7 0x57cea39822f1 in aio_dispatch_handler qemu/util/aio-posix.c:372:9
+    #8 0x57cea3979385 in aio_dispatch_handlers qemu/util/aio-posix.c:414:20
+    #9 0x57cea3978eb1 in aio_dispatch qemu/util/aio-posix.c:424:5
+    #10 0x57cea3a1eede in aio_ctx_dispatch qemu/util/async.c:360:5
 
-Hey Dongli,
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+---
+ hw/audio/virtio-snd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-So VIRTIO_F_IN_ORDER can theoretically improve performance under certain 
-conditions. Whether it can improve performance today, I'm not sure.
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index e604d8f30c..d9e9f980f7 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -913,13 +913,13 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+                             &hdr,
+                             sizeof(virtio_snd_pcm_xfer));
+         if (msg_sz != sizeof(virtio_snd_pcm_xfer)) {
+-            goto tx_err;
++            continue;
+         }
+         stream_id = le32_to_cpu(hdr.stream_id);
+ 
+         if (stream_id >= s->snd_conf.streams
+             || s->pcm->streams[stream_id] == NULL) {
+-            goto tx_err;
++            continue;
+         }
+ 
+         stream = s->pcm->streams[stream_id];
+-- 
+2.34.1
 
-But, if we can guarantee that all buffers are used by the device in the 
-same order in which they're made available by the driver (enforcing a 
-strict in-order processing and completion of requests), then we can 
-leverage this to our advantage.
-
-For example, we could simplify device and driver logic such as not 
-needing complex mechanisms to track the completion of out-of-order 
-requests (reduce request management overhead). Though the need of 
-complex mechanisms to force this data to be in-order kind of defeats 
-this benefit.
-
-It could also improve cache utilization since sequential access patterns 
-are more cache-friendly compared to random access patterns.
-
-Also, in-order processing is more predictable, making it easier to 
-optimize device and driver performance. E.g. it can allow us to 
-fine-tune things without having to account for the variability of 
-out-of-order completions.
-
-But again, the actual performance impact will vary depending on the use 
-case and workload. Scenarios that require high levels of parallelism or 
-where out-of-order completions are efficiently managed, the flexibility 
-of out-of-order processing can still be preferable.
-
-Jonah
-
-> On 3/21/24 08:57, Jonah Palmer wrote:
->> The goal of these patches is to add support to a variety of virtio and
->> vhost devices for the VIRTIO_F_IN_ORDER transport feature. This feature
->> indicates that all buffers are used by the device in the same order in
->> which they were made available by the driver.
->>
->> These patches attempt to implement a generalized, non-device-specific
->> solution to support this feature.
->>
->> The core feature behind this solution is a buffer mechanism in the form
->> of GLib's GHashTable. The decision behind using a hash table was to
->> leverage their ability for quick lookup, insertion, and removal
->> operations. Given that our keys are simply numbers of an ordered
->> sequence, a hash table seemed like the best choice for a buffer
->> mechanism.
->>
->> ---------------------
->>
->> The strategy behind this implementation is as follows:
->>
->> We know that buffers that are popped from the available ring and enqueued
->> for further processing will always done in the same order in which they
->> were made available by the driver. Given this, we can note their order
->> by assigning the resulting VirtQueueElement a key. This key is a number
->> in a sequence that represents the order in which they were popped from
->> the available ring, relative to the other VirtQueueElements.
->>
->> For example, given 3 "elements" that were popped from the available
->> ring, we assign a key value to them which represents their order (elem0
->> is popped first, then elem1, then lastly elem2):
->>
->>       elem2   --  elem1   --  elem0   ---> Enqueue for processing
->>      (key: 2)    (key: 1)    (key: 0)
->>
->> Then these elements are enqueued for further processing by the host.
->>
->> While most devices will return these completed elements in the same
->> order in which they were enqueued, some devices may not (e.g.
->> virtio-blk). To guarantee that these elements are put on the used ring
->> in the same order in which they were enqueued, we can use a buffering
->> mechanism that keeps track of the next expected sequence number of an
->> element.
->>
->> In other words, if the completed element does not have a key value that
->> matches the next expected sequence number, then we know this element is
->> not in-order and we must stash it away in a hash table until an order
->> can be made. The element's key value is used as the key for placing it
->> in the hash table.
->>
->> If the completed element has a key value that matches the next expected
->> sequence number, then we know this element is in-order and we can push
->> it on the used ring. Then we increment the next expected sequence number
->> and check if the hash table contains an element at this key location.
->>
->> If so, we retrieve this element, push it to the used ring, delete the
->> key-value pair from the hash table, increment the next expected sequence
->> number, and check the hash table again for an element at this new key
->> location. This process is repeated until we're unable to find an element
->> in the hash table to continue the order.
->>
->> So, for example, say the 3 elements we enqueued were completed in the
->> following order: elem1, elem2, elem0. The next expected sequence number
->> is 0:
->>
->>      exp-seq-num = 0:
->>
->>       elem1   --> elem1.key == exp-seq-num ? --> No, stash it
->>      (key: 1)                                         |
->>                                                       |
->>                                                       v
->>                                                 ================
->>                                                 |key: 1 - elem1|
->>                                                 ================
->>      ---------------------
->>      exp-seq-num = 0:
->>
->>       elem2   --> elem2.key == exp-seq-num ? --> No, stash it
->>      (key: 2)                                         |
->>                                                       |
->>                                                       v
->>                                                 ================
->>                                                 |key: 1 - elem1|
->>                                                 |--------------|
->>                                                 |key: 2 - elem2|
->>                                                 ================
->>      ---------------------
->>      exp-seq-num = 0:
->>
->>       elem0   --> elem0.key == exp-seq-num ? --> Yes, push to used ring
->>      (key: 0)
->>
->>      exp-seq-num = 1:
->>
->>      lookup(table, exp-seq-num) != NULL ? --> Yes, push to used ring,
->>                                               remove elem from table
->>                                                       |
->>                                                       v
->>                                                 ================
->>                                                 |key: 2 - elem2|
->>                                                 ================
->>
->>      exp-seq-num = 2:
->>
->>      lookup(table, exp-seq-num) != NULL ? --> Yes, push to used ring,
->>                                               remove elem from table
->>                                                       |
->>                                                       v
->>                                                 ================
->>                                                 |   *empty*    |
->>                                                 ================
->>
->>      exp-seq-num = 3:
->>
->>      lookup(table, exp-seq-num) != NULL ? --> No, done
->>      ---------------------
->>
->> Jonah Palmer (8):
->>    virtio: Define InOrderVQElement
->>    virtio: Create/destroy/reset VirtQueue In-Order hash table
->>    virtio: Define order variables
->>    virtio: Implement in-order handling for virtio devices
->>    virtio-net: in-order handling
->>    vhost-svq: in-order handling
->>    vhost/vhost-user: Add VIRTIO_F_IN_ORDER to vhost feature bits
->>    virtio: Add VIRTIO_F_IN_ORDER property definition
->>
->>   hw/block/vhost-user-blk.c          |   1 +
->>   hw/net/vhost_net.c                 |   2 +
->>   hw/net/virtio-net.c                |   6 +-
->>   hw/scsi/vhost-scsi.c               |   1 +
->>   hw/scsi/vhost-user-scsi.c          |   1 +
->>   hw/virtio/vhost-shadow-virtqueue.c |  15 ++++-
->>   hw/virtio/vhost-user-fs.c          |   1 +
->>   hw/virtio/vhost-user-vsock.c       |   1 +
->>   hw/virtio/virtio.c                 | 103 ++++++++++++++++++++++++++++-
->>   include/hw/virtio/virtio.h         |  20 +++++-
->>   net/vhost-vdpa.c                   |   1 +
->>   11 files changed, 145 insertions(+), 7 deletions(-)
->>
 
