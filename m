@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8870C54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3EDBCD11C2
 	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 14:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnJOG-0007yD-In; Thu, 21 Mar 2024 10:27:32 -0400
+	id 1rnJOJ-0007yc-6O; Thu, 21 Mar 2024 10:27:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rnJOE-0007xo-JN
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:27:30 -0400
+ id 1rnJOH-0007yM-O6
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:27:33 -0400
 Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
- id 1rnJOB-0002mA-7Z
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:27:28 -0400
+ id 1rnJOG-0002mA-33
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 10:27:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711031248; x=1742567248;
+ t=1711031253; x=1742567253;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=pozxmkQYFmo9TvNo/qUS3XdyUCJrRFtdxe3SYZYL0jA=;
- b=eIobNBFwEpaHyjXNLEzaTQlcfPTNx9xrluVdeN1fa/YZiVeMPXuoDQ9p
- eV71it0qHwvBNLhyuVUrSkKh6Wt5W2g+lGWGkYIZcTRQgz4a2jdNfouua
- RhMQ/QbOI3kgGbYl1E3xruAPF6SpTGKkVqB17dHaq6e38vWn4GtsbiLAh
- 01E07AqDAJlY7uVIoyNGkcbKNFDCZi4RnfRQoHx7n085YD91ChxqQXuj3
- 8iXIwqsT+iP6wgAMs+YrYrJtmiEb3m2goljeb1JYMi5hMQvEKxqeJSkRl
- G1mL/tmbY+tgMeSkVPIy4iHdsYOzRFzHuMAcU4ZBswylCz8BZvvTNpvK3 g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="9806388"
+ bh=3UyjqNiNiVAdeIlY+2eZ0k8GWu/W/0P3WfykGgG1U78=;
+ b=iIrpiqo5wUhgTGlPjDo9mUiddc3xIjY/uAiwKYZf9EIStZmbjI3jOpuf
+ bbZg+LOXnycZRxI+OBym1xyEl4qUbPraAOEY1VNrC5K0c00c3+4IS4jqQ
+ qMTrOxOK2yvioL+AbjUqlcQRVu6kodw/bbf+OR6w7zEZcrMsl2DVt1k8V
+ GrUmzx9cybTYNMsyyCNxO+KjHWszOxZ2I7/e+mYqnA6VeZk00tHkC6jRk
+ xT5nCiD3GKcxHwWRDVI9e5mPYK9/zREFyvjT5IEsKrsI87eD0beH+o66B
+ TPv2/xQGMG0BMzxW1je8kjOq9P0Xwtg4B9OjLzsDsJkEq7nISoqeFjHhX w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="9806410"
 X-IronPort-AV: E=Sophos;i="6.07,143,1708416000"; 
-   d="scan'208";a="9806388"
+   d="scan'208";a="9806410"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Mar 2024 07:27:27 -0700
+ 21 Mar 2024 07:27:32 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,143,1708416000"; d="scan'208";a="14527827"
+X-IronPort-AV: E=Sophos;i="6.07,143,1708416000"; d="scan'208";a="14527850"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
- by orviesa009.jf.intel.com with ESMTP; 21 Mar 2024 07:27:22 -0700
+ by orviesa009.jf.intel.com with ESMTP; 21 Mar 2024 07:27:27 -0700
 From: Zhao Liu <zhao1.liu@linux.intel.com>
 To: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -58,10 +58,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Zhenyu Wang <zhenyu.z.wang@intel.com>,
  Zhuocheng Ding <zhuocheng.ding@intel.com>, Babu Moger <babu.moger@amd.com>,
  Yongwei Ma <yongwei.ma@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v10 03/21] hw/core: Introduce module-id as the topology
- subindex
-Date: Thu, 21 Mar 2024 22:40:30 +0800
-Message-Id: <20240321144048.3699388-4-zhao1.liu@linux.intel.com>
+Subject: [PATCH v10 04/21] hw/core: Support module-id in numa configuration
+Date: Thu, 21 Mar 2024 22:40:31 +0800
+Message-Id: <20240321144048.3699388-5-zhao1.liu@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240321144048.3699388-1-zhao1.liu@linux.intel.com>
 References: <20240321144048.3699388-1-zhao1.liu@linux.intel.com>
@@ -93,60 +92,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Add module-id in CpuInstanceProperties, to locate the CPU with module
-level.
+Module is a level above the core, thereby supporting numa
+configuration on the module level can bring user more numa flexibility.
 
-Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
+This is the natural further support for module level.
+
+Add module level support in numa configuration.
+
 Tested-by: Yongwei Ma <yongwei.ma@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Tested-by: Babu Moger <babu.moger@amd.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
 ---
 Changes since v7:
- * New commit to introduce module_id to locate the CPU with module
-   level.
+ * New commit to support module level.
 ---
- hw/core/machine-hmp-cmds.c | 4 ++++
- qapi/machine.json          | 4 ++++
- 2 files changed, 8 insertions(+)
+ hw/core/machine.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
-index a6ff6a487583..8701f00cc7cc 100644
---- a/hw/core/machine-hmp-cmds.c
-+++ b/hw/core/machine-hmp-cmds.c
-@@ -87,6 +87,10 @@ void hmp_hotpluggable_cpus(Monitor *mon, const QDict *qdict)
-             monitor_printf(mon, "    cluster-id: \"%" PRIu64 "\"\n",
-                            c->cluster_id);
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 9ff5170f8e31..27340392aec8 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -797,6 +797,11 @@ void machine_set_cpu_numa_node(MachineState *machine,
+             return;
          }
-+        if (c->has_module_id) {
-+            monitor_printf(mon, "    module-id: \"%" PRIu64 "\"\n",
-+                           c->module_id);
+ 
++        if (props->has_module_id && !slot->props.has_module_id) {
++            error_setg(errp, "module-id is not supported");
++            return;
 +        }
-         if (c->has_core_id) {
-             monitor_printf(mon, "    core-id: \"%" PRIu64 "\"\n", c->core_id);
++
+         if (props->has_cluster_id && !slot->props.has_cluster_id) {
+             error_setg(errp, "cluster-id is not supported");
+             return;
+@@ -821,6 +826,11 @@ void machine_set_cpu_numa_node(MachineState *machine,
+                 continue;
          }
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 3f6a5af10ba8..366da6244ab6 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -925,6 +925,9 @@
- # @cluster-id: cluster number within the parent container the CPU
- #     belongs to (since 7.1)
- #
-+# @module-id: module number within the parent container the CPU
-+#     belongs to (since 9.1)
-+#
- # @core-id: core number within the parent container the CPU
- #     belongs to
- #
-@@ -943,6 +946,7 @@
-             '*socket-id': 'int',
-             '*die-id': 'int',
-             '*cluster-id': 'int',
-+            '*module-id': 'int',
-             '*core-id': 'int',
-             '*thread-id': 'int'
-   }
+ 
++        if (props->has_module_id &&
++            props->module_id != slot->props.module_id) {
++                continue;
++        }
++
+         if (props->has_cluster_id &&
+             props->cluster_id != slot->props.cluster_id) {
+                 continue;
+@@ -1218,6 +1228,12 @@ static char *cpu_slot_to_string(const CPUArchId *cpu)
+         }
+         g_string_append_printf(s, "cluster-id: %"PRId64, cpu->props.cluster_id);
+     }
++    if (cpu->props.has_module_id) {
++        if (s->len) {
++            g_string_append_printf(s, ", ");
++        }
++        g_string_append_printf(s, "module-id: %"PRId64, cpu->props.module_id);
++    }
+     if (cpu->props.has_core_id) {
+         if (s->len) {
+             g_string_append_printf(s, ", ");
 -- 
 2.34.1
 
