@@ -4,90 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D51FDC54E58
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 04:01:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C086CC54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 05:55:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rn9bo-0001Z6-0U; Thu, 21 Mar 2024 00:00:52 -0400
+	id 1rnBO5-0000Rp-Fy; Thu, 21 Mar 2024 01:54:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rn9bi-0001XH-Cx
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 00:00:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rn9bf-0002bn-Jl
- for qemu-devel@nongnu.org; Thu, 21 Mar 2024 00:00:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1710993642;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XoEfbVUA4oeshnBTHztVo9G5+Fh187KCdU5FooIUy5w=;
- b=OKNgGD/x4X6kmwwy4G1RyvKaVDbjvGgu1lth5IZPyojIV7zu0OcEngluZinps/1UHaCzJO
- Bmri4aUQ/r9is+L7I3M2FqSKP37sMZ3w3Q/2z24qYvYrjxrlOIqfp9y/GCKBD9fk/r8T0+
- MoolmWB1aFkiYjTqmnUdgrbZBNs8sD8=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-222-Ok2SLqubNzSTpdFUSPHnHw-1; Thu, 21 Mar 2024 00:00:41 -0400
-X-MC-Unique: Ok2SLqubNzSTpdFUSPHnHw-1
-Received: by mail-pf1-f198.google.com with SMTP id
- d2e1a72fcca58-6e6cced0068so514220b3a.3
- for <qemu-devel@nongnu.org>; Wed, 20 Mar 2024 21:00:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rnBNs-0000Qq-6q; Thu, 21 Mar 2024 01:54:38 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1rnBNq-0003ig-Kh; Thu, 21 Mar 2024 01:54:35 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1e04ac200a6so4998385ad.1; 
+ Wed, 20 Mar 2024 22:54:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1711000466; x=1711605266; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CRYxNjknx8CxsqzEeMCvnpqao4+OAfW/6TkG7xx3pL0=;
+ b=fu/xHSI1lN2w04K3JV+tLg6wfGgNyi8OxoXlC32IGdTFbkq4xuibn4DPo5SKNsqChj
+ mZPITKJVTkNW3fiBKIFdmjOu0an1WOQDeBea8rcbVsFlfJhyKMCSSSEIo5Sw5o3j2ZPX
+ hsz/8+k4esrungJ+DP2+lMKrNuiWLuT1EMAt1VNUlx760gaa47cr69C8RfngnnQKIb9D
+ vqObrmEMPrpShTfexWkuv18xLN+/9RX9Ls+Ut9xGKaZAuFDyA68tUF3/vXPUYqS9bnzj
+ guNG6SlBkFfRXnl/neDDPEDsgI6AENPny8QvlXX7Rmi1nxxgwNjelhCOp6HDJyxUEC1L
+ wJvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1710993640; x=1711598440;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XoEfbVUA4oeshnBTHztVo9G5+Fh187KCdU5FooIUy5w=;
- b=BxqIcsNWIXJUT7jx6hdUO1LU9T7vgWlzjz/9Ih4gXl6o04b+jVK2l0yhqOG8zVDq5W
- gubgUWAOdCfMLh1RQA9s3a2DcAQ4r1Mi1osoVdSGyZYVXbS7Q6dHbCPePrxA1m9qXQu/
- wdpBIfSSEyl3U8nRkH3bMRAWcC/iOaDplnimP76C1iMX8X5YUWMnqM8XkX+dw3ETsxsn
- MEXXVSVwoFkpHjbVgEI2Bj5+fRBip/3V0Ibrs/J9uJ1uMAsCfXxJQWhjX5zIXeFHfhYS
- VY+shoN+StO9KegCtOO27V8lXnZiFjx3mBapzz/SZ6X9FYzDIbet2ypS+qGatevhZPiw
- Vo2w==
-X-Gm-Message-State: AOJu0YxNOwP0yTxyb6TemhhrQobjh5uL7p/WVoKKW+v/e2llCAlwvCIq
- uiB9PXR3hwvf+L3B119xhk2T0HWBRZZgjwJhYLM5GKtS/xEMi+xzKKt4tIBAboN9AabdmSFY6Cz
- /kHrQ4/AhyKwDMYn4cESEPnhCqfzvQrCXBdtR7KSG9yOGb1PQa8UFW3nFacUVliuijIGUGXJGeR
- pHYtTk6MWnWIyfyWVnkiPRUWZN3gv6eKYPOy260Q==
-X-Received: by 2002:a17:902:eb45:b0:1dd:96ca:e1ae with SMTP id
- i5-20020a170902eb4500b001dd96cae1aemr3931971pli.69.1710993639635; 
- Wed, 20 Mar 2024 21:00:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOkaPi333lSGZOdk7yAa/SfSJVXPogeIZsv313fjs2EslYIoUTcUR/QX+FCjylB5lhD84A3Xh4RWSRIQptRdI=
-X-Received: by 2002:a05:6a20:a903:b0:1a3:3e30:a7e6 with SMTP id
- cd3-20020a056a20a90300b001a33e30a7e6mr3393745pzb.59.1710993199087; Wed, 20
- Mar 2024 20:53:19 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711000466; x=1711605266;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CRYxNjknx8CxsqzEeMCvnpqao4+OAfW/6TkG7xx3pL0=;
+ b=kZNDSGpT4aklw2M5GWCoomzEM+AhoTSYmYgyJCP11+H9MchM8Hp+E9UslpvlBuOoFy
+ gbxspYd6OL6tuUolsGyprfc10QnxQbHfqfVPvZwksUDQ3OmRan4MSdLuV6Fek1OXrcr4
+ Qb8JkB5entXg7FVefMme+iID5jAvVm0VtRSKdAFYT3OzrROnr09pO2SlgjP8CL+hY1v7
+ 74NKYZsX5hpJvW9tPsL/NQnSnS9qGdoqntBvfnoiHSqJb9zP1bP7zRDkGHfJPVZytZlh
+ ekte3TdwzM5X9y5iaeNc/ARDKDmIxRSxXL0HusKE+ArBcKu9nVquujDgdn1f8kBBMoJF
+ Eglg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVnMY2CJYGfcD/tYFPCDqu5Ps719V52KYNVV20pb7nZ3p0ryhrRNRU6B0oHzl4CsHEo1q7OXwtPv4T8dlVeU/Opc6e+fRw=
+X-Gm-Message-State: AOJu0YwYnUhW1walhFcjDCA3z2TadSZV8cVml7VauWF344NDrTCQq5j5
+ fnkOcHDhr5FSqsBY1zDFVknR/U6KPqGFuUXCqPtgIRN3aJ2+mPqTh123xe8S
+X-Google-Smtp-Source: AGHT+IF4OqeRqZOzMvADblKHNgBFcUKu7jQUCzks74MR8DAfaTA+KS7fDZpnJJJ/7dchKR3Hfd7Wzg==
+X-Received: by 2002:a17:903:32d1:b0:1e0:188c:ad4f with SMTP id
+ i17-20020a17090332d100b001e0188cad4fmr2813429plr.26.1711000466216; 
+ Wed, 20 Mar 2024 22:54:26 -0700 (PDT)
+Received: from wheely.local0.net ([1.146.27.241])
+ by smtp.gmail.com with ESMTPSA id
+ lh6-20020a170903290600b001d94678a76csm14746454plb.117.2024.03.20.22.54.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 20 Mar 2024 22:54:25 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PATCH] target/ppc: Do not clear MSR[ME] on MCE interrupts to
+ supervisor
+Date: Thu, 21 Mar 2024 15:54:15 +1000
+Message-ID: <20240321055415.2441812-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-References: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
- <CACGkMEt2-naXvHjCcPyQAoSfto44OVaSUqPtg_gvS8-wrhNwZA@mail.gmail.com>
- <9cb9fe47-f173-4cf1-8bc0-01971e47559c@oracle.com>
- <CACGkMEvjB45RzonvWMQ=OnDpm5M04u6ab6tT7b0=sMsEyBB-Vg@mail.gmail.com>
- <7c118fa7-2288-45f1-aa67-5bf650d65b51@oracle.com>
- <CACGkMEsHY+1752e0tt58uQevUkoAcSRgZRNoMPPYgXZ5SEkWMw@mail.gmail.com>
- <318cef20-96a6-4476-a8f5-1653b1465a69@oracle.com>
-In-Reply-To: <318cef20-96a6-4476-a8f5-1653b1465a69@oracle.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Thu, 21 Mar 2024 11:53:07 +0800
-Message-ID: <CACGkMEsLXLfz_sA2adX6ZF0wcNmKfeoDq4KD-X5Q2oK47ANw0Q@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] vhost: dirty log should be per backend type
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, eperezma@redhat.com, 
- joao.m.martins@oracle.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.417,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,181 +93,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 21, 2024 at 4:29=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com> =
-wrote:
->
->
->
-> On 3/19/2024 8:25 PM, Jason Wang wrote:
-> > On Tue, Mar 19, 2024 at 6:06=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.c=
-om> wrote:
-> >>
-> >>
-> >> On 3/17/2024 8:20 PM, Jason Wang wrote:
-> >>> On Sat, Mar 16, 2024 at 2:33=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle=
-.com> wrote:
-> >>>>
-> >>>> On 3/14/2024 8:50 PM, Jason Wang wrote:
-> >>>>> On Fri, Mar 15, 2024 at 5:39=E2=80=AFAM Si-Wei Liu <si-wei.liu@orac=
-le.com> wrote:
-> >>>>>> There could be a mix of both vhost-user and vhost-kernel clients
-> >>>>>> in the same QEMU process, where separate vhost loggers for the
-> >>>>>> specific vhost type have to be used. Make the vhost logger per
-> >>>>>> backend type, and have them properly reference counted.
-> >>>>> It's better to describe what's the advantage of doing this.
-> >>>> Yes, I can add that to the log. Although it's a niche use case, it w=
-as
-> >>>> actually a long standing limitation / bug that vhost-user and
-> >>>> vhost-kernel loggers can't co-exist per QEMU process, but today it's
-> >>>> just silent failure that may be ended up with. This bug fix removes =
-that
-> >>>> implicit limitation in the code.
-> >>> Ok.
-> >>>
-> >>>>>> Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-> >>>>>> Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-> >>>>>>
-> >>>>>> ---
-> >>>>>> v3->v4:
-> >>>>>>      - remove checking NULL return value from vhost_log_get
-> >>>>>>
-> >>>>>> v2->v3:
-> >>>>>>      - remove non-effective assertion that never be reached
-> >>>>>>      - do not return NULL from vhost_log_get()
-> >>>>>>      - add neccessary assertions to vhost_log_get()
-> >>>>>> ---
-> >>>>>>     hw/virtio/vhost.c | 45 +++++++++++++++++++++++++++++++++------=
-------
-> >>>>>>     1 file changed, 33 insertions(+), 12 deletions(-)
-> >>>>>>
-> >>>>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> >>>>>> index 2c9ac79..612f4db 100644
-> >>>>>> --- a/hw/virtio/vhost.c
-> >>>>>> +++ b/hw/virtio/vhost.c
-> >>>>>> @@ -43,8 +43,8 @@
-> >>>>>>         do { } while (0)
-> >>>>>>     #endif
-> >>>>>>
-> >>>>>> -static struct vhost_log *vhost_log;
-> >>>>>> -static struct vhost_log *vhost_log_shm;
-> >>>>>> +static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
-> >>>>>> +static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
-> >>>>>>
-> >>>>>>     /* Memslots used by backends that support private memslots (wi=
-thout an fd). */
-> >>>>>>     static unsigned int used_memslots;
-> >>>>>> @@ -287,6 +287,10 @@ static int vhost_set_backend_type(struct vhos=
-t_dev *dev,
-> >>>>>>             r =3D -1;
-> >>>>>>         }
-> >>>>>>
-> >>>>>> +    if (r =3D=3D 0) {
-> >>>>>> +        assert(dev->vhost_ops->backend_type =3D=3D backend_type);
-> >>>>>> +    }
-> >>>>>> +
-> >>>>> Under which condition could we hit this?
-> >>>> Just in case some other function inadvertently corrupted this earlie=
-r,
-> >>>> we have to capture discrepancy in the first place... On the other ha=
-nd,
-> >>>> it will be helpful for other vhost backend writers to diagnose day-o=
-ne
-> >>>> bug in the code. I feel just code comment here will not be
-> >>>> sufficient/helpful.
-> >>> See below.
-> >>>
-> >>>>>     It seems not good to assert a local logic.
-> >>>> It seems to me quite a few local asserts are in the same file alread=
-y,
-> >>>> vhost_save_backend_state,
-> >>> For example it has assert for
-> >>>
-> >>> assert(!dev->started);
-> >>>
-> >>> which is not the logic of the function itself but require
-> >>> vhost_dev_start() not to be called before.
-> >>>
-> >>> But it looks like this patch you assert the code just a few lines
-> >>> above the assert itself?
-> >> Yes, that was the intent - for e.g. xxx_ops may contain corrupted
-> >> xxx_ops.backend_type already before coming to this
-> >> vhost_set_backend_type() function. And we may capture this corrupted
-> >> state by asserting the expected xxx_ops.backend_type (to be consistent
-> >> with the backend_type passed in),
-> > This can happen for all variables. Not sure why backend_ops is special.
-> The assert is just checking the backend_type field only. The other op
-> fields in backend_ops have similar assert within the op function itself
-> also. For e.g. vhost_user_requires_shm_log() and a lot of other
-> vhost_user ops have the following:
->
->      assert(dev->vhost_ops->backend_type =3D=3D VHOST_BACKEND_TYPE_USER);
->
-> vhost_vdpa_vq_get_addr() and a lot of other vhost_vdpa ops have:
->
->      assert(dev->vhost_ops->backend_type =3D=3D VHOST_BACKEND_TYPE_VDPA);
->
-> vhost_kernel ops has similar assertions as well.
->
-> The reason why it has to be checked against here is now the callers of
-> vhost_log_get(), would pass in dev->vhost_ops->backend_type to the API,
-> which are unable to verify the validity of the backend_type by
-> themselves. The vhost_log_get() has necessary asserts to make bound
-> check for the vhost_log[] or vhost_log_shm[] array, but specific assert
-> against the exact backend type in vhost_set_backend_type() will further
-> harden the implementation in vhost_log_get() and other backend ops.
+Hardware clears the MSR[ME] bit when delivering a machine check
+interrupt, so that is what QEMU does.
 
-As discussed, those assertions are to make sure of the logic
-dependencies of other functions. (The assignment of vhost_ops doesn't
-happen in those functions).
+The spapr environment runs in supervisor mode though, and receives
+machine check interrupts after they are processed by the hypervisor,
+and MSR[ME] must always be enabled in supervisor mode (otherwise it
+could checkstop the system). So MSR[ME] must not be cleared when
+delivering machine checks to the supervisor.
 
->
-> >
-> >> which needs be done in the first place
-> >> when this discrepancy is detected. In practice I think there should be
-> >> no harm to add this assert, but this will add warranted guarantee to t=
-he
-> >> current code.
-> > For example, such corruption can happen after the assert() so a TOCTOU =
-issue.
-> Sure, it's best effort only. As pointed out earlier, I think together
-> with this, there are other similar asserts already in various backend
-> ops, which could be helpful to nail down the earliest point or a
-> specific range where things may go wrong in the first place.
+The fix to prevent supervisor mode from modifying MSR[ME] also
+prevented it from re-enabling the incorrectly cleared MSR[ME] bit
+when returning from handling the interrupt. Before that fix, the
+problem was not very noticable with well-behaved code. So the
+Fixes tag is not strictly correct, but practically they go together.
 
-Ok, I think I'd leave the decision to Michael.
+Found by kvm-unit-tests machine check tests (not yet upstream).
 
-Thanks
+Fixes: 678b6f1af75ef ("target/ppc: Prevent supervisor from modifying MSR[ME]")
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ target/ppc/excp_helper.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
->
-> Thanks,
-> -Siwei
->
-> >
-> > Thanks
-> >
-> >> Regards,
-> >> -Siwei
-> >>
-> >>> dev->vhost_ops =3D &xxx_ops;
-> >>>
-> >>> ...
-> >>>
-> >>> assert(dev->vhost_ops->backend_type =3D=3D backend_type)
-> >>>
-> >>> ?
-> >>>
-> >>> Thanks
-> >>>
-> >>>> vhost_load_backend_state,
-> >>>> vhost_virtqueue_mask, vhost_config_mask, just to name a few. Why loc=
-al
-> >>>> assert a problem?
-> >>>>
-> >>>> Thanks,
-> >>>> -Siwei
-> >>>>
-> >>>>> Thanks
-> >>>>>
->
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index 80f584f933..674c05a2ce 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -1345,9 +1345,10 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
+              * clear (e.g., see FWNMI in PAPR).
+              */
+             new_msr |= (target_ulong)MSR_HVB;
++
++            /* HV machine check exceptions don't have ME set */
++            new_msr &= ~((target_ulong)1 << MSR_ME);
+         }
+-        /* machine check exceptions don't have ME set */
+-        new_msr &= ~((target_ulong)1 << MSR_ME);
+ 
+         msr |= env->error_code;
+         break;
+-- 
+2.42.0
 
 
