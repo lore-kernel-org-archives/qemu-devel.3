@@ -4,58 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 421C4C54E68
-	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 05:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9159C54E68
+	for <qemu-devel@archiver.kernel.org>; Thu, 21 Mar 2024 06:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnBOV-0000Xr-AF; Thu, 21 Mar 2024 01:55:15 -0400
+	id 1rnBxN-0000e2-PI; Thu, 21 Mar 2024 02:31:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1rnBOT-0000Wy-00; Thu, 21 Mar 2024 01:55:13 -0400
-Received: from out30-110.freemail.mail.aliyun.com ([115.124.30.110])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1rnBOP-0003kd-Rr; Thu, 21 Mar 2024 01:55:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1711000496; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=Yo5DBRQmmubqbV+E+YJ4w22GLhmuNyQY27Y5R5Un3uQ=;
- b=vLLEQ6YFRu8mr3P1m6qG2c7tiTdhMHjBl1U5t4Z7OYQCro0bKUZ3co9MS6nfKrCyxuMer66b9JrD176+KHZMIkPDE+GY2WYG3lCePsJpadNcaRNEOrOQRZAfFAox28vVbJlc6atImMnw1UhU40xd+FFULLvdZRljx7pvG8WrhaA=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R181e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046056;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W2zadUx_1711000493; 
-Received: from 30.198.0.180(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W2zadUx_1711000493) by smtp.aliyun-inc.com;
- Thu, 21 Mar 2024 13:54:54 +0800
-Message-ID: <d58afdd1-257e-457f-ae28-52507431d2a6@linux.alibaba.com>
-Date: Thu, 21 Mar 2024 13:54:50 +0800
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rnBxL-0000dt-Ma
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 02:31:15 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rnBxJ-0001I0-8C
+ for qemu-devel@nongnu.org; Thu, 21 Mar 2024 02:31:15 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxXesr1Ptlt7YbAA--.675S3;
+ Thu, 21 Mar 2024 14:31:07 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8AxTRMq1PtlXY5fAA--.54450S2; 
+ Thu, 21 Mar 2024 14:31:06 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org,
+	philmd@linaro.org,
+	maobibo@loongson.cn
+Subject: [PATCH v2] target/loongarch: Fix qemu-system-loongarch64 assert
+ failed with the option '-d int'
+Date: Thu, 21 Mar 2024 14:31:06 +0800
+Message-Id: <20240321063106.1700330-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: Fix the element agnostic function problem
-Content-Language: en-US
-To: Huang Tao <eric.huang@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, dbarboza@ventanamicro.com, liwei1518@gmail.com,
- bin.meng@windriver.com, alistair.francis@wdc.com, palmer@dabbelt.com,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240321035816.99983-1-eric.huang@linux.alibaba.com>
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240321035816.99983-1-eric.huang@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=115.124.30.110;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-110.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8AxTRMq1PtlXY5fAA--.54450S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,61 +65,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+qemu-system-loongarch64 assert failed with the option '-d int',
+the helper_idle() raise an exception EXCP_HLT, but the exception name is undefined.
 
-On 2024/3/21 11:58, Huang Tao wrote:
-> In RVV and vcrypto instructions, the masked and tail elements are set to 1s
-> using vext_set_elems_1s function if the vma/vta bit is set. It is the element
-> agnostic policy.
->
-> However, this function can't deal the big endian situation. This patch fixes
-> the problem by adding handling of such case.
->
-> Signed-off-by: Huang Tao <eric.huang@linux.alibaba.com>
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-> Changes in v2:
-> - Keep the api of vext_set_elems_1s
-> - Reduce the number of patches.
-> ---
->   target/riscv/vector_internals.c | 22 ++++++++++++++++++++++
->   1 file changed, 22 insertions(+)
->
-> diff --git a/target/riscv/vector_internals.c b/target/riscv/vector_internals.c
-> index 12f5964fbb..3e45b9b4a7 100644
-> --- a/target/riscv/vector_internals.c
-> +++ b/target/riscv/vector_internals.c
-> @@ -30,6 +30,28 @@ void vext_set_elems_1s(void *base, uint32_t is_agnostic, uint32_t cnt,
->       if (tot - cnt == 0) {
->           return ;
->       }
-> +
-> +#if HOST_BIG_ENDIAN
-> +    /*
-> +     * Deal the situation when the elements are insdie
-> +     * only one uint64 block including setting the
-> +     * masked-off element.
-> +     */
-> +    if ((tot - 1) ^ cnt < 8) {
-> +        memset(base + H1(tot - 1), -1, tot - cnt);
-> +        return;
-> +    }
-> +    /*
-> +     * Otherwise, at least cross two uint64_t blocks.
-> +     * Set first unaligned block.
-> +     */
-> +    if (cnt % 8 != 0) {
-> +        uint32_t j = ROUND_UP(cnt, 8);
-> +        memset(base + H1(j - 1), -1, j - cnt);
-> +        cnt = j;
-> +    }
-> +    /* Set other 64bit aligend blocks */
-> +#endif
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/cpu.c | 76 +++++++++++++++++++++++-------------------
+ 1 file changed, 42 insertions(+), 34 deletions(-)
 
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index f6ffb3aadb..c56e606d28 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -45,33 +45,47 @@ const char * const fregnames[32] = {
+     "f24", "f25", "f26", "f27", "f28", "f29", "f30", "f31",
+ };
+ 
+-static const char * const excp_names[] = {
+-    [EXCCODE_INT] = "Interrupt",
+-    [EXCCODE_PIL] = "Page invalid exception for load",
+-    [EXCCODE_PIS] = "Page invalid exception for store",
+-    [EXCCODE_PIF] = "Page invalid exception for fetch",
+-    [EXCCODE_PME] = "Page modified exception",
+-    [EXCCODE_PNR] = "Page Not Readable exception",
+-    [EXCCODE_PNX] = "Page Not Executable exception",
+-    [EXCCODE_PPI] = "Page Privilege error",
+-    [EXCCODE_ADEF] = "Address error for instruction fetch",
+-    [EXCCODE_ADEM] = "Address error for Memory access",
+-    [EXCCODE_SYS] = "Syscall",
+-    [EXCCODE_BRK] = "Break",
+-    [EXCCODE_INE] = "Instruction Non-Existent",
+-    [EXCCODE_IPE] = "Instruction privilege error",
+-    [EXCCODE_FPD] = "Floating Point Disabled",
+-    [EXCCODE_FPE] = "Floating Point Exception",
+-    [EXCCODE_DBP] = "Debug breakpoint",
+-    [EXCCODE_BCE] = "Bound Check Exception",
+-    [EXCCODE_SXD] = "128 bit vector instructions Disable exception",
+-    [EXCCODE_ASXD] = "256 bit vector instructions Disable exception",
++struct TypeExcp {
++    int32_t exccode;
++    const char *name;
++};
++
++static const struct TypeExcp excp_names[] = {
++    {EXCCODE_INT, "Interrupt"},
++    {EXCCODE_PIL, "Page invalid exception for load"},
++    {EXCCODE_PIS, "Page invalid exception for store"},
++    {EXCCODE_PIF, "Page invalid exception for fetch"},
++    {EXCCODE_PME, "Page modified exception"},
++    {EXCCODE_PNR, "Page Not Readable exception"},
++    {EXCCODE_PNX, "Page Not Executable exception"},
++    {EXCCODE_PPI, "Page Privilege error"},
++    {EXCCODE_ADEF, "Address error for instruction fetch"},
++    {EXCCODE_ADEM, "Address error for Memory access"},
++    {EXCCODE_SYS, "Syscall"},
++    {EXCCODE_BRK, "Break"},
++    {EXCCODE_INE, "Instruction Non-Existent"},
++    {EXCCODE_IPE, "Instruction privilege error"},
++    {EXCCODE_FPD, "Floating Point Disabled"},
++    {EXCCODE_FPE, "Floating Point Exception"},
++    {EXCCODE_DBP, "Debug breakpoint"},
++    {EXCCODE_BCE, "Bound Check Exception"},
++    {EXCCODE_SXD, "128 bit vector instructions Disable exception"},
++    {EXCCODE_ASXD, "256 bit vector instructions Disable exception"},
++    {EXCP_HLT, "EXCP_HLT"},
+ };
+ 
+ const char *loongarch_exception_name(int32_t exception)
+ {
+-    assert(excp_names[exception]);
+-    return excp_names[exception];
++    int i;
++    const char *name = NULL;
++
++    for (i = 0; i < ARRAY_SIZE(excp_names); i++) {
++        if (excp_names[i].exccode == exception) {
++            name = excp_names[i].name;
++            break;
++        }
++    }
++    return name;
+ }
+ 
+ void G_NORETURN do_raise_exception(CPULoongArchState *env,
+@@ -80,7 +94,7 @@ void G_NORETURN do_raise_exception(CPULoongArchState *env,
+ {
+     CPUState *cs = env_cpu(env);
+ 
+-    qemu_log_mask(CPU_LOG_INT, "%s: %d (%s)\n",
++    qemu_log_mask(CPU_LOG_INT, "%s: expection: %d (%s)\n",
+                   __func__,
+                   exception,
+                   loongarch_exception_name(exception));
+@@ -154,22 +168,16 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     CPULoongArchState *env = cpu_env(cs);
+     bool update_badinstr = 1;
+     int cause = -1;
+-    const char *name;
+     bool tlbfill = FIELD_EX64(env->CSR_TLBRERA, CSR_TLBRERA, ISTLBR);
+     uint32_t vec_size = FIELD_EX64(env->CSR_ECFG, CSR_ECFG, VS);
+ 
+     if (cs->exception_index != EXCCODE_INT) {
+-        if (cs->exception_index < 0 ||
+-            cs->exception_index >= ARRAY_SIZE(excp_names)) {
+-            name = "unknown";
+-        } else {
+-            name = excp_names[cs->exception_index];
+-        }
+-
+         qemu_log_mask(CPU_LOG_INT,
+                      "%s enter: pc " TARGET_FMT_lx " ERA " TARGET_FMT_lx
+-                     " TLBRERA " TARGET_FMT_lx " %s exception\n", __func__,
+-                     env->pc, env->CSR_ERA, env->CSR_TLBRERA, name);
++                     " TLBRERA " TARGET_FMT_lx " exception: %d (%s)\n",
++                     __func__, env->pc, env->CSR_ERA, env->CSR_TLBRERA,
++                     cs->exception_index,
++                     loongarch_exception_name(cs->exception_index));
+     }
+ 
+     switch (cs->exception_index) {
+-- 
+2.25.1
 
-Zhiwei
-
->       memset(base + cnt, -1, tot - cnt);
->   }
->   
 
