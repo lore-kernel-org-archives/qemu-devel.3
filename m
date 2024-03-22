@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27591C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 16:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24679C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 16:16:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnhXP-0000cL-QG; Fri, 22 Mar 2024 12:14:35 -0400
+	id 1rnhY8-0000zF-DT; Fri, 22 Mar 2024 12:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rnhXL-0000bV-92
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 12:14:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rnhXI-0000l8-4y
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 12:14:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711124064;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9o8qzy6L7mwSEPINx1G7qpKCDuh+yBwE7mJu/Ztnqvk=;
- b=WeLXKko/accZgI42V/iziScogYh5P/PcSfEZqlN2oGhF/vIENbAK+eNdxcO5LdI9ikuTls
- GNnXghrpFX8Wwbpgqj9drFjLzE30S9aiauqkKCGDqEFpC4A/xrAm3ZieWWV5pxEoISkdRL
- 8fyQouZj20cRh0yudgtaidbllukSFh0=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-41-uiWowjy1OoWn1FpjQ5FSRA-1; Fri, 22 Mar 2024 12:14:23 -0400
-X-MC-Unique: uiWowjy1OoWn1FpjQ5FSRA-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-69120b349c9so5357616d6.1
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 09:14:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnhXy-0000tM-UM
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 12:15:14 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnhXr-0000p3-52
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 12:15:08 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2d4886a1cb4so31544701fa.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 09:14:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711124095; x=1711728895; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nWERvWbaYA8U7fTdf/uiT9QJ6qMAGAYtIIOsHDWn7CE=;
+ b=qR+dr51WAAf3QVHR9pEZEy0YpdMSuSJrCgtAkckqiQyWkWM0r0rzcb0cKx4h+Bc+xC
+ 4rY2Bp9E3Fo9P3uPy1Otkvzy9f12C0yW11NsCWsAeeI7KjzWMBxkrBxN6mE5bAxFr2nO
+ moFWmfWBlE+0ztkLYVZIHn2524MmJZc5KPbqnKVSoCnACeERHi7VBt8aPTS0/dK39/4R
+ lVePo5s0VVW2iNVxfZGKvLhIUmJw5C836EvhC9EmXG3a1/SdgLX2FbyDwqKgHJKNaTjk
+ KhaCTT0rnKy8ed8V2sxzf2GXLyDe0fo7awWD6ZWiAXKpOy43hROFw0LqMZFU7pRamjP9
+ Ozog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711124062; x=1711728862;
+ d=1e100.net; s=20230601; t=1711124095; x=1711728895;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9o8qzy6L7mwSEPINx1G7qpKCDuh+yBwE7mJu/Ztnqvk=;
- b=mV6I3oFP2+ugjd2OLAgxRHE6I0OhTdyuWYF4iu3pGgyt+g8xlZxokl0vquEkzLs/mx
- UVNB8Vr2QqWx3xupjaAA1qntrLVYGEAft/ayg/KnbirjlwnLtmzcdNhtTq7YAlyFnzRp
- xwt59EUZSZcxq21YaNYr7ESrGuh+YcCYCtCLMFhe8hDmiAGQ2jnQ7qWySLHe9DSCIdzP
- 82Oj2vlaFWo2nazeE9MXip/xrOOhqOK8nJxyhaQLeXCOODISD5eBwwMgdGcQi0knYkLA
- Z843c913JRcPUi8o3YYTlDPE4rlsxt0N69tNzVOPnRkXhDbTmJj/jgYH9e8zequN7Nh0
- mv0Q==
-X-Gm-Message-State: AOJu0YxMXypJKTFzUogWPlYZHULH4ZEtelwTLx9LgYFknSneeNAYdR3T
- HinTSAW4mPYj00SuFu+rR+3xsWS5dHo9hBVgdoq1XFprZuWIaxnmyZ9hr3kqrcffQ7Jd9tLecDb
- 9+UTbN7wmTMiqZH75wuxCsNyRvgADGEQvore7V+DX7q3YiV87uS2JOncGK/kYUzHU2B/HCdjrLj
- S5n5anLnmMUV0cC4LvnAmXD2ZXVOVHBQuVhw==
-X-Received: by 2002:a05:6214:5991:b0:690:cdd5:ea47 with SMTP id
- qp17-20020a056214599100b00690cdd5ea47mr2611173qvb.4.1711124062143; 
- Fri, 22 Mar 2024 09:14:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFAQsVQqHWuYmOH382S3+7bJqvTSCyBm0+br+Avs+Coz2F4enGf4SOn0x7zlc0x2UzEbvVqsw==
-X-Received: by 2002:a05:6214:5991:b0:690:cdd5:ea47 with SMTP id
- qp17-20020a056214599100b00690cdd5ea47mr2611143qvb.4.1711124061591; 
- Fri, 22 Mar 2024 09:14:21 -0700 (PDT)
-Received: from x1n.redhat.com ([99.254.121.117])
+ bh=nWERvWbaYA8U7fTdf/uiT9QJ6qMAGAYtIIOsHDWn7CE=;
+ b=iR+369vZIo9eOUw2pKbcQHmz8cmSSe+kywngBX9EnSUW7pR0Av2DjDVgzxhXYafLLw
+ l8bpMVgcqZuGBe4ZHu0tKwk5PAae/1CvBRJwzgX6mYBova5uXmZdxJnS5tDRSZlEmg//
+ 6oLK+qGt2EZStMyphxN9/2qfqN6lBrl/ShwsRPPKqLLUA5Co1pB8X1fTt0Fk3q/L+Gcr
+ oAKCiOksJ3H3DQAIYbWofCnbsT1uuTld4+4KGLxnpEV30MlHvS+yEPhNehapvKJhQLO9
+ THEXfLtqiEcSqrdro1P4Emds4sglaaxaEPFGdMra3hqP6W9Ure+bFI78NDje70JZ9QrF
+ lYGw==
+X-Gm-Message-State: AOJu0YwaFTpNKNkCVE6hcYUCDui2D7I6jPs9NXKZUwkv9pKD8OmMKutr
+ 60kr7Y3ZSdkq7XjdnaeMvdzi2raZWQR5Mtypw/e3UcpsNBqDeyav6Om1pysas0csXPxqsVhHVof
+ 6
+X-Google-Smtp-Source: AGHT+IGFKaVbKf31VATWjTGdq0ZObqLxjTDJ8xODl4fNGzZ922tI8v36pANqcGwSv9NcRuux+xfNmw==
+X-Received: by 2002:a2e:97c7:0:b0:2d4:25df:b8eb with SMTP id
+ m7-20020a2e97c7000000b002d425dfb8ebmr2410707ljj.41.1711124095391; 
+ Fri, 22 Mar 2024 09:14:55 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.178.251])
  by smtp.gmail.com with ESMTPSA id
- 6-20020a05621420e600b006904c34d5basm1202708qvk.64.2024.03.22.09.14.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 09:14:21 -0700 (PDT)
-From: peterx@redhat.com
+ he11-20020a05600c540b00b004147cfe50e2sm1824710wmb.2.2024.03.22.09.14.53
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 22 Mar 2024 09:14:55 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- peterx@redhat.com
-Subject: [PULL 3/3] migration/multifd: Fix clearing of mapped-ram zero pages
-Date: Fri, 22 Mar 2024 12:14:17 -0400
-Message-ID: <20240322161417.759586-4-peterx@redhat.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240322161417.759586-1-peterx@redhat.com>
-References: <20240322161417.759586-1-peterx@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH-for-9.1 v2 2/3] hw/core: Remove check on NEED_CPU_H in
+ tcg-cpu-ops.h
+Date: Fri, 22 Mar 2024 17:14:38 +0100
+Message-ID: <20240322161439.6448-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240322161439.6448-1-philmd@linaro.org>
+References: <20240322161439.6448-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.222,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,48 +99,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+Commit fd3f7d24d4 ("include/hw/core: Remove i386 conditional
+on fake_user_interrupt") remove the need to check on NEED_CPU_H.
 
-When the zero page detection is done in the multifd threads, we need
-to iterate the second part of the pages->offset array and clear the
-file bitmap for each zero page. The piece of code we merged to do that
-is wrong.
-
-The reason this has passed all the tests is because the bitmap is
-initialized with zeroes already, so clearing the bits only really has
-an effect during live migration and when a data page goes from having
-data to no data.
-
-Fixes: 303e6f54f9 ("migration/multifd: Implement zero page transmission on the multifd thread.")
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20240321201242.6009-1-farosas@suse.de
-Signed-off-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- migration/multifd.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/hw/core/tcg-cpu-ops.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index d2f0238f70..2802afe79d 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -111,7 +111,6 @@ void multifd_send_channel_created(void)
- static void multifd_set_file_bitmap(MultiFDSendParams *p)
- {
-     MultiFDPages_t *pages = p->pages;
--    uint32_t zero_num = p->pages->num - p->pages->normal_num;
+diff --git a/include/hw/core/tcg-cpu-ops.h b/include/hw/core/tcg-cpu-ops.h
+index bf8ff8e3ee..dc1f16a977 100644
+--- a/include/hw/core/tcg-cpu-ops.h
++++ b/include/hw/core/tcg-cpu-ops.h
+@@ -49,7 +49,6 @@ struct TCGCPUOps {
+     /** @debug_excp_handler: Callback for handling debug exceptions */
+     void (*debug_excp_handler)(CPUState *cpu);
  
-     assert(pages->block);
+-#ifdef NEED_CPU_H
+ #ifdef CONFIG_USER_ONLY
+     /**
+      * @fake_user_interrupt: Callback for 'fake exception' handling.
+@@ -174,8 +173,6 @@ struct TCGCPUOps {
+      */
+     bool (*need_replay_interrupt)(int interrupt_request);
+ #endif /* !CONFIG_USER_ONLY */
+-#endif /* NEED_CPU_H */
+-
+ };
  
-@@ -119,7 +118,7 @@ static void multifd_set_file_bitmap(MultiFDSendParams *p)
-         ramblock_set_file_bmap_atomic(pages->block, pages->offset[i], true);
-     }
- 
--    for (int i = p->pages->num; i < zero_num; i++) {
-+    for (int i = p->pages->normal_num; i < p->pages->num; i++) {
-         ramblock_set_file_bmap_atomic(pages->block, pages->offset[i], false);
-     }
- }
+ #if defined(CONFIG_USER_ONLY)
 -- 
-2.44.0
+2.41.0
 
 
