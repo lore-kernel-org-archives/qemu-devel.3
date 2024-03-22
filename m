@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D073C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:15:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 024E4C54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:15:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnjNh-0000Ge-AQ; Fri, 22 Mar 2024 14:12:41 -0400
+	id 1rnjN1-0006Hi-Md; Fri, 22 Mar 2024 14:11:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjNg-00007F-9H
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:40 -0400
+ id 1rnjMp-0006GQ-TD
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:11:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjNd-00078M-TX
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:40 -0400
+ id 1rnjMn-0006yV-WF
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:11:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711131156;
+ s=mimecast20190719; t=1711131104;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4lvnwCtrPDnXyVmehzwWHmW4+Ppw0puxVjxFyVwmVZY=;
- b=grAClwIb1EEUW0Zs5Z/2PoM0rYi8iYW1QvMOt3Vif+Yl3n2mdqA6xJ5TvRXAC6yoBhQEKh
- LDa/xrGF+z+Y1yj6J7B4AnyFoxoBe1ADju4C6Ly1ard0le8tW3zSTmbR9MG3V3W1F3Yr7v
- OZEMcq9jRNaxSLJYHQ7TTB/8IXn1oi8=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sKz1EYMWvMohSbHGKABPVU60K0D/HveOBbfCcHvL+0Y=;
+ b=I39Hm6OPJDaVG1smCBi3GA3Oln2ePaL0+36yL3KKPEJaDab2lVCYmALnk6TPGo3wxn3S0F
+ 1v0YgbJ5jQQ2U8c2Oh0upS8r2fDt10eUO2H4iCaDJsNfUKZMzE8mCqKhMW2va3Eh+vLrD1
+ xqMSLmr6XivG2D+o+Rzq2AuBJiSNCyg=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-o9RGY3OcM7KzEng4ShpJnw-1; Fri, 22 Mar 2024 14:12:35 -0400
-X-MC-Unique: o9RGY3OcM7KzEng4ShpJnw-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2d599dba7fbso22742561fa.0
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:12:35 -0700 (PDT)
+ us-mta-393-1WzJHGZiN5qIdjx-uZwYGA-1; Fri, 22 Mar 2024 14:11:42 -0400
+X-MC-Unique: 1WzJHGZiN5qIdjx-uZwYGA-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a3fb52f121eso132911266b.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:11:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711131153; x=1711735953;
+ d=1e100.net; s=20230601; t=1711131100; x=1711735900;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4lvnwCtrPDnXyVmehzwWHmW4+Ppw0puxVjxFyVwmVZY=;
- b=oWfcG2a/2kZ5xCGnTXcqI0MjxT2UOTJC4p0qBPZIJNel4n6N3HgfItVWXKPinCMmFB
- E9CY7LABiu4CW0cbx0sHP2k/oLSgBnrMZWC93nocfdPtAD2GmRUAoftZy4BgVGrA5QIl
- MFz1OXEqvErQCCXoVplHrouEwsoWuwrlLX0m0t13StnmAwp110C+uXQ5XKr28PZo1mem
- VZi1c9JPhMRzdyAOHNM+F17ijnZB8cOYwNj8ktGkNQ/EuVfTc8oe8RlyA0DTlwhys2PG
- w+Qdb2JxavCXaAPG/QZxqAZM7BQHmkKmwwO+NokjWQXS8YYmWdsIj3fTjI4DCMnJkQhe
- fE8g==
-X-Gm-Message-State: AOJu0YwYwdTx/WPGXWUMtqzZYZE9uXmxJSObU9Jq9TmXRyMwWFeo5PDc
- hlUOBDKTJCF+wv8DrxLTSis49B8h8hhw6/WlBOxprLe+VDkzku2t4DbevKdQdm1GOZ7707bU2rI
- dRE5ohiAI1WzqXQ+9tZQ2eU5DS/lixvKc4J/27kHkoqT2bU/9iI/CLNnnYYfAw4Th2Pbry8Ex2T
- eWNdFSkZI/d+AcKACYEZNHzrpteOhoO9wxvn8y
-X-Received: by 2002:ac2:4c37:0:b0:513:ce00:1a2 with SMTP id
- u23-20020ac24c37000000b00513ce0001a2mr151745lfq.30.1711131153084; 
- Fri, 22 Mar 2024 11:12:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/vpsWvKW+UefxP1BB/BvMyzSgPRYSN4K4RqYzXi6rG4mgedTz/kYl+63v3Gp9WiJz5PsnzA==
-X-Received: by 2002:ac2:4c37:0:b0:513:ce00:1a2 with SMTP id
- u23-20020ac24c37000000b00513ce0001a2mr151730lfq.30.1711131152667; 
- Fri, 22 Mar 2024 11:12:32 -0700 (PDT)
+ bh=sKz1EYMWvMohSbHGKABPVU60K0D/HveOBbfCcHvL+0Y=;
+ b=mHaHhzNCbam2Hna6y4ekIlHEh4rIQwqmtR+G1G2f/3AgTMD+yF4uhBRzyX47Irtutu
+ inpvLmPA9rIuHvpM4l8nTRB56EBa9dbL5T4lNwIFGtocIYyeFsgElKmJwuTPcBroGnK5
+ R6cAMmL+Cf4zA+ZZlVR3dOUrqRkD1qDfAg3cr4659PzvLbDHJ/KgXtTNKfjGPmrSR8Vn
+ Dveo7+IXXk/IaYsUXZM1ZhXztPluyekklbJlnTfD69CZ33kucjg5aiOkuCVcstOYXHAN
+ XjJ05yO6/BKsyeyY7AkEotbhqmys8H4i3sOCxWhKOBhhSAjcXwlUMhjUoC67JW/4Rqmy
+ QyUA==
+X-Gm-Message-State: AOJu0Yw9LB8RU/aOeO+kgSBLCiz8yv7M1GGrZUqcabwQ67yRSgBWtRmP
+ 2fC9G1R7RWLlEHG/+GXky+4ajkJlV/0q2HN/DzQ0Y0sIkk1NNNxVUI4XlghsP2gdndGf3lGBF3Y
+ nFNIH43SuFfSCuepIMlUMC6/MsQ3+m87oCrPLjmG0V5A94/yCOCO9TfFu+OjlQnCqMs+jk0yX8F
+ OUfO5zxOsEL8N3oTyOpaN1IE4OQKsNBoP+n9Rv
+X-Received: by 2002:a17:906:1986:b0:a46:6fe4:af27 with SMTP id
+ g6-20020a170906198600b00a466fe4af27mr321737ejd.24.1711131100097; 
+ Fri, 22 Mar 2024 11:11:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFWDaaHZKPF4/Ud7gNL/dd0Co5gmsSUoej8q5FH2vAIiF/1xGr1pny1OHIq19/TE9miADjMkg==
+X-Received: by 2002:a17:906:1986:b0:a46:6fe4:af27 with SMTP id
+ g6-20020a170906198600b00a466fe4af27mr321718ejd.24.1711131099741; 
+ Fri, 22 Mar 2024 11:11:39 -0700 (PDT)
 Received: from [192.168.10.118] ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- m23-20020a1709062ad700b00a46dd1f7dc1sm76391eje.92.2024.03.22.11.12.30
+ e25-20020a170906845900b00a4673706b4dsm75949ejy.78.2024.03.22.11.11.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 11:12:30 -0700 (PDT)
+ Fri, 22 Mar 2024 11:11:37 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: xiaoyao.li@intel.com,
 	michael.roth@amd.com,
 	david@redhat.com
-Subject: [PATCH 24/26] physmem: Introduce ram_block_discard_guest_memfd_range()
-Date: Fri, 22 Mar 2024 19:11:14 +0100
-Message-ID: <20240322181116.1228416-25-pbonzini@redhat.com>
+Subject: [PATCH 06/26] s390: Switch to use confidential_guest_kvm_init()
+Date: Fri, 22 Mar 2024 19:10:56 +0100
+Message-ID: <20240322181116.1228416-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240322181116.1228416-1-pbonzini@redhat.com>
 References: <20240322181116.1228416-1-pbonzini@redhat.com>
@@ -106,70 +106,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-When memory page is converted from private to shared, the original
-private memory is back'ed by guest_memfd. Introduce
-ram_block_discard_guest_memfd_range() for discarding memory in
-guest_memfd.
-
-Based on a patch by Isaku Yamahata <isaku.yamahata@intel.com>.
+Use unified confidential_guest_kvm_init() for consistency with
+other architectures.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Michael Roth <michael.roth@amd.com>
-Message-ID: <20240320083945.991426-12-michael.roth@amd.com>
+Message-Id: <20240229060038.606591-1-xiaoyao.li@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/exec/cpu-common.h |  2 ++
- system/physmem.c          | 23 +++++++++++++++++++++++
- 2 files changed, 25 insertions(+)
+ target/s390x/kvm/pv.h      | 14 --------------
+ hw/s390x/s390-virtio-ccw.c |  5 ++++-
+ target/s390x/kvm/pv.c      |  8 ++++++++
+ 3 files changed, 12 insertions(+), 15 deletions(-)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 6346df17ce9..6d5318895a3 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -159,6 +159,8 @@ typedef int (RAMBlockIterFunc)(RAMBlock *rb, void *opaque);
+diff --git a/target/s390x/kvm/pv.h b/target/s390x/kvm/pv.h
+index 5877d28ff10..4b408174391 100644
+--- a/target/s390x/kvm/pv.h
++++ b/target/s390x/kvm/pv.h
+@@ -80,18 +80,4 @@ static inline int kvm_s390_dump_mem_state(uint64_t addr, size_t len,
+ static inline int kvm_s390_dump_completion_data(void *buff) { return 0; }
+ #endif /* CONFIG_KVM */
  
- int qemu_ram_foreach_block(RAMBlockIterFunc func, void *opaque);
- int ram_block_discard_range(RAMBlock *rb, uint64_t start, size_t length);
-+int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
-+                                        size_t length);
+-int s390_pv_kvm_init(ConfidentialGuestSupport *cgs, Error **errp);
+-static inline int s390_pv_init(ConfidentialGuestSupport *cgs, Error **errp)
+-{
+-    if (!cgs) {
+-        return 0;
+-    }
+-    if (kvm_enabled()) {
+-        return s390_pv_kvm_init(cgs, errp);
+-    }
+-
+-    error_setg(errp, "Protected Virtualization requires KVM");
+-    return -1;
+-}
+-
+ #endif /* HW_S390_PV_H */
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index b1dcb3857f0..e35b90ed83c 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -14,6 +14,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "exec/ram_addr.h"
++#include "exec/confidential-guest-support.h"
+ #include "hw/s390x/s390-virtio-hcall.h"
+ #include "hw/s390x/sclp.h"
+ #include "hw/s390x/s390_flic.h"
+@@ -260,7 +261,9 @@ static void ccw_init(MachineState *machine)
+     s390_init_cpus(machine);
  
- #endif
+     /* Need CPU model to be determined before we can set up PV */
+-    s390_pv_init(machine->cgs, &error_fatal);
++    if (machine->cgs) {
++        confidential_guest_kvm_init(machine->cgs, &error_fatal);
++    }
  
-diff --git a/system/physmem.c b/system/physmem.c
-index 5ebcf5be116..c3d04ca9212 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3721,6 +3721,29 @@ err:
-     return ret;
+     s390_flic_init();
+ 
+diff --git a/target/s390x/kvm/pv.c b/target/s390x/kvm/pv.c
+index 7ca7faec73e..c04d53753bf 100644
+--- a/target/s390x/kvm/pv.c
++++ b/target/s390x/kvm/pv.c
+@@ -340,6 +340,11 @@ int s390_pv_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+         return 0;
+     }
+ 
++    if (!kvm_enabled()) {
++        error_setg(errp, "Protected Virtualization requires KVM");
++        return -1;
++    }
++
+     if (!s390_has_feat(S390_FEAT_UNPACK)) {
+         error_setg(errp,
+                    "CPU model does not support Protected Virtualization");
+@@ -364,6 +369,9 @@ OBJECT_DEFINE_TYPE_WITH_INTERFACES(S390PVGuest,
+ 
+ static void s390_pv_guest_class_init(ObjectClass *oc, void *data)
+ {
++    ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
++
++    klass->kvm_init = s390_pv_kvm_init;
  }
  
-+int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
-+                                        size_t length)
-+{
-+    int ret = -1;
-+
-+#ifdef CONFIG_FALLOCATE_PUNCH_HOLE
-+    ret = fallocate(rb->guest_memfd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZE,
-+                    start, length);
-+
-+    if (ret) {
-+        ret = -errno;
-+        error_report("%s: Failed to fallocate %s:%" PRIx64 " +%zx (%d)",
-+                     __func__, rb->idstr, start, length, ret);
-+    }
-+#else
-+    ret = -ENOSYS;
-+    error_report("%s: fallocate not available %s:%" PRIx64 " +%zx (%d)",
-+                 __func__, rb->idstr, start, length, ret);
-+#endif
-+
-+    return ret;
-+}
-+
- bool ramblock_is_pmem(RAMBlock *rb)
- {
-     return rb->flags & RAM_PMEM;
+ static void s390_pv_guest_init(Object *obj)
 -- 
 2.44.0
 
