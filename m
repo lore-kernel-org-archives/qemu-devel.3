@@ -4,39 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E08C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:51:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FB38C54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 10:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnbXa-0003SR-UT; Fri, 22 Mar 2024 05:50:22 -0400
+	id 1rnbkX-0008R0-M2; Fri, 22 Mar 2024 06:03:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1rnbXY-0003R5-Kl; Fri, 22 Mar 2024 05:50:20 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1rnbXW-00020m-Ea; Fri, 22 Mar 2024 05:50:20 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 113C1418DD;
- Fri, 22 Mar 2024 10:50:15 +0100 (CET)
-From: Fiona Ebner <f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1rnbkV-0008QT-Gf
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:03:43 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1rnbkP-0004Km-Lr
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:03:43 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxyuhuV_1lxmkcAA--.47750S3;
+ Fri, 22 Mar 2024 18:03:26 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8AxTRNsV_1lE95hAA--.59909S2; 
+ Fri, 22 Mar 2024 18:03:24 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, hreitz@redhat.com,
- kwolf@redhat.com, fam@euphon.net, stefanha@redhat.com,
- t.lamprecht@proxmox.com, w.bumiller@proxmox.com
-Subject: [PATCH v3 4/4] iotests: add test for stream job with an unaligned
- prefetch read
-Date: Fri, 22 Mar 2024 10:50:09 +0100
-Message-Id: <20240322095009.346989-5-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240322095009.346989-1-f.ebner@proxmox.com>
-References: <20240322095009.346989-1-f.ebner@proxmox.com>
+Cc: peter.maydell@linaro.org,
+	mjt@tls.msk.ru
+Subject: [PULL 0/1] loongarch fix for 9.0
+Date: Fri, 22 Mar 2024 18:03:22 +0800
+Message-Id: <20240322100323.1973836-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
+X-CM-TRANSID: AQAAf8AxTRNsV_1lE95hAA--.59909S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -57,132 +64,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, bdrv_pad_request() could not deal with a NULL qiov when
-a read needed to be aligned. During prefetch, a stream job will pass a
-NULL qiov. Add a test case to cover this scenario.
+The following changes since commit fea445e8fe9acea4f775a832815ee22bdf2b0222:
 
-By accident, also covers a previous race during shutdown, where block
-graph changes during iteration in bdrv_flush_all() could lead to
-unreferencing the wrong block driver state and an assertion failure
-later.
+  Merge tag 'pull-maintainer-final-for-real-this-time-200324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-21 10:31:56 +0000)
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
----
+are available in the Git repository at:
 
-No changes in v3.
-New in v2.
+  https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240322
 
- .../tests/stream-unaligned-prefetch           | 86 +++++++++++++++++++
- .../tests/stream-unaligned-prefetch.out       |  5 ++
- 2 files changed, 91 insertions(+)
- create mode 100755 tests/qemu-iotests/tests/stream-unaligned-prefetch
- create mode 100644 tests/qemu-iotests/tests/stream-unaligned-prefetch.out
+for you to fetch changes up to 1590154ee4376819a8c6ee61e849ebf4a4e7cd02:
 
-diff --git a/tests/qemu-iotests/tests/stream-unaligned-prefetch b/tests/qemu-iotests/tests/stream-unaligned-prefetch
-new file mode 100755
-index 0000000000..546db1d369
---- /dev/null
-+++ b/tests/qemu-iotests/tests/stream-unaligned-prefetch
-@@ -0,0 +1,86 @@
-+#!/usr/bin/env python3
-+# group: rw quick
-+#
-+# Test what happens when a stream job does an unaligned prefetch read
-+# which requires padding while having a NULL qiov.
-+#
-+# Copyright (C) Proxmox Server Solutions GmbH
-+#
-+# This program is free software; you can redistribute it and/or modify
-+# it under the terms of the GNU General Public License as published by
-+# the Free Software Foundation; either version 2 of the License, or
-+# (at your option) any later version.
-+#
-+# This program is distributed in the hope that it will be useful,
-+# but WITHOUT ANY WARRANTY; without even the implied warranty of
-+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+# GNU General Public License for more details.
-+#
-+# You should have received a copy of the GNU General Public License
-+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-+#
-+
-+import os
-+import iotests
-+from iotests import imgfmt, qemu_img_create, qemu_io, QMPTestCase
-+
-+image_size = 1 * 1024 * 1024
-+cluster_size = 64 * 1024
-+base = os.path.join(iotests.test_dir, 'base.img')
-+top = os.path.join(iotests.test_dir, 'top.img')
-+
-+class TestStreamUnalignedPrefetch(QMPTestCase):
-+    def setUp(self) -> None:
-+        """
-+        Create two images:
-+        - base image {base} with {cluster_size // 2} bytes allocated
-+        - top image {top} without any data allocated and coarser
-+          cluster size
-+
-+        Attach a compress filter for the top image, because that
-+        requires that the request alignment is the top image's cluster
-+        size.
-+        """
-+        qemu_img_create('-f', imgfmt,
-+                        '-o', 'cluster_size={}'.format(cluster_size // 2),
-+                        base, str(image_size))
-+        qemu_io('-c', f'write 0 {cluster_size // 2}', base)
-+        qemu_img_create('-f', imgfmt,
-+                        '-o', 'cluster_size={}'.format(cluster_size),
-+                        top, str(image_size))
-+
-+        self.vm = iotests.VM()
-+        self.vm.add_blockdev(self.vm.qmp_to_opts({
-+            'driver': imgfmt,
-+            'node-name': 'base',
-+            'file': {
-+                'driver': 'file',
-+                'filename': base
-+            }
-+        }))
-+        self.vm.add_blockdev(self.vm.qmp_to_opts({
-+            'driver': 'compress',
-+            'node-name': 'compress-top',
-+            'file': {
-+                'driver': imgfmt,
-+                'node-name': 'top',
-+                'file': {
-+                    'driver': 'file',
-+                    'filename': top
-+                },
-+                'backing': 'base'
-+            }
-+        }))
-+        self.vm.launch()
-+
-+    def tearDown(self) -> None:
-+        self.vm.shutdown()
-+        os.remove(top)
-+        os.remove(base)
-+
-+    def test_stream_unaligned_prefetch(self) -> None:
-+        self.vm.cmd('block-stream', job_id='stream', device='compress-top')
-+
-+
-+if __name__ == '__main__':
-+    iotests.main(supported_fmts=['qcow2'], supported_protocols=['file'])
-diff --git a/tests/qemu-iotests/tests/stream-unaligned-prefetch.out b/tests/qemu-iotests/tests/stream-unaligned-prefetch.out
-new file mode 100644
-index 0000000000..ae1213e6f8
---- /dev/null
-+++ b/tests/qemu-iotests/tests/stream-unaligned-prefetch.out
-@@ -0,0 +1,5 @@
-+.
-+----------------------------------------------------------------------
-+Ran 1 tests
-+
-+OK
--- 
-2.39.2
+  target/loongarch: Fix qemu-system-loongarch64 assert failed with the option '-d int' (2024-03-22 17:57:49 +0800)
 
+----------------------------------------------------------------
+pull-loongarch-20240322
+
+----------------------------------------------------------------
+Song Gao (1):
+      target/loongarch: Fix qemu-system-loongarch64 assert failed with the option '-d int'
+
+ target/loongarch/cpu.c | 74 +++++++++++++++++++++++++++-----------------------
+ 1 file changed, 40 insertions(+), 34 deletions(-)
 
 
