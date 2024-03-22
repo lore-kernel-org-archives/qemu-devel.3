@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D3B2C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 04:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5337C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 04:38:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnWSC-0006WH-Si; Fri, 22 Mar 2024 00:24:28 -0400
+	id 1rnWeU-0000IK-8o; Fri, 22 Mar 2024 00:37:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnWSB-0006Vz-QQ; Fri, 22 Mar 2024 00:24:27 -0400
-Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
+ id 1rnWeS-0000I0-Cy; Fri, 22 Mar 2024 00:37:08 -0400
+Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnWSA-0007Vp-8r; Fri, 22 Mar 2024 00:24:27 -0400
-Received: by mail-ua1-x92b.google.com with SMTP id
- a1e0cc1a2514c-7dac7cfbea0so287823241.3; 
- Thu, 21 Mar 2024 21:24:25 -0700 (PDT)
+ id 1rnWeQ-0001e2-NL; Fri, 22 Mar 2024 00:37:08 -0400
+Received: by mail-vs1-xe29.google.com with SMTP id
+ ada2fe7eead31-4765a8015bbso612675137.1; 
+ Thu, 21 Mar 2024 21:37:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711081465; x=1711686265; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711082225; x=1711687025; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fgvKF5Sth88yKU/cA4NVFCY57XMKSTiSg1FuGuq7HP0=;
- b=K1Jl/sFipfog3kFv63QXZrfJO3g7bJqrohcaA3nC/otEkI3RCJKDBfsGSpUwMRzMt3
- kUk6RaVY65cYc/l+vVPUIz6Tr5wRmoGnQ+KPeQM1O+7HS49SJqcJ7HQADkiv08wcfX6/
- TUy6zpDMsfsPxUt4iGC0+jA+4kEWWB2d+Ecl+uMIFkirZz+PJDS/HZiFjGSP5AjvVpgx
- gXSzrw+7KG4+fIRA6PhcJRtjJtpyPbZcEn2hPRYUTqUfc5L82nvoTvVzCRvzt7yJYjRc
- ZNk06NzgbmYhSf4j9j5KNcXs+4ka70HSnYrEjO0CdOuCdCNhNjkh/3mVEud8sJXcSZYK
- 8Itg==
+ bh=2i46XHZIxmwskYjfKdfd2egddjUx8933ndgD96adCWY=;
+ b=EqB75JMi7OkmbQPqLImLRdjIki+BNPBGWU2hBxMXNFfTqPza6bPmiZjkTx2Ne0pt4n
+ Uupe9MkTtp/ECG0yrz2RXMO1CuCtctL0YhqW07NPD/oqFPBesAIMN6vccINyBr1PqzSq
+ NDtrK7vx3L+yyEXhhgPW2ag1WFQvJQmhkI6jVol61P/1JtdBU7eQmi4LNkX0Xz9CqQ6u
+ 6RvdEkMW6KPUiaJ8/d2Fasr1Q3bHevhAUs/8KvfIn70cI7WeLOpXyj/cqrKh7ifvGN4z
+ NfiRzfJfEZJxLZXN6MAscI6h7mlAu+vCpr1jJ/OJGLaGWhok/nJO0TLYwnUmxOdGGPIc
+ m2vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711081465; x=1711686265;
+ d=1e100.net; s=20230601; t=1711082225; x=1711687025;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fgvKF5Sth88yKU/cA4NVFCY57XMKSTiSg1FuGuq7HP0=;
- b=VGxUi4z7dboyBuTVTC+1/kqmiuigSdBl/yGnskEE3KHt136zzNG4HKZozh+t1P9owb
- VR+M+SkxtVBxfIN5txExGHGHz9U3NQHLQCvM57lgqJrqbR8U2es/eTXulRAgW8z7arZI
- KYA7pKzpGi4qRtl3Q9SWmG38hBJfoZUGFivmOwVAPVOzZ4dfOP5iz3uZRuyG//bLLL7J
- E+Sd7GH3a2VYAIscGOe9719O8Ij897CWGReofScj/kkw8mXFNzZGq1riLL4S8gpWD3Z0
- IgiRo5oPXZETpnlPlLU9WRbOHlwlKIMZkY+79IIP4jpcqtipoHjhwLOyrOSdjvJU8rM8
- qLLw==
+ bh=2i46XHZIxmwskYjfKdfd2egddjUx8933ndgD96adCWY=;
+ b=gJo4bl4RZp8JK0GYuDto6A10F71Qtw3KeD/rW2aw7vyx17NvRRMX6FODlO8vB3G7SZ
+ 3IBkyDMGbxb4AOjRpfavHYoyOwm+4QIgHl3BF2kQVQKSW7a7ieWrP6h67CmJuBUWe3u/
+ JOOtA4XRzMozm25WewKFp+/70Tvh0rWc4xLpED97XlpCWBbsoOMmgNTsKl9COKS7YePR
+ fYxpjhWt2h1+vxlr3/jZxgNjwPSyjpUDmDjq29BxfWYt8oMNwy0IFR4izKDZ8M2qXJtF
+ GaisCLLPB/0OE5lnZMc1QOyHthdEGc7Zaq65M0O0JtLOha++Ixm3wymtUSuXCOqIExXs
+ ihvA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXf0MIx11lZxOcvf+zH92vhVOhOflfoiaKmj6O7q2PV7Zps+UK5uQVWI2YPICahGkWTVt1pLqB5K8/gyneKhcqfItNKsiM=
-X-Gm-Message-State: AOJu0YzkD3pJm6kLX6nffgnHmn1fZC61aXQREmi/LwV5FOGIKq0/5kaj
- +p9twQnp12kESzTahZtMcD6x6kQWtVeIAnwdK3gJ2CRkrt6DEE5yLm1NB+HwqcyWrc764M6jEah
- 6Oddp6vPrXlioR+OpnTpfXbtGy9F8WUANgf281QXW
-X-Google-Smtp-Source: AGHT+IHWPMokP0gyYF09raTOKovTzYum1iTAYoXlw39l+ZImqVZWTxxhwI1TXmQnLyl7pQ1APhWizEESOcCj9ip25u8=
-X-Received: by 2002:a67:b404:0:b0:472:7b45:47de with SMTP id
- x4-20020a67b404000000b004727b4547demr1375426vsl.4.1711081464739; Thu, 21 Mar
- 2024 21:24:24 -0700 (PDT)
+ AJvYcCVBQpHi2IJL8I3DK/cUEKov2mHW1c3uWF4nIlGyPy1OAsaYD2wfqyfhEEuLjgG8RuINaB1YcgWgTHOW8e7nnfKB4gU7Aec=
+X-Gm-Message-State: AOJu0YzgNL7wZRH6w9gtQFVNUGQ8Pg+FFpwifNhAAfGNXIUUfW6UKvL9
+ IC3NGsThaATCPDuuqCRCo07qi9TjkvJLHe9h8DOajlDgpePmtfS/YNiNFjn7agCq71Kxc3PawjF
+ 1d2C0IHPGFe1dJtvvJ2iTGJb59Wk=
+X-Google-Smtp-Source: AGHT+IEJ/bf+wqpYIwzFgFpmHBqkpwPGcI+B1G11PliVxy2HkfAQ77F2z/vNPM+vLezZqxtjDxTFOBPH2Un2ZHqeTpw=
+X-Received: by 2002:a67:fe94:0:b0:476:c86d:a9fc with SMTP id
+ b20-20020a67fe94000000b00476c86da9fcmr1437991vsr.9.1711082225266; Thu, 21 Mar
+ 2024 21:37:05 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240321170929.1162507-1-max.chou@sifive.com>
 In-Reply-To: <20240321170929.1162507-1-max.chou@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 22 Mar 2024 14:23:58 +1000
-Message-ID: <CAKmqyKOf4w9CETdg8wu6KJC5B4WDG19U4fdczkDC3=NhdV=a8Q@mail.gmail.com>
+Date: Fri, 22 Mar 2024 14:36:39 +1000
+Message-ID: <CAKmqyKPbSEd2OaPta0SwcTn4VMo3E2ueSRH1Av9ALzhi_Ms3vg@mail.gmail.com>
 Subject: Re: [PATCH] target/riscv: rvv: Remove the dependency of Zvfbfmin to
  Zfbfmin
 To: Max Chou <max.chou@sifive.com>
@@ -72,8 +72,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Andrew Jones <ajones@ventanamicro.com>, Rob Bradford <rbradford@rivosinc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe29.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,17 +103,12 @@ e:
 > According to the Zvfbfmin definition in the RISC-V BF16 extensions spec,
 > the Zvfbfmin extension only requires either the V extension or the
 > Zve32f extension.
-
-Yeah, the dependency has been removed
-
-https://github.com/riscv/riscv-bfloat16/commit/86d7a74f4b928e981f79f6d84a45=
-92e6e9e4c0e9#diff-f3084dfbeae77f242848fc2cd24a84514a9f01aff7ae8ad945e1af1c0=
-a33988cR20
-
 >
 > Signed-off-by: Max Chou <max.chou@sifive.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
