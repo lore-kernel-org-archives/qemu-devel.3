@@ -4,74 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB1BC47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 04:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0A3DC54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 04:13:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnWCH-0002aS-Px; Fri, 22 Mar 2024 00:08:01 -0400
+	id 1rnWGp-0003mU-0V; Fri, 22 Mar 2024 00:12:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnWCF-0002aD-K8; Fri, 22 Mar 2024 00:07:59 -0400
-Received: from mail-ua1-x92f.google.com ([2607:f8b0:4864:20::92f])
+ id 1rnWGn-0003mC-KV; Fri, 22 Mar 2024 00:12:41 -0400
+Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnWCE-0004YJ-7e; Fri, 22 Mar 2024 00:07:59 -0400
-Received: by mail-ua1-x92f.google.com with SMTP id
- a1e0cc1a2514c-7dfacd39b9eso1393500241.1; 
- Thu, 21 Mar 2024 21:07:57 -0700 (PDT)
+ id 1rnWGm-0005VA-3Y; Fri, 22 Mar 2024 00:12:41 -0400
+Received: by mail-vs1-xe2a.google.com with SMTP id
+ ada2fe7eead31-4768156d947so599805137.3; 
+ Thu, 21 Mar 2024 21:12:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711080477; x=1711685277; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711080758; x=1711685558; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tsxMKOrXL/7R5maBQoltyot6XJvo6YJofRsyHpwAh5c=;
- b=V98YshVJe/yIeRHOhwNJU5OgLQPTXnJEDcp/es9xIAskaLp4KR4PkIGe0Lpx9wKqx1
- bihp2W5Y+skIYzJhb7vNIxRj8YaiOfWHvdScNtpCFj8Z6aVGrJrVh6SVxDzo5gL7Q2b1
- xgMCwXLb42K9/y3AFD656TOhkvSPZzewLh5dFfwL0hxJbNG9vOFewewuL3BccfqVoWuA
- IDXVIvT6uT1Dn574nnrm4ypO2gNVh6fiPFyMrOvmUoirrPXQCkvfC6wscpRTr774kEoN
- GHyEGwoBO7XcvPW2GLqqUP9B95cm7y0VG1aHGIhC8x91oxCSFaDWFIRKAV+f0cvfEsuZ
- JQPQ==
+ bh=kHi6njtOcybWfxmRHKBcreZQ01beP+UuUDxZdh3gCbs=;
+ b=XKNC//1W2ri8JeBH7ac0koto+6luMb1YlxBvDtVqcWSB4c5IkoO0AjS+3okjxiBphZ
+ 0QXspHaSWbhFsoZfRkA3mA02deACn5IGt6TKAUQ7vZI1wRwmqJ5sqIK/IXB4Dz5LosU4
+ lzJhqqOYlO9rKF/pkPrVFMx2Q2GBHYV81Dqop7am2ZBZ1V+bMuR3KNIpeFpAggbNJG+N
+ U7OdGZVtrhzgcQWUNeTDAGdCwI1UPdImzkk3j1rdcXfJ3KYrV81LnaHzlYPpnIXBeNUl
+ TSgTokbL6XRs3KHPr1BPjs8im2nR5O0Z5Lalwao6glxLYGn0+Kn+d5bZxeMTleEtDttR
+ gBXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711080477; x=1711685277;
+ d=1e100.net; s=20230601; t=1711080758; x=1711685558;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tsxMKOrXL/7R5maBQoltyot6XJvo6YJofRsyHpwAh5c=;
- b=e4T8MwitZCUrubhwWHDZM2XPq9eqRr62SjXLpAxJRICPX6IdjFzdInweIcHhhzCkbZ
- CuHNdD6sM725O1zPJwa2XpBfQL/TRIUc6ClFQRXh4nb86Wh9SQtb2305STrJZlHWaIyf
- IN+cMeyyG/y295ALGCneru8VenCyM60xkXLq658tVxSztrqqmLssCJb4Y2XWGYeyecuW
- yznwkW54y8O4TVgKQYVK37ARmp/5dngpyKyoziUShnvxBesTG+jx2pFUmRNhVyCBIa3b
- /P2dezLslZCv0FNWHseNtCzFC1XsqXkVEax355y7/YnqEq9U0NcA7Vw36sljiEzA4wAp
- 5mFA==
+ bh=kHi6njtOcybWfxmRHKBcreZQ01beP+UuUDxZdh3gCbs=;
+ b=nIYO+nHGQsPyEQpVz2bYqSv8gxmqBOFZ/NPHAbkClal45RKkawMWmXBcHd/Pe1xZ1E
+ RiASUOzmdzZ7bRW1BsGLDsAQi7ecFKyJ8NVOcl3hbZi7CmGObhGEihzhnlwca5NTXZoj
+ ixi2W0gebxR7aeI7DOhqHYxi+F2MGFIDQ6Oos/4+/sRMCpDmURqmV8Y5W7+yAMIn5gax
+ W58z++4Q1Tq8lpXa/8/Edg+nbVHKQFBwFCnwj3lNfWqIN6C+HEAX0e4qhe9wQbgVmUcu
+ NUa5QJv37uiSgZ4KJ0cWHUE8p6JeyeS5j3Cq2m0n26cVaDiq/nwt0ibCU9Dcm8M9pIsq
+ g4vA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8V6R2qW4N8EDluomGKgsKA13lva9zEjGn6+6hHjmX3wPr7aRwJeiWRL9hd8e1dVb8ofhvjCf2x+TtkrFxpVTRFio7xz0=
-X-Gm-Message-State: AOJu0Yz7uOs/3D9aKQvraB3CjiSBkwFGH1+TFZMi98176LGKTpoexxvO
- Ti2iR1nYSUNB88eileqUQBTd+keU/AujlH415tw5ynXhTlarqkkr4eYCzksgPWnO/zjVpAWGEDI
- LwKPekaPbG3IO4U9vmr/0IG7cKy6e7THefYidyw==
-X-Google-Smtp-Source: AGHT+IE063wtAJzx4iifP384vC5/Gej2A6VuFjWcKMF5OD3exAcfr4qjqxfpFtk9Y1sco74CIks2sKG7OqgljsZ0oL0=
-X-Received: by 2002:a05:6102:38cd:b0:476:a861:8089 with SMTP id
- k13-20020a05610238cd00b00476a8618089mr670273vst.12.1711080476840; Thu, 21 Mar
- 2024 21:07:56 -0700 (PDT)
+ AJvYcCUxVgQwLrA68MOzzBM+yvzqGDaPtKuaVqhK/GhNgZQ1hi5Bh4x1W54TGZ1i+9A8FWvH4Z44VL59JwxTWjQTK5TdpVgg3qQ=
+X-Gm-Message-State: AOJu0YyFR2VQxSSERPY9v6Y7WUHcxzJbZJ2WjnwxpTfkYXDDwv0sZo4a
+ uGv9fqacbDDT5YIfMW1Jc7vEDjD9Sb2HrVpU7VXGUF0dCTs+2aEC07gkf6YEsZQ3ztC+FzCqZmP
+ JUiHD5ReDDMcSswj4q8cZqjf34w9vhMLaPVsBpg==
+X-Google-Smtp-Source: AGHT+IE+Y4EfO5zvXLGm74M36Sq46WE/oVfsO79kmU8wyIUR3X1STPE9va1uNBKeQr8y7zSqsjAYGylBmnJ+XdvmgBY=
+X-Received: by 2002:a67:fd73:0:b0:476:aecb:e09c with SMTP id
+ h19-20020a67fd73000000b00476aecbe09cmr1331142vsa.9.1711080758355; Thu, 21 Mar
+ 2024 21:12:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240321104951.12104-1-frank.chang@sifive.com>
-In-Reply-To: <20240321104951.12104-1-frank.chang@sifive.com>
+References: <20240320072709.1043227-1-max.chou@sifive.com>
+In-Reply-To: <20240320072709.1043227-1-max.chou@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 22 Mar 2024 14:07:30 +1000
-Message-ID: <CAKmqyKOH_hXi4GhU6UN1pU3HFbrA=RL2c=cbF9+OME_ungX5_Q@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc: Update APLIC IDC after claiming iforce register
-To: frank.chang@sifive.com
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Jim Shu <jim.shu@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Date: Fri, 22 Mar 2024 14:12:12 +1000
+Message-ID: <CAKmqyKNN_BbxV-Qh=8gOCpb6z6RS2qmGajj--XU7XgnZ3ks10g@mail.gmail.com>
+Subject: Re: [PATCH] Fix fp16 checking in vector fp widen/narrow instructions
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92f;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -95,45 +90,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 21, 2024 at 8:50=E2=80=AFPM <frank.chang@sifive.com> wrote:
+On Wed, Mar 20, 2024 at 5:28=E2=80=AFPM Max Chou <max.chou@sifive.com> wrot=
+e:
 >
-> From: Frank Chang <frank.chang@sifive.com>
+> When SEW is 16, we need to check whether the Zvfhmin is enabled for the
+> single width operator for vector floating point widen/narrow
+> instructions.
 >
-> Currently, QEMU only sets the iforce register to 0 and returns early
-> when claiming the iforce register. However, this may leave mip.meip
-> remains at 1 if a spurious external interrupt triggered by iforce
-> register is the only pending interrupt to be claimed, and the interrupt
-> cannot be lowered as expected.
+> The commits in this patchset fix the single width operator checking and
+> remove the redudant SEW checking for vector floating point widen/narrow
+> instructions.
 >
-> This commit fixes this issue by calling riscv_aplic_idc_update() to
-> update the IDC status after the iforce register is claimed.
->
-> Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Jim Shu <jim.shu@sifive.com>
+> Max Chou (4):
+>   target/riscv: rvv: Fix Zvfhmin checking for vfwcvt.f.f.v and
+>     vfncvt.f.f.w instructions
+>   target/riscv: rvv: Check single width operator for vector fp widen
+>     instructions
+>   target/riscv: rvv: Check single width operator for vfncvt.rod.f.f.w
+>   target/riscv: rvv: Remove redudant SEW checking for vector fp
+>     narrow/widen instructions
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+I think something went wrong here. It looks like you meant to send
+this as a series, but somehow that information was lost in the subject
 
 Alistair
 
-> ---
->  hw/intc/riscv_aplic.c | 1 +
->  1 file changed, 1 insertion(+)
 >
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 6a7fbfa861..fc5df0d598 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -488,6 +488,7 @@ static uint32_t riscv_aplic_idc_claimi(RISCVAPLICStat=
-e *aplic, uint32_t idc)
->
->      if (!topi) {
->          aplic->iforce[idc] =3D 0;
-> +        riscv_aplic_idc_update(aplic, idc);
->          return 0;
->      }
+>  target/riscv/insn_trans/trans_rvv.c.inc | 42 ++++++++++++++++---------
+>  1 file changed, 28 insertions(+), 14 deletions(-)
 >
 > --
-> 2.43.2
+> 2.31.1
 >
 >
 
