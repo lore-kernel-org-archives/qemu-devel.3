@@ -4,74 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF70C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 05:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30283C54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 05:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnXAW-0001xP-Pk; Fri, 22 Mar 2024 01:10:16 -0400
+	id 1rnXNw-0004XV-8y; Fri, 22 Mar 2024 01:24:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnXAT-0001x0-H9; Fri, 22 Mar 2024 01:10:13 -0400
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ id 1rnXNp-0004Uh-8d
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 01:24:02 -0400
+Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnXAQ-00089o-Uk; Fri, 22 Mar 2024 01:10:13 -0400
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-4d523586a59so714574e0c.2; 
- Thu, 21 Mar 2024 22:10:10 -0700 (PDT)
+ id 1rnXNn-0002bz-Iy
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 01:24:01 -0400
+Received: by mail-ot1-x32e.google.com with SMTP id
+ 46e09a7af769-6e68a30e6a1so660999a34.1
+ for <qemu-devel@nongnu.org>; Thu, 21 Mar 2024 22:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711084209; x=1711689009; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711085038; x=1711689838; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RjilqN5ludifmJa+srAwbBrAavb2Ps3qBifRhpTPOhQ=;
- b=Z3XYWeFkrApgq+fNAfgIupoSPbEBhWMvzvH9MTS0S/+WZayS7D3lJ7NQ3WbXa4hJTM
- ofRsOu1QLYS4poqDLg81kI2y9oXuwYr6hoqvDa618/rnJrxOg4otCTsykTWXjBwUVBjU
- 6yay2aaSD9GbPmozacxKRbwTVTN5CQipubIgDyaaUeMiYQH6BpYIeQpAbzTpf+wUsv6+
- bN7LQFE6lQmschRoGGsvX8JE8jsH+pviCLhRpIZndqY/iir7e79iwRGeVyu6c0FE4UPk
- q+tj6y7/968No0BnVWpG5Qiec3SAVchOd8ehUDFHu9RvFdG+LcjTs25u6l5VjolP9VGO
- EMyA==
+ bh=Qou/7FnkJFeDMxM6Rq7k8Ez5gGLwwWcgkpmG3Y0+j5Q=;
+ b=XqbZRhYUyJzlopxkFt9Jf6x8z4/9lcpkGxQZhQ4FPQNmatlSFZiO1kMEo/OO8ctdqn
+ dPMyEUW6nbkwAx7nMvEKWM1zTjyj8JT78QIe+8f1JtbO5TIUCcLP9XiIOzMRBvDSu0qY
+ FMEaTRg3Qd6pcXW0e2VZsviITfWC21bhikwMAKoS4XQmWoVKoPOTLJsUhccXmbnlBLWW
+ Fmm3jVnEQ4baeeBoRGJCnhVxYFzkN9KZADCT5IM9ahuVfrhqwJayTiNFlqZk/86+RTjR
+ 0deGmbcdzVvLvRLAD9YR4wKtAQde8fBopGwi60zAPw7yDjmx0y3vrbMSDVQVx8ufqgCM
+ 0uLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711084209; x=1711689009;
+ d=1e100.net; s=20230601; t=1711085038; x=1711689838;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RjilqN5ludifmJa+srAwbBrAavb2Ps3qBifRhpTPOhQ=;
- b=jU1R3fJHN3j+V0Myyqbt2qR08OujpL/zD+xx6Y+jZs9Jr0ZIIc0BDFa1FUnJYsEqzP
- sFjPeWS6sXO1dbkAAPyUwg120LBjZ5gqZg0ujBO/LkozwZcDiocKCangF33cyqW2WJWj
- 386DzhgsGxuqORx/V9TEa+m/m+LUK/kLsQspQ05tfDempRMa5q9ouZA27KDS4RwbHrHq
- moVJq7ecKabRor3KDoSaJp8aOU836URWDo0k+fQRtzaN8CV2ga+rxVLUTiX5EOtzOOEg
- p579ge0ncaQVvdqDSQm/LvQu4LMaF5T9XDpt8o9zPbIrPcfV/JFlSw+xHntbU0ff9Iw5
- XYIw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVc1nK+vD4J8MruPm/QL6hVw+kAGIQvyhYDD2j3vvik1mXZQi54SMMfSnAGjMpz81G8m7+v1etWx/u0Zwt/09p4oHR333w=
-X-Gm-Message-State: AOJu0YxUsbG7HrFpGUz//z1NiCAmqhzD1XI33Ap+D5wInG+dv5wL3wp+
- YIXaTwbUrIhqKiRKASqnAJD88430eF+s+L7jQV0IYeqfnT5VChhGqatIdE1CmwnbKk83YGqaj/c
- LP3X10i6XQqhtIg+sM4WWHJkDDMY=
-X-Google-Smtp-Source: AGHT+IG3188v2mkFQ1pD33an1VRxDwetGs07tu6pbZSqt0ETsU9RYOglp2KGYujvtEi5fYphdWjxshjCrb7df+iA2iY=
-X-Received: by 2002:a05:6122:32ca:b0:4d3:37d1:5a70 with SMTP id
- ck10-20020a05612232ca00b004d337d15a70mr1576238vkb.7.1711084209495; Thu, 21
- Mar 2024 22:10:09 -0700 (PDT)
+ bh=Qou/7FnkJFeDMxM6Rq7k8Ez5gGLwwWcgkpmG3Y0+j5Q=;
+ b=lVHe49G0X2KBMvfSeoiTzhrOjHcrj4G/3Zl/s1SN9c/eU3VNYupixjIROmu07hioZ3
+ S9OKNgZO0x6taK0sbwED9I8LT4cDbm7VROru0s3oidQ0cgZoV/OGhfSmvQKyJ0sZZrLj
+ pSm5VI0goTqNVPGs3qu0hFslXoYUqOKxcrDMaGfZhd6FhPT4+MhXRxgY/rGEExbMGI2b
+ gOEjRCH9YUb4tg9Z83D2KGn6zujSqrrxtjh0AxMF0E9aOwX06DaH7+mg3lPU5lmX1Q5S
+ gatVUCcGjA9UV5zUFy2EMDMU2syMfXP+hBKonf7dAMnUGGnoSdaNPxvohH9O+yTL16J7
+ jcHg==
+X-Gm-Message-State: AOJu0YxZxmTEF71KGL+CM3YUqrPC1EhCqTlbbAaQ2I70fm3E7mpZaFxI
+ kOWdcpMLYtvjpoLKoPzoJBLgSWbLBfPPK/GsMj1B03EFKxKFbIEbrqqR0OmwHhI39Gkd8qDFdxy
+ P+aTCyF7Df5nXbsvauDboArGjzBTSGIVkPB9bew==
+X-Google-Smtp-Source: AGHT+IGEP8um9hLAROqK4ry+KaLDwkd51U5CdSea7H5Ai+JItTK9i4pKSvbmcBdbmPyrgoYDghjzuqzAZqY+ISU56lY=
+X-Received: by 2002:a05:6102:9ba:b0:474:c8f5:ebe6 with SMTP id
+ f26-20020a05610209ba00b00474c8f5ebe6mr543093vsb.2.1711085018030; Thu, 21 Mar
+ 2024 22:23:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240321104951.12104-1-frank.chang@sifive.com>
-In-Reply-To: <20240321104951.12104-1-frank.chang@sifive.com>
+References: <BYAPR15MB268082AF727B0C775A4BA7E1C34D2@BYAPR15MB2680.namprd15.prod.outlook.com>
+In-Reply-To: <BYAPR15MB268082AF727B0C775A4BA7E1C34D2@BYAPR15MB2680.namprd15.prod.outlook.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 22 Mar 2024 15:09:00 +1000
-Message-ID: <CAKmqyKNEkhr16cpG_9hrEX2rqdQ8Q5=wFQLDA7fSWk-ONNiUpw@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc: Update APLIC IDC after claiming iforce register
-To: frank.chang@sifive.com
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, Jim Shu <jim.shu@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Date: Fri, 22 Mar 2024 15:23:12 +1000
+Message-ID: <CAKmqyKPE5R4_kCgVtjShR=WzoMLQWp2DqOHSWOtmAOz2+YOe5g@mail.gmail.com>
+Subject: Re: support for having both 32 and 64 bit RISC-V CPUs in one QEMU
+ machine
+To: Igor Lesik <lesikigor@meta.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
+ envelope-from=alistair23@gmail.com; helo=mail-ot1-x32e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -95,47 +91,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 21, 2024 at 8:50=E2=80=AFPM <frank.chang@sifive.com> wrote:
+On Fri, Feb 16, 2024 at 6:50=E2=80=AFAM Igor Lesik <lesikigor@meta.com> wro=
+te:
 >
-> From: Frank Chang <frank.chang@sifive.com>
+> Hi,
 >
-> Currently, QEMU only sets the iforce register to 0 and returns early
-> when claiming the iforce register. However, this may leave mip.meip
-> remains at 1 if a spurious external interrupt triggered by iforce
-> register is the only pending interrupt to be claimed, and the interrupt
-> cannot be lowered as expected.
->
-> This commit fixes this issue by calling riscv_aplic_idc_update() to
-> update the IDC status after the iforce register is claimed.
->
-> Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Jim Shu <jim.shu@sifive.com>
+> I have a situation when I need to use third-party 32-bit RISC-V CPU when =
+rest is all 64-bit RISC-V CPUs. I have seen that some steps were already ma=
+de in the direction to enable such configuration (https://riscv.org/blog/20=
+23/01/run-32-bit-applications-on-64-bit-linux-kernel-liu-zhiwei-guo-ren-t-h=
+ead-division-of-alibaba-cloud/), I am wondering if someone can shed more li=
+ght on it.
 
-Thanks!
+I assume you want to model a number of 64-bit RISC-V CPUs and a 32-bit
+RISC-V CPU (for power control of something like that) in QEMU?
 
-Applied to riscv-to-apply.next
+That currently isn't possible. There are minimal efforts to support
+creating and running a 32-bit RISC-V CPU with the 64-bit binary, but
+that currently doesn't work. I don't think anyone is actively working
+on it either. The next step of running both at the same time shouldn't
+be too hard after that. It's already possible for 32/64-bit ARM CPUs.
 
 Alistair
 
-> ---
->  hw/intc/riscv_aplic.c | 1 +
->  1 file changed, 1 insertion(+)
 >
-> diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-> index 6a7fbfa861..fc5df0d598 100644
-> --- a/hw/intc/riscv_aplic.c
-> +++ b/hw/intc/riscv_aplic.c
-> @@ -488,6 +488,7 @@ static uint32_t riscv_aplic_idc_claimi(RISCVAPLICStat=
-e *aplic, uint32_t idc)
->
->      if (!topi) {
->          aplic->iforce[idc] =3D 0;
-> +        riscv_aplic_idc_update(aplic, idc);
->          return 0;
->      }
->
-> --
-> 2.43.2
->
+> Thanks,
+> Igor
 >
 
