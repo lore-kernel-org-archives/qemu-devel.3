@@ -4,79 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 463C0C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 12:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8537CC47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 13:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rneTp-0006ZV-2O; Fri, 22 Mar 2024 08:58:41 -0400
+	id 1rneZm-0001fL-4s; Fri, 22 Mar 2024 09:04:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rneTm-0006Yb-Fu
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 08:58:38 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rneTk-0004Un-NH
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 08:58:38 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-55a179f5fa1so2925515a12.0
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 05:58:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711112315; x=1711717115; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GWM6ZDeJKwoezpXfxD9FjRUizC2BeHNICr/OOtH40rM=;
- b=ccaIiCbzkkM/Z1YNsvPVmZtX6PAWhWg4MITQlDlZ9UtEjcM0l72q+5MyNwsNJp4Kt6
- vZamHpAjJ/c2B+EV+ONbgQbcUkn72cIEEI5suDLgasvwTH+Z4I7UaVff3zw20jaLrfYq
- RZnpV3w6DO0ceAynY7K7aiZ13ecI5qRgeSLqIVx0thfrzup4l7FU/5UU07Z5Q33boVng
- 8X/W+Jzk+AuQyyKuJ9Mk4Z8wAvO5pE63CFEVmre8ovEcfO9e4GEJmHz9JUIelGlNVCoo
- MpV+Z7woOVg/eO2DeCGf86L+R8siuqLvNzp4MKqQf8ltCiK2pDASlUE42syWCVQXxhuG
- ATzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711112315; x=1711717115;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GWM6ZDeJKwoezpXfxD9FjRUizC2BeHNICr/OOtH40rM=;
- b=PUnNgDWXTOIL5pqXpIK0dVV/viuNYcHiqMFsm5UJV9XUXJjPEASsrANW0Ts/lY8JLF
- 2GWUcVyD9wdrhFD6isYdTq0sjx9D+gSUs5XMsOzHwGJ1AYb1npVmvrOGFy4RVURY9D4+
- 5uQkURWQw8l9VpSQfXC7UVDpJQh5fkBSEBh/D+OK5/ZgPd2n2HAbL+aTKqrrTiqEUh89
- KTjMfnKnRt2xSjCUZ/tubSCjxwGVKq0nFxdCsfqTvdT2AxUOWKIALTw0HiQPV40yCmDj
- u7e/9iYQ3BNMARUcZn+9k+ztWSGdp/dwJ3D948V1mkxow1nEPKgkt75J7ZloXgs8M1Nk
- WBJg==
-X-Gm-Message-State: AOJu0YxxVp3ruXJgPR23X60shbloyXtzvUsU6yJLOMW9zhiiIgoBRlZO
- tlbNeeHQPEiagL6Fn/cfH73jDPdX4ICtI8ybzldrUPm9CJ6cMFVMxFc1Qp4Le6tguIDvvW18fOw
- PnNS6mtkYXV07rQp/OKjBxhQ/gKXR4KJYsLbiE6AsE5WRjw0h
-X-Google-Smtp-Source: AGHT+IFptQIagiPub/5RjGeDmwZs7MFKbb3FreOdiLCOz8wpUWoWZo24Hu7T2GzGaw5sqxPg8EDCQnmqt4WCmQ4+d6I=
-X-Received: by 2002:a50:d559:0:b0:567:a318:ac0b with SMTP id
- f25-20020a50d559000000b00567a318ac0bmr1657909edj.16.1711112314859; Fri, 22
- Mar 2024 05:58:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <christian.poetzsch@kernkonzept.com>)
+ id 1rnc5V-0008Ni-DF
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:25:27 -0400
+Received: from serv1.kernkonzept.com ([2a01:4f8:1c1c:b490::2]
+ helo=mx.kernkonzept.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <christian.poetzsch@kernkonzept.com>)
+ id 1rnc5S-0000Bh-CP
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:25:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:Content-Type:
+ MIME-Version:Message-Id:Date:Subject:Cc:To:From:References:In-Reply-To:
+ Reply-To:Content-ID:Content-Description;
+ bh=uddgZXDiTzQQfpiNSJyLx5dFmvoi3NpsRnqm37BqGtk=; b=DtaDmNE8XeL/FuE43g8/HyOglQ
+ ZD2B/44nck15qzEX/gACG8/ZOApjHs5LfcMDoKDViGV9+ZoARopmscgIUNmgRASXiEMRuyu5FoG2I
+ dgs6rDmOZYHIWkW4aCalA5j2pDYDuxHgVyuSjLB67IFTiePu2Q/DifyRi5WbeZAGTqNp6YdnxV/9J
+ rO3Qs8Y++JqciL6k8WYXuSoJFxF68w9enuwpWjT9fViGh9saEZUZA9WguW8DMODmUW+9Y/vqMljhd
+ SP78aKjzebAfHDwbE+tQQgUP1s4COKCWsLrR7ZXAQoPhp5rqZIDor1r5K0x0k3VTD1bMPe2m/sXqL
+ u5LpXEqA==;
+Received: from ip92349c68.dynamic.kabel-deutschland.de ([146.52.156.104]
+ helo=iris.dd1.int.kernkonzept.com) by mx.kernkonzept.com with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
+ id 1rnc5J-007ZAZ-0I; Fri, 22 Mar 2024 11:25:13 +0100
+From: =?UTF-8?q?Christian=20P=C3=B6tzsch?= <christian.poetzsch@kernkonzept.com>
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Christian=20P=C3=B6tzsch?= <christian.poetzsch@kernkonzept.com>
+Subject: [PATCH] Add support for abs info in vhost-user-input
+Date: Fri, 22 Mar 2024 11:24:21 +0100
+Message-Id: <20240322102421.2158139-1-christian.poetzsch@kernkonzept.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-References: <20240321172251.1542718-1-stefanha@redhat.com>
-In-Reply-To: <20240321172251.1542718-1-stefanha@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 22 Mar 2024 12:58:24 +0000
-Message-ID: <CAFEAcA8fcp1Bzi9mya+tDE53jjRKJdF3JyCCZkoPd+TG7mVi7w@mail.gmail.com>
-Subject: Re: [PULL for-9.0 0/1] Block patches
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a01:4f8:1c1c:b490::2;
+ envelope-from=christian.poetzsch@kernkonzept.com; helo=mx.kernkonzept.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 22 Mar 2024 09:04:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,35 +70,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 21 Mar 2024 at 17:23, Stefan Hajnoczi <stefanha@redhat.com> wrote:
->
-> The following changes since commit fea445e8fe9acea4f775a832815ee22bdf2b02=
-22:
->
->   Merge tag 'pull-maintainer-final-for-real-this-time-200324-1' of https:=
-//gitlab.com/stsquad/qemu into staging (2024-03-21 10:31:56 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/stefanha/qemu.git tags/block-pull-request
->
-> for you to fetch changes up to 9352f80cd926fe2dde7c89b93ee33bb0356ff40e:
->
->   coroutine: reserve 5,000 mappings (2024-03-21 13:14:30 -0400)
->
-> ----------------------------------------------------------------
-> Pull request
->
-> I was too quick in sending the coroutine pool sizing change for -rc0 and =
-still
-> needed to address feedback from Daniel Berrang=C3=A9.
->
+Absolute input device did not work, cause VIRTIO_INPUT_CFG_ABS_INFO is
+missing. Fetch this info when available and provide it to any virtio
+client.
 
+This is basically the same code as in hw/input/virtio-input-host.c, just
+modified to work here.
 
-Applied, thanks.
+Signed-off-by: Christian Pötzsch <christian.poetzsch@kernkonzept.com>
+---
+ contrib/vhost-user-input/main.c | 46 +++++++++++++++++++++++++++++++--
+ 1 file changed, 44 insertions(+), 2 deletions(-)
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
-for any user-visible changes.
+diff --git a/contrib/vhost-user-input/main.c b/contrib/vhost-user-input/main.c
+index 081230da54..9506e34d04 100644
+--- a/contrib/vhost-user-input/main.c
++++ b/contrib/vhost-user-input/main.c
+@@ -272,6 +272,32 @@ vi_bits_config(VuInput *vi, int type, int count)
+     g_array_append_val(vi->config, bits);
+ }
+ 
++static void
++vi_input_abs_config(VuInput *vi, int axis)
++{
++    virtio_input_config config;
++    struct input_absinfo absinfo;
++    int rc;
++
++    rc = ioctl(vi->evdevfd, EVIOCGABS(axis), &absinfo);
++    if (rc < 0) {
++        return;
++    }
++
++    memset(&config, 0, sizeof(config));
++    config.select = VIRTIO_INPUT_CFG_ABS_INFO;
++    config.subsel = axis;
++    config.size   = sizeof(struct input_absinfo);
++
++    config.u.abs.min  = cpu_to_le32(absinfo.minimum);
++    config.u.abs.max  = cpu_to_le32(absinfo.maximum);
++    config.u.abs.fuzz = cpu_to_le32(absinfo.fuzz);
++    config.u.abs.flat = cpu_to_le32(absinfo.flat);
++    config.u.abs.res  = cpu_to_le32(absinfo.resolution);
++
++    g_array_append_val(vi->config, config);
++}
++
+ static char *opt_evdev;
+ static int opt_fdnum = -1;
+ static char *opt_socket_path;
+@@ -297,11 +323,12 @@ main(int argc, char *argv[])
+ {
+     GMainLoop *loop = NULL;
+     VuInput vi = { 0, };
+-    int rc, ver, fd;
+-    virtio_input_config id;
++    int rc, ver, fd, i, axis;
++    virtio_input_config id, *abs;
+     struct input_id ids;
+     GError *error = NULL;
+     GOptionContext *context;
++    uint8_t byte;
+ 
+     context = g_option_context_new(NULL);
+     g_option_context_add_main_entries(context, entries, NULL);
+@@ -375,6 +402,21 @@ main(int argc, char *argv[])
+     vi_bits_config(&vi, EV_ABS, ABS_CNT);
+     vi_bits_config(&vi, EV_MSC, MSC_CNT);
+     vi_bits_config(&vi, EV_SW,  SW_CNT);
++
++    abs = vi_find_config(&vi, VIRTIO_INPUT_CFG_EV_BITS, EV_ABS);
++    if (abs) {
++        for (i = 0; i < abs->size; i++) {
++            byte = abs->u.bitmap[i];
++            axis = 8 * i;
++            while (byte) {
++                if (byte & 1) {
++                    vi_input_abs_config(&vi, axis);
++                }
++                axis++;
++                byte >>= 1;
++            }
++        }
++    }
+     g_debug("config length: %u", vi.config->len);
+ 
+     if (opt_socket_path) {
+-- 
+2.39.2
 
--- PMM
 
