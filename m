@@ -4,79 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F2EC54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 08:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21224C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 08:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnaTP-0000MA-B5; Fri, 22 Mar 2024 04:41:59 -0400
+	id 1rnabg-00025Q-Bc; Fri, 22 Mar 2024 04:50:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1rnaTH-0000H4-Qc
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 04:41:55 -0400
-Received: from mgamail.intel.com ([192.198.163.8])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1rnabf-00025F-25
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 04:50:31 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1rnaTE-00075O-O4
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 04:41:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711096909; x=1742632909;
- h=from:to:cc:subject:in-reply-to:references:date:
- message-id:mime-version;
- bh=lUc29sDLNaxzdQqbXFTr/bw/3I6o0uIxECNwJmIeNUw=;
- b=lfeSdHk9SfCHD271/Oy2Q4KxMU6w7JcRVb8wFpJ6/PFY1o1Nk+Yr+rf0
- BxJYDMok3sHAYkDIUYK2ffwFcxH5KAD1rwmX64MQnSBuj5XVrNTWpBHiR
- ToI02DBncwhg+i3ZtmT1IBvHY8ZJf0h86rgOaZWSyQukqblzkXb8Ejvlk
- E3UGKqJGybYJGHDH0PDKIrn93kbo2Z5ClrMp5xIXSt2zJTvTYBZ4wg8WB
- Gd4HUQOXwRxs3h/VVm5hu7/lVM13XfwmYVLFts5KDhWq3DeKcAUrJX+On
- LtW5Z9QLnEUX4BJCnPQpAxCY9aKdxm3pPUER2gOnMxZXeDi6Nm3loHyaE A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="23620920"
-X-IronPort-AV: E=Sophos;i="6.07,145,1708416000"; d="scan'208";a="23620920"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Mar 2024 01:41:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,145,1708416000"; d="scan'208";a="19487739"
-Received: from yhuang6-desk2.sh.intel.com (HELO
- yhuang6-desk2.ccr.corp.intel.com) ([10.238.208.55])
- by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 22 Mar 2024 01:41:38 -0700
-From: "Huang, Ying" <ying.huang@intel.com>
-To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Cc: "Gregory Price" <gourry.memverge@gmail.com>,
- aneesh.kumar@linux.ibm.com,  mhocko@suse.com,  tj@kernel.org,
- john@jagalactic.com,  "Eishan Mirakhur" <emirakhur@micron.com>,
- "Vinicius Tavares Petrucci" <vtavarespetr@micron.com>,  "Ravis OpenSrc"
- <Ravis.OpenSrc@micron.com>,  "Alistair Popple" <apopple@nvidia.com>,
- "Srinivasulu Thanneeru" <sthanneeru@micron.com>,  Dan Williams
- <dan.j.williams@intel.com>,  Vishal Verma <vishal.l.verma@intel.com>,
- Dave Jiang <dave.jiang@intel.com>,  Andrew Morton
- <akpm@linux-foundation.org>,  nvdimm@lists.linux.dev,
- linux-cxl@vger.kernel.org,  linux-kernel@vger.kernel.org,
- linux-mm@kvack.org,  "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,  "Ho-Ren
- (Jack) Chuang" <horenchuang@gmail.com>,  qemu-devel@nongnu.org,  Hao Xiang
- <hao.xiang@bytedance.com>
-Subject: Re: [PATCH v4 2/2] memory tier: create CPUless memory tiers after
- obtaining HMAT info
-In-Reply-To: <20240322070356.315922-3-horenchuang@bytedance.com> (Ho-Ren
- Chuang's message of "Fri, 22 Mar 2024 07:03:55 +0000")
-References: <20240322070356.315922-1-horenchuang@bytedance.com>
- <20240322070356.315922-3-horenchuang@bytedance.com>
-Date: Fri, 22 Mar 2024 16:39:44 +0800
-Message-ID: <87cyrmr773.fsf@yhuang6-desk2.ccr.corp.intel.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1rnabR-0000Po-0G
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 04:50:29 -0400
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id CFED83FB77
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 08:50:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1711097408;
+ bh=1NPyyWq4majbmi+xcXjpt8YWDG2Op46iJhonn7+pXvc=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=S6j0j8T3iLp78mBd2ydeKqFq48q41zDPvicqmzqLaI24DUDt2MxnYrxsO7l0nhwof
+ 9RrroDXD9K4bsYCNMUu+BDR6r1itMxuByFjSdCfT3LNKFgptqy1Qjw7AWwxiDlR0hm
+ ot+yCRlJkgGaoa1AtX3Wn7w5ZQKh+x9Su6LhpnOWQqC32lYWc6i5GTHLdjGo/+Dwyg
+ YfYqZyJrwlvnao3ts8BDSIGL0tN0QCU/sfmMk/CRw+zpBZXJmjrH/tDOzGlUuqhWSg
+ 8dK8cRbaZfs5hMsxbuDpsmahl/akpfBaT4DrJA5Ilq0jnT0sXv1Nw1nB0nZUDbsxXH
+ gLn9y43+LzKiQ==
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-33ed8677d16so924861f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 01:50:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711097408; x=1711702208;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1NPyyWq4majbmi+xcXjpt8YWDG2Op46iJhonn7+pXvc=;
+ b=sheIZwAlpo03w3VqxGtstROEOxkHlOd3Cqtaag7JDK1JyuNVnctbYQEDksI9qiLK1H
+ isIJf6qGA/zG3PH5USew5lGRmReW6m4c2vdtc7AzeUgvSrLsDgveLFjFnchvjia9CZod
+ zYvRsJSnva1JXA0ZLJWjFl7Z9p2UilqC4RoQhnrWIZYdgMIUqW5FSQTc1cGjFYGY+pw7
+ ohLxb4YKcHgzOfC3wa5sEVVpCqUHYNpV8eUTbNlfcVtfoRyNL4FZcyxvjtwkBvSojMux
+ l056fUYxAOXNk7KUk6x47Xl+UrjT9xfe1ux8eGT4YpofYZU0/ez7ABdO3U7T9Lrd9dIm
+ JG2g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX4HUUTyTfbdS+jC+KH+9BYpDONdNE/DvQ6OztpUYHVUaccC3moYZcVyy6uYDKp5iRnZKI6pNRreAe5m0ztjZ+vbjAqFpk=
+X-Gm-Message-State: AOJu0Yz+45hIuQ76LDugdRKhxhO3EunsXPRxF7xuTeMdPEOwJDS58YhI
+ 2tkkc0h2wS0kADFbekNOLuzuIB6tDo7OhKFOQOa/hFNF6OSaydh53H8MOw/mSTQwV4HA85xL28h
+ 1SKjmdFjxP2fQIf0xCuNQq7wm0BeW6igqyelA7O7ioqk6s9HayFyhasoO0xNk4EGiNFFM
+X-Received: by 2002:a5d:5506:0:b0:33e:6ac:691b with SMTP id
+ b6-20020a5d5506000000b0033e06ac691bmr1064549wrv.9.1711097408280; 
+ Fri, 22 Mar 2024 01:50:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGf1SKFbtIZlVsgcDgnCK3o0R6C9ULWWIbfzhDWzRDzmP94uEOEmxqdwaBYKvL89leuB6rfEQ==
+X-Received: by 2002:a5d:5506:0:b0:33e:6ac:691b with SMTP id
+ b6-20020a5d5506000000b0033e06ac691bmr1064516wrv.9.1711097407859; 
+ Fri, 22 Mar 2024 01:50:07 -0700 (PDT)
+Received: from [192.168.123.161]
+ (ip-062-143-245-032.um16.pools.vodafone-ip.de. [62.143.245.32])
+ by smtp.gmail.com with ESMTPSA id
+ bs20-20020a056000071400b0033e18421618sm1571856wrb.17.2024.03.22.01.50.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Mar 2024 01:50:07 -0700 (PDT)
+Message-ID: <ebd63aa1-b4e7-490a-bdef-d952c8e37c47@canonical.com>
+Date: Fri, 22 Mar 2024 09:50:12 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ascii
-Received-SPF: pass client-ip=192.198.163.8; envelope-from=ying.huang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.372,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v2 2/2] hw/riscv: Add server platform reference machine
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ andrei.warkentin@intel.com, shaolin.xie@alibaba-inc.com, ved@rivosinc.com,
+ sunilvl@ventanamicro.com, haibo1.xu@intel.com, evan.chai@intel.com,
+ yin.wang@intel.com, tech-server-platform@lists.riscv.org,
+ tech-server-soc@lists.riscv.org, atishp@rivosinc.com,
+ ajones@ventanamicro.com, conor@kernel.org, Fei Wu <fei2.wu@intel.com>,
+ Alistair Francis <alistair23@gmail.com>
+References: <20240312135222.3187945-1-fei2.wu@intel.com>
+ <20240312135222.3187945-3-fei2.wu@intel.com>
+ <CAKmqyKN-Yj-HZrR2MtxD2jC=JR6nFn5cEq866EXm0OfaEydXsQ@mail.gmail.com>
+ <cfac29ce-f353-4bbd-8e8d-4a7d40bf80e3@linaro.org>
+Content-Language: en-US
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+In-Reply-To: <cfac29ce-f353-4bbd-8e8d-4a7d40bf80e3@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.372,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,218 +120,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+On 3/22/24 08:14, Marcin Juszkiewicz wrote:
+> W dniu 22.03.2024 o 05:55, Alistair Francis pisze:
+>> I see no mention of device trees in the spec, but I do see ACPI. Do we
+>> really expect a server platform to use DTs?
+> 
+> This platform "kind of" follows sbsa-ref where we have very minimalistic 
+> device tree sharing information qemu->firmware.
+> 
+> libfdt is small, format is known and describes hardware. Firmware is 
+> free to make use of it in any way it wants.
+> 
+> On sbsa-ref we parse DT in TF-A (base firmware) and provide hardware 
+> information to higher level (edk2) via SMC mechanism. Then EDK2 creates 
+> ACPI tables and provide them to the Operating System.
 
-> The current implementation treats emulated memory devices, such as
-> CXL1.1 type3 memory, as normal DRAM when they are emulated as normal memory
-> (E820_TYPE_RAM). However, these emulated devices have different
-> characteristics than traditional DRAM, making it important to
-> distinguish them. Thus, we modify the tiered memory initialization process
-> to introduce a delay specifically for CPUless NUMA nodes. This delay
-> ensures that the memory tier initialization for these nodes is deferred
-> until HMAT information is obtained during the boot process. Finally,
-> demotion tables are recalculated at the end.
->
-> * late_initcall(memory_tier_late_init);
-> Some device drivers may have initialized memory tiers between
-> `memory_tier_init()` and `memory_tier_late_init()`, potentially bringing
-> online memory nodes and configuring memory tiers. They should be excluded
-> in the late init.
->
-> * Handle cases where there is no HMAT when creating memory tiers
-> There is a scenario where a CPUless node does not provide HMAT information.
-> If no HMAT is specified, it falls back to using the default DRAM tier.
->
-> * Introduce another new lock `default_dram_perf_lock` for adist calculation
-> In the current implementation, iterating through CPUlist nodes requires
-> holding the `memory_tier_lock`. However, `mt_calc_adistance()` will end up
-> trying to acquire the same lock, leading to a potential deadlock.
-> Therefore, we propose introducing a standalone `default_dram_perf_lock` to
-> protect `default_dram_perf_*`. This approach not only avoids deadlock
-> but also prevents holding a large lock simultaneously.
->
-> * Upgrade `set_node_memory_tier` to support additional cases, including
->   default DRAM, late CPUless, and hot-plugged initializations.
-> To cover hot-plugged memory nodes, `mt_calc_adistance()` and
-> `mt_find_alloc_memory_type()` are moved into `set_node_memory_tier()` to
-> handle cases where memtype is not initialized and where HMAT information is
-> available.
->
-> * Introduce `default_memory_types` for those memory types that are not
->   initialized by device drivers.
-> Because late initialized memory and default DRAM memory need to be managed,
-> a default memory type is created for storing all memory types that are
-> not initialized by device drivers and as a fallback.
->
-> Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
-> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> ---
->  mm/memory-tiers.c | 73 ++++++++++++++++++++++++++++++++++++++++-------
->  1 file changed, 63 insertions(+), 10 deletions(-)
->
-> diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
-> index 974af10cfdd8..9396330fa162 100644
-> --- a/mm/memory-tiers.c
-> +++ b/mm/memory-tiers.c
-> @@ -36,6 +36,11 @@ struct node_memory_type_map {
->  
->  static DEFINE_MUTEX(memory_tier_lock);
->  static LIST_HEAD(memory_tiers);
-> +/*
-> + * The list is used to store all memory types that are not created
-> + * by a device driver.
-> + */
-> +static LIST_HEAD(default_memory_types);
->  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
->  struct memory_dev_type *default_dram_type;
->  
-> @@ -108,6 +113,7 @@ static struct demotion_nodes *node_demotion __read_mostly;
->  
->  static BLOCKING_NOTIFIER_HEAD(mt_adistance_algorithms);
->
-> +static DEFINE_MUTEX(default_dram_perf_lock);
+We should ensure that only either an ACPI table or a device-tree 
+description is passed to the OS and not both, e.g. when using
 
-Better to add comments about what is protected by this lock.
+     qemu-system-riscv64 -kernel vmlinux -M sbsa-ref
 
->  static bool default_dram_perf_error;
->  static struct access_coordinate default_dram_perf;
->  static int default_dram_perf_ref_nid = NUMA_NO_NODE;
-> @@ -505,7 +511,8 @@ static inline void __init_node_memory_type(int node, struct memory_dev_type *mem
->  static struct memory_tier *set_node_memory_tier(int node)
->  {
->  	struct memory_tier *memtier;
-> -	struct memory_dev_type *memtype;
-> +	struct memory_dev_type *mtype;
+But that requirement is not machine specific.
 
-mtype may be referenced without initialization now below.
+Best regards
 
-> +	int adist = MEMTIER_ADISTANCE_DRAM;
->  	pg_data_t *pgdat = NODE_DATA(node);
->  
->  
-> @@ -514,11 +521,20 @@ static struct memory_tier *set_node_memory_tier(int node)
->  	if (!node_state(node, N_MEMORY))
->  		return ERR_PTR(-EINVAL);
->  
-> -	__init_node_memory_type(node, default_dram_type);
-> +	mt_calc_adistance(node, &adist);
-> +	if (node_memory_types[node].memtype == NULL) {
-> +		mtype = mt_find_alloc_memory_type(adist, &default_memory_types);
-> +		if (IS_ERR(mtype)) {
-> +			mtype = default_dram_type;
-> +			pr_info("Failed to allocate a memory type. Fall back.\n");
-> +		}
-> +	}
->  
-> -	memtype = node_memory_types[node].memtype;
-> -	node_set(node, memtype->nodes);
-> -	memtier = find_create_memory_tier(memtype);
-> +	__init_node_memory_type(node, mtype);
-> +
-> +	mtype = node_memory_types[node].memtype;
-> +	node_set(node, mtype->nodes);
-> +	memtier = find_create_memory_tier(mtype);
->  	if (!IS_ERR(memtier))
->  		rcu_assign_pointer(pgdat->memtier, memtier);
->  	return memtier;
-> @@ -655,6 +671,34 @@ void mt_put_memory_types(struct list_head *memory_types)
->  }
->  EXPORT_SYMBOL_GPL(mt_put_memory_types);
->  
-> +/*
-> + * This is invoked via `late_initcall()` to initialize memory tiers for
-> + * CPU-less memory nodes after driver initialization, which is
-> + * expected to provide `adistance` algorithms.
-> + */
-> +static int __init memory_tier_late_init(void)
-> +{
-> +	int nid;
-> +
-> +	mutex_lock(&memory_tier_lock);
-> +	for_each_node_state(nid, N_MEMORY)
-> +		if (!node_state(nid, N_CPU) &&
-> +			node_memory_types[nid].memtype == NULL)
-> +			/*
-> +			 * Some device drivers may have initialized memory tiers
-> +			 * between `memory_tier_init()` and `memory_tier_late_init()`,
-> +			 * potentially bringing online memory nodes and
-> +			 * configuring memory tiers. Exclude them here.
-> +			 */
-> +			set_node_memory_tier(nid);
-> +
-> +	establish_demotion_targets();
-> +	mutex_unlock(&memory_tier_lock);
-> +
-> +	return 0;
-> +}
-> +late_initcall(memory_tier_late_init);
-> +
->  static void dump_hmem_attrs(struct access_coordinate *coord, const char *prefix)
->  {
->  	pr_info(
-> @@ -668,7 +712,7 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
->  {
->  	int rc = 0;
->  
-> -	mutex_lock(&memory_tier_lock);
-> +	mutex_lock(&default_dram_perf_lock);
->  	if (default_dram_perf_error) {
->  		rc = -EIO;
->  		goto out;
-> @@ -716,7 +760,7 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
->  	}
->  
->  out:
-> -	mutex_unlock(&memory_tier_lock);
-> +	mutex_unlock(&default_dram_perf_lock);
->  	return rc;
->  }
->  
-> @@ -732,7 +776,7 @@ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
->  	    perf->read_bandwidth + perf->write_bandwidth == 0)
->  		return -EINVAL;
->  
-> -	mutex_lock(&memory_tier_lock);
-> +	mutex_lock(&default_dram_perf_lock);
->  	/*
->  	 * The abstract distance of a memory node is in direct proportion to
->  	 * its memory latency (read + write) and inversely proportional to its
-> @@ -745,7 +789,7 @@ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
->  		(default_dram_perf.read_latency + default_dram_perf.write_latency) *
->  		(default_dram_perf.read_bandwidth + default_dram_perf.write_bandwidth) /
->  		(perf->read_bandwidth + perf->write_bandwidth);
-> -	mutex_unlock(&memory_tier_lock);
-> +	mutex_unlock(&default_dram_perf_lock);
->  
->  	return 0;
->  }
-> @@ -858,7 +902,8 @@ static int __init memory_tier_init(void)
->  	 * For now we can have 4 faster memory tiers with smaller adistance
->  	 * than default DRAM tier.
->  	 */
-> -	default_dram_type = alloc_memory_type(MEMTIER_ADISTANCE_DRAM);
-> +	default_dram_type = mt_find_alloc_memory_type(MEMTIER_ADISTANCE_DRAM,
-> +									&default_memory_types);
->  	if (IS_ERR(default_dram_type))
->  		panic("%s() failed to allocate default DRAM tier\n", __func__);
->  
-> @@ -868,6 +913,14 @@ static int __init memory_tier_init(void)
->  	 * types assigned.
->  	 */
->  	for_each_node_state(node, N_MEMORY) {
-> +		if (!node_state(node, N_CPU))
-> +			/*
-> +			 * Defer memory tier initialization on CPUless numa nodes.
-> +			 * These will be initialized after firmware and devices are
-> +			 * initialized.
-> +			 */
-> +			continue;
-> +
->  		memtier = set_node_memory_tier(node);
->  		if (IS_ERR(memtier))
->  			/*
+Heinrich
 
---
-Best Regards,
-Huang, Ying
+> 
+> In physical system some parts of information provided in DT would be 
+> read by firmware from onboard Embedded Controller chip.
+> 
+>> These functions should be shared with the virt machine if we really do
+>> want DTs, but I'm not convinced we do
+> 
+
 
