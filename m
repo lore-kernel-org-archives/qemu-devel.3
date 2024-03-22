@@ -4,72 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A93DEC47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 14:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F03C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 15:02:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rngLz-0001vx-4p; Fri, 22 Mar 2024 10:58:43 -0400
+	id 1rngOz-0003QS-4f; Fri, 22 Mar 2024 11:01:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rngLv-0001st-1J
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:58:39 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rngLt-0006f4-3r
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:58:38 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E33EA582B1;
- Fri, 22 Mar 2024 17:59:48 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1A96BA0903;
- Fri, 22 Mar 2024 17:58:27 +0300 (MSK)
-Message-ID: <f4866402-bcee-447a-89fc-c5dd3128770c@tls.msk.ru>
-Date: Fri, 22 Mar 2024 17:58:26 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rngOv-0003Q0-Nz
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 11:01:45 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rngOt-0007Y2-Pr
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 11:01:45 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-33d90dfe73cso1266189f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 08:01:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711119701; x=1711724501; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=V6b+ejAGAOE5/dAtCKvwYsyIRYzDFgfqlgX0jMwzj8M=;
+ b=liDdevaD5AmS5Vskdcqj+oV9huS7OducCW5j2UFeMPRV/1op51Am964n1ni2EbZ9v8
+ ybCnUIlpsu9TrSs+QvD7AXbpNj55HwcImw5onQZXwUjQbZYupZpGdd8qsMrDex6IiV5d
+ 2GYbl0Nx8banwy70+eJ1iUqQf1gxFDSv0Vh0DCgslxEvAltfX2M1RmEW7A07n2IOdkDx
+ XEO4DSAlB4YOyln24iMaoyI5ea+gC3DIbTMeMkKtQh1/JSvGe/lhOoeX3/BLpEwL5wO2
+ 2Hrgg03zGYBuFOEh6/vdf+MYbZ28BG0iaFYh7HRRNyzF43z2Y9ysAhUQb9foOwv2Kre9
+ BZNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711119701; x=1711724501;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=V6b+ejAGAOE5/dAtCKvwYsyIRYzDFgfqlgX0jMwzj8M=;
+ b=WkEHKdLvALO3R/fuoN0WqEt+croMedED5qD2rcSBeUNqmm9ol+4r2LyJ+oTCm0KDB5
+ fqXSA0Q0DX5qY9/l5SQtTnlPWhj932QrQ0+EahzVazSHI1RnoGb07zalPmvuy2TBJE1S
+ PwGn5AXMGIGjlbr2dMl+mz9fmo+nOH1q1w7ttvpPsI1670m5uFQ2QtaSRDUYEnL4sZ0p
+ ljFtlvNbHxTfgiDyyZKSRjchzJBYHdi2aajsghe5AznuTPHSeBneo+aUI+epKmhO1IDT
+ AhqDofo/PaV/tGtxewxvBL3V1oV/iCC5rQYifDFg9iqTavmoz2jc/95p+/1ao36DoC/w
+ nalw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXSkRNW+9EgK7Ogx4zojq1V8/BCzTw9fGxTZcGmawAjSrFcEq56ucFFVxnVpKFGuHhVOeluLTtiC5iA1l0j2OeW4vHxsB0=
+X-Gm-Message-State: AOJu0YyGP/MpNIWI1UiP/qFyu224FSiGYBuEHgciJTQ/A9Y0D+T44ovf
+ 9YYliV1N5PvkWX5HYPpt+wM2fnYP4XHaZTIycuQiReKVIMuBzptFLi9qM9whiB8=
+X-Google-Smtp-Source: AGHT+IGrMdMljSWdmBKnfotmBiqrI8DrbPlT5+ZYG28JQBxyDU3y5+jWNQMhLaKdusBQh1TrfD6mtg==
+X-Received: by 2002:a5d:5441:0:b0:33e:d2f3:cbff with SMTP id
+ w1-20020a5d5441000000b0033ed2f3cbffmr2164040wrv.23.1711119700957; 
+ Fri, 22 Mar 2024 08:01:40 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.178.251])
+ by smtp.gmail.com with ESMTPSA id
+ x3-20020adfcc03000000b0033e41e1ad93sm2230173wrh.57.2024.03.22.08.01.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Mar 2024 08:01:40 -0700 (PDT)
+Message-ID: <4ffb9edb-f4c3-4775-b05e-00d233ca2e65@linaro.org>
+Date: Fri, 22 Mar 2024 16:01:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/1] target/loongarch: Fix qemu-system-loongarch64 assert
- failed with the option '-d int'
+Subject: Re: [PATCH for-9.0 v2] vhost-vdpa: check vhost_vdpa_set_vring_ready()
+ return value
 Content-Language: en-US
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240322100323.1973836-1-gaosong@loongson.cn>
- <20240322100323.1973836-2-gaosong@loongson.cn>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240322100323.1973836-2-gaosong@loongson.cn>
+To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, mst@redhat.com, lulu@redhat.com, eperezma@redhat.com,
+ Jason Wang <jasowang@redhat.com>
+References: <20240322092315.31885-1-sgarzare@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240322092315.31885-1-sgarzare@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,20 +97,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-22.03.2024 13:03, Song Gao :
-> qemu-system-loongarch64 assert failed with the option '-d int',
-> the helper_idle() raise an exception EXCP_HLT, but the exception name is undefined.
+On 22/3/24 10:23, Stefano Garzarella wrote:
+> vhost_vdpa_set_vring_ready() could already fail, but if Linux's
+> patch [1] will be merged, it may fail with more chance if
+> userspace does not activate virtqueues before DRIVER_OK when
+> VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated.
 > 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Message-Id: <20240321123606.1704900-1-gaosong@loongson.cn>
+> So better check its return value anyway.
+> 
+> [1] https://lore.kernel.org/virtualization/20240206145154.118044-1-sgarzare@redhat.com/T/#u
+> 
+> Acked-by: Eugenio Pérez <eperezma@redhat.com>
+> Acked-by: Jason Wang <jasowang@redhat.com>
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
+> Based-on: 20240315155949.86066-1-kwolf@redhat.com
+> 
+> v1: https://patchew.org/QEMU/20240207092702.25242-1-sgarzare@redhat.com/
+> v2:
+>   - added acks
+>   - rebased on top of https://patchew.org/QEMU/20240315155949.86066-1-kwolf@redhat.com/
+> ---
+>   net/vhost-vdpa.c | 15 ++++++++++++---
+>   1 file changed, 12 insertions(+), 3 deletions(-)
 
-Is this another qemu-stable material?  You Cc'd it to me but I'm not sure
-what should I do with it.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-For patches suitable for -stable, please Cc: qemu-stable@nongnu.org.
-
-Thanks,
-
-/mjt
 
