@@ -4,81 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11C60C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 16:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A72BC47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 16:31:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnhkt-0002tq-5j; Fri, 22 Mar 2024 12:28:31 -0400
+	id 1rnhn6-00044I-QR; Fri, 22 Mar 2024 12:30:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnhkr-0002tY-To
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 12:28:29 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rnhn4-0003zV-4R
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 12:30:46 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rnhkp-0003UN-A3
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 12:28:29 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4140aadfe2eso17361285e9.1
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 09:28:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rnhms-0003yn-4E
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 12:30:45 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-51588f70d2dso2698796e87.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 09:30:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711124905; x=1711729705; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=7QdAIBvFnVQkIHc7ZXX6yGjuUKjHY2VoM4j0omCFJVI=;
- b=kK/7B6v31BXRDgCol18Ej57kO4zj6yrKNQ6EWtwZNj14hWoQ7+AJ/Xgb50tyXww/EP
- jclLsCItyTQXpfjI7WKoS1YEsCJgAef3l3J+glz7dqEyA7x71/bFUZBhYMZrOn12fgjw
- 6KaFltra4tlld8nk2m0EGX+lV8ifIxW5t+96RPXz6Rw+Mt8Z214XSTqeYI+OpiP/up5j
- VYVyQwTsVJlu4+cZ7Y9f5VB3F5fd07ty8y/c3DCrBNrtzMB8oY1kAedE+Gaehy1TEFu1
- WDjPnqUbrCjv/ue0OcAMDHkNMkO4b5Hr7V4VUth8R0Zii2gktRHGuZfi9rnXp21zPD20
- R1jQ==
+ d=linaro.org; s=google; t=1711125032; x=1711729832; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=uPweuQzZHN3q2pc8FHLfq/14jl+TvULObztzvlgzcFs=;
+ b=FrGKDeEyFWtIwj8d/naMAJNqeeix1nk3/A5oXvWu41Rx786ULB9t6oE3lLUHfRmtvt
+ W/BuX37mJI00rPOs25zlyl1DdZJ1NsMQqqFD/jlK6Ks/+Iqo9lLFNbb8ViGH+IHIoxB2
+ x0Sadx1IdxaoLNyl3iY8sr1YuPCvS3b1zUTu9KDMWnDoGIbJLOsvylvno685YIO4z0Iv
+ bl8+lZRD5JXc97g0fjYXdaZlkUb2R8DIZolOXsxlSRYVgsfd79Gz5CX8WYtYPx+OTO7r
+ UWa9oqex80y13Jx8cgtwGPHoPHlr7qm4d+YiPBuD9AudisrAzHCxJyCESMPe2extlsSk
+ vK/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711124905; x=1711729705;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1711125032; x=1711729832;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7QdAIBvFnVQkIHc7ZXX6yGjuUKjHY2VoM4j0omCFJVI=;
- b=LBMUB8ntK+AJlHVwudVvKOMiwWFWCf9JcZC+z68eNmHHWwdj5bbB2bjU4+T7SOBrqB
- qf6vqAfrq9prbGw7HloG0R/4DhXCyw6gPurFeyJA/J7kCFd3fSsaIi9lFFe0dIOcIeI/
- WLoihdKf3s1ObcU/vfjboYaSJaL60b3fCbSSiaZN+iMoIz9cjsjrkIfr28CTD0tjb2YV
- ikDt67fE6FtWI1NX47bcRg++E9FNszdGYsbcbz+h4/9goadAmBdX6S7ZLl1BYNasKwg+
- n2dHf4+b9A5LsuOiYwRQdOoV24CVwBMDi35GGT7YejbEX/rf+G19tng4Sn4YkcolcmI4
- z7Yw==
-X-Gm-Message-State: AOJu0Yy7iGaLToR1v+kYdnZqAC5XkS3xHTTPwmWcHatqmpltHVrWv9Mo
- sGlCUG8NzJ3JtnsUA0ukG2+URW6q6hyHetnzzzxoblI8Fv5TxTKvgJH+t+4513cmpHej3lyPStK
- 8
-X-Google-Smtp-Source: AGHT+IGp3OszdZpj8J8Od3tnDJNRaFgneYYJInxnxCT394gdzGwWqLgF+zz92oqjmRJu6AnPYDHwgA==
-X-Received: by 2002:adf:cb13:0:b0:33e:652b:d6db with SMTP id
- u19-20020adfcb13000000b0033e652bd6dbmr1655893wrh.23.1711124905395; 
- Fri, 22 Mar 2024 09:28:25 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.178.251])
- by smtp.gmail.com with ESMTPSA id
- p11-20020a056000018b00b0033e75e5f280sm2375905wrx.113.2024.03.22.09.28.23
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 22 Mar 2024 09:28:24 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] hw/s390x: Include missing 'cpu.h' header
-Date: Fri, 22 Mar 2024 17:28:22 +0100
-Message-ID: <20240322162822.7391-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ bh=uPweuQzZHN3q2pc8FHLfq/14jl+TvULObztzvlgzcFs=;
+ b=LO23YdgIzic+R+zpxOZUYnOOXC4tOMPGVvMll017JygGZiGzyq3P47I0f+pDiziHg6
+ psyIJHq8KkE4dx1+NsEuvwPqOOc89zWIUL8/v+5fWgBt/2OBexVrmvpzlADms+/tAdLW
+ 8p0ZQEuJT+QYQPNIlXZKEN6a2tH42MEz0jndBVJ99AK2ZCrd1333v+8XOxcI7S2cNsW4
+ XT57hHb89zx1hUdt6zTTMo7NpsJ9MFqcWJ+8QL6uzErJUUteYsPbagUKtxst5Pk5/TnG
+ OrTXufyn2DGUly3797B02JUg1RUhSUlGX/VN5oL/EGuGIUoaY9zpZbrLPCTcLAJb87PL
+ cldA==
+X-Gm-Message-State: AOJu0YzwWpYwqdrmSebkGsEBDr8T3ZCVyxjGgOMDQT1lgXPOhb4/ilBD
+ qWD7hEVIu/8MIxWy+3IkedckMmrBurB96hcBt1DXQ+XEdk2c623eRp6FCI2i7/r4CGw31vZDNO1
+ g3OdvBLJrGHiH5E7eag0VLCJiGLGhWxXqLK6lPg==
+X-Google-Smtp-Source: AGHT+IHJuDCUZoF/JNYMwvSwigfJ1T/APDQjpvroUuSPK1lk8PWw7MIQDve5DNYduDoz4RvDp0EOTQ6qDnxmPTTr0/Y=
+X-Received: by 2002:ac2:5b84:0:b0:515:9b0f:1235 with SMTP id
+ o4-20020ac25b84000000b005159b0f1235mr1406003lfn.67.1711125032094; Fri, 22 Mar
+ 2024 09:30:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+References: <20240320202100.820228-1-balbi@kernel.org>
+In-Reply-To: <20240320202100.820228-1-balbi@kernel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 22 Mar 2024 16:30:21 +0000
+Message-ID: <CAFEAcA9+JVFJROVGj=8RkfmBGqjODdWgE0Qw6HrZrHjhefSf1g@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Add support for STM32G0 SoC family
+To: Felipe Balbi <balbi@kernel.org>
+Cc: qemu-devel@nongnu.org, Samuel Tardieu <sam@rfc1149.net>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,60 +86,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"cpu.h" is implicitly included. Include it explicitly to
-avoid the following error when refactoring headers:
+On Wed, 20 Mar 2024 at 20:22, Felipe Balbi <balbi@kernel.org> wrote:
+>
+> Hi all,
+>
+> These two patches add support for STM32G0 family and nucleo-g071rb
+> board. Patches have been tested with minimal embedded rust examples.
+>
+> Changes since v1:
+>
+>   - Patch 1:
+>     - Convert tabs to spaces (checkpatch.pl)
+>     - Correct lines longer than 80 characters (checkpatch.pl)
+>     - Correct num-prio-bits (Samuel Tardieu)
+>     - Correct num-irqs (Found reviewing RM0444)
+>
+>   - Patch 2:
+>     - Convert tabs to spaces (checkpatch.pl)
+>
+> Felipe Balbi (2):
+>   hw/arm: Add support for stm32g000 SoC family
+>   hw/arm: Add nucleo-g071rb board
+>
+>  MAINTAINERS                    |  13 ++
+>  hw/arm/Kconfig                 |  12 ++
+>  hw/arm/meson.build             |   2 +
+>  hw/arm/nucleo-g071rb.c         |  70 +++++++++
+>  hw/arm/stm32g000_soc.c         | 253 +++++++++++++++++++++++++++++++++
+>  include/hw/arm/stm32g000_soc.h |  62 ++++++++
 
-  hw/s390x/s390-stattrib.c:86:40: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
-      len = sac->peek_stattr(sas, addr / TARGET_PAGE_SIZE, buflen, vals);
-                                         ^
-  hw/s390x/s390-stattrib.c:94:58: error: use of undeclared identifier 'TARGET_PAGE_MASK'
-                     addr / TARGET_PAGE_SIZE, len, addr & ~TARGET_PAGE_MASK);
-                                                         ^
-  hw/s390x/s390-stattrib.c:224:40: error: use of undeclared identifier 'TARGET_PAGE_BITS'
-          qemu_put_be64(f, (start_gfn << TARGET_PAGE_BITS) | STATTR_FLAG_MORE);
-                                         ^
-  In file included from hw/s390x/s390-virtio-ccw.c:17:
-  hw/s390x/s390-virtio-hcall.h:22:27: error: unknown type name 'CPUS390XState'
-  int s390_virtio_hypercall(CPUS390XState *env);
-                            ^
+Hi; I've left review comments on the two patches in this series.
+There are a couple of "missing pieces" here:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/s390x/s390-virtio-hcall.h | 2 ++
- hw/s390x/s390-stattrib.c     | 1 +
- 2 files changed, 3 insertions(+)
+(1) documentation. Arm board documentation is in rst format
+in docs/system/arm/. You can either add the information for
+this board to the existing stm32.rst which documents the other
+STM32 boards we model, or if you think it's too different to
+share a source file you can create a new one with the same
+kind of structure. (Using the existing stm32.rst seems likely
+to be best to me.)
 
-diff --git a/hw/s390x/s390-virtio-hcall.h b/hw/s390x/s390-virtio-hcall.h
-index 9800c4b351..3ae6d6ae3a 100644
---- a/hw/s390x/s390-virtio-hcall.h
-+++ b/hw/s390x/s390-virtio-hcall.h
-@@ -13,6 +13,7 @@
- #define HW_S390_VIRTIO_HCALL_H
- 
- #include "standard-headers/asm-s390/virtio-ccw.h"
-+#include "cpu.h"
- 
- /* The only thing that we need from the old kvm_virtio.h file */
- #define KVM_S390_VIRTIO_NOTIFY 0
-@@ -20,4 +21,5 @@
- typedef int (*s390_virtio_fn)(const uint64_t *args);
- void s390_register_virtio_hypercall(uint64_t code, s390_virtio_fn fn);
- int s390_virtio_hypercall(CPUS390XState *env);
-+
- #endif /* HW_S390_VIRTIO_HCALL_H */
-diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
-index c483b62a9b..aaf48ac73f 100644
---- a/hw/s390x/s390-stattrib.c
-+++ b/hw/s390x/s390-stattrib.c
-@@ -19,6 +19,7 @@
- #include "exec/ram_addr.h"
- #include "qapi/error.h"
- #include "qapi/qmp/qdict.h"
-+#include "cpu.h"
- 
- /* 512KiB cover 2GB of guest memory */
- #define CMMA_BLOCK_SIZE  (512 * KiB)
--- 
-2.41.0
+(2) tests. Are there any conveniently publicly available guest
+images from some URL that doesn't mind our CI downloading from
+it, that would run on the board model as it is? If so, we could
+consider writing an avocado test (these live in tests/avocado/),
+which basically can do "run QEMU with this image and look for
+this output on the serial port". This is a "nice-to-have", not
+a requirement.
 
+thanks
+-- PMM
 
