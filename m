@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C1B0C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D8FC54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnjNa-0007j9-6l; Fri, 22 Mar 2024 14:12:34 -0400
+	id 1rnjRw-0005cM-0A; Fri, 22 Mar 2024 14:17:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjNV-00079i-PV
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjNE-00073E-58
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711131131;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=glw032yBeIofkVgO0zZmbqSSWrrsI8f/pRheVVoaBak=;
- b=dVV0FNGvdPj3MQeTf21YJEincnKZOo6g4uS9bPQq/R5dxod3OKj4eTTQJsi8zKvOvM5xO0
- PK4NKH8q0UQAbNUcPzKeYsBWhGW403kDQTsq3bvus+BkDBRoJ1sJ7iTxLABINrJZAczbUf
- QCdtmRj4Ztla8JAhYhcdhdLQofu/qGc=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-153-Tw3O3nnGMfyTcYVPdp2NeQ-1; Fri, 22 Mar 2024 14:12:09 -0400
-X-MC-Unique: Tw3O3nnGMfyTcYVPdp2NeQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a473ac9d263so23012166b.1
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:12:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rnjRn-0005ZJ-SO
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:16:56 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rnjRg-00083Z-DC
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:16:51 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-56890b533aaso3001610a12.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:16:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711131403; x=1711736203; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=stdoSV9ntZpVzVEx7ecukiuBxB08z1i9BkzJV8hxl/0=;
+ b=RYHy9qBI5tM4+iUlIOahGvPrd4EMnaaPazJQqe2rnharrmj0Rn4uKh2UkYa3jpVFGb
+ znqL7vM+jBACoS4hZvhbIE1/TYiPG7yXFkkgXHbHRch7Aij5BoULRa/IxPHN2Ud242pH
+ 1GslWRh01UdhZSh6PLKOLimQ5WxnBAObg+N0ZTKKdpEoi4LjviSRFg7PXpqczNUa8v2k
+ LcoqEL2oqW4eQBBtKrQLuFjTIwKpX2ViYFCLbOqJ0aP3pMlKfU9CDPYkKtz8U0k7lLCA
+ sAi3q7Xb5dwjMMjrJv5et08zEz3WpvDn60PWfxyRvIXgZi6DOrmMmB5OmfRO+HrJUoPr
+ f51Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711131127; x=1711735927;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1711131403; x=1711736203;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=glw032yBeIofkVgO0zZmbqSSWrrsI8f/pRheVVoaBak=;
- b=UR+NvpsijiTHmOSAQxSMstoxTEqTeQbIPSPu4p/7mbsrHOgiDqx3GnoFLvaf7gMF9L
- HIuDSuf/SrgyCCNjEaWHw3xyxbT50R09oJWaHkdciN5mIR+8dEn4b3rRGrm2ZPzt9oPF
- jSkYUr38wrA981QSsMfn1bRZdsu7DDQlpW16CO+05PELnBRucqdL0E0MZ5s/fZiQOPU8
- 5UMds9Fb0+i6g3Yr+ZXruv4uKo2wB35fwpuHC8F/RWRcfPDRYag4ivmE5/px3zq9NSPu
- +gdG78nW7D6hc5wtzEAYfpX5wxPOuwKLi8t8SuFxUvHn9o8PWbJa2gumq0rCOJHTEfbZ
- 6fPg==
-X-Gm-Message-State: AOJu0YyM66rc0QWCYUp+exq2GFdK0RX2uJ6xbyHCXNuG37CGs3ToKqGt
- tjve1VBciOnUXU1t5N9JuHKhYFkmDM4BNUFv4RnTgAjExt2rz7nZSUWpqlZDH7lkXCNXfu0VGKP
- D3tO5SvaPrPwilSq4mQljDD93QfP06EvXliHuQdnPaWuVQGBbDnYsOdhrFAgOuhf+S+Kg9fSb42
- JI2YuX2fQ+ykjxnUnzU6kzrrRr7cAyAL0nykHN
-X-Received: by 2002:a17:907:100a:b0:a46:930c:825d with SMTP id
- ox10-20020a170907100a00b00a46930c825dmr329304ejb.69.1711131126920; 
- Fri, 22 Mar 2024 11:12:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG/456wzOKa22BBbylk9Aii2/PupSKVyb3Gt79gUIG4JGhkjVOsg6h4mBB97NQdgu0/7oRing==
-X-Received: by 2002:a17:907:100a:b0:a46:930c:825d with SMTP id
- ox10-20020a170907100a00b00a46930c825dmr329290ejb.69.1711131126572; 
- Fri, 22 Mar 2024 11:12:06 -0700 (PDT)
-Received: from [192.168.10.118] ([151.95.49.219])
- by smtp.gmail.com with ESMTPSA id
- bm6-20020a170906c04600b00a46b4544da2sm70727ejb.125.2024.03.22.11.12.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 11:12:05 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: xiaoyao.li@intel.com,
-	michael.roth@amd.com,
-	david@redhat.com
-Subject: [PATCH 15/26] target/i386: Implement mc->kvm_type() to get VM type
-Date: Fri, 22 Mar 2024 19:11:05 +0100
-Message-ID: <20240322181116.1228416-16-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240322181116.1228416-1-pbonzini@redhat.com>
-References: <20240322181116.1228416-1-pbonzini@redhat.com>
+ bh=stdoSV9ntZpVzVEx7ecukiuBxB08z1i9BkzJV8hxl/0=;
+ b=RPg6BUnHea6BWa5f+96CeCvatHtZagjjPWNRPOeQjCL6ogmFzn+EmT6UpOVK7MBbVv
+ fPVBnGRuLkdci0myj7I6fHY28hXYlSHGUPbaiNUUwgHizwHIpXUQ+fziZN6zZvAjmDib
+ hmp3B531WWaRRsVN7glbCULFXbUF0GG8g6HtMMau1mSOtOekxUeCylso5XXoppDFUc9M
+ Y1D+lRX/GZ6/NIJdf6T4QMQnkBUHbHmA3pm5McblMFJkzEuDA+WbAlNY1cPeD+A8POf2
+ xSdsSfwFx6GO68PzhOqxjbz950NZdOAwhScBirCEH2M8eDAdfaPCFya6OxAl5AC07jlz
+ nL5w==
+X-Gm-Message-State: AOJu0YzyifqNB39r/qF2BM0ZUO3+c7uyxSWqPX9EYV5iEDI0E6Fvw27z
+ TAxkb25Ae/w2RjAvoazoKmLUmmid819iiEh13RlvRZDpVl0p12P9HDZy83Y8VP8PsZxGDy9dVvY
+ l8yTj87Lka+RlirLhdvPcA1zvnZOk+e+obs8NLA==
+X-Google-Smtp-Source: AGHT+IFptiuLSPSGbYBXGwmJ7Q7QjxVYjapjmrxVMPKXgTngjcg6a5uzO+HA3/RVPIxhnQuAnuKOFyKl0uc1xrsosHk=
+X-Received: by 2002:a50:d5d5:0:b0:567:504e:e779 with SMTP id
+ g21-20020a50d5d5000000b00567504ee779mr206413edj.25.1711131402884; Fri, 22 Mar
+ 2024 11:16:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20240317103918.44375-1-arnaud.minier@telecom-paris.fr>
+ <20240317103918.44375-8-arnaud.minier@telecom-paris.fr>
+In-Reply-To: <20240317103918.44375-8-arnaud.minier@telecom-paris.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 22 Mar 2024 18:16:32 +0000
+Message-ID: <CAFEAcA8KjiaBHpMYQXrTBV3xG4Paqx82v6iFms_i2jwO2i2Fsg@mail.gmail.com>
+Subject: Re: [PATCH 7/7] tests/qtest: Add tests for the STM32L4x5 USART
+To: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Cc: qemu-devel@nongnu.org, Samuel Tardieu <samuel.tardieu@telecom-paris.fr>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
+ qemu-arm@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.222,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,181 +95,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM is introducing a new API to create confidential guests, which
-will be used by TDX and SEV-SNP but is also available for SEV and
-SEV-ES.  The API uses the VM type argument to KVM_CREATE_VM to
-identify which confidential computing technology to use.
+On Sun, 17 Mar 2024 at 10:42, Arnaud Minier
+<arnaud.minier@telecom-paris.fr> wrote:
+>
+> Test:
+> - read/write from/to the usart registers
+> - send/receive a character/string over the serial port
+>
+> The test to detect overrun is implemented but disabled
+> because overruns are currently impossible due to how we signal
+> in the USART when we are ready to receive a new character.
+>
+> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+> ---
 
-Since there are no other expected uses of VM types, delegate
-mc->kvm_type() for x86 boards to the confidential-guest-support
-object pointed to by ms->cgs.
 
-For example, if a sev-guest object is specified to confidential-guest-support,
-like,
 
-  qemu -machine ...,confidential-guest-support=sev0 \
-       -object sev-guest,id=sev0,...
+> --- /dev/null
+> +++ b/tests/qtest/stm32l4x5_usart-test.c
+> @@ -0,0 +1,399 @@
+> +/*
+> + * QTest testcase for STML4X5_USART
+> + *
+> + * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> + * Copyright (c) 2023 In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or la=
+ter.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "libqtest-single.h"
+> +#include "hw/misc/stm32l4x5_rcc_internals.h"
+> +#include "hw/registerfields.h"
+> +
+> +/*
+> + * All page references in the following test
+> + * refer to the ST RM0351 Reference Manuel.
 
-it will check if a VM type KVM_X86_SEV_VM or KVM_X86_SEV_ES_VM
-is supported, and if so use them together with the KVM_SEV_INIT2
-function of the KVM_MEMORY_ENCRYPT_OP ioctl. If not, it will fall back to
-KVM_SEV_INIT and KVM_SEV_ES_INIT.
+"Manual". Also, what page references? I couldn't see any
+from a quick scroll through.
 
-This is a preparatory work towards TDX and SEV-SNP support, but it
-will also enable support for VMSA features such as DebugSwap, which
-are only available via KVM_SEV_INIT2.
 
-Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/confidential-guest.h | 19 ++++++++++++++
- target/i386/kvm/kvm_i386.h       |  2 ++
- hw/i386/x86.c                    | 11 ++++++++
- target/i386/kvm/kvm.c            | 44 ++++++++++++++++++++++++++++++++
- 4 files changed, 76 insertions(+)
+> + */
+> +
+> +#define RCC_BASE_ADDR 0x40021000
+> +/* Use USART 1 ADDR, assume the others work the same */
+> +#define USART1_BASE_ADDR 0x40013800
+> +
+> +/* See stm32l4x5_usart for definitions */
+> +REG32(CR1, 0x00)
+> +    FIELD(CR1, M1, 28, 1)
+> +    FIELD(CR1, OVER8, 15, 1)
+> +    FIELD(CR1, M0, 12, 1)
+> +    FIELD(CR1, PCE, 10, 1)
+> +    FIELD(CR1, TXEIE, 7, 1)
+> +    FIELD(CR1, RXNEIE, 5, 1)
+> +    FIELD(CR1, TE, 3, 1)
+> +    FIELD(CR1, RE, 2, 1)
+> +    FIELD(CR1, UE, 0, 1)
+> +REG32(CR2, 0x04)
+> +REG32(CR3, 0x08)
+> +    FIELD(CR3, OVRDIS, 12, 1)
+> +REG32(BRR, 0x0C)
+> +REG32(GTPR, 0x10)
+> +REG32(RTOR, 0x14)
+> +REG32(RQR, 0x18)
+> +REG32(ISR, 0x1C)
+> +    FIELD(ISR, TXE, 7, 1)
+> +    FIELD(ISR, RXNE, 5, 1)
+> +    FIELD(ISR, ORE, 3, 1)
+> +REG32(ICR, 0x20)
+> +REG32(RDR, 0x24)
+> +REG32(TDR, 0x28)
+> +
+> +#define NVIC_ISPR1 0XE000E204
+> +#define NVIC_ICPR1 0xE000E284
+> +#define USART1_IRQ 37
+> +
+> +static bool check_nvic_pending(QTestState *qts, unsigned int n)
+> +{
+> +    /* No USART interrupts are less than 32 */
+> +    if (n < 32) {
+> +        return false;
+> +    }
 
-diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
-index ca12d5a8fba..532e172a60b 100644
---- a/target/i386/confidential-guest.h
-+++ b/target/i386/confidential-guest.h
-@@ -36,5 +36,24 @@ struct X86ConfidentialGuest {
- struct X86ConfidentialGuestClass {
-     /* <private> */
-     ConfidentialGuestSupportClass parent;
-+
-+    /* <public> */
-+    int (*kvm_type)(X86ConfidentialGuest *cg);
- };
-+
-+/**
-+ * x86_confidential_guest_kvm_type:
-+ *
-+ * Calls #X86ConfidentialGuestClass.unplug callback of @plug_handler.
-+ */
-+static inline int x86_confidential_guest_kvm_type(X86ConfidentialGuest *cg)
-+{
-+    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
-+
-+    if (klass->kvm_type) {
-+        return klass->kvm_type(cg);
-+    } else {
-+        return 0;
-+    }
-+}
- #endif
-diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-index 30fedcffea3..6b44844d95d 100644
---- a/target/i386/kvm/kvm_i386.h
-+++ b/target/i386/kvm/kvm_i386.h
-@@ -37,6 +37,7 @@ bool kvm_hv_vpindex_settable(void);
- bool kvm_enable_sgx_provisioning(KVMState *s);
- bool kvm_hyperv_expand_features(X86CPU *cpu, Error **errp);
- 
-+int kvm_get_vm_type(MachineState *ms);
- void kvm_arch_reset_vcpu(X86CPU *cs);
- void kvm_arch_after_reset_vcpu(X86CPU *cpu);
- void kvm_arch_do_init_vcpu(X86CPU *cs);
-@@ -49,6 +50,7 @@ void kvm_request_xsave_components(X86CPU *cpu, uint64_t mask);
- 
- #ifdef CONFIG_KVM
- 
-+bool kvm_is_vm_type_supported(int type);
- bool kvm_has_adjust_clock_stable(void);
- bool kvm_has_exception_payload(void);
- void kvm_synchronize_all_tsc(void);
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index 84a48019770..3d5b51e92db 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -1381,6 +1381,16 @@ static void machine_set_sgx_epc(Object *obj, Visitor *v, const char *name,
-     qapi_free_SgxEPCList(list);
- }
- 
-+static int x86_kvm_type(MachineState *ms, const char *vm_type)
-+{
-+    /*
-+     * No x86 machine has a kvm-type property.  If one is added that has
-+     * it, it should call kvm_get_vm_type() directly or not use it at all.
-+     */
-+    assert(vm_type == NULL);
-+    return kvm_enabled() ? kvm_get_vm_type(ms) : 0;
-+}
-+
- static void x86_machine_initfn(Object *obj)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
-@@ -1405,6 +1415,7 @@ static void x86_machine_class_init(ObjectClass *oc, void *data)
-     mc->cpu_index_to_instance_props = x86_cpu_index_to_props;
-     mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
-     mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
-+    mc->kvm_type = x86_kvm_type;
-     x86mc->save_tsc_khz = true;
-     x86mc->fwcfg_dma_enabled = true;
-     nc->nmi_monitor_handler = x86_nmi;
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 0ec69109a2b..b599a7fae36 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -31,6 +31,7 @@
- #include "sysemu/kvm_int.h"
- #include "sysemu/runstate.h"
- #include "kvm_i386.h"
-+#include "../confidential-guest.h"
- #include "sev.h"
- #include "xen-emu.h"
- #include "hyperv.h"
-@@ -161,6 +162,49 @@ static KVMMSRHandlers msr_handlers[KVM_MSR_FILTER_MAX_RANGES];
- static RateLimit bus_lock_ratelimit_ctrl;
- static int kvm_get_one_msr(X86CPU *cpu, int index, uint64_t *value);
- 
-+static const char *vm_type_name[] = {
-+    [KVM_X86_DEFAULT_VM] = "default",
-+};
-+
-+bool kvm_is_vm_type_supported(int type)
-+{
-+    uint32_t machine_types;
-+
-+    /*
-+     * old KVM doesn't support KVM_CAP_VM_TYPES but KVM_X86_DEFAULT_VM
-+     * is always supported
-+     */
-+    if (type == KVM_X86_DEFAULT_VM) {
-+        return true;
-+    }
-+
-+    machine_types = kvm_check_extension(KVM_STATE(current_machine->accelerator),
-+                                        KVM_CAP_VM_TYPES);
-+    return !!(machine_types & BIT(type));
-+}
-+
-+int kvm_get_vm_type(MachineState *ms)
-+{
-+    int kvm_type = KVM_X86_DEFAULT_VM;
-+
-+    if (ms->cgs) {
-+        if (!object_dynamic_cast(OBJECT(ms->cgs), TYPE_X86_CONFIDENTIAL_GUEST)) {
-+            error_report("configuration type %s not supported for x86 guests",
-+                         object_get_typename(OBJECT(ms->cgs)));
-+            exit(1);
-+        }
-+        kvm_type = x86_confidential_guest_kvm_type(
-+            X86_CONFIDENTIAL_GUEST(ms->cgs));
-+    }
-+
-+    if (!kvm_is_vm_type_supported(kvm_type)) {
-+        error_report("vm-type %s not supported by KVM", vm_type_name[kvm_type]);
-+        exit(1);
-+    }
-+
-+    return kvm_type;
-+}
-+
- bool kvm_has_smm(void)
- {
-     return kvm_vm_check_extension(kvm_state, KVM_CAP_X86_SMM);
--- 
-2.44.0
+I think this would be better as an assert() -- it would be
+a bug in the test case if it called this with a bad interrupt number.
 
+> +    n -=3D 32;
+> +    return qtest_readl(qts, NVIC_ISPR1) & (1 << n);
+> +}
+> +
+> +static bool clear_nvic_pending(QTestState *qts, unsigned int n)
+> +{
+> +    /* No USART interrupts are less than 32 */
+> +    if (n < 32) {
+> +        return false;
+> +    }
+
+Similarly here.
+
+> +    n -=3D 32;
+> +    qtest_writel(qts, NVIC_ICPR1, (1 << n));
+> +    return true;
+> +}
+> +
+> +static void usart_writel(unsigned int offset, uint32_t value)
+> +{
+> +    writel(USART1_BASE_ADDR + offset, value);
+> +}
+> +
+> +static uint32_t usart_readl(unsigned int offset)
+> +{
+> +    return readl(USART1_BASE_ADDR + offset);
+> +}
+> +
+> +static bool usart_wait_for_flag(QTestState *qts, uint32_t event_addr, ui=
+nt32_t flag)
+> +{
+> +    /* Wait at most 5 seconds */
+> +    for (int i =3D 0; i < 5000; i++) {
+> +        if ((qtest_readl(qts, event_addr) & flag)) {
+> +            return true;
+> +        }
+> +        g_usleep(1000);
+> +    }
+
+qtest tests should never need to sleep(). If you need to advance
+the guest clock, use clock_step(). If this is because we've sent some
+data to the UART over the socket and need to wait for it to appear
+in the QEMU process, that might be trickier, but I would see if
+advancing the guest clock works reliably for that.
+
+In general having tests which encode "wait for some wallclock
+time" is flaky, because while it might be plenty of time on your
+fast development machine, it can cause intermittent failures due
+to timeouts if the test is on some heavily-loaded slow CI runner.
+
+I note that the microbit version of this "wait for the UART"
+has a timeout of 10 minutes.
+
+> +
+> +    return false;
+> +}
+
+
+
+> +int main(int argc, char **argv)
+> +{
+> +    int ret;
+> +
+> +    g_test_init(&argc, &argv, NULL);
+> +    g_test_set_nonfatal_assertions();
+> +
+> +    qtest_add_func("stm32l4x5/usart/write_read", test_write_read);
+> +    qtest_add_func("stm32l4x5/usart/receive_char", test_receive_char);
+> +    qtest_add_func("stm32l4x5/usart/send_char", test_send_char);
+> +    qtest_add_func("stm32l4x5/usart/receive_str", test_receive_str);
+> +    qtest_add_func("stm32l4x5/usart/send_str", test_send_str);
+> +    /* Disabled tests */
+> +    if (false) {
+> +        qtest_add_func("stm32l4x5/usart/overrun", test_overrun);
+> +    }
+
+If the test doesn't work because QEMU's implementation never
+generates overruns, I would just not put it in the file, rather
+than having dead code we never run.
+
+> +    qtest_start("-machine b-l475e-iot01a");
+> +    ret =3D g_test_run();
+> +    qtest_end();
+> +
+> +    return ret;
+> +}
+
+thanks
+-- PMM
 
