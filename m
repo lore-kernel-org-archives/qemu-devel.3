@@ -4,82 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEBC2C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2608C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnamU-0004Qt-17; Fri, 22 Mar 2024 05:01:44 -0400
+	id 1rnaqk-0005zb-7b; Fri, 22 Mar 2024 05:06:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnam3-00044E-7h
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:01:18 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rnaqj-0005zM-19
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:06:05 -0400
+Received: from mail-qk1-x72b.google.com ([2607:f8b0:4864:20::72b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnals-0002Ir-I1
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:01:07 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-6e682dbd84bso1074611a34.0
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:01:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1rnaqg-00032P-PG
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:06:04 -0400
+Received: by mail-qk1-x72b.google.com with SMTP id
+ af79cd13be357-78a06e38527so131754585a.2
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:06:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711098063; x=1711702863; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1711098361; x=1711703161; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lzkJtzrD2AZguEnLS9WQcNcwiid6ehuxGtzXZnitJe4=;
- b=f1/O59xpDS4zk7rA0tzHAdf1xLmUhj2xlBzqg4acmk8fpnCXZAN2lUy/Pj5gi+ztqL
- DpA7AIm1nRhQ7Ho9LBjls1e5vmHORzp1Qizvm3FMaE5VblqT6bH9ni4CzQvXNHMe4oTv
- ctLOZzrvceke5ffiFQrHdog9/6Hoe/SwFxsNjdYBrtDQRPlZ9xuScNfmdRMXi8/oSj7g
- dOHrDtixEqtQ10itnweBQw3fqr2ULwRy+OY05RdP2XZC4wXa/JKvWK+qUoleCVsunzJ6
- SV7LAciOYyBwLMrkcEvwSEyMtBWAi7XeS/ijpvxuU2n+HTlcaE2Xp6X/Rk0SQ6rlCkG/
- 4c1g==
+ bh=lfuw8aehbErLcbZDWQAcA7Ny8GXzd/Gxk3vUhvUcf2Y=;
+ b=mdmcrVC5IwDPc877eCE7ouI0rSgDlhmxtyG9gt+w5VftDbou02gJZtlU0iJPhzVEBu
+ WXMANDAsnCDGQKbZEmVV/9jignP0zdJslNh7xzueRdrvy/lxqBvjerriV6GT9SYKshjx
+ 5FqEcDZ3lOsQ3O/IlpqqPmv6fGBzswtGubsh/ugypruk/UWaOyHupfZfLHDtcsm17ebm
+ Ymw4cPyLNLaC1iUWQNH6CVdc8xSx7n8G4E5VZKlAPUdxXuBa0s8p0yNvG8HhYBjFc4+M
+ /ieT7xA2yyye3uls2ranpjtxNkQnUdolQKNZXqmw+eUWsE5PVCpDuak80Yg9XHDgseA8
+ TLhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711098063; x=1711702863;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1711098361; x=1711703161;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lzkJtzrD2AZguEnLS9WQcNcwiid6ehuxGtzXZnitJe4=;
- b=rpPBGLUfZ6Uipa0DqkM8Rt0MWA/bStcncU9+j/U8M3XjT/6kwPOAu3G2WYpruLdEKR
- rOWpIh+Frcp8rcaZUr+eKHcL47B2S0gt1rY+nTIsj63MyipMApinQVGSC6v6mu5sC96Q
- QK9znc/2SVc57/+aL9daXEX58wjVafkzof1PdzbMZvRXfaulP+mBiOPpsKgbJaw5xLSf
- sUhpFUjqhxoPWTxYW7lT7k8zIAckUeyAKeRwDuBY5+aigOUfJGmAtUe1czL95cBfU3pJ
- aDEvL0Or4ZwbBEuig94HHbkZdNzkeFiyJsWFzm1dgZNSGaGz55bTCbC8tVvbLH51NtBP
- A9hw==
-X-Gm-Message-State: AOJu0YxWmkdw8AlDBd78IJZv1heqv8MkCYyNEJRZ/9n/0VFEH7XcDA7O
- pJpeLZnm5vXVq0/IPWRGrIC4QFApY0fltSreG96jXMzKq/ui1bas9RFt+waGlsNMMA==
-X-Google-Smtp-Source: AGHT+IHwqv/deqV5zgpjCzyHMjJ+ZTFkX/ftR4m6i8LpO3G7q5qpZxxK0apbaD4mZdKV/hPbE+phIw==
-X-Received: by 2002:a05:6a21:789d:b0:1a3:5090:7268 with SMTP id
- bf29-20020a056a21789d00b001a350907268mr2219119pzc.47.1711097636249; 
- Fri, 22 Mar 2024 01:53:56 -0700 (PDT)
-Received: from toolbox.wdc.com ([129.253.180.114])
- by smtp.gmail.com with ESMTPSA id
- h5-20020a170902680500b001ddde07af12sm1369048plk.143.2024.03.22.01.53.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 01:53:55 -0700 (PDT)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 08/15] target/riscv: remove 'over' brconds from vector trans
-Date: Fri, 22 Mar 2024 18:53:12 +1000
-Message-ID: <20240322085319.1758843-9-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240322085319.1758843-1-alistair.francis@wdc.com>
-References: <20240322085319.1758843-1-alistair.francis@wdc.com>
+ bh=lfuw8aehbErLcbZDWQAcA7Ny8GXzd/Gxk3vUhvUcf2Y=;
+ b=xDCwIfMNew93+OuxRygrDGC38Zp2RvPtUoUMxgqXbpCnxiM/m/x2JRbrJqC75qzZlM
+ p9K8AmT9ZHY4+DN2SuGxZjsj4ASxcHxJUk1/n8aGdQnF6+GfPOlGA2FsDfokY6isz1FJ
+ 3cPkSpd6FKk8o5Cdk9mmXAaDwT33vC/1ng+9fDCqfxZPXNTeBfHeiUCPDJ/QCEaJ2CkY
+ kM+VtCJS3aMLnbWxNvydFr+gRTsJAlH1E17dcGTyU0Uk3CfosZr/B7019cptGIlYZjHl
+ 0l7TTvhjZIYZikT1uz8D92VCEPjXzt8dFVBm/i9WnnNGnicwsOj7fSJ3dGsZo3sxVcbY
+ VVUQ==
+X-Gm-Message-State: AOJu0YzJrx8rhDH5pVCMIklnYbtKc4l9MP7AJ9VbwSqFqV/W0ZNpuzcp
+ dcbMal8tZwqTB3JFCdcSGFAQmmCVihjwqpGPtUfdqZPhhBFh+BVoy6sTxNq4rlfj6M3aBGWiJRh
+ tuIAKJbeQUIr6tLLObZOW9s/mJdY=
+X-Google-Smtp-Source: AGHT+IE1BcSrWx8PyWKIRaYHOVSbreqkaP59uSS0aPHZWkvKFyTacYeISWA4Vl4NJfcbREMUKTfaN6pfAQEGk7t460k=
+X-Received: by 2002:a05:622a:4b18:b0:431:3034:e626 with SMTP id
+ et24-20020a05622a4b1800b004313034e626mr1180173qtb.10.1711098361327; Fri, 22
+ Mar 2024 02:06:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=alistair23@gmail.com; helo=mail-ot1-x32a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+References: <20240321234236.3476163-1-dongwon.kim@intel.com>
+ <20240321234236.3476163-4-dongwon.kim@intel.com>
+In-Reply-To: <20240321234236.3476163-4-dongwon.kim@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Fri, 22 Mar 2024 13:05:49 +0400
+Message-ID: <CAJ+F1CK0uaTxEG87wkRi7OoN3-RH1wMuwCpMD7hdobWhcp_MMw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] ui/console: Introduce dpy_gl_create_dmabuf() helper
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x72b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,776 +90,391 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Hi
 
-All helpers that rely on vstart >= vl are now doing early exits using
-the VSTART_CHECK_EARLY_EXIT() macro. This macro will not only exit the
-helper but also clear vstart.
+On Fri, Mar 22, 2024 at 3:45=E2=80=AFAM <dongwon.kim@intel.com> wrote:
+>
+> From: Dongwon Kim <dongwon.kim@intel.com>
+>
+> dpy_gl_create_dmabuf() allocates QemuDmaBuf and initialize fields.
+> hw/display modules, hw/vfio and ui/dbus-listener now use this method
+> to create QemuDmaBuf instead of declaring and initializing it on their
+> own.
+>
+> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> ---
+>  include/hw/vfio/vfio-common.h   |  2 +-
+>  include/hw/virtio/virtio-gpu.h  |  4 ++--
+>  include/ui/console.h            |  6 ++++++
+>  hw/display/vhost-user-gpu.c     | 33 ++++++++++++++++++---------------
+>  hw/display/virtio-gpu-udmabuf.c | 23 ++++++++---------------
+>  hw/vfio/display.c               | 26 +++++++++++---------------
+>  ui/console.c                    | 28 ++++++++++++++++++++++++++++
+>  ui/dbus-listener.c              | 28 ++++++++++++----------------
+>  8 files changed, 86 insertions(+), 64 deletions(-)
+>
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.=
+h
+> index b9da6c08ef..d66e27db02 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -148,7 +148,7 @@ typedef struct VFIOGroup {
+>  } VFIOGroup;
+>
+>  typedef struct VFIODMABuf {
+> -    QemuDmaBuf buf;
+> +    QemuDmaBuf *buf;
+>      uint32_t pos_x, pos_y, pos_updates;
+>      uint32_t hot_x, hot_y, hot_updates;
+>      int dmabuf_id;
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gp=
+u.h
+> index ed44cdad6b..56d6e821bf 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -169,7 +169,7 @@ struct VirtIOGPUBaseClass {
+>      DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
+>
+>  typedef struct VGPUDMABuf {
+> -    QemuDmaBuf buf;
+> +    QemuDmaBuf *buf;
+>      uint32_t scanout_id;
+>      QTAILQ_ENTRY(VGPUDMABuf) next;
+>  } VGPUDMABuf;
+> @@ -238,7 +238,7 @@ struct VhostUserGPU {
+>      VhostUserBackend *vhost;
+>      int vhost_gpu_fd; /* closed by the chardev */
+>      CharBackend vhost_chr;
+> -    QemuDmaBuf dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
+> +    QemuDmaBuf *dmabuf[VIRTIO_GPU_MAX_SCANOUTS];
+>      bool backend_blocked;
+>  };
+>
+> diff --git a/include/ui/console.h b/include/ui/console.h
+> index d5334a806c..01e998264b 100644
+> --- a/include/ui/console.h
+> +++ b/include/ui/console.h
+> @@ -358,6 +358,12 @@ void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaB=
+uf *dmabuf,
+>                            bool have_hot, uint32_t hot_x, uint32_t hot_y)=
+;
+>  void dpy_gl_cursor_position(QemuConsole *con,
+>                              uint32_t pos_x, uint32_t pos_y);
+> +QemuDmaBuf *dpy_gl_create_dmabuf(uint32_t width, uint32_t height,
+> +                                 uint32_t stride, uint32_t x,
+> +                                 uint32_t y, uint32_t backing_width,
+> +                                 uint32_t backing_height, uint32_t fourc=
+c,
+> +                                 uint64_t modifier, uint32_t dmabuf_fd,
+> +                                 bool allow_fences, bool y0_top);
+>  uint32_t dpy_gl_dmabuf_get_width(QemuDmaBuf *dmabuf);
+>  uint32_t dpy_gl_dmabuf_get_height(QemuDmaBuf *dmabuf);
+>  int32_t dpy_gl_dmabuf_get_fd(QemuDmaBuf *dmabuf);
+> diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
+> index 709c8a02a1..0e49a934ed 100644
+> --- a/hw/display/vhost-user-gpu.c
+> +++ b/hw/display/vhost-user-gpu.c
+> @@ -249,6 +249,7 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostU=
+serGpuMsg *msg)
+>      case VHOST_USER_GPU_DMABUF_SCANOUT: {
+>          VhostUserGpuDMABUFScanout *m =3D &msg->payload.dmabuf_scanout;
+>          int fd =3D qemu_chr_fe_get_msgfd(&g->vhost_chr);
+> +        uint64_t modifier =3D 0;
+>          QemuDmaBuf *dmabuf;
+>
+>          if (m->scanout_id >=3D g->parent_obj.conf.max_outputs) {
+> @@ -261,30 +262,32 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, Vhos=
+tUserGpuMsg *msg)
+>
+>          g->parent_obj.enable =3D 1;
+>          con =3D g->parent_obj.scanout[m->scanout_id].con;
+> -        dmabuf =3D &g->dmabuf[m->scanout_id];
+> -        if (dmabuf->fd >=3D 0) {
+> -            close(dmabuf->fd);
+> -            dmabuf->fd =3D -1;
+> +        dmabuf =3D g->dmabuf[m->scanout_id];
+> +        if (dmabuf) {
+> +            int dmabuf_fd =3D dpy_gl_dmabuf_get_fd(dmabuf);
+> +            if (dmabuf_fd >=3D 0) {
+> +                close(dmabuf_fd);
+> +            }
+> +            dpy_gl_release_dmabuf(con, dmabuf);
+>          }
+> -        dpy_gl_release_dmabuf(con, dmabuf);
+> +
+>          if (fd =3D=3D -1) {
+>              dpy_gl_scanout_disable(con);
+>              break;
+>          }
+> -        *dmabuf =3D (QemuDmaBuf) {
+> -            .fd =3D fd,
+> -            .width =3D m->fd_width,
+> -            .height =3D m->fd_height,
+> -            .stride =3D m->fd_stride,
+> -            .fourcc =3D m->fd_drm_fourcc,
+> -            .y0_top =3D m->fd_flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP,
+> -        };
+> +
+>          if (msg->request =3D=3D VHOST_USER_GPU_DMABUF_SCANOUT2) {
+>              VhostUserGpuDMABUFScanout2 *m2 =3D &msg->payload.dmabuf_scan=
+out2;
+> -            dmabuf->modifier =3D m2->modifier;
+> +            modifier =3D m2->modifier;
+>          }
+>
+> -        dpy_gl_scanout_dmabuf(con, dmabuf);
+> +        dmabuf =3D dpy_gl_create_dmabuf(m->fd_width, m->fd_height, m->fd=
+_stride,
+> +                                      0, 0, 0, 0, m->fd_drm_fourcc, modi=
+fier,
+> +                                      fd, false, m->fd_flags &
+> +                                      VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP);
+> +
+> +        dpy_gl_scanout_dmabuf(con, g->dmabuf[m->scanout_id]);
+> +        g->dmabuf[m->scanout_id] =3D dmabuf;
+>          break;
+>      }
+>      case VHOST_USER_GPU_DMABUF_UPDATE: {
+> diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udma=
+buf.c
+> index a4ebf828ec..2bc8697d86 100644
+> --- a/hw/display/virtio-gpu-udmabuf.c
+> +++ b/hw/display/virtio-gpu-udmabuf.c
+> @@ -162,7 +162,7 @@ static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPU=
+DMABuf *dmabuf)
+>      struct virtio_gpu_scanout *scanout;
+>
+>      scanout =3D &g->parent_obj.scanout[dmabuf->scanout_id];
+> -    dpy_gl_release_dmabuf(scanout->con, &dmabuf->buf);
+> +    dpy_gl_release_dmabuf(scanout->con, dmabuf->buf);
+>      QTAILQ_REMOVE(&g->dmabuf.bufs, dmabuf, next);
+>      g_free(dmabuf);
+>  }
+> @@ -181,17 +181,10 @@ static VGPUDMABuf
+>      }
+>
+>      dmabuf =3D g_new0(VGPUDMABuf, 1);
+> -    dmabuf->buf.width =3D r->width;
+> -    dmabuf->buf.height =3D r->height;
+> -    dmabuf->buf.stride =3D fb->stride;
+> -    dmabuf->buf.x =3D r->x;
+> -    dmabuf->buf.y =3D r->y;
+> -    dmabuf->buf.backing_width =3D fb->width;
+> -    dmabuf->buf.backing_height =3D fb->height;
+> -    dmabuf->buf.fourcc =3D qemu_pixman_to_drm_format(fb->format);
+> -    dmabuf->buf.fd =3D res->dmabuf_fd;
+> -    dmabuf->buf.allow_fences =3D true;
+> -    dmabuf->buf.draw_submitted =3D false;
+> +    dmabuf->buf =3D dpy_gl_create_dmabuf(r->width, r->height, fb->stride=
+,
+> +                                       r->x, r->y, fb->width, fb->height=
+,
+> +                                       qemu_pixman_to_drm_format(fb->for=
+mat),
+> +                                       0, res->dmabuf_fd, false, 0);
+>      dmabuf->scanout_id =3D scanout_id;
+>      QTAILQ_INSERT_HEAD(&g->dmabuf.bufs, dmabuf, next);
+>
+> @@ -217,11 +210,11 @@ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
+>          old_primary =3D g->dmabuf.primary[scanout_id];
+>      }
+>
+> -    width =3D dpy_gl_dmabuf_get_width(&new_primary->buf);
+> -    height =3D dpy_gl_dmabuf_get_height(&new_primary->buf);
+> +    width =3D dpy_gl_dmabuf_get_width(new_primary->buf);
+> +    height =3D dpy_gl_dmabuf_get_height(new_primary->buf);
+>      g->dmabuf.primary[scanout_id] =3D new_primary;
+>      qemu_console_resize(scanout->con, width, height);
+> -    dpy_gl_scanout_dmabuf(scanout->con, &new_primary->buf);
+> +    dpy_gl_scanout_dmabuf(scanout->con, new_primary->buf);
+>
+>      if (old_primary) {
+>          virtio_gpu_free_dmabuf(g, old_primary);
+> diff --git a/hw/vfio/display.c b/hw/vfio/display.c
+> index 676b2fc5f3..62f5db2d54 100644
+> --- a/hw/vfio/display.c
+> +++ b/hw/vfio/display.c
+> @@ -240,15 +240,11 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPCID=
+evice *vdev,
+>      }
+>
+>      dmabuf =3D g_new0(VFIODMABuf, 1);
+> -    dmabuf->dmabuf_id  =3D plane.dmabuf_id;
+> -    dmabuf->buf.width  =3D plane.width;
+> -    dmabuf->buf.height =3D plane.height;
+> -    dmabuf->buf.backing_width =3D plane.width;
+> -    dmabuf->buf.backing_height =3D plane.height;
+> -    dmabuf->buf.stride =3D plane.stride;
+> -    dmabuf->buf.fourcc =3D plane.drm_format;
+> -    dmabuf->buf.modifier =3D plane.drm_format_mod;
+> -    dmabuf->buf.fd     =3D fd;
+> +    dmabuf->dmabuf_id =3D plane.dmabuf_id;
+> +    dmabuf->buf =3D dpy_gl_create_dmabuf(plane.width, plane.height, plan=
+e.stride,
+> +                                       0, 0, plane.width, plane.height,
+> +                                       plane.drm_format, plane.drm_forma=
+t_mod,
+> +                                       fd, false, 0);
+>      if (plane_type =3D=3D DRM_PLANE_TYPE_CURSOR) {
+>          vfio_display_update_cursor(dmabuf, &plane);
+>      }
+> @@ -262,12 +258,12 @@ static void vfio_display_free_one_dmabuf(VFIODispla=
+y *dpy, VFIODMABuf *dmabuf)
+>      int fd;
+>
+>      QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
+> -    fd =3D dpy_gl_dmabuf_get_fd(&dmabuf->buf);
+> +    fd =3D dpy_gl_dmabuf_get_fd(dmabuf->buf);
+>      if (fd > -1) {
+>          close(fd);
+>      }
+>
+> -    dpy_gl_release_dmabuf(dpy->con, &dmabuf->buf);
+> +    dpy_gl_release_dmabuf(dpy->con, dmabuf->buf);
+>      g_free(dmabuf);
+>  }
+>
+> @@ -303,13 +299,13 @@ static void vfio_display_dmabuf_update(void *opaque=
+)
+>          return;
+>      }
+>
+> -    width =3D dpy_gl_dmabuf_get_width(&primary->buf);
+> -    height =3D dpy_gl_dmabuf_get_height(&primary->buf);
+> +    width =3D dpy_gl_dmabuf_get_width(primary->buf);
+> +    height =3D dpy_gl_dmabuf_get_height(primary->buf);
+>
+>      if (dpy->dmabuf.primary !=3D primary) {
+>          dpy->dmabuf.primary =3D primary;
+>          qemu_console_resize(dpy->con, width, height);
+> -        dpy_gl_scanout_dmabuf(dpy->con, &primary->buf);
+> +        dpy_gl_scanout_dmabuf(dpy->con, primary->buf);
+>          free_bufs =3D true;
+>      }
+>
+> @@ -323,7 +319,7 @@ static void vfio_display_dmabuf_update(void *opaque)
+>      if (cursor && (new_cursor || cursor->hot_updates)) {
+>          bool have_hot =3D (cursor->hot_x !=3D 0xffffffff &&
+>                           cursor->hot_y !=3D 0xffffffff);
+> -        dpy_gl_cursor_dmabuf(dpy->con, &cursor->buf, have_hot,
+> +        dpy_gl_cursor_dmabuf(dpy->con, cursor->buf, have_hot,
+>                               cursor->hot_x, cursor->hot_y);
+>          cursor->hot_updates =3D 0;
+>      } else if (!cursor && new_cursor) {
+> diff --git a/ui/console.c b/ui/console.c
+> index 69560aac7e..f3920e7713 100644
+> --- a/ui/console.c
+> +++ b/ui/console.c
+> @@ -1132,6 +1132,33 @@ void dpy_gl_cursor_position(QemuConsole *con,
+>      }
+>  }
+>
+> +QemuDmaBuf *dpy_gl_create_dmabuf(uint32_t width, uint32_t height,
+> +                                 uint32_t stride, uint32_t x,
+> +                                 uint32_t y, uint32_t backing_width,
+> +                                 uint32_t backing_height, uint32_t fourc=
+c,
+> +                                 uint64_t modifier, uint32_t dmabuf_fd,
+> +                                 bool allow_fences, bool y0_top) {
 
-We're still left with brconds that are skipping the helper, which is the
-only place where we're clearing vstart. The pattern goes like this:
+We usually follow glib conventions, name the function according to the
+type allocated, and add a "_new" suffix: qemu_dma_buf_new()
 
-    tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
-    (... calls helper that clears vstart ...)
-    gen_set_label(over);
-    return true;
+> +    QemuDmaBuf *dmabuf;
+> +
+> +    dmabuf =3D g_new0(QemuDmaBuf, 1);
+> +
+> +    dmabuf->width =3D width;
+> +    dmabuf->height =3D height;
+> +    dmabuf->stride =3D stride;
+> +    dmabuf->x =3D x;
+> +    dmabuf->y =3D y;
+> +    dmabuf->backing_width =3D backing_width;
+> +    dmabuf->backing_height =3D backing_height;
+> +    dmabuf->fourcc =3D fourcc;
+> +    dmabuf->modifier =3D modifier;
+> +    dmabuf->fd =3D dmabuf_fd;
+> +    dmabuf->allow_fences =3D allow_fences;
+> +    dmabuf->y0_top =3D y0_top;
+> +    dmabuf->fence_fd =3D -1;
+> +
+> +    return dmabuf;
+> +}
+> +
+>  uint32_t dpy_gl_dmabuf_get_width(QemuDmaBuf *dmabuf)
+>  {
+>      if (dmabuf) {
+> @@ -1164,6 +1191,7 @@ void dpy_gl_release_dmabuf(QemuConsole *con,
+>              dcl->ops->dpy_gl_release_dmabuf(dcl, dmabuf);
+>          }
+>      }
+> +    g_free(dmabuf);
 
-This means that every time we jump to 'over' we're not clearing vstart,
-which is an oversight that we're doing across the board.
+This is not a good place to free dmabuf, since it's a place to notify
+console listeners. I suggest introducing another function,
+qemu_dma_buf_free(). And to use it through g_clear_pointer(&buf,
+qemu_dma_buf_free), to avoid dangling pointers later.
 
-Instead of setting vstart = 0 manually after each 'over' jump, remove
-those brconds that are skipping helpers. The exception will be
-trans_vmv_s_x() and trans_vfmv_s_f(): they don't use a helper and are
-already clearing vstart manually in the 'over' label.
+>  }
+>
+>  void dpy_gl_update(QemuConsole *con,
+> diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+> index 4a0a5d78f9..a2145704cc 100644
+> --- a/ui/dbus-listener.c
+> +++ b/ui/dbus-listener.c
+> @@ -438,28 +438,24 @@ static void dbus_scanout_texture(DisplayChangeListe=
+ner *dcl,
+>      trace_dbus_scanout_texture(tex_id, backing_y_0_top,
+>                                 backing_width, backing_height, x, y, w, h=
+);
+>  #ifdef CONFIG_GBM
+> -    QemuDmaBuf dmabuf =3D {
+> -        .width =3D w,
+> -        .height =3D h,
+> -        .y0_top =3D backing_y_0_top,
+> -        .x =3D x,
+> -        .y =3D y,
+> -        .backing_width =3D backing_width,
+> -        .backing_height =3D backing_height,
+> -    };
+> +    int32_t fd;
+> +    uint32_t stride, fourcc;
+> +    uint64_t modifier;
+> +    QemuDmaBuf *dmabuf;
+>
+>      assert(tex_id);
+> -    dmabuf.fd =3D egl_get_fd_for_texture(
+> -        tex_id, (EGLint *)&dmabuf.stride,
+> -        (EGLint *)&dmabuf.fourcc,
+> -        &dmabuf.modifier);
+> -    if (dmabuf.fd < 0) {
+> +    fd =3D egl_get_fd_for_texture(tex_id, (EGLint *)&stride, (EGLint *)&=
+fourcc,
+> +                                &modifier);
+> +    if (fd < 0) {
+>          error_report("%s: failed to get fd for texture", __func__);
+>          return;
+>      }
+> +    dmabuf =3D dpy_gl_create_dmabuf(w, h, stride, x, y, backing_width,
+> +                                  backing_height, fourcc, modifier, fd,
+> +                                  false, backing_y_0_top);
+>
+> -    dbus_scanout_dmabuf(dcl, &dmabuf);
+> -    close(dmabuf.fd);
+> +    dbus_scanout_dmabuf(dcl, dmabuf);
+> +    close(fd);
+>  #endif
+>
+>  #ifdef WIN32
+> --
+> 2.34.1
+>
+>
 
-While we're at it, remove the (vl == 0) brconds from trans_rvbf16.c.inc
-too since they're unneeded.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240314175704.478276-8-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/insn_trans/trans_rvbf16.c.inc | 12 ---
- target/riscv/insn_trans/trans_rvv.c.inc    | 99 ----------------------
- target/riscv/insn_trans/trans_rvvk.c.inc   | 18 ----
- 3 files changed, 129 deletions(-)
-
-diff --git a/target/riscv/insn_trans/trans_rvbf16.c.inc b/target/riscv/insn_trans/trans_rvbf16.c.inc
-index 8ee99df3f3..a842e76a6b 100644
---- a/target/riscv/insn_trans/trans_rvbf16.c.inc
-+++ b/target/riscv/insn_trans/trans_rvbf16.c.inc
-@@ -71,11 +71,8 @@ static bool trans_vfncvtbf16_f_f_w(DisasContext *ctx, arg_vfncvtbf16_f_f_w *a)
- 
-     if (opfv_narrow_check(ctx, a) && (ctx->sew == MO_16)) {
-         uint32_t data = 0;
--        TCGLabel *over = gen_new_label();
- 
-         gen_set_rm_chkfrm(ctx, RISCV_FRM_DYN);
--        tcg_gen_brcondi_tl(TCG_COND_EQ, cpu_vl, 0, over);
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-         data = FIELD_DP32(data, VDATA, VM, a->vm);
-         data = FIELD_DP32(data, VDATA, LMUL, ctx->lmul);
-@@ -87,7 +84,6 @@ static bool trans_vfncvtbf16_f_f_w(DisasContext *ctx, arg_vfncvtbf16_f_f_w *a)
-                            ctx->cfg_ptr->vlenb, data,
-                            gen_helper_vfncvtbf16_f_f_w);
-         mark_vs_dirty(ctx);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
-@@ -100,11 +96,8 @@ static bool trans_vfwcvtbf16_f_f_v(DisasContext *ctx, arg_vfwcvtbf16_f_f_v *a)
- 
-     if (opfv_widen_check(ctx, a) && (ctx->sew == MO_16)) {
-         uint32_t data = 0;
--        TCGLabel *over = gen_new_label();
- 
-         gen_set_rm_chkfrm(ctx, RISCV_FRM_DYN);
--        tcg_gen_brcondi_tl(TCG_COND_EQ, cpu_vl, 0, over);
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-         data = FIELD_DP32(data, VDATA, VM, a->vm);
-         data = FIELD_DP32(data, VDATA, LMUL, ctx->lmul);
-@@ -116,7 +109,6 @@ static bool trans_vfwcvtbf16_f_f_v(DisasContext *ctx, arg_vfwcvtbf16_f_f_v *a)
-                            ctx->cfg_ptr->vlenb, data,
-                            gen_helper_vfwcvtbf16_f_f_v);
-         mark_vs_dirty(ctx);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
-@@ -130,11 +122,8 @@ static bool trans_vfwmaccbf16_vv(DisasContext *ctx, arg_vfwmaccbf16_vv *a)
-     if (require_rvv(ctx) && vext_check_isa_ill(ctx) && (ctx->sew == MO_16) &&
-         vext_check_dss(ctx, a->rd, a->rs1, a->rs2, a->vm)) {
-         uint32_t data = 0;
--        TCGLabel *over = gen_new_label();
- 
-         gen_set_rm_chkfrm(ctx, RISCV_FRM_DYN);
--        tcg_gen_brcondi_tl(TCG_COND_EQ, cpu_vl, 0, over);
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-         data = FIELD_DP32(data, VDATA, VM, a->vm);
-         data = FIELD_DP32(data, VDATA, LMUL, ctx->lmul);
-@@ -147,7 +136,6 @@ static bool trans_vfwmaccbf16_vv(DisasContext *ctx, arg_vfwmaccbf16_vv *a)
-                            ctx->cfg_ptr->vlenb, data,
-                            gen_helper_vfwmaccbf16_vv);
-         mark_vs_dirty(ctx);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 1366445e1f..7931fb2f3f 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -616,9 +616,6 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
-     TCGv base;
-     TCGv_i32 desc;
- 
--    TCGLabel *over = gen_new_label();
--    tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
--
-     dest = tcg_temp_new_ptr();
-     mask = tcg_temp_new_ptr();
-     base = get_gpr(s, rs1, EXT_NONE);
-@@ -660,7 +657,6 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
-         tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
-     }
- 
--    gen_set_label(over);
-     return true;
- }
- 
-@@ -802,9 +798,6 @@ static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
-     TCGv base, stride;
-     TCGv_i32 desc;
- 
--    TCGLabel *over = gen_new_label();
--    tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
--
-     dest = tcg_temp_new_ptr();
-     mask = tcg_temp_new_ptr();
-     base = get_gpr(s, rs1, EXT_NONE);
-@@ -819,7 +812,6 @@ static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
- 
-     fn(dest, mask, base, stride, tcg_env, desc);
- 
--    gen_set_label(over);
-     return true;
- }
- 
-@@ -906,9 +898,6 @@ static bool ldst_index_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
-     TCGv base;
-     TCGv_i32 desc;
- 
--    TCGLabel *over = gen_new_label();
--    tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
--
-     dest = tcg_temp_new_ptr();
-     mask = tcg_temp_new_ptr();
-     index = tcg_temp_new_ptr();
-@@ -924,7 +913,6 @@ static bool ldst_index_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
- 
-     fn(dest, mask, base, index, tcg_env, desc);
- 
--    gen_set_label(over);
-     return true;
- }
- 
-@@ -1044,9 +1032,6 @@ static bool ldff_trans(uint32_t vd, uint32_t rs1, uint32_t data,
-     TCGv base;
-     TCGv_i32 desc;
- 
--    TCGLabel *over = gen_new_label();
--    tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
--
-     dest = tcg_temp_new_ptr();
-     mask = tcg_temp_new_ptr();
-     base = get_gpr(s, rs1, EXT_NONE);
-@@ -1059,7 +1044,6 @@ static bool ldff_trans(uint32_t vd, uint32_t rs1, uint32_t data,
-     fn(dest, mask, base, tcg_env, desc);
- 
-     mark_vs_dirty(s);
--    gen_set_label(over);
-     return true;
- }
- 
-@@ -1189,10 +1173,6 @@ static inline bool
- do_opivv_gvec(DisasContext *s, arg_rmrr *a, GVecGen3Fn *gvec_fn,
-               gen_helper_gvec_4_ptr *fn)
- {
--    TCGLabel *over = gen_new_label();
--
--    tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
--
-     if (a->vm && s->vl_eq_vlmax && !(s->vta && s->lmul < 0)) {
-         gvec_fn(s->sew, vreg_ofs(s, a->rd),
-                 vreg_ofs(s, a->rs2), vreg_ofs(s, a->rs1),
-@@ -1210,7 +1190,6 @@ do_opivv_gvec(DisasContext *s, arg_rmrr *a, GVecGen3Fn *gvec_fn,
-                            s->cfg_ptr->vlenb, data, fn);
-     }
-     mark_vs_dirty(s);
--    gen_set_label(over);
-     return true;
- }
- 
-@@ -1242,9 +1221,6 @@ static bool opivx_trans(uint32_t vd, uint32_t rs1, uint32_t vs2, uint32_t vm,
-     TCGv_i32 desc;
-     uint32_t data = 0;
- 
--    TCGLabel *over = gen_new_label();
--    tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
--
-     dest = tcg_temp_new_ptr();
-     mask = tcg_temp_new_ptr();
-     src2 = tcg_temp_new_ptr();
-@@ -1265,7 +1241,6 @@ static bool opivx_trans(uint32_t vd, uint32_t rs1, uint32_t vs2, uint32_t vm,
-     fn(dest, mask, src1, src2, tcg_env, desc);
- 
-     mark_vs_dirty(s);
--    gen_set_label(over);
-     return true;
- }
- 
-@@ -1404,9 +1379,6 @@ static bool opivi_trans(uint32_t vd, uint32_t imm, uint32_t vs2, uint32_t vm,
-     TCGv_i32 desc;
-     uint32_t data = 0;
- 
--    TCGLabel *over = gen_new_label();
--    tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
--
-     dest = tcg_temp_new_ptr();
-     mask = tcg_temp_new_ptr();
-     src2 = tcg_temp_new_ptr();
-@@ -1427,7 +1399,6 @@ static bool opivi_trans(uint32_t vd, uint32_t imm, uint32_t vs2, uint32_t vm,
-     fn(dest, mask, src1, src2, tcg_env, desc);
- 
-     mark_vs_dirty(s);
--    gen_set_label(over);
-     return true;
- }
- 
-@@ -1489,8 +1460,6 @@ static bool do_opivv_widen(DisasContext *s, arg_rmrr *a,
- {
-     if (checkfn(s, a)) {
-         uint32_t data = 0;
--        TCGLabel *over = gen_new_label();
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-         data = FIELD_DP32(data, VDATA, VM, a->vm);
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);
-@@ -1503,7 +1472,6 @@ static bool do_opivv_widen(DisasContext *s, arg_rmrr *a,
-                            s->cfg_ptr->vlenb,
-                            data, fn);
-         mark_vs_dirty(s);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
-@@ -1565,8 +1533,6 @@ static bool do_opiwv_widen(DisasContext *s, arg_rmrr *a,
- {
-     if (opiwv_widen_check(s, a)) {
-         uint32_t data = 0;
--        TCGLabel *over = gen_new_label();
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-         data = FIELD_DP32(data, VDATA, VM, a->vm);
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);
-@@ -1578,7 +1544,6 @@ static bool do_opiwv_widen(DisasContext *s, arg_rmrr *a,
-                            tcg_env, s->cfg_ptr->vlenb,
-                            s->cfg_ptr->vlenb, data, fn);
-         mark_vs_dirty(s);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
-@@ -1637,8 +1602,6 @@ static bool opivv_trans(uint32_t vd, uint32_t vs1, uint32_t vs2, uint32_t vm,
-                         gen_helper_gvec_4_ptr *fn, DisasContext *s)
- {
-     uint32_t data = 0;
--    TCGLabel *over = gen_new_label();
--    tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-     data = FIELD_DP32(data, VDATA, VM, vm);
-     data = FIELD_DP32(data, VDATA, LMUL, s->lmul);
-@@ -1649,7 +1612,6 @@ static bool opivv_trans(uint32_t vd, uint32_t vs1, uint32_t vs2, uint32_t vm,
-                        vreg_ofs(s, vs2), tcg_env, s->cfg_ptr->vlenb,
-                        s->cfg_ptr->vlenb, data, fn);
-     mark_vs_dirty(s);
--    gen_set_label(over);
-     return true;
- }
- 
-@@ -1828,8 +1790,6 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
-             gen_helper_##NAME##_h,                                 \
-             gen_helper_##NAME##_w,                                 \
-         };                                                         \
--        TCGLabel *over = gen_new_label();                          \
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over); \
-                                                                    \
-         data = FIELD_DP32(data, VDATA, VM, a->vm);                 \
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);             \
-@@ -1842,7 +1802,6 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
-                            s->cfg_ptr->vlenb, data,                \
-                            fns[s->sew]);                           \
-         mark_vs_dirty(s);                                          \
--        gen_set_label(over);                                       \
-         return true;                                               \
-     }                                                              \
-     return false;                                                  \
-@@ -2039,14 +1998,11 @@ static bool trans_vmv_v_v(DisasContext *s, arg_vmv_v_v *a)
-                 gen_helper_vmv_v_v_b, gen_helper_vmv_v_v_h,
-                 gen_helper_vmv_v_v_w, gen_helper_vmv_v_v_d,
-             };
--            TCGLabel *over = gen_new_label();
--            tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-             tcg_gen_gvec_2_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, a->rs1),
-                                tcg_env, s->cfg_ptr->vlenb,
-                                s->cfg_ptr->vlenb, data,
-                                fns[s->sew]);
--            gen_set_label(over);
-         }
-         mark_vs_dirty(s);
-         return true;
-@@ -2062,8 +2018,6 @@ static bool trans_vmv_v_x(DisasContext *s, arg_vmv_v_x *a)
-         /* vmv.v.x has rs2 = 0 and vm = 1 */
-         vext_check_ss(s, a->rd, 0, 1)) {
-         TCGv s1;
--        TCGLabel *over = gen_new_label();
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-         s1 = get_gpr(s, a->rs1, EXT_SIGN);
- 
-@@ -2096,7 +2050,6 @@ static bool trans_vmv_v_x(DisasContext *s, arg_vmv_v_x *a)
-         }
- 
-         mark_vs_dirty(s);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
-@@ -2123,8 +2076,6 @@ static bool trans_vmv_v_i(DisasContext *s, arg_vmv_v_i *a)
-                 gen_helper_vmv_v_x_b, gen_helper_vmv_v_x_h,
-                 gen_helper_vmv_v_x_w, gen_helper_vmv_v_x_d,
-             };
--            TCGLabel *over = gen_new_label();
--            tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-             s1 = tcg_constant_i64(simm);
-             dest = tcg_temp_new_ptr();
-@@ -2134,7 +2085,6 @@ static bool trans_vmv_v_i(DisasContext *s, arg_vmv_v_i *a)
-             fns[s->sew](dest, s1, tcg_env, desc);
- 
-             mark_vs_dirty(s);
--            gen_set_label(over);
-         }
-         return true;
-     }
-@@ -2269,9 +2219,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
-             gen_helper_##NAME##_w,                                 \
-             gen_helper_##NAME##_d,                                 \
-         };                                                         \
--        TCGLabel *over = gen_new_label();                          \
-         gen_set_rm(s, RISCV_FRM_DYN);                              \
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over); \
-                                                                    \
-         data = FIELD_DP32(data, VDATA, VM, a->vm);                 \
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);             \
-@@ -2286,7 +2234,6 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
-                            s->cfg_ptr->vlenb, data,                \
-                            fns[s->sew - 1]);                       \
-         mark_vs_dirty(s);                                          \
--        gen_set_label(over);                                       \
-         return true;                                               \
-     }                                                              \
-     return false;                                                  \
-@@ -2304,9 +2251,6 @@ static bool opfvf_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
-     TCGv_i32 desc;
-     TCGv_i64 t1;
- 
--    TCGLabel *over = gen_new_label();
--    tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
--
-     dest = tcg_temp_new_ptr();
-     mask = tcg_temp_new_ptr();
-     src2 = tcg_temp_new_ptr();
-@@ -2324,7 +2268,6 @@ static bool opfvf_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
-     fn(dest, mask, t1, src2, tcg_env, desc);
- 
-     mark_vs_dirty(s);
--    gen_set_label(over);
-     return true;
- }
- 
-@@ -2387,9 +2330,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
-         static gen_helper_gvec_4_ptr * const fns[2] = {          \
-             gen_helper_##NAME##_h, gen_helper_##NAME##_w,        \
-         };                                                       \
--        TCGLabel *over = gen_new_label();                        \
-         gen_set_rm(s, RISCV_FRM_DYN);                            \
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);\
-                                                                  \
-         data = FIELD_DP32(data, VDATA, VM, a->vm);               \
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);           \
-@@ -2402,7 +2343,6 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
-                            s->cfg_ptr->vlenb, data,              \
-                            fns[s->sew - 1]);                     \
-         mark_vs_dirty(s);                                        \
--        gen_set_label(over);                                     \
-         return true;                                             \
-     }                                                            \
-     return false;                                                \
-@@ -2461,9 +2401,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
-         static gen_helper_gvec_4_ptr * const fns[2] = {            \
-             gen_helper_##NAME##_h, gen_helper_##NAME##_w,          \
-         };                                                         \
--        TCGLabel *over = gen_new_label();                          \
-         gen_set_rm(s, RISCV_FRM_DYN);                              \
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over); \
-                                                                    \
-         data = FIELD_DP32(data, VDATA, VM, a->vm);                 \
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);             \
-@@ -2476,7 +2414,6 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
-                            s->cfg_ptr->vlenb, data,                \
-                            fns[s->sew - 1]);                       \
-         mark_vs_dirty(s);                                          \
--        gen_set_label(over);                                       \
-         return true;                                               \
-     }                                                              \
-     return false;                                                  \
-@@ -2578,9 +2515,7 @@ static bool do_opfv(DisasContext *s, arg_rmr *a,
- {
-     if (checkfn(s, a)) {
-         uint32_t data = 0;
--        TCGLabel *over = gen_new_label();
-         gen_set_rm_chkfrm(s, rm);
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-         data = FIELD_DP32(data, VDATA, VM, a->vm);
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);
-@@ -2591,7 +2526,6 @@ static bool do_opfv(DisasContext *s, arg_rmr *a,
-                            s->cfg_ptr->vlenb,
-                            s->cfg_ptr->vlenb, data, fn);
-         mark_vs_dirty(s);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
-@@ -2690,8 +2624,6 @@ static bool trans_vfmv_v_f(DisasContext *s, arg_vfmv_v_f *a)
-                 gen_helper_vmv_v_x_w,
-                 gen_helper_vmv_v_x_d,
-             };
--            TCGLabel *over = gen_new_label();
--            tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-             t1 = tcg_temp_new_i64();
-             /* NaN-box f[rs1] */
-@@ -2705,7 +2637,6 @@ static bool trans_vfmv_v_f(DisasContext *s, arg_vfmv_v_f *a)
-             fns[s->sew - 1](dest, t1, tcg_env, desc);
- 
-             mark_vs_dirty(s);
--            gen_set_label(over);
-         }
-         return true;
-     }
-@@ -2767,9 +2698,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
-             gen_helper_##HELPER##_h,                               \
-             gen_helper_##HELPER##_w,                               \
-         };                                                         \
--        TCGLabel *over = gen_new_label();                          \
-         gen_set_rm_chkfrm(s, FRM);                                 \
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over); \
-                                                                    \
-         data = FIELD_DP32(data, VDATA, VM, a->vm);                 \
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);             \
-@@ -2781,7 +2710,6 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
-                            s->cfg_ptr->vlenb, data,                \
-                            fns[s->sew - 1]);                       \
-         mark_vs_dirty(s);                                          \
--        gen_set_label(over);                                       \
-         return true;                                               \
-     }                                                              \
-     return false;                                                  \
-@@ -2818,9 +2746,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
-             gen_helper_##NAME##_h,                                 \
-             gen_helper_##NAME##_w,                                 \
-         };                                                         \
--        TCGLabel *over = gen_new_label();                          \
-         gen_set_rm(s, RISCV_FRM_DYN);                              \
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over); \
-                                                                    \
-         data = FIELD_DP32(data, VDATA, VM, a->vm);                 \
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);             \
-@@ -2832,7 +2758,6 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
-                            s->cfg_ptr->vlenb, data,                \
-                            fns[s->sew]);                           \
-         mark_vs_dirty(s);                                          \
--        gen_set_label(over);                                       \
-         return true;                                               \
-     }                                                              \
-     return false;                                                  \
-@@ -2885,9 +2810,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
-             gen_helper_##HELPER##_h,                               \
-             gen_helper_##HELPER##_w,                               \
-         };                                                         \
--        TCGLabel *over = gen_new_label();                          \
-         gen_set_rm_chkfrm(s, FRM);                                 \
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over); \
-                                                                    \
-         data = FIELD_DP32(data, VDATA, VM, a->vm);                 \
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);             \
-@@ -2899,7 +2822,6 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
-                            s->cfg_ptr->vlenb, data,                \
-                            fns[s->sew - 1]);                       \
-         mark_vs_dirty(s);                                          \
--        gen_set_label(over);                                       \
-         return true;                                               \
-     }                                                              \
-     return false;                                                  \
-@@ -2934,9 +2856,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
-             gen_helper_##HELPER##_h,                               \
-             gen_helper_##HELPER##_w,                               \
-         };                                                         \
--        TCGLabel *over = gen_new_label();                          \
-         gen_set_rm_chkfrm(s, FRM);                                 \
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over); \
-                                                                    \
-         data = FIELD_DP32(data, VDATA, VM, a->vm);                 \
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);             \
-@@ -2948,7 +2868,6 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
-                            s->cfg_ptr->vlenb, data,                \
-                            fns[s->sew]);                           \
-         mark_vs_dirty(s);                                          \
--        gen_set_label(over);                                       \
-         return true;                                               \
-     }                                                              \
-     return false;                                                  \
-@@ -3025,8 +2944,6 @@ static bool trans_##NAME(DisasContext *s, arg_r *a)                \
-         vext_check_isa_ill(s)) {                                   \
-         uint32_t data = 0;                                         \
-         gen_helper_gvec_4_ptr *fn = gen_helper_##NAME;             \
--        TCGLabel *over = gen_new_label();                          \
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over); \
-                                                                    \
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);             \
-         data =                                                     \
-@@ -3037,7 +2954,6 @@ static bool trans_##NAME(DisasContext *s, arg_r *a)                \
-                            s->cfg_ptr->vlenb,                      \
-                            s->cfg_ptr->vlenb, data, fn);           \
-         mark_vs_dirty(s);                                          \
--        gen_set_label(over);                                       \
-         return true;                                               \
-     }                                                              \
-     return false;                                                  \
-@@ -3125,8 +3041,6 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
-         s->vstart_eq_zero) {                                       \
-         uint32_t data = 0;                                         \
-         gen_helper_gvec_3_ptr *fn = gen_helper_##NAME;             \
--        TCGLabel *over = gen_new_label();                          \
--        tcg_gen_brcondi_tl(TCG_COND_EQ, cpu_vl, 0, over);          \
-                                                                    \
-         data = FIELD_DP32(data, VDATA, VM, a->vm);                 \
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);             \
-@@ -3139,7 +3053,6 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
-                            s->cfg_ptr->vlenb,                      \
-                            data, fn);                              \
-         mark_vs_dirty(s);                                          \
--        gen_set_label(over);                                       \
-         return true;                                               \
-     }                                                              \
-     return false;                                                  \
-@@ -3165,8 +3078,6 @@ static bool trans_viota_m(DisasContext *s, arg_viota_m *a)
-         require_align(a->rd, s->lmul) &&
-         s->vstart_eq_zero) {
-         uint32_t data = 0;
--        TCGLabel *over = gen_new_label();
--        tcg_gen_brcondi_tl(TCG_COND_EQ, cpu_vl, 0, over);
- 
-         data = FIELD_DP32(data, VDATA, VM, a->vm);
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);
-@@ -3181,7 +3092,6 @@ static bool trans_viota_m(DisasContext *s, arg_viota_m *a)
-                            s->cfg_ptr->vlenb,
-                            s->cfg_ptr->vlenb, data, fns[s->sew]);
-         mark_vs_dirty(s);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
-@@ -3195,8 +3105,6 @@ static bool trans_vid_v(DisasContext *s, arg_vid_v *a)
-         require_align(a->rd, s->lmul) &&
-         require_vm(a->vm, a->rd)) {
-         uint32_t data = 0;
--        TCGLabel *over = gen_new_label();
--        tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-         data = FIELD_DP32(data, VDATA, VM, a->vm);
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);
-@@ -3211,7 +3119,6 @@ static bool trans_vid_v(DisasContext *s, arg_vid_v *a)
-                            s->cfg_ptr->vlenb,
-                            data, fns[s->sew]);
-         mark_vs_dirty(s);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
-@@ -3624,8 +3531,6 @@ static bool trans_vcompress_vm(DisasContext *s, arg_r *a)
-             gen_helper_vcompress_vm_b, gen_helper_vcompress_vm_h,
-             gen_helper_vcompress_vm_w, gen_helper_vcompress_vm_d,
-         };
--        TCGLabel *over = gen_new_label();
--        tcg_gen_brcondi_tl(TCG_COND_EQ, cpu_vl, 0, over);
- 
-         data = FIELD_DP32(data, VDATA, LMUL, s->lmul);
-         data = FIELD_DP32(data, VDATA, VTA, s->vta);
-@@ -3635,7 +3540,6 @@ static bool trans_vcompress_vm(DisasContext *s, arg_r *a)
-                            s->cfg_ptr->vlenb, data,
-                            fns[s->sew]);
-         mark_vs_dirty(s);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
-@@ -3689,8 +3593,6 @@ static bool int_ext_op(DisasContext *s, arg_rmr *a, uint8_t seq)
- {
-     uint32_t data = 0;
-     gen_helper_gvec_3_ptr *fn;
--    TCGLabel *over = gen_new_label();
--    tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
- 
-     static gen_helper_gvec_3_ptr * const fns[6][4] = {
-         {
-@@ -3735,7 +3637,6 @@ static bool int_ext_op(DisasContext *s, arg_rmr *a, uint8_t seq)
-                        s->cfg_ptr->vlenb, data, fn);
- 
-     mark_vs_dirty(s);
--    gen_set_label(over);
-     return true;
- }
- 
-diff --git a/target/riscv/insn_trans/trans_rvvk.c.inc b/target/riscv/insn_trans/trans_rvvk.c.inc
-index a5cdd1b67f..6d640e4596 100644
---- a/target/riscv/insn_trans/trans_rvvk.c.inc
-+++ b/target/riscv/insn_trans/trans_rvvk.c.inc
-@@ -164,8 +164,6 @@ GEN_OPIVX_GVEC_TRANS_CHECK(vandn_vx, andcs, zvkb_vx_check)
-                 gen_helper_##NAME##_w,                                     \
-                 gen_helper_##NAME##_d,                                     \
-             };                                                             \
--            TCGLabel *over = gen_new_label();                              \
--            tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);     \
-                                                                            \
-             data = FIELD_DP32(data, VDATA, VM, a->vm);                     \
-             data = FIELD_DP32(data, VDATA, LMUL, s->lmul);                 \
-@@ -177,7 +175,6 @@ GEN_OPIVX_GVEC_TRANS_CHECK(vandn_vx, andcs, zvkb_vx_check)
-                                s->cfg_ptr->vlenb, s->cfg_ptr->vlenb,       \
-                                data, fns[s->sew]);                         \
-             mark_vs_dirty(s);                                              \
--            gen_set_label(over);                                           \
-             return true;                                                   \
-         }                                                                  \
-         return false;                                                      \
-@@ -249,14 +246,12 @@ GEN_OPIVI_WIDEN_TRANS(vwsll_vi, IMM_ZX, vwsll_vx, vwsll_vx_check)
-             TCGv_ptr rd_v, rs2_v;                                             \
-             TCGv_i32 desc, egs;                                               \
-             uint32_t data = 0;                                                \
--            TCGLabel *over = gen_new_label();                                 \
-                                                                               \
-             if (!s->vstart_eq_zero || !s->vl_eq_vlmax) {                      \
-                 /* save opcode for unwinding in case we throw an exception */ \
-                 decode_save_opc(s);                                           \
-                 egs = tcg_constant_i32(EGS);                                  \
-                 gen_helper_egs_check(egs, tcg_env);                           \
--                tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);    \
-             }                                                                 \
-                                                                               \
-             data = FIELD_DP32(data, VDATA, VM, a->vm);                        \
-@@ -272,7 +267,6 @@ GEN_OPIVI_WIDEN_TRANS(vwsll_vi, IMM_ZX, vwsll_vx, vwsll_vx_check)
-             tcg_gen_addi_ptr(rs2_v, tcg_env, vreg_ofs(s, a->rs2));            \
-             gen_helper_##NAME(rd_v, rs2_v, tcg_env, desc);                    \
-             mark_vs_dirty(s);                                                 \
--            gen_set_label(over);                                              \
-             return true;                                                      \
-         }                                                                     \
-         return false;                                                         \
-@@ -325,14 +319,12 @@ GEN_V_UNMASKED_TRANS(vaesem_vs, vaes_check_vs, ZVKNED_EGS)
-             TCGv_ptr rd_v, rs2_v;                                             \
-             TCGv_i32 uimm_v, desc, egs;                                       \
-             uint32_t data = 0;                                                \
--            TCGLabel *over = gen_new_label();                                 \
-                                                                               \
-             if (!s->vstart_eq_zero || !s->vl_eq_vlmax) {                      \
-                 /* save opcode for unwinding in case we throw an exception */ \
-                 decode_save_opc(s);                                           \
-                 egs = tcg_constant_i32(EGS);                                  \
-                 gen_helper_egs_check(egs, tcg_env);                           \
--                tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);    \
-             }                                                                 \
-                                                                               \
-             data = FIELD_DP32(data, VDATA, VM, a->vm);                        \
-@@ -350,7 +342,6 @@ GEN_V_UNMASKED_TRANS(vaesem_vs, vaes_check_vs, ZVKNED_EGS)
-             tcg_gen_addi_ptr(rs2_v, tcg_env, vreg_ofs(s, a->rs2));            \
-             gen_helper_##NAME(rd_v, rs2_v, uimm_v, tcg_env, desc);            \
-             mark_vs_dirty(s);                                                 \
--            gen_set_label(over);                                              \
-             return true;                                                      \
-         }                                                                     \
-         return false;                                                         \
-@@ -394,7 +385,6 @@ GEN_VI_UNMASKED_TRANS(vaeskf2_vi, vaeskf2_check, ZVKNED_EGS)
-     {                                                                         \
-         if (CHECK(s, a)) {                                                    \
-             uint32_t data = 0;                                                \
--            TCGLabel *over = gen_new_label();                                 \
-             TCGv_i32 egs;                                                     \
-                                                                               \
-             if (!s->vstart_eq_zero || !s->vl_eq_vlmax) {                      \
-@@ -402,7 +392,6 @@ GEN_VI_UNMASKED_TRANS(vaeskf2_vi, vaeskf2_check, ZVKNED_EGS)
-                 decode_save_opc(s);                                           \
-                 egs = tcg_constant_i32(EGS);                                  \
-                 gen_helper_egs_check(egs, tcg_env);                           \
--                tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);    \
-             }                                                                 \
-                                                                               \
-             data = FIELD_DP32(data, VDATA, VM, a->vm);                        \
-@@ -417,7 +406,6 @@ GEN_VI_UNMASKED_TRANS(vaeskf2_vi, vaeskf2_check, ZVKNED_EGS)
-                                data, gen_helper_##NAME);                      \
-                                                                               \
-             mark_vs_dirty(s);                                                 \
--            gen_set_label(over);                                              \
-             return true;                                                      \
-         }                                                                     \
-         return false;                                                         \
-@@ -448,7 +436,6 @@ static bool trans_vsha2cl_vv(DisasContext *s, arg_rmrr *a)
- {
-     if (vsha_check(s, a)) {
-         uint32_t data = 0;
--        TCGLabel *over = gen_new_label();
-         TCGv_i32 egs;
- 
-         if (!s->vstart_eq_zero || !s->vl_eq_vlmax) {
-@@ -456,7 +443,6 @@ static bool trans_vsha2cl_vv(DisasContext *s, arg_rmrr *a)
-             decode_save_opc(s);
-             egs = tcg_constant_i32(ZVKNH_EGS);
-             gen_helper_egs_check(egs, tcg_env);
--            tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
-         }
- 
-         data = FIELD_DP32(data, VDATA, VM, a->vm);
-@@ -472,7 +458,6 @@ static bool trans_vsha2cl_vv(DisasContext *s, arg_rmrr *a)
-                 gen_helper_vsha2cl32_vv : gen_helper_vsha2cl64_vv);
- 
-         mark_vs_dirty(s);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
-@@ -482,7 +467,6 @@ static bool trans_vsha2ch_vv(DisasContext *s, arg_rmrr *a)
- {
-     if (vsha_check(s, a)) {
-         uint32_t data = 0;
--        TCGLabel *over = gen_new_label();
-         TCGv_i32 egs;
- 
-         if (!s->vstart_eq_zero || !s->vl_eq_vlmax) {
-@@ -490,7 +474,6 @@ static bool trans_vsha2ch_vv(DisasContext *s, arg_rmrr *a)
-             decode_save_opc(s);
-             egs = tcg_constant_i32(ZVKNH_EGS);
-             gen_helper_egs_check(egs, tcg_env);
--            tcg_gen_brcond_tl(TCG_COND_GEU, cpu_vstart, cpu_vl, over);
-         }
- 
-         data = FIELD_DP32(data, VDATA, VM, a->vm);
-@@ -506,7 +489,6 @@ static bool trans_vsha2ch_vv(DisasContext *s, arg_rmrr *a)
-                 gen_helper_vsha2ch32_vv : gen_helper_vsha2ch64_vv);
- 
-         mark_vs_dirty(s);
--        gen_set_label(over);
-         return true;
-     }
-     return false;
--- 
-2.44.0
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
