@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C96AFC54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC39C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:13:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnjNR-0006os-RV; Fri, 22 Mar 2024 14:12:25 -0400
+	id 1rnjMW-0006Bj-QX; Fri, 22 Mar 2024 14:11:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjNK-0006eU-UL
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rnjMU-0006B9-EE
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:11:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjNI-00073g-CL
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:18 -0400
+ id 1rnjMS-0006tk-GC
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:11:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711131135;
+ s=mimecast20190719; t=1711131083;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PJ1i93OLH0rJPkws1vcaOOsOxlg3B1IE3zBDSu2Pk2c=;
- b=JJsEkhJGNTKAeDZ2bV7Zfx0c+l4Q/JdFvTsPeGrcMDIQtVtHWJtFNmMbq6DRTNzpjTTMXJ
- bV/juHisF7NQ7uqmWuhGT9s9OhCrKcs1zYSM+1cXgYaVpIuYVa23uL45tEpnuBFj9v4/OC
- /4fWttqrtS7VL1rnwq5MfDejVFQlEBc=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=WubQWkcslV/ov2f3B8vk3m2OpqnQFlW63EUQE8TOyfg=;
+ b=aFneYCeVd/1RV9UXpjuZGhnA0SOjLKXvy0kptGdmM262gLRTK5dJGG7ixKXgqL4IZW8uIo
+ lt+BapkFvO1fYXrjnA5vRl5vrsKw2D4kq4/yFk58Y39yKjeoLcUe8QsaNketKrsohY+7hz
+ pcxNszzTJ1nkKlRavyb6cMLsde6gXvo=
 Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
  [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-379-Veg-52g_MJSBA9af-yaEBQ-1; Fri, 22 Mar 2024 14:12:14 -0400
-X-MC-Unique: Veg-52g_MJSBA9af-yaEBQ-1
+ us-mta-672-0-DNFdO1OyGTpfpIsDykiQ-1; Fri, 22 Mar 2024 14:11:22 -0400
+X-MC-Unique: 0-DNFdO1OyGTpfpIsDykiQ-1
 Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a473f5a84aaso3144166b.2
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:12:14 -0700 (PDT)
+ a640c23a62f3a-a4711e69b9bso129985466b.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:11:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711131133; x=1711735933;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PJ1i93OLH0rJPkws1vcaOOsOxlg3B1IE3zBDSu2Pk2c=;
- b=rNa/616bjzbKDbTVTTyjT6Lj99Ik19fEbWbfdUD8qFcedgAuMpSOd964n0AP17T6nZ
- 8IFu8vtRCj7NZFWvUQxeQaSjX1KXLtW3ps+rBIjkNPNUPkQhDywxawGHHPMl+/cPxqWn
- RX7/KSvucQ+p9BhXCFKbLpig/jtlVhWsX54G577rnhUw3ef3Z5fGxS21rKecGubViPt3
- 7NxBQcqP4CwFeJxMMKvxZ84ZepGpeNaRxCid4xIOzdOjdqlfShQgkmH6RG/s3X7q81er
- MhhSpo2RstasabUbwERzP2R6S6Pk+Bw5TlripYKbMaei1/l+myxBYapkG74W5nESyplU
- q+aA==
-X-Gm-Message-State: AOJu0YxMOAxtmNU7a2yk66bJ9ZroAKczGpbU+Ii47Xt3X1iXuCpw+bBS
- KTmfv4FEnE2JA/HHKeNMvV+BIVNt7HB6vHlqihyvPs91WQhZcCsMUJpULzABCtUJsBlY3fcrSqZ
- Y3353Y+ILnr4s0GWJY1KYFuQtZq0MxDu5QX+LVakBRIb5tDm6KSqNa4af3eYOmTRLHMqxkOdEAj
- ihSjNyax7h2IOoR5iZh+5kuVF9IsVc4ZFLITby
-X-Received: by 2002:a50:8a9a:0:b0:566:4a85:ceba with SMTP id
- j26-20020a508a9a000000b005664a85cebamr209524edj.1.1711131132846; 
- Fri, 22 Mar 2024 11:12:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEqt7gNETxzL03L2rHMAZAcfDdiAAVL590d7iBvsTPwl9Sc6GtR/QgCVo66oUjJzUTdfcIn8A==
-X-Received: by 2002:a50:8a9a:0:b0:566:4a85:ceba with SMTP id
- j26-20020a508a9a000000b005664a85cebamr209506edj.1.1711131132549; 
- Fri, 22 Mar 2024 11:12:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711131079; x=1711735879;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WubQWkcslV/ov2f3B8vk3m2OpqnQFlW63EUQE8TOyfg=;
+ b=vs8s1YU5UFYO6MFv48VYYptm4KfQ9iflt58yE7eRmnWHTufOCCUclnZ54fa7zup5EU
+ ozFd0WACbVlX4xfsw6mVGTeCx4cQeGywv0L897zWk40iUblphDUH1FLFmZxcM5S6Zc8a
+ sSeklzSkqZuRcRYxZk2W4PPBel7XS+I8xIn6hyhp7A3FiQGr2CKJzFN2wmeg7w1IVhTx
+ TlnLrN9Tovo24jfZ+6azIj4BJS/hYiBSeJPXTT7OckhtdluTDo5eRWvXXuHgapWXUpHC
+ S0gv43646cRlKoH5FSOGZFPaQ50o+ZSXRNn9ZiShG76HHjdk1wfU/EvxhaZwp3ESyobp
+ /NHQ==
+X-Gm-Message-State: AOJu0Yx8lnDKB+Ri/5dVGSWoHEKkd3m/Ehodp5L++btWMmUL0m/mteNK
+ JVl8QSn+YM33BSow/y9vMrWsNViNinv7QzggAgm8Mlepv2FSYmEG12PoPW+2058dA6I86xJTm4h
+ qj87u/8U4NYtxGZvAAfHj4yq6Svd5XF7/nsBFldvoqIlpQyjBjyksb/m0UkdM0j6RIFZJl2reY4
+ fwyHol+sBOnDF2UTrQu4hOBAvGxAt7Rnp8JbGA
+X-Received: by 2002:a17:906:2a0a:b0:a46:1fa:fc12 with SMTP id
+ j10-20020a1709062a0a00b00a4601fafc12mr358070eje.18.1711131079138; 
+ Fri, 22 Mar 2024 11:11:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHWeh2MfixfhMXJ0bJagQQWnqhfYmSWuVVfGexcm3bWPFXBf+/luM/B+yZ95T/svyLScaSojg==
+X-Received: by 2002:a17:906:2a0a:b0:a46:1fa:fc12 with SMTP id
+ j10-20020a1709062a0a00b00a4601fafc12mr358054eje.18.1711131078728; 
+ Fri, 22 Mar 2024 11:11:18 -0700 (PDT)
 Received: from [192.168.10.118] ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- m10-20020a50cc0a000000b0056b0af78d80sm74255edi.34.2024.03.22.11.12.10
+ q8-20020a170906388800b00a4729f093ecsm76502ejd.53.2024.03.22.11.11.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 11:12:11 -0700 (PDT)
+ Fri, 22 Mar 2024 11:11:18 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: xiaoyao.li@intel.com,
 	michael.roth@amd.com,
 	david@redhat.com
-Subject: [PATCH 17/26] trace/kvm: Split address space and slot id in
- trace_kvm_set_user_memory()
-Date: Fri, 22 Mar 2024 19:11:07 +0100
-Message-ID: <20240322181116.1228416-18-pbonzini@redhat.com>
+Subject: [PATCH for-9.1 00/26] x86, kvm: common confidential computing subset
+Date: Fri, 22 Mar 2024 19:10:50 +0100
+Message-ID: <20240322181116.1228416-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240322181116.1228416-1-pbonzini@redhat.com>
-References: <20240322181116.1228416-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -105,48 +101,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+These are the common bits for TDX and SEV-SNP support for QEMU 9.1.
 
-The upper 16 bits of kvm_userspace_memory_region::slot are
-address space id. Parse it separately in trace_kvm_set_user_memory().
+The main changes compared to what Michael posted is:
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Message-ID: <20240229063726.610065-5-xiaoyao.li@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- accel/kvm/kvm-all.c    | 5 +++--
- accel/kvm/trace-events | 2 +-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+1) I am including KVM_SEV_INIT2 support patches without the linux-headers
+update hack (however the linux-headers update in these patches is still
+not final).  This also includes the bits to track whether guest state
+are encrypted, that are needed by TDX as well as SEV-ES/SNP.
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index a05dea23133..4ac3cf1c9ef 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -303,8 +303,9 @@ static int kvm_set_user_memory_region(KVMMemoryListener *kml, KVMSlot *slot, boo
-     ret = kvm_vm_ioctl(s, KVM_SET_USER_MEMORY_REGION, &mem);
-     slot->old_flags = mem.flags;
- err:
--    trace_kvm_set_user_memory(mem.slot, mem.flags, mem.guest_phys_addr,
--                              mem.memory_size, mem.userspace_addr, ret);
-+    trace_kvm_set_user_memory(mem.slot >> 16, (uint16_t)mem.slot, mem.flags,
-+                              mem.guest_phys_addr, mem.memory_size,
-+                              mem.userspace_addr, ret);
-     if (ret < 0) {
-         error_report("%s: KVM_SET_USER_MEMORY_REGION failed, slot=%d,"
-                      " start=0x%" PRIx64 ", size=0x%" PRIx64 ": %s",
-diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
-index a25902597b1..9f599abc172 100644
---- a/accel/kvm/trace-events
-+++ b/accel/kvm/trace-events
-@@ -15,7 +15,7 @@ kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=%d"
- kvm_irqchip_release_virq(int virq) "virq %d"
- kvm_set_ioeventfd_mmio(int fd, uint64_t addr, uint32_t val, bool assign, uint32_t size, bool datamatch) "fd: %d @0x%" PRIx64 " val=0x%x assign: %d size: %d match: %d"
- kvm_set_ioeventfd_pio(int fd, uint16_t addr, uint32_t val, bool assign, uint32_t size, bool datamatch) "fd: %d @0x%x val=0x%x assign: %d size: %d match: %d"
--kvm_set_user_memory(uint32_t slot, uint32_t flags, uint64_t guest_phys_addr, uint64_t memory_size, uint64_t userspace_addr, int ret) "Slot#%d flags=0x%x gpa=0x%"PRIx64 " size=0x%"PRIx64 " ua=0x%"PRIx64 " ret=%d"
-+kvm_set_user_memory(uint16_t as, uint16_t slot, uint32_t flags, uint64_t guest_phys_addr, uint64_t memory_size, uint64_t userspace_addr, int ret) "AddrSpace#%d Slot#%d flags=0x%x gpa=0x%"PRIx64 " size=0x%"PRIx64 " ua=0x%"PRIx64 " ret=%d"
- kvm_clear_dirty_log(uint32_t slot, uint64_t start, uint32_t size) "slot#%"PRId32" start 0x%"PRIx64" size 0x%"PRIx32
- kvm_resample_fd_notify(int gsi) "gsi %d"
- kvm_dirty_ring_full(int id) "vcpu %d"
+2) VFIO currently is blocked, pending a decision on what is worse
+between possibly consuming twice the memory and disallowing device
+assignment; or someone biting the bullet and implementing the
+RamDiscardManager interface.
+
+3) I included another easy patch from the TDX series, "i386/kvm: Move
+architectural CPUID leaf generation to separate helper".
+
+Please test. :)
+
+Paolo
+
+Chao Peng (2):
+  kvm: Enable KVM_SET_USER_MEMORY_REGION2 for memslot
+  kvm: handle KVM_EXIT_MEMORY_FAULT
+
+Isaku Yamahata (2):
+  pci-host/q35: Move PAM initialization above SMRAM initialization
+  q35: Introduce smm_ranges property for q35-pci-host
+
+Michael Roth (5):
+  scripts/update-linux-headers: Add setup_data.h to import list
+  scripts/update-linux-headers: Add bits.h to file imports
+  [HACK] linux-headers: Update headers for 6.8 + kvm-coco-queue + SNP
+  [TO SQUASH] hw/i386: Remove redeclaration of struct setup_data
+  RAMBlock: Add support of KVM private guest memfd
+
+Paolo Bonzini (7):
+  runstate: skip initial CPU reset if reset is not actually possible
+  KVM: track whether guest state is encrypted
+  KVM: remove kvm_arch_cpu_check_are_resettable
+  target/i386: introduce x86-confidential-guest
+  target/i386: Implement mc->kvm_type() to get VM type
+  target/i386: SEV: use KVM_SEV_INIT2 if possible
+  RAMBlock: make guest_memfd require uncoordinated discard
+
+Sean Christopherson (1):
+  i386/kvm: Move architectural CPUID leaf generation to separate helper
+
+Xiaoyao Li (9):
+  confidential guest support: Add kvm_init() and kvm_reset() in class
+  i386/sev: Switch to use confidential_guest_kvm_init()
+  ppc/pef: switch to use confidential_guest_kvm_init/reset()
+  s390: Switch to use confidential_guest_kvm_init()
+  trace/kvm: Split address space and slot id in
+    trace_kvm_set_user_memory()
+  kvm: Introduce support for memory_attributes
+  kvm/memory: Make memory type private by default if it has guest memfd
+    backend
+  HostMem: Add mechanism to opt in kvm guest memfd via MachineState
+  physmem: Introduce ram_block_discard_guest_memfd_range()
+
+ include/exec/confidential-guest-support.h     |  34 +-
+ include/exec/cpu-common.h                     |   2 +
+ include/exec/memory.h                         |  20 +-
+ include/exec/ram_addr.h                       |   2 +-
+ include/exec/ramblock.h                       |   1 +
+ include/hw/boards.h                           |   2 +
+ include/hw/i386/pc.h                          |   1 +
+ include/hw/pci-host/q35.h                     |   1 +
+ include/hw/ppc/pef.h                          |  17 -
+ include/standard-headers/asm-x86/bootparam.h  |  17 +-
+ include/standard-headers/asm-x86/kvm_para.h   |   3 +-
+ include/standard-headers/asm-x86/setup_data.h |  83 ++
+ include/standard-headers/linux/ethtool.h      |  48 ++
+ include/standard-headers/linux/fuse.h         |  39 +-
+ .../linux/input-event-codes.h                 |   1 +
+ include/standard-headers/linux/virtio_gpu.h   |   2 +
+ include/standard-headers/linux/virtio_snd.h   | 154 ++++
+ include/sysemu/hostmem.h                      |   1 +
+ include/sysemu/kvm.h                          |  19 +-
+ include/sysemu/kvm_int.h                      |   3 +
+ linux-headers/asm-arm64/kvm.h                 |  15 +-
+ linux-headers/asm-arm64/sve_context.h         |  11 +
+ linux-headers/asm-generic/bitsperlong.h       |   4 +
+ linux-headers/asm-loongarch/kvm.h             |   2 -
+ linux-headers/asm-mips/kvm.h                  |   2 -
+ linux-headers/asm-powerpc/kvm.h               |  45 +-
+ linux-headers/asm-riscv/kvm.h                 |   3 +-
+ linux-headers/asm-s390/kvm.h                  | 315 +++++++-
+ linux-headers/asm-x86/kvm.h                   | 364 ++++++++-
+ linux-headers/linux/bits.h                    |  15 +
+ linux-headers/linux/kvm.h                     | 717 +-----------------
+ linux-headers/linux/psp-sev.h                 |  71 ++
+ target/i386/confidential-guest.h              |  59 ++
+ target/i386/kvm/kvm_i386.h                    |   2 +
+ target/i386/sev.h                             |   2 -
+ target/s390x/kvm/pv.h                         |  14 -
+ accel/kvm/kvm-accel-ops.c                     |   2 +-
+ accel/kvm/kvm-all.c                           | 236 +++++-
+ accel/stubs/kvm-stub.c                        |   5 +
+ backends/hostmem-file.c                       |   1 +
+ backends/hostmem-memfd.c                      |   1 +
+ backends/hostmem-ram.c                        |   1 +
+ backends/hostmem.c                            |   1 +
+ hw/core/machine.c                             |   5 +
+ hw/i386/pc_q35.c                              |   2 +
+ hw/i386/x86.c                                 |  19 +-
+ hw/pci-host/q35.c                             |  61 +-
+ hw/ppc/pef.c                                  |   9 +-
+ hw/ppc/spapr.c                                |  10 +-
+ hw/s390x/s390-virtio-ccw.c                    |   5 +-
+ system/memory.c                               |   5 +
+ system/physmem.c                              |  65 +-
+ system/runstate.c                             |  15 +-
+ target/arm/kvm.c                              |   5 -
+ target/i386/confidential-guest.c              |  33 +
+ target/i386/kvm/kvm.c                         | 507 +++++++------
+ target/i386/kvm/sev-stub.c                    |  21 -
+ target/i386/sev.c                             | 173 +++--
+ target/loongarch/kvm/kvm.c                    |   5 -
+ target/mips/kvm.c                             |   5 -
+ target/ppc/kvm.c                              |   5 -
+ target/riscv/kvm/kvm-cpu.c                    |   5 -
+ target/s390x/kvm/kvm.c                        |   5 -
+ target/s390x/kvm/pv.c                         |   8 +
+ accel/kvm/trace-events                        |   4 +-
+ roms/edk2                                     |   2 +-
+ scripts/update-linux-headers.sh               |   8 +-
+ target/i386/kvm/meson.build                   |   2 -
+ target/i386/meson.build                       |   2 +-
+ 69 files changed, 2124 insertions(+), 1200 deletions(-)
+ delete mode 100644 include/hw/ppc/pef.h
+ create mode 100644 include/standard-headers/asm-x86/setup_data.h
+ create mode 100644 linux-headers/linux/bits.h
+ create mode 100644 target/i386/confidential-guest.h
+ create mode 100644 target/i386/confidential-guest.c
+ delete mode 100644 target/i386/kvm/sev-stub.c
+
 -- 
 2.44.0
 
