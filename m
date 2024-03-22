@@ -4,101 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDA52C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 08:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F2EC54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 08:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnaKg-00074j-PQ; Fri, 22 Mar 2024 04:32:58 -0400
+	id 1rnaTP-0000MA-B5; Fri, 22 Mar 2024 04:41:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rnaKe-00073g-LM; Fri, 22 Mar 2024 04:32:56 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1rnaTH-0000H4-Qc
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 04:41:55 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1rnaKc-0005kD-MR; Fri, 22 Mar 2024 04:32:56 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42M89nuC024972; Fri, 22 Mar 2024 08:32:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=R25hTsL3ipMuM5wa8WGmXT+GcQvjYn6gZfHXqhbsIdw=;
- b=FXiCv7vDLdu5C/kZiCUWD2hypgV3RzKZnLPijodzHVegCVHW8QVEgSw5S0v2CUjRjqNB
- 97AyUlRUIpmt2DaoBGXLGKPzZyRWtya/mCml82JlsSQ49HA+ihIqYfz9ZikbLF09su3P
- XuGhAL6NVBfs3U7VugLrzxtaQwmUaoWtdQw15dEEy3/OkpAsam2tDw1JR1HleKXlLZJ+
- L57P1nSfc7rmMspe35RktfEHtFfPhSSymhHtWu6IE/kzV75g1IcdPrA8axr+WqFXVYVd
- dG27C76UE7W9/Du5iXqYqpHlsD5JG7vN0JvLEgCT3tKPUXKD+ijVaQRXH0p83+5oJx52 cA== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x15d3054t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 22 Mar 2024 08:32:51 +0000
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42M8WpVH000686;
- Fri, 22 Mar 2024 08:32:51 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x15d3054s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 22 Mar 2024 08:32:51 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42M5XdMd023107; Fri, 22 Mar 2024 08:32:50 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3x0x14jjnv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 22 Mar 2024 08:32:50 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42M8Wl5C26215046
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 22 Mar 2024 08:32:49 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 198195805F;
- Fri, 22 Mar 2024 08:32:47 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5BD9E58065;
- Fri, 22 Mar 2024 08:32:45 +0000 (GMT)
-Received: from [9.171.94.36] (unknown [9.171.94.36])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 22 Mar 2024 08:32:45 +0000 (GMT)
-Message-ID: <a6ec42e1-b07f-4535-8c8f-2fffa3beab0c@linux.ibm.com>
-Date: Fri, 22 Mar 2024 14:02:43 +0530
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1rnaTE-00075O-O4
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 04:41:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711096909; x=1742632909;
+ h=from:to:cc:subject:in-reply-to:references:date:
+ message-id:mime-version;
+ bh=lUc29sDLNaxzdQqbXFTr/bw/3I6o0uIxECNwJmIeNUw=;
+ b=lfeSdHk9SfCHD271/Oy2Q4KxMU6w7JcRVb8wFpJ6/PFY1o1Nk+Yr+rf0
+ BxJYDMok3sHAYkDIUYK2ffwFcxH5KAD1rwmX64MQnSBuj5XVrNTWpBHiR
+ ToI02DBncwhg+i3ZtmT1IBvHY8ZJf0h86rgOaZWSyQukqblzkXb8Ejvlk
+ E3UGKqJGybYJGHDH0PDKIrn93kbo2Z5ClrMp5xIXSt2zJTvTYBZ4wg8WB
+ Gd4HUQOXwRxs3h/VVm5hu7/lVM13XfwmYVLFts5KDhWq3DeKcAUrJX+On
+ LtW5Z9QLnEUX4BJCnPQpAxCY9aKdxm3pPUER2gOnMxZXeDi6Nm3loHyaE A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="23620920"
+X-IronPort-AV: E=Sophos;i="6.07,145,1708416000"; d="scan'208";a="23620920"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Mar 2024 01:41:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,145,1708416000"; d="scan'208";a="19487739"
+Received: from yhuang6-desk2.sh.intel.com (HELO
+ yhuang6-desk2.ccr.corp.intel.com) ([10.238.208.55])
+ by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Mar 2024 01:41:38 -0700
+From: "Huang, Ying" <ying.huang@intel.com>
+To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Cc: "Gregory Price" <gourry.memverge@gmail.com>,
+ aneesh.kumar@linux.ibm.com,  mhocko@suse.com,  tj@kernel.org,
+ john@jagalactic.com,  "Eishan Mirakhur" <emirakhur@micron.com>,
+ "Vinicius Tavares Petrucci" <vtavarespetr@micron.com>,  "Ravis OpenSrc"
+ <Ravis.OpenSrc@micron.com>,  "Alistair Popple" <apopple@nvidia.com>,
+ "Srinivasulu Thanneeru" <sthanneeru@micron.com>,  Dan Williams
+ <dan.j.williams@intel.com>,  Vishal Verma <vishal.l.verma@intel.com>,
+ Dave Jiang <dave.jiang@intel.com>,  Andrew Morton
+ <akpm@linux-foundation.org>,  nvdimm@lists.linux.dev,
+ linux-cxl@vger.kernel.org,  linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org,  "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,  "Ho-Ren
+ (Jack) Chuang" <horenchuang@gmail.com>,  qemu-devel@nongnu.org,  Hao Xiang
+ <hao.xiang@bytedance.com>
+Subject: Re: [PATCH v4 2/2] memory tier: create CPUless memory tiers after
+ obtaining HMAT info
+In-Reply-To: <20240322070356.315922-3-horenchuang@bytedance.com> (Ho-Ren
+ Chuang's message of "Fri, 22 Mar 2024 07:03:55 +0000")
+References: <20240322070356.315922-1-horenchuang@bytedance.com>
+ <20240322070356.315922-3-horenchuang@bytedance.com>
+Date: Fri, 22 Mar 2024 16:39:44 +0800
+Message-ID: <87cyrmr773.fsf@yhuang6-desk2.ccr.corp.intel.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/ppc: Do not clear MSR[ME] on MCE interrupts to
- supervisor
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>
-References: <20240321055415.2441812-1-npiggin@gmail.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20240321055415.2441812-1-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 5gsqzlid1xKCHa_WfwAnXC7lhBdF_Pm-
-X-Proofpoint-ORIG-GUID: 1nyDsLyv7-QM8EGOax8IS8Uz_LATO9ir
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-22_05,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0
- clxscore=1015 priorityscore=1501 impostorscore=0 bulkscore=0 adultscore=0
- spamscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=920 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2403210000
- definitions=main-2403220061
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=ascii
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=ying.huang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.372,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,50 +93,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+"Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
 
-
-On 3/21/24 11:24, Nicholas Piggin wrote:
-> Hardware clears the MSR[ME] bit when delivering a machine check
-> interrupt, so that is what QEMU does.
-> 
-> The spapr environment runs in supervisor mode though, and receives
-> machine check interrupts after they are processed by the hypervisor,
-> and MSR[ME] must always be enabled in supervisor mode (otherwise it
-> could checkstop the system). So MSR[ME] must not be cleared when
-> delivering machine checks to the supervisor.
-> 
-> The fix to prevent supervisor mode from modifying MSR[ME] also
-> prevented it from re-enabling the incorrectly cleared MSR[ME] bit
-> when returning from handling the interrupt. Before that fix, the
-> problem was not very noticable with well-behaved code. So the
-> Fixes tag is not strictly correct, but practically they go together.
-> 
-> Found by kvm-unit-tests machine check tests (not yet upstream).
-> 
-> Fixes: 678b6f1af75ef ("target/ppc: Prevent supervisor from modifying MSR[ME]")
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-
+> The current implementation treats emulated memory devices, such as
+> CXL1.1 type3 memory, as normal DRAM when they are emulated as normal memory
+> (E820_TYPE_RAM). However, these emulated devices have different
+> characteristics than traditional DRAM, making it important to
+> distinguish them. Thus, we modify the tiered memory initialization process
+> to introduce a delay specifically for CPUless NUMA nodes. This delay
+> ensures that the memory tier initialization for these nodes is deferred
+> until HMAT information is obtained during the boot process. Finally,
+> demotion tables are recalculated at the end.
+>
+> * late_initcall(memory_tier_late_init);
+> Some device drivers may have initialized memory tiers between
+> `memory_tier_init()` and `memory_tier_late_init()`, potentially bringing
+> online memory nodes and configuring memory tiers. They should be excluded
+> in the late init.
+>
+> * Handle cases where there is no HMAT when creating memory tiers
+> There is a scenario where a CPUless node does not provide HMAT information.
+> If no HMAT is specified, it falls back to using the default DRAM tier.
+>
+> * Introduce another new lock `default_dram_perf_lock` for adist calculation
+> In the current implementation, iterating through CPUlist nodes requires
+> holding the `memory_tier_lock`. However, `mt_calc_adistance()` will end up
+> trying to acquire the same lock, leading to a potential deadlock.
+> Therefore, we propose introducing a standalone `default_dram_perf_lock` to
+> protect `default_dram_perf_*`. This approach not only avoids deadlock
+> but also prevents holding a large lock simultaneously.
+>
+> * Upgrade `set_node_memory_tier` to support additional cases, including
+>   default DRAM, late CPUless, and hot-plugged initializations.
+> To cover hot-plugged memory nodes, `mt_calc_adistance()` and
+> `mt_find_alloc_memory_type()` are moved into `set_node_memory_tier()` to
+> handle cases where memtype is not initialized and where HMAT information is
+> available.
+>
+> * Introduce `default_memory_types` for those memory types that are not
+>   initialized by device drivers.
+> Because late initialized memory and default DRAM memory need to be managed,
+> a default memory type is created for storing all memory types that are
+> not initialized by device drivers and as a fallback.
+>
+> Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+> Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
 > ---
->   target/ppc/excp_helper.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-> index 80f584f933..674c05a2ce 100644
-> --- a/target/ppc/excp_helper.c
-> +++ b/target/ppc/excp_helper.c
-> @@ -1345,9 +1345,10 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
->                * clear (e.g., see FWNMI in PAPR).
->                */
->               new_msr |= (target_ulong)MSR_HVB;
+>  mm/memory-tiers.c | 73 ++++++++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 63 insertions(+), 10 deletions(-)
+>
+> diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+> index 974af10cfdd8..9396330fa162 100644
+> --- a/mm/memory-tiers.c
+> +++ b/mm/memory-tiers.c
+> @@ -36,6 +36,11 @@ struct node_memory_type_map {
+>  
+>  static DEFINE_MUTEX(memory_tier_lock);
+>  static LIST_HEAD(memory_tiers);
+> +/*
+> + * The list is used to store all memory types that are not created
+> + * by a device driver.
+> + */
+> +static LIST_HEAD(default_memory_types);
+>  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
+>  struct memory_dev_type *default_dram_type;
+>  
+> @@ -108,6 +113,7 @@ static struct demotion_nodes *node_demotion __read_mostly;
+>  
+>  static BLOCKING_NOTIFIER_HEAD(mt_adistance_algorithms);
+>
+> +static DEFINE_MUTEX(default_dram_perf_lock);
+
+Better to add comments about what is protected by this lock.
+
+>  static bool default_dram_perf_error;
+>  static struct access_coordinate default_dram_perf;
+>  static int default_dram_perf_ref_nid = NUMA_NO_NODE;
+> @@ -505,7 +511,8 @@ static inline void __init_node_memory_type(int node, struct memory_dev_type *mem
+>  static struct memory_tier *set_node_memory_tier(int node)
+>  {
+>  	struct memory_tier *memtier;
+> -	struct memory_dev_type *memtype;
+> +	struct memory_dev_type *mtype;
+
+mtype may be referenced without initialization now below.
+
+> +	int adist = MEMTIER_ADISTANCE_DRAM;
+>  	pg_data_t *pgdat = NODE_DATA(node);
+>  
+>  
+> @@ -514,11 +521,20 @@ static struct memory_tier *set_node_memory_tier(int node)
+>  	if (!node_state(node, N_MEMORY))
+>  		return ERR_PTR(-EINVAL);
+>  
+> -	__init_node_memory_type(node, default_dram_type);
+> +	mt_calc_adistance(node, &adist);
+> +	if (node_memory_types[node].memtype == NULL) {
+> +		mtype = mt_find_alloc_memory_type(adist, &default_memory_types);
+> +		if (IS_ERR(mtype)) {
+> +			mtype = default_dram_type;
+> +			pr_info("Failed to allocate a memory type. Fall back.\n");
+> +		}
+> +	}
+>  
+> -	memtype = node_memory_types[node].memtype;
+> -	node_set(node, memtype->nodes);
+> -	memtier = find_create_memory_tier(memtype);
+> +	__init_node_memory_type(node, mtype);
 > +
-> +            /* HV machine check exceptions don't have ME set */
-> +            new_msr &= ~((target_ulong)1 << MSR_ME);
->           }
-> -        /* machine check exceptions don't have ME set */
-> -        new_msr &= ~((target_ulong)1 << MSR_ME);
->   
->           msr |= env->error_code;
->           break;
+> +	mtype = node_memory_types[node].memtype;
+> +	node_set(node, mtype->nodes);
+> +	memtier = find_create_memory_tier(mtype);
+>  	if (!IS_ERR(memtier))
+>  		rcu_assign_pointer(pgdat->memtier, memtier);
+>  	return memtier;
+> @@ -655,6 +671,34 @@ void mt_put_memory_types(struct list_head *memory_types)
+>  }
+>  EXPORT_SYMBOL_GPL(mt_put_memory_types);
+>  
+> +/*
+> + * This is invoked via `late_initcall()` to initialize memory tiers for
+> + * CPU-less memory nodes after driver initialization, which is
+> + * expected to provide `adistance` algorithms.
+> + */
+> +static int __init memory_tier_late_init(void)
+> +{
+> +	int nid;
+> +
+> +	mutex_lock(&memory_tier_lock);
+> +	for_each_node_state(nid, N_MEMORY)
+> +		if (!node_state(nid, N_CPU) &&
+> +			node_memory_types[nid].memtype == NULL)
+> +			/*
+> +			 * Some device drivers may have initialized memory tiers
+> +			 * between `memory_tier_init()` and `memory_tier_late_init()`,
+> +			 * potentially bringing online memory nodes and
+> +			 * configuring memory tiers. Exclude them here.
+> +			 */
+> +			set_node_memory_tier(nid);
+> +
+> +	establish_demotion_targets();
+> +	mutex_unlock(&memory_tier_lock);
+> +
+> +	return 0;
+> +}
+> +late_initcall(memory_tier_late_init);
+> +
+>  static void dump_hmem_attrs(struct access_coordinate *coord, const char *prefix)
+>  {
+>  	pr_info(
+> @@ -668,7 +712,7 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+>  {
+>  	int rc = 0;
+>  
+> -	mutex_lock(&memory_tier_lock);
+> +	mutex_lock(&default_dram_perf_lock);
+>  	if (default_dram_perf_error) {
+>  		rc = -EIO;
+>  		goto out;
+> @@ -716,7 +760,7 @@ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+>  	}
+>  
+>  out:
+> -	mutex_unlock(&memory_tier_lock);
+> +	mutex_unlock(&default_dram_perf_lock);
+>  	return rc;
+>  }
+>  
+> @@ -732,7 +776,7 @@ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
+>  	    perf->read_bandwidth + perf->write_bandwidth == 0)
+>  		return -EINVAL;
+>  
+> -	mutex_lock(&memory_tier_lock);
+> +	mutex_lock(&default_dram_perf_lock);
+>  	/*
+>  	 * The abstract distance of a memory node is in direct proportion to
+>  	 * its memory latency (read + write) and inversely proportional to its
+> @@ -745,7 +789,7 @@ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
+>  		(default_dram_perf.read_latency + default_dram_perf.write_latency) *
+>  		(default_dram_perf.read_bandwidth + default_dram_perf.write_bandwidth) /
+>  		(perf->read_bandwidth + perf->write_bandwidth);
+> -	mutex_unlock(&memory_tier_lock);
+> +	mutex_unlock(&default_dram_perf_lock);
+>  
+>  	return 0;
+>  }
+> @@ -858,7 +902,8 @@ static int __init memory_tier_init(void)
+>  	 * For now we can have 4 faster memory tiers with smaller adistance
+>  	 * than default DRAM tier.
+>  	 */
+> -	default_dram_type = alloc_memory_type(MEMTIER_ADISTANCE_DRAM);
+> +	default_dram_type = mt_find_alloc_memory_type(MEMTIER_ADISTANCE_DRAM,
+> +									&default_memory_types);
+>  	if (IS_ERR(default_dram_type))
+>  		panic("%s() failed to allocate default DRAM tier\n", __func__);
+>  
+> @@ -868,6 +913,14 @@ static int __init memory_tier_init(void)
+>  	 * types assigned.
+>  	 */
+>  	for_each_node_state(node, N_MEMORY) {
+> +		if (!node_state(node, N_CPU))
+> +			/*
+> +			 * Defer memory tier initialization on CPUless numa nodes.
+> +			 * These will be initialized after firmware and devices are
+> +			 * initialized.
+> +			 */
+> +			continue;
+> +
+>  		memtier = set_node_memory_tier(node);
+>  		if (IS_ERR(memtier))
+>  			/*
+
+--
+Best Regards,
+Huang, Ying
 
