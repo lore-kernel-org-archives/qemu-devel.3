@@ -4,110 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 852B9C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 14:03:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9511EC54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 14:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnfTF-0000Vb-IG; Fri, 22 Mar 2024 10:02:09 -0400
+	id 1rnfZE-0002d9-7G; Fri, 22 Mar 2024 10:08:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rnfTA-0000Uo-VU
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:02:05 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rnfT8-0001XM-Rj
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:02:04 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id A607B5FF03;
- Fri, 22 Mar 2024 14:01:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1711116117; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1rnfZB-0002cN-MF
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:08:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1rnfZA-00031c-33
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:08:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711116494;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vvYUKZGTveTr3RrdpYpEdn46UOkJWBD6/QiLcontVBs=;
- b=uT3eeSz6xITQGC54fFY4NpM90ut3qcLHMRbM7q6DzXAqy+6E6ZqS9+iiWpJKnRVNriJShK
- VMl/LK1z2cCLi6RlHrA2aP2ekV6H5fmw+F37TtEFCBnXvU9CtlSVEguGxNhSzbiZvZLArZ
- oKiGu8Xh3n2dZujCGirHj4atVg9O6+w=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1711116117;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vvYUKZGTveTr3RrdpYpEdn46UOkJWBD6/QiLcontVBs=;
- b=+5Ho6lt9w7/6gf+1C0ue+qrH/7ANJO3cNjloVktzMDB11Wd35I84go20JFswQpKkZBXBz9
- 1B4vy8X69nEdydCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1711116117; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vvYUKZGTveTr3RrdpYpEdn46UOkJWBD6/QiLcontVBs=;
- b=uT3eeSz6xITQGC54fFY4NpM90ut3qcLHMRbM7q6DzXAqy+6E6ZqS9+iiWpJKnRVNriJShK
- VMl/LK1z2cCLi6RlHrA2aP2ekV6H5fmw+F37TtEFCBnXvU9CtlSVEguGxNhSzbiZvZLArZ
- oKiGu8Xh3n2dZujCGirHj4atVg9O6+w=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1711116117;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vvYUKZGTveTr3RrdpYpEdn46UOkJWBD6/QiLcontVBs=;
- b=+5Ho6lt9w7/6gf+1C0ue+qrH/7ANJO3cNjloVktzMDB11Wd35I84go20JFswQpKkZBXBz9
- 1B4vy8X69nEdydCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 32253136AD;
- Fri, 22 Mar 2024 14:01:56 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id tj4rOlSP/WWHKAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 22 Mar 2024 14:01:56 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, eblake@redhat.com, berrange@redhat.com
-Subject: Re: [PATCH 1/3] qapi: Improve migration TLS documentation
-In-Reply-To: <20240322135117.195489-2-armbru@redhat.com>
-References: <20240322135117.195489-1-armbru@redhat.com>
- <20240322135117.195489-2-armbru@redhat.com>
-Date: Fri, 22 Mar 2024 11:01:54 -0300
-Message-ID: <875xxemkkt.fsf@suse.de>
+ bh=jb+RFwUxZLS6XlMgPlZdWSuIHefjsKppq7uBkfuYlFQ=;
+ b=WVqpEUwJ2IiohFFv0TKqWKIuGuigDLT2pJvGstKw9kZ+dBas67ifPWfffj4GOzi69rbYQB
+ GCFvbQr7IkhADvpxeFKfKKe/heEraqHnLDqJ9xSsyN/MD/CShwTSx6zlY/PuKQddAB16Cg
+ 4SJlHSK1vLmqe07CdrH6SKUWdZ0cdBo=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-437-tTXb0x7IMYuv-wN21DU4Tg-1; Fri, 22 Mar 2024 10:08:12 -0400
+X-MC-Unique: tTXb0x7IMYuv-wN21DU4Tg-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-513eee2dd2fso2100649e87.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 07:08:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711116491; x=1711721291;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jb+RFwUxZLS6XlMgPlZdWSuIHefjsKppq7uBkfuYlFQ=;
+ b=t3b4Aq9Hq/dKyEa1vsEmM3gIExUZeT4szRTBv6pP+32GggtwNK9jfM6BMVM5IR83ZZ
+ jdP0juh7PFV61Pji2OAzQIf9TfXKZlO5lO3O+BkqT+f3tDfm2zEul28gXDr2fsxmhwyj
+ lH5D4n3HSRbVyF16UbngAlJB3OzzffdDj48QUPPfVA5pc6IsOGhDfSxSUmEnU9i5VzwU
+ pyA06jSOePcN6KKHCVB0qepU9riNOP9MnFboCbS1L7vqt5VgI2IVYZaHSfjSmobleCWK
+ T0nHCMWobFANh10m76Vn13HRH3Sp7/Hz+aU/Y6IvDUOugDaQoIezH9MmlMiOx35GpsM2
+ PmcQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWmLKWhrm8oyqvcoTgPQagPdU0xdwLwxwaD07vwLE47nrFtCiYIymBFekfRIbGgMVZm1362OBXu4O5ubcdzHegV1Ohh4V0=
+X-Gm-Message-State: AOJu0Yzp4XPso/B0Jr4+d3DPoewdRqaQuw4dQaHi9Alq/iwaY20tsI6T
+ YpXM+HKI29pEDzBNH713Ce/xxz1AEFjziHHAVZg4VQbtfYvCQ9usnMLLVt5p31vYh1pdqhcc1Hl
+ 4pqMqRIhzBbyedfY7ZB+ZrAjxh3QbTTJPgTyGl6NFs8NkjQdDnKmw
+X-Received: by 2002:a19:e05d:0:b0:513:c6ec:fa6c with SMTP id
+ g29-20020a19e05d000000b00513c6ecfa6cmr1724290lfj.48.1711116491418; 
+ Fri, 22 Mar 2024 07:08:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFHcfthXuy2N5hKCsZ42T5Q83dfNwqXK3Du4VtPbyMsngZqrCKM0JE7SY5SK9Zn13EPpRLThw==
+X-Received: by 2002:a19:e05d:0:b0:513:c6ec:fa6c with SMTP id
+ g29-20020a19e05d000000b00513c6ecfa6cmr1724272lfj.48.1711116491075; 
+ Fri, 22 Mar 2024 07:08:11 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ m15-20020adffe4f000000b0033e5c54d0d9sm2153343wrs.38.2024.03.22.07.08.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Mar 2024 07:08:10 -0700 (PDT)
+Message-ID: <6dfb82c0-d2c0-4618-94b0-2e2561534d96@redhat.com>
+Date: Fri, 22 Mar 2024 15:08:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.51 / 50.00]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- BAYES_HAM(-3.00)[100.00%]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MIME_GOOD(-0.10)[text/plain];
- DWL_DNSWL_HI(-3.50)[suse.de:dkim]; RCPT_COUNT_FIVE(0.00)[5];
- RCVD_COUNT_THREE(0.00)[3];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
- NEURAL_SPAM_LONG(3.50)[1.000];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=uT3eeSz6;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=+5Ho6lt9
-X-Rspamd-Queue-Id: A607B5FF03
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
+Subject: Re: [PATCH 0/4] hw/nmi: Remove @cpu_index argument
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Mark Burton <mburton@qti.qualcomm.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Markus Armbruster <armbru@redhat.com>,
+ "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>,
+ "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20240220150833.13674-1-philmd@linaro.org>
+ <f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com>
+ <cc132404-dcd5-4aed-a481-b46d6e3115b0@linaro.org>
+ <CAFEAcA_0qUFW0MewHC+v+pSOisE-kQDt9Wv4F3RafEkyQ0DGJA@mail.gmail.com>
+ <59C20F1A-FCFE-4E26-B511-A6C0E1EF6F61@qti.qualcomm.com>
+ <CAFEAcA8MVbKqv-TgaO7Vv95f0p164Gao+LT-CM5+92cXjkpmTw@mail.gmail.com>
+ <23BCD870-16A1-4AF9-9308-2788178F511B@qti.qualcomm.com>
+ <CAFEAcA8=H=xD75T-e6JFnz9RtT2kG2nM5HbqE0AsTiWFe+0a-w@mail.gmail.com>
+Content-Language: en-US, fr
+In-Reply-To: <CAFEAcA8=H=xD75T-e6JFnz9RtT2kG2nM5HbqE0AsTiWFe+0a-w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.222,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,152 +119,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+On 3/20/24 16:00, Peter Maydell wrote:
+> On Wed, 20 Mar 2024 at 14:10, Mark Burton <mburton@qti.qualcomm.com> wrote:
+>> I’d broaden this to all ’signals’ (IRQ, Reset etc) - and I guess
+>> similar statements apply, with the “bridge” between the function
+>> and the GPIO mechanism moved closer or further from the originator(s)
+>> of the activity.
+>>
+>> The issue isn’t my “machine” model, rather the compose-ability of
+>> (any) such machine.  A-priori, a model writer doesn’t know if they
+>> should respond directly to an NMI or not - Hence they dont know if
+>> they should implement the TYPE_NMI or not. That’s a decision only
+>> the machine composer knows.
+>> My suggestion would be to use a GPIO interface to models, which can
+>> then be appropriately wired. (And, hence, to have a single place
+>> that implements the TYPE_NMI interface and provides the GPIO wire
+>> ready for wiring to appropriate devices).
+> 
+> I feel like that's a long way in the future, but my back-of-the-envelope
+> design sketch of that is that the TYPE_MACHINE class that's implementing
+> the "I am just a container for all the devices that the user has
+> specified and wired together" machine would itself implement TYPE_NMI and
+> when an NMI came in it would assert a GPIO line that the user could
+> wire up, or not wire up, as they chose.
+> 
+> Right now we can't do that though, because, among other reasons,
+> TYPE_MACHINE isn't a TYPE_DEVICE. (I do want to fix that, though:
+> I'm hoping it won't be too difficult.)
 
-> MigrateSetParameters is about setting parameters, and
-> MigrationParameters is about querying them.  Their documentation of
-> @tls-creds and @tls-hostname has residual damage from a failed attempt
-> at de-duplicating them (see commit de63ab61241 "migrate: Share common
-> MigrationParameters struct" and commit 1bda8b3c695 "migration: Unshare
-> MigrationParameters struct for now").
->
-> MigrateSetParameters documentation issues:
->
-> * It claims plain text mode "was reported by omitting tls-creds"
->   before 2.9.  MigrateSetParameters is not used for reporting, so this
->   is misleading.  Delete.
->
-> * It similarly claims hostname defaulting to migration URI "was
->   reported by omitting tls-hostname" before 2.9.  Delete as well.
->
-> Rephrase the remaining @tls-hostname contents for clarity.
->
-> Enum MigrationParameter mirrors the members of struct
-> MigrateSetParameters.  Differences to MigrateSetParameters's member
-> documentation are pointless.  Copy the new text to MigrationParameter.
->
-> MigrationParameters documentation issues:
->
-> * @tls-creds runs the two last sentences together without punctuation.
->   Fix that.
->
-> * Much of the contents on @tls-hostname only applies to setting
->   parameters, resulting in confusion.  Replace by a suitable abridged
->   version of the new MigrateSetParameters text, and a note on
->   @tls-hostname omission in 2.8.
->
-> Additional damage is due to flawed doc fix commit
-> 66fcb9d651d (qapi/migration: Add missing tls-authz documentation):
-> since it copied the missing MigrateSetParameters text from
-> MigrationParameters instead of MigrationParameter, the part on
-> recreating @tls-authz on the fly is missing.  Copy that, too.
->
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  qapi/migration.json | 63 +++++++++++++++++++++++----------------------
->  1 file changed, 32 insertions(+), 31 deletions(-)
->
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index aa1b39bce1..cbcc6946eb 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -809,16 +809,19 @@
->  #     for establishing a TLS connection over the migration data
->  #     channel.  On the outgoing side of the migration, the credentials
->  #     must be for a 'client' endpoint, while for the incoming side the
-> -#     credentials must be for a 'server' endpoint.  Setting this will
-> -#     enable TLS for all migrations.  The default is unset, resulting
-> -#     in unsecured migration at the QEMU level.  (Since 2.7)
-> +#     credentials must be for a 'server' endpoint.  Setting this to a
-> +#     non-empty string enables TLS for all migrations.  An empty
-> +#     string means that QEMU will use plain text mode for migration,
-> +#     rather than TLS.  (Since 2.7)
->  #
-> -# @tls-hostname: hostname of the target host for the migration.  This
-> -#     is required when using x509 based TLS credentials and the
-> -#     migration URI does not already include a hostname.  For example
-> -#     if using fd: or exec: based migration, the hostname must be
-> -#     provided so that the server's x509 certificate identity can be
-> -#     validated.  (Since 2.7)
-> +# @tls-hostname: migration target's hostname for validating the
-> +#     server's x509 certificate identify.  If empty, QEMU will use the
+Oh that's interesting. Will that introduce an extra level of container
+with multiple machines below ?
 
-identity
+/qemu
+   /machine[0]
+     ...
+     /peripheral (container)
+     /peripheral-anon (container)
+   /machine[1]
+     ...
+     /peripheral (container)
+     /peripheral-anon (container)
+   /unattached (container)
+     ...
+     /sysbus (System)
+     /system[0] (memory-region)
 
-> +#     hostname from the migration URI, if any.  A non-empty value is
-> +#     required when using x509 based TLS credentials and the migration
-> +#     URI does not include a hostname, such as fd: or exec: based
-> +#     migration.  (Since 2.7)
-> +#
-> +#     Note: empty value works only since 2.9.
->  #
->  # @tls-authz: ID of the 'authz' object subclass that provides access
->  #     control checking of the TLS x509 certificate distinguished name.
-> @@ -1006,22 +1009,22 @@
->  #     credentials must be for a 'server' endpoint.  Setting this to a
->  #     non-empty string enables TLS for all migrations.  An empty
->  #     string means that QEMU will use plain text mode for migration,
-> -#     rather than TLS (Since 2.9) Previously (since 2.7), this was
-> -#     reported by omitting tls-creds instead.
-> +#     rather than TLS.  This is the default.  (Since 2.7)
->  #
-> -# @tls-hostname: hostname of the target host for the migration.  This
-> -#     is required when using x509 based TLS credentials and the
-> -#     migration URI does not already include a hostname.  For example
-> -#     if using fd: or exec: based migration, the hostname must be
-> -#     provided so that the server's x509 certificate identity can be
-> -#     validated.  (Since 2.7) An empty string means that QEMU will use
-> -#     the hostname associated with the migration URI, if any.  (Since
-> -#     2.9) Previously (since 2.7), this was reported by omitting
-> -#     tls-hostname instead.
-> +# @tls-hostname: migration target's hostname for validating the
-> +#     server's x509 certificate identify.  If empty, QEMU will use the
+Thanks,
 
-same here
+C.
 
-> +#     hostname from the migration URI, if any.  A non-empty value is
-> +#     required when using x509 based TLS credentials and the migration
-> +#     URI does not include a hostname, such as fd: or exec: based
-> +#     migration.  (Since 2.7)
-> +#
-> +#     Note: empty value works only since 2.9.
->  #
->  # @tls-authz: ID of the 'authz' object subclass that provides access
->  #     control checking of the TLS x509 certificate distinguished name.
-> -#     (Since 4.0)
-> +#     This object is only resolved at time of use, so can be deleted
-> +#     and recreated on the fly while the migration server is active.
-> +#     If missing, it will default to denying access (Since 4.0)
->  #
->  # @max-bandwidth: to set maximum speed for migration.  maximum speed
->  #     in bytes per second.  (Since 2.8)
-> @@ -1240,17 +1243,15 @@
->  #     must be for a 'client' endpoint, while for the incoming side the
->  #     credentials must be for a 'server' endpoint.  An empty string
->  #     means that QEMU will use plain text mode for migration, rather
-> -#     than TLS (Since 2.7) Note: 2.8 reports this by omitting
-> -#     tls-creds instead.
-> +#     than TLS.  (Since 2.7)
->  #
-> -# @tls-hostname: hostname of the target host for the migration.  This
-> -#     is required when using x509 based TLS credentials and the
-> -#     migration URI does not already include a hostname.  For example
-> -#     if using fd: or exec: based migration, the hostname must be
-> -#     provided so that the server's x509 certificate identity can be
-> -#     validated.  (Since 2.7) An empty string means that QEMU will use
-> -#     the hostname associated with the migration URI, if any.  (Since
-> -#     2.9) Note: 2.8 reports this by omitting tls-hostname instead.
-> +#     Note: 2.8 omits empty @tls-creds instead.
-> +#
-> +# @tls-hostname: migration target's hostname for validating the
-> +#     server's x509 certificate identify.  If empty, QEMU will use the
-
-and here
-
-> +#     hostname from the migration URI, if any.  (Since 2.7)
-> +#
-> +#     Note: 2.8 omits empty @tls-hostname instead.
->  #
->  # @tls-authz: ID of the 'authz' object subclass that provides access
->  #     control checking of the TLS x509 certificate distinguished name.
 
