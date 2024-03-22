@@ -4,58 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8537CC47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 13:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA2DC47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 13:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rneZm-0001fL-4s; Fri, 22 Mar 2024 09:04:50 -0400
+	id 1rnebz-0003VV-Oc; Fri, 22 Mar 2024 09:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian.poetzsch@kernkonzept.com>)
- id 1rnc5V-0008Ni-DF
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:25:27 -0400
-Received: from serv1.kernkonzept.com ([2a01:4f8:1c1c:b490::2]
- helo=mx.kernkonzept.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian.poetzsch@kernkonzept.com>)
- id 1rnc5S-0000Bh-CP
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:25:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=kernkonzept.com; s=mx1; h=Content-Transfer-Encoding:Content-Type:
- MIME-Version:Message-Id:Date:Subject:Cc:To:From:References:In-Reply-To:
- Reply-To:Content-ID:Content-Description;
- bh=uddgZXDiTzQQfpiNSJyLx5dFmvoi3NpsRnqm37BqGtk=; b=DtaDmNE8XeL/FuE43g8/HyOglQ
- ZD2B/44nck15qzEX/gACG8/ZOApjHs5LfcMDoKDViGV9+ZoARopmscgIUNmgRASXiEMRuyu5FoG2I
- dgs6rDmOZYHIWkW4aCalA5j2pDYDuxHgVyuSjLB67IFTiePu2Q/DifyRi5WbeZAGTqNp6YdnxV/9J
- rO3Qs8Y++JqciL6k8WYXuSoJFxF68w9enuwpWjT9fViGh9saEZUZA9WguW8DMODmUW+9Y/vqMljhd
- SP78aKjzebAfHDwbE+tQQgUP1s4COKCWsLrR7ZXAQoPhp5rqZIDor1r5K0x0k3VTD1bMPe2m/sXqL
- u5LpXEqA==;
-Received: from ip92349c68.dynamic.kabel-deutschland.de ([146.52.156.104]
- helo=iris.dd1.int.kernkonzept.com) by mx.kernkonzept.com with esmtpsa
- (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim 4.96)
- id 1rnc5J-007ZAZ-0I; Fri, 22 Mar 2024 11:25:13 +0100
-From: =?UTF-8?q?Christian=20P=C3=B6tzsch?= <christian.poetzsch@kernkonzept.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Christian=20P=C3=B6tzsch?= <christian.poetzsch@kernkonzept.com>
-Subject: [PATCH] Add support for abs info in vhost-user-input
-Date: Fri, 22 Mar 2024 11:24:21 +0100
-Message-Id: <20240322102421.2158139-1-christian.poetzsch@kernkonzept.com>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rnebx-0003Ue-OS
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 09:07:05 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rnebv-0006kS-4l
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 09:07:05 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-56bcb9640bbso2281496a12.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 06:07:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711112821; x=1711717621; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=NdAGvFh9v2vtrvHy+ZgoS5liRzTxQboPJqHxj7/u0dg=;
+ b=lpRx68reJvm6wMPV6do67EJGKGjxcQXtfQ694VxuEQ9qeLHi+bnco4jh/77LSPY0s9
+ 7iqWHnAQKpDALW0UCLssCqI1zrqw1Ba6ANH9ktpUhA96RCOp6DY3/myPSf1DsueXMvfE
+ mu95243GqHh4piUPSBcIu1aRlVwbwM2VKeCOw+PpPBY/xiSslQG32kPawEA6P2gL+43F
+ ZoCp5CDG9QrVkHBDUn3SNj/IUSiKUds7ILwvDRxK3K0zke6rAa+CX8vLB+zqdXKQWbS7
+ hOfYl7Vp/2pjmibHKYIq1FQupM180R+yDew1QU8C/KuCSvym3xrak3TBt3c6zRSfQ/nw
+ Q2rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711112821; x=1711717621;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NdAGvFh9v2vtrvHy+ZgoS5liRzTxQboPJqHxj7/u0dg=;
+ b=hFpvCtqZ61XbnotxPKqBLCtO+WFTqYpBBwwPJ0vLeOYGYJI8inBgqgnQPbGZ1pbQeE
+ otEx9LcMtTXu58FhDFAjfVGk4DRzsD323cVMu0By06z7mN1wn6LH0N0e72Ozzgszz/va
+ d1GNuN2J2iIHKUBLxtxsy/45mI5Ulhu5wE6rE01YL+2yThEmNyf2nE5h/9giUFTShzwC
+ SzsnjVffXEXiyhO4pnbbEgi3Jlt2qYNTxHmtDHviQT5bhaCs/2HVUyEmD2fSiTtyUXny
+ 1DYsffqcDz8z9JPsMvb1iwTXoDqT8yrtKtBn+mJRsDGUjIWLciTu8hglBev7gd9vtmJ2
+ 95jA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyAlFWzlQ6VqOxyn4s8o/5tHp/kPjQo8BZNskWae5CR8IDByXdAftw3822tiBgPC2iWZ80e3kL8zRnCSUzZhypx5QqQPM=
+X-Gm-Message-State: AOJu0YwQ+SPYYfefj8qAlKj8ordutx1RYwH+vKMe0xRiFhm8J1oOPbqP
+ 7MZ7cdJQhusmLxaC/UE+L6c/u4SAeZYk/M8w1Y74P+O8GOam/MQPjM4ZSftsYyHbpE2WPd47+vW
+ eeW4gkR8v2sod1H4I+z6UsZRekyHULfXstf98S+N4VjzSw+X7
+X-Google-Smtp-Source: AGHT+IEDjpxBve92RwmHdoX5dcyBDscuXFncgb6ww3g/BIs8lK6ZDKvKMNp94sXsnCwDo0RWN6MIiiS3Va7tD6k0uw0=
+X-Received: by 2002:a50:d5da:0:b0:56b:d139:490 with SMTP id
+ g26-20020a50d5da000000b0056bd1390490mr1715498edj.6.1711112821204; Fri, 22 Mar
+ 2024 06:07:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a01:4f8:1c1c:b490::2;
- envelope-from=christian.poetzsch@kernkonzept.com; helo=mx.kernkonzept.com
+References: <20240318-zoom-v1-1-07ad14fcde19@daynix.com>
+In-Reply-To: <20240318-zoom-v1-1-07ad14fcde19@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 22 Mar 2024 13:06:50 +0000
+Message-ID: <CAFEAcA_i3Os6YPwxx99sWvK5qdzopMGBZgvVKJ7qX-waCc7RnQ@mail.gmail.com>
+Subject: Re: [PATCH] ui/cocoa: Do not automatically zoom for HiDPI
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 22 Mar 2024 09:04:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,93 +92,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Absolute input device did not work, cause VIRTIO_INPUT_CFG_ABS_INFO is
-missing. Fetch this info when available and provide it to any virtio
-client.
+On Mon, 18 Mar 2024 at 09:02, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>
+> Cocoa automatically zooms for a HiDPI display like Retina and makes
+> the display blurry. Revert the automatic zooming.
+>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>  ui/cocoa.m | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
+>
+> diff --git a/ui/cocoa.m b/ui/cocoa.m
+> index fa879d7dcd4b..c5b3c28000ff 100644
+> --- a/ui/cocoa.m
+> +++ b/ui/cocoa.m
+> @@ -522,7 +522,10 @@ - (void) resizeWindow
+>      [[self window] setContentAspectRatio:NSMakeSize(screen.width, screen.height)];
+>
+>      if (!([[self window] styleMask] & NSWindowStyleMaskResizable)) {
+> -        [[self window] setContentSize:NSMakeSize(screen.width, screen.height)];
+> +        CGFloat width = screen.width / [[self window] backingScaleFactor];
+> +        CGFloat height = screen.height / [[self window] backingScaleFactor];
+> +
+> +        [[self window] setContentSize:NSMakeSize(width, height)];
+>          [[self window] center];
+>      } else if ([[self window] styleMask] & NSWindowStyleMaskFullScreen) {
+>          [[self window] setContentSize:[self screenSafeAreaSize]];
+> @@ -575,8 +578,8 @@ - (void) updateUIInfoLocked
+>
+>      info.xoff = 0;
+>      info.yoff = 0;
+> -    info.width = frameSize.width;
+> -    info.height = frameSize.height;
+> +    info.width = frameSize.width * [[self window] backingScaleFactor];
+> +    info.height = frameSize.height * [[self window] backingScaleFactor];
+>
+>      dpy_set_ui_info(dcl.con, &info, TRUE);
+>  }
 
-This is basically the same code as in hw/input/virtio-input-host.c, just
-modified to work here.
+Could we / should we use convertRectToBacking and convertRectFromBacking
+rather than doing the multiply/divide ourselves? The docs seem to
+recommend against directly using backingScaleFactor when possible.
 
-Signed-off-by: Christian Pötzsch <christian.poetzsch@kernkonzept.com>
----
- contrib/vhost-user-input/main.c | 46 +++++++++++++++++++++++++++++++--
- 1 file changed, 44 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/vhost-user-input/main.c b/contrib/vhost-user-input/main.c
-index 081230da54..9506e34d04 100644
---- a/contrib/vhost-user-input/main.c
-+++ b/contrib/vhost-user-input/main.c
-@@ -272,6 +272,32 @@ vi_bits_config(VuInput *vi, int type, int count)
-     g_array_append_val(vi->config, bits);
- }
- 
-+static void
-+vi_input_abs_config(VuInput *vi, int axis)
-+{
-+    virtio_input_config config;
-+    struct input_absinfo absinfo;
-+    int rc;
-+
-+    rc = ioctl(vi->evdevfd, EVIOCGABS(axis), &absinfo);
-+    if (rc < 0) {
-+        return;
-+    }
-+
-+    memset(&config, 0, sizeof(config));
-+    config.select = VIRTIO_INPUT_CFG_ABS_INFO;
-+    config.subsel = axis;
-+    config.size   = sizeof(struct input_absinfo);
-+
-+    config.u.abs.min  = cpu_to_le32(absinfo.minimum);
-+    config.u.abs.max  = cpu_to_le32(absinfo.maximum);
-+    config.u.abs.fuzz = cpu_to_le32(absinfo.fuzz);
-+    config.u.abs.flat = cpu_to_le32(absinfo.flat);
-+    config.u.abs.res  = cpu_to_le32(absinfo.resolution);
-+
-+    g_array_append_val(vi->config, config);
-+}
-+
- static char *opt_evdev;
- static int opt_fdnum = -1;
- static char *opt_socket_path;
-@@ -297,11 +323,12 @@ main(int argc, char *argv[])
- {
-     GMainLoop *loop = NULL;
-     VuInput vi = { 0, };
--    int rc, ver, fd;
--    virtio_input_config id;
-+    int rc, ver, fd, i, axis;
-+    virtio_input_config id, *abs;
-     struct input_id ids;
-     GError *error = NULL;
-     GOptionContext *context;
-+    uint8_t byte;
- 
-     context = g_option_context_new(NULL);
-     g_option_context_add_main_entries(context, entries, NULL);
-@@ -375,6 +402,21 @@ main(int argc, char *argv[])
-     vi_bits_config(&vi, EV_ABS, ABS_CNT);
-     vi_bits_config(&vi, EV_MSC, MSC_CNT);
-     vi_bits_config(&vi, EV_SW,  SW_CNT);
-+
-+    abs = vi_find_config(&vi, VIRTIO_INPUT_CFG_EV_BITS, EV_ABS);
-+    if (abs) {
-+        for (i = 0; i < abs->size; i++) {
-+            byte = abs->u.bitmap[i];
-+            axis = 8 * i;
-+            while (byte) {
-+                if (byte & 1) {
-+                    vi_input_abs_config(&vi, axis);
-+                }
-+                axis++;
-+                byte >>= 1;
-+            }
-+        }
-+    }
-     g_debug("config length: %u", vi.config->len);
- 
-     if (opt_socket_path) {
--- 
-2.39.2
-
+thanks
+-- PMM
 
