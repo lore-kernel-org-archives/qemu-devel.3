@@ -4,79 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F78C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 11:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F586C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 11:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rndQB-0005CG-5g; Fri, 22 Mar 2024 07:50:51 -0400
+	id 1rndQn-0005GG-Mb; Fri, 22 Mar 2024 07:51:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rndQ7-0005Bw-Ea
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 07:50:49 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rndQ4-0007XE-4V
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 07:50:46 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-56a2bb1d84eso3640746a12.1
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 04:50:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711108239; x=1711713039; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ensAXljaHg7KfpjfX/dLLUQdCVh99xLqF2mZKyVqav8=;
- b=fEINF1od1CwFxkRhGYVplCf8TbbRpoKFv8yhGgzovVELeDI7dhGZax4XUuBdFHQIJ0
- 7J/JDwoAxt1pyJkWCMJEuFJMP/Yy7TxU/UbnY8BuSU2aYQd0JycaUVe7lxxKnQaxfZhP
- wDtJax9o1YeT2ucnkLIynn2kWK/3KE/zqzOCVslmZm4hgZXh7mLK6Q5ENz2t53eC9ehh
- DTI3aH2PQkgoWUTBSuEuAJnal+7qexdhKw9GKZx8AFZAZsAklVBV+61UXhr0UEDn2PAp
- RwAi7Mnk293ikrLD/PQ+Q9bqlFbc9Mgr2GQG6zAj2gFNBv0OMyKAcThcX+TPsb7DsP0b
- n/6w==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rndQm-0005FQ-Gp
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 07:51:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rndQk-0007Zj-6h
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 07:51:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711108283;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=c+MhZzsQ3nfnPscuYpKrUsimAvR86kvlI2svcxdjtKo=;
+ b=YQMYhP67u8njhYB4+tK38WviHnGAHC3ELkWTyygZJrmCZqR0MFVhcHxkDm7BY7ECqTYATr
+ vcGusLFPgMOa+vGvw8lpSKiR2GszKN1+giMEytTIjtUU1WLQ/OwnCDoCTCId8/renM0jf5
+ 92avQz4nolNdpOqX5NaZic+/N+PpmS8=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-65-TEIAWZWGPoqiWa59Jp7czQ-1; Fri, 22 Mar 2024 07:51:21 -0400
+X-MC-Unique: TEIAWZWGPoqiWa59Jp7czQ-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-513e50a5aaeso2246760e87.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 04:51:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711108239; x=1711713039;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ensAXljaHg7KfpjfX/dLLUQdCVh99xLqF2mZKyVqav8=;
- b=Kva9vzukENljiMxEGE0uHXL9W4juHeSARW7bt8BmdYdDpyq7C7oAp+yRvmkEOYJcK8
- 8/MsvvtmRr7HbNNvSnHNu9N9JQQcXP8gdEJpbCiotuW6LZwtlMLz9q1B3471Tyobro4b
- eSNTDNZVvrLKKENp+9g1gEekLuPc47wgI9QA0jwAi5zoPMMUauez2VSu7UjqNREXr6Z0
- 72zL2MdaeQ2wk2lnghV7ab6ZkAhJgWNR2mWCRV/RFEXZG+IBCUlQwt6YTzglfHAncHLE
- SIotZltv5NkQgDETbX/QYOkZrAF8MrTlJKFCO7jpQzgPXZKoyr+D3jDGyHE1v0cYUjHa
- qrtw==
+ d=1e100.net; s=20230601; t=1711108280; x=1711713080;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=c+MhZzsQ3nfnPscuYpKrUsimAvR86kvlI2svcxdjtKo=;
+ b=W/+P/mCpJ8D/X8+kOxr5KvHluDLBlAVr7JJbW+S4ZiudJV/qTzjBxCH2//Vw4DM7p6
+ bp6kfvNmlXuM7HFnX3PoBIc6lLbAG/CJomZfupA7n7fSR0B8BIAEPs7A2jhpyExExo6i
+ 76uByNgQEN32fA1afa+2hmOJXGJHEI1DpqpWURAKCOmLizvRspWpFMzxWQTBhJFcmUEP
+ HpPlomZsORKYcqkRbAU3SwrjlFoxg34ye945nNdb74MUgorbXoSfAub2MbTtmGrQzQPh
+ jeXIIlIrSpZY9JpduPzWE8esBo8JvRc3uMVQ/F8e5ssw3rLDBGTNgOH2zChFLhYLjVTx
+ MCeg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWR2Z1uvO4BEuxtMd8E1C3qdF8PlVf6e08VSsXZuSFcNNzUEDR7y742oMlTv9TQZDACdP+r5sIj3IAxbS/Y8hSbgo8j7XA=
-X-Gm-Message-State: AOJu0YzFBIt2k/apGEG2WH3Ycag4qearpOPAFk0AjOvFqXpS0JGYH/W8
- SK733GtEOjx4l9pVdj9BOqxtSxko/J7ONBRhLp6LDXIzlY8R0Cg+csXbx4BFwo6Sf8aTb4WlK9H
- zTq1nU8Wh2zbfk77cD184GfsQWA22P0EB8R1gUg==
-X-Google-Smtp-Source: AGHT+IHSw3WaU0Ajux9aASXBJHKXXDDFDS8WcKaL0SL/XEvY6I78+nAs9Z11vWZqNtDIGINGAY2Kz29eDFhBxhUeZIk=
-X-Received: by 2002:a50:baaf:0:b0:567:f475:6c6b with SMTP id
- x44-20020a50baaf000000b00567f4756c6bmr1615351ede.8.1711108239408; Fri, 22 Mar
- 2024 04:50:39 -0700 (PDT)
+ AJvYcCXFsmHlc7ncm4tmldkifmGiBcSwZ5wAjrdFOzYrpgy2MdxEX/Wy5ZeBamYSb71pRzfG2Xd807YZ8nsWFVAlmIYfl7hBd8E=
+X-Gm-Message-State: AOJu0Yxa3/flGqWmH3gDxNLS+QTxdvoaWkxTlV2MZx16PJsqOiE7cNw8
+ 4G58ObzP0HWqW1WHgqdYBPuc4pYnU9+waQ95TcsJcSUG5JAsN3CV/Xi99QKv4XchL5ZTvoFausM
+ D/CAIGj0wuR5B/JU6YS8pkHDqKsHTBHJPqo7HV7IEyfEpgpjgtClf
+X-Received: by 2002:a19:5e54:0:b0:513:cd70:8db0 with SMTP id
+ z20-20020a195e54000000b00513cd708db0mr1383959lfi.65.1711108280258; 
+ Fri, 22 Mar 2024 04:51:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKYwRH2oeI5u3MfO89jve750zjDlh/NOT+HaBJljGem7Nci95379yCTfsM/PR09Vtt2FcOVQ==
+X-Received: by 2002:a19:5e54:0:b0:513:cd70:8db0 with SMTP id
+ z20-20020a195e54000000b00513cd708db0mr1383948lfi.65.1711108279876; 
+ Fri, 22 Mar 2024 04:51:19 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-177-50.web.vodafone.de.
+ [109.43.177.50]) by smtp.gmail.com with ESMTPSA id
+ o20-20020a05600c511400b0041477f95cf6sm2857786wms.13.2024.03.22.04.51.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Mar 2024 04:51:19 -0700 (PDT)
+Message-ID: <d9989432-bdfa-40ce-b161-58f8c4421de5@redhat.com>
+Date: Fri, 22 Mar 2024 12:51:18 +0100
 MIME-Version: 1.0
-References: <20240320020115.18801-1-yaoxt.fnst@fujitsu.com>
-In-Reply-To: <20240320020115.18801-1-yaoxt.fnst@fujitsu.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 22 Mar 2024 11:50:28 +0000
-Message-ID: <CAFEAcA_7E62a4QJtQRk0AHw0hjNaReB1zyGXNjFM1EMAK-unOg@mail.gmail.com>
-Subject: Re: [PATCH] contrib/plugins/execlog: Fix compiler warning
-To: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Cc: alex.bennee@linaro.org, erdnaxe@crans.org, ma.mandourr@gmail.com, 
- pierrick.bouvier@linaro.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] tests/unit/socket-helpers: Don't close(-1)
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20240312183810.557768-1-peter.maydell@linaro.org>
+ <20240312183810.557768-3-peter.maydell@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240312183810.557768-3-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.222,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,122 +144,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 Mar 2024 at 02:05, Yao Xingtao via <qemu-devel@nongnu.org> wrote=
-:
->
-> 1. The g_pattern_match_string() is deprecated when glib2 version >=3D 2.7=
-0.
->    Use g_pattern_spec_match_string() instead to avoid this problem.
->
-> 2. The type of second parameter in g_ptr_array_add() is
->    'gpointer' {aka 'void *'}, but the type of reg->name is 'const char*'.
->    Cast the type of reg->name to 'gpointer' to avoid this problem.
->
-> compiler warning message:
-> /root/qemu/contrib/plugins/execlog.c:330:17: warning: =E2=80=98g_pattern_=
-match_string=E2=80=99
-> is deprecated: Use 'g_pattern_spec_match_string'
-> instead [-Wdeprecated-declarations]
->   330 |                 if (g_pattern_match_string(pat, rd->name) ||
->       |                 ^~
-> In file included from /usr/include/glib-2.0/glib.h:67,
->                  from /root/qemu/contrib/plugins/execlog.c:9:
-> /usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
->    57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
->       |               ^~~~~~~~~~~~~~~~~~~~~~
-> /root/qemu/contrib/plugins/execlog.c:331:21: warning: =E2=80=98g_pattern_=
-match_string=E2=80=99
-> is deprecated: Use 'g_pattern_spec_match_string'
-> instead [-Wdeprecated-declarations]
->   331 |                     g_pattern_match_string(pat, rd_lower)) {
->       |                     ^~~~~~~~~~~~~~~~~~~~~~
-> /usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
->    57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
->       |               ^~~~~~~~~~~~~~~~~~~~~~
-> /root/qemu/contrib/plugins/execlog.c:339:63: warning: passing argument 2 =
-of
-> =E2=80=98g_ptr_array_add=E2=80=99 discards =E2=80=98const=E2=80=99 qualif=
-ier from pointer target type
-> [-Wdiscarded-qualifiers]
->   339 |                             g_ptr_array_add(all_reg_names, reg->n=
-ame);
->       |                                                            ~~~^~~=
-~~~
-> In file included from /usr/include/glib-2.0/glib.h:33:
-> /usr/include/glib-2.0/glib/garray.h:198:62: note: expected
-> =E2=80=98gpointer=E2=80=99 {aka =E2=80=98void *=E2=80=99} but argument is=
- of type =E2=80=98const char *=E2=80=99
->   198 |                                            gpointer          data=
-);
->       |                                            ~~~~~~~~~~~~~~~~~~^~~~
->
-
-Hi; thanks for this patch.
-
-This fixes a bug reported in the bug tracker so we should put
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2210
-
-in the commit message just above your signed-off-by tag.
-
-
-> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+On 12/03/2024 19.38, Peter Maydell wrote:
+> In socket_check_afunix_support() we call socket(PF_UNIX, SOCK_STREAM, 0)
+> to see if it works, but we call close() on the result whether it
+> worked or not. Only close the fd if the socket() call succeeded.
+> Spotted by Coverity.
+> 
+> Resolves: Coverity CID 1497481
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  contrib/plugins/execlog.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
-> index a1dfd59ab7..41f6774116 100644
-> --- a/contrib/plugins/execlog.c
-> +++ b/contrib/plugins/execlog.c
-> @@ -327,8 +327,13 @@ static GPtrArray *registers_init(int vcpu_index)
->              for (int p =3D 0; p < rmatches->len; p++) {
->                  g_autoptr(GPatternSpec) pat =3D g_pattern_spec_new(rmatc=
-hes->pdata[p]);
->                  g_autofree gchar *rd_lower =3D g_utf8_strdown(rd->name, =
--1);
-> +#if GLIB_VERSION_MAX_ALLOWED < G_ENCODE_VERSION(2, 70)
+>   tests/unit/socket-helpers.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/unit/socket-helpers.c b/tests/unit/socket-helpers.c
+> index 6de27baee2e..f3439cc4e52 100644
+> --- a/tests/unit/socket-helpers.c
+> +++ b/tests/unit/socket-helpers.c
+> @@ -160,7 +160,6 @@ void socket_check_afunix_support(bool *has_afunix)
+>       int fd;
+>   
+>       fd = socket(PF_UNIX, SOCK_STREAM, 0);
+> -    close(fd);
+>   
+>   #ifdef _WIN32
+>       *has_afunix = (fd != (int)INVALID_SOCKET);
+> @@ -168,5 +167,8 @@ void socket_check_afunix_support(bool *has_afunix)
+>       *has_afunix = (fd >= 0);
+>   #endif
+>   
+> +    if (*has_afunix) {
+> +        close(fd);
+> +    }
+>       return;
+>   }
 
-Elsewhere we do glib version checks with
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-#if GLIB_CHECK_VERSION(2, 70, 0)
-    code for 2.70.0 and up;
-#else
-    code for older versions
-#endif
-
-so I think we should probably do that here too.
-
->                  if (g_pattern_match_string(pat, rd->name) ||
->                      g_pattern_match_string(pat, rd_lower)) {
-> +#else
-> +                if (g_pattern_spec_match_string(pat, rd->name) ||
-> +                    g_pattern_spec_match_string(pat, rd_lower)) {
-> +#endif
-
-Rather than putting this ifdef in the middle of this function,
-I think it would be easier to read if we abstract out a function
-which does the pattern matching and whose body calls the right
-glib function depending on glib version. We generally call these
-functions the same as the glib function but with a _qemu suffix
-(compare the ones in include/glib-compat.h), so here that would
-be g_pattern_spec_match_string_qemu().
-
->                      Register *reg =3D init_vcpu_register(rd);
->                      g_ptr_array_add(registers, reg);
->
-> @@ -336,7 +341,7 @@ static GPtrArray *registers_init(int vcpu_index)
->                      if (disas_assist) {
->                          g_mutex_lock(&add_reg_name_lock);
->                          if (!g_ptr_array_find(all_reg_names, reg->name, =
-NULL)) {
-> -                            g_ptr_array_add(all_reg_names, reg->name);
-> +                            g_ptr_array_add(all_reg_names, (gpointer)reg=
-->name);
->                          }
->                          g_mutex_unlock(&add_reg_name_lock);
->                      }
-
-thanks
--- PMM
 
