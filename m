@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0808CC6FD1F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E46BDC47DD9
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 12:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rneTb-0006Or-Qi; Fri, 22 Mar 2024 08:58:27 -0400
+	id 1rneU3-0006vA-RX; Fri, 22 Mar 2024 08:58:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rneTa-0006OC-2j
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 08:58:26 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1rneU0-0006tH-PO
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 08:58:52 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rneTY-0004Tt-2z
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 08:58:25 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-56bc753f58eso2482929a12.3
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 05:58:23 -0700 (PDT)
+ id 1rneTz-0004XU-6m
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 08:58:52 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-56bc5a3aeb9so2697969a12.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 05:58:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711112302; x=1711717102; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711112329; x=1711717129; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ZhkeEo/UIFFLGByKCGYe1uYmHT0Fqpd3UUx9SW2R1yU=;
- b=muoYCEl5I593UejXWm6F0vTxdiiuZLh65Kr3fm4fZauZ1RyqCMQ6EIg/0UBSituYrg
- qcd0m51AFpoIlVSoHSk+5LLQ7fIROJhGX97tF3iLDarKmK3L2P7Azfm2i5DDMC5+1wlr
- faksg08zjYoPAuHBOU8zHikCA3ogfK8G9QymdVm1UZ0n4YAM525xjn6G79+GGi5rucpM
- 2Nl2hp0WCpVvZ0x6H4hrwQ4n8BkEDJvWF+HeSoRbqjoWxTulGHqVJ3IHeeesuu3dgaAs
- /c0uuTGI3pbo+GS/wXEgJkthMUISn6MN+Gz+/nQ+wqcvq38TC3dC6jIqNG2d48BHGwDO
- 5O0A==
+ bh=w9UPMwS8yPyJJafAwL1ptFG2gaG7sFAo9wR9goYDGWU=;
+ b=mRRtgY0pN4i6YcHgkz8tGF/imC1IeF2AXjvRsLII8pr7jtWG6aoUCdhTLIZJSfuDLM
+ NN2Xp87ilA7pZwEIYMvTUhVim1LeZD2Tm/afthGRKCJV2DwZ9h5qLN9avUxXyYqWEv+o
+ hVWphpfJ6HP4U01GYuRdiptdUqtcgLthnLarUXzBk4PNAdwlFCCjbrBMuO7MhF3yJbr2
+ HOHPBf1YZZxRhQrsyAaziDK6SiB7V4MNWQ3pFLi0oyMFq5ieNTAWYb6d5oY84bhuu5MG
+ 2GjpLOrFRzrciaA5hrx/jogAortYIWoHX0ZmV89lLZViZbQt5l13KCDmxE/OhUZGJmgQ
+ Z3aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711112302; x=1711717102;
+ d=1e100.net; s=20230601; t=1711112329; x=1711717129;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ZhkeEo/UIFFLGByKCGYe1uYmHT0Fqpd3UUx9SW2R1yU=;
- b=qE9N8Sh5MVhVLewtY/qxoKZOFcxJCyx5tDcCOGj6S9kdRZMFDhlVigxUHqmPQ5Kr9v
- bmo3YYpi3N/ObfQtJC2npcnY202JhwW57HGjGB4ecXKv6alX9cOnHNqfxfXqpGj9yxd/
- sG+/UVpwad9Y2FFuDrnRQ3Hj3ABoKU+AN0X6GVqHbBfrhXmnxUDxBCXKixGdt9Ybmy8e
- azpOCnXRGO+Ht6Fti69BIsWw+Lo0E7kbLEb2pe6getxPmZYDgjZDbb9LlOusmzIH+4rr
- 1szNRaM4n/uAEupfqLsaO2OmNfgNHAO4TJ15+UA8JlJsqi64GGRKePj/QYkvpx1TZjlj
- ZtKg==
-X-Gm-Message-State: AOJu0YzlN5nJiCrm/IfQldDdSY8WTVVzW03b25LwCkQ1XvtOk7cw337v
- sXF6ZrdsSfgml3/aARt+9hD7VV29GmFB8ZkbBl0sUHk2SjyMcPExN76a6haiLdDxgRx046ZgJvK
- dN/v2jdnxRwK1sZQlbd+jY525Bagf1dWuh/uFM9hjFPn+eL31
-X-Google-Smtp-Source: AGHT+IEsJeCIACebOEeFd1MlSgWVzCNZVWFCr+wuZKXLLV9ZfivBSlOWhmLOov7DmvFqbzUL0IPe5VLIc0elTIh2a2k=
-X-Received: by 2002:a50:d60a:0:b0:56b:a969:e742 with SMTP id
- x10-20020a50d60a000000b0056ba969e742mr1570791edi.4.1711112302351; Fri, 22 Mar
- 2024 05:58:22 -0700 (PDT)
+ bh=w9UPMwS8yPyJJafAwL1ptFG2gaG7sFAo9wR9goYDGWU=;
+ b=eTyyLpgBjXjmvR5MxN0DNARz73c/Ono5rjM3L89hxbImUQiF2Zj/A+VnQHf59qesKh
+ f5bGnzBT8rQ0x1UblhAEMw+YBnucRG6jR3aWiZ70txsZhqNAjJL+WaDmyANEoC1GmkPF
+ D4uWs2q3CAM8FOYFxTPbY6aapK96HBjMhZEsDbnUB/04cVOm4hmvNdq4K2Pb5rp5D901
+ Au/Hb/MyfSo094cCes2mrQ6oS5BBNVhKu5tdkf2LU46vUJ60Hn6IHdu3ZdfBo0xTtCTJ
+ ICu30fStc2AaZQr9V8lOG6+DLI+Kjwou5BuLQxyMcwD4JD/Ei3Xnv5GZYNj6A6sqimlJ
+ fh/w==
+X-Gm-Message-State: AOJu0YxYvE2Kw7iB9AeF872VKh3nnXzENVL1DSk2E5VZ5vXGJbC9m207
+ 7xGAAxf3ABPqpl/OlNBHgKDbF/iveFsAU/qew/JqlnKIwJ0GvfbaRPDIAWCi2MkA+ZDaFR3EutZ
+ 4jqGZCY4HWJpBlvIQ3cZUsfHtXuqK6YuGxFjZ/g==
+X-Google-Smtp-Source: AGHT+IGpouGjtuuW3+3kx2fy2ZAv8gMrr0qhgLhYaEmekbZhWjaMxb7dVlwjW1Qag4tVTd041pPfc+h4Vo4Ytj/PJ6E=
+X-Received: by 2002:aa7:c488:0:b0:56b:defb:3b59 with SMTP id
+ m8-20020aa7c488000000b0056bdefb3b59mr1508397edq.19.1711112329074; Fri, 22 Mar
+ 2024 05:58:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240322100323.1973836-1-gaosong@loongson.cn>
-In-Reply-To: <20240322100323.1973836-1-gaosong@loongson.cn>
+References: <20240322085319.1758843-1-alistair.francis@wdc.com>
+In-Reply-To: <20240322085319.1758843-1-alistair.francis@wdc.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 22 Mar 2024 12:58:11 +0000
-Message-ID: <CAFEAcA-9maEMgawxvfndLyZ8uWnCdiD5VLY5H8NMJ8Ph6M05bg@mail.gmail.com>
-Subject: Re: [PULL 0/1] loongarch fix for 9.0
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, mjt@tls.msk.ru
+Date: Fri, 22 Mar 2024 12:58:38 +0000
+Message-ID: <CAFEAcA-gg5r3DzHfz-W7oMUpdNHv2q19caikYU+80znnHvUzFQ@mail.gmail.com>
+Subject: Re: [PULL 00/15] riscv-to-apply queue
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,7 +87,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Mar 2024 at 10:03, Song Gao <gaosong@loongson.cn> wrote:
+On Fri, 22 Mar 2024 at 09:01, Alistair Francis <alistair23@gmail.com> wrote:
 >
 > The following changes since commit fea445e8fe9acea4f775a832815ee22bdf2b0222:
 >
@@ -95,14 +95,21 @@ On Fri, 22 Mar 2024 at 10:03, Song Gao <gaosong@loongson.cn> wrote:
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240322
+>   https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20240322
 >
-> for you to fetch changes up to 1590154ee4376819a8c6ee61e849ebf4a4e7cd02:
+> for you to fetch changes up to 385e575cd5ab2436c123e4b7f8c9b383a64c0dbe:
 >
->   target/loongarch: Fix qemu-system-loongarch64 assert failed with the option '-d int' (2024-03-22 17:57:49 +0800)
+>   target/riscv/kvm: fix timebase-frequency when using KVM acceleration (2024-03-22 15:41:01 +1000)
 >
 > ----------------------------------------------------------------
-> pull-loongarch-20240322
+> RISC-V PR for 9.0
+>
+> * Do not enable all named features by default
+> * A range of Vector fixes
+> * Update APLIC IDC after claiming iforce register
+> * Remove the dependency of Zvfbfmin to Zfbfmin
+> * Fix mode in riscv_tlb_fill
+> * Fix timebase-frequency when using KVM acceleration
 >
 > ----------------------------------------------------------------
 
