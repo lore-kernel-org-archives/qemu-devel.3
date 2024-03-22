@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C52C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D0E4C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnbGh-0006gh-DQ; Fri, 22 Mar 2024 05:32:55 -0400
+	id 1rnbIO-0000DF-88; Fri, 22 Mar 2024 05:34:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rnbGf-0006g8-C9
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:32:53 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rnbIM-0000CV-8d
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:34:38 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1rnbGd-00080K-Rn
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:32:53 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-611248b4805so2088047b3.0
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:32:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1rnbIK-00087r-B7
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:34:37 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-565c6cf4819so5005503a12.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:34:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1711099970; x=1711704770; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8/+hfSrW/mdAYwfwaUDoq5Q6x6uBgXDbqUbcs84BAx0=;
- b=gPozoPQlfmuep8ZbN540aMbDFVxtGvClxoqAOzMMCY+lN8aNu7Ykwxnzy/4OrZpVl9
- ALfuSm8zefnnX0YJao6RQX913LWpyNvxfJNEMy18qbL3Y/jmmf6utpwtUR8SfG330nHU
- yAeFLGzxLPWcnhbgsCfsaX+Y7FYOc4EYW72nnJMGTYM81g6p5Qy8Jamnq1BRMVyLJ3LG
- ywKO977/Hkgm80e3m6t2BS7PFfDzu+JI6vmBBY61xX/NrvXeuzbPla374n5VUU3MYH5T
- 9yCKbQBzOskcYfYBe2VxAyd0KuvpCai4exd7B8lsJavyy3T9AsyC48ArvqD5FtbBfjAk
- /wBA==
+ d=linaro.org; s=google; t=1711100072; x=1711704872; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=848hfDMfHSWYM8SNdG3tbhtU2pCVUaSart0G0SSujnU=;
+ b=RXFAemRd11Y825O+szmT4PA0TVAsnDRzB1fp35fD0ZsCK3XxU1VBBsnYokWZUdzZKq
+ RtH83VAcXlhyuYrjMoCuwq+T47VPwVngm+4ToBlgshPqbLR1j/fxFfI2PSZ7wEQskhsb
+ bRqDxYFQdHXqw0KTPImo2JqdmAhA6r8gEIhX6cU/TN3HhfV+iFc9/RIlMRurkZJpirmd
+ d+G/+NYOdd5kBQxyvp56O6wgZcfyJpV2itUVRb03booNBnuzogjmZq44Tt6nF7wg/DBm
+ thwPOQCxn+a2DuTnQ02g6CkyCq8d0z0QJgVJ3dgVsz8cazznEvzAr3/QdfENuxnbi8Rn
+ l3KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711099970; x=1711704770;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8/+hfSrW/mdAYwfwaUDoq5Q6x6uBgXDbqUbcs84BAx0=;
- b=eKYjzzseVgsGJai8oFgRWIXjxYko5+GasZVZbMWlN4xz6DDyZMW7uiRrUfsZw54jgq
- NN3YCYOy5O/Mu/aOdfYbrg0Nwd0idX8XoKyj2p0VUC6AtmqHrF4biMyJ4f+mMdvJvRsp
- ziLHvdlFUaWZuipt90fYhQLlnv2Elp55zSjcCqSXrEtNWAziJMmEQaALGAvopkjOi5PE
- xJqVvgmxaHz17vkYgsGX8YyH8TQVkvkC8hXqF0f2oifUVNuPHBuTzKzvWfY/ye5YLeAp
- fR2WKdI5/DteP0TIDtF8PAO5hHxkgFPit6+SHwH7P3rjCACEAbKY7VTTJz8RSfuRZ4y2
- 4z9g==
-X-Gm-Message-State: AOJu0YyI0Z8l7WWliZpD23e6r6ifWASEuZP0zwvdNw0b17lRNZQZPgDl
- QikHwzk1EbLXX3YF6rF0yZaIETtG9N5hmjoCQojxKoGizQ/g+CMMT7jrMipLbGvvZiORvp9yOg+
- 01fxYfqWHR4f87G9uMJDDN9JYY7TG71TPMlybHGTLg9Ax7EK2439NOeHkiixOIljPnvkPL1E676
- uYJ+sizcGfov4Ag6uMR1Q+lKBjrmzGN5HUgzHXgw==
-X-Google-Smtp-Source: AGHT+IFwvJO7Z4zoV4jXz1cUnNriDmsTFmmKvNfGgaZAvFlA6NbDv0PpC4+vXASvpQX4NIYAmTpmQA==
-X-Received: by 2002:a05:6a20:560a:b0:1a3:6c9e:1e31 with SMTP id
- ir10-20020a056a20560a00b001a36c9e1e31mr1903807pzc.19.1711099564731; 
- Fri, 22 Mar 2024 02:26:04 -0700 (PDT)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- z14-20020a170903018e00b001e088a9e2bcsm1380380plg.292.2024.03.22.02.26.03
+ d=1e100.net; s=20230601; t=1711100072; x=1711704872;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=848hfDMfHSWYM8SNdG3tbhtU2pCVUaSart0G0SSujnU=;
+ b=wHuLkuOjyqQkI9k6i1LTYWmFMtVbkI61OaKyLYT9uE8vDUNxMM3Gwqb97jxiNqMb5k
+ 5NkriFG/hmwKAaAyhpBzsCNhSpMxnlGpU5ymhTI4O8qrlUZeX2HtEWlk1+4y7H8fGUmU
+ OoyTQEK8XzEdhMg8muq+rlw9CpKCFRyCAh3iOs2fn2JN/gnVeITne5SlDw9WJ7tAvnNZ
+ EHWewstd4y7L/R+J+ifIqqdeexEQGy8A/pLIapecexjQaQg/+fc4VqSAVAisvFo2XqEY
+ kpHW/F4Hp+xm0dFki5y8/NuW1Q+iBu+e9TldhpLI6viB1MbhkozXS2XqmBJkx68c3Fj7
+ 2yoA==
+X-Gm-Message-State: AOJu0Yyptgr3WS1Zv4nO1+xCQSZMzyEXT/8o6pf/ovo+wurEQ0RYOHUt
+ qJ5VCL4cCM1eLAB/MyKSFmgXjWma+TFgcrXiMJi6Q5Z5FZ7605qFNll6m7jdcgI=
+X-Google-Smtp-Source: AGHT+IH/x6VQhwEZsm6gbBqlwFepg/w0s6iVrziCDNqseUb4DYgBD12AdGA/GBXxemRrHwgyT8m8IQ==
+X-Received: by 2002:a17:907:7da7:b0:a47:3076:b572 with SMTP id
+ oz39-20020a1709077da700b00a473076b572mr1081510ejc.18.1711100072119; 
+ Fri, 22 Mar 2024 02:34:32 -0700 (PDT)
+Received: from meli-email.org (adsl-53.37.6.2.tellas.gr. [37.6.2.53])
+ by smtp.gmail.com with ESMTPSA id
+ v23-20020a170906381700b00a46a9425fe5sm814999ejc.212.2024.03.22.02.34.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 02:26:04 -0700 (PDT)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Max Chou <max.chou@sifive.com>
-Subject: [PATCH v2 0/4] Fix fp16 checking in vector fp widen/narrow
- instructions
-Date: Fri, 22 Mar 2024 17:25:54 +0800
-Message-Id: <20240322092600.1198921-1-max.chou@sifive.com>
-X-Mailer: git-send-email 2.34.1
+ Fri, 22 Mar 2024 02:34:31 -0700 (PDT)
+Date: Fri, 22 Mar 2024 11:23:32 +0200
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Zheyu Ma <zheyuma97@gmail.com>, mst@redhat.com, kraxel@redhat.com
+Cc: qemu-devel@nongnu.org, Zheyu Ma <zheyuma97@gmail.com>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH] virtio-snd: Skip invalid message sizes and null streams
+User-Agent: meli 0.8.5-rc.3
+References: <20240321214259.518560-1-zheyuma97@gmail.com>
+In-Reply-To: <20240321214259.518560-1-zheyuma97@gmail.com>
+Message-ID: <aqt9h.5se3l02z75nv@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=max.chou@sifive.com; helo=mail-yw1-x112b.google.com
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,40 +95,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When SEW is 16, we need to check whether the Zvfhmin is enabled for the
-single width operator for vector floating point widen/narrow
-instructions. 
+Hello Ma,
 
-The commits in this patchset fix the single width operator checking and
-remove the redudant SEW checking for vector floating point widen/narrow
-instructions.
+On Thu, 21 Mar 2024 23:42, Zheyu Ma <zheyuma97@gmail.com> wrote:
+>This update changes how virtio_snd_handle_tx_xfer handles message size
+>discrepancies and null streams. Instead of using error handling paths
+>which led to unnecessary processing and potential null pointer dereferences,
+>the function now continues to the next loop iteration.
+>
+>ASAN log illustrating the issue addressed:
+>
+>ERROR: AddressSanitizer: SEGV on unknown address 0x0000000000b4 (pc 0x57cea39967b8 bp 0x7ffce84d51b0 sp 0x7ffce84d5160 T0)
+>    #0 0x57cea39967b8 in qemu_mutex_lock_impl qemu/util/qemu-thread-posix.c:92:5
+>    #1 0x57cea128c462 in qemu_mutex_lock qemu/include/qemu/thread.h:122:5
+>    #2 0x57cea128d72f in qemu_lockable_lock qemu/include/qemu/lockable.h:95:5
+>    #3 0x57cea128c294 in qemu_lockable_auto_lock qemu/include/qemu/lockable.h:105:5
+>    #4 0x57cea1285eb2 in virtio_snd_handle_rx_xfer qemu/hw/audio/virtio-snd.c:1026:9
+>    #5 0x57cea2caebbc in virtio_queue_notify_vq qemu/hw/virtio/virtio.c:2268:9
+>    #6 0x57cea2cae412 in virtio_queue_host_notifier_read qemu/hw/virtio/virtio.c:3671:9
+>    #7 0x57cea39822f1 in aio_dispatch_handler qemu/util/aio-posix.c:372:9
+>    #8 0x57cea3979385 in aio_dispatch_handlers qemu/util/aio-posix.c:414:20
+>    #9 0x57cea3978eb1 in aio_dispatch qemu/util/aio-posix.c:424:5
+>    #10 0x57cea3a1eede in aio_ctx_dispatch qemu/util/async.c:360:5
+>
+>Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+>---
+> hw/audio/virtio-snd.c | 4 ++--
+> 1 file changed, 2 insertions(+), 2 deletions(-)
+>
+>diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+>index e604d8f30c..d9e9f980f7 100644
+>--- a/hw/audio/virtio-snd.c
+>+++ b/hw/audio/virtio-snd.c
+>@@ -913,13 +913,13 @@ static void virtio_snd_handle_tx_xfer(VirtIODevice *vdev, VirtQueue *vq)
+>                             &hdr,
+>                             sizeof(virtio_snd_pcm_xfer));
+>         if (msg_sz != sizeof(virtio_snd_pcm_xfer)) {
+>-            goto tx_err;
+>+            continue;
+>         }
+>         stream_id = le32_to_cpu(hdr.stream_id);
+> 
+>         if (stream_id >= s->snd_conf.streams
+>             || s->pcm->streams[stream_id] == NULL) {
+>-            goto tx_err;
+>+            continue;
+>         }
+> 
+>         stream = s->pcm->streams[stream_id];
+>-- 
+>2.34.1
+>
 
-v2:
-  Group patchset and rebase to the riscv-to-apply.next branch(commit 385e575)
+While the bug is valid I think the fix is insufficient, but not because 
+it is wrong. The invalid elements are leaked and the guest never gets a 
+BAD_MSG response. The problem is in the error handling logic; I think 
+the invalid queue should be moved to the device struct since it's not 
+stream specific.
 
+Cc'ing qemu-stable because this bug is present in current versions.
 
-Thanks to those who have already reviewed:
+Please make the same changes to virtio_snd_handle_rx_xfer() as well and 
+send a v2, cc'ing qemu-stable. With those changes you can add:
 
-    Daniel Henrique Barboza dbarboza@ventanamicro.com
-        [PATCH] target/riscv: rvv: Fix Zvfhmin checking for vfwcvt.f.f.v and vfncvt.f.f.w instructions
-        [PATCH] target/riscv: rvv: Check single width operator for vector fp widen instructions
-        [PATCH] target/riscv: rvv: Check single width operator for vfncvt.rod.f.f.w
-        [PATCH] target/riscv: rvv: Remove redudant SEW checking for vector fp narrow/widen instructions
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
+I will prepare a patch fixing the invalid element handling logic for 
+when this fix is accepted.
 
-Max Chou (4):
-  target/riscv: rvv: Fix Zvfhmin checking for vfwcvt.f.f.v and
-    vfncvt.f.f.w instructions
-  target/riscv: rvv: Check single width operator for vector fp widen
-    instructions
-  target/riscv: rvv: Check single width operator for vfncvt.rod.f.f.w
-  target/riscv: rvv: Remove redudant SEW checking for vector fp
-    narrow/widen instructions
-
- target/riscv/insn_trans/trans_rvv.c.inc | 42 ++++++++++++++++---------
- 1 file changed, 28 insertions(+), 14 deletions(-)
-
--- 
-2.34.1
-
+Thanks,
+Manos
 
