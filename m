@@ -4,70 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E76CC47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 14:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 338D5C54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 14:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnfaF-0002wa-W9; Fri, 22 Mar 2024 10:09:24 -0400
+	id 1rnfb6-0005DL-8y; Fri, 22 Mar 2024 10:10:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rnfaE-0002vc-Be
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:09:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rnfaC-0003Y4-Uz
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:09:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711116560;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kjn8QpKX4fe/hTlb9r3XI72HaUYlTbI+EynHoKLCJ8o=;
- b=iUWCjcuI+rBKJLL7cqDJ4NnC3APMe6DMPO4RJK77yrkL56kGPVfWI2Ie8yRUPSOBE2YIwF
- DzGdl7ARTV3RWr6ScPskUcQ4tgQGo/RV3YPJv+xboJUfw+q39HqnZM8+0BRHZAJ8wJaMVa
- JbYUN4VBRxrO9inAtMbB5cjCLET2EXY=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-asGjacgHMWGPjklsvJkujA-1; Fri, 22 Mar 2024 10:09:16 -0400
-X-MC-Unique: asGjacgHMWGPjklsvJkujA-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rnfb0-00053p-Op
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:10:11 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1rnfax-0003hL-LX
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:10:09 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DF8A9101A586;
- Fri, 22 Mar 2024 14:09:15 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id C03FB1C060A4;
- Fri, 22 Mar 2024 14:09:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C9DA521E5D2A; Fri, 22 Mar 2024 15:09:10 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: eblake@redhat.com,
-	michael.roth@amd.com,
-	kkostiuk@redhat.com
-Subject: [PATCH 04/12] qapi: Tidy up indentation of add_client's example
-Date: Fri, 22 Mar 2024 15:09:02 +0100
-Message-ID: <20240322140910.328840-5-armbru@redhat.com>
-In-Reply-To: <20240322140910.328840-1-armbru@redhat.com>
-References: <20240322140910.328840-1-armbru@redhat.com>
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B32F638636;
+ Fri, 22 Mar 2024 14:10:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1711116605; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UPDCqm8/mgfEPmKQeH0ZPqYLsag7HuzWiSwYq5rPD0A=;
+ b=a2pslFh0Z/JTfQumMjqR30iEKfsgcra9kEPuyCFjKcadqjSrwSztt+pGmtqzndOaD84Gfy
+ 7fNGMG9lQFoNg2o3L7JuuTRWIx08eJYbp/UcuBqC1dhn5W6JWHUENoxVRxWlkLZBSMjsNn
+ EA33FlAWpwNn5cE3zVIYBaTmfqr7sLs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1711116605;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UPDCqm8/mgfEPmKQeH0ZPqYLsag7HuzWiSwYq5rPD0A=;
+ b=q7OiRvFL3XiC0p4o53IfFjNmtmIwlpF5UW/Dt92e9EKftc1bpYWeXdv4ThgA5viQxrpqZY
+ Dz5B0IMXz63ML8Cg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1711116605; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UPDCqm8/mgfEPmKQeH0ZPqYLsag7HuzWiSwYq5rPD0A=;
+ b=a2pslFh0Z/JTfQumMjqR30iEKfsgcra9kEPuyCFjKcadqjSrwSztt+pGmtqzndOaD84Gfy
+ 7fNGMG9lQFoNg2o3L7JuuTRWIx08eJYbp/UcuBqC1dhn5W6JWHUENoxVRxWlkLZBSMjsNn
+ EA33FlAWpwNn5cE3zVIYBaTmfqr7sLs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1711116605;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UPDCqm8/mgfEPmKQeH0ZPqYLsag7HuzWiSwYq5rPD0A=;
+ b=q7OiRvFL3XiC0p4o53IfFjNmtmIwlpF5UW/Dt92e9EKftc1bpYWeXdv4ThgA5viQxrpqZY
+ Dz5B0IMXz63ML8Cg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3EE72136A1;
+ Fri, 22 Mar 2024 14:10:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id HRTyAT2R/WXtKgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 22 Mar 2024 14:10:05 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, eblake@redhat.com, berrange@redhat.com
+Subject: Re: [PATCH 2/3] qapi: Resync MigrationParameter and
+ MigrateSetParameters
+In-Reply-To: <20240322135117.195489-3-armbru@redhat.com>
+References: <20240322135117.195489-1-armbru@redhat.com>
+ <20240322135117.195489-3-armbru@redhat.com>
+Date: Fri, 22 Mar 2024 11:10:02 -0300
+Message-ID: <8734simk79.fsf@suse.de>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.222,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=a2pslFh0;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=q7OiRvFL
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-6.50 / 50.00]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; BAYES_HAM(-2.99)[99.96%];
+ MIME_GOOD(-0.10)[text/plain]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_COUNT_THREE(0.00)[3];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]; MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:email];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ MIME_TRACE(0.00)[0:+]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[]
+X-Rspamd-Queue-Id: B32F638636
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,41 +122,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit d23055b8db8 (qapi: Require descriptions and tagged sections to
-be indented) indented add_client's example too much.  Revert that.
+Markus Armbruster <armbru@redhat.com> writes:
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- qapi/misc.json | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+> Enum MigrationParameter mirrors the members of struct
+> MigrateSetParameters.  Differences to MigrateSetParameters's member
+> documentation are pointless.  Clean them up:
+>
+> * @compress-level, @compress-threads, @decompress-threads, and
+>   x-checkpoint-delay are more thoroughly documented for
+>   MigrationParameter, so use that version for both.
+>
+> * @max-cpu-throttle is almost the same.  Use MigrationParameter's
+>   version for both.
+>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-diff --git a/qapi/misc.json b/qapi/misc.json
-index 1b0c5dad88..ec30e5c570 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -32,9 +32,9 @@
- #
- # Example:
- #
--#         -> { "execute": "add_client", "arguments": { "protocol": "vnc",
--#                                                      "fdname": "myclient" } }
--#         <- { "return": {} }
-+#     -> { "execute": "add_client", "arguments": { "protocol": "vnc",
-+#                                                  "fdname": "myclient" } }
-+#     <- { "return": {} }
- ##
- { 'command': 'add_client',
-   'data': { 'protocol': 'str', 'fdname': 'str', '*skipauth': 'bool',
-@@ -142,7 +142,7 @@
- #     option was passed on the command line.
- #
- #     In the "suspended" state, it will completely stop the VM and
--#     cause a transition to the "paused" state. (Since 9.0)
-+#     cause a transition to the "paused" state.  (Since 9.0)
- #
- # Example:
- #
--- 
-2.44.0
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
