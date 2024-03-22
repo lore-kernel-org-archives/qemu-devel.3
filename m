@@ -4,97 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C4C8C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 867B3C54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:23:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnb4v-0001eX-LE; Fri, 22 Mar 2024 05:20:45 -0400
+	id 1rnb7Y-00031M-MN; Fri, 22 Mar 2024 05:23:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rnb4r-0001e3-In
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:20:41 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rnb4q-0005jU-28
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:20:41 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-33e17342ea7so842201f8f.2
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:20:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711099237; x=1711704037; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=pouck9HZQleT7x+vFBGmfvusvsFxN07XU6u0eukEV1M=;
- b=M30rFtKR/CyXPKtgrSBcsUq9tsXm/adF+nhSoKVd1OdVSAbfpyFCokafrGmy/l/0BA
- f4igtQPv+XHR1Bj6/ktbHfQOwQoSOcsfXmcYG4812qbbTQY0q87Y1i4OF5K36mdhw62W
- cSlcFxHZ5FW3RiTKbWYTbHq9dXlQuD3hGsbzcKZ2bNwCrGfJ4zoD/7ttqDjdsSWdBFW7
- w1kDBbofjqoBgtiRHZ9bk8pDPMJzb2od9Ym33/cvK40rJVy3dV6+QL2u7LvlpGE12RL5
- 8tcb9jnoTCpXvuesW00dsgXAMtgHac9iZtfAIB6mQniE3pYJWjZRsrKZLQpO+jehEuuk
- p06g==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rnb7X-00030w-5d
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:23:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rnb7U-0005xe-A9
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:23:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711099402;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=K1CCjRVJRVf+ZFfSl/7At/4VX4N9ABNtVU5DQTchqXE=;
+ b=K1Vsnt/pZFmQAGbDALHmIHzmf6p2CZaL5A6rdgiOwh0ACtbqRKUZgYOd/r4LA1yduXyXzs
+ pUwT3BNx42SJL37hDws8NT/NZzcb83etpDWFvi/Li7d66ejDK4Mbg0COW8PeoVUaJFdzEI
+ M4uwT7oedLVJo1wy/YB9Q7YonAWLrbk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-642-29ffN5q_N6ypNBLsFiZvew-1; Fri, 22 Mar 2024 05:23:19 -0400
+X-MC-Unique: 29ffN5q_N6ypNBLsFiZvew-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-34172041676so1348658f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:23:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711099237; x=1711704037;
- h=content-transfer-encoding:in-reply-to:organization:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1711099398; x=1711704198;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=pouck9HZQleT7x+vFBGmfvusvsFxN07XU6u0eukEV1M=;
- b=pNOca5hevXiCILBBYbIiCbbK6igqYWy34YjP+x5Gnnpr3Pg/xKhKQ8Ui7BYxndwcCy
- vroDqsn9AIQtim2UMG0vU/XUSYUr5MXDvWYnKG19xGrOizDQ8OvG5w66U+JlJ9in5o37
- lma6/d+DIqEiyhfpxbOEwuUNhc+PzQBNZ76iW774vKTwawwOCeVHLIO5/ELdzROWaT0o
- vf4YEAdfO+tHv84/gltZqLp87KUt3IAJ/nNvHPHdq9WkajKI81Rx7+Rk19rpjaGdhDsC
- NdkOO5exHBIqmXhg5Jl41V73T9pIp0aTjnFNTP60OxjILSPzBEv6mB8pDEJGdPhytD36
- aZsQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWsFX5R/3lr0gGt9go7Dvq1gFfC+IYudn9DTsa5rxxUUDjmWOXYMDGSBtja13WTb63RieZoaa3Af8tvG8ED9VXul1bHokA=
-X-Gm-Message-State: AOJu0YwYbjIzxMPWftDU+/vdTirVW+h0hveuI1zg/NlsSvOkx8ajYiVy
- hnDRRENZ1nNTGdFxLX43mPMPUPs6n/s3kmczvlLbNY8LBCAbHfEd/koS7XFHG0c=
-X-Google-Smtp-Source: AGHT+IFGJj3d1+cZS1lq9wE69kifci8I4tFueyzMIqY5sKIeDCarj8jSpzHLJgnwEGRiyPEktGR9Sw==
-X-Received: by 2002:a5d:6884:0:b0:33e:aab0:9984 with SMTP id
- h4-20020a5d6884000000b0033eaab09984mr1233864wru.24.1711099237648; 
- Fri, 22 Mar 2024 02:20:37 -0700 (PDT)
-Received: from [192.168.200.106] (83.11.22.169.ipv4.supernova.orange.pl.
- [83.11.22.169]) by smtp.gmail.com with ESMTPSA id
- v7-20020a5d6107000000b0033e9e26a2d0sm1615431wrt.37.2024.03.22.02.20.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Mar 2024 02:20:37 -0700 (PDT)
-Message-ID: <5587d9ed-6cdd-47ae-864e-75cb5ea47aee@linaro.org>
-Date: Fri, 22 Mar 2024 10:20:34 +0100
+ bh=K1CCjRVJRVf+ZFfSl/7At/4VX4N9ABNtVU5DQTchqXE=;
+ b=MiosMZscs4PORzgxav+gDqa4TyLube+AM2rxT1v4YRUGH59VX/7lzroZlkeAJ7IZjM
+ C4ty+R580I5y/i0td3p3QI45XkD7rY2NFxsQulasRLCzOSAxl7asavDAHCdSqwLQf96w
+ CZupQmF0Cm70YNhYgt8yFmuR+dwhMf5yR0y6/C16cwOqFKwG10ZP7ldEOYPrn9C5nEjn
+ hQhZS7mEtuqA0At+lhvCMfp7QmDZMQeXFuSz+9j+6/f9ICfSDxdqA/RQRWT0RWAJ8rw8
+ dQ78BT2GutvIYUXsesj2B4YOtlml3P2/QJo26Cqdeq3iTBwoMUD9gydimfTIpC1WFCoO
+ bWDQ==
+X-Gm-Message-State: AOJu0YxBn06jlk9u7hJxJKZ43ckg4TzVffu4BlyVakulX5t57aAE+LG/
+ FCmSZIG2A5pWUZVIwWN/SndsFP9ieS4jc9yh087RdJLMKP0Jd6qh2O2sqP9ePf5/mn4MzwuulgF
+ /TuSCg2iKlHqBzDXpdhf6dmoTu60Y9/dMGskidPX6JHsdbJT+MWlhpyCFPK5CH8pQmi+tTtrm7o
+ T5FvqCTcqXpCVhttLERPM0DwEb7GYGdoiBJ1RX
+X-Received: by 2002:a05:6000:154f:b0:33e:d6cb:34c4 with SMTP id
+ 15-20020a056000154f00b0033ed6cb34c4mr1733259wry.4.1711099397935; 
+ Fri, 22 Mar 2024 02:23:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGLYCw7oVkNkff0+5NTe2zIXSGrkw8EQkaveGcF6UAa2cO9HHPLsLkHVQ4Jgsd1QWsvhGnFAA==
+X-Received: by 2002:a05:6000:154f:b0:33e:d6cb:34c4 with SMTP id
+ 15-20020a056000154f00b0033ed6cb34c4mr1733227wry.4.1711099397525; 
+ Fri, 22 Mar 2024 02:23:17 -0700 (PDT)
+Received: from step1.redhat.com (host-87-12-25-33.business.telecomitalia.it.
+ [87.12.25.33]) by smtp.gmail.com with ESMTPSA id
+ x3-20020adfcc03000000b0033e41e1ad93sm1615301wrh.57.2024.03.22.02.23.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 22 Mar 2024 02:23:16 -0700 (PDT)
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, mst@redhat.com, lulu@redhat.com, eperezma@redhat.com,
+ Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH for-9.0 v2] vhost-vdpa: check vhost_vdpa_set_vring_ready()
+ return value
+Date: Fri, 22 Mar 2024 10:23:15 +0100
+Message-ID: <20240322092315.31885-1-sgarzare@redhat.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2 2/2] hw/riscv: Add server platform reference machine
-Content-Language: pl-PL, en-GB, en-HK
-To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- andrei.warkentin@intel.com, shaolin.xie@alibaba-inc.com, ved@rivosinc.com,
- sunilvl@ventanamicro.com, haibo1.xu@intel.com, evan.chai@intel.com,
- yin.wang@intel.com, tech-server-platform@lists.riscv.org,
- tech-server-soc@lists.riscv.org, atishp@rivosinc.com,
- ajones@ventanamicro.com, conor@kernel.org, Fei Wu <fei2.wu@intel.com>,
- Alistair Francis <alistair23@gmail.com>
-References: <20240312135222.3187945-1-fei2.wu@intel.com>
- <20240312135222.3187945-3-fei2.wu@intel.com>
- <CAKmqyKN-Yj-HZrR2MtxD2jC=JR6nFn5cEq866EXm0OfaEydXsQ@mail.gmail.com>
- <cfac29ce-f353-4bbd-8e8d-4a7d40bf80e3@linaro.org>
- <ebd63aa1-b4e7-490a-bdef-d952c8e37c47@canonical.com>
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Organization: Linaro
-In-Reply-To: <ebd63aa1-b4e7-490a-bdef-d952c8e37c47@canonical.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.372,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ PP_MIME_FAKE_ASCII_TEXT=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,38 +103,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 22.03.2024 o 09:50, Heinrich Schuchardt pisze:
- >>> I see no mention of device trees in the spec, but I do see ACPI. Do we
- >>> really expect a server platform to use DTs?
- >>
- >> This platform "kind of" follows sbsa-ref where we have very
- >> minimalistic device tree sharing information qemu->firmware.
- >>
- >> libfdt is small, format is known and describes hardware. Firmware is
- >> free to make use of it in any way it wants.
- >>
- >> On sbsa-ref we parse DT in TF-A (base firmware) and provide hardware
- >> information to higher level (edk2) via SMC mechanism. Then EDK2
- >> creates ACPI tables and provide them to the Operating System.
+vhost_vdpa_set_vring_ready() could already fail, but if Linux's
+patch [1] will be merged, it may fail with more chance if
+userspace does not activate virtqueues before DRIVER_OK when
+VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated.
 
- > We should ensure that only either an ACPI table or a device-tree
- > description is passed to the OS and not both, e.g. when using
- >
- >      qemu-system-riscv64 -kernel vmlinux -M sbsa-ref
- >
- > But that requirement is not machine specific.
+So better check its return value anyway.
 
-I would not call "qemu-system-* -M machinename -k kernel_image" a proper 
-way to boot for several systems emulated by QEMU.
+[1] https://lore.kernel.org/virtualization/20240206145154.118044-1-sgarzare@redhat.com/T/#u
 
-DeviceTree is in rvsp-ref and sbsa-ref because it is easy to process in 
-limited space 1st stage of firmware has.
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+---
+Based-on: 20240315155949.86066-1-kwolf@redhat.com
 
-And if we knew how people will mention 'sbsa-ref uses DT' we would use 
-something else instead. But that would require adding more code into 
-existing firmware projects (libfdt is usually already there).
+v1: https://patchew.org/QEMU/20240207092702.25242-1-sgarzare@redhat.com/
+v2:
+ - added acks
+ - rebased on top of https://patchew.org/QEMU/20240315155949.86066-1-kwolf@redhat.com/
+---
+ net/vhost-vdpa.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-I did not looked at DT generated for rvsp-ref. I know that sbsa-ref one 
-is too minimalistic for kernel use as we added only those fields/nodes 
-we need to provide data for firmware.
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 85e73dd6a7..eda714d1a4 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -399,7 +399,10 @@ static int vhost_vdpa_net_data_load(NetClientState *nc)
+     }
+ 
+     for (int i = 0; i < v->dev->nvqs; ++i) {
+-        vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
++        int ret = vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
++        if (ret < 0) {
++            return ret;
++        }
+     }
+     return 0;
+ }
+@@ -1238,7 +1241,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState *nc)
+ 
+     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
+ 
+-    vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
++    r = vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
++    if (unlikely(r < 0)) {
++        return r;
++    }
+ 
+     if (v->shadow_vqs_enabled) {
+         n = VIRTIO_NET(v->dev->vdev);
+@@ -1277,7 +1283,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState *nc)
+     }
+ 
+     for (int i = 0; i < v->dev->vq_index; ++i) {
+-        vhost_vdpa_set_vring_ready(v, i);
++        r = vhost_vdpa_set_vring_ready(v, i);
++        if (unlikely(r < 0)) {
++            return r;
++        }
+     }
+ 
+     return 0;
+-- 
+2.44.0
+
 
