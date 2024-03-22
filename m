@@ -4,87 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F306C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 17:38:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66773CD11BF
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 17:48:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnipI-0004Df-5z; Fri, 22 Mar 2024 13:37:08 -0400
+	id 1rnizH-0007cc-Ij; Fri, 22 Mar 2024 13:47:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rnipG-0004CA-LH
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 13:37:06 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rnipE-0008JY-SG
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 13:37:06 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6ea7f2d093aso1025567b3a.3
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 10:37:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711129023; x=1711733823; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MMRs46KCieH0SsPWq1s53+e9N3cdkQJ1ez6yeGH+kLY=;
- b=dmS1Eityy/KF99aa9tKwy+vuP8i7PQSjqokXFAXcJUp5pAzYLfxX5w9z9EoVqe2bXF
- lrXx4L447OA9vDxC21A5sqSehNwaOGlsYHVqI0auO3j1szuZsQg12WZAvxt0pNtkwFiU
- sprW3F256fbywXBvJOBv5XM1+5gD09XyN/fcMXAd6pvIn2dx6pWYvu5wTpE9bftneP4o
- R0R0kqF9fJXn1qTpEMCEKoj9xJpU4CNRKWaxP55xl/UUJesh2N6xE6Vl9UfGG3OgonVj
- 28gpBqwZtRPADNbzFpZkZxI029ONc3GnQ1/cp5S9t3Ax45f553flj2/DCoGDpdZk9BqW
- Fp1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711129023; x=1711733823;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MMRs46KCieH0SsPWq1s53+e9N3cdkQJ1ez6yeGH+kLY=;
- b=vJbM0MSWS+ck7wXyIW967LOkiwyiW4/HRo8Inkkh9i0xrSu7N/KIAJRf0cwPZD/dgZ
- qHzvdo/L71ZU6RUzZ3YxD1h5nrNvmuMO+Y/rHJOa7kGAivPmsMSfjgrzh0FU4an4zNig
- L5ddnBQuYAuhjK3eAdcKYl4K60f4JchFF8LP3gkbkYfyTT82xWMK7+J9flgkXzuJRYPt
- 1sKeatP8W0WPe3pNjP0JdtXHhO9wkZURnAkGgYdGyMzydUsm7hvysgXkOD7Hy71QmIpn
- PRPbGZsX4yXojIJqFMsB11SPqxrcN37PKyzgNB1kDBxx9g+zO8fTpwQYmKkWf89kgZaq
- 21JA==
-X-Gm-Message-State: AOJu0Ywwjex/wXYI4EjVSIuvhjwRJJVG1HCveyHalm/QwIODPOVwuTOF
- SCTegeAHpqJeVpyEzCwr6rkX63G3ENDAnAzZuzBC+gRnLVg8djh9Av+F1AmbONs=
-X-Google-Smtp-Source: AGHT+IGW/foFaldm541guyQQ1KwW37GZ7Bjix0WChYfLq8JA1Rs2Ux9OdNWY7GTjDq2y+tT+H3pW5A==
-X-Received: by 2002:a17:902:e810:b0:1e0:9b08:446 with SMTP id
- u16-20020a170902e81000b001e09b080446mr482997plg.60.1711129022789; 
- Fri, 22 Mar 2024 10:37:02 -0700 (PDT)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- u13-20020a170902e80d00b001e00285b727sm2124904plg.294.2024.03.22.10.37.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Mar 2024 10:37:02 -0700 (PDT)
-Message-ID: <125cb191-bb3f-4ea6-b3ef-02476d4a47ab@linaro.org>
-Date: Fri, 22 Mar 2024 07:36:58 -1000
+ (Exim 4.90_1)
+ (envelope-from <prvs=7811d50a34=aidan_leuck@selinc.com>)
+ id 1rnizF-0007cR-Vf
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 13:47:26 -0400
+Received: from mx0a-000e8d01.pphosted.com ([148.163.147.191])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <prvs=7811d50a34=aidan_leuck@selinc.com>)
+ id 1rnizD-0001uL-1l
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 13:47:25 -0400
+Received: from pps.filterd (m0136171.ppops.net [127.0.0.1])
+ by mx0b-000e8d01.pphosted.com (8.17.1.24/8.17.1.24) with ESMTP id
+ 42MClIob012637; Fri, 22 Mar 2024 10:47:20 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=selinc.com; h=
+ from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding:content-type; s=sel1; bh=3YP3oqmqoYxL
+ LM+XJoiOaHsnYQ7IJasfb9tsvXaH81k=; b=rBxOi9kzFagfByjCGbWApdjhOylD
+ N/aisnFDhTpMLSnfcmgLo1GYzoKRCuOY11uShZ96SEUpB+63C5uQTBJP+bVa9GR/
+ CtuhzxR9+O23e/6RU3Sa3Uz0dK7jRN9xYlfXVfVZyrwpvRpFI0T8Vd7RWR8BhZYi
+ e+3lb7VLHFRfkfTyq1np7Hb+WDFTWGVBx8fgU4jBWDsnfQbfCX3/piohbB3CynYB
+ PW0QcFNrnaKS62cptPpjukhc+LT3KGFByA/vJDbg5TMM2T9lN9Su+Uqq32nsvJgj
+ +I/yfCt5j/gPfDmUEuPSg10bIwx8iAj2VrhQdrOoPcQETEx6p0KV1e4BzQ==
+Received: from nam12-mw2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12lp2041.outbound.protection.outlook.com [104.47.66.41])
+ by mx0b-000e8d01.pphosted.com (PPS) with ESMTPS id 3x0wy4ghs0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 22 Mar 2024 10:47:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=BbNO8SS6aE5W+2XxQorAzdEPOpv128GDYv/tYvyTRxWUAP4NQ7FsWgLIuBqDqo/VHop2f/OyKR03yZE4dSaeTFBDncbEmuMY3vablKAjlwbI+zdGy5enRnKU3EtQvbJ7TmgGw4sGUAMr1pD0ZLfUI7rHovdw7dcuFst5E6d2zdtZLu8mQapqvUKI7uoQUmF/zmoLokKcJ7Exw0/kJf8qBoeOcD80KiWy53cqhSszVd0C927P226i7qOTFSfDFljHDB2tIS7vP6421kTNXgU5nq07kDf5cP8YiPEugWUNv3odEaIFM7TyJPl0H6fkGl0McaGw4vBjHhXzpWA/BjU8hQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3YP3oqmqoYxLLM+XJoiOaHsnYQ7IJasfb9tsvXaH81k=;
+ b=SnGMQqfqGKASmzDbj6vXUTDRAgRaOgOl/TIRbW18XLeZ68zU7aLuPwZSTtJooHuwm8gavjZjRKLkyamehjfhuqmt4fsB//lRko5qfzvNKAbQnLj17dky8rRzYnL9hqiJZmKhik7SwJA/yFceujjJW72nvjGN1q9Mhga3dCmfuLLTw+T8zAAAn2/kvSn2qbZrDSpOCn7qW/BuSWvz/3tk+EibhRt6Wvd/iDlSjc5FIeidXuzVXfLJWnFJcWB20NNdgPm5fubsjHqOrJ56qtxXdCb6S2yD36n4ph1N6M5glRHeMd8s3JtRNxQFeKu9Q1YiQnPQKsypqKcL+LBjTGiUsg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 74.117.212.83) smtp.rcpttodomain=nongnu.org smtp.mailfrom=selinc.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=selinc.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=selinc.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3YP3oqmqoYxLLM+XJoiOaHsnYQ7IJasfb9tsvXaH81k=;
+ b=t08qvihjBI+5Tx7cjo2lyWt3ImD4oJt6w4gjxOLhL5/lOSE49cqOoY038/0aScFBTwrw2i/OZaZz80eP5kv9LOWnSTP8/D0ftfpKfcjbOq6L1t1Zv7MqyFtP2BWQf7PQPXvUkWXUKVkj4nUcXl3sI02ds+70Hz5vr7z1jgrfNab24ytxP6qde3+kwSf46tOOEW9AI3rt8fhCiS/w6N/S4OFP+1JK4TBo86c8SqDxjXjAClfacFnBZpjrDOkXE9MXLIW2HKbEqIjeLxPvqPJh4pew68PvBLPPu4lcrxVvp426L9W7+jUijgn9KdCRTQC5qfMjexgV0W7zgrNAeia/rg==
+Received: from MW4PR03CA0064.namprd03.prod.outlook.com (2603:10b6:303:b6::9)
+ by PH0PR22MB3200.namprd22.prod.outlook.com (2603:10b6:510:14a::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7386.34; Fri, 22 Mar
+ 2024 17:47:18 +0000
+Received: from MWH0EPF000A6734.namprd04.prod.outlook.com
+ (2603:10b6:303:b6:cafe::69) by MW4PR03CA0064.outlook.office365.com
+ (2603:10b6:303:b6::9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.13 via Frontend
+ Transport; Fri, 22 Mar 2024 17:47:18 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 74.117.212.83)
+ smtp.mailfrom=selinc.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=selinc.com;
+Received-SPF: Pass (protection.outlook.com: domain of selinc.com designates
+ 74.117.212.83 as permitted sender) receiver=protection.outlook.com;
+ client-ip=74.117.212.83; helo=email.selinc.com; pr=C
+Received: from email.selinc.com (74.117.212.83) by
+ MWH0EPF000A6734.mail.protection.outlook.com (10.167.249.26) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7409.10 via Frontend Transport; Fri, 22 Mar 2024 17:47:17 +0000
+Received: from AIDALEUCPC3.ad.selinc.com (10.100.90.200) by
+ wpul-exchange1.ad.selinc.com (10.53.14.22) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 22 Mar 2024 10:47:17 -0700
+From: <aidan_leuck@selinc.com>
+To: <qemu-devel@nongnu.org>
+CC: <kkostiuk@redhat.com>, <berrange@redhat.com>, Aidan Leuck
+ <aidan_leuck@selinc.com>
+Subject: [PATCH v3 0/2] Implement SSH commands in QEMU GA for Windows
+Date: Fri, 22 Mar 2024 11:46:35 -0600
+Message-ID: <20240322174637.499113-1-aidan_leuck@selinc.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/9] target/hppa fixes for 9.0
-To: Michael Tokarev <mjt@tls.msk.ru>, Helge Deller <deller@gmx.de>,
- Sven Schnelle <svens@stackframe.org>
-Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <20240320003223.554145-1-richard.henderson@linaro.org>
- <812ed94a-1231-492c-bcbb-60a72c059eb4@tls.msk.ru>
- <87cyrnmoha.fsf@t14.stackframe.org>
- <ebd05b86-ba9c-4d66-8a4a-f28dc03d15a8@gmx.de>
- <f4682acd-129c-4695-994d-1cd2cd8a842c@tls.msk.ru>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <f4682acd-129c-4695-994d-1cd2cd8a842c@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Content-Type: text/plain
+X-Originating-IP: [10.100.90.200]
+X-ClientProxiedBy: wpul-exchange1.ad.selinc.com (10.53.14.22) To
+ wpul-exchange1.ad.selinc.com (10.53.14.22)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000A6734:EE_|PH0PR22MB3200:EE_
+X-MS-Office365-Filtering-Correlation-Id: 066c3c2d-3e9d-455a-32c6-08dc4a981e14
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 8QkleSbsVsxo8t3jNO/TOQpXRwdK9a8mFNxdNIVlEjUJ7SKXi+UGemJg7HZ+4SEjcH96qZi+KNyVb24nHAa+Agrp2TbvvQ7y5oKJjyVWv0HJuUtxhM81AuxdQbXoxqu7ZjVCx+irnAc1z3odoQ8GzMYj18VI1xm8Xo/bRczO0MdLaETq+V9JQkdE9SwWe3DfLX+9S0OKKXVcJdNaNwEAGUwtEvYojPV8fgq4/jTGy82IjxM8RnsfwcdvkS2YFoVdj4vupxpNkdIsWMxk53ZrIHxh1+X4x5tUaRFQZqeYeWdC1WZmuEJB9XqQbh2ulaRkwF8wMuc9C5fh6q57n6nBrjxTurnxDq0Wj9NoN18ntSRuclRAnVQh3f/ZjioPHbB497OSMw89h5v2ZcNGGQaawdUFnSt5XZGlkTy44y1jQC7BPHEwNVZJ6T+LIxj95e9nSiGEesYr1/H7cPGK8u+YMUoLjTLVOSFIISPYCjknqex+Hij/I37MOhm8bXjlW+kqEYHWlDBDFZpnR0Szk8GA0BRnnYQpp8VWbRThPcPyysHz0TN1vY6WLlGUXmz/Po+q0d0qTmBV7G3jS2lQe0/YK6wCNvlqgzd1JflLO6jbIS6JQaZgLzcGsnspYCA5+mf9bIMnzQDKsHoGrKzkxiZtqsJA46hcJyCKMl8wu8RqUVJ3/OP5PN7xyLDRqHllrSgGsf5mooVES6XS40QKu20TIA==
+X-Forefront-Antispam-Report: CIP:74.117.212.83; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:email.selinc.com; PTR:wpul-exchange1.selinc.com; CAT:NONE;
+ SFS:(13230031)(36860700004)(82310400014)(376005)(1800799015); DIR:OUT;
+ SFP:1102; 
+X-OriginatorOrg: selinc.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Mar 2024 17:47:17.9423 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 066c3c2d-3e9d-455a-32c6-08dc4a981e14
+X-MS-Exchange-CrossTenant-Id: 12381f30-10fe-4e2c-aa3a-5e03ebeb59ec
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=12381f30-10fe-4e2c-aa3a-5e03ebeb59ec; Ip=[74.117.212.83];
+ Helo=[email.selinc.com]
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A6734.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR22MB3200
+X-Proofpoint-GUID: x4KSBfMr7cxhM9DQeFjTH0RfdnvKJDbX
+X-Proofpoint-ORIG-GUID: x4KSBfMr7cxhM9DQeFjTH0RfdnvKJDbX
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015
+ lowpriorityscore=0 impostorscore=0 phishscore=0 malwarescore=0
+ mlxlogscore=750 adultscore=0 mlxscore=0 suspectscore=0 spamscore=0
+ bulkscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2403210001 definitions=main-2403220128
+Received-SPF: pass client-ip=148.163.147.191;
+ envelope-from=prvs=7811d50a34=aidan_leuck@selinc.com;
+ helo=mx0a-000e8d01.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,45 +147,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/21/24 18:48, Michael Tokarev wrote:
-> 21.03.2024 21:32, Helge Deller wrote:
->> On 3/21/24 19:25, Sven Schnelle wrote:
->>> Michael Tokarev <mjt@tls.msk.ru> writes:
->>>
->>>> 20.03.2024 03:32, Richard Henderson :
->>>>
->>>>> Richard Henderson (3):
->>>>>         target/hppa: Fix assemble_16 insns for wide mode
->>>>>         target/hppa: Fix assemble_11a insns for wide mode
->>>>>         target/hppa: Fix assemble_12a insns for wide mode
->>>>> Sven Schnelle (6):
->>>>>         target/hppa: ldcw,s uses static shift of 3
->>>>>         target/hppa: fix shrp for wide mode
->>>>>         target/hppa: fix access_id check
->>>>>         target/hppa: exit tb on flush cache instructions
->>>>>         target/hppa: mask privilege bits in mfia
->>>>>         target/hppa: fix do_stdby_e()
->>>>
->>>> Is it all -stable material (when appropriate)?
->>>
->>> I'd say yes.
->>
->> Yes.
-> 
-> Picked all 9 for stable-8.2.
-> 
-> And none for stable-7.2.  There, just one of them applies.
-> 
-> I understand most of them can be applied still (it is just adding
-> new lines here and there, the same lines needs to be added to 7.2
-> but there, context is missing so every patch needs manual applying,
-> which I'm not feeling confident doing.  If anything of that is
-> really good to have in 7.2 (which has de-facto become an LTS series),
-> please re-spin it on top of stable-7.2 branch and send the result
-> to qemu-stable@.
+From: Aidan Leuck <aidan_leuck@selinc.com>
 
-This is all for hppa64 support, which was not present in 7.2.
+This patch aims to implement guest-ssh-add-authorized-keys, guest-ssh-remove-authorized-keys, and guest-ssh-get-authorized-keys
+for Windows. This PR is based on Microsoft's OpenSSH implementation https://github.com/PowerShell/Win32-OpenSSH. The guest agents 
+will support Kubevirt and allow guest agent propagation to be used to dynamically inject SSH keys. 
+https://kubevirt.io/user-guide/virtual_machines/accessing_virtual_machines/#dynamic-ssh-public-key-injection-via-qemu-guest-agent
 
-r~
+Changes since v2
+* Set indent to 4 spaces
+* Moved all comments to C style comments
+* Fixed a segfault bug in get_user_info function related to non zeroed memory when a user did not exist.
+* Used g_new0 instead of g_malloc where applicable
+* Modified newlines in qapi-schema.json
+* Added newlines at the end of all files
+* GError functions now use g_autoptr instead of being freed manually.
+* Refactored get_ssh_folder to remove goto error statement
+* Fixed uninitialized variable pgDataW
+* Modified patch order so that the generalization patch is the first patch
+* Removed unnecssary ZeroMemory calls
+
+Changes since v1
+* Fixed styling errors
+* Moved from wcstombs to g_utf functions
+* Removed unnecessary if checks on calls to free
+* Fixed copyright headers
+* Refactored create_acl functions into base function, admin function and user function
+* Removed unused user count function
+* Split up refactor of existing code into a separate patch
+
+Aidan Leuck (2):
+  Refactor common functions between POSIX and Windows implementation
+  Implement SSH commands in QEMU GA for Windows
+
+ qga/commands-posix-ssh.c   |  47 +--
+ qga/commands-ssh-core.c    |  57 +++
+ qga/commands-ssh-core.h    |   8 +
+ qga/commands-windows-ssh.c | 791 +++++++++++++++++++++++++++++++++++++
+ qga/commands-windows-ssh.h |  26 ++
+ qga/meson.build            |   6 +-
+ qga/qapi-schema.json       |  17 +-
+ 7 files changed, 895 insertions(+), 57 deletions(-)
+ create mode 100644 qga/commands-ssh-core.c
+ create mode 100644 qga/commands-ssh-core.h
+ create mode 100644 qga/commands-windows-ssh.c
+ create mode 100644 qga/commands-windows-ssh.h
+
+-- 
+2.44.0
 
 
