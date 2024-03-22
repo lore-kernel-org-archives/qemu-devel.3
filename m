@@ -4,75 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C405C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 12:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0808CC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 12:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rneR9-0004Md-2e; Fri, 22 Mar 2024 08:55:55 -0400
+	id 1rneTb-0006Or-Qi; Fri, 22 Mar 2024 08:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rneR7-0004MS-WC
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 08:55:54 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ id 1rneTa-0006OC-2j
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 08:58:26 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rneR6-0003vZ-8N
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 08:55:53 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a46cca2a979so127882666b.3
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 05:55:51 -0700 (PDT)
+ id 1rneTY-0004Tt-2z
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 08:58:25 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-56bc753f58eso2482929a12.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 05:58:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711112150; x=1711716950; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711112302; x=1711717102; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=R0/o/kh2WuTultZqA1awv+uqzv6pPlLUDjsLOe3YfL4=;
- b=RjIQeZbjScpke3K3IsP6uakibWEa3DQXLqg5VomwiZUP5BWPlJEAbXRWdoSUt6Vp7w
- fHj2io3RtA1UEi7T++2uWpPwEl+eeEW7yzXgE+pbVZLhARKFsrP6BhXtDhqzQtatn+gs
- 8+i9XJIbxHOtq/bkmO0Est8ixpSMRrFDjPRZzBZPlWcvrxi4xd8PzrCa5iduCPKi3Slj
- 4WnztFWlJjgczfu/bym+ylA1wF+1bdEYDlLTeFarbpuZ9LdUz1SlOmTUinz8JPlc4Jso
- xA4MJW1odTEmlK03Hnm3EZX88j4O6CIuupV9bLlZaXul7BjZPcGtmzYUSFWTDdV5euYX
- +q+g==
+ bh=ZhkeEo/UIFFLGByKCGYe1uYmHT0Fqpd3UUx9SW2R1yU=;
+ b=muoYCEl5I593UejXWm6F0vTxdiiuZLh65Kr3fm4fZauZ1RyqCMQ6EIg/0UBSituYrg
+ qcd0m51AFpoIlVSoHSk+5LLQ7fIROJhGX97tF3iLDarKmK3L2P7Azfm2i5DDMC5+1wlr
+ faksg08zjYoPAuHBOU8zHikCA3ogfK8G9QymdVm1UZ0n4YAM525xjn6G79+GGi5rucpM
+ 2Nl2hp0WCpVvZ0x6H4hrwQ4n8BkEDJvWF+HeSoRbqjoWxTulGHqVJ3IHeeesuu3dgaAs
+ /c0uuTGI3pbo+GS/wXEgJkthMUISn6MN+Gz+/nQ+wqcvq38TC3dC6jIqNG2d48BHGwDO
+ 5O0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711112150; x=1711716950;
+ d=1e100.net; s=20230601; t=1711112302; x=1711717102;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=R0/o/kh2WuTultZqA1awv+uqzv6pPlLUDjsLOe3YfL4=;
- b=nLgGkQ1hIqGUIZDv/g8umcGFAFP9JNwnYFoPFpS8vRuS+5HPPlgzT7ZFDiY/h7rVG6
- zeteyzWJIbfPtVB9/f9gVtdKF+hFI4gYDIQK8fIybQEMB89rcnl7gXdfcSfX9KWXVLIY
- kyHFMBdwK6SV4n2oWIwG3yxzafh/IhfJcqaaUlrwn9PfYWlaEDdA38MblyHwSo9dyQwg
- 9WlF4qw/Xe1UF0VVJEVxAPjqwUnHHHooRTEBrnvbxd2jWB8eiDJIqPG3cNYDi3Oefc8l
- BCd4zpjtW/tWWfZuV2jpwqaweNjlcO1AopmEMCwEuUfQ5o0NBuApHmI+pXQfkp32hvP3
- RMnw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW7y2OJUN6kfWVU8SZ+yTY6GZLL8ZzGkAK3/Uy1957vMFsiCrBwOoc69ZRq3aRQhh5jy6f85J4v2fmtLw7x/4rZDeDhlhs=
-X-Gm-Message-State: AOJu0YwyVoXt/Yi2WW3vGJT7RhVIXBin0hj6lPk+6Ivx/asPtL1ae1pC
- k/m8Wfk6y0soLc4MWiV8TYl1n3Qh+3jdqQ9rpKkvKG4i1VwRT38JHXl5yYyBHcAlaYWpLnGNPT2
- ui6m2g+ltT3Vjd6mFtB6LtP2+jgPLB3i3Ubz+4g==
-X-Google-Smtp-Source: AGHT+IFAqb2F8Guzj56qR5qhCx3B1Duw3zTm+bb1hiUwwa7dSvGOZiiUyE6tceOXwt17srQMMiWUdu27ubWXucZBjds=
-X-Received: by 2002:a50:f603:0:b0:565:f7c7:f23c with SMTP id
- c3-20020a50f603000000b00565f7c7f23cmr2040500edn.3.1711112150044; Fri, 22 Mar
- 2024 05:55:50 -0700 (PDT)
+ bh=ZhkeEo/UIFFLGByKCGYe1uYmHT0Fqpd3UUx9SW2R1yU=;
+ b=qE9N8Sh5MVhVLewtY/qxoKZOFcxJCyx5tDcCOGj6S9kdRZMFDhlVigxUHqmPQ5Kr9v
+ bmo3YYpi3N/ObfQtJC2npcnY202JhwW57HGjGB4ecXKv6alX9cOnHNqfxfXqpGj9yxd/
+ sG+/UVpwad9Y2FFuDrnRQ3Hj3ABoKU+AN0X6GVqHbBfrhXmnxUDxBCXKixGdt9Ybmy8e
+ azpOCnXRGO+Ht6Fti69BIsWw+Lo0E7kbLEb2pe6getxPmZYDgjZDbb9LlOusmzIH+4rr
+ 1szNRaM4n/uAEupfqLsaO2OmNfgNHAO4TJ15+UA8JlJsqi64GGRKePj/QYkvpx1TZjlj
+ ZtKg==
+X-Gm-Message-State: AOJu0YzlN5nJiCrm/IfQldDdSY8WTVVzW03b25LwCkQ1XvtOk7cw337v
+ sXF6ZrdsSfgml3/aARt+9hD7VV29GmFB8ZkbBl0sUHk2SjyMcPExN76a6haiLdDxgRx046ZgJvK
+ dN/v2jdnxRwK1sZQlbd+jY525Bagf1dWuh/uFM9hjFPn+eL31
+X-Google-Smtp-Source: AGHT+IEsJeCIACebOEeFd1MlSgWVzCNZVWFCr+wuZKXLLV9ZfivBSlOWhmLOov7DmvFqbzUL0IPe5VLIc0elTIh2a2k=
+X-Received: by 2002:a50:d60a:0:b0:56b:a969:e742 with SMTP id
+ x10-20020a50d60a000000b0056ba969e742mr1570791edi.4.1711112302351; Fri, 22 Mar
+ 2024 05:58:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240318-fixes-v1-0-34f1a849b0d9@daynix.com>
- <20240318-fixes-v1-1-34f1a849b0d9@daynix.com>
- <CAFEAcA80J1zDs1odrHmJGm0sjcg1O_rS0N3su4Gvq+NNLpaUXQ@mail.gmail.com>
- <805177eb-7cd4-463c-9d01-c955d6b91cf8@daynix.com>
-In-Reply-To: <805177eb-7cd4-463c-9d01-c955d6b91cf8@daynix.com>
+References: <20240322100323.1973836-1-gaosong@loongson.cn>
+In-Reply-To: <20240322100323.1973836-1-gaosong@loongson.cn>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 22 Mar 2024 12:55:38 +0000
-Message-ID: <CAFEAcA9YedzrYosLLa0PaqS72Bq6XjM8GBmUrQwmzD3tC-Ecjg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] ui/cocoa: Fix aspect ratio
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-devel@nongnu.org
+Date: Fri, 22 Mar 2024 12:58:11 +0000
+Message-ID: <CAFEAcA-9maEMgawxvfndLyZ8uWnCdiD5VLY5H8NMJ8Ph6M05bg@mail.gmail.com>
+Subject: Re: [PULL 0/1] loongarch fix for 9.0
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, mjt@tls.msk.ru
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,90 +87,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Mar 2024 at 12:25, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+On Fri, 22 Mar 2024 at 10:03, Song Gao <gaosong@loongson.cn> wrote:
 >
-> On 2024/03/22 21:22, Peter Maydell wrote:
-> > On Mon, 18 Mar 2024 at 07:53, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
-> >>
-> >> [NSWindow setContentAspectRatio:] does not trigger window resize itself,
-> >> so the wrong aspect ratio will persist if nothing resizes the window.
-> >> Call [NSWindow setContentSize:] in such a case.
-> >>
-> >> Fixes: 91aa508d0274 ("ui/cocoa: Let the platform toggle fullscreen")
-> >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> >> ---
-> >>   ui/cocoa.m | 23 ++++++++++++++++++++++-
-> >>   1 file changed, 22 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/ui/cocoa.m b/ui/cocoa.m
-> >> index fa879d7dcd4b..d6a5b462f78b 100644
-> >> --- a/ui/cocoa.m
-> >> +++ b/ui/cocoa.m
-> >> @@ -508,6 +508,25 @@ - (void) drawRect:(NSRect) rect
-> >>       }
-> >>   }
-> >>
-> >> +- (NSSize)fixAspectRatio:(NSSize)original
-> >> +{
-> >> +    NSSize scaled;
-> >> +    NSSize fixed;
-> >> +
-> >> +    scaled.width = screen.width * original.height;
-> >> +    scaled.height = screen.height * original.width;
-> >> +
-> >> +    if (scaled.width < scaled.height) {
-> >
-> > Is this a standard algorithm for scaling with a fixed
-> > aspect ratio? It looks rather weird to be comparing
-> > a width against a height here, and to be multiplying a
-> > width by a height.
+> The following changes since commit fea445e8fe9acea4f775a832815ee22bdf2b0222:
 >
-> Not sure if it's a standard, but it's an algorithm with least error I
-> came up with.
+>   Merge tag 'pull-maintainer-final-for-real-this-time-200324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-21 10:31:56 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/gaosong/qemu.git tags/pull-loongarch-20240322
+>
+> for you to fetch changes up to 1590154ee4376819a8c6ee61e849ebf4a4e7cd02:
+>
+>   target/loongarch: Fix qemu-system-loongarch64 assert failed with the option '-d int' (2024-03-22 17:57:49 +0800)
+>
+> ----------------------------------------------------------------
+> pull-loongarch-20240322
+>
+> ----------------------------------------------------------------
 
-OK. Maybe a comment would help (at least it helps me in thinking
-through the code :-))
 
- /*
-  * Here screen is our guest's output size, and original is the
-  * size of the largest possible area of the screen we can display on.
-  * We want to scale up (screen.width x screen.height) by either:
-  *   1) original.height / screen.height
-  *   2) original.width / screen.width
-  * With the first scale factor the scale will result in an output
-  * height of original.height (i.e. we will fill the whole height
-  * of the available screen space and have black bars left and right)
-  * and with the second scale factor the scaling will result in an
-  * output width of original.width (i.e. we fill the whole width of
-  * the available screen space and have black bars top and bottom).
-  * We need to pick whichever keeps the whole of the guest output
-  * on the screen, which is to say the smaller of the two scale factors.
-  * To avoid doing more division than strictly necessary, instead
-  * of directly comparing scale factors 1 and 2 we instead
-  * calculate and compare those two scale factors multiplied by
-  * (screen.height * screen.width).
-  */
+Applied, thanks.
 
-Having written that out, it seems to me that the variable
-names here could more clearly reflect what they're doing
-(eg "screen" is not the size of the screen we're displaying
-on, "original" is not the old displayable area size but the
-new one we're trying to fit into, scaled doesn't actually
-contain a (width, height) that go together with each other,
-and it doesn't contain the actual scale factor we're going to
-be using either).
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
 
-> >> +        fixed.width = scaled.width / screen.height;
-> >> +        fixed.height = original.height;
-> >> +    } else {
-> >> +        fixed.width = original.width;
-> >> +        fixed.height = scaled.height / screen.width;
-> >> +    }
-> >> +
-> >> +    return fixed;
-> >> +}
-> >> +
-
-thanks
 -- PMM
 
