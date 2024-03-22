@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5A56C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D615C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:01:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnalE-0001Tj-Ps; Fri, 22 Mar 2024 05:00:24 -0400
+	id 1rnalN-0001X3-Pw; Fri, 22 Mar 2024 05:00:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnalD-0001TW-7N
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:00:23 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1rnalL-0001VR-0b
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:00:31 -0400
+Received: from mail-qv1-xf31.google.com ([2607:f8b0:4864:20::f31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnalB-00029J-PS
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:00:22 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-609ff069a40so21235917b3.1
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:00:21 -0700 (PDT)
+ id 1rnalJ-0002Dy-6T
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:00:30 -0400
+Received: by mail-qv1-xf31.google.com with SMTP id
+ 6a1803df08f44-696499bd61eso19436736d6.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:00:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711098020; x=1711702820; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JFOwsLoUeHy61UpIhgty+6bsINYXEMHB7YYoX+Io5XM=;
- b=VHfce5NwZBw8a8vzgkYOjL8DvrrOQ4IhUk4TyIJug4xrwbMMK+YwWQiC9ZMzX5o6Ve
- yk9+4Ue9UIzGP87JM6M1R4sHAyeHuf0TqF9FZX6ZS1LQhzVPstNhAhNMuolJF9hb7Med
- UqPG120PTbQHe+29LsVvyjJM7F+9q79OKIIuePkEXMrIY82Kx/z3PcEVk9A2xPNh6ajl
- MzsRog1Bw3S9kIRAhRkfO4aGlXogOKZ39Pu99+iDzJzFQBYCO7eQ8bSASBGIau+znW1k
- 3QmEUukKxsVrNfQVxxaU02UAyDhZjxuqy713CaIY13WU0hUGM3AX1duCvxoP/n8UAZ5f
- zlsw==
+ d=gmail.com; s=20230601; t=1711098027; x=1711702827; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ATuiYoLpuugVHqI4OxAuRWcDc9r7aEih/KU8sNmRL4c=;
+ b=GSiYAUd7x89PHoP0HRZ1jE7egdAAglwJ3BOjmStshbF0DaCdnLIW7J8Q/RyurX7Hif
+ I7WnJROd0z4+WjWxMXr+KiVfLXrmFy0c20p9BzPygW8uv4lz2VXecKF8GNcJV173yRDH
+ YNLJZPE7kh0pHC0NvNwzxq9uu3PCXU0/kAWsHOXhfmhbWLs01tlPfDcYLBK74IfrKNDa
+ WtVQJnaEeW56goGYd2Ui66JqCGFssuDlbc2NBFLbV3qyn85kv4eFd11BYRRIf797lUAe
+ hl/yje62JF/0pNeU0Wq8ieESkE5hqsI2+BmuBCMl34kqDtqjeXS/rl5J29NBJ784by0Z
+ z25Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711098020; x=1711702820;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JFOwsLoUeHy61UpIhgty+6bsINYXEMHB7YYoX+Io5XM=;
- b=GzenIBGhg2zDYCldva4ieoye3G1HD71JLl3DVO57zDrS052AI/9IxOwoE1GqIhiw+u
- yeYJvN2QOb8jgfv2nMAaLX4QBvpFcsfYEVT5pDf+yZaEkbjJA/hYfNZmaduSCWf+J+31
- 27jge9hmhiG0p5kKBp7xMu0YWD2D3l0lwrtybN0qWTP5dl0D/IOHjUiqecknBDAWasJy
- YtI4BKCCMYuEXTycIzBLQZhzqyGY9n6cFnCTovasRc7+2JfD3XZbpvTw+J1rVlAA7kYg
- HSirlZhdsp0KdX1triowvdK532Arta5kcFksRnl9gwT1/tLP1ZIQ3Lqr1TGi10IJFeCO
- FuMw==
-X-Gm-Message-State: AOJu0YwhKYe7563coj9AiIQvY0KSnl4W1/Rw3mWQla+2n6dEeWL54FYl
- G19cgCY4ajbWhMjoTQX7ffROoWFG09y8Gm05dlHOj809iH+Z5jEkQeIrEHawcjZ5Mw==
-X-Google-Smtp-Source: AGHT+IHn+f5j/qhYtuThW/7TrxJMVc2tQJ+O8bbPdtZkUWg3N127WYAui4gWoCGx+Sp68QXw545H/g==
-X-Received: by 2002:a05:6a20:2587:b0:1a3:a9ee:853a with SMTP id
- k7-20020a056a20258700b001a3a9ee853amr308102pzd.40.1711097647260; 
- Fri, 22 Mar 2024 01:54:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711098027; x=1711702827;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ATuiYoLpuugVHqI4OxAuRWcDc9r7aEih/KU8sNmRL4c=;
+ b=KQ4qQocJHOEkcHgDRWLOHBFWLchDlNa8lc0P+3cFkRF7ESKBkI8qVrOLg+ZrKb3Rm4
+ upx1m7hvCtc4C903WGkFS6iMJL2Toe/470WCShMa6V73sR7GQSBYsIblSrSwM5KP4Pvn
+ 9Zc3Yd4l8gC7AHpm/uR0ctbt+37yysCE9dOTB+6QjtzY3zWIa739Of4waRwY/CEJ7wJj
+ DZUWXjymlT4JIq2gM1U0y9gNIzj2DgIG6q0O0JO6JNmwzzssuI8orgXLAe5V28iLI6eZ
+ PgYnQ2dUkzhlqotYdOVbO73GLJtc2HLR6TiAv/4BbKK0+i6JztUG+q3IXDVxMaVUwRS+
+ yh3g==
+X-Gm-Message-State: AOJu0YxVU0Vydl95EeokaxQAzbEv4fgAh8wAk5EBiWnZiY8nJRkBUWbQ
+ Az/8h9+Sz+Wz3l+woWeTLxBSw/XsY8xARMtPXQ4GA1146yM2FXX90PrkGjBkllia+A==
+X-Google-Smtp-Source: AGHT+IGf0UQnk9gURlkpnZI411JmI7DGsJS1ePKX6nvcxV33RfvisW+HGheayyNWlrVUS0U8q4JmPw==
+X-Received: by 2002:a05:6a20:3d1f:b0:1a3:a94e:9d64 with SMTP id
+ y31-20020a056a203d1f00b001a3a94e9d64mr398993pzi.53.1711097607164; 
+ Fri, 22 Mar 2024 01:53:27 -0700 (PDT)
 Received: from toolbox.wdc.com ([129.253.180.114])
  by smtp.gmail.com with ESMTPSA id
- h5-20020a170902680500b001ddde07af12sm1369048plk.143.2024.03.22.01.54.04
+ h5-20020a170902680500b001ddde07af12sm1369048plk.143.2024.03.22.01.53.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 01:54:06 -0700 (PDT)
+ Fri, 22 Mar 2024 01:53:26 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 11/15] target/riscv/vector_helper.c: optimize loops in ldst
- helpers
-Date: Fri, 22 Mar 2024 18:53:15 +1000
-Message-ID: <20240322085319.1758843-12-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com,
+	Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 00/15] riscv-to-apply queue
+Date: Fri, 22 Mar 2024 18:53:04 +1000
+Message-ID: <20240322085319.1758843-1-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240322085319.1758843-1-alistair.francis@wdc.com>
-References: <20240322085319.1758843-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=alistair23@gmail.com; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f31;
+ envelope-from=alistair23@gmail.com; helo=mail-qv1-xf31.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,54 +94,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+The following changes since commit fea445e8fe9acea4f775a832815ee22bdf2b0222:
 
-Change the for loops in ldst helpers to do a single increment in the
-counter, and assign it env->vstart, to avoid re-reading from vstart
-every time.
+  Merge tag 'pull-maintainer-final-for-real-this-time-200324-1' of https://gitlab.com/stsquad/qemu into staging (2024-03-21 10:31:56 +0000)
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240314175704.478276-11-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/vector_helper.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+are available in the Git repository at:
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 63a1083f03..fa139040f8 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -209,7 +209,7 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base,
- 
-     VSTART_CHECK_EARLY_EXIT(env);
- 
--    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
-+    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
-         k = 0;
-         while (k < nf) {
-             if (!vm && !vext_elem_mask(v0, i)) {
-@@ -277,7 +277,7 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
-     VSTART_CHECK_EARLY_EXIT(env);
- 
-     /* load bytes from guest memory */
--    for (i = env->vstart; i < evl; i++, env->vstart++) {
-+    for (i = env->vstart; i < evl; env->vstart = ++i) {
-         k = 0;
-         while (k < nf) {
-             target_ulong addr = base + ((i * nf + k) << log2_esz);
-@@ -393,7 +393,7 @@ vext_ldst_index(void *vd, void *v0, target_ulong base,
-     VSTART_CHECK_EARLY_EXIT(env);
- 
-     /* load bytes from guest memory */
--    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
-+    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
-         k = 0;
-         while (k < nf) {
-             if (!vm && !vext_elem_mask(v0, i)) {
--- 
-2.44.0
+  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20240322
 
+for you to fetch changes up to 385e575cd5ab2436c123e4b7f8c9b383a64c0dbe:
+
+  target/riscv/kvm: fix timebase-frequency when using KVM acceleration (2024-03-22 15:41:01 +1000)
+
+----------------------------------------------------------------
+RISC-V PR for 9.0
+
+* Do not enable all named features by default
+* A range of Vector fixes
+* Update APLIC IDC after claiming iforce register
+* Remove the dependency of Zvfbfmin to Zfbfmin
+* Fix mode in riscv_tlb_fill
+* Fix timebase-frequency when using KVM acceleration
+
+----------------------------------------------------------------
+Daniel Henrique Barboza (10):
+      target/riscv: do not enable all named features by default
+      target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
+      trans_rvv.c.inc: set vstart = 0 in int scalar move insns
+      target/riscv/vector_helper.c: fix 'vmvr_v' memcpy endianess
+      target/riscv: always clear vstart in whole vec move insns
+      target/riscv: always clear vstart for ldst_whole insns
+      target/riscv/vector_helpers: do early exit when vstart >= vl
+      target/riscv: remove 'over' brconds from vector trans
+      trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+      target/riscv/vector_helper.c: optimize loops in ldst helpers
+
+Frank Chang (1):
+      hw/intc: Update APLIC IDC after claiming iforce register
+
+Irina Ryapolova (1):
+      target/riscv: Fix mode in riscv_tlb_fill
+
+Ivan Klokov (1):
+      target/riscv: enable 'vstart_eq_zero' in the end of insns
+
+Max Chou (1):
+      target/riscv: rvv: Remove the dependency of Zvfbfmin to Zfbfmin
+
+Yong-Xuan Wang (1):
+      target/riscv/kvm: fix timebase-frequency when using KVM acceleration
+
+ target/riscv/cpu_cfg.h                     |   8 +-
+ target/riscv/kvm/kvm_riscv.h               |   1 +
+ target/riscv/vector_internals.h            |   9 ++
+ hw/intc/riscv_aplic.c                      |   1 +
+ hw/riscv/virt.c                            |   2 +
+ target/riscv/cpu.c                         |  40 ++---
+ target/riscv/cpu_helper.c                  |   2 +-
+ target/riscv/kvm/kvm-cpu.c                 |   9 ++
+ target/riscv/tcg/tcg-cpu.c                 |  19 ++-
+ target/riscv/translate.c                   |   6 +
+ target/riscv/vcrypto_helper.c              |  32 ++++
+ target/riscv/vector_helper.c               |  93 ++++++++++-
+ target/riscv/vector_internals.c            |   4 +
+ target/riscv/insn_trans/trans_rvbf16.c.inc |  18 +--
+ target/riscv/insn_trans/trans_rvv.c.inc    | 244 +++++++++--------------------
+ target/riscv/insn_trans/trans_rvvk.c.inc   |  30 +---
+ 16 files changed, 259 insertions(+), 259 deletions(-)
 
