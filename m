@@ -4,66 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C9EFC54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 10:40:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91C03C54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 10:47:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rncJB-0003Th-DI; Fri, 22 Mar 2024 06:39:33 -0400
+	id 1rncQK-00060X-1a; Fri, 22 Mar 2024 06:46:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rncJA-0003TP-0d
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:39:32 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rncQF-0005yO-53
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:46:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rncJ8-0002it-7n
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:39:31 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1rncQD-0003zM-Db
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:46:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711103969;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1711104408;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IeI2zG0UgvTEQRsPuKc8KH8h60Dxviv3x/YY/wARwd4=;
- b=b/KmRgxEMZkyXAllVjV5TrioXWaxbxi3Cb23PD3QHd5YsL6u0LcgIAQsSO3p6hcou/S5tb
- S7W+o6sgbThSkTSiTBWmeYonaxNKuL1ckKP24EOmJBE7GfwVckq9lLW2jZz9KLmgzL8SIV
- hQchKat8K5FImeVgpYu1xWQBwsFwBYE=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NXBVMEl+yr8B/V45S2vmEezcNU1jZzl9rRvfSfEDrKk=;
+ b=NjoynEZ8pbna4i6gxrRi9VQyeyTUSK0eRev1Jq8d9fl4t9a7jMxvGYXyCL7QP4uuncZxkf
+ DJ8PVErpWQ/lQJwCVqNKZp/9kEQTQo/OAHAyO+tAcSCvers7xJ1M72H3PGn1nYs/82wYJE
+ VDqqvDVsSduGD8paoAhjn4dTsSK1Pk0=
+Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
+ [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-237-NxoCXq89Mj6owySmTvP_LA-1; Fri, 22 Mar 2024 06:39:26 -0400
-X-MC-Unique: NxoCXq89Mj6owySmTvP_LA-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 4DF1B8A5E2A;
- Fri, 22 Mar 2024 10:39:26 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.46])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id F1689492BC6;
- Fri, 22 Mar 2024 10:39:24 +0000 (UTC)
-Date: Fri, 22 Mar 2024 10:39:19 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, michael.roth@amd.com, kkostiuk@redhat.com,
- marcandre.lureau@redhat.com, philmd@linaro.org, den@virtuozzo.com
-Subject: Re: [PATCH v4 1/7] qga: guest-get-fsinfo: add optional
- 'total-bytes-privileged' field
-Message-ID: <Zf1f1yajMqqF6G6t@redhat.com>
-References: <20240320161648.158226-1-andrey.drobyshev@virtuozzo.com>
- <20240320161648.158226-2-andrey.drobyshev@virtuozzo.com>
+ us-mta-57-_Ft-5v11OsmRQXXrFDCo1g-1; Fri, 22 Mar 2024 06:46:44 -0400
+X-MC-Unique: _Ft-5v11OsmRQXXrFDCo1g-1
+Received: by mail-yb1-f199.google.com with SMTP id
+ 3f1490d57ef6-dcc05887ee9so2901714276.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 03:46:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711104404; x=1711709204;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NXBVMEl+yr8B/V45S2vmEezcNU1jZzl9rRvfSfEDrKk=;
+ b=iOjYTh4EEg+uoU1azoyCIryAdbAQD2WEdicUd8/H0GzsOpJypTCZabSeY35A+h3Fn9
+ sKAGx1rkyRf8TZxCGWUxqsu0ESsixQi80ppYkOYjErrG4iwNwm7z1S5K7YhjgJ9f7dSR
+ i/cIZORHmpLi2IfrGVC/tc909OzE88SCSI0l5izY8mQCxJIvW/oXuoggUl40SGCGHp8V
+ 5SAc9AhvrwGkhjQai8tC8iSHlohbCO2OtMkezYBO/clZE5D2lG2L1weCUAJ53QDrpfBs
+ E/UBPhoqs2qtckusN8YLRGdgoivwURex0Q6ZMkxzrQU+Oe3MYkDoir9NEzm3ZB0TlVr6
+ v5zg==
+X-Gm-Message-State: AOJu0Yyrb1IbKHiuf/5heO3r/mMZ73wfPYC+VbL9F7JzpaS1c7lGmceQ
+ 2fHnTz34Djg2Aeh7lL8Ca2phbmfTaUOEUu6PPVRxpX67gJr+D3+NibAe9p3bIA0fiYPs3ya62HK
+ aarn4U0e63B9iEZ2MkKvJN7LIU6eYDQ3l3E7eHoDsXtGSLslhQJJfHNHc4T7Wf9oeZ4ieXMymsg
+ Pm7DdtuY5crvO90Q5feVaZ923bX4k=
+X-Received: by 2002:a25:9341:0:b0:db5:50ea:d304 with SMTP id
+ g1-20020a259341000000b00db550ead304mr1614827ybo.34.1711104403727; 
+ Fri, 22 Mar 2024 03:46:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGTcw9m52uQHhVzSdcw4E1rvQ2l5P2tTIXeS24Vy1cJzcZntUDX+L244XEM/y8DDeR6TGTaFFu3qj44oGkOU1A=
+X-Received: by 2002:a25:9341:0:b0:db5:50ea:d304 with SMTP id
+ g1-20020a259341000000b00db550ead304mr1614811ybo.34.1711104403412; Fri, 22 Mar
+ 2024 03:46:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240320161648.158226-2-andrey.drobyshev@virtuozzo.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+References: <20240321155717.1392787-1-jonah.palmer@oracle.com>
+ <20240321155717.1392787-5-jonah.palmer@oracle.com>
+In-Reply-To: <20240321155717.1392787-5-jonah.palmer@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Fri, 22 Mar 2024 11:46:07 +0100
+Message-ID: <CAJaqyWedsT+0DT-SCAH7SMFnuWHazTsbe1kNC+PENDSxvu3W0A@mail.gmail.com>
+Subject: Re: [RFC 4/8] virtio: Implement in-order handling for virtio devices
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, raphael@enfabrica.net, 
+ kwolf@redhat.com, hreitz@redhat.com, jasowang@redhat.com, pbonzini@redhat.com, 
+ fam@euphon.net, stefanha@redhat.com, qemu-block@nongnu.org, 
+ schalla@marvell.com, leiyang@redhat.com, virtio-fs@lists.linux.dev, 
+ si-wei.liu@oracle.com, boris.ostrovsky@oracle.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -71,7 +85,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.222,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,97 +98,234 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 20, 2024 at 06:16:42PM +0200, Andrey Drobyshev wrote:
-> Since the commit 25b5ff1a86 ("qga: add mountpoint usage info to
-> GuestFilesystemInfo") we have 2 values reported in guest-get-fsinfo:
-> used = (f_blocks - f_bfree), total = (f_blocks - f_bfree + f_bavail) as
-> returned by statvfs(3).  While on Windows guests that's all we can get
-> with GetDiskFreeSpaceExA(), on POSIX guests we might also be interested in
-> total file system size, as it's visible for root user.  Let's add an
-> optional field 'total-bytes-privileged' to GuestFilesystemInfo struct,
-> which'd only be reported on POSIX and represent f_blocks value as returned
-> by statvfs(3).
-> 
-> While here, also tweak the docs to reflect better where those values
-> come from.
-> 
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+On Thu, Mar 21, 2024 at 4:57=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
+om> wrote:
+>
+> Implements in-order handling for most virtio devices using the
+> VIRTIO_F_IN_ORDER transport feature, specifically those who call
+> virtqueue_push to push their used elements onto the used ring.
+>
+> The logic behind this implementation is as follows:
+>
+> 1.) virtqueue_pop always enqueues VirtQueueElements in-order.
+>
+> virtqueue_pop always retrieves one or more buffer descriptors in-order
+> from the available ring and converts them into a VirtQueueElement. This
+> means that the order in which VirtQueueElements are enqueued are
+> in-order by default.
+>
+> By virtue, as VirtQueueElements are created, we can assign a sequential
+> key value to them. This preserves the order of buffers that have been
+> made available to the device by the driver.
+>
+> As VirtQueueElements are assigned a key value, the current sequence
+> number is incremented.
+>
+> 2.) Requests can be completed out-of-order.
+>
+> While most devices complete requests in the same order that they were
+> enqueued by default, some devices don't (e.g. virtio-blk). The goal of
+> this out-of-order handling is to reduce the impact of devices that
+> process elements in-order by default while also guaranteeing compliance
+> with the VIRTIO_F_IN_ORDER feature.
+>
+> Below is the logic behind handling completed requests (which may or may
+> not be in-order).
+>
+> 3.) Does the incoming used VirtQueueElement preserve the correct order?
+>
+> In other words, is the sequence number (key) assigned to the
+> VirtQueueElement the expected number that would preserve the original
+> order?
+>
+> 3a.)
+> If it does... immediately push the used element onto the used ring.
+> Then increment the next expected sequence number and check to see if
+> any previous out-of-order VirtQueueElements stored on the hash table
+> has a key that matches this next expected sequence number.
+>
+> For each VirtQueueElement found on the hash table with a matching key:
+> push the element on the used ring, remove the key-value pair from the
+> hash table, and then increment the next expected sequence number. Repeat
+> this process until we're unable to find an element with a matching key.
+>
+> Note that if the device uses batching (e.g. virtio-net), then we skip
+> the virtqueue_flush call and let the device call it themselves.
+>
+> 3b.)
+> If it does not... stash the VirtQueueElement, along with relevant data,
+> as a InOrderVQElement on the hash table. The key used is the order_key
+> that was assigned when the VirtQueueElement was created.
+>
+> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 > ---
->  qga/commands-posix.c | 2 ++
->  qga/commands-win32.c | 1 +
->  qga/qapi-schema.json | 7 +++++--
->  3 files changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-> index 26008db497..7df2d72e9f 100644
-> --- a/qga/commands-posix.c
-> +++ b/qga/commands-posix.c
-> @@ -1569,8 +1569,10 @@ static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount,
->          nonroot_total = used + buf.f_bavail;
->          fs->used_bytes = used * fr_size;
->          fs->total_bytes = nonroot_total * fr_size;
-> +        fs->total_bytes_privileged = buf.f_blocks * fr_size;
->  
->          fs->has_total_bytes = true;
-> +        fs->has_total_bytes_privileged = true;
->          fs->has_used_bytes = true;
+>  hw/virtio/virtio.c         | 70 ++++++++++++++++++++++++++++++++++++--
+>  include/hw/virtio/virtio.h |  8 +++++
+>  2 files changed, 76 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 40124545d6..40e4377f1e 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -992,12 +992,56 @@ void virtqueue_flush(VirtQueue *vq, unsigned int co=
+unt)
 >      }
->  
-> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-> index 6242737b00..6fee0e1e6f 100644
-> --- a/qga/commands-win32.c
-> +++ b/qga/commands-win32.c
-> @@ -1143,6 +1143,7 @@ static GuestFilesystemInfo *build_guest_fsinfo(char *guid, Error **errp)
->      fs = g_malloc(sizeof(*fs));
->      fs->name = g_strdup(guid);
->      fs->has_total_bytes = false;
-> +    fs->has_total_bytes_privileged = false;
->      fs->has_used_bytes = false;
->      if (len == 0) {
->          fs->mountpoint = g_strdup("System Reserved");
-> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index 9554b566a7..dcc469b268 100644
-> --- a/qga/qapi-schema.json
-> +++ b/qga/qapi-schema.json
-> @@ -1026,7 +1026,10 @@
->  #
->  # @used-bytes: file system used bytes (since 3.0)
->  #
-> -# @total-bytes: non-root file system total bytes (since 3.0)
-> +# @total-bytes: filesystem capacity in bytes for unprivileged users (since 3.0)
-> +#
-> +# @total-bytes-privileged: filesystem capacity in bytes for privileged users
-> +#     (since 9.0)
+>  }
+>
+> +void virtqueue_order_element(VirtQueue *vq, const VirtQueueElement *elem=
+,
+> +                             unsigned int len, unsigned int idx,
+> +                             unsigned int count)
+> +{
+> +    InOrderVQElement *in_order_elem;
+> +
+> +    if (elem->order_key =3D=3D vq->current_order_idx) {
+> +        /* Element is in-order, push to used ring */
+> +        virtqueue_fill(vq, elem, len, idx);
+> +
+> +        /* Batching? Don't flush */
+> +        if (count) {
+> +            virtqueue_flush(vq, count);
 
-Will need to be '9.1', not '9.0', since we don't accept new features
-during freeze periods.
+The "count" parameter is the number of heads used, but here you're
+only using one head (elem). Same with the other virtqueue_flush in the
+function.
 
->  #
->  # @disk: an array of disk hardware information that the volume lies
->  #     on, which may be empty if the disk type is not supported
-> @@ -1036,7 +1039,7 @@
->  { 'struct': 'GuestFilesystemInfo',
->    'data': {'name': 'str', 'mountpoint': 'str', 'type': 'str',
->             '*used-bytes': 'uint64', '*total-bytes': 'uint64',
-> -           'disk': ['GuestDiskAddress']} }
-> +           '*total-bytes-privileged': 'uint64', 'disk': ['GuestDiskAddress']} }
->  
->  ##
->  # @guest-get-fsinfo:
+Also, this function sometimes replaces virtqueue_fill and other
+replaces virtqueue_fill + virtqueue_flush (both examples in patch
+6/8). I have the impression the series would be simpler if
+virtqueue_order_element is a static function just handling the
+virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER) path of
+virtqueue_fill, so the caller does not need to know if the in_order
+feature is on or off.
 
-Assuming the version is changed:
+> +        }
+> +
+> +        /* Increment next expected order, search for more in-order eleme=
+nts */
+> +        while ((in_order_elem =3D g_hash_table_lookup(vq->in_order_ht,
+> +                        GUINT_TO_POINTER(++vq->current_order_idx))) !=3D=
+ NULL) {
+> +            /* Found in-order element, push to used ring */
+> +            virtqueue_fill(vq, in_order_elem->elem, in_order_elem->len,
+> +                           in_order_elem->idx);
+> +
+> +            /* Batching? Don't flush */
+> +            if (count) {
+> +                virtqueue_flush(vq, in_order_elem->count);
+> +            }
+> +
+> +            /* Remove key-value pair from hash table */
+> +            g_hash_table_remove(vq->in_order_ht,
+> +                                GUINT_TO_POINTER(vq->current_order_idx))=
+;
+> +        }
+> +    } else {
+> +        /* Element is out-of-order, stash in hash table */
+> +        in_order_elem =3D virtqueue_alloc_in_order_element(elem, len, id=
+x,
+> +                                                         count);
+> +        g_hash_table_insert(vq->in_order_ht, GUINT_TO_POINTER(elem->orde=
+r_key),
+> +                            in_order_elem);
+> +    }
+> +}
+> +
+>  void virtqueue_push(VirtQueue *vq, const VirtQueueElement *elem,
+>                      unsigned int len)
+>  {
+>      RCU_READ_LOCK_GUARD();
+> -    virtqueue_fill(vq, elem, len, 0);
+> -    virtqueue_flush(vq, 1);
+> +    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_IN_ORDER)) {
+> +        virtqueue_order_element(vq, elem, len, 0, 1);
+> +    } else {
+> +        virtqueue_fill(vq, elem, len, 0);
+> +        virtqueue_flush(vq, 1);
+> +    }
+>  }
+>
+>  /* Called within rcu_read_lock().  */
+> @@ -1478,6 +1522,18 @@ void virtqueue_map(VirtIODevice *vdev, VirtQueueEl=
+ement *elem)
+>                                                                          =
+false);
+>  }
+>
+> +void *virtqueue_alloc_in_order_element(const VirtQueueElement *elem,
+> +                                       unsigned int len, unsigned int id=
+x,
+> +                                       unsigned int count)
+> +{
+> +    InOrderVQElement *in_order_elem =3D g_malloc(sizeof(InOrderVQElement=
+));
+> +    in_order_elem->elem =3D elem;
+> +    in_order_elem->len =3D len;
+> +    in_order_elem->idx =3D idx;
+> +    in_order_elem->count =3D count;
+> +    return in_order_elem;
+> +}
+> +
+>  static void *virtqueue_alloc_element(size_t sz, unsigned out_num, unsign=
+ed in_num)
+>  {
+>      VirtQueueElement *elem;
+> @@ -1626,6 +1682,11 @@ static void *virtqueue_split_pop(VirtQueue *vq, si=
+ze_t sz)
+>          elem->in_sg[i] =3D iov[out_num + i];
+>      }
+>
+> +    /* Assign key for in-order processing */
+> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
+> +        elem->order_key =3D vq->current_order_key++;
 
-  Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Since you're adding this in both split_pop and packed_pop, why not add
+it in virtqueue_pop?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> +    }
+> +
+>      vq->inuse++;
+>
+>      trace_virtqueue_pop(vq, elem, elem->in_num, elem->out_num);
+> @@ -1762,6 +1823,11 @@ static void *virtqueue_packed_pop(VirtQueue *vq, s=
+ize_t sz)
+>          vq->last_avail_wrap_counter ^=3D 1;
+>      }
+>
+> +    /* Assign key for in-order processing */
+> +    if (virtio_vdev_has_feature(vdev, VIRTIO_F_IN_ORDER)) {
+> +        elem->order_key =3D vq->current_order_key++;
+> +    }
+> +
+>      vq->shadow_avail_idx =3D vq->last_avail_idx;
+>      vq->shadow_avail_wrap_counter =3D vq->last_avail_wrap_counter;
+>
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index f83d7e1fee..eeeda397a9 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -275,6 +275,14 @@ void virtio_del_queue(VirtIODevice *vdev, int n);
+>
+>  void virtio_delete_queue(VirtQueue *vq);
+>
+> +void *virtqueue_alloc_in_order_element(const VirtQueueElement *elem,
+> +                                       unsigned int len, unsigned int id=
+x,
+> +                                       unsigned int count);
+> +
+> +void virtqueue_order_element(VirtQueue *vq, const VirtQueueElement *elem=
+,
+> +                             unsigned int len, unsigned int idx,
+> +                             unsigned int count);
+> +
+>  void virtqueue_push(VirtQueue *vq, const VirtQueueElement *elem,
+>                      unsigned int len);
+>  void virtqueue_flush(VirtQueue *vq, unsigned int count);
+> --
+> 2.39.3
+>
 
 
