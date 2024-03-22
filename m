@@ -4,75 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46993C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C4C8C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:21:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnaqz-000615-5z; Fri, 22 Mar 2024 05:06:21 -0400
+	id 1rnb4v-0001eX-LE; Fri, 22 Mar 2024 05:20:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rnaqx-00060q-Kx
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:06:19 -0400
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1rnb4r-0001e3-In
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:20:41 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1rnaqw-00034S-2l
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:06:19 -0400
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-429de32dad9so12401411cf.2
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:06:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1rnb4q-0005jU-28
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:20:41 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-33e17342ea7so842201f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711098377; x=1711703177; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AHTCs5FcjXLntKpcU5I8cgwfWVTfiUhEy4nN7RWwNG0=;
- b=O71GecqIVL3hKbnKmlYjc+FnxXnSB4eklqApjfUP84Qysn6UN32uACqgi4ExJ9uE16
- /3vxcJWtu1xSELYAMJwlfDT4qxOdBbkkcd07yGNUPr4C90LK95BDj3CeRK+G39ho7ER2
- 6U6MNRKj5sNWsvFs/Cc/WRMWOg+TNMMFcqHVqOd4QHr8Wk2XSthIyz0Swc85BT7Lr8Jv
- BFvgeWk6a9d/wHZCyWlVn3j4xYLMtipax5f9g5nwaTqVKcJsmS+wjmDZRCVtfljwrzTs
- gdKncMtwyK0k4mge/CvcDIVesfm6Eb0Ol3JU1mz7hWZBL39eRznvVOKPaAiP4ZTHK4Qi
- XKCA==
+ d=linaro.org; s=google; t=1711099237; x=1711704037; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=pouck9HZQleT7x+vFBGmfvusvsFxN07XU6u0eukEV1M=;
+ b=M30rFtKR/CyXPKtgrSBcsUq9tsXm/adF+nhSoKVd1OdVSAbfpyFCokafrGmy/l/0BA
+ f4igtQPv+XHR1Bj6/ktbHfQOwQoSOcsfXmcYG4812qbbTQY0q87Y1i4OF5K36mdhw62W
+ cSlcFxHZ5FW3RiTKbWYTbHq9dXlQuD3hGsbzcKZ2bNwCrGfJ4zoD/7ttqDjdsSWdBFW7
+ w1kDBbofjqoBgtiRHZ9bk8pDPMJzb2od9Ym33/cvK40rJVy3dV6+QL2u7LvlpGE12RL5
+ 8tcb9jnoTCpXvuesW00dsgXAMtgHac9iZtfAIB6mQniE3pYJWjZRsrKZLQpO+jehEuuk
+ p06g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711098377; x=1711703177;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AHTCs5FcjXLntKpcU5I8cgwfWVTfiUhEy4nN7RWwNG0=;
- b=viZPhKDrnmQUJWZp+1Mp8yHt3924a8aUV96sXdQotj2pZpx6QC26bOQNEj2oBajob/
- j2WcDV0bidjnAynkhJHrA7RpJCz8Xd4Ufx8i3Mym07eH3/eD127WePeUqyqKZ0iwIqHb
- ZUJwseYUz0IfYMAQNtZDiZBUChUC40y6ReRKjiZQK/hEZEwDcERQmfHeabgKD8tJqyP/
- set3iPLMPVZh8tPkFqtSu1orDynxQOD4GSRkuuQbtzCrT+qKLCBaYH1AFFuKQakxWzxe
- ZbiXXQgukAWOWB7F+pPoCUdoR0ZN/FYPwDK41TAZ7N72DFc3pS8QLEs2yP+MgbXYdaKx
- S4QQ==
-X-Gm-Message-State: AOJu0Yz6l4yRFywW9PobiWo4o0deBmjD4RrFVtoDgrR+/cSOKBTXSg9j
- pz0k7h1zpxTTb23jr0vHrIfV6KtRnVmMrRNCVI6eZvDp/G1GAgWdqBG7L6s55XkUmWfldKir06I
- vqIIgJpiDVwoCmUCHCE8e08BAbxs=
-X-Google-Smtp-Source: AGHT+IEHyojiE7Y4jA3x5Dd5khtnj76tF1pUTALAQ2eO1dB7yXeVzkyunpuHQQNyKqYw396mc5PNledgIac4rD/JUQ4=
-X-Received: by 2002:ac8:7fcb:0:b0:430:abd3:2684 with SMTP id
- b11-20020ac87fcb000000b00430abd32684mr1532429qtk.48.1711098376848; Fri, 22
- Mar 2024 02:06:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711099237; x=1711704037;
+ h=content-transfer-encoding:in-reply-to:organization:from:references
+ :cc:to:content-language:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pouck9HZQleT7x+vFBGmfvusvsFxN07XU6u0eukEV1M=;
+ b=pNOca5hevXiCILBBYbIiCbbK6igqYWy34YjP+x5Gnnpr3Pg/xKhKQ8Ui7BYxndwcCy
+ vroDqsn9AIQtim2UMG0vU/XUSYUr5MXDvWYnKG19xGrOizDQ8OvG5w66U+JlJ9in5o37
+ lma6/d+DIqEiyhfpxbOEwuUNhc+PzQBNZ76iW774vKTwawwOCeVHLIO5/ELdzROWaT0o
+ vf4YEAdfO+tHv84/gltZqLp87KUt3IAJ/nNvHPHdq9WkajKI81Rx7+Rk19rpjaGdhDsC
+ NdkOO5exHBIqmXhg5Jl41V73T9pIp0aTjnFNTP60OxjILSPzBEv6mB8pDEJGdPhytD36
+ aZsQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWsFX5R/3lr0gGt9go7Dvq1gFfC+IYudn9DTsa5rxxUUDjmWOXYMDGSBtja13WTb63RieZoaa3Af8tvG8ED9VXul1bHokA=
+X-Gm-Message-State: AOJu0YwYbjIzxMPWftDU+/vdTirVW+h0hveuI1zg/NlsSvOkx8ajYiVy
+ hnDRRENZ1nNTGdFxLX43mPMPUPs6n/s3kmczvlLbNY8LBCAbHfEd/koS7XFHG0c=
+X-Google-Smtp-Source: AGHT+IFGJj3d1+cZS1lq9wE69kifci8I4tFueyzMIqY5sKIeDCarj8jSpzHLJgnwEGRiyPEktGR9Sw==
+X-Received: by 2002:a5d:6884:0:b0:33e:aab0:9984 with SMTP id
+ h4-20020a5d6884000000b0033eaab09984mr1233864wru.24.1711099237648; 
+ Fri, 22 Mar 2024 02:20:37 -0700 (PDT)
+Received: from [192.168.200.106] (83.11.22.169.ipv4.supernova.orange.pl.
+ [83.11.22.169]) by smtp.gmail.com with ESMTPSA id
+ v7-20020a5d6107000000b0033e9e26a2d0sm1615431wrt.37.2024.03.22.02.20.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 22 Mar 2024 02:20:37 -0700 (PDT)
+Message-ID: <5587d9ed-6cdd-47ae-864e-75cb5ea47aee@linaro.org>
+Date: Fri, 22 Mar 2024 10:20:34 +0100
 MIME-Version: 1.0
-References: <20240321234236.3476163-1-dongwon.kim@intel.com>
- <20240321234236.3476163-3-dongwon.kim@intel.com>
-In-Reply-To: <20240321234236.3476163-3-dongwon.kim@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Fri, 22 Mar 2024 13:06:05 +0400
-Message-ID: <CAJ+F1C+175z2QCewYxt0KqhhxLwrxeymKv+pJhYdRVyYY+KAzg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/3] ui/console: Introduce dpy_gl_dmabuf_get_fd() helper
-To: dongwon.kim@intel.com
-Cc: qemu-devel@nongnu.org, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v2 2/2] hw/riscv: Add server platform reference machine
+Content-Language: pl-PL, en-GB, en-HK
+To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
+ bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ andrei.warkentin@intel.com, shaolin.xie@alibaba-inc.com, ved@rivosinc.com,
+ sunilvl@ventanamicro.com, haibo1.xu@intel.com, evan.chai@intel.com,
+ yin.wang@intel.com, tech-server-platform@lists.riscv.org,
+ tech-server-soc@lists.riscv.org, atishp@rivosinc.com,
+ ajones@ventanamicro.com, conor@kernel.org, Fei Wu <fei2.wu@intel.com>,
+ Alistair Francis <alistair23@gmail.com>
+References: <20240312135222.3187945-1-fei2.wu@intel.com>
+ <20240312135222.3187945-3-fei2.wu@intel.com>
+ <CAKmqyKN-Yj-HZrR2MtxD2jC=JR6nFn5cEq866EXm0OfaEydXsQ@mail.gmail.com>
+ <cfac29ce-f353-4bbd-8e8d-4a7d40bf80e3@linaro.org>
+ <ebd63aa1-b4e7-490a-bdef-d952c8e37c47@canonical.com>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Organization: Linaro
+In-Reply-To: <ebd63aa1-b4e7-490a-bdef-d952c8e37c47@canonical.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,96 +111,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+W dniu 22.03.2024 o 09:50, Heinrich Schuchardt pisze:
+ >>> I see no mention of device trees in the spec, but I do see ACPI. Do we
+ >>> really expect a server platform to use DTs?
+ >>
+ >> This platform "kind of" follows sbsa-ref where we have very
+ >> minimalistic device tree sharing information qemu->firmware.
+ >>
+ >> libfdt is small, format is known and describes hardware. Firmware is
+ >> free to make use of it in any way it wants.
+ >>
+ >> On sbsa-ref we parse DT in TF-A (base firmware) and provide hardware
+ >> information to higher level (edk2) via SMC mechanism. Then EDK2
+ >> creates ACPI tables and provide them to the Operating System.
 
-On Fri, Mar 22, 2024 at 3:45=E2=80=AFAM <dongwon.kim@intel.com> wrote:
->
-> From: Dongwon Kim <dongwon.kim@intel.com>
->
-> dpy_gl_dmabuf_get_fd() is a helper for retrieving FD of the dmabuf
-> from QemuDmaBuf struct.
->
+ > We should ensure that only either an ACPI table or a device-tree
+ > description is passed to the OS and not both, e.g. when using
+ >
+ >      qemu-system-riscv64 -kernel vmlinux -M sbsa-ref
+ >
+ > But that requirement is not machine specific.
 
-Same remarks as previous patch regarding exhaustivity, setter,
-accepting NULL argument etc.
+I would not call "qemu-system-* -M machinename -k kernel_image" a proper 
+way to boot for several systems emulated by QEMU.
 
-> Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-> ---
->  include/ui/console.h | 1 +
->  hw/vfio/display.c    | 8 +++++++-
->  ui/console.c         | 9 +++++++++
->  3 files changed, 17 insertions(+), 1 deletion(-)
->
-> diff --git a/include/ui/console.h b/include/ui/console.h
-> index 6064487fc4..d5334a806c 100644
-> --- a/include/ui/console.h
-> +++ b/include/ui/console.h
-> @@ -360,6 +360,7 @@ void dpy_gl_cursor_position(QemuConsole *con,
->                              uint32_t pos_x, uint32_t pos_y);
->  uint32_t dpy_gl_dmabuf_get_width(QemuDmaBuf *dmabuf);
->  uint32_t dpy_gl_dmabuf_get_height(QemuDmaBuf *dmabuf);
-> +int32_t dpy_gl_dmabuf_get_fd(QemuDmaBuf *dmabuf);
->  void dpy_gl_release_dmabuf(QemuConsole *con,
->                             QemuDmaBuf *dmabuf);
->  void dpy_gl_update(QemuConsole *con,
-> diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-> index c962e5f88f..676b2fc5f3 100644
-> --- a/hw/vfio/display.c
-> +++ b/hw/vfio/display.c
-> @@ -259,9 +259,15 @@ static VFIODMABuf *vfio_display_get_dmabuf(VFIOPCIDe=
-vice *vdev,
->
->  static void vfio_display_free_one_dmabuf(VFIODisplay *dpy, VFIODMABuf *d=
-mabuf)
->  {
-> +    int fd;
-> +
->      QTAILQ_REMOVE(&dpy->dmabuf.bufs, dmabuf, next);
-> +    fd =3D dpy_gl_dmabuf_get_fd(&dmabuf->buf);
-> +    if (fd > -1) {
-> +        close(fd);
-> +    }
+DeviceTree is in rvsp-ref and sbsa-ref because it is easy to process in 
+limited space 1st stage of firmware has.
 
-The current code assumes that fd is valid. Why should we change that?
+And if we knew how people will mention 'sbsa-ref uses DT' we would use 
+something else instead. But that would require adding more code into 
+existing firmware projects (libfdt is usually already there).
 
-
-> +
->      dpy_gl_release_dmabuf(dpy->con, &dmabuf->buf);
-> -    close(dmabuf->buf.fd);
-
->      g_free(dmabuf);
->  }
->
-> diff --git a/ui/console.c b/ui/console.c
-> index 1d0513a733..69560aac7e 100644
-> --- a/ui/console.c
-> +++ b/ui/console.c
-> @@ -1504,6 +1504,15 @@ int qemu_console_get_height(QemuConsole *con, int =
-fallback)
->      }
->  }
->
-> +int32_t dpy_gl_dmabuf_get_fd(QemuDmaBuf *dmabuf)
-> +{
-> +    if (dmabuf) {
-> +        return dmabuf->fd;
-> +    }
-> +
-> +    return -1;
-> +}
-> +
->  int qemu_invalidate_text_consoles(void)
->  {
->      QemuConsole *s;
-> --
-> 2.34.1
->
->
-
-
---
-Marc-Andr=C3=A9 Lureau
+I did not looked at DT generated for rvsp-ref. I know that sbsa-ref one 
+is too minimalistic for kernel use as we added only those fields/nodes 
+we need to provide data for firmware.
 
