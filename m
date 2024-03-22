@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78FA2CD11DF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BBB7C47DD9
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:15:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnjNZ-0007bL-Be; Fri, 22 Mar 2024 14:12:33 -0400
+	id 1rnjNX-0007N0-Hj; Fri, 22 Mar 2024 14:12:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjNW-0007ED-Dv
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rnjNU-00072c-QD
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjNU-00075m-PG
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:30 -0400
+ id 1rnjNO-00074i-VJ
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711131148;
+ s=mimecast20190719; t=1711131142;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1oCRmigRwyKccyqZzlqOB3pVXpr4vlDHuJMd2fJ2F+E=;
- b=WBzZWrvxXGVhQh67R+5IyOqB/KLEGhOGnqShPc41TyPtI5FZLknrDg6AZEazY69CHX9lh6
- yFRovj+th+flS5f4KftAYKjDmSk7+avCUVnzGcsSyTq+AxqjZYJleyMYvxxE2y0Z1kDP3g
- V/jZlbiJD5axEAZHyxyfII8pO7C/p48=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nUBPSKRBAPOo+lQ/eTxjDUcxZLo5fXSFnvIO2PmnF9k=;
+ b=LVS4bJnXy/s/5z0w/j8wLkHW2tWAaDH1OzDhpUgei66wybMWdCzMJAcX3l8Zk4ak5D1yWF
+ bseJD74nEuPi+T+Dmkh2/M7e+ZSkXtTvFfXA7wPtBHmwZBEDFU1C1lMqOo9ZtOURX1HESZ
+ VECo7u7/Z9p9Q7TDm7tded6sygfhBYI=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-381-61muHn6fN1G5qP9xKjp3zA-1; Fri, 22 Mar 2024 14:12:26 -0400
-X-MC-Unique: 61muHn6fN1G5qP9xKjp3zA-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a45acc7f191so131378766b.0
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:12:26 -0700 (PDT)
+ us-mta-306-bCH1RyR1NhecZjXLaOeyRg-1; Fri, 22 Mar 2024 14:12:20 -0400
+X-MC-Unique: bCH1RyR1NhecZjXLaOeyRg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a4711e69b9bso130027166b.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:12:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711131144; x=1711735944;
+ d=1e100.net; s=20230601; t=1711131136; x=1711735936;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1oCRmigRwyKccyqZzlqOB3pVXpr4vlDHuJMd2fJ2F+E=;
- b=cbW/4oYT/b55g9WGg4AZAl9y9hM+VNP6YdxB/UtvU01Cyppoc5kgcHu7FCKHbRjHFK
- HCXZDceWp+udqjdJMWEb/83bOUwwZ+QGIBGNr/zwSL+adn7Km2f8C2wyXZ5a0iwjNfBx
- B/D32BBVPRzAwmO8q3u4tDZ+Hj7j0snrcM7gGODNp1otHjR8B4r/JMU3LOdErDldXZMi
- nYt5XXGoxHmc6b4y6Wbid6s4qSG/6UGXNJ1Jce5lrxQJjR6NWTSAfnqUrHDBb/qio1Vt
- xqMigXpVxENTIBnCOPgvBElmgS+R6OOOxf8dUbCvX1yj56VKa9ylTDiRaT4mGLkD3Ocx
- PWwA==
-X-Gm-Message-State: AOJu0Yx1n9q69w7ePerEp25JntKb2c0Bbca+1aynAZohJU81z+IHN1fn
- 8TkWBE878RUWb9Rpl5g8deqdEj8NgCaC5HOyMoM1Oi7439i3+tZ2HuJj25JBP2L/A1Egd5A22xF
- YASH9DmsaY2Upp/tR3uDzkZnVwcGCAxATsbCxbh6+2QqnxT9Ku41G4ujIPrI4GGsc6FWE9YlNol
- givGzTvv7ifgM6WqNIfin3c4xod3xYvlOvK/gH
-X-Received: by 2002:a17:906:4a56:b0:a47:3951:ce96 with SMTP id
- a22-20020a1709064a5600b00a473951ce96mr435272ejv.4.1711131144267; 
- Fri, 22 Mar 2024 11:12:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFDnWhUxmxCmbz28kqksHLWzbN/Uvb+oWsgGXmHuMlsFS8RzAzeRppb9wpI31TAqRc9LaBlUA==
-X-Received: by 2002:a17:906:4a56:b0:a47:3951:ce96 with SMTP id
- a22-20020a1709064a5600b00a473951ce96mr435260ejv.4.1711131143954; 
- Fri, 22 Mar 2024 11:12:23 -0700 (PDT)
+ bh=nUBPSKRBAPOo+lQ/eTxjDUcxZLo5fXSFnvIO2PmnF9k=;
+ b=RfrVCQtB1picmZoGak5Wo3h+z29Nx3HshsjJo4DSSxQ4k8fM/+JaPEYd75qt802CmK
+ qNwG8c5OyrCdVUP5eyfa5Fk4rEWALy9/KPQbPLmcr5GSTYh4AEoUwC2GMvfmZw7mWnDl
+ iOW/gKypvDxnGo2cN2YqDXyM/HG6yEn8gBvWnhdxvcnawOi2agFgGot6c8iUypN5SPp2
+ WzMPM2w7kF1ZccFLC0DGBstoXWRKW7TfkvFYn7HsVpwlW+ZK5Ih5+gY0f69Yejl8+SOF
+ mwsbTb8kKpNRHz/TVCp0NcfMZ2mGXS51kMrHh9vxI/6SfZKXrJxpYc60PwEGPPAlKfM+
+ QSYg==
+X-Gm-Message-State: AOJu0Yyxzvlq28tNMKCfrh1XnAqUQjuruHzZ4FVJqnB2YGpPQucsmuQ4
+ RxfjTKxzf2WzVKoFO7kArbrPtzqSnSgUxm14DO9GhNWc6pSspEryTywoje/mzWBLdjZoJD+9WXO
+ lYO4gEWSXvHh806pWKkwpgs1AKVsbqBBfqcOgL9ip4A8l+KlLtW8mZuAayDLWZ3U7Z6KxjuD1MY
+ 1BIhFNOvkcptvhcjtGaLLmWr238qa4w1Ie/ETv
+X-Received: by 2002:a17:906:128d:b0:a47:25e4:f5c8 with SMTP id
+ k13-20020a170906128d00b00a4725e4f5c8mr326383ejb.65.1711131135837; 
+ Fri, 22 Mar 2024 11:12:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHymEeJZpYlsG7C5LT6JNwxJjbmm9VBD+qbDTCyyq9NKtl0r3gOy9qFplXIbuStRjAaj+8O0A==
+X-Received: by 2002:a17:906:128d:b0:a47:25e4:f5c8 with SMTP id
+ k13-20020a170906128d00b00a4725e4f5c8mr326369ejb.65.1711131135526; 
+ Fri, 22 Mar 2024 11:12:15 -0700 (PDT)
 Received: from [192.168.10.118] ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- bw26-20020a170906c1da00b00a4650ec48d0sm72519ejb.140.2024.03.22.11.12.22
+ i16-20020a170906091000b00a4735fc654fsm68782ejd.205.2024.03.22.11.12.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 11:12:22 -0700 (PDT)
+ Fri, 22 Mar 2024 11:12:13 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: xiaoyao.li@intel.com,
 	michael.roth@amd.com,
 	david@redhat.com
-Subject: [PATCH 21/26] kvm/memory: Make memory type private by default if it
- has guest memfd backend
-Date: Fri, 22 Mar 2024 19:11:11 +0100
-Message-ID: <20240322181116.1228416-22-pbonzini@redhat.com>
+Subject: [PATCH 18/26] kvm: Introduce support for memory_attributes
+Date: Fri, 22 Mar 2024 19:11:08 +0100
+Message-ID: <20240322181116.1228416-19-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240322181116.1228416-1-pbonzini@redhat.com>
 References: <20240322181116.1228416-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -89,7 +88,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.222,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,43 +106,90 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-KVM side leaves the memory to shared by default, while may incur the
-overhead of paging conversion on the first visit of each page. Because
-the expectation is that page is likely to private for the VMs that
-require private memory (has guest memfd).
+Introduce the helper functions to set the attributes of a range of
+memory to private or shared.
 
-Explicitly set the memory to private when memory region has valid
-guest memfd backend.
+This is necessary to notify KVM the private/shared attribute of each gpa
+range. KVM needs the information to decide the GPA needs to be mapped at
+hva-based shared memory or guest_memfd based private memory.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Michael Roth <michael.roth@amd.com>
-Message-ID: <20240320083945.991426-16-michael.roth@amd.com>
+Message-ID: <20240320083945.991426-11-michael.roth@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- accel/kvm/kvm-all.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/sysemu/kvm.h |  4 ++++
+ accel/kvm/kvm-all.c  | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
 
+diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+index 54f4d83a370..bda309d5ffa 100644
+--- a/include/sysemu/kvm.h
++++ b/include/sysemu/kvm.h
+@@ -536,4 +536,8 @@ void kvm_mark_guest_state_protected(void);
+  * reported for the VM.
+  */
+ bool kvm_hwpoisoned_mem(void);
++
++int kvm_set_memory_attributes_private(hwaddr start, hwaddr size);
++int kvm_set_memory_attributes_shared(hwaddr start, hwaddr size);
++
+ #endif
 diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 7fbaf31cbaf..56b17cbd8aa 100644
+index 4ac3cf1c9ef..36e39fd6514 100644
 --- a/accel/kvm/kvm-all.c
 +++ b/accel/kvm/kvm-all.c
-@@ -1430,6 +1430,16 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-                     strerror(-err));
-             abort();
-         }
+@@ -91,6 +91,7 @@ bool kvm_msi_use_devid;
+ static bool kvm_has_guest_debug;
+ static int kvm_sstep_flags;
+ static bool kvm_immediate_exit;
++static uint64_t kvm_supported_memory_attributes;
+ static hwaddr kvm_max_slot_size = ~0;
+ 
+ static const KVMCapabilityInfo kvm_required_capabilites[] = {
+@@ -1266,6 +1267,35 @@ void kvm_set_max_memslot_size(hwaddr max_slot_size)
+     kvm_max_slot_size = max_slot_size;
+ }
+ 
++static int kvm_set_memory_attributes(hwaddr start, hwaddr size, uint64_t attr)
++{
++    struct kvm_memory_attributes attrs;
++    int r;
 +
-+        if (memory_region_has_guest_memfd(mr)) {
-+            err = kvm_set_memory_attributes_private(start_addr, slot_size);
-+            if (err) {
-+                error_report("%s: failed to set memory attribute private: %s\n",
-+                             __func__, strerror(-err));
-+                exit(1);
-+            }
-+        }
++    assert((attr & kvm_supported_memory_attributes) == attr);
++    attrs.attributes = attr;
++    attrs.address = start;
++    attrs.size = size;
++    attrs.flags = 0;
 +
-         start_addr += slot_size;
-         ram_start_offset += slot_size;
-         ram += slot_size;
++    r = kvm_vm_ioctl(kvm_state, KVM_SET_MEMORY_ATTRIBUTES, &attrs);
++    if (r) {
++        error_report("failed to set memory (0x%lx+%#zx) with attr 0x%lx error '%s'",
++                     start, size, attr, strerror(errno));
++    }
++    return r;
++}
++
++int kvm_set_memory_attributes_private(hwaddr start, hwaddr size)
++{
++    return kvm_set_memory_attributes(start, size, KVM_MEMORY_ATTRIBUTE_PRIVATE);
++}
++
++int kvm_set_memory_attributes_shared(hwaddr start, hwaddr size)
++{
++    return kvm_set_memory_attributes(start, size, 0);
++}
++
+ /* Called with KVMMemoryListener.slots_lock held */
+ static void kvm_set_phys_mem(KVMMemoryListener *kml,
+                              MemoryRegionSection *section, bool add)
+@@ -2382,6 +2412,7 @@ static int kvm_init(MachineState *ms)
+         goto err;
+     }
+ 
++    kvm_supported_memory_attributes = kvm_check_extension(s, KVM_CAP_MEMORY_ATTRIBUTES);
+     kvm_immediate_exit = kvm_check_extension(s, KVM_CAP_IMMEDIATE_EXIT);
+     s->nr_slots = kvm_check_extension(s, KVM_CAP_NR_MEMSLOTS);
+ 
 -- 
 2.44.0
 
