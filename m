@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28994C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0D3FC47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:15:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnjN4-0006Iq-Cv; Fri, 22 Mar 2024 14:12:02 -0400
+	id 1rnjMs-0006Gi-4G; Fri, 22 Mar 2024 14:11:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjN2-0006IC-TG
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:00 -0400
+ id 1rnjMl-0006Fg-HY
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:11:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjN1-00070r-FR
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:00 -0400
+ id 1rnjMj-0006xX-Qj
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:11:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711131118;
+ s=mimecast20190719; t=1711131101;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9UbgN6L5wwHBr2/dEFTK02U3qWZ6pGNJNZEj7uTD6i0=;
- b=FFqqARWxIWXPlrKuBaDhEif/+s0irCbpS70MxEYHj/nPrnJvS/bKRe7Y8wU4OTkaDm3QTX
- flSFyiRUgqt0QZm74BkNIJjg+BOHoqgiocoquFOzb2ck4xd8BZuPFMIIkImFEZrD3nUE8i
- 8M0qQsINBeTsEyMFeABVfKZZr6bO/WA=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lS61gCLs7YziC1lAPCrOTzqqeI8VkoEudAEH6HlvNFc=;
+ b=MaQU58nO46wdwIxru7h2JkP2DRu+Q+5n46CmDTLjWzaDpBf+kC4smcYlJSPRqolIyTwbJ3
+ ZbgYTouhCP+Pnld67TMsg0h4WfTZsvfBewYE4C68VdKG1JL6xV+0apuAq0apK3Hd3sC2/s
+ L67m7Y6vdLp1PVB0cLNTcqRpF5dwySM=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-497-QJmSKQ2gPIGHIMvzTguNLA-1; Fri, 22 Mar 2024 14:11:55 -0400
-X-MC-Unique: QJmSKQ2gPIGHIMvzTguNLA-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-558aafe9bf2so1970146a12.1
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:11:55 -0700 (PDT)
+ us-mta-663-M2x_8ASgPd6iL8PFyuMxeQ-1; Fri, 22 Mar 2024 14:11:38 -0400
+X-MC-Unique: M2x_8ASgPd6iL8PFyuMxeQ-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a4736548760so66897166b.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:11:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711131111; x=1711735911;
+ d=1e100.net; s=20230601; t=1711131097; x=1711735897;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9UbgN6L5wwHBr2/dEFTK02U3qWZ6pGNJNZEj7uTD6i0=;
- b=gQAzFb+vpm7TbvpsUdDZ3tx3yHy7f0kNiYm9jHro9F0zC3tMb3GPcfrEeSiZ8kGdgw
- su/mBnTbZ2lqDRZWttit1fqgoo00g10u8awQeT+PNgDW4bsJZp22KRUThoOfx4cCN+U2
- 2tc9+Fa8/HChXbZ4hlcVTOxcHGEt74iRj8msyFX3QATZdDTSsVIy7ovMcdt1rtTX6vNO
- NO4qx8PJVqw6NVZ74HfUxxAhkL5qFkI2gbJadVrIkX7539xMF4t7r07TsQlHDgW1Og4i
- PUfjaIZjPPSUXPpkTKqHAXMs4WCWvaNpinDmoD7wn4ABDO8hpMs4btFohX9PlKd4qmL1
- tPwQ==
-X-Gm-Message-State: AOJu0YxKsvoOk8kKWLT7v2jR1oaxSGhSlvs9IfHdjlmGImx0HupQSE3C
- NnWP+DemUx/XZs51TKNicry+kjO1qhx8y9kH5eIGmF9wzpVrVXWEuAeMd3KC7UdSHDo1ryFPxrF
- gZ6IkSarphBZMFm/ipgfF3ChzldyZc7VtcXY8byTsUNs9xWIQ14wNkesla1UXHMad3ne5eQMdF8
- rGVV8MhPKBZFSme51Cure7RZI8WfmJhLmkASPx
-X-Received: by 2002:a50:9e45:0:b0:568:145a:4a19 with SMTP id
- z63-20020a509e45000000b00568145a4a19mr198268ede.4.1711131111404; 
- Fri, 22 Mar 2024 11:11:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG3Ex6mGzd3lN6OgvfZj+75F8N+ee2vQZGBNPCaTnQxJzKUrFeu8JolWZO5nC6UuWwKroZoRg==
-X-Received: by 2002:a50:9e45:0:b0:568:145a:4a19 with SMTP id
- z63-20020a509e45000000b00568145a4a19mr198250ede.4.1711131111061; 
- Fri, 22 Mar 2024 11:11:51 -0700 (PDT)
+ bh=lS61gCLs7YziC1lAPCrOTzqqeI8VkoEudAEH6HlvNFc=;
+ b=sYpUmnTGO5bV3N17fVjCbOpyi0hbXuGP7Viwmwr9p0kfFgUMF37o2U5+8C2vqGq7S6
+ saoeCMwRfi3zzalZvRwU1kloDdGNoqEzGeQSr45nJmhR/zkqLmZp4wls1FUuNMezsyQ1
+ 2+mnNYtlbn1g9eWILOXDuxPT79Nc79ir9c4kYFp9ZORxD/ty/lrchlCq7CAj4lh0Hxel
+ CVBDpnx2J5u+xgNwQYdvq8fE3rEJAT0XI/0AInZSV6HYHVSO7xDIlNotzkjU2Rxk5MJn
+ QORVgVrrTxelxYkRXuGMbCBFCR/RZzV97YAKztp+Mf0b1CpxjqzigpMHupWjmxLZ+foz
+ duwA==
+X-Gm-Message-State: AOJu0YxmRvo4AKzENfYwKH/Sc85EuMF7YjXfUvf14wTx3+VKIesdzJMV
+ HE9KmSqU21S31Kee4iKxjTwq6PADLxaBNM1JXCU2UmfrbaRo0giMA33Wn60EcQPloR/x3aUeouj
+ 0/3s5sLA2Y/YBu40I7HJGl1eyN5BQJ/rNd8nHY2X1ihNtjjfk27//GbzWVgL6q/TxCz3QbvzuPj
+ BTtByf7a91JrNMZMyVG2VJT8kAD0S8xtYY6RKa
+X-Received: by 2002:a17:906:6d8a:b0:a47:2011:11c1 with SMTP id
+ h10-20020a1709066d8a00b00a47201111c1mr308323ejt.8.1711131096844; 
+ Fri, 22 Mar 2024 11:11:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHcxrgzCoc7VjsRg0xYrlLEmbzy6FnUnFowYqI7Sp8SNbdzKS59YFy4h4qMQAcXTT0k9KgfNw==
+X-Received: by 2002:a17:906:6d8a:b0:a47:2011:11c1 with SMTP id
+ h10-20020a1709066d8a00b00a47201111c1mr308306ejt.8.1711131096601; 
+ Fri, 22 Mar 2024 11:11:36 -0700 (PDT)
 Received: from [192.168.10.118] ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- e25-20020a50fb99000000b0056be8a21ec4sm74579edq.32.2024.03.22.11.11.50
+ a27-20020a170906191b00b00a46bd891b5bsm67953eje.225.2024.03.22.11.11.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 11:11:50 -0700 (PDT)
+ Fri, 22 Mar 2024 11:11:34 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: xiaoyao.li@intel.com,
 	michael.roth@amd.com,
 	david@redhat.com
-Subject: [PATCH 10/26] [TO SQUASH] hw/i386: Remove redeclaration of struct
- setup_data
-Date: Fri, 22 Mar 2024 19:11:00 +0100
-Message-ID: <20240322181116.1228416-11-pbonzini@redhat.com>
+Subject: [PATCH 05/26] ppc/pef: switch to use
+ confidential_guest_kvm_init/reset()
+Date: Fri, 22 Mar 2024 19:10:55 +0100
+Message-ID: <20240322181116.1228416-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240322181116.1228416-1-pbonzini@redhat.com>
 References: <20240322181116.1228416-1-pbonzini@redhat.com>
@@ -105,39 +105,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Roth <michael.roth@amd.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-It is now provided by kernel headers.
+Use the unified interface to call confidential guest related kvm_init()
+and kvm_reset(), to avoid exposing pef specific functions.
 
-This needs to be squashed with the header update to avoid temporary
-build bisect breakage. Keeping it separate for reference.
+As a bonus, pef.h goes away since there is no direct call from sPAPR
+board code to PEF code anymore.
 
-Signed-off-by: Michael Roth <michael.roth@amd.com>
-Message-ID: <20240320083945.991426-6-michael.roth@amd.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/i386/x86.c | 8 --------
- 1 file changed, 8 deletions(-)
+ include/hw/ppc/pef.h | 17 -----------------
+ hw/ppc/pef.c         |  9 ++++++---
+ hw/ppc/spapr.c       | 10 +++++++---
+ 3 files changed, 13 insertions(+), 23 deletions(-)
+ delete mode 100644 include/hw/ppc/pef.h
 
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index ffbda48917f..84a48019770 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -679,14 +679,6 @@ DeviceState *ioapic_init_secondary(GSIState *gsi_state)
-     return dev;
+diff --git a/include/hw/ppc/pef.h b/include/hw/ppc/pef.h
+deleted file mode 100644
+index 707dbe524c4..00000000000
+--- a/include/hw/ppc/pef.h
++++ /dev/null
+@@ -1,17 +0,0 @@
+-/*
+- * PEF (Protected Execution Facility) for POWER support
+- *
+- * Copyright Red Hat.
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef HW_PPC_PEF_H
+-#define HW_PPC_PEF_H
+-
+-int pef_kvm_init(ConfidentialGuestSupport *cgs, Error **errp);
+-int pef_kvm_reset(ConfidentialGuestSupport *cgs, Error **errp);
+-
+-#endif /* HW_PPC_PEF_H */
+diff --git a/hw/ppc/pef.c b/hw/ppc/pef.c
+index d28ed3ba733..47553348b1e 100644
+--- a/hw/ppc/pef.c
++++ b/hw/ppc/pef.c
+@@ -15,7 +15,6 @@
+ #include "sysemu/kvm.h"
+ #include "migration/blocker.h"
+ #include "exec/confidential-guest-support.h"
+-#include "hw/ppc/pef.h"
+ 
+ #define TYPE_PEF_GUEST "pef-guest"
+ OBJECT_DECLARE_SIMPLE_TYPE(PefGuest, PEF_GUEST)
+@@ -93,7 +92,7 @@ static int kvmppc_svm_off(Error **errp)
+ #endif
  }
  
--struct setup_data {
--    uint64_t next;
--    uint32_t type;
--    uint32_t len;
--    uint8_t data[];
--} __attribute__((packed));
--
--
- /*
-  * The entry point into the kernel for PVH boot is different from
-  * the native entry point.  The PVH entry is defined by the x86/HVM
+-int pef_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
++static int pef_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+ {
+     if (!object_dynamic_cast(OBJECT(cgs), TYPE_PEF_GUEST)) {
+         return 0;
+@@ -107,7 +106,7 @@ int pef_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+     return kvmppc_svm_init(cgs, errp);
+ }
+ 
+-int pef_kvm_reset(ConfidentialGuestSupport *cgs, Error **errp)
++static int pef_kvm_reset(ConfidentialGuestSupport *cgs, Error **errp)
+ {
+     if (!object_dynamic_cast(OBJECT(cgs), TYPE_PEF_GUEST)) {
+         return 0;
+@@ -131,6 +130,10 @@ OBJECT_DEFINE_TYPE_WITH_INTERFACES(PefGuest,
+ 
+ static void pef_guest_class_init(ObjectClass *oc, void *data)
+ {
++    ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
++
++    klass->kvm_init = pef_kvm_init;
++    klass->kvm_reset = pef_kvm_reset;
+ }
+ 
+ static void pef_guest_init(Object *obj)
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index c417f9dd523..7178da53901 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -74,6 +74,7 @@
+ #include "hw/virtio/vhost-scsi-common.h"
+ 
+ #include "exec/ram_addr.h"
++#include "exec/confidential-guest-support.h"
+ #include "hw/usb.h"
+ #include "qemu/config-file.h"
+ #include "qemu/error-report.h"
+@@ -86,7 +87,6 @@
+ #include "hw/ppc/spapr_tpm_proxy.h"
+ #include "hw/ppc/spapr_nvdimm.h"
+ #include "hw/ppc/spapr_numa.h"
+-#include "hw/ppc/pef.h"
+ 
+ #include "monitor/monitor.h"
+ 
+@@ -1714,7 +1714,9 @@ static void spapr_machine_reset(MachineState *machine, ShutdownCause reason)
+         qemu_guest_getrandom_nofail(spapr->fdt_rng_seed, 32);
+     }
+ 
+-    pef_kvm_reset(machine->cgs, &error_fatal);
++    if (machine->cgs) {
++        confidential_guest_kvm_reset(machine->cgs, &error_fatal);
++    }
+     spapr_caps_apply(spapr);
+     spapr_nested_reset(spapr);
+ 
+@@ -2840,7 +2842,9 @@ static void spapr_machine_init(MachineState *machine)
+     /*
+      * if Secure VM (PEF) support is configured, then initialize it
+      */
+-    pef_kvm_init(machine->cgs, &error_fatal);
++    if (machine->cgs) {
++        confidential_guest_kvm_init(machine->cgs, &error_fatal);
++    }
+ 
+     msi_nonbroken = true;
+ 
 -- 
 2.44.0
 
