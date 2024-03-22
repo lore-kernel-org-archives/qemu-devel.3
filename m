@@ -4,111 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21224C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 08:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 397D6C54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 08:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnabg-00025Q-Bc; Fri, 22 Mar 2024 04:50:32 -0400
+	id 1rnacd-0002ZS-4j; Fri, 22 Mar 2024 04:51:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1rnabf-00025F-25
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 04:50:31 -0400
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rnaca-0002X8-8j
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 04:51:28 -0400
+Received: from forwardcorp1c.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1rnabR-0000Po-0G
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 04:50:29 -0400
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id CFED83FB77
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 08:50:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1711097408;
- bh=1NPyyWq4majbmi+xcXjpt8YWDG2Op46iJhonn7+pXvc=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
- In-Reply-To:Content-Type;
- b=S6j0j8T3iLp78mBd2ydeKqFq48q41zDPvicqmzqLaI24DUDt2MxnYrxsO7l0nhwof
- 9RrroDXD9K4bsYCNMUu+BDR6r1itMxuByFjSdCfT3LNKFgptqy1Qjw7AWwxiDlR0hm
- ot+yCRlJkgGaoa1AtX3Wn7w5ZQKh+x9Su6LhpnOWQqC32lYWc6i5GTHLdjGo/+Dwyg
- YfYqZyJrwlvnao3ts8BDSIGL0tN0QCU/sfmMk/CRw+zpBZXJmjrH/tDOzGlUuqhWSg
- 8dK8cRbaZfs5hMsxbuDpsmahl/akpfBaT4DrJA5Ilq0jnT0sXv1Nw1nB0nZUDbsxXH
- gLn9y43+LzKiQ==
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33ed8677d16so924861f8f.1
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 01:50:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711097408; x=1711702208;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1NPyyWq4majbmi+xcXjpt8YWDG2Op46iJhonn7+pXvc=;
- b=sheIZwAlpo03w3VqxGtstROEOxkHlOd3Cqtaag7JDK1JyuNVnctbYQEDksI9qiLK1H
- isIJf6qGA/zG3PH5USew5lGRmReW6m4c2vdtc7AzeUgvSrLsDgveLFjFnchvjia9CZod
- zYvRsJSnva1JXA0ZLJWjFl7Z9p2UilqC4RoQhnrWIZYdgMIUqW5FSQTc1cGjFYGY+pw7
- ohLxb4YKcHgzOfC3wa5sEVVpCqUHYNpV8eUTbNlfcVtfoRyNL4FZcyxvjtwkBvSojMux
- l056fUYxAOXNk7KUk6x47Xl+UrjT9xfe1ux8eGT4YpofYZU0/ez7ABdO3U7T9Lrd9dIm
- JG2g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4HUUTyTfbdS+jC+KH+9BYpDONdNE/DvQ6OztpUYHVUaccC3moYZcVyy6uYDKp5iRnZKI6pNRreAe5m0ztjZ+vbjAqFpk=
-X-Gm-Message-State: AOJu0Yz+45hIuQ76LDugdRKhxhO3EunsXPRxF7xuTeMdPEOwJDS58YhI
- 2tkkc0h2wS0kADFbekNOLuzuIB6tDo7OhKFOQOa/hFNF6OSaydh53H8MOw/mSTQwV4HA85xL28h
- 1SKjmdFjxP2fQIf0xCuNQq7wm0BeW6igqyelA7O7ioqk6s9HayFyhasoO0xNk4EGiNFFM
-X-Received: by 2002:a5d:5506:0:b0:33e:6ac:691b with SMTP id
- b6-20020a5d5506000000b0033e06ac691bmr1064549wrv.9.1711097408280; 
- Fri, 22 Mar 2024 01:50:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGf1SKFbtIZlVsgcDgnCK3o0R6C9ULWWIbfzhDWzRDzmP94uEOEmxqdwaBYKvL89leuB6rfEQ==
-X-Received: by 2002:a5d:5506:0:b0:33e:6ac:691b with SMTP id
- b6-20020a5d5506000000b0033e06ac691bmr1064516wrv.9.1711097407859; 
- Fri, 22 Mar 2024 01:50:07 -0700 (PDT)
-Received: from [192.168.123.161]
- (ip-062-143-245-032.um16.pools.vodafone-ip.de. [62.143.245.32])
- by smtp.gmail.com with ESMTPSA id
- bs20-20020a056000071400b0033e18421618sm1571856wrb.17.2024.03.22.01.50.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Mar 2024 01:50:07 -0700 (PDT)
-Message-ID: <ebd63aa1-b4e7-490a-bdef-d952c8e37c47@canonical.com>
-Date: Fri, 22 Mar 2024 09:50:12 +0100
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1rnacW-0000rE-Mh
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 04:51:28 -0400
+Received: from mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:400c:0:640:9907:0])
+ by forwardcorp1c.mail.yandex.net (Yandex) with ESMTPS id D638D60A41;
+ Fri, 22 Mar 2024 11:51:19 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b406::1:29] (unknown
+ [2a02:6b8:b081:b406::1:29])
+ by mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id HpCeMl0IhOs0-6FrucWng; Fri, 22 Mar 2024 11:51:18 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1711097478;
+ bh=N/X3gc5neBgMa9Rnqfbuz4YQyI4OoUNtTGvdwsMmmkM=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=c7axtAFRv8R2llVJwe44SwMfichR3Y5CvHew4Z58Wo9taim2nzmwJDz+X4o3Sx7cO
+ B3PPLyuJ77/3DbGQm/WG10kSb9XNn9awxX1itTEIshycJQnm+em6nDhThRa4sYY1Gs
+ Jd5sstoDvYSa7Ok6IDmfH6m7Y6t2RPwW++tg/j3Y=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <cfc3e69f-86ed-4d60-ba70-64a51a41a75f@yandex-team.ru>
+Date: Fri, 22 Mar 2024 11:51:17 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2 2/2] hw/riscv: Add server platform reference machine
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- bin.meng@windriver.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- andrei.warkentin@intel.com, shaolin.xie@alibaba-inc.com, ved@rivosinc.com,
- sunilvl@ventanamicro.com, haibo1.xu@intel.com, evan.chai@intel.com,
- yin.wang@intel.com, tech-server-platform@lists.riscv.org,
- tech-server-soc@lists.riscv.org, atishp@rivosinc.com,
- ajones@ventanamicro.com, conor@kernel.org, Fei Wu <fei2.wu@intel.com>,
- Alistair Francis <alistair23@gmail.com>
-References: <20240312135222.3187945-1-fei2.wu@intel.com>
- <20240312135222.3187945-3-fei2.wu@intel.com>
- <CAKmqyKN-Yj-HZrR2MtxD2jC=JR6nFn5cEq866EXm0OfaEydXsQ@mail.gmail.com>
- <cfac29ce-f353-4bbd-8e8d-4a7d40bf80e3@linaro.org>
+Subject: Re: qemu fuzz crash in virtio_net_queue_reset()
 Content-Language: en-US
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-In-Reply-To: <cfac29ce-f353-4bbd-8e8d-4a7d40bf80e3@linaro.org>
+To: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, alxndr@bu.edu,
+ Paolo Bonzini <pbonzini@redhat.com>, bsd@redhat.com,
+ Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ darren.kenny@oracle.com, Qiuhao.Li@outlook.com, si-wei.liu@oracle.com,
+ yc-core@yandex-team.ru, Denis Plotnikov <den-plotnikov@yandex-team.ru>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ kangjie.xu@linux.alibaba.com
+References: <25d616db-6db5-47ed-afc7-8e285d069d8a@yandex-team.ru>
+ <1711073849.8330412-2-xuanzhuo@linux.alibaba.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <1711073849.8330412-2-xuanzhuo@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.372,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1c.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -120,38 +83,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/22/24 08:14, Marcin Juszkiewicz wrote:
-> W dniu 22.03.2024 o 05:55, Alistair Francis pisze:
->> I see no mention of device trees in the spec, but I do see ACPI. Do we
->> really expect a server platform to use DTs?
+On 22.03.24 05:17, Xuan Zhuo wrote:
+> On Wed, 20 Mar 2024 00:24:37 +0300, "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru> wrote:
+>> Hi all!
+>>
+>>   From fuzzing I've got a fuzz-data, which produces the following crash:
+>>
+>> qemu-fuzz-x86_64: ../hw/net/virtio-net.c:134: void flush_or_purge_queued_packets(NetClientState *): Assertion `!virtio_net_get_subqueue(nc)->async_tx.elem' failed.
+>> ==2172308== ERROR: libFuzzer: deadly signal
+>>       #0 0x5bd8c748b5a1 in __sanitizer_print_stack_trace (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x26f05a1) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>       #1 0x5bd8c73fde38 in fuzzer::PrintStackTrace() (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x2662e38) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>       #2 0x5bd8c73e38b3 in fuzzer::Fuzzer::CrashCallback() (/home/settlements/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x26488b3) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>       #3 0x739eec84251f  (/lib/x86_64-linux-gnu/libc.so.6+0x4251f) (BuildId: c289da5071a3399de893d2af81d6a30c62646e1e)
+>>       #4 0x739eec8969fb in __pthread_kill_implementation nptl/./nptl/pthread_kill.c:43:17
+>>       #5 0x739eec8969fb in __pthread_kill_internal nptl/./nptl/pthread_kill.c:78:10
+>>       #6 0x739eec8969fb in pthread_kill nptl/./nptl/pthread_kill.c:89:10
+>>       #7 0x739eec842475 in gsignal signal/../sysdeps/posix/raise.c:26:13
+>>       #8 0x739eec8287f2 in abort stdlib/./stdlib/abort.c:79:7
+>>       #9 0x739eec82871a in __assert_fail_base assert/./assert/assert.c:92:3
+>>       #10 0x739eec839e95 in __assert_fail assert/./assert/assert.c:101:3
+>>       #11 0x5bd8c995d9e2 in flush_or_purge_queued_packets /home/vsementsov/work/src/qemu/yc7-fuzz/build/../hw/net/virtio-net.c:134:5
+>>       #12 0x5bd8c9918a5f in virtio_net_queue_reset /home/vsementsov/work/src/qemu/yc7-fuzz/build/../hw/net/virtio-net.c:563:5
+>>       #13 0x5bd8c9b724e5 in virtio_queue_reset /home/vsementsov/work/src/qemu/yc7-fuzz/build/../hw/virtio/virtio.c:2492:9
+>>       #14 0x5bd8c8bcfb7c in virtio_pci_common_write /home/vsementsov/work/src/qemu/yc7-fuzz/build/../hw/virtio/virtio-pci.c:1372:13
+>>       #15 0x5bd8c9e19cf3 in memory_region_write_accessor /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/memory.c:492:5
+>>       #16 0x5bd8c9e19631 in access_with_adjusted_size /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/memory.c:554:18
+>>       #17 0x5bd8c9e17f3c in memory_region_dispatch_write /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/memory.c:1514:16
+>>       #18 0x5bd8c9ea3bbe in flatview_write_continue /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/physmem.c:2825:23
+>>       #19 0x5bd8c9e91aab in flatview_write /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/physmem.c:2867:12
+>>       #20 0x5bd8c9e91568 in address_space_write /home/vsementsov/work/src/qemu/yc7-fuzz/build/../softmmu/physmem.c:2963:18
+>>       #21 0x5bd8c74c8a90 in __wrap_qtest_writeq /home/vsementsov/work/src/qemu/yc7-fuzz/build/../tests/qtest/fuzz/qtest_wrappers.c:187:9
+>>       #22 0x5bd8c74dc4da in op_write /home/vsementsov/work/src/qemu/yc7-fuzz/build/../tests/qtest/fuzz/generic_fuzz.c:487:13
+>>       #23 0x5bd8c74d942e in generic_fuzz /home/vsementsov/work/src/qemu/yc7-fuzz/build/../tests/qtest/fuzz/generic_fuzz.c:714:17
+>>       #24 0x5bd8c74c016e in LLVMFuzzerTestOneInput /home/vsementsov/work/src/qemu/yc7-fuzz/build/../tests/qtest/fuzz/fuzz.c:152:5
+>>       #25 0x5bd8c73e4e43 in fuzzer::Fuzzer::ExecuteCallback(unsigned char const*, unsigned long) (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x2649e43) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>       #26 0x5bd8c73cebbf in fuzzer::RunOneTest(fuzzer::Fuzzer*, char const*, unsigned long) (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x2633bbf) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>       #27 0x5bd8c73d4916 in fuzzer::FuzzerDriver(int*, char***, int (*)(unsigned char const*, unsigned long)) (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x2639916) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>       #28 0x5bd8c73fe732 in main (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x2663732) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>       #29 0x739eec829d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+>>       #30 0x739eec829e3f in __libc_start_main csu/../csu/libc-start.c:392:3
+>>       #31 0x5bd8c73c9484 in _start (/home/vsementsov/work/src/qemu/yc7-fuzz/build/qemu-fuzz-x86_64+0x262e484) (BuildId: b41827f440fd9feaa98c667dbdcc961abb2799ae)
+>>
+>>
+>>
+>> How to reproduce:
+>> ./configure --target-list=x86_64-softmmu --enable-debug --disable-docs --cc=clang --cxx=clang++ --enable-fuzzing --enable-sanitizers --enable-slirp
+>> make -j20 qemu-fuzz-x86_64
+>> ./build/qemu-fuzz-x86_64 --fuzz-target=generic-fuzz-virtio-net-pci-slirp ../generic-fuzz-virtio-net-pci-slirp.crash-7707e14adea64d129be88faeb6ca57dab6118ec5
+>>
+>>
+>> This ...crash-7707... file is attached.
+>>
+>> git-bisect points to 7dc6be52f4ead25e7da8fb758900bdcb527996f7 "virtio-net: support queue reset" as a first bad commit. That's a commit which introduces virtio_net_queue_reset() function.
+>>
+>>
+>> I'm a newbie in qemu-fuzzing, and don't know virtio-net code, so I've no idea how to debug this thing further. I even don't know, how to get a normal coredump file to open it in gdb, it's not produced from fuzzing process...
+>>
+>>
+>> I tried to search for "async_tx.elem" in git log, and found two commits, fixing similar crashes:
+>>
+>>     bc5add1dadcc140fef9af4fe215167e796cd1a58 "vhost-vdpa: fix assert !virtio_net_get_subqueue(nc)->async_tx.elem in virtio_net_reset"
 > 
-> This platform "kind of" follows sbsa-ref where we have very minimalistic 
-> device tree sharing information qemu->firmware.
 > 
-> libfdt is small, format is known and describes hardware. Firmware is 
-> free to make use of it in any way it wants.
+> This fixed that by updating the vdpa "receive" callback.
 > 
-> On sbsa-ref we parse DT in TF-A (base firmware) and provide hardware 
-> information to higher level (edk2) via SMC mechanism. Then EDK2 creates 
-> ACPI tables and provide them to the Operating System.
+> You use the slirp, so should we fix that by updating the "receive"
+> callback of slirp?
+> 
 
-We should ensure that only either an ACPI table or a device-tree 
-description is passed to the OS and not both, e.g. when using
+Probably.. But receive callback is a lot more complex in virtio-net. And now I tried simple test:
 
-     qemu-system-riscv64 -kernel vmlinux -M sbsa-ref
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -2692,6 +2692,7 @@ static ssize_t virtio_net_receive(NetClientState *nc, const uint8_t *buf,
+                                    size_t size)
+  {
+      VirtIONet *n = qemu_get_nic_opaque(nc);
++    return size;
+      if ((n->rsc4_enabled || n->rsc6_enabled)) {
+          return virtio_net_rsc_receive(nc, buf, size);
+      } else {
 
-But that requirement is not machine specific.
 
-Best regards
+- this doesn't help.
 
-Heinrich
 
 > 
-> In physical system some parts of information provided in DT would be 
-> read by firmware from onboard Embedded Controller chip.
 > 
->> These functions should be shared with the virt machine if we really do
->> want DTs, but I'm not convinced we do
-> 
+>>
+>> and
+>>
+>>     5fe19fb81839ea42b592b409f725349cf3c73551 "net: use peer when purging queue in qemu_flush_or_purge_queue_packets()"
+>>
+>> but I failed to get helping idea from them.
+>>
+>>
+>>
+>> Could someone please help with this?
+>>
+>>
+>> --
+>> Best regards,
+>> Vladimir
+
+-- 
+Best regards,
+Vladimir
 
 
