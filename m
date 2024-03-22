@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86705C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:26:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32D5C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:30:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnjbR-0001xE-48; Fri, 22 Mar 2024 14:26:53 -0400
+	id 1rnjf9-0003K0-6a; Fri, 22 Mar 2024 14:30:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
- id 1rnjbN-0001pH-Hu
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:26:49 -0400
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
- id 1rnjbJ-0002Qw-Tg
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:26:48 -0400
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-dcd9e34430cso2588872276.1
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:26:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1711132004; x=1711736804; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6AUICcSJg/mLbMOQlQg8ZPtye+1Y8JCvK5pGCwWXtOo=;
- b=WiRwSsuZly0/eTuoq3ccBi3v2DxRWyzfFEoltVLFpXzIJaoTJUtjSdpKGny07YjwFg
- 7kfq0C6i4Is475KRNmUCLk45+m6SBUKY/8Oyj47PEsLzACo236qfXbzELp4iyJ2DkIL/
- ZeXb5xwxmggk38YGZNcr9Qj7RZxSXSeQGsF75vagzNlMEd2R9KD8cHQoecNoB7Bp6Iwy
- KI7qCmi34yH5HbEN5emtw7tTMZLKiGDrmV1Q/A24u9q34N+Humt507A9AKuS+CSxLzLb
- kptJYccbZ7qNF2LF8elENd7FFASnio/9SuxA8xTlK67jbhkvAybvxkivd7YzOoYuQT4z
- gLhA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rnjew-0003HJ-9E
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:30:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rnjeu-0003TZ-1o
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:30:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711132227;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lX1ZpNOz/f8WGgxXm5qvIzLIxCNZvJIgxvAaNK4StQY=;
+ b=ApX5z5Y4JRAay0FeBijJ1PcH+Tr2zhAMkHnAF50tBg1GhX4N4GQDufJxwjqLIoDg9BsyaS
+ K/pGiDEEYdsZJ4zhyC39s1PxhyQBQn0QtCldGcVCfkGCDk2nRqjSQ5ZouxfL1HtxE1LwWN
+ 2/wGdPKjT8oKOhPddep5iu/dM05yC5M=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-657-F6pkCUMvM8aaYJuZ9laMdA-1; Fri, 22 Mar 2024 14:30:25 -0400
+X-MC-Unique: F6pkCUMvM8aaYJuZ9laMdA-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-568a3be9127so1530494a12.2
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:30:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711132004; x=1711736804;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6AUICcSJg/mLbMOQlQg8ZPtye+1Y8JCvK5pGCwWXtOo=;
- b=QY6wEtOzU7HY5G6gctQE2ObrHGL9cfJr/Umn9uWdJ5G0J+UE8Lz4ZnzyZFJsKIBtbI
- kKg9GaTyUBn0vrJ627UXyu8xdh/e0gPGJ2qH9KIxPwNsctS0+ZXRo4oax/UIdIgysKsH
- vLrxAr/x+Ysqu4JjEGCEz+AumLH/LZqAthkLdoU4T0NsgcZSNwdb5k9tpdQOoSSWgxWx
- n7ONxHRx51qtxlBaIqwfMWhGYeTbmSfcyTZT839NNwlDc1VLRDZdTqYplqwsYyLh/mx6
- /9Do3LHKTLsMv1P3S4PKYj4RJeSoR9EFknqGbX6hty6pAuat/TcLgO5W9DvFEwZ5LDSO
- QmaA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvmWvWK1VSe9sAc00OYYyUrfo/4T47k9c+4meD4S05ldKWdR5JSXDm7mfEUbtebuNmeGji+ntMbSNDakWwPwsXLithnJw=
-X-Gm-Message-State: AOJu0Yzt3PaZ6zaR5tqLb7McvPsrIHcFCW8H7F9dD5HbkOikcaZjlM4x
- Qds95iPC+dVZHx3/AYCYLd+qTgFnZ7WAj/STZw9m5plTWpG5xIARkJy6rSuadbx9oVfSqNuFZhp
- efPbtucBswsbVFUYTTcz5vpNAvK78A3AOH3viNA==
-X-Google-Smtp-Source: AGHT+IFq+Vld2u9CEv92mxcPdGGVK+HlqojAbAarhNNW8pq520kH61lUaodFCsAExfRXZuH3hgY+ToVYiDIEhie12xw=
-X-Received: by 2002:a25:5303:0:b0:dda:a550:4e92 with SMTP id
- h3-20020a255303000000b00ddaa5504e92mr161782ybb.46.1711132004008; Fri, 22 Mar
- 2024 11:26:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711132223; x=1711737023;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lX1ZpNOz/f8WGgxXm5qvIzLIxCNZvJIgxvAaNK4StQY=;
+ b=XwZ6zNASzuACE2qdVw5Kvj86FKjXBILA07wmK14tosctD92Rj7IVgksH2E0E+928bl
+ RZOpOQBZiM+qW0vZgjQ0lTz3fXxItCOQtrYyCMnS7/HRUit5uU4iHh6KjRHmqmelLScx
+ 97+FUqK9j1M4IsTOjk4YDBpRSMCBDKzBCCVAdT/Kjgf8ApOiIiK6zOETIF1iaJzV+H3/
+ UjDHEOYy5HcCYsJeKedPsgH6TFQAwt/r9AVJ2U6IIVklsjS8V8SdUcLJJWJo9vZ0XHU0
+ ARcSo4opbYUz3CGiq2UV7qWZ6CXKheM6CAYDcKL6BCI10b6QJUGKyOGnt7z+W9Ld43cO
+ yJIA==
+X-Gm-Message-State: AOJu0YxbpCKe6px0I574/6qp2SMj7lhe+TvfevXLHTahp4f/Q6usAN1p
+ tlttY/TcWdYpU5ZyuLLMqkt8tAriWM2oIDYyMkg0C9KqK45VIFOM+fu9DG7oveo2V4QM79p1X35
+ rJjFk/9sdgew3iwx7KBZfOFr76wJ1vCpi0JcuQJU80waZfm9H6reh0qd9MHghTz1YAH8EWnuG/1
+ TMt7FyVHssyo2df9RylCM5QSM24TMEtpv0bK90
+X-Received: by 2002:a50:f694:0:b0:568:b43c:d75d with SMTP id
+ d20-20020a50f694000000b00568b43cd75dmr205469edn.25.1711132223247; 
+ Fri, 22 Mar 2024 11:30:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFva2n8gs4mlw09ih+0NxIUShp/zYcv4aD+lolFMqEYmJ1kbg5s/KIgkmJ8AJ5htEKeOdxdXg==
+X-Received: by 2002:a50:f694:0:b0:568:b43c:d75d with SMTP id
+ d20-20020a50f694000000b00568b43cd75dmr205454edn.25.1711132222824; 
+ Fri, 22 Mar 2024 11:30:22 -0700 (PDT)
+Received: from [192.168.10.118] ([151.95.49.219])
+ by smtp.gmail.com with ESMTPSA id
+ df15-20020a05640230af00b00568d6a20717sm87664edb.52.2024.03.22.11.30.21
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 22 Mar 2024 11:30:21 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] kvm: use configs/ definition to conditionalize debug support
+Date: Fri, 22 Mar 2024 19:30:20 +0100
+Message-ID: <20240322183020.1230736-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-References: <20240322070356.315922-1-horenchuang@bytedance.com>
- <20240322070356.315922-3-horenchuang@bytedance.com>
- <87cyrmr773.fsf@yhuang6-desk2.ccr.corp.intel.com>
-In-Reply-To: <87cyrmr773.fsf@yhuang6-desk2.ccr.corp.intel.com>
-From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Date: Fri, 22 Mar 2024 11:26:33 -0700
-Message-ID: <CAKPbEqptUKhDdH0ke7PuFShTBFm-Y=NWDtMOWCXBQBe-mac88w@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v4 2/2] memory tier: create CPUless memory
- tiers after obtaining HMAT info
-To: "Huang, Ying" <ying.huang@intel.com>
-Cc: Gregory Price <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
- mhocko@suse.com, 
- tj@kernel.org, john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
- Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
- Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
- Alistair Popple <apopple@nvidia.com>,
- Srinivasulu Thanneeru <sthanneeru@micron.com>, 
- Dan Williams <dan.j.williams@intel.com>,
- Vishal Verma <vishal.l.verma@intel.com>, 
- Dave Jiang <dave.jiang@intel.com>, Andrew Morton <akpm@linux-foundation.org>,
- nvdimm@lists.linux.dev, 
- linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
- "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
- "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org, 
- Hao Xiang <hao.xiang@bytedance.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=horenchuang@bytedance.com; helo=mail-yb1-xb2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.222,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,283 +98,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 22, 2024 at 1:41=E2=80=AFAM Huang, Ying <ying.huang@intel.com> =
-wrote:
->
-> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
->
-> > The current implementation treats emulated memory devices, such as
-> > CXL1.1 type3 memory, as normal DRAM when they are emulated as normal me=
-mory
-> > (E820_TYPE_RAM). However, these emulated devices have different
-> > characteristics than traditional DRAM, making it important to
-> > distinguish them. Thus, we modify the tiered memory initialization proc=
-ess
-> > to introduce a delay specifically for CPUless NUMA nodes. This delay
-> > ensures that the memory tier initialization for these nodes is deferred
-> > until HMAT information is obtained during the boot process. Finally,
-> > demotion tables are recalculated at the end.
-> >
-> > * late_initcall(memory_tier_late_init);
-> > Some device drivers may have initialized memory tiers between
-> > `memory_tier_init()` and `memory_tier_late_init()`, potentially bringin=
-g
-> > online memory nodes and configuring memory tiers. They should be exclud=
-ed
-> > in the late init.
-> >
-> > * Handle cases where there is no HMAT when creating memory tiers
-> > There is a scenario where a CPUless node does not provide HMAT informat=
-ion.
-> > If no HMAT is specified, it falls back to using the default DRAM tier.
-> >
-> > * Introduce another new lock `default_dram_perf_lock` for adist calcula=
-tion
-> > In the current implementation, iterating through CPUlist nodes requires
-> > holding the `memory_tier_lock`. However, `mt_calc_adistance()` will end=
- up
-> > trying to acquire the same lock, leading to a potential deadlock.
-> > Therefore, we propose introducing a standalone `default_dram_perf_lock`=
- to
-> > protect `default_dram_perf_*`. This approach not only avoids deadlock
-> > but also prevents holding a large lock simultaneously.
-> >
-> > * Upgrade `set_node_memory_tier` to support additional cases, including
-> >   default DRAM, late CPUless, and hot-plugged initializations.
-> > To cover hot-plugged memory nodes, `mt_calc_adistance()` and
-> > `mt_find_alloc_memory_type()` are moved into `set_node_memory_tier()` t=
-o
-> > handle cases where memtype is not initialized and where HMAT informatio=
-n is
-> > available.
-> >
-> > * Introduce `default_memory_types` for those memory types that are not
-> >   initialized by device drivers.
-> > Because late initialized memory and default DRAM memory need to be mana=
-ged,
-> > a default memory type is created for storing all memory types that are
-> > not initialized by device drivers and as a fallback.
-> >
-> > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
-> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
-> > ---
-> >  mm/memory-tiers.c | 73 ++++++++++++++++++++++++++++++++++++++++-------
-> >  1 file changed, 63 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
-> > index 974af10cfdd8..9396330fa162 100644
-> > --- a/mm/memory-tiers.c
-> > +++ b/mm/memory-tiers.c
-> > @@ -36,6 +36,11 @@ struct node_memory_type_map {
-> >
-> >  static DEFINE_MUTEX(memory_tier_lock);
-> >  static LIST_HEAD(memory_tiers);
-> > +/*
-> > + * The list is used to store all memory types that are not created
-> > + * by a device driver.
-> > + */
-> > +static LIST_HEAD(default_memory_types);
-> >  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
-> >  struct memory_dev_type *default_dram_type;
-> >
-> > @@ -108,6 +113,7 @@ static struct demotion_nodes *node_demotion __read_=
-mostly;
-> >
-> >  static BLOCKING_NOTIFIER_HEAD(mt_adistance_algorithms);
-> >
-> > +static DEFINE_MUTEX(default_dram_perf_lock);
->
-> Better to add comments about what is protected by this lock.
->
+If an architecture adds support for KVM_CAP_SET_GUEST_DEBUG but QEMU does not
+have the necessary code, QEMU will fail to build after updating kernel headers.
+Avoid this by using a #define in config-target.h instead of KVM_CAP_SET_GUEST_DEBUG.
 
-Thank you. I will add a comment like this:
-+ /* The lock is used to protect `default_dram_perf*` info and nid. */
-+static DEFINE_MUTEX(default_dram_perf_lock);
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ configs/targets/aarch64-softmmu.mak |  1 +
+ configs/targets/i386-softmmu.mak    |  1 +
+ configs/targets/ppc-softmmu.mak     |  1 +
+ configs/targets/ppc64-softmmu.mak   |  1 +
+ configs/targets/s390x-softmmu.mak   |  1 +
+ configs/targets/x86_64-softmmu.mak  |  1 +
+ include/sysemu/kvm.h                |  2 +-
+ include/sysemu/kvm_int.h            |  2 +-
+ accel/kvm/kvm-accel-ops.c           |  4 ++--
+ accel/kvm/kvm-all.c                 | 10 +++++-----
+ 10 files changed, 15 insertions(+), 9 deletions(-)
 
-I also found an error path was not handled and
-found the lock could be put closer to what it protects.
-I will have them fixed in V5.
+diff --git a/configs/targets/aarch64-softmmu.mak b/configs/targets/aarch64-softmmu.mak
+index b4338e95680..83c22391a69 100644
+--- a/configs/targets/aarch64-softmmu.mak
++++ b/configs/targets/aarch64-softmmu.mak
+@@ -1,5 +1,6 @@
+ TARGET_ARCH=aarch64
+ TARGET_BASE_ARCH=arm
+ TARGET_SUPPORTS_MTTCG=y
++TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml gdb-xml/aarch64-pauth.xml
+ TARGET_NEED_FDT=y
+diff --git a/configs/targets/i386-softmmu.mak b/configs/targets/i386-softmmu.mak
+index 6b3c99fc86c..d61b5076134 100644
+--- a/configs/targets/i386-softmmu.mak
++++ b/configs/targets/i386-softmmu.mak
+@@ -1,4 +1,5 @@
+ TARGET_ARCH=i386
+ TARGET_SUPPORTS_MTTCG=y
+ TARGET_NEED_FDT=y
++TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_XML_FILES= gdb-xml/i386-32bit.xml
+diff --git a/configs/targets/ppc-softmmu.mak b/configs/targets/ppc-softmmu.mak
+index 774440108f7..f3ea9c98f75 100644
+--- a/configs/targets/ppc-softmmu.mak
++++ b/configs/targets/ppc-softmmu.mak
+@@ -1,4 +1,5 @@
+ TARGET_ARCH=ppc
+ TARGET_BIG_ENDIAN=y
++TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_XML_FILES= gdb-xml/power-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml
+ TARGET_NEED_FDT=y
+diff --git a/configs/targets/ppc64-softmmu.mak b/configs/targets/ppc64-softmmu.mak
+index ddf0c39617f..1db8d8381d0 100644
+--- a/configs/targets/ppc64-softmmu.mak
++++ b/configs/targets/ppc64-softmmu.mak
+@@ -2,5 +2,6 @@ TARGET_ARCH=ppc64
+ TARGET_BASE_ARCH=ppc
+ TARGET_BIG_ENDIAN=y
+ TARGET_SUPPORTS_MTTCG=y
++TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_XML_FILES= gdb-xml/power64-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml gdb-xml/power-vsx.xml
+ TARGET_NEED_FDT=y
+diff --git a/configs/targets/s390x-softmmu.mak b/configs/targets/s390x-softmmu.mak
+index 70d2f9f0ba0..b22218aacc8 100644
+--- a/configs/targets/s390x-softmmu.mak
++++ b/configs/targets/s390x-softmmu.mak
+@@ -1,4 +1,5 @@
+ TARGET_ARCH=s390x
+ TARGET_BIG_ENDIAN=y
+ TARGET_SUPPORTS_MTTCG=y
++TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_XML_FILES= gdb-xml/s390x-core64.xml gdb-xml/s390-acr.xml gdb-xml/s390-fpr.xml gdb-xml/s390-vx.xml gdb-xml/s390-cr.xml gdb-xml/s390-virt.xml gdb-xml/s390-virt-kvm.xml gdb-xml/s390-gs.xml
+diff --git a/configs/targets/x86_64-softmmu.mak b/configs/targets/x86_64-softmmu.mak
+index 197817c9434..c5f882e5ba1 100644
+--- a/configs/targets/x86_64-softmmu.mak
++++ b/configs/targets/x86_64-softmmu.mak
+@@ -2,4 +2,5 @@ TARGET_ARCH=x86_64
+ TARGET_BASE_ARCH=i386
+ TARGET_SUPPORTS_MTTCG=y
+ TARGET_NEED_FDT=y
++TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_XML_FILES= gdb-xml/i386-64bit.xml
+diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+index 698f1640fe2..e4bdc1ff914 100644
+--- a/include/sysemu/kvm.h
++++ b/include/sysemu/kvm.h
+@@ -224,7 +224,7 @@ void kvm_flush_coalesced_mmio_buffer(void);
+  * calling down to kvm_arch_update_guest_debug after the generic
+  * fields have been set.
+  */
+-#ifdef KVM_CAP_SET_GUEST_DEBUG
++#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+ int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_trap);
+ #else
+ static inline int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_trap)
+diff --git a/include/sysemu/kvm_int.h b/include/sysemu/kvm_int.h
+index a5a3fee4119..3f3d13f8166 100644
+--- a/include/sysemu/kvm_int.h
++++ b/include/sysemu/kvm_int.h
+@@ -80,7 +80,7 @@ struct KVMState
+     struct kvm_coalesced_mmio_ring *coalesced_mmio_ring;
+     bool coalesced_flush_in_progress;
+     int vcpu_events;
+-#ifdef KVM_CAP_SET_GUEST_DEBUG
++#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+     QTAILQ_HEAD(, kvm_sw_breakpoint) kvm_sw_breakpoints;
+ #endif
+     int max_nested_state_len;
+diff --git a/accel/kvm/kvm-accel-ops.c b/accel/kvm/kvm-accel-ops.c
+index 74e3c5785b5..94c828ac8da 100644
+--- a/accel/kvm/kvm-accel-ops.c
++++ b/accel/kvm/kvm-accel-ops.c
+@@ -85,7 +85,7 @@ static bool kvm_cpus_are_resettable(void)
+     return !kvm_enabled() || !kvm_state->guest_state_protected;
+ }
+ 
+-#ifdef KVM_CAP_SET_GUEST_DEBUG
++#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+ static int kvm_update_guest_debug_ops(CPUState *cpu)
+ {
+     return kvm_update_guest_debug(cpu, 0);
+@@ -104,7 +104,7 @@ static void kvm_accel_ops_class_init(ObjectClass *oc, void *data)
+     ops->synchronize_state = kvm_cpu_synchronize_state;
+     ops->synchronize_pre_loadvm = kvm_cpu_synchronize_pre_loadvm;
+ 
+-#ifdef KVM_CAP_SET_GUEST_DEBUG
++#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+     ops->update_guest_debug = kvm_update_guest_debug_ops;
+     ops->supports_guest_debug = kvm_supports_guest_debug;
+     ops->insert_breakpoint = kvm_insert_breakpoint;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index afd7f992e39..a7517bd6494 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2427,7 +2427,7 @@ static int kvm_init(MachineState *ms)
+     s->sigmask_len = 8;
+     accel_blocker_init();
+ 
+-#ifdef KVM_CAP_SET_GUEST_DEBUG
++#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+     QTAILQ_INIT(&s->kvm_sw_breakpoints);
+ #endif
+     QLIST_INIT(&s->kvm_parked_vcpus);
+@@ -2617,7 +2617,7 @@ static int kvm_init(MachineState *ms)
+     kvm_vm_attributes_allowed =
+         (kvm_check_extension(s, KVM_CAP_VM_ATTRIBUTES) > 0);
+ 
+-#ifdef KVM_CAP_SET_GUEST_DEBUG
++#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+     kvm_has_guest_debug =
+         (kvm_check_extension(s, KVM_CAP_SET_GUEST_DEBUG) > 0);
+ #endif
+@@ -2626,7 +2626,7 @@ static int kvm_init(MachineState *ms)
+     if (kvm_has_guest_debug) {
+         kvm_sstep_flags = SSTEP_ENABLE;
+ 
+-#if defined KVM_CAP_SET_GUEST_DEBUG2
++#if defined TARGET_KVM_HAVE_GUEST_DEBUG
+         int guest_debug_flags =
+             kvm_check_extension(s, KVM_CAP_SET_GUEST_DEBUG2);
+ 
+@@ -3309,7 +3309,7 @@ bool kvm_arm_supports_user_irq(void)
+     return kvm_check_extension(kvm_state, KVM_CAP_ARM_USER_IRQ);
+ }
+ 
+-#ifdef KVM_CAP_SET_GUEST_DEBUG
++#ifdef TARGET_KVM_HAVE_GUEST_DEBUG
+ struct kvm_sw_breakpoint *kvm_find_sw_breakpoint(CPUState *cpu, vaddr pc)
+ {
+     struct kvm_sw_breakpoint *bp;
+@@ -3469,7 +3469,7 @@ void kvm_remove_all_breakpoints(CPUState *cpu)
+     }
+ }
+ 
+-#endif /* !KVM_CAP_SET_GUEST_DEBUG */
++#endif /* !TARGET_KVM_HAVE_GUEST_DEBUG */
+ 
+ static int kvm_set_signal_mask(CPUState *cpu, const sigset_t *sigset)
+ {
+-- 
+2.44.0
 
-> >  static bool default_dram_perf_error;
-> >  static struct access_coordinate default_dram_perf;
-> >  static int default_dram_perf_ref_nid =3D NUMA_NO_NODE;
-> > @@ -505,7 +511,8 @@ static inline void __init_node_memory_type(int node=
-, struct memory_dev_type *mem
-> >  static struct memory_tier *set_node_memory_tier(int node)
-> >  {
-> >       struct memory_tier *memtier;
-> > -     struct memory_dev_type *memtype;
-> > +     struct memory_dev_type *mtype;
->
-> mtype may be referenced without initialization now below.
->
-
-Good catch! Thank you.
-
-Please check below.
-I may found a potential NULL pointer dereference.
-
-> > +     int adist =3D MEMTIER_ADISTANCE_DRAM;
-> >       pg_data_t *pgdat =3D NODE_DATA(node);
-> >
-> >
-> > @@ -514,11 +521,20 @@ static struct memory_tier *set_node_memory_tier(i=
-nt node)
-> >       if (!node_state(node, N_MEMORY))
-> >               return ERR_PTR(-EINVAL);
-> >
-> > -     __init_node_memory_type(node, default_dram_type);
-> > +     mt_calc_adistance(node, &adist);
-> > +     if (node_memory_types[node].memtype =3D=3D NULL) {
-> > +             mtype =3D mt_find_alloc_memory_type(adist, &default_memor=
-y_types);
-> > +             if (IS_ERR(mtype)) {
-> > +                     mtype =3D default_dram_type;
-> > +                     pr_info("Failed to allocate a memory type. Fall b=
-ack.\n");
-> > +             }
-> > +     }
-> >
-> > -     memtype =3D node_memory_types[node].memtype;
-> > -     node_set(node, memtype->nodes);
-> > -     memtier =3D find_create_memory_tier(memtype);
-> > +     __init_node_memory_type(node, mtype);
-> > +
-> > +     mtype =3D node_memory_types[node].memtype;
-> > +     node_set(node, mtype->nodes);
-
-If the `mtype` could be NULL, would there be a potential
-NULL pointer dereference. Do you have a preferred idea
-to fix this if needed?
-
-> > +     memtier =3D find_create_memory_tier(mtype);
-> >       if (!IS_ERR(memtier))
-> >               rcu_assign_pointer(pgdat->memtier, memtier);
-> >       return memtier;
-> > @@ -655,6 +671,34 @@ void mt_put_memory_types(struct list_head *memory_=
-types)
-> >  }
-> >  EXPORT_SYMBOL_GPL(mt_put_memory_types);
-> >
-> > +/*
-> > + * This is invoked via `late_initcall()` to initialize memory tiers fo=
-r
-> > + * CPU-less memory nodes after driver initialization, which is
-> > + * expected to provide `adistance` algorithms.
-> > + */
-> > +static int __init memory_tier_late_init(void)
-> > +{
-> > +     int nid;
-> > +
-> > +     mutex_lock(&memory_tier_lock);
-> > +     for_each_node_state(nid, N_MEMORY)
-> > +             if (!node_state(nid, N_CPU) &&
-> > +                     node_memory_types[nid].memtype =3D=3D NULL)
-> > +                     /*
-> > +                      * Some device drivers may have initialized memor=
-y tiers
-> > +                      * between `memory_tier_init()` and `memory_tier_=
-late_init()`,
-> > +                      * potentially bringing online memory nodes and
-> > +                      * configuring memory tiers. Exclude them here.
-> > +                      */
-> > +                     set_node_memory_tier(nid);
-> > +
-> > +     establish_demotion_targets();
-> > +     mutex_unlock(&memory_tier_lock);
-> > +
-> > +     return 0;
-> > +}
-> > +late_initcall(memory_tier_late_init);
-> > +
-> >  static void dump_hmem_attrs(struct access_coordinate *coord, const cha=
-r *prefix)
-> >  {
-> >       pr_info(
-> > @@ -668,7 +712,7 @@ int mt_set_default_dram_perf(int nid, struct access=
-_coordinate *perf,
-> >  {
-> >       int rc =3D 0;
-> >
-> > -     mutex_lock(&memory_tier_lock);
-> > +     mutex_lock(&default_dram_perf_lock);
-> >       if (default_dram_perf_error) {
-> >               rc =3D -EIO;
-> >               goto out;
-> > @@ -716,7 +760,7 @@ int mt_set_default_dram_perf(int nid, struct access=
-_coordinate *perf,
-> >       }
-> >
-> >  out:
-> > -     mutex_unlock(&memory_tier_lock);
-> > +     mutex_unlock(&default_dram_perf_lock);
-> >       return rc;
-> >  }
-> >
-> > @@ -732,7 +776,7 @@ int mt_perf_to_adistance(struct access_coordinate *=
-perf, int *adist)
-> >           perf->read_bandwidth + perf->write_bandwidth =3D=3D 0)
-> >               return -EINVAL;
-> >
-> > -     mutex_lock(&memory_tier_lock);
-> > +     mutex_lock(&default_dram_perf_lock);
-> >       /*
-> >        * The abstract distance of a memory node is in direct proportion=
- to
-> >        * its memory latency (read + write) and inversely proportional t=
-o its
-> > @@ -745,7 +789,7 @@ int mt_perf_to_adistance(struct access_coordinate *=
-perf, int *adist)
-> >               (default_dram_perf.read_latency + default_dram_perf.write=
-_latency) *
-> >               (default_dram_perf.read_bandwidth + default_dram_perf.wri=
-te_bandwidth) /
-> >               (perf->read_bandwidth + perf->write_bandwidth);
-> > -     mutex_unlock(&memory_tier_lock);
-> > +     mutex_unlock(&default_dram_perf_lock);
-> >
-> >       return 0;
-> >  }
-> > @@ -858,7 +902,8 @@ static int __init memory_tier_init(void)
-> >        * For now we can have 4 faster memory tiers with smaller adistan=
-ce
-> >        * than default DRAM tier.
-> >        */
-> > -     default_dram_type =3D alloc_memory_type(MEMTIER_ADISTANCE_DRAM);
-> > +     default_dram_type =3D mt_find_alloc_memory_type(MEMTIER_ADISTANCE=
-_DRAM,
-> > +                                                                     &=
-default_memory_types);
-> >       if (IS_ERR(default_dram_type))
-> >               panic("%s() failed to allocate default DRAM tier\n", __fu=
-nc__);
-> >
-> > @@ -868,6 +913,14 @@ static int __init memory_tier_init(void)
-> >        * types assigned.
-> >        */
-> >       for_each_node_state(node, N_MEMORY) {
-> > +             if (!node_state(node, N_CPU))
-> > +                     /*
-> > +                      * Defer memory tier initialization on CPUless nu=
-ma nodes.
-> > +                      * These will be initialized after firmware and d=
-evices are
-> > +                      * initialized.
-> > +                      */
-> > +                     continue;
-> > +
-> >               memtier =3D set_node_memory_tier(node);
-> >               if (IS_ERR(memtier))
-> >                       /*
->
-> --
-> Best Regards,
-> Huang, Ying
-
-
-
---=20
-Best regards,
-Ho-Ren (Jack) Chuang
-=E8=8E=8A=E8=B3=80=E4=BB=BB
 
