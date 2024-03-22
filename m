@@ -4,84 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43F03C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 15:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C949AC54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 15:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rngOz-0003QS-4f; Fri, 22 Mar 2024 11:01:49 -0400
+	id 1rngTq-00055f-CI; Fri, 22 Mar 2024 11:06:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rngOv-0003Q0-Nz
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 11:01:45 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rngOt-0007Y2-Pr
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 11:01:45 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-33d90dfe73cso1266189f8f.0
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 08:01:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711119701; x=1711724501; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=V6b+ejAGAOE5/dAtCKvwYsyIRYzDFgfqlgX0jMwzj8M=;
- b=liDdevaD5AmS5Vskdcqj+oV9huS7OducCW5j2UFeMPRV/1op51Am964n1ni2EbZ9v8
- ybCnUIlpsu9TrSs+QvD7AXbpNj55HwcImw5onQZXwUjQbZYupZpGdd8qsMrDex6IiV5d
- 2GYbl0Nx8banwy70+eJ1iUqQf1gxFDSv0Vh0DCgslxEvAltfX2M1RmEW7A07n2IOdkDx
- XEO4DSAlB4YOyln24iMaoyI5ea+gC3DIbTMeMkKtQh1/JSvGe/lhOoeX3/BLpEwL5wO2
- 2Hrgg03zGYBuFOEh6/vdf+MYbZ28BG0iaFYh7HRRNyzF43z2Y9ysAhUQb9foOwv2Kre9
- BZNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711119701; x=1711724501;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=V6b+ejAGAOE5/dAtCKvwYsyIRYzDFgfqlgX0jMwzj8M=;
- b=WkEHKdLvALO3R/fuoN0WqEt+croMedED5qD2rcSBeUNqmm9ol+4r2LyJ+oTCm0KDB5
- fqXSA0Q0DX5qY9/l5SQtTnlPWhj932QrQ0+EahzVazSHI1RnoGb07zalPmvuy2TBJE1S
- PwGn5AXMGIGjlbr2dMl+mz9fmo+nOH1q1w7ttvpPsI1670m5uFQ2QtaSRDUYEnL4sZ0p
- ljFtlvNbHxTfgiDyyZKSRjchzJBYHdi2aajsghe5AznuTPHSeBneo+aUI+epKmhO1IDT
- AhqDofo/PaV/tGtxewxvBL3V1oV/iCC5rQYifDFg9iqTavmoz2jc/95p+/1ao36DoC/w
- nalw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXSkRNW+9EgK7Ogx4zojq1V8/BCzTw9fGxTZcGmawAjSrFcEq56ucFFVxnVpKFGuHhVOeluLTtiC5iA1l0j2OeW4vHxsB0=
-X-Gm-Message-State: AOJu0YyGP/MpNIWI1UiP/qFyu224FSiGYBuEHgciJTQ/A9Y0D+T44ovf
- 9YYliV1N5PvkWX5HYPpt+wM2fnYP4XHaZTIycuQiReKVIMuBzptFLi9qM9whiB8=
-X-Google-Smtp-Source: AGHT+IGrMdMljSWdmBKnfotmBiqrI8DrbPlT5+ZYG28JQBxyDU3y5+jWNQMhLaKdusBQh1TrfD6mtg==
-X-Received: by 2002:a5d:5441:0:b0:33e:d2f3:cbff with SMTP id
- w1-20020a5d5441000000b0033ed2f3cbffmr2164040wrv.23.1711119700957; 
- Fri, 22 Mar 2024 08:01:40 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.178.251])
- by smtp.gmail.com with ESMTPSA id
- x3-20020adfcc03000000b0033e41e1ad93sm2230173wrh.57.2024.03.22.08.01.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 22 Mar 2024 08:01:40 -0700 (PDT)
-Message-ID: <4ffb9edb-f4c3-4775-b05e-00d233ca2e65@linaro.org>
-Date: Fri, 22 Mar 2024 16:01:38 +0100
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rngTo-00053e-7Y
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 11:06:48 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rngTl-0000Iv-Jg
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 11:06:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711120005; x=1742656005;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=o6YgWdJ2W/tOSmBuB3lQOVrBKLc7RJHcQpsAomtOSb4=;
+ b=iJbRrBFLf4G24ym9uPFOl0xyAU+DN2iKoGLwCXKxPzCsC5LPrf5gDElg
+ 2IsK6srodiGSokrty83DL/rP2ra547ce9PsjIZdQH0E+E9Lksz0V7TGg2
+ EOuGmS6aAU1rM1rc8dHYKzPyTBNWMI6nsKc8NB71216EK76LIqro2IfWb
+ Met7JCQob/+S8eIQDb0mQf06w1digZ7q91zKZ59HPna6KUJShXC5N/4ov
+ 00Az+4ShDuiKETkgAly6WN2p7WZ8izF5ZeXHvmyMNTrDfREqDeM90EUdG
+ XwGlmdWmBWZVXW4EFxmVhQryuh8kEh5QIzRQzU9ghkST+dhVwI8wIXGoG A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11020"; a="16898039"
+X-IronPort-AV: E=Sophos;i="6.07,146,1708416000"; d="scan'208";a="16898039"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Mar 2024 08:06:40 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,146,1708416000"; d="scan'208";a="45924190"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.242.48])
+ ([10.124.242.48])
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 22 Mar 2024 08:06:39 -0700
+Message-ID: <0cca95e9-cde3-4139-8159-7de68d58fc83@intel.com>
+Date: Fri, 22 Mar 2024 23:06:36 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 v2] vhost-vdpa: check vhost_vdpa_set_vring_ready()
- return value
+Subject: Re: [PATCH 6/7] target/i386: Implement mc->kvm_type() to get VM type
 Content-Language: en-US
-To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, mst@redhat.com, lulu@redhat.com, eperezma@redhat.com,
- Jason Wang <jasowang@redhat.com>
-References: <20240322092315.31885-1-sgarzare@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240322092315.31885-1-sgarzare@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: michael.roth@amd.com
+References: <20240319140000.1014247-1-pbonzini@redhat.com>
+ <20240319140000.1014247-7-pbonzini@redhat.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20240319140000.1014247-7-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.222,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,30 +81,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/3/24 10:23, Stefano Garzarella wrote:
-> vhost_vdpa_set_vring_ready() could already fail, but if Linux's
-> patch [1] will be merged, it may fail with more chance if
-> userspace does not activate virtqueues before DRIVER_OK when
-> VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated.
+On 3/19/2024 9:59 PM, Paolo Bonzini wrote:
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
 > 
-> So better check its return value anyway.
+> KVM is introducing a new API to create confidential guests, which
+> will be used by TDX and SEV-SNP but is also available for SEV and
+> SEV-ES.  The API uses the VM type argument to KVM_CREATE_VM to
+> identify which confidential computing technology to use.
 > 
-> [1] https://lore.kernel.org/virtualization/20240206145154.118044-1-sgarzare@redhat.com/T/#u
+> Since there are no other expected uses of VM types, delegate
+> mc->kvm_type() for x86 boards to the confidential-guest-support
+> object pointed to by ms->cgs.
 > 
-> Acked-by: Eugenio Pérez <eperezma@redhat.com>
-> Acked-by: Jason Wang <jasowang@redhat.com>
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-> ---
-> Based-on: 20240315155949.86066-1-kwolf@redhat.com
+> For example, if a sev-guest object is specified to confidential-guest-support,
+> like,
 > 
-> v1: https://patchew.org/QEMU/20240207092702.25242-1-sgarzare@redhat.com/
-> v2:
->   - added acks
->   - rebased on top of https://patchew.org/QEMU/20240315155949.86066-1-kwolf@redhat.com/
-> ---
->   net/vhost-vdpa.c | 15 ++++++++++++---
->   1 file changed, 12 insertions(+), 3 deletions(-)
+>    qemu -machine ...,confidential-guest-support=sev0 \
+>         -object sev-guest,id=sev0,...
+> 
+> it will check if a VM type KVM_X86_SEV_VM or KVM_X86_SEV_ES_VM
+> is supported, and if so use them together with the KVM_SEV_INIT2
+> function of the KVM_MEMORY_ENCRYPT_OP ioctl. If not, it will fall back to
+> KVM_SEV_INIT and KVM_SEV_ES_INIT.
+> 
+> This is a preparatory work towards TDX and SEV-SNP support, but it
+> will also enable support for VMSA features such as DebugSwap, which
+> are only available via KVM_SEV_INIT2.
+> 
+> Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
+some nits below.
+
+> ---
+>   target/i386/confidential-guest.h | 19 ++++++++++++++
+>   target/i386/kvm/kvm_i386.h       |  2 ++
+>   hw/i386/x86.c                    |  6 +++++
+>   target/i386/kvm/kvm.c            | 44 ++++++++++++++++++++++++++++++++
+>   4 files changed, 71 insertions(+)
+> 
+> diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+> index ca12d5a8fba..532e172a60b 100644
+> --- a/target/i386/confidential-guest.h
+> +++ b/target/i386/confidential-guest.h
+> @@ -36,5 +36,24 @@ struct X86ConfidentialGuest {
+>   struct X86ConfidentialGuestClass {
+>       /* <private> */
+>       ConfidentialGuestSupportClass parent;
+> +
+> +    /* <public> */
+> +    int (*kvm_type)(X86ConfidentialGuest *cg);
+>   };
+> +
+> +/**
+> + * x86_confidential_guest_kvm_type:
+> + *
+> + * Calls #X86ConfidentialGuestClass.unplug callback of @plug_handler.
+
+ah, forgot to change the callback name after copy+paste.
+
+> + */
+> +static inline int x86_confidential_guest_kvm_type(X86ConfidentialGuest *cg)
+> +{
+> +    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
+> +
+> +    if (klass->kvm_type) {
+> +        return klass->kvm_type(cg);
+> +    } else {
+> +        return 0;
+> +    }
+> +}
+>   #endif
+> diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
+> index 30fedcffea3..02168122787 100644
+> --- a/target/i386/kvm/kvm_i386.h
+> +++ b/target/i386/kvm/kvm_i386.h
+> @@ -37,6 +37,7 @@ bool kvm_hv_vpindex_settable(void);
+>   bool kvm_enable_sgx_provisioning(KVMState *s);
+>   bool kvm_hyperv_expand_features(X86CPU *cpu, Error **errp);
+>   
+> +int kvm_get_vm_type(MachineState *ms, const char *vm_type);
+>   void kvm_arch_reset_vcpu(X86CPU *cs);
+>   void kvm_arch_after_reset_vcpu(X86CPU *cpu);
+>   void kvm_arch_do_init_vcpu(X86CPU *cs);
+> @@ -49,6 +50,7 @@ void kvm_request_xsave_components(X86CPU *cpu, uint64_t mask);
+>   
+>   #ifdef CONFIG_KVM
+>   
+> +bool kvm_is_vm_type_supported(int type);
+>   bool kvm_has_adjust_clock_stable(void);
+>   bool kvm_has_exception_payload(void);
+>   void kvm_synchronize_all_tsc(void);
+> diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+> index ffbda48917f..2d4b148cd25 100644
+> --- a/hw/i386/x86.c
+> +++ b/hw/i386/x86.c
+> @@ -1389,6 +1389,11 @@ static void machine_set_sgx_epc(Object *obj, Visitor *v, const char *name,
+>       qapi_free_SgxEPCList(list);
+>   }
+>   
+> +static int x86_kvm_type(MachineState *ms, const char *vm_type)
+> +{
+> +    return kvm_enabled() ? kvm_get_vm_type(ms, vm_type) : 0;
+> +}
+> +
+>   static void x86_machine_initfn(Object *obj)
+>   {
+>       X86MachineState *x86ms = X86_MACHINE(obj);
+> @@ -1413,6 +1418,7 @@ static void x86_machine_class_init(ObjectClass *oc, void *data)
+>       mc->cpu_index_to_instance_props = x86_cpu_index_to_props;
+>       mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
+>       mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
+> +    mc->kvm_type = x86_kvm_type;
+>       x86mc->save_tsc_khz = true;
+>       x86mc->fwcfg_dma_enabled = true;
+>       nc->nmi_monitor_handler = x86_nmi;
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 0ec69109a2b..e109648f260 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -31,6 +31,7 @@
+>   #include "sysemu/kvm_int.h"
+>   #include "sysemu/runstate.h"
+>   #include "kvm_i386.h"
+> +#include "../confidential-guest.h"
+>   #include "sev.h"
+>   #include "xen-emu.h"
+>   #include "hyperv.h"
+> @@ -161,6 +162,49 @@ static KVMMSRHandlers msr_handlers[KVM_MSR_FILTER_MAX_RANGES];
+>   static RateLimit bus_lock_ratelimit_ctrl;
+>   static int kvm_get_one_msr(X86CPU *cpu, int index, uint64_t *value);
+>   
+> +static const char *vm_type_name[] = {
+> +    [KVM_X86_DEFAULT_VM] = "default",
+> +};
+> +
+> +bool kvm_is_vm_type_supported(int type)
+> +{
+> +    uint32_t machine_types;
+
+The name of machine_types confuses me a lot. why not supported_vm_types?
+
+> +
+> +    /*
+> +     * old KVM doesn't support KVM_CAP_VM_TYPES but KVM_X86_DEFAULT_VM
+> +     * is always supported
+> +     */
+> +    if (type == KVM_X86_DEFAULT_VM) {
+> +        return true;
+> +    }
+> +
+> +    machine_types = kvm_check_extension(KVM_STATE(current_machine->accelerator),
+> +                                        KVM_CAP_VM_TYPES);
+> +    return !!(machine_types & BIT(type));
+> +}
+> +
+> +int kvm_get_vm_type(MachineState *ms, const char *vm_type)
+> +{
+> +    int kvm_type = KVM_X86_DEFAULT_VM;
+> +
+> +    if (ms->cgs) {
+> +        if (!object_dynamic_cast(OBJECT(ms->cgs), TYPE_X86_CONFIDENTIAL_GUEST)) {
+> +            error_report("configuration type %s not supported for x86 guests",
+> +                         object_get_typename(OBJECT(ms->cgs)));
+> +            exit(1);
+> +        }
+> +        kvm_type = x86_confidential_guest_kvm_type(
+> +            X86_CONFIDENTIAL_GUEST(ms->cgs));
+> +    }
+> +
+> +    if (!kvm_is_vm_type_supported(kvm_type)) {
+> +        error_report("vm-type %s not supported by KVM", vm_type_name[kvm_type]);
+> +        exit(1);
+> +    }
+> +
+> +    return kvm_type;
+> +}
+> +
+>   bool kvm_has_smm(void)
+>   {
+>       return kvm_vm_check_extension(kvm_state, KVM_CAP_X86_SMM);
 
 
