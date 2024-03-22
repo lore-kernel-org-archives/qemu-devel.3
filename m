@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B95C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:01:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5A56C54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnalh-0002bD-B7; Fri, 22 Mar 2024 05:00:53 -0400
+	id 1rnalE-0001Tj-Ps; Fri, 22 Mar 2024 05:00:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnalf-0002Ok-G4
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:00:51 -0400
-Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
+ id 1rnalD-0001TW-7N
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:00:23 -0400
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnald-0002GV-Qi
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:00:51 -0400
-Received: by mail-ua1-x935.google.com with SMTP id
- a1e0cc1a2514c-7db1a2c1f96so986399241.0
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:00:48 -0700 (PDT)
+ id 1rnalB-00029J-PS
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:00:22 -0400
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-609ff069a40so21235917b3.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:00:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711098048; x=1711702848; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711098020; x=1711702820; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Eain6TjZs4KlayZqmfzJXWzUESCa0jrf8H67G9gsemE=;
- b=lenyC2nxTJaKTWfzJMvsm8cgJEgAF1aYRSBHLlJ1RlHo1GrZ9UmySNsG3TPYHq7Uuc
- E+y38IbRiixDd2Q9EuPcCGxKum6bhUZsobkJQFMSQ81ah9Mp0HxCpWNSQniSKOTHFms+
- 251Zp+6wPmV3Kc9+QYrR6Swv9mxN2zcJrhQqv/xA5jYJJw+3Qoc/g+dausRdoNrFN/XK
- /RFpyUgyj2qritXK0tutkE7YsTMyVkyC7CVYRZifp1J3zkS8qBIXDw4fRqGRODWqhIA5
- wNdW/IElmjxjqso6Hj689Ay6sENr89ZbG+0NKTaZrzLVn0pHD1Z6b2LSgRRCLQfE0mmt
- 8oNg==
+ bh=JFOwsLoUeHy61UpIhgty+6bsINYXEMHB7YYoX+Io5XM=;
+ b=VHfce5NwZBw8a8vzgkYOjL8DvrrOQ4IhUk4TyIJug4xrwbMMK+YwWQiC9ZMzX5o6Ve
+ yk9+4Ue9UIzGP87JM6M1R4sHAyeHuf0TqF9FZX6ZS1LQhzVPstNhAhNMuolJF9hb7Med
+ UqPG120PTbQHe+29LsVvyjJM7F+9q79OKIIuePkEXMrIY82Kx/z3PcEVk9A2xPNh6ajl
+ MzsRog1Bw3S9kIRAhRkfO4aGlXogOKZ39Pu99+iDzJzFQBYCO7eQ8bSASBGIau+znW1k
+ 3QmEUukKxsVrNfQVxxaU02UAyDhZjxuqy713CaIY13WU0hUGM3AX1duCvxoP/n8UAZ5f
+ zlsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711098048; x=1711702848;
+ d=1e100.net; s=20230601; t=1711098020; x=1711702820;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Eain6TjZs4KlayZqmfzJXWzUESCa0jrf8H67G9gsemE=;
- b=iQ42ki4TKouEjzvWUyKyIimN7BAAm1kKswYhrZIHRlf4cwfaT6w+ZZ0Ex81I0Ic+Co
- wArKRnkhUoLMsPdDo4z7z4gRUN+ze4YMFClMf6tG6HvJHzJh6+yAyho16o4Yek6pNrPd
- //zqSm0eFYwwNY3c4clF2DwWVlOyZtWd/eWPNqE1YF4DZBnP+eVnFsR/IURs/znUWFP6
- 47xM58MPJviZgpheKoJVU2KHZQL6E2YABXq6/Z/9fGRQMWOfFQyLPqzIufe9hyCADKAw
- ElYoyIlKJ90uvqE+fIwESKPsKlOi+uw65WlYVn8x8gyYN4KRP+A7blhbh3NIvfMxSjRj
- iq5w==
-X-Gm-Message-State: AOJu0YxCYbkDTTVeghVPM8HHNIvwhw1U+5iT2CHkOu+COailuQ+BTBVi
- D6+fIzar/RhjED6t91ukQNC9TXBlSKIywuqq3o0LxAjywDVsHqrj5yHWmM8ABR80ZQ==
-X-Google-Smtp-Source: AGHT+IHMePlEEepUGlYPmQwDEOZ9wktx9ltXupP2zK/RW7bH2Vs1khYrvVAmbixcH7mgpT7feW91ug==
-X-Received: by 2002:a05:6a20:3d1d:b0:1a3:6f9a:5434 with SMTP id
- y29-20020a056a203d1d00b001a36f9a5434mr2224347pzi.62.1711097625574; 
- Fri, 22 Mar 2024 01:53:45 -0700 (PDT)
+ bh=JFOwsLoUeHy61UpIhgty+6bsINYXEMHB7YYoX+Io5XM=;
+ b=GzenIBGhg2zDYCldva4ieoye3G1HD71JLl3DVO57zDrS052AI/9IxOwoE1GqIhiw+u
+ yeYJvN2QOb8jgfv2nMAaLX4QBvpFcsfYEVT5pDf+yZaEkbjJA/hYfNZmaduSCWf+J+31
+ 27jge9hmhiG0p5kKBp7xMu0YWD2D3l0lwrtybN0qWTP5dl0D/IOHjUiqecknBDAWasJy
+ YtI4BKCCMYuEXTycIzBLQZhzqyGY9n6cFnCTovasRc7+2JfD3XZbpvTw+J1rVlAA7kYg
+ HSirlZhdsp0KdX1triowvdK532Arta5kcFksRnl9gwT1/tLP1ZIQ3Lqr1TGi10IJFeCO
+ FuMw==
+X-Gm-Message-State: AOJu0YwhKYe7563coj9AiIQvY0KSnl4W1/Rw3mWQla+2n6dEeWL54FYl
+ G19cgCY4ajbWhMjoTQX7ffROoWFG09y8Gm05dlHOj809iH+Z5jEkQeIrEHawcjZ5Mw==
+X-Google-Smtp-Source: AGHT+IHn+f5j/qhYtuThW/7TrxJMVc2tQJ+O8bbPdtZkUWg3N127WYAui4gWoCGx+Sp68QXw545H/g==
+X-Received: by 2002:a05:6a20:2587:b0:1a3:a9ee:853a with SMTP id
+ k7-20020a056a20258700b001a3a9ee853amr308102pzd.40.1711097647260; 
+ Fri, 22 Mar 2024 01:54:07 -0700 (PDT)
 Received: from toolbox.wdc.com ([129.253.180.114])
  by smtp.gmail.com with ESMTPSA id
- h5-20020a170902680500b001ddde07af12sm1369048plk.143.2024.03.22.01.53.42
+ h5-20020a170902680500b001ddde07af12sm1369048plk.143.2024.03.22.01.54.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 01:53:45 -0700 (PDT)
+ Fri, 22 Mar 2024 01:54:06 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 05/15] target/riscv: always clear vstart in whole vec move insns
-Date: Fri, 22 Mar 2024 18:53:09 +1000
-Message-ID: <20240322085319.1758843-6-alistair.francis@wdc.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 11/15] target/riscv/vector_helper.c: optimize loops in ldst
+ helpers
+Date: Fri, 22 Mar 2024 18:53:15 +1000
+Message-ID: <20240322085319.1758843-12-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240322085319.1758843-1-alistair.francis@wdc.com>
 References: <20240322085319.1758843-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=alistair23@gmail.com; helo=mail-yw1-x1131.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,71 +100,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-These insns have 2 paths: we'll either have vstart already cleared if
-vstart_eq_zero or we'll do a brcond to check if vstart >= maxsz to call
-the 'vmvr_v' helper. The helper will clear vstart if it executes until
-the end, or if vstart >= vl.
+Change the for loops in ldst helpers to do a single increment in the
+counter, and assign it env->vstart, to avoid re-reading from vstart
+every time.
 
-For starters, the check itself is wrong: we're checking vstart >= maxsz,
-when in fact we should use vstart in bytes, or 'startb' like 'vmvr_v' is
-calling, to do the comparison. But even after fixing the comparison we'll
-still need to clear vstart in the end, which isn't happening too.
-
-We want to make the helpers responsible to manage vstart, including
-these corner cases, precisely to avoid these situations:
-
-- remove the wrong vstart >= maxsz cond from the translation;
-- add a 'startb >= maxsz' cond in 'vmvr_v', and clear vstart if that
-  happens.
-
-This way we're now sure that vstart is being cleared in the end of the
-execution, regardless of the path taken.
-
-Fixes: f714361ed7 ("target/riscv: rvv-1.0: implement vstart CSR")
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240314175704.478276-5-dbarboza@ventanamicro.com>
+Message-ID: <20240314175704.478276-11-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/vector_helper.c            | 5 +++++
- target/riscv/insn_trans/trans_rvv.c.inc | 3 ---
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ target/riscv/vector_helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 34ac4aa808..bcc553c0e2 100644
+index 63a1083f03..fa139040f8 100644
 --- a/target/riscv/vector_helper.c
 +++ b/target/riscv/vector_helper.c
-@@ -5075,6 +5075,11 @@ void HELPER(vmvr_v)(void *vd, void *vs2, CPURISCVState *env, uint32_t desc)
-     uint32_t startb = env->vstart * sewb;
-     uint32_t i = startb;
+@@ -209,7 +209,7 @@ vext_ldst_stride(void *vd, void *v0, target_ulong base,
  
-+    if (startb >= maxsz) {
-+        env->vstart = 0;
-+        return;
-+    }
-+
-     if (HOST_BIG_ENDIAN && i % 8 != 0) {
-         uint32_t j = ROUND_UP(i, 8);
-         memcpy((uint8_t *)vd + H1(j - 1),
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 8c16a9f5b3..52c26a7834 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -3664,12 +3664,9 @@ static bool trans_##NAME(DisasContext *s, arg_##NAME * a)               \
-                              vreg_ofs(s, a->rs2), maxsz, maxsz);        \
-             mark_vs_dirty(s);                                           \
-         } else {                                                        \
--            TCGLabel *over = gen_new_label();                           \
--            tcg_gen_brcondi_tl(TCG_COND_GEU, cpu_vstart, maxsz, over);  \
-             tcg_gen_gvec_2_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2), \
-                                tcg_env, maxsz, maxsz, 0, gen_helper_vmvr_v); \
-             mark_vs_dirty(s);                                           \
--            gen_set_label(over);                                        \
-         }                                                               \
-         return true;                                                    \
-     }                                                                   \
+     VSTART_CHECK_EARLY_EXIT(env);
+ 
+-    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
++    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
+         k = 0;
+         while (k < nf) {
+             if (!vm && !vext_elem_mask(v0, i)) {
+@@ -277,7 +277,7 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+     VSTART_CHECK_EARLY_EXIT(env);
+ 
+     /* load bytes from guest memory */
+-    for (i = env->vstart; i < evl; i++, env->vstart++) {
++    for (i = env->vstart; i < evl; env->vstart = ++i) {
+         k = 0;
+         while (k < nf) {
+             target_ulong addr = base + ((i * nf + k) << log2_esz);
+@@ -393,7 +393,7 @@ vext_ldst_index(void *vd, void *v0, target_ulong base,
+     VSTART_CHECK_EARLY_EXIT(env);
+ 
+     /* load bytes from guest memory */
+-    for (i = env->vstart; i < env->vl; i++, env->vstart++) {
++    for (i = env->vstart; i < env->vl; env->vstart = ++i) {
+         k = 0;
+         while (k < nf) {
+             if (!vm && !vext_elem_mask(v0, i)) {
 -- 
 2.44.0
 
