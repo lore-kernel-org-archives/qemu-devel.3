@@ -4,93 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 828B4C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 14:56:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A93DEC47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 14:59:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rngJi-0000rY-U6; Fri, 22 Mar 2024 10:56:22 -0400
+	id 1rngLz-0001vx-4p; Fri, 22 Mar 2024 10:58:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rngJd-0000qa-6w
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:56:17 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rngJb-0006Ac-3u
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:56:16 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-56b8248e2d8so2710637a12.1
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 07:56:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711119371; x=1711724171; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n+TZYtMacNOfYRVs+W9TIKrYzeSGZmA6B++6aYUiM6Q=;
- b=D3r3RVWXt64dYTi4bA8s3I68uQ5vNro6/DXuRyXLnIY/a4t/1+0DbITVpnVZ8yIGoB
- Y6Ws9fbmCMI36I3t55DTQtSYqIaWx/mJtxV2sv2wJoUTV2c6JRx/kx4us32RsJQM4TI1
- Vt6gLz+ZpKvge9PXxfVS2AB6WvgHL3mJEs1KakQx4KsJy4YVVrH5uFeAQS/ys/u6Ilx2
- CJdZl7pKtcq+nUKjwGYmOrM9cgT33nrOv3VDE65W3/wHj9CcIfKEgQGOuC7Cfrs8ed87
- pGoQdy33VtbNpRhqoWuv+v0GW6y1C+R7tZcqcR68ZUeEhvMxWKN/e4HCmIhy5j/+GKFA
- k22g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711119371; x=1711724171;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=n+TZYtMacNOfYRVs+W9TIKrYzeSGZmA6B++6aYUiM6Q=;
- b=mOXHBT2QRVVnxqBXcICXpwtciYQIaZGfUGKS4DZEa5teyXTHraop9HQzyG+71aZuCN
- M95JjwtHh868aAgoyFdk6gjZNeWnu0GVrDpNz2dylUTkw7Wr3akXkBPEX54TAENnW5sz
- eKZzzRZEJ92RCge56Mae6wmW1sfzpMmFbuZoxwUdj3zRh65ixtR3LbMhWtNGfV59QVFm
- gdMuQs1iFYRRpghHOKgijwuedXcPLnON0sO4AKKxB3N9sQi3TEUHmejlA9kY75OFfuw2
- 1RhiBBmpbcodIVBOjHbozRGwhJoBbK2DFDHfYMCIP8gJmzd54ACJaiDV9B4W+QOAprox
- Qfyg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWE0MS/oALotH9Ke2H6HWrX4cGX0wyxU6K5rwVuBFDMEv5AoThDYJmGoVZGz1zTNzXWl+pJ80xrd4Ip05rgiESeRqufPkk=
-X-Gm-Message-State: AOJu0Yz4xqoKHZUGFU6XypPFETtmIh1WpmYfgJudItG01hmFvaHFnOu9
- wgMgG3ZNshubrXGKmJWteRndKWyr2g5bIzUh1mknyvw5V5kEYytiShCnedmLcf4oeNxj+FQ28Ab
- 2f2LYGu9VWMJkqEcm2LybOamp6tZdvSIM04lyow==
-X-Google-Smtp-Source: AGHT+IGy8E3gmIDfgS1NJyEaT/oIRks3OVSJIWZL2F2M4laHfvm3vcRK0fTZRA/3agueBGdo+GZJn4ATTRuy5rY0owE=
-X-Received: by 2002:a50:9b07:0:b0:568:c4ca:987a with SMTP id
- o7-20020a509b07000000b00568c4ca987amr1833694edi.13.1711119371359; Fri, 22 Mar
- 2024 07:56:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rngLv-0001st-1J
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:58:39 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rngLt-0006f4-3r
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 10:58:38 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id E33EA582B1;
+ Fri, 22 Mar 2024 17:59:48 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1A96BA0903;
+ Fri, 22 Mar 2024 17:58:27 +0300 (MSK)
+Message-ID: <f4866402-bcee-447a-89fc-c5dd3128770c@tls.msk.ru>
+Date: Fri, 22 Mar 2024 17:58:26 +0300
 MIME-Version: 1.0
-References: <20240220150833.13674-1-philmd@linaro.org>
- <f4a6492b-cff4-439d-8f34-cdf04cb747ee@redhat.com>
- <cc132404-dcd5-4aed-a481-b46d6e3115b0@linaro.org>
- <CAFEAcA_0qUFW0MewHC+v+pSOisE-kQDt9Wv4F3RafEkyQ0DGJA@mail.gmail.com>
- <59C20F1A-FCFE-4E26-B511-A6C0E1EF6F61@qti.qualcomm.com>
- <CAFEAcA8MVbKqv-TgaO7Vv95f0p164Gao+LT-CM5+92cXjkpmTw@mail.gmail.com>
- <23BCD870-16A1-4AF9-9308-2788178F511B@qti.qualcomm.com>
- <CAFEAcA8=H=xD75T-e6JFnz9RtT2kG2nM5HbqE0AsTiWFe+0a-w@mail.gmail.com>
- <6dfb82c0-d2c0-4618-94b0-2e2561534d96@redhat.com>
-In-Reply-To: <6dfb82c0-d2c0-4618-94b0-2e2561534d96@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 22 Mar 2024 14:55:59 +0000
-Message-ID: <CAFEAcA-8NzZK4kRRat-Esi19JyFVxbc+A4at0vdrusmzV7ZQYA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] hw/nmi: Remove @cpu_index argument
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
-Cc: Mark Burton <mburton@qti.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Markus Armbruster <armbru@redhat.com>,
- "qemu-s390x@nongnu.org" <qemu-s390x@nongnu.org>, 
- "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 1/1] target/loongarch: Fix qemu-system-loongarch64 assert
+ failed with the option '-d int'
+Content-Language: en-US
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240322100323.1973836-1-gaosong@loongson.cn>
+ <20240322100323.1973836-2-gaosong@loongson.cn>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240322100323.1973836-2-gaosong@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,60 +85,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Mar 2024 at 14:08, C=C3=A9dric Le Goater <clegoate@redhat.com> w=
-rote:
->
-> On 3/20/24 16:00, Peter Maydell wrote:
-> > On Wed, 20 Mar 2024 at 14:10, Mark Burton <mburton@qti.qualcomm.com> wr=
-ote:
-> >> I=E2=80=99d broaden this to all =E2=80=99signals=E2=80=99 (IRQ, Reset =
-etc) - and I guess
-> >> similar statements apply, with the =E2=80=9Cbridge=E2=80=9D between th=
-e function
-> >> and the GPIO mechanism moved closer or further from the originator(s)
-> >> of the activity.
-> >>
-> >> The issue isn=E2=80=99t my =E2=80=9Cmachine=E2=80=9D model, rather the=
- compose-ability of
-> >> (any) such machine.  A-priori, a model writer doesn=E2=80=99t know if =
-they
-> >> should respond directly to an NMI or not - Hence they dont know if
-> >> they should implement the TYPE_NMI or not. That=E2=80=99s a decision o=
-nly
-> >> the machine composer knows.
-> >> My suggestion would be to use a GPIO interface to models, which can
-> >> then be appropriately wired. (And, hence, to have a single place
-> >> that implements the TYPE_NMI interface and provides the GPIO wire
-> >> ready for wiring to appropriate devices).
-> >
-> > I feel like that's a long way in the future, but my back-of-the-envelop=
-e
-> > design sketch of that is that the TYPE_MACHINE class that's implementin=
-g
-> > the "I am just a container for all the devices that the user has
-> > specified and wired together" machine would itself implement TYPE_NMI a=
-nd
-> > when an NMI came in it would assert a GPIO line that the user could
-> > wire up, or not wire up, as they chose.
-> >
-> > Right now we can't do that though, because, among other reasons,
-> > TYPE_MACHINE isn't a TYPE_DEVICE. (I do want to fix that, though:
-> > I'm hoping it won't be too difficult.)
->
-> Oh that's interesting. Will that introduce an extra level of container
-> with multiple machines below ?
+22.03.2024 13:03, Song Gao :
+> qemu-system-loongarch64 assert failed with the option '-d int',
+> the helper_idle() raise an exception EXCP_HLT, but the exception name is undefined.
+> 
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Message-Id: <20240321123606.1704900-1-gaosong@loongson.cn>
 
-No, I don't intend that we should have multiple machines in one
-simulation, only that the thing which is "container for all the
-machine's devices" shouldn't be a weirdly distinct type from
-the SoC "container for devices" devices. What I'm primarily hoping
-to remedy by making TYPE_MACHINE a subclass of TYPE_DEVICE to
-deal with inconsistencies like:
- * reset of machine objects is nonstandard
- * machine models can't use facilities like having qdev gpio
-   lines, so wind up calling qemu_allocate_irqs() directly
+Is this another qemu-stable material?  You Cc'd it to me but I'm not sure
+what should I do with it.
 
-None of these are big things, but they're a bit paper-cut-ish.
+For patches suitable for -stable, please Cc: qemu-stable@nongnu.org.
 
--- PMM
+Thanks,
+
+/mjt
 
