@@ -4,71 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC1C8C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 04:44:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A792C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 04:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnWkl-0002BO-Cf; Fri, 22 Mar 2024 00:43:39 -0400
+	id 1rnWnZ-00039C-7U; Fri, 22 Mar 2024 00:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnWkj-0002Aj-4j; Fri, 22 Mar 2024 00:43:37 -0400
-Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
+ id 1rnWnW-00037N-85; Fri, 22 Mar 2024 00:46:30 -0400
+Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnWkg-0002rz-Fd; Fri, 22 Mar 2024 00:43:35 -0400
-Received: by mail-vk1-xa29.google.com with SMTP id
- 71dfb90a1353d-4d853aa6f33so626635e0c.1; 
- Thu, 21 Mar 2024 21:43:33 -0700 (PDT)
+ id 1rnWnU-0003r5-PC; Fri, 22 Mar 2024 00:46:30 -0400
+Received: by mail-vs1-xe2b.google.com with SMTP id
+ ada2fe7eead31-4760fe9c282so608111137.3; 
+ Thu, 21 Mar 2024 21:46:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711082613; x=1711687413; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711082787; x=1711687587; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+tTWPMac9UPB5pCkc5seamOgZmsH/8X8ybAzInKOXRI=;
- b=hKLGfkQaxj2f444+jWuq10Fj+mLO4QJ0qfNtQ0CsmJSLiNUJcp/bv63DKL9r5YtMCO
- 816RANPyjQXtiu8zQqgp2yd8LJDjPzYWZWfu+iniQ/1ODmPZtBUybkRfk2ojluRw+HXh
- jskgY0Xlv2ipa9RNuc4RlFip+NuFTimOwVvlIuYI0Gzy5UBwb+L3eeXbanlCDMAjrTZP
- Rm7oAUiUR2hDZqx+CfhbVjbk18h6IwhzJTEArT8hnmtgOUyar36ZJxcU3RfbYV4v7xfv
- KlK4vdRXUfYJIm0Jp1SMTnkzKGmvfZe6OJygwp4SASmpL9JCqCzcdUVX+TlNKFoQiKv5
- nnOg==
+ bh=Nxpx17JxSzUsjFIqtx9TJGsgHKT6l5JJuhit24MWsLA=;
+ b=TE2o2DlwiNklKwvmTD/VHFhbjBX5X1vf5V0LR4Qt5439NYdCiyGsAi4IzTjXBuYKCr
+ +rhv3Dx8/GlT+jWb3/s/2Nz5S9zm9xwtbWgRxbFO42B9wWrchCXa6h7wDhOJamhwdVXw
+ Cde5dgxHS9hLSAxLPn7+vtEQL+jcS8JdtySH5id4Sfdsp/FM+MwEoI26dRWoxIiarPQN
+ W8Y4zRsojUOm7PpyhrGXlCiMlV0u47Kqz74OEqCmzkb8bOxrwWxTYYaXLZ2zhiY4mgOJ
+ LAJGI9Jqwk7pwXpMixifi4tsGID6THC3u+Sn8nz9yMP072o2Cpny1NBLftYP5VT8LPJO
+ K2Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711082613; x=1711687413;
+ d=1e100.net; s=20230601; t=1711082787; x=1711687587;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+tTWPMac9UPB5pCkc5seamOgZmsH/8X8ybAzInKOXRI=;
- b=XAFLLSfS0j59mkmXc1ekC9HLvNPw6QAIKqajY6p7wi+9Tl/uTZb/GPfOHNgVmxW1Iu
- sopUjv8D8+NHNtgQWnMXnsVdM+4uyYdF7ymLf86eRz9TuHT3pdqe+4bAqL2Ha3YfgMkL
- PK1HiFfEdgAcCND859UeloONVC1CMcWbOZIjkBUKNRqNyBRXjtVa77A2C9eBT2kNm88U
- NemWLG835cOgZkcJSldf01sgz+8QgYFgYoLJKTynrpS0fEwY3p6M+7RJNBNy1XETqfJk
- sEC+1VQqB8G5LHpC1UgByk0z5vSKijYwzJi+9WZWRUhU5BPzWADN/D3okkNzr5otlQok
- R7sw==
+ bh=Nxpx17JxSzUsjFIqtx9TJGsgHKT6l5JJuhit24MWsLA=;
+ b=iNk46VXw0TX8OK6Zv3pOgFr8wLsgsVaPfJg78H7j9TFh9/TF0uha5gGPsR8hQFhnzZ
+ ZscplHF7cpGHDXJqJ+EDnVFt0KMmDK9uijVjeF3Uo+OmCstI8SnlkpCOBdVya6sTIENC
+ q/OL0QR4p3WVsQuSMx4w1MibtwndWD9PMIYnfLP+A049pRCV8Qgg133z5yBnzty+8fpN
+ EqB8ZakCwDvSOXR4e45nhPuN7dENdL0ClbsFrn3h4u9HL7aEXPx1ZmAOonz43EEvJC+o
+ o9Yd+w6050mYEcjYKhQkS7J4xIfD0M59B83LFP0DfJHYnHhyAF15SuQUocodukAzHiCP
+ nMzw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsKOsqsTAg3905bE9xdl7LBiWrudLhBgSdxCgsW4IkmoeCbl6HPTz8fwe/I7tZJbrlOf5JNwTgGHfCIlPFMtB+aBAPx/I=
-X-Gm-Message-State: AOJu0YwJ9k69mdReyga8AYHBEP8aIWbviM3cvh6Iahb0NCs7nkePaaL2
- ZIaxfhDnM14TJMdUrRaPWRDb+WFO1JfFO9A1uPxewF4bgq7gMLQporVJDGefUFF1Rb6hWNObEKa
- sVEFAIf5rW79rFXKs4PmQbZhmyWI=
-X-Google-Smtp-Source: AGHT+IFWNbWBKwpWKDCyo5nZZJMBlr3F1YyB0aULHRgS9DNbPsYhU7FOtANnB0jtlsKWdiXQoPuGZOX9RhdI5k1Samk=
-X-Received: by 2002:a05:6122:3093:b0:4d3:45a2:ae4f with SMTP id
- cd19-20020a056122309300b004d345a2ae4fmr1463438vkb.14.1711082613031; Thu, 21
- Mar 2024 21:43:33 -0700 (PDT)
+ AJvYcCWg/ewcOJ5xnnC0d8Hw/Ua66ohILUJmRzWE0JnwM6y4gLD5EyOAsUak6QEZ9SOM9re2DJeBLbkadSZUYs/hltTCEQVPVxY=
+X-Gm-Message-State: AOJu0YwVqiJu+eFHt36VRCQ8DoKdphjYFqKWfKzxSvFCkt/zjEoAgwE0
+ /hXz7uDQxX0RraJVdAnXviR11NDxHPtFTG0wnKex+lG6nos/xrZjWIq4ARZ4Z94aTvVDGXKmCcP
+ et/RzTkbfEvKB0QijeR6KVcgfncY=
+X-Google-Smtp-Source: AGHT+IEil8TuOBsExlwZj6uaQTxz6YnbbmZHZlmNB6GVayaceulyjOlP5gjIStXmt0YiVz9MPx9JtiGYsdb8/GaKhsA=
+X-Received: by 2002:a05:6102:290c:b0:473:1582:eea0 with SMTP id
+ cz12-20020a056102290c00b004731582eea0mr1855147vsb.20.1711082787370; Thu, 21
+ Mar 2024 21:46:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240320172828.23965-1-irina.ryapolova@syntacore.com>
-In-Reply-To: <20240320172828.23965-1-irina.ryapolova@syntacore.com>
+References: <20240314061510.9800-1-yongxuan.wang@sifive.com>
+In-Reply-To: <20240314061510.9800-1-yongxuan.wang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 22 Mar 2024 14:43:06 +1000
-Message-ID: <CAKmqyKNKuwPHRaHfdZM6HjwZXpUt7d+S6m68w8Tr2CX=-Tem3w@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Fix mode in riscv_tlb_fill
-To: Irina Ryapolova <irina.ryapolova@syntacore.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+Date: Fri, 22 Mar 2024 14:46:01 +1000
+Message-ID: <CAKmqyKNxgpcwpHn2cEXbLCZaAXE+zzCbdut9W4z6rstcUbY+vg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] target/riscv/kvm: fix timebase-frequency when
+ using KVM acceleration
+To: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
+ vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Andrew Jones <ajones@ventanamicro.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -92,39 +99,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 21, 2024 at 3:29=E2=80=AFAM Irina Ryapolova
-<irina.ryapolova@syntacore.com> wrote:
+On Thu, Mar 14, 2024 at 4:17=E2=80=AFPM Yong-Xuan Wang <yongxuan.wang@sifiv=
+e.com> wrote:
 >
-> Need to convert mmu_idx to privilege mode for PMP function.
+> The timebase-frequency of guest OS should be the same with host
+> machine. The timebase-frequency value in DTS should be got from
+> hypervisor when using KVM acceleration.
 >
-> Signed-off-by: Irina Ryapolova <irina.ryapolova@syntacore.com>
+> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+>
 > ---
->  target/riscv/cpu_helper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Changelog
+> v2:
+> - update the function definition
+> - restructure if-else statement
+> ---
+>  hw/riscv/virt.c              | 2 ++
+>  target/riscv/kvm/kvm-cpu.c   | 9 +++++++++
+>  target/riscv/kvm/kvm_riscv.h | 1 +
+>  3 files changed, 12 insertions(+)
 >
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index ce7322011d..fc090d729a 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1315,7 +1315,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address=
-, int size,
->      bool two_stage_lookup =3D mmuidx_2stage(mmu_idx);
->      bool two_stage_indirect_error =3D false;
->      int ret =3D TRANSLATE_FAIL;
-> -    int mode =3D mmu_idx;
-> +    int mode =3D mmuidx_priv(mmu_idx);
->      /* default TLB page size */
->      target_ulong tlb_size =3D TARGET_PAGE_SIZE;
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index a094af97c32a..533b17799581 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -711,6 +711,8 @@ static void create_fdt_sockets(RISCVVirtState *s, con=
+st MemMapEntry *memmap,
 >
+>      qemu_fdt_add_subnode(ms->fdt, "/cpus");
+>      qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
+> +                          kvm_enabled() ?
+> +                          kvm_riscv_get_timebase_frequency(first_cpu) :
+>                            RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ);
+>      qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#size-cells", 0x0);
+>      qemu_fdt_setprop_cell(ms->fdt, "/cpus", "#address-cells", 0x1);
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index c7afdb1e81b7..bbb115eaa867 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -739,6 +739,15 @@ static void kvm_riscv_put_regs_timer(CPUState *cs)
+>      env->kvm_timer_dirty =3D false;
+>  }
+>
+> +uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs)
+> +{
+> +    uint64_t reg;
+> +
+> +    KVM_RISCV_GET_TIMER(cs, frequency, reg);
+> +
+> +    return reg;
+> +}
+> +
+>  static int kvm_riscv_get_regs_vector(CPUState *cs)
+>  {
+>      RISCVCPU *cpu =3D RISCV_CPU(cs);
+> diff --git a/target/riscv/kvm/kvm_riscv.h b/target/riscv/kvm/kvm_riscv.h
+> index 4bd98fddc776..58518988681d 100644
+> --- a/target/riscv/kvm/kvm_riscv.h
+> +++ b/target/riscv/kvm/kvm_riscv.h
+> @@ -28,5 +28,6 @@ void kvm_riscv_aia_create(MachineState *machine, uint64=
+_t group_shift,
+>  void riscv_kvm_aplic_request(void *opaque, int irq, int level);
+>  int kvm_riscv_sync_mpstate_to_kvm(RISCVCPU *cpu, int state);
+>  void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+> +uint64_t kvm_riscv_get_timebase_frequency(CPUState *cs);
+>
+>  #endif
 > --
-> 2.25.1
+> 2.17.1
 >
 >
 
