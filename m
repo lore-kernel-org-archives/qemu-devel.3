@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD0D0C54E71
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03211C47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 09:00:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnakr-0001HR-Te; Fri, 22 Mar 2024 05:00:01 -0400
+	id 1rnalO-0001Xc-UA; Fri, 22 Mar 2024 05:00:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnakr-0001GS-3N
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:00:01 -0400
-Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
+ id 1rnalN-0001X2-La
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:00:33 -0400
+Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rnako-0001tc-75
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 04:59:59 -0400
-Received: by mail-vk1-xa34.google.com with SMTP id
- 71dfb90a1353d-4d43a1f0188so705148e0c.2
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 01:59:57 -0700 (PDT)
+ id 1rnalK-0002Ev-WC
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 05:00:33 -0400
+Received: by mail-qk1-x734.google.com with SMTP id
+ af79cd13be357-789db917876so118753085a.1
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 02:00:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711097997; x=1711702797; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711098029; x=1711702829; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aZXIs8sadw+5YTvtfFcTNBIyJz0eNqaMZ6kYLK2RH70=;
- b=E2gKLBooRAk5cWdxHnls2nGCErhwTXqFHCR9+tAjEmcg7Ly3B4azA8dDTcmySaxB4n
- iEzTH5v8iQmFyFoEe0vMr57vt/oAe+eZuEfAJdRbLV7N0VqKGa6Y27byxhSbhmlA3OmR
- YsNz61o2D7F9TtjDoo3lwqeEF+mp3glX+rQcMXUqoEagN2ZJ+WaQcsfIK2PTKGrhlSNI
- LrVDN/fxNDGJ5GAP7/kWlBXiatRcN04MoAwgOFQ9MQlGQ/gfQHwKK+OdJw+/R8Ufh7gt
- DlYO2f3b0KMR9ni6OKdG3kVwDaGGupjzo/vmpaP/YdfkCt35iTEXSu7UiLYEYD/J8SRG
- 2cpQ==
+ bh=cJdnSS4KFv/eLevUHZVNJQnW4+egP8pig8yKDZGXOck=;
+ b=ZX8+k7wDw81kbZB1G3k2EGMdY7pJ5viPTkkZTC82fR1daYwF6JVZUjN+Fudx50fDBY
+ 8RaDI2gV35vnhKY964Yy4Js8FPGUxd/G3EIgedP019HatWJk9V3695DdZtu5D8gG7QUO
+ P9ekTIjTEaAoU5Soi3H0nS8XNCN8em4yiwmJlagjEY54Mu6SjzustnMA6VN8598wcyAo
+ 4gCXG9DFBdd1q/IOgjyfqaUcOdXlgnyFAupfrabQmGrOQLwDFB5ap7SamFpUMC4VDWuC
+ 2RnmTSq1bun5QOFeGo+t4TM/5aP9e3ZyqP2dNGGZLOukiXjIZuVJPSoawOzHgjRWSOl4
+ XjEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711097997; x=1711702797;
+ d=1e100.net; s=20230601; t=1711098029; x=1711702829;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aZXIs8sadw+5YTvtfFcTNBIyJz0eNqaMZ6kYLK2RH70=;
- b=KJ5znfnDTl+TquI25FjIuruON+IlJQ02gUaglykIUNUwGTSv6lqCW9+9MSO1mVSS37
- 3qEyNkSbqm33+IqnjUXAn1zk0ASbPLacj5EaKbMhX4PBWfEsftAAoyAVUwncj500AnB/
- 5uv9hR0zDoorS7MFroejvRYFsDtfP5BG2EKgNj7Q2CCcTiyF8MrqttT+leM4nJoM7+n3
- /IR+iqtcJ5i3Aizwcf9UbxTLSp5/R5ANHlF9HoFjnuxobOi7Hk2cZ3kSmRGIgVIlcBhd
- aqX+Rl4M8TCHEVksh8Syy4BF5eX2AzBGu/ipIQ7upDSaVcOd/zARRCuA4lFI2Mvn/K5Y
- xK6A==
-X-Gm-Message-State: AOJu0YwjNjSDeSD+46R8sSDMEca8KcdYIubRA4gFsuBlBpTbEOJdiyQK
- 2DvexWZvg7FS8DyIJGNZjCxgb7/HKrnetzLbeCzR4R5vgsU3BzYKKJZwkzs5KrKE9g==
-X-Google-Smtp-Source: AGHT+IGeybim0zxVpQSNEizFFfzf6EcTTl27vkBc7WRGykSjsQKPQIrInvDujZe9EWekMCM9F4BrJA==
-X-Received: by 2002:a05:6a20:b92:b0:1a3:463e:af40 with SMTP id
- i18-20020a056a200b9200b001a3463eaf40mr1518020pzh.24.1711097611077; 
- Fri, 22 Mar 2024 01:53:31 -0700 (PDT)
+ bh=cJdnSS4KFv/eLevUHZVNJQnW4+egP8pig8yKDZGXOck=;
+ b=e7I5zhNZ9y6fq+T5or1ZwmRddFn8srE6tgM0PDkVIMuCKEhO92mxpD64xXeahD7xvY
+ ivqe9uEIxGsmT0ZqvLoSWkb6SkQhz8vXNelPHMKpfh6quh/zXRgfPvm+UHiaRlKcmUE8
+ uYZ/lqW2yafWHyj9WqQjjUL1NZ5PFtj01yEGFL3pJF/3zXgVXGwxji16VYzLLNuuxPbf
+ jN307SszKbAm6Ro86rqbizwrTOfV7Q+jVxI0kHYMwcrpHnD8Zn/ARCjL4RZyky3dktRR
+ ZF8UIzBHG0zSGVmpZmxNq87UZ2z248V5OkzZ88MRGXwd+slLVsnYPZKIYwKqpYw+DmTN
+ Z8PA==
+X-Gm-Message-State: AOJu0YzL0NRmI8rQOBQii4+cyxx69GlW0RUYIkjT1hW6k/x6yAJmZKZv
+ XRfruPvdQYiuHv1qUsWawYwzfVYkzp055jGFO4JN/QBRc3jB7xmwDPh9WR2aP7JiZg==
+X-Google-Smtp-Source: AGHT+IFo49HKmug5ZaPJZnaR7/agj3zpi17lEUjNJM7AvyX+6o9BI3aGxNDeg+9DLznYP/hbDP1O2Q==
+X-Received: by 2002:a05:6a20:2d2c:b0:1a3:6f26:6b83 with SMTP id
+ g44-20020a056a202d2c00b001a36f266b83mr2519286pzl.46.1711097643858; 
+ Fri, 22 Mar 2024 01:54:03 -0700 (PDT)
 Received: from toolbox.wdc.com ([129.253.180.114])
  by smtp.gmail.com with ESMTPSA id
- h5-20020a170902680500b001ddde07af12sm1369048plk.143.2024.03.22.01.53.27
+ h5-20020a170902680500b001ddde07af12sm1369048plk.143.2024.03.22.01.54.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 01:53:30 -0700 (PDT)
+ Fri, 22 Mar 2024 01:54:03 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
- Andrew Jones <ajones@ventanamicro.com>,
+Cc: alistair23@gmail.com, Ivan Klokov <ivan.klokov@syntacore.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 01/15] target/riscv: do not enable all named features by default
-Date: Fri, 22 Mar 2024 18:53:05 +1000
-Message-ID: <20240322085319.1758843-2-alistair.francis@wdc.com>
+Subject: [PULL 10/15] target/riscv: enable 'vstart_eq_zero' in the end of insns
+Date: Fri, 22 Mar 2024 18:53:14 +1000
+Message-ID: <20240322085319.1758843-11-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240322085319.1758843-1-alistair.francis@wdc.com>
 References: <20240322085319.1758843-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
+ envelope-from=alistair23@gmail.com; helo=mail-qk1-x734.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,190 +98,529 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Ivan Klokov <ivan.klokov@syntacore.com>
 
-Commit 3b8022269c added the capability of named features/profile
-extensions to be added in riscv,isa. To do that we had to assign priv
-versions for each one of them in isa_edata_arr[]. But this resulted in a
-side-effect: vendor CPUs that aren't running priv_version_latest started
-to experience warnings for these profile extensions [1]:
+The vstart_eq_zero flag is updated at the beginning of the translation
+phase from the env->vstart variable. During the execution phase all
+functions will set env->vstart = 0 after a successful execution, but the
+vstart_eq_zero flag remains the same as at the start of the block. This
+will wrongly cause SIGILLs in translations that requires env->vstart = 0
+and might be reading vstart_eq_zero = false.
 
-  | $ qemu-system-riscv32  -M sifive_e
-  | qemu-system-riscv32: warning: disabling zic64b extension for hart
-0x00000000 because privilege spec version does not match
-  | qemu-system-riscv32: warning: disabling ziccamoa extension for
-hart 0x00000000 because privilege spec version does not match
+This patch adds a new finalize_rvv_inst() helper that is called at the
+end of each vector instruction that will both update vstart_eq_zero and
+do a mark_vs_dirty().
 
-This is benign as far as the CPU behavior is concerned since disabling
-both extensions is a no-op (aside from riscv,isa). But the warnings are
-unpleasant to deal with, especially because we're sending user warnings
-for extensions that users can't enable/disable.
-
-Instead of enabling all named features all the time, separate them by
-priv version. During finalize() time, after we decided which
-priv_version the CPU is running, enable/disable all the named extensions
-based on the priv spec chosen. This will be enough for a bug fix, but as
-a future work we should look into how we can name these extensions in a
-way that we don't need an explicit ext_name => priv_ver as we're doing
-here.
-
-The named extensions being added in isa_edata_arr[] that will be
-enabled/disabled based solely on priv version can be removed from
-riscv_cpu_named_features[]. 'zic64b' is an extension that can be
-disabled based on block sizes so it'll retain its own flag and entry.
-
-[1] https://lists.gnu.org/archive/html/qemu-devel/2024-03/msg02592.html
-
-Reported-by: Clément Chigot <chigot@adacore.com>
-Fixes: 3b8022269c ("target/riscv: add riscv,isa to named features")
-Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1976
+Signed-off-by: Ivan Klokov <ivan.klokov@syntacore.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Tested-by: Clément Chigot <chigot@adacore.com>
-Message-ID: <20240312203214.350980-1-dbarboza@ventanamicro.com>
+Message-ID: <20240314175704.478276-10-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_cfg.h     |  8 +++++---
- target/riscv/cpu.c         | 40 +++++++++-----------------------------
- target/riscv/tcg/tcg-cpu.c | 14 ++++++++++---
- 3 files changed, 25 insertions(+), 37 deletions(-)
+ target/riscv/translate.c                   |  6 ++
+ target/riscv/insn_trans/trans_rvbf16.c.inc |  6 +-
+ target/riscv/insn_trans/trans_rvv.c.inc    | 83 ++++++++++++----------
+ target/riscv/insn_trans/trans_rvvk.c.inc   | 12 ++--
+ 4 files changed, 59 insertions(+), 48 deletions(-)
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 2040b90da0..cb750154bd 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -130,10 +130,12 @@ struct RISCVCPUConfig {
-     bool ext_zic64b;
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index ea5d52b2ef..9d57089fcc 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -676,6 +676,12 @@ static void mark_vs_dirty(DisasContext *ctx)
+ static inline void mark_vs_dirty(DisasContext *ctx) { }
+ #endif
  
-     /*
--     * Always 'true' boolean for named features
--     * TCG always implement/can't be disabled.
-+     * Always 'true' booleans for named features
-+     * TCG always implement/can't be user disabled,
-+     * based on spec version.
-      */
--    bool ext_always_enabled;
-+    bool has_priv_1_12;
-+    bool has_priv_1_11;
- 
-     /* Vendor-specific custom extensions */
-     bool ext_xtheadba;
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index c160b9216b..36e3e5fdaf 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -102,10 +102,10 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zicbom, PRIV_VERSION_1_12_0, ext_zicbom),
-     ISA_EXT_DATA_ENTRY(zicbop, PRIV_VERSION_1_12_0, ext_zicbop),
-     ISA_EXT_DATA_ENTRY(zicboz, PRIV_VERSION_1_12_0, ext_zicboz),
--    ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, ext_always_enabled),
--    ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, ext_always_enabled),
--    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, ext_always_enabled),
--    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_always_enabled),
-+    ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, has_priv_1_11),
-+    ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, has_priv_1_11),
-+    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, has_priv_1_11),
-+    ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(zicond, PRIV_VERSION_1_12_0, ext_zicond),
-     ISA_EXT_DATA_ENTRY(zicntr, PRIV_VERSION_1_12_0, ext_zicntr),
-     ISA_EXT_DATA_ENTRY(zicsr, PRIV_VERSION_1_10_0, ext_zicsr),
-@@ -114,7 +114,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause),
-     ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
-     ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
--    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, ext_always_enabled),
-+    ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
-     ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
-     ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
-@@ -179,12 +179,12 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
-     ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
-     ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
--    ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, ext_always_enabled),
-+    ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1_11),
-     ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
--    ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, ext_always_enabled),
-+    ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
--    ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, ext_always_enabled),
--    ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, ext_always_enabled),
-+    ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
-+    ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
-     ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
-     ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
-@@ -1575,11 +1575,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
--#define ALWAYS_ENABLED_FEATURE(_name) \
--    {.name = _name, \
--     .offset = CPU_CFG_OFFSET(ext_always_enabled), \
--     .enabled = true}
--
- /*
-  * 'Named features' is the name we give to extensions that we
-  * don't want to expose to users. They are either immutable
-@@ -1590,23 +1585,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
- const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
-     MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
- 
--    /*
--     * cache-related extensions that are always enabled
--     * in TCG since QEMU RISC-V does not have a cache
--     * model.
--     */
--    ALWAYS_ENABLED_FEATURE("za64rs"),
--    ALWAYS_ENABLED_FEATURE("ziccif"),
--    ALWAYS_ENABLED_FEATURE("ziccrse"),
--    ALWAYS_ENABLED_FEATURE("ziccamoa"),
--    ALWAYS_ENABLED_FEATURE("zicclsm"),
--    ALWAYS_ENABLED_FEATURE("ssccptr"),
--
--    /* Other named features that TCG always implements */
--    ALWAYS_ENABLED_FEATURE("sstvecd"),
--    ALWAYS_ENABLED_FEATURE("sstvala"),
--    ALWAYS_ENABLED_FEATURE("sscounterenw"),
--
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index ab6db817db..63192ef54f 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -315,9 +315,19 @@ static void riscv_cpu_disable_priv_spec_isa_exts(RISCVCPU *cpu)
- 
- static void riscv_cpu_update_named_features(RISCVCPU *cpu)
++static void finalize_rvv_inst(DisasContext *ctx)
++{
++    mark_vs_dirty(ctx);
++    ctx->vstart_eq_zero = true;
++}
++
+ static void gen_set_rm(DisasContext *ctx, int rm)
  {
-+    if (cpu->env.priv_ver >= PRIV_VERSION_1_11_0) {
-+        cpu->cfg.has_priv_1_11 = true;
-+    }
-+
-+    if (cpu->env.priv_ver >= PRIV_VERSION_1_12_0) {
-+        cpu->cfg.has_priv_1_12 = true;
-+    }
-+
-+    /* zic64b is 1.12 or later */
-     cpu->cfg.ext_zic64b = cpu->cfg.cbom_blocksize == 64 &&
-                           cpu->cfg.cbop_blocksize == 64 &&
--                          cpu->cfg.cboz_blocksize == 64;
-+                          cpu->cfg.cboz_blocksize == 64 &&
-+                          cpu->cfg.has_priv_1_12;
+     if (ctx->frm == rm) {
+diff --git a/target/riscv/insn_trans/trans_rvbf16.c.inc b/target/riscv/insn_trans/trans_rvbf16.c.inc
+index a842e76a6b..0a9cd1ec31 100644
+--- a/target/riscv/insn_trans/trans_rvbf16.c.inc
++++ b/target/riscv/insn_trans/trans_rvbf16.c.inc
+@@ -83,7 +83,7 @@ static bool trans_vfncvtbf16_f_f_w(DisasContext *ctx, arg_vfncvtbf16_f_f_w *a)
+                            ctx->cfg_ptr->vlenb,
+                            ctx->cfg_ptr->vlenb, data,
+                            gen_helper_vfncvtbf16_f_f_w);
+-        mark_vs_dirty(ctx);
++        finalize_rvv_inst(ctx);
+         return true;
+     }
+     return false;
+@@ -108,7 +108,7 @@ static bool trans_vfwcvtbf16_f_f_v(DisasContext *ctx, arg_vfwcvtbf16_f_f_v *a)
+                            ctx->cfg_ptr->vlenb,
+                            ctx->cfg_ptr->vlenb, data,
+                            gen_helper_vfwcvtbf16_f_f_v);
+-        mark_vs_dirty(ctx);
++        finalize_rvv_inst(ctx);
+         return true;
+     }
+     return false;
+@@ -135,7 +135,7 @@ static bool trans_vfwmaccbf16_vv(DisasContext *ctx, arg_vfwmaccbf16_vv *a)
+                            ctx->cfg_ptr->vlenb,
+                            ctx->cfg_ptr->vlenb, data,
+                            gen_helper_vfwmaccbf16_vv);
+-        mark_vs_dirty(ctx);
++        finalize_rvv_inst(ctx);
+         return true;
+     }
+     return false;
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 401ee939b8..7d84e7d812 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -167,7 +167,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
+ 
+     gen_helper_vsetvl(dst, tcg_env, s1, s2);
+     gen_set_gpr(s, rd, dst);
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+ 
+     gen_update_pc(s, s->cur_insn_len);
+     lookup_and_goto_ptr(s);
+@@ -187,7 +187,7 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
+ 
+     gen_helper_vsetvl(dst, tcg_env, s1, s2);
+     gen_set_gpr(s, rd, dst);
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     gen_update_pc(s, s->cur_insn_len);
+     lookup_and_goto_ptr(s);
+     s->base.is_jmp = DISAS_NORETURN;
+@@ -657,6 +657,7 @@ static bool ldst_us_trans(uint32_t vd, uint32_t rs1, uint32_t data,
+         tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ);
+     }
+ 
++    finalize_rvv_inst(s);
+     return true;
  }
  
- static void riscv_cpu_validate_g(RISCVCPU *cpu)
-@@ -1316,8 +1326,6 @@ static void riscv_tcg_cpu_instance_init(CPUState *cs)
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     Object *obj = OBJECT(cpu);
+@@ -812,6 +813,7 @@ static bool ldst_stride_trans(uint32_t vd, uint32_t rs1, uint32_t rs2,
  
--    cpu->cfg.ext_always_enabled = true;
--
-     misa_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
-     multi_ext_user_opts = g_hash_table_new(NULL, g_direct_equal);
-     riscv_cpu_add_user_properties(obj);
+     fn(dest, mask, base, stride, tcg_env, desc);
+ 
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -913,6 +915,7 @@ static bool ldst_index_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
+ 
+     fn(dest, mask, base, index, tcg_env, desc);
+ 
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -1043,7 +1046,7 @@ static bool ldff_trans(uint32_t vd, uint32_t rs1, uint32_t data,
+ 
+     fn(dest, mask, base, tcg_env, desc);
+ 
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -1100,6 +1103,7 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
+ 
+     fn(dest, base, tcg_env, desc);
+ 
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -1189,7 +1193,7 @@ do_opivv_gvec(DisasContext *s, arg_rmrr *a, GVecGen3Fn *gvec_fn,
+                            tcg_env, s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb, data, fn);
+     }
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -1240,7 +1244,7 @@ static bool opivx_trans(uint32_t vd, uint32_t rs1, uint32_t vs2, uint32_t vm,
+ 
+     fn(dest, mask, src1, src2, tcg_env, desc);
+ 
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -1265,7 +1269,7 @@ do_opivx_gvec(DisasContext *s, arg_rmrr *a, GVecGen2sFn *gvec_fn,
+         gvec_fn(s->sew, vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2),
+                 src1, MAXSZ(s), MAXSZ(s));
+ 
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return opivx_trans(a->rd, a->rs1, a->rs2, a->vm, fn, s);
+@@ -1398,7 +1402,7 @@ static bool opivi_trans(uint32_t vd, uint32_t imm, uint32_t vs2, uint32_t vm,
+ 
+     fn(dest, mask, src1, src2, tcg_env, desc);
+ 
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -1412,7 +1416,7 @@ do_opivi_gvec(DisasContext *s, arg_rmrr *a, GVecGen2iFn *gvec_fn,
+     if (a->vm && s->vl_eq_vlmax && !(s->vta && s->lmul < 0)) {
+         gvec_fn(s->sew, vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2),
+                 extract_imm(s, a->rs1, imm_mode), MAXSZ(s), MAXSZ(s));
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return opivi_trans(a->rd, a->rs1, a->rs2, a->vm, fn, s, imm_mode);
+@@ -1471,7 +1475,7 @@ static bool do_opivv_widen(DisasContext *s, arg_rmrr *a,
+                            tcg_env, s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb,
+                            data, fn);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -1543,7 +1547,7 @@ static bool do_opiwv_widen(DisasContext *s, arg_rmrr *a,
+                            vreg_ofs(s, a->rs2),
+                            tcg_env, s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb, data, fn);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -1611,7 +1615,7 @@ static bool opivv_trans(uint32_t vd, uint32_t vs1, uint32_t vs2, uint32_t vm,
+     tcg_gen_gvec_4_ptr(vreg_ofs(s, vd), vreg_ofs(s, 0), vreg_ofs(s, vs1),
+                        vreg_ofs(s, vs2), tcg_env, s->cfg_ptr->vlenb,
+                        s->cfg_ptr->vlenb, data, fn);
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -1744,7 +1748,7 @@ do_opivx_gvec_shift(DisasContext *s, arg_rmrr *a, GVecGen2sFn32 *gvec_fn,
+         gvec_fn(s->sew, vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2),
+                 src1, MAXSZ(s), MAXSZ(s));
+ 
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return opivx_trans(a->rd, a->rs1, a->rs2, a->vm, fn, s);
+@@ -1801,7 +1805,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew]);                           \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2004,7 +2008,7 @@ static bool trans_vmv_v_v(DisasContext *s, arg_vmv_v_v *a)
+                                s->cfg_ptr->vlenb, data,
+                                fns[s->sew]);
+         }
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -2049,7 +2053,7 @@ static bool trans_vmv_v_x(DisasContext *s, arg_vmv_v_x *a)
+             fns[s->sew](dest, s1_i64, tcg_env, desc);
+         }
+ 
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -2083,7 +2087,7 @@ static bool trans_vmv_v_i(DisasContext *s, arg_vmv_v_i *a)
+             tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, a->rd));
+             fns[s->sew](dest, s1, tcg_env, desc);
+         }
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -2231,7 +2235,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew - 1]);                       \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2265,7 +2269,7 @@ static bool opfvf_trans(uint32_t vd, uint32_t rs1, uint32_t vs2,
+ 
+     fn(dest, mask, t1, src2, tcg_env, desc);
+ 
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+@@ -2340,7 +2344,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)           \
+                            s->cfg_ptr->vlenb,                    \
+                            s->cfg_ptr->vlenb, data,              \
+                            fns[s->sew - 1]);                     \
+-        mark_vs_dirty(s);                                        \
++        finalize_rvv_inst(s);                                    \
+         return true;                                             \
+     }                                                            \
+     return false;                                                \
+@@ -2411,7 +2415,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmrr *a)             \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew - 1]);                       \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2523,7 +2527,7 @@ static bool do_opfv(DisasContext *s, arg_rmr *a,
+                            vreg_ofs(s, a->rs2), tcg_env,
+                            s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb, data, fn);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -2633,7 +2637,7 @@ static bool trans_vfmv_v_f(DisasContext *s, arg_vfmv_v_f *a)
+ 
+             fns[s->sew - 1](dest, t1, tcg_env, desc);
+         }
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -2705,7 +2709,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew - 1]);                       \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2753,7 +2757,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew]);                           \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2817,7 +2821,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew - 1]);                       \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2863,7 +2867,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data,                \
+                            fns[s->sew]);                           \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -2949,7 +2953,7 @@ static bool trans_##NAME(DisasContext *s, arg_r *a)                \
+                            vreg_ofs(s, a->rs2), tcg_env,           \
+                            s->cfg_ptr->vlenb,                      \
+                            s->cfg_ptr->vlenb, data, fn);           \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -3048,7 +3052,7 @@ static bool trans_##NAME(DisasContext *s, arg_rmr *a)              \
+                            tcg_env, s->cfg_ptr->vlenb,             \
+                            s->cfg_ptr->vlenb,                      \
+                            data, fn);                              \
+-        mark_vs_dirty(s);                                          \
++        finalize_rvv_inst(s);                                      \
+         return true;                                               \
+     }                                                              \
+     return false;                                                  \
+@@ -3087,7 +3091,7 @@ static bool trans_viota_m(DisasContext *s, arg_viota_m *a)
+                            vreg_ofs(s, a->rs2), tcg_env,
+                            s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb, data, fns[s->sew]);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3114,7 +3118,7 @@ static bool trans_vid_v(DisasContext *s, arg_vid_v *a)
+                            tcg_env, s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb,
+                            data, fns[s->sew]);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3271,7 +3275,7 @@ static bool trans_vmv_x_s(DisasContext *s, arg_vmv_x_s *a)
+         tcg_gen_trunc_i64_tl(dest, t1);
+         gen_set_gpr(s, a->rd, dest);
+         tcg_gen_movi_tl(cpu_vstart, 0);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3300,7 +3304,7 @@ static bool trans_vmv_s_x(DisasContext *s, arg_vmv_s_x *a)
+         vec_element_storei(s, a->rd, 0, t1);
+         gen_set_label(over);
+         tcg_gen_movi_tl(cpu_vstart, 0);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3328,7 +3332,7 @@ static bool trans_vfmv_f_s(DisasContext *s, arg_vfmv_f_s *a)
+ 
+         mark_fs_dirty(s);
+         tcg_gen_movi_tl(cpu_vstart, 0);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3354,9 +3358,10 @@ static bool trans_vfmv_s_f(DisasContext *s, arg_vfmv_s_f *a)
+         do_nanbox(s, t1, cpu_fpr[a->rs1]);
+ 
+         vec_element_storei(s, a->rd, 0, t1);
++
+         gen_set_label(over);
+         tcg_gen_movi_tl(cpu_vstart, 0);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3462,7 +3467,7 @@ static bool trans_vrgather_vx(DisasContext *s, arg_rmrr *a)
+ 
+         tcg_gen_gvec_dup_i64(s->sew, vreg_ofs(s, a->rd),
+                              MAXSZ(s), MAXSZ(s), dest);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+     } else {
+         static gen_helper_opivx * const fns[4] = {
+             gen_helper_vrgather_vx_b, gen_helper_vrgather_vx_h,
+@@ -3490,7 +3495,7 @@ static bool trans_vrgather_vi(DisasContext *s, arg_rmrr *a)
+                                  endian_ofs(s, a->rs2, a->rs1),
+                                  MAXSZ(s), MAXSZ(s));
+         }
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+     } else {
+         static gen_helper_opivx * const fns[4] = {
+             gen_helper_vrgather_vx_b, gen_helper_vrgather_vx_h,
+@@ -3535,7 +3540,7 @@ static bool trans_vcompress_vm(DisasContext *s, arg_r *a)
+                            tcg_env, s->cfg_ptr->vlenb,
+                            s->cfg_ptr->vlenb, data,
+                            fns[s->sew]);
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -3560,7 +3565,7 @@ static bool trans_##NAME(DisasContext *s, arg_##NAME * a)               \
+             tcg_gen_gvec_2_ptr(vreg_ofs(s, a->rd), vreg_ofs(s, a->rs2), \
+                                tcg_env, maxsz, maxsz, 0, gen_helper_vmvr_v); \
+         }                                                               \
+-        mark_vs_dirty(s);                                               \
++        finalize_rvv_inst(s);                                           \
+         return true;                                                    \
+     }                                                                   \
+     return false;                                                       \
+@@ -3631,7 +3636,7 @@ static bool int_ext_op(DisasContext *s, arg_rmr *a, uint8_t seq)
+                        s->cfg_ptr->vlenb,
+                        s->cfg_ptr->vlenb, data, fn);
+ 
+-    mark_vs_dirty(s);
++    finalize_rvv_inst(s);
+     return true;
+ }
+ 
+diff --git a/target/riscv/insn_trans/trans_rvvk.c.inc b/target/riscv/insn_trans/trans_rvvk.c.inc
+index 6d640e4596..ae1f40174a 100644
+--- a/target/riscv/insn_trans/trans_rvvk.c.inc
++++ b/target/riscv/insn_trans/trans_rvvk.c.inc
+@@ -174,7 +174,7 @@ GEN_OPIVX_GVEC_TRANS_CHECK(vandn_vx, andcs, zvkb_vx_check)
+                                vreg_ofs(s, a->rs2), tcg_env,               \
+                                s->cfg_ptr->vlenb, s->cfg_ptr->vlenb,       \
+                                data, fns[s->sew]);                         \
+-            mark_vs_dirty(s);                                              \
++            finalize_rvv_inst(s);                                          \
+             return true;                                                   \
+         }                                                                  \
+         return false;                                                      \
+@@ -266,7 +266,7 @@ GEN_OPIVI_WIDEN_TRANS(vwsll_vi, IMM_ZX, vwsll_vx, vwsll_vx_check)
+             tcg_gen_addi_ptr(rd_v, tcg_env, vreg_ofs(s, a->rd));              \
+             tcg_gen_addi_ptr(rs2_v, tcg_env, vreg_ofs(s, a->rs2));            \
+             gen_helper_##NAME(rd_v, rs2_v, tcg_env, desc);                    \
+-            mark_vs_dirty(s);                                                 \
++            finalize_rvv_inst(s);                                             \
+             return true;                                                      \
+         }                                                                     \
+         return false;                                                         \
+@@ -341,7 +341,7 @@ GEN_V_UNMASKED_TRANS(vaesem_vs, vaes_check_vs, ZVKNED_EGS)
+             tcg_gen_addi_ptr(rd_v, tcg_env, vreg_ofs(s, a->rd));              \
+             tcg_gen_addi_ptr(rs2_v, tcg_env, vreg_ofs(s, a->rs2));            \
+             gen_helper_##NAME(rd_v, rs2_v, uimm_v, tcg_env, desc);            \
+-            mark_vs_dirty(s);                                                 \
++            finalize_rvv_inst(s);                                             \
+             return true;                                                      \
+         }                                                                     \
+         return false;                                                         \
+@@ -405,7 +405,7 @@ GEN_VI_UNMASKED_TRANS(vaeskf2_vi, vaeskf2_check, ZVKNED_EGS)
+                                s->cfg_ptr->vlenb, s->cfg_ptr->vlenb,          \
+                                data, gen_helper_##NAME);                      \
+                                                                               \
+-            mark_vs_dirty(s);                                                 \
++            finalize_rvv_inst(s);                                             \
+             return true;                                                      \
+         }                                                                     \
+         return false;                                                         \
+@@ -457,7 +457,7 @@ static bool trans_vsha2cl_vv(DisasContext *s, arg_rmrr *a)
+             s->sew == MO_32 ?
+                 gen_helper_vsha2cl32_vv : gen_helper_vsha2cl64_vv);
+ 
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
+@@ -488,7 +488,7 @@ static bool trans_vsha2ch_vv(DisasContext *s, arg_rmrr *a)
+             s->sew == MO_32 ?
+                 gen_helper_vsha2ch32_vv : gen_helper_vsha2ch64_vv);
+ 
+-        mark_vs_dirty(s);
++        finalize_rvv_inst(s);
+         return true;
+     }
+     return false;
 -- 
 2.44.0
 
