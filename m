@@ -4,81 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6893C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 10:22:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E692AC47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 10:32:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnc1j-0006vF-KP; Fri, 22 Mar 2024 06:21:31 -0400
+	id 1rncBv-0001S5-Qa; Fri, 22 Mar 2024 06:32:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
- id 1rnc1g-0006uy-Bl
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:21:28 -0400
-Received: from mail-ej1-f52.google.com ([209.85.218.52])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
- id 1rnc1e-0007xI-T2
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:21:28 -0400
-Received: by mail-ej1-f52.google.com with SMTP id
- a640c23a62f3a-a470d7f77eeso229831566b.3
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 03:21:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711102885; x=1711707685;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JGqjI6P0mTPBiKZTNOwbVNYIjw9Vw14Zd3G3C6QS6wY=;
- b=t2ya8eKZJFzjVcYcgv+lMfHt9zUKTem+TDhce6g2taVV00ZeCtZYq7DF/HlNE7+5KO
- m4q8JkT79oscs85/TVNlly4bvWLmRKdJuZ6THPBJ2AzlLnDT8lvT3aPjp1vLGSLYK/kC
- 9m/OaGjh3tBCPM76gUSEw8y0olAp1tLdZCQGe6n/JA4S7kXfiRb8lnqXwnrUqBpx3Ovn
- /MujNTMHqhhgLjEo61SMPJQDKs9wg4RPPsGOR/Up4c7w3/9ie8ElMJQ+T+pEO6KNZ8CJ
- QMFVIsq1w3IknK5mY8d9aZBl/I2qpCZpwPl0ei1fsJ1t+VqXq2adnmmoQTEGdpO2krPX
- zj5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX9ADY1ywoqSnfDEHkL2XUcMoixtLVE5g+1/MMfRIvsBwcmp6Utf+UessTU5fj83gKwXSYwsa4ImszAg0ljIfm84FKQ+Tk=
-X-Gm-Message-State: AOJu0Yz8w2xSWTn4ERmzwY3XnvUaEaZXVHpSwY/AkvyMJr+et8rSE2/Y
- HfKVSqJMFP8lNfw8Yym0S8xDwTnv1dVcoS8osVPJFhzmMnXpegbX
-X-Google-Smtp-Source: AGHT+IGEXDCR4iq9rvwz5B26z4GLijSPqxuBAhYB8+zqYJlK7HGPtfYNr6wzSSm9SN6zugWqLIWZmg==
-X-Received: by 2002:a17:907:7e94:b0:a47:3527:90c0 with SMTP id
- qb20-20020a1709077e9400b00a47352790c0mr673262ejc.14.1711102884800; 
- Fri, 22 Mar 2024 03:21:24 -0700 (PDT)
-Received: from gmail.com (fwdproxy-lla-004.fbsv.net.
- [2a03:2880:30ff:4::face:b00c]) by smtp.gmail.com with ESMTPSA id
- bo10-20020a170906d04a00b00a4728151908sm705505ejb.93.2024.03.22.03.21.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 03:21:24 -0700 (PDT)
-Date: Fri, 22 Mar 2024 03:21:21 -0700
-From: Breno Leitao <leitao@debian.org>
-To: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Cc: rbc@meta.com, riel@surriel.com, stable@vger.kernel.org,
- qemu-devel@nongnu.org,
- "open list:VIRTIO CORE AND NET DRIVERS" <virtualization@lists.linux.dev>,
- "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Andrew Melnychenko <andrew@daynix.com>
-Subject: Re: [PATCH] virtio_net: Do not send RSS key if it is not supported
-Message-ID: <Zf1bofzE4x0wGEm+@gmail.com>
-References: <20240321165431.3517868-1-leitao@debian.org>
- <1711072822.882584-1-xuanzhuo@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rncBu-0001RZ-0r
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:32:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1rncBq-0001IG-KN
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 06:32:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711103517;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=JNimNq3zTC2sYXVdptoca4z6fHAxTw32U8cZzXLT1X4=;
+ b=HvxDE61NJkL6OeZt0lmu7XlAc+gEDmVWVO9fy/l68NMlw6V1R7KBFT4vPZZGbjm11mcxzI
+ MprYozYWDxkA4FQRi3Vj95OkevVzeEWsx2JhDWaYxDkzgqd+Zqt/G/qjQBBMgCN2aBG4pS
+ silGcD6WCe2FkVBaXfc7mCKt3ICCCGI=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-OYZquYHcPwmkEVFgVquDUA-1; Fri,
+ 22 Mar 2024 06:31:55 -0400
+X-MC-Unique: OYZquYHcPwmkEVFgVquDUA-1
+Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 99A66380450A;
+ Fri, 22 Mar 2024 10:31:55 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.46])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 0C7842022C1D;
+ Fri, 22 Mar 2024 10:31:53 +0000 (UTC)
+Date: Fri, 22 Mar 2024 10:31:47 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: aidan_leuck@selinc.com
+Cc: qemu-devel@nongnu.org, kkostiuk@redhat.com
+Subject: Re: [PATCH v2 1/2] Implement SSH commands in QEMU GA for Windows
+Message-ID: <Zf1eE73m_yS5MLs8@redhat.com>
+References: <20240321160725.340341-1-aidan_leuck@selinc.com>
+ <20240321160725.340341-2-aidan_leuck@selinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1711072822.882584-1-xuanzhuo@linux.alibaba.com>
-Received-SPF: pass client-ip=209.85.218.52;
- envelope-from=breno.debian@gmail.com; helo=mail-ej1-f52.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20240321160725.340341-2-aidan_leuck@selinc.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.372,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,55 +79,889 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Xuan,
+On Thu, Mar 21, 2024 at 04:07:24PM +0000, aidan_leuck@selinc.com wrote:
+> From: aidaleuc <aidan_leuck@selinc.com>
+> 
+> Signed-off-by: aidaleuc <aidan_leuck@selinc.com>
+> ---
+>  qga/commands-windows-ssh.c | 848 +++++++++++++++++++++++++++++++++++++
+>  qga/commands-windows-ssh.h |  26 ++
+>  qga/meson.build            |   9 +-
+>  qga/qapi-schema.json       |  22 +-
+>  4 files changed, 892 insertions(+), 13 deletions(-)
+>  create mode 100644 qga/commands-windows-ssh.c
+>  create mode 100644 qga/commands-windows-ssh.h
+> 
+> diff --git a/qga/commands-windows-ssh.c b/qga/commands-windows-ssh.c
+> new file mode 100644
+> index 0000000000..566266f465
+> --- /dev/null
+> +++ b/qga/commands-windows-ssh.c
+> @@ -0,0 +1,848 @@
 
-On Fri, Mar 22, 2024 at 10:00:22AM +0800, Xuan Zhuo wrote:
-> On Thu, 21 Mar 2024 09:54:30 -0700, Breno Leitao <leitao@debian.org> wrote:
 
-> > 4) Since the command above does not have a key, then the last
-> >    scatter-gatter entry will be zeroed, since rss_key_size == 0.
-> >     sg_buf_size = vi->rss_key_size;
-> 
-> 
-> 
-> 	if (vi->has_rss || vi->has_rss_hash_report) {
-> 		vi->rss_indir_table_size =
-> 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
-> 				rss_max_indirection_table_length));
-> 		vi->rss_key_size =
-> 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
-> 
-> 		vi->rss_hash_types_supported =
-> 		    virtio_cread32(vdev, offsetof(struct virtio_net_config, supported_hash_types));
-> 		vi->rss_hash_types_supported &=
-> 				~(VIRTIO_NET_RSS_HASH_TYPE_IP_EX |
-> 				  VIRTIO_NET_RSS_HASH_TYPE_TCP_EX |
-> 				  VIRTIO_NET_RSS_HASH_TYPE_UDP_EX);
-> 
-> 		dev->hw_features |= NETIF_F_RXHASH;
-> 	}
-> 
-> 
-> vi->rss_key_size is initiated here, I wonder if there is something wrong?
+> +static char *get_admin_ssh_folder(Error **errp)
+> +{
+> +  // Allocate memory for the program data path
 
-Not really, the code above is never executed (in my machines). This is
-because `vi->has_rss` and `vi->has_rss_hash_report` are both unset.
+Please use C /* ... */  comments, not C++ comment style
 
-Looking further, vdev does not have the VIRTIO_NET_F_RSS and
-VIRTIO_NET_F_HASH_REPORT features.
+> +  g_autofree char *programDataPath = NULL;
+> +  char *authkeys_path = NULL;
+> +  PWSTR pgDataW;
 
-Also, when I run `ethtool -x`, I got:
+Nothing initializes pgDataW here.
 
-	# ethtool  -x eth0
-	RX flow hash indirection table for eth0 with 1 RX ring(s):
-	Operation not supported
-	RSS hash key:
-	Operation not supported
-	RSS hash function:
-	    toeplitz: on
-	    xor: off
-	    crc32: off
+> +  GError *gerr = NULL;
+
+Declare that 'g_autoptr(GError) gerr = NULL', avoiding the
+need for manual g_Error_Free calls.
+
+> +
+> +  // Get the KnownFolderPath on the machine.
+> +  HRESULT folderResult =
+> +      SHGetKnownFolderPath(&FOLDERID_ProgramData, 0, NULL, &pgDataW);
+> +  if (folderResult != S_OK) {
+
+This method is the initializer for 'pgDataW', but in this
+error scenario, is there any guarantee that 'pgDataW'
+will actually have been initialized ? We're about to jump
+to an 'error' label that will try to free this.
+
+> +    error_setg(errp, "Failed to retrieve ProgramData folder");
+> +    goto error;
+
+QEMU indent standard is 4 spaces, rather than 2 spaces. Applies
+throughout this patch.
+
+> +  }
+> +
+> +  // Convert from a wide string back to a standard character string.
+> +  programDataPath = g_utf16_to_utf8(pgDataW, -1, NULL, NULL, &gerr);
+
+If you put the 'CoTaskMemFree(pgDataW)' call here
+
+> +  if (!programDataPath) {
+
+and call error_setg(...., gerr->mssage); here
+
+we can avoid the need for any 'error:' cleanup block at all. All
+places can just 'return NULL' immediately.
+
+> +    goto error;
+> +  }
+> +
+> +  // Build the path to the file.
+> +  authkeys_path = g_build_filename(programDataPath, "ssh", NULL);
+> +  CoTaskMemFree(pgDataW);
+> +  return authkeys_path;
+> +
+> +error:
+> +  CoTaskMemFree(pgDataW);
+
+...before we access pgDataW here potentially uninitialized.
+
+> +  
+> +  if (gerr) {
+> +    error_setg(errp,"Failed to convert program data path from wide string to standard utf 8 string. %s", gerr->message);
+> +    g_error_free(gerr);
+> +  }
+> +
+> +  return NULL;
+> +}
+> +
+> +/*
+> + * Gets the path to the SSH folder for the specified user. If the user is an
+> + * admin it returns the ssh folder located at %PROGRAMDATA%/ssh. If the user is
+> + * not an admin it returns %USERPROFILE%/.ssh
+> + *
+> + * parameters:
+> + * username -> Username to get the SSH folder for
+> + * isAdmin -> Whether the user is an admin or not
+> + * errp -> Error structure to set any errors that occur.
+> + * returns: path to the ssh folder as a string.
+> + */
+> +static char *get_ssh_folder(const char *username, const bool isAdmin,
+> +                            Error **errp)
+> +{
+> +  if (isAdmin) {
+> +    return get_admin_ssh_folder(errp);
+> +  }
+> +
+> +  // If not an Admin the SSH key is in the user directory.
+> +  DWORD maxSize = MAX_PATH;
+
+QEMU preference is for all variables to be declared at the start of
+the code scope block. This is especially important when using
+g_autofree at the same time as 'goto', as if a goto jumps over
+a variable declaration, it will remain uninitialized.
+
+> +  g_autofree char* profilesDir = g_malloc(maxSize);
+
+Use 'char *' rather than 'char*', and use g_new0 to guarantee the
+memory is initialized.
+
+> +
+> +  // Get the user profile directory on the machine.
+> +  BOOL ret = GetProfilesDirectory(profilesDir, &maxSize);
+> +  if (!ret) {
+> +    error_setg_win32(errp, GetLastError(),
+> +                     "failed to retrieve profiles directory");
+> +    return NULL;
+> +  }
+> +
+> +  // Builds the filename
+> +  return g_build_filename(profilesDir, username, ".ssh", NULL);
+> +}
+> +
+> +/*
+> + * Creates an entry for the everyone group. This is used when the user is an Administrator
+> + * This is consistent with the folder permissions that OpenSSH creates when it
+> + * is installed. Anyone can read the file, but only Administrators and SYSTEM can
+> + * modify the file.
+> + *
+> + * parameters:
+> + * userInfo -> Information about the current user
+> + * pACL -> Pointer to an ACL structure
+> + * errp -> Error structure to set any errors that occur
+> + * returns: 1 on success, 0 otherwise
+> + */
+> +static bool create_acl_admin(PWindowsUserInfo userInfo, PACL *pACL,
+> +                             Error **errp)
+> +{
+> +  PSID everyonePSID = NULL;
+> +
+> +  const int aclSize = 1;
+> +  EXPLICIT_ACCESS eAccess[1];
+> +
+> +  // Zero out memory for the explicit access array
+> +  ZeroMemory(&eAccess, aclSize * sizeof(EXPLICIT_ACCESS));
+
+Calling ZeroMemory is redundant, just let the compiler do this
+
+ EXPLICIT_ACCESS eAccess[1] = {};
+
+> +
+> +  // Create an entry for everyone (so they can at least read the folder).
+> +  // This is consistent with other folders located in %PROGRAMDATA%
+> +  bool converted = ConvertStringSidToSid(WORLD_SID, &everyonePSID);
+> +  if (!converted) {
+> +    error_setg_win32(errp, GetLastError(), "failed to retrieve Admin SID");
+> +    goto error;
+> +  }
+> +
+> +  // Set permissions for everyone group (they can only read the files)
+> +  eAccess[0].grfAccessPermissions = GENERIC_READ;
+> +  eAccess[0].grfAccessMode = SET_ACCESS;
+> +  eAccess[0].grfInheritance = NO_INHERITANCE;
+> +  eAccess[0].Trustee.TrusteeForm = TRUSTEE_IS_SID;
+> +  eAccess[0].Trustee.TrusteeType = TRUSTEE_IS_GROUP;
+> +  eAccess[0].Trustee.ptstrName = (LPTSTR)everyonePSID;
+> +
+> +  // Put the entries in an ACL object.
+> +  PACL pNewACL = NULL;
+> +  DWORD setResult;
+> +
+> +  // If we are given a pointer that is already initialized, then we can merge
+> +  // the existing entries instead of overwriting them.
+> +  if (*pACL) {
+> +    setResult = SetEntriesInAcl(aclSize, eAccess, *pACL, &pNewACL);
+> +  }
+> +  else {
+> +    setResult = SetEntriesInAcl(aclSize, eAccess, NULL, &pNewACL);
+> +  }
+> +
+> +  if (setResult != ERROR_SUCCESS) {
+> +    error_setg_win32(errp, GetLastError(),
+> +                     "failed to set ACL entries for admin user %s %lu",
+> +                     userInfo->username, setResult);
+> +    goto error;
+> +  }
+> +
+> +  LocalFree(everyonePSID);
+> +
+> +  // Free the old memory since we are going to overwrite the users
+> +  // pointer
+> +  LocalFree(*pACL);
+> +  *pACL = pNewACL;
+> +
+> +  return true;
+> +
+> +error:
+> +  LocalFree(everyonePSID);
+> +  return false;
+> +}
+> +
+> +/*
+> + * Creates an entry for the user so they can access the ssh folder in their
+> + * userprofile.
+> + *
+> + * parameters:
+> + * userInfo -> Information about the current user
+> + * pACL -> Pointer to an ACL structure
+> + * errp -> Error structure to set any errors that occur
+> + * returns -> 1 on success, 0 otherwise
+> + */
+> +static bool create_acl_user(PWindowsUserInfo userInfo, PACL *pACL, Error **errp)
+> +{
+> +  const int aclSize = 1;
+> +  PACL newACL = NULL;
+> +  EXPLICIT_ACCESS eAccess[1];
+> +  PSID userPSID = NULL;
+> +
+> +  // Zero out memory for the explicit access array
+> +  ZeroMemory(&eAccess, aclSize * sizeof(EXPLICIT_ACCESS));
+> +
+> +  // Get a pointer to the internal SID object in Windows
+> +  bool converted = ConvertStringSidToSid(userInfo->SSID, &userPSID);
+> +  if (!converted) {
+> +    error_setg_win32(errp, GetLastError(), "failed to retrieve user %s SID",
+> +                     userInfo->username);
+> +    goto error;
+> +  }
+> +
+> +  // Set the permissions for the user.
+> +  eAccess[0].grfAccessPermissions = GENERIC_ALL;
+> +  eAccess[0].grfAccessMode = SET_ACCESS;
+> +  eAccess[0].grfInheritance = NO_INHERITANCE;
+> +  eAccess[0].Trustee.TrusteeForm = TRUSTEE_IS_SID;
+> +  eAccess[0].Trustee.TrusteeType = TRUSTEE_IS_USER;
+> +  eAccess[0].Trustee.ptstrName = (LPTSTR)userPSID;
+> +
+> +  // Set the ACL entries
+> +  DWORD setResult;
+> +
+> +  // If we are given a pointer that is already initialized, then we can merge
+> +  // the existing entries instead of overwriting them.
+> +  if (*pACL) {
+> +    setResult = SetEntriesInAcl(aclSize, eAccess, *pACL, &newACL);
+> +  }
+> +  else {
+> +    setResult = SetEntriesInAcl(aclSize, eAccess, NULL, &newACL);
+> +  }
+> +
+> +  if (setResult != ERROR_SUCCESS) {
+> +    error_setg_win32(errp, GetLastError(),
+> +                     "failed to set ACL entries for user %s %lu",
+> +                     userInfo->username, setResult);
+> +    goto error;
+> +  }
+> +
+> +  // Free any old memory since we are going to overwrite the users pointer.
+> +  LocalFree(*pACL);
+> +  *pACL = newACL;
+> +
+> +  LocalFree(userPSID);
+> +  return true;
+> +error:
+> +  LocalFree(userPSID);
+> +  return false;
+> +}
+> +
+> +/*
+> + * Creates a base ACL for both normal users and admins to share
+> + * pACL -> Pointer to an ACL structure
+> + * errp -> Error structure to set any errors that occur
+> + * returns: 1 on success, 0 otherwise
+> + */
+> +static bool create_acl_base(PACL *pACL, Error **errp)
+> +{
+> +  PSID adminGroupPSID = NULL;
+> +  PSID systemPSID = NULL;
+> +
+> +  const int aclSize = 2;
+> +  EXPLICIT_ACCESS eAccess[2];
+> +
+> +  // Zero out memory for the explicit access array
+> +  ZeroMemory(&eAccess, aclSize * sizeof(EXPLICIT_ACCESS));
+> +
+> +  // Create an entry for the system user.
+> +  const char *systemSID = LOCAL_SYSTEM_SID;
+> +  bool converted = ConvertStringSidToSid(systemSID, &systemPSID);
+> +  if (!converted) {
+> +    error_setg_win32(errp, GetLastError(), "failed to retrieve system SID");
+> +    goto error;
+> +  }
+> +
+> +  // set permissions for system user
+> +  eAccess[0].grfAccessPermissions = GENERIC_ALL;
+> +  eAccess[0].grfAccessMode = SET_ACCESS;
+> +  eAccess[0].grfInheritance = NO_INHERITANCE;
+> +  eAccess[0].Trustee.TrusteeForm = TRUSTEE_IS_SID;
+> +  eAccess[0].Trustee.TrusteeType = TRUSTEE_IS_USER;
+> +  eAccess[0].Trustee.ptstrName = (LPTSTR)systemPSID;
+> +
+> +  // Create an entry for the admin user.
+> +  const char *adminSID = ADMIN_SID;
+> +  converted = ConvertStringSidToSid(adminSID, &adminGroupPSID);
+> +  if (!converted) {
+> +    error_setg_win32(errp, GetLastError(), "failed to retrieve Admin SID");
+> +    goto error;
+> +  }
+> +
+> +  // Set permissions for admin group.
+> +  eAccess[1].grfAccessPermissions = GENERIC_ALL;
+> +  eAccess[1].grfAccessMode = SET_ACCESS;
+> +  eAccess[1].grfInheritance = NO_INHERITANCE;
+> +  eAccess[1].Trustee.TrusteeForm = TRUSTEE_IS_SID;
+> +  eAccess[1].Trustee.TrusteeType = TRUSTEE_IS_GROUP;
+> +  eAccess[1].Trustee.ptstrName = (LPTSTR)adminGroupPSID;
+> +
+> +  // Put the entries in an ACL object.
+> +  PACL pNewACL = NULL;
+> +  DWORD setResult;
+> +
+> +  // If we are given a pointer that is already initialized, then we can merge
+> +  // the existing entries instead of overwriting them.
+> +  if (*pACL) {
+> +    setResult = SetEntriesInAcl(aclSize, eAccess, *pACL, &pNewACL);
+> +  }
+> +  else {
+> +    setResult = SetEntriesInAcl(aclSize, eAccess, NULL, &pNewACL);
+> +  }
+> +
+> +  if (setResult != ERROR_SUCCESS) {
+> +    error_setg_win32(
+> +        errp, GetLastError(),
+> +        "failed to set base ACL entries for system user and admin group %lu",
+> +        setResult);
+> +    goto error;
+> +  }
+> +
+> +  LocalFree(adminGroupPSID);
+> +  LocalFree(systemPSID);
+> +
+> +  // Free any old memory since we are going to overwrite the users pointer.
+> +  LocalFree(*pACL);
+> +
+> +  *pACL = pNewACL;
+> +
+> +  return true;
+> +
+> +error:
+> +  LocalFree(adminGroupPSID);
+> +  LocalFree(systemPSID);
+> +  return false;
+> +}
+> +
+> +/*
+> + * Sets the access control on the authorized_keys file and any ssh folders that
+> + * need to be created. For administrators the required permissions on the
+> + * file/folders are that only administrators and the LocalSystem account can
+> + * access the folders. For normal user accounts only the specified user,
+> + * LocalSystem and Administrators can have access to the key.
+> + *
+> + * parameters:
+> + * userInfo -> pointer to structure that contains information about the user
+> + * PACL -> pointer to an access control structure that will be set upon
+> + * successful completion of the function.
+> + * errp -> error structure that will be set upon error.
+> + * returns: 1 upon success 0 upon failure.
+> + */
+> +static bool create_acl(PWindowsUserInfo userInfo, PACL *pACL, Error **errp)
+> +{
+> +  // Creates a base ACL that both admins and users will share
+> +  // This adds the Administrators group and the SYSTEM group
+> +  if (!create_acl_base(pACL, errp)) {
+> +    return false;
+> +  }
+> +
+> +  // If the user is not an admin give the user creating the key permission to
+> +  // access the file.
+> +  if (!userInfo->isAdmin) {
+> +    if (!create_acl_user(userInfo, pACL, errp)) {
+> +      return false;
+> +    }
+> +
+> +    return true;
+> +  }
+> +
+> +  // If the user is an admin allow everyone to read the keys
+> +  if (!create_acl_admin(userInfo, pACL, errp)) {
+> +    return false;
+> +  }
+> +
+> +  return true;
+> +}
+> +/*
+> + * Create the SSH directory for the user and d sets appropriate permissions.
+> + * In general the directory will be %PROGRAMDATA%/ssh if the user is an admin.
+> + * %USERPOFILE%/.ssh if not an admin
+> + *
+> + * parameters:
+> + * userInfo -> Contains information about the user
+> + * errp -> Structure that will contain errors if the function fails.
+> + * returns: zero upon failure, 1 upon success
+> + */
+> +static bool create_ssh_directory(WindowsUserInfo *userInfo, Error **errp)
+> +{
+> +  PACL pNewACL = NULL;
+> +  g_autofree PSECURITY_DESCRIPTOR pSD = NULL;
+> +
+> +  // Gets the approparite ACL for the user
+> +  if (!create_acl(userInfo, &pNewACL, errp)) {
+> +    goto error;
+> +  }
+> +
+> +  // Allocate memory for a security descriptor
+> +  pSD = g_malloc(SECURITY_DESCRIPTOR_MIN_LENGTH);
+> +  if (!InitializeSecurityDescriptor(pSD, SECURITY_DESCRIPTOR_REVISION)) {
+> +    error_setg_win32(errp, GetLastError(),
+> +                     "Failed to initialize security descriptor");
+> +    goto error;
+> +  }
+> +
+> +  // Associate the security descriptor with the ACL permissions.
+> +  if (!SetSecurityDescriptorDacl(pSD, TRUE, pNewACL, FALSE)) {
+> +    error_setg_win32(errp, GetLastError(),
+> +                     "Failed to set security descriptor ACL");
+> +    goto error;
+> +  }
+> +
+> +  // Set the security attributes on the folder
+> +  SECURITY_ATTRIBUTES sAttr;
+> +  sAttr.bInheritHandle = FALSE;
+> +  sAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
+> +  sAttr.lpSecurityDescriptor = pSD;
+> +
+> +  // Create the directory with the created permissions
+> +  BOOL created = CreateDirectory(userInfo->sshDirectory, &sAttr);
+> +  if (!created) {
+> +    error_setg_win32(errp, GetLastError(), "failed to create directory %s",
+> +                     userInfo->sshDirectory);
+> +    goto error;
+> +  }
+> +
+> +  // Free memory
+> +  LocalFree(pNewACL);
+> +  return true;
+> +error:
+> +  LocalFree(pNewACL);
+> +  return false;
+> +}
+> +
+> +/*
+> + * Sets permissions on the authorized_key_file that is created.
+> + *
+> + * parameters: userInfo -> Information about the user
+> + * errp -> error structure that will contain errors upon failure
+> + * returns: 1 upon success, zero upon failure.
+> + */
+> +static bool set_file_permissions(PWindowsUserInfo userInfo, Error **errp)
+> +{
+> +  PACL pACL = NULL;
+> +  PSID userPSID;
+> +
+> +  // Creates the access control structure
+> +  if (!create_acl(userInfo, &pACL, errp)) {
+> +    goto error;
+> +  }
+> +
+> +  // Get the PSID structure for the user based off the string SID.
+> +  bool converted = ConvertStringSidToSid(userInfo->SSID, &userPSID);
+> +  if (!converted) {
+> +    error_setg_win32(errp, GetLastError(), "failed to retrieve user %s SID",
+> +                     userInfo->username);
+> +    goto error;
+> +  }
+> +
+> +  // Set the ACL on the file.
+> +  if (SetNamedSecurityInfo(userInfo->authorizedKeyFile, SE_FILE_OBJECT,
+> +                           DACL_SECURITY_INFORMATION, userPSID, NULL, pACL,
+> +                           NULL) != ERROR_SUCCESS) {
+> +    error_setg_win32(errp, GetLastError(),
+> +                     "failed to set file security for file %s",
+> +                     userInfo->authorizedKeyFile);
+> +    goto error;
+> +  }
+> +
+> +  LocalFree(pACL);
+> +  LocalFree(userPSID);
+> +  return true;
+> +
+> +error:
+> +  LocalFree(pACL);
+> +  LocalFree(userPSID);
+> +  
+> +  return false;
+> +}
+> +
+> +/*
+> + * Writes the specified keys to the authenticated keys file.
+> + * parameters:
+> + * userInfo: Information about the user we are writing the authkeys file to.
+> + * authkeys: Array of keys to write to disk
+> + * errp: Error structure that will contain any errors if they occur.
+> + * returns: 1 if successful, 0 otherwise.
+> + */
+> +static bool write_authkeys(WindowsUserInfo *userInfo, GStrv authkeys,
+> +                           Error **errp)
+> +{
+> +  g_autofree char *contents = NULL;
+> +  g_autoptr(GError) err = NULL;
+> +
+> +  contents = g_strjoinv("\n", authkeys);
+> +
+> +  if (!g_file_set_contents(userInfo->authorizedKeyFile, contents, -1, &err)) {
+> +    error_setg(errp, "failed to write to '%s': %s", userInfo->authorizedKeyFile,
+> +               err->message);
+> +    return false;
+> +  }
+> +
+> +  if (!set_file_permissions(userInfo, errp)) {
+> +    return false;
+> +  }
+> +
+> +  return true;
+> +}
+> +
+> +/*
+> + * Retrieves information about a Windows user by their username
+> + *
+> + * parameters:
+> + * userInfo -> Double pointer to a WindowsUserInfo structure. Upon success, it
+> + * will be allocated with information about the user and need to be freed.
+> + * username -> Name of the user to lookup.
+> + * errp -> Contains any errors that occur.
+> + * returns: 1 upon success, 0 upon failure.
+> + */
+> +static bool get_user_info(PWindowsUserInfo *userInfo, const char *username,
+> +                          Error **errp)
+> +{
+> +  DWORD infoLevel = 4;
+> +  LPUSER_INFO_4 uBuf = NULL;
+> +  g_autofree wchar_t *wideUserName = NULL;
+> +  GError *gerr = NULL;
+> +  PSID psid = NULL;
+> +
+> +  // Converts a string to a Windows wide string since the GetNetUserInfo
+> +  // function requires it.
+> +  wideUserName = g_utf8_to_utf16(username, -1, NULL, NULL, &gerr);
+> +  if (!wideUserName) {
+> +    goto error;
+> +  }
+> +
+> +  // allocate data
+> +  PWindowsUserInfo uData = g_malloc(sizeof(WindowsUserInfo));
+> +
+> +  // Set pointer so it can be cleaned up by the calle, even upon error.
+> +  *userInfo = uData;
+> +
+> +  // Find the information
+> +  NET_API_STATUS result = NetUserGetInfo(NULL, wideUserName, infoLevel, (LPBYTE *)&uBuf);
+> +  if (result != NERR_Success) {
+> +    // Give a friendlier error message if the user was not found.
+> +    if (result == NERR_UserNotFound) {
+> +      error_setg(errp, "User %s was not found", username);
+> +      goto error;
+> +    }
+> +
+> +    error_setg(errp, "Received unexpected error when asking for user info: Error Code %lu", result);
+> +    goto error;
+> +  }
+> +
+> +  // Get information from the buffer returned by NetUserGetInfo.
+> +  uData->username = g_strdup(username);
+> +  uData->isAdmin = uBuf->usri4_priv == USER_PRIV_ADMIN;
+> +  psid = uBuf->usri4_user_sid;
+> +
+> +  char *sidStr = NULL;
+> +
+> +  // We store the string representation of the SID not SID structure in memory.
+> +  // Callees wanting to use the SID structure should call ConvertStringSidToSID.
+> +  if (!ConvertSidToStringSid(psid, &sidStr)) {
+> +    error_setg_win32(errp, GetLastError(),
+> +                     "failed to get SID string for user %s", username);
+> +    goto error;
+> +  }
+> +
+> +  // Store the SSID
+> +  uData->SSID = sidStr;
+> +
+> +  // Get the SSH folder for the user.
+> +  char *sshFolder = get_ssh_folder(username, uData->isAdmin, errp);
+> +  if (sshFolder == NULL) {
+> +    goto error;
+> +  }
+> +
+> +  // Get the authorized key file path
+> +  const char *authorizedKeyFile = uData->isAdmin ? AUTHORIZED_KEY_FILE_ADMIN : AUTHORIZED_KEY_FILE;
+> +  char *authorizedKeyPath = g_build_filename(sshFolder, authorizedKeyFile, NULL);
+> +  uData->sshDirectory = sshFolder;
+> +  uData->authorizedKeyFile = authorizedKeyPath;
+> +
+> +  // Free
+> +  NetApiBufferFree(uBuf);
+> +  return true;
+> +error:
+> +  if (uBuf) {
+> +    NetApiBufferFree(uBuf);
+> +  }
+> +  if (gerr) {
+> +    error_setg(errp, "Failed to convert username %s to wide string. %s",
+> +               username, gerr->message);
+> +    g_error_free(gerr);
+> +  }
+> +
+> +  return false;
+> +}
+> +
+> +/*
+> + * Gets the list of authorized keys for a user.
+> + *
+> + * parameters:
+> + * username -> Username to retrieve the keys for.
+> + * errp -> Error structure that will display any errors through QMP.
+> + * returns: List of keys associated with the user.
+> + */
+> +GuestAuthorizedKeys *qmp_guest_ssh_get_authorized_keys(const char *username,
+> +                                                       Error **errp)
+> +{
+> +  GuestAuthorizedKeys *keys = NULL;
+> +  g_auto(GStrv) authKeys = NULL;
+> +  g_autoptr(GuestAuthorizedKeys) ret = NULL;
+> +  g_auto(PWindowsUserInfo) userInfo = NULL;
+> +
+> +  // Gets user information
+> +  if (!get_user_info(&userInfo, username, errp)) {
+> +    return NULL;
+> +  }
+> +
+> +  // Reads authekys for the user
+> +  authKeys = read_authkeys(userInfo->authorizedKeyFile, errp);
+> +  if (authKeys == NULL) {
+> +    return NULL;
+> +  }
+> +
+> +  // Set the GuestAuthorizedKey struct with keys from the file
+> +  ret = g_new0(GuestAuthorizedKeys, 1);
+> +  for (int i = 0; authKeys[i] != NULL; i++) {
+> +    g_strstrip(authKeys[i]);
+> +    if (!authKeys[i][0] || authKeys[i][0] == '#') {
+> +      continue;
+> +    }
+> +
+> +    QAPI_LIST_PREPEND(ret->keys, g_strdup(authKeys[i]));
+> +  }
+> +
+> +  // Steal the pointer because it is up for the callee to deallocate the memory.
+> +  keys = g_steal_pointer(&ret);
+> +  return keys;
+> +}
+> +
+> +/*
+> + * Adds an ssh key for a user.
+> + *
+> + * parameters:
+> + * username -> User to add the SSH key to
+> + * strList -> Array of keys to add to the list
+> + * has_reset -> Whether the keys have been reset
+> + * reset -> Boolean to reset the keys (If this is set the existing list will be
+> + * cleared) and the other key reset. errp -> Pointer to an error structure that
+> + * will get returned over QMP if anything goes wrong.
+> + */
+> +void qmp_guest_ssh_add_authorized_keys(const char *username, strList *keys,
+> +                                       bool has_reset, bool reset, Error **errp)
+> +{
+> +  g_auto(PWindowsUserInfo) userInfo = NULL;
+> +  g_auto(GStrv) authkeys = NULL;
+> +  strList *k;
+> +  size_t nkeys, nauthkeys;
+> +
+> +  // Make sure the keys given are valid
+> +  if (!check_openssh_pub_keys(keys, &nkeys, errp)) {
+> +    return;
+> +  }
+> +
+> +  // Gets user information
+> +  if (!get_user_info(&userInfo, username, errp)) {
+> +    return;
+> +  }
+> +
+> +  // Determine whether we should reset the keys
+> +  reset = has_reset && reset;
+> +  if (!reset) {
+> +    // If we are not resetting the keys, read the existing keys into memory
+> +    authkeys = read_authkeys(userInfo->authorizedKeyFile, NULL);
+> +  }
+> +
+> +  // Check that the SSH key directory exists for the user.
+> +  if (!g_file_test(userInfo->sshDirectory, G_FILE_TEST_IS_DIR)) {
+> +    BOOL success = create_ssh_directory(userInfo, errp);
+> +    if (!success) {
+> +      return;
+> +    }
+> +  }
+> +
+> +  // Reallocates the buffer to fit the new keys.
+> +  nauthkeys = authkeys ? g_strv_length(authkeys) : 0;
+> +  authkeys = g_realloc_n(authkeys, nauthkeys + nkeys + 1, sizeof(char *));
+> +
+> +  // zero out the memory for the reallocated buffer
+> +  memset(authkeys + nauthkeys, 0, (nkeys + 1) * sizeof(char *));
+> +
+> +  // Adds the keys
+> +  for (k = keys; k != NULL; k = k->next) {
+> +    // Check that the key doesn't already exist
+> +    if (g_strv_contains((const gchar *const *)authkeys, k->value)) {
+> +      continue;
+> +    }
+> +
+> +    authkeys[nauthkeys++] = g_strdup(k->value);
+> +  }
+> +
+> +  // Write the authkeys to the file.
+> +  write_authkeys(userInfo, authkeys, errp);
+> +}
+> +
+> +/*
+> + * Removes an SSH key for a user
+> + *
+> + * parameters:
+> + * username -> Username to remove the key from
+> + * strList -> List of strings to remove
+> + * errp -> Contains any errors that occur.
+> + */
+> +void qmp_guest_ssh_remove_authorized_keys(const char *username, strList *keys,
+> +                                          Error **errp)
+> +{
+> +  g_auto(PWindowsUserInfo) userInfo = NULL;
+> +  g_autofree struct passwd *p = NULL;
+> +  g_autofree GStrv new_keys = NULL; /* do not own the strings */
+> +  g_auto(GStrv) authkeys = NULL;
+> +  GStrv a;
+> +  size_t nkeys = 0;
+> +
+> +  // Validates the keys passed in by the user
+> +  if (!check_openssh_pub_keys(keys, NULL, errp)) {
+> +    return;
+> +  }
+> +
+> +  // Gets user information
+> +  if (!get_user_info(&userInfo, username, errp)) {
+> +    return;
+> +  }
+> +
+> +  // Reads the authkeys for the user
+> +  authkeys = read_authkeys(userInfo->authorizedKeyFile, errp);
+> +  if (authkeys == NULL) {
+> +    return;
+> +  }
+> +
+> +  // Create a new buffer to hold the keys
+> +  new_keys = g_new0(char *, g_strv_length(authkeys) + 1);
+> +  for (a = authkeys; *a != NULL; a++) {
+> +    strList *k;
+> +
+> +    // Filters out keys that are equal to ones the user specified.
+> +    for (k = keys; k != NULL; k = k->next) {
+> +      if (g_str_equal(k->value, *a)) {
+> +        break;
+> +      }
+> +    }
+> +
+> +    if (k != NULL) {
+> +      continue;
+> +    }
+> +
+> +    new_keys[nkeys++] = *a;
+> +  }
+> +
+> +  // Write the new authkeys to the file.
+> +  write_authkeys(userInfo, new_keys, errp);
+> +}
+> diff --git a/qga/commands-windows-ssh.h b/qga/commands-windows-ssh.h
+> new file mode 100644
+> index 0000000000..7d68a1bcef
+> --- /dev/null
+> +++ b/qga/commands-windows-ssh.h
+> @@ -0,0 +1,26 @@
+> +/*
+> + * Header file for commands-windows-ssh.c
+> + *
+> + * Copyright Schweitzer Engineering Laboratories. 2024
+> + *
+> + * Authors:
+> + *  Aidan Leuck <aidan_leuck@selinc.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#include <glib/gstrfuncs.h>
+> +#include <stdbool.h>
+> +typedef struct WindowsUserInfo {
+> +  char *sshDirectory;
+> +  char *authorizedKeyFile;
+> +  char *username;
+> +  char *SSID;
+> +  bool isAdmin;
+> +} WindowsUserInfo;
+> +
+> +typedef WindowsUserInfo *PWindowsUserInfo;
+> +
+> +void free_userInfo(PWindowsUserInfo info);
+> +G_DEFINE_AUTO_CLEANUP_FREE_FUNC(PWindowsUserInfo, free_userInfo, NULL);
+
+> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> index 9554b566a7..ffa7eb4082 100644
+> --- a/qga/qapi-schema.json
+> +++ b/qga/qapi-schema.json
+> @@ -1599,8 +1599,10 @@
+>  # Since: 5.2
+>  ##
+>  { 'command': 'guest-ssh-add-authorized-keys',
+> -  'data': { 'username': 'str', 'keys': ['str'], '*reset': 'bool' },
+> -  'if': 'CONFIG_POSIX' }
+> +  'data': { 'username': 'str', 'keys': ['str'
+> +    ], '*reset': 'bool'
+> +  }
+
+Don't insert these two extra linebreaks, it is already short enough as is.
+
+
+> +}
+>  
+>  ##
+>  # @guest-ssh-remove-authorized-keys:
+> @@ -1617,8 +1619,10 @@
+>  # Since: 5.2
+>  ##
+>  { 'command': 'guest-ssh-remove-authorized-keys',
+> -  'data': { 'username': 'str', 'keys': ['str'] },
+> -  'if': 'CONFIG_POSIX' }
+> +  'data': { 'username': 'str', 'keys': ['str'
+> +    ]
+> +  }
+
+Again these extra line breaks are undesirable.
+
+
+> +}
+>  
+>  ##
+>  # @GuestDiskStats:
+> @@ -1792,4 +1796,4 @@
+>  ##
+>  { 'command': 'guest-get-cpustats',
+>    'returns': ['GuestCpuStats']
+> -}
+> +}
+> \ No newline at end of file
+> -- 
+> 2.44.0
+> 
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
