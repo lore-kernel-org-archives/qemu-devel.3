@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC39C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:13:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC71C54E71
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnjMW-0006Bj-QX; Fri, 22 Mar 2024 14:11:28 -0400
+	id 1rnjNc-000875-NN; Fri, 22 Mar 2024 14:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjMU-0006B9-EE
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:11:26 -0400
+ id 1rnjNZ-0007cG-B9
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjMS-0006tk-GC
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:11:26 -0400
+ id 1rnjNX-00076P-HX
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711131083;
+ s=mimecast20190719; t=1711131150;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WubQWkcslV/ov2f3B8vk3m2OpqnQFlW63EUQE8TOyfg=;
- b=aFneYCeVd/1RV9UXpjuZGhnA0SOjLKXvy0kptGdmM262gLRTK5dJGG7ixKXgqL4IZW8uIo
- lt+BapkFvO1fYXrjnA5vRl5vrsKw2D4kq4/yFk58Y39yKjeoLcUe8QsaNketKrsohY+7hz
- pcxNszzTJ1nkKlRavyb6cMLsde6gXvo=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RYuN7GnzfuyFAUI3cUkmwGDLrJHXS1AZ1cx6Ty/AhZ0=;
+ b=Ggm6AMIP/ypFkYjxmhD1sGbTJXzeQeuBpKeht/vojySnDAhejyMWpBjPUJ3+PIJSlc18WV
+ yIOO+v2bffPZQ3YLpvpHAhYtNICdHgSWHFbKV3oBLqqZSwrmuJPpuuBD0jJ1it9MyiIwCd
+ 0q3p1jJFUfJ/NCa/SXFPLYlK3QJ4y1Y=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-0-DNFdO1OyGTpfpIsDykiQ-1; Fri, 22 Mar 2024 14:11:22 -0400
-X-MC-Unique: 0-DNFdO1OyGTpfpIsDykiQ-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a4711e69b9bso129985466b.3
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:11:21 -0700 (PDT)
+ us-mta-652-pvt6oKKRPtSgC2f727ieKQ-1; Fri, 22 Mar 2024 14:12:29 -0400
+X-MC-Unique: pvt6oKKRPtSgC2f727ieKQ-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a47103b2261so124210066b.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:12:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711131079; x=1711735879;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WubQWkcslV/ov2f3B8vk3m2OpqnQFlW63EUQE8TOyfg=;
- b=vs8s1YU5UFYO6MFv48VYYptm4KfQ9iflt58yE7eRmnWHTufOCCUclnZ54fa7zup5EU
- ozFd0WACbVlX4xfsw6mVGTeCx4cQeGywv0L897zWk40iUblphDUH1FLFmZxcM5S6Zc8a
- sSeklzSkqZuRcRYxZk2W4PPBel7XS+I8xIn6hyhp7A3FiQGr2CKJzFN2wmeg7w1IVhTx
- TlnLrN9Tovo24jfZ+6azIj4BJS/hYiBSeJPXTT7OckhtdluTDo5eRWvXXuHgapWXUpHC
- S0gv43646cRlKoH5FSOGZFPaQ50o+ZSXRNn9ZiShG76HHjdk1wfU/EvxhaZwp3ESyobp
- /NHQ==
-X-Gm-Message-State: AOJu0Yx8lnDKB+Ri/5dVGSWoHEKkd3m/Ehodp5L++btWMmUL0m/mteNK
- JVl8QSn+YM33BSow/y9vMrWsNViNinv7QzggAgm8Mlepv2FSYmEG12PoPW+2058dA6I86xJTm4h
- qj87u/8U4NYtxGZvAAfHj4yq6Svd5XF7/nsBFldvoqIlpQyjBjyksb/m0UkdM0j6RIFZJl2reY4
- fwyHol+sBOnDF2UTrQu4hOBAvGxAt7Rnp8JbGA
-X-Received: by 2002:a17:906:2a0a:b0:a46:1fa:fc12 with SMTP id
- j10-20020a1709062a0a00b00a4601fafc12mr358070eje.18.1711131079138; 
- Fri, 22 Mar 2024 11:11:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHWeh2MfixfhMXJ0bJagQQWnqhfYmSWuVVfGexcm3bWPFXBf+/luM/B+yZ95T/svyLScaSojg==
-X-Received: by 2002:a17:906:2a0a:b0:a46:1fa:fc12 with SMTP id
- j10-20020a1709062a0a00b00a4601fafc12mr358054eje.18.1711131078728; 
- Fri, 22 Mar 2024 11:11:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711131147; x=1711735947;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RYuN7GnzfuyFAUI3cUkmwGDLrJHXS1AZ1cx6Ty/AhZ0=;
+ b=BgpgKms0wnoPs9PXXC2Ab/m8ZaXaOk3mXSxsgEZz1V4XSDEIZ07donOIfvbeG4sU8o
+ m4Xar06km0j6aRS9nH5YMM5/liXGYFK+A7Ud/RtH5lsY8XCOd6JwDxd7NrChHzykL7ep
+ RuyydwNVYBZNs02WYbA0qRwwWlYDPgfEsYxcAyTaN1nzgHy3JgnFd8v3Zcbw1kJxCFCd
+ AIMMXJO46a/Zyn7cyZ2diDuMDMY9ySYgKpfBudyIApBgAFozNxN8e+3no7e5MQPa1VYn
+ Sw8tHxHQFbPVgHqAlq6LKtekvMmMSe1HjNgTMkj6l3nFzDBb6G6MvGm79qK5gccKpSyk
+ C0NA==
+X-Gm-Message-State: AOJu0YwBeKsxE7d9SegYLFbmtHNa6vSfrjbI2nwufPz+Nlcxwhi3nRtA
+ gjsnGnH+x0KqikMseHFBy3Eovl/5JY9CSsenYZtDTYjpP+16vAS/A3pipzz6x0cOlDgFJOJufdc
+ mF3HjDGlqWkxOxZXQ7kP7y1n3EAzKaHt5paPrKlHurSfliUhHxjoTmGfUdYO0wVz5NLXFm6Iimr
+ XY4NT6ETNm+/I5x4qIu1rVhvgzEwlrcAFSQ+TV
+X-Received: by 2002:a17:906:304b:b0:a46:64e3:e284 with SMTP id
+ d11-20020a170906304b00b00a4664e3e284mr301149ejd.74.1711131147222; 
+ Fri, 22 Mar 2024 11:12:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGl5IkAyYVn7ygUrArRRYUM621yCVdtB0KlTk6IuELg8aMbPSFthxwPjtTFQMkZROXfKXEDXA==
+X-Received: by 2002:a17:906:304b:b0:a46:64e3:e284 with SMTP id
+ d11-20020a170906304b00b00a4664e3e284mr301127ejd.74.1711131146675; 
+ Fri, 22 Mar 2024 11:12:26 -0700 (PDT)
 Received: from [192.168.10.118] ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- q8-20020a170906388800b00a4729f093ecsm76502ejd.53.2024.03.22.11.11.17
+ g6-20020a17090670c600b00a4519304f8bsm80418ejk.14.2024.03.22.11.12.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 11:11:18 -0700 (PDT)
+ Fri, 22 Mar 2024 11:12:25 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: xiaoyao.li@intel.com,
 	michael.roth@amd.com,
 	david@redhat.com
-Subject: [PATCH for-9.1 00/26] x86, kvm: common confidential computing subset
-Date: Fri, 22 Mar 2024 19:10:50 +0100
-Message-ID: <20240322181116.1228416-1-pbonzini@redhat.com>
+Subject: [PATCH 22/26] HostMem: Add mechanism to opt in kvm guest memfd via
+ MachineState
+Date: Fri, 22 Mar 2024 19:11:12 +0100
+Message-ID: <20240322181116.1228416-23-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240322181116.1228416-1-pbonzini@redhat.com>
+References: <20240322181116.1228416-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -101,144 +105,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are the common bits for TDX and SEV-SNP support for QEMU 9.1.
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-The main changes compared to what Michael posted is:
+Add a new member "guest_memfd" to memory backends. When it's set
+to true, it enables RAM_GUEST_MEMFD in ram_flags, thus private kvm
+guest_memfd will be allocated during RAMBlock allocation.
 
-1) I am including KVM_SEV_INIT2 support patches without the linux-headers
-update hack (however the linux-headers update in these patches is still
-not final).  This also includes the bits to track whether guest state
-are encrypted, that are needed by TDX as well as SEV-ES/SNP.
+Memory backend's @guest_memfd is wired with @require_guest_memfd
+field of MachineState. It avoid looking up the machine in phymem.c.
 
-2) VFIO currently is blocked, pending a decision on what is worse
-between possibly consuming twice the memory and disallowing device
-assignment; or someone biting the bullet and implementing the
-RamDiscardManager interface.
+MachineState::require_guest_memfd is supposed to be set by any VMs
+that requires KVM guest memfd as private memory, e.g., TDX VM.
 
-3) I included another easy patch from the TDX series, "i386/kvm: Move
-architectural CPUID leaf generation to separate helper".
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Message-ID: <20240320083945.991426-8-michael.roth@amd.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ include/hw/boards.h      | 2 ++
+ include/sysemu/hostmem.h | 1 +
+ backends/hostmem-file.c  | 1 +
+ backends/hostmem-memfd.c | 1 +
+ backends/hostmem-ram.c   | 1 +
+ backends/hostmem.c       | 1 +
+ hw/core/machine.c        | 5 +++++
+ 7 files changed, 12 insertions(+)
 
-Please test. :)
-
-Paolo
-
-Chao Peng (2):
-  kvm: Enable KVM_SET_USER_MEMORY_REGION2 for memslot
-  kvm: handle KVM_EXIT_MEMORY_FAULT
-
-Isaku Yamahata (2):
-  pci-host/q35: Move PAM initialization above SMRAM initialization
-  q35: Introduce smm_ranges property for q35-pci-host
-
-Michael Roth (5):
-  scripts/update-linux-headers: Add setup_data.h to import list
-  scripts/update-linux-headers: Add bits.h to file imports
-  [HACK] linux-headers: Update headers for 6.8 + kvm-coco-queue + SNP
-  [TO SQUASH] hw/i386: Remove redeclaration of struct setup_data
-  RAMBlock: Add support of KVM private guest memfd
-
-Paolo Bonzini (7):
-  runstate: skip initial CPU reset if reset is not actually possible
-  KVM: track whether guest state is encrypted
-  KVM: remove kvm_arch_cpu_check_are_resettable
-  target/i386: introduce x86-confidential-guest
-  target/i386: Implement mc->kvm_type() to get VM type
-  target/i386: SEV: use KVM_SEV_INIT2 if possible
-  RAMBlock: make guest_memfd require uncoordinated discard
-
-Sean Christopherson (1):
-  i386/kvm: Move architectural CPUID leaf generation to separate helper
-
-Xiaoyao Li (9):
-  confidential guest support: Add kvm_init() and kvm_reset() in class
-  i386/sev: Switch to use confidential_guest_kvm_init()
-  ppc/pef: switch to use confidential_guest_kvm_init/reset()
-  s390: Switch to use confidential_guest_kvm_init()
-  trace/kvm: Split address space and slot id in
-    trace_kvm_set_user_memory()
-  kvm: Introduce support for memory_attributes
-  kvm/memory: Make memory type private by default if it has guest memfd
-    backend
-  HostMem: Add mechanism to opt in kvm guest memfd via MachineState
-  physmem: Introduce ram_block_discard_guest_memfd_range()
-
- include/exec/confidential-guest-support.h     |  34 +-
- include/exec/cpu-common.h                     |   2 +
- include/exec/memory.h                         |  20 +-
- include/exec/ram_addr.h                       |   2 +-
- include/exec/ramblock.h                       |   1 +
- include/hw/boards.h                           |   2 +
- include/hw/i386/pc.h                          |   1 +
- include/hw/pci-host/q35.h                     |   1 +
- include/hw/ppc/pef.h                          |  17 -
- include/standard-headers/asm-x86/bootparam.h  |  17 +-
- include/standard-headers/asm-x86/kvm_para.h   |   3 +-
- include/standard-headers/asm-x86/setup_data.h |  83 ++
- include/standard-headers/linux/ethtool.h      |  48 ++
- include/standard-headers/linux/fuse.h         |  39 +-
- .../linux/input-event-codes.h                 |   1 +
- include/standard-headers/linux/virtio_gpu.h   |   2 +
- include/standard-headers/linux/virtio_snd.h   | 154 ++++
- include/sysemu/hostmem.h                      |   1 +
- include/sysemu/kvm.h                          |  19 +-
- include/sysemu/kvm_int.h                      |   3 +
- linux-headers/asm-arm64/kvm.h                 |  15 +-
- linux-headers/asm-arm64/sve_context.h         |  11 +
- linux-headers/asm-generic/bitsperlong.h       |   4 +
- linux-headers/asm-loongarch/kvm.h             |   2 -
- linux-headers/asm-mips/kvm.h                  |   2 -
- linux-headers/asm-powerpc/kvm.h               |  45 +-
- linux-headers/asm-riscv/kvm.h                 |   3 +-
- linux-headers/asm-s390/kvm.h                  | 315 +++++++-
- linux-headers/asm-x86/kvm.h                   | 364 ++++++++-
- linux-headers/linux/bits.h                    |  15 +
- linux-headers/linux/kvm.h                     | 717 +-----------------
- linux-headers/linux/psp-sev.h                 |  71 ++
- target/i386/confidential-guest.h              |  59 ++
- target/i386/kvm/kvm_i386.h                    |   2 +
- target/i386/sev.h                             |   2 -
- target/s390x/kvm/pv.h                         |  14 -
- accel/kvm/kvm-accel-ops.c                     |   2 +-
- accel/kvm/kvm-all.c                           | 236 +++++-
- accel/stubs/kvm-stub.c                        |   5 +
- backends/hostmem-file.c                       |   1 +
- backends/hostmem-memfd.c                      |   1 +
- backends/hostmem-ram.c                        |   1 +
- backends/hostmem.c                            |   1 +
- hw/core/machine.c                             |   5 +
- hw/i386/pc_q35.c                              |   2 +
- hw/i386/x86.c                                 |  19 +-
- hw/pci-host/q35.c                             |  61 +-
- hw/ppc/pef.c                                  |   9 +-
- hw/ppc/spapr.c                                |  10 +-
- hw/s390x/s390-virtio-ccw.c                    |   5 +-
- system/memory.c                               |   5 +
- system/physmem.c                              |  65 +-
- system/runstate.c                             |  15 +-
- target/arm/kvm.c                              |   5 -
- target/i386/confidential-guest.c              |  33 +
- target/i386/kvm/kvm.c                         | 507 +++++++------
- target/i386/kvm/sev-stub.c                    |  21 -
- target/i386/sev.c                             | 173 +++--
- target/loongarch/kvm/kvm.c                    |   5 -
- target/mips/kvm.c                             |   5 -
- target/ppc/kvm.c                              |   5 -
- target/riscv/kvm/kvm-cpu.c                    |   5 -
- target/s390x/kvm/kvm.c                        |   5 -
- target/s390x/kvm/pv.c                         |   8 +
- accel/kvm/trace-events                        |   4 +-
- roms/edk2                                     |   2 +-
- scripts/update-linux-headers.sh               |   8 +-
- target/i386/kvm/meson.build                   |   2 -
- target/i386/meson.build                       |   2 +-
- 69 files changed, 2124 insertions(+), 1200 deletions(-)
- delete mode 100644 include/hw/ppc/pef.h
- create mode 100644 include/standard-headers/asm-x86/setup_data.h
- create mode 100644 linux-headers/linux/bits.h
- create mode 100644 target/i386/confidential-guest.h
- create mode 100644 target/i386/confidential-guest.c
- delete mode 100644 target/i386/kvm/sev-stub.c
-
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 8b8f6d5c00d..44c2a4e1ec7 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -36,6 +36,7 @@ bool machine_usb(MachineState *machine);
+ int machine_phandle_start(MachineState *machine);
+ bool machine_dump_guest_core(MachineState *machine);
+ bool machine_mem_merge(MachineState *machine);
++bool machine_require_guest_memfd(MachineState *machine);
+ HotpluggableCPUList *machine_query_hotpluggable_cpus(MachineState *machine);
+ void machine_set_cpu_numa_node(MachineState *machine,
+                                const CpuInstanceProperties *props,
+@@ -370,6 +371,7 @@ struct MachineState {
+     char *dt_compatible;
+     bool dump_guest_core;
+     bool mem_merge;
++    bool require_guest_memfd;
+     bool usb;
+     bool usb_disabled;
+     char *firmware;
+diff --git a/include/sysemu/hostmem.h b/include/sysemu/hostmem.h
+index 0e411aaa29e..04b884bf42a 100644
+--- a/include/sysemu/hostmem.h
++++ b/include/sysemu/hostmem.h
+@@ -74,6 +74,7 @@ struct HostMemoryBackend {
+     uint64_t size;
+     bool merge, dump, use_canonical_path;
+     bool prealloc, is_mapped, share, reserve;
++    bool guest_memfd;
+     uint32_t prealloc_threads;
+     ThreadContext *prealloc_context;
+     DECLARE_BITMAP(host_nodes, MAX_NODES + 1);
+diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
+index ac3e433cbdd..3c69db79460 100644
+--- a/backends/hostmem-file.c
++++ b/backends/hostmem-file.c
+@@ -85,6 +85,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
+     ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
+     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
++    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
+     ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
+     ram_flags |= RAM_NAMED_FILE;
+     return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 3923ea9364d..745ead0034d 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -55,6 +55,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     name = host_memory_backend_get_name(backend);
+     ram_flags = backend->share ? RAM_SHARED : 0;
+     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
++    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
+     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
+                                           backend->size, ram_flags, fd, 0, errp);
+ }
+diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
+index d121249f0f4..f7d81af783a 100644
+--- a/backends/hostmem-ram.c
++++ b/backends/hostmem-ram.c
+@@ -30,6 +30,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+     name = host_memory_backend_get_name(backend);
+     ram_flags = backend->share ? RAM_SHARED : 0;
+     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
++    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
+     return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
+                                                   name, backend->size,
+                                                   ram_flags, errp);
+diff --git a/backends/hostmem.c b/backends/hostmem.c
+index 81a72ce40b7..eb9682b4a85 100644
+--- a/backends/hostmem.c
++++ b/backends/hostmem.c
+@@ -277,6 +277,7 @@ static void host_memory_backend_init(Object *obj)
+     /* TODO: convert access to globals to compat properties */
+     backend->merge = machine_mem_merge(machine);
+     backend->dump = machine_dump_guest_core(machine);
++    backend->guest_memfd = machine_require_guest_memfd(machine);
+     backend->reserve = true;
+     backend->prealloc_threads = machine->smp.cpus;
+ }
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 37ede0e7d4f..73ce9da835b 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1198,6 +1198,11 @@ bool machine_mem_merge(MachineState *machine)
+     return machine->mem_merge;
+ }
+ 
++bool machine_require_guest_memfd(MachineState *machine)
++{
++    return machine->require_guest_memfd;
++}
++
+ static char *cpu_slot_to_string(const CPUArchId *cpu)
+ {
+     GString *s = g_string_new(NULL);
 -- 
 2.44.0
 
