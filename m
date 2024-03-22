@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF095C47DD9
-	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F54EC47DD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:12:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnjN9-0006KP-Ck; Fri, 22 Mar 2024 14:12:07 -0400
+	id 1rnjNP-0006pq-OP; Fri, 22 Mar 2024 14:12:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjN7-0006KE-Jt
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:05 -0400
+ id 1rnjNJ-0006dv-SK
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjN6-000726-4U
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:05 -0400
+ id 1rnjNH-00073S-UL
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711131123;
+ s=mimecast20190719; t=1711131134;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ybGTeJ15j23uaLcwCaC0bXlA3wGJbYUuGHTm8RBxdns=;
- b=T2zRmUyHA3VUhzmyDrWZzONgcezAbWCxYpL68N5YiNZ90W/JLcDqCmwx/My2Vg51f1s4Hk
- 8wZG56xkKO5wKAarq0XKdMYTamCi69e4peEHzIPRH6VVep6P34SWdza3t29aPnY0uYzPpx
- IESpdxTiHAnk2rcRPxV+fkkfd+VSOUw=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jWInMz9rmQLUefPoQzYe9Bf7sptu2RteyLyov8JGQb8=;
+ b=inVD92AQJfabLyDnMlCOCmzxUwNXBFSrqJ8yaXuRh9LrXQwCQgO32mg6F0xYThokiH2p/W
+ jHR4GJO2CHZ9Yk/OX3ooLyl+04qSeuy71ghJPI5XCadoKGGIX0ZOkLRBHWpcWg90htnq52
+ unJ33mZdWsGYGfAn1wJU75dqaggCxvU=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-x0NdHLI-N42n0hB3yKGLTA-1; Fri, 22 Mar 2024 14:12:00 -0400
-X-MC-Unique: x0NdHLI-N42n0hB3yKGLTA-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-56b829a3b41so1372145a12.3
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:12:00 -0700 (PDT)
+ us-mta-310-DEqICODdOayX-UIkZFAqvA-1; Fri, 22 Mar 2024 14:12:12 -0400
+X-MC-Unique: DEqICODdOayX-UIkZFAqvA-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-513e0c5f399so2044809e87.3
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:12:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711131119; x=1711735919;
+ d=1e100.net; s=20230601; t=1711131130; x=1711735930;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ybGTeJ15j23uaLcwCaC0bXlA3wGJbYUuGHTm8RBxdns=;
- b=jUxjfneoawOupOKF5UxfLhyiy2z0LuqDCJawNHA9tU3WgB35XlADBZYn1nNVA2rBEt
- rFeR+bUkyjh4FbvV3RNpw+M4ewYZno8iBjRPsc32uvNfh7Zx9As/AQMPGNyBAaJeOJCT
- 5I+J1DJCSVD5AMZ2/cSzM3SvmGep2v6thf2Y40vjavxaA5yPzRVW1gKAA/4A141XItpM
- 3Ng9Pi0GdU8wFXV7Quw7x7zmOP+lBqpJf8R9ziwiB0jaNm1HDlW0YXG2W77Ylvae0ZjQ
- wWcHkodO+ie+ZehTinXm0Oh8T8kXEM2LK3HP0PH4qIj/ZzIdvGQZtHqQ0L+7Emz6gOT+
- +zyA==
-X-Gm-Message-State: AOJu0Yz8xFh4WRHXBuEWEk3NyHC0gsvf1nGVOjQjHt+f+qoPjpGcCYZD
- nGgo/SKLnDjaXUugxJok0Wm9yTCv/0fiaNYFYVlFxlGBjS6TN4ZBU8Bc33LEHwayyF0OLhz5A0W
- KpHtydMu7TIhDRxmwDNjmAongN11TIOOQjDgfjuO7y6kMByRYrVjMePP3z9u4Jfuvksb25rjsD7
- //HndFfZ4Rcbr/SJd5fgEJ6EUauB0nCGfhJCgt
-X-Received: by 2002:a50:d594:0:b0:56b:902e:b144 with SMTP id
- v20-20020a50d594000000b0056b902eb144mr192619edi.12.1711131118930; 
- Fri, 22 Mar 2024 11:11:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGKOHI4Z9v+6MSVTyAgMg95WsgYfetbNPWZowO9qwc+UeYAk0Gh4Y2YLlm2Ospf8Dcyb1c7bw==
-X-Received: by 2002:a50:d594:0:b0:56b:902e:b144 with SMTP id
- v20-20020a50d594000000b0056b902eb144mr192607edi.12.1711131118656; 
- Fri, 22 Mar 2024 11:11:58 -0700 (PDT)
+ bh=jWInMz9rmQLUefPoQzYe9Bf7sptu2RteyLyov8JGQb8=;
+ b=LbW5IgqOojVHshXYXJlEvhaIpj4rgYJPP51scbEEOPfPMeF8A6YE70iveM6aM8B4tZ
+ DUtC8AtmQAt9WoGjllRUXhrU74ceH1UPsoYnsMjj6ZYM4Q7dO2iLsScEKnnoUvO4OTM2
+ XFftiUcAlU1mhYvlEuCg2FyO+qbCIt4gAo4dVZ5xTnexWUT7u7eYVVJgERFZNACgeSWT
+ F9zSZM4ulTNqHlPituPEmzP+k9Lyr6Uc/nTUY7R5gqcAyXLVsDeWIdYYoAgml5w43Wgr
+ hPhCkd4Nb3Zga7d6fVM95tl9+D3uSp/nnu7FVzrhfQCBmXvCjaf4gRt/OP5hLTx/35gM
+ AjpQ==
+X-Gm-Message-State: AOJu0YymC80/3MWdx9NZha+bN50Com/MP4Bs8WAY9oYPDzjfrWTyv/yU
+ qPRZNuvEO5giOqfY58ZcK5EW1l/FyYOGENTO0txZpAcEDdxXAEWPiUFm4xgX1vpG0EyYBcD2sKo
+ b6igk+a4NCjBTZ5D0aseFl7RwGeNRcsbpmZ5MuAT8Rxjz1oqjCuRahadn1cc5NZLgxeThDYK5DM
+ BffFeGePisPQZp0W3zfcNFyN6ltWdRr7npUsjP
+X-Received: by 2002:a05:6512:55c:b0:513:ccd1:563e with SMTP id
+ h28-20020a056512055c00b00513ccd1563emr174951lfl.8.1711131130321; 
+ Fri, 22 Mar 2024 11:12:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOdvTe4TSUyXf9V2XkBMoxfe17psOJpqGWG723gMrqQYeklUrighyAEIlmTWp4EEgq/heV3Q==
+X-Received: by 2002:a05:6512:55c:b0:513:ccd1:563e with SMTP id
+ h28-20020a056512055c00b00513ccd1563emr174930lfl.8.1711131129978; 
+ Fri, 22 Mar 2024 11:12:09 -0700 (PDT)
 Received: from [192.168.10.118] ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- h26-20020a50ed9a000000b005689baaae61sm74449edr.26.2024.03.22.11.11.56
+ l22-20020aa7c316000000b00568c299eaedsm68240edq.81.2024.03.22.11.12.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 11:11:56 -0700 (PDT)
+ Fri, 22 Mar 2024 11:12:07 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: xiaoyao.li@intel.com,
 	michael.roth@amd.com,
 	david@redhat.com
-Subject: [PATCH 12/26] KVM: track whether guest state is encrypted
-Date: Fri, 22 Mar 2024 19:11:02 +0100
-Message-ID: <20240322181116.1228416-13-pbonzini@redhat.com>
+Subject: [PATCH 16/26] target/i386: SEV: use KVM_SEV_INIT2 if possible
+Date: Fri, 22 Mar 2024 19:11:06 +0100
+Message-ID: <20240322181116.1228416-17-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240322181116.1228416-1-pbonzini@redhat.com>
 References: <20240322181116.1228416-1-pbonzini@redhat.com>
@@ -104,108 +104,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So far, KVM has allowed KVM_GET/SET_* ioctls to execute even if the
-guest state is encrypted, in which case they do nothing.  For the new
-API using VM types, instead, the ioctls will fail which is a safer and
-more robust approach.
+Implement support for the KVM_X86_SEV_VM and KVM_X86_SEV_ES_VM virtual
+machine types, and the KVM_SEV_INIT2 function of KVM_MEMORY_ENCRYPT_OP.
 
-The new API will be the only one available for SEV-SNP and TDX, but it
-is also usable for SEV and SEV-ES.  In preparation for that, require
-architecture-specific KVM code to communicate the point at which guest
-state is protected (which must be after kvm_cpu_synchronize_post_init(),
-though that might change in the future in order to suppor migration).
-From that point, skip reading registers so that cpu->vcpu_dirty is
-never true: if it ever becomes true, kvm_arch_put_registers() will
-fail miserably.
+These replace the KVM_SEV_INIT and KVM_SEV_ES_INIT functions, and have
+several advantages:
+
+- sharing the initialization sequence with SEV-SNP and TDX
+
+- allowing arguments including the set of desired VMSA features
+
+- protection against invalid use of KVM_GET/SET_* ioctls for guests
+  with encrypted state
+
+If the KVM_X86_SEV_VM and KVM_X86_SEV_ES_VM types are not supported,
+fall back to KVM_SEV_INIT and KVM_SEV_ES_INIT (which use the
+default x86 VM type).
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/sysemu/kvm.h     |  2 ++
- include/sysemu/kvm_int.h |  1 +
- accel/kvm/kvm-all.c      | 14 ++++++++++++--
- target/i386/sev.c        |  1 +
- 4 files changed, 16 insertions(+), 2 deletions(-)
+ target/i386/kvm/kvm.c |  2 ++
+ target/i386/sev.c     | 41 +++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 39 insertions(+), 4 deletions(-)
 
-diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-index fad9a7e8ff3..302e8f6f1e5 100644
---- a/include/sysemu/kvm.h
-+++ b/include/sysemu/kvm.h
-@@ -539,6 +539,8 @@ bool kvm_dirty_ring_enabled(void);
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index b599a7fae36..2577e345502 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -164,6 +164,8 @@ static int kvm_get_one_msr(X86CPU *cpu, int index, uint64_t *value);
  
- uint32_t kvm_dirty_ring_size(void);
+ static const char *vm_type_name[] = {
+     [KVM_X86_DEFAULT_VM] = "default",
++    [KVM_X86_SEV_VM] = "SEV",
++    [KVM_X86_SEV_ES_VM] = "SEV-ES",
+ };
  
-+void kvm_mark_guest_state_protected(void);
-+
- /**
-  * kvm_hwpoisoned_mem - indicate if there is any hwpoisoned page
-  * reported for the VM.
-diff --git a/include/sysemu/kvm_int.h b/include/sysemu/kvm_int.h
-index 882e37e12c5..3496be7997a 100644
---- a/include/sysemu/kvm_int.h
-+++ b/include/sysemu/kvm_int.h
-@@ -87,6 +87,7 @@ struct KVMState
-     bool kernel_irqchip_required;
-     OnOffAuto kernel_irqchip_split;
-     bool sync_mmu;
-+    bool guest_state_protected;
-     uint64_t manual_dirty_log_protect;
-     /* The man page (and posix) say ioctl numbers are signed int, but
-      * they're not.  Linux, glibc and *BSD all treat ioctl numbers as
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index a8cecd040eb..05fa3533c66 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2698,7 +2698,7 @@ bool kvm_cpu_check_are_resettable(void)
- 
- static void do_kvm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
- {
--    if (!cpu->vcpu_dirty) {
-+    if (!cpu->vcpu_dirty && !kvm_state->guest_state_protected) {
-         int ret = kvm_arch_get_registers(cpu);
-         if (ret) {
-             error_report("Failed to get registers: %s", strerror(-ret));
-@@ -2712,7 +2712,7 @@ static void do_kvm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
- 
- void kvm_cpu_synchronize_state(CPUState *cpu)
- {
--    if (!cpu->vcpu_dirty) {
-+    if (!cpu->vcpu_dirty && !kvm_state->guest_state_protected) {
-         run_on_cpu(cpu, do_kvm_cpu_synchronize_state, RUN_ON_CPU_NULL);
-     }
- }
-@@ -2747,6 +2747,11 @@ static void do_kvm_cpu_synchronize_post_init(CPUState *cpu, run_on_cpu_data arg)
- 
- void kvm_cpu_synchronize_post_init(CPUState *cpu)
- {
-+    /*
-+     * This runs before the machine_init_done notifiers, and is the last
-+     * opportunity to synchronize the state of confidential guests.
-+     */
-+    assert(!kvm_state->guest_state_protected);
-     run_on_cpu(cpu, do_kvm_cpu_synchronize_post_init, RUN_ON_CPU_NULL);
- }
- 
-@@ -4094,3 +4099,8 @@ void query_stats_schemas_cb(StatsSchemaList **result, Error **errp)
-         query_stats_schema_vcpu(first_cpu, &stats_args);
-     }
- }
-+
-+void kvm_mark_guest_state_protected(void)
-+{
-+    kvm_state->guest_state_protected = true;
-+}
+ bool kvm_is_vm_type_supported(int type)
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index b8f79d34d19..c49a8fd55eb 100644
+index ebe36d4c10c..9dab4060b84 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -755,6 +755,7 @@ sev_launch_get_measure(Notifier *notifier, void *unused)
-         if (ret) {
-             exit(1);
+@@ -26,6 +26,7 @@
+ #include "qemu/error-report.h"
+ #include "crypto/hash.h"
+ #include "sysemu/kvm.h"
++#include "kvm/kvm_i386.h"
+ #include "sev.h"
+ #include "sysemu/sysemu.h"
+ #include "sysemu/runstate.h"
+@@ -56,6 +57,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(SevGuestState, SEV_GUEST)
+ struct SevGuestState {
+     X86ConfidentialGuest parent_obj;
+ 
++    int kvm_type;
++
+     /* configuration parameters */
+     char *sev_device;
+     uint32_t policy;
+@@ -850,6 +853,26 @@ sev_vm_state_change(void *opaque, bool running, RunState state)
+     }
+ }
+ 
++static int sev_kvm_type(X86ConfidentialGuest *cg)
++{
++    SevGuestState *sev = SEV_GUEST(cg);
++    int kvm_type;
++
++    if (sev->kvm_type != -1) {
++        goto out;
++    }
++
++    kvm_type = (sev->policy & SEV_POLICY_ES) ? KVM_X86_SEV_ES_VM : KVM_X86_SEV_VM;
++    if (kvm_is_vm_type_supported(kvm_type)) {
++        sev->kvm_type = kvm_type;
++    } else {
++        sev->kvm_type = KVM_X86_DEFAULT_VM;
++    }
++
++out:
++    return sev->kvm_type;
++}
++
+ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+ {
+     SevGuestState *sev = SEV_GUEST(cgs);
+@@ -929,13 +952,19 @@ static int sev_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+                          __func__);
+             goto err;
          }
-+        kvm_mark_guest_state_protected();
+-        cmd = KVM_SEV_ES_INIT;
+-    } else {
+-        cmd = KVM_SEV_INIT;
      }
  
-     /* query the measurement blob length */
+     trace_kvm_sev_init();
+-    ret = sev_ioctl(sev->sev_fd, cmd, NULL, &fw_error);
++    if (sev_kvm_type(X86_CONFIDENTIAL_GUEST(sev)) == KVM_X86_DEFAULT_VM) {
++        cmd = sev_es_enabled() ? KVM_SEV_ES_INIT : KVM_SEV_INIT;
++
++        ret = sev_ioctl(sev->sev_fd, cmd, NULL, &fw_error);
++    } else {
++        struct kvm_sev_init args = { 0 };
++
++        ret = sev_ioctl(sev->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
++    }
++
+     if (ret) {
+         error_setg(errp, "%s: failed to initialize ret=%d fw_error=%d '%s'",
+                    __func__, ret, fw_error, fw_error_to_str(fw_error));
+@@ -1327,8 +1356,10 @@ static void
+ sev_guest_class_init(ObjectClass *oc, void *data)
+ {
+     ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
++    X86ConfidentialGuestClass *x86_klass = X86_CONFIDENTIAL_GUEST_CLASS(oc);
+ 
+     klass->kvm_init = sev_kvm_init;
++    x86_klass->kvm_type = sev_kvm_type;
+ 
+     object_class_property_add_str(oc, "sev-device",
+                                   sev_guest_get_sev_device,
+@@ -1357,6 +1388,8 @@ sev_guest_instance_init(Object *obj)
+ {
+     SevGuestState *sev = SEV_GUEST(obj);
+ 
++    sev->kvm_type = -1;
++
+     sev->sev_device = g_strdup(DEFAULT_SEV_DEVICE);
+     sev->policy = DEFAULT_GUEST_POLICY;
+     object_property_add_uint32_ptr(obj, "policy", &sev->policy,
 -- 
 2.44.0
 
