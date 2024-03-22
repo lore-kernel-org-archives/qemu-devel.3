@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC71C54E71
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DC8DCD11BF
 	for <qemu-devel@archiver.kernel.org>; Fri, 22 Mar 2024 18:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnjNc-000875-NN; Fri, 22 Mar 2024 14:12:36 -0400
+	id 1rnjN2-0006I2-P8; Fri, 22 Mar 2024 14:12:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjNZ-0007cG-B9
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:33 -0400
+ id 1rnjMw-0006HH-2y
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:11:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rnjNX-00076P-HX
- for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:12:33 -0400
+ id 1rnjMu-0006zs-FQ
+ for qemu-devel@nongnu.org; Fri, 22 Mar 2024 14:11:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711131150;
+ s=mimecast20190719; t=1711131111;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RYuN7GnzfuyFAUI3cUkmwGDLrJHXS1AZ1cx6Ty/AhZ0=;
- b=Ggm6AMIP/ypFkYjxmhD1sGbTJXzeQeuBpKeht/vojySnDAhejyMWpBjPUJ3+PIJSlc18WV
- yIOO+v2bffPZQ3YLpvpHAhYtNICdHgSWHFbKV3oBLqqZSwrmuJPpuuBD0jJ1it9MyiIwCd
- 0q3p1jJFUfJ/NCa/SXFPLYlK3QJ4y1Y=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/oyq/pYGuo/iu0l7uKUoPfrHl8ZU1WATY9EZskgY+m8=;
+ b=NyRvV7BfC8Rj/z8IJaTfkf8GyUq5W4i4e1td3bWQbdj8HK6DxAeshBCDLowfTIDDv1K52l
+ Fr2pqf2D4CU35aPhE8iWZeg3/SXZ52yhHk8yiNoocViwN9DDfDXkGIRyfpVtTzs2gwVrqZ
+ 7oBD+1DMO2VhViPwcQeovc1kTdpKtZ8=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-652-pvt6oKKRPtSgC2f727ieKQ-1; Fri, 22 Mar 2024 14:12:29 -0400
-X-MC-Unique: pvt6oKKRPtSgC2f727ieKQ-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a47103b2261so124210066b.3
- for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:12:29 -0700 (PDT)
+ us-mta-220-L1psxzkIMfuCLIpMLVKpQg-1; Fri, 22 Mar 2024 14:11:49 -0400
+X-MC-Unique: L1psxzkIMfuCLIpMLVKpQg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a4732ace81eso54945866b.0
+ for <qemu-devel@nongnu.org>; Fri, 22 Mar 2024 11:11:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711131147; x=1711735947;
+ d=1e100.net; s=20230601; t=1711131106; x=1711735906;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RYuN7GnzfuyFAUI3cUkmwGDLrJHXS1AZ1cx6Ty/AhZ0=;
- b=BgpgKms0wnoPs9PXXC2Ab/m8ZaXaOk3mXSxsgEZz1V4XSDEIZ07donOIfvbeG4sU8o
- m4Xar06km0j6aRS9nH5YMM5/liXGYFK+A7Ud/RtH5lsY8XCOd6JwDxd7NrChHzykL7ep
- RuyydwNVYBZNs02WYbA0qRwwWlYDPgfEsYxcAyTaN1nzgHy3JgnFd8v3Zcbw1kJxCFCd
- AIMMXJO46a/Zyn7cyZ2diDuMDMY9ySYgKpfBudyIApBgAFozNxN8e+3no7e5MQPa1VYn
- Sw8tHxHQFbPVgHqAlq6LKtekvMmMSe1HjNgTMkj6l3nFzDBb6G6MvGm79qK5gccKpSyk
- C0NA==
-X-Gm-Message-State: AOJu0YwBeKsxE7d9SegYLFbmtHNa6vSfrjbI2nwufPz+Nlcxwhi3nRtA
- gjsnGnH+x0KqikMseHFBy3Eovl/5JY9CSsenYZtDTYjpP+16vAS/A3pipzz6x0cOlDgFJOJufdc
- mF3HjDGlqWkxOxZXQ7kP7y1n3EAzKaHt5paPrKlHurSfliUhHxjoTmGfUdYO0wVz5NLXFm6Iimr
- XY4NT6ETNm+/I5x4qIu1rVhvgzEwlrcAFSQ+TV
-X-Received: by 2002:a17:906:304b:b0:a46:64e3:e284 with SMTP id
- d11-20020a170906304b00b00a4664e3e284mr301149ejd.74.1711131147222; 
- Fri, 22 Mar 2024 11:12:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGl5IkAyYVn7ygUrArRRYUM621yCVdtB0KlTk6IuELg8aMbPSFthxwPjtTFQMkZROXfKXEDXA==
-X-Received: by 2002:a17:906:304b:b0:a46:64e3:e284 with SMTP id
- d11-20020a170906304b00b00a4664e3e284mr301127ejd.74.1711131146675; 
- Fri, 22 Mar 2024 11:12:26 -0700 (PDT)
+ bh=/oyq/pYGuo/iu0l7uKUoPfrHl8ZU1WATY9EZskgY+m8=;
+ b=Ie//VnoyRTbga6uaguoqwqE4/mWOBMfDKcSYzIz/PwNJdDvH8hNGcQaMkdOPHdLusc
+ 4qjI24O1Prb253oTBE+f3hgbe9r3P3zzbYjZU1PFDI1jaFVE6bATaLq1/zqDof5N9iGu
+ k/0WOx0nmoIHXrgrzjxzFYAl6A6YzuB/pVWP4M0Ff0AvYEuvXnilbmlDULtu0B+nGoY9
+ hLiqWxJLfMVCqgA9z0ZhBtaT0RQVpZklKe6WzAacCANtF0PMmvaE9SIpgZHAy3zDZnbz
+ WnOE66fBXjWZqIuAS5AXtpA8ztnmO2ZmS2ya4dE5aL5XK+94kgBQYnVgWRgzvQ+vuelX
+ uwxA==
+X-Gm-Message-State: AOJu0YypnR577A6hXkokgv1CyjgRhwSEVKQvP92pxT7JUoSNB/dmXgNN
+ COjhos8kEXYmOUFOy48KEaa8FH15/m+v+oq7tAQkgTJHTx9FcZ2O5D+fkvQajbK/Rt4L6d2lzFg
+ 0+wqNlRPIF7YHi9ytvMGkvCrYZquFlV75JZ8JapVBLrKxIaxM18Bc1UtBL7rOui2eLXs96DslhH
+ RU1gu0V7fnjTn63LU5A/HtCAGrUYeu2H/atYXo
+X-Received: by 2002:a17:906:6958:b0:a46:30f4:6321 with SMTP id
+ c24-20020a170906695800b00a4630f46321mr418889ejs.58.1711131106276; 
+ Fri, 22 Mar 2024 11:11:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkmBUloOLbYrHyxnr3q+kfWGpqGz1abuCf4iKRSQ5eDjnywqyV4scKqipYSyEBSW6t+1mbHA==
+X-Received: by 2002:a17:906:6958:b0:a46:30f4:6321 with SMTP id
+ c24-20020a170906695800b00a4630f46321mr418868ejs.58.1711131105956; 
+ Fri, 22 Mar 2024 11:11:45 -0700 (PDT)
 Received: from [192.168.10.118] ([151.95.49.219])
  by smtp.gmail.com with ESMTPSA id
- g6-20020a17090670c600b00a4519304f8bsm80418ejk.14.2024.03.22.11.12.24
+ m21-20020a17090679d500b00a4739efd7cesm77375ejo.60.2024.03.22.11.11.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 22 Mar 2024 11:12:25 -0700 (PDT)
+ Fri, 22 Mar 2024 11:11:43 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: xiaoyao.li@intel.com,
 	michael.roth@amd.com,
 	david@redhat.com
-Subject: [PATCH 22/26] HostMem: Add mechanism to opt in kvm guest memfd via
- MachineState
-Date: Fri, 22 Mar 2024 19:11:12 +0100
-Message-ID: <20240322181116.1228416-23-pbonzini@redhat.com>
+Subject: [PATCH 08/26] scripts/update-linux-headers: Add bits.h to file imports
+Date: Fri, 22 Mar 2024 19:10:58 +0100
+Message-ID: <20240322181116.1228416-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240322181116.1228416-1-pbonzini@redhat.com>
 References: <20240322181116.1228416-1-pbonzini@redhat.com>
@@ -105,128 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Michael Roth <michael.roth@amd.com>
 
-Add a new member "guest_memfd" to memory backends. When it's set
-to true, it enables RAM_GUEST_MEMFD in ram_flags, thus private kvm
-guest_memfd will be allocated during RAMBlock allocation.
-
-Memory backend's @guest_memfd is wired with @require_guest_memfd
-field of MachineState. It avoid looking up the machine in phymem.c.
-
-MachineState::require_guest_memfd is supposed to be set by any VMs
-that requires KVM guest memfd as private memory, e.g., TDX VM.
-
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Message-ID: <20240320083945.991426-8-michael.roth@amd.com>
+Signed-off-by: Michael Roth <michael.roth@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/boards.h      | 2 ++
- include/sysemu/hostmem.h | 1 +
- backends/hostmem-file.c  | 1 +
- backends/hostmem-memfd.c | 1 +
- backends/hostmem-ram.c   | 1 +
- backends/hostmem.c       | 1 +
- hw/core/machine.c        | 5 +++++
- 7 files changed, 12 insertions(+)
+ scripts/update-linux-headers.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 8b8f6d5c00d..44c2a4e1ec7 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -36,6 +36,7 @@ bool machine_usb(MachineState *machine);
- int machine_phandle_start(MachineState *machine);
- bool machine_dump_guest_core(MachineState *machine);
- bool machine_mem_merge(MachineState *machine);
-+bool machine_require_guest_memfd(MachineState *machine);
- HotpluggableCPUList *machine_query_hotpluggable_cpus(MachineState *machine);
- void machine_set_cpu_numa_node(MachineState *machine,
-                                const CpuInstanceProperties *props,
-@@ -370,6 +371,7 @@ struct MachineState {
-     char *dt_compatible;
-     bool dump_guest_core;
-     bool mem_merge;
-+    bool require_guest_memfd;
-     bool usb;
-     bool usb_disabled;
-     char *firmware;
-diff --git a/include/sysemu/hostmem.h b/include/sysemu/hostmem.h
-index 0e411aaa29e..04b884bf42a 100644
---- a/include/sysemu/hostmem.h
-+++ b/include/sysemu/hostmem.h
-@@ -74,6 +74,7 @@ struct HostMemoryBackend {
-     uint64_t size;
-     bool merge, dump, use_canonical_path;
-     bool prealloc, is_mapped, share, reserve;
-+    bool guest_memfd;
-     uint32_t prealloc_threads;
-     ThreadContext *prealloc_context;
-     DECLARE_BITMAP(host_nodes, MAX_NODES + 1);
-diff --git a/backends/hostmem-file.c b/backends/hostmem-file.c
-index ac3e433cbdd..3c69db79460 100644
---- a/backends/hostmem-file.c
-+++ b/backends/hostmem-file.c
-@@ -85,6 +85,7 @@ file_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     ram_flags |= fb->readonly ? RAM_READONLY_FD : 0;
-     ram_flags |= fb->rom == ON_OFF_AUTO_ON ? RAM_READONLY : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     ram_flags |= fb->is_pmem ? RAM_PMEM : 0;
-     ram_flags |= RAM_NAMED_FILE;
-     return memory_region_init_ram_from_file(&backend->mr, OBJECT(backend), name,
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index 3923ea9364d..745ead0034d 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -55,6 +55,7 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     name = host_memory_backend_get_name(backend);
-     ram_flags = backend->share ? RAM_SHARED : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend), name,
-                                           backend->size, ram_flags, fd, 0, errp);
- }
-diff --git a/backends/hostmem-ram.c b/backends/hostmem-ram.c
-index d121249f0f4..f7d81af783a 100644
---- a/backends/hostmem-ram.c
-+++ b/backends/hostmem-ram.c
-@@ -30,6 +30,7 @@ ram_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-     name = host_memory_backend_get_name(backend);
-     ram_flags = backend->share ? RAM_SHARED : 0;
-     ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-+    ram_flags |= backend->guest_memfd ? RAM_GUEST_MEMFD : 0;
-     return memory_region_init_ram_flags_nomigrate(&backend->mr, OBJECT(backend),
-                                                   name, backend->size,
-                                                   ram_flags, errp);
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index 81a72ce40b7..eb9682b4a85 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -277,6 +277,7 @@ static void host_memory_backend_init(Object *obj)
-     /* TODO: convert access to globals to compat properties */
-     backend->merge = machine_mem_merge(machine);
-     backend->dump = machine_dump_guest_core(machine);
-+    backend->guest_memfd = machine_require_guest_memfd(machine);
-     backend->reserve = true;
-     backend->prealloc_threads = machine->smp.cpus;
- }
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 37ede0e7d4f..73ce9da835b 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1198,6 +1198,11 @@ bool machine_mem_merge(MachineState *machine)
-     return machine->mem_merge;
- }
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index d48856f9e24..5f20434d5c5 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -169,7 +169,7 @@ rm -rf "$output/linux-headers/linux"
+ mkdir -p "$output/linux-headers/linux"
+ for header in const.h stddef.h kvm.h vfio.h vfio_ccw.h vfio_zdev.h vhost.h \
+               psci.h psp-sev.h userfaultfd.h memfd.h mman.h nvme_ioctl.h \
+-              vduse.h iommufd.h; do
++              vduse.h iommufd.h bits.h; do
+     cp "$tmpdir/include/linux/$header" "$output/linux-headers/linux"
+ done
  
-+bool machine_require_guest_memfd(MachineState *machine)
-+{
-+    return machine->require_guest_memfd;
-+}
-+
- static char *cpu_slot_to_string(const CPUArchId *cpu)
- {
-     GString *s = g_string_new(NULL);
 -- 
 2.44.0
 
