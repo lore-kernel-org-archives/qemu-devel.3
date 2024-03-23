@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA7C6C54E67
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 09:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25C4AC54E67
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 09:40:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnxqT-0001oa-Ni; Sat, 23 Mar 2024 05:39:21 -0400
+	id 1rnxqW-0001p8-Ms; Sat, 23 Mar 2024 05:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rnxqR-0001nY-Ht
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 05:39:19 -0400
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rnxqT-0001od-Os
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 05:39:21 -0400
 Received: from todd.t-8ch.de ([159.69.126.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rnxqO-0006wK-Lk
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 05:39:19 -0400
+ (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rnxqR-0006wt-D4
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 05:39:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
- t=1711186751; bh=fMsU+/qeHEJsWGtnvX3wRLIgPDqabVyVlyBbSHyCcpg=;
+ t=1711186752; bh=2JLoEvBr8ShBIMBQWSMVVUm8Hdn8BucAfAqSpnJ4aaU=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=m7CO9D2yeAAoErp1A7NPZbfReq6T7iqclEAblvMPESpD+6S8Z989AQTnnqxusIRgZ
- pHKNMqbwxRzlXq0Zz4yPE8hF1/pPDFWmK5AlZx9/oIwIoVOiLB+HgPdUaHL74jSvBV
- /fGBLn7tQEug34vZrlN5Xx1fv5EefWydaENZORys=
+ b=qGk4iF2sOnHSxjOUJpfkqMbP+avEYYomBCBAd/jj9BpyBDhnRWM9YdNpTJ1lNbLkO
+ uHku3W91sTtg52k/JLVdT0jjvlCA1HWFhLY68CxDx1818vJJov37pAMVOesqjhMzDf
+ XYIGG4AtbNDOljjK4pSKQySZqpSJl/KBlEMMFHKs=
 From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Date: Sat, 23 Mar 2024 10:39:08 +0100
-Subject: [PATCH v7 3/7] hw/misc/pvpanic: add local definition for
- PVPANIC_SHUTDOWN
+Date: Sat, 23 Mar 2024 10:39:10 +0100
+Subject: [PATCH v7 5/7] pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic
+ shutdown signal
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240323-pvpanic-shutdown-v7-3-4ac1fd546d6f@t-8ch.de>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240323-pvpanic-shutdown-v7-5-4ac1fd546d6f@t-8ch.de>
 References: <20240323-pvpanic-shutdown-v7-0-4ac1fd546d6f@t-8ch.de>
 In-Reply-To: <20240323-pvpanic-shutdown-v7-0-4ac1fd546d6f@t-8ch.de>
 To: "Michael S. Tsirkin" <mst@redhat.com>, 
@@ -41,11 +41,11 @@ Cc: qemu-devel@nongnu.org,
  Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
  =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1711186751; l=1026;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1711186751; l=1650;
  i=thomas@t-8ch.de; s=20221212; h=from:subject:message-id;
- bh=fMsU+/qeHEJsWGtnvX3wRLIgPDqabVyVlyBbSHyCcpg=;
- b=SyMh2GJ0akgrK4hK9M08UQmS2qmIv8fNyVaZNszYU0zsBcdsn4hd6YxRydVbfeNla+Smgm0VN
- rtXw3pHbsm1BWbbC0Xb/4HQc+/AzCg9+f0NhalYSD/zowtzMyWyIV0b
+ bh=k19zzq4mYJdN2OE0/Y1gHo14BiZIj+kA8x0gNif0H+w=;
+ b=EfZXFDRHp7rEy6qYhqvdUMa+5OnG3Nwum5c5ETrvRogCcZ0YgnfTtdpNCDuxPVQeIEFxZ525G
+ bhGKt3Q6iOpBbXhSU0eQcjOxpvGTmvzTHieTF0rmMq0rFFIbDzg3X9Y
 X-Developer-Key: i=thomas@t-8ch.de; a=ed25519;
  pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
 Received-SPF: pass client-ip=159.69.126.157; envelope-from=thomas@t-8ch.de;
@@ -71,36 +71,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PVPANIC_* defines are imported from the kernel via
-standard-header/pvpanic.h.
-For that the kernel needs to pick up the changes from
-qemu docs/specs/pvpanic.rst which takes time.
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-The actual value of the define is known as the authoritative source
-comes from the qemu tree in docs/specs/pvpanic.rst, where it was added
-in commit 73279cecca03 ("docs/specs/pvpanic: document shutdown event").
+Emit a QMP event on receiving a PVPANIC_SHUTDOWN event. Even though a typical
+SHUTDOWN event will be sent, it will be indistinguishable from a shutdown
+originating from other cases (e.g. KVM exit due to KVM_SYSTEM_EVENT_SHUTDOWN)
+that also issue the guest-shutdown cause.
+A management layer application can detect the new GUEST_PVSHUTDOWN event to
+determine if the guest is using the pvpanic interface to request shutdowns.
 
-Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 ---
- include/hw/misc/pvpanic.h | 5 +++++
- 1 file changed, 5 insertions(+)
+ qapi/run-state.json | 14 ++++++++++++++
+ system/runstate.c   |  1 +
+ 2 files changed, 15 insertions(+)
 
-diff --git a/include/hw/misc/pvpanic.h b/include/hw/misc/pvpanic.h
-index 947468b81b1a..926aa64838f9 100644
---- a/include/hw/misc/pvpanic.h
-+++ b/include/hw/misc/pvpanic.h
-@@ -20,6 +20,11 @@
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index 789fc34559ad..888a11e62011 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -455,6 +455,20 @@
+ { 'event': 'GUEST_CRASHLOADED',
+   'data': { 'action': 'GuestPanicAction', '*info': 'GuestPanicInformation' } }
  
- #include "standard-headers/linux/pvpanic.h"
- 
-+#ifdef PVPANIC_SHUTDOWN
-+#error PVPANIC_SHUTDOWN is already defined
-+#endif
-+#define PVPANIC_SHUTDOWN	(1 << 2)
++##
++# @GUEST_PVSHUTDOWN:
++#
++# Emitted when guest submits a shutdown request via pvpanic interface
++#
++# Since: 9.0
++#
++# Example:
++#
++#     <- { "event": "GUEST_PVSHUTDOWN",
++#          "timestamp": { "seconds": 1648245259, "microseconds": 893771 } }
++##
++{ 'event': 'GUEST_PVSHUTDOWN' }
 +
- #define PVPANIC_EVENTS (PVPANIC_PANICKED | PVPANIC_CRASH_LOADED)
+ ##
+ # @GuestPanicAction:
+ #
+diff --git a/system/runstate.c b/system/runstate.c
+index 572499513034..02b0a1f8b9d0 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -574,6 +574,7 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
  
- #define TYPE_PVPANIC_ISA_DEVICE "pvpanic"
+ void qemu_system_guest_pvshutdown(void)
+ {
++    qapi_event_send_guest_pvshutdown();
+     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+ }
+ 
 
 -- 
 2.44.0
