@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57BA7C54E58
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 17:32:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0ECAC54E67
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 17:32:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ro5C6-0002kr-3G; Sat, 23 Mar 2024 13:30:10 -0400
+	id 1ro5C7-0002l9-3a; Sat, 23 Mar 2024 13:30:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ro5C3-0002k7-Fd
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 13:30:07 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1ro5C4-0002kU-IR
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 13:30:08 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ro5C1-00065S-OI
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 13:30:07 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1dffa5e3f2dso19830045ad.2
- for <qemu-devel@nongnu.org>; Sat, 23 Mar 2024 10:30:05 -0700 (PDT)
+ id 1ro5C2-00065f-RX
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 13:30:08 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1e0b213efa3so628515ad.0
+ for <qemu-devel@nongnu.org>; Sat, 23 Mar 2024 10:30:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711215004; x=1711819804; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711215005; x=1711819805; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iCXMa8NXK4SslxAJzO8oJ4YsLhlZ/FlXinB3WAZag7c=;
- b=UnDychnUrUw8jo2e7a5xYAVECR2PLxrLWY4Oi3XRjrnAqrI9OoL8iU+G1XcUz6fzAD
- uJg/2WcxZOvWoj96oLcLwyY4f5PBQjUKfAMZp5q/ne5FmZwlHPoOHi0lRwt75X9xdshi
- pf+he90x5t2elKn/8we1HQXE4ukPu6aPOU7VsLQHmBJBSWxRFZ5BWqAmMW+kTF2OYHaY
- YvHyIxovU1p5JsXjxwt/uedB3Voc84gMdZEvds2C0I2BFzAqe9hTDX5F8C2mw6SzTDcx
- NsyS1ksBkjjAZRKemXbLhom7oc071bePz87MNw/wLjBvEyzB5XtXxqFbUr+XX4gK8Mhg
- Dqxw==
+ bh=RF8MIQWUQ8ggE/MlTolxsgSJT5vy8jgQgVDGU2A+dUw=;
+ b=qO0SLNpjo2ernSZmuk9kzJeQwnm9pqZde5znaOZpLHKzGXeK8z6ffCKtRl8y8wUb5z
+ JNSc6e3ivhcvrcSMOup+/2trKi03n7MZMUSsPkGgnqTQ0NTew8GoMxWRna0568HTVcJ/
+ 6HY1czKEuCjPqgqoZLSui6gCEtFyqX72qOCKYXuaQt/rbNf9UGjS/Br4vfjCF3hbK305
+ IT7GQYRASh50OtuD+sVZTUMmzYSuFG4DeL1BvhsBUAq15L2CRSJ6/RjmN/sgqHr7+n0s
+ 9opb5dxZ/CuvYmGZOlZK4wEPjPGRsYwP4P+OqliG6z818eP07d6mlUSrUyqdBdOf1lCe
+ ngNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711215004; x=1711819804;
+ d=1e100.net; s=20230601; t=1711215005; x=1711819805;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iCXMa8NXK4SslxAJzO8oJ4YsLhlZ/FlXinB3WAZag7c=;
- b=GnI4gxf4VLCiXqdZdjBlKZ7skFVlMhTR0ckV+cnRhSzrpQPbULelKyNkO8BnjjJ8i1
- rMJsK8t0ZGbEx/aaU5ubRSJPrKKTpiurzM+lpRHRQ7gMsjnJ2Ux040ZIo7Ox6WwNrxBJ
- 7QYTySh0XlKxqhMPmnpE8+TJQgxcU7/r2EPGB262a5xD8qzenf8EQY7O3mI2tIIpwgv/
- hVzGut4c3FDQISfEKZAhgnpJKPWshM6U0advCQH4SyOJ1QKossVhh3kQ+iAcxwANOHI0
- ppLquP3yu3Vz9D5TN8hzA4j6xay8WEOckAHP9qLwI0xNfZBwz7ptRcf3BXx8WyPKShij
- yWog==
-X-Gm-Message-State: AOJu0Yxe8vQgDljjEKdKLxqhrHQRlCIGcnwuyZE9tYsDxzIfcDfiIVO6
- hwXo2axWraBPd0Tz8/du89/4mZjRnn4DFa14r+raJLB3UKH17vGhEvkpAyBgw8pmsq4giwDtQTH
- V
-X-Google-Smtp-Source: AGHT+IEKuFCX3s8lMRFtdAhZDVmpO87xwPgvk9b68sY+eIX/e6Xn59kdAPEBkBtx6d0XPoe/gaTt0w==
-X-Received: by 2002:a17:902:bb8b:b0:1de:ebb7:d1ed with SMTP id
- m11-20020a170902bb8b00b001deebb7d1edmr2529598pls.45.1711215004144; 
- Sat, 23 Mar 2024 10:30:04 -0700 (PDT)
+ bh=RF8MIQWUQ8ggE/MlTolxsgSJT5vy8jgQgVDGU2A+dUw=;
+ b=ml4DMcic0Xr2NV8xCyWvTR9KXLEPQILXka1t1hG6sONC1GMjIOdVcXwLaniLbdAT/0
+ kbT1FC87il9o4/QJD6+5fElqi1Zcj7lJpdNalrRPGVhlQ0zaAAC/wAsFyfKvUXghyH0Q
+ EsfmStSPQKd/QpGiFHsxyHJRLPfZXS0V9HlLLGk2ZoqCWBvlf6GSuubdr25hwCfT7z7c
+ Gh+jB++Old8fj0hWOMEiC7yglJjFywwfM4KaVR5NqdnjmUVtU875xTSz6ll+srD4bg++
+ 6g2oQ+EzPU8A/GlrzDu7klvzfkGcTyZqE79GBkMm+iF3WxpkUsCie6pXR7I/iz8rcY/I
+ UaRQ==
+X-Gm-Message-State: AOJu0YxijKo3qignh++dk20hlC42FkC+c9mBQfxqxf5WtQcBR7WB8R7M
+ LCliYF9kNYnbt8HzXO+LkEkfMDZSYK9q/eG5dd+RJSOIc4zOarCxs5R0dKh+YBMIu3DmTIx8YTg
+ l
+X-Google-Smtp-Source: AGHT+IGfjxIo8Hl1YsHZ+qQ22LcH6XsCHK8+eLrREr8y4AdToXKj/lANl45kTDBeJv6bIqpYVmNwAA==
+X-Received: by 2002:a17:903:442:b0:1e0:319a:2677 with SMTP id
+ iw2-20020a170903044200b001e0319a2677mr2720704plb.8.1711215005543; 
+ Sat, 23 Mar 2024 10:30:05 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- n15-20020a170902d2cf00b001dcfaab3457sm1811758plc.104.2024.03.23.10.30.03
+ n15-20020a170902d2cf00b001dcfaab3457sm1811758plc.104.2024.03.23.10.30.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 23 Mar 2024 10:30:03 -0700 (PDT)
+ Sat, 23 Mar 2024 10:30:05 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: svens@stackframe.org,
 	deller@gmx.de
-Subject: [PATCH v2 4/7] target/hppa: Fix ADD/SUB trap on overflow for narrow
- mode
-Date: Sat, 23 Mar 2024 07:29:51 -1000
-Message-Id: <20240323172954.1041480-5-richard.henderson@linaro.org>
+Subject: [PATCH v2 5/7] target/hppa: Mark interval timer write as io
+Date: Sat, 23 Mar 2024 07:29:52 -1000
+Message-Id: <20240323172954.1041480-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240323172954.1041480-1-richard.henderson@linaro.org>
 References: <20240323172954.1041480-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,41 +95,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sven Schnelle <svens@stackframe.org>
-
-Fixes: c53e401ed9ff ("target/hppa: Remove TARGET_REGISTER_BITS")
-Signed-off-by: Sven Schnelle <svens@stackframe.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240321184228.611897-2-svens@stackframe.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/translate.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ target/hppa/translate.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 2cb91956da..ceb739c54a 100644
+index ceb739c54a..8c1a564c5d 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -1126,6 +1126,9 @@ static void do_add(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
-     if (is_tsv || cond_need_sv(c)) {
-         sv = do_add_sv(ctx, dest, in1, in2);
-         if (is_tsv) {
-+            if (!d) {
-+                tcg_gen_ext32s_i64(sv, sv);
-+            }
-             /* ??? Need to include overflow from shift.  */
-             gen_helper_tsv(tcg_env, sv);
-         }
-@@ -1217,6 +1220,9 @@ static void do_sub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
-     if (is_tsv || cond_need_sv(c)) {
-         sv = do_sub_sv(ctx, dest, in1, in2);
-         if (is_tsv) {
-+            if (!d) {
-+                tcg_gen_ext32s_i64(sv, sv);
-+            }
-             gen_helper_tsv(tcg_env, sv);
-         }
-     }
+@@ -2162,6 +2162,9 @@ static bool trans_mtctl(DisasContext *ctx, arg_mtctl *a)
+ 
+     switch (ctl) {
+     case CR_IT:
++        if (translator_io_start(&ctx->base)) {
++            ctx->base.is_jmp = DISAS_IAQ_N_STALE;
++        }
+         gen_helper_write_interval_timer(tcg_env, reg);
+         break;
+     case CR_EIRR:
 -- 
 2.34.1
 
