@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8961CC54E58
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 20:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D013CC54E67
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 20:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ro8NS-0000sr-EH; Sat, 23 Mar 2024 16:54:06 -0400
+	id 1ro8Rd-0002LG-Uj; Sat, 23 Mar 2024 16:58:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8NQ-0000sX-Mu
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:54:04 -0400
-Received: from mout.gmx.net ([212.227.17.21])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8Rc-0002L1-AO
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:58:24 -0400
+Received: from mout.gmx.net ([212.227.17.22])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8NO-0002D1-Hm
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:54:04 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8RS-0002u1-Eq
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:58:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1711227236; x=1711832036; i=deller@gmx.de;
- bh=f2WnAskoAAbOgAYTkRzfB7sAgl5wrNMEHCj1VY72lro=;
+ s=s31663417; t=1711227490; x=1711832290; i=deller@gmx.de;
+ bh=rsDntOjpYtwHqJUDF6Aaw2EW15fCP9z6VOPH2OZ7oGE=;
  h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
  In-Reply-To;
- b=mYW62u1W84RrgGQcDGB+yfi3/XSOWKNsI8NiwDTYzsKkWJCvOUpeGoQqQoveDIak
- hqB/xS2o+5hLuj++FciU0rpSO9W7P1iI0k0T/GwWRxtPpE7I4YzLGrY6E29l6vPG0
- DB0FpZpQW0uRAsBddoopZeb7FaWanwQ1ajerXBrw5kCreS3ZmNCWo2y7ICd8ggCFx
- SZ+Zr5uPoZv/qpBDzl0M1t2Aup+sD+WkmAW7KXcoaCirTUHxf+FUCT6+x14zYBYYf
- F6Io3SC76K5OoppvINRt0cimcxCSbtaTxTtzbRLsmfyZGOjOZn4kimoIawsgfppRh
- rKI1nqGtpsXqBPMZTQ==
+ b=msvV1H8FwLpfTo903uPSuY0lsomXHVDv/2I/oxK7iLgmryPSgxMP//A2hLAz2bm2
+ uhBC2OhtslzWT0p8ezQy7ymFNrstseEz0gi7amQ+TBKVSDX5L8aksxcot4uCm15Mc
+ tcRAdX8bmz99dCn9+SM1hfkpbwCpLgtz/792YFjdgCNV8XWG0ApbvNs+Yzs4BG/mp
+ Yj16MyOL+yxJnuAMJ3lKx7i9kHuxpHDKeSHk0I5bcPk9CjmwzVHlksmYIyASdNeL0
+ tRjJwrLp7eN2TSgJqWpaGahgTaJ86SOsD8hlfCqoLaZ765zK+GjmBT9ZEsv3M8Ic1
+ CAHVikjnwX+eg4HRtw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([89.244.187.196]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MtfNf-1qtIOh1oT9-00v9kn; Sat, 23
- Mar 2024 21:53:56 +0100
-Message-ID: <99304ad6-32f8-4f91-afb7-50a916aa8e78@gmx.de>
-Date: Sat, 23 Mar 2024 21:53:55 +0100
+Received: from [192.168.20.55] ([89.244.187.196]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MK3Vu-1rSd121QWk-00LXfL; Sat, 23
+ Mar 2024 21:58:10 +0100
+Message-ID: <99f4456f-51b7-452e-9eb0-bfea402a90b6@gmx.de>
+Date: Sat, 23 Mar 2024 21:58:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/7] target/hppa: Fix BE,L set of sr0
+Subject: Re: [PATCH v2 5/7] target/hppa: Mark interval timer write as io
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: svens@stackframe.org
 References: <20240323172954.1041480-1-richard.henderson@linaro.org>
- <20240323172954.1041480-2-richard.henderson@linaro.org>
+ <20240323172954.1041480-6-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -87,35 +87,35 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240323172954.1041480-2-richard.henderson@linaro.org>
+In-Reply-To: <20240323172954.1041480-6-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:qLAs6zqkcbvdcbDKV+TURKzbOV+E2BFC8pXfySVY9uDfloDxZYL
- nw1nWXtP5FwmlZC5PlwLVrDw5YpC0uOaFULE4VAVpE3/jJZ3S/XJsxED6X3gimhRlTVzoSF
- CXL5G4cVnktfo/0pG7ylqq2kgPbJF1MQZ9mBXgQU1b4i8bJNn0gkSE4wtldH8QnUWGtafWz
- xkzDAw3b0OsAHSxhGjw3Q==
-UI-OutboundReport: notjunk:1;M01:P0:CvuJarycDfk=;Jki5pCi7bcvMh3gs7cqBqhniBKM
- +GH7FEEJBnAjaCW8YThCfQxSoCE8CSlVTg+WLKLleF1OyoN5AQySN32+UgetkD756WQl2jAVM
- f0S/LrEPIgSS7jFK0Vt9H11+U/Oo+gxN+nArg5GerYWVnFak4j3fzbu7kZjp9Iu/cdQ8Ewxlz
- Xc0/eXhAzBs133ONWQDV/Rbi1ioUOQ8mRdkTz5Uff7ruJvygX5w3EPLdbiN2rqDNyN9InXXaE
- vwy9lLEth4Baeb1hElcXYNfqYhVF0mNNIWD+ZUoE5MH5INb6IrEuyrH7i4Rslv9P9KMl7Sr8q
- LAKx4ourPYUln1cIWuIiF5k6GKYvsvghdStMSsnMAmHTMyf5m4olB50OVyF4Q6kxeHegkpn8t
- ome+Se5UNvvwSay9TXOuDNrp7z2rN9YasL5eMYhQuRdfjZD1i8Dh+e4nf1003c/Ac1a0rh+L7
- qI0MCd3XVWLdv29IhVXhPqVW9VfiN3Wla5PGQhg31qVXsRNhcfCulNP1qkJwAXfFsbk6uVyGk
- TxrtojPqi+pkT3z5c8AgFPriEdkzxpAWAp4KZk/0RwEqnrj17XpNwkoSC1MNznpc6+IGsT9R5
- do9nhyQCsaSOiYs7ekTmMwAPteQKqY9qusZtIxZhWqDH4qOrgTNs5X7HygxDLykj/wD52UJ2P
- JKHGjNfcamSdXRWK0gwT770oDUGad8mTHeH35DVYkxUFvJtQTpat5Fcc/qvkIrtixwi52182s
- ANXkTSiBF6x7cq844LEOVZJ2rhKfDzbffXsLnhWapl6kDU5um79A03pEuK7VmPdndNZwv45xm
- nKNXrf3Bgmot0cuRAtHHyHuhcmq4Oj6c15yDFwn/RjeT0=
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:NQZdBAekbM6XNAgD3XoF5W2KGD6VBrigvc+3UEHTv46WpOEvU7R
+ fj9oughMdL3h1YXtn3rBlprivMjcGnoH+YsUVtZVUfrP6V7eJCsSDz/szThb7T9e0+O4kKy
+ sXWjYSaodAplp+Eh95FLrSrDlbL9OeIamyDr3LZQ7z7P9NDxMaFO8BJU470XmiUYbfxmVQv
+ pJrA6jmkR1j7WgyIGVZcw==
+UI-OutboundReport: notjunk:1;M01:P0:1GzH6zCOvEY=;f5mnXz0JZkXdj6TGwkEcoIwTQyf
+ APd/tPHD5o4kReenPJBUs6GSimCO/KM6vzJNbH+WQ68RT6zpg4yaunFLUVwjV9Ln+xIWX4mm+
+ UMV0YmHoLUNUXTIxavg4hbsEG5+4iUvM8GYHwZY8tNSI/KaPKFYzkFMXiQNz3tUoe1P7ZmqDd
+ D65uSK/Ucjn2RhiRGGumGIic2Iys2PZvpOzNQpuBky3gyM8zYKK99J5/EF1ZGqJQ1i70LJDk5
+ JmgovHm7zO8hDVRwnqmWqk6Ctg0Jhua2Bgm26QWupuLQXCZjZOG/LFWL7jv93DQB214fGOkNf
+ veAV+h+qksxc4DJO//eclronSHssZfmfeXBCOyA19xE+3AUSpCxWMeKzR70ORKi5ZAm6WZS0B
+ Kj54WjASxeDeslduP7Tqn/dbXp8oaxRKg/hVNaW8vLHcCdE0ONiB5kK5GPA2T/k5jwjXG7kLf
+ h27vDl6LR1owdRSDypyOyTdkOKMGC4moSM1eEHk20xfJpPAuyhy1KbGm8GdXadUVtAOdhQsYm
+ KUxy4UElNeuOlcq1g7v0Km5hgcqxDaLRTcYt7+VjOmAxsn0OBy2q6PfGXYHfijUZiqbwlagBF
+ +8gH6Unh8gAi0sUZ5jpyHN4k3wA9PolMcIBjaMJHfGNYrxvt+YWaNVY+pspVnVtAvzmwKpMU+
+ dzCBYLu7s5eC8JhnlHN1hLka9QW94dJWN7pj12Kc2fkmFu5jrCX6zwqNT+X/trVr/zmJhrXLQ
+ m617utYYfTMcIfXZk816UuqUlEghg6a0iIHTT5ZeFbjYKJTRscSbzxAP2mxTGLhCkKdBsRz1o
+ cBG1ZqvSzoH6I58OyvRq8hpKZ8ehEPNec7YE9gAm2MJ84=
+Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,31 +132,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/23/24 18:29, Richard Henderson wrote:
-> The return address comes from IA*Q_Next, and IASQ_Next
-> is always equal to IASQ_Back, not IASQ_Front.
->
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
+Reviewed-by: Helge Deller <deller@gmx.de>
 Tested-by: Helge Deller <deller@gmx.de>
 
+Thanks!
+Helge
 
 > ---
->   target/hppa/translate.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/hppa/translate.c | 3 +++
+>   1 file changed, 3 insertions(+)
 >
 > diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index 19594f917e..1766a63001 100644
+> index ceb739c54a..8c1a564c5d 100644
 > --- a/target/hppa/translate.c
 > +++ b/target/hppa/translate.c
-> @@ -3817,7 +3817,7 @@ static bool trans_be(DisasContext *ctx, arg_be *a)
->       load_spr(ctx, new_spc, a->sp);
->       if (a->l) {
->           copy_iaoq_entry(ctx, cpu_gr[31], ctx->iaoq_n, ctx->iaoq_n_var)=
-;
-> -        tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_f);
-> +        tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
->       }
->       if (a->n && use_nullify_skip(ctx)) {
->           copy_iaoq_entry(ctx, cpu_iaoq_f, -1, tmp);
+> @@ -2162,6 +2162,9 @@ static bool trans_mtctl(DisasContext *ctx, arg_mtc=
+tl *a)
+>
+>       switch (ctl) {
+>       case CR_IT:
+> +        if (translator_io_start(&ctx->base)) {
+> +            ctx->base.is_jmp =3D DISAS_IAQ_N_STALE;
+> +        }
+>           gen_helper_write_interval_timer(tcg_env, reg);
+>           break;
+>       case CR_EIRR:
 
 
