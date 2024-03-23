@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 828D4C54E67
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 20:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20857C54E58
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 21:01:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ro8S5-0002Q4-OW; Sat, 23 Mar 2024 16:58:53 -0400
+	id 1ro8Th-000416-8Z; Sat, 23 Mar 2024 17:00:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8S4-0002Pl-0w
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:58:52 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8Tf-00040w-5a
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 17:00:31 -0400
 Received: from mout.gmx.net ([212.227.17.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8S2-00036A-H9
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:58:51 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8Td-0003hO-1Y
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 17:00:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1711227524; x=1711832324; i=deller@gmx.de;
- bh=lSdhub0WDJWR2KfRtYxx2tIAY9BrWul+XWkbs1Mo+u8=;
+ s=s31663417; t=1711227626; x=1711832426; i=deller@gmx.de;
+ bh=OB8LnwGKMHCksjprKdFp2bD91zuciiMJxj/Uyzz86cw=;
  h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
  In-Reply-To;
- b=gtZwTkao23CusQk0iVxt8AIpv0zBD5KZF2cI/EzbxFRJ4C/ILGXsZJ44GVTI/WJz
- YuIYf1yJwG2svZE5lZuF0VAFzonax3+kfawiNXG8WxO0ARVa37Nx3ImeHj8P/tw9g
- lsMqVW8gJbIb5pupzyZ+U2gQ6Bi9B0iTOucqqXRKlGm/8a87IR7Hh7gS5RRBfocMY
- DJy0QGQ3Ac8uKrVdgoIhNIYTqCO5XmStggyNqaLxRreYhl5VbD4uZmA717qMduciY
- licDQo9ZX1wo1TeJ/MAk6gXrqbDTTBJH2UUCUZKTSiz00sAx6gRzyysHjhG3l71hj
- pEaMdww82kp8gAZ/HA==
+ b=NHbVzfwr2UHDzjJxNzhlWyy/kXWUMC0zuiDeQs6l/mJbgW3KYZIApp8jAWba5kf3
+ ELDf3wq350oL9pnZV0kKDMuESYIQ6RaQDv2WHieIO3G2lmXxXBlr14J9SHHsifDVH
+ heGZOrIEKJwfoJ3z48CD0EvTKL0La4S+RujzcCQ1lN0BRWuch++dvopVwIPS8/Tgm
+ SxO2oh/UoPATK4xzaWsMn1I8kny/7g058nLyCjDBYpHeZ5vlEXLLjw8CCKyVUY9+7
+ /0otg1cHVjs0D/3bV5U5zZ1MEQD+DoejeYhfnZhbPooTyi+MoCY13hlTNNzQNCZd6
+ 4LJubWYdBPzmL3NDJA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [192.168.20.55] ([89.244.187.196]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N7zBb-1qjQxD2PVT-0154YF; Sat, 23
- Mar 2024 21:58:44 +0100
-Message-ID: <e02e4f25-edbb-4a0f-b8f4-6dea48e118dc@gmx.de>
-Date: Sat, 23 Mar 2024 21:58:43 +0100
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3UZG-1rnaFH3zfu-000ZfX; Sat, 23
+ Mar 2024 22:00:26 +0100
+Message-ID: <d819d5cb-8e9c-4b9f-a6b4-c7f2bd6ca680@gmx.de>
+Date: Sat, 23 Mar 2024 22:00:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] target/hppa: Tidy read of interval timer
+Subject: Re: [PATCH v2 7/7] target/hppa: Fix EIRR, EIEM versus icount
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: svens@stackframe.org
 References: <20240323172954.1041480-1-richard.henderson@linaro.org>
- <20240323172954.1041480-7-richard.henderson@linaro.org>
+ <20240323172954.1041480-8-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -87,26 +87,26 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240323172954.1041480-7-richard.henderson@linaro.org>
+In-Reply-To: <20240323172954.1041480-8-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:PQA1pZCsZNkYTlYYPSpMYdLyjNLhrwvPG3lDzEgWNrnmukC7Gvz
- C/olr99YnNISmw8WkRC9Ju0lV3j15NSL97JVixp1NTxKzdYKqdEafpaaR0fRppBZhWh+Gm/
- fJpSLQDM13x2jlzt+sOEyMVlSAXnSTkmnLKEppmtVAUg8J62aqo0VlA6VgsLa9wct1TLkG9
- 2mCShD4qzSKjYC5vTJbxA==
-UI-OutboundReport: notjunk:1;M01:P0:L4racvdiErU=;Dit389982jSyYOoe3N+B/AXZAe9
- 8tZKsWEXz4b5FXMX3S9NnIYa56FsQp/ibutwj8ss8qb/RKmJADlw3RBWjenq2zYwfJF+PzJ+0
- JoyrBZ4m/qFh0IeqBrbQHhRSHm6fpL14FRCjt8aEMmGgOEZ9ENsjrH+/gQOtY04fgRa9lPOu3
- Yo3XxU7gtLQns+Nk5M1SxWPX8bWx4vYpKsGONCgjtYo6ksHMOgk1MHr5Q1qxz1641aRlRjKvN
- qGmhFFu+uDSeqZgUyWgFWiye3VK1Iw7PMYMpg6ID+yOVzJiuqNY6k+SYwt6nS814kKrQ1N4n7
- rBc4I/cBCNIfvKmBkXMz9sRcrnGh5XsAEwWkJtiJ93qXiKCCvlp0S3wuLXmbmBNCC2KRy6UsA
- rml9idtRcwE0OGEup91h0SYGxha9addG8GX6Ac2diTlbv1rOtspeVO8q12T9nEG0u8VQq83RG
- DS5zWgc1aMdkI/jmc0JQCjCy2pm2T8Y5SV6+Paiqb/Ef0OLxRIPYN0XMVcT7YQ0mCZFVh5IWH
- 0sJeGH/dSNPMf1GcQDLaq57fnrWdchDzFjzobnWnV2V+7H9AmdzWdmDN4QMBpZd+1OwuJ5JRV
- w9rpkguaDY1Iu5ZUInvVnqrTqjcFBit3HYyAcEwX4bvoDAHYiPu4Lf3NM59avuIhgh7rdyOKO
- ph5oH62y2XBwd7gt8IqLFsg6kZLW7mhRh11LRcOVkIBKEEBMza+ceGMSLxP7nlq4dZ/BcVjP0
- TunNIvU7i7LdJ1Du+t7Hu6ECNU0ytzZqSgxo2jtIyndLcPKpvlARbDk39YRS57D0tTo8etWlz
- dEeVf1d3WcwvOD7tqT283pS/Y55QbJQeE/94dxtvtnSFo=
+X-Provags-ID: V03:K1:xAo1ty+ZfOcYOCWeVJr1UH37Iivqq3kY5cfhJBLP3KG0QXFJU+L
+ ziuJV6gxPhSXjXBPmJ+vLSlUxOBZ906SQjWqRe9n6LXbDhU/ZumYl5QQ5KeeGHraDIoD0OM
+ Aw8mPWHBMGnmNHOOk1lTw1hU4entkvjv0+SjGQaMw6ElYL6a15VT96YsmH0Ve45GLQLDfUJ
+ /LqJQvotG0GRcV9vgWJaQ==
+UI-OutboundReport: notjunk:1;M01:P0:hJxtmsEyRHA=;0dGjEJ9GMp/6rAAgk0+j076x1Hq
+ Jz0BV5zoFq5UET2ri5DUn35PBpzwDUJ3X5Ky56hrbtgFtZf6BOa2e4bL13N2m+xh5RTpCQ6L9
+ LNBUPbJ3RGujFVtroGOIUrKfYjzf01TeiLdDcpvVMvyQvj4qxFtmTPJBXvhEUEbWKQ5wMtBLc
+ VMLaL3LJW5yt/zc3hKJ+Nk8/WoFBK89rVhEqHlXV8YbdoyHHZ3WXB69IaHGkyN6gGSBhXWJBk
+ sObg7mNtmMjfiQ+sCGFYzoLe3dK2xWrCTe9TKZ+/QlWAmPoAFsKWWe6e8iZSb35XaJbpef46B
+ 2S9uplZlPpRN8zRNt17phb2CwtZ7GtpCV7GDIOKAuVTAb8v36jVaIO4Hfxc0JG2LO2kQY9Nuf
+ tjiw7hVdc7/NcSTOGeP70f+35ycjfEoqhOnflLt3cBCHUPAR43yWgDNL3+kX/QsPgU2Fb/0tW
+ 57XLRyG8TrmaNe0U9noV3Kh2FRr+oY6FEBfBe41+ag599iwRQcl4L+9OsGysiJSnN0SI2Qbxy
+ gkE9we/b5J4uhlUnGPGsAQ3LX4lk4M0tiihhgqmlRyv82zjzEOYXb93Q9DBp1oVGNfwJRP0AQ
+ DEUFe4sFCniMQzsLkfXnNCIsh6d6xEKWiHvcOEsmda46i+xMQE9gEOTwZ8PHVSH1qgrjndo2a
+ S8rrUnyGkPZnzgAsfWHjVLwtiVZm31/7ybVkMuBAY4Iyap2rI8S4iAJGQEQJYgWqxX5WCyS9u
+ idTX8Smt0iaEaejCANiq1+ozjtCiwgrEAAXSJdFM+3jZ+XFDI0pXxK0DffH9oTOT2+kF6kl+k
+ SamvsfbbKv5hMV6VO1wh4S/3ZB28AuKCl9+8Tldwf3jD0=
 Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
@@ -132,11 +132,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/23/24 18:29, Richard Henderson wrote:
-> The call to gen_helper_read_interval_timer is
-> identical on both sides of the IF.
+> Call translator_io_start before write to EIRR.
+> Move evaluation of EIRR vs EIEM to hppa_cpu_exec_interrupt.
+> Exit TB after write to EIEM, but otherwise use a straight store.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 Reviewed-by: Helge Deller <deller@gmx.de>
 Tested-by: Helge Deller <deller@gmx.de>
@@ -144,27 +144,98 @@ Tested-by: Helge Deller <deller@gmx.de>
 Thanks!
 Helge
 
+
 > ---
->   target/hppa/translate.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
+>   target/hppa/helper.h     |  1 -
+>   target/hppa/int_helper.c | 14 ++++----------
+>   target/hppa/translate.c  | 10 +++++++---
+>   3 files changed, 11 insertions(+), 14 deletions(-)
 >
+> diff --git a/target/hppa/helper.h b/target/hppa/helper.h
+> index 1bdbcd8f98..8fd7ba65d8 100644
+> --- a/target/hppa/helper.h
+> +++ b/target/hppa/helper.h
+> @@ -91,7 +91,6 @@ DEF_HELPER_1(rfi, void, env)
+>   DEF_HELPER_1(rfi_r, void, env)
+>   DEF_HELPER_FLAGS_2(write_interval_timer, TCG_CALL_NO_RWG, void, env, t=
+l)
+>   DEF_HELPER_FLAGS_2(write_eirr, TCG_CALL_NO_RWG, void, env, tl)
+> -DEF_HELPER_FLAGS_2(write_eiem, TCG_CALL_NO_RWG, void, env, tl)
+>   DEF_HELPER_FLAGS_2(swap_system_mask, TCG_CALL_NO_RWG, tl, env, tl)
+>   DEF_HELPER_FLAGS_3(itlba_pa11, TCG_CALL_NO_RWG, void, env, tl, tl)
+>   DEF_HELPER_FLAGS_3(itlbp_pa11, TCG_CALL_NO_RWG, void, env, tl, tl)
+> diff --git a/target/hppa/int_helper.c b/target/hppa/int_helper.c
+> index efe638b36e..90437a92cd 100644
+> --- a/target/hppa/int_helper.c
+> +++ b/target/hppa/int_helper.c
+> @@ -28,7 +28,7 @@
+>   static void eval_interrupt(HPPACPU *cpu)
+>   {
+>       CPUState *cs =3D CPU(cpu);
+> -    if (cpu->env.cr[CR_EIRR] & cpu->env.cr[CR_EIEM]) {
+> +    if (cpu->env.cr[CR_EIRR]) {
+>           cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+>       } else {
+>           cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+> @@ -89,14 +89,6 @@ void HELPER(write_eirr)(CPUHPPAState *env, target_ulo=
+ng val)
+>       bql_unlock();
+>   }
+>
+> -void HELPER(write_eiem)(CPUHPPAState *env, target_ulong val)
+> -{
+> -    env->cr[CR_EIEM] =3D val;
+> -    bql_lock();
+> -    eval_interrupt(env_archcpu(env));
+> -    bql_unlock();
+> -}
+> -
+>   void hppa_cpu_do_interrupt(CPUState *cs)
+>   {
+>       HPPACPU *cpu =3D HPPA_CPU(cs);
+> @@ -280,7 +272,9 @@ bool hppa_cpu_exec_interrupt(CPUState *cs, int inter=
+rupt_request)
+>       }
+>
+>       /* If interrupts are requested and enabled, raise them.  */
+> -    if ((env->psw & PSW_I) && (interrupt_request & CPU_INTERRUPT_HARD))=
+ {
+> +    if ((interrupt_request & CPU_INTERRUPT_HARD)
+> +        && (env->psw & PSW_I)
+> +        && (env->cr[CR_EIRR] & env->cr[CR_EIEM])) {
+>           cs->exception_index =3D EXCP_EXT_INTERRUPT;
+>           hppa_cpu_do_interrupt(cs);
+>           return true;
 > diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index 8c1a564c5d..5b8c1b06c3 100644
+> index 5b8c1b06c3..46b2d6508d 100644
 > --- a/target/hppa/translate.c
 > +++ b/target/hppa/translate.c
-> @@ -2082,11 +2082,9 @@ static bool trans_mfctl(DisasContext *ctx, arg_mf=
+> @@ -2166,10 +2166,10 @@ static bool trans_mtctl(DisasContext *ctx, arg_m=
+tctl *a)
+>           gen_helper_write_interval_timer(tcg_env, reg);
+>           break;
+>       case CR_EIRR:
+> +        /* Helper modifies interrupt lines and is therefore IO. */
+> +        translator_io_start(&ctx->base);
+>           gen_helper_write_eirr(tcg_env, reg);
+> -        break;
+> -    case CR_EIEM:
+> -        gen_helper_write_eiem(tcg_env, reg);
+> +        /* Exit to re-evaluate interrupts in the main loop. */
+>           ctx->base.is_jmp =3D DISAS_IAQ_N_STALE_EXIT;
+>           break;
+>
+> @@ -2195,6 +2195,10 @@ static bool trans_mtctl(DisasContext *ctx, arg_mt=
 ctl *a)
->           nullify_over(ctx);
->           tmp =3D dest_gpr(ctx, rt);
->           if (translator_io_start(&ctx->base)) {
-> -            gen_helper_read_interval_timer(tmp);
->               ctx->base.is_jmp =3D DISAS_IAQ_N_STALE;
-> -        } else {
-> -            gen_helper_read_interval_timer(tmp);
->           }
-> +        gen_helper_read_interval_timer(tmp);
->           save_gpr(ctx, rt, tmp);
->           return nullify_end(ctx);
->       case 26:
+>   #endif
+>           break;
+>
+> +    case CR_EIEM:
+> +        /* Exit to re-evaluate interrupts in the main loop. */
+> +        ctx->base.is_jmp =3D DISAS_IAQ_N_STALE_EXIT;
+> +        /* FALLTHRU */
+>       default:
+>           tcg_gen_st_i64(reg, tcg_env, offsetof(CPUHPPAState, cr[ctl]));
+>           break;
 
 
