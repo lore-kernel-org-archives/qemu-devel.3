@@ -4,82 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0ECAC54E67
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 17:32:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4971AC54E67
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 19:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ro5C7-0002l9-3a; Sat, 23 Mar 2024 13:30:11 -0400
+	id 1ro6y1-0003yO-Nz; Sat, 23 Mar 2024 15:23:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ro5C4-0002kU-IR
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 13:30:08 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1ro6y0-0003y9-6W; Sat, 23 Mar 2024 15:23:44 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ro5C2-00065f-RX
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 13:30:08 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1e0b213efa3so628515ad.0
- for <qemu-devel@nongnu.org>; Sat, 23 Mar 2024 10:30:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1ro6xy-0001UM-I3; Sat, 23 Mar 2024 15:23:43 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-29dd91f3aaeso2242591a91.3; 
+ Sat, 23 Mar 2024 12:23:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711215005; x=1711819805; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1711221819; x=1711826619; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RF8MIQWUQ8ggE/MlTolxsgSJT5vy8jgQgVDGU2A+dUw=;
- b=qO0SLNpjo2ernSZmuk9kzJeQwnm9pqZde5znaOZpLHKzGXeK8z6ffCKtRl8y8wUb5z
- JNSc6e3ivhcvrcSMOup+/2trKi03n7MZMUSsPkGgnqTQ0NTew8GoMxWRna0568HTVcJ/
- 6HY1czKEuCjPqgqoZLSui6gCEtFyqX72qOCKYXuaQt/rbNf9UGjS/Br4vfjCF3hbK305
- IT7GQYRASh50OtuD+sVZTUMmzYSuFG4DeL1BvhsBUAq15L2CRSJ6/RjmN/sgqHr7+n0s
- 9opb5dxZ/CuvYmGZOlZK4wEPjPGRsYwP4P+OqliG6z818eP07d6mlUSrUyqdBdOf1lCe
- ngNw==
+ bh=F73dvEtwIOBh5oFshfiS2mW5qnmKccT/uXo1IvtmEks=;
+ b=DSI+ieo5x621pFQDy6Z50qnK/eRuarbXK9tpy9YYfdp2yAW5Bcz0+zjF+4GtAi+gSn
+ N39FYQ/OqhHx6HcRL5TSGp9J7ZTmKBYWUEvtJU7BMP59GmJJnn2ANqkEXOf2u9UMUbgL
+ hzhVFSPiYWPQtXTbXZc87VQaDw+zBjGsmQgsWXk4IjQFcgWo8DpnayRgWxCvd8vQsLYH
+ GHgOOHkc7SEmuBmqJiWvewTY3rO0tLeNseP+diVLcIf2iBedRyWy4DGaCO9R62HSdq96
+ 3Eg4GbDGmVFurOslI5CIJ9AJuDU+u4keAgRfa6VbylaQspBbOSNTI1WzZklWJKyQCOT5
+ 3yOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711215005; x=1711819805;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1711221819; x=1711826619;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RF8MIQWUQ8ggE/MlTolxsgSJT5vy8jgQgVDGU2A+dUw=;
- b=ml4DMcic0Xr2NV8xCyWvTR9KXLEPQILXka1t1hG6sONC1GMjIOdVcXwLaniLbdAT/0
- kbT1FC87il9o4/QJD6+5fElqi1Zcj7lJpdNalrRPGVhlQ0zaAAC/wAsFyfKvUXghyH0Q
- EsfmStSPQKd/QpGiFHsxyHJRLPfZXS0V9HlLLGk2ZoqCWBvlf6GSuubdr25hwCfT7z7c
- Gh+jB++Old8fj0hWOMEiC7yglJjFywwfM4KaVR5NqdnjmUVtU875xTSz6ll+srD4bg++
- 6g2oQ+EzPU8A/GlrzDu7klvzfkGcTyZqE79GBkMm+iF3WxpkUsCie6pXR7I/iz8rcY/I
- UaRQ==
-X-Gm-Message-State: AOJu0YxijKo3qignh++dk20hlC42FkC+c9mBQfxqxf5WtQcBR7WB8R7M
- LCliYF9kNYnbt8HzXO+LkEkfMDZSYK9q/eG5dd+RJSOIc4zOarCxs5R0dKh+YBMIu3DmTIx8YTg
- l
-X-Google-Smtp-Source: AGHT+IGfjxIo8Hl1YsHZ+qQ22LcH6XsCHK8+eLrREr8y4AdToXKj/lANl45kTDBeJv6bIqpYVmNwAA==
-X-Received: by 2002:a17:903:442:b0:1e0:319a:2677 with SMTP id
- iw2-20020a170903044200b001e0319a2677mr2720704plb.8.1711215005543; 
- Sat, 23 Mar 2024 10:30:05 -0700 (PDT)
-Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
- by smtp.gmail.com with ESMTPSA id
- n15-20020a170902d2cf00b001dcfaab3457sm1811758plc.104.2024.03.23.10.30.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 23 Mar 2024 10:30:05 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: svens@stackframe.org,
-	deller@gmx.de
-Subject: [PATCH v2 5/7] target/hppa: Mark interval timer write as io
-Date: Sat, 23 Mar 2024 07:29:52 -1000
-Message-Id: <20240323172954.1041480-6-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240323172954.1041480-1-richard.henderson@linaro.org>
-References: <20240323172954.1041480-1-richard.henderson@linaro.org>
+ bh=F73dvEtwIOBh5oFshfiS2mW5qnmKccT/uXo1IvtmEks=;
+ b=Dh01mPvutzu5cELVR5KomG0kIGVlJ9zlROevQeQBRUN3RQ/bGXQfZhCDx1bMFXzW1L
+ wdjzh6AXBfceMdePJpf0a186akSqyDS43Wrd8e+7GxNSlFkSrln4Tl3YyybyhsRbjXNw
+ leXnAo0BtGxOq7FanqxP+xBPVBOflK2yJHjjRtUxR1lOJZH0kLtQhwYe0USVJy1HQuNb
+ et7fuscqiH00vBw2E6rsXIbZ6+ujv7RCh31r/+PFYg9KzNyTLu2P6Dtz2Sk4LmoM9Ylg
+ gsTPdJ0FB5cWs7heLyE5FkbAVbSE6KBSTluXTaR8xlQzXHgbJaaOLGi2twBSu3B2pFCk
+ BQ9A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV06ke2rGRE9jEgzM4xmVWIKebsqbOGrQSa5I6wvhYaUI6jCqhQnvviVkT0p8oShAGbXySxtMcfGIdiFDAAYn1RurAb
+X-Gm-Message-State: AOJu0YwDRTBlAScWVvKN2BbDNe/sZFcAeaaO8syW69usUWw283vLmEkF
+ iVedr3qvU+aTgHyVS+NNfWETbBbvdm2ZmSaYrlGbUuKuzbQyu7PBwNkr7cWwpa5KTVYs8I7VpXT
+ M0maSz0PImHyI/8b714MJzN4d90E=
+X-Google-Smtp-Source: AGHT+IFbO8PbPeLAO9WOB2WFteDlOlfWHLdI/nIustkgks+OnGD8d7ASVuFv3Ief99MI9bGT+cSpT67+IsPd22/LV10=
+X-Received: by 2002:a17:90b:4f89:b0:29c:6a5c:b8f5 with SMTP id
+ qe9-20020a17090b4f8900b0029c6a5cb8f5mr2372254pjb.43.1711221819010; Sat, 23
+ Mar 2024 12:23:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20240321154838.95771-1-philmd@linaro.org>
+ <20240321154838.95771-19-philmd@linaro.org>
+In-Reply-To: <20240321154838.95771-19-philmd@linaro.org>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Sat, 23 Mar 2024 12:23:27 -0700
+Message-ID: <CAMo8BfJ9XYvzd4hTRbVvbsk0LkxWqKZ6trLuJpZRsRy7wjuP7Q@mail.gmail.com>
+Subject: Re: [PATCH-for-9.1 18/21] target/xtensa: Extract MMU API to new
+ mmu.c/mmu.h files
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Chris Wulff <crwulff@gmail.com>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Marek Vasut <marex@denx.de>, "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, 
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,26 +102,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/hppa/translate.c | 3 +++
- 1 file changed, 3 insertions(+)
+On Thu, Mar 21, 2024 at 8:50=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> Extract the MMU API and expose it via "mmu.h" so we can
+> reuse the methods in target/xtensa/ files.
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index ceb739c54a..8c1a564c5d 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -2162,6 +2162,9 @@ static bool trans_mtctl(DisasContext *ctx, arg_mtctl *a)
- 
-     switch (ctl) {
-     case CR_IT:
-+        if (translator_io_start(&ctx->base)) {
-+            ctx->base.is_jmp = DISAS_IAQ_N_STALE;
-+        }
-         gen_helper_write_interval_timer(tcg_env, reg);
-         break;
-     case CR_EIRR:
--- 
-2.34.1
+The MMU/MPU are replaceable configuration blocks in the xtensa
+architecture, their internals don't have architecture-wide significance
+and I believe their exposure should be kept to a minimum.
+I have a half-done xtensa MMU rework which I'd like to complete,
+it only exposes the interface for address translation, opcode translation
+and dumping.
 
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  target/xtensa/cpu.h        |  32 +-
+>  target/xtensa/mmu.h        |  95 ++++
+>  target/xtensa/mmu.c        | 889 ++++++++++++++++++++++++++++++++++++
+>  target/xtensa/mmu_helper.c | 892 +------------------------------------
+>  target/xtensa/meson.build  |   1 +
+>  5 files changed, 991 insertions(+), 918 deletions(-)
+>  create mode 100644 target/xtensa/mmu.h
+>  create mode 100644 target/xtensa/mmu.c
+
+--=20
+Thanks.
+-- Max
 
