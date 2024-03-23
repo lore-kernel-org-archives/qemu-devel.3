@@ -4,89 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4971AC54E67
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 19:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8961CC54E58
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 20:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ro6y1-0003yO-Nz; Sat, 23 Mar 2024 15:23:45 -0400
+	id 1ro8NS-0000sr-EH; Sat, 23 Mar 2024 16:54:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1ro6y0-0003y9-6W; Sat, 23 Mar 2024 15:23:44 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1ro6xy-0001UM-I3; Sat, 23 Mar 2024 15:23:43 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-29dd91f3aaeso2242591a91.3; 
- Sat, 23 Mar 2024 12:23:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711221819; x=1711826619; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F73dvEtwIOBh5oFshfiS2mW5qnmKccT/uXo1IvtmEks=;
- b=DSI+ieo5x621pFQDy6Z50qnK/eRuarbXK9tpy9YYfdp2yAW5Bcz0+zjF+4GtAi+gSn
- N39FYQ/OqhHx6HcRL5TSGp9J7ZTmKBYWUEvtJU7BMP59GmJJnn2ANqkEXOf2u9UMUbgL
- hzhVFSPiYWPQtXTbXZc87VQaDw+zBjGsmQgsWXk4IjQFcgWo8DpnayRgWxCvd8vQsLYH
- GHgOOHkc7SEmuBmqJiWvewTY3rO0tLeNseP+diVLcIf2iBedRyWy4DGaCO9R62HSdq96
- 3Eg4GbDGmVFurOslI5CIJ9AJuDU+u4keAgRfa6VbylaQspBbOSNTI1WzZklWJKyQCOT5
- 3yOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711221819; x=1711826619;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=F73dvEtwIOBh5oFshfiS2mW5qnmKccT/uXo1IvtmEks=;
- b=Dh01mPvutzu5cELVR5KomG0kIGVlJ9zlROevQeQBRUN3RQ/bGXQfZhCDx1bMFXzW1L
- wdjzh6AXBfceMdePJpf0a186akSqyDS43Wrd8e+7GxNSlFkSrln4Tl3YyybyhsRbjXNw
- leXnAo0BtGxOq7FanqxP+xBPVBOflK2yJHjjRtUxR1lOJZH0kLtQhwYe0USVJy1HQuNb
- et7fuscqiH00vBw2E6rsXIbZ6+ujv7RCh31r/+PFYg9KzNyTLu2P6Dtz2Sk4LmoM9Ylg
- gsTPdJ0FB5cWs7heLyE5FkbAVbSE6KBSTluXTaR8xlQzXHgbJaaOLGi2twBSu3B2pFCk
- BQ9A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV06ke2rGRE9jEgzM4xmVWIKebsqbOGrQSa5I6wvhYaUI6jCqhQnvviVkT0p8oShAGbXySxtMcfGIdiFDAAYn1RurAb
-X-Gm-Message-State: AOJu0YwDRTBlAScWVvKN2BbDNe/sZFcAeaaO8syW69usUWw283vLmEkF
- iVedr3qvU+aTgHyVS+NNfWETbBbvdm2ZmSaYrlGbUuKuzbQyu7PBwNkr7cWwpa5KTVYs8I7VpXT
- M0maSz0PImHyI/8b714MJzN4d90E=
-X-Google-Smtp-Source: AGHT+IFbO8PbPeLAO9WOB2WFteDlOlfWHLdI/nIustkgks+OnGD8d7ASVuFv3Ief99MI9bGT+cSpT67+IsPd22/LV10=
-X-Received: by 2002:a17:90b:4f89:b0:29c:6a5c:b8f5 with SMTP id
- qe9-20020a17090b4f8900b0029c6a5cb8f5mr2372254pjb.43.1711221819010; Sat, 23
- Mar 2024 12:23:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8NQ-0000sX-Mu
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:54:04 -0400
+Received: from mout.gmx.net ([212.227.17.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8NO-0002D1-Hm
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:54:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1711227236; x=1711832036; i=deller@gmx.de;
+ bh=f2WnAskoAAbOgAYTkRzfB7sAgl5wrNMEHCj1VY72lro=;
+ h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+ In-Reply-To;
+ b=mYW62u1W84RrgGQcDGB+yfi3/XSOWKNsI8NiwDTYzsKkWJCvOUpeGoQqQoveDIak
+ hqB/xS2o+5hLuj++FciU0rpSO9W7P1iI0k0T/GwWRxtPpE7I4YzLGrY6E29l6vPG0
+ DB0FpZpQW0uRAsBddoopZeb7FaWanwQ1ajerXBrw5kCreS3ZmNCWo2y7ICd8ggCFx
+ SZ+Zr5uPoZv/qpBDzl0M1t2Aup+sD+WkmAW7KXcoaCirTUHxf+FUCT6+x14zYBYYf
+ F6Io3SC76K5OoppvINRt0cimcxCSbtaTxTtzbRLsmfyZGOjOZn4kimoIawsgfppRh
+ rKI1nqGtpsXqBPMZTQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([89.244.187.196]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MtfNf-1qtIOh1oT9-00v9kn; Sat, 23
+ Mar 2024 21:53:56 +0100
+Message-ID: <99304ad6-32f8-4f91-afb7-50a916aa8e78@gmx.de>
+Date: Sat, 23 Mar 2024 21:53:55 +0100
 MIME-Version: 1.0
-References: <20240321154838.95771-1-philmd@linaro.org>
- <20240321154838.95771-19-philmd@linaro.org>
-In-Reply-To: <20240321154838.95771-19-philmd@linaro.org>
-From: Max Filippov <jcmvbkbc@gmail.com>
-Date: Sat, 23 Mar 2024 12:23:27 -0700
-Message-ID: <CAMo8BfJ9XYvzd4hTRbVvbsk0LkxWqKZ6trLuJpZRsRy7wjuP7Q@mail.gmail.com>
-Subject: Re: [PATCH-for-9.1 18/21] target/xtensa: Extract MMU API to new
- mmu.c/mmu.h files
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>, 
- Chris Wulff <crwulff@gmail.com>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Marek Vasut <marex@denx.de>, "Dr . David Alan Gilbert" <dave@treblig.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>, 
- Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org, 
- Laurent Vivier <laurent@vivier.eu>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/7] target/hppa: Fix BE,L set of sr0
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: svens@stackframe.org
+References: <20240323172954.1041480-1-richard.henderson@linaro.org>
+ <20240323172954.1041480-2-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
+ HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
+ r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
+ CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
+ 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
+ dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
+ Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
+ GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
+ aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
+ 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
+ ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
+ FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
+ uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
+ uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
+ REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
+ qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
+ iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
+ gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
+ Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
+ qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
+ 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
+ dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
+ rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
+ UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
+ eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
+ ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
+ dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
+ lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
+ 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
+ xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
+ wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
+ fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
+ Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
+ l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
+ RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
+ BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
+ Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
+ XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
+ MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
+ FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
+ 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
+ ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
+In-Reply-To: <20240323172954.1041480-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Provags-ID: V03:K1:qLAs6zqkcbvdcbDKV+TURKzbOV+E2BFC8pXfySVY9uDfloDxZYL
+ nw1nWXtP5FwmlZC5PlwLVrDw5YpC0uOaFULE4VAVpE3/jJZ3S/XJsxED6X3gimhRlTVzoSF
+ CXL5G4cVnktfo/0pG7ylqq2kgPbJF1MQZ9mBXgQU1b4i8bJNn0gkSE4wtldH8QnUWGtafWz
+ xkzDAw3b0OsAHSxhGjw3Q==
+UI-OutboundReport: notjunk:1;M01:P0:CvuJarycDfk=;Jki5pCi7bcvMh3gs7cqBqhniBKM
+ +GH7FEEJBnAjaCW8YThCfQxSoCE8CSlVTg+WLKLleF1OyoN5AQySN32+UgetkD756WQl2jAVM
+ f0S/LrEPIgSS7jFK0Vt9H11+U/Oo+gxN+nArg5GerYWVnFak4j3fzbu7kZjp9Iu/cdQ8Ewxlz
+ Xc0/eXhAzBs133ONWQDV/Rbi1ioUOQ8mRdkTz5Uff7ruJvygX5w3EPLdbiN2rqDNyN9InXXaE
+ vwy9lLEth4Baeb1hElcXYNfqYhVF0mNNIWD+ZUoE5MH5INb6IrEuyrH7i4Rslv9P9KMl7Sr8q
+ LAKx4ourPYUln1cIWuIiF5k6GKYvsvghdStMSsnMAmHTMyf5m4olB50OVyF4Q6kxeHegkpn8t
+ ome+Se5UNvvwSay9TXOuDNrp7z2rN9YasL5eMYhQuRdfjZD1i8Dh+e4nf1003c/Ac1a0rh+L7
+ qI0MCd3XVWLdv29IhVXhPqVW9VfiN3Wla5PGQhg31qVXsRNhcfCulNP1qkJwAXfFsbk6uVyGk
+ TxrtojPqi+pkT3z5c8AgFPriEdkzxpAWAp4KZk/0RwEqnrj17XpNwkoSC1MNznpc6+IGsT9R5
+ do9nhyQCsaSOiYs7ekTmMwAPteQKqY9qusZtIxZhWqDH4qOrgTNs5X7HygxDLykj/wD52UJ2P
+ JKHGjNfcamSdXRWK0gwT770oDUGad8mTHeH35DVYkxUFvJtQTpat5Fcc/qvkIrtixwi52182s
+ ANXkTSiBF6x7cq844LEOVZJ2rhKfDzbffXsLnhWapl6kDU5um79A03pEuK7VmPdndNZwv45xm
+ nKNXrf3Bgmot0cuRAtHHyHuhcmq4Oj6c15yDFwn/RjeT0=
+Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,31 +131,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 21, 2024 at 8:50=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
+On 3/23/24 18:29, Richard Henderson wrote:
+> The return address comes from IA*Q_Next, and IASQ_Next
+> is always equal to IASQ_Back, not IASQ_Front.
 >
-> Extract the MMU API and expose it via "mmu.h" so we can
-> reuse the methods in target/xtensa/ files.
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-The MMU/MPU are replaceable configuration blocks in the xtensa
-architecture, their internals don't have architecture-wide significance
-and I believe their exposure should be kept to a minimum.
-I have a half-done xtensa MMU rework which I'd like to complete,
-it only exposes the interface for address translation, opcode translation
-and dumping.
+Tested-by: Helge Deller <deller@gmx.de>
 
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+
 > ---
->  target/xtensa/cpu.h        |  32 +-
->  target/xtensa/mmu.h        |  95 ++++
->  target/xtensa/mmu.c        | 889 ++++++++++++++++++++++++++++++++++++
->  target/xtensa/mmu_helper.c | 892 +------------------------------------
->  target/xtensa/meson.build  |   1 +
->  5 files changed, 991 insertions(+), 918 deletions(-)
->  create mode 100644 target/xtensa/mmu.h
->  create mode 100644 target/xtensa/mmu.c
+>   target/hppa/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index 19594f917e..1766a63001 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -3817,7 +3817,7 @@ static bool trans_be(DisasContext *ctx, arg_be *a)
+>       load_spr(ctx, new_spc, a->sp);
+>       if (a->l) {
+>           copy_iaoq_entry(ctx, cpu_gr[31], ctx->iaoq_n, ctx->iaoq_n_var)=
+;
+> -        tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_f);
+> +        tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
+>       }
+>       if (a->n && use_nullify_skip(ctx)) {
+>           copy_iaoq_entry(ctx, cpu_iaoq_f, -1, tmp);
 
---=20
-Thanks.
--- Max
 
