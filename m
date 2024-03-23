@@ -4,57 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103F7C54E58
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 09:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79CE6CD11BF
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 13:14:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rnxqT-0001oK-03; Sat, 23 Mar 2024 05:39:21 -0400
+	id 1ro1Bl-0003eo-40; Sat, 23 Mar 2024 09:13:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rnxqQ-0001nO-DC
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 05:39:18 -0400
-Received: from todd.t-8ch.de ([159.69.126.157])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thomas@t-8ch.de>) id 1rnxqO-0006wL-7p
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 05:39:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
- t=1711186751; bh=+Sw9fy0FVqUDlfcuJVUl76n4Vf/NYbXMngMBVQi3upM=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=Y3uD8/KnUb/6XKWAiiQsKMWLX7W4Zc2r9E1kn4Rvkn4wSvMajaJ+RO3sGOhE8xdfs
- KzSc/mSjhGJeA+iGJyZNk52ptg1nyEHZ6HCQ0ZzfBUU4k0ZCCZUEdDwuOjs7/APnH8
- AiOYFLxUWz1uaYoVPoEV+hTxzqQKda5QNanfybac=
-From: =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-Date: Sat, 23 Mar 2024 10:39:07 +0100
-Subject: [PATCH v7 2/7] tests/qtest/pvpanic: use centralized definition of
- supported events
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1ro1Bj-0003eV-ML; Sat, 23 Mar 2024 09:13:31 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1ro1Bh-0005J2-CC; Sat, 23 Mar 2024 09:13:31 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-513dc9d6938so3930850e87.2; 
+ Sat, 23 Mar 2024 06:13:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1711199606; x=1711804406; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=DbMU85BT53DMjbn5JQEFy+jPQnDXIrhZAdVJYZ20OYc=;
+ b=SwBSW1QZrIn1Xgn/NTElLMEsvkexABluyek7BIgscYg3RCpTj+t01EFnGYCjihx126
+ +Y2wmiB8axUeP6R+fftR8G9DQcyqaxNtEYGXGHbQapJ/mVOfR2UqLecHUGQiFOOFJS9Y
+ RWWMEvYWc62G7qWf+RZ/ZfyfKuzndJHymyZR5icX62OhAri7jBvbPVEoALPrvCvLAAYG
+ RXZzfDWsVQzZFQcwOdJwxr3MhilCn775w3EbBmGNC4RvR8q+qlVkTOPKPVKoprFXcyH8
+ YgURYL0ldpViu+Zqx5AgFLBEn0sMmMSDSFp7OLBBl0zTAF5wYArMwpk0gmMuEnafiCm3
+ 9dMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711199606; x=1711804406;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DbMU85BT53DMjbn5JQEFy+jPQnDXIrhZAdVJYZ20OYc=;
+ b=I0PUNuxXwJTkMG82toxPJys+xt+uULC5bZZTw2UhBvmVv4pdWnXSc1GUNeXqJ/5aM+
+ MAOGfRGykcZZS68YH//wJw82TAMwQf1w1nbayck1/5kc8tCiYEF6RyQ4Lz4JYl3OOsCJ
+ zPq+WSdzFfRsY5LQKlZJCQ5G0zoZhs51R30o/+yD7Ht2GxYD+X4/AHqqr33g5P5adpcn
+ 4nnkY6rQ6xHkZXuBJsvtGNJSOuxy8fGlNbAHazPHCZaydju5dz8RZyUkkAVF1TXdYaTc
+ OfUm0lFfNfvuREqYp/ykLcaq/wPRURwttbYcWl35pNPQDFXoh4R6ylpKSuV2YgeLpE0T
+ 8uXQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVTYzZqHWHg082XDp3uNDXIXDjndbiVhwXWVy+PCB73VxCcG4BzWGL2krKxy/KQAtmm6Tno7u98kqmRwXOfzabymNZW
+X-Gm-Message-State: AOJu0YwB+qe87SYt8saZYgSffiT83vidXdXs/DA4hiEw2QDz+l4igOOG
+ 92Z3D4c+Xe/POyCEhfBHIcJ5mV56B8wqX0ZDE1JeixfpXAT7kIJn+s62cQ4B+adxuEsCalBcQJg
+ GqWCvRzq8haRb9/F+vkn7hGcLP6Y=
+X-Google-Smtp-Source: AGHT+IG6yWqQeP5jyLZfBxdNjUWxUWzCv3GJPA+LsGBJcOZ7lEsXAOVv1r0ZPW3hf31Uh5bPqvw0WQUQQGOP61HzTuQ=
+X-Received: by 2002:ac2:5bd0:0:b0:513:d3a2:6350 with SMTP id
+ u16-20020ac25bd0000000b00513d3a26350mr1293113lfn.66.1711199605755; Sat, 23
+ Mar 2024 06:13:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240323-pvpanic-shutdown-v7-2-4ac1fd546d6f@t-8ch.de>
-References: <20240323-pvpanic-shutdown-v7-0-4ac1fd546d6f@t-8ch.de>
-In-Reply-To: <20240323-pvpanic-shutdown-v7-0-4ac1fd546d6f@t-8ch.de>
-To: "Michael S. Tsirkin" <mst@redhat.com>, 
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, 
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
- =?utf-8?q?Thomas_Wei=C3=9Fschuh?= <thomas@t-8ch.de>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1711186751; l=2303;
- i=thomas@t-8ch.de; s=20221212; h=from:subject:message-id;
- bh=+Sw9fy0FVqUDlfcuJVUl76n4Vf/NYbXMngMBVQi3upM=;
- b=18qmOKGjqZLNyxcQw7R5Brqa05Ni7EDNfQmYmtuMDaaN66ZJlgCrdn/+SrRRlA46td7koPW8O
- 5enHwU6Sr0GCpq+zq6gAMTPgo3oIUGTWXSv5e8DlAtvMl2BRJ4czv1u
-X-Developer-Key: i=thomas@t-8ch.de; a=ed25519;
- pk=KcycQgFPX2wGR5azS7RhpBqedglOZVgRPfdFSPB1LNw=
-Received-SPF: pass client-ip=159.69.126.157; envelope-from=thomas@t-8ch.de;
- helo=todd.t-8ch.de
+References: <20240321154838.95771-1-philmd@linaro.org>
+ <20240321154838.95771-9-philmd@linaro.org>
+In-Reply-To: <20240321154838.95771-9-philmd@linaro.org>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Sat, 23 Mar 2024 14:13:13 +0100
+Message-ID: <CAJy5ezpxDNYmNOmb3Ew795gK86M0UFVFJDuPnVKhLx70ixvETQ@mail.gmail.com>
+Subject: Re: [PATCH-for-9.1 08/21] target/microblaze: Prefix MMU API with 'mb_'
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Chris Wulff <crwulff@gmail.com>, Marek Vasut <marex@denx.de>,
+ Max Filippov <jcmvbkbc@gmail.com>, 
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>, 
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Content-Type: multipart/alternative; boundary="000000000000a417eb061453b470"
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,79 +99,388 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid the necessity to update all tests when new events are added
-to the device.
+--000000000000a417eb061453b470
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Acked-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
----
- tests/qtest/pvpanic-pci-test.c | 5 +++--
- tests/qtest/pvpanic-test.c     | 5 +++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+On Thu, Mar 21, 2024 at 4:49=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
+@linaro.org>
+wrote:
 
-diff --git a/tests/qtest/pvpanic-pci-test.c b/tests/qtest/pvpanic-pci-test.c
-index 2c05b376ba72..b372caf41dc0 100644
---- a/tests/qtest/pvpanic-pci-test.c
-+++ b/tests/qtest/pvpanic-pci-test.c
-@@ -16,6 +16,7 @@
- #include "qapi/qmp/qdict.h"
- #include "libqos/pci.h"
- #include "libqos/pci-pc.h"
-+#include "hw/misc/pvpanic.h"
- #include "hw/pci/pci_regs.h"
- 
- static void test_panic_nopause(void)
-@@ -34,7 +35,7 @@ static void test_panic_nopause(void)
-     bar = qpci_iomap(dev, 0, NULL);
- 
-     qpci_memread(dev, bar, 0, &val, sizeof(val));
--    g_assert_cmpuint(val, ==, 3);
-+    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
- 
-     val = 1;
-     qpci_memwrite(dev, bar, 0, &val, sizeof(val));
-@@ -67,7 +68,7 @@ static void test_panic(void)
-     bar = qpci_iomap(dev, 0, NULL);
- 
-     qpci_memread(dev, bar, 0, &val, sizeof(val));
--    g_assert_cmpuint(val, ==, 3);
-+    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
- 
-     val = 1;
-     qpci_memwrite(dev, bar, 0, &val, sizeof(val));
-diff --git a/tests/qtest/pvpanic-test.c b/tests/qtest/pvpanic-test.c
-index 78f1cf8186b0..ccc603472f5d 100644
---- a/tests/qtest/pvpanic-test.c
-+++ b/tests/qtest/pvpanic-test.c
-@@ -10,6 +10,7 @@
- #include "qemu/osdep.h"
- #include "libqtest.h"
- #include "qapi/qmp/qdict.h"
-+#include "hw/misc/pvpanic.h"
- 
- static void test_panic_nopause(void)
- {
-@@ -20,7 +21,7 @@ static void test_panic_nopause(void)
-     qts = qtest_init("-device pvpanic -action panic=none");
- 
-     val = qtest_inb(qts, 0x505);
--    g_assert_cmpuint(val, ==, 3);
-+    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
- 
-     qtest_outb(qts, 0x505, 0x1);
- 
-@@ -43,7 +44,7 @@ static void test_panic(void)
-     qts = qtest_init("-device pvpanic -action panic=pause");
- 
-     val = qtest_inb(qts, 0x505);
--    g_assert_cmpuint(val, ==, 3);
-+    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
- 
-     qtest_outb(qts, 0x505, 0x1);
- 
+> MicroBlaze MMU API is exposed in "mmu.h". In order to avoid
+> name clashing with other targets, prefix the API with 'mb_'.
+>
 
--- 
-2.44.0
 
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+
+
+
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  target/microblaze/mmu.h       | 10 +++++-----
+>  target/microblaze/cpu.c       |  2 +-
+>  target/microblaze/helper.c    |  4 ++--
+>  target/microblaze/mmu.c       | 14 +++++++-------
+>  target/microblaze/op_helper.c |  4 ++--
+>  5 files changed, 17 insertions(+), 17 deletions(-)
+>
+> diff --git a/target/microblaze/mmu.h b/target/microblaze/mmu.h
+> index 1068bd2d52..5b51e0a9c6 100644
+> --- a/target/microblaze/mmu.h
+> +++ b/target/microblaze/mmu.h
+> @@ -85,10 +85,10 @@ typedef struct {
+>      } err;
+>  } MicroBlazeMMULookup;
+>
+> -unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
+> -                           target_ulong vaddr, MMUAccessType rw, int
+> mmu_idx);
+> -uint32_t mmu_read(CPUMBState *env, bool ea, uint32_t rn);
+> -void mmu_write(CPUMBState *env, bool ea, uint32_t rn, uint32_t v);
+> -void mmu_init(MicroBlazeMMU *mmu);
+> +unsigned int mb_mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *l=
+u,
+> +                              target_ulong vaddr, MMUAccessType rw, int
+> mmu_idx);
+> +uint32_t mb_mmu_read(CPUMBState *env, bool ea, uint32_t rn);
+> +void mb_mmu_write(CPUMBState *env, bool ea, uint32_t rn, uint32_t v);
+> +void mb_mmu_init(MicroBlazeMMU *mmu);
+>
+>  #endif
+> diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+> index 96c2b71f7f..59bfb5c45d 100644
+> --- a/target/microblaze/cpu.c
+> +++ b/target/microblaze/cpu.c
+> @@ -205,7 +205,7 @@ static void mb_cpu_reset_hold(Object *obj)
+>      mb_cpu_write_msr(env, MSR_EE | MSR_IE | MSR_VM | MSR_UM);
+>  #else
+>      mb_cpu_write_msr(env, 0);
+> -    mmu_init(&env->mmu);
+> +    mb_mmu_init(&env->mmu);
+>  #endif
+>  }
+>
+> diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
+> index d25c9eb4d3..961687bae7 100644
+> --- a/target/microblaze/helper.c
+> +++ b/target/microblaze/helper.c
+> @@ -57,7 +57,7 @@ bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int
+> size,
+>          return true;
+>      }
+>
+> -    hit =3D mmu_translate(cpu, &lu, address, access_type, mmu_idx);
+> +    hit =3D mb_mmu_translate(cpu, &lu, address, access_type, mmu_idx);
+>      if (likely(hit)) {
+>          uint32_t vaddr =3D address & TARGET_PAGE_MASK;
+>          uint32_t paddr =3D lu.paddr + vaddr - lu.vaddr;
+> @@ -238,7 +238,7 @@ hwaddr mb_cpu_get_phys_page_attrs_debug(CPUState *cs,
+> vaddr addr,
+>      attrs->secure =3D mb_cpu_access_is_secure(cpu, MMU_DATA_LOAD);
+>
+>      if (mmu_idx !=3D MMU_NOMMU_IDX) {
+> -        hit =3D mmu_translate(cpu, &lu, addr, 0, 0);
+> +        hit =3D mb_mmu_translate(cpu, &lu, addr, 0, 0);
+>          if (hit) {
+>              vaddr =3D addr & TARGET_PAGE_MASK;
+>              paddr =3D lu.paddr + vaddr - lu.vaddr;
+> diff --git a/target/microblaze/mmu.c b/target/microblaze/mmu.c
+> index 234006634e..5fb8ee8418 100644
+> --- a/target/microblaze/mmu.c
+> +++ b/target/microblaze/mmu.c
+> @@ -74,8 +74,8 @@ static void mmu_change_pid(CPUMBState *env, unsigned in=
+t
+> newpid)
+>  }
+>
+>  /* rw - 0 =3D read, 1 =3D write, 2 =3D fetch.  */
+> -unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,
+> -                           target_ulong vaddr, MMUAccessType rw, int
+> mmu_idx)
+> +unsigned int mb_mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *l=
+u,
+> +                              target_ulong vaddr, MMUAccessType rw, int
+> mmu_idx)
+>  {
+>      MicroBlazeMMU *mmu =3D &cpu->env.mmu;
+>      unsigned int i, hit =3D 0;
+> @@ -175,7 +175,7 @@ done:
+>  }
+>
+>  /* Writes/reads to the MMU's special regs end up here.  */
+> -uint32_t mmu_read(CPUMBState *env, bool ext, uint32_t rn)
+> +uint32_t mb_mmu_read(CPUMBState *env, bool ext, uint32_t rn)
+>  {
+>      MicroBlazeCPU *cpu =3D env_archcpu(env);
+>      unsigned int i;
+> @@ -228,7 +228,7 @@ uint32_t mmu_read(CPUMBState *env, bool ext, uint32_t
+> rn)
+>      return r;
+>  }
+>
+> -void mmu_write(CPUMBState *env, bool ext, uint32_t rn, uint32_t v)
+> +void mb_mmu_write(CPUMBState *env, bool ext, uint32_t rn, uint32_t v)
+>  {
+>      MicroBlazeCPU *cpu =3D env_archcpu(env);
+>      uint64_t tmp64;
+> @@ -304,8 +304,8 @@ void mmu_write(CPUMBState *env, bool ext, uint32_t rn=
+,
+> uint32_t v)
+>                  return;
+>              }
+>
+> -            hit =3D mmu_translate(cpu, &lu, v & TLB_EPN_MASK,
+> -                                0, cpu_mmu_index(env_cpu(env), false));
+> +            hit =3D mb_mmu_translate(cpu, &lu, v & TLB_EPN_MASK,
+> +                                   0, cpu_mmu_index(env_cpu(env), false)=
+);
+>              if (hit) {
+>                  env->mmu.regs[MMU_R_TLBX] =3D lu.idx;
+>              } else {
+> @@ -319,7 +319,7 @@ void mmu_write(CPUMBState *env, bool ext, uint32_t rn=
+,
+> uint32_t v)
+>     }
+>  }
+>
+> -void mmu_init(MicroBlazeMMU *mmu)
+> +void mb_mmu_init(MicroBlazeMMU *mmu)
+>  {
+>      int i;
+>      for (i =3D 0; i < ARRAY_SIZE(mmu->regs); i++) {
+> diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.=
+c
+> index f6378030b7..58475a3af5 100644
+> --- a/target/microblaze/op_helper.c
+> +++ b/target/microblaze/op_helper.c
+> @@ -386,12 +386,12 @@ void helper_stackprot(CPUMBState *env, target_ulong
+> addr)
+>  /* Writes/reads to the MMU's special regs end up here.  */
+>  uint32_t helper_mmu_read(CPUMBState *env, uint32_t ext, uint32_t rn)
+>  {
+> -    return mmu_read(env, ext, rn);
+> +    return mb_mmu_read(env, ext, rn);
+>  }
+>
+>  void helper_mmu_write(CPUMBState *env, uint32_t ext, uint32_t rn,
+> uint32_t v)
+>  {
+> -    mmu_write(env, ext, rn, v);
+> +    mb_mmu_write(env, ext, rn, v);
+>  }
+>
+>  void mb_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr=
+,
+> --
+> 2.41.0
+>
+>
+
+--000000000000a417eb061453b470
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Thu, Mar 21, 2024 at 4:49=E2=80=AF=
+PM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">phi=
+lmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
+ing-left:1ex">MicroBlaze MMU API is exposed in &quot;mmu.h&quot;. In order =
+to avoid<br>
+name clashing with other targets, prefix the API with &#39;mb_&#39;.<br></b=
+lockquote><div><br></div><div><br></div><div>Reviewed-by: Edgar E. Iglesias=
+ &lt;<a href=3D"mailto:edgar.iglesias@amd.com">edgar.iglesias@amd.com</a>&g=
+t;<br></div><div><br></div><div>=C2=A0</div><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex">
+<br>
+Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
+aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0target/microblaze/mmu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0| 10 +++++-----<br>
+=C2=A0target/microblaze/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 2 +-<br>
+=C2=A0target/microblaze/helper.c=C2=A0 =C2=A0 |=C2=A0 4 ++--<br>
+=C2=A0target/microblaze/mmu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0| 14 +++++++-------=
+<br>
+=C2=A0target/microblaze/op_helper.c |=C2=A0 4 ++--<br>
+=C2=A05 files changed, 17 insertions(+), 17 deletions(-)<br>
+<br>
+diff --git a/target/microblaze/mmu.h b/target/microblaze/mmu.h<br>
+index 1068bd2d52..5b51e0a9c6 100644<br>
+--- a/target/microblaze/mmu.h<br>
++++ b/target/microblaze/mmu.h<br>
+@@ -85,10 +85,10 @@ typedef struct {<br>
+=C2=A0 =C2=A0 =C2=A0} err;<br>
+=C2=A0} MicroBlazeMMULookup;<br>
+<br>
+-unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,<br=
+>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0target_ulong vaddr, MMUAccessType rw, int mmu_idx);=
+<br>
+-uint32_t mmu_read(CPUMBState *env, bool ea, uint32_t rn);<br>
+-void mmu_write(CPUMBState *env, bool ea, uint32_t rn, uint32_t v);<br>
+-void mmu_init(MicroBlazeMMU *mmu);<br>
++unsigned int mb_mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_ulong vaddr, MMUAccessType rw, int m=
+mu_idx);<br>
++uint32_t mb_mmu_read(CPUMBState *env, bool ea, uint32_t rn);<br>
++void mb_mmu_write(CPUMBState *env, bool ea, uint32_t rn, uint32_t v);<br>
++void mb_mmu_init(MicroBlazeMMU *mmu);<br>
+<br>
+=C2=A0#endif<br>
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c<br>
+index 96c2b71f7f..59bfb5c45d 100644<br>
+--- a/target/microblaze/cpu.c<br>
++++ b/target/microblaze/cpu.c<br>
+@@ -205,7 +205,7 @@ static void mb_cpu_reset_hold(Object *obj)<br>
+=C2=A0 =C2=A0 =C2=A0mb_cpu_write_msr(env, MSR_EE | MSR_IE | MSR_VM | MSR_UM=
+);<br>
+=C2=A0#else<br>
+=C2=A0 =C2=A0 =C2=A0mb_cpu_write_msr(env, 0);<br>
+-=C2=A0 =C2=A0 mmu_init(&amp;env-&gt;mmu);<br>
++=C2=A0 =C2=A0 mb_mmu_init(&amp;env-&gt;mmu);<br>
+=C2=A0#endif<br>
+=C2=A0}<br>
+<br>
+diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c<br>
+index d25c9eb4d3..961687bae7 100644<br>
+--- a/target/microblaze/helper.c<br>
++++ b/target/microblaze/helper.c<br>
+@@ -57,7 +57,7 @@ bool mb_cpu_tlb_fill(CPUState *cs, vaddr address, int siz=
+e,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return true;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-=C2=A0 =C2=A0 hit =3D mmu_translate(cpu, &amp;lu, address, access_type, mm=
+u_idx);<br>
++=C2=A0 =C2=A0 hit =3D mb_mmu_translate(cpu, &amp;lu, address, access_type,=
+ mmu_idx);<br>
+=C2=A0 =C2=A0 =C2=A0if (likely(hit)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0uint32_t vaddr =3D address &amp; TARGET_P=
+AGE_MASK;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0uint32_t paddr =3D lu.paddr + vaddr - lu.=
+vaddr;<br>
+@@ -238,7 +238,7 @@ hwaddr mb_cpu_get_phys_page_attrs_debug(CPUState *cs, v=
+addr addr,<br>
+=C2=A0 =C2=A0 =C2=A0attrs-&gt;secure =3D mb_cpu_access_is_secure(cpu, MMU_D=
+ATA_LOAD);<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0if (mmu_idx !=3D MMU_NOMMU_IDX) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 hit =3D mmu_translate(cpu, &amp;lu, addr, 0, 0=
+);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 hit =3D mb_mmu_translate(cpu, &amp;lu, addr, 0=
+, 0);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (hit) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0vaddr =3D addr &amp; TARGET=
+_PAGE_MASK;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0paddr =3D lu.paddr + vaddr =
+- lu.vaddr;<br>
+diff --git a/target/microblaze/mmu.c b/target/microblaze/mmu.c<br>
+index 234006634e..5fb8ee8418 100644<br>
+--- a/target/microblaze/mmu.c<br>
++++ b/target/microblaze/mmu.c<br>
+@@ -74,8 +74,8 @@ static void mmu_change_pid(CPUMBState *env, unsigned int =
+newpid)<br>
+=C2=A0}<br>
+<br>
+=C2=A0/* rw - 0 =3D read, 1 =3D write, 2 =3D fetch.=C2=A0 */<br>
+-unsigned int mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,<br=
+>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0target_ulong vaddr, MMUAccessType rw, int mmu_idx)<=
+br>
++unsigned int mb_mmu_translate(MicroBlazeCPU *cpu, MicroBlazeMMULookup *lu,=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_ulong vaddr, MMUAccessType rw, int m=
+mu_idx)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0MicroBlazeMMU *mmu =3D &amp;cpu-&gt;env.mmu;<br>
+=C2=A0 =C2=A0 =C2=A0unsigned int i, hit =3D 0;<br>
+@@ -175,7 +175,7 @@ done:<br>
+=C2=A0}<br>
+<br>
+=C2=A0/* Writes/reads to the MMU&#39;s special regs end up here.=C2=A0 */<b=
+r>
+-uint32_t mmu_read(CPUMBState *env, bool ext, uint32_t rn)<br>
++uint32_t mb_mmu_read(CPUMBState *env, bool ext, uint32_t rn)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0MicroBlazeCPU *cpu =3D env_archcpu(env);<br>
+=C2=A0 =C2=A0 =C2=A0unsigned int i;<br>
+@@ -228,7 +228,7 @@ uint32_t mmu_read(CPUMBState *env, bool ext, uint32_t r=
+n)<br>
+=C2=A0 =C2=A0 =C2=A0return r;<br>
+=C2=A0}<br>
+<br>
+-void mmu_write(CPUMBState *env, bool ext, uint32_t rn, uint32_t v)<br>
++void mb_mmu_write(CPUMBState *env, bool ext, uint32_t rn, uint32_t v)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0MicroBlazeCPU *cpu =3D env_archcpu(env);<br>
+=C2=A0 =C2=A0 =C2=A0uint64_t tmp64;<br>
+@@ -304,8 +304,8 @@ void mmu_write(CPUMBState *env, bool ext, uint32_t rn, =
+uint32_t v)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hit =3D mmu_translate(cpu, &amp;=
+lu, v &amp; TLB_EPN_MASK,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0, cpu_mmu_index(env_cpu(env), false=
+));<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 hit =3D mb_mmu_translate(cpu, &a=
+mp;lu, v &amp; TLB_EPN_MASK,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00, cpu_mmu_index(env_cp=
+u(env), false));<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (hit) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0env-&gt;mmu.r=
+egs[MMU_R_TLBX] =3D lu.idx;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
+@@ -319,7 +319,7 @@ void mmu_write(CPUMBState *env, bool ext, uint32_t rn, =
+uint32_t v)<br>
+=C2=A0 =C2=A0 }<br>
+=C2=A0}<br>
+<br>
+-void mmu_init(MicroBlazeMMU *mmu)<br>
++void mb_mmu_init(MicroBlazeMMU *mmu)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0int i;<br>
+=C2=A0 =C2=A0 =C2=A0for (i =3D 0; i &lt; ARRAY_SIZE(mmu-&gt;regs); i++) {<b=
+r>
+diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c<=
+br>
+index f6378030b7..58475a3af5 100644<br>
+--- a/target/microblaze/op_helper.c<br>
++++ b/target/microblaze/op_helper.c<br>
+@@ -386,12 +386,12 @@ void helper_stackprot(CPUMBState *env, target_ulong a=
+ddr)<br>
+=C2=A0/* Writes/reads to the MMU&#39;s special regs end up here.=C2=A0 */<b=
+r>
+=C2=A0uint32_t helper_mmu_read(CPUMBState *env, uint32_t ext, uint32_t rn)<=
+br>
+=C2=A0{<br>
+-=C2=A0 =C2=A0 return mmu_read(env, ext, rn);<br>
++=C2=A0 =C2=A0 return mb_mmu_read(env, ext, rn);<br>
+=C2=A0}<br>
+<br>
+=C2=A0void helper_mmu_write(CPUMBState *env, uint32_t ext, uint32_t rn, uin=
+t32_t v)<br>
+=C2=A0{<br>
+-=C2=A0 =C2=A0 mmu_write(env, ext, rn, v);<br>
++=C2=A0 =C2=A0 mb_mmu_write(env, ext, rn, v);<br>
+=C2=A0}<br>
+<br>
+=C2=A0void mb_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr a=
+ddr,<br>
+-- <br>
+2.41.0<br>
+<br>
+</blockquote></div></div>
+
+--000000000000a417eb061453b470--
 
