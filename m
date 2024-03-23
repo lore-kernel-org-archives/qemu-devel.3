@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D013CC54E67
-	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 20:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 828D4C54E67
+	for <qemu-devel@archiver.kernel.org>; Sat, 23 Mar 2024 20:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ro8Rd-0002LG-Uj; Sat, 23 Mar 2024 16:58:25 -0400
+	id 1ro8S5-0002Q4-OW; Sat, 23 Mar 2024 16:58:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8Rc-0002L1-AO
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:58:24 -0400
-Received: from mout.gmx.net ([212.227.17.22])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8S4-0002Pl-0w
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:58:52 -0400
+Received: from mout.gmx.net ([212.227.17.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8RS-0002u1-Eq
- for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:58:23 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ro8S2-00036A-H9
+ for qemu-devel@nongnu.org; Sat, 23 Mar 2024 16:58:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1711227490; x=1711832290; i=deller@gmx.de;
- bh=rsDntOjpYtwHqJUDF6Aaw2EW15fCP9z6VOPH2OZ7oGE=;
+ s=s31663417; t=1711227524; x=1711832324; i=deller@gmx.de;
+ bh=lSdhub0WDJWR2KfRtYxx2tIAY9BrWul+XWkbs1Mo+u8=;
  h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
  In-Reply-To;
- b=msvV1H8FwLpfTo903uPSuY0lsomXHVDv/2I/oxK7iLgmryPSgxMP//A2hLAz2bm2
- uhBC2OhtslzWT0p8ezQy7ymFNrstseEz0gi7amQ+TBKVSDX5L8aksxcot4uCm15Mc
- tcRAdX8bmz99dCn9+SM1hfkpbwCpLgtz/792YFjdgCNV8XWG0ApbvNs+Yzs4BG/mp
- Yj16MyOL+yxJnuAMJ3lKx7i9kHuxpHDKeSHk0I5bcPk9CjmwzVHlksmYIyASdNeL0
- tRjJwrLp7eN2TSgJqWpaGahgTaJ86SOsD8hlfCqoLaZ765zK+GjmBT9ZEsv3M8Ic1
- CAHVikjnwX+eg4HRtw==
+ b=gtZwTkao23CusQk0iVxt8AIpv0zBD5KZF2cI/EzbxFRJ4C/ILGXsZJ44GVTI/WJz
+ YuIYf1yJwG2svZE5lZuF0VAFzonax3+kfawiNXG8WxO0ARVa37Nx3ImeHj8P/tw9g
+ lsMqVW8gJbIb5pupzyZ+U2gQ6Bi9B0iTOucqqXRKlGm/8a87IR7Hh7gS5RRBfocMY
+ DJy0QGQ3Ac8uKrVdgoIhNIYTqCO5XmStggyNqaLxRreYhl5VbD4uZmA717qMduciY
+ licDQo9ZX1wo1TeJ/MAk6gXrqbDTTBJH2UUCUZKTSiz00sAx6gRzyysHjhG3l71hj
+ pEaMdww82kp8gAZ/HA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [192.168.20.55] ([89.244.187.196]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MK3Vu-1rSd121QWk-00LXfL; Sat, 23
- Mar 2024 21:58:10 +0100
-Message-ID: <99f4456f-51b7-452e-9eb0-bfea402a90b6@gmx.de>
-Date: Sat, 23 Mar 2024 21:58:09 +0100
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N7zBb-1qjQxD2PVT-0154YF; Sat, 23
+ Mar 2024 21:58:44 +0100
+Message-ID: <e02e4f25-edbb-4a0f-b8f4-6dea48e118dc@gmx.de>
+Date: Sat, 23 Mar 2024 21:58:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] target/hppa: Mark interval timer write as io
+Subject: Re: [PATCH v2 6/7] target/hppa: Tidy read of interval timer
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: svens@stackframe.org
 References: <20240323172954.1041480-1-richard.henderson@linaro.org>
- <20240323172954.1041480-6-richard.henderson@linaro.org>
+ <20240323172954.1041480-7-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -87,35 +87,35 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240323172954.1041480-6-richard.henderson@linaro.org>
+In-Reply-To: <20240323172954.1041480-7-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:NQZdBAekbM6XNAgD3XoF5W2KGD6VBrigvc+3UEHTv46WpOEvU7R
- fj9oughMdL3h1YXtn3rBlprivMjcGnoH+YsUVtZVUfrP6V7eJCsSDz/szThb7T9e0+O4kKy
- sXWjYSaodAplp+Eh95FLrSrDlbL9OeIamyDr3LZQ7z7P9NDxMaFO8BJU470XmiUYbfxmVQv
- pJrA6jmkR1j7WgyIGVZcw==
-UI-OutboundReport: notjunk:1;M01:P0:1GzH6zCOvEY=;f5mnXz0JZkXdj6TGwkEcoIwTQyf
- APd/tPHD5o4kReenPJBUs6GSimCO/KM6vzJNbH+WQ68RT6zpg4yaunFLUVwjV9Ln+xIWX4mm+
- UMV0YmHoLUNUXTIxavg4hbsEG5+4iUvM8GYHwZY8tNSI/KaPKFYzkFMXiQNz3tUoe1P7ZmqDd
- D65uSK/Ucjn2RhiRGGumGIic2Iys2PZvpOzNQpuBky3gyM8zYKK99J5/EF1ZGqJQ1i70LJDk5
- JmgovHm7zO8hDVRwnqmWqk6Ctg0Jhua2Bgm26QWupuLQXCZjZOG/LFWL7jv93DQB214fGOkNf
- veAV+h+qksxc4DJO//eclronSHssZfmfeXBCOyA19xE+3AUSpCxWMeKzR70ORKi5ZAm6WZS0B
- Kj54WjASxeDeslduP7Tqn/dbXp8oaxRKg/hVNaW8vLHcCdE0ONiB5kK5GPA2T/k5jwjXG7kLf
- h27vDl6LR1owdRSDypyOyTdkOKMGC4moSM1eEHk20xfJpPAuyhy1KbGm8GdXadUVtAOdhQsYm
- KUxy4UElNeuOlcq1g7v0Km5hgcqxDaLRTcYt7+VjOmAxsn0OBy2q6PfGXYHfijUZiqbwlagBF
- +8gH6Unh8gAi0sUZ5jpyHN4k3wA9PolMcIBjaMJHfGNYrxvt+YWaNVY+pspVnVtAvzmwKpMU+
- dzCBYLu7s5eC8JhnlHN1hLka9QW94dJWN7pj12Kc2fkmFu5jrCX6zwqNT+X/trVr/zmJhrXLQ
- m617utYYfTMcIfXZk816UuqUlEghg6a0iIHTT5ZeFbjYKJTRscSbzxAP2mxTGLhCkKdBsRz1o
- cBG1ZqvSzoH6I58OyvRq8hpKZ8ehEPNec7YE9gAm2MJ84=
-Received-SPF: pass client-ip=212.227.17.22; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:PQA1pZCsZNkYTlYYPSpMYdLyjNLhrwvPG3lDzEgWNrnmukC7Gvz
+ C/olr99YnNISmw8WkRC9Ju0lV3j15NSL97JVixp1NTxKzdYKqdEafpaaR0fRppBZhWh+Gm/
+ fJpSLQDM13x2jlzt+sOEyMVlSAXnSTkmnLKEppmtVAUg8J62aqo0VlA6VgsLa9wct1TLkG9
+ 2mCShD4qzSKjYC5vTJbxA==
+UI-OutboundReport: notjunk:1;M01:P0:L4racvdiErU=;Dit389982jSyYOoe3N+B/AXZAe9
+ 8tZKsWEXz4b5FXMX3S9NnIYa56FsQp/ibutwj8ss8qb/RKmJADlw3RBWjenq2zYwfJF+PzJ+0
+ JoyrBZ4m/qFh0IeqBrbQHhRSHm6fpL14FRCjt8aEMmGgOEZ9ENsjrH+/gQOtY04fgRa9lPOu3
+ Yo3XxU7gtLQns+Nk5M1SxWPX8bWx4vYpKsGONCgjtYo6ksHMOgk1MHr5Q1qxz1641aRlRjKvN
+ qGmhFFu+uDSeqZgUyWgFWiye3VK1Iw7PMYMpg6ID+yOVzJiuqNY6k+SYwt6nS814kKrQ1N4n7
+ rBc4I/cBCNIfvKmBkXMz9sRcrnGh5XsAEwWkJtiJ93qXiKCCvlp0S3wuLXmbmBNCC2KRy6UsA
+ rml9idtRcwE0OGEup91h0SYGxha9addG8GX6Ac2diTlbv1rOtspeVO8q12T9nEG0u8VQq83RG
+ DS5zWgc1aMdkI/jmc0JQCjCy2pm2T8Y5SV6+Paiqb/Ef0OLxRIPYN0XMVcT7YQ0mCZFVh5IWH
+ 0sJeGH/dSNPMf1GcQDLaq57fnrWdchDzFjzobnWnV2V+7H9AmdzWdmDN4QMBpZd+1OwuJ5JRV
+ w9rpkguaDY1Iu5ZUInvVnqrTqjcFBit3HYyAcEwX4bvoDAHYiPu4Lf3NM59avuIhgh7rdyOKO
+ ph5oH62y2XBwd7gt8IqLFsg6kZLW7mhRh11LRcOVkIBKEEBMza+ceGMSLxP7nlq4dZ/BcVjP0
+ TunNIvU7i7LdJ1Du+t7Hu6ECNU0ytzZqSgxo2jtIyndLcPKpvlARbDk39YRS57D0tTo8etWlz
+ dEeVf1d3WcwvOD7tqT283pS/Y55QbJQeE/94dxtvtnSFo=
+Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,7 +132,11 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/23/24 18:29, Richard Henderson wrote:
+> The call to gen_helper_read_interval_timer is
+> identical on both sides of the IF.
+>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 Reviewed-by: Helge Deller <deller@gmx.de>
 Tested-by: Helge Deller <deller@gmx.de>
@@ -141,23 +145,26 @@ Thanks!
 Helge
 
 > ---
->   target/hppa/translate.c | 3 +++
->   1 file changed, 3 insertions(+)
+>   target/hppa/translate.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
 >
 > diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index ceb739c54a..8c1a564c5d 100644
+> index 8c1a564c5d..5b8c1b06c3 100644
 > --- a/target/hppa/translate.c
 > +++ b/target/hppa/translate.c
-> @@ -2162,6 +2162,9 @@ static bool trans_mtctl(DisasContext *ctx, arg_mtc=
-tl *a)
->
->       switch (ctl) {
->       case CR_IT:
-> +        if (translator_io_start(&ctx->base)) {
-> +            ctx->base.is_jmp =3D DISAS_IAQ_N_STALE;
-> +        }
->           gen_helper_write_interval_timer(tcg_env, reg);
->           break;
->       case CR_EIRR:
+> @@ -2082,11 +2082,9 @@ static bool trans_mfctl(DisasContext *ctx, arg_mf=
+ctl *a)
+>           nullify_over(ctx);
+>           tmp =3D dest_gpr(ctx, rt);
+>           if (translator_io_start(&ctx->base)) {
+> -            gen_helper_read_interval_timer(tmp);
+>               ctx->base.is_jmp =3D DISAS_IAQ_N_STALE;
+> -        } else {
+> -            gen_helper_read_interval_timer(tmp);
+>           }
+> +        gen_helper_read_interval_timer(tmp);
+>           save_gpr(ctx, rt, tmp);
+>           return nullify_end(ctx);
+>       case 26:
 
 
