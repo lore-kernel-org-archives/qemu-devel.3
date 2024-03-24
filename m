@@ -4,64 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47868C47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 15:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55FC6C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 16:13:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roPfm-0006FM-8Y; Sun, 24 Mar 2024 11:22:10 -0400
+	id 1roQSd-0003dT-P2; Sun, 24 Mar 2024 12:12:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <irina.ryapolova@syntacore.com>)
- id 1roPfl-0006FC-91
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 11:22:09 -0400
-Received: from mta-04.yadro.com ([89.207.88.248])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1roQSc-0003ch-18; Sun, 24 Mar 2024 12:12:38 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <irina.ryapolova@syntacore.com>)
- id 1roPfj-00063m-H9
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 11:22:09 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com DCCF9C0003
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1711293722;
- bh=3g6QPnEumO3m2dubq03r4CdJmKaZIbh2xTPTUVN0iMg=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=LMi7kQHQRo5T1nDYgAz5Ymnjg1RSq1hcGYUJfwhN4rZHPOtPgs5jp5NMK33fKF85w
- NX8/0T6tN7vju7hcddFTwkT+eoOPfZqgGyAGenEy8JF6qL3NEkSNObyUAJvcRqZ4nU
- 5sxuw2vKInbtyXtCtoR14W0Ss8GDAkcgGWSNkmAic/sAYdcEcBxq7ut0G/H/+mKDSs
- zOiZjpJu/XykZ8WVRUrOSRYFMhFMBLlxxE+9tTqHoylUVmnyDu8YQoXwowmje7UO8p
- rr3AzZHlWuQYQqFeuWHEPRN2a8f3+87Ds/MsI9LEaRfJFiLX0IpBPwCkwFATAt/P3M
- hU5RaDL1Vtadg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1711293722;
- bh=3g6QPnEumO3m2dubq03r4CdJmKaZIbh2xTPTUVN0iMg=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=uh37kE1VXUt27r2WLksj4HzMTpRSyLKqibBZfJcyL9HwnKWWe5pxenTgjaHi317wA
- sgerctObIwMEXsfkyn5kzOZsPw8tYwIEVjTzXFR0UT/TR5oC0PImuXXyrm/2Ak0QIu
- Qt/mvPL4TIsFxyPMSbp4Lqcjb2jn3kZ/ZcQ5p6ynm6QW65jCbcrvjrqKBYoBNwwvUb
- chmBr0wNTtsEgYJgpP50wSOprdKAWElE45BAVTkuuG54Qx2MFxj8OtnGUrUdab+nlY
- JuUagsosG9bD3s9O2C8Fh8jnH/JepK7vl7DcCybMmsJEwIjRuOoju6vEYjaudLj+3U
- N2o2XQaz3yXfQ==
-From: Irina Ryapolova <irina.ryapolova@syntacore.com>
-To: <qemu-devel@nongnu.org>
-CC: <marcandre.lureau@redhat.com>, <pbonzini@redhat.com>, Irina Ryapolova
- <irina.ryapolova@syntacore.com>
-Subject: [PATCH] chardev/char-win-stdio: Fix keyboard input after exit Qemu on
-Date: Sun, 24 Mar 2024 18:21:50 +0300
-Message-ID: <20240324152150.21506-1-irina.ryapolova@syntacore.com>
-X-Mailer: git-send-email 2.25.1
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1roQSZ-0006tM-IQ; Sun, 24 Mar 2024 12:12:37 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 89C294E6003;
+ Sun, 24 Mar 2024 17:11:50 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id q52ltfNNo1Wl; Sun, 24 Mar 2024 17:11:48 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 4650D4E601F; Sun, 24 Mar 2024 17:11:48 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH] docs/system/ppc/amigang.rst: Fix formatting
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-09.corp.yadro.com (172.17.11.59) To
- S-Exch-01.corp.yadro.com (10.78.5.241)
-Received-SPF: permerror client-ip=89.207.88.248;
- envelope-from=irina.ryapolova@syntacore.com; helo=mta-04.yadro.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-trivial@nongnu.org
+Message-Id: <20240324161148.4650D4E601F@zero.eik.bme.hu>
+Date: Sun, 24 Mar 2024 17:11:48 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,37 +58,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After exit Qemu need to return the terminal to the default state.
+Add missing space to fix character formatting where it was missed in
+two places.
 
-Signed-off-by: Irina Ryapolova <irina.ryapolova@syntacore.com>
+Fixes: 623d9065b6 (docs/system/ppc: Document running Linux on AmigaNG machines)
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- chardev/char-win-stdio.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ docs/system/ppc/amigang.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
-index 1a18999e78..4fa2c3de8b 100644
---- a/chardev/char-win-stdio.c
-+++ b/chardev/char-win-stdio.c
-@@ -220,6 +220,7 @@ err1:
- static void char_win_stdio_finalize(Object *obj)
- {
-     WinStdioChardev *stdio = WIN_STDIO_CHARDEV(obj);
-+    DWORD dwMode;
+diff --git a/docs/system/ppc/amigang.rst b/docs/system/ppc/amigang.rst
+index ba1a3d80b9..e2c9cb74b7 100644
+--- a/docs/system/ppc/amigang.rst
++++ b/docs/system/ppc/amigang.rst
+@@ -16,7 +16,7 @@ firmware to support AmigaOS 4.
+ Emulated devices
+ ----------------
  
-     if (stdio->hInputReadyEvent != INVALID_HANDLE_VALUE) {
-         CloseHandle(stdio->hInputReadyEvent);
-@@ -230,6 +231,10 @@ static void char_win_stdio_finalize(Object *obj)
-     if (stdio->hInputThread != INVALID_HANDLE_VALUE) {
-         TerminateThread(stdio->hInputThread, 0);
-     }
-+
-+    GetConsoleMode(stdio->hStdIn, &dwMode);
-+    dwMode &= ~ENABLE_VIRTUAL_TERMINAL_INPUT;
-+    SetConsoleMode(stdio->hStdIn, dwMode);
- }
+- * PowerPC 7457 CPU (can also use``-cpu g3, 750cxe, 750fx`` or ``750gx``)
++ * PowerPC 7457 CPU (can also use ``-cpu g3, 750cxe, 750fx`` or ``750gx``)
+  * Articia S north bridge
+  * VIA VT82C686B south bridge
+  * PCI VGA compatible card (guests may need other card instead)
+@@ -73,7 +73,7 @@ https://www.powerdeveloper.org/platforms/pegasos/schematics.
+ Emulated devices
+ ----------------
  
- static int win_stdio_write(Chardev *chr, const uint8_t *buf, int len)
+- * PowerPC 7457 CPU (can also use``-cpu g3`` or ``750cxe``)
++ * PowerPC 7457 CPU (can also use ``-cpu g3`` or ``750cxe``)
+  * Marvell MV64361 Discovery II north bridge
+  * VIA VT8231 south bridge
+  * PCI VGA compatible card (guests may need other card instead)
 -- 
-2.25.1
+2.30.9
 
 
