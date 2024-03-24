@@ -4,77 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0EE4C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 17:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B931C47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 18:13:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roRWi-0006o7-3u; Sun, 24 Mar 2024 13:20:56 -0400
+	id 1roSL0-0001pH-FS; Sun, 24 Mar 2024 14:12:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1roRWe-0006na-KH
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 13:20:52 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1roSKm-0001o4-A5
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 14:12:40 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1roRWd-0000mY-6k
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 13:20:52 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1e0025ef1efso20834925ad.1
- for <qemu-devel@nongnu.org>; Sun, 24 Mar 2024 10:20:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1roSKj-00025H-M3
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 14:12:39 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-29fb11f4b34so3198181a91.0
+ for <qemu-devel@nongnu.org>; Sun, 24 Mar 2024 11:12:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711300850; x=1711905650; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=ventanamicro.com; s=google; t=1711303956; x=1711908756; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=IllBLdIzxA15Qa026XG/E2jsLbE3PsU66Vj11aA5tnk=;
- b=zX+75vSr+79LNW8zBs0JUY6Zxn0leCjpXCTrcnKEpd3W9Fmz7HaqGdDdzXMqhFgbLr
- LuRmhQBGipBPnmM3BodwjhoUkpi4tV5PSKT6t3uoZc/DzYMuDDpBQsVRTr+jHlI8B1LQ
- zki8KZiW2kNg4hp66LXBMeTN9J1aengRhn2lWuDOYRpoK9+j8xG9miTkAHaiESrE7Cth
- MJQpfg/8+3cMJxn7z2D79nIb17ivtZywFBpua7bf9Ubzbst/d48q+evo9ZXFvDVndNg8
- v6WWOkmDUyKuzKyZ+4Ab5XFAHU+biegdpUdNPI8eM0kXy9JHyf+QYdi6yYA+YQq+7cy2
- qkkw==
+ bh=jkbdW3eorgIsu5Hony6gjNwQckwa5A9q0Q7uAfZjU34=;
+ b=l7GiD43XNSQ8Wrm6vQ8cU52Cv2uiP48DAKFjqmJItRNZafVYHx+NVQrlRtmRS1skBs
+ Fhr4z6mvGwywvnlEGahKmK8HfYrgkZBm13CMVLOZVYxIrMYNbMfdG+BUhZ9vMbkaemNK
+ hXUVYVPW5ygiP1Yv2Kj5QhIx5oKBcVhhEUyOv0OxcQB8jk1RtVpugW2NihIWS+KeSuLj
+ RUC2R5Xoy7Tuhy0Who22+lUrAuGmDqGqISZAxmSg0xyuBO6a7x33rSQSn4wA8SBSa7Ia
+ 2zYVUEBgzot7/H+pY7oT5PFX68m5Pk+PbEjwj+Sz6w0sNCIvFK0Yr5Pg064AF3pUwor1
+ evlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711300850; x=1711905650;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1711303956; x=1711908756;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IllBLdIzxA15Qa026XG/E2jsLbE3PsU66Vj11aA5tnk=;
- b=amo2CmG0CsVsESK6aPRwNO4zMwQWDXeB20x02dzhpAbtgifvSsaLdZmHwu0VnPkG1k
- peGA+E7uFn/CbVtNFFbG45pHzA1nzxjOrewaiEreM1ZH1BzW3dIWxZJMDC/Uj3xjjzOn
- ohQCKUz0r/Dor/2T2jWJ5wOWzgpZmrLA7igZPPbf5MplmoATx7T7TFbnEpN2xUA6q32O
- M2uIafWwo3aBSXsMTM/DnwWjUeELuXrQpvXAHpXAhuvP9lzt0FgnckpH33lt7Eym8HmU
- Qshv3L+7Y5Y6hnCX3hqPOcRHd6XRAMD58nnt5DYFzOa0DIxVJo2sr55to2zihwHrF8s4
- kdwg==
-X-Gm-Message-State: AOJu0YwnZ8CTfL/4sO8cjonMhM6E4TXxBWjx/RKbJnKONRlFxENV/PrH
- VrtGsIQ+m1IeMHSyZc01+gcUEvogit/r1NmrT6bKIcFN2SHUfRsXJPEkd6hOtI/o16ZOxu7vHei
- Q
-X-Google-Smtp-Source: AGHT+IHNNIB3ZClft8CTVlLrlfptpuNqiF9ou82medmQR+YUWwlX/dMH7Bn6GQ6OOxx7FzduJeO1yA==
-X-Received: by 2002:a17:902:e5c2:b0:1e0:282a:2714 with SMTP id
- u2-20020a170902e5c200b001e0282a2714mr5306216plf.23.1711300849908; 
- Sun, 24 Mar 2024 10:20:49 -0700 (PDT)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- y1-20020a17090322c100b001e043df262dsm3275112plg.33.2024.03.24.10.20.48
+ bh=jkbdW3eorgIsu5Hony6gjNwQckwa5A9q0Q7uAfZjU34=;
+ b=kNjzXsWtO/Dt7SOl4Pr+m+n1VonIDmLc9LucRQ50hXWlYJ4+6V8V+2M1XzXJNFQprb
+ fUSXnmO5m8XPskkoE2sHLCQYVRKkTFMyGY5XGfeIoAwJTmlGVSIaZVeWv69zUwTY6itQ
+ BLw3BLomoUZJdCNPMmZFQsm8V2KzxxWixEZCpyAkvw3Y24Vl/kw1ar1DEw7h/0uKHUWV
+ 6j06QJUH4q8/eBtI2s6Wv7Ii+GVriMBnxLjHAjZZeRR8LyCB485mM596w2K8OVe04CNz
+ rF8Z4o0kroaSdu6md36kWCzuLcKjLE/nbqznXR0ifOM4U/cOZYAHXJBa5L/7PZrjnLxo
+ ki3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLxZ/NDaC1mYA4lUM0SFLWSiLbSE5J+Zvcc5DZW8+qxryRECF8HJLf5BQTUOginfqZqOmoIX1aJjL1ZwIVxSNfDN0RS7k=
+X-Gm-Message-State: AOJu0YwJwEjIJ95g1vJNYJ3x5vW0DZF2Oa9+ce1SYrrxlYYvQx+JN2s8
+ L75nMPbBcW3MLtBNTgnj32/nB3U94996OOx/fUB7p2zt/x4UFTWKbgCFYVpyESh2Q/9lsSqmzD1
+ y
+X-Google-Smtp-Source: AGHT+IFnFfcp5JXdQKqzTJ7t/gz+oXu2EPOQP+oot+ORIIWqicD7kgYvG079wk2g1PFCs0b1C2sggA==
+X-Received: by 2002:a17:90a:a085:b0:29e:5e:33bd with SMTP id
+ r5-20020a17090aa08500b0029e005e33bdmr6201029pjp.21.1711303955850; 
+ Sun, 24 Mar 2024 11:12:35 -0700 (PDT)
+Received: from [192.168.68.110] ([177.94.15.159])
+ by smtp.gmail.com with ESMTPSA id
+ sx16-20020a17090b2cd000b002a053cdd4e5sm2590472pjb.9.2024.03.24.11.12.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 24 Mar 2024 10:20:49 -0700 (PDT)
-Message-ID: <f28ad059-38a4-42e6-a2e6-2a4cd34e2e73@linaro.org>
-Date: Sun, 24 Mar 2024 07:20:47 -1000
+ Sun, 24 Mar 2024 11:12:35 -0700 (PDT)
+Message-ID: <6fb5ca42-8e86-4144-b9a9-9d98d30f8fb9@ventanamicro.com>
+Date: Sun, 24 Mar 2024 15:12:29 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/hppa: use gva_offset_mask() everywhere
+Subject: Re: [PULL 00/15] riscv-to-apply queue
+To: Michael Tokarev <mjt@tls.msk.ru>, Alistair Francis
+ <alistair23@gmail.com>, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20240322085319.1758843-1-alistair.francis@wdc.com>
+ <5eb1ce03-639a-4db3-a1e2-aba61fa295d1@tls.msk.ru>
+ <76c065d8-41ee-433d-ba40-e1d13579b4a4@ventanamicro.com>
+ <6d1ea7ad-0a81-4f5e-8210-80b5150bc521@tls.msk.ru>
 Content-Language: en-US
-To: Sven Schnelle <svens@stackframe.org>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
-References: <20240324080945.991100-1-svens@stackframe.org>
- <20240324080945.991100-2-svens@stackframe.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240324080945.991100-2-svens@stackframe.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <6d1ea7ad-0a81-4f5e-8210-80b5150bc521@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,17 +103,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/23/24 22:09, Sven Schnelle wrote:
-> move it to cpu.h, so it can also be used in hppa_form_gva_psw()
+
+
+On 3/24/24 12:07, Michael Tokarev wrote:
+> 22.03.2024 22:46, Daniel Henrique Barboza :
+>>
+>>
+>> On 3/22/24 14:16, Michael Tokarev wrote:
+>>> 22.03.2024 11:53, Alistair Francis :
+>>>
+>>>> RISC-V PR for 9.0
+>>>>
+>>>> * Do not enable all named features by default
+>>>> * A range of Vector fixes
+>>>> * Update APLIC IDC after claiming iforce register
+>>>> * Remove the dependency of Zvfbfmin to Zfbfmin
+>>>> * Fix mode in riscv_tlb_fill
+>>>> * Fix timebase-frequency when using KVM acceleration
+>>>
+>>> Should something from there be picked up for stable (8.2 and probably 7.2)?
+>>
+>> Ignore the "Do not enable all named features by default" since it's fixing something
+>> that were added in 9.0.
+>>
+>> The rest you can pick it up to 8.2 at least. Thanks,
 > 
-> Signed-off-by: Sven Schnelle<svens@stackframe.org>
-> ---
->   target/hppa/cpu.h       | 10 ++++++++--
->   target/hppa/translate.c | 12 +++---------
->   2 files changed, 11 insertions(+), 11 deletions(-)
+> Unfortunately this doesn't quite work, the following changes
+> fail to apply to 8.2:
+> 
+> 929e521a47 target/riscv: always clear vstart for ldst_whole insns
+> b46631f122 target/riscv: remove 'over' brconds from vector trans
+> d57dfe4b37 trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+> bac802ada8 target/riscv: enable 'vstart_eq_zero' in the end of insns
+> 385e575cd5 target/riscv/kvm: fix timebase-frequency when using KVM acceleration
+> 
+> I tried to back-port at least the first one but it turned out to be
+> another failure.  Didn't try looking at the rest.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+This particular code (vector emulation) has been going through a lot of
+changes in the last couple of releases, so I'm not surprised with the
+difficulty with backporting these.
+
+> 
+> If these really should be in 8.2 (it's your guys to decide, not me),
+> I need help with back-porting these to 8.2 (and/or cherry-picking
+> additional patches from master).
+
+The amount of work can be non-trivial for this backport, so I'd say we should
+leave it aside for now. If someone has a good argument for this work then we
+can re-evaluate.
 
 
-r~
+Thanks,
+
+Daniel
+
+> 
+> Thanks,
+> 
+> /mjt
+> 
+>>>> ----------------------------------------------------------------
+>>>> Daniel Henrique Barboza (10):
+>>>>        target/riscv: do not enable all named features by default
+>>>>        target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
+>>>>        trans_rvv.c.inc: set vstart = 0 in int scalar move insns
+>>>>        target/riscv/vector_helper.c: fix 'vmvr_v' memcpy endianess
+>>>>        target/riscv: always clear vstart in whole vec move insns
+>>>>        target/riscv: always clear vstart for ldst_whole insns
+>>>>        target/riscv/vector_helpers: do early exit when vstart >= vl
+>>>>        target/riscv: remove 'over' brconds from vector trans
+>>>>        trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+>>>>        target/riscv/vector_helper.c: optimize loops in ldst helpers
+>>>>
+>>>> Frank Chang (1):
+>>>>        hw/intc: Update APLIC IDC after claiming iforce register
+>>>>
+>>>> Irina Ryapolova (1):
+>>>>        target/riscv: Fix mode in riscv_tlb_fill
+>>>>
+>>>> Ivan Klokov (1):
+>>>>        target/riscv: enable 'vstart_eq_zero' in the end of insns
+>>>>
+>>>> Max Chou (1):
+>>>>        target/riscv: rvv: Remove the dependency of Zvfbfmin to Zfbfmin
+>>>>
+>>>> Yong-Xuan Wang (1):
+>>>>        target/riscv/kvm: fix timebase-frequency when using KVM acceleration
+>>>
+>>
+> 
 
