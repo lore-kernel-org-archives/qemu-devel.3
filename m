@@ -4,68 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB73C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 19:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51732C47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 19:46:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roTMN-0008Rt-QQ; Sun, 24 Mar 2024 15:18:23 -0400
+	id 1roTmz-0007le-5l; Sun, 24 Mar 2024 15:45:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1roTMM-0008Ez-A1
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 15:18:22 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1roTMK-0005Nd-Qa
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 15:18:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=UknKXcdUNSvY0ijF9Z/LnlJlCg6n6wA0k3it0IJ3DeE=; b=wt9K2ENog3UO7eTYcmDCTjp9fV
- EfCS9e0N0t/H8VGAHs9+y5iwyOiFPoy5NaXjudR+QhjnOhxrAO5aNiBS0/cNly0dYP9gr5V4Idvdh
- 42lr1CyYzRi31tDnZQGtGQBjDwhDYxH5G+BlL7veoAIyHTYBCytGu84Uxy/vvGu68HCbzTzqP674C
- jeQeeWY7LApYvqTxuDwXTp0FLLHIOxnf0Xa//u+thQyDDMQ/Q5hHxYPuQwpB+/5wgcKC1XK6ZxmWw
- nCKxOW5StolVDLLWg2jfmkrEK1zScKRf7GNQiiHqBNtgulPPIMnnI5oZGy7bx7d2Gt+ESbLKNuJmF
- WaAi1QoUxqWlpK5+O9JRu5FCOKm4TS96IcykhEDsfsb/v6jpU92WL8vfTLd+fc10Y7Bysoet3nu+s
- h4/2Q8GNfhKFRPGDDx1Tm6asyPeASafiPq06+s+sF734HEhg67fT/Vu1cZ93lV5AxAXWpQ5soPfB2
- RK1XDzk95BjhWq7YvjsCYykuUfcqnwTlK33KDOUxkMNOIZdhm2OBW3W4AmY5W9Ru6Gk0B852RrlF/
- oTTRzoXQ6b8tRKejLI1/3iP/tmerNRagkKQnnDCXV/HaUmTJYYhBofEivh1V5HcEYZptad6wnob1T
- 8KtUoV3WfW+Knlw6dzGiywo5xYhIxF+csNGXQs514=;
-Received: from [2a00:23c4:8bb3:1000:d8cc:63fe:ef32:8539]
- (helo=localhost.localdomain)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1roTLM-0000dj-0u; Sun, 24 Mar 2024 19:17:24 +0000
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: pbonzini@redhat.com, fam@euphon.net, laurent@vivier.eu,
- qemu-devel@nongnu.org
-Date: Sun, 24 Mar 2024 19:17:04 +0000
-Message-Id: <20240324191707.623175-16-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240324191707.623175-1-mark.cave-ayland@ilande.co.uk>
-References: <20240324191707.623175-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1roTmx-0007ko-P1
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 15:45:51 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1roTmw-0002DO-1x
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 15:45:51 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-56a2bb1d84eso6623183a12.1
+ for <qemu-devel@nongnu.org>; Sun, 24 Mar 2024 12:45:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711309548; x=1711914348; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=N2JsNotPsxrW+11ThuWn1EOfLxqHr2RtWo996k/wJHk=;
+ b=iAaKCvZ1Xf10Bcp2+e0ZQjymbIINdZvqEnkIgNp+PQotmZIxSpqLbqJyyvIiACZocP
+ FXqsIIu3d6rRq9DDqPc9f3urhiMck7J4SsXV5xR3ZT1gHFmN3PCxhte4zNUw5uLIrsSD
+ L3Je9D//Zuv0a/eGTDsHcjSY36friQ0ITx2J/Usi34kmIJXtlKU3e8BZYZUIaNAYxPfj
+ cCYpzT9VSBBylk17Bb2nyZkA8YVKNei/XgvCmxUk1CTdyrS3Pv+OXhDsilB2++G0n8yZ
+ nj/WI9X4DhwnJ6+oau741NLDOkpM/KIACrX0XEFLLxiLqKTYR/9F5KNRCzIyF3NAmgw+
+ mf3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711309548; x=1711914348;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=N2JsNotPsxrW+11ThuWn1EOfLxqHr2RtWo996k/wJHk=;
+ b=jLpNfc9MW3byXu9zaKS6pslqhtEntMnisPgVFWwVYb4/n0uLyiGw7pqcUk38wMEno0
+ CMJf974YfLXodTvOKWpwP7EbYckmJq8LR9lPUSxb+xsiHJI/ib2wNzDEa1aATgE0Sh/K
+ jJoV+EZPtbIzZ4LTONlKxrBKu73sfMJLB47COJQlOCPbWNskrAASoDFtjXLH1R4tp2M0
+ 5Tc/MJhXL3qdi5DHnI7fY00oywZ7jSBYvTpU/uXKcR5cT+F6Kt11hxwYHiUhNADtLJ1B
+ 1C+e6VlsnRwKLBBWIA5xibVxJur+29O3FCRnBI5lu6BFWZRJb8sPXzCra/zH/LmWvslS
+ I3TQ==
+X-Gm-Message-State: AOJu0YwD+saa4J6Alu61EI6O0Swq84vfujzOYh7L8uDMi9TQ7y1oj1op
+ yMyefn3NicLacYIrWcwosIFjlph3uo7QyupOQAOlfxT7y7l/yL0UlCNKYz+YWwkrTYJ96wirty2
+ GKVN0ZsP0rvq9e6nLzvuSETgAKgS3TlpxBjF8LQ==
+X-Google-Smtp-Source: AGHT+IHmPaiLgN25rN8RifcETYY9CLkocn/OH7qT6Mca+Xvcc8A3R8VQbWqbFvgiKA+9tlr6P7D8wvuJJ8lAGB9AOdA=
+X-Received: by 2002:a50:cdd2:0:b0:566:624a:9e3f with SMTP id
+ h18-20020a50cdd2000000b00566624a9e3fmr4202972edj.3.1711309548263; Sun, 24 Mar
+ 2024 12:45:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb3:1000:d8cc:63fe:ef32:8539
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v3 15/17] esp.c: update esp_fifo_{push,
- pop}() to call esp_update_drq()
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+References: <20240324161148.4650D4E601F@zero.eik.bme.hu>
+In-Reply-To: <20240324161148.4650D4E601F@zero.eik.bme.hu>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sun, 24 Mar 2024 19:45:37 +0000
+Message-ID: <CAFEAcA9-UUOpC56d=N8T=2ELZAS7s2eqmMv0L+QVSGLp6odAEg@mail.gmail.com>
+Subject: Re: [PATCH] docs/system/ppc/amigang.rst: Fix formatting
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,53 +87,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This ensures that the DRQ line is always set correctly when reading/writing
-single bytes to/from the FIFO.
+On Sun, 24 Mar 2024 at 16:13, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>
+> Add missing space to fix character formatting where it was missed in
+> two places.
+>
+> Fixes: 623d9065b6 (docs/system/ppc: Document running Linux on AmigaNG machines)
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/scsi/esp.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
-
-diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index 6fd1a12f23..4895181ec1 100644
---- a/hw/scsi/esp.c
-+++ b/hw/scsi/esp.c
-@@ -170,10 +170,11 @@ static void esp_fifo_push(ESPState *s, uint8_t val)
- {
-     if (fifo8_num_used(&s->fifo) == s->fifo.capacity) {
-         trace_esp_error_fifo_overrun();
--        return;
-+    } else {
-+        fifo8_push(&s->fifo, val);
-     }
- 
--    fifo8_push(&s->fifo, val);
-+    esp_update_drq(s);
- }
- 
- static void esp_fifo_push_buf(ESPState *s, uint8_t *buf, int len)
-@@ -184,11 +185,16 @@ static void esp_fifo_push_buf(ESPState *s, uint8_t *buf, int len)
- 
- static uint8_t esp_fifo_pop(ESPState *s)
- {
-+    uint8_t val;
-+
-     if (fifo8_is_empty(&s->fifo)) {
--        return 0;
-+        val = 0;
-+    } else {
-+        val = fifo8_pop(&s->fifo);
-     }
- 
--    return fifo8_pop(&s->fifo);
-+    esp_update_drq(s);
-+    return val;
- }
- 
- static uint32_t esp_fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, int maxlen)
--- 
-2.39.2
-
+thanks
+-- PMM
 
