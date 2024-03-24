@@ -4,80 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2782BC47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 14:16:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8039BC47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 15:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roOd8-0008I2-22; Sun, 24 Mar 2024 10:15:22 -0400
+	id 1roPRy-0001vc-So; Sun, 24 Mar 2024 11:07:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1roOd6-0008Hj-OO
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 10:15:20 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1roOd5-0007Qw-BI
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 10:15:20 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-56c1374e212so57870a12.0
- for <qemu-devel@nongnu.org>; Sun, 24 Mar 2024 07:15:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711289716; x=1711894516; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3g/4ni0VR898VkfKvoUC7qc9ELXUxMoBhIEHyp1Qf80=;
- b=fPtmIg2cs2MMKzA0EkRqdMGozyk8+lB9wQLB2FGk6fdWojU2b5bybK523HMi+mQO2c
- 0GAnWij8p8lMhTwZ2Oz1IzTsV1bItnjHY5gxF7RJI3ieYCnpEKrRMmUaf/wc37p9NisK
- u2FKlEc/IjW6IjhtJOj12Dn3uc5RMjcqWTREwO5jipUwbeegL5xDt31xQno7Uz5gPgcr
- fFz6zrSiuha0m6qy4sG1PxR518cZO1ubbvYuwegdvwaSD68SGAEsjHB1gYzOf2cnQzrP
- gzidytj8UILO+I0R21610mMsUazkPZzZ8Twzele+k86Bw4z+u07IdlZ3YJOf9VFvWDmn
- HHzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711289716; x=1711894516;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3g/4ni0VR898VkfKvoUC7qc9ELXUxMoBhIEHyp1Qf80=;
- b=LRgwUU4I1uV+CcqvIx4p6bLHui2Rhme3Q7xeTdpFJFV/h8pOF8L2KAwaDAHhSydIrr
- bC2DTj/UoM/ym08kTN9Q4sNd21sivk7H5mSJ5+EfMFCwM6xrtW5pufvmlch0l2ZLTMNK
- UKvpnij6GFzWwF7aiDynIj593EC0QcK840ufTmUTGqGF1tKQGWDwH8lj3VxsDWB1m96/
- 6i6QkxisVTxOVLXwBMZguUadSgeJBVTKZZJVQEmEaGiJPsdU2ft6IMY/QZ1eEZm7BuXd
- AUljCROzvbpndwn+euHydFkan4fyBQmH9OU/Tn7ylykqWwg21YZPAmoDYQW8hSHHBoKU
- sbPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXbIReB87CzavzVpbPR2nUhhTgcS2cf//fCsdSBFGWm1IjrgTQDq+XfF2SCQxjflw7ZWZHKuxiUuIcKNa6fDrZHJGW8io=
-X-Gm-Message-State: AOJu0Yy285r4sTseqH/yaZSj9CmiHGiIuzKfO5f7c0UPIRrMgIaf7OnY
- hT5XzEQ8yqx/GuAaEM3oDOiT/yL7QKuHcDEpwQh2Peb78jkvEYDJE3WviKumYrwQ4e7yCTyPtvb
- I5Y7cg20zDZvWceWqn+Zw/nO5nF21Rx+KnMoadw==
-X-Google-Smtp-Source: AGHT+IGhxG9deBD5B5aqTGoF4AAo729qNVpzA/hdNPzskz6hVPRO1a4sm4Up4nVE081/fFj2TflLt3kTiN1L6bf0X3A=
-X-Received: by 2002:a50:c307:0:b0:56b:d9b7:c127 with SMTP id
- a7-20020a50c307000000b0056bd9b7c127mr3617616edb.12.1711289715835; Sun, 24 Mar
- 2024 07:15:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1roPRx-0001vM-VB; Sun, 24 Mar 2024 11:07:53 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1roPRt-0002yr-2Q; Sun, 24 Mar 2024 11:07:53 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 6702C5873E;
+ Sun, 24 Mar 2024 18:09:00 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id CD3AAA1AA0;
+ Sun, 24 Mar 2024 18:07:30 +0300 (MSK)
+Message-ID: <6d1ea7ad-0a81-4f5e-8210-80b5150bc521@tls.msk.ru>
+Date: Sun, 24 Mar 2024 18:07:28 +0300
 MIME-Version: 1.0
-References: <20240323-fixes-v2-0-18651a2b0394@daynix.com>
- <20240323-fixes-v2-1-18651a2b0394@daynix.com>
-In-Reply-To: <20240323-fixes-v2-1-18651a2b0394@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 24 Mar 2024 14:15:04 +0000
-Message-ID: <CAFEAcA98QafF63JrDKG9Oy=C2QcbPn7iEx_BPnRJEQAt9Ws1sg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] ui/cocoa: Fix aspect ratio
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/15] riscv-to-apply queue
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20240322085319.1758843-1-alistair.francis@wdc.com>
+ <5eb1ce03-639a-4db3-a1e2-aba61fa295d1@tls.msk.ru>
+ <76c065d8-41ee-433d-ba40-e1d13579b4a4@ventanamicro.com>
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <76c065d8-41ee-433d-ba40-e1d13579b4a4@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,19 +87,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 23 Mar 2024 at 06:20, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->
-> [NSWindow setContentAspectRatio:] does not trigger window resize itself,
-> so the wrong aspect ratio will persist if nothing resizes the window.
-> Call [NSWindow setContentSize:] in such a case.
->
-> Fixes: 91aa508d0274 ("ui/cocoa: Let the platform toggle fullscreen")
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
+22.03.2024 22:46, Daniel Henrique Barboza :
+> 
+> 
+> On 3/22/24 14:16, Michael Tokarev wrote:
+>> 22.03.2024 11:53, Alistair Francis :
+>>
+>>> RISC-V PR for 9.0
+>>>
+>>> * Do not enable all named features by default
+>>> * A range of Vector fixes
+>>> * Update APLIC IDC after claiming iforce register
+>>> * Remove the dependency of Zvfbfmin to Zfbfmin
+>>> * Fix mode in riscv_tlb_fill
+>>> * Fix timebase-frequency when using KVM acceleration
+>>
+>> Should something from there be picked up for stable (8.2 and probably 7.2)?
+> 
+> Ignore the "Do not enable all named features by default" since it's fixing something
+> that were added in 9.0.
+> 
+> The rest you can pick it up to 8.2 at least. Thanks,
 
+Unfortunately this doesn't quite work, the following changes
+fail to apply to 8.2:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+929e521a47 target/riscv: always clear vstart for ldst_whole insns
+b46631f122 target/riscv: remove 'over' brconds from vector trans
+d57dfe4b37 trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+bac802ada8 target/riscv: enable 'vstart_eq_zero' in the end of insns
+385e575cd5 target/riscv/kvm: fix timebase-frequency when using KVM acceleration
 
-thanks
--- PMM
+I tried to back-port at least the first one but it turned out to be
+another failure.  Didn't try looking at the rest.
+
+If these really should be in 8.2 (it's your guys to decide, not me),
+I need help with back-porting these to 8.2 (and/or cherry-picking
+additional patches from master).
+
+Thanks,
+
+/mjt
+
+>>> ----------------------------------------------------------------
+>>> Daniel Henrique Barboza (10):
+>>>        target/riscv: do not enable all named features by default
+>>>        target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
+>>>        trans_rvv.c.inc: set vstart = 0 in int scalar move insns
+>>>        target/riscv/vector_helper.c: fix 'vmvr_v' memcpy endianess
+>>>        target/riscv: always clear vstart in whole vec move insns
+>>>        target/riscv: always clear vstart for ldst_whole insns
+>>>        target/riscv/vector_helpers: do early exit when vstart >= vl
+>>>        target/riscv: remove 'over' brconds from vector trans
+>>>        trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+>>>        target/riscv/vector_helper.c: optimize loops in ldst helpers
+>>>
+>>> Frank Chang (1):
+>>>        hw/intc: Update APLIC IDC after claiming iforce register
+>>>
+>>> Irina Ryapolova (1):
+>>>        target/riscv: Fix mode in riscv_tlb_fill
+>>>
+>>> Ivan Klokov (1):
+>>>        target/riscv: enable 'vstart_eq_zero' in the end of insns
+>>>
+>>> Max Chou (1):
+>>>        target/riscv: rvv: Remove the dependency of Zvfbfmin to Zfbfmin
+>>>
+>>> Yong-Xuan Wang (1):
+>>>        target/riscv/kvm: fix timebase-frequency when using KVM acceleration
+>>
+> 
+
 
