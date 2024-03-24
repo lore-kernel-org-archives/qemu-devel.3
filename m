@@ -4,83 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB26C47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 23:38:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC968C47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 23:44:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roXPp-0003YD-LL; Sun, 24 Mar 2024 19:38:13 -0400
+	id 1roXUo-0004jE-DW; Sun, 24 Mar 2024 19:43:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1roXPn-0003Y1-QR
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 19:38:11 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1roXPm-0001Zb-9j
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 19:38:11 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-6ea7f2d093aso2122199b3a.3
- for <qemu-devel@nongnu.org>; Sun, 24 Mar 2024 16:38:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711323488; x=1711928288; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6cUxaXdK/kmujnddbeaGBXzh1jEQ3cbj7Ib3DWDF+2w=;
- b=L0bMFyvIgvPZ7dlCxw+HsQKShs/5frwYhwnuRPlDW/BaMlqVcb9Ay0b8HNBfe7Q5xK
- P6zktsOVl0RvKa2E595nMoyriGXISRxWrrcaVHzHNH9LV5Tb3WXPsHs5M+y8/DLMJvTK
- 0rQXjjcvBtRkuUUyPm3CkrP3Q8ti2iRS5JE3+ROz3CZbVUNKf9Nb4A9AKz2ZiZql0v5P
- 44NYi6k0kkaY47OOxR2xbVGgIt6sRKyCQnexwt4cfzFgMVRYsmhXi0o0kp9xa6s9oR8Z
- 4nAsVuHySFUtWtEixm0T6/Sqf4/MxOR5gM6My8r86D81VBHt9zB0j065f8JNjPJddimV
- JEEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711323488; x=1711928288;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6cUxaXdK/kmujnddbeaGBXzh1jEQ3cbj7Ib3DWDF+2w=;
- b=M5oI59bv3/n0WcDIR/WBgttKdmkv08UrZx0UHfP7hT2c6iRg8jK9e+1lUDCrYu8yet
- mGFNCQqW8NdkQwjBt8hcgd6a0XYYYRUSaMCdVjZuC2dCcmY5tQf9OummFjT0Yz5VLkPY
- si7Tuls4nOlfPv7GPY8MwqEvhLdL3+kN+mHKtPXlk1arAoMRVGrcvwuUkmNPswfN8Y/w
- zGvDfrnzxqSVpoPuCcHLgMrpdnAKG3YNer3vDwbZc6yeV7gKNu0XK2EXZnhG4LKFQRL5
- Z/mzFAJiFtliwkoMAyEHiAX+TG1jPC1dap20fGe08TwcqYwfH7O6/9x4bHx4QtxMrudu
- 0LmA==
-X-Gm-Message-State: AOJu0Yww0WHHWlk1Vs63DzDSe50hQQX2b3zAWILt26QoAAMpD28zgzW8
- wJdQwc3kKzLkDh4oj8Jq73b12/EStr/3+rxO8DHnrLrE2pUsYo/Q58lQC+ilSNI=
-X-Google-Smtp-Source: AGHT+IHn/0l4ubVKqawgK5X0Z+/wGtezNBisptkJoXo4eJK1wYImfUVpWCbV9Ha8kxTrpmI4dtz/AA==
-X-Received: by 2002:a05:6a00:1949:b0:6ea:ab48:5dd9 with SMTP id
- s9-20020a056a00194900b006eaab485dd9mr1769162pfk.6.1711323488562; 
- Sun, 24 Mar 2024 16:38:08 -0700 (PDT)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- du12-20020a056a002b4c00b006e6813f2301sm3136880pfb.56.2024.03.24.16.38.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 24 Mar 2024 16:38:08 -0700 (PDT)
-Message-ID: <1502f024-a384-4c2f-aa2f-de63bcdd97f9@linaro.org>
-Date: Sun, 24 Mar 2024 13:38:05 -1000
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1roXUm-0004io-40; Sun, 24 Mar 2024 19:43:20 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1roXUj-0002N6-Fm; Sun, 24 Mar 2024 19:43:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=In-Reply-To:Content-Transfer-Encoding:Content-Type:
+ MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+ Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=NrqYsWUFQvP4rQSBHQe8+d6CEVrsUFDmTfJnr8j8ilg=; b=qqs5W4FcjYcs31LLNcNjjIzCUJ
+ cK+NkWXpCaraBEQm5w2j96ZVHOQ9g+nQJRB3613jotGI4R2AUw4qO5ozCUxIZIA8HLVCvbHkNJOT2
+ t9rDMPDa9EreSg6X+c3JW6/XL6xv6dmqcClxDpEnKCO+dUK5ohe5aZJE+EvzWTcEgGjvctvElpMKs
+ KkJcppr3WYhPrl6y7RpfUd9ksKFEB1aLdlVINWk7GDFpzcR9ICQapA/bpUbWVY8ZldcGkAzRP3NHJ
+ XTunEBFGhIxy2WicWX5C+644bytJAMC5x/w5n1FX86mJPX5kl6rlqKFHfFlYVlMM4bGIVRwqLTBWE
+ O+FMdF1A==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1roXUX-00ED5w-26;
+ Sun, 24 Mar 2024 23:43:05 +0000
+Date: Sun, 24 Mar 2024 23:43:05 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
+ Chris Wulff <crwulff@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Marek Vasut <marex@denx.de>, Max Filippov <jcmvbkbc@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ qemu-ppc@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH-for-9.1 05/21] target/m68k: Replace qemu_printf() by
+ monitor_printf() in monitor
+Message-ID: <ZgC6iTKCqG-LX4Sf@gallifrey>
+References: <20240321154838.95771-1-philmd@linaro.org>
+ <20240321154838.95771-6-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/hppa: fix building gva for wide mode
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-To: Sven Schnelle <svens@stackframe.org>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
-References: <20240324080945.991100-1-svens@stackframe.org>
- <20240324080945.991100-4-svens@stackframe.org>
- <c26dd647-bf03-4ade-8266-e1c653554110@linaro.org>
-In-Reply-To: <c26dd647-bf03-4ade-8266-e1c653554110@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+In-Reply-To: <20240321154838.95771-6-philmd@linaro.org>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-17-amd64 (x86_64)
+X-Uptime: 23:42:22 up 82 days, 2:32, 1 user, load average: 0.05, 0.09, 0.02
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,57 +86,297 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/24/24 11:39, Richard Henderson wrote:
-> On 3/23/24 22:09, Sven Schnelle wrote:
->> 64 Bit hppa no longer has a fixed 32/32 bit split between space and
->> offset. Instead it uses 42 bits for the offset. The lower 10 bits of
->> the space are always zero, leaving 22 bits actually used. Simply or
->> the values together to build the gva.
->>
->> Signed-off-by: Sven Schnelle <svens@stackframe.org>
->> ---
->>   target/hppa/mem_helper.c | 13 +++++++------
->>   1 file changed, 7 insertions(+), 6 deletions(-)
->>
->> diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
->> index 84785b5a5c..6f895fced7 100644
->> --- a/target/hppa/mem_helper.c
->> +++ b/target/hppa/mem_helper.c
->> @@ -523,13 +523,16 @@ void HELPER(itlbp_pa11)(CPUHPPAState *env, target_ulong addr, 
->> target_ulong reg)
->>   }
->>   static void itlbt_pa20(CPUHPPAState *env, target_ulong r1,
->> -                       target_ulong r2, vaddr va_b)
->> +                       target_ulong r2, uint64_t spc, uint64_t off)
->>   {
->>       HPPATLBEntry *ent;
->> -    vaddr va_e;
->> +    vaddr va_b, va_e;
->>       uint64_t va_size;
->>       int mask_shift;
->> +    va_b = off & gva_offset_mask(env->psw);
->> +    va_b |= spc << 32;
+* Philippe Mathieu-Daud� (philmd@linaro.org) wrote:
+> Replace qemu_printf() by monitor_printf() / monitor_puts() in monitor.
 > 
-> Actually, no, these instructions don't form a GVA in the normal fashion:
+> Signed-off-by: Philippe Mathieu-Daud� <philmd@linaro.org>
+> ---
+>  target/m68k/cpu.h     |   2 +-
+>  target/m68k/helper.c  | 126 +++++++++++++++++++++---------------------
+>  target/m68k/monitor.c |   4 +-
+>  3 files changed, 67 insertions(+), 65 deletions(-)
 > 
-> space ← ISR;
-> offset ← cat(ISR{32..63},IOR{32..63});
-> VIRTUAL_ADDR ← (space<<32) | (offset);
+> diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+> index 346427e144..4e4307956d 100644
+> --- a/target/m68k/cpu.h
+> +++ b/target/m68k/cpu.h
+> @@ -620,6 +620,6 @@ static inline void cpu_get_tb_cpu_state(CPUM68KState *env, vaddr *pc,
+>      }
+>  }
+>  
+> -void dump_mmu(CPUM68KState *env);
+> +void dump_mmu(Monitor *mon, CPUM68KState *env);
+>  
+>  #endif
+> diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+> index 1a475f082a..310e26dfa1 100644
+> --- a/target/m68k/helper.c
+> +++ b/target/m68k/helper.c
+> @@ -25,7 +25,7 @@
+>  #include "exec/helper-proto.h"
+>  #include "gdbstub/helpers.h"
+>  #include "fpu/softfloat.h"
+> -#include "qemu/qemu-print.h"
+> +#include "monitor/monitor.h"
+>  
+>  #define SIGNBIT (1u << 31)
+>  
+> @@ -455,28 +455,30 @@ void m68k_switch_sp(CPUM68KState *env)
+>  #if !defined(CONFIG_USER_ONLY)
+>  /* MMU: 68040 only */
+>  
+> -static void print_address_zone(uint32_t logical, uint32_t physical,
+> +static void print_address_zone(Monitor *mon,
+> +                               uint32_t logical, uint32_t physical,
+>                                 uint32_t size, int attr)
+>  {
+> -    qemu_printf("%08x - %08x -> %08x - %08x %c ",
+> -                logical, logical + size - 1,
+> -                physical, physical + size - 1,
+> -                attr & 4 ? 'W' : '-');
+> +    monitor_printf(mon, "%08x - %08x -> %08x - %08x %c ",
+> +                   logical, logical + size - 1,
+> +                   physical, physical + size - 1,
+> +                   attr & 4 ? 'W' : '-');
+>      size >>= 10;
+>      if (size < 1024) {
+> -        qemu_printf("(%d KiB)\n", size);
+> +        monitor_printf(mon, "(%d KiB)\n", size);
+>      } else {
+>          size >>= 10;
+>          if (size < 1024) {
+> -            qemu_printf("(%d MiB)\n", size);
+> +            monitor_printf(mon, "(%d MiB)\n", size);
+>          } else {
+>              size >>= 10;
+> -            qemu_printf("(%d GiB)\n", size);
+> +            monitor_printf(mon, "(%d GiB)\n", size);
+>          }
+>      }
+>  }
+>  
+> -static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
+> +static void dump_address_map(Monitor *mon, CPUM68KState *env,
+> +                             uint32_t root_pointer)
+>  {
+>      int i, j, k;
+>      int tic_size, tic_shift;
+> @@ -545,7 +547,7 @@ static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
+>                      if (first_logical != 0xffffffff) {
+>                          size = last_logical + (1 << tic_shift) -
+>                                 first_logical;
+> -                        print_address_zone(first_logical,
+> +                        print_address_zone(mon, first_logical,
+>                                             first_physical, size, last_attr);
+>                      }
+>                      first_logical = logical;
+> @@ -556,125 +558,125 @@ static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
+>      }
+>      if (first_logical != logical || (attr & 4) != (last_attr & 4)) {
+>          size = logical + (1 << tic_shift) - first_logical;
+> -        print_address_zone(first_logical, first_physical, size, last_attr);
+> +        print_address_zone(mon, first_logical, first_physical, size, last_attr);
+>      }
+>  }
+>  
+>  #define DUMP_CACHEFLAGS(a) \
+>      switch (a & M68K_DESC_CACHEMODE) { \
+>      case M68K_DESC_CM_WRTHRU: /* cacheable, write-through */ \
+> -        qemu_printf("T"); \
+> +        monitor_puts(mon, "T"); \
+>          break; \
+>      case M68K_DESC_CM_COPYBK: /* cacheable, copyback */ \
+> -        qemu_printf("C"); \
+> +        monitor_puts(mon, "C"); \
+>          break; \
+>      case M68K_DESC_CM_SERIAL: /* noncachable, serialized */ \
+> -        qemu_printf("S"); \
+> +        monitor_puts(mon, "S"); \
+>          break; \
+>      case M68K_DESC_CM_NCACHE: /* noncachable */ \
+> -        qemu_printf("N"); \
+> +        monitor_puts(mon, "N"); \
+>          break; \
+>      }
+>  
+> -static void dump_ttr(uint32_t ttr)
+> +static void dump_ttr(Monitor *mon, uint32_t ttr)
+>  {
+>      if ((ttr & M68K_TTR_ENABLED) == 0) {
+> -        qemu_printf("disabled\n");
+> +        monitor_puts(mon, "disabled\n");
+>          return;
+>      }
+> -    qemu_printf("Base: 0x%08x Mask: 0x%08x Control: ",
+> -                ttr & M68K_TTR_ADDR_BASE,
+> -                (ttr & M68K_TTR_ADDR_MASK) << M68K_TTR_ADDR_MASK_SHIFT);
+> +    monitor_printf(mon, "Base: 0x%08x Mask: 0x%08x Control: ",
+> +                   ttr & M68K_TTR_ADDR_BASE,
+> +                   (ttr & M68K_TTR_ADDR_MASK) << M68K_TTR_ADDR_MASK_SHIFT);
+>      switch (ttr & M68K_TTR_SFIELD) {
+>      case M68K_TTR_SFIELD_USER:
+> -        qemu_printf("U");
+> +        monitor_puts(mon, "U");
+>          break;
+>      case M68K_TTR_SFIELD_SUPER:
+> -        qemu_printf("S");
+> +        monitor_puts(mon, "S");
+>          break;
+>      default:
+> -        qemu_printf("*");
+> +        monitor_puts(mon, "*");
+>          break;
+>      }
+>      DUMP_CACHEFLAGS(ttr);
+>      if (ttr & M68K_DESC_WRITEPROT) {
+> -        qemu_printf("R");
+> +        monitor_puts(mon, "R");
+>      } else {
+> -        qemu_printf("W");
+> +        monitor_puts(mon, "W");
+>      }
+> -    qemu_printf(" U: %d\n", (ttr & M68K_DESC_USERATTR) >>
+> +    monitor_printf(mon, " U: %d\n", (ttr & M68K_DESC_USERATTR) >>
+>                                 M68K_DESC_USERATTR_SHIFT);
+>  }
+>  
+> -void dump_mmu(CPUM68KState *env)
+> +void dump_mmu(Monitor *mon, CPUM68KState *env)
+>  {
+>      if ((env->mmu.tcr & M68K_TCR_ENABLED) == 0) {
+> -        qemu_printf("Translation disabled\n");
+> +        monitor_puts(mon, "Translation disabled\n");
+>          return;
+>      }
+> -    qemu_printf("Page Size: ");
+> +    monitor_puts(mon, "Page Size: ");
+>      if (env->mmu.tcr & M68K_TCR_PAGE_8K) {
+> -        qemu_printf("8kB\n");
+> +        monitor_puts(mon, "8kB\n");
+>      } else {
+> -        qemu_printf("4kB\n");
+> +        monitor_puts(mon, "4kB\n");
+>      }
+>  
+> -    qemu_printf("MMUSR: ");
+> +    monitor_puts(mon, "MMUSR: ");
+>      if (env->mmu.mmusr & M68K_MMU_B_040) {
+> -        qemu_printf("BUS ERROR\n");
+> +        monitor_puts(mon, "BUS ERROR\n");
+>      } else {
+> -        qemu_printf("Phy=%08x Flags: ", env->mmu.mmusr & 0xfffff000);
+> +        monitor_printf(mon, "Phy=%08x Flags: ", env->mmu.mmusr & 0xfffff000);
+>          /* flags found on the page descriptor */
+>          if (env->mmu.mmusr & M68K_MMU_G_040) {
+> -            qemu_printf("G"); /* Global */
+> +            monitor_puts(mon, "G"); /* Global */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+>          if (env->mmu.mmusr & M68K_MMU_S_040) {
+> -            qemu_printf("S"); /* Supervisor */
+> +            monitor_puts(mon, "S"); /* Supervisor */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+>          if (env->mmu.mmusr & M68K_MMU_M_040) {
+> -            qemu_printf("M"); /* Modified */
+> +            monitor_puts(mon, "M"); /* Modified */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+>          if (env->mmu.mmusr & M68K_MMU_WP_040) {
+> -            qemu_printf("W"); /* Write protect */
+> +            monitor_puts(mon, "W"); /* Write protect */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+>          if (env->mmu.mmusr & M68K_MMU_T_040) {
+> -            qemu_printf("T"); /* Transparent */
+> +            monitor_puts(mon, "T"); /* Transparent */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+>          if (env->mmu.mmusr & M68K_MMU_R_040) {
+> -            qemu_printf("R"); /* Resident */
+> +            monitor_puts(mon, "R"); /* Resident */
+>          } else {
+> -            qemu_printf(".");
+> +            monitor_puts(mon, ".");
+>          }
+> -        qemu_printf(" Cache: ");
+> +        monitor_puts(mon, " Cache: ");
+>          DUMP_CACHEFLAGS(env->mmu.mmusr);
+> -        qemu_printf(" U: %d\n", (env->mmu.mmusr >> 8) & 3);
+> -        qemu_printf("\n");
+> +        monitor_printf(mon, " U: %d\n", (env->mmu.mmusr >> 8) & 3);
+> +        monitor_puts(mon, "\n");
+
+That one is a little odd isn't it; still, generally
+
+
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+
+>      }
+>  
+> -    qemu_printf("ITTR0: ");
+> -    dump_ttr(env->mmu.ttr[M68K_ITTR0]);
+> -    qemu_printf("ITTR1: ");
+> -    dump_ttr(env->mmu.ttr[M68K_ITTR1]);
+> -    qemu_printf("DTTR0: ");
+> -    dump_ttr(env->mmu.ttr[M68K_DTTR0]);
+> -    qemu_printf("DTTR1: ");
+> -    dump_ttr(env->mmu.ttr[M68K_DTTR1]);
+> +    monitor_puts(mon, "ITTR0: ");
+> +    dump_ttr(mon, env->mmu.ttr[M68K_ITTR0]);
+> +    monitor_puts(mon, "ITTR1: ");
+> +    dump_ttr(mon, env->mmu.ttr[M68K_ITTR1]);
+> +    monitor_puts(mon, "DTTR0: ");
+> +    dump_ttr(mon, env->mmu.ttr[M68K_DTTR0]);
+> +    monitor_puts(mon, "DTTR1: ");
+> +    dump_ttr(mon, env->mmu.ttr[M68K_DTTR1]);
+>  
+> -    qemu_printf("SRP: 0x%08x\n", env->mmu.srp);
+> -    dump_address_map(env, env->mmu.srp);
+> +    monitor_printf(mon, "SRP: 0x%08x\n", env->mmu.srp);
+> +    dump_address_map(mon, env, env->mmu.srp);
+>  
+> -    qemu_printf("URP: 0x%08x\n", env->mmu.urp);
+> -    dump_address_map(env, env->mmu.urp);
+> +    monitor_printf(mon, "URP: 0x%08x\n", env->mmu.urp);
+> +    dump_address_map(mon, env, env->mmu.urp);
+>  }
+>  
+>  static int check_TTR(uint32_t ttr, int *prot, target_ulong addr,
+> diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
+> index 2bdf6acae0..623c6ab635 100644
+> --- a/target/m68k/monitor.c
+> +++ b/target/m68k/monitor.c
+> @@ -15,11 +15,11 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+>      CPUArchState *env1 = mon_get_cpu_env(mon);
+>  
+>      if (!env1) {
+> -        monitor_printf(mon, "No CPU available\n");
+> +        monitor_puts(mon, "No CPU available\n");
+>          return;
+>      }
+>  
+> -    dump_mmu(env1);
+> +    dump_mmu(mon, env1);
+>  }
+>  
+>  static const MonitorDef monitor_defs[] = {
+> -- 
+> 2.41.0
 > 
->> -    vaddr va_b = deposit64(env->cr[CR_IOR], 32, 32, env->cr[CR_ISR]);
-> 
-> But this is wrong too.
-
-Actually, no.  The
-
-   VIRTUAL_ADDR = (space << 32) | offset
-
-line constructs a 96-bit virtual address.  The low 32 bits of ISR have already replaced 
-the high 32 bits of IOR, so this line really only adds the high 32 bits of space as bits 
-[96:64] of the full virtual address.
-
-Truncated to 64 bits, the deposit as written is exactly right.
-
-
-r~
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
