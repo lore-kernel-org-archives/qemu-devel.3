@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E35F3C47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 16:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 595F8C47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 16:29:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roQeH-0007oB-MU; Sun, 24 Mar 2024 12:24:41 -0400
+	id 1roQhr-0000sl-5V; Sun, 24 Mar 2024 12:28:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1roQeG-0007o0-0G
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 12:24:40 -0400
-Received: from mout.gmx.net ([212.227.15.19])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1roQhq-0000sd-9R
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 12:28:22 -0400
+Received: from mout.gmx.net ([212.227.15.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1roQeE-0000Jv-0M
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 12:24:39 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1roQhn-0000kT-UU
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 12:28:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1711297474; x=1711902274; i=deller@gmx.de;
- bh=QC/XEVExFh2Sl1v48u5uYyX2w2SuAOWTcyqBHJ8JulQ=;
+ s=s31663417; t=1711297694; x=1711902494; i=deller@gmx.de;
+ bh=P9+ujCkFST+g8sl3cvxTgyIQsvRFDOvVYPcslS/4CA4=;
  h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
  In-Reply-To;
- b=F9EBkEiUqSC3AIKiU+7uMW6zjcT6Mb17mdWElrI1QVka0Q7x8+edDsIPb1+jBfnx
- 2+D8b6RZW9nfNd9fs9UwdxqBR+Aeiw13oCS/R3qhR1Enk8SJuXL+uaxCZjCZdik4K
- vHCW+TXMJ41jgDy1d9Xxt0SeawfaeU0owQQsYYoHSCUB8HsekT+HmdMJurQh71osW
- T3x6UkrJ62RmS3sY3brRt2+SUkQb0oxWic51++vxu35c6oZVfI44yMOPVCB55R0eB
- uEpQ3Qm7wszSq/AFTWBiPho72v5f8a+lvTRbodi5PVHCT+dwkEpz40hg9gGkmlxMR
- HL2g+kdDf+6oc50EsQ==
+ b=tbkIsrAFfCMVr+oKw4YTY4ukA3mTL6vsveaHA9M5dYSIm/5WM0dwzNL961q+wi8I
+ iMXRNZO2pmB21kmxxEg5QT5u1cLRA0UjKRAWtZ/T9Wp7iaOPOJmG1o3iQJ+AZ4RQC
+ 1IZQnKS4L3w2VxuiZmFVEccVquqDTwQm7E+WNaw338yDZwCQ6GuNeaG5oTw7ubl3d
+ EeYiegfPYOMx54yWA5NiUvfRFmTkCuVJ3g4l893KTbjI+f53cDogLpBF65H8MY6T/
+ E1fB+dTZnXrEnutcQlhKrveSzHFgvmyLo7Dxa+uTdT/o0Z3IUA93/+cghc1AXL23k
+ m/5jtANicOHIic9SzQ==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [192.168.20.55] ([89.244.186.175]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MNswE-1sCY933sdc-00OKfg; Sun, 24
- Mar 2024 17:24:33 +0100
-Message-ID: <e6fe525c-06b7-4cec-8a77-745cbfffee4a@gmx.de>
-Date: Sun, 24 Mar 2024 17:24:33 +0100
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MMGN2-1s7bkO2Hw6-00JLtR; Sun, 24
+ Mar 2024 17:28:14 +0100
+Message-ID: <1f7a34a6-9038-4419-abfe-d7f9addc5bcf@gmx.de>
+Date: Sun, 24 Mar 2024 17:28:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/hppa: mask offset bits in gva
+Subject: Re: [PATCH 3/3] target/hppa: fix building gva for wide mode
 To: Sven Schnelle <svens@stackframe.org>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20240324080945.991100-1-svens@stackframe.org>
- <20240324080945.991100-3-svens@stackframe.org>
+ <20240324080945.991100-4-svens@stackframe.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -88,35 +88,35 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240324080945.991100-3-svens@stackframe.org>
+In-Reply-To: <20240324080945.991100-4-svens@stackframe.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Xr3cbzdpu/7DofyF9jp+wtut5kP7HvadUrmvXEaagAHjPyYvA8b
- nhm6GomOAuJW0A+oRSONVp3nyl1j8pX2uxiyTch6lyxrsXk2DnqchKRNvawauGrlIp02ntF
- daAYid8cnhTfG0vYLpzQX1ocIMmSk7RCYWo43Z1Z+HAUu6Mob48iyUPxYIZUjEavFpLG+QS
- vyGraXt1nEuP8hwmEuAdw==
-UI-OutboundReport: notjunk:1;M01:P0:iiC/Cki1WKY=;wpZhNB3z0iS4kkcJx7QTitbLfHP
- Giyttye5iTD2T1K4l9Qwwb5TBhnXOQmSFO3TL21SmGJjWsNAZn9NTykxbA40MKf8lQQpyEMQk
- 3QOhU8Ix7CWDlZyT6Di5ZpoVd09+AGok9AZ/rl6SW4qT+Cm68OS/PklnvzVdgqND/ozh11aoG
- 5OB1nUrY7p/79NZfL4kRlUUglz1pBxXT7r/qMjnCoKGP8OU/pEiOajzgS6EbElAijP5jgx9gt
- k2HXjYsrYkTiCYz8RAa9tEFRmE/aMX2wgMWyif0hoMqXf4visc4831JZuI203DrWEguJfro1+
- GWlPxK+yF4MN6KNklgUFV8tKbVii9qp7O+EK5FSRigm6Yn+yCMVuLlirkG0MJcjPGOcEHHexO
- KNmeAgPHo4qRfF9V3QKVeQmXKYUzXXk/qD1rCCOW/QW2fkelyPv9E3Z+hqBDmewK45jl7UBLx
- cjnE89P3okHyNVV1WZ12w+xJZucV+BgsKZd3jIWBQ9blOGWi8eXOfXfqbZ/tdTj3YWiJdA9EI
- uI5QkVYy1v1oOcHG76+ZA+AzFcZNEw1iPwWjOQR6nLFl0dUCAF0dnPG3MREg786/kHX8VMnPN
- WzGE29BXsIcAlI/z6Wxk64wepa1lHqEFbKk5g/5GOVP1lG2Pt6JvRc+IECHkxMBv9GAUwqcGR
- 2397iMjOoX3ZgQmwAn8R1tIEBbp+ygr0bcHo/sYlBtcdIpvYcDtyUm2nztDyDhtxIGQ5huaC8
- JpMS2LxLxv1Sjg498EGAJcgqdoVSrT6SRDMuHKtRtwXeENPVKcTEVoTC31ubg2Fig1KwyDIYh
- ZkuHRJfVJMYEI54rfwOEYnNMp5YXARXCW+/9tbzDey4Hc=
-Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:NBIhQAmdmQ62+2NrEyJv8hfS0CY0vkWbkriteK+fP7BhWiyxFYV
+ su6l2qrVqgzt7vGPsl3jsBrcoN6+Kg+rWRIOMyhHmVngFszsa6y9HaOvdEoOEAHNomyc/La
+ VKg3id8iuBJFrZCze50OWF+VtMtRbe1n3JQE8ODR/gWXSddXVZf7OjekwNgaZ7o6uCNe8dZ
+ oeHpFU7vryfp2Hb0uVfDQ==
+UI-OutboundReport: notjunk:1;M01:P0:rAb906w5wx4=;a3gxo+DlM+yWMVRNONcSrpWW/VG
+ f6ud/eUuHu7LVhvtGV/WkB8/iPo04nOTGYuctY2xRunV0ROMSOwDogYZ1FFE9GG2j2s0JUUq1
+ 6HQ4kw//hNRFT7xNIOTWWO56MBZ+HZgU+ygYdZrEc6VNdrqYdP11vENodi5WJ0pXbh9aCK2FG
+ eKBYrjIv609SU8eZ061LhmzME0hgWmWmL5VrRkgue02HG1pXiCM99QVUMs63IS/kJ1lGoLgb+
+ mNpZinLwxxH0EyKy/HfAUZweqgzfrsU2ruYRTVMuO3hAHD8HkeVNKHCzkD1ItiDaykN1bVHJj
+ j47hGD/mW1v0jZ+IBo54RjEQ5DJVpCwTui//wip93IDWLWgiu6WIPH4fXOO8NtgSCUBie7VIP
+ TQ5o2cZD00mV3E+gyDc2h8ISEGDdU4xfmSAMkRFgxHM75507PFKOZ4zCjYCq8d1f0tD36YTPU
+ M7IiCL5yEjTRjAaH8LVtb6j+JqwKgmvOFaWzyT/34dYOGLZacjgGKJl1OqZQ/ofmI1htd6WFx
+ STcJELJApFn2wJYA8XfDHhDyh3laY/zBP5/obWW3n1zGcRyqKtX5lcMWGmapoBhzYux8NZASN
+ 59RUo2qxgcPrijn/D8gg1y9WR0/BT5wMa1hCXoS8HAPEj404C4MeYsc1CGhNJ3vTCog1PsuDn
+ kHZlOC4sCbmOSwdYt4inKO+n6UajTuke+hRjI9PBic+zitKFercWVTLiAEHqsYPQQvyGAnb+e
+ YZ7J5U05+IAfcIienXZ05YVW8Gr+DpKaFXLaOvauywfwtmgliiVr8HqQ/LUh2bGzPJ6cmj/Ek
+ 0RENQFi+ceWjo7+jAqL7P+xf8YYbiEG7aHc5m/8wFghJ4=
+Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,51 +133,66 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/24/24 09:09, Sven Schnelle wrote:
-> The CPU seems to mask a few bits in the offset when running
-> under HP-UX. ISR/IOR register contents for an address in
-> the processor HPA (0xfffffffffffa0000) on my C8000 and J6750:
->
-> running on Linux: 000000003fffffff c0000000fffa0500
-> running on HP-UX: 00000000301fffff c0000000fffa0500
->
-> I haven't found how this is switched (guess some diag in the
-> firmware), but linux + seabios seems to handle that as well,
-> so lets mask out the additional bits.
+> 64 Bit hppa no longer has a fixed 32/32 bit split between space and
+> offset. Instead it uses 42 bits for the offset. The lower 10 bits of
+> the space are always zero, leaving 22 bits actually used. Simply or
+> the values together to build the gva.
 >
 > Signed-off-by: Sven Schnelle <svens@stackframe.org>
 
-I've seen the issue on HP-UX too, and can confirm the patch does
-not break existing 32- and 64-bit Linux installations, so:
-
+Reviewed-by: Helge Deller <deller@gmx.de>
 Tested-by: Helge Deller <deller@gmx.de>
 
-Thanks!
 Helge
 
-
 > ---
->   target/hppa/cpu.h | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   target/hppa/mem_helper.c | 13 +++++++------
+>   1 file changed, 7 insertions(+), 6 deletions(-)
 >
-> diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-> index a072d0bb63..9bc4d208fa 100644
-> --- a/target/hppa/cpu.h
-> +++ b/target/hppa/cpu.h
-> @@ -283,12 +283,13 @@ static inline int HPPA_BTLB_ENTRIES(CPUHPPAState *=
-env)
->
->   void hppa_translate_init(void);
->
-> +#define HPPA_GVA_OFFSET_MASK64 0x301fffffffffffff
->   #define CPU_RESOLVING_TYPE TYPE_HPPA_CPU
->
->   static inline uint64_t gva_offset_mask(target_ulong psw)
->   {
->       return (psw & PSW_W
-> -            ? MAKE_64BIT_MASK(0, 62)
-> +            ? HPPA_GVA_OFFSET_MASK64
->               : MAKE_64BIT_MASK(0, 32));
+> diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+> index 84785b5a5c..6f895fced7 100644
+> --- a/target/hppa/mem_helper.c
+> +++ b/target/hppa/mem_helper.c
+> @@ -523,13 +523,16 @@ void HELPER(itlbp_pa11)(CPUHPPAState *env, target_=
+ulong addr, target_ulong reg)
 >   }
 >
+>   static void itlbt_pa20(CPUHPPAState *env, target_ulong r1,
+> -                       target_ulong r2, vaddr va_b)
+> +                       target_ulong r2, uint64_t spc, uint64_t off)
+>   {
+>       HPPATLBEntry *ent;
+> -    vaddr va_e;
+> +    vaddr va_b, va_e;
+>       uint64_t va_size;
+>       int mask_shift;
+>
+> +    va_b =3D off & gva_offset_mask(env->psw);
+> +    va_b |=3D spc << 32;
+> +
+>       mask_shift =3D 2 * (r1 & 0xf);
+>       va_size =3D (uint64_t)TARGET_PAGE_SIZE << mask_shift;
+>       va_b &=3D -va_size;
+> @@ -569,14 +572,12 @@ static void itlbt_pa20(CPUHPPAState *env, target_u=
+long r1,
+>
+>   void HELPER(idtlbt_pa20)(CPUHPPAState *env, target_ulong r1, target_ul=
+ong r2)
+>   {
+> -    vaddr va_b =3D deposit64(env->cr[CR_IOR], 32, 32, env->cr[CR_ISR]);
+> -    itlbt_pa20(env, r1, r2, va_b);
+> +    itlbt_pa20(env, r1, r2, env->cr[CR_ISR], env->cr[CR_IOR]);
+>   }
+>
+>   void HELPER(iitlbt_pa20)(CPUHPPAState *env, target_ulong r1, target_ul=
+ong r2)
+>   {
+> -    vaddr va_b =3D deposit64(env->cr[CR_IIAOQ], 32, 32, env->cr[CR_IIAS=
+Q]);
+> -    itlbt_pa20(env, r1, r2, va_b);
+> +    itlbt_pa20(env, r1, r2, env->cr[CR_IIASQ], env->cr[CR_IIAOQ]);
+>   }
+>
+>   /* Purge (Insn/Data) TLB. */
 
 
