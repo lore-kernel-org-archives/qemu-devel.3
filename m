@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C834C47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 15:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47868C47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 15:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roPUe-00034z-Q5; Sun, 24 Mar 2024 11:10:43 -0400
+	id 1roPfm-0006FM-8Y; Sun, 24 Mar 2024 11:22:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <irina.ryapolova@syntacore.com>)
- id 1roPUT-00031M-9Y; Sun, 24 Mar 2024 11:10:29 -0400
+ id 1roPfl-0006FC-91
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 11:22:09 -0400
 Received: from mta-04.yadro.com ([89.207.88.248])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <irina.ryapolova@syntacore.com>)
- id 1roPUI-0003xJ-Al; Sun, 24 Mar 2024 11:10:28 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com AFEC8C0003
+ id 1roPfj-00063m-H9
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 11:22:09 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com DCCF9C0003
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1711293016;
- bh=6INlj23kPf1y3+Wyq31ki6nFc0ejvl17wG7d0KvVfuM=;
+ s=mta-04; t=1711293722;
+ bh=3g6QPnEumO3m2dubq03r4CdJmKaZIbh2xTPTUVN0iMg=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=rMQMU9T/EePcUdUzzBVunNWzSd/DeS6eehk5KKWHJ50YxpEJSZWq1XD4gqyZ0qlXu
- MctU+P7n+JWJtQWDNy3NQHq7lOXQY6YRo/MOz0n2EbjiD0W9dFXxLOy8HsxeCqvJNo
- Ng8Rq2XkhzGyCksE2F1aEkK1RewcNMWaionuwuXsndbnt0ck+q+gL7tOjHIvdp3p64
- YuAgFYDVWBfOZcsXd9gKEexu6ZvXwKU814JBTTofzdvMaQ8rK8VNXo1z/xZyDXVtcC
- KYrsSibGNy9GEoLSWbpYmLvHPEEfvaEQoAmb/DG+LNCXZ/wzN4yPY48YE8In+VuwbA
- GInVF7vlsYRdw==
+ b=LMi7kQHQRo5T1nDYgAz5Ymnjg1RSq1hcGYUJfwhN4rZHPOtPgs5jp5NMK33fKF85w
+ NX8/0T6tN7vju7hcddFTwkT+eoOPfZqgGyAGenEy8JF6qL3NEkSNObyUAJvcRqZ4nU
+ 5sxuw2vKInbtyXtCtoR14W0Ss8GDAkcgGWSNkmAic/sAYdcEcBxq7ut0G/H/+mKDSs
+ zOiZjpJu/XykZ8WVRUrOSRYFMhFMBLlxxE+9tTqHoylUVmnyDu8YQoXwowmje7UO8p
+ rr3AzZHlWuQYQqFeuWHEPRN2a8f3+87Ds/MsI9LEaRfJFiLX0IpBPwCkwFATAt/P3M
+ hU5RaDL1Vtadg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1711293016;
- bh=6INlj23kPf1y3+Wyq31ki6nFc0ejvl17wG7d0KvVfuM=;
+ s=mta-03; t=1711293722;
+ bh=3g6QPnEumO3m2dubq03r4CdJmKaZIbh2xTPTUVN0iMg=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=d89akmun3AxnL4IbTFa44Emub4uDlssJNf/FtemQ4rO+xI+qepvUGI5/jmbd1WI5M
- X6StjioaED7K56ogZ84h0vJid9teAYLmm1KHIm8/dCXkppmTsu58d/I/ZvuGFtt3Ve
- xkXAb6IUASOicw1GPpNObL+CKJST8VxTwrzCndFZqqWAtUYn1Xl9OSNif1HLdxf7ak
- lPl/otdD6Srk3YXmn9oiAJ65R9KNXRflYw4s/Qwjbqmx6Tgc1/eD36sKeTNwK6z5wk
- nitxxbdIB2aYMGE0dso7Ja6hQi7k6jhy7qpphiJL9HJwBblypvczfvIDXihIMjq+Rv
- EhizRQizjuIsA==
+ b=uh37kE1VXUt27r2WLksj4HzMTpRSyLKqibBZfJcyL9HwnKWWe5pxenTgjaHi317wA
+ sgerctObIwMEXsfkyn5kzOZsPw8tYwIEVjTzXFR0UT/TR5oC0PImuXXyrm/2Ak0QIu
+ Qt/mvPL4TIsFxyPMSbp4Lqcjb2jn3kZ/ZcQ5p6ynm6QW65jCbcrvjrqKBYoBNwwvUb
+ chmBr0wNTtsEgYJgpP50wSOprdKAWElE45BAVTkuuG54Qx2MFxj8OtnGUrUdab+nlY
+ JuUagsosG9bD3s9O2C8Fh8jnH/JepK7vl7DcCybMmsJEwIjRuOoju6vEYjaudLj+3U
+ N2o2XQaz3yXfQ==
 From: Irina Ryapolova <irina.ryapolova@syntacore.com>
 To: <qemu-devel@nongnu.org>
-CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
- <bin.meng@windriver.com>, <liwei1518@gmail.com>,
- <dbarboza@ventanamicro.com>, 
- <zhiwei_liu@linux.alibaba.com>, Vadim Shakirov <vadim.shakirov@syntacore.com>
-Subject: [PATCH v3 2/2] target/riscv/csr: Added the ability to delegate LCOFI
- to VS
-Date: Sun, 24 Mar 2024 18:09:49 +0300
-Message-ID: <20240324150949.20822-3-irina.ryapolova@syntacore.com>
+CC: <marcandre.lureau@redhat.com>, <pbonzini@redhat.com>, Irina Ryapolova
+ <irina.ryapolova@syntacore.com>
+Subject: [PATCH] chardev/char-win-stdio: Fix keyboard input after exit Qemu on
+Date: Sun, 24 Mar 2024 18:21:50 +0300
+Message-ID: <20240324152150.21506-1-irina.ryapolova@syntacore.com>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240324150949.20822-1-irina.ryapolova@syntacore.com>
-References: <20240324150949.20822-1-irina.ryapolova@syntacore.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
+X-ClientProxiedBy: T-EXCH-09.corp.yadro.com (172.17.11.59) To
  S-Exch-01.corp.yadro.com (10.78.5.241)
 Received-SPF: permerror client-ip=89.207.88.248;
  envelope-from=irina.ryapolova@syntacore.com; helo=mta-04.yadro.com
@@ -80,31 +77,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vadim Shakirov <vadim.shakirov@syntacore.com>
+After exit Qemu need to return the terminal to the default state.
 
-In the AIA specification in the paragraph "Virtual interrupts for VS level"
-it is indicated for interrupts 13-63: if the bit in hideleg is enabled,
-then the corresponding vsip and vsie bits are aliases to sip and sie
-
-Signed-off-by: Vadim Shakirov <vadim.shakirov@syntacore.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Irina Ryapolova <irina.ryapolova@syntacore.com>
 ---
- target/riscv/csr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ chardev/char-win-stdio.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 4c2cbcd59f..38548a01d9 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1150,7 +1150,7 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
- static const uint64_t delegable_ints =
-     S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
- static const uint64_t vs_delegable_ints =
--    (VS_MODE_INTERRUPTS | LOCAL_INTERRUPTS) & ~MIP_LCOFIP;
-+    VS_MODE_INTERRUPTS | LOCAL_INTERRUPTS;
- static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
-                                      HS_MODE_INTERRUPTS | LOCAL_INTERRUPTS;
- #define DELEGABLE_EXCPS ((1ULL << (RISCV_EXCP_INST_ADDR_MIS)) | \
+diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
+index 1a18999e78..4fa2c3de8b 100644
+--- a/chardev/char-win-stdio.c
++++ b/chardev/char-win-stdio.c
+@@ -220,6 +220,7 @@ err1:
+ static void char_win_stdio_finalize(Object *obj)
+ {
+     WinStdioChardev *stdio = WIN_STDIO_CHARDEV(obj);
++    DWORD dwMode;
+ 
+     if (stdio->hInputReadyEvent != INVALID_HANDLE_VALUE) {
+         CloseHandle(stdio->hInputReadyEvent);
+@@ -230,6 +231,10 @@ static void char_win_stdio_finalize(Object *obj)
+     if (stdio->hInputThread != INVALID_HANDLE_VALUE) {
+         TerminateThread(stdio->hInputThread, 0);
+     }
++
++    GetConsoleMode(stdio->hStdIn, &dwMode);
++    dwMode &= ~ENABLE_VIRTUAL_TERMINAL_INPUT;
++    SetConsoleMode(stdio->hStdIn, dwMode);
+ }
+ 
+ static int win_stdio_write(Chardev *chr, const uint8_t *buf, int len)
 -- 
 2.25.1
 
