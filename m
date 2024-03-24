@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E36BDC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 16:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF733C47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 16:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roRA4-0006iR-Le; Sun, 24 Mar 2024 12:57:32 -0400
+	id 1roRAE-0006wQ-QO; Sun, 24 Mar 2024 12:57:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1roRA3-0006hz-Le; Sun, 24 Mar 2024 12:57:31 -0400
-Received: from zproxy3.enst.fr ([137.194.2.222])
+ id 1roRA7-0006ma-31; Sun, 24 Mar 2024 12:57:35 -0400
+Received: from zproxy3.enst.fr ([2001:660:330f:2::de])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arnaud.minier@telecom-paris.fr>)
- id 1roRA1-0005TZ-Kw; Sun, 24 Mar 2024 12:57:31 -0400
+ id 1roRA3-0005VL-Sl; Sun, 24 Mar 2024 12:57:34 -0400
 Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id C7210A060F;
- Sun, 24 Mar 2024 17:57:27 +0100 (CET)
+ by zproxy3.enst.fr (Postfix) with ESMTP id 8530AA0576;
+ Sun, 24 Mar 2024 17:57:30 +0100 (CET)
 Received: from zproxy3.enst.fr ([IPv6:::1])
  by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id pSLmRExaYSVQ; Sun, 24 Mar 2024 17:57:27 +0100 (CET)
+ id YcMYJWIgn1Mx; Sun, 24 Mar 2024 17:57:30 +0100 (CET)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy3.enst.fr (Postfix) with ESMTP id 4DC8DA014E;
- Sun, 24 Mar 2024 17:57:27 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr 4DC8DA014E
+ by zproxy3.enst.fr (Postfix) with ESMTP id 0BD17A014E;
+ Sun, 24 Mar 2024 17:57:30 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy3.enst.fr 0BD17A014E
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1711299447;
- bh=sUchyrLv2nEZSVNKiFZvbMsEeB8g20X4GOEvyL4TrCw=;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1711299450;
+ bh=ndtKar8M6fNpappM+WKq/5n3TnDIwk6IZeZcI+WHEMw=;
  h=From:To:Date:Message-Id:MIME-Version;
- b=Gga4E7cP3y/6WH+KlVYdarGbS5/CCmqgNgOnygaJksTeDSHdJSvAHfkcELDKnrO+u
- dn8I0Om3O7fdwWPHOyoLyTZ8oTZSlVRCtad1zVU8GPSJImMFrPGPe7mH/4RTZEfAvY
- TxzXplb8KY3Z4ttsFJ1JWYvY1mSS744ccQ7TpkLA=
+ b=JmCtwOIzDQuLsIuxJGlngGVC+uqb/HJcxOUdA9MCVfrnPHY5k0rQyo2j28zAkgNeT
+ 1Q3nUH0u3nl/ux6X/vWT5SOj/2R6XGHqaW8BhP4ZsUk1XrWqX3L71mZcHaXpvhdenC
+ hj0rKBSvjO9zPsdU8mlXWIaKEqsegOI5rUZTrpSs=
 X-Virus-Scanned: amavis at enst.fr
 Received: from zproxy3.enst.fr ([IPv6:::1])
  by localhost (zproxy3.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id h9q-t5NHJ9Et; Sun, 24 Mar 2024 17:57:27 +0100 (CET)
+ id WVokDp1zj-xK; Sun, 24 Mar 2024 17:57:29 +0100 (CET)
 Received: from AM-Inspiron-3585.. (unknown [78.208.223.3])
- by zproxy3.enst.fr (Postfix) with ESMTPSA id 3E4F0A0576;
- Sun, 24 Mar 2024 17:57:26 +0100 (CET)
+ by zproxy3.enst.fr (Postfix) with ESMTPSA id DE9D5A0576;
+ Sun, 24 Mar 2024 17:57:28 +0100 (CET)
 From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <lvivier@redhat.com>,
@@ -53,23 +53,23 @@ Cc: Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
  Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 3/6] hw/char/stm32l4x5_usart: Enable serial read and write
-Date: Sun, 24 Mar 2024 17:55:43 +0100
-Message-Id: <20240324165545.201908-4-arnaud.minier@telecom-paris.fr>
+Subject: [PATCH v2 5/6] hw/arm: Add the USART to the stm32l4x5 SoC
+Date: Sun, 24 Mar 2024 17:55:45 +0100
+Message-Id: <20240324165545.201908-6-arnaud.minier@telecom-paris.fr>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240324165545.201908-1-arnaud.minier@telecom-paris.fr>
 References: <20240324165545.201908-1-arnaud.minier@telecom-paris.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=137.194.2.222;
+Received-SPF: pass client-ip=2001:660:330f:2::de;
  envelope-from=arnaud.minier@telecom-paris.fr; helo=zproxy3.enst.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, WEIRD_QUOTING=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,283 +85,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the ability to read and write characters to the
-usart using the serial port.
-
-The character transmission is based on the
-cmsdk-apb-uart implementation.
+Add the USART to the SoC and connect it to the other implemented devices.
 
 Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
 ---
- hw/char/stm32l4x5_usart.c         | 139 ++++++++++++++++++++++++++++++
- hw/char/trace-events              |   7 ++
- include/hw/char/stm32l4x5_usart.h |   1 +
- 3 files changed, 147 insertions(+)
+ docs/system/arm/b-l475e-iot01a.rst |  2 +-
+ hw/arm/Kconfig                     |  1 +
+ hw/arm/stm32l4x5_soc.c             | 82 +++++++++++++++++++++++++++---
+ include/hw/arm/stm32l4x5_soc.h     | 13 +++++
+ 4 files changed, 91 insertions(+), 7 deletions(-)
 
-diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
-index 46e69bb096..ec8c2f6e63 100644
---- a/hw/char/stm32l4x5_usart.c
-+++ b/hw/char/stm32l4x5_usart.c
-@@ -154,6 +154,119 @@ REG32(RDR, 0x24)
- REG32(TDR, 0x28)
-     FIELD(TDR, TDR, 0, 9)
+diff --git a/docs/system/arm/b-l475e-iot01a.rst b/docs/system/arm/b-l475e=
+-iot01a.rst
+index 0afef8e4f4..a76c9976c5 100644
+--- a/docs/system/arm/b-l475e-iot01a.rst
++++ b/docs/system/arm/b-l475e-iot01a.rst
+@@ -19,13 +19,13 @@ Currently B-L475E-IOT01A machine's only supports the =
+following devices:
+ - STM32L4x5 SYSCFG (System configuration controller)
+ - STM32L4x5 RCC (Reset and clock control)
+ - STM32L4x5 GPIOs (General-purpose I/Os)
++- STM32L4x5 USARTs, UARTs and LPUART (Serial ports)
 =20
-+static void stm32l4x5_update_irq(Stm32l4x5UsartBaseState *s)
-+{
-+    if (((s->isr & R_ISR_WUF_MASK) && (s->cr3 & R_CR3_WUFIE_MASK))      =
-  ||
-+        ((s->isr & R_ISR_CMF_MASK) && (s->cr1 & R_CR1_CMIE_MASK))       =
-  ||
-+        ((s->isr & R_ISR_ABRF_MASK) && (s->cr1 & R_CR1_RXNEIE_MASK))    =
-  ||
-+        ((s->isr & R_ISR_EOBF_MASK) && (s->cr1 & R_CR1_EOBIE_MASK))     =
-  ||
-+        ((s->isr & R_ISR_RTOF_MASK) && (s->cr1 & R_CR1_RTOIE_MASK))     =
-  ||
-+        ((s->isr & R_ISR_CTSIF_MASK) && (s->cr3 & R_CR3_CTSIE_MASK))    =
-  ||
-+        ((s->isr & R_ISR_LBDF_MASK) && (s->cr2 & R_CR2_LBDIE_MASK))     =
-  ||
-+        ((s->isr & R_ISR_TXE_MASK) && (s->cr1 & R_CR1_TXEIE_MASK))      =
-  ||
-+        ((s->isr & R_ISR_TC_MASK) && (s->cr1 & R_CR1_TCIE_MASK))        =
-  ||
-+        ((s->isr & R_ISR_RXNE_MASK) && (s->cr1 & R_CR1_RXNEIE_MASK))    =
-  ||
-+        ((s->isr & R_ISR_IDLE_MASK) && (s->cr1 & R_CR1_IDLEIE_MASK))    =
-  ||
-+        ((s->isr & R_ISR_ORE_MASK) &&
-+            ((s->cr1 & R_CR1_RXNEIE_MASK) || (s->cr3 & R_CR3_EIE_MASK)))=
-  ||
-+        /* TODO: Handle NF ? */
-+        ((s->isr & R_ISR_FE_MASK) && (s->cr3 & R_CR3_EIE_MASK))         =
-  ||
-+        ((s->isr & R_ISR_PE_MASK) && (s->cr1 & R_CR1_PEIE_MASK))) {
-+        qemu_irq_raise(s->irq);
-+        trace_stm32l4x5_usart_irq_raised(s->isr);
-+    } else {
-+        qemu_irq_lower(s->irq);
-+        trace_stm32l4x5_usart_irq_lowered();
-+    }
-+}
-+
-+static int stm32l4x5_usart_base_can_receive(void *opaque)
-+{
-+    Stm32l4x5UsartBaseState *s =3D opaque;
-+
-+    if (!(s->isr & R_ISR_RXNE_MASK)) {
-+        return 1;
-+    }
-+
-+    return 0;
-+}
-+
-+static void stm32l4x5_usart_base_receive(void *opaque, const uint8_t *bu=
-f, int size)
-+{
-+    Stm32l4x5UsartBaseState *s =3D opaque;
-+
-+    if (!((s->cr1 & R_CR1_UE_MASK) && (s->cr1 & R_CR1_RE_MASK))) {
-+        trace_stm32l4x5_usart_receiver_not_enabled(
-+            FIELD_EX32(s->cr1, CR1, UE), FIELD_EX32(s->cr1, CR1, RE));
-+        return;
-+    }
-+
-+    /* Check if overrun detection is enabled and if there is an overrun =
-*/
-+    if (!(s->cr3 & R_CR3_OVRDIS_MASK) && (s->isr & R_ISR_RXNE_MASK)) {
-+        /*
-+         * A character has been received while
-+         * the previous has not been read =3D Overrun.
-+         */
-+        s->isr |=3D R_ISR_ORE_MASK;
-+        trace_stm32l4x5_usart_overrun_detected(s->rdr, *buf);
-+    } else {
-+        /* No overrun */
-+        s->rdr =3D *buf;
-+        s->isr |=3D R_ISR_RXNE_MASK;
-+        trace_stm32l4x5_usart_rx(s->rdr);
-+    }
-+
-+    stm32l4x5_update_irq(s);
-+}
-+
-+/* Try to send tx data, and arrange to be called back later if
-+ * we can't (ie the char backend is busy/blocking).
-+ */
-+static gboolean usart_transmit(void *do_not_use, GIOCondition cond, void=
- *opaque)
-+{
-+    Stm32l4x5UsartBaseState *s =3D STM32L4X5_USART_BASE(opaque);
-+    int ret;
-+    /* TODO: Handle 9 bits transmission */
-+    uint8_t ch =3D s->tdr;
-+
-+    s->watch_tag =3D 0;
-+
-+    if (!(s->cr1 & R_CR1_TE_MASK) || (s->isr & R_ISR_TXE_MASK)) {
-+        return G_SOURCE_REMOVE;
-+    }
-+
-+    ret =3D qemu_chr_fe_write(&s->chr, &ch, 1);
-+    if (ret <=3D 0) {
-+        s->watch_tag =3D qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_=
-HUP,
-+                                             usart_transmit, s);
-+        if (!s->watch_tag) {
-+            /* Most common reason to be here is "no chardev backend":
-+             * just insta-drain the buffer, so the serial output
-+             * goes into a void, rather than blocking the guest.
-+             */
-+            goto buffer_drained;
-+        }
-+        /* Transmit pending */
-+        trace_stm32l4x5_usart_tx_pending();
-+        return G_SOURCE_REMOVE;
-+    }
-+
-+buffer_drained:
-+    /* Character successfully sent */
-+    trace_stm32l4x5_usart_tx(ch);
-+    s->isr |=3D R_ISR_TC_MASK | R_ISR_TXE_MASK;
-+    stm32l4x5_update_irq(s);
-+    return G_SOURCE_REMOVE;
-+}
-+
-+static void usart_cancel_transmit(Stm32l4x5UsartBaseState *s)
-+{
-+    if (s->watch_tag) {
-+        g_source_remove(s->watch_tag);
-+        s->watch_tag =3D 0;
-+    }
-+}
-+
- static void stm32l4x5_usart_base_reset_hold(Object *obj)
- {
-     Stm32l4x5UsartBaseState *s =3D STM32L4X5_USART_BASE(obj);
-@@ -167,6 +280,22 @@ static void stm32l4x5_usart_base_reset_hold(Object *=
-obj)
-     s->isr =3D 0x020000C0;
-     s->rdr =3D 0x00000000;
-     s->tdr =3D 0x00000000;
-+
-+    usart_cancel_transmit(s);
-+    stm32l4x5_update_irq(s);
-+}
-+
-+static void usart_update_rqr(Stm32l4x5UsartBaseState *s, uint32_t value)
-+{
-+    /* TXFRQ */
-+    /* Reset RXNE flag */
-+    if (value & R_RQR_RXFRQ_MASK) {
-+        s->isr &=3D ~R_ISR_RXNE_MASK;
-+    }
-+    /* MMRQ */
-+    /* SBKRQ */
-+    /* ABRRQ */
-+    stm32l4x5_update_irq(s);
- }
+ Missing devices
+ """""""""""""""
 =20
- static uint64_t stm32l4x5_usart_base_read(void *opaque, hwaddr addr,
-@@ -209,6 +338,7 @@ static uint64_t stm32l4x5_usart_base_read(void *opaqu=
-e, hwaddr addr,
-         retvalue =3D FIELD_EX32(s->rdr, RDR, RDR);
-         /* Reset RXNE flag */
-         s->isr &=3D ~R_ISR_RXNE_MASK;
-+        stm32l4x5_update_irq(s);
-         break;
-     case A_TDR:
-         retvalue =3D FIELD_EX32(s->tdr, TDR, TDR);
-@@ -235,6 +365,7 @@ static void stm32l4x5_usart_base_write(void *opaque, =
-hwaddr addr,
-     switch (addr) {
-     case A_CR1:
-         s->cr1 =3D value;
-+        stm32l4x5_update_irq(s);
-         return;
-     case A_CR2:
-         s->cr2 =3D value;
-@@ -252,6 +383,7 @@ static void stm32l4x5_usart_base_write(void *opaque, =
-hwaddr addr,
-         s->rtor =3D value;
-         return;
-     case A_RQR:
-+        usart_update_rqr(s, value);
-         return;
-     case A_ISR:
-         qemu_log_mask(LOG_GUEST_ERROR,
-@@ -260,6 +392,7 @@ static void stm32l4x5_usart_base_write(void *opaque, =
-hwaddr addr,
-     case A_ICR:
-         /* Clear the status flags */
-         s->isr &=3D ~value;
-+        stm32l4x5_update_irq(s);
-         return;
-     case A_RDR:
-         qemu_log_mask(LOG_GUEST_ERROR,
-@@ -267,6 +400,8 @@ static void stm32l4x5_usart_base_write(void *opaque, =
-hwaddr addr,
-         return;
-     case A_TDR:
-         s->tdr =3D value;
-+        s->isr &=3D ~R_ISR_TXE_MASK;
-+        usart_transmit(NULL, G_IO_OUT, s);
-         return;
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR,
-@@ -336,6 +471,10 @@ static void stm32l4x5_usart_base_realize(DeviceState=
- *dev, Error **errp)
-         error_setg(errp, "USART clock must be wired up by SoC code");
-         return;
-     }
-+
-+    qemu_chr_fe_set_handlers(&s->chr, stm32l4x5_usart_base_can_receive,
-+                             stm32l4x5_usart_base_receive, NULL, NULL,
-+                             s, NULL, true);
- }
+ The B-L475E-IOT01A does *not* support the following devices:
 =20
- static void stm32l4x5_usart_base_class_init(ObjectClass *klass, void *da=
-ta)
-diff --git a/hw/char/trace-events b/hw/char/trace-events
-index 689bed9e02..f22f0ee2bc 100644
---- a/hw/char/trace-events
-+++ b/hw/char/trace-events
-@@ -109,6 +109,13 @@ sh_serial_write(char *id, unsigned size, uint64_t of=
-fs, uint64_t val) "%s size %
- # stm32l4x5_usart.c
- stm32l4x5_usart_read(uint64_t addr, uint32_t data) "USART: Read <0x%" PR=
-Ix64 "> -> 0x%" PRIx32 ""
- stm32l4x5_usart_write(uint64_t addr, uint32_t data) "USART: Write <0x%" =
-PRIx64 "> <- 0x%" PRIx32 ""
-+stm32l4x5_usart_rx(uint8_t c) "USART: got character 0x%x from backend"
-+stm32l4x5_usart_tx(uint8_t c) "USART: character 0x%x sent to backend"
-+stm32l4x5_usart_tx_pending(void) "USART: character send to backend pendi=
-ng"
-+stm32l4x5_usart_irq_raised(uint32_t reg) "USART: IRQ raised: 0x%08"PRIx3=
-2
-+stm32l4x5_usart_irq_lowered(void) "USART: IRQ lowered"
-+stm32l4x5_usart_overrun_detected(uint8_t current, uint8_t received) "USA=
-RT: Overrun detected, RDR=3D'0x%x', received 0x%x"
-+stm32l4x5_usart_receiver_not_enabled(uint8_t ue_bit, uint8_t re_bit) "US=
-ART: Receiver not enabled, UE=3D0x%x, RE=3D0x%x"
+-- Serial ports (UART)
+ - Analog to Digital Converter (ADC)
+ - SPI controller
+ - Timer controller (TIMER)
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 893a7bff66..098d043375 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -477,6 +477,7 @@ config STM32L4X5_SOC
+     select STM32L4X5_SYSCFG
+     select STM32L4X5_RCC
+     select STM32L4X5_GPIO
++    select STM32L4X5_USART
 =20
- # xen_console.c
- xen_console_connect(unsigned int idx, unsigned int ring_ref, unsigned in=
-t port, unsigned int limit) "idx %u ring_ref %u port %u limit %u"
-diff --git a/include/hw/char/stm32l4x5_usart.h b/include/hw/char/stm32l4x=
-5_usart.h
-index 8d38a85a6e..dd3866682a 100644
---- a/include/hw/char/stm32l4x5_usart.h
-+++ b/include/hw/char/stm32l4x5_usart.h
-@@ -55,6 +55,7 @@ struct Stm32l4x5UsartBaseState {
-     Clock *clk;
-     CharBackend chr;
-     qemu_irq irq;
-+    guint watch_tag;
+ config XLNX_ZYNQMP_ARM
+     bool
+diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
+index 40e294f838..ae0868dcab 100644
+--- a/hw/arm/stm32l4x5_soc.c
++++ b/hw/arm/stm32l4x5_soc.c
+@@ -28,6 +28,7 @@
+ #include "sysemu/sysemu.h"
+ #include "hw/or-irq.h"
+ #include "hw/arm/stm32l4x5_soc.h"
++#include "hw/char/stm32l4x5_usart.h"
+ #include "hw/gpio/stm32l4x5_gpio.h"
+ #include "hw/qdev-clock.h"
+ #include "hw/misc/unimp.h"
+@@ -116,6 +117,22 @@ static const struct {
+     { 0x48001C00, 0x0000000F, 0x00000000, 0x00000000 },
  };
 =20
- struct Stm32l4x5UsartBaseClass {
++static const hwaddr usart_addr[] =3D {
++    0x40013800, /* "USART1", 0x400 */
++    0x40004400, /* "USART2", 0x400 */
++    0x40004800, /* "USART3", 0x400 */
++};
++static const hwaddr uart_addr[] =3D {
++    0x40004C00, /* "UART4" , 0x400 */
++    0x40005000  /* "UART5" , 0x400 */
++};
++
++#define LPUART_BASE_ADDRESS 0x40008000
++
++static const int usart_irq[] =3D { 37, 38, 39 };
++static const int uart_irq[] =3D { 52, 53 };
++#define LPUART_IRQ 70
++
+ static void stm32l4x5_soc_initfn(Object *obj)
+ {
+     Stm32l4x5SocState *s =3D STM32L4X5_SOC(obj);
+@@ -132,6 +149,18 @@ static void stm32l4x5_soc_initfn(Object *obj)
+         g_autofree char *name =3D g_strdup_printf("gpio%c", 'a' + i);
+         object_initialize_child(obj, name, &s->gpio[i], TYPE_STM32L4X5_G=
+PIO);
+     }
++   =20
++    for (int i =3D 0; i < STM_NUM_USARTS; i++) {
++        object_initialize_child(obj, "usart[*]", &s->usart[i],
++                                TYPE_STM32L4X5_USART);
++    }
++
++    for (int i =3D 0; i < STM_NUM_UARTS; i++) {
++        object_initialize_child(obj, "uart[*]", &s->uart[i],
++                                TYPE_STM32L4X5_UART);
++    }
++    object_initialize_child(obj, "lpuart1", &s->lpuart,
++                            TYPE_STM32L4X5_LPUART);
+ }
+=20
+ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+@@ -279,6 +308,53 @@ static void stm32l4x5_soc_realize(DeviceState *dev_s=
+oc, Error **errp)
+     sysbus_mmio_map(busdev, 0, RCC_BASE_ADDRESS);
+     sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, RCC_IRQ));
+=20
++    /* USART devices */
++    for (int i =3D 0; i < STM_NUM_USARTS; i++) {
++        dev =3D DEVICE(&(s->usart[i]));
++        qdev_prop_set_chr(dev, "chardev", serial_hd(i));
++        g_autofree char *name =3D g_strdup_printf("usart%d-out", i + 1);
++        qdev_connect_clock_in(dev, "clk",
++            qdev_get_clock_out(DEVICE(&(s->rcc)), name));
++        busdev =3D SYS_BUS_DEVICE(dev);
++        if (!sysbus_realize(busdev, errp)) {
++            return;
++        }
++        sysbus_mmio_map(busdev, 0, usart_addr[i]);
++        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, usart_irq=
+[i]));
++    }
++
++    /*
++     * TODO: Connect the USARTs, UARTs and LPUART to the EXTI once the E=
+XTI
++     * can handle other gpio-in than the gpios. (e.g. Direct Lines for t=
+he usarts)
++     */
++
++    /* UART devices */
++    for (int i =3D 0; i < STM_NUM_UARTS; i++) {
++        dev =3D DEVICE(&(s->uart[i]));
++        qdev_prop_set_chr(dev, "chardev", serial_hd(STM_NUM_USARTS + i))=
+;
++        g_autofree char *name =3D g_strdup_printf("uart%d-out", STM_NUM_=
+USARTS + i + 1);
++        qdev_connect_clock_in(dev, "clk",
++            qdev_get_clock_out(DEVICE(&(s->rcc)), name));
++        busdev =3D SYS_BUS_DEVICE(dev);
++        if (!sysbus_realize(busdev, errp)) {
++            return;
++        }
++        sysbus_mmio_map(busdev, 0, uart_addr[i]);
++        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, uart_irq[=
+i]));
++    }
++
++    /* LPUART device*/
++    dev =3D DEVICE(&(s->lpuart));
++    qdev_prop_set_chr(dev, "chardev", serial_hd(STM_NUM_USARTS + STM_NUM=
+_UARTS));
++    qdev_connect_clock_in(dev, "clk",
++        qdev_get_clock_out(DEVICE(&(s->rcc)), "lpuart1-out"));
++    busdev =3D SYS_BUS_DEVICE(dev);
++    if (!sysbus_realize(busdev, errp)) {
++        return;
++    }
++    sysbus_mmio_map(busdev, 0, LPUART_BASE_ADDRESS);
++    sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, LPUART_IRQ));
++
+     /* APB1 BUS */
+     create_unimplemented_device("TIM2",      0x40000000, 0x400);
+     create_unimplemented_device("TIM3",      0x40000400, 0x400);
+@@ -294,10 +370,6 @@ static void stm32l4x5_soc_realize(DeviceState *dev_s=
+oc, Error **errp)
+     create_unimplemented_device("SPI2",      0x40003800, 0x400);
+     create_unimplemented_device("SPI3",      0x40003C00, 0x400);
+     /* RESERVED:    0x40004000, 0x400 */
+-    create_unimplemented_device("USART2",    0x40004400, 0x400);
+-    create_unimplemented_device("USART3",    0x40004800, 0x400);
+-    create_unimplemented_device("UART4",     0x40004C00, 0x400);
+-    create_unimplemented_device("UART5",     0x40005000, 0x400);
+     create_unimplemented_device("I2C1",      0x40005400, 0x400);
+     create_unimplemented_device("I2C2",      0x40005800, 0x400);
+     create_unimplemented_device("I2C3",      0x40005C00, 0x400);
+@@ -308,7 +380,6 @@ static void stm32l4x5_soc_realize(DeviceState *dev_so=
+c, Error **errp)
+     create_unimplemented_device("DAC1",      0x40007400, 0x400);
+     create_unimplemented_device("OPAMP",     0x40007800, 0x400);
+     create_unimplemented_device("LPTIM1",    0x40007C00, 0x400);
+-    create_unimplemented_device("LPUART1",   0x40008000, 0x400);
+     /* RESERVED:    0x40008400, 0x400 */
+     create_unimplemented_device("SWPMI1",    0x40008800, 0x400);
+     /* RESERVED:    0x40008C00, 0x800 */
+@@ -325,7 +396,6 @@ static void stm32l4x5_soc_realize(DeviceState *dev_so=
+c, Error **errp)
+     create_unimplemented_device("TIM1",      0x40012C00, 0x400);
+     create_unimplemented_device("SPI1",      0x40013000, 0x400);
+     create_unimplemented_device("TIM8",      0x40013400, 0x400);
+-    create_unimplemented_device("USART1",    0x40013800, 0x400);
+     /* RESERVED:    0x40013C00, 0x400 */
+     create_unimplemented_device("TIM15",     0x40014000, 0x400);
+     create_unimplemented_device("TIM16",     0x40014400, 0x400);
+diff --git a/include/hw/arm/stm32l4x5_soc.h b/include/hw/arm/stm32l4x5_so=
+c.h
+index ee5f362405..a94ddbd19c 100644
+--- a/include/hw/arm/stm32l4x5_soc.h
++++ b/include/hw/arm/stm32l4x5_soc.h
+@@ -21,6 +21,12 @@
+  * https://www.st.com/en/microcontrollers-microprocessors/stm32l4x5/docu=
+mentation.html
+  */
+=20
++/*
++ * The STM32L4X5 is heavily inspired by the stm32f405 by Alistair Franci=
+s.
++ * The reference used is the STMicroElectronics RM0351 Reference manual
++ * for STM32L4x5 and STM32L4x6 advanced Arm =C2=AE -based 32-bit MCUs.
++ */
++
+ #ifndef HW_ARM_STM32L4x5_SOC_H
+ #define HW_ARM_STM32L4x5_SOC_H
+=20
+@@ -31,6 +37,7 @@
+ #include "hw/misc/stm32l4x5_exti.h"
+ #include "hw/misc/stm32l4x5_rcc.h"
+ #include "hw/gpio/stm32l4x5_gpio.h"
++#include "hw/char/stm32l4x5_usart.h"
+ #include "qom/object.h"
+=20
+ #define TYPE_STM32L4X5_SOC "stm32l4x5-soc"
+@@ -41,6 +48,9 @@ OBJECT_DECLARE_TYPE(Stm32l4x5SocState, Stm32l4x5SocClas=
+s, STM32L4X5_SOC)
+=20
+ #define NUM_EXTI_OR_GATES 4
+=20
++#define STM_NUM_USARTS 3
++#define STM_NUM_UARTS 2
++
+ struct Stm32l4x5SocState {
+     SysBusDevice parent_obj;
+=20
+@@ -51,6 +61,9 @@ struct Stm32l4x5SocState {
+     Stm32l4x5SyscfgState syscfg;
+     Stm32l4x5RccState rcc;
+     Stm32l4x5GpioState gpio[NUM_GPIOS];
++    Stm32l4x5UsartBaseState usart[STM_NUM_USARTS];
++    Stm32l4x5UsartBaseState uart[STM_NUM_UARTS];
++    Stm32l4x5UsartBaseState lpuart;
+=20
+     MemoryRegion sram1;
+     MemoryRegion sram2;
 --=20
 2.34.1
 
