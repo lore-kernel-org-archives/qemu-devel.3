@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58EE0C47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 19:19:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B900C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 19:19:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roTLv-0007QO-Gv; Sun, 24 Mar 2024 15:17:55 -0400
+	id 1roTM8-0007Sh-38; Sun, 24 Mar 2024 15:18:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1roTLu-0007QE-Bi
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 15:17:54 -0400
+ id 1roTM6-0007SG-Ce
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 15:18:06 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1roTLs-0005LW-NB
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 15:17:54 -0400
+ id 1roTM4-0005MP-SB
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 15:18:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- MIME-Version:References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=2QP1JO0PKDjAYT77GyhO+6yB/U03uQz1C5NmIQkapnE=; b=Ow4uPnmtJug8YK8Uol8iOinYS7
- ir5yOpJk6IYhhMRBYrVoOJsDRQqm3gd0iyM7k7BNH/Otf20TOB9Gu6GybWK4V1Mg89vz5jB2/aBQo
- CvnVC058PllpfsOQjb4pqI4jCl/n1woDnfJvuXswf9OwqBAuV6/sKVWdABfrZmcQSRhk+jCjyL1yq
- zwK8HcYiTitZ9tLDdjMLsAjs+qNy8+YWPTUYo/WSa+qhPJjx8OIVz/zHOVQ2z847vBndL4gTnXRsb
- Y2//Rc3eacOChoJewlYjoMGDvm/p/Q8swe3rNTi0uK0iH1W6llmSMlbDG08/KMJojM5LGIH2HGfVu
- BzC3J94vIdHC95i42Uq0PeUjD4kcK477f3kuPkHuARadXFLzNSpZtkBHvWLoyGEfKE0XcRDZjH27u
- CniCR9s7iqaagYqUxL8KZI18Yw0Npyl+ogv0plAon20vEUYVYpX+Tm5OlHV8Ac149q+HEgDVdVHx+
- Ozd7aRlFlWxPM7aA8YStTJuUUNhtPNqMBSwP+d4vaxUziBpi/yz9xlBt4ieWJfPC/cUqAd2yASUcL
- yqIW17pDGd/2nkTFljS/nO96UeHfK6QA4tidvDv0dfZXFGP6Lg3P7K9TTcOHkAJpH89wQEM8WFHer
- Qa4ytnI3uc4v9mqr0ymu7ry0NRDHnJncAN2+BEZLM=;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
+ Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=77dk6wnZ2bSAejWshvXrKexdiyTpCPKPvwX9iyAhCFE=; b=QgwLHof3v46EWCNARk4N4s9odV
+ k1I1DB0DkfH4xP4qtXuxKDd/N1oQvJ+6uViyBVDqQV35WNZ6KsrYbhrum8NNXE7S4UxZ5ZkPYsiC0
+ FCdc+Q4l2Zug7bN+k2MTGkXmSXPQ1e6yEQkq+e+kSRcmVKh+IFpjibquXUuhq6SPYdbgGGz/ceLwp
+ GIwOi0DesdBfRMS4pm1A2C8e5/1wVCnTmdPQdpmglfMw8DpedTK67fax9OHIgvSdOZQmdKV5JArUH
+ RxLDuoIUjH4bZ/3YXJ88/sgXpg2sZiOdXQI97MLagSOQXRATGo/3KFB0xvG6e3io9BCYEm9z++4MI
+ G6advuACBzGZ2Nn2iHShPrt5JAF/Bvn+0sIBGjztgl/PiHjgukXp5iQcTA1GqkltfCLQR4Pd6SkqU
+ t8jKImG3Ewpdht+TNdAp0H/LUVPhoO06sdHAndgXJnidwTu7rIfiZWqSWGsiJpn2IXZm4O4Zenqkj
+ WlgKjTFaK9Zf6KF2nMGJC706S86sxYarQDS3D2f3yH1/EXV3Bvr6RO8KrdeGDlBN+pW/l66BNf/g+
+ yYpWvy8EyNXMDAYHwski6E1u1EAfl6SXd0cQtnsI7zIt3O74Gd1QaMdkpKADPhdkyBkbLCBuqO6Yv
+ CxP3bDBppmMg4ZJtkkbCRGWnya11n1/HLgz5j0nac=;
 Received: from [2a00:23c4:8bb3:1000:d8cc:63fe:ef32:8539]
  (helo=localhost.localdomain)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1roTKt-0000dj-Eb; Sun, 24 Mar 2024 19:16:55 +0000
+ id 1roTL5-0000dj-EC; Sun, 24 Mar 2024 19:17:07 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: pbonzini@redhat.com, fam@euphon.net, laurent@vivier.eu,
  qemu-devel@nongnu.org
-Date: Sun, 24 Mar 2024 19:16:57 +0000
-Message-Id: <20240324191707.623175-9-mark.cave-ayland@ilande.co.uk>
+Date: Sun, 24 Mar 2024 19:17:00 +0000
+Message-Id: <20240324191707.623175-12-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240324191707.623175-1-mark.cave-ayland@ilande.co.uk>
 References: <20240324191707.623175-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb3:1000:d8cc:63fe:ef32:8539
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v3 08/17] esp.c: change esp_fifo_pop_buf() to take ESPState
+Subject: [PATCH v3 11/17] esp.c: rework esp_cdb_length() into esp_cdb_ready()
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -80,120 +79,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that all users of esp_fifo_pop_buf() operate on the main FIFO there is no
-need to pass the FIFO explicitly.
+The esp_cdb_length() function is only used as part of a calculation to determine
+whether the cmdfifo contains an entire SCSI CDB. Rework esp_cdb_length() into a
+new esp_cdb_ready() function which both enables us to handle the case where
+scsi_cdb_length() returns -1, plus simplify the logic for its callers.
 
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/scsi/esp.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ hw/scsi/esp.c | 30 ++++++++++++++----------------
+ 1 file changed, 14 insertions(+), 16 deletions(-)
 
 diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index 8d2d36d56c..83b621ee0f 100644
+index f3aa5364cf..f47abc36d6 100644
 --- a/hw/scsi/esp.c
 +++ b/hw/scsi/esp.c
-@@ -155,9 +155,9 @@ static uint32_t esp_fifo8_pop_buf(Fifo8 *fifo, uint8_t *dest, int maxlen)
-     return n;
- }
- 
--static uint32_t esp_fifo_pop_buf(Fifo8 *fifo, uint8_t *dest, int maxlen)
-+static uint32_t esp_fifo_pop_buf(ESPState *s, uint8_t *dest, int maxlen)
- {
--    return esp_fifo8_pop_buf(fifo, dest, maxlen);
-+    return esp_fifo8_pop_buf(&s->fifo, dest, maxlen);
- }
- 
- static uint32_t esp_get_tc(ESPState *s)
-@@ -459,7 +459,7 @@ static void esp_do_dma(ESPState *s)
-             s->dma_memory_read(s->dma_opaque, buf, len);
-             esp_set_tc(s, esp_get_tc(s) - len);
-         } else {
--            len = esp_fifo_pop_buf(&s->fifo, buf, fifo8_num_used(&s->fifo));
-+            len = esp_fifo_pop_buf(s, buf, fifo8_num_used(&s->fifo));
-             len = MIN(fifo8_num_free(&s->cmdfifo), len);
-             esp_raise_drq(s);
-         }
-@@ -515,7 +515,7 @@ static void esp_do_dma(ESPState *s)
-             fifo8_push_all(&s->cmdfifo, buf, len);
-             esp_set_tc(s, esp_get_tc(s) - len);
-         } else {
--            len = esp_fifo_pop_buf(&s->fifo, buf, fifo8_num_used(&s->fifo));
-+            len = esp_fifo_pop_buf(s, buf, fifo8_num_used(&s->fifo));
-             len = MIN(fifo8_num_free(&s->cmdfifo), len);
-             fifo8_push_all(&s->cmdfifo, buf, len);
-             esp_raise_drq(s);
-@@ -549,7 +549,7 @@ static void esp_do_dma(ESPState *s)
-                 /* Copy FIFO data to device */
-                 len = MIN(s->async_len, ESP_FIFO_SZ);
-                 len = MIN(len, fifo8_num_used(&s->fifo));
--                len = esp_fifo_pop_buf(&s->fifo, s->async_buf, len);
-+                len = esp_fifo_pop_buf(s, s->async_buf, len);
-                 esp_raise_drq(s);
-             }
- 
-@@ -713,7 +713,7 @@ static void esp_nodma_ti_dataout(ESPState *s)
+@@ -425,20 +425,20 @@ static void write_response(ESPState *s)
      }
-     len = MIN(s->async_len, ESP_FIFO_SZ);
-     len = MIN(len, fifo8_num_used(&s->fifo));
--    esp_fifo_pop_buf(&s->fifo, s->async_buf, len);
-+    esp_fifo_pop_buf(s, s->async_buf, len);
-     s->async_buf += len;
-     s->async_len -= len;
-     s->ti_size += len;
-@@ -738,7 +738,7 @@ static void esp_do_nodma(ESPState *s)
-         switch (s->rregs[ESP_CMD]) {
-         case CMD_SELATN:
-             /* Copy FIFO into cmdfifo */
--            len = esp_fifo_pop_buf(&s->fifo, buf, fifo8_num_used(&s->fifo));
-+            len = esp_fifo_pop_buf(s, buf, fifo8_num_used(&s->fifo));
-             len = MIN(fifo8_num_free(&s->cmdfifo), len);
+ }
+ 
+-static int esp_cdb_length(ESPState *s)
++static bool esp_cdb_ready(ESPState *s)
+ {
++    int len = fifo8_num_used(&s->cmdfifo) - s->cmdfifo_cdb_offset;
+     const uint8_t *pbuf;
+-    int cmdlen, len;
++    int cdblen;
+ 
+-    cmdlen = fifo8_num_used(&s->cmdfifo);
+-    if (cmdlen < s->cmdfifo_cdb_offset) {
+-        return 0;
++    if (len <= 0) {
++        return false;
+     }
+ 
+-    pbuf = fifo8_peek_buf(&s->cmdfifo, cmdlen, NULL);
+-    len = scsi_cdb_length((uint8_t *)&pbuf[s->cmdfifo_cdb_offset]);
++    pbuf = fifo8_peek_buf(&s->cmdfifo, len, NULL);
++    cdblen = scsi_cdb_length((uint8_t *)&pbuf[s->cmdfifo_cdb_offset]);
+ 
+-    return len;
++    return cdblen < 0 ? false : (len >= cdblen);
+ }
+ 
+ static void esp_dma_ti_check(ESPState *s)
+@@ -806,10 +806,9 @@ static void esp_do_nodma(ESPState *s)
+             trace_esp_handle_ti_cmd(cmdlen);
+ 
+             /* CDB may be transferred in one or more TI commands */
+-            if (esp_cdb_length(s) && esp_cdb_length(s) ==
+-                fifo8_num_used(&s->cmdfifo) - s->cmdfifo_cdb_offset) {
+-                    /* Command has been received */
+-                    do_cmd(s);
++            if (esp_cdb_ready(s)) {
++                /* Command has been received */
++                do_cmd(s);
+             } else {
+                 /*
+                  * If data was transferred from the FIFO then raise bus
+@@ -832,10 +831,9 @@ static void esp_do_nodma(ESPState *s)
              fifo8_push_all(&s->cmdfifo, buf, len);
  
-@@ -757,7 +757,7 @@ static void esp_do_nodma(ESPState *s)
- 
-         case CMD_SELATNS:
-             /* Copy one byte from FIFO into cmdfifo */
--            len = esp_fifo_pop_buf(&s->fifo, buf, 1);
-+            len = esp_fifo_pop_buf(s, buf, 1);
-             len = MIN(fifo8_num_free(&s->cmdfifo), len);
-             fifo8_push_all(&s->cmdfifo, buf, len);
- 
-@@ -774,7 +774,7 @@ static void esp_do_nodma(ESPState *s)
- 
-         case CMD_TI:
-             /* Copy FIFO into cmdfifo */
--            len = esp_fifo_pop_buf(&s->fifo, buf, fifo8_num_used(&s->fifo));
-+            len = esp_fifo_pop_buf(s, buf, fifo8_num_used(&s->fifo));
-             len = MIN(fifo8_num_free(&s->cmdfifo), len);
-             fifo8_push_all(&s->cmdfifo, buf, len);
- 
-@@ -792,7 +792,7 @@ static void esp_do_nodma(ESPState *s)
-         switch (s->rregs[ESP_CMD]) {
-         case CMD_TI:
-             /* Copy FIFO into cmdfifo */
--            len = esp_fifo_pop_buf(&s->fifo, buf, fifo8_num_used(&s->fifo));
-+            len = esp_fifo_pop_buf(s, buf, fifo8_num_used(&s->fifo));
-             len = MIN(fifo8_num_free(&s->cmdfifo), len);
-             fifo8_push_all(&s->cmdfifo, buf, len);
- 
-@@ -821,7 +821,7 @@ static void esp_do_nodma(ESPState *s)
-         case CMD_SEL | CMD_DMA:
-         case CMD_SELATN | CMD_DMA:
-             /* Copy FIFO into cmdfifo */
--            len = esp_fifo_pop_buf(&s->fifo, buf, fifo8_num_used(&s->fifo));
-+            len = esp_fifo_pop_buf(s, buf, fifo8_num_used(&s->fifo));
-             len = MIN(fifo8_num_free(&s->cmdfifo), len);
-             fifo8_push_all(&s->cmdfifo, buf, len);
- 
-@@ -836,7 +836,7 @@ static void esp_do_nodma(ESPState *s)
-         case CMD_SEL:
-         case CMD_SELATN:
-             /* FIFO already contain entire CDB: copy to cmdfifo and execute */
--            len = esp_fifo_pop_buf(&s->fifo, buf, fifo8_num_used(&s->fifo));
-+            len = esp_fifo_pop_buf(s, buf, fifo8_num_used(&s->fifo));
-             len = MIN(fifo8_num_free(&s->cmdfifo), len);
-             fifo8_push_all(&s->cmdfifo, buf, len);
+             /* Handle when DMA transfer is terminated by non-DMA FIFO write */
+-            if (esp_cdb_length(s) && esp_cdb_length(s) ==
+-                fifo8_num_used(&s->cmdfifo) - s->cmdfifo_cdb_offset) {
+-                    /* Command has been received */
+-                    do_cmd(s);
++            if (esp_cdb_ready(s)) {
++                /* Command has been received */
++                do_cmd(s);
+             }
+             break;
  
 -- 
 2.39.2
