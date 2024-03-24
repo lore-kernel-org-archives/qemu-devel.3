@@ -4,61 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3C28CD11BF
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 09:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F88FCD11BF
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 10:06:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roKPM-0006ET-TL; Sun, 24 Mar 2024 05:44:53 -0400
+	id 1roKjC-0003VR-BQ; Sun, 24 Mar 2024 06:05:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
- id 1roKPK-0006DW-Mx; Sun, 24 Mar 2024 05:44:50 -0400
-Received: from shirlock.uni-paderborn.de ([2001:638:502:c003::15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
- id 1roKPI-0006lf-VF; Sun, 24 Mar 2024 05:44:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=mail.uni-paderborn.de; s=20170601; h=In-Reply-To:Content-Transfer-Encoding:
- Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
- Sender:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=YewijLU+TrbF4ce0hnwwHWP1g2DhzE8v1fnV4OZbtj0=; b=PsgHL45whyT9ykx1huJZnoCEw7
- VXPgOIUzCr/lat/Y4K/HKymN87q/0p0HgX0az69o00lOD6znPpW8BAeP42pDg9BTwmdAqX2tq/fBQ
- dNsTZMz/vEFUgeoA0CAGZL28hQirCVdnHyNQU533It3gUtkkrZvsFcXgb6j3a2ocwxGQ=;
-Date: Sun, 24 Mar 2024 10:44:41 +0100
-From: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org, Anton Johansson <anjo@rev.ng>
-Subject: Re: [PATCH-for-9.1 25/27] target/tricore: Convert to
- TCGCPUOps::get_cpu_state()
-Message-ID: <bqsi6kbga52jrllbqzgipknruhkeypbyelxa4kpmz72iukqqry@ubjt2rpwm325>
-References: <20240319154258.71206-1-philmd@linaro.org>
- <20240319154258.71206-26-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1roKj9-0003Uk-32
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 06:05:19 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1roKj7-0002lW-Io
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 06:05:18 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-568c714a9c7so3977385a12.2
+ for <qemu-devel@nongnu.org>; Sun, 24 Mar 2024 03:05:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711274715; x=1711879515; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CgL3dvbqfXtunyQIdDYczEnBfF91tJ9I5F7zxRRiOys=;
+ b=BuUc+eIkFkrtmwPQIqnyEoo8K1e9CjV1/KD/jFiUQ+vhKUaoFjhDRqYZ7wMIdOWklD
+ xbGsnZA2v0gmBOZT00cbES2R3NkrrQuAlEl7AmVM8c69c7TLJCwheyyOdVhJRlscGvlE
+ /rIAGldTUJitSISqlc76SZdwXZ/+fM8GbJcJHJuYHLjqtnGuDzEenMRb9x0BARSNGE9l
+ hA02lypKivzGSycH3enKMpCCmNXpP4KntJYTS9ZzZFeo8Go3gRCeStdL2c3DKayBr/tU
+ CZG4QS3MQ67ZrHfDKIUh4+Tv3JliMAeHaf/N8NTexDG7nsfLYfTdRtG55kDXKIQKGNSR
+ gYRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711274715; x=1711879515;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CgL3dvbqfXtunyQIdDYczEnBfF91tJ9I5F7zxRRiOys=;
+ b=d1XEzSXA6fLp5hvRVlJE9Bv8bSwxifC3uo54m9Tr1pzFQuRl/AxloBoQny+SgRh2Dg
+ aCCG0AoURFa8MhCOwl/dVnQaJEkDINwC57zVzAO276IHFmuPIEjpBRtOXnYFTculs38K
+ JMFxi9wb29PCWzDcgnfdrH6ZJk1o30wCFp62zIDCYWeYyda2kzwLLWPkFs7oHsm9ngx0
+ s0+dezLTUgOmslkhaUtcgw4Z9rTnXgXjfzXnTb3W/YrrW5i+OV7KRiuVCQw2taa+ndv/
+ UDcoNlihrWRnLv8qIn2Fwg8iObu0od7DmlROPbPI9f9vbo6Xe9kjccY+d+amOzOE2wCv
+ EvMw==
+X-Gm-Message-State: AOJu0Yzu1v+02P1LuId2subbTLMc0/Yp7MpdxYd/Ge+68h5Fbg/Vk2Pg
+ aWP+rt2gyddDgNIGnExV0IET/7S4eik6rBrEBDB8xDpvxUURETjGPPVDcUlQ2I/S70uKju27NsO
+ Qx0Q=
+X-Google-Smtp-Source: AGHT+IF5BoSHvQYqAzetuohDwUZ2D5hmP19aelohfmgKhrFe9nubNu2hGSWkUvhUhMjyJS011emM4g==
+X-Received: by 2002:a17:906:487:b0:a47:3428:2b2f with SMTP id
+ f7-20020a170906048700b00a4734282b2fmr2634946eja.64.1711274715124; 
+ Sun, 24 Mar 2024 03:05:15 -0700 (PDT)
+Received: from localhost.localdomain (adsl-53.37.6.2.tellas.gr. [37.6.2.53])
+ by smtp.gmail.com with ESMTPSA id
+ lb25-20020a170907785900b00a3d11feb32esm1812537ejc.186.2024.03.24.03.05.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 24 Mar 2024 03:05:14 -0700 (PDT)
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org,
+	qemu-stable@nongnu.org
+Cc: Zheyu Ma <zheyuma97@gmail.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v1 0/1] virtio-snd: fix invalid tx/rx message handling logic
+Date: Sun, 24 Mar 2024 12:04:58 +0200
+Message-Id: <cover.virtio-snd-rewrite-invalid-tx-rx-message-handling-v1.manos.pitsidianakis@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240319154258.71206-26-philmd@linaro.org>
-X-IMT-rspamd-score: -10
-X-IMT-Spam-Score: 0.0 ()
-X-PMX-Version: 6.4.9.2830568, Antispam-Engine: 2.7.2.2107409,
- Antispam-Data: 2024.1.27.235115, AntiVirus-Engine: 6.0.2,
- AntiVirus-Data: 2024.1.26.602001
-X-Sophos-SenderHistory: ip=79.202.220.76, fs=67, da=198882548, mc=1, sc=0, hc=1,
- sp=0, fso=67, re=0, sd=0, hd=0
-X-IMT-Authenticated-Sender: kbastian@UNI-PADERBORN.DE
-Received-SPF: pass client-ip=2001:638:502:c003::15;
- envelope-from=kbastian@mail.uni-paderborn.de; helo=shirlock.uni-paderborn.de
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,17 +95,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 19, 2024 at 04:42:54PM +0100, Philippe Mathieu-Daud� wrote:
-> Convert cpu_get_tb_cpu_state() to TCGCPUOps::get_cpu_state().
-> 
-> Signed-off-by: Philippe Mathieu-Daud� <philmd@linaro.org>
-> ---
->  target/tricore/cpu.h | 12 ------------
->  target/tricore/cpu.c | 13 +++++++++++++
->  2 files changed, 13 insertions(+), 12 deletions(-)
+This is a logic fix for the error handling in the TX/RX virt queue 
+handlers. A potential invalid address dereference was reported and fixed 
+by Zheyu Ma in <20240322110827.568412-1-zheyuma97@gmail.com>. This patch 
+moves the invalid message storage from the stream structs to the virtio 
+device struct to
 
-Reviewed-by: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+1. make such bug impossible
+2. reply to invalid messages again with VIRTIO_SND_S_BAD_MSG, which was 
+not possible before.
 
-Cheers,
-Bastian
+Patch based on master base-commit: 853546f8128476eefb701d4a55b2781bb3a46faa
+with the following patch applied:
+
+  Subject: [PATCH v2] virtio-snd: Enhance error handling for invalid
+   transfers
+  From: Zheyu Ma <zheyuma97@gmail.com>
+  Date: Fri, 22 Mar 2024 12:08:27 +0100
+  Message-Id: <20240322110827.568412-1-zheyuma97@gmail.com>
+
+
+Manos Pitsidianakis (1):
+  virtio-snd: rewrite invalid tx/rx message handling
+
+ include/hw/audio/virtio-snd.h |  16 +++-
+ hw/audio/virtio-snd.c         | 137 +++++++++++++++-------------------
+ 2 files changed, 77 insertions(+), 76 deletions(-)
+
+
+base-commit: 853546f8128476eefb701d4a55b2781bb3a46faa
+prerequisite-patch-id: 8209301569bd30ba806d06b3452a2f3156503a7a
+-- 
+γαῖα πυρί μιχθήτω
+
 
