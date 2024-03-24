@@ -4,74 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8039BC47DD9
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 15:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E9AC47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 15:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roPRy-0001vc-So; Sun, 24 Mar 2024 11:07:55 -0400
+	id 1roPUE-0002vy-Ah; Sun, 24 Mar 2024 11:10:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1roPRx-0001vM-VB; Sun, 24 Mar 2024 11:07:53 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <irina.ryapolova@syntacore.com>)
+ id 1roPUD-0002vi-3Z; Sun, 24 Mar 2024 11:10:13 -0400
+Received: from mta-04.yadro.com ([89.207.88.248])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1roPRt-0002yr-2Q; Sun, 24 Mar 2024 11:07:53 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6702C5873E;
- Sun, 24 Mar 2024 18:09:00 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CD3AAA1AA0;
- Sun, 24 Mar 2024 18:07:30 +0300 (MSK)
-Message-ID: <6d1ea7ad-0a81-4f5e-8210-80b5150bc521@tls.msk.ru>
-Date: Sun, 24 Mar 2024 18:07:28 +0300
+ (Exim 4.90_1) (envelope-from <irina.ryapolova@syntacore.com>)
+ id 1roPUB-0003jI-3J; Sun, 24 Mar 2024 11:10:12 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 9CF9DC0003
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1711293000;
+ bh=NgBhcHvA1hJNLG9Q2UzD2GpmFdYNx5LDk1FdSzGkDj8=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=pRSkowahCH8kS2suGlfiff68Wvg1t9GXzxuNLRyJYJpKjT+zuHO5KFICOtfhKLAhE
+ HjP+ghRkbDSBLeoO38I4Tm9weMyVrWhM1RfFQzObzws6fiwcdPFp3uLmo/H+/l/kh+
+ n0ICUvRPR5rGYPy8hRDGrfIOZoS503lpzYGRia8ur9Oay19tiyvAmeJ4nI0U0RLXxg
+ cWw8B4Iup5nLtNzhW6JMqbRLTvfW3sBxXwDVa/Q86WEPUSDnYs1eOTl8BBiqp7wwCj
+ d0Mm/BKcw2JADgKaSP1kCoGedxTQBkBvLH4tWNDVQZDL2rjL45QitQRhDXUk6angu+
+ cQr5uQl40EX1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1711293000;
+ bh=NgBhcHvA1hJNLG9Q2UzD2GpmFdYNx5LDk1FdSzGkDj8=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=xGNeG6bgKiSKZ1fQeXTiZT4dMq5TPsXrRKp5jFKZy+yBE3WilIvJUl60oknpyOcZ7
+ lVkknAWEstWJvN3kBAUsZJBx+HVqHNPg4jaE7aODkBPj1q0g9vCvUfL83ImqMQexLO
+ vGiPSoaJ7bwjWyhD3DfDIcb6dszHshb61Tnl4NBfioMhfvcT4YiIGtkznFUcsHaiWA
+ hVjVyWoiNFkgmeG5RTDYjthlFqqdhwDEqqJkEqt/hWSiRtCpXHaLgAxF/lidwkpJCl
+ 623QGcULwLyBZPe4dODtz1xlxFT9cBFcONvVr4xQQAZtl8M2k/tFDriAUsBKFAZIvy
+ YTM9iqMbUZQtg==
+From: Irina Ryapolova <irina.ryapolova@syntacore.com>
+To: <qemu-devel@nongnu.org>
+CC: <qemu-riscv@nongnu.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>, 
+ <bin.meng@windriver.com>, <liwei1518@gmail.com>,
+ <dbarboza@ventanamicro.com>, 
+ <zhiwei_liu@linux.alibaba.com>, Irina Ryapolova
+ <irina.ryapolova@syntacore.com>
+Subject: [PATCH] target/riscv: Fix mode in riscv_tlb_fill
+Date: Sun, 24 Mar 2024 18:09:47 +0300
+Message-ID: <20240324150949.20822-1-irina.ryapolova@syntacore.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/15] riscv-to-apply queue
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20240322085319.1758843-1-alistair.francis@wdc.com>
- <5eb1ce03-639a-4db3-a1e2-aba61fa295d1@tls.msk.ru>
- <76c065d8-41ee-433d-ba40-e1d13579b4a4@ventanamicro.com>
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <76c065d8-41ee-433d-ba40-e1d13579b4a4@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
+ S-Exch-01.corp.yadro.com (10.78.5.241)
+Received-SPF: permerror client-ip=89.207.88.248;
+ envelope-from=irina.ryapolova@syntacore.com; helo=mta-04.yadro.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,76 +78,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-22.03.2024 22:46, Daniel Henrique Barboza :
-> 
-> 
-> On 3/22/24 14:16, Michael Tokarev wrote:
->> 22.03.2024 11:53, Alistair Francis :
->>
->>> RISC-V PR for 9.0
->>>
->>> * Do not enable all named features by default
->>> * A range of Vector fixes
->>> * Update APLIC IDC after claiming iforce register
->>> * Remove the dependency of Zvfbfmin to Zfbfmin
->>> * Fix mode in riscv_tlb_fill
->>> * Fix timebase-frequency when using KVM acceleration
->>
->> Should something from there be picked up for stable (8.2 and probably 7.2)?
-> 
-> Ignore the "Do not enable all named features by default" since it's fixing something
-> that were added in 9.0.
-> 
-> The rest you can pick it up to 8.2 at least. Thanks,
+Need to convert mmu_idx to privilege mode for PMP function.
 
-Unfortunately this doesn't quite work, the following changes
-fail to apply to 8.2:
+Signed-off-by: Irina Ryapolova <irina.ryapolova@syntacore.com>
+---
+ target/riscv/cpu_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-929e521a47 target/riscv: always clear vstart for ldst_whole insns
-b46631f122 target/riscv: remove 'over' brconds from vector trans
-d57dfe4b37 trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
-bac802ada8 target/riscv: enable 'vstart_eq_zero' in the end of insns
-385e575cd5 target/riscv/kvm: fix timebase-frequency when using KVM acceleration
-
-I tried to back-port at least the first one but it turned out to be
-another failure.  Didn't try looking at the rest.
-
-If these really should be in 8.2 (it's your guys to decide, not me),
-I need help with back-porting these to 8.2 (and/or cherry-picking
-additional patches from master).
-
-Thanks,
-
-/mjt
-
->>> ----------------------------------------------------------------
->>> Daniel Henrique Barboza (10):
->>>        target/riscv: do not enable all named features by default
->>>        target/riscv/vector_helper.c: set vstart = 0 in GEN_VEXT_VSLIDEUP_VX()
->>>        trans_rvv.c.inc: set vstart = 0 in int scalar move insns
->>>        target/riscv/vector_helper.c: fix 'vmvr_v' memcpy endianess
->>>        target/riscv: always clear vstart in whole vec move insns
->>>        target/riscv: always clear vstart for ldst_whole insns
->>>        target/riscv/vector_helpers: do early exit when vstart >= vl
->>>        target/riscv: remove 'over' brconds from vector trans
->>>        trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
->>>        target/riscv/vector_helper.c: optimize loops in ldst helpers
->>>
->>> Frank Chang (1):
->>>        hw/intc: Update APLIC IDC after claiming iforce register
->>>
->>> Irina Ryapolova (1):
->>>        target/riscv: Fix mode in riscv_tlb_fill
->>>
->>> Ivan Klokov (1):
->>>        target/riscv: enable 'vstart_eq_zero' in the end of insns
->>>
->>> Max Chou (1):
->>>        target/riscv: rvv: Remove the dependency of Zvfbfmin to Zfbfmin
->>>
->>> Yong-Xuan Wang (1):
->>>        target/riscv/kvm: fix timebase-frequency when using KVM acceleration
->>
-> 
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index ce7322011d..fc090d729a 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1315,7 +1315,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     bool two_stage_lookup = mmuidx_2stage(mmu_idx);
+     bool two_stage_indirect_error = false;
+     int ret = TRANSLATE_FAIL;
+-    int mode = mmu_idx;
++    int mode = mmuidx_priv(mmu_idx);
+     /* default TLB page size */
+     target_ulong tlb_size = TARGET_PAGE_SIZE;
+ 
+-- 
+2.25.1
 
 
