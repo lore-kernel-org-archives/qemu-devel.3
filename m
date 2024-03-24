@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C74C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 16:14:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E35F3C47DD9
+	for <qemu-devel@archiver.kernel.org>; Sun, 24 Mar 2024 16:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roQTe-000477-9t; Sun, 24 Mar 2024 12:13:42 -0400
+	id 1roQeH-0007oB-MU; Sun, 24 Mar 2024 12:24:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1roQTc-000441-5A
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 12:13:40 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1roQeG-0007o0-0G
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 12:24:40 -0400
 Received: from mout.gmx.net ([212.227.15.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1roQTa-00070n-64
- for qemu-devel@nongnu.org; Sun, 24 Mar 2024 12:13:39 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1roQeE-0000Jv-0M
+ for qemu-devel@nongnu.org; Sun, 24 Mar 2024 12:24:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1711296810; x=1711901610; i=deller@gmx.de;
- bh=LNtI3DpUXQCgC2WQvtYGkq0GTc7RHLChqFQfYQi4UtY=;
+ s=s31663417; t=1711297474; x=1711902274; i=deller@gmx.de;
+ bh=QC/XEVExFh2Sl1v48u5uYyX2w2SuAOWTcyqBHJ8JulQ=;
  h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
  In-Reply-To;
- b=Rt7GMYczJrWKJlkvNg93yZSz0wggeHKf9oeDlEK6pSIRjGFPEWNQceiim+dG6gCS
- USb7XgDSBSeJk7dKbhKBNfQSwRtqC23ia28o/D8YRClRO3vM5byOjVgfEQzcm0lOh
- QxWVtDcvaQlCXA4yoJ/NQhG/4q+MXx6EvFYzPOQwf7Qi9MQfuH0LLUi8RHeSRmMu4
- wAJOGEMCKesaN9SNMPy55Tl56w1kxkst2WiQ3AxgXIh7nT5XlYUVJH8UK+FaJvbTU
- jSmwfqzc5L6fyd1asL9aBdeobhcIuCoB7NAqQu7vEUtO0VElZFjuL/89XfOEjI3Tk
- 5uz20tJlPpCF8Ku0Ow==
+ b=F9EBkEiUqSC3AIKiU+7uMW6zjcT6Mb17mdWElrI1QVka0Q7x8+edDsIPb1+jBfnx
+ 2+D8b6RZW9nfNd9fs9UwdxqBR+Aeiw13oCS/R3qhR1Enk8SJuXL+uaxCZjCZdik4K
+ vHCW+TXMJ41jgDy1d9Xxt0SeawfaeU0owQQsYYoHSCUB8HsekT+HmdMJurQh71osW
+ T3x6UkrJ62RmS3sY3brRt2+SUkQb0oxWic51++vxu35c6oZVfI44yMOPVCB55R0eB
+ uEpQ3Qm7wszSq/AFTWBiPho72v5f8a+lvTRbodi5PVHCT+dwkEpz40hg9gGkmlxMR
+ HL2g+kdDf+6oc50EsQ==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([89.244.186.175]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mkpav-1sajZt1xNv-00mHiV; Sun, 24
- Mar 2024 17:13:30 +0100
-Message-ID: <729cb22b-ad46-41bd-aa0c-c1e638eedcd5@gmx.de>
-Date: Sun, 24 Mar 2024 17:13:29 +0100
+Received: from [192.168.20.55] ([89.244.186.175]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MNswE-1sCY933sdc-00OKfg; Sun, 24
+ Mar 2024 17:24:33 +0100
+Message-ID: <e6fe525c-06b7-4cec-8a77-745cbfffee4a@gmx.de>
+Date: Sun, 24 Mar 2024 17:24:33 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/hppa: use gva_offset_mask() everywhere
+Subject: Re: [PATCH 2/3] target/hppa: mask offset bits in gva
 To: Sven Schnelle <svens@stackframe.org>,
  Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20240324080945.991100-1-svens@stackframe.org>
- <20240324080945.991100-2-svens@stackframe.org>
+ <20240324080945.991100-3-svens@stackframe.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -88,26 +88,26 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240324080945.991100-2-svens@stackframe.org>
+In-Reply-To: <20240324080945.991100-3-svens@stackframe.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:B5R8kk2i2GZS6v67EnyBZ+hilAuylOQfz/K7K9WzWTG4xAoIax9
- 7LS4nIYpRLpw8+K42H7JDPt14nv5WVioChX0EWGJBNtbtdGyXN9Mltz6cpWb1cUtF/7WTWK
- MBYy6SPsGsQqRWl0t5qvEy408FHI0HRF5iVddGhKFBY04NpdMlUAS1wG3ZUQu6YuQbUU6wR
- PwqNhefm4D5hp9/WKwpzQ==
-UI-OutboundReport: notjunk:1;M01:P0:uZdysOJaSpU=;o0IEB4K2VII7IyDeF3xo9/7RKGm
- bnZlkqBPvmAK0LtI5WTFEU7llC7fcsinaBomPzDfn80VCdH1zolDWh9B7CjlqmjRUjjvfW/Ds
- tsPnf9v+Cnv7tK9OlSmJj8EkOHth/T4wp5F4xtKa/m/+bhsl/38viVQb2kG5j60se0vnNX/UV
- iXmktnKMbhJkTVumgmFoBy8h3KJzwbTWTP9SIHsneVMqmJwIxjnSrHXBjnfu/QPinh31y5J9A
- JaqGhu9rRFgVGx5lazNA/YHCUKWnNvNvLxJxR8s/Nh+3rwOHh0sduEeiIj1GPmBtOADwAOcNO
- bqEgBkivbtSPh1pv/TnS/dN8traXeKi79o7dogexWTsSeIvWeZpm4VTvlq6UHXUE1zuVEQlNh
- u+d1mTDHinaanp9/v9LROwce6ABNNxlKBXLPvv7j7g1GESbFc4y5n5rjdrO/Y9OunGZ1Cln6c
- nUWderThDDjsj5yZgr88DdjvQFpcHyl+nSs06fpF+V4Maaa6tddnUqnNDoYFtV75SrQNarTwb
- jcfK1G/+p3aq/K8uB6k7syrBDiii3wFQEuoJ65RzN+YyXChOYdWs32c8Azha4a8Nzwk0aMkCi
- iymora64/nwXmv0aqT20HANDTi8ilBgP9OxSHs/ZpIPi52fxvR8v+2dCdrfHWcBjlJpByf4of
- fc6zjlB1lIizNU6aJqK73/K+FM+bJQ+mq+pvxLGBuVeYzCYAIIRWttKusHlRHfgE26LjutZaN
- 1REdkJPMqB3FJF1p5zfzf4nWheoxo5Rtb6pqbVjn4+HKV6wgpgQtVwVMWbaLcnVhafK6tS6jU
- FDDPXgLw7W17eCIv3tDZL8AoDXXM7dsCZRsRD+u2DnE4A=
+X-Provags-ID: V03:K1:Xr3cbzdpu/7DofyF9jp+wtut5kP7HvadUrmvXEaagAHjPyYvA8b
+ nhm6GomOAuJW0A+oRSONVp3nyl1j8pX2uxiyTch6lyxrsXk2DnqchKRNvawauGrlIp02ntF
+ daAYid8cnhTfG0vYLpzQX1ocIMmSk7RCYWo43Z1Z+HAUu6Mob48iyUPxYIZUjEavFpLG+QS
+ vyGraXt1nEuP8hwmEuAdw==
+UI-OutboundReport: notjunk:1;M01:P0:iiC/Cki1WKY=;wpZhNB3z0iS4kkcJx7QTitbLfHP
+ Giyttye5iTD2T1K4l9Qwwb5TBhnXOQmSFO3TL21SmGJjWsNAZn9NTykxbA40MKf8lQQpyEMQk
+ 3QOhU8Ix7CWDlZyT6Di5ZpoVd09+AGok9AZ/rl6SW4qT+Cm68OS/PklnvzVdgqND/ozh11aoG
+ 5OB1nUrY7p/79NZfL4kRlUUglz1pBxXT7r/qMjnCoKGP8OU/pEiOajzgS6EbElAijP5jgx9gt
+ k2HXjYsrYkTiCYz8RAa9tEFRmE/aMX2wgMWyif0hoMqXf4visc4831JZuI203DrWEguJfro1+
+ GWlPxK+yF4MN6KNklgUFV8tKbVii9qp7O+EK5FSRigm6Yn+yCMVuLlirkG0MJcjPGOcEHHexO
+ KNmeAgPHo4qRfF9V3QKVeQmXKYUzXXk/qD1rCCOW/QW2fkelyPv9E3Z+hqBDmewK45jl7UBLx
+ cjnE89P3okHyNVV1WZ12w+xJZucV+BgsKZd3jIWBQ9blOGWi8eXOfXfqbZ/tdTj3YWiJdA9EI
+ uI5QkVYy1v1oOcHG76+ZA+AzFcZNEw1iPwWjOQR6nLFl0dUCAF0dnPG3MREg786/kHX8VMnPN
+ WzGE29BXsIcAlI/z6Wxk64wepa1lHqEFbKk5g/5GOVP1lG2Pt6JvRc+IECHkxMBv9GAUwqcGR
+ 2397iMjOoX3ZgQmwAn8R1tIEBbp+ygr0bcHo/sYlBtcdIpvYcDtyUm2nztDyDhtxIGQ5huaC8
+ JpMS2LxLxv1Sjg498EGAJcgqdoVSrT6SRDMuHKtRtwXeENPVKcTEVoTC31ubg2Fig1KwyDIYh
+ ZkuHRJfVJMYEI54rfwOEYnNMp5YXARXCW+/9tbzDey4Hc=
 Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
@@ -133,82 +133,51 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/24/24 09:09, Sven Schnelle wrote:
-> move it to cpu.h, so it can also be used in hppa_form_gva_psw()
+> The CPU seems to mask a few bits in the offset when running
+> under HP-UX. ISR/IOR register contents for an address in
+> the processor HPA (0xfffffffffffa0000) on my C8000 and J6750:
+>
+> running on Linux: 000000003fffffff c0000000fffa0500
+> running on HP-UX: 00000000301fffff c0000000fffa0500
+>
+> I haven't found how this is switched (guess some diag in the
+> firmware), but linux + seabios seems to handle that as well,
+> so lets mask out the additional bits.
 >
 > Signed-off-by: Sven Schnelle <svens@stackframe.org>
 
-Reviewed-by: Helge Deller <deller@gmx.de>
+I've seen the issue on HP-UX too, and can confirm the patch does
+not break existing 32- and 64-bit Linux installations, so:
 
+Tested-by: Helge Deller <deller@gmx.de>
+
+Thanks!
 Helge
 
+
 > ---
->   target/hppa/cpu.h       | 10 ++++++++--
->   target/hppa/translate.c | 12 +++---------
->   2 files changed, 11 insertions(+), 11 deletions(-)
+>   target/hppa/cpu.h | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 >
 > diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-> index a92dc352cb..a072d0bb63 100644
+> index a072d0bb63..9bc4d208fa 100644
 > --- a/target/hppa/cpu.h
 > +++ b/target/hppa/cpu.h
-> @@ -285,14 +285,20 @@ void hppa_translate_init(void);
+> @@ -283,12 +283,13 @@ static inline int HPPA_BTLB_ENTRIES(CPUHPPAState *=
+env)
 >
+>   void hppa_translate_init(void);
+>
+> +#define HPPA_GVA_OFFSET_MASK64 0x301fffffffffffff
 >   #define CPU_RESOLVING_TYPE TYPE_HPPA_CPU
 >
-> +static inline uint64_t gva_offset_mask(target_ulong psw)
-> +{
-> +    return (psw & PSW_W
-> +            ? MAKE_64BIT_MASK(0, 62)
-> +            : MAKE_64BIT_MASK(0, 32));
-> +}
-> +
->   static inline target_ulong hppa_form_gva_psw(target_ulong psw, uint64_=
-t spc,
->                                                target_ulong off)
+>   static inline uint64_t gva_offset_mask(target_ulong psw)
 >   {
->   #ifdef CONFIG_USER_ONLY
->       return off;
->   #else
-> -    off &=3D psw & PSW_W ? MAKE_64BIT_MASK(0, 62) : MAKE_64BIT_MASK(0, =
-32);
-> -    return spc | off;
-> +    return spc | (off & gva_offset_mask(psw));
->   #endif
->   }
->
-> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index 19594f917e..0af125ed74 100644
-> --- a/target/hppa/translate.c
-> +++ b/target/hppa/translate.c
-> @@ -586,17 +586,10 @@ static bool nullify_end(DisasContext *ctx)
->       return true;
->   }
->
-> -static uint64_t gva_offset_mask(DisasContext *ctx)
-> -{
-> -    return (ctx->tb_flags & PSW_W
+>       return (psw & PSW_W
 > -            ? MAKE_64BIT_MASK(0, 62)
-> -            : MAKE_64BIT_MASK(0, 32));
-> -}
-> -
->   static void copy_iaoq_entry(DisasContext *ctx, TCGv_i64 dest,
->                               uint64_t ival, TCGv_i64 vval)
->   {
-> -    uint64_t mask =3D gva_offset_mask(ctx);
-> +    uint64_t mask =3D gva_offset_mask(ctx->tb_flags);
+> +            ? HPPA_GVA_OFFSET_MASK64
+>               : MAKE_64BIT_MASK(0, 32));
+>   }
 >
->       if (ival !=3D -1) {
->           tcg_gen_movi_i64(dest, ival & mask);
-> @@ -1403,7 +1396,8 @@ static void form_gva(DisasContext *ctx, TCGv_i64 *=
-pgva, TCGv_i64 *pofs,
->
->       *pofs =3D ofs;
->       *pgva =3D addr =3D tcg_temp_new_i64();
-> -    tcg_gen_andi_i64(addr, modify <=3D 0 ? ofs : base, gva_offset_mask(=
-ctx));
-> +    tcg_gen_andi_i64(addr, modify <=3D 0 ? ofs : base,
-> +                     gva_offset_mask(ctx->tb_flags));
->   #ifndef CONFIG_USER_ONLY
->       if (!is_phys) {
->           tcg_gen_or_i64(addr, addr, space_select(ctx, sp, base));
 
 
