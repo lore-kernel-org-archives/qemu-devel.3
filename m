@@ -4,90 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C262CC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 17:50:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46932C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 17:50:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rooSe-0004TC-OO; Mon, 25 Mar 2024 13:50:16 -0400
+	id 1rooSp-0004bJ-H7; Mon, 25 Mar 2024 13:50:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rooSc-0004Sw-NV
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 13:50:14 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1rooSa-0000LQ-EY
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 13:50:14 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a46f0da1b4fso595632866b.2
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 10:50:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711389010; x=1711993810; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=mUMnly82MrVRd1t3jtzRsWysxbErpHMd2zSWX9TbrpE=;
- b=KutJIRI41Gfe/w+oqfeHul2G+K1qbLyKn7I4DzeXtdih8B9n+qfeaVUiGr8EnJy47P
- lBBNDhhnrYPbmETdbduQXeM82t2cSE3DzxAEp/nffCevgeRbinwEzsEnb2sVYHeUUSbW
- DV8upxpIfnY9i2DAsHIgP+TIYucvsVtYcnP7Ds6v3dj0DSHbq2qIEKjJ98QMDFqwChnz
- IVfME+fQXC97TlJDA1ilVlptlyw6om3ZJwgj9U7QsvJJ/Qh4CI1OtS+F5FrR98BMKO0R
- hPizZ+3ftIgfOvA4mTkI3M8IlNH6pdF33fTy7PXBGr0UVTR+rLjEQeyq6AyVltLw55hE
- lHpA==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rooSo-0004b2-LB
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 13:50:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1rooSk-0000Mx-Ip
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 13:50:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711389020;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hgeudOPUdFhKToQeclPDI1rbISaoF9vG9EsQS5jFg/0=;
+ b=dZXAgwVvbUc+8WugdVwPV9F6vrpVqBiIAbEmReCLkaMM9gCHJTZfEJktjkJiG4ovICZqku
+ iBf5HefpLaba7u42a6x6OpJAjVFQ6f0WfIN3o0uMzQ0+X98EpQBml5hVGYp6jrTbA2Wnsy
+ 0R+PiLnQ3QM6G+E+yRrLrpqqCtRKhwA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-373--o7rlGSNM6S7gVGQ38Y9Qw-1; Mon, 25 Mar 2024 13:50:19 -0400
+X-MC-Unique: -o7rlGSNM6S7gVGQ38Y9Qw-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-33ed483c2ecso2274400f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 10:50:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711389010; x=1711993810;
- h=content-transfer-encoding:in-reply-to:organization:from:references
- :cc:to:content-language:subject:user-agent:mime-version:date
+ d=1e100.net; s=20230601; t=1711389017; x=1711993817;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mUMnly82MrVRd1t3jtzRsWysxbErpHMd2zSWX9TbrpE=;
- b=Udh1Z8ZIE2cqrnGCtPvBH1GkTYqUlxOCP0rLDe5p2Ge7azQmCOVaQncAawCGxbOk0o
- KSE8rGBUMtShDCF8qEJjJXYn3yijC77wEo1Z66zWOG+e/9dJ/wMpkkg1nJEc4/QWU/m7
- EOQa7k61nQcH9YVNbPYX3iEzotlfBur6JvY01i0MdOoAS5vbeU3aZ9c+QpWZoSe7VzQb
- 9hHhY4VvTucridrcKFiByuCjm2plRxxsvWcc7GS9O5o6R7c3ccJ9RenDR3nL12Jm/rgQ
- su+x36wLImWg/NeBnaJbkg3dKUp6opxtdZ9+Wszm4GvCCrj9cWo+0mfIx1F/r4OipWBL
- Ya/A==
+ bh=hgeudOPUdFhKToQeclPDI1rbISaoF9vG9EsQS5jFg/0=;
+ b=H+TRUv3ccqD1Z4e5ZkduU2tZeLAKYgGNrB+k8S7PLkz6rVuuWROowbT2cr9x+iHv3J
+ pONT0PDP4gQ7eYmMXqlsfQ0wN9lWncPFMz2sCmzd3KjImHPM9QM/C0b2SQVeu57EaVpr
+ wAMhc4L/nkpIlunu8Wuqf1e7/IFit9HVbto/dqIRJ4QsaY7FimBDqjpgR5PNdF5huFvk
+ YyjIzUtM48Ljej1qYtG+kPF4Dwh85ef7ttzUwcwIB2lXg3c99lqAIYtA7Ck3Zj6wBk5h
+ ZaiwVKDIRXWUZA+St/n+6PSBZiudSUB3nJmijmm5v8G4367Iki/5pZdPp4SajBEHPL2e
+ bgXA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXhazwTSHhx+Q2COHtmyuc1fuM+dP7ChkvWCwA6uvfvdtj/Z1VF6zhr7gxYD5UDd5th6d+zDp66jxBhAyoE1figirHto2w=
-X-Gm-Message-State: AOJu0Yz3WA9n02O4XE4JjSZ17c+DUiRAHSyxtZarMVmbRBxffgsiqHBr
- VJACszAb/P7G7pg4iUM2XhvSyS2KWUP6/vDT5IMyQgNQ9+95D9iEfnwuu6T7Ur7anNHr0z2xAAY
- P0Rk=
-X-Google-Smtp-Source: AGHT+IF9udHzvbJVSqAYQXN+uLBup7ZHa+5JPcBkF9jLPPNm6XmT+QlVnXw38vw3w3FBbUkFf0jBpg==
-X-Received: by 2002:a17:906:3888:b0:a47:325e:f88f with SMTP id
- q8-20020a170906388800b00a47325ef88fmr5479300ejd.61.1711389010266; 
- Mon, 25 Mar 2024 10:50:10 -0700 (PDT)
-Received: from [192.168.200.106] (83.11.22.169.ipv4.supernova.orange.pl.
- [83.11.22.169]) by smtp.gmail.com with ESMTPSA id
- q5-20020a170906388500b00a473362062fsm3272439ejd.220.2024.03.25.10.50.08
+ AJvYcCVPhS9SlGhapnSGe/l/JPwRlTJzMz87z4R7UzyMnQzkmX9A4uUWx5R9o6u3+IwwcjX9iewjZOMnxiNSOmraOjmYBKh8UfI=
+X-Gm-Message-State: AOJu0Yxd0SMzQEDMgC7SwznmZki5E5mHoE2D/DDJjqOyrVN0Xe7JLJAB
+ DYmbV9Cpgm0FFvzMG/8tVrm6NINcThMHhQD+yfPg/Ran63ZyyQowFIozq815SFZUU3koJgTQju5
+ M0DA6WtGUmg80TVBnWLbod7Zn9mqntRJYk9CkziXtYry06FNojkDiwNOQ5k5b
+X-Received: by 2002:adf:db4b:0:b0:33e:7a10:4d6e with SMTP id
+ f11-20020adfdb4b000000b0033e7a104d6emr4806905wrj.32.1711389017080; 
+ Mon, 25 Mar 2024 10:50:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHahzv4gHdMF6ifZz+x7znDSFtzbIJb88Ky9A5tGtwjbE6qCPvTQF3j2/eNkz5NAuhzoiL1VQ==
+X-Received: by 2002:adf:db4b:0:b0:33e:7a10:4d6e with SMTP id
+ f11-20020adfdb4b000000b0033e7a104d6emr4806893wrj.32.1711389016776; 
+ Mon, 25 Mar 2024 10:50:16 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ e7-20020a5d5947000000b0033f20497d4asm10070058wri.5.2024.03.25.10.50.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Mar 2024 10:50:09 -0700 (PDT)
-Message-ID: <f74aa60b-74ac-4bca-a253-c398e06d1ce0@linaro.org>
-Date: Mon, 25 Mar 2024 18:50:07 +0100
+ Mon, 25 Mar 2024 10:50:16 -0700 (PDT)
+Message-ID: <1e9d4dff-03e0-41f4-9cf0-8059043e0860@redhat.com>
+Date: Mon, 25 Mar 2024 18:50:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 00/12] SMMUv3 nested translation support
-Content-Language: pl-PL, en-GB, en-HK
-To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
- eric.auger@redhat.com, peter.maydell@linaro.org, qemu-devel@nongnu.org
-Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org,
- Leif Lindholm <leif-linkedin@smurfnet.nu>
-References: <20240325101442.1306300-1-smostafa@google.com>
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Organization: Linaro
-In-Reply-To: <20240325101442.1306300-1-smostafa@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Subject: Re: [RFC v2 2/5] hw/arm: Allow setting KVM vGIC maintenance IRQ
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ miguel.luis@oracle.com, haibo.xu@linaro.org, richard.henderson@linaro.org,
+ maz@kernel.org, gkulkarni@amperecomputing.com
+References: <20240209160039.677865-1-eric.auger@redhat.com>
+ <20240209160039.677865-3-eric.auger@redhat.com>
+ <CAFEAcA-yLbwPyUxQy2s0CGwcE1z04WQd+EX0xmrvhUepfPR5ZQ@mail.gmail.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CAFEAcA-yLbwPyUxQy2s0CGwcE1z04WQd+EX0xmrvhUepfPR5ZQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,21 +108,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 25.03.2024 o 11:13, Mostafa Saleh pisze:
-> Currently, QEMU supports emulating either stage-1 or stage-2 SMMUs
-> but not nested instances.
-> This patch series adds support for nested translation in SMMUv3,
-> this is controlled by property “arm-smmuv3.stage=nested”, and
-> advertised to guests as (IDR0.S1P == 1 && IDR0.S2P == 2)
+Hi Peter,
 
- From pure curiosity I applied the series, enabled 'nested' one in
-sbsa-ref and ran (S)BSA ACS tests.
+On 3/5/24 17:46, Peter Maydell wrote:
+> On Fri, 9 Feb 2024 at 16:00, Eric Auger <eric.auger@redhat.com> wrote:
+>> From: Haibo Xu <haibo.xu@linaro.org>
+>>
+>> Allow virt arm machine to set the intid for the KVM GIC maintenance
+>> interrupt.
+>>
+>> Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
+>> Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>
+>> ---
+>> v1 -> v2:
+>> - [Miguel] replaced the has_virt_extensions by the maintenance irq
+>>   intid property. [Eric] restored kvm_device_check_attr and
+>>   kvm_device_access standard usage and conditionally call those
+>>   if the prop is set
+Please forgive me for the delay
+> This seems reasonable, but it's not the same way we opted to
+> handle telling the kernel the IRQ number for the PMU interrupt
+> (where we use kvm_arm_pmu_set_irq()). I guess we have to do
+> it this way because it's a device attr so we need to set it
+> in gic realize, though?
+This cannot follow the same pattern as the
 
-Two more tests passed. Ones which check does SMMU supports both stage1 
-and stage2 at same time.
+kvm_arm_pmu_set_irq() because the maintenance irq must be set between before the GICv3 KVM device creation and the 
+KVM_DEV_ARM_VGIC_CTRL_INIT. The GICv3 realize function calls both so I cannot set the maintenance after the realize. It would fail
+with -EBUSY. Hope this helps.
 
-The fun part? Those tests only check SMMU registers.
+Thanks
+
+Eric
+
+>
+> By the way, does the kernel automatically complain and fail
+> if we try to enable nested-virt with a GICv2 or with a
+> userspace GIC, or do we need to catch and produce error
+> messages for those (invalid) combinations ourselves?
+>
+> thanks
+> -- PMM
+>
+
 
