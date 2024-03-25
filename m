@@ -4,104 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FE30C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 18:24:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 616E2C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 18:29:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roozB-0005kl-Vt; Mon, 25 Mar 2024 14:23:54 -0400
+	id 1rop40-0006sN-Os; Mon, 25 Mar 2024 14:28:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1rooz6-0005kD-Vi; Mon, 25 Mar 2024 14:23:49 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1rooz5-0005tQ-9Z; Mon, 25 Mar 2024 14:23:48 -0400
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42PGxWGt025788; Mon, 25 Mar 2024 18:23:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=kt+WZGl+8Rmzq/QAJ7IKvGc+u63cp7OXfFulUaP3cqU=;
- b=KluLvKWso+u46XDVZQ0/eHXE2OMvBRIvGKzETiYPPrBAm4V8c6nacV0XCuPPNMY4a8tu
- IhmIEyCpjqoj3w/DwOYOlYKGZUb4lz7nLFNvC2Cy1TuqZ6bVCLSGgOgPkLcOh7Ju6xFC
- CL5M6xBqQKStaorGsXCjutJ+YUItR4e3XPIb5TUngo2F0YH2/hW9oChRycEV/tM8eyks
- 0z5WHZ9/S1XrtbxYdUjVou5RE+peh2dBg0pmOM95jr3/7QhQRl10Khp/H8/BPjuYWgyr
- VUKQM61+eUYHR+6HE1Gz24H0UsZ6zMUyYDwFF2CsLN3A7713wOPxoeFszyp2mabDYnow lQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x3d8u06bd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Mar 2024 18:23:43 +0000
-Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42PINgxd029119;
- Mon, 25 Mar 2024 18:23:42 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x3d8u06b8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Mar 2024 18:23:42 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 42PHARqZ028620; Mon, 25 Mar 2024 18:23:42 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3x2adp2wuf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 25 Mar 2024 18:23:42 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 42PINdV256820142
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 25 Mar 2024 18:23:41 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0EF2658068;
- Mon, 25 Mar 2024 18:23:39 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 28D2358069;
- Mon, 25 Mar 2024 18:23:38 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.34.64]) by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 25 Mar 2024 18:23:38 +0000 (GMT)
-Message-ID: <25acfa771509675ff6924393897fa648c0cd72af.camel@linux.ibm.com>
-Subject: Re: [PATCH] hw/s390x: Include missing 'cpu.h' header
-From: Eric Farman <farman@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>, David Hildenbrand <david@redhat.com>
-Date: Mon, 25 Mar 2024 14:23:37 -0400
-In-Reply-To: <20240322162822.7391-1-philmd@linaro.org>
-References: <20240322162822.7391-1-philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rop3z-0006rq-9X
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 14:28:51 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rop3w-0006hI-ME
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 14:28:50 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-6ea9a616cc4so1288609b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 11:28:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711391326; x=1711996126; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1Z6u3rCpcYmisJciN/U9LZhSUUbITBpUfbXyuvhwYN0=;
+ b=W/X0RQqJqwiGkvS2vhxQkdQKYQe1HnizQcBLQ2HriqJP7dAAcl1UcR4mRmD0IOUf5B
+ TLO3GtXRjH19JHCRa3cZztN61VYFD6px+vU8Dy4ijXjzD7T0URoHJDfh4UUYi9JTOQbN
+ 82cOCmf/VX5i8sf+JvTW6KwyxnKlcVwy7579qxLYpErjAPDsCA4KYGfpoAgL7kogBtiH
+ +dww3mIfGGxOIDgnExqjM0lpl2dbE1FR5yRbXnt0549fwSQvNpU37a892gJCwusa/Yw3
+ Zmc01spGVUFRPbp5jw/AEmyTj0mtqiHzU8+lwtuIRXMCQ+FkyaEzUuIZ5lkbrmovkRbR
+ kWsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711391326; x=1711996126;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1Z6u3rCpcYmisJciN/U9LZhSUUbITBpUfbXyuvhwYN0=;
+ b=OCXa6f5dJPQC+1nR6NHcb1jmpp2ELT+Lu25YC7X8opBH9ZEmH+VHi19o/exxvov8ru
+ n39OXWmeFQ9F37kQz8/jOZbc7xCz68Mn/QMJuQwfn2jSRaqxMf+g4Fr3wuPUsCAxFiQ1
+ jW8doTr/j5Ruvn9klN/YDfIBAApkqW2dc/kbmmH4OMPht+yXFvGKwWkflpL8FFUh8o/H
+ ZcEj5QkYnPGVCKKPKd4OTe5Qk/Lk6nNTtyTWvDMYrswpE3T4UmJM1CSSX76hB6TEKpLB
+ WA/68erXKC8+y3xFup92FsN0Rq2dPtGRHTh+6H9tn/RQyW/EKF/aQjXlfeSrmqCcQ9m/
+ EuUA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrqL3sd5Pp3U6+D8ZXkWBFJ0DpIhiZkSmnBUrz02cqkWySgtbzzRex7swgZoL4K3hHElsd+dijnBweSWPJYcFlr43iNNQ=
+X-Gm-Message-State: AOJu0YzXO2HPhqydpQQsMMigc4k8i8LRQ0RUNzIpbQuzOGxFYyRRUkUu
+ akCyOKlUzBWHCxMdJ5obPyM13LCcaW1rczxxykzMN/yvFFYRVFzFjH7MVMZNZybv0yK8T/9D5UK
+ x
+X-Google-Smtp-Source: AGHT+IFw10NpYZ4iDTHaVs8UPOFEO0+1oYl4wlhio1gghANweCvVJPBwstqITxNc/6hqaL/0mYw3gw==
+X-Received: by 2002:a05:6a00:3d51:b0:6e6:9af4:409a with SMTP id
+ lp17-20020a056a003d5100b006e69af4409amr9127825pfb.33.1711391326476; 
+ Mon, 25 Mar 2024 11:28:46 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ a9-20020aa78649000000b006e681769ee0sm4515061pfo.145.2024.03.25.11.28.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Mar 2024 11:28:46 -0700 (PDT)
+Message-ID: <eb736a6e-59fe-4b3f-9338-fb94d13fce32@linaro.org>
+Date: Mon, 25 Mar 2024 08:28:41 -1000
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: V1VfundV1ZUn2kEk22OMx07VY_-1_Xni
-X-Proofpoint-ORIG-GUID: 4QkaDsJ0jMEJh87l3EnQiPIpARlA3TzA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-25_16,2024-03-21_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0
- bulkscore=0 mlxlogscore=910 phishscore=0 suspectscore=0 spamscore=0
- mlxscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2403210000 definitions=main-2403250108
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.0] target/arm: take HSTR traps of cp15 accesses to
+ EL2, not EL1
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20240325133116.2075362-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240325133116.2075362-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,34 +99,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gRnJpLCAyMDI0LTAzLTIyIGF0IDE3OjI4ICswMTAwLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTD
-qSB3cm90ZToKPiAiY3B1LmgiIGlzIGltcGxpY2l0bHkgaW5jbHVkZWQuIEluY2x1ZGUgaXQgZXhw
-bGljaXRseSB0bwo+IGF2b2lkIHRoZSBmb2xsb3dpbmcgZXJyb3Igd2hlbiByZWZhY3RvcmluZyBo
-ZWFkZXJzOgo+IAo+IMKgIGh3L3MzOTB4L3MzOTAtc3RhdHRyaWIuYzo4Njo0MDogZXJyb3I6IHVz
-ZSBvZiB1bmRlY2xhcmVkIGlkZW50aWZpZXIKPiAnVEFSR0VUX1BBR0VfU0laRScKPiDCoMKgwqDC
-oMKgIGxlbiA9IHNhYy0+cGVla19zdGF0dHIoc2FzLCBhZGRyIC8gVEFSR0VUX1BBR0VfU0laRSwg
-YnVmbGVuLAo+IHZhbHMpOwo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIF4KPiDCoCBody9zMzkw
-eC9zMzkwLXN0YXR0cmliLmM6OTQ6NTg6IGVycm9yOiB1c2Ugb2YgdW5kZWNsYXJlZCBpZGVudGlm
-aWVyCj4gJ1RBUkdFVF9QQUdFX01BU0snCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCBhZGRyIC8gVEFSR0VUX1BBR0VfU0laRSwgbGVuLCBhZGRyICYKPiB+VEFSR0VU
-X1BBR0VfTUFTSyk7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCBeCj4gwqAgaHcvczM5MHgvczM5MC1zdGF0dHJpYi5jOjIyNDo0MDogZXJy
-b3I6IHVzZSBvZiB1bmRlY2xhcmVkCj4gaWRlbnRpZmllciAnVEFSR0VUX1BBR0VfQklUUycKPiDC
-oMKgwqDCoMKgwqDCoMKgwqAgcWVtdV9wdXRfYmU2NChmLCAoc3RhcnRfZ2ZuIDw8IFRBUkdFVF9Q
-QUdFX0JJVFMpIHwKPiBTVEFUVFJfRkxBR19NT1JFKTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCBeCj4gwqAgSW4gZmlsZSBpbmNsdWRlZCBmcm9tIGh3L3MzOTB4L3MzOTAtdmlydGlvLWNjdy5j
-OjE3Ogo+IMKgIGh3L3MzOTB4L3MzOTAtdmlydGlvLWhjYWxsLmg6MjI6Mjc6IGVycm9yOiB1bmtu
-b3duIHR5cGUgbmFtZQo+ICdDUFVTMzkwWFN0YXRlJwo+IMKgIGludCBzMzkwX3ZpcnRpb19oeXBl
-cmNhbGwoQ1BVUzM5MFhTdGF0ZSAqZW52KTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgXgo+IAo+IFNpZ25lZC1vZmYtYnk6IFBoaWxpcHBl
-IE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4KPiAtLS0KPiDCoGh3L3MzOTB4L3Mz
-OTAtdmlydGlvLWhjYWxsLmggfCAyICsrCj4gwqBody9zMzkweC9zMzkwLXN0YXR0cmliLmPCoMKg
-wqDCoCB8IDEgKwo+IMKgMiBmaWxlcyBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKykKClRoZXNlIGFy
-ZW4ndCB0aGUgb25seSBpbXBsaWNpdCB1c2VycyBvZiBjcHUuaCBpbiBody9zMzkweC8gYnV0IGlm
-IHRoaXMKc29sdmVzIG9uZSBwcm9ibGVtLCB0aGVuIHRoYXQncyBnb29kLgoKQWNrZWQtYnk6IEVy
-aWMgRmFybWFuIDxmYXJtYW5AbGludXguaWJtLmNvbT4K
+On 3/25/24 03:31, Peter Maydell wrote:
+> The HSTR_EL2 register allows the hypervisor to trap AArch32 EL1 and
+> EL0 accesses to cp15 registers.  We incorrectly implemented this so
+> they trap to EL1 when we detect the need for a HSTR trap at code
+> generation time.  (The check in access_check_cp_reg() which we do at
+> runtime to catch traps from EL0 is correctly routing them to EL2.)
+> 
+> Use the correct target EL when generating the code to take the trap.
+> 
+> Cc:qemu-stable@nongnu.org
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2226
+> Fixes: 049edada5e93df ("target/arm: Make HSTR_EL2 traps take priority over UNDEF-at-EL1")
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   target/arm/tcg/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
