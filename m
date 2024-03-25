@@ -4,80 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99B82C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 12:37:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC131C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 12:41:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rojYX-0002JX-IL; Mon, 25 Mar 2024 08:36:01 -0400
+	id 1rojdy-00088y-7x; Mon, 25 Mar 2024 08:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rojYU-0002Ht-9n
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:58 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rojYS-0005dd-7v
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:57 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4148c650bc7so151855e9.2
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 05:35:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711370154; x=1711974954; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4aVB8aQfFHBTbOCLmq+XJCLN+ZOpZZJ/7MtfrbF8pCw=;
- b=w9yF66WdwsE+kArJ66Pb6xkLwB9g3nGczm/cJOZDvW3tqOlgy2/rqEy0AI97C0k7FN
- ku+y1cYcrX3YZKsOafkDsbsBU5+9iLOT7JXENrI2scuhD2qwswe7s1rOyRsHhypfNhWR
- sCFbB9gSQ3ww2G+7nnXmm2xV59Ob9v3LPpPxRNBhCQM+gwCQV4RiZG1mVhKqMllR+n9C
- NUMx159Sw3REk/2cPJ97CE93mHMmcsWkbAzdOd0TowosL2jHYgh+H5yPBWLJI31aoynk
- FOfC3K+8YtCIWQNxMozhxuWD0U42oSxr6zNhF4ubTCCdDtJA9p1WscDOk214N5/lDPt9
- 7csQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711370154; x=1711974954;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4aVB8aQfFHBTbOCLmq+XJCLN+ZOpZZJ/7MtfrbF8pCw=;
- b=d6Quj62dOn56qTzFKFeLTeQtfGn60wrTSfwy5dhTb4h9jQmpdA2sNP7VkB4vfOYyBA
- nC2ehMlecMynk/appXtEZOIqHbVIplBuT7KX4Cxqqxq/FeSUpx32hbSy0Rziqnhfi+9L
- PWb6WG36xCKs358zGKPF/r5Zp7/+pfy/Lv+y4dZ1o2XZgBtpzbvV0RiYsddTqAXMA+oo
- dR98RK8aQNbFeOFrQ1xRvTsk6/gYU6Hm/9JxFZhEoVVkKXPCyVxlE7PVeoZ6ek2gKpyT
- HLPVcBLb75QcG88Vi50ABMJmLhslU1+R0avkG8b8+IBsF9jBibv1kPwdgj/TemnGFXWo
- yBbA==
-X-Gm-Message-State: AOJu0Ywmm4334gY3/SMbUZgk9MGq3hB2Yvg3667z6BY0Agl9ovzHhVKb
- zUOxgzATmTF0v0EMpLIWvZkbpCZk7nKD/v+UazG7pHI0P9OyTYqxojNQGSLPDzC5sERjte7jQ2o
- j
-X-Google-Smtp-Source: AGHT+IGqLRt27VLo3fRyDShnOrER+h0xzgX0O8ROeL2TyGpZWYt1pUpwZ7viQQ/I7hIKFpcBnipSpg==
-X-Received: by 2002:a05:600c:1547:b0:413:ff10:cee with SMTP id
- f7-20020a05600c154700b00413ff100ceemr4997308wmg.13.1711370154700; 
- Mon, 25 Mar 2024 05:35:54 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- o19-20020a05600c339300b00414041032casm2303877wmp.1.2024.03.25.05.35.54
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Mar 2024 05:35:54 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 6/7] tests/unit/test-throttle: Avoid unintended integer division
-Date: Mon, 25 Mar 2024 12:35:49 +0000
-Message-Id: <20240325123550.1991693-7-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240325123550.1991693-1-peter.maydell@linaro.org>
-References: <20240325123550.1991693-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rojdw-00086f-SM
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:41:36 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rojdv-0006cY-8q
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:41:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=gOKa4y72xcwoBs0sNlWOnYmRNegrXWirYGsY/t6z2DM=; b=wXkHckPV7tKTA/lipWLDmzfXw/
+ SGW6Vxa/SoGunRsTUZPnfj/3g4UehGvyYAwxupXulJut1C4bCt6M905BWgoFbqla7gq3/TNPSCcCM
+ JkAevMgKZJt+RnGYPqTfYVHKXZCXjyHKJWqtz7NZVm9aqV1wwebDdTWtrpez7Ifwf0eoQscFZg585
+ XaARHpMtxagLIdA6cC8FvKabW+Nmi3G+34olqMpIQXIJ19RZsvBh9PJqNlsDp0ZposDddWW05MQoI
+ VxJCrLs/9KxRy7/+RZ8lgyBRaeDzEHiERh/4E9r7AemLu0P3law8nHluROfhutbBI6+wLGFDa+ts7
+ QXySCCFfCXBDZ8/ZIarwL9bcvF4PUqie1ErEaqfSEqcU3o2MlVivFfVzp09dbipTRqzb+bPUUFVq5
+ VhNYMiMpdM2yaZE3zWUEeFHRIPu4VyVoVU+f8MnAZebW0vqZQcCY1mtK+GYWiwnhVI92iX85Vw4EF
+ mRWU7lYbDNo9ewGuVWwVNolW0SVVRMG/uR+7+3sjC7pX5ffcACMwCG3MMMC0hbK5mSqf/UALqdv5V
+ fddYC+7OWpnHH2pepeXebNz7siHUGSBoXaPTp1MCc1JEk0wqKOc+HJo67yqct524LKlU2ryxJYP3U
+ 2/d82Ml1ZD3czlRW/hWq2mWcrw5xh/IMY0YLtDuck=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rojcu-0008KA-QA; Mon, 25 Mar 2024 12:40:36 +0000
+Message-ID: <2fe371b5-07a3-4322-8543-76b15244dbe1@ilande.co.uk>
+Date: Mon, 25 Mar 2024 12:41:18 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ pbonzini@redhat.com, fam@euphon.net, laurent@vivier.eu, qemu-devel@nongnu.org
+References: <20240324191707.623175-1-mark.cave-ayland@ilande.co.uk>
+ <20240324191707.623175-13-mark.cave-ayland@ilande.co.uk>
+ <aaaad221-9a88-4298-ac87-49d8a827ce9f@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <aaaad221-9a88-4298-ac87-49d8a827ce9f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v3 12/17] esp.c: prevent cmdfifo overflow in
+ esp_cdb_ready()
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,47 +107,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In test_compute_wait() we do
- double units = bkt.max / 10;
-which does an integer division and then assigns it to a double variable,
-and similarly later on in the expression for an assertion.
+On 25/03/2024 10:26, Philippe Mathieu-Daudé wrote:
 
-Use 10.0 so that we do a floating point division and calculate the
-exact value, rather than doing an integer division.
+> On 24/3/24 20:17, Mark Cave-Ayland wrote:
+>> During normal use the cmdfifo will never wrap internally and cmdfifo_cdb_offset
+>> will always indicate the start of the SCSI CDB. However it is possible that a
+>> malicious guest could issue an invalid ESP command sequence such that cmdfifo
+>> wraps internally and cmdfifo_cdb_offset could point beyond the end of the FIFO
+>> data buffer.
+>>
+>> Add an extra check to fifo8_peek_buf() to ensure that if the cmdfifo has wrapped
+>> internally then esp_cdb_ready() will exit rather than allow scsi_cdb_length() to
+>> access data outside the cmdfifo data buffer.
+>>
+>> Reported-by: Chuhong Yuan <hslester96@gmail.com>
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> ---
+>>   hw/scsi/esp.c | 12 +++++++++++-
+>>   1 file changed, 11 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+>> index f47abc36d6..d8db33b921 100644
+>> --- a/hw/scsi/esp.c
+>> +++ b/hw/scsi/esp.c
+>> @@ -429,13 +429,23 @@ static bool esp_cdb_ready(ESPState *s)
+>>   {
+>>       int len = fifo8_num_used(&s->cmdfifo) - s->cmdfifo_cdb_offset;
+>>       const uint8_t *pbuf;
+>> +    uint32_t n;
+>>       int cdblen;
+>>       if (len <= 0) {
+>>           return false;
+>>       }
+>> -    pbuf = fifo8_peek_buf(&s->cmdfifo, len, NULL);
+>> +    pbuf = fifo8_peek_buf(&s->cmdfifo, len, &n);
+>> +    if (n < len) {
+>> +        /*
+>> +         * In normal use the cmdfifo should never wrap, but include this check
+>> +         * to prevent a malicious guest from reading past the end of the
+>> +         * cmdfifo data buffer below
+>> +         */
+> 
+> Can we qemu_log_mask(LOG_GUEST_ERROR) something here?
 
-Spotted by Coverity.
+I'm not sure that this makes sense here? The cmdfifo wrapping is internal artifact of 
+the Fifo8 implementation rather than being directly affected by writes to the ESP 
+hardware FIFO (i.e. this is not the same as the ESP hardware FIFO overflow).
 
-Resolves: Coverity CID 1432564
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240312183810.557768-7-peter.maydell@linaro.org
----
- tests/unit/test-throttle.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+>> +        return false;
+>> +    }
+>> +
+>>       cdblen = scsi_cdb_length((uint8_t *)&pbuf[s->cmdfifo_cdb_offset]);
+>>       return cdblen < 0 ? false : (len >= cdblen);
+>  
 
-diff --git a/tests/unit/test-throttle.c b/tests/unit/test-throttle.c
-index 2146cfacd36..24032a02667 100644
---- a/tests/unit/test-throttle.c
-+++ b/tests/unit/test-throttle.c
-@@ -127,13 +127,13 @@ static void test_compute_wait(void)
-     bkt.avg = 10;
-     bkt.max = 200;
-     for (i = 0; i < 22; i++) {
--        double units = bkt.max / 10;
-+        double units = bkt.max / 10.0;
-         bkt.level += units;
-         bkt.burst_level += units;
-         throttle_leak_bucket(&bkt, NANOSECONDS_PER_SECOND / 10);
-         wait = throttle_compute_wait(&bkt);
-         g_assert(double_cmp(bkt.burst_level, 0));
--        g_assert(double_cmp(bkt.level, (i + 1) * (bkt.max - bkt.avg) / 10));
-+        g_assert(double_cmp(bkt.level, (i + 1) * (bkt.max - bkt.avg) / 10.0));
-         /* We can do bursts for the 2 seconds we have configured in
-          * burst_length. We have 100 extra milliseconds of burst
-          * because bkt.level has been leaking during this time.
--- 
-2.34.1
+
+ATB,
+
+Mark.
 
 
