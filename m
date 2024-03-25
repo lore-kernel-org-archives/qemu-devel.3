@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB909CD11DF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4361C54E58
 	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 12:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rojYT-0002Hr-TE; Mon, 25 Mar 2024 08:35:58 -0400
+	id 1rojYY-0002K7-B1; Mon, 25 Mar 2024 08:36:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rojYR-0002Gj-FE
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:55 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1rojYU-0002I0-FN
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:58 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rojYP-0005d9-Tb
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:55 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-414881d8956so6228445e9.3
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 05:35:53 -0700 (PDT)
+ id 1rojYS-0005dr-Ky
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:57 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-341cf77b86dso587407f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 05:35:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711370152; x=1711974952; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711370155; x=1711974955; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=eRU+7TF6IV9xXJWV5nC1V9vP/PTuItRJkSSU0GlEqY4=;
- b=KA3xNX8BX+47r6wLM9A/TRQGbSVGqsJxc7a3hE8P9MAnp+yqc20Q4RbsjUkm0Svv8u
- V1va3bo3TG8edlH2M3bUoflGAg8YdajqtZdHLILFxbg/bVSuVPiA4DJRjjniheRupDqO
- W7FkosTIX19Cvs9cHlGwUVccvyO1chC45L/zMHbEDidDVVn0jZoLCD2Fl9o6NJArmnw8
- Dz59jdD7GAX6N2H3vL63ep4l07yaR9dQyOEmsBR4EJRy+UpOTL4M9Gf0b7vSPU0cFcko
- aazzWUr3P6WbgWVx1Dlh6W6mynQkgsBybgTu3xQ7CGWka50qFk58Gh/8zUpIQkOYZL7L
- RKTw==
+ :reply-to; bh=/WSvWBDSQi9Zqsw2htT0Fim8jLY3dFWtGJXr5FhGHxs=;
+ b=BayrhtsBTCfrZbhVKJa0LFq58Iqk9wuEYLr/pQ9qBg4xQXhLN02zQFToiNK/7cvkDy
+ W75XTh6XxBkBZRyWBBDVpMgEbt00NTUxZ3NP8vx6Abfs1Od7iBp8aqyhijDjczgIjKH8
+ 5tc7iGfwv+nb6OrJQOmCaUihiUxT08icF/1LMLtBMxwvu/E6HpfXPV8Vvf1KtKNfUu/a
+ VBUO17rCZggcaMxy6gkgoEXv6Uob9PszU8Q2pP85F1fb/TDQX12gXAUkcgc8h5KT+5e0
+ sPjdXPQxqI/YEJzsYDqeP4GcTkJiiGEyi3FG93sRZ89JBUVBC3am+7jXo2LwfuQPl3Ce
+ PsaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711370152; x=1711974952;
+ d=1e100.net; s=20230601; t=1711370155; x=1711974955;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eRU+7TF6IV9xXJWV5nC1V9vP/PTuItRJkSSU0GlEqY4=;
- b=D4NPjt9tbn2CmjzBxdtL51fQCtilgnmuyiNOMd2d1LejZbLATrurQ60W9+I98IG91T
- 4zvVxxithzJq5FgmmZ41CwP0+DkIJyywWEeCniA8/PQUF1eHFnUN2LwQumrQXPJmeJ3C
- 8Qnaynojr88n1GL7hMDzBVw/nP7JuT+wpHi9xqiqsEdFKuPOz9sAUwFsaKn70SQJhcFZ
- 7pOoaPLzqIF9wD711KdKwYy5SIpe15dUxc8D82ZFDJXX+Fx2WbtNZUVYM6MoLpFQAR2g
- jVUvNbESPN5Y1uK4evi2+YukRqMlfq+lJ8gqARo3kaThV0K8CEF0WKjR439mkhf97bmD
- 7pXg==
-X-Gm-Message-State: AOJu0YzYs207OqBD9eigOluz4ZZyiEV7ibdej+dTq+IWQe/ox1Q5wVyo
- k6DLh/IMR2NPHMqK3h7qRlsOPgIPnMlGGOA+WZpaI1uKCyjWSEyTRPEEmw23+dXOZyk+Z5lWdSZ
- y
-X-Google-Smtp-Source: AGHT+IFoMfoHxiqlGYKuoTxF82tL++pY7rtbug1wkAAQqvD7baWgjqqKtJdy1EjtEi4ND29X+2BHAw==
-X-Received: by 2002:a05:600c:55c6:b0:413:fea7:bd19 with SMTP id
- jq6-20020a05600c55c600b00413fea7bd19mr4688293wmb.15.1711370152524; 
- Mon, 25 Mar 2024 05:35:52 -0700 (PDT)
+ bh=/WSvWBDSQi9Zqsw2htT0Fim8jLY3dFWtGJXr5FhGHxs=;
+ b=hk5FA0mUFFi7OGm3vu9aTAQvcXY4k73CmzurE+sGKzX/q/MM9X6dUCTdiUk83qBqwV
+ ILRCSAAYXAHdhltxsikPj9Hf4uZ/ZozVNhsaCmtSVG5YsX4wV44LWGyoTxDLX5w+9fSY
+ nAG37DEM5oKKhXthO44mC65SP/Hr3t61yW3OqglWtw3wP+pX7mxTe6m5Y21KFZANewnU
+ /qz4PzJbFLMHUYUh7d1Ipnf6WbOZGc9ACQzlM1S32tQ6wG/1tp20W4mfb406ceYZEECl
+ Oxc493s/Nd41NcvfzJxNgZaZOunwwNuNAIM4ktQGxv+TMZp2gY/noHcH+dYkdyHAiQSZ
+ Umwg==
+X-Gm-Message-State: AOJu0YzpnZnOxF4Pmn8FSFiTLNILTtz+CirmvZ642SrU4uVoBCHpMZMf
+ knnyoq2sK7kD1/R6n9DtYBfucNbquM/Ew7toAUPPjaBEbyMEzu5m08sWtDYWiyULeCc3C+DKGm1
+ s
+X-Google-Smtp-Source: AGHT+IFQCwP4G4LBhoPnrbmqDFOYafMaA8dAEqdDlcAQJeSwLkndXPWybUnIJPVdU5zXUFUjHvPhQQ==
+X-Received: by 2002:a05:6000:dc8:b0:33e:8b95:b350 with SMTP id
+ dw8-20020a0560000dc800b0033e8b95b350mr6243896wrb.7.1711370155091; 
+ Mon, 25 Mar 2024 05:35:55 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- o19-20020a05600c339300b00414041032casm2303877wmp.1.2024.03.25.05.35.52
+ o19-20020a05600c339300b00414041032casm2303877wmp.1.2024.03.25.05.35.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Mar 2024 05:35:52 -0700 (PDT)
+ Mon, 25 Mar 2024 05:35:54 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 1/7] tests/qtest/npcm7xx_emc_test: Don't leak cmd_line
-Date: Mon, 25 Mar 2024 12:35:44 +0000
-Message-Id: <20240325123550.1991693-2-peter.maydell@linaro.org>
+Subject: [PULL 7/7] tests/qtest/libqtest.c: Check for g_setenv() failure
+Date: Mon, 25 Mar 2024 12:35:50 +0000
+Message-Id: <20240325123550.1991693-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240325123550.1991693-1-peter.maydell@linaro.org>
 References: <20240325123550.1991693-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,41 +94,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In test_rx() and test_tx() we allocate a GString *cmd_line
-but never free it. This is pretty harmless in a test case, but
-Coverity spotted it.
+Coverity points out that g_setenv() can fail and we don't
+check for this in qtest_inproc_init(). In practice this will
+only fail if a memory allocation failed in setenv() or if
+the caller passed an invalid architecture name (e.g. one
+with an '=' in it), so rather than requiring the callsite
+to check for failure, make g_setenv() failure fatal here,
+similarly to what we did in commit aca68d95c515.
 
-Resolves: Coverity CID 1507122
+Resolves: Coverity CID 1497485
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-id: 20240312183810.557768-2-peter.maydell@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240312183810.557768-8-peter.maydell@linaro.org
 ---
- tests/qtest/npcm7xx_emc-test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/qtest/libqtest.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/npcm7xx_emc-test.c b/tests/qtest/npcm7xx_emc-test.c
-index 63f6cadb5cc..2e1a1a6d702 100644
---- a/tests/qtest/npcm7xx_emc-test.c
-+++ b/tests/qtest/npcm7xx_emc-test.c
-@@ -789,7 +789,7 @@ static void emc_test_ptle(QTestState *qts, const EMCModule *mod, int fd)
- static void test_tx(gconstpointer test_data)
- {
-     const TestData *td = test_data;
--    GString *cmd_line = g_string_new("-machine quanta-gsj");
-+    g_autoptr(GString) cmd_line = g_string_new("-machine quanta-gsj");
-     int *test_sockets = packet_test_init(emc_module_index(td->module),
-                                          cmd_line);
-     QTestState *qts = qtest_init(cmd_line->str);
-@@ -814,7 +814,7 @@ static void test_tx(gconstpointer test_data)
- static void test_rx(gconstpointer test_data)
- {
-     const TestData *td = test_data;
--    GString *cmd_line = g_string_new("-machine quanta-gsj");
-+    g_autoptr(GString) cmd_line = g_string_new("-machine quanta-gsj");
-     int *test_sockets = packet_test_init(emc_module_index(td->module),
-                                          cmd_line);
-     QTestState *qts = qtest_init(cmd_line->str);
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index f33a2108610..d8f80d335e7 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -1814,7 +1814,11 @@ QTestState *qtest_inproc_init(QTestState **s, bool log, const char* arch,
+      * way, qtest_get_arch works for inproc qtest.
+      */
+     gchar *bin_path = g_strconcat("/qemu-system-", arch, NULL);
+-    g_setenv("QTEST_QEMU_BINARY", bin_path, 0);
++    if (!g_setenv("QTEST_QEMU_BINARY", bin_path, 0)) {
++        fprintf(stderr,
++                "Could not set environment variable QTEST_QEMU_BINARY\n");
++        exit(1);
++    }
+     g_free(bin_path);
+ 
+     return qts;
 -- 
 2.34.1
 
