@@ -4,63 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC50C54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 06:00:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E4CC54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 06:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rodNn-0001UW-DC; Mon, 25 Mar 2024 02:00:31 -0400
+	id 1rodUJ-0002sq-Hl; Mon, 25 Mar 2024 02:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xuanzhuo@linux.alibaba.com>)
- id 1rodNk-0001Ti-Tj
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 02:00:28 -0400
-Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1rodUH-0002sY-M8
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 02:07:13 -0400
+Received: from esa9.hc1455-7.c3s2.iphmx.com ([139.138.36.223])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xuanzhuo@linux.alibaba.com>)
- id 1rodNh-0004XN-Ps
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 02:00:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1711346414; h=Message-ID:Subject:Date:From:To;
- bh=JNL9A38afeP0aEJfOCNG1LEpvhSBCwkDLxX/IRTOtms=;
- b=kpCDMD7gZLJfGeUmP9zWIPgXWPjPB7b+/US7NNVETxDyzNvuwcdKOBimDIta09tDR2wzjNwM/OumN1DibA9btOhl+NNEi/5QjAwXh8rHyNnt7/ATKnaFUoT4dcMtxMSnJs6f5X2jR4UpPzFMJX4zilz0gkH+Mx5cSVUH9lvp43U=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046051;
- MF=xuanzhuo@linux.alibaba.com; NM=1; PH=DS; RN=15; SR=0;
- TI=SMTPD_---0W39kIMB_1711346410; 
-Received: from localhost(mailfrom:xuanzhuo@linux.alibaba.com
- fp:SMTPD_---0W39kIMB_1711346410) by smtp.aliyun-inc.com;
- Mon, 25 Mar 2024 14:00:11 +0800
-Message-ID: <1711346273.5079622-1-xuanzhuo@linux.alibaba.com>
-Subject: Re: [PATCH] virtio_net: Do not send RSS key if it is not supported
-Date: Mon, 25 Mar 2024 13:57:53 +0800
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-To: Breno Leitao <leitao@debian.org>
-Cc: rbc@meta.com, riel@surriel.com, stable@vger.kernel.org,
- qemu-devel@nongnu.org,
- "open list:VIRTIO CORE AND NET DRIVERS" <virtualization@lists.linux.dev>,
- "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Andrew Melnychenko <andrew@daynix.com>
-References: <20240321165431.3517868-1-leitao@debian.org>
- <1711072822.882584-1-xuanzhuo@linux.alibaba.com>
- <Zf1bofzE4x0wGEm+@gmail.com>
-In-Reply-To: <Zf1bofzE4x0wGEm+@gmail.com>
-Received-SPF: pass client-ip=115.124.30.118;
- envelope-from=xuanzhuo@linux.alibaba.com;
- helo=out30-118.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1rodUF-0005sM-Da
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 02:07:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1711346831; x=1742882831;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=io0vjKt3DUX3bbLEAz4YJnl2lXVcbVGBOPReVWMf8Fs=;
+ b=B7DVTay70Uk1AswV5Yv+8EBexPoJQDmImX9aRiOfMcjmbEUZ6N5JTbar
+ NTkIO5Jh5wWVjtJkdeECn9CoRl+XSuYWFJkq65sD1O0msnHtP7LDAIvlj
+ lm3m0s+m80Px9Wm98np5yRyXyP+Ksv0U2LR3syRCT5sl/3Gk+O69D8b5V
+ AsqGd3/PXclAyIXkWw+C6J1QpBraM2zXQ51ZQVsm3gO/x3CNnMTzynjWP
+ 18tblRk7KfAaNClkZ7T77rL2qV+cbP3hFr8f66CzFbeoUIaj3Ao3GsHLa
+ wpZGo9W+rfVe9YCcpWAVTxtNjp2cKGXwUDf9OlamY9XtJsiE96s2VyGmI g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,11023"; a="141699592"
+X-IronPort-AV: E=Sophos;i="6.07,152,1708354800"; d="scan'208";a="141699592"
+Received: from unknown (HELO oym-r1.gw.nic.fujitsu.com) ([210.162.30.89])
+ by esa9.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Mar 2024 15:07:07 +0900
+Received: from oym-m3.gw.nic.fujitsu.com (oym-nat-oym-m3.gw.nic.fujitsu.com
+ [192.168.87.60])
+ by oym-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id EC82ED4804
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 15:07:05 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by oym-m3.gw.nic.fujitsu.com (Postfix) with ESMTP id 202F5D6222
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 15:07:05 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id 9DB6820097CCA
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 15:07:04 +0900 (JST)
+Received: from localhost.localdomain (unknown [10.167.225.88])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id D9F961A006C;
+ Mon, 25 Mar 2024 14:07:03 +0800 (CST)
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, erdnaxe@crans.org, ma.mandourr@gmail.com,
+ pierrick.bouvier@linaro.org, peter.maydell@linaro.org,
+ yaoxt.fnst@fujitsu.com
+Subject: [PATCH v2] contrib/plugins/execlog: Fix compiler warning
+Date: Mon, 25 Mar 2024 02:06:57 -0400
+Message-Id: <20240325060657.3934-1-yaoxt.fnst@fujitsu.com>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20240320020115.18801-1-yaoxt.fnst@fujitsu.com>
+References: <20240320020115.18801-1-yaoxt.fnst@fujitsu.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28272.005
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28272.005
+X-TMASE-Result: 10--4.760100-10.000000
+X-TMASE-MatchedRID: F/q6px2NM/kPmP3FESo1jx1kSRHxj+Z5C//1TMV5chP1xrH5kKK/riC2
+ FZ19GZhejDVMw6TJvuFqZQlTWBYkGK7NRB06WtQS9Ib/6w+1lWQ81ck8U80WlhzTkVRa1gtO6L4
+ H3GWBX20pdBmkg8Rmd+8j2/Qpcz4879SLQXyG7tBO5y1KmK5bJRSLgSFq3Tnj1VNlojpO42hjFr
+ zDFNuGe2Nj1vYGtvPcRHrEsMXfwkOXBXaJoB9JZ4MbH85DUZXyw5ug89ZVKMv6C0ePs7A07aLm7
+ 9W+wVodjVp6BPyhKWtOLFx/IKragV3nIPV6Di2N1e7ni4kyYe8+HfiDG3cIsMOZXEfpBeOUBm+h
+ Pw53yV+zq3M/fI/zHWU31p31FoMysiVHQI/7266+6QVxiAZsda5sicnpScShiWAbBu8T+Gs=
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=139.138.36.223;
+ envelope-from=yaoxt.fnst@fujitsu.com; helo=esa9.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,75 +97,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
+From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Mar 2024 03:21:21 -0700, Breno Leitao <leitao@debian.org> wrote:
-> Hello Xuan,
->
-> On Fri, Mar 22, 2024 at 10:00:22AM +0800, Xuan Zhuo wrote:
-> > On Thu, 21 Mar 2024 09:54:30 -0700, Breno Leitao <leitao@debian.org> wrote:
->
-> > > 4) Since the command above does not have a key, then the last
-> > >    scatter-gatter entry will be zeroed, since rss_key_size == 0.
-> > >     sg_buf_size = vi->rss_key_size;
-> >
-> >
-> >
-> > 	if (vi->has_rss || vi->has_rss_hash_report) {
-> > 		vi->rss_indir_table_size =
-> > 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
-> > 				rss_max_indirection_table_length));
-> > 		vi->rss_key_size =
-> > 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
-> >
-> > 		vi->rss_hash_types_supported =
-> > 		    virtio_cread32(vdev, offsetof(struct virtio_net_config, supported_hash_types));
-> > 		vi->rss_hash_types_supported &=
-> > 				~(VIRTIO_NET_RSS_HASH_TYPE_IP_EX |
-> > 				  VIRTIO_NET_RSS_HASH_TYPE_TCP_EX |
-> > 				  VIRTIO_NET_RSS_HASH_TYPE_UDP_EX);
-> >
-> > 		dev->hw_features |= NETIF_F_RXHASH;
-> > 	}
-> >
-> >
-> > vi->rss_key_size is initiated here, I wonder if there is something wrong?
->
-> Not really, the code above is never executed (in my machines). This is
-> because `vi->has_rss` and `vi->has_rss_hash_report` are both unset.
->
-> Looking further, vdev does not have the VIRTIO_NET_F_RSS and
-> VIRTIO_NET_F_HASH_REPORT features.
->
-> Also, when I run `ethtool -x`, I got:
->
-> 	# ethtool  -x eth0
-> 	RX flow hash indirection table for eth0 with 1 RX ring(s):
-> 	Operation not supported
-> 	RSS hash key:
-> 	Operation not supported
-> 	RSS hash function:
-> 	    toeplitz: on
-> 	    xor: off
-> 	    crc32: off
+1. The g_pattern_match_string() is deprecated when glib2 version >= 2.70.
+   Use g_pattern_spec_match_string() instead to avoid this problem.
 
+2. The type of second parameter in g_ptr_array_add() is
+   'gpointer' {aka 'void *'}, but the type of reg->name is 'const char*'.
+   Cast the type of reg->name to 'gpointer' to avoid this problem.
 
-The spec saies:
-	Note that if the device offers VIRTIO_NET_F_HASH_REPORT, even if it
-	supports only one pair of virtqueues, it MUST support at least one of
-	commands of VIRTIO_NET_CTRL_MQ class to configure reported hash
-	parameters:
+compiler warning message:
+/root/qemu/contrib/plugins/execlog.c:330:17: warning: ‘g_pattern_match_string’
+is deprecated: Use 'g_pattern_spec_match_string'
+instead [-Wdeprecated-declarations]
+  330 |                 if (g_pattern_match_string(pat, rd->name) ||
+      |                 ^~
+In file included from /usr/include/glib-2.0/glib.h:67,
+                 from /root/qemu/contrib/plugins/execlog.c:9:
+/usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
+   57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
+      |               ^~~~~~~~~~~~~~~~~~~~~~
+/root/qemu/contrib/plugins/execlog.c:331:21: warning: ‘g_pattern_match_string’
+is deprecated: Use 'g_pattern_spec_match_string'
+instead [-Wdeprecated-declarations]
+  331 |                     g_pattern_match_string(pat, rd_lower)) {
+      |                     ^~~~~~~~~~~~~~~~~~~~~~
+/usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
+   57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
+      |               ^~~~~~~~~~~~~~~~~~~~~~
+/root/qemu/contrib/plugins/execlog.c:339:63: warning: passing argument 2 of
+‘g_ptr_array_add’ discards ‘const’ qualifier from pointer target type
+[-Wdiscarded-qualifiers]
+  339 |                             g_ptr_array_add(all_reg_names, reg->name);
+      |                                                            ~~~^~~~~~
+In file included from /usr/include/glib-2.0/glib.h:33:
+/usr/include/glib-2.0/glib/garray.h:198:62: note: expected
+‘gpointer’ {aka ‘void *’} but argument is of type ‘const char *’
+  198 |                                            gpointer          data);
+      |                                            ~~~~~~~~~~~~~~~~~~^~~~
 
-	If the device offers VIRTIO_NET_F_RSS, it MUST support
-	VIRTIO_NET_CTRL_MQ_RSS_CONFIG command per 5.1.6.5.7.1.
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2210
+Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+---
+ contrib/plugins/execlog.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-	Otherwise the device MUST support VIRTIO_NET_CTRL_MQ_HASH_CONFIG command
-	per 5.1.6.5.6.4.
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index a1dfd59ab7..09654910ee 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -327,8 +327,13 @@ static GPtrArray *registers_init(int vcpu_index)
+             for (int p = 0; p < rmatches->len; p++) {
+                 g_autoptr(GPatternSpec) pat = g_pattern_spec_new(rmatches->pdata[p]);
+                 g_autofree gchar *rd_lower = g_utf8_strdown(rd->name, -1);
++#if GLIB_CHECK_VERSION(2, 70, 0)
++                if (g_pattern_spec_match_string(pat, rd->name) ||
++                    g_pattern_spec_match_string(pat, rd_lower)) {
++#else
+                 if (g_pattern_match_string(pat, rd->name) ||
+                     g_pattern_match_string(pat, rd_lower)) {
++#endif
+                     Register *reg = init_vcpu_register(rd);
+                     g_ptr_array_add(registers, reg);
+ 
+@@ -336,7 +341,7 @@ static GPtrArray *registers_init(int vcpu_index)
+                     if (disas_assist) {
+                         g_mutex_lock(&add_reg_name_lock);
+                         if (!g_ptr_array_find(all_reg_names, reg->name, NULL)) {
+-                            g_ptr_array_add(all_reg_names, reg->name);
++                            g_ptr_array_add(all_reg_names, (gpointer)reg->name);
+                         }
+                         g_mutex_unlock(&add_reg_name_lock);
+                     }
+-- 
+2.37.3
 
-
-So if we have not anyone of `vi->has_rss` and `vi->has_rss_hash_report`,
-we should return from virtnet_set_rxfh directly.
-
-Thanks.
 
