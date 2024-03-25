@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43C9FCD11BF
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4BBDC54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:34:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rokSD-0002by-Nr; Mon, 25 Mar 2024 09:33:33 -0400
+	id 1rokSF-0002ds-Na; Mon, 25 Mar 2024 09:33:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokRr-0002Uv-So
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:33:13 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokSB-0002bD-PD
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:33:31 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokRq-0007KB-7y
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:33:11 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-33ed5b6bf59so3181568f8f.0
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:33:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokS9-0007N8-Nf
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:33:31 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4148bc73069so3322555e9.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:33:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711373588; x=1711978388; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711373608; x=1711978408; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SzMbY9DE4/3HwqgfxhwLJUdxgeZIWP3uN9BqoNrhiWM=;
- b=Anc33GabkocihGnodBXTH1AjtqxD4Kbpvg2JZKbPNzCTWsBJzJvQlvr1a4raEfZDBj
- vpWYidbEpliZHOQA3XmLZhrQt/Y07nUTJP4EWjIGZa8R6seHOQs8WK9x90rWW4+Rvs5r
- W2AoJFs+F6ceAV6w/8+nWghKAZBMh2qHPG6hGvfWVDejxccajTtShnWkl91PNS3FnE6J
- 2cjq/RlXPW6Y+z2yKo2ESdaQCU3OxOTA2PmYNJePNGYSWdudoHMGYOLPcTAkHn0Rp4D6
- vH7QvqoJbrbTQQgTIYPMjLr10yFYRMSLRZHMGgRUJkSAx8VXDJjdtzxZmqw7SDjW4MeK
- 2Fcw==
+ bh=+iChHJV7sNlvRqqjFzQcgZJQ2tuinOgYhEDNJOHyzoE=;
+ b=yzSINfOc5KigA7rYWbldxZDNz7WrJpMf5CZewBVIHHxRHaalkbXomJ9mfGCqgKg1vx
+ neZhXNlqD2GXVKP/VAgq0LF6/Ol5FjTxYyDVggoKdUW3Fy0p8W75V/jwheF//PgfatV3
+ LPI+B460xUzVhU+aT+9wuPoYl9xpSeYTn4N5oza9WtdOFTqmkmhfHfksAfb+DSq0lyYb
+ 95Z091PmLAISGzXkNLi21mypvVSqJu6SxOv5dJDfBcBRI5feW59zYOlNmXhO0U/pb2Bp
+ veINHTiuuYgqNXdbhy4tBopMsjY7nBMT7Ce8kMQc0Q03GuvUJRfWHFRj5powlyZMSgd0
+ vHHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711373588; x=1711978388;
+ d=1e100.net; s=20230601; t=1711373608; x=1711978408;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SzMbY9DE4/3HwqgfxhwLJUdxgeZIWP3uN9BqoNrhiWM=;
- b=ilteFsCiBYahAZJTK/C1H8VvhmQHVPL5YhbDoE+gBFx4NGp/aP+vZupnVZiyIY02fg
- 02B+soY/Y1RB84fy2hzVGlXTcJvznNsvC5Hn3Ziz5qWRKMs5w0AR/PHeCW1TLTMjUkC7
- lCeXlgUZyxgz5ZX1ScojlVQyema9/ioW0fCXk9ukGq/cKtbOOLbG1OWsxU3uW4f8SgND
- ccUbNbIYMx+pwzy5XwKS6J/u1CqAgBtV2OtqVcFijcMZASsflSayD8icdi4o9LFze2OP
- gXNbxUfkn1RWisCrqpXbQrTsUuxbOtythoqo97APtqHW/83dCzO6s7ra3/jO21EgFbaO
- 7AYw==
-X-Gm-Message-State: AOJu0YzHbzgy56VAVJJkjqqmJ3ZnCC01NbYjb+HnRkPQb/eUSQGixNNd
- TbLLHKiHsUwZTOLqH2ZlbMby724aFvnnnBYD4VsK0mm4tqL25EplXflCxJEakGbWfeQG2Wr68KQ
- Q/hM=
-X-Google-Smtp-Source: AGHT+IFeY2vJu2FC7PeDSmMscT6Xti4bGL4lGsaDwB0K3J6F1wJ2Adq2Fh+BDm/LUPL+NZGiWFiQTg==
-X-Received: by 2002:a5d:6507:0:b0:33d:6fd8:90d3 with SMTP id
- x7-20020a5d6507000000b0033d6fd890d3mr5158151wru.4.1711373587797; 
- Mon, 25 Mar 2024 06:33:07 -0700 (PDT)
+ bh=+iChHJV7sNlvRqqjFzQcgZJQ2tuinOgYhEDNJOHyzoE=;
+ b=APbbw7uObe/cWLvWvjS6jxmrLYov1rSUJXVjJO6fEHzybJEHAg+EiBobskkOOpw2VR
+ 9qJp61SEF674s35sg9KepNWVofcCScnwxWSCoHsGMIGzUyVQKklgmbPILuYr3/YvXPfV
+ zGBK06vxqZ1tNQTY+iB+v0ApR7A5HKHOSHP/jWQNzYjr+0aKwtrJHJv4VDqvo3bDHcpC
+ nCsTie1ixk2T7WMfBv6k5gWNoEnVfqYErsnKhgPixHJ0vJi65Xy+DZN/CXEIhssaPZS8
+ tkfPUs3upB1DfQGD9IrVz/opY4Q2uQAmlgsHqboF/2G4/csuRAQwIqQtFftXcAAaqZH2
+ WuAA==
+X-Gm-Message-State: AOJu0YxWLAWQfs/AQ4Ws8mHj9Qa2+GHTFGIcnhLyJRwExgvYJ949KZ2B
+ W4M3bZIpB73C5NS+xVEfYibCgNWHHB3Yb/Zv8nCMMB9JZawWSD+V58DpfNJmzand6x2GnUc8ZlB
+ HjWk=
+X-Google-Smtp-Source: AGHT+IEV/yh479xjpGEm/dixwALkBj+9rU8pOrz0EphvfaixtwC++Jn2XXpqh2asCeljeudbYuo71w==
+X-Received: by 2002:a05:600c:5128:b0:414:8a28:6c8e with SMTP id
+ o40-20020a05600c512800b004148a286c8emr1941571wms.26.1711373607847; 
+ Mon, 25 Mar 2024 06:33:27 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.208.214])
  by smtp.gmail.com with ESMTPSA id
- ez19-20020a056000251300b00341c88ab493sm4601353wrb.10.2024.03.25.06.33.06
+ l40-20020a05600c1d2800b0041480a1b8f7sm7972127wms.4.2024.03.25.06.33.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 25 Mar 2024 06:33:07 -0700 (PDT)
+ Mon, 25 Mar 2024 06:33:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
@@ -64,19 +64,26 @@ Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
  Damien Hedde <damien.hedde@dahe.fr>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair@alistair23.me>, Luc Michel <luc@lmichel.fr>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.0 v2 1/8] hw/clock: Have clock_set_mul_div() return
- early when nothing to change
-Date: Mon, 25 Mar 2024 14:32:51 +0100
-Message-ID: <20240325133259.57235-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Felipe Balbi <balbi@kernel.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH-for-9.0? v2 4/8] hw/clock: Pass optional &bool argument to
+ clock_set_hz()
+Date: Mon, 25 Mar 2024 14:32:54 +0100
+Message-ID: <20240325133259.57235-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240325133259.57235-1-philmd@linaro.org>
 References: <20240325133259.57235-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,29 +106,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Return early when clock_set_mul_div() is called with
-same mul/div values the clock has.
+Pass optional &bool argument to clock_set_ns().
+Since all callers ignore the return value, have
+them use NULL.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/core/clock.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ include/hw/clock.h         | 8 ++------
+ hw/arm/aspeed.c            | 2 +-
+ hw/arm/fby35.c             | 2 +-
+ hw/arm/mps2-tz.c           | 4 ++--
+ hw/arm/mps2.c              | 4 ++--
+ hw/arm/mps3r.c             | 2 +-
+ hw/arm/msf2-som.c          | 2 +-
+ hw/arm/musca.c             | 4 ++--
+ hw/arm/netduino2.c         | 2 +-
+ hw/arm/netduinoplus2.c     | 2 +-
+ hw/arm/nrf51_soc.c         | 2 +-
+ hw/arm/olimex-stm32-h405.c | 2 +-
+ hw/arm/stm32vldiscovery.c  | 2 +-
+ hw/arm/xilinx_zynq.c       | 2 +-
+ hw/char/cadence_uart.c     | 4 ++--
+ 15 files changed, 20 insertions(+), 24 deletions(-)
 
-diff --git a/hw/core/clock.c b/hw/core/clock.c
-index d82e44cd1a..c73f0c2f98 100644
---- a/hw/core/clock.c
-+++ b/hw/core/clock.c
-@@ -147,6 +147,10 @@ void clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider)
- {
-     assert(divider != 0);
+diff --git a/include/hw/clock.h b/include/hw/clock.h
+index 94ed5ba6e6..f0ac410fc8 100644
+--- a/include/hw/clock.h
++++ b/include/hw/clock.h
+@@ -186,13 +186,9 @@ static inline bool clock_has_source(const Clock *clk)
+  */
+ void clock_set(Clock *clk, uint64_t period, bool *changed);
  
-+    if (clk->multiplier == multiplier && clk->divider == divider) {
-+        return;
-+    }
-+
-     trace_clock_set_mul_div(CLOCK_PATH(clk), clk->multiplier, multiplier,
-                             clk->divider, divider);
-     clk->multiplier = multiplier;
+-static inline bool clock_set_hz(Clock *clk, unsigned hz)
++static inline void clock_set_hz(Clock *clk, unsigned hz, bool *changed)
+ {
+-    bool changed = false;
+-
+-    clock_set(clk, CLOCK_PERIOD_FROM_HZ(hz), &changed);
+-
+-    return changed;
++    clock_set(clk, CLOCK_PERIOD_FROM_HZ(hz), changed);
+ }
+ 
+ static inline void clock_set_ns(Clock *clk, unsigned ns, bool *changed)
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 8854581ca8..7e4ed71e9f 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1521,7 +1521,7 @@ static void aspeed_minibmc_machine_init(MachineState *machine)
+     Clock *sysclk;
+ 
+     sysclk = clock_new(OBJECT(machine), "SYSCLK");
+-    clock_set_hz(sysclk, SYSCLK_FRQ);
++    clock_set_hz(sysclk, SYSCLK_FRQ, NULL);
+ 
+     bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(bmc->soc));
+diff --git a/hw/arm/fby35.c b/hw/arm/fby35.c
+index c9964bd283..dd4abdd768 100644
+--- a/hw/arm/fby35.c
++++ b/hw/arm/fby35.c
+@@ -119,7 +119,7 @@ static void fby35_bic_init(Fby35State *s)
+     AspeedSoCState *soc;
+ 
+     s->bic_sysclk = clock_new(OBJECT(s), "SYSCLK");
+-    clock_set_hz(s->bic_sysclk, 200000000ULL);
++    clock_set_hz(s->bic_sysclk, 200000000ULL, NULL);
+ 
+     object_initialize_child(OBJECT(s), "bic", &s->bic, "ast1030-a1");
+     soc = ASPEED_SOC(&s->bic);
+diff --git a/hw/arm/mps2-tz.c b/hw/arm/mps2-tz.c
+index a2d18afd79..015db74ab8 100644
+--- a/hw/arm/mps2-tz.c
++++ b/hw/arm/mps2-tz.c
+@@ -818,9 +818,9 @@ static void mps2tz_common_init(MachineState *machine)
+ 
+     /* These clocks don't need migration because they are fixed-frequency */
+     mms->sysclk = clock_new(OBJECT(machine), "SYSCLK");
+-    clock_set_hz(mms->sysclk, mmc->sysclk_frq);
++    clock_set_hz(mms->sysclk, mmc->sysclk_frq, NULL);
+     mms->s32kclk = clock_new(OBJECT(machine), "S32KCLK");
+-    clock_set_hz(mms->s32kclk, S32KCLK_FRQ);
++    clock_set_hz(mms->s32kclk, S32KCLK_FRQ, NULL);
+ 
+     object_initialize_child(OBJECT(machine), TYPE_IOTKIT, &mms->iotkit,
+                             mmc->armsse_type);
+diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
+index 50919ee46d..7176305239 100644
+--- a/hw/arm/mps2.c
++++ b/hw/arm/mps2.c
+@@ -151,10 +151,10 @@ static void mps2_common_init(MachineState *machine)
+ 
+     /* This clock doesn't need migration because it is fixed-frequency */
+     mms->sysclk = clock_new(OBJECT(machine), "SYSCLK");
+-    clock_set_hz(mms->sysclk, SYSCLK_FRQ);
++    clock_set_hz(mms->sysclk, SYSCLK_FRQ, NULL);
+ 
+     mms->refclk = clock_new(OBJECT(machine), "REFCLK");
+-    clock_set_hz(mms->refclk, REFCLK_FRQ);
++    clock_set_hz(mms->refclk, REFCLK_FRQ, NULL);
+ 
+     /* The FPGA images have an odd combination of different RAMs,
+      * because in hardware they are different implementations and
+diff --git a/hw/arm/mps3r.c b/hw/arm/mps3r.c
+index 4d55a6564c..84f1f9d3a2 100644
+--- a/hw/arm/mps3r.c
++++ b/hw/arm/mps3r.c
+@@ -360,7 +360,7 @@ static void mps3r_common_init(MachineState *machine)
+     QList *oscclk;
+ 
+     mms->clk = clock_new(OBJECT(machine), "CLK");
+-    clock_set_hz(mms->clk, CLK_FRQ);
++    clock_set_hz(mms->clk, CLK_FRQ, NULL);
+ 
+     for (const RAMInfo *ri = mmc->raminfo; ri->name; ri++) {
+         MemoryRegion *mr = mr_for_raminfo(mms, ri);
+diff --git a/hw/arm/msf2-som.c b/hw/arm/msf2-som.c
+index 5c415abe85..420c0ae332 100644
+--- a/hw/arm/msf2-som.c
++++ b/hw/arm/msf2-som.c
+@@ -71,7 +71,7 @@ static void emcraft_sf2_s2s010_init(MachineState *machine)
+      */
+     /* This clock doesn't need migration because it is fixed-frequency */
+     m3clk = clock_new(OBJECT(machine), "m3clk");
+-    clock_set_hz(m3clk, 142 * 1000000);
++    clock_set_hz(m3clk, 142 * 1000000, NULL);
+     qdev_connect_clock_in(dev, "m3clk", m3clk);
+     qdev_prop_set_uint32(dev, "apb0div", 2);
+     qdev_prop_set_uint32(dev, "apb1div", 2);
+diff --git a/hw/arm/musca.c b/hw/arm/musca.c
+index e2c9d49af5..6fdcb76dfa 100644
+--- a/hw/arm/musca.c
++++ b/hw/arm/musca.c
+@@ -366,9 +366,9 @@ static void musca_init(MachineState *machine)
+     assert(mmc->num_mpcs <= MUSCA_MPC_MAX);
+ 
+     mms->sysclk = clock_new(OBJECT(machine), "SYSCLK");
+-    clock_set_hz(mms->sysclk, SYSCLK_FRQ);
++    clock_set_hz(mms->sysclk, SYSCLK_FRQ, NULL);
+     mms->s32kclk = clock_new(OBJECT(machine), "S32KCLK");
+-    clock_set_hz(mms->s32kclk, S32KCLK_FRQ);
++    clock_set_hz(mms->s32kclk, S32KCLK_FRQ, NULL);
+ 
+     object_initialize_child(OBJECT(machine), "sse-200", &mms->sse,
+                             TYPE_SSE200);
+diff --git a/hw/arm/netduino2.c b/hw/arm/netduino2.c
+index 8b1a9a2437..49a3ee2c47 100644
+--- a/hw/arm/netduino2.c
++++ b/hw/arm/netduino2.c
+@@ -41,7 +41,7 @@ static void netduino2_init(MachineState *machine)
+ 
+     /* This clock doesn't need migration because it is fixed-frequency */
+     sysclk = clock_new(OBJECT(machine), "SYSCLK");
+-    clock_set_hz(sysclk, SYSCLK_FRQ);
++    clock_set_hz(sysclk, SYSCLK_FRQ, NULL);
+ 
+     dev = qdev_new(TYPE_STM32F205_SOC);
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
+diff --git a/hw/arm/netduinoplus2.c b/hw/arm/netduinoplus2.c
+index bccd100354..30d9c0410d 100644
+--- a/hw/arm/netduinoplus2.c
++++ b/hw/arm/netduinoplus2.c
+@@ -41,7 +41,7 @@ static void netduinoplus2_init(MachineState *machine)
+ 
+     /* This clock doesn't need migration because it is fixed-frequency */
+     sysclk = clock_new(OBJECT(machine), "SYSCLK");
+-    clock_set_hz(sysclk, SYSCLK_FRQ);
++    clock_set_hz(sysclk, SYSCLK_FRQ, NULL);
+ 
+     dev = qdev_new(TYPE_STM32F405_SOC);
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
+diff --git a/hw/arm/nrf51_soc.c b/hw/arm/nrf51_soc.c
+index ac53441630..9aebb98934 100644
+--- a/hw/arm/nrf51_soc.c
++++ b/hw/arm/nrf51_soc.c
+@@ -75,7 +75,7 @@ static void nrf51_soc_realize(DeviceState *dev_soc, Error **errp)
+         return;
+     }
+     /* This clock doesn't need migration because it is fixed-frequency */
+-    clock_set_hz(s->sysclk, HCLK_FRQ);
++    clock_set_hz(s->sysclk, HCLK_FRQ, NULL);
+     qdev_connect_clock_in(DEVICE(&s->cpu), "cpuclk", s->sysclk);
+     /*
+      * This SoC has no systick device, so don't connect refclk.
+diff --git a/hw/arm/olimex-stm32-h405.c b/hw/arm/olimex-stm32-h405.c
+index 4ad7b043be..394875608a 100644
+--- a/hw/arm/olimex-stm32-h405.c
++++ b/hw/arm/olimex-stm32-h405.c
+@@ -44,7 +44,7 @@ static void olimex_stm32_h405_init(MachineState *machine)
+ 
+     /* This clock doesn't need migration because it is fixed-frequency */
+     sysclk = clock_new(OBJECT(machine), "SYSCLK");
+-    clock_set_hz(sysclk, SYSCLK_FRQ);
++    clock_set_hz(sysclk, SYSCLK_FRQ, NULL);
+ 
+     dev = qdev_new(TYPE_STM32F405_SOC);
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
+diff --git a/hw/arm/stm32vldiscovery.c b/hw/arm/stm32vldiscovery.c
+index cc41935160..4be626e878 100644
+--- a/hw/arm/stm32vldiscovery.c
++++ b/hw/arm/stm32vldiscovery.c
+@@ -44,7 +44,7 @@ static void stm32vldiscovery_init(MachineState *machine)
+ 
+     /* This clock doesn't need migration because it is fixed-frequency */
+     sysclk = clock_new(OBJECT(machine), "SYSCLK");
+-    clock_set_hz(sysclk, SYSCLK_FRQ);
++    clock_set_hz(sysclk, SYSCLK_FRQ, NULL);
+ 
+     dev = qdev_new(TYPE_STM32F100_SOC);
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(dev));
+diff --git a/hw/arm/xilinx_zynq.c b/hw/arm/xilinx_zynq.c
+index fc3abcbe88..1fd13caa58 100644
+--- a/hw/arm/xilinx_zynq.c
++++ b/hw/arm/xilinx_zynq.c
+@@ -228,7 +228,7 @@ static void zynq_init(MachineState *machine)
+     object_property_add_child(OBJECT(zynq_machine), "ps_clk",
+                               OBJECT(zynq_machine->ps_clk));
+     object_unref(OBJECT(zynq_machine->ps_clk));
+-    clock_set_hz(zynq_machine->ps_clk, PS_CLK_FREQUENCY);
++    clock_set_hz(zynq_machine->ps_clk, PS_CLK_FREQUENCY, NULL);
+ 
+     /* Create slcr, keep a pointer to connect clocks */
+     slcr = qdev_new("xilinx-zynq_slcr");
+diff --git a/hw/char/cadence_uart.c b/hw/char/cadence_uart.c
+index db31d7cc85..4619209af4 100644
+--- a/hw/char/cadence_uart.c
++++ b/hw/char/cadence_uart.c
+@@ -566,7 +566,7 @@ static void cadence_uart_init(Object *obj)
+     s->refclk = qdev_init_clock_in(DEVICE(obj), "refclk",
+                                    cadence_uart_refclk_update, s, ClockUpdate);
+     /* initialize the frequency in case the clock remains unconnected */
+-    clock_set_hz(s->refclk, UART_DEFAULT_REF_CLK);
++    clock_set_hz(s->refclk, UART_DEFAULT_REF_CLK, NULL);
+ 
+     s->char_tx_time = (NANOSECONDS_PER_SECOND / 9600) * 10;
+ }
+@@ -576,7 +576,7 @@ static int cadence_uart_pre_load(void *opaque)
+     CadenceUARTState *s = opaque;
+ 
+     /* the frequency will be overridden if the refclk field is present */
+-    clock_set_hz(s->refclk, UART_DEFAULT_REF_CLK);
++    clock_set_hz(s->refclk, UART_DEFAULT_REF_CLK, NULL);
+     return 0;
+ }
+ 
 -- 
 2.41.0
 
