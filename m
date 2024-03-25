@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D2D9C54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 15:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5491ECD11BF
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 15:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1romFo-0002lp-NU; Mon, 25 Mar 2024 11:28:52 -0400
+	id 1romFX-0002iL-9G; Mon, 25 Mar 2024 11:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1romFn-0002lD-6K
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 11:28:51 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1romFV-0002hz-HD
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 11:28:33 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1romFl-0000Fr-Pb
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 11:28:50 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-414859830f2so10021835e9.0
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 08:28:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1romFT-0000EL-P2
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 11:28:33 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4148ca200a7so401995e9.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 08:28:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711380527; x=1711985327; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=egg5Mtyn99cCwmy/P18xKwdXOjmaICInZ6LaE2Awphc=;
- b=QAoft+ZpjFuEqdkyjeyCnyG/tB7/55Q5ZnGyqVwppwa2xdKm+ZDMzSxhIXs8t0o4SB
- yUmzcikKumFABwufuHZO/6db4qZNk7pD3rPHt0BA2AVDn+rqTewJ7Fh0dj3AQC488KhB
- aapV0dojbhBoXFZ6n9Y5GvlwR6SflnOmSOa5IF7iTsn6yk8704K9QwjrS3fTEQKXl1nm
- xrn/cBfMV7JALe7RtABz+s8ewZbLHVKd/5Evpk7gp72vxa8B61kqZJodjDX6U1d8iIZV
- eWSicqIk+1DJxVtzkMw5PGlqbz0BrspjgsRfdxm2sK+TCKaU9CD0UdGrED3Oo3WZA3Ow
- 00Hg==
+ d=linaro.org; s=google; t=1711380510; x=1711985310; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TCoF0Ik2WJOdiDikaxpQR9jUBlogBxY6ArmfBRiXluk=;
+ b=F3+kZXesV0U7HLq97j6uR1pPmQIwFdk/6BIVMoBjd2pC7PbcN+HfsJOmgpPZMQFFuW
+ k0MlIlgK7kmBT5d+CUHqDmKcwBfIpLMar79bVQBXhsKf0uVaNThf3MUbgCr5gf44wkxG
+ K6V612JhtH6kkRwZqCYxQuBVExhgVXc2CHN9my1Ko+lPg8beZO8MGxMTc4GqzdlONBZi
+ UzRjyXrTRZOvWYK8I3rXwVM/f8hUXpeez0OVh+Im3JHsb7kzWsuRivaWTyJlBnNEuRRw
+ acycl64UWHiTYyoSnLVL+p0DGm4WBxfdJ/+NbPPPxQhaLzB8zs5wjZ42dCTZIR6AO0AU
+ Expw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711380527; x=1711985327;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=egg5Mtyn99cCwmy/P18xKwdXOjmaICInZ6LaE2Awphc=;
- b=tLwqkSfKBv5Jbfq0Z7Hhe3B/xcocxiQ/xDQe1vNE4Ke/Ze2z5cFEJPRk4SMvF0Xn/V
- inTg5HvFkazUGkRzt2qR/WtVu32jAgpihr1L3+Fj433tx3psON+8Yw8Kc1LfcHnw5iAt
- eLtOks39QZZetio/cTO9E/nrMdPGtNC2TYNah/Hx4McMW5E1nX/kzoRtiPuc+NzibPZx
- pB8hxWSkEqSMlvy+WbAqErOQLVEDJqpQo1eFulCfs+X5Rh7ub8x4oCSsxYnLNHhuA4Vg
- XgH+COiPvh0blZZ1vU+WB/pElRAJ6DqwVDNtP6LA9UtYkajLAQJqJBl2mkTxNbUSCN3/
- Fe8w==
-X-Gm-Message-State: AOJu0YzuP5XtvSzh8i7WTWugGuBJXJkga7POOWvXZauXtQ8vTW0Po4R+
- ijV1Kxq2s8wKxxBEZkuN/AfDi5EkBqY7uZGmAtfjPhcAOjB2CphcT0I5GxULztD4Y43owIVcsFw
- ozi8=
-X-Google-Smtp-Source: AGHT+IG71BRPXIOaH/SLJY22g2op8AV25bdPmej/JuI/NnWgTbSgHved3Vg5LXS0t6W/jJanYTzpaQ==
-X-Received: by 2002:a05:600c:4f01:b0:414:8948:621c with SMTP id
- l1-20020a05600c4f0100b004148948621cmr2566601wmq.8.1711380527317; 
- Mon, 25 Mar 2024 08:28:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711380510; x=1711985310;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TCoF0Ik2WJOdiDikaxpQR9jUBlogBxY6ArmfBRiXluk=;
+ b=ejKHesYKmr7kPnPCYaLLlBGh6HVhJupSgLGAdIAddwBMTvqBzJmpxGaHj1IKEwdjOD
+ PR0+4oyyPdY+/3lkVkwcRSumHQ8vJUKXTJj0jyy0v0/24B1kgVZMLdPsnasHY1VbBiqy
+ HkIh99rHIhojS+eRQYa1NYNRyQD/hzqRMJn9/AbJt63TMueDBuPSIQOwnhqD3AXC2ueE
+ yxn9KbjWJqCkrJb/UMLRfcH+5nPXYrWiIZBs62RbPuPowM0WlqQEpdXachWDRl6qzf63
+ ictfuIob2m3Roc6kkGDzhn9RpWXDq0BeegwLQQ45LbuX6wJxvu0NP18Kg3q4TpGf8e/r
+ PmWA==
+X-Gm-Message-State: AOJu0YwXvfm1tNy+X2lWxpPw5WVzgr4AB62qU98kivcOaWvuAdp9vIQq
+ RL0mOUr3+PBNoBFV7CQOBfGQAZBLgWmJNUgeI1s/pUuXQqFHd+WevdvsBL9+2oTkmv4PGz8E8Ob
+ G/R4=
+X-Google-Smtp-Source: AGHT+IFPbnQi8nZLrkF/W7wtVL6ILis6jKJ6ES9goxOOqichZ/EJtEQnWe626R3+BCSxzmPLDqQjcQ==
+X-Received: by 2002:a05:600c:1386:b0:414:9fa:1da2 with SMTP id
+ u6-20020a05600c138600b0041409fa1da2mr5053391wmf.15.1711380509796; 
+ Mon, 25 Mar 2024 08:28:29 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.208.214])
  by smtp.gmail.com with ESMTPSA id
- j28-20020a05600c1c1c00b004146c769c79sm8799861wms.0.2024.03.25.08.28.46
+ q13-20020adfcd8d000000b0033eab3520a9sm9740497wrj.43.2024.03.25.08.28.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 25 Mar 2024 08:28:46 -0700 (PDT)
+ Mon, 25 Mar 2024 08:28:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
@@ -65,18 +64,16 @@ Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
  Damien Hedde <damien.hedde@dahe.fr>,
  Peter Maydell <peter.maydell@linaro.org>, Luc Michel <luc@lmichel.fr>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.0 v3 3/3] hw/misc/stm32l4x5_rcc: Propagate period when
- enabling a clock
-Date: Mon, 25 Mar 2024 16:28:26 +0100
-Message-ID: <20240325152827.73817-4-philmd@linaro.org>
+Subject: [PATCH-for-9.0 v3 0/3] hw/clock: Propagate clock changes when
+ STM32L4X5 MUX is updated
+Date: Mon, 25 Mar 2024 16:28:23 +0100
+Message-ID: <20240325152827.73817-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240325152827.73817-1-philmd@linaro.org>
-References: <20240325152827.73817-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,38 +96,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Since v2:
+- Simpler approach
 
-The "clock_set_mul_div" function doesn't propagate the clock period
-to the children if it is changed (e.g. by enabling/disabling a clock
-multiplexer).
-This was overlooked during the implementation due to late changes.
+Since v1:
+- Rework API to only propagate when both clock_set
+  and clock_set_mul_div modified the clock params
+  (Peter & Luc).
+- Use that in zynq_slcr.
 
-This commit propagates the change if the multiplier or divider changes.
+Per https://www.qemu.org/docs/master/devel/clocks.html#clock-multiplier-and-divider-settings:
 
-Fixes: ec7d83acbd ("hw/misc/stm32l4x5_rcc: Add an internal clock multiplexer object")
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-Message-ID: <20240317103918.44375-2-arnaud.minier@telecom-paris.fr>
-[PMD: Check clock_set_mul_div() return value]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/misc/stm32l4x5_rcc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+  Note that clock_set_mul_div() does not automatically call
+  clock_propagate(). If you make a runtime change to the
+  multiplier or divider you must call clock_propagate() yourself.
 
-diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
-index 49b90afdf0..ed2dbd9dc3 100644
---- a/hw/misc/stm32l4x5_rcc.c
-+++ b/hw/misc/stm32l4x5_rcc.c
-@@ -61,7 +61,7 @@ static void clock_mux_update(RccClockMuxState *mux, bool bypass_source)
-         freq_multiplier = mux->divider;
-     }
- 
--    clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier);
-+    clk_changed |= clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier);
-     clk_changed |= clock_set(mux->out, clock_get(current_source));
-     if (clk_changed) {
-         clock_propagate(mux->out);
+Fix what we forgot to do that in recent commit ec7d83acbd
+("hw/misc/stm32l4x5_rcc: Add an internal clock multiplexer object")
+
+Arnaud Minier (1):
+  hw/misc/stm32l4x5_rcc: Propagate period when enabling a clock
+
+Philippe Mathieu-Daudé (2):
+  hw/clock: Let clock_set_mul_div() return a boolean value
+  hw/misc/stm32l4x5_rcc: Inline clock_update() in clock_mux_update()
+
+ docs/devel/clocks.rst   | 4 ++++
+ include/hw/clock.h      | 4 +++-
+ hw/core/clock.c         | 8 +++++++-
+ hw/misc/stm32l4x5_rcc.c | 9 +++++++--
+ 4 files changed, 21 insertions(+), 4 deletions(-)
+
 -- 
 2.41.0
 
