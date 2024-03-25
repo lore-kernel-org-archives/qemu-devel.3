@@ -4,70 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A2FAC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 354B0C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:59:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rokh6-0002hs-FW; Mon, 25 Mar 2024 09:48:56 -0400
+	id 1rokqJ-0005Yf-2l; Mon, 25 Mar 2024 09:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rokh1-0002ed-6o
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:48:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=rDMc=K7=kaod.org=clg@ozlabs.org>)
+ id 1rokqH-0005WB-9y; Mon, 25 Mar 2024 09:58:25 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rokgy-0001oX-2k
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:48:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711374527;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=VaH6K/ABk6YQuJNNhWyqrYmxsgNY5PnuamIwvpzT35o=;
- b=VtY4DBeIJdRSwQ5PzvLjjNaRgyCnEifeJE5A9YYoOBI0MZMz0DWYq1DquTmQIDgPUvlkaK
- TElgBO3ofOzWCibnLzd9Om0beSSOcszmDu+xxnINV7Nc1+L4hAw2ZxYDiknXalU6+siUbO
- LYhy6wGE44vbjG1LP5ytskuIHgoGHBc=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-BV9l-_hpNYG3UXhpoXojSA-1; Mon, 25 Mar 2024 09:48:42 -0400
-X-MC-Unique: BV9l-_hpNYG3UXhpoXojSA-1
-Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
- [10.11.54.4])
+ (Exim 4.90_1) (envelope-from <SRS0=rDMc=K7=kaod.org=clg@ozlabs.org>)
+ id 1rokqE-000333-A3; Mon, 25 Mar 2024 09:58:24 -0400
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4V3DzX20Syz4wcg;
+ Tue, 26 Mar 2024 00:58:16 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7B7F485A58C;
- Mon, 25 Mar 2024 13:48:41 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.59])
- by smtp.corp.redhat.com (Postfix) with ESMTP id ED07C2024517;
- Mon, 25 Mar 2024 13:48:38 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Glenn Miles <milesg@linux.vnet.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org
-Subject: [PATCH] misc/pca955*: Move models under hw/gpio
-Date: Mon, 25 Mar 2024 14:48:32 +0100
-Message-ID: <20240325134833.1484265-1-clg@redhat.com>
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4V3DzQ0jkHz4wyR;
+ Tue, 26 Mar 2024 00:58:09 +1100 (AEDT)
+Message-ID: <496a56ca-4c20-4990-a0ed-dffd89038a98@kaod.org>
+Date: Mon, 25 Mar 2024 14:58:07 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/10] pnv/phb4: Implement write-clear and return 1's on
+ unimplemented reg read
+To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com
+References: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
+ <20240321100422.5347-6-saif.abrar@linux.vnet.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240321100422.5347-6-saif.abrar@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=rDMc=K7=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,200 +69,373 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PCA9552 and PCA9554 devices are both I2C GPIO controllers and the
-PCA9552 also can drive LEDs. Do all the necessary adjustments to move
-the models under hw/gpio.
+On 3/21/24 11:04, Saif Abrar wrote:
+> Implement write-1-to-clear and write-X-to-clear logic.
+> Update registers with silent simple read and write.
+> Return all 1's when an unimplemented/reserved register is read.
+> 
+> Test that reading address 0x0 returns all 1's (i.e. -1).
+> 
+> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 
-Cc: Glenn Miles <milesg@linux.vnet.ibm.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- MAINTAINERS                              | 4 ++--
- include/hw/{misc => gpio}/pca9552.h      | 0
- include/hw/{misc => gpio}/pca9552_regs.h | 0
- include/hw/{misc => gpio}/pca9554.h      | 0
- include/hw/{misc => gpio}/pca9554_regs.h | 0
- hw/arm/aspeed.c                          | 2 +-
- hw/{misc => gpio}/pca9552.c              | 4 ++--
- hw/{misc => gpio}/pca9554.c              | 4 ++--
- tests/qtest/pca9552-test.c               | 2 +-
- tests/qtest/pnv-host-i2c-test.c          | 4 ++--
- hw/gpio/meson.build                      | 2 ++
- hw/gpio/trace-events                     | 4 ++++
- hw/misc/meson.build                      | 2 --
- hw/misc/trace-events                     | 4 ----
- 14 files changed, 16 insertions(+), 16 deletions(-)
- rename include/hw/{misc => gpio}/pca9552.h (100%)
- rename include/hw/{misc => gpio}/pca9552_regs.h (100%)
- rename include/hw/{misc => gpio}/pca9554.h (100%)
- rename include/hw/{misc => gpio}/pca9554_regs.h (100%)
- rename hw/{misc => gpio}/pca9552.c (99%)
- rename hw/{misc => gpio}/pca9554.c (99%)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 409d7db4d457..a07af6b9d48e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1549,8 +1549,8 @@ M: Glenn Miles <milesg@linux.vnet.ibm.com>
- L: qemu-ppc@nongnu.org
- L: qemu-arm@nongnu.org
- S: Odd Fixes
--F: hw/misc/pca955*.c
--F: include/hw/misc/pca955*.h
-+F: hw/gpio/pca955*.c
-+F: include/hw/gpio/pca955*.h
- 
- virtex_ml507
- M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-diff --git a/include/hw/misc/pca9552.h b/include/hw/gpio/pca9552.h
-similarity index 100%
-rename from include/hw/misc/pca9552.h
-rename to include/hw/gpio/pca9552.h
-diff --git a/include/hw/misc/pca9552_regs.h b/include/hw/gpio/pca9552_regs.h
-similarity index 100%
-rename from include/hw/misc/pca9552_regs.h
-rename to include/hw/gpio/pca9552_regs.h
-diff --git a/include/hw/misc/pca9554.h b/include/hw/gpio/pca9554.h
-similarity index 100%
-rename from include/hw/misc/pca9554.h
-rename to include/hw/gpio/pca9554.h
-diff --git a/include/hw/misc/pca9554_regs.h b/include/hw/gpio/pca9554_regs.h
-similarity index 100%
-rename from include/hw/misc/pca9554_regs.h
-rename to include/hw/gpio/pca9554_regs.h
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 729f66941462..badf6f6fa09d 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -18,7 +18,7 @@
- #include "hw/block/flash.h"
- #include "hw/i2c/i2c_mux_pca954x.h"
- #include "hw/i2c/smbus_eeprom.h"
--#include "hw/misc/pca9552.h"
-+#include "hw/gpio/pca9552.h"
- #include "hw/nvram/eeprom_at24c.h"
- #include "hw/sensor/tmp105.h"
- #include "hw/misc/led.h"
-diff --git a/hw/misc/pca9552.c b/hw/gpio/pca9552.c
-similarity index 99%
-rename from hw/misc/pca9552.c
-rename to hw/gpio/pca9552.c
-index 2ae13af35e93..27d4db068095 100644
---- a/hw/misc/pca9552.c
-+++ b/hw/gpio/pca9552.c
-@@ -15,8 +15,8 @@
- #include "qemu/module.h"
- #include "qemu/bitops.h"
- #include "hw/qdev-properties.h"
--#include "hw/misc/pca9552.h"
--#include "hw/misc/pca9552_regs.h"
-+#include "hw/gpio/pca9552.h"
-+#include "hw/gpio/pca9552_regs.h"
- #include "hw/irq.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
-diff --git a/hw/misc/pca9554.c b/hw/gpio/pca9554.c
-similarity index 99%
-rename from hw/misc/pca9554.c
-rename to hw/gpio/pca9554.c
-index 5e31696797d9..7d10a64ba7c1 100644
---- a/hw/misc/pca9554.c
-+++ b/hw/gpio/pca9554.c
-@@ -11,8 +11,8 @@
- #include "qemu/module.h"
- #include "qemu/bitops.h"
- #include "hw/qdev-properties.h"
--#include "hw/misc/pca9554.h"
--#include "hw/misc/pca9554_regs.h"
-+#include "hw/gpio/pca9554.h"
-+#include "hw/gpio/pca9554_regs.h"
- #include "hw/irq.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
-diff --git a/tests/qtest/pca9552-test.c b/tests/qtest/pca9552-test.c
-index ccca2b3d9140..747495769239 100644
---- a/tests/qtest/pca9552-test.c
-+++ b/tests/qtest/pca9552-test.c
-@@ -12,7 +12,7 @@
- #include "libqtest.h"
- #include "libqos/qgraph.h"
- #include "libqos/i2c.h"
--#include "hw/misc/pca9552_regs.h"
-+#include "hw/gpio/pca9552_regs.h"
- 
- #define PCA9552_TEST_ID   "pca9552-test"
- #define PCA9552_TEST_ADDR 0x60
-diff --git a/tests/qtest/pnv-host-i2c-test.c b/tests/qtest/pnv-host-i2c-test.c
-index c6351772520c..7f64d597ac1d 100644
---- a/tests/qtest/pnv-host-i2c-test.c
-+++ b/tests/qtest/pnv-host-i2c-test.c
-@@ -8,8 +8,8 @@
-  */
- #include "qemu/osdep.h"
- #include "libqtest.h"
--#include "hw/misc/pca9554_regs.h"
--#include "hw/misc/pca9552_regs.h"
-+#include "hw/gpio/pca9554_regs.h"
-+#include "hw/gpio/pca9552_regs.h"
- #include "pnv-xscom.h"
- 
- #define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 791e93a97bcc..a7495d196ae9 100644
---- a/hw/gpio/meson.build
-+++ b/hw/gpio/meson.build
-@@ -2,6 +2,8 @@ system_ss.add(when: 'CONFIG_GPIO_KEY', if_true: files('gpio_key.c'))
- system_ss.add(when: 'CONFIG_GPIO_MPC8XXX', if_true: files('mpc8xxx.c'))
- system_ss.add(when: 'CONFIG_GPIO_PWR', if_true: files('gpio_pwr.c'))
- system_ss.add(when: 'CONFIG_MAX7310', if_true: files('max7310.c'))
-+system_ss.add(when: 'CONFIG_PCA9552', if_true: files('pca9552.c'))
-+system_ss.add(when: 'CONFIG_PCA9554', if_true: files('pca9554.c'))
- system_ss.add(when: 'CONFIG_PL061', if_true: files('pl061.c'))
- system_ss.add(when: 'CONFIG_ZAURUS', if_true: files('zaurus.c'))
- 
-diff --git a/hw/gpio/trace-events b/hw/gpio/trace-events
-index 9331f4289d5a..b91cc7e9a45d 100644
---- a/hw/gpio/trace-events
-+++ b/hw/gpio/trace-events
-@@ -13,6 +13,10 @@ nrf51_gpio_write(uint64_t offset, uint64_t value) "offset 0x%" PRIx64 " value 0x
- nrf51_gpio_set(int64_t line, int64_t value) "line %" PRIi64 " value %" PRIi64
- nrf51_gpio_update_output_irq(int64_t line, int64_t value) "line %" PRIi64 " value %" PRIi64
- 
-+# pca9552.c
-+pca955x_gpio_status(const char *description, const char *buf) "%s GPIOs 0-15 [%s]"
-+pca955x_gpio_change(const char *description, unsigned id, unsigned prev_state, unsigned current_state) "%s GPIO id:%u status: %u -> %u"
-+
- # pl061.c
- pl061_update(const char *id, uint32_t dir, uint32_t data, uint32_t pullups, uint32_t floating) "%s GPIODIR 0x%x GPIODATA 0x%x pullups 0x%x floating 0x%x"
- pl061_set_output(const char *id, int gpio, int level) "%s setting output %d to %d"
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 8e1ddc00f9b2..dd6cf89a5449 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -3,8 +3,6 @@ system_ss.add(when: 'CONFIG_EDU', if_true: files('edu.c'))
- system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
- system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
- system_ss.add(when: 'CONFIG_ISA_TESTDEV', if_true: files('pc-testdev.c'))
--system_ss.add(when: 'CONFIG_PCA9552', if_true: files('pca9552.c'))
--system_ss.add(when: 'CONFIG_PCA9554', if_true: files('pca9554.c'))
- system_ss.add(when: 'CONFIG_PCI_TESTDEV', if_true: files('pci-testdev.c'))
- system_ss.add(when: 'CONFIG_UNIMP', if_true: files('unimp.c'))
- system_ss.add(when: 'CONFIG_EMPTY_SLOT', if_true: files('empty_slot.c'))
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index 0374eb33ac52..4896001f35de 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -340,10 +340,6 @@ grlib_apb_pnp_read(uint64_t addr, unsigned size, uint32_t value) "APB PnP read a
- led_set_intensity(const char *color, const char *desc, uint8_t intensity_percent) "LED desc:'%s' color:%s intensity: %u%%"
- led_change_intensity(const char *color, const char *desc, uint8_t old_intensity_percent, uint8_t new_intensity_percent) "LED desc:'%s' color:%s intensity %u%% -> %u%%"
- 
--# pca9552.c
--pca955x_gpio_status(const char *description, const char *buf) "%s GPIOs 0-15 [%s]"
--pca955x_gpio_change(const char *description, unsigned id, unsigned prev_state, unsigned current_state) "%s GPIO id:%u status: %u -> %u"
--
- # bcm2835_cprman.c
- bcm2835_cprman_read(uint64_t offset, uint64_t value) "offset:0x%" PRIx64 " value:0x%" PRIx64
- bcm2835_cprman_write(uint64_t offset, uint64_t value) "offset:0x%" PRIx64 " value:0x%" PRIx64
--- 
-2.44.0
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/pci-host/pnv_phb4.c              | 190 ++++++++++++++++++++++------
+>   include/hw/pci-host/pnv_phb4_regs.h |  12 +-
+>   tests/qtest/pnv-phb4-test.c         |   9 ++
+>   3 files changed, 170 insertions(+), 41 deletions(-)
+> 
+> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+> index a81763f34c..4e3a6b37f9 100644
+> --- a/hw/pci-host/pnv_phb4.c
+> +++ b/hw/pci-host/pnv_phb4.c
+> @@ -683,8 +683,41 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>           return;
+>       }
+>   
+> -    /* Handle masking */
+> +    /* Handle RO, W1C, WxC and masking */
+>       switch (off) {
+> +    /* W1C: Write-1-to-Clear registers */
+> +    case PHB_TXE_ERR_STATUS:
+> +    case PHB_RXE_ARB_ERR_STATUS:
+> +    case PHB_RXE_MRG_ERR_STATUS:
+> +    case PHB_RXE_TCE_ERR_STATUS:
+> +    case PHB_ERR_STATUS:
+> +    case PHB_REGB_ERR_STATUS:
+> +    case PHB_PCIE_DLP_ERRLOG1:
+> +    case PHB_PCIE_DLP_ERRLOG2:
+> +    case PHB_PCIE_DLP_ERR_STATUS:
+> +    case PHB_PBL_ERR_STATUS:
+> +        phb->regs[off >> 3] &= ~val;
+> +        return;
+> +
+> +    /* WxC: Clear register on any write */
+> +    case PHB_PBL_ERR1_STATUS:
+> +    case PHB_PBL_ERR_LOG_0 ... PHB_PBL_ERR_LOG_1:
+> +    case PHB_REGB_ERR1_STATUS:
+> +    case PHB_REGB_ERR_LOG_0 ... PHB_REGB_ERR_LOG_1:
+> +    case PHB_TXE_ERR1_STATUS:
+> +    case PHB_TXE_ERR_LOG_0 ... PHB_TXE_ERR_LOG_1:
+> +    case PHB_RXE_ARB_ERR1_STATUS:
+> +    case PHB_RXE_ARB_ERR_LOG_0 ... PHB_RXE_ARB_ERR_LOG_1:
+> +    case PHB_RXE_MRG_ERR1_STATUS:
+> +    case PHB_RXE_MRG_ERR_LOG_0 ... PHB_RXE_MRG_ERR_LOG_1:
+> +    case PHB_RXE_TCE_ERR1_STATUS:
+> +    case PHB_RXE_TCE_ERR_LOG_0 ... PHB_RXE_TCE_ERR_LOG_1:
+> +    case PHB_ERR1_STATUS:
+> +    case PHB_ERR_LOG_0 ... PHB_ERR_LOG_1:
+> +        phb->regs[off >> 3] = 0;
+> +        return;
+> +
+> +    /* Write value updated by masks */
+>       case PHB_LSI_SOURCE_ID:
+>           val &= PHB_LSI_SRC_ID;
+>           break;
+> @@ -723,7 +756,6 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>       case PHB_LEM_WOF:
+>           val = 0;
+>           break;
+> -    /* TODO: More regs ..., maybe create a table with masks... */
+>   
+>       /* Read only registers */
+>       case PHB_CPU_LOADSTORE_STATUS:
+> @@ -732,6 +764,12 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>       case PHB_PHB4_TCE_CAP:
+>       case PHB_PHB4_IRQ_CAP:
+>       case PHB_PHB4_EEH_CAP:
+> +    case PHB_VERSION:
+> +    case PHB_DMA_CHAN_STATUS:
+> +    case PHB_TCE_TAG_STATUS:
+> +    case PHB_PBL_BUF_STATUS:
+> +    case PHB_PCIE_BNR:
+> +    case PHB_PCIE_PHY_RXEQ_STAT_G3_00_03 ... PHB_PCIE_PHY_RXEQ_STAT_G5_12_15:
+>           return;
+>       }
+>   
+> @@ -752,6 +790,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>               pnv_phb4_update_all_msi_regions(phb);
+>           }
+>           break;
+> +
+>       case PHB_M32_START_ADDR:
+>       case PHB_M64_UPPER_BITS:
+>           if (changed) {
+> @@ -797,27 +836,63 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>           break;
+>   
+>       /* Silent simple writes */
+> -    case PHB_ASN_CMPM:
+> -    case PHB_CONFIG_ADDRESS:
+> -    case PHB_IODA_ADDR:
+> -    case PHB_TCE_KILL:
+> -    case PHB_TCE_SPEC_CTL:
+> -    case PHB_PEST_BAR:
+> -    case PHB_PELTV_BAR:
+> +    /* PHB Fundamental register set A */
+> +    case PHB_CONFIG_DATA ... PHB_LOCK1:
+>       case PHB_RTT_BAR:
+> -    case PHB_LEM_FIR_ACCUM:
+> -    case PHB_LEM_ERROR_MASK:
+> -    case PHB_LEM_ACTION0:
+> -    case PHB_LEM_ACTION1:
+> -    case PHB_TCE_TAG_ENABLE:
+> +    case PHB_PELTV_BAR:
+> +    case PHB_PEST_BAR:
+> +    case PHB_CAPI_CMPM ... PHB_M64_AOMASK:
+> +    case PHB_NXLATE_PREFIX ... PHB_DMA_SYNC:
+> +    case PHB_TCE_KILL ... PHB_IODA_ADDR:
+> +    case PHB_PAPR_ERR_INJ_CTL ... PHB_PAPR_ERR_INJ_MASK:
+>       case PHB_INT_NOTIFY_ADDR:
+>       case PHB_INT_NOTIFY_INDEX:
+> -    case PHB_DMA_SYNC:
+> -       break;
+> +    /* Fundamental register set B */
+> +    case PHB_AIB_FENCE_CTRL ... PHB_Q_DMA_R:
+> +    /* FIR & Error registers */
+> +    case PHB_LEM_FIR_ACCUM:
+> +    case PHB_LEM_ERROR_MASK:
+> +    case PHB_LEM_ACTION0 ... PHB_LEM_WOF:
+> +    case PHB_ERR_INJECT ... PHB_ERR_AIB_FENCE_ENABLE:
+> +    case PHB_ERR_STATUS_MASK ... PHB_ERR1_STATUS_MASK:
+> +    case PHB_TXE_ERR_INJECT ... PHB_TXE_ERR_AIB_FENCE_ENABLE:
+> +    case PHB_TXE_ERR_STATUS_MASK ... PHB_TXE_ERR1_STATUS_MASK:
+> +    case PHB_RXE_ARB_ERR_INJECT ... PHB_RXE_ARB_ERR_AIB_FENCE_ENABLE:
+> +    case PHB_RXE_ARB_ERR_STATUS_MASK ... PHB_RXE_ARB_ERR1_STATUS_MASK:
+> +    case PHB_RXE_MRG_ERR_INJECT ... PHB_RXE_MRG_ERR_AIB_FENCE_ENABLE:
+> +    case PHB_RXE_MRG_ERR_STATUS_MASK ... PHB_RXE_MRG_ERR1_STATUS_MASK:
+> +    case PHB_RXE_TCE_ERR_INJECT ... PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE:
+> +    case PHB_RXE_TCE_ERR_STATUS_MASK ... PHB_RXE_TCE_ERR1_STATUS_MASK:
+> +    /* Performance monitor & Debug registers */
+> +    case PHB_TRACE_CONTROL ... PHB_PERFMON_CTR1:
+> +    /* REGB Registers */
+> +    /* PBL core */
+> +    case PHB_PBL_CONTROL:
+> +    case PHB_PBL_TIMEOUT_CTRL:
+> +    case PHB_PBL_NPTAG_ENABLE:
+> +    case PHB_PBL_SYS_LINK_INIT:
+> +    case PHB_PBL_ERR_INF_ENABLE ... PHB_PBL_ERR_FAT_ENABLE:
+> +    case PHB_PBL_ERR_STATUS_MASK ... PHB_PBL_ERR1_STATUS_MASK:
+> +    /* PCI-E stack */
+> +    case PHB_PCIE_SCR:
+> +    case PHB_PCIE_DLP_STR ... PHB_PCIE_HOTPLUG_STATUS:
+> +    case PHB_PCIE_LMR ... PHB_PCIE_DLP_LSR:
+> +    case PHB_PCIE_DLP_RXMGN:
+> +    case PHB_PCIE_DLP_LANEZEROCTL ... PHB_PCIE_DLP_TRCRDDATA:
+> +    case PHB_PCIE_DLP_ERR_COUNTERS:
+> +    case PHB_PCIE_DLP_EIC ...   PHB_PCIE_LANE_EQ_CNTL23:
+> +    case PHB_PCIE_TRACE_CTRL:
+> +    case PHB_PCIE_MISC_STRAP ... PHB_PCIE_PHY_EQ_CTL:
+> +    /* Error registers */
+> +    case PHB_REGB_ERR_INJECT:
+> +    case PHB_REGB_ERR_INF_ENABLE ... PHB_REGB_ERR_FAT_ENABLE:
+> +    case PHB_REGB_ERR_STATUS_MASK ... PHB_REGB_ERR1_STATUS_MASK:
+> +        break;
+>   
+>       /* Noise on anything else */
+>       default:
+> -        qemu_log_mask(LOG_UNIMP, "phb4: reg_write 0x%"PRIx64"=%"PRIx64"\n",
+> +        qemu_log_mask(LOG_UNIMP,
+> +                      "phb4: unimplemented reg_write 0x%"PRIx64"=%"PRIx64"\n",
+>                         off, val);
+>       }
+>   }
+> @@ -905,36 +980,75 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+>           return val;
+>   
+>       /* Silent simple reads */
+> +    /* PHB Fundamental register set A */
+>       case PHB_LSI_SOURCE_ID:
+> +    case PHB_DMA_CHAN_STATUS:
+>       case PHB_CPU_LOADSTORE_STATUS:
+> -    case PHB_ASN_CMPM:
+> +    case PHB_CONFIG_DATA ... PHB_LOCK1:
+>       case PHB_PHB4_CONFIG:
+> +    case PHB_RTT_BAR:
+> +    case PHB_PELTV_BAR:
+>       case PHB_M32_START_ADDR:
+> -    case PHB_CONFIG_ADDRESS:
+> -    case PHB_IODA_ADDR:
+> -    case PHB_RTC_INVALIDATE:
+> -    case PHB_TCE_KILL:
+> -    case PHB_TCE_SPEC_CTL:
+>       case PHB_PEST_BAR:
+> -    case PHB_PELTV_BAR:
+> -    case PHB_RTT_BAR:
+> +    case PHB_CAPI_CMPM:
+> +    case PHB_M64_AOMASK:
+>       case PHB_M64_UPPER_BITS:
+> -    case PHB_CTRLR:
+> -    case PHB_LEM_FIR_ACCUM:
+> -    case PHB_LEM_ERROR_MASK:
+> -    case PHB_LEM_ACTION0:
+> -    case PHB_LEM_ACTION1:
+> -    case PHB_TCE_TAG_ENABLE:
+> +    case PHB_NXLATE_PREFIX:
+> +    case PHB_RTC_INVALIDATE ... PHB_IODA_ADDR:
+> +    case PHB_PAPR_ERR_INJ_CTL ... PHB_ETU_ERR_SUMMARY:
+>       case PHB_INT_NOTIFY_ADDR:
+>       case PHB_INT_NOTIFY_INDEX:
+> -    case PHB_Q_DMA_R:
+> -    case PHB_ETU_ERR_SUMMARY:
+> -        break;
+> -
+> -    /* Noise on anything else */
+> +    /* Fundamental register set B */
+> +    case PHB_CTRLR:
+> +    case PHB_AIB_FENCE_CTRL ... PHB_Q_DMA_R:
+> +    case PHB_TCE_TAG_STATUS:
+> +    /* FIR & Error registers */
+> +    case PHB_LEM_FIR_ACCUM ... PHB_LEM_ERROR_MASK:
+> +    case PHB_LEM_ACTION0 ... PHB_LEM_WOF:
+> +    case PHB_ERR_STATUS ... PHB_ERR_AIB_FENCE_ENABLE:
+> +    case PHB_ERR_LOG_0 ... PHB_ERR1_STATUS_MASK:
+> +    case PHB_TXE_ERR_STATUS ... PHB_TXE_ERR_AIB_FENCE_ENABLE:
+> +    case PHB_TXE_ERR_LOG_0 ... PHB_TXE_ERR1_STATUS_MASK:
+> +    case PHB_RXE_ARB_ERR_STATUS ... PHB_RXE_ARB_ERR_AIB_FENCE_ENABLE:
+> +    case PHB_RXE_ARB_ERR_LOG_0 ... PHB_RXE_ARB_ERR1_STATUS_MASK:
+> +    case PHB_RXE_MRG_ERR_STATUS ... PHB_RXE_MRG_ERR_AIB_FENCE_ENABLE:
+> +    case PHB_RXE_MRG_ERR_LOG_0 ... PHB_RXE_MRG_ERR1_STATUS_MASK:
+> +    case PHB_RXE_TCE_ERR_STATUS ... PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE:
+> +    case PHB_RXE_TCE_ERR_LOG_0 ... PHB_RXE_TCE_ERR1_STATUS_MASK:
+> +    /* Performance monitor & Debug registers */
+> +    case PHB_TRACE_CONTROL ... PHB_PERFMON_CTR1:
+> +    /* REGB Registers */
+> +    /* PBL core */
+> +    case PHB_PBL_CONTROL:
+> +    case PHB_PBL_TIMEOUT_CTRL:
+> +    case PHB_PBL_NPTAG_ENABLE:
+> +    case PHB_PBL_SYS_LINK_INIT:
+> +    case PHB_PBL_BUF_STATUS:
+> +    case PHB_PBL_ERR_STATUS ... PHB_PBL_ERR_INJECT:
+> +    case PHB_PBL_ERR_INF_ENABLE ... PHB_PBL_ERR_FAT_ENABLE:
+> +    case PHB_PBL_ERR_LOG_0 ... PHB_PBL_ERR1_STATUS_MASK:
+> +    /* PCI-E stack */
+> +    case PHB_PCIE_BNR ... PHB_PCIE_DLP_STR:
+> +    case PHB_PCIE_DLP_LANE_PWR:
+> +    case PHB_PCIE_DLP_LSR:
+> +    case PHB_PCIE_DLP_RXMGN:
+> +    case PHB_PCIE_DLP_LANEZEROCTL ... PHB_PCIE_DLP_CTL:
+> +    case PHB_PCIE_DLP_TRCRDDATA:
+> +    case PHB_PCIE_DLP_ERRLOG1 ... PHB_PCIE_DLP_ERR_COUNTERS:
+> +    case PHB_PCIE_DLP_EIC ...   PHB_PCIE_LANE_EQ_CNTL23:
+> +    case PHB_PCIE_TRACE_CTRL:
+> +    case PHB_PCIE_MISC_STRAP ... PHB_PCIE_PHY_RXEQ_STAT_G5_12_15:
+> +    /* Error registers */
+> +    case PHB_REGB_ERR_STATUS ... PHB_REGB_ERR_INJECT:
+> +    case PHB_REGB_ERR_INF_ENABLE ... PHB_REGB_ERR_FAT_ENABLE:
+> +    case PHB_REGB_ERR_LOG_0 ... PHB_REGB_ERR1_STATUS_MASK:
+> +        break;
+> +
+> +    /* Noise on unimplemented read, return all 1's */
+>       default:
+> -        qemu_log_mask(LOG_UNIMP, "phb4: reg_read 0x%"PRIx64"=%"PRIx64"\n",
+> -                      off, val);
+> +        qemu_log_mask(LOG_UNIMP, "phb4: unimplemented reg_read 0x%"PRIx64"\n",
+> +                      off);
+> +        val = ~0ull;
+>       }
+>       return val;
+>   }
+> diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
+> index 391d6a89ea..c1d5a83271 100644
+> --- a/include/hw/pci-host/pnv_phb4_regs.h
+> +++ b/include/hw/pci-host/pnv_phb4_regs.h
+> @@ -372,6 +372,7 @@
+>   #define P32_CAP                                 0x228
+>   #define P32_CTL                                 0x22C
+>   #define P32_STAT                                0x230
+> +
+>   /* PHB4 REGB registers */
+>   
+>   /* PBL core */
+> @@ -406,6 +407,7 @@
+>   #define   PHB_PCIE_CRESET_PERST_N       PPC_BIT(3)
+>   #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
+>   #define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
+> +#define PHB_PCIE_DLP_STR                0x1A18
+>   #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
+>   #define   PHB_PCIE_HPSTAT_SIMDIAG       PPC_BIT(3)
+>   #define   PHB_PCIE_HPSTAT_RESAMPLE      PPC_BIT(9)
+> @@ -416,6 +418,7 @@
+>   #define   PHB_PCIE_LMR_RETRAINLINK      PPC_BIT(1)
+>   #define   PHB_PCIE_LMR_LINKACTIVE       PPC_BIT(8)
+>   
+> +#define PHB_PCIE_DLP_LANE_PWR           0x1A38
+>   #define PHB_PCIE_DLP_TRAIN_CTL          0x1A40
+>   #define   PHB_PCIE_DLP_LINK_WIDTH       PPC_BITMASK(30, 35)
+>   #define   PHB_PCIE_DLP_LINK_SPEED       PPC_BITMASK(36, 39)
+> @@ -435,18 +438,21 @@
+>   #define   PHB_PCIE_DLP_DL_PGRESET       PPC_BIT(22)
+>   #define   PHB_PCIE_DLP_TRAINING         PPC_BIT(20)
+>   #define   PHB_PCIE_DLP_INBAND_PRESENCE  PPC_BIT(19)
+> -
+> +#define PHB_PCIE_DLP_LSR                0x1A48
+> +#define PHB_PCIE_DLP_RXMGN              0x1A50
+> +#define PHB_PCIE_DLP_LANEZEROCTL        0x1A70
+>   #define PHB_PCIE_DLP_CTL                0x1A78
+>   #define   PHB_PCIE_DLP_CTL_BYPASS_PH2   PPC_BIT(4)
+>   #define   PHB_PCIE_DLP_CTL_BYPASS_PH3   PPC_BIT(5)
+> -
+>   #define PHB_PCIE_DLP_TRWCTL             0x1A80
+>   #define   PHB_PCIE_DLP_TRWCTL_EN        PPC_BIT(0)
+>   #define   PHB_PCIE_DLP_TRWCTL_WREN      PPC_BIT(1)
+> +#define PHB_PCIE_DLP_TRCRDDATA          0x1A88
+>   #define PHB_PCIE_DLP_ERRLOG1            0x1AA0
+>   #define PHB_PCIE_DLP_ERRLOG2            0x1AA8
+>   #define PHB_PCIE_DLP_ERR_STATUS         0x1AB0
+>   #define PHB_PCIE_DLP_ERR_COUNTERS       0x1AB8
+> +#define PHB_PCIE_DLP_EIC                0x1AC8
+>   
+>   #define PHB_PCIE_LANE_EQ_CNTL0          0x1AD0
+>   #define PHB_PCIE_LANE_EQ_CNTL1          0x1AD8
+> @@ -458,6 +464,7 @@
+>   #define PHB_PCIE_LANE_EQ_CNTL23         0x1B08 /* DD1 only */
+>   #define PHB_PCIE_TRACE_CTRL             0x1B20
+>   #define PHB_PCIE_MISC_STRAP             0x1B30
+> +#define PHB_PCIE_PHY_EQ_CTL             0x1B38
+>   #define PHB_PCIE_PHY_RXEQ_STAT_G3_00_03 0x1B40
+>   #define PHB_PCIE_PHY_RXEQ_STAT_G5_12_15 0x1B98
+>   
+> @@ -591,5 +598,4 @@
+>   
+>   #define IODA3_PEST1_FAIL_ADDR           PPC_BITMASK(3, 63)
+>   
+> -
+>   #endif /* PCI_HOST_PNV_PHB4_REGS_H */
+> diff --git a/tests/qtest/pnv-phb4-test.c b/tests/qtest/pnv-phb4-test.c
+> index 0c8e58dd5f..96d1bd6724 100644
+> --- a/tests/qtest/pnv-phb4-test.c
+> +++ b/tests/qtest/pnv-phb4-test.c
+> @@ -139,6 +139,12 @@ static void phb4_writeonly_read_test(QTestState *qts)
+>       g_assert_cmpuint(val, ==, 0x0);
+>   }
+>   
+> +/* Check that reading an unimplemented address 0x0 returns -1 */
+> +static void phb4_unimplemented_read_test(QTestState *qts)
+> +{
+> +    g_assert_cmpint(pnv_phb4_xscom_read(qts, 0x0), ==, -1);
+> +}
+> +
+>   static void test_phb4(void)
+>   {
+>       QTestState *qts = NULL;
+> @@ -157,6 +163,9 @@ static void test_phb4(void)
+>       /* Check write-only logic */
+>       phb4_writeonly_read_test(qts);
+>   
+> +    /* Check unimplemented register read */
+> +    phb4_unimplemented_read_test(qts);
+> +
+>       qtest_quit(qts);
+>   }
+>   
 
 
