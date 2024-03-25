@@ -4,84 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0460C54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:21:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4010C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rokFn-0007NF-OI; Mon, 25 Mar 2024 09:20:43 -0400
+	id 1rokK8-0008Ck-J9; Mon, 25 Mar 2024 09:25:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1rokFk-0007Mx-LH
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:20:40 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1rokFi-0005I6-J9
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:20:40 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6e782e955adso3679073b3a.3
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:20:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711372837; x=1711977637; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bvn32dFXv/6xheZxRIppG2aWjR1g4SG6/JFkduvJ5bA=;
- b=DCTJn9ZI4czAW1ga+NHmxn/gT4W3xptDrjnytdPxFPYa0IvvlG5HKVvETzJ+AoucgZ
- wZquwFrobK7pBMzd+yPEAdYOdzJg2Xo6qAJb/Nyn1PyFBT4+mVRHYiv30y1O8aKBZiAa
- vyTW/qlEbphk47eUvjBO9VkcQ6HM3LRC03DGU5pOK/SdsarnwjkfImuHp8aNwaQ1r/cQ
- CRDqAGbU2Bg479sLsFxJxzEugQBJLKkOHVLZeXf5vQV781sMNE9wjLppuqjPKVl4hiyK
- 0dCdssNV6IH2y1nC7o4rb8aUKzYIJt/RvgVdIC8QngRMRkUm4vxZYbFGfghZgQ/MUlfC
- 7Isg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711372837; x=1711977637;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bvn32dFXv/6xheZxRIppG2aWjR1g4SG6/JFkduvJ5bA=;
- b=YFboHjlFrgHi5mNw0LVyJkYo/BdxeOTOznoXiWqpPOObPpLVU5YodYyr/x9cCklPuF
- I8RZnRwiZt2YYnR2do3fQRyxFTh8CFkWvFXSkHGP0bgKgS1EM0EKo5CoQeeiBcZxeMcq
- VVhWulXfizeKt2RuKvTytBB3o0gFY1ZR3lshBL72uf+HFNLR4Qxsg05ErKBipzZPm16H
- hA+8R8GzTzdHzXPmNk+LgFcIBsRrUB7EJFvt8MogX4cwTA+B64bScA6T3fj3N/DgdI3r
- +ZtyIRFNNLFWr+tbKW5KR3JmXOduXwYvBfNE3xo0Eqp/z5jhistNG6ohkWhWgzw3ddRK
- /GcA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXMWSXlekM1KZbmbBz0SwXCn1Drm9FyzG27mkAIwehikIDy7d15nKN2wOekg+gqhJbWCsHbHV1j961ybKqlt3OxBxhJrxc=
-X-Gm-Message-State: AOJu0YwCJ8ERm786zvV6bLoWnB+3RQtvUVTBJ7oAn7qsU5Gt3fIvY2eH
- 1DmLPfWv8DmMZZxcM+NcxA1f971UaK21qu7rc9mH3pK/2l3t2gZog//YN3I/
-X-Google-Smtp-Source: AGHT+IFxgFgpjGakLpko5DVrTW1lBzZPTHXO5GxKLtwN5/lQn125Qe1Spw/pGyPPqu748E9pxtM8jQ==
-X-Received: by 2002:a05:6a21:3948:b0:1a3:d27a:40c3 with SMTP id
- ac8-20020a056a21394800b001a3d27a40c3mr694250pzc.25.1711372836542; 
- Mon, 25 Mar 2024 06:20:36 -0700 (PDT)
-Received: from valdaarhun.localnet ([182.48.211.62])
- by smtp.gmail.com with ESMTPSA id
- gl3-20020a17090b120300b00298cc4c56cdsm9877889pjb.22.2024.03.25.06.20.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Mar 2024 06:20:36 -0700 (PDT)
-From: Sahil <icegambit91@gmail.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>,
- qemu-level <qemu-devel@nongnu.org>
-Cc: Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: Intention to work on GSoC project
-Date: Mon, 25 Mar 2024 18:50:32 +0530
-Message-ID: <8390729.NyiUUSuA9g@valdaarhun>
-In-Reply-To: <CAJaqyWdhsXUXdP+3GN81hw9tqccy6+3=WVvigxu2yU-8F=x04A@mail.gmail.com>
-References: <13625712.uLZWGnKmhe@valdaarhun> <3291749.44csPzL39Z@valdaarhun>
- <CAJaqyWdhsXUXdP+3GN81hw9tqccy6+3=WVvigxu2yU-8F=x04A@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1rokK7-0008Ca-9a
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:25:11 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1rokK4-0005s9-Ac
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:25:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=9YgHf0qKT/atY8TBObrr6MCtsDUhx+yoFKjGrki32R4=; b=g9Mv6WjxdBmSV3n16TJW9llk9i
+ GE1poe+F2LDw+1TEiMiO7Y917kprvRerGZyeeYGJyPH2iRDxzpkICLTYrmBngIEjVqAUfwb+/hAWx
+ tZ0MqTR5x6O9hxnmp5qXbP8MtwPsLQ1bVOWNZWfnAqs4rBsw5PEHrMSHnwFDS6r+iv3PquDOV7UbH
+ txUx1/WIY9LJ2pFQ3d6dstDgrqBqJug09XrOx9pbB7iQdAkP+V12SIWfrYnvrnnK6VpZVN4kmp5Yn
+ wcmKp1ZtvChD5h5r8xPKqWBHpe/U7xy8xyEqyMmIAe8a/Yr2naFZs5hTHEb+rLHLfk80pl7wLsYMx
+ 5+3nKQIilJfYb4fsjGjkzq6/FIuZ6FX8DY08s84b5AXrzPAhQxDuOW/NnrcKkJYVVdNpP9Tn/ghhA
+ BHJt4JYlU9fh/uJzP8zcchmNHbIk31O/VKvkCvZ+6YpJPOR++ctEw4GFTZpsYTVUM8XII9mfpYqBs
+ xNt9KOZNNREx9lAfueKh89HexlaQ7GZOE9xwjaNyFtc3LEVB/q9C+kp6BggL3IxlIyxIVtXF6f5Ro
+ lTowxHGjkIYl7u8oh03h5gg2nZy6Cxt3bOhuoL5vV7v2Puwv7DUJYkg0q1otU1qmeM4vuNorROt7N
+ 5esgywPzYDs1tUJUhaOPJbhhpJfMBMeuEJe1LQxoc=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair23@gmail.com>,
+ qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>, Greg Kurz <groug@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PULL 20/34] tests/libqos: add riscv/virt machine nodes
+Date: Mon, 25 Mar 2024 14:25:01 +0100
+Message-ID: <2671306.ea0pUnVCe6@silver>
+In-Reply-To: <cef9c499-b258-4618-bff8-eeca8da3d184@ventanamicro.com>
+References: <20240308111152.2856137-1-alistair.francis@wdc.com>
+ <b85c8451-57e0-49aa-a7c4-28ae8bf08bf9@redhat.com>
+ <cef9c499-b258-4618-bff8-eeca8da3d184@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7Bit
 Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=icegambit91@gmail.com; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,154 +73,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-Thank you for your reply.
-
-On Wednesday, March 20, 2024 9:27:00 PM IST Eugenio Perez Martin wrote:
-> [...]
-> > Q1.
-> > Regarding the "Deep dive into Virtio-networking and vhost-net"
-> > article [3], the "Introduction" subsection of the "Vhost protocol"
-> > section mentions that sending the available buffer notification
-> > involves a vCPU interrupt (4th bullet point).
-> 
-> Now I realize we used a very misleading term there :). Without
-> ioeventfd, when the guest writes to the PCI notification area the
-> guest vCPU is totally paused there, and the control is handed to
-> host's KVM first and QEMU after it. The same physical CPU of the
-> machine needs to switch context because of that.
-> 
-> Is an interruption of the execution and a context switch. Maybe
-> "paused" is a better term.
-> 
-> > But in figure 2, the arrow for the "available buffer notification"
-> > indicates a PCI interrupt. Initially I thought they were two different
-> > interrupts but I am a little confused about this now.
-> 
-> They are different, but at that part of the blog is just the direction
-> of who interrupts / notifies who :).
-
-Thank you for the clarification. This makes sense now.
-
-On Wednesday, March 20, 2024 9:59:30 PM IST Eugenio Perez Martin wrote:
-> [...]
-> > Q1.
-> > Step 2 in the "Process to make a buffer available" diagram depicts
-> > how the virtio driver writes the descriptor index in the avail ring.
-> > In the example, the descriptor index #0 is written in the first entry.
-> > But in figure 2, the number 0 is in the 4th position in the avail ring.
-> > Is the avail ring queue an array of "struct virtq_avail" which maintains
-> > metadata such as the number of descriptor indexes in the header?
-> 
-> struct virtq_avail has two members: uint16_t idx and ring[]. To be in
-> the first position of the avail ring means to be in ring[0] there.
-> 
-> Idx and ring[] are just headers in the figure, not actual positions.
-> Same as Avail. Now that you mention maybe there is a better way to
-> represent that, yes.
-> 
-> Let me know if I didn't explain it well.
-> 
-> > Also, in the second position, the number changes from 0 (figure 1) to
-> > 1 (figure 2). I haven't understood what idx, 0 (later 1) and ring[]
-> > represent in the figures. Does this number represent the number of
-> > descriptors that are currently in the avail ring?
-> 
-> It is the position in ring[] where the device needs to stop looking
-> for descriptors. It starts at 0, and when the device sees 1 it means
-> ring[0] has a descriptor to process.
-> 
-> Now you need to apply a "modulo virtqueue size" to that index. So if
-> the virtqueue is 256, avail_idx 257 means the last valid descriptor is
-> at 0. This happens naturally when the driver keeps adding descriptors
-> and wraps the queue.
-> 
-> The authoritative source of this is the VirtQueues section of the
-> virtio standard [1], feel free to check it in case it clarifies
-> something better.
-
-I have understood this as well. Reading the virtio specification was
-definitely helpful.
-
-> > Q2.
+On Monday, March 25, 2024 1:35:52 PM CET Daniel Henrique Barboza wrote:
+> On 3/25/24 06:20, Thomas Huth wrote:
+> > On 08/03/2024 12.11, Alistair Francis wrote:
+> >> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> >>
+> >> Add a RISC-V 'virt' machine to the graph. This implementation is a
+> >> modified copy of the existing arm machine in arm-virt-machine.c
+> >>
+> >> It contains a virtio-mmio and a generic-pcihost controller. The
+> >> generic-pcihost controller hardcodes assumptions from the ARM 'virt'
+> >> machine, like ecam and pio_base addresses, so we'll add an extra step to
+> >> set its parameters after creating it.
+> >>
+> >> Our command line is incremented with 'aclint' parameters to allow the
+> >> machine to run MSI tests.
+> >>
+> >> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> >> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> >> Acked-by: Thomas Huth <thuth@redhat.com>
+> >> Message-ID: <20240217192607.32565-7-dbarboza@ventanamicro.com>
+> >> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> >> ---
 > > 
-> > There's this paragraph in the article right below the above mentioned
-> > diagram:
-> > > The avail ring must be able to hold the same number of descriptors
-> > > as the descriptor area, and the descriptor area must have a size power
-> > > of two, so idx wraps naturally at some point. For example, if the ring
-> > > size is 256 entries, idx 1 references the same descriptor as idx 257,
-> > > 513... And it will wrap at a 16 bit boundary. This way, neither side
-> > > needs to worry about processing an invalid idx: They are all valid.
+> >   Hi!
 > > 
-> > I haven't really understood this. I have understood that idx is calculated
-> > as idx mod queue_length. But I haven't understood the "16 bit boundary"
-> > part.
+> > I noticed that "make check SPEED=slow" is now failing on the qos-test with both, qemu-system-riscv32 and qemu-system-riscv64. Seems like it fails with the virtio-9p test, when I run the qos-test manually, I get:
+> > 
+> > $ MALLOC_PERTURB_=21 V=2 QTEST_QEMU_BINARY=./qemu-system-riscv64 \
+> >     tests/qtest/qos-test -m slow
+> > ...
+> > # Start of local tests
+> > # starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-211303.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-211303.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -M virt,aclint=on,aia=aplic-imsic -fsdev local,id=fsdev0,path='/home/thuth/tmp/qemu-build/qtest-9p-local-MBCML2',security_model=mapped-xattr -device virtio-9p-pci,fsdev=fsdev0,addr=04.0,mount_tag=qtest -accel qtest
+> > ok 168 /riscv64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-9p-pci/virtio-9p/virtio-9p-tests/local/config
+> > Received response 7 (RLERROR) instead of 73 (RMKDIR)
+> > Rlerror has errno 17 (File exists)
+> > **
+> > ERROR:../../devel/qemu/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
+> > not ok /riscv64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-9p-pci/virtio-9p/virtio-9p-tests/local/create_dir - ERROR:../../devel/qemu/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
+> > Bail out!
+> > Aborted (core dumped)
+> > 
+> > Could you please have a look? ... or if it is too cumbersome to fix, could we please always skip the virtio-9p local tests on riscv ?
 > 
-> avail_idx is an uin16_t, so ((uint16_t)-1) + 1 == 0.
-> > I am also not very clear on how a queue length that is not a power of 2
-> > might cause trouble. Could you please expand on this?
+> I'll take a look.
 > 
-> That's a limitation in the standard, but I'm not sure where it comes
-> from beyond being computationally easier to calculate ring position
-> with a mask than with a remainder of a random non-power-of-two number.
+> Do we run these slow tests in the Gitlab pipeline? I don't recall this
+> particular test failing when I first introduced the riscv machine nodes.
 
-Understood.
+No, the 'local' 9p tests were taken out by moving them to 'slow', because
+these particular tests did not pass in the cloud and gitlab doesn't run
+'slow':
 
-> Packed virtqueue removes that limitation.
+commit 558f5c42efded3e0d0b20a90bce2a9a14580d824
+Author: Greg Kurz <groug@kaod.org>
+Date:   Tue Nov 24 08:43:43 2020 +0100
 
-Right, I noticed that "queue_size" does not have to be a power of 2 for
-packed virtqueues.
+    tests/9pfs: Mark "local" tests as "slow"
+    
+    The "local" tests can fail on some automated build systems as
+    reported here:
+    
+    https://lists.nongnu.org/archive/html/qemu-devel/2020-11/msg05510.html
+    
+    This will need to be investigated and addressed later. Let's go for a
+    workaround in the meantime : mark the "local" tests as "slow" so that
+    they aren't executed with a simple "make check" like in the case above.
+    
+    Reported-by: Cole Robinson <crobinso@redhat.com>
+    Signed-off-by: Greg Kurz <groug@kaod.org>
+    Reviewed-by: Thomas Huth <thuth@redhat.com>
+    Acked-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+    Message-Id: <160620382310.1423262.7364287092069513483.stgit@bahia.lan>
+    Signed-off-by: Greg Kurz <groug@kaod.org>
 
-> > Q3.
-> > I have started going through the source code in
-> > "drivers/virtio/virtio_ring.c". I have understood that the virtio driver
-> > runs in the guest's kernel. Does that mean the drivers in
-> > "drivers/virtio/*" are enabled when linux is being run in a guest VM?
-> 
-> For PCI devices, as long as it detects a device with vendor == Red
-> Hat, Inc. (0x1AF4) and device ID 0x1000 through 0x107F inclusive, yes.
-> You can also load and unload manually with modprobe as other drivers.
+Could be because the 'local' 9p backend needs xattr support which might not be
+available with gitlab container's filesystem. But I haven't investigated.
 
-Got it. The linux documentation in "documentation/driver-api/virtio/virtio.rst"
-covers this as well. I must have missed this before sending the email.
+The test that fails seems to be the same, just the errno is different in your
+case.
 
-> Let me know if you have more doubts. Thanks!
-
-I have also read through the "Packed virtqueue: How to reduce overhead
-with virtio" article [1] and the relevant section from the virtio specification [2].
-This has been slightly difficult to grasp. Going through the source in
-"drivers/virtio/virtio_ring.c" is helping a bit but I am still confused about
-a few things.
-
-Q1.
-Section 2.7.4 of the virtio spec [3] states that in an available descriptor, the
-"Element Length" stores the length of the buffer element. In the next few lines,
-it also states that the "Element Length" is reserved for used descriptors and is
-ignored by drivers. This sounds a little contradictory given that drivers write
-available desciptors in the descriptor ring.
-
-Q2.
-In the Red Hat article, just below the first listing ("Memory layout of a packed
-virtqueue descriptor"), there's the following line referring to the buffer id in
-"virtq_desc":
-
-> This time, the id field is not an index for the device to look for the buffer: it is
-> an opaque value for it, only has meaning for the driver.
-
-But the device returns the buffer id when it writes the used descriptor to the
-descriptor ring. The "only has meaning for the driver" part has got me a little
-confused. Which buffer id is this that the device returns? Is it related to the
-buffer id in the available descriptor?
-
-Thanks,
-Sahil
-
-[1] https://www.redhat.com/en/blog/packed-virtqueue-how-reduce-overhead-virtio
-[2] https://docs.oasis-open.org/virtio/virtio/v1.1/csprd01/virtio-v1.1-csprd01.html#x1-610007
-[3] https://docs.oasis-open.org/virtio/virtio/v1.1/csprd01/virtio-v1.1-csprd01.html#x1-650004
-
+Best regards,
+Christian Schoenebeck
 
 
 
