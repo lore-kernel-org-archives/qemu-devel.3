@@ -4,74 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83954C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 12:36:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 767B9C54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 12:37:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rojYV-0002IO-3p; Mon, 25 Mar 2024 08:35:59 -0400
+	id 1rojYX-0002JO-0d; Mon, 25 Mar 2024 08:36:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rojYS-0002HF-QL
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:56 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rojYV-0002IP-BT
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:59 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rojYR-0005dS-3G
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:56 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-414866f92beso7280345e9.3
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 05:35:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rojYT-0005eG-KD
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:59 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1e0411c0a52so30811265ad.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 05:35:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711370153; x=1711974953; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GCgvA2TmnxeKrt9Gh3RGTnMyC9ymehvv7sEyBNeOPwc=;
- b=Ub7n9wCgEPxRGmiMrvQ2/W+mRBsbiep1zU7SyHmLQd5rNW2bRSFT8oMIdZembEUPpr
- J22gx1Z8ZoDFebmlambCthYinal5rwel6TwcoAfMIG1gug9pQ8/HHZ6cG1/cYBkIs6aX
- v3ERejN0jlCI1DYRw8tBWkz0yq9ED7BbeE3eNyE7pIZt7L/1NSuoXXwOok/AwIYxfEk9
- daE/kOScckGyIWLx8+WMu+zZRupIs5mMDI2ESfX6UAsW3dAqdqrEGoAT5xYG3t3Ks5Hw
- rNt0E/A+U2Ug51l1pDkShFomabHStQZ9B4NQurinSJvcx/A9K0JfdMw5PVA1g1PmX08E
- CVtg==
+ d=ventanamicro.com; s=google; t=1711370156; x=1711974956; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fI97XdXEDCdvaQoA+KSfIiFD9UwZRCBaweWdCTvgrl8=;
+ b=DrLRACALH/yEmsxkVLDVQ0lcTIgiQAuKoZZyOJi0lRUO7Va1QyXEwj0ERrbczOQlsd
+ MKnSlQTiEazrziKqqnGOJlkTZ7qPkawharX/VM9xqmHaOkg+AId+up1qk3B8AT3BwfQc
+ 4UxBfkaU8A8LkyAWtaUr/Zt2mW9oxv5cjsgteN/iLINdrLXcrP0M5QdZiyY05uH7d89V
+ 9UPPR+cLuMEbbeVhVMEQSXxg4Hw3edWtdXiRz6nPSgDym1+O2qLF/fWexfzH4SHwrbkf
+ xU7gJE8lWn+P0JE+kQ7sBChX+jfe1GFF3J9QB9sT85jCEh9pwMFflWC6lDj5KOR6fw5H
+ AP3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711370153; x=1711974953;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GCgvA2TmnxeKrt9Gh3RGTnMyC9ymehvv7sEyBNeOPwc=;
- b=G+DwC84WGYoHjV95nC+b+gwG6POg+eh6s+MtwmfPU3EhcobWah81CH5aMrQr0plghA
- 6IwjC8zYqrgqBOjd3aeqFQg7753eLGGfoWJsw3Dp1W4jtm1L0coi8ZG6KNf80wxGd6zv
- sR89GEilw3jd8Dcm7viw1nAURForX+v+EwWzzXP/BVz/OApJI7AuQmLJQFc3WwH5zHnu
- HO0i0IOXC6akDuOK6thaKZLAHRiRSBBrjCibuwLp1RFVnLgpddrpB6EdeY/RouOorU1+
- KQuveu5Wp2b+j37EjUpqQzRHeNBe/bCybqaTxtwesmgLSREWW4rAUAxh1RfVVE54xj4I
- rsvw==
-X-Gm-Message-State: AOJu0YzkEqu3QcNyZSkdEUO0TGtiFu3KIke65agehSui0eIlGKeWPeeJ
- htkVQBHeEdcAbTD64mLMe643d1dQcR1yzpkCVzYNgUoDyMYjxh+UVpdKSDxFv2JfWrOVowbOik8
- K
-X-Google-Smtp-Source: AGHT+IGau3cTAVloogSc3fTcgbX5s68SHA6tDLec6kZKBI0K4E+wqI+Kcr8FEtTwgeSdspxpDLN5KQ==
-X-Received: by 2002:a05:600c:45d5:b0:414:869b:dbd9 with SMTP id
- s21-20020a05600c45d500b00414869bdbd9mr3072410wmo.9.1711370153770; 
- Mon, 25 Mar 2024 05:35:53 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ d=1e100.net; s=20230601; t=1711370156; x=1711974956;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fI97XdXEDCdvaQoA+KSfIiFD9UwZRCBaweWdCTvgrl8=;
+ b=toeLUN8Y+4h3rItCnIjtguFeqGnUbKOezjratqzAItpwmKqIoGAJI9n31VOlRm2twg
+ pTSdoZG0Gg2XOgyi4NbCgfqCS5m1wPU3YmqnN00bQN95UttBCR2+9vLVQawGQXT6wYED
+ Ffts+p/M/hjR86AvmQBzRyYlzKqAw4wrNSXUWVtzqWlCzMSCLlV08I62DS+rBHtIz/q1
+ xZf9zxBnq2EgMwCTO2gThTaM9Mhi3a6Gsqm81gsCz7LwH8vwPFGCKBb2l64zEo7JfiOc
+ OML6es5yy5aHlD31FV+5ImN/eAhT/ga9aFRIS0ZvUUNFYdYYkFWwX4mhUiZy+AESxbt4
+ dBBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXRc6wpn3UFElkWqE2g0b9FMVDUnwRvlm0IL3SpjRNNNCkN7ku4IsIda8M3t5kUa0Hff8tzxYtYYQ4+uvKpgJ/Ws9bMJo8=
+X-Gm-Message-State: AOJu0YyDVs19gpD4GNN9K3UTkMqnYFstcVro0HnuGDO/B2epQ3W3YQoH
+ cAvJHK46tyeYC4b4DS2VzSnAj54+vKj8OmZ1mCqf05SebA1GkcHKV+JFS4MN3Mo=
+X-Google-Smtp-Source: AGHT+IGv7ZBYvvwz97T0hj9vLPV+kF+G2/6Bmak0zW5QaSjJ7ij3ZLxcxbJHCGRs9F5jXphdeSlSGw==
+X-Received: by 2002:a17:902:ecc8:b0:1e0:d630:f18e with SMTP id
+ a8-20020a170902ecc800b001e0d630f18emr530886plh.14.1711370156099; 
+ Mon, 25 Mar 2024 05:35:56 -0700 (PDT)
+Received: from [192.168.68.110] ([177.45.186.241])
  by smtp.gmail.com with ESMTPSA id
- o19-20020a05600c339300b00414041032casm2303877wmp.1.2024.03.25.05.35.53
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Mar 2024 05:35:53 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 4/7] hw/misc/pca9554: Correct error check bounds in get/set pin
- functions
-Date: Mon, 25 Mar 2024 12:35:47 +0000
-Message-Id: <20240325123550.1991693-5-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240325123550.1991693-1-peter.maydell@linaro.org>
-References: <20240325123550.1991693-1-peter.maydell@linaro.org>
+ mo12-20020a1709030a8c00b001db717d2dbbsm4575825plb.210.2024.03.25.05.35.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Mar 2024 05:35:55 -0700 (PDT)
+Message-ID: <cef9c499-b258-4618-bff8-eeca8da3d184@ventanamicro.com>
+Date: Mon, 25 Mar 2024 09:35:52 -0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 20/34] tests/libqos: add riscv/virt machine nodes
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair23@gmail.com>,
+ qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>, Greg Kurz <groug@kaod.org>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240308111152.2856137-1-alistair.francis@wdc.com>
+ <20240308111152.2856137-21-alistair.francis@wdc.com>
+ <b85c8451-57e0-49aa-a7c4-28ae8bf08bf9@redhat.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <b85c8451-57e0-49aa-a7c4-28ae8bf08bf9@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,50 +102,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In pca9554_get_pin() and pca9554_set_pin(), we try to detect an
-incorrect pin value, but we get the condition wrong, using ">"
-when ">=" was intended.
 
-This has no actual effect, because in pca9554_initfn() we
-use the correct test when creating the properties and so
-we'll never be called with an out of range value. However,
-Coverity complains about the mismatch between the check and
-the later use of the pin value in a shift operation.
 
-Use the correct condition.
+On 3/25/24 06:20, Thomas Huth wrote:
+> On 08/03/2024 12.11, Alistair Francis wrote:
+>> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>
+>> Add a RISC-V 'virt' machine to the graph. This implementation is a
+>> modified copy of the existing arm machine in arm-virt-machine.c
+>>
+>> It contains a virtio-mmio and a generic-pcihost controller. The
+>> generic-pcihost controller hardcodes assumptions from the ARM 'virt'
+>> machine, like ecam and pio_base addresses, so we'll add an extra step to
+>> set its parameters after creating it.
+>>
+>> Our command line is incremented with 'aclint' parameters to allow the
+>> machine to run MSI tests.
+>>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+>> Acked-by: Thomas Huth <thuth@redhat.com>
+>> Message-ID: <20240217192607.32565-7-dbarboza@ventanamicro.com>
+>> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+>> ---
+> 
+>   Hi!
+> 
+> I noticed that "make check SPEED=slow" is now failing on the qos-test with both, qemu-system-riscv32 and qemu-system-riscv64. Seems like it fails with the virtio-9p test, when I run the qos-test manually, I get:
+> 
+> $ MALLOC_PERTURB_=21 V=2 QTEST_QEMU_BINARY=./qemu-system-riscv64 \
+>     tests/qtest/qos-test -m slow
+> ...
+> # Start of local tests
+> # starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-211303.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-211303.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -M virt,aclint=on,aia=aplic-imsic -fsdev local,id=fsdev0,path='/home/thuth/tmp/qemu-build/qtest-9p-local-MBCML2',security_model=mapped-xattr -device virtio-9p-pci,fsdev=fsdev0,addr=04.0,mount_tag=qtest -accel qtest
+> ok 168 /riscv64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-9p-pci/virtio-9p/virtio-9p-tests/local/config
+> Received response 7 (RLERROR) instead of 73 (RMKDIR)
+> Rlerror has errno 17 (File exists)
+> **
+> ERROR:../../devel/qemu/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
+> not ok /riscv64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-9p-pci/virtio-9p/virtio-9p-tests/local/create_dir - ERROR:../../devel/qemu/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
+> Bail out!
+> Aborted (core dumped)
+> 
+> Could you please have a look? ... or if it is too cumbersome to fix, could we please always skip the virtio-9p local tests on riscv ?
 
-Resolves: Coverity CID 1534917
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-id: 20240312183810.557768-5-peter.maydell@linaro.org
----
- hw/misc/pca9554.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I'll take a look.
 
-diff --git a/hw/misc/pca9554.c b/hw/misc/pca9554.c
-index 778b32e4430..5e31696797d 100644
---- a/hw/misc/pca9554.c
-+++ b/hw/misc/pca9554.c
-@@ -160,7 +160,7 @@ static void pca9554_get_pin(Object *obj, Visitor *v, const char *name,
-         error_setg(errp, "%s: error reading %s", __func__, name);
-         return;
-     }
--    if (pin < 0 || pin > PCA9554_PIN_COUNT) {
-+    if (pin < 0 || pin >= PCA9554_PIN_COUNT) {
-         error_setg(errp, "%s invalid pin %s", __func__, name);
-         return;
-     }
-@@ -187,7 +187,7 @@ static void pca9554_set_pin(Object *obj, Visitor *v, const char *name,
-         error_setg(errp, "%s: error reading %s", __func__, name);
-         return;
-     }
--    if (pin < 0 || pin > PCA9554_PIN_COUNT) {
-+    if (pin < 0 || pin >= PCA9554_PIN_COUNT) {
-         error_setg(errp, "%s invalid pin %s", __func__, name);
-         return;
-     }
--- 
-2.34.1
+Do we run these slow tests in the Gitlab pipeline? I don't recall this
+particular test failing when I first introduced the riscv machine nodes.
 
+
+Thanks,
+
+
+Daniel
+
+> 
+>   Thomas
+> 
 
