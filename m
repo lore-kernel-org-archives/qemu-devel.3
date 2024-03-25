@@ -4,86 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55AFEC54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 14:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8263EC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 14:48:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rolZQ-0004RL-HB; Mon, 25 Mar 2024 10:45:04 -0400
+	id 1rolbu-0005tO-3E; Mon, 25 Mar 2024 10:47:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rolZO-0004Qm-DB
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:45:02 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rolZM-00024U-8G
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:45:01 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-56c1a65275bso303383a12.1
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 07:44:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711377898; x=1711982698; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UasTUmVBcL/VKWYDCP4/BH4KdfUFX2g4aOhY6ZmnY4A=;
- b=FDyxM01VIvIfrWm0Iqc9hUQvYbpCgHYG3t2bDx9ROxrqJwzuavKZX7fLZd5H7o/3mD
- NVslglkn15eqSsC4zggB0M7UvHgNR5XT0PD1jjx2IxJO2btpNwg3PZA3hphqAxrurYsZ
- Fvg4rnUApFR0DiCbwP431wy/Ik9sX2BNyz6COtk0QO1IbsUgkvTNosabTODC6r01HHC7
- Ob5TzntZpQzBuy4VVcAU3H9ciTFQTFSMC1SgSiDc6kbAMUwEVMsgDm785bgALwC6zPpf
- /9SdH007buKk3zHq4QA91BJG2TWFcezVB46KIP2ur+3ZjJvGd5eG6hfzBZQqxJifDPRh
- Spbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711377898; x=1711982698;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UasTUmVBcL/VKWYDCP4/BH4KdfUFX2g4aOhY6ZmnY4A=;
- b=JIUZfK87pWogpfVtiEk2whgBt5atS5uYfltfeBavsNmOqDiuLqrP06W9Llb42vRrqK
- Jhq2p5OeqJfl24Px8uz8OVLV4Z3n3rw+qBDXEr8UKgdFqd8+Em441w0RY3/PbiQgTKo0
- 2FSq4dS7pcUO3yZPdUB4rB19hqU/gIxoulmuPs+tx2xeQ/7gUMfZz0pLpG5ssoY/swPn
- GoV7wLLoMHrWZIRZJ+J3NgAbHir97ENhUDHhAQY4CEeb0LeMatZxrGCQHy7JJr1PhDIs
- eaSvueg/R/EhRmGIYg/i+5FbC3BVG4fs+q12HRclT3u8OaZ1N2DoXM5pdNELXYG59rQl
- 6a1w==
-X-Gm-Message-State: AOJu0YwUliIYSB7ZuAr4q4/mBbdCfT6PUc+pk1tbCRcYkx1uQQN2VS6p
- bZ8DiL5dpuCa6BrtyF7phv/8m3DAIsf02tdtl/FcyIQt0Q+gVQue5IFnNoPSaG6UbUH5rPaUSKR
- 6GAus7EGs9kg0Xokba3kwdXYt1ZYgjFXbv67MKw==
-X-Google-Smtp-Source: AGHT+IEoyQXUwZC5FBlZHDQWutX+6XYDDrNKCcQ/pCuy6ZjVFJVTVTSQfIJYxPezMehlH0DBgNG3SFC9Q+JpT7cpLS8=
-X-Received: by 2002:a50:d7d1:0:b0:568:d7fe:a768 with SMTP id
- m17-20020a50d7d1000000b00568d7fea768mr6209020edj.25.1711377898145; Mon, 25
- Mar 2024 07:44:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rolbt-0005t7-3V
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:47:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rolbq-0002fO-Ox
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:47:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711378052;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=WM1+IU0xNyrYhER5wVdwgTjr8eQSLSe1Sd7ZFSpQIc4=;
+ b=Rqr6BFSSEgEbOt2f1vs7qHox/kqQRp4ZLavqPrV397yPJO/1kLApPwfcb31MsJIMC4sIYN
+ 0d3GaHWzMqdKIM+4k7VHnYm4xUHEgFUhYwHReOq7Vm/MtorlSMJ2hyJyYIYl+0zRKuwzjQ
+ vEl8xcKLOCMIElny9OI3f1X0Sk4uoFA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-BdP2kmpgNAa2m7Afp3y_wA-1; Mon,
+ 25 Mar 2024 10:47:31 -0400
+X-MC-Unique: BdP2kmpgNAa2m7Afp3y_wA-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C79C11C004E8;
+ Mon, 25 Mar 2024 14:47:30 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.158])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 67EB8492BC4;
+ Mon, 25 Mar 2024 14:47:30 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 2BB961801497; Mon, 25 Mar 2024 15:47:25 +0100 (CET)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Tom Lendacky <thomas.lendacky@amd.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH v5 0/2] kvm: add support for guest physical bits
+Date: Mon, 25 Mar 2024 15:47:22 +0100
+Message-ID: <20240325144725.1089192-1-kraxel@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20240325133259.57235-1-philmd@linaro.org>
- <20240325133259.57235-3-philmd@linaro.org>
- <CAFEAcA9aM8J+0RjYnvr8Xr8Q2j3w_TgxHO-gPDn8MaAcAUDynw@mail.gmail.com>
- <e3806179-47ed-4952-a7b6-c256a2aad197@linaro.org>
-In-Reply-To: <e3806179-47ed-4952-a7b6-c256a2aad197@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 25 Mar 2024 14:44:46 +0000
-Message-ID: <CAFEAcA_yyWKo7E1Vz2zQXnjetYWEXtt6mUyg+t4mJXt+nsKBgA@mail.gmail.com>
-Subject: Re: [PATCH-for-9.0? v2 2/8] hw/clock: Pass optional &bool argument to
- clock_set()
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Damien Hedde <damien.hedde@dahe.fr>, 
- qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
- Luc Michel <luc@lmichel.fr>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,64 +80,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 25 Mar 2024 at 14:39, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 25/3/24 14:47, Peter Maydell wrote:
-> > On Mon, 25 Mar 2024 at 13:33, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
-o.org> wrote:
-> >>
-> >> Currently clock_set() returns whether the clock has
-> >> been changed or not. In order to combine this information
-> >> with other clock calls, pass an optional boolean and do
-> >> not return anything.  The single caller ignores the return
-> >> value, have it use NULL.
-> >>
-> >> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >> ---
-> >>   include/hw/clock.h       | 22 ++++++++++++++++------
-> >>   hw/core/clock.c          |  8 +++++---
-> >>   hw/misc/bcm2835_cprman.c |  2 +-
-> >>   hw/misc/zynq_slcr.c      |  4 ++--
-> >>   4 files changed, 24 insertions(+), 12 deletions(-)
-> >>
-> >> diff --git a/include/hw/clock.h b/include/hw/clock.h
-> >> index bb12117f67..474bbc07fe 100644
-> >> --- a/include/hw/clock.h
-> >> +++ b/include/hw/clock.h
-> >> @@ -180,21 +180,28 @@ static inline bool clock_has_source(const Clock =
-*clk)
-> >>    * clock_set:
-> >>    * @clk: the clock to initialize.
-> >>    * @value: the clock's value, 0 means unclocked
-> >> + * @changed: set to true if the clock is changed, ignored if set to N=
-ULL.
-> >>    *
-> >>    * Set the local cached period value of @clk to @value.
-> >> - *
-> >> - * @return: true if the clock is changed.
-> >>    */
-> >> -bool clock_set(Clock *clk, uint64_t value);
-> >> +void clock_set(Clock *clk, uint64_t period, bool *changed);
-> >
-> > What's wrong with using the return value? Generally
-> > returning a value via passing in a pointer is much
-> > clunkier in C than using the return value, so we only
-> > do it if we have to (e.g. the return value is already
-> > being used for something else, or we need to return
-> > more than one thing at once).
->
-> Then I'd rather remove (by inlining) the clock_update*() methods,
-> to have explicit calls to clock_propagate(), after multiple
-> clock_set*() calls.
+The matching kernel bits are here:
+https://lore.kernel.org/kvm/20240313125844.912415-1-kraxel@redhat.com/T/
 
-You mean, so that we handle "set the clock period" and
-"set the mul/div" the same way, by just setting them and making
-it always the caller's responsibility to call clock_propagate() ?
+ovmf test patches are here:
+https://github.com/kraxel/edk2/commits/devel/guest-phys-bits/
 
-Would you keep the bool return for clock_set and clock_set_mul_div
-to tell the caller whether a clock_propagate() call is needed ?
+Gerd Hoffmann (2):
+  kvm: add support for guest physical bits
+  target/i386: add guest-phys-bits cpu property
 
-thanks
--- PMM
+ target/i386/cpu.h         |  1 +
+ target/i386/cpu.c         | 14 ++++++++++++++
+ target/i386/kvm/kvm-cpu.c | 31 ++++++++++++++++++++++++++++++-
+ 3 files changed, 45 insertions(+), 1 deletion(-)
+
+-- 
+2.44.0
+
 
