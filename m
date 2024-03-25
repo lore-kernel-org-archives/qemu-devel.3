@@ -4,56 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB50C54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF00C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:35:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rokT1-0004iz-CF; Mon, 25 Mar 2024 09:34:23 -0400
+	id 1rokSJ-0002pk-NQ; Mon, 25 Mar 2024 09:33:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=rDMc=K7=kaod.org=clg@ozlabs.org>)
- id 1rokSw-0004a6-PY; Mon, 25 Mar 2024 09:34:18 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=rDMc=K7=kaod.org=clg@ozlabs.org>)
- id 1rokSt-0007UN-L5; Mon, 25 Mar 2024 09:34:17 -0400
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4V3DRm0Jrwz4wcg;
- Tue, 26 Mar 2024 00:34:12 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4V3DRg4krdz4wyh;
- Tue, 26 Mar 2024 00:34:07 +1100 (AEDT)
-Message-ID: <26c7a63d-78fe-4378-b950-0673f0c96114@kaod.org>
-Date: Mon, 25 Mar 2024 14:34:05 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokSH-0002kZ-MU
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:33:37 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokSF-0007Nu-PE
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:33:37 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4148c6132b4so569165e9.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:33:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711373613; x=1711978413; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eAE2yytRBI+AooWG1nnNIGk1ax3StRcF3qR/MNn/B7A=;
+ b=S4fXYeOt1szLbaDkSZ57+UEX+5imdJifPsqxCdQ3qjde4PpYPpIiJbIV8ioJ8DFEnZ
+ NJ59SP09dVgWMvgX0+yJG/nkvox0SJo4AktguJkjW7AvizKNGAqXasl+uWtBD7gh+Cro
+ IumRrtKU7iNvVidk/fY8pue1WtWWHL9R22i/wxGyTUo3P6tGxNQ/Ri0UxUlssM4LDQm7
+ wrLxmfN4AlL4FfhX9bfpKu9d3Z3z3C2M1DgmU4FfnhxvumQn1a5GCSd74wCFCBz6kU+p
+ F4wwJVDoh1oiJ90YnsClw6tavaC0rvLfUy43ThQomi06fLZD+57fqqMj/cfuCdLL14i2
+ wEGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711373613; x=1711978413;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=eAE2yytRBI+AooWG1nnNIGk1ax3StRcF3qR/MNn/B7A=;
+ b=fhXdJzjoXAR2QvNizX23PHevcEFzwCPSGwDG0xXh2mt+0NegFWXsKZHu207bPmB3+c
+ uS69NBpF5Hyw96IXluENnyF0/KXnT1LDW6zRXO0cDHSut0GmulfHFF3R61rVqAQ3J5Zu
+ UMPlbhQC4D+0iW62zYLfo4mVDTZ+nc4D3GatLg3CWnfFGHtnS9BSm6l1APcufwkHS8d0
+ dXvCVrcC363K2FFe3gRuESDtFYisxkQGCNU6T+oXdVJsF+aqg5WRPL+HgzeawC8TbqRJ
+ 0HXE2K828foLbKOGQWYFYrLwt7FfEfWeucXyvIOroQMnhsTE9VIkhVQDmdKbSAXQaAHI
+ u4+g==
+X-Gm-Message-State: AOJu0YzjGqpKKi69d0gj6y4aJb/kg3iSN0eaJy2oPEN1ltBK4Mu5/K3d
+ sUYzSWhl4Cyass1hww8HtxeCH22AVeu8nLTjQXTeh+Ikerh1uYRh2nZA+JWDqy8nlbAnWgzePwb
+ /lX8=
+X-Google-Smtp-Source: AGHT+IGBzL4UkP7UXjWy0pFo/4OspRCYJ3gNscDzKsaFYTMP08eVdUr9p6WMLGzwWpq8vju0ksuM+g==
+X-Received: by 2002:a05:6000:1362:b0:33e:ca2c:70f5 with SMTP id
+ q2-20020a056000136200b0033eca2c70f5mr6078181wrz.7.1711373613710; 
+ Mon, 25 Mar 2024 06:33:33 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.208.214])
+ by smtp.gmail.com with ESMTPSA id
+ e6-20020a5d5946000000b0033ecb329f15sm9612390wri.9.2024.03.25.06.33.32
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 25 Mar 2024 06:33:33 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Damien Hedde <damien.hedde@dahe.fr>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>, Luc Michel <luc@lmichel.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>
+Subject: [PATCH-for-9.0? v2 5/8] hw/clock: Pass optional &bool argument to
+ clock_set_mul_div()
+Date: Mon, 25 Mar 2024 14:32:55 +0100
+Message-ID: <20240325133259.57235-6-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240325133259.57235-1-philmd@linaro.org>
+References: <20240325133259.57235-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/10] pnv/phb4: Mask off LSI Source-ID based on number of
- interrupts
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com
-References: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
- <20240321100422.5347-11-saif.abrar@linux.vnet.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240321100422.5347-11-saif.abrar@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=rDMc=K7=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,71 +101,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/21/24 11:04, Saif Abrar wrote:
-> Add a method to reset the value of LSI Source-ID.
-> Mask off LSI source-id based on number of interrupts in the big/small PHB.
+Pass optional &bool argument to clock_set_ns().
+Since all callers ignore the return value, have
+them use NULL.
 
-Looks ok.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ docs/devel/clocks.rst   | 4 ++++
+ include/hw/clock.h      | 3 ++-
+ hw/arm/msf2-soc.c       | 2 +-
+ hw/arm/stm32f100_soc.c  | 2 +-
+ hw/arm/stm32f205_soc.c  | 2 +-
+ hw/arm/stm32f405_soc.c  | 2 +-
+ hw/core/clock.c         | 7 ++++++-
+ hw/misc/stm32l4x5_rcc.c | 2 +-
+ 8 files changed, 17 insertions(+), 7 deletions(-)
 
-  
-> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-> ---
->   hw/pci-host/pnv_phb4.c | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-> index f48750ee54..8fbaf6512e 100644
-> --- a/hw/pci-host/pnv_phb4.c
-> +++ b/hw/pci-host/pnv_phb4.c
-> @@ -489,6 +489,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
->   
->       lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
->       lsi_base <<= 3;
-> +    lsi_base &= (xsrc->nr_irqs - 1);
->   
->       /* TODO: handle reset values of PHB_LSI_SRC_ID */
->       if (!lsi_base) {
-> @@ -1966,6 +1967,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
->       /* TODO: Add more RO-masks as regs are implemented in the model */
->   }
->   
-> +static void pnv_phb4_fund_A_reset(PnvPHB4 *phb)
-
-What is fund_A ?
-
-> +{
-> +    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
-
-Is this mask the default value for HW ?
-
-
-Thanks,
-
-C.
-
-
-> +    pnv_phb4_update_xsrc(phb);
-> +}
-> +
->   static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
->   {
->       STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
-> @@ -2023,6 +2030,7 @@ static void pnv_phb4_reset(void *dev)
->       pnv_phb4_cfg_core_reset(phb);
->       pnv_phb4_pbl_core_reset(phb);
->   
-> +    pnv_phb4_fund_A_reset(phb);
->       pnv_phb4_err_reg_reset(phb);
->       pnv_phb4_pcie_stack_reg_reset(phb);
->       pnv_phb4_regb_err_reg_reset(phb);
-> @@ -2102,8 +2110,6 @@ static void pnv_phb4_realize(DeviceState *dev, Error **errp)
->           return;
->       }
->   
-> -    pnv_phb4_update_xsrc(phb);
-> -
->       phb->qirqs = qemu_allocate_irqs(xive_source_set_irq, xsrc, xsrc->nr_irqs);
->   
->       pnv_phb4_xscom_realize(phb);
+diff --git a/docs/devel/clocks.rst b/docs/devel/clocks.rst
+index 3360e5616d..027a3c5dbc 100644
+--- a/docs/devel/clocks.rst
++++ b/docs/devel/clocks.rst
+@@ -279,6 +279,10 @@ You can change the multiplier and divider of a clock at runtime,
+ so you can use this to model clock controller devices which
+ have guest-programmable frequency multipliers or dividers.
+ 
++Similary to ``clock_set()``, ``clock_set_mul_div()`` takes an optional
++boolean pointer which is set to ``true`` if the clock state was modified,
++that it, if the multiplier or the diviser or both were changed by the call.
++
+ Note that ``clock_set_mul_div()`` does not automatically call
+ ``clock_propagate()``. If you make a runtime change to the
+ multiplier or divider you must call clock_propagate() yourself.
+diff --git a/include/hw/clock.h b/include/hw/clock.h
+index f0ac410fc8..0e4c5b67a2 100644
+--- a/include/hw/clock.h
++++ b/include/hw/clock.h
+@@ -376,6 +376,7 @@ char *clock_display_freq(Clock *clk);
+  * Note that this function does not call clock_propagate(); the
+  * caller should do that if necessary.
+  */
+-void clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider);
++void clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider,
++                       bool *changed);
+ 
+ #endif /* QEMU_HW_CLOCK_H */
+diff --git a/hw/arm/msf2-soc.c b/hw/arm/msf2-soc.c
+index a94a10adcc..7257bd5ded 100644
+--- a/hw/arm/msf2-soc.c
++++ b/hw/arm/msf2-soc.c
+@@ -111,7 +111,7 @@ static void m2sxxx_soc_realize(DeviceState *dev_soc, Error **errp)
+      * implement the divisor as a fixed /32, which matches the reset value
+      * of SYSTICK_CR.
+      */
+-    clock_set_mul_div(s->refclk, 32, 1);
++    clock_set_mul_div(s->refclk, 32, 1, NULL);
+     clock_set_source(s->refclk, s->m3clk);
+ 
+     memory_region_init_rom(&s->nvm, OBJECT(dev_soc), "MSF2.eNVM", s->envm_size,
+diff --git a/hw/arm/stm32f100_soc.c b/hw/arm/stm32f100_soc.c
+index 808b783515..4879bd6188 100644
+--- a/hw/arm/stm32f100_soc.c
++++ b/hw/arm/stm32f100_soc.c
+@@ -93,7 +93,7 @@ static void stm32f100_soc_realize(DeviceState *dev_soc, Error **errp)
+      */
+ 
+     /* The refclk always runs at frequency HCLK / 8 */
+-    clock_set_mul_div(s->refclk, 8, 1);
++    clock_set_mul_div(s->refclk, 8, 1, NULL);
+     clock_set_source(s->refclk, s->sysclk);
+ 
+     /*
+diff --git a/hw/arm/stm32f205_soc.c b/hw/arm/stm32f205_soc.c
+index a451e21f59..aeb0cb0a5a 100644
+--- a/hw/arm/stm32f205_soc.c
++++ b/hw/arm/stm32f205_soc.c
+@@ -110,7 +110,7 @@ static void stm32f205_soc_realize(DeviceState *dev_soc, Error **errp)
+      */
+ 
+     /* The refclk always runs at frequency HCLK / 8 */
+-    clock_set_mul_div(s->refclk, 8, 1);
++    clock_set_mul_div(s->refclk, 8, 1, NULL);
+     clock_set_source(s->refclk, s->sysclk);
+ 
+     memory_region_init_rom(&s->flash, OBJECT(dev_soc), "STM32F205.flash",
+diff --git a/hw/arm/stm32f405_soc.c b/hw/arm/stm32f405_soc.c
+index 2ad5b79a06..07cf0e8287 100644
+--- a/hw/arm/stm32f405_soc.c
++++ b/hw/arm/stm32f405_soc.c
+@@ -115,7 +115,7 @@ static void stm32f405_soc_realize(DeviceState *dev_soc, Error **errp)
+      */
+ 
+     /* The refclk always runs at frequency HCLK / 8 */
+-    clock_set_mul_div(s->refclk, 8, 1);
++    clock_set_mul_div(s->refclk, 8, 1, NULL);
+     clock_set_source(s->refclk, s->sysclk);
+ 
+     memory_region_init_rom(&s->flash, OBJECT(dev_soc), "STM32F405.flash",
+diff --git a/hw/core/clock.c b/hw/core/clock.c
+index e0f257b141..6ef60a2423 100644
+--- a/hw/core/clock.c
++++ b/hw/core/clock.c
+@@ -145,7 +145,8 @@ char *clock_display_freq(Clock *clk)
+     return freq_to_str(clock_get_hz(clk));
+ }
+ 
+-void clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider)
++void clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider,
++                       bool *changed)
+ {
+     assert(divider != 0);
+ 
+@@ -157,6 +158,10 @@ void clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider)
+                             clk->divider, divider);
+     clk->multiplier = multiplier;
+     clk->divider = divider;
++
++    if (changed) {
++        *changed = true;
++    }
+ }
+ 
+ static void clock_initfn(Object *obj)
+diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
+index bc2d63528b..f01113308a 100644
+--- a/hw/misc/stm32l4x5_rcc.c
++++ b/hw/misc/stm32l4x5_rcc.c
+@@ -59,7 +59,7 @@ static void clock_mux_update(RccClockMuxState *mux, bool bypass_source)
+         freq_multiplier = mux->divider;
+     }
+ 
+-    clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier);
++    clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier, NULL);
+     clock_update(mux->out, clock_get(current_source));
+ 
+     src_freq = clock_get_hz(current_source);
+-- 
+2.41.0
 
 
