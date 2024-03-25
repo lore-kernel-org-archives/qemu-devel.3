@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98C93C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 19:03:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C7E3C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 19:05:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ropaf-0008Uj-8H; Mon, 25 Mar 2024 15:02:37 -0400
+	id 1ropcn-00012n-Tw; Mon, 25 Mar 2024 15:04:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ropaa-0008UU-Qh
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:02:33 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1ropcm-00012U-6M
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:04:48 -0400
+Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ropaY-0004d4-H8
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:02:32 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6e6afb754fcso4157162b3a.3
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 12:02:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1ropck-0004oX-H7
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:04:47 -0400
+Received: by mail-oo1-xc2a.google.com with SMTP id
+ 006d021491bc7-5a529a1f69aso1333318eaf.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 12:04:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711393349; x=1711998149; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vLwfXaxD9gsTbc806gbHCNJUeEjFRSWjCyVPjGEmZbY=;
- b=JgBKtJajQJSnxV1TEDj7hpXQoG9nH/ep/G5rgIWOv+SS9Ta0jpsXtH/vlkGfloyAoE
- El8bl87QwU0wNMM5QGO2zuXaDRPbhHNKnNdQ/prWoQ2kWNqrzecbvDhsKDrgdtX2q2Ns
- YBMNXlQSlfaI5Jezt58v3CQoInt3bn0hS9fOBd0p42PbZhEjP8CauJVSikbVoqx4ZMJg
- dDU/2TDHBbTNAvYbx+y+nkPt8NBlnJ+JEndF+QE4mTPw+tLgLdbgBOMFAa7T/W8j9Wds
- O0qbsRQkBEsJE/jO2IsnMThfELivW1k/KPtWAglXHhmbX8YROhK/CQA+V+7BXpZHKYzT
- T51A==
+ d=gmail.com; s=20230601; t=1711393485; x=1711998285; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZE+wSwqEFJL+GKQSjH/3heWejc1q4cGgoFbgOcUQ3o0=;
+ b=XxM7qJs7qHeA5CzpZcu62Mf3STNi23ilWepMW7i1R8scpErzbmzdLAXXKGrZaeo7l4
+ qvqn7foY7Sw2n61G0oHLqyJoc6RD8LU4zfofmIqeSAgggaN89+ao2p+5j6B1lKGlwDEe
+ qIQw8EG+FGyPVzH96RemHmCSeHyDDVrQiTMfyRTLceAqWL2oIm6IAuo72YjRSAWoYfjd
+ IXTj4JOf9+89LeYtyE68Yw4f8cdZE0h0Tu5FnR5iHaDtEoKQUlT7zffgsRBvfWRG5XKu
+ 7Zhqn7NyBL9XdMByBIuwbaf0SnrzQcLuBLbFxB65F5o0jCT3TRS0e63cch9bIxuCBFKZ
+ Cvlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711393349; x=1711998149;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vLwfXaxD9gsTbc806gbHCNJUeEjFRSWjCyVPjGEmZbY=;
- b=T9tpFcCFEdjoDK2xmT3+bdlZ6fFsZj+Y/NYLujhsqQAZlOT6iI6oCxKO5KdQxCp6lG
- RlMcGd6nDioGNe4Hzr7VQv1zCnwuQecxkdmR8V5HRopdIwI/ncJudTMegkPs0JhVWFK0
- fRmeZ5GjmQYa5Yr9mZ2BlZ+NpUwGTTvajOFXcBl88XRy0RapQ+vsLqi5kVJaQdBmEmI7
- qJ7sHbTYe85vELcis8SJdaH5lqCDcThHD76vWYia42mG6WmybBVDzDYCy5P74N5dvMCs
- zhMTCqrLL7s+8nH5736zsDPzGtW1UrVqIDpVR+EjrjFOUi/zXw2n6CpjznL9g71thmDg
- TiFA==
-X-Gm-Message-State: AOJu0YwqsCnHZdq8FV95hjyvsfXa8RsiBCuw+kXkBDwc8EWXf2nVzUzL
- zuAKCzRdX4mQojJfXYfyMNZtHT7MxJs4XRXFnDuBHQOqJqYSi0f1T3ADLeXcXLiKMxq1L6En9iM
- q
-X-Google-Smtp-Source: AGHT+IHOBhJtemPRGYSAqu5/vK7xGZnST2esVlOJzo11ZBO3nrsP/dASI+enk2bOJy/0c0yG/6kOtg==
-X-Received: by 2002:a17:902:dac6:b0:1e0:b60e:2cd9 with SMTP id
- q6-20020a170902dac600b001e0b60e2cd9mr6036477plx.30.1711393348644; 
- Mon, 25 Mar 2024 12:02:28 -0700 (PDT)
-Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
+ d=1e100.net; s=20230601; t=1711393485; x=1711998285;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZE+wSwqEFJL+GKQSjH/3heWejc1q4cGgoFbgOcUQ3o0=;
+ b=sPPC9BSpjlMcy2UuV9t7D3RZpqunHwQmBw7HN4CUt6Z4r3ia+j/qAuQ7TqeFB4DwPa
+ a2yGCBUkUVhz+Xz4tnc1AwxP+nUGOXSWODnfdCNctLoWLCMj6hYwsMdEZNoTOt9kDTOY
+ WFDNzwztBK/XzhdxTtZ0J4/w2N8glB661TqZrKY/Uzv9mgWG9PVYsHVy51Phyj8TPZZO
+ 2Q4jVclTtb+ELCJ+iW2BO0Q3IZHSW+GQQsr38QERmzp7bhDDii+e+3Rt8p8SCzbTnFDU
+ MNh+uRj9ThFzbFk5c06WcV/m3ozO+CI9B5fl9XjjwtpRGnx8CUAcxM5smrabcQtz1HaX
+ x39Q==
+X-Gm-Message-State: AOJu0YxegNhj7LoigOIfPYT4s2DVFp6Rv+yZHycGQq+kLdIqN8MGAnbB
+ F0BZgRQ2DVKOEE1rsKXb11H3Jau02z6mwRqhqoZKOEzbjhHsAHbcws7lHe+N
+X-Google-Smtp-Source: AGHT+IGh8nmchiuNN7ukVHIskLAnXpa5rDx0Y8mCAvpRUq1OfIHgTSakFVcZ+aTS1/yVwOJjvsfGkg==
+X-Received: by 2002:a05:6358:7695:b0:17c:1c76:84b1 with SMTP id
+ e21-20020a056358769500b0017c1c7684b1mr10164285rwg.14.1711393484615; 
+ Mon, 25 Mar 2024 12:04:44 -0700 (PDT)
+Received: from localhost.localdomain ([2601:641:300:14de:7bed:2ef:bead:18b])
  by smtp.gmail.com with ESMTPSA id
- n1-20020a170902e54100b001deecb4f897sm4997372plf.100.2024.03.25.12.02.27
+ z7-20020a634c07000000b005f05c9ee8d3sm1722663pga.93.2024.03.25.12.04.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Mar 2024 12:02:28 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Mon, 25 Mar 2024 12:04:44 -0700 (PDT)
+From: nifan.cxl@gmail.com
 To: qemu-devel@nongnu.org
-Cc: deller@gmx.de
-Subject: [PATCH v2] target/hppa: Fix unit carry conditions
-Date: Mon, 25 Mar 2024 09:02:25 -1000
-Message-Id: <20240325190225.104465-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+Cc: jonathan.cameron@huawei.com, linux-cxl@vger.kernel.org,
+ gregory.price@memverge.com, ira.weiny@intel.com, dan.j.williams@intel.com,
+ a.manzanares@samsung.com, dave@stgolabs.net, nmtadam.samsung@gmail.com,
+ nifan.cxl@gmail.com, jim.harris@samsung.com, Jorgen.Hansen@wdc.com,
+ wj28.lee@gmail.com, Fan Ni <fan.ni@samsung.com>
+Subject: [PATCH v6 07/12] hw/mem/cxl_type3: Add DC extent list representative
+ and get DC extent list mailbox support
+Date: Mon, 25 Mar 2024 12:02:25 -0700
+Message-ID: <20240325190339.696686-8-nifan.cxl@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240325190339.696686-1-nifan.cxl@gmail.com>
+References: <20240325190339.696686-1-nifan.cxl@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-oo1-xc2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,312 +98,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split do_unit_cond to do_unit_zero_cond to only handle conditions
-versus zero.  These are the only ones that are legal for UXOR.
-Simplify trans_uxor accordingly.
+From: Fan Ni <fan.ni@samsung.com>
 
-Rename do_unit to do_unit_addsub, since xor has been split.
-Properly compute carry-out bits for add and subtract, mirroring
-the code in do_add and do_sub.
+Add dynamic capacity extent list representative to the definition of
+CXLType3Dev and implement get DC extent list mailbox command per
+CXL.spec.3.1:.8.2.9.9.9.2.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
 ---
+ hw/cxl/cxl-mailbox-utils.c  | 75 ++++++++++++++++++++++++++++++++++++-
+ hw/mem/cxl_type3.c          |  1 +
+ include/hw/cxl/cxl_device.h | 22 +++++++++++
+ 3 files changed, 97 insertions(+), 1 deletion(-)
 
-v2: Cut and paste error between 64- and 32-bit paths.
-    Shift 32-bit carry down 1 bit like 64-bit carry;
-    tradeoff is shift vs needing a 64-bit constant for the mask.
-    Don't use of TCG_COND_TST{NE,EQ}, as this will limit backports
-    of the actual bug fix.  We can convert the port to test conditions
-    en masse during the next devel cycle.
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 831cef0567..30ef46a036 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -84,6 +84,7 @@ enum {
+         #define CLEAR_POISON           0x2
+     DCD_CONFIG  = 0x48,
+         #define GET_DC_CONFIG          0x0
++        #define GET_DYN_CAP_EXT_LIST   0x1
+     PHYSICAL_SWITCH = 0x51,
+         #define IDENTIFY_SWITCH_DEVICE      0x0
+         #define GET_PHYSICAL_PORT_STATE     0x1
+@@ -1322,7 +1323,8 @@ static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
+      * to use.
+      */
+     stl_le_p(&extra_out->num_extents_supported, CXL_NUM_EXTENTS_SUPPORTED);
+-    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED);
++    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED -
++             ct3d->dc.total_extent_count);
+     stl_le_p(&extra_out->num_tags_supported, CXL_NUM_TAGS_SUPPORTED);
+     stl_le_p(&extra_out->num_tags_available, CXL_NUM_TAGS_SUPPORTED);
  
----
- target/hppa/translate.c | 218 +++++++++++++++++++++-------------------
- 1 file changed, 113 insertions(+), 105 deletions(-)
-
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 3fc3e7754c..99c5c4cbca 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -936,98 +936,44 @@ static DisasCond do_sed_cond(DisasContext *ctx, unsigned orig, bool d,
-     return do_log_cond(ctx, c * 2 + f, d, res);
+@@ -1330,6 +1332,74 @@ static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
+     return CXL_MBOX_SUCCESS;
  }
  
--/* Similar, but for unit conditions.  */
--
--static DisasCond do_unit_cond(unsigned cf, bool d, TCGv_i64 res,
--                              TCGv_i64 in1, TCGv_i64 in2)
-+/* Similar, but for unit zero conditions.  */
-+static DisasCond do_unit_zero_cond(unsigned cf, bool d, TCGv_i64 res)
- {
--    DisasCond cond;
--    TCGv_i64 tmp, cb = NULL;
-+    TCGv_i64 tmp;
-     uint64_t d_repl = d ? 0x0000000100000001ull : 1;
--
--    if (cf & 8) {
--        /* Since we want to test lots of carry-out bits all at once, do not
--         * do our normal thing and compute carry-in of bit B+1 since that
--         * leaves us with carry bits spread across two words.
--         */
--        cb = tcg_temp_new_i64();
--        tmp = tcg_temp_new_i64();
--        tcg_gen_or_i64(cb, in1, in2);
--        tcg_gen_and_i64(tmp, in1, in2);
--        tcg_gen_andc_i64(cb, cb, res);
--        tcg_gen_or_i64(cb, cb, tmp);
--    }
-+    uint64_t ones = 0, sgns = 0;
- 
-     switch (cf >> 1) {
--    case 0: /* never / TR */
--        cond = cond_make_f();
--        break;
--
-     case 1: /* SBW / NBW */
-         if (d) {
--            tmp = tcg_temp_new_i64();
--            tcg_gen_subi_i64(tmp, res, d_repl * 0x00000001u);
--            tcg_gen_andc_i64(tmp, tmp, res);
--            tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80000000u);
--            cond = cond_make_0(TCG_COND_NE, tmp);
--        } else {
--            /* undefined */
--            cond = cond_make_f();
-+            ones = d_repl;
-+            sgns = d_repl << 31;
-         }
-         break;
--
-     case 2: /* SBZ / NBZ */
--        /* See hasless(v,1) from
--         * https://graphics.stanford.edu/~seander/bithacks.html#ZeroInWord
--         */
--        tmp = tcg_temp_new_i64();
--        tcg_gen_subi_i64(tmp, res, d_repl * 0x01010101u);
--        tcg_gen_andc_i64(tmp, tmp, res);
--        tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80808080u);
--        cond = cond_make_0(TCG_COND_NE, tmp);
-+        ones = d_repl * 0x01010101u;
-+        sgns = ones << 7;
-         break;
--
-     case 3: /* SHZ / NHZ */
--        tmp = tcg_temp_new_i64();
--        tcg_gen_subi_i64(tmp, res, d_repl * 0x00010001u);
--        tcg_gen_andc_i64(tmp, tmp, res);
--        tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80008000u);
--        cond = cond_make_0(TCG_COND_NE, tmp);
-+        ones = d_repl * 0x00010001u;
-+        sgns = ones << 15;
-         break;
--
--    case 4: /* SDC / NDC */
--        tcg_gen_andi_i64(cb, cb, d_repl * 0x88888888u);
--        cond = cond_make_0(TCG_COND_NE, cb);
--        break;
--
--    case 5: /* SWC / NWC */
--        if (d) {
--            tcg_gen_andi_i64(cb, cb, d_repl * 0x80000000u);
--            cond = cond_make_0(TCG_COND_NE, cb);
--        } else {
--            /* undefined */
--            cond = cond_make_f();
--        }
--        break;
--
--    case 6: /* SBC / NBC */
--        tcg_gen_andi_i64(cb, cb, d_repl * 0x80808080u);
--        cond = cond_make_0(TCG_COND_NE, cb);
--        break;
--
--    case 7: /* SHC / NHC */
--        tcg_gen_andi_i64(cb, cb, d_repl * 0x80008000u);
--        cond = cond_make_0(TCG_COND_NE, cb);
--        break;
--
--    default:
--        g_assert_not_reached();
-     }
--    if (cf & 1) {
--        cond.c = tcg_invert_cond(cond.c);
-+    if (ones == 0) {
-+        /* Undefined, or 0/1 (never/always). */
-+        return cf & 1 ? cond_make_t() : cond_make_f();
-     }
- 
--    return cond;
-+    /*
-+     * See hasless(v,1) from
-+     * https://graphics.stanford.edu/~seander/bithacks.html#ZeroInWord
-+     */
-+    tmp = tcg_temp_new_i64();
-+    tcg_gen_subi_i64(tmp, res, ones);
-+    tcg_gen_andc_i64(tmp, tmp, res);
-+    tcg_gen_andi_i64(tmp, tmp, sgns);
++/*
++ * CXL r3.1 section 8.2.9.9.9.2:
++ * Get Dynamic Capacity Extent List (Opcode 4801h)
++ */
++static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
++                                               uint8_t *payload_in,
++                                               size_t len_in,
++                                               uint8_t *payload_out,
++                                               size_t *len_out,
++                                               CXLCCI *cci)
++{
++    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
++    struct {
++        uint32_t extent_cnt;
++        uint32_t start_extent_id;
++    } QEMU_PACKED *in = (void *)payload_in;
++    struct {
++        uint32_t count;
++        uint32_t total_extents;
++        uint32_t generation_num;
++        uint8_t rsvd[4];
++        CXLDCExtentRaw records[];
++    } QEMU_PACKED *out = (void *)payload_out;
++    uint32_t start_extent_id = in->start_extent_id;
++    CXLDCExtentList *extent_list = &ct3d->dc.extents;
++    uint16_t record_count = 0, i = 0, record_done = 0;
++    uint16_t out_pl_len, size;
++    CXLDCExtent *ent;
 +
-+    return cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, tmp);
- }
- 
- static TCGv_i64 get_carry(DisasContext *ctx, bool d,
-@@ -1330,34 +1276,86 @@ static bool do_log_reg(DisasContext *ctx, arg_rrr_cf_d *a,
-     return nullify_end(ctx);
- }
- 
--static void do_unit(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
--                    TCGv_i64 in2, unsigned cf, bool d, bool is_tc,
--                    void (*fn)(TCGv_i64, TCGv_i64, TCGv_i64))
-+static void do_unit_addsub(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
-+                           TCGv_i64 in2, unsigned cf, bool d,
-+                           bool is_tc, bool is_add)
- {
--    TCGv_i64 dest;
-+    TCGv_i64 dest = tcg_temp_new_i64();
-+    uint64_t test_cb = 0;
-     DisasCond cond;
- 
--    if (cf == 0) {
--        dest = dest_gpr(ctx, rt);
--        fn(dest, in1, in2);
--        save_gpr(ctx, rt, dest);
--        cond_free(&ctx->null_cond);
--    } else {
--        dest = tcg_temp_new_i64();
--        fn(dest, in1, in2);
--
--        cond = do_unit_cond(cf, d, dest, in1, in2);
--
--        if (is_tc) {
--            TCGv_i64 tmp = tcg_temp_new_i64();
--            tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
--            gen_helper_tcond(tcg_env, tmp);
-+    /* Select which carry-out bits to test. */
-+    switch (cf >> 1) {
-+    case 4: /* NDC / SDC -- 4-bit carries */
-+        test_cb = dup_const(MO_8, 0x88);
-+        break;
-+    case 5: /* NWC / SWC -- 32-bit carries */
-+        if (d) {
-+            test_cb = dup_const(MO_32, INT32_MIN);
-+        } else {
-+            cf &= 1; /* undefined -- map to never/always */
-         }
--        save_gpr(ctx, rt, dest);
--
--        cond_free(&ctx->null_cond);
--        ctx->null_cond = cond;
-+        break;
-+    case 6: /* NBC / SBC -- 8-bit carries */
-+        test_cb = dup_const(MO_8, INT8_MIN);
-+        break;
-+    case 7: /* NHC / SHC -- 16-bit carries */
-+        test_cb = dup_const(MO_16, INT16_MIN);
-+        break;
-     }
-+    if (!d) {
-+        test_cb = (uint32_t)test_cb;
++    if (start_extent_id > ct3d->dc.total_extent_count) {
++        return CXL_MBOX_INVALID_INPUT;
 +    }
 +
-+    if (!test_cb) {
-+        /* No need to compute carries if we don't need to test them. */
-+        if (is_add) {
-+            tcg_gen_add_i64(dest, in1, in2);
-+        } else {
-+            tcg_gen_sub_i64(dest, in1, in2);
-+        }
-+        cond = do_unit_zero_cond(cf, d, dest);
-+    } else {
-+        TCGv_i64 cb = tcg_temp_new_i64();
++    record_count = MIN(in->extent_cnt,
++                       ct3d->dc.total_extent_count - start_extent_id);
++    size = CXL_MAILBOX_MAX_PAYLOAD_SIZE - sizeof(*out);
++    if (size / sizeof(out->records[0]) < record_count) {
++        record_count = size / sizeof(out->records[0]);
++    }
++    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
 +
-+        if (d) {
-+            TCGv_i64 cb_msb = tcg_temp_new_i64();
-+            if (is_add) {
-+                tcg_gen_add2_i64(dest, cb_msb, in1, ctx->zero, in2, ctx->zero);
-+                tcg_gen_xor_i64(cb, in1, in2);
-+            } else {
-+                /* See do_sub, !is_b. */
-+                TCGv_i64 one = tcg_constant_i64(1);
-+                tcg_gen_sub2_i64(dest, cb_msb, in1, one, in2, ctx->zero);
-+                tcg_gen_eqv_i64(cb, in1, in2);
++    stl_le_p(&out->count, record_count);
++    stl_le_p(&out->total_extents, ct3d->dc.total_extent_count);
++    stl_le_p(&out->generation_num, ct3d->dc.ext_list_gen_seq);
++
++    if (record_count > 0) {
++        CXLDCExtentRaw *out_rec = &out->records[record_done];
++
++        QTAILQ_FOREACH(ent, extent_list, node) {
++            if (i++ < start_extent_id) {
++                continue;
 +            }
-+            tcg_gen_xor_i64(cb, cb, dest);
-+            tcg_gen_extract2_i64(cb, cb, cb_msb, 1);
-+        } else {
-+            if (is_add) {
-+                tcg_gen_add_i64(dest, in1, in2);
-+                tcg_gen_xor_i64(cb, in1, in2);
-+            } else {
-+                tcg_gen_sub_i64(dest, in1, in2);
-+                tcg_gen_eqv_i64(cb, in1, in2);
++            stq_le_p(&out_rec->start_dpa, ent->start_dpa);
++            stq_le_p(&out_rec->len, ent->len);
++            memcpy(&out_rec->tag, ent->tag, 0x10);
++            stw_le_p(&out_rec->shared_seq, ent->shared_seq);
++
++            record_done++;
++            if (record_done == record_count) {
++                break;
 +            }
-+            tcg_gen_xor_i64(cb, cb, dest);
-+            tcg_gen_shri_i64(cb, cb, 1);
 +        }
-+
-+        tcg_gen_andi_i64(cb, cb, test_cb);
-+        cond = cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, cb);
 +    }
 +
-+    if (is_tc) {
-+        TCGv_i64 tmp = tcg_temp_new_i64();
-+        tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
-+        gen_helper_tcond(tcg_env, tmp);
-+    }
-+    save_gpr(ctx, rt, dest);
++    *len_out = out_pl_len;
++    return CXL_MBOX_SUCCESS;
++}
 +
-+    cond_free(&ctx->null_cond);
-+    ctx->null_cond = cond;
- }
+ #define IMMEDIATE_CONFIG_CHANGE (1 << 1)
+ #define IMMEDIATE_DATA_CHANGE (1 << 2)
+ #define IMMEDIATE_POLICY_CHANGE (1 << 3)
+@@ -1377,6 +1447,9 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+ static const struct cxl_cmd cxl_cmd_set_dcd[256][256] = {
+     [DCD_CONFIG][GET_DC_CONFIG] = { "DCD_GET_DC_CONFIG",
+         cmd_dcd_get_dyn_cap_config, 2, 0 },
++    [DCD_CONFIG][GET_DYN_CAP_EXT_LIST] = {
++        "DCD_GET_DYNAMIC_CAPACITY_EXTENT_LIST", cmd_dcd_get_dyn_cap_ext_list,
++        8, 0 },
+ };
  
- #ifndef CONFIG_USER_ONLY
-@@ -2748,14 +2746,24 @@ static bool trans_cmpclr(DisasContext *ctx, arg_rrr_cf_d *a)
- 
- static bool trans_uxor(DisasContext *ctx, arg_rrr_cf_d *a)
- {
--    TCGv_i64 tcg_r1, tcg_r2;
-+    TCGv_i64 tcg_r1, tcg_r2, dest;
- 
-     if (a->cf) {
-         nullify_over(ctx);
+ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 75ea9b20e1..5be3c904ba 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -673,6 +673,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
+         };
+         ct3d->dc.total_capacity += region->len;
      }
-+
-     tcg_r1 = load_gpr(ctx, a->r1);
-     tcg_r2 = load_gpr(ctx, a->r2);
--    do_unit(ctx, a->t, tcg_r1, tcg_r2, a->cf, a->d, false, tcg_gen_xor_i64);
-+    dest = dest_gpr(ctx, a->t);
-+
-+    tcg_gen_xor_i64(dest, tcg_r1, tcg_r2);
-+    save_gpr(ctx, a->t, dest);
-+
-+    cond_free(&ctx->null_cond);
-+    if (a->cf) {
-+        ctx->null_cond = do_unit_zero_cond(a->cf, a->d, dest);
-+    }
-+
-     return nullify_end(ctx);
- }
++    QTAILQ_INIT(&ct3d->dc.extents);
  
-@@ -2790,7 +2798,7 @@ static bool do_uaddcm(DisasContext *ctx, arg_rrr_cf_d *a, bool is_tc)
-     tcg_r2 = load_gpr(ctx, a->r2);
-     tmp = tcg_temp_new_i64();
-     tcg_gen_not_i64(tmp, tcg_r2);
--    do_unit(ctx, a->t, tcg_r1, tmp, a->cf, a->d, is_tc, tcg_gen_add_i64);
-+    do_unit_addsub(ctx, a->t, tcg_r1, tmp, a->cf, a->d, is_tc, true);
-     return nullify_end(ctx);
+     return true;
  }
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index c2c3df0d2a..6aec6ac983 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -424,6 +424,25 @@ typedef QLIST_HEAD(, CXLPoison) CXLPoisonList;
  
-@@ -2817,8 +2825,8 @@ static bool do_dcor(DisasContext *ctx, arg_rr_cf_d *a, bool is_i)
-     }
-     tcg_gen_andi_i64(tmp, tmp, (uint64_t)0x1111111111111111ull);
-     tcg_gen_muli_i64(tmp, tmp, 6);
--    do_unit(ctx, a->t, load_gpr(ctx, a->r), tmp, a->cf, a->d, false,
--            is_i ? tcg_gen_add_i64 : tcg_gen_sub_i64);
-+    do_unit_addsub(ctx, a->t, load_gpr(ctx, a->r), tmp,
-+                   a->cf, a->d, false, is_i);
-     return nullify_end(ctx);
- }
+ #define DCD_MAX_NUM_REGION 8
  
++typedef struct CXLDCExtentRaw {
++    uint64_t start_dpa;
++    uint64_t len;
++    uint8_t tag[0x10];
++    uint16_t shared_seq;
++    uint8_t rsvd[0x6];
++} QEMU_PACKED CXLDCExtentRaw;
++
++typedef struct CXLDCExtent {
++    uint64_t start_dpa;
++    uint64_t len;
++    uint8_t tag[0x10];
++    uint16_t shared_seq;
++    uint8_t rsvd[0x6];
++
++    QTAILQ_ENTRY(CXLDCExtent) node;
++} CXLDCExtent;
++typedef QTAILQ_HEAD(, CXLDCExtent) CXLDCExtentList;
++
+ typedef struct CXLDCRegion {
+     uint64_t base;       /* aligned to 256*MiB */
+     uint64_t decode_len; /* aligned to 256*MiB */
+@@ -474,6 +493,9 @@ struct CXLType3Dev {
+          * memory region size.
+          */
+         uint64_t total_capacity; /* 256M aligned */
++        CXLDCExtentList extents;
++        uint32_t total_extent_count;
++        uint32_t ext_list_gen_seq;
+ 
+         uint8_t num_regions; /* 0-8 regions */
+         CXLDCRegion regions[DCD_MAX_NUM_REGION];
 -- 
-2.34.1
+2.43.0
 
 
