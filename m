@@ -4,83 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BBEC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 17:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C17DC54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 18:02:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rooT4-0004ge-3Z; Mon, 25 Mar 2024 13:50:42 -0400
+	id 1rooe5-0008S3-2O; Mon, 25 Mar 2024 14:02:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rooT2-0004gH-TC
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 13:50:40 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rooSz-0000Uj-7O
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 13:50:40 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a4751063318so206095266b.0
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 10:50:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711389035; x=1711993835; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=y1uiuCJQg2So4tRBliZR+NbU2eE2QLya/9doEeFFxlg=;
- b=BNqFGvlwBxH+nJXto4B2lfn1Ph1c2Lx18j4E24bqNVKPM+CecYqMa9wC6ehTywdu3E
- /DocaP4xlrcxPyQtEaM4sEvUrMudVkC7UGN6rb+XmeZHc3fDaFLyLrwyk4XitCkVRrVw
- ywnq4TTB3rxu4PsM0SCZXyguZwiAIvYNX5KdzusFZc70MyXi0It57POQH6JPpmRzhcu5
- //E8pydW/IzHI/hVL2VJ51L7p7ta9W24sIyWMG7/v1opzU2lsgTQ37zXnf8t/8DVEKd6
- 5pc5nsYQ6BxWxRmprTVfEFJ/zegwiSaT8Zhzns69eCQkbH7HUarnNCuP6QyDOhlmyyKw
- mJ3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711389035; x=1711993835;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y1uiuCJQg2So4tRBliZR+NbU2eE2QLya/9doEeFFxlg=;
- b=lbRB+m9kHb2QiPPZyTSIVzwYV4Oc35CLNfkgOtBiOeK9uqyf+DZCxVnCZV1BSMKE+K
- 3tpfy/aVxlt90mc+BxRucjy2XBlsimPRX8MkC0/Sz0vq2QM79yWzZtug3tRPnnEB5nm/
- eZGlkW1odyqPVEehUKXiIkU/DWPm2TE/VWQo21tPBJpQGb6xb7bZR8VQe1kq/Sb7yFVD
- omk5wgiwRxGPxuM0XQydvdSxdnyis+LtC5MgocihZk3AdOG1dGJn6MPMUhEwy5nayw8S
- oH/9xcUpnPizUE5v5Gs9xWI6Jw5gdEKDhlaTVBeg4mw0yeHuVFTJ0k7tYVWxCQuDoVqd
- Su8w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXBNQNYPAYXY0gxZM4ImDyz75NktnnbRcL9prOmGxn+w6W4RDb3A3tBymEZCfDeAglu04iwXI2nE7Cg6VRHHh2AwynubBc=
-X-Gm-Message-State: AOJu0YwidQpQqD3Y3/r5TRczZRMkrNRrsR0UFTo2DA0hj/zLqHS9bxhQ
- dtQCOtFPX6oPBu3t1ZO1jFosKX8IHfu8G2NtSkv1wAathoCJ9x+W17tPsD68v4U=
-X-Google-Smtp-Source: AGHT+IGb+2GxE/FNl1Cr2DkGYBXrpVQrXwkCMGOEJuP37Jjt4CuJMkQODISQkJPf+AP/OnyZpeGHew==
-X-Received: by 2002:a17:906:308f:b0:a46:df38:6d4b with SMTP id
- 15-20020a170906308f00b00a46df386d4bmr4396699ejv.66.1711389035159; 
- Mon, 25 Mar 2024 10:50:35 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.208.214])
- by smtp.gmail.com with ESMTPSA id
- i27-20020a170906265b00b00a471481ef3csm3240098ejc.124.2024.03.25.10.50.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Mar 2024 10:50:34 -0700 (PDT)
-Message-ID: <330d90fc-e5ff-4b7d-a01f-5587274a5f2a@linaro.org>
-Date: Mon, 25 Mar 2024 18:50:32 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1roodt-0008Ra-Nz; Mon, 25 Mar 2024 14:01:53 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1roodq-0002ek-Uu; Mon, 25 Mar 2024 14:01:53 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7720658D16;
+ Mon, 25 Mar 2024 21:03:11 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D4AF9A2A7F;
+ Mon, 25 Mar 2024 21:01:42 +0300 (MSK)
+Message-ID: <604bf457-23a7-4d06-b59f-a7b46945c626@tls.msk.ru>
+Date: Mon, 25 Mar 2024 21:01:42 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] Implement SSH commands in QEMU GA for Windows
+Subject: Re: [PATCH trivial for-9.0] hw/i386/fw_cfg.c: fix non-legacy smbios
+ build
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
+ "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>
+References: <20240325130920.349521-1-mjt@tls.msk.ru>
+ <20240325162049.46c2a758@imammedo.users.ipa.redhat.com>
 Content-Language: en-US
-To: aidan_leuck@selinc.com, qemu-devel@nongnu.org
-Cc: kkostiuk@redhat.com, berrange@redhat.com
-References: <20240322174637.499113-1-aidan_leuck@selinc.com>
- <20240322174637.499113-3-aidan_leuck@selinc.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240322174637.499113-3-aidan_leuck@selinc.com>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240325162049.46c2a758@imammedo.users.ipa.redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,78 +86,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/3/24 18:46, aidan_leuck@selinc.com wrote:
-> From: Aidan Leuck <aidan_leuck@selinc.com>
+25.03.2024 18:20, Igor Mammedov wrote
+> On Mon, 25 Mar 2024 16:09:20 +0300
+> Michael Tokarev <mjt@tls.msk.ru> wrote:
 > 
-> Signed-off-by: Aidan Leuck <aidan_leuck@selinc.com>
-> ---
->   qga/commands-windows-ssh.c | 791 +++++++++++++++++++++++++++++++++++++
+>> When building qemu with smbios but not legacy mode (eg minimal microvm build),
+>> link fails with:
+>>
+>>    hw/i386/fw_cfg.c:74: undefined reference to `smbios_get_table_legacy'
+>>
+>> This is because fw_cfg interface can call this function if CONFIG_SMBIOS
+>> is defined.  Made this code block to depend on CONFIG_SMBIOS_LEGACY.
+> 
+> stub supposedly should have handled that
+> what configure options do you use to build 'minimal microvm'?
 
-Huge file, I'm skipping it.
+This is a custom build, not only configure options but also custom
+devices.mak: https://salsa.debian.org/qemu-team/qemu/-/blob/master/debian/microvm-devices.mak
 
->   qga/commands-windows-ssh.h |  26 ++
->   qga/meson.build            |   5 +-
->   qga/qapi-schema.json       |  17 +-
->   4 files changed, 828 insertions(+), 11 deletions(-)
->   create mode 100644 qga/commands-windows-ssh.c
->   create mode 100644 qga/commands-windows-ssh.h
+================== cut ==========================
+# see configs/devices/i386-softmmu/default.mak
+# for additional devices which can be disabled
+#
+CONFIG_PCI_DEVICES=n
+# we can't disable all machine types (boards) as of 6.1
+# since the resulting binary fails to link
+#CONFIG_ISAPC=y
+#CONFIG_I440FX=y
+CONFIG_Q35=y
+CONFIG_MICROVM=y
+CONFIG_VIRTIO_BLK=y
+CONFIG_VIRTIO_SERIAL=y
+CONFIG_VIRTIO_INPUT=y
+CONFIG_VIRTIO_INPUT_HOST=y
+CONFIG_VHOST_USER_INPUT=y
+CONFIG_VIRTIO_NET=y
+CONFIG_VIRTIO_SCSI=y
+CONFIG_VIRTIO_RNG=y
+CONFIG_VIRTIO_CRYPTO=y
+CONFIG_VIRTIO_BALLOON=y
+CONFIG_VIRTIO_MEM=y
+CONFIG_VIRTIO_PMEM=y
+CONFIG_VIRTIO_GPU=y
+CONFIG_VHOST_USER_GPU=y
+================== cut ==========================
 
+Relevant configure options:
+https://salsa.debian.org/qemu-team/qemu/-/blob/master/debian/rules#L293-308
 
-> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index 9554b566a7..a64a6d91cf 100644
-> --- a/qga/qapi-schema.json
-> +++ b/qga/qapi-schema.json
-> @@ -1562,9 +1562,8 @@
->   { 'struct': 'GuestAuthorizedKeys',
->     'data': {
->         'keys': ['str']
-> -  },
-> -  'if': 'CONFIG_POSIX' }
-> -
+		../../configure ${common_configure_opts} \
+		--extra-cflags="${extra-cflags} -DCONFIG_MICROVM_DEFAULT=1" \
+		--without-default-features \
+		--target-list=x86_64-softmmu --enable-kvm --disable-tcg \
+		--enable-pixman --enable-vnc \
+		--enable-attr \
+		--enable-coroutine-pool \
+		--audio-drv-list="" \
+		--without-default-devices \
+		--with-devices-x86_64=microvm \
+		--enable-vhost-kernel --enable-vhost-net \
+		--enable-vhost-vdpa \
+		--enable-vhost-user --enable-vhost-user-blk-server \
+		--enable-vhost-crypto \
 
-For Windows you have to check the CONFIG_WIN32 definition,
-so you want:
+I dunno how relevant these are, - it come from ubuntu and I haven't
+looked there for a long time.  The idea was to have a build especially
+for microvm with minimal footprint, as light as possible, for fastest
+startup time etc.
 
-   'if': { 'any': [ 'CONFIG_POSIX',
-                    'CONFIG_WIN32' ] },
+Enabling (selecting) CONFIG_SMBIOS does not help since it is already
+enabled by something, but not SMBIOS_LEGACY (which should not be
+enabled in this case).
 
-> +  }
-> +}
->   
->   ##
->   # @guest-ssh-get-authorized-keys:
-> @@ -1580,8 +1579,8 @@
->   ##
->   { 'command': 'guest-ssh-get-authorized-keys',
->     'data': { 'username': 'str' },
-> -  'returns': 'GuestAuthorizedKeys',
-> -  'if': 'CONFIG_POSIX' }
-> +  'returns': 'GuestAuthorizedKeys'
-> +}
->   
->   ##
->   # @guest-ssh-add-authorized-keys:
-> @@ -1599,8 +1598,8 @@
->   # Since: 5.2
->   ##
->   { 'command': 'guest-ssh-add-authorized-keys',
-> -  'data': { 'username': 'str', 'keys': ['str'], '*reset': 'bool' },
-> -  'if': 'CONFIG_POSIX' }
-> +  'data': { 'username': 'str', 'keys': ['str'], '*reset': 'bool' }
-> +}
->   
->   ##
->   # @guest-ssh-remove-authorized-keys:
-> @@ -1617,8 +1616,8 @@
->   # Since: 5.2
->   ##
->   { 'command': 'guest-ssh-remove-authorized-keys',
-> -  'data': { 'username': 'str', 'keys': ['str'] },
-> -  'if': 'CONFIG_POSIX' }
-> +  'data': { 'username': 'str', 'keys': ['str'] }
-> +}
->   
->   ##
->   # @GuestDiskStats:
+I still think it is better to avoid pcmc->smbios_legacy_mode variable
+(field) entirely.
+
+Thanks,
+
+/mjt
+
+>>
+>> Fixes: b42b0e4daaa5 "smbios: build legacy mode code only for 'pc' machine"
+>> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+>> ---
+>>   hw/i386/fw_cfg.c | 2 ++
+>>   1 file changed, 2 insertions(+)
+>>
+>> diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+>> index d802d2787f..d5e78a9183 100644
+>> --- a/hw/i386/fw_cfg.c
+>> +++ b/hw/i386/fw_cfg.c
+>> @@ -70,6 +70,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+>>       /* tell smbios about cpuid version and features */
+>>       smbios_set_cpuid(cpu->env.cpuid_version, cpu->env.features[FEAT_1_EDX]);
+>>   
+>> +#ifdef CONFIG_SMBIOS_LEGACY
+>>       if (pcmc->smbios_legacy_mode) {
+>>           smbios_tables = smbios_get_table_legacy(&smbios_tables_len,
+>>                                                   &error_fatal);
+>> @@ -77,6 +78,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+>>                            smbios_tables, smbios_tables_len);
+>>           return;
+>>       }
+>> +#endif
+>>   
+>>       /* build the array of physical mem area from e820 table */
+>>       mem_array = g_malloc0(sizeof(*mem_array) * e820_get_num_entries());
+> 
+> 
 
 
