@@ -4,58 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8263EC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 14:48:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F02CC54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 14:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rolbu-0005tO-3E; Mon, 25 Mar 2024 10:47:38 -0400
+	id 1rolc2-0005uU-0M; Mon, 25 Mar 2024 10:47:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rolbt-0005t7-3V
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:47:37 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rolc0-0005uL-Go
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:47:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rolbq-0002fO-Ox
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:47:36 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rolby-0002gE-5b
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:47:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711378052;
+ s=mimecast20190719; t=1711378061;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WM1+IU0xNyrYhER5wVdwgTjr8eQSLSe1Sd7ZFSpQIc4=;
- b=Rqr6BFSSEgEbOt2f1vs7qHox/kqQRp4ZLavqPrV397yPJO/1kLApPwfcb31MsJIMC4sIYN
- 0d3GaHWzMqdKIM+4k7VHnYm4xUHEgFUhYwHReOq7Vm/MtorlSMJ2hyJyYIYl+0zRKuwzjQ
- vEl8xcKLOCMIElny9OI3f1X0Sk4uoFA=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DsJzNPnYlAzllKzELoC8ajG8VB6UCIrLwt5d6+Usjys=;
+ b=aowVExhdDK+ZiC9f5DWsyGuy/gPNPdH2sc3bf2AIgo5/2uc8OV7FpkAU2P9aFEUhUAbSw7
+ Xfq6JTkM3AHZ/qK1ijQySJ0eLx+rFuQkMZhNi2u2m91jIzBYK8qA9Mks1TKROBR0BsacGd
+ FbvgxwW2WHAsLZDpHyqHUhgN8CtZEuo=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-BdP2kmpgNAa2m7Afp3y_wA-1; Mon,
- 25 Mar 2024 10:47:31 -0400
-X-MC-Unique: BdP2kmpgNAa2m7Afp3y_wA-1
-Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
- [10.11.54.10])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-XMZUEqHON_e8BDus4gvrKg-1; Mon,
+ 25 Mar 2024 10:47:36 -0400
+X-MC-Unique: XMZUEqHON_e8BDus4gvrKg-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id C79C11C004E8;
- Mon, 25 Mar 2024 14:47:30 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 60FDB2800E8F;
+ Mon, 25 Mar 2024 14:47:36 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.158])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 67EB8492BC4;
- Mon, 25 Mar 2024 14:47:30 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 05EA51121306;
+ Mon, 25 Mar 2024 14:47:36 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 2BB961801497; Mon, 25 Mar 2024 15:47:25 +0100 (CET)
+ id 9AB551801CDC; Mon, 25 Mar 2024 15:47:25 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Tom Lendacky <thomas.lendacky@amd.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
  Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH v5 0/2] kvm: add support for guest physical bits
-Date: Mon, 25 Mar 2024 15:47:22 +0100
-Message-ID: <20240325144725.1089192-1-kraxel@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH v5 2/2] target/i386: add guest-phys-bits cpu property
+Date: Mon, 25 Mar 2024 15:47:24 +0100
+Message-ID: <20240325144725.1089192-3-kraxel@redhat.com>
+In-Reply-To: <20240325144725.1089192-1-kraxel@redhat.com>
+References: <20240325144725.1089192-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -80,21 +82,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The matching kernel bits are here:
-https://lore.kernel.org/kvm/20240313125844.912415-1-kraxel@redhat.com/T/
+Allows to set guest-phys-bits (cpuid leaf 80000008, eax[23:16])
+via -cpu $model,guest-phys-bits=$nr.
 
-ovmf test patches are here:
-https://github.com/kraxel/edk2/commits/devel/guest-phys-bits/
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ target/i386/cpu.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-Gerd Hoffmann (2):
-  kvm: add support for guest physical bits
-  target/i386: add guest-phys-bits cpu property
-
- target/i386/cpu.h         |  1 +
- target/i386/cpu.c         | 14 ++++++++++++++
- target/i386/kvm/kvm-cpu.c | 31 ++++++++++++++++++++++++++++++-
- 3 files changed, 45 insertions(+), 1 deletion(-)
-
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 3b7bd506baf1..79bea83b7b1c 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7380,6 +7380,14 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+         if (cpu->phys_bits == 0) {
+             cpu->phys_bits = TCG_PHYS_ADDR_BITS;
+         }
++        if (cpu->guest_phys_bits &&
++            (cpu->guest_phys_bits > cpu->phys_bits ||
++            cpu->guest_phys_bits < 32)) {
++            error_setg(errp, "guest-phys-bits should be between 32 and %u "
++                             " (but is %u)",
++                             cpu->phys_bits, cpu->guest_phys_bits);
++            return;
++        }
+     } else {
+         /* For 32 bit systems don't use the user set value, but keep
+          * phys_bits consistent with what we tell the guest.
+@@ -7388,6 +7396,10 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+             error_setg(errp, "phys-bits is not user-configurable in 32 bit");
+             return;
+         }
++        if (cpu->guest_phys_bits != 0) {
++            error_setg(errp, "guest-phys-bits is not user-configurable in 32 bit");
++            return;
++        }
+ 
+         if (env->features[FEAT_1_EDX] & (CPUID_PSE36 | CPUID_PAE)) {
+             cpu->phys_bits = 36;
+@@ -7888,6 +7900,7 @@ static Property x86_cpu_properties[] = {
+     DEFINE_PROP_BOOL("x-force-features", X86CPU, force_features, false),
+     DEFINE_PROP_BOOL("kvm", X86CPU, expose_kvm, true),
+     DEFINE_PROP_UINT32("phys-bits", X86CPU, phys_bits, 0),
++    DEFINE_PROP_UINT32("guest-phys-bits", X86CPU, guest_phys_bits, 0),
+     DEFINE_PROP_BOOL("host-phys-bits", X86CPU, host_phys_bits, false),
+     DEFINE_PROP_UINT8("host-phys-bits-limit", X86CPU, host_phys_bits_limit, 0),
+     DEFINE_PROP_BOOL("fill-mtrr-mask", X86CPU, fill_mtrr_mask, true),
 -- 
 2.44.0
 
