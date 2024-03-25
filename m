@@ -4,68 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72DB9C54E58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31741C54E64
 	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 11:37:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roidM-00035y-J0; Mon, 25 Mar 2024 07:36:56 -0400
+	id 1roidI-00035X-J7; Mon, 25 Mar 2024 07:36:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1roidK-00035a-N6
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 07:36:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xuanzhuo@linux.alibaba.com>)
+ id 1roidG-000355-CJ
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 07:36:50 -0400
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1roidJ-0002Hx-6U
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 07:36:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711366612;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bvlAHmHsZxYMsujxyxX8BIGPqcB2ObSkwelUh3Qh5AI=;
- b=efrmSO4mJ736SRbWmJxnBnPgvV9O4Ed65x+KPvypNA8PrP4fK5ADrFejyC5l3iMb4egtAG
- fy/Wu0UNkFL74PcEzhKsekxADV9KsqGKlfYOb7y13XaKSU0uyIrhXl8ywgdI7zL0nEuqyX
- /Sz7ozocN9wsSYqx+tlfCQVlLRW0F14=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-8Dkc2GlSM-eFYixplZcQmw-1; Mon,
- 25 Mar 2024 07:36:50 -0400
-X-MC-Unique: 8Dkc2GlSM-eFYixplZcQmw-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 3333328B6934
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 11:36:50 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 131EC112131D
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 11:36:50 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0FEA621E669D; Mon, 25 Mar 2024 12:36:45 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] qapi: document leftover members in qapi/run-state.json
-In-Reply-To: <20240325104502.1358693-1-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Mon, 25 Mar 2024 11:45:02 +0100")
-References: <20240325104502.1358693-1-pbonzini@redhat.com>
-Date: Mon, 25 Mar 2024 12:36:45 +0100
-Message-ID: <87o7b2mtki.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <xuanzhuo@linux.alibaba.com>)
+ id 1roid8-0002H2-9I
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 07:36:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1711366591; h=Message-ID:Subject:Date:From:To;
+ bh=tWzoma9+YgEU3EhGSSB8r00Sws8k2xiQqkay3SxZld4=;
+ b=DMTG+/ph680l+w96mCOi5M2WWAED0R6RyaXzfM/YE6cWM9GcdVcylmWMq90HswuX8eR0YQMdnyKIXlTLlCmPKZSlAKKJTDvlqbvmA+a3PEW500bM/iB0te1Tpc4FHNrDXIclh6d66tkTySWL1Qz1a8B1sa6KyLdWrJABpbsEXgk=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R161e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=ay29a033018046056;
+ MF=xuanzhuo@linux.alibaba.com; NM=1; PH=DS; RN=16; SR=0;
+ TI=SMTPD_---0W3FiqZe_1711366589; 
+Received: from localhost(mailfrom:xuanzhuo@linux.alibaba.com
+ fp:SMTPD_---0W3FiqZe_1711366589) by smtp.aliyun-inc.com;
+ Mon, 25 Mar 2024 19:36:30 +0800
+Message-ID: <1711366510.4360204-1-xuanzhuo@linux.alibaba.com>
+Subject: Re: [PATCH] virtio_net: Do not send RSS key if it is not supported
+Date: Mon, 25 Mar 2024 19:35:10 +0800
+From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+To: Breno Leitao <leitao@debian.org>
+Cc: rbc@meta.com, riel@surriel.com, stable@vger.kernel.org,
+ qemu-devel@nongnu.org,
+ "open list:VIRTIO CORE AND NET DRIVERS" <virtualization@lists.linux.dev>,
+ "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
+ open list <linux-kernel@vger.kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>,
+ Andrew Melnychenko <andrew@daynix.com>, "Heng Qi" <hengqi@linux.alibaba.com>
+References: <20240321165431.3517868-1-leitao@debian.org>
+ <1711072822.882584-1-xuanzhuo@linux.alibaba.com>
+ <Zf1bofzE4x0wGEm+@gmail.com>
+ <1711346273.5079622-1-xuanzhuo@linux.alibaba.com>
+ <ZgFfUHQhMdAWixqB@gmail.com>
+In-Reply-To: <ZgFfUHQhMdAWixqB@gmail.com>
+Received-SPF: pass client-ip=115.124.30.133;
+ envelope-from=xuanzhuo@linux.alibaba.com;
+ helo=out30-133.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,67 +79,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
-
-> Suggested-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  qapi/run-state.json | 26 +++++++++++++++++++++++++-
->  1 file changed, 25 insertions(+), 1 deletion(-)
+On Mon, 25 Mar 2024 04:26:08 -0700, Breno Leitao <leitao@debian.org> wrote:
+> Hello Xuan,
 >
-> diff --git a/qapi/run-state.json b/qapi/run-state.json
-> index 789fc34559a..cb4a2b43293 100644
-> --- a/qapi/run-state.json
-> +++ b/qapi/run-state.json
-> @@ -377,9 +377,17 @@
->  ##
->  # @watchdog-set-action:
->  #
-> -# Set watchdog action
-> +# Set watchdog action.
-> +#
-> +# @action: @WatchdogAction action taken when watchdog timer expires.
->  #
->  # Since: 2.11
-> +#
-> +# Example:
-> +#
-> +#     -> { "execute": "watchdog-set-action",
-> +#          "arguments": { "action": "inject-nmi" } }
-> +#     <- { "return": {} }
->  ##
->  { 'command': 'watchdog-set-action', 'data' : {'action': 'WatchdogAction'} }
->  
+> On Mon, Mar 25, 2024 at 01:57:53PM +0800, Xuan Zhuo wrote:
+> > On Fri, 22 Mar 2024 03:21:21 -0700, Breno Leitao <leitao@debian.org> wrote:
+> > > Hello Xuan,
+> > >
+> > > On Fri, Mar 22, 2024 at 10:00:22AM +0800, Xuan Zhuo wrote:
+> > > > On Thu, 21 Mar 2024 09:54:30 -0700, Breno Leitao <leitao@debian.org> wrote:
+> > >
+> > > > > 4) Since the command above does not have a key, then the last
+> > > > >    scatter-gatter entry will be zeroed, since rss_key_size == 0.
+> > > > >     sg_buf_size = vi->rss_key_size;
+> > > >
+> > > >
+> > > >
+> > > > 	if (vi->has_rss || vi->has_rss_hash_report) {
+> > > > 		vi->rss_indir_table_size =
+> > > > 			virtio_cread16(vdev, offsetof(struct virtio_net_config,
+> > > > 				rss_max_indirection_table_length));
+> > > > 		vi->rss_key_size =
+> > > > 			virtio_cread8(vdev, offsetof(struct virtio_net_config, rss_max_key_size));
+> > > >
+> > > > 		vi->rss_hash_types_supported =
+> > > > 		    virtio_cread32(vdev, offsetof(struct virtio_net_config, supported_hash_types));
+> > > > 		vi->rss_hash_types_supported &=
+> > > > 				~(VIRTIO_NET_RSS_HASH_TYPE_IP_EX |
+> > > > 				  VIRTIO_NET_RSS_HASH_TYPE_TCP_EX |
+> > > > 				  VIRTIO_NET_RSS_HASH_TYPE_UDP_EX);
+> > > >
+> > > > 		dev->hw_features |= NETIF_F_RXHASH;
+> > > > 	}
+> > > >
+> > > >
+> > > > vi->rss_key_size is initiated here, I wonder if there is something wrong?
+> > >
+> > > Not really, the code above is never executed (in my machines). This is
+> > > because `vi->has_rss` and `vi->has_rss_hash_report` are both unset.
+> > >
+> > > Looking further, vdev does not have the VIRTIO_NET_F_RSS and
+> > > VIRTIO_NET_F_HASH_REPORT features.
+> > >
+> > > Also, when I run `ethtool -x`, I got:
+> > >
+> > > 	# ethtool  -x eth0
+> > > 	RX flow hash indirection table for eth0 with 1 RX ring(s):
+> > > 	Operation not supported
+> > > 	RSS hash key:
+> > > 	Operation not supported
+> > > 	RSS hash function:
+> > > 	    toeplitz: on
+> > > 	    xor: off
+> > > 	    crc32: off
+> >
+> >
+> > The spec saies:
+> > 	Note that if the device offers VIRTIO_NET_F_HASH_REPORT, even if it
+> > 	supports only one pair of virtqueues, it MUST support at least one of
+> > 	commands of VIRTIO_NET_CTRL_MQ class to configure reported hash
+> > 	parameters:
+> >
+> > 	If the device offers VIRTIO_NET_F_RSS, it MUST support
+> > 	VIRTIO_NET_CTRL_MQ_RSS_CONFIG command per 5.1.6.5.7.1.
+> >
+> > 	Otherwise the device MUST support VIRTIO_NET_CTRL_MQ_HASH_CONFIG command
+> > 	per 5.1.6.5.6.4.
+> >
+> >
+> > So if we have not anyone of `vi->has_rss` and `vi->has_rss_hash_report`,
+> > we should return from virtnet_set_rxfh directly.
+>
+> Makes sense. Although it is not clear to me how vi->has_rss_hash_report
+> is related here, but, I am convinced that we shouldn't do any RSS
+> operation if the device doesn't have the RSS feature, i.e, vi->has_rss
+> is false.
+>
+> That said, I am thinking about something like this. How does it sound?
+>
+> 	diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+> 	index 5a7700b103f8..8c1ad7361cf2 100644
+> 	--- a/drivers/net/virtio_net.c
+> 	+++ b/drivers/net/virtio_net.c
+> 	@@ -3780,6 +3780,9 @@ static int virtnet_set_rxfh(struct net_device *dev,
+> 		struct virtnet_info *vi = netdev_priv(dev);
+> 		int i;
+>
+> 	+	if (!vi->has_rss)
+> 	+		return -EOPNOTSUPP;
+> 	+
 
-Appreciate the example!
+Should we check has_rss_hash_report?
 
-> @@ -505,6 +513,22 @@
->  #
->  # Hyper-V specific guest panic information (HV crash MSRs)
->  #
-> +# @arg1: for Windows, STOP code for the guest crash.  For Linux,
-> +#        an error code.
-> +#
-> +# @arg2: for Windows, first argument of the STOP.  For Linux, the
-> +#        guest OS id, which has the kernel version in bits 16-47
+@Heng Qi
 
-Mind if I capitalize ID?
+Could you help us?
 
-> +#        and 0x8100 in bits 48-63.
-> +#
-> +# @arg3: for Windows, second argument of the STOP.  For Linux, the
-> +#        program counter of the guest.
-> +#
-> +# @arg4: for Windows, third argument of the STOP.  For Linux, the
-> +#        RAX register (x86) or the stack pointer (aarch64) of the guest.
-> +#
-> +# @arg5: for Windows, fourth argument of the STOP.  For x86 Linux, the
-> +#        stack pointer of the guest.
-> +#
->  # Since: 2.9
->  ##
->  {'struct': 'GuestPanicInformationHyperV',
+Thanks.
 
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
+> 		if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
+> 		    rxfh->hfunc != ETH_RSS_HASH_TOP)
+> 			return -EOPNOTSUPP;
+>
+> Thanks!
 
