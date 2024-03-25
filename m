@@ -4,84 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1CF5C54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA040C54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:45:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rokYu-0003qH-Cn; Mon, 25 Mar 2024 09:40:28 -0400
+	id 1rokdR-0005dO-EH; Mon, 25 Mar 2024 09:45:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokYt-0003pn-Br
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:40:27 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokYr-0000LF-Cp
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:40:26 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4147e135f4dso18455755e9.2
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:40:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711374024; x=1711978824; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=x6MuEQSkb/kt5823ISGd/KisLUiiIt3CnAcazZPSXC4=;
- b=DFKufq7J9/x4+E5Z499QVNIIoHKt7GOt8pxofAUcp2qyQmmYAuegs4c+52UeX2ETMg
- Xgo4vYH+jqsV0CAxFi8u1wiqBSeEwsgPxMOrLBqVs7Qi4pSQ1k0oRKSIxXeMJy/Lz/mP
- swJLx3obio/nc8AY8DFgw3xkwmY63h9ADM2B+r5YJcj4HIvVoLaTah5b/2M4KGWyKUCn
- mDca1FbhIQa3j8lcwRg2vOKiKp9g3PAJxnXZQvRXSeDlOzTJD8Rhae7d4qVD8kFWIMlA
- nTGStJGyhYGJBO6WvdK93l85r+Qk7DZ0b943OKm90ygAMrsjsBzCq6LHqoL6lg2J8PUE
- wC3w==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rokdC-0005WP-Fe
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:44:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rokd9-000121-M6
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:44:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711374290;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=p3t/oZZ4JCG0v4QTSvzAzqf02uGoryO3OXksp1aovF0=;
+ b=cqD3QnbAAsjok7cyeuEMkpJRLFxNrjn3TvRaBB0A+CRCr/YeuPOJHj07ujc9N286EAe5T0
+ RNlddaI/ZtonQZyu6Q0XKrH1sjRJ5EnsKjdMA+9LSkfmcl8IpAEh41a4HA2vUKwjEWMf1U
+ nDJcGO3LvINhYzsWWhyi/y3IS3yKHLg=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-142-MqDqtIRKNOy4K3PtNKLcew-1; Mon, 25 Mar 2024 09:44:48 -0400
+X-MC-Unique: MqDqtIRKNOy4K3PtNKLcew-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-33ecc0f0c95so2408941f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:44:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711374024; x=1711978824;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x6MuEQSkb/kt5823ISGd/KisLUiiIt3CnAcazZPSXC4=;
- b=DvWs15QYzq5DDVBsjNrGovJ0758E3qtX6dCNihEOINW6WYURHHebywRX5TpfRiJtis
- zQcBg6DBjwFfdsGpIFmSr83BGf3KOh/97Tj6GkOul7z78yRmz3MXffdNN62//FsJhJeP
- Me/F84TjFirkBdT1BfrEN9edNChyfjHDdRn6MGJy+7aAUs2HhkdXTnrfTcN5BH+BN+z8
- QUJFVC54TKKTOF8btsnu7xOmr906iFKljUPs7GA+cIC7dgMm1s5jEh0wdQ+pbRhb5Uhs
- /8ydbTOrL/UQ40orT7dk0NPzTjzto2UxKp6z1FTUJUx0qPL5f1OHgAbAj82jboP5Az3B
- 0GkA==
+ d=1e100.net; s=20230601; t=1711374287; x=1711979087;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=p3t/oZZ4JCG0v4QTSvzAzqf02uGoryO3OXksp1aovF0=;
+ b=vF07iVgC8St3YSUbgOvS+3tMIhEd+hym2JBcaGth2EO27qvFjDqkRIXMttVFgT9QmO
+ 4j23uhcEq68mnoxLOZsDcsNl8DfIX7gX9SA1IRWUv0DOPk/uePP2LVCesiT6Wa2bSs4k
+ RP1fz2RsAAvZnCNVM3VxZouwW2hWCHaOuoMeXt7qrWM7nJZ6W6pPzcNzGr8xtlK6FRxI
+ AB0FTXEIZboWWHCP72T6xmpEkWSvj5XJFQfK43fIiPKCzGus/LU4J2LlBkPnTczybKK2
+ a+ghUhZJYliaPfYI0zbWmv1OrDjgfmyf64b0o1FBmBDXKXTWBZlIV2U6ObsgqDK3ZOvL
+ 2X8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXKD7OG8VJuM1ZRa8cOzDpz8tHh1TAgrwp6kCo7w2WMUNtVcPMErDR3lkXMGJ4ryHllxV208W7ul/kYZgynJvv3TVhKAzY=
-X-Gm-Message-State: AOJu0YylbZHwIJ8w7byW5MvE+iu9barRdLL+BYtj4XNoKnarCgox/kEm
- tSnlbjsB28U5Fpd3DtugMvY3uEPVKLsbCltqauQ8LFTWFzEk15v5CQDlOw0KW2k=
-X-Google-Smtp-Source: AGHT+IHNsNG6BHUhvFMTG55UDBvRU+R3T9K/XOHcrTxNCYrdHMtF+hiVFyMOoEjJMfEZOsVmXzVrvQ==
-X-Received: by 2002:a05:600c:4da4:b0:413:f290:c747 with SMTP id
- v36-20020a05600c4da400b00413f290c747mr5171829wmp.33.1711374023661; 
- Mon, 25 Mar 2024 06:40:23 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.208.214])
- by smtp.gmail.com with ESMTPSA id
- t9-20020a05600c198900b0041330d49604sm8527103wmq.45.2024.03.25.06.40.22
+ AJvYcCWztl7cHZ6Jv+1zDRKwdEbw3OWVwe4b3VER7A/J2ADV1Ip3+J7oFksSKnlBwGYARdBge3gtZowYaMQEJjyn6saqAlJ+3vY=
+X-Gm-Message-State: AOJu0Yz/T/GAJl6k61lcZMmEmpuVAlNLMZM56vwPZl9XKKq7r5KIp8TD
+ qY1r7AXpXyWZTvOIzy5V1oOiXUbxsAQHl9kS+jjqJp9Wa/JvLYzU8sDThJBKL4zwW3G3JQh3o1E
+ h6eepFjcS/EdcZQL77gNTE6N+rrgI7bv+CiMfc3R8P+p5akst54xg
+X-Received: by 2002:a5d:4ed0:0:b0:341:b88b:1625 with SMTP id
+ s16-20020a5d4ed0000000b00341b88b1625mr4928057wrv.47.1711374287248; 
+ Mon, 25 Mar 2024 06:44:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFfWvt/pq8QNkPlkkQBNJKSHN3w84OJVVlembXba3ek35GiomQ5uyrJSj9dd1wXqcrN947p4g==
+X-Received: by 2002:a5d:4ed0:0:b0:341:b88b:1625 with SMTP id
+ s16-20020a5d4ed0000000b00341b88b1625mr4928044wrv.47.1711374286856; 
+ Mon, 25 Mar 2024 06:44:46 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-176-158.web.vodafone.de.
+ [109.43.176.158]) by smtp.gmail.com with ESMTPSA id
+ bu14-20020a056000078e00b00341d2728e02sm1019220wrb.37.2024.03.25.06.44.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Mar 2024 06:40:23 -0700 (PDT)
-Message-ID: <ca6b1ae9-14b9-413b-93dc-a28d930b0e3a@linaro.org>
-Date: Mon, 25 Mar 2024 14:40:21 +0100
+ Mon, 25 Mar 2024 06:44:46 -0700 (PDT)
+Message-ID: <14ba7a6a-f888-4fd5-b30d-d6cc5db9fed5@redhat.com>
+Date: Mon, 25 Mar 2024 14:44:45 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial for-9.0] hw/i386/fw_cfg.c: fix non-legacy smbios
- build
+Subject: Re: [PULL 20/34] tests/libqos: add riscv/virt machine nodes
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>, Greg Kurz <groug@kaod.org>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240308111152.2856137-1-alistair.francis@wdc.com>
+ <20240308111152.2856137-21-alistair.francis@wdc.com>
+ <b85c8451-57e0-49aa-a7c4-28ae8bf08bf9@redhat.com>
+ <cef9c499-b258-4618-bff8-eeca8da3d184@ventanamicro.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>
-References: <20240325130920.349521-1-mjt@tls.msk.ru>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240325130920.349521-1-mjt@tls.msk.ru>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <cef9c499-b258-4618-bff8-eeca8da3d184@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,62 +151,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
-
-On 25/3/24 14:09, Michael Tokarev wrote:
-> When building qemu with smbios but not legacy mode (eg minimal microvm build),
-> link fails with:
+On 25/03/2024 13.35, Daniel Henrique Barboza wrote:
 > 
->    hw/i386/fw_cfg.c:74: undefined reference to `smbios_get_table_legacy'
 > 
-> This is because fw_cfg interface can call this function if CONFIG_SMBIOS
-> is defined.  Made this code block to depend on CONFIG_SMBIOS_LEGACY.
+> On 3/25/24 06:20, Thomas Huth wrote:
+>> On 08/03/2024 12.11, Alistair Francis wrote:
+>>> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>>
+>>> Add a RISC-V 'virt' machine to the graph. This implementation is a
+>>> modified copy of the existing arm machine in arm-virt-machine.c
+>>>
+>>> It contains a virtio-mmio and a generic-pcihost controller. The
+>>> generic-pcihost controller hardcodes assumptions from the ARM 'virt'
+>>> machine, like ecam and pio_base addresses, so we'll add an extra step to
+>>> set its parameters after creating it.
+>>>
+>>> Our command line is incremented with 'aclint' parameters to allow the
+>>> machine to run MSI tests.
+>>>
+>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>> Acked-by: Alistair Francis <alistair.francis@wdc.com>
+>>> Acked-by: Thomas Huth <thuth@redhat.com>
+>>> Message-ID: <20240217192607.32565-7-dbarboza@ventanamicro.com>
+>>> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+>>> ---
+>>
+>>   Hi!
+>>
+>> I noticed that "make check SPEED=slow" is now failing on the qos-test with 
+>> both, qemu-system-riscv32 and qemu-system-riscv64. Seems like it fails 
+>> with the virtio-9p test, when I run the qos-test manually, I get:
+>>
+>> $ MALLOC_PERTURB_=21 V=2 QTEST_QEMU_BINARY=./qemu-system-riscv64 \
+>>     tests/qtest/qos-test -m slow
+>> ...
+>> # Start of local tests
+>> # starting QEMU: exec ./qemu-system-riscv64 -qtest 
+>> unix:/tmp/qtest-211303.sock -qtest-log /dev/null -chardev 
+>> socket,path=/tmp/qtest-211303.qmp,id=char0 -mon chardev=char0,mode=control 
+>> -display none -audio none -M virt,aclint=on,aia=aplic-imsic -fsdev 
+>> local,id=fsdev0,path='/home/thuth/tmp/qemu-build/qtest-9p-local-MBCML2',security_model=mapped-xattr -device virtio-9p-pci,fsdev=fsdev0,addr=04.0,mount_tag=qtest -accel qtest
+>> ok 168 
+>> /riscv64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-9p-pci/virtio-9p/virtio-9p-tests/local/config
+>> Received response 7 (RLERROR) instead of 73 (RMKDIR)
+>> Rlerror has errno 17 (File exists)
+>> **
+>> ERROR:../../devel/qemu/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
+>> not ok 
+>> /riscv64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-9p-pci/virtio-9p/virtio-9p-tests/local/create_dir - ERROR:../../devel/qemu/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
+>> Bail out!
+>> Aborted (core dumped)
+>>
+>> Could you please have a look? ... or if it is too cumbersome to fix, could 
+>> we please always skip the virtio-9p local tests on riscv ?
 > 
-> Fixes: b42b0e4daaa5 "smbios: build legacy mode code only for 'pc' machine"
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->   hw/i386/fw_cfg.c | 2 ++
->   1 file changed, 2 insertions(+)
+> I'll take a look.
 > 
-> diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-> index d802d2787f..d5e78a9183 100644
-> --- a/hw/i386/fw_cfg.c
-> +++ b/hw/i386/fw_cfg.c
-> @@ -70,6 +70,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
->       /* tell smbios about cpuid version and features */
->       smbios_set_cpuid(cpu->env.cpuid_version, cpu->env.features[FEAT_1_EDX]);
->   
-> +#ifdef CONFIG_SMBIOS_LEGACY
->       if (pcmc->smbios_legacy_mode) {
+> Do we run these slow tests in the Gitlab pipeline? I don't recall this
+> particular test failing when I first introduced the riscv machine nodes.
 
-But then having pcmc->smbios_legacy_mode == true without
-CONFIG_SMBIOS_LEGACY would be a bug. IMHO what we want is:
+No, we don't run the slow tests in the Gitlab-CI, that's likely why nobody 
+noticed it before.
 
--- >8 --
-diff --git a/hw/smbios/smbios_legacy_stub.c b/hw/smbios/smbios_legacy_stub.c
-index f29b15316c..7d593dca98 100644
---- a/hw/smbios/smbios_legacy_stub.c
-+++ b/hw/smbios/smbios_legacy_stub.c
-@@ -13,3 +13,8 @@
-  void smbios_add_usr_blob_size(size_t size)
-  {
-  }
-+
-+uint8_t *smbios_get_table_legacy(size_t *length, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
----
-
->           smbios_tables = smbios_get_table_legacy(&smbios_tables_len,
->                                                   &error_fatal);
-> @@ -77,6 +78,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
->                            smbios_tables, smbios_tables_len);
->           return;
->       }
-> +#endif
->   
->       /* build the array of physical mem area from e820 table */
->       mem_array = g_malloc0(sizeof(*mem_array) * e820_get_num_entries());
+  Thomas
 
 
