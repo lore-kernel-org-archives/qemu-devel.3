@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B67A1C54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 10:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBCCC54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 10:07:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rohAS-0000PT-It; Mon, 25 Mar 2024 06:03:00 -0400
+	id 1rohDy-0001PW-TK; Mon, 25 Mar 2024 06:06:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1rohAP-0000PB-Ow; Mon, 25 Mar 2024 06:02:57 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>)
- id 1rohAM-0002RE-Fh; Mon, 25 Mar 2024 06:02:57 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8BxiejESwFmXcsdAA--.50908S3;
- Mon, 25 Mar 2024 18:02:44 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxZMzDSwFmfxlnAA--.12479S3; 
- Mon, 25 Mar 2024 18:02:43 +0800 (CST)
-Subject: Re: [PULL 1/1] target/loongarch: Fix qemu-system-loongarch64 assert
- failed with the option '-d int'
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org
-References: <20240322100323.1973836-1-gaosong@loongson.cn>
- <20240322100323.1973836-2-gaosong@loongson.cn>
- <f4866402-bcee-447a-89fc-c5dd3128770c@tls.msk.ru>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <00d1335c-a717-b71a-4170-adbabb42ba36@loongson.cn>
-Date: Mon, 25 Mar 2024 18:02:43 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rohDx-0001PF-Bh
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 06:06:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rohDv-00030Z-TB
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 06:06:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711361194;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=LQ+Mhtrib3R4OccVHJnzkwm6mF2o9VrfAP9Xh3HEk84=;
+ b=NorpioYdxNIzWRekG0iO6LryLuu7Mebn50cqpuzltP7aT6TBSOgjukEu7tNpVgIAv27+T9
+ 2EZGeLGsYKXuIaZNIuMWClZBEPDKkgGPgJhh9CWuqyDxgyDaKIy2zbQZBk1A4avk2jFo5O
+ FkajEh1XgVhCCZcNg949PgFFkSVU8E8=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-604-xyrfvmP-O8-djbJjY1DzGQ-1; Mon, 25 Mar 2024 06:06:33 -0400
+X-MC-Unique: xyrfvmP-O8-djbJjY1DzGQ-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 462F488F3C7
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 10:06:33 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 26CEB492BD8
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 10:06:33 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3AA9D21E668C; Mon, 25 Mar 2024 11:06:28 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org,  armbru@redhat.com,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH] qapi: document InputMultiTouchType
+In-Reply-To: <20240325095648.2835381-1-marcandre.lureau@redhat.com> (marcandre
+ lureau's message of "Mon, 25 Mar 2024 13:56:48 +0400")
+References: <20240325095648.2835381-1-marcandre.lureau@redhat.com>
+Date: Mon, 25 Mar 2024 11:06:28 +0100
+Message-ID: <87a5mmocbf.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-In-Reply-To: <f4866402-bcee-447a-89fc-c5dd3128770c@tls.msk.ru>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8CxZMzDSwFmfxlnAA--.12479S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7JrWDCF4kGFyxArWrWw13Jrc_yoWxZrbEqr
- 42vrykW3y8Crs3KFsrZa1DAa18Gw40qF45Za4DXr40qw1xtw43GFW5WFyUXr4akFW8Ary3
- XFnFgrn5u3y5CosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbI8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_Jrv_JF1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70Pf
- DUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.996,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_SPACE_RATIO=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,25 +85,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: qemu-stable@nongnu.org
+marcandre.lureau@redhat.com writes:
 
-在 2024/3/22 下午10:58, Michael Tokarev 写道:
-> 22.03.2024 13:03, Song Gao :
->> qemu-system-loongarch64 assert failed with the option '-d int',
->> the helper_idle() raise an exception EXCP_HLT, but the exception name 
->> is undefined.
->>
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Message-Id: <20240321123606.1704900-1-gaosong@loongson.cn>
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 >
-> Is this another qemu-stable material?  You Cc'd it to me but I'm not sure
-> what should I do with it.
->
-> For patches suitable for -stable, please Cc: qemu-stable@nongnu.org.
->
-> Thanks,
->
-> /mjt
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+
+Queued, thanks!
 
 
