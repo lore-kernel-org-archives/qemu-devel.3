@@ -4,91 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6519C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 14:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56025C54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 14:16:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rol6k-0006Y0-AV; Mon, 25 Mar 2024 10:15:29 -0400
+	id 1rol7R-0007ym-6u; Mon, 25 Mar 2024 10:16:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rol5t-0005py-U1
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:14:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=rDMc=K7=kaod.org=clg@ozlabs.org>)
+ id 1rol7E-0007h5-Jb; Mon, 25 Mar 2024 10:15:59 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
+ helo=gandalf.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rol5r-00062i-7h
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:14:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711376070;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=b81kYa5kbqusJrC9AtQJGq2VZBu1IRZUXvQD4lw/kss=;
- b=SkVmi1oP8XC2j3wI+LLcS1VxyyWsyLdzApdye4sNRvfSJPCUBrTiPVm2mqLj2NCilNhPy/
- RBUGvSv4eHyx2eq9lVM5ovZeo+uMB3gd8+GbbI5t4RaUiRhV9gojVN3OwRiyhHrnjW3dLO
- GtsJm5Ayynyc55vqmnWwUjC05MskTZE=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-251-mCJltnFCN0Krfc4LS0CjYg-1; Mon, 25 Mar 2024 10:14:29 -0400
-X-MC-Unique: mCJltnFCN0Krfc4LS0CjYg-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2d6c8f170e2so17149941fa.3
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 07:14:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711376067; x=1711980867;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=b81kYa5kbqusJrC9AtQJGq2VZBu1IRZUXvQD4lw/kss=;
- b=rSXkUJG0rGvf9S9goXXH7bdVNyFnXoOt/QthO1oteDHhVvoBgXzO8rOujzPFCl253C
- S0MnBN6l5rKbvX+wFwmm2xnc+lqSLPhNrohB7xhEwd2cQ118BW4C8CuhH/KW9g/9kBhN
- lY7cDOXH667rvpmVSk+NvaovreBkSB6epYj+IiHipvz+cqV6Ht+hb2rNNuGDcTu0X1WZ
- UUr0adhp5vakqvpHwZTYdvZfp2eniFmBC2bw15RuhLnzmJ0d9xv2qiiyf3DKmM2PVO4P
- bSKYi+sksdgdPYcxcHWJuZapcPsRkcSO9afZ7a76CNKbf5WtDb/dlofZoGw9fJaMbXou
- 8QhA==
-X-Gm-Message-State: AOJu0YyNfVpFY1OZitDdtBUQr5H3f3lJmeLrFb6dhnB/GYjKbawDfzOe
- C+iQIiCx2irsJ5SIcXn15So6v3KLaTmnBLm5SuxxcUHMgCdO4pbTcTVs4fRZzZK8hrjwcXq/bII
- jlOZiPDOA95MtP1E8UIztSY8z1OseiKyWrX4SO7MUBTJXE6JMQtpTKKLwVnAuBPkmEqVeNOokbh
- /Er1VG7Am2YbXuJwijSyQWFeclgQ6SwH/i0qY4
-X-Received: by 2002:a2e:938e:0:b0:2d4:94eb:e9fe with SMTP id
- g14-20020a2e938e000000b002d494ebe9femr5750149ljh.21.1711376067346; 
- Mon, 25 Mar 2024 07:14:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0mCWCepaQf/otmERs1RkCJybbSbsc8J5ZI89tKCvpXxEY37PNvkkGCLBoFTEDgmbsQJUdmQ==
-X-Received: by 2002:a2e:938e:0:b0:2d4:94eb:e9fe with SMTP id
- g14-20020a2e938e000000b002d494ebe9femr5750118ljh.21.1711376066931; 
- Mon, 25 Mar 2024 07:14:26 -0700 (PDT)
-Received: from [192.168.10.118] ([151.95.49.219])
- by smtp.gmail.com with ESMTPSA id
- b12-20020a17090630cc00b00a47342b53a4sm3078336ejb.191.2024.03.25.07.14.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Mar 2024 07:14:25 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Cornelia Huck <cohuck@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Gavin Shan <gshan@redhat.com>
-Subject: [PATCH for-9.1 v5 1/3] hw: Add compat machines for 9.1
-Date: Mon, 25 Mar 2024 15:14:20 +0100
-Message-ID: <20240325141422.1380087-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240325141422.1380087-1-pbonzini@redhat.com>
-References: <20240325141422.1380087-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <SRS0=rDMc=K7=kaod.org=clg@ozlabs.org>)
+ id 1rol7A-0006Ny-2p; Mon, 25 Mar 2024 10:15:56 -0400
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4V3FMk0P7Zz4wb0;
+ Tue, 26 Mar 2024 01:15:46 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4V3FMd3qZVz4wcg;
+ Tue, 26 Mar 2024 01:15:41 +1100 (AEDT)
+Message-ID: <225449ea-475c-40a6-abf6-e2aba8dc3201@kaod.org>
+Date: Mon, 25 Mar 2024 15:15:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/10] pnv/phb4: Implement read-only and write-only bits
+ of registers
+To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com
+References: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
+ <20240321100422.5347-5-saif.abrar@linux.vnet.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240321100422.5347-5-saif.abrar@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=rDMc=K7=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,274 +69,321 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add 9.1 machine types for arm/i440fx/m68k/q35/s390x/spapr.
+On 3/21/24 11:04, Saif Abrar wrote:
+> SW cannot write the read-only(RO) bits of a register
+> and write-only(WO) bits of a register return 0 when read.
+> 
+> Added ro_mask[] for each register that defines which
+> bits in that register are RO.
+> When writing to a register, the RO-bits are not updated.
+> 
+> When reading a register, clear the WO bits and return the updated value.
+> 
+> Tested the registers PHB_DMA_SYNC, PHB_PCIE_HOTPLUG_STATUS, PHB_PCIE_LMR,
+> PHB_PCIE_DLP_TRWCTL, PHB_LEM_ERROR_AND_MASK and PHB_LEM_ERROR_OR_MASK
+> by writing all 1's and reading back the value.
+> The WO bits in these registers should read back as 0.
+> 
+> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+> ---
+>   hw/pci-host/pnv_phb4.c              | 77 ++++++++++++++++++++++++++---
+>   include/hw/pci-host/pnv_phb4.h      |  7 +++
+>   include/hw/pci-host/pnv_phb4_regs.h | 19 +++++--
+>   tests/qtest/pnv-phb4-test.c         | 60 +++++++++++++++++++++-
+>   4 files changed, 150 insertions(+), 13 deletions(-)
+> 
+> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+> index b3a83837f8..a81763f34c 100644
+> --- a/hw/pci-host/pnv_phb4.c
+> +++ b/hw/pci-host/pnv_phb4.c
+> @@ -735,6 +735,10 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>           return;
+>       }
+>   
+> +    /* Update 'val' according to the register's RO-mask */
+> +    val = (phb->regs[off >> 3] & phb->ro_mask[off >> 3]) |
+> +          (val & ~(phb->ro_mask[off >> 3]));
+> +
+>       /* Record whether it changed */
+>       changed = phb->regs[off >> 3] != val;
+>   
+> @@ -808,7 +812,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+>       case PHB_TCE_TAG_ENABLE:
+>       case PHB_INT_NOTIFY_ADDR:
+>       case PHB_INT_NOTIFY_INDEX:
+> -    case PHB_DMARD_SYNC:
+> +    case PHB_DMA_SYNC:
+>          break;
+>   
+>       /* Noise on anything else */
+> @@ -846,7 +850,7 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+>       case PHB_VERSION:
+>           return PNV_PHB4_PEC_GET_CLASS(phb->pec)->version;
+>   
+> -        /* Read-only */
+> +    /* Read-only */
+>       case PHB_PHB4_GEN_CAP:
+>           return 0xe4b8000000000000ull;
+>       case PHB_PHB4_TCE_CAP:
+> @@ -856,18 +860,49 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+>       case PHB_PHB4_EEH_CAP:
+>           return phb->big_phb ? 0x2000000000000000ull : 0x1000000000000000ull;
+>   
+> +    /* Write-only, read will return zeros */
+> +    case PHB_LEM_ERROR_AND_MASK:
+> +    case PHB_LEM_ERROR_OR_MASK:
+> +        return 0;
+> +    case PHB_PCIE_DLP_TRWCTL:
+> +        val &= ~PHB_PCIE_DLP_TRWCTL_WREN;
+> +        return val;
+>       /* IODA table accesses */
+>       case PHB_IODA_DATA0:
+>           return pnv_phb4_ioda_read(phb);
+>   
+> +    /*
+> +     * DMA sync: make it look like it's complete,
+> +     *           clear write-only read/write start sync bits.
+> +     */
+> +    case PHB_DMA_SYNC:
+> +        val = PHB_DMA_SYNC_RD_COMPLETE |
+> +            ~(PHB_DMA_SYNC_RD_START | PHB_DMA_SYNC_WR_START);
+> +        return val;
+> +
+> +    /*
+> +     * PCI-E Stack registers
+> +     */
+> +    case PHB_PCIE_SCR:
+> +        val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
+> +        break;
+> +
+>       /* Link training always appears trained */
+>       case PHB_PCIE_DLP_TRAIN_CTL:
+>           /* TODO: Do something sensible with speed ? */
+> -        return PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
+> +        val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
+> +        return val;
+> +
+> +    case PHB_PCIE_HOTPLUG_STATUS:
+> +        /* Clear write-only bit */
+> +        val &= ~PHB_PCIE_HPSTAT_RESAMPLE;
+> +        return val;
+>   
+> -    /* DMA read sync: make it look like it's complete */
+> -    case PHB_DMARD_SYNC:
+> -        return PHB_DMARD_SYNC_COMPLETE;
+> +    /* Link Management Register */
+> +    case PHB_PCIE_LMR:
+> +        /* These write-only bits always read as 0 */
+> +        val &= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
+> +        return val;
+>   
+>       /* Silent simple reads */
+>       case PHB_LSI_SOURCE_ID:
+> @@ -1712,6 +1747,33 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
+>       .get_address_space = pnv_phb4_dma_iommu,
+>   };
+>   
+> +static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
+> +{
+> +    /* Clear RO-mask to make all regs as R/W by default */
+> +    memset(phb->ro_mask, 0x0, PNV_PHB4_NUM_REGS * sizeof(uint64_t));
+> +
+> +    /*
+> +     * Set register specific RO-masks
+> +     */
+> +
+> +    /* PBL - Error Injection Register (0x1910) */
+> +    phb->ro_mask[PHB_PBL_ERR_INJECT >> 3] =
+> +        PPC_BITMASK(0, 23) | PPC_BITMASK(28, 35) | PPC_BIT(38) | PPC_BIT(46) |
+> +        PPC_BITMASK(49, 51) | PPC_BITMASK(55, 63);
+> +
+> +    /* Reserved bits[60:63] */
+> +    phb->ro_mask[PHB_TXE_ERR_LEM_ENABLE >> 3] =
+> +    phb->ro_mask[PHB_TXE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(60, 63);
+> +    /* Reserved bits[36:63] */
+> +    phb->ro_mask[PHB_RXE_TCE_ERR_LEM_ENABLE >> 3] =
+> +    phb->ro_mask[PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(36, 63);
+> +    /* Reserved bits[40:63] */
+> +    phb->ro_mask[PHB_ERR_LEM_ENABLE >> 3] =
+> +    phb->ro_mask[PHB_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(40, 63);
 
-Cc: Cornelia Huck <cohuck@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: Gavin Shan <gshan@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/hw/boards.h        |  3 +++
- include/hw/i386/pc.h       |  3 +++
- hw/arm/virt.c              | 11 +++++++++--
- hw/core/machine.c          |  3 +++
- hw/i386/pc.c               |  3 +++
- hw/i386/pc_piix.c          | 17 ++++++++++++++---
- hw/i386/pc_q35.c           | 14 ++++++++++++--
- hw/m68k/virt.c             | 11 +++++++++--
- hw/ppc/spapr.c             | 17 ++++++++++++++---
- hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
- 10 files changed, 83 insertions(+), 13 deletions(-)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 8b8f6d5c00d..50e0cf4278e 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -425,6 +425,9 @@ struct MachineState {
-     } \
-     type_init(machine_initfn##_register_types)
- 
-+extern GlobalProperty hw_compat_9_0[];
-+extern const size_t hw_compat_9_0_len;
-+
- extern GlobalProperty hw_compat_8_2[];
- extern const size_t hw_compat_8_2_len;
- 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 27a68071d77..349f79df086 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -198,6 +198,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
- /* sgx.c */
- void pc_machine_init_sgx_epc(PCMachineState *pcms);
- 
-+extern GlobalProperty pc_compat_9_0[];
-+extern const size_t pc_compat_9_0_len;
-+
- extern GlobalProperty pc_compat_8_2[];
- extern const size_t pc_compat_8_2_len;
- 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index a9a913aeadb..c9119ef3847 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3223,10 +3223,17 @@ static void machvirt_machine_init(void)
- }
- type_init(machvirt_machine_init);
- 
--static void virt_machine_9_0_options(MachineClass *mc)
-+static void virt_machine_9_1_options(MachineClass *mc)
- {
- }
--DEFINE_VIRT_MACHINE_AS_LATEST(9, 0)
-+DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
-+
-+static void virt_machine_9_0_options(MachineClass *mc)
-+{
-+    virt_machine_9_1_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-+}
-+DEFINE_VIRT_MACHINE(9, 0)
- 
- static void virt_machine_8_2_options(MachineClass *mc)
- {
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 37ede0e7d4f..a92bec23147 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -33,6 +33,9 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "audio/audio.h"
- 
-+GlobalProperty hw_compat_9_0[] = {};
-+const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
-+
- GlobalProperty hw_compat_8_2[] = {
-     { "migration", "zero-page-detection", "legacy"},
-     { TYPE_VIRTIO_IOMMU_PCI, "granule", "4k" },
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index e80f02bef41..461fcaa1b48 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -78,6 +78,9 @@
-     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
-     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
- 
-+GlobalProperty pc_compat_9_0[] = {};
-+const size_t pc_compat_9_0_len = G_N_ELEMENTS(pc_compat_9_0);
-+
- GlobalProperty pc_compat_8_2[] = {};
- const size_t pc_compat_8_2_len = G_N_ELEMENTS(pc_compat_8_2);
- 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 18ba0766092..8850c49c66a 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -513,13 +513,26 @@ static void pc_i440fx_machine_options(MachineClass *m)
-                                      "Use a different south bridge than PIIX3");
- }
- 
--static void pc_i440fx_9_0_machine_options(MachineClass *m)
-+static void pc_i440fx_9_1_machine_options(MachineClass *m)
- {
-     pc_i440fx_machine_options(m);
-     m->alias = "pc";
-     m->is_default = true;
- }
- 
-+DEFINE_I440FX_MACHINE(v9_1, "pc-i440fx-9.1", NULL,
-+                      pc_i440fx_9_1_machine_options);
-+
-+static void pc_i440fx_9_0_machine_options(MachineClass *m)
-+{
-+    pc_i440fx_9_1_machine_options(m);
-+    m->alias = NULL;
-+    m->is_default = false;
-+
-+    compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-+    compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
-+}
-+
- DEFINE_I440FX_MACHINE(v9_0, "pc-i440fx-9.0", NULL,
-                       pc_i440fx_9_0_machine_options);
- 
-@@ -528,8 +541,6 @@ static void pc_i440fx_8_2_machine_options(MachineClass *m)
-     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
- 
-     pc_i440fx_9_0_machine_options(m);
--    m->alias = NULL;
--    m->is_default = false;
- 
-     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index c7bc8a2041f..6e1180d4b60 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -365,12 +365,23 @@ static void pc_q35_machine_options(MachineClass *m)
-                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
- }
- 
--static void pc_q35_9_0_machine_options(MachineClass *m)
-+static void pc_q35_9_1_machine_options(MachineClass *m)
- {
-     pc_q35_machine_options(m);
-     m->alias = "q35";
- }
- 
-+DEFINE_Q35_MACHINE(v9_1, "pc-q35-9.1", NULL,
-+                   pc_q35_9_1_machine_options);
-+
-+static void pc_q35_9_0_machine_options(MachineClass *m)
-+{
-+    pc_q35_9_1_machine_options(m);
-+    m->alias = NULL;
-+    compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-+    compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
-+}
-+
- DEFINE_Q35_MACHINE(v9_0, "pc-q35-9.0", NULL,
-                    pc_q35_9_0_machine_options);
- 
-@@ -378,7 +389,6 @@ static void pc_q35_8_2_machine_options(MachineClass *m)
- {
-     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
-     pc_q35_9_0_machine_options(m);
--    m->alias = NULL;
-     m->max_cpus = 1024;
-     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
-     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index b8e5e102e6b..09bc9bdfefb 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -357,10 +357,17 @@ type_init(virt_machine_register_types)
-     } \
-     type_init(machvirt_machine_##major##_##minor##_init);
- 
--static void virt_machine_9_0_options(MachineClass *mc)
-+static void virt_machine_9_1_options(MachineClass *mc)
- {
- }
--DEFINE_VIRT_MACHINE(9, 0, true)
-+DEFINE_VIRT_MACHINE(9, 1, true)
-+
-+static void virt_machine_9_0_options(MachineClass *mc)
-+{
-+    virt_machine_9_1_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-+}
-+DEFINE_VIRT_MACHINE(9, 0, false)
- 
- static void virt_machine_8_2_options(MachineClass *mc)
- {
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index c417f9dd523..ab0cf496d61 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4805,14 +4805,25 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
-     type_init(spapr_machine_register_##suffix)
- 
- /*
-- * pseries-9.0
-+ * pseries-9.1
-  */
--static void spapr_machine_9_0_class_options(MachineClass *mc)
-+static void spapr_machine_9_1_class_options(MachineClass *mc)
- {
-     /* Defaults for the latest behaviour inherited from the base class */
- }
- 
--DEFINE_SPAPR_MACHINE(9_0, "9.0", true);
-+DEFINE_SPAPR_MACHINE(9_1, "9.1", true);
-+
-+/*
-+ * pseries-9.0
-+ */
-+static void spapr_machine_9_0_class_options(MachineClass *mc)
-+{
-+    spapr_machine_9_1_class_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-+}
-+
-+DEFINE_SPAPR_MACHINE(9_0, "9.0", false);
- 
- /*
-  * pseries-8.2
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index b1dcb3857f0..67e8b0b05e8 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -859,14 +859,26 @@ bool css_migration_enabled(void)
-     }                                                                         \
-     type_init(ccw_machine_register_##suffix)
- 
-+static void ccw_machine_9_1_instance_options(MachineState *machine)
-+{
-+}
-+
-+static void ccw_machine_9_1_class_options(MachineClass *mc)
-+{
-+}
-+DEFINE_CCW_MACHINE(9_0, "9.1", true);
-+
- static void ccw_machine_9_0_instance_options(MachineState *machine)
- {
-+    ccw_machine_9_1_instance_options(machine);
- }
- 
- static void ccw_machine_9_0_class_options(MachineClass *mc)
- {
-+    ccw_machine_9_1_class_options(machine);
-+    compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
- }
--DEFINE_CCW_MACHINE(9_0, "9.0", true);
-+DEFINE_CCW_MACHINE(9_0, "9.0", false);
- 
- static void ccw_machine_8_2_instance_options(MachineState *machine)
- {
--- 
-2.44.0
+These constant values should be defined in an array under PnvPhb4Class
+
+Thanks,
+
+C.
+
+> +    /* TODO: Add more RO-masks as regs are implemented in the model */
+> +}
+> +
+>   static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
+>   {
+>       STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+> @@ -1782,6 +1844,9 @@ static void pnv_phb4_instance_init(Object *obj)
+>   
+>       /* XIVE interrupt source object */
+>       object_initialize_child(obj, "source", &phb->xsrc, TYPE_XIVE_SOURCE);
+> +
+> +    /* Initialize RO-mask of registers */
+> +    pnv_phb4_ro_mask_init(phb);
+>   }
+>   
+>   void pnv_phb4_bus_init(DeviceState *dev, PnvPHB4 *phb)
+> diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
+> index 3212e68160..91e81eee0e 100644
+> --- a/include/hw/pci-host/pnv_phb4.h
+> +++ b/include/hw/pci-host/pnv_phb4.h
+> @@ -94,6 +94,13 @@ struct PnvPHB4 {
+>       uint64_t regs[PNV_PHB4_NUM_REGS];
+>       MemoryRegion mr_regs;
+>   
+> +    /*
+> +     * Read-only bitmask for registers
+> +     * Bit value: 1 => RO bit
+> +     *            0 => RW bit
+> +     */
+> +    uint64_t ro_mask[PNV_PHB4_NUM_REGS];> +
+>       /* Extra SCOM-only register */
+>       uint64_t scom_hv_ind_addr_reg;
+>   
+> diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
+> index df5e86d29a..391d6a89ea 100644
+> --- a/include/hw/pci-host/pnv_phb4_regs.h
+> +++ b/include/hw/pci-host/pnv_phb4_regs.h
+> @@ -180,9 +180,11 @@
+>   #define PHB_M64_AOMASK                  0x1d0
+>   #define PHB_M64_UPPER_BITS              0x1f0
+>   #define PHB_NXLATE_PREFIX               0x1f8
+> -#define PHB_DMARD_SYNC                  0x200
+> -#define   PHB_DMARD_SYNC_START          PPC_BIT(0)
+> -#define   PHB_DMARD_SYNC_COMPLETE       PPC_BIT(1)
+> +#define PHB_DMA_SYNC                    0x200
+> +#define   PHB_DMA_SYNC_RD_START         PPC_BIT(0)
+> +#define   PHB_DMA_SYNC_RD_COMPLETE      PPC_BIT(1)
+> +#define   PHB_DMA_SYNC_WR_START         PPC_BIT(2)
+> +#define   PHB_DMA_SYNC_WR_COMPLETE      PPC_BIT(3)
+>   #define PHB_RTC_INVALIDATE              0x208
+>   #define   PHB_RTC_INVALIDATE_ALL        PPC_BIT(0)
+>   #define   PHB_RTC_INVALIDATE_RID        PPC_BITMASK(16, 31)
+> @@ -395,8 +397,8 @@
+>   #define PHB_PCIE_SCR                    0x1A00
+>   #define   PHB_PCIE_SCR_SLOT_CAP         PPC_BIT(15)
+>   #define   PHB_PCIE_SCR_MAXLINKSPEED     PPC_BITMASK(32, 35)
+> +#define   PHB_PCIE_SCR_PLW_X16          PPC_BIT(41) /* x16 */
+>   #define PHB_PCIE_BNR                    0x1A08
+> -
+>   #define PHB_PCIE_CRESET                 0x1A10
+>   #define   PHB_PCIE_CRESET_CFG_CORE      PPC_BIT(0)
+>   #define   PHB_PCIE_CRESET_TLDLP         PPC_BIT(1)
+> @@ -405,7 +407,14 @@
+>   #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
+>   #define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
+>   #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
+> +#define   PHB_PCIE_HPSTAT_SIMDIAG       PPC_BIT(3)
+> +#define   PHB_PCIE_HPSTAT_RESAMPLE      PPC_BIT(9)
+>   #define   PHB_PCIE_HPSTAT_PRESENCE      PPC_BIT(10)
+> +#define   PHB_PCIE_HPSTAT_LINKACTIVE    PPC_BIT(12)
+> +#define PHB_PCIE_LMR                    0x1A30
+> +#define   PHB_PCIE_LMR_CHANGELW         PPC_BIT(0)
+> +#define   PHB_PCIE_LMR_RETRAINLINK      PPC_BIT(1)
+> +#define   PHB_PCIE_LMR_LINKACTIVE       PPC_BIT(8)
+>   
+>   #define PHB_PCIE_DLP_TRAIN_CTL          0x1A40
+>   #define   PHB_PCIE_DLP_LINK_WIDTH       PPC_BITMASK(30, 35)
+> @@ -433,7 +442,7 @@
+>   
+>   #define PHB_PCIE_DLP_TRWCTL             0x1A80
+>   #define   PHB_PCIE_DLP_TRWCTL_EN        PPC_BIT(0)
+> -
+> +#define   PHB_PCIE_DLP_TRWCTL_WREN      PPC_BIT(1)
+>   #define PHB_PCIE_DLP_ERRLOG1            0x1AA0
+>   #define PHB_PCIE_DLP_ERRLOG2            0x1AA8
+>   #define PHB_PCIE_DLP_ERR_STATUS         0x1AB0
+> diff --git a/tests/qtest/pnv-phb4-test.c b/tests/qtest/pnv-phb4-test.c
+> index 708df3867c..0c8e58dd5f 100644
+> --- a/tests/qtest/pnv-phb4-test.c
+> +++ b/tests/qtest/pnv-phb4-test.c
+> @@ -75,7 +75,8 @@ static void phb4_sticky_rst_test(QTestState *qts)
+>        * Sticky reset test of PHB_PBL_ERR_STATUS.
+>        *
+>        * Write all 1's to reg PHB_PBL_ERR_INJECT.
+> -     * Updated value will be copied to reg PHB_PBL_ERR_STATUS.
+> +     * RO-only bits will not be written and
+> +     * updated value will be copied to reg PHB_PBL_ERR_STATUS.
+>        *
+>        * Reset PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
+>        * Verify the sticky bits are still set.
+> @@ -83,7 +84,59 @@ static void phb4_sticky_rst_test(QTestState *qts)
+>       pnv_phb4_xscom_write(qts, PHB_PBL_ERR_INJECT, PPC_BITMASK(0, 63));
+>       pnv_phb4_xscom_write(qts, PHB_PCIE_CRESET, PHB_PCIE_CRESET_PBL); /*Reset*/
+>       val = pnv_phb4_xscom_read(qts, PHB_PBL_ERR_STATUS);
+> -    g_assert_cmpuint(val, ==, (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
+> +    g_assert_cmpuint(val, ==, 0xF00DFD8E00);
+> +}
+> +
+> +/* Check that write-only bits/regs return 0 when read */
+> +static void phb4_writeonly_read_test(QTestState *qts)
+> +{
+> +    uint64_t val;
+> +
+> +    /*
+> +     * Set all bits of PHB_DMA_SYNC,
+> +     * bits 0 and 2 are write-only and should be read as 0.
+> +     */
+> +    pnv_phb4_xscom_write(qts, PHB_DMA_SYNC, PPC_BITMASK(0, 63));
+> +    val = pnv_phb4_xscom_read(qts, PHB_DMA_SYNC);
+> +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
+> +    g_assert_cmpuint(val & PPC_BIT(2), ==, 0x0);
+> +
+> +    /*
+> +     * Set all bits of PHB_PCIE_HOTPLUG_STATUS,
+> +     * bit 9 is write-only and should be read as 0.
+> +     */
+> +    pnv_phb4_xscom_write(qts, PHB_PCIE_HOTPLUG_STATUS, PPC_BITMASK(0, 63));
+> +    val = pnv_phb4_xscom_read(qts, PHB_PCIE_HOTPLUG_STATUS);
+> +    g_assert_cmpuint(val & PPC_BIT(9), ==, 0x0);
+> +
+> +    /*
+> +     * Set all bits of PHB_PCIE_LMR,
+> +     * bits 0 and 1 are write-only and should be read as 0.
+> +     */
+> +    pnv_phb4_xscom_write(qts, PHB_PCIE_LMR, PPC_BITMASK(0, 63));
+> +    val = pnv_phb4_xscom_read(qts, PHB_PCIE_LMR);
+> +    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
+> +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
+> +
+> +    /*
+> +     * Set all bits of PHB_PCIE_DLP_TRWCTL,
+> +     * write-only bit-1 should be read as 0.
+> +     */
+> +    pnv_phb4_xscom_write(qts, PHB_PCIE_DLP_TRWCTL, PPC_BITMASK(0, 63));
+> +    val = pnv_phb4_xscom_read(qts, PHB_PCIE_DLP_TRWCTL);
+> +    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
+> +
+> +    /*
+> +     * Set all bits of PHB_LEM_ERROR_AND_MASK, PHB_LEM_ERROR_OR_MASK,
+> +     * both regs are write-only and should be read as 0.
+> +     */
+> +    pnv_phb4_xscom_write(qts, PHB_LEM_ERROR_AND_MASK, PPC_BITMASK(0, 63));
+> +    val = pnv_phb4_xscom_read(qts, PHB_LEM_ERROR_AND_MASK);
+> +    g_assert_cmpuint(val, ==, 0x0);
+> +
+> +    pnv_phb4_xscom_write(qts, PHB_LEM_ERROR_OR_MASK, PPC_BITMASK(0, 63));
+> +    val = pnv_phb4_xscom_read(qts, PHB_LEM_ERROR_OR_MASK);
+> +    g_assert_cmpuint(val, ==, 0x0);
+>   }
+>   
+>   static void test_phb4(void)
+> @@ -101,6 +154,9 @@ static void test_phb4(void)
+>       /* Check sticky reset of a register */
+>       phb4_sticky_rst_test(qts);
+>   
+> +    /* Check write-only logic */
+> +    phb4_writeonly_read_test(qts);
+> +
+>       qtest_quit(qts);
+>   }
+>   
 
 
