@@ -4,84 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1A49C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 09:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88F5BC54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 09:37:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roghL-0007eb-9B; Mon, 25 Mar 2024 05:32:55 -0400
+	id 1roglK-0000iF-J7; Mon, 25 Mar 2024 05:37:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1roghJ-0007eL-RZ
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 05:32:53 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1roghI-0005SM-BB
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 05:32:53 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4148a581d3fso2393085e9.3
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 02:32:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711359170; x=1711963970; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=v79t8Dy6CKUyWsPvkucEnxwlLGs3vBSnXkAdxoXiOsk=;
- b=SyoGg/NsCwW6agyW0efFLHNsSLC6dJKlcXkX0h4WQuCUXGPmG2iLyNB7wAzgHsvFtR
- drB90t15n8UQwZq4EVRDwXYQCwveoT2oxun3CaUXfnMB5x/ymtSWtkHgZ8u1xxMIJSJY
- 3AnpY66ohsMSXg7urK09XMYZwz4uUAVNz8jD+7wRgwF+pfdLFjU0Us8GV75iTVz3r1BW
- 4rBrrA2UjqQvhK03jEcMVpaVWWZJEAb8ev69B2yXKHAid5rxFkl8DXIzc/+mwQS/uGN6
- mY2bKnGQfdBSseKQCjYINg2a/qWH54S6DHRuVRP6yMh9ZDBkqAC6BWPfrz/RZ2gGd9BA
- w8nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711359170; x=1711963970;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=v79t8Dy6CKUyWsPvkucEnxwlLGs3vBSnXkAdxoXiOsk=;
- b=jKFWC+aQReJIvHh2BEr5BJmm+oGZAiHFZgfCQVkKyLS9Dak955DuyERsckc0LmqBpv
- 2e2171qJ3becGBl95IyHyhHsRukKk7avJibbRbWPcGNh/PaHZiqc4yov/21DzsQbs5wO
- zrQ2+UeX/lZS7JasSpuPg0nnUK8sKbQCdkPNp9Hn0B3JUThsXXLqJdkBGNcgPhIoYJHi
- 0bdLq/CKZ2iwiNbA/QadVujbW/8rV9sTK+zvFfv0PiMmL/OopooPWQkqCWFFv6eGtB3g
- r91EFHhixzgvzTF6tr280oCHz1joQvL2Lfz2ra3cACMTk9X+s8rFlRRTy23+BlQ4nrYE
- LVjQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX3AoEdXZkfneZrJHkDUOSKAXaQuKayg9VzhKt2e9KWOiA3jtjOjW/651SpDdlOwyuKJMZbc1X/BwbxlNdohmmGuW6ar/w=
-X-Gm-Message-State: AOJu0Yzak6dmoJGq879XCMY8w4mvjWT3w+dxkQHx0T9yQn2PLQWe7ukv
- pKPoBR4p4p/BPIZis1lB0t8GSi6cq6A9pV21Mvf7CRjc5ExSgrRH7A86hX1Ranw=
-X-Google-Smtp-Source: AGHT+IHNFlZW0AI9Lx3z6i0zk3FnC+cIagQX7AdcUUAcEIjOgdp/kMijy/b14UQCXfAKNbkOIVJ8yQ==
-X-Received: by 2002:a05:600c:450c:b0:414:86a2:a43 with SMTP id
- t12-20020a05600c450c00b0041486a20a43mr2149048wmo.40.1711359170626; 
- Mon, 25 Mar 2024 02:32:50 -0700 (PDT)
-Received: from [192.168.163.175] (237.red-88-29-182.dynamicip.rima-tde.net.
- [88.29.182.237]) by smtp.gmail.com with ESMTPSA id
- m15-20020a05600c4f4f00b00414037f27a9sm7844004wmq.31.2024.03.25.02.32.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Mar 2024 02:32:50 -0700 (PDT)
-Message-ID: <5d5d3415-3ee3-4230-a8c7-5a87fa11fb7e@linaro.org>
-Date: Mon, 25 Mar 2024 10:32:48 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1roglJ-0000i1-B9
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 05:37:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1roglH-0006CP-IG
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 05:37:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711359416;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=xAyrOfFJqsIa+nou85agsoQOUp6k6g5Dk7m9dw8z7v8=;
+ b=FZkSFG5hAUTO0F5dxG/wv8zjHiG7evrR+Tb0UgcVVzdYeWvNJx7+hS6im+KTgvRpPjbsCl
+ ZjqJlKfF5NKlvvq/YhzIIeJRO+X/xD7hcoVTR/ElH1vv2Lklqkj2y9C6aLk9KbIONnRrAP
+ 8TOorRhpq8h/MIW6inN4xse11mLs+Cw=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-388-9cRqTjm0PyGtVbJ0Qd4LXA-1; Mon, 25 Mar 2024 05:36:54 -0400
+X-MC-Unique: 9cRqTjm0PyGtVbJ0Qd4LXA-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.7])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DD6478007A7;
+ Mon, 25 Mar 2024 09:36:53 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id E04131C060D1;
+ Mon, 25 Mar 2024 09:36:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CC80721E668C; Mon, 25 Mar 2024 10:36:47 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel@redhat.com>, Jiri Pirko <jiri@resnulli.us>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: Let's close member documentation gaps
+Date: Mon, 25 Mar 2024 10:36:47 +0100
+Message-ID: <87il1aodow.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/26] runstate: skip initial CPU reset if reset is not
- actually possible
-Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: xiaoyao.li@intel.com, michael.roth@amd.com, david@redhat.com
-References: <20240322181116.1228416-1-pbonzini@redhat.com>
- <20240322181116.1228416-12-pbonzini@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240322181116.1228416-12-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,27 +85,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/3/24 19:11, Paolo Bonzini wrote:
-> Right now, the system reset is concluded by a call to
-> cpu_synchronize_all_post_reset() in order to sync any changes
-> that the machine reset callback applied to the CPU state.
-> 
-> However, for VMs with encrypted state such as SEV-ES guests (currently
-> the only case of guests with non-resettable CPUs) this cannot be done,
-> because guest state has already been finalized by machine-init-done notifiers.
-> cpu_synchronize_all_post_reset() does nothing on these guests, and actually
-> we would like to make it fail if called once guest has been encrypted.
-> So, assume that boards that support non-resettable CPUs do not touch
-> CPU state and that all such setup is done before, at the time of
-> cpu_synchronize_all_post_init().
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   system/runstate.c | 15 ++++++++++++++-
->   roms/edk2         |  2 +-
-Without submodule change:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+If you're cc'ed, I have a bit of doc work for you.  Search for your
+name to find it.
 
->   2 files changed, 15 insertions(+), 2 deletions(-)
+The QAPI generator forces you to document your stuff.  Except for
+commands, events, enum and object types listed in pragma
+documentation-exceptions, the generator silently defaults missing
+documentation to "Not documented".  Right now, we're using this loophole
+some 500 times.
+
+Most of the offenders are enumeration values.  Their meaning is perhaps
+easier to guess than the meaning of command arguments, member data, and
+object type members.  Ignoring enumerations leaves 62 offenders.  Let's
+examine them.
+
+=3D qapi/block-core.json
+
+* DummyBlockCoreForceArrays
+
+  Not actually part of the external interface, ignore.
+
+* Qcow2OverlapCheckFlags
+
+  If the user needs to know what the flags do, then the flags need to be
+  documented.  Else, they should not be part of the stable interface.
+
+  Vladimir, if the former, please fix.  If the latter, please mark them
+  unstable.
+
+* ThrottleGroupProperties
+
+  The unstable properties you're not supposed to use are undocumented.
+  Tolerable, I guess.
+
+* XDbgBlockGraph
+
+  Only user is x-debug-query-block-graph, which is for debugging.
+  Tolerable, I guess.
+
+* blockdev-reopen
+
+  The documentation refers to the argument ("the given set of options"),
+  but since it lacks a formal @option: section, the generator concludes
+  it doesn't, and supplies its "Not documented" description.
+  Embarrassing.  Kevin or Hanna, please fix.
+
+=3D qapi/machine-target.json
+
+* query-cpu-model-baseline
+* query-cpu-model-comparison
+
+  The documentation refers to the arguments ("two CPU models"), but
+  since it lacks formal @modela: and @modelb: sections, the generator
+  concludes it doesn't, and supplies its "Not documented" description.
+  Embarrassing.  David, please fix.
+
+* query-cpu-model-expansion
+
+  Likewise, only the references to the arguments are even more vague.
+  David, please fix.
+
+=3D qapi/machine.json
+
+* DummyForceArrays
+
+  Not actually part of the external interface, ignore.
+
+=3D qapi/net.json
+
+* String
+
+  Lack of the @str: section produces an embarrassing "Not documented" in
+  the generated documentation.  I can post a patch to make it less
+  embarrassing.  I doubt we can make it actually good, as generic
+  wrapper types like this one have meaning only in the context they are
+  used.  Therefore, their meaning can be usefully explained only at
+  their uses, not their definition.
+
+=3D qapi/pci.json
+
+* PciMemoryRegion
+
+  Michael or Marcel, please document @address.
+
+=3D qapi/rocker.json
+
+* query-rocker
+* query-rocker-ports
+
+  Jiri, please document the argument.
+
+=3D qapi/run-state.json
+
+* GuestPanicInformationHyperV
+
+  Paolo, please document the members.
+
+* watchdog-set-action
+
+  Paolo, please document the argument, or ask me to do it for you.
+
+=3D qapi/stats.json
+
+* StatsFilter
+
+  Paolo, please document @providers.
+
+* StatsValue
+
+  Paolo, please document @boolean.
+
+* query-stats-schemas
+
+  Paolo, please document the argument.
+
+=3D qapi/transaction.json
+
+* AbortWrapper
+* BlockDirtyBitmapAddWrapper
+* BlockDirtyBitmapMergeWrapper
+* BlockDirtyBitmapWrapper
+* BlockdevBackupWrapper
+* BlockdevSnapshotInternalWrapper
+* BlockdevSnapshotSyncWrapper
+* BlockdevSnapshotWrapper
+* DriveBackupWrapper
+
+  Kevin or Hana, please document the member.
+
+  Similar wrapper types elsewhere simply steal from the wrapped type's
+  description.  Trouble is the ones wrapped here lack a description.
+
+=3D qapi/ui.json
+
+* InputMultiTouchEvent
+
+  Marc-Andr=C3=A9, please document @type.
+
+=3D qapi/virtio.json
+
+* DummyVirtioForceArrays
+
+  Not actually part of the external interface, ignore.
 
 
