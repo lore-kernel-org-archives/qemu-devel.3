@@ -4,139 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40ACBC54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 06:20:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71536C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 06:28:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rodgJ-0007Fd-Fm; Mon, 25 Mar 2024 02:19:40 -0400
+	id 1rodo6-0000ca-RW; Mon, 25 Mar 2024 02:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rodgD-0007Df-3k
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 02:19:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1rodnw-0000cD-TQ
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 02:27:34 -0400
+Received: from cat.oak.relay.mailchannels.net ([23.83.215.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rodgA-0007fI-Vl
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 02:19:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711347569;
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1rodnt-0000hC-Ii
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 02:27:32 -0400
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+ by relay.mailchannels.net (Postfix) with ESMTP id 4C8725024E0
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:27:27 +0000 (UTC)
+Received: from outbound1.eu.mailhop.org (unknown [127.0.0.6])
+ (Authenticated sender: duocircle)
+ by relay.mailchannels.net (Postfix) with ESMTPA id BF0CF502536
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:27:06 +0000 (UTC)
+ARC-Seal: i=2; s=arc-2022; d=mailchannels.net; t=1711348027; a=rsa-sha256;
+ cv=pass;
+ b=rwNMEHb/xztwZQFbszbItrJQy2Wm8233DTNMw53hCzKW7FVxoAVdf1ptyX46DZiEGGJADr
+ 9sMkfoRksW5c9JfZSLc6U/pIdBGcdD8EMTo6llO4enoWKQSZuLik2DRumyPCtieBw+YVDj
+ zwSDPIA8qHM4GlXC+WC+Koy2uzBiLVqGVFJbIRCHIo1oNEIvHVDpI+Kcy8YkGjCgN+2jB5
+ 9jNXuss//JhH4Aa26nckSstE+OhhJ8YAZrLenr9fqL+xOYVbCv8VUpRl364aBQ2KLNmkHc
+ 4maLA/ehukAwGLsVhdFSU6oQJWLKiwsqvuyWqkx3djK2a/sQSf7owR40EDuCrA==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net; s=arc-2022; t=1711348027;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hYJD0dTXplx8tmYUFvxPyIMbnTl0e1SqD5FBdPJRvz0=;
- b=ckJHv08cfQOUFiu5jS7c5qhA2k62WySGsjWI9FMdzvTsqAaKOklRHA+Waz+iz4FL9W9f6k
- yPWCF+jLzJU8yWmwOyuLwmNuku2GZ0Zt94NGHIgD9qJCWQjDf7EQ5xqY57fy1bxHpa8x7m
- r1DqUCmeN0VC/opYzJtj5laujiIdiH4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-540-zSM-U6KIN9aHBtcujOnTwQ-1; Mon, 25 Mar 2024 02:19:27 -0400
-X-MC-Unique: zSM-U6KIN9aHBtcujOnTwQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4147de378b9so13730985e9.3
- for <qemu-devel@nongnu.org>; Sun, 24 Mar 2024 23:19:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711347566; x=1711952366;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hYJD0dTXplx8tmYUFvxPyIMbnTl0e1SqD5FBdPJRvz0=;
- b=g0YdS/8YW3GXvTbNoGAPmumpP4TlPyrNSVzoGnm8r9l8oNeYYJuCP+9I52CJxeOfdv
- Nj1g78SAR9nMcgS1EPB1T5xdOrzJ/k8mRwiveiRATY2h8dt/p47M3gzeG+gsxm/Znnpn
- cabJyRL7a3fx+1YUosNtecAl/ZBgg0KYK7XyqN6MZlfNXoE9rHNzvzRTF96j+AAF+Zif
- Cw/e7M8WZ+M/xtl1h3NW3f0GabINZANizb1NUimZd6NtssQzDhLOD7drf8f441mNJ6yL
- Pw2fVQZeu0ZjWeYaY7WPO8dXwYU1bO/sw/CmVhRQXIKB3UcWPPOoSpUFR60YmP6/vpYQ
- 36RQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV+l1OoR0kNq054kOngy2hUM2QkDFo0z129J8cTTAyxGtjVr9jrN6h5pNoN+w1FF4pycV94CvBxWTXh96B1StW4kUtE7gU=
-X-Gm-Message-State: AOJu0Yw6RL6VeV31yVr8Ew7VqKGc4ndBBTVXR04gxf6Ibj8cV20HHYab
- gRb/9eTpGO3yVJaY412Ctw5p3HntRvR0qbVdO9/YLQ40qX80fWSUz7VS8oUyYA+BdFevih/KKZ1
- KnyxrufD1IvsBJTieaahRHp1XGJyygVUi1gEtjBETuwARIkquJ89i
-X-Received: by 2002:a5d:40c7:0:b0:33e:6056:6b8b with SMTP id
- b7-20020a5d40c7000000b0033e60566b8bmr4181671wrq.7.1711347566628; 
- Sun, 24 Mar 2024 23:19:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9vxS7cgaPl5VSd5wqZKrvXLiNsnJ+dluBmd4q2Jwi1kCJUl82DgvbwD9Yh6NN2ojiEa6Vow==
-X-Received: by 2002:a5d:40c7:0:b0:33e:6056:6b8b with SMTP id
- b7-20020a5d40c7000000b0033e60566b8bmr4181661wrq.7.1711347566251; 
- Sun, 24 Mar 2024 23:19:26 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-176-158.web.vodafone.de.
- [109.43.176.158]) by smtp.gmail.com with ESMTPSA id
- j1-20020adff001000000b0033e7e9c8657sm8507662wro.45.2024.03.24.23.19.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 24 Mar 2024 23:19:25 -0700 (PDT)
-Message-ID: <9e6142e9-83b1-465d-b29a-01f60f9cbc49@redhat.com>
-Date: Mon, 25 Mar 2024 07:19:24 +0100
+ in-reply-to:in-reply-to:references:references:dkim-signature;
+ bh=fxsfjUJ3SS7G27kDHJP891WrfbPyd7rtaLFNfNJmYeY=;
+ b=vqyDFjrNHJqsmGcRs92aGF+eg1aovlxfiW8gWbrgO2gPmog82WMN8OOx8Ou1C8RU0Hpu6L
+ nCrMA85kU7G/F9VAm/Yrlv7j+xmPNWjxlTH8yiXszYYUIZ/oSC0UQ1svW56dxAts9ThrWq
+ DP3m/exUmj2Mx6GdJ6sO5LhFkA5R2bgClWjg6P0sVxv5eoSddFYlsTUcjjoDaRu+LYPSyT
+ 48a15qf+ms7iw2SutUPPoeXEeRLELYzsc/3el+Uitu+82xuukDSo0q5DFMwgMqa4H+rwcP
+ UrBidvsS2kremJOKKDGDDn+0pHbYAkkmwvfJqxvAokOAYfm7KgzS1bx02JPaFg==
+ARC-Authentication-Results: i=2; rspamd-6c65898bb7-hnzvm;
+ arc=pass ("outbound.mailhop.org:s=arc-outbound20181012:i=1");
+ auth=pass smtp.auth=duocircle smtp.mailfrom=svens@stackframe.org
+Received: from outbound1.eu.mailhop.org (outbound1.eu.mailhop.org
+ [52.28.251.132]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+ by 100.121.187.25 (trex/6.9.2); Mon, 25 Mar 2024 06:27:07 +0000
+ARC-Seal: i=1; a=rsa-sha256; t=1711347989; cv=none;
+ d=outbound.mailhop.org; s=arc-outbound20181012;
+ b=Sgth5Dkn8WFi/ZUxRDL8wLJmpJ81Ok6nsvmLPB85c+7Ib1KJEOk7RfDmzu1hokUqGBuGHS7xmcqhA
+ FHIslTPEM6WLnBkZrgyPzXlGbPWvRhfA5N9W1274K1A0kh9Ln7xC0IzfhLcT0y3gDpNgKx2spOEP9i
+ Wok9pCBo+foSZXTmToe6fEU0JzC4YXUHFAwO5yo3TvDY6qjxyRtx959DCYmCPhsullzjgKTnqDM8vU
+ EzJSKhDLAR1o3CXeZdO6ZtUvRikmErCjGTCSK0uA36USaqavTopr117wbyY4sc2hwp7xqhqFkMU/52
+ DF51NZIx1fPujt3QOTEv+9L5u4N7CxQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=arc-outbound20181012;
+ h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
+ to:from:dkim-signature:dkim-signature:dkim-signature:from;
+ bh=fxsfjUJ3SS7G27kDHJP891WrfbPyd7rtaLFNfNJmYeY=;
+ b=o8C/9lbbIq5NwRiOFOpCGHx2bJz2QENsurM7s9crTNktrzB/pp4Y7NN/kv4V7BWnyiDbKbXdMZAFn
+ s3nOUnrH7j5zPdj8hdY7sK/K4sPf9WwCe/54KpGIreSLQ1a621DL7r8ClmZM4oHsj5OJsTMAVUTLvD
+ 0VfTPBurpEOnjfbuM4azz3s6gS9t+l0MWIGklmMYXMrmMwN/G5Hg9/jLQT7QB5y5Csw3YJsLWW2ke+
+ shOYQOSdPLM6EIIyivCmRMJTb9AfIkoLT2aTNQvWFnSBhY39k37im1ljP2XZbr6mh5RpSu7Vw84+Js
+ gqK8ET+tDOxiz/vi2NrkaNOxHb4bdaA==
+ARC-Authentication-Results: i=1; outbound3.eu.mailhop.org;
+ spf=pass smtp.mailfrom=stackframe.org smtp.remote-ip=130.180.31.158;
+ dkim=pass header.d=stackframe.org header.s=dkim1 header.a=rsa-sha256
+ header.b=E8tf1syL; 
+ dmarc=none header.from=stackframe.org;
+ arc=none header.oldest-pass=0;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=stackframe.org; s=duo-1634547266507-560c42ae;
+ h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
+ to:from:from; bh=fxsfjUJ3SS7G27kDHJP891WrfbPyd7rtaLFNfNJmYeY=;
+ b=USB46T0qOw5v+Wjs2em8FoCul6ZN7p4U6uJOKBZY+p3yRZahvPlXU+ao0MDhWZZQBjWCof6qXpxSU
+ yyKkgISC6EWj+hFZLly0NHQyj/4ft3WeGsgLSs0NsGHpuOka729LSB7TJ72wKLqgUS9dlK6WTRlTyj
+ pycmMmpOnp7XmUW0=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=dkim-high;
+ h=content-type:mime-version:message-id:date:references:in-reply-to:subject:cc:
+ to:from:from; bh=fxsfjUJ3SS7G27kDHJP891WrfbPyd7rtaLFNfNJmYeY=;
+ b=caYPMBACtmY70aLCMelUAXF8CVR4H219xK8pMf0qdpr01UxMnYmWJ7oUtobNJ7BOFzfJxDGKnh/ad
+ xK5FIcD16R9XwOFcInCLmrbHwxO3bHRx2eEAKcB8LPnKD5wOnzcE/UPyBP3cS87nq7VgEA682Ocdra
+ IAf/zgUFHJqeLpbgFuoR6XsXZ5+bIIj6Ouz7J+64sk1CeuRaf03PicKQ4TJTEi3wlAtDJOLXGnjGFg
+ kQF5Srx8wm0U0DcJ5FPFSwm7NmJR5ovnwOXXhi+7GHShwiqFIRZ//UW/T4scNjrz56kV2lyEtlQVTm
+ KMn1E9s4YfPC0h2smQH9WR31GK4kSyg==
+X-Originating-IP: 130.180.31.158
+X-MHO-RoutePath: dG9ta2lzdG5lcm51
+X-MHO-User: 9b943666-ea70-11ee-b288-eda7e384987e
+X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
+X-Mail-Handler: DuoCircle Outbound SMTP
+Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
+ by outbound3.eu.mailhop.org (Halon) with ESMTPSA
+ id 9b943666-ea70-11ee-b288-eda7e384987e;
+ Mon, 25 Mar 2024 06:26:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=stackframe.org; s=dkim1; h=Content-Type:MIME-Version:Message-ID:Date:
+ References:In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+ Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+ List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=fxsfjUJ3SS7G27kDHJP891WrfbPyd7rtaLFNfNJmYeY=; b=E8tf1syLsu+5U7VgAUup/Pne8x
+ dZuXkrgcFqNdrZI/PxXKt9wuAazgnh0Anj8+apQpEmYaqLhpMouGXFXKH0pI6UT0QrLZ1inCYFfmC
+ gM1IhkkKekIwrpzJEhWmMbF9BKdN+ed2YK1ttiODWJ98kE+KaUdy+ylZOK2RU+dbMP9axFUQ55wvg
+ dnlUjhF+SFCY3709GT+AYaNHFUB5qfgxzboiDvch/xGrSSzuIjt3ZZpPHTvypvCnAcVhOfpPxfl8p
+ GlglwedCxG7+ZnoC6+gYC4ChNsLc7ibRubsCB5Q5F7psMABsLTOHisZtWn3xbQlx25DsfE1Y6VzYd
+ 5xKGzUmA==;
+Received: from ip-134-003-094-010.um41.pools.vodafone-ip.de ([134.3.94.10]
+ helo=t14.stackframe.org.stackframe.org)
+ by mail.duncanthrax.net with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <svens@stackframe.org>) id 1rodnS-005UV5-0J;
+ Mon, 25 Mar 2024 07:27:02 +0100
+From: Sven Schnelle <svens@stackframe.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  Helge Deller <deller@gmx.de>
+Subject: Re: [PATCH 2/3] target/hppa: mask offset bits in gva
+In-Reply-To: <7785c89b-95eb-4b56-8fbd-5f14fba7de08@linaro.org> (Richard
+ Henderson's message of "Sun, 24 Mar 2024 13:14:34 -1000")
+References: <20240324080945.991100-1-svens@stackframe.org>
+ <20240324080945.991100-3-svens@stackframe.org>
+ <ec050630-a866-4a51-8878-d35844fb66a6@linaro.org>
+ <87o7b31nhj.fsf@t14.stackframe.org>
+ <7785c89b-95eb-4b56-8fbd-5f14fba7de08@linaro.org>
+Date: Mon, 25 Mar 2024 07:27:00 +0100
+Message-ID: <87h6gu25e3.fsf@t14.stackframe.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/6] tests/qtest: Add tests for the STM32L4x5 USART
-To: Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
- Samuel Tardieu <samuel.tardieu@telecom-paris.fr>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240324165545.201908-1-arnaud.minier@telecom-paris.fr>
- <20240324165545.201908-7-arnaud.minier@telecom-paris.fr>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240324165545.201908-7-arnaud.minier@telecom-paris.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain
+Received-SPF: pass client-ip=23.83.215.31; envelope-from=svens@stackframe.org;
+ helo=cat.oak.relay.mailchannels.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,146 +156,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi!
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-On 24/03/2024 17.55, Arnaud Minier wrote:
-> Test:
-> - read/write from/to the usart registers
-> - send/receive a character/string over the serial port
-> 
-> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-> ---
->   tests/qtest/meson.build            |   3 +-
->   tests/qtest/stm32l4x5_usart-test.c | 326 +++++++++++++++++++++++++++++
->   2 files changed, 328 insertions(+), 1 deletion(-)
->   create mode 100644 tests/qtest/stm32l4x5_usart-test.c
-> 
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 36c5c13a7b..e0d72ee91e 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -205,7 +205,8 @@ qtests_stm32l4x5 = \
->     ['stm32l4x5_exti-test',
->      'stm32l4x5_syscfg-test',
->      'stm32l4x5_rcc-test',
-> -   'stm32l4x5_gpio-test']
-> +   'stm32l4x5_gpio-test',
-> +   'stm32l4x5_usart-test']
+> On 3/24/24 08:41, Sven Schnelle wrote:
+>> 7f09e0: val=000fffb0301fffff r2=110e0f0000000001 r1=01fffffffffff600 phys=fffffffffffb0000 4K aid=1 pl1=0, pl2=0 type=1 (DATA RW)
+>> 'val' is the value constructed from IOR/ISR,
+>
+> Is this byte swapped in some weird way?  I do not see how 'val'
+> corresponds to any of the addresses we're talking about.  From here,
+> the string "301fffff" appears to an out-of-context grep hit.
 
-We are now using timeouts from the meson test harneess in meson.build, too, 
-see the slow_qtests[] at the beginning of that file.
-You seem to be using a 10 minutes timeout in your test below 
-(usart_wait_for_flag() function), but you didn't adjust the meson timeout 
-setting in meson.build, so this does not quite match...
-How long does your test take on a very loaded machine (with --enable-debug 
-used)? If it could take more than 30 seconds, you need to adjust the timeout 
-in meson.build, too. If it is running very fast, you should likely adjust 
-the 10 minutes timeout in usart_wait_for_flag() to < 30 seconds instead to 
-match the meson timeout setting.
-
->   qtests_arm = \
->     (config_all_devices.has_key('CONFIG_MPS2') ? ['sse-timer-test'] : []) + \
-> diff --git a/tests/qtest/stm32l4x5_usart-test.c b/tests/qtest/stm32l4x5_usart-test.c
-> new file mode 100644
-> index 0000000000..2d42f053f6
-> --- /dev/null
-> +++ b/tests/qtest/stm32l4x5_usart-test.c
-> @@ -0,0 +1,326 @@
-> +/*
-> + * QTest testcase for STML4X5_USART
-> + *
-> + * Copyright (c) 2023 Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> + * Copyright (c) 2023 Inès Varhol <ines.varhol@telecom-paris.fr>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqtest.h"
-> +#include "hw/misc/stm32l4x5_rcc_internals.h"
-> +#include "hw/registerfields.h"
-> +
-> +#define RCC_BASE_ADDR 0x40021000
-> +/* Use USART 1 ADDR, assume the others work the same */
-> +#define USART1_BASE_ADDR 0x40013800
-> +
-> +/* See stm32l4x5_usart for definitions */
-> +REG32(CR1, 0x00)
-> +    FIELD(CR1, M1, 28, 1)
-> +    FIELD(CR1, OVER8, 15, 1)
-> +    FIELD(CR1, M0, 12, 1)
-> +    FIELD(CR1, PCE, 10, 1)
-> +    FIELD(CR1, TXEIE, 7, 1)
-> +    FIELD(CR1, RXNEIE, 5, 1)
-> +    FIELD(CR1, TE, 3, 1)
-> +    FIELD(CR1, RE, 2, 1)
-> +    FIELD(CR1, UE, 0, 1)
-> +REG32(CR2, 0x04)
-> +REG32(CR3, 0x08)
-> +    FIELD(CR3, OVRDIS, 12, 1)
-> +REG32(BRR, 0x0C)
-> +REG32(GTPR, 0x10)
-> +REG32(RTOR, 0x14)
-> +REG32(RQR, 0x18)
-> +REG32(ISR, 0x1C)
-> +    FIELD(ISR, TXE, 7, 1)
-> +    FIELD(ISR, RXNE, 5, 1)
-> +    FIELD(ISR, ORE, 3, 1)
-> +REG32(ICR, 0x20)
-> +REG32(RDR, 0x24)
-> +REG32(TDR, 0x28)
-> +
-> +#define NVIC_ISPR1 0XE000E204
-> +#define NVIC_ICPR1 0xE000E284
-> +#define USART1_IRQ 37
-> +
-> +static bool check_nvic_pending(QTestState *qts, unsigned int n)
-> +{
-> +    /* No USART interrupts are less than 32 */
-> +    assert(n > 32);
-> +    n -= 32;
-> +    return qtest_readl(qts, NVIC_ISPR1) & (1 << n);
-> +}
-> +
-> +static bool clear_nvic_pending(QTestState *qts, unsigned int n)
-> +{
-> +    /* No USART interrupts are less than 32 */
-> +    assert(n > 32);
-> +    n -= 32;
-> +    qtest_writel(qts, NVIC_ICPR1, (1 << n));
-> +    return true;
-
-I'd suggest to change the return type to "void" and drop the "return true" here.
-
-> +}
-> +
-> +/*
-> + Tests should never need to sleep(), because while it might be plenty of time on a
-> + fast development machine, it can cause intermittent failures due
-> + to timeouts if the test is on some heavily-loaded slow CI runner.
-> + */
-> +static bool usart_wait_for_flag(QTestState *qts, uint32_t event_addr, uint32_t flag)
-> +{
-> +    /* Wait at most 10 minutes */
-> +    for (int i = 0; i < 600000; i++) {
-> +        if ((qtest_readl(qts, event_addr) & flag)) {
-> +            return true;
-> +        }
-> +        g_usleep(1000);
-
-As I recently learnt again, some systems (like some BSD kernels) still use a 
-time slice resolution of 10 ms, so it might be better to g_usleep(10000) and 
-adjust the loop counter to a value that is 10 times less instead, otherwise 
-your loop might 100 minutes instead of 10 minutes in the worst case instead.
-
-> +    }
-> +
-> +    return false;
-> +}
-
-  Thomas
-
-
+It's just both values combined together, where the 301fffff is basically
+the ISR content. It's not a out of context grep - the real machines i have
+are constructing the same value, and the same offset into the pagetable.
+I verified that by patching the DTLB miss handler in HPUX to write the
+ISR/IOR and calulated pagetable offset/value to PAGE0 and looked with
+the kernel debugger at the values.
 
