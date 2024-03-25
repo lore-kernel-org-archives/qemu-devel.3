@@ -4,129 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 525F3CD11BF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 453A5C54E58
 	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 14:05:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rokvy-0000FW-6w; Mon, 25 Mar 2024 10:04:18 -0400
+	id 1rokwa-0000QP-Fl; Mon, 25 Mar 2024 10:04:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rokvw-0000F0-A5
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:04:16 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rokwP-0000Nq-Uj
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:04:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rokvu-000471-Ub
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:04:16 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rokwN-00049m-5D
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:04:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711375453;
+ s=mimecast20190719; t=1711375482;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/6lLN9ZTXd/Wo2XoE5NwtPmRKNtG8azFkGIpKl9RGyY=;
- b=a8aXxtSvVnjUjL/ap4tvmkzClGlwnrEalD6UF/xlWGXl/ftXGUhabhj4U4DsElhC64gl4e
- ndySo91VFerAVh1s9igrV66iCMcrvZbl8+9th4DlveMW13dk5cfey5kzNnA7WWJs7eUagK
- B5KJMeYaiqgeN2lETr+Ff4FEf3UGOB4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=E8yIDiCX/Ln3x0nNQdql3UK/HtqDf0IEIrOFJt+xFMY=;
+ b=P4/WhYDARX33Z6oU/71eK4lawzREC2dwHJ79fRof+VFXRAZdp8FBQPHXFwaKtXRWxyFdmX
+ RGSqlTw3e5HuZxFvUT7zOwN8+PgJ1NHNJZMj2912cKgoQ/SVsSGAk2wqbrQIPvSYEEc+eM
+ DaHpknwHpiIQiD7TVHtYrx5ELiTziEk=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-191-2ipCFsUwNoyxYOhiew1KIQ-1; Mon, 25 Mar 2024 10:04:11 -0400
-X-MC-Unique: 2ipCFsUwNoyxYOhiew1KIQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4140e6bbc87so25132815e9.2
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 07:04:11 -0700 (PDT)
+ us-mta-395-973qy01WMeSx0E-T5v3M-Q-1; Mon, 25 Mar 2024 10:04:41 -0400
+X-MC-Unique: 973qy01WMeSx0E-T5v3M-Q-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a4943e972d1so108140966b.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 07:04:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711375450; x=1711980250;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/6lLN9ZTXd/Wo2XoE5NwtPmRKNtG8azFkGIpKl9RGyY=;
- b=kZ+GmKPAq7baszPTPpxopM2i3sHzV2v64c/fHgvaqnEPX5D5yMAyxPNzOZyf3l8xYD
- Px73daXDxUVAZqIasE/muwHrqiy78tQzroeC4ZltoQIXTsrGANHtebXNfYqujhrkXvSV
- HDLqxPz6CIRvA1bjl7ooDk39cO7yZVuTQAeGfcOPwh4QYHUUjY1lvIBMw3rCAi2K0ZQ9
- CimfnWY3wE7RglAfB501xkQWUywhrkK81B41iks4b79wTdfU6lRc8Vbf9ViZN4HJfJGs
- hk8gBCV7/s09DS8ERLzEjrNnBP2UjmCKJqdoTcK7fmXNsmNs+0xhNr9+RdpfBdKAC27d
- d3DQ==
-X-Gm-Message-State: AOJu0YxCHUKGz+Si5K7Ux+xjT97TeIyvqZpZJ3clk/uJ7IqvFWDoCUCm
- Q441lDcRvMZD/cUdmHMg59EoyuWSS+AOOyBfZH60JaqmqxHuGwrYaCoCnLH+0RPWnSTy5IyZJM8
- KkHibnH8KKh6F21AmyDEHzdG7D8StdDOkF1kAGDGfAiJCXJBsAp27
-X-Received: by 2002:a05:600c:4f85:b0:414:ca1:650a with SMTP id
- n5-20020a05600c4f8500b004140ca1650amr5033702wmq.30.1711375450798; 
- Mon, 25 Mar 2024 07:04:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAjoYqgsEegSNhaHBilPECrAQ1gEHB/ibRYQcscwbpRyuFq2qKefcgLn3zyWwDikiCr+L3Hg==
-X-Received: by 2002:a05:600c:4f85:b0:414:ca1:650a with SMTP id
- n5-20020a05600c4f8500b004140ca1650amr5033680wmq.30.1711375450467; 
- Mon, 25 Mar 2024 07:04:10 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-176-158.web.vodafone.de.
- [109.43.176.158]) by smtp.gmail.com with ESMTPSA id
- t12-20020a05600c450c00b004148619f5d0sm5696322wmo.35.2024.03.25.07.04.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Mar 2024 07:04:10 -0700 (PDT)
-Message-ID: <7ce93c0d-fe4a-4333-92b0-16c8efa53dad@redhat.com>
-Date: Mon, 25 Mar 2024 15:04:08 +0100
+ d=1e100.net; s=20230601; t=1711375479; x=1711980279;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=E8yIDiCX/Ln3x0nNQdql3UK/HtqDf0IEIrOFJt+xFMY=;
+ b=QJ3Ez3JhiS9x+V3zq17WhzqBX64zF+SEgjIez05WwJmDcnOJRvPrd1hyORxYYGZMH9
+ gU7paPDHEpgHSqMwiskSD4eTGvBAHIWYD1xYgZgY6qeOiss7H5TuCiJGFj+Als4OeCBR
+ RmNTbZ3NjHxlV1yez8h13WsAZwhOrgbMcKA1lt/PvBfi09cFKeVQKCNh8v+Wc/Q4MHcc
+ qudvU934UuPKFHm2Z8QquYSfsYBtYD2vkNWB8FUjrrWkf40+Zx08sINimw9HYqKBWKuv
+ yPEO7aIiD0uarRD3x0KqeUApclpvXny8lcgQQOlApvpAHijGqZPjWpFliiq7r3OlKCBx
+ QywQ==
+X-Gm-Message-State: AOJu0Yz+SGGy75Z51IVvVX3I+R1N9vyHYXLqeBWJShoCaCU0i6nwdQ1d
+ tFxkXEaEtz5q5JwEQVTGYg6fQO7VTS1p4U+ZyDni7u6ToJ/tuRhoXh7PzL81vCDYUfi9wR1uxhU
+ Qrbbaqf6eEOq36+SxFCbUFAufxd827reD1lK+eUk7Wn9AQnGvkmwO6FvmAVs4o2nT+RUcXLwA8z
+ FFhI41H5E8IOPg0nMnWz6F/dfIy0JrHvtsUu8h
+X-Received: by 2002:a17:906:fad6:b0:a46:d786:3672 with SMTP id
+ lu22-20020a170906fad600b00a46d7863672mr5365532ejb.13.1711375479231; 
+ Mon, 25 Mar 2024 07:04:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFfYTr6OuCk/6v3QU15byJhL0L8cT/4I4AmmZTY/1GtMbcvwCx2BEmEoT9XsdMzudiN9MP2Iw==
+X-Received: by 2002:a17:906:fad6:b0:a46:d786:3672 with SMTP id
+ lu22-20020a170906fad600b00a46d7863672mr5365518ejb.13.1711375478776; 
+ Mon, 25 Mar 2024 07:04:38 -0700 (PDT)
+Received: from [192.168.10.118] ([151.95.49.219])
+ by smtp.gmail.com with ESMTPSA id
+ h7-20020a170906398700b00a473a28fa91sm3080996eje.0.2024.03.25.07.04.38
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 Mar 2024 07:04:38 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH v2] pc_q35: remove unnecessary m->alias assignment
+Date: Mon, 25 Mar 2024 15:04:37 +0100
+Message-ID: <20240325140437.1374224-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] misc/pca955*: Move models under hw/gpio
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Glenn Miles <milesg@linux.vnet.ibm.com>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org
-References: <20240325134833.1484265-1-clg@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240325134833.1484265-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -150,15 +98,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/03/2024 14.48, Cédric Le Goater wrote:
-> The PCA9552 and PCA9554 devices are both I2C GPIO controllers and the
-> PCA9552 also can drive LEDs. Do all the necessary adjustments to move
-> the models under hw/gpio.
-> 
-> Cc: Glenn Miles <milesg@linux.vnet.ibm.com>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
+The assignment is already inherited from pc-q35-8.2.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/i386/pc_q35.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index b5922b44afa..c7bc8a2041f 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -393,7 +393,6 @@ static void pc_q35_8_1_machine_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_q35_8_2_machine_options(m);
+-    m->alias = NULL;
+     pcmc->broken_32bit_mem_addr_check = true;
+     compat_props_add(m->compat_props, hw_compat_8_1, hw_compat_8_1_len);
+     compat_props_add(m->compat_props, pc_compat_8_1, pc_compat_8_1_len);
+-- 
+2.44.0
 
 
