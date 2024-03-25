@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13D23C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10491C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:47:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rokeI-0006MT-0A; Mon, 25 Mar 2024 09:46:02 -0400
+	id 1rokeI-0006Mi-Sf; Mon, 25 Mar 2024 09:46:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1rohLq-0004AH-2H; Mon, 25 Mar 2024 06:14:46 -0400
+ id 1rojxH-0002g9-Cd; Mon, 25 Mar 2024 09:01:38 -0400
 Received: from mta-04.yadro.com ([89.207.88.248])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1rohLo-0004SQ-8q; Mon, 25 Mar 2024 06:14:45 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com BAF2BC0002
+ id 1rojxF-0001pz-9k; Mon, 25 Mar 2024 09:01:35 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com BF729C0029
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1711361677;
- bh=4/F9Iz/B58YpptQ/lFLdFrpCKHH/DNX8vucZgaupHkc=;
+ s=mta-04; t=1711371686;
+ bh=xIIe5O6x22a7VBvnMNb4j1rhvzWw+lgcaBik4NeVUwc=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=ag0Mv54YoZjjPMSWm23mKxJ1o5UWtOGOVREu/0JUagnByHC5hpDocOghfYflr3CdR
- OXLRxYlujhXV89OAVkX84yz4RwwBDjk442NvSSR6w2wPdIeK05NcZBMNEVHWKubSkv
- ajNBBcNQNuc/TVWYUOOzTZilhv9dHD1jIs8I8RVNEBwK08AAECHnUWJa8NugNJtAMu
- 8ylHws0g90CsyN5RIF3429Wq3qTC3XtysSuY6FqTGs/XERzGG0uy/sLX3QlRzRmfq1
- H8LiI1AyuCu0GTJIiIHhuRftk8YMnl1gWtezM8wAv9sL3r0rsHL0GX8zqSf1CY9aSF
- KUStVtreXlEDQ==
+ b=br2SgbIcp6hGyWtlKkpxMybxSKPqb+IyrhrB6E8mMUSlpcE7LtiRsHaRMrQhyYZzg
+ C1TgwzxZ6BZXu1ANtkPXvpZ92JOrr5YcArZhEX3vwPFgcJ0x/sq0rAMoggLE6FAPEn
+ k3QymuuY1XLMmMM7lYegSnKq5K62ANXdc1OpTBLAYKZvCikJ4XvhrwC5sSUAWfYPsC
+ q7xNwMppU+xJVYQ+9iL++P+4rWRwUG/S127yFvUOieaMRf6o5pM8ZCDORsNU6Gdark
+ BFHa4EpPvlzwQh31yY1/zh7Jswf6cvs+nRgmutiDWMjmHrnpt8TiaaIQAuPK/87eC3
+ Dudqx6DDAvX7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1711361677;
- bh=4/F9Iz/B58YpptQ/lFLdFrpCKHH/DNX8vucZgaupHkc=;
+ s=mta-03; t=1711371686;
+ bh=xIIe5O6x22a7VBvnMNb4j1rhvzWw+lgcaBik4NeVUwc=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=sGP1iAHGrNEdZKJRu/9h2joq7LKaPIimPircM09ojag7+avN7KQ/xtR50bzPy5TO+
- HVhlo1hlozNU7erUpHfyxmP7gFddJoXWoPDePSgu/K4grJJCDRs5sNVBFhs3ES8dR8
- wq/6dNm+cwoittT2TZ9F37Vw9dVV8GSHTwVqswDlT8iM1oXiCANrqAzd0ogOEC5sfF
- TadFyzRV3jFwBLms+DhEgoeEhRtRsdAHpSGM6fiehFYI9uuPp5wAamYBfryMJWbY1Y
- JXZqej2pgHkXGhGLeeO50rHkh03/9WG9fymNSjbuDb3iX6+NCsuoGSKUSXhb1dKL4l
- BKJga1GhQzcfw==
+ b=qLCSWfKbxk6jcHHTpDr5dkwYLQY609xuMEu1XKIpeMORkxupv2Wmi6dmTax3HiCV8
+ /KkxGxYt1H2wleY+sSl/4zGTlR5k8wQ5+uLa0ifokITz3qhph3BkZQVkqNlf3WUmrq
+ yEu3EOUhTaADFeWUYSIdeFDyMhBzn+yjVellR5vi+oYShPA1QjoYKLgH7mMWHETvSv
+ ShA6oRD9o09s1WXwfWxDKyOEU6PIo7x/Ne5pbgKn3VhbcfV85dOQPFa5GHfzP96Sly
+ 2TkmXm0LzWAcdoGfg1wv/d/rP0AkVreiLWAwzgcDD7ksC7z0tpx8JNtlsZ6eJebIUQ
+ UUpe/Xu6GUV7Q==
 From: Alexei Filippov <alexei.filippov@syntacore.com>
-To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>,
- <bin.meng@windriver.com>, <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>, 
+To: <dbarboza@ventanamicro.com>
+CC: <alexei.filippov@syntacore.com>, <alistair.francis@wdc.com>,
+ <apatel@ventanamicro.com>, <bin.meng@windriver.com>, <liwei1518@gmail.com>,
+ <palmer@dabbelt.com>, <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>,
  <zhiwei_liu@linux.alibaba.com>
-CC: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>, Alexei Filippov
- <alexei.filippov@syntacore.com>
-Subject: [PATCH] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi() fail with
- vendor-specific SBI
-Date: Mon, 25 Mar 2024 13:14:28 +0300
-Message-ID: <20240325101428.8875-1-alexei.filippov@syntacore.com>
+Subject: [PATCH v2] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi() fail
+ with vendor-specific SBI
+Date: Mon, 25 Mar 2024 16:01:16 +0300
+Message-ID: <20240325130116.13194-1-alexei.filippov@syntacore.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <b7fff1e9-f2b3-4a45-8966-1dbd76263457@ventanamicro.com>
+References: <b7fff1e9-f2b3-4a45-8966-1dbd76263457@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: T-Exch-05.corp.yadro.com (172.17.10.109) To
+X-ClientProxiedBy: T-EXCH-10.corp.yadro.com (172.17.11.60) To
  T-EXCH-12.corp.yadro.com (172.17.11.143)
 Received-SPF: permerror client-ip=89.207.88.248;
  envelope-from=alexei.filippov@syntacore.com; helo=mta-04.yadro.com
@@ -85,7 +87,12 @@ qemu abort with vendor-specific sbi.
 Added SBI related return code's defines.
 
 Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+Fixes: 4eb47125 ("target/riscv: Handle KVM_EXIT_RISCV_SBI exit")
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
+
+Changes since v1:
+        -Add Fixes and Revied-by lines.
  target/riscv/kvm/kvm-cpu.c         |  5 +++--
  target/riscv/sbi_ecall_interface.h | 11 +++++++++++
  2 files changed, 14 insertions(+), 2 deletions(-)
