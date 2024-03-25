@@ -4,70 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C693CD11DB
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 12:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0440C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 12:57:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rojt0-0000kj-Eg; Mon, 25 Mar 2024 08:57:10 -0400
+	id 1rojt6-0000lo-3G; Mon, 25 Mar 2024 08:57:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rojsy-0000kK-HJ
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:57:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rojt4-0000lI-Hw
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:57:14 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rojsv-00014X-Vs
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:57:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711371424;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xl5I3hOhdrE4SPWwod0YbylVUbyrRQ7fEH20MbloB1Y=;
- b=fecWwC+bQNjX6bptoRvUfydj+X6rWVhXG+US0Sf4ALGlie+fgyUkJworBHSWN1yeCvcWba
- 6Wi9TCPNTcaQ+GaaqSQ6BLXzr6UMfqljnooU0sNVH85A9QqCn5m6eu1R3+ROgxfFaXqD+0
- HDplHRP3PUsWQRiB4MhHsZYzojsfi1w=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-gMw00uYxOAKs9tulaRQVZg-1; Mon,
- 25 Mar 2024 08:57:03 -0400
-X-MC-Unique: gMw00uYxOAKs9tulaRQVZg-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 2F8CD3CBD4E4
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 12:57:03 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 106AF40C6DB5
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 12:57:03 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0819C21E669D; Mon, 25 Mar 2024 13:56:42 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Michal Privoznik <mprivozn@redhat.com>
-Subject: Re: [PATCH] qapi: document leftover members in qapi/run-state.json
-In-Reply-To: <CABgObfbDa57=+tJ_t=nFWY=CnZJq2Kkx7Wdc=PL93NB6yFVBEA@mail.gmail.com>
- (Paolo Bonzini's message of "Mon, 25 Mar 2024 13:04:14 +0100")
-References: <20240325104502.1358693-1-pbonzini@redhat.com>
- <87o7b2mtki.fsf@pond.sub.org>
- <CABgObfbDa57=+tJ_t=nFWY=CnZJq2Kkx7Wdc=PL93NB6yFVBEA@mail.gmail.com>
-Date: Mon, 25 Mar 2024 13:56:42 +0100
-Message-ID: <87plvilbat.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rojt2-00015B-1P
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:57:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=6vUWl5jHLRxIYOzySN2gOxGp5jGhu3yhZACyWaxVYTg=; b=bB5kIXF4r+pY/E1BE4k/dkNsY6
+ tRDZGCVfrX5P+7PBLttRzTfKBxYcLw1CyYxxr9dJTiJYcnhLyi4puZcLqoVi6WW0V5/VkvHmo8Ri+
+ YwGdyyY+kv+UOy31GuX9HvcjF+bSSUI31soXP4wfPzHUp/9331k1/eTBCLFXMqS92FbZMWdYEfAcx
+ 7SOqPVEC5I/SAGo6namjoCtcsh+3YDcfrtb23cwVOJXrN1h2ylL3m9yLrCr7c3l8TNeFboyjBMY0A
+ t6j0yO5Q9hFlHkExygdloJrHWuJOvR6z13UCBzQgwugqqt0+rZSURHDUGqCQelsOxq/Bg/Fa2c3IS
+ DhKzIUdPjeFw5pX8HEHI9dk/M91aHBPDm3kH81KjOshsCG5ngN3qr46TBRrehFgidBQz8l4hcItv7
+ N+oEeMsjbsBMhm8b450E49PNgVhn+aEh8KxIGjCBK88dlce28q1M63G392mHiKdksA9Zs6coLCqQD
+ tBJYm5NaU9oC723hOAbo9/pBC3XVg1BymJ/eGe3v9lQ/MrOkkamIIiG7V39LOyNGSbk0Z15rbvZPF
+ JU8EJJt4277z+jV2BZto6xB9TOv7Om22lrAbH2Xe2SEt70bTOGCPIg8TRgdVCtrD7L9G74KiVtmPW
+ b6IUzKJd+QCE9IR7NrzyOmqdKgAOCyx54z+aqt2ko=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rojs1-0008Sx-Bo; Mon, 25 Mar 2024 12:56:13 +0000
+Message-ID: <9f6064d0-cb77-47eb-a4c0-25eaf0d184f5@ilande.co.uk>
+Date: Mon, 25 Mar 2024 12:57:00 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ pbonzini@redhat.com, fam@euphon.net, laurent@vivier.eu, qemu-devel@nongnu.org
+References: <20240324191707.623175-1-mark.cave-ayland@ilande.co.uk>
+ <20240324191707.623175-11-mark.cave-ayland@ilande.co.uk>
+ <5f8511b6-225d-4197-8785-7fb69a1b1c13@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <5f8511b6-225d-4197-8785-7fb69a1b1c13@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH v3 10/17] esp.c: don't assert() if FIFO empty when
+ executing non-DMA SELATNS
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,70 +107,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On 25/03/2024 10:49, Philippe Mathieu-Daudé wrote:
 
-> Il lun 25 mar 2024, 12:36 Markus Armbruster <armbru@redhat.com> ha scritto:
->
->> Paolo Bonzini <pbonzini@redhat.com> writes:
+> On 24/3/24 20:16, Mark Cave-Ayland wrote:
+>> The current logic assumes that at least 1 byte is present in the FIFO when
+>> executing a non-DMA SELATNS command, but this may not be the case if the
+>> guest executes an invalid ESP command sequence.
+> 
+> What is real hardware behavior here?
+
+I don't know for sure, but my guess is that if you ask to transfer a single byte from 
+the FIFO to the SCSI bus and the FIFO is empty, you'll either end up with all zeros 
+or a NOOP.
+
+>> Reported-by: Chuhong Yuan <hslester96@gmail.com>
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> ---
+>>   hw/scsi/esp.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
 >>
->> > Suggested-by: Markus Armbruster <armbru@redhat.com>
->> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> > ---
->> >  qapi/run-state.json | 26 +++++++++++++++++++++++++-
->> >  1 file changed, 25 insertions(+), 1 deletion(-)
->> >
->> > diff --git a/qapi/run-state.json b/qapi/run-state.json
->> > index 789fc34559a..cb4a2b43293 100644
->> > --- a/qapi/run-state.json
->> > +++ b/qapi/run-state.json
->> > @@ -377,9 +377,17 @@
->> >  ##
->> >  # @watchdog-set-action:
->> >  #
->> > -# Set watchdog action
->> > +# Set watchdog action.
->> > +#
->> > +# @action: @WatchdogAction action taken when watchdog timer expires.
->> >  #
->> >  # Since: 2.11
->> > +#
->> > +# Example:
->> > +#
->> > +#     -> { "execute": "watchdog-set-action",
->> > +#          "arguments": { "action": "inject-nmi" } }
->> > +#     <- { "return": {} }
->> >  ##
->> >  { 'command': 'watchdog-set-action', 'data' : {'action': 'WatchdogAction'} }
->> >
->>
->> Appreciate the example!
->
-> It may even be worth deprecating the command, since action-set is a clean
-> superset. But I didn't check if libvirt knows about action-set and it's
-> cheap enough to implement watchdog-set-action as well.
+>> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+>> index 1aac8f5564..f3aa5364cf 100644
+>> --- a/hw/scsi/esp.c
+>> +++ b/hw/scsi/esp.c
+>> @@ -762,7 +762,8 @@ static void esp_do_nodma(ESPState *s)
+>>           case CMD_SELATNS:
+> 
+> Alternatively logging the guest abuse:
+> 
+>                len = fifo8_num_used(&s->fifo);
+>                if (len < 1) {
+>                    qemu_log_mask(LOG_GUEST_ERROR, ...
+>                    break;
+>                }
+> 
+>>               /* Copy one byte from FIFO into cmdfifo */
+>> -            len = esp_fifo_pop_buf(s, buf, 1);
+>> +            len = esp_fifo_pop_buf(s, buf,
+>> +                                   MIN(fifo8_num_used(&s->fifo), 1));
 
-Quick grep...  libvirt appears to use watchdog-set-action, but not
-action-set.
+This is similar to your previous comment in that it's an artifact of the 
+implementation: when popping data using esp_fifo_pop_buf() I've always allowed the 
+internal Fifo8 assert() if too much data is requested. This was a deliberate design 
+choice that allowed me to catch several memory issues when working on the ESP 
+emulation: it just so happened I missed a case in the last big ESP rework that was 
+found by fuzzing.
 
->> @@ -505,6 +513,22 @@
->> >  #
->> >  # Hyper-V specific guest panic information (HV crash MSRs)
->> >  #
->> > +# @arg1: for Windows, STOP code for the guest crash.  For Linux,
->> > +#        an error code.
->> > +#
->> > +# @arg2: for Windows, first argument of the STOP.  For Linux, the
->> > +#        guest OS id, which has the kernel version in bits 16-47
->>
->> Mind if I capitalize ID?
->>
->
-> Go ahead if you are going to queue it.
+It's also worth noting that it's a Fifo8 internal protective assert() that fires here 
+which is different from the previous case whereby an overflow of the internal Fifo8 
+data buffer actually did occur.
 
-Done.
+>>               len = MIN(fifo8_num_free(&s->cmdfifo), len);
+>>               fifo8_push_all(&s->cmdfifo, buf, len);
 
-Queued, thanks!
 
-[...]
+ATB,
+
+Mark.
 
 
