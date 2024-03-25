@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F6FDC54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 15:49:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9EA2C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 15:50:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1romYy-0005k2-U1; Mon, 25 Mar 2024 11:48:40 -0400
+	id 1roman-0006jm-RK; Mon, 25 Mar 2024 11:50:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1romYw-0005jT-GK
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 11:48:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1romal-0006jP-US
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 11:50:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1romYv-0003M2-84
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 11:48:38 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1romak-0003xz-Dl
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 11:50:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711381716;
+ s=mimecast20190719; t=1711381829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=VyujE3DQXrnF2ey5nuWnHKaipTsGpS20QpLWNwp7F9A=;
- b=QOvB8krGfWpgZ6l8KGUhj5LJ5BVykLG/euKL1x4zmE1YOT9iMzdnrm1JwVTEEPFOarvFIY
- IwUEbu9Dc9Y2+KYyq5Qa6IO9YRGsWoYx8gN6924aRzqdpyZWpqOKLdCArJXfrJpPEueJ4U
- uEtHTD6Aimb8Lh0NcygL5zsQbwqq/AM=
+ bh=qIkcHuoRgkRTQhV8FxRZ4XjAMpsTZC9+UBQwHoz1qKc=;
+ b=QAOi6Jask0aMp6DO0zYAnfeposxd9/N0IA4jg4lDWY6fS4p5DOxDYRRctlOU7UYyyfMEG5
+ pxFsPb2ssEeT2FlO7vBKpNJlT9MCBLkULmRpmb3LXsWzkrO2d5K63wXpoCKoDgpqO8fZ+C
+ gFwrcJZo+Hd2KNoqXe0qi8hko5ozkOY=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-n_Ha0SKIM4yXrJYSPh7JxQ-1; Mon, 25 Mar 2024 11:48:33 -0400
-X-MC-Unique: n_Ha0SKIM4yXrJYSPh7JxQ-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
+ us-mta-140-840LDykoPaijcp3ViABptQ-1; Mon, 25 Mar 2024 11:50:26 -0400
+X-MC-Unique: 840LDykoPaijcp3ViABptQ-1
+Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.5])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5C46D891002
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 15:48:33 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 51FF8800262
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 15:50:26 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 3CDD4112132A
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 15:48:33 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 32C4410189
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 15:50:26 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3DF0421E669D; Mon, 25 Mar 2024 16:48:28 +0100 (CET)
+ id 494B421E669D; Mon, 25 Mar 2024 16:50:21 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] qapi: document leftover members in qapi/run-state.json
-In-Reply-To: <20240325104502.1358693-1-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Mon, 25 Mar 2024 11:45:02 +0100")
-References: <20240325104502.1358693-1-pbonzini@redhat.com>
-Date: Mon, 25 Mar 2024 16:48:28 +0100
-Message-ID: <87y1a6z50z.fsf@pond.sub.org>
+Subject: Re: [PATCH] qapi: document leftover members in qapi/stats.json
+In-Reply-To: <20240325104504.1358734-1-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Mon, 25 Mar 2024 11:45:04 +0100")
+References: <20240325104504.1358734-1-pbonzini@redhat.com>
+Date: Mon, 25 Mar 2024 16:50:21 +0100
+Message-ID: <87ttkuz4xu.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -84,24 +84,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Squashing in
 
 diff --git a/qapi/pragma.json b/qapi/pragma.json
-index 92715d22b3..1a302981c1 100644
+index 1a302981c1..99e4052ab3 100644
 --- a/qapi/pragma.json
 +++ b/qapi/pragma.json
-@@ -57,7 +57,6 @@
-         'DummyForceArrays',
-         'DummyVirtioForceArrays',
-         'GrabToggleKeys',
--        'GuestPanicInformationHyperV',
-         'HotKeyMod',
-         'ImageInfoSpecificKind',
-         'InputAxis',
-@@ -93,8 +92,7 @@
+@@ -75,8 +75,6 @@
+         'Qcow2OverlapCheckFlags',
+         'RbdAuthMode',
+         'RbdImageEncryptionFormat',
+-        'StatsFilter',
+-        'StatsValue',
+         'String',
+         'StringWrapper',
+         'SysEmuTarget',
+@@ -91,8 +89,7 @@
+         'query-cpu-model-comparison',
          'query-cpu-model-expansion',
          'query-rocker',
-         'query-rocker-ports',
--        'query-stats-schemas',
--        'watchdog-set-action' ],
-+        'query-stats-schemas' ],
+-        'query-rocker-ports',
+-        'query-stats-schemas' ],
++        'query-rocker-ports' ],
      # Externally visible types whose member names may use uppercase
      'member-name-exceptions': [     # visible in:
          'ACPISlotType',             # query-acpi-ospm-status
