@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC215C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9477CC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rokSU-0003Vc-EU; Mon, 25 Mar 2024 09:33:50 -0400
+	id 1rokSP-0003EG-FE; Mon, 25 Mar 2024 09:33:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokST-0003S8-01
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:33:49 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokSN-00037Y-J5
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:33:43 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokSR-0007SW-Ax
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:33:48 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4148c5de23fso609415e9.1
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:33:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokSL-0007QQ-QT
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:33:43 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-513da1c1f26so5469475e87.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:33:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711373625; x=1711978425; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711373619; x=1711978419; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dmBZnvObELGs1VJCtsjfXQQHR8FYa+eCE52ifx9aDFo=;
- b=TkcmmaY3P9KBxuj/1kMLyKMhfW3tUhND1f2WJ6LAotpmiQgbtWLd2ciexxuvhqhULl
- FqPneXiDxHaTwSwpvq9M26qypu7UeX8SWaOcSQy6VwvAlHD+cqin2OplF/tFgh9tiCsW
- 6raBV+s2rXeV/dP6BwR5C+aFrqg3Xfi5e/IFgKlMBIjvdX+lCgHkOUxrNG+24dcTDXFc
- d28to8WWhBfKcmKEBXnVxBz+kqTMNws6kms7t2dCBp2XTKc7iKCe2d91PPri8dJ2XCC7
- NCcSvwmnu9+W6SuLw3PlC8stErZxf92Bd6OaT0ALippppRYDM3GHj46DbSrklmVzrzyw
- jmjw==
+ bh=ECmMULAo7ez5jaBxa5Wjvt8SfPbxgHkevNpFi8ZZgIM=;
+ b=LWZt6tpq8WlS3qrd9yC0vjOon2RtjlV/kpiGcYDPto/i2m2brHGJYw4bnoswlYEVTh
+ i+nPU8Arb5RumI6cvT9qkkZSnjfgLPALq+b6mWQmC7LSTSkn95EkhBRNngOLNeG+xSBh
+ VmGi1o7tj9Ncx1rfac3AdHc7yaNSjTD+mGPTk4eC2telqYrf/XITDa44N/5ksWn6/1g4
+ tpQ1kUTGaunJyxoc5l+oBTXORBr27DqD/DFWIwTFZ76WLBhO1X6hGXG1H7qamxmJRo6x
+ Uh4vhysIPFnv+UBsuJcZJp55Aioas82JoP1Def3hnMlnNjmB1vBlmYxAGwG//6HL/LLw
+ v7Xg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711373625; x=1711978425;
+ d=1e100.net; s=20230601; t=1711373619; x=1711978419;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dmBZnvObELGs1VJCtsjfXQQHR8FYa+eCE52ifx9aDFo=;
- b=Er39HNtlC8eDc3af5B/e2FBGU3I9pxc/pWZqWxFdhcpDXPCcgl6KMRH7GsRE73SuVP
- QcyZiIL7Jst0CzAtQucczFQrLRcUP5oXNgonLzUjsLN11YTiRd8js1VegWGxP3T57HwB
- yYe/RwgbuCWZ31439sxi3fKOmoOHHMKfCS1dndGZd+/qlnqdsdYMrNOEvBULdoy9MqZS
- cEbxPd2Mtrq/dvVHDCZ+w+7vKILgPAZDUBz4at96F9OfKth2L+zNJAwWg0OOaP/h/PpV
- IVdGakK1jgPpfyoTy86x4loKgOO4VAjzHMldNzbEy6VPZ0liT7qpA0llsGwA9GbZR7P9
- h2+g==
-X-Gm-Message-State: AOJu0Yy5wQSJZkD960vxcsY5m80cRW9VrMHhzXnII+2YvWi1ivfjlmKU
- qevu55lFjn3o0e5fVYuqNDR5mrDnzj8m4guVGCoX6LA7Cxe3RZcOKKOjTpS3nCXcjIPqMauMCrO
- KJ3M=
-X-Google-Smtp-Source: AGHT+IFWZ/58Xj/nwYwUTAXrwNX6H0wJoPJCar7qmULOe4KV+pP42L8yH1ezkdLTV9P/Fd7XkQhr/w==
-X-Received: by 2002:a05:600c:5121:b0:414:7bd1:4060 with SMTP id
- o33-20020a05600c512100b004147bd14060mr5425135wms.2.1711373625053; 
- Mon, 25 Mar 2024 06:33:45 -0700 (PDT)
+ bh=ECmMULAo7ez5jaBxa5Wjvt8SfPbxgHkevNpFi8ZZgIM=;
+ b=vif7BbbHss7hu6uCPp2ZMK7mseSWCul8xs9oWaNMlJP2xF6aME8hm8K3yoE7bAYTh1
+ 54sgtavMvfP26dnjpEfCFaoZKc6gV9CqEjcwV5ku4iAtFWcY9fDeQVGbYAmeSLaWBaos
+ P1V3he4+SYUYZj05Op9IvFgVfkFdbPD1n+77+anbswywXkiWg98p6pEs0+P8yPf/eQxi
+ g3q47UxRfPOujug1CIRfx/efgvsqx7xzuueD8yS5y4B0AeMOAl//rBNMj0opLaTKj6yY
+ N/VdDeYLgJtDQPzGQerM3SdRM1alTwG3nitdv7F1OcGrgQ451DBBBvysnEi6laslh90+
+ d+NQ==
+X-Gm-Message-State: AOJu0YxzN6U/qqGkH1/3TzZgdtYpIpeLjcVHkUVP4My6ugSN6fVneAsz
+ FxoyhEHcMBjID1W6B4gKWuxEfjyo5yu9f21nCakWSS4RPjefgNfR4A+uH0BKeTKfDGR9i4w2LIE
+ UeIE=
+X-Google-Smtp-Source: AGHT+IH6CHH2Ug5XOiOcGGqC8V40tsHZUYTmdpaG/s0RshLAk2eF6vsXi826Go/fuPXbyA/5ziDcoQ==
+X-Received: by 2002:a05:6512:55c:b0:513:184a:ff5f with SMTP id
+ h28-20020a056512055c00b00513184aff5fmr5010410lfl.50.1711373619372; 
+ Mon, 25 Mar 2024 06:33:39 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.208.214])
  by smtp.gmail.com with ESMTPSA id
- ay41-20020a05600c1e2900b004148c10db66sm809802wmb.26.2024.03.25.06.33.43
+ en7-20020a056000420700b0034174875850sm8133536wrb.70.2024.03.25.06.33.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 25 Mar 2024 06:33:44 -0700 (PDT)
+ Mon, 25 Mar 2024 06:33:38 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
@@ -65,18 +65,18 @@ Cc: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
  Peter Maydell <peter.maydell@linaro.org>,
  Alistair Francis <alistair@alistair23.me>, Luc Michel <luc@lmichel.fr>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.0? v2 7/8] hw/misc/stm32l4x5_rcc: Propagate period when
- enabling a clock
-Date: Mon, 25 Mar 2024 14:32:57 +0100
-Message-ID: <20240325133259.57235-8-philmd@linaro.org>
+Subject: [PATCH-for-9.0 v2 6/8] hw/misc/stm32l4x5_rcc: Inline clock_update()
+ in clock_mux_update()
+Date: Mon, 25 Mar 2024 14:32:56 +0100
+Message-ID: <20240325133259.57235-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240325133259.57235-1-philmd@linaro.org>
 References: <20240325133259.57235-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,38 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Trivial inlining in preliminary patch to make the next
+one easier to review.
 
-The "clock_set_mul_div" function doesn't propagate the clock period
-to the children if it is changed (e.g. by enabling/disabling a clock
-multiplexer).
-This was overlooked during the implementation due to late changes.
-
-This commit propagates the change if the multiplier or divider changes.
-
-Fixes: ec7d83acbd ("hw/misc/stm32l4x5_rcc: Add an internal clock multiplexer object")
-Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-Message-ID: <20240317103918.44375-2-arnaud.minier@telecom-paris.fr>
-[PMD: Pass argument to clock_set_mul_div()]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/misc/stm32l4x5_rcc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/misc/stm32l4x5_rcc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
-index 8852b434db..166c727e52 100644
+index f01113308a..8852b434db 100644
 --- a/hw/misc/stm32l4x5_rcc.c
 +++ b/hw/misc/stm32l4x5_rcc.c
-@@ -61,7 +61,7 @@ static void clock_mux_update(RccClockMuxState *mux, bool bypass_source)
-         freq_multiplier = mux->divider;
+@@ -48,6 +48,8 @@ static void clock_mux_update(RccClockMuxState *mux, bool bypass_source)
+     uint64_t src_freq;
+     Clock *current_source = mux->srcs[mux->src];
+     uint32_t freq_multiplier = 0;
++    bool clk_changed = false;
++
+     /*
+      * To avoid rounding errors, we use the clock period instead of the
+      * frequency.
+@@ -60,7 +62,10 @@ static void clock_mux_update(RccClockMuxState *mux, bool bypass_source)
      }
  
--    clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier, NULL);
-+    clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier, &clk_changed);
-     clock_set(mux->out, clock_get(current_source), &clk_changed);
-     if (clk_changed) {
-         clock_propagate(mux->out);
+     clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier, NULL);
+-    clock_update(mux->out, clock_get(current_source));
++    clock_set(mux->out, clock_get(current_source), &clk_changed);
++    if (clk_changed) {
++        clock_propagate(mux->out);
++    }
+ 
+     src_freq = clock_get_hz(current_source);
+     /* TODO: can we simply detect if the config changed so that we reduce log spam ? */
 -- 
 2.41.0
 
