@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC1EC54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 09:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D0FC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 09:49:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rogwg-0004R8-V4; Mon, 25 Mar 2024 05:48:46 -0400
+	id 1rogwx-0004Vi-OM; Mon, 25 Mar 2024 05:49:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rogwf-0004Qy-CF
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 05:48:45 -0400
-Received: from mout.gmx.net ([212.227.17.20])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rogwv-0004VD-Jd
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 05:49:01 -0400
+Received: from mout.gmx.net ([212.227.17.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rogwc-000894-Mt
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 05:48:44 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rogwu-0008A8-0E
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 05:49:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1711360118; x=1711964918; i=deller@gmx.de;
- bh=q7sGUQZGoS8f00PkWTNy0BsO3lO7ahlS/eruXlaBRf8=;
+ s=s31663417; t=1711360138; x=1711964938; i=deller@gmx.de;
+ bh=1g8OXDFY4cAtyjm25+osIojyUOIGPWg4U5AtB6/PdME=;
  h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
- b=LzaNdHFma7KjVCZIgsUD1gB3LbNZR6KBGL7y5xlVN5oVkc5mYY3ZBvkWjvfwpC/3
- P/RMS4AeyvnqguLsrVvnWYvXmOJhX0m3/98rN2TwAZPJETLv79TmL6hYfN4wWevTp
- DRTgUoSzJpjHro3GuDfuUZ8afGaH4ERYI7BfzSumjN1SaqMOvlSPzBAEyT+LJ/aws
- R5nM9Sh/SPF6PjQkqI1L+vjBB3WWTi2nc0gtRAsP3w7CRaQ71JGjqaAnv84sxM0/D
- 5HKEpESk61x0JrywX496/B7+PyXORZHIl12pBGWI6cS3bZZUzVBXF1Q2It0y8Nvem
- /DwkpIAQYa+ZyPKAUQ==
+ b=V/11Q1y6pzmdgEGYzUtvmubJttHC1e5wkTjbuKP8TTU9ypCeGK+Bk2FrC/iq97t3
+ 0iIYtczflw7nyRfL22jjjcd6y+O8NqgKEC7cUaDw9HwN79/5wcA2t6h6Fvcgm3UQv
+ coA5xdyBIAsJXMawsSmicTxsliiUgOi3N2JXb/1LfVccCVOhTeTvPMo/U9fsgKjdn
+ koEzIWZsOrLYtP5oh61p35AH/EYNLFHNGkAXdlNFY/Bq7wWT6CYNqr4mn7oLvcFa9
+ SQx9UXshPXgP5q+0b4zRH7IuUkitPl78MCEvm3sftukm2jhl6SU4Q3rKTlZud59Se
+ +SKlUIVbF8eH8LqzQg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [192.168.20.55] ([89.244.186.8]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mq2nK-1sbpWW1ZwY-00n8Lj; Mon, 25
- Mar 2024 10:48:38 +0100
-Message-ID: <e9f62291-1bec-48c9-ab52-369580e3249d@gmx.de>
-Date: Mon, 25 Mar 2024 10:48:37 +0100
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQMuX-1sAMhc3f7J-00MM79; Mon, 25
+ Mar 2024 10:48:57 +0100
+Message-ID: <6ba279b9-51f1-4525-9227-b1601ba5eb7d@gmx.de>
+Date: Mon, 25 Mar 2024 10:48:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] targt/hppa: Fix DCOR reconstruction of carry bits
+Subject: Re: [PATCH 2/3] target/hppa: Optimize UADDCM with no condition
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20240325030448.52110-1-richard.henderson@linaro.org>
- <20240325030448.52110-2-richard.henderson@linaro.org>
+ <20240325030448.52110-3-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -85,27 +85,27 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240325030448.52110-2-richard.henderson@linaro.org>
+In-Reply-To: <20240325030448.52110-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:xalu9BqvpDtErKG5z5NOkE/75ZXMSsGx8hSYrM2NFD8IYxrEoTL
- yZ+60nbJdENTzMirmqio9zX0m7MJWVq0YNCF4T2+WxSmed1AQMJQEoy6BTMBiU1gBCRT83K
- RtovkBHCAC55rgW4YUGZvYtjabOsvX0ev8FPGjcaQQhmNczdDH2lXtBfahy307MVGMlujKT
- ahbU8EyFd/ykhmfoF27AA==
-UI-OutboundReport: notjunk:1;M01:P0:Q9CMvlHMZ3s=;HcDf1drTF+5utJpjgoPk+ZX6c7h
- unWnv2yUhAZXwCod8ehZazFlxMkPpKRe/K/FKHg5+64dshR8bhY9DYHkb0m14SaZxULHBzRfp
- Z6n42YUF46j6KYstdxpb/XQVXDcLVy1Eg5iWTGDQ7WLND40CCjDx2UIuuE8Jzcux9HRmGagUQ
- YiebVwizAEeo95/QokqwhdJc10UtleWh7iB/J4L0DmY7bec0945jlp8kBuQb7+x36tPKejh4G
- bhExTBQfXE/V4SNNtyX7ZC0OVUciJD47jmLPVr09aAj0v+KbAmznz4/l6Tu9uHSwdbWNMrPgk
- BkCeD44WBrKuG9kslTJIGYKO9hLtBa8DsS8OFB23uxX9ULT3nBtji41mdqLQ7AZ9tb6mKlOfu
- dV+cJl2gBY1isFUUImGR50b3aDCEC3LCIlES8meZxEAxZD/oQIb4Mo0nFrBuHIgQzz9g51Xv2
- UuK+WbM0xYOSd8mL6DqDkOoIceIMGu/5H3rsbAu+alcufHswqY6OML/XEJWLICuhGTaIHUbKe
- RQU3wt1puLXHSfoJY0N8xWPZiQIz7yu8gJrpXpR7S9v5aeYuml56ki/Qf3hg6f6X0xAXnDGxx
- QVHg+DfecoWr5g61q+TUJEwCjzZCBRb47Ed3saS6ylApZlofOH0qQCKD1JPQePSp+S9IrAAUC
- pzQP2+jQHr/AP820IlZ4we9LwIqLVVX2MndwUwqmimrVhZy81oFI4/fDXQkgwJU4Tzx67K2VX
- 71qF223MPg+KWTZhMp2b8yFK90y/2OXDK84fkQLDCa3Th91O2925gAftNsa7+XoHa5EFFUvKq
- s7SE/U2eTxXNL2/EGRq40gSZm53VR7BLVT8aX9/mX0tWY=
-Received-SPF: pass client-ip=212.227.17.20; envelope-from=deller@gmx.de;
+X-Provags-ID: V03:K1:znzsKz1CZGbgMniorpjUQhd/hg+8Huxef/Lq+YvQ0bhap9Z3JUo
+ q84OrT5zooSc90pF/Bz/4IKZ2W2Jx/B+wB2AsFwKdLyf6ERiHv4s6DiqLuV4g8aoZguPDXk
+ g+izSz10svF4sUE08cmOFJwevEXJ4oFJ0rdLAYQg5d25K5kSSuVwQougflTKXm0ULxC7qjH
+ TgYQkH0PV0zlNV5pE6ysw==
+UI-OutboundReport: notjunk:1;M01:P0:lHSP9kw05Gs=;TVuXIrFEzE2QOhIgPWXCiH44B77
+ 7MKSqNFBA85Dbf87lnV4b2rPoBjajBvjur220kp+qVLU7b4I/JOQ3J1zi0sxEEL4GOExZiVPO
+ Ix3MlB25f+dEDre7R4gFQi6xW622y7q8AOP104pUq2zDjbZpyRYCkUQ6pNX8/JAmXR3PSxHoz
+ d8ko+CNwgxMWM7FTJMRy4WHkx1XQMhW5jsXkTjXAuyDMsxPvQL4sTl+3W9oi0K0wA+brmIQxB
+ UnfC/VIDcUkXFSpeR5VMru2wxXkWMeY55Sz1uGzfzZbHCSfPT3/esCGIpIxcvJkKRoEtQl0um
+ IM0kUFgaybvExCToWhT7ky3fzrF0cyJvFNvSL+W+8ZoqgHzcm5q5t+ss7S3A8JdTedSAKPDjp
+ 1C8y3sFtD6Cvli6MbLnaDdrZFfPNhxGWJ7Caj8JOkZ+lJtFBlcmFwmd7Vf2r3DiEm1BNrxV4I
+ CZg9ilYQiSON5l6R844j+ImgDP1lps1IuSylEGk48hGgN78b6qPbviHHMN0oqbygyq8d6WB9m
+ DwuquQBU+wV6PCCShWQfh/0D+36ms6NGF/yh3G/3rF+iPoIFhA8uRF4JjeU0Pig5/I+arQ6In
+ 18G5Tlejomn+ZSEBrHgPh5KkLolgfSQ8Igd26aWamxqlGUey/k9Pte8HALW7XClkdYiWF+xAW
+ lN7RsF21/hTc7XRYtlETUlES4mQY7S2yut5/ewefJmP7q8NGP4z4dAFgizSEK6TkNboe8F/s6
+ toMg2U/Ciut4D46tfl2lHHYT6QPmTTrtQ0VYH9tAjFXP+YFVmYLFu7HTVWOEdDx4gqKZTuodi
+ xxfa6pr2SNNIccXsj72iKIAyiP0Rrl9fyTEPO1zY+ruoE=
+Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
 X-Spam_score: -2.8
@@ -130,13 +130,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/25/24 04:04, Richard Henderson wrote:
-> The carry bits for each nibble N are located in bit (N+1)*4,
-> so the shift by 3 was off by one.  Furthermore, the carry bit
-> for the most significant carry bit is indeed located in bit 64,
-> which is located in a different storage word.
->
-> Use a double-word shift-right to reassemble into a single word
-> and place them all at bit 0 of their respective nibbles.
+> With r1 as zero is by far the only usage of UADDCM, as the easiest
+> way to invert a register.  The compiler does occasionally use the
+> addition step as well, and we can simplify that to avoid a temp
+> and write directly into the destination.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
@@ -145,23 +142,48 @@ Tested-by: Helge Deller <deller@gmx.de>
 
 Helge
 
+
 > ---
->   target/hppa/translate.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/hppa/translate.c | 24 ++++++++++++++++++++++--
+>   1 file changed, 22 insertions(+), 2 deletions(-)
 >
 > diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index e041310207..a3f425d861 100644
+> index a3f425d861..3fc3e7754c 100644
 > --- a/target/hppa/translate.c
 > +++ b/target/hppa/translate.c
-> @@ -2791,7 +2791,7 @@ static bool do_dcor(DisasContext *ctx, arg_rr_cf_d=
- *a, bool is_i)
->       nullify_over(ctx);
+> @@ -2763,9 +2763,29 @@ static bool do_uaddcm(DisasContext *ctx, arg_rrr_=
+cf_d *a, bool is_tc)
+>   {
+>       TCGv_i64 tcg_r1, tcg_r2, tmp;
 >
->       tmp =3D tcg_temp_new_i64();
-> -    tcg_gen_shri_i64(tmp, cpu_psw_cb, 3);
-> +    tcg_gen_extract2_i64(tmp, cpu_psw_cb, cpu_psw_cb_msb, 4);
->       if (!is_i) {
->           tcg_gen_not_i64(tmp, tmp);
+> -    if (a->cf) {
+> -        nullify_over(ctx);
+> +    if (a->cf =3D=3D 0) {
+> +        tcg_r2 =3D load_gpr(ctx, a->r2);
+> +        tmp =3D dest_gpr(ctx, a->t);
+> +
+> +        if (a->r1 =3D=3D 0) {
+> +            /* UADDCM r0,src,dst is the common idiom for dst =3D ~src. =
+*/
+> +            tcg_gen_not_i64(tmp, tcg_r2);
+> +        } else {
+> +            /*
+> +             * Recall that r1 - r2 =3D=3D r1 + ~r2 + 1.
+> +             * Thus r1 + ~r2 =3D=3D r1 - r2 - 1,
+> +             * which does not require an extra temporary.
+> +             */
+> +            tcg_r1 =3D load_gpr(ctx, a->r1);
+> +            tcg_gen_sub_i64(tmp, tcg_r1, tcg_r2);
+> +            tcg_gen_subi_i64(tmp, tmp, 1);
+> +        }
+> +        save_gpr(ctx, a->t, tmp);
+> +        cond_free(&ctx->null_cond);
+> +        return true;
 >       }
+> +
+> +    nullify_over(ctx);
+>       tcg_r1 =3D load_gpr(ctx, a->r1);
+>       tcg_r2 =3D load_gpr(ctx, a->r2);
+>       tmp =3D tcg_temp_new_i64();
 
 
