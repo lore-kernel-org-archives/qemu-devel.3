@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CC0FC54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 19:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FD3BC54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 19:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ropus-0005mY-1u; Mon, 25 Mar 2024 15:23:30 -0400
+	id 1ropwJ-0006ch-Bl; Mon, 25 Mar 2024 15:25:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ropum-0005mD-J2
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:23:24 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ropuk-0007kR-Vu
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:23:24 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1e0000cdf99so36849545ad.0
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 12:23:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711394601; x=1711999401; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kpnT3ZJVl7ZW4tzI11v8BlXbyBRnovpBnl3cbWzKr+o=;
- b=himXkmsfJQOyiHcYoNASSd85nrAi/zdQhX3I6Z7oj8lAQj6lGVXhgLX78nTfMf/YB3
- /2Ne3Iuc/YIwspQ7AEsHJJX+t7HJ/EeLxLe1xLriCH/zfXJj5LswW9HRENhOCGqnEJco
- noleOFLEscGqIDyEnQ/TYmtrbc8f0j1OZNaKHhBQkZZapjmyFqyDZwlohdgqyJurOTet
- 7PrY2Pr8jNFD0dFr8SE5A7JrO4GqLvNPa5tpC512lRn4bHNQc4XIhbpbz41lympDnYm8
- eM4LFwYSpmtyFhQuOvdaZ9EbMbYuV8ro8iPX4Nfjb2FLMNmoO5R7ozwl0MGhwAvgBRMd
- EBng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711394601; x=1711999401;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kpnT3ZJVl7ZW4tzI11v8BlXbyBRnovpBnl3cbWzKr+o=;
- b=sDSXZRaiwZ7/NjaR+OZk5qdihB/p64I1KzEah38aARg3OeevJTzoCMb6pZMPoKGpqn
- NiZankBTKkZ7w/Xqq5/tFE8Z/4YU6xvMfjimpTmFMVhZB8xxH0YHTYxEWCXLx/pM+PBe
- tBx6I9BEeK2pKu+TPQsOK0PAP6HTEaOo2Y+7x0c83M2f+goko/38wPcvdp8g3Ygdevjc
- BaF8PBE6aRM8bREzsB0dPaIIRcv2Yo8Q/QPAGZHuezFRm/Gr/O8dimPumYRLU4rhImQT
- 2gSSoxGL0dKUGxgkWyNzyaojQaSIEstFp+um/Huf0SXyhMR3ZVC0isD2chH6vnNrmxzs
- mLqQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVoioxZSmEh13Ds7tOjPQVFspkOFJnAN/kPuLjAJtMjjk/r8nqzM0ONvceNsBxvIuApf/YYp8GaGgC5VtzkjkM7kAYHCDQ=
-X-Gm-Message-State: AOJu0YxeUI60FQqmruIMx0xdy9Ks11ZjDzTHUL6MoULUwLmOhly9gzkv
- p+++Rr06RfM+pjeV/431iyTkrMTmDWtwvKRGKkKhCW/QQ+fR+7bnEMtaOzadcMQ=
-X-Google-Smtp-Source: AGHT+IHA3idBooFYq9cX21eJrEAUTqDeC4nDNd9TgJdN1TCALyDhgVuw1c+sqfJ1Hb3qBfiwc2U+kg==
-X-Received: by 2002:a17:902:d50f:b0:1e0:bd7f:194 with SMTP id
- b15-20020a170902d50f00b001e0bd7f0194mr4683229plg.36.1711394600759; 
- Mon, 25 Mar 2024 12:23:20 -0700 (PDT)
-Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
- [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- q8-20020a170902b10800b001e00d9680cesm5039111plr.130.2024.03.25.12.23.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Mar 2024 12:23:20 -0700 (PDT)
-Message-ID: <32cec6a3-3535-4464-983a-894d3ba937bf@linaro.org>
-Date: Mon, 25 Mar 2024 09:23:17 -1000
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1ropwA-0006ba-Rk
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:24:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1ropw9-0007vC-Bf
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:24:50 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42PHatRt014199; Mon, 25 Mar 2024 19:24:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=d4raO4FXqA8ISg3QUii+dspus0gzJCpElzOjTWRIQ8k=;
+ b=lC2kg6n4zXU/3b8H8aSG+Mtb+wrsEGrYDQHP8mW9qnjawNAzA/C7DnKPwm2lagFqd+An
+ +Yp4t3iQCEBz/J3qm4YJTYeMTWF8MB+9qGUolLsb6gYrHO+2ZN9ihU94MoX6kD3v277V
+ /0jQqJCwFQ0ToSv6EeDeYaqTKeIYcOiYMFXNW0XUSzC6Tpz+D6YhDGQzR2OQJ/2gYvXj
+ dUX1kMMjK7vtRt4dyXV/DYKq9UA8LGrZn3k14bRVABYS6jH7YtNU1FAgIu1UDhsH9yAy
+ 5Ek0RGkIVsSKqz5bkN3/LL5js2lckStOeA0bCt1Ymj2+BXe4Xo1eca7a2qusCSE54rjT jQ== 
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x3a7vrsfr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 25 Mar 2024 19:24:47 +0000
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42PIiQk2003767; Mon, 25 Mar 2024 19:24:46 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3x2c42jpuh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 25 Mar 2024 19:24:46 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42PJOh0228967452
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 25 Mar 2024 19:24:45 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 198852004B;
+ Mon, 25 Mar 2024 19:24:43 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B27DB20040;
+ Mon, 25 Mar 2024 19:24:42 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.171.7.191])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 25 Mar 2024 19:24:42 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH v2 3/4] linux-user: Fix shmat(NULL) for h != g
+Date: Mon, 25 Mar 2024 20:23:01 +0100
+Message-ID: <20240325192436.561154-4-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240325192436.561154-1-iii@linux.ibm.com>
+References: <20240325192436.561154-1-iii@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 7/8] plugins: distinct types for callbacks
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <20240325124151.336003-1-pierrick.bouvier@linaro.org>
- <20240325124151.336003-8-pierrick.bouvier@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240325124151.336003-8-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 1mQI2TzcbUAtX5bZcyVQVJuXffUN0MxQ
+X-Proofpoint-GUID: 1mQI2TzcbUAtX5bZcyVQVJuXffUN0MxQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-25_18,2024-03-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015
+ mlxlogscore=962 phishscore=0 mlxscore=0 malwarescore=0 impostorscore=0
+ spamscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2403210000 definitions=main-2403250116
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,46 +107,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/25/24 02:41, Pierrick Bouvier wrote:
-> To prevent errors when writing new types of callbacks or inline
-> operations, we split callbacks data to distinct types.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   include/qemu/plugin.h  | 46 ++++++++++++++-----------
->   plugins/plugin.h       |  2 +-
->   accel/tcg/plugin-gen.c | 58 +++++++++++++++++---------------
->   plugins/core.c         | 76 ++++++++++++++++++++++--------------------
->   4 files changed, 98 insertions(+), 84 deletions(-)
-> 
-> diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-> index bb224b8e4c7..a078229942f 100644
-> --- a/include/qemu/plugin.h
-> +++ b/include/qemu/plugin.h
-> @@ -73,34 +73,40 @@ enum plugin_dyn_cb_type {
->       PLUGIN_CB_INLINE_STORE_U64,
->   };
->   
-> +struct qemu_plugin_regular_cb {
-> +    union qemu_plugin_cb_sig f;
-> +    TCGHelperInfo *info;
-> +    void *userp;
-> +    enum qemu_plugin_mem_rw rw;
-> +};
-> +
-> +struct qemu_plugin_inline_cb {
-> +    qemu_plugin_u64 entry;
-> +    enum qemu_plugin_op op;
-> +    uint64_t imm;
-> +    enum qemu_plugin_mem_rw rw;
-> +};
+In the h != g && shmaddr == NULL && !reserved_va case, target_shmat()
+incorrectly mmap()s the initial anonymous range with
+MAP_FIXED_NOREPLACE, even though the earlier mmap_find_vma() has
+already reserved the respective address range.
 
-Do you still need 'op' anymore here?
-It seems redundant with 'type'.
+Fix by using MAP_FIXED when "mapped", which is set after
+mmap_find_vma(), is true.
 
-Otherwise,
+Fixes: 78bc8ed9a8f0 ("linux-user: Rewrite target_shmat")
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ linux-user/mmap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index e88faf1ab3d..681b6db1b67 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -1358,7 +1358,7 @@ abi_ulong target_shmat(CPUArchState *cpu_env, int shmid,
+         if (h_len != t_len) {
+             int mmap_p = PROT_READ | (shmflg & SHM_RDONLY ? 0 : PROT_WRITE);
+             int mmap_f = MAP_PRIVATE | MAP_ANONYMOUS
+-                       | (reserved_va || (shmflg & SHM_REMAP)
++                       | (reserved_va || mapped || (shmflg & SHM_REMAP)
+                           ? MAP_FIXED : MAP_FIXED_NOREPLACE);
+ 
+             test = mmap(want, m_len, mmap_p, mmap_f, -1, 0);
+-- 
+2.44.0
 
-r~
 
