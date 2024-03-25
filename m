@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10A87C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 12:37:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B92DEC54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 12:37:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rojYW-0002Ic-2q; Mon, 25 Mar 2024 08:36:00 -0400
+	id 1rojYX-0002Ja-QB; Mon, 25 Mar 2024 08:36:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rojYU-0002Hs-5x
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:58 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1rojYS-0002HG-QS
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:56 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rojYR-0005dW-QR
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:57 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4148c607f31so246485e9.0
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 05:35:55 -0700 (PDT)
+ id 1rojYQ-0005dO-Nw
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:35:56 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4148bd2ce39so2075215e9.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 05:35:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711370154; x=1711974954; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711370153; x=1711974953; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=cPU63vtq7nGV4qBFhe6DUh4SCq/4JARPRKtq5Gn7vKA=;
- b=iW/PqS6VPldOP78K54KmqaPGL9XCS7yBLaUn2k871mKn+j4dfIK8MJdL+X1sqUK1nF
- WhoLC4eYZUQILN9x2hQr1X0mBumWApK+yrJS5kEQuWu5Agg2oaxObJJvTCn1o9nW2/xU
- lu+a6sMPnbZibN7PtRKM+mPmGNgYGGbwgTlXjUggjKOrXUXTR+u46f6OC8WO0J02/A9i
- lgnK6WQ1rZs3Jw80M78sCWYJKdplMmYeoy+BVvLIw6Yywinj/r0lqxq13ngBdn7zh+oX
- noo+dtzvWMWC1DESe81wY4TOV09CGCrA9VCl1q5W6a9DQg10BTczpUmW4fPD8KDK3rzz
- IJ6g==
+ :reply-to; bh=aGhWsSP/npTCiFe/sHrNCbxR5PPjNjefjYSTRbPwF88=;
+ b=Ygo1IaNH6FB5YXtSobiQEt8PzoNuvjYhNUE0vp/X+iAzTm/FcGTJ9FwmOQ+RVDImM9
+ FpSERsaIE9OthTglJM9qukogC9Er2aUb1m1o4JpIGeToNxuoYH21/DcJRloZLuIIXMxA
+ F7agCAnX3c7HmYxWd6MJo5qh4F8p/TCW06OJrqx7Dsq+FrZiNoaD++bDbsHMGb6e89n7
+ B/2f+mPag3y13pJsERp0aokbPb8VFLM6ePKz41nEZ3R2jOX7YitSn+FAHl2slgbaJH4z
+ fJlLNcWBAYVf4/FZUDsTdd7wqLSV7EZh6WTZ2JOPxPpzLJ41eu0O4VjZV4klQIvakbud
+ pSQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711370154; x=1711974954;
+ d=1e100.net; s=20230601; t=1711370153; x=1711974953;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cPU63vtq7nGV4qBFhe6DUh4SCq/4JARPRKtq5Gn7vKA=;
- b=CkP5Ufgy9sJxE0bnPLC9Hspir0MIkEliRd+9ZQYFJx8C9MPPQKyPMmaPLBcqaJFuzI
- YoHrTOthpUrDcv16Di0fqTGw1D/OphC6aveu3Lt96ik1H597def7sgKhLAG3KP6XzFfv
- p9ytKhQWKEdyerCVdNsdIMxYfOdSvUYwZ5cBt5RanTpgeEUICV3BhQRJSdlewBt3OfQz
- P0BViEyn4frXMf9Jbf1DpoUtCsQRs/aUUGdGCwqIWSUpv5VbmxK+RQAzmxf9YBS7vQ+R
- 9n8h/1cY+1lNPSUyazQGKhbseeqsrzBVKvcRAOCtOSfmSGeY83q3xBfAIFMhurIG1XKd
- sAaw==
-X-Gm-Message-State: AOJu0YzcTeJ9lupjZiNBiVvJfbVaidFe1Vf9r/3SmReCrnelvfIPcchm
- zgGauWAqsc16mPZ0Y5ORlaW6qJmADgD147iwj/kXehWlpEess4+qzgNviTcfamyb3KElfX5t72W
- e
-X-Google-Smtp-Source: AGHT+IHwYOSADN27vwyXi8KbGnJ1XMry2w9dJYCq48639W+pL+ysrGnwhO1IuC3XI27py29vJLH+mw==
-X-Received: by 2002:a05:600c:450c:b0:414:86a2:a43 with SMTP id
- t12-20020a05600c450c00b0041486a20a43mr2496920wmo.40.1711370154162; 
- Mon, 25 Mar 2024 05:35:54 -0700 (PDT)
+ bh=aGhWsSP/npTCiFe/sHrNCbxR5PPjNjefjYSTRbPwF88=;
+ b=ok5wVQ5CXiFti2jaeOodjrjpE6CZ9Bl90/jsCIkRwfvnCgIiokYvpbhR1R5vw+AAFs
+ u6osu6VOGL5OoFKe9Y+By4ipVoPVZzJ/fq/VTizGi/zSaEwRiM4PSvZmSpBdJApAcFam
+ xcLj6Vz15Sy8X2uuEgys3rFCuW38LfAsBmfoHLpMrVqnegQnbZKQDFEsVMHYeA6cpcu6
+ CCurC9145QyR6G2uZamJdcBGkVsa7xv7AcrxSBxoS7jsI1RCDW9qagodRyKDzVyA4KRb
+ jqDc84HaVDTRWAo8vnvjuU739z7gGyBIWviMwZARBikh0DdCfKW8cndMxZXLJdkBa5MQ
+ 6Juw==
+X-Gm-Message-State: AOJu0YyyvsOl0XTXtRCjQRNKeDi8lY84LX8Pe07RVoDB7ZSzWzD1B3Fb
+ OV1qn98XOItpBtlrIWoevTLD1YmAIelQG9l/l1hMkOJtVD/lANm8tF+ahT78nmwCaT6x430awm7
+ w
+X-Google-Smtp-Source: AGHT+IGPkE4pZV9wBlViscRjg8FwWPkFGu4Q3ONXbnxawSC2IxHR9Y6r9g3WFqH3NIs6lCbfZQJmEA==
+X-Received: by 2002:a05:600c:4ece:b0:414:6c72:8df with SMTP id
+ g14-20020a05600c4ece00b004146c7208dfmr4809223wmq.38.1711370153346; 
+ Mon, 25 Mar 2024 05:35:53 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
  o19-20020a05600c339300b00414041032casm2303877wmp.1.2024.03.25.05.35.53
@@ -61,17 +61,17 @@ Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  Mon, 25 Mar 2024 05:35:53 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 5/7] hw/nvram/mac_nvram: Report failure to write data
-Date: Mon, 25 Mar 2024 12:35:48 +0000
-Message-Id: <20240325123550.1991693-6-peter.maydell@linaro.org>
+Subject: [PULL 3/7] net/af-xdp.c: Don't leak sock_fds array in
+ net_init_af_xdp()
+Date: Mon, 25 Mar 2024 12:35:46 +0000
+Message-Id: <20240325123550.1991693-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240325123550.1991693-1-peter.maydell@linaro.org>
 References: <20240325123550.1991693-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,38 +94,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There's no way for the macio_nvram device to report failure to write
-data, but we can at least report it to the user with error_report()
-as we do in other devices like xlnx-efuse.
+In net_init_af_xdp() we parse the arguments and allocate
+a buffer of ints into sock_fds. However, although we
+free this in the error exit path, we don't ever free it
+in the successful return path. Coverity spots this leak.
 
-Spotted by Coverity.
+Switch to g_autofree so we don't need to manually free the
+array.
 
-Resolves: Coverity CID 1507628
+Resolves: Coverity CID 1534906
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240312183810.557768-6-peter.maydell@linaro.org
+Message-id: 20240312183810.557768-4-peter.maydell@linaro.org
 ---
- hw/nvram/mac_nvram.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/af-xdp.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/hw/nvram/mac_nvram.c b/hw/nvram/mac_nvram.c
-index 5f9d16fb3e3..59277fbc776 100644
---- a/hw/nvram/mac_nvram.c
-+++ b/hw/nvram/mac_nvram.c
-@@ -48,7 +48,10 @@ static void macio_nvram_writeb(void *opaque, hwaddr addr,
-     trace_macio_nvram_write(addr, value);
-     s->data[addr] = value;
-     if (s->blk) {
--        blk_pwrite(s->blk, addr, 1, &s->data[addr], 0);
-+        if (blk_pwrite(s->blk, addr, 1, &s->data[addr], 0) < 0) {
-+            error_report("%s: write of NVRAM data to backing store failed",
-+                         blk_name(s->blk));
-+        }
-     }
- }
+diff --git a/net/af-xdp.c b/net/af-xdp.c
+index 38e600703a3..01c5fb914ec 100644
+--- a/net/af-xdp.c
++++ b/net/af-xdp.c
+@@ -446,7 +446,7 @@ int net_init_af_xdp(const Netdev *netdev,
+     NetClientState *nc, *nc0 = NULL;
+     unsigned int ifindex;
+     uint32_t prog_id = 0;
+-    int *sock_fds = NULL;
++    g_autofree int *sock_fds = NULL;
+     int64_t i, queues;
+     Error *err = NULL;
+     AFXDPState *s;
+@@ -516,7 +516,6 @@ int net_init_af_xdp(const Netdev *netdev,
+     return 0;
  
+ err:
+-    g_free(sock_fds);
+     if (nc0) {
+         qemu_del_net_client(nc0);
+     }
 -- 
 2.34.1
 
