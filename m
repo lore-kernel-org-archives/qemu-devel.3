@@ -4,55 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C8A4C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 09:40:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6204AC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 09:46:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rogo1-0001ca-IJ; Mon, 25 Mar 2024 05:39:49 -0400
+	id 1rogu7-0003Rp-2T; Mon, 25 Mar 2024 05:46:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=rDMc=K7=kaod.org=clg@ozlabs.org>)
- id 1rognz-0001cL-F3; Mon, 25 Mar 2024 05:39:47 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3]
- helo=gandalf.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=rDMc=K7=kaod.org=clg@ozlabs.org>)
- id 1rognr-0006Tg-A2; Mon, 25 Mar 2024 05:39:47 -0400
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4V37Dz4LZ8z4wcd;
- Mon, 25 Mar 2024 20:39:31 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4V37Dv31KKz4wbv;
- Mon, 25 Mar 2024 20:39:27 +1100 (AEDT)
-Message-ID: <3fc15c01-82d4-4243-b6fd-95cb9d2f5548@kaod.org>
-Date: Mon, 25 Mar 2024 10:39:21 +0100
+ (Exim 4.90_1) (envelope-from <xiongyining1480@phytium.com.cn>)
+ id 1rogty-0003RO-3u; Mon, 25 Mar 2024 05:45:59 -0400
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <xiongyining1480@phytium.com.cn>)
+ id 1rogtt-0007rB-Pf; Mon, 25 Mar 2024 05:45:57 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCXRwjERwFmmrQyBw--.51115S2;
+ Mon, 25 Mar 2024 17:45:40 +0800 (CST)
+Received: from xiongyining1480$phytium.com.cn ( [218.76.62.144] ) by
+ ajax-webmail-mail (Coremail) ; Mon, 25 Mar 2024 17:45:35 +0800 (GMT+08:00)
+X-Originating-IP: [218.76.62.144]
+Date: Mon, 25 Mar 2024 17:45:35 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?54aK5LmZ5a6B?= <xiongyining1480@phytium.com.cn>
+To: "Marcin Juszkiewicz" <marcin.juszkiewicz@linaro.org>,
+ "Peter Maydell" <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, chenbaozi@phytium.com.cn,
+ quic_llindhol@quicinc.com
+Subject: Re: [PATCH v2 0/2] ARM Sbsa-ref: Enable CPU cluster topology
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2023.1-cmXT6 build
+ 20230609(48863718) Copyright (c) 2002-2024 www.mailtech.cn
+ mispb-76b96e3b-3ecc-44d5-9200-de81e6d4c242-
+In-Reply-To: <c0478bc2-73bb-4048-988b-a05df30cdbd4@linaro.org>
+References: <20240312083049.3412522-1-xiongyining1480@phytium.com.cn>
+ <CAFEAcA8sQnBzFq3b_WscYY1o+J2CutFrEcTGHXvbi8YVn6vorg@mail.gmail.com>
+ <c0478bc2-73bb-4048-988b-a05df30cdbd4@linaro.org>
+Content-Transfer-Encoding: base64
+X-CM-CTRLDATA: 79P2OGZvb3Rlcl90eHQ9MTkyOTozODM=
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] qtest/phb4: Add testbench for PHB4
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com
-References: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
- <20240321100422.5347-2-saif.abrar@linux.vnet.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240321100422.5347-2-saif.abrar@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=rDMc=K7=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-ID: <6d9dd876.2cb.18e75004489.Coremail.xiongyining1480@phytium.com.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: AQAAfwC3O5PARwFm22kAAA--.338W
+X-CM-SenderInfo: x0lr0wp1lqx0bjrumio6sk53xlxphulrpou0/1tbiAQAPBmYAgF4G 8AAAsG
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=xiongyinin
+ g1480@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW7Kr1fuw1xuw18Ww4UGFy7Awb_yoW8Cw1DpF
+ 4Fqw1YkF4kKwn0k3Z7CF1xua45Zw1rWrW8Jr1kCw48CFnxWF92gryftrs09a4DGws5G3y2
+ gF1Ig34kuF1DZrDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=xiongyining1480@phytium.com.cn;
+ helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,124 +79,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Saif,
-
-On 3/21/24 11:04, Saif Abrar wrote:
-> New qtest TB added for PHB4.
-> TB reads PHB Version register and asserts that
-> bits[24:31] have value 0xA5.
-> 
-> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-> ---
->   tests/qtest/meson.build     |  1 +
->   tests/qtest/pnv-phb4-test.c | 74 +++++++++++++++++++++++++++++++++++++
->   2 files changed, 75 insertions(+)
->   create mode 100644 tests/qtest/pnv-phb4-test.c
-> 
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 36c5c13a7b..4795e51c17 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -168,6 +168,7 @@ qtests_ppc64 = \
->     (config_all_devices.has_key('CONFIG_PSERIES') ? ['device-plug-test'] : []) +               \
->     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xscom-test'] : []) +                 \
->     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-host-i2c-test'] : []) +              \
-> +  (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-phb4-test'] : []) +                  \
->     (config_all_devices.has_key('CONFIG_PSERIES') ? ['rtas-test'] : []) +                      \
->     (slirp.found() ? ['pxe-test'] : []) +              \
->     (config_all_devices.has_key('CONFIG_USB_UHCI') ? ['usb-hcd-uhci-test'] : []) +             \
-> diff --git a/tests/qtest/pnv-phb4-test.c b/tests/qtest/pnv-phb4-test.c
-> new file mode 100644
-> index 0000000000..e3b809e9c4
-> --- /dev/null
-> +++ b/tests/qtest/pnv-phb4-test.c
-> @@ -0,0 +1,74 @@
-> +/*
-> + * QTest testcase for PowerNV PHB4
-> + *
-> + * Copyright (c) 2024, IBM Corporation.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqtest.h"
-> +#include "hw/pci-host/pnv_phb4_regs.h"
-> +
-> +#define P10_XSCOM_BASE          0x000603fc00000000ull
-> +#define PHB4_MMIO               0x000600c3c0000000ull
-> +#define PHB4_XSCOM              0x8010900ull
-> +
-> +#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
-> +#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
-> +
-> +static uint64_t pnv_xscom_addr(uint32_t pcba)
-> +{
-> +    return P10_XSCOM_BASE | ((uint64_t) pcba << 3);
-> +}
-> +
-> +static uint64_t pnv_phb4_xscom_addr(uint32_t reg)
-> +{
-> +    return pnv_xscom_addr(PHB4_XSCOM + reg);
-> +}
-
-Please use tests/qtest/pnv-xscom.h instead.
-
-> +/*
-> + * XSCOM read/write is indirect in PHB4:
-> + * Write 'SCOM - HV Indirect Address Register'
-> + * with register-offset to read/write.
-> +   - bit[0]: Valid Bit
-> +   - bit[51:61]: Indirect Address(00:10)
-> + * Read/write 'SCOM - HV Indirect Data Register' to get/set the value.
-> + */
-> +
-> +static uint64_t pnv_phb4_xscom_read(QTestState *qts, uint32_t reg)
-> +{
-> +    qtest_writeq(qts, pnv_phb4_xscom_addr(PHB_SCOM_HV_IND_ADDR),
-> +            PPC_BIT(0) | reg);
-> +    return qtest_readq(qts, pnv_phb4_xscom_addr(PHB_SCOM_HV_IND_DATA));
-> +}
-
-> +/* Assert that 'PHB - Version Register Offset 0x0800' bits-[24:31] are 0xA5 */
-> +static void phb4_version_test(QTestState *qts)
-> +{
-> +    uint64_t ver = pnv_phb4_xscom_read(qts, PHB_VERSION);
-> +
-> +    /* PHB Version register [24:31]: Major Revision ID 0xA5 */
-> +    ver = ver >> (63 - 31);
-> +    g_assert_cmpuint(ver, ==, 0xA5);
-> +}
-> +
-> +static void test_phb4(void)
-> +{
-> +    QTestState *qts = NULL;
-> +
-> +    qts = qtest_initf("-machine powernv10 -accel tcg -nographic -d unimp");
-
-"-nographic -d unimp" is not needed.
-
-> +
-> +    /* Make sure test is running on PHB */
-> +    phb4_version_test(qts);
-
-Please add similar tests for phb[345]. See tests/qtest/pnv-xscom-test.c.
-
-Thanks,
-
-C.
-
-
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +    qtest_add_func("phb4", test_phb4);
-> +    return g_test_run();
-> +}
+PiBXIGRuaXUgMjIuMDMuMjAyNCBvwqAxOTo1MSwgUGV0ZXIgTWF5ZGVsbCBwaXN6ZToKPiA+IE9u
+IFR1ZSwgMTIgTWFyIDIwMjQgYXQgMDg6MzIsIFhpb25nIFlpbmluZwo+IAo+ID4+IHhpb25neWlu
+aW5nMTQ4MCAoMik6Cj4gPj4gICAgaHcvYXJtL3Nic2EtcmVmOkVuYWJsZSBDUFUgY2x1c3RlciBv
+biBBUk0gc2JzYSBtYWNoaW5lCj4gPj4gICAgaHcvYXJtL3Nic2EtcmVmOiBBZGQgY3B1LW1hcCB0
+byBkZXZpY2UgdHJlZQo+ID4gCj4gPiBUaGFua3MgZm9yIHRoZXNlIHBhdGNoZXMuIEkgdGhpbmsg
+d2Ugc2hvdWxkIHNxdWFzaCB0aGUgdHdvCj4gPiBwYXRjaGVzIHRvZ2V0aGVyIGludG8gb25lLCBi
+ZWNhdXNlIHRoZSBmaXJzdCBwYXRjaCBpcyBvbmx5Cj4gPiBhIHNpbmdsZSBsaW5lLCBhbmQgYWxz
+byBiZWNhdXNlIHdlIHNob3VsZG4ndCBzYXkgdGhhdCB0aGUKPiA+IG1hY2hpbmUgc3VwcG9ydHMg
+Y2x1c3RlciB0b3BvbG9neSB1bnRpbCBpdCBhY3R1YWxseSBkb2VzCj4gPiBieSBwdXR0aW5nIHRo
+ZSBpbmZvcm1hdGlvbiBpbnRvIHRoZSBkZXZpY2UgdHJlZS4KCmZ1bGx5IGFncmVlCgo+ID4gVGhl
+cmUncyBubyBydXNoLCBiZWNhdXNlIHdlJ3JlICBub3cgaW4gc29mdGZyZWV6ZSBmb3IgOS4wLCBz
+byB0aGVzZQo+ID4gd2lsbCBoYXZlIHRvIHdhaXQgdW50aWwgOS4wIGlzIHJlbGVhc2VkIChpbiBh
+Ym91dCBhIG1vbnRoJ3MgdGltZSkuCj4gCj4gPiBJJ20gYWxzbyBhIGJpdCBjb25mdXNlZCBieSB0
+aGUgUmV2aWV3ZWQtYnk6IHRhZyBmcm9tIE1hcmNpbiBvbiBwYXRjaCAyLAo+ID4gYmVjYXVzZSBJ
+IGNhbid0IHNlZSB0aGF0IGluIG15IG1haWwgYXJjaGl2ZXMgb2YgdGhlIGRpc2N1c3Npb24gb24g
+dmVyc2lvbgo+ID4gMSBvZiB0aGlzIHBhdGNoc2V0LCBvbmx5IGEgVGVzdGVkLWJ5Lgo+ID4gTWFy
+Y2luLCBhcmUgeW91IE9LIHdpdGggdGhlc2UgcGF0Y2hlcz8KPiAKPiBJIG9ubHkgdGVzdGVkIHRo
+ZW0uIFRoZXkgYXJlIGZpbmUsIHdpbGwgY2hlY2sgb24gTW9uZGF5Lgo+IAo+ID4gQWxzbywgaXMg
+dGhpcyBjaGFuZ2UgdG8gdGhlIERUQiBzb21ldGhpbmcgdGhhdCB3b3VsZCByZXF1aXJlIGFuCj4g
+PiBpbmNyZWFzZSBpbiB0aGUgc2JzYS1yZWYgcGxhdGZvcm0gdmVyc2lvbiBudW1iZXIsIG9yIG5v
+dD8KPiAKPiBURi1BIHdpbGwgY2hlY2sgZm9yICIvY3B1cy9jcHUtbWFwIiBub2RlIGFuZCBpZiBp
+dCBpcyBtaXNzaW5nIHRoZW4gd2lsbCAKPiBub3QgcHJvdmlkZSBpdCB0byBFREsyLiBTbyBmYXIg
+SSBkaWQgbm90IHNhdyBwYXRjaGVzIGZvciBmaXJtd2FyZSBzaWRlLgoKSSBzZW5kIGEgcGF0Y2gg
+aW4gVEYtQSB0byBjaGVjayAgIi9jcHVzL2NwdS1tYXAiIG5vZGUgaHR0cHM6Ly9yZXZpZXcudHJ1
+c3RlZGZpcm13YXJlLm9yZy9jL1RGLUEvdHJ1c3RlZC1maXJtd2FyZS1hLysvMjcxODkvMSNtZXNz
+YWdlLTJjMjliZTZiOGI5YjRmZDNmZWYyM2JhN2JlNmZlNmZjM2EyZDBhZWYuIEl0IGNhbiBiZSB1
+c2VkIHdpdGggdGhpcyBwYXRjaCBpbiBxZW11LgoKPiBJIHdvdWxkIGFkZCBidW1wIG9mIHBsYXRm
+b3JtIHZlcnNpb24gdG8gMC40IG9uZS4gSXQgaXMgY2hlYXAgb3BlcmF0aW9uIAo+IGFuZCBzbyBm
+YXIgKGZyb20gZmlybXdhcmUgc2lkZSkgd2UgY2hlY2sgZm9yID49IDAuMyBvbmx5Lgo+IAo+ICA+
+IFNob3VsZCB3ZSBhZGp1c3QgdGhlIGRvY3VtZW50YXRpb24gaW4gZG9jcy9zeXN0ZW0vYXJtL3Ni
+c2EucnN0IHRvCj4gID4gbWVudGlvbiB0aGF0IHRoZSBEVEIgbWlnaHQgaGF2ZSBjbHVzdGVyIHRv
+cG9sb2d5IGluZm9ybWF0aW9uPwo+IAo+IFllcy4gSSB3aWxsIHNlbmQgYW4gdXBkYXRlIHRvIG1l
+bnRpb24gdGhhdCBOVU1BIGNvbmZpZ3VyYXRpb24gY2FuIGJlIAo+IHRoZXJlIHRvbyAod2UgYWxy
+ZWFkeSBleHBvcnQgaXQgZnJvbSBURi1BIHRvIEVESzIgdmlhIFNNQyBjYWxscykuCg0KDQrkv6Hm
+ga/lronlhajlo7DmmI7vvJrmnKzpgq7ku7bljIXlkKvkv6Hmga/lvZLlj5Hku7bkurrmiYDlnKjn
+u4Tnu4fmiYDmnIks5Y+R5Lu25Lq65omA5Zyo57uE57uH5a+56K+l6YKu5Lu25oul5pyJ5omA5pyJ
+5p2D5Yip44CC6K+35o6l5pS26ICF5rOo5oSP5L+d5a+GLOacque7j+WPkeS7tuS6uuS5pumdouiu
+uOWPryzkuI3lvpflkJHku7vkvZXnrKzkuInmlrnnu4Tnu4flkozkuKrkurrpgI/pnLLmnKzpgq7k
+u7bmiYDlkKvkv6Hmga/jgIINCkluZm9ybWF0aW9uIFNlY3VyaXR5IE5vdGljZTogVGhlIGluZm9y
+bWF0aW9uIGNvbnRhaW5lZCBpbiB0aGlzIG1haWwgaXMgc29sZWx5IHByb3BlcnR5IG9mIHRoZSBz
+ZW5kZXIncyBvcmdhbml6YXRpb24uVGhpcyBtYWlsIGNvbW11bmljYXRpb24gaXMgY29uZmlkZW50
+aWFsLlJlY2lwaWVudHMgbmFtZWQgYWJvdmUgYXJlIG9ibGlnYXRlZCB0byBtYWludGFpbiBzZWNy
+ZWN5IGFuZCBhcmUgbm90IHBlcm1pdHRlZCB0byBkaXNjbG9zZSB0aGUgY29udGVudHMgb2YgdGhp
+cyBjb21tdW5pY2F0aW9uIHRvIG90aGVycy4=
 
 
