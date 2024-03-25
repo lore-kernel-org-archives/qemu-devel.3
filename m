@@ -4,71 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61256C54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 11:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBE4BC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 11:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roimQ-0007Sa-Dp; Mon, 25 Mar 2024 07:46:18 -0400
+	id 1roirv-0000Lv-96; Mon, 25 Mar 2024 07:51:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1roimM-0007Lu-1c
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 07:46:14 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1roirr-0000L9-RB
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 07:51:56 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1roimK-0003jW-Fo
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 07:46:13 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-56bf63af770so858880a12.3
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 04:46:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1roirl-0004jp-29
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 07:51:55 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-6e6bee809b8so3611292b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 04:51:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711367168; x=1711971968; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pOhG+I6FhU8/RyL1wJisRPG0LbRYcv2DN6Dp50wSRHw=;
- b=a4qPPMnuymnF9V2VrasDfBWBDpOPnZduV24qzuaxUYhYIgvGluyUP+ynZOKHs5Yk7v
- F0yVzta9vdt/vaRIoxdApbg7R1o/DoKo87i5kC6896IVxjv/ahcG5BPUp9nKWKE/+igV
- aDL83ZdaBhHfGs0PYYs0YfIqM6dlDxrwrJuRQIIeEuJaXcKai+OjvvoJAFudO+S+dQVW
- 8xNEJ0p3tcNTSAtgS+UIqtHv5tBKfASXCNisXdBGL5ysvd1w+7xiWiAU9Pnff5q6amd7
- fapHW1AtdD0846W/kYsY2gXcHrfgIsNArfwPX87KjDqPJFGdtWo5moRqBwiJSNw2JngI
- 3dlg==
+ d=ventanamicro.com; s=google; t=1711367507; x=1711972307; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=p+B9HA+Vo3yeONZaUTp3gGNqBQ5FF02I2NN1oNtG9yA=;
+ b=OpqhYiPyIHgN0cH6P0eNa8q4nDVZYuMQAeeGobY8NzIvCsxokWX1Ugji01IR63G5gx
+ CAmr5qY3bDCNYTsM6kueeePgqXlSEAwhZyuS4o4jVYzJKoVI0X5spa2owYjxAf7Rmqcp
+ kCWzCDm4eSmHcZtS/RQNRmdgRecOfqAwixu+LFPQT9C5Nsgtw5Fi5vndOm2rV/eQhdMk
+ RioWLHfxdAJl8MEQqhgNhT41wt+FVAvExrR/a4ZUXLqLByJqrCGcrY7Q0ORaIxbDcNj/
+ 1C1wra9wT94rxab/dixQSQpwAEjdEssdKfnZjLRw+QUmzUZyBF+j66h3wU3HqLH5pjaC
+ gLmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711367168; x=1711971968;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pOhG+I6FhU8/RyL1wJisRPG0LbRYcv2DN6Dp50wSRHw=;
- b=nH7rl8fx0sv83IaINZT7RBO5wU4+sm1nhOL1EiYBrc5cWenKxctSZg4Uj4PeHyXFp5
- b7n3yb5P2g2Q7LR4RWnNILvoHiYFEalDVdrV1PKv0jTToil4SG4kUl587w6Zm/1pnAq9
- BXx3++/mPfHekGZ5I1f10/zRuA+f+9tf68XDR86uoF1Gho+S2lHK9JQ1cHuVYA1BUl66
- 8/Rw2EGSuby46YAVn/vzAzVHUFq2yQ8P2ATBitLv6zk4ZF0vRL9Lm//TeVfXP/Fe+bzf
- cAgL+L2BhaaFOG+p+48UgoF64vhQc5DDPRDmj42LGac1GGZBb82aj2yInwY6nKVXRNvp
- zStA==
-X-Gm-Message-State: AOJu0Yx80F0rcCGe7kXeDIBpuv5Jw8BNvIn9DJZwa9g2uK2+bODj/sXj
- VQuqK6OQ73vkD4mldsdqiv/4lY4tXYr+pcDaeJ2oFT8MI0r0pjgTk+Q8wmoZy3/0nOJqFOanYbQ
- oy7PJqqZnIIZMCBe7Mq/5pZ8D6VKcXYdzOacEIg==
-X-Google-Smtp-Source: AGHT+IHH8kz4sUcGPj5+Rix2zCwAZ4AvBmplr9wSLE0tDJKCEXujL90NxBieN2laIPIznmF+aYYEa9kQSemA90OzAxE=
-X-Received: by 2002:a50:a6d0:0:b0:56c:18b4:d2ab with SMTP id
- f16-20020a50a6d0000000b0056c18b4d2abmr930172edc.42.1711367168428; Mon, 25 Mar
- 2024 04:46:08 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711367507; x=1711972307;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=p+B9HA+Vo3yeONZaUTp3gGNqBQ5FF02I2NN1oNtG9yA=;
+ b=GxkjT4iE0REZGdg0s9O/82eJXMSwP0QaIqlz8CDiSjvP4i8lCRhOASAB5apn2WL6dI
+ DsYgyTEpt7EDHFVtiqt0nfj1jzDDv2sscV+Mdhmzqu6tpRUGjqOqjLEMSvYkv+OKM6jh
+ jupKur+Rzt4Qz59dC+aZIun3xEOqvMCAGoE38Vw83mStLwqbbcENXEawd0mQ2JQw+rhW
+ RArQBmD0Uq2/VtIwEHpXGIprbnUNdkcr+jcqY1fJ9vtpQQE+UT9XFMYCmrsUB+KExc6M
+ Tl+oeBXHISVl19dJseS/5cHfHV7FpoDje3c1FAU4yJLhpFirBiolmX0i7HakK1QoPEXc
+ afzg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQIuAKM3isbe1MRrkJUSeN4n15oeH932w8NyqVco3vdHHhH2meBX1jkbxEZ2XwRk5ur2lNKbiExu5u5JLqMlepptiaFwg=
+X-Gm-Message-State: AOJu0Yz1VBAmKenwwbJ5CQDULZNQ35hGtPscv5XSTT0Te18GgSeH01kU
+ VmKJBKDhFhHxABfwErkKJt1PKyJkg76RQtv6LAHt9vVVJlpgrQ9O+coSmBAmBCM=
+X-Google-Smtp-Source: AGHT+IFiCyMGLmbn+x6UjAlRrC97FrPfuAnqdeEpCHr6YOh9S9fmG0FWrvfJseF+3eaW6i9ctOtpfg==
+X-Received: by 2002:a05:6a20:7501:b0:1a3:5c61:5ec2 with SMTP id
+ r1-20020a056a20750100b001a35c615ec2mr5947759pzd.16.1711367507276; 
+ Mon, 25 Mar 2024 04:51:47 -0700 (PDT)
+Received: from [192.168.68.110] ([177.45.186.241])
+ by smtp.gmail.com with ESMTPSA id
+ q23-20020a170902bd9700b001ddc93c5759sm4495265pls.196.2024.03.25.04.51.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Mar 2024 04:51:46 -0700 (PDT)
+Message-ID: <b7fff1e9-f2b3-4a45-8966-1dbd76263457@ventanamicro.com>
+Date: Mon, 25 Mar 2024 08:51:42 -0300
 MIME-Version: 1.0
-References: <20240223154211.1001692-1-npiggin@gmail.com>
- <20240223154211.1001692-9-npiggin@gmail.com>
-In-Reply-To: <20240223154211.1001692-9-npiggin@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 25 Mar 2024 11:45:56 +0000
-Message-ID: <CAFEAcA_5OJ9X8QKoxZdNAOtmtg9otvLLCx5n7wchNE3wuHOT+A@mail.gmail.com>
-Subject: Re: [PULL 08/47] tests/avocado: ppc add hypervisor tests
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi() fail
+ with vendor-specific SBI
+To: Alexei Filippov <alexei.filippov@syntacore.com>, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ Anup Patel <apatel@ventanamicro.com>
+References: <20240325101428.8875-1-alexei.filippov@syntacore.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240325101428.8875-1-alexei.filippov@syntacore.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,30 +101,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 23 Feb 2024 at 16:00, Nicholas Piggin <npiggin@gmail.com> wrote:
->
-> The powernv and pseries machines both provide hypervisor facilities
-> that are supported by KVM. This is a large and complicated set of
-> features that don't get much system-level testing in ppc tests.
->
-> Add a new test case for these which runs QEMU KVM inside the target.
-> This downloads an Alpine VM image, boots it and downloads and installs
-> the qemu package, then boots a virtual machine under it, re-using the
-> original Alpine VM image.
->
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+CCing Anup as well
 
-This breaks running "make check-avocado" for ppc targets
-if the host system doesn't have 'xorriso':
+On 3/25/24 07:14, Alexei Filippov wrote:
+> kvm_riscv_handle_sbi() may return not supported return code to not trigger
+> qemu abort with vendor-specific sbi.
+> 
+> Added SBI related return code's defines.
 
- (177/300) tests/avocado/ppc_hv_tests.py:HypervisorTest.test_hv_pseries:
-ERROR: [Errno 2] No such file or directory: 'xorriso' (0.14 s)
 
-Missing prerequisites should trigger the test to SKIP, not ERROR.
+Please add:
 
-Bug filed with the avocado logfile details etc:
-https://gitlab.com/qemu-project/qemu/-/issues/2246
+Fixes: 4eb47125 ("target/riscv: Handle KVM_EXIT_RISCV_SBI exit")
 
-thanks
--- PMM
+> 
+> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+> ---
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+
+>   target/riscv/kvm/kvm-cpu.c         |  5 +++--
+>   target/riscv/sbi_ecall_interface.h | 11 +++++++++++
+>   2 files changed, 14 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 6a6c6cae80..a4f84ad950 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1404,7 +1404,7 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+>           if (ret == sizeof(ch)) {
+>               run->riscv_sbi.ret[0] = ch;
+>           } else {
+> -            run->riscv_sbi.ret[0] = -1;
+> +            run->riscv_sbi.ret[0] = SBI_ERR_FAILURE;
+>           }
+>           ret = 0;
+>           break;
+> @@ -1412,7 +1412,8 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+>           qemu_log_mask(LOG_UNIMP,
+>                         "%s: un-handled SBI EXIT, specific reasons is %lu\n",
+>                         __func__, run->riscv_sbi.extension_id);
+> -        ret = -1;
+> +        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
+> +        ret = 0;
+>           break;
+>       }
+>       return ret;
+> diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
+> index 43899d08f6..0279e92a36 100644
+> --- a/target/riscv/sbi_ecall_interface.h
+> +++ b/target/riscv/sbi_ecall_interface.h
+> @@ -69,4 +69,15 @@
+>   #define SBI_EXT_VENDOR_END              0x09FFFFFF
+>   /* clang-format on */
+>   
+> +/* SBI return error codes */
+> +#define SBI_SUCCESS                  0
+> +#define SBI_ERR_FAILURE             -1
+> +#define SBI_ERR_NOT_SUPPORTED       -2
+> +#define SBI_ERR_INVALID_PARAM       -3
+> +#define SBI_ERR_DENIED              -4
+> +#define SBI_ERR_INVALID_ADDRESS     -5
+> +#define SBI_ERR_ALREADY_AVAILABLE   -6
+> +#define SBI_ERR_ALREADY_STARTED     -7
+> +#define SBI_ERR_ALREADY_STOPPED     -8
+> +
+>   #endif
 
