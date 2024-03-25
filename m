@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DA1AC54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 12:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC510C54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 12:42:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rojep-00009b-Ob; Mon, 25 Mar 2024 08:42:38 -0400
+	id 1rojfB-0000LM-H8; Mon, 25 Mar 2024 08:42:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rojea-0008Ru-B9
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:42:17 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ id 1rojef-00005p-S4
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:42:25 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rojeU-0006da-Lk
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:42:12 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-51381021af1so6631972e87.0
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 05:42:10 -0700 (PDT)
+ id 1rojee-0006fu-3J
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 08:42:21 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-51381021af1so6632276e87.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 05:42:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711370528; x=1711975328; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711370537; x=1711975337; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jrYhcbQiD/iBdvr35vsxxSuWauM+6gxOSzxNrMmsmbY=;
- b=aH/ZPf1yLCrAg8Ix9bwcvaCarxnf+hfiEgiUq+Cj/GI7qVFouER/IJeneOOGGN2ULL
- Vca/51RYlnaeF/KAj0c8DYUNGzNVXN/DBjSOUsoqAzNgMaiUIcQiPNpB+0WzYudwC6PG
- aX7oD0xQZLoPI45vhn3tVGq8kGv2eQnR19KH9zgaAvGLPNmc0Nitc4JOGZDa57vfP8db
- uZf9EcvUOxfPLxU1+RFpX669iVXXI/3UM5QIFljKJdpXWbkVyfNEf60JhfyQn8CqWS9M
- WnaVj+TMvow11+hFfzgm5nWQ6xovIwTBnkWp9WGDHVcWR/LtSax35PWC1L2t/jf8inX8
- liAA==
+ bh=cou8ZHLxFtHbxq//TR+XjCD6vcNQOpnA7W/aP2xbs5E=;
+ b=s2gLSEd0p+WoFYugw+0hM0OTFI6UzykR7cVoy6AaULxDorbzFoozrbI+YyIpmDTyfS
+ 5VCzE6kEosRzzBTb5u6SX8OfdBvnfTmgHFK131NRmLoMa1A9jy+1gkCAy/OOs8b4MyXJ
+ FY2TNiwohjLbYw+VUwvzKpjW2G3/dr97kPM/X5cWlKeHs0Cru3LRTTQfh26wMnTQHceo
+ 0i55WORRupxMxyQcuvconW3pxYKuybrgG6chSbej3bp7vtxiBQCTYzRIIueD/+hszmEW
+ mIGg0Idex8jo2I1ZP03f81izePHWDwnut5N34rZB40XBK15gPbtdBVFCmTVaolZTNnCV
+ H5yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711370528; x=1711975328;
+ d=1e100.net; s=20230601; t=1711370537; x=1711975337;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jrYhcbQiD/iBdvr35vsxxSuWauM+6gxOSzxNrMmsmbY=;
- b=kZkUOC8AyKNwILbforr6m5JWIbpY9CXBQcI/UAA2yI0Iq/7gewS7WWjsE3fduZxnUg
- b8tQfLvMWim3sRo1fLUeZLq/YBPMQvw5oeyvY9jtcabw3iruOVevGD5t/FX3fBEQPMNN
- asR6cqe2XNUYq/I7fs1lgdRLYJJfY8b2GWin9FCr/5YPEgrIb13W2H2jXvNjgiwipwb7
- GMfAOLoubuJHNlQgYKgiMLtAHi1CUUNJ8k85iEpJ7IEyEKbzVytIPKs/867MV57rNAVl
- R0yX+CLfRhvhakSddfsoR7tJIVPzacyrOghbh6WMAbc9mHdUgr3b98kY6Mgpwm0SUBjJ
- kpQw==
-X-Gm-Message-State: AOJu0YxSZ9hmi8oJzxF3M9Z78UqZx8LcVc93+iqirdyijq8XHX6CQ0I6
- 1e1frnP160a8xxh/xDOz8pY3UfpEKxvV5UmlHg7NMkv4pM2tDUIpS6O8OVE2zqjOHm15R3AGg5A
- R
-X-Google-Smtp-Source: AGHT+IHuLfy3EawACyBd2aOjloqY/y76w9VjmQykogtn0pQamScYimr6tKCv2gXBITvjNNsDMWkksg==
-X-Received: by 2002:a05:6512:2809:b0:515:9c73:e29a with SMTP id
- cf9-20020a056512280900b005159c73e29amr6937647lfb.66.1711370528198; 
- Mon, 25 Mar 2024 05:42:08 -0700 (PDT)
+ bh=cou8ZHLxFtHbxq//TR+XjCD6vcNQOpnA7W/aP2xbs5E=;
+ b=Qo49amF6341XFq8iZADIqSb4QfCOKiova6fMiP+fspqtKiJutOV72jXW40waTOA5d4
+ huMdCmY3gZPDgQ3csk+iDi8P9mD1VnvHV6nRjdnfR3dDIfZrJlfHXe6SAFQ+4SWqkTdQ
+ zbs009mn4Z9qVjqwqTrixCzu3+5iq839rwM4EpK4RCL/Nb4xDZkY/zVBbyQ7oiYHrUyj
+ FxYdPSCPWYCTa0UQCVUU3AHB4irLBdvu6pq/hrsQSqNsrBjLVmzKOIxamWFICLH3mg0G
+ asibE45LFP6811UK/EZWRjGHpNdgfYI/PPUndPR+fitfMfT/lPBmTzrQ4Q+PGHMsrqel
+ 9+bg==
+X-Gm-Message-State: AOJu0Yzl+jDCmyjG8xIftFTHMHgIaZP+WOKwDBOk/OyXoIwm5ITRvK1I
+ 9r0zfoTsQHXVHfK8DpSHIdnhj4cmSqRCGQrdUL1f1XpMNgDDwKtjf1LLPWmWWfeRFBqh1w/jnFz
+ Q
+X-Google-Smtp-Source: AGHT+IG2lehQGtZ/24Sdy+uX3nskI4hdRwr14BjPCIvFvOOPezEeghWBeBh+YXdlbbByyVv3D5KtjQ==
+X-Received: by 2002:a19:2d5a:0:b0:513:c61c:7331 with SMTP id
+ t26-20020a192d5a000000b00513c61c7331mr5833999lft.3.1711370537542; 
+ Mon, 25 Mar 2024 05:42:17 -0700 (PDT)
 Received: from linaro.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
- t20-20020ac243b4000000b00515b1b3a2bdsm35231lfl.194.2024.03.25.05.42.05
+ t20-20020ac243b4000000b00515b1b3a2bdsm35231lfl.194.2024.03.25.05.42.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Mar 2024 05:42:07 -0700 (PDT)
+ Mon, 25 Mar 2024 05:42:17 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -66,16 +66,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v3 1/8] plugins: prepare introduction of new inline ops
-Date: Mon, 25 Mar 2024 16:41:44 +0400
-Message-Id: <20240325124151.336003-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 4/8] tests/plugin/inline: add test for STORE_U64 inline op
+Date: Mon, 25 Mar 2024 16:41:47 +0400
+Message-Id: <20240325124151.336003-5-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240325124151.336003-1-pierrick.bouvier@linaro.org>
 References: <20240325124151.336003-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-lf1-x12d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,93 +98,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Until now, only add_u64 was available, and all functions assumed this or
-were named uniquely.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/qemu/plugin.h  |  2 +-
- accel/tcg/plugin-gen.c |  6 +++---
- plugins/core.c         | 14 ++++++++++++--
- 3 files changed, 16 insertions(+), 6 deletions(-)
+ tests/plugin/inline.c | 41 +++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 37 insertions(+), 4 deletions(-)
 
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index 201889cbeec..23271fbe36a 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -68,7 +68,7 @@ union qemu_plugin_cb_sig {
- enum plugin_dyn_cb_type {
-     PLUGIN_CB_REGULAR,
-     PLUGIN_CB_MEM_REGULAR,
--    PLUGIN_CB_INLINE,
-+    PLUGIN_CB_INLINE_ADD_U64,
- };
+diff --git a/tests/plugin/inline.c b/tests/plugin/inline.c
+index 0163e9b51c5..103c3a22f6e 100644
+--- a/tests/plugin/inline.c
++++ b/tests/plugin/inline.c
+@@ -22,6 +22,12 @@ typedef struct {
+     uint64_t count_mem_inline;
+ } CPUCount;
  
- /*
-diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
-index c3548257798..41d4d83f547 100644
---- a/accel/tcg/plugin-gen.c
-+++ b/accel/tcg/plugin-gen.c
-@@ -120,7 +120,7 @@ static void gen_udata_cb(struct qemu_plugin_dyn_cb *cb)
-     tcg_temp_free_i32(cpu_index);
- }
- 
--static void gen_inline_cb(struct qemu_plugin_dyn_cb *cb)
-+static void gen_inline_add_u64_cb(struct qemu_plugin_dyn_cb *cb)
- {
-     GArray *arr = cb->inline_insn.entry.score->data;
-     size_t offset = cb->inline_insn.entry.offset;
-@@ -165,8 +165,8 @@ static void inject_cb(struct qemu_plugin_dyn_cb *cb)
-     case PLUGIN_CB_REGULAR:
-         gen_udata_cb(cb);
-         break;
--    case PLUGIN_CB_INLINE:
--        gen_inline_cb(cb);
-+    case PLUGIN_CB_INLINE_ADD_U64:
-+        gen_inline_add_u64_cb(cb);
-         break;
-     default:
-         g_assert_not_reached();
-diff --git a/plugins/core.c b/plugins/core.c
-index 0213513ec65..a8557b54ff7 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -316,6 +316,16 @@ static struct qemu_plugin_dyn_cb *plugin_get_dyn_cb(GArray **arr)
-     return &g_array_index(cbs, struct qemu_plugin_dyn_cb, cbs->len - 1);
- }
- 
-+static enum plugin_dyn_cb_type op_to_cb_type(enum qemu_plugin_op op)
-+{
-+    switch (op) {
-+    case QEMU_PLUGIN_INLINE_ADD_U64:
-+        return PLUGIN_CB_INLINE_ADD_U64;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
++typedef struct {
++    uint64_t data_insn;
++    uint64_t data_tb;
++    uint64_t data_mem;
++} CPUData;
 +
- void plugin_register_inline_op_on_entry(GArray **arr,
-                                         enum qemu_plugin_mem_rw rw,
-                                         enum qemu_plugin_op op,
-@@ -326,7 +336,7 @@ void plugin_register_inline_op_on_entry(GArray **arr,
+ static struct qemu_plugin_scoreboard *counts;
+ static qemu_plugin_u64 count_tb;
+ static qemu_plugin_u64 count_tb_inline;
+@@ -29,6 +35,10 @@ static qemu_plugin_u64 count_insn;
+ static qemu_plugin_u64 count_insn_inline;
+ static qemu_plugin_u64 count_mem;
+ static qemu_plugin_u64 count_mem_inline;
++static struct qemu_plugin_scoreboard *data;
++static qemu_plugin_u64 data_insn;
++static qemu_plugin_u64 data_tb;
++static qemu_plugin_u64 data_mem;
  
-     dyn_cb = plugin_get_dyn_cb(arr);
-     dyn_cb->userp = NULL;
--    dyn_cb->type = PLUGIN_CB_INLINE;
-+    dyn_cb->type = op_to_cb_type(op);
-     dyn_cb->rw = rw;
-     dyn_cb->inline_insn.entry = entry;
-     dyn_cb->inline_insn.op = op;
-@@ -551,7 +561,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-             cb->regular.f.vcpu_mem(cpu->cpu_index, make_plugin_meminfo(oi, rw),
-                                    vaddr, cb->userp);
-             break;
--        case PLUGIN_CB_INLINE:
-+        case PLUGIN_CB_INLINE_ADD_U64:
-             exec_inline_op(cb, cpu->cpu_index);
-             break;
-         default:
+ static uint64_t global_count_tb;
+ static uint64_t global_count_insn;
+@@ -109,11 +119,13 @@ static void plugin_exit(qemu_plugin_id_t id, void *udata)
+     stats_mem();
+ 
+     qemu_plugin_scoreboard_free(counts);
++    qemu_plugin_scoreboard_free(data);
+ }
+ 
+ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
+ {
+     qemu_plugin_u64_add(count_tb, cpu_index, 1);
++    g_assert(qemu_plugin_u64_get(data_tb, cpu_index) == (uintptr_t) udata);
+     g_mutex_lock(&tb_lock);
+     max_cpu_index = MAX(max_cpu_index, cpu_index);
+     global_count_tb++;
+@@ -123,6 +135,7 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
+ static void vcpu_insn_exec(unsigned int cpu_index, void *udata)
+ {
+     qemu_plugin_u64_add(count_insn, cpu_index, 1);
++    g_assert(qemu_plugin_u64_get(data_insn, cpu_index) == (uintptr_t) udata);
+     g_mutex_lock(&insn_lock);
+     global_count_insn++;
+     g_mutex_unlock(&insn_lock);
+@@ -131,9 +144,10 @@ static void vcpu_insn_exec(unsigned int cpu_index, void *udata)
+ static void vcpu_mem_access(unsigned int cpu_index,
+                             qemu_plugin_meminfo_t info,
+                             uint64_t vaddr,
+-                            void *userdata)
++                            void *udata)
+ {
+     qemu_plugin_u64_add(count_mem, cpu_index, 1);
++    g_assert(qemu_plugin_u64_get(data_mem, cpu_index) == (uintptr_t) udata);
+     g_mutex_lock(&mem_lock);
+     global_count_mem++;
+     g_mutex_unlock(&mem_lock);
+@@ -141,20 +155,34 @@ static void vcpu_mem_access(unsigned int cpu_index,
+ 
+ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+ {
++    void *tb_store = tb;
++    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
++        tb, QEMU_PLUGIN_INLINE_STORE_U64, data_tb, (uintptr_t) tb_store);
+     qemu_plugin_register_vcpu_tb_exec_cb(
+-        tb, vcpu_tb_exec, QEMU_PLUGIN_CB_NO_REGS, 0);
++        tb, vcpu_tb_exec, QEMU_PLUGIN_CB_NO_REGS, tb_store);
+     qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+         tb, QEMU_PLUGIN_INLINE_ADD_U64, count_tb_inline, 1);
+ 
+     for (int idx = 0; idx < qemu_plugin_tb_n_insns(tb); ++idx) {
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, idx);
++        void *insn_store = insn;
++        void *mem_store = (char *)insn_store + 0xff;
++
++        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
++            insn, QEMU_PLUGIN_INLINE_STORE_U64, data_insn,
++            (uintptr_t) insn_store);
+         qemu_plugin_register_vcpu_insn_exec_cb(
+-            insn, vcpu_insn_exec, QEMU_PLUGIN_CB_NO_REGS, 0);
++            insn, vcpu_insn_exec, QEMU_PLUGIN_CB_NO_REGS, insn_store);
+         qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+             insn, QEMU_PLUGIN_INLINE_ADD_U64, count_insn_inline, 1);
++
++        qemu_plugin_register_vcpu_mem_inline_per_vcpu(
++            insn, QEMU_PLUGIN_MEM_RW,
++            QEMU_PLUGIN_INLINE_STORE_U64,
++            data_mem, (uintptr_t) mem_store);
+         qemu_plugin_register_vcpu_mem_cb(insn, &vcpu_mem_access,
+                                          QEMU_PLUGIN_CB_NO_REGS,
+-                                         QEMU_PLUGIN_MEM_RW, 0);
++                                         QEMU_PLUGIN_MEM_RW, mem_store);
+         qemu_plugin_register_vcpu_mem_inline_per_vcpu(
+             insn, QEMU_PLUGIN_MEM_RW,
+             QEMU_PLUGIN_INLINE_ADD_U64,
+@@ -179,6 +207,11 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+         counts, CPUCount, count_insn_inline);
+     count_mem_inline = qemu_plugin_scoreboard_u64_in_struct(
+         counts, CPUCount, count_mem_inline);
++    data = qemu_plugin_scoreboard_new(sizeof(CPUData));
++    data_insn = qemu_plugin_scoreboard_u64_in_struct(data, CPUData, data_insn);
++    data_tb = qemu_plugin_scoreboard_u64_in_struct(data, CPUData, data_tb);
++    data_mem = qemu_plugin_scoreboard_u64_in_struct(data, CPUData, data_mem);
++
+     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+ 
 -- 
 2.39.2
 
