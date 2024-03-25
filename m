@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D5ADC54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 08:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DB1DCD11DD
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 08:55:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rog4e-0003as-TI; Mon, 25 Mar 2024 04:52:56 -0400
+	id 1rog4a-0003UN-FT; Mon, 25 Mar 2024 04:52:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rog3z-00034M-RQ; Mon, 25 Mar 2024 04:52:17 -0400
-Received: from szxga05-in.huawei.com ([45.249.212.191])
+ id 1rog40-00034Q-HE; Mon, 25 Mar 2024 04:52:17 -0400
+Received: from szxga07-in.huawei.com ([45.249.212.35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rog3w-0007RK-4U; Mon, 25 Mar 2024 04:52:15 -0400
+ id 1rog3u-0007RI-Ts; Mon, 25 Mar 2024 04:52:15 -0400
 Received: from mail.maildlp.com (unknown [172.19.88.214])
- by szxga05-in.huawei.com (SkyGuard) with ESMTP id 4V369l4C07z1GCyP;
- Mon, 25 Mar 2024 16:51:39 +0800 (CST)
+ by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4V367F29b3z1R83k;
+ Mon, 25 Mar 2024 16:49:29 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 3052B1A016F;
- Mon, 25 Mar 2024 16:52:08 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 58CC31A016F;
+ Mon, 25 Mar 2024 16:52:07 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 25 Mar
- 2024 16:52:07 +0800
+ 2024 16:52:06 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [PATCH v10 21/23] hw/intc/arm_gicv3: Report the VINMI interrupt
-Date: Mon, 25 Mar 2024 08:48:52 +0000
-Message-ID: <20240325084854.3010562-22-ruanjinjie@huawei.com>
+Subject: [PATCH v10 20/23] hw/intc/arm_gicv3: Report the NMI interrupt in
+ gicv3_cpuif_update()
+Date: Mon, 25 Mar 2024 08:48:51 +0000
+Message-ID: <20240325084854.3010562-21-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240325084854.3010562-1-ruanjinjie@huawei.com>
 References: <20240325084854.3010562-1-ruanjinjie@huawei.com>
@@ -45,8 +46,8 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.191;
- envelope-from=ruanjinjie@huawei.com; helo=szxga05-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.35; envelope-from=ruanjinjie@huawei.com;
+ helo=szxga07-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -70,62 +71,54 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In vCPU Interface, if the vIRQ has the non-maskable property, report
-vINMI to the corresponding vPE.
+In CPU Interface, if the IRQ has the non-maskable property, report NMI to
+the corresponding PE.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
 v10:
+- superprio -> nmi.
 - Update the commit message, superpriority -> non-maskable.
-v9:
-- Update the commit subject and message, vNMI -> vINMI.
 v6:
 - Add Reviewed-by.
+v4:
+- Swap the ordering of the IFs.
+v3:
+- Remove handling nmi_is_irq flag.
 ---
- hw/intc/arm_gicv3_cpuif.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ hw/intc/arm_gicv3_cpuif.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index 4cd84b142e..cc5ff124d6 100644
+index e0dc76df2f..4cd84b142e 100644
 --- a/hw/intc/arm_gicv3_cpuif.c
 +++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -476,6 +476,7 @@ void gicv3_cpuif_virt_irq_fiq_update(GICv3CPUState *cs)
-     int idx;
+@@ -1015,6 +1015,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+     /* Tell the CPU about its highest priority pending interrupt */
      int irqlevel = 0;
      int fiqlevel = 0;
 +    int nmilevel = 0;
+     ARMCPU *cpu = ARM_CPU(cs->cpu);
+     CPUARMState *env = &cpu->env;
  
-     idx = hppvi_index(cs);
-     trace_gicv3_cpuif_virt_update(gicv3_redist_affid(cs), idx,
-@@ -493,9 +494,17 @@ void gicv3_cpuif_virt_irq_fiq_update(GICv3CPUState *cs)
-         uint64_t lr = cs->ich_lr_el2[idx];
+@@ -1053,6 +1054,8 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
  
-         if (icv_hppi_can_preempt(cs, lr)) {
--            /* Virtual interrupts are simple: G0 are always FIQ, and G1 IRQ */
-+            /*
-+             * Virtual interrupts are simple: G0 are always FIQ, and G1 are
-+             * IRQ or NMI which depends on the ICH_LR<n>_EL2.NMI to have
-+             * non-maskable property.
-+             */
-             if (lr & ICH_LR_EL2_GROUP) {
--                irqlevel = 1;
-+                if (cs->gic->nmi_support && (lr & ICH_LR_EL2_NMI)) {
-+                    nmilevel = 1;
-+                } else {
-+                    irqlevel = 1;
-+                }
-             } else {
-                 fiqlevel = 1;
-             }
-@@ -505,6 +514,7 @@ void gicv3_cpuif_virt_irq_fiq_update(GICv3CPUState *cs)
-     trace_gicv3_cpuif_virt_set_irqs(gicv3_redist_affid(cs), fiqlevel, irqlevel);
-     qemu_set_irq(cs->parent_vfiq, fiqlevel);
-     qemu_set_irq(cs->parent_virq, irqlevel);
-+    qemu_set_irq(cs->parent_vnmi, nmilevel);
+         if (isfiq) {
+             fiqlevel = 1;
++        } else if (cs->hppi.nmi) {
++            nmilevel = 1;
+         } else {
+             irqlevel = 1;
+         }
+@@ -1062,6 +1065,7 @@ void gicv3_cpuif_update(GICv3CPUState *cs)
+ 
+     qemu_set_irq(cs->parent_fiq, fiqlevel);
+     qemu_set_irq(cs->parent_irq, irqlevel);
++    qemu_set_irq(cs->parent_nmi, nmilevel);
  }
  
- static void gicv3_cpuif_virt_update(GICv3CPUState *cs)
+ static uint64_t icc_pmr_read(CPUARMState *env, const ARMCPRegInfo *ri)
 -- 
 2.34.1
 
