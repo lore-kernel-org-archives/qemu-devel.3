@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E3AC6FD1F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83FE8C54E64
 	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 08:55:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rog4R-0003Fv-W1; Mon, 25 Mar 2024 04:52:44 -0400
+	id 1rog4Z-0003Sr-Ng; Mon, 25 Mar 2024 04:52:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rog3o-0002zu-Ix; Mon, 25 Mar 2024 04:52:06 -0400
-Received: from szxga08-in.huawei.com ([45.249.212.255])
+ id 1rog41-00034v-JE; Mon, 25 Mar 2024 04:52:19 -0400
+Received: from szxga04-in.huawei.com ([45.249.212.190])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruanjinjie@huawei.com>)
- id 1rog3k-0007Ne-Jp; Mon, 25 Mar 2024 04:52:03 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.174])
- by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4V36790Ywxz1QBBG;
- Mon, 25 Mar 2024 16:49:25 +0800 (CST)
+ id 1rog3q-0007Pf-Rd; Mon, 25 Mar 2024 04:52:16 -0400
+Received: from mail.maildlp.com (unknown [172.19.163.17])
+ by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4V367726QYz2Bhcx;
+ Mon, 25 Mar 2024 16:49:23 +0800 (CST)
 Received: from kwepemi500008.china.huawei.com (unknown [7.221.188.139])
- by mail.maildlp.com (Postfix) with ESMTPS id 743DE14011D;
- Mon, 25 Mar 2024 16:51:47 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 072131A0172;
+ Mon, 25 Mar 2024 16:52:01 +0800 (CST)
 Received: from huawei.com (10.67.174.55) by kwepemi500008.china.huawei.com
  (7.221.188.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Mon, 25 Mar
- 2024 16:51:46 +0800
+ 2024 16:52:00 +0800
 To: <peter.maydell@linaro.org>, <eduardo@habkost.net>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, <wangyanan55@huawei.com>,
  <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>
 CC: <ruanjinjie@huawei.com>
-Subject: [PATCH v10 03/23] target/arm: Add support for FEAT_NMI,
- Non-maskable Interrupt
-Date: Mon, 25 Mar 2024 08:48:34 +0000
-Message-ID: <20240325084854.3010562-4-ruanjinjie@huawei.com>
+Subject: [PATCH v10 13/23] hw/intc: Enable FEAT_GICv3_NMI Feature
+Date: Mon, 25 Mar 2024 08:48:44 +0000
+Message-ID: <20240325084854.3010562-14-ruanjinjie@huawei.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240325084854.3010562-1-ruanjinjie@huawei.com>
 References: <20240325084854.3010562-1-ruanjinjie@huawei.com>
@@ -46,13 +45,14 @@ Content-Type: text/plain
 X-Originating-IP: [10.67.174.55]
 X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
  kwepemi500008.china.huawei.com (7.221.188.139)
-Received-SPF: pass client-ip=45.249.212.255;
- envelope-from=ruanjinjie@huawei.com; helo=szxga08-in.huawei.com
+Received-SPF: pass client-ip=45.249.212.190;
+ envelope-from=ruanjinjie@huawei.com; helo=szxga04-in.huawei.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,33 +70,79 @@ From:  Jinjie Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for FEAT_NMI. NMI (FEAT_NMI) is an mandatory feature in
-ARMv8.8-A and ARM v9.3-A.
+Added properties to enable FEAT_GICv3_NMI feature, setup distributor
+and redistributor registers to indicate NMI support.
 
 Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-v3:
+v10:
+- Adjust to before add irq non-maskable property.
+v4:
 - Add Reviewed-by.
-- Adjust to before the MSR patches.
 ---
- target/arm/internals.h | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/intc/arm_gicv3_common.c         | 1 +
+ hw/intc/arm_gicv3_dist.c           | 2 ++
+ hw/intc/gicv3_internal.h           | 1 +
+ include/hw/intc/arm_gicv3_common.h | 1 +
+ 4 files changed, 5 insertions(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index dd3da211a3..516e0584bf 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1229,6 +1229,9 @@ static inline uint32_t aarch64_pstate_valid_mask(const ARMISARegisters *id)
-     if (isar_feature_aa64_mte(id)) {
-         valid |= PSTATE_TCO;
-     }
-+    if (isar_feature_aa64_nmi(id)) {
-+        valid |= PSTATE_ALLINT;
-+    }
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index c52f060026..2d2cea6858 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -569,6 +569,7 @@ static Property arm_gicv3_common_properties[] = {
+     DEFINE_PROP_UINT32("num-irq", GICv3State, num_irq, 32),
+     DEFINE_PROP_UINT32("revision", GICv3State, revision, 3),
+     DEFINE_PROP_BOOL("has-lpi", GICv3State, lpi_enable, 0),
++    DEFINE_PROP_BOOL("has-nmi", GICv3State, nmi_support, 0),
+     DEFINE_PROP_BOOL("has-security-extensions", GICv3State, security_extn, 0),
+     /*
+      * Compatibility property: force 8 bits of physical priority, even
+diff --git a/hw/intc/arm_gicv3_dist.c b/hw/intc/arm_gicv3_dist.c
+index 35e850685c..22ddc0d666 100644
+--- a/hw/intc/arm_gicv3_dist.c
++++ b/hw/intc/arm_gicv3_dist.c
+@@ -389,6 +389,7 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
+          *                      by GICD_TYPER.IDbits)
+          * MBIS == 0 (message-based SPIs not supported)
+          * SecurityExtn == 1 if security extns supported
++         * NMI = 1 if Non-maskable interrupt property is supported
+          * CPUNumber == 0 since for us ARE is always 1
+          * ITLinesNumber == (((max SPI IntID + 1) / 32) - 1)
+          */
+@@ -402,6 +403,7 @@ static bool gicd_readl(GICv3State *s, hwaddr offset,
+         bool dvis = s->revision >= 4;
  
-     return valid;
- }
+         *data = (1 << 25) | (1 << 24) | (dvis << 18) | (sec_extn << 10) |
++            (s->nmi_support << GICD_TYPER_NMI_SHIFT) |
+             (s->lpi_enable << GICD_TYPER_LPIS_SHIFT) |
+             (0xf << 19) | itlinesnumber;
+         return true;
+diff --git a/hw/intc/gicv3_internal.h b/hw/intc/gicv3_internal.h
+index 29d5cdc1b6..8f4ebed2f4 100644
+--- a/hw/intc/gicv3_internal.h
++++ b/hw/intc/gicv3_internal.h
+@@ -68,6 +68,7 @@
+ #define GICD_CTLR_E1NWF             (1U << 7)
+ #define GICD_CTLR_RWP               (1U << 31)
+ 
++#define GICD_TYPER_NMI_SHIFT           9
+ #define GICD_TYPER_LPIS_SHIFT          17
+ 
+ /* 16 bits EventId */
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index 7324c7d983..4358c5319c 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -249,6 +249,7 @@ struct GICv3State {
+     uint32_t num_irq;
+     uint32_t revision;
+     bool lpi_enable;
++    bool nmi_support;
+     bool security_extn;
+     bool force_8bit_prio;
+     bool irq_reset_nonsecure;
 -- 
 2.34.1
 
