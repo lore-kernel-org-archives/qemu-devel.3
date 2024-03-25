@@ -4,89 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AF25C54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 08:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB425C54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 08:40:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rofmV-0003d3-CI; Mon, 25 Mar 2024 04:34:11 -0400
+	id 1rofsS-0008Ur-6L; Mon, 25 Mar 2024 04:40:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1rofmT-0003cT-MN
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 04:34:09 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1rofmS-0004Hx-Cs
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 04:34:09 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-5d8ddbac4fbso2834895a12.0
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 01:34:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1711355645; x=1711960445; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hnvubSbXLg2BWwOx87msU0XQ3d0bes7qQf5bQx35ugg=;
- b=Ya3zXQ08hPl1N1nO9fWskEhd/7zx1qmDYkOYZk93zLL/Wmgie072sewclB13BMsF+r
- wMFi2fnOoLQhD1J8A6v+WFIS+rBuY9ZX3S/6AvNvZEklsdTw2sppXCIst3tORcZW8TW5
- k58+Bl81pQqOd9Pz5mBbKe17X65V4c82E04bhWCjf7FJehfXPp91TnDdErLIuCRXKYej
- 8n/DMAh3vP1KmXvXBcCH9iUkCcXNWCNgW8Anil+WytTAOpantJFav5b3813qCXKyDxwO
- VZfMnO62lFs+JPfSG94bk8MzsIIhSOPYdlvmvauJkVj7RPiKqU2V+El6WHRQbjP/hQk2
- ED/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711355645; x=1711960445;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hnvubSbXLg2BWwOx87msU0XQ3d0bes7qQf5bQx35ugg=;
- b=YAOmjcPW3jFkBJJprRvgFHHoSgAGqn2g+R1PhPTgufYOwChtwdY2vENbS7baoe5Qor
- 7OHul1rSR/KktbxvQph90QNtlvO6j0nW7L8AOdpfr0pt7chXIwnrBvMiyka0YXqYrjop
- 7EDlGK4D/C4LeP1GRnw5od+9lOtJvhFPq+bforNuy2mDVsUWsz141lCTuEwFFGKL43tZ
- VXYroAbhcBGowM66mcPozj6zKeUP1YEWwP/i8oZE+Fa4oJcvKAsCIB9yKUzxH5Eitxub
- liyJFBN2D5BosFw7fsLDidqBB/tv8eEwBo20PoQXn9i2EAgUdQCjRuJF6+NKChd0LNQk
- mJpA==
-X-Gm-Message-State: AOJu0Yy4SARo+v2UOW4R/KgjJrD4Pt5d+DxgEPa+tA1ltjox8len+WNU
- y8XDfOIjIHLxF/OJyPl4Mf1Wln5wu8/qHp3AlJebXK5PKJ+d+x/x83OfqMkKeCA9qdBnc9ngaLx
- d4A1eaFyyCkWs7jVSShgi5OXZczRzg7Rks5rjc8WKuwofB3snsqNkf7SiN2r3Huo4/H/k1+jeZZ
- aWNAQiHrd3ZOWKw1WA/toBgXZHppZE3doTt4xPTjg=
-X-Google-Smtp-Source: AGHT+IE1Xg0YRynYqVePbmvnTQJXF/LDxYmnvm7rLg7mjRFzL5NlsF+29z3s95UqhNT+R7avS5nHUQ==
-X-Received: by 2002:a17:902:ea09:b0:1e0:b1e9:afb2 with SMTP id
- s9-20020a170902ea0900b001e0b1e9afb2mr6013364plg.7.1711355645394; 
- Mon, 25 Mar 2024 01:34:05 -0700 (PDT)
-Received: from hsinchu16.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- f7-20020a170902684700b001e0287592c4sm4311269pln.267.2024.03.25.01.34.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Mar 2024 01:34:04 -0700 (PDT)
-From: Jason Chien <jason.chien@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Jason Chien <jason.chien@sifive.com>, Frank Chang <frank.chang@sifive.com>,
- Max Chou <max.chou@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH v2 2/5] target/riscv: Expose Zve32x extension to users
-Date: Mon, 25 Mar 2024 16:33:36 +0800
-Message-ID: <20240325083346.16656-3-jason.chien@sifive.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240325083346.16656-1-jason.chien@sifive.com>
-References: <20240325083346.16656-1-jason.chien@sifive.com>
+ (Exim 4.90_1) (envelope-from <luc@lmichel.fr>)
+ id 1rofsP-0008UM-Ea; Mon, 25 Mar 2024 04:40:17 -0400
+Received: from pharaoh.lmichel.fr ([149.202.28.74])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <luc@lmichel.fr>)
+ id 1rofsM-0005Gc-Dp; Mon, 25 Mar 2024 04:40:17 -0400
+Received: from localhost (sekoia-laptop.home.lmichel.fr [192.168.61.102])
+ by pharaoh.lmichel.fr (Postfix) with ESMTPSA id DC89AC60172;
+ Mon, 25 Mar 2024 09:40:09 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lmichel.fr; s=pharaoh; 
+ t=1711356009;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vHRuwnOdguxqhxPoHLzR5N48+FWlPiQSh+ab6PKX8OA=;
+ b=ZKSJvgVZXP4JQ2sDJWMoaBecgMICCivMlVUz0p1bylsqGQzATDtZRgRoKuEhuJgoaxbceJ
+ 7Ncd7IiPQTPUgwsKoUOjpFJl6DJvhKkzoFKfQj1EZpg7Di0eQ9x1bIndNz+VrdXmGPrp9K
+ Y9uvKLdSWTEKyHfhRJdBLCnbPx3fxe9kn8WCVBNPocMM2ZW+zpB/XFgcjedcjLzT0q8cuX
+ 69wYaA4KvdDXiZh8FlKH9xk7ANfw4CmzXqxmE4uH8H2HAwsEpmpIZ5WmJB0p8H0uh1I1ZR
+ MG2mH/4G5Cf7K/YPyFjUDLZDWHdnVF88yB8i+DHMgTCzzKGfLBhowqRrQwmz2Q==
+Date: Mon, 25 Mar 2024 09:40:09 +0100
+From: Luc Michel <luc@lmichel.fr>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Luc Michel <luc.michel@amd.com>,
+ Damien Hedde <damien.hedde@dahe.fr>,
+ =?utf-8?B?SW7DqHM=?= Varhol <ines.varhol@telecom-paris.fr>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-arm@nongnu.org
+Subject: Re: [PATCH-for-9.0 1/2] hw/clock: Let clock_set_mul_div() return
+ boolean value
+Message-ID: <ZgE3fZx7qNkYATms@michell-laptop.localdomain>
+References: <20240322155810.5733-1-philmd@linaro.org>
+ <20240322155810.5733-2-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=jason.chien@sifive.com; helo=mail-pg1-x52a.google.com
+In-Reply-To: <20240322155810.5733-2-philmd@linaro.org>
+Received-SPF: pass client-ip=149.202.28.74; envelope-from=luc@lmichel.fr;
+ helo=pharaoh.lmichel.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,26 +73,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Jason Chien <jason.chien@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+On 16:58 Fri 22 Mar     , Philippe Mathieu-Daudé wrote:
+> Let clock_set_mul_div() return a boolean value whether the
+> clock has been updated or not, similarly to clock_set().
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 851ac7372c..6bd8798bb5 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1473,6 +1473,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("zfh", ext_zfh, false),
-     MULTI_EXT_CFG_BOOL("zfhmin", ext_zfhmin, false),
-     MULTI_EXT_CFG_BOOL("zve32f", ext_zve32f, false),
-+    MULTI_EXT_CFG_BOOL("zve32x", ext_zve32x, false),
-     MULTI_EXT_CFG_BOOL("zve64f", ext_zve64f, false),
-     MULTI_EXT_CFG_BOOL("zve64d", ext_zve64d, false),
-     MULTI_EXT_CFG_BOOL("zvfbfmin", ext_zvfbfmin, false),
--- 
-2.43.2
+Acked-by: Luc Michel <luc@lmichel.fr>
 
+> ---
+>  include/hw/clock.h | 4 +++-
+>  hw/core/clock.c    | 8 +++++++-
+>  2 files changed, 10 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/hw/clock.h b/include/hw/clock.h
+> index bb12117f67..eb58599131 100644
+> --- a/include/hw/clock.h
+> +++ b/include/hw/clock.h
+> @@ -357,6 +357,8 @@ char *clock_display_freq(Clock *clk);
+>   * @multiplier: multiplier value
+>   * @divider: divider value
+>   *
+> + * @return: true if the clock is changed.
+> + *
+>   * By default, a Clock's children will all run with the same period
+>   * as their parent. This function allows you to adjust the multiplier
+>   * and divider used to derive the child clock frequency.
+> @@ -374,6 +376,6 @@ char *clock_display_freq(Clock *clk);
+>   * Note that this function does not call clock_propagate(); the
+>   * caller should do that if necessary.
+>   */
+> -void clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider);
+> +bool clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider);
+>  
+>  #endif /* QEMU_HW_CLOCK_H */
+> diff --git a/hw/core/clock.c b/hw/core/clock.c
+> index d82e44cd1a..a19c7db7df 100644
+> --- a/hw/core/clock.c
+> +++ b/hw/core/clock.c
+> @@ -143,14 +143,20 @@ char *clock_display_freq(Clock *clk)
+>      return freq_to_str(clock_get_hz(clk));
+>  }
+>  
+> -void clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider)
+> +bool clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider)
+>  {
+>      assert(divider != 0);
+>  
+> +    if (clk->multiplier == multiplier && clk->divider == divider) {
+> +        return false;
+> +    }
+> +
+>      trace_clock_set_mul_div(CLOCK_PATH(clk), clk->multiplier, multiplier,
+>                              clk->divider, divider);
+>      clk->multiplier = multiplier;
+>      clk->divider = divider;
+> +
+> +    return true;
+>  }
+>  
+>  static void clock_initfn(Object *obj)
+> -- 
+> 2.41.0
+> 
 
