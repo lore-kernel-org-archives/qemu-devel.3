@@ -4,86 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE682C54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 10:58:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E38EC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 10:59:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roi1f-0000ft-6c; Mon, 25 Mar 2024 06:57:59 -0400
+	id 1roi31-0001QQ-3C; Mon, 25 Mar 2024 06:59:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1roi1d-0000fN-CS
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 06:57:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <yajunw@nvidia.com>) id 1roi30-0001QI-1p
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 06:59:22 -0400
+Received: from mail-bn8nam04on2078.outbound.protection.outlook.com
+ ([40.107.100.78] helo=NAM04-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1roi1Y-0003EE-NF
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 06:57:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711364271;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U1ZDmNeCMIDm97dXCnPolb+RWLhe+L+ppa2TI1ymYd4=;
- b=euCvBDZ/Xi9xAXYe8QG/sbMDa0VRYtaSx2ezFE6CMElTok0eOwwgg4DPwi3DUo01MzdktY
- iVPoRNI8Upts+0GphrvMJD9joLhGmFrCT6iNnNWipkzufrKhop31jl/62/cPQqSNXerd+q
- agFCZqISuWCK6H60EjKhwWAOdtAFkZ0=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-117-TV3cQHxmOF-sGmxgyflBWw-1; Mon, 25 Mar 2024 06:57:50 -0400
-X-MC-Unique: TV3cQHxmOF-sGmxgyflBWw-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33e7ef510aaso2692671f8f.0
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 03:57:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711364269; x=1711969069;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=U1ZDmNeCMIDm97dXCnPolb+RWLhe+L+ppa2TI1ymYd4=;
- b=TOqagJOWlU5T1Nz9SwiauoaDFS00srdBW2WnNNPl/RZYS+xoPCN+HaakN2sWjVRbDc
- uUX1Nodh3F1Myr6HyMmsrvYcSnpneTflES/6H97XcqZ3+ONyFSfG7su0bOAtNeLb1qWV
- qoUUo5UkQ22ZFnuZQYsQXj4Nrj/oImoAKGKahiWlUUChAC0rFlR+N3Dj8xLK8sg7eVAW
- AxkDzCw5d1sceZxmU6pfIqvVcUG8yNX/mpRIuTnS1jtb+x2qow6lxXbbZ403BNv6ew1d
- rVfEzt+sheAO+pyC+jdvaG6/FdSB1hwWfz8ZDbD6sxyu4FwerKDE4nI+g34nF0BtnSvp
- CUpQ==
-X-Gm-Message-State: AOJu0YzErVJMwmFpQbvSGjr7CYrJLYFFI09RajohsrPrKnsU2N/tL0Xg
- FMm8pisS3ObmgsewHjqCQNJMkd+MneZr02aWvLfnWZtHOM1/PmwnBcw1Qa9ImcqttPzaYa0Uszy
- ZkKZUbJDZvqVrYVKT/sUsWbXafgXicGao/1hnnA9gEjVpsJng747SMrufP76+5HWXjYmgS76cbK
- zdLmagemB4ZR4zHXP8dIjggyIqezg0Tv4MRo4ZQw==
-X-Received: by 2002:a05:6000:d0:b0:33d:2180:30e8 with SMTP id
- q16-20020a05600000d000b0033d218030e8mr5673102wrx.25.1711364268834; 
- Mon, 25 Mar 2024 03:57:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpCH+BHjl/7d2tw8POE4DV1asMFRnZLJVpDh0jsgCzoR2Kyd60s5q7R5qlk33IsJO+kVtUeQnWvuUfwVYk8ss=
-X-Received: by 2002:a05:6000:d0:b0:33d:2180:30e8 with SMTP id
- q16-20020a05600000d000b0033d218030e8mr5673087wrx.25.1711364268543; Mon, 25
- Mar 2024 03:57:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240322181116.1228416-1-pbonzini@redhat.com>
- <20240322181116.1228416-16-pbonzini@redhat.com>
- <93004298-25d3-485f-9d25-22e9398bbe02@linaro.org>
-In-Reply-To: <93004298-25d3-485f-9d25-22e9398bbe02@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 25 Mar 2024 11:57:37 +0100
-Message-ID: <CABgObfbZg3QfTZhvFaNFOQSKs_mVTWJxwhwOuMZ7+_aV6c6Lqw@mail.gmail.com>
-Subject: Re: [PATCH 15/26] target/i386: Implement mc->kvm_type() to get VM type
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, xiaoyao.li@intel.com, michael.roth@amd.com, 
- david@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <yajunw@nvidia.com>) id 1roi2y-0003Qu-1S
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 06:59:21 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=gUYz9BT7THaAQs4NEYa9chHCTZFgIlwpIPmQb2YifxbSccQX38HKSxVCZQJzYq8G8OjPXtSnBbODfysNdWX4wZzVKXJz2D2u8he6O4faxsQfse37WpDsC3LlUtRyO0ttgv422vNTUir3bfK0lrBJo26gpNvl5VFli5xjm7km9fdNLiw984e5tHAgFFQmCMaRwyKqjE378NiKwB1yaJrKeyVD+U8U2SvaNfWPco6kGS214KsmL70gNbAu8WPqJxbriMXEsFMbR2XWPeNgHKLtOiIBEFkEJ46rb7FGqqLCsfUDidnQ6nFQGvxfVu2L3lHa4mWwCljae37hMqp3dUDjcw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8+/Y7DGafFJAyPSe7tNqymVzlCfDRyoAmBJszyZMWzo=;
+ b=SMz4p5vmg7OTfU0R9i3Ap4j++wlSsAMLJT3O/NB5c9N2NwHf79ALzm/4KZleZX5CyBypVYiM7R7TC0FsPWPtx/Aag7f64R6zpwlR+rtuXm9NQaLXQ7kop2pU9VWGahaiKuv6Ga8C9nd1KQ5yaHMG2f3eyBxlm7xjKKNVttOngm+9MJW4mcC/WhmP23pxmtkaPb8P2qsymPfwwdkLWHj3qlyla8Oz6Njxa/D0nzIkYrgTIYWO/npKiO6FQNNd3mEytACaYrrqVES2HVj+QJhdZ92+ttdok8wCHbUF1h8fFGuzQWYaDiojzeQdkHMZvHgs3ZU7R6TMCOqvoZTF+OZp/g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8+/Y7DGafFJAyPSe7tNqymVzlCfDRyoAmBJszyZMWzo=;
+ b=SfksOg3LES+JIAGh1Ea3/M8owwT+z7aFUOJvyNGlD0mYV73mnj0kNDolFYlBXdvlNhwKVGECkJzKAl9BX/k+XX7dD3buLjE8YxIoMW/yUsAqL5Jmyfh1oNEV0NGs4Qw4bzGs5J7FO4VIZW2HfkDVVP1Spbz9ICQWxfeQPUxJ+XEBF6dGu8/SdWeF1bjT/zISpHrj0vOcQZLhP/NUQrRXnYCB6YGZcwGxWi8n1MXCWmvPTSI3ictNiV4+H6XtWt+cX3wXwrqp4rDBy+I/HjzccWUPoH/BLGEbjGwIOCdxczkIgpKb5lEnqqP7qpCmKcnSdYb6J76qk/N9ydLasWNg1w==
+Received: from DM4PR12MB5168.namprd12.prod.outlook.com (2603:10b6:5:397::8) by
+ DS0PR12MB6463.namprd12.prod.outlook.com (2603:10b6:8:c5::10) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7409.31; Mon, 25 Mar 2024 10:54:13 +0000
+Received: from DM4PR12MB5168.namprd12.prod.outlook.com
+ ([fe80::449b:329d:c9cd:5824]) by DM4PR12MB5168.namprd12.prod.outlook.com
+ ([fe80::449b:329d:c9cd:5824%5]) with mapi id 15.20.7409.031; Mon, 25 Mar 2024
+ 10:54:13 +0000
+From: Yajun Wu <yajunw@nvidia.com>
+To: "fengli@smartx.com" <fengli@smartx.com>, "raphael.norwitz@nutanix.com"
+ <raphael.norwitz@nutanix.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "mst@redhat.com" <mst@redhat.com>, Parav Pandit <parav@nvidia.com>
+Subject: vhost-user-blk  reconnect issue
+Thread-Topic: vhost-user-blk  reconnect issue
+Thread-Index: Adp+nnkoENmPBEsIQVaXjBYKlOa4yg==
+Date: Mon, 25 Mar 2024 10:54:13 +0000
+Message-ID: <DM4PR12MB5168C0DB5E4B8F30B47738F6B6362@DM4PR12MB5168.namprd12.prod.outlook.com>
+Accept-Language: zh-CN, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM4PR12MB5168:EE_|DS0PR12MB6463:EE_
+x-ms-office365-filtering-correlation-id: c8854b63-d7ec-4192-d9f8-08dc4cb9e879
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: kvuCCnMhYH2WLubLMMYpMK8VeFvhsxFrFQ8gY018Xysh8wsnh1ahsW9QFnlZvYTcDlb/kmuRWq8AtlRbSzx9dmPtIeqLtnrUPMNYKN0yblSxcU11yngU0UUXwq8uA9LCjngAeihvjVVLmYXoy0PGudB9kGF85soSsFaFunxmub8f5IjQLnmm/bnjfj4RceJQgy+Ow3iTJanPKI2h6/Lnlg47VsaaRQP9P8uWMfsag0YKuX29WQDj5kdM4OfIyoMQFdQFbJXJ1wq2TnU4FHGBUhdpV6f6Bm2yfPzfjrCAS7c8dJ7XnhWSf/0BaHGMGZOVNcuY3E685UNvcJd5/N4uAQ6A9WBNL7mm5TuHcAOdQHz6sgX1H6Ky9oXKvZ0VeWzOtNW654iZluDdb/HDGZ3CLKOM1VwX3P4GIO+cs6q6+jXbtPORIIOV7/gf4gjzfH4e+bJvq0W8yAmvAg+XzPOnMeMGOL6USOAD96yNzLRnGnQBH+BQbhHtB04/Km53QnMTpWznqAlzn40pMbexCsX59foSLvNiVpkH/3nB/4H5X+B2feHVqvihO1JtuJrcMvgAAq8p8wtvVCJqVDVyi7XMQ6IJEml5hq4DkAulEgAA7ZSyNrJ8F9jxHZBHMN0TjRSQX7zGjAkA8sORLidjnHbKB4knDLMhrL3yZAkc7UbBAEH8ivC49DQGQkgx51VQKk/Epuz8W5WK7YWr/h087PY+Ag==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM4PR12MB5168.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230031)(376005)(1800799015)(366007)(38070700009); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?FqI+/eWwzjd3nG7jNrhnBxQW5hcrZNbGP6w0rmmMriuWYgzL5DsAxkXoyg/2?=
+ =?us-ascii?Q?YMD0R4w/W7ThDakt+bRmxmdUmocywmz44GOWhFYATHnx+zLcGxDf6j27I3/G?=
+ =?us-ascii?Q?Uf7Kq9kGpEmb8gdmLjnIOyPGbOC0s0sIGycHnjyhLSVvfKUjaPPGqKnBpvoJ?=
+ =?us-ascii?Q?igzdaDwnqgj0GQJhkbiA3LK2A7PZklIvbszUxb5fvIuCvcDb4OghzjwMcntl?=
+ =?us-ascii?Q?TyuWEpo+hoEi5btzRQR02EbjOOW6B7iqXSGQV0C7RwVqDJZP8mEizzStKQ+T?=
+ =?us-ascii?Q?PZUP3Vhxfvx1pritcOjNK6a1o3z9Mqy/qxdwOX/olmKv+0XeVRTl3u//b0Rm?=
+ =?us-ascii?Q?2rI0oACGHKmZ8iJvoiC0tRISFXLxAfrm+joeJkFBTsuvwgaIUD/xCgnK9U7K?=
+ =?us-ascii?Q?qZ2PTw3OCE5StZDNkqRxtfEQS0d3umb6gXtJb5ka8lQpu7gDMG5D1csw138Z?=
+ =?us-ascii?Q?15FijyCfobIA+Mgmu5fjVxNw6RSwQmjGWhs0/hwPxauaJmrnFy8eXBCXssc+?=
+ =?us-ascii?Q?mdKBcvj8LsS5ySn4sHPGt59h10fBAs+jKanPzktKIL55c88d6i8pmbjshqUJ?=
+ =?us-ascii?Q?eO00loLeSRgI11goZoa4UyX692jrhugT4ecGUrzmBrpyMTq9hXq0DCzmFlnu?=
+ =?us-ascii?Q?B/8Dwp2CAxCWc0bqqZD0QXtjU/ielf6eG9x7MdOdswX1r4Wo0SYhFJdQDGhZ?=
+ =?us-ascii?Q?yG6NZd0fR9fWsQl+RsP4h7KhuHuu4Wdbi42NB0Ttq5+gO6jlgYrnYT3yqDio?=
+ =?us-ascii?Q?dYLX387lGsm3ABwISDmYgXy/FM20ntxYMVVFWce+XNJmxx4KO0J9X3ieta3a?=
+ =?us-ascii?Q?6HhY8HwZWATbbaTdNpf+kp4TF/mEd0CkLpP1qADsRdke2+CFMmdNNJUZd+kZ?=
+ =?us-ascii?Q?hzBJjRtMsn+AyZ3OEGPWpDE3V3bJ8nVMbnMP4YiJswXQFhqUnpAhNquFNyao?=
+ =?us-ascii?Q?FRD+3L5hmStNZnIKlUSWvXoCzvNNs4WQZ3PW31KkmI6r4m2IEVaTmXfrjF59?=
+ =?us-ascii?Q?tgCEnrfasF0ekJNmgiBMkgWfImKrcPJ8HM8rTUKLxwCyo3219tR/XPOkmpCA?=
+ =?us-ascii?Q?OAv8gRhLX8tWMAigglXlr5Y7QaAXg6Gj0Fp5eqYCB3gdcwgPxWx+oxf/sEKV?=
+ =?us-ascii?Q?xBPbElaSMfqYPqfOrpcyyeWFZozayh7AeV7WgwIXapbqLANwxqsj9plVc1ft?=
+ =?us-ascii?Q?ePM8Aw1Zou7ZCJly4/GTv0EALg39k8fhxBL+ZAAQqIptN0FeyiIvuzldqF1V?=
+ =?us-ascii?Q?Ry3skpJk1mPH4r5xT4FdTeLjGna4OUwuyIGLDQh7MiPZrGx0p5jCgCce5BQW?=
+ =?us-ascii?Q?/dnUCIb+wwP4/F6NufAwmQvIic9YsTioBRjGl46BcFYgwAz3y3phj+CwjgJv?=
+ =?us-ascii?Q?okrIepWPHGzCHV+/O7s8wHPfny0BFS6taKJw7GCX1NcHoHQTLLtUlIDBdmJh?=
+ =?us-ascii?Q?3kroxRHlEMKI4zV7kBb8uU0rrX67Py6tn3dGtdnd5PAKujh8e4zHvzkd4vQC?=
+ =?us-ascii?Q?6bb+B83Nav8098YCZpjTe7fiKyfQ3I6wSNjsk47Mr7JOX+itQZ3IkEPYM42U?=
+ =?us-ascii?Q?D5HHuSDciPi8rzw5K5E=3D?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5168.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8854b63-d7ec-4192-d9f8-08dc4cb9e879
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Mar 2024 10:54:13.2689 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: XVxwuAkklgAv3GxkqF/e8F1aTfOvjZCLarrSxuFhLnIaGBonxEi05rC6up0kKBRtgO+UgXLRFDRXjlryDE+Rtw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6463
+Received-SPF: softfail client-ip=40.107.100.78; envelope-from=yajunw@nvidia.com;
+ helo=NAM04-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.099,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,55 +134,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 25, 2024 at 10:29=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> On 22/3/24 19:11, Paolo Bonzini wrote:
-> > KVM is introducing a new API to create confidential guests, which
-> > will be used by TDX and SEV-SNP but is also available for SEV and
-> > SEV-ES.  The API uses the VM type argument to KVM_CREATE_VM to
-> > identify which confidential computing technology to use.
-> >
-> > Since there are no other expected uses of VM types, delegate
-> > mc->kvm_type() for x86 boards to the confidential-guest-support
->
-> s/mc/cgs/ here and in subject?
+Hi experts,
 
-No, this refers to x86_kvm_type(), which is the implementation
-mc->kvm_type. As the commit message says, mc->kvm_type() is delegated
-to cgs->kvm_type(), via kvm_get_vm_type().
+With latest QEMU (8.2.90), we find two vhost-user-blk backend reconnect fai=
+lure scenarios:
+1. Disconnect vhost-user-blk backend before guest driver probe vblk device,=
+ then reconnect backend after guest driver probe device. QEMU won't send ou=
+t any vhost messages to restore backend.
+This is because vhost->vdev is NULL before guest driver probe vblk device, =
+so vhost_user_blk_disconnect won't be called, s->connected is still true. N=
+ext vhost_user_blk_connect will simply return without doing anything.
 
-Paolo
+2. modprobe -r virtio-blk inside VM, then disconnect backend, then reconnec=
+t backend, then modprobe virtio-blk. QEMU won't send messages in vhost_dev_=
+init.=20
+This is because rmmod will let qemu call vhost_user_blk_stop, vhost->vdev a=
+lso become NULL(in vhost_dev_stop), vhost_user_blk_disconnect won't be call=
+ed. Again s->connected is still true, even chr connect is closed.
 
-> > object pointed to by ms->cgs.
-> >
-> > For example, if a sev-guest object is specified to confidential-guest-s=
-upport,
-> > like,
-> >
-> >    qemu -machine ...,confidential-guest-support=3Dsev0 \
-> >         -object sev-guest,id=3Dsev0,...
-> >
-> > it will check if a VM type KVM_X86_SEV_VM or KVM_X86_SEV_ES_VM
-> > is supported, and if so use them together with the KVM_SEV_INIT2
-> > function of the KVM_MEMORY_ENCRYPT_OP ioctl. If not, it will fall back =
-to
-> > KVM_SEV_INIT and KVM_SEV_ES_INIT.
-> >
-> > This is a preparatory work towards TDX and SEV-SNP support, but it
-> > will also enable support for VMSA features such as DebugSwap, which
-> > are only available via KVM_SEV_INIT2.
-> >
-> > Co-developed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >   target/i386/confidential-guest.h | 19 ++++++++++++++
-> >   target/i386/kvm/kvm_i386.h       |  2 ++
-> >   hw/i386/x86.c                    | 11 ++++++++
-> >   target/i386/kvm/kvm.c            | 44 +++++++++++++++++++++++++++++++=
-+
-> >   4 files changed, 76 insertions(+)
->
+I think even vhost->vdev is NULL, vhost_user_blk_disconnect should be calle=
+d when chr connect close?
+Hope we can have a fix soon.
 
+
+Thanks,
+Yajun
 
