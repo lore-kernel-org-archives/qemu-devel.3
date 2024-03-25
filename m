@@ -4,73 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C17DC54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 18:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FE30C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 18:24:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rooe5-0008S3-2O; Mon, 25 Mar 2024 14:02:05 -0400
+	id 1roozB-0005kl-Vt; Mon, 25 Mar 2024 14:23:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1roodt-0008Ra-Nz; Mon, 25 Mar 2024 14:01:53 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1rooz6-0005kD-Vi; Mon, 25 Mar 2024 14:23:49 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1roodq-0002ek-Uu; Mon, 25 Mar 2024 14:01:53 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7720658D16;
- Mon, 25 Mar 2024 21:03:11 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D4AF9A2A7F;
- Mon, 25 Mar 2024 21:01:42 +0300 (MSK)
-Message-ID: <604bf457-23a7-4d06-b59f-a7b46945c626@tls.msk.ru>
-Date: Mon, 25 Mar 2024 21:01:42 +0300
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1rooz5-0005tQ-9Z; Mon, 25 Mar 2024 14:23:48 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42PGxWGt025788; Mon, 25 Mar 2024 18:23:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=kt+WZGl+8Rmzq/QAJ7IKvGc+u63cp7OXfFulUaP3cqU=;
+ b=KluLvKWso+u46XDVZQ0/eHXE2OMvBRIvGKzETiYPPrBAm4V8c6nacV0XCuPPNMY4a8tu
+ IhmIEyCpjqoj3w/DwOYOlYKGZUb4lz7nLFNvC2Cy1TuqZ6bVCLSGgOgPkLcOh7Ju6xFC
+ CL5M6xBqQKStaorGsXCjutJ+YUItR4e3XPIb5TUngo2F0YH2/hW9oChRycEV/tM8eyks
+ 0z5WHZ9/S1XrtbxYdUjVou5RE+peh2dBg0pmOM95jr3/7QhQRl10Khp/H8/BPjuYWgyr
+ VUKQM61+eUYHR+6HE1Gz24H0UsZ6zMUyYDwFF2CsLN3A7713wOPxoeFszyp2mabDYnow lQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x3d8u06bd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 25 Mar 2024 18:23:43 +0000
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42PINgxd029119;
+ Mon, 25 Mar 2024 18:23:42 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x3d8u06b8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 25 Mar 2024 18:23:42 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42PHARqZ028620; Mon, 25 Mar 2024 18:23:42 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3x2adp2wuf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 25 Mar 2024 18:23:42 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42PINdV256820142
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 25 Mar 2024 18:23:41 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0EF2658068;
+ Mon, 25 Mar 2024 18:23:39 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 28D2358069;
+ Mon, 25 Mar 2024 18:23:38 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.34.64]) by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 25 Mar 2024 18:23:38 +0000 (GMT)
+Message-ID: <25acfa771509675ff6924393897fa648c0cd72af.camel@linux.ibm.com>
+Subject: Re: [PATCH] hw/s390x: Include missing 'cpu.h' header
+From: Eric Farman <farman@linux.ibm.com>
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, Halil Pasic
+ <pasic@linux.ibm.com>, David Hildenbrand <david@redhat.com>
+Date: Mon, 25 Mar 2024 14:23:37 -0400
+In-Reply-To: <20240322162822.7391-1-philmd@linaro.org>
+References: <20240322162822.7391-1-philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial for-9.0] hw/i386/fw_cfg.c: fix non-legacy smbios
- build
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>
-References: <20240325130920.349521-1-mjt@tls.msk.ru>
- <20240325162049.46c2a758@imammedo.users.ipa.redhat.com>
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240325162049.46c2a758@imammedo.users.ipa.redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: V1VfundV1ZUn2kEk22OMx07VY_-1_Xni
+X-Proofpoint-ORIG-GUID: 4QkaDsJ0jMEJh87l3EnQiPIpARlA3TzA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-25_16,2024-03-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0
+ bulkscore=0 mlxlogscore=910 phishscore=0 suspectscore=0 spamscore=0
+ mlxscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2403210000 definitions=main-2403250108
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,113 +117,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-25.03.2024 18:20, Igor Mammedov wrote
-> On Mon, 25 Mar 2024 16:09:20 +0300
-> Michael Tokarev <mjt@tls.msk.ru> wrote:
-> 
->> When building qemu with smbios but not legacy mode (eg minimal microvm build),
->> link fails with:
->>
->>    hw/i386/fw_cfg.c:74: undefined reference to `smbios_get_table_legacy'
->>
->> This is because fw_cfg interface can call this function if CONFIG_SMBIOS
->> is defined.  Made this code block to depend on CONFIG_SMBIOS_LEGACY.
-> 
-> stub supposedly should have handled that
-> what configure options do you use to build 'minimal microvm'?
-
-This is a custom build, not only configure options but also custom
-devices.mak: https://salsa.debian.org/qemu-team/qemu/-/blob/master/debian/microvm-devices.mak
-
-================== cut ==========================
-# see configs/devices/i386-softmmu/default.mak
-# for additional devices which can be disabled
-#
-CONFIG_PCI_DEVICES=n
-# we can't disable all machine types (boards) as of 6.1
-# since the resulting binary fails to link
-#CONFIG_ISAPC=y
-#CONFIG_I440FX=y
-CONFIG_Q35=y
-CONFIG_MICROVM=y
-CONFIG_VIRTIO_BLK=y
-CONFIG_VIRTIO_SERIAL=y
-CONFIG_VIRTIO_INPUT=y
-CONFIG_VIRTIO_INPUT_HOST=y
-CONFIG_VHOST_USER_INPUT=y
-CONFIG_VIRTIO_NET=y
-CONFIG_VIRTIO_SCSI=y
-CONFIG_VIRTIO_RNG=y
-CONFIG_VIRTIO_CRYPTO=y
-CONFIG_VIRTIO_BALLOON=y
-CONFIG_VIRTIO_MEM=y
-CONFIG_VIRTIO_PMEM=y
-CONFIG_VIRTIO_GPU=y
-CONFIG_VHOST_USER_GPU=y
-================== cut ==========================
-
-Relevant configure options:
-https://salsa.debian.org/qemu-team/qemu/-/blob/master/debian/rules#L293-308
-
-		../../configure ${common_configure_opts} \
-		--extra-cflags="${extra-cflags} -DCONFIG_MICROVM_DEFAULT=1" \
-		--without-default-features \
-		--target-list=x86_64-softmmu --enable-kvm --disable-tcg \
-		--enable-pixman --enable-vnc \
-		--enable-attr \
-		--enable-coroutine-pool \
-		--audio-drv-list="" \
-		--without-default-devices \
-		--with-devices-x86_64=microvm \
-		--enable-vhost-kernel --enable-vhost-net \
-		--enable-vhost-vdpa \
-		--enable-vhost-user --enable-vhost-user-blk-server \
-		--enable-vhost-crypto \
-
-I dunno how relevant these are, - it come from ubuntu and I haven't
-looked there for a long time.  The idea was to have a build especially
-for microvm with minimal footprint, as light as possible, for fastest
-startup time etc.
-
-Enabling (selecting) CONFIG_SMBIOS does not help since it is already
-enabled by something, but not SMBIOS_LEGACY (which should not be
-enabled in this case).
-
-I still think it is better to avoid pcmc->smbios_legacy_mode variable
-(field) entirely.
-
-Thanks,
-
-/mjt
-
->>
->> Fixes: b42b0e4daaa5 "smbios: build legacy mode code only for 'pc' machine"
->> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
->> ---
->>   hw/i386/fw_cfg.c | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
->> index d802d2787f..d5e78a9183 100644
->> --- a/hw/i386/fw_cfg.c
->> +++ b/hw/i386/fw_cfg.c
->> @@ -70,6 +70,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
->>       /* tell smbios about cpuid version and features */
->>       smbios_set_cpuid(cpu->env.cpuid_version, cpu->env.features[FEAT_1_EDX]);
->>   
->> +#ifdef CONFIG_SMBIOS_LEGACY
->>       if (pcmc->smbios_legacy_mode) {
->>           smbios_tables = smbios_get_table_legacy(&smbios_tables_len,
->>                                                   &error_fatal);
->> @@ -77,6 +78,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
->>                            smbios_tables, smbios_tables_len);
->>           return;
->>       }
->> +#endif
->>   
->>       /* build the array of physical mem area from e820 table */
->>       mem_array = g_malloc0(sizeof(*mem_array) * e820_get_num_entries());
-> 
-> 
+T24gRnJpLCAyMDI0LTAzLTIyIGF0IDE3OjI4ICswMTAwLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTD
+qSB3cm90ZToKPiAiY3B1LmgiIGlzIGltcGxpY2l0bHkgaW5jbHVkZWQuIEluY2x1ZGUgaXQgZXhw
+bGljaXRseSB0bwo+IGF2b2lkIHRoZSBmb2xsb3dpbmcgZXJyb3Igd2hlbiByZWZhY3RvcmluZyBo
+ZWFkZXJzOgo+IAo+IMKgIGh3L3MzOTB4L3MzOTAtc3RhdHRyaWIuYzo4Njo0MDogZXJyb3I6IHVz
+ZSBvZiB1bmRlY2xhcmVkIGlkZW50aWZpZXIKPiAnVEFSR0VUX1BBR0VfU0laRScKPiDCoMKgwqDC
+oMKgIGxlbiA9IHNhYy0+cGVla19zdGF0dHIoc2FzLCBhZGRyIC8gVEFSR0VUX1BBR0VfU0laRSwg
+YnVmbGVuLAo+IHZhbHMpOwo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIF4KPiDCoCBody9zMzkw
+eC9zMzkwLXN0YXR0cmliLmM6OTQ6NTg6IGVycm9yOiB1c2Ugb2YgdW5kZWNsYXJlZCBpZGVudGlm
+aWVyCj4gJ1RBUkdFVF9QQUdFX01BU0snCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCBhZGRyIC8gVEFSR0VUX1BBR0VfU0laRSwgbGVuLCBhZGRyICYKPiB+VEFSR0VU
+X1BBR0VfTUFTSyk7Cj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCBeCj4gwqAgaHcvczM5MHgvczM5MC1zdGF0dHJpYi5jOjIyNDo0MDogZXJy
+b3I6IHVzZSBvZiB1bmRlY2xhcmVkCj4gaWRlbnRpZmllciAnVEFSR0VUX1BBR0VfQklUUycKPiDC
+oMKgwqDCoMKgwqDCoMKgwqAgcWVtdV9wdXRfYmU2NChmLCAoc3RhcnRfZ2ZuIDw8IFRBUkdFVF9Q
+QUdFX0JJVFMpIHwKPiBTVEFUVFJfRkxBR19NT1JFKTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCBeCj4gwqAgSW4gZmlsZSBpbmNsdWRlZCBmcm9tIGh3L3MzOTB4L3MzOTAtdmlydGlvLWNjdy5j
+OjE3Ogo+IMKgIGh3L3MzOTB4L3MzOTAtdmlydGlvLWhjYWxsLmg6MjI6Mjc6IGVycm9yOiB1bmtu
+b3duIHR5cGUgbmFtZQo+ICdDUFVTMzkwWFN0YXRlJwo+IMKgIGludCBzMzkwX3ZpcnRpb19oeXBl
+cmNhbGwoQ1BVUzM5MFhTdGF0ZSAqZW52KTsKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgXgo+IAo+IFNpZ25lZC1vZmYtYnk6IFBoaWxpcHBl
+IE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4KPiAtLS0KPiDCoGh3L3MzOTB4L3Mz
+OTAtdmlydGlvLWhjYWxsLmggfCAyICsrCj4gwqBody9zMzkweC9zMzkwLXN0YXR0cmliLmPCoMKg
+wqDCoCB8IDEgKwo+IMKgMiBmaWxlcyBjaGFuZ2VkLCAzIGluc2VydGlvbnMoKykKClRoZXNlIGFy
+ZW4ndCB0aGUgb25seSBpbXBsaWNpdCB1c2VycyBvZiBjcHUuaCBpbiBody9zMzkweC8gYnV0IGlm
+IHRoaXMKc29sdmVzIG9uZSBwcm9ibGVtLCB0aGVuIHRoYXQncyBnb29kLgoKQWNrZWQtYnk6IEVy
+aWMgRmFybWFuIDxmYXJtYW5AbGludXguaWJtLmNvbT4K
 
 
