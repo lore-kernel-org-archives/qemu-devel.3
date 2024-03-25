@@ -4,98 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46932C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 17:50:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BBEC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 17:51:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rooSp-0004bJ-H7; Mon, 25 Mar 2024 13:50:27 -0400
+	id 1rooT4-0004ge-3Z; Mon, 25 Mar 2024 13:50:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rooSo-0004b2-LB
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 13:50:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1rooSk-0000Mx-Ip
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 13:50:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711389020;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hgeudOPUdFhKToQeclPDI1rbISaoF9vG9EsQS5jFg/0=;
- b=dZXAgwVvbUc+8WugdVwPV9F6vrpVqBiIAbEmReCLkaMM9gCHJTZfEJktjkJiG4ovICZqku
- iBf5HefpLaba7u42a6x6OpJAjVFQ6f0WfIN3o0uMzQ0+X98EpQBml5hVGYp6jrTbA2Wnsy
- 0R+PiLnQ3QM6G+E+yRrLrpqqCtRKhwA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-373--o7rlGSNM6S7gVGQ38Y9Qw-1; Mon, 25 Mar 2024 13:50:19 -0400
-X-MC-Unique: -o7rlGSNM6S7gVGQ38Y9Qw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-33ed483c2ecso2274400f8f.0
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 10:50:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711389017; x=1711993817;
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rooT2-0004gH-TC
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 13:50:40 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rooSz-0000Uj-7O
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 13:50:40 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a4751063318so206095266b.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 10:50:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711389035; x=1711993835; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hgeudOPUdFhKToQeclPDI1rbISaoF9vG9EsQS5jFg/0=;
- b=H+TRUv3ccqD1Z4e5ZkduU2tZeLAKYgGNrB+k8S7PLkz6rVuuWROowbT2cr9x+iHv3J
- pONT0PDP4gQ7eYmMXqlsfQ0wN9lWncPFMz2sCmzd3KjImHPM9QM/C0b2SQVeu57EaVpr
- wAMhc4L/nkpIlunu8Wuqf1e7/IFit9HVbto/dqIRJ4QsaY7FimBDqjpgR5PNdF5huFvk
- YyjIzUtM48Ljej1qYtG+kPF4Dwh85ef7ttzUwcwIB2lXg3c99lqAIYtA7Ck3Zj6wBk5h
- ZaiwVKDIRXWUZA+St/n+6PSBZiudSUB3nJmijmm5v8G4367Iki/5pZdPp4SajBEHPL2e
- bgXA==
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=y1uiuCJQg2So4tRBliZR+NbU2eE2QLya/9doEeFFxlg=;
+ b=BNqFGvlwBxH+nJXto4B2lfn1Ph1c2Lx18j4E24bqNVKPM+CecYqMa9wC6ehTywdu3E
+ /DocaP4xlrcxPyQtEaM4sEvUrMudVkC7UGN6rb+XmeZHc3fDaFLyLrwyk4XitCkVRrVw
+ ywnq4TTB3rxu4PsM0SCZXyguZwiAIvYNX5KdzusFZc70MyXi0It57POQH6JPpmRzhcu5
+ //E8pydW/IzHI/hVL2VJ51L7p7ta9W24sIyWMG7/v1opzU2lsgTQ37zXnf8t/8DVEKd6
+ 5pc5nsYQ6BxWxRmprTVfEFJ/zegwiSaT8Zhzns69eCQkbH7HUarnNCuP6QyDOhlmyyKw
+ mJ3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711389035; x=1711993835;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=y1uiuCJQg2So4tRBliZR+NbU2eE2QLya/9doEeFFxlg=;
+ b=lbRB+m9kHb2QiPPZyTSIVzwYV4Oc35CLNfkgOtBiOeK9uqyf+DZCxVnCZV1BSMKE+K
+ 3tpfy/aVxlt90mc+BxRucjy2XBlsimPRX8MkC0/Sz0vq2QM79yWzZtug3tRPnnEB5nm/
+ eZGlkW1odyqPVEehUKXiIkU/DWPm2TE/VWQo21tPBJpQGb6xb7bZR8VQe1kq/Sb7yFVD
+ omk5wgiwRxGPxuM0XQydvdSxdnyis+LtC5MgocihZk3AdOG1dGJn6MPMUhEwy5nayw8S
+ oH/9xcUpnPizUE5v5Gs9xWI6Jw5gdEKDhlaTVBeg4mw0yeHuVFTJ0k7tYVWxCQuDoVqd
+ Su8w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPhS9SlGhapnSGe/l/JPwRlTJzMz87z4R7UzyMnQzkmX9A4uUWx5R9o6u3+IwwcjX9iewjZOMnxiNSOmraOjmYBKh8UfI=
-X-Gm-Message-State: AOJu0Yxd0SMzQEDMgC7SwznmZki5E5mHoE2D/DDJjqOyrVN0Xe7JLJAB
- DYmbV9Cpgm0FFvzMG/8tVrm6NINcThMHhQD+yfPg/Ran63ZyyQowFIozq815SFZUU3koJgTQju5
- M0DA6WtGUmg80TVBnWLbod7Zn9mqntRJYk9CkziXtYry06FNojkDiwNOQ5k5b
-X-Received: by 2002:adf:db4b:0:b0:33e:7a10:4d6e with SMTP id
- f11-20020adfdb4b000000b0033e7a104d6emr4806905wrj.32.1711389017080; 
- Mon, 25 Mar 2024 10:50:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHahzv4gHdMF6ifZz+x7znDSFtzbIJb88Ky9A5tGtwjbE6qCPvTQF3j2/eNkz5NAuhzoiL1VQ==
-X-Received: by 2002:adf:db4b:0:b0:33e:7a10:4d6e with SMTP id
- f11-20020adfdb4b000000b0033e7a104d6emr4806893wrj.32.1711389016776; 
- Mon, 25 Mar 2024 10:50:16 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ AJvYcCXBNQNYPAYXY0gxZM4ImDyz75NktnnbRcL9prOmGxn+w6W4RDb3A3tBymEZCfDeAglu04iwXI2nE7Cg6VRHHh2AwynubBc=
+X-Gm-Message-State: AOJu0YwidQpQqD3Y3/r5TRczZRMkrNRrsR0UFTo2DA0hj/zLqHS9bxhQ
+ dtQCOtFPX6oPBu3t1ZO1jFosKX8IHfu8G2NtSkv1wAathoCJ9x+W17tPsD68v4U=
+X-Google-Smtp-Source: AGHT+IGb+2GxE/FNl1Cr2DkGYBXrpVQrXwkCMGOEJuP37Jjt4CuJMkQODISQkJPf+AP/OnyZpeGHew==
+X-Received: by 2002:a17:906:308f:b0:a46:df38:6d4b with SMTP id
+ 15-20020a170906308f00b00a46df386d4bmr4396699ejv.66.1711389035159; 
+ Mon, 25 Mar 2024 10:50:35 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.208.214])
  by smtp.gmail.com with ESMTPSA id
- e7-20020a5d5947000000b0033f20497d4asm10070058wri.5.2024.03.25.10.50.15
+ i27-20020a170906265b00b00a471481ef3csm3240098ejc.124.2024.03.25.10.50.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Mar 2024 10:50:16 -0700 (PDT)
-Message-ID: <1e9d4dff-03e0-41f4-9cf0-8059043e0860@redhat.com>
-Date: Mon, 25 Mar 2024 18:50:14 +0100
+ Mon, 25 Mar 2024 10:50:34 -0700 (PDT)
+Message-ID: <330d90fc-e5ff-4b7d-a01f-5587274a5f2a@linaro.org>
+Date: Mon, 25 Mar 2024 18:50:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2 2/5] hw/arm: Allow setting KVM vGIC maintenance IRQ
+Subject: Re: [PATCH v3 2/2] Implement SSH commands in QEMU GA for Windows
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- miguel.luis@oracle.com, haibo.xu@linaro.org, richard.henderson@linaro.org,
- maz@kernel.org, gkulkarni@amperecomputing.com
-References: <20240209160039.677865-1-eric.auger@redhat.com>
- <20240209160039.677865-3-eric.auger@redhat.com>
- <CAFEAcA-yLbwPyUxQy2s0CGwcE1z04WQd+EX0xmrvhUepfPR5ZQ@mail.gmail.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CAFEAcA-yLbwPyUxQy2s0CGwcE1z04WQd+EX0xmrvhUepfPR5ZQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+To: aidan_leuck@selinc.com, qemu-devel@nongnu.org
+Cc: kkostiuk@redhat.com, berrange@redhat.com
+References: <20240322174637.499113-1-aidan_leuck@selinc.com>
+ <20240322174637.499113-3-aidan_leuck@selinc.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240322174637.499113-3-aidan_leuck@selinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,53 +93,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On 22/3/24 18:46, aidan_leuck@selinc.com wrote:
+> From: Aidan Leuck <aidan_leuck@selinc.com>
+> 
+> Signed-off-by: Aidan Leuck <aidan_leuck@selinc.com>
+> ---
+>   qga/commands-windows-ssh.c | 791 +++++++++++++++++++++++++++++++++++++
 
-On 3/5/24 17:46, Peter Maydell wrote:
-> On Fri, 9 Feb 2024 at 16:00, Eric Auger <eric.auger@redhat.com> wrote:
->> From: Haibo Xu <haibo.xu@linaro.org>
->>
->> Allow virt arm machine to set the intid for the KVM GIC maintenance
->> interrupt.
->>
->> Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
->> Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>
->> ---
->> v1 -> v2:
->> - [Miguel] replaced the has_virt_extensions by the maintenance irq
->>   intid property. [Eric] restored kvm_device_check_attr and
->>   kvm_device_access standard usage and conditionally call those
->>   if the prop is set
-Please forgive me for the delay
-> This seems reasonable, but it's not the same way we opted to
-> handle telling the kernel the IRQ number for the PMU interrupt
-> (where we use kvm_arm_pmu_set_irq()). I guess we have to do
-> it this way because it's a device attr so we need to set it
-> in gic realize, though?
-This cannot follow the same pattern as the
+Huge file, I'm skipping it.
 
-kvm_arm_pmu_set_irq() because the maintenance irq must be set between before the GICv3 KVM device creation and the 
-KVM_DEV_ARM_VGIC_CTRL_INIT. The GICv3 realize function calls both so I cannot set the maintenance after the realize. It would fail
-with -EBUSY. Hope this helps.
+>   qga/commands-windows-ssh.h |  26 ++
+>   qga/meson.build            |   5 +-
+>   qga/qapi-schema.json       |  17 +-
+>   4 files changed, 828 insertions(+), 11 deletions(-)
+>   create mode 100644 qga/commands-windows-ssh.c
+>   create mode 100644 qga/commands-windows-ssh.h
 
-Thanks
 
-Eric
+> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+> index 9554b566a7..a64a6d91cf 100644
+> --- a/qga/qapi-schema.json
+> +++ b/qga/qapi-schema.json
+> @@ -1562,9 +1562,8 @@
+>   { 'struct': 'GuestAuthorizedKeys',
+>     'data': {
+>         'keys': ['str']
+> -  },
+> -  'if': 'CONFIG_POSIX' }
+> -
 
->
-> By the way, does the kernel automatically complain and fail
-> if we try to enable nested-virt with a GICv2 or with a
-> userspace GIC, or do we need to catch and produce error
-> messages for those (invalid) combinations ourselves?
->
-> thanks
-> -- PMM
->
+For Windows you have to check the CONFIG_WIN32 definition,
+so you want:
+
+   'if': { 'any': [ 'CONFIG_POSIX',
+                    'CONFIG_WIN32' ] },
+
+> +  }
+> +}
+>   
+>   ##
+>   # @guest-ssh-get-authorized-keys:
+> @@ -1580,8 +1579,8 @@
+>   ##
+>   { 'command': 'guest-ssh-get-authorized-keys',
+>     'data': { 'username': 'str' },
+> -  'returns': 'GuestAuthorizedKeys',
+> -  'if': 'CONFIG_POSIX' }
+> +  'returns': 'GuestAuthorizedKeys'
+> +}
+>   
+>   ##
+>   # @guest-ssh-add-authorized-keys:
+> @@ -1599,8 +1598,8 @@
+>   # Since: 5.2
+>   ##
+>   { 'command': 'guest-ssh-add-authorized-keys',
+> -  'data': { 'username': 'str', 'keys': ['str'], '*reset': 'bool' },
+> -  'if': 'CONFIG_POSIX' }
+> +  'data': { 'username': 'str', 'keys': ['str'], '*reset': 'bool' }
+> +}
+>   
+>   ##
+>   # @guest-ssh-remove-authorized-keys:
+> @@ -1617,8 +1616,8 @@
+>   # Since: 5.2
+>   ##
+>   { 'command': 'guest-ssh-remove-authorized-keys',
+> -  'data': { 'username': 'str', 'keys': ['str'] },
+> -  'if': 'CONFIG_POSIX' }
+> +  'data': { 'username': 'str', 'keys': ['str'] }
+> +}
+>   
+>   ##
+>   # @GuestDiskStats:
 
 
