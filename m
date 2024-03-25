@@ -4,56 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFBF6C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1CF5C54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rokVU-0002Nv-3p; Mon, 25 Mar 2024 09:36:58 -0400
+	id 1rokYu-0003qH-Cn; Mon, 25 Mar 2024 09:40:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=rDMc=K7=kaod.org=clg@ozlabs.org>)
- id 1rokVJ-0002Mt-93; Mon, 25 Mar 2024 09:36:46 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=rDMc=K7=kaod.org=clg@ozlabs.org>)
- id 1rokVH-0008CB-KM; Mon, 25 Mar 2024 09:36:44 -0400
-Received: from gandalf.ozlabs.org (mail.ozlabs.org
- [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4V3DVd1tR8z4wnq;
- Tue, 26 Mar 2024 00:36:41 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4V3DVY0Fnbz4wcq;
- Tue, 26 Mar 2024 00:36:36 +1100 (AEDT)
-Message-ID: <785203a7-de49-430c-9494-d8b349920f91@kaod.org>
-Date: Mon, 25 Mar 2024 14:36:33 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokYt-0003pn-Br
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:40:27 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rokYr-0000LF-Cp
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:40:26 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4147e135f4dso18455755e9.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:40:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711374024; x=1711978824; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=x6MuEQSkb/kt5823ISGd/KisLUiiIt3CnAcazZPSXC4=;
+ b=DFKufq7J9/x4+E5Z499QVNIIoHKt7GOt8pxofAUcp2qyQmmYAuegs4c+52UeX2ETMg
+ Xgo4vYH+jqsV0CAxFi8u1wiqBSeEwsgPxMOrLBqVs7Qi4pSQ1k0oRKSIxXeMJy/Lz/mP
+ swJLx3obio/nc8AY8DFgw3xkwmY63h9ADM2B+r5YJcj4HIvVoLaTah5b/2M4KGWyKUCn
+ mDca1FbhIQa3j8lcwRg2vOKiKp9g3PAJxnXZQvRXSeDlOzTJD8Rhae7d4qVD8kFWIMlA
+ nTGStJGyhYGJBO6WvdK93l85r+Qk7DZ0b943OKm90ygAMrsjsBzCq6LHqoL6lg2J8PUE
+ wC3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711374024; x=1711978824;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=x6MuEQSkb/kt5823ISGd/KisLUiiIt3CnAcazZPSXC4=;
+ b=DvWs15QYzq5DDVBsjNrGovJ0758E3qtX6dCNihEOINW6WYURHHebywRX5TpfRiJtis
+ zQcBg6DBjwFfdsGpIFmSr83BGf3KOh/97Tj6GkOul7z78yRmz3MXffdNN62//FsJhJeP
+ Me/F84TjFirkBdT1BfrEN9edNChyfjHDdRn6MGJy+7aAUs2HhkdXTnrfTcN5BH+BN+z8
+ QUJFVC54TKKTOF8btsnu7xOmr906iFKljUPs7GA+cIC7dgMm1s5jEh0wdQ+pbRhb5Uhs
+ /8ydbTOrL/UQ40orT7dk0NPzTjzto2UxKp6z1FTUJUx0qPL5f1OHgAbAj82jboP5Az3B
+ 0GkA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXKD7OG8VJuM1ZRa8cOzDpz8tHh1TAgrwp6kCo7w2WMUNtVcPMErDR3lkXMGJ4ryHllxV208W7ul/kYZgynJvv3TVhKAzY=
+X-Gm-Message-State: AOJu0YylbZHwIJ8w7byW5MvE+iu9barRdLL+BYtj4XNoKnarCgox/kEm
+ tSnlbjsB28U5Fpd3DtugMvY3uEPVKLsbCltqauQ8LFTWFzEk15v5CQDlOw0KW2k=
+X-Google-Smtp-Source: AGHT+IHNsNG6BHUhvFMTG55UDBvRU+R3T9K/XOHcrTxNCYrdHMtF+hiVFyMOoEjJMfEZOsVmXzVrvQ==
+X-Received: by 2002:a05:600c:4da4:b0:413:f290:c747 with SMTP id
+ v36-20020a05600c4da400b00413f290c747mr5171829wmp.33.1711374023661; 
+ Mon, 25 Mar 2024 06:40:23 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.208.214])
+ by smtp.gmail.com with ESMTPSA id
+ t9-20020a05600c198900b0041330d49604sm8527103wmq.45.2024.03.25.06.40.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 25 Mar 2024 06:40:23 -0700 (PDT)
+Message-ID: <ca6b1ae9-14b9-413b-93dc-a28d930b0e3a@linaro.org>
+Date: Mon, 25 Mar 2024 14:40:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] pnv/phb4: Set link speed and width in the DLP
- training control register
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com
-References: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
- <20240321100422.5347-8-saif.abrar@linux.vnet.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240321100422.5347-8-saif.abrar@linux.vnet.ibm.com>
+Subject: Re: [PATCH trivial for-9.0] hw/i386/fw_cfg.c: fix non-legacy smbios
+ build
+Content-Language: en-US
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>
+References: <20240325130920.349521-1-mjt@tls.msk.ru>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240325130920.349521-1-mjt@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=rDMc=K7=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,57 +97,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/21/24 11:04, Saif Abrar wrote:
-> Get the current link-status from PCIE macro.
-> Extract link-speed and link-width from the link-status
-> and set in the DLP training control (PCIE_DLP_TCR) register.
+Hi Michael,
+
+On 25/3/24 14:09, Michael Tokarev wrote:
+> When building qemu with smbios but not legacy mode (eg minimal microvm build),
+> link fails with:
 > 
-> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-
-Thanks,
-
-C.
-
-
+>    hw/i386/fw_cfg.c:74: undefined reference to `smbios_get_table_legacy'
+> 
+> This is because fw_cfg interface can call this function if CONFIG_SMBIOS
+> is defined.  Made this code block to depend on CONFIG_SMBIOS_LEGACY.
+> 
+> Fixes: b42b0e4daaa5 "smbios: build legacy mode code only for 'pc' machine"
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 > ---
->   hw/pci-host/pnv_phb4.c | 21 +++++++++++++++++++--
->   1 file changed, 19 insertions(+), 2 deletions(-)
+>   hw/i386/fw_cfg.c | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-> index 7b3d75bae6..6823ffab54 100644
-> --- a/hw/pci-host/pnv_phb4.c
-> +++ b/hw/pci-host/pnv_phb4.c
-> @@ -980,10 +980,27 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
->           val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
->           break;
+> diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+> index d802d2787f..d5e78a9183 100644
+> --- a/hw/i386/fw_cfg.c
+> +++ b/hw/i386/fw_cfg.c
+> @@ -70,6 +70,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+>       /* tell smbios about cpuid version and features */
+>       smbios_set_cpuid(cpu->env.cpuid_version, cpu->env.features[FEAT_1_EDX]);
 >   
-> -    /* Link training always appears trained */
->       case PHB_PCIE_DLP_TRAIN_CTL:
-> -        /* TODO: Do something sensible with speed ? */
-> +        /* Link training always appears trained */
->           val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
-> +
-> +        /* Get the current link-status from PCIE */
-> +        uint32_t exp_offset = get_exp_offset(phb);
-> +        uint32_t lnkstatus = bswap32(pnv_phb4_rc_config_read(phb,
-> +                                exp_offset + PCI_EXP_LNKSTA, 4));
-> +
-> +        /* Extract link-speed from the link-status */
-> +        uint32_t v = lnkstatus & PCI_EXP_LNKSTA_CLS;
-> +        /* Set the current link-speed at the LINK_SPEED position */
-> +        val = SETFIELD(PHB_PCIE_DLP_LINK_SPEED, val, v);
-> +
-> +        /*
-> +         * Extract link-width from the link-status,
-> +         * after shifting the required bitfields.
-> +         */
-> +        v = (lnkstatus & PCI_EXP_LNKSTA_NLW) >> PCI_EXP_LNKSTA_NLW_SHIFT;
-> +        /* Set the current link-width at the LINK_WIDTH position */
-> +        val = SETFIELD(PHB_PCIE_DLP_LINK_WIDTH, val, v);
->           return val;
+> +#ifdef CONFIG_SMBIOS_LEGACY
+>       if (pcmc->smbios_legacy_mode) {
+
+But then having pcmc->smbios_legacy_mode == true without
+CONFIG_SMBIOS_LEGACY would be a bug. IMHO what we want is:
+
+-- >8 --
+diff --git a/hw/smbios/smbios_legacy_stub.c b/hw/smbios/smbios_legacy_stub.c
+index f29b15316c..7d593dca98 100644
+--- a/hw/smbios/smbios_legacy_stub.c
++++ b/hw/smbios/smbios_legacy_stub.c
+@@ -13,3 +13,8 @@
+  void smbios_add_usr_blob_size(size_t size)
+  {
+  }
++
++uint8_t *smbios_get_table_legacy(size_t *length, Error **errp)
++{
++    g_assert_not_reached();
++}
+---
+
+>           smbios_tables = smbios_get_table_legacy(&smbios_tables_len,
+>                                                   &error_fatal);
+> @@ -77,6 +78,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+>                            smbios_tables, smbios_tables_len);
+>           return;
+>       }
+> +#endif
 >   
->       /*
+>       /* build the array of physical mem area from e820 table */
+>       mem_array = g_malloc0(sizeof(*mem_array) * e820_get_num_entries());
 
 
