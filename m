@@ -4,60 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D4ECD11DD
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 14:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C21DC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 14:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rol4X-00037V-Md; Mon, 25 Mar 2024 10:13:09 -0400
+	id 1rol48-00032k-8H; Mon, 25 Mar 2024 10:12:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rol4D-00034H-E8
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:12:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rol45-00032R-F9
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:12:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rol4B-0005qD-1V
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:12:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rol42-0005mn-9t
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:12:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711375966;
+ s=mimecast20190719; t=1711375957;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MawEXWhzbd+c1s6u1XPJ6zLV6a+85Rfk9ax3gmrnPNQ=;
- b=DE6Ea84J+QyFQJ2Bo7OXZmKvpyTbjljCnOudCyiawjyecSqEADn2nKynM6VHR/YrWptbpd
- +bm4WDVH2FW8W17PROPN8DXEMSXgkIewr4GFydUoAcJpwOyMd+Fv1WXY/Tks/C5Yiu3JGf
- FfEIWV2Wajk5qCivVeDAkgAFuxOWryU=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-642-YheAiPtLNHSKM4saOGtG4w-1; Mon, 25 Mar 2024 10:12:44 -0400
-X-MC-Unique: YheAiPtLNHSKM4saOGtG4w-1
+ bh=TC7zX4WQgoLSn6ZIKyojaDdAE/R2hLhtQDyrGtIDMkU=;
+ b=W664l9gp/DT4/kHTxj1eK58pxM2it9r9i4lstVYkzazixks8ispPVulUkPYccsV8FkshbX
+ sBlfcbEdoJ0EVFNs7Glfi4a46hUyqzOnN+BvNBW9ojgO70G9UGTvqCV6yQO8LJN4+jd+5N
+ S2nCXvXTlGw5bSA4QxFDtnALgKSQ1as=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-oPEluuF7N6OAOmjxTxtPSg-1; Mon,
+ 25 Mar 2024 10:12:35 -0400
+X-MC-Unique: oPEluuF7N6OAOmjxTxtPSg-1
 Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
  [10.11.54.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D989985A58B;
- Mon, 25 Mar 2024 14:12:42 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 062A328EC11D;
+ Mon, 25 Mar 2024 14:12:34 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.90])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 6C2063C22;
- Mon, 25 Mar 2024 14:12:41 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 32D463C20;
+ Mon, 25 Mar 2024 14:12:33 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Glenn Miles <milesg@linux.vnet.ibm.com>
-Subject: [PULL 6/9] misc/pca955*: Move models under hw/gpio
-Date: Mon, 25 Mar 2024 15:12:07 +0100
-Message-ID: <20240325141210.788356-7-thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 1/9] .travis.yml: Shorten the runtime of the problematic jobs
+Date: Mon, 25 Mar 2024 15:12:02 +0100
+Message-ID: <20240325141210.788356-2-thuth@redhat.com>
 In-Reply-To: <20240325141210.788356-1-thuth@redhat.com>
 References: <20240325141210.788356-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -81,204 +78,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+The "[s390x] GCC (other-system)" and the "[s390x] GCC check-tcg"
+jobs are hitting the 50 minutes timeout in Travis quite frequently
+since a while.
 
-The PCA9552 and PCA9554 devices are both I2C GPIO controllers and the
-PCA9552 also can drive LEDs. Do all the necessary adjustments to move
-the models under hw/gpio.
+To fix it, we've got to drop a lot of the targets from the target
+list in the jobs to make them work again.
 
-Cc: Glenn Miles <milesg@linux.vnet.ibm.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Message-ID: <20240325134833.1484265-1-clg@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+With regards to the "check-tcg" test, we can move the check with
+"s390x-linux-user" to the "user" job instead which also builds
+the s390x-linux-user target.
+
+And while we're at it, remove the "--enable-fdt=system" configure
+switch (since this is not required nowadays anymore).
+
+Message-ID: <20240320104144.823425-2-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                              | 4 ++--
- include/hw/{misc => gpio}/pca9552.h      | 0
- include/hw/{misc => gpio}/pca9552_regs.h | 0
- include/hw/{misc => gpio}/pca9554.h      | 0
- include/hw/{misc => gpio}/pca9554_regs.h | 0
- hw/arm/aspeed.c                          | 2 +-
- hw/{misc => gpio}/pca9552.c              | 4 ++--
- hw/{misc => gpio}/pca9554.c              | 4 ++--
- tests/qtest/pca9552-test.c               | 2 +-
- tests/qtest/pnv-host-i2c-test.c          | 4 ++--
- hw/gpio/meson.build                      | 2 ++
- hw/gpio/trace-events                     | 4 ++++
- hw/misc/meson.build                      | 2 --
- hw/misc/trace-events                     | 4 ----
- 14 files changed, 16 insertions(+), 16 deletions(-)
- rename include/hw/{misc => gpio}/pca9552.h (100%)
- rename include/hw/{misc => gpio}/pca9552_regs.h (100%)
- rename include/hw/{misc => gpio}/pca9554.h (100%)
- rename include/hw/{misc => gpio}/pca9554_regs.h (100%)
- rename hw/{misc => gpio}/pca9552.c (99%)
- rename hw/{misc => gpio}/pca9554.c (99%)
+ .travis.yml | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 409d7db4d4..a07af6b9d4 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1549,8 +1549,8 @@ M: Glenn Miles <milesg@linux.vnet.ibm.com>
- L: qemu-ppc@nongnu.org
- L: qemu-arm@nongnu.org
- S: Odd Fixes
--F: hw/misc/pca955*.c
--F: include/hw/misc/pca955*.h
-+F: hw/gpio/pca955*.c
-+F: include/hw/gpio/pca955*.h
+diff --git a/.travis.yml b/.travis.yml
+index 597d151b80..a8d1e12190 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -184,8 +184,8 @@ jobs:
+           - genisoimage
+       env:
+         - TEST_CMD="make check check-tcg V=1"
+-        - CONFIG="--disable-containers --enable-fdt=system
+-                  --target-list=${MAIN_SYSTEM_TARGETS},s390x-linux-user"
++        - CONFIG="--disable-containers
++            --target-list=hppa-softmmu,mips64-softmmu,ppc64-softmmu,riscv64-softmmu,s390x-softmmu,x86_64-softmmu"
+         - UNRELIABLE=true
+       script:
+         - BUILD_RC=0 && make -j${JOBS} || BUILD_RC=$?
+@@ -225,8 +225,8 @@ jobs:
+           # Tests dependencies
+           - genisoimage
+       env:
+-        - CONFIG="--disable-containers --enable-fdt=system --audio-drv-list=sdl
+-                  --disable-user --target-list-exclude=${MAIN_SYSTEM_TARGETS}"
++        - CONFIG="--disable-containers --audio-drv-list=sdl --disable-user
++            --target-list=arm-softmmu,avr-softmmu,microblaze-softmmu,sh4eb-softmmu,sparc64-softmmu,xtensaeb-softmmu"
  
- virtex_ml507
- M: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-diff --git a/include/hw/misc/pca9552.h b/include/hw/gpio/pca9552.h
-similarity index 100%
-rename from include/hw/misc/pca9552.h
-rename to include/hw/gpio/pca9552.h
-diff --git a/include/hw/misc/pca9552_regs.h b/include/hw/gpio/pca9552_regs.h
-similarity index 100%
-rename from include/hw/misc/pca9552_regs.h
-rename to include/hw/gpio/pca9552_regs.h
-diff --git a/include/hw/misc/pca9554.h b/include/hw/gpio/pca9554.h
-similarity index 100%
-rename from include/hw/misc/pca9554.h
-rename to include/hw/gpio/pca9554.h
-diff --git a/include/hw/misc/pca9554_regs.h b/include/hw/gpio/pca9554_regs.h
-similarity index 100%
-rename from include/hw/misc/pca9554_regs.h
-rename to include/hw/gpio/pca9554_regs.h
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 8854581ca8..93ca87fda2 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -18,7 +18,7 @@
- #include "hw/block/flash.h"
- #include "hw/i2c/i2c_mux_pca954x.h"
- #include "hw/i2c/smbus_eeprom.h"
--#include "hw/misc/pca9552.h"
-+#include "hw/gpio/pca9552.h"
- #include "hw/nvram/eeprom_at24c.h"
- #include "hw/sensor/tmp105.h"
- #include "hw/misc/led.h"
-diff --git a/hw/misc/pca9552.c b/hw/gpio/pca9552.c
-similarity index 99%
-rename from hw/misc/pca9552.c
-rename to hw/gpio/pca9552.c
-index 2ae13af35e..27d4db0680 100644
---- a/hw/misc/pca9552.c
-+++ b/hw/gpio/pca9552.c
-@@ -15,8 +15,8 @@
- #include "qemu/module.h"
- #include "qemu/bitops.h"
- #include "hw/qdev-properties.h"
--#include "hw/misc/pca9552.h"
--#include "hw/misc/pca9552_regs.h"
-+#include "hw/gpio/pca9552.h"
-+#include "hw/gpio/pca9552_regs.h"
- #include "hw/irq.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
-diff --git a/hw/misc/pca9554.c b/hw/gpio/pca9554.c
-similarity index 99%
-rename from hw/misc/pca9554.c
-rename to hw/gpio/pca9554.c
-index 778b32e443..affc9b2d61 100644
---- a/hw/misc/pca9554.c
-+++ b/hw/gpio/pca9554.c
-@@ -11,8 +11,8 @@
- #include "qemu/module.h"
- #include "qemu/bitops.h"
- #include "hw/qdev-properties.h"
--#include "hw/misc/pca9554.h"
--#include "hw/misc/pca9554_regs.h"
-+#include "hw/gpio/pca9554.h"
-+#include "hw/gpio/pca9554_regs.h"
- #include "hw/irq.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
-diff --git a/tests/qtest/pca9552-test.c b/tests/qtest/pca9552-test.c
-index ccca2b3d91..7474957692 100644
---- a/tests/qtest/pca9552-test.c
-+++ b/tests/qtest/pca9552-test.c
-@@ -12,7 +12,7 @@
- #include "libqtest.h"
- #include "libqos/qgraph.h"
- #include "libqos/i2c.h"
--#include "hw/misc/pca9552_regs.h"
-+#include "hw/gpio/pca9552_regs.h"
+     - name: "[s390x] GCC (user)"
+       arch: s390x
+@@ -240,6 +240,7 @@ jobs:
+           - flex
+           - bison
+       env:
++        - TEST_CMD="make check check-tcg V=1"
+         - CONFIG="--disable-containers --disable-system"
  
- #define PCA9552_TEST_ID   "pca9552-test"
- #define PCA9552_TEST_ADDR 0x60
-diff --git a/tests/qtest/pnv-host-i2c-test.c b/tests/qtest/pnv-host-i2c-test.c
-index c635177252..7f64d597ac 100644
---- a/tests/qtest/pnv-host-i2c-test.c
-+++ b/tests/qtest/pnv-host-i2c-test.c
-@@ -8,8 +8,8 @@
-  */
- #include "qemu/osdep.h"
- #include "libqtest.h"
--#include "hw/misc/pca9554_regs.h"
--#include "hw/misc/pca9552_regs.h"
-+#include "hw/gpio/pca9554_regs.h"
-+#include "hw/gpio/pca9552_regs.h"
- #include "pnv-xscom.h"
- 
- #define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 791e93a97b..a7495d196a 100644
---- a/hw/gpio/meson.build
-+++ b/hw/gpio/meson.build
-@@ -2,6 +2,8 @@ system_ss.add(when: 'CONFIG_GPIO_KEY', if_true: files('gpio_key.c'))
- system_ss.add(when: 'CONFIG_GPIO_MPC8XXX', if_true: files('mpc8xxx.c'))
- system_ss.add(when: 'CONFIG_GPIO_PWR', if_true: files('gpio_pwr.c'))
- system_ss.add(when: 'CONFIG_MAX7310', if_true: files('max7310.c'))
-+system_ss.add(when: 'CONFIG_PCA9552', if_true: files('pca9552.c'))
-+system_ss.add(when: 'CONFIG_PCA9554', if_true: files('pca9554.c'))
- system_ss.add(when: 'CONFIG_PL061', if_true: files('pl061.c'))
- system_ss.add(when: 'CONFIG_ZAURUS', if_true: files('zaurus.c'))
- 
-diff --git a/hw/gpio/trace-events b/hw/gpio/trace-events
-index 9331f4289d..b91cc7e9a4 100644
---- a/hw/gpio/trace-events
-+++ b/hw/gpio/trace-events
-@@ -13,6 +13,10 @@ nrf51_gpio_write(uint64_t offset, uint64_t value) "offset 0x%" PRIx64 " value 0x
- nrf51_gpio_set(int64_t line, int64_t value) "line %" PRIi64 " value %" PRIi64
- nrf51_gpio_update_output_irq(int64_t line, int64_t value) "line %" PRIi64 " value %" PRIi64
- 
-+# pca9552.c
-+pca955x_gpio_status(const char *description, const char *buf) "%s GPIOs 0-15 [%s]"
-+pca955x_gpio_change(const char *description, unsigned id, unsigned prev_state, unsigned current_state) "%s GPIO id:%u status: %u -> %u"
-+
- # pl061.c
- pl061_update(const char *id, uint32_t dir, uint32_t data, uint32_t pullups, uint32_t floating) "%s GPIODIR 0x%x GPIODATA 0x%x pullups 0x%x floating 0x%x"
- pl061_set_output(const char *id, int gpio, int level) "%s setting output %d to %d"
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 265b2c2627..86596a3888 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -3,8 +3,6 @@ system_ss.add(when: 'CONFIG_EDU', if_true: files('edu.c'))
- system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
- system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
- system_ss.add(when: 'CONFIG_ISA_TESTDEV', if_true: files('pc-testdev.c'))
--system_ss.add(when: 'CONFIG_PCA9552', if_true: files('pca9552.c'))
--system_ss.add(when: 'CONFIG_PCA9554', if_true: files('pca9554.c'))
- system_ss.add(when: 'CONFIG_PCI_TESTDEV', if_true: files('pci-testdev.c'))
- system_ss.add(when: 'CONFIG_UNIMP', if_true: files('unimp.c'))
- system_ss.add(when: 'CONFIG_EMPTY_SLOT', if_true: files('empty_slot.c'))
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index 7cab1d5cb5..5d241cb40a 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -327,10 +327,6 @@ grlib_apb_pnp_read(uint64_t addr, unsigned size, uint32_t value) "APB PnP read a
- led_set_intensity(const char *color, const char *desc, uint8_t intensity_percent) "LED desc:'%s' color:%s intensity: %u%%"
- led_change_intensity(const char *color, const char *desc, uint8_t old_intensity_percent, uint8_t new_intensity_percent) "LED desc:'%s' color:%s intensity %u%% -> %u%%"
- 
--# pca9552.c
--pca955x_gpio_status(const char *description, const char *buf) "%s GPIOs 0-15 [%s]"
--pca955x_gpio_change(const char *description, unsigned id, unsigned prev_state, unsigned current_state) "%s GPIO id:%u status: %u -> %u"
--
- # bcm2835_cprman.c
- bcm2835_cprman_read(uint64_t offset, uint64_t value) "offset:0x%" PRIx64 " value:0x%" PRIx64
- bcm2835_cprman_write(uint64_t offset, uint64_t value) "offset:0x%" PRIx64 " value:0x%" PRIx64
+     - name: "[s390x] Clang (disable-tcg)"
 -- 
 2.44.0
 
