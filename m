@@ -4,60 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4010C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63ADDC54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 13:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rokK8-0008Ck-J9; Mon, 25 Mar 2024 09:25:12 -0400
+	id 1rokQ9-0000z5-BP; Mon, 25 Mar 2024 09:31:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1rokK7-0008Ca-9a
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:25:11 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1rokK4-0005s9-Ac
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:25:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=9YgHf0qKT/atY8TBObrr6MCtsDUhx+yoFKjGrki32R4=; b=g9Mv6WjxdBmSV3n16TJW9llk9i
- GE1poe+F2LDw+1TEiMiO7Y917kprvRerGZyeeYGJyPH2iRDxzpkICLTYrmBngIEjVqAUfwb+/hAWx
- tZ0MqTR5x6O9hxnmp5qXbP8MtwPsLQ1bVOWNZWfnAqs4rBsw5PEHrMSHnwFDS6r+iv3PquDOV7UbH
- txUx1/WIY9LJ2pFQ3d6dstDgrqBqJug09XrOx9pbB7iQdAkP+V12SIWfrYnvrnnK6VpZVN4kmp5Yn
- wcmKp1ZtvChD5h5r8xPKqWBHpe/U7xy8xyEqyMmIAe8a/Yr2naFZs5hTHEb+rLHLfk80pl7wLsYMx
- 5+3nKQIilJfYb4fsjGjkzq6/FIuZ6FX8DY08s84b5AXrzPAhQxDuOW/NnrcKkJYVVdNpP9Tn/ghhA
- BHJt4JYlU9fh/uJzP8zcchmNHbIk31O/VKvkCvZ+6YpJPOR++ctEw4GFTZpsYTVUM8XII9mfpYqBs
- xNt9KOZNNREx9lAfueKh89HexlaQ7GZOE9xwjaNyFtc3LEVB/q9C+kp6BggL3IxlIyxIVtXF6f5Ro
- lTowxHGjkIYl7u8oh03h5gg2nZy6Cxt3bOhuoL5vV7v2Puwv7DUJYkg0q1otU1qmeM4vuNorROt7N
- 5esgywPzYDs1tUJUhaOPJbhhpJfMBMeuEJe1LQxoc=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair23@gmail.com>,
- qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>, Greg Kurz <groug@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: Re: [PULL 20/34] tests/libqos: add riscv/virt machine nodes
-Date: Mon, 25 Mar 2024 14:25:01 +0100
-Message-ID: <2671306.ea0pUnVCe6@silver>
-In-Reply-To: <cef9c499-b258-4618-bff8-eeca8da3d184@ventanamicro.com>
-References: <20240308111152.2856137-1-alistair.francis@wdc.com>
- <b85c8451-57e0-49aa-a7c4-28ae8bf08bf9@redhat.com>
- <cef9c499-b258-4618-bff8-eeca8da3d184@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rokQ6-0000yR-3m
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:31:22 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rokQ4-0006u1-7F
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 09:31:21 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-33fd12a06fdso3083369f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 06:31:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711373478; x=1711978278; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UG7Md5ptENEJSsV0K7ydj7dMPAW9+5Dt7UXUOoP4TX0=;
+ b=o+quYPS5M+MvXc44TmfQyDp5JG7Q38wEn5SJHK6j8MGsWwhnyxbJcoPeVhC8ZEtvZQ
+ TN/LNXbREeFThWyp3L020tHiE1bVzWZASGQaIJrqVDF+I+s31qhN3rX6qBRYAPt2+J7T
+ aGCG+2pgX8s6L6rrGQvzWjdKjKXxgwKEuO9mNrplqYzYioD697EMzjYfHJNen78ax5Rv
+ IDGx5j9ALAkZfFmaMAQwqnsHcDoCEXA1LwztDQm/EV9smhVaSBwfcLFIjYqdJlg0JZ4J
+ mizGrxzhjKmAM8okyEpDUh/I7Ddv7tEV8qhfMwO95cQwG+uHtnhE0OVb0I5oCDONonp1
+ nEow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711373478; x=1711978278;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UG7Md5ptENEJSsV0K7ydj7dMPAW9+5Dt7UXUOoP4TX0=;
+ b=eoqr2i3xUlCQxeGwjFhA+X5UPMJvw9/cnl3GUPsST6/HzlrtI5nNU6bQyU7RBj4E3R
+ NZId2V4vWbv/0PPIvRuXqODjTjOSX9JrKjgnhTGk35eE1vlUn30B+9NKFGlO/9StQpFk
+ c4XmKcYWY0ENg2NTFwsGceQKjNsz8Cpezh5t0fhnl917u5BNzWVG8x7cTxgl1m1lsXm+
+ HQkU/MhmAwA6+/XndhC0Cqmr8KtP2vjjFQOHw4YafvpLyGLK450WK3cXihiPklJ60ypV
+ 5wDxbIAlx5B8XhplTQOiZPK2FgYMQuA7Eix90t70K09GvWQ0vauVtSchTH/RH9F4jWpc
+ 4VDA==
+X-Gm-Message-State: AOJu0YzvCI8ModxwbZWyuHgt36c8zdzNi15F98Ht6EtAH1/HjO4XQ0Ne
+ XJ0E8ycH6OTJpQuvZGBSmmucema2tiByIt0HKt0oEklg0+4tvbJZAn4bP6AlWrybCzyDX8fXsF/
+ S
+X-Google-Smtp-Source: AGHT+IFD24/odmixbK1LHstBWiwtzIVG9IZOYEIum3t7efXk7JAvN8hyLEvhprmp3x33+BdNOYHY8Q==
+X-Received: by 2002:a5d:4d07:0:b0:341:b4db:c8d6 with SMTP id
+ z7-20020a5d4d07000000b00341b4dbc8d6mr4341397wrt.71.1711373477724; 
+ Mon, 25 Mar 2024 06:31:17 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ m10-20020a056000174a00b0033ec9ddc638sm9596027wrf.31.2024.03.25.06.31.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 Mar 2024 06:31:17 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+Subject: [PATCH for-9.0] target/arm: take HSTR traps of cp15 accesses to EL2,
+ not EL1
+Date: Mon, 25 Mar 2024 13:31:16 +0000
+Message-Id: <20240325133116.2075362-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,88 +92,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Monday, March 25, 2024 1:35:52 PM CET Daniel Henrique Barboza wrote:
-> On 3/25/24 06:20, Thomas Huth wrote:
-> > On 08/03/2024 12.11, Alistair Francis wrote:
-> >> From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> >>
-> >> Add a RISC-V 'virt' machine to the graph. This implementation is a
-> >> modified copy of the existing arm machine in arm-virt-machine.c
-> >>
-> >> It contains a virtio-mmio and a generic-pcihost controller. The
-> >> generic-pcihost controller hardcodes assumptions from the ARM 'virt'
-> >> machine, like ecam and pio_base addresses, so we'll add an extra step to
-> >> set its parameters after creating it.
-> >>
-> >> Our command line is incremented with 'aclint' parameters to allow the
-> >> machine to run MSI tests.
-> >>
-> >> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> >> Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> >> Acked-by: Thomas Huth <thuth@redhat.com>
-> >> Message-ID: <20240217192607.32565-7-dbarboza@ventanamicro.com>
-> >> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> >> ---
-> > 
-> >   Hi!
-> > 
-> > I noticed that "make check SPEED=slow" is now failing on the qos-test with both, qemu-system-riscv32 and qemu-system-riscv64. Seems like it fails with the virtio-9p test, when I run the qos-test manually, I get:
-> > 
-> > $ MALLOC_PERTURB_=21 V=2 QTEST_QEMU_BINARY=./qemu-system-riscv64 \
-> >     tests/qtest/qos-test -m slow
-> > ...
-> > # Start of local tests
-> > # starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-211303.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-211303.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -M virt,aclint=on,aia=aplic-imsic -fsdev local,id=fsdev0,path='/home/thuth/tmp/qemu-build/qtest-9p-local-MBCML2',security_model=mapped-xattr -device virtio-9p-pci,fsdev=fsdev0,addr=04.0,mount_tag=qtest -accel qtest
-> > ok 168 /riscv64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-9p-pci/virtio-9p/virtio-9p-tests/local/config
-> > Received response 7 (RLERROR) instead of 73 (RMKDIR)
-> > Rlerror has errno 17 (File exists)
-> > **
-> > ERROR:../../devel/qemu/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
-> > not ok /riscv64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-9p-pci/virtio-9p/virtio-9p-tests/local/create_dir - ERROR:../../devel/qemu/tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
-> > Bail out!
-> > Aborted (core dumped)
-> > 
-> > Could you please have a look? ... or if it is too cumbersome to fix, could we please always skip the virtio-9p local tests on riscv ?
-> 
-> I'll take a look.
-> 
-> Do we run these slow tests in the Gitlab pipeline? I don't recall this
-> particular test failing when I first introduced the riscv machine nodes.
+The HSTR_EL2 register allows the hypervisor to trap AArch32 EL1 and
+EL0 accesses to cp15 registers.  We incorrectly implemented this so
+they trap to EL1 when we detect the need for a HSTR trap at code
+generation time.  (The check in access_check_cp_reg() which we do at
+runtime to catch traps from EL0 is correctly routing them to EL2.)
 
-No, the 'local' 9p tests were taken out by moving them to 'slow', because
-these particular tests did not pass in the cloud and gitlab doesn't run
-'slow':
+Use the correct target EL when generating the code to take the trap.
 
-commit 558f5c42efded3e0d0b20a90bce2a9a14580d824
-Author: Greg Kurz <groug@kaod.org>
-Date:   Tue Nov 24 08:43:43 2020 +0100
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2226
+Fixes: 049edada5e93df ("target/arm: Make HSTR_EL2 traps take priority over UNDEF-at-EL1")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/tcg/translate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-    tests/9pfs: Mark "local" tests as "slow"
-    
-    The "local" tests can fail on some automated build systems as
-    reported here:
-    
-    https://lists.nongnu.org/archive/html/qemu-devel/2020-11/msg05510.html
-    
-    This will need to be investigated and addressed later. Let's go for a
-    workaround in the meantime : mark the "local" tests as "slow" so that
-    they aren't executed with a simple "make check" like in the case above.
-    
-    Reported-by: Cole Robinson <crobinso@redhat.com>
-    Signed-off-by: Greg Kurz <groug@kaod.org>
-    Reviewed-by: Thomas Huth <thuth@redhat.com>
-    Acked-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-    Message-Id: <160620382310.1423262.7364287092069513483.stgit@bahia.lan>
-    Signed-off-by: Greg Kurz <groug@kaod.org>
-
-Could be because the 'local' 9p backend needs xattr support which might not be
-available with gitlab container's filesystem. But I haven't investigated.
-
-The test that fails seems to be the same, just the errno is different in your
-case.
-
-Best regards,
-Christian Schoenebeck
-
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index c8a24706750..69585e6003d 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -4585,7 +4585,7 @@ static void do_coproc_insn(DisasContext *s, int cpnum, int is64,
+             tcg_gen_andi_i32(t, t, 1u << maskbit);
+             tcg_gen_brcondi_i32(TCG_COND_EQ, t, 0, over.label);
+ 
+-            gen_exception_insn(s, 0, EXCP_UDEF, syndrome);
++            gen_exception_insn_el(s, 0, EXCP_UDEF, syndrome, 2);
+             /*
+              * gen_exception_insn() will set is_jmp to DISAS_NORETURN,
+              * but since we're conditionally branching over it, we want
+-- 
+2.34.1
 
 
