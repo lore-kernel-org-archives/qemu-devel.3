@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 182A2C54E58
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 19:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488E3C54E64
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 19:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ropj0-0001Es-1B; Mon, 25 Mar 2024 15:11:14 -0400
+	id 1ropjg-0001eb-Eo; Mon, 25 Mar 2024 15:11:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ropix-0001Ec-7U
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:11:11 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1ropjY-0001YT-UV
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:11:49 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1ropiv-00064Y-L4
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:11:10 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1de0f92e649so32907105ad.0
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 12:11:08 -0700 (PDT)
+ id 1ropjX-00066o-CI
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 15:11:48 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1def59b537cso29645965ad.2
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 12:11:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711393867; x=1711998667; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711393906; x=1711998706; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=l2aB34pg7RPuUIMLi3XCR2gYk2fLzQA2R+5W7T0tIkw=;
- b=y+XxgLpuBpoOunFJjPEeoqXqkvSmPExij6WQH1l7gHDCY0yzzsSsvIUK1ERExMDRw9
- IlNH40qI2X22KIZTyHofZlHSopfhirceH2F1fcg6Q6F7e75v9g2bbiBf6xWS0ZqNKS/2
- 0hMmcJMFCO5G9kJEhcbaU9d3EHhFUjreaYl+YmsPb5w9vaD2oc/RtP6+e41VMfWwdHqi
- mb7sPNW4H7wptwZRflVozEOwdh4mj/GME2i+vM/Wz75InU6t71ZiUhyGgaG4qBGjHybf
- lakjQktnVHt7rmCMvqXqi7JLFeOlWelUvFETxL5dN9NZLE+LGPQVf9cjezq0iP5L5gXd
- BMpA==
+ bh=tcrioghJDZ7IxX6/gCftw21QrcqXKg2D5dsSOrfB7vA=;
+ b=hf/3HCGb9rOpl0uXuwbspIoZEjeT7NOcULiWkbxaVgJ9QI8pvA3BTDk3bIUkBHvBoi
+ 5TJR8jUv7G+/QwehS1v9CYW6sM0RN1FSTE+B0xLVF4rAfKTPDGZlFqkwLB+caX5Ijq6U
+ PcEUJ6ZqLe3fUOHxKNiCvVmdhJT+1JaRj0lf38w7vuI9nMD4tplBWkNdYE7Sk++GFP9w
+ GprYhmpK1bIZt7ceXe/WWG+ZwHNWB7PlIkVFe1DQQJ2+9I7gmMgHqYLEhmkvJGnBsB4k
+ Lq9qaR4cVKaBVLJh/ppZmmniMsHIvdw16FTmMjiKEtHemMLl9JN9NHMGcjZUKqDISkm6
+ wWDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711393867; x=1711998667;
+ d=1e100.net; s=20230601; t=1711393906; x=1711998706;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l2aB34pg7RPuUIMLi3XCR2gYk2fLzQA2R+5W7T0tIkw=;
- b=JhSHUZA5ufG652zxPbwruuFhQx1ZcHGS3eI9qh+1ydjZc3LnSyz3bip3kwm+w/3bv7
- Rk1IrNBkNRRWZAYpFuogJKDLEhiy6GYN9tIh1oLYeGqOo6DgTO289EJN7X4NZlNDjHgv
- 2O3XKLKuCZ4jEOtdY0nO/0NJ4v1jM0G4g9YyJIuuGPgbnF7jfKRk2Y/Cs4kQalAd/Z+x
- dijLhzm7bwFO/MtROc+KL5hVeXexjtWeZxIc7D/tbyBoaS2lxuX/N0M5ArzIxhjDeBOI
- nmLn4deaqgy3z13/p5TuROqkyPsSmaBDI6HlaBzxBThpGog6uhdvRDhtk2gX1bFrVvl6
- AhPg==
+ bh=tcrioghJDZ7IxX6/gCftw21QrcqXKg2D5dsSOrfB7vA=;
+ b=JfyzDzqte7P4mITT3yIIj6b72AfaxB0Tfp46lsieIQJY2zuAuITu7IidUTh9dAFZS7
+ GX9k1g9/DaWqqi4bIeE26Hb3C+n9TLu0k38ZhXxjt1vCWRwdqFXOqcjVLNaVOsLXRV17
+ NDxKdeP9DHScJyvk/PECEpJMwek+bXsvm3GZySWEMlv+uDgg/NGI4hBpkzUWCshBvz6M
+ PxovlCb9wGPK0WyNn0MnyZDosxsZF1j+BAZeUVcwjoiKhQS3+dCql0uRXyj9rP/BnLIc
+ QD+umchMN5vmEjhiCToi7D3yHz1J2j1V+ZUgb0gfgiha1oVFYhtj1ZO2gAvJXoRBZ/LC
+ FtEw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVknMiz5yqhaU7LU2Oxw9hvYUKJvQw+AQwzCABBtrpIXOZO34eZf8i6yOVnqiNSJMJeR0JLHtTeVRVFckMYptuOfHm8Rr8=
-X-Gm-Message-State: AOJu0YwuctvEzL0eShOFlfiQOOGfkvhEPE/l2UQrghfWg/9Mll/p0GwA
- GI/TdHMQvQDxt7O0FgFrXCKntdj1CpH0dTkaGsq6Vq1DG8+EW+z4ERwJQov0otY=
-X-Google-Smtp-Source: AGHT+IHOhjg7zwMuYwwgpLVYLc+9RdkOdWs/88d2OeJPfn9SsghDHwS4wqupAyxW2w/BM/xPbiQZ1A==
-X-Received: by 2002:a17:902:9047:b0:1e0:552d:8a1b with SMTP id
- w7-20020a170902904700b001e0552d8a1bmr663677plz.57.1711393866869; 
- Mon, 25 Mar 2024 12:11:06 -0700 (PDT)
+ AJvYcCUMvIWOTGd4LeR60qJUbJyKhLwYC7MIJ5XSbrvTOe7q3D1s9f6zyzjPyOXzrl9eHHFVOqQSmzepO1iSgSicRGBiW4izx6Q=
+X-Gm-Message-State: AOJu0YwcLnxgOqX42FycGlouj+5Bj00SbH5SGh6BF8x840ucaOwajCAm
+ UwI+zY7Ida1IYKklEusKpqQIAxDHqrodYRFe5oMuQatzpc0tch2eihxn612O41kILvMf6veZs8r
+ e
+X-Google-Smtp-Source: AGHT+IGvpryqtIodstzHmD+KSTODkCH0eXBYmlt1GDIzwwzRdrR4hd6p/CU7sg3T9Z+krFEIY8rpyQ==
+X-Received: by 2002:a17:902:e5c9:b0:1e0:98e1:a3b8 with SMTP id
+ u9-20020a170902e5c900b001e098e1a3b8mr8956123plf.64.1711393905972; 
+ Mon, 25 Mar 2024 12:11:45 -0700 (PDT)
 Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
  [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
- q14-20020a170902a3ce00b001d8edfec673sm5175268plb.214.2024.03.25.12.11.05
+ q14-20020a170902a3ce00b001d8edfec673sm5175268plb.214.2024.03.25.12.11.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 25 Mar 2024 12:11:06 -0700 (PDT)
-Message-ID: <09c0a424-7c4c-40db-acf6-9df5430e054b@linaro.org>
-Date: Mon, 25 Mar 2024 09:11:04 -1000
+ Mon, 25 Mar 2024 12:11:45 -0700 (PDT)
+Message-ID: <273567f9-9fe6-4df4-89db-5a607a01183a@linaro.org>
+Date: Mon, 25 Mar 2024 09:11:43 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/8] plugins: add new inline op STORE_U64
+Subject: Re: [PATCH v3 4/8] tests/plugin/inline: add test for STORE_U64 inline
+ op
 Content-Language: en-US
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
 References: <20240325124151.336003-1-pierrick.bouvier@linaro.org>
- <20240325124151.336003-4-pierrick.bouvier@linaro.org>
+ <20240325124151.336003-5-pierrick.bouvier@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240325124151.336003-4-pierrick.bouvier@linaro.org>
+In-Reply-To: <20240325124151.336003-5-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,22 +103,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/25/24 02:41, Pierrick Bouvier wrote:
-> @@ -152,6 +152,18 @@ static void gen_inline_add_u64_cb(struct qemu_plugin_dyn_cb *cb)
->       tcg_temp_free_ptr(ptr);
->   }
->   
-> +static void gen_inline_store_u64_cb(struct qemu_plugin_dyn_cb *cb)
-> +{
-> +    TCGv_ptr ptr = gen_plugin_u64_ptr(cb->inline_insn.entry);
-> +    TCGv_i64 val = tcg_temp_ebb_new_i64();
-> +
-> +    tcg_gen_movi_i64(val, cb->inline_insn.imm);
+> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
+> ---
+>   tests/plugin/inline.c | 41 +++++++++++++++++++++++++++++++++++++----
+>   1 file changed, 37 insertions(+), 4 deletions(-)
 
-TCGv_i64 val = tcg_constant_i64(cb->inline_insn.imm);
-
-With that,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
