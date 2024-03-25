@@ -4,115 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5C47C54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 20:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551EEC54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 20:48:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ror6p-00046u-Sf; Mon, 25 Mar 2024 16:39:55 -0400
+	id 1rorE8-0005ep-4e; Mon, 25 Mar 2024 16:47:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ror6n-00046Y-9U
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 16:39:53 -0400
-Received: from mout.gmx.net ([212.227.15.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1ror6k-0004tY-PX
- for qemu-devel@nongnu.org; Mon, 25 Mar 2024 16:39:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1711399188; x=1712003988; i=deller@gmx.de;
- bh=zrZhGEJCl4kVNU7RcviZxCAqDETWmHQL5aphl4h1RRY=;
- h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
- b=iWl/51bxumq1OB97VOLFxtWBrehZzV3isvhA6qfYkZLQaREAq22YuWxkItvyBjEt
- MLibDkOz/DPSfl9Zqxn6HIOBIjaPOpkbvFnAnO7jY0HohcUqH4WIrfONoJU3d3ZoN
- HmFgTO7IEU1CPjxgh99hHq3mSY7Ngc3lPMcQzRU8GkZWaB0ATiC8RI//Hy885TBWF
- 87Z7hA8UZtUJWg/txBCRGaAse5jRHCObdElwR8fNsR6zF99TO8jao2iDl7mRsCQaT
- WNF19OGKftvHiRCx0BIukOONkm72OMAwYjRo6ZQoTmdWMuGWqmuV2X7YgkxFlQk25
- XnhfUjunie5HPrBqzQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([89.244.186.8]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MaJ7v-1sKOcj14Yn-00WGxY; Mon, 25
- Mar 2024 21:39:48 +0100
-Message-ID: <bc223297-f4f6-47bf-b920-d0f6224cea42@gmx.de>
-Date: Mon, 25 Mar 2024 21:39:47 +0100
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1rorE6-0005eT-Kp
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 16:47:26 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1rorE4-0006i5-RY
+ for qemu-devel@nongnu.org; Mon, 25 Mar 2024 16:47:26 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-413f8c8192eso6385e9.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 13:47:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1711399642; x=1712004442; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=KzzT5/g7h3BtKN08HVpS/NBgjLGvcyxBh480N/I/y6A=;
+ b=g2OqSKHjkwXh1bjY4Y51H/FiIedEg9YoKxVxvPIYYz5tH/ldrYs+8TbAc50bvYz6ZE
+ 1DT4vMzXtahv+JsJolmE7UEW7270yhO+KxrDiETTuMh9mlc55Jb8bzXl1AeryNuTn4eD
+ vzDim/sXNdINJaNDtJW0fjvkr++eL3KEhIy+HCqcNqDrXv0GxfFf6JNk7I2CfV1ABik5
+ GOSfcT7UhGYfh6ihyl0Olp+3RX6WFSLC1Ypv4wI8ANsU0qGI1doT3rEqsjnkTV/PMX6m
+ 9XEER0TtNm3QJHHsLeyO1DI22y4rcGnPpot9ZNYdm4z4ao5bSl4SQkBngXkBcuW/zC+r
+ /v5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711399642; x=1712004442;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KzzT5/g7h3BtKN08HVpS/NBgjLGvcyxBh480N/I/y6A=;
+ b=GEwHT8/f6nagiMeerYgWVVGgXpSO/I4DZbCA/YFlgck1XBkR7Y3BUyUi5EQJTNS3E/
+ 2k8bKBpYWX4FHsDFx/qbAb7JxjgvMAw8AtACi4fLaKTNFS5A5D/SJPlmd9hgPRx2XO4s
+ zXycwyNrQ7hUjoDh5S2P5/qK2leCeRBDvWRnZ+Cpq7xD4moDRhLg1j78lbauUcJYM0C2
+ 0TUsvWuzb5/rf72yoAFiQTvtRfyILlKFWcybDvzass1F1zPRbieeW2i6wkJRyYGgBXry
+ o6TgGFuTzeYtLn4VP2hve+FLTZiwu8vvWYoYuukzAPp4iVsC5XP9Pb7ysC3Rvf3IkeF9
+ 01Ng==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVchKNEg0CIYsK7+hs+IDwPr8ga7C7uSyxkLqHhTGw8rF3b/O15n8mukiaM7BTehBMIvZlTdAvsv6mCw1f6phklSiNiyUo=
+X-Gm-Message-State: AOJu0Yx3ON5iDXnnt480UWs/J0icoL7JCZqcAOFDMu91+cExgTCCurS/
+ 1cLYXh29U0Iwsj5WJVD3bWEPTI6K6j0J9w7XscHZfG28MVCseSJHXSVHmF8f3Q==
+X-Google-Smtp-Source: AGHT+IFX0D1hkRYCJNUuU0gq4lc3j5XsVVwR7qg72xtqIYu/WkP/8t8GeqC2aDlNPKDtdVU3DvlO/Q==
+X-Received: by 2002:a05:600c:3793:b0:414:7f46:95f with SMTP id
+ o19-20020a05600c379300b004147f46095fmr11078wmr.5.1711399642503; 
+ Mon, 25 Mar 2024 13:47:22 -0700 (PDT)
+Received: from google.com (180.232.140.34.bc.googleusercontent.com.
+ [34.140.232.180]) by smtp.gmail.com with ESMTPSA id
+ d9-20020a05600c3ac900b004148dee09afsm119163wms.14.2024.03.25.13.47.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 25 Mar 2024 13:47:22 -0700 (PDT)
+Date: Mon, 25 Mar 2024 20:47:18 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Julien Grall <julien@xen.org>
+Cc: qemu-arm@nongnu.org, eric.auger@redhat.com, peter.maydell@linaro.org,
+ qemu-devel@nongnu.org, jean-philippe@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, nicolinc@nvidia.com
+Subject: Re: [RFC PATCH 07/12] hw/arm/smmu-common: Support nested translation
+Message-ID: <ZgHi1s3RCayh6uyp@google.com>
+References: <20240325101442.1306300-1-smostafa@google.com>
+ <20240325101442.1306300-8-smostafa@google.com>
+ <bd24dc1a-d474-4cc7-87f9-2d5059a19602@xen.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/hppa: Fix unit carry conditions
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240325190225.104465-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- xsFNBF3Ia3MBEAD3nmWzMgQByYAWnb9cNqspnkb2GLVKzhoH2QD4eRpyDLA/3smlClbeKkWT
- HLnjgkbPFDmcmCz5V0Wv1mKYRClAHPCIBIJgyICqqUZo2qGmKstUx3pFAiztlXBANpRECgwJ
- r+8w6mkccOM9GhoPU0vMaD/UVJcJQzvrxVHO8EHS36aUkjKd6cOpdVbCt3qx8cEhCmaFEO6u
- CL+k5AZQoABbFQEBocZE1/lSYzaHkcHrjn4cQjc3CffXnUVYwlo8EYOtAHgMDC39s9a7S90L
- 69l6G73lYBD/Br5lnDPlG6dKfGFZZpQ1h8/x+Qz366Ojfq9MuuRJg7ZQpe6foiOtqwKym/zV
- dVvSdOOc5sHSpfwu5+BVAAyBd6hw4NddlAQUjHSRs3zJ9OfrEx2d3mIfXZ7+pMhZ7qX0Axlq
- Lq+B5cfLpzkPAgKn11tfXFxP+hcPHIts0bnDz4EEp+HraW+oRCH2m57Y9zhcJTOJaLw4YpTY
- GRUlF076vZ2Hz/xMEvIJddRGId7UXZgH9a32NDf+BUjWEZvFt1wFSW1r7zb7oGCwZMy2LI/G
- aHQv/N0NeFMd28z+deyxd0k1CGefHJuJcOJDVtcE1rGQ43aDhWSpXvXKDj42vFD2We6uIo9D
- 1VNre2+uAxFzqqf026H6cH8hin9Vnx7p3uq3Dka/Y/qmRFnKVQARAQABzRxIZWxnZSBEZWxs
- ZXIgPGRlbGxlckBnbXguZGU+wsGRBBMBCAA7AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
- FiEERUSCKCzZENvvPSX4Pl89BKeiRgMFAl3J1zsCGQEACgkQPl89BKeiRgNK7xAAg6kJTPje
- uBm9PJTUxXaoaLJFXbYdSPfXhqX/BI9Xi2VzhwC2nSmizdFbeobQBTtRIz5LPhjk95t11q0s
- uP5htzNISPpwxiYZGKrNnXfcPlziI2bUtlz4ke34cLK6MIl1kbS0/kJBxhiXyvyTWk2JmkMi
- REjR84lCMAoJd1OM9XGFOg94BT5aLlEKFcld9qj7B4UFpma8RbRUpUWdo0omAEgrnhaKJwV8
- qt0ULaF/kyP5qbI8iA2PAvIjq73dA4LNKdMFPG7Rw8yITQ1Vi0DlDgDT2RLvKxEQC0o3C6O4
- iQq7qamsThLK0JSDRdLDnq6Phv+Yahd7sDMYuk3gIdoyczRkXzncWAYq7XTWl7nZYBVXG1D8
- gkdclsnHzEKpTQIzn/rGyZshsjL4pxVUIpw/vdfx8oNRLKj7iduf11g2kFP71e9v2PP94ik3
- Xi9oszP+fP770J0B8QM8w745BrcQm41SsILjArK+5mMHrYhM4ZFN7aipK3UXDNs3vjN+t0zi
- qErzlrxXtsX4J6nqjs/mF9frVkpv7OTAzj7pjFHv0Bu8pRm4AyW6Y5/H6jOup6nkJdP/AFDu
- 5ImdlA0jhr3iLk9s9WnjBUHyMYu+HD7qR3yhX6uWxg2oB2FWVMRLXbPEt2hRGq09rVQS7DBy
- dbZgPwou7pD8MTfQhGmDJFKm2jvOwU0EXchrcwEQAOsDQjdtPeaRt8EP2pc8tG+g9eiiX9Sh
- rX87SLSeKF6uHpEJ3VbhafIU6A7hy7RcIJnQz0hEUdXjH774B8YD3JKnAtfAyuIU2/rOGa/v
- UN4BY6U6TVIOv9piVQByBthGQh4YHhePSKtPzK9Pv/6rd8H3IWnJK/dXiUDQllkedrENXrZp
- eLUjhyp94ooo9XqRl44YqlsrSUh+BzW7wqwfmu26UjmAzIZYVCPCq5IjD96QrhLf6naY6En3
- ++tqCAWPkqKvWfRdXPOz4GK08uhcBp3jZHTVkcbo5qahVpv8Y8mzOvSIAxnIjb+cklVxjyY9
- dVlrhfKiK5L+zA2fWUreVBqLs1SjfHm5OGuQ2qqzVcMYJGH/uisJn22VXB1c48yYyGv2HUN5
- lC1JHQUV9734I5cczA2Gfo27nTHy3zANj4hy+s/q1adzvn7hMokU7OehwKrNXafFfwWVK3OG
- 1dSjWtgIv5KJi1XZk5TV6JlPZSqj4D8pUwIx3KSp0cD7xTEZATRfc47Yc+cyKcXG034tNEAc
- xZNTR1kMi9njdxc1wzM9T6pspTtA0vuD3ee94Dg+nDrH1As24uwfFLguiILPzpl0kLaPYYgB
- wumlL2nGcB6RVRRFMiAS5uOTEk+sJ/tRiQwO3K8vmaECaNJRfJC7weH+jww1Dzo0f1TP6rUa
- fTBRABEBAAHCwXYEGAEIACAWIQRFRIIoLNkQ2+89Jfg+Xz0Ep6JGAwUCXchrcwIbDAAKCRA+
- Xz0Ep6JGAxtdEAC54NQMBwjUNqBNCMsh6WrwQwbg9tkJw718QHPw43gKFSxFIYzdBzD/YMPH
- l+2fFiefvmI4uNDjlyCITGSM+T6b8cA7YAKvZhzJyJSS7pRzsIKGjhk7zADL1+PJei9p9idy
- RbmFKo0dAL+ac0t/EZULHGPuIiavWLgwYLVoUEBwz86ZtEtVmDmEsj8ryWw75ZIarNDhV74s
- BdM2ffUJk3+vWe25BPcJiaZkTuFt+xt2CdbvpZv3IPrEkp9GAKof2hHdFCRKMtgxBo8Kao6p
- Ws/Vv68FusAi94ySuZT3fp1xGWWf5+1jX4ylC//w0Rj85QihTpA2MylORUNFvH0MRJx4mlFk
- XN6G+5jIIJhG46LUucQ28+VyEDNcGL3tarnkw8ngEhAbnvMJ2RTx8vGh7PssKaGzAUmNNZiG
- MB4mPKqvDZ02j1wp7vthQcOEg08z1+XHXb8ZZKST7yTVa5P89JymGE8CBGdQaAXnqYK3/yWf
- FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
- 4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
- ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240325190225.104465-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:JC98/EGwrxAStXbu+nOCr3FALNkTF/uM4cxo+YHtZOlchqwsAt7
- 4/vBydvPhM8295GUGDkJUKYGsDwqLFNTIbwk+AjE9omy2IgNbTNOo8zXOmbfsiFUsao24GK
- f8OQbQslnRMqFdn6OgHZxmxs/Gxr875c09hVSWEKjyqd2sX3LPxiEvC7yTxXJU5cV9EbirO
- 4ZLVdNuVE3N18uY2q5U8Q==
-UI-OutboundReport: notjunk:1;M01:P0:cMnDoDbqT/8=;xD+VCOA4PKM9Veq1kVRknjC8hTj
- beY7XDZVP0Vc5hdJCcygg+ZIIwGsSUjgyOB/uWYzVn1rVaygn41ZozbqxH/5oF+gtLrbd5DLK
- P7zbHWtRTFwZr1hrIj5YgdTp1xmo0wPCauaf92hkjm0cWzxaP5+mMDGt7ZsCPRUE87xQ34Ro9
- 0LDDBFBUtbS9URTbmDbAq3gqv52bYt1boCH/GQjiVLRiOidFy0LsQd2of+4mTmSvmq22VmFYr
- XLikP4RfkaYks2Fmth9iYF0mEUI96o0nYgJST/1CXVcQytvFZI+JnXzBt7S2T4wGCq6SDugVh
- D1Y9OtC7nshFVF4ULUn0S/lfAkEIj28ZvfKMtglnwnhv/kGDt92qvcl/GFt5tKT6N2Cqdbtxs
- +47R7cNhjZFB4I1MuZAQtD+RlpLe8HXkxxnOn8H/l/Qh6f52rsW73YBtYaGHSdAUiyLdjwoyj
- H1ndmaslOLvWG31sfkz1+04wLcWKtWOzy59oHGwrsbp8sejKsEEQdKRUYbB9e4u5z+RkQfA0k
- YDUk626sBZZjXkfNsNSvxPuqlnZOLuH2VgFfUPIs+ybHGa0C3fHjQhKyW47CKrSC5GHffVZEe
- PjxE0DmtTVWDxcZPPYMVUBjaLyaNF14z+Cw9QWeeGnJ+loYJQHY5lDT7THvBbHihzibiMQkeO
- A6v+nMEaupzXmBQTXLmI8tGCT5hOj/D6kIJjFMAbexcdMvZA+f7f30rCH1ZaFuWNYoXnTrGPB
- bPJzteR8/BZSnH9WqKDkIAQLIkORu00MKWm/kUVkghyWDCJfOmtQ2kcfUBOSTRigBjQidHHha
- qWczXsevHkh53Uf14TsmYlbGSHiEZL6/kY0AmV5TIJS/I=
-Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <bd24dc1a-d474-4cc7-87f9-2d5059a19602@xen.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=smostafa@google.com; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,338 +101,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/25/24 20:02, Richard Henderson wrote:
-> Split do_unit_cond to do_unit_zero_cond to only handle conditions
-> versus zero.  These are the only ones that are legal for UXOR.
-> Simplify trans_uxor accordingly.
->
-> Rename do_unit to do_unit_addsub, since xor has been split.
-> Properly compute carry-out bits for add and subtract, mirroring
-> the code in do_add and do_sub.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Hi Julien,
 
-this patch does not break test #55 (uaddcm) any longer, and with the other
-two patches test #58 (uaddcm & dcor) is OK as well.
+On Mon, Mar 25, 2024 at 02:20:07PM +0000, Julien Grall wrote:
+> Hi Mostafa,
+> 
+> On 25/03/2024 10:14, Mostafa Saleh wrote:
+> > @@ -524,7 +551,7 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
+> >           tlbe->entry.translated_addr = gpa;
+> >           tlbe->entry.iova = ipa & ~mask;
+> >           tlbe->entry.addr_mask = mask;
+> > -        tlbe->entry.perm = s2ap;
+> > +        tlbe->parent_perm = tlbe->entry.perm = s2ap;
+> >           tlbe->level = level;
+> >           tlbe->granule = granule_sz;
+> >           return 0;
+> > @@ -537,6 +564,35 @@ error:
+> >       return -EINVAL;
+> >   }
+> > +/* Combine 2 TLB enteries and return in tlbe. */
+> > +static void combine_tlb(SMMUTLBEntry *tlbe, SMMUTLBEntry *tlbe_s2,
+> > +                        dma_addr_t iova, SMMUTransCfg *cfg)
+> > +{
+> > +        if (cfg->stage == SMMU_NESTED) {
+> > +
+> > +            /*
+> > +             * tg and level are used from stage-1, while the addr mask can be
+> With the current approach, I can't boot a guest if I create a dummy stage-1
+> using 512GB mapping and a stage-2 using 2MB mapping. It looks like this is
+> because the level will be used during the TLB lookup.
 
-So, for the whole series:
-Reviewed-by: Helge Deller <deller@gmx.de>
-Tested-by: Helge Deller <deller@gmx.de>
+Agh, I guess that case is’t common with Linux.
 
-Thanks!
-Helge
+I was able to reproduce it with a hacked Linux driver, and the issue
+happens in smmu_iotlb_lookup() because it assumes the cached entry has
+a mask matching level and granularity, which is not correct with
+nesting and I missed it, and fixing the mask is not enough here.
 
+Looking at the mask of the found entry, not good also, if there is
+disparity between stage-1 and stage-2 levels we always miss in TLB
+even for the same address.
 
+> 
+> I managed to solve the issue by using the max level of the two stages. I
+> think we may need to do a minimum for the granule.
+> 
 
-> ---
->
-> v2: Cut and paste error between 64- and 32-bit paths.
->      Shift 32-bit carry down 1 bit like 64-bit carry;
->      tradeoff is shift vs needing a 64-bit constant for the mask.
->      Don't use of TCG_COND_TST{NE,EQ}, as this will limit backports
->      of the actual bug fix.  We can convert the port to test conditions
->      en masse during the next devel cycle.
->
-> ---
->   target/hppa/translate.c | 218 +++++++++++++++++++++-------------------
->   1 file changed, 113 insertions(+), 105 deletions(-)
->
-> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index 3fc3e7754c..99c5c4cbca 100644
-> --- a/target/hppa/translate.c
-> +++ b/target/hppa/translate.c
-> @@ -936,98 +936,44 @@ static DisasCond do_sed_cond(DisasContext *ctx, un=
-signed orig, bool d,
->       return do_log_cond(ctx, c * 2 + f, d, res);
->   }
->
-> -/* Similar, but for unit conditions.  */
-> -
-> -static DisasCond do_unit_cond(unsigned cf, bool d, TCGv_i64 res,
-> -                              TCGv_i64 in1, TCGv_i64 in2)
-> +/* Similar, but for unit zero conditions.  */
-> +static DisasCond do_unit_zero_cond(unsigned cf, bool d, TCGv_i64 res)
->   {
-> -    DisasCond cond;
-> -    TCGv_i64 tmp, cb =3D NULL;
-> +    TCGv_i64 tmp;
->       uint64_t d_repl =3D d ? 0x0000000100000001ull : 1;
-> -
-> -    if (cf & 8) {
-> -        /* Since we want to test lots of carry-out bits all at once, do=
- not
-> -         * do our normal thing and compute carry-in of bit B+1 since th=
-at
-> -         * leaves us with carry bits spread across two words.
-> -         */
-> -        cb =3D tcg_temp_new_i64();
-> -        tmp =3D tcg_temp_new_i64();
-> -        tcg_gen_or_i64(cb, in1, in2);
-> -        tcg_gen_and_i64(tmp, in1, in2);
-> -        tcg_gen_andc_i64(cb, cb, res);
-> -        tcg_gen_or_i64(cb, cb, tmp);
-> -    }
-> +    uint64_t ones =3D 0, sgns =3D 0;
->
->       switch (cf >> 1) {
-> -    case 0: /* never / TR */
-> -        cond =3D cond_make_f();
-> -        break;
-> -
->       case 1: /* SBW / NBW */
->           if (d) {
-> -            tmp =3D tcg_temp_new_i64();
-> -            tcg_gen_subi_i64(tmp, res, d_repl * 0x00000001u);
-> -            tcg_gen_andc_i64(tmp, tmp, res);
-> -            tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80000000u);
-> -            cond =3D cond_make_0(TCG_COND_NE, tmp);
-> -        } else {
-> -            /* undefined */
-> -            cond =3D cond_make_f();
-> +            ones =3D d_repl;
-> +            sgns =3D d_repl << 31;
->           }
->           break;
-> -
->       case 2: /* SBZ / NBZ */
-> -        /* See hasless(v,1) from
-> -         * https://graphics.stanford.edu/~seander/bithacks.html#ZeroInW=
-ord
-> -         */
-> -        tmp =3D tcg_temp_new_i64();
-> -        tcg_gen_subi_i64(tmp, res, d_repl * 0x01010101u);
-> -        tcg_gen_andc_i64(tmp, tmp, res);
-> -        tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80808080u);
-> -        cond =3D cond_make_0(TCG_COND_NE, tmp);
-> +        ones =3D d_repl * 0x01010101u;
-> +        sgns =3D ones << 7;
->           break;
-> -
->       case 3: /* SHZ / NHZ */
-> -        tmp =3D tcg_temp_new_i64();
-> -        tcg_gen_subi_i64(tmp, res, d_repl * 0x00010001u);
-> -        tcg_gen_andc_i64(tmp, tmp, res);
-> -        tcg_gen_andi_i64(tmp, tmp, d_repl * 0x80008000u);
-> -        cond =3D cond_make_0(TCG_COND_NE, tmp);
-> +        ones =3D d_repl * 0x00010001u;
-> +        sgns =3D ones << 15;
->           break;
-> -
-> -    case 4: /* SDC / NDC */
-> -        tcg_gen_andi_i64(cb, cb, d_repl * 0x88888888u);
-> -        cond =3D cond_make_0(TCG_COND_NE, cb);
-> -        break;
-> -
-> -    case 5: /* SWC / NWC */
-> -        if (d) {
-> -            tcg_gen_andi_i64(cb, cb, d_repl * 0x80000000u);
-> -            cond =3D cond_make_0(TCG_COND_NE, cb);
-> -        } else {
-> -            /* undefined */
-> -            cond =3D cond_make_f();
-> -        }
-> -        break;
-> -
-> -    case 6: /* SBC / NBC */
-> -        tcg_gen_andi_i64(cb, cb, d_repl * 0x80808080u);
-> -        cond =3D cond_make_0(TCG_COND_NE, cb);
-> -        break;
-> -
-> -    case 7: /* SHC / NHC */
-> -        tcg_gen_andi_i64(cb, cb, d_repl * 0x80008000u);
-> -        cond =3D cond_make_0(TCG_COND_NE, cb);
-> -        break;
-> -
-> -    default:
-> -        g_assert_not_reached();
->       }
-> -    if (cf & 1) {
-> -        cond.c =3D tcg_invert_cond(cond.c);
-> +    if (ones =3D=3D 0) {
-> +        /* Undefined, or 0/1 (never/always). */
-> +        return cf & 1 ? cond_make_t() : cond_make_f();
->       }
->
-> -    return cond;
-> +    /*
-> +     * See hasless(v,1) from
-> +     * https://graphics.stanford.edu/~seander/bithacks.html#ZeroInWord
-> +     */
-> +    tmp =3D tcg_temp_new_i64();
-> +    tcg_gen_subi_i64(tmp, res, ones);
-> +    tcg_gen_andc_i64(tmp, tmp, res);
-> +    tcg_gen_andi_i64(tmp, tmp, sgns);
-> +
-> +    return cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, tmp);
->   }
->
->   static TCGv_i64 get_carry(DisasContext *ctx, bool d,
-> @@ -1330,34 +1276,86 @@ static bool do_log_reg(DisasContext *ctx, arg_rr=
-r_cf_d *a,
->       return nullify_end(ctx);
->   }
->
-> -static void do_unit(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
-> -                    TCGv_i64 in2, unsigned cf, bool d, bool is_tc,
-> -                    void (*fn)(TCGv_i64, TCGv_i64, TCGv_i64))
-> +static void do_unit_addsub(DisasContext *ctx, unsigned rt, TCGv_i64 in1=
-,
-> +                           TCGv_i64 in2, unsigned cf, bool d,
-> +                           bool is_tc, bool is_add)
->   {
-> -    TCGv_i64 dest;
-> +    TCGv_i64 dest =3D tcg_temp_new_i64();
-> +    uint64_t test_cb =3D 0;
->       DisasCond cond;
->
-> -    if (cf =3D=3D 0) {
-> -        dest =3D dest_gpr(ctx, rt);
-> -        fn(dest, in1, in2);
-> -        save_gpr(ctx, rt, dest);
-> -        cond_free(&ctx->null_cond);
-> -    } else {
-> -        dest =3D tcg_temp_new_i64();
-> -        fn(dest, in1, in2);
-> -
-> -        cond =3D do_unit_cond(cf, d, dest, in1, in2);
-> -
-> -        if (is_tc) {
-> -            TCGv_i64 tmp =3D tcg_temp_new_i64();
-> -            tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
-> -            gen_helper_tcond(tcg_env, tmp);
-> +    /* Select which carry-out bits to test. */
-> +    switch (cf >> 1) {
-> +    case 4: /* NDC / SDC -- 4-bit carries */
-> +        test_cb =3D dup_const(MO_8, 0x88);
-> +        break;
-> +    case 5: /* NWC / SWC -- 32-bit carries */
-> +        if (d) {
-> +            test_cb =3D dup_const(MO_32, INT32_MIN);
-> +        } else {
-> +            cf &=3D 1; /* undefined -- map to never/always */
->           }
-> -        save_gpr(ctx, rt, dest);
-> -
-> -        cond_free(&ctx->null_cond);
-> -        ctx->null_cond =3D cond;
-> +        break;
-> +    case 6: /* NBC / SBC -- 8-bit carries */
-> +        test_cb =3D dup_const(MO_8, INT8_MIN);
-> +        break;
-> +    case 7: /* NHC / SHC -- 16-bit carries */
-> +        test_cb =3D dup_const(MO_16, INT16_MIN);
-> +        break;
->       }
-> +    if (!d) {
-> +        test_cb =3D (uint32_t)test_cb;
-> +    }
-> +
-> +    if (!test_cb) {
-> +        /* No need to compute carries if we don't need to test them. */
-> +        if (is_add) {
-> +            tcg_gen_add_i64(dest, in1, in2);
-> +        } else {
-> +            tcg_gen_sub_i64(dest, in1, in2);
-> +        }
-> +        cond =3D do_unit_zero_cond(cf, d, dest);
-> +    } else {
-> +        TCGv_i64 cb =3D tcg_temp_new_i64();
-> +
-> +        if (d) {
-> +            TCGv_i64 cb_msb =3D tcg_temp_new_i64();
-> +            if (is_add) {
-> +                tcg_gen_add2_i64(dest, cb_msb, in1, ctx->zero, in2, ctx=
-->zero);
-> +                tcg_gen_xor_i64(cb, in1, in2);
-> +            } else {
-> +                /* See do_sub, !is_b. */
-> +                TCGv_i64 one =3D tcg_constant_i64(1);
-> +                tcg_gen_sub2_i64(dest, cb_msb, in1, one, in2, ctx->zero=
-);
-> +                tcg_gen_eqv_i64(cb, in1, in2);
-> +            }
-> +            tcg_gen_xor_i64(cb, cb, dest);
-> +            tcg_gen_extract2_i64(cb, cb, cb_msb, 1);
-> +        } else {
-> +            if (is_add) {
-> +                tcg_gen_add_i64(dest, in1, in2);
-> +                tcg_gen_xor_i64(cb, in1, in2);
-> +            } else {
-> +                tcg_gen_sub_i64(dest, in1, in2);
-> +                tcg_gen_eqv_i64(cb, in1, in2);
-> +            }
-> +            tcg_gen_xor_i64(cb, cb, dest);
-> +            tcg_gen_shri_i64(cb, cb, 1);
-> +        }
-> +
-> +        tcg_gen_andi_i64(cb, cb, test_cb);
-> +        cond =3D cond_make_0_tmp(cf & 1 ? TCG_COND_EQ : TCG_COND_NE, cb=
-);
-> +    }
-> +
-> +    if (is_tc) {
-> +        TCGv_i64 tmp =3D tcg_temp_new_i64();
-> +        tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
-> +        gen_helper_tcond(tcg_env, tmp);
-> +    }
-> +    save_gpr(ctx, rt, dest);
-> +
-> +    cond_free(&ctx->null_cond);
-> +    ctx->null_cond =3D cond;
->   }
->
->   #ifndef CONFIG_USER_ONLY
-> @@ -2748,14 +2746,24 @@ static bool trans_cmpclr(DisasContext *ctx, arg_=
-rrr_cf_d *a)
->
->   static bool trans_uxor(DisasContext *ctx, arg_rrr_cf_d *a)
->   {
-> -    TCGv_i64 tcg_r1, tcg_r2;
-> +    TCGv_i64 tcg_r1, tcg_r2, dest;
->
->       if (a->cf) {
->           nullify_over(ctx);
->       }
-> +
->       tcg_r1 =3D load_gpr(ctx, a->r1);
->       tcg_r2 =3D load_gpr(ctx, a->r2);
-> -    do_unit(ctx, a->t, tcg_r1, tcg_r2, a->cf, a->d, false, tcg_gen_xor_=
-i64);
-> +    dest =3D dest_gpr(ctx, a->t);
-> +
-> +    tcg_gen_xor_i64(dest, tcg_r1, tcg_r2);
-> +    save_gpr(ctx, a->t, dest);
-> +
-> +    cond_free(&ctx->null_cond);
-> +    if (a->cf) {
-> +        ctx->null_cond =3D do_unit_zero_cond(a->cf, a->d, dest);
-> +    }
-> +
->       return nullify_end(ctx);
->   }
->
-> @@ -2790,7 +2798,7 @@ static bool do_uaddcm(DisasContext *ctx, arg_rrr_c=
-f_d *a, bool is_tc)
->       tcg_r2 =3D load_gpr(ctx, a->r2);
->       tmp =3D tcg_temp_new_i64();
->       tcg_gen_not_i64(tmp, tcg_r2);
-> -    do_unit(ctx, a->t, tcg_r1, tmp, a->cf, a->d, is_tc, tcg_gen_add_i64=
-);
-> +    do_unit_addsub(ctx, a->t, tcg_r1, tmp, a->cf, a->d, is_tc, true);
->       return nullify_end(ctx);
->   }
->
-> @@ -2817,8 +2825,8 @@ static bool do_dcor(DisasContext *ctx, arg_rr_cf_d=
- *a, bool is_i)
->       }
->       tcg_gen_andi_i64(tmp, tmp, (uint64_t)0x1111111111111111ull);
->       tcg_gen_muli_i64(tmp, tmp, 6);
-> -    do_unit(ctx, a->t, load_gpr(ctx, a->r), tmp, a->cf, a->d, false,
-> -            is_i ? tcg_gen_add_i64 : tcg_gen_sub_i64);
-> +    do_unit_addsub(ctx, a->t, load_gpr(ctx, a->r), tmp,
-> +                   a->cf, a->d, false, is_i);
->       return nullify_end(ctx);
->   }
->
+Just fixing the granularity and level, will alway miss in TLB if they
+are different as granularity is used in lookup, I guess one way is to
+fall back for stage-2 granularity in lookup if stage-1 lookup fails,
+I will have another look and see if there is a better solution for v2.
+
+But for now as you mentioned (also we need update the IOVA to match
+the mask), that just should at least work:
+
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index ef5edfe4dc..ac2dc3efeb 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -572,21 +572,13 @@ static void combine_tlb(SMMUTLBEntry *tlbe, SMMUTLBEntry *tlbe_s2,
+                         dma_addr_t iova, SMMUTransCfg *cfg)
+ {
+         if (cfg->stage == SMMU_NESTED) {
+-
+-            /*
+-             * tg and level are used from stage-1, while the addr mask can be
+-             * smaller in case stage-2 size(based on granule and level) was
+-             * smaller than stage-1.
+-             * That should have no impact on:
+-             * - lookup: as iova is properly aligned with the stage-1 level and
+-             *   granule.
+-             * - Invalidation: as it uses the entry mask.
+-             */
+             tlbe->entry.addr_mask = MIN(tlbe->entry.addr_mask,
+                                         tlbe_s2->entry.addr_mask);
+             tlbe->entry.translated_addr = CACHED_ENTRY_TO_ADDR(tlbe_s2,
+                                           tlbe->entry.translated_addr);
+-
++            tlbe->granule = MIN(tlbe->granule, tlbe_s2->granule);
++            tlbe->level = MAX(tlbe->level, tlbe_s2->level);
++            tlbe->entry.iova = iova & ~tlbe->entry.addr_mask;
+             /* parent_perm has s2 perm while perm has s1 perm. */
+             tlbe->parent_perm = tlbe_s2->entry.perm;
+
+> 
+> > +             * smaller in case stage-2 size(based on granule and level) was
+> > +             * smaller than stage-1.
+> > +             * That should have no impact on:
+> > +             * - lookup: as iova is properly aligned with the stage-1 level and
+> > +             *   granule.
+> > +             * - Invalidation: as it uses the entry mask.
+> > +             */
+> > +            tlbe->entry.addr_mask = MIN(tlbe->entry.addr_mask,
+> > +                                        tlbe_s2->entry.addr_mask);
+> > +            tlbe->entry.translated_addr = CACHED_ENTRY_TO_ADDR(tlbe_s2,
+> > +                                          tlbe->entry.translated_addr);
+> > +
+> > +            /* parent_perm has s2 perm while perm has s1 perm. */
+> > +            tlbe->parent_perm = tlbe_s2->entry.perm;
+> > +            return;
+> > +        }
+> > +
+> > +        /* That was not nested, use the s2. */
+> > +        memcpy(tlbe, tlbe_s2, sizeof(*tlbe));
+> > +}
+> 
+> Cheers,
+> 
+> -- 
+> Julien Grall
+
+Thanks,
+Mostafa
 
 
