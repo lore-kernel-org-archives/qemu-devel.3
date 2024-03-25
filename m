@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B989C54E64
-	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 14:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D018C54E58
+	for <qemu-devel@archiver.kernel.org>; Mon, 25 Mar 2024 14:14:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rol4R-00036h-1k; Mon, 25 Mar 2024 10:13:03 -0400
+	id 1rol4R-00036i-1x; Mon, 25 Mar 2024 10:13:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rol4J-00035P-2C
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rol4I-00035O-U7
  for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:12:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rol4H-0005u1-K1
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rol4H-0005tz-Iw
  for qemu-devel@nongnu.org; Mon, 25 Mar 2024 10:12:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1711375971;
@@ -24,39 +24,40 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e/ndwUAIAghUSD679D4fKjCND9j9K0f5xXqvUEDwxA0=;
- b=BTtYQEKJ5O48Lvi0jlkOaNmIWSc+1W9u+IMBaBB8WU/lYmiDnhl6Eeimiu2lVl5d/DqPwr
- bs2FCSh8+KwCYxKllYqH8b63QLHUkgRETUNN0mMIOnrmw+Eu2Nb9FbG8IOXaTKKsTleQzv
- OEYegl3H+en7LNvLDvA8052FCI3vdmQ=
+ bh=jvtDnRWzDZsJoUkIlOW0ywPJ2i2CMssnW163x/f5Cwc=;
+ b=FRmFUtWonkhU8wQGFgu8CYaR8jXnPAuOSw9me+lpAf16KzRPAzggSTohcARGknjifKPo7V
+ RvDbKOZ5YkEFNU6MD4SYzgjilro0Fa/ldXZTyh0ZEQkUlxbQ0PmIi1sUgTu/B0EieyqeJv
+ XuvWh6gRSuaX5AFPK+lNAZ1GZfy/0PM=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-NNTYa60gPiaIpdLoIZ1m-A-1; Mon, 25 Mar 2024 10:12:49 -0400
-X-MC-Unique: NNTYa60gPiaIpdLoIZ1m-A-1
+ us-mta-490-tUoWFmSBMV2H9ZkoCJnvYA-1; Mon, 25 Mar 2024 10:12:48 -0400
+X-MC-Unique: tUoWFmSBMV2H9ZkoCJnvYA-1
 Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
  [10.11.54.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 5BAC9800266;
- Mon, 25 Mar 2024 14:12:49 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.90])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 0196A3C20;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B0987822487;
  Mon, 25 Mar 2024 14:12:47 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.90])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 416873C22;
+ Mon, 25 Mar 2024 14:12:45 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 9/9] tests/tcg/s390x: Test TEST AND SET
-Date: Mon, 25 Mar 2024 15:12:10 +0100
-Message-ID: <20240325141210.788356-10-thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Ido Plat <ido.plat@ibm.com>,
+ qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PULL 8/9] target/s390x: Use mutable temporary value for op_ts
+Date: Mon, 25 Mar 2024 15:12:09 +0100
+Message-ID: <20240325141210.788356-9-thuth@redhat.com>
 In-Reply-To: <20240325141210.788356-1-thuth@redhat.com>
 References: <20240325141210.788356-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -64,7 +65,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,73 +81,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Ido Plat <ido.plat@ibm.com>
 
-Add a small test to prevent regressions.
+Otherwise TCG would assume the register that holds t1 would be constant
+and reuse whenever it needs the value within it.
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: qemu-stable@nongnu.org
+Fixes: f1ea739bd598 ("target/s390x: Use tcg_constant_* in local contexts")
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240318202722.20675-2-iii@linux.ibm.com>
+[iii: Adjust a newline and capitalization, add tags]
+Signed-off-by: Ido Plat <ido.plat@ibm.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Message-ID: <20240318202722.20675-1-iii@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/tcg/s390x/ts.c            | 35 +++++++++++++++++++++++++++++++++
- tests/tcg/s390x/Makefile.target |  1 +
- 2 files changed, 36 insertions(+)
- create mode 100644 tests/tcg/s390x/ts.c
+ target/s390x/tcg/translate.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tests/tcg/s390x/ts.c b/tests/tcg/s390x/ts.c
-new file mode 100644
-index 0000000000..441faf30d9
---- /dev/null
-+++ b/tests/tcg/s390x/ts.c
-@@ -0,0 +1,35 @@
-+/*
-+ * Test the TEST AND SET instruction.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include <assert.h>
-+#include <stdlib.h>
-+
-+static int ts(char *p)
-+{
-+    int cc;
-+
-+    asm("ts %[p]\n"
-+        "ipm %[cc]"
-+        : [cc] "=r" (cc)
-+        , [p] "+Q" (*p)
-+        : : "cc");
-+
-+    return (cc >> 28) & 3;
-+}
-+
-+int main(void)
-+{
-+    char c;
-+
-+    c = 0x80;
-+    assert(ts(&c) == 1);
-+    assert(c == 0xff);
-+
-+    c = 0x7f;
-+    assert(ts(&c) == 0);
-+    assert(c == 0xff);
-+
-+    return EXIT_SUCCESS;
-+}
-diff --git a/tests/tcg/s390x/Makefile.target b/tests/tcg/s390x/Makefile.target
-index e2aba2ec27..a8f86c9449 100644
---- a/tests/tcg/s390x/Makefile.target
-+++ b/tests/tcg/s390x/Makefile.target
-@@ -47,6 +47,7 @@ TESTS+=add-logical-with-carry
- TESTS+=lae
- TESTS+=cvd
- TESTS+=cvb
-+TESTS+=ts
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index 0d0c672c95..57b7db1ee9 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -4781,9 +4781,10 @@ static DisasJumpType op_trXX(DisasContext *s, DisasOps *o)
  
- cdsg: CFLAGS+=-pthread
- cdsg: LDFLAGS+=-pthread
+ static DisasJumpType op_ts(DisasContext *s, DisasOps *o)
+ {
+-    TCGv_i32 t1 = tcg_constant_i32(0xff);
++    TCGv_i32 ff = tcg_constant_i32(0xff);
++    TCGv_i32 t1 = tcg_temp_new_i32();
+ 
+-    tcg_gen_atomic_xchg_i32(t1, o->in2, t1, get_mem_index(s), MO_UB);
++    tcg_gen_atomic_xchg_i32(t1, o->in2, ff, get_mem_index(s), MO_UB);
+     tcg_gen_extract_i32(cc_op, t1, 7, 1);
+     set_cc_static(s);
+     return DISAS_NEXT;
 -- 
 2.44.0
 
