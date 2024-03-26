@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDFB6CD11DD
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 13:10:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9D0CD11DD
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 13:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp6Yr-0002H4-MO; Tue, 26 Mar 2024 09:09:53 -0400
+	id 1rp6dC-0003Nk-EA; Tue, 26 Mar 2024 09:14:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp6Yo-0002GM-9x
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:09:50 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp6d9-0003NU-As
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:14:19 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp6Yl-00076V-Cb
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:09:50 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-41400a9844aso37200735e9.0
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 06:09:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp6d6-0008Co-UW
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:14:18 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-513cf9bacf1so7438477e87.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 06:14:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711458584; x=1712063384; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0LSC2LbQn66/CrjDJXLYir/DE+1vSCS6UQ5hjybI1Vg=;
- b=B5Doez2sxvf8LGvczasT5bfBguzavX1hT7wAAo+3ZYsZ3vF6h8JUlX1XF5fj+TvAC8
- AQxwrrX9Jq05vGjxl5gnsE5QLYIUppsSVfoB0x1JHHgrUXKh4M+KZo67VaLaEBVwVsOu
- UL7gKxjc+uXqFz2eCc/NKq1nNcRQW8XWwMHJZf+aTAhfMcrvM5XEC1x33dx9qX0uX+nl
- G0/zMDZuoUudSuiRiRRNEfjWoiQWnb9G7Vz2/GTlPk9F5KMXFSHgSfd9opEwA3z+b8fT
- /qUDbtK97z4FdeAQ87Q9VcLpyiaXyXKDSNnN80kdfPoRpRKAoNj/g+zE1ohs4h7OW7bV
- FUhQ==
+ d=linaro.org; s=google; t=1711458854; x=1712063654; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IBArclXLgBtGIQsug37uXb6juwwdgaFEKEzp1NzqfYA=;
+ b=mVlXtdD4/Yat5n5KcwksZTrKO4MFcAjUImiIbD1lKZGugqjwgRe9wsCuqoVb11YzcK
+ h3sALBi4yG6pvJkr4CQ1gKU5n3fYtGNU46ty2y00dIIzIH7wTXkYb1/Eo+FcwRAIXtnb
+ L2p2gx2tSe7wFH0Epe9uFKcDvGAHsO94qRygvRRT5RQqeicFFEcjomwaWjdcmbjqjDtU
+ XkwXndDC3Dcs2nD65x1Vf4I1TkKjgmDLC8SdVwsfy3MNzSd4ih9pHwnstNl1HgRaRJaS
+ jThRPQKxChzaQ4dVz4IfiWNAIc3Q1VJxdd5fuqvH3Sl0Dfn4q3Vx2o/hK8BVhZHa519y
+ +4iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711458584; x=1712063384;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0LSC2LbQn66/CrjDJXLYir/DE+1vSCS6UQ5hjybI1Vg=;
- b=uMtS8Pg4+VEooSKPIqaJlcwRiZvh+Az/XqbRvF+O9Dwf755geMuQ3VXaJO/hbtiNjs
- vVbfC/iO2yK1Bd1x3jWFU04l02D0l4zL5rNXSaJw3zHYSF4hcKtm557RU3sxMR9vah5U
- XaAFItXNO9r65Dvn2mUc0CwfIFekZ2Kess+/hozoKf+Crr7C6naPotP1ax/cnENbt4wn
- Z9V5QRw0oCG2vg/xs+nfXjCelbR4cMpWKmKiJLibnk4lYORgLZQTaIqTNmnbcLQP5Lk1
- I+Vw3HsBmC020LQuYctlCn7iajQQx3y8lGwLYz9sjPxkmr6t17oll6j1Pm8UpA2tNG4r
- Z4Dw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXRTUUThZdr889fvKXNBtyXG7CjYtH4ko0KH+P/yMnUB5utTxwomXOSi6K8p1yYXn8eAVJw0BHW9ZaUBajtnnbI43Wya4E=
-X-Gm-Message-State: AOJu0YyYsSKz+W9Bjice7G16iZshHXTlIDkDqDMsfFwsGl4GGlr/hdKw
- KrtEEeDNEPzjehyKVsnechYcO/V5UaPR6NP9W8lrOTL+N+S5dpgajIJlHASwp5o=
-X-Google-Smtp-Source: AGHT+IHb/1iI5LxGQfN25P6NFALfXzEQbEqhKJSWMBdkEn5aIXMTUeOQFlh9Fnzk/pAzrACvvG+D7A==
-X-Received: by 2002:a05:600c:3217:b0:414:6467:d8e9 with SMTP id
- r23-20020a05600c321700b004146467d8e9mr1341526wmp.17.1711458584531; 
- Tue, 26 Mar 2024 06:09:44 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.155.229])
+ d=1e100.net; s=20230601; t=1711458854; x=1712063654;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IBArclXLgBtGIQsug37uXb6juwwdgaFEKEzp1NzqfYA=;
+ b=dkrm2VNHGvb6sXGi3dVZhVW0G3a3aCU5IZHSTk4cY8JyojsJ5mg3eNwDOl6fPvKFbT
+ 1HrVDvPiXcHYgtR0pEXtG7BSQwEF2CHMblH9D7u4xwDYYBl/7+xosnjla4/soz78az17
+ CrXb7X1w4BhRLOTSJX0hRKOIq/CrGL7j9CneWryiwPsN9JlGVFg3QteqAZJHQMyhKBBC
+ +qNJKa20iyYH6hqN4sJmWz7imGq/oO2nDcNI79RbJp3EJhfq42aGpqVxPUJc4IEcytYZ
+ /nqNbBlyifqtqLEJibyfaBw3lB4iRfahUdu8CcypPBWghzBsTg/7Cwar4HNx97iJyWty
+ W5Mw==
+X-Gm-Message-State: AOJu0Yw9NuZ9bwUoQfV9xLcGCBuop3OEVl8aeyvJI1G4jptFaGcI6tZf
+ rhnLr7dx0r+PUKDxPzBx5Gl0kJahic+lJz8WGlm/Ifq2ghQoORLVhsWaOg90P3sA1FN6GLr6LTy
+ g
+X-Google-Smtp-Source: AGHT+IEGsXoW+PPpOhv5ihVPPM0jrHIOfW3HEhzUvTreGanWDwY3bSe0A8Xy/R1lkXdyDcV73lBb6g==
+X-Received: by 2002:a2e:a0c5:0:b0:2d6:bd60:1c17 with SMTP id
+ f5-20020a2ea0c5000000b002d6bd601c17mr6581350ljm.28.1711458853565; 
+ Tue, 26 Mar 2024 06:14:13 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.155.229])
  by smtp.gmail.com with ESMTPSA id
- d37-20020a05600c4c2500b004140a6d52e9sm648578wmp.1.2024.03.26.06.09.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 06:09:44 -0700 (PDT)
-Message-ID: <403a8e6f-b6ba-45e1-a406-0642b8d1eb93@linaro.org>
-Date: Tue, 26 Mar 2024 14:09:42 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial for-9.0] smbios: add stub for
- smbios_get_table_legacy()
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
+ s19-20020a05600c45d300b00414112a6159sm11482143wmo.44.2024.03.26.06.14.12
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 26 Mar 2024 06:14:13 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org, Sergio Lopez <slp@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Cc: anisinha@redhat.com, mst@redhat.com, laurent@vivier.eu,
- qemu-trivial@nongnu.org
-References: <20240326122630.85989-1-imammedo@redhat.com>
- <2b158752-9a6d-4013-a9d1-bb380b31cbda@linaro.org>
-In-Reply-To: <2b158752-9a6d-4013-a9d1-bb380b31cbda@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: mst@redhat.com, Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-9.1] hw/i386: Add a config to only build the microvm
+ machine
+Date: Tue, 26 Mar 2024 14:14:10 +0100
+Message-ID: <20240326131410.93866-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,72 +97,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/3/24 13:44, Philippe Mathieu-Daudé wrote:
-> On 26/3/24 13:26, Igor Mammedov wrote:
->> QEMU build fails with
->>    hw/i386/fw_cfg.c:74: undefined reference to `smbios_get_table_legacy'
->> when it's built with only 'microvm' enabled i.e. with config patch
->>     +++ b/configs/devices/i386-softmmu/default.mak
->>     @@ -26,7 +26,7 @@
->>
->>     # Boards:
->>     #
->>     -CONFIG_ISAPC=y
->>     -CONFIG_I440FX=y
->>     -CONFIG_Q35=y
->>     +CONFIG_ISAPC=n
->>     +CONFIG_I440FX=n
->>     +CONFIG_Q35=n
->>
->> it happens because I've fogotten/lost smbios_get_table_legacy() stub.
->>
->> Fix it by adding missing stub as Philippe suggested.
->>
->> Fixes: b42b0e4daaa5 "smbios: build legacy mode code only for 'pc' 
->> machine"
->> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
->> Singned-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
->> ---
->> Compile tested only.
->>
->> While it's fixing bug for off-tree usecase with non-upstream config,
->> it's trivial enough to go into 9.0 if time frame allows.
->> Benefit of it going into 9.0 is that folks who play with minimal builds
->> won't have to carry the patch in their tree.
->>
->>
->>   hw/smbios/smbios_legacy_stub.c | 5 +++++
->>   1 file changed, 5 insertions(+)
-> 
-> Thanks, patch queued.
+Add a config file to build a binary only containing the
+microvm machine, inspired by a discussion on the list:
+https://lore.kernel.org/qemu-devel/604bf457-23a7-4d06-b59f-a7b46945c626@tls.msk.ru/
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+As suggested in commit d1d5e9eefd ("configure: allow the
+selection of alternate config in the build"), it can be
+built using:
 
-BTW I tested using the following patch:
+  $ ../configure --without-default-features \
+                 --target-list=x86_64-softmmu \
+                 --with-devices-x86_64=microvm
 
--- >8 --
-commit 8be7b26b430d3ab192a2d22215ee512072bd88fb
-Author: Philippe Mathieu-Daudé <philmd@linaro.org>
-Date:   Tue Mar 26 13:52:17 2024 +0100
+Inspired-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ configs/devices/x86_64-softmmu/microvm.mak | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+ create mode 100644 configs/devices/x86_64-softmmu/microvm.mak
 
-     hw/i386: Add a config to only build the microvm machine
-
-     Add a config file to build a binary only containing the
-     microvm machine.
-
-     As suggested in commit d1d5e9eefd ("configure: allow the
-     selection of alternate config in the build"), it can be
-     built using:
-
-       $ ../configure --without-default-features \
-                      --target-list=x86_64-softmmu \
-                      --with-devices-x86_64=microvm
-
-     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-diff --git a/configs/devices/x86_64-softmmu/microvm.mak 
-b/configs/devices/x86_64-softmmu/microvm.mak
+diff --git a/configs/devices/x86_64-softmmu/microvm.mak b/configs/devices/x86_64-softmmu/microvm.mak
 new file mode 100644
 index 0000000000..fe48b5b4a7
 --- /dev/null
@@ -190,20 +142,7 @@ index 0000000000..fe48b5b4a7
 +CONFIG_VIRTIO_RNG=y
 +CONFIG_VIRTIO_SCSI=y
 +CONFIG_VIRTIO_SERIAL=y
----
+-- 
+2.41.0
 
-Before:
-
-Undefined symbols for architecture arm64:
-   "_smbios_get_table_legacy", referenced from:
-       _fw_cfg_build_smbios in hw_i386_fw_cfg.c.o
-ld: symbol(s) not found for architecture arm64
-
-After:
-
-$ ./qemu-system-x86_64 -S -monitor stdio -M microvm
-QEMU 8.2.90 monitor - type 'help' for more information
-(qemu) info qom-tree
-/machine (microvm-machine)
-...
 
