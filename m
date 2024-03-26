@@ -4,65 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9925CD11DD
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 13:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23AB6C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 14:02:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp7GR-00049E-E1; Tue, 26 Mar 2024 09:54:55 -0400
+	id 1rp7ME-0001LP-LY; Tue, 26 Mar 2024 10:00:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rp7GP-00047y-Ni
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:54:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rp7GO-0001O3-0q
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:54:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711461291;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Xr1F5MnnKq3YaOXm655zwchlibK1SjVBcFkXGpCrKXk=;
- b=bRhlH+OUuwCz6+NEVbJma0kKamClfIU5QoXId8svWpb5dC5mZ/s9zuOUhTYD9JxomOCJH+
- 1hxcLnoaUOiQLIireUuaAblhJe+C7cme7ivvs6xrJSrDNDKs3OBUO/sUEHd8KukZ0kM2X6
- ZbOxZr0WIeblaXh537bUPpybnzv9xcA=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-tdzYvptKNBKMzcnqp8m5Hg-1; Tue,
- 26 Mar 2024 09:54:47 -0400
-X-MC-Unique: tdzYvptKNBKMzcnqp8m5Hg-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 665CD3C0EAAE;
- Tue, 26 Mar 2024 13:54:47 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.39.193.60])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 827A1112132A;
- Tue, 26 Mar 2024 13:54:46 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	peter.maydell@linaro.org,
-	qemu-devel@nongnu.org
-Subject: [PULL 0/6] Block layer patches
-Date: Tue, 26 Mar 2024 14:54:34 +0100
-Message-ID: <20240326135440.421609-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp7MC-0001Jk-Rj
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 10:00:53 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp7MB-00031L-0E
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 10:00:52 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-512b3b04995so3034291e87.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 07:00:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711461649; x=1712066449; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=518rxPStDSiC644PHfV+WPYhM8g47DKTiBbf7OfJSi0=;
+ b=kWBcBdpf792gvdtXC/72MjFfTzItqOcs9LCs6U4mWLk6RS3zOQJ1Bj++2iNdiFfQFX
+ 36znMpFNcAy15WY8wepqaU3WCRId0B4uuP8QMS4q5B8WwHVlaRPkheQpchh/J63PrKzi
+ qXvK4VF4K/QgC1Lwjw24RfshGBfNp153HpNeQaD4n1ytBd/Oez8p1E3N+uVuOeX48Pl4
+ 3WV4HDQvfWH8pKyfIAvk2joKk8QWmHf5MPCG9a0e4gQRki2gzrRzjcbhZnx9oA9/QMOq
+ sH9wTGDHbnihNVYjluw1LPuofMbtKUnWTSAvlDgKh00KqDi8mtx86LTt9jXcw3c4Mozy
+ udDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711461649; x=1712066449;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=518rxPStDSiC644PHfV+WPYhM8g47DKTiBbf7OfJSi0=;
+ b=NjhE1I3XXONIROSh+xAp1wN40WoFKaBdtNTXLG9P3llegDjSuuo5+atAYGNH87fm3R
+ ovhiaUZ8cCMSFED50aIOFNAEAkpDdfx0FKxIn7Bb5nTEIc2hofH1nQZqk9Ot7EkWCinB
+ dJI6EZRTYtkfk+rFWV/N8eZx3v7fx3nxrapMmVS/I9R+Cp91StV9Wts6CD6rh3prL+MG
+ A/vHeciWvT/n/R1o327KWtbjTuePVI1lp3HQW7SWTOKYJIw32EHdJUBLgyV3mUfOtk1g
+ OrE40C0za4xiqD6csHwEWqNjUP1wKpGG2YTjfk97tjeDiJ7zGEbRQGrJM5dgUCUiYQzL
+ lKBQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUE4ddOUruz4qwaIJILoB3nTJDqMILsEuJcL645NmoQnM63yOqUqm0rSLRS0NPBnzJyBUtbuEbZ4LC4HbOJtYkB3TRRZCc=
+X-Gm-Message-State: AOJu0YzxCCsapZKzy8OrS+d1ig2CXhhQYf9xPqrJa2QNzLX0gLNSHgUT
+ vUR8jgEFziU5EP3G+2EbWn/IbvWg4/NlZWpG4O3f0PR0+QgkFGJkxSjnaqZYc8E=
+X-Google-Smtp-Source: AGHT+IHTZfn9haAVcRCw/8INyWm7Ly7DU7TOZaflyvkjX11+WuWsm4pXECrJDW8M1nc7kDWpNyvcLQ==
+X-Received: by 2002:a19:6914:0:b0:513:e249:65fc with SMTP id
+ e20-20020a196914000000b00513e24965fcmr5932355lfc.61.1711461648472; 
+ Tue, 26 Mar 2024 07:00:48 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.155.229])
+ by smtp.gmail.com with ESMTPSA id
+ u15-20020a05600c00cf00b00414041032casm908926wmm.1.2024.03.26.07.00.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Mar 2024 07:00:47 -0700 (PDT)
+Message-ID: <c8a96403-a07f-40ae-8865-bec3fa1a7258@linaro.org>
+Date: Tue, 26 Mar 2024 15:00:45 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.0] docs/about: Mark the iaspc machine type as
+ deprecated
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>
+Cc: pbonzini@redhat.com, devel@lists.libvirt.org,
+ richard.henderson@linaro.org, mst@redhat.com, qemu-trivial@nongnu.org
+References: <20240326125104.90103-1-imammedo@redhat.com>
+ <a4a0bb13-d6a0-4665-810d-ecd9a9fb89b1@redhat.com>
+ <8dbba6ae-5910-4a62-9a08-a56e20dfb480@linaro.org>
+ <306fd62e-50d4-4871-ae62-ea554a0fb388@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <306fd62e-50d4-4871-ae62-ea554a0fb388@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,53 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 096ae430a7b5a704af4cd94dca7200d6cb069991:
+On 26/3/24 14:37, Thomas Huth wrote:
+> On 26/03/2024 14.29, Philippe Mathieu-Daudé wrote:
+>> Hi Igor,
+>>
+>> On 26/3/24 14:08, Thomas Huth wrote:
+>>>
+>>> s/iaspc/isapc/ in the subject
+>>>
+>>> On 26/03/2024 13.51, Igor Mammedov wrote:
+>>>> ISAPC machine was introduced 25 years ago and it's a lot of time since
+>>>> such machine was around with real ISA only PC hardware practically 
+>>>> defunct.
+>>>> Also it's slowly bit-rots (for example: I was able to boot RHEL6 on 
+>>>> RHEL9 host
+>>>> in only TCG mode, while in KVM mode it hung in the middle of boot)
+>>
+>> I'm quite opposed to this patch. QEMU models various very-old /
+>> defunct hardware. I'm pretty sure Bernhard and myself are OK to
+>> keep maintaining it, besides we are working in separating it from
+>> the i440fx+piix machine. Also, this machine is particularly
+>> interesting for my single-binary experiments.
+>>
+>> Where I agree is we should stop reporting "KVM on ISA/PC machine"
+>> as supported.
+> 
+> +1
 
-  Merge tag 'pull-qapi-2024-03-26' of https://repo.or.cz/qemu/armbru into staging (2024-03-26 09:50:21 +0000)
+Rough plan is to extract 'isapc' machine from PCMachineClass,
+having the latter becoming smth like PcPciMachineClass, on
+top of:
+https://lore.kernel.org/qemu-devel/20240305134221.30924-1-philmd@linaro.org/
 
-are available in the Git repository at:
+> See also:
+> 
+> https://lists.gnu.org/archive/html/qemu-devel/2017-11/msg01367.html
 
-  https://repo.or.cz/qemu/kevin.git tags/for-upstream
-
-for you to fetch changes up to 12d7b3bbd3333cededd3b695501d8d247239d769:
-
-  iotests: add test for stream job with an unaligned prefetch read (2024-03-26 14:21:26 +0100)
-
-----------------------------------------------------------------
-Block layer patches
-
-- Fix crash with unaligned prefetch requests (e.g. in stream jobs)
-- vdpa-dev: Fix initialisation order to restore VDUSE compatibility
-- iotests fixes
-
-----------------------------------------------------------------
-Fiona Ebner (3):
-      block-backend: fix edge case in bdrv_next() where BDS associated to BB changes
-      block-backend: fix edge case in bdrv_next_cleanup() where BDS associated to BB changes
-      iotests: add test for stream job with an unaligned prefetch read
-
-Kevin Wolf (1):
-      vdpa-dev: Fix initialisation order to restore VDUSE compatibility
-
-Stefan Reiter (1):
-      block/io: accept NULL qiov in bdrv_pad_request
-
-Thomas Huth (1):
-      tests/qemu-iotests: Test 157 and 227 require virtio-blk
-
- block/block-backend.c                              | 18 ++---
- block/io.c                                         | 33 +++++----
- hw/net/vhost_net.c                                 | 10 +++
- hw/virtio/vdpa-dev.c                               |  5 +-
- hw/virtio/vhost-vdpa.c                             | 29 +++++++-
- hw/virtio/vhost.c                                  |  8 +-
- hw/virtio/trace-events                             |  2 +-
- tests/qemu-iotests/157                             |  2 +
- tests/qemu-iotests/227                             |  2 +
- tests/qemu-iotests/tests/stream-unaligned-prefetch | 86 ++++++++++++++++++++++
- .../tests/stream-unaligned-prefetch.out            |  5 ++
- 11 files changed, 167 insertions(+), 33 deletions(-)
- create mode 100755 tests/qemu-iotests/tests/stream-unaligned-prefetch
- create mode 100644 tests/qemu-iotests/tests/stream-unaligned-prefetch.out
+lol I didn't remember I posted a similar patch =)
 
 
