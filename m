@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD1F3C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD683C54E67
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:47:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp8zR-0003dt-Tm; Tue, 26 Mar 2024 11:45:29 -0400
+	id 1rp90C-0004Sj-UX; Tue, 26 Mar 2024 11:46:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zI-0003b8-LF
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:45:26 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp901-000436-Cr
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:46:12 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zE-00016J-On
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:45:19 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4148c6af2d3so9881685e9.1
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:45:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zx-0001FW-CI
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:46:04 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-33ed6078884so3745304f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:46:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711467915; x=1712072715; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711467960; x=1712072760; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JkAwTx0OkQeZQvYLzrNAV/RC6xNW2lAxLycOTzYaqpI=;
- b=EYGbRIwFhOMph4BeoqqsSXXfTOYU7nb4l9JMMeH+BSJsDb2o81ha1ptGWJ+M82qQXo
- jlN6MgyCLe2cOLhE4WEicl8IEU7SotYBuz9nl1rUD1bE/sBk4okPTND89qpbZATi0CN9
- 7sgGAL7Dng686oBZr/QGaAn5w7QNbht68nDd8MDouinTWTrccvZmnq/DZXCIybPMGztp
- TvJTRfq8843IHTV92MUhaQ433IVYgJyZ0N2bwOqrW+G77+Q3u949aTo7vzLvO3LuSjcH
- oIjkcjEaNXsez6b2biUVEnrpCXegIY5MqvZTkJqmJGhgz6xrfMGkWx1AZQ7Y+z9MUYX/
- iE0Q==
+ bh=PZoPdLMWukYfNxcXkCat/bL6sGsc7qqjORe7Wmplu6s=;
+ b=ZhKSc65n6aSSgjvZCIGZUYBuQTJzohbnxNhKAwvMA3eUDpaP4g8GJMX/qfzP0nRfNF
+ kt/nXs3kCQmTcGFyWIRqoSljunIvDVY8GxP6fNXgFx6QYastUV5U85shDd0+t8//0H4y
+ lFqEnAQMZ62hQaA3uHkXKeFlreoMNMjQcuuIE8/32JwyoOju+5s7lBe9fp/gze6VgPpf
+ iL9B9DYDCPoCq5DgGZqEzmEtYK0NvEhYEf42JGJ8iLslKRzb8r3jVtiDAZn2frGL7t9V
+ lUbpySQ++PRTbCyJOpi2gv86GdyZ0Y1kE907bozMH0X839rLA354SASPmgHZNwEWIUvX
+ bHSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711467915; x=1712072715;
+ d=1e100.net; s=20230601; t=1711467960; x=1712072760;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JkAwTx0OkQeZQvYLzrNAV/RC6xNW2lAxLycOTzYaqpI=;
- b=w8KwMDkOkeTGBQly5N3VgFyxjpYGTTB1zPANIrrjyQltF/5rbpg1FqItx1h28kLIxz
- ge53m6qBD8a7N3UhncViPvZGrKhqJtXTAR91iK9WVTzVCqkxaoYe4G8IO49UywupKcZG
- 94kU+wTd5oY9dMbdIjDMyzrWfnSWmQktA2xNH+y1dL4IFo5wtR+8q+5zmrgLyTWeqHqO
- enazgeA9J8Ra4TNA1NmkAXps8aYcLd2PLfwKJieXvSTf2O2E7bNjV2VdsxT2Yck6m1Bk
- 9yQmPAoEpFYoKWqgdCYipIQDQT/JpJJ6a0+ub3CXleZlUpYGJbLBOYZMVeHbr/pxaSS+
- aWpg==
-X-Gm-Message-State: AOJu0Yx3AKqQfDalXph7X6Vdnt9BtGQRAyRFu9dHIIKwAkXZ+bpFngFK
- yT59tH3fVjc2tVmURISBgvuLWnCGz3aCM7y/rpHo10ZvECEv8IkYItzuOY/hlpNLzU5rA0UvVpu
- /
-X-Google-Smtp-Source: AGHT+IHLJW4dL2DMP3UBxDXp1qvagTejKAui5dqCfO86vToFFxsrHc21S/zs9bGOC1Aa0pTKnH8lag==
-X-Received: by 2002:a05:600c:4f01:b0:414:8948:621c with SMTP id
- l1-20020a05600c4f0100b004148948621cmr4736654wmq.8.1711467914751; 
- Tue, 26 Mar 2024 08:45:14 -0700 (PDT)
+ bh=PZoPdLMWukYfNxcXkCat/bL6sGsc7qqjORe7Wmplu6s=;
+ b=jXwhNXkU/oZXPGsWh7KTmfKlvKN3jEz+lMkJaZvXIMr5tlQ4vHprGbY2ZKS4+5u3dJ
+ f2lee3T4cwSRAQR95rpiggSvcuJkALMXx4h7vtkHLnmar7r/OUeMaUP5v9FaauavA6Zv
+ ouojo/taGrlDB/7dIeiTS0Z0VJ105Ojmj1HBqPh2yRyJ+oYN7pDGTvDpxmTGRtvk2prX
+ sxXn646N+h5lEuF+Xk5OLaorfbyw69XYcBtO6n2AVM67lUOSGeBHUxpKjc+sB3fHqI0Y
+ FlIRlKAiQDVBM5gj4UjCGou8TZi/FBTxalsj2iVuIdIA7DIj6/sI7+3WPDCOXjP7H4xI
+ 3hgA==
+X-Gm-Message-State: AOJu0YwOx3o/fafe8A2b1UH1tWw38+XQI3JKaytibJYujE8zvdnwcBJX
+ rDf+u4sY9sByDUppqYFPNrOcxftgFSmhdj4jhTgTa0bHApFUy1rH2DyiIKO/0n0lnysNSS5fy0w
+ 4
+X-Google-Smtp-Source: AGHT+IGn9vVSpDNh8rQWuVgF1+Gw5LLVBbsr7W6HSykE2xDWZmuWfsooId8xN1cHVcfv8a/1nR/yzg==
+X-Received: by 2002:adf:e6cc:0:b0:33e:ce08:79b5 with SMTP id
+ y12-20020adfe6cc000000b0033ece0879b5mr1645151wrm.9.1711467959787; 
+ Tue, 26 Mar 2024 08:45:59 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.229])
  by smtp.gmail.com with ESMTPSA id
- p3-20020a05600c204300b004148090cf86sm1760810wmg.0.2024.03.26.08.45.13
+ s17-20020adfa291000000b00341b7388dafsm11861938wra.77.2024.03.26.08.45.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 Mar 2024 08:45:14 -0700 (PDT)
+ Tue, 26 Mar 2024 08:45:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- Gregory Price <gregory.price@memverge.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+ Yao Xingtao <yaoxt.fnst@fujitsu.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 01/13] target/i386/tcg: Enable page walking from MMIO memory
-Date: Tue, 26 Mar 2024 16:44:52 +0100
-Message-ID: <20240326154505.8300-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PULL 09/13] contrib/plugins/execlog: Fix compiler warning
+Date: Tue, 26 Mar 2024 16:45:00 +0100
+Message-ID: <20240326154505.8300-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240326154505.8300-1-philmd@linaro.org>
 References: <20240326154505.8300-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_PORT=0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,252 +100,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gregory Price <gregory.price@memverge.com>
+From: Yao Xingtao <yaoxt.fnst@fujitsu.com>
 
-CXL emulation of interleave requires read and write hooks due to
-requirement for subpage granularity. The Linux kernel stack now enables
-using this memory as conventional memory in a separate NUMA node. If a
-process is deliberately forced to run from that node
-$ numactl --membind=1 ls
-the page table walk on i386 fails.
+1. The g_pattern_match_string() is deprecated when glib2 version >= 2.70.
+   Use g_pattern_spec_match_string() instead to avoid this problem.
 
-Useful part of backtrace:
+2. The type of second parameter in g_ptr_array_add() is
+   'gpointer' {aka 'void *'}, but the type of reg->name is 'const char*'.
+   Cast the type of reg->name to 'gpointer' to avoid this problem.
 
-    (cpu=cpu@entry=0x555556fd9000, fmt=fmt@entry=0x555555fe3378 "cpu_io_recompile: could not find TB for pc=%p")
-    at ../../cpu-target.c:359
-    (retaddr=0, addr=19595792376, attrs=..., xlat=<optimized out>, cpu=0x555556fd9000, out_offset=<synthetic pointer>)
-    at ../../accel/tcg/cputlb.c:1339
-    (cpu=0x555556fd9000, full=0x7fffee0d96e0, ret_be=ret_be@entry=0, addr=19595792376, size=size@entry=8, mmu_idx=4, type=MMU_DATA_LOAD, ra=0) at ../../accel/tcg/cputlb.c:2030
-    (cpu=cpu@entry=0x555556fd9000, p=p@entry=0x7ffff56fddc0, mmu_idx=<optimized out>, type=type@entry=MMU_DATA_LOAD, memop=<optimized out>, ra=ra@entry=0) at ../../accel/tcg/cputlb.c:2356
-    (cpu=cpu@entry=0x555556fd9000, addr=addr@entry=19595792376, oi=oi@entry=52, ra=ra@entry=0, access_type=access_type@entry=MMU_DATA_LOAD) at ../../accel/tcg/cputlb.c:2439
-    at ../../accel/tcg/ldst_common.c.inc:301
-    at ../../target/i386/tcg/sysemu/excp_helper.c:173
-    (err=0x7ffff56fdf80, out=0x7ffff56fdf70, mmu_idx=0, access_type=MMU_INST_FETCH, addr=18446744072116178925, env=0x555556fdb7c0)
-    at ../../target/i386/tcg/sysemu/excp_helper.c:578
-    (cs=0x555556fd9000, addr=18446744072116178925, size=<optimized out>, access_type=MMU_INST_FETCH, mmu_idx=0, probe=<optimized out>, retaddr=0) at ../../target/i386/tcg/sysemu/excp_helper.c:604
+compiler warning message:
 
-Avoid this by plumbing the address all the way down from
-x86_cpu_tlb_fill() where is available as retaddr to the actual accessors
-which provide it to probe_access_full() which already handles MMIO accesses.
+  contrib/plugins/execlog.c:330:17: warning: ‘g_pattern_match_string’
+  is deprecated: Use 'g_pattern_spec_match_string' instead [-Wdeprecated-declarations]
+    330 |                 if (g_pattern_match_string(pat, rd->name) ||
+        |                 ^~
+  In file included from /usr/include/glib-2.0/glib.h:67,
+                   from contrib/plugins/execlog.c:9:
+  /usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
+     57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
+        |               ^~~~~~~~~~~~~~~~~~~~~~
+  contrib/plugins/execlog.c:331:21: warning: ‘g_pattern_match_string’
+  is deprecated: Use 'g_pattern_spec_match_string' instead [-Wdeprecated-declarations]
+    331 |                     g_pattern_match_string(pat, rd_lower)) {
+        |                     ^~~~~~~~~~~~~~~~~~~~~~
+  /usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
+     57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
+        |               ^~~~~~~~~~~~~~~~~~~~~~
+  contrib/plugins/execlog.c:339:63: warning: passing argument 2 of
+  ‘g_ptr_array_add’ discards ‘const’ qualifier from pointer target type [-Wdiscarded-qualifiers]
+    339 |                             g_ptr_array_add(all_reg_names, reg->name);
+        |                                                            ~~~^~~~~~
+  In file included from /usr/include/glib-2.0/glib.h:33:
+  /usr/include/glib-2.0/glib/garray.h:198:62: note: expected
+  ‘gpointer’ {aka ‘void *’} but argument is of type ‘const char *’
+    198 |                                            gpointer          data);
+        |                                            ~~~~~~~~~~~~~~~~~~^~~~
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2180
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2220
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gregory Price <gregory.price@memverge.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Message-ID: <20240307155304.31241-2-Jonathan.Cameron@huawei.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2210
+Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Message-ID: <20240326015257.21516-1-yaoxt.fnst@fujitsu.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/i386/tcg/sysemu/excp_helper.c | 57 +++++++++++++++-------------
- 1 file changed, 30 insertions(+), 27 deletions(-)
+ contrib/plugins/execlog.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/tcg/sysemu/excp_helper.c b/target/i386/tcg/sysemu/excp_helper.c
-index 8f7011d966..7a57b7dd10 100644
---- a/target/i386/tcg/sysemu/excp_helper.c
-+++ b/target/i386/tcg/sysemu/excp_helper.c
-@@ -59,14 +59,14 @@ typedef struct PTETranslate {
-     hwaddr gaddr;
- } PTETranslate;
- 
--static bool ptw_translate(PTETranslate *inout, hwaddr addr)
-+static bool ptw_translate(PTETranslate *inout, hwaddr addr, uint64_t ra)
- {
-     CPUTLBEntryFull *full;
-     int flags;
- 
-     inout->gaddr = addr;
-     flags = probe_access_full(inout->env, addr, 0, MMU_DATA_STORE,
--                              inout->ptw_idx, true, &inout->haddr, &full, 0);
-+                              inout->ptw_idx, true, &inout->haddr, &full, ra);
- 
-     if (unlikely(flags & TLB_INVALID_MASK)) {
-         TranslateFault *err = inout->err;
-@@ -82,20 +82,20 @@ static bool ptw_translate(PTETranslate *inout, hwaddr addr)
-     return true;
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index a1dfd59ab7..fab18113d4 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -311,6 +311,24 @@ static Register *init_vcpu_register(qemu_plugin_reg_descriptor *desc)
+     return reg;
  }
  
--static inline uint32_t ptw_ldl(const PTETranslate *in)
-+static inline uint32_t ptw_ldl(const PTETranslate *in, uint64_t ra)
++/*
++ * g_pattern_match_string has been deprecated in Glib since 2.70 and
++ * will complain about it if you try to use it. Fortunately the
++ * signature of both functions is the same making it easy to work
++ * around.
++ */
++static inline
++gboolean g_pattern_spec_match_string_qemu(GPatternSpec *pspec,
++                                          const gchar *string)
++{
++#if GLIB_CHECK_VERSION(2, 70, 0)
++    return g_pattern_spec_match_string(pspec, string);
++#else
++    return g_pattern_match_string(pspec, string);
++#endif
++};
++#define g_pattern_spec_match_string(p, s) g_pattern_spec_match_string_qemu(p, s)
++
+ static GPtrArray *registers_init(int vcpu_index)
  {
-     if (likely(in->haddr)) {
-         return ldl_p(in->haddr);
-     }
--    return cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
-+    return cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
- }
+     g_autoptr(GPtrArray) registers = g_ptr_array_new();
+@@ -327,8 +345,8 @@ static GPtrArray *registers_init(int vcpu_index)
+             for (int p = 0; p < rmatches->len; p++) {
+                 g_autoptr(GPatternSpec) pat = g_pattern_spec_new(rmatches->pdata[p]);
+                 g_autofree gchar *rd_lower = g_utf8_strdown(rd->name, -1);
+-                if (g_pattern_match_string(pat, rd->name) ||
+-                    g_pattern_match_string(pat, rd_lower)) {
++                if (g_pattern_spec_match_string(pat, rd->name) ||
++                    g_pattern_spec_match_string(pat, rd_lower)) {
+                     Register *reg = init_vcpu_register(rd);
+                     g_ptr_array_add(registers, reg);
  
--static inline uint64_t ptw_ldq(const PTETranslate *in)
-+static inline uint64_t ptw_ldq(const PTETranslate *in, uint64_t ra)
- {
-     if (likely(in->haddr)) {
-         return ldq_p(in->haddr);
-     }
--    return cpu_ldq_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
-+    return cpu_ldq_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
- }
- 
- /*
-@@ -132,7 +132,8 @@ static inline bool ptw_setl(const PTETranslate *in, uint32_t old, uint32_t set)
- }
- 
- static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
--                          TranslateResult *out, TranslateFault *err)
-+                          TranslateResult *out, TranslateFault *err,
-+                          uint64_t ra)
- {
-     const target_ulong addr = in->addr;
-     const int pg_mode = in->pg_mode;
-@@ -164,11 +165,11 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-                  * Page table level 5
-                  */
-                 pte_addr = (in->cr3 & ~0xfff) + (((addr >> 48) & 0x1ff) << 3);
--                if (!ptw_translate(&pte_trans, pte_addr)) {
-+                if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-                     return false;
-                 }
-             restart_5:
--                pte = ptw_ldq(&pte_trans);
-+                pte = ptw_ldq(&pte_trans, ra);
-                 if (!(pte & PG_PRESENT_MASK)) {
-                     goto do_fault;
-                 }
-@@ -188,11 +189,11 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-              * Page table level 4
-              */
-             pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 39) & 0x1ff) << 3);
--            if (!ptw_translate(&pte_trans, pte_addr)) {
-+            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-                 return false;
-             }
-         restart_4:
--            pte = ptw_ldq(&pte_trans);
-+            pte = ptw_ldq(&pte_trans, ra);
-             if (!(pte & PG_PRESENT_MASK)) {
-                 goto do_fault;
-             }
-@@ -208,11 +209,11 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-              * Page table level 3
-              */
-             pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 30) & 0x1ff) << 3);
--            if (!ptw_translate(&pte_trans, pte_addr)) {
-+            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-                 return false;
-             }
-         restart_3_lma:
--            pte = ptw_ldq(&pte_trans);
-+            pte = ptw_ldq(&pte_trans, ra);
-             if (!(pte & PG_PRESENT_MASK)) {
-                 goto do_fault;
-             }
-@@ -235,12 +236,12 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-              * Page table level 3
-              */
-             pte_addr = (in->cr3 & 0xffffffe0ULL) + ((addr >> 27) & 0x18);
--            if (!ptw_translate(&pte_trans, pte_addr)) {
-+            if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-                 return false;
-             }
-             rsvd_mask |= PG_HI_USER_MASK;
-         restart_3_nolma:
--            pte = ptw_ldq(&pte_trans);
-+            pte = ptw_ldq(&pte_trans, ra);
-             if (!(pte & PG_PRESENT_MASK)) {
-                 goto do_fault;
-             }
-@@ -257,11 +258,11 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-          * Page table level 2
-          */
-         pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 21) & 0x1ff) << 3);
--        if (!ptw_translate(&pte_trans, pte_addr)) {
-+        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-             return false;
-         }
-     restart_2_pae:
--        pte = ptw_ldq(&pte_trans);
-+        pte = ptw_ldq(&pte_trans, ra);
-         if (!(pte & PG_PRESENT_MASK)) {
-             goto do_fault;
-         }
-@@ -283,10 +284,10 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-          * Page table level 1
-          */
-         pte_addr = (pte & PG_ADDRESS_MASK) + (((addr >> 12) & 0x1ff) << 3);
--        if (!ptw_translate(&pte_trans, pte_addr)) {
-+        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-             return false;
-         }
--        pte = ptw_ldq(&pte_trans);
-+        pte = ptw_ldq(&pte_trans, ra);
-         if (!(pte & PG_PRESENT_MASK)) {
-             goto do_fault;
-         }
-@@ -301,11 +302,11 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-          * Page table level 2
-          */
-         pte_addr = (in->cr3 & 0xfffff000ULL) + ((addr >> 20) & 0xffc);
--        if (!ptw_translate(&pte_trans, pte_addr)) {
-+        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-             return false;
-         }
-     restart_2_nopae:
--        pte = ptw_ldl(&pte_trans);
-+        pte = ptw_ldl(&pte_trans, ra);
-         if (!(pte & PG_PRESENT_MASK)) {
-             goto do_fault;
-         }
-@@ -330,10 +331,10 @@ static bool mmu_translate(CPUX86State *env, const TranslateParams *in,
-          * Page table level 1
-          */
-         pte_addr = (pte & ~0xfffu) + ((addr >> 10) & 0xffc);
--        if (!ptw_translate(&pte_trans, pte_addr)) {
-+        if (!ptw_translate(&pte_trans, pte_addr, ra)) {
-             return false;
-         }
--        pte = ptw_ldl(&pte_trans);
-+        pte = ptw_ldl(&pte_trans, ra);
-         if (!(pte & PG_PRESENT_MASK)) {
-             goto do_fault;
-         }
-@@ -526,7 +527,8 @@ static G_NORETURN void raise_stage2(CPUX86State *env, TranslateFault *err,
- 
- static bool get_physical_address(CPUX86State *env, vaddr addr,
-                                  MMUAccessType access_type, int mmu_idx,
--                                 TranslateResult *out, TranslateFault *err)
-+                                 TranslateResult *out, TranslateFault *err,
-+                                 uint64_t ra)
- {
-     TranslateParams in;
-     bool use_stage2 = env->hflags2 & HF2_NPT_MASK;
-@@ -546,7 +548,7 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
-                 env->nested_pg_mode & PG_MODE_LMA ? MMU_USER64_IDX : MMU_USER32_IDX;
-             in.ptw_idx = MMU_PHYS_IDX;
- 
--            if (!mmu_translate(env, &in, out, err)) {
-+            if (!mmu_translate(env, &in, out, err, ra)) {
-                 err->stage2 = S2_GPA;
-                 return false;
-             }
-@@ -577,7 +579,7 @@ static bool get_physical_address(CPUX86State *env, vaddr addr,
-                     return false;
-                 }
-             }
--            return mmu_translate(env, &in, out, err);
-+            return mmu_translate(env, &in, out, err, ra);
-         }
-         break;
-     }
-@@ -597,7 +599,8 @@ bool x86_cpu_tlb_fill(CPUState *cs, vaddr addr, int size,
-     TranslateResult out;
-     TranslateFault err;
- 
--    if (get_physical_address(env, addr, access_type, mmu_idx, &out, &err)) {
-+    if (get_physical_address(env, addr, access_type, mmu_idx, &out, &err,
-+                             retaddr)) {
-         /*
-          * Even if 4MB pages, we map only one 4KB page in the cache to
-          * avoid filling it too fast.
+@@ -336,7 +354,7 @@ static GPtrArray *registers_init(int vcpu_index)
+                     if (disas_assist) {
+                         g_mutex_lock(&add_reg_name_lock);
+                         if (!g_ptr_array_find(all_reg_names, reg->name, NULL)) {
+-                            g_ptr_array_add(all_reg_names, reg->name);
++                            g_ptr_array_add(all_reg_names, (gpointer)reg->name);
+                         }
+                         g_mutex_unlock(&add_reg_name_lock);
+                     }
 -- 
 2.41.0
 
