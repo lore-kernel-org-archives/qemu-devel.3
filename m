@@ -4,80 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A17C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 237BFC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:46:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp8aL-0005vz-L8; Tue, 26 Mar 2024 11:19:33 -0400
+	id 1rp901-0003zz-2T; Tue, 26 Mar 2024 11:46:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
- id 1rp8aH-0005vW-KJ
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:19:29 -0400
-Received: from mail-lf1-f53.google.com ([209.85.167.53])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zo-0003ue-G8
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:45:56 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
- id 1rp8aE-0002jg-1Z
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:19:29 -0400
-Received: by mail-lf1-f53.google.com with SMTP id
- 2adb3069b0e04-515b69e8f38so955673e87.1
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:19:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zm-0001DS-7k
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:45:51 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-341d730bdfcso923843f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:45:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711467948; x=1712072748; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fauC/yH9kU0VZHj4feO8NJiXVYDlYdxvHhdtor8Edys=;
+ b=mlPpDUJ9MirdFE1yMXxP/N6UEO+gBont64n1BYfZvxhVvR032GOUQkZIC6Ph7U5KQK
+ TLyIqb3vdlGRmliGSjpPIVbLbWKJG5mMyQtWYTsoec6XS8unx4A3AspQA0gOEyRzzCP8
+ lZ6TYppKqIqfLkOEQDxcjv9EwIei91KNxMQBFkn+nanZqdysQoly1HLA1HtY88y89suT
+ dlYdnMU2SBpgNOyuBKO2D2WJQ6pf6zObORJ6W+MJ5Fhtq47iCk52ATMw9Ljy/Fzy7fGA
+ 0NrP5qZ0eUdNhN7gm0FKeZc4CMB2bOcwQE1PP4Z5Zs2HeHRixiOZAwexrBxwh1vVb7qt
+ K96A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711466363; x=1712071163;
+ d=1e100.net; s=20230601; t=1711467948; x=1712072748;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JUVslbHxJBsutcvQ73cVdAnF0u3jUnm/TB9Hv1RCS88=;
- b=BYjIR3yeZ8aAPOefDQtLAHrR4I8J4EB3L5nSdArCyE3zJrmL/aUHCMgp/vKm3GK0y9
- vcuvJeqm20JzBf6GEj6pjwpRopWNuJLsWwv86e7AtBSYJ470HwlQm++FJEOghMrvZopa
- WZ0UTM9Z4avfV8WISC2bu31YFoVvHsaF3bzznBWJEjK/tZy24cbRrD9YnBdOH8/YCpn7
- N3HipuTCOlymX3WPdh9JpoHA78rgiIEb/uQ18GYWa2/lyaNAw5Z8wRIzHObnqSLOOkbb
- 3jZneo6E2D1SXr4Ixpn82PgTCX+zhSS0H0BSeaeyyyPhru9UXmpfKOGg5UC+CXf0fDsB
- 903g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWIvc3IJ+P/3WCH89TCNppMbreZp+AV2BTnk6rSiDLIyJI1HqmPhvoRM3rP2USj8XUkWxBvMi+xX1/Vp9Y0LV7ronFqzbE=
-X-Gm-Message-State: AOJu0Yww5lJKyGzRHbO7srNh0Yd/ic6eaqKVW0QkbxaH8Wt2HHxn5E7q
- cDzRLiW0Unuh4BV629GKDN93bxbrjm4DFoPSKSrkMF22LwUv8Qpj
-X-Google-Smtp-Source: AGHT+IFP2FZZbpvO9c2stqUmT05DnUhkBn3keNu/tRQhmT0rhlV567sSQvXWBoBrIb87kTJm2cF7ag==
-X-Received: by 2002:a05:6512:54e:b0:513:d522:b58c with SMTP id
- h14-20020a056512054e00b00513d522b58cmr6423792lfl.56.1711466363049; 
- Tue, 26 Mar 2024 08:19:23 -0700 (PDT)
-Received: from localhost (fwdproxy-lla-000.fbsv.net.
- [2a03:2880:30ff::face:b00c]) by smtp.gmail.com with ESMTPSA id
- i16-20020a170906091000b00a4735fc654fsm4295335ejd.205.2024.03.26.08.19.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Mar 2024 08:19:22 -0700 (PDT)
-From: Breno Leitao <leitao@debian.org>
-To: hengqi@linux.alibaba.com, xuanzhuo@linux.alibaba.com,
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Andrew Melnychenko <andrew@daynix.com>
-Cc: rbc@meta.com, riel@surriel.com, stable@vger.kernel.org,
- qemu-devel@nongnu.org,
- virtualization@lists.linux.dev (open list:VIRTIO CORE AND NET DRIVERS),
- netdev@vger.kernel.org (open list:NETWORKING DRIVERS),
- linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH net v2 2/2] virtio_net: Do not send RSS key if it is not
- supported
-Date: Tue, 26 Mar 2024 08:19:09 -0700
-Message-ID: <20240326151911.2155689-2-leitao@debian.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240326151911.2155689-1-leitao@debian.org>
-References: <20240326151911.2155689-1-leitao@debian.org>
+ bh=fauC/yH9kU0VZHj4feO8NJiXVYDlYdxvHhdtor8Edys=;
+ b=wzIRs6ZMRQ44sWyHpY+PF31csw4j2vYojvsH8km0r0gtLDE2GIHRc8Do9nBL3rPh/g
+ hQclzuFQ579dbbeRYPqCxsbPKpRgxJUCzCYoxOWVroiN5POCHFj2VuHlqkZiM+H7zS/x
+ SwMoRNysx5iO92ZwQ3Sl6/2cUQ7MgPhQv+W6kiWMzHxU0YjAgTNB+tmVhI867bWu+Xvb
+ 42nimTD6UPR7lO/fGEVhPWB3srv07iDgosOxFbThP4OTtVwjrZsl36uAkPHey8Cj0FZG
+ PoPgJzx9f0/F5hgShxd3PjYoCJjQTw6fQ/oOJW3maW9Tmm1BeSn8G2D3LEyfb8BThoEa
+ pRgQ==
+X-Gm-Message-State: AOJu0YxlhKEMyAXbxifUDXitbrub0OoDMMgrJY/BI+aK02VGHJyftyHi
+ txgSlvyZypE59gDLj4g8YP8j3KL9Ed3jH5qXSASXTbFeI4z28eLOINk6Q3auw57Q86bC/jDz8X0
+ F
+X-Google-Smtp-Source: AGHT+IFeH/aj7ObeI42wqjQssteZWuPQWTaK9WbbHadK6sXHo+PXXBu2EBRXcXbvr/1b4dgdMcfKYA==
+X-Received: by 2002:adf:cb12:0:b0:33e:9de3:9037 with SMTP id
+ u18-20020adfcb12000000b0033e9de39037mr6604764wrh.59.1711467948446; 
+ Tue, 26 Mar 2024 08:45:48 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.155.229])
+ by smtp.gmail.com with ESMTPSA id
+ z15-20020a5d4d0f000000b003418016b04csm12472452wrt.76.2024.03.26.08.45.47
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 26 Mar 2024 08:45:48 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 07/13] hw/misc/stm32l4x5_rcc: Propagate period when enabling a
+ clock
+Date: Tue, 26 Mar 2024 16:44:58 +0100
+Message-ID: <20240326154505.8300-8-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240326154505.8300-1-philmd@linaro.org>
+References: <20240326154505.8300-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=209.85.167.53;
- envelope-from=breno.debian@gmail.com; helo=mail-lf1-f53.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,80 +98,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a bug when setting the RSS options in virtio_net that can break
-the whole machine, getting the kernel into an infinite loop.
+From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
 
-Running the following command in any QEMU virtual machine with virtionet
-will reproduce this problem:
+The "clock_set_mul_div" function doesn't propagate the clock period
+to the children if it is changed (e.g. by enabling/disabling a clock
+multiplexer).
+This was overlooked during the implementation due to late changes.
 
-    # ethtool -X eth0  hfunc toeplitz
+This commit propagates the change if the multiplier or divider changes.
 
-This is how the problem happens:
-
-1) ethtool_set_rxfh() calls virtnet_set_rxfh()
-
-2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
-
-3) virtnet_commit_rss_command() populates 4 entries for the rss
-scatter-gather
-
-4) Since the command above does not have a key, then the last
-scatter-gatter entry will be zeroed, since rss_key_size == 0.
-sg_buf_size = vi->rss_key_size;
-
-5) This buffer is passed to qemu, but qemu is not happy with a buffer
-with zero length, and do the following in virtqueue_map_desc() (QEMU
-function):
-
-  if (!sz) {
-      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
-
-6) virtio_error() (also QEMU function) set the device as broken
-
-    vdev->broken = true;
-
-7) Qemu bails out, and do not repond this crazy kernel.
-
-8) The kernel is waiting for the response to come back (function
-virtnet_send_command())
-
-9) The kernel is waiting doing the following :
-
-      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
-	     !virtqueue_is_broken(vi->cvq))
-	      cpu_relax();
-
-10) None of the following functions above is true, thus, the kernel
-loops here forever. Keeping in mind that virtqueue_is_broken() does
-not look at the qemu `vdev->broken`, so, it never realizes that the
-vitio is broken at QEMU side.
-
-Fix it by not sending RSS commands if the feature is not available in
-the device.
-
-Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
-Cc: stable@vger.kernel.org
-Cc: qemu-devel@nongnu.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
+Fixes: ec7d83acbd ("hw/misc/stm32l4x5_rcc: Add an internal clock multiplexer object")
+Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Message-ID: <20240317103918.44375-2-arnaud.minier@telecom-paris.fr>
+[PMD: Check clock_set_mul_div() return value]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-Id: <20240325152827.73817-4-philmd@linaro.org>
 ---
- drivers/net/virtio_net.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/misc/stm32l4x5_rcc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index c640fdf28fc5..e6b0eaf08ac2 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3809,6 +3809,9 @@ static int virtnet_set_rxfh(struct net_device *dev,
- 	struct virtnet_info *vi = netdev_priv(dev);
- 	int i;
+diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
+index 49b90afdf0..ed2dbd9dc3 100644
+--- a/hw/misc/stm32l4x5_rcc.c
++++ b/hw/misc/stm32l4x5_rcc.c
+@@ -61,7 +61,7 @@ static void clock_mux_update(RccClockMuxState *mux, bool bypass_source)
+         freq_multiplier = mux->divider;
+     }
  
-+	if (!vi->has_rss && !vi->has_rss_hash_report)
-+		return -EOPNOTSUPP;
-+
- 	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
- 	    rxfh->hfunc != ETH_RSS_HASH_TOP)
- 		return -EOPNOTSUPP;
+-    clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier);
++    clk_changed |= clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier);
+     clk_changed |= clock_set(mux->out, clock_get(current_source));
+     if (clk_changed) {
+         clock_propagate(mux->out);
 -- 
-2.43.0
+2.41.0
 
 
