@@ -4,93 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5530ECD11DD
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:51:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966FDCD11DD
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp6G0-00021T-J2; Tue, 26 Mar 2024 08:50:24 -0400
+	id 1rp6Gs-0002Xo-Em; Tue, 26 Mar 2024 08:51:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rp6Fx-00021B-ON
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:50:22 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rp6Fv-0003X2-0H
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:50:21 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-5dbf7b74402so3080528a12.0
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 05:50:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711457417; x=1712062217;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HD8bTh4SKj8kWMpYV27yBYsr6pw/gXEO7hM8oeGvcbY=;
- b=naxMFgS2dHUTc6nozrgAg0IMWRepAo/GnWr9vC6pohDqzEmzXXmJgRr5WxAmt12/Px
- 88UoP5ReBaXqFnGTQuAEGJw0xpIpi0i7tIRnk/AfIol7Ju18GluobbF8kUNyOC370z75
- G+HP+sNq3hNP+CqDKOTDBH7BWLskJx2hb2LFM1y/rfA8DBLLiC4CRsLzOesOL5DbjMSR
- Uy+cupZpCs3J2XHLXProR9x8CBCzBPem+XPZgAXvSsQG5jj0yAmF8AVEuCjjLgqZ37GA
- RmqhhglCReymGTeBZje3SgCb0Q2I72Y/WT3AHDDVD6W2w7S1hAITZrvxpbSCPip0s/OV
- AEcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711457417; x=1712062217;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HD8bTh4SKj8kWMpYV27yBYsr6pw/gXEO7hM8oeGvcbY=;
- b=i/MB/VJMaAQxLxJ7+Futmt3PNZA1Hc4rZe0zvyF/FXpkrfP+wWlY/YIHvKFGjcUOpS
- N0+AVLWszMv42C66OR7MpDte58f91wnkl3uk3fOEyGfSn8aM/brGyiRtHphk5EaWQD0f
- IjcLJCf3MGXWUmH27/cZ9jddGPNRh0+Yj61HlNjHEgL9VrygYFdija7F31XMYjAdADyM
- 20hjRs74enhnfqqKsIfVvnxwjhfUzUCWzOu2b6sCek4pKAhN/03HbjH3CQ//SQpAmvGK
- g5GEMn26NFeYrqYX9lJuiB3479LMN/LaJ+hc7H5bcC9/AfkdrFrCPaCFfMxLVePw6A/4
- 2EXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWhIPLUv1Apoz9buysiBXXkOO39VV5QxfVNA1wyDO02Q2oT27O6Xhupvtv8gTh7/fYkRYM0rcxtvK9EpZlE8WZlmx98QuY=
-X-Gm-Message-State: AOJu0YzKCiyMpYctkw70N0+Y63SFjpLZZURPVZ1VcfuYtQv1qc+LPEpQ
- Je68MgQR0xFe8EV8cnVLzQEmIkAo23InlzwdVBczVEljZhvO5DcV+LjuBpy7S5M=
-X-Google-Smtp-Source: AGHT+IHG/U03BbGPOtwZPbEQcNLo5qDeQT9JHJUzkBw98y9Pe/AQrgkLEEDmQFPFVa7nuDLOLTnu7Q==
-X-Received: by 2002:a05:6a20:3d0b:b0:1a3:d60c:f16d with SMTP id
- y11-20020a056a203d0b00b001a3d60cf16dmr1808840pzi.51.1711457416941; 
- Tue, 26 Mar 2024 05:50:16 -0700 (PDT)
-Received: from [157.82.202.248] ([157.82.202.248])
- by smtp.gmail.com with ESMTPSA id
- r18-20020aa78b92000000b006e647716b6esm6110428pfd.149.2024.03.26.05.50.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 05:50:16 -0700 (PDT)
-Message-ID: <f2686686-70f6-41e6-998c-d54e8480a8d4@daynix.com>
-Date: Tue, 26 Mar 2024 21:50:13 +0900
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rp6Gq-0002XG-QO
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:51:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rp6Gp-0003nA-1J
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:51:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711457473;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=JlMSmLkcTMlylmW5uZLLXGFw0hS3xSZAZYREd5/BcF4=;
+ b=PRjfdyv8mWFig1iFteLSJl9tTQvwnxqNCOaKqw8JWxIAMsrtpXRqG24ay//uHeWfzUREdw
+ /EfV4af6YkhCspWSBxpWDgzVMQs7EQQBaOfkopxM1cq3LpzbHWbGLD7rojRcMA2SRo21pU
+ kIjbFHgT4k8vqeTAa9iRiYytb6BtwT0=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-316-ImfVzm7RMkiZ0Qe3zQx44w-1; Tue, 26 Mar 2024 08:51:07 -0400
+X-MC-Unique: ImfVzm7RMkiZ0Qe3zQx44w-1
+Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.9])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 81491800262;
+ Tue, 26 Mar 2024 12:51:07 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 4F15E492BDC;
+ Tue, 26 Mar 2024 12:51:06 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, devel@lists.libvirt.org, richard.henderson@linaro.org,
+ mst@redhat.com, thuth@redhat.com, qemu-trivial@nongnu.org
+Subject: [PATCH for-9.0] docs/about: Mark the iaspc machine type as deprecated
+Date: Tue, 26 Mar 2024 13:51:04 +0100
+Message-ID: <20240326125104.90103-1-imammedo@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 9.1 v2 1/2] buildsys: Bump known good meson version to
- v1.4.0
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Beraldo Leal <bleal@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-References: <20240326-meson-v2-0-d9f9003775e9@daynix.com>
- <20240326-meson-v2-1-d9f9003775e9@daynix.com>
- <CAFEAcA8JF35A5o-+F39sXFnkTDnPo29A7zCZgxFPt3388sVvig@mail.gmail.com>
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAFEAcA8JF35A5o-+F39sXFnkTDnPo29A7zCZgxFPt3388sVvig@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::530;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,51 +80,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/03/26 21:40, Peter Maydell wrote:
-> On Tue, 26 Mar 2024 at 12:35, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> We need meson v1.4.0 to fix MESONINTROSPECT quoting on Windows:
->> https://github.com/mesonbuild/meson/pull/12807
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   python/scripts/vendor.py                   |   4 ++--
->>   python/wheels/meson-1.2.3-py3-none-any.whl | Bin 964928 -> 0 bytes
->>   python/wheels/meson-1.4.0-py3-none-any.whl | Bin 0 -> 935471 bytes
->>   pythondeps.toml                            |   2 +-
->>   4 files changed, 3 insertions(+), 3 deletions(-)
-> 
->> --- a/pythondeps.toml
->> +++ b/pythondeps.toml
->> @@ -19,7 +19,7 @@
->>
->>   [meson]
->>   # The install key should match the version in python/wheels/
->> -meson = { accepted = ">=0.63.0", installed = "1.2.3", canary = "meson" }
->> +meson = { accepted = ">=0.63.0", installed = "1.4.0", canary = "meson" }
-> 
-> If we need 1.4.0 why does this still say we accept anything 0.63.0
-> or better ?
-> 
-> If we use shlex.split(), does that go wrong for pre-1.4.0
-> meson only on Windows, or is it broken for all platforms?
+ISAPC machine was introduced 25 years ago and it's a lot of time since
+such machine was around with real ISA only PC hardware practically defunct.
+Also it's slowly bit-rots (for example: I was able to boot RHEL6 on RHEL9 host
+in only TCG mode, while in KVM mode it hung in the middle of boot)
 
-It is only needed for Windows.
+Rather than spending time on fixing 'the oldest' no longer tested machine type,
+deprecate it so we can clean up QEMU code from legacy fixups and hopefully
+make it easier to follow.
 
-> (i.e. could we if we wanted to make the requirement
-> "1.4.0 for windows, 0.63.0 for others"?)
+Folks who have to use ancient guest that requires ISAPC can still
+use older QEMU to play with it.
 
-I just followed what commit 1a1e889f3576 ("buildsys: Bump known good 
-meson version to v1.2.3") did, which don't bump the accepted version.
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+ docs/about/deprecated.rst | 7 +++++++
+ hw/i386/pc_piix.c         | 1 +
+ 2 files changed, 8 insertions(+)
 
-But certainly we can do better and conditionally ensure meson==1.4.0 on 
-Windows in the configure script as commit edc210789500 ("python: use 
-vendored tomli") does.
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 7b548519b5..5708296991 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -226,6 +226,13 @@ These old machine types are quite neglected nowadays and thus might have
+ various pitfalls with regards to live migration. Use a newer machine type
+ instead.
+ 
++``isapc`` (since 9.0)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++These old machine type are quite neglected nowadays and thus might have
++various pitfalls with regards to live migration. Use a newer machine type
++instead.
++
+ Nios II ``10m50-ghrd`` and ``nios2-generic-nommu`` machines (since 8.2)
+ '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 18ba076609..96f72384dd 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -921,6 +921,7 @@ static void isapc_machine_options(MachineClass *m)
+     m->default_nic = "ne2k_isa";
+     m->default_cpu_type = X86_CPU_TYPE_NAME("486");
+     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
++    m->deprecation_reason = "old and unattended - use a newer version instead";
+ }
+ 
+ DEFINE_PC_MACHINE(isapc, "isapc", pc_init_isa,
+-- 
+2.43.0
 
-Regards,
-Akihiko Odaki
-
-> 
-> thanks
-> -- PMM
 
