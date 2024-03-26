@@ -4,82 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD05CD11DD
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11374CD11DD
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:35:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp60u-00056j-L5; Tue, 26 Mar 2024 08:34:49 -0400
+	id 1rp619-0005Dy-SJ; Tue, 26 Mar 2024 08:35:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rp60s-00055n-8n
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:34:47 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rp616-0005DK-S0
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:35:00 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rp60q-0000d3-L3
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:34:46 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4148f00fa66so5021585e9.0
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 05:34:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rp615-0000en-7L
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:35:00 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6ea9a60f7f5so2335637b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 05:34:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711456482; x=1712061282; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=svUOsYaO6p9SY9abVfjJdsXNvOCTqKkw1oua4oYqZig=;
- b=BHio45ZAsoeaKjNRdxqWSZrWL42sXrZiKfx9Fhf9QXbR5Kj+QVh22SwEB0c57aZMol
- 7o8tT/RRpuT0dVNKYHvqeohdkeFdocohjow7BN5c1DpRHMGGyh6syys0lc6v1kk6tCC6
- sjVVqdYbtdT4yrflI7Ytr/QbeZWGGesq74YiMafxGHJ4mjPDz8n7Lnl04rMwX0q0j4rU
- s+lTHtgKOS9AoXxzo8J+z3RiOpdCXDv3Gnfrt6OjhQTbIGXShYa5jnfakf0oLCG/bi6Y
- O4pFuAfB5FxdGs2wUW2doypp3CZRO6/NLQwBY/VT9qii7UO5d6FE09/0yVdX7zD6GRju
- d5SA==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711456498; x=1712061298;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=vYBWS+x0cCz2HwpXjLNdbyBk5DIta0GpDi9Mx2R+9is=;
+ b=W88syRZ7pBOiLHJltUkR93fphlBbbAD2Fggdo/yF67usBXV/FdOTmmmVRBevavORdG
+ eqksBg6NhEdH223fA7QSAMkMywvJ8F+knGVZ3Pfgy5IBcX9aQqFo4y77dZZPZhMtN1il
+ AGS3mTalVmzdv2UwvKPZe2+74hEeUxVZ1TDfc1hgl7pQAnYj4Vo00ilNIawNH86KgHiU
+ ZPbqECJignwq5EMrWBJUz6Ben68TR2hSq+xScbHAk2Fq55nZ/79bpTsi4V706TFYDxDX
+ uDtrhJQGHkWu9nQ7Jb/K2CtmwxfJ3pbMEIhFcQjaUBd4iUF52GvlWf8lXw6wjSYwJPGi
+ n4gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711456482; x=1712061282;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=svUOsYaO6p9SY9abVfjJdsXNvOCTqKkw1oua4oYqZig=;
- b=qjrhF0wlpTGk4/4waAtmU06hrfawL8on+tJ5K8+//6BZzqtSaPYOQ867HRa5KhLGfT
- x0NXE89O9ANfeFhTxH4xzn9JAqPtqTKmhjdrm++5pxg5akBUXjtOTGAU59z/ncUeHQVc
- iKy9UU0vr/B3YO0vtlnN9rOwEFNV8o2JGMDAEIYqC5lNz4sz0gzf6SmiZkDYxg2It02d
- W1PDt1/1LAfGKhyhG6FZ7VovZMiOzjPf2obmSUSf5agLxjTqRu83COPua4arOeJbo+05
- P10Gze0H5lbR4TzFkJ6JxFVyoJbEpLiqQ1jFgwbXMwtLGe/gQnbRoi7xlU1DpQaM8jV0
- DaIg==
-X-Gm-Message-State: AOJu0YySabslcuY//JpnDkB2m3YTBt2STv7hSlfp4uAve2vMXVk5pR00
- idEACoX0qZmSqWwIwzvU3sYT9tUyhAsojpc7oD/HYWrIXa1zoGbfppxv+Nwzdn2JeV7BE0ZvKzu
- ajoU=
-X-Google-Smtp-Source: AGHT+IFeO39Md14hAYeyibaCckZgJ17gWdFu5fyk5/2ZqTjKqDRiCiEG6d6U2q48tK6ZLhQA14ZU7w==
-X-Received: by 2002:a05:600c:1c8d:b0:412:beee:36b3 with SMTP id
- k13-20020a05600c1c8d00b00412beee36b3mr9810309wms.7.1711456482258; 
- Tue, 26 Mar 2024 05:34:42 -0700 (PDT)
-Received: from linaro.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
- y19-20020a1c4b13000000b004148090cf85sm716317wma.0.2024.03.26.05.34.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Mar 2024 05:34:41 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 0/9] TCG plugins new inline operations
-Date: Tue, 26 Mar 2024 16:34:17 +0400
-Message-Id: <20240326123426.761473-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.2
-Content-Type: text/plain; charset="utf-8"
+ d=1e100.net; s=20230601; t=1711456498; x=1712061298;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vYBWS+x0cCz2HwpXjLNdbyBk5DIta0GpDi9Mx2R+9is=;
+ b=xLNOcbDubDtR6A/BK7/1nNpMlz3ICoMD9rhizGdHKLgURIO7u40Un9Tp6/YlCQlwDJ
+ YB97yyUvVg5RaaAgHekAiBB4gvXxV2cRhzD6Ets3l8bGV0PV8IUqjRE/nY9t7rTKshGe
+ R3U/t+fMDGJ74ewmyuqbaCFzVSxbiWyywwdf/6Anp2sEvX25waywz2pzd1SBAhwVOoPC
+ kI+myVkAdFpiVVCNiY5wXhZQEZzuW3JZYKu0W2bz067TBHHbedvTyB42YQ91CU5sPWjK
+ Yd5w37pN2LvRXJJSGKe+y+8uOFFkjmnVbKn5E8jAxCWhkHXw1kBd28GwmRd3r0HMiajj
+ jRQg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXQREiZoIx7ISzggr8tEs7Xtg5IrSnmKW6D7vCDbkSu6q8fylt95L6zAVlOuU3uiVnk+0ZMi+7otFMLlClKP/bgYQfHmoI=
+X-Gm-Message-State: AOJu0Yxo4KH+1/yjZk6y6RqdWYhcrszKouEE7YlTTqAvEAKbNRbmX3df
+ CFKfChizp0r6YB3SyMr7UTQMITgKCOH1jg02wkwtM6KiDscZINUM6iKwUTV+Oc8=
+X-Google-Smtp-Source: AGHT+IHK2/a9ocYwQfFGOprp1X5uI0qcJyrqhoEAEfhHKWVq5Z8dj53aenuBibdidfnBJgSG1lmEjA==
+X-Received: by 2002:a05:6a20:12d2:b0:1a3:4671:2285 with SMTP id
+ v18-20020a056a2012d200b001a346712285mr9557900pzg.44.1711456497934; 
+ Tue, 26 Mar 2024 05:34:57 -0700 (PDT)
+Received: from localhost ([157.82.202.248])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d2-20020a170902cec200b001d9a91af8a4sm6691831plg.28.2024.03.26.05.34.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Mar 2024 05:34:57 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Tue, 26 Mar 2024 21:34:22 +0900
+Subject: [PATCH for 9.1 v2 1/2] buildsys: Bump known good meson version to
+ v1.4.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240326-meson-v2-1-d9f9003775e9@daynix.com>
+References: <20240326-meson-v2-0-d9f9003775e9@daynix.com>
+In-Reply-To: <20240326-meson-v2-0-d9f9003775e9@daynix.com>
+To: Beraldo Leal <bleal@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
+ John Snow <jsnow@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+X-Mailer: b4 0.13.0
+Received-SPF: none client-ip=2607:f8b0:4864:20::434;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,60 +102,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series implement two new operations for plugins:
-- Store inline allows to write a specific value to a scoreboard.
-- Conditional callback executes a callback only when a given condition is true.
-  The condition is evaluated inline.
+We need meson v1.4.0 to fix MESONINTROSPECT quoting on Windows:
+https://github.com/mesonbuild/meson/pull/12807
 
-It's possible to mix various inline operations (add, store) with conditional
-callbacks, allowing efficient "trap" based counters.
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ python/scripts/vendor.py                   |   4 ++--
+ python/wheels/meson-1.2.3-py3-none-any.whl | Bin 964928 -> 0 bytes
+ python/wheels/meson-1.4.0-py3-none-any.whl | Bin 0 -> 935471 bytes
+ pythondeps.toml                            |   2 +-
+ 4 files changed, 3 insertions(+), 3 deletions(-)
 
-It builds on top of new scoreboard API, introduced in the previous series.
-
-NOTE: Two patches still need review
-
-v2
---
-
-- fixed issue with udata not being passed to conditional callback
-- added specific test for this in tests/plugin/inline.c (udata was NULL before).
-
-v3
---
-
-- rebased on top of "plugins: Rewrite plugin code generation":
-  20240316015720.3661236-1-richard.henderson@linaro.org
-- single pass code generation
-- small cleanups for code generation
-
-v4
---
-
-- remove op field from qemu_plugin_inline_cb
-- use tcg_constant_i64 to load immediate value to store
-
-Pierrick Bouvier (9):
-  plugins: prepare introduction of new inline ops
-  plugins: extract generate ptr for qemu_plugin_u64
-  plugins: add new inline op STORE_U64
-  tests/plugin/inline: add test for STORE_U64 inline op
-  plugins: conditional callbacks
-  tests/plugin/inline: add test for conditional callback
-  plugins: distinct types for callbacks
-  plugins: extract cpu_index generate
-  plugins: remove op from qemu_plugin_inline_cb
-
- include/qemu/plugin.h        |  42 +++++++----
- include/qemu/qemu-plugin.h   |  80 ++++++++++++++++++++-
- plugins/plugin.h             |  12 +++-
- accel/tcg/plugin-gen.c       | 136 +++++++++++++++++++++++++++--------
- plugins/api.c                |  39 ++++++++++
- plugins/core.c               | 109 ++++++++++++++++++++--------
- tests/plugin/inline.c        | 130 +++++++++++++++++++++++++++++++--
- plugins/qemu-plugins.symbols |   2 +
- 8 files changed, 466 insertions(+), 84 deletions(-)
+diff --git a/python/scripts/vendor.py b/python/scripts/vendor.py
+index 1038b14ae0c8..da463fbde557 100755
+--- a/python/scripts/vendor.py
++++ b/python/scripts/vendor.py
+@@ -41,8 +41,8 @@ def main() -> int:
+     parser.parse_args()
+ 
+     packages = {
+-        "meson==1.2.3":
+-        "4533a43c34548edd1f63a276a42690fce15bde9409bcf20c4b8fa3d7e4d7cac1",
++        "meson==1.4.0":
++        "476a458d51fcfa322a6bdc64da5138997c542d08e6b2e49b9fa68c46fd7c4475",
+ 
+         "tomli==2.0.1":
+         "939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc",
+diff --git a/python/wheels/meson-1.2.3-py3-none-any.whl b/python/wheels/meson-1.2.3-py3-none-any.whl
+deleted file mode 100644
+index a8b84e5f114a..000000000000
+Binary files a/python/wheels/meson-1.2.3-py3-none-any.whl and /dev/null differ
+diff --git a/python/wheels/meson-1.4.0-py3-none-any.whl b/python/wheels/meson-1.4.0-py3-none-any.whl
+new file mode 100644
+index 000000000000..ca9adc3f024d
+Binary files /dev/null and b/python/wheels/meson-1.4.0-py3-none-any.whl differ
+diff --git a/pythondeps.toml b/pythondeps.toml
+index 0e8841599935..4269decf0e3e 100644
+--- a/pythondeps.toml
++++ b/pythondeps.toml
+@@ -19,7 +19,7 @@
+ 
+ [meson]
+ # The install key should match the version in python/wheels/
+-meson = { accepted = ">=0.63.0", installed = "1.2.3", canary = "meson" }
++meson = { accepted = ">=0.63.0", installed = "1.4.0", canary = "meson" }
+ 
+ [docs]
+ sphinx = { accepted = ">=1.6", installed = "5.3.0", canary = "sphinx-build" }
 
 -- 
-2.39.2
+2.44.0
 
 
