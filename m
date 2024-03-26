@@ -4,85 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEE70C54E67
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:48:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281D1C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp90E-0004YF-Hm; Tue, 26 Mar 2024 11:46:18 -0400
+	id 1rp92w-000400-7g; Tue, 26 Mar 2024 11:49:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp90A-0004Du-Sd
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:46:14 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp909-0001JS-1c
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:46:14 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-341c7c8adf3so2025402f8f.0
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:46:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711467971; x=1712072771; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pTnsklKw4fWTCEXstwwApylL5b79xPCluS5bdtq/AP4=;
- b=K9kypSWjrfL9N49/W0NFOIIlz2Dnk9rtYgHDD6A1UPo93CPorPUdqVmjm6kgb6pr2O
- ZuDtGSzklFVjwXlOvepNxv0tv7EHRW9ndWLYhbvZBKNEJKw3G3sqh/NjSeLkNEqY3810
- lC/FZkOjdhaCgmmaGXaR0yLvPtpXg37ndUompjvycbESn9AEB3SfLm3FEeUVU8i9a1UC
- FL/if81txP+DD12rEucTkPTogqMX0JCVVr4lUnZc4f+qhgv9kWP0UtxgbS7YcTUioGqI
- 8aHdJtGGmg9YCTjK7Udiyf5IkzFCclroIJUHFaunEgDmUZuQS2O0Gx9apk5FQYDC5pU6
- tDkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711467971; x=1712072771;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pTnsklKw4fWTCEXstwwApylL5b79xPCluS5bdtq/AP4=;
- b=QOn0wjYMRy8wymQWLFp1CHha2K0NGFyxXjt7Q16nOtY3Zj3+2wkyZZJ9a4kvKPfrNr
- I8FVqn9c5vtj50Sm68z+j8kGg6+IUXsLl0W/+Ur5Y2V6g3RSIqA7B8u7VTtgpgAtN7F3
- WsjxbF7VzhAq+sc8u1WDQgD4/au34yYl0B97GyBmO1O+0NS/RqseJoV9uiF6+mXKrAp6
- vxQBBXbhervPKgzMTJGBMeA2e4KpKzKISAoHC5XR7mpB/DoP1v28dfCDrLe8TtWpZ3RP
- pOPMuEss3gp8UAsxuFW91sI39TEpDW6Yys7qpg3+GvkHn4vTJ27qPZbRMLtLxiFLQYtQ
- ONww==
-X-Gm-Message-State: AOJu0YyIENf6BsRhQfUCrMm+0cxYWKCFMcUJI8r6+Vv7Ky04AxX+G6y2
- m5PtbZNtLlIrEiclrTP2T7FHRQKziMC/Y6blWj85QY7RFcotFEuaSKj0g6cTMlehkXBGUtdNDGp
- r
-X-Google-Smtp-Source: AGHT+IFRg138015mLkS4XG4Sdyh7YagfM5S5mQJ97xUcjF73GKx/sVaycVtwbwmi4p09E0ToYZh4Dg==
-X-Received: by 2002:a5d:5b88:0:b0:33e:c0a9:79c with SMTP id
- df8-20020a5d5b88000000b0033ec0a9079cmr24223wrb.23.1711467971342; 
- Tue, 26 Mar 2024 08:46:11 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.155.229])
- by smtp.gmail.com with ESMTPSA id
- dv13-20020a0560000d8d00b0033e25c39ac3sm12463085wrb.80.2024.03.26.08.46.09
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 Mar 2024 08:46:10 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 11/13] ui/cocoa: Fix aspect ratio
-Date: Tue, 26 Mar 2024 16:45:02 +0100
-Message-ID: <20240326154505.8300-12-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240326154505.8300-1-philmd@linaro.org>
-References: <20240326154505.8300-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rp92T-0003i1-2t
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:48:39 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1rp92P-0001oJ-Np
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:48:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711468114; x=1743004114;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=PSDsdy9cCNNUizkkvJKo+ZRNsRTL6uHLRjjn/ZAdyaA=;
+ b=lW4mx5Cw10XVInXvMShL6BumHfrb/Vz/Qv9GITdFjX/rOy9jP1SYGBB2
+ EJkb9YgIVBruN6FVRUw0vVpd/XOu8PlmPOUgqzs/W3KmBoSGVeSj94vjp
+ kJq3PEmV3IHUicSgLCT1Ypu7nh2HLYKtrPGiBzMzKsjaCBJUKN+P6oSKq
+ 1j9wx6VEnkvI2Q33FwHbOLU1CA2YruEjnYpjp9Hypn+nY0bXkYFVKsiHL
+ iEBy5oMTsp9meRQ+9X3O5ev6BgukofwpcdQh911hxYa7DRYuG0eZ14j6y
+ wxRioIy9UCi0gqmcjVtUJAS7h7BHv6P5btEOm/2U5O1v+HC/rczbSs+PF w==;
+X-CSE-ConnectionGUID: JtqEm3c0RaWiUJEsrkmREg==
+X-CSE-MsgGUID: y7h56RDPTxeSD2KfuCP5cg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11025"; a="6466230"
+X-IronPort-AV: E=Sophos;i="6.07,156,1708416000"; 
+   d="scan'208";a="6466230"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Mar 2024 08:48:30 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,156,1708416000"; d="scan'208";a="20717018"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.224.7])
+ ([10.124.224.7])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Mar 2024 08:48:29 -0700
+Message-ID: <62c24e8e-4b6a-4710-a4b8-a26197d0143e@intel.com>
+Date: Tue, 26 Mar 2024 23:48:26 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/26] KVM: track whether guest state is encrypted
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: michael.roth@amd.com, david@redhat.com
+References: <20240322181116.1228416-1-pbonzini@redhat.com>
+ <20240322181116.1228416-13-pbonzini@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20240322181116.1228416-13-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,82 +84,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+On 3/23/2024 2:11 AM, Paolo Bonzini wrote:
+> So far, KVM has allowed KVM_GET/SET_* ioctls to execute even if the
+> guest state is encrypted, in which case they do nothing.  For the new
+> API using VM types, instead, the ioctls will fail which is a safer and
+> more robust approach.
+> 
+> The new API will be the only one available for SEV-SNP and TDX, but it
+> is also usable for SEV and SEV-ES.  In preparation for that, require
+> architecture-specific KVM code to communicate the point at which guest
+> state is protected (which must be after kvm_cpu_synchronize_post_init(),
+> though that might change in the future in order to suppor migration).
+>  From that point, skip reading registers so that cpu->vcpu_dirty is
+> never true: if it ever becomes true, kvm_arch_put_registers() will
+> fail miserably.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   include/sysemu/kvm.h     |  2 ++
+>   include/sysemu/kvm_int.h |  1 +
+>   accel/kvm/kvm-all.c      | 14 ++++++++++++--
+>   target/i386/sev.c        |  1 +
+>   4 files changed, 16 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+> index fad9a7e8ff3..302e8f6f1e5 100644
+> --- a/include/sysemu/kvm.h
+> +++ b/include/sysemu/kvm.h
+> @@ -539,6 +539,8 @@ bool kvm_dirty_ring_enabled(void);
+>   
+>   uint32_t kvm_dirty_ring_size(void);
+>   
+> +void kvm_mark_guest_state_protected(void);
+> +
+>   /**
+>    * kvm_hwpoisoned_mem - indicate if there is any hwpoisoned page
+>    * reported for the VM.
+> diff --git a/include/sysemu/kvm_int.h b/include/sysemu/kvm_int.h
+> index 882e37e12c5..3496be7997a 100644
+> --- a/include/sysemu/kvm_int.h
+> +++ b/include/sysemu/kvm_int.h
+> @@ -87,6 +87,7 @@ struct KVMState
+>       bool kernel_irqchip_required;
+>       OnOffAuto kernel_irqchip_split;
+>       bool sync_mmu;
+> +    bool guest_state_protected;
+>       uint64_t manual_dirty_log_protect;
+>       /* The man page (and posix) say ioctl numbers are signed int, but
+>        * they're not.  Linux, glibc and *BSD all treat ioctl numbers as
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index a8cecd040eb..05fa3533c66 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -2698,7 +2698,7 @@ bool kvm_cpu_check_are_resettable(void)
+>   
+>   static void do_kvm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
+>   {
+> -    if (!cpu->vcpu_dirty) {
+> +    if (!cpu->vcpu_dirty && !kvm_state->guest_state_protected) {
+>           int ret = kvm_arch_get_registers(cpu);
+>           if (ret) {
+>               error_report("Failed to get registers: %s", strerror(-ret));
+> @@ -2712,7 +2712,7 @@ static void do_kvm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
+>   
+>   void kvm_cpu_synchronize_state(CPUState *cpu)
+>   {
+> -    if (!cpu->vcpu_dirty) {
+> +    if (!cpu->vcpu_dirty && !kvm_state->guest_state_protected) {
+>           run_on_cpu(cpu, do_kvm_cpu_synchronize_state, RUN_ON_CPU_NULL);
+>       }
+>   }
+> @@ -2747,6 +2747,11 @@ static void do_kvm_cpu_synchronize_post_init(CPUState *cpu, run_on_cpu_data arg)
+>   
+>   void kvm_cpu_synchronize_post_init(CPUState *cpu)
+>   {
+> +    /*
+> +     * This runs before the machine_init_done notifiers, and is the last
+> +     * opportunity to synchronize the state of confidential guests.
+> +     */ > +    assert(!kvm_state->guest_state_protected);
 
-[NSWindow setContentAspectRatio:] does not trigger window resize itself,
-so the wrong aspect ratio will persist if nothing resizes the window.
-Call [NSWindow setContentSize:] in such a case.
+So, this requires confidential guests to call 
+kvm_mark_guest_state_protected() in its machine_init_done notifier callback?
 
-Fixes: 91aa508d0274 ("ui/cocoa: Let the platform toggle fullscreen")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20240323-fixes-v2-1-18651a2b0394@daynix.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- ui/cocoa.m | 41 ++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 40 insertions(+), 1 deletion(-)
+But for TDX, the guest_state is protected at the beginning, not some 
+time later when machine_init_done.
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index 810751cf26..17e125d66d 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -519,6 +519,43 @@ - (void) drawRect:(NSRect) rect
-     }
- }
- 
-+- (NSSize)fixAspectRatio:(NSSize)max
-+{
-+    NSSize scaled;
-+    NSSize fixed;
-+
-+    scaled.width = screen.width * max.height;
-+    scaled.height = screen.height * max.width;
-+
-+    /*
-+     * Here screen is our guest's output size, and max is the size of the
-+     * largest possible area of the screen we can display on.
-+     * We want to scale up (screen.width x screen.height) by either:
-+     *   1) max.height / screen.height
-+     *   2) max.width / screen.width
-+     * With the first scale factor the scale will result in an output height of
-+     * max.height (i.e. we will fill the whole height of the available screen
-+     * space and have black bars left and right) and with the second scale
-+     * factor the scaling will result in an output width of max.width (i.e. we
-+     * fill the whole width of the available screen space and have black bars
-+     * top and bottom). We need to pick whichever keeps the whole of the guest
-+     * output on the screen, which is to say the smaller of the two scale
-+     * factors.
-+     * To avoid doing more division than strictly necessary, instead of directly
-+     * comparing scale factors 1 and 2 we instead calculate and compare those
-+     * two scale factors multiplied by (screen.height * screen.width).
-+     */
-+    if (scaled.width < scaled.height) {
-+        fixed.width = scaled.width / screen.height;
-+        fixed.height = max.height;
-+    } else {
-+        fixed.width = max.width;
-+        fixed.height = scaled.height / screen.width;
-+    }
-+
-+    return fixed;
-+}
-+
- - (NSSize) screenSafeAreaSize
- {
-     NSSize size = [[[self window] screen] frame].size;
-@@ -536,8 +573,10 @@ - (void) resizeWindow
-         [[self window] setContentSize:NSMakeSize(screen.width, screen.height)];
-         [[self window] center];
-     } else if ([[self window] styleMask] & NSWindowStyleMaskFullScreen) {
--        [[self window] setContentSize:[self screenSafeAreaSize]];
-+        [[self window] setContentSize:[self fixAspectRatio:[self screenSafeAreaSize]]];
-         [[self window] center];
-+    } else {
-+        [[self window] setContentSize:[self fixAspectRatio:[self frame].size]];
-     }
- }
- 
--- 
-2.41.0
+>       run_on_cpu(cpu, do_kvm_cpu_synchronize_post_init, RUN_ON_CPU_NULL);
+>   }
+>   
+> @@ -4094,3 +4099,8 @@ void query_stats_schemas_cb(StatsSchemaList **result, Error **errp)
+>           query_stats_schema_vcpu(first_cpu, &stats_args);
+>       }
+>   }
+> +
+> +void kvm_mark_guest_state_protected(void)
+> +{
+> +    kvm_state->guest_state_protected = true;
+> +}
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index b8f79d34d19..c49a8fd55eb 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
+> @@ -755,6 +755,7 @@ sev_launch_get_measure(Notifier *notifier, void *unused)
+>           if (ret) {
+>               exit(1);
+>           }
+> +        kvm_mark_guest_state_protected();
+>       }
+>   
+>       /* query the measurement blob length */
 
 
