@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BA68C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 10:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA63C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 10:58:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp480-0007be-6F; Tue, 26 Mar 2024 06:34:00 -0400
+	id 1rp4V5-0002Gs-Rd; Tue, 26 Mar 2024 06:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rp47w-0007bE-Kq
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 06:33:57 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rp47u-0006NB-Pw
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 06:33:56 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-513d23be0b6so6338764e87.0
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 03:33:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711449233; x=1712054033; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W8wyaybGhlkTclIAHhYVXLpn3bLuxmb8JWOnRWfjgnY=;
- b=tmEGkKlCVtoBvuWNBKWGQuO/QUFzMpjfZ74Y+TCuZnpVP6wG+U8MyOGL3GujgtMxp3
- baymEPvDqm5TFcZ0LCFLsXXbWtUksrShB4Hxbjuwfq/l9CChz4JxbUAzw/LEuvO1LiCv
- B0TwbXkYYCiVCCpVNThXrz4ZHy5aGZPR95puMUtP/uyHzvvYJT8wIApv2/MHSDVZ39G5
- a7EMR9m/BE4/+VlgYf2C99BDvQCkQ+ZJd/+RLcnp4DqlXC0RiCa63OKzxFAZNu8MSINf
- lNO+noZ/RKpxbZ8o4nssS4wuRG0VyoaUJvsXcBPol0PaBOvyEIAwG0wptTGcDCh780xR
- sOfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711449233; x=1712054033;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=W8wyaybGhlkTclIAHhYVXLpn3bLuxmb8JWOnRWfjgnY=;
- b=DEP/drp1xpw8WmP1ytBFNp4y3ognlerWu1/hDDVNa9a1Je4Lepf2whhCnGsAl5mfO+
- OR02P69yTZXx5pr2ufgxf8eccqGHH3oJsI8qagptZCcWcw/1Ihs8UZTibP0eGkQealnf
- 75u6U9eoda94Uc1QdrFnFZI6vomQiOhAa8Ij3gn1borxnPXIb8h1VAruUgYAm7zd0rFX
- YHRfxK22LIwRru0Jdrujsc/0CMr3k6hVLw1+EVBQ3jyyFlRpV0sSNJqScwKj8/nhhJfD
- 90O4hWhduSeV5HnDxKuyPiaEwe9P9DfF6KUwWjvwcH4yxpOJizZ/XMhZlS84XLzoTpVk
- Xf4w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW5+OYawQY1Q5C8ZCrVSohXZ+LxlETVJbPh2gIrcyoBNWuRLPm/G8GpxOFRO/Wy+gQmT43zu7/84CNUWXAsvnTkJuO6dGk=
-X-Gm-Message-State: AOJu0YzvSIm87Pms+0ldashdWxIJ5lPn8d5iyQpiazASsMOlC1uWQmtM
- zqcYXgS/cq0l6IBifdi9hlj/ScRuIzpmubsZLMmS9QCEzJQXxy8G06cjy8Yeit2CRES8JG9RKQr
- zCXxoi/KI6R3rjn/JDtD32sR6tD3I8PBAUDklCQ==
-X-Google-Smtp-Source: AGHT+IECFVts8+7RBmbbazuAEVUYth2MI7lmsKJczpnF+rJS6Kzd6sygMltLSWxiL5J7cFSXSv/GHrtsqbiNQ271RwE=
-X-Received: by 2002:a05:6512:29c:b0:515:adde:94c7 with SMTP id
- j28-20020a056512029c00b00515adde94c7mr3361624lfp.31.1711449232581; Tue, 26
- Mar 2024 03:33:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp4V3-0002Fn-Po
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 06:57:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp4V2-0002iD-AF
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 06:57:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711450667;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hsAuvtjcGMknxupq7dt0Tx5jDHTx3kFzc8XXDd0b8jY=;
+ b=JEEucI2rSYEcarsAoKO64QnLTRP/HR6awRlGis1Nuz+zFMxejOJjizpaBoWZktpkx8Kbb2
+ 98syLERWQ8rT1EI0funJfCfoMYRB4eBECfgw9ezGv1zEAZaSiL1Dm7VZeNnSJxpITZUy/G
+ VWsbGUdg174sFHOu96FPOxQfjtBUY0c=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-571-YsFiHoJlPj6J1yCYNtY6uw-1; Tue,
+ 26 Mar 2024 06:57:41 -0400
+X-MC-Unique: YsFiHoJlPj6J1yCYNtY6uw-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id CA2B0383CD69;
+ Tue, 26 Mar 2024 10:57:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 8E4E1492BC4;
+ Tue, 26 Mar 2024 10:57:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8667721E668C; Tue, 26 Mar 2024 11:57:35 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  qemu-riscv@nongnu.org,  Anton Johansson
+ <anjo@rev.ng>,  qemu-s390x@nongnu.org,  qemu-ppc@nongnu.org,  Daniel P .
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Claudio Fontana
+ <cfontana@suse.de>,  Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>,
+ qemu-arm@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Laurent Vivier
+ <lvivier@redhat.com>
+Subject: Re: [PATCH-for-9.1 06/21] target/i386: Make X86_CPU common to new
+ I386_CPU / X86_64_CPU types
+In-Reply-To: <20240315130910.15750-7-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 15 Mar 2024 14:08:54
+ +0100")
+References: <20240315130910.15750-1-philmd@linaro.org>
+ <20240315130910.15750-7-philmd@linaro.org>
+Date: Tue, 26 Mar 2024 11:57:35 +0100
+Message-ID: <87h6gtp8f4.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240320020115.18801-1-yaoxt.fnst@fujitsu.com>
- <20240326015257.21516-1-yaoxt.fnst@fujitsu.com>
- <9eb2194e-7efe-448a-a511-9d10e589943e@linaro.org>
- <c0bdb1f6-b456-4378-a2ee-b2355ad5bb42@linaro.org>
-In-Reply-To: <c0bdb1f6-b456-4378-a2ee-b2355ad5bb42@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 26 Mar 2024 10:33:40 +0000
-Message-ID: <CAFEAcA_0j0HZ16MqR1QtPJPx7xFGJPbW7=Zgo-wHzhpZHRiMCg@mail.gmail.com>
-Subject: Re: [PATCH v3] contrib/plugins/execlog: Fix compiler warning
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Yao Xingtao <yaoxt.fnst@fujitsu.com>, 
- qemu-devel@nongnu.org, alex.bennee@linaro.org, erdnaxe@crans.org, 
- ma.mandourr@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,130 +96,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Mar 2024 at 09:54, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+
+> "target/foo/cpu-qom.h" can not use any target specific definitions.
 >
-> On 26/3/24 04:33, Pierrick Bouvier wrote:
-> > On 3/26/24 05:52, Yao Xingtao wrote:
-> >> 1. The g_pattern_match_string() is deprecated when glib2 version >=3D =
-2.70.
-> >>     Use g_pattern_spec_match_string() instead to avoid this problem.
-> >>
-> >> 2. The type of second parameter in g_ptr_array_add() is
-> >>     'gpointer' {aka 'void *'}, but the type of reg->name is 'const
-> >> char*'.
-> >>     Cast the type of reg->name to 'gpointer' to avoid this problem.
-> >>
-> >> compiler warning message:
-> >> /root/qemu/contrib/plugins/execlog.c:330:17: warning:
-> >> =E2=80=98g_pattern_match_string=E2=80=99
-> >> is deprecated: Use 'g_pattern_spec_match_string'
-> >> instead [-Wdeprecated-declarations]
-> >>    330 |                 if (g_pattern_match_string(pat, rd->name) ||
-> >>        |                 ^~
-> >> In file included from /usr/include/glib-2.0/glib.h:67,
-> >>                   from /root/qemu/contrib/plugins/execlog.c:9:
-> >> /usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
-> >>     57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
-> >>        |               ^~~~~~~~~~~~~~~~~~~~~~
-> >> /root/qemu/contrib/plugins/execlog.c:331:21: warning:
-> >> =E2=80=98g_pattern_match_string=E2=80=99
-> >> is deprecated: Use 'g_pattern_spec_match_string'
-> >> instead [-Wdeprecated-declarations]
-> >>    331 |                     g_pattern_match_string(pat, rd_lower)) {
-> >>        |                     ^~~~~~~~~~~~~~~~~~~~~~
-> >> /usr/include/glib-2.0/glib/gpattern.h:57:15: note: declared here
-> >>     57 | gboolean      g_pattern_match_string   (GPatternSpec *pspec,
-> >>        |               ^~~~~~~~~~~~~~~~~~~~~~
-> >> /root/qemu/contrib/plugins/execlog.c:339:63: warning: passing argument
-> >> 2 of
-> >> =E2=80=98g_ptr_array_add=E2=80=99 discards =E2=80=98const=E2=80=99 qua=
-lifier from pointer target type
-> >> [-Wdiscarded-qualifiers]
-> >>    339 |                             g_ptr_array_add(all_reg_names,
-> >> reg->name);
-> >>        |
-> >> ~~~^~~~~~
-> >> In file included from /usr/include/glib-2.0/glib.h:33:
-> >> /usr/include/glib-2.0/glib/garray.h:198:62: note: expected
-> >> =E2=80=98gpointer=E2=80=99 {aka =E2=80=98void *=E2=80=99} but argument=
- is of type =E2=80=98const char *=E2=80=99
-> >>    198 |                                            gpointer
-> >> data);
-> >>        |
-> >> ~~~~~~~~~~~~~~~~~~^~~~
-> >>
-> >> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2210
-> >> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-> >> ---
-> >>   contrib/plugins/execlog.c | 24 +++++++++++++++++++++---
-> >>   1 file changed, 21 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
-> >> index a1dfd59ab7..fab18113d4 100644
-> >> --- a/contrib/plugins/execlog.c
-> >> +++ b/contrib/plugins/execlog.c
-> >> @@ -311,6 +311,24 @@ static Register
-> >> *init_vcpu_register(qemu_plugin_reg_descriptor *desc)
-> >>       return reg;
-> >>   }
-> >> +/*
-> >> + * g_pattern_match_string has been deprecated in Glib since 2.70 and
-> >> + * will complain about it if you try to use it. Fortunately the
-> >> + * signature of both functions is the same making it easy to work
-> >> + * around.
-> >> + */
-> >> +static inline
-> >> +gboolean g_pattern_spec_match_string_qemu(GPatternSpec *pspec,
-> >> +                                          const gchar *string)
-> >> +{
-> >> +#if GLIB_CHECK_VERSION(2, 70, 0)
-> >> +    return g_pattern_spec_match_string(pspec, string);
-> >> +#else
-> >> +    return g_pattern_match_string(pspec, string);
-> >> +#endif
-> >> +};
-> >> +#define g_pattern_spec_match_string(p, s)
-> >> g_pattern_spec_match_string_qemu(p, s)
-> >> +
-> >>   static GPtrArray *registers_init(int vcpu_index)
-> >>   {
-> >>       g_autoptr(GPtrArray) registers =3D g_ptr_array_new();
-> >> @@ -327,8 +345,8 @@ static GPtrArray *registers_init(int vcpu_index)
-> >>               for (int p =3D 0; p < rmatches->len; p++) {
-> >>                   g_autoptr(GPatternSpec) pat =3D
-> >> g_pattern_spec_new(rmatches->pdata[p]);
-> >>                   g_autofree gchar *rd_lower =3D
-> >> g_utf8_strdown(rd->name, -1);
-> >> -                if (g_pattern_match_string(pat, rd->name) ||
-> >> -                    g_pattern_match_string(pat, rd_lower)) {
-> >> +                if (g_pattern_spec_match_string(pat, rd->name) ||
-> >> +                    g_pattern_spec_match_string(pat, rd_lower)) {
-> >>                       Register *reg =3D init_vcpu_register(rd);
-> >>                       g_ptr_array_add(registers, reg);
-> >> @@ -336,7 +354,7 @@ static GPtrArray *registers_init(int vcpu_index)
-> >>                       if (disas_assist) {
-> >>                           g_mutex_lock(&add_reg_name_lock);
-> >>                           if (!g_ptr_array_find(all_reg_names,
-> >> reg->name, NULL)) {
-> >> -                            g_ptr_array_add(all_reg_names, reg->name)=
-;
-> >> +                            g_ptr_array_add(all_reg_names,
-> >> (gpointer)reg->name);
-> >>                           }
-> >>                           g_mutex_unlock(&add_reg_name_lock);
-> >>                       }
-> >
-> > Would be nice if it's still possible to merge this in 9.0 Peter.
+> Currently "target/i386/cpu-qom.h" defines TYPE_X86_CPU depending
+> on the i386/x86_64 build type. This doesn't scale in a heterogeneous
+> context where we need to access both types concurrently.
 >
-> I will post a small PR later today, so until Peter has something
-> else planned, I can take it, since the patch LGTM now.
+> In order to do that, introduce the new I386_CPU / X86_64_CPU
+> types, both inheriting a common TYPE_X86_CPU base type.
+>
+> Keep the current "base" and "max" CPU types as 32 or 64-bit,
+> depending on the binary built.
+>
+> Adapt the cpu-plug-test, since the 'base' architecture is now
+> common to both 32/64-bit x86 targets.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Acked-by: Richard Henderson <richard.henderson@linaro.org>
 
-That would be great (I don't have any more patches I wanted
-to put in a PR).
+[...]
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> diff --git a/tests/qtest/cpu-plug-test.c b/tests/qtest/cpu-plug-test.c
+> index 7f5dd5f85a..97316d131f 100644
+> --- a/tests/qtest/cpu-plug-test.c
+> +++ b/tests/qtest/cpu-plug-test.c
+> @@ -90,7 +90,7 @@ static void add_pc_test_case(const char *mname)
+>      data->machine =3D g_strdup(mname);
+>      data->cpu_model =3D "Haswell"; /* 1.3+ theoretically */
+>      data->device_model =3D g_strdup_printf("%s-%s-cpu", data->cpu_model,
+> -                                         qtest_get_arch());
+> +                                         qtest_get_base_arch());
+>      data->sockets =3D 1;
+>      data->cores =3D 3;
+>      data->threads =3D 2;
 
-thanks
--- PMM
+Doesn't build for me:
+
+../tests/qtest/cpu-plug-test.c: In function =E2=80=98add_pc_test_case=E2=80=
+=99:
+../tests/qtest/cpu-plug-test.c:93:42: error: implicit declaration of functi=
+on =E2=80=98qtest_get_base_arch=E2=80=99; did you mean =E2=80=98qtest_get_a=
+rch=E2=80=99? [-Werror=3Dimplicit-function-declaration]
+   93 |                                          qtest_get_base_arch());
+      |                                          ^~~~~~~~~~~~~~~~~~~
+      |                                          qtest_get_arch
+../tests/qtest/cpu-plug-test.c:93:42: error: nested extern declaration of =
+=E2=80=98qtest_get_base_arch=E2=80=99 [-Werror=3Dnested-externs]
+../tests/qtest/cpu-plug-test.c:92:47: error: format =E2=80=98%s=E2=80=99 ex=
+pects argument of type =E2=80=98char *=E2=80=99, but argument 3 has type =
+=E2=80=98int=E2=80=99 [-Werror=3Dformat=3D]
+   92 |     data->device_model =3D g_strdup_printf("%s-%s-cpu", data->cpu_m=
+odel,
+      |                                              ~^
+      |                                               |
+      |                                               char *
+      |                                              %d
+   93 |                                          qtest_get_base_arch());
+      |                                          ~~~~~~~~~~~~~~~~~~~~~
+      |                                          |
+      |                                          int
+
 
