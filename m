@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02DF4C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 07:37:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03AB7C54E67
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 07:37:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp1KZ-0004lI-OU; Tue, 26 Mar 2024 03:34:47 -0400
+	id 1rp1KY-0004kk-4i; Tue, 26 Mar 2024 03:34:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp1KZ-0004kz-6s
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:34:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp1KW-0004kA-S2
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:34:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp1KW-0005SN-Mv
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:34:46 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp1KT-0005Pv-Mq
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:34:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711438484;
+ s=mimecast20190719; t=1711438481;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8ItNSmBpkA635gc2XzCR3nyipQCjZoX7TAkHBT/GqcQ=;
- b=Mq6o35n8QXdKOi6AyokHpTD8I2v/HACZsDKQKLKgBE34crRPAa/omcG15yhXsr94MbdnC2
- xcuGsjyw10EmnVQV9zRqYkHdOdCL3Eje7fyteQ3D0d5vmlWJrcEYLLT/oLV7Y7zh/veLT+
- aB/4rHfKZW7VKyaR849pTk1Oof2mE3U=
+ bh=GnydpNbkal1IZ9OcdgD3l1Lc8axV/VHoTevS5Urjnn4=;
+ b=MiHDMXUleGO68RmdynMH1UGLBFRQfXmUvQ32mWtmaMjptigXBK6AEtRjBnZ919cUl6IkVP
+ fgN7jmxIinoPrWApbTNe/c5u43S63RAHnL8D9gslq6CR6HzugXCSPHP4hAp7V2d/G3bDpq
+ I9Wupc6mepFS4SoVK7Rj98IEnuj/wXE=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-283-iR302acHOPu0Hbg18aczBg-1; Tue,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-154-RmPGD3UZMbuNLQl8pSfX9A-1; Tue,
  26 Mar 2024 03:34:36 -0400
-X-MC-Unique: iR302acHOPu0Hbg18aczBg-1
+X-MC-Unique: RmPGD3UZMbuNLQl8pSfX9A-1
 Received: from smtp.corp.redhat.com (int-mx08.intmail.prod.int.rdu2.redhat.com
  [10.11.54.8])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 16C8A3C0E442;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1770A3C0E444;
  Tue, 26 Mar 2024 07:34:36 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B44C4C3E621;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B44A5C3E620;
  Tue, 26 Mar 2024 07:34:35 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AF75421E5D34; Tue, 26 Mar 2024 08:34:20 +0100 (CET)
+ id AC7FA21E5D33; Tue, 26 Mar 2024 08:34:20 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org
-Subject: [PULL 14/20] qapi: Correct documentation indentation and whitespace
-Date: Tue, 26 Mar 2024 08:34:14 +0100
-Message-ID: <20240326073420.738016-15-armbru@redhat.com>
+Subject: [PULL 13/20] qapi: Refill doc comments to conform to current
+ conventions
+Date: Tue, 26 Mar 2024 08:34:13 +0100
+Message-ID: <20240326073420.738016-14-armbru@redhat.com>
 In-Reply-To: <20240326073420.738016-1-armbru@redhat.com>
 References: <20240326073420.738016-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.8
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -81,464 +82,632 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+For legibility, wrap text paragraphs so every line is at most 70
+characters long.
+
+To check the generated documentation does not change, I compared the
+generated HTML before and after this commit with "wdiff -3".  Finds no
+differences.  Comparing with diff is not useful, as the refilled
+paragraphs are visible there.
+
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20240322140910.328840-12-armbru@redhat.com>
-[Add a previous patch's stray hunk]
+Message-ID: <20240322140910.328840-11-armbru@redhat.com>
 ---
- qapi/block-core.json | 20 ++++++++++----------
- qapi/crypto.json     | 12 ++++++------
- qapi/dump.json       |  2 +-
- qapi/machine.json    |  3 +--
- qapi/migration.json  | 38 ++++++++++++++++++--------------------
- qapi/misc.json       |  2 +-
- qapi/qom.json        |  4 ++--
- qapi/run-state.json  |  9 ++++-----
- qapi/sockets.json    |  3 +--
- qapi/ui.json         | 14 +++++++-------
- 10 files changed, 51 insertions(+), 56 deletions(-)
+ qapi/block-core.json     |  24 ++++-----
+ qapi/block.json          |   4 +-
+ qapi/cxl.json            |   4 +-
+ qapi/dump.json           |  16 +++---
+ qapi/ebpf.json           |  12 ++---
+ qapi/machine-target.json |  22 +++++----
+ qapi/machine.json        |  15 +++---
+ qapi/migration.json      | 104 ++++++++++++++++++++-------------------
+ qapi/net.json            |  27 +++++-----
+ qapi/qom.json            |  34 ++++++-------
+ qapi/run-state.json      |   4 +-
+ qapi/virtio.json         |  12 +++--
+ 12 files changed, 142 insertions(+), 136 deletions(-)
 
 diff --git a/qapi/block-core.json b/qapi/block-core.json
-index e6b392ffe7..7d3fe59f6c 100644
+index 64668b080d..e6b392ffe7 100644
 --- a/qapi/block-core.json
 +++ b/qapi/block-core.json
-@@ -2593,27 +2593,27 @@
+@@ -1819,10 +1819,10 @@
+ #     Care should be taken when specifying the string, to specify a
+ #     valid filename or protocol.  (Since 2.1)
  #
- # @bps_max_length: maximum length of the @bps_max burst period, in
- #     seconds.  It must only be set if @bps_max is set as well.
--#     Defaults to 1. (Since 2.6)
-+#     Defaults to 1.  (Since 2.6)
+-# @backing-mask-protocol: If true, replace any protocol mentioned in the
+-#     'backing file format' with 'raw', rather than storing the protocol
+-#     name as the backing format.  Can be used even when no image header
+-#     will be updated (default false; since 9.0).
++# @backing-mask-protocol: If true, replace any protocol mentioned in
++#     the 'backing file format' with 'raw', rather than storing the
++#     protocol name as the backing format.  Can be used even when no
++#     image header will be updated (default false; since 9.0).
  #
- # @bps_rd_max_length: maximum length of the @bps_rd_max burst period,
- #     in seconds.  It must only be set if @bps_rd_max is set as well.
--#     Defaults to 1. (Since 2.6)
-+#     Defaults to 1.  (Since 2.6)
+ # @speed: the maximum speed, in bytes per second
  #
- # @bps_wr_max_length: maximum length of the @bps_wr_max burst period,
- #     in seconds.  It must only be set if @bps_wr_max is set as well.
--#     Defaults to 1. (Since 2.6)
-+#     Defaults to 1.  (Since 2.6)
+@@ -2825,10 +2825,10 @@
+ #     Care should be taken when specifying the string, to specify a
+ #     valid filename or protocol.  (Since 2.1)
  #
- # @iops_max_length: maximum length of the @iops burst period, in
- #     seconds.  It must only be set if @iops_max is set as well.
--#     Defaults to 1. (Since 2.6)
-+#     Defaults to 1.  (Since 2.6)
+-# @backing-mask-protocol: If true, replace any protocol mentioned in the
+-#     'backing file format' with 'raw', rather than storing the protocol
+-#     name as the backing format.  Can be used even when no image header
+-#     will be updated (default false; since 9.0).
++# @backing-mask-protocol: If true, replace any protocol mentioned in
++#     the 'backing file format' with 'raw', rather than storing the
++#     protocol name as the backing format.  Can be used even when no
++#     image header will be updated (default false; since 9.0).
  #
- # @iops_rd_max_length: maximum length of the @iops_rd_max burst
- #     period, in seconds.  It must only be set if @iops_rd_max is set
--#     as well.  Defaults to 1. (Since 2.6)
-+#     as well.  Defaults to 1.  (Since 2.6)
+ # @speed: the maximum speed, in bytes per second
  #
- # @iops_wr_max_length: maximum length of the @iops_wr_max burst
- #     period, in seconds.  It must only be set if @iops_wr_max is set
--#     as well.  Defaults to 1. (Since 2.6)
-+#     as well.  Defaults to 1.  (Since 2.6)
+@@ -3547,10 +3547,10 @@
+ #     re-allocating them later.  Besides potential performance
+ #     degradation, such fragmentation can lead to increased allocation
+ #     of clusters past the end of the image file, resulting in image
+-#     files whose file length can grow much larger than their guest disk
+-#     size would suggest.  If image file length is of concern (e.g. when
+-#     storing qcow2 images directly on block devices), you should
+-#     consider enabling this option.  (since 8.1)
++#     files whose file length can grow much larger than their guest
++#     disk size would suggest.  If image file length is of concern
++#     (e.g. when storing qcow2 images directly on block devices), you
++#     should consider enabling this option.  (since 8.1)
  #
- # @iops_size: an I/O size in bytes (Since 1.7)
- #
-@@ -3354,7 +3354,7 @@
- #     decryption key (since 2.6). Mandatory except when doing a
- #     metadata-only probe of the image.
- #
--# @header: block device holding a detached LUKS header. (since 9.0)
-+# @header: block device holding a detached LUKS header.  (since 9.0)
- #
- # Since: 2.9
- ##
-@@ -4619,7 +4619,7 @@
- #     seconds for copy-before-write operation.  When a timeout occurs,
- #     the respective copy-before-write operation will fail, and the
- #     @on-cbw-error parameter will decide how this failure is handled.
--#     Default 0. (Since 7.1)
-+#     Default 0.  (Since 7.1)
- #
- # Since: 6.2
- ##
-@@ -4953,9 +4953,9 @@
- # Driver specific image creation options for LUKS.
- #
- # @file: Node to create the image format on, mandatory except when
--#        'preallocation' is not requested
-+#     'preallocation' is not requested
- #
--# @header: Block device holding a detached LUKS header. (since 9.0)
-+# @header: Block device holding a detached LUKS header.  (since 9.0)
- #
- # @size: Size of the virtual disk in bytes
- #
-diff --git a/qapi/crypto.json b/qapi/crypto.json
-index 931c88e688..e102be337b 100644
---- a/qapi/crypto.json
-+++ b/qapi/crypto.json
-@@ -48,15 +48,15 @@
- #
- # @sha1: SHA-1. Should not be used in any new code, legacy compat only
- #
--# @sha224: SHA-224. (since 2.7)
-+# @sha224: SHA-224.  (since 2.7)
- #
- # @sha256: SHA-256. Current recommended strong hash.
- #
--# @sha384: SHA-384. (since 2.7)
-+# @sha384: SHA-384.  (since 2.7)
- #
--# @sha512: SHA-512. (since 2.7)
-+# @sha512: SHA-512.  (since 2.7)
- #
--# @ripemd160: RIPEMD-160. (since 2.7)
-+# @ripemd160: RIPEMD-160.  (since 2.7)
- #
- # Since: 2.6
- ##
-@@ -224,9 +224,9 @@
- #     'sha256'
- #
- # @iter-time: number of milliseconds to spend in PBKDF passphrase
--#     processing.  Currently defaults to 2000. (since 2.8)
-+#     processing.  Currently defaults to 2000.  (since 2.8)
- #
--# @detached-header: create a detached LUKS header. (since 9.0)
-+# @detached-header: create a detached LUKS header.  (since 9.0)
- #
- # Since: 2.6
- ##
-diff --git a/qapi/dump.json b/qapi/dump.json
-index ef1f3b62fc..2fa9504d86 100644
---- a/qapi/dump.json
-+++ b/qapi/dump.json
-@@ -77,7 +77,7 @@
- #
- # @detach: if true, QMP will return immediately rather than waiting
- #     for the dump to finish.  The user can track progress using
--#     "query-dump". (since 2.6).
-+#     "query-dump".  (since 2.6).
- #
- # @begin: if specified, the starting physical address.
- #
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 01be411fa7..e8b60641f2 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -920,7 +920,7 @@
- # @socket-id: socket number within parent container the CPU belongs to
- #
- # @die-id: die number within the parent container the CPU belongs to
--#    (since 4.1)
-+#     (since 4.1)
- #
- # @cluster-id: cluster number within the parent container the CPU
- #     belongs to (since 7.1)
-@@ -1190,7 +1190,6 @@
- #     <- { "event": "HV_BALLOON_STATUS_REPORT",
- #          "data": { "committed": 816640000, "available": 3333054464 },
- #          "timestamp": { "seconds": 1600295492, "microseconds": 661044 } }
--#
- ##
- { 'event': 'HV_BALLOON_STATUS_REPORT',
-   'data': 'HvBalloonInfo' }
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 8845f8bb72..8c65b90328 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -68,7 +68,6 @@
- # @deprecated: Member @skipped is always zero since 1.5.3
- #
- # Since: 0.14
--#
- ##
- { 'struct': 'MigrationStats',
-   'data': {'transferred': 'int', 'remaining': 'int', 'total': 'int' ,
-@@ -230,7 +229,7 @@
- #     throttled during auto-converge.  This is only present when
- #     auto-converge has started throttling guest cpus.  (Since 2.7)
- #
--# @error-desc: the human readable error description string. Clients
-+# @error-desc: the human readable error description string.  Clients
- #     should not attempt to parse the error strings.  (Since 2.7)
- #
- # @postcopy-blocktime: total time when all vCPU were blocked during
-@@ -638,7 +637,7 @@
- ##
- # @MigMode:
- #
--# @normal: the original form of migration. (since 8.2)
-+# @normal: the original form of migration.  (since 8.2)
- #
- # @cpr-reboot: The migrate command stops the VM and saves state to the
- #     URI.  After quitting QEMU, the user resumes by running QEMU
-@@ -781,15 +780,15 @@
- #
- # @throttle-trigger-threshold: The ratio of bytes_dirty_period and
- #     bytes_xfer_period to trigger throttling.  It is expressed as
--#     percentage.  The default value is 50. (Since 5.0)
-+#     percentage.  The default value is 50.  (Since 5.0)
- #
- # @cpu-throttle-initial: Initial percentage of time guest cpus are
- #     throttled when migration auto-converge is activated.  The
--#     default value is 20. (Since 2.7)
-+#     default value is 20.  (Since 2.7)
- #
- # @cpu-throttle-increment: throttle percentage increase each time
- #     auto-converge detects that migration is not making progress.
--#     The default value is 10. (Since 2.7)
-+#     The default value is 10.  (Since 2.7)
- #
- # @cpu-throttle-tailslow: Make CPU throttling slower at tail stage At
- #     the tail stage of throttling, the Guest is very sensitive to CPU
-@@ -877,13 +876,13 @@
- #     migration, the compression level is an integer between 0 and 9,
- #     where 0 means no compression, 1 means the best compression
- #     speed, and 9 means best compression ratio which will consume
--#     more CPU. Defaults to 1. (Since 5.0)
-+#     more CPU. Defaults to 1.  (Since 5.0)
- #
- # @multifd-zstd-level: Set the compression level to be used in live
- #     migration, the compression level is an integer between 0 and 20,
- #     where 0 means no compression, 1 means the best compression
- #     speed, and 20 means best compression ratio which will consume
--#     more CPU. Defaults to 1. (Since 5.0)
-+#     more CPU. Defaults to 1.  (Since 5.0)
- #
- # @block-bitmap-mapping: Maps block nodes and bitmaps on them to
- #     aliases for the purpose of dirty bitmap migration.  Such aliases
-@@ -989,15 +988,15 @@
- #
- # @throttle-trigger-threshold: The ratio of bytes_dirty_period and
- #     bytes_xfer_period to trigger throttling.  It is expressed as
--#     percentage.  The default value is 50. (Since 5.0)
-+#     percentage.  The default value is 50.  (Since 5.0)
- #
- # @cpu-throttle-initial: Initial percentage of time guest cpus are
- #     throttled when migration auto-converge is activated.  The
--#     default value is 20. (Since 2.7)
-+#     default value is 20.  (Since 2.7)
- #
- # @cpu-throttle-increment: throttle percentage increase each time
- #     auto-converge detects that migration is not making progress.
--#     The default value is 10. (Since 2.7)
-+#     The default value is 10.  (Since 2.7)
- #
- # @cpu-throttle-tailslow: Make CPU throttling slower at tail stage At
- #     the tail stage of throttling, the Guest is very sensitive to CPU
-@@ -1085,13 +1084,13 @@
- #     migration, the compression level is an integer between 0 and 9,
- #     where 0 means no compression, 1 means the best compression
- #     speed, and 9 means best compression ratio which will consume
--#     more CPU. Defaults to 1. (Since 5.0)
-+#     more CPU. Defaults to 1.  (Since 5.0)
- #
- # @multifd-zstd-level: Set the compression level to be used in live
- #     migration, the compression level is an integer between 0 and 20,
- #     where 0 means no compression, 1 means the best compression
- #     speed, and 20 means best compression ratio which will consume
--#     more CPU. Defaults to 1. (Since 5.0)
-+#     more CPU. Defaults to 1.  (Since 5.0)
- #
- # @block-bitmap-mapping: Maps block nodes and bitmaps on them to
- #     aliases for the purpose of dirty bitmap migration.  Such aliases
-@@ -1225,7 +1224,7 @@
- #
- # @throttle-trigger-threshold: The ratio of bytes_dirty_period and
- #     bytes_xfer_period to trigger throttling.  It is expressed as
--#     percentage.  The default value is 50. (Since 5.0)
-+#     percentage.  The default value is 50.  (Since 5.0)
- #
- # @cpu-throttle-initial: Initial percentage of time guest cpus are
- #     throttled when migration auto-converge is activated.  (Since
-@@ -1317,13 +1316,13 @@
- #     migration, the compression level is an integer between 0 and 9,
- #     where 0 means no compression, 1 means the best compression
- #     speed, and 9 means best compression ratio which will consume
--#     more CPU. Defaults to 1. (Since 5.0)
-+#     more CPU. Defaults to 1.  (Since 5.0)
- #
- # @multifd-zstd-level: Set the compression level to be used in live
- #     migration, the compression level is an integer between 0 and 20,
- #     where 0 means no compression, 1 means the best compression
- #     speed, and 20 means best compression ratio which will consume
--#     more CPU. Defaults to 1. (Since 5.0)
-+#     more CPU. Defaults to 1.  (Since 5.0)
- #
- # @block-bitmap-mapping: Maps block nodes and bitmaps on them to
- #     aliases for the purpose of dirty bitmap migration.  Such aliases
-@@ -1750,7 +1749,7 @@
- # @detach: this argument exists only for compatibility reasons and is
- #     ignored by QEMU
- #
--# @resume: resume one paused migration, default "off". (since 3.0)
-+# @resume: resume one paused migration, default "off".  (since 3.0)
- #
- # Features:
- #
-@@ -2176,7 +2175,6 @@
- # @millisecond: value is in milliseconds
- #
- # Since: 8.2
--#
- ##
- { 'enum': 'TimeUnit',
-   'data': ['second', 'millisecond'] }
-@@ -2258,7 +2256,7 @@
- #     will not increase dirty page rate anymore.
- #
- # @calc-time-unit: time unit in which @calc-time is specified.
--#     By default it is seconds. (Since 8.2)
-+#     By default it is seconds.  (Since 8.2)
- #
- # @sample-pages: number of sampled pages per each GiB of guest memory.
- #     Default value is 512.  For 4KiB guest pages this corresponds to
-@@ -2295,7 +2293,7 @@
- # Query results of the most recent invocation of @calc-dirty-rate.
- #
- # @calc-time-unit: time unit in which to report calculation time.
--#     By default it is reported in seconds. (Since 8.2)
-+#     By default it is reported in seconds.  (Since 8.2)
- #
- # Since: 5.2
- #
-diff --git a/qapi/misc.json b/qapi/misc.json
-index 83def5edc4..ec30e5c570 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -142,7 +142,7 @@
- #     option was passed on the command line.
- #
- #     In the "suspended" state, it will completely stop the VM and
--#     cause a transition to the "paused" state. (Since 9.0)
-+#     cause a transition to the "paused" state.  (Since 9.0)
+ # @overlap-check: which overlap checks to perform for writes to the
+ #     image, defaults to 'cached' (since 2.2)
+diff --git a/qapi/block.json b/qapi/block.json
+index 2410145cd3..5de99fe09d 100644
+--- a/qapi/block.json
++++ b/qapi/block.json
+@@ -555,8 +555,8 @@
  #
  # Example:
  #
+-#     Set new histogram only for write, other histograms will remain not
+-#     changed (or not created):
++#     Set new histogram only for write, other histograms will remain
++#     not changed (or not created):
+ #
+ #     -> { "execute": "block-latency-histogram-set",
+ #          "arguments": { "id": "drive0",
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index 8cc4c72fa9..4281726dec 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -144,8 +144,8 @@
+ # @cxl-inject-memory-module-event:
+ #
+ # Inject an event record for a Memory Module Event (CXL r3.0
+-# 8.2.9.2.1.3).  This event includes a copy of the Device Health
+-# info at the time of the event.
++# 8.2.9.2.1.3).  This event includes a copy of the Device Health info
++# at the time of the event.
+ #
+ # @path: CXL type 3 device canonical QOM path
+ #
+diff --git a/qapi/dump.json b/qapi/dump.json
+index 4c021dd53c..ef1f3b62fc 100644
+--- a/qapi/dump.json
++++ b/qapi/dump.json
+@@ -15,20 +15,20 @@
+ #
+ # @elf: elf format
+ #
+-# @kdump-zlib: makedumpfile flattened, kdump-compressed format with zlib
+-#     compression
++# @kdump-zlib: makedumpfile flattened, kdump-compressed format with
++#     zlib compression
+ #
+ # @kdump-lzo: makedumpfile flattened, kdump-compressed format with lzo
+ #     compression
+ #
+-# @kdump-snappy: makedumpfile flattened, kdump-compressed format with snappy
+-#     compression
++# @kdump-snappy: makedumpfile flattened, kdump-compressed format with
++#     snappy compression
+ #
+-# @kdump-raw-zlib: raw assembled kdump-compressed format with zlib compression
+-#     (since 8.2)
++# @kdump-raw-zlib: raw assembled kdump-compressed format with zlib
++#     compression (since 8.2)
+ #
+-# @kdump-raw-lzo: raw assembled kdump-compressed format with lzo compression
+-#     (since 8.2)
++# @kdump-raw-lzo: raw assembled kdump-compressed format with lzo
++#     compression (since 8.2)
+ #
+ # @kdump-raw-snappy: raw assembled kdump-compressed format with snappy
+ #     compression (since 8.2)
+diff --git a/qapi/ebpf.json b/qapi/ebpf.json
+index 61359e1c0f..e500b5a744 100644
+--- a/qapi/ebpf.json
++++ b/qapi/ebpf.json
+@@ -7,15 +7,13 @@
+ ##
+ # = eBPF Objects
+ #
+-# eBPF object is an ELF binary that contains the eBPF
+-# program and eBPF map description(BTF). Overall, eBPF
+-# object should contain the program and enough metadata
+-# to create/load eBPF with libbpf. As the eBPF maps/program
+-# should correspond to QEMU, the eBPF can't be used from
+-# different QEMU build.
++# eBPF object is an ELF binary that contains the eBPF program and eBPF
++# map description(BTF). Overall, eBPF object should contain the
++# program and enough metadata to create/load eBPF with libbpf.  As the
++# eBPF maps/program should correspond to QEMU, the eBPF can't be used
++# from different QEMU build.
+ #
+ # Currently, there is a possible eBPF for receive-side scaling (RSS).
+-#
+ ##
+ 
+ ##
+diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+index 519adf3220..03d7a185b9 100644
+--- a/qapi/machine-target.json
++++ b/qapi/machine-target.json
+@@ -394,9 +394,9 @@
+ ##
+ # @set-cpu-topology:
+ #
+-# Modify the topology by moving the CPU inside the topology tree,
+-# or by changing a modifier attribute of a CPU.
+-# Absent values will not be modified.
++# Modify the topology by moving the CPU inside the topology tree, or
++# by changing a modifier attribute of a CPU.  Absent values will not
++# be modified.
+ #
+ # @core-id: the vCPU ID to be moved
+ #
+@@ -408,7 +408,8 @@
+ #
+ # @entitlement: entitlement to set
+ #
+-# @dedicated: whether the provisioning of real to virtual CPU is dedicated
++# @dedicated: whether the provisioning of real to virtual CPU is
++#     dedicated
+ #
+ # Features:
+ #
+@@ -435,14 +436,15 @@
+ # Emitted when the guest asks to change the polarization.
+ #
+ # The guest can tell the host (via the PTF instruction) whether the
+-# CPUs should be provisioned using horizontal or vertical polarization.
++# CPUs should be provisioned using horizontal or vertical
++# polarization.
+ #
+-# On horizontal polarization the host is expected to provision all vCPUs
+-# equally.
++# On horizontal polarization the host is expected to provision all
++# vCPUs equally.
+ #
+-# On vertical polarization the host can provision each vCPU differently.
+-# The guest will get information on the details of the provisioning
+-# the next time it uses the STSI(15) instruction.
++# On vertical polarization the host can provision each vCPU
++# differently.  The guest will get information on the details of the
++# provisioning the next time it uses the STSI(15) instruction.
+ #
+ # @polarization: polarization specified by the guest
+ #
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 0840c91e70..01be411fa7 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -925,8 +925,7 @@
+ # @cluster-id: cluster number within the parent container the CPU
+ #     belongs to (since 7.1)
+ #
+-# @core-id: core number within the parent container the CPU
+-#     belongs to
++# @core-id: core number within the parent container the CPU belongs to
+ #
+ # @thread-id: thread number within the core the CPU  belongs to
+ #
+@@ -982,8 +981,8 @@
+ #
+ # Examples:
+ #
+-#     For pseries machine type started with -smp 2,cores=2,maxcpus=4 -cpu
+-#     POWER8:
++#     For pseries machine type started with -smp 2,cores=2,maxcpus=4
++#     -cpu POWER8:
+ #
+ #     -> { "execute": "query-hotpluggable-cpus" }
+ #     <- {"return": [
+@@ -1008,8 +1007,8 @@
+ #          }
+ #        ]}
+ #
+-#     For s390x-virtio-ccw machine type started with -smp 1,maxcpus=2 -cpu
+-#     qemu (Since: 2.11):
++#     For s390x-virtio-ccw machine type started with -smp 1,maxcpus=2
++#     -cpu qemu (Since: 2.11):
+ #
+ #     -> { "execute": "query-hotpluggable-cpus" }
+ #     <- {"return": [
+@@ -1152,8 +1151,8 @@
+ ##
+ # @query-hv-balloon-status-report:
+ #
+-# Returns the hv-balloon driver data contained in the last received "STATUS"
+-# message from the guest.
++# Returns the hv-balloon driver data contained in the last received
++# "STATUS" message from the guest.
+ #
+ # Returns:
+ #     @HvBalloonInfo
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 8fa1b7f8ed..8845f8bb72 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -23,8 +23,8 @@
+ #
+ # @duplicate: number of duplicate (zero) pages (since 1.2)
+ #
+-# @skipped: number of skipped zero pages. Always zero, only provided for
+-#     compatibility (since 1.5)
++# @skipped: number of skipped zero pages.  Always zero, only provided
++#     for compatibility (since 1.5)
+ #
+ # @normal: number of normal pages (since 1.2)
+ #
+@@ -501,8 +501,8 @@
+ #
+ # @background-snapshot: If enabled, the migration stream will be a
+ #     snapshot of the VM exactly at the point when the migration
+-#     procedure starts.  The VM RAM is saved with running VM. (since
+-#     6.0)
++#     procedure starts.  The VM RAM is saved with running VM.
++#     (since 6.0)
+ #
+ # @zero-copy-send: Controls behavior on sending memory pages on
+ #     migration.  When true, enables a zero-copy mechanism for sending
+@@ -640,9 +640,9 @@
+ #
+ # @normal: the original form of migration. (since 8.2)
+ #
+-# @cpr-reboot: The migrate command stops the VM and saves state to
+-#     the URI.  After quitting QEMU, the user resumes by running
+-#     QEMU -incoming.
++# @cpr-reboot: The migrate command stops the VM and saves state to the
++#     URI.  After quitting QEMU, the user resumes by running QEMU
++#     -incoming.
+ #
+ #     This mode allows the user to quit QEMU, optionally update and
+ #     reboot the OS, and restart QEMU.  If the user reboots, the URI
+@@ -652,8 +652,8 @@
+ #     does not block the migration, but the user must not modify the
+ #     contents of guest block devices between the quit and restart.
+ #
+-#     This mode supports VFIO devices provided the user first puts
+-#     the guest in the suspended runstate, such as by issuing
++#     This mode supports VFIO devices provided the user first puts the
++#     guest in the suspended runstate, such as by issuing
+ #     guest-suspend-ram to the QEMU guest agent.
+ #
+ #     Best performance is achieved when the memory backend is shared
+@@ -678,11 +678,10 @@
+ # @legacy: Perform zero page checking in main migration thread.
+ #
+ # @multifd: Perform zero page checking in multifd sender thread if
+-#     multifd migration is enabled, else in the main migration
+-#     thread as for @legacy.
++#     multifd migration is enabled, else in the main migration thread
++#     as for @legacy.
+ #
+ # Since: 9.0
+-#
+ ##
+ { 'enum': 'ZeroPageDetection',
+   'data': [ 'none', 'legacy', 'multifd' ] }
+@@ -834,13 +833,14 @@
+ #
+ # @avail-switchover-bandwidth: to set the available bandwidth that
+ #     migration can use during switchover phase.  NOTE!  This does not
+-#     limit the bandwidth during switchover, but only for calculations when
+-#     making decisions to switchover.  By default, this value is zero,
+-#     which means QEMU will estimate the bandwidth automatically.  This can
+-#     be set when the estimated value is not accurate, while the user is
+-#     able to guarantee such bandwidth is available when switching over.
+-#     When specified correctly, this can make the switchover decision much
+-#     more accurate.  (Since 8.2)
++#     limit the bandwidth during switchover, but only for calculations
++#     when making decisions to switchover.  By default, this value is
++#     zero, which means QEMU will estimate the bandwidth
++#     automatically.  This can be set when the estimated value is not
++#     accurate, while the user is able to guarantee such bandwidth is
++#     available when switching over.  When specified correctly, this
++#     can make the switchover decision much more accurate.
++#     (Since 8.2)
+ #
+ # @downtime-limit: set maximum tolerated downtime for migration.
+ #     maximum downtime in milliseconds (Since 2.8)
+@@ -902,14 +902,14 @@
+ #     to their node name otherwise.  (Since 5.2)
+ #
+ # @x-vcpu-dirty-limit-period: Periodic time (in milliseconds) of dirty
+-#     limit during live migration.  Should be in the range 1 to 1000ms.
+-#     Defaults to 1000ms.  (Since 8.1)
++#     limit during live migration.  Should be in the range 1 to
++#     1000ms.  Defaults to 1000ms.  (Since 8.1)
+ #
+ # @vcpu-dirty-limit: Dirtyrate limit (MB/s) during live migration.
+ #     Defaults to 1.  (Since 8.1)
+ #
+-# @mode: Migration mode. See description in @MigMode. Default is 'normal'.
+-#        (Since 8.2)
++# @mode: Migration mode.  See description in @MigMode.  Default is
++#     'normal'.  (Since 8.2)
+ #
+ # @zero-page-detection: Whether and how to detect zero pages.
+ #     See description in @ZeroPageDetection.  Default is 'multifd'.
+@@ -922,8 +922,8 @@
+ #     @compress-threads, @decompress-threads and @compress-wait-thread
+ #     are deprecated because @compression is deprecated.
+ #
+-# @unstable: Members @x-checkpoint-delay and @x-vcpu-dirty-limit-period
+-#     are experimental.
++# @unstable: Members @x-checkpoint-delay and
++#     @x-vcpu-dirty-limit-period are experimental.
+ #
+ # Since: 2.4
+ ##
+@@ -1041,13 +1041,14 @@
+ #
+ # @avail-switchover-bandwidth: to set the available bandwidth that
+ #     migration can use during switchover phase.  NOTE!  This does not
+-#     limit the bandwidth during switchover, but only for calculations when
+-#     making decisions to switchover.  By default, this value is zero,
+-#     which means QEMU will estimate the bandwidth automatically.  This can
+-#     be set when the estimated value is not accurate, while the user is
+-#     able to guarantee such bandwidth is available when switching over.
+-#     When specified correctly, this can make the switchover decision much
+-#     more accurate.  (Since 8.2)
++#     limit the bandwidth during switchover, but only for calculations
++#     when making decisions to switchover.  By default, this value is
++#     zero, which means QEMU will estimate the bandwidth
++#     automatically.  This can be set when the estimated value is not
++#     accurate, while the user is able to guarantee such bandwidth is
++#     available when switching over.  When specified correctly, this
++#     can make the switchover decision much more accurate.
++#     (Since 8.2)
+ #
+ # @downtime-limit: set maximum tolerated downtime for migration.
+ #     maximum downtime in milliseconds (Since 2.8)
+@@ -1109,14 +1110,14 @@
+ #     to their node name otherwise.  (Since 5.2)
+ #
+ # @x-vcpu-dirty-limit-period: Periodic time (in milliseconds) of dirty
+-#     limit during live migration.  Should be in the range 1 to 1000ms.
+-#     Defaults to 1000ms.  (Since 8.1)
++#     limit during live migration.  Should be in the range 1 to
++#     1000ms.  Defaults to 1000ms.  (Since 8.1)
+ #
+ # @vcpu-dirty-limit: Dirtyrate limit (MB/s) during live migration.
+ #     Defaults to 1.  (Since 8.1)
+ #
+-# @mode: Migration mode. See description in @MigMode. Default is 'normal'.
+-#        (Since 8.2)
++# @mode: Migration mode.  See description in @MigMode.  Default is
++#     'normal'.  (Since 8.2)
+ #
+ # @zero-page-detection: Whether and how to detect zero pages.
+ #     See description in @ZeroPageDetection.  Default is 'multifd'.
+@@ -1129,8 +1130,8 @@
+ #     @compress-threads, @decompress-threads and @compress-wait-thread
+ #     are deprecated because @compression is deprecated.
+ #
+-# @unstable: Members @x-checkpoint-delay and @x-vcpu-dirty-limit-period
+-#     are experimental.
++# @unstable: Members @x-checkpoint-delay and
++#     @x-vcpu-dirty-limit-period are experimental.
+ #
+ # TODO: either fuse back into MigrationParameters, or make
+ #     MigrationParameters members mandatory
+@@ -1272,13 +1273,14 @@
+ #
+ # @avail-switchover-bandwidth: to set the available bandwidth that
+ #     migration can use during switchover phase.  NOTE!  This does not
+-#     limit the bandwidth during switchover, but only for calculations when
+-#     making decisions to switchover.  By default, this value is zero,
+-#     which means QEMU will estimate the bandwidth automatically.  This can
+-#     be set when the estimated value is not accurate, while the user is
+-#     able to guarantee such bandwidth is available when switching over.
+-#     When specified correctly, this can make the switchover decision much
+-#     more accurate.  (Since 8.2)
++#     limit the bandwidth during switchover, but only for calculations
++#     when making decisions to switchover.  By default, this value is
++#     zero, which means QEMU will estimate the bandwidth
++#     automatically.  This can be set when the estimated value is not
++#     accurate, while the user is able to guarantee such bandwidth is
++#     available when switching over.  When specified correctly, this
++#     can make the switchover decision much more accurate.
++#     (Since 8.2)
+ #
+ # @downtime-limit: set maximum tolerated downtime for migration.
+ #     maximum downtime in milliseconds (Since 2.8)
+@@ -1340,14 +1342,14 @@
+ #     to their node name otherwise.  (Since 5.2)
+ #
+ # @x-vcpu-dirty-limit-period: Periodic time (in milliseconds) of dirty
+-#     limit during live migration.  Should be in the range 1 to 1000ms.
+-#     Defaults to 1000ms.  (Since 8.1)
++#     limit during live migration.  Should be in the range 1 to
++#     1000ms.  Defaults to 1000ms.  (Since 8.1)
+ #
+ # @vcpu-dirty-limit: Dirtyrate limit (MB/s) during live migration.
+ #     Defaults to 1.  (Since 8.1)
+ #
+-# @mode: Migration mode. See description in @MigMode. Default is 'normal'.
+-#        (Since 8.2)
++# @mode: Migration mode.  See description in @MigMode.  Default is
++#        'normal'.  (Since 8.2)
+ #
+ # @zero-page-detection: Whether and how to detect zero pages.
+ #     See description in @ZeroPageDetection.  Default is 'multifd'.
+@@ -1360,8 +1362,8 @@
+ #     @compress-threads, @decompress-threads and @compress-wait-thread
+ #     are deprecated because @compression is deprecated.
+ #
+-# @unstable: Members @x-checkpoint-delay and @x-vcpu-dirty-limit-period
+-#     are experimental.
++# @unstable: Members @x-checkpoint-delay and
++#     @x-vcpu-dirty-limit-period are experimental.
+ #
+ # Since: 2.4
+ ##
+diff --git a/qapi/net.json b/qapi/net.json
+index 417b61a321..0f5a259475 100644
+--- a/qapi/net.json
++++ b/qapi/net.json
+@@ -425,8 +425,8 @@
+ #
+ # @skb: generic mode, no driver support necessary
+ #
+-# @native: DRV mode, program is attached to a driver, packets are passed to
+-#     the socket without allocation of skb.
++# @native: DRV mode, program is attached to a driver, packets are
++#     passed to the socket without allocation of skb.
+ #
+ # Since: 8.2
+ ##
+@@ -441,23 +441,26 @@
+ #
+ # @ifname: The name of an existing network interface.
+ #
+-# @mode: Attach mode for a default XDP program.  If not specified, then
+-#     'native' will be tried first, then 'skb'.
++# @mode: Attach mode for a default XDP program.  If not specified,
++#     then 'native' will be tried first, then 'skb'.
+ #
+ # @force-copy: Force XDP copy mode even if device supports zero-copy.
+ #     (default: false)
+ #
+-# @queues: number of queues to be used for multiqueue interfaces (default: 1).
++# @queues: number of queues to be used for multiqueue interfaces
++#     (default: 1).
+ #
+-# @start-queue: Use @queues starting from this queue number (default: 0).
++# @start-queue: Use @queues starting from this queue number
++#     (default: 0).
+ #
+-# @inhibit: Don't load a default XDP program, use one already loaded to
+-#     the interface (default: false).  Requires @sock-fds.
++# @inhibit: Don't load a default XDP program, use one already loaded
++#     to the interface (default: false).  Requires @sock-fds.
+ #
+-# @sock-fds: A colon (:) separated list of file descriptors for already open
+-#     but not bound AF_XDP sockets in the queue order.  One fd per queue.
+-#     These descriptors should already be added into XDP socket map for
+-#     corresponding queues.  Requires @inhibit.
++# @sock-fds: A colon (:) separated list of file descriptors for
++#     already open but not bound AF_XDP sockets in the queue order.
++#     One fd per queue.  These descriptors should already be added
++#     into XDP socket map for corresponding queues.  Requires
++#     @inhibit.
+ #
+ # Since: 8.2
+ ##
 diff --git a/qapi/qom.json b/qapi/qom.json
-index e263e29a26..8d4ca8ed92 100644
+index baae3a183f..e263e29a26 100644
 --- a/qapi/qom.json
 +++ b/qapi/qom.json
-@@ -649,14 +649,14 @@
+@@ -668,19 +668,20 @@
+ # @readonly: if true, the backing file is opened read-only; if false,
+ #     it is opened read-write.  (default: false)
  #
- # @offset: the offset into the target file that the region starts at.
- #     You can use this option to back multiple regions with a single
--#     file. Must be a multiple of the page size.
-+#     file.  Must be a multiple of the page size.
- #     (default: 0) (since 8.1)
+-# @rom: whether to create Read Only Memory (ROM) that cannot be modified
+-#       by the VM.  Any write attempts to such ROM will be denied.  Most
+-#       use cases want writable RAM instead of ROM.  However, selected use
+-#       cases, like R/O NVDIMMs, can benefit from ROM.  If set to 'on',
+-#       create ROM; if set to 'off', create writable RAM;  if set to
+-#       'auto', the value of the @readonly property is used.  This
+-#       property is primarily helpful when we want to have proper RAM in
+-#       configurations that would traditionally create ROM before this
+-#       property was introduced: VM templating, where we want to open a
+-#       file readonly (@readonly set to true) and mark the memory to be
+-#       private for QEMU (@share set to false).  For this use case, we need
+-#       writable RAM instead of ROM, and want to set this property to 'off'.
+-#       (default: auto, since 8.2)
++# @rom: whether to create Read Only Memory (ROM) that cannot be
++#     modified by the VM.  Any write attempts to such ROM will be
++#     denied.  Most use cases want writable RAM instead of ROM.
++#     However, selected use cases, like R/O NVDIMMs, can benefit from
++#     ROM.  If set to 'on', create ROM; if set to 'off', create
++#     writable RAM; if set to 'auto', the value of the @readonly
++#     property is used.  This property is primarily helpful when we
++#     want to have proper RAM in configurations that would
++#     traditionally create ROM before this property was introduced: VM
++#     templating, where we want to open a file readonly (@readonly set
++#     to true) and mark the memory to be private for QEMU (@share set
++#     to false).  For this use case, we need writable RAM instead of
++#     ROM, and want to set this property to 'off'.  (default: auto,
++#     since 8.2)
  #
- # @discard-data: if true, the file contents can be destroyed when QEMU
- #     exits, to avoid unnecessarily flushing data to the backing file.
- #     Note that @discard-data is only an optimization, and QEMU might
- #     not discard file contents if it aborts unexpectedly or is
--#     terminated using SIGKILL. (default: false)
-+#     terminated using SIGKILL.  (default: false)
+ # Since: 2.1
+ ##
+@@ -801,10 +802,9 @@
  #
- # @mem-path: the path to either a shared memory or huge page
- #     filesystem mount
+ # @fd: file descriptor name previously passed via 'getfd' command,
+ #     which represents a pre-opened /dev/iommu.  This allows the
+-#     iommufd object to be shared accross several subsystems
+-#     (VFIO, VDPA, ...), and the file descriptor to be shared
+-#     with other process, e.g. DPDK.  (default: QEMU opens
+-#     /dev/iommu by itself)
++#     iommufd object to be shared accross several subsystems (VFIO,
++#     VDPA, ...), and the file descriptor to be shared with other
++#     process, e.g. DPDK.  (default: QEMU opens /dev/iommu by itself)
+ #
+ # Since: 9.0
+ ##
 diff --git a/qapi/run-state.json b/qapi/run-state.json
-index bc1c3a9217..5f07444b84 100644
+index ae084e13a0..bc1c3a9217 100644
 --- a/qapi/run-state.json
 +++ b/qapi/run-state.json
-@@ -91,7 +91,7 @@
- #
- # @snapshot-load: A snapshot is being loaded by the record & replay
- #     subsystem.  This value is used only within QEMU.  It doesn't
--#     occur in QMP. (since 7.2)
-+#     occur in QMP.  (since 7.2)
- ##
- { 'enum': 'ShutdownCause',
-   # Beware, shutdown_caused_by_guest() depends on enumeration order
-@@ -109,7 +109,6 @@
- # @status: the virtual machine @RunState
- #
- # Since: 0.14
--#
- ##
- { 'struct': 'StatusInfo',
-   'data': {'running': 'bool',
-@@ -142,7 +141,7 @@
- # @guest: If true, the shutdown was triggered by a guest request (such
- #     as a guest-initiated ACPI shutdown request or other
+@@ -144,8 +144,8 @@
  #     hardware-specific action) rather than a host request (such as
--#     sending qemu a SIGINT). (since 2.10)
-+#     sending qemu a SIGINT).  (since 2.10)
+ #     sending qemu a SIGINT). (since 2.10)
  #
- # @reason: The @ShutdownCause which resulted in the SHUTDOWN.
- #     (since 4.0)
-@@ -184,9 +183,9 @@
- # @guest: If true, the reset was triggered by a guest request (such as
- #     a guest-initiated ACPI reboot request or other hardware-specific
- #     action) rather than a host request (such as the QMP command
--#     system_reset). (since 2.10)
-+#     system_reset).  (since 2.10)
+-# @reason: The @ShutdownCause which resulted in the SHUTDOWN. (since
+-#     4.0)
++# @reason: The @ShutdownCause which resulted in the SHUTDOWN.
++#     (since 4.0)
  #
--# @reason: The @ShutdownCause of the RESET. (since 4.0)
-+# @reason: The @ShutdownCause of the RESET.  (since 4.0)
+ # Note: If the command-line option "-no-shutdown" has been specified,
+ #     qemu will not exit, and a STOP event will eventually follow the
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index b0cd41be72..74fc27c702 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -938,10 +938,11 @@
  #
- # Since: 0.12
+ # @iothread: the id of IOThread object
  #
-diff --git a/qapi/sockets.json b/qapi/sockets.json
-index ef777928e7..aa97c89768 100644
---- a/qapi/sockets.json
-+++ b/qapi/sockets.json
-@@ -58,7 +58,7 @@
- # @keep-alive: enable keep-alive when connecting to this socket.  Not
- #     supported for passive sockets.  (Since 4.2)
+-# @vqs: an optional array of virtqueue indices that will be handled by this
+-#     IOThread.  When absent, virtqueues are assigned round-robin across all
+-#     IOThreadVirtQueueMappings provided.  Either all IOThreadVirtQueueMappings
+-#     must have @vqs or none of them must have it.
++# @vqs: an optional array of virtqueue indices that will be handled by
++#     this IOThread.  When absent, virtqueues are assigned round-robin
++#     across all IOThreadVirtQueueMappings provided.  Either all
++#     IOThreadVirtQueueMappings must have @vqs or none of them must
++#     have it.
  #
--# @mptcp: enable multi-path TCP. (Since 6.1)
-+# @mptcp: enable multi-path TCP.  (Since 6.1)
- #
- # Since: 1.3
+ # Since: 9.0
  ##
-@@ -125,7 +125,6 @@
- #     Decimal file descriptors are permitted at startup or other
- #     contexts where no monitor context is active.
- #
--#
- # Since: 1.2
+@@ -952,7 +953,8 @@
  ##
- { 'struct': 'FdSocketAddress',
-diff --git a/qapi/ui.json b/qapi/ui.json
-index e71cd2f50b..9721c1e5af 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -181,7 +181,7 @@
- # @head: head to use in case the device supports multiple heads.  If
- #     this parameter is missing, head #0 will be used.  Also note that
- #     the head can only be specified in conjunction with the device
--#     ID. (Since 2.12)
-+#     ID.  (Since 2.12)
+ # @DummyVirtioForceArrays:
  #
- # @format: image format for screendump.  (default: ppm) (Since 7.1)
+-# Not used by QMP; hack to let us use IOThreadVirtQueueMappingList internally
++# Not used by QMP; hack to let us use IOThreadVirtQueueMappingList
++# internally
  #
-@@ -303,7 +303,7 @@
- #
- # @auth: the current authentication type used by the server
- #
--#     - 'none'  if no authentication is being used
-+#     - 'none' if no authentication is being used
- #     - 'spice' uses SASL or direct TLS authentication, depending on
- #       command line options
- #
-@@ -1314,7 +1314,7 @@
- #     display device can notify the guest on window resizes
- #     (virtio-gpu) this will default to "on", assuming the guest will
- #     resize the display to match the window size then.  Otherwise it
--#     defaults to "off". (Since 3.1)
-+#     defaults to "off".  (Since 3.1)
- #
- # @show-tabs: Display the tab bar for switching between the various
- #     graphical interfaces (e.g. VGA and virtual console character
-@@ -1417,12 +1417,12 @@
- #     codes match their position on non-Mac keyboards and you can use
- #     Meta/Super and Alt where you expect them.  (default: off)
- #
--# @zoom-to-fit: Zoom guest display to fit into the host window. When
--#     turned off the host window will be resized instead. Defaults to
--#     "off". (Since 8.2)
-+# @zoom-to-fit: Zoom guest display to fit into the host window.  When
-+#     turned off the host window will be resized instead.  Defaults to
-+#     "off".  (Since 8.2)
- #
- # @zoom-interpolation: Apply interpolation to smooth output when
--#     zoom-to-fit is enabled. Defaults to "off". (Since 9.0)
-+#     zoom-to-fit is enabled. Defaults to "off".  (Since 9.0)
- #
- # Since: 7.0
+ # Since: 9.0
  ##
 -- 
 2.44.0
