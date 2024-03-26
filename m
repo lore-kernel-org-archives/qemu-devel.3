@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D87CCD11DD
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 13:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A11C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 13:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp7GR-00048n-2g; Tue, 26 Mar 2024 09:54:55 -0400
+	id 1rp7GX-0004EA-EC; Tue, 26 Mar 2024 09:55:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rp7GP-000486-Rh
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:54:53 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rp7GV-0004C9-1o
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:54:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rp7GO-0001O5-31
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:54:53 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rp7GT-0001Q9-Ek
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:54:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711461291;
+ s=mimecast20190719; t=1711461296;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=00p6Fe2jKqTz09HPK0hkhT/FL6JFarV4u7L7bkf2gsg=;
- b=izewh4tE5dFJeTKBb3cW44GZsvJdjpZa3boxXk4IR4NJUac8wVKj1jXB65QzbJ6Q2imA8k
- nKBtXlugdI8rC6YyLE53l05jBoa8nc1prv392jp07LjjZ5BJCPqOn7QCA5uuhKW+1d/Mc5
- FQe8vibAfnWnuTdhlPGJf04B1L78KlA=
+ bh=Coa9Um95coZQAOs2TmVRBiG/R0G8A+PNbpwEgpIM3Tg=;
+ b=ht9wwx1RRuvULiMrxuMnU2idUkp1LsmGbytzvx45+oAp6Qdjk3skSW8JymDwBA6kHMIMCw
+ 5df8UEfw4BkT8NbZfK7AdCgpVxKAPdwaZVTHIi2o/OUZSLDxZfWDEwxrDGbMFYbumObYaR
+ 3/lt235H3hsBRSfbOtrgLChZaj17StI=
 Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
  by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-114-3RS1TJvxPiWjVmGGsxFh7A-1; Tue,
- 26 Mar 2024 09:54:49 -0400
-X-MC-Unique: 3RS1TJvxPiWjVmGGsxFh7A-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-rvSwBDJZNxu6Cdy18UcNIQ-1; Tue,
+ 26 Mar 2024 09:54:53 -0400
+X-MC-Unique: rvSwBDJZNxu6Cdy18UcNIQ-1
 Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
  [10.11.54.3])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 71AF028EC116;
- Tue, 26 Mar 2024 13:54:49 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 7B42128EC11D;
+ Tue, 26 Mar 2024 13:54:53 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.39.193.60])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 854CC112132A;
- Tue, 26 Mar 2024 13:54:48 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C6593112132A;
+ Tue, 26 Mar 2024 13:54:52 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	peter.maydell@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 2/6] vdpa-dev: Fix initialisation order to restore VDUSE
- compatibility
-Date: Tue, 26 Mar 2024 14:54:36 +0100
-Message-ID: <20240326135440.421609-3-kwolf@redhat.com>
+Subject: [PULL 6/6] iotests: add test for stream job with an unaligned
+ prefetch read
+Date: Tue, 26 Mar 2024 14:54:40 +0100
+Message-ID: <20240326135440.421609-7-kwolf@redhat.com>
 In-Reply-To: <20240326135440.421609-1-kwolf@redhat.com>
 References: <20240326135440.421609-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
@@ -66,7 +65,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,170 +81,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VDUSE requires that virtqueues are first enabled before the DRIVER_OK
-status flag is set; with the current API of the kernel module, it is
-impossible to enable the opposite order in our block export code because
-userspace is not notified when a virtqueue is enabled.
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-This requirement also mathces the normal initialisation order as done by
-the generic vhost code in QEMU. However, commit 6c482547 accidentally
-changed the order for vdpa-dev and broke access to VDUSE devices with
-this.
+Previously, bdrv_pad_request() could not deal with a NULL qiov when
+a read needed to be aligned. During prefetch, a stream job will pass a
+NULL qiov. Add a test case to cover this scenario.
 
-This changes vdpa-dev to use the normal order again and use the standard
-vhost callback .vhost_set_vring_enable for this. VDUSE devices can be
-used with vdpa-dev again after this fix.
+By accident, also covers a previous race during shutdown, where block
+graph changes during iteration in bdrv_flush_all() could lead to
+unreferencing the wrong block driver state and an assertion failure
+later.
 
-vhost_net intentionally avoided enabling the vrings for vdpa and does
-this manually later while it does enable them for other vhost backends.
-Reflect this in the vhost_net code and return early for vdpa, so that
-the behaviour doesn't change for this device.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 6c4825476a43 ('vdpa: move vhost_vdpa_set_vring_ready to the caller')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20240315155949.86066-1-kwolf@redhat.com>
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20240322095009.346989-5-f.ebner@proxmox.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- hw/net/vhost_net.c     | 10 ++++++++++
- hw/virtio/vdpa-dev.c   |  5 +----
- hw/virtio/vhost-vdpa.c | 29 ++++++++++++++++++++++++++---
- hw/virtio/vhost.c      |  8 +++++++-
- hw/virtio/trace-events |  2 +-
- 5 files changed, 45 insertions(+), 9 deletions(-)
+ .../tests/stream-unaligned-prefetch           | 86 +++++++++++++++++++
+ .../tests/stream-unaligned-prefetch.out       |  5 ++
+ 2 files changed, 91 insertions(+)
+ create mode 100755 tests/qemu-iotests/tests/stream-unaligned-prefetch
+ create mode 100644 tests/qemu-iotests/tests/stream-unaligned-prefetch.out
 
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index e8e1661646..fd1a93701a 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -541,6 +541,16 @@ int vhost_set_vring_enable(NetClientState *nc, int enable)
-     VHostNetState *net = get_vhost_net(nc);
-     const VhostOps *vhost_ops = net->dev.vhost_ops;
- 
-+    /*
-+     * vhost-vdpa network devices need to enable dataplane virtqueues after
-+     * DRIVER_OK, so they can recover device state before starting dataplane.
-+     * Because of that, we don't enable virtqueues here and leave it to
-+     * net/vhost-vdpa.c.
-+     */
-+    if (nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
-+        return 0;
-+    }
+diff --git a/tests/qemu-iotests/tests/stream-unaligned-prefetch b/tests/qemu-iotests/tests/stream-unaligned-prefetch
+new file mode 100755
+index 0000000000..546db1d369
+--- /dev/null
++++ b/tests/qemu-iotests/tests/stream-unaligned-prefetch
+@@ -0,0 +1,86 @@
++#!/usr/bin/env python3
++# group: rw quick
++#
++# Test what happens when a stream job does an unaligned prefetch read
++# which requires padding while having a NULL qiov.
++#
++# Copyright (C) Proxmox Server Solutions GmbH
++#
++# This program is free software; you can redistribute it and/or modify
++# it under the terms of the GNU General Public License as published by
++# the Free Software Foundation; either version 2 of the License, or
++# (at your option) any later version.
++#
++# This program is distributed in the hope that it will be useful,
++# but WITHOUT ANY WARRANTY; without even the implied warranty of
++# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++# GNU General Public License for more details.
++#
++# You should have received a copy of the GNU General Public License
++# along with this program.  If not, see <http://www.gnu.org/licenses/>.
++#
 +
-     nc->vring_enable = enable;
- 
-     if (vhost_ops && vhost_ops->vhost_set_vring_enable) {
-diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-index eb9ecea83b..13e87f06f6 100644
---- a/hw/virtio/vdpa-dev.c
-+++ b/hw/virtio/vdpa-dev.c
-@@ -253,14 +253,11 @@ static int vhost_vdpa_device_start(VirtIODevice *vdev, Error **errp)
- 
-     s->dev.acked_features = vdev->guest_features;
- 
--    ret = vhost_dev_start(&s->dev, vdev, false);
-+    ret = vhost_dev_start(&s->dev, vdev, true);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "Error starting vhost");
-         goto err_guest_notifiers;
-     }
--    for (i = 0; i < s->dev.nvqs; ++i) {
--        vhost_vdpa_set_vring_ready(&s->vdpa, i);
--    }
-     s->started = true;
- 
-     /*
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 3bcd05cc22..e827b9175f 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -896,19 +896,41 @@ static int vhost_vdpa_get_vq_index(struct vhost_dev *dev, int idx)
-     return idx;
- }
- 
--int vhost_vdpa_set_vring_ready(struct vhost_vdpa *v, unsigned idx)
-+static int vhost_vdpa_set_vring_enable_one(struct vhost_vdpa *v, unsigned idx,
-+                                           int enable)
- {
-     struct vhost_dev *dev = v->dev;
-     struct vhost_vring_state state = {
-         .index = idx,
--        .num = 1,
-+        .num = enable,
-     };
-     int r = vhost_vdpa_call(dev, VHOST_VDPA_SET_VRING_ENABLE, &state);
- 
--    trace_vhost_vdpa_set_vring_ready(dev, idx, r);
-+    trace_vhost_vdpa_set_vring_enable_one(dev, idx, enable, r);
-     return r;
- }
- 
-+static int vhost_vdpa_set_vring_enable(struct vhost_dev *dev, int enable)
-+{
-+    struct vhost_vdpa *v = dev->opaque;
-+    unsigned int i;
-+    int ret;
++import os
++import iotests
++from iotests import imgfmt, qemu_img_create, qemu_io, QMPTestCase
 +
-+    for (i = 0; i < dev->nvqs; ++i) {
-+        ret = vhost_vdpa_set_vring_enable_one(v, i, enable);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+    }
++image_size = 1 * 1024 * 1024
++cluster_size = 64 * 1024
++base = os.path.join(iotests.test_dir, 'base.img')
++top = os.path.join(iotests.test_dir, 'top.img')
 +
-+    return 0;
-+}
++class TestStreamUnalignedPrefetch(QMPTestCase):
++    def setUp(self) -> None:
++        """
++        Create two images:
++        - base image {base} with {cluster_size // 2} bytes allocated
++        - top image {top} without any data allocated and coarser
++          cluster size
 +
-+int vhost_vdpa_set_vring_ready(struct vhost_vdpa *v, unsigned idx)
-+{
-+    return vhost_vdpa_set_vring_enable_one(v, idx, 1);
-+}
++        Attach a compress filter for the top image, because that
++        requires that the request alignment is the top image's cluster
++        size.
++        """
++        qemu_img_create('-f', imgfmt,
++                        '-o', 'cluster_size={}'.format(cluster_size // 2),
++                        base, str(image_size))
++        qemu_io('-c', f'write 0 {cluster_size // 2}', base)
++        qemu_img_create('-f', imgfmt,
++                        '-o', 'cluster_size={}'.format(cluster_size),
++                        top, str(image_size))
 +
- static int vhost_vdpa_set_config_call(struct vhost_dev *dev,
-                                        int fd)
- {
-@@ -1536,6 +1558,7 @@ const VhostOps vdpa_ops = {
-         .vhost_set_features = vhost_vdpa_set_features,
-         .vhost_reset_device = vhost_vdpa_reset_device,
-         .vhost_get_vq_index = vhost_vdpa_get_vq_index,
-+        .vhost_set_vring_enable = vhost_vdpa_set_vring_enable,
-         .vhost_get_config  = vhost_vdpa_get_config,
-         .vhost_set_config = vhost_vdpa_set_config,
-         .vhost_requires_shm_log = NULL,
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 2e4e040db8..f50180e60e 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1984,7 +1984,13 @@ static int vhost_dev_set_vring_enable(struct vhost_dev *hdev, int enable)
-     return hdev->vhost_ops->vhost_set_vring_enable(hdev, enable);
- }
- 
--/* Host notifiers must be enabled at this point. */
-+/*
-+ * Host notifiers must be enabled at this point.
-+ *
-+ * If @vrings is true, this function will enable all vrings before starting the
-+ * device. If it is false, the vring initialization is left to be done by the
-+ * caller.
-+ */
- int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
- {
-     int i, r;
-diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
-index 13b6991179..96632fd026 100644
---- a/hw/virtio/trace-events
-+++ b/hw/virtio/trace-events
-@@ -49,7 +49,7 @@ vhost_vdpa_set_features(void *dev, uint64_t features) "dev: %p features: 0x%"PRI
- vhost_vdpa_get_device_id(void *dev, uint32_t device_id) "dev: %p device_id %"PRIu32
- vhost_vdpa_reset_device(void *dev) "dev: %p"
- vhost_vdpa_get_vq_index(void *dev, int idx, int vq_idx) "dev: %p idx: %d vq idx: %d"
--vhost_vdpa_set_vring_ready(void *dev, unsigned i, int r) "dev: %p, idx: %u, r: %d"
-+vhost_vdpa_set_vring_enable_one(void *dev, unsigned i, int enable, int r) "dev: %p, idx: %u, enable: %u, r: %d"
- vhost_vdpa_dump_config(void *dev, const char *line) "dev: %p %s"
- vhost_vdpa_set_config(void *dev, uint32_t offset, uint32_t size, uint32_t flags) "dev: %p offset: %"PRIu32" size: %"PRIu32" flags: 0x%"PRIx32
- vhost_vdpa_get_config(void *dev, void *config, uint32_t config_len) "dev: %p config: %p config_len: %"PRIu32
++        self.vm = iotests.VM()
++        self.vm.add_blockdev(self.vm.qmp_to_opts({
++            'driver': imgfmt,
++            'node-name': 'base',
++            'file': {
++                'driver': 'file',
++                'filename': base
++            }
++        }))
++        self.vm.add_blockdev(self.vm.qmp_to_opts({
++            'driver': 'compress',
++            'node-name': 'compress-top',
++            'file': {
++                'driver': imgfmt,
++                'node-name': 'top',
++                'file': {
++                    'driver': 'file',
++                    'filename': top
++                },
++                'backing': 'base'
++            }
++        }))
++        self.vm.launch()
++
++    def tearDown(self) -> None:
++        self.vm.shutdown()
++        os.remove(top)
++        os.remove(base)
++
++    def test_stream_unaligned_prefetch(self) -> None:
++        self.vm.cmd('block-stream', job_id='stream', device='compress-top')
++
++
++if __name__ == '__main__':
++    iotests.main(supported_fmts=['qcow2'], supported_protocols=['file'])
+diff --git a/tests/qemu-iotests/tests/stream-unaligned-prefetch.out b/tests/qemu-iotests/tests/stream-unaligned-prefetch.out
+new file mode 100644
+index 0000000000..ae1213e6f8
+--- /dev/null
++++ b/tests/qemu-iotests/tests/stream-unaligned-prefetch.out
+@@ -0,0 +1,5 @@
++.
++----------------------------------------------------------------------
++Ran 1 tests
++
++OK
 -- 
 2.44.0
 
