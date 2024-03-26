@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2ACCC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA4C1CD1280
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp616-0005D3-ES; Tue, 26 Mar 2024 08:35:00 -0400
+	id 1rp613-0005BP-OC; Tue, 26 Mar 2024 08:34:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rp613-0005BW-P1
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:34:57 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rp612-0005A5-BS
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:34:56 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rp611-0000eH-BX
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:34:57 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-6e46dcd8feaso2232216b3a.2
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 05:34:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1rp610-0000e1-Bo
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:34:55 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2d4a8bddc21so73417131fa.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 05:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711456494; x=1712061294;
- darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=epmBK7av2aa3lJZIHywP1gcTcoG4fm8mkn0XPkXFBz0=;
- b=PNbCTmBzBCAYuOaMEPtD6aacuPTb5dqAKQFtokh4PhdFNUIm7ZAq/0R5SkEKfIPnNl
- aH/r2S4udc5BIV/qvQt2UnN081E2vHIS7BO2nqm/8+A/Chs4mMj0ffZwg1s3noUSTbjd
- LrUmOvenXJFTIN6Oi/7kbY36exNZCuxz3ZkNOBowRsFIPrPdkol57SnSKwOED2fNTask
- q4K3rvy/hRUeMjwZ8wxIx/zO2iF0rzvDc38jv1cgRvvofgSca5XqLvf7fodV7WYDZkJv
- BHHqfiW832462/PF3n4+TGqE6Onj0SlWdPfzzTtNODjrjcgufbKrjO/yd8Qaeicr447s
- nQ7w==
+ d=linaro.org; s=google; t=1711456492; x=1712061292; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IJYNwNm35V5xzu7ic8glr0yVgOLlUO7V69uiN6b/dLQ=;
+ b=ImwtXejocYwY03ztl7PcvG+qWx+9sEyjnBtmkQf8mNh782mcjxhbgXY2ToKGqTqyD9
+ cGDO1Rv9/jtZe++yvJpMy3tCF56yc7XNL5UMsSNsIhte2cGk8HgRJiq29hQRLdVwa6xm
+ iWbz+0Y96kxDPiuwHBFIHxT8AwE/6nD6rsbjJabU+ucfQhr5C+V5OCz7ImbhzfDv5wW7
+ 9/9q0OPBvYTgykZESz4Ul/cXNV5b0xqmtpbiePC2zoey2W8Y8fm3w79D2ePhgIHmMeeH
+ 7BK+x9lagdCHTaYogRt9CcQVuLVN7HGW5H4ZKALi5ml52vIV76t8Wzul+Wzz0HGdZ85s
+ QLRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711456494; x=1712061294;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=epmBK7av2aa3lJZIHywP1gcTcoG4fm8mkn0XPkXFBz0=;
- b=vbWzdfqq64a5cwnXZHwhmKOIm6CynfDsjMTDScPIBFkeyF3g35fsMQjpSbejw//RZF
- 8CwwYNtPy7v2MaW55AOSFFlO/r3/EWz8nQ2a680q016/64cs8KEtEqVxgX+092Nst+ng
- 7WFoGZNmVHKUW32fXszxg5EHybhO61TfRb+Y9LDNz2koMYrsrNdxtwRKCv0Z1lT/PzGY
- PwsRQdVKV+hKCXuWIgc8m6wIL+ijYPU+rakHV4rWfr1yGzaRSInQudgZEEa4bFvK9urc
- fM5PApoJ9jzDqb4AercMiAkXGcsgBL90QHRlT7zpjLvbaALxvgw1OMjUGezCbADdJ+pm
- fviQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXBv2gUS4BRuO5ykAbc6SLHHn0cpZbVmeKa2ia4/Gj8fSRCtYw37gpYvDuE+OpykBisx5NopLqgVvS4x5gqRJ3oyMYcgus=
-X-Gm-Message-State: AOJu0YzTLpLZDrR3Bc3g9YXjdwQ4/Eunb7Ld9IabatEpJDPdOEnF4Lqr
- /c7k+8pWsCi6XiFpxJeqHSZ4MdfCkx2Y04YQ7Ckfoe+ec/F88DT4mVjAGJ7maC8=
-X-Google-Smtp-Source: AGHT+IFQRWAqRgfjgcPRhgn6qwB4NCE6xKU6IAgh0rMuEwPLSwRz/SqDHsbaUSLwXBxNxtw1Wh5luQ==
-X-Received: by 2002:a05:6a20:12d2:b0:1a3:6fef:3a80 with SMTP id
- v18-20020a056a2012d200b001a36fef3a80mr10196394pzg.40.1711456493735; 
- Tue, 26 Mar 2024 05:34:53 -0700 (PDT)
-Received: from localhost ([157.82.202.248])
- by smtp.gmail.com with UTF8SMTPSA id
- a19-20020aa78653000000b006e67edb113fsm5805935pfo.219.2024.03.26.05.34.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 05:34:53 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH for 9.1 v2 0/2] meson: Fix MESONINTROSPECT parsing
-Date: Tue, 26 Mar 2024 21:34:21 +0900
-Message-Id: <20240326-meson-v2-0-d9f9003775e9@daynix.com>
+ d=1e100.net; s=20230601; t=1711456492; x=1712061292;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IJYNwNm35V5xzu7ic8glr0yVgOLlUO7V69uiN6b/dLQ=;
+ b=kr2YIqhmGvd/xu35X1ALH6m2LPaWw4TZet55Aw85hPczBR5iOEr5v1XlF45rry/4QJ
+ KtyIfczqgc+BLf45FuSwMnFR38U/MOCS/E4PpBE/zuCmz1VgSeRBoHQf9F2OCgjGnyCB
+ bbyhv+n4cyKa4dGk/smJ+MJa20L1oSuCNTUn+eb0LFrqIeyo6JT6kEaeldOBbdTqOR4/
+ N+Djn74udXwmDmTnfXklAllU8+n1W2asaplx8a6AijX6TjgiINg82b33GWZT3KLR4s1o
+ yBz+IzGymkC6rRcoxGPLIiM2DMpIxGo5pgr8PnTy+j5Ys3D6XFt1HAJE+kbUJAvIXWJp
+ kGmA==
+X-Gm-Message-State: AOJu0Yy/nbiLhxRKyzbncQuFN2q/Ej49WrwWng10ggNSqnr23mSYWEGr
+ PMUss9dCvh8zzy9GaUkNTf4daJsQ9JGfddRHXX8PF5YbngfCfoabeKy1UdQl0Eo+G8TcXpOqz12
+ XcEc=
+X-Google-Smtp-Source: AGHT+IFF+q4pH2dp2GsZ2JARo/2j7Re9ePv1UenxaKmnmjeL/SoIw3pZ+/ICTHBVBikr0xeTX4YDSA==
+X-Received: by 2002:a2e:9c95:0:b0:2d2:b506:d2cb with SMTP id
+ x21-20020a2e9c95000000b002d2b506d2cbmr7372056lji.9.1711456491775; 
+ Tue, 26 Mar 2024 05:34:51 -0700 (PDT)
+Received: from linaro.. ([102.35.208.160]) by smtp.gmail.com with ESMTPSA id
+ y19-20020a1c4b13000000b004148090cf85sm716317wma.0.2024.03.26.05.34.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Mar 2024 05:34:51 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 3/9] plugins: add new inline op STORE_U64
+Date: Tue, 26 Mar 2024 16:34:20 +0400
+Message-Id: <20240326123426.761473-4-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240326123426.761473-1-pierrick.bouvier@linaro.org>
+References: <20240326123426.761473-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAM3AAmYC/x2MywqDMBBFf0Vm3YRkfNR21f8oLqJO6iBmSlJEE
- f+9wd09nMs5IFFkSvAsDoi0cmIJGfBWwDC58CHFY2ZAg5UpsVELJQmqrwmHu0Pfo4f8/UbyvF2
- dN3iJxUNb6LKYOP0k7ld/tZfOqdK0Fk1j68rouny0yio388SzaBnzeo1uD7zpQRbozvP8AyaVS
- BanAAAA
-To: Beraldo Leal <bleal@redhat.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
- John Snow <jsnow@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-X-Mailer: b4 0.13.0
-Received-SPF: none client-ip=2607:f8b0:4864:20::430;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-lj1-x22a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,43 +97,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The arguments in MESONINTROSPECT are quoted with shlex.quote() so it
-must be parsed with shlex.split().
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-
-To: Beraldo Leal <bleal@redhat.com>
-Cc: qemu-devel@nongnu.org
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Cleber Rosa <crosa@redhat.com>
-Cc: John Snow <jsnow@redhat.com>
-Cc: Michael Tokarev <mjt@tls.msk.ru>
-
-Changes in v2:
-- Added patch "buildsys: Bump known good meson version to v1.4.0".
-- Link to v1: https://lore.kernel.org/r/20230812061540.5398-1-akihiko.odaki@daynix.com
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
-Akihiko Odaki (2):
-      buildsys: Bump known good meson version to v1.4.0
-      meson: Fix MESONINTROSPECT parsing
+ include/qemu/plugin.h      |  1 +
+ include/qemu/qemu-plugin.h |  4 ++--
+ accel/tcg/plugin-gen.c     | 13 +++++++++++++
+ plugins/core.c             |  6 ++++++
+ 4 files changed, 22 insertions(+), 2 deletions(-)
 
- python/scripts/vendor.py                   |   4 ++--
- python/wheels/meson-1.2.3-py3-none-any.whl | Bin 964928 -> 0 bytes
- python/wheels/meson-1.4.0-py3-none-any.whl | Bin 0 -> 935471 bytes
- pythondeps.toml                            |   2 +-
- scripts/symlink-install-tree.py            |   3 ++-
- 5 files changed, 5 insertions(+), 4 deletions(-)
----
-base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
-change-id: 20240326-meson-b5e2c7a2fb2f
-
-Best regards,
+diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+index 23271fbe36a..d1d9b4490df 100644
+--- a/include/qemu/plugin.h
++++ b/include/qemu/plugin.h
+@@ -69,6 +69,7 @@ enum plugin_dyn_cb_type {
+     PLUGIN_CB_REGULAR,
+     PLUGIN_CB_MEM_REGULAR,
+     PLUGIN_CB_INLINE_ADD_U64,
++    PLUGIN_CB_INLINE_STORE_U64,
+ };
+ 
+ /*
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 4fc6c3739b2..c5cac897a0b 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -305,12 +305,12 @@ void qemu_plugin_register_vcpu_tb_exec_cb(struct qemu_plugin_tb *tb,
+  * enum qemu_plugin_op - describes an inline op
+  *
+  * @QEMU_PLUGIN_INLINE_ADD_U64: add an immediate value uint64_t
+- *
+- * Note: currently only a single inline op is supported.
++ * @QEMU_PLUGIN_INLINE_STORE_U64: store an immediate value uint64_t
+  */
+ 
+ enum qemu_plugin_op {
+     QEMU_PLUGIN_INLINE_ADD_U64,
++    QEMU_PLUGIN_INLINE_STORE_U64,
+ };
+ 
+ /**
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index d3667203546..1cfd7908df1 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -152,6 +152,16 @@ static void gen_inline_add_u64_cb(struct qemu_plugin_dyn_cb *cb)
+     tcg_temp_free_ptr(ptr);
+ }
+ 
++static void gen_inline_store_u64_cb(struct qemu_plugin_dyn_cb *cb)
++{
++    TCGv_ptr ptr = gen_plugin_u64_ptr(cb->inline_insn.entry);
++    TCGv_i64 val = tcg_constant_i64(cb->inline_insn.imm);
++
++    tcg_gen_st_i64(val, ptr, 0);
++
++    tcg_temp_free_ptr(ptr);
++}
++
+ static void gen_mem_cb(struct qemu_plugin_dyn_cb *cb,
+                        qemu_plugin_meminfo_t meminfo, TCGv_i64 addr)
+ {
+@@ -177,6 +187,9 @@ static void inject_cb(struct qemu_plugin_dyn_cb *cb)
+     case PLUGIN_CB_INLINE_ADD_U64:
+         gen_inline_add_u64_cb(cb);
+         break;
++    case PLUGIN_CB_INLINE_STORE_U64:
++        gen_inline_store_u64_cb(cb);
++        break;
+     default:
+         g_assert_not_reached();
+     }
+diff --git a/plugins/core.c b/plugins/core.c
+index a8557b54ff7..e1bf0dc3717 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -321,6 +321,8 @@ static enum plugin_dyn_cb_type op_to_cb_type(enum qemu_plugin_op op)
+     switch (op) {
+     case QEMU_PLUGIN_INLINE_ADD_U64:
+         return PLUGIN_CB_INLINE_ADD_U64;
++    case QEMU_PLUGIN_INLINE_STORE_U64:
++        return PLUGIN_CB_INLINE_STORE_U64;
+     default:
+         g_assert_not_reached();
+     }
+@@ -535,6 +537,9 @@ void exec_inline_op(struct qemu_plugin_dyn_cb *cb, int cpu_index)
+     case QEMU_PLUGIN_INLINE_ADD_U64:
+         *val += cb->inline_insn.imm;
+         break;
++    case QEMU_PLUGIN_INLINE_STORE_U64:
++        *val = cb->inline_insn.imm;
++        break;
+     default:
+         g_assert_not_reached();
+     }
+@@ -562,6 +567,7 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
+                                    vaddr, cb->userp);
+             break;
+         case PLUGIN_CB_INLINE_ADD_U64:
++        case PLUGIN_CB_INLINE_STORE_U64:
+             exec_inline_op(cb, cpu->cpu_index);
+             break;
+         default:
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.39.2
 
 
