@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B6CCC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 589C4C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:47:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp90C-0004Pj-AW; Tue, 26 Mar 2024 11:46:16 -0400
+	id 1rp8zk-0003q0-Ae; Tue, 26 Mar 2024 11:45:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zx-0003zm-07
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:46:01 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zj-0003nN-1q
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:45:47 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zt-0001Ea-72
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:45:59 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2d6ee81bcd4so6777701fa.2
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:45:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zg-0001CO-SS
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:45:46 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-33e285a33bdso3367640f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:45:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711467954; x=1712072754; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711467943; x=1712072743; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pILgX4qmWPDEo+FllF7pXDQL2dWnRzBzAqVL780ebL0=;
- b=qd4XxyWrCrUcGvRO7kuuWoY6Wi6laaGq6BfdtucybR0jNF6v6sjhh7ZlqxhjeOW7H+
- YgmnW9WChgHOOopV7wChhrtTTxsHhCejBcFzvkYVMBAcX6ZNMlu7vSMAXMEps1btWy4e
- kfU6fWI74cJ0902WOrAMNaYUz/3B6TU/eDexDKbht7XaECU+o/ygRrHqdWrwN3KJ00PY
- i/cEDQwE6ss3mYFUd3stHUXatea3NuOzB0tRJoHp3i56Fbif/4/Nif4TEISbZfOAWA2U
- sOGfhuZ738k7ptayJT2HxhhkGUfxMJx1acsOayqLT/pajGASdQjL68SO18Z1CYCPT3cq
- 8PXA==
+ bh=nd+vMuVqiQfFDX5tDq7mwgsep0f8/HZ19ER+KJLjK2g=;
+ b=nYUTXbzftBbnz39vmhFeITOPBmZR3OBT8VW3eTXivuz31s4KXPXsKqf0tGrNzbeE7u
+ xqZSCpoIuml6KAW2Qe9z5jNezhSwzAflLYtqv53IRMb4nyJRjyyrD4IoCnvI6PHe8GFP
+ JSv9u9gefjLYkEeOBkViKGzmdCYxRPBO3SrtyGkaYJuAzs2pM2xps0edXOom9/sZVlmk
+ AyO+boVKBYkcsBixmc9x3UR5BAidimx7AZnRGyG/zDe0yzYWdAqX3ckFnx04bjXEGNEo
+ w819Sy7tnuJHhuoBZAX6WqHzIIi/qTXu2LXz+uoxRa7j0p/11/FPKrQefonOPUSxWq/r
+ ZT/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711467954; x=1712072754;
+ d=1e100.net; s=20230601; t=1711467943; x=1712072743;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pILgX4qmWPDEo+FllF7pXDQL2dWnRzBzAqVL780ebL0=;
- b=Ezfdcb1PljyqIW/0rAvFTc9fIxeecWkByZXjqIz4ZmEebxHV1i1BV3MQlG01G+99Rq
- /D/Vskwul6L62rRphIwX6A00tspcsaoz+Tvgz78HFprByAnK+1QRLrJPPRE/WDCUIg2z
- 1kBASWLjcejNWPeLnR/MK9gR3n6Ap4Yuyu6ztXptinTfBFNy4HzVzX1W7OYuXtgQx+DC
- 7/OVKVRJGWSduTqhd1nKaDksGLO9b0yKPaHMCDghhtoz//d3BKAb5ZyAu373J/V88Yzn
- dGrbIevHredU5yDa9UrNCH2I/knHA9NuOl4sTfbmrpGfpGq/i06dE9mWhdwvUmJPvMIH
- +7Iw==
-X-Gm-Message-State: AOJu0YwPqVN5fZMyOJrVfar4RUTfm7MOKtjF3Kj2MPQ7kt+6+4kHWS10
- 2cgkTwyMLEWr1hNLKrrUY/cZxYt1fAcKuoUmIWJNLgjt5NdKY1pP1pl0lFEqZmkpP7Dwi7gDG0B
- i
-X-Google-Smtp-Source: AGHT+IFPSZ+KbdkoTCVxyOu8c8tHBPXiiJjv3g/xhUl6hvPn6M9vNgNFoHQCM/Gc34BJN7BWsUr/1Q==
-X-Received: by 2002:a2e:914b:0:b0:2d6:f100:6e6b with SMTP id
- q11-20020a2e914b000000b002d6f1006e6bmr888577ljg.18.1711467953968; 
- Tue, 26 Mar 2024 08:45:53 -0700 (PDT)
+ bh=nd+vMuVqiQfFDX5tDq7mwgsep0f8/HZ19ER+KJLjK2g=;
+ b=hTmdvz0pHfXvPR6JekIiQQonW97QrkqJrxKROFN52bWCeLzegZY0YM4gkVDGTSmE67
+ jkGkm2OPwuStE1Ob5VgF1ned07EIFRb/7fVp/9Oe89TwqTrWobkKL40AZ4oaYbdFtKKw
+ uFbR9n7cVne5ln1Fy0+pQ2hu5kwqEYKEcXEm0fpioVGtBYK9qkwp8BRfaX3CC13/Pbpt
+ 5CXcuoBwZEX8IgFnyq8F8MuC1LlSqWp7KNOewR/L0cEkdJd/1pJgRlgM35O1Gii33jmM
+ zkl5bA/0rp2d5DRIBnY67ysw76PKK2jyESFYIkaoaGeRhkVQfvywPUogsv09qaDllcJA
+ XhUA==
+X-Gm-Message-State: AOJu0YzJhMr6BLXh6iMsxidPqEj72VES3OEbhan8eCIN3mGiNUSNaFgc
+ eQTl61zTeVo92A8DtG1d6UzGQwOt+vv9lZly4t5hdpHeOepSjjPqE0T8fJV+I8+xUR3fOftQfnu
+ 7
+X-Google-Smtp-Source: AGHT+IE2GvDWOFjl+Lb0ZUPMSQOY1ieA1J21BH5JpIoP11zJmq8qAE6vB5grDx2AQ+RuJG2JsaUemA==
+X-Received: by 2002:a5d:4c4f:0:b0:341:8efd:e206 with SMTP id
+ n15-20020a5d4c4f000000b003418efde206mr1223655wrt.38.1711467942916; 
+ Tue, 26 Mar 2024 08:45:42 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.229])
  by smtp.gmail.com with ESMTPSA id
- b2-20020a05600003c200b00341ddb65b07sm112154wrg.63.2024.03.26.08.45.52
+ i5-20020a5d5585000000b0033ed7181fd1sm12471970wrv.62.2024.03.26.08.45.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 Mar 2024 08:45:53 -0700 (PDT)
+ Tue, 26 Mar 2024 08:45:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 08/13] docs/system/ppc/amigang.rst: Fix formatting
-Date: Tue, 26 Mar 2024 16:44:59 +0100
-Message-ID: <20240326154505.8300-9-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+Subject: [PULL 06/13] hw/misc/stm32l4x5_rcc: Inline clock_update() in
+ clock_mux_update()
+Date: Tue, 26 Mar 2024 16:44:57 +0100
+Message-ID: <20240326154505.8300-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240326154505.8300-1-philmd@linaro.org>
 References: <20240326154505.8300-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,42 +98,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+Trivial inlining in preliminary patch to make the next
+one easier to review.
 
-Add missing space to fix character formatting where it was missed in
-two places.
-
-Fixes: 623d9065b6 (docs/system/ppc: Document running Linux on AmigaNG machines)
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20240324161148.4650D4E601F@zero.eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-Id: <20240325152827.73817-3-philmd@linaro.org>
 ---
- docs/system/ppc/amigang.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/misc/stm32l4x5_rcc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/docs/system/ppc/amigang.rst b/docs/system/ppc/amigang.rst
-index ba1a3d80b9..e2c9cb74b7 100644
---- a/docs/system/ppc/amigang.rst
-+++ b/docs/system/ppc/amigang.rst
-@@ -16,7 +16,7 @@ firmware to support AmigaOS 4.
- Emulated devices
- ----------------
+diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
+index bc2d63528b..49b90afdf0 100644
+--- a/hw/misc/stm32l4x5_rcc.c
++++ b/hw/misc/stm32l4x5_rcc.c
+@@ -48,6 +48,8 @@ static void clock_mux_update(RccClockMuxState *mux, bool bypass_source)
+     uint64_t src_freq;
+     Clock *current_source = mux->srcs[mux->src];
+     uint32_t freq_multiplier = 0;
++    bool clk_changed = false;
++
+     /*
+      * To avoid rounding errors, we use the clock period instead of the
+      * frequency.
+@@ -60,7 +62,10 @@ static void clock_mux_update(RccClockMuxState *mux, bool bypass_source)
+     }
  
-- * PowerPC 7457 CPU (can also use``-cpu g3, 750cxe, 750fx`` or ``750gx``)
-+ * PowerPC 7457 CPU (can also use ``-cpu g3, 750cxe, 750fx`` or ``750gx``)
-  * Articia S north bridge
-  * VIA VT82C686B south bridge
-  * PCI VGA compatible card (guests may need other card instead)
-@@ -73,7 +73,7 @@ https://www.powerdeveloper.org/platforms/pegasos/schematics.
- Emulated devices
- ----------------
+     clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier);
+-    clock_update(mux->out, clock_get(current_source));
++    clk_changed |= clock_set(mux->out, clock_get(current_source));
++    if (clk_changed) {
++        clock_propagate(mux->out);
++    }
  
-- * PowerPC 7457 CPU (can also use``-cpu g3`` or ``750cxe``)
-+ * PowerPC 7457 CPU (can also use ``-cpu g3`` or ``750cxe``)
-  * Marvell MV64361 Discovery II north bridge
-  * VIA VT8231 south bridge
-  * PCI VGA compatible card (guests may need other card instead)
+     src_freq = clock_get_hz(current_source);
+     /* TODO: can we simply detect if the config changed so that we reduce log spam ? */
 -- 
 2.41.0
 
