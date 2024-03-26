@@ -4,118 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E171FC54E67
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 16:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CEF6C54E67
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 16:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp9MW-0002Gh-6J; Tue, 26 Mar 2024 12:09:20 -0400
+	id 1rp9Tu-0004N4-1m; Tue, 26 Mar 2024 12:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <poffer@nvidia.com>) id 1rp9MT-0002GU-HL
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 12:09:18 -0400
-Received: from mail-bn8nam11on2100.outbound.protection.outlook.com
- ([40.107.236.100] helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rp9Ti-0004MA-7T
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 12:16:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <poffer@nvidia.com>) id 1rp9MR-00072z-DD
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 12:09:17 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=iyLB+1WB8PNk09e6mew3Z9bYr0QtoCk00enw/1gZ5r0Sg+T+Ly1lmxpLiX0pZBQ3iz+BAYpSJ48z3+wKMNyXRe/d+oBSqGCQqdK2j00LH8dLVm0iXIuycpFhOY4Vv6lVKpmpyWT/NxS24LaYo5xcNVeVsA1wLeJM9I/MUEU/qI+PSYRuq/vkrcAuF5zrORfuoH9IQza6jMG+pBmhXY4BN0qzMLxrQnyV+59WBQe7svGDg3fWiRltniMsxmer1ckiSFNwHrA0ZlzwJJUvq6CIqXCCvvt98R4bdqBbja8Ut7AbM8L3I8Nu6+GKF0/c6ARC17euEPdmcK8lxpBSRuS08w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UfjznhJj+bBz7iH1KfKZtbHVGwt3D7xCptG4dB/YIAY=;
- b=EV2oYr2Rl6ljZ0V5fKWYYe9aJVD3KSyn8JjlvA+H1Sz0laMXC4U5ds8sPnDJUaHZ+pZzTTFFwwItn6gQinq8159auWd31c7fZvfTWGlgwxNPzQkQEGRGW9MormfubjXXOaaN+2QQnw0YA1B4h7mezUph8e5wJfbrmrDdj03NRLIl0maHMb4fqfg2oawb+SmLJJYPMG3BS7miZ+V3OO8C0GSyhiPvWyLEYQ18Ini1EZsuMhsFYk43d9GxQXKCCWC8oyPybJZs9dNklsYsQcl+f4kyIWvqROu4NWem4j5glOrJZUoRWTD6H0dw18K6Cca/rdP2xEhj+IsiA46CKC0Kmw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UfjznhJj+bBz7iH1KfKZtbHVGwt3D7xCptG4dB/YIAY=;
- b=ec1T6H7a57K9slYjBXKcNqS684ZZ4jkjEWJ+jjNso44ssRh3fTA5+BJN6RqC6RddcHBSpIRurGTL1EOquggEOEwo9FOYEDTwSiaHrn+pyHT1r/AfRJazP7cZenz4QFqCeZV2EmZ6piUuyzKMLuYbBU7BifOIQHbQLy/1P5eallYlYv8psk3p6OWLvIprQHUMEL0MPvb0yoTMrbcbjzJqj9l2cmu0nDALGmDusC244sffTU3aNkuu1OnMeI10cDKEDwIkOfh/FBQf6C641wS/6yU7P3ci7nmeBhHXE5GIC8uJnbWTdB8lZ+W+N2bk/0RZ8bCMDmwEMiLq9Y2HpOk4/w==
-Received: from MW4PR12MB6997.namprd12.prod.outlook.com (2603:10b6:303:20a::14)
- by PH8PR12MB7375.namprd12.prod.outlook.com (2603:10b6:510:215::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.33; Tue, 26 Mar
- 2024 16:04:08 +0000
-Received: from MW4PR12MB6997.namprd12.prod.outlook.com
- ([fe80::1afb:ba76:620e:60c4]) by MW4PR12MB6997.namprd12.prod.outlook.com
- ([fe80::1afb:ba76:620e:60c4%7]) with mapi id 15.20.7409.031; Tue, 26 Mar 2024
- 16:04:08 +0000
-From: Paz Offer <poffer@nvidia.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Endless data flow on i2c bus
-Thread-Topic: Endless data flow on i2c bus
-Thread-Index: AQHaf43FbGZcoA9M+Uuy5peHQE/1ZA==
-Date: Tue, 26 Mar 2024 16:04:08 +0000
-Message-ID: <MW4PR12MB69971E8D044CD7C38EF0CDDAA0352@MW4PR12MB6997.namprd12.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MW4PR12MB6997:EE_|PH8PR12MB7375:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: fBlGX/ty+azykTnaaBo/PrYUiwwZ1vks1ZabP4VO33/6/Gb4PSrUV7flV2fIj5x7GBSzZ5yLHg+dE8pvpdIW9SySKWm+E5k9HalulmjtVH0MbjdB0VFapYzRntau1xjMa0u8JDQJJbOZ5lcsslsYkRBXfIMfAMZFRwtY/vM1+p6XAb4IVD7u51xQ4OhE8nt+xcelJjfAsOkbdabda07oMiMdFUCFVjmlJ3smpEtiPx7ZgNzwPzro0Ec+S0zG2D/TAvGZpgujh+HI+aALCBYg77PPDzAvIJahLgqISKHP1qOhGBPkh7QcfN6RBtJjQ+nLOjIrL+RPthYNlqocrAbdqTNFlnF3c1Tsy/+FULzXC8Q3cgg7ViEKdKxfuPoKEWKwYWfhp5o6eheEVYvO04WxpBrFE1yD4n1x+N0S601LXBKhR/auDDwol9rajiHpOWOsZFFKx/vWYCr0wKOaQdEYK4AJSQ4Z+e7iyzYG6SXcmOEyOUR5khnWsuccC8soP/c7+inx00dqRs0C2KppbLtO2+vIad/l/QjGPpOUk1ONOUtfwyl7G5+R+dZDoD9g+wE1BbIauuKv/Jq6fDekF3YuM6nbqYj1o0ReNbnAt2g8Dw15zgf7pS4DTsvQLDF8eCvIpTaTw+zs+uGh7k96AaPrBL5qAKXdydAWGdJJRPjclxI=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW4PR12MB6997.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(1800799015)(366007); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?OtZ+D27JZewrTViGScCPv+tba/eWU+QrwYiRZWVKos+7/QlTdrX06WjrEK?=
- =?iso-8859-1?Q?Xvhi3MbWtylPKgFpaGaUPC8jPCy8d1H8EEGRgrUXIxS8Hx5tZcvGE49rR2?=
- =?iso-8859-1?Q?9EFJVhhdCnFgc59jFmZi80NWAOw/vW9U1yLLk0ZGQBhDsgBkpJdbvBpKAf?=
- =?iso-8859-1?Q?2y209x44i+vChRCgsiRlYnyAM1I/X+THe+UqicZNOuatIh6928sH2sGFbK?=
- =?iso-8859-1?Q?UsHK0FrsN5Z5u8iGQDapBLDctw9k1VFFNan7FX2ZViTzMFCEUXOg3gwRIa?=
- =?iso-8859-1?Q?rejMHwRph5/TZO9dymEIw9AydehHYLdIxSFv5nd3RjoubwGpI1lksyR3h2?=
- =?iso-8859-1?Q?ZQw2fuL/Y8oOE1R69SQ1lnyR/1Tq/XSq7+Qx29pVwOBgHC6Bu53VGYKAK/?=
- =?iso-8859-1?Q?OPVfEUgug0qJo1RllvmWXdTOuy4L8XMJ6Sv9Xg+2DCKNOBbpcbg9OUS9Gr?=
- =?iso-8859-1?Q?u7fo9wAZ/6anjRsFjC4caE4To+hbqC8mXdlJgQ9SCVuRTpN5px8Dte+PpZ?=
- =?iso-8859-1?Q?19ML5iHzMgR9qvUpuO/M2PhVladJE8sQ+eA4tKGwf8XDt3XpnYw8jAovjd?=
- =?iso-8859-1?Q?O/SqpbNOuXXQ1ynb4gI1+4djCUx+n+DKEWDiTnbwYrbjVw5O4pdOe1R5oU?=
- =?iso-8859-1?Q?Kzmv8oE4Xh6K+NJ+ILVAFVSfRhY1IWJGQ6jyvQMdk7msJ2H9TufP2wqm7v?=
- =?iso-8859-1?Q?bewA6SXWrVNyzLV8AL1LrqIWhD3f0472ugv1zph8FSNGmZOZXdSwTIlUJr?=
- =?iso-8859-1?Q?rmGiFaKes1E9mInzcuuPdrBvX2ADzvvV0mNakQoLYiaAFJB3UZ/aZxq7qu?=
- =?iso-8859-1?Q?wWipb5NAD8CwCcs/fnDTIox4xNzoIPeaXW/lgD9kzaEv9WYcgxsPVC6igB?=
- =?iso-8859-1?Q?2wPOIK9tYswBoZ0bx7EhLQ/uLexPuvWHQt9698SpEvxlVb2n3J1fwU9foW?=
- =?iso-8859-1?Q?il1PmbSPxuUYRz2RVqUibfdPzTqTb4jb+rjNz0BWpQn6uUvY7cAl9ksxSh?=
- =?iso-8859-1?Q?KozE78l++eOYtmpqn5UmTDQ11jW4cTjYUQipxIhsmQVNHCSZd5Rv9lXmql?=
- =?iso-8859-1?Q?rEIv6Ixw3pZLDj0nPjGOAE85P/WpAhUlKxREphq8S54qHr4ti7WuXzlce8?=
- =?iso-8859-1?Q?/CJHjxlb5nONBF1ZylXtEHAlbhq6zoHsdeDS+I3CoRYtgFJSVenUw34Lr1?=
- =?iso-8859-1?Q?QxH6lQAXDsrWIywOUZ4ZgXLUYv1eXiCB0pgmXBj89aOIJgBqJuEisJnVIk?=
- =?iso-8859-1?Q?hnVbYMW6W4dkjOXHLldOZBV+OY4qkdHNXPVGxTUTw1z2i40O3YyBlxT+i3?=
- =?iso-8859-1?Q?rS0C6C7fbskMJzOp4SZP3GiUXUFjluoMxemH1LiZ93YqZSOA0QWeTqWEAp?=
- =?iso-8859-1?Q?boFJWZPEEsqy5E4u05qNkUQOaat30umg9aFHUgtnnl8KvVhS7JnoNBkYkw?=
- =?iso-8859-1?Q?wFKPwO2lYc/Kd5EeZBKIPyLUKrNKQ+sn8NCz/nWcN/q5BfrGU47D3n8hJC?=
- =?iso-8859-1?Q?oFkJcmJ0M4eLmf27k6hOOUxz48mRr/IcjPnWsS8+j274RJ4fDQhCIgy+oo?=
- =?iso-8859-1?Q?iO+Spw8qCcFWqTL50wiUotTQEgENU7KkEBGQuX6/ln1JihyJZK/zWylDpX?=
- =?iso-8859-1?Q?2izlpLKAfjEYQ=3D?=
-Content-Type: multipart/alternative;
- boundary="_000_MW4PR12MB69971E8D044CD7C38EF0CDDAA0352MW4PR12MB6997namp_"
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1rp9Tf-0000Ap-0X
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 12:16:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711469801;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HnQKVzfYYxTezxn36Vo34iP57wRBhKpC6E5adiwHo0I=;
+ b=AcZhaDy680ddJ9rAE54jc2WtQkjEnVSDGxPYG2DcU1e2V6ATJX0+VrTA2SYMDTj7akXtkx
+ v26wL3jEemNvXO9EbiSNacPtkUdeFhajrfRWSgKo/uFlYbV8ZevjrBGtdR0Pe9KsX/kUF/
+ H27ybdHk8WouzFtqELwV73r2SyGM6mo=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-568-1uOCrRj_OeCOwEqf7vCJPw-1; Tue, 26 Mar 2024 12:16:38 -0400
+X-MC-Unique: 1uOCrRj_OeCOwEqf7vCJPw-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2d49fa5dfadso48125391fa.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 09:16:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711469794; x=1712074594;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HnQKVzfYYxTezxn36Vo34iP57wRBhKpC6E5adiwHo0I=;
+ b=jKUgoT2mJseCe96bGRfXb43lsOFTOEv7IsnK382wxkaYvLGayYIOmiZo68ZLNANsyT
+ kssxsZzb5ANJg4ynQByUqxBPb1GMUrkA2l4T8QxiDIXuzzF/5Y53WCDQqxk8KKd/ymRC
+ cv8Zwo2DErOjA/Inexqz+MyMuqqWesQgeaJqdvKASZz/NTujSCHwf6TLiL66eQPTo6qu
+ xkMyNmNzRC5Ec5BOm2lKlKPK4iLEC3McM6oksqh/C6Y+sdr2pQUR+kdPYZpVlM3ECACL
+ +jKq8tc97qLwVSlVmSU+7uvLJIPdSu5W3zCgd5bgLKtZMy9ity+nCmCSYEeQiMuNgxFS
+ SuHA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW+eW0PnEUEJGP40VPLFvmOolEPdnfiYNYs/52JXfo4HsGm3wEih0HXLJ7r7w3jVSqTUcEv0YrZdUsIbvTujqYCJ5hhPHs=
+X-Gm-Message-State: AOJu0Yz1TeabPc3hk0DigohjtLMsVIEV5nN4PVJ/ww9iqIzKwsL3qDQb
+ OajKFLXK9pOqBk22UeYavVi8es/X3y3G1y5cD2+P/a/0QWsH1VX+Mz1uTYr7UJETWbqV2/twjeK
+ CmJQqvIHknq4NijYqVNoxolF3xKxbMraMRANe2zHREUv5g4l3Zv6P
+X-Received: by 2002:a2e:a172:0:b0:2d6:9d74:f553 with SMTP id
+ u18-20020a2ea172000000b002d69d74f553mr88042ljl.5.1711469794606; 
+ Tue, 26 Mar 2024 09:16:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9CZMqCC/Rahki7VLSbkdQGNeK/yvBLEb3bQRDs9J6IlM5ki0x9CwZkk7dkoRhzGLUGDi0oA==
+X-Received: by 2002:a2e:a172:0:b0:2d6:9d74:f553 with SMTP id
+ u18-20020a2ea172000000b002d69d74f553mr88026ljl.5.1711469794142; 
+ Tue, 26 Mar 2024 09:16:34 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ h20-20020a05600c351400b0041477f95cf6sm11987176wmq.13.2024.03.26.09.16.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Mar 2024 09:16:33 -0700 (PDT)
+Date: Tue, 26 Mar 2024 17:16:32 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, Bernhard Beschow
+ <shentey@gmail.com>, pbonzini@redhat.com, devel@lists.libvirt.org,
+ richard.henderson@linaro.org, mst@redhat.com, qemu-trivial@nongnu.org
+Subject: Re: [PATCH for-9.0] docs/about: Mark the iaspc machine type as
+ deprecated
+Message-ID: <20240326171632.3cc7533d@imammedo.users.ipa.redhat.com>
+In-Reply-To: <8dbba6ae-5910-4a62-9a08-a56e20dfb480@linaro.org>
+References: <20240326125104.90103-1-imammedo@redhat.com>
+ <a4a0bb13-d6a0-4665-810d-ecd9a9fb89b1@redhat.com>
+ <8dbba6ae-5910-4a62-9a08-a56e20dfb480@linaro.org>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MW4PR12MB6997.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3d788117-7a6e-4af8-ca45-08dc4dae5e3d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Mar 2024 16:04:08.0339 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: iOQnDrX31sbUzZCwT5N83qNkFbLr+sFHO93VyqTrKCoUOcsngoV193BmEOfnLTR4JkuNdZHHbrKQnyBcWCWpjA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7375
-Received-SPF: softfail client-ip=40.107.236.100;
- envelope-from=poffer@nvidia.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,143 +108,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---_000_MW4PR12MB69971E8D044CD7C38EF0CDDAA0352MW4PR12MB6997namp_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+On Tue, 26 Mar 2024 14:29:58 +0100
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-Hi,
+> Hi Igor,
+>=20
+> On 26/3/24 14:08, Thomas Huth wrote:
+> >=20
+> > s/iaspc/isapc/ in the subject
+> >=20
+> > On 26/03/2024 13.51, Igor Mammedov wrote: =20
+> >> ISAPC machine was introduced 25 years ago and it's a lot of time since
+> >> such machine was around with real ISA only PC hardware practically=20
+> >> defunct.
+> >> Also it's slowly bit-rots (for example: I was able to boot RHEL6 on=20
+> >> RHEL9 host
+> >> in only TCG mode, while in KVM mode it hung in the middle of boot) =20
+>=20
+> I'm quite opposed to this patch. QEMU models various very-old /
+> defunct hardware. I'm pretty sure Bernhard and myself are OK to
+> keep maintaining it, besides we are working in separating it from
+> the i440fx+piix machine. Also, this machine is particularly
+> interesting for my single-binary experiments.
 
-I am simulating an i2c slave device, listening on address 0x30.
-My intention is that in the hosted Linux OS, my driver will communicate wit=
-h this (simulated) HW device.
+it would not be fair to ask you or Bernard to deal with every
+case where ISAPC related code gets in a way, nor it's fair to
+ask other contributors to ensure that their patches don't break
+semi-working ISAPC or refactor code that relates to it.=20
 
-The problem I have is that ever since I start QEMU, and even before the hos=
-ted Linux OS was fully loaded, the device receives endless amount of data o=
-n the bus:
+[
+for example I'd like to refactor smbios parts in the image
+ACPI table builder, but the I'd have to do it for legacy
+part as well without means to verify that. Sure it can be
+done but at cost of extra time spent to rewrite something
+that would never be used and to find test env to verify
+touched code.
+]
 
-  *
-Few times stream of 7 bytes,
-  *
-Few times stream of 9 bytes,
-  *
-Repeat forever...
+However I look at it, isapc is burden at this point=20
+and it gets into a way of evolving.
 
-This continues even after Linux is loaded.
+[downstream hat]
+while both of you do a wonderful job of separating some parts
+of the mess we have, it's a lot of churn which is not ideal when it
+comes to backporting patches.
 
-My question is how do I know what is this data and how to ignore it?
+[emotional hat]
+Nowadays with modern containers tooling it's very easy to
+spawn old qemu environment to play with removed machines/features.
+quick few minutes example that lets me run isapc on old ubuntu
+without need to read how to build containers in 100 different ways:
 
-Many thanks,
-Paz
+ toolbox create --distro ubuntu --release 22.04
+ toolbox enter ubuntu-toolbox-22.04
+ toolbox enter ubuntu-toolbox-22.04
+[user@toolbox ~]$ sudo apt update
+[user@toolbox ~]$ sudo apt install qemu-system-x86
+[user@toolbox ~]$ qemu-system-i386 -M isapc -vnc :0 my_toy.qcow2
 
 
+PS:
+I haven't had high hopes of this getting accepted,
+but I had to try.
+Though recent trend was that upstream
+QEMU were deprecating/dropping old machines/devices
+(even ones that kernel folks were using for testing)
+and it hasn't caused the end of universe (old qemu(s)
+sill exists and can be used for those cases).=20
 
---_000_MW4PR12MB69971E8D044CD7C38EF0CDDAA0352MW4PR12MB6997namp_
-Content-Type: text/html; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+> Where I agree is we should stop reporting "KVM on ISA/PC machine"
+> as supported.
+>=20
+> Regards,
+>=20
+> Phil.
+>=20
+> >> Rather than spending time on fixing 'the oldest' no longer tested=20
+> >> machine type,
+> >> deprecate it so we can clean up QEMU code from legacy fixups and=20
+> >> hopefully
+> >> make it easier to follow.
+> >>
+> >> Folks who have to use ancient guest that requires ISAPC can still
+> >> use older QEMU to play with it.
+> >>
+> >> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> >> ---
+> >> =C2=A0 docs/about/deprecated.rst | 7 +++++++
+> >> =C2=A0 hw/i386/pc_piix.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 | 1 +
+> >> =C2=A0 2 files changed, 8 insertions(+)
+> >>
+> >> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> >> index 7b548519b5..5708296991 100644
+> >> --- a/docs/about/deprecated.rst
+> >> +++ b/docs/about/deprecated.rst
+> >> @@ -226,6 +226,13 @@ These old machine types are quite neglected=20
+> >> nowadays and thus might have
+> >> =C2=A0 various pitfalls with regards to live migration. Use a newer ma=
+chine=20
+> >> type
+> >> =C2=A0 instead.
+> >> +``isapc`` (since 9.0)
+> >> +'''''''''''''''''''''''''''''''''''''''''''''''''''''
+> >> +
+> >> +These old machine type are quite neglected nowadays and thus might ha=
+ve =20
+> >=20
+> > "This old machine type is ..." ?
+> >  =20
+> >> +various pitfalls with regards to live migration. Use a newer machine=
+=20
+> >> type
+> >> +instead. =20
+> >=20
+> > I doubt that isapc could ever be used reliably for live migration, sinc=
+e=20
+> > it's an unversioned machine type, so I think it would be better to not=
+=20
+> > mention live migration here.
+> >=20
+> >  =C2=A0Thomas
+> >=20
+> >  =20
+>=20
 
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-1">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Hi,</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-I am simulating an <b>i2c slave device</b>, listening on address 0x30.</div=
->
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-My intention is that in the hosted <b>Linux</b>&nbsp;OS, my driver will com=
-municate with this (simulated) HW device.</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-The problem I have is that ever since I start QEMU, and even before the hos=
-ted Linux OS was fully loaded, the device receives endless amount of data o=
-n the bus:</div>
-<ul data-editing-info=3D"{&quot;orderedStyleType&quot;:1,&quot;unorderedSty=
-leType&quot;:1}" style=3D"margin-top: 0px; margin-bottom: 0px; list-style-t=
-ype: disc;">
-<li style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontService, C=
-alibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Few times stream of 7 bytes,</div>
-</li><li style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontServi=
-ce, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Few times stream of 9 bytes,</div>
-</li><li style=3D"font-family: Aptos, Aptos_EmbeddedFont, Aptos_MSFontServi=
-ce, Calibri, Helvetica, sans-serif; font-size: 12pt; color: rgb(0, 0, 0);">
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Repeat forever...</div>
-</li></ul>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-This continues even after Linux is loaded.</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-My question is how do I know what is this data and how to ignore it?</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Many thanks,</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-Paz</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
-<div class=3D"elementToProof" style=3D"font-family: Aptos, Aptos_EmbeddedFo=
-nt, Aptos_MSFontService, Calibri, Helvetica, sans-serif; font-size: 12pt; c=
-olor: rgb(0, 0, 0);">
-<br>
-</div>
-</body>
-</html>
-
---_000_MW4PR12MB69971E8D044CD7C38EF0CDDAA0352MW4PR12MB6997namp_--
 
