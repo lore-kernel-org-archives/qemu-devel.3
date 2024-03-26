@@ -4,55 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62FC7CD11DD
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 11:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B24CD11DD
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:00:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp5H8-0004BS-BN; Tue, 26 Mar 2024 07:47:30 -0400
+	id 1rp5Se-00065K-Be; Tue, 26 Mar 2024 07:59:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhuyangyang14@huawei.com>)
- id 1rp5H3-0004AA-0H; Tue, 26 Mar 2024 07:47:25 -0400
-Received: from szxga02-in.huawei.com ([45.249.212.188])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhuyangyang14@huawei.com>)
- id 1rp5Gu-0005I9-VF; Tue, 26 Mar 2024 07:47:20 -0400
-Received: from mail.maildlp.com (unknown [172.19.163.174])
- by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4V3nyN31RZzXjsg;
- Tue, 26 Mar 2024 19:44:12 +0800 (CST)
-Received: from dggpeml500011.china.huawei.com (unknown [7.185.36.84])
- by mail.maildlp.com (Postfix) with ESMTPS id 189B81400DD;
- Tue, 26 Mar 2024 19:46:58 +0800 (CST)
-Received: from huawei.com (10.91.158.201) by dggpeml500011.china.huawei.com
- (7.185.36.84) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Tue, 26 Mar
- 2024 19:46:57 +0800
-To: <stefanha@redhat.com>
-CC: <chenxiaoyu48@huawei.com>, <eblake@redhat.com>, <fam@euphon.net>,
- <kwolf@redhat.com>, <luolongmin@huawei.com>, <qemu-block@nongnu.org>,
- <qemu-devel@nongnu.org>, <qemu-stable@nongnu.org>, <suxiaodong1@huawei.com>,
- <wangyan122@huawei.com>, <yebiaoxiang@huawei.com>, <zhuyangyang14@huawei.com>
-Subject: Re: [PATCH v1] coroutine: avoid inserting duplicate coroutine to
- co_queue_wakeup
-Date: Tue, 26 Mar 2024 19:53:56 +0800
-Message-ID: <20240326115356.2495562-1-zhuyangyang14@huawei.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20240325155041.GA1898401@fedora>
-References: <20240325155041.GA1898401@fedora>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp5Sc-00064l-Ap
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 07:59:22 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp5Sa-0007W9-Bx
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 07:59:22 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a4715d4c2cbso686217066b.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 04:59:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711454357; x=1712059157; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UfL+brPGJOzeOS7ViC5dGCPitcNeAGgyBVYMr8wZwvA=;
+ b=r+jyctZO7Fe/9SLeFTlsI29r33uMyVRb/mUAd7svNYwWHrMeFmE9ME0xrUKv9v/kGV
+ I1pPG1YA/a9qeG2D28h9UOw1qttPgnGbRBSMaAwuSEI7rEW0/r+RHU+B/bIH0jTdfC9T
+ v9dGjioMWZlbttIrJj2TWIDlTp1VyBQ88r7xl0sUnnkmlVOJMAchTDCKFh/dd81OfnU8
+ LyDtnyLYIGMKdane4mVZiTZfK+EkheGgy10r4Cn1OCGf4eaFS5k47Bj3jIcUSqzxcoas
+ t5XsKKLy/gjHJupYI3RGJkVT7FfM0ZP0bWV96Avht4d46JpP3gvRg3+W5a/a7mW3KKtJ
+ 4lAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711454357; x=1712059157;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UfL+brPGJOzeOS7ViC5dGCPitcNeAGgyBVYMr8wZwvA=;
+ b=TqnfTBhwKTEPElQfbGlUHBwhIH9+Yc5eg3BLua5q2TJd2SlQ9D+ZzQdr4ZCWjErHT9
+ Ruxw7mDpOGVcNM7FkKNVLQJ8lgOOEfqhSoRPcj+6PwN3Dj54RFhnnaCPd0QaH4vuAWb8
+ mSgRlehgUAK05qgsDgOcKm7tScQ8DTZYevo2f9RVvbMr1NViJp6XeOr4yPKeIm9rEL6j
+ 8FbJFaRQcRBJPAXsdGedvvKDPwzjB/MBpGwH+tfK/TrRRCu21FOqFAL70vvWv7YjORZK
+ t7mHRkjMGb4M5NBGsgZIHmEQxLLRFzFJk/b+HNNveSqjPmrqBgSyCogvfryZdKBy47Qw
+ oNDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVp4f9EOac1+wRAvX7E02cE2Ud1NRYmcGRIMf73osNpiqoQpf87d98CX5HUZ5ts/mfTyLO4fpqWX4MIyXUTNFSW54YTxhY=
+X-Gm-Message-State: AOJu0YzLppR191ivouJwOhH3GX+DhxpFvIf1iM5WEWFyP3/WKejEP9E5
+ 5r30TIC9izEoYJOCAAroETha20WJ4kXBxdQUSp2dY33ZQzlcHFtnLALERQLYFe8tpDp2UUolLT4
+ T
+X-Google-Smtp-Source: AGHT+IHeWh45u39qU3sYTOWdp42lhHkkK8s6iJTyi0daBLYH4jN6Eyxy3sjT8ikc/gOrAbDhzGQ5eA==
+X-Received: by 2002:a17:907:390:b0:a46:635b:bb3e with SMTP id
+ ss16-20020a170907039000b00a46635bbb3emr736402ejb.52.1711454357101; 
+ Tue, 26 Mar 2024 04:59:17 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.155.229])
+ by smtp.gmail.com with ESMTPSA id
+ i10-20020a170906264a00b00a46a27794f6sm4146095ejc.123.2024.03.26.04.59.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Mar 2024 04:59:16 -0700 (PDT)
+Message-ID: <c1fb4049-7036-4b16-ae11-82150c1bc961@linaro.org>
+Date: Tue, 26 Mar 2024 12:59:15 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.91.158.201]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- dggpeml500011.china.huawei.com (7.185.36.84)
-Received-SPF: pass client-ip=45.249.212.188;
- envelope-from=zhuyangyang14@huawei.com; helo=szxga02-in.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] virt: set the CPU type in BOOTINFO
+Content-Language: en-US
+To: Laurent Vivier <laurent@vivier.eu>, qemu-devel@nongnu.org
+Cc: Daniel Palmer <daniel@0x0f.com>
+References: <20240223155742.2790252-1-laurent@vivier.eu>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240223155742.2790252-1-laurent@vivier.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,82 +93,22 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  zhuyangyang <zhuyangyang14@huawei.com>
-From:  zhuyangyang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 25 Mar 2024 11:50:41 -0400, Stefan Hajnoczi wrote:
-> On Mon, Mar 25, 2024 at 05:18:50PM +0800, zhuyangyang wrote:
-> > If g_main_loop_run()/aio_poll() is called in the coroutine context,
-> > the pending coroutine may be woken up repeatedly, and the co_queue_wakeup
-> > may be disordered.
+On 23/2/24 16:57, Laurent Vivier wrote:
+> BI_CPUTYPE/BI_MMUTYPE/BI_FPUTYPE were statically assigned to the
+> 68040 information.
+> This patch changes the code to set in bootinfo the information
+> provided by the command line '-cpu' parameter.
 > 
-> aio_poll() must not be called from coroutine context:
-> 
->   bool no_coroutine_fn aio_poll(AioContext *ctx, bool blocking);
->        ^^^^^^^^^^^^^^^
-> 
-> Coroutines are not supposed to block. Instead, they should yield.
-> 
-> > When the poll() syscall exited in g_main_loop_run()/aio_poll(), it means
-> > some listened events is completed. Therefore, the completion callback
-> > function is dispatched.
-> > 
-> > If this callback function needs to invoke aio_co_enter(), it will only
-> > wake up the coroutine (because we are already in coroutine context),
-> > which may cause that the data on this listening event_fd/socket_fd
-> > is not read/cleared. When the next poll () exits, it will be woken up again
-> > and inserted into the wakeup queue again.
-> > 
-> > For example, if TLS is enabled in NBD, the server will call g_main_loop_run()
-> > in the coroutine, and repeatedly wake up the io_read event on a socket.
-> > The call stack is as follows:
-> > 
-> > aio_co_enter()
-> > aio_co_wake()
-> > qio_channel_restart_read()
-> > aio_dispatch_handler()
-> > aio_dispatch_handlers()
-> > aio_dispatch()
-> > aio_ctx_dispatch()
-> > g_main_context_dispatch()
-> > g_main_loop_run()
-> > nbd_negotiate_handle_starttls()
-> 
-> This code does not look like it was designed to run in coroutine
-> context. Two options:
-> 
-> 1. Don't run it in coroutine context (e.g. use a BH instead). This
->    avoids blocking the coroutine but calling g_main_loop_run() is still
->    ugly, in my opinion.
-> 
-> 2. Get rid of data.loop and use coroutine APIs instead:
-> 
->    while (!data.complete) {
->        qemu_coroutine_yield();
->    }
-> 
->    and update nbd_tls_handshake() to call aio_co_wake(data->co) instead
->    of g_main_loop_quit(data->loop).
-> 
->    This requires auditing the code to check whether the event loop might
->    invoke something that interferes with
->    nbd_negotiate_handle_starttls(). Typically this means monitor
->    commands or fd activity that could change the state of this
->    connection while it is yielded. This is where the real work is but
->    hopefully it will not be that hard to figure out.
+> Bug: https://gitlab.com/qemu-project/qemu/-/issues/2091
+> Reported-by: Daniel Palmer <daniel@0x0f.com>
+> Signed-off-by: Laurent Vivier <laurent@vivier.eu>
+> ---
+>   hw/m68k/virt.c | 17 ++++++++++++++---
+>   1 file changed, 14 insertions(+), 3 deletions(-)
 
-Thank you for your help, I'll try to fix it using the coroutine api.
+Merged as e39a0809b9.
 
-> 
-> > nbd_negotiate_options()
-> > nbd_negotiate()
-> > nbd_co_client_start()
-> > coroutine_trampoline()
-> > 
-
--- 
-Best Regards,
-Zhu Yangyang
 
