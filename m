@@ -4,77 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF714CD1284
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDBAFCD11DD
 	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:46:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp8zT-0003fA-Hk; Tue, 26 Mar 2024 11:45:31 -0400
+	id 1rp8zE-0003a9-Oc; Tue, 26 Mar 2024 11:45:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zS-0003e5-8w
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:45:30 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zB-0003YT-8I
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:45:13 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8zQ-00018g-R5
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:45:30 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2d6dda3adb9so21223081fa.1
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:45:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp8z9-00013S-3A
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:45:13 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2d68cf90ec4so93860321fa.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:45:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711467926; x=1712072726; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rDRJxqQMAhWnh+G5jpK8UG7ljcyYHl8RJLjLiMQKlpg=;
- b=NGt7zk7NnvkLiO+rmxYS7RMgb414csV3Ce7YRpBUytr4vqQ6harrMRHoCRHpYzgSnP
- ve4OqizHNcnjwLv/LNyIcvteT4qwfM8Lzn/lzNoD3oWMVBLiA9QrdyoxzTcJDxX5jgDV
- 5G9ILGB8IsJDu0rjmGu+De/91OHsaN+pQ45vHPsvRiIDgimbtzbuP8I7wy5aleErE266
- QnjP+F5RBoNv7J714TDXZxQbqp88Gu+30ffj/33LxptrLWJrMKlfkZS9IRd3K2Z9r2YX
- 0Bo/tBlmt3ouLtslQcBNfTg2R9XSl3p38MoiD4UVKm7MQ1YLTAefEa0tri7gjrJOWcmC
- jwnw==
+ d=linaro.org; s=google; t=1711467909; x=1712072709; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=hn7lLwxhhf3gNG9hNhmhqHwHMzru6i5It7d/ZRKMp5c=;
+ b=Yb5lMLhXOiKn5VkpseRU65m2V2+9vB72Gq7NIpyoOd0vzxJydvcbsgZDZ8Tp9di5M4
+ QyWICCpbJTOqd434AzBzLHiBf9qkZDmkWqCnsK2rUnaBmrNZ7i5urO2x7ZW4jLgx0Jh2
+ xV0dhqjRwFIYCwc0mVk1VBDaf5QbAnHUtWDLDtlr4lXtZqtPtC0EjDhhByZ6Z5dhTM2d
+ C8zwh22r+e9ayzvjwlC3+he10IbdY5zI37WDLzFR0wGFTFxF2H9z1GUjEAfpQ1aEtuS6
+ wFYSBJHINrG32pOOCSdjVz4XRETqB+dmODdwx8qSLRXgcdZXbpNMF9Lt5O1dDotTMnKI
+ 3u2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711467926; x=1712072726;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rDRJxqQMAhWnh+G5jpK8UG7ljcyYHl8RJLjLiMQKlpg=;
- b=s/nUc19k7sbNIWVfGbYIEVYMbX1Gs6Ba+06DqEYsQHHi1R1V6b7subeszsm98sRBkY
- qZwlTCveZETRN71ChUPVij9GdhIkfD2URO/zQKTZywYkokxK5CFAAm0ljix0wJcjYjU2
- syGxM3zSPXjJMoo9aABUMz5EQW2NRGok9LvPcy7yQxptDCEHw6gPw448BeLOkp2u+Y7k
- xTIYF1g/nTvj5bSSwjV4pxayg2mrH9m/dsMutJP20+LcR5r1goHNulfdminyPFSm30oa
- b+ssxar+e7UtFCjFu4MaaZr+5kdURkergzWDdw6fbH/X/N0zn2c/lYS3ciENBuU8wmVm
- 7t2g==
-X-Gm-Message-State: AOJu0YxGbi/60nkU7nv5h7Zv02BGEhPqX3e4UqZd6bkLrO24V/fL7wBB
- 8zuWtheBGq12rfG7sx+DN9Ewxfpq+Tv0oMn3zltZp/19jqqQAiOb0eQgxBUs2vGtXSFAyBpvs5K
- b
-X-Google-Smtp-Source: AGHT+IFqE/msHvMueVXJSeWqeznaanf64OTWLSApiWnDNA5v58x32u5IKEF2KoZoc6z5RuTm+RYh0A==
-X-Received: by 2002:a05:651c:b0f:b0:2d6:a2cd:bb8c with SMTP id
- b15-20020a05651c0b0f00b002d6a2cdbb8cmr2493212ljr.10.1711467926018; 
- Tue, 26 Mar 2024 08:45:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711467909; x=1712072709;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hn7lLwxhhf3gNG9hNhmhqHwHMzru6i5It7d/ZRKMp5c=;
+ b=s9a1El1ttMVrpBceqa2WWwqx4VrDUCDUsxebpZoFDZghuS3By4SPz1aqqB4SQDg581
+ QiUO7NqcsNr00jGn9tdIP7DRtjc3gqLXI2CXQTO4y+vOzkeT8MLxORQpu8BIXMFLIpYH
+ Roox8n6ibFq3FDGSUTNHBg2f8QDAjxHwDXAVr8Zg8KId5qs5LBCsE+ql0XbrjPTuipoS
+ 4UZqlcgUHuYti8tbEryc+KhTeHTL/3UF0qaPxjh/VTg0tCAhcMx0ZcRa1TKDLwbLrQO5
+ VLwo1R/eSkqMF6HvPgVpGTsk8DISx/iJvEL3jrNEIExU0iR7fB6F2lonoJySfe1zh7ZV
+ RP0A==
+X-Gm-Message-State: AOJu0Yx5EK0I/ShH5ivv8BVnrO87mFYGGwwSI0bJk7e1Nvwm9gVtDLKK
+ sVKcGYDvgFSrmAFe9s7LDc5aaUWSNKA52MEo+eq0dbI2E9oyQUakvcc/HNNJEB0mC0Yo/nA1HUr
+ Q
+X-Google-Smtp-Source: AGHT+IEALTk4jXcNz+fMQ88/UxCzvbm02IxmYranwLwGcphz5AA31i0Mrh7B9Am48JKgWGWF1x3MBA==
+X-Received: by 2002:a2e:834e:0:b0:2d4:3c32:814d with SMTP id
+ l14-20020a2e834e000000b002d43c32814dmr1302990ljh.26.1711467908686; 
+ Tue, 26 Mar 2024 08:45:08 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.229])
  by smtp.gmail.com with ESMTPSA id
- hg9-20020a05600c538900b004101f27737asm11836235wmb.29.2024.03.26.08.45.24
+ fb13-20020a05600c520d00b0041490a19e13sm1084314wmb.7.2024.03.26.08.45.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 Mar 2024 08:45:25 -0700 (PDT)
+ Tue, 26 Mar 2024 08:45:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- Yao Xingtao <yaoxt.fnst@fujitsu.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>
-Subject: [PULL 03/13] monitor/hmp-cmds-target: Append a space in error message
- in gpa2hva()
-Date: Tue, 26 Mar 2024 16:44:54 +0100
-Message-ID: <20240326154505.8300-4-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/13] Misc HW patches for 2024-03-26
+Date: Tue, 26 Mar 2024 16:44:51 +0100
+Message-ID: <20240326154505.8300-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240326154505.8300-1-philmd@linaro.org>
-References: <20240326154505.8300-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,40 +91,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+The following changes since commit 096ae430a7b5a704af4cd94dca7200d6cb069991:
 
-In qemu monitor mode, when we use gpa2hva command to print the host
-virtual address corresponding to a guest physical address, if the gpa is
-not in RAM, the error message is below:
+  Merge tag 'pull-qapi-2024-03-26' of https://repo.or.cz/qemu/armbru into staging (2024-03-26 09:50:21 +0000)
 
-  (qemu) gpa2hva 0x750000000
-  Memory at address 0x750000000is not RAM
+are available in the Git repository at:
 
-A space is missed between '0x750000000' and 'is'.
+  https://github.com/philmd/qemu.git tags/hw-misc-20240326
 
-Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Fixes: e9628441df ("hmp: gpa2hva and gpa2hpa hostaddr command")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-Message-ID: <20240319021610.2423844-1-ruansy.fnst@fujitsu.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- monitor/hmp-cmds-target.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+for you to fetch changes up to ccebb9ae352eea63cb1491cb829e4cd0f7576f1c:
 
-diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
-index 9338ae8440..ff01cf9d8d 100644
---- a/monitor/hmp-cmds-target.c
-+++ b/monitor/hmp-cmds-target.c
-@@ -261,7 +261,7 @@ void *gpa2hva(MemoryRegion **p_mr, hwaddr addr, uint64_t size, Error **errp)
-     }
- 
-     if (!memory_region_is_ram(mrs.mr) && !memory_region_is_romd(mrs.mr)) {
--        error_setg(errp, "Memory at address 0x%" HWADDR_PRIx "is not RAM", addr);
-+        error_setg(errp, "Memory at address 0x%" HWADDR_PRIx " is not RAM", addr);
-         memory_region_unref(mrs.mr);
-         return NULL;
-     }
+  ui/cocoa: Use NSTrackingInVisibleRect (2024-03-26 14:32:54 +0100)
+
+A pair of "WARNING: line over 80 characters" are ignored (82 chars).
+
+----------------------------------------------------------------
+Misc HW patch queue
+
+[hw]
+- Do not silently overwrite 'io_timeout' property in scsi-generic (Lorenz)
+- Propagate period when enabling a clock in stm32l4x5 mux (Arnaud, Phil)
+- Add missing smbios_get_table_legacy() stub (Igor)
+- Append a space in gpa2hva() HMP error message (Yao)
+- Fix compiler warning in 'execlog' plugin (Yao)
+
+[target]
+- i386: Enable page walking from MMIO memory (Gregory, Jonathan)
+- tricore: Use correct string format in cpu_tlb_fill (Phil)
+
+[docs]
+- Fix formatting in amigang.rst (Zoltan)
+
+[ui]
+- Fix cocoa regression in platform fullscreen toggling (Akihiko)
+
+----------------------------------------------------------------
+
+Akihiko Odaki (3):
+  ui/cocoa: Fix aspect ratio
+  ui/cocoa: Resize window after toggling zoom-to-fit
+  ui/cocoa: Use NSTrackingInVisibleRect
+
+Arnaud Minier (1):
+  hw/misc/stm32l4x5_rcc: Propagate period when enabling a clock
+
+BALATON Zoltan (1):
+  docs/system/ppc/amigang.rst: Fix formatting
+
+Gregory Price (1):
+  target/i386/tcg: Enable page walking from MMIO memory
+
+Igor Mammedov (1):
+  hw/smbios: add stub for smbios_get_table_legacy()
+
+Lorenz Brun (1):
+  hw/scsi/scsi-generic: Fix io_timeout property not applying
+
+Philippe Mathieu-Daudé (3):
+  target/tricore/helper: Use correct string format in cpu_tlb_fill()
+  hw/clock: Let clock_set_mul_div() return a boolean value
+  hw/misc/stm32l4x5_rcc: Inline clock_update() in clock_mux_update()
+
+Yao Xingtao (2):
+  monitor/hmp-cmds-target: Append a space in error message in gpa2hva()
+  contrib/plugins/execlog: Fix compiler warning
+
+ docs/devel/clocks.rst                |  4 ++
+ docs/system/ppc/amigang.rst          |  4 +-
+ include/hw/clock.h                   |  4 +-
+ contrib/plugins/execlog.c            | 24 +++++++-
+ hw/core/clock.c                      |  8 ++-
+ hw/misc/stm32l4x5_rcc.c              |  9 ++-
+ hw/scsi/scsi-generic.c               |  1 -
+ hw/smbios/smbios_legacy_stub.c       |  5 ++
+ monitor/hmp-cmds-target.c            |  2 +-
+ target/i386/tcg/sysemu/excp_helper.c | 57 +++++++++---------
+ target/tricore/helper.c              |  4 +-
+ ui/cocoa.m                           | 90 +++++++++++++++++-----------
+ 12 files changed, 137 insertions(+), 75 deletions(-)
+
 -- 
 2.41.0
 
