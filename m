@@ -4,81 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 061ACC54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 06:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8EBAC54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 06:52:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp0Xf-0004V6-Op; Tue, 26 Mar 2024 02:44:15 -0400
+	id 1rp0em-0007ja-8B; Tue, 26 Mar 2024 02:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rp0Xd-0004Up-QW
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 02:44:14 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rp0Xc-0004Xw-8n
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 02:44:13 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-6e675181ceaso2836844a34.2
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 23:44:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711435451; x=1712040251; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VDIupqWKv8Wdkk0Q3yVmDJqHZnSDTz4Dyh6M/jZqxCA=;
- b=DK7IzRYeCuAgwn40v3UtNhqxXq9l6/AK2918bIKVuQfu0vQyki8Vhdur5uW54JNnbw
- cd9VFKvbazcVUkXRhYxjKUpXBwOj9OfLQhkiuj0uE7eUWoDk2/NL9tNAqNZC3YZncDfc
- 1/4dYR51VpSFgVLLH6yV4pwAUlndV5IrMhViFOwfJ9vhbt8VA+A8dNaAND/L02hpPz/d
- B96ja9aM+OSMytDlJYR7O3+K/Ixu+4nhPdvFn+pz1OoKvW0DMkChTn5j9bwB7s9byk9L
- OukkQZZD8f2Or1/bo99QsJzOH5Qhfh4K4xJpJvTpY62t4KCsH0Q1OWwZUd4bKD8xo+A/
- 9dDQ==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rp0ek-0007jR-MM
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 02:51:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1rp0ej-00060Q-5V
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 02:51:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711435892;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WOAA07FzmiMSaaIAqGvEUMrm7cgtOrka9v2DPmBLhBs=;
+ b=B4xHEvw1P1FbSUOp0CSzi2Ex6LpeV8/PTx0VkK4InwpUPQxERkZgDTvFTUvXR5OUzccVzs
+ 9u4iXUkWndsrS6hGmXjD8PTw5YDSa/rmKAv64sLPElw8TKC5aJwSYjuwgF0jjChmVQiy5X
+ wetmBt0S5ZhYDj7UD1IUa6ZuoE/Awco=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-56--2jGYMlsO5GMJDjHuZi-lQ-1; Tue, 26 Mar 2024 02:51:27 -0400
+X-MC-Unique: -2jGYMlsO5GMJDjHuZi-lQ-1
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-5dcab65d604so3644073a12.3
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 23:51:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711435451; x=1712040251;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1711435886; x=1712040686;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VDIupqWKv8Wdkk0Q3yVmDJqHZnSDTz4Dyh6M/jZqxCA=;
- b=MWy9nfnnsOH1dBQirOZ5bfrV5usWS5eyHKCYuTyCZLLBhaJS9ViXbIkzPBwuiTR/em
- EUj94GPiXv82MmpBJx+m0tx8jeew8nZK/llKvmX3DeBl1/lB+wmF5ZkScPFJbu8jsIIG
- UqHpycY0VQP9KcyHzmk8VRKamteLmjDgVU1dStQgOX3S1vDeNxxOGaeFhMGf48p49PLt
- 7d5OAcdcUY5bhLvMFdMnRsRm8IEnri0NgrcUdWetzsE2uc8oPcT7EdhYl8Hdogks7PY8
- WRLMpLRwkFEpGz2bEnereobIPzPxHfYPgOQY72vlej3JJzJgAkJDUlZnqxzWKStKrGju
- /dJw==
-X-Gm-Message-State: AOJu0Yza1MQM3Utz4qMiH3JzpEVp6z71PFuS9ueo/q/f4SKx0HJqp+kn
- yUJJI1La2+9LIyRH3Cyn9R71ckIthzg9q8SFEblPxsmIMay9m04j28JnO8sr4roKfg10vBHFF/C
- r
-X-Google-Smtp-Source: AGHT+IEhOw7nWC7b2/n6ITT73WQqyEMBOvb7Ii/sq267zr+KbdeYhN5rWWT0WyEmu2K1Etc3YTZYmg==
-X-Received: by 2002:a9d:6e16:0:b0:6e6:d1ac:c989 with SMTP id
- e22-20020a9d6e16000000b006e6d1acc989mr5398447otr.6.1711435451014; 
- Mon, 25 Mar 2024 23:44:11 -0700 (PDT)
-Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
- by smtp.gmail.com with ESMTPSA id
- c3-20020a633503000000b005dc36761ad1sm6958819pga.33.2024.03.25.23.44.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Mar 2024 23:44:10 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: deller@gmx.de
-Subject: [PATCH 2/3] target/hppa: Replace c with uv in do_cond
-Date: Mon, 25 Mar 2024 20:44:04 -1000
-Message-Id: <20240326064405.320551-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240326064405.320551-1-richard.henderson@linaro.org>
-References: <20240326064405.320551-1-richard.henderson@linaro.org>
+ bh=WOAA07FzmiMSaaIAqGvEUMrm7cgtOrka9v2DPmBLhBs=;
+ b=iWyBXWMSSKBPATUVY3vLvuJ7Ai8ocAzfmt6EzMpiygmap/l5gMS2fEm8bPx4epRaDV
+ Y7BJJOVPa0a4byPCeh610QTTV2xsgEB3ygxSdvD4FkZz5X4L7i6A8IZI1HUekDjWRv4b
+ XxOSE7keyGiUJmr6STvFHrIA+lLvj4J7oOmEbLFeqzCNiQu9qqGsyvaV217d2Lize+e0
+ j2r05NJKTFqF7hq1IHr2eEZGgkiVFEGFI9ETicW3i3rvoZXvt+IrPVURgY9rGTQTMUgC
+ Z9yg66ZHa/8iCox6K9TqihfdvhcEAExUFKFu84CRiaYoVluLoprueOj61G/UI4Fj9+Z5
+ 0lZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXfpfVWn9zca6Llyn7efNzvRzktiqzfWZws0WOzKGu7bxYXpgKdna28osE15DgrZIMIsmMG4qEy10/oBfdCsSk6PfSpyzs=
+X-Gm-Message-State: AOJu0Yz2LHP0DoNvyV9hHI8dXS5Dd59yS458zWkp5dvh2lsWc9jVYfd4
+ wyVERlFLCJGB80R5dtC5OVzlDe6gKvVYGc0TbyXjmv+F7mtNYDaA2/f/Zh383nA5ulaZBhWcLm6
+ hzIqUoGNHL1PIe0j72ku6v6d21qs/rpgJkSUMPdRso9mFnrXsysA5JB7UP2ku+/xHcuBRYDKGZ3
+ P0U8Glz2JaYo9e8OHVFMdNfJl2dl6fPE049vyqKA==
+X-Received: by 2002:a05:6a20:94cf:b0:1a3:572d:637b with SMTP id
+ ht15-20020a056a2094cf00b001a3572d637bmr354023pzb.33.1711435886209; 
+ Mon, 25 Mar 2024 23:51:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFMKrkmHcFZGDAfpL0i+9LdvzIiCQZtAVmeanankVwB4gtwmFZy0DTxo3Um/2NV42kGxwdryshFUxf3p/KB4AI=
+X-Received: by 2002:a05:6a20:94cf:b0:1a3:572d:637b with SMTP id
+ ht15-20020a056a2094cf00b001a3572d637bmr354013pzb.33.1711435885861; Mon, 25
+ Mar 2024 23:51:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240324-tx-v1-1-a3b4135749ec@daynix.com>
+In-Reply-To: <20240324-tx-v1-1-a3b4135749ec@daynix.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 26 Mar 2024 14:51:14 +0800
+Message-ID: <CACGkMEvBoe4XQeHOR64rNwAPM-vBMsfLQApWpUoMtvwsSVCpUQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/net/net_tx_pkt: Fix virtio header without checksum
+ offloading
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,47 +99,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prepare for proper indication of shladd unsigned overflow.
-The UV indicator will be zero/not-zero instead of a single bit.
+On Sun, Mar 24, 2024 at 4:32=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
+.com> wrote:
+>
+> It is incorrect to have the VIRTIO_NET_HDR_F_NEEDS_CSUM set when
+> checksum offloading is disabled so clear the bit. Set the
+> VIRTIO_NET_HDR_F_DATA_VALID bit instead to tell the checksum is valid.
+>
+> TCP/UDP checksum is usually offloaded when the peer requires virtio
+> headers because they can instruct the peer to compute checksum. However,
+> igb disables TX checksum offloading when a VF is enabled whether the
+> peer requires virtio headers because a transmitted packet can be routed
+> to it and it expects the packet has a proper checksum. Therefore, it
+> is necessary to have a correct virtio header even when checksum
+> offloading is disabled.
+>
+> A real TCP/UDP checksum will be computed and saved in the buffer when
+> checksum offloading is disabled. The virtio specification requires to
+> set the packet checksum stored in the buffer to the TCP/UDP pseudo
+> header when the VIRTIO_NET_HDR_F_NEEDS_CSUM bit is set so the bit must
+> be cleared in that case.
+>
+> The VIRTIO_NET_HDR_F_NEEDS_CSUM bit also tells to skip checksum
+> validation. Even if checksum offloading is disabled, it is desirable to
+> skip checksum validation because the checksum is always correct. Use the
+> VIRTIO_NET_HDR_F_DATA_VALID bit to claim the validity of the checksum.
+>
+> Fixes: ffbd2dbd8e64 ("e1000e: Perform software segmentation for loopback"=
+)
+> Buglink: https://issues.redhat.com/browse/RHEL-23067
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>  hw/net/net_tx_pkt.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+> index 2e5f58b3c9cc..c225cf706513 100644
+> --- a/hw/net/net_tx_pkt.c
+> +++ b/hw/net/net_tx_pkt.c
+> @@ -833,6 +833,9 @@ bool net_tx_pkt_send_custom(struct NetTxPkt *pkt, boo=
+l offload,
+>
+>      if (offload || gso_type =3D=3D VIRTIO_NET_HDR_GSO_NONE) {
+>          if (!offload && pkt->virt_hdr.flags & VIRTIO_NET_HDR_F_NEEDS_CSU=
+M) {
+> +            pkt->virt_hdr.flags =3D
+> +                (pkt->virt_hdr.flags & ~VIRTIO_NET_HDR_F_NEEDS_CSUM) |
+> +                VIRTIO_NET_HDR_F_DATA_VALID;
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/hppa/translate.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+Why VIRTIO_NET_HDR_F_DATA_VALID is used in TX path?
 
-diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index a70d644c0b..9d31ef5764 100644
---- a/target/hppa/translate.c
-+++ b/target/hppa/translate.c
-@@ -707,7 +707,7 @@ static bool cond_need_cb(int c)
-  */
- 
- static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
--                         TCGv_i64 res, TCGv_i64 cb_msb, TCGv_i64 sv)
-+                         TCGv_i64 res, TCGv_i64 uv, TCGv_i64 sv)
- {
-     DisasCond cond;
-     TCGv_i64 tmp;
-@@ -754,14 +754,12 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
-         }
-         cond = cond_make_0_tmp(TCG_COND_EQ, tmp);
-         break;
--    case 4: /* NUV / UV      (!C / C) */
--        /* Only bit 0 of cb_msb is ever set. */
--        cond = cond_make_0(TCG_COND_EQ, cb_msb);
-+    case 4: /* NUV / UV      (!UV / UV) */
-+        cond = cond_make_0(TCG_COND_EQ, uv);
-         break;
--    case 5: /* ZNV / VNZ     (!C | Z / C & !Z) */
-+    case 5: /* ZNV / VNZ     (!UV | Z / UV & !Z) */
-         tmp = tcg_temp_new_i64();
--        tcg_gen_neg_i64(tmp, cb_msb);
--        tcg_gen_and_i64(tmp, tmp, res);
-+        tcg_gen_movcond_i64(TCG_COND_EQ, tmp, uv, ctx->zero, ctx->zero, res);
-         if (!d) {
-             tcg_gen_ext32u_i64(tmp, tmp);
-         }
--- 
-2.34.1
+Thanks
+
+>              net_tx_pkt_do_sw_csum(pkt, &pkt->vec[NET_TX_PKT_L2HDR_FRAG],
+>                                    pkt->payload_frags + NET_TX_PKT_PL_STA=
+RT_FRAG - 1,
+>                                    pkt->payload_len);
+>
+> ---
+> base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
+> change-id: 20240324-tx-c57d3c22ad73
+>
+> Best regards,
+> --
+> Akihiko Odaki <akihiko.odaki@daynix.com>
+>
 
 
