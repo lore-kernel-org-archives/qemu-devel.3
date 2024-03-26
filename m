@@ -4,59 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966FDCD11DD
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:52:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E4DCD11DD
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:54:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp6Gs-0002Xo-Em; Tue, 26 Mar 2024 08:51:18 -0400
+	id 1rp6Jb-0004J7-AI; Tue, 26 Mar 2024 08:54:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rp6Gq-0002XG-QO
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:51:16 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rp6JY-0004I6-6g
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:54:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1rp6Gp-0003nA-1J
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:51:16 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1rp6JW-000490-LM
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:54:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711457473;
+ s=mimecast20190719; t=1711457642;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=JlMSmLkcTMlylmW5uZLLXGFw0hS3xSZAZYREd5/BcF4=;
- b=PRjfdyv8mWFig1iFteLSJl9tTQvwnxqNCOaKqw8JWxIAMsrtpXRqG24ay//uHeWfzUREdw
- /EfV4af6YkhCspWSBxpWDgzVMQs7EQQBaOfkopxM1cq3LpzbHWbGLD7rojRcMA2SRo21pU
- kIjbFHgT4k8vqeTAa9iRiYytb6BtwT0=
+ in-reply-to:in-reply-to:references:references;
+ bh=EIl14wxj3W6lON4jR9olKaR7bR6xu50JtK/eCNAcpzg=;
+ b=Ke0BsRV2fTCC4LYFpkwFD6o0csPiFGp4euM2i+kS2sAvs0+UxC0df1s96Z8H0sr4A3jYto
+ EvUP4Oo9g3JWCvLxOc+z2wxqo23OAkrapywIrTeWvxZqzySN3uunG7tkIBcJKhSQvoO5Rn
+ 5zeX/0fmc6YAarzxnhGd+J/jHdaRNM0=
 Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
  [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-316-ImfVzm7RMkiZ0Qe3zQx44w-1; Tue, 26 Mar 2024 08:51:07 -0400
-X-MC-Unique: ImfVzm7RMkiZ0Qe3zQx44w-1
-Received: from smtp.corp.redhat.com (int-mx09.intmail.prod.int.rdu2.redhat.com
- [10.11.54.9])
+ us-mta-50-5iLHOLEXOQmGzpnh5QYE6A-1; Tue, 26 Mar 2024 08:53:56 -0400
+X-MC-Unique: 5iLHOLEXOQmGzpnh5QYE6A-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 81491800262;
- Tue, 26 Mar 2024 12:51:07 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 4F15E492BDC;
- Tue, 26 Mar 2024 12:51:06 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, devel@lists.libvirt.org, richard.henderson@linaro.org,
- mst@redhat.com, thuth@redhat.com, qemu-trivial@nongnu.org
-Subject: [PATCH for-9.0] docs/about: Mark the iaspc machine type as deprecated
-Date: Tue, 26 Mar 2024 13:51:04 +0100
-Message-ID: <20240326125104.90103-1-imammedo@redhat.com>
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 16CC0810469;
+ Tue, 26 Mar 2024 12:53:56 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.193.60])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id 51B76492BDC;
+ Tue, 26 Mar 2024 12:53:53 +0000 (UTC)
+Date: Tue, 26 Mar 2024 13:53:48 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-stable@nongnu.org, hreitz@redhat.com,
+ fam@euphon.net, t.lamprecht@proxmox.com, w.bumiller@proxmox.com,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH v3 0/4] fix two edge cases related to stream block jobs
+Message-ID: <ZgLFXEd6JsVTnKCv@redhat.com>
+References: <20240322095009.346989-1-f.ebner@proxmox.com>
+ <20240325201116.GE1944176@fedora>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.9
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="HtzA1h09/Nl67ztt"
+Content-Disposition: inline
+In-Reply-To: <20240325201116.GE1944176@fedora>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -80,55 +83,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ISAPC machine was introduced 25 years ago and it's a lot of time since
-such machine was around with real ISA only PC hardware practically defunct.
-Also it's slowly bit-rots (for example: I was able to boot RHEL6 on RHEL9 host
-in only TCG mode, while in KVM mode it hung in the middle of boot)
 
-Rather than spending time on fixing 'the oldest' no longer tested machine type,
-deprecate it so we can clean up QEMU code from legacy fixups and hopefully
-make it easier to follow.
+--HtzA1h09/Nl67ztt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Folks who have to use ancient guest that requires ISAPC can still
-use older QEMU to play with it.
+Am 25.03.2024 um 21:11 hat Stefan Hajnoczi geschrieben:
+> On Fri, Mar 22, 2024 at 10:50:05AM +0100, Fiona Ebner wrote:
+> > Changes in v3:
+> >     * Also deal with edge case in bdrv_next_cleanup(). Haven't run
+> >       into an actual issue there, but at least the caller in
+> >       migration/block.c uses bdrv_nb_sectors() which, while not a
+> >       coroutine wrapper itself (it's written manually), may call
+> >       bdrv_refresh_total_sectors(), which is a generated coroutine
+> >       wrapper, so AFAIU, the block graph can change during that call.
+> >       And even without that, it's just better to be more consistent
+> >       with bdrv_next().
+> >=20
+> > Changes in v2:
+> >     * Ran into another issue while writing the IO test Stefan wanted
+> >       to have (good call :)), so include a fix for that and add the
+> >       test. I didn't notice during manual testing, because I hadn't
+> >       used a scripted QMP 'quit', so there was no race.
+> >=20
+> > Fiona Ebner (3):
+> >   block-backend: fix edge case in bdrv_next() where BDS associated to BB
+> >     changes
+> >   block-backend: fix edge case in bdrv_next_cleanup() where BDS
+> >     associated to BB changes
+> >   iotests: add test for stream job with an unaligned prefetch read
+> >=20
+> > Stefan Reiter (1):
+> >   block/io: accept NULL qiov in bdrv_pad_request
+> >=20
+> >  block/block-backend.c                         | 18 ++--
+> >  block/io.c                                    | 31 ++++---
+> >  .../tests/stream-unaligned-prefetch           | 86 +++++++++++++++++++
+> >  .../tests/stream-unaligned-prefetch.out       |  5 ++
+> >  4 files changed, 117 insertions(+), 23 deletions(-)
+> >  create mode 100755 tests/qemu-iotests/tests/stream-unaligned-prefetch
+> >  create mode 100644 tests/qemu-iotests/tests/stream-unaligned-prefetch.=
+out
+>=20
+> Looks good to me. I will wait until Thursday before merging in case
+> Hanna, Vladimir, or Kevin have comments. Thanks!
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
----
- docs/about/deprecated.rst | 7 +++++++
- hw/i386/pc_piix.c         | 1 +
- 2 files changed, 8 insertions(+)
+Let's not delay it to -rc2. If something turns out to be wrong with it,
+we can still revert it, but I think getting fixes in earlier is better
+during freeze.
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 7b548519b5..5708296991 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -226,6 +226,13 @@ These old machine types are quite neglected nowadays and thus might have
- various pitfalls with regards to live migration. Use a newer machine type
- instead.
- 
-+``isapc`` (since 9.0)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+These old machine type are quite neglected nowadays and thus might have
-+various pitfalls with regards to live migration. Use a newer machine type
-+instead.
-+
- Nios II ``10m50-ghrd`` and ``nios2-generic-nommu`` machines (since 8.2)
- '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 18ba076609..96f72384dd 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -921,6 +921,7 @@ static void isapc_machine_options(MachineClass *m)
-     m->default_nic = "ne2k_isa";
-     m->default_cpu_type = X86_CPU_TYPE_NAME("486");
-     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
-+    m->deprecation_reason = "old and unattended - use a newer version instead";
- }
- 
- DEFINE_PC_MACHINE(isapc, "isapc", pc_init_isa,
--- 
-2.43.0
+Thanks, applied to the block branch.
+
+Kevin
+
+--HtzA1h09/Nl67ztt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE3D3rFZqa+V09dFb+fwmycsiPL9YFAmYCxVwACgkQfwmycsiP
+L9Y+JQ/+I8OpJCvbnK+MrGggafMd/P+WMOgVRxSSW22Ms61RlH9GOBGYuKIWwwPL
+8DJXB5VGMrPIX58SEHyL5PGyoFfieHAW5eNVzPLJcxyWdkRYwOEnjSVzIkXOGtsp
+XhTLILi15dXUHLw7DbzqzllQILKdTNqm/kkkP6W0TgS9AnnfLUT9rtWRYS586YuC
+k422c32/Dh6iZjGhEI2m9ArNWIfFhS//vLL/FZRl4wIKUSjH7CbKO8/U6UdZerVz
+Mfr3ramJEn77CdHwV1WYKj86bIbqUvdSxAXmEpTN75gaC/40wJFji7jrCVgJ2sQA
+PXjRhk/mqgk2PmxXB/kn1auBUr4MGNZWuSCpOdC9GxKuQ+gNPQhwhBQfkkcoIuP+
+xNX79XV41KebdaG1WAUryPJTFgzeNlBr72HX40LZjoa4zGpoUeL0ga5xDSOZoLQO
+74yhniBcG7XkXTKrAXMrNRZewLACdgG1m+t3GDMkTDK8NJSzEB7dfFCFUdyLgWLP
+oLxoml9XMGwnji/1Fh1BXfSpsp5NyX0NbEik0wYwFhqpmQ+OjkiT3e4oe14RBMP/
+wiyraHz+mjjesMKKohZBSOafcqG/MVlk/r9S0Q2gd+rnzlhb5BYJk1MgY+HQ6mxY
+UMLqJkvyI6JarOEMAIP31b4cnVpH510Pq3LYyfn1sr8ZZw+zCWA=
+=EUwr
+-----END PGP SIGNATURE-----
+
+--HtzA1h09/Nl67ztt--
 
 
