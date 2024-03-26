@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4CCC54E67
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 17:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0579EC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 17:29:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpAXm-0005yj-C4; Tue, 26 Mar 2024 13:25:02 -0400
+	id 1rpAbc-0007P6-2s; Tue, 26 Mar 2024 13:29:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpAXb-0005wT-N6
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:24:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpAbb-0007Ou-BD
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:28:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpAXW-0003KW-Fc
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:24:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpAbZ-0004LZ-JQ
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:28:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711473884;
+ s=mimecast20190719; t=1711474136;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=YzgFcENBFcRV2BQK3uXsRVrIxB7FtkgoqUugHYtNIx4=;
- b=fRFaMK5Wm3gKxLxsfvotIi4w0sn3N2qod/ZHgSP5TnPrpa7LoJgrHFHA1E2cfDRQ81CBjy
- 6Jx3DO0OmffQjd3cdzvsqNrhOXrGwVWH6UW/FH9LNyi3Oq7sSmer3d4ob/7ys6Av0z3Hai
- +kgMhnnoKxGeqvlJOPXIH++29ZFcFfg=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vTWfZ4Z+HXRWrOagC3etP7t7lhRFvBXSzwKL+IZfi8g=;
+ b=IaNuz2Xu/w5naEet7niSlQ/OuWt4o+feViB/glj4Fho9YTnJMIB8X4b25qUjzRTzN6mv8o
+ 73GjqzoYMhAuNFfK/Pf8K69FfLi1Th+yrUNMCM5N21mU97OOksuIUbLL1FyyDp9WhD2xcr
+ dLdDQxAgZCCyNCqGswcML3cPaM/LwO4=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-tV7ebJ2oMGKOX0JP0xWyvg-1; Tue, 26 Mar 2024 13:24:41 -0400
-X-MC-Unique: tV7ebJ2oMGKOX0JP0xWyvg-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6910d0d4d0bso72845286d6.1
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 10:24:41 -0700 (PDT)
+ us-mta-211-zm4bn9FfOvO68aul1yTxLQ-1; Tue, 26 Mar 2024 13:28:54 -0400
+X-MC-Unique: zm4bn9FfOvO68aul1yTxLQ-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4317b902a41so900481cf.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 10:28:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711473881; x=1712078681;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YzgFcENBFcRV2BQK3uXsRVrIxB7FtkgoqUugHYtNIx4=;
- b=T9PLeXRVgur3aYDhO8+4ANtAwGhrJIT1wuzFr0jvNa5g6gLSxtUEHWRvXGHPb8yzKI
- 1ZA7Nk8K+gAQuMwODv1e+d2ESzrxbCjkg317ORbi8IQreNhNx922iOPs2/sApwJ95ZRN
- wQ40JcABbc4VWN2cKZra/Im2vvWyCl+iYpdmFGHoTmTmgU+jDR5Gr6MtxI0gC6so6Mtn
- 10WiyVODTzjqI3xxIiKXkh8pfIrEn8+5uSfA8tFCmk4K5+h5FHp66dVy2rLhS1fi+w3y
- Jg7EETud2LHU4uVRtK2gdtpL2bbCa+ILYO2rnzwaLvX8SVKdByeTMK+9cmpUZg25tq1K
- eHxg==
+ d=1e100.net; s=20230601; t=1711474134; x=1712078934;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vTWfZ4Z+HXRWrOagC3etP7t7lhRFvBXSzwKL+IZfi8g=;
+ b=LVV4dKzhRfB+TNTT+vFBl7LQf+7UL1MyiNOWSZoKdwG6JsBHFpSxwGq/c1BxNCrGMU
+ WfJSBaiGzaZi7XvzDtSz74S3/2js4vhoMhmLbTqXYfLgOhdXiTbYiCp31TlWg68S3oHX
+ vA/0BHDKuF3zOXvYFLC7bvYayG7dSGjgrziRbbdmwvQsUD9DX2UBgjNpFSsInSogzeVN
+ SFk1+rtE5m5q5SbscVI/yzS3VR02N1EyQmHMkUrzl6JfirgogG9/vkRFmkZMwbB2W72R
+ KkCArJ7DkV5EdufuDSnO4OmF33HqVHMgvpEDBv5DLCvYhojvFES60fbyllFBj3UtP/3m
+ jr/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVkKFXia37LCfAVS3JKRwChAPdb6iDs0NWzN98VslrpnHhEAW1giatUxY6dsqYqHFXt/D9aSO5kAL5otJV0CDvQYPD2M5Y=
-X-Gm-Message-State: AOJu0Yy0baJ8bMk6YJB+otC5sEaZoE/gF5+PyW1sW0hUbSBT5EjNBEga
- fWGAG2PrkVqVs0WMDHl2I8QNk0crMgotmXNsQrSzQHGZibsK8MbjE5YK18uLPZW62E3e42AuTlB
- 3pQs31AGU6FcPn/79hQNjRZIpUB+5j6EcszV5qB0q+O4JBm/Lm8GJ
-X-Received: by 2002:a05:6214:ac9:b0:696:82ce:a2ce with SMTP id
- g9-20020a0562140ac900b0069682cea2cemr2073066qvi.8.1711473880914; 
- Tue, 26 Mar 2024 10:24:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEY3+IWricGGAYmM7uQNlnjRwjmcTRdpUsitB+hTmcV19eoBnuyz+7h9mSO6WhCjnNa6wyj2g==
-X-Received: by 2002:a05:6214:ac9:b0:696:82ce:a2ce with SMTP id
- g9-20020a0562140ac900b0069682cea2cemr2073045qvi.8.1711473880602; 
- Tue, 26 Mar 2024 10:24:40 -0700 (PDT)
+ AJvYcCWwcXXUUleclf7JViHhhXcrHX03vG5jtz0kdxuYu3AKIURnMPErK/B0LAwsTSI3gC4qiBhC08HxXBvSFHIG0fPAab/DALw=
+X-Gm-Message-State: AOJu0YyMzVVtA+0vx4nY1zlF6ro0XUNu1W7axVkiRq7zKzyQAQHdy7sT
+ a3ekjio7l+pmetjcFIGCqUIO/iYpHGhu4QmFzFh+55JUE5YvW4IiJn7MOcnLLiN9aTibgM33knB
+ vXole91tZI8YVwpBW8maDaeuWEuIxXEnAJOEiSMF+rxknx9tdvPYD
+X-Received: by 2002:ac8:7dc2:0:b0:431:3887:ace7 with SMTP id
+ c2-20020ac87dc2000000b004313887ace7mr215188qte.67.1711474134117; 
+ Tue, 26 Mar 2024 10:28:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEGP0FkkhtjqBfizdByDqW7xmhpl5s+qMf3sTIGNgH20VYOWhcshLG/FRJjYZHE1M3MxNR4yQ==
+X-Received: by 2002:ac8:7dc2:0:b0:431:3887:ace7 with SMTP id
+ c2-20020ac87dc2000000b004313887ace7mr215169qte.67.1711474133754; 
+ Tue, 26 Mar 2024 10:28:53 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-37.web.vodafone.de.
  [109.43.177.37]) by smtp.gmail.com with ESMTPSA id
- k15-20020ad45bef000000b006968d51518bsm2451351qvc.83.2024.03.26.10.24.38
+ g15-20020ac870cf000000b0042f0008b8b7sm3885739qtp.35.2024.03.26.10.28.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 10:24:40 -0700 (PDT)
-Message-ID: <0a147666-e2e0-4c84-8809-a402814183a4@redhat.com>
-Date: Tue, 26 Mar 2024 18:24:36 +0100
+ Tue, 26 Mar 2024 10:28:53 -0700 (PDT)
+Message-ID: <1a51295a-f27d-455c-a615-3f53bde1d11a@redhat.com>
+Date: Tue, 26 Mar 2024 18:28:48 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.0? v2 3/4] qtest/libqos: Reduce size_to_prdtl()
- declaration scope
+Subject: Re: [PATCH-for-9.0? v2 4/4] meson: Enable -Wstatic-in-inline
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-block@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20240326171009.26696-1-philmd@linaro.org>
- <20240326171009.26696-4-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ <20240326171009.26696-5-philmd@linaro.org>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -123,7 +124,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240326171009.26696-4-philmd@linaro.org>
+In-Reply-To: <20240326171009.26696-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -134,7 +135,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,16 +152,40 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 26/03/2024 18.10, Philippe Mathieu-Daudé wrote:
-> Since size_to_prdtl() is only used within ahci.c,
-> declare it statically. This removes the last use
-> of "inlined function with external linkage". See
-> previous commit and commit 9de9fa5cf2 for rationale.
+> Compilers are clever enough to inline code when necessary.
 > 
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
+> The only case we accept an inline function is static in
+> header (we use C, not C++).
+> 
+> Add the -Wstatic-in-inline CPPFLAG to prevent public and
 
+I think this is rather a compiler than a pre-processor flag, so 
+s/CPPFLAG/CFLAGS/ ?
 
+Anyway:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+
+> inline function to be added in the code base.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Message-Id: <20240313184954.42513-5-philmd@linaro.org>
+> ---
+>   meson.build | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index c9c3217ba4..f400f7d36c 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -591,6 +591,7 @@ warn_flags = [
+>     '-Wold-style-definition',
+>     '-Wredundant-decls',
+>     '-Wshadow=local',
+> +  '-Wstatic-in-inline',
+>     '-Wstrict-prototypes',
+>     '-Wtype-limits',
+>     '-Wundef',
 
 
