@@ -4,116 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BB87CD11DF
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 09:47:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28E8CCD11DF
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 09:50:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp3P5-0002gW-1Z; Tue, 26 Mar 2024 05:47:35 -0400
+	id 1rp3Rj-0003pg-Tj; Tue, 26 Mar 2024 05:50:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rp3P2-0002cq-V6
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:47:33 -0400
-Received: from mout.gmx.net ([212.227.15.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rp3Oz-0005EX-BJ
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:47:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1711446446; x=1712051246; i=deller@gmx.de;
- bh=BCv97JPPBXx6bkTUJDccxzoeJhQaldkOZrklwObXams=;
- h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
- b=m0pBRGvNbTQROlMgxgOMj8pc0lMezcQEmYxav6Jip0oNeCq1YCPhmq3pYqiE/amT
- /M3YjMxhlflMQeXT+eqsH/hs0ZBzuJLB4dvnjG3qzhblOvBPN8K6Kl0RnoJ3L4w93
- Ov3CACB6ygYUlnSZEHWJw6cH6NA+DdsSSgrVoKVZJKNunNNcDI7xqqTW+pXS58Vv/
- eT2huKadeIYfXPgVsDgYN/VdNapwbpAehABAz6UtIs492G9Ey5ywSxc4HgIoxv2xp
- Jn83qsFkWJgcsUazoy9Dc7IoJRpXRtED/A3huWQn5VN9uS3411fV+O6l3ZSL5r2E2
- Wb8fjcRhoBZMMJ5WaA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.55] ([89.244.180.193]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M5wPh-1rvLzp13Gt-007WLq; Tue, 26
- Mar 2024 10:47:26 +0100
-Message-ID: <1c6c0af6-5719-45f0-af05-1748113ca09f@gmx.de>
-Date: Tue, 26 Mar 2024 10:47:25 +0100
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rp3Ri-0003ol-GT
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:50:18 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1rp3Rf-0005pK-GD
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:50:18 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a46dd7b4bcbso646007566b.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 02:50:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1711446612; x=1712051412; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=8tqhNhpR84gq+U3RYnctvjPwNYRpv1R563RMIXFBceE=;
+ b=fGJu0dhAzNqwoo0C07pLgJz8EYdEAqNCHyYKR5pBT0DVovlNB4pohSscy1qodrO4d0
+ ZmIuPwBnwGlQMgeBDDJBB4MYF1V+O4joDrjDGxq753W2vYDdVVIEaCPpPURTbYMQh6/G
+ Qcqgy8BWNSZVbnhMCbfQD4XIgXMXlWIeJmSb+cWDsi/esxk+p5EVH+FD04dmBvzk71/U
+ aQydCSsZAwa+SmuTP9Wrfebr02+qJ2UtaRinj7ao07fgJrOIWtJZyRCer3DontDFpeAM
+ avHw9ayLwJpwcO8PK9hBxLtwHUNWUXiVmtCZ/tQAPk/y5nC9P4wkhqB5/I0rpP3tFNBZ
+ DlGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711446612; x=1712051412;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8tqhNhpR84gq+U3RYnctvjPwNYRpv1R563RMIXFBceE=;
+ b=mUo7bskKwyT6a/drFmz+59Omzopt9bSy5pYGPoJvcM4+t97oPUlJPHsy5VK67C/52e
+ ZujtlddoDojiIgVJQYdFG2NF7r8UDjctKYI8/+Bt3Uw2ln7WOyf7l6GjjfRs2pY7htRK
+ S1kLmQLkGtMnGULhhJly1BLhMmbqY+9tOZmzm1lTb6ed9tUaqXhWPJGkO83KM4j9KHGy
+ 4FlJaBm8qjEildFPO0pe7S/iwq6FQHrhexsDuk3UmEn8FsN/Ru6gF7WwQtKny7bI89TJ
+ t4zd1MygLDw3Xz0ulvw8PDnTFc6IQcyIPHqr+J4KaBH0LDKReSsynH8JxAtNK3OUI6j8
+ Jp2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZL/0p1t67GEv94lvYwNKcue8Q7DElQpZHJp+S/Jyby4dz2RXn+wC3Lo3d67X0LORRS4Wb/X6IsZaN5glOawR6W8C0Q/I=
+X-Gm-Message-State: AOJu0Yw9fEho6OgXhBFfUiX7CPKS56AX4t31SrEqYt4DGonWuVwg8da3
+ O9i6I4kzUbN7cDFDy9QYIxPMEsGLxIObxBZmpObX0gO+RP8GBWvvd0ml6dWjF/8=
+X-Google-Smtp-Source: AGHT+IET8z1vXkdNpUuDSPY+mMi37+GFXhJ1V7OtS7oLm2ZimM9pj2hDpTJt0kCok9wFDUEsIXMVMw==
+X-Received: by 2002:a17:906:410d:b0:a47:29ef:f3ca with SMTP id
+ j13-20020a170906410d00b00a4729eff3camr554193ejk.31.1711446612430; 
+ Tue, 26 Mar 2024 02:50:12 -0700 (PDT)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ l12-20020a1709062a8c00b00a45f39b2d16sm4043630eje.200.2024.03.26.02.50.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Mar 2024 02:50:11 -0700 (PDT)
+Date: Tue, 26 Mar 2024 10:50:11 +0100
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Alexei Filippov <alexei.filippov@syntacore.com>
+Cc: dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
+ apatel@ventanamicro.com, bin.meng@windriver.com, liwei1518@gmail.com,
+ palmer@dabbelt.com, 
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH v2] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi()
+ fail with vendor-specific SBI
+Message-ID: <20240326-672b9d2fa4066ec883a9f037@orel>
+References: <b7fff1e9-f2b3-4a45-8966-1dbd76263457@ventanamicro.com>
+ <20240325130116.13194-1-alexei.filippov@syntacore.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/hppa: Replace c with uv in do_cond
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240326064405.320551-1-richard.henderson@linaro.org>
- <20240326064405.320551-3-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20240326064405.320551-3-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:NmZX1bfnr0WQDWQ6JXCdK5yZZkRNNv9pDGtEWpcoYPt8c0Duo9U
- yQB9gA9lsD4wg0PCqM1JGMokffJf2LWIdfXEXvJyMhjVVSz0qFpBVchCwcQ5rVdvwR9eAEa
- q7MplOc6J1pAJeJwbzHTqn/4Nv/o4rtjWC9O/raL0kBEIgEjr6CfpH3DHw9kyKuaeAZwXeQ
- as6roRfuBnl4UuZAzWX0g==
-UI-OutboundReport: notjunk:1;M01:P0:AgPjYAoz904=;CBhyckcc4vXFfqFAs87HAsbShzm
- 5XAL9biHdBD4GWM7f6Uvj8IjG6PHtlAEXngqx3A8sYJWkT35Vre8fDX37l/fyg8FFYaFKUeD2
- 97cr+8fBM3yUKTp9wTVuF3s73vE42fABJ4pKvY1I0qtEppvsmITUMHAXiPlyoGf3PSW6iBlb3
- wZGRUYoTx/f2mjTe7GA2ELMmv+EjNBIl+2nMEzGGwnTsjzMpNpI1FHCTKHrHVyfuLwogDcbQN
- A/aErTsu7moKymcVNGlL0mGvAWwNyET5T0YYi8uz4kG2DAb4dTGWMpGUu/cx5bUAHLVyh8fb0
- EEjEnYoeHi33h98N3yJ0ggaM8xr0hb1/VDgFUucbN/9nCiRye/jpKTTwzLX2KnRnAR+AaMTxU
- cAlHJCl/26gdfM5wvy+aDCQhDNJJ/UtU9SBuJgaRgOZx6opDXzOEQ3DJvPrcxwDpexjZALiEP
- mOgaA4gsWtVbcyf4mfiPiwU2aBOJpt/L0jbmpKcTEQEEARvnEiR+PNtkMbN7KwcklGpz1L0Rr
- wwXyvPRwAKNK2dY1quCFSVkMmsHjMgRZq2Vh2k64J1xHA6XLcDzQ3eRYyRkVEkNjwSEHotASv
- NvZ5eepa+ADGQD0QBVD/GXlik329jfX3CiQARz19AAYz0/6NQ3DPSaIiHqNXp0PD8LCkoqCXO
- X1KJVJOnXYTCmJK59bq3/2anRBKEDeTwPv7abjasXE8L83bSQnGOLXpDlDNOIpX2gLZxXWHGC
- ev3VBg7heLTpToTSu2UBXUVCO8WwY718jkxf7PlXlb7wxCeUHUEPsLcLTpCGTFI3uFLR0xiVT
- GhG8WQEqZVnUw2yUyglz3omXRJhA7iV0uSrA4qKu6IYU8=
-Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240325130116.13194-1-alexei.filippov@syntacore.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,55 +100,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/26/24 07:44, Richard Henderson wrote:
-> Prepare for proper indication of shladd unsigned overflow.
-> The UV indicator will be zero/not-zero instead of a single bit.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-Reviewed-by: Helge Deller <deller@gmx.de>
-Tested-by: Helge Deller <deller@gmx.de>
-
-Helge
-
+On Mon, Mar 25, 2024 at 04:01:16PM +0300, Alexei Filippov wrote:
+> kvm_riscv_handle_sbi() may return not supported return code to not trigger
+> qemu abort with vendor-specific sbi.
+> 
+> Added SBI related return code's defines.
+> 
+> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+> Fixes: 4eb47125 ("target/riscv: Handle KVM_EXIT_RISCV_SBI exit")
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->   target/hppa/translate.c | 12 +++++-------
->   1 file changed, 5 insertions(+), 7 deletions(-)
->
-> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index a70d644c0b..9d31ef5764 100644
-> --- a/target/hppa/translate.c
-> +++ b/target/hppa/translate.c
-> @@ -707,7 +707,7 @@ static bool cond_need_cb(int c)
->    */
->
->   static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
-> -                         TCGv_i64 res, TCGv_i64 cb_msb, TCGv_i64 sv)
-> +                         TCGv_i64 res, TCGv_i64 uv, TCGv_i64 sv)
->   {
->       DisasCond cond;
->       TCGv_i64 tmp;
-> @@ -754,14 +754,12 @@ static DisasCond do_cond(DisasContext *ctx, unsign=
-ed cf, bool d,
->           }
->           cond =3D cond_make_0_tmp(TCG_COND_EQ, tmp);
->           break;
-> -    case 4: /* NUV / UV      (!C / C) */
-> -        /* Only bit 0 of cb_msb is ever set. */
-> -        cond =3D cond_make_0(TCG_COND_EQ, cb_msb);
-> +    case 4: /* NUV / UV      (!UV / UV) */
-> +        cond =3D cond_make_0(TCG_COND_EQ, uv);
->           break;
-> -    case 5: /* ZNV / VNZ     (!C | Z / C & !Z) */
-> +    case 5: /* ZNV / VNZ     (!UV | Z / UV & !Z) */
->           tmp =3D tcg_temp_new_i64();
-> -        tcg_gen_neg_i64(tmp, cb_msb);
-> -        tcg_gen_and_i64(tmp, tmp, res);
-> +        tcg_gen_movcond_i64(TCG_COND_EQ, tmp, uv, ctx->zero, ctx->zero,=
- res);
->           if (!d) {
->               tcg_gen_ext32u_i64(tmp, tmp);
->           }
+> 
+> Changes since v1:
+>         -Add Fixes and Revied-by lines.
+>  target/riscv/kvm/kvm-cpu.c         |  5 +++--
+>  target/riscv/sbi_ecall_interface.h | 11 +++++++++++
+>  2 files changed, 14 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 6a6c6cae80..a4f84ad950 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1404,7 +1404,7 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+>          if (ret == sizeof(ch)) {
+>              run->riscv_sbi.ret[0] = ch;
+>          } else {
+> -            run->riscv_sbi.ret[0] = -1;
+> +            run->riscv_sbi.ret[0] = SBI_ERR_FAILURE;
+>          }
+>          ret = 0;
+>          break;
+> @@ -1412,7 +1412,8 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+>          qemu_log_mask(LOG_UNIMP,
+>                        "%s: un-handled SBI EXIT, specific reasons is %lu\n",
+>                        __func__, run->riscv_sbi.extension_id);
 
+While changing this, can we also change this log to something like
+
+ "%s: Unhandled SBI exit with extension-id %lu\n", __func__, run->riscv_sbi.extension_id
+
+
+> -        ret = -1;
+> +        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
+> +        ret = 0;
+
+We don't have any paths that set ret to anything other than zero now.
+Let's return zero at the bottom of the function instead. And the top
+of the function can then be cleaned up to
+
+ unsigned char ch;
+ int ret;
+
+ switch (run->riscv_sbi.extension_id) {
+
+
+>          break;
+>      }
+>      return ret;
+> diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
+> index 43899d08f6..0279e92a36 100644
+> --- a/target/riscv/sbi_ecall_interface.h
+> +++ b/target/riscv/sbi_ecall_interface.h
+> @@ -69,4 +69,15 @@
+>  #define SBI_EXT_VENDOR_END              0x09FFFFFF
+>  /* clang-format on */
+>  
+> +/* SBI return error codes */
+> +#define SBI_SUCCESS                  0
+> +#define SBI_ERR_FAILURE             -1
+> +#define SBI_ERR_NOT_SUPPORTED       -2
+> +#define SBI_ERR_INVALID_PARAM       -3
+> +#define SBI_ERR_DENIED              -4
+> +#define SBI_ERR_INVALID_ADDRESS     -5
+> +#define SBI_ERR_ALREADY_AVAILABLE   -6
+> +#define SBI_ERR_ALREADY_STARTED     -7
+> +#define SBI_ERR_ALREADY_STOPPED     -8
+
+v2 of the spec has SBI_ERR_NO_SHMEM as well.
+
+Thanks,
+drew
+
+> +
+>  #endif
+> -- 
+> 2.34.1
+> 
+> 
 
