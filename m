@@ -4,86 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACEFFC54E67
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 07:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51F10C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 07:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp0rN-0001Is-8D; Tue, 26 Mar 2024 03:04:37 -0400
+	id 1rp1KX-0004kU-I5; Tue, 26 Mar 2024 03:34:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rp0rL-0001IZ-IG
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:04:35 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rp0rI-0008Hc-Ms
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:04:34 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1e0d8403257so8074715ad.1
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 00:04:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711436671; x=1712041471;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=X3XpEffPJkB/vxEACHsRUQ714jMP4/rwnj9UtQPZyKQ=;
- b=2zGsc2WjgXcFlF39U4VHoltfMIXdzLxX/oo8TEyY8RdrbBE7jEKbXXb4YnD/2M9dFJ
- 21VvujJMwBJN+IoeS5eijcHfNJpJrhcDp/hk62vF3LdcXet6m5ZJYODrdGBEMLDPIs+x
- GGyyh+jyV3XpsU/B1DJrgFoUqxuzk39Mz4y2MdsM/6Fvf11tKFs6epl2prarDGknClJH
- 9FY6Ry1Cn0AQI8GwdJ7EGk3IaoDFDMvfvL/gMoqiyAzHqB+qzOb0rq/xLdr8pOGtmK9w
- m+ynsKVfPsYcVrgkJgzZQpwvknqbUTpp45eFcxO0OPBzkkzKP4wPT5g+c7P8LfsZjrRm
- y3uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711436671; x=1712041471;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=X3XpEffPJkB/vxEACHsRUQ714jMP4/rwnj9UtQPZyKQ=;
- b=GGMEgVWDX8t7UZjEkBgB5S+LKrT1sSmfKqjbq5RHqnNoo6HOPzdjB76xAhugjZEn4p
- P63WUzDzCwhxjjZWke7yMOPnekbFUUlzt0t05+v++qwhELhn4z+q2r0pknnqiNUlE8k4
- 2xRbPGtG3bfzDfAxkA4sGNhBn6UF2ZqPsjijdbVaQTJ8IrOK5OrHTc3zm31GkXD1M9zc
- aqXlmUDRJ2qEH1zV/Ko8Ua1JPxPkl5QBoYy0xGzZXETntToSXh/NCFr26bjSyF6agcwV
- 6L9r/TuEdt+0yl9djc0/Q361spy0f59kJIENg9+j8mI8pL5sBSM8jdRQSLUat/jcFRra
- tnVg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVi/COqQ4mgxb6E6XIhj9xwY6tt6Se+5n+dtmUvCtoCMq41+QMWIS7sM2SBw5doGr0bUri6juOd7hpzSsbfhUlwsIe+SYE=
-X-Gm-Message-State: AOJu0YywcIfbz8YspparlYksm5If5ZD1hlSilkvqsJk/yQQnmUH/hKeO
- VRQaUUndw4TwJ/wiT6KZ9KCx8SpsDBds4Ygcf6Muet2fP9snsr5c5YSmzVEaRtU=
-X-Google-Smtp-Source: AGHT+IFsFHJzZjPhcd7FXNdN+lx0nA5tEEt4vQkObhp1mmFhIOWx74IXKgeJ37mkP/0I4E/DKK3U9g==
-X-Received: by 2002:a17:902:6541:b0:1e0:a0d5:1d23 with SMTP id
- d1-20020a170902654100b001e0a0d51d23mr6585503pln.29.1711436670692; 
- Tue, 26 Mar 2024 00:04:30 -0700 (PDT)
-Received: from [157.82.200.213] ([157.82.200.213])
- by smtp.gmail.com with ESMTPSA id
- v18-20020a1709028d9200b001dde403a060sm5986889plo.44.2024.03.26.00.04.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 00:04:30 -0700 (PDT)
-Message-ID: <a31d0734-823b-4b67-8888-46f0c787cf8f@daynix.com>
-Date: Tue, 26 Mar 2024 16:04:28 +0900
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp1KU-0004jE-Tb
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:34:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp1KT-0005OZ-5m
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:34:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711438480;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DX6+i2EUYC0nbfpAIoLt2b0ioI53ucLgBOhxWDFJqRo=;
+ b=CVJyZYQ3JZ0WN716BbRTdgFwD39mKTGidUvm8jjjd/kIUgv9NSeRZUp40QPFMYMRIFvkuo
+ oeLgiZbV1MsdKEVoVvjdd6UHlLahD6iHvdBGC2RRn0ZoMkZA8sSA0v6qDxrYbOAlGEX9n3
+ ASxlSw2A+okSNKClnKO8fiGAB/F8Lew=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-1z-X9XiLM02_V4T-yn9RPg-1; Tue,
+ 26 Mar 2024 03:34:36 -0400
+X-MC-Unique: 1z-X9XiLM02_V4T-yn9RPg-1
+Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.3])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 195C03C0E447;
+ Tue, 26 Mar 2024 07:34:36 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B41451121312;
+ Tue, 26 Mar 2024 07:34:35 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C0A1E21E5D3A; Tue, 26 Mar 2024 08:34:20 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, David Hildenbrand <david@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PULL 20/20] qapi: document parameters of query-cpu-model-* QAPI
+ commands
+Date: Tue, 26 Mar 2024 08:34:20 +0100
+Message-ID: <20240326073420.738016-21-armbru@redhat.com>
+In-Reply-To: <20240326073420.738016-1-armbru@redhat.com>
+References: <20240326073420.738016-1-armbru@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net/net_tx_pkt: Fix virtio header without checksum
- offloading
-To: Jason Wang <jasowang@redhat.com>
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-devel@nongnu.org
-References: <20240324-tx-v1-1-a3b4135749ec@daynix.com>
- <CACGkMEvBoe4XQeHOR64rNwAPM-vBMsfLQApWpUoMtvwsSVCpUQ@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CACGkMEvBoe4XQeHOR64rNwAPM-vBMsfLQApWpUoMtvwsSVCpUQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::62d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,74 +86,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/03/26 15:51, Jason Wang wrote:
-> On Sun, Mar 24, 2024 at 4:32 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> It is incorrect to have the VIRTIO_NET_HDR_F_NEEDS_CSUM set when
->> checksum offloading is disabled so clear the bit. Set the
->> VIRTIO_NET_HDR_F_DATA_VALID bit instead to tell the checksum is valid.
->>
->> TCP/UDP checksum is usually offloaded when the peer requires virtio
->> headers because they can instruct the peer to compute checksum. However,
->> igb disables TX checksum offloading when a VF is enabled whether the
->> peer requires virtio headers because a transmitted packet can be routed
->> to it and it expects the packet has a proper checksum. Therefore, it
->> is necessary to have a correct virtio header even when checksum
->> offloading is disabled.
->>
->> A real TCP/UDP checksum will be computed and saved in the buffer when
->> checksum offloading is disabled. The virtio specification requires to
->> set the packet checksum stored in the buffer to the TCP/UDP pseudo
->> header when the VIRTIO_NET_HDR_F_NEEDS_CSUM bit is set so the bit must
->> be cleared in that case.
->>
->> The VIRTIO_NET_HDR_F_NEEDS_CSUM bit also tells to skip checksum
->> validation. Even if checksum offloading is disabled, it is desirable to
->> skip checksum validation because the checksum is always correct. Use the
->> VIRTIO_NET_HDR_F_DATA_VALID bit to claim the validity of the checksum.
->>
->> Fixes: ffbd2dbd8e64 ("e1000e: Perform software segmentation for loopback")
->> Buglink: https://issues.redhat.com/browse/RHEL-23067
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   hw/net/net_tx_pkt.c | 3 +++
->>   1 file changed, 3 insertions(+)
->>
->> diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
->> index 2e5f58b3c9cc..c225cf706513 100644
->> --- a/hw/net/net_tx_pkt.c
->> +++ b/hw/net/net_tx_pkt.c
->> @@ -833,6 +833,9 @@ bool net_tx_pkt_send_custom(struct NetTxPkt *pkt, bool offload,
->>
->>       if (offload || gso_type == VIRTIO_NET_HDR_GSO_NONE) {
->>           if (!offload && pkt->virt_hdr.flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) {
->> +            pkt->virt_hdr.flags =
->> +                (pkt->virt_hdr.flags & ~VIRTIO_NET_HDR_F_NEEDS_CSUM) |
->> +                VIRTIO_NET_HDR_F_DATA_VALID;
-> 
-> Why VIRTIO_NET_HDR_F_DATA_VALID is used in TX path?
+From: David Hildenbrand <david@redhat.com>
 
-On igb, a packet sent from a PCI function may be routed to another 
-function. The virtio header updated here will be directly provided to 
-the RX path in such a case.
+Let's document the parameters of these commands, so we can remove them
+from the "documentation-exceptions" list.
 
-Regards,
-Akihiko Odaki
+While at it, extend the "Returns:" documentation as well, fixing a wrong
+use of CpuModelBaselineInfo vs. CpuModelCompareInfo for
+query-cpu-model-comparison.
 
-> 
-> Thanks
-> 
->>               net_tx_pkt_do_sw_csum(pkt, &pkt->vec[NET_TX_PKT_L2HDR_FRAG],
->>                                     pkt->payload_frags + NET_TX_PKT_PL_START_FRAG - 1,
->>                                     pkt->payload_len);
->>
->> ---
->> base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
->> change-id: 20240324-tx-c57d3c22ad73
->>
->> Best regards,
->> --
->> Akihiko Odaki <akihiko.odaki@daynix.com>
->>
-> 
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: Eric Blake <eblake@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org>
+Cc: Yanan Wang <wangyanan55@huawei.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Message-ID: <20240325150141.342720-1-david@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+[Punctuation tweaked]
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ qapi/machine-target.json | 46 +++++++++++++++++++++++++++-------------
+ qapi/pragma.json         |  3 ---
+ 2 files changed, 31 insertions(+), 18 deletions(-)
+
+diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+index 03d7a185b9..29e695aa06 100644
+--- a/qapi/machine-target.json
++++ b/qapi/machine-target.json
+@@ -124,11 +124,12 @@
+ ##
+ # @query-cpu-model-comparison:
+ #
+-# Compares two CPU models, returning how they compare in a specific
+-# configuration.  The results indicates how both models compare
+-# regarding runnability.  This result can be used by tooling to make
+-# decisions if a certain CPU model will run in a certain configuration
+-# or if a compatible CPU model has to be created by baselining.
++# Compares two CPU models, @modela and @modelb, returning how they
++# compare in a specific configuration.  The results indicates how
++# both models compare regarding runnability.  This result can be
++# used by tooling to make decisions if a certain CPU model will
++# run in a certain configuration or if a compatible CPU model has
++# to be created by baselining.
+ #
+ # Usually, a CPU model is compared against the maximum possible CPU
+ # model of a certain configuration (e.g. the "host" model for KVM).
+@@ -154,7 +155,14 @@
+ # Some architectures may not support comparing CPU models.  s390x
+ # supports comparing CPU models.
+ #
+-# Returns: a CpuModelBaselineInfo
++# @modela: description of the first CPU model to compare, referred to as
++#     "model A" in CpuModelCompareResult
++#
++# @modelb: description of the second CPU model to compare, referred to as
++#     "model B" in CpuModelCompareResult
++#
++# Returns: a CpuModelCompareInfo describing how both CPU models
++#     compare
+ #
+ # Errors:
+ #     - if comparing CPU models is not supported
+@@ -175,9 +183,9 @@
+ ##
+ # @query-cpu-model-baseline:
+ #
+-# Baseline two CPU models, creating a compatible third model.  The
+-# created model will always be a static, migration-safe CPU model (see
+-# "static" CPU model expansion for details).
++# Baseline two CPU models, @modela and @modelb, creating a compatible
++# third model.  The created model will always be a static,
++# migration-safe CPU model (see "static" CPU model expansion for details).
+ #
+ # This interface can be used by tooling to create a compatible CPU
+ # model out two CPU models.  The created CPU model will be identical
+@@ -204,7 +212,11 @@
+ # Some architectures may not support baselining CPU models.  s390x
+ # supports baselining CPU models.
+ #
+-# Returns: a CpuModelBaselineInfo
++# @modela: description of the first CPU model to baseline
++#
++# @modelb: description of the second CPU model to baseline
++#
++# Returns: a CpuModelBaselineInfo describing the baselined CPU model
+ #
+ # Errors:
+ #     - if baselining CPU models is not supported
+@@ -243,10 +255,10 @@
+ ##
+ # @query-cpu-model-expansion:
+ #
+-# Expands a given CPU model (or a combination of CPU model +
+-# additional options) to different granularities, allowing tooling to
+-# get an understanding what a specific CPU model looks like in QEMU
+-# under a certain configuration.
++# Expands a given CPU model, @model, (or a combination of CPU model +
++# additional options) to different granularities, specified by
++# @type, allowing tooling to get an understanding what a specific
++# CPU model looks like in QEMU under a certain configuration.
+ #
+ # This interface can be used to query the "host" CPU model.
+ #
+@@ -269,7 +281,11 @@
+ # Some architectures may not support all expansion types.  s390x
+ # supports "full" and "static". Arm only supports "full".
+ #
+-# Returns: a CpuModelExpansionInfo
++# @model: description of the CPU model to expand
++#
++# @type: expansion type, specifying how to expand the CPU model
++#
++# Returns: a CpuModelExpansionInfo describing the expanded CPU model
+ #
+ # Errors:
+ #     - if expanding CPU models is not supported
+diff --git a/qapi/pragma.json b/qapi/pragma.json
+index 9e28de1721..59fbe74b8c 100644
+--- a/qapi/pragma.json
++++ b/qapi/pragma.json
+@@ -84,9 +84,6 @@
+         'XDbgBlockGraph',
+         'YankInstanceType',
+         'blockdev-reopen',
+-        'query-cpu-model-baseline',
+-        'query-cpu-model-comparison',
+-        'query-cpu-model-expansion',
+         'query-rocker',
+         'query-rocker-ports' ],
+     # Externally visible types whose member names may use uppercase
+-- 
+2.44.0
+
 
