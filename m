@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4437C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 06:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B162C54E67
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 06:45:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp0Xf-0004V1-DB; Tue, 26 Mar 2024 02:44:15 -0400
+	id 1rp0Xj-0004Vu-9g; Tue, 26 Mar 2024 02:44:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rp0Xc-0004UX-Py
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 02:44:13 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1rp0Xh-0004VY-1v
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 02:44:17 -0400
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rp0Xa-0004Xl-Vc
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 02:44:12 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-6e6e3eadec8so331222a34.0
- for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 23:44:10 -0700 (PDT)
+ id 1rp0Xf-0004YH-A4
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 02:44:16 -0400
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-3c3acf4b0e1so3076828b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 25 Mar 2024 23:44:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711435450; x=1712040250; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711435452; x=1712040252; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Qo1Cy+/ahqbmFMcF+S3a41PcnAQ9BeXKsl8/poFdtaM=;
- b=RNKGLGdlQEodIC32jpMJB288rvs9p0mLvHRyXI0KRkGXJh50KNyPcLsB+AAkF9JcGk
- kWOZgurvw2jO3+2FQHWQbFigWFeFc8zfYvZ+KVwrx416stnW3ArSz6bVPhZSqTkCqogK
- Pgy4bNIpRQvq6pSWl8adDPUcbQExXDLmb+5X672TQFyQefv5nkk/dpFVrzFosmuzMpuL
- I6afwyMmRFq79T/zMjUA45tx2EIM73PoGATJw3+4zZqy3M8MzTTk3XVwB5bTae99sN4K
- 2sK3njpanPs2svTqqoUOYgTXR7xR67ZDmD0QMjDsjGwJkFpGgrkVAoQ6eSvfBXHJ4aHY
- rdBg==
+ bh=j9CLORt38yZiQ1fCLl5knbBMBJnlvZ9He6LtCWjt6QA=;
+ b=NzZiqrW9kDYmldoioHvJB/RAr5GwRlKw5lfY75aDcrTSHKnrIO8ebFKiPGIVlRs69f
+ /Cz4BQOAAI8m/8uNY8rVn7mtroY//0dZNpFHxT9QmLhZp1lVIyB3CCPs8JSrHUsFAkRp
+ wagNSSsvSXAgGiadRyshqJnsyD2hXSppmu75JmIBZEVF7utnVorjKh31LMWMSL5cDLlG
+ thEWlpe26DRwfVHWDD+JETv49vUTXBrESLPICPy4r8fWtStVWdNXQa8opdCiryEn2Wai
+ mBykVJdbqJNI0wbe5gc46c27BmqBksQtAeRxLBMWQQXK3xbL0jotBQA//GZpmpSu+5OW
+ 0PvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711435450; x=1712040250;
+ d=1e100.net; s=20230601; t=1711435452; x=1712040252;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qo1Cy+/ahqbmFMcF+S3a41PcnAQ9BeXKsl8/poFdtaM=;
- b=j9NoE4m5uCvdTd2/zDGDj73LuJUqlXeEje6LZk02TNl32I4ObxtqXHXB6t2V7UROLW
- 1N9GRRF0dpfv+EpKtCJ8+WKRjSYxzKB7RqzUsK7KGyh7f+3yLRjiwrCqo65gKtZzoG7x
- G3wqXorsTQdbvSEgiugnEgXm0H1tYcKqo55wtxAx6U27zq+vtDq0c5U246BtxV8jWbg4
- JXzcZ8smwC8XRbEc12GzyIKEOV0UCMD4XEse4iY0uTXTZAqOGCnIumW9Kp2Cl3i3zQOr
- c+KmXwrIGKBa5co/HKxVD4H2EdBraoFj3+2bkhBu4ffoeQfPP1aQ0nFpBeyLDtt+VtvJ
- z5SA==
-X-Gm-Message-State: AOJu0YxCpUco9oDNf8i2iYILT/9pmae+nPIuxuDx+LIKONwzEb1+oHDr
- p5SKTCuOFrLkjpeXUO0ixvJh733Olis87tAxGKQ+9AUj19fLb7gKzvOyXO+BXc2U9n4Q5r6Re7W
- V
-X-Google-Smtp-Source: AGHT+IGh0T2LtPGDepvq19nFEldPttRLRorimoHHluX1/4+azuz9IWw4r+aFvKYb8TXbVJT93TiGZw==
-X-Received: by 2002:a05:6870:7986:b0:220:65ba:ca3a with SMTP id
- he6-20020a056870798600b0022065baca3amr2449996oab.14.1711435449777; 
- Mon, 25 Mar 2024 23:44:09 -0700 (PDT)
+ bh=j9CLORt38yZiQ1fCLl5knbBMBJnlvZ9He6LtCWjt6QA=;
+ b=kXQH3DsR9x3M2U9kVTxZtEtrXNVJ4H/mM/x4dcZhMXHGNAGxI6woZfnqIwBlB0gc0W
+ p6KqaotA9p+D4730PNo0EARWXZpt+fzyGlcY+jb+R1WLYnmJF2SFRkjZkw/iZrmiN9IR
+ y9ea7E03c3JBvWgTWyGN9tXwkW456151h50RAJchN9eMPfLAM9+DIGZ+Fi5IchYZoK3f
+ 4lnWCVEQ/uvGwt1UeP6KYUAQlT+3y/OWeo7a040guNoP2rBdk5KZ4GwF+4tK4NeElbCR
+ 0gD4VRIZ7OHCynN/l8xj/zMA2HyVJ6S6si9uqyL4FdGTkl3LO3Lte41eTsAbRplaPGFe
+ MOHg==
+X-Gm-Message-State: AOJu0Yxy720FucOr106PSXYxfiID/i40ZQEcXeNoUWxjjKiN8NYsa4+J
+ 9cHu7GPfVVtL6nZeIkjQmwFjelPy5PZXjLqCzh+PAoosmwQNiWIkjIE24RHGf3oIWP/PGepn8v2
+ S
+X-Google-Smtp-Source: AGHT+IH2AfhF/A2bXoQ18EVrEes5JiPZsFohpAvLSFVuNMaJjenWZojRob9k5o6u9CkGEKDmn3bAdA==
+X-Received: by 2002:a05:6808:1315:b0:3c1:c124:6d4d with SMTP id
+ y21-20020a056808131500b003c1c1246d4dmr10844194oiv.56.1711435452525; 
+ Mon, 25 Mar 2024 23:44:12 -0700 (PDT)
 Received: from stoup.. (173-197-098-125.biz.spectrum.com. [173.197.98.125])
  by smtp.gmail.com with ESMTPSA id
- c3-20020a633503000000b005dc36761ad1sm6958819pga.33.2024.03.25.23.44.08
+ c3-20020a633503000000b005dc36761ad1sm6958819pga.33.2024.03.25.23.44.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 25 Mar 2024 23:44:09 -0700 (PDT)
+ Mon, 25 Mar 2024 23:44:12 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH 1/3] target/hppa: Squash d for pa1.x during decode
-Date: Mon, 25 Mar 2024 20:44:03 -1000
-Message-Id: <20240326064405.320551-2-richard.henderson@linaro.org>
+Subject: [PATCH 3/3] target/hppa: Fix overflow computation for shladd
+Date: Mon, 25 Mar 2024 20:44:05 -1000
+Message-Id: <20240326064405.320551-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240326064405.320551-1-richard.henderson@linaro.org>
 References: <20240326064405.320551-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,192 +94,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The cond_need_ext predicate was created while we still had a
-32-bit compilation mode.  It now makes more sense to treat D
-as an absolute indicator of a 64-bit operation.
+Overflow indicator should include the effect of the shift step.
+We had previously left ??? comments about the issue.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/insns.decode | 20 +++++++++++++-------
- target/hppa/translate.c  | 38 ++++++++++++++++++++------------------
- 2 files changed, 33 insertions(+), 25 deletions(-)
+ target/hppa/translate.c | 85 ++++++++++++++++++++++++++++++++---------
+ 1 file changed, 66 insertions(+), 19 deletions(-)
 
-diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
-index f58455dfdb..6a74cf23cd 100644
---- a/target/hppa/insns.decode
-+++ b/target/hppa/insns.decode
-@@ -57,6 +57,9 @@
- %neg_to_m       0:1      !function=neg_to_m
- %a_to_m         2:1      !function=neg_to_m
- %cmpbid_c       13:2     !function=cmpbid_c
-+%d_5            5:1      !function=pa20_d
-+%d_11           11:1     !function=pa20_d
-+%d_13           13:1     !function=pa20_d
- 
- ####
- # Argument set definitions
-@@ -84,15 +87,16 @@
- # Format definitions
- ####
- 
--@rr_cf_d        ...... r:5 ..... cf:4 ...... d:1 t:5    &rr_cf_d
-+@rr_cf_d        ...... r:5 ..... cf:4 ...... . t:5      &rr_cf_d d=%d_5
- @rrr            ...... r2:5 r1:5 .... ....... t:5       &rrr
- @rrr_cf         ...... r2:5 r1:5 cf:4 ....... t:5       &rrr_cf
--@rrr_cf_d       ...... r2:5 r1:5 cf:4 ...... d:1 t:5    &rrr_cf_d
-+@rrr_cf_d       ...... r2:5 r1:5 cf:4 ...... . t:5      &rrr_cf_d d=%d_5
- @rrr_sh         ...... r2:5 r1:5 ........ sh:2 . t:5    &rrr_sh
--@rrr_cf_d_sh    ...... r2:5 r1:5 cf:4 .... sh:2 d:1 t:5 &rrr_cf_d_sh
--@rrr_cf_d_sh0   ...... r2:5 r1:5 cf:4 ...... d:1 t:5    &rrr_cf_d_sh sh=0
-+@rrr_cf_d_sh    ...... r2:5 r1:5 cf:4 .... sh:2 . t:5   &rrr_cf_d_sh d=%d_5
-+@rrr_cf_d_sh0   ...... r2:5 r1:5 cf:4 ...... . t:5      &rrr_cf_d_sh d=%d_5 sh=0
- @rri_cf         ...... r:5  t:5  cf:4 . ...........     &rri_cf i=%lowsign_11
--@rri_cf_d       ...... r:5  t:5  cf:4 d:1 ...........   &rri_cf_d i=%lowsign_11
-+@rri_cf_d       ...... r:5  t:5  cf:4 . ...........     \
-+                &rri_cf_d d=%d_11 i=%lowsign_11
- 
- @rrb_cf         ...... r2:5 r1:5 c:3 ........... n:1 .  \
-                 &rrb_c_f disp=%assemble_12
-@@ -368,8 +372,10 @@ fmpysub_d       100110 ..... ..... ..... ..... 1 .....  @mpyadd
- # Conditional Branches
- ####
- 
--bb_sar          110000 00000 r:5 c:1 1 d:1 ........... n:1 . disp=%assemble_12
--bb_imm          110001 p:5   r:5 c:1 1 d:1 ........... n:1 . disp=%assemble_12
-+bb_sar          110000 00000 r:5 c:1 1 . ........... n:1 . \
-+                disp=%assemble_12 d=%d_13
-+bb_imm          110001 p:5   r:5 c:1 1 . ........... n:1 . \
-+                disp=%assemble_12 d=%d_13
- 
- movb            110010 ..... ..... ... ........... . .  @rrb_cf f=0
- movbi           110011 ..... ..... ... ........... . .  @rib_cf f=0
 diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-index 99c5c4cbca..a70d644c0b 100644
+index 9d31ef5764..0976372d16 100644
 --- a/target/hppa/translate.c
 +++ b/target/hppa/translate.c
-@@ -200,6 +200,14 @@ static int cmpbid_c(DisasContext *ctx, int val)
-     return val ? val : 4; /* 0 == "*<<" */
- }
+@@ -994,7 +994,8 @@ static TCGv_i64 get_psw_carry(DisasContext *ctx, bool d)
  
-+/*
-+ * In many places pa1.x did not decode the bit that later became
-+ * the pa2.0 D bit.  Suppress D unless the cpu is pa2.0.
-+ */
-+static int pa20_d(DisasContext *ctx, int val)
-+{
-+    return ctx->is_pa20 & val;
-+}
- 
- /* Include the auto-generated decoder.  */
- #include "decode-insns.c.inc"
-@@ -693,12 +701,6 @@ static bool cond_need_cb(int c)
-     return c == 4 || c == 5;
- }
- 
--/* Need extensions from TCGv_i32 to TCGv_i64. */
--static bool cond_need_ext(DisasContext *ctx, bool d)
--{
--    return !(ctx->is_pa20 && d);
--}
--
- /*
-  * Compute conditional for arithmetic.  See Page 5-3, Table 5-1, of
-  * the Parisc 1.1 Architecture Reference Manual for details.
-@@ -715,7 +717,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
-         cond = cond_make_f();
-         break;
-     case 1: /* = / <>        (Z / !Z) */
--        if (cond_need_ext(ctx, d)) {
-+        if (!d) {
-             tmp = tcg_temp_new_i64();
-             tcg_gen_ext32u_i64(tmp, res);
-             res = tmp;
-@@ -725,7 +727,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
-     case 2: /* < / >=        (N ^ V / !(N ^ V) */
-         tmp = tcg_temp_new_i64();
-         tcg_gen_xor_i64(tmp, res, sv);
--        if (cond_need_ext(ctx, d)) {
-+        if (!d) {
-             tcg_gen_ext32s_i64(tmp, tmp);
-         }
-         cond = cond_make_0_tmp(TCG_COND_LT, tmp);
-@@ -742,7 +744,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
-          */
-         tmp = tcg_temp_new_i64();
-         tcg_gen_eqv_i64(tmp, res, sv);
--        if (cond_need_ext(ctx, d)) {
-+        if (!d) {
-             tcg_gen_sextract_i64(tmp, tmp, 31, 1);
-             tcg_gen_and_i64(tmp, tmp, res);
-             tcg_gen_ext32u_i64(tmp, tmp);
-@@ -760,13 +762,13 @@ static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
-         tmp = tcg_temp_new_i64();
-         tcg_gen_neg_i64(tmp, cb_msb);
-         tcg_gen_and_i64(tmp, tmp, res);
--        if (cond_need_ext(ctx, d)) {
-+        if (!d) {
-             tcg_gen_ext32u_i64(tmp, tmp);
-         }
-         cond = cond_make_0_tmp(TCG_COND_EQ, tmp);
-         break;
-     case 6: /* SV / NSV      (V / !V) */
--        if (cond_need_ext(ctx, d)) {
-+        if (!d) {
-             tmp = tcg_temp_new_i64();
-             tcg_gen_ext32s_i64(tmp, sv);
-             sv = tmp;
-@@ -827,7 +829,7 @@ static DisasCond do_sub_cond(DisasContext *ctx, unsigned cf, bool d,
-     if (cf & 1) {
-         tc = tcg_invert_cond(tc);
-     }
--    if (cond_need_ext(ctx, d)) {
-+    if (!d) {
-         TCGv_i64 t1 = tcg_temp_new_i64();
-         TCGv_i64 t2 = tcg_temp_new_i64();
- 
-@@ -904,7 +906,7 @@ static DisasCond do_log_cond(DisasContext *ctx, unsigned cf, bool d,
-         g_assert_not_reached();
-     }
- 
--    if (cond_need_ext(ctx, d)) {
-+    if (!d) {
-         TCGv_i64 tmp = tcg_temp_new_i64();
- 
-         if (ext_uns) {
-@@ -979,7 +981,7 @@ static DisasCond do_unit_zero_cond(unsigned cf, bool d, TCGv_i64 res)
- static TCGv_i64 get_carry(DisasContext *ctx, bool d,
-                           TCGv_i64 cb, TCGv_i64 cb_msb)
+ /* Compute signed overflow for addition.  */
+ static TCGv_i64 do_add_sv(DisasContext *ctx, TCGv_i64 res,
+-                          TCGv_i64 in1, TCGv_i64 in2)
++                          TCGv_i64 in1, TCGv_i64 in2,
++                          TCGv_i64 orig_in1, int shift, bool d)
  {
--    if (cond_need_ext(ctx, d)) {
-+    if (!d) {
-         TCGv_i64 t = tcg_temp_new_i64();
-         tcg_gen_extract_i64(t, cb, 32, 1);
-         return t;
-@@ -3448,12 +3450,12 @@ static bool trans_bb_sar(DisasContext *ctx, arg_bb_sar *a)
+     TCGv_i64 sv = tcg_temp_new_i64();
+     TCGv_i64 tmp = tcg_temp_new_i64();
+@@ -1003,9 +1004,50 @@ static TCGv_i64 do_add_sv(DisasContext *ctx, TCGv_i64 res,
+     tcg_gen_xor_i64(tmp, in1, in2);
+     tcg_gen_andc_i64(sv, sv, tmp);
  
-     tmp = tcg_temp_new_i64();
-     tcg_r = load_gpr(ctx, a->r);
--    if (cond_need_ext(ctx, a->d)) {
-+    if (a->d) {
-+        tcg_gen_shl_i64(tmp, tcg_r, cpu_sar);
++    switch (shift) {
++    case 0:
++        break;
++    case 1:
++        /* Shift left by one and compare the sign. */
++        tcg_gen_add_i64(tmp, orig_in1, orig_in1);
++        tcg_gen_xor_i64(tmp, tmp, orig_in1);
++        /* Incorporate into the overflow. */
++        tcg_gen_or_i64(sv, sv, tmp);
++        break;
++    default:
++        {
++            int sign_bit = d ? 63 : 31;
++            uint64_t mask = MAKE_64BIT_MASK(sign_bit - shift, shift);
++
++            /* Compare the sign against all lower bits. */
++            tcg_gen_sextract_i64(tmp, orig_in1, sign_bit, 1);
++            tcg_gen_xor_i64(tmp, tmp, orig_in1);
++            /*
++             * If one of the bits shifting into or through the sign
++             * differs, then we have overflow.
++             */
++            tcg_gen_movcond_i64(TCG_COND_TSTNE, sv,
++                                tmp, tcg_constant_i64(mask),
++                                tcg_constant_i64(-1), sv);
++        }
++    }
+     return sv;
+ }
+ 
++/* Compute unsigned overflow for addition.  */
++static TCGv_i64 do_add_uv(DisasContext *ctx, TCGv_i64 cb, TCGv_i64 cb_msb,
++                          TCGv_i64 in1, int shift, bool d)
++{
++    if (shift == 0) {
++        return get_carry(ctx, d, cb, cb_msb);
 +    } else {
-         /* Force shift into [32,63] */
-         tcg_gen_ori_i64(tmp, cpu_sar, 32);
-         tcg_gen_shl_i64(tmp, tcg_r, tmp);
--    } else {
--        tcg_gen_shl_i64(tmp, tcg_r, cpu_sar);
++        TCGv_i64 tmp = tcg_temp_new_i64();
++        tcg_gen_extract_i64(tmp, in1, (d ? 63 : 31) - shift, shift);
++        tcg_gen_or_i64(tmp, tmp, get_carry(ctx, d, cb, cb_msb));
++        return tmp;
++    }
++}
++
+ /* Compute signed overflow for subtraction.  */
+ static TCGv_i64 do_sub_sv(DisasContext *ctx, TCGv_i64 res,
+                           TCGv_i64 in1, TCGv_i64 in2)
+@@ -1020,19 +1062,19 @@ static TCGv_i64 do_sub_sv(DisasContext *ctx, TCGv_i64 res,
+     return sv;
+ }
+ 
+-static void do_add(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
++static void do_add(DisasContext *ctx, unsigned rt, TCGv_i64 orig_in1,
+                    TCGv_i64 in2, unsigned shift, bool is_l,
+                    bool is_tsv, bool is_tc, bool is_c, unsigned cf, bool d)
+ {
+-    TCGv_i64 dest, cb, cb_msb, cb_cond, sv, tmp;
++    TCGv_i64 dest, cb, cb_msb, in1, uv, sv, tmp;
+     unsigned c = cf >> 1;
+     DisasCond cond;
+ 
+     dest = tcg_temp_new_i64();
+     cb = NULL;
+     cb_msb = NULL;
+-    cb_cond = NULL;
+ 
++    in1 = orig_in1;
+     if (shift) {
+         tmp = tcg_temp_new_i64();
+         tcg_gen_shli_i64(tmp, in1, shift);
+@@ -1050,9 +1092,6 @@ static void do_add(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
+         }
+         tcg_gen_xor_i64(cb, in1, in2);
+         tcg_gen_xor_i64(cb, cb, dest);
+-        if (cond_need_cb(c)) {
+-            cb_cond = get_carry(ctx, d, cb, cb_msb);
+-        }
+     } else {
+         tcg_gen_add_i64(dest, in1, in2);
+         if (is_c) {
+@@ -1063,18 +1102,23 @@ static void do_add(DisasContext *ctx, unsigned rt, TCGv_i64 in1,
+     /* Compute signed overflow if required.  */
+     sv = NULL;
+     if (is_tsv || cond_need_sv(c)) {
+-        sv = do_add_sv(ctx, dest, in1, in2);
++        sv = do_add_sv(ctx, dest, in1, in2, orig_in1, shift, d);
+         if (is_tsv) {
+             if (!d) {
+                 tcg_gen_ext32s_i64(sv, sv);
+             }
+-            /* ??? Need to include overflow from shift.  */
+             gen_helper_tsv(tcg_env, sv);
+         }
      }
  
-     cond = cond_make_0_tmp(a->c ? TCG_COND_GE : TCG_COND_LT, tmp);
-@@ -3470,7 +3472,7 @@ static bool trans_bb_imm(DisasContext *ctx, arg_bb_imm *a)
++    /* Compute unsigned overflow if required.  */
++    uv = NULL;
++    if (cond_need_cb(c)) {
++        uv = do_add_uv(ctx, cb, cb_msb, orig_in1, shift, d);
++    }
++
+     /* Emit any conditional trap before any writeback.  */
+-    cond = do_cond(ctx, cf, d, dest, cb_cond, sv);
++    cond = do_cond(ctx, cf, d, dest, uv, sv);
+     if (is_tc) {
+         tmp = tcg_temp_new_i64();
+         tcg_gen_setcond_i64(cond.c, tmp, cond.a0, cond.a1);
+@@ -2843,7 +2887,6 @@ static bool trans_dcor_i(DisasContext *ctx, arg_rr_cf_d *a)
+ static bool trans_ds(DisasContext *ctx, arg_rrr_cf *a)
+ {
+     TCGv_i64 dest, add1, add2, addc, in1, in2;
+-    TCGv_i64 cout;
  
-     tmp = tcg_temp_new_i64();
-     tcg_r = load_gpr(ctx, a->r);
--    p = a->p | (cond_need_ext(ctx, a->d) ? 32 : 0);
-+    p = a->p | (a->d ? 0 : 32);
-     tcg_gen_shli_i64(tmp, tcg_r, p);
+     nullify_over(ctx);
  
-     cond = cond_make_0(a->c ? TCG_COND_GE : TCG_COND_LT, tmp);
+@@ -2880,19 +2923,23 @@ static bool trans_ds(DisasContext *ctx, arg_rrr_cf *a)
+     tcg_gen_xor_i64(cpu_psw_cb, add1, add2);
+     tcg_gen_xor_i64(cpu_psw_cb, cpu_psw_cb, dest);
+ 
+-    /* Write back PSW[V] for the division step.  */
+-    cout = get_psw_carry(ctx, false);
+-    tcg_gen_neg_i64(cpu_psw_v, cout);
++    /*
++     * Write back PSW[V] for the division step.
++     * Shift cb{8} from where it lives in bit 32 to bit 31,
++     * so that it overlaps r2{32} in bit 31.
++     */
++    tcg_gen_shri_i64(cpu_psw_v, cpu_psw_cb, 1);
+     tcg_gen_xor_i64(cpu_psw_v, cpu_psw_v, in2);
+ 
+     /* Install the new nullification.  */
+     if (a->cf) {
+-        TCGv_i64 sv = NULL;
++        TCGv_i64 sv = NULL, uv = NULL;
+         if (cond_need_sv(a->cf >> 1)) {
+-            /* ??? The lshift is supposed to contribute to overflow.  */
+-            sv = do_add_sv(ctx, dest, add1, add2);
++            sv = do_add_sv(ctx, dest, add1, add2, in1, 1, false);
++        } else if (cond_need_cb(a->cf >> 1)) {
++            uv = do_add_uv(ctx, cpu_psw_cb, NULL, in1, 1, false);
+         }
+-        ctx->null_cond = do_cond(ctx, a->cf, false, dest, cout, sv);
++        ctx->null_cond = do_cond(ctx, a->cf, false, dest, uv, sv);
+     }
+ 
+     return nullify_end(ctx);
+@@ -3419,7 +3466,7 @@ static bool do_addb(DisasContext *ctx, unsigned r, TCGv_i64 in1,
+         tcg_gen_add_i64(dest, in1, in2);
+     }
+     if (cond_need_sv(c)) {
+-        sv = do_add_sv(ctx, dest, in1, in2);
++        sv = do_add_sv(ctx, dest, in1, in2, in1, 0, d);
+     }
+ 
+     cond = do_cond(ctx, c * 2 + f, d, dest, cb_cond, sv);
 -- 
 2.34.1
 
