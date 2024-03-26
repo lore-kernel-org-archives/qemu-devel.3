@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8452C54E67
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 17:48:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB5E5C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 17:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpAtU-000552-Oi; Tue, 26 Mar 2024 13:47:28 -0400
+	id 1rpB43-0008Qa-5i; Tue, 26 Mar 2024 13:58:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpAtS-00054J-4P
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:47:26 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpAtP-0000mz-Fd
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:47:25 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1dde26f7e1dso44266925ad.1
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 10:47:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1711475241; x=1712080041; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TApd6r7vJi9NBxs5zkY2J2qJhuV39IDiehDiQqtkq4s=;
- b=bj874XXcwIYJXY3WiMDDnUOE1wkQFukgRbWWGcGyAdC1OWIVVctcr/G2ZN3Upio4D2
- bWyFxsK6Oa3VQKttIJjNC6hOoUWwVS44w4+KIPI1TGxDTYhN/ouAMlTvVoPtUxfDZb+q
- NTnLCpSm5if7m3E7l/owkuGDmP1xdA7v5gUnIkYvX3kfTtwzqHsa/e9j1uOVe8yGnFMq
- lCJ2OsoXi427DP9UFG7ehnvEITk1zAkiwT52i7KRAxXhkzaWm/wS6DxpkHeHPMBFynkO
- iWHgUzeoq8gms7ca1vT0tUjYxubBPed4KYdx1pXxUyOuawtQmW5nibo7BU40QMtuKS2c
- 8w+Q==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rpB41-0008QK-KT
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:58:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rpB3z-0003EM-4g
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:58:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711475896;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lhdtxwQH0naeGYU38q4i+lcqVqXoH3uri6VJsinOV18=;
+ b=HvG+kEEoY5fvTK+k6KrriGMILhEHbjIe+EwQdxL4ZSjZVwp8YI8P3mtBi0/KDNx/QcdndW
+ 4NI5Fsg7bygv4djgMwr8SwUs8Qk9rag8hw3+h8UP435cLrwA1p78aHGkqps3iiwTk+BwjZ
+ A3lt2YRLZ4kX/ZUkcO6ZZ+GV4SgWV/w=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-284-eaTPGWu8P52gO7NLQGG3Rw-1; Tue, 26 Mar 2024 13:58:12 -0400
+X-MC-Unique: eaTPGWu8P52gO7NLQGG3Rw-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4311dd10102so23592551cf.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 10:58:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711475241; x=1712080041;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TApd6r7vJi9NBxs5zkY2J2qJhuV39IDiehDiQqtkq4s=;
- b=NLKs5+ZDLJ7vLtCRYFjl8vHCaOSfYmi++HvUu3Og963mdxzcAgsq15UchZlHF27xGf
- c16K8rHUcOyXChXCs0LqXp7kAhR8I3FFJkJ4PvxaJoRKumdblHUeghfVnXlHPYGStDLl
- 3s9M/RO2RedVMlct1Sg7KnuxPgo3ZgIWztPC10ZoBjUzLcFSm0dVfk2YP1D+cGI1QBCW
- YZ4hQQozHt1Y8dXhBC3zAPOxi302Of0HfYGpXLHI4A/wlDYxp5ut6uWbCH6EpAWCWJQi
- nxmio//oTnmrTPx2J/EvHD42ZfJn4OpvzhjMiO+HdZXzixtqAlqwdLgo7EaH3btz06R4
- IcJg==
-X-Gm-Message-State: AOJu0Yy5GdcWVsPkn2RgVsJsyA6wm07H6Wktz+i0uEqjxwH5o8lJJ/m7
- Dcv4eMtDDBwVccq456WwihtmmpJR19uX6kKHbuYRhtwRwRqNY55MksLuz5ZSkQ4=
-X-Google-Smtp-Source: AGHT+IHn+0mvqrvPxh6SirgZtQgcYVQE+BNJZ9K35XkI0dQ4BTrao0JqZ0aS5xUIIcpqqxw0oHg9OA==
-X-Received: by 2002:a17:902:bc83:b0:1dd:76f0:3dde with SMTP id
- bb3-20020a170902bc8300b001dd76f03ddemr443477plb.31.1711475240800; 
- Tue, 26 Mar 2024 10:47:20 -0700 (PDT)
-Received: from [192.168.68.110] ([177.45.186.241])
- by smtp.gmail.com with ESMTPSA id
- q7-20020a170902a3c700b001e005a58237sm7322201plb.93.2024.03.26.10.47.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 10:47:20 -0700 (PDT)
-Message-ID: <1f73d065-fcf6-4466-bc86-c8fdbae7bd96@ventanamicro.com>
-Date: Tue, 26 Mar 2024 14:47:17 -0300
+ d=1e100.net; s=20230601; t=1711475891; x=1712080691;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lhdtxwQH0naeGYU38q4i+lcqVqXoH3uri6VJsinOV18=;
+ b=P+IZvJlHZHHQdrEzrR28Kgha8W+6/PC3gnSm9/sf+YS1nHTmTLOYUZrUg0VeO3UyTz
+ g3BhfOeChJ0oXlunxatJrn+0L/ifGRJQoDr4j5clw9xG+MJMFUrqoy3qATegeN4F08O9
+ rrDh6CHTZG3IpgVm8mzDwRKDSgRXdP39ogi2M5yuzOgMD9Rl74gGkErl2o6l69jhjf4n
+ elfKYl/onoveRQTbTVR/NS2QyOyoBQflZuTkUgc7jgJ9w0UxTKMiKFfh13Ur8aoI7Xua
+ 89+I2nfmDuEJU1iQwMmTNNBXQQacNL7Knb4/QxUIZEwNoKNl+ndNoVVh4HUeGFkgqmRj
+ wKpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW0fncdb68mzCsfbBdkTZKEzrsEdWMbXpz0bIh588v60dDsDKkH/7+KzTonKgOvKC+xMTvXiEgYqwfd5iR1Vnu9JidHHzk=
+X-Gm-Message-State: AOJu0Ywfi4B3y9gG+MN1ajXplYh01Wl+VQP+MXibynvyr73lnR/zmzLR
+ GZD8gOSMY8a7IsmcX4kLgZTnrl3i8BSgMVwVjONnRqQDuutTVHxpM9fH9nSj03IRAxuOgPJ2f9z
+ X/d9QSW7RvL5VxLCLmxM1xQ6UrnvCdraw3goZjdblCtPePdJSOXKF
+X-Received: by 2002:a05:6214:5f10:b0:690:9db6:f410 with SMTP id
+ lx16-20020a0562145f1000b006909db6f410mr12511113qvb.3.1711475890992; 
+ Tue, 26 Mar 2024 10:58:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXt8qOEntUmzQ0tlg1mRy3h4tNZzWQpFQouuB4OTuHuLCnYhQglPmS7Qml3i7rrudhTcZ+Fg==
+X-Received: by 2002:a05:6214:5f10:b0:690:9db6:f410 with SMTP id
+ lx16-20020a0562145f1000b006909db6f410mr12511085qvb.3.1711475890305; 
+ Tue, 26 Mar 2024 10:58:10 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ kd9-20020a056214400900b00696a3367c2asm535744qvb.28.2024.03.26.10.58.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Mar 2024 10:58:10 -0700 (PDT)
+Date: Tue, 26 Mar 2024 13:58:08 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yuan Liu <yuan1.liu@intel.com>
+Cc: farosas@suse.de, qemu-devel@nongnu.org, hao.xiang@bytedance.com,
+ bryan.zhang@bytedance.com, nanhai.zou@intel.com
+Subject: Re: [PATCH v5 1/7] docs/migration: add qpl compression feature
+Message-ID: <ZgMMsFWPClvF5Gm6@x1n>
+References: <20240319164527.1873891-1-yuan1.liu@intel.com>
+ <20240319164527.1873891-2-yuan1.liu@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 1/3] qtest/virtio-9p-test.c: consolidate create
- dir, file and symlink tests
-Content-Language: en-US
-To: Greg Kurz <groug@kaod.org>
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, alistair.francis@wdc.com,
- peter.maydell@linaro.org, qemu_oss@crudebyte.com
-References: <20240326132606.686025-1-dbarboza@ventanamicro.com>
- <20240326132606.686025-2-dbarboza@ventanamicro.com>
- <20240326180550.3072dd2d@bahia>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240326180550.3072dd2d@bahia>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240319164527.1873891-2-yuan1.liu@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,231 +101,295 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Mar 20, 2024 at 12:45:21AM +0800, Yuan Liu wrote:
+> add Intel Query Processing Library (QPL) compression method
+> introduction
+> 
+> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+> Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
+> ---
+>  docs/devel/migration/features.rst        |   1 +
+>  docs/devel/migration/qpl-compression.rst | 231 +++++++++++++++++++++++
+>  2 files changed, 232 insertions(+)
+>  create mode 100644 docs/devel/migration/qpl-compression.rst
+> 
+> diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
+> index d5ca7b86d5..bc98b65075 100644
+> --- a/docs/devel/migration/features.rst
+> +++ b/docs/devel/migration/features.rst
+> @@ -12,3 +12,4 @@ Migration has plenty of features to support different use cases.
+>     virtio
+>     mapped-ram
+>     CPR
+> +   qpl-compression
+> diff --git a/docs/devel/migration/qpl-compression.rst b/docs/devel/migration/qpl-compression.rst
+> new file mode 100644
+> index 0000000000..42c7969d30
+> --- /dev/null
+> +++ b/docs/devel/migration/qpl-compression.rst
+> @@ -0,0 +1,231 @@
+> +===============
+> +QPL Compression
+> +===============
+> +The Intel Query Processing Library (Intel ``QPL``) is an open-source library to
+> +provide compression and decompression features and it is based on deflate
+> +compression algorithm (RFC 1951).
+> +
+> +The ``QPL`` compression relies on Intel In-Memory Analytics Accelerator(``IAA``)
+> +and Shared Virtual Memory(``SVM``) technology, they are new features supported
+> +from Intel 4th Gen Intel Xeon Scalable processors, codenamed Sapphire Rapids
+> +processor(``SPR``).
+> +
+> +For more ``QPL`` introduction, please refer to:
+> +
+> +https://intel.github.io/qpl/documentation/introduction_docs/introduction.html
 
+There're a bunch of links in this page, please consider switching all of
+them to use the link formats of .rST:
 
-On 3/26/24 14:05, Greg Kurz wrote:
-> On Tue, 26 Mar 2024 10:26:04 -0300
-> Daniel Henrique Barboza <dbarboza@ventanamicro.com> wrote:
-> 
->> The local 9p driver in virtio-9p-test.c its temporary dir right at the
->> start of qos-test (via virtio_9p_create_local_test_dir()) and only
->> deletes it after qos-test is finished (via
->> virtio_9p_remove_local_test_dir()).
->>
->> This means that any qos-test machine that ends up running virtio-9p-test local
->> tests more than once will end up re-using the same temp dir. This is
->> what's happening in [1] after we introduced the riscv machine nodes: if
->> we enable slow tests with the '-m slow' flag using qemu-system-riscv64,
->> this is what happens:
->>
->> - a temp dir is created, e.g. qtest-9p-local-WZLDL2;
->>
->> - virtio-9p-device tests will run virtio-9p-test successfully;
->>
->> - virtio-9p-pci tests will run virtio-9p-test, and fail right at the
->>    first slow test at fs_create_dir() because the "01" file was already
->>    created by fs_create_dir() test when running with the virtio-9p-device.
->>
->> We can fix it by making every test clean up their changes in the
->> filesystem after they're done. But we don't need every test either:
->> what fs_create_file() does is already exercised in fs_unlinkat_dir(),
->> i.e. a dir is created, verified to be created, and then removed. Fixing
->> fs_create_file() would turn it into fs_unlikat_dir(), so we don't need
->> both. The same theme follows every test in virtio-9p-test.c, where the
->> 'unlikat' variant does the same thing the 'create' does but with some
->> cleaning in the end.
->>
->> Consolide some tests as follows:
->>
->> - fs_create_dir() is removed. fs_unlinkat_dir() is renamed to
->>    fs_create_unlinkat_dir();
->>
->> - fs_create_file() is removed. fs_unlinkat_file() is renamed to
->>    fs_create_unlinkat_file(). The "04" dir it uses is now being removed;
->>
->> - fs_symlink_file() is removed. fs_unlinkat_symlink() is renamed to
->>    fs_create_unlinkat_symlink(). Both "real_file" and the "06" dir it
->>    creates is now being removed.
->>
-> 
-> The  change looks good functionally but it breaks the legitimate assumption
-> that files "06/*" come from test #6 and so on... I think you should consider
-> renumbering to avoid confusion when debugging logs.
-> 
-> Since this will bring more hunks, please split this in enough reviewable
-> patches.
+  Please refer to `QPL introduction page <https://...>`_.
 
-Fair enough. Let me cook a v2. Thanks,
+> +
+> +QPL Compression Framework
+> +=========================
+> +
+> +::
+> +
+> +  +----------------+       +------------------+
+> +  | MultiFD Service|       |accel-config tool |
+> +  +-------+--------+       +--------+---------+
+> +          |                         |
+> +          |                         |
+> +  +-------+--------+                | Setup IAA
+> +  |  QPL library   |                | Resources
+> +  +-------+---+----+                |
+> +          |   |                     |
+> +          |   +-------------+-------+
+> +          |   Open IAA      |
+> +          |   Devices +-----+-----+
+> +          |           |idxd driver|
+> +          |           +-----+-----+
+> +          |                 |
+> +          |                 |
+> +          |           +-----+-----+
+> +          +-----------+IAA Devices|
+> +      Submit jobs     +-----------+
+> +      via enqcmd
+> +
+> +
+> +Intel In-Memory Analytics Accelerator (Intel IAA) Introduction
+> +================================================================
+> +
+> +Intel ``IAA`` is an accelerator that has been designed to help benefit
+> +in-memory databases and analytic workloads. There are three main areas
+> +that Intel ``IAA`` can assist with analytics primitives (scan, filter, etc.),
+> +sparse data compression and memory tiering.
+> +
+> +``IAA`` Manual Documentation:
+> +
+> +https://www.intel.com/content/www/us/en/content-details/721858/intel-in-memory-analytics-accelerator-architecture-specification
+> +
+> +IAA Device Enabling
+> +-------------------
+> +
+> +- Enabling ``IAA`` devices for platform configuration, please refer to:
+> +
+> +https://www.intel.com/content/www/us/en/content-details/780887/intel-in-memory-analytics-accelerator-intel-iaa.html
+> +
+> +- ``IAA`` device driver is ``Intel Data Accelerator Driver (idxd)``, it is
+> +  recommended that the minimum version of Linux kernel is 5.18.
+> +
+> +- Add ``"intel_iommu=on,sm_on"`` parameter to kernel command line
+> +  for ``SVM`` feature enabling.
+> +
+> +Here is an easy way to verify ``IAA`` device driver and ``SVM``, refer to:
+> +
+> +https://github.com/intel/idxd-config/tree/stable/test
+> +
+> +IAA Device Management
+> +---------------------
+> +
+> +The number of ``IAA`` devices will vary depending on the Xeon product model.
+> +On a ``SPR`` server, there can be a maximum of 8 ``IAA`` devices, with up to
+> +4 devices per socket.
+> +
+> +By default, all ``IAA`` devices are disabled and need to be configured and
+> +enabled by users manually.
+> +
+> +Check the number of devices through the following command
+> +
+> +.. code-block:: shell
+> +
+> +  # lspci -d 8086:0cfe
+> +  # 6a:02.0 System peripheral: Intel Corporation Device 0cfe
+> +  # 6f:02.0 System peripheral: Intel Corporation Device 0cfe
+> +  # 74:02.0 System peripheral: Intel Corporation Device 0cfe
+> +  # 79:02.0 System peripheral: Intel Corporation Device 0cfe
+> +  # e7:02.0 System peripheral: Intel Corporation Device 0cfe
+> +  # ec:02.0 System peripheral: Intel Corporation Device 0cfe
+> +  # f1:02.0 System peripheral: Intel Corporation Device 0cfe
+> +  # f6:02.0 System peripheral: Intel Corporation Device 0cfe
+> +
+> +IAA Device Configuration
+> +------------------------
+> +
+> +The ``accel-config`` tool is used to enable ``IAA`` devices and configure
+> +``IAA`` hardware resources(work queues and engines). One ``IAA`` device
+> +has 8 work queues and 8 processing engines, multiple engines can be assigned
+> +to a work queue via ``group`` attribute.
+> +
+> +One example of configuring and enabling an ``IAA`` device.
+> +
+> +.. code-block:: shell
+> +
+> +  # accel-config config-engine iax1/engine1.0 -g 0
+> +  # accel-config config-engine iax1/engine1.1 -g 0
+> +  # accel-config config-engine iax1/engine1.2 -g 0
+> +  # accel-config config-engine iax1/engine1.3 -g 0
+> +  # accel-config config-engine iax1/engine1.4 -g 0
+> +  # accel-config config-engine iax1/engine1.5 -g 0
+> +  # accel-config config-engine iax1/engine1.6 -g 0
+> +  # accel-config config-engine iax1/engine1.7 -g 0
+> +  # accel-config config-wq iax1/wq1.0 -g 0 -s 128 -p 10 -b 1 -t 128 -m shared -y user -n app1 -d user
+> +  # accel-config enable-device iax1
+> +  # accel-config enable-wq iax1/wq1.0
+> +
+> +.. note::
+> +   IAX is an early name for IAA
+> +
+> +- The ``IAA`` device index is 1, use ``ls -lh /sys/bus/dsa/devices/iax*``
+> +  command to query the ``IAA`` device index.
+> +
+> +- 8 engines and 1 work queue are configured in group 0, so all compression jobs
+> +  submitted to this work queue can be processed by all engines at the same time.
+> +
+> +- Set work queue attributes including the work mode, work queue size and so on.
+> +
+> +- Enable the ``IAA1`` device and work queue 1.0
+> +
+> +.. note::
+> +  Set work queue mode to shared mode, since ``QPL`` library only supports
+> +  shared mode
+> +
+> +For more detailed configuration, please refer to:
+> +
+> +https://github.com/intel/idxd-config/tree/stable/Documentation/accfg
+> +
+> +IAA Resources Allocation For Migration
+> +--------------------------------------
+> +
+> +There is no ``IAA`` resource configuration parameters for migration and
+> +``accel-config`` tool configuration cannot directly specify the ``IAA``
+> +resources used for migration.
+> +
+> +``QPL`` will use all work queues that are enabled and set to shared mode,
+> +and use all engines assigned to the work queues with shared mode.
+> +
+> +By default, ``QPL`` will only use the local ``IAA`` device for compression
+> +job processing. The local ``IAA`` device means that the CPU of the job
+> +submission and the ``IAA`` device are on the same socket, so one CPU
+> +can submit the jobs to up to 4 ``IAA`` devices.
+> +
+> +Shared Virtual Memory(SVM) Introduction
+> +=======================================
+> +
+> +An ability for an accelerator I/O device to operate in the same virtual
+> +memory space of applications on host processors. It also implies the
+> +ability to operate from pageable memory, avoiding functional requirements
+> +to pin memory for DMA operations.
+> +
+> +When using ``SVM`` technology, users do not need to reserve memory for the
+> +``IAA`` device and perform pin memory operation. The ``IAA`` device can
+> +directly access data using the virtual address of the process.
+> +
+> +For more ``SVM`` technology, please refer to:
+> +
+> +https://docs.kernel.org/next/x86/sva.html
+> +
+> +
+> +How To Use QPL Compression In Migration
+> +=======================================
+> +
+> +1 - Installation of ``accel-config`` tool and ``QPL`` library
 
+We can drop "1 " and stick with:
 
-Daniel
+  - item1
+    - item1.1
+    ...
+  - item2
 
+> +
+> +  - Install ``accel-config`` tool from https://github.com/intel/idxd-config
+> +  - Install ``QPL`` library from https://github.com/intel/qpl
+> +
+> +2 - Configure and enable ``IAA`` devices and work queues via ``accel-config``
+> +
+> +3 - Build ``Qemu`` with ``--enable-qpl`` parameter
+> +
+> +  E.g. configure --target-list=x86_64-softmmu --enable-kvm ``--enable-qpl``
+> +
+> +4 - Start VMs with ``sudo`` command or ``root`` permission
+> +
+> +  Use the ``sudo`` command or ``root`` privilege to start the source and
+> +  destination virtual machines, since migration service needs permission
+> +  to access ``IAA`` hardware resources.
+> +
+> +5 - Enable ``QPL`` compression during migration
+> +
+> +  Set ``migrate_set_parameter multifd-compression qpl`` when migrating, the
+> +  ``QPL`` compression does not support configuring the compression level, it
+> +  only supports one compression level.
+> +
+> +The Difference Between QPL And ZLIB
+> +===================================
+> +
+> +Although both ``QPL`` and ``ZLIB`` are based on the deflate compression
+> +algorithm, and ``QPL`` can support the header and tail of ``ZLIB``, ``QPL``
+> +is still not fully compatible with the ``ZLIB`` compression in the migration.
+> +
+> +``QPL`` only supports 4K history buffer, and ``ZLIB`` is 32K by default. The
+> +``ZLIB`` compressed data that ``QPL`` may not decompress correctly and
+> +vice versa.
+> +
+> +``QPL`` does not support the ``Z_SYNC_FLUSH`` operation in ``ZLIB`` streaming
+> +compression, current ``ZLIB`` implementation uses ``Z_SYNC_FLUSH``, so each
+> +``multifd`` thread has a ``ZLIB`` streaming context, and all page compression
+> +and decompression are based on this stream. ``QPL`` cannot decompress such data
+> +and vice versa.
+> +
+> +The introduction for ``Z_SYNC_FLUSH``, please refer to:
+> +
+> +https://www.zlib.net/manual.html
+> +
+> +The Best Practices
+> +==================
+> +
+> +When the virtual machine's pages are not populated and the ``IAA`` device is
+> +used, I/O page faults occur, which can impact performance due to a large number
+> +of flush ``IOTLB`` operations.
+
+AFAIU the IOTLB issue is not expected and can be fixed, while per our
+discussion in the other thread, the DMA fault latency cannot.
+
+I think we can mention the possibility of IOTLB flush issue but that
+shouldn't be the major cause of such suggestion.  Again, I think it'll be
+great to mention how slow a DMA page fault can be, it can be compared in
+migration performance difference, or just describe an average DMA page
+fault latency, v.s. a processor fault.  That might explain why we suggest
+prefault the pages (comparing to a generic setup where the pages are always
+faulted by processors).
+
+> +
+> +Since the normal pages on the source side are all populated, ``IOTLB`` caused
+> +by I/O page fault will not occur. On the destination side, a large number
+> +of normal pages need to be loaded, so it is recommended to add ``-mem-prealloc``
+> +parameter on the destination side.
+> -- 
+> 2.39.3
 > 
-> Cheers,
-> 
-> --
-> Greg
-> 
->> We're still missing the 'hardlink' tests. We'll do it in the next patch
->> since it's less trivial to consolidate than these.
->>
->> [1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg05807.html
->>
->> Reported-by: Thomas Huth <thuth@redhat.com>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   tests/qtest/virtio-9p-test.c | 97 +++++++++++-------------------------
->>   1 file changed, 29 insertions(+), 68 deletions(-)
->>
->> diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
->> index 65e69491e5..cdbe3e78ea 100644
->> --- a/tests/qtest/virtio-9p-test.c
->> +++ b/tests/qtest/virtio-9p-test.c
->> @@ -506,26 +506,8 @@ static void fs_readdir_split_512(void *obj, void *data,
->>   
->>   /* tests using the 9pfs 'local' fs driver */
->>   
->> -static void fs_create_dir(void *obj, void *data, QGuestAllocator *t_alloc)
->> -{
->> -    QVirtio9P *v9p = obj;
->> -    v9fs_set_allocator(t_alloc);
->> -    struct stat st;
->> -    g_autofree char *root_path = virtio_9p_test_path("");
->> -    g_autofree char *new_dir = virtio_9p_test_path("01");
->> -
->> -    g_assert(root_path != NULL);
->> -
->> -    tattach({ .client = v9p });
->> -    tmkdir({ .client = v9p, .atPath = "/", .name = "01" });
->> -
->> -    /* check if created directory really exists now ... */
->> -    g_assert(stat(new_dir, &st) == 0);
->> -    /* ... and is actually a directory */
->> -    g_assert((st.st_mode & S_IFMT) == S_IFDIR);
->> -}
->> -
->> -static void fs_unlinkat_dir(void *obj, void *data, QGuestAllocator *t_alloc)
->> +static void fs_create_unlinkat_dir(void *obj, void *data,
->> +                                   QGuestAllocator *t_alloc)
->>   {
->>       QVirtio9P *v9p = obj;
->>       v9fs_set_allocator(t_alloc);
->> @@ -551,28 +533,13 @@ static void fs_unlinkat_dir(void *obj, void *data, QGuestAllocator *t_alloc)
->>       g_assert(stat(new_dir, &st) != 0);
->>   }
->>   
->> -static void fs_create_file(void *obj, void *data, QGuestAllocator *t_alloc)
->> -{
->> -    QVirtio9P *v9p = obj;
->> -    v9fs_set_allocator(t_alloc);
->> -    struct stat st;
->> -    g_autofree char *new_file = virtio_9p_test_path("03/1st_file");
->> -
->> -    tattach({ .client = v9p });
->> -    tmkdir({ .client = v9p, .atPath = "/", .name = "03" });
->> -    tlcreate({ .client = v9p, .atPath = "03", .name = "1st_file" });
->> -
->> -    /* check if created file exists now ... */
->> -    g_assert(stat(new_file, &st) == 0);
->> -    /* ... and is a regular file */
->> -    g_assert((st.st_mode & S_IFMT) == S_IFREG);
->> -}
->> -
->> -static void fs_unlinkat_file(void *obj, void *data, QGuestAllocator *t_alloc)
->> +static void fs_create_unlinkat_file(void *obj, void *data,
->> +                                    QGuestAllocator *t_alloc)
->>   {
->>       QVirtio9P *v9p = obj;
->>       v9fs_set_allocator(t_alloc);
->>       struct stat st;
->> +    g_autofree char *new_dir = virtio_9p_test_path("04");
->>       g_autofree char *new_file = virtio_9p_test_path("04/doa_file");
->>   
->>       tattach({ .client = v9p });
->> @@ -587,37 +554,22 @@ static void fs_unlinkat_file(void *obj, void *data, QGuestAllocator *t_alloc)
->>       tunlinkat({ .client = v9p, .atPath = "04", .name = "doa_file" });
->>       /* file should be gone now */
->>       g_assert(stat(new_file, &st) != 0);
->> -}
->> -
->> -static void fs_symlink_file(void *obj, void *data, QGuestAllocator *t_alloc)
->> -{
->> -    QVirtio9P *v9p = obj;
->> -    v9fs_set_allocator(t_alloc);
->> -    struct stat st;
->> -    g_autofree char *real_file = virtio_9p_test_path("05/real_file");
->> -    g_autofree char *symlink_file = virtio_9p_test_path("05/symlink_file");
->>   
->> -    tattach({ .client = v9p });
->> -    tmkdir({ .client = v9p, .atPath = "/", .name = "05" });
->> -    tlcreate({ .client = v9p, .atPath = "05", .name = "real_file" });
->> -    g_assert(stat(real_file, &st) == 0);
->> -    g_assert((st.st_mode & S_IFMT) == S_IFREG);
->> -
->> -    tsymlink({
->> -        .client = v9p, .atPath = "05", .name = "symlink_file",
->> -        .symtgt = "real_file"
->> +    /* also cleanup dir*/
->> +    tunlinkat({
->> +        .client = v9p, .atPath = "/", .name = "04",
->> +        .flags = P9_DOTL_AT_REMOVEDIR
->>       });
->> -
->> -    /* check if created link exists now */
->> -    g_assert(stat(symlink_file, &st) == 0);
->> +    g_assert(stat(new_dir, &st) != 0);
->>   }
->>   
->> -static void fs_unlinkat_symlink(void *obj, void *data,
->> -                                QGuestAllocator *t_alloc)
->> +static void fs_create_unlinkat_symlink(void *obj, void *data,
->> +                                       QGuestAllocator *t_alloc)
->>   {
->>       QVirtio9P *v9p = obj;
->>       v9fs_set_allocator(t_alloc);
->>       struct stat st;
->> +    g_autofree char *new_dir = virtio_9p_test_path("06");
->>       g_autofree char *real_file = virtio_9p_test_path("06/real_file");
->>       g_autofree char *symlink_file = virtio_9p_test_path("06/symlink_file");
->>   
->> @@ -636,6 +588,16 @@ static void fs_unlinkat_symlink(void *obj, void *data,
->>       tunlinkat({ .client = v9p, .atPath = "06", .name = "symlink_file" });
->>       /* symlink should be gone now */
->>       g_assert(stat(symlink_file, &st) != 0);
->> +
->> +    /* remove real file and dir */
->> +    tunlinkat({ .client = v9p, .atPath = "06", .name = "real_file" });
->> +    g_assert(stat(real_file, &st) != 0);
->> +
->> +    tunlinkat({
->> +        .client = v9p, .atPath = "/", .name = "06",
->> +        .flags = P9_DOTL_AT_REMOVEDIR
->> +    });
->> +    g_assert(stat(new_dir, &st) != 0);
->>   }
->>   
->>   static void fs_hardlink_file(void *obj, void *data, QGuestAllocator *t_alloc)
->> @@ -746,13 +708,12 @@ static void register_virtio_9p_test(void)
->>   
->>       opts.before = assign_9p_local_driver;
->>       qos_add_test("local/config", "virtio-9p", pci_config,  &opts);
->> -    qos_add_test("local/create_dir", "virtio-9p", fs_create_dir, &opts);
->> -    qos_add_test("local/unlinkat_dir", "virtio-9p", fs_unlinkat_dir, &opts);
->> -    qos_add_test("local/create_file", "virtio-9p", fs_create_file, &opts);
->> -    qos_add_test("local/unlinkat_file", "virtio-9p", fs_unlinkat_file, &opts);
->> -    qos_add_test("local/symlink_file", "virtio-9p", fs_symlink_file, &opts);
->> -    qos_add_test("local/unlinkat_symlink", "virtio-9p", fs_unlinkat_symlink,
->> -                 &opts);
->> +    qos_add_test("local/create_unlinkat_dir", "virtio-9p",
->> +                 fs_create_unlinkat_dir, &opts);
->> +    qos_add_test("local/create_unlinkat_file", "virtio-9p",
->> +                 fs_create_unlinkat_file, &opts);
->> +    qos_add_test("local/create_unlinkat_symlink", "virtio-9p",
->> +                 fs_create_unlinkat_symlink, &opts);
->>       qos_add_test("local/hardlink_file", "virtio-9p", fs_hardlink_file, &opts);
->>       qos_add_test("local/unlinkat_hardlink", "virtio-9p", fs_unlinkat_hardlink,
->>                    &opts);
-> 
-> 
-> 
+
+-- 
+Peter Xu
+
 
