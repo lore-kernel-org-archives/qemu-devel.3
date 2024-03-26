@@ -4,77 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7995CD11DD
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 967C0C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:41:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp66W-0005Vc-5s; Tue, 26 Mar 2024 08:40:36 -0400
+	id 1rp67J-0006AZ-J6; Tue, 26 Mar 2024 08:41:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rp66R-0005UD-RF
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:40:32 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1rp67A-00069N-1S
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:41:16 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1rp66Q-0001qt-5E
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:40:31 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5684db9147dso6347529a12.2
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 05:40:28 -0700 (PDT)
+ id 1rp677-0001w6-0v
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:41:14 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-56c197d042fso2011482a12.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 05:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711456827; x=1712061627; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711456871; x=1712061671; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=M3UGHtJmOYdUAhi5t1BRB9hvcswDptE9pAC7zQpBEQA=;
- b=DhthijxFdL0XZQO0vhvONRijUvsLJ2Uc3dpsSeuLGQY964vLQ6I4wBU4f1mkU6/1eT
- HATNegLLLfi3E69D9B9Y6YPAATVXhagb380LCBhpSFs00p00KlDwH7od+QHKpI6MzPlx
- 3XLlNd9ZM4KiGnd4BsniRYqTkVDaH3N85gpK+ferXRvjNA1fNZUAcq3y9w6PU7ssAWaQ
- m0Xp1Hkue1qaq+A+zTbRRB2itrpcPn0Dccm0w3ocI6wq5I9qjUfARXJbEtt5ebDmQPIb
- Vp+PSZaRfeH/ODtAhNzqiHNeL3l9XNJJyQw9QDO8rQiT1PgqPxipejqQgiKBeruGF8TN
- IyWA==
+ bh=4CuG97nn0Q6Eeqa6id3xmKY4GdCXfpXLd8iOFU2gGvE=;
+ b=CSuO54IjY7vkFSECCQvZoYTOaXJVL9NiQ+x79fb9QVRzkEKq5wQPZYG1Cy/TBTbX5L
+ xXXBnz4irgwkKJ5UsyeboAdOPgJl9ZohlQX6IX5TS0O744a0rZKTNI3S23/NQQ0ZbgLc
+ qKS8JTZC7MiSn90fIJfZDgp8PPqruY8+F6q4dby3jWp3ytTDyhYQDIYed+HCFjfdx+k3
+ P8a8eI3hfhAJvqrYUQEKo+sCvxNidM2Py6zDoMYhtqK14cYbseMICI1qFxgYrW5+Jhxo
+ QjCfSgBpgL+Zzd9YgyI1Jur49OUmLbrt04kJDSnQaaMOsE+yuJudCOtqgEGqdsUsgSpH
+ RuCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711456827; x=1712061627;
+ d=1e100.net; s=20230601; t=1711456871; x=1712061671;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=M3UGHtJmOYdUAhi5t1BRB9hvcswDptE9pAC7zQpBEQA=;
- b=h5AOvXSlPStBE7Xs7mf6rU52R6+s/A84VIh+QxXoBaDnwWypY5PBlfTFfh9ldXBUux
- g74sAlOtHynuaFz3vm0IePvcUKlGYXJaC/C7ZgmXbYXYik5anmCuz3+IPp0ce/AgDCoO
- Lt0ng7Y8fD2/zSsD8Ob05UolenOBYeRxktg5Qskb7P/hIUL7lq1Se8pVXIN1WoS0PQRd
- ibMaIcjvjqKV/IKxOi1vBjV88I6wSRzKg6+bzZwOYzJFlNf0TjTyF5x6RbvNZhzlw/Bq
- e2Iimrcfn/ki0bTeqJ3g4FaIyqheHIRpdT5p68gDF9IxAV5mxUsLKwNJHWnNh3FBj15F
- /Tbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVwdMZsyEhwcqiooA8lETr/y8+3uwnNZxm/EZp+5J4+QKmb8dSJ7Hj1+8z66Ew94PrcWc421yFlLDUJSNjUQjM0xXfjCto=
-X-Gm-Message-State: AOJu0YyeB2eslsGXOQqoHCCzAgrKgjSKGyha4NOzNsy6M8xz8mK1vE9V
- JjaqpRW4UzaMavRhAPE7FfyVZAXb2bVMSYskf/TfvubuLPGqLSqmXZ+gx/N3QCMQJ01mFbQf5cT
- gEq3tIBAXZ64lsgZ+aQhVDnBjim1FC9X+L+suwQ==
-X-Google-Smtp-Source: AGHT+IFxr6/Eic3/zTKR/CCsHPeSz0BOal6hN/adaX6bW0CZtZopfMP4CC30YUCnSS2g+UouMOf8ku1RA3dIsP52qTs=
-X-Received: by 2002:a50:d5c5:0:b0:56b:8f6d:8a99 with SMTP id
- g5-20020a50d5c5000000b0056b8f6d8a99mr823495edj.22.1711456827553; Tue, 26 Mar
- 2024 05:40:27 -0700 (PDT)
+ bh=4CuG97nn0Q6Eeqa6id3xmKY4GdCXfpXLd8iOFU2gGvE=;
+ b=uc4GLe85v/HIY1agPE+hynd57cask+ccus54UdmnJWIfmSZLn7oiBwsHY8CGwb67Df
+ SDha6PQiRQAnht/hEBKRdFORpJAu1XBdNz0DaMplAi/CVD0amklNgIoI7AuY2yzGzSdt
+ NTOVoFG8u4WLTELWBsGr89ZZn8wBym4kkDNydfmzmo2z3excNcVMdn7czjLZVGWDJ/CS
+ 9kKju49b/u5UkeH+p+ladBVO1CGG+9t5LwkGzwMu400eT9diaDBBAH1kOIvkD/Yn76po
+ bWjynJr6tA14OI+2LDeYKlyRjL4W6PkvToinytQ15bkXjX491+SJGcFgphbsoXPot1Qc
+ 6Ibg==
+X-Gm-Message-State: AOJu0Yx6oboZESOx2kfcbqnX5Mdhkr+IeL/uhgVjglh10NEkl5ipNW/M
+ weYhAWa3TGzGdhaes5SbSSjsMbteloBT1BhX8YUQPaYssqTgr3VBCzvZSeQNSHhprj87Q/20a4m
+ HmEtTMQr8mVvP8yROAMfdbcDRKDFi74Crcv7n+Gj8ongFz7bJ
+X-Google-Smtp-Source: AGHT+IGk9qeCBd3qzgXINDPfPvszw7tpBSCG30t+pS8bOzcs8GNxnrtfvbTXVarH3nx3v9OkAlO1EQ4VGqViowBnt3U=
+X-Received: by 2002:a50:9352:0:b0:56c:274a:31df with SMTP id
+ n18-20020a509352000000b0056c274a31dfmr1545213eda.5.1711456871413; Tue, 26 Mar
+ 2024 05:41:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240326-meson-v2-0-d9f9003775e9@daynix.com>
- <20240326-meson-v2-1-d9f9003775e9@daynix.com>
-In-Reply-To: <20240326-meson-v2-1-d9f9003775e9@daynix.com>
+References: <20240326073420.738016-1-armbru@redhat.com>
+In-Reply-To: <20240326073420.738016-1-armbru@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 26 Mar 2024 12:40:16 +0000
-Message-ID: <CAFEAcA8JF35A5o-+F39sXFnkTDnPo29A7zCZgxFPt3388sVvig@mail.gmail.com>
-Subject: Re: [PATCH for 9.1 v2 1/2] buildsys: Bump known good meson version to
- v1.4.0
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Beraldo Leal <bleal@redhat.com>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- John Snow <jsnow@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Date: Tue, 26 Mar 2024 12:41:00 +0000
+Message-ID: <CAFEAcA8j+WHFNbohrLJpYNy4=YF7NaFTGOkFf5rvPtife1tuHA@mail.gmail.com>
+Subject: Re: [PULL 00/20] QAPI patches patches for 2024-03-26
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,36 +87,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Mar 2024 at 12:35, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+On Tue, 26 Mar 2024 at 07:34, Markus Armbruster <armbru@redhat.com> wrote:
 >
-> We need meson v1.4.0 to fix MESONINTROSPECT quoting on Windows:
-> https://github.com/mesonbuild/meson/pull/12807
+> This pull request does not touch code, only QAPI schema documentation
+> comments and error-suppressing QAPI schema pragma
+> documentation-exceptions.
 >
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  python/scripts/vendor.py                   |   4 ++--
->  python/wheels/meson-1.2.3-py3-none-any.whl | Bin 964928 -> 0 bytes
->  python/wheels/meson-1.4.0-py3-none-any.whl | Bin 0 -> 935471 bytes
->  pythondeps.toml                            |   2 +-
->  4 files changed, 3 insertions(+), 3 deletions(-)
-
-> --- a/pythondeps.toml
-> +++ b/pythondeps.toml
-> @@ -19,7 +19,7 @@
+> The following changes since commit 6a4180af9686830d88c387baab6d79563ce42a15:
 >
->  [meson]
->  # The install key should match the version in python/wheels/
-> -meson = { accepted = ">=0.63.0", installed = "1.2.3", canary = "meson" }
-> +meson = { accepted = ">=0.63.0", installed = "1.4.0", canary = "meson" }
+>   Merge tag 'pull-request-2024-03-25' of https://gitlab.com/thuth/qemu into staging (2024-03-25 14:19:42 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2024-03-26
+>
+> for you to fetch changes up to 1a533ce986f52c35f324f5f4fff22cdc2619a47c:
+>
+>   qapi: document parameters of query-cpu-model-* QAPI commands (2024-03-26 06:36:08 +0100)
+>
+> ----------------------------------------------------------------
+> QAPI patches patches for 2024-03-26
+>
+> ----------------------------------------------------------------
 
-If we need 1.4.0 why does this still say we accept anything 0.63.0
-or better ?
 
-If we use shlex.split(), does that go wrong for pre-1.4.0
-meson only on Windows, or is it broken for all platforms?
-(i.e. could we if we wanted to make the requirement
-"1.4.0 for windows, 0.63.0 for others"?)
+Applied, thanks.
 
-thanks
+Please update the changelog at https://wiki.qemu.org/ChangeLog/9.0
+for any user-visible changes.
+
 -- PMM
 
