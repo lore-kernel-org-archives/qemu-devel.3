@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD964C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 04:55:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE28C54E67
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 04:56:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1royq6-0002gs-6I; Tue, 26 Mar 2024 00:55:10 -0400
+	id 1royqw-00040s-4B; Tue, 26 Mar 2024 00:56:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1royq0-0002eB-9w; Tue, 26 Mar 2024 00:55:04 -0400
-Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
+ id 1royqu-00040g-5D; Tue, 26 Mar 2024 00:56:00 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1roypy-0000xi-1P; Tue, 26 Mar 2024 00:55:03 -0400
-Received: by mail-vk1-xa29.google.com with SMTP id
- 71dfb90a1353d-4d452e2f0aeso1948630e0c.1; 
- Mon, 25 Mar 2024 21:55:01 -0700 (PDT)
+ id 1royqp-0001FF-H1; Tue, 26 Mar 2024 00:55:59 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2d49f7e5c2cso68258321fa.2; 
+ Mon, 25 Mar 2024 21:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711428900; x=1712033700; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711428951; x=1712033751; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gDto20CjZopmIFKXilu7ietmczZxyfrzm+oC59FLg6U=;
- b=UGJvmjcx5sMFF0HQUK+5LQL4KVhmi7YYnFzezIMJcQ4ncUwEJU6w1kD9Id8GGRQe4X
- gzAXNyxZ3Q7GdHzuOy+SB15aXXyvNMUCMP8y8hh7kjIXVegGIIy+2z6Vuc3sLy1wBAA8
- cSUUollONb2ZU4E+NqZykYZY4/NRn4CAfizxRU8iBNM7wE6TSVX6Xly+4LSgCaSgHRzr
- QQZUNd69CrSNq2H5df/c/Hx9zS3zZo4IkIw5VnE7CpAwd89yKsxrjTSYz/FTFE8cMtz1
- zT7w72M8vvmO6/qKTVWDfIktitv75NlTsUEin7bgRkMZVfLstJwerH8JD4fIdufrKTkX
- qmKA==
+ bh=rS+wzdQT5x7x5iCFTR/am43NuWsKoxOMfZ5wiLYQm/w=;
+ b=adxK4954pmGN01Hp2Qv4o276wCYLdPayDTo6GKj6Kbmk5cbVDYO6cTFLLhML5cdKh5
+ nolyIFEd2nREKfaLqHCcjcgbp5KD7GPeA0PHeWjE5oGrh6cHd3hs6HFplo+XbMcQJvNX
+ NfSNpsoa0mYrd8mar1RqgPV5UHAGrn+0MLVDVGq8/r6YLFXYFmOr0RaOPA/n0YgN4xQr
+ yAh0+15eXf6EG1SHuIo+xdlezv2EkQC4d2zSpuup9aHpDOKRKBn6xnQiXsK4PJ5lcZWk
+ 0hlnWt4T1XitqrDhDksxw9rzqnn3Di8HAinDDTnJ1emkKFmi4QmB8/nIIl/zJILFkFG6
+ sCMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711428900; x=1712033700;
+ d=1e100.net; s=20230601; t=1711428951; x=1712033751;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gDto20CjZopmIFKXilu7ietmczZxyfrzm+oC59FLg6U=;
- b=bWV8XOm0rnc1eARvfN87PT3WQTKMCcpuWf2ma9DxadOGEzKdwRYltQCTkbv9027NzU
- FV9WgzAm3xdYF1PrWRsD/b3+KwBkGQ73jUcsmik6yDhp7+/olHTxELMgMVyiCpGKdATd
- X6SEmNYCfyvHdxKXRZ1cV5ufAiUq5k+QJZIH+VPMUZoRDA4tS5PZ08O2Dwj0rhjLcBUX
- Vku320OUK/w+QsoA+Dwez5SzrGkVgy/aypCH57XW9jTO4blAbneK1almLidMAehEMIRl
- l0tBtMcoaXqEJML4M2tTMUD2nmxxwBubbJboTty3yHPR6PyhEI0WWJx/lClLIymlKA8C
- qV9Q==
+ bh=rS+wzdQT5x7x5iCFTR/am43NuWsKoxOMfZ5wiLYQm/w=;
+ b=P7/gvDEAjIW4PZmU+mu14YNcj1v/1+I1HZFPu6ds3OsJqu1Iuhp7C7HlYoNjQip54L
+ ThUUXyeeQQ4GdzSa+vgd04uFgxRaQNXqov4hU8xNwqcqg/0q1C6/cPzJkNpMrZuWRLlT
+ rcpcMXyPoVy6v3SQOppt0SOK2yA824zTR36DXKM02F98L4/AUSgqNCxMt0orqffWyNbW
+ 5ZgsUTHPs/jO4cRuivJOnDqZIybSa+1klKa8jWybIfGaa8LuVaJ+7Jp0nAVN8Z8FgprX
+ ur6eHfcNvO1Uq2TVhnZN5LeVRSnjYO60n5oYO1p+90/c/Ep2Vrxeu42amnO/hGEl7ek3
+ 00FQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHityWI03RRAJoB2l22idP/OCfmfo7CWzmjHOJ/vPIMxwMm0BJgtvATS0Xe5nKHzwzUz3AH5zZ+hnnLjWUnfK4XPmi
-X-Gm-Message-State: AOJu0YxyNq31M1RVeVQzFUvtsn3yvsXDdwcWfOowgCUMoN9DOwxdgyHI
- Te6K1Si+6/O0vdmD0BsP5qqLSccT5Jpj5xuPMmKUCHMvsbbl43tJsVrLrEoXnz2VGWd/yJSwZk9
- 9bPCWmKllwa6i1J32PSsdCWbUgVI=
-X-Google-Smtp-Source: AGHT+IHsNEflE4ALOvCiGMtfIttGAuPQqpQqDSW93EaQs89TD1F8F6oNj6Uo1PYjrF+oK5glZGUefYYPclPUD/47ARk=
-X-Received: by 2002:a1f:f843:0:b0:4d8:7a5e:392f with SMTP id
- w64-20020a1ff843000000b004d87a5e392fmr5912129vkh.12.1711428895420; Mon, 25
- Mar 2024 21:54:55 -0700 (PDT)
+ AJvYcCUxPZSL3+ZtRJnmkZIYzAivA8OmXSuQE4z6jWhnR9xcFfozr8Wo57RwUmhezUhsBDauE0VOh4kYtzPjdmb0X1hABpuEXRoAEryTzOI4xuciCda3FCnOrJW5a2kxBQ==
+X-Gm-Message-State: AOJu0Yz3eoiIOoYb1SPJ44M5iKaH8E8qRgcGtALAjojhnS5+3nvYdMxW
+ 0AbjvFXwD9LyyrqAB7cmFubgd0bDp0blmxLROMSUZ8g0CS/3ly7Dgg0MVe81zCt//plX3pUGjxa
+ /73t9NevUQYndqd+I5rQm3zqmKVE=
+X-Google-Smtp-Source: AGHT+IHg1fw5vhSuJn7HdOWQlH3hc7vYnN35kbyA7PRBkX4/Zr6q2PepFrLV+EimGczcdzc8lyWI9flCPoJnO6xHESc=
+X-Received: by 2002:a2e:b704:0:b0:2d3:f3fe:48ac with SMTP id
+ j4-20020a2eb704000000b002d3f3fe48acmr5170869ljo.27.1711428951102; Mon, 25 Mar
+ 2024 21:55:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240325152827.73817-1-philmd@linaro.org>
- <20240325152827.73817-4-philmd@linaro.org>
-In-Reply-To: <20240325152827.73817-4-philmd@linaro.org>
+References: <b7fff1e9-f2b3-4a45-8966-1dbd76263457@ventanamicro.com>
+ <20240325130116.13194-1-alexei.filippov@syntacore.com>
+In-Reply-To: <20240325130116.13194-1-alexei.filippov@syntacore.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 26 Mar 2024 14:54:29 +1000
-Message-ID: <CAKmqyKMm9RLMweqCBpHBmu8PaLavFh8rcOLLSMVLVpxim6AGqA@mail.gmail.com>
-Subject: Re: [PATCH-for-9.0 v3 3/3] hw/misc/stm32l4x5_rcc: Propagate period
- when enabling a clock
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
- Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org, 
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- Damien Hedde <damien.hedde@dahe.fr>, 
- Peter Maydell <peter.maydell@linaro.org>, Luc Michel <luc@lmichel.fr>
+Date: Tue, 26 Mar 2024 14:54:55 +1000
+Message-ID: <CAKmqyKNkyxx9YV5ahb-VTO=4+mtu-1D2nMvyP6=-MpZ6KGXomw@mail.gmail.com>
+Subject: Re: [PATCH v2] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi()
+ fail with vendor-specific SBI
+To: Alexei Filippov <alexei.filippov@syntacore.com>
+Cc: dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
+ apatel@ventanamicro.com, bin.meng@windriver.com, liwei1518@gmail.com, 
+ palmer@dabbelt.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ zhiwei_liu@linux.alibaba.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=alistair23@gmail.com; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,51 +95,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 26, 2024 at 1:29=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
+On Mon, Mar 25, 2024 at 11:46=E2=80=AFPM Alexei Filippov
+<alexei.filippov@syntacore.com> wrote:
 >
-> From: Arnaud Minier <arnaud.minier@telecom-paris.fr>
+> kvm_riscv_handle_sbi() may return not supported return code to not trigge=
+r
+> qemu abort with vendor-specific sbi.
 >
-> The "clock_set_mul_div" function doesn't propagate the clock period
-> to the children if it is changed (e.g. by enabling/disabling a clock
-> multiplexer).
-> This was overlooked during the implementation due to late changes.
+> Added SBI related return code's defines.
 >
-> This commit propagates the change if the multiplier or divider changes.
->
-> Fixes: ec7d83acbd ("hw/misc/stm32l4x5_rcc: Add an internal clock multiple=
-xer object")
-> Signed-off-by: Arnaud Minier <arnaud.minier@telecom-paris.fr>
-> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-> Message-ID: <20240317103918.44375-2-arnaud.minier@telecom-paris.fr>
-> [PMD: Check clock_set_mul_div() return value]
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+> Fixes: 4eb47125 ("target/riscv: Handle KVM_EXIT_RISCV_SBI exit")
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  hw/misc/stm32l4x5_rcc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
-> index 49b90afdf0..ed2dbd9dc3 100644
-> --- a/hw/misc/stm32l4x5_rcc.c
-> +++ b/hw/misc/stm32l4x5_rcc.c
-> @@ -61,7 +61,7 @@ static void clock_mux_update(RccClockMuxState *mux, boo=
-l bypass_source)
->          freq_multiplier =3D mux->divider;
+> Changes since v1:
+>         -Add Fixes and Revied-by lines.
+>  target/riscv/kvm/kvm-cpu.c         |  5 +++--
+>  target/riscv/sbi_ecall_interface.h | 11 +++++++++++
+>  2 files changed, 14 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 6a6c6cae80..a4f84ad950 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1404,7 +1404,7 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struc=
+t kvm_run *run)
+>          if (ret =3D=3D sizeof(ch)) {
+>              run->riscv_sbi.ret[0] =3D ch;
+>          } else {
+> -            run->riscv_sbi.ret[0] =3D -1;
+> +            run->riscv_sbi.ret[0] =3D SBI_ERR_FAILURE;
+>          }
+>          ret =3D 0;
+>          break;
+> @@ -1412,7 +1412,8 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struc=
+t kvm_run *run)
+>          qemu_log_mask(LOG_UNIMP,
+>                        "%s: un-handled SBI EXIT, specific reasons is %lu\=
+n",
+>                        __func__, run->riscv_sbi.extension_id);
+> -        ret =3D -1;
+> +        run->riscv_sbi.ret[0] =3D SBI_ERR_NOT_SUPPORTED;
+> +        ret =3D 0;
+>          break;
 >      }
+>      return ret;
+> diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_=
+interface.h
+> index 43899d08f6..0279e92a36 100644
+> --- a/target/riscv/sbi_ecall_interface.h
+> +++ b/target/riscv/sbi_ecall_interface.h
+> @@ -69,4 +69,15 @@
+>  #define SBI_EXT_VENDOR_END              0x09FFFFFF
+>  /* clang-format on */
 >
-> -    clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier);
-> +    clk_changed |=3D clock_set_mul_div(mux->out, freq_multiplier, mux->m=
-ultiplier);
->      clk_changed |=3D clock_set(mux->out, clock_get(current_source));
->      if (clk_changed) {
->          clock_propagate(mux->out);
+> +/* SBI return error codes */
+> +#define SBI_SUCCESS                  0
+> +#define SBI_ERR_FAILURE             -1
+> +#define SBI_ERR_NOT_SUPPORTED       -2
+> +#define SBI_ERR_INVALID_PARAM       -3
+> +#define SBI_ERR_DENIED              -4
+> +#define SBI_ERR_INVALID_ADDRESS     -5
+> +#define SBI_ERR_ALREADY_AVAILABLE   -6
+> +#define SBI_ERR_ALREADY_STARTED     -7
+> +#define SBI_ERR_ALREADY_STOPPED     -8
+> +
+>  #endif
 > --
-> 2.41.0
+> 2.34.1
 >
 >
 
