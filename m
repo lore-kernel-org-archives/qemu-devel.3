@@ -4,68 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 420E1C54E67
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54142C54E67
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 16:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp9Cx-0003DX-Fc; Tue, 26 Mar 2024 11:59:27 -0400
+	id 1rp9GI-0005P5-RM; Tue, 26 Mar 2024 12:02:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rp9Cv-0003Cy-3u
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:59:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rp9Ct-0004a4-Ge
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:59:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711468761;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=d15WhNfc/b5KrYAViRJoQXka4p4afLDCZN5PnNE3AtA=;
- b=R2W4cVcS49rAvBRWH5EnzTycWkdky5I+MCkah1JfFPQ8LalY0Uqf17icq+3QgP/+B6gkzk
- 3WdI3DWai8FCRaVIBQ3zxdwRaZ2AcZuTCEXLBLXnueizbOT2De3vK/5tXR/1S08C6Cao5u
- FVHyt/FMndoioeI/knS/iHTZ5fsQg+Y=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-482-A2FZS4dQNDOnJF4WMR_IDg-1; Tue, 26 Mar 2024 11:59:19 -0400
-X-MC-Unique: A2FZS4dQNDOnJF4WMR_IDg-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DDFAE10189B8;
- Tue, 26 Mar 2024 15:59:18 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.192.145])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 99368111E406;
- Tue, 26 Mar 2024 15:59:18 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 632BC1801492; Tue, 26 Mar 2024 16:59:13 +0100 (CET)
-Date: Tue, 26 Mar 2024 16:59:13 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] edk2: get version + date from git submodule
-Message-ID: <z5cuq7sx2islbjm6vpu5ksr4b7vytbe5fhhllp46gm5mmqcky4@npmeowuookgn>
-References: <20240325144440.1069662-1-kraxel@redhat.com>
- <CAFEAcA9PkAyqVcKMLQZw71FMh6YTpNDNwuKoO0u7i_mRxsJizQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rp9G6-0005AS-2h
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 12:02:46 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rp9G3-0005Im-4g
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 12:02:41 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-56bf8093dddso1139227a12.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 09:02:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711468956; x=1712073756; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=YK43hgjiaGWqspEZFIT8PnwRPXbUGsP2JdXcwjx9h38=;
+ b=J39Ktq3mALgac2crmnSgPLXf1CV0lSwiH1aMnHF/Ow/LxA8LB3B1g/F65zZLMT8M3l
+ 0/wyG8G6ys9Pofdgj8juhHiCo44D4gkNRxw1qZk5ZrS+jqlRa7O7hMLBTNfTjbWyuUTN
+ OuFgAhCLbevq/G8YR4LiCq8IB46TpNAG0x0b86RWStVE+vKXy/ZW924bUY1b5CV/3Dn3
+ 9KxWwX/6XCRCYI9Yd2U9ypsAP2uvZQSg1M/vXBK0f9EPMXPyYsgRQucdAl/NHfzrAfZC
+ fxVeZxIpPAuYNCsMWmQdjlQBmTKQgXIQzZwTDgJWmUf1qGnF3DAKMsV7F8r2uk3VvWT9
+ 4ANQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711468956; x=1712073756;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YK43hgjiaGWqspEZFIT8PnwRPXbUGsP2JdXcwjx9h38=;
+ b=TOYYbbA/G1nVlGkKLIz6Dd8CGVpYRPHAUUDV3KhklI9sDJVZmO46JxfyrfeXC/eTXr
+ 27KxRWu/x8tA4aiAPLAAM6bsNoa1MrdMthGen0nPGewI1wOIwiX5UYXlebcpfUD0/hPM
+ BfiVLEQuvHkdfHy07ykJzQuXyuG9rDyz7o24kN59yz4dG3BP+ke41de6EhpYN6Mm+avK
+ AW0NbGD1LrUR/xPL03N7OvmEDpRfcwopsxlkOrWITvi1wksfm+DnjuLpFCIVDc8FWT/P
+ TGYIcdf8EeC7cxphDsAOiNGKodBYvbn1lHvrKemYOz+1ekAly+8TyicUWzS3AFFMvP3O
+ sdlQ==
+X-Gm-Message-State: AOJu0Yx+rRnrOxkQovcyTuinuSj0XD2c0VYEKyrLJgFaNhLFZfOz1/yx
+ RFy8oqyRwiQ6S2jgXEW16ZXUIo1Fn2mZY9ym4DBfSFMUEVGr6ObxtnX2dGp5Ed1gFOurrLmCPEC
+ 9B3hETflCTS6Qf4kDcoNZh0/aD77Bq8CR73Mzsw==
+X-Google-Smtp-Source: AGHT+IGW3M0qyG3TTTJ6344s8KCcVArZxh0YinHmQgPbxuu5dv1LUsAcOGcBHXVCvgngh05pGqWp6cscBL/6Us3obzA=
+X-Received: by 2002:a50:d7da:0:b0:56c:18b4:d2ab with SMTP id
+ m26-20020a50d7da000000b0056c18b4d2abmr207942edj.42.1711468956018; Tue, 26 Mar
+ 2024 09:02:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA9PkAyqVcKMLQZw71FMh6YTpNDNwuKoO0u7i_mRxsJizQ@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240312165851.2240242-1-npiggin@gmail.com>
+ <20240312165851.2240242-36-npiggin@gmail.com>
+In-Reply-To: <20240312165851.2240242-36-npiggin@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 Mar 2024 16:02:24 +0000
+Message-ID: <CAFEAcA9dLHYvY7-zCntKFZGr1VJUW6b3y5UqFAq-XN8zgVe2WQ@mail.gmail.com>
+Subject: Re: [PULL 35/38] spapr: nested: Introduce H_GUEST_[GET|SET]_STATE
+ hcalls.
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Michael Neuling <mikey@neuling.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,51 +92,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 25, 2024 at 02:55:11PM +0000, Peter Maydell wrote:
-> On Mon, 25 Mar 2024 at 14:45, Gerd Hoffmann <kraxel@redhat.com> wrote:
-> >
-> > Turned out hard-coding version and date in the Makefile wasn't a bright
-> > idea.  Updating it on edk2 updates is easily forgotten.  Fetch the info
-> > from git instead.
-> >
-> > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> > ---
-> >  roms/Makefile | 7 +++++--
-> >  1 file changed, 5 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/roms/Makefile b/roms/Makefile
-> > index edc234a0e886..534eba17ebd0 100644
-> > --- a/roms/Makefile
-> > +++ b/roms/Makefile
-> > @@ -51,6 +51,8 @@ SEABIOS_EXTRAVERSION="-prebuilt.qemu.org"
-> >  # efi ia32, efi x64) into a single rom binary.
-> >  #
-> >  EDK2_EFIROM = edk2/BaseTools/Source/C/bin/EfiRom
-> > +EDK2_STABLE = $(shell cd edk2; git describe --tags --match 'edk2-stable*')
-> > +EDK2_DATE = $(shell cd edk2; git show --pretty='format:%cd' --date='format:%m/%d/%Y'| head -1)
-> 
-> I don't think there's any guarantee that the user has 'git'
-> installed. scripts/qemu-version avoids using "git describe"
-> unless it's building in a git tree.
+On Tue, 12 Mar 2024 at 17:11, Nicholas Piggin <npiggin@gmail.com> wrote:
+>
+> From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>
+> Introduce the nested PAPR hcalls:
+>     - H_GUEST_GET_STATE which is used to get state of a nested guest or
+>       a guest VCPU. The value field for each element in the request is
+>       destination to be updated to reflect current state on success.
+>     - H_GUEST_SET_STATE which is used to modify the state of a guest or
+>       a guest VCPU. On success, guest (or its VCPU) state shall be
+>       updated as per the value field for the requested element(s).
+>
+> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+> Signed-off-by: Michael Neuling <mikey@neuling.org>
+> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 
-Hmm.  Have to figure something else then I guess.
+Hi; Coverity points out a problem with this code (CID 1540008, 1540009):
 
-> You can avoid the "| head -1" by using
->   git log -1 --pretty='format:%cd' --date='format:%m/%d/%Y'
-> I think.
 
-Works.  Thanks.
 
-> Also, does EDK2 really want month/day/year? Typically silly
-> choice if so :-)
+> +static target_ulong h_guest_getset_state(PowerPCCPU *cpu,
+> +                                         SpaprMachineState *spapr,
+> +                                         target_ulong *args,
+> +                                         bool set)
+> +{
+> +    target_ulong flags = args[0];
+> +    target_ulong lpid = args[1];
+> +    target_ulong vcpuid = args[2];
+> +    target_ulong buf = args[3];
+> +    target_ulong buflen = args[4];
+> +    struct guest_state_request gsr;
+> +    SpaprMachineStateNestedGuest *guest;
+> +
+> +    guest = spapr_get_nested_guest(spapr, lpid);
+> +    if (!guest) {
+> +        return H_P2;
+> +    }
+> +    gsr.buf = buf;
+> +    assert(buflen <= GSB_MAX_BUF_SIZE);
+> +    gsr.len = buflen;
+> +    gsr.flags = 0;
+> +    if (flags & H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
 
-Yes.
+flags is a target_ulong, which means it might only be 32 bits.
+But H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE has a bit set in the
+upper 32 bits only. So Coverity complains about this condition
+being always-zero and the body of the if being dead code.
 
-It's the smbios spec being silly btw, this lands more or less
-directly in /sys/class/dmi/id/bios_date.  edk2 itself doesn't
-care.
+What was the intention here?
 
-take care,
-  Gerd
+> +        gsr.flags |= GUEST_STATE_REQUEST_GUEST_WIDE;
+> +    }
+> +    if (flags & !H_GUEST_GETSET_STATE_FLAG_GUEST_WIDE) {
+> +        return H_PARAMETER; /* flag not supported yet */
+> +    }
+> +
+> +    if (set) {
+> +        gsr.flags |= GUEST_STATE_REQUEST_SET;
+> +    }
+> +    return map_and_getset_state(cpu, guest, vcpuid, &gsr);
+> +}
 
+thanks
+-- PMM
 
