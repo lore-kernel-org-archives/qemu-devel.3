@@ -4,51 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64B6FCD11DF
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 09:53:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D931BCD11DF
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 09:54:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp3Uo-0005ZK-Pu; Tue, 26 Mar 2024 05:53:31 -0400
+	id 1rp3VS-0006Fk-2k; Tue, 26 Mar 2024 05:54:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rp3Um-0005Z3-9g; Tue, 26 Mar 2024 05:53:28 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rp3VQ-0006F7-BF
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:54:08 -0400
+Received: from mout.gmx.net ([212.227.15.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rp3Uk-0006Om-Kl; Tue, 26 Mar 2024 05:53:28 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD14658F6B;
- Tue, 26 Mar 2024 12:54:52 +0300 (MSK)
-Received: from [192.168.177.132] (mjt-x200la.wg.tls.msk.ru [192.168.177.132])
- by tsrv.corpit.ru (Postfix) with ESMTP id E928FA3210;
- Tue, 26 Mar 2024 12:53:22 +0300 (MSK)
-Message-ID: <19d5ffb8-8cf1-4d88-b66a-2cf961621b93@tls.msk.ru>
-Date: Tue, 26 Mar 2024 12:53:22 +0300
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rp3VO-0006TQ-As
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:54:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1711446844; x=1712051644; i=deller@gmx.de;
+ bh=3vbK3OE4iRVQXWveMUcUsB+dL5DvrRCx2bMHLIcAuHE=;
+ h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
+ b=ZMh+Fo2y5dXGKlObgredNvKmrMLn33UgXyGbiu44KIxN++EdKgguHZHXRUzew14E
+ 2+wMbq/63IJ6tFG1XK/r+CC8c4bH4nbjvq9J/XDc7pzNF3S6KTA7qpbKwhQBvPlW+
+ hwTRoz2S85r6UzSIFJIR42t7yOoRDt9eXYqg6R4kmjQvRe6G/OpkvmptXvmgocLbN
+ LniqQ8YmbCvruR6aQEizx97p1idXeHfIZBaFp5Vy9SVXEkBcK5UX30j4qnc0G/qkl
+ xKxhMeV+h2ddUXItsFIyIj9P42hD/VQcs7cg7cR6vNPF5pF/MF4P6PH6LvjMZsbSM
+ bUJ1f9049BbQWmhJUQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.20.55] ([89.244.180.193]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MeU0k-1sPDjc1j3U-00aUoB; Tue, 26
+ Mar 2024 10:54:04 +0100
+Message-ID: <37889650-a0ec-4f74-97cf-2b5c17623117@gmx.de>
+Date: Tue, 26 Mar 2024 10:54:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/15] riscv-to-apply queue
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20240322085319.1758843-1-alistair.francis@wdc.com>
- <5eb1ce03-639a-4db3-a1e2-aba61fa295d1@tls.msk.ru>
- <76c065d8-41ee-433d-ba40-e1d13579b4a4@ventanamicro.com>
- <6d1ea7ad-0a81-4f5e-8210-80b5150bc521@tls.msk.ru>
- <6fb5ca42-8e86-4144-b9a9-9d98d30f8fb9@ventanamicro.com>
-Content-Language: ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-In-Reply-To: <6fb5ca42-8e86-4144-b9a9-9d98d30f8fb9@ventanamicro.com>
+Subject: Re: [PATCH for-9.0 0/3] target/hppa: Fix overflow computation for
+ shladd
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240326064405.320551-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <20240326064405.320551-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:YhTvMKYaqzFElNdTV57QfaH1moBJWWWOjSLUM1H5TKHZhTRhODI
+ K/AZFN/hzOsu9N0lSIdebhxU8K5CJTd6Ha8ZUtxDtUgxvhu9qPv+IB1Cep4moLz2i+dpAGq
+ CXE+GtmFiZ/c+ZOOaWuGn4enfob2LYPIXgFsD02jfSv7oHQ1TWbRBwPFGdN3FW4hOrrHGGH
+ SfxL2jEwd+rjGlmdGxdyQ==
+UI-OutboundReport: notjunk:1;M01:P0:P+CJyf97UXE=;xQSI1YZW69EbB6WLVHM4RUhMeWv
+ 4H9tXgygoB01xjywIxOJPLSnwN23jgQoBhcRO+Vp/sxwqLTu8hFbNxVtQtpSOldCljbmAnduY
+ XTdFPLkcUNY0ZLHU4GyUVlkD+X3W7rBttHiAA0pY5vXvBvacC8DIPGDWkwfP53i0MJCOShf7P
+ 1OoS2slSz5gdchlQGzDyVy0ocHk1ir0y9jLptCmIW8ilX5iHG2ai1yxJvkNEULcy0ZR5C4SrE
+ Hv5PeA2f3/pD310v8AK8mfeVcZ4EESDA6uWYrB0q9ByrmSoC7KKIuCxdBAApDYJj99ls0cXH0
+ ttFrbiQnQvseRvrYCM8Oa7mf1bYcOy/IcPmbWIpR2u7J2IpTG1mFrShBkyeiDakdgbFivq9de
+ qVZEVf9jadNCc86C6bGC01NJ/aCbqJAoKOHwtyZAabRDTdGeFyHfLcjVwthcXRmWyXU+wCS1L
+ rKfoz8xq6xmzMjDk3aFxPfd5CSFwgTTEN2SGiI25o//6s8wGz+HhzuRTRDkR5N6wkqrTxEVN4
+ 8QU2Q1J11bk0+RHNjMnsmLIIqTdxj0pVHlqnIeiuzhVQ3M9fdqKaZIesbCq27238ASwKIc77h
+ bMcECk904j2Gep94b1OF4sWD45Grth4XIxOuyMKhb07jlRJniu1qV492AVN8djF6Nl103jK6+
+ uj02kN+HvZ8yW5Lil3IdAa5fzxDuDqEk7g2XAvPeW53SEpBNctXd3L2iJukHTQ7kjUtKQB3p+
+ xWv3AxqBee2nWZTlV05xaMhW8XSRGp6Jk/08MyYO4hXSDoZyMi1JXyEMaBQHWKlk3ZZ8UnZk/
+ 5omdlcWEKSKO3Y0XQmOXFApGa42ZaebKecAWnM3kjGpQ4=
+Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,27 +129,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.03.2024 21:12, Daniel Henrique Barboza wrote:
-> On 3/24/24 12:07, Michael Tokarev wrote:
+On 3/26/24 07:44, Richard Henderson wrote:
+> These ??? notes have been there since day one.
+> This fixes l2diag test 59.
 
->> Unfortunately this doesn't quite work, the following changes
->> fail to apply to 8.2:
->>
->> 929e521a47 target/riscv: always clear vstart for ldst_whole insns
->> b46631f122 target/riscv: remove 'over' brconds from vector trans
->> d57dfe4b37 trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
->> bac802ada8 target/riscv: enable 'vstart_eq_zero' in the end of insns
->> 385e575cd5 target/riscv/kvm: fix timebase-frequency when using KVM acceleration
+Your patches fix the 64-bit wdiag test 66 (shladd) too.
 
-> The amount of work can be non-trivial for this backport, so I'd say we should
-> leave it aside for now. If someone has a good argument for this work then we
-> can re-evaluate.
+I tested 32/64-bit Linux & 32-bit HP-UX.
+No regressions.
 
-So, out of 15 patches in this series (minus the first one already
-mentioned) - should I pick 9 remaining patches for stable (the ones
-which applies) or none at all? :)
+Helge
 
-Thanks,
+>
+> Richard Henderson (3):
+>    target/hppa: Squash d for pa1.x during decode
+>    target/hppa: Replace c with uv in do_cond
+>    target/hppa: Fix overflow computation for shladd
+>
+>   target/hppa/insns.decode |  20 ++++--
+>   target/hppa/translate.c  | 135 ++++++++++++++++++++++++++-------------
+>   2 files changed, 104 insertions(+), 51 deletions(-)
+>
 
-/mjt
 
