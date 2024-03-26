@@ -4,76 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0308C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DDE6C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp92z-00048i-Nl; Tue, 26 Mar 2024 11:49:10 -0400
+	id 1rp97n-0008F3-5g; Tue, 26 Mar 2024 11:54:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rp92X-0003no-JI
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:48:45 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rp92T-0001p5-35
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:48:40 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 95C24591C2;
- Tue, 26 Mar 2024 18:50:04 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9F45FA35F2;
- Tue, 26 Mar 2024 18:48:34 +0300 (MSK)
-Message-ID: <517935ff-6f0f-4ef8-878c-9778f6b1bb98@tls.msk.ru>
-Date: Tue, 26 Mar 2024 18:48:34 +0300
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rp97i-0008Eg-MR
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:54:03 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1rp97f-0002t9-1K
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:54:02 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6e6082eab17so4352756b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:53:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711468437; x=1712073237; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mTH6NyEYRCwdqaZP4q4VPNh/XegFiVeS6drCaYPsuT0=;
+ b=rE1Hz+9n2iKpTBlkCpNAdt+5ZuvyT2KkjqKmVXtXsFnIEtqpGEnqXv/YTFYLlGyWCW
+ 7rGZ9d15jkypIiQux5PoFPJNHJvba2/2o+o6ePiZxyAmVVkGD1TigUtwu+F9nXiqt1PU
+ FcfspwDaiMJf4wNBE55kQFShQgpzVLh9iZjT9lhBLAcg/ufsI49zSDTPw0mG51KPGlOT
+ vcn3mokcDA/vapyQPjln2WROrLILI4/RLKj/VOhGY06WFfS4nAN/mQra/H3CAzHQRGBp
+ aip5z3QucZJAY6tVxsLBF2I0JiSZJ8N6g/mSShg8bgeIfn9T6qZrw5GMR8cfqfGDUUWK
+ ezuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711468437; x=1712073237;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mTH6NyEYRCwdqaZP4q4VPNh/XegFiVeS6drCaYPsuT0=;
+ b=qaQHMvRG9R2h9ZZolBP5ffR9lwIYRdifeUHmeVVFUP2J/50pVqBVtYfDDObw29WY5o
+ /rdKHX9yQxh/nUQPnBtD9BHRk/1b8PWk3AJFwJh/e4S3GBY6AIXsI+ybnuCNQvtAMBhg
+ H1GkIP5+jyvucQ21+1GazOq5jAh49mFcEE1gkLY6Iosb1D94CrAyw1oa1XxDX0wrD522
+ Ag2ggaG7IXGdPSLeuBrLcWp8hBJ/9h1QYzqQjde0409RlxmFqpXX/OSywqB7+N8weiSv
+ Q8mjkYNlETcZ5NuMGnz1Qy+JOGK8RqhbLkBrS3Ll/vVHUqFNK+a3hGOd3zJFK2n+sU5j
+ w8fQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXm5c7Zlo75E4oonNTmlKCrAwN/Ez6T3YVASRKFWO7P8M6qeODwZAtuJY2qtatuspEsioLGD897L2KEJVPU4kvqH6ACza4=
+X-Gm-Message-State: AOJu0Yxwa0hkZ/IG1HEvCKZuPRCpO0ofhCpC8a64Y7AUiPWCC8/6xx7y
+ hf8Wot+ySKpzJdEef8i4YSjBF37oZApfDvLj5T/mrcMNzHWqioOrq4OSgaRnrU0=
+X-Google-Smtp-Source: AGHT+IG/Txea9bMdtJp4aYyPLklKlSm89OBzwO3WqzWOqVfTnVh081OwKZLO2rV0+9ewAmZqEkpvyQ==
+X-Received: by 2002:a05:6a21:999f:b0:1a3:42ea:cbed with SMTP id
+ ve31-20020a056a21999f00b001a342eacbedmr3551033pzb.44.1711468436985; 
+ Tue, 26 Mar 2024 08:53:56 -0700 (PDT)
+Received: from [172.20.1.19] (173-197-098-125.biz.spectrum.com.
+ [173.197.98.125]) by smtp.gmail.com with ESMTPSA id
+ r16-20020a63d910000000b005dc5129ba9dsm7606556pgg.72.2024.03.26.08.53.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Mar 2024 08:53:56 -0700 (PDT)
+Message-ID: <bcbf8200-1ffa-4a39-b7b5-e19a65257962@linaro.org>
+Date: Mon, 25 Mar 2024 19:20:34 -1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1] hw/i386: Add a config to only build the microvm
- machine
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Sergio Lopez <slp@redhat.com>
-Cc: mst@redhat.com, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-References: <20240326131410.93866-1-philmd@linaro.org>
+Subject: Re: target/hppa: be,n nullifying first insn at branch target?
 Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240326131410.93866-1-philmd@linaro.org>
+To: Sven Schnelle <svens@stackframe.org>
+Cc: Helge Deller <deller@gmx.de>, qemu-devel@nongnu.org
+References: <875xxa14z1.fsf@t14.stackframe.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <875xxa14z1.fsf@t14.stackframe.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,58 +97,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.03.2024 16:14, Philippe Mathieu-Daudé wrote:
-> Add a config file to build a binary only containing the
-> microvm machine, inspired by a discussion on the list:
-> https://lore.kernel.org/qemu-devel/604bf457-23a7-4d06-b59f-a7b46945c626@tls.msk.ru/
+On 3/25/24 09:33, Sven Schnelle wrote:
+> diff --git a/target/hppa/translate.c b/target/hppa/translate.c
+> index 7546a5f5a2..56c68a7cbe 100644
+> --- a/target/hppa/translate.c
+> +++ b/target/hppa/translate.c
+> @@ -3847,7 +3849,7 @@ static bool trans_be(DisasContext *ctx, arg_be *a)
+>           copy_iaoq_entry(ctx, cpu_gr[31], ctx->iaoq_n, ctx->iaoq_n_var);
+>           tcg_gen_mov_i64(cpu_sr[0], cpu_iasq_b);
+>       }
+> -    if (a->n && use_nullify_skip(ctx)) {
+> +    if (0 && a->n && use_nullify_skip(ctx)) {
+>           copy_iaoq_entry(ctx, cpu_iaoq_f, -1, tmp);
+>           tcg_gen_addi_i64(tmp, tmp, 4);
+>           copy_iaoq_entry(ctx, cpu_iaoq_b, -1, tmp);
 > 
-> As suggested in commit d1d5e9eefd ("configure: allow the
-> selection of alternate config in the build"), it can be
-> built using:
 > 
->    $ ../configure --without-default-features \
->                   --target-list=x86_64-softmmu \
->                   --with-devices-x86_64=microvm
-> 
-> Inspired-by: Michael Tokarev <mjt@tls.msk.ru>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   configs/devices/x86_64-softmmu/microvm.mak | 20 ++++++++++++++++++++
->   1 file changed, 20 insertions(+)
->   create mode 100644 configs/devices/x86_64-softmmu/microvm.mak
+> So i think the problem is caused by this optimization. Does this ring a
+> bell? Debugging this is rather hard, alone the logfile above is 6GB in
+> size...
 
-This is not enough.  This step is good already, but it lacks default machine
-type selection.  In debian we carry a tiny patch to make microvm the default
-machine type or else it crashes at startup not finding "pc" machine or one
-of its required devices.
+The problem is a missing
 
-/mjt
+     nullify_set(ctx, 0)
 
-> diff --git a/configs/devices/x86_64-softmmu/microvm.mak b/configs/devices/x86_64-softmmu/microvm.mak
-> new file mode 100644
-> index 0000000000..fe48b5b4a7
-> --- /dev/null
-> +++ b/configs/devices/x86_64-softmmu/microvm.mak
-> @@ -0,0 +1,20 @@
-> +# SPDX-FileCopyrightText: 2024 Linaro Ltd.
-> +#
-> +# Config that only supports the 64-bit microvm machine.
-> +# This avoids bringing in any of numerous legacy features from
-> +# the legacy machines or the 32bit platform.
-> +#
-> +
-> +CONFIG_MICROVM=y
-> +CONFIG_PCI_DEVICES=n
-> +CONFIG_SMBIOS=y
-> +CONFIG_SMBIOS_LEGACY=n
-> +CONFIG_VIRTIO_BALLOON=y
-> +CONFIG_VIRTIO_BLK=y
-> +CONFIG_VIRTIO_CRYPTO=y
-> +CONFIG_VIRTIO_GPU=y
-> +CONFIG_VIRTIO_INPUT=y
-> +CONFIG_VIRTIO_NET=y
-> +CONFIG_VIRTIO_RNG=y
-> +CONFIG_VIRTIO_SCSI=y
-> +CONFIG_VIRTIO_SERIAL=y
+within this block.
+
+I have patches queued to reorg the IAQ handling, which I hope will fix the problem Sven 
+saw with spaces.  It would fix this as a consequence of other unification.  But I think 
+it's a bit too big for 9.0.
+
+
+r~
 
 
