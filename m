@@ -4,81 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE28C54E67
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 04:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD49C54E67
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 04:58:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1royqw-00040s-4B; Tue, 26 Mar 2024 00:56:02 -0400
+	id 1royst-0004nk-Qv; Tue, 26 Mar 2024 00:58:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1royqu-00040g-5D; Tue, 26 Mar 2024 00:56:00 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1royqp-0001FF-H1; Tue, 26 Mar 2024 00:55:59 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2d49f7e5c2cso68258321fa.2; 
- Mon, 25 Mar 2024 21:55:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711428951; x=1712033751; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rS+wzdQT5x7x5iCFTR/am43NuWsKoxOMfZ5wiLYQm/w=;
- b=adxK4954pmGN01Hp2Qv4o276wCYLdPayDTo6GKj6Kbmk5cbVDYO6cTFLLhML5cdKh5
- nolyIFEd2nREKfaLqHCcjcgbp5KD7GPeA0PHeWjE5oGrh6cHd3hs6HFplo+XbMcQJvNX
- NfSNpsoa0mYrd8mar1RqgPV5UHAGrn+0MLVDVGq8/r6YLFXYFmOr0RaOPA/n0YgN4xQr
- yAh0+15eXf6EG1SHuIo+xdlezv2EkQC4d2zSpuup9aHpDOKRKBn6xnQiXsK4PJ5lcZWk
- 0hlnWt4T1XitqrDhDksxw9rzqnn3Di8HAinDDTnJ1emkKFmi4QmB8/nIIl/zJILFkFG6
- sCMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711428951; x=1712033751;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rS+wzdQT5x7x5iCFTR/am43NuWsKoxOMfZ5wiLYQm/w=;
- b=P7/gvDEAjIW4PZmU+mu14YNcj1v/1+I1HZFPu6ds3OsJqu1Iuhp7C7HlYoNjQip54L
- ThUUXyeeQQ4GdzSa+vgd04uFgxRaQNXqov4hU8xNwqcqg/0q1C6/cPzJkNpMrZuWRLlT
- rcpcMXyPoVy6v3SQOppt0SOK2yA824zTR36DXKM02F98L4/AUSgqNCxMt0orqffWyNbW
- 5ZgsUTHPs/jO4cRuivJOnDqZIybSa+1klKa8jWybIfGaa8LuVaJ+7Jp0nAVN8Z8FgprX
- ur6eHfcNvO1Uq2TVhnZN5LeVRSnjYO60n5oYO1p+90/c/Ep2Vrxeu42amnO/hGEl7ek3
- 00FQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUxPZSL3+ZtRJnmkZIYzAivA8OmXSuQE4z6jWhnR9xcFfozr8Wo57RwUmhezUhsBDauE0VOh4kYtzPjdmb0X1hABpuEXRoAEryTzOI4xuciCda3FCnOrJW5a2kxBQ==
-X-Gm-Message-State: AOJu0Yz3eoiIOoYb1SPJ44M5iKaH8E8qRgcGtALAjojhnS5+3nvYdMxW
- 0AbjvFXwD9LyyrqAB7cmFubgd0bDp0blmxLROMSUZ8g0CS/3ly7Dgg0MVe81zCt//plX3pUGjxa
- /73t9NevUQYndqd+I5rQm3zqmKVE=
-X-Google-Smtp-Source: AGHT+IHg1fw5vhSuJn7HdOWQlH3hc7vYnN35kbyA7PRBkX4/Zr6q2PepFrLV+EimGczcdzc8lyWI9flCPoJnO6xHESc=
-X-Received: by 2002:a2e:b704:0:b0:2d3:f3fe:48ac with SMTP id
- j4-20020a2eb704000000b002d3f3fe48acmr5170869ljo.27.1711428951102; Mon, 25 Mar
- 2024 21:55:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1roysY-0004k3-CB; Tue, 26 Mar 2024 00:57:42 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1roysT-0001lU-Td; Tue, 26 Mar 2024 00:57:42 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42Q40tEc003807; Tue, 26 Mar 2024 04:57:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=3AOS8E6v5/h8eE/cspkgTqdbz3NhPJN+ZjiqK0tDX/Y=;
+ b=lsmxKze0V+2fab/ergeOgjp2kCY61P31rdX0QVZk9fcKjAdq48nuXYGslhZ+ycVW4TWo
+ cRyJTMkoM9f9V4i1ZQY70y2IesS3R4YARqM2u87Bl7MOXx7geLqg/3fnlfazgpfFqu8V
+ m1Z2F6DnTDhT9z/VZ6E+KgRLsHQWsn3MS60Be1Iq0rfyON9ycWjkZIWQDocWuG+Ax+el
+ FtLatTea/j2Bq+WNvL0L3ITZUvWW+vbntjQ/GfcvKtisxDcVO6J00rwTIqNGYxBprfIU
+ FkNNWBqfTFEHTwVC/8thxtXG80LCa++k38Gm+oXRsF4WfPcTvmCws+KlO8mpkNhGFR8s 7w== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x3p6b068j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 Mar 2024 04:57:32 +0000
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42Q4vVA3021605;
+ Tue, 26 Mar 2024 04:57:31 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x3p6b068h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 Mar 2024 04:57:31 +0000
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42Q2ovcb028685; Tue, 26 Mar 2024 04:57:31 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3x2adp5md2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 26 Mar 2024 04:57:31 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42Q4vSEb16843398
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 26 Mar 2024 04:57:30 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7611758059;
+ Tue, 26 Mar 2024 04:57:28 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A62E558043;
+ Tue, 26 Mar 2024 04:57:26 +0000 (GMT)
+Received: from [9.109.243.35] (unknown [9.109.243.35])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 26 Mar 2024 04:57:26 +0000 (GMT)
+Message-ID: <caf9c25a-6851-4435-8f68-5d5c76443b5e@linux.ibm.com>
+Date: Tue, 26 Mar 2024 10:27:25 +0530
 MIME-Version: 1.0
-References: <b7fff1e9-f2b3-4a45-8966-1dbd76263457@ventanamicro.com>
- <20240325130116.13194-1-alexei.filippov@syntacore.com>
-In-Reply-To: <20240325130116.13194-1-alexei.filippov@syntacore.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 26 Mar 2024 14:54:55 +1000
-Message-ID: <CAKmqyKNkyxx9YV5ahb-VTO=4+mtu-1D2nMvyP6=-MpZ6KGXomw@mail.gmail.com>
-Subject: Re: [PATCH v2] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi()
- fail with vendor-specific SBI
-To: Alexei Filippov <alexei.filippov@syntacore.com>
-Cc: dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
- apatel@ventanamicro.com, bin.meng@windriver.com, liwei1518@gmail.com, 
- palmer@dabbelt.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- zhiwei_liu@linux.alibaba.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=alistair23@gmail.com; helo=mail-lj1-x231.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/ppc/spapr: Include missing 'sysemu/tcg.h' header
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>
+References: <20240322162459.7173-1-philmd@linaro.org>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20240322162459.7173-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 97woMP5exDT7JRONN3L-yBog5CHHXlX8
+X-Proofpoint-ORIG-GUID: mvM9dSoq8AhHm8Pkysuh1ZoRcJFHsVvv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-26_02,2024-03-21_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0
+ phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0 mlxscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2403210000 definitions=main-2403260029
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,80 +117,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 25, 2024 at 11:46=E2=80=AFPM Alexei Filippov
-<alexei.filippov@syntacore.com> wrote:
->
-> kvm_riscv_handle_sbi() may return not supported return code to not trigge=
-r
-> qemu abort with vendor-specific sbi.
->
-> Added SBI related return code's defines.
->
-> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
-> Fixes: 4eb47125 ("target/riscv: Handle KVM_EXIT_RISCV_SBI exit")
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Alistair
+On 3/22/24 21:54, Philippe Mathieu-Daudé wrote:
+> "sysemu/tcg.h" declares tcg_enabled(), and is implicitly included.
+> Include it explicitly to avoid the following error when refactoring
+> headers:
+> 
+>    hw/ppc/spapr.c:2612:9: error: call to undeclared function 'tcg_enabled'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+>      if (tcg_enabled()) {
+>          ^
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 
 > ---
->
-> Changes since v1:
->         -Add Fixes and Revied-by lines.
->  target/riscv/kvm/kvm-cpu.c         |  5 +++--
->  target/riscv/sbi_ecall_interface.h | 11 +++++++++++
->  2 files changed, 14 insertions(+), 2 deletions(-)
->
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 6a6c6cae80..a4f84ad950 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1404,7 +1404,7 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struc=
-t kvm_run *run)
->          if (ret =3D=3D sizeof(ch)) {
->              run->riscv_sbi.ret[0] =3D ch;
->          } else {
-> -            run->riscv_sbi.ret[0] =3D -1;
-> +            run->riscv_sbi.ret[0] =3D SBI_ERR_FAILURE;
->          }
->          ret =3D 0;
->          break;
-> @@ -1412,7 +1412,8 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struc=
-t kvm_run *run)
->          qemu_log_mask(LOG_UNIMP,
->                        "%s: un-handled SBI EXIT, specific reasons is %lu\=
-n",
->                        __func__, run->riscv_sbi.extension_id);
-> -        ret =3D -1;
-> +        run->riscv_sbi.ret[0] =3D SBI_ERR_NOT_SUPPORTED;
-> +        ret =3D 0;
->          break;
->      }
->      return ret;
-> diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_=
-interface.h
-> index 43899d08f6..0279e92a36 100644
-> --- a/target/riscv/sbi_ecall_interface.h
-> +++ b/target/riscv/sbi_ecall_interface.h
-> @@ -69,4 +69,15 @@
->  #define SBI_EXT_VENDOR_END              0x09FFFFFF
->  /* clang-format on */
->
-> +/* SBI return error codes */
-> +#define SBI_SUCCESS                  0
-> +#define SBI_ERR_FAILURE             -1
-> +#define SBI_ERR_NOT_SUPPORTED       -2
-> +#define SBI_ERR_INVALID_PARAM       -3
-> +#define SBI_ERR_DENIED              -4
-> +#define SBI_ERR_INVALID_ADDRESS     -5
-> +#define SBI_ERR_ALREADY_AVAILABLE   -6
-> +#define SBI_ERR_ALREADY_STARTED     -7
-> +#define SBI_ERR_ALREADY_STOPPED     -8
-> +
->  #endif
-> --
-> 2.34.1
->
->
+>   hw/ppc/spapr.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+> index c417f9dd52..e9bc97fee0 100644
+> --- a/hw/ppc/spapr.c
+> +++ b/hw/ppc/spapr.c
+> @@ -35,6 +35,7 @@
+>   #include "sysemu/sysemu.h"
+>   #include "sysemu/hostmem.h"
+>   #include "sysemu/numa.h"
+> +#include "sysemu/tcg.h"
+>   #include "sysemu/qtest.h"
+>   #include "sysemu/reset.h"
+>   #include "sysemu/runstate.h"
 
