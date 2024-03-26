@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9D0CD11DD
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 13:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A690ACD11DD
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 13:17:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp6dC-0003Nk-EA; Tue, 26 Mar 2024 09:14:22 -0400
+	id 1rp6fo-0004b3-TA; Tue, 26 Mar 2024 09:17:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp6d9-0003NU-As
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:14:19 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp6fi-0004Yz-4q
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:16:58 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp6d6-0008Co-UW
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:14:18 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-513cf9bacf1so7438477e87.0
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 06:14:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp6fc-0000Np-FY
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:16:55 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-33ed4d8e9edso4072805f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 06:16:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711458854; x=1712063654; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=IBArclXLgBtGIQsug37uXb6juwwdgaFEKEzp1NzqfYA=;
- b=mVlXtdD4/Yat5n5KcwksZTrKO4MFcAjUImiIbD1lKZGugqjwgRe9wsCuqoVb11YzcK
- h3sALBi4yG6pvJkr4CQ1gKU5n3fYtGNU46ty2y00dIIzIH7wTXkYb1/Eo+FcwRAIXtnb
- L2p2gx2tSe7wFH0Epe9uFKcDvGAHsO94qRygvRRT5RQqeicFFEcjomwaWjdcmbjqjDtU
- XkwXndDC3Dcs2nD65x1Vf4I1TkKjgmDLC8SdVwsfy3MNzSd4ih9pHwnstNl1HgRaRJaS
- jThRPQKxChzaQ4dVz4IfiWNAIc3Q1VJxdd5fuqvH3Sl0Dfn4q3Vx2o/hK8BVhZHa519y
- +4iQ==
+ d=linaro.org; s=google; t=1711459009; x=1712063809; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SzNNAWRjVpk11jBRrLqvs/9vVdb0R7Y61XJMf031xHE=;
+ b=CsNYYcEaHj+cbursj7+Mi/f64pqO/7uLIPjfPXzTrbbzqQcTLNbY5ySYu6Q1CroAgk
+ KfUbo504kA4uKVwmBeTN/H8q1ghJg4I5dbTqiK7DX3dNIgscFHYtdrbSGDhN6wwycbpn
+ E0hoZOuijZODaEW8LKFILK7fjup8PzfytOWZXUqc3VlGrjqzlFZRk/G5x7tl++moxw0j
+ g7Nw+GvgU37AsNtmmXmbHeno6imOn4veIWST6IBS2pPG4Z2LyIIUzWZf0vH2ewi2RKUF
+ 20KAcugXna2EofAcJUnxCCGk/0bCsPIpWhnYBpoXsBtpPYiP6Q0ycu6Ih6jxFyqfcueP
+ qMwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711458854; x=1712063654;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IBArclXLgBtGIQsug37uXb6juwwdgaFEKEzp1NzqfYA=;
- b=dkrm2VNHGvb6sXGi3dVZhVW0G3a3aCU5IZHSTk4cY8JyojsJ5mg3eNwDOl6fPvKFbT
- 1HrVDvPiXcHYgtR0pEXtG7BSQwEF2CHMblH9D7u4xwDYYBl/7+xosnjla4/soz78az17
- CrXb7X1w4BhRLOTSJX0hRKOIq/CrGL7j9CneWryiwPsN9JlGVFg3QteqAZJHQMyhKBBC
- +qNJKa20iyYH6hqN4sJmWz7imGq/oO2nDcNI79RbJp3EJhfq42aGpqVxPUJc4IEcytYZ
- /nqNbBlyifqtqLEJibyfaBw3lB4iRfahUdu8CcypPBWghzBsTg/7Cwar4HNx97iJyWty
- W5Mw==
-X-Gm-Message-State: AOJu0Yw9NuZ9bwUoQfV9xLcGCBuop3OEVl8aeyvJI1G4jptFaGcI6tZf
- rhnLr7dx0r+PUKDxPzBx5Gl0kJahic+lJz8WGlm/Ifq2ghQoORLVhsWaOg90P3sA1FN6GLr6LTy
- g
-X-Google-Smtp-Source: AGHT+IEGsXoW+PPpOhv5ihVPPM0jrHIOfW3HEhzUvTreGanWDwY3bSe0A8Xy/R1lkXdyDcV73lBb6g==
-X-Received: by 2002:a2e:a0c5:0:b0:2d6:bd60:1c17 with SMTP id
- f5-20020a2ea0c5000000b002d6bd601c17mr6581350ljm.28.1711458853565; 
- Tue, 26 Mar 2024 06:14:13 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.155.229])
+ d=1e100.net; s=20230601; t=1711459009; x=1712063809;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SzNNAWRjVpk11jBRrLqvs/9vVdb0R7Y61XJMf031xHE=;
+ b=YwENcpvK70ip1vhwLOAUPGSl8F8LoDDqgVqGg8WnK7JrqhUCHniOXQKU5oL9SVEuwL
+ pUhFOmsq9I06iPV7sybh1h/0Gm0cLwrjJKnr4wMCEKSoHyytLop8umNOqPwutZbI/dWJ
+ 162jsv9PMlAkInhY0jPK6tQGgZoGeNfCuGN76REVtZEqT8oNstFPJ6yEPJWHCHAQF087
+ abny5oeGMwt8hdUDQFtt9s7D7BLSh3ZkqlnT0UdQpTlbZIF5Iwb/+rXRcllkNSvXkW/x
+ HTnpiH7JP/DnodQRQzKsCsgyiiftp+/VB8vLTb8SW92kdVV9LGvCDwFHvul9cmmQpMh8
+ KY3w==
+X-Gm-Message-State: AOJu0Yxl5gEHHMcManoVTlJsQp2TBL4CR8X1vQ0l2+xvu6//FKb1EMXa
+ OVzMiO+vW3zKXya6+lw/DN+vi4PnjGJKRfGr46NSV1xKZGOycse4IZVKnoqLEsurE3RukyMepoc
+ p
+X-Google-Smtp-Source: AGHT+IEWK8YxzMK/MnJ8nBkzy6EptjHH7oBztv5x2yYA8FptfqgGSV9G4tcwY/ttL8s5aLhqLHVbGA==
+X-Received: by 2002:a5d:5f90:0:b0:341:d811:b573 with SMTP id
+ dr16-20020a5d5f90000000b00341d811b573mr1492388wrb.23.1711459008744; 
+ Tue, 26 Mar 2024 06:16:48 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.155.229])
  by smtp.gmail.com with ESMTPSA id
- s19-20020a05600c45d300b00414112a6159sm11482143wmo.44.2024.03.26.06.14.12
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 Mar 2024 06:14:13 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org, Sergio Lopez <slp@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Cc: mst@redhat.com, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1] hw/i386: Add a config to only build the microvm
- machine
-Date: Tue, 26 Mar 2024 14:14:10 +0100
-Message-ID: <20240326131410.93866-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ bl40-20020adfe268000000b0033e03d37685sm12095958wrb.55.2024.03.26.06.16.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Mar 2024 06:16:48 -0700 (PDT)
+Message-ID: <b4b250a9-184e-4744-8948-38f1bc72b25d@linaro.org>
+Date: Tue, 26 Mar 2024 14:16:46 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.0 v3 0/3] hw/clock: Propagate clock changes when
+ STM32L4X5 MUX is updated
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?In=C3=A8s_Varhol?= <ines.varhol@telecom-paris.fr>,
+ Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>,
+ Damien Hedde <damien.hedde@dahe.fr>, Peter Maydell
+ <peter.maydell@linaro.org>, Luc Michel <luc@lmichel.fr>
+References: <20240325152827.73817-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240325152827.73817-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,52 +99,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a config file to build a binary only containing the
-microvm machine, inspired by a discussion on the list:
-https://lore.kernel.org/qemu-devel/604bf457-23a7-4d06-b59f-a7b46945c626@tls.msk.ru/
+On 25/3/24 16:28, Philippe Mathieu-Daudé wrote:
 
-As suggested in commit d1d5e9eefd ("configure: allow the
-selection of alternate config in the build"), it can be
-built using:
+> Per https://www.qemu.org/docs/master/devel/clocks.html#clock-multiplier-and-divider-settings:
+> 
+>    Note that clock_set_mul_div() does not automatically call
+>    clock_propagate(). If you make a runtime change to the
+>    multiplier or divider you must call clock_propagate() yourself.
+> 
+> Fix what we forgot to do that in recent commit ec7d83acbd
+> ("hw/misc/stm32l4x5_rcc: Add an internal clock multiplexer object")
+> 
+> Arnaud Minier (1):
+>    hw/misc/stm32l4x5_rcc: Propagate period when enabling a clock
+> 
+> Philippe Mathieu-Daudé (2):
+>    hw/clock: Let clock_set_mul_div() return a boolean value
+>    hw/misc/stm32l4x5_rcc: Inline clock_update() in clock_mux_update()
 
-  $ ../configure --without-default-features \
-                 --target-list=x86_64-softmmu \
-                 --with-devices-x86_64=microvm
-
-Inspired-by: Michael Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- configs/devices/x86_64-softmmu/microvm.mak | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
- create mode 100644 configs/devices/x86_64-softmmu/microvm.mak
-
-diff --git a/configs/devices/x86_64-softmmu/microvm.mak b/configs/devices/x86_64-softmmu/microvm.mak
-new file mode 100644
-index 0000000000..fe48b5b4a7
---- /dev/null
-+++ b/configs/devices/x86_64-softmmu/microvm.mak
-@@ -0,0 +1,20 @@
-+# SPDX-FileCopyrightText: 2024 Linaro Ltd.
-+#
-+# Config that only supports the 64-bit microvm machine.
-+# This avoids bringing in any of numerous legacy features from
-+# the legacy machines or the 32bit platform.
-+#
-+
-+CONFIG_MICROVM=y
-+CONFIG_PCI_DEVICES=n
-+CONFIG_SMBIOS=y
-+CONFIG_SMBIOS_LEGACY=n
-+CONFIG_VIRTIO_BALLOON=y
-+CONFIG_VIRTIO_BLK=y
-+CONFIG_VIRTIO_CRYPTO=y
-+CONFIG_VIRTIO_GPU=y
-+CONFIG_VIRTIO_INPUT=y
-+CONFIG_VIRTIO_NET=y
-+CONFIG_VIRTIO_RNG=y
-+CONFIG_VIRTIO_SCSI=y
-+CONFIG_VIRTIO_SERIAL=y
--- 
-2.41.0
-
+Series queued (thanks Alistair!).
 
