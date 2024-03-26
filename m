@@ -4,150 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABC65C54E67
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 14:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A17C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 15:20:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp83u-0007GS-VT; Tue, 26 Mar 2024 10:46:03 -0400
+	id 1rp8aL-0005vz-L8; Tue, 26 Mar 2024 11:19:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rp83s-0007G7-HT
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 10:46:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rp83q-00050g-IA
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 10:45:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711464357;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=iVQJNRSO/zaLtQSezV6qEN+Vy5O/mjBPHxzGJG6AVXY=;
- b=Pi0v+TxwWdEwRW1jnk1ixBcjsJbb3rc4NDKSDAB2vSG/B8Oa1m3hwuXGe/P4yNBUQJCHMe
- l9ROvbnZWmGbilVDsRYrHCu7GXjPNAjiGbqsY52nz4MJhAeDufHz1Hhgj4FcBAMRDNQdwU
- Fmk7TvUtOTx21FDdSFsmk4y2GtNCsMM=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-AXbCqspfNZSQ0Nx0nxWEkQ-1; Tue, 26 Mar 2024 10:45:56 -0400
-X-MC-Unique: AXbCqspfNZSQ0Nx0nxWEkQ-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-513e0c5f399so4889685e87.3
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 07:45:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
+ id 1rp8aH-0005vW-KJ
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:19:29 -0400
+Received: from mail-lf1-f53.google.com ([209.85.167.53])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <breno.debian@gmail.com>)
+ id 1rp8aE-0002jg-1Z
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 11:19:29 -0400
+Received: by mail-lf1-f53.google.com with SMTP id
+ 2adb3069b0e04-515b69e8f38so955673e87.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:19:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711464355; x=1712069155;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :references:cc:to:content-language:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iVQJNRSO/zaLtQSezV6qEN+Vy5O/mjBPHxzGJG6AVXY=;
- b=np9NznJuxZ5YFxEgPyWRQuS7LL4FxEyPdowaII53fL5wuXHAQLw788F06N1XbaTjAc
- nKpnTRLRG7LYXKG9Lp1eRM7dMrxhh3uOpPe/DUBOAVTTdJXYt9731S3OtP5wmEjBTEcy
- qSkG71dxVcSSjOftLvwWaum6OxVSJ/WO+0fNwqNL8ZaHfTq9m6+YVDckUQe+KL25oIr+
- OVJFBnjiRe1vqdWLgQzRm5B3opkgHu/3okd3Daw7v0ec7UNYYDRap56DarVezC1xYE+2
- n02rVxIQPbRPZ+3PD6VIn3ERAJqVTbFsQ42GGsPmoAyPcQzXNK4vCverAxjZP/2HWrgD
- BjBw==
+ d=1e100.net; s=20230601; t=1711466363; x=1712071163;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JUVslbHxJBsutcvQ73cVdAnF0u3jUnm/TB9Hv1RCS88=;
+ b=BYjIR3yeZ8aAPOefDQtLAHrR4I8J4EB3L5nSdArCyE3zJrmL/aUHCMgp/vKm3GK0y9
+ vcuvJeqm20JzBf6GEj6pjwpRopWNuJLsWwv86e7AtBSYJ470HwlQm++FJEOghMrvZopa
+ WZ0UTM9Z4avfV8WISC2bu31YFoVvHsaF3bzznBWJEjK/tZy24cbRrD9YnBdOH8/YCpn7
+ N3HipuTCOlymX3WPdh9JpoHA78rgiIEb/uQ18GYWa2/lyaNAw5Z8wRIzHObnqSLOOkbb
+ 3jZneo6E2D1SXr4Ixpn82PgTCX+zhSS0H0BSeaeyyyPhru9UXmpfKOGg5UC+CXf0fDsB
+ 903g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1Y50WAL6atd7S+89ic4XgFBkRjjstiaWppvU4xIsKNe0p4W6RhU2xcC9vyGqU+/C6tfVJmRfVREJiXUx52dZS0xPTNrE=
-X-Gm-Message-State: AOJu0YxwXj8os2nBduFoROEGSHUP7RBkIuqgvWzg3e21pIsjo3t77cyf
- Oeq0VU6jeKnNU2gNrA2egNyY2f/yfL0eWs1HsWmCde///forR6ERBNOIMTzaK8BBWvHeIXuCXm4
- AdDtJWD/sIYWmPR5ONlWGd1ahnORQDesaPPOZjWoVgICed3b5BjhZ
-X-Received: by 2002:a19:7417:0:b0:513:aef9:7159 with SMTP id
- v23-20020a197417000000b00513aef97159mr6809230lfe.39.1711464354679; 
- Tue, 26 Mar 2024 07:45:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQWBJdU71Q4unum2QM/G6FtXaz8X2UUkigP84T97xx3/v6XPqvtiqbsqLyzA56SkTLrqDEJg==
-X-Received: by 2002:a19:7417:0:b0:513:aef9:7159 with SMTP id
- v23-20020a197417000000b00513aef97159mr6809189lfe.39.1711464354094; 
- Tue, 26 Mar 2024 07:45:54 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c741:c700:3db9:94c9:28b0:34f2?
- (p200300cbc741c7003db994c928b034f2.dip0.t-ipconnect.de.
- [2003:cb:c741:c700:3db9:94c9:28b0:34f2])
- by smtp.gmail.com with ESMTPSA id
- bu16-20020a056000079000b00341cd8e04a0sm5444484wrb.105.2024.03.26.07.45.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 07:45:53 -0700 (PDT)
-Message-ID: <462b8b02-5585-45b9-b725-27b8c84d0d1d@redhat.com>
-Date: Tue, 26 Mar 2024 15:45:52 +0100
+ AJvYcCWIvc3IJ+P/3WCH89TCNppMbreZp+AV2BTnk6rSiDLIyJI1HqmPhvoRM3rP2USj8XUkWxBvMi+xX1/Vp9Y0LV7ronFqzbE=
+X-Gm-Message-State: AOJu0Yww5lJKyGzRHbO7srNh0Yd/ic6eaqKVW0QkbxaH8Wt2HHxn5E7q
+ cDzRLiW0Unuh4BV629GKDN93bxbrjm4DFoPSKSrkMF22LwUv8Qpj
+X-Google-Smtp-Source: AGHT+IFP2FZZbpvO9c2stqUmT05DnUhkBn3keNu/tRQhmT0rhlV567sSQvXWBoBrIb87kTJm2cF7ag==
+X-Received: by 2002:a05:6512:54e:b0:513:d522:b58c with SMTP id
+ h14-20020a056512054e00b00513d522b58cmr6423792lfl.56.1711466363049; 
+ Tue, 26 Mar 2024 08:19:23 -0700 (PDT)
+Received: from localhost (fwdproxy-lla-000.fbsv.net.
+ [2a03:2880:30ff::face:b00c]) by smtp.gmail.com with ESMTPSA id
+ i16-20020a170906091000b00a4735fc654fsm4295335ejd.205.2024.03.26.08.19.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Mar 2024 08:19:22 -0700 (PDT)
+From: Breno Leitao <leitao@debian.org>
+To: hengqi@linux.alibaba.com, xuanzhuo@linux.alibaba.com,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, Andrew Melnychenko <andrew@daynix.com>
+Cc: rbc@meta.com, riel@surriel.com, stable@vger.kernel.org,
+ qemu-devel@nongnu.org,
+ virtualization@lists.linux.dev (open list:VIRTIO CORE AND NET DRIVERS),
+ netdev@vger.kernel.org (open list:NETWORKING DRIVERS),
+ linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH net v2 2/2] virtio_net: Do not send RSS key if it is not
+ supported
+Date: Tue, 26 Mar 2024 08:19:09 -0700
+Message-ID: <20240326151911.2155689-2-leitao@debian.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240326151911.2155689-1-leitao@debian.org>
+References: <20240326151911.2155689-1-leitao@debian.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 v2 09/11] hostmem: add a new memory backend based
- on POSIX shm_open()
-Content-Language: en-US
-To: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, gmaglione@redhat.com,
- Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Hanna Reitz <hreitz@redhat.com>, stefanha@redhat.com,
- Coiby Xu <Coiby.Xu@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Igor Mammedov <imammedo@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>,
- slp@redhat.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Brad Smith <brad@comstyle.com>, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-References: <20240326133936.125332-1-sgarzare@redhat.com>
- <20240326133936.125332-10-sgarzare@redhat.com>
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240326133936.125332-10-sgarzare@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=209.85.167.53;
+ envelope-from=breno.debian@gmail.com; helo=mail-lf1-f53.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,31 +93,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> +    mode = 0;
-> +    oflag = O_RDWR | O_CREAT | O_EXCL;
-> +    backend_name = host_memory_backend_get_name(backend);
-> +
-> +    /*
-> +     * Some operating systems allow creating anonymous POSIX shared memory
-> +     * objects (e.g. FreeBSD provides the SHM_ANON constant), but this is not
-> +     * defined by POSIX, so let's create a unique name.
-> +     *
-> +     * From Linux's shm_open(3) man-page:
-> +     *   For  portable  use,  a shared  memory  object should be identified
-> +     *   by a name of the form /somename;"
-> +     */
-> +    g_string_printf(shm_name, "/qemu-" FMT_pid "-shm-%s", getpid(),
-> +                    backend_name);
+There is a bug when setting the RSS options in virtio_net that can break
+the whole machine, getting the kernel into an infinite loop.
 
-Hm, shouldn't we just let the user specify a name, and if no name was 
-specified, generate one ourselves?
+Running the following command in any QEMU virtual machine with virtionet
+will reproduce this problem:
 
-I'm also not quite sure if "host_memory_backend_get_name()" should be 
-used for the purpose here.
+    # ethtool -X eth0  hfunc toeplitz
 
+This is how the problem happens:
+
+1) ethtool_set_rxfh() calls virtnet_set_rxfh()
+
+2) virtnet_set_rxfh() calls virtnet_commit_rss_command()
+
+3) virtnet_commit_rss_command() populates 4 entries for the rss
+scatter-gather
+
+4) Since the command above does not have a key, then the last
+scatter-gatter entry will be zeroed, since rss_key_size == 0.
+sg_buf_size = vi->rss_key_size;
+
+5) This buffer is passed to qemu, but qemu is not happy with a buffer
+with zero length, and do the following in virtqueue_map_desc() (QEMU
+function):
+
+  if (!sz) {
+      virtio_error(vdev, "virtio: zero sized buffers are not allowed");
+
+6) virtio_error() (also QEMU function) set the device as broken
+
+    vdev->broken = true;
+
+7) Qemu bails out, and do not repond this crazy kernel.
+
+8) The kernel is waiting for the response to come back (function
+virtnet_send_command())
+
+9) The kernel is waiting doing the following :
+
+      while (!virtqueue_get_buf(vi->cvq, &tmp) &&
+	     !virtqueue_is_broken(vi->cvq))
+	      cpu_relax();
+
+10) None of the following functions above is true, thus, the kernel
+loops here forever. Keeping in mind that virtqueue_is_broken() does
+not look at the qemu `vdev->broken`, so, it never realizes that the
+vitio is broken at QEMU side.
+
+Fix it by not sending RSS commands if the feature is not available in
+the device.
+
+Fixes: c7114b1249fa ("drivers/net/virtio_net: Added basic RSS support.")
+Cc: stable@vger.kernel.org
+Cc: qemu-devel@nongnu.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+---
+ drivers/net/virtio_net.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index c640fdf28fc5..e6b0eaf08ac2 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3809,6 +3809,9 @@ static int virtnet_set_rxfh(struct net_device *dev,
+ 	struct virtnet_info *vi = netdev_priv(dev);
+ 	int i;
+ 
++	if (!vi->has_rss && !vi->has_rss_hash_report)
++		return -EOPNOTSUPP;
++
+ 	if (rxfh->hfunc != ETH_RSS_HASH_NO_CHANGE &&
+ 	    rxfh->hfunc != ETH_RSS_HASH_TOP)
+ 		return -EOPNOTSUPP;
 -- 
-Cheers,
-
-David / dhildenb
+2.43.0
 
 
