@@ -4,42 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B79C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 16:03:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E310C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 16:04:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp9Fj-0004mA-8o; Tue, 26 Mar 2024 12:02:19 -0400
+	id 1rp9HY-0007yX-Ga; Tue, 26 Mar 2024 12:04:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rp9Fb-0004gN-02
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 12:02:11 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rp9HR-0007vp-ST; Tue, 26 Mar 2024 12:04:10 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1rp9FO-0005CU-Ve
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 12:02:02 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rp9HP-0005Ys-C5; Tue, 26 Mar 2024 12:04:05 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CDB5C5921C;
- Tue, 26 Mar 2024 19:03:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D1EC459220;
+ Tue, 26 Mar 2024 19:05:26 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 68048A3602;
- Tue, 26 Mar 2024 19:01:51 +0300 (MSK)
-Message-ID: <1788e23b-1681-4d4e-a281-df5c9ba330e7@tls.msk.ru>
-Date: Tue, 26 Mar 2024 19:01:50 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id D6363A3606;
+ Tue, 26 Mar 2024 19:03:56 +0300 (MSK)
+Message-ID: <f48df4d0-56ff-4e6a-97ec-71e3f14bd91d@tls.msk.ru>
+Date: Tue, 26 Mar 2024 19:03:56 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1] hw/i386: Add a config to only build the microvm
- machine
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Sergio Lopez <slp@redhat.com>
-Cc: mst@redhat.com, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-References: <20240326131410.93866-1-philmd@linaro.org>
- <517935ff-6f0f-4ef8-878c-9778f6b1bb98@tls.msk.ru>
- <d5ff6e5e-963f-467a-9d5b-3e2d12e16695@linaro.org>
+Subject: Re: [PATCH trivial for-9.0] smbios: add stub for
+ smbios_get_table_legacy()
+To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+Cc: anisinha@redhat.com, mst@redhat.com, laurent@vivier.eu,
+ qemu-trivial@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20240326122630.85989-1-imammedo@redhat.com>
 Content-Language: en-US
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -66,7 +61,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <d5ff6e5e-963f-467a-9d5b-3e2d12e16695@linaro.org>
+In-Reply-To: <20240326122630.85989-1-imammedo@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -91,28 +86,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.03.2024 18:58, Philippe Mathieu-Daudé:
-
->> This is not enough.  This step is good already, but it lacks default machine
->> type selection.  In debian we carry a tiny patch to make microvm the default
->> machine type or else it crashes at startup not finding "pc" machine or one
->> of its required devices.
+26.03.2024 15:26, Igor Mammedov wrote:
+> QEMU build fails with
+>    hw/i386/fw_cfg.c:74: undefined reference to `smbios_get_table_legacy'
+> when it's built with only 'microvm' enabled i.e. with config patch
+>     +++ b/configs/devices/i386-softmmu/default.mak
+>     @@ -26,7 +26,7 @@
 > 
-> No crash here, what is your base commit?
+>     # Boards:
+>     #
+>     -CONFIG_ISAPC=y
+>     -CONFIG_I440FX=y
+>     -CONFIG_Q35=y
+>     +CONFIG_ISAPC=n
+>     +CONFIG_I440FX=n
+>     +CONFIG_Q35=n
 > 
-> ./qemu-system-x86_64
-> qemu-system-x86_64: No machine specified, and there is no default
-> Use -machine help to list supported machines
+> it happens because I've fogotten/lost smbios_get_table_legacy() stub.
+> 
+> Fix it by adding missing stub as Philippe suggested.
+> 
+> Fixes: b42b0e4daaa5 "smbios: build legacy mode code only for 'pc' machine"
+> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+> Singned-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 
-Well, this is definitely better than a crash.  I haven't looked at that for
-a long time, initially it just crashed.
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Still, this current behavior isn't nice, - in my opinion it should select
-microvm by default in this case.
-
-https://salsa.debian.org/qemu-team/qemu/-/blob/master/debian/patches/microvm-default-machine-type.patch
-is the outline (from more than 4 years ago), - it's a hack but shows what
-I mean.
+Thanks,
 
 /mjt
 
