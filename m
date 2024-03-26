@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E04AEC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7995CD11DD
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp64m-0004fO-Hj; Tue, 26 Mar 2024 08:38:48 -0400
+	id 1rp66W-0005Vc-5s; Tue, 26 Mar 2024 08:40:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rp64l-0004fE-PT
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:38:47 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rp66R-0005UD-RF
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:40:32 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1rp64j-0001SF-RQ
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:38:47 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-341808b6217so3471311f8f.3
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 05:38:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rp66Q-0001qt-5E
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:40:31 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5684db9147dso6347529a12.2
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 05:40:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711456724; x=1712061524; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=moj79F80528qTPBI7G4nUqRT3fEvk/Eg8GXtBzL2LD0=;
- b=gCSak1jUx75Wmpq+e47SwtVV7bc/MN7Ej4Q6fGpJmP2Xoon/JmdiwbqlIBjjDx4MaF
- LDYN91OxNydZbLPQhMgvxJk/scQ+dirTpLrlHw1L3ZltSOYlQUvJZwglqZM3aMNNpyDS
- PUTLW+yWOO5efxdFl1FTyG33liDUWU3btcqVntG1BPIKTLPOwWW+8iOV3GyQgs73ATb5
- 9ucZTq7FI7zf4bJXaMkJOKG1uGWSeFcnNNe1hiMYFYe+nXKeveR2lmvYFSS2FyQpHb+y
- 2WtLukxjbvB20S7V1H5u8c+juT7m2h4mqCcRTG/joxTkruimfWqjAEJzUj935mLZcCfx
- yPiw==
+ d=linaro.org; s=google; t=1711456827; x=1712061627; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=M3UGHtJmOYdUAhi5t1BRB9hvcswDptE9pAC7zQpBEQA=;
+ b=DhthijxFdL0XZQO0vhvONRijUvsLJ2Uc3dpsSeuLGQY964vLQ6I4wBU4f1mkU6/1eT
+ HATNegLLLfi3E69D9B9Y6YPAATVXhagb380LCBhpSFs00p00KlDwH7od+QHKpI6MzPlx
+ 3XLlNd9ZM4KiGnd4BsniRYqTkVDaH3N85gpK+ferXRvjNA1fNZUAcq3y9w6PU7ssAWaQ
+ m0Xp1Hkue1qaq+A+zTbRRB2itrpcPn0Dccm0w3ocI6wq5I9qjUfARXJbEtt5ebDmQPIb
+ Vp+PSZaRfeH/ODtAhNzqiHNeL3l9XNJJyQw9QDO8rQiT1PgqPxipejqQgiKBeruGF8TN
+ IyWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711456724; x=1712061524;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=moj79F80528qTPBI7G4nUqRT3fEvk/Eg8GXtBzL2LD0=;
- b=h4nqygO3d+QQTwGw/nw3n8uCT1MtHw0nLnaY1PHHg0WYfaUUWtav6A2NvnxwX/BT9J
- W06AWxj4K9QP+IP+0vSNjNYlERmtHrPFzghmhz/xDFB5wrF1gn9tfDrP4ttYXiETk/7N
- URuqcmlXIVq6vGk3w/Hs3ljO5Ml37/1YDw+KTqeOjKgoX4Z5bEMYwwiJtJ3mJo0QpqPz
- NC163e6lJxTMX6uVbAgtI6WJHBc+1q3Uhx7MhrfPIqbDClNT+XqWI7vql388XMvVTYEZ
- mG7K+w7wLmJfMBEUQCcEmVrmaG1EWNH7fTSQYeI+SmLbKe44+yUk5FJyC0QTZzLuCQkr
- G8VQ==
+ d=1e100.net; s=20230601; t=1711456827; x=1712061627;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=M3UGHtJmOYdUAhi5t1BRB9hvcswDptE9pAC7zQpBEQA=;
+ b=h5AOvXSlPStBE7Xs7mf6rU52R6+s/A84VIh+QxXoBaDnwWypY5PBlfTFfh9ldXBUux
+ g74sAlOtHynuaFz3vm0IePvcUKlGYXJaC/C7ZgmXbYXYik5anmCuz3+IPp0ce/AgDCoO
+ Lt0ng7Y8fD2/zSsD8Ob05UolenOBYeRxktg5Qskb7P/hIUL7lq1Se8pVXIN1WoS0PQRd
+ ibMaIcjvjqKV/IKxOi1vBjV88I6wSRzKg6+bzZwOYzJFlNf0TjTyF5x6RbvNZhzlw/Bq
+ e2Iimrcfn/ki0bTeqJ3g4FaIyqheHIRpdT5p68gDF9IxAV5mxUsLKwNJHWnNh3FBj15F
+ /Tbg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXRnCtT3RGJSn/u0L91S27lGMV5PdA66u99oy/XR6nKLuoiR1I/2ZsYTGJigrh4TQMbKv1k48WeIYkyy3C4CGYr0o5WpnM=
-X-Gm-Message-State: AOJu0YzmRRymBDvcsujDwXOPJ0xYTSC2fttEzFtqLK+OKw8swb38rt7Q
- 7uiZTyQHEuhZ+Lm4fLFJ6jAGr7Yt1EpM+BC2JWMaHTlZt+9nysFc+R9NCAmfA4c=
-X-Google-Smtp-Source: AGHT+IFpgdmbMYl+AZ8VM947U7u4wCGSQJcQExXtPno1TAUpj6aTYlAqJq2jGb4FCXTm+u6Cpf3Inw==
-X-Received: by 2002:a05:6000:e45:b0:33e:d06a:3273 with SMTP id
- dy5-20020a0560000e4500b0033ed06a3273mr7061999wrb.19.1711456723896; 
- Tue, 26 Mar 2024 05:38:43 -0700 (PDT)
-Received: from [192.168.1.24] ([102.35.208.160])
- by smtp.gmail.com with ESMTPSA id
- ay26-20020a5d6f1a000000b00341dc343e21sm169645wrb.65.2024.03.26.05.38.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 05:38:43 -0700 (PDT)
-Message-ID: <c75cf73d-5e8c-48da-a505-3cc0ba858856@linaro.org>
-Date: Tue, 26 Mar 2024 16:38:39 +0400
+ AJvYcCVwdMZsyEhwcqiooA8lETr/y8+3uwnNZxm/EZp+5J4+QKmb8dSJ7Hj1+8z66Ew94PrcWc421yFlLDUJSNjUQjM0xXfjCto=
+X-Gm-Message-State: AOJu0YyeB2eslsGXOQqoHCCzAgrKgjSKGyha4NOzNsy6M8xz8mK1vE9V
+ JjaqpRW4UzaMavRhAPE7FfyVZAXb2bVMSYskf/TfvubuLPGqLSqmXZ+gx/N3QCMQJ01mFbQf5cT
+ gEq3tIBAXZ64lsgZ+aQhVDnBjim1FC9X+L+suwQ==
+X-Google-Smtp-Source: AGHT+IFxr6/Eic3/zTKR/CCsHPeSz0BOal6hN/adaX6bW0CZtZopfMP4CC30YUCnSS2g+UouMOf8ku1RA3dIsP52qTs=
+X-Received: by 2002:a50:d5c5:0:b0:56b:8f6d:8a99 with SMTP id
+ g5-20020a50d5c5000000b0056b8f6d8a99mr823495edj.22.1711456827553; Tue, 26 Mar
+ 2024 05:40:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] contrib/plugins/execlog: Fix compiler warning
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yao Xingtao <yaoxt.fnst@fujitsu.com>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, erdnaxe@crans.org, ma.mandourr@gmail.com,
- peter.maydell@linaro.org
-References: <20240320020115.18801-1-yaoxt.fnst@fujitsu.com>
- <20240326015257.21516-1-yaoxt.fnst@fujitsu.com>
- <9eb2194e-7efe-448a-a511-9d10e589943e@linaro.org>
- <c0bdb1f6-b456-4378-a2ee-b2355ad5bb42@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <c0bdb1f6-b456-4378-a2ee-b2355ad5bb42@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-wr1-x429.google.com
+References: <20240326-meson-v2-0-d9f9003775e9@daynix.com>
+ <20240326-meson-v2-1-d9f9003775e9@daynix.com>
+In-Reply-To: <20240326-meson-v2-1-d9f9003775e9@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 26 Mar 2024 12:40:16 +0000
+Message-ID: <CAFEAcA8JF35A5o-+F39sXFnkTDnPo29A7zCZgxFPt3388sVvig@mail.gmail.com>
+Subject: Re: [PATCH for 9.1 v2 1/2] buildsys: Bump known good meson version to
+ v1.4.0
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Beraldo Leal <bleal@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ John Snow <jsnow@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,8 +97,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCk9uIDMvMjYvMjQgMTM6NTQsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0K
-PiANCj4gSSB3aWxsIHBvc3QgYSBzbWFsbCBQUiBsYXRlciB0b2RheSwgc28gdW50aWwgUGV0
-ZXIgaGFzIHNvbWV0aGluZw0KPiBlbHNlIHBsYW5uZWQsIEkgY2FuIHRha2UgaXQsIHNpbmNl
-IHRoZSBwYXRjaCBMR1RNIG5vdy4NCj4gDQoNClRoYW5rcyBQaGlsaXBwZSA6KQ0K
+On Tue, 26 Mar 2024 at 12:35, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>
+> We need meson v1.4.0 to fix MESONINTROSPECT quoting on Windows:
+> https://github.com/mesonbuild/meson/pull/12807
+>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>  python/scripts/vendor.py                   |   4 ++--
+>  python/wheels/meson-1.2.3-py3-none-any.whl | Bin 964928 -> 0 bytes
+>  python/wheels/meson-1.4.0-py3-none-any.whl | Bin 0 -> 935471 bytes
+>  pythondeps.toml                            |   2 +-
+>  4 files changed, 3 insertions(+), 3 deletions(-)
+
+> --- a/pythondeps.toml
+> +++ b/pythondeps.toml
+> @@ -19,7 +19,7 @@
+>
+>  [meson]
+>  # The install key should match the version in python/wheels/
+> -meson = { accepted = ">=0.63.0", installed = "1.2.3", canary = "meson" }
+> +meson = { accepted = ">=0.63.0", installed = "1.4.0", canary = "meson" }
+
+If we need 1.4.0 why does this still say we accept anything 0.63.0
+or better ?
+
+If we use shlex.split(), does that go wrong for pre-1.4.0
+meson only on Windows, or is it broken for all platforms?
+(i.e. could we if we wanted to make the requirement
+"1.4.0 for windows, 0.63.0 for others"?)
+
+thanks
+-- PMM
 
