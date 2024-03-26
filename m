@@ -4,87 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 572ABCD11DF
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 09:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E9E6CD1280
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 09:57:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp3XE-0007cO-Ik; Tue, 26 Mar 2024 05:56:00 -0400
+	id 1rp3Xo-0007yU-Hy; Tue, 26 Mar 2024 05:56:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp3XB-0007br-UB
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:55:58 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp3Xm-0007tY-Lp
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:56:34 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp3X9-0006sX-4w
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:55:56 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-513e134f73aso6808346e87.2
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 02:55:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp3Xj-0006zV-BN
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:56:33 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-41488f9708fso13093085e9.3
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 02:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711446953; x=1712051753; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711446990; x=1712051790; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zCB0SA3PLv8WNhbjHVBiYQK5hT8Xlfs6CZwCJfO5OeU=;
- b=OIK5g43dd+mq6qXBjqrRq/4NhY9CL3o3/aj65Eb4z7gJ21TfqWx3pNsIU/kwDqCEpf
- S+QTevvI98swtIVWP+dml8T1ZHd6lhGVu3VNQiVpJG6aC4N0m/iU2zt3kmfTvgpC3T30
- sLZcZ5fhLiqTQXh7UTHTLBVAaDVDG9LDMsG/EDhictXs+bKO7/iqQn2axM5NiUoyP+yh
- a1QzoUepy6Yj6YqkKfOjK7uXIPpMMGRZV0KhGXu3sdPxMy6bWPdCCERX/qDlZJM5v8hV
- S24KYRbm5xwduJoCiMdIIuubH/pKDP/AHo3r7kxYcdyaWQ3sFD5A+hUyIRWcgUZKE/y9
- lf6w==
+ bh=qeE5IqzdinRWh6lTlE0AtWqMokUPKMdMOciWC6LfJAE=;
+ b=q8Zk5Rb4OTLBovvAs3Ydr0Tp0rP7R9kZ5CGA2R57WElXnLxBIGQGMVbJLbVAHo7OAh
+ X5BLsLe9ELPbCVa50LZTezQ/sHZiRvzcQtdFkbrs6hfUD6otd2EWQW7r0WUG74hyuItL
+ ecOb6vVVxErVTwRaN2pjVdJ3xgHVzXIFHhq28pzK8bsQv/xbUNcE6YrUU7t1k/8cX8QD
+ 6t2ESk7Ymm8aQXAO5ynUzFTSLWk67z+3V1ukCxExrD825Ag2X/1cbntV7IIugGM0T6FK
+ kVboPIup951wFvs50HRFU3qOLLqrw9/tI/Tgj0rFCIrVfWmxyDYo59y8JPnMR9ESgFHo
+ sFUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711446953; x=1712051753;
+ d=1e100.net; s=20230601; t=1711446990; x=1712051790;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zCB0SA3PLv8WNhbjHVBiYQK5hT8Xlfs6CZwCJfO5OeU=;
- b=sturSOGm6b6uFSgSlPD2WxI60puMMwSDuy3DZSALC+QHVV+x9RszkHGWS40jv/+8ex
- ZiKQ0J6AT8W9Gsg569pZB28Ju215VWgtjSERp3k9FbDBcWuVtF7e5J9V7Db9uv4fVyJ2
- MHxHNGJNHAt/pMgrWlwxTwJFtVduzdDcaAJ65fzAS1ATTSMuWh99lUWDC9Ig8rKA3uuc
- cV/THzuWEUEd+OMETDyr9cAWPzEoSrWRJ7Ez58IZtUbvan8e4ELBCmjcB6h5aQRzOWV1
- LluNvSgOQnyTY4kOVszPyj6wOG4JYQLGnLHHzUqyfeTWdfYwIE9LjOopgVOpLw9GIFQ4
- QhQg==
-X-Gm-Message-State: AOJu0YyGJMBwVtUvlS9fgDCl2FRYg9fcGOuzwsSEAyNpcJ88tS2jeVIv
- ot1aSsOljwgrTKEf1bQVfzI+CAv4OROqO1zNsD9ZYRSrezNYsy78I5hO2pg61Es=
-X-Google-Smtp-Source: AGHT+IGbB3HEesP3F038+sm0oIuZ23xB+WPo7+IXSzJLQ8WZpMNY93xdbQqZizPFOs3KBy0Gbfpyfg==
-X-Received: by 2002:a2e:9257:0:b0:2d6:d45d:b49b with SMTP id
- v23-20020a2e9257000000b002d6d45db49bmr3983563ljg.10.1711446952831; 
- Tue, 26 Mar 2024 02:55:52 -0700 (PDT)
+ bh=qeE5IqzdinRWh6lTlE0AtWqMokUPKMdMOciWC6LfJAE=;
+ b=uSVKlHNb0mOxfnarls5kRwiMJl11eNFh9aoiLlV2bwoAbhb7fzjwWyUQ/qKiu9vRl0
+ 9cfTCnk4TB3sl2g8DmNUTapW0jH09U5dnC9zpY7aSVF/VbVtw1kmcE1nevlPOvRmlOcT
+ Imgkxls6CyUFb2sCo6OaFVLUnVE5wZ0A3W9pLoD0tveSq8yLqB3FgutqM577vE8mjHy9
+ ONiNTI4yEEPFD2TTQzc99c42j/RkYQjeNbHcGZLuV3oSd/GJ/38SPV5rcO0fRRjOoHi+
+ I+5nH2w+y31P1h5OsqLq0Mtlgocw76Q7ta897lHdweOxNdAhX9MD3Q1p539tkupENaSf
+ 7nCg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWj0r0zM0lMquRco0WftSNuxQJQTZD1AzG3WGSplPUUz75BFfaourQxL58tqwCzZ/u9rmbTY7SUnUwbmnPq/iwICRjUoXo=
+X-Gm-Message-State: AOJu0YzIAAXaL2QV1VLN+LEn3OFZN/XKaOZm0ZewJI5znInvFINS171/
+ h3+YP/vJ0cSbpHMm1FvdYAUmhTXuKj9EsLG9wx2EINjAOIjirXj3AN/dS0gGGlk=
+X-Google-Smtp-Source: AGHT+IHmQIRTDEIOw9WFpimkhJHl7IXlFHt30wjN6LKdKXnpUUjIazryJ1GuoVvCRIURrW7j6gutTg==
+X-Received: by 2002:a05:600c:2e51:b0:414:250:ccaa with SMTP id
+ q17-20020a05600c2e5100b004140250ccaamr6858790wmf.12.1711446989647; 
+ Tue, 26 Mar 2024 02:56:29 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.155.229])
  by smtp.gmail.com with ESMTPSA id
- g4-20020a05600c310400b0041462294fe3sm11043010wmo.42.2024.03.26.02.55.50
+ g4-20020a05600c310400b0041462294fe3sm11043010wmo.42.2024.03.26.02.56.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 02:55:52 -0700 (PDT)
-Message-ID: <10713c68-27d8-49b8-b50f-6648eef8d277@linaro.org>
-Date: Tue, 26 Mar 2024 10:55:50 +0100
+ Tue, 26 Mar 2024 02:56:29 -0700 (PDT)
+Message-ID: <a8408559-7eb4-4643-bae7-4039f16ef00e@linaro.org>
+Date: Tue, 26 Mar 2024 10:56:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] misc/pca955*: Move models under hw/gpio
+Subject: Re: [PATCH] docs/system/ppc/amigang.rst: Fix formatting
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Glenn Miles <milesg@linux.vnet.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org
-References: <20240325134833.1484265-1-clg@redhat.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-trivial@nongnu.org
+References: <20240324161148.4650D4E601F@zero.eik.bme.hu>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240325134833.1484265-1-clg@redhat.com>
+In-Reply-To: <20240324161148.4650D4E601F@zero.eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,35 +95,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/3/24 14:48, Cédric Le Goater wrote:
-> The PCA9552 and PCA9554 devices are both I2C GPIO controllers and the
-> PCA9552 also can drive LEDs. Do all the necessary adjustments to move
-> the models under hw/gpio.
+On 24/3/24 17:11, BALATON Zoltan wrote:
+> Add missing space to fix character formatting where it was missed in
+> two places.
 > 
-> Cc: Glenn Miles <milesg@linux.vnet.ibm.com>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> Fixes: 623d9065b6 (docs/system/ppc: Document running Linux on AmigaNG machines)
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   MAINTAINERS                              | 4 ++--
->   include/hw/{misc => gpio}/pca9552.h      | 0
->   include/hw/{misc => gpio}/pca9552_regs.h | 0
->   include/hw/{misc => gpio}/pca9554.h      | 0
->   include/hw/{misc => gpio}/pca9554_regs.h | 0
->   hw/arm/aspeed.c                          | 2 +-
->   hw/{misc => gpio}/pca9552.c              | 4 ++--
->   hw/{misc => gpio}/pca9554.c              | 4 ++--
->   tests/qtest/pca9552-test.c               | 2 +-
->   tests/qtest/pnv-host-i2c-test.c          | 4 ++--
->   hw/gpio/meson.build                      | 2 ++
->   hw/gpio/trace-events                     | 4 ++++
->   hw/misc/meson.build                      | 2 --
->   hw/misc/trace-events                     | 4 ----
->   14 files changed, 16 insertions(+), 16 deletions(-)
->   rename include/hw/{misc => gpio}/pca9552.h (100%)
->   rename include/hw/{misc => gpio}/pca9552_regs.h (100%)
->   rename include/hw/{misc => gpio}/pca9554.h (100%)
->   rename include/hw/{misc => gpio}/pca9554_regs.h (100%)
->   rename hw/{misc => gpio}/pca9552.c (99%)
->   rename hw/{misc => gpio}/pca9554.c (99%)
+>   docs/system/ppc/amigang.rst | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
 Thanks, patch queued.
 
