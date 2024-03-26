@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AFC9C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17660CD1280
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 12:10:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp5YY-0000rI-Qo; Tue, 26 Mar 2024 08:05:30 -0400
+	id 1rp5cN-0002O7-1l; Tue, 26 Mar 2024 08:09:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp5YX-0000qI-1C
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:05:29 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rp5cF-0002NT-CL
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:09:21 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rp5YS-0001V1-GF
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:05:28 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-56899d9bf52so6858440a12.2
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 05:05:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rp5cB-0002hF-Tg
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 08:09:17 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6e6082eab17so4128314b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 05:09:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711454721; x=1712059521; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=ventanamicro.com; s=google; t=1711454953; x=1712059753; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UOBnM2pnR6oPF9CjLZcZAdfJODqH22UCVW8p0wDKXk0=;
- b=TS8/jfQAuOzfVWDI96xqQUkSTp5+aRvHcnFjwf7aXUAi23eBfV6Hw/fE3G4yoj+rpn
- +Q/b5zKhDGJ9yOel+ZIoPXvEsAlNQNV45cDlwud88JSN/VveGKp9Ui2HG9gthNGQXBXn
- //rtYxWeytL1Up4ShyAQEfKJv3NDE0ahmS+Tm29lkUZG7MfbVELwI29xNDcsOf3MPg5F
- NTn1j1ULa5XbzmKz36RQVXN/Z8IAM2K0G2FqtXzNsdyLqXFG5NXB5INuMKUqEBRtWciL
- y7w+x4gNv+XaU+BREbve1LCnBOV5vhd/YT7je0O6WNZYWYgjAnH5R6K0H29gJ4Dqx0lt
- tyig==
+ bh=MIR8qz4HTWoBQMZ8nTE9DRw7vN7H9IWFCkZ+QLtQgMU=;
+ b=iTu+z2zLmCo/FvP0wOFXjKd3DYyNf1Dd9uQEEXeqK4+8+eOVedY7K/hZsf+0qL70o9
+ rbH4Ha61+1+IAOf42pOZRfig2alDJv/SCJR1MhROvtWDP/6EtQkKXqg+869IL0ZzgBO1
+ POpKmIQdTh5IluzYm/bhvSABbDFzbaFfVkA3Uezr1aTMbY+1DrcPt+1ZQl18KnSEpvWI
+ 57IyElArgs4aY0fMIIcbdIJ7OV098BCJuvHcZdS2XbFX6DH009nhE51eXKOkSIxjPSXY
+ gCv5shgNXiZ/rWqcikstF9ci7/ZeV7Tqd/uH+p50OK+aUTio/K387bde9SpdVrV8FK2h
+ gq2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711454721; x=1712059521;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1711454953; x=1712059753;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UOBnM2pnR6oPF9CjLZcZAdfJODqH22UCVW8p0wDKXk0=;
- b=LiksvoXbot+GW14FGYrWpVuqinCVRnUslv2p/aeLlNcIzwwIjAUwXviUZ9ODwD/h+r
- eVsvCC1khZQer3OcztHwVIHyeY7295mp7S6/ByVwd0FiO2PhkdZWr4B8yYAYHyioUBdA
- NV4Z+2HIZEshpXfRoEd3EEec07PsrOW1iFw5jhXTlY0XCLxE+aQDvsSi8ZgdpLEKD7BE
- yYohORjYF+MQvMRNq80UaAk1sf+aXmiAwNemwSFGah+KFzyPCdM2JNJouNjh11OOkOJh
- xikdd/bpjWpYIyz9ugBbdYQ7DQ6ABFGEra2lQPkYdR0mnOKtQ/a0q5m4H+4NgJY9Syzb
- Gd1w==
-X-Gm-Message-State: AOJu0YzlZH3/fpPsZK8ykhuzZgQZ2YMt7SbKETdJ4AlAhkisdp4Ro4w/
- Lk2At9HM+oBB8MXnoH/7g46u4GoYWvQeTiAjypndOoSqbGlITHyAZcWaZeGpciU=
-X-Google-Smtp-Source: AGHT+IGHXNiUnYHAvUYjZ5mC9BMUU7HFSpHVwWLURw488dRl6eHCJnK/ido5NcXo5kA6b4c7eTvGbg==
-X-Received: by 2002:a50:d707:0:b0:56c:295e:2c01 with SMTP id
- t7-20020a50d707000000b0056c295e2c01mr1598521edi.15.1711454721455; 
- Tue, 26 Mar 2024 05:05:21 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.155.229])
+ bh=MIR8qz4HTWoBQMZ8nTE9DRw7vN7H9IWFCkZ+QLtQgMU=;
+ b=fp2SDoS6C97bKLpV+fDE/6LL+isn0CK3VaW2gxCmFlsTwMqKUE6cfiBk5WROjdisUA
+ A4Rhnr7WHPPu6Co7nMtOiyfVTF16fA9/xpXXgx9Ml5PlBjoS1BaFPe9KvjSecedluj+T
+ tG+UQwBEZYhhYEbfQDS+zhbGct7+q3EP2pkaxrfryEugoCqbdWqzV69kGNcq+VyfgdLb
+ 1l6ET+t+dNuR1Y3RLjxARRozDUyKQc8wmLnShU6T3kRQX/DMncJGOqQn9jMTMHekAvKn
+ nWi1FJjNmS0TBTi1cgLY/nvIyh6vbLrKl1aylrRT5qS1QOiIWlAoZ1BG1ilIup8V5J2C
+ AARw==
+X-Gm-Message-State: AOJu0Yxh587REAL3vDSbyfeX5wKocEbtQUX4hG++dMm2XrmHGzFMn9cB
+ aWNEcj93RA+Z5N2WidF4Akz0Bdih+zDRVj4iRHsnRDTj6XjZgGrrOfIyqS4iLjw=
+X-Google-Smtp-Source: AGHT+IG02Oc/vrz5E/RwPAVRVGcFE1d+6I38a6m7cGjCyidUcIf1hXcAfufsNkOUKLqHcg0fp84hoA==
+X-Received: by 2002:a05:6a20:3d8e:b0:1a3:c5be:678c with SMTP id
+ s14-20020a056a203d8e00b001a3c5be678cmr3169783pzi.47.1711454953573; 
+ Tue, 26 Mar 2024 05:09:13 -0700 (PDT)
+Received: from [192.168.68.110] ([177.45.186.241])
  by smtp.gmail.com with ESMTPSA id
- cx10-20020a05640222aa00b0056bb1b017besm4065490edb.23.2024.03.26.05.05.19
+ k9-20020aa79d09000000b006e535bf8da4sm5765814pfp.57.2024.03.26.05.09.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 05:05:21 -0700 (PDT)
-Message-ID: <a7dd18be-61dd-42d7-8bf1-dba47e1234c6@linaro.org>
-Date: Tue, 26 Mar 2024 13:05:19 +0100
+ Tue, 26 Mar 2024 05:09:13 -0700 (PDT)
+Message-ID: <bfb8856c-f154-4e54-a8f9-42586e45f424@ventanamicro.com>
+Date: Tue, 26 Mar 2024 09:09:09 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] misc/pca955*: Move models under hw/gpio
+Subject: Re: [PULL 00/15] riscv-to-apply queue
+To: Alistair Francis <alistair23@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20240322085319.1758843-1-alistair.francis@wdc.com>
+ <5eb1ce03-639a-4db3-a1e2-aba61fa295d1@tls.msk.ru>
+ <76c065d8-41ee-433d-ba40-e1d13579b4a4@ventanamicro.com>
+ <6d1ea7ad-0a81-4f5e-8210-80b5150bc521@tls.msk.ru>
+ <6fb5ca42-8e86-4144-b9a9-9d98d30f8fb9@ventanamicro.com>
+ <19d5ffb8-8cf1-4d88-b66a-2cf961621b93@tls.msk.ru>
+ <CAKmqyKOG1sr269TDERsGEvbAJfJ_MTtW-smMCdDUBbYaGwkPGA@mail.gmail.com>
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Glenn Miles <milesg@linux.vnet.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org
-References: <20240325134833.1484265-1-clg@redhat.com>
- <10713c68-27d8-49b8-b50f-6648eef8d277@linaro.org>
- <f6f6e771-0820-4de5-b9cc-1e64b9729712@kaod.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f6f6e771-0820-4de5-b9cc-1e64b9729712@kaod.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CAKmqyKOG1sr269TDERsGEvbAJfJ_MTtW-smMCdDUBbYaGwkPGA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,52 +102,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/3/24 11:16, Cédric Le Goater wrote:
-> On 3/26/24 10:55, Philippe Mathieu-Daudé wrote:
->> On 25/3/24 14:48, Cédric Le Goater wrote:
->>> The PCA9552 and PCA9554 devices are both I2C GPIO controllers and the
->>> PCA9552 also can drive LEDs. Do all the necessary adjustments to move
->>> the models under hw/gpio.
->>>
->>> Cc: Glenn Miles <milesg@linux.vnet.ibm.com>
->>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>> ---
->>>   MAINTAINERS                              | 4 ++--
->>>   include/hw/{misc => gpio}/pca9552.h      | 0
->>>   include/hw/{misc => gpio}/pca9552_regs.h | 0
->>>   include/hw/{misc => gpio}/pca9554.h      | 0
->>>   include/hw/{misc => gpio}/pca9554_regs.h | 0
->>>   hw/arm/aspeed.c                          | 2 +-
->>>   hw/{misc => gpio}/pca9552.c              | 4 ++--
->>>   hw/{misc => gpio}/pca9554.c              | 4 ++--
->>>   tests/qtest/pca9552-test.c               | 2 +-
->>>   tests/qtest/pnv-host-i2c-test.c          | 4 ++--
->>>   hw/gpio/meson.build                      | 2 ++
->>>   hw/gpio/trace-events                     | 4 ++++
->>>   hw/misc/meson.build                      | 2 --
->>>   hw/misc/trace-events                     | 4 ----
->>>   14 files changed, 16 insertions(+), 16 deletions(-)
->>>   rename include/hw/{misc => gpio}/pca9552.h (100%)
->>>   rename include/hw/{misc => gpio}/pca9552_regs.h (100%)
->>>   rename include/hw/{misc => gpio}/pca9554.h (100%)
->>>   rename include/hw/{misc => gpio}/pca9554_regs.h (100%)
->>>   rename hw/{misc => gpio}/pca9552.c (99%)
->>>   rename hw/{misc => gpio}/pca9554.c (99%)
+
+
+On 3/26/24 06:56, Alistair Francis wrote:
+> On Tue, Mar 26, 2024 at 7:53 PM Michael Tokarev <mjt@tls.msk.ru> wrote:
 >>
->> Thanks, patch queued.
+>> On 24.03.2024 21:12, Daniel Henrique Barboza wrote:
+>>> On 3/24/24 12:07, Michael Tokarev wrote:
+>>
+>>>> Unfortunately this doesn't quite work, the following changes
+>>>> fail to apply to 8.2:
+>>>>
+>>>> 929e521a47 target/riscv: always clear vstart for ldst_whole insns
+>>>> b46631f122 target/riscv: remove 'over' brconds from vector trans
+>>>> d57dfe4b37 trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+>>>> bac802ada8 target/riscv: enable 'vstart_eq_zero' in the end of insns
+>>>> 385e575cd5 target/riscv/kvm: fix timebase-frequency when using KVM acceleration
+>>
+>>> The amount of work can be non-trivial for this backport, so I'd say we should
+>>> leave it aside for now. If someone has a good argument for this work then we
+>>> can re-evaluate.
+>>
+>> So, out of 15 patches in this series (minus the first one already
+>> mentioned) - should I pick 9 remaining patches for stable (the ones
+>> which applies) or none at all? :)
 > 
-> This one is merged,
+> Sorry for the confusion.
 > 
-> https://gitlab.com/qemu-project/qemu/-/commit/6328d8ffa6cb9d750e4bfcfd73ac25d3a39ceb63
+> The 9 patches that applied and
+> 
+> 385e575cd5 target/riscv/kvm: fix timebase-frequency when using KVM acceleration
+> 
+> should all be picked for stable.
+> 
+> PS: What is the best way in future to help ease some of the stable
+> burden? Should I try and cherry pick them beforehand and then mention
+> that as a follow up to the PR?
 
-Yes I just realized when updating my tree that Thomas sent a PR with
-your patches. Sorry for the noise.
+We believe your judgement about what should or shouldn't be in stable, so IMO you can
+be pro-active into cherry picking fixes into stable and mention it in the PR.
+
+
+Thanks,
+
+Daniel
 
 > 
-> Thanks,
+> Alistair
 > 
-> C.
-> 
-> 
-
+>>
+>> Thanks,
+>>
+>> /mjt
 
