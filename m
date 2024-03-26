@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07221C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 13:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82E59CD11DD
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 13:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp72H-0007VQ-OI; Tue, 26 Mar 2024 09:40:17 -0400
+	id 1rp72B-0007H6-8A; Tue, 26 Mar 2024 09:40:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rp72E-0007RV-FI
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:40:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1rp725-0007C3-OX
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:40:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rp72C-0005Ab-7m
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:40:13 -0400
+ id 1rp724-00057o-CD
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 09:40:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711460411;
+ s=mimecast20190719; t=1711460403;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QKw7wwOpcT5LAk2fX9NUDEtqgiO584+Et0vV37YJJRo=;
- b=MElvr9m0N3+DzlPFs+YmV8FRcT2WHrHJQa6J2t6xbHXZY4hL2t5asUVxN5klurNkwtAE9Y
- 2Tp3HCkPITXmUdbddrHM5MyL91SElsUyKiYjuMhEbNVME66xu5Qht+yqWBgNDCRGRhwMnu
- Pee14tE5+QwKhldPDHwqGTHZE/duJpI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UGDk8t1Sssy5sr3pI6FPbTNJvoJDpa2GRLWLlgFnCCg=;
+ b=UVjme058wOxU/fljnSmAdZZWT/i9etsyAIIm6ZNDTrvfKWmNi4N7qjKoox7xt61khD6eG/
+ 4RDt5jIRGQh8Pvm4aNaLvxqno+tLuZDvFXqn1tMYGmDO9mxcZa518BfmnQUZaa3cOuHMe7
+ 58xHxwTNo517CgIkeEyzzPjc0zowh1E=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-558-O-WKnm5sPqmSkwwk8aQm3A-1; Tue, 26 Mar 2024 09:40:07 -0400
-X-MC-Unique: O-WKnm5sPqmSkwwk8aQm3A-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3418f237c0bso2807342f8f.3
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 06:40:06 -0700 (PDT)
+ us-mta-119-p81ApJd_Orm_MuSPdfsdrw-1; Tue, 26 Mar 2024 09:40:02 -0400
+X-MC-Unique: p81ApJd_Orm_MuSPdfsdrw-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3417fa3f143so1322597f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 06:40:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711460405; x=1712065205;
+ d=1e100.net; s=20230601; t=1711460400; x=1712065200;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QKw7wwOpcT5LAk2fX9NUDEtqgiO584+Et0vV37YJJRo=;
- b=QnU90EDVz6179UiZNINlVOc9zyjfewbLB+qz0Y4umfAS2AEgQZPrE3zeuvWV9YSffb
- H7zPQD3SmFw2691YEjpHftd88VVHHCs91q99s3KgaYDteZkc/iRe4v7G+CMDVUKV/wse
- JLfMqOr+rnLi+B8GBo3Q1oU5+uk8QkvI5XG8ez8ZQ0FLBztDm3t+jYy2FwhqLtw7CD/F
- neafRngV0A0JN906xlx1eKPnUzD1c8E7JOUGjM5N6ROJz7WMrCkpEcKbRz5p/Di4e+4k
- Prdopt9dsHYGpH29JBi9N+h5bclejDvZK5dmCQhDiP+ndkHuyFcJZeJWSs2hggCAvcid
- suCg==
-X-Gm-Message-State: AOJu0YzViYGBIyLLiKCkD3GTVXg5bX3vEbHE33CyBbjIQZx2iyJ2oqAm
- bn3gz3VfD1CLPYaFijZwuAtEpYwNWOxV9XLK3vrQYtsT3X3jAe3ExiRnlMZray6KhueSMtvXDWA
- F9aLgxde/pUgmeUJy/826Dx7sKUCDgeLe+lUFP4xp9CeAFOrDe6oAlp09bJRRX3MhG4tAQtRWJ5
- ROaoyjSKQM3nxCBYvVoiSrN0IFswlNoQ0d4PLm
-X-Received: by 2002:a5d:6e88:0:b0:33e:bf11:a007 with SMTP id
- k8-20020a5d6e88000000b0033ebf11a007mr1015446wrz.31.1711460405408; 
- Tue, 26 Mar 2024 06:40:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFtcEO0M9lq6C75Hqd6uCy0EDmER4gQXhoRzLyt0r3wluU94R3XlnCfYqFXYdF9WX/VBCfkVQ==
-X-Received: by 2002:a5d:6e88:0:b0:33e:bf11:a007 with SMTP id
- k8-20020a5d6e88000000b0033ebf11a007mr1015413wrz.31.1711460405139; 
- Tue, 26 Mar 2024 06:40:05 -0700 (PDT)
+ bh=UGDk8t1Sssy5sr3pI6FPbTNJvoJDpa2GRLWLlgFnCCg=;
+ b=iG8RuVAfmZH/WgrJtawxI/RB4/mVddR5eACuPEWCTPvaKcfesdjJgsZAofjTm/Z7Vo
+ tKjlpdBDeL0uo+ghQO5fzXLDmKVriyG9JV0KReJcC7Lg3cvU89TJOx2z5WNg6zR99tJY
+ vEWviHn9VQ8R7JYqKKVutbjorWEavgB7uCpbs3lTeRRzAQZD9Z3Q1Ge1YqmQrI77lfkx
+ y46sMon9rUL2jvGxFZhbqLK3yI5uBv20rUGHgxPtgXAlQN6c4VT9ME0y2A59HAx2NG8H
+ k7m78SzGihyCc13VcAWubX8RQNdmrm9DKQvvqnyDgmWQqquI3Z5IVQDIIR0Av9YqiWE5
+ w1EQ==
+X-Gm-Message-State: AOJu0Yxj7bvwKNkx1z7cxKmFTNzO/mc53TsQH7syLJWxuu6P2tLK0mkd
+ zkyYghAh5LTKm8mDHAVVzAyrXrCk3ww7yO78eyTA4ZSsTCbDkNP3XNG9VYo5NILllJuIyJwF+sE
+ I29w9aqmablDHzWigjyd+d+Btx7Q37ABRNXro1+ivAyPMVYlRhDShCbBjd5YRk5thDXEvUXyabL
+ QVUPCASdQQU7NDaerRtLMCBfTKnHKqiOk/VY31
+X-Received: by 2002:adf:fd07:0:b0:33e:7c3f:ee0f with SMTP id
+ e7-20020adffd07000000b0033e7c3fee0fmr6615247wrr.28.1711460400441; 
+ Tue, 26 Mar 2024 06:40:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFImdrA8cehgHQjACL3IkcO9h+idapOlwMAutQ+pb3b6l8BdOECajlEwjWrV55g/onVxx/g8Q==
+X-Received: by 2002:adf:fd07:0:b0:33e:7c3f:ee0f with SMTP id
+ e7-20020adffd07000000b0033e7c3fee0fmr6615209wrr.28.1711460400033; 
+ Tue, 26 Mar 2024 06:40:00 -0700 (PDT)
 Received: from step1.redhat.com (host-87-12-25-33.business.telecomitalia.it.
  [87.12.25.33]) by smtp.gmail.com with ESMTPSA id
- t13-20020a5d42cd000000b0033ec312cd8asm12230707wrr.33.2024.03.26.06.40.03
+ w6-20020a05600c474600b0041490d1cd06sm577179wmo.40.2024.03.26.06.39.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 26 Mar 2024 06:40:04 -0700 (PDT)
+ Tue, 26 Mar 2024 06:39:59 -0700 (PDT)
 From: Stefano Garzarella <sgarzare@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, gmaglione@redhat.com,
@@ -82,27 +82,25 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, gmaglione@redhat.com,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH for-9.1 v2 05/11] contrib/vhost-user-blk: fix bind() using the
- right size of the address
-Date: Tue, 26 Mar 2024 14:39:30 +0100
-Message-ID: <20240326133936.125332-6-sgarzare@redhat.com>
+Subject: [PATCH for-9.1 v2 04/11] vhost-user-server: don't abort if we can't
+ set fd non-blocking
+Date: Tue, 26 Mar 2024 14:39:29 +0100
+Message-ID: <20240326133936.125332-5-sgarzare@redhat.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240326133936.125332-1-sgarzare@redhat.com>
 References: <20240326133936.125332-1-sgarzare@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- PP_MIME_FAKE_ASCII_TEXT=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,62 +116,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On macOS passing `-s /tmp/vhost.socket` parameter to the vhost-user-blk
-application, the bind was done on `/tmp/vhost.socke` pathname,
-missing the last character.
+In vhost-user-server we set all fd received from the other peer
+in non-blocking mode. For some of them (e.g. memfd, shm_open, etc.)
+if we fail, it's not really a problem, because we don't use these
+fd with blocking operations, but only to map memory.
 
-This sounds like one of the portability problems described in the
-unix(7) manpage:
+In these cases a failure is not bad, so let's just report a warning
+instead of panicking if we fail to set some fd in non-blocking mode.
 
-   Pathname sockets
-       When  binding  a socket to a pathname, a few rules should
-       be observed for maximum portability and ease of coding:
-
-       •  The pathname in sun_path should be null-terminated.
-
-       •  The length of the pathname, including the  terminating
-          null byte, should not exceed the size of sun_path.
-
-       •  The  addrlen  argument  that  describes  the enclosing
-          sockaddr_un structure should have a value of at least:
-
-              offsetof(struct sockaddr_un, sun_path) +
-              strlen(addr.sun_path)+1
-
-          or,  more  simply,  addrlen  can   be   specified   as
-          sizeof(struct sockaddr_un).
-
-So let's follow the last advice and simplify the code as well.
+This for example occurs in macOS where setting shm_open() fd
+non-blocking is failing (errno: 25).
 
 Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- contrib/vhost-user-blk/vhost-user-blk.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ util/vhost-user-server.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/vhost-user-blk/vhost-user-blk.c b/contrib/vhost-user-blk/vhost-user-blk.c
-index 89e5f11a64..a8ab9269a2 100644
---- a/contrib/vhost-user-blk/vhost-user-blk.c
-+++ b/contrib/vhost-user-blk/vhost-user-blk.c
-@@ -469,7 +469,6 @@ static int unix_sock_new(char *unix_fn)
+diff --git a/util/vhost-user-server.c b/util/vhost-user-server.c
+index 3bfb1ad3ec..064999f0b7 100644
+--- a/util/vhost-user-server.c
++++ b/util/vhost-user-server.c
+@@ -66,7 +66,11 @@ static void vmsg_unblock_fds(VhostUserMsg *vmsg)
  {
-     int sock;
-     struct sockaddr_un un;
--    size_t len;
- 
-     assert(unix_fn);
- 
-@@ -481,10 +480,9 @@ static int unix_sock_new(char *unix_fn)
- 
-     un.sun_family = AF_UNIX;
-     (void)snprintf(un.sun_path, sizeof(un.sun_path), "%s", unix_fn);
--    len = sizeof(un.sun_family) + strlen(un.sun_path);
- 
-     (void)unlink(unix_fn);
--    if (bind(sock, (struct sockaddr *)&un, len) < 0) {
-+    if (bind(sock, (struct sockaddr *)&un, sizeof(un)) < 0) {
-         perror("bind");
-         goto fail;
+     int i;
+     for (i = 0; i < vmsg->fd_num; i++) {
+-        qemu_socket_set_nonblock(vmsg->fds[i]);
++        int ret = qemu_socket_try_set_nonblock(vmsg->fds[i]);
++        if (ret) {
++            warn_report("Failed to set fd %d nonblock for request %d: %s",
++                        vmsg->fds[i], vmsg->request, strerror(-ret));
++        }
      }
+ }
+ 
 -- 
 2.44.0
 
