@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2CEEC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 09:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BB87CD11DF
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 09:47:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp3Nu-0002D3-26; Tue, 26 Mar 2024 05:46:22 -0400
+	id 1rp3P5-0002gW-1Z; Tue, 26 Mar 2024 05:47:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rp3Ns-0002Cl-K0
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:46:20 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rp3P2-0002cq-V6
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:47:33 -0400
 Received: from mout.gmx.net ([212.227.15.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rp3No-00056o-W8
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:46:20 -0400
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1rp3Oz-0005EX-BJ
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 05:47:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1711446374; x=1712051174; i=deller@gmx.de;
- bh=NUrMDPjKSCQEldPSWHKFIAQq+w45+qWPJa928kOTj5Q=;
+ s=s31663417; t=1711446446; x=1712051246; i=deller@gmx.de;
+ bh=BCv97JPPBXx6bkTUJDccxzoeJhQaldkOZrklwObXams=;
  h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
- b=A6T/YN6kLUoLydDZyQzVt3eM7RllJuTVHi2itt4FZ3QUfg/AHvIwOe9sl4pswOec
- QO9ZrY/UApkLXA2foB/U+T4GrgfLunNRRJeJY8ym12U47qMZTij7xRc4rkdSVmJPi
- E7izdYaDRy1mrWR70lNhnHWDaFcb3seS54ko9l2zoxRk6/sZj9oV+gOjdmzzu/qIw
- miGuglgjRx1+hYufRmGaSd09blgpxCqbEUMAWneSAuz7haTxYAIk1/8LqszcUy/Kc
- CqObKIQ92071OL0WTF3orwEf/rMB1QYUPokUHG10mJQfq5ryCVyjK/JvEoHwVo8nU
- eSirb43HSO5mJNGquw==
+ b=m0pBRGvNbTQROlMgxgOMj8pc0lMezcQEmYxav6Jip0oNeCq1YCPhmq3pYqiE/amT
+ /M3YjMxhlflMQeXT+eqsH/hs0ZBzuJLB4dvnjG3qzhblOvBPN8K6Kl0RnoJ3L4w93
+ Ov3CACB6ygYUlnSZEHWJw6cH6NA+DdsSSgrVoKVZJKNunNNcDI7xqqTW+pXS58Vv/
+ eT2huKadeIYfXPgVsDgYN/VdNapwbpAehABAz6UtIs492G9Ey5ywSxc4HgIoxv2xp
+ Jn83qsFkWJgcsUazoy9Dc7IoJRpXRtED/A3huWQn5VN9uS3411fV+O6l3ZSL5r2E2
+ Wb8fjcRhoBZMMJ5WaA==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [192.168.20.55] ([89.244.180.193]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtwUw-1sj4qg08Vg-00uFXR; Tue, 26
- Mar 2024 10:46:14 +0100
-Message-ID: <11ad662e-1da3-4061-b39c-4a289d151852@gmx.de>
-Date: Tue, 26 Mar 2024 10:46:13 +0100
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M5wPh-1rvLzp13Gt-007WLq; Tue, 26
+ Mar 2024 10:47:26 +0100
+Message-ID: <1c6c0af6-5719-45f0-af05-1748113ca09f@gmx.de>
+Date: Tue, 26 Mar 2024 10:47:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/hppa: Squash d for pa1.x during decode
+Subject: Re: [PATCH 2/3] target/hppa: Replace c with uv in do_cond
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20240326064405.320551-1-richard.henderson@linaro.org>
- <20240326064405.320551-2-richard.henderson@linaro.org>
+ <20240326064405.320551-3-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Helge Deller <deller@gmx.de>
 Autocrypt: addr=deller@gmx.de; keydata=
@@ -85,26 +85,26 @@ Autocrypt: addr=deller@gmx.de; keydata=
  FwRDcGV6nxanxZGKEkSHHOm8jHwvQWvPP73pvuPBEPtKGLzbgd7OOcGZWtq2hNC6cRtsRdDx
  4TAGMCz4j238m+2mdbdhRh3iBnWT5yPFfnv/2IjFAk+sdix1Mrr+LIDF++kiekeq0yUpDdc4
  ExBy2xf6dd+tuFFBp3/VDN4U0UfG4QJ2fg19zE5Z8dS4jGIbLg==
-In-Reply-To: <20240326064405.320551-2-richard.henderson@linaro.org>
+In-Reply-To: <20240326064405.320551-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:E4LEkJLpH0ia8dUdhL1M7iAR51lisLKdY6E0lCyhHW45QzJHufb
- 0ni9i0cTVWH8TA3v0aiLKpDF+P/j10wPfgtya6v9expmq/5XzvASvvqKTzWX5ZUZG2H/0ZQ
- 8JL4ARQRuonmO/VwnTEMY6oo7PrFxlzxHsguyWwmWzRoSJHIMEcoV/6WbTObC1DOmxUe7fb
- yfCAoOIYaupggsEPs5BRg==
-UI-OutboundReport: notjunk:1;M01:P0:RAMFZf253+w=;QLixgNmD0UNALZpBz5mwm8Xq04D
- ECxQXDSxW6ZjkSN/nI9B29WVBeUV4fwMsnrNK3HeJpi5V0/4HU0KNlQONfi6QytzViEHfjjCq
- kkK2dAUEh6RwrijgjaWKaV1Ou+7nXVGz9x6KHNZ3vDa3D3Rm7nsf5e/d2FEftypfS4Ni1Jivk
- EYtnE1sGW1lpRG+VcOHP+75FkgyLfa3WKvtTky11LonwMMuK3yLsz7ffI3uFOnwiAZmeUuLrv
- j5/vaIf5mRuBAzov3kslf11q0a4drVmYKDDfJwdEW3hCmR8OaTA0VHzgg8oAnWTG0E2DIdoyU
- OQc5BW4639m6CWiRBZhBzrUiRcGjDZb1LPcrSb8fewY3Ae0yan/HqYtQNXxs6lmEBLbinBhm5
- VKFOe2yD0iEvZGDSvlWuYrnmPmERxWK1u510vjdcwPtFxfA4GZMPKadYAxERzfiQH6PP6Sxm/
- wNgJ6nrP/6iguHOlcVGlbsw4vx1l/HC+eoLrOy1yx6rftRes6sPUbyv/l4n0GsoZb0U0Fk4p4
- t1uDsrRiEGqMJJEyKyOj53ognxdI2DIS/5JIA+Ii2kMq8to+CPXf1Oh+0u2O9DEmMG6dj9nuJ
- I/ju7jkuaNvFEyCa/csu7uJMQzOFIlgMQknWqtR17OlLrN+u65qt+fasuuwsJV81DcpfSC7wP
- +r1K+InopZr7dK1osR/U2ZxtWvfAiPFBtX/vQGM/ZfNCHYvooKNKGrL/DkOGE95xgYsmrVk3g
- ehplSJzMxAtgt0itGKnQiJKW+EZStNCD/Xr3dwOsvWnC98Wmx43n1iPZduK6ZQ0t1IoJepeYv
- qyzhTe8oy33dtubH7eADNPZr92O92x8FRnIl/JKbg9UUc=
+X-Provags-ID: V03:K1:NmZX1bfnr0WQDWQ6JXCdK5yZZkRNNv9pDGtEWpcoYPt8c0Duo9U
+ yQB9gA9lsD4wg0PCqM1JGMokffJf2LWIdfXEXvJyMhjVVSz0qFpBVchCwcQ5rVdvwR9eAEa
+ q7MplOc6J1pAJeJwbzHTqn/4Nv/o4rtjWC9O/raL0kBEIgEjr6CfpH3DHw9kyKuaeAZwXeQ
+ as6roRfuBnl4UuZAzWX0g==
+UI-OutboundReport: notjunk:1;M01:P0:AgPjYAoz904=;CBhyckcc4vXFfqFAs87HAsbShzm
+ 5XAL9biHdBD4GWM7f6Uvj8IjG6PHtlAEXngqx3A8sYJWkT35Vre8fDX37l/fyg8FFYaFKUeD2
+ 97cr+8fBM3yUKTp9wTVuF3s73vE42fABJ4pKvY1I0qtEppvsmITUMHAXiPlyoGf3PSW6iBlb3
+ wZGRUYoTx/f2mjTe7GA2ELMmv+EjNBIl+2nMEzGGwnTsjzMpNpI1FHCTKHrHVyfuLwogDcbQN
+ A/aErTsu7moKymcVNGlL0mGvAWwNyET5T0YYi8uz4kG2DAb4dTGWMpGUu/cx5bUAHLVyh8fb0
+ EEjEnYoeHi33h98N3yJ0ggaM8xr0hb1/VDgFUucbN/9nCiRye/jpKTTwzLX2KnRnAR+AaMTxU
+ cAlHJCl/26gdfM5wvy+aDCQhDNJJ/UtU9SBuJgaRgOZx6opDXzOEQ3DJvPrcxwDpexjZALiEP
+ mOgaA4gsWtVbcyf4mfiPiwU2aBOJpt/L0jbmpKcTEQEEARvnEiR+PNtkMbN7KwcklGpz1L0Rr
+ wwXyvPRwAKNK2dY1quCFSVkMmsHjMgRZq2Vh2k64J1xHA6XLcDzQ3eRYyRkVEkNjwSEHotASv
+ NvZ5eepa+ADGQD0QBVD/GXlik329jfX3CiQARz19AAYz0/6NQ3DPSaIiHqNXp0PD8LCkoqCXO
+ X1KJVJOnXYTCmJK59bq3/2anRBKEDeTwPv7abjasXE8L83bSQnGOLXpDlDNOIpX2gLZxXWHGC
+ ev3VBg7heLTpToTSu2UBXUVCO8WwY718jkxf7PlXlb7wxCeUHUEPsLcLTpCGTFI3uFLR0xiVT
+ GhG8WQEqZVnUw2yUyglz3omXRJhA7iV0uSrA4qKu6IYU8=
 Received-SPF: pass client-ip=212.227.15.19; envelope-from=deller@gmx.de;
  helo=mout.gmx.net
 X-Spam_score_int: -27
@@ -130,217 +130,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/26/24 07:44, Richard Henderson wrote:
-> The cond_need_ext predicate was created while we still had a
-> 32-bit compilation mode.  It now makes more sense to treat D
-> as an absolute indicator of a 64-bit operation.
+> Prepare for proper indication of shladd unsigned overflow.
+> The UV indicator will be zero/not-zero instead of a single bit.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 Reviewed-by: Helge Deller <deller@gmx.de>
 Tested-by: Helge Deller <deller@gmx.de>
 
 Helge
 
-
 > ---
->   target/hppa/insns.decode | 20 +++++++++++++-------
->   target/hppa/translate.c  | 38 ++++++++++++++++++++------------------
->   2 files changed, 33 insertions(+), 25 deletions(-)
+>   target/hppa/translate.c | 12 +++++-------
+>   1 file changed, 5 insertions(+), 7 deletions(-)
 >
-> diff --git a/target/hppa/insns.decode b/target/hppa/insns.decode
-> index f58455dfdb..6a74cf23cd 100644
-> --- a/target/hppa/insns.decode
-> +++ b/target/hppa/insns.decode
-> @@ -57,6 +57,9 @@
->   %neg_to_m       0:1      !function=3Dneg_to_m
->   %a_to_m         2:1      !function=3Dneg_to_m
->   %cmpbid_c       13:2     !function=3Dcmpbid_c
-> +%d_5            5:1      !function=3Dpa20_d
-> +%d_11           11:1     !function=3Dpa20_d
-> +%d_13           13:1     !function=3Dpa20_d
->
->   ####
->   # Argument set definitions
-> @@ -84,15 +87,16 @@
->   # Format definitions
->   ####
->
-> -@rr_cf_d        ...... r:5 ..... cf:4 ...... d:1 t:5    &rr_cf_d
-> +@rr_cf_d        ...... r:5 ..... cf:4 ...... . t:5      &rr_cf_d d=3D%d=
-_5
->   @rrr            ...... r2:5 r1:5 .... ....... t:5       &rrr
->   @rrr_cf         ...... r2:5 r1:5 cf:4 ....... t:5       &rrr_cf
-> -@rrr_cf_d       ...... r2:5 r1:5 cf:4 ...... d:1 t:5    &rrr_cf_d
-> +@rrr_cf_d       ...... r2:5 r1:5 cf:4 ...... . t:5      &rrr_cf_d d=3D%=
-d_5
->   @rrr_sh         ...... r2:5 r1:5 ........ sh:2 . t:5    &rrr_sh
-> -@rrr_cf_d_sh    ...... r2:5 r1:5 cf:4 .... sh:2 d:1 t:5 &rrr_cf_d_sh
-> -@rrr_cf_d_sh0   ...... r2:5 r1:5 cf:4 ...... d:1 t:5    &rrr_cf_d_sh sh=
-=3D0
-> +@rrr_cf_d_sh    ...... r2:5 r1:5 cf:4 .... sh:2 . t:5   &rrr_cf_d_sh d=
-=3D%d_5
-> +@rrr_cf_d_sh0   ...... r2:5 r1:5 cf:4 ...... . t:5      &rrr_cf_d_sh d=
-=3D%d_5 sh=3D0
->   @rri_cf         ...... r:5  t:5  cf:4 . ...........     &rri_cf i=3D%l=
-owsign_11
-> -@rri_cf_d       ...... r:5  t:5  cf:4 d:1 ...........   &rri_cf_d i=3D%=
-lowsign_11
-> +@rri_cf_d       ...... r:5  t:5  cf:4 . ...........     \
-> +                &rri_cf_d d=3D%d_11 i=3D%lowsign_11
->
->   @rrb_cf         ...... r2:5 r1:5 c:3 ........... n:1 .  \
->                   &rrb_c_f disp=3D%assemble_12
-> @@ -368,8 +372,10 @@ fmpysub_d       100110 ..... ..... ..... ..... 1 ..=
-...  @mpyadd
->   # Conditional Branches
->   ####
->
-> -bb_sar          110000 00000 r:5 c:1 1 d:1 ........... n:1 . disp=3D%as=
-semble_12
-> -bb_imm          110001 p:5   r:5 c:1 1 d:1 ........... n:1 . disp=3D%as=
-semble_12
-> +bb_sar          110000 00000 r:5 c:1 1 . ........... n:1 . \
-> +                disp=3D%assemble_12 d=3D%d_13
-> +bb_imm          110001 p:5   r:5 c:1 1 . ........... n:1 . \
-> +                disp=3D%assemble_12 d=3D%d_13
->
->   movb            110010 ..... ..... ... ........... . .  @rrb_cf f=3D0
->   movbi           110011 ..... ..... ... ........... . .  @rib_cf f=3D0
 > diff --git a/target/hppa/translate.c b/target/hppa/translate.c
-> index 99c5c4cbca..a70d644c0b 100644
+> index a70d644c0b..9d31ef5764 100644
 > --- a/target/hppa/translate.c
 > +++ b/target/hppa/translate.c
-> @@ -200,6 +200,14 @@ static int cmpbid_c(DisasContext *ctx, int val)
->       return val ? val : 4; /* 0 =3D=3D "*<<" */
->   }
+> @@ -707,7 +707,7 @@ static bool cond_need_cb(int c)
+>    */
 >
-> +/*
-> + * In many places pa1.x did not decode the bit that later became
-> + * the pa2.0 D bit.  Suppress D unless the cpu is pa2.0.
-> + */
-> +static int pa20_d(DisasContext *ctx, int val)
-> +{
-> +    return ctx->is_pa20 & val;
-> +}
->
->   /* Include the auto-generated decoder.  */
->   #include "decode-insns.c.inc"
-> @@ -693,12 +701,6 @@ static bool cond_need_cb(int c)
->       return c =3D=3D 4 || c =3D=3D 5;
->   }
->
-> -/* Need extensions from TCGv_i32 to TCGv_i64. */
-> -static bool cond_need_ext(DisasContext *ctx, bool d)
-> -{
-> -    return !(ctx->is_pa20 && d);
-> -}
-> -
->   /*
->    * Compute conditional for arithmetic.  See Page 5-3, Table 5-1, of
->    * the Parisc 1.1 Architecture Reference Manual for details.
-> @@ -715,7 +717,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned=
- cf, bool d,
->           cond =3D cond_make_f();
->           break;
->       case 1: /* =3D / <>        (Z / !Z) */
-> -        if (cond_need_ext(ctx, d)) {
-> +        if (!d) {
->               tmp =3D tcg_temp_new_i64();
->               tcg_gen_ext32u_i64(tmp, res);
->               res =3D tmp;
-> @@ -725,7 +727,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned=
- cf, bool d,
->       case 2: /* < / >=3D        (N ^ V / !(N ^ V) */
->           tmp =3D tcg_temp_new_i64();
->           tcg_gen_xor_i64(tmp, res, sv);
-> -        if (cond_need_ext(ctx, d)) {
-> +        if (!d) {
->               tcg_gen_ext32s_i64(tmp, tmp);
->           }
->           cond =3D cond_make_0_tmp(TCG_COND_LT, tmp);
-> @@ -742,7 +744,7 @@ static DisasCond do_cond(DisasContext *ctx, unsigned=
- cf, bool d,
->            */
->           tmp =3D tcg_temp_new_i64();
->           tcg_gen_eqv_i64(tmp, res, sv);
-> -        if (cond_need_ext(ctx, d)) {
-> +        if (!d) {
->               tcg_gen_sextract_i64(tmp, tmp, 31, 1);
->               tcg_gen_and_i64(tmp, tmp, res);
->               tcg_gen_ext32u_i64(tmp, tmp);
-> @@ -760,13 +762,13 @@ static DisasCond do_cond(DisasContext *ctx, unsign=
+>   static DisasCond do_cond(DisasContext *ctx, unsigned cf, bool d,
+> -                         TCGv_i64 res, TCGv_i64 cb_msb, TCGv_i64 sv)
+> +                         TCGv_i64 res, TCGv_i64 uv, TCGv_i64 sv)
+>   {
+>       DisasCond cond;
+>       TCGv_i64 tmp;
+> @@ -754,14 +754,12 @@ static DisasCond do_cond(DisasContext *ctx, unsign=
 ed cf, bool d,
->           tmp =3D tcg_temp_new_i64();
->           tcg_gen_neg_i64(tmp, cb_msb);
->           tcg_gen_and_i64(tmp, tmp, res);
-> -        if (cond_need_ext(ctx, d)) {
-> +        if (!d) {
->               tcg_gen_ext32u_i64(tmp, tmp);
 >           }
 >           cond =3D cond_make_0_tmp(TCG_COND_EQ, tmp);
 >           break;
->       case 6: /* SV / NSV      (V / !V) */
-> -        if (cond_need_ext(ctx, d)) {
-> +        if (!d) {
->               tmp =3D tcg_temp_new_i64();
->               tcg_gen_ext32s_i64(tmp, sv);
->               sv =3D tmp;
-> @@ -827,7 +829,7 @@ static DisasCond do_sub_cond(DisasContext *ctx, unsi=
-gned cf, bool d,
->       if (cf & 1) {
->           tc =3D tcg_invert_cond(tc);
->       }
-> -    if (cond_need_ext(ctx, d)) {
-> +    if (!d) {
->           TCGv_i64 t1 =3D tcg_temp_new_i64();
->           TCGv_i64 t2 =3D tcg_temp_new_i64();
->
-> @@ -904,7 +906,7 @@ static DisasCond do_log_cond(DisasContext *ctx, unsi=
-gned cf, bool d,
->           g_assert_not_reached();
->       }
->
-> -    if (cond_need_ext(ctx, d)) {
-> +    if (!d) {
->           TCGv_i64 tmp =3D tcg_temp_new_i64();
->
->           if (ext_uns) {
-> @@ -979,7 +981,7 @@ static DisasCond do_unit_zero_cond(unsigned cf, bool=
- d, TCGv_i64 res)
->   static TCGv_i64 get_carry(DisasContext *ctx, bool d,
->                             TCGv_i64 cb, TCGv_i64 cb_msb)
->   {
-> -    if (cond_need_ext(ctx, d)) {
-> +    if (!d) {
->           TCGv_i64 t =3D tcg_temp_new_i64();
->           tcg_gen_extract_i64(t, cb, 32, 1);
->           return t;
-> @@ -3448,12 +3450,12 @@ static bool trans_bb_sar(DisasContext *ctx, arg_=
-bb_sar *a)
->
->       tmp =3D tcg_temp_new_i64();
->       tcg_r =3D load_gpr(ctx, a->r);
-> -    if (cond_need_ext(ctx, a->d)) {
-> +    if (a->d) {
-> +        tcg_gen_shl_i64(tmp, tcg_r, cpu_sar);
-> +    } else {
->           /* Force shift into [32,63] */
->           tcg_gen_ori_i64(tmp, cpu_sar, 32);
->           tcg_gen_shl_i64(tmp, tcg_r, tmp);
-> -    } else {
-> -        tcg_gen_shl_i64(tmp, tcg_r, cpu_sar);
->       }
->
->       cond =3D cond_make_0_tmp(a->c ? TCG_COND_GE : TCG_COND_LT, tmp);
-> @@ -3470,7 +3472,7 @@ static bool trans_bb_imm(DisasContext *ctx, arg_bb=
-_imm *a)
->
->       tmp =3D tcg_temp_new_i64();
->       tcg_r =3D load_gpr(ctx, a->r);
-> -    p =3D a->p | (cond_need_ext(ctx, a->d) ? 32 : 0);
-> +    p =3D a->p | (a->d ? 0 : 32);
->       tcg_gen_shli_i64(tmp, tcg_r, p);
->
->       cond =3D cond_make_0(a->c ? TCG_COND_GE : TCG_COND_LT, tmp);
+> -    case 4: /* NUV / UV      (!C / C) */
+> -        /* Only bit 0 of cb_msb is ever set. */
+> -        cond =3D cond_make_0(TCG_COND_EQ, cb_msb);
+> +    case 4: /* NUV / UV      (!UV / UV) */
+> +        cond =3D cond_make_0(TCG_COND_EQ, uv);
+>           break;
+> -    case 5: /* ZNV / VNZ     (!C | Z / C & !Z) */
+> +    case 5: /* ZNV / VNZ     (!UV | Z / UV & !Z) */
+>           tmp =3D tcg_temp_new_i64();
+> -        tcg_gen_neg_i64(tmp, cb_msb);
+> -        tcg_gen_and_i64(tmp, tmp, res);
+> +        tcg_gen_movcond_i64(TCG_COND_EQ, tmp, uv, ctx->zero, ctx->zero,=
+ res);
+>           if (!d) {
+>               tcg_gen_ext32u_i64(tmp, tmp);
+>           }
 
 
