@@ -4,73 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E310C6FD1F
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 16:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25201C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 16:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp9HY-0007yX-Ga; Tue, 26 Mar 2024 12:04:12 -0400
+	id 1rp9Ki-0001MA-9E; Tue, 26 Mar 2024 12:07:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rp9HR-0007vp-ST; Tue, 26 Mar 2024 12:04:10 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rp9HP-0005Ys-C5; Tue, 26 Mar 2024 12:04:05 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D1EC459220;
- Tue, 26 Mar 2024 19:05:26 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D6363A3606;
- Tue, 26 Mar 2024 19:03:56 +0300 (MSK)
-Message-ID: <f48df4d0-56ff-4e6a-97ec-71e3f14bd91d@tls.msk.ru>
-Date: Tue, 26 Mar 2024 19:03:56 +0300
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rp9Kg-0001Lm-8r
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 12:07:26 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rp9Ke-0006NW-BI
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 12:07:25 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1e0189323b4so43787265ad.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 09:07:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1711469242; x=1712074042; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=K1/ETFHfBAHRt5SRZc6zEItAUnr14wWoBgrXhWnHPBY=;
+ b=cJ1yXuWbbstxvtsOHYI7vUpGyQtbHZt4vLxlO+PX9B99CqNRFcMHrPnyQT/ruXR6th
+ QA74BP0eZzAv1Jdh58Wi17UZm2oLt+9NziPraZp3LmnWfVN8MW82bR3od+3zMgq1QdAv
+ G7mk2KG8eHPwHupMUANNs40T7AkmsDTo3AvvfSILRgweW6lKsso+mRdglh9qaMtv74Qo
+ fGAubfPSl9jq6UfBsmQS3xiVxpnBvnaaJSAb9H37/iyAfUNmmryMI78RNMjSpj0yFUPa
+ 5W05Ffr9hsirLvIOH5+lUpF223B3rkDOf9ZiDK4SsB87l+11fwAPJ13p60kmwZsT4iqt
+ kGBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711469242; x=1712074042;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=K1/ETFHfBAHRt5SRZc6zEItAUnr14wWoBgrXhWnHPBY=;
+ b=CNe8cARtgvHsjt7gMhOZqD1tKM1h1yKHra9nunVdNnvuM/A1cCo9rOdseyzHMV/neE
+ RAdjVxW7M/69IsSyu01DnYYUebGObOXe4aEgSSLLTY+dWe9TBSok0M9UT1NF/qhmdJfP
+ l/rrj78cWEA2ru/DMvWZd+lOiigkpEmNAIbf7s50feWC5OFmIjhaW+NcWlYeCmGHGwwf
+ YDG2RVVtDiee0b8G46Kb2udWAGRxSMoIbiJf9Urg91sjPOwWkVl0thtxLsZg7miSHk6K
+ ck17tlE4Ly37v51H0yVXh6DNGqCVOAFGExDR9Wno9SK1FzM47JnQFLJ/wOnbHLHViHMy
+ 4rZA==
+X-Gm-Message-State: AOJu0YwNxWhNrcMrFd1CGNQB3cr5PAnImGkmzrixexXmuluVFo2Nc9ha
+ /z+3Ct6AsVlhzpeCZH1//W83VKpY3/3JeqQIJU1LTkqvVWrq4xkcNsvcQZaNs00=
+X-Google-Smtp-Source: AGHT+IFOiQXDjTc5piSK4auV/59xQbo9M+Ua0aep0ccPRSL/stFuBjEJRL1ZEE3tAgX9CkgH6IOxRw==
+X-Received: by 2002:a17:902:fc45:b0:1e0:9c35:e07f with SMTP id
+ me5-20020a170902fc4500b001e09c35e07fmr213631plb.34.1711469240492; 
+ Tue, 26 Mar 2024 09:07:20 -0700 (PDT)
+Received: from [192.168.68.110] ([177.45.186.241])
+ by smtp.gmail.com with ESMTPSA id
+ y6-20020a17090322c600b001e0b5d49fc7sm5015962plg.161.2024.03.26.09.07.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Mar 2024 09:07:20 -0700 (PDT)
+Message-ID: <087af5f3-dfcd-4888-936c-0ffdd955459a@ventanamicro.com>
+Date: Tue, 26 Mar 2024 13:07:16 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial for-9.0] smbios: add stub for
- smbios_get_table_legacy()
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: anisinha@redhat.com, mst@redhat.com, laurent@vivier.eu,
- qemu-trivial@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20240326122630.85989-1-imammedo@redhat.com>
+Subject: Re: [PATCH for-9.0 0/3] qtest/virtio-9p-test.c: fix slow tests
 Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240326122630.85989-1-imammedo@redhat.com>
+To: Greg Kurz <groug@kaod.org>
+Cc: qemu-devel@nongnu.org, thuth@redhat.com, alistair.francis@wdc.com,
+ peter.maydell@linaro.org, qemu_oss@crudebyte.com
+References: <20240326132606.686025-1-dbarboza@ventanamicro.com>
+ <20240326165550.05d083da@bahia>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240326165550.05d083da@bahia>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,34 +97,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.03.2024 15:26, Igor Mammedov wrote:
-> QEMU build fails with
->    hw/i386/fw_cfg.c:74: undefined reference to `smbios_get_table_legacy'
-> when it's built with only 'microvm' enabled i.e. with config patch
->     +++ b/configs/devices/i386-softmmu/default.mak
->     @@ -26,7 +26,7 @@
-> 
->     # Boards:
->     #
->     -CONFIG_ISAPC=y
->     -CONFIG_I440FX=y
->     -CONFIG_Q35=y
->     +CONFIG_ISAPC=n
->     +CONFIG_I440FX=n
->     +CONFIG_Q35=n
-> 
-> it happens because I've fogotten/lost smbios_get_table_legacy() stub.
-> 
-> Fix it by adding missing stub as Philippe suggested.
-> 
-> Fixes: b42b0e4daaa5 "smbios: build legacy mode code only for 'pc' machine"
-> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-> Singned-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+
+On 3/26/24 12:55, Greg Kurz wrote:
+> Bom dia Daniel !
+
+Bonne après-midi !
+
+> 
+> On Tue, 26 Mar 2024 10:26:03 -0300
+> Daniel Henrique Barboza <dbarboza@ventanamicro.com> wrote:
+> 
+>> Hi,
+>>
+>> Thomas reported in [1] a problem that happened with the RISC-V machine
+>> where some tests from virtio-9p-test.c were failing with '-m slow', i.e.
+>> enabling slow tests.
+>>
+>> In the end it wasn't a RISC-V specific problem. It just so happens that
+>> the recently added riscv machine nodes runs the tests from
+>> virtio-9p-test two times for each qos-test run: one with the
+>> virtio-9p-device device and another with the virtio-9p-pci. The temp dir
+>> for these tests is being created at the start of qos-test and removed
+>> only at the end of qos-test, and the tests are leaving dirs and files
+>> behind. virtio-9-device tests run first, creates stuff in the temp dir,
+>> then when virtio-9p-pci tests runs again it'll fail because the previous
+>> run left created dirs and files in the same temp dir. Here's a run that
+>> exemplifies the problem:
+>>
+>> $ MALLOC_PERTURB_=21 V=2 QTEST_QEMU_BINARY=./qemu-system-riscv64 ./tests/qtest/qos-test -m slow
+>> (...)
+>> # starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-621710.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-621710.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -M virt,aclint=on,aia=aplic-imsic -fsdev local,id=fsdev0,path='/home/danielhb/work/qemu/build/qtest-9p-local-7E16K2',security_model=mapped-xattr -device virtio-9p-device,fsdev=fsdev0,mount_tag=qtest -accel qtest
+>> ( goes ok ...)
+>> # starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-621710.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-621710.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -M virt,aclint=on,aia=aplic-imsic -fsdev local,id=fsdev0,path='/home/danielhb/work/qemu/build/qtest-9p-local-7E16K2',security_model=mapped-xattr -device virtio-9p-pci,fsdev=fsdev0,addr=04.0,mount_tag=qtest -accel qtest
+>> ok 168 /riscv64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-9p-pci/virtio-9p/virtio-9p-tests/local/config
+>> Received response 7 (RLERROR) instead of 73 (RMKDIR)
+>> Rlerror has errno 17 (File exists)
+>> **
+>> ERROR:../tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: assertion failed (hdr.id == id): (7 == 73)
+>>
+>> As we can see we're running both 'virtio-9p-device' tests and 'virtio-9p-pci'
+>> tests using the same '/home/danielhb/work/qemu/build/qtest-9p-local-7E16K2'
+>> temp dir.
+>>
+> 
+> 
+> Good catch ! I'll try to find some time to review.
+> 
+>> The quick fix I came up with was to make each test clean themselves up
+>> after each run. The tests were also consolidated, i.e. fewer tests with the
+>> same coverage, because the 'unlikat' tests were doing the same thing the
+>> 'create' tests were doing but removing stuff after. Might as well keep just
+>> the 'unlikat' tests.
+>>
+> 
+> As long as coverage is preserved, I'm fine with consolidation of the
+> checks. In any case, last call goes to Christian.
+> 
+>> I also went ahead and reverted 558f5c42efd ("tests/9pfs: Mark "local"
+>> tests as "slow"") after realizing that the problem I was fixing is also
+>> the same problem that this patch was trying to working around with the
+>> skip [2]. I validated this change in this Gitlab pipeline:
+>>
+> 
+> Are you sure with that ? Issues look very similar indeed but not
+> exactly the same.
+
+We can skip this revert if we're not sure about it. Gitlab passed with it but
+perhaps this isn't evidence enough. I'll let you guys decide.
+
 
 Thanks,
 
-/mjt
+Daniel
+
+> 
+> Cheers,
+> 
+> --
+> Greg
+> 
+>> https://gitlab.com/danielhb/qemu/-/pipelines/1227953967
+>>
+>> [1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg05807.html
+>> [2] https://lists.nongnu.org/archive/html/qemu-devel/2020-11/msg05510.html
+>>
+>> Daniel Henrique Barboza (3):
+>>    qtest/virtio-9p-test.c: consolidate create dir, file and symlink tests
+>>    qtest/virtio-9p-test.c: consolidate hardlink tests
+>>    qtest/virtio-9p-test.c: remove g_test_slow() gate
+>>
+>>   tests/qtest/virtio-9p-test.c | 155 +++++++++++------------------------
+>>   1 file changed, 48 insertions(+), 107 deletions(-)
+>>
 
