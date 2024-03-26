@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2300C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 04:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 987D4C54E58
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 04:55:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1roynT-0001IG-Fx; Tue, 26 Mar 2024 00:52:27 -0400
+	id 1roypP-0002Fq-13; Tue, 26 Mar 2024 00:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1roynP-0001Ho-B2; Tue, 26 Mar 2024 00:52:23 -0400
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ id 1roypM-0002FO-Mf; Tue, 26 Mar 2024 00:54:24 -0400
+Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1roynN-0000c6-BV; Tue, 26 Mar 2024 00:52:23 -0400
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-4d44fb48077so1880945e0c.0; 
- Mon, 25 Mar 2024 21:52:19 -0700 (PDT)
+ id 1roypJ-0000tN-Cu; Tue, 26 Mar 2024 00:54:24 -0400
+Received: by mail-vk1-xa36.google.com with SMTP id
+ 71dfb90a1353d-4d44216ea59so1742710e0c.2; 
+ Mon, 25 Mar 2024 21:54:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711428738; x=1712033538; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711428859; x=1712033659; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8Se6h2sk+23XBqGDt5WxIERqzHReoO5syAQ+oMHecUs=;
- b=ekCbDmoAK4fNbWPuRN4e/zdYj0vCiAM6DbN5vWfVYvBAGUQG5dHXEKnUFZacn+fxgc
- khaontMOLnnZadObQSuO0powX7AY5KNnwCWx49oYWwjW+xje+/S8dwsJK3M4MFLuaCBu
- gcBmorrEDy2h/mSx4SpD7mmdmM+25Tco0votFmDKAylCEeBE4zrUHvDOLlazMYB2b9Re
- /wCDF+/iyunuTPIFAJ3ow2maR30/Kyc7LTImE/usQXpVVvlRZCfbLPt93fUIPyFQ3E7G
- 26bdiEic4bEmyFp5gbCvZ+JCoCXt3VUKo5SkbZT3Y2JaGeJ/pek4NCUgcjxVMoPxIuy1
- //Lg==
+ bh=JOEvSzzaFpPm6kSZsVuroxblQgv56KqmmLkwoyeaY00=;
+ b=mZDubjUfLpGcRCOFC0h0dydFe35sdVre2SoSDwxarBW9RI4JAchqy8u9fmONliStJv
+ 9sUGCrvXTIeHcvIsCVFhht1s7wKwx6c13Gbeavig3uGjlyyfQogDN7XFFRjOdCTqlDyM
+ U32L9ovZ6E+z09mn6iPrnH/sh3y22dfMJzOd0mdjZQXarnq9N1N59tqYdT4bvhRoi2Op
+ CqJKkiIq8LfJr2jLOav8gWjs2DPrHyylQ6qyt+0sJxHRlrHEZNTKrdSwbKUFPFMyryf2
+ ae5n0v5KF947zHB1Tnsd6Sc0Mb6WCKMwUH3Arw73u46s7DcmrVW5OBuhHveWcqsBzq2z
+ S9Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711428738; x=1712033538;
+ d=1e100.net; s=20230601; t=1711428859; x=1712033659;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8Se6h2sk+23XBqGDt5WxIERqzHReoO5syAQ+oMHecUs=;
- b=RvfjoFdtPXs/9Wn5BhMi9IAtuf5DWWrIo/frc2iQoZvxfsCa3Opkh3aWvu9CWLdtQ6
- BGD9Llfc40SSE//6js2+u+jLooZrV0fbBF/wWl/c77MnVoJfC1WQt7ZR1DM/uxb2pG9Q
- QWx79tZmNHaC4ogAPYp+9ioFtWyq9Q6agnyImzGd+zGtv16t/vvgKrn34nH7i1qunw1z
- qfpQbgzg33AK5B6nVmEulRHj0zjpm94qqYq6+RHrgSzJ1NocJTPI+33UxUIVEBSzjUd6
- lDxBrfhvYo4lzJBnx/I6LE1ZINFY9rVhnl8USNKqJLUg3icVPXbigwGTblOEM6nbXPXX
- 4MMQ==
+ bh=JOEvSzzaFpPm6kSZsVuroxblQgv56KqmmLkwoyeaY00=;
+ b=VGhA1Iia6DGQheYnO0onfwQN8J7S5HugcWVUFJ1V6ZMxenDfdMcko/f5AaDqex7Rth
+ p4v/ME+tj3OfCuskJFU25eTTbG9haq3NzqBPI5CDqsiEhpkef5GuZcJvK7kIO8fTC4aK
+ O4yI9aCJhS7vH5z4p+wAgzJR471x1MQK86sGER0dIQ1xhdi3PTmN4AzkSM/TfV/a2zRT
+ Ncy3c4sErVcaaY1LaRvI8UcWn1tkAjAFgyGO8QgrK7H2931kwSpkv8pYSfv28rzCxopE
+ 8Bo92n5HP9piOb/buJgcBFmLYnXiwqmLKvyGk6sL9pFytE/rmzH6MG6PzJbVOH0U5olD
+ 0J0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzXs+yz9RVmfbx91Q4BEFj+6+n0srZqCznlMPiVL/c9waq7O+99PpH+TWi+0+oUWsG9Pxst7t4XJ/LDrVA7wMfTkgd
-X-Gm-Message-State: AOJu0YzsCIehDcXOrtAVyD5OBgsoJH/nzx3JeIHbtlB9xexptXDqVjWC
- 1I0cMRc3fK4gINb4egf2n0KLgpHWYA1pxizYUSTjDiR9LEH3ruH1NHda+LoYZ2CfeOvHQrgfOgY
- VQL47PqHD4C82NDeKwsopaJ68X6s=
-X-Google-Smtp-Source: AGHT+IFgbyD3FzbKl3BIlrgcYAVeawvt7psWrtPAN1/xCVybEowpZC7B3D6uyxCL7GL/vss5zHoneZc44Nxn8uO0IVg=
-X-Received: by 2002:a1f:cd02:0:b0:4d4:2fc1:b252 with SMTP id
- d2-20020a1fcd02000000b004d42fc1b252mr5209944vkg.6.1711428736732; Mon, 25 Mar
- 2024 21:52:16 -0700 (PDT)
+ AJvYcCX+AdJKPl8WaMV2Gabdt6WwEFYoAdE68Tq8+tkAfBIaal4oK02dqDMMGiC0MSykvEIPeB/PO6THGl1NraEvUl2r3maP
+X-Gm-Message-State: AOJu0YwNnnMrV1knqjckJfjme8lK68LAkVvKGRVaqdzsx8hKFVtnW0bX
+ hF3vFiweeTL/9ZK2OzzVQ+TiAt84c7IA892W7IcF6LB0HUOIRXmgPkBjcr9CSkCSxDWVwoOdu8V
+ /rCwzS9y0PdUoeSgeQkNf/Ly9za9HlPrz8ps=
+X-Google-Smtp-Source: AGHT+IGscCB0yez7KmunAcyB3NYIKL+RRGnFxEQB8hLTBOq4Wl7duamsbH/fomWOxWRBHEYWADLVFAQT6RGoqsTQHAw=
+X-Received: by 2002:a05:6122:1d02:b0:4d8:79c1:2a21 with SMTP id
+ gc2-20020a0561221d0200b004d879c12a21mr7085156vkb.7.1711428859464; Mon, 25 Mar
+ 2024 21:54:19 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240325152827.73817-1-philmd@linaro.org>
- <20240325152827.73817-2-philmd@linaro.org>
-In-Reply-To: <20240325152827.73817-2-philmd@linaro.org>
+ <20240325152827.73817-3-philmd@linaro.org>
+In-Reply-To: <20240325152827.73817-3-philmd@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 26 Mar 2024 14:51:50 +1000
-Message-ID: <CAKmqyKMfYDrs07yNhOp+3Am-LTmwupcmA8aWxLRSnBUeP6qJaw@mail.gmail.com>
-Subject: Re: [PATCH-for-9.0 v3 1/3] hw/clock: Let clock_set_mul_div() return a
- boolean value
+Date: Tue, 26 Mar 2024 14:53:53 +1000
+Message-ID: <CAKmqyKPtYmO91rmPQUgCibxtGAPq2yZPKJsq1n-1dq5hC+XT0g@mail.gmail.com>
+Subject: Re: [PATCH-for-9.0 v3 2/3] hw/misc/stm32l4x5_rcc: Inline
+ clock_update() in clock_mux_update()
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>, 
@@ -72,8 +72,8 @@ Cc: qemu-devel@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>, Luc Michel <luc@lmichel.fr>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa36.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,13 +100,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, Mar 26, 2024 at 1:29=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> Let clock_set_mul_div() return a boolean value whether the
-> clock has been updated or not, similarly to clock_set().
+> Trivial inlining in preliminary patch to make the next
+> one easier to review.
 >
-> Return early when clock_set_mul_div() is called with
-> same mul/div values the clock has.
->
-> Acked-by: Luc Michel <luc@lmichel.fr>
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
@@ -114,80 +110,37 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  docs/devel/clocks.rst | 4 ++++
->  include/hw/clock.h    | 4 +++-
->  hw/core/clock.c       | 8 +++++++-
->  3 files changed, 14 insertions(+), 2 deletions(-)
+>  hw/misc/stm32l4x5_rcc.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 >
-> diff --git a/docs/devel/clocks.rst b/docs/devel/clocks.rst
-> index c4d14bde04..b2d1148cdb 100644
-> --- a/docs/devel/clocks.rst
-> +++ b/docs/devel/clocks.rst
-> @@ -279,6 +279,10 @@ You can change the multiplier and divider of a clock=
- at runtime,
->  so you can use this to model clock controller devices which
->  have guest-programmable frequency multipliers or dividers.
->
-> +Similary to ``clock_set()``, ``clock_set_mul_div()`` returns ``true`` if
-> +the clock state was modified; that is, if the multiplier or the diviser
-> +or both were changed by the call.
+> diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
+> index bc2d63528b..49b90afdf0 100644
+> --- a/hw/misc/stm32l4x5_rcc.c
+> +++ b/hw/misc/stm32l4x5_rcc.c
+> @@ -48,6 +48,8 @@ static void clock_mux_update(RccClockMuxState *mux, boo=
+l bypass_source)
+>      uint64_t src_freq;
+>      Clock *current_source =3D mux->srcs[mux->src];
+>      uint32_t freq_multiplier =3D 0;
+> +    bool clk_changed =3D false;
 > +
->  Note that ``clock_set_mul_div()`` does not automatically call
->  ``clock_propagate()``. If you make a runtime change to the
->  multiplier or divider you must call clock_propagate() yourself.
-> diff --git a/include/hw/clock.h b/include/hw/clock.h
-> index bb12117f67..eb58599131 100644
-> --- a/include/hw/clock.h
-> +++ b/include/hw/clock.h
-> @@ -357,6 +357,8 @@ char *clock_display_freq(Clock *clk);
->   * @multiplier: multiplier value
->   * @divider: divider value
->   *
-> + * @return: true if the clock is changed.
-> + *
->   * By default, a Clock's children will all run with the same period
->   * as their parent. This function allows you to adjust the multiplier
->   * and divider used to derive the child clock frequency.
-> @@ -374,6 +376,6 @@ char *clock_display_freq(Clock *clk);
->   * Note that this function does not call clock_propagate(); the
->   * caller should do that if necessary.
->   */
-> -void clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider=
-);
-> +bool clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider=
-);
+>      /*
+>       * To avoid rounding errors, we use the clock period instead of the
+>       * frequency.
+> @@ -60,7 +62,10 @@ static void clock_mux_update(RccClockMuxState *mux, bo=
+ol bypass_source)
+>      }
 >
->  #endif /* QEMU_HW_CLOCK_H */
-> diff --git a/hw/core/clock.c b/hw/core/clock.c
-> index d82e44cd1a..a19c7db7df 100644
-> --- a/hw/core/clock.c
-> +++ b/hw/core/clock.c
-> @@ -143,14 +143,20 @@ char *clock_display_freq(Clock *clk)
->      return freq_to_str(clock_get_hz(clk));
->  }
->
-> -void clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider=
-)
-> +bool clock_set_mul_div(Clock *clk, uint32_t multiplier, uint32_t divider=
-)
->  {
->      assert(divider !=3D 0);
->
-> +    if (clk->multiplier =3D=3D multiplier && clk->divider =3D=3D divider=
-) {
-> +        return false;
+>      clock_set_mul_div(mux->out, freq_multiplier, mux->multiplier);
+> -    clock_update(mux->out, clock_get(current_source));
+> +    clk_changed |=3D clock_set(mux->out, clock_get(current_source));
+> +    if (clk_changed) {
+> +        clock_propagate(mux->out);
 > +    }
-> +
->      trace_clock_set_mul_div(CLOCK_PATH(clk), clk->multiplier, multiplier=
-,
->                              clk->divider, divider);
->      clk->multiplier =3D multiplier;
->      clk->divider =3D divider;
-> +
-> +    return true;
->  }
 >
->  static void clock_initfn(Object *obj)
+>      src_freq =3D clock_get_hz(current_source);
+>      /* TODO: can we simply detect if the config changed so that we reduc=
+e log spam ? */
 > --
 > 2.41.0
 >
