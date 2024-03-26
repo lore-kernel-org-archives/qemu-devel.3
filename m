@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 976F6C54E67
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 17:10:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33B7C6FD1F
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 17:10:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpAJZ-0006S2-EE; Tue, 26 Mar 2024 13:10:22 -0400
+	id 1rpAJj-0006UU-6e; Tue, 26 Mar 2024 13:10:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpAJV-0006RE-3Q
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:10:17 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpAJa-0006Se-93
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:10:25 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpAJS-0006X6-Me
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:10:16 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-341d381d056so980858f8f.0
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 10:10:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpAJX-0006bW-U4
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 13:10:21 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-33e285a33bdso3440352f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 10:10:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711473012; x=1712077812; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=DfphgC1cwxQ4n12/gSrpOTjEXbIY4MpgcYXhU3OEoG0=;
- b=tXm9AQVCp2HrDr8gOxvwwNIlf8mUWHcmTDf1he31h2vzj/+VmzoyBw2BzDwD1+zres
- chiTTjg2RXkUFKBNAKLVCKNcIYEFThYWi0QnibXKxNtgTBNnd1mPG/msgYuSykhjpBEr
- SwPKgiZqW/sDeMLQD19LGzmtcf36XVyBNN8DZ7wNwTsf0opIzbHNTFekbBD+t94Mm2tL
- 7q/ClvSP8XldDpTrPscskvfl8qN6Qp0qUCk7kwBxSEj86splw6iIvGFC1ZJptgeO0CC+
- mw2vnfwsQUngdlGTxW+QH5mQ7IeqM4g32LUTLNm4Z1rFTal7ei21zOnIRq+ODUXiF285
- /I1A==
+ d=linaro.org; s=google; t=1711473018; x=1712077818; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3Dxp+qC3MBDCoPwn4MSHcBmknQiyHJfiE1PD2um5P9g=;
+ b=r8yu3ykLKsUeLgfq/85DfKFIl1u2iENkHwENpeHonz3EBlRXoIBNzRzIAq4olDzjkt
+ RSg7cZj8JeBbgbsTr/EFocih03+ycsbo56cxmz+slF8boylnLHrEXOwFukcFHUfwXF6k
+ NtKBo+gFv8TXlHxKPERo8Ewd86xX6a5+S/tDgfsOZu+oshpIBaoL982Rru1HAdAfb4Ek
+ EqVTAxgYVfJ2qDLmcYr8xQ2dRSRrHTH7FyiVyhErOh1SmQ2iMUQGZC3fTrv+tKFx9EKI
+ 9kJuN9g1LdXKGDio2iurySSqfzeWqty+5kcWtNR5rdrIuJ9E18Yi0unXx5A+BGtGVUwP
+ YlKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711473012; x=1712077812;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DfphgC1cwxQ4n12/gSrpOTjEXbIY4MpgcYXhU3OEoG0=;
- b=IeC0UiP2QBLk4y63CBSItpBjRsEMQpoujverMxDQ1VQm9fWIQiYDn0a9ui5C6iCQKV
- yC33ZdZoTKVjs0eqC+ABHpmnX8UAf26TydLn44tGMrZqMSlV0PIdT2fxpPMyrydOGSL8
- wtrEvHzLzLo5+SzmEbDkQ0qzVXDGE0C0JNYfq+exW7qb1ile2ltof6bFuwD0QV2PnYgz
- b+hmsi3kS0kW7ek3M4jaecxO+SA+DkoFNByV7SrY9BE6q0wdTIvnfK+1Lt91N4lSysL1
- FxfqoIYuT3s795h9Y5JSNSgHxO7Ne5IPj++WjFXj0J+w5GGG1/Ih7rqOZEMV5F4JIzGZ
- g20g==
-X-Gm-Message-State: AOJu0Yw9Y+OvkjFQK1BarLL8zBJ070XCrvEs6bpTplcqUrA7qlgQ63yP
- 2VGsmMmvOFX16+XLTztYZOKl3gXUqyqkbyBrG/egyN1Mque8CBE+qytThai7RPiHkketVkwq0u2
- l
-X-Google-Smtp-Source: AGHT+IFrjYqA722H502bYPdcfKZie7sYcxBJI6LLMGJcNWrPpBZKs7QWwTo3IJUWpFhsRumhRIGKeA==
-X-Received: by 2002:adf:f011:0:b0:33e:6f9b:7abc with SMTP id
- j17-20020adff011000000b0033e6f9b7abcmr6512744wro.65.1711473012259; 
- Tue, 26 Mar 2024 10:10:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711473018; x=1712077818;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3Dxp+qC3MBDCoPwn4MSHcBmknQiyHJfiE1PD2um5P9g=;
+ b=gjRhq3xWnltoj6Oa6q5SMLicrMuMqG2TXA+M1tceememniqxrQ9NRgqqeiym1REhKT
+ DCrJs/VA6khDWoNurL7N6hEfA41icKAFAdg0LX5UEML8q81I+r9gDlQ7yeGX7RV8+6L7
+ E6QvZrfEeonUY+KS4t0djkm7zHILzcl6Hnpd0UXY9Wn2iJNtUy+ccCLE3WJykfr6cWU2
+ 3g0iISMioOdSFfNMUYF5PIx6iqKDYj0thtR8/ZPvwm4bilyKNkrC3kd15LtIsYoJnkms
+ 3yONSfs7X1z4OcVT7/3r37+hf9ygC60LBnvlNKdNXWgrGKl86e3nc4IebnwMvSGvPIGs
+ WPWg==
+X-Gm-Message-State: AOJu0YwSxiSA6LrxySp1Fz+12AUBxXjm6JMP8swI7n96Max5MDYnCU2A
+ Uu7+gQLAwu3ecyZlmzj/qwmGJqgeY3VU+qy/cGfrC3muY3J20cFWJfjq58izhlhiUZ1b3UBbUuj
+ +
+X-Google-Smtp-Source: AGHT+IFf/w3junysBDCoHdj2OjDwBCX72iNg/46FAVI95FKGBQE4eTxVBisciOtaN4WSEXMnGPhXOg==
+X-Received: by 2002:a5d:5707:0:b0:33e:be35:d449 with SMTP id
+ a7-20020a5d5707000000b0033ebe35d449mr1414220wrv.44.1711473017883; 
+ Tue, 26 Mar 2024 10:10:17 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.155.229])
  by smtp.gmail.com with ESMTPSA id
- p11-20020a056000018b00b0033e75e5f280sm12598614wrx.113.2024.03.26.10.10.11
+ x17-20020adfffd1000000b00341babb8af0sm11331005wrs.7.2024.03.26.10.10.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 26 Mar 2024 10:10:11 -0700 (PDT)
+ Tue, 26 Mar 2024 10:10:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.0? v2 0/4] overall: Avoid using inlined functions with
- external linkage again
-Date: Tue, 26 Mar 2024 18:10:05 +0100
-Message-ID: <20240326171009.26696-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>, qemu-arm@nongnu.org
+Subject: [PATCH-for-9.0? v2 1/4] hw/arm/smmu: Avoid using inlined functions
+ with external linkage again
+Date: Tue, 26 Mar 2024 18:10:06 +0100
+Message-ID: <20240326171009.26696-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240326171009.26696-1-philmd@linaro.org>
+References: <20240326171009.26696-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,31 +97,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Oops, I forgot patch 3 needed rework :/ Is it too late to
-enforce that flag for 9.0?
+Similarly to commit 9de9fa5cf2 ("hw/arm/smmu-common: Avoid using
+inlined functions with external linkage"):
 
-Missing review: #3
+  None of our code base require / use inlined functions with external
+  linkage. Some places use internal inlining in the hot path. These
+  two functions are certainly not in any hot path and don't justify
+  any inlining, so these are likely oversights rather than intentional.
 
-Since v1:
-- Reduce size_to_prdtl() scope
+Fix:
 
-Mostly as a C style cleanup, use -Wstatic-in-inline to avoid
-using inlined function with external linkage.
+  C compiler for the host machine: clang (clang 15.0.0 "Apple clang version 15.0.0 (clang-1500.3.9.4)")
+  ...
+  hw/arm/smmu-common.c:203:43: error: static function 'smmu_hash_remove_by_vmid' is
+  used in an inline function with external linkage [-Werror,-Wstatic-in-inline]
+      g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid, &vmid);
+                                            ^
+  include/hw/arm/smmu-common.h:197:1: note: use 'static' to give inline function 'smmu_iotlb_inv_vmid' internal linkage
+  void smmu_iotlb_inv_vmid(SMMUState *s, uint16_t vmid);
+  ^
+  static
+  hw/arm/smmu-common.c:139:17: note: 'smmu_hash_remove_by_vmid' declared here
+  static gboolean smmu_hash_remove_by_vmid(gpointer key, gpointer value,
+                ^
 
-Philippe Mathieu-Daudé (4):
-  hw/arm/smmu: Avoid using inlined functions with external linkage again
-  accel/hvf: Un-inline hvf_arch_supports_guest_debug()
-  qtest/libqos: Reduce size_to_prdtl() declaration scope
-  meson: Enable -Wstatic-in-inline
+Fixes: ccc3ee3871 ("hw/arm/smmuv3: Add CMDs related to stage-2")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240313184954.42513-2-philmd@linaro.org>
+---
+ hw/arm/smmu-common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- meson.build               | 1 +
- tests/qtest/libqos/ahci.h | 1 -
- hw/arm/smmu-common.c      | 2 +-
- target/arm/hvf/hvf.c      | 2 +-
- target/i386/hvf/hvf.c     | 2 +-
- tests/qtest/libqos/ahci.c | 2 +-
- 6 files changed, 5 insertions(+), 5 deletions(-)
-
+diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+index 4caedb4998..c4b540656c 100644
+--- a/hw/arm/smmu-common.c
++++ b/hw/arm/smmu-common.c
+@@ -197,7 +197,7 @@ void smmu_iotlb_inv_asid(SMMUState *s, uint16_t asid)
+     g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_asid, &asid);
+ }
+ 
+-inline void smmu_iotlb_inv_vmid(SMMUState *s, uint16_t vmid)
++void smmu_iotlb_inv_vmid(SMMUState *s, uint16_t vmid)
+ {
+     trace_smmu_iotlb_inv_vmid(vmid);
+     g_hash_table_foreach_remove(s->iotlb, smmu_hash_remove_by_vmid, &vmid);
 -- 
 2.41.0
 
