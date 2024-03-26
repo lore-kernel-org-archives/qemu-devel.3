@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F5ECCD1280
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 10:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40207CD11DF
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 10:08:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp3i5-0006B5-9T; Tue, 26 Mar 2024 06:07:13 -0400
+	id 1rp3i1-0006Aj-W6; Tue, 26 Mar 2024 06:07:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rp3i1-0006AZ-LH
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 06:07:09 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1rp3hz-0006AP-7L
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 06:07:07 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rp3hz-0000cp-Pm
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 06:07:09 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-6e6afb754fcso4677867b3a.3
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 03:07:07 -0700 (PDT)
+ id 1rp3hv-0000cV-TJ
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 06:07:06 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2a04ac98cf7so1948753a91.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 03:07:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711447626; x=1712052426;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711447622; x=1712052422;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=C9ZtEo8zXe/BK9I7qoRpJCkIeC3s39lHzzgTxhX0Iv0=;
- b=IhzhzKIWHF1ZQBNbCOjfxtKoGFA2aA87toZHgJp+LUIHBJOrnaTWa3KX9BcILgZIuL
- ASzcQp4ogu91ozdPoLDwpjdexSyxk2KfJYG8+f6dKtLRu1ULMy4/Bl0d23za485T9tIr
- 8DPWzfPpsvsmg55VVosjHqJ6YxQy9inEqaioaV1UprF6nQ52VH5XrxyyLU5pOq42Vjpk
- tFGSHPh2bnygt7UWuSwGQ9MZqgW6zQipg7UIgyMKj2kt35Or7FKzGEH7Lk0hkPhG+vNX
- YpvPyqE8P5wRYxORNO5PkGMkHBaft0lmylHXhDjog6TvoWwwLFZqrIwg0oib4sQ95/GR
- /D9w==
+ :reply-to; bh=LE24uluRQ9KTcauWcR//b64EcOukqLmAzNLJotmbG6Q=;
+ b=TaI7iYTiU1uhs/VeJTeDPt9kr76HaCD1azv5dhpEZE8NTu5SukNEaliGqLbBWAysdh
+ kdSUGZHHiboz103govv+FyVGyXz/8P5mUbsk+LhkCyocpHZYuofx6YBeR2crNk7LN0K9
+ eZZgwJjy6RSVcfN89stkTpxp7tQebtYqK9AQ4fFX7SOzH26N7OUodNfnh168BY4WcOrr
+ 0f6NVcU5S9ugQXWdqyAxzsCxzj/FWd6ewbVxmkf7LIuPkqEAEMJ96Q3DNpDKq6Ch17Qa
+ 8olDAEaIPY3wXkEMA550x9SWzd+UOX5y9EZadE47sO6Tl3n2/Cyb4cvY0x6yu6z1HQNx
+ d4nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711447626; x=1712052426;
+ d=1e100.net; s=20230601; t=1711447622; x=1712052422;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C9ZtEo8zXe/BK9I7qoRpJCkIeC3s39lHzzgTxhX0Iv0=;
- b=YsJ7R5IcLITRf8tHbbOsWfK7JI7tA3JPh5pGSpN11mPOma9pWWUIJVbyjBjezaw+8w
- MWUu31b5sN5JV+vyT35/PoNS7jxqGXhuDkpsPsf5mJd3QNMUckGCol9XHm8lwWI2S1uF
- Hecom+xwPEpFsHiQI0nGfqx0V4O/SIxlLF9tzT8v+VbciKmkpNGoEWuOQfqW7lpVoj0L
- zanN7DX6pgM7A2pRgUfTVxpnD9FrnsYP0Dt/+uLSXV5vjScFBlICykfvmjJOPyh4syZR
- xSxMFxrApqOvgo1Xz8A5leDHxY84F3dDJ++jStxFCfBG6qCEUhCgYKZtzJMxNsnvS9Bg
- XgSQ==
-X-Gm-Message-State: AOJu0Yypre8mTsY8f1PxqBwc8OaG1mj0YcWFfPhebgSg0oPtRaa6ZYDR
- RYc6DGgHpi3BUjLxDR4d9FIRJJJATNd+sYj53UhiF0otunwpuzLFOtLYOJX0sZU=
-X-Google-Smtp-Source: AGHT+IET/NGPJWeIfRy0DbO5vQ+KLBUr6O2Tu6dsI/MGhXV8vBFRFAwT3oSrOQSkqFQoXQJ5HTOVsQ==
-X-Received: by 2002:a05:6a00:801:b0:6e6:f9b6:4b1a with SMTP id
- m1-20020a056a00080100b006e6f9b64b1amr12162097pfk.11.1711447626321; 
- Tue, 26 Mar 2024 03:07:06 -0700 (PDT)
+ bh=LE24uluRQ9KTcauWcR//b64EcOukqLmAzNLJotmbG6Q=;
+ b=TU8pilyo4+O0cEWqJDcZIjivUD+ZmL/VWGs3hFFr/+VLWt9macjDDSFDnVXOFOuMMH
+ hLLAVrwkSDVEqX7IY5QpAmSrtIENlAbigTBLZZ9SYn+ZpMcDf/yQDYL/wyDt6aVKB72Y
+ BWTe43UltQfD5bXPKCLWJNXNQbI+W7kAURV4Qhc8YDzW7pPX/lMNTruXKgUYwp1B+iTZ
+ Mn1q1Xlm0e/fpQbbRyUMk4O2ttRI2M46nFa8Eewo/9BBEVLuE/bLAP0mg4vSiaC+8pnn
+ cgt8ypa8264lMP6TIegd1NztRxamL2AAwe+swMnKO7L6/9I93bNM3PCAReLMBqntITtK
+ Y+4A==
+X-Gm-Message-State: AOJu0YyhAqegtX6tqVY2BH4YVrDZWO8UHfDjEfnLVSHtn1B3Pg27UT51
+ X2o2vr+bngCZvK3eAIGuJEzqyE0MRccZB1wr5g5yHCUSof6SeuVy/abph+eG18M=
+X-Google-Smtp-Source: AGHT+IEqJUad4tXd2Iq/lYbsAx06V/hHG40TSop9hHEbZprXYvUfThD86Wfxl6vZFFW0uBNYrlGHRA==
+X-Received: by 2002:a17:90a:2f01:b0:2a0:8d17:948d with SMTP id
+ s1-20020a17090a2f0100b002a08d17948dmr883086pjd.1.1711447622326; 
+ Tue, 26 Mar 2024 03:07:02 -0700 (PDT)
 Received: from localhost ([157.82.202.248])
  by smtp.gmail.com with UTF8SMTPSA id
- a9-20020aa78649000000b006e681769ee0sm5725873pfo.145.2024.03.26.03.07.04
+ l18-20020a17090a599200b0029beb0fc60fsm11348831pji.28.2024.03.26.03.07.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 03:07:06 -0700 (PDT)
+ Tue, 26 Mar 2024 03:07:02 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Tue, 26 Mar 2024 19:06:30 +0900
-Subject: [PATCH 2/2] ebpf: Fix indirections table setting
+Date: Tue, 26 Mar 2024 19:06:29 +0900
+Subject: [PATCH 1/2] virtio-net: Fix vhost virtqueue notifiers for RSS
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240326-vhost-v1-2-09bd85b1ba2c@daynix.com>
+Message-Id: <20240326-vhost-v1-1-09bd85b1ba2c@daynix.com>
 References: <20240326-vhost-v1-0-09bd85b1ba2c@daynix.com>
 In-Reply-To: <20240326-vhost-v1-0-09bd85b1ba2c@daynix.com>
 To: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
@@ -72,8 +72,8 @@ To: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Yuri Benditovich <yuri.benditovich@daynix.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.13.0
-Received-SPF: none client-ip=2607:f8b0:4864:20::431;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -95,47 +95,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The kernel documentation says:
-> The value stored can be of any size, however, all array elements are
-> aligned to 8 bytes.
-https://www.kernel.org/doc/html/v6.8/bpf/map_array.html
+virtio_net_guest_notifier_pending() and virtio_net_guest_notifier_mask()
+checked VIRTIO_NET_F_MQ to know there are multiple queues, but
+VIRTIO_NET_F_RSS also enables multiple queues. Refer to n->multiqueue,
+which is set to true either of VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS is
+enabled.
 
-Fixes: 333b3e5fab75 ("ebpf: Added eBPF map update through mmap.")
+Fixes: 68b0a6395f36 ("virtio-net: align ctrl_vq index for non-mq guest for vhost_vdpa")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- ebpf/ebpf_rss.h | 2 +-
- ebpf/ebpf_rss.c | 5 +++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ hw/net/virtio-net.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/ebpf/ebpf_rss.h b/ebpf/ebpf_rss.h
-index 239242b0d26e..7d15b600bf5b 100644
---- a/ebpf/ebpf_rss.h
-+++ b/ebpf/ebpf_rss.h
-@@ -26,7 +26,7 @@ struct EBPFRSSContext {
-     /* mapped eBPF maps for direct access to omit bpf_map_update_elem() */
-     void *mmap_configuration;
-     void *mmap_toeplitz_key;
--    void *mmap_indirections_table;
-+    uint64_t *mmap_indirections_table;
- };
- 
- struct EBPFRSSConfig {
-diff --git a/ebpf/ebpf_rss.c b/ebpf/ebpf_rss.c
-index 2e506f974357..e0f300febb77 100644
---- a/ebpf/ebpf_rss.c
-+++ b/ebpf/ebpf_rss.c
-@@ -190,8 +190,9 @@ static bool ebpf_rss_set_indirections_table(struct EBPFRSSContext *ctx,
-         return false;
-     }
- 
--    memcpy(ctx->mmap_indirections_table, indirections_table,
--            sizeof(*indirections_table) * len);
-+    for (size_t i = 0; i < len; i++) {
-+        ctx->mmap_indirections_table[i] = indirections_table[i];
-+    }
-     return true;
- }
- 
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 9959f1932b1b..a6ff000cd9d3 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3426,7 +3426,7 @@ static bool virtio_net_guest_notifier_pending(VirtIODevice *vdev, int idx)
+     VirtIONet *n = VIRTIO_NET(vdev);
+     NetClientState *nc;
+     assert(n->vhost_started);
+-    if (!virtio_vdev_has_feature(vdev, VIRTIO_NET_F_MQ) && idx == 2) {
++    if (!n->multiqueue && idx == 2) {
+         /* Must guard against invalid features and bogus queue index
+          * from being set by malicious guest, or penetrated through
+          * buggy migration stream.
+@@ -3458,7 +3458,7 @@ static void virtio_net_guest_notifier_mask(VirtIODevice *vdev, int idx,
+     VirtIONet *n = VIRTIO_NET(vdev);
+     NetClientState *nc;
+     assert(n->vhost_started);
+-    if (!virtio_vdev_has_feature(vdev, VIRTIO_NET_F_MQ) && idx == 2) {
++    if (!n->multiqueue && idx == 2) {
+         /* Must guard against invalid features and bogus queue index
+          * from being set by malicious guest, or penetrated through
+          * buggy migration stream.
 
 -- 
 2.44.0
