@@ -4,68 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12197C54E58
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 08:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03562CD11DB
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 08:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp29x-0005Sh-OY; Tue, 26 Mar 2024 04:27:53 -0400
+	id 1rp2ZI-0001RA-0k; Tue, 26 Mar 2024 04:54:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp29w-0005SW-E2
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 04:27:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pierre-eric@damsy.net>)
+ id 1rp2ZG-0001R1-Hv
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 04:54:02 -0400
+Received: from mail.damsy.net ([2a01:7e01::f03c:91ff:fe93:d9c3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp29v-0007Ha-02
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 04:27:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711441669;
+ (Exim 4.90_1) (envelope-from <pierre-eric@damsy.net>)
+ id 1rp2ZE-0003Xs-BP
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 04:54:02 -0400
+Message-ID: <20ca2a39-cf41-4a7b-8c94-c4e193018147@damsy.net>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=damsy.net; s=201803;
+ t=1711443228;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=54/K5Nf6UMsxw1XiSfhsRlDPT94F3Lu3eDWYDSVOjTI=;
- b=XXc1VLQeGNTIZNaV4/t6A53NI8Zge9BYQR+uksC9VTK5SHl/1jAWv/Woyohzj28paSougY
- HPxh8w0/DJnHXmAJvXhtMnLqC1iarKwDtI1Kqgburx3S6eRePzRe3k5b4FdD2UmMRLyB3P
- nvt2xBOETUc14eKZlIXNkqrRVOFf7qM=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-25-rxSSa3bNNXapyD1QMGkKyQ-1; Tue, 26 Mar 2024 04:27:47 -0400
-X-MC-Unique: rxSSa3bNNXapyD1QMGkKyQ-1
-Received: from smtp.corp.redhat.com (int-mx03.intmail.prod.int.rdu2.redhat.com
- [10.11.54.3])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id A51DB85A58B
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:27:46 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 8518E112132A
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 08:27:46 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 80BB321E668C; Tue, 26 Mar 2024 09:27:41 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>
-Subject: Re: Let's close member documentation gaps
-In-Reply-To: <87il1aodow.fsf@pond.sub.org> (Markus Armbruster's message of
- "Mon, 25 Mar 2024 10:36:47 +0100")
-References: <87il1aodow.fsf@pond.sub.org>
-Date: Tue, 26 Mar 2024 09:27:41 +0100
-Message-ID: <87r0fxs8hu.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=xFjPbfFF8Mxh31f2Q1P0/8J/bltLrrx4Y06I0UEXuv8=;
+ b=dnaIRgc23uUz3xOG60/r013Vp2tnh7Wlez3aTAw55DqebDQn1DXohc6w+WiJ7P9fqvUm3n
+ ErhlNgNpy2Hwz6flWDNTXLr3nIIXrU9iTsHpXQiODCsRNfqVpI30wW8zVsA8sAg4V8n4yk
+ b0nhMtG/5G3Pd2EFbgw9fwHwhSZ2xYfBJAVpKfbsw9yNGnBTGh9g3bo7ZczCj8D+jaVjPs
+ lEkfVHNJNMQhykAbJm1fg5zwkB8ZNmWoxN08e7ANWkqJ/YiMvg9eHjOpMxVY3BWdM2GW0b
+ P1Xm3wgh44ETKCBHNLg2G+KQpcVwKZQ0yEk//+xOVWxhjM620qw5kgdQAweJvw==
+Date: Tue, 26 Mar 2024 09:53:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.3
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.065,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [PATCH v6 10/11] virtio-gpu: Initialize Venus
+To: Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony.perard@citrix.com>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>,
+ Gurchetan Singh <gurchetansingh@chromium.org>,
+ "ernunes@redhat.com" <ernunes@redhat.com>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ "Deucher, Alexander" <Alexander.Deucher@amd.com>,
+ "Stabellini, Stefano" <stefano.stabellini@amd.com>,
+ "Koenig, Christian" <Christian.Koenig@amd.com>,
+ "Ragiadakou, Xenia" <Xenia.Ragiadakou@amd.com>,
+ "Pelloux-Prayer, Pierre-Eric" <Pierre-eric.Pelloux-prayer@amd.com>,
+ "Huang, Honglei1" <Honglei1.Huang@amd.com>,
+ "Zhang, Julia" <Julia.Zhang@amd.com>, "Chen, Jiqian" <Jiqian.Chen@amd.com>,
+ Antonio Caggiano <antonio.caggiano@collabora.com>
+References: <20231219075320.165227-1-ray.huang@amd.com>
+ <20231219075320.165227-11-ray.huang@amd.com>
+ <CAJ+F1C+gQ7kwAD=Tv7uAgKtgA57wPkZcE_zadAogtMUEFUmFnQ@mail.gmail.com>
+ <ZdhiO0ZEZS9lmAeo@amd.com>
+Content-Language: fr
+From: Pierre-Eric Pelloux-Prayer <pierre-eric@damsy.net>
+In-Reply-To: <ZdhiO0ZEZS9lmAeo@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a01:7e01::f03c:91ff:fe93:d9c3;
+ envelope-from=pierre-eric@damsy.net; helo=mail.damsy.net
+X-Spam_score_int: 16
+X-Spam_score: 1.6
+X-Spam_bar: +
+X-Spam_report: (1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_XBL=0.375, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,57 +94,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
 
-> If you're cc'ed, I have a bit of doc work for you.  Search for your
-> name to find it.
->
-> The QAPI generator forces you to document your stuff.  Except for
-> commands, events, enum and object types listed in pragma
-> documentation-exceptions, the generator silently defaults missing
-> documentation to "Not documented".  Right now, we're using this loophole
-> some 500 times.
->
-> Most of the offenders are enumeration values.  Their meaning is perhaps
-> easier to guess than the meaning of command arguments, member data, and
-> object type members.  Ignoring enumerations leaves 62 offenders.  Let's
-> examine them.
 
-[...]
+Le 23/02/2024 à 10:15, Huang Rui a écrit :
+> On Tue, Jan 02, 2024 at 09:33:11PM +0800, Marc-André Lureau wrote:
+>> Hi
+>>
+>> On Tue, Dec 19, 2023 at 11:55 AM Huang Rui <ray.huang@amd.com> wrote:
+>>>
+>>> From: Antonio Caggiano <antonio.caggiano@collabora.com>
+>>>
+>>> Request Venus when initializing VirGL.
+>>>
+>>> Signed-off-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+>>> Signed-off-by: Huang Rui <ray.huang@amd.com>
+>>> ---
+>>>
+>>> Changes in v6:
+>>> - Remove the unstable API flags check because virglrenderer is already 1.0.
+>>> - Squash the render server flag support into "Initialize Venus".
+>>>
+>>>   hw/display/virtio-gpu-virgl.c | 4 ++++
+>>>   1 file changed, 4 insertions(+)
+>>>
+>>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+>>> index f35a751824..c523a6717a 100644
+>>> --- a/hw/display/virtio-gpu-virgl.c
+>>> +++ b/hw/display/virtio-gpu-virgl.c
+>>> @@ -964,6 +964,10 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>>>       }
+>>>   #endif
+>>>
+>>> +#ifdef VIRGL_RENDERER_VENUS
+>>> +    flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
+>>> +#endif
+>>> +
+>>
+>> I wonder if it's a good idea to initialize venus by default. It
+>> doesn't seem to require vulkan during initialization, but this may
+>> evolve. Make it optional?
+>>
+> 
+> I am fine. In fact, vulkan is widely used for graphic area such as gaming,
+> compute, VR/AR, etc.
 
-> = qapi/net.json
->
-> * String
->
->   Lack of the @str: section produces an embarrassing "Not documented" in
->   the generated documentation.  I can post a patch to make it less
->   embarrassing.  I doubt we can make it actually good, as generic
->   wrapper types like this one have meaning only in the context they are
->   used.  Therefore, their meaning can be usefully explained only at
->   their uses, not their definition.
+Actually, making it optional is useful because Venus support is optional in
+virglrenderer (= having VIRGL_RENDERER_VENUS defined doesn't mean that
+Venus is supported).
 
-I decided not to.
+Thanks,
+Pierre-Eric
 
-String is used for NetdevUserOptions members @dnssearch, @hostfwd, and
-@guestfwd.  NetdevUserOptions are the type-specific arguments of
-netdev-add with type "user".
 
-@dnssearch is documented tolerably well, although there's less
-information than for the CLI equivalent in qemu-options.hx.
-
-@hostfwd is not: the string format is not documented at all.  It's its
-own mini-language.  The CLI equivalent in qemu-options.hx documents it.
-
-Of course, encoding information in strings like that is bad practice in
-QMP.  Probably not worth fixing now.
-
-Same for @guestfwd.
-
-These documentation deficiencies are more serious than the "Not
-documented" for String.  Only fixing the latter seems not worthwhile.
-
-Jason, thoughts?
-
-[...]
-
+> 
+> Thanks,
+> Ray
+> 
+>>>       ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
+>>>       if (ret != 0) {
+>>>           error_report("virgl could not be initialized: %d", ret);
+>>> --
+>>> 2.25.1
+>>>
+>>
+>>
+>> -- 
+>> Marc-André Lureau
+> 
 
