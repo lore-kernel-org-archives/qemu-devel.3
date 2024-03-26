@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B55C54E67
-	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 07:37:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97DD8CD11DB
+	for <qemu-devel@archiver.kernel.org>; Tue, 26 Mar 2024 07:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rp1KU-0004ir-LD; Tue, 26 Mar 2024 03:34:42 -0400
+	id 1rp1KW-0004kK-V6; Tue, 26 Mar 2024 03:34:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp1KS-0004h7-5R
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:34:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp1KU-0004if-9w
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:34:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp1KQ-0005Np-Le
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:34:39 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rp1KS-0005OS-MC
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 03:34:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711438478;
+ s=mimecast20190719; t=1711438480;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jpPljqVg9QjdtoaeLaWIq1x6laii/MU2HPjfWZbX10U=;
- b=AEs7whbjmVqAkyXcOQD7g4X1ZmuDVRPPdfZ+HTM4VSrcIf6JEi5b9ErajMdONIhFJfTUye
- y40hAXFx/F+kfTJKOUOgAkqxSoTMDfFT2W8S2+WWIyjq9RoF4pDc3+RaZs8lalLYn7+p8R
- EazVNh+OhaHCI7QW8/7lZvkbZyz7q5w=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-92-rGjlzsSiMNSf2esFox-v6Q-1; Tue,
- 26 Mar 2024 03:34:36 -0400
-X-MC-Unique: rGjlzsSiMNSf2esFox-v6Q-1
+ bh=dCcsGDAqTHp3SKBdBhmBLMwgpfp96QPPVeggh7rLPUU=;
+ b=ci/A5RE3sRBlCsm9QKmel1cpkO4LDZB4fTWsIMde1pwnhGBuxkt5xJJSgSQ5pkjSzKy0ZG
+ Yn0E8Ej/jWZvC9IMT1GYv7YstkBaKl8SKJgMP4XmRD3FavFOETkoC1OmpQVzwLOkcFaU/2
+ JPLJfp3VGGHxduDisVWAOQbBUe4bmxs=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-649-IXdpgMGgMnum4t0KVf1dcQ-1; Tue, 26 Mar 2024 03:34:36 -0400
+X-MC-Unique: IXdpgMGgMnum4t0KVf1dcQ-1
 Received: from smtp.corp.redhat.com (int-mx04.intmail.prod.int.rdu2.redhat.com
  [10.11.54.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D414B1C02C9D;
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id D439D101A526;
  Tue, 26 Mar 2024 07:34:35 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id B3C44200AFA3;
+ by smtp.corp.redhat.com (Postfix) with ESMTPS id B3E0F200B3BF;
  Tue, 26 Mar 2024 07:34:35 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B502521E5D36; Tue, 26 Mar 2024 08:34:20 +0100 (CET)
+ id BA7A621E5D38; Tue, 26 Mar 2024 08:34:20 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 16/20] qapi: document InputMultiTouchType
-Date: Tue, 26 Mar 2024 08:34:16 +0100
-Message-ID: <20240326073420.738016-17-armbru@redhat.com>
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 18/20] qapi: document leftover members in qapi/stats.json
+Date: Tue, 26 Mar 2024 08:34:18 +0100
+Message-ID: <20240326073420.738016-19-armbru@redhat.com>
 In-Reply-To: <20240326073420.738016-1-armbru@redhat.com>
 References: <20240326073420.738016-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -82,61 +82,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20240325095648.2835381-1-marcandre.lureau@redhat.com>
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20240325104504.1358734-1-pbonzini@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 [Update qapi/pragma.json]
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/pragma.json |  2 --
- qapi/ui.json     | 12 ++++++++++++
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ qapi/pragma.json |  5 +----
+ qapi/stats.json  | 14 +++++++++-----
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
 diff --git a/qapi/pragma.json b/qapi/pragma.json
-index 6929ab776e..92715d22b3 100644
+index 1a302981c1..99e4052ab3 100644
 --- a/qapi/pragma.json
 +++ b/qapi/pragma.json
-@@ -62,8 +62,6 @@
-         'ImageInfoSpecificKind',
-         'InputAxis',
-         'InputButton',
--        'InputMultiTouchEvent',
--        'InputMultiTouchType',
-         'IscsiHeaderDigest',
-         'IscsiTransport',
-         'JSONType',
-diff --git a/qapi/ui.json b/qapi/ui.json
-index 9721c1e5af..f610bce118 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -1080,6 +1080,16 @@
+@@ -75,8 +75,6 @@
+         'Qcow2OverlapCheckFlags',
+         'RbdAuthMode',
+         'RbdImageEncryptionFormat',
+-        'StatsFilter',
+-        'StatsValue',
+         'String',
+         'StringWrapper',
+         'SysEmuTarget',
+@@ -91,8 +89,7 @@
+         'query-cpu-model-comparison',
+         'query-cpu-model-expansion',
+         'query-rocker',
+-        'query-rocker-ports',
+-        'query-stats-schemas' ],
++        'query-rocker-ports' ],
+     # Externally visible types whose member names may use uppercase
+     'member-name-exceptions': [     # visible in:
+         'ACPISlotType',             # query-acpi-ospm-status
+diff --git a/qapi/stats.json b/qapi/stats.json
+index ce9d8161ec..578b52c7ef 100644
+--- a/qapi/stats.json
++++ b/qapi/stats.json
+@@ -114,13 +114,13 @@
  #
- # Type of a multi-touch event.
+ # The arguments to the query-stats command; specifies a target for
+ # which to request statistics and optionally the required subset of
+-# information for that target:
++# information for that target.
  #
-+# @begin: A new touch event sequence has just started.
-+#
-+# @update: A touch event sequence has been updated.
-+#
-+# @end: A touch event sequence has finished.
-+#
-+# @cancel: A touch event sequence has been canceled.
-+#
-+# @data: Absolute position data.
-+#
- # Since: 8.1
+-# - which vCPUs to request statistics for
+-# - which providers to request statistics from
+-# - which named values to return within each provider
++# @target: the kind of objects to query.  Note that each possible
++#          target may enable additional filtering options
+ #
+-# @target: the kind of objects to query
++# @providers: which providers to request statistics from, and optionally
++#             which named values to return within each provider
+ #
+ # Since: 7.1
  ##
- { 'enum'  : 'InputMultiTouchType',
-@@ -1137,6 +1147,8 @@
+@@ -136,6 +136,8 @@
  #
- # MultiTouch input event.
+ # @scalar: single unsigned 64-bit integers.
  #
-+# @type: The type of multi-touch event.
++# @boolean: single boolean value.
 +#
- # @slot: Which slot has generated the event.
+ # @list: list of unsigned 64-bit integers (used for histograms).
  #
- # @tracking-id: ID to correlate this event with previously generated
+ # Since: 7.1
+@@ -254,6 +256,8 @@
+ #
+ # Return the schema for all available runtime-collected statistics.
+ #
++# @provider: a provider to restrict the query to.
++#
+ # Note: runtime-collected statistics and their names fall outside
+ #     QEMU's usual deprecation policies.  QEMU will try to keep the
+ #     set of available data stable, together with their names, but
 -- 
 2.44.0
 
