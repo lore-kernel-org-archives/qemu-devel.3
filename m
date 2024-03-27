@@ -4,97 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEA4CC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 14:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09344C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 14:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpU62-0003RM-IY; Wed, 27 Mar 2024 10:17:42 -0400
+	id 1rpU8f-0004pQ-KA; Wed, 27 Mar 2024 10:20:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpU61-0003Qn-Bp
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:17:41 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rpU8d-0004mm-9V
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:20:23 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpU5z-0000Ok-QO
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:17:41 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-56a2bb1d84eso1645048a12.1
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 07:17:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rpU8b-000123-Dh
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:20:23 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6ea80de0e97so3420037b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 07:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711549058; x=1712153858; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YrN2TiabhmRyI9HcWwqOzKKM88od4U5ulMzv3IN7/WY=;
- b=er4fynFHfTwvUAhypodsiWGYIS8Ohziv65LzxJZbviCGUL8PW4lAYj/hFMtYk4sTg7
- Ea2n0YQjE1pfkA6CFw9v5UicsafXsF1dtCckoKucYyur3thvb21Ahb4akKJ1j4TAIgRC
- ArZBKDIMUy5GtpaBqKovzthKyr9x9+Tc63sLyZEhRuCvTi6cdtxgX4n+JuE8VPA4FFGB
- qXf5jvichL3FXQXdQJLD5BIPczMmazOi+RfkXljnzWeq1wH3VeA/djubQIOmr/Oeds5v
- HXMQu28xF1jl2HRqbIiutAHb2F9AsLsuKc1uaEIjZllIY3AN762QKdRdqt8sWp9RE696
- HAkQ==
+ d=ventanamicro.com; s=google; t=1711549217; x=1712154017; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8StAz2pihx+vhGzAzl18uQsb+6havdLYBPTInod4nVE=;
+ b=C8kQJM7RZp3wWuRVFXifA4cmxw7syrdpVsgJd7LeAopH/Ir6RzNtbYij8bZGGTHzL1
+ mD0U4sHYOepwKNULyKl+1ISRCGykWwNE/A33dxJ90HsWE7yH9kNg+U0DVjT4Gi8HVQ9p
+ 9c/hlCqbBvqqgHzOLfcKlAxEp4INLyjVTe1IXkiGE+vBVeP6P+/1Z7ygwhPtEyAKNEbl
+ WC0QdBC0uvtLCDMaZB0U2CPBlMsjovxZ1o+rt1niIe2evVCrsjDD6/W4yTxFOU1CEMD0
+ 56g58DM1GIl2ZicRRQ88VCsBb04RJOmJrPRny0E7rOlXjXSB0r4KkD4V/gwEZTrleCl/
+ 2iZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711549058; x=1712153858;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YrN2TiabhmRyI9HcWwqOzKKM88od4U5ulMzv3IN7/WY=;
- b=m2YSFJfswu2le0Rvb0uaWYoAXwAOkCi9Ek5geyy7TpP17TkckRLnE4cuZz9YUyW8Ep
- G20DaljkpsvPrcWUfNeSvkLKacl4P6w93ytbG4l6iM6yw31t/cgsfnVPP1kYPQvgyvhf
- Z8MZpBVSUv+yxflc2pWX7X3KO3hcB4he38VWQPkkMmm+38hh9t/JfcAirS8/3S4oaCfL
- 9jlevG7bTkv9PfD5bU/rNGWQhIdnJ9R3dE8muDLawUUGFvQ3R/NHqxOjjGUvpjFS41KO
- I4wYyu+zQ8gAvRVYJ1/m722MEZZp3XGDk5NgyyTBS7EFwiuPwg2OcFt5zCYzwQ70nTJw
- OXDQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWVx/qg8PvsB71s1QQppoUCR1u408eIzyAm485U/O0fxe256MQgRTB8Y80H5yKL8cu0/qsKmo5oPA64B3TA4qpR3pu9ai8=
-X-Gm-Message-State: AOJu0Yy2NvTafgh1apRWf+b/1O/8lOj12PSvSiqucqUORY7qtfbpJt9W
- HHhoh6Do29cgauCAKmxTfv1bZaMYmthA2AfPhCxZ1AEpsgKq/ZQ4IsOQDVC7KwY=
-X-Google-Smtp-Source: AGHT+IGWdIEzawrGYP4x6Ik51f4FOstO69KAiCfdNB6dnMHwytZodFAmmX+pQKWCabrocVvJwCBRMg==
-X-Received: by 2002:a50:8a8a:0:b0:567:e0e:dda5 with SMTP id
- j10-20020a508a8a000000b005670e0edda5mr38598edj.17.1711549058213; 
- Wed, 27 Mar 2024 07:17:38 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.205.175])
- by smtp.gmail.com with ESMTPSA id
- j26-20020aa7de9a000000b0056c08268768sm4171537edv.10.2024.03.27.07.17.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Mar 2024 07:17:37 -0700 (PDT)
-Message-ID: <c7af214f-c446-4092-aaad-017a4d3ea2a8@linaro.org>
-Date: Wed, 27 Mar 2024 15:17:34 +0100
+ d=1e100.net; s=20230601; t=1711549217; x=1712154017;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8StAz2pihx+vhGzAzl18uQsb+6havdLYBPTInod4nVE=;
+ b=vJZ356hJKkrfOjH70HXpDh+abMU+ASFjPGzluATMhYWkhFRUDihFY/sdjfNXLaM744
+ FsOPwTvpSBqJTBiiOqm9aF+bcs78JvCzr4dZZjc6kHZ5fQhFzGrhaYDvucCQm4OGOgrc
+ 71GHuqT8FFbxXSLuneHA5EZBUhkUOZjNLuq50OfrvpZCmKFbeIj3smH/JD6bC2AUr2FT
+ c2hxOvekHZ7nmjhjDjqRiuOUCbaCrgKIVq0iaL5SExBpmWMfMl741cCKx+Dk3ziMy9rh
+ FHKxwxT0bVAdI9gXiiKoG1gR/ymCKvbetTURPhrcUJ0/bxgLadVUv2+Xm9ceD6nccFBh
+ +W7g==
+X-Gm-Message-State: AOJu0YxS/TfqPYxdjQ3+zk8MaWzpUlJiXVklVx9I2lzWtFDOVKliMstX
+ mrbTWnFxMmzr+62Vt9BHcfbv0I6p+TIVNmiP7Da90vb6nSjQ5M2EQpQC0fwSEDKBY+x+hOVZ7cA
+ a
+X-Google-Smtp-Source: AGHT+IGqgDbN6G1jq29W7gOuC3CKduShIWpZhXerGLlszLpTgQCLq2ZTlriVrSQbgV7/V94BJiqpaQ==
+X-Received: by 2002:a05:6a21:6d8e:b0:1a3:dc59:764a with SMTP id
+ wl14-20020a056a216d8e00b001a3dc59764amr104721pzb.37.1711549217477; 
+ Wed, 27 Mar 2024 07:20:17 -0700 (PDT)
+Received: from grind.. ([177.45.186.241]) by smtp.gmail.com with ESMTPSA id
+ fa26-20020a056a002d1a00b006ea7b343877sm7891809pfb.9.2024.03.27.07.20.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Mar 2024 07:20:17 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: thuth@redhat.com, alistair.francis@wdc.com, groug@kaod.org,
+ peter.maydell@linaro.org, qemu_oss@crudebyte.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH for-9.0 v3 0/2] qtest/virtio-9p-test.c: fix slow tests
+Date: Wed, 27 Mar 2024 11:20:09 -0300
+Message-ID: <20240327142011.805728-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.44.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 v2 10/21] hw/smbios: Remove 'uuid_encoded'
- argument from smbios_set_defaults()
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- devel@lists.libvirt.org, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Song Gao <gaosong@loongson.cn>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-arm@nongnu.org,
- qemu-riscv@nongnu.org
-References: <20240327095124.73639-1-philmd@linaro.org>
- <20240327095124.73639-11-philmd@linaro.org> <ZgQoTF3FUOpIZAix@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZgQoTF3FUOpIZAix@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,35 +92,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/3/24 15:08, Zhao Liu wrote:
-> On Wed, Mar 27, 2024 at 10:51:12AM +0100, Philippe Mathieu-Daudé wrote:
->> Date: Wed, 27 Mar 2024 10:51:12 +0100
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Subject: [PATCH-for-9.1 v2 10/21] hw/smbios: Remove 'uuid_encoded' argument
->>   from smbios_set_defaults()
->> X-Mailer: git-send-email 2.41.0
->>
->> 'uuid_encoded' is always NULL, remove it.
-> 
-> It's a boolean, so,
-> 
-> s/NULL/true/.
+Hi,
 
-Oops, thanks ;)
+In this new version we took a different approach after the discussions
+we had in [1]. The tests are now untouched, and we're addressing the root
+cause directly: the fact that we have a single temp dir for all the test
+execution in qos-test.
 
-> 
-> 
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/hw/firmware/smbios.h | 3 +--
->>   hw/arm/virt.c                | 3 +--
->>   hw/i386/fw_cfg.c             | 2 +-
->>   hw/loongarch/virt.c          | 2 +-
->>   hw/riscv/virt.c              | 2 +-
->>   hw/smbios/smbios.c           | 6 ++----
->>   6 files changed, 7 insertions(+), 11 deletions(-)
-> 
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> 
+We're now creating and cleaning temp dirs for each individual test by
+calling virtio_9p_create_local_test_dir() in the .before callback for
+the local 9p tests (assign_9p_local_driver()). In this same callback we
+queue the cleanup function that will erase the created temp dir. The
+cleanup will run after the test ran successfully.
+
+This approach is similar to what other qtests do (in fact this design was
+taken from vhost-user-test.c) so it's not like we're doing something
+novel.
+
+I kept the revert of the slow test gate because Gitlab seems to approve
+it:
+
+https://gitlab.com/danielhb/qemu/-/pipelines/1229836634
+
+Feel free to take just patch 1 if we're not sure about re-enabling these
+tests in Gitlab.
+
+
+Changes from v3:
+- patches 1 to 6: dropped
+- patch 1 (new):
+  - create and remove temporary dirs on each test
+- v2 link: https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg06335.html
+
+[1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg06400.html
+
+Daniel Henrique Barboza (2):
+  qtest/virtio-9p-test.c: create/remove temp dirs after each test
+  qtest/virtio-9p-test.c: remove g_test_slow() gate
+
+ tests/qtest/virtio-9p-test.c | 32 +++++++++++---------------------
+ 1 file changed, 11 insertions(+), 21 deletions(-)
+
+-- 
+2.44.0
 
 
