@@ -4,82 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B50C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 01:51:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 531DECD11DF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 02:06:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpIR5-00023W-3O; Tue, 26 Mar 2024 21:50:39 -0400
+	id 1rpIfR-0005ZD-Eo; Tue, 26 Mar 2024 22:05:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rpIR3-00020a-Ti
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:50:38 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1rpIfO-0005Z4-S9
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 22:05:26 -0400
+Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rpIR2-000848-72
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:50:37 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1e0d6356ce9so19659165ad.3
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 18:50:35 -0700 (PDT)
+ id 1rpIfM-0001x7-Sd
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 22:05:26 -0400
+Received: by mail-oi1-x234.google.com with SMTP id
+ 5614622812f47-3c3ca3c3bbaso1730082b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 19:05:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711504235; x=1712109035;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711505123; x=1712109923;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uREyk6RWhynxkM3LrQEj7fmpTF8ERnyaJjFlw7xKBgk=;
- b=iKCPeQ3SenFUh36E9PsQo077Pc5UCJU6I8nGJcKky/Gq+63atN0MJF7Al0RYOIR+u2
- 8h2ffDDylFPVRyQafocxlLWjGFwQsTeeqAcbBh4wPin8SiXi5W3hW4N2AmltAF176/3C
- DxJCq6CUwL4CLQYz4P48gGTLGYwaByKp+W/XWlzOSzdFtOpu8wNSwYliA24CKhWXHJNA
- N9gWgwTR26meH80vIigxkrtSlFgmZvMbOZZW+UxNRVGw+RqS5RIv0Rwhk2Sc5BV4qcOk
- nOcPCk7V3Sl4RV7JWK9UgllDVZPO3UcT5fos6n9XhbEjg5o6ZXwiJQ7BZa4ecOsP27F3
- UDpA==
+ :reply-to; bh=LE24uluRQ9KTcauWcR//b64EcOukqLmAzNLJotmbG6Q=;
+ b=lh8XUV7Z5DRW+yU7pleOTLykBYsxcq6utK/sqdSJtcf59deDd+SblCVpeDwuTudJIm
+ q9xuwxFgmDiJzXMj8r8OjGd8lAqJ2B7L8z6bIFoYQl85A+t0n4QUAGK01zaXJeaYNMRM
+ FrtAp8ULHuN200XeuBmMG1wD9nHmCAcCGXpShmLYKBKDcwL+3I+qfWBVmW2RHKV9h0Hh
+ RZMe9YosJEeIl0UZvFowMtSS1VxYSQWLABOVG2foHKXsSpVBeBKLh4bZa8fQqcjNkUsJ
+ OFpsEVqQDC7BNRjYHZpqYxQA7Kp+z1V16ykeDSAxsLuEc5xm4s/EyNM79mQ96YdNHXIp
+ JZMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711504235; x=1712109035;
+ d=1e100.net; s=20230601; t=1711505123; x=1712109923;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uREyk6RWhynxkM3LrQEj7fmpTF8ERnyaJjFlw7xKBgk=;
- b=R4pJUX6Nbj4S0gPXo43v/99zsqpHjHjRadS/ZU27W3fzMKbvWp/FXwVtST7R+dvggQ
- npcxLtEQQKRkaLPT1Mme35hdEqmRKCod0qeWfNcG4wkLW93/cN18klPB0uMN8uQzJYG1
- FG/9Qz9TmfLX/9R1S93doax21XgDm8DkEvdP+eu1OO3VBl+LlpMmd9Z34SGZ9fuY6VAX
- ou9zTPEmuiqtSJ6bKtLm8Dq9iY0WyyHRs3PpkiqWeArO/muIC3KJjQdGOSRWADLXbL+W
- oysTvEViEhHgOfZLTEHkdlJ7mcLOdvGY8Pq6Eimj5IWcqVK9KHh+peODlXeJm+aQQ6kD
- UoQQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDIiRWp4IVAAjb08wRs9TGYg3NHrefFpeKxpwDT99MgDHJxa9JuOuhqAfSvqsgwyPmfF7sfTnLc+3yDRGLmdC90GxBDEw=
-X-Gm-Message-State: AOJu0YzXxqTHgHIh49BI/sLSgbby/oA6Hun/CXpIhl34/tqZ/pgYyBYB
- NPmGERLy2uozTpKsREakLtNGVu7rIJMz7G5pyZHGbCW3QpFjxr0Y1h/k2Xd89pk=
-X-Google-Smtp-Source: AGHT+IEyjhf/HpFqzeTNpW9EIau15kfS5+0EBYTSjnFR43PR2i/61HU1Pvg8VfbcT7gfACtv2FfyCw==
-X-Received: by 2002:a17:902:ce8a:b0:1e0:ca47:4d9b with SMTP id
- f10-20020a170902ce8a00b001e0ca474d9bmr6091515plg.29.1711504234908; 
- Tue, 26 Mar 2024 18:50:34 -0700 (PDT)
+ bh=LE24uluRQ9KTcauWcR//b64EcOukqLmAzNLJotmbG6Q=;
+ b=MasjoQhLLypkn/0XHtxhbe/teC6mA/tUz6B3sGLDjf6aegOhG4/69y7YwMRVpwEsBa
+ pDvd2SMedO88HOzGFu/+koihGVO0KnVtnSpArqTrBPL0ANbepeqlVVEnjCaO8f6kLjS5
+ +7hcp8LcS74E3r/gGgdLFX652pvBjFUDtiTZMnvzU8gKAiQ/OTu+yipUuWn154xnOd+4
+ HofT/8vQWCoFRMkvQKmv/6SSMWdFVvFig3SGjo9zdtA/J4JD9RYFx80YjMHngdSl4Mn0
+ VyTp0Vf+eMucygkAsVCvT97v6UatB1wJKwIhMuWKOYbUacpe0759PaU2bTaL1MCBTti1
+ 72ng==
+X-Gm-Message-State: AOJu0Yz8apaF4zH7RLJPDuyZhgrmnS5Y2qYutviJkCJFWzyKsd4f7FgV
+ xTdv/hmcczzigq3pAoV3YCuXgN5K9+36VTc8QTGyiLE1xfhTytZ6RcEFqXCARSs=
+X-Google-Smtp-Source: AGHT+IFG16LQfwYTABGS0s/eSMQmi+7vqNaD+T1Ya9RxKbitHLeYlaQIGaXzdjifG/VQpqvV/yiDlQ==
+X-Received: by 2002:a05:6808:23c6:b0:3c3:d1f1:dcc9 with SMTP id
+ bq6-20020a05680823c600b003c3d1f1dcc9mr7795567oib.18.1711505123731; 
+ Tue, 26 Mar 2024 19:05:23 -0700 (PDT)
 Received: from localhost ([157.82.202.248])
  by smtp.gmail.com with UTF8SMTPSA id
- x3-20020a170902a38300b001dda608484asm7785894pla.57.2024.03.26.18.50.32
+ q27-20020a63751b000000b005bd980cca56sm8205732pgc.29.2024.03.26.19.05.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 18:50:34 -0700 (PDT)
+ Tue, 26 Mar 2024 19:05:23 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 27 Mar 2024 10:49:22 +0900
-Subject: [PATCH for 9.1 v3 2/2] meson: Fix MESONINTROSPECT parsing
+Date: Wed, 27 Mar 2024 11:05:09 +0900
+Subject: [PATCH v2 1/2] virtio-net: Fix vhost virtqueue notifiers for RSS
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240327-meson-v3-2-7e6cdef1be8a@daynix.com>
-References: <20240327-meson-v3-0-7e6cdef1be8a@daynix.com>
-In-Reply-To: <20240327-meson-v3-0-7e6cdef1be8a@daynix.com>
-To: Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
- John Snow <jsnow@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240327-vhost-v2-1-0a89aa21b54b@daynix.com>
+References: <20240327-vhost-v2-0-0a89aa21b54b@daynix.com>
+In-Reply-To: <20240327-vhost-v2-0-0a89aa21b54b@daynix.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ Andrew Melnychenko <andrew@daynix.com>, 
+ Yuri Benditovich <yuri.benditovich@daynix.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev
-Received-SPF: none client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::234;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x234.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,62 +95,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The arguments in MESONINTROSPECT are quoted with shlex.quote() so it
-must be parsed with shlex.split().
+virtio_net_guest_notifier_pending() and virtio_net_guest_notifier_mask()
+checked VIRTIO_NET_F_MQ to know there are multiple queues, but
+VIRTIO_NET_F_RSS also enables multiple queues. Refer to n->multiqueue,
+which is set to true either of VIRTIO_NET_F_MQ or VIRTIO_NET_F_RSS is
+enabled.
 
-meson<1.4.0 quotes arguments in MESONINTROSPECT with the
-Windows-specific format on the platform, which is incompatible with
-shlex.split(). meson>=1.4.0 uses shlex.quote() also on the platform and
-fixes the incompatibility so make sure meson>=1.4.0 on Windows.
-
-Fixes: cf60ccc330 ("cutils: Introduce bundle mechanism")
-Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Tested-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: 68b0a6395f36 ("virtio-net: align ctrl_vq index for non-mq guest for vhost_vdpa")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- configure                       | 5 +++++
- scripts/symlink-install-tree.py | 3 ++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ hw/net/virtio-net.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/configure b/configure
-index 3cd736b139f3..57c2f1a2273d 100755
---- a/configure
-+++ b/configure
-@@ -956,6 +956,11 @@ fi
- $mkvenv ensuregroup --dir "${source_path}/python/wheels" \
-      ${source_path}/pythondeps.toml meson || exit 1
- 
-+# Windows needs: https://github.com/mesonbuild/meson/pull/12807
-+if test "$host_os" = "windows"; then
-+  $mkvenv ensure --dir "$source_path/python/wheels" 'meson>=1.4.0' || exit 1
-+fi
-+
- # At this point, we expect Meson to be installed and available.
- # We expect mkvenv or pip to have created pyvenv/bin/meson for us.
- # We ignore PATH completely here: we want to use the venv's Meson
-diff --git a/scripts/symlink-install-tree.py b/scripts/symlink-install-tree.py
-index 8ed97e3c943d..b72563895c56 100644
---- a/scripts/symlink-install-tree.py
-+++ b/scripts/symlink-install-tree.py
-@@ -4,6 +4,7 @@
- import errno
- import json
- import os
-+import shlex
- import subprocess
- import sys
- 
-@@ -14,7 +15,7 @@ def destdir_join(d1: str, d2: str) -> str:
-     return str(PurePath(d1, *PurePath(d2).parts[1:]))
- 
- introspect = os.environ.get('MESONINTROSPECT')
--out = subprocess.run([*introspect.split(' '), '--installed'],
-+out = subprocess.run([*shlex.split(introspect), '--installed'],
-                      stdout=subprocess.PIPE, check=True).stdout
- for source, dest in json.loads(out).items():
-     bundle_dest = destdir_join('qemu-bundle', dest)
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 9959f1932b1b..a6ff000cd9d3 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3426,7 +3426,7 @@ static bool virtio_net_guest_notifier_pending(VirtIODevice *vdev, int idx)
+     VirtIONet *n = VIRTIO_NET(vdev);
+     NetClientState *nc;
+     assert(n->vhost_started);
+-    if (!virtio_vdev_has_feature(vdev, VIRTIO_NET_F_MQ) && idx == 2) {
++    if (!n->multiqueue && idx == 2) {
+         /* Must guard against invalid features and bogus queue index
+          * from being set by malicious guest, or penetrated through
+          * buggy migration stream.
+@@ -3458,7 +3458,7 @@ static void virtio_net_guest_notifier_mask(VirtIODevice *vdev, int idx,
+     VirtIONet *n = VIRTIO_NET(vdev);
+     NetClientState *nc;
+     assert(n->vhost_started);
+-    if (!virtio_vdev_has_feature(vdev, VIRTIO_NET_F_MQ) && idx == 2) {
++    if (!n->multiqueue && idx == 2) {
+         /* Must guard against invalid features and bogus queue index
+          * from being set by malicious guest, or penetrated through
+          * buggy migration stream.
 
 -- 
 2.44.0
