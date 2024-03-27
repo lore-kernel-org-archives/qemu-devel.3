@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 541E7C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 17:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6702BC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 17:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpWqf-0006xb-7q; Wed, 27 Mar 2024 13:14:01 -0400
+	id 1rpX3T-0001pk-OU; Wed, 27 Mar 2024 13:27:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1rpWqe-0006xL-Cp
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 13:14:00 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1rpX3O-0001on-KH
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 13:27:10 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <anthony.perard@cloud.com>)
- id 1rpWqc-0005Na-SF
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 13:14:00 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-341d381d056so1789160f8f.0
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 10:13:58 -0700 (PDT)
+ id 1rpX3L-0000h6-3H
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 13:27:10 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-33ececeb19eso4607598f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 10:27:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=cloud.com; s=cloud; t=1711559637; x=1712164437; darn=nongnu.org;
+ d=cloud.com; s=cloud; t=1711560425; x=1712165225; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=vu7suNCUX1YMKGA4SET/IwU/8+fAPUob1HodKRWXOiw=;
- b=M00dKYMB7gZMUuv6wXNsUllWSygYUgATjQBuOHHScfCIbtSaa/WjUQglvLpm89L8yG
- bqzXzRBpyZIJUOFh3BaN7a0wHE2LRtFm6tTmXwbmDyoQ41ZruiTUZx9Sx+U1e/IXnGzk
- 68rP7sixEuZ44V9trTDdEujZO/YaEqRuQSXrE=
+ bh=LOeWq64vcMpyC+dfgqU4qcoJI/qjRuI1jSd1ZXO7Aa8=;
+ b=Y4yRJF7FZiBkHevRqyl57Ja38pfJ2RwREmUVEnfRrBIonFI1fftuz8BezxT5WXMsEi
+ ngsjpFTaIyhXh1hukVDlVMKnDMxvLuka14SVNq1Oq279EnwyLxx0vk8C+ojwf6EGc30a
+ 7Mvbflv7kYki4jsvA6Qk7vNfLH+vNDc2JB23w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711559637; x=1712164437;
+ d=1e100.net; s=20230601; t=1711560425; x=1712165225;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vu7suNCUX1YMKGA4SET/IwU/8+fAPUob1HodKRWXOiw=;
- b=qKHQMSErbYMatUx7W9qq8lfmBTauck+q2NcH1baS74OCb822k38oaYZUOZLevywzYu
- zIlh3LWGuVPSWoJ34o/jgqWJ5Vj1uQqYe8c5Rk8gKs/JNu3lDP9sdvrDIBXw5+m/5Rwd
- cBjPsi/MP0xLFXtTuM5NW+s2gTRPyAfM7/P8Rywemur0m1WGDPCQ+nkoSY84yUfG1dra
- zLcM2vbi+d1C9Y2Ct34sG2XlJNjFFg9amBhaRdl1jEQT6YBZehWWiRswNVbRJFNo2RSX
- toSBjdWQac927tN3E7f8EC6fCiHay5DgMDy06YiGgD2SRtNGNvtEfATvuABsm1BJ6itV
- lcoQ==
+ bh=LOeWq64vcMpyC+dfgqU4qcoJI/qjRuI1jSd1ZXO7Aa8=;
+ b=AAX4WDpGDsc1MtpmoHazwsI6J4Ih8uCiIpIhGxpIz+vCOl9joM9Nx4HclF1/lUidmG
+ botSlRH+gpDkVHOLXWZaTTbRqn8xGj/lBOXfTb7elNJlT9CYGkflH2puc1STH+uGNHfo
+ gbTC8RTfisrSP8NSFYrWyimNP7LI+EACuo4YWl8otSvuwM4/0gEdNapPfHkbIf/XXIiC
+ nqbhKk9Ko1OquZHcYcfx6Yc7hvMWIrYkYQcglh2ljylrw6WhQQvL/sretGwtkDmkkc6q
+ UU6skjI4LBVvfYW7wgDCOJxe7mSvmwd0cuSQqtnOV28K3nalexgXTvM1LOH19StkHVbd
+ kXZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWfQYYJUrYNwcelXl3X7Irurvl0uTs9RaRyYy6KkRAvr4/8+Pa/C41NR7JjKKAPEz+n64khDm3ao0O3WLi5qoIWP2hz0Bg=
-X-Gm-Message-State: AOJu0YxfOX8ybx16emEgJXxNO4d1FjvzzUTRBQSKQC8u+ZqSnn9uJvVQ
- DKRgOS+nfnUJ7QJ5xM7g2OFKsjh/wlqnD0H9vb6wsPBRfVHuI1CF9ZUeNSz+PlE=
-X-Google-Smtp-Source: AGHT+IHuzwyfCe0U7WV3L9+qNX5m7LH+o76ieKYIT56YXzVsC6yBJ1zoRlezauX/mZrHEMHFIXhO1A==
-X-Received: by 2002:a05:6000:ac3:b0:33e:64f3:65a5 with SMTP id
- di3-20020a0560000ac300b0033e64f365a5mr433896wrb.52.1711559636869; 
- Wed, 27 Mar 2024 10:13:56 -0700 (PDT)
+ AJvYcCXH7ZM45M2XfHy5U8yXp7o7u89dp8jyW61/nKmXtpriGp9ijDKiig0Pkg8wE+vFMk4f12k7njo/2vgkoTtrYmINJityDGA=
+X-Gm-Message-State: AOJu0YyoGwQUjgZn/8m/EHl9Br+FE/Hqskn1mTlDWYgB1pLnm4btaBYd
+ mtApcp4QI07Kzty9Sp7mz+J7UFLugJR2fnE2S7yVH2UFMHamVXMN+jjZ5ygzCvQ=
+X-Google-Smtp-Source: AGHT+IHr9JM+c5QDCOdkTDoDNItACvq5s9onzO3m1fxTIw9ef9+p/5BHroxQSnJUYc67vBX8mZewQg==
+X-Received: by 2002:adf:eccc:0:b0:341:d64e:4966 with SMTP id
+ s12-20020adfeccc000000b00341d64e4966mr424121wro.61.1711560425465; 
+ Wed, 27 Mar 2024 10:27:05 -0700 (PDT)
 Received: from perard.uk.xensource.com (default-46-102-197-194.interdsl.co.uk.
  [46.102.197.194]) by smtp.gmail.com with ESMTPSA id
- w17-20020adfcd11000000b0033e786abf84sm15317168wrm.54.2024.03.27.10.13.55
+ fa7-20020a056000258700b00341c6b53358sm10953709wrb.66.2024.03.27.10.27.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Mar 2024 10:13:56 -0700 (PDT)
-Date: Wed, 27 Mar 2024 17:13:55 +0000
+ Wed, 27 Mar 2024 10:27:05 -0700 (PDT)
+Date: Wed, 27 Mar 2024 17:27:04 +0000
 From: Anthony PERARD <anthony.perard@cloud.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: David Woodhouse <dwmw@amazon.co.uk>, qemu-devel@nongnu.org,
@@ -67,30 +67,25 @@ Cc: David Woodhouse <dwmw@amazon.co.uk>, qemu-devel@nongnu.org,
  Stefano Stabellini <sstabellini@kernel.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  xen-devel@lists.xenproject.org, qemu-block@nongnu.org,
- kvm@vger.kernel.org, Thomas Huth <thuth@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH-for-9.0 v2 15/19] hw/xen: Reduce inclusion of 'cpu.h' to
- target-specific sources
-Message-ID: <5cac8283-2e26-44dd-b113-d8499a0ef618@perard>
+ kvm@vger.kernel.org, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH-for-9.0 v2 16/19] hw/xen/xen_pt: Add missing license
+Message-ID: <71182998-214b-4e38-8420-79edb92ec09c@perard>
 References: <20231114143816.71079-1-philmd@linaro.org>
- <20231114143816.71079-16-philmd@linaro.org>
+ <20231114143816.71079-17-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20231114143816.71079-16-philmd@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=anthony.perard@cloud.com; helo=mail-wr1-x42c.google.com
+In-Reply-To: <20231114143816.71079-17-philmd@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=anthony.perard@cloud.com; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,15 +101,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 14, 2023 at 03:38:11PM +0100, Philippe Mathieu-Daudé wrote:
-> We rarely need to include "cpu.h" in headers. Including it
-> 'taint' headers to be target-specific. Here only the i386/arm
-> implementations requires "cpu.h", so include it there and
-> remove from the "hw/xen/xen-hvm-common.h" *common* header.
+On Tue, Nov 14, 2023 at 03:38:12PM +0100, Philippe Mathieu-Daudé wrote:
+> Commit eaab4d60d3 ("Introduce Xen PCI Passthrough, qdevice")
+> introduced both xen_pt.[ch], but only added the license to
+> xen_pt.c. Use the same license for xen_pt.h.
 > 
+> Suggested-by: David Woodhouse <dwmw@amazon.co.uk>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: David Woodhouse <dwmw@amazon.co.uk>
+
+Fine by me. Looks like there was a license header before:
+https://xenbits.xen.org/gitweb/?p=qemu-xen-unstable.git;a=blob;f=hw/pass-through.h;h=0b5822414e24d199a064abccc4d378dcaf569bd6;hb=HEAD
+I don't know why I didn't copied it over here.
 
 Acked-by: Anthony PERARD <anthony.perard@citrix.com>
 
