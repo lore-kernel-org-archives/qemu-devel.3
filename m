@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB0AC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 03:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F91EC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 03:07:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpJcc-00027x-97; Tue, 26 Mar 2024 23:06:38 -0400
+	id 1rpJcL-0001uM-TG; Tue, 26 Mar 2024 23:06:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1rpJcV-00022V-Nj
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:06:31 -0400
+ id 1rpJcK-0001uD-Jv
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:06:20 -0400
 Received: from fout3-smtp.messagingengine.com ([103.168.172.146])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1rpJcT-0004XI-5t
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:06:30 -0400
+ id 1rpJcJ-0004V0-2b
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:06:20 -0400
 Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
- by mailfout.nyi.internal (Postfix) with ESMTP id C74C81380165;
- Tue, 26 Mar 2024 23:06:28 -0400 (EDT)
+ by mailfout.nyi.internal (Postfix) with ESMTP id E409D1380174;
+ Tue, 26 Mar 2024 23:06:17 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Tue, 26 Mar 2024 23:06:28 -0400
+ by compute7.internal (MEProxy); Tue, 26 Mar 2024 23:06:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  invisiblethingslab.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm2; t=1711508788; x=1711595188; bh=MbWNAocmC2
- tXBNyeSris83Z/pJQ9bxIJsFcp7jvH5XI=; b=B9XiLJ1Neg+S24LlG51xvdKE3F
- 09Eso1tQ6eMCxdX8xfVx09URS4QDwDXRVh0fyn7FIxabsDhRjzljbNXrF0Lq2rTG
- cPi2Xo6LK3zo9eaBCWpFzZVIpvSTNQ65CN69nb8TfJXc/V9uJYnTOLjLWAk8iphm
- IHDf6Ep3ZzOWL+rwAKMeQBR0cDJ7QPw/Cg8axiXh7jb6cfLN1n3ZF0jrEKikMYCg
- Fgni1Mrx7OgrHfiOHwKcoi7z4gAbtX6pAsuCE3qlxdvXp1ew0m6HY6bmMEI6Mgj2
- nvJrKwskZcdUm0fhlo96QhwCPz09U0RvGj2+VF8ooZNuIOfg136ADQP87I6w==
+ :message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+ t=1711508777; x=1711595177; bh=n+fL4u4pIY1MP5INUg/5Z6ZGGe3TCZWv
+ qrv4TyLguM0=; b=cqsAgg0DYn2BNGcf+Jt3riRiHWi8lHrqd+qFYi7oW9woTz78
+ j01vb8gyY9bAeG3GPuxSlnkMHLAs6wTG5iP+duoVZAbOtWm4nMeENRpfF8iG2ByV
+ FxAfHJEXpmcN1XnSkRSTH+DXW3V9ban1oEgmSDyFAqJFru5hLrOB9v2O2TFv50kK
+ c+TMeC8yUlpowjcdX0H+OedCtlTy6ZxbmP6smSeq4RAUw5XyUndFEuno+WytZUvu
+ fTQEGkP4ChsPa4DU2qO/vwSPdwSPd2zWR097QTrdqWyZmEO5ShRfK96v7ZaPC+TU
+ Nk1xOMLwaPyJohLDV9yQZNVq6fzeIeFp+DE6sg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1711508788; x=
- 1711595188; bh=MbWNAocmC2tXBNyeSris83Z/pJQ9bxIJsFcp7jvH5XI=; b=x
- rn9Iqc7z00/ieKDGMeEHf1xO9LKYNU0XBssT6keiTb7RQ9Hws4K0T5mPmvSejNv/
- UXTuHacyb1TwViEI0fJ0LLH/7qJxA0aVOmxvN03bxmQgPWvAMIAYBcmmNtRC2d8s
- zksfLwnyJDoYRjl/5UeEpBCPuzYCS0FdYMTqZUOBd6gf5j9iAGQdwV0gYdqX+kVl
- L2yHAJJt4cyCM7XKkW4gATx7UOSnPXwNjjA6MVafYQUVfUQJd42VMB1GW4jS85wL
- awikQIvHhpI/gObFsUMzSqsvgopC+osgLzTtFcWNSPvWE0nzLQZVGTDhyvwAng7N
- xkQguMh4PqLAY/npi3PpA==
-X-ME-Sender: <xms:NI0DZkB1xmdqAqKokIWOE8rKVeKXURKjVHxzPc6gvmKyDuGuBGEx9A>
- <xme:NI0DZmiIzVsUYz8nmb9afgtisHplZX5S89WJ45DG2JEg5aEkHMv31pkQn4K5SDSN5
- vW7lZ0JZXU4JA>
-X-ME-Received: <xmr:NI0DZnncUKYLrK2UbFq6A172gjI1Nm5zNdR_404pJvAcfYrtWK43ptApltTdXV5qOyTIn6tAKvSX1MRBasy2-ghLgBlRZWmC0EJPw3fMdGYykUAhJeY>
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; t=1711508777; x=1711595177; bh=n+fL4u4pIY1MP
+ 5INUg/5Z6ZGGe3TCZWvqrv4TyLguM0=; b=PhnCCH4OJbq7+1/iqkae6QWGccVHx
+ SRpcphB1WsJHHZklPBaxyOHg5vF2YhsTRz1Om2y6/ISZMU5Yng9skC9ue5zwf6TY
+ iVEjblimj5W2AXbkVX79Tdr8RJwd78YOjofkSmr8T7DfUpT9h0TbN6qzj0/7D3cl
+ TPDTs6sjLcMg6euCymgE6w+6Cl4qSYuL90uJySpjSBjK1nDuHtzvw269uB61J+Sr
+ zF3ZhJWWMsZ3kFUCRbRGoiqrREMWIru4DhZujMWjJPv+4ULXRxp1bZjHMR1rK8/W
+ jIxQRWOICIkhE5gaQtLQ1OWiQKK4DiVJDuw+vJGwzucMUXw+bhq+0pqkw==
+X-ME-Sender: <xms:KY0DZspt-qo_vei4Lrp0KOOjjVsCQ-mlYFFtf1B_HLkuVKfZeYv03A>
+ <xme:KY0DZipXcnWu7W1OD1aSmqtJMq3bxkub25IGIXLOJIMxRksrZmLVhXGKe4WM48T_U
+ IoPS1ivgAPzFA>
+X-ME-Received: <xmr:KY0DZhMxF3qrbe55n7QdoaJSCD4VIm-LFmPMQjkMiBkv6Ttpi63mF8Az6oPZl3ouYQGUFxxrDCmGMQ0kxx3GhYiNrANpTnJMwF5vEhgPqmDAmJ5RVRs>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddugedgheeiucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpeforghr
- vghkucforghrtgiihihkohifshhkihdqifpkrhgvtghkihcuoehmrghrmhgrrhgvkhesih
- hnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpefg
- ueduhefgvdefheehudejheefudevueeghfekhfehleegveduteeuiedugffgffenucevlh
- hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmrghrmhgrrhgv
- khesihhnvhhishhisghlvghthhhinhhgshhlrggsrdgtohhm
-X-ME-Proxy: <xmx:NI0DZqwB8ug52_A0qWQcpdxwao7sxhvMmNPttlgikr4gASNFw1l7CA>
- <xmx:NI0DZpQCX4tX0DZxHt7entbKHNbZg7slS11YUqGe49UkMqbGlv1inw>
- <xmx:NI0DZlatG-0aai-WFvhZ2vxilJWt7IfYsx-vWj1NounPZlWSq9JQdg>
- <xmx:NI0DZiSjaaSdxjRzuk8xlhig814J8CPPR6opw-nJkRdd5CL2Hwp05w>
- <xmx:NI0DZoGqu7ISBtsYqlNC5hDnT1y_peCtCnt1g79kFsPQSjWEnwhWOw>
+ uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffogggtgfesthekre
+ dtredtjeenucfhrhhomhepofgrrhgvkhcuofgrrhgtiiihkhhofihskhhiqdfikphrvggt
+ khhiuceomhgrrhhmrghrvghksehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomh
+ eqnecuggftrfgrthhtvghrnhepleekhfduleetleelleetteevfeefteffkeetteejheel
+ gfegkeelgeehhfdthedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+ hilhhfrhhomhepmhgrrhhmrghrvghksehinhhvihhsihgslhgvthhhihhnghhslhgrsgdr
+ tghomh
+X-ME-Proxy: <xmx:KY0DZj5jXs4Ed4MnNdTJl7eiyCtMdRzfX8zG23aQg3WHTlxarimGGQ>
+ <xmx:KY0DZr65xSip9qCAVetI3BgR3QxWxwiHzOMIRXgAbv_ihTqTKvyN_g>
+ <xmx:KY0DZjhmH4F2rMNtIjgs0st6gzVN_SUQNhlxGxPi3DWd801n9YlX4w>
+ <xmx:KY0DZl5ncm7im6kvgu7aCRl6DvLEoMVfPxU6qiNGwnCCtWNH7P2AnQ>
+ <xmx:KY0DZrEAG6cNt2bGbkQsQGIyL_zRHZrP-c4eWWeTJWeHE2w4GKh32Q>
 Feedback-ID: i1568416f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Mar 2024 23:06:27 -0400 (EDT)
+ 26 Mar 2024 23:06:17 -0400 (EDT)
 From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
  <marmarek@invisiblethingslab.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>, 
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony Perard <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
- xen-devel@lists.xenproject.org (open list:X86 Xen CPUs)
-Subject: [PATCH v3 2/2] xen: fix stubdom PCI addr
-Date: Wed, 27 Mar 2024 04:05:15 +0100
-Message-ID: <35049e99da634a74578a1ff2cb3ae4cc436ede33.1711506237.git-series.marmarek@invisiblethingslab.com>
+ <marmarek@invisiblethingslab.com>
+Subject: [PATCH v3 0/2] Changes necessary to work inside Xen device model
+ stubdomain
+Date: Wed, 27 Mar 2024 04:05:13 +0100
+Message-ID: <cover.527f002866de2be7c275c5000b6e5edfeb7e8368.1711506237.git-series.marmarek@invisiblethingslab.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.527f002866de2be7c275c5000b6e5edfeb7e8368.1711506237.git-series.marmarek@invisiblethingslab.com>
-References: <cover.527f002866de2be7c275c5000b6e5edfeb7e8368.1711506237.git-series.marmarek@invisiblethingslab.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -112,152 +107,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When running in a stubdomain, the config space access via sysfs needs to
-use BDF as seen inside stubdomain (connected via xen-pcifront), which is
-different from the real BDF. For other purposes (hypercall parameters
-etc), the real BDF needs to be used.
-Get the in-stubdomain BDF by looking up relevant PV PCI xenstore
-entries.
+This is minimal set of changes necessary to run Xen device model inside a
+stubdomain and still support PCI passthrough.
 
-Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
----
-Changes in v3:
-- reduce 'path' size
-- add two missing error_setg() calls
-- coding style
-Changes in v2:
-- use xs_node_scanf
-- use %d instead of %u to read values written as %d
-- add a comment from another iteration of this patch by Jason Andryuk
----
+Marek Marczykowski-Górecki (2):
+  hw/xen: detect when running inside stubdomain
+  xen: fix stubdom PCI addr
+
+ hw/i386/xen/xen-hvm.c        | 22 +++++++++++-
  hw/xen/xen-host-pci-device.c | 76 ++++++++++++++++++++++++++++++++++++-
  hw/xen/xen-host-pci-device.h |  6 +++-
- 2 files changed, 81 insertions(+), 1 deletion(-)
+ include/hw/xen/xen.h         |  1 +-
+ system/globals.c             |  1 +-
+ 5 files changed, 105 insertions(+), 1 deletion(-)
 
-diff --git a/hw/xen/xen-host-pci-device.c b/hw/xen/xen-host-pci-device.c
-index 8c6e9a1..eaf32f2 100644
---- a/hw/xen/xen-host-pci-device.c
-+++ b/hw/xen/xen-host-pci-device.c
-@@ -9,6 +9,8 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
-+#include "hw/xen/xen-legacy-backend.h"
-+#include "hw/xen/xen-bus-helper.h"
- #include "xen-host-pci-device.h"
- 
- #define XEN_HOST_PCI_MAX_EXT_CAP \
-@@ -33,13 +35,73 @@
- #define IORESOURCE_PREFETCH     0x00001000      /* No side effects */
- #define IORESOURCE_MEM_64       0x00100000
- 
-+/*
-+ * Non-passthrough (dom0) accesses are local PCI devices and use the given BDF
-+ * Passthough (stubdom) accesses are through PV frontend PCI device.  Those
-+ * either have a BDF identical to the backend's BDF (xen-backend.passthrough=1)
-+ * or a local virtual BDF (xen-backend.passthrough=0)
-+ *
-+ * We are always given the backend's BDF and need to lookup the appropriate
-+ * local BDF for sysfs access.
-+ */
-+static void xen_host_pci_fill_local_addr(XenHostPCIDevice *d, Error **errp)
-+{
-+    unsigned int num_devs, len, i;
-+    unsigned int domain, bus, dev, func;
-+    char *be_path = NULL;
-+    char path[16];
-+
-+    be_path = qemu_xen_xs_read(xenstore, 0, "device/pci/0/backend", &len);
-+    if (!be_path) {
-+        error_setg(errp, "Failed to read device/pci/0/backend");
-+        goto out;
-+    }
-+
-+    if (xs_node_scanf(xenstore, 0, be_path, "num_devs", NULL,
-+                      "%d", &num_devs) != 1) {
-+        error_setg(errp, "Failed to read or parse %s/num_devs", be_path);
-+        goto out;
-+    }
-+
-+    for (i = 0; i < num_devs; i++) {
-+        snprintf(path, sizeof(path), "dev-%d", i);
-+        if (xs_node_scanf(xenstore, 0, be_path, path, NULL,
-+                          "%x:%x:%x.%x", &domain, &bus, &dev, &func) != 4) {
-+            error_setg(errp, "Failed to read or parse %s/%s", be_path, path);
-+            goto out;
-+        }
-+        if (domain != d->domain ||
-+                bus != d->bus ||
-+                dev != d->dev ||
-+                func != d->func)
-+            continue;
-+        snprintf(path, sizeof(path), "vdev-%d", i);
-+        if (xs_node_scanf(xenstore, 0, be_path, path, NULL,
-+                          "%x:%x:%x.%x", &domain, &bus, &dev, &func) != 4) {
-+            error_setg(errp, "Failed to read or parse %s/%s", be_path, path);
-+            goto out;
-+        }
-+        d->local_domain = domain;
-+        d->local_bus = bus;
-+        d->local_dev = dev;
-+        d->local_func = func;
-+        goto out;
-+    }
-+    error_setg(errp, "Failed to find PCI device %x:%x:%x.%x in xenstore",
-+               d->domain, d->bus, d->dev, d->func);
-+
-+out:
-+    free(be_path);
-+}
-+
- static void xen_host_pci_sysfs_path(const XenHostPCIDevice *d,
-                                     const char *name, char *buf, ssize_t size)
- {
-     int rc;
- 
-     rc = snprintf(buf, size, "/sys/bus/pci/devices/%04x:%02x:%02x.%d/%s",
--                  d->domain, d->bus, d->dev, d->func, name);
-+                  d->local_domain, d->local_bus, d->local_dev, d->local_func,
-+                  name);
-     assert(rc >= 0 && rc < size);
- }
- 
-@@ -342,6 +404,18 @@ void xen_host_pci_device_get(XenHostPCIDevice *d, uint16_t domain,
-     d->dev = dev;
-     d->func = func;
- 
-+    if (xen_is_stubdomain) {
-+        xen_host_pci_fill_local_addr(d, errp);
-+        if (*errp) {
-+            goto error;
-+        }
-+    } else {
-+        d->local_domain = d->domain;
-+        d->local_bus = d->bus;
-+        d->local_dev = d->dev;
-+        d->local_func = d->func;
-+    }
-+
-     xen_host_pci_config_open(d, errp);
-     if (*errp) {
-         goto error;
-diff --git a/hw/xen/xen-host-pci-device.h b/hw/xen/xen-host-pci-device.h
-index 4d8d34e..270dcb2 100644
---- a/hw/xen/xen-host-pci-device.h
-+++ b/hw/xen/xen-host-pci-device.h
-@@ -23,6 +23,12 @@ typedef struct XenHostPCIDevice {
-     uint8_t dev;
-     uint8_t func;
- 
-+    /* different from the above in case of stubdomain */
-+    uint16_t local_domain;
-+    uint8_t local_bus;
-+    uint8_t local_dev;
-+    uint8_t local_func;
-+
-     uint16_t vendor_id;
-     uint16_t device_id;
-     uint32_t class_code;
+base-commit: 5012e522aca161be5c141596c66e5cc6082538a9
 -- 
 git-series 0.9.1
 
