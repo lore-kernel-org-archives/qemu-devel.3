@@ -4,74 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44C60C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 13:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 838C7C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 13:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpTIs-0008Mk-R4; Wed, 27 Mar 2024 09:26:54 -0400
+	id 1rpTIZ-0008Ca-SR; Wed, 27 Mar 2024 09:26:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rpTIr-0008LE-A1
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:26:53 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rpTIo-0005aO-AR
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:26:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711546010; x=1743082010;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=wWiiZmdYpD6y3PRHGXeei7H6x1Rz33uRTqo+osKh4gI=;
- b=jOpcCnELT7nzdrZYcZh1nsJpPErbL39FGfZNFJX/YGfUNxlKRw31F4qM
- Ap9gC0aeENkdEF024ibVcGiV31RnGdd8nJE4URevUxaBUEFPhlfc3NHU4
- Ng2VkYViubr2/9yqEvJH3rfqet/hkp91xTIZzuCBM08pylKILeCxdK1CA
- yDJw6pgqP1ceYa3N3m+SX7ega6Nzp7Kwt2MXWbQiJHV5o1UDcy1yoIp0s
- qAIHXPNMqWhm86SauAsKi1WXfmTLiXyQL/n0GtW/O+xY9CThBPRPPTeCH
- 8k2jbJsIYftd4nUucTW3o3flJ5scqWPWMSiHuhOBIfkQX7MKgNsKiQlQt Q==;
-X-CSE-ConnectionGUID: aouTM9YNT9G8bnnQ96YLgQ==
-X-CSE-MsgGUID: GNpNyY2JT/iSsmyXyIOYUw==
-X-IronPort-AV: E=McAfee;i="6600,9927,11025"; a="17276070"
-X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; d="scan'208";a="17276070"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Mar 2024 06:26:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; d="scan'208";a="16223220"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa010.fm.intel.com with ESMTP; 27 Mar 2024 06:26:44 -0700
-Date: Wed, 27 Mar 2024 21:40:40 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH-for-9.1 v2 04/21] hw/i386/acpi: Remove
- PCMachineClass::legacy_acpi_table_size
-Message-ID: <ZgQh2OG4LvzDoBFA@intel.com>
-References: <20240327095124.73639-1-philmd@linaro.org>
- <20240327095124.73639-5-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpTIY-0008CK-Lu
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:26:34 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpTIW-0005Xe-Vw
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:26:34 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-41485fcb8ccso24339365e9.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 06:26:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711545991; x=1712150791; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4dCw7HH6eL2/wh/se0db0+w3WDUYFh/wkPQjXWNfVDQ=;
+ b=iU6p4MH35fKRvGVr99MumyHJeTDPkBsmjGInRqx0X5ujLoVJr0gf+BnrRqcQU9zWjs
+ dK4GU1m/1Fbf/LJDDqjBc38TwFCzptVrfW++z7uHqFHSm0OkU8ycozkUlKcug8H5tGH6
+ wyhqHsTdnIKcYA3gJJVGlDigckYwPVbxrQz2gZHQ+q9tMx8QPXx+jHnd8XcU+b4FYPiO
+ v2nhGdIottimd/OINUdemzyKucaGonG/iDDJNSu7mM/41dAfNei/ZxSqWxt3qIL+xggA
+ MYekUbhqzwRkRdKcnDj2ROHwwnCAfyFfVwf/w/GONVgM1E8igWNi3d/YFAexuxF/Liif
+ MtKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711545991; x=1712150791;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4dCw7HH6eL2/wh/se0db0+w3WDUYFh/wkPQjXWNfVDQ=;
+ b=gLu8yQBnGLZLON5QV9McnDOXzFGQqUSA29qR4ZnEGyPUT2FZe9g4LhWG1nFvzr+Z66
+ pjlP2pcqROMnExiBD16F3KXu+oX+2JD9WJbjCJyCudHMikSE2xxzfGL/mPyKRiHubBd9
+ Y40Aj2mgEZJQHdtRpH/Hn80eACZoZ5l/EwXmk7vjTl5xrwD4NmS8i3HTVuwXsA/T6ruB
+ UqoYqe1guVW+jpEF5s+gGqfHFhjC0KvuEk8DHJZOiIVQ+3BbNV1QIWB9AKUhht86zNNh
+ Op21rucmxkDKmjAmJLnC3u8AzAnLA6I5+MDoeKTmMSRvtVriv6XEy0Zw6xaQoquqIZu4
+ ZGCQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWm2pnUkz8KrUeg5ldgUriWbupOABcA9MPPMI94epVXtJN8kyE6YlHrKJBsw7P4BfhnC7tK+AN7XKXMZxcTr8OCgRC12AI=
+X-Gm-Message-State: AOJu0YzSn1xB/XJaKSDtvJ0+xNCuGq4XeMfvYmo0yFuiIOpZQkYZLxWH
+ M0e1bwdf+wAZ5E/j1zWbbTkOs87ssZmzDTTKuihp2jG+EOV3kUz0uF8xWD4xkz4=
+X-Google-Smtp-Source: AGHT+IF/CVsIGMaFEYPxIhMBN8G5NfhVfITI5jc1zuSkD706h5e3S2M3bpybLX6I1yn8qz1uhxyrCg==
+X-Received: by 2002:a05:600c:35cb:b0:414:255:c6a7 with SMTP id
+ r11-20020a05600c35cb00b004140255c6a7mr25880wmq.32.1711545991222; 
+ Wed, 27 Mar 2024 06:26:31 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.205.175])
+ by smtp.gmail.com with ESMTPSA id
+ d17-20020a05600c34d100b004146e631a81sm2174872wmq.5.2024.03.27.06.26.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 Mar 2024 06:26:30 -0700 (PDT)
+Message-ID: <40360cb9-71f5-43c1-9c10-edf6b7ecbc81@linaro.org>
+Date: Wed, 27 Mar 2024 14:26:28 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.0] docs/about: Mark the iaspc machine type as
+ deprecated
+To: Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Bernhard Beschow <shentey@gmail.com>, pbonzini@redhat.com,
+ devel@lists.libvirt.org, richard.henderson@linaro.org, mst@redhat.com,
+ qemu-trivial@nongnu.org
+References: <20240326125104.90103-1-imammedo@redhat.com>
+ <a4a0bb13-d6a0-4665-810d-ecd9a9fb89b1@redhat.com>
+ <8dbba6ae-5910-4a62-9a08-a56e20dfb480@linaro.org>
+ <20240326171632.3cc7533d@imammedo.users.ipa.redhat.com>
+ <ZgP5x3ECYGevla1-@redhat.com>
+ <20240327140917.69d86539@imammedo.users.ipa.redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240327140917.69d86539@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240327095124.73639-5-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,23 +105,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 27, 2024 at 10:51:06AM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Wed, 27 Mar 2024 10:51:06 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH-for-9.1 v2 04/21] hw/i386/acpi: Remove
->  PCMachineClass::legacy_acpi_table_size
-> X-Mailer: git-send-email 2.41.0
+On 27/3/24 14:09, Igor Mammedov wrote:
+> On Wed, 27 Mar 2024 10:49:43 +0000
+> Daniel P. BerrangÃ© <berrange@redhat.com> wrote:
 > 
-> PCMachineClass::legacy_acpi_table_size was only used by the
-> pc-i440fx-2.0 machine, which got removed. Remove it and simplify
-> acpi_build().
+>> On Tue, Mar 26, 2024 at 05:16:32PM +0100, Igor Mammedov wrote:
+>>> On Tue, 26 Mar 2024 14:29:58 +0100
+>>> Philippe Mathieu-DaudÃ© <philmd@linaro.org> wrote:
+>>>    
+>>>> Hi Igor,
+>>>>
+>>>> On 26/3/24 14:08, Thomas Huth wrote:
+>>>>>
+>>>>> s/iaspc/isapc/ in the subject
+>>>>>
+>>>>> On 26/03/2024 13.51, Igor Mammedov wrote:
+>>>>>> ISAPC machine was introduced 25 years ago and it's a lot of time since
+>>>>>> such machine was around with real ISA only PC hardware practically
+>>>>>> defunct.
+>>>>>> Also it's slowly bit-rots (for example: I was able to boot RHEL6 on
+>>>>>> RHEL9 host
+>>>>>> in only TCG mode, while in KVM mode it hung in the middle of boot)
+>>>>
+>>>> I'm quite opposed to this patch. QEMU models various very-old /
+>>>> defunct hardware. I'm pretty sure Bernhard and myself are OK to
+>>>> keep maintaining it, besides we are working in separating it from
+>>>> the i440fx+piix machine. Also, this machine is particularly
+>>>> interesting for my single-binary experiments.
+>>>
+>>> it would not be fair to ask you or Bernard to deal with every
+>>> case where ISAPC related code gets in a way, nor it's fair to
+>>> ask other contributors to ensure that their patches don't break
+>>> semi-working ISAPC or refactor code that relates to it.
+>>>
+>>> [
+>>> for example I'd like to refactor smbios parts in the image
+>>> ACPI table builder, but the I'd have to do it for legacy
+>>> part as well without means to verify that. Sure it can be
+>>> done but at cost of extra time spent to rewrite something
+>>> that would never be used and to find test env to verify
+>>> touched code.
+>>> ]
+>>
+>> Is SMBIOS even relevant for isapc ? IIUC, the first SMBIOS spec
+>> is from 1999, while PCI has been around since 1992.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  include/hw/i386/pc.h |  1 -
->  hw/i386/acpi-build.c | 62 +++++++++-----------------------------------
->  2 files changed, 12 insertions(+), 51 deletions(-)
+> Theoretically SMBIOS can still be used with isapc,
+> (that's how I've tested factoring out legacy part by running
+> RHEL6 in TCG mode)
+> Whether it's used in practice somewhere else is unknown.
+> 
+>> IOW, we shouldn't even be exposing SMBIOS with the isapc
+>> machine type. If we address that, then isapc has no impact
+>> on your ability to refactor SMBIOS code.
+> 
+> It's question of whether we are willing to do unthinkable,
+> i.e. to break QEMU <-> guest ABI for isapc case by removing
+> corresponding fwcfg entries.
+> 
+> With migration ignored it shouldn't be a problem.
+> Question is: does anyone care about migration with isapc?
+> If not, I'd gladly axe smbios legacy parts in 9.1
+> 
+> 
+> But given how easy one can spawn old qemu environment to
+> run something on isapc, we are loosing a chance to cleanup
+> QEMU code base touching following
+> 
+>      m->option_rom_has_mr = true;
+>      m->rom_file_has_mr = false;
+>      pcmc->pci_enabled = false;
+>      pcmc->has_acpi_build = false;
+>      pcmc->smbios_defaults = false;
+>      pcmc->gigabyte_align = false;
+>      pcmc->smbios_legacy_mode = true;
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+My plan is to split the legacy part of fw_cfg_build_smbios() out
+of it as fw_cfg_build_smbios_legacy().
+
+>      pcmc->has_reserved_memory = false;
+> 
+> they are all marginal but in shared code, and removing them
+> makes code a bit more easier to follow (especially when it
+> comes to memory layout).
+> 
+>> With regards,
+>> Daniel
+> 
 
 
