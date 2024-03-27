@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD3DC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 03:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D980FCD11DD
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 03:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpJbU-0000oW-BH; Tue, 26 Mar 2024 23:05:28 -0400
+	id 1rpJce-0002Ab-NK; Tue, 26 Mar 2024 23:06:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rpJbS-0000o2-Of
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:05:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1rpJcY-00024t-0t
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:06:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1rpJbQ-0004L9-ID
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:05:26 -0400
+ id 1rpJcW-0004Xj-EZ
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:06:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711508722;
+ s=mimecast20190719; t=1711508791;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zolu8aruGceuT1v64cktuJeg+zYoGrZVmgGVqfVmobc=;
- b=VvkbZhywAnDftqHBt3PZyUVKv3nudgSABBBdYrEXttRFW1cbRkeMLsH86R9SgM96tosEFM
- hO32BGOaMaJORo+SZZXYhtRLOjSJtGY/ngWdRN5fdwb/ED1uh4RePHjP8XlDRHCQ7a374R
- 4uNMU0qqIeRthaLbF3HgoxjDG9rXhlg=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Trkrku2CS58c1hJqwhRMI168xh0YiaEitpgCt1lKzts=;
+ b=b5mXUZG/nXSxaduaVWgLa99WV6rJgU5dA5nFrGSJkwC1tV1odVNGC0aUipbp0Dqtmqn3s6
+ 9l3iIXr7StIKN6BaSrnCwKU68liyN/9s3v8L7Y9NceFDmLyOGaxReikwqVz8iPHoQrAzG+
+ iWBTK8WmhfjtZGyHufNEAz909tNoRgQ=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-5-13qGQ6mrOCGdKAUwPC4ofQ-1; Tue, 26 Mar 2024 23:05:17 -0400
-X-MC-Unique: 13qGQ6mrOCGdKAUwPC4ofQ-1
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-1e09fba31afso24963695ad.1
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 20:05:17 -0700 (PDT)
+ us-mta-438-6d4MVI2JMcaC-gzCZ6eX3g-1; Tue, 26 Mar 2024 23:06:29 -0400
+X-MC-Unique: 6d4MVI2JMcaC-gzCZ6eX3g-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-29905ac5c21so4930879a91.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 20:06:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711508717; x=1712113517;
+ d=1e100.net; s=20230601; t=1711508788; x=1712113588;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zolu8aruGceuT1v64cktuJeg+zYoGrZVmgGVqfVmobc=;
- b=QiReBaa8hdPpsHwv7kXazJMffO62FMXWZLLlSf2S/IxdvnLkxzVCzuf4eq3eH06BWY
- 2EnkBN1ztuXoxOSLd28C9KU+JpNB6Nrn6HAEXEQiLYTqEb9jzDcGFBz8yCbOzRHKPUI4
- bqd+wQ35a0ddgrtsD1ApEq47XYSAyQY/FEZRKkgoycYsf4ScS3sO/rNN87leaG3cx8zL
- 4au+JRMXITJd3xgpcoQD9e3yOSy6Nc9HKK+641C03ETBiJp9fJ80rSyjJbn6+ygF6Fj9
- Frop2rtrDqfe57O2SWZrYSRaZYQVAh44BGoqfoMp24zp0VDWvZ6/a/8r0Hu88RSgIAFL
- UrMg==
+ bh=Trkrku2CS58c1hJqwhRMI168xh0YiaEitpgCt1lKzts=;
+ b=VfaYxQcUXtq+gohlPj+ZmEwGH2qRGCKZ20FPxc5Wp6k/xi4UAJFN6OpjBv1J3sYztk
+ SJdRewHePNwIJM4xmX0ENNGlVZQXinN/pxOgslxGr4JSK3hmo3/A7/OCfJ9e2+u835XC
+ 8fl8/txs/1PEsYxHUKXAu6yzU2tWZQSS2BslvmwVIJfscMbpQd8RWmUYHaJBnr5SyTSV
+ 8vU/hG85DFDQLfqaaL7DLh3BM5v+V4toA1HKGH71eM63giWivCp2iVOemt8rXeyselKJ
+ Td5NBgY5imGGas+BKoYKUF7LiTC7o9KW6C+9T6sXiYZRuGnryVnHpWxdIAvUkoWwUGdu
+ tTtg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsro64Z8ANJQpN3cXpMBaaZc1Csm4EDbRJ4KEgCdJsk5lmG20517iYql7HbfT1AnQRQz/lIboL0LeoELbIGtAUtIsQbjw=
-X-Gm-Message-State: AOJu0YzdpKtZWgxaJdik2i9RBtUVjGonr2iMo00PSxgDbonbygtFnR7P
- RtNZDkd1crOmRbAQn3qxZWyISbcgUkH4NRSWx/ASq2M9C91yPJi/RJBF5YB2HAVUAk0CQKyqfaP
- bZEFnA1DMCYvR0xs91/JolHiMBVUcD1mThZpgnB+vWMmlg1KcSFcwaqpj5ZCYjyop6HZixWr6vS
- z58BeiOOqlWpKTmAbznuyVar2FhXY=
-X-Received: by 2002:a17:902:d48c:b0:1e0:e2a4:1b1b with SMTP id
- c12-20020a170902d48c00b001e0e2a41b1bmr85792plg.0.1711508716691; 
- Tue, 26 Mar 2024 20:05:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG1YN8Xh46DtOdiq9i/XfV3wqM6jW0QlwA41epKMr1b3AytgpLDmVkF3av48sWRZyl5vN17UWgf8Rl9Vg9jpvI=
-X-Received: by 2002:a17:902:d48c:b0:1e0:e2a4:1b1b with SMTP id
- c12-20020a170902d48c00b001e0e2a41b1bmr85773plg.0.1711508716325; Tue, 26 Mar
- 2024 20:05:16 -0700 (PDT)
+ AJvYcCUoY72MGlrXsXFgbP28KrAZ8PlYLJ38gjHJSIu9BTO4pJb154U3/4J+9tRyzn2v9VUHevgVmcmigxmQNzph5Qt8+qzCpWo=
+X-Gm-Message-State: AOJu0YxwkAKpWnDeqb6H5LxbdvD1a+wu6gHe7jd5pHFigZ27jtBIFZew
+ o9V3ZhPPe1lvLct8BfbnxsKB7S0/qkl2h2WkqCBezsEDzhiBTPhVmNJj3p2QwAgt1BFYDOReU2l
+ +3ERGQDFOjzqnB202+xcoOAbgIP+C1jgHXw8jlUTx54n3CPZ7qiG6ve2EnQxSVDNDwMU3HVmXQY
+ k9+qMVrvWJC0HvYvEaThmMdaYim1RD4Rcevf/6tw==
+X-Received: by 2002:a17:90a:b009:b0:29c:74a4:72b3 with SMTP id
+ x9-20020a17090ab00900b0029c74a472b3mr1615521pjq.8.1711508788447; 
+ Tue, 26 Mar 2024 20:06:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IErs7YrjEYVY29nM3cgASgoGXlZcKdaTtp4ek3lkJFkoX1WkxtfGxzeJ9xxOKtijezCYbykQ1g+ldmSn1LTrW8=
+X-Received: by 2002:a17:90a:b009:b0:29c:74a4:72b3 with SMTP id
+ x9-20020a17090ab00900b0029c74a472b3mr1615512pjq.8.1711508788136; Tue, 26 Mar
+ 2024 20:06:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240327012905.70188-1-lulu@redhat.com>
-In-Reply-To: <20240327012905.70188-1-lulu@redhat.com>
+References: <20240324-tx-v1-1-a3b4135749ec@daynix.com>
+ <CACGkMEvBoe4XQeHOR64rNwAPM-vBMsfLQApWpUoMtvwsSVCpUQ@mail.gmail.com>
+ <a31d0734-823b-4b67-8888-46f0c787cf8f@daynix.com>
+ <CACGkMEvYQr2=0DF99ge9DotJg-O3H1FmZQAzhb=6RVWSvvGqmA@mail.gmail.com>
+ <a4bdd207-e069-47ef-8e80-7b27528a315d@daynix.com>
+ <CACGkMEsCTsQ8H6=XYMZ+8Pb9X1o19j9A4N8kiO500Dbgnw-i6g@mail.gmail.com>
+ <cc71e6c8-eca5-4ce1-9c16-8f85c6a5073e@daynix.com>
+In-Reply-To: <cc71e6c8-eca5-4ce1-9c16-8f85c6a5073e@daynix.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Wed, 27 Mar 2024 11:05:05 +0800
-Message-ID: <CACGkMEt5fTtwmeb18Yj0xDT_bCjsJQM2nB-u1GJDfFKnEtSSHA@mail.gmail.com>
-Subject: Re: [RFC 0/2] disable the configuration interrupt for the unsupported
- device
-To: Cindy Lu <lulu@redhat.com>
-Cc: mst@redhat.com, qemu-devel@nongnu.org
+Date: Wed, 27 Mar 2024 11:06:16 +0800
+Message-ID: <CACGkMEvW+_MTvJ5TwJLNxKC=u0bTTLETuHqK5_0P27GQra5Dng@mail.gmail.com>
+Subject: Re: [PATCH] hw/net/net_tx_pkt: Fix virtio header without checksum
+ offloading
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -99,73 +105,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cindy:
+On Wed, Mar 27, 2024 at 11:05=E2=80=AFAM Akihiko Odaki <akihiko.odaki@dayni=
+x.com> wrote:
+>
+> On 2024/03/27 11:59, Jason Wang wrote:
+> > On Wed, Mar 27, 2024 at 10:53=E2=80=AFAM Akihiko Odaki <akihiko.odaki@d=
+aynix.com> wrote:
+> >>
+> >> On 2024/03/27 11:50, Jason Wang wrote:
+> >>> On Tue, Mar 26, 2024 at 3:04=E2=80=AFPM Akihiko Odaki <akihiko.odaki@=
+daynix.com> wrote:
+> >>>>
+> >>>> On 2024/03/26 15:51, Jason Wang wrote:
+> >>>>> On Sun, Mar 24, 2024 at 4:32=E2=80=AFPM Akihiko Odaki <akihiko.odak=
+i@daynix.com> wrote:
+> >>>>>>
+> >>>>>> It is incorrect to have the VIRTIO_NET_HDR_F_NEEDS_CSUM set when
+> >>>>>> checksum offloading is disabled so clear the bit. Set the
+> >>>>>> VIRTIO_NET_HDR_F_DATA_VALID bit instead to tell the checksum is va=
+lid.
+> >>>>>>
+> >>>>>> TCP/UDP checksum is usually offloaded when the peer requires virti=
+o
+> >>>>>> headers because they can instruct the peer to compute checksum. Ho=
+wever,
+> >>>>>> igb disables TX checksum offloading when a VF is enabled whether t=
+he
+> >>>>>> peer requires virtio headers because a transmitted packet can be r=
+outed
+> >>>>>> to it and it expects the packet has a proper checksum. Therefore, =
+it
+> >>>>>> is necessary to have a correct virtio header even when checksum
+> >>>>>> offloading is disabled.
+> >>>>>>
+> >>>>>> A real TCP/UDP checksum will be computed and saved in the buffer w=
+hen
+> >>>>>> checksum offloading is disabled. The virtio specification requires=
+ to
+> >>>>>> set the packet checksum stored in the buffer to the TCP/UDP pseudo
+> >>>>>> header when the VIRTIO_NET_HDR_F_NEEDS_CSUM bit is set so the bit =
+must
+> >>>>>> be cleared in that case.
+> >>>>>>
+> >>>>>> The VIRTIO_NET_HDR_F_NEEDS_CSUM bit also tells to skip checksum
+> >>>>>> validation. Even if checksum offloading is disabled, it is desirab=
+le to
+> >>>>>> skip checksum validation because the checksum is always correct. U=
+se the
+> >>>>>> VIRTIO_NET_HDR_F_DATA_VALID bit to claim the validity of the check=
+sum.
+> >>>>>>
+> >>>>>> Fixes: ffbd2dbd8e64 ("e1000e: Perform software segmentation for lo=
+opback")
+> >>>>>> Buglink: https://issues.redhat.com/browse/RHEL-23067
+> >>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> >>>>>> ---
+> >>>>>>     hw/net/net_tx_pkt.c | 3 +++
+> >>>>>>     1 file changed, 3 insertions(+)
+> >>>>>>
+> >>>>>> diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+> >>>>>> index 2e5f58b3c9cc..c225cf706513 100644
+> >>>>>> --- a/hw/net/net_tx_pkt.c
+> >>>>>> +++ b/hw/net/net_tx_pkt.c
+> >>>>>> @@ -833,6 +833,9 @@ bool net_tx_pkt_send_custom(struct NetTxPkt *p=
+kt, bool offload,
+> >>>>>>
+> >>>>>>         if (offload || gso_type =3D=3D VIRTIO_NET_HDR_GSO_NONE) {
+> >>>>>>             if (!offload && pkt->virt_hdr.flags & VIRTIO_NET_HDR_F=
+_NEEDS_CSUM) {
+> >>>>>> +            pkt->virt_hdr.flags =3D
+> >>>>>> +                (pkt->virt_hdr.flags & ~VIRTIO_NET_HDR_F_NEEDS_CS=
+UM) |
+> >>>>>> +                VIRTIO_NET_HDR_F_DATA_VALID;
+> >>>>>
+> >>>>> Why VIRTIO_NET_HDR_F_DATA_VALID is used in TX path?
+> >>>>
+> >>>> On igb, a packet sent from a PCI function may be routed to another
+> >>>> function. The virtio header updated here will be directly provided t=
+o
+> >>>> the RX path in such a case.
+> >>>
+> >>> But I meant for example net_tx_pkt_send_custom() is used in
+> >>> e1000e_tx_pkt_send() which is the tx path on the host.
+> >>>
+> >>> VIRTIO_NET_HDR_F_DATA_VALID is not necessary in the tx path.
+> >>
+> >> igb passes igb_tx_pkt_vmdq_callback to net_tx_pkt_send_custom().
+> >> igb_tx_pkt_vmdq_callback() passes the packet to its rx path for loopba=
+ck.
+> >>
+> >
+> > You are right, how about igb_tx_pkt_vmdq_callback()?
+> >
+> > We probably need to tweak the name if it is only used in rx path.
+>
+> igb_tx_pkt_vmdq_callback() itself is part of the tx path of a PCI
+> function, and invokes the rx path of another PCI function in case of
+> loopback, or triggers the transmission to the external peer.
 
-On Wed, Mar 27, 2024 at 9:29=E2=80=AFAM Cindy Lu <lulu@redhat.com> wrote:
->
-> we need a crash in Non-standard image, here is the jira for this https://=
-issues.redhat.com/browse/RHEL-28522
-> The root cause of the issue is that an IRQFD was used without initializat=
-ion..
->
-> During the booting process of the Vyatta image, the behavior of the calle=
-d function in qemu is as follows:
->
-> 1. vhost_net_stop() was called, this will call the function
-> virtio_pci_set_guest_notifiers() with assgin=3D false, and
-> virtio_pci_set_guest_notifiers(=EF=BC=89 will release the irqfd for vecto=
-r 0
-
-Before vhost_net_stop(), do we know which vector is used by which queue?
-
->
-> 2. virtio_reset() was called -->set configure vector to VIRTIO_NO_VECTORt
->
-> 3.vhost_net_start() was called (at this time the configure vector is
-> still VIRTIO_NO_VECTOR) and call virtio_pci_set_guest_notifiers() with
-> assgin=3D true, so the irqfd for vector 0 was not "init" during this proc=
-ess
-
-How does the configure vector differ from the virtqueue vector here?
-
->
-> 4. The system continues to boot and msix_fire_vector_notifier() was
-> called unmask the vector 0 and then met the crash
-> [msix_fire_vector_notifier] 112 called vector 0 is_masked 1
-> [msix_fire_vector_notifier] 112 called vector 0 is_masked 0
->
-> The reason for not reproducing in RHEL/fedora guest image is because
-> REHL/Fedora doesn't have the behavior of calling vhost_net_stop and then =
-virtio_reset, and also won't call msix_fire_vector_notifier for vector 0 du=
-ring system boot.
->
-> The reason for not reproducing before configure interrupt support is beca=
-use
-> vector 0 is for configure interrupt,  before the support for configure in=
-terrupts, the notifier process will not handle vector 0.
->
-> For the device Vyatta using, it doesn't support configure interrupts at a=
-ll, So we plan to disable the configure interrupts in unsupported device
-
-Btw, let's tweak the changelog, it's a little bit hard to understand.
+Right, so if it's an external TX, VIRTIO_NET_HDR_F_DATA_VALID may not
+work there.
 
 Thanks
 
 >
-> Signed-off-by: Cindy Lu <lulu@redhat.com>
+> Regards,
+> Akihiko Odaki
 >
-> Cindy Lu (2):
->   virtio-net: disable the configure interrupt for not support device
->   virtio-pci: check if the configure interrupt enable
->
->  hw/net/virtio-net.c        |  5 ++++-
->  hw/virtio/virtio-pci.c     | 41 +++++++++++++++++++++-----------------
->  hw/virtio/virtio.c         |  1 +
->  include/hw/virtio/virtio.h |  1 +
->  4 files changed, 29 insertions(+), 19 deletions(-)
->
-> --
-> 2.43.0
+> >
+> > Thanks
+> >
+> >> Regards,
+> >> Akihiko Odaki
+> >>
+> >>>
+> >>> Thanks
+> >>>
+> >>>>
+> >>>> Regards,
+> >>>> Akihiko Odaki
+> >>>>
+> >>>>>
+> >>>>> Thanks
+> >>>>>
+> >>>>>>                 net_tx_pkt_do_sw_csum(pkt, &pkt->vec[NET_TX_PKT_L2=
+HDR_FRAG],
+> >>>>>>                                       pkt->payload_frags + NET_TX_=
+PKT_PL_START_FRAG - 1,
+> >>>>>>                                       pkt->payload_len);
+> >>>>>>
+> >>>>>> ---
+> >>>>>> base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
+> >>>>>> change-id: 20240324-tx-c57d3c22ad73
+> >>>>>>
+> >>>>>> Best regards,
+> >>>>>> --
+> >>>>>> Akihiko Odaki <akihiko.odaki@daynix.com>
+> >>>>>>
+> >>>>>
+> >>>>
+> >>>
+> >>
+> >
 >
 
 
