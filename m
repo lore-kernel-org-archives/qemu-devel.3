@@ -4,57 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F25C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 16:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F4FDC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 16:22:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpW0i-0008EO-I5; Wed, 27 Mar 2024 12:20:20 -0400
+	id 1rpW2M-0001Za-36; Wed, 27 Mar 2024 12:22:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ScIh=LB=kaod.org=clg@ozlabs.org>)
- id 1rpW0Y-00081g-HM; Wed, 27 Mar 2024 12:20:11 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ScIh=LB=kaod.org=clg@ozlabs.org>)
- id 1rpW0U-0001iU-2j; Wed, 27 Mar 2024 12:20:10 -0400
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4V4X1y6S87z4wcF;
- Thu, 28 Mar 2024 03:19:50 +1100 (AEDT)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4V4X1t10K6z4wjF;
- Thu, 28 Mar 2024 03:19:45 +1100 (AEDT)
-Message-ID: <365e7b19-3ed9-4739-934c-234f2338c3fd@kaod.org>
-Date: Wed, 27 Mar 2024 17:19:41 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpW2K-0001ZP-3A
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 12:22:00 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpW2I-0002n6-5V
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 12:21:59 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-513e14b2bd9so8337162e87.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 09:21:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711556516; x=1712161316; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8ObErb2qEXgj4jZCyI+Dn2/vo8Ij3FjndmPOuCaPHb8=;
+ b=JtuKqp4jAb79V8tScJBHj2c5j3IqOOoizUu9jeWmfIAll8sIlgqfJwH/ii8LV9Y+Ff
+ M7/6QkPgsyj3VpJIq2XIa6zvmz1RLadl8tPxTjd7M77X4SEpHfnDpB8TFx7KiAQ8zIdA
+ Y7FV9fExg+wR3COm5SfSH6xBvNoruemC7r28dXBvuNNkyovBIlP81ql+NhsbAkUD9oD8
+ 4flLj3h/Dak9NXcOMSX3TzclMEoYKw7pTPbs5fRpkJvaFCV8y0Qbm52JQ1vPDBGkL9+k
+ EUUCDkkSqoeGt62VB40GiuXEDiFT/nsz0o+PecjlGmZtJ7GXLIoDCLovI3d6IklO+BdV
+ Sgag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711556516; x=1712161316;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8ObErb2qEXgj4jZCyI+Dn2/vo8Ij3FjndmPOuCaPHb8=;
+ b=vRBe60EOVspJPi1kWm/OvohID2oEWEjLSPeoc/DVRucHTrsJgytojrX+v2rrmPrk8s
+ NdnNQfGQJs+sk4zNAz+xZN98NiWyHmEmsDy688xYi11nW1+Kh0vIiwz6xVTHEDKzYVZ7
+ zMPvE3/RTbAF7+LYSiHm7tGSXsRPPRXyB2Nonb2pK5vQTQSZDAlgQtkYrgwttQQQwDAp
+ mq8LULhVH45fF3QX9FQ/K316fEubZ+rh3duE86Th+zQGJuc5o2lMR0yDxSpXCIFT6qnt
+ Hn4fm/Q0CxfIf3i9qlAZCdvX21EPh/zrDbgdgORt9UPziXM84DSwyEVUN0ExJIeOAkuy
+ OywQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVmHEHerENCXjbFzHUJ52AhkbkyjlqaGDb1trfHipwhYWGQlD57QR0TkWdFXRzgPH0M5leLw/T91WZsG7doZWovE1QT3sU=
+X-Gm-Message-State: AOJu0YwzONaqDlCGYBQuV4yEP7NLQmmmp97iMpOuMwWaBt1OKFFgYbLy
+ sx2w7V8PY6L6nZhZZfHFx0eaTnUo9gQpqeIhSTvLADu4S+WS8dqBVk66FG+2izM=
+X-Google-Smtp-Source: AGHT+IFpIcC6JlifgX3+5u58q8SxGR0T1fpBCzTdafH4SRXUCwSjLPjA1nDOcpn2J7/XLQe9tRNrVQ==
+X-Received: by 2002:a05:6512:e98:b0:515:baee:584a with SMTP id
+ bi24-20020a0565120e9800b00515baee584amr3992011lfb.40.1711556516083; 
+ Wed, 27 Mar 2024 09:21:56 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.205.175])
+ by smtp.gmail.com with ESMTPSA id
+ e6-20020a056402148600b0056c1cee7a37sm2691110edv.67.2024.03.27.09.21.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 Mar 2024 09:21:55 -0700 (PDT)
+Message-ID: <e8f340d9-ce1d-4b73-91e8-405d139fd3b4@linaro.org>
+Date: Wed, 27 Mar 2024 17:21:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/10] pnv/phb4: Mask off LSI Source-ID based on number of
- interrupts
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com
-References: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
- <20240321100422.5347-11-saif.abrar@linux.vnet.ibm.com>
- <26c7a63d-78fe-4378-b950-0673f0c96114@kaod.org>
- <4777474d-fc4b-4ef1-8847-b6568bec4937@linux.vnet.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <4777474d-fc4b-4ef1-8847-b6568bec4937@linux.vnet.ibm.com>
+Subject: Re: [PATCH v3 2/2] Implement SSH commands in QEMU GA for Windows
+To: Aidan Leuck <aidan_leuck@selinc.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: "kkostiuk@redhat.com" <kkostiuk@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>
+References: <20240322174637.499113-1-aidan_leuck@selinc.com>
+ <20240322174637.499113-3-aidan_leuck@selinc.com>
+ <330d90fc-e5ff-4b7d-a01f-5587274a5f2a@linaro.org>
+ <LV8PR22MB455124393BD875586CBDBEE7E3342@LV8PR22MB4551.namprd22.prod.outlook.com>
+ <ba07096c-029c-4405-85df-005e89826242@linaro.org>
+ <LV8PR22MB4551451CC99AA21DE5562241E3342@LV8PR22MB4551.namprd22.prod.outlook.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <LV8PR22MB4551451CC99AA21DE5562241E3342@LV8PR22MB4551.namprd22.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=ScIh=LB=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,99 +103,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/27/24 10:59, Saif Abrar wrote:
-> Hello Cedric,
-> 
->>   }
->>   +static void pnv_phb4_fund_A_reset(PnvPHB4 *phb)
->>
->> What is fund_A ?
-> 
-> I used 'fund_A' as an abbreviation to "Fundamental Register Set A".
-> 
-> Please let know if you suggest another abbreviation to name this method.
+On 27/3/24 16:54, Aidan Leuck wrote:
 
-pnv_phb4_reset_xsrc may be ?
-
-
-Thanks,
-
-C.
-
-> 
->>> +{
->>> +    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
->>
->> Is this mask the default value for HW ?
-> Yes, the spec defines the bits[04:12] of LSI Source ID having reset value: 0x1FF
-> 
-> 
-> Regards,
-> 
-> Saif
-> 
-> 
-> On 25-03-2024 07:04 pm, Cédric Le Goater wrote:
->> On 3/21/24 11:04, Saif Abrar wrote:
->>> Add a method to reset the value of LSI Source-ID.
->>> Mask off LSI source-id based on number of interrupts in the big/small PHB.
->>
->> Looks ok.
->>
->>
->>> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
->>> ---
->>>   hw/pci-host/pnv_phb4.c | 10 ++++++++--
->>>   1 file changed, 8 insertions(+), 2 deletions(-)
+>> On 22/3/24 18:46, aidan_leuck@selinc.com wrote:
+>>> From: Aidan Leuck <aidan_leuck@selinc.com>
 >>>
->>> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
->>> index f48750ee54..8fbaf6512e 100644
->>> --- a/hw/pci-host/pnv_phb4.c
->>> +++ b/hw/pci-host/pnv_phb4.c
->>> @@ -489,6 +489,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
->>>         lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
->>>       lsi_base <<= 3;
->>> +    lsi_base &= (xsrc->nr_irqs - 1);
->>>         /* TODO: handle reset values of PHB_LSI_SRC_ID */
->>>       if (!lsi_base) {
->>> @@ -1966,6 +1967,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
->>>       /* TODO: Add more RO-masks as regs are implemented in the model */
->>>   }
->>>   +static void pnv_phb4_fund_A_reset(PnvPHB4 *phb)
+>>> Signed-off-by: Aidan Leuck <aidan_leuck@selinc.com>
+>>> ---
+>>>     qga/commands-windows-ssh.c | 791
+>>> +++++++++++++++++++++++++++++++++++++
 >>
->> What is fund_A ?
+>> Huge file, I'm skipping it.
 >>
->>> +{
->>> +    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
->>
->> Is this mask the default value for HW ?
+>>>     qga/commands-windows-ssh.h |  26 ++
+>>>     qga/meson.build            |   5 +-
+>>>     qga/qapi-schema.json       |  17 +-
+>>>     4 files changed, 828 insertions(+), 11 deletions(-)
+>>>     create mode 100644 qga/commands-windows-ssh.c
+>>>     create mode 100644 qga/commands-windows-ssh.h
 >>
 >>
->> Thanks,
->>
->> C.
->>
->>
->>> +    pnv_phb4_update_xsrc(phb);
->>> +}
->>> +
->>>   static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
->>>   {
->>>       STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
->>> @@ -2023,6 +2030,7 @@ static void pnv_phb4_reset(void *dev)
->>>       pnv_phb4_cfg_core_reset(phb);
->>>       pnv_phb4_pbl_core_reset(phb);
->>>   +    pnv_phb4_fund_A_reset(phb);
->>>       pnv_phb4_err_reg_reset(phb);
->>>       pnv_phb4_pcie_stack_reg_reset(phb);
->>>       pnv_phb4_regb_err_reg_reset(phb);
->>> @@ -2102,8 +2110,6 @@ static void pnv_phb4_realize(DeviceState *dev, Error **errp)
->>>           return;
->>>       }
->>>   -    pnv_phb4_update_xsrc(phb);
+>>> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json index
+>>> 9554b566a7..a64a6d91cf 100644
+>>> --- a/qga/qapi-schema.json
+>>> +++ b/qga/qapi-schema.json
+>>> @@ -1562,9 +1562,8 @@
+>>>     { 'struct': 'GuestAuthorizedKeys',
+>>>       'data': {
+>>>           'keys': ['str']
+>>> -  },
+>>> -  'if': 'CONFIG_POSIX' }
 >>> -
->>>       phb->qirqs = qemu_allocate_irqs(xive_source_set_irq, xsrc, xsrc->nr_irqs);
->>>         pnv_phb4_xscom_realize(phb);
 >>
+>> For Windows you have to check the CONFIG_WIN32 definition, so you want:
+>>
+>> I don't think this is necessary, the QEMU guest agent is compiled for only POSIX and Windows. I don't see this pattern being used elsewhere in the qapi schema file. I would be interested in what the maintainers think?
+> 
+> $ git grep -w CONFIG_WIN32 qapi/
+> qapi/char.json:490:            { 'name': 'console', 'if': 'CONFIG_WIN32' },
+> qapi/char.json:663:                         'if': 'CONFIG_WIN32' },
+> qapi/misc.json:293:{ 'command': 'get-win32-socket', 'data': {'info':
+> 'str', 'fdname': 'str'}, 'if': 'CONFIG_WIN32' }
+> 
+>>
+>>      'if': { 'any': [ 'CONFIG_POSIX',
+>>                       'CONFIG_WIN32' ] },
+>>
+>>> +  }
+>>> +}
+>>>
+>>>     ##
+>>>     # @guest-ssh-get-authorized-keys:
+>>> @@ -1580,8 +1579,8 @@
+>>>     ##
+>>>     { 'command': 'guest-ssh-get-authorized-keys',
+>>>       'data': { 'username': 'str' },
+>>> -  'returns': 'GuestAuthorizedKeys',
+>>> -  'if': 'CONFIG_POSIX' }
+>>> +  'returns': 'GuestAuthorizedKeys'
+>>> +}
+>>>
+>>>     ##
+>>>     # @guest-ssh-add-authorized-keys:
+>>> @@ -1599,8 +1598,8 @@
+>>>     # Since: 5.2
+>>>     ##
+>>>     { 'command': 'guest-ssh-add-authorized-keys',
+>>> -  'data': { 'username': 'str', 'keys': ['str'], '*reset': 'bool' },
+>>> -  'if': 'CONFIG_POSIX' }
+>>> +  'data': { 'username': 'str', 'keys': ['str'], '*reset': 'bool' } }
+>>>
+>>>     ##
+>>>     # @guest-ssh-remove-authorized-keys:
+>>> @@ -1617,8 +1616,8 @@
+>>>     # Since: 5.2
+>>>     ##
+>>>     { 'command': 'guest-ssh-remove-authorized-keys',
+>>> -  'data': { 'username': 'str', 'keys': ['str'] },
+>>> -  'if': 'CONFIG_POSIX' }
+>>> +  'data': { 'username': 'str', 'keys': ['str'] } }
+>>>
+>>>     ##
+>>>     # @GuestDiskStats:
+>>
+> Hi Philippe, thank you for getting back to me so quickly. Looking at the grep you gave me seems to confirm what I was saying if I am not mistaken? It looks like CONFIG_WIN32 and CONFIG_POSIX if conditionals are only used when you need to enable a command on one operating system and not the other. I do believe that your code snippet is correct it is just overly verbose. The QGA has both windows and SSH implementations and looking at the guest agent QAPI file when a command supports both POSIX and Windows the if gate is removed. I am happy to discuss this further if you have more concerns.
 
+Well, as you said, up to the maintainers.
+
+Regards,
+
+Phil.
 
