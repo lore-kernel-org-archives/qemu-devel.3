@@ -4,56 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A2DC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 07:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A0CCD1280
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 07:28:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpNYZ-0004qw-9p; Wed, 27 Mar 2024 03:18:43 -0400
+	id 1rpNhQ-0006kz-T3; Wed, 27 Mar 2024 03:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1rpNYW-0004qn-KQ
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:18:40 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1rpNYU-0001Pn-1O
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:18:40 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCXnMhAyANmmexMBw--.56847S2;
- Wed, 27 Mar 2024 15:18:24 +0800 (CST)
-Received: from phytium.com.cn (unknown [123.150.8.50])
- by mail (Coremail) with SMTP id AQAAfwAXpvU2yANmWkYAAA--.246S3;
- Wed, 27 Mar 2024 15:18:15 +0800 (CST)
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
-To: dan.j.williams@intel.com, jonathan.cameron@huawei.com, y-goto@fujitsu.com
-Cc: linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: RE: Questions about CXL device (type 3 memory) hotplug
-Date: Wed, 27 Mar 2024 15:18:12 +0800
-Message-Id: <20240327071812.955794-1-wangyuquan1236@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <646c04bbbd96_33fb32944b@dwillia2-xfh.jf.intel.com.notmuch>
-References: <646c04bbbd96_33fb32944b@dwillia2-xfh.jf.intel.com.notmuch>
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rpNhJ-0006kR-Jl
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:27:46 -0400
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rpNhE-0003De-Kx
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:27:44 -0400
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-430c32c04c7so39750631cf.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 00:27:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1711524453; x=1712129253; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fvdqGcDUWp3D4k7+aVnVSTSeWYL78OJhC3HPSf53QMU=;
+ b=Nj3vZaVjIW6N+T+vxGtldtB6JcjlqUfNF/GSqQgqWsknglJnW7vW16B825gZPlyrgl
+ jYTIuCvgvQ+IlThG/NbkfJ8fXTrYpYrI5Pxa23o/YptGG49EJRFDgp7UrutQ0tB3Dtlv
+ BU4Hwd5q6Fy0JTvMASd3+y9nCjifnJNm2jccrQkI5nHNneNL1/LahkZ0Y26SPPGWLFPP
+ a5gpFppKEiIMrbYR3s4QIWlXpQi+cPCiEXvazDv9Crckp0AkykSI2BYoQNUm7dJxGk5t
+ iDUz5mtEhNYV6+zUomTZtwAwKun3z0nfoN3YBOjBJiQpJWFjP27qEqmo6wVVznrkdZq2
+ M2Rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711524453; x=1712129253;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fvdqGcDUWp3D4k7+aVnVSTSeWYL78OJhC3HPSf53QMU=;
+ b=j0MEB92HP1ukaZByzlE2DB2Ey9y+KnFtQ+yRZJwijxnI001dHU6Mu2dKzy8DrJA2VW
+ cborkq79cCcRDav5KZaWi5g5zlxwwMoa9Z5b9i6aciyFctdD6JARfMbe+BikoBWUWyUP
+ eHjcRMvB0tTPxR8WA7bVY2MSRZTfuz9h12bvUF+TXIQNmhKFw3pqCKOxyI8Mdt+MCuDD
+ vYYGMOdmKtTvFLHpvg5TsTJT5ksG5qp8Fdfnq7mEljrYJIZXr+9uK6jEupyJ7z2Yhiu9
+ hCnvPZ6syYmYyJb8W2K/ZW28oDB9wydP8v12eliKy0o1ojwfZZF9R21aax8/eBEjYTne
+ ZFbw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX51S72U+3jZuJvg2H92M++hMok+YraD1HjvUcwoB3dUgZiocsCRmFV/AAj8BuZip+FwQECe2OembQI1hfECvINtGxBp4Y=
+X-Gm-Message-State: AOJu0YyMkp12nrPbxLEA9OioUsjrFGlegDau2DtSC+k39xeu1BVEiH4R
+ 69L1AmjUk/Ph+CMQSrR6ChfHCeCuk0PrDfqUhgi3kvjbCwRpdQU1zCv8smVT6Lw=
+X-Google-Smtp-Source: AGHT+IEI0M9d2AyKg0jvWeTlX5tpwHLQC2KlAkAsKe2cbEUuq+AjdA4mRWp3a2a6xzEVmFSqeoe/8g==
+X-Received: by 2002:a05:622a:1450:b0:431:7c7f:411c with SMTP id
+ v16-20020a05622a145000b004317c7f411cmr1553361qtx.49.1711524452825; 
+ Wed, 27 Mar 2024 00:27:32 -0700 (PDT)
+Received: from n231-228-171.byted.org ([130.44.212.102])
+ by smtp.gmail.com with ESMTPSA id
+ bq15-20020a05622a1c0f00b00431604af3c1sm2383555qtb.20.2024.03.27.00.27.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Mar 2024 00:27:32 -0700 (PDT)
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+To: "Huang, Ying" <ying.huang@intel.com>,
+ "Gregory Price" <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com, tj@kernel.org, john@jagalactic.com,
+ "Eishan Mirakhur" <emirakhur@micron.com>,
+ "Vinicius Tavares Petrucci" <vtavarespetr@micron.com>,
+ "Ravis OpenSrc" <Ravis.OpenSrc@micron.com>,
+ "Alistair Popple" <apopple@nvidia.com>,
+ "Srinivasulu Thanneeru" <sthanneeru@micron.com>,
+ Dan Williams <dan.j.williams@intel.com>,
+ Vishal Verma <vishal.l.verma@intel.com>, Dave Jiang <dave.jiang@intel.com>,
+ Andrew Morton <akpm@linux-foundation.org>, nvdimm@lists.linux.dev,
+ linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org
+Cc: "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org
+Subject: [PATCH v6 1/2] memory tier: dax/kmem: introduce an abstract layer for
+ finding, allocating, and putting memory types
+Date: Wed, 27 Mar 2024 07:27:27 +0000
+Message-Id: <20240327072729.3381685-2-horenchuang@bytedance.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20240327072729.3381685-1-horenchuang@bytedance.com>
+References: <20240327072729.3381685-1-horenchuang@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwAXpvU2yANmWkYAAA--.246S3
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQARAWYDI2QDSwABs6
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxZr47uryDGryrAry5Gr1xZrb_yoWrGF1kpa
- y7Ja43KrykGw1UW3W0qa4kZa4rG3Z5AayUCF9rJw1xu3ZxJF17tF4rtayYqw1agFZ7Wr12
- v3ZYk3Z2g3WkXaDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=horenchuang@bytedance.com; helo=mail-qt1-x832.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,106 +109,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 22, 2023 at 05:11:39PM -0700, Dan Williams wrote:
-> Yasunori Gotou (Fujitsu) wrote:
-[...]
+Since different memory devices require finding, allocating, and putting
+memory types, these common steps are abstracted in this patch,
+enhancing the scalability and conciseness of the code.
 
-Hi, all
+Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+---
+ drivers/dax/kmem.c           | 20 ++------------------
+ include/linux/memory-tiers.h | 13 +++++++++++++
+ mm/memory-tiers.c            | 32 ++++++++++++++++++++++++++++++++
+ 3 files changed, 47 insertions(+), 18 deletions(-)
 
-There was some confusions about CXL device hotplug when I recently
-tried to use Qemu to emulate CXL device hotplug and verify the relevant
-functions of kernel.
-
-> > Q1) Can PCIe hotplug driver detect and call CXL driver?
-
-[...]
-
-> 
-> Yes.
-> 
-> The cxl_pci driver (drivers/cxl/pci.c) is just a typical PCI driver as
-> far as the PCI hotplug driver is concerned. So add/remove events of a
-> CXL card get turned into probe()/remove() events on the driver.
-> 
-
-1. Can we divide steps of CXL device hotplug into two parts(PCI hotplug & Memory Hotplug)?
-
-PCI Hotplug: the same as the native PCIe hotplug, including initializing cxl.io,
-             assigning PCIe BARs, allocating interrupts, etc. And the cxl_pci driver
-                         is responsible for this part.
-
-Memory Hotplug: focusing on enabling CXL memory including discovering and Configuring HDM,
-                extracting NUMA info from device, notifying memory management, etc.
-
-> > 
-> > Q2) Can QEMU/KVM emulate CXL device hotplug?
-> > 
-> >    I heard that QEMU/KVM has PCIe device hotplug emulation, but I'm not sure
-> >    it can hotplug CXL device.
-> 
-> It can, but as far as the driver is concerned you can achieve the same
-> by:
-> 
-> echo $devname > /sys/bus/pci/drivers/cxl_pci/unbind
-> 
-> ...that exercises the same software flows as physical unplug.
->
-
-2. What is the difference between "echo $devname > /sys/bus/pci/drivers/cxl_pci/unbind" and
-"(qemu) device_del cxl-mem0" ?
-
-According to the test, I found that "(qemu) device_del cxl-mem0" would directly
-unplug the device and cause the interrupts on the cxl root port. It seems like this
-operation would not only trigger cxl_pci driver but also pcieport driver.
-
-The kernel dmesg is like below:
-
-(qemu) device_del cxl-mem0
-# dmesg
-[  699.057907] pcieport 0000:0c:00.0: pciehp: pending interrupts 0x0001 from Slot Status
-[  699.058929] pcieport 0000:0c:00.0: pciehp: Slot(0): Button press: will power off in 5 sec
-[  699.059986] pcieport 0000:0c:00.0: pciehp: pending interrupts 0x0010 from Slot Status
-[  699.060099] pcieport 0000:0c:00.0: pciehp: pciehp_set_indicators: SLOTCTRL 90 write cmd 2c0
-
-Then I also tried "echo $devname > /sys/bus/pci/drivers/cxl_pci/unbind"
-to check the behaviour of kernel. The kernel dmesg is like below:
-
-# echo 0000:0d:00.0 > /sys/bus/pci/drivers/cxl_pci/unbind
-# dmesg
-[70387.978931] cxl_pci 0000:0d:00.0: vgaarb: pci_notify
-[70388.021476] cxl_mem mem0: disconnect mem0 from port1
-[70388.033099] pci 0000:0d:00.0: vgaarb: pci_notify
-
-It seems like this operation would just unbind the cxl_pci driver from the cxl device.
-
-Is my understanding about these two method correct?
-
-3) Can I just use "ndctl/test/cxl-topology.sh" to test the cxl hotplug functions of kernel?
-
-   IIUC, cxl-topology.sh would utilize cxl_test (tools/testing/cxl) which is for regression
-   testing the kernel-user ABI.
-
-PS: My qemu command line:
-qemu-system-x86_64 \
--M q35,nvdimm=on,cxl=on \
--m 4G \
--smp 4 \
--object memory-backend-ram,size=2G,id=mem0 \
--numa node,nodeid=0,cpus=0-1,memdev=mem0 \
--object memory-backend-ram,size=2G,id=mem1 \
--numa node,nodeid=1,cpus=2-3,memdev=mem1 \
--object memory-backend-ram,size=256M,id=cxl-mem0 \
--device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
--device cxl-rp,port=0,bus=cxl.1,id=root_port0,chassis=0,slot=0 \
--device cxl-type3,bus=root_port0,volatile-memdev=cxl-mem0,id=cxl-mem0 \
--M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k \
--hda ../disk/ubuntu_x86_test_new.qcow2 \
--nographic \
-
-Qemu version: 8.2.50, the lastest commit of branch cxl-2024-03-05 in "https://gitlab.com/jic23/qemu"
-Kernel version: 6.8.0-rc6
-
-Many thanks
-Yuquan
+diff --git a/drivers/dax/kmem.c b/drivers/dax/kmem.c
+index 42ee360cf4e3..01399e5b53b2 100644
+--- a/drivers/dax/kmem.c
++++ b/drivers/dax/kmem.c
+@@ -55,21 +55,10 @@ static LIST_HEAD(kmem_memory_types);
+ 
+ static struct memory_dev_type *kmem_find_alloc_memory_type(int adist)
+ {
+-	bool found = false;
+ 	struct memory_dev_type *mtype;
+ 
+ 	mutex_lock(&kmem_memory_type_lock);
+-	list_for_each_entry(mtype, &kmem_memory_types, list) {
+-		if (mtype->adistance == adist) {
+-			found = true;
+-			break;
+-		}
+-	}
+-	if (!found) {
+-		mtype = alloc_memory_type(adist);
+-		if (!IS_ERR(mtype))
+-			list_add(&mtype->list, &kmem_memory_types);
+-	}
++	mtype = mt_find_alloc_memory_type(adist, &kmem_memory_types);
+ 	mutex_unlock(&kmem_memory_type_lock);
+ 
+ 	return mtype;
+@@ -77,13 +66,8 @@ static struct memory_dev_type *kmem_find_alloc_memory_type(int adist)
+ 
+ static void kmem_put_memory_types(void)
+ {
+-	struct memory_dev_type *mtype, *mtn;
+-
+ 	mutex_lock(&kmem_memory_type_lock);
+-	list_for_each_entry_safe(mtype, mtn, &kmem_memory_types, list) {
+-		list_del(&mtype->list);
+-		put_memory_type(mtype);
+-	}
++	mt_put_memory_types(&kmem_memory_types);
+ 	mutex_unlock(&kmem_memory_type_lock);
+ }
+ 
+diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.h
+index 69e781900082..a44c03c2ba3a 100644
+--- a/include/linux/memory-tiers.h
++++ b/include/linux/memory-tiers.h
+@@ -48,6 +48,9 @@ int mt_calc_adistance(int node, int *adist);
+ int mt_set_default_dram_perf(int nid, struct access_coordinate *perf,
+ 			     const char *source);
+ int mt_perf_to_adistance(struct access_coordinate *perf, int *adist);
++struct memory_dev_type *mt_find_alloc_memory_type(int adist,
++							struct list_head *memory_types);
++void mt_put_memory_types(struct list_head *memory_types);
+ #ifdef CONFIG_MIGRATION
+ int next_demotion_node(int node);
+ void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets);
+@@ -136,5 +139,15 @@ static inline int mt_perf_to_adistance(struct access_coordinate *perf, int *adis
+ {
+ 	return -EIO;
+ }
++
++struct memory_dev_type *mt_find_alloc_memory_type(int adist, struct list_head *memory_types)
++{
++	return NULL;
++}
++
++void mt_put_memory_types(struct list_head *memory_types)
++{
++
++}
+ #endif	/* CONFIG_NUMA */
+ #endif  /* _LINUX_MEMORY_TIERS_H */
+diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+index 0537664620e5..974af10cfdd8 100644
+--- a/mm/memory-tiers.c
++++ b/mm/memory-tiers.c
+@@ -623,6 +623,38 @@ void clear_node_memory_type(int node, struct memory_dev_type *memtype)
+ }
+ EXPORT_SYMBOL_GPL(clear_node_memory_type);
+ 
++struct memory_dev_type *mt_find_alloc_memory_type(int adist, struct list_head *memory_types)
++{
++	bool found = false;
++	struct memory_dev_type *mtype;
++
++	list_for_each_entry(mtype, memory_types, list) {
++		if (mtype->adistance == adist) {
++			found = true;
++			break;
++		}
++	}
++	if (!found) {
++		mtype = alloc_memory_type(adist);
++		if (!IS_ERR(mtype))
++			list_add(&mtype->list, memory_types);
++	}
++
++	return mtype;
++}
++EXPORT_SYMBOL_GPL(mt_find_alloc_memory_type);
++
++void mt_put_memory_types(struct list_head *memory_types)
++{
++	struct memory_dev_type *mtype, *mtn;
++
++	list_for_each_entry_safe(mtype, mtn, memory_types, list) {
++		list_del(&mtype->list);
++		put_memory_type(mtype);
++	}
++}
++EXPORT_SYMBOL_GPL(mt_put_memory_types);
++
+ static void dump_hmem_attrs(struct access_coordinate *coord, const char *prefix)
+ {
+ 	pr_info(
+-- 
+Ho-Ren (Jack) Chuang
 
 
