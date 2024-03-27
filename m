@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 191BBC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 13:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EEE1C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 13:20:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpT73-0003tP-Bi; Wed, 27 Mar 2024 09:14:42 -0400
+	id 1rpTBl-00067R-4u; Wed, 27 Mar 2024 09:19:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpT6w-0003qh-4v
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:14:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpTBk-000678-0l
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:19:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpT6u-0002i8-99
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:14:33 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpTBh-0003oO-Gt
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:19:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711545270;
+ s=mimecast20190719; t=1711545567;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3SQWuc/fST723aiWlaBeQkrzNlWB4lY3zQG10/7XHpM=;
- b=ZZP86gHlUsTCRKk20YykOJuMUYe0AkuXv6jiTJM7nEA2zO7WyckOweeWNVHJN1g3/kVQtq
- RZgJC9splcfd1xkdkDaOxRv6dSjP7NEXcM7T5Omp4psNvSd+ZoOkw1qV6Mzx12fIZvaywk
- vfyAL8lZgR/KsUNAtGizBbAnp4X/7hg=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bs2V6mluzgyIKODbH3iRM5jaxEkr5fEgX0samReN4B0=;
+ b=hLyaF7IVOPOh8kHHtmCfnbKuaA8Siqem/gTAu5WyYlRV6fsPaGFqO4EkKpXKXgFYfySORE
+ HRAWYahdR/dl8DhLO7EH2FmN00oExranDXtaBJcYAIkl4FnLrWESeT8gJQojBpoY1Ma+cU
+ EllUEz2SY9ra+gIEcFHZUzVrsFlLUs8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-DnwFJRhLOnybpgpFjHueBw-1; Wed, 27 Mar 2024 09:14:29 -0400
-X-MC-Unique: DnwFJRhLOnybpgpFjHueBw-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-5158a80cf1aso5985741e87.0
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 06:14:28 -0700 (PDT)
+ us-mta-641--weIZWIpOJ6mzWBs8nbl2g-1; Wed, 27 Mar 2024 09:19:25 -0400
+X-MC-Unique: -weIZWIpOJ6mzWBs8nbl2g-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-33ecc0f0c95so3716738f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 06:19:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711545267; x=1712150067;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3SQWuc/fST723aiWlaBeQkrzNlWB4lY3zQG10/7XHpM=;
- b=xTmemAh9cT/Acw4h6kML5x1bU47UCJHoDDu+EbumdTwsWy4w76zfJtMkzormOuCntI
- 9kjRFcofCjM/GlfG+x+IrSQn9Q0QpZQ71qJ46hPhEYhNlKj7L9luPAnHKS3oQ0z0tiMX
- Vy7DeG7C8GzWv7P2CBIH62OogeGEuofQm/CvmXWr73e15WJSTrJ50rteDv1/0E8T4Ghw
- Brnk8vNpHk1URz6mQ7JTh8IEQi8UNKOHYEhlQf1sVsQZgvkfBQ2TD4irujrdz46818kr
- SsLuUDcYCAj8BJludR5NG7F0z0JG3SZTfGXm9JobOs6jhD+epymMmegODtpI9CAd4YAS
- FAGw==
+ d=1e100.net; s=20230601; t=1711545563; x=1712150363;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bs2V6mluzgyIKODbH3iRM5jaxEkr5fEgX0samReN4B0=;
+ b=IUw0xAiNdDoLxOx/nPjgfdJLfBsFKds2eFPR60nragx4Rg8D8s0Rdikk6cz3D/I40Y
+ 6HGcDPxJkplzwpzpkx/aNRDGSfc2yfFBeLfhOKosMhAW7tPS53GU8q1L3KZdRydkiTyo
+ 9t1KkabdhQZjcD79RvxacdqAKSIaX2CswT9E6GYYQKsoce9TfRAAHMjPyim4VCWPsuLr
+ WzaTbwkhlD+ywSjlNJMY0/lrLCk2DWovl1jMdEIV80LcPAthCrCcPLbVVFzHKgH10h3T
+ zgfIhmetD4i7asTPaiFqByLzA4NtKOn/SfZYYxOSNkrJ0enqg6xJgd2oQlienP9fAaUp
+ 1lUg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUa9JtZHq4Dud6Iu16sjNvNO/ZqrKoLrUmTFmjUBlUBda9Q5v6TVEvq08Pt8JY5Ag5fjKtph5WjBZPA7+GeGuT+55G9WNc=
-X-Gm-Message-State: AOJu0YzI3fZL/QhUhBjEqE9Sa35POrnL3Vwi36eDNcEtiwT2R43UD/+/
- UgChCe/eCWyQUh4VgnjGOLn94XMDyCnu/a3ejvv+Hkecfop92Rt2vv5dxIl0nmXFCIuetc+ufCB
- +lUzlwyq4Ghyd+XFvov3UgBxrdsGQylip2XJMz5av3gD6ObeKT0FZOMyzuijh
-X-Received: by 2002:a19:3807:0:b0:513:e2bd:6d15 with SMTP id
- f7-20020a193807000000b00513e2bd6d15mr799144lfa.49.1711545267567; 
- Wed, 27 Mar 2024 06:14:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGhEy2z1w9abuCD9MhaRxVN4J1Oq+NO/dpxLpWAMoDpvyyYEG3IM1MF201OohEmI87acmZ2PA==
-X-Received: by 2002:a19:3807:0:b0:513:e2bd:6d15 with SMTP id
- f7-20020a193807000000b00513e2bd6d15mr799124lfa.49.1711545267161; 
- Wed, 27 Mar 2024 06:14:27 -0700 (PDT)
+ AJvYcCUov+jmCwOUjgPmk4WwzJL/5Br3AtGz0p+xAAOL2x3oH+Z0nI6C8GI5/4+J1hS9GlNzF9N+X7FWsHyLoqJBhZSQHVdKS00=
+X-Gm-Message-State: AOJu0Ywffc6RjOB2OJqWrDJ21ir6ZRojZnk09isCGv8gmdPcz3afBT5v
+ B94aik/LE2v9J5lZYc4IYAqwQJZsEOMugSjWjDw+SjbdLGdyTCXtTpt+QDGaG5A9B1IE+ih1LXY
+ 2GSE30vqRU85NlcHkIGKubW8wzou8YCBV5HSOZjDUTNFJIHmysJGg
+X-Received: by 2002:a5d:47c8:0:b0:341:bf39:9f8 with SMTP id
+ o8-20020a5d47c8000000b00341bf3909f8mr2324812wrc.6.1711545563706; 
+ Wed, 27 Mar 2024 06:19:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxD2o893Qkfuly+1uA8IEv+YXme9hc9NnDgxTV6gcYu/Hh3OELDDNdGCEPSJJydTZ8AFoZdg==
+X-Received: by 2002:a5d:47c8:0:b0:341:bf39:9f8 with SMTP id
+ o8-20020a5d47c8000000b00341bf3909f8mr2324795wrc.6.1711545563353; 
+ Wed, 27 Mar 2024 06:19:23 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-37.web.vodafone.de.
  [109.43.177.37]) by smtp.gmail.com with ESMTPSA id
- o25-20020a198c19000000b00514b4e43906sm1851433lfd.29.2024.03.27.06.14.25
+ bt17-20020a056000081100b00341b5cf0527sm4745104wrb.11.2024.03.27.06.19.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Mar 2024 06:14:26 -0700 (PDT)
-Message-ID: <9f0c10f0-4916-4bc8-bac9-c593cba9ee08@redhat.com>
-Date: Wed, 27 Mar 2024 14:14:24 +0100
+ Wed, 27 Mar 2024 06:19:22 -0700 (PDT)
+Message-ID: <fb28d3b0-1ab9-4423-80ef-03a285cf02d7@redhat.com>
+Date: Wed, 27 Mar 2024 14:19:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0] docs/about: Mark the iaspc machine type as
- deprecated
-To: Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- pbonzini@redhat.com, devel@lists.libvirt.org, richard.henderson@linaro.org,
- mst@redhat.com, qemu-trivial@nongnu.org
-References: <20240326125104.90103-1-imammedo@redhat.com>
- <a4a0bb13-d6a0-4665-810d-ecd9a9fb89b1@redhat.com>
- <8dbba6ae-5910-4a62-9a08-a56e20dfb480@linaro.org>
- <20240326171632.3cc7533d@imammedo.users.ipa.redhat.com>
- <ZgP5x3ECYGevla1-@redhat.com>
- <20240327140917.69d86539@imammedo.users.ipa.redhat.com>
-Content-Language: en-US
+Subject: Re: [PATCH-for-9.1] target/nios2: Remove machines and system emulation
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Chris Wulff <crwulff@gmail.com>, devel@lists.libvirt.org,
+ Marek Vasut <marex@denx.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+References: <20240327123554.3633-1-philmd@linaro.org>
+ <7aad7197-21f3-4c0e-931c-2eb4febdf94a@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -128,10 +129,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240327140917.69d86539@imammedo.users.ipa.redhat.com>
+In-Reply-To: <7aad7197-21f3-4c0e-931c-2eb4febdf94a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -155,73 +156,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/03/2024 14.09, Igor Mammedov wrote:
-> On Wed, 27 Mar 2024 10:49:43 +0000
-> Daniel P. Berrangé <berrange@redhat.com> wrote:
-> 
->> On Tue, Mar 26, 2024 at 05:16:32PM +0100, Igor Mammedov wrote:
->>> On Tue, 26 Mar 2024 14:29:58 +0100
->>> Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>>    
->>>> Hi Igor,
->>>>
->>>> On 26/3/24 14:08, Thomas Huth wrote:
->>>>>
->>>>> s/iaspc/isapc/ in the subject
->>>>>
->>>>> On 26/03/2024 13.51, Igor Mammedov wrote:
->>>>>> ISAPC machine was introduced 25 years ago and it's a lot of time since
->>>>>> such machine was around with real ISA only PC hardware practically
->>>>>> defunct.
->>>>>> Also it's slowly bit-rots (for example: I was able to boot RHEL6 on
->>>>>> RHEL9 host
->>>>>> in only TCG mode, while in KVM mode it hung in the middle of boot)
->>>>
->>>> I'm quite opposed to this patch. QEMU models various very-old /
->>>> defunct hardware. I'm pretty sure Bernhard and myself are OK to
->>>> keep maintaining it, besides we are working in separating it from
->>>> the i440fx+piix machine. Also, this machine is particularly
->>>> interesting for my single-binary experiments.
->>>
->>> it would not be fair to ask you or Bernard to deal with every
->>> case where ISAPC related code gets in a way, nor it's fair to
->>> ask other contributors to ensure that their patches don't break
->>> semi-working ISAPC or refactor code that relates to it.
->>>
->>> [
->>> for example I'd like to refactor smbios parts in the image
->>> ACPI table builder, but the I'd have to do it for legacy
->>> part as well without means to verify that. Sure it can be
->>> done but at cost of extra time spent to rewrite something
->>> that would never be used and to find test env to verify
->>> touched code.
->>> ]
->>
->> Is SMBIOS even relevant for isapc ? IIUC, the first SMBIOS spec
->> is from 1999, while PCI has been around since 1992.
-> 
-> Theoretically SMBIOS can still be used with isapc,
-> (that's how I've tested factoring out legacy part by running
-> RHEL6 in TCG mode)
-> Whether it's used in practice somewhere else is unknown.
-> 
->> IOW, we shouldn't even be exposing SMBIOS with the isapc
->> machine type. If we address that, then isapc has no impact
->> on your ability to refactor SMBIOS code.
-> 
-> It's question of whether we are willing to do unthinkable,
-> i.e. to break QEMU <-> guest ABI for isapc case by removing
-> corresponding fwcfg entries.
-> 
-> With migration ignored it shouldn't be a problem.
-> Question is: does anyone care about migration with isapc?
+On 27/03/2024 13.45, Philippe Mathieu-Daudé wrote:
+> On 27/3/24 13:35, Philippe Mathieu-Daudé wrote:
+>> Remove the Nios II machines and the system emulation code
+>> (deprecated since v8.2 in commit 9997771bc1 "target/nios2:
+>> Deprecate the Nios II architecture").
 
-isapc is not versioned, so it is not really usable with migration at all, I 
-think. We should maybe even add a migration blocker for that machine to 
-avoid that people try to migrate it.
+Please remind me, why didn't we deprecate the linux-user emulation, too?
 
-I just gave it also a quick try, and it currently seems to be broken anyway 
-(aborts with "memory_region_set_alias_offset: Assertion `mr->alias' failed").
+>> diff --git a/hw/nios2/Kconfig b/hw/nios2/Kconfig
+>> deleted file mode 100644
+>> index 4748ae27b6..0000000000
+>> --- a/hw/nios2/Kconfig
+>> +++ /dev/null
+>> @@ -1,13 +0,0 @@
+>> -config NIOS2_10M50
+>> -    bool
+>> -    select NIOS2
+>> -    select SERIAL
+>> -    select ALTERA_TIMER
+> 
+> I forgot to mention I deliberately chose to keep the Altera
+> timer model in the tree, since it looks like a re-usable
+> IP component.
+
+But if it is not used anymore by any machine, this will happily bitrot, 
+won't it? I think I'd rather remove it, too ... maybe in a separate patch, 
+so that in case somebody later needs it again, it can be restored by simply 
+reverting the patch again.
 
   Thomas
 
