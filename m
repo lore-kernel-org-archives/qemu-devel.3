@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B78C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 10:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21E60C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 10:27:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpQUG-0007OK-4R; Wed, 27 Mar 2024 06:26:29 -0400
+	id 1rpQUu-0007lk-SW; Wed, 27 Mar 2024 06:27:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rpQT7-0007CM-Nt
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 06:25:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rpQUF-0007OO-8v
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 06:26:27 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1rpQT5-0007DA-6B
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 06:25:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711535113;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jHbVlOjBtqx0P1bEevoloJAWLqcu0B7esEb/byrU0Mk=;
- b=PBLUxeClIiAl+gx9I/AbAOOHe4pjzEzmPUpxcRpiV3UM8SiDCt7cJmZQEd0xwADNJT4F3v
- dOv+J+h5XgIS5GIS4uVucRn+AU6mtVZPl6EKjhIEs5tYXmTNi6PE2dZ0+RUXnVKA9hHvQ/
- O1tbBk3JCi3VQN2lp2YAegNn5DOGvmg=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-208-tXhGZapNNxqfQZyDkkjQlg-1; Wed, 27 Mar 2024 06:25:10 -0400
-X-MC-Unique: tXhGZapNNxqfQZyDkkjQlg-1
-Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com
- [10.11.54.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B55248164E1;
- Wed, 27 Mar 2024 10:25:09 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.194.77])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 597323C54;
- Wed, 27 Mar 2024 10:25:09 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 450CE18009DD; Wed, 27 Mar 2024 11:24:48 +0100 (CET)
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/3] edk2: get version + date from git submodule
-Date: Wed, 27 Mar 2024 11:24:45 +0100
-Message-ID: <20240327102448.61877-2-kraxel@redhat.com>
-In-Reply-To: <20240327102448.61877-1-kraxel@redhat.com>
-References: <20240327102448.61877-1-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@linux.intel.com>)
+ id 1rpQUC-0007aA-SO
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 06:26:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711535185; x=1743071185;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=4uBrPQD7j2YTQaH7WlV2kQvQoG/tS0FkvYpS12K77DA=;
+ b=UI/4Vz6sBm/rcuaEJKHM5ye+fRUuK3mpCChf6O9zC/O4Xoq+4xiVVeSg
+ TeZmROjZz93OjdH/UVYL02PGbusPF/+drADtmpz4UcXM2D92+V9gLQ8aG
+ 8CLxS1xRx+HA1Ak5D8u5VzEaEYpoSEu/peicKMVhafUwpIYjCmtvaT1Gj
+ 7/dKDsKQ18ZRIqoevWvbHz7k9UV22jlGH8jw+y3q9S6XjzoYgLNA/8zQ7
+ +pndGCY1ck/sMU25o/Qeo6JYQYHy4OrFEUTVhfsvp9qUALh7nOjL85Qya
+ SJIf89Yt+eI+eh2sltn3nBje3nYM1GQigvSOySordVThmGTcYxvdn5D19 w==;
+X-CSE-ConnectionGUID: xTTVWQA2QYy8YEFGgpb6Ag==
+X-CSE-MsgGUID: VmNjVjLKSAC12qJLLP+Daw==
+X-IronPort-AV: E=McAfee;i="6600,9927,11025"; a="6489761"
+X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; 
+   d="scan'208";a="6489761"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Mar 2024 03:26:01 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; d="scan'208";a="16354481"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.36])
+ by fmviesa008.fm.intel.com with ESMTP; 27 Mar 2024 03:26:00 -0700
+From: Zhao Liu <zhao1.liu@linux.intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 3/3] target/i386/cpu: Merge the warning and error messages for
+ AMD HT check
+Date: Wed, 27 Mar 2024 18:39:51 +0800
+Message-Id: <20240327103951.3853425-4-zhao1.liu@linux.intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240327103951.3853425-1-zhao1.liu@linux.intel.com>
+References: <20240327103951.3853425-1-zhao1.liu@linux.intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.1
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: none client-ip=192.198.163.19;
+ envelope-from=zhao1.liu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,53 +81,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Turned out hard-coding version and date in the Makefile wasn't a bright
-idea.  Updating it on edk2 updates is easily forgotten.  Fetch the info
-from git instead.  Store in edk2-version, so this can be committed to
-the repo and is present in tarballs too.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Currently, the difference between warn_report_once() and
+error_report_once() is the former has the "warning:" prefix, while the
+latter does not have a similar level prefix.
+
+At the meantime, considering that there is no error handling logic here,
+and the purpose of error_report_once() is only to prompt the user with
+an abnormal message, there is no need to use an error-level message here,
+and instead we can just use a warning.
+
+Therefore, downgrade the message in error_report_once() to warning, and
+merge it into the previous warn_report_once().
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- roms/Makefile | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ target/i386/cpu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/roms/Makefile b/roms/Makefile
-index edc234a0e886..783a5cab4f4c 100644
---- a/roms/Makefile
-+++ b/roms/Makefile
-@@ -52,6 +52,8 @@ SEABIOS_EXTRAVERSION="-prebuilt.qemu.org"
- #
- EDK2_EFIROM = edk2/BaseTools/Source/C/bin/EfiRom
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 0487469d75f3..ec2787197d42 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -7454,9 +7454,9 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+         !(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) &&
+         cs->nr_threads > 1) {
+             warn_report_once("This family of AMD CPU doesn't support "
+-                             "hyperthreading(%d).", cs->nr_threads);
+-            error_report_once("Please configure -smp options properly"
+-                              " or try enabling topoext feature.");
++                             "hyperthreading(%d). Please configure -smp "
++                             "options properly or try enabling topoext "
++                             "feature.", cs->nr_threads);
+     }
  
-+-include edk2-version
-+
- default help:
- 	@echo "nothing is build by default"
- 	@echo "available build targets:"
-@@ -147,10 +149,19 @@ skiboot:
- 	$(MAKE) -C skiboot CROSS=$(powerpc64_cross_prefix)
- 	cp skiboot/skiboot.lid ../pc-bios/skiboot.lid
- 
--efi:
-+edk2-version: edk2
-+	if test -e edk2/.git; then \
-+		echo "EDK2_STABLE = $$(cd edk2; git describe --tags --match 'edk2-stable*')" > $@; \
-+		echo "EDK2_DATE = $$(cd edk2; git log -1 --pretty='format:%cd' --date='format:%m/%d/%Y')" >> $@; \
-+	else \
-+		touch $@; \
-+	fi
-+
-+efi: edk2-version
- 	$(PYTHON) edk2-build.py --config edk2-build.config \
--		--version-override "edk2-stable202302-for-qemu" \
--		--release-date "03/01/2023"
-+		--version-override "$(EDK2_STABLE)-for-qemu" \
-+		--release-date "$(EDK2_DATE)" \
-+		--silent --no-logs
- 	rm -f ../pc-bios/edk2-*.fd.bz2
- 	bzip2 --verbose ../pc-bios/edk2-*.fd
- 
+ #ifndef CONFIG_USER_ONLY
 -- 
-2.44.0
+2.34.1
 
 
