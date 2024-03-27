@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE442C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 17:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE4CCC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 18:03:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpXFG-0007am-90; Wed, 27 Mar 2024 13:39:26 -0400
+	id 1rpXcC-0003fU-AF; Wed, 27 Mar 2024 14:03:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rpXFE-0007aP-PS
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 13:39:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rpXFC-0003iC-Pq
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 13:39:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711561160;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/+s/5bKOADtr4YhqJM2+cgt9HQcERQGr9y8REbauQW4=;
- b=JtEAQyHYBqKqwNKAK3mqCqPSBHX2wEkQD6H2ewbD4w9tSLxj+SI7MRrTF0kcll22bSyFNy
- 6zpFUuDHI6pp3/Kl5YPw73SqEv4uKajMWteDdNjWamDkUf1jNSInkA2Pl4OfU0//nNAbwA
- dp+3+ro8o64ZeSiSiPwWgvBL3jsjFus=
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
- [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-85-BCdtTphsMO-IJ54E8fp_iw-1; Wed, 27 Mar 2024 13:39:18 -0400
-X-MC-Unique: BCdtTphsMO-IJ54E8fp_iw-1
-Received: by mail-il1-f200.google.com with SMTP id
- e9e14a558f8ab-3665991058fso972075ab.1
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 10:39:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rpXc9-0003fH-Sk
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 14:03:05 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rpXc8-000151-2x
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 14:03:05 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-6e709e0c123so146170b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 11:03:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1711562582; x=1712167382; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2B7BBkg75SiV/JapLWiSn2hEVKf4DdkwdoslNYVgRMQ=;
+ b=COuK4EtdH4VR+if3MSSwcuUy4BuZ7OlN+WaNFRNHdmRnAkjpgS+AdzW3Mlct0uwUbH
+ 4Zysu3ncN294LGuM1JdfuiwC7AK7EN+eM7jyCNcmvPVODddfNwvPFTVZNtLOh/wxJaVA
+ hWoOCqdpBnGs51pP5VqBzcexzEjH1ILbJ5aGgN0ZyovlzaxBZAD6pdTLkIWNR1gcLuYu
+ JGoiHvORRkhpPvmU5Iz7gEPXkC/5Twt09Y0n0c+E3ssvzMNrwiCV2AVh8Zxi873tH0wp
+ GEgtjDnmm1xTrefgRrKsZcCRidkp/cPZgf3M8Qt+x0q3Ze6ph413j48Qbk4BqAvpmg1P
+ q/Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711561157; x=1712165957;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/+s/5bKOADtr4YhqJM2+cgt9HQcERQGr9y8REbauQW4=;
- b=UnYGuE6zcCNu1q24hIG77IX2bT4rCeGaQWN1Q/Yp7GylrE51wcKJVPhsv9FmZdvfFE
- JrdwqaCW5xe59iAVajs9gaGgdN9OxsfDkKhiN3zgn3OAq9HRAhVm4xYts2C/yQJr7yLk
- DVRYf72iKl+gdx72bTn6WNQGTMa1Jwv6lBamXiaXUhaM7fALpQNKDD4qKjLuOVQSxBzB
- iL348VvjDFAKsDu/7uCUPLy9Fwx3xgUmu6uLZiIqGleisHhW0q5NV4Y6qcWZGnaA3OHB
- O9kQi45CNenmzRG9nTjw1nECjalB7DLP4zljTk83g2JtEcR3sBmcTT7hg6hvFQRKtF1r
- ZZ/w==
-X-Gm-Message-State: AOJu0YyMq65MpRJ0CuhaY1BLm18oCyBPVYXT1ViIYMAVI6uVzrjY9MFX
- Nmh8OM4oTnWvzS5GDTTYGvZKl11TeoiwAypzrW66+P2y7f5q+kRDaO3bqFM0J2z6Bp7peW5UBtC
- 7KjGzSjV3Toy3tbGReNdNnuoUv4K/00p8tmbCUYx0iezLwLso86Nv
-X-Received: by 2002:a05:6e02:104a:b0:368:8ab5:5926 with SMTP id
- p10-20020a056e02104a00b003688ab55926mr249478ilj.14.1711561157279; 
- Wed, 27 Mar 2024 10:39:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHKUe8mZYkM8M8mtPHG1OIyuyZQvi/BjfhDQc8fVeTIVtAc6K6DDfez/eDR3cYAn8ATfNHfWg==
-X-Received: by 2002:a05:6e02:104a:b0:368:8ab5:5926 with SMTP id
- p10-20020a056e02104a00b003688ab55926mr249462ilj.14.1711561157035; 
- Wed, 27 Mar 2024 10:39:17 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- b1-20020a92db01000000b0036699bc65aesm3683073iln.26.2024.03.27.10.39.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Mar 2024 10:39:16 -0700 (PDT)
-Date: Wed, 27 Mar 2024 11:39:15 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Vinayak Kale <vkale@nvidia.com>
-Cc: <qemu-devel@nongnu.org>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
- <avihaih@nvidia.com>, <acurrid@nvidia.com>, <cjia@nvidia.com>,
- <zhiw@nvidia.com>, <targupta@nvidia.com>, <kvm@vger.kernel.org>
-Subject: Re: [PATCH v3] vfio/pci: migration: Skip config space check for
- Vendor Specific Information in VSC during restore/load
-Message-ID: <20240327113915.19f6256c.alex.williamson@redhat.com>
-In-Reply-To: <20240322064210.1520394-1-vkale@nvidia.com>
-References: <20240322064210.1520394-1-vkale@nvidia.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1711562582; x=1712167382;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2B7BBkg75SiV/JapLWiSn2hEVKf4DdkwdoslNYVgRMQ=;
+ b=P/u46/NiSlSomiia+aD/3eTtgbeHVOnOYeL5Lj8D0ceE/Mkm9SzDCGUpnwDxPpj4/8
+ hXr75Cpadsaif312/dvNIPceY1WUwawd+bSyvAep1ji7djE3rorhZKAuoKXnWYQcQHAS
+ ccriy9OvKg0nxaheTMdzI9TMeDVDe4zCktpw+NXVYCUr9eU9jEZcxQb+Q5EzaKDoBzsw
+ UU5H5++6lole2QF+jHc3M0LrtM5ARvHMRfZQl7j6mby0sKNveR//JEtaCY6NBOQlUW9N
+ 2Jz1FuXU4hGwCOxJa/wkJSlkCNUeom0UcWCee3/boDdCQUA2SVR05bF9SqIkWk1ZdKYf
+ eWgA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVFnFh1y4cRA/LZPa6Wnbd2SYsue+wrkcnv0YX3dudILh/JpqaZxEP762PIXSPbAHeoeaatzk/SXq7qSxK7Ty0Jo6+V+1Q=
+X-Gm-Message-State: AOJu0YzGwGsIPBjvqXbOroxcQUorD5UwSptFaNzLj47CWZxmPRzFj8XD
+ hyXxV2C1GjeJPDEvmnF+S+T6FgOF6i2fHA3n9QRTfFWqFXeiBl03eAlrskN+/yo=
+X-Google-Smtp-Source: AGHT+IEp8i8k/DoFVaNEqCEs1VZrWC+N0kBOsL5aexDj4sJUM80EV3VSRaUxWVPMOIHx9UIlqnsS5A==
+X-Received: by 2002:a05:6a00:3d09:b0:6e7:47e2:d8ed with SMTP id
+ lo9-20020a056a003d0900b006e747e2d8edmr830684pfb.26.1711562582461; 
+ Wed, 27 Mar 2024 11:03:02 -0700 (PDT)
+Received: from [192.168.68.110] ([177.45.186.241])
+ by smtp.gmail.com with ESMTPSA id
+ g2-20020aa79dc2000000b006e6f0b4d950sm8105223pfq.4.2024.03.27.11.02.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 Mar 2024 11:03:02 -0700 (PDT)
+Message-ID: <78551a06-ac81-46c1-816b-88c00a1d8325@ventanamicro.com>
+Date: Wed, 27 Mar 2024 15:02:57 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] target/riscv: Add support for Zve64x extension
+Content-Language: en-US
+To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Andrew Jones <ajones@ventanamicro.com>
+References: <20240325083346.16656-1-jason.chien@sifive.com>
+ <20240325083346.16656-4-jason.chien@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240325083346.16656-4-jason.chien@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,92 +104,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 22 Mar 2024 12:12:10 +0530
-Vinayak Kale <vkale@nvidia.com> wrote:
 
-> In case of migration, during restore operation, qemu checks config space of the
-> pci device with the config space in the migration stream captured during save
-> operation. In case of config space data mismatch, restore operation is failed.
+
+On 3/25/24 05:33, Jason Chien wrote:
+> Add support for Zve64x extension. Enabling Zve64f enables Zve64x and
+> enabling Zve64x enables Zve32x according to their dependency.
 > 
-> config space check is done in function get_pci_config_device(). By default VSC
-> (vendor-specific-capability) in config space is checked.
-> 
-> Due to qemu's config space check for VSC, live migration is broken across NVIDIA
-> vGPU devices in situation where source and destination host driver is different.
-> In this situation, Vendor Specific Information in VSC varies on the destination
-> to ensure vGPU feature capabilities exposed to the guest driver are compatible
-> with destination host.
-> 
-> If a vfio-pci device is migration capable and vfio-pci vendor driver is OK with
-> volatile Vendor Specific Info in VSC then qemu should exempt config space check
-> for Vendor Specific Info. It is vendor driver's responsibility to ensure that
-> VSC is consistent across migration. Here consistency could mean that VSC format
-> should be same on source and destination, however actual Vendor Specific Info
-> may not be byte-to-byte identical.
-> 
-> This patch skips the check for Vendor Specific Information in VSC for VFIO-PCI
-> device by clearing pdev->cmask[] offsets. Config space check is still enforced
-> for 3 byte VSC header. If cmask[] is not set for an offset, then qemu skips
-> config space check for that offset.
-> 
-> Signed-off-by: Vinayak Kale <vkale@nvidia.com>
+> Signed-off-by: Jason Chien <jason.chien@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+> Reviewed-by: Max Chou <max.chou@sifive.com>
 > ---
-> Version History
-> v2->v3:
->     - Config space check skipped only for Vendor Specific Info in VSC, check is
->       still enforced for 3 byte VSC header.
->     - Updated commit description with live migration failure scenario.
-> v1->v2:
->     - Limited scope of change to vfio-pci devices instead of all pci devices.
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   target/riscv/cpu.c         |  1 +
+>   target/riscv/cpu_cfg.h     |  1 +
+>   target/riscv/tcg/tcg-cpu.c | 17 +++++++++++------
+>   3 files changed, 13 insertions(+), 6 deletions(-)
 > 
->  hw/vfio/pci.c | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
-
-
-Acked-by: Alex Williamson <alex.williamson@redhat.com>
-
- 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index d7fe06715c..1026cdba18 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2132,6 +2132,27 @@ static void vfio_check_af_flr(VFIOPCIDevice *vdev, uint8_t pos)
->      }
->  }
->  
-> +static int vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
-> +                                        uint8_t size, Error **errp)
-> +{
-> +    PCIDevice *pdev = &vdev->pdev;
-> +
-> +    pos = pci_add_capability(pdev, PCI_CAP_ID_VNDR, pos, size, errp);
-> +    if (pos < 0) {
-> +        return pos;
-> +    }
-> +
-> +    /*
-> +     * Exempt config space check for Vendor Specific Information during restore/load.
-> +     * Config space check is still enforced for 3 byte VSC header.
-> +     */
-> +    if (size > 3) {
-> +        memset(pdev->cmask + pos + 3, 0, size - 3);
-> +    }
-> +
-> +    return pos;
-> +}
-> +
->  static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
->  {
->      PCIDevice *pdev = &vdev->pdev;
-> @@ -2199,6 +2220,9 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
->          vfio_check_af_flr(vdev, pos);
->          ret = pci_add_capability(pdev, cap_id, pos, size, errp);
->          break;
-> +    case PCI_CAP_ID_VNDR:
-> +        ret = vfio_add_vendor_specific_cap(vdev, pos, size, errp);
-> +        break;
->      default:
->          ret = pci_add_capability(pdev, cap_id, pos, size, errp);
->          break;
-
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 6bd8798bb5..f6287bf892 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -156,6 +156,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>       ISA_EXT_DATA_ENTRY(zve32x, PRIV_VERSION_1_10_0, ext_zve32x),
+>       ISA_EXT_DATA_ENTRY(zve64f, PRIV_VERSION_1_10_0, ext_zve64f),
+>       ISA_EXT_DATA_ENTRY(zve64d, PRIV_VERSION_1_10_0, ext_zve64d),
+> +    ISA_EXT_DATA_ENTRY(zve64x, PRIV_VERSION_1_10_0, ext_zve64x),
+>       ISA_EXT_DATA_ENTRY(zvfbfmin, PRIV_VERSION_1_12_0, ext_zvfbfmin),
+>       ISA_EXT_DATA_ENTRY(zvfbfwma, PRIV_VERSION_1_12_0, ext_zvfbfwma),
+>       ISA_EXT_DATA_ENTRY(zvfh, PRIV_VERSION_1_12_0, ext_zvfh),
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index dce49050c0..e1e4f32698 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -94,6 +94,7 @@ struct RISCVCPUConfig {
+>       bool ext_zve32x;
+>       bool ext_zve64f;
+>       bool ext_zve64d;
+> +    bool ext_zve64x;
+>       bool ext_zvbb;
+>       bool ext_zvbc;
+>       bool ext_zvkb;
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index ff0d485e7f..4ebebebe09 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -498,17 +498,22 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+>   
+>       /* The Zve64d extension depends on the Zve64f extension */
+>       if (cpu->cfg.ext_zve64d) {
+> +        if (!riscv_has_ext(env, RVD)) {
+> +            error_setg(errp, "Zve64d/V extensions require D extension");
+> +            return;
+> +        }
+>           cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64f), true);
+>       }
+>   
+> -    /* The Zve64f extension depends on the Zve32f extension */
+> +    /* The Zve64f extension depends on the Zve64x and Zve32f extensions */
+>       if (cpu->cfg.ext_zve64f) {
+> +        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64x), true);
+>           cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32f), true);
+>       }
+>   
+> -    if (cpu->cfg.ext_zve64d && !riscv_has_ext(env, RVD)) {
+> -        error_setg(errp, "Zve64d/V extensions require D extension");
+> -        return;
+> +    /* The Zve64x extension depends on the Zve32x extension */
+> +    if (cpu->cfg.ext_zve64x) {
+> +        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32x), true);
+>       }
+>   
+>       /* The Zve32f extension depends on the Zve32x extension */
+> @@ -670,10 +675,10 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+>           return;
+>       }
+>   
+> -    if ((cpu->cfg.ext_zvbc || cpu->cfg.ext_zvknhb) && !cpu->cfg.ext_zve64f) {
+> +    if ((cpu->cfg.ext_zvbc || cpu->cfg.ext_zvknhb) && !cpu->cfg.ext_zve64x) {
+>           error_setg(
+>               errp,
+> -            "Zvbc and Zvknhb extensions require V or Zve64{f,d} extensions");
+> +            "Zvbc and Zvknhb extensions require V or Zve64x extensions");
+>           return;
+>       }
+>   
 
