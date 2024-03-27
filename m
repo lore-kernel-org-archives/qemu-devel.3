@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F91EC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 03:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77C7CC6FD1F
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 03:12:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpJcL-0001uM-TG; Tue, 26 Mar 2024 23:06:21 -0400
+	id 1rpJhh-0005c5-53; Tue, 26 Mar 2024 23:11:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1rpJcK-0001uD-Jv
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:06:20 -0400
-Received: from fout3-smtp.messagingengine.com ([103.168.172.146])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1rpJcJ-0004V0-2b
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:06:20 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
- by mailfout.nyi.internal (Postfix) with ESMTP id E409D1380174;
- Tue, 26 Mar 2024 23:06:17 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute7.internal (MEProxy); Tue, 26 Mar 2024 23:06:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- invisiblethingslab.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:from:from:in-reply-to
- :message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
- t=1711508777; x=1711595177; bh=n+fL4u4pIY1MP5INUg/5Z6ZGGe3TCZWv
- qrv4TyLguM0=; b=cqsAgg0DYn2BNGcf+Jt3riRiHWi8lHrqd+qFYi7oW9woTz78
- j01vb8gyY9bAeG3GPuxSlnkMHLAs6wTG5iP+duoVZAbOtWm4nMeENRpfF8iG2ByV
- FxAfHJEXpmcN1XnSkRSTH+DXW3V9ban1oEgmSDyFAqJFru5hLrOB9v2O2TFv50kK
- c+TMeC8yUlpowjcdX0H+OedCtlTy6ZxbmP6smSeq4RAUw5XyUndFEuno+WytZUvu
- fTQEGkP4ChsPa4DU2qO/vwSPdwSPd2zWR097QTrdqWyZmEO5ShRfK96v7ZaPC+TU
- Nk1xOMLwaPyJohLDV9yQZNVq6fzeIeFp+DE6sg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; t=1711508777; x=1711595177; bh=n+fL4u4pIY1MP
- 5INUg/5Z6ZGGe3TCZWvqrv4TyLguM0=; b=PhnCCH4OJbq7+1/iqkae6QWGccVHx
- SRpcphB1WsJHHZklPBaxyOHg5vF2YhsTRz1Om2y6/ISZMU5Yng9skC9ue5zwf6TY
- iVEjblimj5W2AXbkVX79Tdr8RJwd78YOjofkSmr8T7DfUpT9h0TbN6qzj0/7D3cl
- TPDTs6sjLcMg6euCymgE6w+6Cl4qSYuL90uJySpjSBjK1nDuHtzvw269uB61J+Sr
- zF3ZhJWWMsZ3kFUCRbRGoiqrREMWIru4DhZujMWjJPv+4ULXRxp1bZjHMR1rK8/W
- jIxQRWOICIkhE5gaQtLQ1OWiQKK4DiVJDuw+vJGwzucMUXw+bhq+0pqkw==
-X-ME-Sender: <xms:KY0DZspt-qo_vei4Lrp0KOOjjVsCQ-mlYFFtf1B_HLkuVKfZeYv03A>
- <xme:KY0DZipXcnWu7W1OD1aSmqtJMq3bxkub25IGIXLOJIMxRksrZmLVhXGKe4WM48T_U
- IoPS1ivgAPzFA>
-X-ME-Received: <xmr:KY0DZhMxF3qrbe55n7QdoaJSCD4VIm-LFmPMQjkMiBkv6Ttpi63mF8Az6oPZl3ouYQGUFxxrDCmGMQ0kxx3GhYiNrANpTnJMwF5vEhgPqmDAmJ5RVRs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddugedgheeiucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffogggtgfesthekre
- dtredtjeenucfhrhhomhepofgrrhgvkhcuofgrrhgtiiihkhhofihskhhiqdfikphrvggt
- khhiuceomhgrrhhmrghrvghksehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomh
- eqnecuggftrfgrthhtvghrnhepleekhfduleetleelleetteevfeefteffkeetteejheel
- gfegkeelgeehhfdthedvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
- hilhhfrhhomhepmhgrrhhmrghrvghksehinhhvihhsihgslhgvthhhihhnghhslhgrsgdr
- tghomh
-X-ME-Proxy: <xmx:KY0DZj5jXs4Ed4MnNdTJl7eiyCtMdRzfX8zG23aQg3WHTlxarimGGQ>
- <xmx:KY0DZr65xSip9qCAVetI3BgR3QxWxwiHzOMIRXgAbv_ihTqTKvyN_g>
- <xmx:KY0DZjhmH4F2rMNtIjgs0st6gzVN_SUQNhlxGxPi3DWd801n9YlX4w>
- <xmx:KY0DZl5ncm7im6kvgu7aCRl6DvLEoMVfPxU6qiNGwnCCtWNH7P2AnQ>
- <xmx:KY0DZrEAG6cNt2bGbkQsQGIyL_zRHZrP-c4eWWeTJWeHE2w4GKh32Q>
-Feedback-ID: i1568416f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Mar 2024 23:06:17 -0400 (EDT)
-From: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
-Subject: [PATCH v3 0/2] Changes necessary to work inside Xen device model
- stubdomain
-Date: Wed, 27 Mar 2024 04:05:13 +0100
-Message-ID: <cover.527f002866de2be7c275c5000b6e5edfeb7e8368.1711506237.git-series.marmarek@invisiblethingslab.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rpJhg-0005bs-1H
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:11:52 -0400
+Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rpJhe-0005o1-0i
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:11:51 -0400
+Received: by mail-oi1-x229.google.com with SMTP id
+ 5614622812f47-3c37d50adecso4096971b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 20:11:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711509108; x=1712113908;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YhlZON9mQyCPeD3shzb4wJ/sWnxwtJpSLaF9DociUaU=;
+ b=chunzNhHAICskhcJq3lx8RolROl6r34/asidHIK0BSWyy1iL40EF1v2c4xlzMeONNj
+ N+LIQsECIy5uHPki6htSSZ4Ao0kdM+4QTtlFYO/5ivDJ9fHqMRaLMvFljQNF/hrHJgX3
+ G3cFyNoDSu5KA7MtT6uokFHwYInsvIFcWjiBaCxgxkNcKizw5zreZn/dvPSh01avZZbn
+ AKxMOYZhl+/DmvfudkfxDOG5+YOZANW1vAVl7HQ8RfUZA/GMZLYs9ic341mQgt9rayDA
+ CpmCqs1bgY8lsMh4H4CtBYQ1qM3BcQbsBKwmQuj3C0dRtRoCq7tRYuUjfqQva085eoaL
+ jFCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711509108; x=1712113908;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YhlZON9mQyCPeD3shzb4wJ/sWnxwtJpSLaF9DociUaU=;
+ b=dcEWPYJ9Tf94XCAcMdF5IbUCrI3rZWt5ubkzHeus60KMhRuV2vO0fV1nmdPLxrPTig
+ 484kmZoJjfvhiDD0Prt2+dq7MrgV/8OuF1gK4jXO9et41HWG6y5OiowQRyQsYO1c/zAF
+ NeJaF/YAjKMeUAmCeKqkUq+TmEtBqvNKscZyhpO6J/xA8Atodjn3XOCK6pQi5haJ8geg
+ n0ry4l5XEN3hvmoCK0vT2H7mursAearljgtbLDzT2KOzyU7OIaJI7LJKnsnbmZn2f1NS
+ GliMg6Ogw55zu6pL06TJfpI0op0BbIguFfoFB9SEeW/D834s+pfE6c1J8LTbGId0U0QQ
+ L5LA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUzh4K3BjUA8vCL06czFQFtDTfbT6pPd2zcWRbMRNmQ9wXnRDqb9HDFm1+NWRFBKhZr85LiZCOfPQmTH0zeAHq/EoWUEfI=
+X-Gm-Message-State: AOJu0YzHjKh0I+JUr/A/azUSCtkSItuSqgD2x/W8QNRHgUa2mIzIV76b
+ DX7+XBaM/ZSGCtIjQVLIuYZg4xqDMYzp9HqwDVOkyw7b4m2YYFdxM2rqAoLrQyQ=
+X-Google-Smtp-Source: AGHT+IEk6fN1Go1BYJQlQRwHqAr1Gvhdq3rOGT/RNiO0SLUidZ2Jy7lpmzuqzEl2vUiLZ0qpN7ukkw==
+X-Received: by 2002:a05:6808:301f:b0:3c3:cc31:5b57 with SMTP id
+ ay31-20020a056808301f00b003c3cc315b57mr56790oib.31.1711509108312; 
+ Tue, 26 Mar 2024 20:11:48 -0700 (PDT)
+Received: from [157.82.202.248] ([157.82.202.248])
+ by smtp.gmail.com with ESMTPSA id
+ r6-20020aa78b86000000b006ea92de360esm6969640pfd.93.2024.03.26.20.11.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Mar 2024 20:11:47 -0700 (PDT)
+Message-ID: <72ccd5e9-8e9a-4d01-bbdc-94c2dfaf6468@daynix.com>
+Date: Wed, 27 Mar 2024 12:11:46 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/net/net_tx_pkt: Fix virtio header without checksum
+ offloading
+Content-Language: en-US
+To: Jason Wang <jasowang@redhat.com>
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-devel@nongnu.org
+References: <20240324-tx-v1-1-a3b4135749ec@daynix.com>
+ <CACGkMEvBoe4XQeHOR64rNwAPM-vBMsfLQApWpUoMtvwsSVCpUQ@mail.gmail.com>
+ <a31d0734-823b-4b67-8888-46f0c787cf8f@daynix.com>
+ <CACGkMEvYQr2=0DF99ge9DotJg-O3H1FmZQAzhb=6RVWSvvGqmA@mail.gmail.com>
+ <a4bdd207-e069-47ef-8e80-7b27528a315d@daynix.com>
+ <CACGkMEsCTsQ8H6=XYMZ+8Pb9X1o19j9A4N8kiO500Dbgnw-i6g@mail.gmail.com>
+ <cc71e6c8-eca5-4ce1-9c16-8f85c6a5073e@daynix.com>
+ <CACGkMEvW+_MTvJ5TwJLNxKC=u0bTTLETuHqK5_0P27GQra5Dng@mail.gmail.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CACGkMEvW+_MTvJ5TwJLNxKC=u0bTTLETuHqK5_0P27GQra5Dng@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=103.168.172.146;
- envelope-from=marmarek@invisiblethingslab.com;
- helo=fout3-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Received-SPF: none client-ip=2607:f8b0:4864:20::229;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x229.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,21 +105,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is minimal set of changes necessary to run Xen device model inside a
-stubdomain and still support PCI passthrough.
+On 2024/03/27 12:06, Jason Wang wrote:
+> On Wed, Mar 27, 2024 at 11:05 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>
+>> On 2024/03/27 11:59, Jason Wang wrote:
+>>> On Wed, Mar 27, 2024 at 10:53 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>>>
+>>>> On 2024/03/27 11:50, Jason Wang wrote:
+>>>>> On Tue, Mar 26, 2024 at 3:04 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>>>>>
+>>>>>> On 2024/03/26 15:51, Jason Wang wrote:
+>>>>>>> On Sun, Mar 24, 2024 at 4:32 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>>>>>>>
+>>>>>>>> It is incorrect to have the VIRTIO_NET_HDR_F_NEEDS_CSUM set when
+>>>>>>>> checksum offloading is disabled so clear the bit. Set the
+>>>>>>>> VIRTIO_NET_HDR_F_DATA_VALID bit instead to tell the checksum is valid.
+>>>>>>>>
+>>>>>>>> TCP/UDP checksum is usually offloaded when the peer requires virtio
+>>>>>>>> headers because they can instruct the peer to compute checksum. However,
+>>>>>>>> igb disables TX checksum offloading when a VF is enabled whether the
+>>>>>>>> peer requires virtio headers because a transmitted packet can be routed
+>>>>>>>> to it and it expects the packet has a proper checksum. Therefore, it
+>>>>>>>> is necessary to have a correct virtio header even when checksum
+>>>>>>>> offloading is disabled.
+>>>>>>>>
+>>>>>>>> A real TCP/UDP checksum will be computed and saved in the buffer when
+>>>>>>>> checksum offloading is disabled. The virtio specification requires to
+>>>>>>>> set the packet checksum stored in the buffer to the TCP/UDP pseudo
+>>>>>>>> header when the VIRTIO_NET_HDR_F_NEEDS_CSUM bit is set so the bit must
+>>>>>>>> be cleared in that case.
+>>>>>>>>
+>>>>>>>> The VIRTIO_NET_HDR_F_NEEDS_CSUM bit also tells to skip checksum
+>>>>>>>> validation. Even if checksum offloading is disabled, it is desirable to
+>>>>>>>> skip checksum validation because the checksum is always correct. Use the
+>>>>>>>> VIRTIO_NET_HDR_F_DATA_VALID bit to claim the validity of the checksum.
+>>>>>>>>
+>>>>>>>> Fixes: ffbd2dbd8e64 ("e1000e: Perform software segmentation for loopback")
+>>>>>>>> Buglink: https://issues.redhat.com/browse/RHEL-23067
+>>>>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>>>>>> ---
+>>>>>>>>      hw/net/net_tx_pkt.c | 3 +++
+>>>>>>>>      1 file changed, 3 insertions(+)
+>>>>>>>>
+>>>>>>>> diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+>>>>>>>> index 2e5f58b3c9cc..c225cf706513 100644
+>>>>>>>> --- a/hw/net/net_tx_pkt.c
+>>>>>>>> +++ b/hw/net/net_tx_pkt.c
+>>>>>>>> @@ -833,6 +833,9 @@ bool net_tx_pkt_send_custom(struct NetTxPkt *pkt, bool offload,
+>>>>>>>>
+>>>>>>>>          if (offload || gso_type == VIRTIO_NET_HDR_GSO_NONE) {
+>>>>>>>>              if (!offload && pkt->virt_hdr.flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) {
+>>>>>>>> +            pkt->virt_hdr.flags =
+>>>>>>>> +                (pkt->virt_hdr.flags & ~VIRTIO_NET_HDR_F_NEEDS_CSUM) |
+>>>>>>>> +                VIRTIO_NET_HDR_F_DATA_VALID;
+>>>>>>>
+>>>>>>> Why VIRTIO_NET_HDR_F_DATA_VALID is used in TX path?
+>>>>>>
+>>>>>> On igb, a packet sent from a PCI function may be routed to another
+>>>>>> function. The virtio header updated here will be directly provided to
+>>>>>> the RX path in such a case.
+>>>>>
+>>>>> But I meant for example net_tx_pkt_send_custom() is used in
+>>>>> e1000e_tx_pkt_send() which is the tx path on the host.
+>>>>>
+>>>>> VIRTIO_NET_HDR_F_DATA_VALID is not necessary in the tx path.
+>>>>
+>>>> igb passes igb_tx_pkt_vmdq_callback to net_tx_pkt_send_custom().
+>>>> igb_tx_pkt_vmdq_callback() passes the packet to its rx path for loopback.
+>>>>
+>>>
+>>> You are right, how about igb_tx_pkt_vmdq_callback()?
+>>>
+>>> We probably need to tweak the name if it is only used in rx path.
+>>
+>> igb_tx_pkt_vmdq_callback() itself is part of the tx path of a PCI
+>> function, and invokes the rx path of another PCI function in case of
+>> loopback, or triggers the transmission to the external peer.
+> 
+> Right, so if it's an external TX, VIRTIO_NET_HDR_F_DATA_VALID may not
+> work there.
 
-Marek Marczykowski-Górecki (2):
-  hw/xen: detect when running inside stubdomain
-  xen: fix stubdom PCI addr
+It should be fine since it's just a hint.
 
- hw/i386/xen/xen-hvm.c        | 22 +++++++++++-
- hw/xen/xen-host-pci-device.c | 76 ++++++++++++++++++++++++++++++++++++-
- hw/xen/xen-host-pci-device.h |  6 +++-
- include/hw/xen/xen.h         |  1 +-
- system/globals.c             |  1 +-
- 5 files changed, 105 insertions(+), 1 deletion(-)
+Regards,
+Akihiko Odaki
 
-base-commit: 5012e522aca161be5c141596c66e5cc6082538a9
--- 
-git-series 0.9.1
+> 
+> Thanks
+> 
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>>>
+>>> Thanks
+>>>
+>>>> Regards,
+>>>> Akihiko Odaki
+>>>>
+>>>>>
+>>>>> Thanks
+>>>>>
+>>>>>>
+>>>>>> Regards,
+>>>>>> Akihiko Odaki
+>>>>>>
+>>>>>>>
+>>>>>>> Thanks
+>>>>>>>
+>>>>>>>>                  net_tx_pkt_do_sw_csum(pkt, &pkt->vec[NET_TX_PKT_L2HDR_FRAG],
+>>>>>>>>                                        pkt->payload_frags + NET_TX_PKT_PL_START_FRAG - 1,
+>>>>>>>>                                        pkt->payload_len);
+>>>>>>>>
+>>>>>>>> ---
+>>>>>>>> base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
+>>>>>>>> change-id: 20240324-tx-c57d3c22ad73
+>>>>>>>>
+>>>>>>>> Best regards,
+>>>>>>>> --
+>>>>>>>> Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>>>>>>
+>>>>>>>
+>>>>>>
+>>>>>
+>>>>
+>>>
+>>
+> 
 
