@@ -4,58 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D31BAC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 08:53:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8943AC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 08:53:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpP1s-00006C-CM; Wed, 27 Mar 2024 04:53:04 -0400
+	id 1rpP2M-0000IH-2C; Wed, 27 Mar 2024 04:53:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1rpP1q-00005k-At
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 04:53:02 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rpP2G-0000Bd-3s
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 04:53:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1rpP1o-0004ju-Pb
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 04:53:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=Mo04SwzJRirM/etuzgoo7EYZyAYiQ6E4CGT+DJfdlu4=; b=PVRwIp61vFyZ2G4Od9sBhJY6lP
- 972tMzGNvgST/9fq5T2bCnfyxqEmyc6YEa2HxJuA4tj3M/rqrK7Xq4A7YYYI4zCZfAJ8rgF663tQq
- 7a5bim5JarIuKXma5Y0zTPhxOaWPf3kQoR2UJOXv/1V0bWjoyaeJ5Ge5auFfwwCwzgbeYr/ArhBYl
- JAZmq8eWKNJQU7qOBadg5ZidE3LwC1qu3eQnqV6uZ56VNZeAIfleYQ8B6lc+vWoRbZ6B2cCxT8Uu9
- Pa/jS2fhIHk60wAIpWIbFBugalRhbuQ7DpRvIdnkqzdNvteEDbjJCtX4q/aHxCIM10LHf/2oetDX8
- fyGqBi0L8ny5H3FinNF25XaD6+78mC74T6f5iTN72QuC4WApTUZPEyjM+F8UOOMMGHeNXUmTp/tSB
- wSME//MpNZZ+AQTxbYtzGuEBqD758tUUeLhgkcp/3g6DkqRB+5kYPJ4Z3XxH8+AxcE0fydK9RGrm6
- AQqfBoBvTnImd9bsO7mEMpzI5XyExfhdSY90ZSpI5MrE8YAioOhuG78fuGw6L2IEA2hCN8/M9N9qN
- inSZsd8qvS03xMfhj7DpGU6VTXkYyQ4Hv7VLV23AWMjsHl1fxUuZwdA1isewLSRUv1hQIRWtUzNoW
- Fc3kUzDGn+z6MEHumqQmeOM82vkJnNZv0wtTsjiRk=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: Greg Kurz <groug@kaod.org>, qemu-devel@nongnu.org
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, alistair.francis@wdc.com,
- peter.maydell@linaro.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: Re: [PATCH for-9.0 0/3] qtest/virtio-9p-test.c: fix slow tests
-Date: Wed, 27 Mar 2024 09:52:58 +0100
-Message-ID: <3619944.yRKTfBRQAU@silver>
-In-Reply-To: <087af5f3-dfcd-4888-936c-0ffdd955459a@ventanamicro.com>
-References: <20240326132606.686025-1-dbarboza@ventanamicro.com>
- <20240326165550.05d083da@bahia>
- <087af5f3-dfcd-4888-936c-0ffdd955459a@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1rpP2D-0004nl-T8
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 04:53:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711529604;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6cf4cCnC+qe5Ypk9TgMBbXSUglge44MnVLQOMvYgo2s=;
+ b=Fhefc0EMWXrynZQjdjGMXs/Sn9Ph+GfePbr7o2hzlJUcGabLEJA0hJyur+3NcjaFU6sptF
+ 3z01zOimqKGK2xH+qtHnOvOc+l/Q3UuiCpP8zTJtz5cokOJS61PnSlu4bosMrZYFP00TIz
+ bZUz/5SuEAPSkN9/P+xKqWRfdhe9XZg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-695-FCwRYvs7NZuL2wOUJ4Lsuw-1; Wed, 27 Mar 2024 04:53:21 -0400
+X-MC-Unique: FCwRYvs7NZuL2wOUJ4Lsuw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-41481ad9364so27979555e9.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 01:53:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711529600; x=1712134400;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6cf4cCnC+qe5Ypk9TgMBbXSUglge44MnVLQOMvYgo2s=;
+ b=EiKhiyKpTFEFgcr3r1vUyP2ofaeNN76z0tbC+bvkfdLXBToc5m9okCL0s5ElERW4VA
+ 2ZVfhbtC9tL7cBZMByugeGKgxZ7tpr18O7/f62taBY+4VPgfQD/GXSZX13vBrPHvUQqw
+ RYR5ZRmUkc656R0t/8HjNcNZinSuRUiR87xvqhZUxXcD1P3q75TCp0rf71IVq2/2g34j
+ AqbKW1VDfiN/36MAY8KOIaJcecOcUk87Y1yE2PmJi4xODsw3rAwvQNb0lSGfTQTf45gN
+ ZDdXpCxgp5pQgaajPF9EbxuerEEFbN6M4dx8bHdcneTEwkC8NUJYxFnvhwz5DQoxAhej
+ Otsg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcvUvv1eh6jufkmZCW/gMXQYAOYsxikeytByhDf+tfhXpJuueyBwVvWlEWAiH+cupL43KD5L2Y1jCtTSmpxQtX9WrBP3M=
+X-Gm-Message-State: AOJu0YxobBRlb0iGCRe/jnU5R3OjRUwvvWe+LuR7aEvrX2JEHNSAGshY
+ Rs++Q4/s4f+lIet7k79XD5NxCiCvmRal2GVi0XV/VvDvm0zXSX+W2/KC40SVYUi6dQGYycScYnP
+ X/qcGZ2dl6Y4ARw0TE+Fie6uKkPk/9J8FtHk+kqLHCjViidXEWLXyQNmnvEjm2U3nmQP049zU5u
+ URFs4eHBk71cGetWjndeTbMRCkAos=
+X-Received: by 2002:a05:600c:314c:b0:413:2873:937 with SMTP id
+ h12-20020a05600c314c00b0041328730937mr1618757wmo.35.1711529600222; 
+ Wed, 27 Mar 2024 01:53:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2L75qsx6232S4O6zkODYRiFhAacXms15IMaam2sxmCRP+hNFo9OXoiwvyuX8V+YgKxAvXF7hp/iZ0qLkDXnc=
+X-Received: by 2002:a05:600c:314c:b0:413:2873:937 with SMTP id
+ h12-20020a05600c314c00b0041328730937mr1618749wmo.35.1711529599914; Wed, 27
+ Mar 2024 01:53:19 -0700 (PDT)
 MIME-Version: 1.0
+References: <20240318155336.156197-1-kraxel@redhat.com>
+ <20240318155336.156197-2-kraxel@redhat.com>
+ <54e8b518-2bea-4a5b-a75a-4fd45535c6fa@intel.com>
+In-Reply-To: <54e8b518-2bea-4a5b-a75a-4fd45535c6fa@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 27 Mar 2024 09:53:07 +0100
+Message-ID: <CABgObfZ5GpnoFwfbMNbPoWceifO0hiqu7LePvZFWLNOwCRvC1Q@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] kvm: add support for guest physical bits
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org, 
+ Tom Lendacky <thomas.lendacky@amd.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,104 +102,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tuesday, March 26, 2024 5:07:16 PM CET Daniel Henrique Barboza wrote:
->=20
-> On 3/26/24 12:55, Greg Kurz wrote:
-> > Bom dia Daniel !
->=20
-> Bonne apr=E8s-midi !
->=20
-> >=20
-> > On Tue, 26 Mar 2024 10:26:03 -0300
-> > Daniel Henrique Barboza <dbarboza@ventanamicro.com> wrote:
-> >=20
-> >> Hi,
-> >>
-> >> Thomas reported in [1] a problem that happened with the RISC-V machine
-> >> where some tests from virtio-9p-test.c were failing with '-m slow', i.=
-e.
-> >> enabling slow tests.
-> >>
-> >> In the end it wasn't a RISC-V specific problem. It just so happens that
-> >> the recently added riscv machine nodes runs the tests from
-> >> virtio-9p-test two times for each qos-test run: one with the
-> >> virtio-9p-device device and another with the virtio-9p-pci. The temp d=
-ir
-> >> for these tests is being created at the start of qos-test and removed
-> >> only at the end of qos-test, and the tests are leaving dirs and files
-> >> behind. virtio-9-device tests run first, creates stuff in the temp dir,
-> >> then when virtio-9p-pci tests runs again it'll fail because the previo=
-us
-> >> run left created dirs and files in the same temp dir. Here's a run that
-> >> exemplifies the problem:
-> >>
-> >> $ MALLOC_PERTURB_=3D21 V=3D2 QTEST_QEMU_BINARY=3D./qemu-system-riscv64=
- ./tests/qtest/qos-test -m slow
-> >> (...)
-> >> # starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-621=
-710.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-621710.qmp,=
-id=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -M=
- virt,aclint=3Don,aia=3Daplic-imsic -fsdev local,id=3Dfsdev0,path=3D'/home/=
-danielhb/work/qemu/build/qtest-9p-local-7E16K2',security_model=3Dmapped-xat=
-tr -device virtio-9p-device,fsdev=3Dfsdev0,mount_tag=3Dqtest -accel qtest
-> >> ( goes ok ...)
-> >> # starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-621=
-710.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-621710.qmp,=
-id=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -M=
- virt,aclint=3Don,aia=3Daplic-imsic -fsdev local,id=3Dfsdev0,path=3D'/home/=
-danielhb/work/qemu/build/qtest-9p-local-7E16K2',security_model=3Dmapped-xat=
-tr -device virtio-9p-pci,fsdev=3Dfsdev0,addr=3D04.0,mount_tag=3Dqtest -acce=
-l qtest
-> >> ok 168 /riscv64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-9p=
-=2Dpci/virtio-9p/virtio-9p-tests/local/config
-> >> Received response 7 (RLERROR) instead of 73 (RMKDIR)
-> >> Rlerror has errno 17 (File exists)
-> >> **
-> >> ERROR:../tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: asse=
-rtion failed (hdr.id =3D=3D id): (7 =3D=3D 73)
-> >>
-> >> As we can see we're running both 'virtio-9p-device' tests and 'virtio-=
-9p-pci'
-> >> tests using the same '/home/danielhb/work/qemu/build/qtest-9p-local-7E=
-16K2'
-> >> temp dir.
-> >>
-> >=20
-> >=20
-> > Good catch ! I'll try to find some time to review.
-> >=20
-> >> The quick fix I came up with was to make each test clean themselves up
-> >> after each run. The tests were also consolidated, i.e. fewer tests wit=
-h the
-> >> same coverage, because the 'unlikat' tests were doing the same thing t=
-he
-> >> 'create' tests were doing but removing stuff after. Might as well keep=
- just
-> >> the 'unlikat' tests.
-> >>
-> >=20
-> > As long as coverage is preserved, I'm fine with consolidation of the
-> > checks. In any case, last call goes to Christian.
-> >=20
-> >> I also went ahead and reverted 558f5c42efd ("tests/9pfs: Mark "local"
-> >> tests as "slow"") after realizing that the problem I was fixing is also
-> >> the same problem that this patch was trying to working around with the
-> >> skip [2]. I validated this change in this Gitlab pipeline:
-> >>
-> >=20
-> > Are you sure with that ? Issues look very similar indeed but not
-> > exactly the same.
->=20
-> We can skip this revert if we're not sure about it. Gitlab passed with it=
- but
-> perhaps this isn't evidence enough. I'll let you guys decide.
+On Wed, Mar 20, 2024 at 3:45=E2=80=AFAM Xiaoyao Li <xiaoyao.li@intel.com> w=
+rote:
+> If users pass configuration like "-cpu
+> qemu64,phys-bits=3D52,host-phys-bits-limit=3D45", the cpu->guest_phys_bit=
+s
+> will be set to 45. I think this is not what we want, though the usage
+> seems insane.
+>
+> We can guard it as
+>
+>   if (cpu->host_phys_bits && cpu->host_phys_bits_limit &&
+>       cpu->guest_phys_bits > cpu->host_phys_bits_limt)
+> {
+> }
 
-I am a bit surprised because errnos were different (file exists vs. not
-supported), but indeed, it did pass in your Gitlab pipeline. So I am fine w=
-ith
-bringing those tests back in on Gitlab.
+> Simpler, we can guard with cpu->phys_bits like below, because
+> cpu->host_phys_bits_limit is used to guard cpu->phys_bits in
+> host_cpu_realizefn()
+>
+>   if (cpu->guest_phys_bits > cpu->phys_bits) {
+>         cpu->guest_phys_bits =3D cpu->phys_bits;
+> }
+>
+>
+> with this resolved,
+>
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-/Christian
+[oops sorry - I noticed now that this email was never sent, so I am
+sending it for archival]
 
+There are more issues:
+
+1) for compatibility with older machine types, the GuestPhysAddrSize
+should remain 0. One possibility is to have "-1" as "accelerator
+default" and "0" as "show it as zero in CPUID".
+
+2) a "guest-phys-bits is not user-configurable in 32 bit" error is
+probably a good idea just like it does for cpu->phys_bits
+
+3) I think the order of the patches makes more sense if the property
+is added first and KVM is adjusted second.
+
+I'll post a v5 myself (mostly because it has to include the creation
+of 9.1 machine types).
+
+Paolo
+
+> > +    }
+> > +}
+> > +
+> >   static bool kvm_cpu_realizefn(CPUState *cs, Error **errp)
+> >   {
+> >       X86CPU *cpu =3D X86_CPU(cs);
+> >       CPUX86State *env =3D &cpu->env;
+> > +    bool ret;
+> >
+> >       /*
+> >        * The realize order is important, since x86_cpu_realize() checks=
+ if
+> > @@ -50,7 +73,13 @@ static bool kvm_cpu_realizefn(CPUState *cs, Error **=
+errp)
+> >                                                      MSR_IA32_UCODE_REV=
+);
+> >           }
+> >       }
+> > -    return host_cpu_realizefn(cs, errp);
+> > +    ret =3D host_cpu_realizefn(cs, errp);
+> > +    if (!ret) {
+> > +        return ret;
+> > +    }
+> > +
+> > +    kvm_set_guest_phys_bits(cs);
+> > +    return true;
+> >   }
+> >
+> >   static bool lmce_supported(void)
+>Ther
 
 
