@@ -4,68 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59058CD1284
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 12:56:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A332C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 12:57:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpSoc-00045A-Hn; Wed, 27 Mar 2024 08:55:38 -0400
+	id 1rpSqB-0005MM-Dm; Wed, 27 Mar 2024 08:57:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rpSoa-00043B-5f
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 08:55:36 -0400
+ id 1rpSqA-0005M1-65
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 08:57:14 -0400
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rpSoX-0006Xb-DB
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 08:55:35 -0400
+ id 1rpSq8-0007RB-PD
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 08:57:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711544134; x=1743080134;
+ t=1711544233; x=1743080233;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=ZbffO2sdXK5gNW6Pqv0vknSa4PPdfD2lGofGIRE/emw=;
- b=MJSZwP3z+Gq3KHP+2JKdToL/lyj0GSasA5yHeu1848jXDJQzLXSL1mZv
- VOlqFiJmXa+S/JGxwYYvSphLAfmHVeebFhuZ9226WzbNnCxxro6ikz76Q
- bljpdhMM1UTPqnPKWuZS1wuOHkNycdNaukEwq0ssVgvzofvK1YmZrlGIn
- u+yZ8yQEblGFX9BUV/NH7wCa/koSslkNJAoM7PNTCoBdymLr/B+f6seFi
- s82jNgBIA6FKNmPM3zWFP49m8xLzTJlS1dz3isFPcUwH7BJhf5qe22wW2
- +ZLWvkqZPU11zbOQ8usTo9x0ZXbh4xG9SsiV1fS8kRKEpAtcisgDTUygx g==;
-X-CSE-ConnectionGUID: l6+AXrmhQGOyVg2ezMODrw==
-X-CSE-MsgGUID: QLdaQSOuR0aH1TXaLaRUwQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11025"; a="6774538"
+ bh=4XFDlHxykiZ2GqNXzQZRFXHCN+RjhDui8BDuHdozgtA=;
+ b=UzfcBhltcegRMkatKjjTfuFN36VhAvxK8rQg21xDIkzJanq9EEcTLjeW
+ sE+M4g5WsezK58Hd8d/yFKMHWapeV+z2ezULqmv1hCS/jD3rsmfsFOVqE
+ mpLU/lPnzOzgTJOhELQQSDDBCfXAtkAMUaYKX8C4GRHMProDw6lVI62tY
+ Eoz7ywG/HUvRVt6BA502oj9F3/5CwATkD260PXz18XVfYs3/53PHfZgzy
+ ouldQhd9Fpzq/nlZNEMQqO83PAlwLhTmeOxgDNxhSIlZdnCtEDam2VwWi
+ Int5l2Y+jJmNV9WyRR6bKUn694r61NRhtyr3R6KYWElHdxR/pwIyOXLFi g==;
+X-CSE-ConnectionGUID: AqSuq8sNR+2oPQY078DaVQ==
+X-CSE-MsgGUID: dmHawybjTCWcyOwTvMLq4A==
+X-IronPort-AV: E=McAfee;i="6600,9927,11025"; a="6774624"
 X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; 
-   d="scan'208";a="6774538"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+   d="scan'208";a="6774624"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Mar 2024 05:55:30 -0700
+ 27 Mar 2024 05:57:10 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; d="scan'208";a="20770523"
+X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; d="scan'208";a="16217058"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa005.fm.intel.com with ESMTP; 27 Mar 2024 05:55:27 -0700
-Date: Wed, 27 Mar 2024 21:09:22 +0800
+ by fmviesa010.fm.intel.com with ESMTP; 27 Mar 2024 05:57:00 -0700
+Date: Wed, 27 Mar 2024 21:10:55 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
  Igor Mammedov <imammedo@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
  Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH-for-9.1 v2 01/21] hw/i386/pc: Remove deprecated
- pc-i440fx-2.0 machine
-Message-ID: <ZgQagqzF8tuUxVDX@intel.com>
+ Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH-for-9.1 v2 02/21] hw/usb/hcd-xhci: Remove
+ XHCI_FLAG_FORCE_PCIE_ENDCAP flag
+Message-ID: <ZgQa3xEqbtOVlQJE@intel.com>
 References: <20240327095124.73639-1-philmd@linaro.org>
- <20240327095124.73639-2-philmd@linaro.org>
+ <20240327095124.73639-3-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240327095124.73639-2-philmd@linaro.org>
+In-Reply-To: <20240327095124.73639-3-philmd@linaro.org>
 Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -20
@@ -90,28 +87,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 27, 2024 at 10:51:03AM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Wed, 27 Mar 2024 10:51:03 +0100
+On Wed, Mar 27, 2024 at 10:51:04AM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Wed, 27 Mar 2024 10:51:04 +0100
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH-for-9.1 v2 01/21] hw/i386/pc: Remove deprecated
->  pc-i440fx-2.0 machine
+> Subject: [PATCH-for-9.1 v2 02/21] hw/usb/hcd-xhci: Remove
+>  XHCI_FLAG_FORCE_PCIE_ENDCAP flag
 > X-Mailer: git-send-email 2.41.0
 > 
-> The pc-i440fx-2.0 machine was deprecated for the 8.2
-> release (see commit c7437f0ddb "docs/about: Mark the
-> old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
-> time to remove it.
+> XHCI_FLAG_FORCE_PCIE_ENDCAP was only used by the
+> pc-i440fx-2.0 machine, which got removed. Remove it
+> and simplify usb_xhci_pci_realize().
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Message-Id: <20240305134221.30924-2-philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  docs/about/deprecated.rst       |  2 +-
->  docs/about/removed-features.rst |  2 +-
->  include/hw/i386/pc.h            |  3 ---
->  hw/i386/pc.c                    | 15 -------------
->  hw/i386/pc_piix.c               | 37 ---------------------------------
->  5 files changed, 2 insertions(+), 57 deletions(-)
+>  hw/usb/hcd-xhci.h     | 1 -
+>  hw/usb/hcd-xhci-nec.c | 2 --
+>  hw/usb/hcd-xhci-pci.c | 3 +--
+>  3 files changed, 1 insertion(+), 5 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
