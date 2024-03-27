@@ -4,118 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74BA0C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 06:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2403CC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 06:56:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpMdo-0005q2-M9; Wed, 27 Mar 2024 02:20:04 -0400
+	id 1rpNCB-0001WH-Nl; Wed, 27 Mar 2024 02:55:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1rpMdk-0005pY-Us
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 02:20:01 -0400
-Received: from mail-psaapc01on2132.outbound.protection.outlook.com
- ([40.107.255.132] helo=APC01-PSA-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1rpMdg-0007gs-V8
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 02:20:00 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=auk5BsfkkWxwuUx+MoTJoQ9aig2ErkbJAnVO8wbKnxboe4/kHatLwNhg6ITPlqH/N8+IT1Jm8blLpTL7denWi7jyTsxdoc0ceq7YF33I7SRmA0z0XnbLumjOfObkFtfwkNi2yH/7HMyBFPQNEH8acBaGOKQr5UzZEOCEidqo3MMA24aoWc8/HLo68ZBUAYZPdM2pIPgWWD6tSplrDe6CJzAQSShu1Tl0GAgYqyIJOoyugaFOxW08+mPEpM7lcQQrdL4PCF4/NyDvbkYtNvPWoUIlj8v2l7XfLqSHsRrNof0iUXaYgcvQt7VzUgYnAVBZImPs8NcI6I3RAeW/aQas+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7AFncNqpKvyoQYp/BcawpJ3hSkH1KSPDCTVoEd8xusA=;
- b=cXZeCROmtmHzei8vYgRtvSvJa0VXDyEpT+KTlvoApHX0P2SqJFDOsShUSqbGuF2kGkTLQ10cTvf7YBeFdMvCMHSxTFHxHWgSTJ0/VsNfgoi4bTxgART2fdOlSprld6Jw72+vLoaR5qRScNxxxS1zMKQV4h/Trjc1nfo5wKkFPHlbctmwXnMAOJJSoRNLZfYp7Q0VA6bXzislASdk6JjW+lveudoj2tvRyFhVPyeojaiKET987+VuRE04XKGILgR3KmL1n8xwtlvOhMXRKyAr2Qx7S+7WQmMLSBNzJTE+v04Ap8ZsXQVvXbz0k/GDXdM60WQbCG1Lyph4lTC1Zed0cA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
- header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7AFncNqpKvyoQYp/BcawpJ3hSkH1KSPDCTVoEd8xusA=;
- b=F7gHR/7RyKEKo/X3kFRJ+DLpMYfny3+1JxGD4mCRcjrPeA7yCp4sc7t/XcvrezjhmD+SlKlRts3g8dJGieRkZdTSddvfr9MJbS7jOWgV4f4CyMbBAhsdQeuW4ZyFjsgLkTADhAjwQS4ZtYZFtlg9HsUCqosL+bXrzPKre9DWaV4DAM1S+MAQnp+kgf0egixdh3qgNYEaq4hbKDZp3y/2aza3yqKnH+BKAvP2dDr3HpHTk/fo4x5TgHtjhlaBlrnek6kNqJaXs1sOx6sZgoL39X6meWjMiHFpXXfgk0ZzN2PVHEFpp+HTlHjkp3WTfgSbzlxp1HBE5byw8s1rxRL8Tw==
-Received: from PUZPR06MB4713.apcprd06.prod.outlook.com (2603:1096:301:b4::10)
- by PUZPR06MB5904.apcprd06.prod.outlook.com (2603:1096:301:113::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.32; Wed, 27 Mar
- 2024 06:14:46 +0000
-Received: from PUZPR06MB4713.apcprd06.prod.outlook.com
- ([fe80::807:eccb:cfd5:e6b5]) by PUZPR06MB4713.apcprd06.prod.outlook.com
- ([fe80::807:eccb:cfd5:e6b5%3]) with mapi id 15.20.7409.031; Wed, 27 Mar 2024
- 06:14:45 +0000
-From: Wafer <wafer@jaguarmicro.com>
-To: mst@redhat.com
-Cc: qemu-devel@nongnu.org, angus.chen@jaguarmicro.com,
- Wafer <wafer@jaguarmicro.com>
-Subject: [PATCH] hw/virtio: Fix packed virtqueue flush used_idx
-Date: Wed, 27 Mar 2024 14:15:18 +0800
-Message-Id: <20240327061518.13200-1-wafer@jaguarmicro.com>
-X-Mailer: git-send-email 2.27.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SI2PR01CA0044.apcprd01.prod.exchangelabs.com
- (2603:1096:4:193::8) To PUZPR06MB4713.apcprd06.prod.outlook.com
- (2603:1096:301:b4::10)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rpNC8-0001Vn-7u
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 02:55:32 -0400
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <horenchuang@bytedance.com>)
+ id 1rpNC2-0005Uf-Tm
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 02:55:30 -0400
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-dc742543119so6135327276.0
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 23:55:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1711522519; x=1712127319; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2gBdAxMvMnjsczXEA3QG1dVLh7HlPI7SpPCL+teq1rw=;
+ b=iZlNk2/kcelFXOy83PoDeGRUy5BR9n6wvDvYMwXToLBoUjIb5LTfn2nK8wGAZWOe8s
+ iboaPXb0XNfF2/0g6bd/72mr4B+Lrs/Amipk2Eo9nPeWEWgJe8VxlPzXvFHeMZywPDa2
+ gQO7DvuTZKgTbdmSMtuotf7HEAxvvwJAf2xNze1tZr0/vO5CY1ulYVeZF4IPizbARBeK
+ R0A/af5P5tcj35wbWQY/k6KNDBOPX+ZXHpp/bYJRhLJTkNeZ4RQcAi3LnAGzCcRjn/Ob
+ EaQpZGXsbxDO1A4JXfvWXzKKmll5JTl5zBvKk0NTFFOKL0WE12v/Vr1cHythPFD6MHZx
+ 92Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711522519; x=1712127319;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2gBdAxMvMnjsczXEA3QG1dVLh7HlPI7SpPCL+teq1rw=;
+ b=g9gq7IHGyviTAjrE2J6vxvzInY1cF2dEjzdnJTGQnEaTeOH4hH/6OPMmwYqqKGBs3w
+ 0vHQhLqbsSYvDZfWQwZTDfzasVtebWDUboQH8esJ3B8IKkMG1seR8ZTYsdI75hBvUy8y
+ wyHthZu5k2GYC+BNAPRVc1H7CGyPl1HkTLQ/DtOtHOELV18/gL8L8PzR3Yr/4sqdp2Wk
+ lNtba52Kn5HgCh9oEBFim/3KNKjzkQukndlLK9jM8/bVbFD+0T7KacunGgTaS34fASE9
+ a3VnVedpTzYo2vZZXOCohfsJhqKzMjRTnw6+8mRLlaLQ1Dh4kSG+RuV6qxDcmO4D4RCn
+ J6Og==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV0R7J6faC0S/yfLCjR/O8KEO0TNRvWW+DX37/9e/B9OzTE0rJarTz4m2ZHrc4Qifx6P8FysFlZ77CjmhaBxWr1YNZ3/uE=
+X-Gm-Message-State: AOJu0Yw16iUVbrAciAJ/HETYEZcpdCges4DbUMZXNbnPukwQEj53fbeD
+ 432NvZjADqkkbC19eURAmPmIhuFJpbL6U4xHgF8FE7RJhf+rfN5LJvAcw3210NMQNxovoJ4qErf
+ tOE8x3TQvu+7snOl5Q0im42Qklh/dd0OPS6k8GQ==
+X-Google-Smtp-Source: AGHT+IGneaW9WE/Y0nsKRo0D7anGiHOi7fBK7mx80rP9apScsfFYIjDTSuH8hoPcCeMmppqQ4avESF7WEPInBimAGLE=
+X-Received: by 2002:a25:a009:0:b0:dcf:b5b7:c72 with SMTP id
+ x9-20020a25a009000000b00dcfb5b70c72mr2835965ybh.0.1711522518886; Tue, 26 Mar
+ 2024 23:55:18 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PUZPR06MB4713:EE_|PUZPR06MB5904:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: u6spOka21dHCtrvLRLX+lw8ahbS2+5oy10OmtzgU6iKwUTK4Mcb/G486YqzMwQ60rycQp0yjbRLlDjgxvEV9oH6vybyy/EZYw8riGzAyzg9s2d7KCVPHmeHTsUkSyuz8vS+ZjegtMzS9hWUqSy/8YTBGdByDjLKm0O6EB3meHXcWqM2D2KxsU2oLSLMMtUzbBlNKUqyjs9i4AtQ/V2ScqzhOw8xJLbqWCt+c8vGUP5QUgGtknd0KopMUfM4evUARpVSnBx6/Z6rFIUfrtHbNmDA1EOCbYwfio8Uzj0S/1hDp5Gutv/v1Gi9Ko+iuz1ojr5yHPOlob3+A862d5Zm/0+UbWzV+sxk43j3QLLo5lw2y+2ja4RzhAtECFWprKc2DA5mcz8XonVRK3hIyJHrvc8ofaClAvZcpd2nTO1LCvmClEttlFtBNc1vO3BvVgrtaxCwS4dorcbYODqN/74NO6E4IblSG6bRVEU5Hma7aRBex7udPG/xORNe5bvGOWfZmmHAIESgnayRTmLXcf/67P6E7x0J3yy+eoxRc/tI/0ck+i5KBBuV9QxY0RGEpUCRb8NXzWx3Zcp4Acx7YucDzB6Ghwo/CbiA5kiUtpK/DkOgQJ1HEZXA6JVM6lJtQ7kj33VJ1HVOSygfL5o7/ZjOifUjBtAo0ErqmJLGKgZAt64R4sVQeNC2e/PaihiAnI8F4JZzBVTyDtneQqG+Sq18d+w==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PUZPR06MB4713.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230031)(376005)(366007)(52116005)(1800799015)(38350700005); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?9Bti1fQhA1xFCsFmLlsQEQMgFTpqOR9VXHglVlnAfTQ0Xxyfr0k5mAOOCXMM?=
- =?us-ascii?Q?0miE9dl2ar3eQb6WccvO3J+6ccWRjV3g8RTLkV5n0B2tKlCG0eUfguaOIA1c?=
- =?us-ascii?Q?srUspq9lMT74LzZW4fU08bfczKdp9P7LsGVB1Iuxn3YtNgv8Zl8KbtmnKt0S?=
- =?us-ascii?Q?M1YCfyXnh3ABKQDm0nclJsmkal1F+cAXIydTD6XVdxcsL8c7OqEmEz0g4+ML?=
- =?us-ascii?Q?9e8jS7uT1aoeDHuRqA3jOIlv+1Cf6hCRCc/6LDryhlldsY4ghdG4Z0IMyNEh?=
- =?us-ascii?Q?UB3L1SFcM67tFHYzmMiS2EsJgrc5WnCBI3AqbIbq3Q1fzfhxVQRZONCu75T4?=
- =?us-ascii?Q?kvek9stRcu+ToVIUP8f2VNVSvDgs6Z/hP/hKYtU4a8qQHwXjS2+zfy5jWpqq?=
- =?us-ascii?Q?Gam3Wy9LYPl5H+Y1EOr1SFyfQJlqLDXcEmK26I/t6xyMQX+759bkKSJAL7VN?=
- =?us-ascii?Q?o9HLrttx1GOV6MiHNgFT8NtTT5HkJdcXMz94iDwCKRm3CqrMB1axb8HSIa31?=
- =?us-ascii?Q?tLYPHpFr7JVk/bybiofThxcGTAa+JotK0Z9gdikNRr4ashzK4cAOv9ETqoX9?=
- =?us-ascii?Q?52diZiUbiBQtj/QUWCD8SGiUGI6We3ZbRlDLhAxjfUHQCW8s+e0XCgtsuXSc?=
- =?us-ascii?Q?5XCojs6RewT6ovz9qGIPdnWCT2CcDXhh73e2crkAV4gVZK9qEyWM684VZFif?=
- =?us-ascii?Q?50wH70nuprS69qWmu23TkDE1zPjdjoV89VImsj8PUxuDeFEFr41KJjhKWTOG?=
- =?us-ascii?Q?i4FRPyO5hqmn2j4x5X/NCdN9cF2XumW9brJTVZonsV2h7laXMw+jw8faR5pV?=
- =?us-ascii?Q?4azbuYiJCiJl82Z6GqUzcZ/GpnV+8RrwLvtx6DtMdmsT18KM8BRYQjlYt38e?=
- =?us-ascii?Q?EdE4ALLvvVGbM5c6u0GIvb5bHyGLQvDooelrUApSu5rOdBXvANy+HiQrhKQi?=
- =?us-ascii?Q?6MYaf2XgE8quREOpsT0Z9hD9OtCWZcFQj85wl/L4+0NzfdUBMrWoxkaDtGjP?=
- =?us-ascii?Q?qaafno1/2drBk5MNuz4fXZyKlkUvXPrQg9j2ZdMS+uq5GpeHgXRNjYiIyCgR?=
- =?us-ascii?Q?0XIiByjcF/RJ9vAupIO5KcjkMw87kB9T77uaREBXfl4Fcf4lLa9lYOgutQYb?=
- =?us-ascii?Q?dKFGBfMKHeMgpeeYMKphMmidn//JJASyPb841MylJO8qgjm8Wpy7n1YOYQvl?=
- =?us-ascii?Q?gYZEtD4N5o2QFFIA5OqBQSxciUdVP7Ff3yI1xZ1GLNFZ30z+AF42ceLhMwKO?=
- =?us-ascii?Q?lAzg97pa1zlT7ZthqINd+dvOdSvgmjaR7sfJvTU8Z2zLEk9/3nSWr6HSODMg?=
- =?us-ascii?Q?Em4EQi/LBQZnhHZBBPjYEym3OwDIyAlRSS66AOwJI31kipBfxnxZeKlHT339?=
- =?us-ascii?Q?ZnC/pGBqaGf+lz5Ufs3MzboUziRTpNU22jUL8P1cx8i+QVboro7Ic5qDMa6G?=
- =?us-ascii?Q?9is342Uivbi4s+tkVF0WL8OTasXMWgJfgxqgCB7ezKH7Dzdt1F3DHPw1NJRb?=
- =?us-ascii?Q?bw7On9OF84EVIa+qYsRWjw5HiJQwM/dhX/hB6wQuyOgIpl1x7oafFzcxDl04?=
- =?us-ascii?Q?J4NFhJN7R5JDDk0Cpdg38K5Zi48Raolvi9d88P/9?=
-X-OriginatorOrg: jaguarmicro.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b38dca89-c74f-4d52-a36b-08dc4e2532fe
-X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4713.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2024 06:14:45.8289 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zqbCTgsIMe9gtYTujeFhzPZUvoInvFMp8C1g1vzQP8e36fKRZCfrP+xvPi9Nh9jWWavXsu/KK9CRW2gNt5SXog==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5904
-Received-SPF: pass client-ip=40.107.255.132;
- envelope-from=wafer@jaguarmicro.com;
- helo=APC01-PSA-obe.outbound.protection.outlook.com
+References: <20240327041646.3258110-1-horenchuang@bytedance.com>
+ <20240327041646.3258110-3-horenchuang@bytedance.com>
+ <874jcsnryv.fsf@yhuang6-desk2.ccr.corp.intel.com>
+In-Reply-To: <874jcsnryv.fsf@yhuang6-desk2.ccr.corp.intel.com>
+From: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Date: Tue, 26 Mar 2024 23:55:07 -0700
+Message-ID: <CAKPbEqpbtkbcH2XoV2g3AFm1HtzOPjkNMa3AyTqWdd5MyvY9pg@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v5 2/2] memory tier: create CPUless memory
+ tiers after obtaining HMAT info
+To: "Huang, Ying" <ying.huang@intel.com>
+Cc: Gregory Price <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com, 
+ tj@kernel.org, john@jagalactic.com, Eishan Mirakhur <emirakhur@micron.com>, 
+ Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, 
+ Alistair Popple <apopple@nvidia.com>,
+ Srinivasulu Thanneeru <sthanneeru@micron.com>, 
+ Dan Williams <dan.j.williams@intel.com>,
+ Vishal Verma <vishal.l.verma@intel.com>, 
+ Dave Jiang <dave.jiang@intel.com>, Andrew Morton <akpm@linux-foundation.org>,
+ nvdimm@lists.linux.dev, 
+ linux-cxl@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mm@kvack.org, 
+ "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, qemu-devel@nongnu.org, 
+ Hao Xiang <hao.xiang@bytedance.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=horenchuang@bytedance.com; helo=mail-yb1-xb2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,43 +108,314 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For indirect descriptors the elelm->ndescs was one,
-For direct descriptors the elele->ndesc was the numbe of entries.
-elem->ndescs = (desc_cache == &indirect_desc_cache) ? 1 : elem_entries;
+On Tue, Mar 26, 2024 at 10:52=E2=80=AFPM Huang, Ying <ying.huang@intel.com>=
+ wrote:
+>
+> "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
+>
+> > The current implementation treats emulated memory devices, such as
+> > CXL1.1 type3 memory, as normal DRAM when they are emulated as normal me=
+mory
+> > (E820_TYPE_RAM). However, these emulated devices have different
+> > characteristics than traditional DRAM, making it important to
+> > distinguish them. Thus, we modify the tiered memory initialization proc=
+ess
+> > to introduce a delay specifically for CPUless NUMA nodes. This delay
+> > ensures that the memory tier initialization for these nodes is deferred
+> > until HMAT information is obtained during the boot process. Finally,
+> > demotion tables are recalculated at the end.
+> >
+> > * late_initcall(memory_tier_late_init);
+> > Some device drivers may have initialized memory tiers between
+> > `memory_tier_init()` and `memory_tier_late_init()`, potentially bringin=
+g
+> > online memory nodes and configuring memory tiers. They should be exclud=
+ed
+> > in the late init.
+> >
+> > * Handle cases where there is no HMAT when creating memory tiers
+> > There is a scenario where a CPUless node does not provide HMAT informat=
+ion.
+> > If no HMAT is specified, it falls back to using the default DRAM tier.
+> >
+> > * Introduce another new lock `default_dram_perf_lock` for adist calcula=
+tion
+> > In the current implementation, iterating through CPUlist nodes requires
+> > holding the `memory_tier_lock`. However, `mt_calc_adistance()` will end=
+ up
+> > trying to acquire the same lock, leading to a potential deadlock.
+> > Therefore, we propose introducing a standalone `default_dram_perf_lock`=
+ to
+> > protect `default_dram_perf_*`. This approach not only avoids deadlock
+> > but also prevents holding a large lock simultaneously. Besides, this pa=
+tch
+> > slightly shortens the time holding the lock by putting the lock closer =
+to
+> > what it protects as well.
+> >
+> > * Upgrade `set_node_memory_tier` to support additional cases, including
+> >   default DRAM, late CPUless, and hot-plugged initializations.
+> > To cover hot-plugged memory nodes, `mt_calc_adistance()` and
+> > `mt_find_alloc_memory_type()` are moved into `set_node_memory_tier()` t=
+o
+> > handle cases where memtype is not initialized and where HMAT informatio=
+n is
+> > available.
+> >
+> > * Introduce `default_memory_types` for those memory types that are not
+> >   initialized by device drivers.
+> > Because late initialized memory and default DRAM memory need to be mana=
+ged,
+> > a default memory type is created for storing all memory types that are
+> > not initialized by device drivers and as a fallback.
+> >
+> > * Fix a deadlock bug in `mt_perf_to_adistance`
+> > Because an error path was not handled properly in `mt_perf_to_adistance=
+`,
+> > unlock before returning the error.
+> >
+> > Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+> > Signed-off-by: Hao Xiang <hao.xiang@bytedance.com>
+> > ---
+> >  mm/memory-tiers.c | 85 +++++++++++++++++++++++++++++++++++++++--------
+> >  1 file changed, 72 insertions(+), 13 deletions(-)
+> >
+> > diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+> > index 974af10cfdd8..610db9581ba4 100644
+> > --- a/mm/memory-tiers.c
+> > +++ b/mm/memory-tiers.c
+> > @@ -36,6 +36,11 @@ struct node_memory_type_map {
+> >
+> >  static DEFINE_MUTEX(memory_tier_lock);
+> >  static LIST_HEAD(memory_tiers);
+> > +/*
+> > + * The list is used to store all memory types that are not created
+> > + * by a device driver.
+> > + */
+> > +static LIST_HEAD(default_memory_types);
+> >  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
+> >  struct memory_dev_type *default_dram_type;
+> >
+> > @@ -108,6 +113,8 @@ static struct demotion_nodes *node_demotion __read_=
+mostly;
+> >
+> >  static BLOCKING_NOTIFIER_HEAD(mt_adistance_algorithms);
+> >
+> > +/* The lock is used to protect `default_dram_perf*` info and nid. */
+> > +static DEFINE_MUTEX(default_dram_perf_lock);
+> >  static bool default_dram_perf_error;
+> >  static struct access_coordinate default_dram_perf;
+> >  static int default_dram_perf_ref_nid =3D NUMA_NO_NODE;
+> > @@ -505,7 +512,8 @@ static inline void __init_node_memory_type(int node=
+, struct memory_dev_type *mem
+> >  static struct memory_tier *set_node_memory_tier(int node)
+> >  {
+> >       struct memory_tier *memtier;
+> > -     struct memory_dev_type *memtype;
+> > +     struct memory_dev_type *mtype =3D default_dram_type;
+> > +     int adist =3D MEMTIER_ADISTANCE_DRAM;
+> >       pg_data_t *pgdat =3D NODE_DATA(node);
+> >
+> >
+> > @@ -514,11 +522,20 @@ static struct memory_tier *set_node_memory_tier(i=
+nt node)
+> >       if (!node_state(node, N_MEMORY))
+> >               return ERR_PTR(-EINVAL);
+> >
+> > -     __init_node_memory_type(node, default_dram_type);
+> > +     mt_calc_adistance(node, &adist);
+> > +     if (node_memory_types[node].memtype =3D=3D NULL) {
+> > +             mtype =3D mt_find_alloc_memory_type(adist, &default_memor=
+y_types);
+> > +             if (IS_ERR(mtype)) {
+> > +                     mtype =3D default_dram_type;
+> > +                     pr_info("Failed to allocate a memory type. Fall b=
+ack.\n");
+> > +             }
+> > +     }
+> >
+> > -     memtype =3D node_memory_types[node].memtype;
+> > -     node_set(node, memtype->nodes);
+> > -     memtier =3D find_create_memory_tier(memtype);
+> > +     __init_node_memory_type(node, mtype);
+> > +
+> > +     mtype =3D node_memory_types[node].memtype;
+> > +     node_set(node, mtype->nodes);
+> > +     memtier =3D find_create_memory_tier(mtype);
+> >       if (!IS_ERR(memtier))
+> >               rcu_assign_pointer(pgdat->memtier, memtier);
+> >       return memtier;
+> > @@ -655,6 +672,34 @@ void mt_put_memory_types(struct list_head *memory_=
+types)
+> >  }
+> >  EXPORT_SYMBOL_GPL(mt_put_memory_types);
+> >
+> > +/*
+> > + * This is invoked via `late_initcall()` to initialize memory tiers fo=
+r
+> > + * CPU-less memory nodes after driver initialization, which is
+> > + * expected to provide `adistance` algorithms.
+> > + */
+> > +static int __init memory_tier_late_init(void)
+> > +{
+> > +     int nid;
+> > +
+> > +     mutex_lock(&memory_tier_lock);
+> > +     for_each_node_state(nid, N_MEMORY)
+> > +             if (!node_state(nid, N_CPU) &&
+> > +                     node_memory_types[nid].memtype =3D=3D NULL)
+> > +                     /*
+> > +                      * Some device drivers may have initialized memor=
+y tiers
+> > +                      * between `memory_tier_init()` and `memory_tier_=
+late_init()`,
+> > +                      * potentially bringing online memory nodes and
+> > +                      * configuring memory tiers. Exclude them here.
+> > +                      */
+> > +                     set_node_memory_tier(nid);
+> > +
+> > +     establish_demotion_targets();
+> > +     mutex_unlock(&memory_tier_lock);
+> > +
+> > +     return 0;
+> > +}
+> > +late_initcall(memory_tier_late_init);
+> > +
+> >  static void dump_hmem_attrs(struct access_coordinate *coord, const cha=
+r *prefix)
+> >  {
+> >       pr_info(
+> > @@ -668,7 +713,6 @@ int mt_set_default_dram_perf(int nid, struct access=
+_coordinate *perf,
+> >  {
+> >       int rc =3D 0;
+> >
+> > -     mutex_lock(&memory_tier_lock);
+> >       if (default_dram_perf_error) {
+> >               rc =3D -EIO;
+> >               goto out;
+> > @@ -680,6 +724,7 @@ int mt_set_default_dram_perf(int nid, struct access=
+_coordinate *perf,
+> >               goto out;
+> >       }
+> >
+> > +     mutex_lock(&default_dram_perf_lock);
+>
+> Why do you move the position of locking?  mutex_lock/unlock() will be
+> unbalance for error path above.
+>
 
-When flushing multiple elemes,
-the used_idx should be added to all the privious numeric entry value.
+Because you've mentioned below that moving the lock to the
+beginning of the function will make the code easier to understand,
+I will move the lock to the beginning of the function.
 
-Signed-off-by: Wafer <wafer@jaguarmicro.com>
----
- hw/virtio/virtio.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+Perhaps the explanation may no longer be relevant; because reading
+`default_dram_perf_error` and `perf->*` do not require
+holding `default_dram_perf_lock`, but I forgot to replace
+"rc =3D -EXXX ; goto out;" with return -EXXX.
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index d229755eae..44f1d2fcfc 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -957,12 +957,17 @@ static void virtqueue_packed_flush(VirtQueue *vq, unsigned int count)
-         return;
-     }
- 
-+    /*
-+     * When the descriptor's flag was 'INDIRECT', the value of 'ndescs' is one.
-+     * When the descriptor's flag was 'chain', the value of 'ndescs'
-+     * is the number of entries.
-+     */
-+    ndescs += vq->used_elems[0].ndescs;
-     for (i = 1; i < count; i++) {
--        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], i, false);
-+        virtqueue_packed_fill_desc(vq, &vq->used_elems[i], ndescs, false);
-         ndescs += vq->used_elems[i].ndescs;
-     }
-     virtqueue_packed_fill_desc(vq, &vq->used_elems[0], 0, true);
--    ndescs += vq->used_elems[0].ndescs;
- 
-     vq->inuse -= ndescs;
-     vq->used_idx += ndescs;
--- 
-2.27.0
+> >       if (default_dram_perf_ref_nid =3D=3D NUMA_NO_NODE) {
+> >               default_dram_perf =3D *perf;
+> >               default_dram_perf_ref_nid =3D nid;
+> > @@ -716,23 +761,26 @@ int mt_set_default_dram_perf(int nid, struct acce=
+ss_coordinate *perf,
+> >       }
+> >
+> >  out:
+> > -     mutex_unlock(&memory_tier_lock);
+> > +     mutex_unlock(&default_dram_perf_lock);
+> >       return rc;
+> >  }
+> >
+> >  int mt_perf_to_adistance(struct access_coordinate *perf, int *adist)
+> >  {
+> > +     int rc =3D 0;
+> > +
+> >       if (default_dram_perf_error)
+> >               return -EIO;
+> >
+> > -     if (default_dram_perf_ref_nid =3D=3D NUMA_NO_NODE)
+> > -             return -ENOENT;
+> > -
+> >       if (perf->read_latency + perf->write_latency =3D=3D 0 ||
+> >           perf->read_bandwidth + perf->write_bandwidth =3D=3D 0)
+> >               return -EINVAL;
+> >
+> > -     mutex_lock(&memory_tier_lock);
+> > +     mutex_lock(&default_dram_perf_lock);
+>
+> It may be a little better to move lock position at the begin of the
+> function.  This will not avoid race condition (not harmful in practice)
+> but it will make code easier to be understood.
+>
 
+No problem. I will move the lock to the beginning of the function and
+take care of all error paths.
+
+> > +     if (default_dram_perf_ref_nid =3D=3D NUMA_NO_NODE) {
+> > +             rc =3D -ENOENT;
+> > +             goto out;
+> > +     }
+> >       /*
+> >        * The abstract distance of a memory node is in direct proportion=
+ to
+> >        * its memory latency (read + write) and inversely proportional t=
+o its
+> > @@ -745,8 +793,10 @@ int mt_perf_to_adistance(struct access_coordinate =
+*perf, int *adist)
+> >               (default_dram_perf.read_latency + default_dram_perf.write=
+_latency) *
+> >               (default_dram_perf.read_bandwidth + default_dram_perf.wri=
+te_bandwidth) /
+> >               (perf->read_bandwidth + perf->write_bandwidth);
+> > -     mutex_unlock(&memory_tier_lock);
+> > +     mutex_unlock(&default_dram_perf_lock);
+> >
+> > +out:
+> > +     mutex_unlock(&default_dram_perf_lock);
+> >       return 0;
+> >  }
+> >  EXPORT_SYMBOL_GPL(mt_perf_to_adistance);
+> > @@ -858,7 +908,8 @@ static int __init memory_tier_init(void)
+> >        * For now we can have 4 faster memory tiers with smaller adistan=
+ce
+> >        * than default DRAM tier.
+> >        */
+> > -     default_dram_type =3D alloc_memory_type(MEMTIER_ADISTANCE_DRAM);
+> > +     default_dram_type =3D mt_find_alloc_memory_type(MEMTIER_ADISTANCE=
+_DRAM,
+> > +                                                                     &=
+default_memory_types);
+> >       if (IS_ERR(default_dram_type))
+> >               panic("%s() failed to allocate default DRAM tier\n", __fu=
+nc__);
+> >
+> > @@ -868,6 +919,14 @@ static int __init memory_tier_init(void)
+> >        * types assigned.
+> >        */
+> >       for_each_node_state(node, N_MEMORY) {
+> > +             if (!node_state(node, N_CPU))
+> > +                     /*
+> > +                      * Defer memory tier initialization on CPUless nu=
+ma nodes.
+> > +                      * These will be initialized after firmware and d=
+evices are
+> > +                      * initialized.
+> > +                      */
+> > +                     continue;
+> > +
+> >               memtier =3D set_node_memory_tier(node);
+> >               if (IS_ERR(memtier))
+> >                       /*
+>
+> --
+> Best Regards,
+> Huang, Ying
+
+
+
+--=20
+Best regards,
+Ho-Ren (Jack) Chuang
+=E8=8E=8A=E8=B3=80=E4=BB=BB
 
