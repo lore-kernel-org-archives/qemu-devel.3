@@ -4,103 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC13C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 09:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F531C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 09:52:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpPu2-00014A-LY; Wed, 27 Mar 2024 05:49:02 -0400
+	id 1rpPwY-0002FO-T4; Wed, 27 Mar 2024 05:51:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rpPu1-00013d-Aa
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:49:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1rpPtz-00060i-TC
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:49:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711532938;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=f1UQkypibsieyW5RAtcoMZs1s43WqN5lVIYVjYbct6Q=;
- b=ERtLmg9Z5/ag9Hwi7vRMjRulbytIY9FBtz/IQTH98locY9UiNxZvwvdbyYUphzC9iWMase
- Kr5NBerBeIfsPXEXTNsSeB5s8EIuziUJGAMD2b4m7aQ/m80xMHKKaCLUggdp2XOEsJX0//
- rO/rvN3lxMHxQAblVvPhkvr5cGFGtew=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-zWE83fv_OfO9edm6W37kCQ-1; Wed, 27 Mar 2024 05:48:56 -0400
-X-MC-Unique: zWE83fv_OfO9edm6W37kCQ-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5689f41cf4dso4386795a12.3
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:48:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711532935; x=1712137735;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpPwX-0002F6-7q
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:51:37 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpPwV-0006cM-DY
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:51:37 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-56bf6591865so6191541a12.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:51:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711533093; x=1712137893; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f1UQkypibsieyW5RAtcoMZs1s43WqN5lVIYVjYbct6Q=;
- b=p7B+G9ennBkksGGEk8nkorotBcrnkJLncPzAapk+tlVkxKMkXE2iowj61baQ012+Sm
- 76RvFac3UiDf2ceZ3xwNn7a8KD0Inhcp+OtJoh54dVbP+p7Wx9o+WQ1v5Ik4xotLtZG9
- hlmh8gCnv0L3KF+Gxpk15sNdqTbH6mf9nKB8m3VTQCqPVr658uVszGzFWNR2j9EZd11Z
- fOF1i2mr/FZGKzA63EdM74sHf4i6VKzH6W4M4qIs4w4cRvE6dgf7E9QWgBYylSm4p9vP
- MeJH5Hdb63BDkF8vNexUx26hARwPH7G0jw9xl8UjD6Nr962d0DQ/GEu0CUQBbDgCIhwn
- e+tQ==
-X-Gm-Message-State: AOJu0YzenWl1kwCXGwMv1NxyDx1JUEAloAzbSohqnxqBXO3Yxc5kCD9b
- exwDM0fZDRrh93SahtR7j7m71NygiR4HUAlltsiepiGdaTMAnpOT5XWfckL1Nb3Vu7wQYtNha3o
- 78dg8Abu1XPQZNfg+/TMW3M8edP4t/FhlJMuvjM5jgBtyab5tcRxz
-X-Received: by 2002:a50:d71e:0:b0:568:cdf3:5cb2 with SMTP id
- t30-20020a50d71e000000b00568cdf35cb2mr637374edi.30.1711532935730; 
- Wed, 27 Mar 2024 02:48:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFnTetmFqqzKg2lE36w9BF3BE6JgJek8vvTZF4Wn+vQejeaBYcz8wW+Bks+1SjLg0P5NuUEZw==
-X-Received: by 2002:a50:d71e:0:b0:568:cdf3:5cb2 with SMTP id
- t30-20020a50d71e000000b00568cdf35cb2mr637348edi.30.1711532935413; 
- Wed, 27 Mar 2024 02:48:55 -0700 (PDT)
-Received: from sgarzare-redhat (host-87-12-25-33.business.telecomitalia.it.
- [87.12.25.33]) by smtp.gmail.com with ESMTPSA id
- c13-20020a056402100d00b00568abb329a3sm5122881edu.88.2024.03.27.02.48.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Mar 2024 02:48:54 -0700 (PDT)
-Date: Wed, 27 Mar 2024 10:48:51 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- gmaglione@redhat.com, Eduardo Habkost <eduardo@habkost.net>, 
- Hanna Reitz <hreitz@redhat.com>, stefanha@redhat.com,
- Coiby Xu <Coiby.Xu@gmail.com>, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, Raphael Norwitz <raphael@enfabrica.net>,
- slp@redhat.com, 
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- David Hildenbrand <david@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Brad Smith <brad@comstyle.com>,
- qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>
-Subject: Re: [PATCH for-9.1 v2 04/11] vhost-user-server: don't abort if we
- can't set fd non-blocking
-Message-ID: <x5hjumv6dfqam4d7dvgzi4cw6yhdlnjxrxbpgkm5476z54he2p@ei3ivej3g5wx>
-References: <20240326133936.125332-1-sgarzare@redhat.com>
- <20240326133936.125332-5-sgarzare@redhat.com>
- <img3eawf5augdcdnrw6i2bteobxo46wjibdfzugnfikgpi7xuk@2izhutalpmwg>
+ bh=nBAy082BGnicpTR9HTkkFTBoGpDwmw0PRBVIrlqsu0g=;
+ b=bvsrENBNyBTi72XTAyP7IbOMKmFqRwLZDQXozlVxVpjW+Vf+tGf2kEDB+r4PrNIGOH
+ QcZbIwF/d/QQJ3H9STROQ55FDixzeR3VNUkebvMntYr3x2Qj+JeqneJpTS9kN7mLp74s
+ 2YaL/eDyE/NkpD78ykxs5no4Az0piPrSPIQMZNmflRoDi3KHr8GrkXdRvef6z05cCDRA
+ SoR3uHwezKdRYDixhtHMmCtniOL3ClR/igE1mZEVZUVGViKfssXy1vYskMQluSHZWgKi
+ fQW1TojObe+qLz+cCEilGnaZfJeU5zlyaTVxi0xRrrYjuz60xAdkAsYN0yKQ+Mu1no9K
+ ZV2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711533093; x=1712137893;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nBAy082BGnicpTR9HTkkFTBoGpDwmw0PRBVIrlqsu0g=;
+ b=OiqrGBZrRW85Jn5kzmjuPSaOE5DMoX5lE3/aw5RRPP0ItDOGSJ9wtDvrgWeKS+hpNA
+ IpSEJAU60i8zDUyiXeFCrOwhB/fP4b/syISOCt3ak8SWtEwfNCTkgMKAkhIeoKL96Uem
+ zaWTfPqq+Y9OO/zCx1w0b+bTlQpaUUIeiD3ZAgdwG3iM/xlgN+lODrlRe+VlF2akbzwm
+ HQ7L8pO4A0XgFhwaYKm9FbQYD1YR91t8RwC6pcLaTnRF45T8qSQYz8+KppSThsYUwN+U
+ jvUK6RPekOVT8AHV63D3L6LImK8g8Nz667XOsO1OcJ2pQzv31+LlxBCZqqlmAgWlllOG
+ tuXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXlcvu19RmtxYj8ea5wz+SaeJQ+n5seuPTwJ6h5vxLA/nnXoIGZRg0ala9suahFqETs65ozkQ34RQW8JCZf8Cvvqhm1Cks=
+X-Gm-Message-State: AOJu0Yy1NHUaVrLka2RNRupAqW6f8vNLrZlpTr5BMvQ6m/CzLfSyAVpv
+ IwilePfZA5UtLG4E3DZxYWUpPGs+r9mgAPIGkTvCCbDgyxu1n4eUa89aTHnuuZw=
+X-Google-Smtp-Source: AGHT+IHRy81znAmxXO5ClOjnVu9DCPLIi8FYLPm1Dap94aWRip8C28mC3sIkpREG+9zqQDJivRmG9A==
+X-Received: by 2002:a17:906:53ce:b0:a47:3526:81a3 with SMTP id
+ p14-20020a17090653ce00b00a47352681a3mr2425820ejo.48.1711533093526; 
+ Wed, 27 Mar 2024 02:51:33 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.205.175])
+ by smtp.gmail.com with ESMTPSA id
+ x15-20020a1709060a4f00b00a455519bcb3sm5236741ejf.55.2024.03.27.02.51.31
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 27 Mar 2024 02:51:32 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Zhao Liu <zhao1.liu@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH-for-9.1 v2 01/21] hw/i386/pc: Remove deprecated pc-i440fx-2.0
+ machine
+Date: Wed, 27 Mar 2024 10:51:03 +0100
+Message-ID: <20240327095124.73639-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240327095124.73639-1-philmd@linaro.org>
+References: <20240327095124.73639-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <img3eawf5augdcdnrw6i2bteobxo46wjibdfzugnfikgpi7xuk@2izhutalpmwg>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,74 +102,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 26, 2024 at 09:40:12AM -0500, Eric Blake wrote:
->On Tue, Mar 26, 2024 at 02:39:29PM +0100, Stefano Garzarella wrote:
->> In vhost-user-server we set all fd received from the other peer
->> in non-blocking mode. For some of them (e.g. memfd, shm_open, etc.)
->> if we fail, it's not really a problem, because we don't use these
->> fd with blocking operations, but only to map memory.
->>
->> In these cases a failure is not bad, so let's just report a warning
->> instead of panicking if we fail to set some fd in non-blocking mode.
->>
->> This for example occurs in macOS where setting shm_open() fd
->> non-blocking is failing (errno: 25).
->
->What is errno 25 on MacOS?
+The pc-i440fx-2.0 machine was deprecated for the 8.2
+release (see commit c7437f0ddb "docs/about: Mark the
+old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
+time to remove it.
 
-It should be ENOTTY.
-I'll add in the commit description.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240305134221.30924-2-philmd@linaro.org>
+---
+ docs/about/deprecated.rst       |  2 +-
+ docs/about/removed-features.rst |  2 +-
+ include/hw/i386/pc.h            |  3 ---
+ hw/i386/pc.c                    | 15 -------------
+ hw/i386/pc_piix.c               | 37 ---------------------------------
+ 5 files changed, 2 insertions(+), 57 deletions(-)
 
->
->>
->> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
->> ---
->>  util/vhost-user-server.c | 6 +++++-
->>  1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/util/vhost-user-server.c b/util/vhost-user-server.c
->> index 3bfb1ad3ec..064999f0b7 100644
->> --- a/util/vhost-user-server.c
->> +++ b/util/vhost-user-server.c
->> @@ -66,7 +66,11 @@ static void vmsg_unblock_fds(VhostUserMsg *vmsg)
->>  {
->>      int i;
->>      for (i = 0; i < vmsg->fd_num; i++) {
->> -        qemu_socket_set_nonblock(vmsg->fds[i]);
->> +        int ret = qemu_socket_try_set_nonblock(vmsg->fds[i]);
->> +        if (ret) {
->
->Should this be 'if (ret < 0)'?
-
-I was confused by the assert() in qemu_socket_set_nonblock():
-     void qemu_socket_set_nonblock(int fd)
-     {
-         int f;
-         f = qemu_socket_try_set_nonblock(fd);
-         assert(f == 0);
-     }
-
-BTW, I see most of the code checks ret < 0, so I'll fix it.
-
->
->> +            warn_report("Failed to set fd %d nonblock for request %d: %s",
->> +                        vmsg->fds[i], vmsg->request, strerror(-ret));
->> +        }
->
->This now ignores all errors even on pre-existing fds where we NEED
->non-blocking, rather than just the specific (expected) error we are
->seeing on MacOS.  Should this code be a bit more precise about
->checking that -ret == EXXX for the expected errno value we are
->ignoring for the specific fds where non-blocking is not essential?
-
-Good point, maybe I'll just avoid calling vmsg_unblock_fds() when the
-message is VHOST_USER_ADD_MEM_REG or VHOST_USER_SET_MEM_TABLE.
-
-These should be the cases where carried fds are used for mmap() and so
-there is no need to mark them non-blocking.
-
-WDYT?
-
-Stefano
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 7b548519b5..b567415d62 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -219,7 +219,7 @@ deprecated; use the new name ``dtb-randomness`` instead. The new name
+ better reflects the way this property affects all random data within
+ the device tree blob, not just the ``kaslr-seed`` node.
+ 
+-``pc-i440fx-2.0`` up to ``pc-i440fx-2.3`` (since 8.2)
++``pc-i440fx-2.1`` up to ``pc-i440fx-2.3`` (since 8.2)
+ '''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ These old machine types are quite neglected nowadays and thus might have
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index f9cf874f7b..51119e623f 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -816,7 +816,7 @@ mips ``fulong2e`` machine alias (removed in 6.0)
+ 
+ This machine has been renamed ``fuloong2e``.
+ 
+-``pc-0.10`` up to ``pc-i440fx-1.7`` (removed in 4.0 up to 8.2)
++``pc-0.10`` up to ``pc-i440fx-2.0`` (removed in 4.0 up to 9.0)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ These machine types were very old and likely could not be used for live
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 27a68071d7..67856f54c3 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -285,9 +285,6 @@ extern const size_t pc_compat_2_2_len;
+ extern GlobalProperty pc_compat_2_1[];
+ extern const size_t pc_compat_2_1_len;
+ 
+-extern GlobalProperty pc_compat_2_0[];
+-extern const size_t pc_compat_2_0_len;
+-
+ #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+     static void pc_machine_##suffix##_class_init(ObjectClass *oc, void *data) \
+     { \
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index e80f02bef4..e7b6abf237 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -311,21 +311,6 @@ GlobalProperty pc_compat_2_1[] = {
+ };
+ const size_t pc_compat_2_1_len = G_N_ELEMENTS(pc_compat_2_1);
+ 
+-GlobalProperty pc_compat_2_0[] = {
+-    PC_CPU_MODEL_IDS("2.0.0")
+-    { "virtio-scsi-pci", "any_layout", "off" },
+-    { "PIIX4_PM", "memory-hotplug-support", "off" },
+-    { "apic", "version", "0x11" },
+-    { "nec-usb-xhci", "superspeed-ports-first", "off" },
+-    { "nec-usb-xhci", "force-pcie-endcap", "on" },
+-    { "pci-serial", "prog_if", "0" },
+-    { "pci-serial-2x", "prog_if", "0" },
+-    { "pci-serial-4x", "prog_if", "0" },
+-    { "virtio-net-pci", "guest_announce", "off" },
+-    { "ICH9-LPC", "memory-hotplug-support", "off" },
+-};
+-const size_t pc_compat_2_0_len = G_N_ELEMENTS(pc_compat_2_0);
+-
+ GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled)
+ {
+     GSIState *s;
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 18ba076609..585231ef7b 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -441,11 +441,6 @@ static void pc_compat_2_1_fn(MachineState *machine)
+     x86_cpu_change_kvm_default("svm", NULL);
+ }
+ 
+-static void pc_compat_2_0_fn(MachineState *machine)
+-{
+-    pc_compat_2_1_fn(machine);
+-}
+-
+ #ifdef CONFIG_ISAPC
+ static void pc_init_isa(MachineState *machine)
+ {
+@@ -872,38 +867,6 @@ static void pc_i440fx_2_1_machine_options(MachineClass *m)
+ DEFINE_I440FX_MACHINE(v2_1, "pc-i440fx-2.1", pc_compat_2_1_fn,
+                       pc_i440fx_2_1_machine_options);
+ 
+-static void pc_i440fx_2_0_machine_options(MachineClass *m)
+-{
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    pc_i440fx_2_1_machine_options(m);
+-    m->hw_version = "2.0.0";
+-    compat_props_add(m->compat_props, pc_compat_2_0, pc_compat_2_0_len);
+-    pcmc->smbios_legacy_mode = true;
+-    pcmc->has_reserved_memory = false;
+-    /* This value depends on the actual DSDT and SSDT compiled into
+-     * the source QEMU; unfortunately it depends on the binary and
+-     * not on the machine type, so we cannot make pc-i440fx-1.7 work on
+-     * both QEMU 1.7 and QEMU 2.0.
+-     *
+-     * Large variations cause migration to fail for more than one
+-     * consecutive value of the "-smp" maxcpus option.
+-     *
+-     * For small variations of the kind caused by different iasl versions,
+-     * the 4k rounding usually leaves slack.  However, there could be still
+-     * one or two values that break.  For QEMU 1.7 and QEMU 2.0 the
+-     * slack is only ~10 bytes before one "-smp maxcpus" value breaks!
+-     *
+-     * 6652 is valid for QEMU 2.0, the right value for pc-i440fx-1.7 on
+-     * QEMU 1.7 it is 6414.  For RHEL/CentOS 7.0 it is 6418.
+-     */
+-    pcmc->legacy_acpi_table_size = 6652;
+-    pcmc->acpi_data_size = 0x10000;
+-}
+-
+-DEFINE_I440FX_MACHINE(v2_0, "pc-i440fx-2.0", pc_compat_2_0_fn,
+-                      pc_i440fx_2_0_machine_options);
+-
+ #ifdef CONFIG_ISAPC
+ static void isapc_machine_options(MachineClass *m)
+ {
+-- 
+2.41.0
 
 
