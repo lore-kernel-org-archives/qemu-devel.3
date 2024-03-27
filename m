@@ -4,51 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3AC0C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 08:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D31BAC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 08:53:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpOwT-00076B-TB; Wed, 27 Mar 2024 04:47:29 -0400
+	id 1rpP1s-00006C-CM; Wed, 27 Mar 2024 04:53:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1rpOwP-00075p-Uc
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 04:47:26 -0400
+ id 1rpP1q-00005k-At
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 04:53:02 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1rpOwN-0003VW-Rj
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 04:47:25 -0400
+ id 1rpP1o-0004ju-Pb
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 04:53:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
  MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
  Content-ID:Content-Description;
- bh=7j0YcMrREnK3u0fvyxgGBNYdAQaM3z+OSYMSM/ZErGI=; b=CywOtvZqquTXOXJzo+Hx6Mphc6
- WYwBu7wcunsrLXjlYTAGA3eM3wu7TJQdvhM2gYGsRF1CODc3G9T10AxnEUbuh9KJxoFAXzLbLZw74
- jmMxIO+WF6sUzT3grAwgSEo0fx8buWKLcshNhwn+4rOseeye1hds/63F/xcFXE3PVWw7HakhDRDQW
- hPmXMp/0wuS+5aEZRZAnNGIJhoZPi0fkGDw+QjB9oi/b0J/v5vnnSnmfGmcP7+VaN2smtCFzQdPP1
- X7m2SGSesLoMg0kMqZOYNYQwuCSYT+Ece+3JZvKGKj1ijEUAqYmW8xfctUeau0hbHLc/nnW0BAovz
- 9F+FJmAwHvsYh8BwsUskdwK6U5aFN4toYoqRbyoIq8TiegO4UBfMd3926EZCouP2e+kADvxaIlMju
- 3hMhTblOwnSkG1qSddq5g2xiiYdbZP2CAFzKjaW8ZB377aVfiylPIiC90C+egpg9QuZIaZ6pnnOSy
- MZZjfygoHQp5ERNweLCYz5/S55f4jPD7hJ1zwF3mhne56GqhDKXUhRTtbGAUUZB7LPT+ur5noU0pc
- sYx2pGodoeHOrf4HsvpfOxEqoAVlm2tcwhWRpwbYXdt7YPuTQJhQDPJ0/cP/teqLSlwooKm2Ut1Eh
- UPCl4UoZfRm28iv5K43PRB4M2PFKrD3uJIY8SWvpQ=;
+ bh=Mo04SwzJRirM/etuzgoo7EYZyAYiQ6E4CGT+DJfdlu4=; b=PVRwIp61vFyZ2G4Od9sBhJY6lP
+ 972tMzGNvgST/9fq5T2bCnfyxqEmyc6YEa2HxJuA4tj3M/rqrK7Xq4A7YYYI4zCZfAJ8rgF663tQq
+ 7a5bim5JarIuKXma5Y0zTPhxOaWPf3kQoR2UJOXv/1V0bWjoyaeJ5Ge5auFfwwCwzgbeYr/ArhBYl
+ JAZmq8eWKNJQU7qOBadg5ZidE3LwC1qu3eQnqV6uZ56VNZeAIfleYQ8B6lc+vWoRbZ6B2cCxT8Uu9
+ Pa/jS2fhIHk60wAIpWIbFBugalRhbuQ7DpRvIdnkqzdNvteEDbjJCtX4q/aHxCIM10LHf/2oetDX8
+ fyGqBi0L8ny5H3FinNF25XaD6+78mC74T6f5iTN72QuC4WApTUZPEyjM+F8UOOMMGHeNXUmTp/tSB
+ wSME//MpNZZ+AQTxbYtzGuEBqD758tUUeLhgkcp/3g6DkqRB+5kYPJ4Z3XxH8+AxcE0fydK9RGrm6
+ AQqfBoBvTnImd9bsO7mEMpzI5XyExfhdSY90ZSpI5MrE8YAioOhuG78fuGw6L2IEA2hCN8/M9N9qN
+ inSZsd8qvS03xMfhj7DpGU6VTXkYyQ4Hv7VLV23AWMjsHl1fxUuZwdA1isewLSRUv1hQIRWtUzNoW
+ Fc3kUzDGn+z6MEHumqQmeOM82vkJnNZv0wtTsjiRk=;
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 To: Greg Kurz <groug@kaod.org>, qemu-devel@nongnu.org
 Cc: qemu-devel@nongnu.org, thuth@redhat.com, alistair.francis@wdc.com,
  peter.maydell@linaro.org, Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: Re: [PATCH for-9.0 1/3] qtest/virtio-9p-test.c: consolidate create
- dir, file and symlink tests
-Date: Wed, 27 Mar 2024 09:47:19 +0100
-Message-ID: <190171404.Ysjo4HZYI3@silver>
-In-Reply-To: <1f73d065-fcf6-4466-bc86-c8fdbae7bd96@ventanamicro.com>
+Subject: Re: [PATCH for-9.0 0/3] qtest/virtio-9p-test.c: fix slow tests
+Date: Wed, 27 Mar 2024 09:52:58 +0100
+Message-ID: <3619944.yRKTfBRQAU@silver>
+In-Reply-To: <087af5f3-dfcd-4888-936c-0ffdd955459a@ventanamicro.com>
 References: <20240326132606.686025-1-dbarboza@ventanamicro.com>
- <20240326180550.3072dd2d@bahia>
- <1f73d065-fcf6-4466-bc86-c8fdbae7bd96@ventanamicro.com>
+ <20240326165550.05d083da@bahia>
+ <087af5f3-dfcd-4888-936c-0ffdd955459a@ventanamicro.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 Received-SPF: pass client-ip=5.189.157.229;
  envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
@@ -72,65 +71,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tuesday, March 26, 2024 6:47:17 PM CET Daniel Henrique Barboza wrote:
-> On 3/26/24 14:05, Greg Kurz wrote:
-> > On Tue, 26 Mar 2024 10:26:04 -0300
+On Tuesday, March 26, 2024 5:07:16 PM CET Daniel Henrique Barboza wrote:
+>=20
+> On 3/26/24 12:55, Greg Kurz wrote:
+> > Bom dia Daniel !
+>=20
+> Bonne apr=E8s-midi !
+>=20
+> >=20
+> > On Tue, 26 Mar 2024 10:26:03 -0300
 > > Daniel Henrique Barboza <dbarboza@ventanamicro.com> wrote:
-> > 
-> >> The local 9p driver in virtio-9p-test.c its temporary dir right at the
-> >> start of qos-test (via virtio_9p_create_local_test_dir()) and only
-> >> deletes it after qos-test is finished (via
-> >> virtio_9p_remove_local_test_dir()).
+> >=20
+> >> Hi,
 > >>
-> >> This means that any qos-test machine that ends up running virtio-9p-test local
-> >> tests more than once will end up re-using the same temp dir. This is
-> >> what's happening in [1] after we introduced the riscv machine nodes: if
-> >> we enable slow tests with the '-m slow' flag using qemu-system-riscv64,
-> >> this is what happens:
+> >> Thomas reported in [1] a problem that happened with the RISC-V machine
+> >> where some tests from virtio-9p-test.c were failing with '-m slow', i.=
+e.
+> >> enabling slow tests.
 > >>
-> >> - a temp dir is created, e.g. qtest-9p-local-WZLDL2;
+> >> In the end it wasn't a RISC-V specific problem. It just so happens that
+> >> the recently added riscv machine nodes runs the tests from
+> >> virtio-9p-test two times for each qos-test run: one with the
+> >> virtio-9p-device device and another with the virtio-9p-pci. The temp d=
+ir
+> >> for these tests is being created at the start of qos-test and removed
+> >> only at the end of qos-test, and the tests are leaving dirs and files
+> >> behind. virtio-9-device tests run first, creates stuff in the temp dir,
+> >> then when virtio-9p-pci tests runs again it'll fail because the previo=
+us
+> >> run left created dirs and files in the same temp dir. Here's a run that
+> >> exemplifies the problem:
 > >>
-> >> - virtio-9p-device tests will run virtio-9p-test successfully;
+> >> $ MALLOC_PERTURB_=3D21 V=3D2 QTEST_QEMU_BINARY=3D./qemu-system-riscv64=
+ ./tests/qtest/qos-test -m slow
+> >> (...)
+> >> # starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-621=
+710.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-621710.qmp,=
+id=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -M=
+ virt,aclint=3Don,aia=3Daplic-imsic -fsdev local,id=3Dfsdev0,path=3D'/home/=
+danielhb/work/qemu/build/qtest-9p-local-7E16K2',security_model=3Dmapped-xat=
+tr -device virtio-9p-device,fsdev=3Dfsdev0,mount_tag=3Dqtest -accel qtest
+> >> ( goes ok ...)
+> >> # starting QEMU: exec ./qemu-system-riscv64 -qtest unix:/tmp/qtest-621=
+710.sock -qtest-log /dev/null -chardev socket,path=3D/tmp/qtest-621710.qmp,=
+id=3Dchar0 -mon chardev=3Dchar0,mode=3Dcontrol -display none -audio none -M=
+ virt,aclint=3Don,aia=3Daplic-imsic -fsdev local,id=3Dfsdev0,path=3D'/home/=
+danielhb/work/qemu/build/qtest-9p-local-7E16K2',security_model=3Dmapped-xat=
+tr -device virtio-9p-pci,fsdev=3Dfsdev0,addr=3D04.0,mount_tag=3Dqtest -acce=
+l qtest
+> >> ok 168 /riscv64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-9p=
+=2Dpci/virtio-9p/virtio-9p-tests/local/config
+> >> Received response 7 (RLERROR) instead of 73 (RMKDIR)
+> >> Rlerror has errno 17 (File exists)
+> >> **
+> >> ERROR:../tests/qtest/libqos/virtio-9p-client.c:275:v9fs_req_recv: asse=
+rtion failed (hdr.id =3D=3D id): (7 =3D=3D 73)
 > >>
-> >> - virtio-9p-pci tests will run virtio-9p-test, and fail right at the
-> >>    first slow test at fs_create_dir() because the "01" file was already
-> >>    created by fs_create_dir() test when running with the virtio-9p-device.
+> >> As we can see we're running both 'virtio-9p-device' tests and 'virtio-=
+9p-pci'
+> >> tests using the same '/home/danielhb/work/qemu/build/qtest-9p-local-7E=
+16K2'
+> >> temp dir.
 > >>
-> >> We can fix it by making every test clean up their changes in the
-> >> filesystem after they're done. But we don't need every test either:
-> >> what fs_create_file() does is already exercised in fs_unlinkat_dir(),
-> >> i.e. a dir is created, verified to be created, and then removed. Fixing
-> >> fs_create_file() would turn it into fs_unlikat_dir(), so we don't need
-> >> both. The same theme follows every test in virtio-9p-test.c, where the
-> >> 'unlikat' variant does the same thing the 'create' does but with some
-> >> cleaning in the end.
+> >=20
+> >=20
+> > Good catch ! I'll try to find some time to review.
+> >=20
+> >> The quick fix I came up with was to make each test clean themselves up
+> >> after each run. The tests were also consolidated, i.e. fewer tests wit=
+h the
+> >> same coverage, because the 'unlikat' tests were doing the same thing t=
+he
+> >> 'create' tests were doing but removing stuff after. Might as well keep=
+ just
+> >> the 'unlikat' tests.
 > >>
-> >> Consolide some tests as follows:
+> >=20
+> > As long as coverage is preserved, I'm fine with consolidation of the
+> > checks. In any case, last call goes to Christian.
+> >=20
+> >> I also went ahead and reverted 558f5c42efd ("tests/9pfs: Mark "local"
+> >> tests as "slow"") after realizing that the problem I was fixing is also
+> >> the same problem that this patch was trying to working around with the
+> >> skip [2]. I validated this change in this Gitlab pipeline:
 > >>
-> >> - fs_create_dir() is removed. fs_unlinkat_dir() is renamed to
-> >>    fs_create_unlinkat_dir();
-> >>
-> >> - fs_create_file() is removed. fs_unlinkat_file() is renamed to
-> >>    fs_create_unlinkat_file(). The "04" dir it uses is now being removed;
-> >>
-> >> - fs_symlink_file() is removed. fs_unlinkat_symlink() is renamed to
-> >>    fs_create_unlinkat_symlink(). Both "real_file" and the "06" dir it
-> >>    creates is now being removed.
-> >>
-> > 
-> > The  change looks good functionally but it breaks the legitimate assumption
-> > that files "06/*" come from test #6 and so on... I think you should consider
-> > renumbering to avoid confusion when debugging logs.
-> > 
-> > Since this will bring more hunks, please split this in enough reviewable
-> > patches.
-> 
-> Fair enough. Let me cook a v2. Thanks,
+> >=20
+> > Are you sure with that ? Issues look very similar indeed but not
+> > exactly the same.
+>=20
+> We can skip this revert if we're not sure about it. Gitlab passed with it=
+ but
+> perhaps this isn't evidence enough. I'll let you guys decide.
 
-Wouldn't it be much simpler to just change the name of the temporary
-directory, such that it contains the device name as well? Then these tests
-runs would run on independent directories and won't interfere with each other
-and that wouldn't need much changes I guess.
+I am a bit surprised because errnos were different (file exists vs. not
+supported), but indeed, it did pass in your Gitlab pipeline. So I am fine w=
+ith
+bringing those tests back in on Gitlab.
 
 /Christian
 
