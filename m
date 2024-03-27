@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C41BFC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 17:38:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE442C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 17:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpXDm-0006k2-Sc; Wed, 27 Mar 2024 13:37:54 -0400
+	id 1rpXFG-0007am-90; Wed, 27 Mar 2024 13:39:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpXDl-0006io-6i
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 13:37:53 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpXDj-0003Qz-HO
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 13:37:52 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1e0ae065d24so785665ad.1
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 10:37:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1711561070; x=1712165870; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DzwcFEMtabmVhbLX7E4sRfHTxjIoZH8AZaETBHUghm8=;
- b=VW0CubHchdSCeuXDrlPSpVpRyoGaLXGYTPmKXLrcn9rlU1j3RR3aBjoxm8/STgwsbB
- XJgKIkzfyBB9Znse4xc/H3JQsO0tRKwJnbYw31eoA1pHIOG2lyXqVRaem3jVF0Pi/Scp
- 3/IMqZ3Kbix8sXEStlrCL6v97n73RwzR2Dpub7Yxnge/WIE7FK11VT5RwzZxdRgHxVQa
- GdAyMpt1qj3xf4rLgsF6bh0GSWQ1xrweBfXB+G8a4sHmgTJvXGlpjP3v2KZUa25gNL1z
- 1+Ms/OUJLq//dH2DD5xMB4kIREWu/fimxMHyhI0mxFol5DBIoWXj07PBf57nqjr2bxxk
- +eTw==
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1rpXFE-0007aP-PS
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 13:39:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1rpXFC-0003iC-Pq
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 13:39:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711561160;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/+s/5bKOADtr4YhqJM2+cgt9HQcERQGr9y8REbauQW4=;
+ b=JtEAQyHYBqKqwNKAK3mqCqPSBHX2wEkQD6H2ewbD4w9tSLxj+SI7MRrTF0kcll22bSyFNy
+ 6zpFUuDHI6pp3/Kl5YPw73SqEv4uKajMWteDdNjWamDkUf1jNSInkA2Pl4OfU0//nNAbwA
+ dp+3+ro8o64ZeSiSiPwWgvBL3jsjFus=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-85-BCdtTphsMO-IJ54E8fp_iw-1; Wed, 27 Mar 2024 13:39:18 -0400
+X-MC-Unique: BCdtTphsMO-IJ54E8fp_iw-1
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-3665991058fso972075ab.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 10:39:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711561070; x=1712165870;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DzwcFEMtabmVhbLX7E4sRfHTxjIoZH8AZaETBHUghm8=;
- b=L//ImW1IYHm6aoHZmau0pSscu9PCPwjR8KRuD4F6Y0rNQwdo4YdRQk5b71J/rlYWz0
- LfNRzHBJRkEfGapPoS2iyPH2Zb71yh4pGe9PZ7J6zhZPDC5HR2MqxKfnm7DmcvZqMPGw
- L9et9naPGYbhgmm51dLcW6LO2cqdwdHKhPnboGUxYvLu+mJHVWip+Cp3dy0SJ7+pPN20
- 0q/UE5nWZ4yXBsQTsyviqFhj55K1W6WmSPYv7ScmWFzeapzFQid8wMryT6THIYlfagyr
- WOE2aHEgxpyAq6ZDuIemY1cRn1FNjq64Rm0Rl/cv10/slEzzo9GAFpLhJEToKqg1mlBW
- ksrg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX9UfPWtz22dYwJtT4jLl6jX9MLG5JOKnXeybIQA5Dg1vQM/h8njAaYZ6NXwhiMBYyAjH8bY81uekF3ksjsf6qrTcV3Jj4=
-X-Gm-Message-State: AOJu0Yy7Ab42Lgv+cpwO7k3aVQ634T/UP/fmWz0vRa9HJlH5BjTsEJ++
- dlwQfPvOCS7Gan8axyohUiNEjeViLz2Ev7ScZNpCsSOW/+ULm16Dn9lvdpNLP7s=
-X-Google-Smtp-Source: AGHT+IH/n81E5AglP0oSEENlQh31CCTYBjoK6ajII2iSfUUAkaUJSVJtq26HBTy+tnveBDbSG3DvqQ==
-X-Received: by 2002:a17:902:b116:b0:1dd:7f7c:945f with SMTP id
- q22-20020a170902b11600b001dd7f7c945fmr369625plr.17.1711561070135; 
- Wed, 27 Mar 2024 10:37:50 -0700 (PDT)
-Received: from [192.168.68.110] ([177.45.186.241])
- by smtp.gmail.com with ESMTPSA id
- j11-20020a170902da8b00b001e0c5be4e2esm5878469plx.48.2024.03.27.10.37.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Mar 2024 10:37:49 -0700 (PDT)
-Message-ID: <1151f20f-9fe9-4aa9-a688-e92fa6422dd9@ventanamicro.com>
-Date: Wed, 27 Mar 2024 14:37:45 -0300
+ d=1e100.net; s=20230601; t=1711561157; x=1712165957;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/+s/5bKOADtr4YhqJM2+cgt9HQcERQGr9y8REbauQW4=;
+ b=UnYGuE6zcCNu1q24hIG77IX2bT4rCeGaQWN1Q/Yp7GylrE51wcKJVPhsv9FmZdvfFE
+ JrdwqaCW5xe59iAVajs9gaGgdN9OxsfDkKhiN3zgn3OAq9HRAhVm4xYts2C/yQJr7yLk
+ DVRYf72iKl+gdx72bTn6WNQGTMa1Jwv6lBamXiaXUhaM7fALpQNKDD4qKjLuOVQSxBzB
+ iL348VvjDFAKsDu/7uCUPLy9Fwx3xgUmu6uLZiIqGleisHhW0q5NV4Y6qcWZGnaA3OHB
+ O9kQi45CNenmzRG9nTjw1nECjalB7DLP4zljTk83g2JtEcR3sBmcTT7hg6hvFQRKtF1r
+ ZZ/w==
+X-Gm-Message-State: AOJu0YyMq65MpRJ0CuhaY1BLm18oCyBPVYXT1ViIYMAVI6uVzrjY9MFX
+ Nmh8OM4oTnWvzS5GDTTYGvZKl11TeoiwAypzrW66+P2y7f5q+kRDaO3bqFM0J2z6Bp7peW5UBtC
+ 7KjGzSjV3Toy3tbGReNdNnuoUv4K/00p8tmbCUYx0iezLwLso86Nv
+X-Received: by 2002:a05:6e02:104a:b0:368:8ab5:5926 with SMTP id
+ p10-20020a056e02104a00b003688ab55926mr249478ilj.14.1711561157279; 
+ Wed, 27 Mar 2024 10:39:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKUe8mZYkM8M8mtPHG1OIyuyZQvi/BjfhDQc8fVeTIVtAc6K6DDfez/eDR3cYAn8ATfNHfWg==
+X-Received: by 2002:a05:6e02:104a:b0:368:8ab5:5926 with SMTP id
+ p10-20020a056e02104a00b003688ab55926mr249462ilj.14.1711561157035; 
+ Wed, 27 Mar 2024 10:39:17 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ b1-20020a92db01000000b0036699bc65aesm3683073iln.26.2024.03.27.10.39.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Mar 2024 10:39:16 -0700 (PDT)
+Date: Wed, 27 Mar 2024 11:39:15 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Vinayak Kale <vkale@nvidia.com>
+Cc: <qemu-devel@nongnu.org>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
+ <avihaih@nvidia.com>, <acurrid@nvidia.com>, <cjia@nvidia.com>,
+ <zhiw@nvidia.com>, <targupta@nvidia.com>, <kvm@vger.kernel.org>
+Subject: Re: [PATCH v3] vfio/pci: migration: Skip config space check for
+ Vendor Specific Information in VSC during restore/load
+Message-ID: <20240327113915.19f6256c.alex.williamson@redhat.com>
+In-Reply-To: <20240322064210.1520394-1-vkale@nvidia.com>
+References: <20240322064210.1520394-1-vkale@nvidia.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] target/riscv: Expose Zve32x extension to users
-Content-Language: en-US
-To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20240325083346.16656-1-jason.chien@sifive.com>
- <20240325083346.16656-3-jason.chien@sifive.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240325083346.16656-3-jason.chien@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,36 +104,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I think this patch should be squashed into patch 1. Patch 1 as is
-does nothing since there's no way of enabling the flag without this
-patch.
+On Fri, 22 Mar 2024 12:12:10 +0530
+Vinayak Kale <vkale@nvidia.com> wrote:
 
-Same thing with patch 4: I think it should be squashed into patch 3.
-
-
-
-Thanks,
-
-Daniel
-
-On 3/25/24 05:33, Jason Chien wrote:
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> Reviewed-by: Max Chou <max.chou@sifive.com>
-> ---
->   target/riscv/cpu.c | 1 +
->   1 file changed, 1 insertion(+)
+> In case of migration, during restore operation, qemu checks config space of the
+> pci device with the config space in the migration stream captured during save
+> operation. In case of config space data mismatch, restore operation is failed.
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 851ac7372c..6bd8798bb5 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1473,6 +1473,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
->       MULTI_EXT_CFG_BOOL("zfh", ext_zfh, false),
->       MULTI_EXT_CFG_BOOL("zfhmin", ext_zfhmin, false),
->       MULTI_EXT_CFG_BOOL("zve32f", ext_zve32f, false),
-> +    MULTI_EXT_CFG_BOOL("zve32x", ext_zve32x, false),
->       MULTI_EXT_CFG_BOOL("zve64f", ext_zve64f, false),
->       MULTI_EXT_CFG_BOOL("zve64d", ext_zve64d, false),
->       MULTI_EXT_CFG_BOOL("zvfbfmin", ext_zvfbfmin, false),
+> config space check is done in function get_pci_config_device(). By default VSC
+> (vendor-specific-capability) in config space is checked.
+> 
+> Due to qemu's config space check for VSC, live migration is broken across NVIDIA
+> vGPU devices in situation where source and destination host driver is different.
+> In this situation, Vendor Specific Information in VSC varies on the destination
+> to ensure vGPU feature capabilities exposed to the guest driver are compatible
+> with destination host.
+> 
+> If a vfio-pci device is migration capable and vfio-pci vendor driver is OK with
+> volatile Vendor Specific Info in VSC then qemu should exempt config space check
+> for Vendor Specific Info. It is vendor driver's responsibility to ensure that
+> VSC is consistent across migration. Here consistency could mean that VSC format
+> should be same on source and destination, however actual Vendor Specific Info
+> may not be byte-to-byte identical.
+> 
+> This patch skips the check for Vendor Specific Information in VSC for VFIO-PCI
+> device by clearing pdev->cmask[] offsets. Config space check is still enforced
+> for 3 byte VSC header. If cmask[] is not set for an offset, then qemu skips
+> config space check for that offset.
+> 
+> Signed-off-by: Vinayak Kale <vkale@nvidia.com>
+> ---
+> Version History
+> v2->v3:
+>     - Config space check skipped only for Vendor Specific Info in VSC, check is
+>       still enforced for 3 byte VSC header.
+>     - Updated commit description with live migration failure scenario.
+> v1->v2:
+>     - Limited scope of change to vfio-pci devices instead of all pci devices.
+> 
+>  hw/vfio/pci.c | 24 ++++++++++++++++++++++++
+>  1 file changed, 24 insertions(+)
+
+
+Acked-by: Alex Williamson <alex.williamson@redhat.com>
+
+ 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index d7fe06715c..1026cdba18 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -2132,6 +2132,27 @@ static void vfio_check_af_flr(VFIOPCIDevice *vdev, uint8_t pos)
+>      }
+>  }
+>  
+> +static int vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
+> +                                        uint8_t size, Error **errp)
+> +{
+> +    PCIDevice *pdev = &vdev->pdev;
+> +
+> +    pos = pci_add_capability(pdev, PCI_CAP_ID_VNDR, pos, size, errp);
+> +    if (pos < 0) {
+> +        return pos;
+> +    }
+> +
+> +    /*
+> +     * Exempt config space check for Vendor Specific Information during restore/load.
+> +     * Config space check is still enforced for 3 byte VSC header.
+> +     */
+> +    if (size > 3) {
+> +        memset(pdev->cmask + pos + 3, 0, size - 3);
+> +    }
+> +
+> +    return pos;
+> +}
+> +
+>  static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
+>  {
+>      PCIDevice *pdev = &vdev->pdev;
+> @@ -2199,6 +2220,9 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error **errp)
+>          vfio_check_af_flr(vdev, pos);
+>          ret = pci_add_capability(pdev, cap_id, pos, size, errp);
+>          break;
+> +    case PCI_CAP_ID_VNDR:
+> +        ret = vfio_add_vendor_specific_cap(vdev, pos, size, errp);
+> +        break;
+>      default:
+>          ret = pci_add_capability(pdev, cap_id, pos, size, errp);
+>          break;
+
 
