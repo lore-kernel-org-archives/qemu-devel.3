@@ -4,97 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B300DCD11DD
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 01:14:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1FBDC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 01:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpHqo-0003AN-D8; Tue, 26 Mar 2024 21:13:10 -0400
+	id 1rpI7h-0005Xf-LZ; Tue, 26 Mar 2024 21:30:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1rpHqn-00039v-3H
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:13:09 -0400
-Received: from fhigh5-smtp.messagingengine.com ([103.168.172.156])
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rpI7a-0005X4-3j
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:30:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1rpHql-0000sk-5I
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:13:08 -0400
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
- by mailfhigh.nyi.internal (Postfix) with ESMTP id 1315D11400F5;
- Tue, 26 Mar 2024 21:13:06 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute7.internal (MEProxy); Tue, 26 Mar 2024 21:13:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- invisiblethingslab.com; h=cc:cc:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1711501986;
- x=1711588386; bh=duPM4l7vESI6W2wpgUYG6yFDLRrQw0j3QbzzhqkGPoI=; b=
- XUMS7BfJqc1oRqz15fu7rAlbhGdaGgYiIB/JyZRGJCsA/fCdYy2xLCGKHw4WHi3p
- 5abMFAq+Ztstn7j1G3hfI4d06Me4Gqshv0M4d8MAkOJzCmLMCyqLnrSj1+5S1nis
- r4mIKk/q9HAEIz3I6lWgbSiWuZ+Dh1pOSphUL1fnE2ZagS8n6ZwoDOXydPCVcOVv
- A08Q7UpzIrTBi+QnYK20IkG2YIJhHYcVKr8IkYet6hWKVcEE/TLzzx4Y1D4SwtuN
- pYWbUBOkOcvVj17EqkZDtrsbiNw0POofGB/VH8BmlA79Wlg8thLxs3QxvkZBJjq4
- eX+aROXwf7wAJOzhHX4jcg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm2; t=1711501986; x=1711588386; bh=duPM4l7vESI6W2wpgUYG6yFDLRrQ
- w0j3QbzzhqkGPoI=; b=rNV+BPWovfV2TSrKVM0JPoIY3AdEdAEUBOnw434PCKG8
- hF2R4TnNDJXZ8qgqsCXOqMychXD0VZ/ZCsMRTwGngjBPY1N9b7EjPioZaZrU4vM8
- VOKXQgT8P12SSLysjy4BWXoYlXtKRIthjDJhXPN5I0Km8KC9GVBBDYYf4WfnJ4rl
- feW5DjbiwA3LCvIJGXp0FCPuhmMbK78JX3lResk3anZI0mL7XtqVHqX8wdWxYRzC
- aI5lY8qHkHwmD1V8RGtS1XFlBfoAV+MkV3C19okIMAG0lCf7gzEVWobUQnai4T/Z
- oGEdZ8gyvOnjdAR4Fx7bc909mThk4BRZuucHTNHVFg==
-X-ME-Sender: <xms:oXIDZgatEUoV61h3-u018HcyIEzG_ZmOll4ij3m4oDvc_mgp7gKrKQ>
- <xme:oXIDZrYreGi78Adqr8rNNaz2kLY8kBuzfj7YTL_tDCJutM7REQBPXndx8pGibgBHp
- Jdzu8maCQLnqA>
-X-ME-Received: <xmr:oXIDZq94mIn3YI-U6iJLJZ0n_GEc2HIh_7khCgIogPxwbiuJx9nN7vtOFEV77-FZkuJRxoWwkNfOgx_Bi8T5jtZeGN6ZhrUExw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddugedgfeefucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepofgrrhgv
- khcuofgrrhgtiiihkhhofihskhhiqdfikphrvggtkhhiuceomhgrrhhmrghrvghksehinh
- hvihhsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnhepgfdu
- leetfeevhfefheeiteeliefhjefhleduveetteekveettddvgeeuteefjedunecuvehluh
- hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmhgrrhhmrghrvghk
- sehinhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomh
-X-ME-Proxy: <xmx:oXIDZqoIkNqMIvbnSF-p6uZ204bNYJjxVREhCSf4cYx16_wzXN3sHQ>
- <xmx:oXIDZrowGBwHXlwODyHLjRpSMxFD10CWA0vtB3Q_GSmrh2_G04qGaw>
- <xmx:oXIDZoR3cmpnX-u5o4ALpmwcbpbNKkaHJdjLvzHnfyHlKcnn1Y3Kbg>
- <xmx:oXIDZroMa0Kqhs5oxoYxuLtDcSlsuuTYdVl31UNzWLTnVnSsD3FoZw>
- <xmx:onIDZsdf_ENd3LGlxPLKhdn50VAIrSBClrGhXlYGEqyMCGysHii6CQ>
-Feedback-ID: i1568416f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 26 Mar 2024 21:13:04 -0400 (EDT)
-Date: Wed, 27 Mar 2024 02:13:02 +0100
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
-To: Anthony PERARD <anthony.perard@cloud.com>
-Cc: qemu-devel@nongnu.org, Jason Andryuk <jandryuk@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>, Paul Durrant <paul@xen.org>,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-Subject: Re: [PATCH v2 1/2] hw/xen: detect when running inside stubdomain
-Message-ID: <ZgNynlHAAuFA1vTy@mail-itl>
-References: <20240305191312.321127-1-marmarek@invisiblethingslab.com>
- <a6345b81-5c67-4c05-acff-f73ceea904ad@perard>
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rpI7X-0003vI-7T
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:30:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711503024;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=8F0MIllH5clWMxBrxgR5uny6vEHitOHBq+RT3SWOBLI=;
+ b=G72BJurp2yvLgWoYUmB/JaBP4E1HDI5Wos7ycHCyAYySbkaCOMASmMhJ/xqQduyCOkbP6Z
+ ysw7jEMySUNknMds16kEyLdRDzuoqy8bQ1CQDsiHZZzMDvLYJUJUo9VEGTRL6+KY9XN6Pt
+ +EDub2s9cATuxRX2i4C3kzkAXQZxVuA=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-q31fhu74OWOXANwBjr0OEQ-1; Tue,
+ 26 Mar 2024 21:29:14 -0400
+X-MC-Unique: q31fhu74OWOXANwBjr0OEQ-1
+Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
+ [10.11.54.10])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E44EA3C29842
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 01:29:13 +0000 (UTC)
+Received: from server.redhat.com (unknown [10.72.112.204])
+ by smtp.corp.redhat.com (Postfix) with ESMTP id CA2E6492BD4;
+ Wed, 27 Mar 2024 01:29:11 +0000 (UTC)
+From: Cindy Lu <lulu@redhat.com>
+To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
+Subject: [RFC 0/2] disable the configuration interrupt for the unsupported
+ device
+Date: Wed, 27 Mar 2024 09:22:13 +0800
+Message-ID: <20240327012905.70188-1-lulu@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="L+9mmUR3Q4Dfquvs"
-Content-Disposition: inline
-In-Reply-To: <a6345b81-5c67-4c05-acff-f73ceea904ad@perard>
-Received-SPF: none client-ip=103.168.172.156;
- envelope-from=marmarek@invisiblethingslab.com;
- helo=fhigh5-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=y
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,96 +76,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+we need a crash in Non-standard image, here is the jira for this https://issues.redhat.com/browse/RHEL-28522
+The root cause of the issue is that an IRQFD was used without initialization..
 
---L+9mmUR3Q4Dfquvs
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 27 Mar 2024 02:13:02 +0100
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
-To: Anthony PERARD <anthony.perard@cloud.com>
-Cc: qemu-devel@nongnu.org, Jason Andryuk <jandryuk@gmail.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Paul Durrant <paul@xen.org>,
-	"open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-Subject: Re: [PATCH v2 1/2] hw/xen: detect when running inside stubdomain
+During the booting process of the Vyatta image, the behavior of the called function in qemu is as follows:
 
-On Tue, Mar 26, 2024 at 05:06:50PM +0000, Anthony PERARD wrote:
-> On Tue, Mar 05, 2024 at 08:12:29PM +0100, Marek Marczykowski-G=C3=B3recki=
- wrote:
-> > diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-> > index 124dd5f3d6..6bd4e6eb2f 100644
-> > --- a/hw/xen/xen-legacy-backend.c
-> > +++ b/hw/xen/xen-legacy-backend.c
-> > @@ -603,6 +603,20 @@ static void xen_set_dynamic_sysbus(void)
-> >      machine_class_allow_dynamic_sysbus_dev(mc, TYPE_XENSYSDEV);
-> >  }
-> > =20
-> > +static bool xen_check_stubdomain(void)
-> > +{
-> > +    char *dm_path =3D g_strdup_printf("/local/domain/%d/image", xen_do=
-mid);
-> > +    int32_t dm_domid;
-> > +    bool is_stubdom =3D false;
-> > +
-> > +    if (!xenstore_read_int(dm_path, "device-model-domid", &dm_domid)) {
-> > +        is_stubdom =3D dm_domid !=3D 0;
-> > +    }
-> > +
-> > +    g_free(dm_path);
-> > +    return is_stubdom;
-> > +}
-> > +
-> >  void xen_be_init(void)
-> >  {
-> >      xenstore =3D qemu_xen_xs_open();
-> > @@ -616,6 +630,8 @@ void xen_be_init(void)
-> >          exit(1);
-> >      }
-> > =20
-> > +    xen_is_stubdomain =3D xen_check_stubdomain();
->=20
-> This isn't really a backend specific information, and xen_be_init() is
-> all about old backend implementation support. (qdisk which have been the
-> first to be rewritten doesn't need xen_be_init(), or shouldn't). Could
-> we move the initialisation elsewhere?
+1. vhost_net_stop() was called, this will call the function
+virtio_pci_set_guest_notifiers() with assgin= false, and
+virtio_pci_set_guest_notifiers(） will release the irqfd for vector 0
 
-I can try to move it, sure.
+2. virtio_reset() was called -->set configure vector to VIRTIO_NO_VECTORt
 
-> Is this relevant PV guests? If not, we could move the initialisation to
-> xen_hvm_init_pc().
->=20
-> Also, avoid having xen_check_stubdomain() depending on
-> "xen-legacy-backend", if possible.
->=20
-> (In xen_hvm_init_pc(), a call to xen_register_ioreq() opens another
-> xenstore, as `state->xenstore`.)
+3.vhost_net_start() was called (at this time the configure vector is
+still VIRTIO_NO_VECTOR) and call virtio_pci_set_guest_notifiers() with
+assgin= true, so the irqfd for vector 0 was not "init" during this process
 
-And xen_register_ioreq() calls xen_be_init() anyway, so it wouldn't
-change much in practice (at least for now)...
+4. The system continues to boot and msix_fire_vector_notifier() was
+called unmask the vector 0 and then met the crash
+[msix_fire_vector_notifier] 112 called vector 0 is_masked 1
+[msix_fire_vector_notifier] 112 called vector 0 is_masked 0
 
-> (There's already been effort to build QEMU without legacy backends, that
-> stubdom check would break in this scenario.)
+The reason for not reproducing in RHEL/fedora guest image is because
+REHL/Fedora doesn't have the behavior of calling vhost_net_stop and then virtio_reset, and also won't call msix_fire_vector_notifier for vector 0 during system boot.
 
---=20
-Best Regards,
-Marek Marczykowski-G=C3=B3recki
-Invisible Things Lab
+The reason for not reproducing before configure interrupt support is because
+vector 0 is for configure interrupt,  before the support for configure interrupts, the notifier process will not handle vector 0.
 
---L+9mmUR3Q4Dfquvs
-Content-Type: application/pgp-signature; name="signature.asc"
+For the device Vyatta using, it doesn't support configure interrupts at all, So we plan to disable the configure interrupts in unsupported device
 
------BEGIN PGP SIGNATURE-----
+Signed-off-by: Cindy Lu <lulu@redhat.com>
 
-iQEzBAEBCAAdFiEEhrpukzGPukRmQqkK24/THMrX1ywFAmYDcp4ACgkQ24/THMrX
-1yxUTwf9GlCojUIfNlirgs+bpCQz7TgUrggQ4b7Pspee9vb/Eer1+K6qseZ9wyNj
-s15Pjnp+BjHBeisOJ1a5QP0JZ/eqzm1ygdRDzkNgLjLUn0SwT+v1BqWSgGLGDIFg
-l28LFGFWaWwauzehqi8v8uoQxJrlGksAEpHZaKumd2DniCw1TJHX832oz5Nlxhhx
-ND1OkAQYDyf6VpW8VpJP7R+eM/A6sMGCkDRaoQGmRNeszAsEaM5vXYb9I1A5mKAR
-S+Hjp4GF4mSshXfKQozp92CCjIF+rOFaDeaMUsyuNQybtHWVxVFFAmPSW0xpecDq
-Jz49s+i/TPT79jUnVWmkMfpng6x4dg==
-=kQYH
------END PGP SIGNATURE-----
+Cindy Lu (2):
+  virtio-net: disable the configure interrupt for not support device
+  virtio-pci: check if the configure interrupt enable
 
---L+9mmUR3Q4Dfquvs--
+ hw/net/virtio-net.c        |  5 ++++-
+ hw/virtio/virtio-pci.c     | 41 +++++++++++++++++++++-----------------
+ hw/virtio/virtio.c         |  1 +
+ include/hw/virtio/virtio.h |  1 +
+ 4 files changed, 29 insertions(+), 19 deletions(-)
+
+-- 
+2.43.0
+
 
