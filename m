@@ -4,86 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D3BC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 07:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D30C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 07:52:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpO2u-0003w4-QV; Wed, 27 Mar 2024 03:50:04 -0400
+	id 1rpO4S-0004l9-Dm; Wed, 27 Mar 2024 03:51:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpO2p-0003vP-47
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:50:00 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpO2n-0007EB-D4
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:49:58 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-5159f9de7fbso4929988e87.1
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 00:49:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711525788; x=1712130588; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NrGF31tzvXVgaalAMxJGyScTlNrN3QLj9ehfjtcu3Ow=;
- b=j3lPKv7j7Ul2G/eO5KJDjyloDj4gBk/ft7W/3BgHUt7jv83IFQ4i9VlgoPwF+lXhiY
- BoZGuJUqMRcBMxcB8V3E5BJvONEeePDw2+riw7DxsTaKvWf66Pj2+1S2QYhLqEax2a7n
- B9CTjkgfgG4whpTLc7foSL+XPQtSpXvyMKUeaPTuUdto8O/2/TPC0ubWun68FB4SPnv2
- phPzlBKmGrynH25XzMKjwNGBNARl2o9kfRJ6bsB6MPZ7tfiTaNRC5RioI1S/oXqUsLED
- KcJ4jI33m4jwzcrtDhSI1cnqbB+ZeKgD3eZLETOnfEhwz4aPXupLhYZ30lqAIQdaFgtU
- pa4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711525788; x=1712130588;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NrGF31tzvXVgaalAMxJGyScTlNrN3QLj9ehfjtcu3Ow=;
- b=wac/oGaqY42XXGU3FBhSTiOhd0ymK/P9RBdrQmULubeoDfx5WTvzaYViNF8W4Ki2Vg
- KwrIK8XAEkQmp/PzvYuT7JXrFreW78/hJv/yuc4iB3aa3aEAOMSyrxnhwRNKLL/PK5ST
- adMgylvWLYHmaLwNIQF8Q6lPg9QWSV0EpSdAxk5cQDlCDqNJT1EPgfc6e+sLmejAdWM5
- qdBRAtX/TCjxPMPXFt5TWLmhXUwHF43r7HeI8xIbZdv6Yed5APnYtnoV9MgFLxjxyixs
- uNF88whOyRGYRWKthVTkMXj/uZiReItIvlXvDTmL4iR1y7W1qfymsN+R8naQ86ZNWQDH
- pRJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUomNe5A7esR9Fa62AS9MLQe07nzYpGkw4UT00S7Ya7ZG0JXGaHqhOvX6PWFlyG49mguj6CDc99w8YvJaQA62Et1fPaIdQ=
-X-Gm-Message-State: AOJu0YwiWNFuwEDcq8brCFsAreQKPiiwVge+ASgBwC2mV7k+bO52TGMS
- 79+QumjIW25/H+pcqH19XpKj1ohGkt6hKIAARiswUMrEJjEAp9siil6rcsJssRw=
-X-Google-Smtp-Source: AGHT+IEagGLFq0C+XcV1WV9gLtKnTnNRsBHgZP53oIWzE7asbjZhNLHOm1KIBH5y0qAXTP3y8yQ7KQ==
-X-Received: by 2002:a19:5e10:0:b0:512:bf99:7d80 with SMTP id
- s16-20020a195e10000000b00512bf997d80mr1112403lfb.1.1711525787895; 
- Wed, 27 Mar 2024 00:49:47 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.205.175])
- by smtp.gmail.com with ESMTPSA id
- t17-20020a05600c451100b0041413aefeb9sm1270936wmo.48.2024.03.27.00.49.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Mar 2024 00:49:47 -0700 (PDT)
-Message-ID: <57693478-ed3f-4372-a987-d3f0b7e79302@linaro.org>
-Date: Wed, 27 Mar 2024 08:49:45 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rpO4Q-0004km-6w
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:51:38 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rpO4O-0007dz-AA
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:51:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711525897; x=1743061897;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=EKilDtQGUE+aPzFGLkujBkQ0LybksSXRCKVPYJ0Bcxk=;
+ b=Z1tmaEQtn6/aW+JTiktQVPhX05/LIeO8TIJEZ6b23v30K7Lr15yDXo/H
+ hTvrGCFZDSNxTqUALav95VJFgs2B+F+noSf06XKL/JdkiCSZtmG+Ggfdc
+ iRsP3dpozjth9F8U+e2D0y7ecqoLHOS+lKzsxwJCEGH8gqn7iNIuHhBry
+ RJBEsrH6y0PPXwneLD5q7OHE0gf5JX9a/lITEeZ2v78opWmmSAtBh0w+j
+ VgI2y+UNnCbwDd2dFFjMG+J0IjCiGEoUZyln5s9UfLq2nPZFGmgxmOqYn
+ LzJHASDzPWdhcduNqW2w5wCFZTwEgaz53AdBmbVVOaGjRSas9+FxaEWpV g==;
+X-CSE-ConnectionGUID: 5slPcaiCTuG/FswDo34/UA==
+X-CSE-MsgGUID: AsM7DEXaThqjzVPySj27pQ==
+X-IronPort-AV: E=McAfee;i="6600,9927,11025"; a="10412269"
+X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; d="scan'208";a="10412269"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Mar 2024 00:51:33 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; d="scan'208";a="16145106"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa010.fm.intel.com with ESMTP; 27 Mar 2024 00:51:31 -0700
+Date: Wed, 27 Mar 2024 16:05:27 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: Re: [PATCH for-9.1 v5 2/3] target/i386: add guest-phys-bits cpu
+ property
+Message-ID: <ZgPTR0cdSFODG2Z3@intel.com>
+References: <20240325141422.1380087-1-pbonzini@redhat.com>
+ <20240325141422.1380087-3-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.0? v2 4/4] meson: Enable -Wstatic-in-inline
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20240326171009.26696-1-philmd@linaro.org>
- <20240326171009.26696-5-philmd@linaro.org>
- <1a51295a-f27d-455c-a615-3f53bde1d11a@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1a51295a-f27d-455c-a615-3f53bde1d11a@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240325141422.1380087-3-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,32 +82,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/3/24 18:28, Thomas Huth wrote:
-> On 26/03/2024 18.10, Philippe Mathieu-Daudé wrote:
->> Compilers are clever enough to inline code when necessary.
->>
->> The only case we accept an inline function is static in
->> header (we use C, not C++).
->>
->> Add the -Wstatic-in-inline CPPFLAG to prevent public and
-> 
-> I think this is rather a compiler than a pre-processor flag, so 
-> s/CPPFLAG/CFLAGS/ ?
+Hi Paolo,
 
-Oops indeed you are right, thanks!
+On Mon, Mar 25, 2024 at 03:14:21PM +0100, Paolo Bonzini wrote:
+> Date: Mon, 25 Mar 2024 15:14:21 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH for-9.1 v5 2/3] target/i386: add guest-phys-bits cpu
+>  property
+> X-Mailer: git-send-email 2.44.0
+> 
+> From: Gerd Hoffmann <kraxel@redhat.com>
+> 
+> Allows to set guest-phys-bits (cpuid leaf 80000008, eax[23:16])
+> via -cpu $model,guest-phys-bits=$nr.
+> 
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> Message-ID: <20240318155336.156197-3-kraxel@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+> v4->v5:
+> - move here all non-KVM parts
+> - add compat property and support for special value "-1" (accelerator
+>   defines value)
+> 
+>  target/i386/cpu.h |  1 +
+>  hw/i386/pc.c      |  4 +++-
+>  target/i386/cpu.c | 22 ++++++++++++++++++++++
+>  3 files changed, 26 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 6b057380791..83e47358451 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2026,6 +2026,7 @@ struct ArchCPU {
+>  
+>      /* Number of physical address bits supported */
+>      uint32_t phys_bits;
+> +    uint32_t guest_phys_bits;
 
-> 
-> Anyway:
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> 
-> 
->> inline function to be added in the code base.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Message-Id: <20240313184954.42513-5-philmd@linaro.org>
->> ---
->>   meson.build | 1 +
->>   1 file changed, 1 insertion(+)
+Maybe here it deserves a comment, just as most any other fields...what
+about copying commit message of patch 3 like:
+
+/*
+ * Number of guest physical address bits supported. Usually this is
+ * identical to host physical address bits. With NPT or EPT being used
+ * this might be restricted to 48 (max 4-level paging address space
+ * size) even if the host cpu supports more physical address bits.
+ */
+
+Otherwise,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
