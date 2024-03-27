@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B076C54E67
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B168ECD11DF
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 09:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpPei-0007Rs-Fs; Wed, 27 Mar 2024 05:33:12 -0400
+	id 1rpPdo-0006Bh-TQ; Wed, 27 Mar 2024 05:32:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rpPeU-000774-9Z
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:32:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rpPeS-0008T0-Fc
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:32:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711531975;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=l1SBMgStakZGhAvIQSn+x87SBO5BujpAIAASksZNRlM=;
- b=JywkMBFgv58w+OHCtvR+mPHl+1Z4BhMDGjhIbHRt8+PWgzDS68zYhAYAWoSY44CkT9wXxR
- o4FccCDnsF6eeKXSGaDTrym6a3wHAKTJyHhfMOTWqm7zI+bslt/OgptPGrG33LdbdGtbDB
- bUa9tm+ekftQWN1Y2egLqurssYxBRO4=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-646-SoQ6ZoXQPXiWxutXeoRHNA-1; Wed, 27 Mar 2024 05:32:53 -0400
-X-MC-Unique: SoQ6ZoXQPXiWxutXeoRHNA-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a466c7b0587so462845866b.0
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:32:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rpPdc-00067v-L0
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:32:08 -0400
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1rpPda-0007gK-7Z
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:32:04 -0400
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-22a353217c3so1560549fac.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:32:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1711531919; x=1712136719; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WyRw4RpAUjMROWRxa8n83txCjmXC/d2qLnvcFPrpXT0=;
+ b=IoKPvo7KI7JQQ6FO9i70YZOdabMQB80CL+Gc6EIfd1//uMbsrlhGgLHTlqfo8klCeQ
+ uiqY6Pln2dZq3RJndFqvVvdZtMYYF276x5sE5V2vSogQ5wJUdE/qeX9jszHI6mVBA+4r
+ o+kVvQF7umJPDYuy2n/83F0Y45s2Z/SZRRSqwBCd6UUguIdsiKywP5dxWEsg+4YDqIAg
+ xMUvvCivxvZNhGCZBJPxo5kWreBWXBCBlojprv57s6xu7kFqQFfHFzbt/S0T5vvEKVd5
+ Hq24ciE4lTn18UDmE0T9RmKMG0zxsm7kxkFFJYBDFz7KWS7JDV7jsWyi5hnYJwkySXU/
+ MYNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711531972; x=1712136772;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1711531919; x=1712136719;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=l1SBMgStakZGhAvIQSn+x87SBO5BujpAIAASksZNRlM=;
- b=YEcsCJEAQff96c6V8guUCx0Pc25Z64VP3EXcAVbvHEtT6VA+VmZRLMSPj1P/sng3zc
- mCP/7yMtayf72ZVEn6Jyhd1DCxMbYTg7UWNZKuOs6stEC3FlF/RZCBS6wK6gePbGJkh2
- sl8OWeQrN+/RXBpEzA6lsJI40LYm/ZLOoe6bctxb2T8v6qQIjIHSjJANJawxzd98mHB0
- GSpEUUHczvV9H1k2QY51wXjegjSt3MU9xlWqiEqu3PzPjTWg6c19frHH9uEnMeq6fc/A
- 2vU3miPX4uowMEvt8VTTF/sNRABuW8SzUyGUwJ7cbY3OHP2ugv0kb6XySruXJyf2Fzmh
- H+aA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNveVtKlIenNl0T4Q/t1sYhhaiiXzFplCBnlbLK94Iay6ITusxvizlKXBnWptr1Smrzv46gxoLvrRThA7YR0O/gqPR3DY=
-X-Gm-Message-State: AOJu0YxtIxeepzlq0kZF5+Bq+M7cA/4pr5LayH72alarvHSYeutEnHRO
- SmENE5/jSxopMH36C64xQ8mP7CSARQbKZ2elcXEBXgwGxCvvEllCVlxjoSYsW1kIj00wqQwLJXi
- Rt/nOnzhVsrHmlJe6+Er+6rm+nPYDACv8zfoaN0qY4HFW+keg9ebdA2pgb9vIvikxEa9OD/BAPY
- WItcZ8HvHCN3xQHFhbeedp9zskRFA=
-X-Received: by 2002:a17:906:d0db:b0:a4e:6ae:2a97 with SMTP id
- bq27-20020a170906d0db00b00a4e06ae2a97mr717188ejb.48.1711531972448; 
- Wed, 27 Mar 2024 02:32:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGE8e1gE8x1uvFXmId4P3AeiRI8GTOvREs3rNKown26Jofe8icKtDSi4LFs3Xh6lpIQkzig+b/w2lrMgs9TOCQ=
-X-Received: by 2002:a17:906:d0db:b0:a4e:6ae:2a97 with SMTP id
- bq27-20020a170906d0db00b00a4e06ae2a97mr717174ejb.48.1711531972075; Wed, 27
- Mar 2024 02:32:52 -0700 (PDT)
+ bh=WyRw4RpAUjMROWRxa8n83txCjmXC/d2qLnvcFPrpXT0=;
+ b=pRab/aYFNaJGiSspz+L8851GdNWHY35X9KHtYJlHBd4+ldYey2/TFUo+0D+5eSnTkT
+ dMph7iwOraXnt2Ok56lKIt73IetTmvqJATD0rluMlapFrODdse2VmohFZTy5QekZ3Fef
+ pgzfdVYT8l+NBoSbII338kvEdKb8T6HoOgE0m5AuweTSOzd6h1oSVSDh18qQLqvYRryg
+ nhoKn5kcVc453187NFVrSSla/aiJ8VLbWsvdmGRdZ/O83QdIzLmogenjjzzXy2nQI8vz
+ vKrpyWBKpGr9wXbYP6UCf6hlncI0e35nYhPlK/zsNZRltgvPdvKMuyB++Oi8YocS76MQ
+ wIEw==
+X-Gm-Message-State: AOJu0YzDzF32IjRYPp6szAARr0EsxJwUIYpunTwGCytSmyZkxIWJ/Xm+
+ H3QSbTz1goEiw2ZgSc2gK6Yec1rDNFq7dGiyU23LCTCuO57PUkFapH+QcTnc3LlW1Ou82KJGrpR
+ P
+X-Google-Smtp-Source: AGHT+IG8YgU7L/GJNGMP5fw6uZ/FLqPFN9SAVIFv53bDx8dyHLlotZwzEZoscFQuzpf6Ri9TYGcBzg==
+X-Received: by 2002:a05:6870:b14c:b0:229:fe3c:b096 with SMTP id
+ a12-20020a056870b14c00b00229fe3cb096mr2271071oal.32.1711531919139; 
+ Wed, 27 Mar 2024 02:31:59 -0700 (PDT)
+Received: from grind.. ([177.45.186.241]) by smtp.gmail.com with ESMTPSA id
+ fm23-20020a056a002f9700b006e6b41511fdsm7628760pfb.94.2024.03.27.02.31.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Mar 2024 02:31:58 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: thuth@redhat.com, alistair.francis@wdc.com, groug@kaod.org,
+ peter.maydell@linaro.org, qemu_oss@crudebyte.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH for-9.0 v2 3/7] qtest/virtio-9p-test.c: consolidate create dir
+ tests
+Date: Wed, 27 Mar 2024 06:31:40 -0300
+Message-ID: <20240327093144.781701-4-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240327093144.781701-1-dbarboza@ventanamicro.com>
+References: <20240327093144.781701-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-References: <20240327012905.70188-1-lulu@redhat.com>
- <CACGkMEt5fTtwmeb18Yj0xDT_bCjsJQM2nB-u1GJDfFKnEtSSHA@mail.gmail.com>
- <CACLfguVY-yNWDAETt6gpUF7Ce5wbmLVXbpocsm7GW2mKRKukqQ@mail.gmail.com>
- <CACGkMEu67pZKApDkcBi4XSuS+ss001GKyapUkNNkwnSRcgPZqw@mail.gmail.com>
- <CACLfguXFn9aNUwh_aBkNsLZ79EWPRnXRNws95t6ySgE7b+4HPQ@mail.gmail.com>
- <CACGkMEuP71EWSC33gj2diABaDk4sYexBbskq9ZfpZMBoB1aBbQ@mail.gmail.com>
-In-Reply-To: <CACGkMEuP71EWSC33gj2diABaDk4sYexBbskq9ZfpZMBoB1aBbQ@mail.gmail.com>
-From: Cindy Lu <lulu@redhat.com>
-Date: Wed, 27 Mar 2024 17:32:13 +0800
-Message-ID: <CACLfguU8tTagz=gtYkY5B01-TSMBjb0R=z-hhaP9LoOSx1GVUw@mail.gmail.com>
-Subject: Re: [RFC 0/2] disable the configuration interrupt for the unsupported
- device
-To: Jason Wang <jasowang@redhat.com>
-Cc: mst@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::35;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-oa1-x35.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,168 +96,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 27, 2024 at 5:12=E2=80=AFPM Jason Wang <jasowang@redhat.com> wr=
-ote:
->
-> On Wed, Mar 27, 2024 at 4:28=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
-> >
-> > On Wed, Mar 27, 2024 at 3:54=E2=80=AFPM Jason Wang <jasowang@redhat.com=
-> wrote:
-> > >
-> > > On Wed, Mar 27, 2024 at 2:03=E2=80=AFPM Cindy Lu <lulu@redhat.com> wr=
-ote:
-> > > >
-> > > > On Wed, Mar 27, 2024 at 11:05=E2=80=AFAM Jason Wang <jasowang@redha=
-t.com> wrote:
-> > > > >
-> > > > > Hi Cindy:
-> > > > >
-> > > > > On Wed, Mar 27, 2024 at 9:29=E2=80=AFAM Cindy Lu <lulu@redhat.com=
-> wrote:
-> > > > > >
-> > > > > > we need a crash in Non-standard image, here is the jira for thi=
-s https://issues.redhat.com/browse/RHEL-28522
-> > > > > > The root cause of the issue is that an IRQFD was used without i=
-nitialization..
-> > > > > >
-> > > > > > During the booting process of the Vyatta image, the behavior of=
- the called function in qemu is as follows:
-> > > > > >
-> > > > > > 1. vhost_net_stop() was called, this will call the function
-> > > > > > virtio_pci_set_guest_notifiers() with assgin=3D false, and
-> > > > > > virtio_pci_set_guest_notifiers(=EF=BC=89 will release the irqfd=
- for vector 0
-> > > > >
-> > > > > Before vhost_net_stop(), do we know which vector is used by which=
- queue?
-> > > > >
-> > > > before this stop, vdev->config_verctor is get from
-> > > > virtio_pci_common_read/virtio_pci_common_write
-> > > > it was set to vector 0
-> > >
-> > > I basically meant if vector 0 is shared with some virtqueues here.
-> > >
-> > Really sorry for this, vq's vector is 1,2, and will not share with the
-> > configure vector
-> > > > > >
-> > > > > > 2. virtio_reset() was called -->set configure vector to VIRTIO_=
-NO_VECTORt
-> > > > > >
-> > > > > > 3.vhost_net_start() was called (at this time the configure vect=
-or is
-> > > > > > still VIRTIO_NO_VECTOR) and call virtio_pci_set_guest_notifiers=
-() with
-> > > > > > assgin=3D true, so the irqfd for vector 0 was not "init" during=
- this process
-> > > > >
-> > > > > How does the configure vector differ from the virtqueue vector he=
-re?
-> > > > >
-> > > > All the vectors are VIRTIO_NO_VECTOR (including vq). any
-> > > > msix_fire_vector_notifier()
-> > > > been called will cause the crash at this time.
-> > >
-> > > Won't virtio_pci_set_guest_notifiers() will try to allocate irqfd whe=
-n
-> > > the assignment is true?
-> > >
-> > It will allocate, but  the vector is VIRTIO_NO_VECTOR (0xffff)
-> >
-> > then it will called kvm_virtio_pci_vector_use_one()
-> >
-> > in this function, there is a check for
-> >
-> >     if (vector >=3D msix_nr_vectors_allocated(dev))
-> >
-> > {         return 0;     }
-> >
-> > So it will return.
->
-> How about let's just fix this?
->
-> Btw, it's better to explain in detail like the above in the next version.
->
-> Thanks
->
-The problem is I think the behavior here is correct, The vector here is
- VIRTIO_NO_VECTOR and we should return,
-the fix could work maybe is we try get to know if this was changed
-from another value
-and use that one? this seems strange.
-Thanks
-cindy
-> >
-> > > > So I think this should
-> > > > be a bug in this guest image
-> > >
-> > > The point is Qemu should not crash even if the guest driver is buggy.
-> > >
-> > > It would be nice if we can have a qtest for this on top.
-> > >
-> > > Thanks
-> > >
-> > sure, got it, I have done the Qtest, and it passed
-> > here is the result
-> >
-> > Ok:                 794
-> > Expected Fail:      0
-> > Fail:               0
-> > Unexpected Pass:    0
-> > Skipped:            32
-> > Timeout:            0
-> >
-> > > > > >
-> > > > > > 4. The system continues to boot and msix_fire_vector_notifier()=
- was
-> > > > > > called unmask the vector 0 and then met the crash
-> > > > > > [msix_fire_vector_notifier] 112 called vector 0 is_masked 1
-> > > > > > [msix_fire_vector_notifier] 112 called vector 0 is_masked 0
-> > > > > >
-> > > > > > The reason for not reproducing in RHEL/fedora guest image is be=
-cause
-> > > > > > REHL/Fedora doesn't have the behavior of calling vhost_net_stop=
- and then virtio_reset, and also won't call msix_fire_vector_notifier for v=
-ector 0 during system boot.
-> > > > > >
-> > > > > > The reason for not reproducing before configure interrupt suppo=
-rt is because
-> > > > > > vector 0 is for configure interrupt,  before the support for co=
-nfigure interrupts, the notifier process will not handle vector 0.
-> > > > > >
-> > > > > > For the device Vyatta using, it doesn't support configure inter=
-rupts at all, So we plan to disable the configure interrupts in unsupported=
- device
-> > > > >
-> > > > > Btw, let's tweak the changelog, it's a little bit hard to underst=
-and.
-> > > > >
-> > > > sure will do
-> > > > thanks
-> > > > Cindy
-> > > > > Thanks
-> > > > >
-> > > > > >
-> > > > > > Signed-off-by: Cindy Lu <lulu@redhat.com>
-> > > > > >
-> > > > > > Cindy Lu (2):
-> > > > > >   virtio-net: disable the configure interrupt for not support d=
-evice
-> > > > > >   virtio-pci: check if the configure interrupt enable
-> > > > > >
-> > > > > >  hw/net/virtio-net.c        |  5 ++++-
-> > > > > >  hw/virtio/virtio-pci.c     | 41 +++++++++++++++++++++---------=
---------
-> > > > > >  hw/virtio/virtio.c         |  1 +
-> > > > > >  include/hw/virtio/virtio.h |  1 +
-> > > > > >  4 files changed, 29 insertions(+), 19 deletions(-)
-> > > > > >
-> > > > > > --
-> > > > > > 2.43.0
-> > > > > >
-> > > > >
-> > > >
-> > >
-> >
->
+The local 9p driver in virtio-9p-test.c its temporary dir right at the
+start of qos-test (via virtio_9p_create_local_test_dir()) and only
+deletes it after qos-test is finished (via
+virtio_9p_remove_local_test_dir()).
+
+This means that any qos-test machine that ends up running virtio-9p-test
+local tests more than once will end up re-using the same temp dir. This
+is what's happening in [1] after we introduced the riscv machine nodes:
+if we enable slow tests with the '-m slow' flag using
+qemu-system-riscv64, this is what happens:
+
+- a temp dir is created;
+
+- virtio-9p-device tests will run virtio-9p-test successfully;
+
+- virtio-9p-pci tests will run virtio-9p-test, and fail right at the
+  first slow test at fs_create_dir() because the "01" file was already
+  created by fs_create_dir() test when running with the virtio-9p-device.
+
+We can fix it by making every test clean up their changes in the
+filesystem after they're done. But we don't need every test either: what
+fs_create_file() does is already exercised in fs_unlinkat_dir(), i.e. a
+dir is created, verified to be created, and then removed.  Fixing
+fs_create_file() would turn it into fs_unlinkat_dir(), so we don't need
+both.
+
+The same idea applies to every test in virtio-9p-test.c, where the
+'unlinkat' variant does the same thing the 'create' does but with some
+cleaning in the end. But we'll start with fs_create_dir() and
+fs_unlinkat_dir() only:
+
+- fs_create_dir() is removed. s_unlinkat_dir() is renamed to
+  fs_create_unlinkat_dir();
+
+- update the dir names for every other test since we have 1 less test.
+
+[1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg05807.html
+
+Reported-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ tests/qtest/virtio-9p-test.c | 39 +++++++++---------------------------
+ 1 file changed, 10 insertions(+), 29 deletions(-)
+
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index be031abc17..2cea1b4189 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -506,7 +506,8 @@ static void fs_readdir_split_512(void *obj, void *data,
+ 
+ /* tests using the 9pfs 'local' fs driver */
+ 
+-static void fs_create_dir(void *obj, void *data, QGuestAllocator *t_alloc)
++static void fs_create_unlinkat_dir(void *obj, void *data,
++                                   QGuestAllocator *t_alloc)
+ {
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+@@ -524,26 +525,6 @@ static void fs_create_dir(void *obj, void *data, QGuestAllocator *t_alloc)
+     g_assert(stat(new_dir_path, &st) == 0);
+     /* ... and is actually a directory */
+     g_assert((st.st_mode & S_IFMT) == S_IFDIR);
+-}
+-
+-static void fs_unlinkat_dir(void *obj, void *data, QGuestAllocator *t_alloc)
+-{
+-    QVirtio9P *v9p = obj;
+-    v9fs_set_allocator(t_alloc);
+-    struct stat st;
+-    const char *new_dir = "02";
+-    g_autofree char *root_path = virtio_9p_test_path("");
+-    g_autofree char *new_dir_path = virtio_9p_test_path(new_dir);
+-
+-    g_assert(root_path != NULL);
+-
+-    tattach({ .client = v9p });
+-    tmkdir({ .client = v9p, .atPath = "/", .name = new_dir });
+-
+-    /* check if created directory really exists now ... */
+-    g_assert(stat(new_dir_path, &st) == 0);
+-    /* ... and is actually a directory */
+-    g_assert((st.st_mode & S_IFMT) == S_IFDIR);
+ 
+     tunlinkat({
+         .client = v9p, .atPath = "/", .name = new_dir,
+@@ -558,7 +539,7 @@ static void fs_create_file(void *obj, void *data, QGuestAllocator *t_alloc)
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+     struct stat st;
+-    const char *new_dir = "03";
++    const char *new_dir = "02";
+     g_autofree char *new_file = g_strdup_printf("%s/%s", new_dir, "1st_file");
+     g_autofree char *new_file_path = virtio_9p_test_path(new_file);
+ 
+@@ -577,7 +558,7 @@ static void fs_unlinkat_file(void *obj, void *data, QGuestAllocator *t_alloc)
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+     struct stat st;
+-    const char *new_dir = "04";
++    const char *new_dir = "03";
+     g_autofree char *new_file = g_strdup_printf("%s/%s", new_dir, "doa_file");
+     g_autofree char *new_file_path = virtio_9p_test_path(new_file);
+ 
+@@ -600,7 +581,7 @@ static void fs_symlink_file(void *obj, void *data, QGuestAllocator *t_alloc)
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+     struct stat st;
+-    const char *new_dir = "05";
++    const char *new_dir = "04";
+     g_autofree char *real_file = NULL;
+     g_autofree char *real_file_path = NULL;
+     g_autofree char *symlink_file = NULL;
+@@ -633,7 +614,7 @@ static void fs_unlinkat_symlink(void *obj, void *data,
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+     struct stat st;
+-    const char *new_dir = "06";
++    const char *new_dir = "05";
+     g_autofree char *real_file = NULL;
+     g_autofree char *real_file_path = NULL;
+     g_autofree char *symlink_file = NULL;
+@@ -667,7 +648,7 @@ static void fs_hardlink_file(void *obj, void *data, QGuestAllocator *t_alloc)
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+     struct stat st_real, st_link;
+-    const char *new_dir = "07";
++    const char *new_dir = "06";
+     g_autofree char *real_file = NULL;
+     g_autofree char *real_file_path = NULL;
+     g_autofree char *hardlink_file = NULL;
+@@ -704,7 +685,7 @@ static void fs_unlinkat_hardlink(void *obj, void *data,
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+     struct stat st_real, st_link;
+-    const char *new_dir = "08";
++    const char *new_dir = "07";
+     g_autofree char *real_file = NULL;
+     g_autofree char *real_file_path = NULL;
+     g_autofree char *hardlink_file = NULL;
+@@ -788,8 +769,8 @@ static void register_virtio_9p_test(void)
+ 
+     opts.before = assign_9p_local_driver;
+     qos_add_test("local/config", "virtio-9p", pci_config,  &opts);
+-    qos_add_test("local/create_dir", "virtio-9p", fs_create_dir, &opts);
+-    qos_add_test("local/unlinkat_dir", "virtio-9p", fs_unlinkat_dir, &opts);
++    qos_add_test("local/create_unlinkat_dir", "virtio-9p",
++                 fs_create_unlinkat_dir, &opts);
+     qos_add_test("local/create_file", "virtio-9p", fs_create_file, &opts);
+     qos_add_test("local/unlinkat_file", "virtio-9p", fs_unlinkat_file, &opts);
+     qos_add_test("local/symlink_file", "virtio-9p", fs_symlink_file, &opts);
+-- 
+2.44.0
 
 
