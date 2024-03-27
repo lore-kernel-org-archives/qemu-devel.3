@@ -4,88 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F8DC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 14:14:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9C5BC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 14:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpU1a-0000z7-R5; Wed, 27 Mar 2024 10:13:08 -0400
+	id 1rpU2S-0001GX-2g; Wed, 27 Mar 2024 10:14:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rpU1V-0000yc-Qf
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:13:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1rpU1R-00087S-Kz
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:13:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711548776;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=32NsZvkpXH+LKxiQveFHB6foCUWRdIAJhKwT+VEiZGE=;
- b=UPjWCPZ8D3D5L2+YUHiwos/gnQ3cLdsEi87cBRkvD9enkwD5TD9iLjQ+WJNx7awQKMQiHL
- eIB8c8QC+41iyTuVP1293J3w4IPH24Pre16CrfOsYCJdD+LGxq9Nptjky+/odbcHyfZ84L
- /yXpANP/mPGrAZ/k3+0g13WJBdYOUCg=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-407-vOmIQW1aPhW7a5XR5HC74Q-1; Wed, 27 Mar 2024 10:12:54 -0400
-X-MC-Unique: vOmIQW1aPhW7a5XR5HC74Q-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-33ed44854ddso3607917f8f.2
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 07:12:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1rpU2Q-0001GF-PE
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:13:58 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1rpU2O-0008Cj-Hn
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:13:58 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-34175878e30so4876471f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 07:13:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=suse.com; s=google; t=1711548834; x=1712153634; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:autocrypt
+ :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=dbKwV1lVh0eDNNl8BfpXJC6IsewNSy8t9cbeao3ZZXk=;
+ b=MOcTmIzuCoh0+9zhy94xe8ntLUd+pGN7/cm6uyWyE7ZDTdB2G0qW1fYPEvY7ao9rcZ
+ MJtMTWcRgdQ9ZZX4ylyfsf/sKtF2U1wEvpERy5OOZxVm5fCuZ2Y32k+Jo2UZ2S2T2zFl
+ F1XVPhRX3syAM028xk6XLaD7waxGzLIZAr/1xW9Fx5NjWaDxKExIkxb2kkFNyxi5xpNq
+ R5v7d+D/mg5RSBQYK8q/fCsqWLEmZX+mnJomQTLFxrnirEg7JF6b6s/d4erWd4YWgWMg
+ XlFe5uW2pzLFzkyDeDb7/qh73Z0llAzAO/5dZmbH8Q+XUZOZhuWYMG9Oarg2Lky9t5aW
+ d+rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711548773; x=1712153573;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=32NsZvkpXH+LKxiQveFHB6foCUWRdIAJhKwT+VEiZGE=;
- b=bm2+AYZxuGfl3dGs5wvqi/lRqAzqv1TAdsEROsKWL5Lv4PTinyScGXwb7Z4V+bx08M
- X8OEcKChNk5SktNyaM9qzIFxg2osAGz1VFN5NMy0igCaYyXMQv2yH5Xln6U+qtVWuyJn
- D960I1QHwX1ZXiubT+5QwEq+PaErnWqbmtLNBJEdAM3XPQkLH3NJ2rAPH3ydvsaJlf9U
- DM7XOY+ndaXauMO+WXlJ/CxKcJ2HSKPa30Y0xKXmB92oa8jMru+o91vSoJggv+ds1yE1
- 7Mqm0FmwDJgbZ/X3DJyn3UxG6CpSHcm4Y/SE+d1icH0E8ZUxnIcuzkjnBf/6jxQDDgDi
- soNA==
-X-Gm-Message-State: AOJu0YxnT0ViZVhifNVTAr9NczVTkD4TrxvumUNbr9bKCp3arGvQ8vwE
- 6jPTUZNyGHBNCtaTMSYEgPOOcqFBG6x91soz3E0f7BgQoI+Buvibtn3EFyMbUbCE0sIjZOi84GK
- mZXxvWPkJZDxgP65B5AmySf1IdROPOX/Xe49jHAMt3SHmqfjQjPdz17AOmC2x07qCyR8BKjVQR3
- L3rnw/Wm4zbTZexWiAewFOnlSMFlo=
-X-Received: by 2002:a5d:5886:0:b0:33e:beca:65ef with SMTP id
- n6-20020a5d5886000000b0033ebeca65efmr71565wrf.2.1711548772910; 
- Wed, 27 Mar 2024 07:12:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE0De9U9jYN+4es6zocRQK21LQIZb5/zvrOtmE6lnYTpcKdoN8FScZLykbGyl9A1ioIe5YMlcBSkYRiXfnBcec=
-X-Received: by 2002:a5d:5886:0:b0:33e:beca:65ef with SMTP id
- n6-20020a5d5886000000b0033ebeca65efmr71546wrf.2.1711548772602; Wed, 27 Mar
- 2024 07:12:52 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711548834; x=1712153634;
+ h=mime-version:user-agent:content-transfer-encoding:autocrypt
+ :references:in-reply-to:date:cc:to:from:subject:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dbKwV1lVh0eDNNl8BfpXJC6IsewNSy8t9cbeao3ZZXk=;
+ b=K82xlgMCV6Mwkg9+tovylERtypiiIxcvOsxncsSXCwyPrcVV+NQmvC70ajWylyvBVo
+ qRYqAqMdpddycsP2xk9BuXOLIMjmRZK+c6ypYBE4CiAKB9M+Mng0O6ZvTv5y87nagQ6T
+ vy4QVs0YPStWiPfDMJDzUU7gSvIDtlyzv5QgsKFl9xoGLUCRGpDMdiG11sw7tNy1K131
+ EJ+psj1P5/YHS3XnrB+jGG4E3M+rrRiHn4P2sMIbT2nyrgJt5XGY8LEgZldBr21iQMHJ
+ 0gGVD+uL3IumsdtLhJlRlo5EGIUFDR/1eCYRtzBkf0NtGdqGhJrPONK7WH3f/it00Ft+
+ Za9w==
+X-Gm-Message-State: AOJu0YxLcn0JvIfcbR+9c4Bmsc1RT6/pPBx3BDtb33AqdPOJawqIS3y3
+ XrZDJnB3tEUuntFdpHRy/HwpT67sca8KbsOd3agNiMmd65FRDTZdSpDs0esElaY=
+X-Google-Smtp-Source: AGHT+IEOSgYpRxcnDtQGshfZPm76+5tPNKjNQx5KEB+YnMrV2/IpTHybgAl3wCQiDucUdnEtfmajWg==
+X-Received: by 2002:a5d:4ccc:0:b0:341:9087:8a4 with SMTP id
+ c12-20020a5d4ccc000000b00341908708a4mr74460wrt.13.1711548834092; 
+ Wed, 27 Mar 2024 07:13:54 -0700 (PDT)
+Received: from [192.168.7.249] ([145.40.191.116])
+ by smtp.gmail.com with ESMTPSA id
+ bo15-20020a056000068f00b0033ec8f3ca9bsm11633860wrb.49.2024.03.27.07.13.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Mar 2024 07:13:53 -0700 (PDT)
+Message-ID: <da59863286f014444350d7ecc5523f32fd12138a.camel@suse.com>
+Subject: Re: [PATCH 6/9] i386/pc: Skip initialization of system FW when
+ using IGVM
+From: Roy Hopkins <roy.hopkins@suse.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Michael Tsirkin <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>,  Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,  Igor
+ Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,  =?ISO-8859-1?Q?J=F6rg?= Roedel
+ <jroedel@suse.com>, Gerd Hoffmann <kraxel@redhat.com>, Vitaly Kuznetsov
+ <vkuznets@redhat.com>
+Date: Wed, 27 Mar 2024 14:13:53 +0000
+In-Reply-To: <11A81A35-2513-4433-8965-FE3AC5E0BF75@redhat.com>
+References: <cover.1709044754.git.roy.hopkins@suse.com>
+ <63a4febd571701bb9f2f7511d71fc968ed9205ab.1709044754.git.roy.hopkins@suse.com>
+ <11A81A35-2513-4433-8965-FE3AC5E0BF75@redhat.com>
+Autocrypt: addr=roy.hopkins@suse.com; prefer-encrypt=mutual;
+ keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.2 
 MIME-Version: 1.0
-References: <20240326171009.26696-1-philmd@linaro.org>
- <20240326171009.26696-5-philmd@linaro.org>
- <8cf13d4d-0b1a-487a-8a7c-1aea4cb107c5@redhat.com>
- <5ceb0f8d-ef37-4b34-bcce-f4948d1b73ef@linaro.org>
-In-Reply-To: <5ceb0f8d-ef37-4b34-bcce-f4948d1b73ef@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 27 Mar 2024 15:12:40 +0100
-Message-ID: <CABgObfZv42tsWP5P7dUb5fntii2Edt66hOAhxbv2RxpRpBmvUg@mail.gmail.com>
-Subject: Re: [PATCH-for-9.0? v2 4/4] meson: Enable -Wstatic-in-inline
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000009b72840614a50041"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: permerror client-ip=2a00:1450:4864:20::434;
+ envelope-from=roy.hopkins@suse.com; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,111 +114,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009b72840614a50041
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Il mer 27 mar 2024, 13:42 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> h=
-a
-scritto:
-
-> IIUC your comment, you are worried about system headers declaring
-> non-static inline functions?
->
-
-No, it's just that the flag (and thus the patch) is not doing what the
-commit message says.
-
-Perhaps you could instead add a checkpatch test that catches occurrences of
-inline without static.
-
-Paolo
-
-
-> >
-> > For now I'm queuing patches 1-3 only.
-> >
-> > Paolo
-> >
-> >> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> >> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> >> Message-Id: <20240313184954.42513-5-philmd@linaro.org>
-> >> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> >> ---
-> >>   meson.build | 1 +
-> >>   1 file changed, 1 insertion(+)
-> >>
-> >> diff --git a/meson.build b/meson.build
-> >> index c9c3217ba4..f400f7d36c 100644
-> >> --- a/meson.build
-> >> +++ b/meson.build
-> >> @@ -591,6 +591,7 @@ warn_flags =3D [
-> >>     '-Wold-style-definition',
-> >>     '-Wredundant-decls',
-> >>     '-Wshadow=3Dlocal',
-> >> +  '-Wstatic-in-inline',
-> >>     '-Wstrict-prototypes',
-> >>     '-Wtype-limits',
-> >>     '-Wundef',
-> >
->
->
-
---0000000000009b72840614a50041
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il mer 27 mar 2024, 13:42 Philippe Mathieu-Daud=C3=A9 =
-&lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org</a>&gt; ha scrit=
-to:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;b=
-order-left:1px #ccc solid;padding-left:1ex">IIUC your comment, you are worr=
-ied about system headers declaring<br>
-non-static inline functions?<br></blockquote></div></div><div dir=3D"auto">=
-<br></div><div dir=3D"auto">No, it&#39;s just that the flag (and thus the p=
-atch) is not doing what the commit message says.</div><div dir=3D"auto"><br=
-></div><div dir=3D"auto">Perhaps you could instead add a checkpatch test th=
-at catches occurrences of inline without static.</div><div dir=3D"auto"><br=
-></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D=
-"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=
-=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-&gt; <br>
-&gt; For now I&#39;m queuing patches 1-3 only.<br>
-&gt; <br>
-&gt; Paolo<br>
-&gt; <br>
-&gt;&gt; Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:p=
-hilmd@linaro.org" target=3D"_blank" rel=3D"noreferrer">philmd@linaro.org</a=
->&gt;<br>
-&gt;&gt; Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.hende=
-rson@linaro.org" target=3D"_blank" rel=3D"noreferrer">richard.henderson@lin=
-aro.org</a>&gt;<br>
-&gt;&gt; Message-Id: &lt;<a href=3D"mailto:20240313184954.42513-5-philmd@li=
-naro.org" target=3D"_blank" rel=3D"noreferrer">20240313184954.42513-5-philm=
-d@linaro.org</a>&gt;<br>
-&gt;&gt; Reviewed-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" t=
-arget=3D"_blank" rel=3D"noreferrer">thuth@redhat.com</a>&gt;<br>
-&gt;&gt; ---<br>
-&gt;&gt; =C2=A0 meson.build | 1 +<br>
-&gt;&gt; =C2=A0 1 file changed, 1 insertion(+)<br>
-&gt;&gt;<br>
-&gt;&gt; diff --git a/meson.build b/meson.build<br>
-&gt;&gt; index c9c3217ba4..f400f7d36c 100644<br>
-&gt;&gt; --- a/meson.build<br>
-&gt;&gt; +++ b/meson.build<br>
-&gt;&gt; @@ -591,6 +591,7 @@ warn_flags =3D [<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 &#39;-Wold-style-definition&#39;,<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 &#39;-Wredundant-decls&#39;,<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 &#39;-Wshadow=3Dlocal&#39;,<br>
-&gt;&gt; +=C2=A0 &#39;-Wstatic-in-inline&#39;,<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 &#39;-Wstrict-prototypes&#39;,<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 &#39;-Wtype-limits&#39;,<br>
-&gt;&gt; =C2=A0=C2=A0=C2=A0 &#39;-Wundef&#39;,<br>
-&gt; <br>
-<br>
-</blockquote></div></div></div>
-
---0000000000009b72840614a50041--
-
+On Wed, 2024-03-27 at 18:58 +0530, Ani Sinha wrote:
+>=20
+>=20
+> > On 27 Feb 2024, at 20:20, Roy Hopkins <roy.hopkins@suse.com> wrote:
+> >=20
+> > When using an IGVM file the configuration of the system firmware is
+> > defined by IGVM directives contained in the file. Therefore the default
+> > system firmware should not be initialized when an IGVM file has been
+> > provided.
+> >=20
+> > This commit checks to see if an IGVM file has been provided and, if it
+> > has then the standard system firmware initialization is skipped and any
+> > prepared flash devices are cleaned up.
+> >=20
+> > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> > ---
+> > hw/i386/pc.c | 12 ++++++++++--
+> > 1 file changed, 10 insertions(+), 2 deletions(-)
+> >=20
+> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> > index f8eb684a49..17bb211708 100644
+> > --- a/hw/i386/pc.c
+> > +++ b/hw/i386/pc.c
+> > @@ -63,6 +63,7 @@
+> > #include "e820_memory_layout.h"
+> > #include "trace.h"
+> > #include CONFIG_DEVICES
+> > +#include "exec/confidential-guest-support.h"
+> >=20
+> > #ifdef CONFIG_XEN_EMU
+> > #include "hw/xen/xen-legacy-backend.h"
+> > @@ -1023,8 +1024,15 @@ void pc_memory_init(PCMachineState *pcms,
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > =C2=A0=C2=A0=C2=A0 }
+> >=20
+> > -=C2=A0=C2=A0=C2=A0 /* Initialize PC system firmware */
+> > -=C2=A0=C2=A0=C2=A0 pc_system_firmware_init(pcms, rom_memory);
+> > +=C2=A0=C2=A0=C2=A0 /*
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * If this is a confidential guest configured =
+using IGVM then the IGVM
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * configuration will include the system firmw=
+are. In this case do not
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 * initialise PC system firmware.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> > +=C2=A0=C2=A0=C2=A0 if (!cgs_is_igvm(machine->cgs)) {
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Initialize PC system fir=
+mware */
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pc_system_firmware_init(pcm=
+s, rom_memory);
+> > +=C2=A0=C2=A0=C2=A0 }
+>=20
+> Ok so this makes QEMU mot load the default fw as provided in the QEMU com=
+mand
+> line. It does not specify how the packaged fw specified within IGVM would=
+ be
+> processed and loaded. Am I understanding this right?
+> =C2=A0
+Yes. Although as suggested by Daniel, I've now changed this so if firmware =
+is
+specified on the command line in conflict with the IGVM file then an error =
+is
+displayed. The IGVM file itself describes how the firmware binary is popula=
+ted
+into guest memory and launched.
 
