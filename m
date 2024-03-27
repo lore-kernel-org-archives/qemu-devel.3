@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A70FCD11DD
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 02:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADAEFCD11DF
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 02:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpIfN-0005Yk-2l; Tue, 26 Mar 2024 22:05:25 -0400
+	id 1rpIfT-0005Zg-Kq; Tue, 26 Mar 2024 22:05:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rpIfL-0005Yb-Gg
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 22:05:23 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1rpIfS-0005ZH-Bz
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 22:05:30 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1rpIfJ-0001wp-Ow
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 22:05:23 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1e0d6356ce9so19733715ad.3
- for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 19:05:21 -0700 (PDT)
+ id 1rpIfQ-0001xI-S9
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 22:05:30 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-6e740fff1d8so4489896b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 19:05:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711505120; x=1712109920;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711505127; x=1712109927;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=IMrQNjap7NimL/Y3bzDVmCVdabyr6HixObY1Am7sLmQ=;
- b=r2WHCXaE2AwgvTkCAIQXlzKqQ3CyJSUc6dO3npLYSVEL9Gv8oQy9VWGhbnRo56GvrD
- swYBGcKT+hG/4iWNWhtonQmuLqGt74oHmHA50OdHXpwjZ1Ot8M9eYiqVC4uBu6HQHH4f
- GDoGoVvgGkooM4eI1srO+EI8gV1ZeHk0/QU7ZjuZ2EZAhCQCsV7VHPrlhCDsVotRFQ+/
- /gb1kFVJdGj8o4SutS0z+rLdad/cXzzUibgW6Vhw4hNhwCVjvbtpzkLOQDZeJurVnry1
- ljPtZNZ996944eorw5NN5FYe3RKruwN6jDo4cKysql5AfHNaEN7mkkRgLYtKOPTMxWok
- PJNw==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=dq9y8oIeY1L8ZIgWL8BlTPdW4sDTSYpVxv6sdWa4hnQ=;
+ b=BfktOCs8qsjPrXT3cIpH0mL/wqSgZHwgybNDUP9xGavBzpsbgmiCDR7ItHWq5ZewN9
+ DXa/QuLuWBCUg5ZP1iBDisNwJXKiGVjMP6VMOjoCH9NnHe9IZE3BOirIEnLmtR4MEiZA
+ dFlkduatGNQOVuJkGi59l3357jdrX8+Qc7iE7xiygL1utfMZ1Q+9VMEEWHv35ODPRAwR
+ ZFP8sk0dedumit7EhzXWWYlV24YnmSLN0jBT/Zv9lroaRqUcIBVFPkPSUvtfHFMTybCQ
+ Um0TC+exGQQtE8WYCaNEgGwK5dVAGAUUNEUrMlJ8N92OHiOLsTTsGoGaSuJQdEFP5EOs
+ UoMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711505120; x=1712109920;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IMrQNjap7NimL/Y3bzDVmCVdabyr6HixObY1Am7sLmQ=;
- b=rvVUPye+dYVedJ+UgBiCXdPGKYiNTfvkdt+MY8T/hTWKmo9lt4C4iqdTV+ufRUOD2R
- PfOC9u24du6yM9nO6lhchThgg7YTAH6sv6+0UvHAbFCBKyBscFpos9X1cAKVKqY4XO76
- 39YfDyINP4Mv5W/3cW+q8ud0uPDm0mWnjflo0+Mn3XZVevZ2OeZoy9DCabkpje1YmeM0
- DR4f4cHeXhcgLcwyeuwpVg1JbBUeYajawp/oi3Rr/xeychcAcu3A0XxBeFE7OYXgPeCd
- ztPu9cr+gFVtc6VtcQlk/Giqc7TibU1IuH48fGmn7MsIsTwnnDYaMebMu62brO4MdHqv
- itbA==
-X-Gm-Message-State: AOJu0YwCi7c80px5KOjlAwATrfZqQ3TExdza2dD3ylg/jJYELZMot0+r
- 8psRMiw0Y96XsbDaz4Eu3KGX0+a+MwTSUUHdHZdDwo0/m5hcVf1R2sPwzGBfQtE4Mpq+QYRGxFp
- U
-X-Google-Smtp-Source: AGHT+IEMFSO6vnjHmM7/ccWb+bJqpcAY0zdV2BcTmHeUzyRblLKQ9wECtsK12LgRuW2hXo27AUhUaQ==
-X-Received: by 2002:a17:902:cec3:b0:1e0:b76b:cfb8 with SMTP id
- d3-20020a170902cec300b001e0b76bcfb8mr10411766plg.19.1711505120034; 
- Tue, 26 Mar 2024 19:05:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711505127; x=1712109927;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dq9y8oIeY1L8ZIgWL8BlTPdW4sDTSYpVxv6sdWa4hnQ=;
+ b=jI9wJnPG5eBjFUNsqMVfJj1ikVZ8HnJ3rI/VXHTCxUyePOndeaCjDaKk4CzdvtfrCq
+ yGYOM+dTzTumQUzabNeDFTbkp9ECcWYLc6dvDrxzFRJAHJlHDCriS9OPxckzxrKe7+fY
+ /dJea/ych1RYc5sCJ+E0f1hN4jbXAI1GbwPbhUr/iKrp/BaQ+Dw3QcfLJM87r0tIPTwi
+ n3sXbeCyj6Fx4tmBRzQa+tP6/as7+TTAgwtV8ZzzFKvWEP+ZReS2lJ+ROyiB7XX2E0ji
+ tCwcJf3MVgjRHXqgriKyZLgoCQGoPqhuEci1LkEScfKT3NALIWgiNDGSNkLs2KJjxRwq
+ KPDQ==
+X-Gm-Message-State: AOJu0Yzhd8ZknrU9/j4HxiI5vA0oolI0B74nMw9r+Q9EH71M5sn41+W0
+ 4t1kOdSgK/fIps4EhKeLPXm3G8k4aS122uLRV0wD6gnfR9gFLhf/lOllfSrx9FDmJYPUt17RRsk
+ C
+X-Google-Smtp-Source: AGHT+IGcTLZm0B03InSGsbKsntOoWD0J32q78Pd/lGvkgtg3L1F1mm/5pnNdXIuAHm5LLWeiiUOrHQ==
+X-Received: by 2002:a05:6a00:a01:b0:6e6:c38e:e8a6 with SMTP id
+ p1-20020a056a000a0100b006e6c38ee8a6mr1957797pfh.4.1711505127467; 
+ Tue, 26 Mar 2024 19:05:27 -0700 (PDT)
 Received: from localhost ([157.82.202.248])
  by smtp.gmail.com with UTF8SMTPSA id
- p7-20020a170902e74700b001e0b5d4a2a8sm5639770plf.149.2024.03.26.19.05.18
+ h4-20020a056a00230400b006ea8ba9902asm6681959pfh.28.2024.03.26.19.05.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 26 Mar 2024 19:05:19 -0700 (PDT)
+ Tue, 26 Mar 2024 19:05:27 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v2 0/2] virtio-net: Fix RSS
-Date: Wed, 27 Mar 2024 11:05:08 +0900
-Message-Id: <20240327-vhost-v2-0-0a89aa21b54b@daynix.com>
+Date: Wed, 27 Mar 2024 11:05:10 +0900
+Subject: [PATCH v2 2/2] ebpf: Fix indirections table setting
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANR+A2YC/zXMSw7CIBSF4a00dywGrqWpjroP0wEv5Q4EAw1p0
- 7B3sdHhf3Ly7ZBdIpfh1u2QXKFMMbTAUwfGq/B0jGxrQI49v2DPio95YdLhYEaFVkkF7ftO7kH
- r4dzn1p7yEtN2sEV8178w/IQiGGf8qu0otdAKzWTVFmg9m/iCudb6Aahr+0ybAAAA
+Message-Id: <20240327-vhost-v2-2-0a89aa21b54b@daynix.com>
+References: <20240327-vhost-v2-0-0a89aa21b54b@daynix.com>
+In-Reply-To: <20240327-vhost-v2-0-0a89aa21b54b@daynix.com>
 To: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
  Andrew Melnychenko <andrew@daynix.com>, 
  Yuri Benditovich <yuri.benditovich@daynix.com>
 Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev
-Received-SPF: none client-ip=2607:f8b0:4864:20::635;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,28 +96,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some recent changes made RSS unfunctional so here are fixes.
+The kernel documentation says:
+> The value stored can be of any size, however, all array elements are
+> aligned to 8 bytes.
+https://www.kernel.org/doc/html/v6.8/bpf/map_array.html
 
+Fixes: 333b3e5fab75 ("ebpf: Added eBPF map update through mmap.")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-Changes in v2:
-- Fixed a potential problem with big-endian hosts.
-- Link to v1: https://lore.kernel.org/r/20240326-vhost-v1-0-09bd85b1ba2c@daynix.com
+ ebpf/ebpf_rss.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
----
-Akihiko Odaki (2):
-      virtio-net: Fix vhost virtqueue notifiers for RSS
-      ebpf: Fix indirections table setting
+diff --git a/ebpf/ebpf_rss.c b/ebpf/ebpf_rss.c
+index 2e506f974357..d102f3dd0929 100644
+--- a/ebpf/ebpf_rss.c
++++ b/ebpf/ebpf_rss.c
+@@ -185,13 +185,18 @@ static bool ebpf_rss_set_indirections_table(struct EBPFRSSContext *ctx,
+                                             uint16_t *indirections_table,
+                                             size_t len)
+ {
++    char *cursor = ctx->mmap_indirections_table;
++
+     if (!ebpf_rss_is_loaded(ctx) || indirections_table == NULL ||
+        len > VIRTIO_NET_RSS_MAX_TABLE_LEN) {
+         return false;
+     }
+ 
+-    memcpy(ctx->mmap_indirections_table, indirections_table,
+-            sizeof(*indirections_table) * len);
++    for (size_t i = 0; i < len; i++) {
++        *(uint16_t *)cursor = indirections_table[i];
++        cursor += 8;
++    }
++
+     return true;
+ }
+ 
 
- ebpf/ebpf_rss.c     | 9 +++++++--
- hw/net/virtio-net.c | 4 ++--
- 2 files changed, 9 insertions(+), 4 deletions(-)
----
-base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
-change-id: 20240324-vhost-5e26c8a2da5a
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.44.0
 
 
