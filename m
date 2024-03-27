@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9754C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 19:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11512C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 19:46:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpZ9I-0005Ne-4A; Wed, 27 Mar 2024 15:41:24 -0400
+	id 1rpZEG-000729-Ig; Wed, 27 Mar 2024 15:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpZ9F-0005NO-Sx
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 15:41:21 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpZ9E-00077j-6z
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 15:41:21 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6ea838bf357so235427b3a.0
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 12:41:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1711568479; x=1712173279; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RG8GD+YGbxvnhEJ3K1sxxXGqD1w9LsSUSpA7ZJ5u5yU=;
- b=EPqclhLBxv0GExlqBx9c2k68aXVOywcTcjYNlsjDBNg+5kI05WD4T8Q9EORVUhTyLe
- DIBPpGqdrPOHSmUhNBTW5T7hrRlWU27YUMfaEiugd3AmP3QGLgZbLclmEiyDLzGw6Iov
- oe19mJ91dydlugVqm7Z3CqKHfkJ0BVaApKYc54lGyn2omsVeEzE+vcTf+Ay+5OngOj9f
- SWc1TguHRTQniBm1kqiHbEPXdIRjQp4AQgl20vR3n0sAvjEeDKQK1Tq63bdz8SBVMsId
- gI7Wsg7C404YTs3UtFIC8mrp8eaAz+ZiooO6jPI0RFfnzJwSlNWuo0m7tJefpinYohTa
- fyJw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rpZED-00071w-9i
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 15:46:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rpZEB-0008O6-1l
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 15:46:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711568785;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0YC45G3dVdDlidydYa17eDZBYrA96CqDEsVmnCgz6js=;
+ b=B2aHaNlgif8/3wpDabJQzjTRY6Vn83qR0IujuElpTKcuwjUWap5qkbT6BHtooKN22eqQJN
+ F+K1o55imzLBKvg9k2DZV7gs2gej7HOU0/FHJn4VBi7o3loY9QLJgRNG9zvRX0y3NN1AFP
+ Ru2kmMA0z7UMxIu9QdYS60RvusyWHQs=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-635-rjHdBVwHPP6HCijd8WqumQ-1; Wed, 27 Mar 2024 15:46:23 -0400
+X-MC-Unique: rjHdBVwHPP6HCijd8WqumQ-1
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7830635331bso2233885a.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 12:46:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711568479; x=1712173279;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RG8GD+YGbxvnhEJ3K1sxxXGqD1w9LsSUSpA7ZJ5u5yU=;
- b=p1bC3No+0hlsvX4JkWRDFwVo5keHC94UmWWcF1GAHyLdJWxYC7GVx4bzKMT+VsyeLj
- VndS721qjDgj19gT3cf3jRsxcbBzGGc8sv6YuYReFIZXyCWQHlrWhVY/Qrcr7ue3wo6E
- O07atd/YtnRlXFpx5m+AkKSwC7EFyXbA6ciPjepcGkS7MugoWkp7qCi9BhruSo3kJ+Pu
- 29m5bZV7d/a0RUY05IXA5Z5iO0G3mTovFexT2om0B3P0zOHRUvE4HpJv1cZUuCvaMceM
- /4DNykAzINWXSeKeB68lb2aWxoJZAGmk1nh8I5pzruL+sP+bwTZpydesHVwYo0D4xSVI
- A8Gw==
+ d=1e100.net; s=20230601; t=1711568783; x=1712173583;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0YC45G3dVdDlidydYa17eDZBYrA96CqDEsVmnCgz6js=;
+ b=FLTJb7t5da2DylEj94naHcUuoXd7OEO4eCbMpqdy7i4ohQJ2nWKjIGqRCxY/M0bzPW
+ 6MO3UL4VHVt/ERin9Nqs5drk4D3h3OrAVpK26u/zWWx34oFqIJDe3bbIoglufBKYN/KA
+ Q2yvqzoS5nJGf9G0OG/zwIoZtG7wTIVqbvdvLBOilBGwCyQpvXuN/5DLYYz2N6Xq4Ivr
+ OxdUwWCGmj1HVwxPh7QrgqeStiebhU9NRtwkvpqV3jqslgQXTSgnzt/KUmajEavZL3l7
+ ozj/l7V9WVANqb74NFnk+yftZ8DNA9gL+bCNBiN0mRGeWuezVWIOMxfrYdNpIyiTdvdo
+ 9gcQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXr2P2Y9dINJLQKj+apEaJaTM28x9RPw6OgaK9aZidPlmXw9oFqCa1TXXtf5IKZ7xfsxAiG3lpNB7zT2UaZWz5ZaaSSGr8=
-X-Gm-Message-State: AOJu0YzOEJQfihsJjEqwgPxamsnJpg8//9mEXKeJrBvxGfvaneAC9LpA
- ZDRnZ5MGRUjnQmuzTtJ9WnrJorQ855s9Vf7KM3yIfcucx3hm2T/ZJMtC/9zptI0=
-X-Google-Smtp-Source: AGHT+IHWAxzbgxlrjNshdTcmQRap6B9UaomWqc1N1XtJgxhvyh/pb5fzbPcPwSNVKpNM4In/7KQfbg==
-X-Received: by 2002:a05:6a20:6a11:b0:1a3:48c8:6858 with SMTP id
- p17-20020a056a206a1100b001a348c86858mr1410156pzk.2.1711568478745; 
- Wed, 27 Mar 2024 12:41:18 -0700 (PDT)
-Received: from [192.168.68.110] ([177.45.186.241])
- by smtp.gmail.com with ESMTPSA id
- n32-20020a056a000d6000b006e6b9dd81bdsm8395903pfv.99.2024.03.27.12.41.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Mar 2024 12:41:18 -0700 (PDT)
-Message-ID: <7861e603-93e5-4961-b31b-b9a7057d8add@ventanamicro.com>
-Date: Wed, 27 Mar 2024 16:41:15 -0300
+ AJvYcCX1rgy8/x4QdqWA6YTimKL4ncl67tmvA+UAtJ508+c3NyZR0oWH03TD6nFxsoFUOvqvoEV9l0bZ5FBS0JEOd/64Y1TPBlA=
+X-Gm-Message-State: AOJu0YzWiPzWc56NP3J9mJQvRtGGQIj4tRBCCcUmc4zHth7S4naoQwtb
+ sscy/ypSfS5vthD6Wt6W4xFf5HDm02RkTo9VVEIoiWNzbqn38XqboR47ghOiajpZAD6jA3SeDni
+ ialS7ocf6MJffq9+aFol9ro8FXM4fhIMDv6W+S3VsyqmFC99BZ2gY
+X-Received: by 2002:a37:de02:0:b0:789:f0c5:9c77 with SMTP id
+ h2-20020a37de02000000b00789f0c59c77mr442181qkj.6.1711568782650; 
+ Wed, 27 Mar 2024 12:46:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGg/wn04fBWSx8WTGEgys1pcMh8UDgb+wDsGN6PbzGx83JJBj4u2QUQSuRC1I8lLgF9mXew+g==
+X-Received: by 2002:a37:de02:0:b0:789:f0c5:9c77 with SMTP id
+ h2-20020a37de02000000b00789f0c59c77mr442165qkj.6.1711568782073; 
+ Wed, 27 Mar 2024 12:46:22 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ z24-20020ae9c118000000b0078a581bc66bsm2695207qki.17.2024.03.27.12.46.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Mar 2024 12:46:21 -0700 (PDT)
+Date: Wed, 27 Mar 2024 15:46:19 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Liu, Yuan1" <yuan1.liu@intel.com>
+Cc: "farosas@suse.de" <farosas@suse.de>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "hao.xiang@bytedance.com" <hao.xiang@bytedance.com>,
+ "bryan.zhang@bytedance.com" <bryan.zhang@bytedance.com>,
+ "Zou, Nanhai" <nanhai.zou@intel.com>
+Subject: Re: [PATCH v5 0/7] Live Migration With IAA
+Message-ID: <ZgR3i5-jc3n2eQA_@x1n>
+References: <20240319164527.1873891-1-yuan1.liu@intel.com>
+ <ZgMwSO_eRIgXZ24L@x1n>
+ <PH7PR11MB5941A91AC1E514BCC32896A6A3342@PH7PR11MB5941.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 v3 0/2] qtest/virtio-9p-test.c: fix slow tests
-Content-Language: en-US
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, alistair.francis@wdc.com, groug@kaod.org,
- peter.maydell@linaro.org
-References: <20240327142011.805728-1-dbarboza@ventanamicro.com>
- <3153513.lVJF6dkNTK@silver>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <3153513.lVJF6dkNTK@silver>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x435.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <PH7PR11MB5941A91AC1E514BCC32896A6A3342@PH7PR11MB5941.namprd11.prod.outlook.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,70 +104,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 3/27/24 15:53, Christian Schoenebeck wrote:
-> On Wednesday, March 27, 2024 3:20:09 PM CET Daniel Henrique Barboza wrote:
->> Hi,
->>
->> In this new version we took a different approach after the discussions
->> we had in [1]. The tests are now untouched, and we're addressing the root
->> cause directly: the fact that we have a single temp dir for all the test
->> execution in qos-test.
->>
->> We're now creating and cleaning temp dirs for each individual test by
->> calling virtio_9p_create_local_test_dir() in the .before callback for
->> the local 9p tests (assign_9p_local_driver()). In this same callback we
->> queue the cleanup function that will erase the created temp dir. The
->> cleanup will run after the test ran successfully.
->>
->> This approach is similar to what other qtests do (in fact this design was
->> taken from vhost-user-test.c) so it's not like we're doing something
->> novel.
->>
->> I kept the revert of the slow test gate because Gitlab seems to approve
->> it:
->>
->> https://gitlab.com/danielhb/qemu/-/pipelines/1229836634
->>
->> Feel free to take just patch 1 if we're not sure about re-enabling these
->> tests in Gitlab.
->>
->>
->> Changes from v3:
->> - patches 1 to 6: dropped
->> - patch 1 (new):
->>    - create and remove temporary dirs on each test
->> - v2 link: https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg06335.html
->>
->> [1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg06400.html
->>
->> Daniel Henrique Barboza (2):
->>    qtest/virtio-9p-test.c: create/remove temp dirs after each test
->>    qtest/virtio-9p-test.c: remove g_test_slow() gate
->>
->>   tests/qtest/virtio-9p-test.c | 32 +++++++++++---------------------
->>   1 file changed, 11 insertions(+), 21 deletions(-)
->>
->>
+On Wed, Mar 27, 2024 at 03:20:19AM +0000, Liu, Yuan1 wrote:
+> > -----Original Message-----
+> > From: Peter Xu <peterx@redhat.com>
+> > Sent: Wednesday, March 27, 2024 4:30 AM
+> > To: Liu, Yuan1 <yuan1.liu@intel.com>
+> > Cc: farosas@suse.de; qemu-devel@nongnu.org; hao.xiang@bytedance.com;
+> > bryan.zhang@bytedance.com; Zou, Nanhai <nanhai.zou@intel.com>
+> > Subject: Re: [PATCH v5 0/7] Live Migration With IAA
+> > 
+> > Hi, Yuan,
+> > 
+> > On Wed, Mar 20, 2024 at 12:45:20AM +0800, Yuan Liu wrote:
+> > > 1. QPL will be used as an independent compression method like ZLIB and
+> > ZSTD,
+> > >    QPL will force the use of the IAA accelerator and will not support
+> > software
+> > >    compression. For a summary of issues compatible with Zlib, please
+> > refer to
+> > >    docs/devel/migration/qpl-compression.rst
+> > 
+> > IIRC our previous discussion is we should provide a software fallback for
+> > the new QEMU paths, right?  Why the decision changed?  Again, such
+> > fallback
+> > can help us to make sure qpl won't get broken easily by other changes.
 > 
-> Awesome!
+> Hi Peter
 > 
-> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> Previous your suggestion below
 > 
-> Are the riscv patches already on master? I.e. should I push those two patches
-> through my queue?
+> https://patchew.org/QEMU/PH7PR11MB5941019462E0ADDE231C7295A37C2@PH7PR11MB5941.namprd11.prod.outlook.com/
+> Compression methods: none, zlib, zstd, qpl (describes all the algorithms
+> that might be used; again, qpl enforces HW support).
+> Compression accelerators: auto, none, qat (only applies when zlib/zstd
+> chosen above)
+> 
+> Maybe I misunderstood here, what you mean is that if the IAA hardware is unavailable, 
+> it will fall back to the software path. This does not need to be specified through live
+> migration parameters, and it will automatically determine whether to use the software or
+> hardware path during QPL initialization, is that right?
 
-Yes, they were pushed to master almost 2 months ago and Thomas got wind of this problem
-at the start of this week.
+I think there are two questions.
 
+Firstly, we definitely want the qpl compressor to be able to run without
+any hardware support.  As I mentioned above, I think that's the only way
+that qpl code can always get covered by the CI as CI hosts should normally
+don't have those modern hardwares.
+
+I think it also means in the last test patch, instead of detecting /dev/iax
+we should unconditionally run the qpl test as long as compiled in, because
+it should just fallback to the software path then when HW not valid?
+
+The second question is whether we'll want a new "compression accelerator",
+fundamentally the only use case of that is to enforce software fallback
+even if hardware existed.  I don't remember whether others have any opinion
+before, but to me I think it's good to have, however no strong opinion.
+It's less important comparing to the other question on CI coverage.
+
+> 
+> > > 2. Compression accelerator related patches are removed from this patch
+> > set and
+> > >    will be added to the QAT patch set, we will submit separate patches
+> > to use
+> > >    QAT to accelerate ZLIB and ZSTD.
+> > >
+> > > 3. Advantages of using IAA accelerator include:
+> > >    a. Compared with the non-compression method, it can improve downtime
+> > >       performance without adding additional host resources (both CPU and
+> > >       network).
+> > >    b. Compared with using software compression methods (ZSTD/ZLIB), it
+> > can
+> > >       provide high data compression ratio and save a lot of CPU
+> > resources
+> > >       used for compression.
+> > >
+> > > Test condition:
+> > >   1. Host CPUs are based on Sapphire Rapids
+> > >   2. VM type, 16 vCPU and 64G memory
+> > >   3. The source and destination respectively use 4 IAA devices.
+> > >   4. The workload in the VM
+> > >     a. all vCPUs are idle state
+> > >     b. 90% of the virtual machine's memory is used, use silesia to fill
+> > >        the memory.
+> > >        The introduction of silesia:
+> > >        https://sun.aei.polsl.pl//~sdeor/index.php?page=silesia
+> > >   5. Set "--mem-prealloc" boot parameter on the destination, this
+> > parameter
+> > >      can make IAA performance better and related introduction is added
+> > here.
+> > >      docs/devel/migration/qpl-compression.rst
+> > >   6. Source migration configuration commands
+> > >      a. migrate_set_capability multifd on
+> > >      b. migrate_set_parameter multifd-channels 2/4/8
+> > >      c. migrate_set_parameter downtime-limit 300
+> > >      f. migrate_set_parameter max-bandwidth 100G/1G
+> > >      d. migrate_set_parameter multifd-compression none/qpl/zstd
+> > >   7. Destination migration configuration commands
+> > >      a. migrate_set_capability multifd on
+> > >      b. migrate_set_parameter multifd-channels 2/4/8
+> > >      c. migrate_set_parameter multifd-compression none/qpl/zstd
+> > >
+> > > Early migration result, each result is the average of three tests
+> > >
+> > >  +--------+-------------+--------+--------+---------+----------+------|
+> > >  |        | The number  |total   |downtime|network  |pages per | CPU  |
+> > >  | None   | of channels |time(ms)|(ms)    |bandwidth|second    | Util |
+> > >  | Comp   |             |        |        |(mbps)   |          |      |
+> > >  |        +-------------+-----------------+---------+----------+------+
+> > >  |Network |            2|    8571|      69|    58391|   1896525|  256%|
+> > 
+> > Is this the average bandwidth?  I'm surprised that you can hit ~59Gbps
+> > only
+> > with 2 channels.  My previous experience is around ~1XGbps per channel, so
+> > no more than 30Gbps for two channels.  Is it because of a faster
+> > processor?
+> > Indeed from the 4/8 results it doesn't look like increasing the num of
+> > channels helped a lot, and even it got worse on the downtime.
+> 
+> Yes, I use iperf3 to check the bandwidth for one core, the bandwith is 60Gbps.
+> [ ID] Interval           Transfer     Bitrate         Retr  Cwnd
+> [  5]   0.00-1.00   sec  7.00 GBytes  60.1 Gbits/sec    0   2.87 MBytes
+> [  5]   1.00-2.00   sec  7.05 GBytes  60.6 Gbits/sec    0   2.87 Mbytes
+> 
+> And in the live migration test, a multifd thread's CPU utilization is almost 100%
+
+This 60Gpbs per-channel is definitely impressive..
+
+Have you tried migration without multifd on your system? Would that also
+perform similarly v.s. 2 channels multifd?
+
+The whole point of multifd is to scale on bandwidth.  If single thread can
+already achieve 60Gbps (where in my previous memory of tests, multifd can
+only reach ~70Gbps before..), then either multifd will be less useful with
+the new hardwares (especially when with a most generic socket nocomp
+setup), or we need to start working on bottlenecks of multifd to make it
+scale better.  Otherwise multifd will become a pool for compressor loads
+only.
+
+> 
+> > What is the rational behind "downtime improvement" when with the QPL
+> > compressors?  IIUC in this 100Gbps case the bandwidth is never a
+> > limitation, then I don't understand why adding the compression phase can
+> > make the switchover faster.  I can expect much more pages sent in a
+> > NIC-limted env like you described below with 1Gbps, but not when NIC has
+> > unlimited resources like here.
+> 
+> The compression can improve the network stack overhead(not improve the RDMA 
+> solution), the less data, the smaller the overhead in the 
+> network protocol stack. If compression has no overhead, and network bandwidth
+> is not limited, the last memory copy is faster with compression
+> 
+> The migration hotspot focuses on the _sys_sendmsg
+> _sys_sendmsg
+>   |- tcp_sendmsg
+>     |- copy_user_enhanced_fast_string
+>     |- tcp_push_one
+
+Makes sense.  I assume that's logical indeed when the compression ratio is
+high enough, meanwhile if the compression work is fast enough to be much
+lower than sending extra data when without it.
 
 Thanks,
 
-Daniel
+-- 
+Peter Xu
 
-> 
-> /Christian
-> 
-> 
 
