@@ -4,90 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C5FC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 18:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98157C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 18:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpY1k-0006pk-SQ; Wed, 27 Mar 2024 14:29:32 -0400
+	id 1rpYPH-0003U8-4H; Wed, 27 Mar 2024 14:53:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpY1j-0006nk-IN
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 14:29:31 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpY1g-0006xK-Rr
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 14:29:30 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2d46dd5f222so867311fa.1
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 11:29:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711564167; x=1712168967; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=N0/W6f6Y2HCbQrIuO4sgGsr5h7YeHtw7/e4Okdbq9Fg=;
- b=EDsEjk5GPVHJMijqMNEmjU0LZGk0iJTgyCvq07NUSB3MAsuDvxeA4IufaUky1F7ABL
- xxaL8ioD9IDixT6n6fsudmcbbXvLrqftBhs68OABMpU7bC42cBkgTmDNu+vNnrsJMngL
- cRfheMXbp1wbhvnyM2R/mdUO2JmyQlL3i9NPik3phjmv/QwUYf3FwDWG5wrSzs97420x
- KY5M9LS2LftbfI1yI/9DCHK7ccWMF3psplgbwXli6kYdSrJZ15YXg4yBV6mS7vD2tUh8
- 4N4quanxXkbPLruVmX57dZoybx1ZhsXSg8PPHtjKGd/TxBmS8daBnJdv9stxOpcCXIgX
- Kkrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711564167; x=1712168967;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N0/W6f6Y2HCbQrIuO4sgGsr5h7YeHtw7/e4Okdbq9Fg=;
- b=uRID99UFPvcxVGK7OPXQUx74OKAy0N12HTn/qgHdS/EEhXXxDZkyQjrlSYkIdISu77
- WrAvUgetxDcxLCud0eBFol2SilwMbA/tqJQMb+V4TThu0rl0CATJp4kL/ZHCrmbjThym
- VcMzYXALDJ8WJSUDW8+yW1C+qY/w4O3yhqh2ZA6l4JdUh2XAXuoRTt8M5sbeJzpD3vq0
- +D9B9SGrfJzZJOLY+V2If6BAV81Rsy7pwZcnXDVbDhNrYyzU9j9WxuVkTcFj5JU8V4Rr
- iVAKJ5+nZcSMU4j62D8jNMiJ0FnrJM9w7N8F7rXNqWiqNRREN321mLwDgSjbDJWVeNdI
- 4SEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVMXictYdBv8z1k0sW85R1HMJDiy2P8cwA1iy12955LbOWBaeIMBFPYtLqM3TPmQGnzMX/93ldG1VjCOVHqNuryfuE107k=
-X-Gm-Message-State: AOJu0YySnaL4Gwrg96NAaD+CLmP8nkCwlbXj9jneOsGwhhgO/XHI5Yb1
- /7FXvFTcf1w425gAAqOXxeBXRWoDKlgRPZ3zAN/D390pnb9u7velzA9BkrQ9vHM=
-X-Google-Smtp-Source: AGHT+IHyMeEd8tPsMXNgrRmVRP8aJhnObTqqBQrkzcIeBCHW2b1hpQhHmMi/XHY4KRqBWWf1MwW6iw==
-X-Received: by 2002:a2e:8ed2:0:b0:2d6:a244:1ba4 with SMTP id
- e18-20020a2e8ed2000000b002d6a2441ba4mr559006ljl.33.1711564166578; 
- Wed, 27 Mar 2024 11:29:26 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.205.175])
- by smtp.gmail.com with ESMTPSA id
- r14-20020aa7da0e000000b0056bf31fa2a3sm5594948eds.80.2024.03.27.11.29.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Mar 2024 11:29:25 -0700 (PDT)
-Message-ID: <aa691f0f-1146-476b-8879-25931f0878ba@linaro.org>
-Date: Wed, 27 Mar 2024 19:29:23 +0100
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1rpYPF-0003Ty-N1
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 14:53:49 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1rpYPD-000410-Cv
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 14:53:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=ZPGKChcZRnms/jKSik1dAe5ShmNBKtWVj+J2inXp0/Q=; b=ENrtSB25LeDKQf80+aCfftXxds
+ UyG1hbRCMTdVrvHuxKA99YhubaEfa8SvxK3/5PEt+pB+g4RTpVyw90RkFS3JYa6bRsK1NxWxtZptE
+ EyFkVwdDa01/BkUoo9bCAr5gBg1zkJT8x/EVfLFhcBKqXlbATt6CzFDvYndN0P6g53lAepsY0kJlS
+ uiZPIv+h0U/zutFBw1QpyxrNaQyDeTHtPQFDRkvddXp6U4NztpNsb8g8+0tCTTeKODV0iwrYlRi0j
+ GheOkpH+BcHAgBlFfgPwXLh008vxvomXdLqlZ935RwjQ9MyV60uJ8Oz4ZvU8kfTwqgplKcRbTflwQ
+ uuxF8vM78w6ggH9G167Ih/pMhVsxADlqM17Br6SeTxrc0g+NKznZSEJFEoRmLjpMJ+n7BQ3ibQwHD
+ C2mfAWeClx712hZq1BBf50c11VRZrvzeZUKThSimaF1EcoGne1+IZXvDyU8F5B856gXR6m1dvub+O
+ Xu762KyzwuDNZMzrjhM5aN6ZPOlD1i5krQyN0DiBBDeUn/ViedJUVk1Ao81A04cZvjYxcSBcl2zWO
+ Cz87lWSCM1rFPPZdHLgo0bEn1BndpskcC9xENjYsHI500sN5wf/w8HC+n5YKAzoUPAuBayr6CB9WI
+ DtJUf7W0llBU5z/YLfNmpu+vWrutikreVMY1rZplI=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org
+Cc: thuth@redhat.com, alistair.francis@wdc.com, groug@kaod.org,
+ peter.maydell@linaro.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PATCH for-9.0 v3 0/2] qtest/virtio-9p-test.c: fix slow tests
+Date: Wed, 27 Mar 2024 19:53:42 +0100
+Message-ID: <3153513.lVJF6dkNTK@silver>
+In-Reply-To: <20240327142011.805728-1-dbarboza@ventanamicro.com>
+References: <20240327142011.805728-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.0 v2] hw/i386/pc: Deprecate 64-bit CPUs on ISA-only
- PC machine
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, devel@lists.libvirt.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20240327165456.34716-1-philmd@linaro.org>
- <0b0c623e-b9f7-4178-ab2e-c89b109ea999@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0b0c623e-b9f7-4178-ab2e-c89b109ea999@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,25 +71,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/3/24 18:29, Marcin Juszkiewicz wrote:
-> W dniu 27.03.2024 o 17:54, Philippe Mathieu-Daudé pisze:
->> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
->> index 7b548519b5..345c35507f 100644
->> --- a/docs/about/deprecated.rst
->> +++ b/docs/about/deprecated.rst
->> @@ -208,6 +208,13 @@ is no longer packaged in any distro making it 
->> harder to run the
->>   ``check-tcg`` tests. Unless we can improve the testing situation there
->>   is a chance the code will bitrot without anyone noticing.
->> +64-bit (x86_64) CPUs on the ``isapc`` machine (since 9.0)
->> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''
->> +
->> +The ``isapc`` machine aims to emulate old PC machine without PCI was
->> +generalized, so hardware available around 1995, before 64-bit intel
->> +CPUs were produced.
+On Wednesday, March 27, 2024 3:20:09 PM CET Daniel Henrique Barboza wrote:
+> Hi,
 > 
-> Can you s/Intel/x86-64/ here? Intel was not first with x86-64 (AMD 
-> invented it). Also "64-bit Intel" smells of Itanium too much.
+> In this new version we took a different approach after the discussions
+> we had in [1]. The tests are now untouched, and we're addressing the root
+> cause directly: the fact that we have a single temp dir for all the test
+> execution in qos-test.
+> 
+> We're now creating and cleaning temp dirs for each individual test by
+> calling virtio_9p_create_local_test_dir() in the .before callback for
+> the local 9p tests (assign_9p_local_driver()). In this same callback we
+> queue the cleanup function that will erase the created temp dir. The
+> cleanup will run after the test ran successfully.
+> 
+> This approach is similar to what other qtests do (in fact this design was
+> taken from vhost-user-test.c) so it's not like we're doing something
+> novel.
+> 
+> I kept the revert of the slow test gate because Gitlab seems to approve
+> it:
+> 
+> https://gitlab.com/danielhb/qemu/-/pipelines/1229836634
+> 
+> Feel free to take just patch 1 if we're not sure about re-enabling these
+> tests in Gitlab.
+> 
+> 
+> Changes from v3:
+> - patches 1 to 6: dropped
+> - patch 1 (new):
+>   - create and remove temporary dirs on each test
+> - v2 link: https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg06335.html
+> 
+> [1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg06400.html
+> 
+> Daniel Henrique Barboza (2):
+>   qtest/virtio-9p-test.c: create/remove temp dirs after each test
+>   qtest/virtio-9p-test.c: remove g_test_slow() gate
+> 
+>  tests/qtest/virtio-9p-test.c | 32 +++++++++++---------------------
+>  1 file changed, 11 insertions(+), 21 deletions(-)
+> 
+> 
 
-OK ;)
+Awesome!
+
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+
+Are the riscv patches already on master? I.e. should I push those two patches
+through my queue?
+
+/Christian
+
+
 
