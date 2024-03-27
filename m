@@ -4,90 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34A9BC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 10:01:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1007C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 10:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpQ5V-0000Fv-JF; Wed, 27 Mar 2024 06:00:53 -0400
+	id 1rpQI9-0003Si-EI; Wed, 27 Mar 2024 06:13:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1rpQ5O-0008RJ-7g
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 06:00:46 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <christoph.muellner@vrull.eu>)
- id 1rpQ5J-0000ut-2c
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 06:00:45 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a46a7208eedso886009566b.0
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 03:00:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=vrull.eu; s=google; t=1711533638; x=1712138438; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=unvmvu9B6Vrmtygb3di4GTC7E2hLPG03yoE1C4AJVBI=;
- b=N/KYZuylSZEqTGKTG91tPubss/u375CCT8SRyWNKXP6lZBRfHchSPfpJqwMe2MzXAq
- dHg8rTo/8eKZukj0QPZqWzW5ou5ZgrK7rh3fCwUDDxaDkBmaffTfJyXXkVjfpoGbzskP
- CQ+Zy0wePzumHrxVeEvS9ka1irgXJO8y1VaiI4Tls59Z26MRRs8BfUxoBA+snJv2Gq+u
- v95pkQGPUWP2RZPPyJgccp05kfCMw+WmtSSepnZLds3d02pAcMGyvTJ+8JJPGTmvaUY9
- byg/SwrkljlFdLX+5wq5QFOZIUgtJM/QiiCbQeJA6HYMvBBzLJ97KsRU0ZbxoAHKuFql
- U2ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711533638; x=1712138438;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=unvmvu9B6Vrmtygb3di4GTC7E2hLPG03yoE1C4AJVBI=;
- b=PGx/cPsinsyfwpbq8GruKXNKDMILHBJGEzK6wESvsqQRCbSpH+6Xl+xFW+Kx/S/zd2
- GQ3ikk2zZn3rcTUNWuR7KaE0w0CmEFgpbWkhOJERneWKjw0mlLJdsAqn92jy8Pn0eBHa
- cyB3kJgZZa74q2LuvnwxF06xf09tDM87F5+N6fo/4Ln4EWEUCMC0EmxOval5GPKiESAp
- AhPhV9PV6/bjfnajml+bw0KbdnVHVWV73K/Sdo807JuJffK+XXbgax5CWvtcpwhH5WW/
- jCHmTuENZYr75eQshVUTjpCBCINBwDMZHujHV53zB45l5oHP/C/KLzzlz1wJqVWlbYzq
- ofug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWKQBQOQMwQpKXgnwL5NXIhETHocftvINIsRZ7GgQ19oWG9D9uD2aEX/eYXQzICxhAIrsJlKVWacpZ27MT2PeqTuUjn534=
-X-Gm-Message-State: AOJu0Yy5qe9EtDryGJyoR7qiEBUkz3JlvlNnVkf0k/jbbarNZDBvrBan
- 5rr4CHQywJwFErFJ80yecGR9dc/cBa9vVfm5xg+ggfPueWR/F3mhWL8zQ8Sf9Ro=
-X-Google-Smtp-Source: AGHT+IFcC+xfeZlZ9H0mOJx5HI4hgpPLr6qVM3RlRVmV5iCC0LiljRWB+mY0eaZKiODkLQmDKnIMtA==
-X-Received: by 2002:a17:906:3797:b0:a46:967b:7c94 with SMTP id
- n23-20020a170906379700b00a46967b7c94mr2605700ejc.18.1711533637763; 
- Wed, 27 Mar 2024 03:00:37 -0700 (PDT)
-Received: from antares.fritz.box (62-178-148-172.cable.dynamic.surfer.at.
- [62.178.148.172]) by smtp.gmail.com with ESMTPSA id
- n19-20020a170906119300b00a4660b63502sm5277061eja.12.2024.03.27.03.00.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Mar 2024 03:00:37 -0700 (PDT)
-From: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>,
- Philipp Tomsich <philipp.tomsich@vrull.eu>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cooper Qu <cooper.qu@linux.alibaba.com>,
- Zhiwei Liu <zhiwei_liu@linux.alibaba.com>,
- Huang Tao <eric.huang@linux.alibaba.com>
-Cc: =?UTF-8?q?Christoph=20M=C3=BCllner?= <christoph.muellner@vrull.eu>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH] riscv: thead: Add th.mxstatus CSR emulation
-Date: Wed, 27 Mar 2024 11:00:34 +0100
-Message-ID: <20240327100034.3636610-1-christoph.muellner@vrull.eu>
-X-Mailer: git-send-email 2.44.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rpQI7-0003SW-Px; Wed, 27 Mar 2024 06:13:55 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1rpQI4-0003xY-Fm; Wed, 27 Mar 2024 06:13:55 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 48D085959F;
+ Wed, 27 Mar 2024 13:15:11 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 09FF1A4743;
+ Wed, 27 Mar 2024 13:13:40 +0300 (MSK)
+Message-ID: <04da79ed-75f5-4a90-b301-7aa11084d347@tls.msk.ru>
+Date: Wed, 27 Mar 2024 13:13:39 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/15] riscv-to-apply queue
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20240322085319.1758843-1-alistair.francis@wdc.com>
+ <5eb1ce03-639a-4db3-a1e2-aba61fa295d1@tls.msk.ru>
+ <76c065d8-41ee-433d-ba40-e1d13579b4a4@ventanamicro.com>
+ <6d1ea7ad-0a81-4f5e-8210-80b5150bc521@tls.msk.ru>
+ <6fb5ca42-8e86-4144-b9a9-9d98d30f8fb9@ventanamicro.com>
+ <19d5ffb8-8cf1-4d88-b66a-2cf961621b93@tls.msk.ru>
+ <CAKmqyKOG1sr269TDERsGEvbAJfJ_MTtW-smMCdDUBbYaGwkPGA@mail.gmail.com>
+Content-Language: en-US
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <CAKmqyKOG1sr269TDERsGEvbAJfJ_MTtW-smMCdDUBbYaGwkPGA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=christoph.muellner@vrull.eu; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,151 +91,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The th.mxstatus CSR can be used to identify available custom extension
-on T-Head CPUs. The CSR is documented here:
-  https://github.com/T-head-Semi/thead-extension-spec/pull/45
+26.03.2024 12:56, Alistair Francis пишет:
+> On Tue, Mar 26, 2024 at 7:53 PM Michael Tokarev <mjt@tls.msk.ru> wrote:
+>>
+>> On 24.03.2024 21:12, Daniel Henrique Barboza wrote:
+>>> On 3/24/24 12:07, Michael Tokarev wrote:
+>>
+>>>> Unfortunately this doesn't quite work, the following changes
+>>>> fail to apply to 8.2:
+>>>>
+>>>> 929e521a47 target/riscv: always clear vstart for ldst_whole insns
+>>>> b46631f122 target/riscv: remove 'over' brconds from vector trans
+>>>> d57dfe4b37 trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
+>>>> bac802ada8 target/riscv: enable 'vstart_eq_zero' in the end of insns
+>>>> 385e575cd5 target/riscv/kvm: fix timebase-frequency when using KVM acceleration
+>>
+>>> The amount of work can be non-trivial for this backport, so I'd say we should
+>>> leave it aside for now. If someone has a good argument for this work then we
+>>> can re-evaluate.
+>>
+>> So, out of 15 patches in this series (minus the first one already
+>> mentioned) - should I pick 9 remaining patches for stable (the ones
+>> which applies) or none at all? :)
+> 
+> Sorry for the confusion.
+> 
+> The 9 patches that applied and
+> 
+> 385e575cd5 target/riscv/kvm: fix timebase-frequency when using KVM acceleration
+> 
+> should all be picked for stable.
 
-An important property of this patch is, that the th.mxstatus MAEE field
-is not set (indicating that XTheadMaee is not available).
-XTheadMaee is a memory attribute extension (similar to Svpbmt) which is
-implemented in many T-Head CPUs (C906, C910, etc.) and utilizes bits
-in PTEs that are marked as reserved. QEMU maintainers prefer to not
-implement XTheadMaee, so we need give kernels a mechanism to identify
-if XTheadMaee is available in a system or not. And this patch introduces
-this mechanism in QEMU in a way that's compatible with real HW
-(i.e., probing the th.mxstatus.MAEE bit).
+Got it, picked all plus 385e575cd5 which needed just trivial context fixup.
+Thank you for the clarification!
 
-Further context can be found on the list:
-https://lists.gnu.org/archive/html/qemu-devel/2024-02/msg00775.html
+> PS: What is the best way in future to help ease some of the stable
+> burden? Should I try and cherry pick them beforehand and then mention
+> that as a follow up to the PR?
 
-Signed-off-by: Christoph Müllner <christoph.muellner@vrull.eu>
----
- target/riscv/cpu.c       |  1 +
- target/riscv/cpu.h       |  3 ++
- target/riscv/meson.build |  1 +
- target/riscv/th_csr.c    | 76 ++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 81 insertions(+)
- create mode 100644 target/riscv/th_csr.c
+The only problem for me so far is the patch selection, - this is why I'm
+asking to Cc changes which should go to stable, to qemu-stable@.  So far
+I was a bit pro-active and asked about some changes which I *feel* are
+suitable, like in this case.  It is much better if someone who actually
+has knowledge about the area being changed, decides if it's stable material
+or not.  At the same time, I don't mind at all if more changes than needed
+are Cc'ed like this, - at least as long as it's obvious they're not really
+needed (like fixing a bug introduced in commit which isn't in any release
+yet).
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 36e3e5fdaf..b82ba95ae6 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -545,6 +545,7 @@ static void rv64_thead_c906_cpu_init(Object *obj)
-     cpu->cfg.mvendorid = THEAD_VENDOR_ID;
- #ifndef CONFIG_USER_ONLY
-     set_satp_mode_max_supported(cpu, VM_1_10_SV39);
-+    th_register_custom_csrs(cpu);
- #endif
- 
-     /* inherited from parent obj via riscv_cpu_init() */
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 3b1a02b944..c9f8f06751 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -824,4 +824,7 @@ void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
- uint8_t satp_mode_max_from_map(uint32_t map);
- const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
- 
-+/* Implemented in th_csr.c */
-+void th_register_custom_csrs(RISCVCPU *cpu);
-+
- #endif /* RISCV_CPU_H */
-diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-index a5e0734e7f..a4bd61e52a 100644
---- a/target/riscv/meson.build
-+++ b/target/riscv/meson.build
-@@ -33,6 +33,7 @@ riscv_system_ss.add(files(
-   'monitor.c',
-   'machine.c',
-   'pmu.c',
-+  'th_csr.c',
-   'time_helper.c',
-   'riscv-qmp-cmds.c',
- ))
-diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
-new file mode 100644
-index 0000000000..7fbcf88b5b
---- /dev/null
-+++ b/target/riscv/th_csr.c
-@@ -0,0 +1,76 @@
-+/*
-+ * T-Head-specific CSRs.
-+ *
-+ * Copyright (c) 2024 VRULL GmbH
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "cpu.h"
-+#include "cpu_vendorid.h"
-+
-+#define CSR_TH_MXSTATUS 0x7c0
-+
-+/* TH_MXSTATUS bits */
-+#define TH_MXSTATUS_UCME        BIT(16)
-+#define TH_MXSTATUS_MAEE        BIT(21)
-+#define TH_MXSTATUS_THEADISAEE  BIT(22)
-+
-+typedef struct {
-+    int csrno;
-+    int (*insertion_test)(RISCVCPU *cpu);
-+    riscv_csr_operations csr_ops;
-+} riscv_csr;
-+
-+static RISCVException m_mode(CPURISCVState *env, int csrno)
-+{
-+    if (env->debugger)
-+        return RISCV_EXCP_NONE;
-+    if (env->priv != PRV_M)
-+        return RISCV_EXCP_ILLEGAL_INST;
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static int test_thead_mvendorid(RISCVCPU *cpu)
-+{
-+    if (cpu->cfg.mvendorid != THEAD_VENDOR_ID)
-+        return -1;
-+    return 0;
-+}
-+
-+static RISCVException read_th_mxstatus(CPURISCVState *env, int csrno,
-+                                       target_ulong *val)
-+{
-+    /* We don't set MAEE here, because QEMU does not implement MAEE. */
-+    *val = TH_MXSTATUS_UCME | TH_MXSTATUS_THEADISAEE;
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static riscv_csr th_csr_list[] = {
-+    {
-+        .csrno = CSR_TH_MXSTATUS,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mxstatus", m_mode, read_th_mxstatus }
-+    }
-+};
-+
-+void th_register_custom_csrs(RISCVCPU *cpu)
-+{
-+    for (size_t i = 0; i < ARRAY_SIZE(th_csr_list); i++) {
-+        int csrno = th_csr_list[i].csrno;
-+        riscv_csr_operations *csr_ops = &th_csr_list[i].csr_ops;
-+        if (!th_csr_list[i].insertion_test(cpu))
-+            riscv_set_csr_ops(csrno, csr_ops);
-+    }
-+}
--- 
-2.44.0
+I usually don't have any issues with applying patches which don't apply
+directly to stable - this is not a burden.  In some cases when this happens,
+I can edit the commit (like I just did for 385e575cd5), or pick some previous
+changes too if they're okay, or in even more rare cases, ask for clarification
+or even for help with back-porting, - but this last category is really rare.
 
+Some changes gets rejected for stable in the end due to too much back-porting
+effort or requiring too much prior context.
+
+So the only real issue for me is to know which changes are to pick, - that's all.
+And this is the only thing I'm asking, - in this thread and elsewhere.
+
+Thank you!
+
+/mjt
 
