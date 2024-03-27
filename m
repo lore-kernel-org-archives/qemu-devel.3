@@ -4,96 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1976BC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 20:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD11C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 21:22:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpaGM-0004Oq-Hn; Wed, 27 Mar 2024 16:52:46 -0400
+	id 1rpaiG-0000FR-SO; Wed, 27 Mar 2024 17:21:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rpaGJ-0004OJ-Ks
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 16:52:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1rpaGH-0006uQ-Tk
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 16:52:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711572760;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/pW0ojG3ndwgE/v4rM89IHsDuWEEg/21ioV3l/R79FY=;
- b=hCPZUZwSOa7uxvBV6O6ikoovCwpWXETeOSM0/+t/cBG8/GKg5h/WUFqfOkypc/neMXI89+
- QdA50ZrF37z/z1gx2VUgmyaNKw2eIs/OZJLvgggQXNmh31Sp0xzelJ06aUmGGl0lM/c/OL
- UyGX7HtCqfUtjXRlQotzfKRP1SM8XAU=
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
- [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-295-JdMkP-g_PC63z1TB9pIR0g-1; Wed, 27 Mar 2024 16:52:39 -0400
-X-MC-Unique: JdMkP-g_PC63z1TB9pIR0g-1
-Received: by mail-il1-f200.google.com with SMTP id
- e9e14a558f8ab-368a41081baso1893655ab.3
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 13:52:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1rpaiF-0000El-Gr; Wed, 27 Mar 2024 17:21:35 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1rpaiD-0004dU-Hp; Wed, 27 Mar 2024 17:21:35 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-513e25afabaso223155e87.2; 
+ Wed, 27 Mar 2024 14:21:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1711574490; x=1712179290; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JuSxJn1ijkFMnBjJ6Hb54upktV5uWoGDE3+zkgCVc8Y=;
+ b=gGCIaBbOyD55eGmgcc2ISUlDQnrnVfL1Ptza8Ft+KHt1sPST5fKmbuPZCuB5DZF68b
+ BxTLYm1rREG8Xcd0SK8kscNxPYOvrx/yBEL//lNtBaGI7CuS3456MJl7z/lFkUOaDzAb
+ AYOYBZ2NcJJ5qwqD/rcK3ZBRx+oC2O2N17Cf2Caf7/knP+Vs7jiYBt66SkGAV1XZheXD
+ 61TbWBHzIwpM7YC5jyNcMOO3G1g/MbCeLtFxtbWBiZZPyr6R2EtdQ595oL7xiSrcrYI7
+ xaxAg4fCxEK+lhzRJDWtcT8qW1EbGG49Um0jbUl6XCCLxMN7vaO/r4/aBLivOnHuU+xD
+ /4sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711572759; x=1712177559;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1711574490; x=1712179290;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/pW0ojG3ndwgE/v4rM89IHsDuWEEg/21ioV3l/R79FY=;
- b=pXAQL4+excLLsLLUvtMhUR7XqWUMNA1aYfj7FWmWkKerYMZnYxaAUAKtO3hvIMxdqI
- BSPwpZOIJpY26FdxM4hrkSYRKLH0tJGjYW53fP14O796YAuMCwOt6Yo9p4v09B3FT/ID
- Sum5Lj7CNfm6n3yUzPSVAMRQxfj1U4heIPuw45xAkk5bCP7BlcX5wBb+pMfkq67suSBy
- ukWvrjlWwCeCwIquiNdyHylMEQjtGo/4ZKF0xJTZTBeorkQU2a5DAhjha6/ppwzQz55Z
- l74V8RDGwy3Contz1PfXVN9+POM+0vYAHKj94I5qKTqNWoIrcULXrZdJXaDy6Ciev4mX
- IVrQ==
+ bh=JuSxJn1ijkFMnBjJ6Hb54upktV5uWoGDE3+zkgCVc8Y=;
+ b=IQHiHS/nTD/tudrIaJt1N055dQnErmYqjZu8bw8fSpF14iHBHVrJ7yhwumk2gXfVB3
+ MBWMWs5pab7v+fxzUN9NiGiOrBnFSZPbqICc0Tz0OLcX+QMwpEvzajHft1OUiLT4Ag26
+ y95BpPLzZoB/s2yO93TGlQD2v0o9PJsajIp8wbtROQFAsc7/5Cv4lVBeKeoe4nLVE2Ox
+ TtltT0rQW53f0DaXZdYEp+4+PoZbBR0iFjxqiGDL3S/AIseLpn1454JLKGBu9VVk7flp
+ VNMRE9TrvKmJ126r30t3NODSjuPxzDx2uCTIoYonkyBYCAWCKpLZgymZmO7i9jepj/by
+ XaAw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVU/kuMPvp128t/7Ci7sf9Wq58IxD5KJDRHDFIsAtUBVCGCpsAEICAyLNGAJ+G/gmd4rcwKUcDduNeQ8POl+LwwSlKnbpU=
-X-Gm-Message-State: AOJu0Yzg0EUwVdw2VWeT+Y2AAcL9RzeLjNvMSwCg53cWO+KIRbbXVHei
- nOQfZm02YijcjtQlXNSz0QlApwoy3OZLKXxolisBLmWVe+UoFLdQyLxbQ4jQtu6xGoGXXU9ElUI
- hxuy1lcwx3CmI3WTzJxfdeugDApI4GHoWGJq0FmZGmCMCIejSvO6q
-X-Received: by 2002:a05:6e02:1049:b0:366:4967:d932 with SMTP id
- p9-20020a056e02104900b003664967d932mr1106725ilj.7.1711572758769; 
- Wed, 27 Mar 2024 13:52:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE14A/bVgCYGg+01T0SI2mboM+uA0nIttgSzsyNCcRhYDWKZAjKcBE2LWekEf2+X3szOtVyXg==
-X-Received: by 2002:a05:6e02:1049:b0:366:4967:d932 with SMTP id
- p9-20020a056e02104900b003664967d932mr1106711ilj.7.1711572758504; 
- Wed, 27 Mar 2024 13:52:38 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- t4-20020a92dc04000000b00366a7ec00f3sm1358370iln.40.2024.03.27.13.52.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Mar 2024 13:52:38 -0700 (PDT)
-Date: Wed, 27 Mar 2024 14:52:35 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Vinayak Kale <vkale@nvidia.com>, qemu-devel@nongnu.org,
- marcel.apfelbaum@gmail.com, avihaih@nvidia.com, acurrid@nvidia.com,
- cjia@nvidia.com, zhiw@nvidia.com, targupta@nvidia.com, kvm@vger.kernel.org,
- =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH v3] vfio/pci: migration: Skip config space check for
- Vendor Specific Information in VSC during restore/load
-Message-ID: <20240327145235.47338c2b.alex.williamson@redhat.com>
-In-Reply-To: <20240327161108-mutt-send-email-mst@kernel.org>
-References: <20240322064210.1520394-1-vkale@nvidia.com>
- <20240327113915.19f6256c.alex.williamson@redhat.com>
- <20240327161108-mutt-send-email-mst@kernel.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ AJvYcCWi1k5ZcGKaQREuKmOafP2ahvBuqc6dGL9VPGT0hD+rgwd9lbBVV7TTkzEncYtaqspIQ+sVnwTjJt7HqoTBcQDmK3sAPDkcgqmsdhGjKSp4F6u6S1aJzXw3+sBTKCqm
+X-Gm-Message-State: AOJu0YwzXbs7PCBvZpEkT98mbK0SP36RckjFvaZ5vWeEtau2uEwOn0VD
+ JPkV1blsohV0+IUpV5VJ8e6RoeQzyeNbqnHfvMaBbGtmmVTL8KIU
+X-Google-Smtp-Source: AGHT+IHHkxgl24ZRYdzxqqFMiOV53K1Y9jUlb/OLvkqhf0DvjtmognATW0U7iJTPSSyFVFwHmKPRMA==
+X-Received: by 2002:ac2:5f8e:0:b0:515:a5b1:1dd0 with SMTP id
+ r14-20020ac25f8e000000b00515a5b11dd0mr372753lfe.55.1711574490191; 
+ Wed, 27 Mar 2024 14:21:30 -0700 (PDT)
+Received: from [127.0.0.1] (dynamic-077-191-040-243.77.191.pool.telefonica.de.
+ [77.191.40.243]) by smtp.gmail.com with ESMTPSA id
+ wr8-20020a170907700800b00a474ba09387sm5072924ejb.22.2024.03.27.14.21.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 Mar 2024 14:21:29 -0700 (PDT)
+Date: Wed, 27 Mar 2024 20:47:19 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ qemu-devel@nongnu.org
+CC: pbonzini@redhat.com, devel@lists.libvirt.org, richard.henderson@linaro.org,
+ mst@redhat.com, qemu-trivial@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_for-9=2E0=5D_docs/about=3A_Mark?=
+ =?US-ASCII?Q?_the_iaspc_machine_type_as_deprecated?=
+In-Reply-To: <8dbba6ae-5910-4a62-9a08-a56e20dfb480@linaro.org>
+References: <20240326125104.90103-1-imammedo@redhat.com>
+ <a4a0bb13-d6a0-4665-810d-ecd9a9fb89b1@redhat.com>
+ <8dbba6ae-5910-4a62-9a08-a56e20dfb480@linaro.org>
+Message-ID: <5365A87A-C33D-40CC-9D9A-B908EBCB4FCF@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=shentey@gmail.com; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,130 +101,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 27 Mar 2024 16:11:37 -0400
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
 
-> On Wed, Mar 27, 2024 at 11:39:15AM -0600, Alex Williamson wrote:
-> > On Fri, 22 Mar 2024 12:12:10 +0530
-> > Vinayak Kale <vkale@nvidia.com> wrote:
-> >  =20
-> > > In case of migration, during restore operation, qemu checks config sp=
-ace of the
-> > > pci device with the config space in the migration stream captured dur=
-ing save
-> > > operation. In case of config space data mismatch, restore operation i=
-s failed.
-> > >=20
-> > > config space check is done in function get_pci_config_device(). By de=
-fault VSC
-> > > (vendor-specific-capability) in config space is checked.
-> > >=20
-> > > Due to qemu's config space check for VSC, live migration is broken ac=
-ross NVIDIA
-> > > vGPU devices in situation where source and destination host driver is=
- different.
-> > > In this situation, Vendor Specific Information in VSC varies on the d=
-estination
-> > > to ensure vGPU feature capabilities exposed to the guest driver are c=
-ompatible
-> > > with destination host.
-> > >=20
-> > > If a vfio-pci device is migration capable and vfio-pci vendor driver =
-is OK with
-> > > volatile Vendor Specific Info in VSC then qemu should exempt config s=
-pace check
-> > > for Vendor Specific Info. It is vendor driver's responsibility to ens=
-ure that
-> > > VSC is consistent across migration. Here consistency could mean that =
-VSC format
-> > > should be same on source and destination, however actual Vendor Speci=
-fic Info
-> > > may not be byte-to-byte identical.
-> > >=20
-> > > This patch skips the check for Vendor Specific Information in VSC for=
- VFIO-PCI
-> > > device by clearing pdev->cmask[] offsets. Config space check is still=
- enforced
-> > > for 3 byte VSC header. If cmask[] is not set for an offset, then qemu=
- skips
-> > > config space check for that offset.
-> > >=20
-> > > Signed-off-by: Vinayak Kale <vkale@nvidia.com>
-> > > ---
-> > > Version History
-> > > v2->v3:
-> > >     - Config space check skipped only for Vendor Specific Info in VSC=
-, check is
-> > >       still enforced for 3 byte VSC header.
-> > >     - Updated commit description with live migration failure scenario.
-> > > v1->v2:
-> > >     - Limited scope of change to vfio-pci devices instead of all pci =
-devices.
-> > >=20
-> > >  hw/vfio/pci.c | 24 ++++++++++++++++++++++++
-> > >  1 file changed, 24 insertions(+) =20
-> >=20
-> >=20
-> > Acked-by: Alex Williamson <alex.williamson@redhat.com> =20
->=20
->=20
-> A very reasonable way to do it.
->=20
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->=20
-> Merge through the VFIO tree I presume?
 
-Yep, C=C3=A9dric said he=C2=B4d grab it for 9.1.  Thanks,
+Am 26=2E M=C3=A4rz 2024 13:29:58 UTC schrieb "Philippe Mathieu-Daud=C3=A9"=
+ <philmd@linaro=2Eorg>:
+>Hi Igor,
+>
+>On 26/3/24 14:08, Thomas Huth wrote:
+>>=20
+>> s/iaspc/isapc/ in the subject
+>>=20
+>> On 26/03/2024 13=2E51, Igor Mammedov wrote:
+>>> ISAPC machine was introduced 25 years ago and it's a lot of time since
+>>> such machine was around with real ISA only PC hardware practically def=
+unct=2E
+>>> Also it's slowly bit-rots (for example: I was able to boot RHEL6 on RH=
+EL9 host
+>>> in only TCG mode, while in KVM mode it hung in the middle of boot)
+>
+>I'm quite opposed to this patch=2E QEMU models various very-old /
+>defunct hardware=2E I'm pretty sure Bernhard and myself are OK to
+>keep maintaining it, besides we are working in separating it from
+>the i440fx+piix machine=2E
 
-Alex
-=20
-> > > diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> > > index d7fe06715c..1026cdba18 100644
-> > > --- a/hw/vfio/pci.c
-> > > +++ b/hw/vfio/pci.c
-> > > @@ -2132,6 +2132,27 @@ static void vfio_check_af_flr(VFIOPCIDevice *v=
-dev, uint8_t pos)
-> > >      }
-> > >  }
-> > > =20
-> > > +static int vfio_add_vendor_specific_cap(VFIOPCIDevice *vdev, int pos,
-> > > +                                        uint8_t size, Error **errp)
-> > > +{
-> > > +    PCIDevice *pdev =3D &vdev->pdev;
-> > > +
-> > > +    pos =3D pci_add_capability(pdev, PCI_CAP_ID_VNDR, pos, size, err=
-p);
-> > > +    if (pos < 0) {
-> > > +        return pos;
-> > > +    }
-> > > +
-> > > +    /*
-> > > +     * Exempt config space check for Vendor Specific Information dur=
-ing restore/load.
-> > > +     * Config space check is still enforced for 3 byte VSC header.
-> > > +     */
-> > > +    if (size > 3) {
-> > > +        memset(pdev->cmask + pos + 3, 0, size - 3);
-> > > +    }
-> > > +
-> > > +    return pos;
-> > > +}
-> > > +
-> > >  static int vfio_add_std_cap(VFIOPCIDevice *vdev, uint8_t pos, Error =
-**errp)
-> > >  {
-> > >      PCIDevice *pdev =3D &vdev->pdev;
-> > > @@ -2199,6 +2220,9 @@ static int vfio_add_std_cap(VFIOPCIDevice *vdev=
-, uint8_t pos, Error **errp)
-> > >          vfio_check_af_flr(vdev, pos);
-> > >          ret =3D pci_add_capability(pdev, cap_id, pos, size, errp);
-> > >          break;
-> > > +    case PCI_CAP_ID_VNDR:
-> > > +        ret =3D vfio_add_vendor_specific_cap(vdev, pos, size, errp);
-> > > +        break;
-> > >      default:
-> > >          ret =3D pci_add_capability(pdev, cap_id, pos, size, errp);
-> > >          break; =20
->=20
+Yes, I'd rather keep maintaining the isapc machine and separating it from =
+the i440fx machine seems like a good idea to me=2E I'm confident that we ca=
+n work out a way that allows for moving forward the pc-pci machines while k=
+eeping the isapc machine from getting into the way too much=2E
 
+Best regards,
+Bernhard
+
+> Also, this machine is particularly
+>interesting for my single-binary experiments=2E
+>
+>Where I agree is we should stop reporting "KVM on ISA/PC machine"
+>as supported=2E
+>
+>Regards,
+>
+>Phil=2E
+>
+>>> Rather than spending time on fixing 'the oldest' no longer tested mach=
+ine type,
+>>> deprecate it so we can clean up QEMU code from legacy fixups and hopef=
+ully
+>>> make it easier to follow=2E
+>>>=20
+>>> Folks who have to use ancient guest that requires ISAPC can still
+>>> use older QEMU to play with it=2E
+>>>=20
+>>> Signed-off-by: Igor Mammedov <imammedo@redhat=2Ecom>
+>>> ---
+>>> =C2=A0 docs/about/deprecated=2Erst | 7 +++++++
+>>> =C2=A0 hw/i386/pc_piix=2Ec=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 1 +
+>>> =C2=A0 2 files changed, 8 insertions(+)
+>>>=20
+>>> diff --git a/docs/about/deprecated=2Erst b/docs/about/deprecated=2Erst
+>>> index 7b548519b5=2E=2E5708296991 100644
+>>> --- a/docs/about/deprecated=2Erst
+>>> +++ b/docs/about/deprecated=2Erst
+>>> @@ -226,6 +226,13 @@ These old machine types are quite neglected nowad=
+ays and thus might have
+>>> =C2=A0 various pitfalls with regards to live migration=2E Use a newer =
+machine type
+>>> =C2=A0 instead=2E
+>>> +``isapc`` (since 9=2E0)
+>>> +'''''''''''''''''''''''''''''''''''''''''''''''''''''
+>>> +
+>>> +These old machine type are quite neglected nowadays and thus might ha=
+ve
+>>=20
+>> "This old machine type is =2E=2E=2E" ?
+>>=20
+>>> +various pitfalls with regards to live migration=2E Use a newer machin=
+e type
+>>> +instead=2E
+>>=20
+>> I doubt that isapc could ever be used reliably for live migration, sinc=
+e it's an unversioned machine type, so I think it would be better to not me=
+ntion live migration here=2E
+>>=20
+>>  =C2=A0Thomas
+>>=20
+>>=20
+>
 
