@@ -4,82 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E418CD11DF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A89CC54E67
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 09:34:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpPfH-0001mv-CN; Wed, 27 Mar 2024 05:33:47 -0400
+	id 1rpPdo-0006Be-Ph; Wed, 27 Mar 2024 05:32:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpPfF-0001gy-09
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:33:45 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1rpPdl-0006AR-4W
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:32:14 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpPf4-0000OT-0w
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:33:44 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-6e6f69e850bso5887665b3a.0
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:33:33 -0700 (PDT)
+ id 1rpPdh-0007nT-T8
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:32:11 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-6e6c0098328so4513206b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:32:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1711532012; x=1712136812; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oHTl8gYlsmXfu+P4KVuboaLUZSbMsj4ZZeM4VMTTSS0=;
- b=NK9mBEBWY1Hkoy0GXmIp+fAY3UvLvUfirjedPhGVTPrHNl9uV1pOiN162BUCdY1TsG
- ssXu+7WTR1QH86ts3DqIu5JEyJXBtsmito4/YQYOduwsD019tkp/Q0KSatlQ2a8k//s1
- MI7RXAietoPo7SvMDL6s8PPQrT/7R7v/YGlfWcMrgGUvmZ/25E9XMNMkTgRnD6ZpYmpr
- sXmk6qfVcEAKHK7VLWFJrRe2jdEzc/+bQeYeqLI6VQYvbXlVFsvq9kAWevUbc+0fWhHk
- eSrz446FUZop43kvD2M31p8+TVgj7X8dcI/k/fqqQT5e0g9lVEBhlkwL4IFlyRaRPH6o
- GJFg==
+ d=ventanamicro.com; s=google; t=1711531927; x=1712136727; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7nMAeHd1FtL+QcrNG1cSxDeodNP8yzWlHRCdD7o0fyk=;
+ b=IyXf0o6xFU3kS/zo+Di2mObD6iAtTuj99lJzyZyvPy9G6L3bvG48IbIh3FG6zSGyuy
+ MLDhFkm62dyCFdK1Jlr6dpfjp2N6uGEm5+13E/MAeVIMznI7KjwM0PapXHgxn9WDshbz
+ E2gqMZA6GABul4MTflNcVkBoCPikoGeYmozShgULNuC1U5kycnKnpvUCAfu5GrO73Hy/
+ wthUsv/LjxFOYWCofAP1X0KKQlqc4JAyJ5oOHfMmk7bO9N2r5ea9ScA4p7NdEk+ModQC
+ vKD86zigqJ/CHZZ/CjkMFx++eNSS/pCbvaoU5WBbA9pjfAP8ZAz8udQRX6bysBpd+ZZh
+ eNOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711532012; x=1712136812;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oHTl8gYlsmXfu+P4KVuboaLUZSbMsj4ZZeM4VMTTSS0=;
- b=MN7eg89R6AdcX463mCwvBaA4ks5ZEDUZOCywvd39+llMlpIHxt3waz5b+t8S3NqqTa
- MeI1uKVHKPU4c/34CKplUhLVbQyaqZ1RGfH6hBGwFto62O02megPoHYsCny0sXueViUc
- wWWlCOr1M4Ghej3rSxiAdh95u063ZCr6fE6aj22R+YNjvnZ4JSqRQI4nFemzBmBFYaIa
- NFgb9GwsHvlW36x/Z8ZZBFxqnK5e2ct6osRUB3hCE92DZn9ZeucfKiSfCDKRPBCnGs/Q
- 8GsCp5PDMOOqV9nKjtkhP2Ad0AygW3PEJHZZkY0Ae9ikauGeA+paxNLbrlVEDrZzFq88
- sS0A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5ruWKReluNc+q9jQzm+b7vc8BecgxOdNJT5ipjK6p0iE873ypNWS+FmsOgIwefZ7bECxx7Dra6wQvnH+fSYbHFlYg7jY=
-X-Gm-Message-State: AOJu0YwyZ21IL/wte1Pr/fTn+qp2BEs9hP6lmkOY9naaTNwq95FMZEo4
- F67Ivs4Eg+aAA3aZ82LoYyYUCWz954gKSj7F+N5nlilOCdS+YmYUcMM2ZRDkV94=
-X-Google-Smtp-Source: AGHT+IFXo6sqV8t49TDIJlir5M6N8ZgariqGKvpHHSc9CMWzOOw2m36pha61HVyGXUAeciTWp93fsA==
-X-Received: by 2002:a05:6a20:12c1:b0:1a3:be07:7c00 with SMTP id
- v1-20020a056a2012c100b001a3be077c00mr3986536pzg.3.1711532012645; 
- Wed, 27 Mar 2024 02:33:32 -0700 (PDT)
-Received: from [192.168.68.110] ([177.45.186.241])
- by smtp.gmail.com with ESMTPSA id
- f1-20020a170902ce8100b001dd6ebd88b0sm8474240plg.198.2024.03.27.02.33.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Mar 2024 02:33:32 -0700 (PDT)
-Message-ID: <f968c2ac-4056-47bf-af87-70534db82035@ventanamicro.com>
-Date: Wed, 27 Mar 2024 06:33:27 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0 1/3] qtest/virtio-9p-test.c: consolidate create
- dir, file and symlink tests
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz
- <groug@kaod.org>, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, alistair.francis@wdc.com, peter.maydell@linaro.org
-References: <20240326132606.686025-1-dbarboza@ventanamicro.com>
- <20240326180550.3072dd2d@bahia>
- <1f73d065-fcf6-4466-bc86-c8fdbae7bd96@ventanamicro.com>
- <190171404.Ysjo4HZYI3@silver>
-Content-Language: en-US
+ d=1e100.net; s=20230601; t=1711531927; x=1712136727;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7nMAeHd1FtL+QcrNG1cSxDeodNP8yzWlHRCdD7o0fyk=;
+ b=qfgz1EIA6GWBoC1c8plZHyK7hL8oENNdJm5JxeG7NJS4Icp6x4zX04uPIbfPamSIMI
+ rRxWjAhLICcR873H5yljpx4e22XyU1FZYpqez1nMKZTmwUpRxBie2BNavqJfzIjE6c7G
+ r1r0lJeu91fG1eHOgoasURU7VzkGAT2Tb8IcZRF6ZDT4p/njngDiErVqbiHcrNIC+Anx
+ HUqZc7fsHa5veiyy9HMCyF10fd6iQM1h0rROPNZoKXLv5S/Lpz2AxkwVcgHofsU8JLZR
+ 9GizE7nSOm9XNOgpLCvOcGX+TqM3CdKkpOmknLLdBuhwpW1b3QaUq9jrVoqHIHw4vFU5
+ eTeg==
+X-Gm-Message-State: AOJu0YyEhe1zuO2cof+WfVgaHuhxQSKpyqOF7puZM6pfqf6QfmLD+dvv
+ LtS62Nl0fAN87f0CTWh4lVedidSclLjHyzzPC10razO/hnHAEq20r1467nMCrkD0neEaAvjSu+z
+ b
+X-Google-Smtp-Source: AGHT+IFkp44CPWb4Lx3V1/2p1zgSyGsW0tUNvsNHd0oFcI8Ws22xz6d643IRvRbLnaYleOXzmbWCYA==
+X-Received: by 2002:a05:6a00:2d92:b0:6ea:8775:a66d with SMTP id
+ fb18-20020a056a002d9200b006ea8775a66dmr732031pfb.1.1711531927017; 
+ Wed, 27 Mar 2024 02:32:07 -0700 (PDT)
+Received: from grind.. ([177.45.186.241]) by smtp.gmail.com with ESMTPSA id
+ fm23-20020a056a002f9700b006e6b41511fdsm7628760pfb.94.2024.03.27.02.32.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Mar 2024 02:32:06 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <190171404.Ysjo4HZYI3@silver>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x432.google.com
+To: qemu-devel@nongnu.org
+Cc: thuth@redhat.com, alistair.francis@wdc.com, groug@kaod.org,
+ peter.maydell@linaro.org, qemu_oss@crudebyte.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH for-9.0 v2 6/7] qtest/virtio-9p-test.c: consolidate hardlink
+ tests
+Date: Wed, 27 Mar 2024 06:31:43 -0300
+Message-ID: <20240327093144.781701-7-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240327093144.781701-1-dbarboza@ventanamicro.com>
+References: <20240327093144.781701-1-dbarboza@ventanamicro.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,83 +96,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We've consolidated all local 9p tests but the hardlink ones. To make
+fs_unlinkat_hardlink() to act exactly like fs_hardlink_file() we added
+the g_assert(st_link...) checks in fs_unlinkat_hardlink() as well.
 
+After that:
 
-On 3/27/24 05:47, Christian Schoenebeck wrote:
-> On Tuesday, March 26, 2024 6:47:17 PM CET Daniel Henrique Barboza wrote:
->> On 3/26/24 14:05, Greg Kurz wrote:
->>> On Tue, 26 Mar 2024 10:26:04 -0300
->>> Daniel Henrique Barboza <dbarboza@ventanamicro.com> wrote:
->>>
->>>> The local 9p driver in virtio-9p-test.c its temporary dir right at the
->>>> start of qos-test (via virtio_9p_create_local_test_dir()) and only
->>>> deletes it after qos-test is finished (via
->>>> virtio_9p_remove_local_test_dir()).
->>>>
->>>> This means that any qos-test machine that ends up running virtio-9p-test local
->>>> tests more than once will end up re-using the same temp dir. This is
->>>> what's happening in [1] after we introduced the riscv machine nodes: if
->>>> we enable slow tests with the '-m slow' flag using qemu-system-riscv64,
->>>> this is what happens:
->>>>
->>>> - a temp dir is created, e.g. qtest-9p-local-WZLDL2;
->>>>
->>>> - virtio-9p-device tests will run virtio-9p-test successfully;
->>>>
->>>> - virtio-9p-pci tests will run virtio-9p-test, and fail right at the
->>>>     first slow test at fs_create_dir() because the "01" file was already
->>>>     created by fs_create_dir() test when running with the virtio-9p-device.
->>>>
->>>> We can fix it by making every test clean up their changes in the
->>>> filesystem after they're done. But we don't need every test either:
->>>> what fs_create_file() does is already exercised in fs_unlinkat_dir(),
->>>> i.e. a dir is created, verified to be created, and then removed. Fixing
->>>> fs_create_file() would turn it into fs_unlikat_dir(), so we don't need
->>>> both. The same theme follows every test in virtio-9p-test.c, where the
->>>> 'unlikat' variant does the same thing the 'create' does but with some
->>>> cleaning in the end.
->>>>
->>>> Consolide some tests as follows:
->>>>
->>>> - fs_create_dir() is removed. fs_unlinkat_dir() is renamed to
->>>>     fs_create_unlinkat_dir();
->>>>
->>>> - fs_create_file() is removed. fs_unlinkat_file() is renamed to
->>>>     fs_create_unlinkat_file(). The "04" dir it uses is now being removed;
->>>>
->>>> - fs_symlink_file() is removed. fs_unlinkat_symlink() is renamed to
->>>>     fs_create_unlinkat_symlink(). Both "real_file" and the "06" dir it
->>>>     creates is now being removed.
->>>>
->>>
->>> The  change looks good functionally but it breaks the legitimate assumption
->>> that files "06/*" come from test #6 and so on... I think you should consider
->>> renumbering to avoid confusion when debugging logs.
->>>
->>> Since this will bring more hunks, please split this in enough reviewable
->>> patches.
->>
->> Fair enough. Let me cook a v2. Thanks,
-> 
-> Wouldn't it be much simpler to just change the name of the temporary
-> directory, such that it contains the device name as well? Then these tests
-> runs would run on independent directories and won't interfere with each other
-> and that wouldn't need much changes I guess.
+- remove fs_hardlink_file(). Rename fs_unlinkat_hardlink() to
+  fs_create_unlinkat_hardlink();
 
-That's true. If we were just trying to fix the issue then I would go with this
-approach since it's simpler. But given that we're also cutting half the tests while
-retaining the coverage I think this approach is worth the extra code.
+- remove the created dir and 'real_file' at the end of
+  fs_create_unlinkat_hardlink().
 
+After this patch all local 9p tests are now cleaning themselves up after
+execution and we shouldn't experience errors like the one reported in
+[1].
 
-Thanks,
+[1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg05807.html
 
+Reported-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ tests/qtest/virtio-9p-test.c | 52 +++++++++++-------------------------
+ 1 file changed, 16 insertions(+), 36 deletions(-)
 
-Daniel
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index 222d11037d..f85f4ef407 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -614,12 +614,14 @@ static void fs_create_unlinkat_symlink(void *obj, void *data,
+     g_assert(stat(new_dir_path, &st) != 0);
+ }
+ 
+-static void fs_hardlink_file(void *obj, void *data, QGuestAllocator *t_alloc)
++static void fs_create_unlinkat_hardlink(void *obj, void *data,
++                                        QGuestAllocator *t_alloc)
+ {
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+-    struct stat st_real, st_link;
++    struct stat st_real, st_link, st;
+     const char *new_dir = "04";
++    g_autofree char *new_dir_path = virtio_9p_test_path(new_dir);
+     g_autofree char *real_file = NULL;
+     g_autofree char *real_file_path = NULL;
+     g_autofree char *hardlink_file = NULL;
+@@ -648,43 +650,22 @@ static void fs_hardlink_file(void *obj, void *data, QGuestAllocator *t_alloc)
+     g_assert((st_link.st_mode & S_IFMT) == S_IFREG);
+     g_assert(st_link.st_dev == st_real.st_dev);
+     g_assert(st_link.st_ino == st_real.st_ino);
+-}
+-
+-static void fs_unlinkat_hardlink(void *obj, void *data,
+-                                 QGuestAllocator *t_alloc)
+-{
+-    QVirtio9P *v9p = obj;
+-    v9fs_set_allocator(t_alloc);
+-    struct stat st_real, st_link;
+-    const char *new_dir = "05";
+-    g_autofree char *real_file = NULL;
+-    g_autofree char *real_file_path = NULL;
+-    g_autofree char *hardlink_file = NULL;
+-    g_autofree char *hardlink_file_path = NULL;
+-
+-    real_file = g_strdup_printf("%s/%s", new_dir, "real_file");
+-    real_file_path = virtio_9p_test_path(real_file);
+-
+-    hardlink_file = g_strdup_printf("%s/%s", new_dir, "hardlink_file");
+-    hardlink_file_path = virtio_9p_test_path(hardlink_file);
+-
+-    tattach({ .client = v9p });
+-    tmkdir({ .client = v9p, .atPath = "/", .name = new_dir });
+-    tlcreate({ .client = v9p, .atPath = new_dir, .name = "real_file" });
+-    g_assert(stat(real_file_path, &st_real) == 0);
+-    g_assert((st_real.st_mode & S_IFMT) == S_IFREG);
+-
+-    tlink({
+-        .client = v9p, .atPath = new_dir, .name = "hardlink_file",
+-        .toPath = real_file
+-    });
+-    g_assert(stat(hardlink_file_path, &st_link) == 0);
+ 
+     tunlinkat({ .client = v9p, .atPath = new_dir, .name = "hardlink_file" });
+     /* symlink should be gone now */
+     g_assert(stat(hardlink_file_path, &st_link) != 0);
+     /* and old file should still exist */
+     g_assert(stat(real_file_path, &st_real) == 0);
++
++    /* cleanup: remove created file and dir */
++    tunlinkat({ .client = v9p, .atPath = new_dir, .name = "real_file" });
++    g_assert(stat(real_file_path, &st_real) != 0);
++
++    tunlinkat({
++        .client = v9p, .atPath = "/", .name = new_dir,
++        .flags = P9_DOTL_AT_REMOVEDIR
++    });
++    g_assert(stat(new_dir_path, &st) != 0);
+ }
+ 
+ static void *assign_9p_local_driver(GString *cmd_line, void *arg)
+@@ -746,9 +727,8 @@ static void register_virtio_9p_test(void)
+                  fs_create_unlinkat_file, &opts);
+     qos_add_test("local/create_unlinkat_symlink", "virtio-9p",
+                  fs_create_unlinkat_symlink, &opts);
+-    qos_add_test("local/hardlink_file", "virtio-9p", fs_hardlink_file, &opts);
+-    qos_add_test("local/unlinkat_hardlink", "virtio-9p", fs_unlinkat_hardlink,
+-                 &opts);
++    qos_add_test("local/create_unlinkat_hardlink", "virtio-9p",
++                 fs_create_unlinkat_hardlink, &opts);
+ }
+ 
+ libqos_init(register_virtio_9p_test);
+-- 
+2.44.0
 
-
-
-> 
-> /Christian
-> 
-> 
 
