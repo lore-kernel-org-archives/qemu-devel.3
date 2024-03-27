@@ -4,77 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C591FC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 13:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E406CD11DD
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 13:29:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpTKs-0001jP-Ri; Wed, 27 Mar 2024 09:28:58 -0400
+	id 1rpTKy-0001y2-Hp; Wed, 27 Mar 2024 09:29:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rpTKp-0001fV-Tu
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:28:56 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rpTKu-0001ob-HS
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:29:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1rpTKn-0005ri-Vp
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:28:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711546134; x=1743082134;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=8b8c6P2+VCs+jk+qXB65SNmYsNp70KEmrOlascpa9Es=;
- b=jjfHEpVjeHGK3XGl3DoMDuV7FZ/ruQFNtF0UVS7bTp0aXHxVS5PzH8x5
- 4yyU2X0n1FSRzB/vrOKvmxaOFbXph+rgaFdYhNU11pzjbhtm8YplvEm0J
- kBcaAs1+qWTs2uPnt99a8vyzICk7q22NKLqzKR3lTGZfnoNywl/2AxqpP
- bocxJmJeG7/zJ4oxA6fnGeGLZHjRbD+5EgXg5RmNCpW7t06mjMKG9KVa5
- Ch+zbrBBPveAlrNS8B5MtK8zXZiYzdH4+TBTWvSoqGKtjYlZj6kjX1YVK
- SuWRg0tF/Iw5J5v2M0IfSxIbVlKVkwoQwpnnCUXdIjtazFef9asZZdu9G w==;
-X-CSE-ConnectionGUID: RoHcYiL7RIKs15XDSPRC4A==
-X-CSE-MsgGUID: STETCM5qQpKeQKthrTXSYA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11025"; a="6833502"
-X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; 
-   d="scan'208";a="6833502"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Mar 2024 06:28:52 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; d="scan'208";a="20949774"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 27 Mar 2024 06:28:49 -0700
-Date: Wed, 27 Mar 2024 21:42:44 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1rpTKs-0005s7-FR
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:29:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711546137;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HZi2BJv2kFGrXoGFjhlUGLg6ksRxJHtlYsrxZAdDmx8=;
+ b=A1atbNOlt4il7wr2WkfCm8nJGFwvbu9M+tyO4O0r0U9QtmYBsGYFhWHOMcGLFs/NTWlPeC
+ HfrYGV2b9DJ/JQs2XKwx7W2StGdvoYXbzXAf+csFgKJyZ3yqcdMYCh3t8mSfjQACmDu2AF
+ aRF6ojmiRLOHba2VZr9Q9EI0DfloV2s=
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-53-j-PJ3WI_N06PbFrPoMYlTw-1; Wed, 27 Mar 2024 09:28:55 -0400
+X-MC-Unique: j-PJ3WI_N06PbFrPoMYlTw-1
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-5a569d0f7a2so2939540eaf.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 06:28:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711546134; x=1712150934;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HZi2BJv2kFGrXoGFjhlUGLg6ksRxJHtlYsrxZAdDmx8=;
+ b=ARR0Fnf2KganWsBhANFfIo6E2Rft3wXqAM2faN3YW/LixblAsjWcXyFW+d0fuKLUwH
+ hTX1IsCCaOIoEYdX3SHiRAZLJDVFvnuMqNzbQqvmvFE/EhAjtTaCQapHWCvY2DrqQANG
+ VoJPr1CEjrPuoya2BPyFewrwlQFJgIj3cHtMOuWkPPy3TBKG3mR/+GkRC5dpgGwF7gEi
+ QeiitfJU7/TlVXJxc9DyT+dLSO/meOwXHn55OIA+QaKn7JWybGy1Erb00PQf8Cm95JQz
+ oIeAJS/s0n1cUVHG1v3nequI5LNSr3IFIyOfT81qQKXqvKoVJLjaydAx/pC1b2iUu9Q2
+ KrDw==
+X-Gm-Message-State: AOJu0YwH0RwqoZfaRErjU4+2ecNfETmDR3U7KOJ7Pnn71iv51yQmUKM3
+ JMpxw6H9z1fEwU8vP79DPCEUmSmepYgir4lQr1rXJ4brDfXijxpBVpqaPWFpJGVt8SJZgNzhW4+
+ 42a2zPf8OQ5F2C0re1VAWGnBr5kKRg6d5GSQc1ai+SiXK7ABTveFP
+X-Received: by 2002:a05:6358:99a7:b0:17f:4964:3e04 with SMTP id
+ j39-20020a05635899a700b0017f49643e04mr4771890rwb.10.1711546134561; 
+ Wed, 27 Mar 2024 06:28:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEsHcTU/t3QRl+D6abp/6qkZqmWfqMpzEu3wYHOfGHgUiSMh6CLkk51BuNuPOW8MRUGUy72xw==
+X-Received: by 2002:a05:6358:99a7:b0:17f:4964:3e04 with SMTP id
+ j39-20020a05635899a700b0017f49643e04mr4771864rwb.10.1711546134197; 
+ Wed, 27 Mar 2024 06:28:54 -0700 (PDT)
+Received: from smtpclient.apple ([203.163.235.72])
+ by smtp.gmail.com with ESMTPSA id
+ c28-20020a630d1c000000b005ceeeea1816sm7718401pgl.77.2024.03.27.06.28.48
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 27 Mar 2024 06:28:53 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.500.171.1.1\))
+Subject: Re: [PATCH 6/9] i386/pc: Skip initialization of system FW when using
+ IGVM
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <63a4febd571701bb9f2f7511d71fc968ed9205ab.1709044754.git.roy.hopkins@suse.com>
+Date: Wed, 27 Mar 2024 18:58:36 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Michael Tsirkin <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH-for-9.1 v2 07/21] hw/i386/pc: Remove deprecated
- pc-i440fx-2.1 machine
-Message-ID: <ZgQiVBg1psUdm8Fl@intel.com>
-References: <20240327095124.73639-1-philmd@linaro.org>
- <20240327095124.73639-8-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240327095124.73639-8-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>,
+ =?utf-8?Q?J=C3=B6rg_Roedel?= <jroedel@suse.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <11A81A35-2513-4433-8965-FE3AC5E0BF75@redhat.com>
+References: <cover.1709044754.git.roy.hopkins@suse.com>
+ <63a4febd571701bb9f2f7511d71fc968ed9205ab.1709044754.git.roy.hopkins@suse.com>
+To: Roy Hopkins <roy.hopkins@suse.com>
+X-Mailer: Apple Mail (2.3774.500.171.1.1)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,29 +114,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 27, 2024 at 10:51:09AM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Wed, 27 Mar 2024 10:51:09 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH-for-9.1 v2 07/21] hw/i386/pc: Remove deprecated
->  pc-i440fx-2.1 machine
-> X-Mailer: git-send-email 2.41.0
-> 
-> The pc-i440fx-2.1 machine was deprecated for the 8.2
-> release (see commit c7437f0ddb "docs/about: Mark the
-> old pc-i440fx-2.0 - 2.3 machine types as deprecated"),
-> time to remove it.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Message-Id: <20240305134221.30924-7-philmd@linaro.org>
-> ---
->  docs/about/deprecated.rst       |  2 +-
->  docs/about/removed-features.rst |  2 +-
->  include/hw/i386/pc.h            |  3 ---
->  hw/i386/pc.c                    |  7 -------
->  hw/i386/pc_piix.c               | 23 -----------------------
->  5 files changed, 2 insertions(+), 35 deletions(-)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+> On 27 Feb 2024, at 20:20, Roy Hopkins <roy.hopkins@suse.com> wrote:
+>=20
+> When using an IGVM file the configuration of the system firmware is
+> defined by IGVM directives contained in the file. Therefore the =
+default
+> system firmware should not be initialized when an IGVM file has been
+> provided.
+>=20
+> This commit checks to see if an IGVM file has been provided and, if it
+> has then the standard system firmware initialization is skipped and =
+any
+> prepared flash devices are cleaned up.
+>=20
+> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> ---
+> hw/i386/pc.c | 12 ++++++++++--
+> 1 file changed, 10 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index f8eb684a49..17bb211708 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -63,6 +63,7 @@
+> #include "e820_memory_layout.h"
+> #include "trace.h"
+> #include CONFIG_DEVICES
+> +#include "exec/confidential-guest-support.h"
+>=20
+> #ifdef CONFIG_XEN_EMU
+> #include "hw/xen/xen-legacy-backend.h"
+> @@ -1023,8 +1024,15 @@ void pc_memory_init(PCMachineState *pcms,
+>         }
+>     }
+>=20
+> -    /* Initialize PC system firmware */
+> -    pc_system_firmware_init(pcms, rom_memory);
+> +    /*
+> +     * If this is a confidential guest configured using IGVM then the =
+IGVM
+> +     * configuration will include the system firmware. In this case =
+do not
+> +     * initialise PC system firmware.
+> +     */
+> +    if (!cgs_is_igvm(machine->cgs)) {
+> +        /* Initialize PC system firmware */
+> +        pc_system_firmware_init(pcms, rom_memory);
+> +    }
+
+Ok so this makes QEMU mot load the default fw as provided in the QEMU =
+command line. It does not specify how the packaged fw specified within =
+IGVM would be processed and loaded. Am I understanding this right?
+=20
 
 
