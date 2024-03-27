@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1624CC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 09:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 234F2C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 09:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpPxF-0002to-My; Wed, 27 Mar 2024 05:52:21 -0400
+	id 1rpPwq-0002KN-W8; Wed, 27 Mar 2024 05:51:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpPxC-0002c5-UR
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:52:18 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpPwp-0002J0-40
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:51:55 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpPxB-0006m2-1a
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:52:18 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-56c3689ad2cso1438747a12.1
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:52:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpPwn-0006iz-3P
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:51:54 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a46ba938de0so866503366b.3
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:51:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711533135; x=1712137935; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711533111; x=1712137911; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3Vuzow4wRuBRA6M1t6JbWbYyMIQl6k4id2ay+d/vaQI=;
- b=evp8jxkKX4lOKE6ulNpIJ7o0wQu+bFrLdezU56pxjsCuhCTTxq9wK9Mg6l2QVWYhVn
- SQn8JqjfnRc37Cdbyt9QDK92FcZKkl21A2pQ7eez0Gbq3I+gMgzyMXlZHmn7juXyCjbH
- lCzgY+rqmXkvVgJwJA6yWqRwTs5trlpxXSFgF6gFWz0xTiY7Fhjl/t7V6+BJMJekGQRp
- oAvWvf8WsmjQz/Qbe3AIIR2J921ok+rTabgLV/go4nyC1lTWMFSLrTdFioMZieUQKKHG
- /y+Ko7j4/mRbgI3mhgvN0PkmQVZEedOmEgN3uWHB2DmX0mL4J5+MX19Vtdma1WyO/Qiw
- E6Bg==
+ bh=5EOMeI+cmJTs9JUVO4oguXe/gFC99HulgRN8N2p2Hs4=;
+ b=s9xWxC7SwkhzkeR+FLXbln33qWvBy2o3AzsBu2eaqp8LSr4c8fyIZM2MKYWe8/q1vq
+ ruVbHCXLZkTkawWI8cDW8Uu2qNMxHLVBlk3648iSxhEEMfNP9DLKhEBy96vfxJ2yPvhn
+ TGnDNyfHIBe8OItOXHWtvHnjZzQktoepul6LRk2lBdNdv5T2Nm4UYBcfvRE0s4c9/Ix3
+ ZNDFSJjpISLQxV/aHtbclwoIXzuFMfpE71cVQgRLp5Hume04m0fSaOsqdx50SbNCOfhd
+ W6hiLUHfKCcGBYxBBWENsSJyGvPUe74c8y8j7xz+4hY/+ojXjy0WmkCU7jC4REC1sx0y
+ nR1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711533135; x=1712137935;
+ d=1e100.net; s=20230601; t=1711533111; x=1712137911;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3Vuzow4wRuBRA6M1t6JbWbYyMIQl6k4id2ay+d/vaQI=;
- b=mkU16B43bYxRdgPccqo/E4JQUwT5D4tVacsw1uPIZyNxWhpqmhTsfYtzBlYlfKmuUP
- Or8ZPn/wD5iJqKkl1eZGgp2LBebDZmnIJ13Zx5ragcs7YtORAEtMHaJrRWbcfxo2lWLV
- IbcuRUQ2/t6c7suhTWjzLJqXClrU9zyUf8jVADWMBGluMj3wl2ZrGEXt9eNbI/F0Cc49
- WViGMF86q/Dxv/1Bkye9gAZWoNiSWYuA70pbkRuR0ny3P5kb4790jFfDLtYYYY0cfQ40
- 6887cISAAksfzCKZQJ1W2SjKBykyEe9gfc5Ecplqp23DWuppLNJwSNX24FgW3vopKpeF
- RzhQ==
+ bh=5EOMeI+cmJTs9JUVO4oguXe/gFC99HulgRN8N2p2Hs4=;
+ b=dggIbrWugJ1woSCn8hG56uXcE3DGrdNUW1hg1oIwOPQIWX9Tbf6tBdp3wBFCn9vNVW
+ 9DTSzW0xJarVVCCY5yjYFyw9D2On1VBmMqBqvKxvXgIvyTRQT2LDtuy9cEtISiLMmWCS
+ Lpbu1SV5tg22LZTurZ9qCw/b+qxbQCBhNmInzfrrWHRb9vdX2gf68DJUxPUrTROLq+c9
+ xZhBRjzRO7iOhHVan+zlozEAc1zCyjqvarmLT/AGR3w3LTqPjaybw4NxWfmZtlG09Tka
+ Jt5rVZCUM+3BQSO0ohP4l5h2DkVWFMANx0ZupHpPbzcW18j5qQeEnBtHbiKIaS7fbRzF
+ 2INg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWzQyMVkPrXEuSymo/RsPmCcSvLN6ieXXwmUpixWR1Cpe3t7beeVkeNaF2s3RBIUANN3QzJN1rkMa1h+r43Eku5zalpL+g=
-X-Gm-Message-State: AOJu0YyfrdfmLyIlrOKtlWl5cJMS0VhQnsAs4mKeW2uO/5Fp8nF2o1M0
- 3Be9vVfYHuWK58IuXkbnanpXDvYZF0QfNKd9FJQNh0R0kSXXlgja4sMx7KzDrK0=
-X-Google-Smtp-Source: AGHT+IGkho+VF9jZbFTrsl0A52f9KUabCr6P1DiiRsYYyyiIAiLpythomXDl0mt7CQFoKBH1AWEZtQ==
-X-Received: by 2002:a50:d781:0:b0:568:9d96:b2d1 with SMTP id
- w1-20020a50d781000000b005689d96b2d1mr3486483edi.32.1711533135591; 
- Wed, 27 Mar 2024 02:52:15 -0700 (PDT)
+ AJvYcCXdJac2foieABKQ5kOeJmMno2NzbtK0Q5easSjDK+1oZ8Lt/q029Aw5W1KIkCxTF6xcW9L62pdCK4D9EkM98sxKCoTr4WQ=
+X-Gm-Message-State: AOJu0YyvkEmfVtYktmo4rDfjKT09QM82kDZ2Lsb1w4ckEhgtwWWC/3fh
+ +/DNcN+apRXEi8FSlja+QlLuI1DofiDrxWkBGKGo0patBusKvXCKjTlm0i9krDw=
+X-Google-Smtp-Source: AGHT+IEdVi4MDq5ukDcPreLr3dc3lhJOZk6KNTNq2c7gCjryr0VDvxNmdzA7VwdCwJnOWswwpHo/Hw==
+X-Received: by 2002:a17:906:4f85:b0:a46:cef3:4aba with SMTP id
+ o5-20020a1709064f8500b00a46cef34abamr3515420eju.75.1711533111466; 
+ Wed, 27 Mar 2024 02:51:51 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.205.175])
  by smtp.gmail.com with ESMTPSA id
- l2-20020aa7cac2000000b00568e3d3337bsm5050818edt.18.2024.03.27.02.52.13
+ y10-20020a1709063daa00b00a4d9e714efbsm2337434ejh.76.2024.03.27.02.51.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 Mar 2024 02:52:15 -0700 (PDT)
+ Wed, 27 Mar 2024 02:51:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
  Igor Mammedov <imammedo@redhat.com>
@@ -65,19 +65,21 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
  Zhao Liu <zhao1.liu@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
-Subject: [PATCH-for-9.1 v2 08/21] target/i386/kvm: Remove
- x86_cpu_change_kvm_default() and 'kvm-cpu.h'
-Date: Wed, 27 Mar 2024 10:51:10 +0100
-Message-ID: <20240327095124.73639-9-philmd@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH-for-9.1 v2 04/21] hw/i386/acpi: Remove
+ PCMachineClass::legacy_acpi_table_size
+Date: Wed, 27 Mar 2024 10:51:06 +0100
+Message-ID: <20240327095124.73639-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240327095124.73639-1-philmd@linaro.org>
 References: <20240327095124.73639-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,87 +102,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-x86_cpu_change_kvm_default() was only used out of kvm-cpu.c by
-the pc-i440fx-2.1 machine, which got removed. Make it static,
-and remove its declaration. "kvm-cpu.h" is now empty, remove it.
+PCMachineClass::legacy_acpi_table_size was only used by the
+pc-i440fx-2.0 machine, which got removed. Remove it and simplify
+acpi_build().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240305134221.30924-8-philmd@linaro.org>
 ---
- target/i386/kvm/kvm-cpu.h | 41 ---------------------------------------
- target/i386/kvm/kvm-cpu.c |  3 +--
- 2 files changed, 1 insertion(+), 43 deletions(-)
- delete mode 100644 target/i386/kvm/kvm-cpu.h
+ include/hw/i386/pc.h |  1 -
+ hw/i386/acpi-build.c | 62 +++++++++-----------------------------------
+ 2 files changed, 12 insertions(+), 51 deletions(-)
 
-diff --git a/target/i386/kvm/kvm-cpu.h b/target/i386/kvm/kvm-cpu.h
-deleted file mode 100644
-index e858ca21e5..0000000000
---- a/target/i386/kvm/kvm-cpu.h
-+++ /dev/null
-@@ -1,41 +0,0 @@
--/*
-- * i386 KVM CPU type and functions
-- *
-- *  Copyright (c) 2003 Fabrice Bellard
-- *
-- * This library is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU Lesser General Public
-- * License as published by the Free Software Foundation; either
-- * version 2 of the License, or (at your option) any later version.
-- *
-- * This library is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- * Lesser General Public License for more details.
-- *
-- * You should have received a copy of the GNU Lesser General Public
-- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-- */
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 67856f54c3..4ad724601a 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -103,7 +103,6 @@ struct PCMachineClass {
+     /* ACPI compat: */
+     bool has_acpi_build;
+     bool rsdp_in_ram;
+-    int legacy_acpi_table_size;
+     unsigned acpi_data_size;
+     int pci_root_uid;
+ 
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 53f804ac16..a6f8203460 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -2499,13 +2499,12 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+     X86MachineState *x86ms = X86_MACHINE(machine);
+     DeviceState *iommu = pcms->iommu;
+     GArray *table_offsets;
+-    unsigned facs, dsdt, rsdt, fadt;
++    unsigned facs, dsdt, rsdt;
+     AcpiPmInfo pm;
+     AcpiMiscInfo misc;
+     AcpiMcfgInfo mcfg;
+     Range pci_hole = {}, pci_hole64 = {};
+     uint8_t *u;
+-    size_t aml_len = 0;
+     GArray *tables_blob = tables->table_data;
+     AcpiSlicOem slic_oem = { .id = NULL, .table_id = NULL };
+     Object *vmgenid_dev;
+@@ -2551,19 +2550,12 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+     build_dsdt(tables_blob, tables->linker, &pm, &misc,
+                &pci_hole, &pci_hole64, machine);
+ 
+-    /* Count the size of the DSDT and SSDT, we will need it for legacy
+-     * sizing of ACPI tables.
+-     */
+-    aml_len += tables_blob->len - dsdt;
 -
--#ifndef KVM_CPU_H
--#define KVM_CPU_H
--
--#ifdef CONFIG_KVM
--/*
-- * Change the value of a KVM-specific default
-- *
-- * If value is NULL, no default will be set and the original
-- * value from the CPU model table will be kept.
-- *
-- * It is valid to call this function only for properties that
-- * are already present in the kvm_default_props table.
-- */
--void x86_cpu_change_kvm_default(const char *prop, const char *value);
--
--#else /* !CONFIG_KVM */
--
--#define x86_cpu_change_kvm_default(a, b)
--
--#endif /* CONFIG_KVM */
--
--#endif /* KVM_CPU_H */
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index 9c791b7b05..cb8c73d20c 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -10,7 +10,6 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "host-cpu.h"
--#include "kvm-cpu.h"
- #include "qapi/error.h"
- #include "sysemu/sysemu.h"
- #include "hw/boards.h"
-@@ -144,7 +143,7 @@ static PropValue kvm_default_props[] = {
- /*
-  * Only for builtin_x86_defs models initialized with x86_register_cpudef_types.
-  */
--void x86_cpu_change_kvm_default(const char *prop, const char *value)
-+static void x86_cpu_change_kvm_default(const char *prop, const char *value)
- {
-     PropValue *pv;
-     for (pv = kvm_default_props; pv->prop; pv++) {
+     /* ACPI tables pointed to by RSDT */
+-    fadt = tables_blob->len;
+     acpi_add_table(table_offsets, tables_blob);
+     pm.fadt.facs_tbl_offset = &facs;
+     pm.fadt.dsdt_tbl_offset = &dsdt;
+     pm.fadt.xdsdt_tbl_offset = &dsdt;
+     build_fadt(tables_blob, tables->linker, &pm.fadt, oem_id, oem_table_id);
+-    aml_len += tables_blob->len - fadt;
+ 
+     acpi_add_table(table_offsets, tables_blob);
+     acpi_build_madt(tables_blob, tables->linker, x86ms,
+@@ -2694,49 +2686,19 @@ void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+      * too simple to be enough.  4k turned out to be too small an
+      * alignment very soon, and in fact it is almost impossible to
+      * keep the table size stable for all (max_cpus, max_memory_slots)
+-     * combinations.  So the table size is always 64k for pc-i440fx-2.1
+-     * and we give an error if the table grows beyond that limit.
+-     *
+-     * We still have the problem of migrating from "-M pc-i440fx-2.0".  For
+-     * that, we exploit the fact that QEMU 2.1 generates _smaller_ tables
+-     * than 2.0 and we can always pad the smaller tables with zeros.  We can
+-     * then use the exact size of the 2.0 tables.
+-     *
+-     * All this is for PIIX4, since QEMU 2.0 didn't support Q35 migration.
++     * combinations.
+      */
+-    if (pcmc->legacy_acpi_table_size) {
+-        /* Subtracting aml_len gives the size of fixed tables.  Then add the
+-         * size of the PIIX4 DSDT/SSDT in QEMU 2.0.
+-         */
+-        int legacy_aml_len =
+-            pcmc->legacy_acpi_table_size +
+-            ACPI_BUILD_LEGACY_CPU_AML_SIZE * x86ms->apic_id_limit;
+-        int legacy_table_size =
+-            ROUND_UP(tables_blob->len - aml_len + legacy_aml_len,
+-                     ACPI_BUILD_ALIGN_SIZE);
+-        if ((tables_blob->len > legacy_table_size) &&
+-            !pcmc->resizable_acpi_blob) {
+-            /* Should happen only with PCI bridges and -M pc-i440fx-2.0.  */
+-            warn_report("ACPI table size %u exceeds %d bytes,"
+-                        " migration may not work",
+-                        tables_blob->len, legacy_table_size);
+-            error_printf("Try removing CPUs, NUMA nodes, memory slots"
+-                         " or PCI bridges.\n");
+-        }
+-        g_array_set_size(tables_blob, legacy_table_size);
+-    } else {
+-        /* Make sure we have a buffer in case we need to resize the tables. */
+-        if ((tables_blob->len > ACPI_BUILD_TABLE_SIZE / 2) &&
+-            !pcmc->resizable_acpi_blob) {
+-            /* As of QEMU 2.1, this fires with 160 VCPUs and 255 memory slots.  */
+-            warn_report("ACPI table size %u exceeds %d bytes,"
+-                        " migration may not work",
+-                        tables_blob->len, ACPI_BUILD_TABLE_SIZE / 2);
+-            error_printf("Try removing CPUs, NUMA nodes, memory slots"
+-                         " or PCI bridges.\n");
+-        }
+-        acpi_align_size(tables_blob, ACPI_BUILD_TABLE_SIZE);
++    /* Make sure we have a buffer in case we need to resize the tables. */
++    if ((tables_blob->len > ACPI_BUILD_TABLE_SIZE / 2) &&
++        !pcmc->resizable_acpi_blob) {
++        /* As of QEMU 2.1, this fires with 160 VCPUs and 255 memory slots.  */
++        warn_report("ACPI table size %u exceeds %d bytes,"
++                    " migration may not work",
++                    tables_blob->len, ACPI_BUILD_TABLE_SIZE / 2);
++        error_printf("Try removing CPUs, NUMA nodes, memory slots"
++                     " or PCI bridges.\n");
+     }
++    acpi_align_size(tables_blob, ACPI_BUILD_TABLE_SIZE);
+ 
+     acpi_align_size(tables->linker->cmd_blob, ACPI_BUILD_ALIGN_SIZE);
+ 
 -- 
 2.41.0
 
