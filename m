@@ -4,133 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87887C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 15:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 560BFC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 15:42:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpVOy-0004od-TQ; Wed, 27 Mar 2024 11:41:21 -0400
+	id 1rpVQB-0005X1-NU; Wed, 27 Mar 2024 11:42:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpVOy-0004oR-01
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:41:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rpVQ9-0005Vr-JE
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:42:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpVOw-0001BO-Jt
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:41:19 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1rpVQ5-0001H6-Ul
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:42:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711554077;
+ s=mimecast20190719; t=1711554149;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=LcyM1o2+csMq4OgtPwgdZ4QL9k5X44upAmPwFBz4xyc=;
- b=NNjxIIvKsXmEPPptvQRgpHn5qTQ6VUdpMwDITMVExxiUCFGOsrKYJrDvhKbcrLNZc6qwTD
- A0xIBchS16pwwg65qtZMXzeMablj7fUisN4CveRyIaajTxSy7KW6akMnHmQClc+up8NR1E
- kOTFNq/zR0WJ/apeIvAyTQBMiCFAj4o=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QgjXZQyN7YOMykU1pTN+FjDfZJO3X4pgLq2uGbabgdc=;
+ b=ZYJKFUnjTtJZbJKdDpPFgHkki0nt6I3EDQEsLXy+92SfNS39rctuYS01Nwmp+2PwD7Iveo
+ DMRWWRWQrZugb4CCBeTn5fdAJ3KTpQRc5OrFZpg++yrbsTDwlqB6yFApbs6dlup0WwfWHk
+ Lehqiykh7fL9vO5ONjWP2JvGyntm+Yk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-394-rdD_iJwCPCmaUT_ZpbFAQw-1; Wed, 27 Mar 2024 11:41:16 -0400
-X-MC-Unique: rdD_iJwCPCmaUT_ZpbFAQw-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-789d981ae87so960842985a.0
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 08:41:16 -0700 (PDT)
+ us-mta-623-2rKoupYENRGI7TxLORiLKw-1; Wed, 27 Mar 2024 11:42:27 -0400
+X-MC-Unique: 2rKoupYENRGI7TxLORiLKw-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4148b78d733so14742455e9.3
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 08:42:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711554076; x=1712158876;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LcyM1o2+csMq4OgtPwgdZ4QL9k5X44upAmPwFBz4xyc=;
- b=pB1/WbBiTx/MDcrlvlLs4Smwx/DuHLqWDA2S3eDBU2AdfUadxtlH7XfK6cssmS+hF0
- TP1JBwcfaetHVar1FnKzkscQCq0gnZ2l8xRsXZBkvSNRFxNVC350Wb3ivJTqrVAS2fJp
- T+X2315NSROY9VeS3J4Lt5mqvrlP9+8Yy8CCxw13MmmTS+K4H/DRJlN3CDqTjGrrsBG2
- m3/tPLxn8tchJV0YWGC3W+X44ue1e9oMU1HcLbclcxRjKKbwNWFnCmkz2cTMUPSPG3p9
- ivvR2ldtdnjjYSgHHdrK55+DcuVrDpBD5elK0gH8KWb72OFHKo3a6nVaY5veJbWNBDOU
- KEaQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWQA+e5U2UdMQbxxnRqK1c+AVNaO73c7/czlXjru6yrEPuUNUUw3cleEZXkWFQqXyPnskLY6+/MGFGmlXARWbZvKvRNf4w=
-X-Gm-Message-State: AOJu0YwkP91EBh6ChYAZRV/JFdbpG89hIwVLabrsMaYWiHKy4bpRtk/W
- 8p7udCelJvNs+fGRgow/+C6dD9FQxKwq3YPTThsM8nnBTwNyXD8tVKAuyOe6xHeR+bI2+Ghcj+u
- 4ive98uYi8ZGEGFVaKTsfv02OKr8Z7WayfY2RKP+T8DDcph263hGX
-X-Received: by 2002:a05:620a:16c8:b0:789:d5ff:95f9 with SMTP id
- a8-20020a05620a16c800b00789d5ff95f9mr3385883qkn.30.1711554075780; 
- Wed, 27 Mar 2024 08:41:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEoj0gcB7PZNvwLYgMXcb7OhJ2OqVxMIhEH7vAqHVR/lSRZQZI0mK/3btGCgllXSkRWTFIyng==
-X-Received: by 2002:a05:620a:16c8:b0:789:d5ff:95f9 with SMTP id
- a8-20020a05620a16c800b00789d5ff95f9mr3385873qkn.30.1711554075513; 
- Wed, 27 Mar 2024 08:41:15 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-177-37.web.vodafone.de.
- [109.43.177.37]) by smtp.gmail.com with ESMTPSA id
- vq12-20020a05620a558c00b00789ea123bd5sm3936723qkn.59.2024.03.27.08.41.12
+ d=1e100.net; s=20230601; t=1711554146; x=1712158946;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :references:cc:to:content-language:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QgjXZQyN7YOMykU1pTN+FjDfZJO3X4pgLq2uGbabgdc=;
+ b=BrFwixw5ZcPFqTZWNBBZvkZht0NdgLkNoFnuErBOZ/YREj3L8MOMmDq4udNMgWrmKg
+ h3ZDUndsVQkliteC1OAXtQ49/PjXnrVi00AAc7lDGlDcYikZaM5n9aObkaOIEPS1rI9S
+ cWp3r6+Qr+LOfluvlSmgYvfQ8vk1ils482Fz5UJtZ4Wk6/CyHw+5El8q0fKrB4+TVRlD
+ If0huw1aYPiTuOP8YHBA1k7d3jujmfWF9A26H1aqrqau73gjH2Z+chlq99JLSY4ba0V+
+ TSihDiTVIMVyXDROQLNOhyBK1bLtqs2CjzL4YBGrfDVCCapRLz9n/p+0LS5GbmA1keYQ
+ xHDw==
+X-Gm-Message-State: AOJu0Yy1l5UmBseEudVy9rsguahRLQOwBF3pLsFqFHL7Jj68AIMLzSyc
+ bHnB6jfOROpXcQcMA8Y1mbxgD5dsTb/CmDiEL6cxJnlDSv09r5gAQxPWMEBOeHVenjnpPxRcT/r
+ i3B0+fOJlRcTcrNWI420LNSSbVPDVXbq0B7ntbcd3iNgNfyGJq3oN
+X-Received: by 2002:a05:600c:a42:b0:413:fea7:bd19 with SMTP id
+ c2-20020a05600c0a4200b00413fea7bd19mr289010wmq.15.1711554145947; 
+ Wed, 27 Mar 2024 08:42:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHmfxsoilvJS19F8NY1xHRmzqhPzpPIx/hTPy1oEk7NSM2X/6sfzY+WPc/fa7M/pyGtKlPc2w==
+X-Received: by 2002:a05:600c:a42:b0:413:fea7:bd19 with SMTP id
+ c2-20020a05600c0a4200b00413fea7bd19mr288968wmq.15.1711554145423; 
+ Wed, 27 Mar 2024 08:42:25 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c708:8a00:362b:7e34:a3bc:9ddf?
+ (p200300cbc7088a00362b7e34a3bc9ddf.dip0.t-ipconnect.de.
+ [2003:cb:c708:8a00:362b:7e34:a3bc:9ddf])
+ by smtp.gmail.com with ESMTPSA id
+ g19-20020a05600c311300b00414957185ebsm1725190wmo.27.2024.03.27.08.42.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Mar 2024 08:41:15 -0700 (PDT)
-Message-ID: <84185cab-a253-4e3d-955c-900e5c6aff0a@redhat.com>
-Date: Wed, 27 Mar 2024 16:41:10 +0100
+ Wed, 27 Mar 2024 08:42:25 -0700 (PDT)
+Message-ID: <24326aaa-4a80-4e85-85e7-4703da4a5d27@redhat.com>
+Date: Wed, 27 Mar 2024 16:42:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.0? v2 1/3] fpu/softfloat: Remove mention of TILE-Gx
- target
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: devel@lists.libvirt.org, Marek Vasut <marex@denx.de>,
- Laurent Vivier <laurent@vivier.eu>, Chris Wulff <crwulff@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20240327144806.11319-1-philmd@linaro.org>
- <20240327144806.11319-2-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH for-9.1 v2 09/11] hostmem: add a new memory backend based
+ on POSIX shm_open()
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240327144806.11319-2-philmd@linaro.org>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ gmaglione@redhat.com, Eric Blake <eblake@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>,
+ stefanha@redhat.com, Coiby Xu <Coiby.Xu@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>, slp@redhat.com,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Brad Smith <brad@comstyle.com>,
+ qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+References: <20240326133936.125332-1-sgarzare@redhat.com>
+ <20240326133936.125332-10-sgarzare@redhat.com>
+ <462b8b02-5585-45b9-b725-27b8c84d0d1d@redhat.com>
+ <ymzdrrltjqubqydcyu4sygcx3g3tfqqkwgziopfisjd2aanlrb@vmufyrqdmkqf>
+ <9573d288-257e-4e1b-9721-c7799db01190@redhat.com>
+ <dsjlixhniz2z7i7ku5u2wwxgqpwhgpntwiauujkj352psrfwtn@7krwrc5wkktq>
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <dsjlixhniz2z7i7ku5u2wwxgqpwhgpntwiauujkj352psrfwtn@7krwrc5wkktq>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -138,7 +150,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,30 +166,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/03/2024 15.48, Philippe Mathieu-Daudé wrote:
-> TILE-Gx has been removed during the v6.0 release (see
-> commit 2cc1a90166 "Remove deprecated target tilegx"),
-> no need to mention it in the list of "supported targets".
+>>>
+>>> So I thought that for now we only support the "anonymous" mode, and if
+>>> in the future we have a use case where the user wants to specify the
+>>> name, we can add it later.
+>>
+>> Okay, so for now you really only want an anonymous fd that behaves like
+>> a memfd, got it.
+>>
+>> Likely we should somehow fail if the "POSIX shared memory object"
+>> already exists. Hmm.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   fpu/softfloat-specialize.c.inc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> `O_CREAT | O_EXCL` should provide just this behavior.
+>   From shm_open(3) manpage:
 > 
-> diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-> index 1610472cfc..1c85c48a73 100644
-> --- a/fpu/softfloat-specialize.c.inc
-> +++ b/fpu/softfloat-specialize.c.inc
-> @@ -152,7 +152,7 @@ static void parts64_default_nan(FloatParts64 *p, float_status *status)
->       /*
->        * This case is true for Alpha, ARM, MIPS, OpenRISC, PPC, RISC-V,
->        * S390, SH4, TriCore, and Xtensa.  Our other supported targets,
-> -     * CRIS, Nios2, and Tile, do not have floating-point.
-> +     * CRIS and Nios2, do not have floating-point.
->        */
->       if (snan_bit_is_one(status)) {
->           /* set all bits other than msb */
+>       O_EXCL  If O_CREAT was also specified, and a shared memory object
+>               with the given name already exists, return an error.  The
+>               check for the existence of the object, and its creation if
+>               it does not exist, are performed atomically.
+> 
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Cool!
+
+>>
+>>>
+>>> That said, if you think it's already useful from the beginning, I can
+>>> add the name as an optional parameter.
+>>>
+>>>>
+>>>> I'm also not quite sure if "host_memory_backend_get_name()" should be
+>>>> used for the purpose here.
+>>>
+>>> What problem do you see? As an alternative I thought of a static
+>>> counter.
+>>
+>> If it's really just an "internal UUID", as we'll remove the file using
+>> shm_unlink(), then the name in fact shouldn't matter and this would be
+>> fine. Correct?
+> 
+> Right. It's a name that will only "appear" in the system for a very
+> short time since we call shm_unlink() right after shm_open(). So I just
+> need the unique name to prevent several QEMUs launched at the same time
+> from colliding with the name.
+
+Okay, essentially emulating tmpfile(), but for weird shmem_open() :)
+
+> 
+>>
+>> So I assume if we ever want to have non-anonymous fds here, we'd pass
+>> in a new property "name", and change the logic how we open/unlink.
+>> Makes sense.
+> 
+> Exactly! I can clarify this in the commit description as well.
+> 
+> Thanks for the helpful comments!
+> If there is anything I need to change for v3, please tell me ;-)
+
+Besides some patch description extension, makes sense to me :)
+
+-- 
+Cheers,
+
+David / dhildenb
 
 
