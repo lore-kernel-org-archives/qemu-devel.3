@@ -4,94 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9C5BC47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 14:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B65D6C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 14:16:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpU2S-0001GX-2g; Wed, 27 Mar 2024 10:14:00 -0400
+	id 1rpU4q-0002Ur-1D; Wed, 27 Mar 2024 10:16:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1rpU2Q-0001GF-PE
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:13:58 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpU4Y-0002Ou-3O
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:16:10 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1rpU2O-0008Cj-Hn
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:13:58 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-34175878e30so4876471f8f.3
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 07:13:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpU4T-0000AB-Ve
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:16:09 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-56c2c41cbdaso970020a12.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 07:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1711548834; x=1712153634; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=dbKwV1lVh0eDNNl8BfpXJC6IsewNSy8t9cbeao3ZZXk=;
- b=MOcTmIzuCoh0+9zhy94xe8ntLUd+pGN7/cm6uyWyE7ZDTdB2G0qW1fYPEvY7ao9rcZ
- MJtMTWcRgdQ9ZZX4ylyfsf/sKtF2U1wEvpERy5OOZxVm5fCuZ2Y32k+Jo2UZ2S2T2zFl
- F1XVPhRX3syAM028xk6XLaD7waxGzLIZAr/1xW9Fx5NjWaDxKExIkxb2kkFNyxi5xpNq
- R5v7d+D/mg5RSBQYK8q/fCsqWLEmZX+mnJomQTLFxrnirEg7JF6b6s/d4erWd4YWgWMg
- XlFe5uW2pzLFzkyDeDb7/qh73Z0llAzAO/5dZmbH8Q+XUZOZhuWYMG9Oarg2Lky9t5aW
- d+rA==
+ d=linaro.org; s=google; t=1711548964; x=1712153764; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VEn6sJJuV1gys26+f1fgasgwmUZDKg+j2PYSB9FR37E=;
+ b=MxhTzdgrVBrnBTkQfEfwzHP8/1jizjbZ/oqF2cOOXNfDzUbEo47G/Hs88/E8q+L4hm
+ yhm+/4kLL6nbsNsNdENLF5nmFh8Xr5Lq82Q2mOpxO9WDbJoA4X36jN4/ZrA/wlssdia4
+ B/90tfEWj8tXZZfxrkHtUwgpMmMB8Ei40otPtXZ60fFF+qBSD2pK4Zsb4NmTJZ3O4PkN
+ Md/EIWYfPyqaLJm81Ow6/8WyOPdJb1fbUW1d98YZomT8EqXE+C6nRsEA8A+s6gj+eZaj
+ iT89SLpJw8by48BteUfXbPM7GUGXmpaPqggTsb1Zy3p8SE8Bx+zLXpDzn38/XeLUi27W
+ ivAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711548834; x=1712153634;
- h=mime-version:user-agent:content-transfer-encoding:autocrypt
- :references:in-reply-to:date:cc:to:from:subject:message-id
+ d=1e100.net; s=20230601; t=1711548964; x=1712153764;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dbKwV1lVh0eDNNl8BfpXJC6IsewNSy8t9cbeao3ZZXk=;
- b=K82xlgMCV6Mwkg9+tovylERtypiiIxcvOsxncsSXCwyPrcVV+NQmvC70ajWylyvBVo
- qRYqAqMdpddycsP2xk9BuXOLIMjmRZK+c6ypYBE4CiAKB9M+Mng0O6ZvTv5y87nagQ6T
- vy4QVs0YPStWiPfDMJDzUU7gSvIDtlyzv5QgsKFl9xoGLUCRGpDMdiG11sw7tNy1K131
- EJ+psj1P5/YHS3XnrB+jGG4E3M+rrRiHn4P2sMIbT2nyrgJt5XGY8LEgZldBr21iQMHJ
- 0gGVD+uL3IumsdtLhJlRlo5EGIUFDR/1eCYRtzBkf0NtGdqGhJrPONK7WH3f/it00Ft+
- Za9w==
-X-Gm-Message-State: AOJu0YxLcn0JvIfcbR+9c4Bmsc1RT6/pPBx3BDtb33AqdPOJawqIS3y3
- XrZDJnB3tEUuntFdpHRy/HwpT67sca8KbsOd3agNiMmd65FRDTZdSpDs0esElaY=
-X-Google-Smtp-Source: AGHT+IEOSgYpRxcnDtQGshfZPm76+5tPNKjNQx5KEB+YnMrV2/IpTHybgAl3wCQiDucUdnEtfmajWg==
-X-Received: by 2002:a5d:4ccc:0:b0:341:9087:8a4 with SMTP id
- c12-20020a5d4ccc000000b00341908708a4mr74460wrt.13.1711548834092; 
- Wed, 27 Mar 2024 07:13:54 -0700 (PDT)
-Received: from [192.168.7.249] ([145.40.191.116])
+ bh=VEn6sJJuV1gys26+f1fgasgwmUZDKg+j2PYSB9FR37E=;
+ b=mbl0xvIZake2xthqN3Mclh20887uZq8M90JuTOE6Um8fTS40I7NkCf/XulNMFrmaSa
+ i0brmHQ9wChkHpCBl0DONC4tP0/L9+4bINUMv2Ioas8WC5FOAGWfT442yCsSqAjE2ijL
+ 3I1DTbBnHL/KEMo4Md7G4tge5Pog8jtaHwom1IkEK5eT9DcHk+n2HUrGoEaSUUm7jbI5
+ r6LeiRCLvMLu6kBNCT5kSmjmBXZeyAOVly5P6a9FZqyMRlH2eXupnLfmaWB78kWlBCvn
+ pdaSe4wyBKfQC6EXUhLcvZ4msjyTYI45F9a7VBuJLI88f3hLaYmsf+v9EbDv4rZH+uJq
+ lE7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVilzwjb9kgsJyzYskbBhR5PQfMy3jh2OnmLNm6i1/5yr7cysxy5a6JJ2ZRvWgsht4SDgp+mJ9fYjnaWtXuVL/ujS2IMXw=
+X-Gm-Message-State: AOJu0YzE9BgILepYDcC2hBsIT1VfE8X6KlymOwMWCA04Efb3LBBU9/6V
+ FUa0ZxL8eB3g6/ObCQYVA7a7FtQ+/IceySbkLtS0zE7aLiitdjFuiN0M5UHYnuw=
+X-Google-Smtp-Source: AGHT+IHhWSrSBDj8zcrgUXt8mm6Z63W3eSCS0czmv7/DkeDt2GIEQfmFYlx6sDSGdoXdXx1TRox8CQ==
+X-Received: by 2002:a50:8d41:0:b0:568:1444:af5f with SMTP id
+ t1-20020a508d41000000b005681444af5fmr2570060edt.4.1711548960858; 
+ Wed, 27 Mar 2024 07:16:00 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.205.175])
  by smtp.gmail.com with ESMTPSA id
- bo15-20020a056000068f00b0033ec8f3ca9bsm11633860wrb.49.2024.03.27.07.13.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Mar 2024 07:13:53 -0700 (PDT)
-Message-ID: <da59863286f014444350d7ecc5523f32fd12138a.camel@suse.com>
-Subject: Re: [PATCH 6/9] i386/pc: Skip initialization of system FW when
- using IGVM
-From: Roy Hopkins <roy.hopkins@suse.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Michael Tsirkin <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, Eduardo
- Habkost <eduardo@habkost.net>,  Alistair Francis <alistair@alistair23.me>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,  Igor
- Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>,  =?ISO-8859-1?Q?J=F6rg?= Roedel
- <jroedel@suse.com>, Gerd Hoffmann <kraxel@redhat.com>, Vitaly Kuznetsov
- <vkuznets@redhat.com>
-Date: Wed, 27 Mar 2024 14:13:53 +0000
-In-Reply-To: <11A81A35-2513-4433-8965-FE3AC5E0BF75@redhat.com>
-References: <cover.1709044754.git.roy.hopkins@suse.com>
- <63a4febd571701bb9f2f7511d71fc968ed9205ab.1709044754.git.roy.hopkins@suse.com>
- <11A81A35-2513-4433-8965-FE3AC5E0BF75@redhat.com>
-Autocrypt: addr=roy.hopkins@suse.com; prefer-encrypt=mutual;
- keydata=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
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.2 
+ h28-20020a056402095c00b0056b2c5c58d2sm5343828edz.21.2024.03.27.07.15.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 Mar 2024 07:16:00 -0700 (PDT)
+Message-ID: <14787bbb-e6cc-45bd-bb5d-1fb3fee5a60f@linaro.org>
+Date: Wed, 27 Mar 2024 15:15:57 +0100
 MIME-Version: 1.0
-Received-SPF: permerror client-ip=2a00:1450:4864:20::434;
- envelope-from=roy.hopkins@suse.com; helo=mail-wr1-x434.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.1] target/nios2: Remove machines and system emulation
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Chris Wulff <crwulff@gmail.com>, devel@lists.libvirt.org,
+ Marek Vasut <marex@denx.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+References: <20240327123554.3633-1-philmd@linaro.org>
+ <7aad7197-21f3-4c0e-931c-2eb4febdf94a@linaro.org>
+ <fb28d3b0-1ab9-4423-80ef-03a285cf02d7@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <fb28d3b0-1ab9-4423-80ef-03a285cf02d7@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,68 +106,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2024-03-27 at 18:58 +0530, Ani Sinha wrote:
->=20
->=20
-> > On 27 Feb 2024, at 20:20, Roy Hopkins <roy.hopkins@suse.com> wrote:
-> >=20
-> > When using an IGVM file the configuration of the system firmware is
-> > defined by IGVM directives contained in the file. Therefore the default
-> > system firmware should not be initialized when an IGVM file has been
-> > provided.
-> >=20
-> > This commit checks to see if an IGVM file has been provided and, if it
-> > has then the standard system firmware initialization is skipped and any
-> > prepared flash devices are cleaned up.
-> >=20
-> > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
-> > ---
-> > hw/i386/pc.c | 12 ++++++++++--
-> > 1 file changed, 10 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index f8eb684a49..17bb211708 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -63,6 +63,7 @@
-> > #include "e820_memory_layout.h"
-> > #include "trace.h"
-> > #include CONFIG_DEVICES
-> > +#include "exec/confidential-guest-support.h"
-> >=20
-> > #ifdef CONFIG_XEN_EMU
-> > #include "hw/xen/xen-legacy-backend.h"
-> > @@ -1023,8 +1024,15 @@ void pc_memory_init(PCMachineState *pcms,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > =C2=A0=C2=A0=C2=A0 }
-> >=20
-> > -=C2=A0=C2=A0=C2=A0 /* Initialize PC system firmware */
-> > -=C2=A0=C2=A0=C2=A0 pc_system_firmware_init(pcms, rom_memory);
-> > +=C2=A0=C2=A0=C2=A0 /*
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * If this is a confidential guest configured =
-using IGVM then the IGVM
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * configuration will include the system firmw=
-are. In this case do not
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 * initialise PC system firmware.
-> > +=C2=A0=C2=A0=C2=A0=C2=A0 */
-> > +=C2=A0=C2=A0=C2=A0 if (!cgs_is_igvm(machine->cgs)) {
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Initialize PC system fir=
-mware */
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pc_system_firmware_init(pcm=
-s, rom_memory);
-> > +=C2=A0=C2=A0=C2=A0 }
->=20
-> Ok so this makes QEMU mot load the default fw as provided in the QEMU com=
-mand
-> line. It does not specify how the packaged fw specified within IGVM would=
- be
-> processed and loaded. Am I understanding this right?
-> =C2=A0
-Yes. Although as suggested by Daniel, I've now changed this so if firmware =
-is
-specified on the command line in conflict with the IGVM file then an error =
-is
-displayed. The IGVM file itself describes how the firmware binary is popula=
-ted
-into guest memory and launched.
+On 27/3/24 14:19, Thomas Huth wrote:
+> On 27/03/2024 13.45, Philippe Mathieu-Daudé wrote:
+>> On 27/3/24 13:35, Philippe Mathieu-Daudé wrote:
+>>> Remove the Nios II machines and the system emulation code
+>>> (deprecated since v8.2 in commit 9997771bc1 "target/nios2:
+>>> Deprecate the Nios II architecture").
+> 
+> Please remind me, why didn't we deprecate the linux-user emulation, too?
+
+Hmm I think we actually did (overall target), since there is
+an issue with signals.
+
+>>> diff --git a/hw/nios2/Kconfig b/hw/nios2/Kconfig
+>>> deleted file mode 100644
+>>> index 4748ae27b6..0000000000
+>>> --- a/hw/nios2/Kconfig
+>>> +++ /dev/null
+>>> @@ -1,13 +0,0 @@
+>>> -config NIOS2_10M50
+>>> -    bool
+>>> -    select NIOS2
+>>> -    select SERIAL
+>>> -    select ALTERA_TIMER
+>>
+>> I forgot to mention I deliberately chose to keep the Altera
+>> timer model in the tree, since it looks like a re-usable
+>> IP component.
+> 
+> But if it is not used anymore by any machine, this will happily bitrot, 
+> won't it? I think I'd rather remove it, too ... maybe in a separate 
+> patch, so that in case somebody later needs it again, it can be restored 
+> by simply reverting the patch again.
+
+It is related to dynamic machines, how do we decide what components
+to remove once there? I suppose we'd need to deprecate every single
+component, like ALTERA_TIMER. But we are not yet generating dynamic
+machines, so for now we can consider ALTERA_TIMER part of Nios II
+sysemu removal. I like your idea of removing it as a separate patch.
 
