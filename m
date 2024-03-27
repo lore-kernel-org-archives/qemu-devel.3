@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D75F1C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 14:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD013C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 14:21:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpU8i-0004r0-Na; Wed, 27 Mar 2024 10:20:28 -0400
+	id 1rpU8g-0004qS-Hn; Wed, 27 Mar 2024 10:20:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpU8g-0004qR-Dg
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:20:26 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1rpU8f-0004p8-4f
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:20:25 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpU8e-000130-M4
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:20:26 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-6da202aa138so3454813b3a.2
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 07:20:24 -0700 (PDT)
+ id 1rpU8c-00012D-Ne
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 10:20:24 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-6e6b3dc3564so4839787b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 07:20:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1711549223; x=1712154023; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1711549220; x=1712154020; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=madbT/BaQjt9l0NAIRCdz4iExhKI7w/5+Gn0wJFqL2Y=;
- b=Z1jlY+EY4o+6cSCNlA+gv8rcHEXbk6squr7gomEfjpxZJnVZ/wGxUVvU5TTN3wtSnK
- reRSS095EC5CmPwU2CGfv2ULT6XmAryPDigFJmLoeAYmZInsm0IHLwk5bkyJpe9vIQOM
- GKoYXA+xdiHIefnh0QLAblElYe5Fn8RvHCqLPmA/aVhncNVwuyt9OY1/T4Oaao1AWQuW
- ZGuAbR5yahLNC5/KNDZVDOqhTtZJodfujgeCwABqEBLN3tMpNtxHtS9mMt7Xt5IJmWS1
- kywGr8jM7815ISeVvlqpsKdSVNTO7EmXq/yEkf5hIx0+c48PyBYmUQd4FkCfXEKPV8Vl
- x/1w==
+ bh=dE8cz24Njw98k6nSsMHYnRI5+W71Jbus9gwpk8ecbyg=;
+ b=Ka3FhcnyyZrJGWAWhqZ4r7pfJlNpAfTfoyyC29Euqyb4AV64Pja9VsSjn5iEuN80Iq
+ txZ8qgt9vGWI2iMbiNIe0Va5ndxtm+TaG+J/fBcqtwTJvhpcWf0/tdolBlIbXtmG9Wj/
+ x0QiBZl0ZpNq+p7dhxXbmC/dcgoWk+w5uXV4JRtFcsBc5Nkir2TG4hNc9oNYwdBNSzWQ
+ zcyuKo7s8kp+1m1OCHG7T3jMte1bCGrj9SmQlmp6r7mAAOvSLT67r3qzS+lUw6d+2gOq
+ 87aIHPncTczNbGi8UGRlvSOS1bv+uy6RyxusayLIS27gFE7PlEsbGC81NOTT+N6phfAS
+ SsNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711549223; x=1712154023;
+ d=1e100.net; s=20230601; t=1711549220; x=1712154020;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=madbT/BaQjt9l0NAIRCdz4iExhKI7w/5+Gn0wJFqL2Y=;
- b=eMaUSLyjolCryQ1KYh6ybATCQ4TzO4t/Er39oHmn6kRLk8lColnpU++sqqQ3haG/65
- f1RmaaPxub+z++6aUOF9r+VQhMy7QMbsqS4dVTQDcCDU0dEDkIxsgViYZnGLQ3WMj4xF
- Xc9RSLKEgg2XCqz16TmtGvaG6VtP1XcY7Qg+rCXDgzgsP/yWXF9j8DBkislX2XadKQGR
- Oxwb5yOCDIJZfryx7ARjuga8ydAOGoPz2h5ur9Zh3Vw/mSS1DYs1DPhQf0/F5oSuXJGM
- MEGb6WtwL8Jbms13d7Y15iu9Y1dsLrhf0dqYXNAH3OgukZ/cKpZ1NWAL18vIRavwH2RV
- aoPQ==
-X-Gm-Message-State: AOJu0YwHB5IlfA7bmvTpe6ZVNntO0+OuiWgCs1ioeiHCZVdQWPNc6it6
- x6D2jCvT1Q6Yfuhon/Dx8mpFuvGHcoZdsFcW/A514k1256JvVNhn6JVrDBDpf+rcu7t19VSwXJv
- 8
-X-Google-Smtp-Source: AGHT+IFVGNvmJBwhi+KNNR4XYUVaSsL2CWJJO3Tg7N8UrmSXSEvaQCSy1/bGq8FMprjdooOhAej4OQ==
-X-Received: by 2002:a05:6a00:6711:b0:6ea:c7eb:59ff with SMTP id
- hm17-20020a056a00671100b006eac7eb59ffmr2030081pfb.28.1711549222988; 
- Wed, 27 Mar 2024 07:20:22 -0700 (PDT)
+ bh=dE8cz24Njw98k6nSsMHYnRI5+W71Jbus9gwpk8ecbyg=;
+ b=e59bsAL93qme4/oKIGRkOeUH4w0roZWMy0a48ezPJKBDSq313od/WPXxhyRibN4f/f
+ 0fyqCGJjdoQ2UQA2Nf4tiEJ0Q2W5Chy4MUJYoUeg/1jdoqFlx69mkB+5wLWvNQMwiti8
+ M7d3tStdbNNj89KroyAgOwZLEKNGT3gz72KnNnnlAjNU0Y028erx54YWT+dGoLCY2YA6
+ LdKJxtKsoLa5io2ZwNBUDsCEOiuTEMoJqLi3Lh1bXQuMU807/575z7nbzsCjhwrw2k1z
+ XBvRIXGpfzcIRiRRGSdoxWf7yPwmxF8p/xieI3fRBO3NnK/qKu/Kjt8DaQdtKVYjw4is
+ hE6Q==
+X-Gm-Message-State: AOJu0YxLUZQfxQfC20oMHxfhae1HP24ZkKqgBLeBGUIYPBKc5gXe243c
+ FfWpgGiKIZYcgSTuEiv7F0FOulzAvJfX5RGraS9WMhcehmiFgJqt3nqRISOjZ4G1mfwhnouQPfG
+ b
+X-Google-Smtp-Source: AGHT+IGSaJ2hXhAAzvgJUns+rQTdoalsHgp2juzNC+Zt0VZp3qDeNV1IO9dNtBqmY+rvB0gIrXW+jQ==
+X-Received: by 2002:a05:6a20:3ca7:b0:1a3:c266:e7bd with SMTP id
+ b39-20020a056a203ca700b001a3c266e7bdmr98411pzj.38.1711549220360; 
+ Wed, 27 Mar 2024 07:20:20 -0700 (PDT)
 Received: from grind.. ([177.45.186.241]) by smtp.gmail.com with ESMTPSA id
- fa26-20020a056a002d1a00b006ea7b343877sm7891809pfb.9.2024.03.27.07.20.20
+ fa26-20020a056a002d1a00b006ea7b343877sm7891809pfb.9.2024.03.27.07.20.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Mar 2024 07:20:22 -0700 (PDT)
+ Wed, 27 Mar 2024 07:20:20 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: thuth@redhat.com, alistair.francis@wdc.com, groug@kaod.org,
  peter.maydell@linaro.org, qemu_oss@crudebyte.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH for-9.0 v3 2/2] qtest/virtio-9p-test.c: remove g_test_slow()
- gate
-Date: Wed, 27 Mar 2024 11:20:11 -0300
-Message-ID: <20240327142011.805728-3-dbarboza@ventanamicro.com>
+Subject: [PATCH for-9.0 v3 1/2] qtest/virtio-9p-test.c: create/remove temp
+ dirs after each test
+Date: Wed, 27 Mar 2024 11:20:10 -0300
+Message-ID: <20240327142011.805728-2-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240327142011.805728-1-dbarboza@ventanamicro.com>
 References: <20240327142011.805728-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,49 +96,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 558f5c42ef gated the local tests with g_test_slow() to skip them
-in 'make check'. The reported issue back then was this following CI
-problem:
+The local 9p driver in virtio-9p-test.c its temporary dir right at the
+start of qos-test (via virtio_9p_create_local_test_dir()) and only
+deletes it after qos-test is finished (via
+virtio_9p_remove_local_test_dir()).
 
-https://lists.nongnu.org/archive/html/qemu-devel/2020-11/msg05510.html
+This means that any qos-test machine that ends up running virtio-9p-test
+local tests more than once will end up re-using the same temp dir. This
+is what's happening in [1] after we introduced the riscv machine nodes:
+if we enable slow tests with the '-m slow' flag using
+qemu-system-riscv64, this is what happens:
 
-This problem ended up being fixed after it was detected with the
-recently added risc-v machine nodes [1]. virtio-9p-test.c is now
-creating and removing temporary dirs for each test run, instead of
-creating a single dir for the entire qos-test scope.
+- a temp dir is created;
 
-We're now able to run these tests with 'make check' in the CI, so let's
-go ahead and re-enable them.
+- virtio-9p-device tests will run virtio-9p-test successfully;
 
-This reverts commit 558f5c42efded3e0d0b20a90bce2a9a14580d824.
+- virtio-9p-pci tests will run virtio-9p-test, and fail right at the
+  first slow test at fs_create_dir() because the "01" file was already
+created by fs_create_dir() test when running with the virtio-9p-device.
+
+The root cause is that we're creating a single temporary dir, via the
+construct/destruct callbacks, and this temp dir is kept for the entire
+qos-test run.
+
+We can change each test to clean after themselves. This approach would
+make the 'create' tests obsolete since we would need to create and
+delete dirs/files/symlinks for the cleanup, turning them into the
+'unlinkat' tests that comes right after.
+
+We chose a different approach that handles the root cause: do not use
+constructor/destructor to create the temp dir. Create one temp dir for
+each test, and remove it after the test is complete. This is the
+approach taken for other qtests like vhost-user-test.c where each test
+requires a setup() and a subsequent cleanup(), all of those instantiated
+in the .before callback.
 
 [1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg05807.html
 
+Reported-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- tests/qtest/virtio-9p-test.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ tests/qtest/virtio-9p-test.c | 23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
 diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index 0179b3a394..3c8cd235cf 100644
+index 65e69491e5..0179b3a394 100644
 --- a/tests/qtest/virtio-9p-test.c
 +++ b/tests/qtest/virtio-9p-test.c
-@@ -746,15 +746,6 @@ static void register_virtio_9p_test(void)
+@@ -693,9 +693,20 @@ static void fs_unlinkat_hardlink(void *obj, void *data,
+     g_assert(stat(real_file, &st_real) == 0);
+ }
  
++static void cleanup_9p_local_driver(void *data)
++{
++    /* remove previously created test dir when test is completed */
++    virtio_9p_remove_local_test_dir();
++}
++
+ static void *assign_9p_local_driver(GString *cmd_line, void *arg)
+ {
++    /* make sure test dir for the 'local' tests exists */
++    virtio_9p_create_local_test_dir();
++
+     virtio_9p_assign_local_driver(cmd_line, "security_model=mapped-xattr");
++
++    g_test_queue_destroy(cleanup_9p_local_driver, NULL);
+     return arg;
+ }
  
-     /* 9pfs test cases using the 'local' filesystem driver */
+@@ -759,15 +770,3 @@ static void register_virtio_9p_test(void)
+ }
+ 
+ libqos_init(register_virtio_9p_test);
 -
--    /*
--     * XXX: Until we are sure that these tests can run everywhere,
--     * keep them as "slow" so that they aren't run with "make check".
--     */
--    if (!g_test_slow()) {
--        return;
--    }
+-static void __attribute__((constructor)) construct_9p_test(void)
+-{
+-    /* make sure test dir for the 'local' tests exists */
+-    virtio_9p_create_local_test_dir();
+-}
 -
-     opts.before = assign_9p_local_driver;
-     qos_add_test("local/config", "virtio-9p", pci_config,  &opts);
-     qos_add_test("local/create_dir", "virtio-9p", fs_create_dir, &opts);
+-static void __attribute__((destructor)) destruct_9p_test(void)
+-{
+-    /* remove previously created test dir when test suite completed */
+-    virtio_9p_remove_local_test_dir();
+-}
 -- 
 2.44.0
 
