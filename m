@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7AD1C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 20:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D5BCC47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 20:44:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpa74-0000oF-NT; Wed, 27 Mar 2024 16:43:10 -0400
+	id 1rpa77-0000p1-4m; Wed, 27 Mar 2024 16:43:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1rpZeE-0003B5-4B; Wed, 27 Mar 2024 16:13:22 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1rpZeF-0003BR-EL; Wed, 27 Mar 2024 16:13:23 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1rpZeB-0005we-Bg; Wed, 27 Mar 2024 16:13:21 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1e0d6356ce9so1897385ad.3; 
- Wed, 27 Mar 2024 13:13:18 -0700 (PDT)
+ id 1rpZeD-0005x6-LG; Wed, 27 Mar 2024 16:13:22 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-6e6fb9a494aso283337b3a.0; 
+ Wed, 27 Mar 2024 13:13:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711570397; x=1712175197; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1711570399; x=1712175199; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iFVIMyRlD8/BSmSylP4xvcbNRqi2JvuqJ8ggirzVAcY=;
- b=R3RF3w6Ij0fQZjkSqWzDXwiKF4NaxCCVq2POBDwvvEK4kTQ6LsvAgBJ35DKm6JOUbI
- gUkCAPVGlJOjN/XUHHpejSO6LNLueLWOplrDjarRBofuIgeKoZ+w6EXeWy27+ZFvJkuo
- f3PIJhhRUhRkcrrPsmqS4JuJLbPOaDKGzUUpEDNvtG9aHX/loxlCpqB/oYrx83fH95tv
- 25+VpBHPpIUM6LZ/prgIpbrOXi/KzEwY0M7vNZ87eV+v7qjAvm4Zl8S3ybqhCIE5SmcB
- Onp0TgVKjtJc8nAxMHeY/6PDYWQz0TMqQ3LWWTryDNn62/yGAVaMZ06AkG0IXU3TbVHN
- XICQ==
+ bh=ipqqr2xOwh8qICJewRkxYEwaPQGJHL+EZFPMDeo3faU=;
+ b=JZIws/Rmu2sgS7nIYjLTIXVDkuMu5VokuaCjYJMDsn6v+Y6TNSjeymLc98qXUjm967
+ md3Gg2ciQEiBwhG7Fpp2HTwuCZeZVIjh/FHLWebR0inHfkQFqfMAm35oBSd7OeCzOHwY
+ KAmAK6N/e/RWJS6P+srIjDgkezx2uc8CToMi4pOdw85nMCHwxQKDeCKKxX8alFBUJ7dU
+ IevvEBPvL0KmkzaWKmIljyC+UUfFAB8IZM9IhDD0F63QX5jZ/nPZTjjQR+4PibXI+7XJ
+ JvMuTIcnWj7KWT282lC+WuAqKKClgMOHP2BVjbGyOQ85+JDyyQTNVMldO47ddqQPd/lB
+ iv1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711570397; x=1712175197;
+ d=1e100.net; s=20230601; t=1711570399; x=1712175199;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iFVIMyRlD8/BSmSylP4xvcbNRqi2JvuqJ8ggirzVAcY=;
- b=hFBVvrWhxWBUWeXRcWoMWYIpPOvlProW3m3117QTnjsNrcTDICCN4qymMIft1i21pu
- rEMigIcXd+2rYe5CNs+tVvhyUSJ5Ovv+ICg7fRi9LeZeb3f6do3xObsOJ8KWGy2Jp32F
- dmQHCwPNq7kovl+KKsV3VJON/3q/W0Lr0t2n7u02rueh31WFyAQPRQ5TMX0HDoUO5OEu
- mZ4H6b5IcaWeZl5vMLGyZmYIwZjAgtOm5roIhGt1iu6EmERqN18inF0XbgUa+2YtrV3m
- 7CvlEeuSOq929rOImbQdyZF793LT4lApQHCHkUEbThjW1/6G0R1TvoEBpDEfIyCpDPuS
- R0cQ==
+ bh=ipqqr2xOwh8qICJewRkxYEwaPQGJHL+EZFPMDeo3faU=;
+ b=o+jP7MrH5BKPKLRnl/371wHmWSzScWpHjtKPmawX9Rmel3qHFwdz/ms/EsehHOC9Z7
+ T2B8ixFmlNZZSX7+tlsfpp52RXnFBdHH75Cmyja1HLyq6nboVfLWhqAqE79tqhDa1JKu
+ MVs2gqOzvvsI5rXhAK58oi1999F5UCKX4kTG18VHajBJzbMDTXjryY/NIN6phZ4SmMAQ
+ 2pFF/+CGSg6GbKz10Qj8YqZFbGCt6VhGnRWXPplr/kiWhTvnnJWwnmTpFcZ1fJbBejqc
+ ynYmBLjjXxOqdnnZbPLaK9YxxTrHKWLxhuzshdy2gCwgdMj8EHv4i4fFjI3j1/gDey0F
+ v2cQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUkmSLmPrWx/P8JhJftzvqTuh52z6WGeIsSjYWMRcr/1t99Xa/Qq4b+pTyYa7+wvXWu6Z7sCA7LPcf+7/Wg09wgIighFIw=
-X-Gm-Message-State: AOJu0Yxg/mGPjO3E17pSnesnqfwoszkQDGa5AJbMYuXzFMUzDjiutuL+
- Td7tD/Y1/EGaUyoiCfQQ6LD5TxT3YsXWLNT4O1yaap0ab/N6kl0Qdp59EWqMoIFJQIip
-X-Google-Smtp-Source: AGHT+IH9uPGf6E2jInJ2aHBvY8xvsboNk/P2+w02eTE13anqRI3+m3UUFCMBDGYAOKRAdljxbL1kHg==
-X-Received: by 2002:a17:902:8f95:b0:1e0:c7b6:ef4a with SMTP id
- z21-20020a1709028f9500b001e0c7b6ef4amr752410plo.40.1711570396973; 
- Wed, 27 Mar 2024 13:13:16 -0700 (PDT)
+ AJvYcCVu+MHhlrFLbqt2M8CFY9gRBdO4DCelIYpevqj63JJl1XNeY/vsRhoh/4U/LkZz7HAsfdhmYCmaRoep3FOW8QC1EPvqOB4=
+X-Gm-Message-State: AOJu0Yw/w3C6oJO9Hr5+934g4ky63iHiK1J5L0NJk9NGKEu7c45X7Gdd
+ db8NR0ti8WECcedI/bUh0Ikxkx2PRs3xio8k7Q8Q6jSRdLjSzbRXKwq/UBPRl6GAX3Yp
+X-Google-Smtp-Source: AGHT+IFgP8n+DIqi1Vus3n5GTJgd93MOpsqUInmVuepXpJcwfJmTy+BRwGNXRaLtB2KzcMNAK8FOWw==
+X-Received: by 2002:a17:902:c409:b0:1e2:86e:a0dd with SMTP id
+ k9-20020a170902c40900b001e2086ea0ddmr708227plk.23.1711570398987; 
+ Wed, 27 Mar 2024 13:13:18 -0700 (PDT)
 Received: from localhost.localdomain ([192.228.205.68])
  by smtp.gmail.com with ESMTPSA id
- b10-20020a170902650a00b001e08d5a7638sm9682673plk.99.2024.03.27.13.13.15
+ b10-20020a170902650a00b001e08d5a7638sm9682673plk.99.2024.03.27.13.13.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Mar 2024 13:13:16 -0700 (PDT)
+ Wed, 27 Mar 2024 13:13:18 -0700 (PDT)
 From: Amjad Alsharafi <amjadsharafi10@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  qemu-block@nongnu.org (open list:vvfat),
  Amjad Alsharafi <amjadsharafi10@gmail.com>
-Subject: [PATCH 1/3] vvfat: Fix bug in writing to middle of file
-Date: Thu, 28 Mar 2024 04:11:25 +0800
-Message-ID: <20240327201231.31046-2-amjadsharafi10@gmail.com>
+Subject: [PATCH 2/3] vvfat: Fix usage of `info.file.offset`
+Date: Thu, 28 Mar 2024 04:11:26 +0800
+Message-ID: <20240327201231.31046-3-amjadsharafi10@gmail.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240327201231.31046-1-amjadsharafi10@gmail.com>
 References: <20240327201231.31046-1-amjadsharafi10@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=amjadsharafi10@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=amjadsharafi10@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,32 +97,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before this commit, the behavior when calling `commit_one_file` for
-example with `offset=0x2000` (second cluster), what will happen is that
-we won't fetch the next cluster from the fat, and instead use the first
-cluster for the read operation.
+The field is marked as "the offset in the file (in clusters)", but it
+was being used like this
+`cluster_size*(nums)+mapping->info.file.offset`, which is incorrect.
 
-This is due to off-by-one error here, where `i=0x2000 !< offset=0x2000`,
-thus not fetching the next cluster.
+Additionally, removed the `abort` when `first_mapping_index` does not
+match, as this matches the case when adding new clusters for files, and
+its inevitable that we reach this condition when doing that if the
+clusters are not after one another, so there is no reason to `abort`
+here, execution continues and the new clusters are written to disk
+correctly.
 
 Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
 ---
- block/vvfat.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/vvfat.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/block/vvfat.c b/block/vvfat.c
-index 9d050ba3ae..ab342f0743 100644
+index ab342f0743..cb3ab81e29 100644
 --- a/block/vvfat.c
 +++ b/block/vvfat.c
-@@ -2525,7 +2525,7 @@ commit_one_file(BDRVVVFATState* s, int dir_index, uint32_t offset)
-         return -1;
-     }
+@@ -1408,7 +1408,7 @@ read_cluster_directory:
  
--    for (i = s->cluster_size; i < offset; i += s->cluster_size)
-+    for (i = s->cluster_size; i <= offset; i += s->cluster_size)
-         c = modified_fat_get(s, c);
+         assert(s->current_fd);
  
-     fd = qemu_open_old(mapping->path, O_RDWR | O_CREAT | O_BINARY, 0666);
+-        offset=s->cluster_size*(cluster_num-s->current_mapping->begin)+s->current_mapping->info.file.offset;
++        offset=s->cluster_size*((cluster_num - s->current_mapping->begin) + s->current_mapping->info.file.offset);
+         if(lseek(s->current_fd, offset, SEEK_SET)!=offset)
+             return -3;
+         s->cluster=s->cluster_buffer;
+@@ -1929,8 +1929,8 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
+                         (mapping->mode & MODE_DIRECTORY) == 0) {
+ 
+                     /* was modified in qcow */
+-                    if (offset != mapping->info.file.offset + s->cluster_size
+-                            * (cluster_num - mapping->begin)) {
++                    if (offset != s->cluster_size
++                            * ((cluster_num - mapping->begin) + mapping->info.file.offset)) {
+                         /* offset of this cluster in file chain has changed */
+                         abort();
+                         copy_it = 1;
+@@ -1944,7 +1944,6 @@ get_cluster_count_for_direntry(BDRVVVFATState* s, direntry_t* direntry, const ch
+ 
+                     if (mapping->first_mapping_index != first_mapping_index
+                             && mapping->info.file.offset > 0) {
+-                        abort();
+                         copy_it = 1;
+                     }
+ 
+@@ -2404,7 +2403,7 @@ static int commit_mappings(BDRVVVFATState* s,
+                         (mapping->end - mapping->begin);
+             } else
+                 next_mapping->info.file.offset = mapping->info.file.offset +
+-                        mapping->end - mapping->begin;
++                        (mapping->end - mapping->begin);
+ 
+             mapping = next_mapping;
+         }
 -- 
 2.44.0
 
