@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B168ECD11DF
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 09:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37A92C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 09:34:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpPdo-0006Bh-TQ; Wed, 27 Mar 2024 05:32:16 -0400
+	id 1rpPdn-0006At-9S; Wed, 27 Mar 2024 05:32:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpPdc-00067v-L0
+ id 1rpPda-00067c-SV
  for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:32:08 -0400
-Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1rpPda-0007gK-7Z
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:32:04 -0400
-Received: by mail-oa1-x35.google.com with SMTP id
- 586e51a60fabf-22a353217c3so1560549fac.1
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:32:01 -0700 (PDT)
+ id 1rpPdW-0007fU-Fu
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:32:02 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-6ea838bf357so3735532b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:31:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1711531919; x=1712136719; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1711531916; x=1712136716; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WyRw4RpAUjMROWRxa8n83txCjmXC/d2qLnvcFPrpXT0=;
- b=IoKPvo7KI7JQQ6FO9i70YZOdabMQB80CL+Gc6EIfd1//uMbsrlhGgLHTlqfo8klCeQ
- uiqY6Pln2dZq3RJndFqvVvdZtMYYF276x5sE5V2vSogQ5wJUdE/qeX9jszHI6mVBA+4r
- o+kVvQF7umJPDYuy2n/83F0Y45s2Z/SZRRSqwBCd6UUguIdsiKywP5dxWEsg+4YDqIAg
- xMUvvCivxvZNhGCZBJPxo5kWreBWXBCBlojprv57s6xu7kFqQFfHFzbt/S0T5vvEKVd5
- Hq24ciE4lTn18UDmE0T9RmKMG0zxsm7kxkFFJYBDFz7KWS7JDV7jsWyi5hnYJwkySXU/
- MYNA==
+ bh=1rCi//3DuQeWhizcKM3Yysq2ZSYZlpAxINwDElJYRZA=;
+ b=QZJpRW1ONv9TFvtE4RSXIyYMR9iRjrjWuuIGEBZnB71KvZc2jG8II8u5AN9hhVOGxI
+ xDcxsXKRxzANQayosZj2syRxt7WTj2U2ULC0Wf++7kFMl0S0uTonzJlX97Iu0f0X5k4l
+ 4qMRTSD1RuHyeoriEYtRL3+gZmziM5WhJClcWePzsx9634HJfvhiC9SVX3nyS7Khc03Z
+ nh8YE30zBck4vBmq7Cw9y2Vq5Vcv03pgd1CAl+7ywlJjrR8P5RSCvm3qd0tOawy/T1GA
+ sp2TuFSXqLyyIenITBlp8fEQ2MW9N3J30skB7QDbgyeqoA7FEu3tmnqkBlswfYhFy+Sd
+ 2+Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711531919; x=1712136719;
+ d=1e100.net; s=20230601; t=1711531916; x=1712136716;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WyRw4RpAUjMROWRxa8n83txCjmXC/d2qLnvcFPrpXT0=;
- b=pRab/aYFNaJGiSspz+L8851GdNWHY35X9KHtYJlHBd4+ldYey2/TFUo+0D+5eSnTkT
- dMph7iwOraXnt2Ok56lKIt73IetTmvqJATD0rluMlapFrODdse2VmohFZTy5QekZ3Fef
- pgzfdVYT8l+NBoSbII338kvEdKb8T6HoOgE0m5AuweTSOzd6h1oSVSDh18qQLqvYRryg
- nhoKn5kcVc453187NFVrSSla/aiJ8VLbWsvdmGRdZ/O83QdIzLmogenjjzzXy2nQI8vz
- vKrpyWBKpGr9wXbYP6UCf6hlncI0e35nYhPlK/zsNZRltgvPdvKMuyB++Oi8YocS76MQ
- wIEw==
-X-Gm-Message-State: AOJu0YzDzF32IjRYPp6szAARr0EsxJwUIYpunTwGCytSmyZkxIWJ/Xm+
- H3QSbTz1goEiw2ZgSc2gK6Yec1rDNFq7dGiyU23LCTCuO57PUkFapH+QcTnc3LlW1Ou82KJGrpR
- P
-X-Google-Smtp-Source: AGHT+IG8YgU7L/GJNGMP5fw6uZ/FLqPFN9SAVIFv53bDx8dyHLlotZwzEZoscFQuzpf6Ri9TYGcBzg==
-X-Received: by 2002:a05:6870:b14c:b0:229:fe3c:b096 with SMTP id
- a12-20020a056870b14c00b00229fe3cb096mr2271071oal.32.1711531919139; 
- Wed, 27 Mar 2024 02:31:59 -0700 (PDT)
+ bh=1rCi//3DuQeWhizcKM3Yysq2ZSYZlpAxINwDElJYRZA=;
+ b=A1KrV/1bNK94Y/n4jAP1XHiIQ/LdMq04oZtN8r4zSn4K8c4IBQ6PMwdR13TlerQUQH
+ E7ENwRqONhYh3o3LJS8Ly6TGqUexGS+Jtp5dgi7oaqIQaLlz3hiROMjZoEeclMZn4Uuj
+ YrCYFkwE7lOwNaOTKRLi/wFyuGdP5jZ3I0416MztIxQiA/VDwyWsiWqXCS3LDpN1igCt
+ J3gEQVim9pjZHRXNOQkXwx1iHVTwXZTl/4tztm7BbCn1pXwmOJHDkLXclX9L1CrBzutS
+ n7GCVpjoHLUFBY1uzCXb+wdZWYlxmYfdjFaBwCT01a9w3i9WlahC9U4o8zPiDLEZDllz
+ aU7A==
+X-Gm-Message-State: AOJu0YzbSPN7I/w1/+zzKXR7BDZ3m+1/wJd6jDPfXWrf3pu/s6N3W30P
+ QPwbpKMRtysO0KpyxcoiFyFNlM+1wMMHw+8sfdLhqxZ8FN7OYcZnVXlwgdnX982uBzVdzQT+9g2
+ w
+X-Google-Smtp-Source: AGHT+IGphlMuBTEXdnzWJ5LvppfwIgjWinWInp9O3bKarX2iCsBtCXOzczHFUHIKHpybBIrmWSv6BA==
+X-Received: by 2002:a05:6a20:2446:b0:1a3:e2ed:62af with SMTP id
+ t6-20020a056a20244600b001a3e2ed62afmr1709034pzc.34.1711531916505; 
+ Wed, 27 Mar 2024 02:31:56 -0700 (PDT)
 Received: from grind.. ([177.45.186.241]) by smtp.gmail.com with ESMTPSA id
- fm23-20020a056a002f9700b006e6b41511fdsm7628760pfb.94.2024.03.27.02.31.56
+ fm23-20020a056a002f9700b006e6b41511fdsm7628760pfb.94.2024.03.27.02.31.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Mar 2024 02:31:58 -0700 (PDT)
+ Wed, 27 Mar 2024 02:31:56 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: thuth@redhat.com, alistair.francis@wdc.com, groug@kaod.org,
  peter.maydell@linaro.org, qemu_oss@crudebyte.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH for-9.0 v2 3/7] qtest/virtio-9p-test.c: consolidate create dir
- tests
-Date: Wed, 27 Mar 2024 06:31:40 -0300
-Message-ID: <20240327093144.781701-4-dbarboza@ventanamicro.com>
+Subject: [PATCH for-9.0 v2 2/7] qtest/virtio-9p-test.c: parametrize 'dir' name
+ in local tests
+Date: Wed, 27 Mar 2024 06:31:39 -0300
+Message-ID: <20240327093144.781701-3-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240327093144.781701-1-dbarboza@ventanamicro.com>
 References: <20240327093144.781701-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::35;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-oa1-x35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,156 +96,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The local 9p driver in virtio-9p-test.c its temporary dir right at the
-start of qos-test (via virtio_9p_create_local_test_dir()) and only
-deletes it after qos-test is finished (via
-virtio_9p_remove_local_test_dir()).
+All local 9p tests creates a different dir inside tempdir, where '01' is
+the dir for the first test, '02' the dir fot the second test and so on.
 
-This means that any qos-test machine that ends up running virtio-9p-test
-local tests more than once will end up re-using the same temp dir. This
-is what's happening in [1] after we introduced the riscv machine nodes:
-if we enable slow tests with the '-m slow' flag using
-qemu-system-riscv64, this is what happens:
+We want to make tests autoclean themselves while also consolidating
+them in fewer tests, but this will incur a lot of dir changes that will
+be unpleasant to deal with at it is today - the dir name is hard coded
+in every 9p API call.
 
-- a temp dir is created;
+Add a 'new_dir' var in each test that will hold the created dir name. If
+the test also creates new files/symlinks, parametrize them as well since
+they also use the dir name.
 
-- virtio-9p-device tests will run virtio-9p-test successfully;
+After these changes, changing the val of "new_dir" will change all dir
+references the test uses.
 
-- virtio-9p-pci tests will run virtio-9p-test, and fail right at the
-  first slow test at fs_create_dir() because the "01" file was already
-  created by fs_create_dir() test when running with the virtio-9p-device.
-
-We can fix it by making every test clean up their changes in the
-filesystem after they're done. But we don't need every test either: what
-fs_create_file() does is already exercised in fs_unlinkat_dir(), i.e. a
-dir is created, verified to be created, and then removed.  Fixing
-fs_create_file() would turn it into fs_unlinkat_dir(), so we don't need
-both.
-
-The same idea applies to every test in virtio-9p-test.c, where the
-'unlinkat' variant does the same thing the 'create' does but with some
-cleaning in the end. But we'll start with fs_create_dir() and
-fs_unlinkat_dir() only:
-
-- fs_create_dir() is removed. s_unlinkat_dir() is renamed to
-  fs_create_unlinkat_dir();
-
-- update the dir names for every other test since we have 1 less test.
-
-[1] https://mail.gnu.org/archive/html/qemu-devel/2024-03/msg05807.html
-
-Reported-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- tests/qtest/virtio-9p-test.c | 39 +++++++++---------------------------
- 1 file changed, 10 insertions(+), 29 deletions(-)
+ tests/qtest/virtio-9p-test.c | 108 +++++++++++++++++++++++------------
+ 1 file changed, 72 insertions(+), 36 deletions(-)
 
 diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index be031abc17..2cea1b4189 100644
+index 23edca05c5..be031abc17 100644
 --- a/tests/qtest/virtio-9p-test.c
 +++ b/tests/qtest/virtio-9p-test.c
-@@ -506,7 +506,8 @@ static void fs_readdir_split_512(void *obj, void *data,
- 
- /* tests using the 9pfs 'local' fs driver */
- 
--static void fs_create_dir(void *obj, void *data, QGuestAllocator *t_alloc)
-+static void fs_create_unlinkat_dir(void *obj, void *data,
-+                                   QGuestAllocator *t_alloc)
- {
+@@ -511,13 +511,14 @@ static void fs_create_dir(void *obj, void *data, QGuestAllocator *t_alloc)
      QVirtio9P *v9p = obj;
      v9fs_set_allocator(t_alloc);
-@@ -524,26 +525,6 @@ static void fs_create_dir(void *obj, void *data, QGuestAllocator *t_alloc)
+     struct stat st;
++    const char *new_dir = "01";
+     g_autofree char *root_path = virtio_9p_test_path("");
+-    g_autofree char *new_dir_path = virtio_9p_test_path("01");
++    g_autofree char *new_dir_path = virtio_9p_test_path(new_dir);
+ 
+     g_assert(root_path != NULL);
+ 
+     tattach({ .client = v9p });
+-    tmkdir({ .client = v9p, .atPath = "/", .name = "01" });
++    tmkdir({ .client = v9p, .atPath = "/", .name = new_dir });
+ 
+     /* check if created directory really exists now ... */
      g_assert(stat(new_dir_path, &st) == 0);
-     /* ... and is actually a directory */
+@@ -530,13 +531,14 @@ static void fs_unlinkat_dir(void *obj, void *data, QGuestAllocator *t_alloc)
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+     struct stat st;
++    const char *new_dir = "02";
+     g_autofree char *root_path = virtio_9p_test_path("");
+-    g_autofree char *new_dir_path = virtio_9p_test_path("02");
++    g_autofree char *new_dir_path = virtio_9p_test_path(new_dir);
+ 
+     g_assert(root_path != NULL);
+ 
+     tattach({ .client = v9p });
+-    tmkdir({ .client = v9p, .atPath = "/", .name = "02" });
++    tmkdir({ .client = v9p, .atPath = "/", .name = new_dir });
+ 
+     /* check if created directory really exists now ... */
+     g_assert(stat(new_dir_path, &st) == 0);
+@@ -544,7 +546,7 @@ static void fs_unlinkat_dir(void *obj, void *data, QGuestAllocator *t_alloc)
      g_assert((st.st_mode & S_IFMT) == S_IFDIR);
--}
--
--static void fs_unlinkat_dir(void *obj, void *data, QGuestAllocator *t_alloc)
--{
--    QVirtio9P *v9p = obj;
--    v9fs_set_allocator(t_alloc);
--    struct stat st;
--    const char *new_dir = "02";
--    g_autofree char *root_path = virtio_9p_test_path("");
--    g_autofree char *new_dir_path = virtio_9p_test_path(new_dir);
--
--    g_assert(root_path != NULL);
--
--    tattach({ .client = v9p });
--    tmkdir({ .client = v9p, .atPath = "/", .name = new_dir });
--
--    /* check if created directory really exists now ... */
--    g_assert(stat(new_dir_path, &st) == 0);
--    /* ... and is actually a directory */
--    g_assert((st.st_mode & S_IFMT) == S_IFDIR);
  
      tunlinkat({
-         .client = v9p, .atPath = "/", .name = new_dir,
-@@ -558,7 +539,7 @@ static void fs_create_file(void *obj, void *data, QGuestAllocator *t_alloc)
+-        .client = v9p, .atPath = "/", .name = "02",
++        .client = v9p, .atPath = "/", .name = new_dir,
+         .flags = P9_DOTL_AT_REMOVEDIR
+     });
+     /* directory should be gone now */
+@@ -556,11 +558,13 @@ static void fs_create_file(void *obj, void *data, QGuestAllocator *t_alloc)
      QVirtio9P *v9p = obj;
      v9fs_set_allocator(t_alloc);
      struct stat st;
--    const char *new_dir = "03";
-+    const char *new_dir = "02";
-     g_autofree char *new_file = g_strdup_printf("%s/%s", new_dir, "1st_file");
-     g_autofree char *new_file_path = virtio_9p_test_path(new_file);
- 
-@@ -577,7 +558,7 @@ static void fs_unlinkat_file(void *obj, void *data, QGuestAllocator *t_alloc)
-     QVirtio9P *v9p = obj;
-     v9fs_set_allocator(t_alloc);
-     struct stat st;
--    const char *new_dir = "04";
+-    g_autofree char *new_file_path = virtio_9p_test_path("03/1st_file");
 +    const char *new_dir = "03";
-     g_autofree char *new_file = g_strdup_printf("%s/%s", new_dir, "doa_file");
-     g_autofree char *new_file_path = virtio_9p_test_path(new_file);
++    g_autofree char *new_file = g_strdup_printf("%s/%s", new_dir, "1st_file");
++    g_autofree char *new_file_path = virtio_9p_test_path(new_file);
  
-@@ -600,7 +581,7 @@ static void fs_symlink_file(void *obj, void *data, QGuestAllocator *t_alloc)
+     tattach({ .client = v9p });
+-    tmkdir({ .client = v9p, .atPath = "/", .name = "03" });
+-    tlcreate({ .client = v9p, .atPath = "03", .name = "1st_file" });
++    tmkdir({ .client = v9p, .atPath = "/", .name = new_dir });
++    tlcreate({ .client = v9p, .atPath = new_dir, .name = "1st_file" });
+ 
+     /* check if created file exists now ... */
+     g_assert(stat(new_file_path, &st) == 0);
+@@ -573,18 +577,20 @@ static void fs_unlinkat_file(void *obj, void *data, QGuestAllocator *t_alloc)
      QVirtio9P *v9p = obj;
      v9fs_set_allocator(t_alloc);
      struct stat st;
--    const char *new_dir = "05";
+-    g_autofree char *new_file_path = virtio_9p_test_path("04/doa_file");
 +    const char *new_dir = "04";
-     g_autofree char *real_file = NULL;
-     g_autofree char *real_file_path = NULL;
-     g_autofree char *symlink_file = NULL;
-@@ -633,7 +614,7 @@ static void fs_unlinkat_symlink(void *obj, void *data,
++    g_autofree char *new_file = g_strdup_printf("%s/%s", new_dir, "doa_file");
++    g_autofree char *new_file_path = virtio_9p_test_path(new_file);
+ 
+     tattach({ .client = v9p });
+-    tmkdir({ .client = v9p, .atPath = "/", .name = "04" });
+-    tlcreate({ .client = v9p, .atPath = "04", .name = "doa_file" });
++    tmkdir({ .client = v9p, .atPath = "/", .name = new_dir });
++    tlcreate({ .client = v9p, .atPath = new_dir, .name = "doa_file" });
+ 
+     /* check if created file exists now ... */
+     g_assert(stat(new_file_path, &st) == 0);
+     /* ... and is a regular file */
+     g_assert((st.st_mode & S_IFMT) == S_IFREG);
+ 
+-    tunlinkat({ .client = v9p, .atPath = "04", .name = "doa_file" });
++    tunlinkat({ .client = v9p, .atPath = new_dir, .name = "doa_file" });
+     /* file should be gone now */
+     g_assert(stat(new_file_path, &st) != 0);
+ }
+@@ -594,17 +600,26 @@ static void fs_symlink_file(void *obj, void *data, QGuestAllocator *t_alloc)
      QVirtio9P *v9p = obj;
      v9fs_set_allocator(t_alloc);
      struct stat st;
--    const char *new_dir = "06";
+-    g_autofree char *real_file_path = virtio_9p_test_path("05/real_file");
+-    g_autofree char *symlink_file_path = virtio_9p_test_path("05/symlink_file");
 +    const char *new_dir = "05";
-     g_autofree char *real_file = NULL;
-     g_autofree char *real_file_path = NULL;
-     g_autofree char *symlink_file = NULL;
-@@ -667,7 +648,7 @@ static void fs_hardlink_file(void *obj, void *data, QGuestAllocator *t_alloc)
-     QVirtio9P *v9p = obj;
-     v9fs_set_allocator(t_alloc);
-     struct stat st_real, st_link;
--    const char *new_dir = "07";
-+    const char *new_dir = "06";
-     g_autofree char *real_file = NULL;
-     g_autofree char *real_file_path = NULL;
-     g_autofree char *hardlink_file = NULL;
-@@ -704,7 +685,7 @@ static void fs_unlinkat_hardlink(void *obj, void *data,
-     QVirtio9P *v9p = obj;
-     v9fs_set_allocator(t_alloc);
-     struct stat st_real, st_link;
--    const char *new_dir = "08";
-+    const char *new_dir = "07";
-     g_autofree char *real_file = NULL;
-     g_autofree char *real_file_path = NULL;
-     g_autofree char *hardlink_file = NULL;
-@@ -788,8 +769,8 @@ static void register_virtio_9p_test(void)
++    g_autofree char *real_file = NULL;
++    g_autofree char *real_file_path = NULL;
++    g_autofree char *symlink_file = NULL;
++    g_autofree char *symlink_file_path = NULL;
++
++    real_file = g_strdup_printf("%s/%s", new_dir, "real_file");
++    real_file_path = virtio_9p_test_path(real_file);
++
++    symlink_file = g_strdup_printf("%s/%s", new_dir, "symlink_file");
++    symlink_file_path = virtio_9p_test_path(symlink_file);
  
-     opts.before = assign_9p_local_driver;
-     qos_add_test("local/config", "virtio-9p", pci_config,  &opts);
--    qos_add_test("local/create_dir", "virtio-9p", fs_create_dir, &opts);
--    qos_add_test("local/unlinkat_dir", "virtio-9p", fs_unlinkat_dir, &opts);
-+    qos_add_test("local/create_unlinkat_dir", "virtio-9p",
-+                 fs_create_unlinkat_dir, &opts);
-     qos_add_test("local/create_file", "virtio-9p", fs_create_file, &opts);
-     qos_add_test("local/unlinkat_file", "virtio-9p", fs_unlinkat_file, &opts);
-     qos_add_test("local/symlink_file", "virtio-9p", fs_symlink_file, &opts);
+     tattach({ .client = v9p });
+-    tmkdir({ .client = v9p, .atPath = "/", .name = "05" });
+-    tlcreate({ .client = v9p, .atPath = "05", .name = "real_file" });
++    tmkdir({ .client = v9p, .atPath = "/", .name = new_dir });
++    tlcreate({ .client = v9p, .atPath = new_dir, .name = "real_file" });
+     g_assert(stat(real_file_path, &st) == 0);
+     g_assert((st.st_mode & S_IFMT) == S_IFREG);
+ 
+     tsymlink({
+-        .client = v9p, .atPath = "05", .name = "symlink_file",
++        .client = v9p, .atPath = new_dir, .name = "symlink_file",
+         .symtgt = "real_file"
+     });
+ 
+@@ -618,22 +633,31 @@ static void fs_unlinkat_symlink(void *obj, void *data,
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+     struct stat st;
+-    g_autofree char *real_file_path = virtio_9p_test_path("06/real_file");
+-    g_autofree char *symlink_file_path = virtio_9p_test_path("06/symlink_file");
++    const char *new_dir = "06";
++    g_autofree char *real_file = NULL;
++    g_autofree char *real_file_path = NULL;
++    g_autofree char *symlink_file = NULL;
++    g_autofree char *symlink_file_path = NULL;
++
++    real_file = g_strdup_printf("%s/%s", new_dir, "real_file");
++    real_file_path = virtio_9p_test_path(real_file);
++
++    symlink_file = g_strdup_printf("%s/%s", new_dir, "symlink_file");
++    symlink_file_path = virtio_9p_test_path(symlink_file);
+ 
+     tattach({ .client = v9p });
+-    tmkdir({ .client = v9p, .atPath = "/", .name = "06" });
+-    tlcreate({ .client = v9p, .atPath = "06", .name = "real_file" });
++    tmkdir({ .client = v9p, .atPath = "/", .name = new_dir });
++    tlcreate({ .client = v9p, .atPath = new_dir, .name = "real_file" });
+     g_assert(stat(real_file_path, &st) == 0);
+     g_assert((st.st_mode & S_IFMT) == S_IFREG);
+ 
+     tsymlink({
+-        .client = v9p, .atPath = "06", .name = "symlink_file",
++        .client = v9p, .atPath = new_dir, .name = "symlink_file",
+         .symtgt = "real_file"
+     });
+     g_assert(stat(symlink_file_path, &st) == 0);
+ 
+-    tunlinkat({ .client = v9p, .atPath = "06", .name = "symlink_file" });
++    tunlinkat({ .client = v9p, .atPath = new_dir, .name = "symlink_file" });
+     /* symlink should be gone now */
+     g_assert(stat(symlink_file_path, &st) != 0);
+ }
+@@ -643,21 +667,27 @@ static void fs_hardlink_file(void *obj, void *data, QGuestAllocator *t_alloc)
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+     struct stat st_real, st_link;
++    const char *new_dir = "07";
++    g_autofree char *real_file = NULL;
+     g_autofree char *real_file_path = NULL;
++    g_autofree char *hardlink_file = NULL;
+     g_autofree char *hardlink_file_path = NULL;
+ 
+-    real_file_path = virtio_9p_test_path("07/real_file");
+-    hardlink_file_path = virtio_9p_test_path("07/hardlink_file");
++    real_file = g_strdup_printf("%s/%s", new_dir, "real_file");
++    real_file_path = virtio_9p_test_path(real_file);
++
++    hardlink_file = g_strdup_printf("%s/%s", new_dir, "hardlink_file");
++    hardlink_file_path = virtio_9p_test_path(hardlink_file);
+ 
+     tattach({ .client = v9p });
+-    tmkdir({ .client = v9p, .atPath = "/", .name = "07" });
+-    tlcreate({ .client = v9p, .atPath = "07", .name = "real_file" });
++    tmkdir({ .client = v9p, .atPath = "/", .name = new_dir });
++    tlcreate({ .client = v9p, .atPath = new_dir, .name = "real_file" });
+     g_assert(stat(real_file_path, &st_real) == 0);
+     g_assert((st_real.st_mode & S_IFMT) == S_IFREG);
+ 
+     tlink({
+-        .client = v9p, .atPath = "07", .name = "hardlink_file",
+-        .toPath = "07/real_file"
++        .client = v9p, .atPath = new_dir, .name = "hardlink_file",
++        .toPath = real_file
+     });
+ 
+     /* check if link exists now ... */
+@@ -674,25 +704,31 @@ static void fs_unlinkat_hardlink(void *obj, void *data,
+     QVirtio9P *v9p = obj;
+     v9fs_set_allocator(t_alloc);
+     struct stat st_real, st_link;
++    const char *new_dir = "08";
++    g_autofree char *real_file = NULL;
+     g_autofree char *real_file_path = NULL;
++    g_autofree char *hardlink_file = NULL;
+     g_autofree char *hardlink_file_path = NULL;
+ 
+-    real_file_path = virtio_9p_test_path("08/real_file");
+-    hardlink_file_path = virtio_9p_test_path("08/hardlink_file");
++    real_file = g_strdup_printf("%s/%s", new_dir, "real_file");
++    real_file_path = virtio_9p_test_path(real_file);
++
++    hardlink_file = g_strdup_printf("%s/%s", new_dir, "hardlink_file");
++    hardlink_file_path = virtio_9p_test_path(hardlink_file);
+ 
+     tattach({ .client = v9p });
+-    tmkdir({ .client = v9p, .atPath = "/", .name = "08" });
+-    tlcreate({ .client = v9p, .atPath = "08", .name = "real_file" });
++    tmkdir({ .client = v9p, .atPath = "/", .name = new_dir });
++    tlcreate({ .client = v9p, .atPath = new_dir, .name = "real_file" });
+     g_assert(stat(real_file_path, &st_real) == 0);
+     g_assert((st_real.st_mode & S_IFMT) == S_IFREG);
+ 
+     tlink({
+-        .client = v9p, .atPath = "08", .name = "hardlink_file",
+-        .toPath = "08/real_file"
++        .client = v9p, .atPath = new_dir, .name = "hardlink_file",
++        .toPath = real_file
+     });
+     g_assert(stat(hardlink_file_path, &st_link) == 0);
+ 
+-    tunlinkat({ .client = v9p, .atPath = "08", .name = "hardlink_file" });
++    tunlinkat({ .client = v9p, .atPath = new_dir, .name = "hardlink_file" });
+     /* symlink should be gone now */
+     g_assert(stat(hardlink_file_path, &st_link) != 0);
+     /* and old file should still exist */
 -- 
 2.44.0
 
