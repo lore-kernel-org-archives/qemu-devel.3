@@ -4,71 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ECFDC6FD1F
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 03:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A32EC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 03:05:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpJWY-000885-FS; Tue, 26 Mar 2024 23:00:22 -0400
+	id 1rpJb8-0000kn-Ls; Tue, 26 Mar 2024 23:05:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rpJWW-00087t-V5
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:00:20 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rpJWN-0003Sn-Pa
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:00:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711508412; x=1743044412;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=bXOkOaCz0LH/bXI9OPwp1c9HZTjsOlpKNvcjeqazYlI=;
- b=fqNpk/EV4wTfoqYyz6s9gXtNeg/Y41L6HN6D2BUxVd9grgqDOxIYMgFD
- OO41/f5IA0doNs+iBLKNM5pr01Q28oOZqG+/hJwebqghAHqfzeLck8hSR
- W2IWUWAQW66y/KtDG0pYF/5SxQEs93u9EUydl8YXjROrjoEOc4BmKELOb
- YhlN9GAiR6oV/uGBH2xMKwup2kO3UgU4zVxkhwOYqOHGVBlvrVh7J4l3o
- 2/OXCqMQyO65qMZfg+j/AYCLdNeNvjnsLVGY/VyggCaqmJqj7ZZxHidEv
- IMmlbYFNQu1jOTN+AM4VvI9cJa5YbxaCfoztwkSkA6QbjgJnqL7rQXZ80 A==;
-X-CSE-ConnectionGUID: V+GjgsHFS6SNxMuhnLnIvg==
-X-CSE-MsgGUID: KTku8p8lTkirkN8pDWd2DA==
-X-IronPort-AV: E=McAfee;i="6600,9927,11025"; a="18021930"
-X-IronPort-AV: E=Sophos;i="6.07,157,1708416000"; d="scan'208";a="18021930"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2024 20:00:06 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,157,1708416000"; d="scan'208";a="16592310"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.224.7])
- ([10.124.224.7])
- by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Mar 2024 20:00:02 -0700
-Message-ID: <2dc199e4-9917-4e5d-ace6-506e084e7736@intel.com>
-Date: Wed, 27 Mar 2024 11:00:02 +0800
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rpJb6-0000kR-2u
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:05:04 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rpJb3-00047m-Lz
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 23:05:03 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1dde26f7e1dso48160135ad.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 20:05:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711508700; x=1712113500;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8oRu0j+df+XshbmcrwthY9vfAcxVy7LWAGXO9AnigXc=;
+ b=2nskp59Y4nDSWYRpQs+eig5o+TxUqwOtGyHugDu6s/b8WD8L+kUeF67LQ1U0cayqW3
+ HpHyDArJ7ljOVYZX1JlihabYviwzl765VnchXGlVZWXv6rNbIIj943jF+mdYA2+eceE+
+ O7FDT7rDiow066X5B26zB58ytSBQdsXTHFcAS6IJJLtMBiL3FSoQzF/4Gty97VQZ6E7D
+ MVoWYw8r14dD74kUiQB18uAj7aWjHeoCnLv1S3i3312WBqkbvJiDZY9ej0JMLWXMpSKy
+ PMKvrnhPKWr9apBBI20NhuhIadVqzwO+UnorVPgU7Ae6evW6fueT64jgo6CHmi+lyiGp
+ 3fKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711508700; x=1712113500;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8oRu0j+df+XshbmcrwthY9vfAcxVy7LWAGXO9AnigXc=;
+ b=k+reHrMjikiU6GCQRAWG9x3jux6ngrLRf8h1WKMOEZ9O0WttNmOih3+Xmz5GbbzH/w
+ 1GzCkX8Fxl4b7HNmv4zVkFu4PE622Lsv8wNVkMr0PeKHRVbXEoljIgLWgkyuCwyzO+gU
+ SUgPyYEEL1rlrhkeh0Wh+Oty0du9GtRmwNuuvi4OnmrXqDtN+ZMz/7/gjkn1Ce9ymFq8
+ I+DI/jXqqGXlSExXhdPcmaEge/G6xwHjfPg8ezd+LdCp6JJeXRp9CPBBnuKBaDluAmi8
+ MghhfG+KTjdJemThFIg8rbUkK55/FjpsFfdoCtMmdNdgNQsGd45RyAy85+6M05Zzhy99
+ JWeA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX1QwJW7qUnxyShdknIf0IR3JkJ2Md3hXGXDoDKS9MqODhtVmUNZfY3hQL9VIRDeoh95HSGE1i2ZeTrHjMgrr+oDyTUohg=
+X-Gm-Message-State: AOJu0YwwX/XzDZtuKW3J0Ib1cESpgqLGy+ODh7UOIRpQgx5rXO+3ob/q
+ ytiFrHOEDB6PO01gBSRnsgta8KF7l+dFE+LT4XxolzCIRtoBhPjN2cTC94n39Ho=
+X-Google-Smtp-Source: AGHT+IF4op9lf33Jy4TfeGAvOlN4tcA7LRHnx7hw7jsTn156z86HmZFQbHdq61KtaJrAGo97POmazw==
+X-Received: by 2002:a17:903:1112:b0:1e0:e85f:3882 with SMTP id
+ n18-20020a170903111200b001e0e85f3882mr1837870plh.38.1711508700003; 
+ Tue, 26 Mar 2024 20:05:00 -0700 (PDT)
+Received: from [157.82.202.248] ([157.82.202.248])
+ by smtp.gmail.com with ESMTPSA id
+ n19-20020a170902969300b001e12013ae07sm229080plp.231.2024.03.26.20.04.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Mar 2024 20:04:59 -0700 (PDT)
+Message-ID: <cc71e6c8-eca5-4ce1-9c16-8f85c6a5073e@daynix.com>
+Date: Wed, 27 Mar 2024 12:04:58 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 v5 2/3] target/i386: add guest-phys-bits cpu
- property
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-References: <20240325141422.1380087-1-pbonzini@redhat.com>
- <20240325141422.1380087-3-pbonzini@redhat.com>
+Subject: Re: [PATCH] hw/net/net_tx_pkt: Fix virtio header without checksum
+ offloading
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20240325141422.1380087-3-pbonzini@redhat.com>
+To: Jason Wang <jasowang@redhat.com>
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-devel@nongnu.org
+References: <20240324-tx-v1-1-a3b4135749ec@daynix.com>
+ <CACGkMEvBoe4XQeHOR64rNwAPM-vBMsfLQApWpUoMtvwsSVCpUQ@mail.gmail.com>
+ <a31d0734-823b-4b67-8888-46f0c787cf8f@daynix.com>
+ <CACGkMEvYQr2=0DF99ge9DotJg-O3H1FmZQAzhb=6RVWSvvGqmA@mail.gmail.com>
+ <a4bdd207-e069-47ef-8e80-7b27528a315d@daynix.com>
+ <CACGkMEsCTsQ8H6=XYMZ+8Pb9X1o19j9A4N8kiO500Dbgnw-i6g@mail.gmail.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CACGkMEsCTsQ8H6=XYMZ+8Pb9X1o19j9A4N8kiO500Dbgnw-i6g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -11
-X-Spam_score: -1.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,116 +103,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/25/2024 10:14 PM, Paolo Bonzini wrote:
-> From: Gerd Hoffmann <kraxel@redhat.com>
+On 2024/03/27 11:59, Jason Wang wrote:
+> On Wed, Mar 27, 2024 at 10:53 AM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>
+>> On 2024/03/27 11:50, Jason Wang wrote:
+>>> On Tue, Mar 26, 2024 at 3:04 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>>>
+>>>> On 2024/03/26 15:51, Jason Wang wrote:
+>>>>> On Sun, Mar 24, 2024 at 4:32 PM Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>>>>>
+>>>>>> It is incorrect to have the VIRTIO_NET_HDR_F_NEEDS_CSUM set when
+>>>>>> checksum offloading is disabled so clear the bit. Set the
+>>>>>> VIRTIO_NET_HDR_F_DATA_VALID bit instead to tell the checksum is valid.
+>>>>>>
+>>>>>> TCP/UDP checksum is usually offloaded when the peer requires virtio
+>>>>>> headers because they can instruct the peer to compute checksum. However,
+>>>>>> igb disables TX checksum offloading when a VF is enabled whether the
+>>>>>> peer requires virtio headers because a transmitted packet can be routed
+>>>>>> to it and it expects the packet has a proper checksum. Therefore, it
+>>>>>> is necessary to have a correct virtio header even when checksum
+>>>>>> offloading is disabled.
+>>>>>>
+>>>>>> A real TCP/UDP checksum will be computed and saved in the buffer when
+>>>>>> checksum offloading is disabled. The virtio specification requires to
+>>>>>> set the packet checksum stored in the buffer to the TCP/UDP pseudo
+>>>>>> header when the VIRTIO_NET_HDR_F_NEEDS_CSUM bit is set so the bit must
+>>>>>> be cleared in that case.
+>>>>>>
+>>>>>> The VIRTIO_NET_HDR_F_NEEDS_CSUM bit also tells to skip checksum
+>>>>>> validation. Even if checksum offloading is disabled, it is desirable to
+>>>>>> skip checksum validation because the checksum is always correct. Use the
+>>>>>> VIRTIO_NET_HDR_F_DATA_VALID bit to claim the validity of the checksum.
+>>>>>>
+>>>>>> Fixes: ffbd2dbd8e64 ("e1000e: Perform software segmentation for loopback")
+>>>>>> Buglink: https://issues.redhat.com/browse/RHEL-23067
+>>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>>>> ---
+>>>>>>     hw/net/net_tx_pkt.c | 3 +++
+>>>>>>     1 file changed, 3 insertions(+)
+>>>>>>
+>>>>>> diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+>>>>>> index 2e5f58b3c9cc..c225cf706513 100644
+>>>>>> --- a/hw/net/net_tx_pkt.c
+>>>>>> +++ b/hw/net/net_tx_pkt.c
+>>>>>> @@ -833,6 +833,9 @@ bool net_tx_pkt_send_custom(struct NetTxPkt *pkt, bool offload,
+>>>>>>
+>>>>>>         if (offload || gso_type == VIRTIO_NET_HDR_GSO_NONE) {
+>>>>>>             if (!offload && pkt->virt_hdr.flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) {
+>>>>>> +            pkt->virt_hdr.flags =
+>>>>>> +                (pkt->virt_hdr.flags & ~VIRTIO_NET_HDR_F_NEEDS_CSUM) |
+>>>>>> +                VIRTIO_NET_HDR_F_DATA_VALID;
+>>>>>
+>>>>> Why VIRTIO_NET_HDR_F_DATA_VALID is used in TX path?
+>>>>
+>>>> On igb, a packet sent from a PCI function may be routed to another
+>>>> function. The virtio header updated here will be directly provided to
+>>>> the RX path in such a case.
+>>>
+>>> But I meant for example net_tx_pkt_send_custom() is used in
+>>> e1000e_tx_pkt_send() which is the tx path on the host.
+>>>
+>>> VIRTIO_NET_HDR_F_DATA_VALID is not necessary in the tx path.
+>>
+>> igb passes igb_tx_pkt_vmdq_callback to net_tx_pkt_send_custom().
+>> igb_tx_pkt_vmdq_callback() passes the packet to its rx path for loopback.
+>>
 > 
-> Allows to set guest-phys-bits (cpuid leaf 80000008, eax[23:16])
-> via -cpu $model,guest-phys-bits=$nr.
+> You are right, how about igb_tx_pkt_vmdq_callback()?
 > 
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> Message-ID: <20240318155336.156197-3-kraxel@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> We probably need to tweak the name if it is only used in rx path.
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+igb_tx_pkt_vmdq_callback() itself is part of the tx path of a PCI 
+function, and invokes the rx path of another PCI function in case of 
+loopback, or triggers the transmission to the external peer.
 
-> ---
-> v4->v5:
-> - move here all non-KVM parts
-> - add compat property and support for special value "-1" (accelerator
->    defines value)
-> 
->   target/i386/cpu.h |  1 +
->   hw/i386/pc.c      |  4 +++-
->   target/i386/cpu.c | 22 ++++++++++++++++++++++
->   3 files changed, 26 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 6b057380791..83e47358451 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -2026,6 +2026,7 @@ struct ArchCPU {
->   
->       /* Number of physical address bits supported */
->       uint32_t phys_bits;
-> +    uint32_t guest_phys_bits;
->   
->       /* in order to simplify APIC support, we leave this pointer to the
->          user */
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 461fcaa1b48..9c4b3969cc8 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -78,7 +78,9 @@
->       { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
->       { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
->   
-> -GlobalProperty pc_compat_9_0[] = {};
-> +GlobalProperty pc_compat_9_0[] = {
-> +    { TYPE_X86_CPU, "guest-phys-bits", "0" },
-> +};
->   const size_t pc_compat_9_0_len = G_N_ELEMENTS(pc_compat_9_0);
->   
->   GlobalProperty pc_compat_8_2[] = {};
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 33760a2ee16..eef3d08473e 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -6570,6 +6570,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->           if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
->               /* 64 bit processor */
->                *eax |= (cpu_x86_virtual_addr_width(env) << 8);
-> +             *eax |= (cpu->guest_phys_bits << 16);
->           }
->           *ebx = env->features[FEAT_8000_0008_EBX];
->           if (cs->nr_cores * cs->nr_threads > 1) {
-> @@ -7329,6 +7330,14 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
->           goto out;
->       }
->   
-> +    if (cpu->guest_phys_bits == -1) {
-> +        /*
-> +         * If it was not set by the user, or by the accelerator via
-> +         * cpu_exec_realizefn, clear.
-> +         */
-> +        cpu->guest_phys_bits = 0;
-> +    }
-> +
->       if (cpu->ucode_rev == 0) {
->           /*
->            * The default is the same as KVM's. Note that this check
-> @@ -7379,6 +7388,14 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
->           if (cpu->phys_bits == 0) {
->               cpu->phys_bits = TCG_PHYS_ADDR_BITS;
->           }
-> +        if (cpu->guest_phys_bits &&
-> +            (cpu->guest_phys_bits > cpu->phys_bits ||
-> +            cpu->guest_phys_bits < 32)) {
-> +            error_setg(errp, "guest-phys-bits should be between 32 and %u "
-> +                             " (but is %u)",
-> +                             cpu->phys_bits, cpu->guest_phys_bits);
-> +            return;
-> +        }
->       } else {
->           /* For 32 bit systems don't use the user set value, but keep
->            * phys_bits consistent with what we tell the guest.
-> @@ -7387,6 +7404,10 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
->               error_setg(errp, "phys-bits is not user-configurable in 32 bit");
->               return;
->           }
-> +        if (cpu->guest_phys_bits != 0) {
-> +            error_setg(errp, "guest-phys-bits is not user-configurable in 32 bit");
-> +            return;
-> +        }
->   
->           if (env->features[FEAT_1_EDX] & (CPUID_PSE36 | CPUID_PAE)) {
->               cpu->phys_bits = 36;
-> @@ -7887,6 +7908,7 @@ static Property x86_cpu_properties[] = {
->       DEFINE_PROP_BOOL("x-force-features", X86CPU, force_features, false),
->       DEFINE_PROP_BOOL("kvm", X86CPU, expose_kvm, true),
->       DEFINE_PROP_UINT32("phys-bits", X86CPU, phys_bits, 0),
-> +    DEFINE_PROP_UINT32("guest-phys-bits", X86CPU, guest_phys_bits, -1),
->       DEFINE_PROP_BOOL("host-phys-bits", X86CPU, host_phys_bits, false),
->       DEFINE_PROP_UINT8("host-phys-bits-limit", X86CPU, host_phys_bits_limit, 0),
->       DEFINE_PROP_BOOL("fill-mtrr-mask", X86CPU, fill_mtrr_mask, true),
+Regards,
+Akihiko Odaki
 
+> 
+> Thanks
+> 
+>> Regards,
+>> Akihiko Odaki
+>>
+>>>
+>>> Thanks
+>>>
+>>>>
+>>>> Regards,
+>>>> Akihiko Odaki
+>>>>
+>>>>>
+>>>>> Thanks
+>>>>>
+>>>>>>                 net_tx_pkt_do_sw_csum(pkt, &pkt->vec[NET_TX_PKT_L2HDR_FRAG],
+>>>>>>                                       pkt->payload_frags + NET_TX_PKT_PL_START_FRAG - 1,
+>>>>>>                                       pkt->payload_len);
+>>>>>>
+>>>>>> ---
+>>>>>> base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
+>>>>>> change-id: 20240324-tx-c57d3c22ad73
+>>>>>>
+>>>>>> Best regards,
+>>>>>> --
+>>>>>> Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>>>>
+>>>>>
+>>>>
+>>>
+>>
+> 
 
