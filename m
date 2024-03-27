@@ -4,65 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD929C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 12:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63BB3CD11DD
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 12:36:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpSSA-0007PX-5q; Wed, 27 Mar 2024 08:32:26 -0400
+	id 1rpSVw-0008WI-Jj; Wed, 27 Mar 2024 08:36:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1rpSS7-0007PJ-QN
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 08:32:24 -0400
-Received: from 3.mo552.mail-out.ovh.net ([178.33.254.192])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpSVu-0008VY-AV
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 08:36:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1rpSS4-0000am-Ko
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 08:32:23 -0400
-Received: from mxplan5.mail.ovh.net (unknown [10.109.148.37])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4V4QzM3GqTz1JXs;
- Wed, 27 Mar 2024 12:32:15 +0000 (UTC)
-Received: from kaod.org (37.59.142.102) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.37; Wed, 27 Mar
- 2024 13:32:14 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-102R0042366d515-e66d-436b-a54b-87d756272179,
- E5A1EC0EFFE5CD3CAD84611DE318B77B5DFBC549) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Wed, 27 Mar 2024 13:32:13 +0100
-From: Greg Kurz <groug@kaod.org>
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-CC: <qemu-devel@nongnu.org>, <thuth@redhat.com>, <alistair.francis@wdc.com>,
- <peter.maydell@linaro.org>, Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>
-Subject: Re: [PATCH for-9.0 1/3] qtest/virtio-9p-test.c: consolidate create
- dir, file and symlink tests
-Message-ID: <20240327133213.7bc9cf31@bahia>
-In-Reply-To: <2696794.aGCxZK9GlV@silver>
-References: <20240326132606.686025-1-dbarboza@ventanamicro.com>
- <8350437.9EvD175kdC@silver>
- <067a79d2-229a-40d8-9a88-28535c2e015d@ventanamicro.com>
- <2696794.aGCxZK9GlV@silver>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpSVp-0001Os-9F
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 08:36:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711542972;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=6oeI+azAxAF+MfufA51kXocZyEHU598GMoGT5Y6a7q0=;
+ b=T7ZLi/kq34W9XxFxjtgAv6z1bRFGRmnxxybqhqoQFw4NbRX+s19P4Fla8D7kR+DInBoy/x
+ lIruwyR58M2Dph5VRrEOOHAtE2CODGVLgz+NL2eFFt9u2N7Z6jXufizZ9YGPjSYRSFys5i
+ 1bUiW9te+dYZgq2iDMC3xWHPnH2adYk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-295-SV7KFPHtOEarDJ_meYPdAg-1; Wed, 27 Mar 2024 08:36:10 -0400
+X-MC-Unique: SV7KFPHtOEarDJ_meYPdAg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4140f58ac00so34516335e9.3
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 05:36:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711542969; x=1712147769;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6oeI+azAxAF+MfufA51kXocZyEHU598GMoGT5Y6a7q0=;
+ b=WtnsKQcgvGXHheofvf5DIVZNrEjQR4d4lxAdWZtcuLGjwdtB0JOgDlxAzf7OFyaiv+
+ pxbl/HgqnU1KMhufMvoFKyNmVfkmjNiEofQJXV8jn/GQLpwKXZJnW5rDipeVulAphrpo
+ ENdtMM665bDF6hOFWxryFn6bZ7y7dOXEvVkiyIYG7tabN62YQ4q1G6XnEyKxsztvaSax
+ KS+vIGH1XmGhYmx73x1EePqcaaAriPZyS9d69s3ziqc8+klh7eXL38Z3u6MUfp6nYw11
+ mvU3yihMIvnCegyE2WyAANw2UhecOz5T7Tnl+sbiM9KgnO84jSwNpSd/spGuo3TXoDaQ
+ g6SA==
+X-Gm-Message-State: AOJu0Yw2rpWVKOSiYpRYliNnMngHQsuuOV4Fak7R6+8yV9t4TWcNyXlM
+ VYJ3bly9dZzJB0/3JT/2v0s5pf7ZBp3XfWUuDi5nnIZueXOcCI2Qy1ZXuS5sFuSdtkSpXKT76lz
+ CYFTlJqiN/xmgT7L6fPzbXUcVoTblvkPZ538USjFB4FD8GZLz0ott
+X-Received: by 2002:a05:600c:3ba7:b0:414:3713:e9a2 with SMTP id
+ n39-20020a05600c3ba700b004143713e9a2mr1056006wms.3.1711542969110; 
+ Wed, 27 Mar 2024 05:36:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHVflpo6EGE/59QLVXEXMKdbdW7ilhVJb2iMAUALrww2VJcEOko9vuWHBz6p88KC6grQpwU7A==
+X-Received: by 2002:a05:600c:3ba7:b0:414:3713:e9a2 with SMTP id
+ n39-20020a05600c3ba700b004143713e9a2mr1055994wms.3.1711542968733; 
+ Wed, 27 Mar 2024 05:36:08 -0700 (PDT)
+Received: from [192.168.0.9] (ip-109-43-177-37.web.vodafone.de.
+ [109.43.177.37]) by smtp.gmail.com with ESMTPSA id
+ f6-20020a05600c4e8600b004148ff6ef54sm2031338wmq.29.2024.03.27.05.36.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 27 Mar 2024 05:36:08 -0700 (PDT)
+Message-ID: <a2d13494-aec2-427b-af9b-e8c41f7057f1@redhat.com>
+Date: Wed, 27 Mar 2024 13:36:07 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC] util/error-report: Add "error: " prefix for error-level
+ report
+To: Zhao Liu <zhao1.liu@linux.intel.com>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+References: <20240327114609.3858483-1-zhao1.liu@linux.intel.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240327114609.3858483-1-zhao1.liu@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.102]
-X-ClientProxiedBy: DAG8EX2.mxp5.local (172.16.2.72) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: eab8fe5a-0137-4a6c-8e21-9cabdea48522
-X-Ovh-Tracer-Id: 1283244422125164838
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvledrudduiedgudeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutddvpdekkedrudejledrledrudehgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepghhrohhugheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopeeipdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehthhhuthhhsehrvgguhhgrthdrtghomhdprhgtphhtthhopegrlhhishhtrghirhdrfhhrrghntghishesfigutgdrtghomhdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopegusggrrhgsohiirgesvhgvnhhtrghnrghmihgtrhhordgtohhmpd
- fovfetjfhoshhtpehmohehhedvpdhmohguvgepshhmthhpohhuth
-Received-SPF: pass client-ip=178.33.254.192; envelope-from=groug@kaod.org;
- helo=3.mo552.mail-out.ovh.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,126 +144,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 27 Mar 2024 13:26:45 +0100
-Christian Schoenebeck <qemu_oss@crudebyte.com> wrote:
+On 27/03/2024 12.46, Zhao Liu wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
+> 
+> When vreport() was introduced, there was no prefix for error-level
+> (REPORT_TYPE_ERROR) report. The original reason is "To maintain
+> compatibility we don't add anything here" as Alistair said in his
+> RFC v3 series [1].
+> 
+> This was done in the context of inheriting the original error_report()
+> interface without the prefix style. And it was also useful to have a
+> means of error handling, such as exit(), when error occurs, so that the
+> error message - the most serious level - can be noticed by the user.
+> 
+> Nowadays, however, error_report() and its variants have a tendency to be
+> "abused": it is used a lot just for the sake of logging something more
+> noticeable than the "warn" or "info" level, in the absence of
+> appropriate error handling logic.
+> 
+> But, in the use case above, due to the lack of a prefix, it is in fact
+> less informative to the user than warn_report()/info_report() (with
+> "warn:" or "info: " prfix), which does not match its highest level.
+> 
+> Therefore, add "error: " prefix for error-level report.
+> 
+> [1]: https://lore.kernel.org/qemu-devel/87r2xuay5h.fsf@dusky.pond.sub.org/#t
+> 
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   util/error-report.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/util/error-report.c b/util/error-report.c
+> index 6e44a5573217..e981c0b032f0 100644
+> --- a/util/error-report.c
+> +++ b/util/error-report.c
+> @@ -213,6 +213,7 @@ static void vreport(report_type type, const char *fmt, va_list ap)
+>   
+>       switch (type) {
+>       case REPORT_TYPE_ERROR:
+> +        error_printf("error: ");
+>           break;
+>       case REPORT_TYPE_WARNING:
+>           error_printf("warning: ");
 
-> On Wednesday, March 27, 2024 12:28:17 PM CET Daniel Henrique Barboza wrote:
-> > On 3/27/24 07:14, Christian Schoenebeck wrote:
-> > > On Wednesday, March 27, 2024 10:33:27 AM CET Daniel Henrique Barboza wrote:
-> > >> On 3/27/24 05:47, Christian Schoenebeck wrote:
-> > >>> On Tuesday, March 26, 2024 6:47:17 PM CET Daniel Henrique Barboza wrote:
-> > >>>> On 3/26/24 14:05, Greg Kurz wrote:
-> > >>>>> On Tue, 26 Mar 2024 10:26:04 -0300
-> > >>>>> Daniel Henrique Barboza <dbarboza@ventanamicro.com> wrote:
-> > >>>>>
-> > >>>>>> The local 9p driver in virtio-9p-test.c its temporary dir right at the
-> > >>>>>> start of qos-test (via virtio_9p_create_local_test_dir()) and only
-> > >>>>>> deletes it after qos-test is finished (via
-> > >>>>>> virtio_9p_remove_local_test_dir()).
-> > >>>>>>
-> > >>>>>> This means that any qos-test machine that ends up running virtio-9p-test local
-> > >>>>>> tests more than once will end up re-using the same temp dir. This is
-> > >>>>>> what's happening in [1] after we introduced the riscv machine nodes: if
-> > >>>>>> we enable slow tests with the '-m slow' flag using qemu-system-riscv64,
-> > >>>>>> this is what happens:
-> > >>>>>>
-> > >>>>>> - a temp dir is created, e.g. qtest-9p-local-WZLDL2;
-> > >>>>>>
-> > >>>>>> - virtio-9p-device tests will run virtio-9p-test successfully;
-> > >>>>>>
-> > >>>>>> - virtio-9p-pci tests will run virtio-9p-test, and fail right at the
-> > >>>>>>      first slow test at fs_create_dir() because the "01" file was already
-> > >>>>>>      created by fs_create_dir() test when running with the virtio-9p-device.
-> > >>>>>>
-> > >>>>>> We can fix it by making every test clean up their changes in the
-> > >>>>>> filesystem after they're done. But we don't need every test either:
-> > >>>>>> what fs_create_file() does is already exercised in fs_unlinkat_dir(),
-> > >>>>>> i.e. a dir is created, verified to be created, and then removed. Fixing
-> > >>>>>> fs_create_file() would turn it into fs_unlikat_dir(), so we don't need
-> > >>>>>> both. The same theme follows every test in virtio-9p-test.c, where the
-> > >>>>>> 'unlikat' variant does the same thing the 'create' does but with some
-> > >>>>>> cleaning in the end.
-> > >>>>>>
-> > >>>>>> Consolide some tests as follows:
-> > >>>>>>
-> > >>>>>> - fs_create_dir() is removed. fs_unlinkat_dir() is renamed to
-> > >>>>>>      fs_create_unlinkat_dir();
-> > >>>>>>
-> > >>>>>> - fs_create_file() is removed. fs_unlinkat_file() is renamed to
-> > >>>>>>      fs_create_unlinkat_file(). The "04" dir it uses is now being removed;
-> > >>>>>>
-> > >>>>>> - fs_symlink_file() is removed. fs_unlinkat_symlink() is renamed to
-> > >>>>>>      fs_create_unlinkat_symlink(). Both "real_file" and the "06" dir it
-> > >>>>>>      creates is now being removed.
-> > >>>>>>
-> > >>>>>
-> > >>>>> The  change looks good functionally but it breaks the legitimate assumption
-> > >>>>> that files "06/*" come from test #6 and so on... I think you should consider
-> > >>>>> renumbering to avoid confusion when debugging logs.
-> > >>>>>
-> > >>>>> Since this will bring more hunks, please split this in enough reviewable
-> > >>>>> patches.
-> > >>>>
-> > >>>> Fair enough. Let me cook a v2. Thanks,
-> > >>>
-> > >>> Wouldn't it be much simpler to just change the name of the temporary
-> > >>> directory, such that it contains the device name as well? Then these tests
-> > >>> runs would run on independent directories and won't interfere with each other
-> > >>> and that wouldn't need much changes I guess.
-> > >>
-> > >> That's true. If we were just trying to fix the issue then I would go with this
-> > >> approach since it's simpler. But given that we're also cutting half the tests while
-> > >> retaining the coverage I think this approach is worth the extra code.
-> > > 
-> > > Well, I am actually not so keen into all those changes. These tests were
-> > > intentionally split, and yes with costs of a bit redundant (test case) code.
-> > > But they were cleanly build up on each other, from fundamental requirements
-> > > like whether it is possible to create a directory and file ... and then the
-> > > subsequent tests would become more and more demanding.
-> > > 
-> > > That way it was easier to review if somebody reports a test to fail, because
-> > > you could immediately see whether the preceding fundamental tests succeeded.
-> > 
-> > The current test design is flawed. It's based on a premise that doesn't happen, i.e.
-> > a new temp dir will be created every time the test suit is executed. In reality the
-> > temp dir is created only once in the constructor of the test, at the start of qos-test
-> > (tests/qtest/qos-test.c, run_one_test()) and removed only once at the destructor
-> > at the end of the run.
-> > 
-> > It's not possible to add a 'device name' in the created temp dir because we're too early
-> > in the process, the tests didn't start at that point. So, with the current temp dir design,
-> > the tests needs to clean themselves up after each run.
-> > 
-> > Here's the alternatives I'm willing to go for:
-> > 
-> > - what I just sent in v2;
-> > 
-> > - add cleanups in all existing tests. We can keep all of them, but the 'create' tests
-> > will be carbon copies of the 'unlinkat' tests but with different names. Can be done;
-> > 
-> > - if we really want the tests untouched we can rework how the 'temp dir' is created/deleted.
-> > The test dir will be created and removed after each test via the 'before' callback. To be
-> > honest this seems like the best approach we can take, aside from what I did in v2, and
-> > it's on par with how tests like vhost-user-test.c works.
-> 
-> Yeah, the latter sounds like the best solution to me, too.
-> 
+Sounds like a good idea to me, but I think you should then also remove
+the hard-coded "error:" strings in the various error_reports():
 
-+1
+$ grep -ri 'error_report.*"error:'
+migration/block-dirty-bitmap.c:        error_report("Error: block device name is not set");
+migration/block-dirty-bitmap.c:                error_report("Error: Unknown bitmap alias '%s' on node "
+migration/block-dirty-bitmap.c:                error_report("Error: unknown dirty bitmap "
+migration/block-dirty-bitmap.c:        error_report("Error: block device name is not set");
+target/i386/kvm/kvm.c:        error_report("error: failed to set MSR 0x%" PRIx32 " to 0x%" PRIx64,
+target/i386/kvm/kvm.c:        error_report("error: failed to get MSR 0x%" PRIx32,
+util/vhost-user-server.c:        error_report("Error: too big message request: %d, "
+accel/hvf/hvf-all.c:        error_report("Error: HV_ERROR");
+accel/hvf/hvf-all.c:        error_report("Error: HV_BUSY");
+accel/hvf/hvf-all.c:        error_report("Error: HV_BAD_ARGUMENT");
+accel/hvf/hvf-all.c:        error_report("Error: HV_NO_RESOURCES");
+accel/hvf/hvf-all.c:        error_report("Error: HV_NO_DEVICE");
+accel/hvf/hvf-all.c:        error_report("Error: HV_UNSUPPORTED");
+accel/hvf/hvf-all.c:        error_report("Error: HV_DENIED");
+monitor/hmp-cmds.c:        error_reportf_err(err, "Error: ");
+hw/arm/xlnx-zcu102.c:        error_report("ERROR: RAM size 0x%" PRIx64 " above max supported of "
+hw/block/dataplane/xen-block.c:        error_report("error: unknown operation (%d)", request->req.operation);
+hw/block/dataplane/xen-block.c:        error_report("error: write req for ro device");
+hw/block/dataplane/xen-block.c:            error_report("error: nr_segments too big");
+hw/block/dataplane/xen-block.c:            error_report("error: first > last sector");
+hw/block/dataplane/xen-block.c:            error_report("error: page crossing");
+hw/block/dataplane/xen-block.c:        error_report("error: access beyond end of file");
+hw/rdma/rdma_backend.c:            rdma_error_report("Error: Not a MAD request, skipping");
+hw/s390x/s390-skeys.c:        error_report("Error: Setting storage keys for pages with unallocated "
+hw/s390x/s390-skeys.c:        error_report("Error: Getting storage keys for pages with unallocated "
+hw/usb/bus.c:        error_report("Error: no usb bus to attach usbdevice %s, "
+gdbstub/gdbstub.c:            error_report("Error: Bad gdb register numbering for '%s', "
 
-> Don't get me wrong, I didn't want to burden you with more work. It's really
-> just that I think that restructuring all test cases is contra productive.
-> 
-> If you want I can also look into that. Just let me know.
-> 
-> Thanks!
-> 
-> /Christian
-> 
-> 
+  Thomas
 
 
-
--- 
-Greg
 
