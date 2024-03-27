@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD940C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 09:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB019C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 09:53:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpPwe-0002HW-RQ; Wed, 27 Mar 2024 05:51:44 -0400
+	id 1rpPxf-00050v-0o; Wed, 27 Mar 2024 05:52:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpPwc-0002HO-I0
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:51:42 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpPxd-0004xN-C5
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:52:45 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpPwa-0006ek-TF
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:51:42 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-56c197d042fso3305305a12.0
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:51:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpPxa-0006rK-C9
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 05:52:45 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-a466a27d30aso799594766b.1
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 02:52:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711533099; x=1712137899; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711533161; x=1712137961; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vS70cG5/b/toW0T3Vv9S7wwrpoW0NWEALf1HsSx3Xqo=;
- b=SEee6GPnEvFs/JbroJS4aChJuPnZAUFGMxKujmUA7Nfft2ZUwZowUsAu6/Qe95EVUr
- uBaBxU5uP1fmgKIgTzH5zd/XmhoEZVrtdxeON/aOg4JlTiTGUtoyz5VKlae5ZNnlCYO0
- f+vomRRHQaeLQpmMKBcMnUw5axKdZXjp8SRw3AB6Jfczav/6Fcsnucuw9PV/souRuClF
- 6e/PiV3jJT1wpOoilHeJlNw3qBWBKhWqKhKFUWgKF+LBqjFUt9vNg8+bbRremY+dmqHB
- 9n28uG1IQSzGY95JCIFsiBWgqQgnaFQZaPslLaV1AJ2gJ1/+dE5LH4PGJaWkt9antDx5
- XRmA==
+ bh=TS+v/eLxATnG0O4x0k9d/m89qYtDW6sLXZHCB+9mUOM=;
+ b=jdQBZRnOkpJ8/r4tBy+y31qMhhw/Qd8zOrxk5Dl7CvjavlM5srxochgjV1prS8gLKP
+ t3mCsoYKyOqf/ieytxrA7jwoJ2gayui9zIqukuxOspf4s4bIqyNPUKPqu8n3+NSOhrQ6
+ /VwVttCMA4QcSRx08WlqJ+ogTqR9O8dyI1a0xBP6+k0bkKENSmJUshDEs99TzjEXhuQb
+ 4q/szYbSA3XcJyQYMyPXHueRv5cRsHx40k7WbKyKGfhpuwFfUkW1WhUdfOvpl4zcSIph
+ NScH8h9D4HAuD/l/brM554D6VyLA0k9og/kLiGoIqJWEvGWlLSwUIOKttp77/Cz+VlBY
+ 4LXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711533099; x=1712137899;
+ d=1e100.net; s=20230601; t=1711533161; x=1712137961;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vS70cG5/b/toW0T3Vv9S7wwrpoW0NWEALf1HsSx3Xqo=;
- b=tzSW/Ev/P0vLztQrxkUhwIKRXMvK3ja1Zv6MW6cQR0NGd4X133646Dsq9QEuu0ZpoV
- TG6MeSdIlAycbJORPftrRjlOzkbq6/40y54KNxfQR2QRTyns3FFbhwLu35VUkpj4e9VO
- Z/RxzSz1JFwzGHU1UOCmUYYk090Yuv9ENRXSiHmnumEfI4XWb2TbGfroXElX9TZqedOB
- caWo53FAFpGGDWUKk4vMEbskYGFm5omTcg6UzFrnI+dVM6ceY16W0KAJZpnMrV33kEHL
- QW+WNYq3stgDwWXnByGSpUU4SHT7K7QGHA6GqNtlYPL+dXSmr61w/Ck7wvp4y7JZYwdX
- t5uQ==
+ bh=TS+v/eLxATnG0O4x0k9d/m89qYtDW6sLXZHCB+9mUOM=;
+ b=FIf2yiO72OoJrJIczyS6i7EttftD5UEotp/kldiQ0Cr00m4TBQVrQgAZkMao9sQZmL
+ lhM7cSpoojl0qjvKZ3zvIG4MWt4h+HWXEFYn+pEsI7A70Qs6rr63H2TV5Ki2ZnTqorMR
+ xyr0k8En5kxLGhxmllrKdrQE8aMNLxZztEAvYCa+hWzFI/Eas1RvZubOa+KLBEuRva7O
+ Zq8mC5NfzI6ecf8sdg4+r5wkJSMPfkVZUhI7uE9tWVN7ZoG0rNFzFLDDQRb0CO5mbrwR
+ UqF9rTHW+Cdn0ReUqn3Kdpc5H+5Sn10aTR4erZn8wg9kn5mBoDWmPKWMANaun/KLDK0y
+ etCw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX43yO6jRDcnDP8MspO7DfeP+mJIZRlxOhiOF6/ddgvZpG0R6Z2cnHfJEa5lu8UW7yT1jUBr+TwVIxPxylPxAGEL2CRhAI=
-X-Gm-Message-State: AOJu0YxHaDW91nWmssYkpfPHkxffywwuXhLnYJ43MmdHcnVTjyFfhoVi
- vmpg2jjOq8n50G4YjSYs/+EuJAAU6YhCy7m6WSqS8kskadn/1uHNbNzcPsEfFRI=
-X-Google-Smtp-Source: AGHT+IEcgurc5xJQE+OdK7ozzNu1skl1GKf9MrqFsC2BIL6RppMRi7IoMlS/ZA4dmpjVGoYusXZHbA==
-X-Received: by 2002:a17:906:eea:b0:a46:53e9:aef9 with SMTP id
- x10-20020a1709060eea00b00a4653e9aef9mr1408180eji.65.1711533099502; 
- Wed, 27 Mar 2024 02:51:39 -0700 (PDT)
+ AJvYcCVlR/Qn2lNJINpXZCDCdNdhdR+z7FTJsKRWsbvvuF35//Bxtm8zdDYNcYonwNzq7w00mbJ1waw98aSh2VQKi7b7XP9MfWY=
+X-Gm-Message-State: AOJu0YxVWl2eIBTQz5SN0JO3iFrxbQxxDdZBaBxQlu/kjKz3s13ErsEo
+ OM1QQx3xVdwIj1CURhYEUP77YPXOuwNhFFoOxlQU6l9SbvUGIrPUWIR058Cp0Js=
+X-Google-Smtp-Source: AGHT+IGwO0//GshnE3F7qsJKYqNnQPVm/trKifCPk4qGgQPBXwdvKOgA6tQeLu1DYmh6v8j5rd93hQ==
+X-Received: by 2002:a17:907:9805:b0:a4e:c5b:4b08 with SMTP id
+ ji5-20020a170907980500b00a4e0c5b4b08mr161880ejc.11.1711533160796; 
+ Wed, 27 Mar 2024 02:52:40 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.205.175])
  by smtp.gmail.com with ESMTPSA id
- m5-20020a170906720500b00a4df01f4232sm1947350ejk.189.2024.03.27.02.51.38
+ z3-20020a170906668300b00a4750a4a1f7sm4032454ejo.6.2024.03.27.02.52.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 Mar 2024 02:51:39 -0700 (PDT)
+ Wed, 27 Mar 2024 02:52:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
  Igor Mammedov <imammedo@redhat.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
  Zhao Liu <zhao1.liu@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 v2 02/21] hw/usb/hcd-xhci: Remove
- XHCI_FLAG_FORCE_PCIE_ENDCAP flag
-Date: Wed, 27 Mar 2024 10:51:04 +0100
-Message-ID: <20240327095124.73639-3-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PATCH-for-9.1 v2 12/21] hw/i386/pc: Remove
+ PCMachineClass::enforce_aligned_dimm
+Date: Wed, 27 Mar 2024 10:51:14 +0100
+Message-ID: <20240327095124.73639-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240327095124.73639-1-philmd@linaro.org>
 References: <20240327095124.73639-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,57 +105,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-XHCI_FLAG_FORCE_PCIE_ENDCAP was only used by the
-pc-i440fx-2.0 machine, which got removed. Remove it
-and simplify usb_xhci_pci_realize().
+PCMachineClass::enforce_aligned_dimm was only used by the
+pc-i440fx-2.1 machine, which got removed. It is now always
+true. Remove it, simplifying pc_get_device_memory_range().
+Update the comment in Avocado test_phybits_low_pse36().
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/usb/hcd-xhci.h     | 1 -
- hw/usb/hcd-xhci-nec.c | 2 --
- hw/usb/hcd-xhci-pci.c | 3 +--
- 3 files changed, 1 insertion(+), 5 deletions(-)
+ include/hw/i386/pc.h                  |  3 ---
+ hw/i386/pc.c                          | 14 +++-----------
+ tests/avocado/mem-addr-space-check.py |  3 +--
+ 3 files changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
-index 98f598382a..1efa4858fb 100644
---- a/hw/usb/hcd-xhci.h
-+++ b/hw/usb/hcd-xhci.h
-@@ -37,7 +37,6 @@ typedef struct XHCIEPContext XHCIEPContext;
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index c2d9af36b2..231aae92ed 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -74,8 +74,6 @@ typedef struct PCMachineState {
+  *
+  * Compat fields:
+  *
+- * @enforce_aligned_dimm: check that DIMM's address/size is aligned by
+- *                        backend's alignment value if provided
+  * @acpi_data_size: Size of the chunk of memory at the top of RAM
+  *                  for the BIOS ACPI tables and other BIOS
+  *                  datastructures.
+@@ -114,7 +112,6 @@ struct PCMachineClass {
+     /* RAM / address space compat: */
+     bool gigabyte_align;
+     bool has_reserved_memory;
+-    bool enforce_aligned_dimm;
+     bool broken_reserved_end;
+     bool enforce_amd_1tb_hole;
  
- enum xhci_flags {
-     XHCI_FLAG_SS_FIRST = 1,
--    XHCI_FLAG_FORCE_PCIE_ENDCAP,
-     XHCI_FLAG_ENABLE_STREAMS,
- };
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index f9650a2821..adbc43ab90 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -716,7 +716,6 @@ static void pc_get_device_memory_range(PCMachineState *pcms,
+                                        hwaddr *base,
+                                        ram_addr_t *device_mem_size)
+ {
+-    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     MachineState *machine = MACHINE(pcms);
+     ram_addr_t size;
+     hwaddr addr;
+@@ -724,10 +723,8 @@ static void pc_get_device_memory_range(PCMachineState *pcms,
+     size = machine->maxram_size - machine->ram_size;
+     addr = ROUND_UP(pc_above_4g_end(pcms), 1 * GiB);
  
-diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
-index 328e5bfe7c..5d5b069cf9 100644
---- a/hw/usb/hcd-xhci-nec.c
-+++ b/hw/usb/hcd-xhci-nec.c
-@@ -43,8 +43,6 @@ static Property nec_xhci_properties[] = {
-     DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BIT("superspeed-ports-first", XHCINecState, flags,
-                     XHCI_FLAG_SS_FIRST, true),
--    DEFINE_PROP_BIT("force-pcie-endcap", XHCINecState, flags,
--                    XHCI_FLAG_FORCE_PCIE_ENDCAP, false),
-     DEFINE_PROP_UINT32("intrs", XHCINecState, intrs, XHCI_MAXINTRS),
-     DEFINE_PROP_UINT32("slots", XHCINecState, slots, XHCI_MAXSLOTS),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
-index 4423983308..cbad96f393 100644
---- a/hw/usb/hcd-xhci-pci.c
-+++ b/hw/usb/hcd-xhci-pci.c
-@@ -148,8 +148,7 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
-                      PCI_BASE_ADDRESS_MEM_TYPE_64,
-                      &s->xhci.mem);
+-    if (pcmc->enforce_aligned_dimm) {
+-        /* size device region assuming 1G page max alignment per slot */
+-        size += (1 * GiB) * machine->ram_slots;
+-    }
++    /* size device region assuming 1G page max alignment per slot */
++    size += (1 * GiB) * machine->ram_slots;
  
--    if (pci_bus_is_express(pci_get_bus(dev)) ||
--        xhci_get_flag(&s->xhci, XHCI_FLAG_FORCE_PCIE_ENDCAP)) {
-+    if (pci_bus_is_express(pci_get_bus(dev))) {
-         ret = pcie_endpoint_cap_init(dev, 0xa0);
-         assert(ret > 0);
+     *base = addr;
+     *device_mem_size = size;
+@@ -1285,12 +1282,9 @@ void pc_i8259_create(ISABus *isa_bus, qemu_irq *i8259_irqs)
+ static void pc_memory_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+                                Error **errp)
+ {
+-    const PCMachineState *pcms = PC_MACHINE(hotplug_dev);
+     const X86MachineState *x86ms = X86_MACHINE(hotplug_dev);
+-    const PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     const MachineState *ms = MACHINE(hotplug_dev);
+     const bool is_nvdimm = object_dynamic_cast(OBJECT(dev), TYPE_NVDIMM);
+-    const uint64_t legacy_align = TARGET_PAGE_SIZE;
+     Error *local_err = NULL;
+ 
+     /*
+@@ -1315,8 +1309,7 @@ static void pc_memory_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+         return;
      }
+ 
+-    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev),
+-                     pcmc->enforce_aligned_dimm ? NULL : &legacy_align, errp);
++    pc_dimm_pre_plug(PC_DIMM(dev), MACHINE(hotplug_dev), NULL, errp);
+ }
+ 
+ static void pc_memory_plug(HotplugHandler *hotplug_dev,
+@@ -1778,7 +1771,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     pcmc->smbios_defaults = true;
+     pcmc->gigabyte_align = true;
+     pcmc->has_reserved_memory = true;
+-    pcmc->enforce_aligned_dimm = true;
+     pcmc->enforce_amd_1tb_hole = true;
+     /* BIOS ACPI tables: 128K. Other BIOS datastructures: less than 4K reported
+      * to be used at the moment, 32K should be enough for a while.  */
+diff --git a/tests/avocado/mem-addr-space-check.py b/tests/avocado/mem-addr-space-check.py
+index af019969c0..ad75170d52 100644
+--- a/tests/avocado/mem-addr-space-check.py
++++ b/tests/avocado/mem-addr-space-check.py
+@@ -31,8 +31,7 @@ def test_phybits_low_pse36(self):
+         at 4 GiB boundary when "above_4g_mem_size" is 0 (this would be true when
+         we have 0.5 GiB of VM memory, see pc_q35_init()). This means total
+         hotpluggable memory size is 60 GiB. Per slot, we reserve 1 GiB of memory
+-        for dimm alignment for all newer machines (see enforce_aligned_dimm
+-        property for pc machines and pc_get_device_memory_range()). That leaves
++        for dimm alignment for all machines. That leaves
+         total hotpluggable actual memory size of 59 GiB. If the VM is started
+         with 0.5 GiB of memory, maxmem should be set to a maximum value of
+         59.5 GiB to ensure that the processor can address all memory directly.
 -- 
 2.41.0
 
