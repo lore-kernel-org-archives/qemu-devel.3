@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1FBDC54E67
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9836CD11DF
 	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 01:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpI7h-0005Xf-LZ; Tue, 26 Mar 2024 21:30:39 -0400
+	id 1rpI8J-0005g8-9v; Tue, 26 Mar 2024 21:31:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rpI7a-0005X4-3j
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:30:31 -0400
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rpI8G-0005fs-Uw
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:31:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rpI7X-0003vI-7T
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:30:29 -0400
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rpI8C-00040K-6y
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:31:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711503024;
+ s=mimecast20190719; t=1711503062;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=8F0MIllH5clWMxBrxgR5uny6vEHitOHBq+RT3SWOBLI=;
- b=G72BJurp2yvLgWoYUmB/JaBP4E1HDI5Wos7ycHCyAYySbkaCOMASmMhJ/xqQduyCOkbP6Z
- ysw7jEMySUNknMds16kEyLdRDzuoqy8bQ1CQDsiHZZzMDvLYJUJUo9VEGTRL6+KY9XN6Pt
- +EDub2s9cATuxRX2i4C3kzkAXQZxVuA=
-Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
- by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-q31fhu74OWOXANwBjr0OEQ-1; Tue,
- 26 Mar 2024 21:29:14 -0400
-X-MC-Unique: q31fhu74OWOXANwBjr0OEQ-1
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4fk/8WpCis16alrDsadAD/keSsbupEqlLK6z5jeJxpA=;
+ b=AVNFBqv6SLtRyX7B2xD3wJB64FvVAl4dMZJ0+Gi2U4udOK1IH5wEWlMPkvOsooB6pz8+Et
+ 6XT+nfLPKHZ+XyZ4cTaToI950A7mTlXatlv5WcrKu27wlg1FF6soIqeLKIdnR2rOJc/072
+ QYaB2WngsXAzHUMPDW0KQntic57Ll3E=
+Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
+ [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-583-Lt5MTGmONUCf6v89PZXknA-1; Tue, 26 Mar 2024 21:29:25 -0400
+X-MC-Unique: Lt5MTGmONUCf6v89PZXknA-1
 Received: from smtp.corp.redhat.com (int-mx10.intmail.prod.int.rdu2.redhat.com
  [10.11.54.10])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E44EA3C29842
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 01:29:13 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id DAA7588B7A1
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 01:29:24 +0000 (UTC)
 Received: from server.redhat.com (unknown [10.72.112.204])
- by smtp.corp.redhat.com (Postfix) with ESMTP id CA2E6492BD4;
- Wed, 27 Mar 2024 01:29:11 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id C61B2492BD0;
+ Wed, 27 Mar 2024 01:29:22 +0000 (UTC)
 From: Cindy Lu <lulu@redhat.com>
 To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
-Subject: [RFC 0/2] disable the configuration interrupt for the unsupported
- device
-Date: Wed, 27 Mar 2024 09:22:13 +0800
-Message-ID: <20240327012905.70188-1-lulu@redhat.com>
+Subject: [RFC 2/2] virtio-pci: check if the configure interrupt enable
+Date: Wed, 27 Mar 2024 09:22:15 +0800
+Message-ID: <20240327012905.70188-3-lulu@redhat.com>
+In-Reply-To: <20240327012905.70188-1-lulu@redhat.com>
+References: <20240327012905.70188-1-lulu@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=y
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.10
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
@@ -76,46 +77,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-we need a crash in Non-standard image, here is the jira for this https://issues.redhat.com/browse/RHEL-28522
-The root cause of the issue is that an IRQFD was used without initialization..
-
-During the booting process of the Vyatta image, the behavior of the called function in qemu is as follows:
-
-1. vhost_net_stop() was called, this will call the function
-virtio_pci_set_guest_notifiers() with assgin= false, and
-virtio_pci_set_guest_notifiers(） will release the irqfd for vector 0
-
-2. virtio_reset() was called -->set configure vector to VIRTIO_NO_VECTORt
-
-3.vhost_net_start() was called (at this time the configure vector is
-still VIRTIO_NO_VECTOR) and call virtio_pci_set_guest_notifiers() with
-assgin= true, so the irqfd for vector 0 was not "init" during this process
-
-4. The system continues to boot and msix_fire_vector_notifier() was
-called unmask the vector 0 and then met the crash
-[msix_fire_vector_notifier] 112 called vector 0 is_masked 1
-[msix_fire_vector_notifier] 112 called vector 0 is_masked 0
-
-The reason for not reproducing in RHEL/fedora guest image is because
-REHL/Fedora doesn't have the behavior of calling vhost_net_stop and then virtio_reset, and also won't call msix_fire_vector_notifier for vector 0 during system boot.
-
-The reason for not reproducing before configure interrupt support is because
-vector 0 is for configure interrupt,  before the support for configure interrupts, the notifier process will not handle vector 0.
-
-For the device Vyatta using, it doesn't support configure interrupts at all, So we plan to disable the configure interrupts in unsupported device
+If config_irq_enabled is not true, it means that configure interrupt is
+not supported. Therefore, the config vector will not be handled during
+the interrupt process.
 
 Signed-off-by: Cindy Lu <lulu@redhat.com>
+---
+ hw/virtio/virtio-pci.c | 41 +++++++++++++++++++++++------------------
+ 1 file changed, 23 insertions(+), 18 deletions(-)
 
-Cindy Lu (2):
-  virtio-net: disable the configure interrupt for not support device
-  virtio-pci: check if the configure interrupt enable
-
- hw/net/virtio-net.c        |  5 ++++-
- hw/virtio/virtio-pci.c     | 41 +++++++++++++++++++++-----------------
- hw/virtio/virtio.c         |  1 +
- include/hw/virtio/virtio.h |  1 +
- 4 files changed, 29 insertions(+), 19 deletions(-)
-
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index e433879542..36ad7da206 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -1065,7 +1065,7 @@ static int virtio_pci_vector_unmask(PCIDevice *dev, unsigned vector,
+         vq = virtio_vector_next_queue(vq);
+     }
+     /* unmask config intr */
+-    if (vector == vdev->config_vector) {
++    if ((vector == vdev->config_vector) && (true == vdev->config_irq_enabled)) {
+         n = virtio_config_get_guest_notifier(vdev);
+         ret = virtio_pci_one_vector_unmask(proxy, VIRTIO_CONFIG_IRQ_IDX, vector,
+                                            msg, n);
+@@ -1111,7 +1111,7 @@ static void virtio_pci_vector_mask(PCIDevice *dev, unsigned vector)
+         vq = virtio_vector_next_queue(vq);
+     }
+ 
+-    if (vector == vdev->config_vector) {
++    if ((vector == vdev->config_vector) && (true == vdev->config_irq_enabled)) {
+         n = virtio_config_get_guest_notifier(vdev);
+         virtio_pci_one_vector_mask(proxy, VIRTIO_CONFIG_IRQ_IDX, vector, n);
+     }
+@@ -1147,21 +1147,24 @@ static void virtio_pci_vector_poll(PCIDevice *dev,
+         }
+     }
+     /* poll the config intr */
+-    ret = virtio_pci_get_notifier(proxy, VIRTIO_CONFIG_IRQ_IDX, &notifier,
+-                                  &vector);
+-    if (ret < 0) {
+-        return;
+-    }
+-    if (vector < vector_start || vector >= vector_end ||
+-        !msix_is_masked(dev, vector)) {
+-        return;
+-    }
+-    if (k->guest_notifier_pending) {
+-        if (k->guest_notifier_pending(vdev, VIRTIO_CONFIG_IRQ_IDX)) {
++    if (true == vdev->config_irq_enabled) {
++        ret = virtio_pci_get_notifier(proxy, VIRTIO_CONFIG_IRQ_IDX, &notifier,
++                                      &vector);
++        if (ret < 0) {
++            return;
++        }
++
++        if (vector < vector_start || vector >= vector_end ||
++            !msix_is_masked(dev, vector)) {
++            return;
++        }
++        if (k->guest_notifier_pending) {
++            if (k->guest_notifier_pending(vdev, VIRTIO_CONFIG_IRQ_IDX)) {
++                msix_set_pending(dev, vector);
++            }
++        } else if (event_notifier_test_and_clear(notifier)) {
+             msix_set_pending(dev, vector);
+         }
+-    } else if (event_notifier_test_and_clear(notifier)) {
+-        msix_set_pending(dev, vector);
+     }
+ }
+ 
+@@ -1282,9 +1285,11 @@ static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
+             if (r < 0) {
+                 goto config_assign_error;
+             }
+-            r = kvm_virtio_pci_vector_config_use(proxy);
+-            if (r < 0) {
+-                goto config_error;
++            if (true == vdev->config_irq_enabled) {
++                r = kvm_virtio_pci_vector_config_use(proxy);
++                if (r < 0) {
++                    goto config_error;
++                }
+             }
+         }
+ 
 -- 
 2.43.0
 
