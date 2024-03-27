@@ -4,78 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1007C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 10:14:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E32DC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 10:14:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpQI9-0003Si-EI; Wed, 27 Mar 2024 06:13:57 -0400
+	id 1rpQIn-0003YA-H3; Wed, 27 Mar 2024 06:14:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rpQI7-0003SW-Px; Wed, 27 Mar 2024 06:13:55 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1rpQIh-0003XN-Ul
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 06:14:33 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1rpQI4-0003xY-Fm; Wed, 27 Mar 2024 06:13:55 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 48D085959F;
- Wed, 27 Mar 2024 13:15:11 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 09FF1A4743;
- Wed, 27 Mar 2024 13:13:40 +0300 (MSK)
-Message-ID: <04da79ed-75f5-4a90-b301-7aa11084d347@tls.msk.ru>
-Date: Wed, 27 Mar 2024 13:13:39 +0300
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1rpQIV-000427-3c
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 06:14:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=dXR2RCV4J4IeCEypyPFGmhIbXbBubbCYbd5dQ0JpIkU=; b=dpw3VOWUu1+9h8YCWKEsGMmWAf
+ VPQTUfGGiwMGTH/398MJGxC7sfP6VPnUneG9KIV0IQbtslcWSKh3SKtzHVLIZC2UsUzGcIvy/M3ch
+ aZJafL4f1Ml6waqufO07gux13BPVdLK3FtTMaVrEXDHInVXQRlWQ8gju6oS5gAlkweOgCBU8lCC37
+ zHZrE7vM7IqnoZwNK+ODLrqvLoapZEUpvptUXUwOc2ac9eHEJLJ9XyLofltjvgal23syjt2XGqRE6
+ +Kkr+FjDTtkCHUKOauNGdcr4B7Dzq+6g/pYBFFf/3ICEEm+Tcuqq5/5deaFx+07WBBi2GPHc5O8en
+ rzmeWSf8/Fw/9cAdvBNbFVMVcKAt1oVkou901y3FDbUnsGsNhDL3uPt10ZqzIhvIVR4GY5aduD0MA
+ 2ReXcCFWiUqMshSj1OwR9irirzURDF4XqR/ovBPxeGJMpVwwrh2F/k1br0kvXIbd9tm2WEudrgjIT
+ iwMlDGK37xc/ORvRY3KIYuJFKoFnVdHY04z+dyrWHFW+PjHDoeVUOckngUU+N8CW2T+s6tVnZVHSR
+ 5uhOHCa+lYPnAR7jHJZNg+g0/IfRfC61GzwDbmaLptsLaujQoLNh3rxHVxV1BgS4/VPJtH0oW4eQI
+ fdhoweJ0E36oFrR4UKBtaNWXX5Xi8pUIRznJ3w66w=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Greg Kurz <groug@kaod.org>, qemu-devel@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: thuth@redhat.com, alistair.francis@wdc.com, peter.maydell@linaro.org
+Subject: Re: [PATCH for-9.0 1/3] qtest/virtio-9p-test.c: consolidate create
+ dir, file and symlink tests
+Date: Wed, 27 Mar 2024 11:14:14 +0100
+Message-ID: <8350437.9EvD175kdC@silver>
+In-Reply-To: <f968c2ac-4056-47bf-af87-70534db82035@ventanamicro.com>
+References: <20240326132606.686025-1-dbarboza@ventanamicro.com>
+ <190171404.Ysjo4HZYI3@silver>
+ <f968c2ac-4056-47bf-af87-70534db82035@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/15] riscv-to-apply queue
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20240322085319.1758843-1-alistair.francis@wdc.com>
- <5eb1ce03-639a-4db3-a1e2-aba61fa295d1@tls.msk.ru>
- <76c065d8-41ee-433d-ba40-e1d13579b4a4@ventanamicro.com>
- <6d1ea7ad-0a81-4f5e-8210-80b5150bc521@tls.msk.ru>
- <6fb5ca42-8e86-4144-b9a9-9d98d30f8fb9@ventanamicro.com>
- <19d5ffb8-8cf1-4d88-b66a-2cf961621b93@tls.msk.ru>
- <CAKmqyKOG1sr269TDERsGEvbAJfJ_MTtW-smMCdDUBbYaGwkPGA@mail.gmail.com>
-Content-Language: en-US
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <CAKmqyKOG1sr269TDERsGEvbAJfJ_MTtW-smMCdDUBbYaGwkPGA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,67 +72,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-26.03.2024 12:56, Alistair Francis пишет:
-> On Tue, Mar 26, 2024 at 7:53 PM Michael Tokarev <mjt@tls.msk.ru> wrote:
->>
->> On 24.03.2024 21:12, Daniel Henrique Barboza wrote:
->>> On 3/24/24 12:07, Michael Tokarev wrote:
->>
->>>> Unfortunately this doesn't quite work, the following changes
->>>> fail to apply to 8.2:
->>>>
->>>> 929e521a47 target/riscv: always clear vstart for ldst_whole insns
->>>> b46631f122 target/riscv: remove 'over' brconds from vector trans
->>>> d57dfe4b37 trans_rvv.c.inc: remove redundant mark_vs_dirty() calls
->>>> bac802ada8 target/riscv: enable 'vstart_eq_zero' in the end of insns
->>>> 385e575cd5 target/riscv/kvm: fix timebase-frequency when using KVM acceleration
->>
->>> The amount of work can be non-trivial for this backport, so I'd say we should
->>> leave it aside for now. If someone has a good argument for this work then we
->>> can re-evaluate.
->>
->> So, out of 15 patches in this series (minus the first one already
->> mentioned) - should I pick 9 remaining patches for stable (the ones
->> which applies) or none at all? :)
+On Wednesday, March 27, 2024 10:33:27 AM CET Daniel Henrique Barboza wrote:
+> On 3/27/24 05:47, Christian Schoenebeck wrote:
+> > On Tuesday, March 26, 2024 6:47:17 PM CET Daniel Henrique Barboza wrote:
+> >> On 3/26/24 14:05, Greg Kurz wrote:
+> >>> On Tue, 26 Mar 2024 10:26:04 -0300
+> >>> Daniel Henrique Barboza <dbarboza@ventanamicro.com> wrote:
+> >>>
+> >>>> The local 9p driver in virtio-9p-test.c its temporary dir right at the
+> >>>> start of qos-test (via virtio_9p_create_local_test_dir()) and only
+> >>>> deletes it after qos-test is finished (via
+> >>>> virtio_9p_remove_local_test_dir()).
+> >>>>
+> >>>> This means that any qos-test machine that ends up running virtio-9p-test local
+> >>>> tests more than once will end up re-using the same temp dir. This is
+> >>>> what's happening in [1] after we introduced the riscv machine nodes: if
+> >>>> we enable slow tests with the '-m slow' flag using qemu-system-riscv64,
+> >>>> this is what happens:
+> >>>>
+> >>>> - a temp dir is created, e.g. qtest-9p-local-WZLDL2;
+> >>>>
+> >>>> - virtio-9p-device tests will run virtio-9p-test successfully;
+> >>>>
+> >>>> - virtio-9p-pci tests will run virtio-9p-test, and fail right at the
+> >>>>     first slow test at fs_create_dir() because the "01" file was already
+> >>>>     created by fs_create_dir() test when running with the virtio-9p-device.
+> >>>>
+> >>>> We can fix it by making every test clean up their changes in the
+> >>>> filesystem after they're done. But we don't need every test either:
+> >>>> what fs_create_file() does is already exercised in fs_unlinkat_dir(),
+> >>>> i.e. a dir is created, verified to be created, and then removed. Fixing
+> >>>> fs_create_file() would turn it into fs_unlikat_dir(), so we don't need
+> >>>> both. The same theme follows every test in virtio-9p-test.c, where the
+> >>>> 'unlikat' variant does the same thing the 'create' does but with some
+> >>>> cleaning in the end.
+> >>>>
+> >>>> Consolide some tests as follows:
+> >>>>
+> >>>> - fs_create_dir() is removed. fs_unlinkat_dir() is renamed to
+> >>>>     fs_create_unlinkat_dir();
+> >>>>
+> >>>> - fs_create_file() is removed. fs_unlinkat_file() is renamed to
+> >>>>     fs_create_unlinkat_file(). The "04" dir it uses is now being removed;
+> >>>>
+> >>>> - fs_symlink_file() is removed. fs_unlinkat_symlink() is renamed to
+> >>>>     fs_create_unlinkat_symlink(). Both "real_file" and the "06" dir it
+> >>>>     creates is now being removed.
+> >>>>
+> >>>
+> >>> The  change looks good functionally but it breaks the legitimate assumption
+> >>> that files "06/*" come from test #6 and so on... I think you should consider
+> >>> renumbering to avoid confusion when debugging logs.
+> >>>
+> >>> Since this will bring more hunks, please split this in enough reviewable
+> >>> patches.
+> >>
+> >> Fair enough. Let me cook a v2. Thanks,
+> > 
+> > Wouldn't it be much simpler to just change the name of the temporary
+> > directory, such that it contains the device name as well? Then these tests
+> > runs would run on independent directories and won't interfere with each other
+> > and that wouldn't need much changes I guess.
 > 
-> Sorry for the confusion.
-> 
-> The 9 patches that applied and
-> 
-> 385e575cd5 target/riscv/kvm: fix timebase-frequency when using KVM acceleration
-> 
-> should all be picked for stable.
+> That's true. If we were just trying to fix the issue then I would go with this
+> approach since it's simpler. But given that we're also cutting half the tests while
+> retaining the coverage I think this approach is worth the extra code.
 
-Got it, picked all plus 385e575cd5 which needed just trivial context fixup.
-Thank you for the clarification!
+Well, I am actually not so keen into all those changes. These tests were
+intentionally split, and yes with costs of a bit redundant (test case) code.
+But they were cleanly build up on each other, from fundamental requirements
+like whether it is possible to create a directory and file ... and then the
+subsequent tests would become more and more demanding.
 
-> PS: What is the best way in future to help ease some of the stable
-> burden? Should I try and cherry pick them beforehand and then mention
-> that as a follow up to the PR?
+That way it was easier to review if somebody reports a test to fail, because
+you could immediately see whether the preceding fundamental tests succeeded.
 
-The only problem for me so far is the patch selection, - this is why I'm
-asking to Cc changes which should go to stable, to qemu-stable@.  So far
-I was a bit pro-active and asked about some changes which I *feel* are
-suitable, like in this case.  It is much better if someone who actually
-has knowledge about the area being changed, decides if it's stable material
-or not.  At the same time, I don't mind at all if more changes than needed
-are Cc'ed like this, - at least as long as it's obvious they're not really
-needed (like fixing a bug introduced in commit which isn't in any release
-yet).
+/Christian
 
-I usually don't have any issues with applying patches which don't apply
-directly to stable - this is not a burden.  In some cases when this happens,
-I can edit the commit (like I just did for 385e575cd5), or pick some previous
-changes too if they're okay, or in even more rare cases, ask for clarification
-or even for help with back-porting, - but this last category is really rare.
 
-Some changes gets rejected for stable in the end due to too much back-porting
-effort or requiring too much prior context.
-
-So the only real issue for me is to know which changes are to pick, - that's all.
-And this is the only thing I'm asking, - in this thread and elsewhere.
-
-Thank you!
-
-/mjt
 
