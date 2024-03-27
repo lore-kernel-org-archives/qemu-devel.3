@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15972C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 15:23:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA11EC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 15:36:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpV6w-0007Cq-KX; Wed, 27 Mar 2024 11:22:42 -0400
+	id 1rpVJK-0001Sr-Fi; Wed, 27 Mar 2024 11:35:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rpV6s-0007BN-JD
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:22:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1rpV6q-0005w6-8E
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:22:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711552953;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TKHBlePX4k/2OLlFq3bcKjGQhaDBP7mP8uLkw/9KFoM=;
- b=PyrS8Yzk4cr+xjXKkfZ718ZDkseowrVAZyEZPcei6yZYX1Qek66dzjs3r8aucSUPVqAzis
- 5Lc2Z5rO5pKoMGIyZHIYeyxcz46XmlBwbzNZtxDFSEKypIXpakzHBT85TgANw1lBBQpPrj
- 6R5XiuOQCBlEhaiXRGEg0IyyfTWPEWY=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-U8EEQHf6Of6yEiVosqE-cQ-1; Wed, 27 Mar 2024 11:22:27 -0400
-X-MC-Unique: U8EEQHf6Of6yEiVosqE-cQ-1
-Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
- [10.11.54.2])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 6F30D10189AB;
- Wed, 27 Mar 2024 15:22:27 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.81])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id 2F49440C6CBB;
- Wed, 27 Mar 2024 15:22:27 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2102021E669D; Wed, 27 Mar 2024 16:22:06 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Michael Roth <michael.roth@amd.com>,  qemu-devel@nongnu.org,
- kvm@vger.kernel.org,  Tom Lendacky <thomas.lendacky@amd.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Pankaj Gupta <pankaj.gupta@amd.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>,  Isaku Yamahata
- <isaku.yamahata@linux.intel.com>
-Subject: Re: [PATCH v3 21/49] i386/sev: Introduce "sev-common" type to
- encapsulate common SEV state
-In-Reply-To: <ZfrMDYk-gSQF04gQ@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 20 Mar 2024 11:44:13 +0000")
-References: <20240320083945.991426-1-michael.roth@amd.com>
- <20240320083945.991426-22-michael.roth@amd.com>
- <ZfrMDYk-gSQF04gQ@redhat.com>
-Date: Wed, 27 Mar 2024 16:22:06 +0100
-Message-ID: <87h6gritsx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpVJG-0001Rs-9m
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:35:26 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpVJE-0000IA-1F
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:35:25 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a474c4faf5eso465092866b.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 08:35:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711553721; x=1712158521; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=J+//+hsMjxhL/OIhDXH4ZqoOHcXVPUdaTBq4imnY3JA=;
+ b=tqPIDbnGvTw9nz0nozgg1htyaqKqtqMx7cPgezCM/K863RI+FR6UyL/J2dl3lsnh6F
+ 5X201vPNjyKSNB7QKEnOhgyzdtnsEuJxokYeLqSLKHoEiTp47ad9rt9S7LmzLuJbDjc4
+ K0/qqwpRoHI1AoYt3r7ZMRxBTEg0RcOwZFQwu6jWc7qy+3Zb4rAFHeU/xlgLVIMP16cS
+ MR70AgQ4QqZ7UL93J/mdapaokih14lg8y7nNV9jIUIWM5gtFV8zWdsOlGlKqqPpTert4
+ sI+rchoncr5O2ZSBQJx2SqCHFXHVGechypuBY5/248+xDsDEBx0CXMJWdtjRVNGCd7/M
+ 8XTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711553721; x=1712158521;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=J+//+hsMjxhL/OIhDXH4ZqoOHcXVPUdaTBq4imnY3JA=;
+ b=LVozE5wDyTE4rSYGCYizP/sq0XqPXgG21ngOFC8np9RUOVPaO78spYHyCsPrd1slOE
+ SOrVUgAZedmTe/kCnjjlpy89bbqssCdWqqqaqTN/JxH0FmaPADen52wjdDei9bB6HNpr
+ poSREz8n9BbSF0JR1coHTlc9CrNHhtZm+TmYcljOSiEyGv5sfpWIU5viIR8icGblMYnC
+ gLgTGiKj1rFCsgVFKxGKAMULvFTG+GvpJk/ALqGWQp0axednbdDxbpM07FrMuEYuWmCI
+ xgR7iB+5jkg5pIEeLOZjfO748L/8cty5e8InBFgSLIXLsmxyahlUe1RJM14hPRrNqSOU
+ tr9w==
+X-Gm-Message-State: AOJu0YwJdy1K8QldBpdF8e/QP0ZD7rVp6PeomRnv0K+CC1HRNGkAllKx
+ eb9cx11QjoQfvkqQicg/rlyErhyeachF9Deo2E4JdMgdzMmGryhod8KPFH2dU+67MdPjDE7Ur/Y
+ J
+X-Google-Smtp-Source: AGHT+IGTaJlxLH0o6cacUHUc3a0w3puqvce48haCcgjaIQj6Lges5gTm5nCQSCMIyml+37TZ0xIJXQ==
+X-Received: by 2002:a17:906:a2d8:b0:a47:479a:a12b with SMTP id
+ by24-20020a170906a2d800b00a47479aa12bmr1087708ejb.43.1711553720937; 
+ Wed, 27 Mar 2024 08:35:20 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.205.175])
+ by smtp.gmail.com with ESMTPSA id
+ hg11-20020a1709072ccb00b00a4e03823107sm938776ejc.210.2024.03.27.08.35.18
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 27 Mar 2024 08:35:20 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, devel@lists.libvirt.org,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, mst@redhat.com,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH-for-9.0] hw/i386/pc: Deprecate 64-bit CPUs on ISA-only PC
+ machine
+Date: Wed, 27 Mar 2024 16:35:17 +0100
+Message-ID: <20240327153517.31285-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,214 +98,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Per Daniel suggestion [*]:
 
-> On Wed, Mar 20, 2024 at 03:39:17AM -0500, Michael Roth wrote:
->> Currently all SEV/SEV-ES functionality is managed through a single
->> 'sev-guest' QOM type. With upcoming support for SEV-SNP, taking this
->> same approach won't work well since some of the properties/state
->> managed by 'sev-guest' is not applicable to SEV-SNP, which will instead
->> rely on a new QOM type with its own set of properties/state.
->>=20
->> To prepare for this, this patch moves common state into an abstract
->> 'sev-common' parent type to encapsulate properties/state that are
->> common to both SEV/SEV-ES and SEV-SNP, leaving only SEV/SEV-ES-specific
->> properties/state in the current 'sev-guest' type. This should not
->> affect current behavior or command-line options.
->>=20
->> As part of this patch, some related changes are also made:
->>=20
->>   - a static 'sev_guest' variable is currently used to keep track of
->>     the 'sev-guest' instance. SEV-SNP would similarly introduce an
->>     'sev_snp_guest' static variable. But these instances are now
->>     available via qdev_get_machine()->cgs, so switch to using that
->>     instead and drop the static variable.
->>=20
->>   - 'sev_guest' is currently used as the name for the static variable
->>     holding a pointer to the 'sev-guest' instance. Re-purpose the name
->>     as a local variable referring the 'sev-guest' instance, and use
->>     that consistently throughout the code so it can be easily
->>     distinguished from sev-common/sev-snp-guest instances.
->>=20
->>   - 'sev' is generally used as the name for local variables holding a
->>     pointer to the 'sev-guest' instance. In cases where that now points
->>     to common state, use the name 'sev_common'; in cases where that now
->>     points to state specific to 'sev-guest' instance, use the name
->>     'sev_guest'
->>=20
->> Signed-off-by: Michael Roth <michael.roth@amd.com>
->> ---
->>  qapi/qom.json     |  32 ++--
->>  target/i386/sev.c | 457 ++++++++++++++++++++++++++--------------------
->>  target/i386/sev.h |   3 +
->>  3 files changed, 281 insertions(+), 211 deletions(-)
->>=20
->> diff --git a/qapi/qom.json b/qapi/qom.json
->> index baae3a183f..66b5781ca6 100644
->> --- a/qapi/qom.json
->> +++ b/qapi/qom.json
->> @@ -875,12 +875,29 @@
->>    'data': { '*filename': 'str' } }
->>=20=20
->>  ##
->> -# @SevGuestProperties:
->> +# @SevCommonProperties:
->>  #
->> -# Properties for sev-guest objects.
->> +# Properties common to objects that are derivatives of sev-common.
->>  #
->>  # @sev-device: SEV device to use (default: "/dev/sev")
->>  #
->> +# @cbitpos: C-bit location in page table entry (default: 0)
->> +#
->> +# @reduced-phys-bits: number of bits in physical addresses that become
->> +#     unavailable when SEV is enabled
->> +#
->> +# Since: 2.12
->
-> Not quite sure what we've done in this scenario before.
-> It feels wierd to use '2.12' for the new base type, even
-> though in effect the properties all existed since 2.12 in
-> the sub-class.
->
-> Perhaps 'Since: 9.1' for the type, but 'Since: 2.12' for the
-> properties, along with an explanatory comment about stuff
-> moving into the new base type ?
->
-> Markus, opinions ?
+ > isapc could arguably be restricted to just 32-bit CPU models,
+ > because we should not need it to support any feature that didn't
+ > exist prior to circa 1995. eg refuse to start with isapc, if 'lm'
+ > is present in the CPU model for example.
 
-The confusion is due to us documenting the schema instead of the
-external interface defined by it.  Let me explain.
+[*] https://lore.kernel.org/qemu-devel/ZgQkS4RPmSt5Xa08@redhat.com/
 
-The external interface is commands and their arguments, ignoring
-results, errors and events for brevity's sake.
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ docs/about/deprecated.rst | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-We use types to define the arguments.  How exactly we use types is not
-part of the interface.  This permits refactorings.  However, since the
-documentation is attached to the types, refactorings can easily mess it
-up.
-
-I'd like to demonstrate this for a simpler command first, then return to
-object-add.
-
-Consider nbd-server-add.  It is documented to be since 1.3.
-
-From now on, I'm abbreviating "documented to be since X.Y" to "since
-X.Y".
-
-Its arguments are the members of struct NbdServerAddOptions.
-
-NbdServerAddOptions is since 5.0.  Its base BlockExportOptionsNbdBase is
-since 5.2.
-
-BlockExportOptionsNbdBase member @name is since 2.12, and @description
-is since 5.0.
-
-NbdServerAddOptions member @bitmap is since 4.0.  Members @device and
-@writable have no "since" documented, so they inherit it from the
-struct, i.e. 5.0.
-
-So, it looks like the command is since 1.3, argument @name since 2.12,
-@bitmap since 4.0, @description, @device, and @writable since 5.0.
-
-Wrong!  Arguments @device and @writable have always been there,
-i.e. since 1.3.  We ended up with documentation incorrectly claiming 5.0
-via several refactorings.
-
-Initially, the command arguments were defined right with the command.
-They simply inherited the command's since 1.3.
-
-Commit c62d24e906e (blockdev-nbd: Boxed argument type for
-nbd-server-add) moved them to a struct type BlockExportNbd.  The new
-struct type was since 5.0.  Newer arguments retained their "since" tags,
-but the initial arguments @device and @writable remained without one.
-Their documented "since" changed from 1.3 to 5.0.
-
-Aside: the new struct was then used as a branch of union BlockExport,
-which was incorrectly documented to be since 4.2.
-
-Messing up "since" when factoring out arguments into a new type was
-avoidable: either lie and claim the new type is as old as its members,
-or add suitable since tags to its members.
-
-Having a struct with members older than itself looks weird.  Of course,
-when a struct came to be is *immaterial*.  How exactly we assemble the
-arguments from types is not part of the interface.  We could omit
-"since" for the struct, and then require it for all members.  We don't,
-because having to think (and then argue!) whether we want a "since" or
-not would be a waste of mental capacity.
-
-Here's another refactoring where that may not be possible.  Say you
-discover two structs share several members.  You decide to factor them
-out into a common base type.  Won't affect the external interface.  But
-what if one of these common members has conflicting "since"?  Either we
-refrain from the refactoring, or we resort to something like "since
-X1.Y1 when used for USER1, since X1.Y2 when used for USER2".  Which
-*sucks* as external interface documentation.
-
-Aside: documentation text could clash similarly.  Same code, different
-meaning.
-
-I've come to the conclusion that manually recording "since" in the
-documentation is dumb.  One, because we mess it up.  Two, because not
-messing it up involves either lies or oddities, or too much thought.
-Three, because keeping it correct can interfere with refactorings.
-
-Some time ago, Michael Tsirkin suggested to generate "since" information
-automatically.  I like the idea.  We'd have to record the external
-interface at release time.  To fully replace existing "since" tags, we'd
-have to record for old versions, too.  I'd expect this to fix quite a
-few doc bugs.
-
-I hope "The confusion is due to us documenting the schema instead of the
-external interface defined by it" is now more clear.  The external
-interface is derived from the types.  How exactly we construct it from
-types is invisible at the interface.  But since we document the
-interface by documenting the types, the structure of our interface
-documentation mirrors our use of types.  We succeed at shielding the
-interface from how we use types, but we fail to shield the
-documentation.
-
-Back to your problem at hand.  The external interface is command
-object-add.  The command is since 2.0.
-
-It has common arguments and variant arguments depending on the value of
-common argument @type.  We specify all that via union ObjectOptions, and
-the variant arguments for @type value "sev-guest" via struct
-SevGuestProperties.
-
-Union ObjectOptions is since 6.0, but that's immaterial; the type isn't
-part of the external interface, only its members are.
-
-Its members are the common arguments.  Since they don't have their own
-"since" tag, they inherit it from ObjectOptions, i.e. since 6.0.  That's
-simply wrong; they exist since 2.0 just like object-add.
-
-Struct SevGuestProperties is since 2.12, but that's also immaterial.
-
-The members of SevGuestProperties are the variant arguments for @type
-value "sev-guest".  Since they don't have their own "since" tag, they
-inherit it from SevGuestProperties, i.e. since 2.12.
-
-Your patch moves some of the members to new base type
-SevCommonProperties.  As Daniel observed, you can either claim
-SevCommonProperties is since 2.12 (which is a lie), or you claim 9.1 for
-the type and 2.12 for all its members (which is odd).
-
-I prefer oddities to lies.
-
-I'm not sure we need a comment explaining the oddity.  If you think it's
-useful, please make it a non-doc comment.  Reminder:
-
-    ##
-    # This is a doc comment.  It goes into generated documentation.
-    ##
-
-    # This is is not a doc comment.  It does not go into generated
-    # documentation.
-
-Comments?
-
-[...]
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 7b548519b5..345c35507f 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -208,6 +208,13 @@ is no longer packaged in any distro making it harder to run the
+ ``check-tcg`` tests. Unless we can improve the testing situation there
+ is a chance the code will bitrot without anyone noticing.
+ 
++64-bit (x86_64) CPUs on the ``isapc`` machine (since 9.0)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''
++
++The ``isapc`` machine aims to emulate old PC machine without PCI was
++generalized, so hardware available around 1995, before 64-bit intel
++CPUs were produced.
++
+ System emulator machines
+ ------------------------
+ 
+-- 
+2.41.0
 
 
