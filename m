@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0751C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 01:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2063CC54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 01:50:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpIPb-0001Dy-MR; Tue, 26 Mar 2024 21:49:07 -0400
+	id 1rpIQn-0001pE-EA; Tue, 26 Mar 2024 21:50:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1rpIPZ-0001C8-Vl
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:49:06 -0400
-Received: from esa8.hc1455-7.c3s2.iphmx.com ([139.138.61.253])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1rpIPX-0007cW-Kg
- for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:49:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1711504143; x=1743040143;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=s0o8X7fjTNmD0jtLGMsQhDQj/68MmQ2vnCIgb63wpjc=;
- b=sLyD+Xlu0u171iyHtX8QGjcZ1OxN8kZZcpZAjAuspahWF+NdnA7TFthW
- YPhe9rA1s1kuudfahJdCBQRJUNbGUBWW6e20KG86uqYPBKTEjFdiL0hje
- DnbUWilkCk70wZSp38i9TKwtWHs7fs6KoZeMpAGOxPUfChRTKbfsrUgVJ
- aRKCl9+f7vJQ3xGR7aJorqfyyV927HDIihnCO++65SUFj2y9lm7qZRDeA
- EoFV6SJl5bXkTLst1ZzofMjRfwCClxF4DQAX3GKcKLsC1aKf7dL/llcZN
- RYm+s+YEm2WarWOm270JVrcxDHHCfQi/70QDGBZno9rkAr5U0dwrGRWa7 g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,11025"; a="141447538"
-X-IronPort-AV: E=Sophos;i="6.07,157,1708354800"; d="scan'208";a="141447538"
-Received: from unknown (HELO yto-r3.gw.nic.fujitsu.com) ([218.44.52.219])
- by esa8.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Mar 2024 10:48:58 +0900
-Received: from yto-m2.gw.nic.fujitsu.com (yto-nat-yto-m2.gw.nic.fujitsu.com
- [192.168.83.65])
- by yto-r3.gw.nic.fujitsu.com (Postfix) with ESMTP id 0DAD1E9667
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 10:48:57 +0900 (JST)
-Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
- [192.51.206.22])
- by yto-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id 464202FCD8
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 10:48:56 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id C1443E477F
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 10:48:55 +0900 (JST)
-Received: from localhost.localdomain (unknown [10.167.225.88])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 1C56F1A006A;
- Wed, 27 Mar 2024 09:48:55 +0800 (CST)
-To: jonathan.cameron@huawei.com,
-	fan.ni@samsung.com
-Cc: qemu-devel@nongnu.org, caoqq@fujitsu.com,
- Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Subject: [PATCH] mem/cxl_type3: fix hpa to dpa logic
-Date: Tue, 26 Mar 2024 21:46:53 -0400
-Message-Id: <20240327014653.26623-1-yaoxt.fnst@fujitsu.com>
-X-Mailer: git-send-email 2.37.3
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rpIQm-0001nw-01
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:50:20 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1rpIQi-0007xC-R3
+ for qemu-devel@nongnu.org; Tue, 26 Mar 2024 21:50:19 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-6e74bd85f26so4962436b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 26 Mar 2024 18:50:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1711504215; x=1712109015;
+ darn=nongnu.org; 
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=vy9mtpiZDjnGnwzDy8nFIblwESvxD2vIkBXConD5DXM=;
+ b=DhXMmiB8x5guDg1ScOk4Wb5BKHrCrj3Ctcktw3Vo8IlH2z+Z3Uhm5FK1ArRtHe6KsR
+ aSYv3SPcPxd67zHDYDF3UdAIsrtB0K47v+T485UxpmNqRsDXdLqVN6NEZg22B/4SOve/
+ 9DTO/fC1K6mfpgAzrpDT3d2QsRSRKRhnYdvHbzalWl9GFk+oWzCT0MPWE4YvwMloWyNw
+ EPbw28W1lfsZ50bDUg6CKzqizcRX9DV8bvHXD3Vcjx5Wgh6C0HFBDZlmJDi8u6JEDXlD
+ HfZuGlcu9elEYLRQ+IuTRgQRg5v5DIxzMY52MvhEgCAMHJ3dSCkrqsBD9z2pt9lBzpqC
+ dFzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711504215; x=1712109015;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=vy9mtpiZDjnGnwzDy8nFIblwESvxD2vIkBXConD5DXM=;
+ b=M8iy2ky0BO5E4x3nL8UbN3Aq2y2qeIguMqlhFfPi67HBuCcvNuvuRw45eef9rkObsW
+ uJGdQY+V/ptYvtKPOC3Y+FSlXxMXtLg52Y4Vh8WAZ23caGKBZtOYng9saW9H8DM4vCDC
+ UZluegvDCyFahXM+7PSU7bYjP58qqY90OpK4wBUvonPFnVsYrCC+/O1DvCjBAtNO+WZG
+ n4riLGRW3kycwY5FWToWjsmEZcHNJwsan378K2GqXFbDZBrKFTeQPy48W3diHRbEewWS
+ Ma5a37GkZxGKteMXtu1rul1Qe3snC5YrBxS1219/J977D+YFMyik+5naNYFK2WP/vVIF
+ kNeQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXchHaHQNVFjYWPhCvQC1lePnCkL5n+BTqOdpXzLY5P3mmAei0SvCUpLbybNS21Do3bmyhEPDgzp5pdgMWlvTVk3Wp2aD4=
+X-Gm-Message-State: AOJu0Yxce5oGefb04zxsodhTG+Qic6V2SOu7hAyjhrPgCP0uDVK82NTi
+ N/4DJWHWGTUfwJzP+YdRy+eIn92bLuHJatrpGhr07W2/y94EipLcqg9FCEWrSb8=
+X-Google-Smtp-Source: AGHT+IHFMC+i6UAHnLjQX5HfLMhKlodZswgOZvoC50/F8cdOX1TVCCIqsPuBcWwLKEPtXJ6GNuN7nw==
+X-Received: by 2002:a05:6a20:3547:b0:1a3:bbfa:930d with SMTP id
+ f7-20020a056a20354700b001a3bbfa930dmr1054086pze.33.1711504215194; 
+ Tue, 26 Mar 2024 18:50:15 -0700 (PDT)
+Received: from localhost ([157.82.202.248])
+ by smtp.gmail.com with UTF8SMTPSA id
+ r6-20020a17090ad40600b0029c68206e2bsm324520pju.0.2024.03.26.18.50.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 26 Mar 2024 18:50:14 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: [PATCH for 9.1 v3 0/2] meson: Fix MESONINTROSPECT parsing
+Date: Wed, 27 Mar 2024 10:49:20 +0900
+Message-Id: <20240327-meson-v3-0-7e6cdef1be8a@daynix.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28276.004
-X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28276.004
-X-TMASE-Result: 10--5.770800-10.000000
-X-TMASE-MatchedRID: jaDo7zRnnqv1FjL5pOozBZjnsVPBNMvRSdIdCi8Ba4BS0AMoK8LL122H
- WvR90BF1AgbxNXiHGCrmXDJ/lmD292FqPXSLpNdArMZ+BqQt2NrBOVz0Jwcxl6vCrG0TnfVU2d8
- mtRIRsUNUj8yB4G09vCgwkKeWenB43wMRFjEYq7yeAiCmPx4NwGmRqNBHmBve8JnRnNG2x81JKW
- 4mDlJsMSAHAopEd76vqPNMeBJRJB/XmLnbMMUB+dZ1ux/9VlJ1AvWh//MRLJShBFoQLCG/3g==
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=139.138.61.253;
- envelope-from=yaoxt.fnst@fujitsu.com; helo=esa8.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-B4-Tracking: v=1; b=H4sIACB7A2YC/1WOQQrDIBRErxJcV9FvTGJXvUfpIonafEJi0SIJI
+ XevCIV2N8PMPOYg0Qa0kVyrgwSbMKJfs5GXioxTvz4tRZM9AQ41l9DQxUa/0kFZGNse3ACO5O4
+ rWIdb4dyJ86HSTJBHDiaMbx/2wk+ixBkleSeAN0LVnCmpOypoP+OEs2feZHUz/b7ixka/FEqC7
+ /L3RALKqdFOcy7bVln9NzvP8wO1Hw0N3gAAAA==
+To: Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
+ John Snow <jsnow@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+X-Mailer: b4 0.14-dev
+Received-SPF: none client-ip=2607:f8b0:4864:20::429;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,60 +100,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
-From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In 3, 6, 12 interleave ways, we could not access cxl memory properly,
-and when the process is running on it, a 'segmentation fault' error will
-occur.
+The arguments in MESONINTROSPECT are quoted with shlex.quote() so it
+must be parsed with shlex.split().
 
-According to the CXL specification '8.2.4.20.13 Decoder Protection',
-there are two branches to convert HPA to DPA:
-b1: Decoder[m].IW < 8 (for 1, 2, 4, 8, 16 interleave ways)
-b2: Decoder[m].IW >= 8 (for 3, 6, 12 interleave ways)
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-but only b1 has been implemented.
+To: Beraldo Leal <bleal@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Cleber Rosa <crosa@redhat.com>
+Cc: John Snow <jsnow@redhat.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>
 
-To solve this issue, we should implement b2:
-  DPAOffset[51:IG+8]=HPAOffset[51:IG+IW] / 3
-  DPAOffset[IG+7:0]=HPAOffset[IG+7:0]
-  DPA=DPAOffset + Decoder[n].DPABase
+Changes in v3:
+- Ensured meson>=1.4.0 on Windows.
+- Link to v2: https://lore.kernel.org/r/20240326-meson-v2-0-d9f9003775e9@daynix.com
 
-Links: https://lore.kernel.org/linux-cxl/3e84b919-7631-d1db-3e1d-33000f3f3868@fujitsu.com/
-Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Changes in v2:
+- Added patch "buildsys: Bump known good meson version to v1.4.0".
+- Link to v1: https://lore.kernel.org/r/20230812061540.5398-1-akihiko.odaki@daynix.com
+
 ---
- hw/mem/cxl_type3.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+Akihiko Odaki (2):
+      buildsys: Bump known good meson version to v1.4.0
+      meson: Fix MESONINTROSPECT parsing
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index b0a7e9f11b..2c1218fb12 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -805,10 +805,17 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
-             continue;
-         }
- 
--        *dpa = dpa_base +
--            ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
--             ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)
--              >> iw));
-+        if (iw < 8) {
-+            *dpa = dpa_base +
-+                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
-+                 ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)
-+                  >> iw));
-+        } else {
-+            *dpa = dpa_base +
-+                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
-+                 ((((MAKE_64BIT_MASK(ig + iw, 64 - ig - iw) & hpa_offset)
-+                   >> (ig + iw)) / 3) << (ig + 8)));
-+        }
- 
-         return true;
-     }
+ configure                                  |   5 +++++
+ python/scripts/vendor.py                   |   4 ++--
+ python/wheels/meson-1.2.3-py3-none-any.whl | Bin 964928 -> 0 bytes
+ python/wheels/meson-1.4.0-py3-none-any.whl | Bin 0 -> 935471 bytes
+ pythondeps.toml                            |   2 +-
+ scripts/symlink-install-tree.py            |   3 ++-
+ 6 files changed, 10 insertions(+), 4 deletions(-)
+---
+base-commit: ba49d760eb04630e7b15f423ebecf6c871b8f77b
+change-id: 20240326-meson-b5e2c7a2fb2f
+
+Best regards,
 -- 
-2.37.3
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
