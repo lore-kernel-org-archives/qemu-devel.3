@@ -4,84 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70AD7C47DD9
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 07:31:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B62A8C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 07:44:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpNkG-0000HM-CA; Wed, 27 Mar 2024 03:30:48 -0400
+	id 1rpNwO-0002T0-O6; Wed, 27 Mar 2024 03:43:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpNkE-0000GV-J6
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:30:46 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpNkC-0003ok-Nj
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:30:46 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a4a387ff7acso357688566b.2
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 00:30:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711524640; x=1712129440; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/pBkl5pSQwxSD6lsLdcXmyiXV+OQ4hUaYKQVZznma+o=;
- b=nYaRO2ntBDsufniYM1Uvw2UDUY89IbdFsa7HckaUAo2difXGCjy5H39ggoWloYmHiy
- 1QZ/WjgtCS3qX7Ft3Y+ntyc+oFSZY7xUg6E52FL6K4Pl4zTeBTNvpAkrU8QkDF3tJthA
- 9wx7rOWnuco1ZhnGxqC6P2gDSUMj2yb/jNZC8Aeb34cYOdPB97KCsBu1k/wv9v3Rj8MJ
- Ml+ptRiaS5+bM1XCI9wVYDWr/B3X5umQNoZCF676ibGTcKBKCTmA4aaggq3V1Y/5nTDu
- W2IVujyJI2C34bZV92DXYPVxohixTOuzhnPPY6sn6YM/rIBDhqx94LDlm7Twsg1ipJO9
- 5XTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711524640; x=1712129440;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/pBkl5pSQwxSD6lsLdcXmyiXV+OQ4hUaYKQVZznma+o=;
- b=oBgsqeEpFT6KWWV7Nm7rx7RUVPM1RTTJsja+1wCOUBeyPCucXQTNFwuMGpfnHIfhlq
- 5Z2qeNRlA5IrXG0eOM4Xs8cmOuGNm0Mu+cUTAaah6jY5Fzq4Ruz46ThMoIxyAvwGOsrG
- fQswz+tZj13tBDyck0RVx0oyavSRseBgpUxNwLG6JC6qtioA86d6CWCgzIBnvItGF2Fe
- NCRuDumlm26/LEzPSXwsYrInGscgvqgRohnVxKtjD05XiLvtFYMRXr1/j65f+PIg8QUN
- DYPwne0WujfPRaGuQbBG55KNoP2wueaVD8F9hL9Cz7dnZoT/acFSomkXA+Qti4qvlQ7n
- yPLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXphJU/28YapdX7zpASvud4Y1XApdIHJy3PXmoj3GlqnIurvFr4XrjAm603YJr0+GkleVMq/sAW0FQ7Z5VYM7icNjnmLgw=
-X-Gm-Message-State: AOJu0Ywwn9MvcjwE+82UFmav2vQPT/VOO/TVH/IhzfvvKQyqKXdo1qWA
- 2lU3FBedbo6OEP987s4E9FhPqspIEh5Av/Zok4C6mBOWZa90yMF5qVFbLy+jcDpoJBxgczoJuRN
- 4
-X-Google-Smtp-Source: AGHT+IGZpA+rnXxs0Xuhvih6y3/Pd/XxlvrnFFiE6K8Kep55/bwSslVG7cuUggIwgsu58zp41FuZXA==
-X-Received: by 2002:a17:906:3613:b0:a46:a3bc:b343 with SMTP id
- q19-20020a170906361300b00a46a3bcb343mr2319679ejb.21.1711524639904; 
- Wed, 27 Mar 2024 00:30:39 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.205.175])
- by smtp.gmail.com with ESMTPSA id
- x20-20020a170906b09400b00a469e55767dsm5067011ejy.214.2024.03.27.00.30.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Mar 2024 00:30:39 -0700 (PDT)
-Message-ID: <ee9e7b85-944a-4f43-91c8-aa072f1fb990@linaro.org>
-Date: Wed, 27 Mar 2024 08:30:37 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rpNwL-0002RY-Df
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:43:17 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1rpNwH-0005xW-DI
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 03:43:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711525393; x=1743061393;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=KGk0N9uMhHq6Ojw7Dbcb/h56tflaL/0mZXbk1gFaZq0=;
+ b=L+w4DUGrIv96R7nSG/zphdJ7l27Ip/Dw9lS92BIJaBrThU+gMuGVkB0U
+ SjB3+WmlJ/sNeQhPE6nv4lWQEUs47ViOQFsEfcYb++hH1Fq8Ua+kFW2UO
+ k+ZKjTLEiuTA4YzWZQFEAPtuBaeaL5qUbO3OlrXSuv/Nvc8Z4/+fMLCmY
+ lQ+1hjexVpGUjDU5sTYE1HYlZgWkxB8ylNs1l6fHc0EEbZbImZznHuFfk
+ OUVXrPAo4nZ+vH2w+O9a77BXojk8slzFhyDs+VgFCI7Ezk4FNiKMzsNUR
+ D0l70GoDl4a1T25Zp7xG6Jiq63WBrPexG+2AHOZ2wdD9lNv6NRcd1wXXq A==;
+X-CSE-ConnectionGUID: j9s46a4TS8qefO8s3GPADg==
+X-CSE-MsgGUID: CSP0U/SBT32un46vHBx5Wg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11025"; a="24052412"
+X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; d="scan'208";a="24052412"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Mar 2024 00:43:07 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,158,1708416000"; d="scan'208";a="47406660"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa001.fm.intel.com with ESMTP; 27 Mar 2024 00:43:05 -0700
+Date: Wed, 27 Mar 2024 15:57:01 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>,
+ Cornelia Huck <cohuck@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Gavin Shan <gshan@redhat.com>
+Subject: Re: [PATCH for-9.1 v5 1/3] hw: Add compat machines for 9.1
+Message-ID: <ZgPRTc81XKA1cbDu@intel.com>
+References: <20240325141422.1380087-1-pbonzini@redhat.com>
+ <20240325141422.1380087-2-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.0] tcg/optimize: Fix sign_mask for logical
- right-shift
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20240326222259.528099-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240326222259.528099-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240325141422.1380087-2-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.088,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,60 +83,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/3/24 23:22, Richard Henderson wrote:
-> The 'sign' computation is attempting to locate the sign bit that has
-> been repeated, so that we can test if that bit is known zero.  That
-> computation can be zero if there are no known sign repetitions.
+On Mon, Mar 25, 2024 at 03:14:20PM +0100, Paolo Bonzini wrote:
+> Date: Mon, 25 Mar 2024 15:14:20 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH for-9.1 v5 1/3] hw: Add compat machines for 9.1
+> X-Mailer: git-send-email 2.44.0
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 93a967fbb57 ("tcg/optimize: Propagate sign info for shifting")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2248
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Add 9.1 machine types for arm/i440fx/m68k/q35/s390x/spapr.
+> 
+> Cc: Cornelia Huck <cohuck@redhat.com>
+> Cc: Thomas Huth <thuth@redhat.com>
+> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Cc: Gavin Shan <gshan@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   tcg/optimize.c                    |  2 +-
->   tests/tcg/aarch64/test-2248.c     | 25 +++++++++++++++++++++++++
->   tests/tcg/aarch64/Makefile.target |  1 +
->   3 files changed, 27 insertions(+), 1 deletion(-)
->   create mode 100644 tests/tcg/aarch64/test-2248.c
+>  include/hw/boards.h        |  3 +++
+>  include/hw/i386/pc.h       |  3 +++
+>  hw/arm/virt.c              | 11 +++++++++--
+>  hw/core/machine.c          |  3 +++
+>  hw/i386/pc.c               |  3 +++
+>  hw/i386/pc_piix.c          | 17 ++++++++++++++---
+>  hw/i386/pc_q35.c           | 14 ++++++++++++--
+>  hw/m68k/virt.c             | 11 +++++++++--
+>  hw/ppc/spapr.c             | 17 ++++++++++++++---
+>  hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
+>  10 files changed, 83 insertions(+), 13 deletions(-)
+>
 
-
-> diff --git a/tests/tcg/aarch64/test-2248.c b/tests/tcg/aarch64/test-2248.c
-> new file mode 100644
-> index 0000000000..6cc20e3c6c
-> --- /dev/null
-> +++ b/tests/tcg/aarch64/test-2248.c
-> @@ -0,0 +1,25 @@
-
-   /* SPDX-License-Identifier: GPL-2.0-or-later */
-
-   /* See https://gitlab.com/qemu-project/qemu/-/issues/2248 */
-
-> +#include <assert.h>
-> +
-> +__attribute__((noinline))
-> +long test(long x, long y, long sh)
-> +{
-> +    long r;
-> +    asm("cmp   %1, %2\n\t"
-> +        "cset  x12, lt\n\t"
-> +        "and   w11, w12, #0xff\n\t"
-> +        "cmp   w11, #0\n\t"
-> +        "csetm x14, ne\n\t"
-> +        "lsr   x13, x14, %3\n\t"
-> +        "sxtb  %0, w13"
-> +        : "=r"(r)
-> +        : "r"(x), "r"(y), "r"(sh)
-> +        : "x11", "x12", "x13", "x14");
-> +    return r;
-> +}
-> +
-> +int main()
-> +{
-> +    long r = test(0, 1, 2);
-> +    assert(r == -1);
-> +    return 0;
-> +}
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
