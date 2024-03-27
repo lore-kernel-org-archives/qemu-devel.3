@@ -4,83 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4922DC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 16:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F25C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 16:20:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpVxW-0005j1-Lr; Wed, 27 Mar 2024 12:17:02 -0400
+	id 1rpW0i-0008EO-I5; Wed, 27 Mar 2024 12:20:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpVxK-0005ig-Cd
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 12:16:51 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rpVxI-0001Cj-Gm
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 12:16:50 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a44665605f3so826202666b.2
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 09:16:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711556206; x=1712161006; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=bAqfmPHU6eSgDittaGCcO2PKWOLIbl5GKHge5h2c9B8=;
- b=mxYYFUHWhbRdtlbbfbdu4ubQhtzTSiYLbCrVVLTMqMTgggZiawPv7Jm32k2tQcQAn1
- J5/Y39TUReVVhmgMQGheMlqcEX9xBG9iCQAnWgoLIEyc9Ih6jAySKRj3f7h08b/FhxOS
- clncU/e9C2m+bKgE+XOzVtZ/TziPYXLEKoeDn7PqB4FFp3Om/iImNVGGLR5EagMhj4zt
- LPFkD+ON0M+WjOQtIpYbTbkOsCQ06JchE1VGH0jSiAMHCPt3S4Hows5KBcXqnDWNjfIp
- fg8OqKtSBwaRVF/8jtqLrzXcNNIQIvHmhT7iGFNaxe/wzb8NH9o/+JDLqZE2fmhP7N3m
- Jhag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711556206; x=1712161006;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bAqfmPHU6eSgDittaGCcO2PKWOLIbl5GKHge5h2c9B8=;
- b=AEThr1xJrOWo3XVTQvwlJukDLQFHMWFrJlC5V5EQbqxChBKPihKd6EzAChWFQ5LU1i
- tCcZw6rg0KOKRi3uZc/K+ISqYOLRZmD5r/krWURrbhlTqS0Wew8bt7e0DNdI6M2kI/GS
- XTd6e15zIuPJVd//cyxOENz479OLMiKLb5j6jh4MP2lsDdcWHaSgOiozjrr9Tdyo3wvr
- Olt3fTd4amBDY79kOwYD7gLoM2p4/FI4ok2IW9U0UfFCY5ok5f42AVAQUvA00Z7er3k4
- v+QhZ9NyIGuOo6F8hMIMnEKQ9pn4/9cdmSTksr01h/buUW2wnCq5d7eOk+16uRKWJzzG
- HsiA==
-X-Gm-Message-State: AOJu0YxLSPmVA2iRsZ4c3bO0ck33utQbUOSEP8Dz9KwOcEXsroiB6MyX
- PwhIfWoPi7lIxHEXT6rdyfCNWDIipcCDcRUkeYX38lsZqX9tJvbhmjmHx3S80Ifq7c2OlS5ZPHW
- 8
-X-Google-Smtp-Source: AGHT+IF2O6fRs0xet58sOzEDdjg/Qlybe4aN7R6q42XZp/85TQJwOY2Q7pySU8mYUFMlIltmCGG4+w==
-X-Received: by 2002:a17:906:fac5:b0:a4e:30d:ee7d with SMTP id
- lu5-20020a170906fac500b00a4e030dee7dmr1426206ejb.12.1711556206076; 
- Wed, 27 Mar 2024 09:16:46 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.205.175])
- by smtp.gmail.com with ESMTPSA id
- e25-20020a170906845900b00a4673706b4dsm5631061ejy.78.2024.03.27.09.16.44
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 27 Mar 2024 09:16:45 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Fan Ni <fan.ni@samsung.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.0] hw/i386/pc: Restrict CXL to PCI-based machines
-Date: Wed, 27 Mar 2024 17:16:42 +0100
-Message-ID: <20240327161642.33574-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
+ (Exim 4.90_1) (envelope-from <SRS0=ScIh=LB=kaod.org=clg@ozlabs.org>)
+ id 1rpW0Y-00081g-HM; Wed, 27 Mar 2024 12:20:11 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=ScIh=LB=kaod.org=clg@ozlabs.org>)
+ id 1rpW0U-0001iU-2j; Wed, 27 Mar 2024 12:20:10 -0400
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4V4X1y6S87z4wcF;
+ Thu, 28 Mar 2024 03:19:50 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4V4X1t10K6z4wjF;
+ Thu, 28 Mar 2024 03:19:45 +1100 (AEDT)
+Message-ID: <365e7b19-3ed9-4739-934c-234f2338c3fd@kaod.org>
+Date: Wed, 27 Mar 2024 17:19:41 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/10] pnv/phb4: Mask off LSI Source-ID based on number of
+ interrupts
+To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com
+References: <20240321100422.5347-1-saif.abrar@linux.vnet.ibm.com>
+ <20240321100422.5347-11-saif.abrar@linux.vnet.ibm.com>
+ <26c7a63d-78fe-4378-b950-0673f0c96114@kaod.org>
+ <4777474d-fc4b-4ef1-8847-b6568bec4937@linux.vnet.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <4777474d-fc4b-4ef1-8847-b6568bec4937@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=ScIh=LB=kaod.org=clg@ozlabs.org; helo=gandalf.ozlabs.org
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,30 +70,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CXL is based on PCIe. In is pointless to initialize
-its context on non-PCI machines.
+On 3/27/24 10:59, Saif Abrar wrote:
+> Hello Cedric,
+> 
+>>   }
+>>   +static void pnv_phb4_fund_A_reset(PnvPHB4 *phb)
+>>
+>> What is fund_A ?
+> 
+> I used 'fund_A' as an abbreviation to "Fundamental Register Set A".
+> 
+> Please let know if you suggest another abbreviation to name this method.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/i386/pc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+pnv_phb4_reset_xsrc may be ?
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index e80f02bef4..5c21b0c4db 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1738,7 +1738,9 @@ static void pc_machine_initfn(Object *obj)
-     pcms->pcspk = isa_new(TYPE_PC_SPEAKER);
-     object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
-                               OBJECT(pcms->pcspk), "audiodev");
--    cxl_machine_init(obj, &pcms->cxl_devices_state);
-+    if (pcmc->pci_enabled) {
-+        cxl_machine_init(obj, &pcms->cxl_devices_state);
-+    }
- 
-     pcms->machine_done.notify = pc_machine_done;
-     qemu_add_machine_init_done_notifier(&pcms->machine_done);
--- 
-2.41.0
+
+Thanks,
+
+C.
+
+> 
+>>> +{
+>>> +    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
+>>
+>> Is this mask the default value for HW ?
+> Yes, the spec defines the bits[04:12] of LSI Source ID having reset value: 0x1FF
+> 
+> 
+> Regards,
+> 
+> Saif
+> 
+> 
+> On 25-03-2024 07:04 pm, Cédric Le Goater wrote:
+>> On 3/21/24 11:04, Saif Abrar wrote:
+>>> Add a method to reset the value of LSI Source-ID.
+>>> Mask off LSI source-id based on number of interrupts in the big/small PHB.
+>>
+>> Looks ok.
+>>
+>>
+>>> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+>>> ---
+>>>   hw/pci-host/pnv_phb4.c | 10 ++++++++--
+>>>   1 file changed, 8 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+>>> index f48750ee54..8fbaf6512e 100644
+>>> --- a/hw/pci-host/pnv_phb4.c
+>>> +++ b/hw/pci-host/pnv_phb4.c
+>>> @@ -489,6 +489,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
+>>>         lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
+>>>       lsi_base <<= 3;
+>>> +    lsi_base &= (xsrc->nr_irqs - 1);
+>>>         /* TODO: handle reset values of PHB_LSI_SRC_ID */
+>>>       if (!lsi_base) {
+>>> @@ -1966,6 +1967,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
+>>>       /* TODO: Add more RO-masks as regs are implemented in the model */
+>>>   }
+>>>   +static void pnv_phb4_fund_A_reset(PnvPHB4 *phb)
+>>
+>> What is fund_A ?
+>>
+>>> +{
+>>> +    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
+>>
+>> Is this mask the default value for HW ?
+>>
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+>>> +    pnv_phb4_update_xsrc(phb);
+>>> +}
+>>> +
+>>>   static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
+>>>   {
+>>>       STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+>>> @@ -2023,6 +2030,7 @@ static void pnv_phb4_reset(void *dev)
+>>>       pnv_phb4_cfg_core_reset(phb);
+>>>       pnv_phb4_pbl_core_reset(phb);
+>>>   +    pnv_phb4_fund_A_reset(phb);
+>>>       pnv_phb4_err_reg_reset(phb);
+>>>       pnv_phb4_pcie_stack_reg_reset(phb);
+>>>       pnv_phb4_regb_err_reg_reset(phb);
+>>> @@ -2102,8 +2110,6 @@ static void pnv_phb4_realize(DeviceState *dev, Error **errp)
+>>>           return;
+>>>       }
+>>>   -    pnv_phb4_update_xsrc(phb);
+>>> -
+>>>       phb->qirqs = qemu_allocate_irqs(xive_source_set_irq, xsrc, xsrc->nr_irqs);
+>>>         pnv_phb4_xscom_realize(phb);
+>>
 
 
