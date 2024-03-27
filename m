@@ -4,54 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA19C54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 13:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16090C47DD9
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 13:28:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpTKU-0001Di-ON; Wed, 27 Mar 2024 09:28:35 -0400
+	id 1rpTKA-000181-Of; Wed, 27 Mar 2024 09:28:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rpTKS-0001Cv-54
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:28:32 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1rpTKO-0005ij-J8
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:28:31 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4V4SBy2Dp1z6J6dZ;
- Wed, 27 Mar 2024 21:27:22 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 193F5140D1D;
- Wed, 27 Mar 2024 21:28:16 +0800 (CST)
-Received: from localhost (10.202.227.76) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.35; Wed, 27 Mar
- 2024 13:28:15 +0000
-Date: Wed, 27 Mar 2024 13:28:14 +0000
-To: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-CC: <fan.ni@samsung.com>, <qemu-devel@nongnu.org>, <caoqq@fujitsu.com>
-Subject: Re: [PATCH] mem/cxl_type3: fix hpa to dpa logic
-Message-ID: <20240327132814.000057c7@Huawei.com>
-In-Reply-To: <20240327014653.26623-1-yaoxt.fnst@fujitsu.com>
-References: <20240327014653.26623-1-yaoxt.fnst@fujitsu.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rpTK9-00017h-Po
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:28:13 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1rpTK8-0005i5-6k
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 09:28:13 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-56c08d1e900so4461011a12.3
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 06:28:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711546090; x=1712150890; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TitztqS/oML4BOLgIpb5h6Tok73IYxEQW3Ngsz1nAYM=;
+ b=s6M5hVzFWp7xP39KdNW0LOkGJejRgPpD9YMuzi3rp0zULJtiKlu7rv6yGDo7TKsYk7
+ f505dDf+zUjTrf1/Od7Nxthz4Ky6+A2zYqMA7H5SCDr6/dNztNeCjlraVG7kQad4/w8P
+ hYF8eQ6CXXpoPnzn4ghqiVoVfHrdC7cnCZzEW6xOzRbNh2OCmi/L+5Gca0KCE+On9TvG
+ B0AigMqKPGqwhBEap/kzk1OnaYbV3uWwzHA8LpmaaaELjcjPMvODWvo1HFVWTI04A3Tb
+ SfsCtRND3kemGmqCEuDy2j+qG8J4JqMx0f+iJv3CfUcGXC2ZCnMWPzc3gnesql7GjB08
+ 7CzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711546090; x=1712150890;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TitztqS/oML4BOLgIpb5h6Tok73IYxEQW3Ngsz1nAYM=;
+ b=q2VIysZ6AOVncHefI+8PdZqXM9BCGohxuh6koUQwZAzEHrCydVZ3ASeML9qnqQm6aU
+ Ajix2ORao+b1NT9bRu9LeqDlZcGdc834yN1iLXpL7fLW5oRmvhWakjJ/A1x0KmK61pED
+ 65YTRKGrrqHIktTAj1E52lkii749BUlm+ELZX5xYQYx+9reRDyPosRIZvDQ2Qbn9cdKk
+ JwoftgY+4FAZho0hXG4rZFsBXYIHsBWUA89A5BiG7RyIfQsgmK4WiTwfLP9hv0wgbo1q
+ PmqwYM62hhv261Vi70Y+/RRyvNKSorPElQHZUHTpLCMXmGV8OdQqIvNC8zArCbOEgkUP
+ 1TtA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXvInMnc83uPRWE6fohBHQrFPJ+/yT2M0TjUF463jUY1d62/uuM4P4fn5xhln+bke5WemCiYBkF31MqAnMsMJEBWOVi8Zc=
+X-Gm-Message-State: AOJu0YxcpKqRWANm5mzOsfNkNFcgBfn5MBsM+GROoIwj0xd31wB3Kkqd
+ oL9s07HtOxmC07KBabexaCOoisdjUykRqLgjvgREG0TQB5R66+Am062uHVkbM4AngeupKp8kQn6
+ zSZrU02FOtP982BjuIhRC+22KP7I+LX4GrLiEnw==
+X-Google-Smtp-Source: AGHT+IGNq1+ftX5LbkdkZcSnLQCAhD6g3naPeP7IPh0hp5Ewlu2m4BDCVPlWnTc2iPcXB3gF4R9+Q3H6HgWoNGrA81U=
+X-Received: by 2002:a50:bae2:0:b0:568:b702:e0d3 with SMTP id
+ x89-20020a50bae2000000b00568b702e0d3mr4021319ede.21.1711546090361; Wed, 27
+ Mar 2024 06:28:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.202.227.76]
-X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+References: <20240326125104.90103-1-imammedo@redhat.com>
+ <a4a0bb13-d6a0-4665-810d-ecd9a9fb89b1@redhat.com>
+ <8dbba6ae-5910-4a62-9a08-a56e20dfb480@linaro.org>
+ <20240326171632.3cc7533d@imammedo.users.ipa.redhat.com>
+ <ZgP5x3ECYGevla1-@redhat.com>
+ <20240327140917.69d86539@imammedo.users.ipa.redhat.com>
+ <ZgQdjX_G9FzpOx6n@redhat.com>
+In-Reply-To: <ZgQdjX_G9FzpOx6n@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 27 Mar 2024 13:27:58 +0000
+Message-ID: <CAFEAcA-K30KZndNK-sfUKjsE7ATMNpNUgpPZY-5YEpxL3BoeLA@mail.gmail.com>
+Subject: Re: [PATCH for-9.0] docs/about: Mark the iaspc machine type as
+ deprecated
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
+ Bernhard Beschow <shentey@gmail.com>, pbonzini@redhat.com,
+ devel@lists.libvirt.org, 
+ richard.henderson@linaro.org, mst@redhat.com, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,81 +100,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 26 Mar 2024 21:46:53 -0400
-Yao Xingtao <yaoxt.fnst@fujitsu.com> wrote:
+On Wed, 27 Mar 2024 at 13:23, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> On Wed, Mar 27, 2024 at 02:09:17PM +0100, Igor Mammedov wrote:
+> > On Wed, 27 Mar 2024 10:49:43 +0000
+> > Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+> > It's question of whether we are willing to do unthinkable,
+> > i.e. to break QEMU <-> guest ABI for isapc case by removing
+> > corresponding fwcfg entries.
+>
+> There has never been any ABI stability requirement for 'isapc'
+> as it is not a versioned machine type.
+>
+> > With migration ignored it shouldn't be a problem.
+> > Question is: does anyone care about migration with isapc?
+> > If not, I'd gladly axe smbios legacy parts in 9.1
+>
+> Migration is irrelevant unless someone steps forward to
+> commit to long term versioning of the machine type.
 
-> In 3, 6, 12 interleave ways, we could not access cxl memory properly,
-> and when the process is running on it, a 'segmentation fault' error will
-> occur.
-> 
-> According to the CXL specification '8.2.4.20.13 Decoder Protection',
-> there are two branches to convert HPA to DPA:
-> b1: Decoder[m].IW < 8 (for 1, 2, 4, 8, 16 interleave ways)
-> b2: Decoder[m].IW >= 8 (for 3, 6, 12 interleave ways)
-> 
-> but only b1 has been implemented.
-> 
-> To solve this issue, we should implement b2:
->   DPAOffset[51:IG+8]=HPAOffset[51:IG+IW] / 3
->   DPAOffset[IG+7:0]=HPAOffset[IG+7:0]
->   DPA=DPAOffset + Decoder[n].DPABase
-> 
-> Links: https://lore.kernel.org/linux-cxl/3e84b919-7631-d1db-3e1d-33000f3f3868@fujitsu.com/
-> Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+But migration is also how we implement savevm/loadvm,
+which are useful even when the machine type is not versioned.
+So please don't put in migration blockers or similar that would
+break that.
 
-Not implementing this was intentional (shouldn't seg fault obviously) but
-I thought we were not advertising EP support for 3, 6, 12?  The HDM Decoder
-configuration checking is currently terrible so we don't prevent
-the bits being set (adding device side sanity checks for those decoders
-has been on the todo list for a long time).  There are a lot of ways of
-programming those that will blow up.
-
-Can you confirm that the emulation reports they are supported.
-https://elixir.bootlin.com/qemu/v9.0.0-rc1/source/hw/cxl/cxl-component-utils.c#L246
-implies it shouldn't and so any software using them is broken.
-
-The non power of 2 decodes always made me nervous as the maths is more
-complex and any changes to that decode will need careful checking.
-For the power of 2 cases it was a bunch of writes to edge conditions etc
-and checking the right data landed in the backing stores.
-
-Joanthan
-
-
-> ---
->  hw/mem/cxl_type3.c | 15 +++++++++++----
->  1 file changed, 11 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index b0a7e9f11b..2c1218fb12 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -805,10 +805,17 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
->              continue;
->          }
->  
-> -        *dpa = dpa_base +
-> -            ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
-> -             ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)
-> -              >> iw));  
-> +        if (iw < 8) {
-> +            *dpa = dpa_base +
-> +                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
-> +                 ((MAKE_64BIT_MASK(8 + ig + iw, 64 - 8 - ig - iw) & hpa_offset)
-> +                  >> iw));
-> +        } else {
-> +            *dpa = dpa_base +
-> +                ((MAKE_64BIT_MASK(0, 8 + ig) & hpa_offset) |
-> +                 ((((MAKE_64BIT_MASK(ig + iw, 64 - ig - iw) & hpa_offset)
-> +                   >> (ig + iw)) / 3) << (ig + 8)));
-> +        }
->  
->          return true;
->      }
-
+thanks
+-- PMM
 
