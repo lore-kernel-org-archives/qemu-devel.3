@@ -4,137 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43E7EC54E67
-	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 15:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6E81C54E67
+	for <qemu-devel@archiver.kernel.org>; Wed, 27 Mar 2024 15:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpVNb-0003bR-6T; Wed, 27 Mar 2024 11:39:55 -0400
+	id 1rpVOD-0004AW-L8; Wed, 27 Mar 2024 11:40:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpVNX-0003b0-Li
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:39:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rpVOC-0004AA-Gw
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:40:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpVNV-0000nH-MK
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:39:51 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1rpVOA-00013k-VY
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 11:40:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711553988;
+ s=mimecast20190719; t=1711554029;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BBAasgwby3nhSMNRtJarAKThk3fu2tqFH1Faqc1cxZk=;
- b=KxrAAXInKjFHtk/gtxCU4KvwU2vUrM87BISzPdrTR0tHDGKAEB4dRvtqftuX+wOPSNtlZa
- v7f+ZNTp9qi7eU4SyV2bupfBc7xHTSnjluKY4bixTfJMfWf9wHzc7xHl5BbNPBX7RX9+3n
- lNYK4zEPa8Jf4TkYCseIuclYKZ0LN+Y=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=jd2kzX9bY5VToVoZrifZ4A7pscMiI3zgmIk6ytk44MA=;
+ b=a+mnlO2N7po6w5jGiR9q+F0f5d3flL+uhgkw8X6kvG2rFFeCFN72ApzCYaNwQgMSr/XUK+
+ bFUNCvZe8Cftt/GOXSeCVGPJQLfqK0iM17oNVFIKdjItX6AYH5MU4Fb/Nx44xVAgagMeo7
+ 1mrlb565E36kTTGOkdqH3paEqwJ6j70=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-652-2Zw0HFrNObGdfCNcjxjcmg-1; Wed, 27 Mar 2024 11:39:45 -0400
-X-MC-Unique: 2Zw0HFrNObGdfCNcjxjcmg-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-78a7495b2faso22792185a.1
- for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 08:39:45 -0700 (PDT)
+ us-mta-497-Tu6DPtP-P6me2sOmLd3Mkw-1; Wed, 27 Mar 2024 11:40:27 -0400
+X-MC-Unique: Tu6DPtP-P6me2sOmLd3Mkw-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-56c3dc8d331so455448a12.2
+ for <qemu-devel@nongnu.org>; Wed, 27 Mar 2024 08:40:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711553985; x=1712158785;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1711554026; x=1712158826;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BBAasgwby3nhSMNRtJarAKThk3fu2tqFH1Faqc1cxZk=;
- b=unEzvirtF8DoIW/dJ222al2vVvPrjoUTx+7JE/X99A7uMJ/9cUMVquH5XKov52q1Cb
- a+UO+6WiLd6pl2jDhB+wgKWPNFEPnMjjERnW3TbD/GybWsFpIB1RAMTwFvjvVSzeE2K4
- YLI1YJJe3zSiVN9oVCwT+dFmbWqZuYqGcSOYeFdPsKqVjxrsmlxS2CHVx4O//11hyMDp
- RSTBW7h/Y4V6HYvDFV159kCe06IrZ5mcvj6y65UbX5mkw5GLYCw7rrGcS0sWlSEkOhjy
- No8KdAEC/EWxS3Q2dnOY4fPjeO8EMJ6HTdaM8yQSc6DFe1lvNmmAv9ppBtFRFCYeQ1Iq
- jPYA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWVgIFEg1qzZ+M3AXMAOIVu0pKciEQXfOQHQPXpRC87+USRlIoHkGaxEXX0ncXceOsXzbcYqMse2/N3tF+/nR0QZgrLSoQ=
-X-Gm-Message-State: AOJu0YyfUWbUrD8Ia+dtHobjEFmTFEBDJXmCOGQj7IqH3RPy6Cd4aUCQ
- XUg5jlxsOHzFgTxkNZ7CfMCZQ67T5AG2z+xohvyOnFY5uA8ln+JEe3oH8rjC93uIRAEqaiFdXcz
- ovruTqmQxnqpzmE3EkZvXfJSmemGITSSFnSmdYvcykwJAHN91OKwb
-X-Received: by 2002:a05:620a:4fc:b0:788:254b:de89 with SMTP id
- b28-20020a05620a04fc00b00788254bde89mr1688327qkh.17.1711553985190; 
- Wed, 27 Mar 2024 08:39:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEUvy5v6zw7/+2XQKQBQqO5Fd9H86BMAfbQ0gh9Kcdg2DCwGpW7F/pBuW7qPCH0H8rYZ4Sktw==
-X-Received: by 2002:a05:620a:4fc:b0:788:254b:de89 with SMTP id
- b28-20020a05620a04fc00b00788254bde89mr1688300qkh.17.1711553984893; 
- Wed, 27 Mar 2024 08:39:44 -0700 (PDT)
-Received: from [192.168.0.9] (ip-109-43-177-37.web.vodafone.de.
- [109.43.177.37]) by smtp.gmail.com with ESMTPSA id
- k11-20020a05620a0b8b00b0078a69ec3790sm1066594qkh.117.2024.03.27.08.39.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Mar 2024 08:39:44 -0700 (PDT)
-Message-ID: <49052bf6-658f-4bec-a9da-794670da3706@redhat.com>
-Date: Wed, 27 Mar 2024 16:39:38 +0100
+ bh=jd2kzX9bY5VToVoZrifZ4A7pscMiI3zgmIk6ytk44MA=;
+ b=OlhVr+1BE1/u696+QPgOQG3tGDg81WhsPkxiNo3hzPPJeAwspSL4MqPBzLymMr8P8H
+ 5k+tlFpkczRnEO2V2B6HfbF+ErhrHTwI15SQsUhTD0nCA1uUlvr9gQAAzy9V/f9vBt1y
+ xK+xXbM44oBFV4TgzRElDa8v+PmCljYAKk9p8svcjt+HDB5943JOx9QcItOY7ngF1Gfu
+ juuLAucVSghsYjMuO+tz41pcFi8+RSuSPz5zjn0a9OdwF3dwOn65cXsLqmRjrI2HeLJJ
+ mc/pjoxm0iPnTYN8k06T+48FIQn1lZIrBrYfQDqIw3iN58tQDRQRDbFz1GJrnet9mGpG
+ rbmQ==
+X-Gm-Message-State: AOJu0YxB2AC6AOOiO3pT4IA3nnhY5HZW0+hL9+4JpFogp64+YLJgFuO7
+ dSECppRUi7sos1qE96dL1jscJNPLzH0VkvqFY8P3CX/Vv6fAv6t263mk8gPdR0ZEgjU8UYwEpMO
+ /9zxLiBEtvKRd/lLQDZ72wf54uBWfyQz7dX06uqa8gpBxqKjhHnBe
+X-Received: by 2002:a50:d71a:0:b0:565:59a:a103 with SMTP id
+ t26-20020a50d71a000000b00565059aa103mr120234edi.33.1711554026691; 
+ Wed, 27 Mar 2024 08:40:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGphzzZ//KuVgjdI90S4/edNsUSOnXhE/xdsqDEoljPeE57nFAeMhVuszu4PlHVcna/EbiY4A==
+X-Received: by 2002:a50:d71a:0:b0:565:59a:a103 with SMTP id
+ t26-20020a50d71a000000b00565059aa103mr120213edi.33.1711554026306; 
+ Wed, 27 Mar 2024 08:40:26 -0700 (PDT)
+Received: from sgarzare-redhat (host-87-12-25-33.business.telecomitalia.it.
+ [87.12.25.33]) by smtp.gmail.com with ESMTPSA id
+ i35-20020a0564020f2300b0056c4a35dbeesm155111eda.49.2024.03.27.08.40.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 27 Mar 2024 08:40:25 -0700 (PDT)
+Date: Wed, 27 Mar 2024 16:40:20 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ gmaglione@redhat.com, Eric Blake <eblake@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>,
+ stefanha@redhat.com, Coiby Xu <Coiby.Xu@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Igor Mammedov <imammedo@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ Raphael Norwitz <raphael@enfabrica.net>, slp@redhat.com, 
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Brad Smith <brad@comstyle.com>, 
+ qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH for-9.1 v2 09/11] hostmem: add a new memory backend based
+ on POSIX shm_open()
+Message-ID: <dsjlixhniz2z7i7ku5u2wwxgqpwhgpntwiauujkj352psrfwtn@7krwrc5wkktq>
+References: <20240326133936.125332-1-sgarzare@redhat.com>
+ <20240326133936.125332-10-sgarzare@redhat.com>
+ <462b8b02-5585-45b9-b725-27b8c84d0d1d@redhat.com>
+ <ymzdrrltjqubqydcyu4sygcx3g3tfqqkwgziopfisjd2aanlrb@vmufyrqdmkqf>
+ <9573d288-257e-4e1b-9721-c7799db01190@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1] target/nios2: Remove machines and system emulation
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Chris Wulff <crwulff@gmail.com>, devel@lists.libvirt.org,
- Marek Vasut <marex@denx.de>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Peter Maydell
- <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-References: <20240327123554.3633-1-philmd@linaro.org>
- <7aad7197-21f3-4c0e-931c-2eb4febdf94a@linaro.org>
- <fb28d3b0-1ab9-4423-80ef-03a285cf02d7@redhat.com>
- <14787bbb-e6cc-45bd-bb5d-1fb3fee5a60f@linaro.org>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <14787bbb-e6cc-45bd-bb5d-1fb3fee5a60f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <9573d288-257e-4e1b-9721-c7799db01190@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -142,7 +101,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,57 +117,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/03/2024 15.15, Philippe Mathieu-Daudé wrote:
-> On 27/3/24 14:19, Thomas Huth wrote:
->> On 27/03/2024 13.45, Philippe Mathieu-Daudé wrote:
->>> On 27/3/24 13:35, Philippe Mathieu-Daudé wrote:
->>>> Remove the Nios II machines and the system emulation code
->>>> (deprecated since v8.2 in commit 9997771bc1 "target/nios2:
->>>> Deprecate the Nios II architecture").
->>
->> Please remind me, why didn't we deprecate the linux-user emulation, too?
-> 
-> Hmm I think we actually did (overall target), since there is
-> an issue with signals.
-
-The placement in the deprecated.rst file seems a bit unfortunate in that 
-case, since the subchapter is called "System emulator CPUs" ?
-
-Anyway, I just saw your v2, so let's continue discussion there...
-
->>>> diff --git a/hw/nios2/Kconfig b/hw/nios2/Kconfig
->>>> deleted file mode 100644
->>>> index 4748ae27b6..0000000000
->>>> --- a/hw/nios2/Kconfig
->>>> +++ /dev/null
->>>> @@ -1,13 +0,0 @@
->>>> -config NIOS2_10M50
->>>> -    bool
->>>> -    select NIOS2
->>>> -    select SERIAL
->>>> -    select ALTERA_TIMER
+On Wed, Mar 27, 2024 at 12:51:51PM +0100, David Hildenbrand wrote:
+>On 27.03.24 11:23, Stefano Garzarella wrote:
+>>On Tue, Mar 26, 2024 at 03:45:52PM +0100, David Hildenbrand wrote:
+>>>>+    mode = 0;
+>>>>+    oflag = O_RDWR | O_CREAT | O_EXCL;
+>>>>+    backend_name = host_memory_backend_get_name(backend);
+>>>>+
+>>>>+    /*
+>>>>+     * Some operating systems allow creating anonymous POSIX shared memory
+>>>>+     * objects (e.g. FreeBSD provides the SHM_ANON constant), but this is not
+>>>>+     * defined by POSIX, so let's create a unique name.
+>>>>+     *
+>>>>+     * From Linux's shm_open(3) man-page:
+>>>>+     *   For  portable  use,  a shared  memory  object should be identified
+>>>>+     *   by a name of the form /somename;"
+>>>>+     */
+>>>>+    g_string_printf(shm_name, "/qemu-" FMT_pid "-shm-%s", getpid(),
+>>>>+                    backend_name);
 >>>
->>> I forgot to mention I deliberately chose to keep the Altera
->>> timer model in the tree, since it looks like a re-usable
->>> IP component.
+>>>Hm, shouldn't we just let the user specify a name, and if no name was
+>>>specified, generate one ourselves?
 >>
->> But if it is not used anymore by any machine, this will happily bitrot, 
->> won't it? I think I'd rather remove it, too ... maybe in a separate patch, 
->> so that in case somebody later needs it again, it can be restored by 
->> simply reverting the patch again.
-> 
-> It is related to dynamic machines, how do we decide what components
-> to remove once there? I suppose we'd need to deprecate every single
-> component, like ALTERA_TIMER. But we are not yet generating dynamic
-> machines, so for now we can consider ALTERA_TIMER part of Nios II
-> sysemu removal. I like your idea of removing it as a separate patch.
+>>I thought about it and initially did it that way, but then some problems
+>>came up so I tried to keep it as simple as possible for the user and for
+>>our use case (having an fd associated with memory and sharing it with
+>>other processes).
+>>
+>>The problems I had were:
+>>
+>>- what mode_t to use if the object does not exist and needs to be
+>>    created? >
+>>- exclude O_EXCL if the user passes the name since they may have already
+>>    created it?
+>
+>I'd handle both like we handle files. But I understand now that you 
+>really just want to "simulate" memfd.
 
-Even if we switch to dynamic machines one day, the devices still need to be 
-somehow used and tested in the CI, e.g. by scripts that assemble a machine 
-dynamically. If there's a device that is never used at all, we can also 
-simply remove it until someone needs it again, I think.
+Right, maybe I should write that in the commit message and 
+documentation.
 
-  Thomas
+>
+>>
+>>- call shm_unlink() only at object deallocation?
+>
+>Right, we don't really do that for ordinary files, they keep existing. 
+>We only have the "discard-data" property to free up memory.
+>
+>For memfd, it just happens "automatically". They cannot be looked up 
+>by name, and once the last user closes the fd, it gets destroyed.
 
+Yep, I see.
+
+>
+>>
+>>So I thought that for now we only support the "anonymous" mode, and if
+>>in the future we have a use case where the user wants to specify the
+>>name, we can add it later.
+>
+>Okay, so for now you really only want an anonymous fd that behaves like 
+>a memfd, got it.
+>
+>Likely we should somehow fail if the "POSIX shared memory object" 
+>already exists. Hmm.
+
+`O_CREAT | O_EXCL` should provide just this behavior.
+ From shm_open(3) manpage:
+
+     O_EXCL  If O_CREAT was also specified, and a shared memory object
+             with the given name already exists, return an error.  The
+             check for the existence of the object, and its creation if
+             it does not exist, are performed atomically.
+
+>
+>>
+>>That said, if you think it's already useful from the beginning, I can
+>>add the name as an optional parameter.
+>>
+>>>
+>>>I'm also not quite sure if "host_memory_backend_get_name()" should be
+>>>used for the purpose here.
+>>
+>>What problem do you see? As an alternative I thought of a static
+>>counter.
+>
+>If it's really just an "internal UUID", as we'll remove the file using 
+>shm_unlink(), then the name in fact shouldn't matter and this would be 
+>fine. Correct?
+
+Right. It's a name that will only "appear" in the system for a very 
+short time since we call shm_unlink() right after shm_open(). So I just 
+need the unique name to prevent several QEMUs launched at the same time 
+from colliding with the name.
+
+>
+>So I assume if we ever want to have non-anonymous fds here, we'd pass 
+>in a new property "name", and change the logic how we open/unlink.  
+>Makes sense.
+
+Exactly! I can clarify this in the commit description as well.
+
+Thanks for the helpful comments!
+If there is anything I need to change for v3, please tell me ;-)
+
+Stefano
 
 
