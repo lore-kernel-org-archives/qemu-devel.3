@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52C14CD1283
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA829CD11DD
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:57:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rps7d-0005EA-MN; Thu, 28 Mar 2024 11:56:57 -0400
+	id 1rps7a-00050d-5G; Thu, 28 Mar 2024 11:56:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7L-0004aW-DN
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:44 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7F-0004Yw-QL
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:37 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7J-0002Ve-JZ
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:39 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5684db9147dso1315132a12.2
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:56:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7D-0002Tc-NN
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:33 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-a46a7208eedso167670066b.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:56:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711641396; x=1712246196; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711641389; x=1712246189; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mvS5b4mOvRgBMXReEbw8mHkHwY6O9r1j8WjPX6hg3zo=;
- b=yQG8nxLXUsIhy97Z2qz79nI0mLusIbLwc+Tc7VKe9VPE5pjS7zcap8QMh/mRsgQ7ZW
- acP9BMOTPrkud7/D6oBuEc1L2r5a5l251CNJBuEPpK5XPAR6u4YFFSu0M9y8jW5DY0O9
- kxbkfknwbJHfpemXOJliVEk7jYjWp/xYTqjiDZEz+LLPOiRfj1FVFqyHSKiq1YmKdqSq
- 9Tqy9Ud7x9iVzK9SFA+CDY4/TN5fMzEsKrOy5K91FfLbfKXxTdRKvUZNXqJ0vDKB3zaO
- lXlcafmrg5JxBDvJYar9mQ1DzP0DHsPzM7OJpT00yKMhe56EOl3KvBgDjAixyPv/TJSt
- QJVQ==
+ bh=yelmGOzPahdn50NTFTioUrFj9NGQyALSAi158EJljHU=;
+ b=krvbD78ORnBdXZmJ3OmYQFXUSF7dNlymbl08eDUGLTjroCPPWdUAqYsv540u7Dd9hy
+ S3zp5u2sAbn1rK6MxiEwGyfbx/4MLf1rPGKoO2QHs8VfTmNE1G33Q54DH5pcr08ViTX1
+ NLrXAL3xlvddf0otKio5moqPtjXJ6eO+Pf8D9oee4cBZHRwvhkwSL2KGvLl1o3o8V+jr
+ OrN/Nd4vnB62IMuGE+IlE/jNX1mhHSVOlz0f2wfmZc8OHSQUZt4sbOQgiCj0VwtuyOWu
+ 1xyUM3QgMO8ccL7saSfLVKdaIubAtgfBs7q4nC0U4Y0vmTDwL6itkG7gfjDPPHJ4LDsZ
+ xmVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711641396; x=1712246196;
+ d=1e100.net; s=20230601; t=1711641389; x=1712246189;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mvS5b4mOvRgBMXReEbw8mHkHwY6O9r1j8WjPX6hg3zo=;
- b=nUQi8Dbz3W+CzXeMtTtAaMso+TV57+lNUGnfwKEb2RrO3fXo8BIfst3I0FToGm3ykB
- R2CyeZ3ASRGEENnI1bKiRGj/IJ27JzYAdf9PZdx410g242VnIc4nz3xMDqVywLrjN09V
- Y/Xfo0FYLnqxL+V6y+dvbatN4gIay+yukJMgdGtrtqEhJt6VrI9C9pJaadBemC/1FEsJ
- nti/iPkpj2pDy2XuWtpS5Gxm+FROT2jlgO09DYRg3Ll00xPTqu8ohO2tlFGShONwj0Qp
- dYS8ZsENXvIFEKyt/DhquCSqdbNfcpmxN/Q9X2zX2xMlVGJ6P83U48xLSOLBJ1Gf1k5J
- RkhQ==
-X-Gm-Message-State: AOJu0Yxm5KRxtBAtDz7IZLFNtP4IVQzZ0OFbYuyoHAxxGMisky5LA87r
- NJAoTUs+cRf0T3pBr7Cel8b/H8M6/6g98p01sqRlzR16TSO5UZ6qPP1D9pGB+Vayej/xF+rR0pS
- +
-X-Google-Smtp-Source: AGHT+IHfWPHo1qaEN4DNEm3R8wOVj4A4iUDXGogGmGPb4Wx0aiRPAERFSIayiOeRYDhmlaAPcH41sw==
-X-Received: by 2002:a50:d6d7:0:b0:568:a9f3:b3fb with SMTP id
- l23-20020a50d6d7000000b00568a9f3b3fbmr2267809edj.8.1711641395712; 
- Thu, 28 Mar 2024 08:56:35 -0700 (PDT)
+ bh=yelmGOzPahdn50NTFTioUrFj9NGQyALSAi158EJljHU=;
+ b=PDs3kENHk62nCRY+EWjBqGWtIgiR5QTqUd8lm1kx0s1kOFr0K/qVE3g7Jq8NPinEDq
+ Mb5t3UlUR+L12W+xMcMy2J5PZlOhOwZKHS1rz+0ycxdrYShO4XpUxOWRk+PbYFwroA00
+ yxIOeV+wFlhCaU5U7o0Qy3roueZ6qTvaK+3CPzNtdS0J1+QyI2v3Gr0BnaFS7OctJV+u
+ YOoeo54OcEOS8oIOsi4aqncE5XiuD0PVSBhJ6UWiLqPG8YOou8b8PJmabMS6pK9BHYZC
+ 9eY0s6/dmu1HhH3n7DQyJrYObxMlDbxQkp+0DW/5N9cFAhl04oxBD68y3R9maqzRAEC1
+ myPA==
+X-Gm-Message-State: AOJu0YwKCyFoU0y7miYmWZVlxS0dlhMuWtd8yWGf4oPbH5HOM6+Lf/Z2
+ TU26R+5VDJOJqD1qjEKlUw1V8fH7f+YEACY2Y59OePphVQxTq8ay9gMNya8I2/3aJewv+crRbEJ
+ i
+X-Google-Smtp-Source: AGHT+IGcQH5U/UKgHXGMsAIRXVS3RWDUx0CNeskq1nCdFHfYMz7G0o34lBWrByXcqIlMAc9p2yI9yQ==
+X-Received: by 2002:a17:906:e24e:b0:a4d:fc83:70e1 with SMTP id
+ gq14-20020a170906e24e00b00a4dfc8370e1mr2038052ejb.56.1711641389600; 
+ Thu, 28 Mar 2024 08:56:29 -0700 (PDT)
 Received: from m1x-phil.lan (pas38-h02-176-184-5-52.dsl.sta.abo.bbox.fr.
  [176.184.5.52]) by smtp.gmail.com with ESMTPSA id
- l13-20020a056402028d00b0056bfa6ad5eesm959518edv.91.2024.03.28.08.56.34
+ c12-20020a170906170c00b00a47464a6ee4sm907178eje.173.2024.03.28.08.56.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 Mar 2024 08:56:35 -0700 (PDT)
+ Thu, 28 Mar 2024 08:56:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -70,17 +70,17 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anthony Perard <anthony.perard@citrix.com>,
  Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH-for-9.1 18/29] hw/i386/pc: Inline has_reserved_memory()
-Date: Thu, 28 Mar 2024 16:54:26 +0100
-Message-ID: <20240328155439.58719-19-philmd@linaro.org>
+Subject: [RFC PATCH-for-9.1 17/29] hw/i386/pc: Inline gigabyte_align()
+Date: Thu, 28 Mar 2024 16:54:25 +0100
+Message-ID: <20240328155439.58719-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240328155439.58719-1-philmd@linaro.org>
 References: <20240328155439.58719-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,115 +103,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All PCI-based machines have the has_reserved_memory
-field set to %true. Simplify by using an inlined helper
+All PCI-based machines have the gigabyte_align field
+set to %true. Simplify by using an inlined helper
 checking whether the machine is PCI-based or not.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/pc.h |  1 -
- hw/i386/pc.c         | 17 ++++++++++-------
- hw/i386/pc_piix.c    |  1 -
- 3 files changed, 10 insertions(+), 9 deletions(-)
+ include/hw/i386/pc.h |  9 ---------
+ hw/i386/pc.c         |  1 -
+ hw/i386/pc_piix.c    | 16 +++++++++++++---
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 758dd5f29b..df4c813854 100644
+index 2db2aa03d3..758dd5f29b 100644
 --- a/include/hw/i386/pc.h
 +++ b/include/hw/i386/pc.h
-@@ -91,7 +91,6 @@ typedef struct PCMachineClass {
+@@ -76,14 +76,6 @@ typedef struct PcPciMachineState {
+ 
+ /**
+  * PCMachineClass:
+- *
+- * Compat fields:
+- *
+- * @gigabyte_align: Make sure that guest addresses aligned at
+- *                  1Gbyte boundaries get mapped to host
+- *                  addresses aligned at 1Gbyte boundaries. This
+- *                  way we can use 1GByte pages in the host.
+- *
+  */
+ typedef struct PCMachineClass {
+     X86MachineClass parent_class;
+@@ -99,7 +91,6 @@ typedef struct PCMachineClass {
      SmbiosEntryPointType default_smbios_ep_type;
  
      /* RAM / address space compat: */
--    bool has_reserved_memory;
+-    bool gigabyte_align;
+     bool has_reserved_memory;
      bool broken_reserved_end;
      bool enforce_amd_1tb_hole;
- 
 diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 093a7c35f7..e36d76656b 100644
+index dd44df0470..093a7c35f7 100644
 --- a/hw/i386/pc.c
 +++ b/hw/i386/pc.c
-@@ -671,6 +671,11 @@ void xen_load_linux(PCMachineState *pcms)
- #define PC_ROM_ALIGN       0x800
- #define PC_ROM_SIZE        (PC_ROM_MAX - PC_ROM_MIN_VGA)
+@@ -1752,7 +1752,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
  
-+static bool has_reserved_memory(PCMachineState *pcms)
+     pcmc->smbios_defaults = true;
+-    pcmc->gigabyte_align = true;
+     pcmc->has_reserved_memory = true;
+     pcmc->enforce_amd_1tb_hole = true;
+     pcmc->pvh_enabled = true;
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 2043a7022a..0bc14da768 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -99,6 +99,17 @@ static void piix_intx_routing_notifier_xen(PCIDevice *dev)
+     }
+ }
+ 
++/*
++ * gigabyte_align: Make sure that guest addresses aligned at
++ *                 1Gbyte boundaries get mapped to host
++ *                 addresses aligned at 1Gbyte boundaries.
++ *                 This way we can use 1GByte pages in the host.
++ */
++static bool gigabyte_align(PCMachineState *pcms)
 +{
 +    return pc_machine_is_pci_enabled(pcms);
 +}
 +
- static hwaddr pc_above_4g_end(PCMachineState *pcms)
+ /* PC hardware initialisation */
+ static void pc_init1(MachineState *machine, const char *pci_type)
  {
-     X86MachineState *x86ms = X86_MACHINE(pcms);
-@@ -702,12 +707,11 @@ static void pc_get_device_memory_range(PCMachineState *pcms,
- 
- static uint64_t pc_get_cxl_range_start(PCMachineState *pcms)
- {
--    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
-     MachineState *ms = MACHINE(pcms);
-     hwaddr cxl_base;
-     ram_addr_t size;
- 
--    if (pcmc->has_reserved_memory &&
-+    if (has_reserved_memory(pcms) &&
-         (ms->ram_size < ms->maxram_size)) {
-         pc_get_device_memory_range(pcms, &cxl_base, &size);
-         cxl_base += size;
-@@ -760,7 +764,7 @@ static hwaddr pc_max_used_gpa(PCMachineState *pcms, uint64_t pci_hole64_size)
-      * calculating the highest possible GPA so that we can properly report
-      * if someone configures them on a CPU that cannot possibly address them.
-      */
--    if (pcmc->has_reserved_memory &&
-+    if (has_reserved_memory(pcms) &&
-         (ms->ram_size < ms->maxram_size)) {
-         hwaddr devmem_start;
-         ram_addr_t devmem_size;
-@@ -891,7 +895,7 @@ void pc_memory_init(PCMachineState *pcms,
-         e820_add_entry(pcms->sgx_epc.base, pcms->sgx_epc.size, E820_RESERVED);
-     }
- 
--    if (!pcmc->has_reserved_memory &&
-+    if (!has_reserved_memory(pcms) &&
-         (machine->ram_slots ||
-          (machine->maxram_size > machine->ram_size))) {
- 
-@@ -901,7 +905,7 @@ void pc_memory_init(PCMachineState *pcms,
-     }
- 
-     /* initialize device memory address space */
--    if (pcmc->has_reserved_memory &&
-+    if (has_reserved_memory(pcms) &&
-         (machine->ram_size < machine->maxram_size)) {
-         ram_addr_t device_mem_size;
-         hwaddr device_mem_base;
-@@ -1024,7 +1028,7 @@ uint64_t pc_pci_hole64_start(void)
- 
-     if (ppms->cxl_devices_state.is_enabled) {
-         hole64_start = pc_get_cxl_range_end(pcms);
--    } else if (pcmc->has_reserved_memory && (ms->ram_size < ms->maxram_size)) {
-+    } else if (has_reserved_memory(pcms) && (ms->ram_size < ms->maxram_size)) {
-         pc_get_device_memory_range(pcms, &hole64_start, &size);
-         if (!pcmc->broken_reserved_end) {
-             hole64_start += size;
-@@ -1752,7 +1756,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
-     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
- 
-     pcmc->smbios_defaults = true;
--    pcmc->has_reserved_memory = true;
-     pcmc->enforce_amd_1tb_hole = true;
-     pcmc->pvh_enabled = true;
-     pcmc->kvmclock_create_always = true;
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 0bc14da768..e6178f8653 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -830,7 +830,6 @@ static void isapc_machine_options(MachineClass *m)
+@@ -130,7 +141,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+      *  - Then, to gigabyte align the memory, we move the split to 3G
+      *    (lowmem = 0xc0000000).  But only in case we have to split in
+      *    the first place, i.e. ram_size is larger than (traditional)
+-     *    lowmem.  And for new machine types (gigabyte_align = true)
++     *    lowmem.  And for new machine types (gigabyte_align() = true)
+      *    only, for live migration compatibility reasons.
+      *
+      *  - Next the max-ram-below-4g option was added, which allowed to
+@@ -160,7 +171,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+         }
+         lowmem = pcms->max_ram_below_4g;
+         if (machine->ram_size >= pcms->max_ram_below_4g) {
+-            if (pcmc->gigabyte_align) {
++            if (gigabyte_align(pcms)) {
+                 if (lowmem > 0xc0000000) {
+                     lowmem = 0xc0000000;
+                 }
+@@ -818,7 +829,6 @@ static void isapc_machine_options(MachineClass *m)
+     m->option_rom_has_mr = true;
      m->rom_file_has_mr = false;
      pcmc->smbios_defaults = false;
+-    pcmc->gigabyte_align = false;
      pcmc->smbios_legacy_mode = true;
--    pcmc->has_reserved_memory = false;
+     pcmc->has_reserved_memory = false;
      m->default_nic = "ne2k_isa";
-     m->default_cpu_type = X86_CPU_TYPE_NAME("486");
-     m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
 -- 
 2.41.0
 
