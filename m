@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D82B0CD1284
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB48AC54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:08:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpqP2-0004Ge-Fv; Thu, 28 Mar 2024 10:06:48 -0400
+	id 1rpqPT-0004nP-4n; Thu, 28 Mar 2024 10:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpqP1-0004GB-Et
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:06:47 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpqPR-0004hh-GE
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:07:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpqOz-0004K0-3V
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:06:47 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpqPN-0004Ya-6X
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:07:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711634803;
+ s=mimecast20190719; t=1711634828;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LPAFbLYFjCDuBVCeROV9miF2jLNUcyNa8HrpV9WnAno=;
- b=QwOKxO+e337R/TM5lc/EFeLtx+TnJimiW0k6hnU7LOuRPIvYPC/0QpHAbNRadYkmawkGFp
- OTsKkmCl5BMaL6WTw2RJyXQ7l32lENJH++xOpstCBOlydG+7xio0vo6ZYHgOvewMxeXtjR
- zjl5Bf9b5+eRNjh660DD70scVk5arAg=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-479-cWAxeMWzOt-YbmqFrm9j5w-1; Thu, 28 Mar 2024 10:06:40 -0400
-X-MC-Unique: cWAxeMWzOt-YbmqFrm9j5w-1
+ bh=pQ+GrcY5slg1mROMClWy0f6G4waIRo2WwUNIKlMC3Qk=;
+ b=BGI5YtjHbxZGRzYNlFjgf+gqULOXZnJg8WGTyiGYprJvpk/25GtrZtvJKYqn0sj++xIliC
+ dA4+joepr5HbGbV1uEaMfsIhC3r2Ghg0T4cFb+Lxx+ulJf/5YPSPckBs/7hovVpUVcL0jM
+ k/Et6mCib3bClhCosICPIKO8anCkrig=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-ARTP-apjM8WFHlpEFWGxdA-1; Thu,
+ 28 Mar 2024 10:07:05 -0400
+X-MC-Unique: ARTP-apjM8WFHlpEFWGxdA-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 293B610189AC;
- Thu, 28 Mar 2024 14:06:39 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0E5B728B6AAD;
+ Thu, 28 Mar 2024 14:07:04 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.161])
- by smtp.corp.redhat.com (Postfix) with ESMTP id DFAD340C6CB1;
- Thu, 28 Mar 2024 14:06:31 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 12AFD40C6CB1;
+ Thu, 28 Mar 2024 14:06:59 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -54,9 +54,9 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH for-9.1 1/9] tests: Remove Ubuntu 20.04 container
-Date: Thu, 28 Mar 2024 15:05:58 +0100
-Message-ID: <20240328140607.2433889-2-thuth@redhat.com>
+Subject: [PATCH for-9.1 9/9] util/uri: Remove the old URI parsing code
+Date: Thu, 28 Mar 2024 15:06:06 +0100
+Message-ID: <20240328140607.2433889-10-thuth@redhat.com>
 In-Reply-To: <20240328140607.2433889-1-thuth@redhat.com>
 References: <20240328140607.2433889-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -70,7 +70,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,191 +86,1609 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since Ubuntu 22.04 is now available since two years, we can stop
-actively supporting the previous LTS version of Ubuntu now.
+Now that we switched all consumers of the URI code to use the URI
+parsing functions from glib instead, we can remove our internal
+URI parsing code since it is not used anymore.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/docker/dockerfiles/ubuntu2004.docker | 157 ---------------------
- tests/lcitool/refresh                      |   1 -
- 2 files changed, 158 deletions(-)
- delete mode 100644 tests/docker/dockerfiles/ubuntu2004.docker
+ include/qemu/uri.h |   99 ---
+ util/uri.c         | 1466 --------------------------------------------
+ util/meson.build   |    2 +-
+ 3 files changed, 1 insertion(+), 1566 deletions(-)
+ delete mode 100644 include/qemu/uri.h
+ delete mode 100644 util/uri.c
 
-diff --git a/tests/docker/dockerfiles/ubuntu2004.docker b/tests/docker/dockerfiles/ubuntu2004.docker
+diff --git a/include/qemu/uri.h b/include/qemu/uri.h
 deleted file mode 100644
-index d3e212060c..0000000000
---- a/tests/docker/dockerfiles/ubuntu2004.docker
+index 255e61f452..0000000000
+--- a/include/qemu/uri.h
 +++ /dev/null
-@@ -1,157 +0,0 @@
--# THIS FILE WAS AUTO-GENERATED
--#
--#  $ lcitool dockerfile --layers all ubuntu-2004 qemu
--#
--# https://gitlab.com/libvirt/libvirt-ci
+@@ -1,99 +0,0 @@
+-/**
+- * Summary: library of generic URI related routines
+- * Description: library of generic URI related routines
+- *              Implements RFC 2396
+- *
+- * Copyright (C) 1998-2003 Daniel Veillard.  All Rights Reserved.
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+- * DANIEL VEILLARD BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+- * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+- *
+- * Except as contained in this notice, the name of Daniel Veillard shall not
+- * be used in advertising or otherwise to promote the sale, use or other
+- * dealings in this Software without prior written authorization from him.
+- *
+- * Author: Daniel Veillard
+- **
+- * Copyright (C) 2007 Red Hat, Inc.
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library. If not, see <https://www.gnu.org/licenses/>.
+- *
+- * Authors:
+- *    Richard W.M. Jones <rjones@redhat.com>
+- *
+- * Utility functions to help parse and assemble query strings.
+- */
 -
--FROM docker.io/library/ubuntu:20.04
+-#ifndef QEMU_URI_H
+-#define QEMU_URI_H
 -
--RUN export DEBIAN_FRONTEND=noninteractive && \
--    apt-get update && \
--    apt-get install -y eatmydata && \
--    eatmydata apt-get dist-upgrade -y && \
--    eatmydata apt-get install --no-install-recommends -y \
--                      bash \
--                      bc \
--                      bison \
--                      bsdmainutils \
--                      bzip2 \
--                      ca-certificates \
--                      ccache \
--                      clang \
--                      dbus \
--                      debianutils \
--                      diffutils \
--                      exuberant-ctags \
--                      findutils \
--                      flex \
--                      g++ \
--                      gcc \
--                      gcovr \
--                      gettext \
--                      git \
--                      hostname \
--                      libaio-dev \
--                      libasan6 \
--                      libasound2-dev \
--                      libattr1-dev \
--                      libbrlapi-dev \
--                      libbz2-dev \
--                      libc6-dev \
--                      libcacard-dev \
--                      libcap-ng-dev \
--                      libcapstone-dev \
--                      libcmocka-dev \
--                      libcurl4-gnutls-dev \
--                      libdaxctl-dev \
--                      libdrm-dev \
--                      libepoxy-dev \
--                      libfdt-dev \
--                      libffi-dev \
--                      libfuse3-dev \
--                      libgbm-dev \
--                      libgcrypt20-dev \
--                      libglib2.0-dev \
--                      libglusterfs-dev \
--                      libgnutls28-dev \
--                      libgtk-3-dev \
--                      libibumad-dev \
--                      libibverbs-dev \
--                      libiscsi-dev \
--                      libjemalloc-dev \
--                      libjpeg-turbo8-dev \
--                      libjson-c-dev \
--                      liblttng-ust-dev \
--                      liblzo2-dev \
--                      libncursesw5-dev \
--                      libnfs-dev \
--                      libnuma-dev \
--                      libpam0g-dev \
--                      libpcre2-dev \
--                      libpixman-1-dev \
--                      libpmem-dev \
--                      libpng-dev \
--                      libpulse-dev \
--                      librbd-dev \
--                      librdmacm-dev \
--                      libsasl2-dev \
--                      libsdl2-dev \
--                      libsdl2-image-dev \
--                      libseccomp-dev \
--                      libselinux1-dev \
--                      libslirp-dev \
--                      libsnappy-dev \
--                      libsndio-dev \
--                      libspice-protocol-dev \
--                      libspice-server-dev \
--                      libssh-dev \
--                      libsystemd-dev \
--                      libtasn1-6-dev \
--                      libubsan1 \
--                      libudev-dev \
--                      libusb-1.0-0-dev \
--                      libusbredirhost-dev \
--                      libvdeplug-dev \
--                      libvirglrenderer-dev \
--                      libvte-2.91-dev \
--                      libxen-dev \
--                      libzstd-dev \
--                      llvm \
--                      locales \
--                      make \
--                      mtools \
--                      multipath-tools \
--                      ncat \
--                      nettle-dev \
--                      ninja-build \
--                      openssh-client \
--                      pkgconf \
--                      python3 \
--                      python3-numpy \
--                      python3-opencv \
--                      python3-pillow \
--                      python3-pip \
--                      python3-setuptools \
--                      python3-sphinx \
--                      python3-sphinx-rtd-theme \
--                      python3-venv \
--                      python3-wheel \
--                      python3-yaml \
--                      rpm2cpio \
--                      sed \
--                      socat \
--                      sparse \
--                      systemtap-sdt-dev \
--                      tar \
--                      tesseract-ocr \
--                      tesseract-ocr-eng \
--                      xfslibs-dev \
--                      xorriso \
--                      zlib1g-dev \
--                      zstd && \
--    eatmydata apt-get autoremove -y && \
--    eatmydata apt-get autoclean -y && \
--    sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
--    dpkg-reconfigure locales && \
--    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt && \
--    mkdir -p /usr/libexec/ccache-wrappers && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/c++ && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/cc && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/clang && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+-/**
+- * URI:
+- *
+- * A parsed URI reference. This is a struct containing the various fields
+- * as described in RFC 2396 but separated for further processing.
+- */
+-typedef struct URI {
+-    char *scheme;      /* the URI scheme */
+-    char *opaque;      /* opaque part */
+-    char *authority;   /* the authority part */
+-    char *server;      /* the server part */
+-    char *user;        /* the user part */
+-    int port;          /* the port number */
+-    char *path;        /* the path string */
+-    char *fragment;    /* the fragment identifier */
+-    int cleanup;       /* parsing potentially unclean URI */
+-    char *query;       /* the query string (as it appears in the URI) */
+-} URI;
 -
--RUN /usr/bin/pip3 install \
--                            meson==0.63.2 \
--                            tomli
+-URI *uri_new(void);
+-URI *uri_parse(const char *str);
+-URI *uri_parse_raw(const char *str, int raw);
+-int uri_parse_into(URI *uri, const char *str);
+-char *uri_to_string(URI *uri);
+-void uri_free(URI *uri);
 -
--ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
--ENV LANG "en_US.UTF-8"
--ENV MAKE "/usr/bin/make"
--ENV NINJA "/usr/bin/ninja"
--ENV PYTHON "/usr/bin/python3"
--# As a final step configure the user (if env is defined)
--ARG USER
--ARG UID
--RUN if [ "${USER}" ]; then \
--  id ${USER} 2>/dev/null || useradd -u ${UID} -U ${USER}; fi
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index fe7692c500..692752a3df 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -130,7 +130,6 @@ try:
-                         trailer="".join(debian12_extras))
-     generate_dockerfile("fedora", "fedora-38")
-     generate_dockerfile("opensuse-leap", "opensuse-leap-15")
--    generate_dockerfile("ubuntu2004", "ubuntu-2004")
-     generate_dockerfile("ubuntu2204", "ubuntu-2204")
- 
-     #
+-/* Single web service query parameter 'name=value'. */
+-typedef struct QueryParam {
+-  char *name;          /* Name (unescaped). */
+-  char *value;         /* Value (unescaped). */
+-  int ignore;          /* Ignore this field in qparam_get_query */
+-} QueryParam;
+-
+-/* Set of parameters. */
+-typedef struct QueryParams {
+-  int n;               /* number of parameters used */
+-  int alloc;           /* allocated space */
+-  QueryParam *p;       /* array of parameters */
+-} QueryParams;
+-
+-QueryParams *query_params_new(int init_alloc);
+-QueryParams *query_params_parse(const char *query);
+-void query_params_free(QueryParams *ps);
+-
+-#endif /* QEMU_URI_H */
+diff --git a/util/uri.c b/util/uri.c
+deleted file mode 100644
+index 573174bf47..0000000000
+--- a/util/uri.c
++++ /dev/null
+@@ -1,1466 +0,0 @@
+-/**
+- * uri.c: set of generic URI related routines
+- *
+- * Reference: RFCs 3986, 2732 and 2373
+- *
+- * Copyright (C) 1998-2003 Daniel Veillard.  All Rights Reserved.
+- *
+- * Permission is hereby granted, free of charge, to any person obtaining a copy
+- * of this software and associated documentation files (the "Software"), to deal
+- * in the Software without restriction, including without limitation the rights
+- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+- * copies of the Software, and to permit persons to whom the Software is
+- * furnished to do so, subject to the following conditions:
+- *
+- * The above copyright notice and this permission notice shall be included in
+- * all copies or substantial portions of the Software.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+- * DANIEL VEILLARD BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+- * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+- *
+- * Except as contained in this notice, the name of Daniel Veillard shall not
+- * be used in advertising or otherwise to promote the sale, use or other
+- * dealings in this Software without prior written authorization from him.
+- *
+- * daniel@veillard.com
+- *
+- **
+- *
+- * Copyright (C) 2007, 2009-2010 Red Hat, Inc.
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library. If not, see <https://www.gnu.org/licenses/>.
+- *
+- * Authors:
+- *    Richard W.M. Jones <rjones@redhat.com>
+- *
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qemu/cutils.h"
+-
+-#include "qemu/uri.h"
+-
+-static void uri_clean(URI *uri);
+-
+-/*
+- * Old rule from 2396 used in legacy handling code
+- * alpha    = lowalpha | upalpha
+- */
+-#define IS_ALPHA(x) (IS_LOWALPHA(x) || IS_UPALPHA(x))
+-
+-/*
+- * lowalpha = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" |
+- *            "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" |
+- *            "u" | "v" | "w" | "x" | "y" | "z"
+- */
+-
+-#define IS_LOWALPHA(x) (((x) >= 'a') && ((x) <= 'z'))
+-
+-/*
+- * upalpha = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" |
+- *           "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" |
+- *           "U" | "V" | "W" | "X" | "Y" | "Z"
+- */
+-#define IS_UPALPHA(x) (((x) >= 'A') && ((x) <= 'Z'))
+-
+-#ifdef IS_DIGIT
+-#undef IS_DIGIT
+-#endif
+-/*
+- * digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+- */
+-#define IS_DIGIT(x) (((x) >= '0') && ((x) <= '9'))
+-
+-/*
+- * alphanum = alpha | digit
+- */
+-
+-#define IS_ALPHANUM(x) (IS_ALPHA(x) || IS_DIGIT(x))
+-
+-/*
+- * mark = "-" | "_" | "." | "!" | "~" | "*" | "'" | "(" | ")"
+- */
+-
+-#define IS_MARK(x) (((x) == '-') || ((x) == '_') || ((x) == '.') ||            \
+-    ((x) == '!') || ((x) == '~') || ((x) == '*') || ((x) == '\'') ||           \
+-    ((x) == '(') || ((x) == ')'))
+-
+-/*
+- * unwise = "{" | "}" | "|" | "\" | "^" | "`"
+- */
+-
+-#define IS_UNWISE(p)                                                           \
+-    (((*(p) == '{')) || ((*(p) == '}')) || ((*(p) == '|')) ||                  \
+-     ((*(p) == '\\')) || ((*(p) == '^')) || ((*(p) == '[')) ||                 \
+-     ((*(p) == ']')) || ((*(p) == '`')))
+-/*
+- * reserved = ";" | "/" | "?" | ":" | "@" | "&" | "=" | "+" | "$" | "," |
+- *            "[" | "]"
+- */
+-
+-#define IS_RESERVED(x) (((x) == ';') || ((x) == '/') || ((x) == '?') ||        \
+-    ((x) == ':') || ((x) == '@') || ((x) == '&') || ((x) == '=') ||            \
+-    ((x) == '+') || ((x) == '$') || ((x) == ',') || ((x) == '[') ||            \
+-    ((x) == ']'))
+-
+-/*
+- * unreserved = alphanum | mark
+- */
+-
+-#define IS_UNRESERVED(x) (IS_ALPHANUM(x) || IS_MARK(x))
+-
+-/*
+- * Skip to next pointer char, handle escaped sequences
+- */
+-
+-#define NEXT(p) ((*p == '%') ? p += 3 : p++)
+-
+-/*
+- * Productions from the spec.
+- *
+- *    authority     = server | reg_name
+- *    reg_name      = 1*( unreserved | escaped | "$" | "," |
+- *                        ";" | ":" | "@" | "&" | "=" | "+" )
+- *
+- * path          = [ abs_path | opaque_part ]
+- */
+-
+-/************************************************************************
+- *                                                                      *
+- *                         RFC 3986 parser                              *
+- *                                                                      *
+- ************************************************************************/
+-
+-#define ISA_DIGIT(p) ((*(p) >= '0') && (*(p) <= '9'))
+-#define ISA_ALPHA(p) (((*(p) >= 'a') && (*(p) <= 'z')) ||                      \
+-                      ((*(p) >= 'A') && (*(p) <= 'Z')))
+-#define ISA_HEXDIG(p)                                                          \
+-    (ISA_DIGIT(p) || ((*(p) >= 'a') && (*(p) <= 'f')) ||                       \
+-     ((*(p) >= 'A') && (*(p) <= 'F')))
+-
+-/*
+- *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+- *                     / "*" / "+" / "," / ";" / "="
+- */
+-#define ISA_SUB_DELIM(p)                                                       \
+-    (((*(p) == '!')) || ((*(p) == '$')) || ((*(p) == '&')) ||                  \
+-     ((*(p) == '(')) || ((*(p) == ')')) || ((*(p) == '*')) ||                  \
+-     ((*(p) == '+')) || ((*(p) == ',')) || ((*(p) == ';')) ||                  \
+-     ((*(p) == '=')) || ((*(p) == '\'')))
+-
+-/*
+- *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+- */
+-#define ISA_UNRESERVED(p)                                                      \
+-    ((ISA_ALPHA(p)) || (ISA_DIGIT(p)) || ((*(p) == '-')) ||                    \
+-     ((*(p) == '.')) || ((*(p) == '_')) || ((*(p) == '~')))
+-
+-/*
+- *    pct-encoded   = "%" HEXDIG HEXDIG
+- */
+-#define ISA_PCT_ENCODED(p)                                                     \
+-    ((*(p) == '%') && (ISA_HEXDIG(p + 1)) && (ISA_HEXDIG(p + 2)))
+-
+-/*
+- *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+- */
+-#define ISA_PCHAR(p)                                                           \
+-    (ISA_UNRESERVED(p) || ISA_PCT_ENCODED(p) || ISA_SUB_DELIM(p) ||            \
+-     ((*(p) == ':')) || ((*(p) == '@')))
+-
+-/**
+- * rfc3986_parse_scheme:
+- * @uri:  pointer to an URI structure
+- * @str:  pointer to the string to analyze
+- *
+- * Parse an URI scheme
+- *
+- * ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_scheme(URI *uri, const char **str)
+-{
+-    const char *cur;
+-
+-    if (str == NULL) {
+-        return -1;
+-    }
+-
+-    cur = *str;
+-    if (!ISA_ALPHA(cur)) {
+-        return 2;
+-    }
+-    cur++;
+-    while (ISA_ALPHA(cur) || ISA_DIGIT(cur) || (*cur == '+') || (*cur == '-') ||
+-           (*cur == '.')) {
+-        cur++;
+-    }
+-    if (uri != NULL) {
+-        g_free(uri->scheme);
+-        uri->scheme = g_strndup(*str, cur - *str);
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_fragment:
+- * @uri:  pointer to an URI structure
+- * @str:  pointer to the string to analyze
+- *
+- * Parse the query part of an URI
+- *
+- * fragment      = *( pchar / "/" / "?" )
+- * NOTE: the strict syntax as defined by 3986 does not allow '[' and ']'
+- *       in the fragment identifier but this is used very broadly for
+- *       xpointer scheme selection, so we are allowing it here to not break
+- *       for example all the DocBook processing chains.
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_fragment(URI *uri, const char **str)
+-{
+-    const char *cur;
+-
+-    if (str == NULL) {
+-        return -1;
+-    }
+-
+-    cur = *str;
+-
+-    while ((ISA_PCHAR(cur)) || (*cur == '/') || (*cur == '?') ||
+-           (*cur == '[') || (*cur == ']') ||
+-           ((uri != NULL) && (uri->cleanup & 1) && (IS_UNWISE(cur)))) {
+-        NEXT(cur);
+-    }
+-    if (uri != NULL) {
+-        g_free(uri->fragment);
+-        if (uri->cleanup & 2) {
+-            uri->fragment = g_strndup(*str, cur - *str);
+-        } else {
+-            uri->fragment = g_uri_unescape_segment(*str, cur, NULL);
+-        }
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_query:
+- * @uri:  pointer to an URI structure
+- * @str:  pointer to the string to analyze
+- *
+- * Parse the query part of an URI
+- *
+- * query = *uric
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_query(URI *uri, const char **str)
+-{
+-    const char *cur;
+-
+-    if (str == NULL) {
+-        return -1;
+-    }
+-
+-    cur = *str;
+-
+-    while ((ISA_PCHAR(cur)) || (*cur == '/') || (*cur == '?') ||
+-           ((uri != NULL) && (uri->cleanup & 1) && (IS_UNWISE(cur)))) {
+-        NEXT(cur);
+-    }
+-    if (uri != NULL) {
+-        g_free(uri->query);
+-        uri->query = g_strndup(*str, cur - *str);
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_port:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse a port  part and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * port          = *DIGIT
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_port(URI *uri, const char **str)
+-{
+-    const char *cur = *str;
+-    int port = 0;
+-
+-    if (ISA_DIGIT(cur)) {
+-        while (ISA_DIGIT(cur)) {
+-            port = port * 10 + (*cur - '0');
+-            if (port > 65535) {
+-                return 1;
+-            }
+-            cur++;
+-        }
+-        if (uri) {
+-            uri->port = port;
+-        }
+-        *str = cur;
+-        return 0;
+-    }
+-    return 1;
+-}
+-
+-/**
+- * rfc3986_parse_user_info:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse a user information part and fill in the appropriate fields
+- * of the @uri structure
+- *
+- * userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_user_info(URI *uri, const char **str)
+-{
+-    const char *cur;
+-
+-    cur = *str;
+-    while (ISA_UNRESERVED(cur) || ISA_PCT_ENCODED(cur) || ISA_SUB_DELIM(cur) ||
+-           (*cur == ':')) {
+-        NEXT(cur);
+-    }
+-    if (*cur == '@') {
+-        if (uri != NULL) {
+-            g_free(uri->user);
+-            if (uri->cleanup & 2) {
+-                uri->user = g_strndup(*str, cur - *str);
+-            } else {
+-                uri->user = g_uri_unescape_segment(*str, cur, NULL);
+-            }
+-        }
+-        *str = cur;
+-        return 0;
+-    }
+-    return 1;
+-}
+-
+-/**
+- * rfc3986_parse_dec_octet:
+- * @str:  the string to analyze
+- *
+- *    dec-octet     = DIGIT                 ; 0-9
+- *                  / %x31-39 DIGIT         ; 10-99
+- *                  / "1" 2DIGIT            ; 100-199
+- *                  / "2" %x30-34 DIGIT     ; 200-249
+- *                  / "25" %x30-35          ; 250-255
+- *
+- * Skip a dec-octet.
+- *
+- * Returns 0 if found and skipped, 1 otherwise
+- */
+-static int rfc3986_parse_dec_octet(const char **str)
+-{
+-    const char *cur = *str;
+-
+-    if (!(ISA_DIGIT(cur))) {
+-        return 1;
+-    }
+-    if (!ISA_DIGIT(cur + 1)) {
+-        cur++;
+-    } else if ((*cur != '0') && (ISA_DIGIT(cur + 1)) && (!ISA_DIGIT(cur + 2))) {
+-        cur += 2;
+-    } else if ((*cur == '1') && (ISA_DIGIT(cur + 1)) && (ISA_DIGIT(cur + 2))) {
+-        cur += 3;
+-    } else if ((*cur == '2') && (*(cur + 1) >= '0') && (*(cur + 1) <= '4') &&
+-             (ISA_DIGIT(cur + 2))) {
+-        cur += 3;
+-    } else if ((*cur == '2') && (*(cur + 1) == '5') && (*(cur + 2) >= '0') &&
+-             (*(cur + 1) <= '5')) {
+-        cur += 3;
+-    } else {
+-        return 1;
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-/**
+- * rfc3986_parse_host:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse an host part and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * host          = IP-literal / IPv4address / reg-name
+- * IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
+- * IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
+- * reg-name      = *( unreserved / pct-encoded / sub-delims )
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_host(URI *uri, const char **str)
+-{
+-    const char *cur = *str;
+-    const char *host;
+-
+-    host = cur;
+-    /*
+-     * IPv6 and future addressing scheme are enclosed between brackets
+-     */
+-    if (*cur == '[') {
+-        cur++;
+-        while ((*cur != ']') && (*cur != 0)) {
+-            cur++;
+-        }
+-        if (*cur != ']') {
+-            return 1;
+-        }
+-        cur++;
+-        goto found;
+-    }
+-    /*
+-     * try to parse an IPv4
+-     */
+-    if (ISA_DIGIT(cur)) {
+-        if (rfc3986_parse_dec_octet(&cur) != 0) {
+-            goto not_ipv4;
+-        }
+-        if (*cur != '.') {
+-            goto not_ipv4;
+-        }
+-        cur++;
+-        if (rfc3986_parse_dec_octet(&cur) != 0) {
+-            goto not_ipv4;
+-        }
+-        if (*cur != '.') {
+-            goto not_ipv4;
+-        }
+-        if (rfc3986_parse_dec_octet(&cur) != 0) {
+-            goto not_ipv4;
+-        }
+-        if (*cur != '.') {
+-            goto not_ipv4;
+-        }
+-        if (rfc3986_parse_dec_octet(&cur) != 0) {
+-            goto not_ipv4;
+-        }
+-        goto found;
+-    not_ipv4:
+-        cur = *str;
+-    }
+-    /*
+-     * then this should be a hostname which can be empty
+-     */
+-    while (ISA_UNRESERVED(cur) || ISA_PCT_ENCODED(cur) || ISA_SUB_DELIM(cur)) {
+-        NEXT(cur);
+-    }
+-found:
+-    if (uri != NULL) {
+-        g_free(uri->authority);
+-        uri->authority = NULL;
+-        g_free(uri->server);
+-        if (cur != host) {
+-            if (uri->cleanup & 2) {
+-                uri->server = g_strndup(host, cur - host);
+-            } else {
+-                uri->server = g_uri_unescape_segment(host, cur, NULL);
+-            }
+-        } else {
+-            uri->server = NULL;
+-        }
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_authority:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse an authority part and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * authority     = [ userinfo "@" ] host [ ":" port ]
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_authority(URI *uri, const char **str)
+-{
+-    const char *cur;
+-    int ret;
+-
+-    cur = *str;
+-    /*
+-     * try to parse a userinfo and check for the trailing @
+-     */
+-    ret = rfc3986_parse_user_info(uri, &cur);
+-    if ((ret != 0) || (*cur != '@')) {
+-        cur = *str;
+-    } else {
+-        cur++;
+-    }
+-    ret = rfc3986_parse_host(uri, &cur);
+-    if (ret != 0) {
+-        return ret;
+-    }
+-    if (*cur == ':') {
+-        cur++;
+-        ret = rfc3986_parse_port(uri, &cur);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_segment:
+- * @str:  the string to analyze
+- * @forbid: an optional forbidden character
+- * @empty: allow an empty segment
+- *
+- * Parse a segment and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * segment       = *pchar
+- * segment-nz    = 1*pchar
+- * segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
+- *               ; non-zero-length segment without any colon ":"
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_segment(const char **str, char forbid, int empty)
+-{
+-    const char *cur;
+-
+-    cur = *str;
+-    if (!ISA_PCHAR(cur)) {
+-        if (empty) {
+-            return 0;
+-        }
+-        return 1;
+-    }
+-    while (ISA_PCHAR(cur) && (*cur != forbid)) {
+-        NEXT(cur);
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_path_ab_empty:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse an path absolute or empty and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * path-abempty  = *( "/" segment )
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_path_ab_empty(URI *uri, const char **str)
+-{
+-    const char *cur;
+-    int ret;
+-
+-    cur = *str;
+-
+-    while (*cur == '/') {
+-        cur++;
+-        ret = rfc3986_parse_segment(&cur, 0, 1);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    }
+-    if (uri != NULL) {
+-        g_free(uri->path);
+-        if (*str != cur) {
+-            if (uri->cleanup & 2) {
+-                uri->path = g_strndup(*str, cur - *str);
+-            } else {
+-                uri->path = g_uri_unescape_segment(*str, cur, NULL);
+-            }
+-        } else {
+-            uri->path = NULL;
+-        }
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_path_absolute:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse an path absolute and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * path-absolute = "/" [ segment-nz *( "/" segment ) ]
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_path_absolute(URI *uri, const char **str)
+-{
+-    const char *cur;
+-    int ret;
+-
+-    cur = *str;
+-
+-    if (*cur != '/') {
+-        return 1;
+-    }
+-    cur++;
+-    ret = rfc3986_parse_segment(&cur, 0, 0);
+-    if (ret == 0) {
+-        while (*cur == '/') {
+-            cur++;
+-            ret = rfc3986_parse_segment(&cur, 0, 1);
+-            if (ret != 0) {
+-                return ret;
+-            }
+-        }
+-    }
+-    if (uri != NULL) {
+-        g_free(uri->path);
+-        if (cur != *str) {
+-            if (uri->cleanup & 2) {
+-                uri->path = g_strndup(*str, cur - *str);
+-            } else {
+-                uri->path = g_uri_unescape_segment(*str, cur, NULL);
+-            }
+-        } else {
+-            uri->path = NULL;
+-        }
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_path_rootless:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse an path without root and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * path-rootless = segment-nz *( "/" segment )
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_path_rootless(URI *uri, const char **str)
+-{
+-    const char *cur;
+-    int ret;
+-
+-    cur = *str;
+-
+-    ret = rfc3986_parse_segment(&cur, 0, 0);
+-    if (ret != 0) {
+-        return ret;
+-    }
+-    while (*cur == '/') {
+-        cur++;
+-        ret = rfc3986_parse_segment(&cur, 0, 1);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    }
+-    if (uri != NULL) {
+-        g_free(uri->path);
+-        if (cur != *str) {
+-            if (uri->cleanup & 2) {
+-                uri->path = g_strndup(*str, cur - *str);
+-            } else {
+-                uri->path = g_uri_unescape_segment(*str, cur, NULL);
+-            }
+-        } else {
+-            uri->path = NULL;
+-        }
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_path_no_scheme:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse an path which is not a scheme and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * path-noscheme = segment-nz-nc *( "/" segment )
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_path_no_scheme(URI *uri, const char **str)
+-{
+-    const char *cur;
+-    int ret;
+-
+-    cur = *str;
+-
+-    ret = rfc3986_parse_segment(&cur, ':', 0);
+-    if (ret != 0) {
+-        return ret;
+-    }
+-    while (*cur == '/') {
+-        cur++;
+-        ret = rfc3986_parse_segment(&cur, 0, 1);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    }
+-    if (uri != NULL) {
+-        g_free(uri->path);
+-        if (cur != *str) {
+-            if (uri->cleanup & 2) {
+-                uri->path = g_strndup(*str, cur - *str);
+-            } else {
+-                uri->path = g_uri_unescape_segment(*str, cur, NULL);
+-            }
+-        } else {
+-            uri->path = NULL;
+-        }
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_hier_part:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse an hierarchical part and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * hier-part     = "//" authority path-abempty
+- *                / path-absolute
+- *                / path-rootless
+- *                / path-empty
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_hier_part(URI *uri, const char **str)
+-{
+-    const char *cur;
+-    int ret;
+-
+-    cur = *str;
+-
+-    if ((*cur == '/') && (*(cur + 1) == '/')) {
+-        cur += 2;
+-        ret = rfc3986_parse_authority(uri, &cur);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-        ret = rfc3986_parse_path_ab_empty(uri, &cur);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-        *str = cur;
+-        return 0;
+-    } else if (*cur == '/') {
+-        ret = rfc3986_parse_path_absolute(uri, &cur);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    } else if (ISA_PCHAR(cur)) {
+-        ret = rfc3986_parse_path_rootless(uri, &cur);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    } else {
+-        /* path-empty is effectively empty */
+-        if (uri != NULL) {
+-            g_free(uri->path);
+-            uri->path = NULL;
+-        }
+-    }
+-    *str = cur;
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_relative_ref:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse an URI string and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * relative-ref  = relative-part [ "?" query ] [ "#" fragment ]
+- * relative-part = "//" authority path-abempty
+- *               / path-absolute
+- *               / path-noscheme
+- *               / path-empty
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_relative_ref(URI *uri, const char *str)
+-{
+-    int ret;
+-
+-    if ((*str == '/') && (*(str + 1) == '/')) {
+-        str += 2;
+-        ret = rfc3986_parse_authority(uri, &str);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-        ret = rfc3986_parse_path_ab_empty(uri, &str);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    } else if (*str == '/') {
+-        ret = rfc3986_parse_path_absolute(uri, &str);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    } else if (ISA_PCHAR(str)) {
+-        ret = rfc3986_parse_path_no_scheme(uri, &str);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    } else {
+-        /* path-empty is effectively empty */
+-        if (uri != NULL) {
+-            g_free(uri->path);
+-            uri->path = NULL;
+-        }
+-    }
+-
+-    if (*str == '?') {
+-        str++;
+-        ret = rfc3986_parse_query(uri, &str);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    }
+-    if (*str == '#') {
+-        str++;
+-        ret = rfc3986_parse_fragment(uri, &str);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    }
+-    if (*str != 0) {
+-        uri_clean(uri);
+-        return 1;
+-    }
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse an URI string and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * scheme ":" hier-part [ "?" query ] [ "#" fragment ]
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse(URI *uri, const char *str)
+-{
+-    int ret;
+-
+-    ret = rfc3986_parse_scheme(uri, &str);
+-    if (ret != 0) {
+-        return ret;
+-    }
+-    if (*str != ':') {
+-        return 1;
+-    }
+-    str++;
+-    ret = rfc3986_parse_hier_part(uri, &str);
+-    if (ret != 0) {
+-        return ret;
+-    }
+-    if (*str == '?') {
+-        str++;
+-        ret = rfc3986_parse_query(uri, &str);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    }
+-    if (*str == '#') {
+-        str++;
+-        ret = rfc3986_parse_fragment(uri, &str);
+-        if (ret != 0) {
+-            return ret;
+-        }
+-    }
+-    if (*str != 0) {
+-        uri_clean(uri);
+-        return 1;
+-    }
+-    return 0;
+-}
+-
+-/**
+- * rfc3986_parse_uri_reference:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse an URI reference string and fills in the appropriate fields
+- * of the @uri structure
+- *
+- * URI-reference = URI / relative-ref
+- *
+- * Returns 0 or the error code
+- */
+-static int rfc3986_parse_uri_reference(URI *uri, const char *str)
+-{
+-    int ret;
+-
+-    if (str == NULL) {
+-        return -1;
+-    }
+-    uri_clean(uri);
+-
+-    /*
+-     * Try first to parse absolute refs, then fallback to relative if
+-     * it fails.
+-     */
+-    ret = rfc3986_parse(uri, str);
+-    if (ret != 0) {
+-        uri_clean(uri);
+-        ret = rfc3986_parse_relative_ref(uri, str);
+-        if (ret != 0) {
+-            uri_clean(uri);
+-            return ret;
+-        }
+-    }
+-    return 0;
+-}
+-
+-/**
+- * uri_parse:
+- * @str:  the URI string to analyze
+- *
+- * Parse an URI based on RFC 3986
+- *
+- * URI-reference = [ absoluteURI | relativeURI ] [ "#" fragment ]
+- *
+- * Returns a newly built URI or NULL in case of error
+- */
+-URI *uri_parse(const char *str)
+-{
+-    URI *uri;
+-    int ret;
+-
+-    if (str == NULL) {
+-        return NULL;
+-    }
+-    uri = uri_new();
+-    ret = rfc3986_parse_uri_reference(uri, str);
+-    if (ret) {
+-        uri_free(uri);
+-        return NULL;
+-    }
+-    return uri;
+-}
+-
+-/**
+- * uri_parse_into:
+- * @uri:  pointer to an URI structure
+- * @str:  the string to analyze
+- *
+- * Parse an URI reference string based on RFC 3986 and fills in the
+- * appropriate fields of the @uri structure
+- *
+- * URI-reference = URI / relative-ref
+- *
+- * Returns 0 or the error code
+- */
+-int uri_parse_into(URI *uri, const char *str)
+-{
+-    return rfc3986_parse_uri_reference(uri, str);
+-}
+-
+-/**
+- * uri_parse_raw:
+- * @str:  the URI string to analyze
+- * @raw:  if 1 unescaping of URI pieces are disabled
+- *
+- * Parse an URI but allows to keep intact the original fragments.
+- *
+- * URI-reference = URI / relative-ref
+- *
+- * Returns a newly built URI or NULL in case of error
+- */
+-URI *uri_parse_raw(const char *str, int raw)
+-{
+-    URI *uri;
+-    int ret;
+-
+-    if (str == NULL) {
+-        return NULL;
+-    }
+-    uri = uri_new();
+-    if (raw) {
+-        uri->cleanup |= 2;
+-    }
+-    ret = uri_parse_into(uri, str);
+-    if (ret) {
+-        uri_free(uri);
+-        return NULL;
+-    }
+-    return uri;
+-}
+-
+-/************************************************************************
+- *                                                                      *
+- *                    Generic URI structure functions                   *
+- *                                                                      *
+- ************************************************************************/
+-
+-/**
+- * uri_new:
+- *
+- * Simply creates an empty URI
+- *
+- * Returns the new structure or NULL in case of error
+- */
+-URI *uri_new(void)
+-{
+-    return g_new0(URI, 1);
+-}
+-
+-/**
+- * realloc2n:
+- *
+- * Function to handle properly a reallocation when saving an URI
+- * Also imposes some limit on the length of an URI string output
+- */
+-static char *realloc2n(char *ret, int *max)
+-{
+-    char *temp;
+-    int tmp;
+-
+-    tmp = *max * 2;
+-    temp = g_realloc(ret, (tmp + 1));
+-    *max = tmp;
+-    return temp;
+-}
+-
+-/**
+- * uri_to_string:
+- * @uri:  pointer to an URI
+- *
+- * Save the URI as an escaped string
+- *
+- * Returns a new string (to be deallocated by caller)
+- */
+-char *uri_to_string(URI *uri)
+-{
+-    char *ret = NULL;
+-    char *temp;
+-    const char *p;
+-    int len;
+-    int max;
+-
+-    if (uri == NULL) {
+-        return NULL;
+-    }
+-
+-    max = 80;
+-    ret = g_malloc(max + 1);
+-    len = 0;
+-
+-    if (uri->scheme != NULL) {
+-        p = uri->scheme;
+-        while (*p != 0) {
+-            if (len >= max) {
+-                temp = realloc2n(ret, &max);
+-                ret = temp;
+-            }
+-            ret[len++] = *p++;
+-        }
+-        if (len >= max) {
+-            temp = realloc2n(ret, &max);
+-            ret = temp;
+-        }
+-        ret[len++] = ':';
+-    }
+-    if (uri->opaque != NULL) {
+-        p = uri->opaque;
+-        while (*p != 0) {
+-            if (len + 3 >= max) {
+-                temp = realloc2n(ret, &max);
+-                ret = temp;
+-            }
+-            if (IS_RESERVED(*(p)) || IS_UNRESERVED(*(p))) {
+-                ret[len++] = *p++;
+-            } else {
+-                int val = *(unsigned char *)p++;
+-                int hi = val / 0x10, lo = val % 0x10;
+-                ret[len++] = '%';
+-                ret[len++] = hi + (hi > 9 ? 'A' - 10 : '0');
+-                ret[len++] = lo + (lo > 9 ? 'A' - 10 : '0');
+-            }
+-        }
+-    } else {
+-        if (uri->server != NULL) {
+-            if (len + 3 >= max) {
+-                temp = realloc2n(ret, &max);
+-                ret = temp;
+-            }
+-            ret[len++] = '/';
+-            ret[len++] = '/';
+-            if (uri->user != NULL) {
+-                p = uri->user;
+-                while (*p != 0) {
+-                    if (len + 3 >= max) {
+-                        temp = realloc2n(ret, &max);
+-                        ret = temp;
+-                    }
+-                    if ((IS_UNRESERVED(*(p))) || ((*(p) == ';')) ||
+-                        ((*(p) == ':')) || ((*(p) == '&')) || ((*(p) == '=')) ||
+-                        ((*(p) == '+')) || ((*(p) == '$')) || ((*(p) == ','))) {
+-                        ret[len++] = *p++;
+-                    } else {
+-                        int val = *(unsigned char *)p++;
+-                        int hi = val / 0x10, lo = val % 0x10;
+-                        ret[len++] = '%';
+-                        ret[len++] = hi + (hi > 9 ? 'A' - 10 : '0');
+-                        ret[len++] = lo + (lo > 9 ? 'A' - 10 : '0');
+-                    }
+-                }
+-                if (len + 3 >= max) {
+-                    temp = realloc2n(ret, &max);
+-                    ret = temp;
+-                }
+-                ret[len++] = '@';
+-            }
+-            p = uri->server;
+-            while (*p != 0) {
+-                if (len >= max) {
+-                    temp = realloc2n(ret, &max);
+-                    ret = temp;
+-                }
+-                ret[len++] = *p++;
+-            }
+-            if (uri->port > 0) {
+-                if (len + 10 >= max) {
+-                    temp = realloc2n(ret, &max);
+-                    ret = temp;
+-                }
+-                len += snprintf(&ret[len], max - len, ":%d", uri->port);
+-            }
+-        } else if (uri->authority != NULL) {
+-            if (len + 3 >= max) {
+-                temp = realloc2n(ret, &max);
+-                ret = temp;
+-            }
+-            ret[len++] = '/';
+-            ret[len++] = '/';
+-            p = uri->authority;
+-            while (*p != 0) {
+-                if (len + 3 >= max) {
+-                    temp = realloc2n(ret, &max);
+-                    ret = temp;
+-                }
+-                if ((IS_UNRESERVED(*(p))) || ((*(p) == '$')) ||
+-                    ((*(p) == ',')) || ((*(p) == ';')) || ((*(p) == ':')) ||
+-                    ((*(p) == '@')) || ((*(p) == '&')) || ((*(p) == '=')) ||
+-                    ((*(p) == '+'))) {
+-                    ret[len++] = *p++;
+-                } else {
+-                    int val = *(unsigned char *)p++;
+-                    int hi = val / 0x10, lo = val % 0x10;
+-                    ret[len++] = '%';
+-                    ret[len++] = hi + (hi > 9 ? 'A' - 10 : '0');
+-                    ret[len++] = lo + (lo > 9 ? 'A' - 10 : '0');
+-                }
+-            }
+-        } else if (uri->scheme != NULL) {
+-            if (len + 3 >= max) {
+-                temp = realloc2n(ret, &max);
+-                ret = temp;
+-            }
+-            ret[len++] = '/';
+-            ret[len++] = '/';
+-        }
+-        if (uri->path != NULL) {
+-            p = uri->path;
+-            /*
+-             * the colon in file:///d: should not be escaped or
+-             * Windows accesses fail later.
+-             */
+-            if ((uri->scheme != NULL) && (p[0] == '/') &&
+-                (((p[1] >= 'a') && (p[1] <= 'z')) ||
+-                 ((p[1] >= 'A') && (p[1] <= 'Z'))) &&
+-                (p[2] == ':') && (!strcmp(uri->scheme, "file"))) {
+-                if (len + 3 >= max) {
+-                    temp = realloc2n(ret, &max);
+-                    ret = temp;
+-                }
+-                ret[len++] = *p++;
+-                ret[len++] = *p++;
+-                ret[len++] = *p++;
+-            }
+-            while (*p != 0) {
+-                if (len + 3 >= max) {
+-                    temp = realloc2n(ret, &max);
+-                    ret = temp;
+-                }
+-                if ((IS_UNRESERVED(*(p))) || ((*(p) == '/')) ||
+-                    ((*(p) == ';')) || ((*(p) == '@')) || ((*(p) == '&')) ||
+-                    ((*(p) == '=')) || ((*(p) == '+')) || ((*(p) == '$')) ||
+-                    ((*(p) == ','))) {
+-                    ret[len++] = *p++;
+-                } else {
+-                    int val = *(unsigned char *)p++;
+-                    int hi = val / 0x10, lo = val % 0x10;
+-                    ret[len++] = '%';
+-                    ret[len++] = hi + (hi > 9 ? 'A' - 10 : '0');
+-                    ret[len++] = lo + (lo > 9 ? 'A' - 10 : '0');
+-                }
+-            }
+-        }
+-        if (uri->query != NULL) {
+-            if (len + 1 >= max) {
+-                temp = realloc2n(ret, &max);
+-                ret = temp;
+-            }
+-            ret[len++] = '?';
+-            p = uri->query;
+-            while (*p != 0) {
+-                if (len + 1 >= max) {
+-                    temp = realloc2n(ret, &max);
+-                    ret = temp;
+-                }
+-                ret[len++] = *p++;
+-            }
+-        }
+-    }
+-    if (uri->fragment != NULL) {
+-        if (len + 3 >= max) {
+-            temp = realloc2n(ret, &max);
+-            ret = temp;
+-        }
+-        ret[len++] = '#';
+-        p = uri->fragment;
+-        while (*p != 0) {
+-            if (len + 3 >= max) {
+-                temp = realloc2n(ret, &max);
+-                ret = temp;
+-            }
+-            if ((IS_UNRESERVED(*(p))) || (IS_RESERVED(*(p)))) {
+-                ret[len++] = *p++;
+-            } else {
+-                int val = *(unsigned char *)p++;
+-                int hi = val / 0x10, lo = val % 0x10;
+-                ret[len++] = '%';
+-                ret[len++] = hi + (hi > 9 ? 'A' - 10 : '0');
+-                ret[len++] = lo + (lo > 9 ? 'A' - 10 : '0');
+-            }
+-        }
+-    }
+-    if (len >= max) {
+-        temp = realloc2n(ret, &max);
+-        ret = temp;
+-    }
+-    ret[len] = 0;
+-    return ret;
+-}
+-
+-/**
+- * uri_clean:
+- * @uri:  pointer to an URI
+- *
+- * Make sure the URI struct is free of content
+- */
+-static void uri_clean(URI *uri)
+-{
+-    if (uri == NULL) {
+-        return;
+-    }
+-
+-    g_free(uri->scheme);
+-    uri->scheme = NULL;
+-    g_free(uri->server);
+-    uri->server = NULL;
+-    g_free(uri->user);
+-    uri->user = NULL;
+-    g_free(uri->path);
+-    uri->path = NULL;
+-    g_free(uri->fragment);
+-    uri->fragment = NULL;
+-    g_free(uri->opaque);
+-    uri->opaque = NULL;
+-    g_free(uri->authority);
+-    uri->authority = NULL;
+-    g_free(uri->query);
+-    uri->query = NULL;
+-}
+-
+-/**
+- * uri_free:
+- * @uri:  pointer to an URI, NULL is ignored
+- *
+- * Free up the URI struct
+- */
+-void uri_free(URI *uri)
+-{
+-    uri_clean(uri);
+-    g_free(uri);
+-}
+-
+-/************************************************************************
+- *                                                                      *
+- *                           Public functions                           *
+- *                                                                      *
+- ************************************************************************/
+-
+-/*
+- * Utility functions to help parse and assemble query strings.
+- */
+-
+-struct QueryParams *query_params_new(int init_alloc)
+-{
+-    struct QueryParams *ps;
+-
+-    if (init_alloc <= 0) {
+-        init_alloc = 1;
+-    }
+-
+-    ps = g_new(QueryParams, 1);
+-    ps->n = 0;
+-    ps->alloc = init_alloc;
+-    ps->p = g_new(QueryParam, ps->alloc);
+-
+-    return ps;
+-}
+-
+-/* Ensure there is space to store at least one more parameter
+- * at the end of the set.
+- */
+-static int query_params_append(struct QueryParams *ps, const char *name,
+-                               const char *value)
+-{
+-    if (ps->n >= ps->alloc) {
+-        ps->p = g_renew(QueryParam, ps->p, ps->alloc * 2);
+-        ps->alloc *= 2;
+-    }
+-
+-    ps->p[ps->n].name = g_strdup(name);
+-    ps->p[ps->n].value = g_strdup(value);
+-    ps->p[ps->n].ignore = 0;
+-    ps->n++;
+-
+-    return 0;
+-}
+-
+-void query_params_free(struct QueryParams *ps)
+-{
+-    int i;
+-
+-    for (i = 0; i < ps->n; ++i) {
+-        g_free(ps->p[i].name);
+-        g_free(ps->p[i].value);
+-    }
+-    g_free(ps->p);
+-    g_free(ps);
+-}
+-
+-struct QueryParams *query_params_parse(const char *query)
+-{
+-    struct QueryParams *ps;
+-    const char *end, *eq;
+-
+-    ps = query_params_new(0);
+-    if (!query || query[0] == '\0') {
+-        return ps;
+-    }
+-
+-    while (*query) {
+-        char *name = NULL, *value = NULL;
+-
+-        /* Find the next separator, or end of the string. */
+-        end = strchr(query, '&');
+-        if (!end) {
+-            end = qemu_strchrnul(query, ';');
+-        }
+-
+-        /* Find the first '=' character between here and end. */
+-        eq = strchr(query, '=');
+-        if (eq && eq >= end) {
+-            eq = NULL;
+-        }
+-
+-        /* Empty section (eg. "&&"). */
+-        if (end == query) {
+-            goto next;
+-        }
+-
+-        /* If there is no '=' character, then we have just "name"
+-         * and consistent with CGI.pm we assume value is "".
+-         */
+-        else if (!eq) {
+-            name = g_uri_unescape_segment(query, end, NULL);
+-            value = NULL;
+-        }
+-        /* Or if we have "name=" here (works around annoying
+-         * problem when calling uri_string_unescape with len = 0).
+-         */
+-        else if (eq + 1 == end) {
+-            name = g_uri_unescape_segment(query, eq, NULL);
+-            value = g_new0(char, 1);
+-        }
+-        /* If the '=' character is at the beginning then we have
+-         * "=value" and consistent with CGI.pm we _ignore_ this.
+-         */
+-        else if (query == eq) {
+-            goto next;
+-        }
+-
+-        /* Otherwise it's "name=value". */
+-        else {
+-            name = g_uri_unescape_segment(query, eq, NULL);
+-            value = g_uri_unescape_segment(eq + 1, end, NULL);
+-        }
+-
+-        /* Append to the parameter set. */
+-        query_params_append(ps, name, value);
+-        g_free(name);
+-        g_free(value);
+-
+-    next:
+-        query = end;
+-        if (*query) {
+-            query++; /* skip '&' separator */
+-        }
+-    }
+-
+-    return ps;
+-}
+diff --git a/util/meson.build b/util/meson.build
+index 0ef9886be0..e6a2c9acc8 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -94,7 +94,7 @@ if have_block
+   util_ss.add(files('hbitmap.c'))
+   util_ss.add(files('hexdump.c'))
+   util_ss.add(files('iova-tree.c'))
+-  util_ss.add(files('iov.c', 'uri.c'))
++  util_ss.add(files('iov.c'))
+   util_ss.add(files('nvdimm-utils.c'))
+   util_ss.add(files('block-helpers.c'))
+   util_ss.add(files('qemu-coroutine-sleep.c'))
 -- 
 2.44.0
 
