@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7705C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 13:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0FDAC54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 13:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rppPR-0008Ll-0v; Thu, 28 Mar 2024 09:03:09 -0400
+	id 1rppPn-0000HE-Cc; Thu, 28 Mar 2024 09:03:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rppPO-0008LE-6j
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 09:03:06 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rppPf-00009I-0j
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 09:03:23 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rppPL-00085J-JB
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 09:03:05 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-515a86daf09so1149899e87.3
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 06:03:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rppPY-00087f-Px
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 09:03:22 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-513cf9bacf1so1093607e87.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 06:03:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711630980; x=1712235780; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=n58xQeN/GzfLvjM7BrwvwqSKY8ac/mk8J4blUOIGKpg=;
- b=d2bhfNocsmGyoyCwJoXbA//NHQg8v1N84W9MTcnJwiFis4+Q5dVp/piI6dF77ouktn
- kFRTsKvC5QBJ4Mo9toZKWZDG8iM6U5iGja6uPhVCMBiCCno2mRQmgMprjnbPV2ZzVnVX
- /9zTrEC0RHWA4mVZ+ryNxANG7jeKF/uCkX9rp4A1dITx4p/XC1kDBm4+8CtP0PZmD6wf
- GYnSQRWTR36paNxzqJD/ddXxTin9pv33/gSrhfuw0UD4//ApKJfHR01YPDI3y3RCBX34
- XWMrtFf0i7x7XiF+q7yDptFPA+LNML22PXsPJ+PRgmvf6Si0/272mqK/UhKKQfopkgzo
- erfw==
+ d=linaro.org; s=google; t=1711630994; x=1712235794; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NTMG8MJ3mXAAw5DE5lYuXiIXFlAbdlMp3fkaaBvZgAs=;
+ b=C6H6naHM0uydiasyAFcDdfVXixrvBDEyMQ0qsQMUWfv5aMB6oz2JZWswO8z/BZx6TB
+ rZqbz3tt69EpwaCiTxr+k32lblQRiounDX/sG5OzbhoRNyCFSlgTRgqcSnaM+115j+Rc
+ HzWNKuUE9IHQZknMG4gevRl8ddTSJngKFE4RF8YTCaiaZ95y1AdfRB/CXdTXevdlM3X2
+ sW9AZq2p3hlDljWIbGU67Nkr1uzb0JN5U2iwKfOqfvkFUhU/tf6BzAYI1s9tlesykA+V
+ Q4RgD9djxO3VJ+wBGum1ls3HkCnmCJQEYT3Ehi766JWJprRas85yJzwtls2e0O34d4bB
+ 06+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711630980; x=1712235780;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=n58xQeN/GzfLvjM7BrwvwqSKY8ac/mk8J4blUOIGKpg=;
- b=pbNZwcos+zNxxaD/bYi62wmf0MBI8F9bXBgT82Gz2PuKpuPxF0igPdDl/NSxvG81pq
- jFZFEtKbShZ3siwC0bpv8VO2lkQuCfBWHq9ny+sbuDi39nLi1K820hpaHErtC5qM23Sp
- HjZX67Y6kJM8plBzbqIMnPC3puZiuDrDnpNclG1d2oLRmQgzyhHHdoQwgdvm9Vu42P2i
- +0t/yHzmkSp9zcX/qVP9ZFcTQZYyou4TmKoCEph54NRPnrOsOUe8GZrqV/8ptKUBLGIC
- Qz9BIk2+qREXdJBB1DufrSmoRM0yatvgfVR1fj2aI8VWl4wqThEa6UqLxE5jWn3rHQqm
- ARmg==
-X-Gm-Message-State: AOJu0YwMfEeazAneFNhf7xdmE/qj0qFWSZnQYxZnDQM5DQWAMkGq8SU2
- G39rQkfoT1bU3Eo3fGWI46jvsdXOznW5gIRTdn7imKZjXTLLw33u4eknkAgAyQgge2eUJ2hIrMP
- k
-X-Google-Smtp-Source: AGHT+IETHWgZQkoYEEC7OX5uqGraRTeihrl8QzOlr0IxjzBolA/9gzn9B94PD+6lyACtCDg2FzRLmg==
-X-Received: by 2002:a05:6512:2210:b0:515:c7c9:b150 with SMTP id
- h16-20020a056512221000b00515c7c9b150mr1972648lfu.0.1711630979905; 
- Thu, 28 Mar 2024 06:02:59 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1711630994; x=1712235794;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NTMG8MJ3mXAAw5DE5lYuXiIXFlAbdlMp3fkaaBvZgAs=;
+ b=Xl6eDIVlCZEYAKAfWvbWDepQEF8boo1BjkL+dnpkzFLAQ6NV51RoiLIytUBBVwuKPt
+ zopdAMTXN8aEFYp2e+Ef4rIfuTOX9ND6rgt/LDttzdr//wGBQTz4H1Xf4O0rPuOGCOhO
+ vDUhdG6ZLTHnWDaQPcfPBjtWetTjpT5ltWL6w8bJmRhBli8aZz9b6Wdn/EFYLMbIASD8
+ loNbL4KWd4kZsX/u7KL8l97iWq/lt+x9OqLiPMaZRV+qfogUA5RP3fsms3lrycGOVP4G
+ +Lry6JvLVV1sW0MgKt6pG8inJknKj8kaiWQ/7aIbex1Z7ZCi/Wm4fJKV4CJzUSvE5SKF
+ P/7g==
+X-Gm-Message-State: AOJu0YwxJdiRJW0KSW1VRUSTTwLX+GWxqJ0Hq1Krs01ZvT/Y86Ld4S0l
+ ZMb+BDXyZXWtb1uXLS+QpNVor0BwX4jZ/1aOg2P/ltP7ciKzdZjg1wm4dIhgycOhZhX3RAtBEKq
+ t
+X-Google-Smtp-Source: AGHT+IEAQGrH+6b+vfnLl4TcLgvkrXI+FCnYlzGW0uvOsv8K2toT3xa05aP9iIEQLKl47sQ5Ijyuow==
+X-Received: by 2002:ac2:5f8e:0:b0:515:a5b1:1dd0 with SMTP id
+ r14-20020ac25f8e000000b00515a5b11dd0mr1646227lfe.55.1711630989406; 
+ Thu, 28 Mar 2024 06:03:09 -0700 (PDT)
 Received: from m1x-phil.lan (pas38-h02-176-184-5-52.dsl.sta.abo.bbox.fr.
  [176.184.5.52]) by smtp.gmail.com with ESMTPSA id
- dn21-20020a17090794d500b00a4588098c5esm719964ejc.132.2024.03.28.06.02.57
+ re26-20020a170906d8da00b00a474ef94fddsm734372ejb.70.2024.03.28.06.03.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 Mar 2024 06:02:59 -0700 (PDT)
+ Thu, 28 Mar 2024 06:03:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -69,16 +70,28 @@ Cc: Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
  devel@lists.libvirt.org, Hanna Reitz <hreitz@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 v2 0/3] rdma: Remove RDMA subsystem and pvrdma device
-Date: Thu, 28 Mar 2024 14:02:52 +0100
-Message-ID: <20240328130255.52257-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Song Gao <gaosong@loongson.cn>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PATCH-for-9.1 v2 1/3] hw/rdma: Remove pvrdma device and rdmacm-mux
+ helper
+Date: Thu, 28 Mar 2024 14:02:53 +0100
+Message-ID: <20240328130255.52257-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240328130255.52257-1-philmd@linaro.org>
+References: <20240328130255.52257-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,67 +114,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v1:
-- split in 3 (Thomas)
-- justify gluster removal
+The whole RDMA subsystem was deprecated in commit e9a54265f5
+("hw/rdma: Deprecate the pvrdma device and the rdma subsystem")
+released in v8.2.
 
-Philippe Mathieu-Daudé (3):
-  hw/rdma: Remove pvrdma device and rdmacm-mux helper
-  migration: Remove RDMA protocol handling
-  block/gluster: Remove RDMA protocol handling
+Remove:
+ - PVRDMA device
+ - generated vmw_pvrdma/ directory from linux-headers
+ - rdmacm-mux tool from contrib/
 
- MAINTAINERS                                   |   17 -
+Cc: Yuval Shaia <yuval.shaia.ml@gmail.com>
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ MAINTAINERS                                   |   10 -
  docs/about/deprecated.rst                     |    9 -
  docs/about/removed-features.rst               |    4 +
- docs/devel/migration/main.rst                 |    6 -
- docs/pvrdma.txt                               |  345 --
- docs/rdma.txt                                 |  420 --
- docs/system/device-url-syntax.rst.inc         |    4 +-
+ docs/pvrdma.txt                               |  345 ----
  docs/system/loongarch/virt.rst                |    2 +-
- docs/system/qemu-block-drivers.rst.inc        |    1 -
- meson.build                                   |   59 -
+ meson.build                                   |   36 -
  qapi/machine.json                             |   17 -
- qapi/migration.json                           |   31 +-
  qapi/qapi-schema.json                         |    1 -
  qapi/rdma.json                                |   38 -
  contrib/rdmacm-mux/rdmacm-mux.h               |   61 -
- hw/rdma/rdma_backend.h                        |  129 -
+ hw/rdma/rdma_backend.h                        |  129 --
  hw/rdma/rdma_backend_defs.h                   |   76 -
- hw/rdma/rdma_rm.h                             |   97 -
- hw/rdma/rdma_rm_defs.h                        |  146 -
+ hw/rdma/rdma_rm.h                             |   97 --
+ hw/rdma/rdma_rm_defs.h                        |  146 --
  hw/rdma/rdma_utils.h                          |   63 -
  hw/rdma/trace.h                               |    1 -
- hw/rdma/vmw/pvrdma.h                          |  144 -
+ hw/rdma/vmw/pvrdma.h                          |  144 --
  hw/rdma/vmw/pvrdma_dev_ring.h                 |   46 -
  hw/rdma/vmw/pvrdma_qp_ops.h                   |   28 -
  hw/rdma/vmw/trace.h                           |    1 -
  include/hw/rdma/rdma.h                        |   37 -
  include/monitor/hmp.h                         |    1 -
- .../infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h |  685 ---
- .../infiniband/hw/vmw_pvrdma/pvrdma_verbs.h   |  348 --
- .../standard-headers/rdma/vmw_pvrdma-abi.h    |  310 --
- migration/migration-stats.h                   |    6 +-
- migration/migration.h                         |    9 -
- migration/options.h                           |    2 -
- migration/rdma.h                              |   69 -
- block/gluster.c                               |   39 -
- contrib/rdmacm-mux/main.c                     |  831 ----
+ .../infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h |  685 --------
+ .../infiniband/hw/vmw_pvrdma/pvrdma_verbs.h   |  348 ----
+ .../standard-headers/rdma/vmw_pvrdma-abi.h    |  310 ----
+ contrib/rdmacm-mux/main.c                     |  831 ----------
  hw/core/machine-qmp-cmds.c                    |   32 -
  hw/rdma/rdma.c                                |   30 -
- hw/rdma/rdma_backend.c                        | 1401 ------
- hw/rdma/rdma_rm.c                             |  812 ----
- hw/rdma/rdma_utils.c                          |  126 -
- hw/rdma/vmw/pvrdma_cmd.c                      |  815 ----
- hw/rdma/vmw/pvrdma_dev_ring.c                 |  141 -
- hw/rdma/vmw/pvrdma_main.c                     |  735 ---
- hw/rdma/vmw/pvrdma_qp_ops.c                   |  298 --
- migration/migration-stats.c                   |    5 +-
- migration/migration.c                         |   31 -
- migration/options.c                           |   16 -
- migration/qemu-file.c                         |    1 -
- migration/ram.c                               |   86 +-
- migration/rdma.c                              | 4184 -----------------
- migration/savevm.c                            |    2 +-
+ hw/rdma/rdma_backend.c                        | 1401 -----------------
+ hw/rdma/rdma_rm.c                             |  812 ----------
+ hw/rdma/rdma_utils.c                          |  126 --
+ hw/rdma/vmw/pvrdma_cmd.c                      |  815 ----------
+ hw/rdma/vmw/pvrdma_dev_ring.c                 |  141 --
+ hw/rdma/vmw/pvrdma_main.c                     |  735 ---------
+ hw/rdma/vmw/pvrdma_qp_ops.c                   |  298 ----
  monitor/qmp-cmds.c                            |    1 -
  Kconfig.host                                  |    3 -
  contrib/rdmacm-mux/meson.build                |    7 -
@@ -172,22 +172,14 @@ Philippe Mathieu-Daudé (3):
  hw/rdma/meson.build                           |   12 -
  hw/rdma/trace-events                          |   31 -
  hw/rdma/vmw/trace-events                      |   17 -
- meson_options.txt                             |    4 -
- migration/meson.build                         |    1 -
- migration/trace-events                        |   68 +-
+ meson_options.txt                             |    2 -
  qapi/meson.build                              |    1 -
- qemu-options.hx                               |    6 -
- .../org.centos/stream/8/build-environment.yml |    1 -
- .../ci/org.centos/stream/8/x86_64/configure   |    3 -
- scripts/ci/setup/build-environment.yml        |    4 -
- scripts/coverity-scan/run-coverity-scan       |    2 +-
- scripts/meson-buildoptions.sh                 |    6 -
+ qemu-options.hx                               |    3 -
+ .../ci/org.centos/stream/8/x86_64/configure   |    1 -
+ scripts/meson-buildoptions.sh                 |    3 -
  scripts/update-linux-headers.sh               |   27 -
- tests/lcitool/projects/qemu.yml               |    3 -
- tests/migration/guestperf/engine.py           |    4 +-
- 75 files changed, 20 insertions(+), 12997 deletions(-)
+ 51 files changed, 5 insertions(+), 7977 deletions(-)
  delete mode 100644 docs/pvrdma.txt
- delete mode 100644 docs/rdma.txt
  delete mode 100644 qapi/rdma.json
  delete mode 100644 contrib/rdmacm-mux/rdmacm-mux.h
  delete mode 100644 hw/rdma/rdma_backend.h
@@ -204,7 +196,6 @@ Philippe Mathieu-Daudé (3):
  delete mode 100644 include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h
  delete mode 100644 include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.h
  delete mode 100644 include/standard-headers/rdma/vmw_pvrdma-abi.h
- delete mode 100644 migration/rdma.h
  delete mode 100644 contrib/rdmacm-mux/main.c
  delete mode 100644 hw/rdma/rdma.c
  delete mode 100644 hw/rdma/rdma_backend.c
@@ -214,13 +205,8449 @@ Philippe Mathieu-Daudé (3):
  delete mode 100644 hw/rdma/vmw/pvrdma_dev_ring.c
  delete mode 100644 hw/rdma/vmw/pvrdma_main.c
  delete mode 100644 hw/rdma/vmw/pvrdma_qp_ops.c
- delete mode 100644 migration/rdma.c
  delete mode 100644 contrib/rdmacm-mux/meson.build
  delete mode 100644 hw/rdma/Kconfig
  delete mode 100644 hw/rdma/meson.build
  delete mode 100644 hw/rdma/trace-events
  delete mode 100644 hw/rdma/vmw/trace-events
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a07af6b9d4..91ab5235b8 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4060,16 +4060,6 @@ F: block/replication.c
+ F: tests/unit/test-replication.c
+ F: docs/block-replication.txt
+ 
+-PVRDMA
+-M: Yuval Shaia <yuval.shaia.ml@gmail.com>
+-M: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+-S: Odd Fixes
+-F: hw/rdma/*
+-F: hw/rdma/vmw/*
+-F: docs/pvrdma.txt
+-F: contrib/rdmacm-mux/*
+-F: qapi/rdma.json
+-
+ Semihosting
+ M: Alex Bennée <alex.bennee@linaro.org>
+ S: Maintained
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 7b548519b5..29eae69e50 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -376,15 +376,6 @@ recommending to switch to their stable counterparts:
+ - "Zve64f" should be replaced with "zve64f"
+ - "Zve64d" should be replaced with "zve64d"
+ 
+-``-device pvrdma`` and the rdma subsystem (since 8.2)
+-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-
+-The pvrdma device and the whole rdma subsystem are in a bad shape and
+-without active maintenance. The QEMU project intends to remove this
+-device and subsystem from the code base in a future release without
+-replacement unless somebody steps up and improves the situation.
+-
+-
+ Block device options
+ ''''''''''''''''''''
+ 
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index f9cf874f7b..4d5bdc43b4 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -909,6 +909,10 @@ contains native support for this feature and thus use of the option
+ ROM approach was obsolete. The native SeaBIOS support can be activated
+ by using ``-machine graphics=off``.
+ 
++``pvrdma`` and the RDMA subsystem (removed in 9.1)
++''''''''''''''''''''''''''''''''''''''''''''''''''
++
++The 'pvrdma' device and the whole RDMA subsystem have been removed.
+ 
+ Related binaries
+ ----------------
+diff --git a/docs/pvrdma.txt b/docs/pvrdma.txt
+deleted file mode 100644
+index 5c122fe818..0000000000
+--- a/docs/pvrdma.txt
++++ /dev/null
+@@ -1,345 +0,0 @@
+-Paravirtualized RDMA Device (PVRDMA)
+-====================================
+-
+-
+-1. Description
+-===============
+-PVRDMA is the QEMU implementation of VMware's paravirtualized RDMA device.
+-It works with its Linux Kernel driver AS IS, no need for any special guest
+-modifications.
+-
+-While it complies with the VMware device, it can also communicate with bare
+-metal RDMA-enabled machines as peers.
+-
+-It does not require an RDMA HCA in the host, it can work with Soft-RoCE (rxe).
+-
+-It does not require the whole guest RAM to be pinned allowing memory
+-over-commit and, even if not implemented yet, migration support will be
+-possible with some HW assistance.
+-
+-A project presentation accompany this document:
+-- https://blog.linuxplumbersconf.org/2017/ocw/system/presentations/4730/original/lpc-2017-pvrdma-marcel-apfelbaum-yuval-shaia.pdf
+-
+-
+-
+-2. Setup
+-========
+-
+-
+-2.1 Guest setup
+-===============
+-Fedora 27+ kernels work out of the box, older distributions
+-require updating the kernel to 4.14 to include the pvrdma driver.
+-
+-However the libpvrdma library needed by User Level Software is still
+-not available as part of the distributions, so the rdma-core library
+-needs to be compiled and optionally installed.
+-
+-Please follow the instructions at:
+-  https://github.com/linux-rdma/rdma-core.git
+-
+-
+-2.2 Host Setup
+-==============
+-The pvrdma backend is an ibdevice interface that can be exposed
+-either by a Soft-RoCE(rxe) device on machines with no RDMA device,
+-or an HCA SRIOV function(VF/PF).
+-Note that ibdevice interfaces can't be shared between pvrdma devices,
+-each one requiring a separate instance (rxe or SRIOV VF).
+-
+-
+-2.2.1 Soft-RoCE backend(rxe)
+-===========================
+-A stable version of rxe is required, Fedora 27+ or a Linux
+-Kernel 4.14+ is preferred.
+-
+-The rdma_rxe module is part of the Linux Kernel but not loaded by default.
+-Install the User Level library (librxe) following the instructions from:
+-https://github.com/SoftRoCE/rxe-dev/wiki/rxe-dev:-Home
+-
+-Associate an ETH interface with rxe by running:
+-   rxe_cfg add eth0
+-An rxe0 ibdevice interface will be created and can be used as pvrdma backend.
+-
+-
+-2.2.2 RDMA device Virtual Function backend
+-==========================================
+-Nothing special is required, the pvrdma device can work not only with
+-Ethernet Links, but also Infinibands Links.
+-All is needed is an ibdevice with an active port, for Mellanox cards
+-will be something like mlx5_6 which can be the backend.
+-
+-
+-2.2.3 QEMU setup
+-================
+-Configure QEMU with --enable-rdma flag, installing
+-the required RDMA libraries.
+-
+-
+-
+-3. Usage
+-========
+-
+-
+-3.1 VM Memory settings
+-======================
+-Currently the device is working only with memory backed RAM
+-and it must be mark as "shared":
+-   -m 1G \
+-   -object memory-backend-ram,id=mb1,size=1G,share \
+-   -numa node,memdev=mb1 \
+-
+-
+-3.2 MAD Multiplexer
+-===================
+-MAD Multiplexer is a service that exposes MAD-like interface for VMs in
+-order to overcome the limitation where only single entity can register with
+-MAD layer to send and receive RDMA-CM MAD packets.
+-
+-To build rdmacm-mux run
+-# make rdmacm-mux
+-
+-Before running the rdmacm-mux make sure that both ib_cm and rdma_cm kernel
+-modules aren't loaded, otherwise the rdmacm-mux service will fail to start.
+-
+-The application accepts 3 command line arguments and exposes a UNIX socket
+-to pass control and data to it.
+--d rdma-device-name  Name of RDMA device to register with
+--s unix-socket-path  Path to unix socket to listen (default /var/run/rdmacm-mux)
+--p rdma-device-port  Port number of RDMA device to register with (default 1)
+-The final UNIX socket file name is a concatenation of the 3 arguments so
+-for example for device mlx5_0 on port 2 this /var/run/rdmacm-mux-mlx5_0-2
+-will be created.
+-
+-pvrdma requires this service.
+-
+-Please refer to contrib/rdmacm-mux for more details.
+-
+-
+-3.3 Service exposed by libvirt daemon
+-=====================================
+-The control over the RDMA device's GID table is done by updating the
+-device's Ethernet function addresses.
+-Usually the first GID entry is determined by the MAC address, the second by
+-the first IPv6 address and the third by the IPv4 address. Other entries can
+-be added by adding more IP addresses. The opposite is the same, i.e.
+-whenever an address is removed, the corresponding GID entry is removed.
+-The process is done by the network and RDMA stacks. Whenever an address is
+-added the ib_core driver is notified and calls the device driver add_gid
+-function which in turn update the device.
+-To support this in pvrdma device the device hooks into the create_bind and
+-destroy_bind HW commands triggered by pvrdma driver in guest.
+-
+-Whenever changed is made to the pvrdma port's GID table a special QMP
+-messages is sent to be processed by libvirt to update the address of the
+-backend Ethernet device.
+-
+-pvrdma requires that libvirt service will be up.
+-
+-
+-3.4 PCI devices settings
+-========================
+-RoCE device exposes two functions - an Ethernet and RDMA.
+-To support it, pvrdma device is composed of two PCI functions, an Ethernet
+-device of type vmxnet3 on PCI slot 0 and a PVRDMA device on PCI slot 1. The
+-Ethernet function can be used for other Ethernet purposes such as IP.
+-
+-
+-3.5 Device parameters
+-=====================
+-- netdev: Specifies the Ethernet device function name on the host for
+-  example enp175s0f0. For Soft-RoCE device (rxe) this would be the Ethernet
+-  device used to create it.
+-- ibdev: The IB device name on host for example rxe0, mlx5_0 etc.
+-- mad-chardev: The name of the MAD multiplexer char device.
+-- ibport: In case of multi-port device (such as Mellanox's HCA) this
+-  specify the port to use. If not set 1 will be used.
+-- dev-caps-max-mr-size: The maximum size of MR.
+-- dev-caps-max-qp:      Maximum number of QPs.
+-- dev-caps-max-cq:      Maximum number of CQs.
+-- dev-caps-max-mr:      Maximum number of MRs.
+-- dev-caps-max-pd:      Maximum number of PDs.
+-- dev-caps-max-ah:      Maximum number of AHs.
+-
+-Notes:
+-- The first 3 parameters are mandatory settings, the rest have their
+-  defaults.
+-- The last 8 parameters (the ones that prefixed by dev-caps) defines the top
+-  limits but the final values is adjusted by the backend device limitations.
+-- netdev can be extracted from ibdev's sysfs
+-  (/sys/class/infiniband/<ibdev>/device/net/)
+-
+-
+-3.6 Example
+-===========
+-Define bridge device with vmxnet3 network backend:
+-<interface type='bridge'>
+-  <mac address='56:b4:44:e9:62:dc'/>
+-  <source bridge='bridge1'/>
+-  <model type='vmxnet3'/>
+-  <address type='pci' domain='0x0000' bus='0x00' slot='0x10' function='0x0' multifunction='on'/>
+-</interface>
+-
+-Define pvrdma device:
+-<qemu:commandline>
+-  <qemu:arg value='-object'/>
+-  <qemu:arg value='memory-backend-ram,id=mb1,size=1G,share'/>
+-  <qemu:arg value='-numa'/>
+-  <qemu:arg value='node,memdev=mb1'/>
+-  <qemu:arg value='-chardev'/>
+-  <qemu:arg value='socket,path=/var/run/rdmacm-mux-rxe0-1,id=mads'/>
+-  <qemu:arg value='-device'/>
+-  <qemu:arg value='pvrdma,addr=10.1,ibdev=rxe0,netdev=bridge0,mad-chardev=mads'/>
+-</qemu:commandline>
+-
+-
+-
+-4. Implementation details
+-=========================
+-
+-
+-4.1 Overview
+-============
+-The device acts like a proxy between the Guest Driver and the host
+-ibdevice interface.
+-On configuration path:
+- - For every hardware resource request (PD/QP/CQ/...) the pvrdma will request
+-   a resource from the backend interface, maintaining a 1-1 mapping
+-   between the guest and host.
+-On data path:
+- - Every post_send/receive received from the guest will be converted into
+-   a post_send/receive for the backend. The buffers data will not be touched
+-   or copied resulting in near bare-metal performance for large enough buffers.
+- - Completions from the backend interface will result in completions for
+-   the pvrdma device.
+-
+-
+-4.2 PCI BARs
+-============
+-PCI Bars:
+-	BAR 0 - MSI-X
+-        MSI-X vectors:
+-		(0) Command - used when execution of a command is completed.
+-		(1) Async - not in use.
+-		(2) Completion - used when a completion event is placed in
+-		  device's CQ ring.
+-	BAR 1 - Registers
+-        --------------------------------------------------------
+-        | VERSION |  DSR | CTL | REQ | ERR |  ICR | IMR  | MAC |
+-        --------------------------------------------------------
+-		DSR - Address of driver/device shared memory used
+-              for the command channel, used for passing:
+-			    - General info such as driver version
+-			    - Address of 'command' and 'response'
+-			    - Address of async ring
+-			    - Address of device's CQ ring
+-			    - Device capabilities
+-		CTL - Device control operations (activate, reset etc)
+-		IMG - Set interrupt mask
+-		REQ - Command execution register
+-		ERR - Operation status
+-
+-	BAR 2 - UAR
+-        ---------------------------------------------------------
+-        | QP_NUM  | SEND/RECV Flag ||  CQ_NUM |   ARM/POLL Flag |
+-        ---------------------------------------------------------
+-		- Offset 0 used for QP operations (send and recv)
+-		- Offset 4 used for CQ operations (arm and poll)
+-
+-
+-4.3 Major flows
+-===============
+-
+-4.3.1 Create CQ
+-===============
+-    - Guest driver
+-        - Allocates pages for CQ ring
+-        - Creates page directory (pdir) to hold CQ ring's pages
+-        - Initializes CQ ring
+-        - Initializes 'Create CQ' command object (cqe, pdir etc)
+-        - Copies the command to 'command' address
+-        - Writes 0 into REQ register
+-    - Device
+-        - Reads the request object from the 'command' address
+-        - Allocates CQ object and initialize CQ ring based on pdir
+-        - Creates the backend CQ
+-        - Writes operation status to ERR register
+-        - Posts command-interrupt to guest
+-    - Guest driver
+-        - Reads the HW response code from ERR register
+-
+-4.3.2 Create QP
+-===============
+-    - Guest driver
+-        - Allocates pages for send and receive rings
+-        - Creates page directory(pdir) to hold the ring's pages
+-        - Initializes 'Create QP' command object (max_send_wr,
+-          send_cq_handle, recv_cq_handle, pdir etc)
+-        - Copies the object to 'command' address
+-        - Write 0 into REQ register
+-    - Device
+-        - Reads the request object from 'command' address
+-        - Allocates the QP object and initialize
+-            - Send and recv rings based on pdir
+-            - Send and recv ring state
+-        - Creates the backend QP
+-        - Writes the operation status to ERR register
+-        - Posts command-interrupt to guest
+-    - Guest driver
+-        - Reads the HW response code from ERR register
+-
+-4.3.3 Post receive
+-==================
+-    - Guest driver
+-        - Initializes a wqe and place it on recv ring
+-        - Write to qpn|qp_recv_bit (31) to QP offset in UAR
+-    - Device
+-        - Extracts qpn from UAR
+-        - Walks through the ring and does the following for each wqe
+-            - Prepares the backend CQE context to be used when
+-              receiving completion from backend (wr_id, op_code, emu_cq_num)
+-            - For each sge prepares backend sge
+-            - Calls backend's post_recv
+-
+-4.3.4 Process backend events
+-============================
+-    - Done by a dedicated thread used to process backend events;
+-      at initialization is attached to the device and creates
+-      the communication channel.
+-    - Thread main loop:
+-        - Polls for completions
+-        - Extracts QEMU _cq_num, wr_id and op_code from context
+-        - Writes CQE to CQ ring
+-        - Writes CQ number to device CQ
+-        - Sends completion-interrupt to guest
+-        - Deallocates context
+-        - Acks the event to backend
+-
+-
+-
+-5. Limitations
+-==============
+-- The device obviously is limited by the Guest Linux Driver features implementation
+-  of the VMware device API.
+-- Memory registration mechanism requires mremap for every page in the buffer in order
+-  to map it to a contiguous virtual address range. Since this is not the data path
+-  it should not matter much. If the default max mr size is increased, be aware that
+-  memory registration can take up to 0.5 seconds for 1GB of memory.
+-- The device requires target page size to be the same as the host page size,
+-  otherwise it will fail to init.
+-- QEMU cannot map guest RAM from a file descriptor if a pvrdma device is attached,
+-  so it can't work with huge pages. The limitation will be addressed in the future,
+-  however QEMU allocates Guest RAM with MADV_HUGEPAGE so if there are enough huge
+-  pages available, QEMU will use them. QEMU will fail to init if the requirements
+-  are not met.
+-
+-
+-
+-6. Performance
+-==============
+-By design the pvrdma device exits on each post-send/receive, so for small buffers
+-the performance is affected; however for medium buffers it will became close to
+-bare metal and from 1MB buffers and  up it reaches bare metal performance.
+-(tested with 2 VMs, the pvrdma devices connected to 2 VFs of the same device)
+-
+-All the above assumes no memory registration is done on data path.
+diff --git a/docs/system/loongarch/virt.rst b/docs/system/loongarch/virt.rst
+index c37268b404..06d034b8ef 100644
+--- a/docs/system/loongarch/virt.rst
++++ b/docs/system/loongarch/virt.rst
+@@ -39,7 +39,7 @@ can be accessed by following steps.
+ 
+ .. code-block:: bash
+ 
+-  ./configure --disable-rdma --disable-pvrdma --prefix=/usr \
++  ./configure --disable-rdma --prefix=/usr \
+               --target-list="loongarch64-softmmu" \
+               --disable-libiscsi --disable-libnfs --disable-libpmem \
+               --disable-glusterfs --enable-libusb --enable-usb-redir \
+diff --git a/meson.build b/meson.build
+index c9c3217ba4..d6af3cd53a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2829,37 +2829,6 @@ config_host_data.set('CONFIG_ARM_AES_BUILTIN', cc.compiles('''
+     void foo(uint8x16_t *p) { *p = vaesmcq_u8(*p); }
+   '''))
+ 
+-have_pvrdma = get_option('pvrdma') \
+-  .require(rdma.found(), error_message: 'PVRDMA requires OpenFabrics libraries') \
+-  .require(cc.compiles(gnu_source_prefix + '''
+-    #include <sys/mman.h>
+-    int main(void)
+-    {
+-      char buf = 0;
+-      void *addr = &buf;
+-      addr = mremap(addr, 0, 1, MREMAP_MAYMOVE | MREMAP_FIXED);
+-
+-      return 0;
+-    }'''), error_message: 'PVRDMA requires mremap').allowed()
+-
+-if have_pvrdma
+-  config_host_data.set('LEGACY_RDMA_REG_MR', not cc.links('''
+-    #include <infiniband/verbs.h>
+-    int main(void)
+-    {
+-      struct ibv_mr *mr;
+-      struct ibv_pd *pd = NULL;
+-      size_t length = 10;
+-      uint64_t iova = 0;
+-      int access = 0;
+-      void *addr = NULL;
+-
+-      mr = ibv_reg_mr_iova(pd, addr, length, iova, access);
+-      ibv_dereg_mr(mr);
+-      return 0;
+-    }'''))
+-endif
+-
+ if get_option('membarrier').disabled()
+   have_membarrier = false
+ elif host_os == 'windows'
+@@ -2993,7 +2962,6 @@ host_kconfig = \
+   (have_vhost_kernel ? ['CONFIG_VHOST_KERNEL=y'] : []) + \
+   (have_virtfs ? ['CONFIG_VIRTFS=y'] : []) + \
+   (host_os == 'linux' ? ['CONFIG_LINUX=y'] : []) + \
+-  (have_pvrdma ? ['CONFIG_PVRDMA=y'] : []) + \
+   (multiprocess_allowed ? ['CONFIG_MULTIPROCESS_ALLOWED=y'] : []) + \
+   (vfio_user_server_allowed ? ['CONFIG_VFIO_USER_SERVER_ALLOWED=y'] : []) + \
+   (hv_balloon ? ['CONFIG_HV_BALLOON_POSSIBLE=y'] : [])
+@@ -3357,8 +3325,6 @@ if have_system
+     'hw/pci',
+     'hw/pci-host',
+     'hw/ppc',
+-    'hw/rdma',
+-    'hw/rdma/vmw',
+     'hw/rtc',
+     'hw/s390x',
+     'hw/scsi',
+@@ -4028,7 +3994,6 @@ if have_tools
+     }]
+   endforeach
+ 
+-  subdir('contrib/rdmacm-mux')
+   subdir('contrib/elf2dmp')
+ 
+   executable('qemu-edid', files('qemu-edid.c', 'hw/display/edid-generate.c'),
+@@ -4434,7 +4399,6 @@ summary_info += {'Linux AIO support': libaio}
+ summary_info += {'Linux io_uring support': linux_io_uring}
+ summary_info += {'ATTR/XATTR support': libattr}
+ summary_info += {'RDMA support':      rdma}
+-summary_info += {'PVRDMA support':    have_pvrdma}
+ summary_info += {'fdt support':       fdt_opt == 'disabled' ? false : fdt_opt}
+ summary_info += {'libcap-ng support': libcap_ng}
+ summary_info += {'bpf support':       libbpf}
+diff --git a/qapi/machine.json b/qapi/machine.json
+index e8b60641f2..e9f0f0c49a 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1737,23 +1737,6 @@
+   'returns': 'HumanReadableText',
+   'features': [ 'unstable' ] }
+ 
+-##
+-# @x-query-rdma:
+-#
+-# Query RDMA state
+-#
+-# Features:
+-#
+-# @unstable: This command is meant for debugging.
+-#
+-# Returns: RDMA state
+-#
+-# Since: 6.2
+-##
+-{ 'command': 'x-query-rdma',
+-  'returns': 'HumanReadableText',
+-  'features': [ 'unstable' ] }
+-
+ ##
+ # @x-query-roms:
+ #
+diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+index 8304d45625..5e33da7228 100644
+--- a/qapi/qapi-schema.json
++++ b/qapi/qapi-schema.json
+@@ -54,7 +54,6 @@
+ { 'include': 'dump.json' }
+ { 'include': 'net.json' }
+ { 'include': 'ebpf.json' }
+-{ 'include': 'rdma.json' }
+ { 'include': 'rocker.json' }
+ { 'include': 'tpm.json' }
+ { 'include': 'ui.json' }
+diff --git a/qapi/rdma.json b/qapi/rdma.json
+deleted file mode 100644
+index 195c001850..0000000000
+--- a/qapi/rdma.json
++++ /dev/null
+@@ -1,38 +0,0 @@
+-# -*- Mode: Python -*-
+-# vim: filetype=python
+-#
+-
+-##
+-# = RDMA device
+-##
+-
+-##
+-# @RDMA_GID_STATUS_CHANGED:
+-#
+-# Emitted when guest driver adds/deletes GID to/from device
+-#
+-# @netdev: RoCE Network Device name
+-#
+-# @gid-status: Add or delete indication
+-#
+-# @subnet-prefix: Subnet Prefix
+-#
+-# @interface-id: Interface ID
+-#
+-# Since: 4.0
+-#
+-# Example:
+-#
+-#     <- {"timestamp": {"seconds": 1541579657, "microseconds": 986760},
+-#         "event": "RDMA_GID_STATUS_CHANGED",
+-#         "data":
+-#             {"netdev": "bridge0",
+-#             "interface-id": 15880512517475447892,
+-#             "gid-status": true,
+-#             "subnet-prefix": 33022}}
+-##
+-{ 'event': 'RDMA_GID_STATUS_CHANGED',
+-  'data': { 'netdev'        : 'str',
+-            'gid-status'    : 'bool',
+-            'subnet-prefix' : 'uint64',
+-            'interface-id'  : 'uint64' } }
+diff --git a/contrib/rdmacm-mux/rdmacm-mux.h b/contrib/rdmacm-mux/rdmacm-mux.h
+deleted file mode 100644
+index 07a4722913..0000000000
+--- a/contrib/rdmacm-mux/rdmacm-mux.h
++++ /dev/null
+@@ -1,61 +0,0 @@
+-/*
+- * QEMU paravirtual RDMA - rdmacm-mux declarations
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef RDMACM_MUX_H
+-#define RDMACM_MUX_H
+-
+-#include "linux/if.h"
+-#include <infiniband/verbs.h>
+-#include <infiniband/umad.h>
+-#include <rdma/rdma_user_cm.h>
+-
+-typedef enum RdmaCmMuxMsgType {
+-    RDMACM_MUX_MSG_TYPE_REQ   = 0,
+-    RDMACM_MUX_MSG_TYPE_RESP  = 1,
+-} RdmaCmMuxMsgType;
+-
+-typedef enum RdmaCmMuxOpCode {
+-    RDMACM_MUX_OP_CODE_REG   = 0,
+-    RDMACM_MUX_OP_CODE_UNREG = 1,
+-    RDMACM_MUX_OP_CODE_MAD   = 2,
+-} RdmaCmMuxOpCode;
+-
+-typedef enum RdmaCmMuxErrCode {
+-    RDMACM_MUX_ERR_CODE_OK        = 0,
+-    RDMACM_MUX_ERR_CODE_EINVAL    = 1,
+-    RDMACM_MUX_ERR_CODE_EEXIST    = 2,
+-    RDMACM_MUX_ERR_CODE_EACCES    = 3,
+-    RDMACM_MUX_ERR_CODE_ENOTFOUND = 4,
+-} RdmaCmMuxErrCode;
+-
+-typedef struct RdmaCmMuxHdr {
+-    RdmaCmMuxMsgType msg_type;
+-    RdmaCmMuxOpCode op_code;
+-    union ibv_gid sgid;
+-    RdmaCmMuxErrCode err_code;
+-} RdmaCmUHdr;
+-
+-typedef struct RdmaCmUMad {
+-    struct ib_user_mad hdr;
+-    char mad[RDMA_MAX_PRIVATE_DATA];
+-} RdmaCmUMad;
+-
+-typedef struct RdmaCmMuxMsg {
+-    RdmaCmUHdr hdr;
+-    int umad_len;
+-    RdmaCmUMad umad;
+-} RdmaCmMuxMsg;
+-
+-#endif
+diff --git a/hw/rdma/rdma_backend.h b/hw/rdma/rdma_backend.h
+deleted file mode 100644
+index 225af481e0..0000000000
+--- a/hw/rdma/rdma_backend.h
++++ /dev/null
+@@ -1,129 +0,0 @@
+-/*
+- *  RDMA device: Definitions of Backend Device functions
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef RDMA_BACKEND_H
+-#define RDMA_BACKEND_H
+-
+-#include "qapi/error.h"
+-#include "chardev/char-fe.h"
+-
+-#include "rdma_rm_defs.h"
+-#include "rdma_backend_defs.h"
+-
+-/* Vendor Errors */
+-#define VENDOR_ERR_FAIL_BACKEND     0x201
+-#define VENDOR_ERR_TOO_MANY_SGES    0x202
+-#define VENDOR_ERR_NOMEM            0x203
+-#define VENDOR_ERR_QP0              0x204
+-#define VENDOR_ERR_INV_NUM_SGE      0x205
+-#define VENDOR_ERR_MAD_SEND         0x206
+-#define VENDOR_ERR_INVLKEY          0x207
+-#define VENDOR_ERR_MR_SMALL         0x208
+-#define VENDOR_ERR_INV_MAD_BUFF     0x209
+-#define VENDOR_ERR_INV_GID_IDX      0x210
+-
+-/* Add definition for QP0 and QP1 as there is no userspace enums for them */
+-enum ibv_special_qp_type {
+-    IBV_QPT_SMI = 0,
+-    IBV_QPT_GSI = 1,
+-};
+-
+-static inline uint32_t rdma_backend_qpn(const RdmaBackendQP *qp)
+-{
+-    return qp->ibqp ? qp->ibqp->qp_num : 1;
+-}
+-
+-static inline uint32_t rdma_backend_mr_lkey(const RdmaBackendMR *mr)
+-{
+-    return mr->ibmr ? mr->ibmr->lkey : 0;
+-}
+-
+-static inline uint32_t rdma_backend_mr_rkey(const RdmaBackendMR *mr)
+-{
+-    return mr->ibmr ? mr->ibmr->rkey : 0;
+-}
+-
+-int rdma_backend_init(RdmaBackendDev *backend_dev, PCIDevice *pdev,
+-                      RdmaDeviceResources *rdma_dev_res,
+-                      const char *backend_device_name, uint8_t port_num,
+-                      struct ibv_device_attr *dev_attr,
+-                      CharBackend *mad_chr_be);
+-void rdma_backend_fini(RdmaBackendDev *backend_dev);
+-int rdma_backend_add_gid(RdmaBackendDev *backend_dev, const char *ifname,
+-                         union ibv_gid *gid);
+-int rdma_backend_del_gid(RdmaBackendDev *backend_dev, const char *ifname,
+-                         union ibv_gid *gid);
+-int rdma_backend_get_gid_index(RdmaBackendDev *backend_dev,
+-                               union ibv_gid *gid);
+-void rdma_backend_start(RdmaBackendDev *backend_dev);
+-void rdma_backend_stop(RdmaBackendDev *backend_dev);
+-void rdma_backend_register_comp_handler(void (*handler)(void *ctx,
+-                                                        struct ibv_wc *wc));
+-void rdma_backend_unregister_comp_handler(void);
+-
+-int rdma_backend_query_port(RdmaBackendDev *backend_dev,
+-                            struct ibv_port_attr *port_attr);
+-int rdma_backend_create_pd(RdmaBackendDev *backend_dev, RdmaBackendPD *pd);
+-void rdma_backend_destroy_pd(RdmaBackendPD *pd);
+-
+-int rdma_backend_create_mr(RdmaBackendMR *mr, RdmaBackendPD *pd, void *addr,
+-                           size_t length, uint64_t guest_start, int access);
+-void rdma_backend_destroy_mr(RdmaBackendMR *mr);
+-
+-int rdma_backend_create_cq(RdmaBackendDev *backend_dev, RdmaBackendCQ *cq,
+-                           int cqe);
+-void rdma_backend_destroy_cq(RdmaBackendCQ *cq);
+-void rdma_backend_poll_cq(RdmaDeviceResources *rdma_dev_res, RdmaBackendCQ *cq);
+-
+-int rdma_backend_create_qp(RdmaBackendQP *qp, uint8_t qp_type,
+-                           RdmaBackendPD *pd, RdmaBackendCQ *scq,
+-                           RdmaBackendCQ *rcq, RdmaBackendSRQ *srq,
+-                           uint32_t max_send_wr, uint32_t max_recv_wr,
+-                           uint32_t max_send_sge, uint32_t max_recv_sge);
+-int rdma_backend_qp_state_init(RdmaBackendDev *backend_dev, RdmaBackendQP *qp,
+-                               uint8_t qp_type, uint32_t qkey);
+-int rdma_backend_qp_state_rtr(RdmaBackendDev *backend_dev, RdmaBackendQP *qp,
+-                              uint8_t qp_type, uint8_t sgid_idx,
+-                              union ibv_gid *dgid, uint32_t dqpn,
+-                              uint32_t rq_psn, uint32_t qkey, bool use_qkey);
+-int rdma_backend_qp_state_rts(RdmaBackendQP *qp, uint8_t qp_type,
+-                              uint32_t sq_psn, uint32_t qkey, bool use_qkey);
+-int rdma_backend_query_qp(RdmaBackendQP *qp, struct ibv_qp_attr *attr,
+-                          int attr_mask, struct ibv_qp_init_attr *init_attr);
+-void rdma_backend_destroy_qp(RdmaBackendQP *qp, RdmaDeviceResources *dev_res);
+-
+-void rdma_backend_post_send(RdmaBackendDev *backend_dev,
+-                            RdmaBackendQP *qp, uint8_t qp_type,
+-                            struct ibv_sge *sge, uint32_t num_sge,
+-                            uint8_t sgid_idx, union ibv_gid *sgid,
+-                            union ibv_gid *dgid, uint32_t dqpn, uint32_t dqkey,
+-                            void *ctx);
+-void rdma_backend_post_recv(RdmaBackendDev *backend_dev,
+-                            RdmaBackendQP *qp, uint8_t qp_type,
+-                            struct ibv_sge *sge, uint32_t num_sge, void *ctx);
+-
+-int rdma_backend_create_srq(RdmaBackendSRQ *srq, RdmaBackendPD *pd,
+-                            uint32_t max_wr, uint32_t max_sge,
+-                            uint32_t srq_limit);
+-int rdma_backend_query_srq(RdmaBackendSRQ *srq, struct ibv_srq_attr *srq_attr);
+-int rdma_backend_modify_srq(RdmaBackendSRQ *srq, struct ibv_srq_attr *srq_attr,
+-                            int srq_attr_mask);
+-void rdma_backend_destroy_srq(RdmaBackendSRQ *srq,
+-                              RdmaDeviceResources *dev_res);
+-void rdma_backend_post_srq_recv(RdmaBackendDev *backend_dev,
+-                                RdmaBackendSRQ *srq, struct ibv_sge *sge,
+-                                uint32_t num_sge, void *ctx);
+-
+-#endif
+diff --git a/hw/rdma/rdma_backend_defs.h b/hw/rdma/rdma_backend_defs.h
+deleted file mode 100644
+index 4e6c0ad695..0000000000
+--- a/hw/rdma/rdma_backend_defs.h
++++ /dev/null
+@@ -1,76 +0,0 @@
+-/*
+- *  RDMA device: Definitions of Backend Device structures
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef RDMA_BACKEND_DEFS_H
+-#define RDMA_BACKEND_DEFS_H
+-
+-#include "qemu/thread.h"
+-#include "chardev/char-fe.h"
+-#include <infiniband/verbs.h>
+-#include "contrib/rdmacm-mux/rdmacm-mux.h"
+-#include "rdma_utils.h"
+-
+-typedef struct RdmaDeviceResources RdmaDeviceResources;
+-
+-typedef struct RdmaBackendThread {
+-    QemuThread thread;
+-    bool run; /* Set by thread manager to let thread know it should exit */
+-    bool is_running; /* Set by the thread to report its status */
+-} RdmaBackendThread;
+-
+-typedef struct RdmaCmMux {
+-    CharBackend *chr_be;
+-    int can_receive;
+-} RdmaCmMux;
+-
+-typedef struct RdmaBackendDev {
+-    RdmaBackendThread comp_thread;
+-    PCIDevice *dev;
+-    RdmaDeviceResources *rdma_dev_res;
+-    struct ibv_device *ib_dev;
+-    struct ibv_context *context;
+-    struct ibv_comp_channel *channel;
+-    uint8_t port_num;
+-    RdmaProtectedGQueue recv_mads_list;
+-    RdmaCmMux rdmacm_mux;
+-} RdmaBackendDev;
+-
+-typedef struct RdmaBackendPD {
+-    struct ibv_pd *ibpd;
+-} RdmaBackendPD;
+-
+-typedef struct RdmaBackendMR {
+-    struct ibv_pd *ibpd;
+-    struct ibv_mr *ibmr;
+-} RdmaBackendMR;
+-
+-typedef struct RdmaBackendCQ {
+-    RdmaBackendDev *backend_dev;
+-    struct ibv_cq *ibcq;
+-} RdmaBackendCQ;
+-
+-typedef struct RdmaBackendQP {
+-    struct ibv_pd *ibpd;
+-    struct ibv_qp *ibqp;
+-    uint8_t sgid_idx;
+-    RdmaProtectedGSList cqe_ctx_list;
+-} RdmaBackendQP;
+-
+-typedef struct RdmaBackendSRQ {
+-    struct ibv_srq *ibsrq;
+-    RdmaProtectedGSList cqe_ctx_list;
+-} RdmaBackendSRQ;
+-
+-#endif
+diff --git a/hw/rdma/rdma_rm.h b/hw/rdma/rdma_rm.h
+deleted file mode 100644
+index d69a917795..0000000000
+--- a/hw/rdma/rdma_rm.h
++++ /dev/null
+@@ -1,97 +0,0 @@
+-/*
+- * RDMA device: Definitions of Resource Manager functions
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef RDMA_RM_H
+-#define RDMA_RM_H
+-
+-#include "qapi/error.h"
+-#include "rdma_backend_defs.h"
+-#include "rdma_rm_defs.h"
+-
+-int rdma_rm_init(RdmaDeviceResources *dev_res,
+-                 struct ibv_device_attr *dev_attr);
+-void rdma_rm_fini(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                  const char *ifname);
+-
+-int rdma_rm_alloc_pd(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                     uint32_t *pd_handle, uint32_t ctx_handle);
+-RdmaRmPD *rdma_rm_get_pd(RdmaDeviceResources *dev_res, uint32_t pd_handle);
+-void rdma_rm_dealloc_pd(RdmaDeviceResources *dev_res, uint32_t pd_handle);
+-
+-int rdma_rm_alloc_mr(RdmaDeviceResources *dev_res, uint32_t pd_handle,
+-                     uint64_t guest_start, uint64_t guest_length,
+-                     void *host_virt, int access_flags, uint32_t *mr_handle,
+-                     uint32_t *lkey, uint32_t *rkey);
+-RdmaRmMR *rdma_rm_get_mr(RdmaDeviceResources *dev_res, uint32_t mr_handle);
+-void rdma_rm_dealloc_mr(RdmaDeviceResources *dev_res, uint32_t mr_handle);
+-
+-int rdma_rm_alloc_uc(RdmaDeviceResources *dev_res, uint32_t pfn,
+-                     uint32_t *uc_handle);
+-RdmaRmUC *rdma_rm_get_uc(RdmaDeviceResources *dev_res, uint32_t uc_handle);
+-void rdma_rm_dealloc_uc(RdmaDeviceResources *dev_res, uint32_t uc_handle);
+-
+-int rdma_rm_alloc_cq(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                     uint32_t cqe, uint32_t *cq_handle, void *opaque);
+-RdmaRmCQ *rdma_rm_get_cq(RdmaDeviceResources *dev_res, uint32_t cq_handle);
+-void rdma_rm_req_notify_cq(RdmaDeviceResources *dev_res, uint32_t cq_handle,
+-                           bool notify);
+-void rdma_rm_dealloc_cq(RdmaDeviceResources *dev_res, uint32_t cq_handle);
+-
+-int rdma_rm_alloc_qp(RdmaDeviceResources *dev_res, uint32_t pd_handle,
+-                     uint8_t qp_type, uint32_t max_send_wr,
+-                     uint32_t max_send_sge, uint32_t send_cq_handle,
+-                     uint32_t max_recv_wr, uint32_t max_recv_sge,
+-                     uint32_t recv_cq_handle, void *opaque, uint32_t *qpn,
+-                     uint8_t is_srq, uint32_t srq_handle);
+-RdmaRmQP *rdma_rm_get_qp(RdmaDeviceResources *dev_res, uint32_t qpn);
+-int rdma_rm_modify_qp(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                      uint32_t qp_handle, uint32_t attr_mask, uint8_t sgid_idx,
+-                      union ibv_gid *dgid, uint32_t dqpn,
+-                      enum ibv_qp_state qp_state, uint32_t qkey,
+-                      uint32_t rq_psn, uint32_t sq_psn);
+-int rdma_rm_query_qp(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                     uint32_t qp_handle, struct ibv_qp_attr *attr,
+-                     int attr_mask, struct ibv_qp_init_attr *init_attr);
+-void rdma_rm_dealloc_qp(RdmaDeviceResources *dev_res, uint32_t qp_handle);
+-
+-RdmaRmSRQ *rdma_rm_get_srq(RdmaDeviceResources *dev_res, uint32_t srq_handle);
+-int rdma_rm_alloc_srq(RdmaDeviceResources *dev_res, uint32_t pd_handle,
+-                      uint32_t max_wr, uint32_t max_sge, uint32_t srq_limit,
+-                      uint32_t *srq_handle, void *opaque);
+-int rdma_rm_query_srq(RdmaDeviceResources *dev_res, uint32_t srq_handle,
+-                      struct ibv_srq_attr *srq_attr);
+-int rdma_rm_modify_srq(RdmaDeviceResources *dev_res, uint32_t srq_handle,
+-                       struct ibv_srq_attr *srq_attr, int srq_attr_mask);
+-void rdma_rm_dealloc_srq(RdmaDeviceResources *dev_res, uint32_t srq_handle);
+-
+-int rdma_rm_alloc_cqe_ctx(RdmaDeviceResources *dev_res, uint32_t *cqe_ctx_id,
+-                          void *ctx);
+-void *rdma_rm_get_cqe_ctx(RdmaDeviceResources *dev_res, uint32_t cqe_ctx_id);
+-void rdma_rm_dealloc_cqe_ctx(RdmaDeviceResources *dev_res, uint32_t cqe_ctx_id);
+-
+-int rdma_rm_add_gid(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                    const char *ifname, union ibv_gid *gid, int gid_idx);
+-int rdma_rm_del_gid(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                    const char *ifname, int gid_idx);
+-int rdma_rm_get_backend_gid_index(RdmaDeviceResources *dev_res,
+-                                  RdmaBackendDev *backend_dev, int sgid_idx);
+-static inline union ibv_gid *rdma_rm_get_gid(RdmaDeviceResources *dev_res,
+-                                             int sgid_idx)
+-{
+-    return &dev_res->port.gid_tbl[sgid_idx].gid;
+-}
+-void rdma_format_device_counters(RdmaDeviceResources *dev_res, GString *buf);
+-
+-#endif
+diff --git a/hw/rdma/rdma_rm_defs.h b/hw/rdma/rdma_rm_defs.h
+deleted file mode 100644
+index 534f2f74d3..0000000000
+--- a/hw/rdma/rdma_rm_defs.h
++++ /dev/null
+@@ -1,146 +0,0 @@
+-/*
+- * RDMA device: Definitions of Resource Manager structures
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef RDMA_RM_DEFS_H
+-#define RDMA_RM_DEFS_H
+-
+-#include "rdma_backend_defs.h"
+-
+-#define MAX_PORTS             1 /* Do not change - we support only one port */
+-#define MAX_PORT_GIDS         255
+-#define MAX_GIDS              MAX_PORT_GIDS
+-#define MAX_PORT_PKEYS        1
+-#define MAX_PKEYS             MAX_PORT_PKEYS
+-#define MAX_UCS               512
+-#define MAX_MR_SIZE           (1UL << 27)
+-#define MAX_QP                1024
+-#define MAX_SGE               4
+-#define MAX_CQ                2048
+-#define MAX_MR                1024
+-#define MAX_PD                1024
+-#define MAX_QP_RD_ATOM        16
+-#define MAX_QP_INIT_RD_ATOM   16
+-#define MAX_AH                64
+-#define MAX_SRQ               512
+-
+-#define MAX_RM_TBL_NAME             16
+-#define MAX_CONSEQ_EMPTY_POLL_CQ    4096 /* considered as error above this */
+-
+-typedef struct RdmaRmResTbl {
+-    char name[MAX_RM_TBL_NAME];
+-    QemuMutex lock;
+-    unsigned long *bitmap;
+-    size_t tbl_sz;
+-    size_t res_sz;
+-    void *tbl;
+-    uint32_t used; /* number of used entries in the table */
+-} RdmaRmResTbl;
+-
+-typedef struct RdmaRmPD {
+-    RdmaBackendPD backend_pd;
+-    uint32_t ctx_handle;
+-} RdmaRmPD;
+-
+-typedef enum CQNotificationType {
+-    CNT_CLEAR,
+-    CNT_ARM,
+-    CNT_SET,
+-} CQNotificationType;
+-
+-typedef struct RdmaRmCQ {
+-    RdmaBackendCQ backend_cq;
+-    void *opaque;
+-    CQNotificationType notify;
+-} RdmaRmCQ;
+-
+-/* MR (DMA region) */
+-typedef struct RdmaRmMR {
+-    RdmaBackendMR backend_mr;
+-    void *virt;
+-    uint64_t start;
+-    size_t length;
+-    uint32_t pd_handle;
+-    uint32_t lkey;
+-    uint32_t rkey;
+-} RdmaRmMR;
+-
+-typedef struct RdmaRmUC {
+-    uint64_t uc_handle;
+-} RdmaRmUC;
+-
+-typedef struct RdmaRmQP {
+-    RdmaBackendQP backend_qp;
+-    void *opaque;
+-    uint32_t qp_type;
+-    uint32_t qpn;
+-    uint32_t send_cq_handle;
+-    uint32_t recv_cq_handle;
+-    enum ibv_qp_state qp_state;
+-    uint8_t is_srq;
+-} RdmaRmQP;
+-
+-typedef struct RdmaRmSRQ {
+-    RdmaBackendSRQ backend_srq;
+-    uint32_t recv_cq_handle;
+-    void *opaque;
+-} RdmaRmSRQ;
+-
+-typedef struct RdmaRmGid {
+-    union ibv_gid gid;
+-    int backend_gid_index;
+-} RdmaRmGid;
+-
+-typedef struct RdmaRmPort {
+-    RdmaRmGid gid_tbl[MAX_PORT_GIDS];
+-    enum ibv_port_state state;
+-} RdmaRmPort;
+-
+-typedef struct RdmaRmStats {
+-    uint64_t tx;
+-    uint64_t tx_len;
+-    uint64_t tx_err;
+-    uint64_t rx_bufs;
+-    uint64_t rx_bufs_len;
+-    uint64_t rx_bufs_err;
+-    uint64_t rx_srq;
+-    uint64_t completions;
+-    uint64_t mad_tx;
+-    uint64_t mad_tx_err;
+-    uint64_t mad_rx;
+-    uint64_t mad_rx_err;
+-    uint64_t mad_rx_bufs;
+-    uint64_t mad_rx_bufs_err;
+-    uint64_t poll_cq_from_bk;
+-    uint64_t poll_cq_from_guest;
+-    uint64_t poll_cq_from_guest_empty;
+-    uint64_t poll_cq_ppoll_to;
+-    uint32_t missing_cqe;
+-} RdmaRmStats;
+-
+-struct RdmaDeviceResources {
+-    RdmaRmPort port;
+-    RdmaRmResTbl pd_tbl;
+-    RdmaRmResTbl mr_tbl;
+-    RdmaRmResTbl uc_tbl;
+-    RdmaRmResTbl qp_tbl;
+-    RdmaRmResTbl cq_tbl;
+-    RdmaRmResTbl cqe_ctx_tbl;
+-    RdmaRmResTbl srq_tbl;
+-    GHashTable *qp_hash; /* Keeps mapping between real and emulated */
+-    QemuMutex lock;
+-    RdmaRmStats stats;
+-};
+-
+-#endif
+diff --git a/hw/rdma/rdma_utils.h b/hw/rdma/rdma_utils.h
+deleted file mode 100644
+index 54e4f56edd..0000000000
+--- a/hw/rdma/rdma_utils.h
++++ /dev/null
+@@ -1,63 +0,0 @@
+-/*
+- * RDMA device: Debug utilities
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef RDMA_UTILS_H
+-#define RDMA_UTILS_H
+-
+-#include "qemu/error-report.h"
+-#include "sysemu/dma.h"
+-
+-#define rdma_error_report(fmt, ...) \
+-    error_report("%s: " fmt, "rdma", ## __VA_ARGS__)
+-#define rdma_warn_report(fmt, ...) \
+-    warn_report("%s: " fmt, "rdma", ## __VA_ARGS__)
+-#define rdma_info_report(fmt, ...) \
+-    info_report("%s: " fmt, "rdma", ## __VA_ARGS__)
+-
+-typedef struct RdmaProtectedGQueue {
+-    QemuMutex lock;
+-    GQueue *list;
+-} RdmaProtectedGQueue;
+-
+-typedef struct RdmaProtectedGSList {
+-    QemuMutex lock;
+-    GSList *list;
+-} RdmaProtectedGSList;
+-
+-void *rdma_pci_dma_map(PCIDevice *dev, dma_addr_t addr, dma_addr_t len);
+-void rdma_pci_dma_unmap(PCIDevice *dev, void *buffer, dma_addr_t len);
+-void rdma_protected_gqueue_init(RdmaProtectedGQueue *list);
+-void rdma_protected_gqueue_destroy(RdmaProtectedGQueue *list);
+-void rdma_protected_gqueue_append_int64(RdmaProtectedGQueue *list,
+-                                        int64_t value);
+-int64_t rdma_protected_gqueue_pop_int64(RdmaProtectedGQueue *list);
+-void rdma_protected_gslist_init(RdmaProtectedGSList *list);
+-void rdma_protected_gslist_destroy(RdmaProtectedGSList *list);
+-void rdma_protected_gslist_append_int32(RdmaProtectedGSList *list,
+-                                        int32_t value);
+-void rdma_protected_gslist_remove_int32(RdmaProtectedGSList *list,
+-                                        int32_t value);
+-
+-static inline void addrconf_addr_eui48(uint8_t *eui, const char *addr)
+-{
+-    memcpy(eui, addr, 3);
+-    eui[3] = 0xFF;
+-    eui[4] = 0xFE;
+-    memcpy(eui + 5, addr + 3, 3);
+-    eui[0] ^= 2;
+-}
+-
+-#endif
+diff --git a/hw/rdma/trace.h b/hw/rdma/trace.h
+deleted file mode 100644
+index b3fa8ebc51..0000000000
+--- a/hw/rdma/trace.h
++++ /dev/null
+@@ -1 +0,0 @@
+-#include "trace/trace-hw_rdma.h"
+diff --git a/hw/rdma/vmw/pvrdma.h b/hw/rdma/vmw/pvrdma.h
+deleted file mode 100644
+index 4cbc10c980..0000000000
+--- a/hw/rdma/vmw/pvrdma.h
++++ /dev/null
+@@ -1,144 +0,0 @@
+-/*
+- * QEMU VMWARE paravirtual RDMA device definitions
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef PVRDMA_PVRDMA_H
+-#define PVRDMA_PVRDMA_H
+-
+-#include "qemu/units.h"
+-#include "qemu/notify.h"
+-#include "hw/pci/msix.h"
+-#include "hw/pci/pci_device.h"
+-#include "chardev/char-fe.h"
+-#include "hw/net/vmxnet3_defs.h"
+-
+-#include "../rdma_backend_defs.h"
+-#include "../rdma_rm_defs.h"
+-
+-#include "standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h"
+-#include "pvrdma_dev_ring.h"
+-#include "qom/object.h"
+-
+-/* BARs */
+-#define RDMA_MSIX_BAR_IDX    0
+-#define RDMA_REG_BAR_IDX     1
+-#define RDMA_UAR_BAR_IDX     2
+-#define RDMA_BAR0_MSIX_SIZE  (16 * KiB)
+-#define RDMA_BAR1_REGS_SIZE  64
+-#define RDMA_BAR2_UAR_SIZE   (0x1000 * MAX_UCS) /* each uc gets page */
+-
+-/* MSIX */
+-#define RDMA_MAX_INTRS       3
+-#define RDMA_MSIX_TABLE      0x0000
+-#define RDMA_MSIX_PBA        0x2000
+-
+-/* Interrupts Vectors */
+-#define INTR_VEC_CMD_RING            0
+-#define INTR_VEC_CMD_ASYNC_EVENTS    1
+-#define INTR_VEC_CMD_COMPLETION_Q    2
+-
+-/* HW attributes */
+-#define PVRDMA_HW_NAME       "pvrdma"
+-#define PVRDMA_HW_VERSION    17
+-#define PVRDMA_FW_VERSION    14
+-
+-/* Some defaults */
+-#define PVRDMA_PKEY          0xFFFF
+-
+-typedef struct DSRInfo {
+-    dma_addr_t dma;
+-    struct pvrdma_device_shared_region *dsr;
+-
+-    union pvrdma_cmd_req *req;
+-    union pvrdma_cmd_resp *rsp;
+-
+-    PvrdmaRingState *async_ring_state;
+-    PvrdmaRing async;
+-
+-    PvrdmaRingState *cq_ring_state;
+-    PvrdmaRing cq;
+-} DSRInfo;
+-
+-typedef struct PVRDMADevStats {
+-    uint64_t commands;
+-    uint64_t regs_reads;
+-    uint64_t regs_writes;
+-    uint64_t uar_writes;
+-    uint64_t interrupts;
+-} PVRDMADevStats;
+-
+-struct PVRDMADev {
+-    PCIDevice parent_obj;
+-    MemoryRegion msix;
+-    MemoryRegion regs;
+-    uint32_t regs_data[RDMA_BAR1_REGS_SIZE];
+-    MemoryRegion uar;
+-    uint32_t uar_data[RDMA_BAR2_UAR_SIZE];
+-    DSRInfo dsr_info;
+-    int interrupt_mask;
+-    struct ibv_device_attr dev_attr;
+-    uint64_t node_guid;
+-    char *backend_eth_device_name;
+-    char *backend_device_name;
+-    uint8_t backend_port_num;
+-    RdmaBackendDev backend_dev;
+-    RdmaDeviceResources rdma_dev_res;
+-    CharBackend mad_chr;
+-    VMXNET3State *func0;
+-    Notifier shutdown_notifier;
+-    PVRDMADevStats stats;
+-};
+-typedef struct PVRDMADev PVRDMADev;
+-DECLARE_INSTANCE_CHECKER(PVRDMADev, PVRDMA_DEV,
+-                         PVRDMA_HW_NAME)
+-
+-static inline int get_reg_val(PVRDMADev *dev, hwaddr addr, uint32_t *val)
+-{
+-    int idx = addr >> 2;
+-
+-    if (idx >= RDMA_BAR1_REGS_SIZE) {
+-        return -EINVAL;
+-    }
+-
+-    *val = dev->regs_data[idx];
+-
+-    return 0;
+-}
+-
+-static inline int set_reg_val(PVRDMADev *dev, hwaddr addr, uint32_t val)
+-{
+-    int idx = addr >> 2;
+-
+-    if (idx >= RDMA_BAR1_REGS_SIZE) {
+-        return -EINVAL;
+-    }
+-
+-    dev->regs_data[idx] = val;
+-
+-    return 0;
+-}
+-
+-static inline void post_interrupt(PVRDMADev *dev, unsigned vector)
+-{
+-    PCIDevice *pci_dev = PCI_DEVICE(dev);
+-
+-    if (likely(!dev->interrupt_mask)) {
+-        dev->stats.interrupts++;
+-        msix_notify(pci_dev, vector);
+-    }
+-}
+-
+-int pvrdma_exec_cmd(PVRDMADev *dev);
+-
+-#endif
+diff --git a/hw/rdma/vmw/pvrdma_dev_ring.h b/hw/rdma/vmw/pvrdma_dev_ring.h
+deleted file mode 100644
+index d231588ce0..0000000000
+--- a/hw/rdma/vmw/pvrdma_dev_ring.h
++++ /dev/null
+@@ -1,46 +0,0 @@
+-/*
+- * QEMU VMWARE paravirtual RDMA ring utilities
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef PVRDMA_DEV_RING_H
+-#define PVRDMA_DEV_RING_H
+-
+-
+-#define MAX_RING_NAME_SZ 32
+-
+-typedef struct PvrdmaRingState {
+-    int prod_tail; /* producer tail */
+-    int cons_head; /* consumer head */
+-} PvrdmaRingState;
+-
+-typedef struct PvrdmaRing {
+-    char name[MAX_RING_NAME_SZ];
+-    PCIDevice *dev;
+-    uint32_t max_elems;
+-    size_t elem_sz;
+-    PvrdmaRingState *ring_state; /* used only for unmap */
+-    int npages;
+-    void **pages;
+-} PvrdmaRing;
+-
+-int pvrdma_ring_init(PvrdmaRing *ring, const char *name, PCIDevice *dev,
+-                     PvrdmaRingState *ring_state, uint32_t max_elems,
+-                     size_t elem_sz, dma_addr_t *tbl, uint32_t npages);
+-void *pvrdma_ring_next_elem_read(PvrdmaRing *ring);
+-void pvrdma_ring_read_inc(PvrdmaRing *ring);
+-void *pvrdma_ring_next_elem_write(PvrdmaRing *ring);
+-void pvrdma_ring_write_inc(PvrdmaRing *ring);
+-void pvrdma_ring_free(PvrdmaRing *ring);
+-
+-#endif
+diff --git a/hw/rdma/vmw/pvrdma_qp_ops.h b/hw/rdma/vmw/pvrdma_qp_ops.h
+deleted file mode 100644
+index bf2b15c5ce..0000000000
+--- a/hw/rdma/vmw/pvrdma_qp_ops.h
++++ /dev/null
+@@ -1,28 +0,0 @@
+-/*
+- * QEMU VMWARE paravirtual RDMA QP Operations
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef PVRDMA_QP_OPS_H
+-#define PVRDMA_QP_OPS_H
+-
+-#include "pvrdma.h"
+-
+-int pvrdma_qp_ops_init(void);
+-void pvrdma_qp_ops_fini(void);
+-void pvrdma_qp_send(PVRDMADev *dev, uint32_t qp_handle);
+-void pvrdma_qp_recv(PVRDMADev *dev, uint32_t qp_handle);
+-void pvrdma_srq_recv(PVRDMADev *dev, uint32_t srq_handle);
+-void pvrdma_cq_poll(RdmaDeviceResources *dev_res, uint32_t cq_handle);
+-
+-#endif
+diff --git a/hw/rdma/vmw/trace.h b/hw/rdma/vmw/trace.h
+deleted file mode 100644
+index 3ebc9fb7ad..0000000000
+--- a/hw/rdma/vmw/trace.h
++++ /dev/null
+@@ -1 +0,0 @@
+-#include "trace/trace-hw_rdma_vmw.h"
+diff --git a/include/hw/rdma/rdma.h b/include/hw/rdma/rdma.h
+deleted file mode 100644
+index 80b2e531c4..0000000000
+--- a/include/hw/rdma/rdma.h
++++ /dev/null
+@@ -1,37 +0,0 @@
+-/*
+- * RDMA device interface
+- *
+- * Copyright (C) 2019 Oracle
+- * Copyright (C) 2019 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#ifndef RDMA_H
+-#define RDMA_H
+-
+-#include "qom/object.h"
+-
+-#define INTERFACE_RDMA_PROVIDER "rdma"
+-
+-typedef struct RdmaProviderClass RdmaProviderClass;
+-DECLARE_CLASS_CHECKERS(RdmaProviderClass, RDMA_PROVIDER,
+-                       INTERFACE_RDMA_PROVIDER)
+-#define RDMA_PROVIDER(obj) \
+-    INTERFACE_CHECK(RdmaProvider, (obj), \
+-                    INTERFACE_RDMA_PROVIDER)
+-
+-typedef struct RdmaProvider RdmaProvider;
+-
+-struct RdmaProviderClass {
+-    InterfaceClass parent;
+-
+-    void (*format_statistics)(RdmaProvider *obj, GString *buf);
+-};
+-
+-#endif
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index 13f9a2dedb..f4cf8f6717 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -37,7 +37,6 @@ void hmp_info_spice(Monitor *mon, const QDict *qdict);
+ void hmp_info_balloon(Monitor *mon, const QDict *qdict);
+ void hmp_info_irq(Monitor *mon, const QDict *qdict);
+ void hmp_info_pic(Monitor *mon, const QDict *qdict);
+-void hmp_info_rdma(Monitor *mon, const QDict *qdict);
+ void hmp_info_pci(Monitor *mon, const QDict *qdict);
+ void hmp_info_tpm(Monitor *mon, const QDict *qdict);
+ void hmp_info_iothreads(Monitor *mon, const QDict *qdict);
+diff --git a/include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h b/include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h
+deleted file mode 100644
+index a5a1c8234e..0000000000
+--- a/include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h
++++ /dev/null
+@@ -1,685 +0,0 @@
+-/*
+- * Copyright (c) 2012-2016 VMware, Inc.  All rights reserved.
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of EITHER the GNU General Public License
+- * version 2 as published by the Free Software Foundation or the BSD
+- * 2-Clause License. This program is distributed in the hope that it
+- * will be useful, but WITHOUT ANY WARRANTY; WITHOUT EVEN THE IMPLIED
+- * WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+- * See the GNU General Public License version 2 for more details at
+- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html.
+- *
+- * You should have received a copy of the GNU General Public License
+- * along with this program available in the file COPYING in the main
+- * directory of this source tree.
+- *
+- * The BSD 2-Clause License
+- *
+- *     Redistribution and use in source and binary forms, with or
+- *     without modification, are permitted provided that the following
+- *     conditions are met:
+- *
+- *      - Redistributions of source code must retain the above
+- *        copyright notice, this list of conditions and the following
+- *        disclaimer.
+- *
+- *      - Redistributions in binary form must reproduce the above
+- *        copyright notice, this list of conditions and the following
+- *        disclaimer in the documentation and/or other materials
+- *        provided with the distribution.
+- *
+- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+- * COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+- * OF THE POSSIBILITY OF SUCH DAMAGE.
+- */
+-
+-#ifndef __PVRDMA_DEV_API_H__
+-#define __PVRDMA_DEV_API_H__
+-
+-#include "standard-headers/linux/types.h"
+-
+-#include "pvrdma_verbs.h"
+-
+-/*
+- * PVRDMA version macros. Some new features require updates to PVRDMA_VERSION.
+- * These macros allow us to check for different features if necessary.
+- */
+-
+-#define PVRDMA_ROCEV1_VERSION		17
+-#define PVRDMA_ROCEV2_VERSION		18
+-#define PVRDMA_PPN64_VERSION		19
+-#define PVRDMA_QPHANDLE_VERSION		20
+-#define PVRDMA_VERSION			PVRDMA_QPHANDLE_VERSION
+-
+-#define PVRDMA_BOARD_ID			1
+-#define PVRDMA_REV_ID			1
+-
+-/*
+- * Masks and accessors for page directory, which is a two-level lookup:
+- * page directory -> page table -> page. Only one directory for now, but we
+- * could expand that easily. 9 bits for tables, 9 bits for pages, gives one
+- * gigabyte for memory regions and so forth.
+- */
+-
+-#define PVRDMA_PDIR_SHIFT		18
+-#define PVRDMA_PTABLE_SHIFT		9
+-#define PVRDMA_PAGE_DIR_DIR(x)		(((x) >> PVRDMA_PDIR_SHIFT) & 0x1)
+-#define PVRDMA_PAGE_DIR_TABLE(x)	(((x) >> PVRDMA_PTABLE_SHIFT) & 0x1ff)
+-#define PVRDMA_PAGE_DIR_PAGE(x)		((x) & 0x1ff)
+-#define PVRDMA_PAGE_DIR_MAX_PAGES	(1 * 512 * 512)
+-#define PVRDMA_MAX_FAST_REG_PAGES	128
+-
+-/*
+- * Max MSI-X vectors.
+- */
+-
+-#define PVRDMA_MAX_INTERRUPTS	3
+-
+-/* Register offsets within PCI resource on BAR1. */
+-#define PVRDMA_REG_VERSION	0x00	/* R: Version of device. */
+-#define PVRDMA_REG_DSRLOW	0x04	/* W: Device shared region low PA. */
+-#define PVRDMA_REG_DSRHIGH	0x08	/* W: Device shared region high PA. */
+-#define PVRDMA_REG_CTL		0x0c	/* W: PVRDMA_DEVICE_CTL */
+-#define PVRDMA_REG_REQUEST	0x10	/* W: Indicate device request. */
+-#define PVRDMA_REG_ERR		0x14	/* R: Device error. */
+-#define PVRDMA_REG_ICR		0x18	/* R: Interrupt cause. */
+-#define PVRDMA_REG_IMR		0x1c	/* R/W: Interrupt mask. */
+-#define PVRDMA_REG_MACL		0x20	/* R/W: MAC address low. */
+-#define PVRDMA_REG_MACH		0x24	/* R/W: MAC address high. */
+-
+-/* Object flags. */
+-#define PVRDMA_CQ_FLAG_ARMED_SOL	BIT(0)	/* Armed for solicited-only. */
+-#define PVRDMA_CQ_FLAG_ARMED		BIT(1)	/* Armed. */
+-#define PVRDMA_MR_FLAG_DMA		BIT(0)	/* DMA region. */
+-#define PVRDMA_MR_FLAG_FRMR		BIT(1)	/* Fast reg memory region. */
+-
+-/*
+- * Atomic operation capability (masked versions are extended atomic
+- * operations.
+- */
+-
+-#define PVRDMA_ATOMIC_OP_COMP_SWAP	BIT(0)	/* Compare and swap. */
+-#define PVRDMA_ATOMIC_OP_FETCH_ADD	BIT(1)	/* Fetch and add. */
+-#define PVRDMA_ATOMIC_OP_MASK_COMP_SWAP	BIT(2)	/* Masked compare and swap. */
+-#define PVRDMA_ATOMIC_OP_MASK_FETCH_ADD	BIT(3)	/* Masked fetch and add. */
+-
+-/*
+- * Base Memory Management Extension flags to support Fast Reg Memory Regions
+- * and Fast Reg Work Requests. Each flag represents a verb operation and we
+- * must support all of them to qualify for the BMME device cap.
+- */
+-
+-#define PVRDMA_BMME_FLAG_LOCAL_INV	BIT(0)	/* Local Invalidate. */
+-#define PVRDMA_BMME_FLAG_REMOTE_INV	BIT(1)	/* Remote Invalidate. */
+-#define PVRDMA_BMME_FLAG_FAST_REG_WR	BIT(2)	/* Fast Reg Work Request. */
+-
+-/*
+- * GID types. The interpretation of the gid_types bit field in the device
+- * capabilities will depend on the device mode. For now, the device only
+- * supports RoCE as mode, so only the different GID types for RoCE are
+- * defined.
+- */
+-
+-#define PVRDMA_GID_TYPE_FLAG_ROCE_V1	BIT(0)
+-#define PVRDMA_GID_TYPE_FLAG_ROCE_V2	BIT(1)
+-
+-/*
+- * Version checks. This checks whether each version supports specific
+- * capabilities from the device.
+- */
+-
+-#define PVRDMA_IS_VERSION17(_dev)					\
+-	(_dev->dsr_version == PVRDMA_ROCEV1_VERSION &&			\
+-	 _dev->dsr->caps.gid_types == PVRDMA_GID_TYPE_FLAG_ROCE_V1)
+-
+-#define PVRDMA_IS_VERSION18(_dev)					\
+-	(_dev->dsr_version >= PVRDMA_ROCEV2_VERSION &&			\
+-	 (_dev->dsr->caps.gid_types == PVRDMA_GID_TYPE_FLAG_ROCE_V1 ||  \
+-	  _dev->dsr->caps.gid_types == PVRDMA_GID_TYPE_FLAG_ROCE_V2))	\
+-
+-#define PVRDMA_SUPPORTED(_dev)						\
+-	((_dev->dsr->caps.mode == PVRDMA_DEVICE_MODE_ROCE) &&		\
+-	 (PVRDMA_IS_VERSION17(_dev) || PVRDMA_IS_VERSION18(_dev)))
+-
+-/*
+- * Get capability values based on device version.
+- */
+-
+-#define PVRDMA_GET_CAP(_dev, _old_val, _val) \
+-	((PVRDMA_IS_VERSION18(_dev)) ? _val : _old_val)
+-
+-enum pvrdma_pci_resource {
+-	PVRDMA_PCI_RESOURCE_MSIX,	/* BAR0: MSI-X, MMIO. */
+-	PVRDMA_PCI_RESOURCE_REG,	/* BAR1: Registers, MMIO. */
+-	PVRDMA_PCI_RESOURCE_UAR,	/* BAR2: UAR pages, MMIO, 64-bit. */
+-	PVRDMA_PCI_RESOURCE_LAST,	/* Last. */
+-};
+-
+-enum pvrdma_device_ctl {
+-	PVRDMA_DEVICE_CTL_ACTIVATE,	/* Activate device. */
+-	PVRDMA_DEVICE_CTL_UNQUIESCE,	/* Unquiesce device. */
+-	PVRDMA_DEVICE_CTL_RESET,	/* Reset device. */
+-};
+-
+-enum pvrdma_intr_vector {
+-	PVRDMA_INTR_VECTOR_RESPONSE,	/* Command response. */
+-	PVRDMA_INTR_VECTOR_ASYNC,	/* Async events. */
+-	PVRDMA_INTR_VECTOR_CQ,		/* CQ notification. */
+-	/* Additional CQ notification vectors. */
+-};
+-
+-enum pvrdma_intr_cause {
+-	PVRDMA_INTR_CAUSE_RESPONSE	= (1 << PVRDMA_INTR_VECTOR_RESPONSE),
+-	PVRDMA_INTR_CAUSE_ASYNC		= (1 << PVRDMA_INTR_VECTOR_ASYNC),
+-	PVRDMA_INTR_CAUSE_CQ		= (1 << PVRDMA_INTR_VECTOR_CQ),
+-};
+-
+-enum pvrdma_gos_bits {
+-	PVRDMA_GOS_BITS_UNK,		/* Unknown. */
+-	PVRDMA_GOS_BITS_32,		/* 32-bit. */
+-	PVRDMA_GOS_BITS_64,		/* 64-bit. */
+-};
+-
+-enum pvrdma_gos_type {
+-	PVRDMA_GOS_TYPE_UNK,		/* Unknown. */
+-	PVRDMA_GOS_TYPE_LINUX,		/* Linux. */
+-};
+-
+-enum pvrdma_device_mode {
+-	PVRDMA_DEVICE_MODE_ROCE,	/* RoCE. */
+-	PVRDMA_DEVICE_MODE_IWARP,	/* iWarp. */
+-	PVRDMA_DEVICE_MODE_IB,		/* InfiniBand. */
+-};
+-
+-struct pvrdma_gos_info {
+-	uint32_t gos_bits:2;			/* W: PVRDMA_GOS_BITS_ */
+-	uint32_t gos_type:4;			/* W: PVRDMA_GOS_TYPE_ */
+-	uint32_t gos_ver:16;			/* W: Guest OS version. */
+-	uint32_t gos_misc:10;		/* W: Other. */
+-	uint32_t pad;			/* Pad to 8-byte alignment. */
+-};
+-
+-struct pvrdma_device_caps {
+-	uint64_t fw_ver;				/* R: Query device. */
+-	uint64_t node_guid;
+-	uint64_t sys_image_guid;
+-	uint64_t max_mr_size;
+-	uint64_t page_size_cap;
+-	uint64_t atomic_arg_sizes;			/* EX verbs. */
+-	uint32_t ex_comp_mask;			/* EX verbs. */
+-	uint32_t device_cap_flags2;			/* EX verbs. */
+-	uint32_t max_fa_bit_boundary;		/* EX verbs. */
+-	uint32_t log_max_atomic_inline_arg;		/* EX verbs. */
+-	uint32_t vendor_id;
+-	uint32_t vendor_part_id;
+-	uint32_t hw_ver;
+-	uint32_t max_qp;
+-	uint32_t max_qp_wr;
+-	uint32_t device_cap_flags;
+-	uint32_t max_sge;
+-	uint32_t max_sge_rd;
+-	uint32_t max_cq;
+-	uint32_t max_cqe;
+-	uint32_t max_mr;
+-	uint32_t max_pd;
+-	uint32_t max_qp_rd_atom;
+-	uint32_t max_ee_rd_atom;
+-	uint32_t max_res_rd_atom;
+-	uint32_t max_qp_init_rd_atom;
+-	uint32_t max_ee_init_rd_atom;
+-	uint32_t max_ee;
+-	uint32_t max_rdd;
+-	uint32_t max_mw;
+-	uint32_t max_raw_ipv6_qp;
+-	uint32_t max_raw_ethy_qp;
+-	uint32_t max_mcast_grp;
+-	uint32_t max_mcast_qp_attach;
+-	uint32_t max_total_mcast_qp_attach;
+-	uint32_t max_ah;
+-	uint32_t max_fmr;
+-	uint32_t max_map_per_fmr;
+-	uint32_t max_srq;
+-	uint32_t max_srq_wr;
+-	uint32_t max_srq_sge;
+-	uint32_t max_uar;
+-	uint32_t gid_tbl_len;
+-	uint16_t max_pkeys;
+-	uint8_t  local_ca_ack_delay;
+-	uint8_t  phys_port_cnt;
+-	uint8_t  mode;				/* PVRDMA_DEVICE_MODE_ */
+-	uint8_t  atomic_ops;				/* PVRDMA_ATOMIC_OP_* bits */
+-	uint8_t  bmme_flags;				/* FRWR Mem Mgmt Extensions */
+-	uint8_t  gid_types;				/* PVRDMA_GID_TYPE_FLAG_ */
+-	uint32_t max_fast_reg_page_list_len;
+-};
+-
+-struct pvrdma_ring_page_info {
+-	uint32_t num_pages;				/* Num pages incl. header. */
+-	uint32_t reserved;				/* Reserved. */
+-	uint64_t pdir_dma;				/* Page directory PA. */
+-};
+-
+-#pragma pack(push, 1)
+-
+-struct pvrdma_device_shared_region {
+-	uint32_t driver_version;			/* W: Driver version. */
+-	uint32_t pad;				/* Pad to 8-byte align. */
+-	struct pvrdma_gos_info gos_info;	/* W: Guest OS information. */
+-	uint64_t cmd_slot_dma;			/* W: Command slot address. */
+-	uint64_t resp_slot_dma;			/* W: Response slot address. */
+-	struct pvrdma_ring_page_info async_ring_pages;
+-						/* W: Async ring page info. */
+-	struct pvrdma_ring_page_info cq_ring_pages;
+-						/* W: CQ ring page info. */
+-	union {
+-		uint32_t uar_pfn;			/* W: UAR pageframe. */
+-		uint64_t uar_pfn64;			/* W: 64-bit UAR page frame. */
+-	};
+-	struct pvrdma_device_caps caps;		/* R: Device capabilities. */
+-};
+-
+-#pragma pack(pop)
+-
+-/* Event types. Currently a 1:1 mapping with enum ib_event. */
+-enum pvrdma_eqe_type {
+-	PVRDMA_EVENT_CQ_ERR,
+-	PVRDMA_EVENT_QP_FATAL,
+-	PVRDMA_EVENT_QP_REQ_ERR,
+-	PVRDMA_EVENT_QP_ACCESS_ERR,
+-	PVRDMA_EVENT_COMM_EST,
+-	PVRDMA_EVENT_SQ_DRAINED,
+-	PVRDMA_EVENT_PATH_MIG,
+-	PVRDMA_EVENT_PATH_MIG_ERR,
+-	PVRDMA_EVENT_DEVICE_FATAL,
+-	PVRDMA_EVENT_PORT_ACTIVE,
+-	PVRDMA_EVENT_PORT_ERR,
+-	PVRDMA_EVENT_LID_CHANGE,
+-	PVRDMA_EVENT_PKEY_CHANGE,
+-	PVRDMA_EVENT_SM_CHANGE,
+-	PVRDMA_EVENT_SRQ_ERR,
+-	PVRDMA_EVENT_SRQ_LIMIT_REACHED,
+-	PVRDMA_EVENT_QP_LAST_WQE_REACHED,
+-	PVRDMA_EVENT_CLIENT_REREGISTER,
+-	PVRDMA_EVENT_GID_CHANGE,
+-};
+-
+-/* Event queue element. */
+-struct pvrdma_eqe {
+-	uint32_t type;	/* Event type. */
+-	uint32_t info;	/* Handle, other. */
+-};
+-
+-/* CQ notification queue element. */
+-struct pvrdma_cqne {
+-	uint32_t info;	/* Handle */
+-};
+-
+-enum {
+-	PVRDMA_CMD_FIRST,
+-	PVRDMA_CMD_QUERY_PORT = PVRDMA_CMD_FIRST,
+-	PVRDMA_CMD_QUERY_PKEY,
+-	PVRDMA_CMD_CREATE_PD,
+-	PVRDMA_CMD_DESTROY_PD,
+-	PVRDMA_CMD_CREATE_MR,
+-	PVRDMA_CMD_DESTROY_MR,
+-	PVRDMA_CMD_CREATE_CQ,
+-	PVRDMA_CMD_RESIZE_CQ,
+-	PVRDMA_CMD_DESTROY_CQ,
+-	PVRDMA_CMD_CREATE_QP,
+-	PVRDMA_CMD_MODIFY_QP,
+-	PVRDMA_CMD_QUERY_QP,
+-	PVRDMA_CMD_DESTROY_QP,
+-	PVRDMA_CMD_CREATE_UC,
+-	PVRDMA_CMD_DESTROY_UC,
+-	PVRDMA_CMD_CREATE_BIND,
+-	PVRDMA_CMD_DESTROY_BIND,
+-	PVRDMA_CMD_CREATE_SRQ,
+-	PVRDMA_CMD_MODIFY_SRQ,
+-	PVRDMA_CMD_QUERY_SRQ,
+-	PVRDMA_CMD_DESTROY_SRQ,
+-	PVRDMA_CMD_MAX,
+-};
+-
+-enum {
+-	PVRDMA_CMD_FIRST_RESP = (1 << 31),
+-	PVRDMA_CMD_QUERY_PORT_RESP = PVRDMA_CMD_FIRST_RESP,
+-	PVRDMA_CMD_QUERY_PKEY_RESP,
+-	PVRDMA_CMD_CREATE_PD_RESP,
+-	PVRDMA_CMD_DESTROY_PD_RESP_NOOP,
+-	PVRDMA_CMD_CREATE_MR_RESP,
+-	PVRDMA_CMD_DESTROY_MR_RESP_NOOP,
+-	PVRDMA_CMD_CREATE_CQ_RESP,
+-	PVRDMA_CMD_RESIZE_CQ_RESP,
+-	PVRDMA_CMD_DESTROY_CQ_RESP_NOOP,
+-	PVRDMA_CMD_CREATE_QP_RESP,
+-	PVRDMA_CMD_MODIFY_QP_RESP,
+-	PVRDMA_CMD_QUERY_QP_RESP,
+-	PVRDMA_CMD_DESTROY_QP_RESP,
+-	PVRDMA_CMD_CREATE_UC_RESP,
+-	PVRDMA_CMD_DESTROY_UC_RESP_NOOP,
+-	PVRDMA_CMD_CREATE_BIND_RESP_NOOP,
+-	PVRDMA_CMD_DESTROY_BIND_RESP_NOOP,
+-	PVRDMA_CMD_CREATE_SRQ_RESP,
+-	PVRDMA_CMD_MODIFY_SRQ_RESP,
+-	PVRDMA_CMD_QUERY_SRQ_RESP,
+-	PVRDMA_CMD_DESTROY_SRQ_RESP,
+-	PVRDMA_CMD_MAX_RESP,
+-};
+-
+-struct pvrdma_cmd_hdr {
+-	uint64_t response;		/* Key for response lookup. */
+-	uint32_t cmd;		/* PVRDMA_CMD_ */
+-	uint32_t reserved;		/* Reserved. */
+-};
+-
+-struct pvrdma_cmd_resp_hdr {
+-	uint64_t response;		/* From cmd hdr. */
+-	uint32_t ack;		/* PVRDMA_CMD_XXX_RESP */
+-	uint8_t err;			/* Error. */
+-	uint8_t reserved[3];		/* Reserved. */
+-};
+-
+-struct pvrdma_cmd_query_port {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint8_t port_num;
+-	uint8_t reserved[7];
+-};
+-
+-struct pvrdma_cmd_query_port_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	struct pvrdma_port_attr attrs;
+-};
+-
+-struct pvrdma_cmd_query_pkey {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint8_t port_num;
+-	uint8_t index;
+-	uint8_t reserved[6];
+-};
+-
+-struct pvrdma_cmd_query_pkey_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	uint16_t pkey;
+-	uint8_t reserved[6];
+-};
+-
+-struct pvrdma_cmd_create_uc {
+-	struct pvrdma_cmd_hdr hdr;
+-	union {
+-		uint32_t pfn; /* UAR page frame number */
+-		uint64_t pfn64; /* 64-bit UAR page frame number */
+-	};
+-};
+-
+-struct pvrdma_cmd_create_uc_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	uint32_t ctx_handle;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_destroy_uc {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t ctx_handle;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_create_pd {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t ctx_handle;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_create_pd_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	uint32_t pd_handle;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_destroy_pd {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t pd_handle;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_create_mr {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint64_t start;
+-	uint64_t length;
+-	uint64_t pdir_dma;
+-	uint32_t pd_handle;
+-	uint32_t access_flags;
+-	uint32_t flags;
+-	uint32_t nchunks;
+-};
+-
+-struct pvrdma_cmd_create_mr_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	uint32_t mr_handle;
+-	uint32_t lkey;
+-	uint32_t rkey;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_destroy_mr {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t mr_handle;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_create_cq {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint64_t pdir_dma;
+-	uint32_t ctx_handle;
+-	uint32_t cqe;
+-	uint32_t nchunks;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_create_cq_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	uint32_t cq_handle;
+-	uint32_t cqe;
+-};
+-
+-struct pvrdma_cmd_resize_cq {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t cq_handle;
+-	uint32_t cqe;
+-};
+-
+-struct pvrdma_cmd_resize_cq_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	uint32_t cqe;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_destroy_cq {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t cq_handle;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_create_srq {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint64_t pdir_dma;
+-	uint32_t pd_handle;
+-	uint32_t nchunks;
+-	struct pvrdma_srq_attr attrs;
+-	uint8_t srq_type;
+-	uint8_t reserved[7];
+-};
+-
+-struct pvrdma_cmd_create_srq_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	uint32_t srqn;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_modify_srq {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t srq_handle;
+-	uint32_t attr_mask;
+-	struct pvrdma_srq_attr attrs;
+-};
+-
+-struct pvrdma_cmd_query_srq {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t srq_handle;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_query_srq_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	struct pvrdma_srq_attr attrs;
+-};
+-
+-struct pvrdma_cmd_destroy_srq {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t srq_handle;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_create_qp {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint64_t pdir_dma;
+-	uint32_t pd_handle;
+-	uint32_t send_cq_handle;
+-	uint32_t recv_cq_handle;
+-	uint32_t srq_handle;
+-	uint32_t max_send_wr;
+-	uint32_t max_recv_wr;
+-	uint32_t max_send_sge;
+-	uint32_t max_recv_sge;
+-	uint32_t max_inline_data;
+-	uint32_t lkey;
+-	uint32_t access_flags;
+-	uint16_t total_chunks;
+-	uint16_t send_chunks;
+-	uint16_t max_atomic_arg;
+-	uint8_t sq_sig_all;
+-	uint8_t qp_type;
+-	uint8_t is_srq;
+-	uint8_t reserved[3];
+-};
+-
+-struct pvrdma_cmd_create_qp_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	uint32_t qpn;
+-	uint32_t max_send_wr;
+-	uint32_t max_recv_wr;
+-	uint32_t max_send_sge;
+-	uint32_t max_recv_sge;
+-	uint32_t max_inline_data;
+-};
+-
+-struct pvrdma_cmd_create_qp_resp_v2 {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	uint32_t qpn;
+-	uint32_t qp_handle;
+-	uint32_t max_send_wr;
+-	uint32_t max_recv_wr;
+-	uint32_t max_send_sge;
+-	uint32_t max_recv_sge;
+-	uint32_t max_inline_data;
+-};
+-
+-struct pvrdma_cmd_modify_qp {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t qp_handle;
+-	uint32_t attr_mask;
+-	struct pvrdma_qp_attr attrs;
+-};
+-
+-struct pvrdma_cmd_query_qp {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t qp_handle;
+-	uint32_t attr_mask;
+-};
+-
+-struct pvrdma_cmd_query_qp_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	struct pvrdma_qp_attr attrs;
+-};
+-
+-struct pvrdma_cmd_destroy_qp {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t qp_handle;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_destroy_qp_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	uint32_t events_reported;
+-	uint8_t reserved[4];
+-};
+-
+-struct pvrdma_cmd_create_bind {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t mtu;
+-	uint32_t vlan;
+-	uint32_t index;
+-	uint8_t new_gid[16];
+-	uint8_t gid_type;
+-	uint8_t reserved[3];
+-};
+-
+-struct pvrdma_cmd_destroy_bind {
+-	struct pvrdma_cmd_hdr hdr;
+-	uint32_t index;
+-	uint8_t dest_gid[16];
+-	uint8_t reserved[4];
+-};
+-
+-union pvrdma_cmd_req {
+-	struct pvrdma_cmd_hdr hdr;
+-	struct pvrdma_cmd_query_port query_port;
+-	struct pvrdma_cmd_query_pkey query_pkey;
+-	struct pvrdma_cmd_create_uc create_uc;
+-	struct pvrdma_cmd_destroy_uc destroy_uc;
+-	struct pvrdma_cmd_create_pd create_pd;
+-	struct pvrdma_cmd_destroy_pd destroy_pd;
+-	struct pvrdma_cmd_create_mr create_mr;
+-	struct pvrdma_cmd_destroy_mr destroy_mr;
+-	struct pvrdma_cmd_create_cq create_cq;
+-	struct pvrdma_cmd_resize_cq resize_cq;
+-	struct pvrdma_cmd_destroy_cq destroy_cq;
+-	struct pvrdma_cmd_create_qp create_qp;
+-	struct pvrdma_cmd_modify_qp modify_qp;
+-	struct pvrdma_cmd_query_qp query_qp;
+-	struct pvrdma_cmd_destroy_qp destroy_qp;
+-	struct pvrdma_cmd_create_bind create_bind;
+-	struct pvrdma_cmd_destroy_bind destroy_bind;
+-	struct pvrdma_cmd_create_srq create_srq;
+-	struct pvrdma_cmd_modify_srq modify_srq;
+-	struct pvrdma_cmd_query_srq query_srq;
+-	struct pvrdma_cmd_destroy_srq destroy_srq;
+-};
+-
+-union pvrdma_cmd_resp {
+-	struct pvrdma_cmd_resp_hdr hdr;
+-	struct pvrdma_cmd_query_port_resp query_port_resp;
+-	struct pvrdma_cmd_query_pkey_resp query_pkey_resp;
+-	struct pvrdma_cmd_create_uc_resp create_uc_resp;
+-	struct pvrdma_cmd_create_pd_resp create_pd_resp;
+-	struct pvrdma_cmd_create_mr_resp create_mr_resp;
+-	struct pvrdma_cmd_create_cq_resp create_cq_resp;
+-	struct pvrdma_cmd_resize_cq_resp resize_cq_resp;
+-	struct pvrdma_cmd_create_qp_resp create_qp_resp;
+-	struct pvrdma_cmd_create_qp_resp_v2 create_qp_resp_v2;
+-	struct pvrdma_cmd_query_qp_resp query_qp_resp;
+-	struct pvrdma_cmd_destroy_qp_resp destroy_qp_resp;
+-	struct pvrdma_cmd_create_srq_resp create_srq_resp;
+-	struct pvrdma_cmd_query_srq_resp query_srq_resp;
+-};
+-
+-#endif /* __PVRDMA_DEV_API_H__ */
+diff --git a/include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.h b/include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.h
+deleted file mode 100644
+index 94d41b202c..0000000000
+--- a/include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.h
++++ /dev/null
+@@ -1,348 +0,0 @@
+-/*
+- * Copyright (c) 2012-2016 VMware, Inc.  All rights reserved.
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of EITHER the GNU General Public License
+- * version 2 as published by the Free Software Foundation or the BSD
+- * 2-Clause License. This program is distributed in the hope that it
+- * will be useful, but WITHOUT ANY WARRANTY; WITHOUT EVEN THE IMPLIED
+- * WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+- * See the GNU General Public License version 2 for more details at
+- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html.
+- *
+- * You should have received a copy of the GNU General Public License
+- * along with this program available in the file COPYING in the main
+- * directory of this source tree.
+- *
+- * The BSD 2-Clause License
+- *
+- *     Redistribution and use in source and binary forms, with or
+- *     without modification, are permitted provided that the following
+- *     conditions are met:
+- *
+- *      - Redistributions of source code must retain the above
+- *        copyright notice, this list of conditions and the following
+- *        disclaimer.
+- *
+- *      - Redistributions in binary form must reproduce the above
+- *        copyright notice, this list of conditions and the following
+- *        disclaimer in the documentation and/or other materials
+- *        provided with the distribution.
+- *
+- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+- * COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+- * OF THE POSSIBILITY OF SUCH DAMAGE.
+- */
+-
+-#ifndef __PVRDMA_VERBS_H__
+-#define __PVRDMA_VERBS_H__
+-
+-#include "standard-headers/linux/types.h"
+-
+-union pvrdma_gid {
+-	uint8_t	raw[16];
+-	struct {
+-		uint64_t	subnet_prefix;
+-		uint64_t	interface_id;
+-	} global;
+-};
+-
+-enum pvrdma_link_layer {
+-	PVRDMA_LINK_LAYER_UNSPECIFIED,
+-	PVRDMA_LINK_LAYER_INFINIBAND,
+-	PVRDMA_LINK_LAYER_ETHERNET,
+-};
+-
+-enum pvrdma_mtu {
+-	PVRDMA_MTU_256  = 1,
+-	PVRDMA_MTU_512  = 2,
+-	PVRDMA_MTU_1024 = 3,
+-	PVRDMA_MTU_2048 = 4,
+-	PVRDMA_MTU_4096 = 5,
+-};
+-
+-enum pvrdma_port_state {
+-	PVRDMA_PORT_NOP			= 0,
+-	PVRDMA_PORT_DOWN		= 1,
+-	PVRDMA_PORT_INIT		= 2,
+-	PVRDMA_PORT_ARMED		= 3,
+-	PVRDMA_PORT_ACTIVE		= 4,
+-	PVRDMA_PORT_ACTIVE_DEFER	= 5,
+-};
+-
+-enum pvrdma_port_cap_flags {
+-	PVRDMA_PORT_SM				= 1 <<  1,
+-	PVRDMA_PORT_NOTICE_SUP			= 1 <<  2,
+-	PVRDMA_PORT_TRAP_SUP			= 1 <<  3,
+-	PVRDMA_PORT_OPT_IPD_SUP			= 1 <<  4,
+-	PVRDMA_PORT_AUTO_MIGR_SUP		= 1 <<  5,
+-	PVRDMA_PORT_SL_MAP_SUP			= 1 <<  6,
+-	PVRDMA_PORT_MKEY_NVRAM			= 1 <<  7,
+-	PVRDMA_PORT_PKEY_NVRAM			= 1 <<  8,
+-	PVRDMA_PORT_LED_INFO_SUP		= 1 <<  9,
+-	PVRDMA_PORT_SM_DISABLED			= 1 << 10,
+-	PVRDMA_PORT_SYS_IMAGE_GUID_SUP		= 1 << 11,
+-	PVRDMA_PORT_PKEY_SW_EXT_PORT_TRAP_SUP	= 1 << 12,
+-	PVRDMA_PORT_EXTENDED_SPEEDS_SUP		= 1 << 14,
+-	PVRDMA_PORT_CM_SUP			= 1 << 16,
+-	PVRDMA_PORT_SNMP_TUNNEL_SUP		= 1 << 17,
+-	PVRDMA_PORT_REINIT_SUP			= 1 << 18,
+-	PVRDMA_PORT_DEVICE_MGMT_SUP		= 1 << 19,
+-	PVRDMA_PORT_VENDOR_CLASS_SUP		= 1 << 20,
+-	PVRDMA_PORT_DR_NOTICE_SUP		= 1 << 21,
+-	PVRDMA_PORT_CAP_MASK_NOTICE_SUP		= 1 << 22,
+-	PVRDMA_PORT_BOOT_MGMT_SUP		= 1 << 23,
+-	PVRDMA_PORT_LINK_LATENCY_SUP		= 1 << 24,
+-	PVRDMA_PORT_CLIENT_REG_SUP		= 1 << 25,
+-	PVRDMA_PORT_IP_BASED_GIDS		= 1 << 26,
+-	PVRDMA_PORT_CAP_FLAGS_MAX		= PVRDMA_PORT_IP_BASED_GIDS,
+-};
+-
+-enum pvrdma_port_width {
+-	PVRDMA_WIDTH_1X		= 1,
+-	PVRDMA_WIDTH_4X		= 2,
+-	PVRDMA_WIDTH_8X		= 4,
+-	PVRDMA_WIDTH_12X	= 8,
+-};
+-
+-enum pvrdma_port_speed {
+-	PVRDMA_SPEED_SDR	= 1,
+-	PVRDMA_SPEED_DDR	= 2,
+-	PVRDMA_SPEED_QDR	= 4,
+-	PVRDMA_SPEED_FDR10	= 8,
+-	PVRDMA_SPEED_FDR	= 16,
+-	PVRDMA_SPEED_EDR	= 32,
+-};
+-
+-struct pvrdma_port_attr {
+-	enum pvrdma_port_state	state;
+-	enum pvrdma_mtu		max_mtu;
+-	enum pvrdma_mtu		active_mtu;
+-	uint32_t			gid_tbl_len;
+-	uint32_t			port_cap_flags;
+-	uint32_t			max_msg_sz;
+-	uint32_t			bad_pkey_cntr;
+-	uint32_t			qkey_viol_cntr;
+-	uint16_t			pkey_tbl_len;
+-	uint16_t			lid;
+-	uint16_t			sm_lid;
+-	uint8_t			lmc;
+-	uint8_t			max_vl_num;
+-	uint8_t			sm_sl;
+-	uint8_t			subnet_timeout;
+-	uint8_t			init_type_reply;
+-	uint8_t			active_width;
+-	uint8_t			active_speed;
+-	uint8_t			phys_state;
+-	uint8_t			reserved[2];
+-};
+-
+-struct pvrdma_global_route {
+-	union pvrdma_gid	dgid;
+-	uint32_t			flow_label;
+-	uint8_t			sgid_index;
+-	uint8_t			hop_limit;
+-	uint8_t			traffic_class;
+-	uint8_t			reserved;
+-};
+-
+-struct pvrdma_grh {
+-	uint32_t			version_tclass_flow;
+-	uint16_t			paylen;
+-	uint8_t			next_hdr;
+-	uint8_t			hop_limit;
+-	union pvrdma_gid	sgid;
+-	union pvrdma_gid	dgid;
+-};
+-
+-enum pvrdma_ah_flags {
+-	PVRDMA_AH_GRH = 1,
+-};
+-
+-enum pvrdma_rate {
+-	PVRDMA_RATE_PORT_CURRENT	= 0,
+-	PVRDMA_RATE_2_5_GBPS		= 2,
+-	PVRDMA_RATE_5_GBPS		= 5,
+-	PVRDMA_RATE_10_GBPS		= 3,
+-	PVRDMA_RATE_20_GBPS		= 6,
+-	PVRDMA_RATE_30_GBPS		= 4,
+-	PVRDMA_RATE_40_GBPS		= 7,
+-	PVRDMA_RATE_60_GBPS		= 8,
+-	PVRDMA_RATE_80_GBPS		= 9,
+-	PVRDMA_RATE_120_GBPS		= 10,
+-	PVRDMA_RATE_14_GBPS		= 11,
+-	PVRDMA_RATE_56_GBPS		= 12,
+-	PVRDMA_RATE_112_GBPS		= 13,
+-	PVRDMA_RATE_168_GBPS		= 14,
+-	PVRDMA_RATE_25_GBPS		= 15,
+-	PVRDMA_RATE_100_GBPS		= 16,
+-	PVRDMA_RATE_200_GBPS		= 17,
+-	PVRDMA_RATE_300_GBPS		= 18,
+-};
+-
+-struct pvrdma_ah_attr {
+-	struct pvrdma_global_route	grh;
+-	uint16_t				dlid;
+-	uint16_t				vlan_id;
+-	uint8_t				sl;
+-	uint8_t				src_path_bits;
+-	uint8_t				static_rate;
+-	uint8_t				ah_flags;
+-	uint8_t				port_num;
+-	uint8_t				dmac[6];
+-	uint8_t				reserved;
+-};
+-
+-enum pvrdma_cq_notify_flags {
+-	PVRDMA_CQ_SOLICITED		= 1 << 0,
+-	PVRDMA_CQ_NEXT_COMP		= 1 << 1,
+-	PVRDMA_CQ_SOLICITED_MASK	= PVRDMA_CQ_SOLICITED |
+-					  PVRDMA_CQ_NEXT_COMP,
+-	PVRDMA_CQ_REPORT_MISSED_EVENTS	= 1 << 2,
+-};
+-
+-struct pvrdma_qp_cap {
+-	uint32_t	max_send_wr;
+-	uint32_t	max_recv_wr;
+-	uint32_t	max_send_sge;
+-	uint32_t	max_recv_sge;
+-	uint32_t	max_inline_data;
+-	uint32_t	reserved;
+-};
+-
+-enum pvrdma_sig_type {
+-	PVRDMA_SIGNAL_ALL_WR,
+-	PVRDMA_SIGNAL_REQ_WR,
+-};
+-
+-enum pvrdma_qp_type {
+-	PVRDMA_QPT_SMI,
+-	PVRDMA_QPT_GSI,
+-	PVRDMA_QPT_RC,
+-	PVRDMA_QPT_UC,
+-	PVRDMA_QPT_UD,
+-	PVRDMA_QPT_RAW_IPV6,
+-	PVRDMA_QPT_RAW_ETHERTYPE,
+-	PVRDMA_QPT_RAW_PACKET = 8,
+-	PVRDMA_QPT_XRC_INI = 9,
+-	PVRDMA_QPT_XRC_TGT,
+-	PVRDMA_QPT_MAX,
+-};
+-
+-enum pvrdma_qp_create_flags {
+-	PVRDMA_QP_CREATE_IPOPVRDMA_UD_LSO		= 1 << 0,
+-	PVRDMA_QP_CREATE_BLOCK_MULTICAST_LOOPBACK	= 1 << 1,
+-};
+-
+-enum pvrdma_qp_attr_mask {
+-	PVRDMA_QP_STATE			= 1 << 0,
+-	PVRDMA_QP_CUR_STATE		= 1 << 1,
+-	PVRDMA_QP_EN_SQD_ASYNC_NOTIFY	= 1 << 2,
+-	PVRDMA_QP_ACCESS_FLAGS		= 1 << 3,
+-	PVRDMA_QP_PKEY_INDEX		= 1 << 4,
+-	PVRDMA_QP_PORT			= 1 << 5,
+-	PVRDMA_QP_QKEY			= 1 << 6,
+-	PVRDMA_QP_AV			= 1 << 7,
+-	PVRDMA_QP_PATH_MTU		= 1 << 8,
+-	PVRDMA_QP_TIMEOUT		= 1 << 9,
+-	PVRDMA_QP_RETRY_CNT		= 1 << 10,
+-	PVRDMA_QP_RNR_RETRY		= 1 << 11,
+-	PVRDMA_QP_RQ_PSN		= 1 << 12,
+-	PVRDMA_QP_MAX_QP_RD_ATOMIC	= 1 << 13,
+-	PVRDMA_QP_ALT_PATH		= 1 << 14,
+-	PVRDMA_QP_MIN_RNR_TIMER		= 1 << 15,
+-	PVRDMA_QP_SQ_PSN		= 1 << 16,
+-	PVRDMA_QP_MAX_DEST_RD_ATOMIC	= 1 << 17,
+-	PVRDMA_QP_PATH_MIG_STATE	= 1 << 18,
+-	PVRDMA_QP_CAP			= 1 << 19,
+-	PVRDMA_QP_DEST_QPN		= 1 << 20,
+-	PVRDMA_QP_ATTR_MASK_MAX		= PVRDMA_QP_DEST_QPN,
+-};
+-
+-enum pvrdma_qp_state {
+-	PVRDMA_QPS_RESET,
+-	PVRDMA_QPS_INIT,
+-	PVRDMA_QPS_RTR,
+-	PVRDMA_QPS_RTS,
+-	PVRDMA_QPS_SQD,
+-	PVRDMA_QPS_SQE,
+-	PVRDMA_QPS_ERR,
+-};
+-
+-enum pvrdma_mig_state {
+-	PVRDMA_MIG_MIGRATED,
+-	PVRDMA_MIG_REARM,
+-	PVRDMA_MIG_ARMED,
+-};
+-
+-enum pvrdma_mw_type {
+-	PVRDMA_MW_TYPE_1 = 1,
+-	PVRDMA_MW_TYPE_2 = 2,
+-};
+-
+-struct pvrdma_srq_attr {
+-	uint32_t			max_wr;
+-	uint32_t			max_sge;
+-	uint32_t			srq_limit;
+-	uint32_t			reserved;
+-};
+-
+-struct pvrdma_qp_attr {
+-	enum pvrdma_qp_state	qp_state;
+-	enum pvrdma_qp_state	cur_qp_state;
+-	enum pvrdma_mtu		path_mtu;
+-	enum pvrdma_mig_state	path_mig_state;
+-	uint32_t			qkey;
+-	uint32_t			rq_psn;
+-	uint32_t			sq_psn;
+-	uint32_t			dest_qp_num;
+-	uint32_t			qp_access_flags;
+-	uint16_t			pkey_index;
+-	uint16_t			alt_pkey_index;
+-	uint8_t			en_sqd_async_notify;
+-	uint8_t			sq_draining;
+-	uint8_t			max_rd_atomic;
+-	uint8_t			max_dest_rd_atomic;
+-	uint8_t			min_rnr_timer;
+-	uint8_t			port_num;
+-	uint8_t			timeout;
+-	uint8_t			retry_cnt;
+-	uint8_t			rnr_retry;
+-	uint8_t			alt_port_num;
+-	uint8_t			alt_timeout;
+-	uint8_t			reserved[5];
+-	struct pvrdma_qp_cap	cap;
+-	struct pvrdma_ah_attr	ah_attr;
+-	struct pvrdma_ah_attr	alt_ah_attr;
+-};
+-
+-enum pvrdma_send_flags {
+-	PVRDMA_SEND_FENCE	= 1 << 0,
+-	PVRDMA_SEND_SIGNALED	= 1 << 1,
+-	PVRDMA_SEND_SOLICITED	= 1 << 2,
+-	PVRDMA_SEND_INLINE	= 1 << 3,
+-	PVRDMA_SEND_IP_CSUM	= 1 << 4,
+-	PVRDMA_SEND_FLAGS_MAX	= PVRDMA_SEND_IP_CSUM,
+-};
+-
+-enum pvrdma_access_flags {
+-	PVRDMA_ACCESS_LOCAL_WRITE	= 1 << 0,
+-	PVRDMA_ACCESS_REMOTE_WRITE	= 1 << 1,
+-	PVRDMA_ACCESS_REMOTE_READ	= 1 << 2,
+-	PVRDMA_ACCESS_REMOTE_ATOMIC	= 1 << 3,
+-	PVRDMA_ACCESS_MW_BIND		= 1 << 4,
+-	PVRDMA_ZERO_BASED		= 1 << 5,
+-	PVRDMA_ACCESS_ON_DEMAND		= 1 << 6,
+-	PVRDMA_ACCESS_FLAGS_MAX		= PVRDMA_ACCESS_ON_DEMAND,
+-};
+-
+-#endif /* __PVRDMA_VERBS_H__ */
+diff --git a/include/standard-headers/rdma/vmw_pvrdma-abi.h b/include/standard-headers/rdma/vmw_pvrdma-abi.h
+deleted file mode 100644
+index c30182a7ae..0000000000
+--- a/include/standard-headers/rdma/vmw_pvrdma-abi.h
++++ /dev/null
+@@ -1,310 +0,0 @@
+-/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Clause) */
+-/*
+- * Copyright (c) 2012-2016 VMware, Inc.  All rights reserved.
+- *
+- * This program is free software; you can redistribute it and/or
+- * modify it under the terms of EITHER the GNU General Public License
+- * version 2 as published by the Free Software Foundation or the BSD
+- * 2-Clause License. This program is distributed in the hope that it
+- * will be useful, but WITHOUT ANY WARRANTY; WITHOUT EVEN THE IMPLIED
+- * WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
+- * See the GNU General Public License version 2 for more details at
+- * http://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html.
+- *
+- * You should have received a copy of the GNU General Public License
+- * along with this program available in the file COPYING in the main
+- * directory of this source tree.
+- *
+- * The BSD 2-Clause License
+- *
+- *     Redistribution and use in source and binary forms, with or
+- *     without modification, are permitted provided that the following
+- *     conditions are met:
+- *
+- *      - Redistributions of source code must retain the above
+- *        copyright notice, this list of conditions and the following
+- *        disclaimer.
+- *
+- *      - Redistributions in binary form must reproduce the above
+- *        copyright notice, this list of conditions and the following
+- *        disclaimer in the documentation and/or other materials
+- *        provided with the distribution.
+- *
+- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+- * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+- * COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+- * OF THE POSSIBILITY OF SUCH DAMAGE.
+- */
+-
+-#ifndef __VMW_PVRDMA_ABI_H__
+-#define __VMW_PVRDMA_ABI_H__
+-
+-#include "standard-headers/linux/types.h"
+-
+-#define PVRDMA_UVERBS_ABI_VERSION	3		/* ABI Version. */
+-#define PVRDMA_UAR_HANDLE_MASK		0x00FFFFFF	/* Bottom 24 bits. */
+-#define PVRDMA_UAR_QP_OFFSET		0		/* QP doorbell. */
+-#define PVRDMA_UAR_QP_SEND		(1 << 30)	/* Send bit. */
+-#define PVRDMA_UAR_QP_RECV		(1 << 31)	/* Recv bit. */
+-#define PVRDMA_UAR_CQ_OFFSET		4		/* CQ doorbell. */
+-#define PVRDMA_UAR_CQ_ARM_SOL		(1 << 29)	/* Arm solicited bit. */
+-#define PVRDMA_UAR_CQ_ARM		(1 << 30)	/* Arm bit. */
+-#define PVRDMA_UAR_CQ_POLL		(1 << 31)	/* Poll bit. */
+-#define PVRDMA_UAR_SRQ_OFFSET		8		/* SRQ doorbell. */
+-#define PVRDMA_UAR_SRQ_RECV		(1 << 30)	/* Recv bit. */
+-
+-enum pvrdma_wr_opcode {
+-	PVRDMA_WR_RDMA_WRITE,
+-	PVRDMA_WR_RDMA_WRITE_WITH_IMM,
+-	PVRDMA_WR_SEND,
+-	PVRDMA_WR_SEND_WITH_IMM,
+-	PVRDMA_WR_RDMA_READ,
+-	PVRDMA_WR_ATOMIC_CMP_AND_SWP,
+-	PVRDMA_WR_ATOMIC_FETCH_AND_ADD,
+-	PVRDMA_WR_LSO,
+-	PVRDMA_WR_SEND_WITH_INV,
+-	PVRDMA_WR_RDMA_READ_WITH_INV,
+-	PVRDMA_WR_LOCAL_INV,
+-	PVRDMA_WR_FAST_REG_MR,
+-	PVRDMA_WR_MASKED_ATOMIC_CMP_AND_SWP,
+-	PVRDMA_WR_MASKED_ATOMIC_FETCH_AND_ADD,
+-	PVRDMA_WR_BIND_MW,
+-	PVRDMA_WR_REG_SIG_MR,
+-	PVRDMA_WR_ERROR,
+-};
+-
+-enum pvrdma_wc_status {
+-	PVRDMA_WC_SUCCESS,
+-	PVRDMA_WC_LOC_LEN_ERR,
+-	PVRDMA_WC_LOC_QP_OP_ERR,
+-	PVRDMA_WC_LOC_EEC_OP_ERR,
+-	PVRDMA_WC_LOC_PROT_ERR,
+-	PVRDMA_WC_WR_FLUSH_ERR,
+-	PVRDMA_WC_MW_BIND_ERR,
+-	PVRDMA_WC_BAD_RESP_ERR,
+-	PVRDMA_WC_LOC_ACCESS_ERR,
+-	PVRDMA_WC_REM_INV_REQ_ERR,
+-	PVRDMA_WC_REM_ACCESS_ERR,
+-	PVRDMA_WC_REM_OP_ERR,
+-	PVRDMA_WC_RETRY_EXC_ERR,
+-	PVRDMA_WC_RNR_RETRY_EXC_ERR,
+-	PVRDMA_WC_LOC_RDD_VIOL_ERR,
+-	PVRDMA_WC_REM_INV_RD_REQ_ERR,
+-	PVRDMA_WC_REM_ABORT_ERR,
+-	PVRDMA_WC_INV_EECN_ERR,
+-	PVRDMA_WC_INV_EEC_STATE_ERR,
+-	PVRDMA_WC_FATAL_ERR,
+-	PVRDMA_WC_RESP_TIMEOUT_ERR,
+-	PVRDMA_WC_GENERAL_ERR,
+-};
+-
+-enum pvrdma_wc_opcode {
+-	PVRDMA_WC_SEND,
+-	PVRDMA_WC_RDMA_WRITE,
+-	PVRDMA_WC_RDMA_READ,
+-	PVRDMA_WC_COMP_SWAP,
+-	PVRDMA_WC_FETCH_ADD,
+-	PVRDMA_WC_BIND_MW,
+-	PVRDMA_WC_LSO,
+-	PVRDMA_WC_LOCAL_INV,
+-	PVRDMA_WC_FAST_REG_MR,
+-	PVRDMA_WC_MASKED_COMP_SWAP,
+-	PVRDMA_WC_MASKED_FETCH_ADD,
+-	PVRDMA_WC_RECV = 1 << 7,
+-	PVRDMA_WC_RECV_RDMA_WITH_IMM,
+-};
+-
+-enum pvrdma_wc_flags {
+-	PVRDMA_WC_GRH			= 1 << 0,
+-	PVRDMA_WC_WITH_IMM		= 1 << 1,
+-	PVRDMA_WC_WITH_INVALIDATE	= 1 << 2,
+-	PVRDMA_WC_IP_CSUM_OK		= 1 << 3,
+-	PVRDMA_WC_WITH_SMAC		= 1 << 4,
+-	PVRDMA_WC_WITH_VLAN		= 1 << 5,
+-	PVRDMA_WC_WITH_NETWORK_HDR_TYPE	= 1 << 6,
+-	PVRDMA_WC_FLAGS_MAX		= PVRDMA_WC_WITH_NETWORK_HDR_TYPE,
+-};
+-
+-enum pvrdma_network_type {
+-	PVRDMA_NETWORK_IB,
+-	PVRDMA_NETWORK_ROCE_V1 = PVRDMA_NETWORK_IB,
+-	PVRDMA_NETWORK_IPV4,
+-	PVRDMA_NETWORK_IPV6
+-};
+-
+-struct pvrdma_alloc_ucontext_resp {
+-	uint32_t qp_tab_size;
+-	uint32_t reserved;
+-};
+-
+-struct pvrdma_alloc_pd_resp {
+-	uint32_t pdn;
+-	uint32_t reserved;
+-};
+-
+-struct pvrdma_create_cq {
+-	uint64_t __attribute__((aligned(8))) buf_addr;
+-	uint32_t buf_size;
+-	uint32_t reserved;
+-};
+-
+-struct pvrdma_create_cq_resp {
+-	uint32_t cqn;
+-	uint32_t reserved;
+-};
+-
+-struct pvrdma_resize_cq {
+-	uint64_t __attribute__((aligned(8))) buf_addr;
+-	uint32_t buf_size;
+-	uint32_t reserved;
+-};
+-
+-struct pvrdma_create_srq {
+-	uint64_t __attribute__((aligned(8))) buf_addr;
+-	uint32_t buf_size;
+-	uint32_t reserved;
+-};
+-
+-struct pvrdma_create_srq_resp {
+-	uint32_t srqn;
+-	uint32_t reserved;
+-};
+-
+-struct pvrdma_create_qp {
+-	uint64_t __attribute__((aligned(8))) rbuf_addr;
+-	uint64_t __attribute__((aligned(8))) sbuf_addr;
+-	uint32_t rbuf_size;
+-	uint32_t sbuf_size;
+-	uint64_t __attribute__((aligned(8))) qp_addr;
+-};
+-
+-struct pvrdma_create_qp_resp {
+-	uint32_t qpn;
+-	uint32_t qp_handle;
+-};
+-
+-/* PVRDMA masked atomic compare and swap */
+-struct pvrdma_ex_cmp_swap {
+-	uint64_t __attribute__((aligned(8))) swap_val;
+-	uint64_t __attribute__((aligned(8))) compare_val;
+-	uint64_t __attribute__((aligned(8))) swap_mask;
+-	uint64_t __attribute__((aligned(8))) compare_mask;
+-};
+-
+-/* PVRDMA masked atomic fetch and add */
+-struct pvrdma_ex_fetch_add {
+-	uint64_t __attribute__((aligned(8))) add_val;
+-	uint64_t __attribute__((aligned(8))) field_boundary;
+-};
+-
+-/* PVRDMA address vector. */
+-struct pvrdma_av {
+-	uint32_t port_pd;
+-	uint32_t sl_tclass_flowlabel;
+-	uint8_t dgid[16];
+-	uint8_t src_path_bits;
+-	uint8_t gid_index;
+-	uint8_t stat_rate;
+-	uint8_t hop_limit;
+-	uint8_t dmac[6];
+-	uint8_t reserved[6];
+-};
+-
+-/* PVRDMA scatter/gather entry */
+-struct pvrdma_sge {
+-	uint64_t __attribute__((aligned(8))) addr;
+-	uint32_t   length;
+-	uint32_t   lkey;
+-};
+-
+-/* PVRDMA receive queue work request */
+-struct pvrdma_rq_wqe_hdr {
+-	uint64_t __attribute__((aligned(8))) wr_id;		/* wr id */
+-	uint32_t num_sge;		/* size of s/g array */
+-	uint32_t total_len;	/* reserved */
+-};
+-/* Use pvrdma_sge (ib_sge) for receive queue s/g array elements. */
+-
+-/* PVRDMA send queue work request */
+-struct pvrdma_sq_wqe_hdr {
+-	uint64_t __attribute__((aligned(8))) wr_id;		/* wr id */
+-	uint32_t num_sge;		/* size of s/g array */
+-	uint32_t total_len;	/* reserved */
+-	uint32_t opcode;		/* operation type */
+-	uint32_t send_flags;	/* wr flags */
+-	union {
+-		uint32_t imm_data;
+-		uint32_t invalidate_rkey;
+-	} ex;
+-	uint32_t reserved;
+-	union {
+-		struct {
+-			uint64_t __attribute__((aligned(8))) remote_addr;
+-			uint32_t rkey;
+-			uint8_t reserved[4];
+-		} rdma;
+-		struct {
+-			uint64_t __attribute__((aligned(8))) remote_addr;
+-			uint64_t __attribute__((aligned(8))) compare_add;
+-			uint64_t __attribute__((aligned(8))) swap;
+-			uint32_t rkey;
+-			uint32_t reserved;
+-		} atomic;
+-		struct {
+-			uint64_t __attribute__((aligned(8))) remote_addr;
+-			uint32_t log_arg_sz;
+-			uint32_t rkey;
+-			union {
+-				struct pvrdma_ex_cmp_swap  cmp_swap;
+-				struct pvrdma_ex_fetch_add fetch_add;
+-			} wr_data;
+-		} masked_atomics;
+-		struct {
+-			uint64_t __attribute__((aligned(8))) iova_start;
+-			uint64_t __attribute__((aligned(8))) pl_pdir_dma;
+-			uint32_t page_shift;
+-			uint32_t page_list_len;
+-			uint32_t length;
+-			uint32_t access_flags;
+-			uint32_t rkey;
+-			uint32_t reserved;
+-		} fast_reg;
+-		struct {
+-			uint32_t remote_qpn;
+-			uint32_t remote_qkey;
+-			struct pvrdma_av av;
+-		} ud;
+-	} wr;
+-};
+-/* Use pvrdma_sge (ib_sge) for send queue s/g array elements. */
+-
+-/* Completion queue element. */
+-struct pvrdma_cqe {
+-	uint64_t __attribute__((aligned(8))) wr_id;
+-	uint64_t __attribute__((aligned(8))) qp;
+-	uint32_t opcode;
+-	uint32_t status;
+-	uint32_t byte_len;
+-	uint32_t imm_data;
+-	uint32_t src_qp;
+-	uint32_t wc_flags;
+-	uint32_t vendor_err;
+-	uint16_t pkey_index;
+-	uint16_t slid;
+-	uint8_t sl;
+-	uint8_t dlid_path_bits;
+-	uint8_t port_num;
+-	uint8_t smac[6];
+-	uint8_t network_hdr_type;
+-	uint8_t reserved2[6]; /* Pad to next power of 2 (64). */
+-};
+-
+-#endif /* __VMW_PVRDMA_ABI_H__ */
+diff --git a/contrib/rdmacm-mux/main.c b/contrib/rdmacm-mux/main.c
+deleted file mode 100644
+index 771ca01e03..0000000000
+--- a/contrib/rdmacm-mux/main.c
++++ /dev/null
+@@ -1,831 +0,0 @@
+-/*
+- * QEMU paravirtual RDMA - rdmacm-mux implementation
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#include "qemu/osdep.h"
+-#include <sys/poll.h>
+-#include <sys/ioctl.h>
+-#include <pthread.h>
+-#include <syslog.h>
+-
+-#include <infiniband/verbs.h>
+-#include <infiniband/umad.h>
+-#include <infiniband/umad_types.h>
+-#include <infiniband/umad_sa.h>
+-#include <infiniband/umad_cm.h>
+-
+-#include "rdmacm-mux.h"
+-
+-#define SCALE_US 1000
+-#define COMMID_TTL 2 /* How many SCALE_US a context of MAD session is saved */
+-#define SLEEP_SECS 5 /* This is used both in poll() and thread */
+-#define SERVER_LISTEN_BACKLOG 10
+-#define MAX_CLIENTS 4096
+-#define MAD_RMPP_VERSION 0
+-#define MAD_METHOD_MASK0 0x8
+-
+-#define IB_USER_MAD_LONGS_PER_METHOD_MASK (128 / (8 * sizeof(long)))
+-
+-#define CM_REQ_DGID_POS      80
+-#define CM_SIDR_REQ_DGID_POS 44
+-
+-/* The below can be override by command line parameter */
+-#define UNIX_SOCKET_PATH "/var/run/rdmacm-mux"
+-/* Has format %s-%s-%d" <path>-<rdma-dev--name>-<port> */
+-#define SOCKET_PATH_MAX (PATH_MAX - NAME_MAX - sizeof(int) - 2)
+-#define RDMA_PORT_NUM 1
+-
+-typedef struct RdmaCmServerArgs {
+-    char unix_socket_path[PATH_MAX];
+-    char rdma_dev_name[NAME_MAX];
+-    int rdma_port_num;
+-} RdmaCMServerArgs;
+-
+-typedef struct CommId2FdEntry {
+-    int fd;
+-    int ttl; /* Initialized to 2, decrement each timeout, entry delete when 0 */
+-    __be64 gid_ifid;
+-} CommId2FdEntry;
+-
+-typedef struct RdmaCmUMadAgent {
+-    int port_id;
+-    int agent_id;
+-    GHashTable *gid2fd; /* Used to find fd of a given gid */
+-    GHashTable *commid2fd; /* Used to find fd on of a given comm_id */
+-} RdmaCmUMadAgent;
+-
+-typedef struct RdmaCmServer {
+-    bool run;
+-    RdmaCMServerArgs args;
+-    struct pollfd fds[MAX_CLIENTS];
+-    int nfds;
+-    RdmaCmUMadAgent umad_agent;
+-    pthread_t umad_recv_thread;
+-    pthread_rwlock_t lock;
+-} RdmaCMServer;
+-
+-static RdmaCMServer server = {0};
+-
+-static void usage(const char *progname)
+-{
+-    printf("Usage: %s [OPTION]...\n"
+-           "Start a RDMA-CM multiplexer\n"
+-           "\n"
+-           "\t-h                    Show this help\n"
+-           "\t-d rdma-device-name   Name of RDMA device to register with\n"
+-           "\t-s unix-socket-path   Path to unix socket to listen on (default %s)\n"
+-           "\t-p rdma-device-port   Port number of RDMA device to register with (default %d)\n",
+-           progname, UNIX_SOCKET_PATH, RDMA_PORT_NUM);
+-}
+-
+-static void help(const char *progname)
+-{
+-    fprintf(stderr, "Try '%s -h' for more information.\n", progname);
+-}
+-
+-static void parse_args(int argc, char *argv[])
+-{
+-    int c;
+-    char unix_socket_path[SOCKET_PATH_MAX];
+-
+-    strcpy(server.args.rdma_dev_name, "");
+-    strcpy(unix_socket_path, UNIX_SOCKET_PATH);
+-    server.args.rdma_port_num = RDMA_PORT_NUM;
+-
+-    while ((c = getopt(argc, argv, "hs:d:p:")) != -1) {
+-        switch (c) {
+-        case 'h':
+-            usage(argv[0]);
+-            exit(0);
+-
+-        case 'd':
+-            strncpy(server.args.rdma_dev_name, optarg, NAME_MAX - 1);
+-            break;
+-
+-        case 's':
+-            /* This is temporary, final name will build below */
+-            strncpy(unix_socket_path, optarg, SOCKET_PATH_MAX - 1);
+-            break;
+-
+-        case 'p':
+-            server.args.rdma_port_num = atoi(optarg);
+-            break;
+-
+-        default:
+-            help(argv[0]);
+-            exit(1);
+-        }
+-    }
+-
+-    if (!strcmp(server.args.rdma_dev_name, "")) {
+-        fprintf(stderr, "Missing RDMA device name\n");
+-        help(argv[0]);
+-        exit(1);
+-    }
+-
+-    /* Build unique unix-socket file name */
+-    snprintf(server.args.unix_socket_path, PATH_MAX, "%s-%s-%d",
+-             unix_socket_path, server.args.rdma_dev_name,
+-             server.args.rdma_port_num);
+-
+-    syslog(LOG_INFO, "unix_socket_path=%s", server.args.unix_socket_path);
+-    syslog(LOG_INFO, "rdma-device-name=%s", server.args.rdma_dev_name);
+-    syslog(LOG_INFO, "rdma-device-port=%d", server.args.rdma_port_num);
+-}
+-
+-static void hash_tbl_alloc(void)
+-{
+-
+-    server.umad_agent.gid2fd = g_hash_table_new_full(g_int64_hash,
+-                                                     g_int64_equal,
+-                                                     g_free, g_free);
+-    server.umad_agent.commid2fd = g_hash_table_new_full(g_int_hash,
+-                                                        g_int_equal,
+-                                                        g_free, g_free);
+-}
+-
+-static void hash_tbl_free(void)
+-{
+-    if (server.umad_agent.commid2fd) {
+-        g_hash_table_destroy(server.umad_agent.commid2fd);
+-    }
+-    if (server.umad_agent.gid2fd) {
+-        g_hash_table_destroy(server.umad_agent.gid2fd);
+-    }
+-}
+-
+-
+-static int _hash_tbl_search_fd_by_ifid(__be64 *gid_ifid)
+-{
+-    int *fd;
+-
+-    fd = g_hash_table_lookup(server.umad_agent.gid2fd, gid_ifid);
+-    if (!fd) {
+-        /* Let's try IPv4 */
+-        *gid_ifid |= 0x00000000ffff0000;
+-        fd = g_hash_table_lookup(server.umad_agent.gid2fd, gid_ifid);
+-    }
+-
+-    return fd ? *fd : 0;
+-}
+-
+-static int hash_tbl_search_fd_by_ifid(int *fd, __be64 *gid_ifid)
+-{
+-    pthread_rwlock_rdlock(&server.lock);
+-    *fd = _hash_tbl_search_fd_by_ifid(gid_ifid);
+-    pthread_rwlock_unlock(&server.lock);
+-
+-    if (!*fd) {
+-        syslog(LOG_WARNING, "Can't find matching for ifid 0x%llx\n", *gid_ifid);
+-        return -ENOENT;
+-    }
+-
+-    return 0;
+-}
+-
+-static int hash_tbl_search_fd_by_comm_id(uint32_t comm_id, int *fd,
+-                                         __be64 *gid_idid)
+-{
+-    CommId2FdEntry *fde;
+-
+-    pthread_rwlock_rdlock(&server.lock);
+-    fde = g_hash_table_lookup(server.umad_agent.commid2fd, &comm_id);
+-    pthread_rwlock_unlock(&server.lock);
+-
+-    if (!fde) {
+-        syslog(LOG_WARNING, "Can't find matching for comm_id 0x%x\n", comm_id);
+-        return -ENOENT;
+-    }
+-
+-    *fd = fde->fd;
+-    *gid_idid = fde->gid_ifid;
+-
+-    return 0;
+-}
+-
+-static RdmaCmMuxErrCode add_fd_ifid_pair(int fd, __be64 gid_ifid)
+-{
+-    int fd1;
+-
+-    pthread_rwlock_wrlock(&server.lock);
+-
+-    fd1 = _hash_tbl_search_fd_by_ifid(&gid_ifid);
+-    if (fd1) { /* record already exist - an error */
+-        pthread_rwlock_unlock(&server.lock);
+-        return fd == fd1 ? RDMACM_MUX_ERR_CODE_EEXIST :
+-                           RDMACM_MUX_ERR_CODE_EACCES;
+-    }
+-
+-    g_hash_table_insert(server.umad_agent.gid2fd, g_memdup(&gid_ifid,
+-                        sizeof(gid_ifid)), g_memdup(&fd, sizeof(fd)));
+-
+-    pthread_rwlock_unlock(&server.lock);
+-
+-    syslog(LOG_INFO, "0x%lx registered on socket %d",
+-           be64toh((uint64_t)gid_ifid), fd);
+-
+-    return RDMACM_MUX_ERR_CODE_OK;
+-}
+-
+-static RdmaCmMuxErrCode delete_fd_ifid_pair(int fd, __be64 gid_ifid)
+-{
+-    int fd1;
+-
+-    pthread_rwlock_wrlock(&server.lock);
+-
+-    fd1 = _hash_tbl_search_fd_by_ifid(&gid_ifid);
+-    if (!fd1) { /* record not exist - an error */
+-        pthread_rwlock_unlock(&server.lock);
+-        return RDMACM_MUX_ERR_CODE_ENOTFOUND;
+-    }
+-
+-    g_hash_table_remove(server.umad_agent.gid2fd, g_memdup(&gid_ifid,
+-                        sizeof(gid_ifid)));
+-    pthread_rwlock_unlock(&server.lock);
+-
+-    syslog(LOG_INFO, "0x%lx unregistered on socket %d",
+-           be64toh((uint64_t)gid_ifid), fd);
+-
+-    return RDMACM_MUX_ERR_CODE_OK;
+-}
+-
+-static void hash_tbl_save_fd_comm_id_pair(int fd, uint32_t comm_id,
+-                                          uint64_t gid_ifid)
+-{
+-    CommId2FdEntry fde = {fd, COMMID_TTL, gid_ifid};
+-
+-    pthread_rwlock_wrlock(&server.lock);
+-    g_hash_table_insert(server.umad_agent.commid2fd,
+-                        g_memdup(&comm_id, sizeof(comm_id)),
+-                        g_memdup(&fde, sizeof(fde)));
+-    pthread_rwlock_unlock(&server.lock);
+-}
+-
+-static gboolean remove_old_comm_ids(gpointer key, gpointer value,
+-                                    gpointer user_data)
+-{
+-    CommId2FdEntry *fde = (CommId2FdEntry *)value;
+-
+-    return !fde->ttl--;
+-}
+-
+-static gboolean remove_entry_from_gid2fd(gpointer key, gpointer value,
+-                                         gpointer user_data)
+-{
+-    if (*(int *)value == *(int *)user_data) {
+-        syslog(LOG_INFO, "0x%lx unregistered on socket %d",
+-               be64toh(*(uint64_t *)key), *(int *)value);
+-        return true;
+-    }
+-
+-    return false;
+-}
+-
+-static void hash_tbl_remove_fd_ifid_pair(int fd)
+-{
+-    pthread_rwlock_wrlock(&server.lock);
+-    g_hash_table_foreach_remove(server.umad_agent.gid2fd,
+-                                remove_entry_from_gid2fd, (gpointer)&fd);
+-    pthread_rwlock_unlock(&server.lock);
+-}
+-
+-static int get_fd(const char *mad, int umad_len, int *fd, __be64 *gid_ifid)
+-{
+-    struct umad_hdr *hdr = (struct umad_hdr *)mad;
+-    char *data = (char *)hdr + sizeof(*hdr);
+-    int32_t comm_id = 0;
+-    uint16_t attr_id = be16toh(hdr->attr_id);
+-    int rc = 0;
+-
+-    if (umad_len <= sizeof(*hdr)) {
+-        rc = -EINVAL;
+-        syslog(LOG_DEBUG, "Ignoring MAD packets with header only\n");
+-        goto out;
+-    }
+-
+-    switch (attr_id) {
+-    case UMAD_CM_ATTR_REQ:
+-        if (unlikely(umad_len < sizeof(*hdr) + CM_REQ_DGID_POS +
+-            sizeof(*gid_ifid))) {
+-            rc = -EINVAL;
+-            syslog(LOG_WARNING,
+-                   "Invalid MAD packet size (%d) for attr_id 0x%x\n", umad_len,
+-                    attr_id);
+-            goto out;
+-        }
+-        memcpy(gid_ifid, data + CM_REQ_DGID_POS, sizeof(*gid_ifid));
+-        rc = hash_tbl_search_fd_by_ifid(fd, gid_ifid);
+-        break;
+-
+-    case UMAD_CM_ATTR_SIDR_REQ:
+-        if (unlikely(umad_len < sizeof(*hdr) + CM_SIDR_REQ_DGID_POS +
+-            sizeof(*gid_ifid))) {
+-            rc = -EINVAL;
+-            syslog(LOG_WARNING,
+-                   "Invalid MAD packet size (%d) for attr_id 0x%x\n", umad_len,
+-                    attr_id);
+-            goto out;
+-        }
+-        memcpy(gid_ifid, data + CM_SIDR_REQ_DGID_POS, sizeof(*gid_ifid));
+-        rc = hash_tbl_search_fd_by_ifid(fd, gid_ifid);
+-        break;
+-
+-    case UMAD_CM_ATTR_REP:
+-        /* Fall through */
+-    case UMAD_CM_ATTR_REJ:
+-        /* Fall through */
+-    case UMAD_CM_ATTR_DREQ:
+-        /* Fall through */
+-    case UMAD_CM_ATTR_DREP:
+-        /* Fall through */
+-    case UMAD_CM_ATTR_RTU:
+-        data += sizeof(comm_id);
+-        /* Fall through */
+-    case UMAD_CM_ATTR_SIDR_REP:
+-        if (unlikely(umad_len < sizeof(*hdr) + sizeof(comm_id))) {
+-            rc = -EINVAL;
+-            syslog(LOG_WARNING,
+-                   "Invalid MAD packet size (%d) for attr_id 0x%x\n", umad_len,
+-                   attr_id);
+-            goto out;
+-        }
+-        memcpy(&comm_id, data, sizeof(comm_id));
+-        if (comm_id) {
+-            rc = hash_tbl_search_fd_by_comm_id(comm_id, fd, gid_ifid);
+-        }
+-        break;
+-
+-    default:
+-        rc = -EINVAL;
+-        syslog(LOG_WARNING, "Unsupported attr_id 0x%x\n", attr_id);
+-    }
+-
+-    syslog(LOG_DEBUG, "mad_to_vm: %d 0x%x 0x%x\n", *fd, attr_id, comm_id);
+-
+-out:
+-    return rc;
+-}
+-
+-static void *umad_recv_thread_func(void *args)
+-{
+-    int rc;
+-    RdmaCmMuxMsg msg = {};
+-    int fd = -2;
+-
+-    msg.hdr.msg_type = RDMACM_MUX_MSG_TYPE_REQ;
+-    msg.hdr.op_code = RDMACM_MUX_OP_CODE_MAD;
+-
+-    while (server.run) {
+-        do {
+-            msg.umad_len = sizeof(msg.umad.mad);
+-            rc = umad_recv(server.umad_agent.port_id, &msg.umad, &msg.umad_len,
+-                           SLEEP_SECS * SCALE_US);
+-            if ((rc == -EIO) || (rc == -EINVAL)) {
+-                syslog(LOG_CRIT, "Fatal error while trying to read MAD");
+-            }
+-
+-            if (rc == -ETIMEDOUT) {
+-                g_hash_table_foreach_remove(server.umad_agent.commid2fd,
+-                                            remove_old_comm_ids, NULL);
+-            }
+-        } while (rc && server.run);
+-
+-        if (server.run) {
+-            rc = get_fd(msg.umad.mad, msg.umad_len, &fd,
+-                        &msg.hdr.sgid.global.interface_id);
+-            if (rc) {
+-                continue;
+-            }
+-
+-            send(fd, &msg, sizeof(msg), 0);
+-        }
+-    }
+-
+-    return NULL;
+-}
+-
+-static int read_and_process(int fd)
+-{
+-    int rc;
+-    RdmaCmMuxMsg msg = {};
+-    struct umad_hdr *hdr;
+-    uint32_t *comm_id = 0;
+-    uint16_t attr_id;
+-
+-    rc = recv(fd, &msg, sizeof(msg), 0);
+-    syslog(LOG_DEBUG, "Socket %d, recv %d\n", fd, rc);
+-
+-    if (rc < 0 && errno != EWOULDBLOCK) {
+-        syslog(LOG_ERR, "Fail to read from socket %d\n", fd);
+-        return -EIO;
+-    }
+-
+-    if (!rc) {
+-        syslog(LOG_ERR, "Fail to read from socket %d\n", fd);
+-        return -EPIPE;
+-    }
+-
+-    if (msg.hdr.msg_type != RDMACM_MUX_MSG_TYPE_REQ) {
+-        syslog(LOG_WARNING, "Got non-request message (%d) from socket %d\n",
+-               msg.hdr.msg_type, fd);
+-        return -EPERM;
+-    }
+-
+-    switch (msg.hdr.op_code) {
+-    case RDMACM_MUX_OP_CODE_REG:
+-        rc = add_fd_ifid_pair(fd, msg.hdr.sgid.global.interface_id);
+-        break;
+-
+-    case RDMACM_MUX_OP_CODE_UNREG:
+-        rc = delete_fd_ifid_pair(fd, msg.hdr.sgid.global.interface_id);
+-        break;
+-
+-    case RDMACM_MUX_OP_CODE_MAD:
+-        /* If this is REQ or REP then store the pair comm_id,fd to be later
+-         * used for other messages where gid is unknown */
+-        hdr = (struct umad_hdr *)msg.umad.mad;
+-        attr_id = be16toh(hdr->attr_id);
+-        if ((attr_id == UMAD_CM_ATTR_REQ) || (attr_id == UMAD_CM_ATTR_DREQ) ||
+-            (attr_id == UMAD_CM_ATTR_SIDR_REQ) ||
+-            (attr_id == UMAD_CM_ATTR_REP) || (attr_id == UMAD_CM_ATTR_DREP)) {
+-            comm_id = (uint32_t *)(msg.umad.mad + sizeof(*hdr));
+-            hash_tbl_save_fd_comm_id_pair(fd, *comm_id,
+-                                          msg.hdr.sgid.global.interface_id);
+-        }
+-
+-        syslog(LOG_DEBUG, "vm_to_mad: %d 0x%x 0x%x\n", fd, attr_id,
+-               comm_id ? *comm_id : 0);
+-        rc = umad_send(server.umad_agent.port_id, server.umad_agent.agent_id,
+-                       &msg.umad, msg.umad_len, 1, 0);
+-        if (rc) {
+-            syslog(LOG_ERR,
+-                  "Fail to send MAD message (0x%x) from socket %d, err=%d",
+-                  attr_id, fd, rc);
+-        }
+-        break;
+-
+-    default:
+-        syslog(LOG_ERR, "Got invalid op_code (%d) from socket %d",
+-               msg.hdr.msg_type, fd);
+-        rc = RDMACM_MUX_ERR_CODE_EINVAL;
+-    }
+-
+-    msg.hdr.msg_type = RDMACM_MUX_MSG_TYPE_RESP;
+-    msg.hdr.err_code = rc;
+-    rc = send(fd, &msg, sizeof(msg), 0);
+-
+-    return rc == sizeof(msg) ? 0 : -EPIPE;
+-}
+-
+-static int accept_all(void)
+-{
+-    int fd, rc = 0;
+-
+-    pthread_rwlock_wrlock(&server.lock);
+-
+-    do {
+-        if ((server.nfds + 1) > MAX_CLIENTS) {
+-            syslog(LOG_WARNING, "Too many clients (%d)", server.nfds);
+-            rc = -EIO;
+-            goto out;
+-        }
+-
+-        fd = accept(server.fds[0].fd, NULL, NULL);
+-        if (fd < 0) {
+-            if (errno != EWOULDBLOCK) {
+-                syslog(LOG_WARNING, "accept() failed");
+-                rc = -EIO;
+-                goto out;
+-            }
+-            break;
+-        }
+-
+-        syslog(LOG_INFO, "Client connected on socket %d\n", fd);
+-        server.fds[server.nfds].fd = fd;
+-        server.fds[server.nfds].events = POLLIN;
+-        server.nfds++;
+-    } while (fd != -1);
+-
+-out:
+-    pthread_rwlock_unlock(&server.lock);
+-    return rc;
+-}
+-
+-static void compress_fds(void)
+-{
+-    int i, j;
+-    int closed = 0;
+-
+-    pthread_rwlock_wrlock(&server.lock);
+-
+-    for (i = 1; i < server.nfds; i++) {
+-        if (!server.fds[i].fd) {
+-            closed++;
+-            for (j = i; j < server.nfds - 1; j++) {
+-                server.fds[j] = server.fds[j + 1];
+-            }
+-        }
+-    }
+-
+-    server.nfds -= closed;
+-
+-    pthread_rwlock_unlock(&server.lock);
+-}
+-
+-static void close_fd(int idx)
+-{
+-    close(server.fds[idx].fd);
+-    syslog(LOG_INFO, "Socket %d closed\n", server.fds[idx].fd);
+-    hash_tbl_remove_fd_ifid_pair(server.fds[idx].fd);
+-    server.fds[idx].fd = 0;
+-}
+-
+-static void run(void)
+-{
+-    int rc, nfds, i;
+-    bool compress = false;
+-
+-    syslog(LOG_INFO, "Service started");
+-
+-    while (server.run) {
+-        rc = poll(server.fds, server.nfds, SLEEP_SECS * SCALE_US);
+-        if (rc < 0) {
+-            if (errno != EINTR) {
+-                syslog(LOG_WARNING, "poll() failed");
+-            }
+-            continue;
+-        }
+-
+-        if (rc == 0) {
+-            continue;
+-        }
+-
+-        nfds = server.nfds;
+-        for (i = 0; i < nfds; i++) {
+-            syslog(LOG_DEBUG, "pollfd[%d]: revents 0x%x, events 0x%x\n", i,
+-                   server.fds[i].revents, server.fds[i].events);
+-            if (server.fds[i].revents == 0) {
+-                continue;
+-            }
+-
+-            if (server.fds[i].revents != POLLIN) {
+-                if (i == 0) {
+-                    syslog(LOG_NOTICE, "Unexpected poll() event (0x%x)\n",
+-                           server.fds[i].revents);
+-                } else {
+-                    close_fd(i);
+-                    compress = true;
+-                }
+-                continue;
+-            }
+-
+-            if (i == 0) {
+-                rc = accept_all();
+-                if (rc) {
+-                    continue;
+-                }
+-            } else {
+-                rc = read_and_process(server.fds[i].fd);
+-                if (rc) {
+-                    close_fd(i);
+-                    compress = true;
+-                }
+-            }
+-        }
+-
+-        if (compress) {
+-            compress = false;
+-            compress_fds();
+-        }
+-    }
+-}
+-
+-static void fini_listener(void)
+-{
+-    int i;
+-
+-    if (server.fds[0].fd <= 0) {
+-        return;
+-    }
+-
+-    for (i = server.nfds - 1; i >= 0; i--) {
+-        if (server.fds[i].fd) {
+-            close(server.fds[i].fd);
+-        }
+-    }
+-
+-    unlink(server.args.unix_socket_path);
+-}
+-
+-static void fini_umad(void)
+-{
+-    if (server.umad_agent.agent_id) {
+-        umad_unregister(server.umad_agent.port_id, server.umad_agent.agent_id);
+-    }
+-
+-    if (server.umad_agent.port_id) {
+-        umad_close_port(server.umad_agent.port_id);
+-    }
+-
+-    hash_tbl_free();
+-}
+-
+-static void fini(void)
+-{
+-    if (server.umad_recv_thread) {
+-        pthread_join(server.umad_recv_thread, NULL);
+-        server.umad_recv_thread = 0;
+-    }
+-    fini_umad();
+-    fini_listener();
+-    pthread_rwlock_destroy(&server.lock);
+-
+-    syslog(LOG_INFO, "Service going down");
+-}
+-
+-static int init_listener(void)
+-{
+-    struct sockaddr_un sun;
+-    int rc, on = 1;
+-
+-    server.fds[0].fd = socket(AF_UNIX, SOCK_STREAM, 0);
+-    if (server.fds[0].fd < 0) {
+-        syslog(LOG_ALERT, "socket() failed");
+-        return -EIO;
+-    }
+-
+-    rc = setsockopt(server.fds[0].fd, SOL_SOCKET, SO_REUSEADDR, (char *)&on,
+-                    sizeof(on));
+-    if (rc < 0) {
+-        syslog(LOG_ALERT, "setsockopt() failed");
+-        rc = -EIO;
+-        goto err;
+-    }
+-
+-    rc = ioctl(server.fds[0].fd, FIONBIO, (char *)&on);
+-    if (rc < 0) {
+-        syslog(LOG_ALERT, "ioctl() failed");
+-        rc = -EIO;
+-        goto err;
+-    }
+-
+-    if (strlen(server.args.unix_socket_path) >= sizeof(sun.sun_path)) {
+-        syslog(LOG_ALERT,
+-               "Invalid unix_socket_path, size must be less than %ld\n",
+-               sizeof(sun.sun_path));
+-        rc = -EINVAL;
+-        goto err;
+-    }
+-
+-    sun.sun_family = AF_UNIX;
+-    rc = snprintf(sun.sun_path, sizeof(sun.sun_path), "%s",
+-                  server.args.unix_socket_path);
+-    if (rc < 0 || rc >= sizeof(sun.sun_path)) {
+-        syslog(LOG_ALERT, "Could not copy unix socket path\n");
+-        rc = -EINVAL;
+-        goto err;
+-    }
+-
+-    rc = bind(server.fds[0].fd, (struct sockaddr *)&sun, sizeof(sun));
+-    if (rc < 0) {
+-        syslog(LOG_ALERT, "bind() failed");
+-        rc = -EIO;
+-        goto err;
+-    }
+-
+-    rc = listen(server.fds[0].fd, SERVER_LISTEN_BACKLOG);
+-    if (rc < 0) {
+-        syslog(LOG_ALERT, "listen() failed");
+-        rc = -EIO;
+-        goto err;
+-    }
+-
+-    server.fds[0].events = POLLIN;
+-    server.nfds = 1;
+-    server.run = true;
+-
+-    return 0;
+-
+-err:
+-    close(server.fds[0].fd);
+-    return rc;
+-}
+-
+-static int init_umad(void)
+-{
+-    long method_mask[IB_USER_MAD_LONGS_PER_METHOD_MASK];
+-
+-    server.umad_agent.port_id = umad_open_port(server.args.rdma_dev_name,
+-                                               server.args.rdma_port_num);
+-
+-    if (server.umad_agent.port_id < 0) {
+-        syslog(LOG_WARNING, "umad_open_port() failed");
+-        return -EIO;
+-    }
+-
+-    memset(&method_mask, 0, sizeof(method_mask));
+-    method_mask[0] = MAD_METHOD_MASK0;
+-    server.umad_agent.agent_id = umad_register(server.umad_agent.port_id,
+-                                               UMAD_CLASS_CM,
+-                                               UMAD_SA_CLASS_VERSION,
+-                                               MAD_RMPP_VERSION, method_mask);
+-    if (server.umad_agent.agent_id < 0) {
+-        syslog(LOG_WARNING, "umad_register() failed");
+-        return -EIO;
+-    }
+-
+-    hash_tbl_alloc();
+-
+-    return 0;
+-}
+-
+-static void signal_handler(int sig, siginfo_t *siginfo, void *context)
+-{
+-    static bool warned;
+-
+-    /* Prevent stop if clients are connected */
+-    if (server.nfds != 1) {
+-        if (!warned) {
+-            syslog(LOG_WARNING,
+-                   "Can't stop while active client exist, resend SIGINT to overid");
+-            warned = true;
+-            return;
+-        }
+-    }
+-
+-    if (sig == SIGINT) {
+-        server.run = false;
+-        fini();
+-    }
+-
+-    exit(0);
+-}
+-
+-static int init(void)
+-{
+-    int rc;
+-    struct sigaction sig = {};
+-
+-    rc = init_listener();
+-    if (rc) {
+-        return rc;
+-    }
+-
+-    rc = init_umad();
+-    if (rc) {
+-        return rc;
+-    }
+-
+-    pthread_rwlock_init(&server.lock, 0);
+-
+-    rc = pthread_create(&server.umad_recv_thread, NULL, umad_recv_thread_func,
+-                        NULL);
+-    if (rc) {
+-        syslog(LOG_ERR, "Fail to create UMAD receiver thread (%d)\n", rc);
+-        return rc;
+-    }
+-
+-    sig.sa_sigaction = &signal_handler;
+-    sig.sa_flags = SA_SIGINFO;
+-    rc = sigaction(SIGINT, &sig, NULL);
+-    if (rc < 0) {
+-        syslog(LOG_ERR, "Fail to install SIGINT handler (%d)\n", errno);
+-        return rc;
+-    }
+-
+-    return 0;
+-}
+-
+-int main(int argc, char *argv[])
+-{
+-    int rc;
+-
+-    memset(&server, 0, sizeof(server));
+-
+-    parse_args(argc, argv);
+-
+-    rc = init();
+-    if (rc) {
+-        syslog(LOG_ERR, "Fail to initialize server (%d)\n", rc);
+-        rc = -EAGAIN;
+-        goto out;
+-    }
+-
+-    run();
+-
+-out:
+-    fini();
+-
+-    return rc;
+-}
+diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
+index 4b72009cd3..c20829b9ae 100644
+--- a/hw/core/machine-qmp-cmds.c
++++ b/hw/core/machine-qmp-cmds.c
+@@ -12,7 +12,6 @@
+ #include "hw/boards.h"
+ #include "hw/intc/intc.h"
+ #include "hw/mem/memory-device.h"
+-#include "hw/rdma/rdma.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-builtin-visit.h"
+ #include "qapi/qapi-commands-machine.h"
+@@ -291,37 +290,6 @@ MemoryInfo *qmp_query_memory_size_summary(Error **errp)
+     return mem_info;
+ }
+ 
+-static int qmp_x_query_rdma_foreach(Object *obj, void *opaque)
+-{
+-    RdmaProvider *rdma;
+-    RdmaProviderClass *k;
+-    GString *buf = opaque;
+-
+-    if (object_dynamic_cast(obj, INTERFACE_RDMA_PROVIDER)) {
+-        rdma = RDMA_PROVIDER(obj);
+-        k = RDMA_PROVIDER_GET_CLASS(obj);
+-        if (k->format_statistics) {
+-            k->format_statistics(rdma, buf);
+-        } else {
+-            g_string_append_printf(buf,
+-                                   "RDMA statistics not available for %s.\n",
+-                                   object_get_typename(obj));
+-        }
+-    }
+-
+-    return 0;
+-}
+-
+-HumanReadableText *qmp_x_query_rdma(Error **errp)
+-{
+-    g_autoptr(GString) buf = g_string_new("");
+-
+-    object_child_foreach_recursive(object_get_root(),
+-                                   qmp_x_query_rdma_foreach, buf);
+-
+-    return human_readable_text_from_str(buf);
+-}
+-
+ HumanReadableText *qmp_x_query_ramblock(Error **errp)
+ {
+     g_autoptr(GString) buf = ram_block_format();
+diff --git a/hw/rdma/rdma.c b/hw/rdma/rdma.c
+deleted file mode 100644
+index 7bec0d0d2c..0000000000
+--- a/hw/rdma/rdma.c
++++ /dev/null
+@@ -1,30 +0,0 @@
+-/*
+- * RDMA device interface
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#include "qemu/osdep.h"
+-#include "hw/rdma/rdma.h"
+-#include "qemu/module.h"
+-
+-static const TypeInfo rdma_hmp_info = {
+-    .name = INTERFACE_RDMA_PROVIDER,
+-    .parent = TYPE_INTERFACE,
+-    .class_size = sizeof(RdmaProviderClass),
+-};
+-
+-static void rdma_register_types(void)
+-{
+-    type_register_static(&rdma_hmp_info);
+-}
+-
+-type_init(rdma_register_types)
+diff --git a/hw/rdma/rdma_backend.c b/hw/rdma/rdma_backend.c
+deleted file mode 100644
+index 6dcdfbbbe2..0000000000
+--- a/hw/rdma/rdma_backend.c
++++ /dev/null
+@@ -1,1401 +0,0 @@
+-/*
+- * QEMU paravirtual RDMA - Generic RDMA backend
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qapi/qapi-events-rdma.h"
+-
+-#include <infiniband/verbs.h>
+-
+-#include "contrib/rdmacm-mux/rdmacm-mux.h"
+-#include "trace.h"
+-#include "rdma_utils.h"
+-#include "rdma_rm.h"
+-#include "rdma_backend.h"
+-
+-#define THR_NAME_LEN 16
+-#define THR_POLL_TO  5000
+-
+-#define MAD_HDR_SIZE sizeof(struct ibv_grh)
+-
+-typedef struct BackendCtx {
+-    void *up_ctx;
+-    struct ibv_sge sge; /* Used to save MAD recv buffer */
+-    RdmaBackendQP *backend_qp; /* To maintain recv buffers */
+-    RdmaBackendSRQ *backend_srq;
+-} BackendCtx;
+-
+-struct backend_umad {
+-    struct ib_user_mad hdr;
+-    char mad[RDMA_MAX_PRIVATE_DATA];
+-};
+-
+-static void (*comp_handler)(void *ctx, struct ibv_wc *wc);
+-
+-static void dummy_comp_handler(void *ctx, struct ibv_wc *wc)
+-{
+-    rdma_error_report("No completion handler is registered");
+-}
+-
+-static inline void complete_work(enum ibv_wc_status status, uint32_t vendor_err,
+-                                 void *ctx)
+-{
+-    struct ibv_wc wc = {};
+-
+-    wc.status = status;
+-    wc.vendor_err = vendor_err;
+-
+-    comp_handler(ctx, &wc);
+-}
+-
+-static void free_cqe_ctx(gpointer data, gpointer user_data)
+-{
+-    BackendCtx *bctx;
+-    RdmaDeviceResources *rdma_dev_res = user_data;
+-    unsigned long cqe_ctx_id = GPOINTER_TO_INT(data);
+-
+-    bctx = rdma_rm_get_cqe_ctx(rdma_dev_res, cqe_ctx_id);
+-    if (bctx) {
+-        rdma_rm_dealloc_cqe_ctx(rdma_dev_res, cqe_ctx_id);
+-        qatomic_dec(&rdma_dev_res->stats.missing_cqe);
+-    }
+-    g_free(bctx);
+-}
+-
+-static void clean_recv_mads(RdmaBackendDev *backend_dev)
+-{
+-    unsigned long cqe_ctx_id;
+-
+-    do {
+-        cqe_ctx_id = rdma_protected_gqueue_pop_int64(&backend_dev->
+-                                                    recv_mads_list);
+-        if (cqe_ctx_id != -ENOENT) {
+-            qatomic_inc(&backend_dev->rdma_dev_res->stats.missing_cqe);
+-            free_cqe_ctx(GINT_TO_POINTER(cqe_ctx_id),
+-                         backend_dev->rdma_dev_res);
+-        }
+-    } while (cqe_ctx_id != -ENOENT);
+-}
+-
+-static int rdma_poll_cq(RdmaDeviceResources *rdma_dev_res, struct ibv_cq *ibcq)
+-{
+-    int i, ne, total_ne = 0;
+-    BackendCtx *bctx;
+-    struct ibv_wc wc[2];
+-    RdmaProtectedGSList *cqe_ctx_list;
+-
+-    WITH_QEMU_LOCK_GUARD(&rdma_dev_res->lock) {
+-        do {
+-            ne = ibv_poll_cq(ibcq, ARRAY_SIZE(wc), wc);
+-
+-            trace_rdma_poll_cq(ne, ibcq);
+-
+-            for (i = 0; i < ne; i++) {
+-                bctx = rdma_rm_get_cqe_ctx(rdma_dev_res, wc[i].wr_id);
+-                if (unlikely(!bctx)) {
+-                    rdma_error_report("No matching ctx for req %"PRId64,
+-                                      wc[i].wr_id);
+-                    continue;
+-                }
+-
+-                comp_handler(bctx->up_ctx, &wc[i]);
+-
+-                if (bctx->backend_qp) {
+-                    cqe_ctx_list = &bctx->backend_qp->cqe_ctx_list;
+-                } else {
+-                    cqe_ctx_list = &bctx->backend_srq->cqe_ctx_list;
+-                }
+-
+-                rdma_protected_gslist_remove_int32(cqe_ctx_list, wc[i].wr_id);
+-                rdma_rm_dealloc_cqe_ctx(rdma_dev_res, wc[i].wr_id);
+-                g_free(bctx);
+-            }
+-            total_ne += ne;
+-        } while (ne > 0);
+-        qatomic_sub(&rdma_dev_res->stats.missing_cqe, total_ne);
+-    }
+-
+-    if (ne < 0) {
+-        rdma_error_report("ibv_poll_cq fail, rc=%d, errno=%d", ne, errno);
+-    }
+-
+-    rdma_dev_res->stats.completions += total_ne;
+-
+-    return total_ne;
+-}
+-
+-static void *comp_handler_thread(void *arg)
+-{
+-    RdmaBackendDev *backend_dev = (RdmaBackendDev *)arg;
+-    int rc;
+-    struct ibv_cq *ev_cq;
+-    void *ev_ctx;
+-    int flags;
+-    GPollFD pfds[1];
+-
+-    /* Change to non-blocking mode */
+-    flags = fcntl(backend_dev->channel->fd, F_GETFL);
+-    rc = fcntl(backend_dev->channel->fd, F_SETFL, flags | O_NONBLOCK);
+-    if (rc < 0) {
+-        rdma_error_report("Failed to change backend channel FD to non-blocking");
+-        return NULL;
+-    }
+-
+-    pfds[0].fd = backend_dev->channel->fd;
+-    pfds[0].events = G_IO_IN | G_IO_HUP | G_IO_ERR;
+-
+-    backend_dev->comp_thread.is_running = true;
+-
+-    while (backend_dev->comp_thread.run) {
+-        do {
+-            rc = qemu_poll_ns(pfds, 1, THR_POLL_TO * (int64_t)SCALE_MS);
+-            if (!rc) {
+-                backend_dev->rdma_dev_res->stats.poll_cq_ppoll_to++;
+-            }
+-        } while (!rc && backend_dev->comp_thread.run);
+-
+-        if (backend_dev->comp_thread.run) {
+-            rc = ibv_get_cq_event(backend_dev->channel, &ev_cq, &ev_ctx);
+-            if (unlikely(rc)) {
+-                rdma_error_report("ibv_get_cq_event fail, rc=%d, errno=%d", rc,
+-                                  errno);
+-                continue;
+-            }
+-
+-            rc = ibv_req_notify_cq(ev_cq, 0);
+-            if (unlikely(rc)) {
+-                rdma_error_report("ibv_req_notify_cq fail, rc=%d, errno=%d", rc,
+-                                  errno);
+-            }
+-
+-            backend_dev->rdma_dev_res->stats.poll_cq_from_bk++;
+-            rdma_poll_cq(backend_dev->rdma_dev_res, ev_cq);
+-
+-            ibv_ack_cq_events(ev_cq, 1);
+-        }
+-    }
+-
+-    backend_dev->comp_thread.is_running = false;
+-
+-    qemu_thread_exit(0);
+-
+-    return NULL;
+-}
+-
+-static inline void disable_rdmacm_mux_async(RdmaBackendDev *backend_dev)
+-{
+-    qatomic_set(&backend_dev->rdmacm_mux.can_receive, 0);
+-}
+-
+-static inline void enable_rdmacm_mux_async(RdmaBackendDev *backend_dev)
+-{
+-    qatomic_set(&backend_dev->rdmacm_mux.can_receive, sizeof(RdmaCmMuxMsg));
+-}
+-
+-static inline int rdmacm_mux_can_process_async(RdmaBackendDev *backend_dev)
+-{
+-    return qatomic_read(&backend_dev->rdmacm_mux.can_receive);
+-}
+-
+-static int rdmacm_mux_check_op_status(CharBackend *mad_chr_be)
+-{
+-    RdmaCmMuxMsg msg = {};
+-    int ret;
+-
+-    ret = qemu_chr_fe_read_all(mad_chr_be, (uint8_t *)&msg, sizeof(msg));
+-    if (ret != sizeof(msg)) {
+-        rdma_error_report("Got invalid message from mux: size %d, expecting %d",
+-                          ret, (int)sizeof(msg));
+-        return -EIO;
+-    }
+-
+-    trace_rdmacm_mux_check_op_status(msg.hdr.msg_type, msg.hdr.op_code,
+-                                     msg.hdr.err_code);
+-
+-    if (msg.hdr.msg_type != RDMACM_MUX_MSG_TYPE_RESP) {
+-        rdma_error_report("Got invalid message type %d", msg.hdr.msg_type);
+-        return -EIO;
+-    }
+-
+-    if (msg.hdr.err_code != RDMACM_MUX_ERR_CODE_OK) {
+-        rdma_error_report("Operation failed in mux, error code %d",
+-                          msg.hdr.err_code);
+-        return -EIO;
+-    }
+-
+-    return 0;
+-}
+-
+-static int rdmacm_mux_send(RdmaBackendDev *backend_dev, RdmaCmMuxMsg *msg)
+-{
+-    int rc = 0;
+-
+-    msg->hdr.msg_type = RDMACM_MUX_MSG_TYPE_REQ;
+-    trace_rdmacm_mux("send", msg->hdr.msg_type, msg->hdr.op_code);
+-    disable_rdmacm_mux_async(backend_dev);
+-    rc = qemu_chr_fe_write(backend_dev->rdmacm_mux.chr_be,
+-                           (const uint8_t *)msg, sizeof(*msg));
+-    if (rc != sizeof(*msg)) {
+-        enable_rdmacm_mux_async(backend_dev);
+-        rdma_error_report("Failed to send request to rdmacm_mux (rc=%d)", rc);
+-        return -EIO;
+-    }
+-
+-    rc = rdmacm_mux_check_op_status(backend_dev->rdmacm_mux.chr_be);
+-    if (rc) {
+-        rdma_error_report("Failed to execute rdmacm_mux request %d (rc=%d)",
+-                          msg->hdr.op_code, rc);
+-    }
+-
+-    enable_rdmacm_mux_async(backend_dev);
+-
+-    return 0;
+-}
+-
+-static void stop_backend_thread(RdmaBackendThread *thread)
+-{
+-    thread->run = false;
+-    while (thread->is_running) {
+-        sleep(THR_POLL_TO / SCALE_US / 2);
+-    }
+-}
+-
+-static void start_comp_thread(RdmaBackendDev *backend_dev)
+-{
+-    char thread_name[THR_NAME_LEN] = {};
+-
+-    stop_backend_thread(&backend_dev->comp_thread);
+-
+-    snprintf(thread_name, sizeof(thread_name), "rdma_comp_%s",
+-             ibv_get_device_name(backend_dev->ib_dev));
+-    backend_dev->comp_thread.run = true;
+-    qemu_thread_create(&backend_dev->comp_thread.thread, thread_name,
+-                       comp_handler_thread, backend_dev, QEMU_THREAD_DETACHED);
+-}
+-
+-void rdma_backend_register_comp_handler(void (*handler)(void *ctx,
+-                                                         struct ibv_wc *wc))
+-{
+-    comp_handler = handler;
+-}
+-
+-void rdma_backend_unregister_comp_handler(void)
+-{
+-    rdma_backend_register_comp_handler(dummy_comp_handler);
+-}
+-
+-int rdma_backend_query_port(RdmaBackendDev *backend_dev,
+-                            struct ibv_port_attr *port_attr)
+-{
+-    int rc;
+-
+-    rc = ibv_query_port(backend_dev->context, backend_dev->port_num, port_attr);
+-    if (rc) {
+-        rdma_error_report("ibv_query_port fail, rc=%d, errno=%d", rc, errno);
+-        return -EIO;
+-    }
+-
+-    return 0;
+-}
+-
+-void rdma_backend_poll_cq(RdmaDeviceResources *rdma_dev_res, RdmaBackendCQ *cq)
+-{
+-    int polled;
+-
+-    rdma_dev_res->stats.poll_cq_from_guest++;
+-    polled = rdma_poll_cq(rdma_dev_res, cq->ibcq);
+-    if (!polled) {
+-        rdma_dev_res->stats.poll_cq_from_guest_empty++;
+-    }
+-}
+-
+-static GHashTable *ah_hash;
+-
+-static struct ibv_ah *create_ah(RdmaBackendDev *backend_dev, struct ibv_pd *pd,
+-                                uint8_t sgid_idx, union ibv_gid *dgid)
+-{
+-    GBytes *ah_key = g_bytes_new(dgid, sizeof(*dgid));
+-    struct ibv_ah *ah = g_hash_table_lookup(ah_hash, ah_key);
+-
+-    if (ah) {
+-        trace_rdma_create_ah_cache_hit(be64_to_cpu(dgid->global.subnet_prefix),
+-                                       be64_to_cpu(dgid->global.interface_id));
+-        g_bytes_unref(ah_key);
+-    } else {
+-        struct ibv_ah_attr ah_attr = {
+-            .is_global     = 1,
+-            .port_num      = backend_dev->port_num,
+-            .grh.hop_limit = 1,
+-        };
+-
+-        ah_attr.grh.dgid = *dgid;
+-        ah_attr.grh.sgid_index = sgid_idx;
+-
+-        ah = ibv_create_ah(pd, &ah_attr);
+-        if (ah) {
+-            g_hash_table_insert(ah_hash, ah_key, ah);
+-        } else {
+-            g_bytes_unref(ah_key);
+-            rdma_error_report("Failed to create AH for gid <0x%" PRIx64", 0x%"PRIx64">",
+-                              be64_to_cpu(dgid->global.subnet_prefix),
+-                              be64_to_cpu(dgid->global.interface_id));
+-        }
+-
+-        trace_rdma_create_ah_cache_miss(be64_to_cpu(dgid->global.subnet_prefix),
+-                                        be64_to_cpu(dgid->global.interface_id));
+-    }
+-
+-    return ah;
+-}
+-
+-static void destroy_ah_hash_key(gpointer data)
+-{
+-    g_bytes_unref(data);
+-}
+-
+-static void destroy_ah_hast_data(gpointer data)
+-{
+-    struct ibv_ah *ah = data;
+-
+-    ibv_destroy_ah(ah);
+-}
+-
+-static void ah_cache_init(void)
+-{
+-    ah_hash = g_hash_table_new_full(g_bytes_hash, g_bytes_equal,
+-                                    destroy_ah_hash_key, destroy_ah_hast_data);
+-}
+-
+-#ifdef LEGACY_RDMA_REG_MR
+-static int build_host_sge_array(RdmaDeviceResources *rdma_dev_res,
+-                                struct ibv_sge *sge, uint8_t num_sge,
+-                                uint64_t *total_length)
+-{
+-    RdmaRmMR *mr;
+-    int idx;
+-
+-    for (idx = 0; idx < num_sge; idx++) {
+-        mr = rdma_rm_get_mr(rdma_dev_res, sge[idx].lkey);
+-        if (unlikely(!mr)) {
+-            rdma_error_report("Invalid lkey 0x%x", sge[idx].lkey);
+-            return VENDOR_ERR_INVLKEY | sge[idx].lkey;
+-        }
+-
+-        sge[idx].addr = (uintptr_t)mr->virt + sge[idx].addr - mr->start;
+-        sge[idx].lkey = rdma_backend_mr_lkey(&mr->backend_mr);
+-
+-        *total_length += sge[idx].length;
+-    }
+-
+-    return 0;
+-}
+-#else
+-static inline int build_host_sge_array(RdmaDeviceResources *rdma_dev_res,
+-                                       struct ibv_sge *sge, uint8_t num_sge,
+-                                       uint64_t *total_length)
+-{
+-    int idx;
+-
+-    for (idx = 0; idx < num_sge; idx++) {
+-        *total_length += sge[idx].length;
+-    }
+-    return 0;
+-}
+-#endif
+-
+-static void trace_mad_message(const char *title, char *buf, int len)
+-{
+-    int i;
+-    char *b = g_malloc0(len * 3 + 1);
+-    char b1[4];
+-
+-    for (i = 0; i < len; i++) {
+-        sprintf(b1, "%.2X ", buf[i] & 0x000000FF);
+-        strcat(b, b1);
+-    }
+-
+-    trace_rdma_mad_message(title, len, b);
+-
+-    g_free(b);
+-}
+-
+-static int mad_send(RdmaBackendDev *backend_dev, uint8_t sgid_idx,
+-                    union ibv_gid *sgid, struct ibv_sge *sge, uint32_t num_sge)
+-{
+-    RdmaCmMuxMsg msg = {};
+-    char *hdr, *data;
+-    int ret;
+-
+-    if (num_sge != 2) {
+-        return -EINVAL;
+-    }
+-
+-    msg.hdr.op_code = RDMACM_MUX_OP_CODE_MAD;
+-    memcpy(msg.hdr.sgid.raw, sgid->raw, sizeof(msg.hdr.sgid));
+-
+-    msg.umad_len = sge[0].length + sge[1].length;
+-
+-    if (msg.umad_len > sizeof(msg.umad.mad)) {
+-        return -ENOMEM;
+-    }
+-
+-    msg.umad.hdr.addr.qpn = htobe32(1);
+-    msg.umad.hdr.addr.grh_present = 1;
+-    msg.umad.hdr.addr.gid_index = sgid_idx;
+-    memcpy(msg.umad.hdr.addr.gid, sgid->raw, sizeof(msg.umad.hdr.addr.gid));
+-    msg.umad.hdr.addr.hop_limit = 0xFF;
+-
+-    hdr = rdma_pci_dma_map(backend_dev->dev, sge[0].addr, sge[0].length);
+-    if (!hdr) {
+-        return -ENOMEM;
+-    }
+-    data = rdma_pci_dma_map(backend_dev->dev, sge[1].addr, sge[1].length);
+-    if (!data) {
+-        rdma_pci_dma_unmap(backend_dev->dev, hdr, sge[0].length);
+-        return -ENOMEM;
+-    }
+-
+-    memcpy(&msg.umad.mad[0], hdr, sge[0].length);
+-    memcpy(&msg.umad.mad[sge[0].length], data, sge[1].length);
+-
+-    rdma_pci_dma_unmap(backend_dev->dev, data, sge[1].length);
+-    rdma_pci_dma_unmap(backend_dev->dev, hdr, sge[0].length);
+-
+-    trace_mad_message("send", msg.umad.mad, msg.umad_len);
+-
+-    ret = rdmacm_mux_send(backend_dev, &msg);
+-    if (ret) {
+-        rdma_error_report("Failed to send MAD to rdma_umadmux (%d)", ret);
+-        return -EIO;
+-    }
+-
+-    return 0;
+-}
+-
+-void rdma_backend_post_send(RdmaBackendDev *backend_dev,
+-                            RdmaBackendQP *qp, uint8_t qp_type,
+-                            struct ibv_sge *sge, uint32_t num_sge,
+-                            uint8_t sgid_idx, union ibv_gid *sgid,
+-                            union ibv_gid *dgid, uint32_t dqpn, uint32_t dqkey,
+-                            void *ctx)
+-{
+-    BackendCtx *bctx;
+-    uint32_t bctx_id;
+-    int rc;
+-    struct ibv_send_wr wr = {}, *bad_wr;
+-
+-    if (!qp->ibqp) { /* This field is not initialized for QP0 and QP1 */
+-        if (qp_type == IBV_QPT_SMI) {
+-            rdma_error_report("Got QP0 request");
+-            complete_work(IBV_WC_GENERAL_ERR, VENDOR_ERR_QP0, ctx);
+-        } else if (qp_type == IBV_QPT_GSI) {
+-            rc = mad_send(backend_dev, sgid_idx, sgid, sge, num_sge);
+-            if (rc) {
+-                complete_work(IBV_WC_GENERAL_ERR, VENDOR_ERR_MAD_SEND, ctx);
+-                backend_dev->rdma_dev_res->stats.mad_tx_err++;
+-            } else {
+-                complete_work(IBV_WC_SUCCESS, 0, ctx);
+-                backend_dev->rdma_dev_res->stats.mad_tx++;
+-            }
+-        }
+-        return;
+-    }
+-
+-    bctx = g_malloc0(sizeof(*bctx));
+-    bctx->up_ctx = ctx;
+-    bctx->backend_qp = qp;
+-
+-    rc = rdma_rm_alloc_cqe_ctx(backend_dev->rdma_dev_res, &bctx_id, bctx);
+-    if (unlikely(rc)) {
+-        complete_work(IBV_WC_GENERAL_ERR, VENDOR_ERR_NOMEM, ctx);
+-        goto err_free_bctx;
+-    }
+-
+-    rdma_protected_gslist_append_int32(&qp->cqe_ctx_list, bctx_id);
+-
+-    rc = build_host_sge_array(backend_dev->rdma_dev_res, sge, num_sge,
+-                              &backend_dev->rdma_dev_res->stats.tx_len);
+-    if (rc) {
+-        complete_work(IBV_WC_GENERAL_ERR, rc, ctx);
+-        goto err_dealloc_cqe_ctx;
+-    }
+-
+-    if (qp_type == IBV_QPT_UD) {
+-        wr.wr.ud.ah = create_ah(backend_dev, qp->ibpd, sgid_idx, dgid);
+-        if (!wr.wr.ud.ah) {
+-            complete_work(IBV_WC_GENERAL_ERR, VENDOR_ERR_FAIL_BACKEND, ctx);
+-            goto err_dealloc_cqe_ctx;
+-        }
+-        wr.wr.ud.remote_qpn = dqpn;
+-        wr.wr.ud.remote_qkey = dqkey;
+-    }
+-
+-    wr.num_sge = num_sge;
+-    wr.opcode = IBV_WR_SEND;
+-    wr.send_flags = IBV_SEND_SIGNALED;
+-    wr.sg_list = sge;
+-    wr.wr_id = bctx_id;
+-
+-    rc = ibv_post_send(qp->ibqp, &wr, &bad_wr);
+-    if (rc) {
+-        rdma_error_report("ibv_post_send fail, qpn=0x%x, rc=%d, errno=%d",
+-                          qp->ibqp->qp_num, rc, errno);
+-        complete_work(IBV_WC_GENERAL_ERR, VENDOR_ERR_FAIL_BACKEND, ctx);
+-        goto err_dealloc_cqe_ctx;
+-    }
+-
+-    qatomic_inc(&backend_dev->rdma_dev_res->stats.missing_cqe);
+-    backend_dev->rdma_dev_res->stats.tx++;
+-
+-    return;
+-
+-err_dealloc_cqe_ctx:
+-    backend_dev->rdma_dev_res->stats.tx_err++;
+-    rdma_rm_dealloc_cqe_ctx(backend_dev->rdma_dev_res, bctx_id);
+-
+-err_free_bctx:
+-    g_free(bctx);
+-}
+-
+-static unsigned int save_mad_recv_buffer(RdmaBackendDev *backend_dev,
+-                                         struct ibv_sge *sge, uint32_t num_sge,
+-                                         void *ctx)
+-{
+-    BackendCtx *bctx;
+-    int rc;
+-    uint32_t bctx_id;
+-
+-    if (num_sge != 1) {
+-        rdma_error_report("Invalid num_sge (%d), expecting 1", num_sge);
+-        return VENDOR_ERR_INV_NUM_SGE;
+-    }
+-
+-    if (sge[0].length < RDMA_MAX_PRIVATE_DATA + sizeof(struct ibv_grh)) {
+-        rdma_error_report("Too small buffer for MAD");
+-        return VENDOR_ERR_INV_MAD_BUFF;
+-    }
+-
+-    bctx = g_malloc0(sizeof(*bctx));
+-
+-    rc = rdma_rm_alloc_cqe_ctx(backend_dev->rdma_dev_res, &bctx_id, bctx);
+-    if (unlikely(rc)) {
+-        g_free(bctx);
+-        return VENDOR_ERR_NOMEM;
+-    }
+-
+-    bctx->up_ctx = ctx;
+-    bctx->sge = *sge;
+-
+-    rdma_protected_gqueue_append_int64(&backend_dev->recv_mads_list, bctx_id);
+-
+-    return 0;
+-}
+-
+-void rdma_backend_post_recv(RdmaBackendDev *backend_dev,
+-                            RdmaBackendQP *qp, uint8_t qp_type,
+-                            struct ibv_sge *sge, uint32_t num_sge, void *ctx)
+-{
+-    BackendCtx *bctx;
+-    uint32_t bctx_id;
+-    int rc;
+-    struct ibv_recv_wr wr = {}, *bad_wr;
+-
+-    if (!qp->ibqp) { /* This field does not get initialized for QP0 and QP1 */
+-        if (qp_type == IBV_QPT_SMI) {
+-            rdma_error_report("Got QP0 request");
+-            complete_work(IBV_WC_GENERAL_ERR, VENDOR_ERR_QP0, ctx);
+-        }
+-        if (qp_type == IBV_QPT_GSI) {
+-            rc = save_mad_recv_buffer(backend_dev, sge, num_sge, ctx);
+-            if (rc) {
+-                complete_work(IBV_WC_GENERAL_ERR, rc, ctx);
+-                backend_dev->rdma_dev_res->stats.mad_rx_bufs_err++;
+-            } else {
+-                backend_dev->rdma_dev_res->stats.mad_rx_bufs++;
+-            }
+-        }
+-        return;
+-    }
+-
+-    bctx = g_malloc0(sizeof(*bctx));
+-    bctx->up_ctx = ctx;
+-    bctx->backend_qp = qp;
+-
+-    rc = rdma_rm_alloc_cqe_ctx(backend_dev->rdma_dev_res, &bctx_id, bctx);
+-    if (unlikely(rc)) {
+-        complete_work(IBV_WC_GENERAL_ERR, VENDOR_ERR_NOMEM, ctx);
+-        goto err_free_bctx;
+-    }
+-
+-    rdma_protected_gslist_append_int32(&qp->cqe_ctx_list, bctx_id);
+-
+-    rc = build_host_sge_array(backend_dev->rdma_dev_res, sge, num_sge,
+-                              &backend_dev->rdma_dev_res->stats.rx_bufs_len);
+-    if (rc) {
+-        complete_work(IBV_WC_GENERAL_ERR, rc, ctx);
+-        goto err_dealloc_cqe_ctx;
+-    }
+-
+-    wr.num_sge = num_sge;
+-    wr.sg_list = sge;
+-    wr.wr_id = bctx_id;
+-    rc = ibv_post_recv(qp->ibqp, &wr, &bad_wr);
+-    if (rc) {
+-        rdma_error_report("ibv_post_recv fail, qpn=0x%x, rc=%d, errno=%d",
+-                          qp->ibqp->qp_num, rc, errno);
+-        complete_work(IBV_WC_GENERAL_ERR, VENDOR_ERR_FAIL_BACKEND, ctx);
+-        goto err_dealloc_cqe_ctx;
+-    }
+-
+-    qatomic_inc(&backend_dev->rdma_dev_res->stats.missing_cqe);
+-    backend_dev->rdma_dev_res->stats.rx_bufs++;
+-
+-    return;
+-
+-err_dealloc_cqe_ctx:
+-    backend_dev->rdma_dev_res->stats.rx_bufs_err++;
+-    rdma_rm_dealloc_cqe_ctx(backend_dev->rdma_dev_res, bctx_id);
+-
+-err_free_bctx:
+-    g_free(bctx);
+-}
+-
+-void rdma_backend_post_srq_recv(RdmaBackendDev *backend_dev,
+-                                RdmaBackendSRQ *srq, struct ibv_sge *sge,
+-                                uint32_t num_sge, void *ctx)
+-{
+-    BackendCtx *bctx;
+-    uint32_t bctx_id;
+-    int rc;
+-    struct ibv_recv_wr wr = {}, *bad_wr;
+-
+-    bctx = g_malloc0(sizeof(*bctx));
+-    bctx->up_ctx = ctx;
+-    bctx->backend_srq = srq;
+-
+-    rc = rdma_rm_alloc_cqe_ctx(backend_dev->rdma_dev_res, &bctx_id, bctx);
+-    if (unlikely(rc)) {
+-        complete_work(IBV_WC_GENERAL_ERR, VENDOR_ERR_NOMEM, ctx);
+-        goto err_free_bctx;
+-    }
+-
+-    rdma_protected_gslist_append_int32(&srq->cqe_ctx_list, bctx_id);
+-
+-    rc = build_host_sge_array(backend_dev->rdma_dev_res, sge, num_sge,
+-                              &backend_dev->rdma_dev_res->stats.rx_bufs_len);
+-    if (rc) {
+-        complete_work(IBV_WC_GENERAL_ERR, rc, ctx);
+-        goto err_dealloc_cqe_ctx;
+-    }
+-
+-    wr.num_sge = num_sge;
+-    wr.sg_list = sge;
+-    wr.wr_id = bctx_id;
+-    rc = ibv_post_srq_recv(srq->ibsrq, &wr, &bad_wr);
+-    if (rc) {
+-        rdma_error_report("ibv_post_srq_recv fail, srqn=0x%x, rc=%d, errno=%d",
+-                          srq->ibsrq->handle, rc, errno);
+-        complete_work(IBV_WC_GENERAL_ERR, VENDOR_ERR_FAIL_BACKEND, ctx);
+-        goto err_dealloc_cqe_ctx;
+-    }
+-
+-    qatomic_inc(&backend_dev->rdma_dev_res->stats.missing_cqe);
+-    backend_dev->rdma_dev_res->stats.rx_bufs++;
+-    backend_dev->rdma_dev_res->stats.rx_srq++;
+-
+-    return;
+-
+-err_dealloc_cqe_ctx:
+-    backend_dev->rdma_dev_res->stats.rx_bufs_err++;
+-    rdma_rm_dealloc_cqe_ctx(backend_dev->rdma_dev_res, bctx_id);
+-
+-err_free_bctx:
+-    g_free(bctx);
+-}
+-
+-int rdma_backend_create_pd(RdmaBackendDev *backend_dev, RdmaBackendPD *pd)
+-{
+-    pd->ibpd = ibv_alloc_pd(backend_dev->context);
+-
+-    if (!pd->ibpd) {
+-        rdma_error_report("ibv_alloc_pd fail, errno=%d", errno);
+-        return -EIO;
+-    }
+-
+-    return 0;
+-}
+-
+-void rdma_backend_destroy_pd(RdmaBackendPD *pd)
+-{
+-    if (pd->ibpd) {
+-        ibv_dealloc_pd(pd->ibpd);
+-    }
+-}
+-
+-int rdma_backend_create_mr(RdmaBackendMR *mr, RdmaBackendPD *pd, void *addr,
+-                           size_t length, uint64_t guest_start, int access)
+-{
+-#ifdef LEGACY_RDMA_REG_MR
+-    mr->ibmr = ibv_reg_mr(pd->ibpd, addr, length, access);
+-#else
+-    mr->ibmr = ibv_reg_mr_iova(pd->ibpd, addr, length, guest_start, access);
+-#endif
+-    if (!mr->ibmr) {
+-        rdma_error_report("ibv_reg_mr fail, errno=%d", errno);
+-        return -EIO;
+-    }
+-
+-    mr->ibpd = pd->ibpd;
+-
+-    return 0;
+-}
+-
+-void rdma_backend_destroy_mr(RdmaBackendMR *mr)
+-{
+-    if (mr->ibmr) {
+-        ibv_dereg_mr(mr->ibmr);
+-    }
+-}
+-
+-int rdma_backend_create_cq(RdmaBackendDev *backend_dev, RdmaBackendCQ *cq,
+-                           int cqe)
+-{
+-    int rc;
+-
+-    cq->ibcq = ibv_create_cq(backend_dev->context, cqe + 1, NULL,
+-                             backend_dev->channel, 0);
+-    if (!cq->ibcq) {
+-        rdma_error_report("ibv_create_cq fail, errno=%d", errno);
+-        return -EIO;
+-    }
+-
+-    rc = ibv_req_notify_cq(cq->ibcq, 0);
+-    if (rc) {
+-        rdma_warn_report("ibv_req_notify_cq fail, rc=%d, errno=%d", rc, errno);
+-    }
+-
+-    cq->backend_dev = backend_dev;
+-
+-    return 0;
+-}
+-
+-void rdma_backend_destroy_cq(RdmaBackendCQ *cq)
+-{
+-    if (cq->ibcq) {
+-        ibv_destroy_cq(cq->ibcq);
+-    }
+-}
+-
+-int rdma_backend_create_qp(RdmaBackendQP *qp, uint8_t qp_type,
+-                           RdmaBackendPD *pd, RdmaBackendCQ *scq,
+-                           RdmaBackendCQ *rcq, RdmaBackendSRQ *srq,
+-                           uint32_t max_send_wr, uint32_t max_recv_wr,
+-                           uint32_t max_send_sge, uint32_t max_recv_sge)
+-{
+-    struct ibv_qp_init_attr attr = {};
+-
+-    qp->ibqp = 0;
+-
+-    switch (qp_type) {
+-    case IBV_QPT_GSI:
+-        return 0;
+-
+-    case IBV_QPT_RC:
+-        /* fall through */
+-    case IBV_QPT_UD:
+-        /* do nothing */
+-        break;
+-
+-    default:
+-        rdma_error_report("Unsupported QP type %d", qp_type);
+-        return -EIO;
+-    }
+-
+-    attr.qp_type = qp_type;
+-    attr.send_cq = scq->ibcq;
+-    attr.recv_cq = rcq->ibcq;
+-    attr.cap.max_send_wr = max_send_wr;
+-    attr.cap.max_recv_wr = max_recv_wr;
+-    attr.cap.max_send_sge = max_send_sge;
+-    attr.cap.max_recv_sge = max_recv_sge;
+-    if (srq) {
+-        attr.srq = srq->ibsrq;
+-    }
+-
+-    qp->ibqp = ibv_create_qp(pd->ibpd, &attr);
+-    if (!qp->ibqp) {
+-        rdma_error_report("ibv_create_qp fail, errno=%d", errno);
+-        return -EIO;
+-    }
+-
+-    rdma_protected_gslist_init(&qp->cqe_ctx_list);
+-
+-    qp->ibpd = pd->ibpd;
+-
+-    /* TODO: Query QP to get max_inline_data and save it to be used in send */
+-
+-    return 0;
+-}
+-
+-int rdma_backend_qp_state_init(RdmaBackendDev *backend_dev, RdmaBackendQP *qp,
+-                               uint8_t qp_type, uint32_t qkey)
+-{
+-    struct ibv_qp_attr attr = {};
+-    int rc, attr_mask;
+-
+-    attr_mask = IBV_QP_STATE | IBV_QP_PKEY_INDEX | IBV_QP_PORT;
+-    attr.qp_state        = IBV_QPS_INIT;
+-    attr.pkey_index      = 0;
+-    attr.port_num        = backend_dev->port_num;
+-
+-    switch (qp_type) {
+-    case IBV_QPT_RC:
+-        attr_mask |= IBV_QP_ACCESS_FLAGS;
+-        trace_rdma_backend_rc_qp_state_init(qp->ibqp->qp_num);
+-        break;
+-
+-    case IBV_QPT_UD:
+-        attr.qkey = qkey;
+-        attr_mask |= IBV_QP_QKEY;
+-        trace_rdma_backend_ud_qp_state_init(qp->ibqp->qp_num, qkey);
+-        break;
+-
+-    default:
+-        rdma_error_report("Unsupported QP type %d", qp_type);
+-        return -EIO;
+-    }
+-
+-    rc = ibv_modify_qp(qp->ibqp, &attr, attr_mask);
+-    if (rc) {
+-        rdma_error_report("ibv_modify_qp fail, rc=%d, errno=%d", rc, errno);
+-        return -EIO;
+-    }
+-
+-    return 0;
+-}
+-
+-int rdma_backend_qp_state_rtr(RdmaBackendDev *backend_dev, RdmaBackendQP *qp,
+-                              uint8_t qp_type, uint8_t sgid_idx,
+-                              union ibv_gid *dgid, uint32_t dqpn,
+-                              uint32_t rq_psn, uint32_t qkey, bool use_qkey)
+-{
+-    struct ibv_qp_attr attr = {};
+-    union ibv_gid ibv_gid = {
+-        .global.interface_id = dgid->global.interface_id,
+-        .global.subnet_prefix = dgid->global.subnet_prefix
+-    };
+-    int rc, attr_mask;
+-
+-    attr.qp_state = IBV_QPS_RTR;
+-    attr_mask = IBV_QP_STATE;
+-
+-    qp->sgid_idx = sgid_idx;
+-
+-    switch (qp_type) {
+-    case IBV_QPT_RC:
+-        attr.path_mtu               = IBV_MTU_1024;
+-        attr.dest_qp_num            = dqpn;
+-        attr.max_dest_rd_atomic     = 1;
+-        attr.min_rnr_timer          = 12;
+-        attr.ah_attr.port_num       = backend_dev->port_num;
+-        attr.ah_attr.is_global      = 1;
+-        attr.ah_attr.grh.hop_limit  = 1;
+-        attr.ah_attr.grh.dgid       = ibv_gid;
+-        attr.ah_attr.grh.sgid_index = qp->sgid_idx;
+-        attr.rq_psn                 = rq_psn;
+-
+-        attr_mask |= IBV_QP_AV | IBV_QP_PATH_MTU | IBV_QP_DEST_QPN |
+-                     IBV_QP_RQ_PSN | IBV_QP_MAX_DEST_RD_ATOMIC |
+-                     IBV_QP_MIN_RNR_TIMER;
+-
+-        trace_rdma_backend_rc_qp_state_rtr(qp->ibqp->qp_num,
+-                                           be64_to_cpu(ibv_gid.global.
+-                                                       subnet_prefix),
+-                                           be64_to_cpu(ibv_gid.global.
+-                                                       interface_id),
+-                                           qp->sgid_idx, dqpn, rq_psn);
+-        break;
+-
+-    case IBV_QPT_UD:
+-        if (use_qkey) {
+-            attr.qkey = qkey;
+-            attr_mask |= IBV_QP_QKEY;
+-        }
+-        trace_rdma_backend_ud_qp_state_rtr(qp->ibqp->qp_num, use_qkey ? qkey :
+-                                           0);
+-        break;
+-    }
+-
+-    rc = ibv_modify_qp(qp->ibqp, &attr, attr_mask);
+-    if (rc) {
+-        rdma_error_report("ibv_modify_qp fail, rc=%d, errno=%d", rc, errno);
+-        return -EIO;
+-    }
+-
+-    return 0;
+-}
+-
+-int rdma_backend_qp_state_rts(RdmaBackendQP *qp, uint8_t qp_type,
+-                              uint32_t sq_psn, uint32_t qkey, bool use_qkey)
+-{
+-    struct ibv_qp_attr attr = {};
+-    int rc, attr_mask;
+-
+-    attr.qp_state = IBV_QPS_RTS;
+-    attr.sq_psn = sq_psn;
+-    attr_mask = IBV_QP_STATE | IBV_QP_SQ_PSN;
+-
+-    switch (qp_type) {
+-    case IBV_QPT_RC:
+-        attr.timeout       = 14;
+-        attr.retry_cnt     = 7;
+-        attr.rnr_retry     = 7;
+-        attr.max_rd_atomic = 1;
+-
+-        attr_mask |= IBV_QP_TIMEOUT | IBV_QP_RETRY_CNT | IBV_QP_RNR_RETRY |
+-                     IBV_QP_MAX_QP_RD_ATOMIC;
+-        trace_rdma_backend_rc_qp_state_rts(qp->ibqp->qp_num, sq_psn);
+-        break;
+-
+-    case IBV_QPT_UD:
+-        if (use_qkey) {
+-            attr.qkey = qkey;
+-            attr_mask |= IBV_QP_QKEY;
+-        }
+-        trace_rdma_backend_ud_qp_state_rts(qp->ibqp->qp_num, sq_psn,
+-                                           use_qkey ? qkey : 0);
+-        break;
+-    }
+-
+-    rc = ibv_modify_qp(qp->ibqp, &attr, attr_mask);
+-    if (rc) {
+-        rdma_error_report("ibv_modify_qp fail, rc=%d, errno=%d", rc, errno);
+-        return -EIO;
+-    }
+-
+-    return 0;
+-}
+-
+-int rdma_backend_query_qp(RdmaBackendQP *qp, struct ibv_qp_attr *attr,
+-                          int attr_mask, struct ibv_qp_init_attr *init_attr)
+-{
+-    if (!qp->ibqp) {
+-        attr->qp_state = IBV_QPS_RTS;
+-        return 0;
+-    }
+-
+-    return ibv_query_qp(qp->ibqp, attr, attr_mask, init_attr);
+-}
+-
+-void rdma_backend_destroy_qp(RdmaBackendQP *qp, RdmaDeviceResources *dev_res)
+-{
+-    if (qp->ibqp) {
+-        ibv_destroy_qp(qp->ibqp);
+-    }
+-    g_slist_foreach(qp->cqe_ctx_list.list, free_cqe_ctx, dev_res);
+-    rdma_protected_gslist_destroy(&qp->cqe_ctx_list);
+-}
+-
+-int rdma_backend_create_srq(RdmaBackendSRQ *srq, RdmaBackendPD *pd,
+-                            uint32_t max_wr, uint32_t max_sge,
+-                            uint32_t srq_limit)
+-{
+-    struct ibv_srq_init_attr srq_init_attr = {};
+-
+-    srq_init_attr.attr.max_wr = max_wr;
+-    srq_init_attr.attr.max_sge = max_sge;
+-    srq_init_attr.attr.srq_limit = srq_limit;
+-
+-    srq->ibsrq = ibv_create_srq(pd->ibpd, &srq_init_attr);
+-    if (!srq->ibsrq) {
+-        rdma_error_report("ibv_create_srq failed, errno=%d", errno);
+-        return -EIO;
+-    }
+-
+-    rdma_protected_gslist_init(&srq->cqe_ctx_list);
+-
+-    return 0;
+-}
+-
+-int rdma_backend_query_srq(RdmaBackendSRQ *srq, struct ibv_srq_attr *srq_attr)
+-{
+-    if (!srq->ibsrq) {
+-        return -EINVAL;
+-    }
+-
+-    return ibv_query_srq(srq->ibsrq, srq_attr);
+-}
+-
+-int rdma_backend_modify_srq(RdmaBackendSRQ *srq, struct ibv_srq_attr *srq_attr,
+-                int srq_attr_mask)
+-{
+-    if (!srq->ibsrq) {
+-        return -EINVAL;
+-    }
+-
+-    return ibv_modify_srq(srq->ibsrq, srq_attr, srq_attr_mask);
+-}
+-
+-void rdma_backend_destroy_srq(RdmaBackendSRQ *srq, RdmaDeviceResources *dev_res)
+-{
+-    if (srq->ibsrq) {
+-        ibv_destroy_srq(srq->ibsrq);
+-    }
+-    g_slist_foreach(srq->cqe_ctx_list.list, free_cqe_ctx, dev_res);
+-    rdma_protected_gslist_destroy(&srq->cqe_ctx_list);
+-}
+-
+-#define CHK_ATTR(req, dev, member, fmt) ({ \
+-    trace_rdma_check_dev_attr(#member, dev.member, req->member); \
+-    if (req->member > dev.member) { \
+-        rdma_warn_report("%s = "fmt" is higher than host device capability "fmt, \
+-                         #member, req->member, dev.member); \
+-        req->member = dev.member; \
+-    } \
+-})
+-
+-static int init_device_caps(RdmaBackendDev *backend_dev,
+-                            struct ibv_device_attr *dev_attr)
+-{
+-    struct ibv_device_attr bk_dev_attr;
+-    int rc;
+-
+-    rc = ibv_query_device(backend_dev->context, &bk_dev_attr);
+-    if (rc) {
+-        rdma_error_report("ibv_query_device fail, rc=%d, errno=%d", rc, errno);
+-        return -EIO;
+-    }
+-
+-    dev_attr->max_sge = MAX_SGE;
+-    dev_attr->max_srq_sge = MAX_SGE;
+-
+-    CHK_ATTR(dev_attr, bk_dev_attr, max_mr_size, "%" PRId64);
+-    CHK_ATTR(dev_attr, bk_dev_attr, max_qp, "%d");
+-    CHK_ATTR(dev_attr, bk_dev_attr, max_sge, "%d");
+-    CHK_ATTR(dev_attr, bk_dev_attr, max_cq, "%d");
+-    CHK_ATTR(dev_attr, bk_dev_attr, max_mr, "%d");
+-    CHK_ATTR(dev_attr, bk_dev_attr, max_pd, "%d");
+-    CHK_ATTR(dev_attr, bk_dev_attr, max_qp_rd_atom, "%d");
+-    CHK_ATTR(dev_attr, bk_dev_attr, max_qp_init_rd_atom, "%d");
+-    CHK_ATTR(dev_attr, bk_dev_attr, max_ah, "%d");
+-    CHK_ATTR(dev_attr, bk_dev_attr, max_srq, "%d");
+-
+-    return 0;
+-}
+-
+-static inline void build_mad_hdr(struct ibv_grh *grh, union ibv_gid *sgid,
+-                                 union ibv_gid *my_gid, int paylen)
+-{
+-    grh->paylen = htons(paylen);
+-    grh->sgid = *sgid;
+-    grh->dgid = *my_gid;
+-}
+-
+-static void process_incoming_mad_req(RdmaBackendDev *backend_dev,
+-                                     RdmaCmMuxMsg *msg)
+-{
+-    unsigned long cqe_ctx_id;
+-    BackendCtx *bctx;
+-    char *mad;
+-
+-    trace_mad_message("recv", msg->umad.mad, msg->umad_len);
+-
+-    cqe_ctx_id = rdma_protected_gqueue_pop_int64(&backend_dev->recv_mads_list);
+-    if (cqe_ctx_id == -ENOENT) {
+-        rdma_warn_report("No more free MADs buffers, waiting for a while");
+-        sleep(THR_POLL_TO);
+-        return;
+-    }
+-
+-    bctx = rdma_rm_get_cqe_ctx(backend_dev->rdma_dev_res, cqe_ctx_id);
+-    if (unlikely(!bctx)) {
+-        rdma_error_report("No matching ctx for req %ld", cqe_ctx_id);
+-        backend_dev->rdma_dev_res->stats.mad_rx_err++;
+-        return;
+-    }
+-
+-    mad = rdma_pci_dma_map(backend_dev->dev, bctx->sge.addr,
+-                           bctx->sge.length);
+-    if (!mad || bctx->sge.length < msg->umad_len + MAD_HDR_SIZE) {
+-        backend_dev->rdma_dev_res->stats.mad_rx_err++;
+-        complete_work(IBV_WC_GENERAL_ERR, VENDOR_ERR_INV_MAD_BUFF,
+-                      bctx->up_ctx);
+-    } else {
+-        struct ibv_wc wc = {};
+-        memset(mad, 0, bctx->sge.length);
+-        build_mad_hdr((struct ibv_grh *)mad,
+-                      (union ibv_gid *)&msg->umad.hdr.addr.gid, &msg->hdr.sgid,
+-                      msg->umad_len);
+-        memcpy(&mad[MAD_HDR_SIZE], msg->umad.mad, msg->umad_len);
+-        rdma_pci_dma_unmap(backend_dev->dev, mad, bctx->sge.length);
+-
+-        wc.byte_len = msg->umad_len;
+-        wc.status = IBV_WC_SUCCESS;
+-        wc.wc_flags = IBV_WC_GRH;
+-        backend_dev->rdma_dev_res->stats.mad_rx++;
+-        comp_handler(bctx->up_ctx, &wc);
+-    }
+-
+-    g_free(bctx);
+-    rdma_rm_dealloc_cqe_ctx(backend_dev->rdma_dev_res, cqe_ctx_id);
+-}
+-
+-static inline int rdmacm_mux_can_receive(void *opaque)
+-{
+-    RdmaBackendDev *backend_dev = (RdmaBackendDev *)opaque;
+-
+-    return rdmacm_mux_can_process_async(backend_dev);
+-}
+-
+-static void rdmacm_mux_read(void *opaque, const uint8_t *buf, int size)
+-{
+-    RdmaBackendDev *backend_dev = (RdmaBackendDev *)opaque;
+-    RdmaCmMuxMsg *msg = (RdmaCmMuxMsg *)buf;
+-
+-    trace_rdmacm_mux("read", msg->hdr.msg_type, msg->hdr.op_code);
+-
+-    if (msg->hdr.msg_type != RDMACM_MUX_MSG_TYPE_REQ &&
+-        msg->hdr.op_code != RDMACM_MUX_OP_CODE_MAD) {
+-            rdma_error_report("Error: Not a MAD request, skipping");
+-            return;
+-    }
+-    process_incoming_mad_req(backend_dev, msg);
+-}
+-
+-static int mad_init(RdmaBackendDev *backend_dev, CharBackend *mad_chr_be)
+-{
+-    int ret;
+-
+-    backend_dev->rdmacm_mux.chr_be = mad_chr_be;
+-
+-    ret = qemu_chr_fe_backend_connected(backend_dev->rdmacm_mux.chr_be);
+-    if (!ret) {
+-        rdma_error_report("Missing chardev for MAD multiplexer");
+-        return -EIO;
+-    }
+-
+-    rdma_protected_gqueue_init(&backend_dev->recv_mads_list);
+-
+-    enable_rdmacm_mux_async(backend_dev);
+-
+-    qemu_chr_fe_set_handlers(backend_dev->rdmacm_mux.chr_be,
+-                             rdmacm_mux_can_receive, rdmacm_mux_read, NULL,
+-                             NULL, backend_dev, NULL, true);
+-
+-    return 0;
+-}
+-
+-static void mad_stop(RdmaBackendDev *backend_dev)
+-{
+-    clean_recv_mads(backend_dev);
+-}
+-
+-static void mad_fini(RdmaBackendDev *backend_dev)
+-{
+-    disable_rdmacm_mux_async(backend_dev);
+-    qemu_chr_fe_disconnect(backend_dev->rdmacm_mux.chr_be);
+-    rdma_protected_gqueue_destroy(&backend_dev->recv_mads_list);
+-}
+-
+-int rdma_backend_get_gid_index(RdmaBackendDev *backend_dev,
+-                               union ibv_gid *gid)
+-{
+-    union ibv_gid sgid;
+-    int ret;
+-    int i = 0;
+-
+-    do {
+-        ret = ibv_query_gid(backend_dev->context, backend_dev->port_num, i,
+-                            &sgid);
+-        i++;
+-    } while (!ret && (memcmp(&sgid, gid, sizeof(*gid))));
+-
+-    trace_rdma_backend_get_gid_index(be64_to_cpu(gid->global.subnet_prefix),
+-                                     be64_to_cpu(gid->global.interface_id),
+-                                     i - 1);
+-
+-    return ret ? ret : i - 1;
+-}
+-
+-int rdma_backend_add_gid(RdmaBackendDev *backend_dev, const char *ifname,
+-                         union ibv_gid *gid)
+-{
+-    RdmaCmMuxMsg msg = {};
+-    int ret;
+-
+-    trace_rdma_backend_gid_change("add", be64_to_cpu(gid->global.subnet_prefix),
+-                                  be64_to_cpu(gid->global.interface_id));
+-
+-    msg.hdr.op_code = RDMACM_MUX_OP_CODE_REG;
+-    memcpy(msg.hdr.sgid.raw, gid->raw, sizeof(msg.hdr.sgid));
+-
+-    ret = rdmacm_mux_send(backend_dev, &msg);
+-    if (ret) {
+-        rdma_error_report("Failed to register GID to rdma_umadmux (%d)", ret);
+-        return -EIO;
+-    }
+-
+-    qapi_event_send_rdma_gid_status_changed(ifname, true,
+-                                            gid->global.subnet_prefix,
+-                                            gid->global.interface_id);
+-
+-    return ret;
+-}
+-
+-int rdma_backend_del_gid(RdmaBackendDev *backend_dev, const char *ifname,
+-                         union ibv_gid *gid)
+-{
+-    RdmaCmMuxMsg msg = {};
+-    int ret;
+-
+-    trace_rdma_backend_gid_change("del", be64_to_cpu(gid->global.subnet_prefix),
+-                                  be64_to_cpu(gid->global.interface_id));
+-
+-    msg.hdr.op_code = RDMACM_MUX_OP_CODE_UNREG;
+-    memcpy(msg.hdr.sgid.raw, gid->raw, sizeof(msg.hdr.sgid));
+-
+-    ret = rdmacm_mux_send(backend_dev, &msg);
+-    if (ret) {
+-        rdma_error_report("Failed to unregister GID from rdma_umadmux (%d)",
+-                          ret);
+-        return -EIO;
+-    }
+-
+-    qapi_event_send_rdma_gid_status_changed(ifname, false,
+-                                            gid->global.subnet_prefix,
+-                                            gid->global.interface_id);
+-
+-    return 0;
+-}
+-
+-int rdma_backend_init(RdmaBackendDev *backend_dev, PCIDevice *pdev,
+-                      RdmaDeviceResources *rdma_dev_res,
+-                      const char *backend_device_name, uint8_t port_num,
+-                      struct ibv_device_attr *dev_attr, CharBackend *mad_chr_be)
+-{
+-    int i;
+-    int ret = 0;
+-    int num_ibv_devices;
+-    struct ibv_device **dev_list;
+-
+-    memset(backend_dev, 0, sizeof(*backend_dev));
+-
+-    backend_dev->dev = pdev;
+-    backend_dev->port_num = port_num;
+-    backend_dev->rdma_dev_res = rdma_dev_res;
+-
+-    rdma_backend_register_comp_handler(dummy_comp_handler);
+-
+-    dev_list = ibv_get_device_list(&num_ibv_devices);
+-    if (!dev_list) {
+-        rdma_error_report("Failed to get IB devices list");
+-        return -EIO;
+-    }
+-
+-    if (num_ibv_devices == 0) {
+-        rdma_error_report("No IB devices were found");
+-        ret = -ENXIO;
+-        goto out_free_dev_list;
+-    }
+-
+-    if (backend_device_name) {
+-        for (i = 0; dev_list[i]; ++i) {
+-            if (!strcmp(ibv_get_device_name(dev_list[i]),
+-                        backend_device_name)) {
+-                break;
+-            }
+-        }
+-
+-        backend_dev->ib_dev = dev_list[i];
+-        if (!backend_dev->ib_dev) {
+-            rdma_error_report("Failed to find IB device %s",
+-                              backend_device_name);
+-            ret = -EIO;
+-            goto out_free_dev_list;
+-        }
+-    } else {
+-        backend_dev->ib_dev = *dev_list;
+-    }
+-
+-    rdma_info_report("uverb device %s", backend_dev->ib_dev->dev_name);
+-
+-    backend_dev->context = ibv_open_device(backend_dev->ib_dev);
+-    if (!backend_dev->context) {
+-        rdma_error_report("Failed to open IB device %s",
+-                          ibv_get_device_name(backend_dev->ib_dev));
+-        ret = -EIO;
+-        goto out;
+-    }
+-
+-    backend_dev->channel = ibv_create_comp_channel(backend_dev->context);
+-    if (!backend_dev->channel) {
+-        rdma_error_report("Failed to create IB communication channel");
+-        ret = -EIO;
+-        goto out_close_device;
+-    }
+-
+-    ret = init_device_caps(backend_dev, dev_attr);
+-    if (ret) {
+-        rdma_error_report("Failed to initialize device capabilities");
+-        ret = -EIO;
+-        goto out_destroy_comm_channel;
+-    }
+-
+-
+-    ret = mad_init(backend_dev, mad_chr_be);
+-    if (ret) {
+-        rdma_error_report("Failed to initialize mad");
+-        ret = -EIO;
+-        goto out_destroy_comm_channel;
+-    }
+-
+-    backend_dev->comp_thread.run = false;
+-    backend_dev->comp_thread.is_running = false;
+-
+-    ah_cache_init();
+-
+-    goto out_free_dev_list;
+-
+-out_destroy_comm_channel:
+-    ibv_destroy_comp_channel(backend_dev->channel);
+-
+-out_close_device:
+-    ibv_close_device(backend_dev->context);
+-
+-out_free_dev_list:
+-    ibv_free_device_list(dev_list);
+-
+-out:
+-    return ret;
+-}
+-
+-
+-void rdma_backend_start(RdmaBackendDev *backend_dev)
+-{
+-    start_comp_thread(backend_dev);
+-}
+-
+-void rdma_backend_stop(RdmaBackendDev *backend_dev)
+-{
+-    mad_stop(backend_dev);
+-    stop_backend_thread(&backend_dev->comp_thread);
+-}
+-
+-void rdma_backend_fini(RdmaBackendDev *backend_dev)
+-{
+-    mad_fini(backend_dev);
+-    g_hash_table_destroy(ah_hash);
+-    ibv_destroy_comp_channel(backend_dev->channel);
+-    ibv_close_device(backend_dev->context);
+-}
+diff --git a/hw/rdma/rdma_rm.c b/hw/rdma/rdma_rm.c
+deleted file mode 100644
+index 038d564433..0000000000
+--- a/hw/rdma/rdma_rm.c
++++ /dev/null
+@@ -1,812 +0,0 @@
+-/*
+- * QEMU paravirtual RDMA - Resource Manager Implementation
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qapi/error.h"
+-#include "cpu.h"
+-#include "monitor/monitor.h"
+-
+-#include "trace.h"
+-#include "rdma_utils.h"
+-#include "rdma_backend.h"
+-#include "rdma_rm.h"
+-
+-void rdma_format_device_counters(RdmaDeviceResources *dev_res, GString *buf)
+-{
+-    g_string_append_printf(buf, "\ttx               : %" PRId64 "\n",
+-                           dev_res->stats.tx);
+-    g_string_append_printf(buf, "\ttx_len           : %" PRId64 "\n",
+-                           dev_res->stats.tx_len);
+-    g_string_append_printf(buf, "\ttx_err           : %" PRId64 "\n",
+-                           dev_res->stats.tx_err);
+-    g_string_append_printf(buf, "\trx_bufs          : %" PRId64 "\n",
+-                           dev_res->stats.rx_bufs);
+-    g_string_append_printf(buf, "\trx_srq           : %" PRId64 "\n",
+-                           dev_res->stats.rx_srq);
+-    g_string_append_printf(buf, "\trx_bufs_len      : %" PRId64 "\n",
+-                           dev_res->stats.rx_bufs_len);
+-    g_string_append_printf(buf, "\trx_bufs_err      : %" PRId64 "\n",
+-                           dev_res->stats.rx_bufs_err);
+-    g_string_append_printf(buf, "\tcomps            : %" PRId64 "\n",
+-                           dev_res->stats.completions);
+-    g_string_append_printf(buf, "\tmissing_comps    : %" PRId32 "\n",
+-                           dev_res->stats.missing_cqe);
+-    g_string_append_printf(buf, "\tpoll_cq (bk)     : %" PRId64 "\n",
+-                           dev_res->stats.poll_cq_from_bk);
+-    g_string_append_printf(buf, "\tpoll_cq_ppoll_to : %" PRId64 "\n",
+-                           dev_res->stats.poll_cq_ppoll_to);
+-    g_string_append_printf(buf, "\tpoll_cq (fe)     : %" PRId64 "\n",
+-                           dev_res->stats.poll_cq_from_guest);
+-    g_string_append_printf(buf, "\tpoll_cq_empty    : %" PRId64 "\n",
+-                           dev_res->stats.poll_cq_from_guest_empty);
+-    g_string_append_printf(buf, "\tmad_tx           : %" PRId64 "\n",
+-                           dev_res->stats.mad_tx);
+-    g_string_append_printf(buf, "\tmad_tx_err       : %" PRId64 "\n",
+-                           dev_res->stats.mad_tx_err);
+-    g_string_append_printf(buf, "\tmad_rx           : %" PRId64 "\n",
+-                           dev_res->stats.mad_rx);
+-    g_string_append_printf(buf, "\tmad_rx_err       : %" PRId64 "\n",
+-                           dev_res->stats.mad_rx_err);
+-    g_string_append_printf(buf, "\tmad_rx_bufs      : %" PRId64 "\n",
+-                           dev_res->stats.mad_rx_bufs);
+-    g_string_append_printf(buf, "\tmad_rx_bufs_err  : %" PRId64 "\n",
+-                           dev_res->stats.mad_rx_bufs_err);
+-    g_string_append_printf(buf, "\tPDs              : %" PRId32 "\n",
+-                           dev_res->pd_tbl.used);
+-    g_string_append_printf(buf, "\tMRs              : %" PRId32 "\n",
+-                           dev_res->mr_tbl.used);
+-    g_string_append_printf(buf, "\tUCs              : %" PRId32 "\n",
+-                           dev_res->uc_tbl.used);
+-    g_string_append_printf(buf, "\tQPs              : %" PRId32 "\n",
+-                           dev_res->qp_tbl.used);
+-    g_string_append_printf(buf, "\tCQs              : %" PRId32 "\n",
+-                           dev_res->cq_tbl.used);
+-    g_string_append_printf(buf, "\tCEQ_CTXs         : %" PRId32 "\n",
+-                           dev_res->cqe_ctx_tbl.used);
+-}
+-
+-static inline void res_tbl_init(const char *name, RdmaRmResTbl *tbl,
+-                                uint32_t tbl_sz, uint32_t res_sz)
+-{
+-    tbl->tbl = g_malloc(tbl_sz * res_sz);
+-
+-    strncpy(tbl->name, name, MAX_RM_TBL_NAME);
+-    tbl->name[MAX_RM_TBL_NAME - 1] = 0;
+-
+-    tbl->bitmap = bitmap_new(tbl_sz);
+-    tbl->tbl_sz = tbl_sz;
+-    tbl->res_sz = res_sz;
+-    tbl->used = 0;
+-    qemu_mutex_init(&tbl->lock);
+-}
+-
+-static inline void res_tbl_free(RdmaRmResTbl *tbl)
+-{
+-    if (!tbl->bitmap) {
+-        return;
+-    }
+-    qemu_mutex_destroy(&tbl->lock);
+-    g_free(tbl->tbl);
+-    g_free(tbl->bitmap);
+-}
+-
+-static inline void *rdma_res_tbl_get(RdmaRmResTbl *tbl, uint32_t handle)
+-{
+-    trace_rdma_res_tbl_get(tbl->name, handle);
+-
+-    if ((handle < tbl->tbl_sz) && (test_bit(handle, tbl->bitmap))) {
+-        return tbl->tbl + handle * tbl->res_sz;
+-    } else {
+-        rdma_error_report("Table %s, invalid handle %d", tbl->name, handle);
+-        return NULL;
+-    }
+-}
+-
+-static inline void *rdma_res_tbl_alloc(RdmaRmResTbl *tbl, uint32_t *handle)
+-{
+-    qemu_mutex_lock(&tbl->lock);
+-
+-    *handle = find_first_zero_bit(tbl->bitmap, tbl->tbl_sz);
+-    if (*handle > tbl->tbl_sz) {
+-        rdma_error_report("Table %s, failed to allocate, bitmap is full",
+-                          tbl->name);
+-        qemu_mutex_unlock(&tbl->lock);
+-        return NULL;
+-    }
+-
+-    set_bit(*handle, tbl->bitmap);
+-
+-    tbl->used++;
+-
+-    qemu_mutex_unlock(&tbl->lock);
+-
+-    memset(tbl->tbl + *handle * tbl->res_sz, 0, tbl->res_sz);
+-
+-    trace_rdma_res_tbl_alloc(tbl->name, *handle);
+-
+-    return tbl->tbl + *handle * tbl->res_sz;
+-}
+-
+-static inline void rdma_res_tbl_dealloc(RdmaRmResTbl *tbl, uint32_t handle)
+-{
+-    trace_rdma_res_tbl_dealloc(tbl->name, handle);
+-
+-    QEMU_LOCK_GUARD(&tbl->lock);
+-
+-    if (handle < tbl->tbl_sz) {
+-        clear_bit(handle, tbl->bitmap);
+-        tbl->used--;
+-    }
+-
+-}
+-
+-int rdma_rm_alloc_pd(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                     uint32_t *pd_handle, uint32_t ctx_handle)
+-{
+-    RdmaRmPD *pd;
+-    int ret = -ENOMEM;
+-
+-    pd = rdma_res_tbl_alloc(&dev_res->pd_tbl, pd_handle);
+-    if (!pd) {
+-        goto out;
+-    }
+-
+-    ret = rdma_backend_create_pd(backend_dev, &pd->backend_pd);
+-    if (ret) {
+-        ret = -EIO;
+-        goto out_tbl_dealloc;
+-    }
+-
+-    pd->ctx_handle = ctx_handle;
+-
+-    return 0;
+-
+-out_tbl_dealloc:
+-    rdma_res_tbl_dealloc(&dev_res->pd_tbl, *pd_handle);
+-
+-out:
+-    return ret;
+-}
+-
+-RdmaRmPD *rdma_rm_get_pd(RdmaDeviceResources *dev_res, uint32_t pd_handle)
+-{
+-    return rdma_res_tbl_get(&dev_res->pd_tbl, pd_handle);
+-}
+-
+-void rdma_rm_dealloc_pd(RdmaDeviceResources *dev_res, uint32_t pd_handle)
+-{
+-    RdmaRmPD *pd = rdma_rm_get_pd(dev_res, pd_handle);
+-
+-    if (pd) {
+-        rdma_backend_destroy_pd(&pd->backend_pd);
+-        rdma_res_tbl_dealloc(&dev_res->pd_tbl, pd_handle);
+-    }
+-}
+-
+-int rdma_rm_alloc_mr(RdmaDeviceResources *dev_res, uint32_t pd_handle,
+-                     uint64_t guest_start, uint64_t guest_length,
+-                     void *host_virt, int access_flags, uint32_t *mr_handle,
+-                     uint32_t *lkey, uint32_t *rkey)
+-{
+-    RdmaRmMR *mr;
+-    int ret = 0;
+-    RdmaRmPD *pd;
+-
+-    pd = rdma_rm_get_pd(dev_res, pd_handle);
+-    if (!pd) {
+-        return -EINVAL;
+-    }
+-
+-    mr = rdma_res_tbl_alloc(&dev_res->mr_tbl, mr_handle);
+-    if (!mr) {
+-        return -ENOMEM;
+-    }
+-    trace_rdma_rm_alloc_mr(*mr_handle, host_virt, guest_start, guest_length,
+-                           access_flags);
+-
+-    if (host_virt) {
+-        mr->virt = host_virt;
+-        mr->start = guest_start;
+-        mr->length = guest_length;
+-        mr->virt += (mr->start & (TARGET_PAGE_SIZE - 1));
+-
+-        ret = rdma_backend_create_mr(&mr->backend_mr, &pd->backend_pd, mr->virt,
+-                                     mr->length, guest_start, access_flags);
+-        if (ret) {
+-            ret = -EIO;
+-            goto out_dealloc_mr;
+-        }
+-#ifdef LEGACY_RDMA_REG_MR
+-        /* We keep mr_handle in lkey so send and recv get get mr ptr */
+-        *lkey = *mr_handle;
+-#else
+-        *lkey = rdma_backend_mr_lkey(&mr->backend_mr);
+-#endif
+-    }
+-
+-    *rkey = -1;
+-
+-    mr->pd_handle = pd_handle;
+-
+-    return 0;
+-
+-out_dealloc_mr:
+-    rdma_res_tbl_dealloc(&dev_res->mr_tbl, *mr_handle);
+-
+-    return ret;
+-}
+-
+-RdmaRmMR *rdma_rm_get_mr(RdmaDeviceResources *dev_res, uint32_t mr_handle)
+-{
+-    return rdma_res_tbl_get(&dev_res->mr_tbl, mr_handle);
+-}
+-
+-void rdma_rm_dealloc_mr(RdmaDeviceResources *dev_res, uint32_t mr_handle)
+-{
+-    RdmaRmMR *mr = rdma_rm_get_mr(dev_res, mr_handle);
+-
+-    if (mr) {
+-        rdma_backend_destroy_mr(&mr->backend_mr);
+-        trace_rdma_rm_dealloc_mr(mr_handle, mr->start);
+-        if (mr->start) {
+-            mr->virt -= (mr->start & (TARGET_PAGE_SIZE - 1));
+-            munmap(mr->virt, mr->length);
+-        }
+-        rdma_res_tbl_dealloc(&dev_res->mr_tbl, mr_handle);
+-    }
+-}
+-
+-int rdma_rm_alloc_uc(RdmaDeviceResources *dev_res, uint32_t pfn,
+-                     uint32_t *uc_handle)
+-{
+-    RdmaRmUC *uc;
+-
+-    /* TODO: Need to make sure pfn is between bar start address and
+-     * bsd+RDMA_BAR2_UAR_SIZE
+-    if (pfn > RDMA_BAR2_UAR_SIZE) {
+-        rdma_error_report("pfn out of range (%d > %d)", pfn,
+-                          RDMA_BAR2_UAR_SIZE);
+-        return -ENOMEM;
+-    }
+-    */
+-
+-    uc = rdma_res_tbl_alloc(&dev_res->uc_tbl, uc_handle);
+-    if (!uc) {
+-        return -ENOMEM;
+-    }
+-
+-    return 0;
+-}
+-
+-RdmaRmUC *rdma_rm_get_uc(RdmaDeviceResources *dev_res, uint32_t uc_handle)
+-{
+-    return rdma_res_tbl_get(&dev_res->uc_tbl, uc_handle);
+-}
+-
+-void rdma_rm_dealloc_uc(RdmaDeviceResources *dev_res, uint32_t uc_handle)
+-{
+-    RdmaRmUC *uc = rdma_rm_get_uc(dev_res, uc_handle);
+-
+-    if (uc) {
+-        rdma_res_tbl_dealloc(&dev_res->uc_tbl, uc_handle);
+-    }
+-}
+-
+-RdmaRmCQ *rdma_rm_get_cq(RdmaDeviceResources *dev_res, uint32_t cq_handle)
+-{
+-    return rdma_res_tbl_get(&dev_res->cq_tbl, cq_handle);
+-}
+-
+-int rdma_rm_alloc_cq(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                     uint32_t cqe, uint32_t *cq_handle, void *opaque)
+-{
+-    int rc;
+-    RdmaRmCQ *cq;
+-
+-    cq = rdma_res_tbl_alloc(&dev_res->cq_tbl, cq_handle);
+-    if (!cq) {
+-        return -ENOMEM;
+-    }
+-
+-    cq->opaque = opaque;
+-    cq->notify = CNT_CLEAR;
+-
+-    rc = rdma_backend_create_cq(backend_dev, &cq->backend_cq, cqe);
+-    if (rc) {
+-        rc = -EIO;
+-        goto out_dealloc_cq;
+-    }
+-
+-    return 0;
+-
+-out_dealloc_cq:
+-    rdma_rm_dealloc_cq(dev_res, *cq_handle);
+-
+-    return rc;
+-}
+-
+-void rdma_rm_req_notify_cq(RdmaDeviceResources *dev_res, uint32_t cq_handle,
+-                           bool notify)
+-{
+-    RdmaRmCQ *cq;
+-
+-    cq = rdma_rm_get_cq(dev_res, cq_handle);
+-    if (!cq) {
+-        return;
+-    }
+-
+-    if (cq->notify != CNT_SET) {
+-        cq->notify = notify ? CNT_ARM : CNT_CLEAR;
+-    }
+-}
+-
+-void rdma_rm_dealloc_cq(RdmaDeviceResources *dev_res, uint32_t cq_handle)
+-{
+-    RdmaRmCQ *cq;
+-
+-    cq = rdma_rm_get_cq(dev_res, cq_handle);
+-    if (!cq) {
+-        return;
+-    }
+-
+-    rdma_backend_destroy_cq(&cq->backend_cq);
+-
+-    rdma_res_tbl_dealloc(&dev_res->cq_tbl, cq_handle);
+-}
+-
+-RdmaRmQP *rdma_rm_get_qp(RdmaDeviceResources *dev_res, uint32_t qpn)
+-{
+-    GBytes *key = g_bytes_new(&qpn, sizeof(qpn));
+-
+-    RdmaRmQP *qp = g_hash_table_lookup(dev_res->qp_hash, key);
+-
+-    g_bytes_unref(key);
+-
+-    if (!qp) {
+-        rdma_error_report("Invalid QP handle %d", qpn);
+-    }
+-
+-    return qp;
+-}
+-
+-int rdma_rm_alloc_qp(RdmaDeviceResources *dev_res, uint32_t pd_handle,
+-                     uint8_t qp_type, uint32_t max_send_wr,
+-                     uint32_t max_send_sge, uint32_t send_cq_handle,
+-                     uint32_t max_recv_wr, uint32_t max_recv_sge,
+-                     uint32_t recv_cq_handle, void *opaque, uint32_t *qpn,
+-                     uint8_t is_srq, uint32_t srq_handle)
+-{
+-    int rc;
+-    RdmaRmQP *qp;
+-    RdmaRmCQ *scq, *rcq;
+-    RdmaRmPD *pd;
+-    RdmaRmSRQ *srq = NULL;
+-    uint32_t rm_qpn;
+-
+-    pd = rdma_rm_get_pd(dev_res, pd_handle);
+-    if (!pd) {
+-        return -EINVAL;
+-    }
+-
+-    scq = rdma_rm_get_cq(dev_res, send_cq_handle);
+-    rcq = rdma_rm_get_cq(dev_res, recv_cq_handle);
+-
+-    if (!scq || !rcq) {
+-        rdma_error_report("Invalid send_cqn or recv_cqn (%d, %d)",
+-                          send_cq_handle, recv_cq_handle);
+-        return -EINVAL;
+-    }
+-
+-    if (is_srq) {
+-        srq = rdma_rm_get_srq(dev_res, srq_handle);
+-        if (!srq) {
+-            rdma_error_report("Invalid srqn %d", srq_handle);
+-            return -EINVAL;
+-        }
+-
+-        srq->recv_cq_handle = recv_cq_handle;
+-    }
+-
+-    if (qp_type == IBV_QPT_GSI) {
+-        scq->notify = CNT_SET;
+-        rcq->notify = CNT_SET;
+-    }
+-
+-    qp = rdma_res_tbl_alloc(&dev_res->qp_tbl, &rm_qpn);
+-    if (!qp) {
+-        return -ENOMEM;
+-    }
+-
+-    qp->qpn = rm_qpn;
+-    qp->qp_state = IBV_QPS_RESET;
+-    qp->qp_type = qp_type;
+-    qp->send_cq_handle = send_cq_handle;
+-    qp->recv_cq_handle = recv_cq_handle;
+-    qp->opaque = opaque;
+-    qp->is_srq = is_srq;
+-
+-    rc = rdma_backend_create_qp(&qp->backend_qp, qp_type, &pd->backend_pd,
+-                                &scq->backend_cq, &rcq->backend_cq,
+-                                is_srq ? &srq->backend_srq : NULL,
+-                                max_send_wr, max_recv_wr, max_send_sge,
+-                                max_recv_sge);
+-
+-    if (rc) {
+-        rc = -EIO;
+-        goto out_dealloc_qp;
+-    }
+-
+-    *qpn = rdma_backend_qpn(&qp->backend_qp);
+-    trace_rdma_rm_alloc_qp(rm_qpn, *qpn, qp_type);
+-    g_hash_table_insert(dev_res->qp_hash, g_bytes_new(qpn, sizeof(*qpn)), qp);
+-
+-    return 0;
+-
+-out_dealloc_qp:
+-    rdma_res_tbl_dealloc(&dev_res->qp_tbl, qp->qpn);
+-
+-    return rc;
+-}
+-
+-int rdma_rm_modify_qp(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                      uint32_t qp_handle, uint32_t attr_mask, uint8_t sgid_idx,
+-                      union ibv_gid *dgid, uint32_t dqpn,
+-                      enum ibv_qp_state qp_state, uint32_t qkey,
+-                      uint32_t rq_psn, uint32_t sq_psn)
+-{
+-    RdmaRmQP *qp;
+-    int ret;
+-
+-    qp = rdma_rm_get_qp(dev_res, qp_handle);
+-    if (!qp) {
+-        return -EINVAL;
+-    }
+-
+-    if (qp->qp_type == IBV_QPT_SMI) {
+-        rdma_error_report("Got QP0 request");
+-        return -EPERM;
+-    } else if (qp->qp_type == IBV_QPT_GSI) {
+-        return 0;
+-    }
+-
+-    trace_rdma_rm_modify_qp(qp_handle, attr_mask, qp_state, sgid_idx);
+-
+-    if (attr_mask & IBV_QP_STATE) {
+-        qp->qp_state = qp_state;
+-
+-        if (qp->qp_state == IBV_QPS_INIT) {
+-            ret = rdma_backend_qp_state_init(backend_dev, &qp->backend_qp,
+-                                             qp->qp_type, qkey);
+-            if (ret) {
+-                return -EIO;
+-            }
+-        }
+-
+-        if (qp->qp_state == IBV_QPS_RTR) {
+-            /* Get backend gid index */
+-            sgid_idx = rdma_rm_get_backend_gid_index(dev_res, backend_dev,
+-                                                     sgid_idx);
+-            if (sgid_idx <= 0) { /* TODO check also less than bk.max_sgid */
+-                rdma_error_report("Failed to get bk sgid_idx for sgid_idx %d",
+-                                  sgid_idx);
+-                return -EIO;
+-            }
+-
+-            ret = rdma_backend_qp_state_rtr(backend_dev, &qp->backend_qp,
+-                                            qp->qp_type, sgid_idx, dgid, dqpn,
+-                                            rq_psn, qkey,
+-                                            attr_mask & IBV_QP_QKEY);
+-            if (ret) {
+-                return -EIO;
+-            }
+-        }
+-
+-        if (qp->qp_state == IBV_QPS_RTS) {
+-            ret = rdma_backend_qp_state_rts(&qp->backend_qp, qp->qp_type,
+-                                            sq_psn, qkey,
+-                                            attr_mask & IBV_QP_QKEY);
+-            if (ret) {
+-                return -EIO;
+-            }
+-        }
+-    }
+-
+-    return 0;
+-}
+-
+-int rdma_rm_query_qp(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                     uint32_t qp_handle, struct ibv_qp_attr *attr,
+-                     int attr_mask, struct ibv_qp_init_attr *init_attr)
+-{
+-    RdmaRmQP *qp;
+-
+-    qp = rdma_rm_get_qp(dev_res, qp_handle);
+-    if (!qp) {
+-        return -EINVAL;
+-    }
+-
+-    return rdma_backend_query_qp(&qp->backend_qp, attr, attr_mask, init_attr);
+-}
+-
+-void rdma_rm_dealloc_qp(RdmaDeviceResources *dev_res, uint32_t qp_handle)
+-{
+-    RdmaRmQP *qp;
+-    GBytes *key;
+-
+-    key = g_bytes_new(&qp_handle, sizeof(qp_handle));
+-    qp = g_hash_table_lookup(dev_res->qp_hash, key);
+-    g_hash_table_remove(dev_res->qp_hash, key);
+-    g_bytes_unref(key);
+-
+-    if (!qp) {
+-        return;
+-    }
+-
+-    rdma_backend_destroy_qp(&qp->backend_qp, dev_res);
+-
+-    rdma_res_tbl_dealloc(&dev_res->qp_tbl, qp->qpn);
+-}
+-
+-RdmaRmSRQ *rdma_rm_get_srq(RdmaDeviceResources *dev_res, uint32_t srq_handle)
+-{
+-    return rdma_res_tbl_get(&dev_res->srq_tbl, srq_handle);
+-}
+-
+-int rdma_rm_alloc_srq(RdmaDeviceResources *dev_res, uint32_t pd_handle,
+-                      uint32_t max_wr, uint32_t max_sge, uint32_t srq_limit,
+-                      uint32_t *srq_handle, void *opaque)
+-{
+-    RdmaRmSRQ *srq;
+-    RdmaRmPD *pd;
+-    int rc;
+-
+-    pd = rdma_rm_get_pd(dev_res, pd_handle);
+-    if (!pd) {
+-        return -EINVAL;
+-    }
+-
+-    srq = rdma_res_tbl_alloc(&dev_res->srq_tbl, srq_handle);
+-    if (!srq) {
+-        return -ENOMEM;
+-    }
+-
+-    rc = rdma_backend_create_srq(&srq->backend_srq, &pd->backend_pd,
+-                                 max_wr, max_sge, srq_limit);
+-    if (rc) {
+-        rc = -EIO;
+-        goto out_dealloc_srq;
+-    }
+-
+-    srq->opaque = opaque;
+-
+-    return 0;
+-
+-out_dealloc_srq:
+-    rdma_res_tbl_dealloc(&dev_res->srq_tbl, *srq_handle);
+-
+-    return rc;
+-}
+-
+-int rdma_rm_query_srq(RdmaDeviceResources *dev_res, uint32_t srq_handle,
+-                      struct ibv_srq_attr *srq_attr)
+-{
+-    RdmaRmSRQ *srq;
+-
+-    srq = rdma_rm_get_srq(dev_res, srq_handle);
+-    if (!srq) {
+-        return -EINVAL;
+-    }
+-
+-    return rdma_backend_query_srq(&srq->backend_srq, srq_attr);
+-}
+-
+-int rdma_rm_modify_srq(RdmaDeviceResources *dev_res, uint32_t srq_handle,
+-                       struct ibv_srq_attr *srq_attr, int srq_attr_mask)
+-{
+-    RdmaRmSRQ *srq;
+-
+-    srq = rdma_rm_get_srq(dev_res, srq_handle);
+-    if (!srq) {
+-        return -EINVAL;
+-    }
+-
+-    if ((srq_attr_mask & IBV_SRQ_LIMIT) &&
+-        (srq_attr->srq_limit == 0)) {
+-        return -EINVAL;
+-    }
+-
+-    if ((srq_attr_mask & IBV_SRQ_MAX_WR) &&
+-        (srq_attr->max_wr == 0)) {
+-        return -EINVAL;
+-    }
+-
+-    return rdma_backend_modify_srq(&srq->backend_srq, srq_attr,
+-                                   srq_attr_mask);
+-}
+-
+-void rdma_rm_dealloc_srq(RdmaDeviceResources *dev_res, uint32_t srq_handle)
+-{
+-    RdmaRmSRQ *srq;
+-
+-    srq = rdma_rm_get_srq(dev_res, srq_handle);
+-    if (!srq) {
+-        return;
+-    }
+-
+-    rdma_backend_destroy_srq(&srq->backend_srq, dev_res);
+-    rdma_res_tbl_dealloc(&dev_res->srq_tbl, srq_handle);
+-}
+-
+-void *rdma_rm_get_cqe_ctx(RdmaDeviceResources *dev_res, uint32_t cqe_ctx_id)
+-{
+-    void **cqe_ctx;
+-
+-    cqe_ctx = rdma_res_tbl_get(&dev_res->cqe_ctx_tbl, cqe_ctx_id);
+-    if (!cqe_ctx) {
+-        return NULL;
+-    }
+-
+-    return *cqe_ctx;
+-}
+-
+-int rdma_rm_alloc_cqe_ctx(RdmaDeviceResources *dev_res, uint32_t *cqe_ctx_id,
+-                          void *ctx)
+-{
+-    void **cqe_ctx;
+-
+-    cqe_ctx = rdma_res_tbl_alloc(&dev_res->cqe_ctx_tbl, cqe_ctx_id);
+-    if (!cqe_ctx) {
+-        return -ENOMEM;
+-    }
+-
+-    *cqe_ctx = ctx;
+-
+-    return 0;
+-}
+-
+-void rdma_rm_dealloc_cqe_ctx(RdmaDeviceResources *dev_res, uint32_t cqe_ctx_id)
+-{
+-    rdma_res_tbl_dealloc(&dev_res->cqe_ctx_tbl, cqe_ctx_id);
+-}
+-
+-int rdma_rm_add_gid(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                    const char *ifname, union ibv_gid *gid, int gid_idx)
+-{
+-    int rc;
+-
+-    rc = rdma_backend_add_gid(backend_dev, ifname, gid);
+-    if (rc) {
+-        return -EINVAL;
+-    }
+-
+-    memcpy(&dev_res->port.gid_tbl[gid_idx].gid, gid, sizeof(*gid));
+-
+-    return 0;
+-}
+-
+-int rdma_rm_del_gid(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                    const char *ifname, int gid_idx)
+-{
+-    int rc;
+-
+-    if (!dev_res->port.gid_tbl[gid_idx].gid.global.interface_id) {
+-        return 0;
+-    }
+-
+-    rc = rdma_backend_del_gid(backend_dev, ifname,
+-                              &dev_res->port.gid_tbl[gid_idx].gid);
+-    if (rc) {
+-        return -EINVAL;
+-    }
+-
+-    memset(dev_res->port.gid_tbl[gid_idx].gid.raw, 0,
+-           sizeof(dev_res->port.gid_tbl[gid_idx].gid));
+-    dev_res->port.gid_tbl[gid_idx].backend_gid_index = -1;
+-
+-    return 0;
+-}
+-
+-int rdma_rm_get_backend_gid_index(RdmaDeviceResources *dev_res,
+-                                  RdmaBackendDev *backend_dev, int sgid_idx)
+-{
+-    if (unlikely(sgid_idx < 0 || sgid_idx >= MAX_PORT_GIDS)) {
+-        rdma_error_report("Got invalid sgid_idx %d", sgid_idx);
+-        return -EINVAL;
+-    }
+-
+-    if (unlikely(dev_res->port.gid_tbl[sgid_idx].backend_gid_index == -1)) {
+-        dev_res->port.gid_tbl[sgid_idx].backend_gid_index =
+-        rdma_backend_get_gid_index(backend_dev,
+-                                   &dev_res->port.gid_tbl[sgid_idx].gid);
+-    }
+-
+-    return dev_res->port.gid_tbl[sgid_idx].backend_gid_index;
+-}
+-
+-static void destroy_qp_hash_key(gpointer data)
+-{
+-    g_bytes_unref(data);
+-}
+-
+-static void init_ports(RdmaDeviceResources *dev_res)
+-{
+-    int i;
+-
+-    memset(&dev_res->port, 0, sizeof(dev_res->port));
+-
+-    dev_res->port.state = IBV_PORT_DOWN;
+-    for (i = 0; i < MAX_PORT_GIDS; i++) {
+-        dev_res->port.gid_tbl[i].backend_gid_index = -1;
+-    }
+-}
+-
+-static void fini_ports(RdmaDeviceResources *dev_res,
+-                       RdmaBackendDev *backend_dev, const char *ifname)
+-{
+-    int i;
+-
+-    dev_res->port.state = IBV_PORT_DOWN;
+-    for (i = 0; i < MAX_PORT_GIDS; i++) {
+-        rdma_rm_del_gid(dev_res, backend_dev, ifname, i);
+-    }
+-}
+-
+-int rdma_rm_init(RdmaDeviceResources *dev_res, struct ibv_device_attr *dev_attr)
+-{
+-    dev_res->qp_hash = g_hash_table_new_full(g_bytes_hash, g_bytes_equal,
+-                                             destroy_qp_hash_key, NULL);
+-    if (!dev_res->qp_hash) {
+-        return -ENOMEM;
+-    }
+-
+-    res_tbl_init("PD", &dev_res->pd_tbl, dev_attr->max_pd, sizeof(RdmaRmPD));
+-    res_tbl_init("CQ", &dev_res->cq_tbl, dev_attr->max_cq, sizeof(RdmaRmCQ));
+-    res_tbl_init("MR", &dev_res->mr_tbl, dev_attr->max_mr, sizeof(RdmaRmMR));
+-    res_tbl_init("QP", &dev_res->qp_tbl, dev_attr->max_qp, sizeof(RdmaRmQP));
+-    res_tbl_init("CQE_CTX", &dev_res->cqe_ctx_tbl, dev_attr->max_qp *
+-                       dev_attr->max_qp_wr, sizeof(void *));
+-    res_tbl_init("UC", &dev_res->uc_tbl, MAX_UCS, sizeof(RdmaRmUC));
+-    res_tbl_init("SRQ", &dev_res->srq_tbl, dev_attr->max_srq,
+-                 sizeof(RdmaRmSRQ));
+-
+-    init_ports(dev_res);
+-
+-    qemu_mutex_init(&dev_res->lock);
+-
+-    memset(&dev_res->stats, 0, sizeof(dev_res->stats));
+-    qatomic_set(&dev_res->stats.missing_cqe, 0);
+-
+-    return 0;
+-}
+-
+-void rdma_rm_fini(RdmaDeviceResources *dev_res, RdmaBackendDev *backend_dev,
+-                  const char *ifname)
+-{
+-    qemu_mutex_destroy(&dev_res->lock);
+-
+-    fini_ports(dev_res, backend_dev, ifname);
+-
+-    res_tbl_free(&dev_res->srq_tbl);
+-    res_tbl_free(&dev_res->uc_tbl);
+-    res_tbl_free(&dev_res->cqe_ctx_tbl);
+-    res_tbl_free(&dev_res->qp_tbl);
+-    res_tbl_free(&dev_res->mr_tbl);
+-    res_tbl_free(&dev_res->cq_tbl);
+-    res_tbl_free(&dev_res->pd_tbl);
+-
+-    if (dev_res->qp_hash) {
+-        g_hash_table_destroy(dev_res->qp_hash);
+-    }
+-}
+diff --git a/hw/rdma/rdma_utils.c b/hw/rdma/rdma_utils.c
+deleted file mode 100644
+index c948baf052..0000000000
+--- a/hw/rdma/rdma_utils.c
++++ /dev/null
+@@ -1,126 +0,0 @@
+-/*
+- * QEMU paravirtual RDMA - Generic RDMA backend
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#include "qemu/osdep.h"
+-#include "hw/pci/pci_device.h"
+-#include "trace.h"
+-#include "rdma_utils.h"
+-
+-void *rdma_pci_dma_map(PCIDevice *dev, dma_addr_t addr, dma_addr_t len)
+-{
+-    void *p;
+-    dma_addr_t pci_len = len;
+-
+-    if (!addr) {
+-        rdma_error_report("addr is NULL");
+-        return NULL;
+-    }
+-
+-    p = pci_dma_map(dev, addr, &pci_len, DMA_DIRECTION_TO_DEVICE);
+-    if (!p) {
+-        rdma_error_report("pci_dma_map fail, addr=0x%"PRIx64", len=%"PRId64,
+-                          addr, pci_len);
+-        return NULL;
+-    }
+-
+-    if (pci_len != len) {
+-        rdma_pci_dma_unmap(dev, p, pci_len);
+-        return NULL;
+-    }
+-
+-    trace_rdma_pci_dma_map(addr, p, pci_len);
+-
+-    return p;
+-}
+-
+-void rdma_pci_dma_unmap(PCIDevice *dev, void *buffer, dma_addr_t len)
+-{
+-    trace_rdma_pci_dma_unmap(buffer);
+-    if (buffer) {
+-        pci_dma_unmap(dev, buffer, len, DMA_DIRECTION_TO_DEVICE, 0);
+-    }
+-}
+-
+-void rdma_protected_gqueue_init(RdmaProtectedGQueue *list)
+-{
+-    qemu_mutex_init(&list->lock);
+-    list->list = g_queue_new();
+-}
+-
+-void rdma_protected_gqueue_destroy(RdmaProtectedGQueue *list)
+-{
+-    if (list->list) {
+-        g_queue_free_full(list->list, g_free);
+-        qemu_mutex_destroy(&list->lock);
+-        list->list = NULL;
+-    }
+-}
+-
+-void rdma_protected_gqueue_append_int64(RdmaProtectedGQueue *list,
+-                                        int64_t value)
+-{
+-    qemu_mutex_lock(&list->lock);
+-    g_queue_push_tail(list->list, g_memdup(&value, sizeof(value)));
+-    qemu_mutex_unlock(&list->lock);
+-}
+-
+-int64_t rdma_protected_gqueue_pop_int64(RdmaProtectedGQueue *list)
+-{
+-    int64_t *valp;
+-    int64_t val;
+-
+-    qemu_mutex_lock(&list->lock);
+-
+-    valp = g_queue_pop_head(list->list);
+-    qemu_mutex_unlock(&list->lock);
+-
+-    if (!valp) {
+-        return -ENOENT;
+-    }
+-
+-    val = *valp;
+-    g_free(valp);
+-    return val;
+-}
+-
+-void rdma_protected_gslist_init(RdmaProtectedGSList *list)
+-{
+-    qemu_mutex_init(&list->lock);
+-}
+-
+-void rdma_protected_gslist_destroy(RdmaProtectedGSList *list)
+-{
+-    if (list->list) {
+-        g_slist_free(list->list);
+-        qemu_mutex_destroy(&list->lock);
+-        list->list = NULL;
+-    }
+-}
+-
+-void rdma_protected_gslist_append_int32(RdmaProtectedGSList *list,
+-                                        int32_t value)
+-{
+-    qemu_mutex_lock(&list->lock);
+-    list->list = g_slist_prepend(list->list, GINT_TO_POINTER(value));
+-    qemu_mutex_unlock(&list->lock);
+-}
+-
+-void rdma_protected_gslist_remove_int32(RdmaProtectedGSList *list,
+-                                        int32_t value)
+-{
+-    qemu_mutex_lock(&list->lock);
+-    list->list = g_slist_remove(list->list, GINT_TO_POINTER(value));
+-    qemu_mutex_unlock(&list->lock);
+-}
+diff --git a/hw/rdma/vmw/pvrdma_cmd.c b/hw/rdma/vmw/pvrdma_cmd.c
+deleted file mode 100644
+index d385d18d9c..0000000000
+--- a/hw/rdma/vmw/pvrdma_cmd.c
++++ /dev/null
+@@ -1,815 +0,0 @@
+-/*
+- * QEMU paravirtual RDMA - Command channel
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#include "qemu/osdep.h"
+-#include "cpu.h"
+-#include "hw/pci/pci.h"
+-#include "hw/pci/pci_ids.h"
+-
+-#include "../rdma_backend.h"
+-#include "../rdma_rm.h"
+-#include "../rdma_utils.h"
+-
+-#include "trace.h"
+-#include "pvrdma.h"
+-#include "standard-headers/rdma/vmw_pvrdma-abi.h"
+-
+-static void *pvrdma_map_to_pdir(PCIDevice *pdev, uint64_t pdir_dma,
+-                                uint32_t nchunks, size_t length)
+-{
+-    uint64_t *dir, *tbl;
+-    int tbl_idx, dir_idx, addr_idx;
+-    void *host_virt = NULL, *curr_page;
+-
+-    if (!nchunks) {
+-        rdma_error_report("Got nchunks=0");
+-        return NULL;
+-    }
+-
+-    length = ROUND_UP(length, TARGET_PAGE_SIZE);
+-    if (nchunks * TARGET_PAGE_SIZE != length) {
+-        rdma_error_report("Invalid nchunks/length (%u, %lu)", nchunks,
+-                          (unsigned long)length);
+-        return NULL;
+-    }
+-
+-    dir = rdma_pci_dma_map(pdev, pdir_dma, TARGET_PAGE_SIZE);
+-    if (!dir) {
+-        rdma_error_report("Failed to map to page directory");
+-        return NULL;
+-    }
+-
+-    tbl = rdma_pci_dma_map(pdev, dir[0], TARGET_PAGE_SIZE);
+-    if (!tbl) {
+-        rdma_error_report("Failed to map to page table 0");
+-        goto out_unmap_dir;
+-    }
+-
+-    curr_page = rdma_pci_dma_map(pdev, (dma_addr_t)tbl[0], TARGET_PAGE_SIZE);
+-    if (!curr_page) {
+-        rdma_error_report("Failed to map the page 0");
+-        goto out_unmap_tbl;
+-    }
+-
+-    host_virt = mremap(curr_page, 0, length, MREMAP_MAYMOVE);
+-    if (host_virt == MAP_FAILED) {
+-        host_virt = NULL;
+-        rdma_error_report("Failed to remap memory for host_virt");
+-        goto out_unmap_tbl;
+-    }
+-    trace_pvrdma_map_to_pdir_host_virt(curr_page, host_virt);
+-
+-    rdma_pci_dma_unmap(pdev, curr_page, TARGET_PAGE_SIZE);
+-
+-    dir_idx = 0;
+-    tbl_idx = 1;
+-    addr_idx = 1;
+-    while (addr_idx < nchunks) {
+-        if (tbl_idx == TARGET_PAGE_SIZE / sizeof(uint64_t)) {
+-            tbl_idx = 0;
+-            dir_idx++;
+-            rdma_pci_dma_unmap(pdev, tbl, TARGET_PAGE_SIZE);
+-            tbl = rdma_pci_dma_map(pdev, dir[dir_idx], TARGET_PAGE_SIZE);
+-            if (!tbl) {
+-                rdma_error_report("Failed to map to page table %d", dir_idx);
+-                goto out_unmap_host_virt;
+-            }
+-        }
+-
+-        curr_page = rdma_pci_dma_map(pdev, (dma_addr_t)tbl[tbl_idx],
+-                                     TARGET_PAGE_SIZE);
+-        if (!curr_page) {
+-            rdma_error_report("Failed to map to page %d, dir %d", tbl_idx,
+-                              dir_idx);
+-            goto out_unmap_host_virt;
+-        }
+-
+-        mremap(curr_page, 0, TARGET_PAGE_SIZE, MREMAP_MAYMOVE | MREMAP_FIXED,
+-               host_virt + TARGET_PAGE_SIZE * addr_idx);
+-
+-        trace_pvrdma_map_to_pdir_next_page(addr_idx, curr_page, host_virt +
+-                                           TARGET_PAGE_SIZE * addr_idx);
+-
+-        rdma_pci_dma_unmap(pdev, curr_page, TARGET_PAGE_SIZE);
+-
+-        addr_idx++;
+-
+-        tbl_idx++;
+-    }
+-
+-    goto out_unmap_tbl;
+-
+-out_unmap_host_virt:
+-    munmap(host_virt, length);
+-    host_virt = NULL;
+-
+-out_unmap_tbl:
+-    rdma_pci_dma_unmap(pdev, tbl, TARGET_PAGE_SIZE);
+-
+-out_unmap_dir:
+-    rdma_pci_dma_unmap(pdev, dir, TARGET_PAGE_SIZE);
+-
+-    return host_virt;
+-}
+-
+-static int query_port(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                      union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_query_port *cmd = &req->query_port;
+-    struct pvrdma_cmd_query_port_resp *resp = &rsp->query_port_resp;
+-    struct ibv_port_attr attrs = {};
+-
+-    if (cmd->port_num > MAX_PORTS) {
+-        return -EINVAL;
+-    }
+-
+-    if (rdma_backend_query_port(&dev->backend_dev, &attrs)) {
+-        return -ENOMEM;
+-    }
+-
+-    memset(resp, 0, sizeof(*resp));
+-
+-    /*
+-     * The state, max_mtu and active_mtu fields are enums; the values
+-     * for pvrdma_port_state and pvrdma_mtu match those for
+-     * ibv_port_state and ibv_mtu, so we can cast them safely.
+-     */
+-    resp->attrs.state = dev->func0->device_active ?
+-        (enum pvrdma_port_state)attrs.state : PVRDMA_PORT_DOWN;
+-    resp->attrs.max_mtu = (enum pvrdma_mtu)attrs.max_mtu;
+-    resp->attrs.active_mtu = (enum pvrdma_mtu)attrs.active_mtu;
+-    resp->attrs.phys_state = attrs.phys_state;
+-    resp->attrs.gid_tbl_len = MIN(MAX_PORT_GIDS, attrs.gid_tbl_len);
+-    resp->attrs.max_msg_sz = 1024;
+-    resp->attrs.pkey_tbl_len = MIN(MAX_PORT_PKEYS, attrs.pkey_tbl_len);
+-    resp->attrs.active_width = 1;
+-    resp->attrs.active_speed = 1;
+-
+-    return 0;
+-}
+-
+-static int query_pkey(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                      union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_query_pkey *cmd = &req->query_pkey;
+-    struct pvrdma_cmd_query_pkey_resp *resp = &rsp->query_pkey_resp;
+-
+-    if (cmd->port_num > MAX_PORTS) {
+-        return -EINVAL;
+-    }
+-
+-    if (cmd->index > MAX_PKEYS) {
+-        return -EINVAL;
+-    }
+-
+-    memset(resp, 0, sizeof(*resp));
+-
+-    resp->pkey = PVRDMA_PKEY;
+-
+-    return 0;
+-}
+-
+-static int create_pd(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                     union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_create_pd *cmd = &req->create_pd;
+-    struct pvrdma_cmd_create_pd_resp *resp = &rsp->create_pd_resp;
+-
+-    memset(resp, 0, sizeof(*resp));
+-    return rdma_rm_alloc_pd(&dev->rdma_dev_res, &dev->backend_dev,
+-                            &resp->pd_handle, cmd->ctx_handle);
+-}
+-
+-static int destroy_pd(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                      union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_destroy_pd *cmd = &req->destroy_pd;
+-
+-    rdma_rm_dealloc_pd(&dev->rdma_dev_res, cmd->pd_handle);
+-
+-    return 0;
+-}
+-
+-static int create_mr(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                     union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_create_mr *cmd = &req->create_mr;
+-    struct pvrdma_cmd_create_mr_resp *resp = &rsp->create_mr_resp;
+-    PCIDevice *pci_dev = PCI_DEVICE(dev);
+-    void *host_virt = NULL;
+-    int rc = 0;
+-
+-    memset(resp, 0, sizeof(*resp));
+-
+-    if (!(cmd->flags & PVRDMA_MR_FLAG_DMA)) {
+-        host_virt = pvrdma_map_to_pdir(pci_dev, cmd->pdir_dma, cmd->nchunks,
+-                                       cmd->length);
+-        if (!host_virt) {
+-            rdma_error_report("Failed to map to pdir");
+-            return -EINVAL;
+-        }
+-    }
+-
+-    rc = rdma_rm_alloc_mr(&dev->rdma_dev_res, cmd->pd_handle, cmd->start,
+-                          cmd->length, host_virt, cmd->access_flags,
+-                          &resp->mr_handle, &resp->lkey, &resp->rkey);
+-    if (rc && host_virt) {
+-        munmap(host_virt, cmd->length);
+-    }
+-
+-    return rc;
+-}
+-
+-static int destroy_mr(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                      union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_destroy_mr *cmd = &req->destroy_mr;
+-
+-    rdma_rm_dealloc_mr(&dev->rdma_dev_res, cmd->mr_handle);
+-
+-    return 0;
+-}
+-
+-static int create_cq_ring(PCIDevice *pci_dev , PvrdmaRing **ring,
+-                          uint64_t pdir_dma, uint32_t nchunks, uint32_t cqe)
+-{
+-    uint64_t *dir = NULL, *tbl = NULL;
+-    PvrdmaRing *r;
+-    int rc = -EINVAL;
+-    char ring_name[MAX_RING_NAME_SZ];
+-
+-    if (!nchunks || nchunks > PVRDMA_MAX_FAST_REG_PAGES) {
+-        rdma_error_report("Got invalid nchunks: %d", nchunks);
+-        return rc;
+-    }
+-
+-    dir = rdma_pci_dma_map(pci_dev, pdir_dma, TARGET_PAGE_SIZE);
+-    if (!dir) {
+-        rdma_error_report("Failed to map to CQ page directory");
+-        goto out;
+-    }
+-
+-    tbl = rdma_pci_dma_map(pci_dev, dir[0], TARGET_PAGE_SIZE);
+-    if (!tbl) {
+-        rdma_error_report("Failed to map to CQ page table");
+-        goto out;
+-    }
+-
+-    r = g_malloc(sizeof(*r));
+-    *ring = r;
+-
+-    r->ring_state = rdma_pci_dma_map(pci_dev, tbl[0], TARGET_PAGE_SIZE);
+-
+-    if (!r->ring_state) {
+-        rdma_error_report("Failed to map to CQ ring state");
+-        goto out_free_ring;
+-    }
+-
+-    sprintf(ring_name, "cq_ring_%" PRIx64, pdir_dma);
+-    rc = pvrdma_ring_init(r, ring_name, pci_dev, &r->ring_state[1],
+-                          cqe, sizeof(struct pvrdma_cqe),
+-                          /* first page is ring state */
+-                          (dma_addr_t *)&tbl[1], nchunks - 1);
+-    if (rc) {
+-        goto out_unmap_ring_state;
+-    }
+-
+-    goto out;
+-
+-out_unmap_ring_state:
+-    /* ring_state was in slot 1, not 0 so need to jump back */
+-    rdma_pci_dma_unmap(pci_dev, --r->ring_state, TARGET_PAGE_SIZE);
+-
+-out_free_ring:
+-    g_free(r);
+-
+-out:
+-    rdma_pci_dma_unmap(pci_dev, tbl, TARGET_PAGE_SIZE);
+-    rdma_pci_dma_unmap(pci_dev, dir, TARGET_PAGE_SIZE);
+-
+-    return rc;
+-}
+-
+-static void destroy_cq_ring(PvrdmaRing *ring)
+-{
+-    pvrdma_ring_free(ring);
+-    /* ring_state was in slot 1, not 0 so need to jump back */
+-    rdma_pci_dma_unmap(ring->dev, --ring->ring_state, TARGET_PAGE_SIZE);
+-    g_free(ring);
+-}
+-
+-static int create_cq(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                     union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_create_cq *cmd = &req->create_cq;
+-    struct pvrdma_cmd_create_cq_resp *resp = &rsp->create_cq_resp;
+-    PvrdmaRing *ring = NULL;
+-    int rc;
+-
+-    memset(resp, 0, sizeof(*resp));
+-
+-    resp->cqe = cmd->cqe;
+-
+-    rc = create_cq_ring(PCI_DEVICE(dev), &ring, cmd->pdir_dma, cmd->nchunks,
+-                        cmd->cqe);
+-    if (rc) {
+-        return rc;
+-    }
+-
+-    rc = rdma_rm_alloc_cq(&dev->rdma_dev_res, &dev->backend_dev, cmd->cqe,
+-                          &resp->cq_handle, ring);
+-    if (rc) {
+-        destroy_cq_ring(ring);
+-    }
+-
+-    resp->cqe = cmd->cqe;
+-
+-    return rc;
+-}
+-
+-static int destroy_cq(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                      union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_destroy_cq *cmd = &req->destroy_cq;
+-    RdmaRmCQ *cq;
+-    PvrdmaRing *ring;
+-
+-    cq = rdma_rm_get_cq(&dev->rdma_dev_res, cmd->cq_handle);
+-    if (!cq) {
+-        rdma_error_report("Got invalid CQ handle");
+-        return -EINVAL;
+-    }
+-
+-    ring = (PvrdmaRing *)cq->opaque;
+-    destroy_cq_ring(ring);
+-
+-    rdma_rm_dealloc_cq(&dev->rdma_dev_res, cmd->cq_handle);
+-
+-    return 0;
+-}
+-
+-static int create_qp_rings(PCIDevice *pci_dev, uint64_t pdir_dma,
+-                           PvrdmaRing **rings, uint32_t scqe, uint32_t smax_sge,
+-                           uint32_t spages, uint32_t rcqe, uint32_t rmax_sge,
+-                           uint32_t rpages, uint8_t is_srq)
+-{
+-    uint64_t *dir = NULL, *tbl = NULL;
+-    PvrdmaRing *sr, *rr;
+-    int rc = -EINVAL;
+-    char ring_name[MAX_RING_NAME_SZ];
+-    uint32_t wqe_sz;
+-
+-    if (!spages || spages > PVRDMA_MAX_FAST_REG_PAGES) {
+-        rdma_error_report("Got invalid send page count for QP ring: %d",
+-                          spages);
+-        return rc;
+-    }
+-
+-    if (!is_srq && (!rpages || rpages > PVRDMA_MAX_FAST_REG_PAGES)) {
+-        rdma_error_report("Got invalid recv page count for QP ring: %d",
+-                          rpages);
+-        return rc;
+-    }
+-
+-    dir = rdma_pci_dma_map(pci_dev, pdir_dma, TARGET_PAGE_SIZE);
+-    if (!dir) {
+-        rdma_error_report("Failed to map to QP page directory");
+-        goto out;
+-    }
+-
+-    tbl = rdma_pci_dma_map(pci_dev, dir[0], TARGET_PAGE_SIZE);
+-    if (!tbl) {
+-        rdma_error_report("Failed to map to QP page table");
+-        goto out;
+-    }
+-
+-    if (!is_srq) {
+-        sr = g_malloc(2 * sizeof(*rr));
+-        rr = &sr[1];
+-    } else {
+-        sr = g_malloc(sizeof(*sr));
+-    }
+-
+-    *rings = sr;
+-
+-    /* Create send ring */
+-    sr->ring_state = rdma_pci_dma_map(pci_dev, tbl[0], TARGET_PAGE_SIZE);
+-    if (!sr->ring_state) {
+-        rdma_error_report("Failed to map to QP ring state");
+-        goto out_free_sr_mem;
+-    }
+-
+-    wqe_sz = pow2ceil(sizeof(struct pvrdma_sq_wqe_hdr) +
+-                      sizeof(struct pvrdma_sge) * smax_sge - 1);
+-
+-    sprintf(ring_name, "qp_sring_%" PRIx64, pdir_dma);
+-    rc = pvrdma_ring_init(sr, ring_name, pci_dev, sr->ring_state,
+-                          scqe, wqe_sz, (dma_addr_t *)&tbl[1], spages);
+-    if (rc) {
+-        goto out_unmap_ring_state;
+-    }
+-
+-    if (!is_srq) {
+-        /* Create recv ring */
+-        rr->ring_state = &sr->ring_state[1];
+-        wqe_sz = pow2ceil(sizeof(struct pvrdma_rq_wqe_hdr) +
+-                          sizeof(struct pvrdma_sge) * rmax_sge - 1);
+-        sprintf(ring_name, "qp_rring_%" PRIx64, pdir_dma);
+-        rc = pvrdma_ring_init(rr, ring_name, pci_dev, rr->ring_state,
+-                              rcqe, wqe_sz, (dma_addr_t *)&tbl[1 + spages],
+-                              rpages);
+-        if (rc) {
+-            goto out_free_sr;
+-        }
+-    }
+-
+-    goto out;
+-
+-out_free_sr:
+-    pvrdma_ring_free(sr);
+-
+-out_unmap_ring_state:
+-    rdma_pci_dma_unmap(pci_dev, sr->ring_state, TARGET_PAGE_SIZE);
+-
+-out_free_sr_mem:
+-    g_free(sr);
+-
+-out:
+-    rdma_pci_dma_unmap(pci_dev, tbl, TARGET_PAGE_SIZE);
+-    rdma_pci_dma_unmap(pci_dev, dir, TARGET_PAGE_SIZE);
+-
+-    return rc;
+-}
+-
+-static void destroy_qp_rings(PvrdmaRing *ring, uint8_t is_srq)
+-{
+-    pvrdma_ring_free(&ring[0]);
+-    if (!is_srq) {
+-        pvrdma_ring_free(&ring[1]);
+-    }
+-
+-    rdma_pci_dma_unmap(ring->dev, ring->ring_state, TARGET_PAGE_SIZE);
+-    g_free(ring);
+-}
+-
+-static int create_qp(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                     union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_create_qp *cmd = &req->create_qp;
+-    struct pvrdma_cmd_create_qp_resp *resp = &rsp->create_qp_resp;
+-    PvrdmaRing *rings = NULL;
+-    int rc;
+-
+-    memset(resp, 0, sizeof(*resp));
+-
+-    rc = create_qp_rings(PCI_DEVICE(dev), cmd->pdir_dma, &rings,
+-                         cmd->max_send_wr, cmd->max_send_sge, cmd->send_chunks,
+-                         cmd->max_recv_wr, cmd->max_recv_sge,
+-                         cmd->total_chunks - cmd->send_chunks - 1, cmd->is_srq);
+-    if (rc) {
+-        return rc;
+-    }
+-
+-    rc = rdma_rm_alloc_qp(&dev->rdma_dev_res, cmd->pd_handle, cmd->qp_type,
+-                          cmd->max_send_wr, cmd->max_send_sge,
+-                          cmd->send_cq_handle, cmd->max_recv_wr,
+-                          cmd->max_recv_sge, cmd->recv_cq_handle, rings,
+-                          &resp->qpn, cmd->is_srq, cmd->srq_handle);
+-    if (rc) {
+-        destroy_qp_rings(rings, cmd->is_srq);
+-        return rc;
+-    }
+-
+-    resp->max_send_wr = cmd->max_send_wr;
+-    resp->max_recv_wr = cmd->max_recv_wr;
+-    resp->max_send_sge = cmd->max_send_sge;
+-    resp->max_recv_sge = cmd->max_recv_sge;
+-    resp->max_inline_data = cmd->max_inline_data;
+-
+-    return 0;
+-}
+-
+-static int modify_qp(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                     union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_modify_qp *cmd = &req->modify_qp;
+-
+-    /* No need to verify sgid_index since it is u8 */
+-
+-    return rdma_rm_modify_qp(&dev->rdma_dev_res, &dev->backend_dev,
+-                             cmd->qp_handle, cmd->attr_mask,
+-                             cmd->attrs.ah_attr.grh.sgid_index,
+-                             (union ibv_gid *)&cmd->attrs.ah_attr.grh.dgid,
+-                             cmd->attrs.dest_qp_num,
+-                             (enum ibv_qp_state)cmd->attrs.qp_state,
+-                             cmd->attrs.qkey, cmd->attrs.rq_psn,
+-                             cmd->attrs.sq_psn);
+-}
+-
+-static int query_qp(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                     union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_query_qp *cmd = &req->query_qp;
+-    struct pvrdma_cmd_query_qp_resp *resp = &rsp->query_qp_resp;
+-    struct ibv_qp_init_attr init_attr;
+-
+-    memset(resp, 0, sizeof(*resp));
+-
+-    return rdma_rm_query_qp(&dev->rdma_dev_res, &dev->backend_dev,
+-                            cmd->qp_handle,
+-                            (struct ibv_qp_attr *)&resp->attrs,
+-                            cmd->attr_mask,
+-                            &init_attr);
+-}
+-
+-static int destroy_qp(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                      union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_destroy_qp *cmd = &req->destroy_qp;
+-    RdmaRmQP *qp;
+-    PvrdmaRing *ring;
+-
+-    qp = rdma_rm_get_qp(&dev->rdma_dev_res, cmd->qp_handle);
+-    if (!qp) {
+-        return -EINVAL;
+-    }
+-
+-    ring = (PvrdmaRing *)qp->opaque;
+-    destroy_qp_rings(ring, qp->is_srq);
+-    rdma_rm_dealloc_qp(&dev->rdma_dev_res, cmd->qp_handle);
+-
+-    return 0;
+-}
+-
+-static int create_bind(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                       union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_create_bind *cmd = &req->create_bind;
+-    union ibv_gid *gid = (union ibv_gid *)&cmd->new_gid;
+-
+-    if (cmd->index >= MAX_PORT_GIDS) {
+-        return -EINVAL;
+-    }
+-
+-    return rdma_rm_add_gid(&dev->rdma_dev_res, &dev->backend_dev,
+-                           dev->backend_eth_device_name, gid, cmd->index);
+-}
+-
+-static int destroy_bind(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                        union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_destroy_bind *cmd = &req->destroy_bind;
+-
+-    if (cmd->index >= MAX_PORT_GIDS) {
+-        return -EINVAL;
+-    }
+-
+-    return rdma_rm_del_gid(&dev->rdma_dev_res, &dev->backend_dev,
+-                           dev->backend_eth_device_name, cmd->index);
+-}
+-
+-static int create_uc(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                     union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_create_uc *cmd = &req->create_uc;
+-    struct pvrdma_cmd_create_uc_resp *resp = &rsp->create_uc_resp;
+-
+-    memset(resp, 0, sizeof(*resp));
+-    return rdma_rm_alloc_uc(&dev->rdma_dev_res, cmd->pfn, &resp->ctx_handle);
+-}
+-
+-static int destroy_uc(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                      union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_destroy_uc *cmd = &req->destroy_uc;
+-
+-    rdma_rm_dealloc_uc(&dev->rdma_dev_res, cmd->ctx_handle);
+-
+-    return 0;
+-}
+-
+-static int create_srq_ring(PCIDevice *pci_dev, PvrdmaRing **ring,
+-                           uint64_t pdir_dma, uint32_t max_wr,
+-                           uint32_t max_sge, uint32_t nchunks)
+-{
+-    uint64_t *dir = NULL, *tbl = NULL;
+-    PvrdmaRing *r;
+-    int rc = -EINVAL;
+-    char ring_name[MAX_RING_NAME_SZ];
+-    uint32_t wqe_sz;
+-
+-    if (!nchunks || nchunks > PVRDMA_MAX_FAST_REG_PAGES) {
+-        rdma_error_report("Got invalid page count for SRQ ring: %d",
+-                          nchunks);
+-        return rc;
+-    }
+-
+-    dir = rdma_pci_dma_map(pci_dev, pdir_dma, TARGET_PAGE_SIZE);
+-    if (!dir) {
+-        rdma_error_report("Failed to map to SRQ page directory");
+-        goto out;
+-    }
+-
+-    tbl = rdma_pci_dma_map(pci_dev, dir[0], TARGET_PAGE_SIZE);
+-    if (!tbl) {
+-        rdma_error_report("Failed to map to SRQ page table");
+-        goto out;
+-    }
+-
+-    r = g_malloc(sizeof(*r));
+-    *ring = r;
+-
+-    r->ring_state = rdma_pci_dma_map(pci_dev, tbl[0], TARGET_PAGE_SIZE);
+-    if (!r->ring_state) {
+-        rdma_error_report("Failed to map tp SRQ ring state");
+-        goto out_free_ring_mem;
+-    }
+-
+-    wqe_sz = pow2ceil(sizeof(struct pvrdma_rq_wqe_hdr) +
+-                      sizeof(struct pvrdma_sge) * max_sge - 1);
+-    sprintf(ring_name, "srq_ring_%" PRIx64, pdir_dma);
+-    rc = pvrdma_ring_init(r, ring_name, pci_dev, &r->ring_state[1], max_wr,
+-                          wqe_sz, (dma_addr_t *)&tbl[1], nchunks - 1);
+-    if (rc) {
+-        goto out_unmap_ring_state;
+-    }
+-
+-    goto out;
+-
+-out_unmap_ring_state:
+-    rdma_pci_dma_unmap(pci_dev, r->ring_state, TARGET_PAGE_SIZE);
+-
+-out_free_ring_mem:
+-    g_free(r);
+-
+-out:
+-    rdma_pci_dma_unmap(pci_dev, tbl, TARGET_PAGE_SIZE);
+-    rdma_pci_dma_unmap(pci_dev, dir, TARGET_PAGE_SIZE);
+-
+-    return rc;
+-}
+-
+-static void destroy_srq_ring(PvrdmaRing *ring)
+-{
+-    pvrdma_ring_free(ring);
+-    rdma_pci_dma_unmap(ring->dev, ring->ring_state, TARGET_PAGE_SIZE);
+-    g_free(ring);
+-}
+-
+-static int create_srq(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                      union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_create_srq *cmd = &req->create_srq;
+-    struct pvrdma_cmd_create_srq_resp *resp = &rsp->create_srq_resp;
+-    PvrdmaRing *ring = NULL;
+-    int rc;
+-
+-    memset(resp, 0, sizeof(*resp));
+-
+-    rc = create_srq_ring(PCI_DEVICE(dev), &ring, cmd->pdir_dma,
+-                         cmd->attrs.max_wr, cmd->attrs.max_sge,
+-                         cmd->nchunks);
+-    if (rc) {
+-        return rc;
+-    }
+-
+-    rc = rdma_rm_alloc_srq(&dev->rdma_dev_res, cmd->pd_handle,
+-                           cmd->attrs.max_wr, cmd->attrs.max_sge,
+-                           cmd->attrs.srq_limit, &resp->srqn, ring);
+-    if (rc) {
+-        destroy_srq_ring(ring);
+-        return rc;
+-    }
+-
+-    return 0;
+-}
+-
+-static int query_srq(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                     union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_query_srq *cmd = &req->query_srq;
+-    struct pvrdma_cmd_query_srq_resp *resp = &rsp->query_srq_resp;
+-
+-    memset(resp, 0, sizeof(*resp));
+-
+-    return rdma_rm_query_srq(&dev->rdma_dev_res, cmd->srq_handle,
+-                             (struct ibv_srq_attr *)&resp->attrs);
+-}
+-
+-static int modify_srq(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                      union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_modify_srq *cmd = &req->modify_srq;
+-
+-    /* Only support SRQ limit */
+-    if (!(cmd->attr_mask & IBV_SRQ_LIMIT) ||
+-        (cmd->attr_mask & IBV_SRQ_MAX_WR))
+-            return -EINVAL;
+-
+-    return rdma_rm_modify_srq(&dev->rdma_dev_res, cmd->srq_handle,
+-                              (struct ibv_srq_attr *)&cmd->attrs,
+-                              cmd->attr_mask);
+-}
+-
+-static int destroy_srq(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-                       union pvrdma_cmd_resp *rsp)
+-{
+-    struct pvrdma_cmd_destroy_srq *cmd = &req->destroy_srq;
+-    RdmaRmSRQ *srq;
+-    PvrdmaRing *ring;
+-
+-    srq = rdma_rm_get_srq(&dev->rdma_dev_res, cmd->srq_handle);
+-    if (!srq) {
+-        return -EINVAL;
+-    }
+-
+-    ring = (PvrdmaRing *)srq->opaque;
+-    destroy_srq_ring(ring);
+-    rdma_rm_dealloc_srq(&dev->rdma_dev_res, cmd->srq_handle);
+-
+-    return 0;
+-}
+-
+-struct cmd_handler {
+-    uint32_t cmd;
+-    uint32_t ack;
+-    int (*exec)(PVRDMADev *dev, union pvrdma_cmd_req *req,
+-            union pvrdma_cmd_resp *rsp);
+-};
+-
+-static struct cmd_handler cmd_handlers[] = {
+-    {PVRDMA_CMD_QUERY_PORT,   PVRDMA_CMD_QUERY_PORT_RESP,        query_port},
+-    {PVRDMA_CMD_QUERY_PKEY,   PVRDMA_CMD_QUERY_PKEY_RESP,        query_pkey},
+-    {PVRDMA_CMD_CREATE_PD,    PVRDMA_CMD_CREATE_PD_RESP,         create_pd},
+-    {PVRDMA_CMD_DESTROY_PD,   PVRDMA_CMD_DESTROY_PD_RESP_NOOP,   destroy_pd},
+-    {PVRDMA_CMD_CREATE_MR,    PVRDMA_CMD_CREATE_MR_RESP,         create_mr},
+-    {PVRDMA_CMD_DESTROY_MR,   PVRDMA_CMD_DESTROY_MR_RESP_NOOP,   destroy_mr},
+-    {PVRDMA_CMD_CREATE_CQ,    PVRDMA_CMD_CREATE_CQ_RESP,         create_cq},
+-    {PVRDMA_CMD_RESIZE_CQ,    PVRDMA_CMD_RESIZE_CQ_RESP,         NULL},
+-    {PVRDMA_CMD_DESTROY_CQ,   PVRDMA_CMD_DESTROY_CQ_RESP_NOOP,   destroy_cq},
+-    {PVRDMA_CMD_CREATE_QP,    PVRDMA_CMD_CREATE_QP_RESP,         create_qp},
+-    {PVRDMA_CMD_MODIFY_QP,    PVRDMA_CMD_MODIFY_QP_RESP,         modify_qp},
+-    {PVRDMA_CMD_QUERY_QP,     PVRDMA_CMD_QUERY_QP_RESP,          query_qp},
+-    {PVRDMA_CMD_DESTROY_QP,   PVRDMA_CMD_DESTROY_QP_RESP,        destroy_qp},
+-    {PVRDMA_CMD_CREATE_UC,    PVRDMA_CMD_CREATE_UC_RESP,         create_uc},
+-    {PVRDMA_CMD_DESTROY_UC,   PVRDMA_CMD_DESTROY_UC_RESP_NOOP,   destroy_uc},
+-    {PVRDMA_CMD_CREATE_BIND,  PVRDMA_CMD_CREATE_BIND_RESP_NOOP,  create_bind},
+-    {PVRDMA_CMD_DESTROY_BIND, PVRDMA_CMD_DESTROY_BIND_RESP_NOOP, destroy_bind},
+-    {PVRDMA_CMD_CREATE_SRQ,   PVRDMA_CMD_CREATE_SRQ_RESP,        create_srq},
+-    {PVRDMA_CMD_QUERY_SRQ,    PVRDMA_CMD_QUERY_SRQ_RESP,         query_srq},
+-    {PVRDMA_CMD_MODIFY_SRQ,   PVRDMA_CMD_MODIFY_SRQ_RESP,        modify_srq},
+-    {PVRDMA_CMD_DESTROY_SRQ,  PVRDMA_CMD_DESTROY_SRQ_RESP,       destroy_srq},
+-};
+-
+-int pvrdma_exec_cmd(PVRDMADev *dev)
+-{
+-    int err = 0xFFFF;
+-    DSRInfo *dsr_info;
+-
+-    dsr_info = &dev->dsr_info;
+-
+-    if (!dsr_info->dsr) {
+-            /* Buggy or malicious guest driver */
+-            rdma_error_report("Exec command without dsr, req or rsp buffers");
+-            goto out;
+-    }
+-
+-    if (dsr_info->req->hdr.cmd >= sizeof(cmd_handlers) /
+-                      sizeof(struct cmd_handler)) {
+-        rdma_error_report("Unsupported command");
+-        goto out;
+-    }
+-
+-    if (!cmd_handlers[dsr_info->req->hdr.cmd].exec) {
+-        rdma_error_report("Unsupported command (not implemented yet)");
+-        goto out;
+-    }
+-
+-    err = cmd_handlers[dsr_info->req->hdr.cmd].exec(dev, dsr_info->req,
+-                                                    dsr_info->rsp);
+-    dsr_info->rsp->hdr.response = dsr_info->req->hdr.response;
+-    dsr_info->rsp->hdr.ack = cmd_handlers[dsr_info->req->hdr.cmd].ack;
+-    dsr_info->rsp->hdr.err = err < 0 ? -err : 0;
+-
+-    trace_pvrdma_exec_cmd(dsr_info->req->hdr.cmd, dsr_info->rsp->hdr.err);
+-
+-    dev->stats.commands++;
+-
+-out:
+-    set_reg_val(dev, PVRDMA_REG_ERR, err);
+-    post_interrupt(dev, INTR_VEC_CMD_RING);
+-
+-    return (err == 0) ? 0 : -EINVAL;
+-}
+diff --git a/hw/rdma/vmw/pvrdma_dev_ring.c b/hw/rdma/vmw/pvrdma_dev_ring.c
+deleted file mode 100644
+index 30ce22a5be..0000000000
+--- a/hw/rdma/vmw/pvrdma_dev_ring.c
++++ /dev/null
+@@ -1,141 +0,0 @@
+-/*
+- * QEMU paravirtual RDMA - Device rings
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#include "qemu/osdep.h"
+-#include "hw/pci/pci.h"
+-#include "cpu.h"
+-#include "qemu/cutils.h"
+-
+-#include "trace.h"
+-
+-#include "../rdma_utils.h"
+-#include "pvrdma_dev_ring.h"
+-
+-int pvrdma_ring_init(PvrdmaRing *ring, const char *name, PCIDevice *dev,
+-                     PvrdmaRingState *ring_state, uint32_t max_elems,
+-                     size_t elem_sz, dma_addr_t *tbl, uint32_t npages)
+-{
+-    int i;
+-    int rc = 0;
+-
+-    pstrcpy(ring->name, MAX_RING_NAME_SZ, name);
+-    ring->dev = dev;
+-    ring->ring_state = ring_state;
+-    ring->max_elems = max_elems;
+-    ring->elem_sz = elem_sz;
+-    /* TODO: Give a moment to think if we want to redo driver settings
+-    qatomic_set(&ring->ring_state->prod_tail, 0);
+-    qatomic_set(&ring->ring_state->cons_head, 0);
+-    */
+-    ring->npages = npages;
+-    ring->pages = g_new0(void *, npages);
+-
+-    for (i = 0; i < npages; i++) {
+-        if (!tbl[i]) {
+-            rdma_error_report("npages=%d but tbl[%d] is NULL", npages, i);
+-            continue;
+-        }
+-
+-        ring->pages[i] = rdma_pci_dma_map(dev, tbl[i], TARGET_PAGE_SIZE);
+-        if (!ring->pages[i]) {
+-            rc = -ENOMEM;
+-            rdma_error_report("Failed to map to page %d in ring %s", i, name);
+-            goto out_free;
+-        }
+-        memset(ring->pages[i], 0, TARGET_PAGE_SIZE);
+-    }
+-
+-    goto out;
+-
+-out_free:
+-    while (i--) {
+-        rdma_pci_dma_unmap(dev, ring->pages[i], TARGET_PAGE_SIZE);
+-    }
+-    g_free(ring->pages);
+-
+-out:
+-    return rc;
+-}
+-
+-void *pvrdma_ring_next_elem_read(PvrdmaRing *ring)
+-{
+-    unsigned int idx, offset;
+-    const uint32_t tail = qatomic_read(&ring->ring_state->prod_tail);
+-    const uint32_t head = qatomic_read(&ring->ring_state->cons_head);
+-
+-    if (tail & ~((ring->max_elems << 1) - 1) ||
+-        head & ~((ring->max_elems << 1) - 1) ||
+-        tail == head) {
+-        trace_pvrdma_ring_next_elem_read_no_data(ring->name);
+-        return NULL;
+-    }
+-
+-    idx = head & (ring->max_elems - 1);
+-    offset = idx * ring->elem_sz;
+-    return ring->pages[offset / TARGET_PAGE_SIZE] + (offset % TARGET_PAGE_SIZE);
+-}
+-
+-void pvrdma_ring_read_inc(PvrdmaRing *ring)
+-{
+-    uint32_t idx = qatomic_read(&ring->ring_state->cons_head);
+-
+-    idx = (idx + 1) & ((ring->max_elems << 1) - 1);
+-    qatomic_set(&ring->ring_state->cons_head, idx);
+-}
+-
+-void *pvrdma_ring_next_elem_write(PvrdmaRing *ring)
+-{
+-    unsigned int idx, offset;
+-    const uint32_t tail = qatomic_read(&ring->ring_state->prod_tail);
+-    const uint32_t head = qatomic_read(&ring->ring_state->cons_head);
+-
+-    if (tail & ~((ring->max_elems << 1) - 1) ||
+-        head & ~((ring->max_elems << 1) - 1) ||
+-        tail == (head ^ ring->max_elems)) {
+-        rdma_error_report("CQ is full");
+-        return NULL;
+-    }
+-
+-    idx = tail & (ring->max_elems - 1);
+-    offset = idx * ring->elem_sz;
+-    return ring->pages[offset / TARGET_PAGE_SIZE] + (offset % TARGET_PAGE_SIZE);
+-}
+-
+-void pvrdma_ring_write_inc(PvrdmaRing *ring)
+-{
+-    uint32_t idx = qatomic_read(&ring->ring_state->prod_tail);
+-
+-    idx = (idx + 1) & ((ring->max_elems << 1) - 1);
+-    qatomic_set(&ring->ring_state->prod_tail, idx);
+-}
+-
+-void pvrdma_ring_free(PvrdmaRing *ring)
+-{
+-    if (!ring) {
+-        return;
+-    }
+-
+-    if (!ring->pages) {
+-        return;
+-    }
+-
+-    while (ring->npages--) {
+-        rdma_pci_dma_unmap(ring->dev, ring->pages[ring->npages],
+-                           TARGET_PAGE_SIZE);
+-    }
+-
+-    g_free(ring->pages);
+-    ring->pages = NULL;
+-}
+diff --git a/hw/rdma/vmw/pvrdma_main.c b/hw/rdma/vmw/pvrdma_main.c
+deleted file mode 100644
+index e735ff97eb..0000000000
+--- a/hw/rdma/vmw/pvrdma_main.c
++++ /dev/null
+@@ -1,735 +0,0 @@
+-/*
+- * QEMU paravirtual RDMA
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#include "qemu/osdep.h"
+-#include "qapi/error.h"
+-#include "qemu/module.h"
+-#include "hw/pci/pci.h"
+-#include "hw/pci/pci_ids.h"
+-#include "hw/pci/msi.h"
+-#include "hw/pci/msix.h"
+-#include "hw/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
+-#include "cpu.h"
+-#include "trace.h"
+-#include "monitor/monitor.h"
+-#include "hw/rdma/rdma.h"
+-
+-#include "../rdma_rm.h"
+-#include "../rdma_backend.h"
+-#include "../rdma_utils.h"
+-
+-#include <infiniband/verbs.h>
+-#include "pvrdma.h"
+-#include "standard-headers/rdma/vmw_pvrdma-abi.h"
+-#include "sysemu/runstate.h"
+-#include "standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h"
+-#include "pvrdma_qp_ops.h"
+-
+-static Property pvrdma_dev_properties[] = {
+-    DEFINE_PROP_STRING("netdev", PVRDMADev, backend_eth_device_name),
+-    DEFINE_PROP_STRING("ibdev", PVRDMADev, backend_device_name),
+-    DEFINE_PROP_UINT8("ibport", PVRDMADev, backend_port_num, 1),
+-    DEFINE_PROP_UINT64("dev-caps-max-mr-size", PVRDMADev, dev_attr.max_mr_size,
+-                       MAX_MR_SIZE),
+-    DEFINE_PROP_INT32("dev-caps-max-qp", PVRDMADev, dev_attr.max_qp, MAX_QP),
+-    DEFINE_PROP_INT32("dev-caps-max-cq", PVRDMADev, dev_attr.max_cq, MAX_CQ),
+-    DEFINE_PROP_INT32("dev-caps-max-mr", PVRDMADev, dev_attr.max_mr, MAX_MR),
+-    DEFINE_PROP_INT32("dev-caps-max-pd", PVRDMADev, dev_attr.max_pd, MAX_PD),
+-    DEFINE_PROP_INT32("dev-caps-qp-rd-atom", PVRDMADev, dev_attr.max_qp_rd_atom,
+-                      MAX_QP_RD_ATOM),
+-    DEFINE_PROP_INT32("dev-caps-max-qp-init-rd-atom", PVRDMADev,
+-                      dev_attr.max_qp_init_rd_atom, MAX_QP_INIT_RD_ATOM),
+-    DEFINE_PROP_INT32("dev-caps-max-ah", PVRDMADev, dev_attr.max_ah, MAX_AH),
+-    DEFINE_PROP_INT32("dev-caps-max-srq", PVRDMADev, dev_attr.max_srq, MAX_SRQ),
+-    DEFINE_PROP_CHR("mad-chardev", PVRDMADev, mad_chr),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+-static void pvrdma_format_statistics(RdmaProvider *obj, GString *buf)
+-{
+-    PVRDMADev *dev = PVRDMA_DEV(obj);
+-    PCIDevice *pdev = PCI_DEVICE(dev);
+-
+-    g_string_append_printf(buf, "%s, %x.%x\n",
+-                           pdev->name, PCI_SLOT(pdev->devfn),
+-                           PCI_FUNC(pdev->devfn));
+-    g_string_append_printf(buf, "\tcommands         : %" PRId64 "\n",
+-                           dev->stats.commands);
+-    g_string_append_printf(buf, "\tregs_reads       : %" PRId64 "\n",
+-                           dev->stats.regs_reads);
+-    g_string_append_printf(buf, "\tregs_writes      : %" PRId64 "\n",
+-                           dev->stats.regs_writes);
+-    g_string_append_printf(buf, "\tuar_writes       : %" PRId64 "\n",
+-                           dev->stats.uar_writes);
+-    g_string_append_printf(buf, "\tinterrupts       : %" PRId64 "\n",
+-                           dev->stats.interrupts);
+-    rdma_format_device_counters(&dev->rdma_dev_res, buf);
+-}
+-
+-static void free_dev_ring(PCIDevice *pci_dev, PvrdmaRing *ring,
+-                          void *ring_state)
+-{
+-    pvrdma_ring_free(ring);
+-    rdma_pci_dma_unmap(pci_dev, ring_state, TARGET_PAGE_SIZE);
+-}
+-
+-static int init_dev_ring(PvrdmaRing *ring, PvrdmaRingState **ring_state,
+-                         const char *name, PCIDevice *pci_dev,
+-                         dma_addr_t dir_addr, uint32_t num_pages)
+-{
+-    uint64_t *dir, *tbl;
+-    int max_pages, rc = 0;
+-
+-    if (!num_pages) {
+-        rdma_error_report("Ring pages count must be strictly positive");
+-        return -EINVAL;
+-    }
+-
+-    /*
+-     * Make sure we can satisfy the requested number of pages in a single
+-     * TARGET_PAGE_SIZE sized page table (taking into account that first entry
+-     * is reserved for ring-state)
+-     */
+-    max_pages = TARGET_PAGE_SIZE / sizeof(dma_addr_t) - 1;
+-    if (num_pages > max_pages) {
+-        rdma_error_report("Maximum pages on a single directory must not exceed %d\n",
+-                          max_pages);
+-        return -EINVAL;
+-    }
+-
+-    dir = rdma_pci_dma_map(pci_dev, dir_addr, TARGET_PAGE_SIZE);
+-    if (!dir) {
+-        rdma_error_report("Failed to map to page directory (ring %s)", name);
+-        rc = -ENOMEM;
+-        goto out;
+-    }
+-
+-    /* We support only one page table for a ring */
+-    tbl = rdma_pci_dma_map(pci_dev, dir[0], TARGET_PAGE_SIZE);
+-    if (!tbl) {
+-        rdma_error_report("Failed to map to page table (ring %s)", name);
+-        rc = -ENOMEM;
+-        goto out_free_dir;
+-    }
+-
+-    *ring_state = rdma_pci_dma_map(pci_dev, tbl[0], TARGET_PAGE_SIZE);
+-    if (!*ring_state) {
+-        rdma_error_report("Failed to map to ring state (ring %s)", name);
+-        rc = -ENOMEM;
+-        goto out_free_tbl;
+-    }
+-    /* RX ring is the second */
+-    (*ring_state)++;
+-    rc = pvrdma_ring_init(ring, name, pci_dev,
+-                          (PvrdmaRingState *)*ring_state,
+-                          (num_pages - 1) * TARGET_PAGE_SIZE /
+-                          sizeof(struct pvrdma_cqne),
+-                          sizeof(struct pvrdma_cqne),
+-                          (dma_addr_t *)&tbl[1], (dma_addr_t)num_pages - 1);
+-    if (rc) {
+-        rc = -ENOMEM;
+-        goto out_free_ring_state;
+-    }
+-
+-    goto out_free_tbl;
+-
+-out_free_ring_state:
+-    rdma_pci_dma_unmap(pci_dev, *ring_state, TARGET_PAGE_SIZE);
+-
+-out_free_tbl:
+-    rdma_pci_dma_unmap(pci_dev, tbl, TARGET_PAGE_SIZE);
+-
+-out_free_dir:
+-    rdma_pci_dma_unmap(pci_dev, dir, TARGET_PAGE_SIZE);
+-
+-out:
+-    return rc;
+-}
+-
+-static void free_dsr(PVRDMADev *dev)
+-{
+-    PCIDevice *pci_dev = PCI_DEVICE(dev);
+-
+-    if (!dev->dsr_info.dsr) {
+-        return;
+-    }
+-
+-    free_dev_ring(pci_dev, &dev->dsr_info.async,
+-                  dev->dsr_info.async_ring_state);
+-
+-    free_dev_ring(pci_dev, &dev->dsr_info.cq, dev->dsr_info.cq_ring_state);
+-
+-    rdma_pci_dma_unmap(pci_dev, dev->dsr_info.req,
+-                       sizeof(union pvrdma_cmd_req));
+-
+-    rdma_pci_dma_unmap(pci_dev, dev->dsr_info.rsp,
+-                       sizeof(union pvrdma_cmd_resp));
+-
+-    rdma_pci_dma_unmap(pci_dev, dev->dsr_info.dsr,
+-                       sizeof(struct pvrdma_device_shared_region));
+-
+-    dev->dsr_info.dsr = NULL;
+-}
+-
+-static int load_dsr(PVRDMADev *dev)
+-{
+-    int rc = 0;
+-    PCIDevice *pci_dev = PCI_DEVICE(dev);
+-    DSRInfo *dsr_info;
+-    struct pvrdma_device_shared_region *dsr;
+-
+-    free_dsr(dev);
+-
+-    /* Map to DSR */
+-    dev->dsr_info.dsr = rdma_pci_dma_map(pci_dev, dev->dsr_info.dma,
+-                              sizeof(struct pvrdma_device_shared_region));
+-    if (!dev->dsr_info.dsr) {
+-        rdma_error_report("Failed to map to DSR");
+-        rc = -ENOMEM;
+-        goto out;
+-    }
+-
+-    /* Shortcuts */
+-    dsr_info = &dev->dsr_info;
+-    dsr = dsr_info->dsr;
+-
+-    /* Map to command slot */
+-    dsr_info->req = rdma_pci_dma_map(pci_dev, dsr->cmd_slot_dma,
+-                                     sizeof(union pvrdma_cmd_req));
+-    if (!dsr_info->req) {
+-        rdma_error_report("Failed to map to command slot address");
+-        rc = -ENOMEM;
+-        goto out_free_dsr;
+-    }
+-
+-    /* Map to response slot */
+-    dsr_info->rsp = rdma_pci_dma_map(pci_dev, dsr->resp_slot_dma,
+-                                     sizeof(union pvrdma_cmd_resp));
+-    if (!dsr_info->rsp) {
+-        rdma_error_report("Failed to map to response slot address");
+-        rc = -ENOMEM;
+-        goto out_free_req;
+-    }
+-
+-    /* Map to CQ notification ring */
+-    rc = init_dev_ring(&dsr_info->cq, &dsr_info->cq_ring_state, "dev_cq",
+-                       pci_dev, dsr->cq_ring_pages.pdir_dma,
+-                       dsr->cq_ring_pages.num_pages);
+-    if (rc) {
+-        rc = -ENOMEM;
+-        goto out_free_rsp;
+-    }
+-
+-    /* Map to event notification ring */
+-    rc = init_dev_ring(&dsr_info->async, &dsr_info->async_ring_state,
+-                       "dev_async", pci_dev, dsr->async_ring_pages.pdir_dma,
+-                       dsr->async_ring_pages.num_pages);
+-    if (rc) {
+-        rc = -ENOMEM;
+-        goto out_free_rsp;
+-    }
+-
+-    goto out;
+-
+-out_free_rsp:
+-    rdma_pci_dma_unmap(pci_dev, dsr_info->rsp, sizeof(union pvrdma_cmd_resp));
+-
+-out_free_req:
+-    rdma_pci_dma_unmap(pci_dev, dsr_info->req, sizeof(union pvrdma_cmd_req));
+-
+-out_free_dsr:
+-    rdma_pci_dma_unmap(pci_dev, dsr_info->dsr,
+-                       sizeof(struct pvrdma_device_shared_region));
+-    dsr_info->dsr = NULL;
+-
+-out:
+-    return rc;
+-}
+-
+-static void init_dsr_dev_caps(PVRDMADev *dev)
+-{
+-    struct pvrdma_device_shared_region *dsr;
+-
+-    if (!dev->dsr_info.dsr) {
+-        /* Buggy or malicious guest driver */
+-        rdma_error_report("Can't initialized DSR");
+-        return;
+-    }
+-
+-    dsr = dev->dsr_info.dsr;
+-    dsr->caps.fw_ver = PVRDMA_FW_VERSION;
+-    dsr->caps.mode = PVRDMA_DEVICE_MODE_ROCE;
+-    dsr->caps.gid_types |= PVRDMA_GID_TYPE_FLAG_ROCE_V1;
+-    dsr->caps.max_uar = RDMA_BAR2_UAR_SIZE;
+-    dsr->caps.max_mr_size = dev->dev_attr.max_mr_size;
+-    dsr->caps.max_qp = dev->dev_attr.max_qp;
+-    dsr->caps.max_qp_wr = dev->dev_attr.max_qp_wr;
+-    dsr->caps.max_sge = dev->dev_attr.max_sge;
+-    dsr->caps.max_cq = dev->dev_attr.max_cq;
+-    dsr->caps.max_cqe = dev->dev_attr.max_cqe;
+-    dsr->caps.max_mr = dev->dev_attr.max_mr;
+-    dsr->caps.max_pd = dev->dev_attr.max_pd;
+-    dsr->caps.max_ah = dev->dev_attr.max_ah;
+-    dsr->caps.max_srq = dev->dev_attr.max_srq;
+-    dsr->caps.max_srq_wr = dev->dev_attr.max_srq_wr;
+-    dsr->caps.max_srq_sge = dev->dev_attr.max_srq_sge;
+-    dsr->caps.gid_tbl_len = MAX_GIDS;
+-    dsr->caps.sys_image_guid = 0;
+-    dsr->caps.node_guid = dev->node_guid;
+-    dsr->caps.phys_port_cnt = MAX_PORTS;
+-    dsr->caps.max_pkeys = MAX_PKEYS;
+-}
+-
+-static void uninit_msix(PCIDevice *pdev, int used_vectors)
+-{
+-    PVRDMADev *dev = PVRDMA_DEV(pdev);
+-    int i;
+-
+-    for (i = 0; i < used_vectors; i++) {
+-        msix_vector_unuse(pdev, i);
+-    }
+-
+-    msix_uninit(pdev, &dev->msix, &dev->msix);
+-}
+-
+-static int init_msix(PCIDevice *pdev)
+-{
+-    PVRDMADev *dev = PVRDMA_DEV(pdev);
+-    int i;
+-    int rc;
+-
+-    rc = msix_init(pdev, RDMA_MAX_INTRS, &dev->msix, RDMA_MSIX_BAR_IDX,
+-                   RDMA_MSIX_TABLE, &dev->msix, RDMA_MSIX_BAR_IDX,
+-                   RDMA_MSIX_PBA, 0, NULL);
+-
+-    if (rc < 0) {
+-        rdma_error_report("Failed to initialize MSI-X");
+-        return rc;
+-    }
+-
+-    for (i = 0; i < RDMA_MAX_INTRS; i++) {
+-        msix_vector_use(PCI_DEVICE(dev), i);
+-    }
+-
+-    return 0;
+-}
+-
+-static void pvrdma_fini(PCIDevice *pdev)
+-{
+-    PVRDMADev *dev = PVRDMA_DEV(pdev);
+-
+-    notifier_remove(&dev->shutdown_notifier);
+-
+-    pvrdma_qp_ops_fini();
+-
+-    rdma_backend_stop(&dev->backend_dev);
+-
+-    rdma_rm_fini(&dev->rdma_dev_res, &dev->backend_dev,
+-                 dev->backend_eth_device_name);
+-
+-    rdma_backend_fini(&dev->backend_dev);
+-
+-    free_dsr(dev);
+-
+-    if (msix_enabled(pdev)) {
+-        uninit_msix(pdev, RDMA_MAX_INTRS);
+-    }
+-
+-    rdma_info_report("Device %s %x.%x is down", pdev->name,
+-                     PCI_SLOT(pdev->devfn), PCI_FUNC(pdev->devfn));
+-}
+-
+-static void pvrdma_stop(PVRDMADev *dev)
+-{
+-    rdma_backend_stop(&dev->backend_dev);
+-}
+-
+-static void pvrdma_start(PVRDMADev *dev)
+-{
+-    rdma_backend_start(&dev->backend_dev);
+-}
+-
+-static void activate_device(PVRDMADev *dev)
+-{
+-    pvrdma_start(dev);
+-    set_reg_val(dev, PVRDMA_REG_ERR, 0);
+-}
+-
+-static int unquiesce_device(PVRDMADev *dev)
+-{
+-    return 0;
+-}
+-
+-static void reset_device(PVRDMADev *dev)
+-{
+-    pvrdma_stop(dev);
+-}
+-
+-static uint64_t pvrdma_regs_read(void *opaque, hwaddr addr, unsigned size)
+-{
+-    PVRDMADev *dev = opaque;
+-    uint32_t val;
+-
+-    dev->stats.regs_reads++;
+-
+-    if (get_reg_val(dev, addr, &val)) {
+-        rdma_error_report("Failed to read REG value from address 0x%x",
+-                          (uint32_t)addr);
+-        return -EINVAL;
+-    }
+-
+-    trace_pvrdma_regs_read(addr, val);
+-
+-    return val;
+-}
+-
+-static void pvrdma_regs_write(void *opaque, hwaddr addr, uint64_t val,
+-                              unsigned size)
+-{
+-    PVRDMADev *dev = opaque;
+-
+-    dev->stats.regs_writes++;
+-
+-    if (set_reg_val(dev, addr, val)) {
+-        rdma_error_report("Failed to set REG value, addr=0x%"PRIx64 ", val=0x%"PRIx64,
+-                          addr, val);
+-        return;
+-    }
+-
+-    switch (addr) {
+-    case PVRDMA_REG_DSRLOW:
+-        trace_pvrdma_regs_write(addr, val, "DSRLOW", "");
+-        dev->dsr_info.dma = val;
+-        break;
+-    case PVRDMA_REG_DSRHIGH:
+-        trace_pvrdma_regs_write(addr, val, "DSRHIGH", "");
+-        dev->dsr_info.dma |= val << 32;
+-        load_dsr(dev);
+-        init_dsr_dev_caps(dev);
+-        break;
+-    case PVRDMA_REG_CTL:
+-        switch (val) {
+-        case PVRDMA_DEVICE_CTL_ACTIVATE:
+-            trace_pvrdma_regs_write(addr, val, "CTL", "ACTIVATE");
+-            activate_device(dev);
+-            break;
+-        case PVRDMA_DEVICE_CTL_UNQUIESCE:
+-            trace_pvrdma_regs_write(addr, val, "CTL", "UNQUIESCE");
+-            unquiesce_device(dev);
+-            break;
+-        case PVRDMA_DEVICE_CTL_RESET:
+-            trace_pvrdma_regs_write(addr, val, "CTL", "URESET");
+-            reset_device(dev);
+-            break;
+-        }
+-        break;
+-    case PVRDMA_REG_IMR:
+-        trace_pvrdma_regs_write(addr, val, "INTR_MASK", "");
+-        dev->interrupt_mask = val;
+-        break;
+-    case PVRDMA_REG_REQUEST:
+-        if (val == 0) {
+-            trace_pvrdma_regs_write(addr, val, "REQUEST", "");
+-            pvrdma_exec_cmd(dev);
+-        }
+-        break;
+-    default:
+-        break;
+-    }
+-}
+-
+-static const MemoryRegionOps regs_ops = {
+-    .read = pvrdma_regs_read,
+-    .write = pvrdma_regs_write,
+-    .endianness = DEVICE_LITTLE_ENDIAN,
+-    .impl = {
+-        .min_access_size = sizeof(uint32_t),
+-        .max_access_size = sizeof(uint32_t),
+-    },
+-};
+-
+-static uint64_t pvrdma_uar_read(void *opaque, hwaddr addr, unsigned size)
+-{
+-    return 0xffffffff;
+-}
+-
+-static void pvrdma_uar_write(void *opaque, hwaddr addr, uint64_t val,
+-                             unsigned size)
+-{
+-    PVRDMADev *dev = opaque;
+-
+-    dev->stats.uar_writes++;
+-
+-    switch (addr & 0xFFF) { /* Mask with 0xFFF as each UC gets page */
+-    case PVRDMA_UAR_QP_OFFSET:
+-        if (val & PVRDMA_UAR_QP_SEND) {
+-            trace_pvrdma_uar_write(addr, val, "QP", "SEND",
+-                                   val & PVRDMA_UAR_HANDLE_MASK, 0);
+-            pvrdma_qp_send(dev, val & PVRDMA_UAR_HANDLE_MASK);
+-        }
+-        if (val & PVRDMA_UAR_QP_RECV) {
+-            trace_pvrdma_uar_write(addr, val, "QP", "RECV",
+-                                   val & PVRDMA_UAR_HANDLE_MASK, 0);
+-            pvrdma_qp_recv(dev, val & PVRDMA_UAR_HANDLE_MASK);
+-        }
+-        break;
+-    case PVRDMA_UAR_CQ_OFFSET:
+-        if (val & PVRDMA_UAR_CQ_ARM) {
+-            trace_pvrdma_uar_write(addr, val, "CQ", "ARM",
+-                                   val & PVRDMA_UAR_HANDLE_MASK,
+-                                   !!(val & PVRDMA_UAR_CQ_ARM_SOL));
+-            rdma_rm_req_notify_cq(&dev->rdma_dev_res,
+-                                  val & PVRDMA_UAR_HANDLE_MASK,
+-                                  !!(val & PVRDMA_UAR_CQ_ARM_SOL));
+-        }
+-        if (val & PVRDMA_UAR_CQ_ARM_SOL) {
+-            trace_pvrdma_uar_write(addr, val, "CQ", "ARMSOL - not supported", 0,
+-                                   0);
+-        }
+-        if (val & PVRDMA_UAR_CQ_POLL) {
+-            trace_pvrdma_uar_write(addr, val, "CQ", "POLL",
+-                                   val & PVRDMA_UAR_HANDLE_MASK, 0);
+-            pvrdma_cq_poll(&dev->rdma_dev_res, val & PVRDMA_UAR_HANDLE_MASK);
+-        }
+-        break;
+-    case PVRDMA_UAR_SRQ_OFFSET:
+-        if (val & PVRDMA_UAR_SRQ_RECV) {
+-            trace_pvrdma_uar_write(addr, val, "QP", "SRQ",
+-                                   val & PVRDMA_UAR_HANDLE_MASK, 0);
+-            pvrdma_srq_recv(dev, val & PVRDMA_UAR_HANDLE_MASK);
+-        }
+-        break;
+-    default:
+-        rdma_error_report("Unsupported command, addr=0x%"PRIx64", val=0x%"PRIx64,
+-                          addr, val);
+-        break;
+-    }
+-}
+-
+-static const MemoryRegionOps uar_ops = {
+-    .read = pvrdma_uar_read,
+-    .write = pvrdma_uar_write,
+-    .endianness = DEVICE_LITTLE_ENDIAN,
+-    .impl = {
+-        .min_access_size = sizeof(uint32_t),
+-        .max_access_size = sizeof(uint32_t),
+-    },
+-};
+-
+-static void init_pci_config(PCIDevice *pdev)
+-{
+-    pdev->config[PCI_INTERRUPT_PIN] = 1;
+-}
+-
+-static void init_bars(PCIDevice *pdev)
+-{
+-    PVRDMADev *dev = PVRDMA_DEV(pdev);
+-
+-    /* BAR 0 - MSI-X */
+-    memory_region_init(&dev->msix, OBJECT(dev), "pvrdma-msix",
+-                       RDMA_BAR0_MSIX_SIZE);
+-    pci_register_bar(pdev, RDMA_MSIX_BAR_IDX, PCI_BASE_ADDRESS_SPACE_MEMORY,
+-                     &dev->msix);
+-
+-    /* BAR 1 - Registers */
+-    memset(&dev->regs_data, 0, sizeof(dev->regs_data));
+-    memory_region_init_io(&dev->regs, OBJECT(dev), &regs_ops, dev,
+-                          "pvrdma-regs", sizeof(dev->regs_data));
+-    pci_register_bar(pdev, RDMA_REG_BAR_IDX, PCI_BASE_ADDRESS_SPACE_MEMORY,
+-                     &dev->regs);
+-
+-    /* BAR 2 - UAR */
+-    memset(&dev->uar_data, 0, sizeof(dev->uar_data));
+-    memory_region_init_io(&dev->uar, OBJECT(dev), &uar_ops, dev, "rdma-uar",
+-                          sizeof(dev->uar_data));
+-    pci_register_bar(pdev, RDMA_UAR_BAR_IDX, PCI_BASE_ADDRESS_SPACE_MEMORY,
+-                     &dev->uar);
+-}
+-
+-static void init_regs(PCIDevice *pdev)
+-{
+-    PVRDMADev *dev = PVRDMA_DEV(pdev);
+-
+-    set_reg_val(dev, PVRDMA_REG_VERSION, PVRDMA_HW_VERSION);
+-    set_reg_val(dev, PVRDMA_REG_ERR, 0xFFFF);
+-}
+-
+-static void init_dev_caps(PVRDMADev *dev)
+-{
+-    size_t pg_tbl_bytes = TARGET_PAGE_SIZE *
+-                          (TARGET_PAGE_SIZE / sizeof(uint64_t));
+-    size_t wr_sz = MAX(sizeof(struct pvrdma_sq_wqe_hdr),
+-                       sizeof(struct pvrdma_rq_wqe_hdr));
+-
+-    dev->dev_attr.max_qp_wr = pg_tbl_bytes /
+-                              (wr_sz + sizeof(struct pvrdma_sge) *
+-                              dev->dev_attr.max_sge) - TARGET_PAGE_SIZE;
+-                              /* First page is ring state  ^^^^ */
+-
+-    dev->dev_attr.max_cqe = pg_tbl_bytes / sizeof(struct pvrdma_cqe) -
+-                            TARGET_PAGE_SIZE; /* First page is ring state */
+-
+-    dev->dev_attr.max_srq_wr = pg_tbl_bytes /
+-                                ((sizeof(struct pvrdma_rq_wqe_hdr) +
+-                                sizeof(struct pvrdma_sge)) *
+-                                dev->dev_attr.max_sge) - TARGET_PAGE_SIZE;
+-}
+-
+-static int pvrdma_check_ram_shared(Object *obj, void *opaque)
+-{
+-    bool *shared = opaque;
+-
+-    if (object_dynamic_cast(obj, "memory-backend-ram")) {
+-        *shared = object_property_get_bool(obj, "share", NULL);
+-    }
+-
+-    return 0;
+-}
+-
+-static void pvrdma_shutdown_notifier(Notifier *n, void *opaque)
+-{
+-    PVRDMADev *dev = container_of(n, PVRDMADev, shutdown_notifier);
+-    PCIDevice *pci_dev = PCI_DEVICE(dev);
+-
+-    pvrdma_fini(pci_dev);
+-}
+-
+-static void pvrdma_realize(PCIDevice *pdev, Error **errp)
+-{
+-    int rc = 0;
+-    PVRDMADev *dev = PVRDMA_DEV(pdev);
+-    Object *memdev_root;
+-    bool ram_shared = false;
+-    PCIDevice *func0;
+-
+-    warn_report_once("pvrdma is deprecated and will be removed in a future release");
+-
+-    rdma_info_report("Initializing device %s %x.%x", pdev->name,
+-                     PCI_SLOT(pdev->devfn), PCI_FUNC(pdev->devfn));
+-
+-    if (TARGET_PAGE_SIZE != qemu_real_host_page_size()) {
+-        error_setg(errp, "Target page size must be the same as host page size");
+-        return;
+-    }
+-
+-    func0 = pci_get_function_0(pdev);
+-    /* Break if not vmxnet3 device in slot 0 */
+-    if (strcmp(object_get_typename(OBJECT(func0)), TYPE_VMXNET3)) {
+-        error_setg(errp, "Device on %x.0 must be %s", PCI_SLOT(pdev->devfn),
+-                   TYPE_VMXNET3);
+-        return;
+-    }
+-    dev->func0 = VMXNET3(func0);
+-
+-    addrconf_addr_eui48((unsigned char *)&dev->node_guid,
+-                        (const char *)&dev->func0->conf.macaddr.a);
+-
+-    memdev_root = object_resolve_path("/objects", NULL);
+-    if (memdev_root) {
+-        object_child_foreach(memdev_root, pvrdma_check_ram_shared, &ram_shared);
+-    }
+-    if (!ram_shared) {
+-        error_setg(errp, "Only shared memory backed ram is supported");
+-        return;
+-    }
+-
+-    dev->dsr_info.dsr = NULL;
+-
+-    init_pci_config(pdev);
+-
+-    init_bars(pdev);
+-
+-    init_regs(pdev);
+-
+-    rc = init_msix(pdev);
+-    if (rc) {
+-        goto out;
+-    }
+-
+-    rc = rdma_backend_init(&dev->backend_dev, pdev, &dev->rdma_dev_res,
+-                           dev->backend_device_name, dev->backend_port_num,
+-                           &dev->dev_attr, &dev->mad_chr);
+-    if (rc) {
+-        goto out;
+-    }
+-
+-    init_dev_caps(dev);
+-
+-    rc = rdma_rm_init(&dev->rdma_dev_res, &dev->dev_attr);
+-    if (rc) {
+-        goto out;
+-    }
+-
+-    rc = pvrdma_qp_ops_init();
+-    if (rc) {
+-        goto out;
+-    }
+-
+-    memset(&dev->stats, 0, sizeof(dev->stats));
+-
+-    dev->shutdown_notifier.notify = pvrdma_shutdown_notifier;
+-    qemu_register_shutdown_notifier(&dev->shutdown_notifier);
+-
+-#ifdef LEGACY_RDMA_REG_MR
+-    rdma_info_report("Using legacy reg_mr");
+-#else
+-    rdma_info_report("Using iova reg_mr");
+-#endif
+-
+-out:
+-    if (rc) {
+-        pvrdma_fini(pdev);
+-        error_append_hint(errp, "Device failed to load\n");
+-    }
+-}
+-
+-static void pvrdma_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+-    RdmaProviderClass *ir = RDMA_PROVIDER_CLASS(klass);
+-
+-    k->realize = pvrdma_realize;
+-    k->vendor_id = PCI_VENDOR_ID_VMWARE;
+-    k->device_id = PCI_DEVICE_ID_VMWARE_PVRDMA;
+-    k->revision = 0x00;
+-    k->class_id = PCI_CLASS_NETWORK_OTHER;
+-
+-    dc->desc = "RDMA Device";
+-    device_class_set_props(dc, pvrdma_dev_properties);
+-    set_bit(DEVICE_CATEGORY_NETWORK, dc->categories);
+-
+-    ir->format_statistics = pvrdma_format_statistics;
+-}
+-
+-static const TypeInfo pvrdma_info = {
+-    .name = PVRDMA_HW_NAME,
+-    .parent = TYPE_PCI_DEVICE,
+-    .instance_size = sizeof(PVRDMADev),
+-    .class_init = pvrdma_class_init,
+-    .interfaces = (InterfaceInfo[]) {
+-        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+-        { INTERFACE_RDMA_PROVIDER },
+-        { }
+-    }
+-};
+-
+-static void register_types(void)
+-{
+-    type_register_static(&pvrdma_info);
+-}
+-
+-type_init(register_types)
+diff --git a/hw/rdma/vmw/pvrdma_qp_ops.c b/hw/rdma/vmw/pvrdma_qp_ops.c
+deleted file mode 100644
+index c30c8344f6..0000000000
+--- a/hw/rdma/vmw/pvrdma_qp_ops.c
++++ /dev/null
+@@ -1,298 +0,0 @@
+-/*
+- * QEMU paravirtual RDMA - QP implementation
+- *
+- * Copyright (C) 2018 Oracle
+- * Copyright (C) 2018 Red Hat Inc
+- *
+- * Authors:
+- *     Yuval Shaia <yuval.shaia@oracle.com>
+- *     Marcel Apfelbaum <marcel@redhat.com>
+- *
+- * This work is licensed under the terms of the GNU GPL, version 2 or later.
+- * See the COPYING file in the top-level directory.
+- *
+- */
+-
+-#include "qemu/osdep.h"
+-
+-#include "../rdma_utils.h"
+-#include "../rdma_rm.h"
+-#include "../rdma_backend.h"
+-
+-#include "trace.h"
+-
+-#include "pvrdma.h"
+-#include "standard-headers/rdma/vmw_pvrdma-abi.h"
+-#include "pvrdma_qp_ops.h"
+-
+-typedef struct CompHandlerCtx {
+-    PVRDMADev *dev;
+-    uint32_t cq_handle;
+-    struct pvrdma_cqe cqe;
+-} CompHandlerCtx;
+-
+-/* Send Queue WQE */
+-typedef struct PvrdmaSqWqe {
+-    struct pvrdma_sq_wqe_hdr hdr;
+-    struct pvrdma_sge sge[];
+-} PvrdmaSqWqe;
+-
+-/* Recv Queue WQE */
+-typedef struct PvrdmaRqWqe {
+-    struct pvrdma_rq_wqe_hdr hdr;
+-    struct pvrdma_sge sge[];
+-} PvrdmaRqWqe;
+-
+-/*
+- * 1. Put CQE on send CQ ring
+- * 2. Put CQ number on dsr completion ring
+- * 3. Interrupt host
+- */
+-static int pvrdma_post_cqe(PVRDMADev *dev, uint32_t cq_handle,
+-                           struct pvrdma_cqe *cqe, struct ibv_wc *wc)
+-{
+-    struct pvrdma_cqe *cqe1;
+-    struct pvrdma_cqne *cqne;
+-    PvrdmaRing *ring;
+-    RdmaRmCQ *cq = rdma_rm_get_cq(&dev->rdma_dev_res, cq_handle);
+-
+-    if (unlikely(!cq)) {
+-        return -EINVAL;
+-    }
+-
+-    ring = (PvrdmaRing *)cq->opaque;
+-
+-    /* Step #1: Put CQE on CQ ring */
+-    cqe1 = pvrdma_ring_next_elem_write(ring);
+-    if (unlikely(!cqe1)) {
+-        return -EINVAL;
+-    }
+-
+-    memset(cqe1, 0, sizeof(*cqe1));
+-    cqe1->wr_id = cqe->wr_id;
+-    cqe1->qp = cqe->qp ? cqe->qp : wc->qp_num;
+-    cqe1->opcode = cqe->opcode;
+-    cqe1->status = wc->status;
+-    cqe1->byte_len = wc->byte_len;
+-    cqe1->src_qp = wc->src_qp;
+-    cqe1->wc_flags = wc->wc_flags;
+-    cqe1->vendor_err = wc->vendor_err;
+-
+-    trace_pvrdma_post_cqe(cq_handle, cq->notify, cqe1->wr_id, cqe1->qp,
+-                          cqe1->opcode, cqe1->status, cqe1->byte_len,
+-                          cqe1->src_qp, cqe1->wc_flags, cqe1->vendor_err);
+-
+-    pvrdma_ring_write_inc(ring);
+-
+-    /* Step #2: Put CQ number on dsr completion ring */
+-    cqne = pvrdma_ring_next_elem_write(&dev->dsr_info.cq);
+-    if (unlikely(!cqne)) {
+-        return -EINVAL;
+-    }
+-
+-    cqne->info = cq_handle;
+-    pvrdma_ring_write_inc(&dev->dsr_info.cq);
+-
+-    if (cq->notify != CNT_CLEAR) {
+-        if (cq->notify == CNT_ARM) {
+-            cq->notify = CNT_CLEAR;
+-        }
+-        post_interrupt(dev, INTR_VEC_CMD_COMPLETION_Q);
+-    }
+-
+-    return 0;
+-}
+-
+-static void pvrdma_qp_ops_comp_handler(void *ctx, struct ibv_wc *wc)
+-{
+-    CompHandlerCtx *comp_ctx = (CompHandlerCtx *)ctx;
+-
+-    pvrdma_post_cqe(comp_ctx->dev, comp_ctx->cq_handle, &comp_ctx->cqe, wc);
+-
+-    g_free(ctx);
+-}
+-
+-static void complete_with_error(uint32_t vendor_err, void *ctx)
+-{
+-    struct ibv_wc wc = {};
+-
+-    wc.status = IBV_WC_GENERAL_ERR;
+-    wc.vendor_err = vendor_err;
+-
+-    pvrdma_qp_ops_comp_handler(ctx, &wc);
+-}
+-
+-void pvrdma_qp_ops_fini(void)
+-{
+-    rdma_backend_unregister_comp_handler();
+-}
+-
+-int pvrdma_qp_ops_init(void)
+-{
+-    rdma_backend_register_comp_handler(pvrdma_qp_ops_comp_handler);
+-
+-    return 0;
+-}
+-
+-void pvrdma_qp_send(PVRDMADev *dev, uint32_t qp_handle)
+-{
+-    RdmaRmQP *qp;
+-    PvrdmaSqWqe *wqe;
+-    PvrdmaRing *ring;
+-    int sgid_idx;
+-    union ibv_gid *sgid;
+-
+-    qp = rdma_rm_get_qp(&dev->rdma_dev_res, qp_handle);
+-    if (unlikely(!qp)) {
+-        return;
+-    }
+-
+-    ring = (PvrdmaRing *)qp->opaque;
+-
+-    wqe = pvrdma_ring_next_elem_read(ring);
+-    while (wqe) {
+-        CompHandlerCtx *comp_ctx;
+-
+-        /* Prepare CQE */
+-        comp_ctx = g_new(CompHandlerCtx, 1);
+-        comp_ctx->dev = dev;
+-        comp_ctx->cq_handle = qp->send_cq_handle;
+-        comp_ctx->cqe.wr_id = wqe->hdr.wr_id;
+-        comp_ctx->cqe.qp = qp_handle;
+-        comp_ctx->cqe.opcode = IBV_WC_SEND;
+-
+-        sgid = rdma_rm_get_gid(&dev->rdma_dev_res, wqe->hdr.wr.ud.av.gid_index);
+-        if (!sgid) {
+-            rdma_error_report("Failed to get gid for idx %d",
+-                              wqe->hdr.wr.ud.av.gid_index);
+-            complete_with_error(VENDOR_ERR_INV_GID_IDX, comp_ctx);
+-            continue;
+-        }
+-
+-        sgid_idx = rdma_rm_get_backend_gid_index(&dev->rdma_dev_res,
+-                                                 &dev->backend_dev,
+-                                                 wqe->hdr.wr.ud.av.gid_index);
+-        if (sgid_idx <= 0) {
+-            rdma_error_report("Failed to get bk sgid_idx for sgid_idx %d",
+-                              wqe->hdr.wr.ud.av.gid_index);
+-            complete_with_error(VENDOR_ERR_INV_GID_IDX, comp_ctx);
+-            continue;
+-        }
+-
+-        if (wqe->hdr.num_sge > dev->dev_attr.max_sge) {
+-            rdma_error_report("Invalid num_sge=%d (max %d)", wqe->hdr.num_sge,
+-                              dev->dev_attr.max_sge);
+-            complete_with_error(VENDOR_ERR_INV_NUM_SGE, comp_ctx);
+-            continue;
+-        }
+-
+-        rdma_backend_post_send(&dev->backend_dev, &qp->backend_qp, qp->qp_type,
+-                               (struct ibv_sge *)&wqe->sge[0], wqe->hdr.num_sge,
+-                               sgid_idx, sgid,
+-                               (union ibv_gid *)wqe->hdr.wr.ud.av.dgid,
+-                               wqe->hdr.wr.ud.remote_qpn,
+-                               wqe->hdr.wr.ud.remote_qkey, comp_ctx);
+-
+-        pvrdma_ring_read_inc(ring);
+-
+-        wqe = pvrdma_ring_next_elem_read(ring);
+-    }
+-}
+-
+-void pvrdma_qp_recv(PVRDMADev *dev, uint32_t qp_handle)
+-{
+-    RdmaRmQP *qp;
+-    PvrdmaRqWqe *wqe;
+-    PvrdmaRing *ring;
+-
+-    qp = rdma_rm_get_qp(&dev->rdma_dev_res, qp_handle);
+-    if (unlikely(!qp)) {
+-        return;
+-    }
+-
+-    ring = &((PvrdmaRing *)qp->opaque)[1];
+-
+-    wqe = pvrdma_ring_next_elem_read(ring);
+-    while (wqe) {
+-        CompHandlerCtx *comp_ctx;
+-
+-        /* Prepare CQE */
+-        comp_ctx = g_new(CompHandlerCtx, 1);
+-        comp_ctx->dev = dev;
+-        comp_ctx->cq_handle = qp->recv_cq_handle;
+-        comp_ctx->cqe.wr_id = wqe->hdr.wr_id;
+-        comp_ctx->cqe.qp = qp_handle;
+-        comp_ctx->cqe.opcode = IBV_WC_RECV;
+-
+-        if (wqe->hdr.num_sge > dev->dev_attr.max_sge) {
+-            rdma_error_report("Invalid num_sge=%d (max %d)", wqe->hdr.num_sge,
+-                              dev->dev_attr.max_sge);
+-            complete_with_error(VENDOR_ERR_INV_NUM_SGE, comp_ctx);
+-            continue;
+-        }
+-
+-        rdma_backend_post_recv(&dev->backend_dev, &qp->backend_qp, qp->qp_type,
+-                               (struct ibv_sge *)&wqe->sge[0], wqe->hdr.num_sge,
+-                               comp_ctx);
+-
+-        pvrdma_ring_read_inc(ring);
+-
+-        wqe = pvrdma_ring_next_elem_read(ring);
+-    }
+-}
+-
+-void pvrdma_srq_recv(PVRDMADev *dev, uint32_t srq_handle)
+-{
+-    RdmaRmSRQ *srq;
+-    PvrdmaRqWqe *wqe;
+-    PvrdmaRing *ring;
+-
+-    srq = rdma_rm_get_srq(&dev->rdma_dev_res, srq_handle);
+-    if (unlikely(!srq)) {
+-        return;
+-    }
+-
+-    ring = (PvrdmaRing *)srq->opaque;
+-
+-    wqe = pvrdma_ring_next_elem_read(ring);
+-    while (wqe) {
+-        CompHandlerCtx *comp_ctx;
+-
+-        /* Prepare CQE */
+-        comp_ctx = g_new(CompHandlerCtx, 1);
+-        comp_ctx->dev = dev;
+-        comp_ctx->cq_handle = srq->recv_cq_handle;
+-        comp_ctx->cqe.wr_id = wqe->hdr.wr_id;
+-        comp_ctx->cqe.qp = 0;
+-        comp_ctx->cqe.opcode = IBV_WC_RECV;
+-
+-        if (wqe->hdr.num_sge > dev->dev_attr.max_sge) {
+-            rdma_error_report("Invalid num_sge=%d (max %d)", wqe->hdr.num_sge,
+-                              dev->dev_attr.max_sge);
+-            complete_with_error(VENDOR_ERR_INV_NUM_SGE, comp_ctx);
+-            continue;
+-        }
+-
+-        rdma_backend_post_srq_recv(&dev->backend_dev, &srq->backend_srq,
+-                                   (struct ibv_sge *)&wqe->sge[0],
+-                                   wqe->hdr.num_sge,
+-                                   comp_ctx);
+-
+-        pvrdma_ring_read_inc(ring);
+-
+-        wqe = pvrdma_ring_next_elem_read(ring);
+-    }
+-
+-}
+-
+-void pvrdma_cq_poll(RdmaDeviceResources *dev_res, uint32_t cq_handle)
+-{
+-    RdmaRmCQ *cq;
+-
+-    cq = rdma_rm_get_cq(dev_res, cq_handle);
+-    if (!cq) {
+-        return;
+-    }
+-
+-    rdma_backend_poll_cq(dev_res, &cq->backend_cq);
+-}
+diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+index b0f948d337..f84a0dc523 100644
+--- a/monitor/qmp-cmds.c
++++ b/monitor/qmp-cmds.c
+@@ -31,7 +31,6 @@
+ #include "qapi/type-helpers.h"
+ #include "hw/mem/memory-device.h"
+ #include "hw/intc/intc.h"
+-#include "hw/rdma/rdma.h"
+ 
+ NameInfo *qmp_query_name(Error **errp)
+ {
+diff --git a/Kconfig.host b/Kconfig.host
+index f496475f8e..f6a2a131e6 100644
+--- a/Kconfig.host
++++ b/Kconfig.host
+@@ -35,9 +35,6 @@ config VHOST_KERNEL
+ config VIRTFS
+     bool
+ 
+-config PVRDMA
+-    bool
+-
+ config MULTIPROCESS_ALLOWED
+     bool
+     imply MULTIPROCESS
+diff --git a/contrib/rdmacm-mux/meson.build b/contrib/rdmacm-mux/meson.build
+deleted file mode 100644
+index 36c9c89630..0000000000
+--- a/contrib/rdmacm-mux/meson.build
++++ /dev/null
+@@ -1,7 +0,0 @@
+-if have_pvrdma
+-  # FIXME: broken on big endian architectures
+-  executable('rdmacm-mux', files('main.c'), genh,
+-             dependencies: [glib, libumad],
+-             build_by_default: false,
+-             install: false)
+-endif
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index ad1b1306e3..20a9835ea8 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -182,19 +182,6 @@ SRST
+     Show PIC state.
+ ERST
+ 
+-    {
+-        .name       = "rdma",
+-        .args_type  = "",
+-        .params     = "",
+-        .help       = "show RDMA state",
+-        .cmd_info_hrt = qmp_x_query_rdma,
+-    },
+-
+-SRST
+-  ``info rdma``
+-    Show RDMA state.
+-ERST
+-
+     {
+         .name       = "pci",
+         .args_type  = "",
+diff --git a/hw/Kconfig b/hw/Kconfig
+index 2c00936c28..32f876deb0 100644
+--- a/hw/Kconfig
++++ b/hw/Kconfig
+@@ -29,7 +29,6 @@ source pci-bridge/Kconfig
+ source pci-host/Kconfig
+ source pcmcia/Kconfig
+ source pci/Kconfig
+-source rdma/Kconfig
+ source remote/Kconfig
+ source rtc/Kconfig
+ source scsi/Kconfig
+diff --git a/hw/meson.build b/hw/meson.build
+index 463d702683..3049a6fab0 100644
+--- a/hw/meson.build
++++ b/hw/meson.build
+@@ -28,7 +28,6 @@ subdir('pci')
+ subdir('pci-bridge')
+ subdir('pci-host')
+ subdir('pcmcia')
+-subdir('rdma')
+ subdir('rtc')
+ subdir('scsi')
+ subdir('sd')
+diff --git a/hw/rdma/Kconfig b/hw/rdma/Kconfig
+deleted file mode 100644
+index 840320bdc0..0000000000
+--- a/hw/rdma/Kconfig
++++ /dev/null
+@@ -1,3 +0,0 @@
+-config VMW_PVRDMA
+-    default y if PCI_DEVICES
+-    depends on PVRDMA && MSI_NONBROKEN && VMXNET3_PCI
+diff --git a/hw/rdma/meson.build b/hw/rdma/meson.build
+deleted file mode 100644
+index 363c9b8c83..0000000000
+--- a/hw/rdma/meson.build
++++ /dev/null
+@@ -1,12 +0,0 @@
+-system_ss.add(when: 'CONFIG_VMW_PVRDMA', if_true: files(
+-  'rdma.c',
+-  'rdma_backend.c',
+-  'rdma_utils.c',
+-  'vmw/pvrdma_qp_ops.c',
+-))
+-specific_ss.add(when: 'CONFIG_VMW_PVRDMA', if_true: files(
+-  'rdma_rm.c',
+-  'vmw/pvrdma_cmd.c',
+-  'vmw/pvrdma_dev_ring.c',
+-  'vmw/pvrdma_main.c',
+-))
+diff --git a/hw/rdma/trace-events b/hw/rdma/trace-events
+deleted file mode 100644
+index c23175120e..0000000000
+--- a/hw/rdma/trace-events
++++ /dev/null
+@@ -1,31 +0,0 @@
+-# See docs/devel/tracing.rst for syntax documentation.
+-
+-# rdma_backend.c
+-rdma_check_dev_attr(const char *name, int max_bk, int max_fe) "%s: be=%d, fe=%d"
+-rdma_create_ah_cache_hit(uint64_t subnet, uint64_t if_id) "subnet=0x%"PRIx64",if_id=0x%"PRIx64
+-rdma_create_ah_cache_miss(uint64_t subnet, uint64_t if_id) "subnet=0x%"PRIx64",if_id=0x%"PRIx64
+-rdma_poll_cq(int ne, void *ibcq) "Got %d completion(s) from cq %p"
+-rdmacm_mux(const char *title, int msg_type, int op_code) "%s: msg_type=%d, op_code=%d"
+-rdmacm_mux_check_op_status(int msg_type, int op_code, int err_code) "resp: msg_type=%d, op_code=%d, err_code=%d"
+-rdma_mad_message(const char *title, int len, char *data) "mad %s (%d): %s"
+-rdma_backend_rc_qp_state_init(uint32_t qpn) "RC QP 0x%x switch to INIT"
+-rdma_backend_ud_qp_state_init(uint32_t qpn, uint32_t qkey) "UD QP 0x%x switch to INIT, qkey=0x%x"
+-rdma_backend_rc_qp_state_rtr(uint32_t qpn, uint64_t subnet, uint64_t ifid, uint8_t sgid_idx, uint32_t dqpn, uint32_t rq_psn) "RC QP 0x%x switch to RTR, subnet = 0x%"PRIx64", ifid = 0x%"PRIx64 ", sgid_idx=%d, dqpn=0x%x, rq_psn=0x%x"
+-rdma_backend_ud_qp_state_rtr(uint32_t qpn, uint32_t qkey) "UD QP 0x%x switch to RTR, qkey=0x%x"
+-rdma_backend_rc_qp_state_rts(uint32_t qpn, uint32_t sq_psn) "RC QP 0x%x switch to RTS, sq_psn=0x%x, "
+-rdma_backend_ud_qp_state_rts(uint32_t qpn, uint32_t sq_psn, uint32_t qkey) "UD QP 0x%x switch to RTS, sq_psn=0x%x, qkey=0x%x"
+-rdma_backend_get_gid_index(uint64_t subnet, uint64_t ifid, int gid_idx) "subnet=0x%"PRIx64", ifid=0x%"PRIx64 ", gid_idx=%d"
+-rdma_backend_gid_change(const char *op, uint64_t subnet, uint64_t ifid) "%s subnet=0x%"PRIx64", ifid=0x%"PRIx64
+-
+-# rdma_rm.c
+-rdma_res_tbl_get(char *name, uint32_t handle) "tbl %s, handle %d"
+-rdma_res_tbl_alloc(char *name, uint32_t handle) "tbl %s, handle %d"
+-rdma_res_tbl_dealloc(char *name, uint32_t handle) "tbl %s, handle %d"
+-rdma_rm_alloc_mr(uint32_t mr_handle, void *host_virt, uint64_t guest_start, uint64_t guest_length, int access_flags) "mr_handle=%d, host_virt=%p, guest_start=0x%"PRIx64", length=%" PRId64", access_flags=0x%x"
+-rdma_rm_dealloc_mr(uint32_t mr_handle, uint64_t guest_start) "mr_handle=%d, guest_start=0x%"PRIx64
+-rdma_rm_alloc_qp(uint32_t rm_qpn, uint32_t backend_qpn, uint8_t qp_type) "rm_qpn=%d, backend_qpn=0x%x, qp_type=%d"
+-rdma_rm_modify_qp(uint32_t qpn, uint32_t attr_mask, int qp_state, uint8_t sgid_idx) "qpn=0x%x, attr_mask=0x%x, qp_state=%d, sgid_idx=%d"
+-
+-# rdma_utils.c
+-rdma_pci_dma_map(uint64_t addr, void *vaddr, uint64_t len) "0x%"PRIx64" -> %p (len=%" PRIu64")"
+-rdma_pci_dma_unmap(void *vaddr) "%p"
+diff --git a/hw/rdma/vmw/trace-events b/hw/rdma/vmw/trace-events
+deleted file mode 100644
+index a6c77e1e10..0000000000
+--- a/hw/rdma/vmw/trace-events
++++ /dev/null
+@@ -1,17 +0,0 @@
+-# See docs/devel/tracing.rst for syntax documentation.
+-
+-# pvrdma_main.c
+-pvrdma_regs_read(uint64_t addr, uint64_t val) "pvrdma.regs[0x%"PRIx64"]=0x%"PRIx64
+-pvrdma_regs_write(uint64_t addr, uint64_t val, const char *reg_name, const char *val_name) "pvrdma.regs[0x%"PRIx64"]=0x%"PRIx64" (%s %s)"
+-pvrdma_uar_write(uint64_t addr, uint64_t val, const char *reg_name, const char *val_name, int val1, int val2) "uar[0x%"PRIx64"]=0x%"PRIx64" (cls=%s, op=%s, obj=%d, val=%d)"
+-
+-# pvrdma_cmd.c
+-pvrdma_map_to_pdir_host_virt(void *vfirst, void *vremaped) "mremap %p -> %p"
+-pvrdma_map_to_pdir_next_page(int page_idx, void *vnext, void *vremaped) "mremap [%d] %p -> %p"
+-pvrdma_exec_cmd(int cmd, int err) "cmd=%d, err=%d"
+-
+-# pvrdma_dev_ring.c
+-pvrdma_ring_next_elem_read_no_data(char *ring_name) "pvrdma_ring %s is empty"
+-
+-# pvrdma_qp_ops.c
+-pvrdma_post_cqe(uint32_t cq_handle, int notify, uint64_t wr_id, uint64_t qpn, uint32_t op_code, uint32_t status, uint32_t byte_len, uint32_t src_qp, uint32_t wc_flags, uint32_t vendor_err) "cq_handle=%d, notify=%d, wr_id=0x%"PRIx64", qpn=0x%"PRIx64", opcode=%d, status=%d, byte_len=%d, src_qp=%d, wc_flags=%d, vendor_err=%d"
+diff --git a/meson_options.txt b/meson_options.txt
+index 0a99a059ec..b5c0bad9e7 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -198,8 +198,6 @@ option('opengl', type : 'feature', value : 'auto',
+        description: 'OpenGL support')
+ option('rdma', type : 'feature', value : 'auto',
+        description: 'Enable RDMA-based migration')
+-option('pvrdma', type : 'feature', value : 'auto',
+-       description: 'Enable PVRDMA support')
+ option('gtk', type : 'feature', value : 'auto',
+        description: 'GTK+ user interface')
+ option('sdl', type : 'feature', value : 'auto',
+diff --git a/qapi/meson.build b/qapi/meson.build
+index 375d564277..c92af6e063 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -62,7 +62,6 @@ if have_system
+     'cryptodev',
+     'qdev',
+     'pci',
+-    'rdma',
+     'rocker',
+     'tpm',
+   ]
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 7fd1713fa8..f7ef9b4e41 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -5113,9 +5113,6 @@ SRST
+         allows a co-operating external process to access the QEMU memory
+         region.
+ 
+-        The ``share`` is also required for pvrdma devices due to
+-        limitations in the RDMA API provided by Linux.
+-
+         Setting share=on might affect the ability to configure NUMA
+         bindings for the memory backend under some circumstances, see
+         Documentation/vm/numa\_memory\_policy.txt on the Linux kernel
+diff --git a/scripts/ci/org.centos/stream/8/x86_64/configure b/scripts/ci/org.centos/stream/8/x86_64/configure
+index 76781f17f4..868db665f6 100755
+--- a/scripts/ci/org.centos/stream/8/x86_64/configure
++++ b/scripts/ci/org.centos/stream/8/x86_64/configure
+@@ -99,7 +99,6 @@
+ --disable-opengl \
+ --disable-parallels \
+ --disable-pie \
+---disable-pvrdma \
+ --disable-qcow1 \
+ --disable-qed \
+ --disable-qom-cast-debug \
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 680fa3f581..5ace33f167 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -163,7 +163,6 @@ meson_options_help() {
+   printf "%s\n" '  pixman          pixman support'
+   printf "%s\n" '  plugins         TCG plugins via shared library loading'
+   printf "%s\n" '  png             PNG support with libpng'
+-  printf "%s\n" '  pvrdma          Enable PVRDMA support'
+   printf "%s\n" '  qcow1           qcow1 image format support'
+   printf "%s\n" '  qed             qed image format support'
+   printf "%s\n" '  qga-vss         build QGA VSS support (broken with MinGW)'
+@@ -428,8 +427,6 @@ _meson_option_parse() {
+     --enable-png) printf "%s" -Dpng=enabled ;;
+     --disable-png) printf "%s" -Dpng=disabled ;;
+     --prefix=*) quote_sh "-Dprefix=$2" ;;
+-    --enable-pvrdma) printf "%s" -Dpvrdma=enabled ;;
+-    --disable-pvrdma) printf "%s" -Dpvrdma=disabled ;;
+     --enable-qcow1) printf "%s" -Dqcow1=enabled ;;
+     --disable-qcow1) printf "%s" -Dqcow1=disabled ;;
+     --enable-qed) printf "%s" -Dqed=enabled ;;
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index a0006eec6f..73c292bbac 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -55,7 +55,6 @@ cp_portable() {
+                                      -e 'linux/if_ether' \
+                                      -e 'input-event-codes' \
+                                      -e 'sys/' \
+-                                     -e 'pvrdma_verbs' \
+                                      -e 'drm.h' \
+                                      -e 'limits' \
+                                      -e 'linux/const' \
+@@ -226,32 +225,6 @@ mkdir -p "$output/include/standard-headers/drm"
+ cp_portable "$tmpdir/include/drm/drm_fourcc.h" \
+             "$output/include/standard-headers/drm"
+ 
+-rm -rf "$output/include/standard-headers/drivers/infiniband/hw/vmw_pvrdma"
+-mkdir -p "$output/include/standard-headers/drivers/infiniband/hw/vmw_pvrdma"
+-
+-# Remove the unused functions from pvrdma_verbs.h avoiding the unnecessary
+-# import of several infiniband/networking/other headers
+-tmp_pvrdma_verbs="$tmpdir/pvrdma_verbs.h"
+-# Parse the entire file instead of single lines to match
+-# function declarations expanding over multiple lines
+-# and strip the declarations starting with pvrdma prefix.
+-sed  -e '1h;2,$H;$!d;g'  -e 's/[^};]*pvrdma[^(| ]*([^)]*);//g' \
+-    "$linux/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.h" > \
+-    "$tmp_pvrdma_verbs";
+-
+-for i in "$linux/drivers/infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h" \
+-         "$tmp_pvrdma_verbs"; do \
+-    cp_portable "$i" \
+-         "$output/include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/"
+-done
+-
+-rm -rf "$output/include/standard-headers/rdma/"
+-mkdir -p "$output/include/standard-headers/rdma/"
+-for i in "$tmpdir/include/rdma/vmw_pvrdma-abi.h"; do
+-    cp_portable "$i" \
+-         "$output/include/standard-headers/rdma/"
+-done
+-
+ cat <<EOF >$output/include/standard-headers/linux/types.h
+ /* For QEMU all types are already defined via osdep.h, so this
+  * header does not need to do anything.
 -- 
 2.41.0
 
