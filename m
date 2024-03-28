@@ -4,85 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82704CD11DF
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 18:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C78ACD11DD
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 18:46:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpue4-000536-Lz; Thu, 28 Mar 2024 14:38:38 -0400
+	id 1rpul7-00079K-PX; Thu, 28 Mar 2024 14:45:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rpue2-00052c-QG
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 14:38:34 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1rpue1-0000Qq-DR
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 14:38:34 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-6e6f69e850bso1507701b3a.0
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 11:38:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711651112; x=1712255912; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8k8ShgZpDq6NET7E/sFDOpXqTEBsCxuTZlNM10OEm+g=;
- b=ZMN5YWbBYo0MOFS9NETgtDrOlN+WZy4s9ypKOgtGWfV9CqoGP3rK0NoFh4tu4sLwuF
- dwXKTahWYrFe66uTTRcL4ThLmOA8O0UjAEVvQGnJABIhPXtQZgRT2HpYFZYZ/eqzweXS
- bRAOEt/jOrLWozaECFoYRUFGo5EEfSELGFbQYEHVxbmpYRW/BOtAd9seUUN4XWA/lqXP
- QtRJTxAokp+Zo2+wDXtDsxfQxJoGvOYPAGh+AeyyrbNR78jtRyQ4xyAtg3W1mqV4hCi7
- pXhOZ7+/GZ/XFqcjtkTdcprCtfVCAInVtfKs5e1Wteuq8FbMQGrhA9jSgup610oIZBEz
- oo8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711651112; x=1712255912;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8k8ShgZpDq6NET7E/sFDOpXqTEBsCxuTZlNM10OEm+g=;
- b=esjbtmJxlobkkwi8JhcKm88renZ/wZl3Oh5LOOCvRLri0zXEUG1uGgFh+nvimrlxEl
- nWiswkRDi9+nuIXrstUKUnHhCUJNbSaqZIqnJutdhxWWrbJw4h5xF3fwBdPez628KYdw
- eUlEnZGuZrwmVbq6bAh3++JUDCPbCb7rWsQfgOST8ehGO2SQ/hKZduiD9s6yMqYPeBXc
- gE6ih4vWMtwyIvL88P3zVxWqumQ5atk1q3vrofdWeFuS6t2wfF459EIWQBGt3AnDZZLa
- Pb9matHp9dGMMlVTCU6ubzosjV6oSBJMuskr1eHqycFyOlxwl6e1wonpyd9yErKQaeae
- BZZg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU5sIxpGwE2z8cbCL2tO4SStuomMM+p8uVc436vRGzoz/c65Jq67NidPTh0lZNrxQX86G8r4IZ4szMZVYrLn2/YIOobG4o=
-X-Gm-Message-State: AOJu0YwORVFFFtUKV8A5qrWi4Fl9zVOsLASrtUDXa75WzR5Y/Qpb8dJo
- QCsM9R1e/ZupFxI3kiJ8ufG3VwlmVKzNQrrARgdtIyxgatfLgn+95Ix+E058PIs=
-X-Google-Smtp-Source: AGHT+IEyNFk1U7IBFhjb/w6h7CXqQ32MFAvPLY/YcYH4rWFzLANa8v2AUvZYuQfKGn9/chXHNyf54g==
-X-Received: by 2002:a05:6a20:b387:b0:1a3:6a74:2e6b with SMTP id
- eg7-20020a056a20b38700b001a36a742e6bmr3219271pzb.55.1711651111966; 
- Thu, 28 Mar 2024 11:38:31 -0700 (PDT)
-Received: from [172.20.1.19] (098-147-007-212.res.spectrum.com. [98.147.7.212])
- by smtp.gmail.com with ESMTPSA id
- fj14-20020a056a003a0e00b006e554afa254sm1698720pfb.38.2024.03.28.11.38.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Mar 2024 11:38:31 -0700 (PDT)
-Message-ID: <364a15eb-ca23-4cd1-aff7-37de8bd7e825@linaro.org>
-Date: Thu, 28 Mar 2024 08:38:27 -1000
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rpul5-00078v-Dm
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 14:45:51 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1rpul3-0001jM-8i
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 14:45:51 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E86084E6061;
+ Thu, 28 Mar 2024 19:45:42 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id E4w3I916cRnf; Thu, 28 Mar 2024 19:45:40 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id F0B8B4E605E; Thu, 28 Mar 2024 19:45:40 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id EE2307456B4;
+ Thu, 28 Mar 2024 19:45:40 +0100 (CET)
+Date: Thu, 28 Mar 2024 19:45:40 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ xen-devel@lists.xenproject.org, Bernhard Beschow <shentey@gmail.com>, 
+ Thomas Huth <thuth@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, 
+ Anthony Perard <anthony.perard@citrix.com>, 
+ Ani Sinha <anisinha@redhat.com>
+Subject: Re: [RFC PATCH-for-9.1 09/29] hw/i386/pc: Pass PCMachineState argument
+ to acpi_setup()
+In-Reply-To: <20240328155439.58719-10-philmd@linaro.org>
+Message-ID: <04b9fcde-31f1-dfa8-8c4e-a666d0d873d8@eik.bme.hu>
+References: <20240328155439.58719-1-philmd@linaro.org>
+ <20240328155439.58719-10-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/intc/arm_gicv3: ICC_HPPIR* return SPURIOUS if int
- group is disabled
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20240328153333.2522667-1-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240328153333.2522667-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-534400419-1711651540=:36462"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,29 +76,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/28/24 05:33, Peter Maydell wrote:
-> If the group of the highest priority pending interrupt is disabled
-> via ICC_IGRPEN*, the ICC_HPPIR* registers should return
-> INTID_SPURIOUS, not the interrupt ID.  (See the GIC architecture
-> specification pseudocode functions ICC_HPPIR1_EL1[] and
-> HighestPriorityPendingInterrupt().)
-> 
-> Make HPPIR reads honour the group disable, the way we already do
-> when determining whether to preempt in icc_hppi_can_preempt().
-> 
-> Cc:qemu-stable@nongnu.org
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
-> Pre-existing bug which I happened to notice while working
-> on review of the FEAT_NMI patches. I don't suppose real world
-> code disables interrupt groups which it's actually using, which
-> is why nobody's noticed it. Still, it's a safe bugfix so might
-> as well go to stable too.
-> ---
->   hw/intc/arm_gicv3_cpuif.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+--3866299591-534400419-1711651540=:36462
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-r~
+On Thu, 28 Mar 2024, Philippe Mathieu-Daudé wrote:
+> acpi_setup() caller knows about the machine state, so pass
+> it as argument to avoid a qdev_get_machine() call.
+>
+> We already resolved X86_MACHINE(pcms) as 'x86ms' so use the
+> latter.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> hw/i386/acpi-build.h | 3 ++-
+> hw/i386/acpi-build.c | 5 ++---
+> hw/i386/pc.c         | 2 +-
+> 3 files changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/hw/i386/acpi-build.h b/hw/i386/acpi-build.h
+> index 0dce155c8c..31de5bddbd 100644
+> --- a/hw/i386/acpi-build.h
+> +++ b/hw/i386/acpi-build.h
+> @@ -2,6 +2,7 @@
+> #ifndef HW_I386_ACPI_BUILD_H
+> #define HW_I386_ACPI_BUILD_H
+> #include "hw/acpi/acpi-defs.h"
+> +#include "hw/i386/pc.h"
+>
+> extern const struct AcpiGenericAddress x86_nvdimm_acpi_dsmio;
+>
+> @@ -9,7 +10,7 @@ extern const struct AcpiGenericAddress x86_nvdimm_acpi_dsmio;
+> #define ACPI_PCIHP_SEJ_BASE 0x8
+> #define ACPI_PCIHP_BNMR_BASE 0x10
+>
+> -void acpi_setup(void);
+> +void acpi_setup(PCMachineState *pcms);
+
+This is changed to PcPciMachineState * in a following patch so can't you 
+already introduce it here to avoid some churn?
+
+Regards,
+BALATON Zoltan
+
+> Object *acpi_get_i386_pci_host(void);
+>
+> #endif
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index 6e8e32e5d2..e702d5e9d2 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -2749,9 +2749,8 @@ static const VMStateDescription vmstate_acpi_build = {
+>     },
+> };
+>
+> -void acpi_setup(void)
+> +void acpi_setup(PCMachineState *pcms)
+> {
+> -    PCMachineState *pcms = PC_MACHINE(qdev_get_machine());
+>     X86MachineState *x86ms = X86_MACHINE(pcms);
+>     AcpiBuildTables tables;
+>     AcpiBuildState *build_state;
+> @@ -2771,7 +2770,7 @@ void acpi_setup(void)
+>         return;
+>     }
+>
+> -    if (!x86_machine_is_acpi_enabled(X86_MACHINE(pcms))) {
+> +    if (!x86_machine_is_acpi_enabled(x86ms)) {
+>         ACPI_BUILD_DPRINTF("ACPI disabled. Bailing out.\n");
+>         return;
+>     }
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 6d87d1d4c2..dfc0247bb6 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -601,7 +601,7 @@ void pc_machine_done(Notifier *notifier, void *data)
+>     /* set the number of CPUs */
+>     x86_rtc_set_cpus_count(x86ms->rtc, x86ms->boot_cpus);
+>
+> -    acpi_setup();
+> +    acpi_setup(pcms);
+>     if (x86ms->fw_cfg) {
+>         fw_cfg_build_smbios(pcms, x86ms->fw_cfg, pcms->smbios_entry_point_type);
+>         fw_cfg_build_feature_control(MACHINE(pcms), x86ms->fw_cfg);
+>
+--3866299591-534400419-1711651540=:36462--
 
