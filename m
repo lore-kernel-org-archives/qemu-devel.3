@@ -4,84 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C16E3C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 07:08:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5AB9C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 07:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpjrs-0004qv-Et; Thu, 28 Mar 2024 03:08:08 -0400
+	id 1rpk41-0007Fr-ML; Thu, 28 Mar 2024 03:20:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rpjrq-0004qW-Lo
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 03:08:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rpk3z-0007FK-QS
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 03:20:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1rpjrm-0004dp-1D
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 03:08:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rpk3x-0000E1-6h
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 03:20:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711609680;
+ s=mimecast20190719; t=1711610435;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZnqrvEIozezjHPNJzKHpuicodoyO2tN7o2xjiP2w/Mg=;
- b=SIGrqNxUGJR6RMeqebBr3IVbA7OcMkK0l3yKc7AK3kSp1fYsXSLZXIgI281PAz2nFpNkLi
- ky7OJldQO489jv28gu7ez23OF/kiARWB4J46Ac+mN3o6ZSMKiUmn2n5RGhqp81WRAVFKUW
- dbx7gker6KnGexd35Yn797bny+dUH2w=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Y/raSgnR5Flpm5xYnPZQmx/dBouS2XEbVWQJ44VVP4E=;
+ b=FEqH1iqcvDoLq1k0YU243rP6/2Erjnc24xo8xWJ8ltuIQ8HygEwWr6hTgRgLl1aOFiexo4
+ XIVqochEk/xwu+j+CMsS8TgEEPFJsgrIrdgsxhpMP7L6+0xVwYWa6MMnfPPqse7a+u0f71
+ RgzZpUq2w1UAwZwQ8+iodbBidUzMS8w=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-A3uUnXqiMrGhhWn2yJNNDw-1; Thu, 28 Mar 2024 03:07:58 -0400
-X-MC-Unique: A3uUnXqiMrGhhWn2yJNNDw-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-568b1075d18so361881a12.3
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 00:07:58 -0700 (PDT)
+ us-mta-562-qJNkBSmkPJ2faTZEn4WBgQ-1; Thu, 28 Mar 2024 03:20:31 -0400
+X-MC-Unique: qJNkBSmkPJ2faTZEn4WBgQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a474ac232e9so29537566b.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 00:20:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711609677; x=1712214477;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZnqrvEIozezjHPNJzKHpuicodoyO2tN7o2xjiP2w/Mg=;
- b=Y0mQMxoKupnMUD+uxXELFE6UW0TRroDj300XBgKAdFsaV3Gw9PRCwSlE1qXmCCHXSy
- DWpkojiSnO4zgiUKDp7wVpJY4b20od9Y2xdtjC0JDCqJRCJUdwinyqxbhhi3FioOcdny
- p1oEr2V+FXbUce9hb/nSKlpk2Kx/o5Smd8qiiNlw4gzpUOWqrNoCGkwPdoW6+ip9B282
- vTCVT4K1k3BWFa9tcF+BTuT1F29NZJvBqwZmtXOk4lQEKkkuK3Kl+XROJdZQ/KB+dql7
- Qjk5/2laF5tcgG3X3/4xp69ZUzm4o/BkiOU6+zb5WquCGgU/W/UDipEf6L1Kh1r77gnX
- AYOA==
+ d=1e100.net; s=20230601; t=1711610430; x=1712215230;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Y/raSgnR5Flpm5xYnPZQmx/dBouS2XEbVWQJ44VVP4E=;
+ b=w3H69p3WLHpUN+WR/RRTk2LEkqQ47dEmhIe1OuR8JUOCMnQ3y3tPODyn/lQaHkGBdP
+ m+yP7dxV55GZnrp314fyCUieMCGzPjsvIxbKDxKy7ifYvuBDUDnqqBogZ5e9iPj2ciiX
+ L7PNDZVEX6EoRyZKFZCmCvv6W/8C9b6c1VIFcqdUZKsHCav74RpiRXDewqm0PJQGWcB5
+ AG7Kdmif5b6UCfA9aUsxMlsXpRtOflaBtyoVoh5YfUELZds6oDhcn8v3EmYfK6okUiDA
+ 3g54EGXhY1czgAhBwaaHL5mXtK0ePyqLrXSSoFAOOlP3tnJ9m5uOPPQ7FRoQiAJTO0Vi
+ HFSg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuPFx400JmBAXm+V+HATljOlJPFfgjWhskbVKaCZApEKt0RpZ6j4kfNI89VgauH8AIi1P8Mw4om/8rZs1/+wlzbz6SU48=
-X-Gm-Message-State: AOJu0YxpD4uiu5pm79PrpM2QxQWU2oELHoo1KditLNoxK1ActQLPuyNQ
- rd7fmTjSn9ljZGMtcaQSM4p1uR2/5V+GCDJ2KyzrnLkTGhellwK7MMlKAFLXUcmuqLBu6A+twYw
- cXQWFQ7ScmPiXdQVBW2c4pPGbvCrHlrjJQ3RkrDNNmSUhSEkzpSB4L3Bv5MdjNjQclzLcRO2+BD
- RGSmjkmBEpkD5dY65SNdNfjleLQil0nhQc0VJhzQ==
-X-Received: by 2002:a17:906:c00a:b0:a45:c931:5703 with SMTP id
- e10-20020a170906c00a00b00a45c9315703mr925211ejz.70.1711609677047; 
- Thu, 28 Mar 2024 00:07:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+77+OQrNdDb08QtoIr3iqJhpw+e5C2I+n8+LUPOAoC6KhB05cV8lC5m+hOFdh5UkS7Tg1JwNjUXbjfGDWdmE=
-X-Received: by 2002:a17:906:c00a:b0:a45:c931:5703 with SMTP id
- e10-20020a170906c00a00b00a45c9315703mr925197ejz.70.1711609676604; Thu, 28 Mar
- 2024 00:07:56 -0700 (PDT)
+ AJvYcCUsAdd6WSLd1Xw3gb/Qm00yjGmRns0Rn37oSdFbXYRaSiSP9hioPwVVi0tde9ZBzqFA0vMeSGyxpGioujgVT/fFMZiX/1A=
+X-Gm-Message-State: AOJu0YySke/0ctA1xHZDaBevtslyYvUpXYH5TLIR9ZTFtrqJuIAB6GnC
+ 7LfrVVLpeh4hN4Yq0IAVR1LThgToNbj3cI30228Z+y+kkq9rKuaZWlCwz0+C7Y0SUrjPRfM5N45
+ nExn9vve0e7vWyAZLtdX/E83QchBmyhLCMNc0rqxx6uRxMdJgyWgO
+X-Received: by 2002:a17:906:fa04:b0:a46:bfe2:521f with SMTP id
+ lo4-20020a170906fa0400b00a46bfe2521fmr1318273ejb.24.1711610430245; 
+ Thu, 28 Mar 2024 00:20:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFmfQYIEboJ8bIec628kSm20IUFPtWq+LnQH4CNZX2py3QaCJ8el81uV8H45k5zVIeA6Ic3Gg==
+X-Received: by 2002:a17:906:fa04:b0:a46:bfe2:521f with SMTP id
+ lo4-20020a170906fa0400b00a46bfe2521fmr1318240ejb.24.1711610429627; 
+ Thu, 28 Mar 2024 00:20:29 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f0:5969:7af8:be53:dc56:3ccc])
+ by smtp.gmail.com with ESMTPSA id
+ qu20-20020a170907111400b00a46e2f89a9csm409303ejb.32.2024.03.28.00.20.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Mar 2024 00:20:29 -0700 (PDT)
+Date: Thu, 28 Mar 2024 03:20:24 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>,
+ "Liu, Yi L" <yi.l.liu@intel.com>, "Sun, Yi Y" <yi.y.sun@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH v1 3/6] intel_iommu: Add a framework to check and sync
+ host IOMMU cap/ecap
+Message-ID: <20240328030023-mutt-send-email-mst@kernel.org>
+References: <20240228094432.1092748-1-zhenzhong.duan@intel.com>
+ <20240228094432.1092748-4-zhenzhong.duan@intel.com>
+ <20240312130058-mutt-send-email-mst@kernel.org>
+ <SJ0PR11MB67446BFCEC0FFFBC018D70DA922A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <20240313030303-mutt-send-email-mst@kernel.org>
+ <SJ0PR11MB6744F2805D8EF6722C725DAC922A2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <20240313071647-mutt-send-email-mst@kernel.org>
+ <b6ca5e9f-5ba2-4133-b7a0-2e3932fcd051@redhat.com>
 MIME-Version: 1.0
-References: <20240327012905.70188-1-lulu@redhat.com>
- <CACGkMEt5fTtwmeb18Yj0xDT_bCjsJQM2nB-u1GJDfFKnEtSSHA@mail.gmail.com>
- <CACLfguVY-yNWDAETt6gpUF7Ce5wbmLVXbpocsm7GW2mKRKukqQ@mail.gmail.com>
- <CACGkMEu67pZKApDkcBi4XSuS+ss001GKyapUkNNkwnSRcgPZqw@mail.gmail.com>
- <CACLfguXFn9aNUwh_aBkNsLZ79EWPRnXRNws95t6ySgE7b+4HPQ@mail.gmail.com>
- <CACGkMEuP71EWSC33gj2diABaDk4sYexBbskq9ZfpZMBoB1aBbQ@mail.gmail.com>
- <CACGkMEvRo4Q2Of7cwTNmR6mgapMWYQ79D4fErJ8AoqPrsc+ncA@mail.gmail.com>
- <CACLfguWfOpwGktTaDOQ=fFMjvFJ4L9i42kJiPess85OJSw0QFA@mail.gmail.com>
- <CACGkMEuX37wzRiO4T-7d1yE76_YxdFK9eh0cChRdAhVJ4iY5Vw@mail.gmail.com>
-In-Reply-To: <CACGkMEuX37wzRiO4T-7d1yE76_YxdFK9eh0cChRdAhVJ4iY5Vw@mail.gmail.com>
-From: Cindy Lu <lulu@redhat.com>
-Date: Thu, 28 Mar 2024 15:07:13 +0800
-Message-ID: <CACLfguWGXRGLF1WVFCX9tUk6nXGYNUi5NVFuy=sGzdQnr7+EpQ@mail.gmail.com>
-Subject: Re: [RFC 0/2] disable the configuration interrupt for the unsupported
- device
-To: Jason Wang <jasowang@redhat.com>
-Cc: mst@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b6ca5e9f-5ba2-4133-b7a0-2e3932fcd051@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,216 +121,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 28, 2024 at 12:14=E2=80=AFPM Jason Wang <jasowang@redhat.com> w=
-rote:
->
-> On Wed, Mar 27, 2024 at 5:44=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
+On Mon, Mar 18, 2024 at 02:20:50PM +0100, Eric Auger wrote:
+> Hi Michael,
+> 
+> On 3/13/24 12:17, Michael S. Tsirkin wrote:
+> > On Wed, Mar 13, 2024 at 07:54:11AM +0000, Duan, Zhenzhong wrote:
+> >>
+> >>> -----Original Message-----
+> >>> From: Michael S. Tsirkin <mst@redhat.com>
+> >>> Subject: Re: [PATCH v1 3/6] intel_iommu: Add a framework to check and
+> >>> sync host IOMMU cap/ecap
+> >>>
+> >>> On Wed, Mar 13, 2024 at 02:52:39AM +0000, Duan, Zhenzhong wrote:
+> >>>> Hi Michael,
+> >>>>
+> >>>>> -----Original Message-----
+> >>>>> From: Michael S. Tsirkin <mst@redhat.com>
+> >>>>> Subject: Re: [PATCH v1 3/6] intel_iommu: Add a framework to check and
+> >>>>> sync host IOMMU cap/ecap
+> >>>>>
+> >>>>> On Wed, Feb 28, 2024 at 05:44:29PM +0800, Zhenzhong Duan wrote:
+> >>>>>> From: Yi Liu <yi.l.liu@intel.com>
+> >>>>>>
+> >>>>>> Add a framework to check and synchronize host IOMMU cap/ecap with
+> >>>>>> vIOMMU cap/ecap.
+> >>>>>>
+> >>>>>> The sequence will be:
+> >>>>>>
+> >>>>>> vtd_cap_init() initializes iommu->cap/ecap.
+> >>>>>> vtd_check_hdev() update iommu->cap/ecap based on host cap/ecap.
+> >>>>>> iommu->cap_frozen set when machine create done, iommu->cap/ecap
+> >>>>> become readonly.
+> >>>>>> Implementation details for different backends will be in following
+> >>> patches.
+> >>>>>> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> >>>>>> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+> >>>>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> >>>>>> ---
+> >>>>>>  include/hw/i386/intel_iommu.h |  1 +
+> >>>>>>  hw/i386/intel_iommu.c         | 50
+> >>>>> ++++++++++++++++++++++++++++++++++-
+> >>>>>>  2 files changed, 50 insertions(+), 1 deletion(-)
+> >>>>>>
+> >>>>>> diff --git a/include/hw/i386/intel_iommu.h
+> >>>>> b/include/hw/i386/intel_iommu.h
+> >>>>>> index bbc7b96add..c71a133820 100644
+> >>>>>> --- a/include/hw/i386/intel_iommu.h
+> >>>>>> +++ b/include/hw/i386/intel_iommu.h
+> >>>>>> @@ -283,6 +283,7 @@ struct IntelIOMMUState {
+> >>>>>>
+> >>>>>>      uint64_t cap;                   /* The value of capability reg */
+> >>>>>>      uint64_t ecap;                  /* The value of extended capability reg */
+> >>>>>> +    bool cap_frozen;                /* cap/ecap become read-only after
+> >>> frozen */
+> >>>>>>      uint32_t context_cache_gen;     /* Should be in [1,MAX] */
+> >>>>>>      GHashTable *iotlb;              /* IOTLB */
+> >>>>>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> >>>>>> index ffa1ad6429..a9f9dfd6a7 100644
+> >>>>>> --- a/hw/i386/intel_iommu.c
+> >>>>>> +++ b/hw/i386/intel_iommu.c
+> >>>>>> @@ -35,6 +35,8 @@
+> >>>>>>  #include "sysemu/kvm.h"
+> >>>>>>  #include "sysemu/dma.h"
+> >>>>>>  #include "sysemu/sysemu.h"
+> >>>>>> +#include "hw/vfio/vfio-common.h"
+> >>>>>> +#include "sysemu/iommufd.h"
+> >>>>>>  #include "hw/i386/apic_internal.h"
+> >>>>>>  #include "kvm/kvm_i386.h"
+> >>>>>>  #include "migration/vmstate.h"
+> >>>>>> @@ -3819,6 +3821,38 @@ VTDAddressSpace
+> >>>>> *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+> >>>>>>      return vtd_dev_as;
+> >>>>>>  }
+> >>>>>>
+> >>>>>> +static int vtd_check_legacy_hdev(IntelIOMMUState *s,
+> >>>>>> +                                 IOMMULegacyDevice *ldev,
+> >>>>>> +                                 Error **errp)
+> >>>>>> +{
+> >>>>>> +    return 0;
+> >>>>>> +}
+> >>>>>> +
+> >>>>>> +static int vtd_check_iommufd_hdev(IntelIOMMUState *s,
+> >>>>>> +                                  IOMMUFDDevice *idev,
+> >>>>>> +                                  Error **errp)
+> >>>>>> +{
+> >>>>>> +    return 0;
+> >>>>>> +}
+> >>>>>> +
+> >>>>>> +static int vtd_check_hdev(IntelIOMMUState *s,
+> >>> VTDHostIOMMUDevice
+> >>>>> *vtd_hdev,
+> >>>>>> +                          Error **errp)
+> >>>>>> +{
+> >>>>>> +    HostIOMMUDevice *base_dev = vtd_hdev->dev;
+> >>>>>> +    IOMMUFDDevice *idev;
+> >>>>>> +
+> >>>>>> +    if (base_dev->type == HID_LEGACY) {
+> >>>>>> +        IOMMULegacyDevice *ldev = container_of(base_dev,
+> >>>>>> +                                               IOMMULegacyDevice, base);
+> >>>>>> +
+> >>>>>> +        return vtd_check_legacy_hdev(s, ldev, errp);
+> >>>>>> +    }
+> >>>>>> +
+> >>>>>> +    idev = container_of(base_dev, IOMMUFDDevice, base);
+> >>>>>> +
+> >>>>>> +    return vtd_check_iommufd_hdev(s, idev, errp);
+> >>>>>> +}
+> >>>>>> +
+> >>>>>>  static int vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int
+> >>>>> devfn,
+> >>>>>>                                      HostIOMMUDevice *base_dev, Error **errp)
+> >>>>>>  {
+> >>>>>> @@ -3829,6 +3863,7 @@ static int
+> >>> vtd_dev_set_iommu_device(PCIBus
+> >>>>> *bus, void *opaque, int devfn,
+> >>>>>>          .devfn = devfn,
+> >>>>>>      };
+> >>>>>>      struct vtd_as_key *new_key;
+> >>>>>> +    int ret;
+> >>>>>>
+> >>>>>>      assert(base_dev);
+> >>>>>>
+> >>>>>> @@ -3848,6 +3883,13 @@ static int
+> >>> vtd_dev_set_iommu_device(PCIBus
+> >>>>> *bus, void *opaque, int devfn,
+> >>>>>>      vtd_hdev->iommu_state = s;
+> >>>>>>      vtd_hdev->dev = base_dev;
+> >>>>>>
+> >>>>>> +    ret = vtd_check_hdev(s, vtd_hdev, errp);
+> >>>>>> +    if (ret) {
+> >>>>>> +        g_free(vtd_hdev);
+> >>>>>> +        vtd_iommu_unlock(s);
+> >>>>>> +        return ret;
+> >>>>>> +    }
+> >>>>>> +
+> >>>>>>      new_key = g_malloc(sizeof(*new_key));
+> >>>>>>      new_key->bus = bus;
+> >>>>>>      new_key->devfn = devfn;
+> >>>>>
+> >>>>> Okay. So when VFIO device is created, it will call
+> >>> vtd_dev_set_iommu_device
+> >>>>> and that in turn will update caps.
+> >>>>>
+> >>>>>
+> >>>>>
+> >>>>>
+> >>>>>> @@ -4083,7 +4125,9 @@ static void vtd_init(IntelIOMMUState *s)
+> >>>>>>      s->iq_dw = false;
+> >>>>>>      s->next_frcd_reg = 0;
+> >>>>>>
+> >>>>>> -    vtd_cap_init(s);
+> >>>>>> +    if (!s->cap_frozen) {
+> >>>>>> +        vtd_cap_init(s);
+> >>>>>> +    }
+> >>>>>>
+> >>>>> If it's fronzen it's because VFIO was added after machine done.
+> >>>>> And then what? I think caps are just wrong?
+> >>>> Not quite get your question on caps being wrong. But try to explains:
+> >>>>
+> >>>> When a hot plugged vfio device's host iommu cap isn't compatible with
+> >>>> vIOMMU's, hotplug should fail. Currently there is no check for this and
+> >>>> allow hotplug to succeed, but then some issue will reveal later,
+> >>>> e.g., vIOMMU's MGAW > host IOMMU's MGAW, guest can setup iova
+> >>>> mapping beyond host supported iova range, then DMA will fail.
+> >>>>
+> >>>> In fact, before this series, cap is not impacted by VFIO, so it's same effect of
+> >>>> frozen after machine done.
+> >>>>
+> >>>>>
+> >>>>> I think the way to approach this is just by specifying this
+> >>>>> as an option on command line.
+> >>>> Do you mean add a cap_frozen property to intel_iommu?
+> >>>> Vtd_init() is called in realize() and system reset(), so I utilize realize() to init
+> >>> cap
+> >>>> and froze cap before system reset(). If cap_frozen is an option, when it's
+> >>> set to
+> >>>> false, cap could be updated every system reset and it's not a fix value any
+> >>> more.
+> >>>> This may break migration.
+> >>> No, I mean either
+> >>> 1. add some kind of vfio-iommu device that is not exposed to guest
+> >>>   but is not hot pluggable
+> >> Not quite get, what will such vfio-iommu device be used for if not exposed to guest.
+> > It will update the IOMMU.
+> > And do so without need for tricky callbacks.
 > >
-> > On Wed, Mar 27, 2024 at 5:13=E2=80=AFPM Jason Wang <jasowang@redhat.com=
-> wrote:
-> > >
-> > > On Wed, Mar 27, 2024 at 5:12=E2=80=AFPM Jason Wang <jasowang@redhat.c=
-om> wrote:
-> > > >
-> > > > On Wed, Mar 27, 2024 at 4:28=E2=80=AFPM Cindy Lu <lulu@redhat.com> =
-wrote:
-> > > > >
-> > > > > On Wed, Mar 27, 2024 at 3:54=E2=80=AFPM Jason Wang <jasowang@redh=
-at.com> wrote:
-> > > > > >
-> > > > > > On Wed, Mar 27, 2024 at 2:03=E2=80=AFPM Cindy Lu <lulu@redhat.c=
-om> wrote:
-> > > > > > >
-> > > > > > > On Wed, Mar 27, 2024 at 11:05=E2=80=AFAM Jason Wang <jasowang=
-@redhat.com> wrote:
-> > > > > > > >
-> > > > > > > > Hi Cindy:
-> > > > > > > >
-> > > > > > > > On Wed, Mar 27, 2024 at 9:29=E2=80=AFAM Cindy Lu <lulu@redh=
-at.com> wrote:
-> > > > > > > > >
-> > > > > > > > > we need a crash in Non-standard image, here is the jira f=
-or this https://issues.redhat.com/browse/RHEL-28522
-> > > > > > > > > The root cause of the issue is that an IRQFD was used wit=
-hout initialization..
-> > > > > > > > >
-> > > > > > > > > During the booting process of the Vyatta image, the behav=
-ior of the called function in qemu is as follows:
-> > > > > > > > >
-> > > > > > > > > 1. vhost_net_stop() was called, this will call the functi=
-on
-> > > > > > > > > virtio_pci_set_guest_notifiers() with assgin=3D false, an=
-d
-> > > > > > > > > virtio_pci_set_guest_notifiers(=EF=BC=89 will release the=
- irqfd for vector 0
-> > > > > > > >
-> > > > > > > > Before vhost_net_stop(), do we know which vector is used by=
- which queue?
-> > > > > > > >
-> > > > > > > before this stop, vdev->config_verctor is get from
-> > > > > > > virtio_pci_common_read/virtio_pci_common_write
-> > > > > > > it was set to vector 0
-> > > > > >
-> > > > > > I basically meant if vector 0 is shared with some virtqueues he=
-re.
-> > > > > >
-> > > > > Really sorry for this, vq's vector is 1,2, and will not share wit=
-h the
-> > > > > configure vector
-> > > > > > > > >
-> > > > > > > > > 2. virtio_reset() was called -->set configure vector to V=
-IRTIO_NO_VECTORt
-> > > > > > > > >
-> > > > > > > > > 3.vhost_net_start() was called (at this time the configur=
-e vector is
-> > > > > > > > > still VIRTIO_NO_VECTOR) and call virtio_pci_set_guest_not=
-ifiers() with
-> > > > > > > > > assgin=3D true, so the irqfd for vector 0 was not "init" =
-during this process
-> > > > > > > >
-> > > > > > > > How does the configure vector differ from the virtqueue vec=
-tor here?
-> > > > > > > >
-> > > > > > > All the vectors are VIRTIO_NO_VECTOR (including vq). any
-> > > > > > > msix_fire_vector_notifier()
-> > > > > > > been called will cause the crash at this time.
-> > > > > >
-> > > > > > Won't virtio_pci_set_guest_notifiers() will try to allocate irq=
-fd when
-> > > > > > the assignment is true?
-> > > > > >
-> > > > > It will allocate, but  the vector is VIRTIO_NO_VECTOR (0xffff)
-> > > > >
-> > > > > then it will called kvm_virtio_pci_vector_use_one()
-> > > > >
-> > > > > in this function, there is a check for
-> > > > >
-> > > > >     if (vector >=3D msix_nr_vectors_allocated(dev))
-> > > > >
-> > > > > {         return 0;     }
-> > > > >
-> > > > > So it will return.
-> > > >
-> > > > How about let's just fix this?
-> > >
-> > > Btw, another question, how does vDPA work here?
-> > >
-> > > Thanks
-> > >
-> > the rhel/fedroa guest image will not call  vrtio_stop and virtio_reset
-> > during the boot
-> > So vector will not change to  VIRTIO_NO_VECTOR. So the vdpa's
-> > configure interrupt
-> > Should work ok and there is no crash
->
-> I mean:
->
-> 1) if vDPA can work with the image you used to reproduce the issue
-> 2) if current Qemu can work on old kernel without configure interrupt
-> support for vDPA
->
-Really Sorry for ,  I tried to answer this
-1. the vDPA device also can not working in this image,
- Because the irqfd for vector 0 is released. and then guest image
-called unmask this vector. These code are all not dependent on vdpa
-related processes
+> 
+> At the moment the only way VFIO can pass info to vIOMMU is through the
+> IOMMU MR API (IOMMUMemoryRegionClass).
+> Unfortunately this API is not fully adapted to new use cases because it
+> relies on the IOMMU MR to be enabled which causes the VFIO
+> 
+> vfio_listener_region_add() to be called and call the relevant IOMMU MR callback. Before the IOMMU MR enablement there is no way to convey info from VFIO to the vIOMMU. That why, for several years and since the beginning of discussions related to nested IOMMU, Peter Xu, Yi Liu, myself headed towards the usage of PCIIOMMUOps instead.
+> 
+> 
+> You will find in 
+> [RFC 0/7] VIRTIO-IOMMU/VFIO: Fix host iommu geometry handling for hotplugged devices
+> https://lore.kernel.org/all/20240117080414.316890-1-eric.auger@redhat.com/
+> yet another example of such kind of PCIIOMMUOps. In that series instead of relying on a HostIOMMUDevice object as proposed by Zhenzhong it uses a direct callback but it is still the same principle and the HostIOMMUDevice looks better to accomodate both iommufd and VFIO backend.
+> 
+> 
+> host reserved memory regions is not something we can easiliy describe at vIOMMU level. The info are fetched from host and propagated to the vIOMMU
+> 
+> I think nested stage setup would also need this PCIIOMMUOps trick to setup stage 1 info. So the introduction of the so called HostIOMMUDevice object has a broader scope than a gaw option or ecap option set I think.
+> 
+> If you don't like this approach, please can you elaborate on the "vfio-iommu device" proposal above so that we can explore it.
+> 
+> Thank you in advance
+> 
+> Eric
 
-2, the current qemu can work with old kernel
-because as I debug the old kernel  won't call
-msix_fire_vector_notifier for vector 0=EF=BC=8C and it will not unmask vect=
-or
-0
-Thansk
-cindy
 
-> Thanks
->
-> > Thanks
-> > cindy
-> >
-> > > >
-> > > > Btw, it's better to explain in detail like the above in the next ve=
-rsion.
-> > > >
-> > > > Thanks
-> > > >
-> > > > >
-> > > > > > > So I think this should
-> > > > > > > be a bug in this guest image
-> > > > > >
-> > > > > > The point is Qemu should not crash even if the guest driver is =
-buggy.
-> > > > > >
-> > > > > > It would be nice if we can have a qtest for this on top.
-> > > > > >
-> > > > > > Thanks
-> > > > > >
-> > > > > sure, got it, I have done the Qtest, and it passed
-> > > > > here is the result
-> > > > >
-> > > > > Ok:                 794
-> > > > > Expected Fail:      0
-> > > > > Fail:               0
-> > > > > Unexpected Pass:    0
-> > > > > Skipped:            32
-> > > > > Timeout:            0
-> > > > >
-> > > > > > > > >
-> > > > > > > > > 4. The system continues to boot and msix_fire_vector_noti=
-fier() was
-> > > > > > > > > called unmask the vector 0 and then met the crash
-> > > > > > > > > [msix_fire_vector_notifier] 112 called vector 0 is_masked=
- 1
-> > > > > > > > > [msix_fire_vector_notifier] 112 called vector 0 is_masked=
- 0
-> > > > > > > > >
-> > > > > > > > > The reason for not reproducing in RHEL/fedora guest image=
- is because
-> > > > > > > > > REHL/Fedora doesn't have the behavior of calling vhost_ne=
-t_stop and then virtio_reset, and also won't call msix_fire_vector_notifier=
- for vector 0 during system boot.
-> > > > > > > > >
-> > > > > > > > > The reason for not reproducing before configure interrupt=
- support is because
-> > > > > > > > > vector 0 is for configure interrupt,  before the support =
-for configure interrupts, the notifier process will not handle vector 0.
-> > > > > > > > >
-> > > > > > > > > For the device Vyatta using, it doesn't support configure=
- interrupts at all, So we plan to disable the configure interrupts in unsup=
-ported device
-> > > > > > > >
-> > > > > > > > Btw, let's tweak the changelog, it's a little bit hard to u=
-nderstand.
-> > > > > > > >
-> > > > > > > sure will do
-> > > > > > > thanks
-> > > > > > > Cindy
-> > > > > > > > Thanks
-> > > > > > > >
-> > > > > > > > >
-> > > > > > > > > Signed-off-by: Cindy Lu <lulu@redhat.com>
-> > > > > > > > >
-> > > > > > > > > Cindy Lu (2):
-> > > > > > > > >   virtio-net: disable the configure interrupt for not sup=
-port device
-> > > > > > > > >   virtio-pci: check if the configure interrupt enable
-> > > > > > > > >
-> > > > > > > > >  hw/net/virtio-net.c        |  5 ++++-
-> > > > > > > > >  hw/virtio/virtio-pci.c     | 41 +++++++++++++++++++++---=
---------------
-> > > > > > > > >  hw/virtio/virtio.c         |  1 +
-> > > > > > > > >  include/hw/virtio/virtio.h |  1 +
-> > > > > > > > >  4 files changed, 29 insertions(+), 19 deletions(-)
-> > > > > > > > >
-> > > > > > > > > --
-> > > > > > > > > 2.43.0
-> > > > > > > > >
-> > > > > > > >
-> > > > > > >
-> > > > > >
-> > > > >
-> > >
-> >
->
+Hi Eric,
+Sorry about the delay in answering - was on vacation.
+
+My concern is with user interface not with the internal API used.
+The concern is simple - assymetry and complex rules in handling devices.
+E.g. a non hotplugged vfio device adjusts the vIOMMU, then you can
+remove it and hotplug another one and it works, but if you start
+without vfio then hotplug then it might fail because it's too late
+to adjust the vIOMMU.
+
+And what I am saying, is that we either want something on the qemu command line
+that will tell the vIOMMU "please use info from the host" or
+have management take info from the host and supply that to the vIOMMU.
+The former seems more user friendly, for sure. The disadvantage of it
+is that one can't e.g. take the least common denominator between two
+hosts and make things migrateable in this way.
+If we limit our ambition to VFIO that might be acceptable, after all
+VFIO already assumes very similar hardware on src and dst of migration.
+The later is what we did for aw-bits.
+
+I see lots of acceptable options, but yes it seems nice to have
+something single that will work for all IOMMUs and also maybe live under
+VFIO? Thus I came up with the idea of a stub device living under vfio
+who's job is just to be present on command line and adjust the guest
+machine (ATM the viommu but we might see other uses too) to match host.
+
+
+-- 
+MST
 
 
