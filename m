@@ -4,115 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89D4CD1283
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:09:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CB79C54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:10:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpqR1-0000GA-IT; Thu, 28 Mar 2024 10:08:51 -0400
+	id 1rpqSc-0002Po-9A; Thu, 28 Mar 2024 10:10:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1rpqR0-0000BS-BG
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:08:50 -0400
-Received: from mail-bn8nam12on2086.outbound.protection.outlook.com
- ([40.107.237.86] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rpqSC-0002BE-DL; Thu, 28 Mar 2024 10:10:08 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1rpqQy-0004ut-8L
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:08:50 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=g0zPlRtbyHgrYqsThqufIxXzCL+GnNe4VsgARWLVBXorVwpJFCPqh1+cHgwIvTgKfU1R/EBRifEFyGwJlbVpAarU7F2PQCYDmtKaEIF7XETIoZgeD83lQTffJ8pBTW5OJCg1VB9pjvHpyBDL6jK89C4v47HGhSHF5yUTqkonsTIGTjNe4TH4BfA/2ahmBPACPpl9w5dT3edJaidA7xBryfiQHvD0fQZAti/D3Dpqge7Nx6VQdkDwdGgvCu34bJQPNZy2QDi6+0lzoFGqpWyq5U+nnMnyhFtMfG9sdsN00hHaSILXdibyeeSILRzVBoU9j9BdVQs3sQRCMpW+AekWFw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IEBOJfZH1NMwuBpz438sGCbB/PKALHGpjlyCGVZxIQo=;
- b=D4E1lM29xkE7wSCMcxJzt0GHxmlAig2C9T2KiMnd80DO30CS1wVHQ+j8i+wmCZbDVcZ31tiQYQ4vOqhDGWx/mgzTU2+rzTb727oa6QCxMkVmKFJR0rP9x6QIwv4H79jTPx3EWc+nUjv7BDIJxWJBXQhmfQrarKCdkIy8abKdK/yVmzSazURkCsnJpzmjU2MCnmM0Kv4YynyXD2kynAyVFyq9g4gJj0yB+t29ZF1zFBK5isXCrynYfNYUpsefcCzONvgU8Cri8NeKVUaVdSYrYxlY/tftTUmfVQsuwa6jCankEK606OH32DcH2Wx4XR0V1yvajBnNLUqXYZ6oVDQCzA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=IEBOJfZH1NMwuBpz438sGCbB/PKALHGpjlyCGVZxIQo=;
- b=d6sTfJDRg8JfBIdfsJxWiosV4pXonkDI3R9oXWkaeQ/wWsCJrOS40frnTiJIfxP30vlqqpEeKoTgmcXxNhu4b1QusbMa+DhwI1vIrKylidRBv21AQ1CS+O+LzWFYn4jc0Ij7VafZUvTmNu3TxhabjVGxtWLuH4WCCmNO/zvT/WRX9aB7U0KiVGtDs5wxXLBkEAgBOOb6m+7GlxmLVDC+q9MvdXxRkTsfmWQlI3aVIox74Nc+njxz+4xfaGmL8T6rOH8ZHr+QJyFif52MfL9jWYeEFEJS0WK3UPNJXb84WYDkQeq9h/zqqFyoooJhhE5jnvC0gLHOC+3vcxv84gA/sA==
-Received: from SN6PR16CA0055.namprd16.prod.outlook.com (2603:10b6:805:ca::32)
- by DS7PR12MB8204.namprd12.prod.outlook.com (2603:10b6:8:e1::9) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7409.32; Thu, 28 Mar 2024 14:03:40 +0000
-Received: from SA2PEPF00001507.namprd04.prod.outlook.com
- (2603:10b6:805:ca:cafe::6f) by SN6PR16CA0055.outlook.office365.com
- (2603:10b6:805:ca::32) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.38 via Frontend
- Transport; Thu, 28 Mar 2024 14:03:40 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- SA2PEPF00001507.mail.protection.outlook.com (10.167.242.39) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7409.10 via Frontend Transport; Thu, 28 Mar 2024 14:03:39 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.41; Thu, 28 Mar
- 2024 07:02:55 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 28 Mar
- 2024 07:02:54 -0700
-Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server id 15.2.1258.12 via Frontend Transport; Thu, 28
- Mar 2024 07:02:53 -0700
-From: Avihai Horon <avihaih@nvidia.com>
-To: <qemu-devel@nongnu.org>
-CC: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>, Avihai Horon
- <avihaih@nvidia.com>
-Subject: [PATCH for-9.0 0/2] migration: Two migration bug fixes
-Date: Thu, 28 Mar 2024 16:02:50 +0200
-Message-ID: <20240328140252.16756-1-avihaih@nvidia.com>
-X-Mailer: git-send-email 2.21.3
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rpqSA-0005Cb-MC; Thu, 28 Mar 2024 10:10:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+ List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=lZuA6NT0jNMphZQh64B+Okobf3QD0+Z1fOnMjG1hAqI=; b=DsHJEgd/iAyEZtEPdH4HTvYGE0
+ 4ALQG8ha5S9T/BjFKfgoE/qGpMB6bs3BZovL6DI6P0OzU1tZAJhq0TIiP2yNkznDgV2zOdHDT5p1k
+ 5FeCV/www8dEsNHHE6qP4BgjmAxVAbrTb021F0wFEHQuOkgj/2qQGdJ3n0POXC9bRsxPkuj2YfYDR
+ zNV1WD9i/rffy4RE6PAhg4DCA9BjmAUzAUVkh+sgnrvgsRrKwc86xuXeFknCZwOeFa3t5e7oHOxuG
+ Q0dz4oPI+cjdmwrDE2ewS/XkcRYZ7J1z93mijjfIn//To62lEL1At6lhnNzN1OKVNkmqoL08Mv0dQ
+ kj7gzKjcENmXF6JzDTg6AZEZGOe6osiNBjGdsPw3iK2wdHTvuTADv8y0zHfcVobslhaA2SD6g4nrJ
+ pteng8VCY79lXm/vlv09S4oqZytQcBigpQcYuaI6K4U+xi8Wcz3ofBvMdMod6wW/NBfAxsI2l2hMu
+ JmIv4FXuxnCyahJJoGRpZ8UhttJdJVBGgVbblUQz9EtkOqJ4CEIzLaMOhZWqI/DEAgaAsXWE9echk
+ SAmBtvRNoCVJGS45mGrfKUj4CoRscQFLXlo4eRgCEWrce86eYosfLwuAnZ3Qe0LHlbJnNCLrTZGOU
+ aulMRjzsSB/zWOAFvNUI9gLUnORMUGuV0XOsnk8+4=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1rpqRB-0000Gd-HO; Thu, 28 Mar 2024 14:09:01 +0000
+Message-ID: <2dbf45c6-33a3-4ebc-a78a-75305836022e@ilande.co.uk>
+Date: Thu, 28 Mar 2024 14:09:52 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF00001507:EE_|DS7PR12MB8204:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7c9370f6-6199-4779-0934-08dc4f2fdebb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: CZc/u7/yebczTusHV4jgsxKCjjejWxOufWX/vECRQYA+uOdTPUvghgF7K9Nn1K0x9lKpK9oGztoroZOUZ0nye6HmoG9BvEvRQZeJD4c1c43zG0Fsm9/sh+lAteAsclkVuVOAAZ6yWEaomV6C4z7fKsi9859t0ybbPgyYlP/ALgZAYqexW72BbHOSdk0dBHYMPwIHYHna4++ozPXBhy469L1DFNJK6+r/nwdDkjWi2r18r/4OyDDkezRPCmqYt8rVVr619e4Ry/zMA65ItSYaWJQFWPGaZrYyzlJfgotitUcXu+9YQkGxRkF/Hbi/C1rIMJwv3YlQ6jCjwMjERrscd4Ood83Wzqn3TwrauRuWKmTW9BjLesyzI+P4yUEXUPH4OpE22JRKxsnYgFj/Qv7ruouMBFoRHHTdMs2DrWyAdRul6jXbgVsbbfFbLDR6raUDJXi1oY9E3jRlwqtMbdxRC3GSYzNFnXrMdUvcD2uHuUHQUrJ4pv3BKO225FI8QoJofSCxbXXZUtvfzHeUY2aMXxrFfJri9kIDYpHTFet3WVnxorewA9KhWKucQ0q8NzIBernpl4N+oZ8NbXcvjvCuzBYbFUT6/DdLT5KXBJsKP+KUdHqQZ+mtmx2hmwS3SepGb+sSOzaPcWU1uXVgsuXVSZzSxAhvJuICV/xkmc7ZYo+GWWhAVK/6rR5/t8xMRmelNuFnmLvPIyxHHPRZezvOH1Ub7AkIlVmEjTCFF10A5nsW6ysymD5zbEu61e30P1y3
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230031)(1800799015)(376005)(82310400014)(36860700004); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Mar 2024 14:03:39.7374 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7c9370f6-6199-4779-0934-08dc4f2fdebb
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00001507.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8204
-Received-SPF: softfail client-ip=40.107.237.86;
- envelope-from=avihaih@nvidia.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
+ pbonzini@redhat.com, devel@lists.libvirt.org, richard.henderson@linaro.org,
+ mst@redhat.com, thuth@redhat.com, qemu-trivial@nongnu.org
+References: <20240326125104.90103-1-imammedo@redhat.com>
+ <d8ddb193-fe76-4554-b887-5106eed2dd01@ilande.co.uk>
+ <vyepknhyulwvmyypt74i7gvu4nqqqzhgdj2fxi66rgdnipi2co@ildhvlycqf2v>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <vyepknhyulwvmyypt74i7gvu4nqqqzhgdj2fxi66rgdnipi2co@ildhvlycqf2v>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH for-9.0] docs/about: Mark the iaspc machine type as
+ deprecated
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,18 +107,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On 27/03/2024 07:09, Gerd Hoffmann wrote:
 
-This small series fixes two migration bugs I stumbled upon recently.
-Comments are welcome, thanks for reviewing.
+> On Tue, Mar 26, 2024 at 01:30:48PM +0000, Mark Cave-Ayland wrote:
+>> Heh I've actually been using isapc over the past couple of weeks to fire up
+>> some old programs in a Windows 3 VM :)
+> 
+> I'm wondering why these use cases can't simply use the 'pc' machine
+> type?
+> 
+> The early pci chipsets of the 90-ies have been designed in a
+> backward-compatible manner, with devices such as the IDE controller
+> being mapped to the standard ISA ioports.  So even an historic OS which
+> does not know what PCI is can run on that hardware, by simply talking to
+> devices using the standard ISA io ports ...
 
-Avihai Horon (2):
-  migration: Set migration error in migration_completion()
-  migration/postcopy: Ensure postcopy_start() sets errp if it fails
+Hmmm that's a fair point: I think the pc machine has a PCI-ISA bridge included, so 
+ISA devices can be plugged in as needed. The reason I ended up on that configuration 
+was because I ended up chasing down a regression, and wanted to quickly eliminate 
+things such as ACPI.
 
- migration/migration.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
 
--- 
-2.26.3
+ATB,
+
+Mark.
+
 
