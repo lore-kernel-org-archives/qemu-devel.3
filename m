@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3565ACD11DD
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 17:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D0ACD11DF
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 17:56:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rptv1-0002Lx-PH; Thu, 28 Mar 2024 13:52:03 -0400
+	id 1rpty1-0004D6-DD; Thu, 28 Mar 2024 13:55:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rptuz-0002LQ-Fd
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 13:52:01 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rptxw-0004C2-3t
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 13:55:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rptux-0008Si-EC
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 13:52:00 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rptxt-0000ZL-MT
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 13:55:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711648318;
+ s=mimecast20190719; t=1711648500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sn1JboDEISozjw1oqFhS+yNfkml9xWlcrKpuqpaEQXw=;
- b=NvvbTT0rS6mNoUeDFramlTZJXwqpDJIGLeO0/7keOMNAzBxpWgfs3uczz/csuva4YhZcZn
- rzv/8bdTB7oD1vCNOzX0Yf3rIQ50r81YfRH3HErJxtquQZfNA+Jz10YV6faFWzyobCF9Yc
- qZNn/xq/Qd5SB/CcFD4IqvfjhLj+cSY=
-Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
- [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LET63Pf/YiDcqeIhd9/QgGNFknYJxlLAejj09HdApU4=;
+ b=UZbK3nY+gqXRdyAw7/+MIlpWtwpPZf3kfY4UGNE580eP95mjR9x/JeCFM//KYjyr5kcq4i
+ puA3t6wAmOQx3L6R9gBBHAQr01sGS7RIcoodU/i61wI3dW+7zT6PDY7RV+ysDbIVo4ZpSM
+ MWoJQ7GExVGA2jigzqPFC6gzNr16Acc=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-3r_TtDxDOgazdgaeW-ZX3g-1; Thu, 28 Mar 2024 13:51:55 -0400
-X-MC-Unique: 3r_TtDxDOgazdgaeW-ZX3g-1
-Received: by mail-oi1-f197.google.com with SMTP id
- 5614622812f47-3c3bb17fe53so1118385b6e.1
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 10:51:55 -0700 (PDT)
+ us-mta-661-gt12QNbtP6a98fisMijaZw-1; Thu, 28 Mar 2024 13:54:57 -0400
+X-MC-Unique: gt12QNbtP6a98fisMijaZw-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-69695434a2aso12383676d6.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 10:54:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711648315; x=1712253115;
+ d=1e100.net; s=20230601; t=1711648497; x=1712253297;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sn1JboDEISozjw1oqFhS+yNfkml9xWlcrKpuqpaEQXw=;
- b=xFfxyPBNWWenL6GbBnf6qqatUP1vD6IlCw73d6nLgFpwE7W6CBe4W+CQYCAuF0sWhj
- sMeHgEvTNTnp8VjXPCSuiSmV37M0C6Tbtm/6IH0OU2ejtyZRkMlpsI8ZNG0N54K7FQJO
- XFgxLJL1hnXz41yCBa1k368epIY8a/hBRLYn2L2XY9NNTIlRI4ZoAg3NsnT+TcKXbb9D
- I2GG4mY4NdDfiO5YvyRJC+IUrWERA9qsubI3LEgvzIhaA+PXPkisJZ6Gq+pYWFdiSr0S
- UXPFNAoAcU+d7nmpQmcu21p9uv58YFjPIHGzGJxEB1599gPnQfXqHu48CVssalAPnfqc
- CD/g==
+ bh=LET63Pf/YiDcqeIhd9/QgGNFknYJxlLAejj09HdApU4=;
+ b=XJt8bYSfFn13TO86V2JlFnO6zbhdr4Gt2j1Y5H9DVwaa/aFThnxAKiv1v4zNqEKDng
+ GLOT/zRoaFBl5JAffV4b+9h5xnM77Hdar6uzA7kjSffmFtBFpb38PCMAQVPibn2Kqezs
+ /G27V54pCaZHceYNOzHrQGx7gllGlDOehUggb0hul0dIotBG2Trxq7DNefsrK5vj6TNq
+ VcNLwOlljZUx/qrdw4GBM43P7Ahc1BmddUTEJhmhE9pr/1iYVytYwO5zFeITBBoS/pKz
+ kwjA6D52gcVLo/nPfA5VQtlrizNQ22flnU4GJVoR3VmSbBNuRZrZznFN7KDX0/5FfIh/
+ vx4A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWh+ck8zWSLoZ/BEs8XuH8jIZ19S+h29vah37zjZmGMnavieDfmeUTGvbl8lGELJmY7hNF905eINBf35+9RV1xsN4oHWl0=
-X-Gm-Message-State: AOJu0YxrCBGyoqzFJ1Ljf4eu24nPsHVKPbbj/i+zQ51sJhAvsvkwB9Vu
- 77R+dL97h6yI6UVke81IS/qJ0EOfUwpFK/n4rZCQB6Fka4gWi6+wz6+sfWXmjGbT0+kWvDucKxG
- pPfYaluI/0K5jEWNEzHiMg1TU1D5JO1RcwFgynKh97DUbMazsYWEn
-X-Received: by 2002:a05:6808:1995:b0:3c3:cb74:62c1 with SMTP id
- bj21-20020a056808199500b003c3cb7462c1mr4523562oib.36.1711648314881; 
- Thu, 28 Mar 2024 10:51:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFn3PCTsbW0X/qrMIgrk7R8CpxUifO0jmrfIp3UEtoxVzzEFpazyCKI9UoAfV65QC6P+daW8w==
-X-Received: by 2002:a05:6808:1995:b0:3c3:cb74:62c1 with SMTP id
- bj21-20020a056808199500b003c3cb7462c1mr4523515oib.36.1711648314467; 
- Thu, 28 Mar 2024 10:51:54 -0700 (PDT)
+ AJvYcCVQtunUFCpMRLrzMM0euCIl0OWN2lIxHSq1ryrfdKQExfEa7kEn/UpDbEBPpPeA4cnR4dWnWmQEvOaWmvlbJOYz2rVbndQ=
+X-Gm-Message-State: AOJu0Yxa7AMUsAQcxyJcik7y+RkI+EhZl8Xkm+u6zMTAFJczcGfVgAl7
+ uLH3tez2y4vjzcbZHffglIij8iYRzFYFzethmyzRwPTDtYBvHDY4hViHqVHt6T/hvRmOYpdKi37
+ 4U1GoL35LIYegjx4v401QWEkqbwnVT35hac4e0qVORHhsg80Lrgim
+X-Received: by 2002:a0c:e647:0:b0:696:8402:84d2 with SMTP id
+ c7-20020a0ce647000000b00696840284d2mr3238589qvn.15.1711648497375; 
+ Thu, 28 Mar 2024 10:54:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHfmrdUh2poLeMl0dbsOmVJAEX9rrac9cZg/KdE1wFuRILQCSGtXu+gk5g3K7Y5xnIknC+uaQ==
+X-Received: by 2002:a0c:e647:0:b0:696:8402:84d2 with SMTP id
+ c7-20020a0ce647000000b00696840284d2mr3238567qvn.15.1711648497097; 
+ Thu, 28 Mar 2024 10:54:57 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-37.web.vodafone.de.
  [109.43.177.37]) by smtp.gmail.com with ESMTPSA id
- t12-20020ac8738c000000b004316281d2d6sm809155qtp.53.2024.03.28.10.51.48
+ qq2-20020a0562142c0200b0069687cdaba3sm839401qvb.36.2024.03.28.10.54.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Mar 2024 10:51:54 -0700 (PDT)
-Message-ID: <a380dca2-ba48-46ef-943d-601cb89d5fe2@redhat.com>
-Date: Thu, 28 Mar 2024 18:51:46 +0100
+ Thu, 28 Mar 2024 10:54:56 -0700 (PDT)
+Message-ID: <641d176e-7990-4bb3-a39d-518c976cb059@redhat.com>
+Date: Thu, 28 Mar 2024 18:54:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 v2 1/3] hw/rdma: Remove pvrdma device and
- rdmacm-mux helper
+Subject: Re: [PATCH-for-9.1 v2 3/3] block/gluster: Remove RDMA protocol
+ handling
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -83,16 +83,9 @@ Cc: Yuval Shaia <yuval.shaia.ml@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  devel@lists.libvirt.org, Hanna Reitz <hreitz@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Song Gao
- <gaosong@loongson.cn>, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
+ "Michael S. Tsirkin" <mst@redhat.com>, Eric Blake <eblake@redhat.com>
 References: <20240328130255.52257-1-philmd@linaro.org>
- <20240328130255.52257-2-philmd@linaro.org>
+ <20240328130255.52257-4-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -137,19 +130,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240328130255.52257-2-philmd@linaro.org>
+In-Reply-To: <20240328130255.52257-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SORBS_WEB=1.5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,19 +158,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/03/2024 14.02, Philippe Mathieu-Daudé wrote:
-> The whole RDMA subsystem was deprecated in commit e9a54265f5
-> ("hw/rdma: Deprecate the pvrdma device and the rdma subsystem")
-> released in v8.2.
+> GlusterFS+RDMA has been deprecated 8 years ago in commit
+> 0552ff2465 ("block/gluster: deprecate rdma support"):
 > 
-> Remove:
->   - PVRDMA device
->   - generated vmw_pvrdma/ directory from linux-headers
->   - rdmacm-mux tool from contrib/
+>    gluster volfile server fetch happens through unix and/or tcp,
+>    it doesn't support volfile fetch over rdma. The rdma code may
+>    actually mislead, so to make sure things do not break, for now
+>    we fallback to tcp when requested for rdma, with a warning.
 > 
-> Cc: Yuval Shaia <yuval.shaia.ml@gmail.com>
-> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+>    If you are wondering how this worked all these days, its the
+>    gluster libgfapi code which handles anything other than unix
+>    transport as socket/tcp, sad but true.
+> 
+> Besides, the whole RDMA subsystem was deprecated in commit
+> e9a54265f5 ("hw/rdma: Deprecate the pvrdma device and the rdma
+> subsystem") released in v8.2.
+> 
+> Cc: Prasanna Kumar Kalever <prasanna.kalever@redhat.com>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
+>   docs/system/device-url-syntax.rst.inc  |  4 +--
+>   docs/system/qemu-block-drivers.rst.inc |  1 -
+>   block/gluster.c                        | 39 --------------------------
+>   3 files changed, 2 insertions(+), 42 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
