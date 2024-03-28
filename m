@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFBA3C54E64
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57CA0C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 14:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpqPA-0004IN-Bv; Thu, 28 Mar 2024 10:06:56 -0400
+	id 1rpqPE-0004MV-9q; Thu, 28 Mar 2024 10:07:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpqP8-0004HW-7V
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:06:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpqPC-0004J4-Rr
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:06:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpqP5-0004Ly-U7
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:06:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rpqP9-0004Pc-Il
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 10:06:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711634811;
+ s=mimecast20190719; t=1711634814;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1M/K+IobY5rS2ZhVbDRD+cdR2CWk3qUfGdTRUvJzxzw=;
- b=HLx/eHqEIkGj7bl6i4cMj9+bUWZnYxywg1vb534X7aqeoDDToB4XXVh2klPNmmAFCec8ik
- y+iSjDUuN3NL9MGtiAXZuSH8C6hir62hOjQWkvq18LbuyNv40XJXcjaYks+uruCKYS2pwo
- snmlBQdiaPNdjqGNc3kqgKRvO0prdps=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-319-QZU0E1kxNhaRr3jVPbcBsA-1; Thu, 28 Mar 2024 10:06:46 -0400
-X-MC-Unique: QZU0E1kxNhaRr3jVPbcBsA-1
+ bh=9HmnkEi4Xrv5p3rnmEdYqUcU4Qbghf77Z/RDogMW1HU=;
+ b=Tkijz9RJ6an725z47mNJ76PEGfaWV9XpQBx6IdXLnqCNFJuMZh76idkK9+KIShZuQQKLIK
+ oAT8e7k4Esb6qzJ1jcdWmxw8GOxIHwmgBKEE0LFAAIw1Nssc7DquCtVcRSmp4XV205BZPy
+ QhOO37IHUAbj6XNLC0O0HzcznvkAf9g=
+Received: from mimecast-mx02.redhat.com (mx-ext.redhat.com [66.187.233.73])
+ by relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-382-PVql2vj0ODqwHMZSz62Vxg-1; Thu,
+ 28 Mar 2024 10:06:51 -0400
+X-MC-Unique: PVql2vj0ODqwHMZSz62Vxg-1
 Received: from smtp.corp.redhat.com (int-mx02.intmail.prod.int.rdu2.redhat.com
  [10.11.54.2])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E4934856D3D;
- Thu, 28 Mar 2024 14:06:45 +0000 (UTC)
+ by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 865211C54068;
+ Thu, 28 Mar 2024 14:06:48 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.161])
- by smtp.corp.redhat.com (Postfix) with ESMTP id 290B640C6CB4;
- Thu, 28 Mar 2024 14:06:42 +0000 (UTC)
+ by smtp.corp.redhat.com (Postfix) with ESMTP id 35AC440C6DB7;
+ Thu, 28 Mar 2024 14:06:46 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -54,16 +54,15 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH for-9.1 3/9] tests: Update our CI to use CentOS Stream 9
- instead of 8
-Date: Thu, 28 Mar 2024 15:06:00 +0100
-Message-ID: <20240328140607.2433889-4-thuth@redhat.com>
+Subject: [PATCH for-9.1 4/9] Bump minimum glib version to v2.66
+Date: Thu, 28 Mar 2024 15:06:01 +0100
+Message-ID: <20240328140607.2433889-5-thuth@redhat.com>
 In-Reply-To: <20240328140607.2433889-1-thuth@redhat.com>
 References: <20240328140607.2433889-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.2
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -71,7 +70,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,308 +86,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RHEL 9 (and thus also the derivatives) are available since two years
-now, so according to QEMU's support policy, we can drop the active
-support for the previous major version 8 now.
-Thus upgrade our CentOS Stream container to major version 9 now.
+Now that we dropped support for CentOS 8 and Ubuntu 20.04, we can
+look into bumping the glib version to a new minimum for further
+clean-ups. According to repology.org, available versions are:
+
+ CentOS Stream 9:       2.66.7
+ Debian 11:             2.66.8
+ Fedora 38:             2.74.1
+ Freebsd:               2.78.4
+ Homebrew:              2.80.0
+ Openbsd:               2.78.4
+ OpenSuse leap 15.5:    2.70.5
+ pkgsrc_current:        2.78.4
+ Ubuntu 22.04:          2.72.1
+
+Thus it should be safe to bump the minimum glib version to 2.66 now.
+Version 2.66 comes with new functions for URI parsing which will
+allow further clean-ups in the following patches.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- .gitlab-ci.d/buildtest.yml                    | 16 ++++-----
- .gitlab-ci.d/container-core.yml               |  4 +--
- .../{centos8.docker => centos9.docker}        | 34 +++++++------------
- tests/lcitool/mappings.yml                    | 20 -----------
- tests/lcitool/refresh                         |  2 +-
- tests/vm/centos                               |  4 +--
- 6 files changed, 26 insertions(+), 54 deletions(-)
- rename tests/docker/dockerfiles/{centos8.docker => centos9.docker} (82%)
+ meson.build              | 16 +---------------
+ include/glib-compat.h    | 27 ++-------------------------
+ qga/commands-posix-ssh.c |  4 ++--
+ 3 files changed, 5 insertions(+), 42 deletions(-)
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index cfdff175c3..9f34c650d6 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -158,9 +158,9 @@ build-system-centos:
-     - .native_build_job_template
-     - .native_build_artifact_template
-   needs:
--    job: amd64-centos8-container
-+    job: amd64-centos9-container
-   variables:
--    IMAGE: centos8
-+    IMAGE: centos9
-     CONFIGURE_ARGS: --disable-nettle --enable-gcrypt --enable-vfio-user-server
-       --enable-modules --enable-trace-backends=dtrace --enable-docs
-     TARGETS: ppc64-softmmu or1k-softmmu s390x-softmmu
-@@ -242,7 +242,7 @@ check-system-centos:
-     - job: build-system-centos
-       artifacts: true
-   variables:
--    IMAGE: centos8
-+    IMAGE: centos9
-     MAKE_CHECK_ARGS: check
+diff --git a/meson.build b/meson.build
+index c9c3217ba4..c0aaceffc0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -865,7 +865,7 @@ have_xen_pci_passthrough = get_option('xen_pci_passthrough') \
  
- avocado-system-centos:
-@@ -251,7 +251,7 @@ avocado-system-centos:
-     - job: build-system-centos
-       artifacts: true
-   variables:
--    IMAGE: centos8
-+    IMAGE: centos9
-     MAKE_CHECK_ARGS: check-avocado
-     AVOCADO_TAGS: arch:ppc64 arch:or1k arch:s390x arch:x86_64 arch:rx
-       arch:sh4 arch:nios2
-@@ -327,9 +327,9 @@ avocado-system-flaky:
- build-tcg-disabled:
-   extends: .native_build_job_template
-   needs:
--    job: amd64-centos8-container
-+    job: amd64-centos9-container
-   variables:
--    IMAGE: centos8
-+    IMAGE: centos9
-   script:
-     - mkdir build
-     - cd build
-@@ -651,9 +651,9 @@ build-tci:
- build-without-defaults:
-   extends: .native_build_job_template
-   needs:
--    job: amd64-centos8-container
-+    job: amd64-centos9-container
-   variables:
--    IMAGE: centos8
-+    IMAGE: centos9
-     CONFIGURE_ARGS:
-       --without-default-devices
-       --without-default-features
-diff --git a/.gitlab-ci.d/container-core.yml b/.gitlab-ci.d/container-core.yml
-index 08f8450fa1..5459447676 100644
---- a/.gitlab-ci.d/container-core.yml
-+++ b/.gitlab-ci.d/container-core.yml
-@@ -1,10 +1,10 @@
- include:
-   - local: '/.gitlab-ci.d/container-template.yml'
+ # When bumping glib minimum version, please check also whether to increase
+ # the _WIN32_WINNT setting in osdep.h according to the value from glib
+-glib_req_ver = '>=2.56.0'
++glib_req_ver = '>=2.66.0'
+ glib_pc = dependency('glib-2.0', version: glib_req_ver, required: true,
+                     method: 'pkg-config')
+ glib_cflags = []
+@@ -906,20 +906,6 @@ if not cc.compiles('''
+         to the right pkg-config files for your build target.''')
+ endif
  
--amd64-centos8-container:
-+amd64-centos9-container:
-   extends: .container_job_template
-   variables:
--    NAME: centos8
-+    NAME: centos9
+-# Silence clang warnings triggered by glib < 2.57.2
+-if not cc.compiles('''
+-  #include <glib.h>
+-  typedef struct Foo {
+-    int i;
+-  } Foo;
+-  static void foo_free(Foo *f)
+-  {
+-    g_free(f);
+-  }
+-  G_DEFINE_AUTOPTR_CLEANUP_FUNC(Foo, foo_free)
+-  int main(void) { return 0; }''', dependencies: glib_pc, args: ['-Wunused-function', '-Werror'])
+-  glib_cflags += cc.get_supported_arguments('-Wno-unused-function')
+-endif
+ glib = declare_dependency(dependencies: [glib_pc, gmodule],
+                           compile_args: glib_cflags,
+                           version: glib_pc.version())
+diff --git a/include/glib-compat.h b/include/glib-compat.h
+index 43a562974d..86be439ba0 100644
+--- a/include/glib-compat.h
++++ b/include/glib-compat.h
+@@ -19,12 +19,12 @@
+ /* Ask for warnings for anything that was marked deprecated in
+  * the defined version, or before. It is a candidate for rewrite.
+  */
+-#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_56
++#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_66
  
- amd64-fedora-container:
-   extends: .container_job_template
-diff --git a/tests/docker/dockerfiles/centos8.docker b/tests/docker/dockerfiles/centos9.docker
-similarity index 82%
-rename from tests/docker/dockerfiles/centos8.docker
-rename to tests/docker/dockerfiles/centos9.docker
-index d97c30e96a..9fc9b27eb7 100644
---- a/tests/docker/dockerfiles/centos8.docker
-+++ b/tests/docker/dockerfiles/centos9.docker
-@@ -1,15 +1,14 @@
- # THIS FILE WAS AUTO-GENERATED
- #
--#  $ lcitool dockerfile --layers all centos-stream-8 qemu
-+#  $ lcitool dockerfile --layers all centos-stream-9 qemu
- #
- # https://gitlab.com/libvirt/libvirt-ci
+ /* Ask for warnings if code tries to use function that did not
+  * exist in the defined version. These risk breaking builds
+  */
+-#define GLIB_VERSION_MAX_ALLOWED GLIB_VERSION_2_56
++#define GLIB_VERSION_MAX_ALLOWED GLIB_VERSION_2_66
  
--FROM quay.io/centos/centos:stream8
-+FROM quay.io/centos/centos:stream9
+ #pragma GCC diagnostic push
+ #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+@@ -105,29 +105,6 @@ static inline gpointer g_memdup2_qemu(gconstpointer mem, gsize byte_size)
+ }
+ #define g_memdup2(m, s) g_memdup2_qemu(m, s)
  
- RUN dnf distro-sync -y && \
-     dnf install 'dnf-command(config-manager)' -y && \
--    dnf config-manager --set-enabled -y powertools && \
--    dnf install -y centos-release-advanced-virtualization && \
-+    dnf config-manager --set-enabled -y crb && \
-     dnf install -y epel-release && \
-     dnf install -y epel-next-release && \
-     dnf install -y \
-@@ -42,7 +41,6 @@ RUN dnf distro-sync -y && \
-         glib2-static \
-         glibc-langpack-en \
-         glibc-static \
--        glusterfs-api-devel \
-         gnutls-devel \
-         gtk3-devel \
-         hostname \
-@@ -82,6 +80,7 @@ RUN dnf distro-sync -y && \
-         lzo-devel \
-         make \
-         mesa-libgbm-devel \
-+        meson \
-         mtools \
-         ncurses-devel \
-         nettle-devel \
-@@ -95,25 +94,25 @@ RUN dnf distro-sync -y && \
-         pixman-devel \
-         pkgconfig \
-         pulseaudio-libs-devel \
--        python38 \
--        python38-PyYAML \
--        python38-numpy \
--        python38-pip \
--        python38-setuptools \
--        python38-wheel \
-+        python3 \
-+        python3-PyYAML \
-+        python3-numpy \
-+        python3-pillow \
-+        python3-pip \
-+        python3-sphinx \
-+        python3-sphinx_rtd_theme \
-+        python3-tomli \
-         rdma-core-devel \
-         sed \
-         snappy-devel \
-         socat \
-         spice-protocol \
--        spice-server-devel \
-         swtpm \
-         systemd-devel \
-         systemtap-sdt-devel \
-         tar \
-         usbredir-devel \
-         util-linux \
--        virglrenderer-devel \
-         vte291-devel \
-         which \
-         xfsprogs-devel \
-@@ -131,18 +130,11 @@ RUN dnf distro-sync -y && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
- 
--RUN /usr/bin/pip3.8 install \
--                    meson==0.63.2 \
--                    pillow \
--                    sphinx \
--                    sphinx-rtd-theme \
--                    tomli
+-#if defined(G_OS_UNIX)
+-/*
+- * Note: The fallback implementation is not MT-safe, and it returns a copy of
+- * the libc passwd (must be g_free() after use) but not the content. Because of
+- * these important differences the caller must be aware of, it's not #define for
+- * GLib API substitution.
+- */
+-static inline struct passwd *
+-g_unix_get_passwd_entry_qemu(const gchar *user_name, GError **error)
+-{
+-#if GLIB_CHECK_VERSION(2, 64, 0)
+-    return g_unix_get_passwd_entry(user_name, error);
+-#else
+-    struct passwd *p = getpwnam(user_name);
+-    if (!p) {
+-        g_set_error_literal(error, G_UNIX_ERROR, 0, g_strerror(errno));
+-        return NULL;
+-    }
+-    return (struct passwd *)g_memdup(p, sizeof(*p));
+-#endif
+-}
+-#endif /* G_OS_UNIX */
 -
- ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
- ENV LANG "en_US.UTF-8"
- ENV MAKE "/usr/bin/make"
- ENV NINJA "/usr/bin/ninja"
--ENV PYTHON "/usr/bin/python3.8"
-+ENV PYTHON "/usr/bin/python3"
- # As a final step configure the user (if env is defined)
- ARG USER
- ARG UID
-diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-index 407c03301b..03b974ad02 100644
---- a/tests/lcitool/mappings.yml
-+++ b/tests/lcitool/mappings.yml
-@@ -1,66 +1,50 @@
- mappings:
-   flake8:
--    CentOSStream8:
-     OpenSUSELeap15:
+ static inline bool
+ qemu_g_test_slow(void)
+ {
+diff --git a/qga/commands-posix-ssh.c b/qga/commands-posix-ssh.c
+index 236f80de44..b0e0b1d674 100644
+--- a/qga/commands-posix-ssh.c
++++ b/qga/commands-posix-ssh.c
+@@ -35,7 +35,7 @@ test_get_passwd_entry(const gchar *user_name, GError **error)
+     return p;
+ }
  
-   meson:
--    CentOSStream8:
-     OpenSUSELeap15:
+-#define g_unix_get_passwd_entry_qemu(username, err) \
++#define g_unix_get_passwd_entry(username, err) \
+    test_get_passwd_entry(username, err)
+ #endif
  
-   python3:
--    CentOSStream8: python38
-     OpenSUSELeap15: python311-base
+@@ -45,7 +45,7 @@ get_passwd_entry(const char *username, Error **errp)
+     g_autoptr(GError) err = NULL;
+     struct passwd *p;
  
-   python3-PyYAML:
--    CentOSStream8: python38-PyYAML
-     OpenSUSELeap15:
- 
-   python3-devel:
--    CentOSStream8: python38-devel
-     OpenSUSELeap15: python311-devel
- 
-   python3-docutils:
--    CentOSStream8:
-     OpenSUSELeap15:
- 
-   python3-numpy:
--    CentOSStream8: python38-numpy
-     OpenSUSELeap15:
- 
-   python3-opencv:
--    CentOSStream8:
-     OpenSUSELeap15:
- 
-   python3-pillow:
--    CentOSStream8:
-     OpenSUSELeap15:
- 
-   python3-pip:
--    CentOSStream8: python38-pip
-     OpenSUSELeap15: python311-pip
- 
-   python3-pillow:
--    CentOSStream8:
-     OpenSUSELeap15:
- 
-   python3-selinux:
--    CentOSStream8:
-     OpenSUSELeap15:
- 
-   python3-setuptools:
--    CentOSStream8: python38-setuptools
-     OpenSUSELeap15: python311-setuptools
- 
-   python3-sphinx:
--    CentOSStream8:
-     OpenSUSELeap15:
- 
-   python3-sphinx-rtd-theme:
--    CentOSStream8:
-     OpenSUSELeap15:
- 
-   python3-sqlite3:
--    CentOSStream8: python38
-     OpenSUSELeap15: python311
- 
-   python3-tomli:
-@@ -69,15 +53,11 @@ mappings:
-     Fedora:
-     Debian12:
-     OpenSUSELeap15:
--    # Not available for Python 3.8
--    CentOSStream8:
- 
-   python3-venv:
--    CentOSStream8: python38
-     OpenSUSELeap15: python311-base
- 
-   python3-wheel:
--    CentOSStream8: python38-wheel
-     OpenSUSELeap15: python311-pip
- 
- pypi_mappings:
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 692752a3df..24a735a3f2 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -125,7 +125,7 @@ try:
-     # Standard native builds
-     #
-     generate_dockerfile("alpine", "alpine-318")
--    generate_dockerfile("centos8", "centos-stream-8")
-+    generate_dockerfile("centos9", "centos-stream-9")
-     generate_dockerfile("debian", "debian-12",
-                         trailer="".join(debian12_extras))
-     generate_dockerfile("fedora", "fedora-38")
-diff --git a/tests/vm/centos b/tests/vm/centos
-index 097a9ca14d..d25c8f8b5b 100755
---- a/tests/vm/centos
-+++ b/tests/vm/centos
-@@ -26,8 +26,8 @@ class CentosVM(basevm.BaseVM):
-         export SRC_ARCHIVE=/dev/vdb;
-         sudo chmod a+r $SRC_ARCHIVE;
-         tar -xf $SRC_ARCHIVE;
--        make docker-test-block@centos8 {verbose} J={jobs} NETWORK=1;
--        make docker-test-quick@centos8 {verbose} J={jobs} NETWORK=1;
-+        make docker-test-block@centos9 {verbose} J={jobs} NETWORK=1;
-+        make docker-test-quick@centos9 {verbose} J={jobs} NETWORK=1;
-     """
- 
-     def build_image(self, img):
+-    p = g_unix_get_passwd_entry_qemu(username, &err);
++    p = g_unix_get_passwd_entry(username, &err);
+     if (p == NULL) {
+         error_setg(errp, "failed to lookup user '%s': %s",
+                    username, err->message);
 -- 
 2.44.0
 
