@@ -4,72 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 744C3C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 09:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA3D7C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 10:00:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpmWx-00023B-Kz; Thu, 28 Mar 2024 05:58:43 -0400
+	id 1rpmYO-00031B-FR; Thu, 28 Mar 2024 06:00:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sanj27272@gmail.com>)
- id 1rpmWi-000211-OG; Thu, 28 Mar 2024 05:58:28 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sanj27272@gmail.com>)
- id 1rpmWg-0002p2-RV; Thu, 28 Mar 2024 05:58:28 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5688eaf1165so973177a12.1; 
- Thu, 28 Mar 2024 02:58:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711619904; x=1712224704; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Rqtt/5cFNnzN2QbWV6d5NoOamWwzy1pDi2pN2kUXfPg=;
- b=ACBjn7+7u9b/qF49hj+P6JYNeFEmU/0dQTvda3Yhz/SxpigwJbAvsXJ6MTdLe7xRfj
- 2R5pfD1RzAg+4CYfLZ+0KlehWzqPPdKECf5Ya2sj+vMPsS5At/2UdxRjtenZ7uL1qB2B
- j0sS5yDg3ySCANyCbW6y30IdBqcmKjmi2OotTGr4CC7e65EfGftc8SUSuraxkao6tYyP
- U1OeNqs6ZdieyhkNlkWOD+gKEmYzPKCgq+w+vupmvKP09bjMeKQG2XIZ/zmjg8QPaR1B
- UO2mICZX/rAlkEAAz0VdCJas7GVwUSanEdOSUb17ExlPGmc5KIMLHYvf153H9dvgHUTn
- NVvw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rpmYD-0002zK-8P
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:00:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1rpmY7-00039a-Mc
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 06:00:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1711619994;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=azsmWgF7HAWVnxkclhkzvmOEbzF9YQbWRc4KlSwEEjE=;
+ b=TjHGeR3FryDdMvlwEz8GqtVgV6TqGGILvjUd6uzAhV62h9N8Zq8LplCdaqZui42zJCtLON
+ RsoQU9AaMOTkKEuCMpmvJZIGhu8zhSsaYR5OwexjScd7CRW8T3xpxTQNWDUXBOp5tYTlut
+ phjsbLYHyks0EkY0izLnKiWiHF2qEF0=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-547-xFclMYONOfi7tvkNKa3qFw-1; Thu, 28 Mar 2024 05:59:50 -0400
+X-MC-Unique: xFclMYONOfi7tvkNKa3qFw-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-56c1b105949so530434a12.3
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 02:59:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711619904; x=1712224704;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Rqtt/5cFNnzN2QbWV6d5NoOamWwzy1pDi2pN2kUXfPg=;
- b=i1vu+C0owkZcNgavOhEtVhgxKCHOR5+WDGYf8omfmTTaYPiwW22hsv0+lRLhk7y/YQ
- G5JlZVL3/OBQPsTWCMTU0dVvLKpecGuBDO6D/7t1Y1oT9dDuchaTkCCPxNwg7c17B4fv
- VmEFXvXqeUFFbY5OKvJqjhtNmVecnvAopVRGxkDWE3gM6N/J4kjG/JRSwM3HOSlLiNM+
- sRQaLmu3EcWPWWNwA+d1lQpls7Nhb8TkVLyVBqzyzb/95jeUWlaw4GvWe2ClQq0mi2vJ
- hA3OSdl14Qv/BhGgQASF74oy4JpLTkqGofLeByQUIld2qo5qDoCUVHxoj5C0IbfCLtsU
- vwkw==
+ d=1e100.net; s=20230601; t=1711619989; x=1712224789;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=azsmWgF7HAWVnxkclhkzvmOEbzF9YQbWRc4KlSwEEjE=;
+ b=vnWSg5MXS98fcJMI/coRf+2aIjKT/p6pttS3cxN0p3e9hKLqDhYr/J1MMC+eGBB/EU
+ NsmcHY+eZwUUe36glL+KdQIR2NGwyItDZvSedJ/Wip6dnum1k1Us6LAwFBnepy6uwJ2c
+ MooYjuHBerg4FKSLo1SILyG8zyNLxsFl1t6y8ctx1hgzFGf6LxtyMjB2R6zOcKpdlRc0
+ UamfK4XUdxS9JC0RAbmj3In/PEwfOaOoMmGtRLLrDHEiwI3tk/rI84x7TZ0/BGwL1MkS
+ GAPPfNTjorDs2JIb80WTdT/WFqfRPvOhSJgDqV9LjX9hKW9tU7SXuS4cCoQRVLYt6CxY
+ 9kyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZmIE4mrYOMny+ptT3HwJzrckYKeVIgbuI08Wpw7butRRPjQ6zg/9EZ8Z8PSHGIRNEStPaddmRFcz2scWE+zg7+CLsFRUFXF1f1m1KGV0mGjdSfYgaBHtwf24=
-X-Gm-Message-State: AOJu0YxXN26H0+d3kw/EUvy5G/CPUk01FzCheD5K27WqtUuYtSeJ7RoY
- dMLy56fD5gA3UAD/ZKTXcDf4NBQTXdG7DLXTKvhH5jOEUdqPb5FU8wcXK1IAz/S7PHWIIwKbE2X
- E3qEDz2bjTL/dSRsAKSYax6jmn4iXQwNH444=
-X-Google-Smtp-Source: AGHT+IFA7xGPA7YtzrePK5nK8vEzA4rwP6g8a9AY7sFIkJsH3/bCs2BltoUoDpp4Yz1Nlf0eMIs2Mku9SAhc1+xMYK8=
-X-Received: by 2002:a17:906:db0d:b0:a46:d79c:ef62 with SMTP id
- xj13-20020a170906db0d00b00a46d79cef62mr1787599ejb.51.1711619903710; Thu, 28
- Mar 2024 02:58:23 -0700 (PDT)
+ AJvYcCXTmNeSWLoVz7I9aUAA/E/O+mE/62BBf3tE5dh/em6/UmLGCEDCbT4LIpLwJRdPeucjfySac3WckynxNYNSRkdV4gjboqs=
+X-Gm-Message-State: AOJu0YyuwwhQ3UJIljO64bXROyHo9oqocfejRy9ljOizkaNEieQhadr7
+ rRIrVjTEEFyXQsPHnjTCV0f+6Gfb48qFKsq5herzoyOX03dfnNvqjM+LZUe8iqLmDqey3uY+Q4k
+ Q8WLxw3d0WVjBlrQluDipY3GPYOFWxPxZCez3BXp5O/Lbj4xpLCxH
+X-Received: by 2002:a17:907:7216:b0:a46:7323:6ab3 with SMTP id
+ dr22-20020a170907721600b00a4673236ab3mr1839256ejc.49.1711619988719; 
+ Thu, 28 Mar 2024 02:59:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEW7D/IhHqpKCEpfnsrBsdnchk0iM0Sd6r0NBmhQDPbvrJSqceN1yeElf9FD8F0K9ETaQu/QA==
+X-Received: by 2002:a17:907:7216:b0:a46:7323:6ab3 with SMTP id
+ dr22-20020a170907721600b00a4673236ab3mr1839221ejc.49.1711619988191; 
+ Thu, 28 Mar 2024 02:59:48 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f0:5969:7af8:be53:dc56:3ccc])
+ by smtp.gmail.com with ESMTPSA id
+ v18-20020a170906339200b00a4df78425dbsm553587eja.36.2024.03.28.02.59.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Mar 2024 02:59:47 -0700 (PDT)
+Date: Thu, 28 Mar 2024 05:59:40 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, qemu-block@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ integration@gluster.org, Peter Xu <peterx@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Li Zhijian <lizhijian@fujitsu.com>, devel@lists.libvirt.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Song Gao <gaosong@loongson.cn>, Eduardo Habkost <eduardo@habkost.net>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>
+Subject: Re: [PATCH-for-9.1] rdma: Remove RDMA subsystem and pvrdma device
+Message-ID: <20240328055821-mutt-send-email-mst@kernel.org>
+References: <20240327105549.1824-1-philmd@linaro.org>
+ <4a43ca17-fc42-402e-8df9-925bc4da8d2c@redhat.com>
 MIME-Version: 1.0
-From: sanjana gogte <sanj27272@gmail.com>
-Date: Thu, 28 Mar 2024 15:28:12 +0530
-Message-ID: <CA+ji3pHZN0DPg4LfssBs1urgYTZy22a6b+fzjfciA_QHjngMQA@mail.gmail.com>
-Subject: Gdb support for Debugging Arm M profile with Xilinx Qemu
-To: vikram.garhwal@amd.com, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- francisco.iglesias@xilinx.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000059ef2d0614b5900d"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=sanj27272@gmail.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4a43ca17-fc42-402e-8df9-925bc4da8d2c@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,286 +120,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000059ef2d0614b5900d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, Mar 28, 2024 at 07:43:06AM +0100, Thomas Huth wrote:
+> On 27/03/2024 11.55, Philippe Mathieu-Daudé wrote:
+> > The whole RDMA subsystem was deprecated in commit e9a54265f5
+> > ("hw/rdma: Deprecate the pvrdma device and the rdma subsystem")
+> > released in v8.2. Time to remove it.
+> > 
+> > Keep the RAM_SAVE_FLAG_HOOK definition since it might appears
+> > in old migration streams.
+> > 
+> > Remove the dependencies on libibumad and libibverbs.
+> > 
+> > Remove the generated vmw_pvrdma/ directory from linux-headers.
+> > 
+> > Remove RDMA handling from migration.
+> > 
+> > Remove RDMA handling in GlusterFS block driver.
+> > 
+> > Remove rdmacm-mux tool from contrib/.
+> > 
+> > Remove PVRDMA device.
+> > 
+> > Cc: Peter Xu <peterx@redhat.com>
+> > Cc: Li Zhijian <lizhijian@fujitsu.com>
+> > Cc: Yuval Shaia <yuval.shaia.ml@gmail.com>
+> > Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+> > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > ---
+> >   MAINTAINERS                                   |   17 -
+> >   docs/about/deprecated.rst                     |    9 -
+> >   docs/about/removed-features.rst               |    4 +
+> >   docs/devel/migration/main.rst                 |    6 -
+> >   docs/pvrdma.txt                               |  345 --
+> >   docs/rdma.txt                                 |  420 --
+> >   docs/system/device-url-syntax.rst.inc         |    4 +-
+> >   docs/system/loongarch/virt.rst                |    2 +-
+> >   docs/system/qemu-block-drivers.rst.inc        |    1 -
+> >   meson.build                                   |   59 -
+> >   qapi/machine.json                             |   17 -
+> >   qapi/migration.json                           |   31 +-
+> >   qapi/qapi-schema.json                         |    1 -
+> >   qapi/rdma.json                                |   38 -
+> >   contrib/rdmacm-mux/rdmacm-mux.h               |   61 -
+> >   hw/rdma/rdma_backend.h                        |  129 -
+> >   hw/rdma/rdma_backend_defs.h                   |   76 -
+> >   hw/rdma/rdma_rm.h                             |   97 -
+> >   hw/rdma/rdma_rm_defs.h                        |  146 -
+> >   hw/rdma/rdma_utils.h                          |   63 -
+> >   hw/rdma/trace.h                               |    1 -
+> >   hw/rdma/vmw/pvrdma.h                          |  144 -
+> >   hw/rdma/vmw/pvrdma_dev_ring.h                 |   46 -
+> >   hw/rdma/vmw/pvrdma_qp_ops.h                   |   28 -
+> >   hw/rdma/vmw/trace.h                           |    1 -
+> >   include/hw/rdma/rdma.h                        |   37 -
+> >   include/monitor/hmp.h                         |    1 -
+> >   .../infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h |  685 ---
+> >   .../infiniband/hw/vmw_pvrdma/pvrdma_verbs.h   |  348 --
+> >   .../standard-headers/rdma/vmw_pvrdma-abi.h    |  310 --
+> >   migration/migration-stats.h                   |    6 +-
+> >   migration/migration.h                         |    9 -
+> >   migration/options.h                           |    2 -
+> >   migration/rdma.h                              |   69 -
+> >   block/gluster.c                               |   39 -
+> >   contrib/rdmacm-mux/main.c                     |  831 ----
+> >   hw/core/machine-qmp-cmds.c                    |   32 -
+> >   hw/rdma/rdma.c                                |   30 -
+> >   hw/rdma/rdma_backend.c                        | 1401 ------
+> >   hw/rdma/rdma_rm.c                             |  812 ----
+> >   hw/rdma/rdma_utils.c                          |  126 -
+> >   hw/rdma/vmw/pvrdma_cmd.c                      |  815 ----
+> >   hw/rdma/vmw/pvrdma_dev_ring.c                 |  141 -
+> >   hw/rdma/vmw/pvrdma_main.c                     |  735 ---
+> >   hw/rdma/vmw/pvrdma_qp_ops.c                   |  298 --
+> >   migration/migration-stats.c                   |    5 +-
+> >   migration/migration.c                         |   31 -
+> >   migration/options.c                           |   16 -
+> >   migration/qemu-file.c                         |    1 -
+> >   migration/ram.c                               |   86 +-
+> >   migration/rdma.c                              | 4184 -----------------
+> >   migration/savevm.c                            |    2 +-
+> >   monitor/qmp-cmds.c                            |    1 -
+> >   Kconfig.host                                  |    3 -
+> >   contrib/rdmacm-mux/meson.build                |    7 -
+> >   hmp-commands-info.hx                          |   13 -
+> >   hw/Kconfig                                    |    1 -
+> >   hw/meson.build                                |    1 -
+> >   hw/rdma/Kconfig                               |    3 -
+> >   hw/rdma/meson.build                           |   12 -
+> >   hw/rdma/trace-events                          |   31 -
+> >   hw/rdma/vmw/trace-events                      |   17 -
+> >   meson_options.txt                             |    4 -
+> >   migration/meson.build                         |    1 -
+> >   migration/trace-events                        |   68 +-
+> >   qapi/meson.build                              |    1 -
+> >   qemu-options.hx                               |    6 -
+> >   .../ci/org.centos/stream/8/x86_64/configure   |    1 -
+> >   scripts/ci/setup/build-environment.yml        |    2 -
+> >   scripts/coverity-scan/run-coverity-scan       |    2 +-
+> >   scripts/meson-buildoptions.sh                 |    6 -
+> >   scripts/update-linux-headers.sh               |   27 -
+> >   tests/lcitool/projects/qemu.yml               |    2 -
+> >   tests/migration/guestperf/engine.py           |    4 +-
+> >   74 files changed, 20 insertions(+), 12991 deletions(-)
+> >   delete mode 100644 docs/pvrdma.txt
+> >   delete mode 100644 docs/rdma.txt
+> >   delete mode 100644 qapi/rdma.json
+> >   delete mode 100644 contrib/rdmacm-mux/rdmacm-mux.h
+> >   delete mode 100644 hw/rdma/rdma_backend.h
+> >   delete mode 100644 hw/rdma/rdma_backend_defs.h
+> >   delete mode 100644 hw/rdma/rdma_rm.h
+> >   delete mode 100644 hw/rdma/rdma_rm_defs.h
+> >   delete mode 100644 hw/rdma/rdma_utils.h
+> >   delete mode 100644 hw/rdma/trace.h
+> >   delete mode 100644 hw/rdma/vmw/pvrdma.h
+> >   delete mode 100644 hw/rdma/vmw/pvrdma_dev_ring.h
+> >   delete mode 100644 hw/rdma/vmw/pvrdma_qp_ops.h
+> >   delete mode 100644 hw/rdma/vmw/trace.h
+> >   delete mode 100644 include/hw/rdma/rdma.h
+> >   delete mode 100644 include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_dev_api.h
+> >   delete mode 100644 include/standard-headers/drivers/infiniband/hw/vmw_pvrdma/pvrdma_verbs.h
+> >   delete mode 100644 include/standard-headers/rdma/vmw_pvrdma-abi.h
+> >   delete mode 100644 migration/rdma.h
+> >   delete mode 100644 contrib/rdmacm-mux/main.c
+> >   delete mode 100644 hw/rdma/rdma.c
+> >   delete mode 100644 hw/rdma/rdma_backend.c
+> >   delete mode 100644 hw/rdma/rdma_rm.c
+> >   delete mode 100644 hw/rdma/rdma_utils.c
+> >   delete mode 100644 hw/rdma/vmw/pvrdma_cmd.c
+> >   delete mode 100644 hw/rdma/vmw/pvrdma_dev_ring.c
+> >   delete mode 100644 hw/rdma/vmw/pvrdma_main.c
+> >   delete mode 100644 hw/rdma/vmw/pvrdma_qp_ops.c
+> >   delete mode 100644 migration/rdma.c
+> >   delete mode 100644 contrib/rdmacm-mux/meson.build
+> >   delete mode 100644 hw/rdma/Kconfig
+> >   delete mode 100644 hw/rdma/meson.build
+> >   delete mode 100644 hw/rdma/trace-events
+> >   delete mode 100644 hw/rdma/vmw/trace-events
+> 
+>  Hi Philippe!
+> 
+> Looking at this rdma stuff again after I while, I realized that there are
+> actually 3 parts in QEMU related to RDMA:
+> 1) The "pvrdma" device in hw/rdma/vmw/
+> 2) The rdma subsystem in hw/rda/*.[ch]
+> 3) The rdma migration code in the migration/ folder.
+> 
+> While the deprecation note in docs/about/deprecated.rst clearly talks about
+> the "pvrdma" device and the rdma subsystem, I'm unsure whether that includes
+> the rdma migration code or not.
+> 
+> Anyway, could you please split your patch at least in two (maybe even in
+> three) parts, so that the removal of the rdma migration code is in a
+> separate patch? That way we can discuss that separately (and maybe also
+> revert it more easily in the future if necessary).
+> 
+>  Thanks,
+>   Thomas
 
-Greetings,
 
-I am currently engaged in a project that involves emulating the LM3S811EVB
-( M3 Core ) board using Xilinx QEMU (version 7.1.0) . While the emulation
-process is successful, I am encountering difficulties in attaching GNU
-Debugger (GDB) or GDB-multiarch to the ELF file being executed on the
-emulated board. Interestingly, this issue does not arise when utilizing the
-standard QEMU (version 8.1.5), where I am able to attach GDB and step
-through the ELF file without any hindrances.
+I agree. E.g. rdma migration would be up to migration maintainers.
 
 
-To address this issue, I have experimented with different versions of GDB,
-specifically:
-GNU gdb (Arm GNU Toolchain 13.2.rel1 (Build arm-13.7)) ( arm-none-eabi)
-GNU gdb (Linaro_GDB-2019.12) 8.3.1.20191204-git
-*Error I am facing :*
-Remote debugging using localhost:1234
-Remote 'g' packet reply is too long (expected 68 bytes, got 92 bytes):
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-0000000000000000000000000000028100020ffffffff080000000000004100000000000000=
-0000000000000000000000000000000000
-(gdb) b main
-Breakpoint 1 at 0xc6: file main2.c, line 69.
-(gdb) continue
-The program is not being run.
-(gdb) run
-Don't know how to run. Try "help target".
+-- 
+MST
 
-*With Gdb-multiarch (12.1)*
-gef=E2=9E=A4 set architecture armv7
-The target architecture is set to "armv7".
-gef=E2=9E=A4 target remote:1234
-Remote debugging using :1234
-warning: No executable has been specified and target does not support
-determining executable automatically. Try using the "file" command.
-Remote 'g' packet reply is too long (expected 68 bytes, got 92 bytes):
-000000000000000000000000000000000000000000000000000000000000000000000000000=
-0000000000000000000000000000028100020ffffffff080000000000004100000000000000=
-0000000000000000000000000000000000
-gef=E2=9E=A4 file kernel2.elf
-Reading symbols from kernel2.elf...
-gef=E2=9E=A4 b main
-Breakpoint 1 at 0xc6: file main2.c, line 69.
-gef=E2=9E=A4 continue
-The program is not being run.
-gef=E2=9E=A4 run
-Starting program:
-/mnt/c/Users/Gogte/Desktop/sanjana_intern_project/Qemu_test/test3/LinkerM3/=
-kernel2.elf
-
-/bin/bash: line 1:
-/mnt/c/Users/Gogte/Desktop/sanjana_intern_project/Qemu_test/test3/LinkerM3/=
-kernel2.elf:
-cannot execute binary file: Exec format error
-/bin/bash: line 1:
-/mnt/c/Users/Gogte/Desktop/sanjana_intern_project/Qemu_test/test3/LinkerM3/=
-kernel2.elf:
-Success
-During startup program exited with code 126.
-
-*If I do the same with Standard qemu binary the gdb works:*
-Remote debugging using localhost:1234
-start () at startup.s:10
---Type <RET> for more, q to quit, c to continue without paging--c
-10 ldr r1, =3Dmain
-(gdb) b main
-Breakpoint 1 at 0xc6: file main2.c, line 69.
-(gdb) continue
-Continuing.
-
-Breakpoint 1, main () at main2.c:69
-69 uart_print("Inside main function");
-(gdb)
-
-
-My project necessitates the use of the Xilinx QEMU binary, specifically to
-leverage the remote port functionality it offers.
-
-Therefore, I am seeking guidance on which version of GDB should be used, or
-any specific configurations that might enable successful GDB attachment to
-the ELF file running on Xilinx QEMU.
-
-
-Regards,
-Sanjana
-
---00000000000059ef2d0614b5900d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div><br></div>Greetings,<div>
-
-
-
-
-
-<p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-=
-variant-east-asian:normal;font-variant-alternates:normal;font-kerning:auto;=
-font-feature-settings:normal;font-stretch:normal;font-size:13px;line-height=
-:normal;font-family:&quot;Helvetica Neue&quot;">I am currently engaged in a=
- project that involves emulating the LM3S811EVB ( M3 Core ) board using Xil=
-inx QEMU (version 7.1.0) . While the emulation process is successful, I am =
-encountering difficulties in attaching GNU Debugger (GDB) or GDB-multiarch =
-to the ELF file being executed on the emulated board. Interestingly, this i=
-ssue does not arise when utilizing the standard QEMU (version 8.1.5), where=
- I am able to attach GDB and step through the ELF file without any hindranc=
-es.</p><p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:norma=
-l;font-variant-east-asian:normal;font-variant-alternates:normal;font-kernin=
-g:auto;font-feature-settings:normal;font-stretch:normal;font-size:13px;line=
--height:normal;font-family:&quot;Helvetica Neue&quot;"><br></p><p class=3D"=
-gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;font-variant-east=
--asian:normal;font-variant-alternates:normal;font-kerning:auto;font-feature=
--settings:normal;font-stretch:normal;font-size:13px;line-height:normal;font=
--family:&quot;Helvetica Neue&quot;">
-
-
-
-
-
-</p><p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal;f=
-ont-variant-east-asian:normal;font-variant-alternates:normal;font-kerning:a=
-uto;font-feature-settings:normal;font-stretch:normal;font-size:13px;line-he=
-ight:normal;font-family:&quot;Helvetica Neue&quot;">To address this issue, =
-I have experimented with different versions of GDB, specifically:</p></div>=
-<div>GNU gdb (Arm GNU Toolchain 13.2.rel1 (Build arm-13.7)) ( arm-none-eabi=
-)<br></div><div>GNU gdb (Linaro_GDB-2019.12) 8.3.1.20191204-git<br></div><d=
-iv><b>Error I am facing :</b></div><div><div style=3D"font-family:Menlo,Mon=
-aco,&quot;Courier New&quot;,monospace;font-size:12px;line-height:18px;white=
--space:pre"><div style=3D""><span style=3D"background-color:rgb(255,255,255=
-)"><font color=3D"#000000">Remote debugging using localhost:1234</font></sp=
-an></div><div style=3D""><span style=3D"background-color:rgb(255,255,255)">=
-<font color=3D"#000000">Remote &#39;g&#39; packet reply is too long (expect=
-ed 68 bytes, got 92 bytes): 00000000000000000000000000000000000000000000000=
-00000000000000000000000000000000000000000000000000000000028100020ffffffff08=
-00000000000041000000000000000000000000000000000000000000000000</font></span=
-></div><div style=3D""><span style=3D"background-color:rgb(255,255,255)"><f=
-ont color=3D"#000000">(gdb) b main</font></span></div><div style=3D""><span=
- style=3D"background-color:rgb(255,255,255)"><font color=3D"#000000">Breakp=
-oint 1 at 0xc6: file main2.c, line 69.</font></span></div><div style=3D""><=
-span style=3D"background-color:rgb(255,255,255)"><font color=3D"#000000">(g=
-db) continue</font></span></div><div style=3D""><span style=3D"background-c=
-olor:rgb(255,255,255)"><font color=3D"#000000">The program is not being run=
-.</font></span></div><div style=3D""><span style=3D"background-color:rgb(25=
-5,255,255)"><font color=3D"#000000">(gdb) run</font></span></div><div style=
-=3D""><span style=3D"background-color:rgb(255,255,255)"><font color=3D"#000=
-000">Don&#39;t know how to run.  Try &quot;help target&quot;.</font></span>=
-</div></div></div><div><br></div><div><b>With Gdb-multiarch (12.1)</b></div=
-><div><div style=3D"line-height:18px;white-space:pre"><div style=3D"font-si=
-ze:12px;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospace"><span s=
-tyle=3D"background-color:rgb(255,255,255)"><font color=3D"#000000">gef=E2=
-=9E=A4  set architecture armv7</font></span></div><div style=3D"font-size:1=
-2px;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospace"><span style=
-=3D"background-color:rgb(255,255,255)"><font color=3D"#000000">The target a=
-rchitecture is set to &quot;armv7&quot;.</font></span></div><div style=3D"f=
-ont-size:12px;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospace"><=
-span style=3D"background-color:rgb(255,255,255)"><font color=3D"#000000">ge=
-f=E2=9E=A4  target remote:1234</font></span></div><div style=3D"font-size:1=
-2px;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospace"><span style=
-=3D"background-color:rgb(255,255,255)"><font color=3D"#000000">Remote debug=
-ging using :1234</font></span></div><div style=3D"font-size:12px;font-famil=
-y:Menlo,Monaco,&quot;Courier New&quot;,monospace"><span style=3D"background=
--color:rgb(255,255,255)"><font color=3D"#000000">warning: No executable has=
- been specified and target does not support</font></span></div><div style=
-=3D"font-size:12px;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospa=
-ce"><span style=3D"background-color:rgb(255,255,255)"><font color=3D"#00000=
-0">determining executable automatically.  Try using the &quot;file&quot; co=
-mmand.</font></span></div><div style=3D"font-size:12px;font-family:Menlo,Mo=
-naco,&quot;Courier New&quot;,monospace"><span style=3D"background-color:rgb=
-(255,255,255)"><font color=3D"#000000">Remote &#39;g&#39; packet reply is t=
-oo long (expected 68 bytes, got 92 bytes): 00000000000000000000000000000000=
-000000000000000000000000000000000000000000000000000000000000000000000000281=
-00020ffffffff08000000000000410000000000000000000000000000000000000000000000=
-00</font></span></div><div style=3D"font-size:12px;font-family:Menlo,Monaco=
-,&quot;Courier New&quot;,monospace"><span style=3D"background-color:rgb(255=
-,255,255)"><font color=3D"#000000">gef=E2=9E=A4  file kernel2.elf</font></s=
-pan></div><div style=3D"font-size:12px;font-family:Menlo,Monaco,&quot;Couri=
-er New&quot;,monospace"><span style=3D"background-color:rgb(255,255,255)"><=
-font color=3D"#000000">Reading symbols from kernel2.elf...</font></span></d=
-iv><div style=3D"font-size:12px;font-family:Menlo,Monaco,&quot;Courier New&=
-quot;,monospace"><span style=3D"background-color:rgb(255,255,255)"><font co=
-lor=3D"#000000">gef=E2=9E=A4  b main</font></span></div><div style=3D"font-=
-size:12px;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospace"><span=
- style=3D"background-color:rgb(255,255,255)"><font color=3D"#000000">Breakp=
-oint 1 at 0xc6: file main2.c, line 69.</font></span></div><div style=3D"fon=
-t-size:12px;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospace"><sp=
-an style=3D"background-color:rgb(255,255,255)"><font color=3D"#000000">gef=
-=E2=9E=A4  continue</font></span></div><div style=3D"font-size:12px;font-fa=
-mily:Menlo,Monaco,&quot;Courier New&quot;,monospace"><span style=3D"backgro=
-und-color:rgb(255,255,255)"><font color=3D"#000000">The program is not bein=
-g run.</font></span></div><div style=3D"font-size:12px;font-family:Menlo,Mo=
-naco,&quot;Courier New&quot;,monospace"><span style=3D"background-color:rgb=
-(255,255,255)"><font color=3D"#000000">gef=E2=9E=A4  run</font></span></div=
-><div style=3D"font-size:12px;font-family:Menlo,Monaco,&quot;Courier New&qu=
-ot;,monospace"><span style=3D"background-color:rgb(255,255,255)"><font colo=
-r=3D"#000000">Starting program: /mnt/c/Users/Gogte/Desktop/sanjana_intern_p=
-roject/Qemu_test/test3/LinkerM3/kernel2.elf </font></span></div><div style=
-=3D"font-size:12px;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospa=
-ce"><span style=3D"background-color:rgb(255,255,255)"><font color=3D"#00000=
-0">/bin/bash: line 1: /mnt/c/Users/Gogte/Desktop/sanjana_intern_project/Qem=
-u_test/test3/LinkerM3/kernel2.elf: cannot execute binary file: Exec format =
-error</font></span></div><div style=3D"font-size:12px;font-family:Menlo,Mon=
-aco,&quot;Courier New&quot;,monospace"><span style=3D"background-color:rgb(=
-255,255,255)"><font color=3D"#000000">/bin/bash: line 1: /mnt/c/Users/Gogte=
-/Desktop/sanjana_intern_project/Qemu_test/test3/LinkerM3/kernel2.elf: Succe=
-ss</font></span></div><div style=3D"font-size:12px;font-family:Menlo,Monaco=
-,&quot;Courier New&quot;,monospace"><span style=3D"background-color:rgb(255=
-,255,255)"><font color=3D"#000000">During startup program exited with code =
-126.</font></span></div><div style=3D"font-size:12px;font-family:Menlo,Mona=
-co,&quot;Courier New&quot;,monospace"><br></div><div style=3D""><font face=
-=3D"arial, sans-serif" style=3D""><b style=3D""><span style=3D"font-size:12=
-px">I</span>f I do the same with Standard qemu binary the gdb works:</b></f=
-ont></div><div style=3D""><div style=3D"line-height:18px"><div style=3D"fon=
-t-size:12px;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospace"><fo=
-nt color=3D"#000000" style=3D"background-color:rgb(255,255,255)">Remote deb=
-ugging using localhost:1234</font></div><div style=3D"font-size:12px;font-f=
-amily:Menlo,Monaco,&quot;Courier New&quot;,monospace"><font color=3D"#00000=
-0" style=3D"background-color:rgb(255,255,255)">start () at startup.s:10</fo=
-nt></div><div style=3D"font-size:12px;font-family:Menlo,Monaco,&quot;Courie=
-r New&quot;,monospace"><font color=3D"#000000" style=3D"background-color:rg=
-b(255,255,255)">--Type &lt;RET&gt; for more, q to quit, c to continue witho=
-ut paging--c</font></div><div style=3D"font-size:12px;font-family:Menlo,Mon=
-aco,&quot;Courier New&quot;,monospace"><font color=3D"#000000" style=3D"bac=
-kground-color:rgb(255,255,255)">10      ldr r1, =3Dmain</font></div><div st=
-yle=3D"font-size:12px;font-family:Menlo,Monaco,&quot;Courier New&quot;,mono=
-space"><font color=3D"#000000" style=3D"background-color:rgb(255,255,255)">=
-(gdb) b main</font></div><div style=3D"font-size:12px;font-family:Menlo,Mon=
-aco,&quot;Courier New&quot;,monospace"><font color=3D"#000000" style=3D"bac=
-kground-color:rgb(255,255,255)">Breakpoint 1 at 0xc6: file main2.c, line 69=
-.</font></div><div style=3D"font-size:12px;font-family:Menlo,Monaco,&quot;C=
-ourier New&quot;,monospace"><font color=3D"#000000" style=3D"background-col=
-or:rgb(255,255,255)">(gdb) continue</font></div><div style=3D"font-size:12p=
-x;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospace"><font color=
-=3D"#000000" style=3D"background-color:rgb(255,255,255)">Continuing.</font>=
-</div><font color=3D"#000000" style=3D"font-size:12px;font-family:Menlo,Mon=
-aco,&quot;Courier New&quot;,monospace;background-color:rgb(255,255,255)"><b=
-r></font><div style=3D"font-size:12px;font-family:Menlo,Monaco,&quot;Courie=
-r New&quot;,monospace"><font color=3D"#000000" style=3D"background-color:rg=
-b(255,255,255)">Breakpoint 1, main () at main2.c:69</font></div><div style=
-=3D"font-size:12px;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospa=
-ce"><font color=3D"#000000" style=3D"background-color:rgb(255,255,255)">69 =
-             uart_print(&quot;Inside main function&quot;);</font></div><div=
- style=3D"font-size:12px;font-family:Menlo,Monaco,&quot;Courier New&quot;,m=
-onospace"><font color=3D"#000000" style=3D"background-color:rgb(255,255,255=
-)">(gdb)</font></div><div style=3D"font-size:12px;font-family:Menlo,Monaco,=
-&quot;Courier New&quot;,monospace"><br></div><div style=3D"font-size:12px;f=
-ont-family:Menlo,Monaco,&quot;Courier New&quot;,monospace"><p class=3D"gmai=
-l-p1" style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asi=
-an:normal;font-variant-alternates:normal;font-kerning:auto;font-feature-set=
-tings:normal;font-stretch:normal;font-size:13px;line-height:normal;font-fam=
-ily:&quot;Helvetica Neue&quot;"><br></p><p class=3D"gmail-p1" style=3D"marg=
-in:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-vari=
-ant-alternates:normal;font-kerning:auto;font-feature-settings:normal;font-s=
-tretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica=
- Neue&quot;">My project necessitates the use of the Xilinx QEMU binary, spe=
-cifically to leverage the remote port functionality it offers.</p><p class=
-=3D"gmail-p1" style=3D"font-variant-numeric:normal;font-variant-east-asian:=
-normal;font-variant-alternates:normal;font-kerning:auto;font-feature-settin=
-gs:normal;font-stretch:normal;font-size:13px;line-height:normal;font-family=
-:&quot;Helvetica Neue&quot;;margin:0px">Therefore, I am seeking guidance on=
- which version of GDB should be used, or any specific configurations that m=
-ight enable successful GDB attachment to the ELF file running on Xilinx QEM=
-U.</p><p class=3D"gmail-p1" style=3D"margin:0px;font-variant-numeric:normal=
-;font-variant-east-asian:normal;font-variant-alternates:normal;font-kerning=
-:auto;font-feature-settings:normal;font-stretch:normal;font-size:13px;line-=
-height:normal;font-family:&quot;Helvetica Neue&quot;"><br></p></div></div><=
-/div><div style=3D"font-size:12px"><font face=3D"arial, sans-serif">Regards=
-,</font></div><div style=3D"font-size:12px"><font face=3D"arial, sans-serif=
-">Sanjana</font></div><div style=3D"font-size:12px;font-family:Menlo,Monaco=
-,&quot;Courier New&quot;,monospace"><span style=3D"background-color:rgb(255=
-,255,255)"><font color=3D"#000000"><br></font></span></div><div style=3D"fo=
-nt-size:12px;font-family:Menlo,Monaco,&quot;Courier New&quot;,monospace"><s=
-pan style=3D"background-color:rgb(255,255,255)"><font color=3D"#000000"><br=
-></font></span></div><div style=3D"font-size:12px;font-family:Menlo,Monaco,=
-&quot;Courier New&quot;,monospace"><span style=3D"background-color:rgb(255,=
-255,255)"><font color=3D"#000000"><br></font></span></div></div></div><div>=
-<br></div></div>
-
---00000000000059ef2d0614b5900d--
 
