@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB60CD11DD
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 868FFCD1283
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rps7a-00051j-MG; Thu, 28 Mar 2024 11:56:54 -0400
+	id 1rps7r-0006m1-Fa; Thu, 28 Mar 2024 11:57:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7R-0004f8-Fd
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:46 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7p-0006ew-W8
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:57:10 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7P-0002XK-UH
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:45 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a46ea03c2a5so216843966b.1
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:56:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps7o-0002hL-7c
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:57:09 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a2f22bfb4e6so155232066b.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:57:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711641402; x=1712246202; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711641426; x=1712246226; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=muQ9YYs1garpvhloVWRUiLPzA6iwq65Rr1SdS4smlFw=;
- b=xIviQFS5WkfB3SmaSqmdUiAYqROgybIZKD58pgI+nEQ6LVuoxICa+gUvJ/0tTQwbzF
- o+uLtFAavL7ut4sMimpHF6nxEOCUOeRg6tCtKL3dQnxXVrFop37PE66b9GSDjArbGVpx
- wuwy6fTwtFcrIWsjIHtCew9cfKdqHUayeiBMlVjFq9nClJpotpgJN133Yet1y+CX7S4V
- Fe18wz1fhSljbdc1b0Pae2YXWJ1/xZBXZAmBqZHAPr/hgrw0YyYr/qDdL2dka3PjVB19
- ueZqFa/A4vS4rpcyqBVsrt0ftb9YlaMc3Bpy9/G51V3NPxYAU/6vOFqKjm5/31/hdo75
- Cf1Q==
+ bh=4BSXB7GHW5TBQXIjnxuyxFyj9B1iDsM8cHi/htTyRxs=;
+ b=bamZfs6ZpZARXoFfvhiYUlk8JTdEt5Hy6MRpnESxzdU/z6Xhk9ZW4tRux1pQNHonKj
+ fRHLphy6mkLkdv+0zARX7iIv7teQaq4q0tqKQONQFCWjds3TRl40tHn+kg/N/sydP/9b
+ BG5xAcbmxKc+Z9u901CL2g+8GVRWlGeRQEvn/u58yPKjf4W+YI+j77JYYgdMtbK8VdFG
+ b7nAMQT0SVI6C+ejaWNoXtOkKnhEmXkgUHEx2ho1UtbK/McWUm0lhbmcV7FLsSvp28FV
+ Fq8lyiaSRepRUUzzW3quXa0cZWdhyrly3UxSTYr5qbCS7zUkvnw7S2Mi8S3n1KjyliNI
+ hYyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711641402; x=1712246202;
+ d=1e100.net; s=20230601; t=1711641426; x=1712246226;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=muQ9YYs1garpvhloVWRUiLPzA6iwq65Rr1SdS4smlFw=;
- b=H1wHNYV0VeiOjpMCZUH19sS5E7C5op114D2gNMaL9XBCDneh2zGNS+gLEu9Q8GjAYh
- wFDCb0wa8UHUFm6IW4VYtO5bPeLDgMax9neYLUmHbftsCjMOpJwSSJ2pY+x3OBBFIcrY
- N/PvQJtNO34Ll8gfdJ39F3BU8DFCclXuPJWGiseHVgC2VALTB6+v124bOTvFTrCDIJDc
- d3k59A0RoRgXB4ZnZuVujNOP2R4aNyGFr7Zn6+nD3e87mmR9sUYEQ0PAwpxI0aHojtQo
- sAfpOtrRyHo2trdLFpdhQS005Ejr2QMw0L16SmkzmTxdj+2AP3GUq5W7yfNKDcD2uiJh
- bABA==
-X-Gm-Message-State: AOJu0Yw92N27Qljkj0evo+0qYu+sh/liQkX3exoA9UlnfXOxKC3SRvO4
- lpiT5QGG8n8XBguTv4Ia3HkJbC5YHZIwfb/YG+ZJ2q35VLigykaEQBjdAUlzenJQbH2OFHzD3iY
- 7
-X-Google-Smtp-Source: AGHT+IFXbYhPHZn5NXBz7Ikr8yC8QHRf+1TONIhT4Hw3waF5CP4z/i4EhLM/5gQv8lw+8vgiP63smA==
-X-Received: by 2002:a17:906:714a:b0:a4e:f91:4694 with SMTP id
- z10-20020a170906714a00b00a4e0f914694mr2568225ejj.27.1711641401851; 
- Thu, 28 Mar 2024 08:56:41 -0700 (PDT)
+ bh=4BSXB7GHW5TBQXIjnxuyxFyj9B1iDsM8cHi/htTyRxs=;
+ b=DidA3cYSThwSF5F/irkkmopfVCh9sxPVHmGTFl5/7gIdCFm2B4afWxzMsujzcvadPD
+ C40OUrNrMXCKSL4QYWbVvQVBsLjHgLEEkb9GAc/XN0lzOD42dV+4nUySSdwvCa9xVu1G
+ pbJMmVtgAx6SDNkg9+3d6kayoQL6AT3cfoayUcWGEYcDecW26HPv5bEV9fg/00xWFO7d
+ w4tTcZPuY24qaVTQZmcQtNRP29ij+IfFimcYzqvCVRFL930Aj9s0F6w2+dwB7p2vYi3N
+ MBllRAnCW5ogTWg9w4WUNdd8Bnc04B+Ofpxwe7qBZGk+TTODJEiw6e3By4Gu7wN/FZP+
+ IyFA==
+X-Gm-Message-State: AOJu0YzxOQcoBjUgmVdOMo7qw8SSULlVRqBdgnMcF8BkC8FK2GWk9lF/
+ sBZlYAzkFNt/taaetqzqxxOgAR2ZH8ScU3GMVQ+O+lE3mJH7w5hpkz77Bi+l6mucBtTrALu+33s
+ x
+X-Google-Smtp-Source: AGHT+IFF/skKWHNCTMPwJb+B2ckteIOxmThfN9+aMTRN8D0HIEaksr7NEcZ4nuV98VsFYsHsSKmB9w==
+X-Received: by 2002:a17:906:b112:b0:a47:1fe8:9825 with SMTP id
+ u18-20020a170906b11200b00a471fe89825mr2020350ejy.32.1711641426506; 
+ Thu, 28 Mar 2024 08:57:06 -0700 (PDT)
 Received: from m1x-phil.lan (pas38-h02-176-184-5-52.dsl.sta.abo.bbox.fr.
  [176.184.5.52]) by smtp.gmail.com with ESMTPSA id
- dr3-20020a170907720300b00a4a38d10801sm896023ejc.35.2024.03.28.08.56.40
+ f8-20020a17090624c800b00a46fbff47a6sm891626ejb.168.2024.03.28.08.57.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 Mar 2024 08:56:41 -0700 (PDT)
+ Thu, 28 Mar 2024 08:57:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -70,18 +70,17 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Anthony Perard <anthony.perard@citrix.com>,
  Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH-for-9.1 19/29] hw/i386/pc: Pass PcPciMachineState argument
- to CXL helpers
-Date: Thu, 28 Mar 2024 16:54:27 +0100
-Message-ID: <20240328155439.58719-20-philmd@linaro.org>
+Subject: [RFC PATCH-for-9.1 23/29] hw/i386/fw_cfg: Inline smbios_defaults()
+Date: Thu, 28 Mar 2024 16:54:31 +0100
+Message-ID: <20240328155439.58719-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240328155439.58719-1-philmd@linaro.org>
 References: <20240328155439.58719-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,67 +103,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since CXL helpers expect a PCI-based machine, we
-can directly pass them a PcPciMachineState argument.
+All PCI-based machines have the smbios_defaults field
+set to %true. Simplify by using an inlined helper
+checking whether the machine is PCI-based or not.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ include/hw/i386/pc.h | 1 -
+ hw/i386/fw_cfg.c     | 7 ++++++-
+ hw/i386/pc.c         | 1 -
+ hw/i386/pc_piix.c    | 1 -
+ 4 files changed, 6 insertions(+), 4 deletions(-)
 
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 7da0bc8aa4..6a6a8df005 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -86,7 +86,6 @@ typedef struct PCMachineClass {
+     int default_cpu_version;
+ 
+     /* SMBIOS compat: */
+-    bool smbios_defaults;
+     bool smbios_legacy_mode;
+     SmbiosEntryPointType default_smbios_ep_type;
+ 
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index 14a7dfbdc9..f60390ed56 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -49,6 +49,11 @@ const char *fw_cfg_arch_key_name(uint16_t key)
+ }
+ 
+ #ifdef CONFIG_SMBIOS
++static bool smbios_defaults(PCMachineState *pcms)
++{
++    return pc_machine_is_pci_enabled(pcms);
++}
++
+ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+                          SmbiosEntryPointType ep_type)
+ {
+@@ -61,7 +66,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+     MachineClass *mc = MACHINE_GET_CLASS(pcms);
+     X86CPU *cpu = X86_CPU(ms->possible_cpus->cpus[0].cpu);
+ 
+-    if (pcmc->smbios_defaults) {
++    if (smbios_defaults(pcms)) {
+         /* These values are guest ABI, do not change */
+         smbios_set_defaults("QEMU", mc->desc, mc->name);
+     }
 diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index e36d76656b..d8e91d18b8 100644
+index b83abee8e9..7a758a2e84 100644
 --- a/hw/i386/pc.c
 +++ b/hw/i386/pc.c
-@@ -705,14 +705,14 @@ static void pc_get_device_memory_range(PCMachineState *pcms,
-     *device_mem_size = size;
- }
+@@ -1754,7 +1754,6 @@ static void pc_machine_class_init(ObjectClass *oc, void *data)
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(oc);
+     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(oc);
  
--static uint64_t pc_get_cxl_range_start(PCMachineState *pcms)
-+static uint64_t pc_get_cxl_range_start(PcPciMachineState *ppms)
- {
-+    PCMachineState *pcms = PC_MACHINE(ppms);
-     MachineState *ms = MACHINE(pcms);
-     hwaddr cxl_base;
-     ram_addr_t size;
- 
--    if (has_reserved_memory(pcms) &&
--        (ms->ram_size < ms->maxram_size)) {
-+    if ((ms->ram_size < ms->maxram_size)) {
-         pc_get_device_memory_range(pcms, &cxl_base, &size);
-         cxl_base += size;
-     } else {
-@@ -722,10 +722,9 @@ static uint64_t pc_get_cxl_range_start(PCMachineState *pcms)
-     return cxl_base;
- }
- 
--static uint64_t pc_get_cxl_range_end(PCMachineState *pcms)
-+static uint64_t pc_get_cxl_range_end(PcPciMachineState *ppms)
- {
--    PcPciMachineState *ppms = PC_PCI_MACHINE(pcms);
--    uint64_t start = pc_get_cxl_range_start(pcms) + MiB;
-+    uint64_t start = pc_get_cxl_range_start(ppms) + MiB;
- 
-     if (ppms->cxl_devices_state.fixed_windows) {
-         GList *it;
-@@ -937,7 +936,7 @@ void pc_memory_init(PCMachineState *pcms,
-         MemoryRegion *mr = &ppms->cxl_devices_state.host_mr;
-         hwaddr cxl_size = MiB;
- 
--        cxl_base = pc_get_cxl_range_start(pcms);
-+        cxl_base = pc_get_cxl_range_start(ppms);
-         memory_region_init(mr, OBJECT(machine), "cxl_host_reg", cxl_size);
-         memory_region_add_subregion(system_memory, cxl_base, mr);
-         cxl_resv_end = cxl_base + cxl_size;
-@@ -1027,7 +1026,7 @@ uint64_t pc_pci_hole64_start(void)
-     ram_addr_t size = 0;
- 
-     if (ppms->cxl_devices_state.is_enabled) {
--        hole64_start = pc_get_cxl_range_end(pcms);
-+        hole64_start = pc_get_cxl_range_end(ppms);
-     } else if (has_reserved_memory(pcms) && (ms->ram_size < ms->maxram_size)) {
-         pc_get_device_memory_range(pcms, &hole64_start, &size);
-         if (!pcmc->broken_reserved_end) {
+-    pcmc->smbios_defaults = true;
+     pcmc->enforce_amd_1tb_hole = true;
+     pcmc->pvh_enabled = true;
+     pcmc->kvmclock_create_always = true;
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index e6178f8653..70dc8686f9 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -828,7 +828,6 @@ static void isapc_machine_options(MachineClass *m)
+     m->max_cpus = 1;
+     m->option_rom_has_mr = true;
+     m->rom_file_has_mr = false;
+-    pcmc->smbios_defaults = false;
+     pcmc->smbios_legacy_mode = true;
+     m->default_nic = "ne2k_isa";
+     m->default_cpu_type = X86_CPU_TYPE_NAME("486");
 -- 
 2.41.0
 
