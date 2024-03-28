@@ -4,79 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 109A8C54E64
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 05:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B32DC54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 06:09:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpiMa-0000pg-7X; Thu, 28 Mar 2024 01:31:44 -0400
+	id 1rpiw1-0007T1-2g; Thu, 28 Mar 2024 02:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rpiMY-0000pM-RZ; Thu, 28 Mar 2024 01:31:42 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1rpiMX-0008PR-9s; Thu, 28 Mar 2024 01:31:42 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-6e6b22af648so1250948b3a.0; 
- Wed, 27 Mar 2024 22:31:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711603899; x=1712208699; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=s4aUGtWC/ud+pU2lGI9ts8YM1IlIGiz8jqFyH7n1v64=;
- b=IjEZVhPjM+Hz99L8KNaetc83ueDPmZPxvn9WXJ+wXTsflUlf/6mAo1tWoo+3O3op+S
- oU2K0rn14zyPl2x4VO3FfsLBVVYOlbZYGJ2RJZoOWeaXWmPYoztyn71X1xbanfuNjqRJ
- vqKzUbVWotGqo8OZPd0pZKWl8oKLjJ4e3cYW3NLad8GWLyTInvBzSRXG5mRDbXKIW3T5
- Nzs0J21kms0cjiBhDxX2A7UuTnjAiDUA3HE3HomLBZyNjpCXjcsAAGSEvLw+yScY2B70
- Ms960ZOSCFBJscAiiz9kD5RczowWXofH6n0JuEOUbh6sr9K7l3vYKZz9iY35JwLfiqSS
- HMjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711603899; x=1712208699;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=s4aUGtWC/ud+pU2lGI9ts8YM1IlIGiz8jqFyH7n1v64=;
- b=IHbQ/9bUaDbYFTaTh8GbX3y6MrTOs0wqSHFxgBnqMd2DaWJsfb+LVSvhSNtqSQuU0H
- LQxWTP14AwxvZjm/7lGQNbHNetNoaAIn9FlAL0JgIdgTLsocEidlBsb5QSd9WfEpUjJO
- zUVcUDUZZRnEVlIiFmEfKZZTnI1It11bWEEv/7JidW/40QNurtQhbDXFqE0MOb9cUlqQ
- IYdyuo1X6P2r4Hh/U5gUTt+nFQD6edYLYK3CPrOkMVJE6oApjlNWJ0eSESab08iAMTcF
- desbx+Jg/SSkrWFKcXnYb9czwSs+9Mxpi4h74J5SLqFuxuwPwMJBRm52M7tK0inPu3wh
- cQLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXcDIybaK0P1NzuRG/kPosLUMFmRKmFVYBex/rNVwmcC7iB0Nl0YaKc03RoTmF9SgOzvyOlB3ihp9WkfmdI8/cZ5bFhWYA=
-X-Gm-Message-State: AOJu0Yx3JIecrpPNjn9MaJIl7hhMIJN5JQqszKVxXmpKk2qRV2uATrAy
- kfhXB1SB54knvSh+kAg9oNbI/q/2Kw95Msva8Adv6+XFWhpsnvgmWnH6pwZO4WM=
-X-Google-Smtp-Source: AGHT+IF+FPbfuPaLyhGchJ33QbgfxPR+69WMXmW/WJffmTWAAAcYIQdfVi7i6EtEFULKGzZofWwkag==
-X-Received: by 2002:a17:903:22d1:b0:1e0:185d:a73 with SMTP id
- y17-20020a17090322d100b001e0185d0a73mr2099537plg.9.1711603898889; 
- Wed, 27 Mar 2024 22:31:38 -0700 (PDT)
-Received: from wheely.local0.net ([118.210.97.62])
- by smtp.gmail.com with ESMTPSA id
- d13-20020a170902654d00b001e211a290efsm535018pln.132.2024.03.27.22.31.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Mar 2024 22:31:38 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH 0/3] target/ppc: fix tlb flushing race
-Date: Thu, 28 Mar 2024 15:31:28 +1000
-Message-ID: <20240328053131.2604454-1-npiggin@gmail.com>
-X-Mailer: git-send-email 2.42.0
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1rpivw-0007Sj-89
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 02:08:16 -0400
+Received: from mail-bn8nam04on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2408::601]
+ helo=NAM04-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Jiqian.Chen@amd.com>)
+ id 1rpivt-00078L-Kh
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 02:08:16 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=jfFpvhBbYSSsw8jSb/rUy8/oVJBqbkA6EcvIVvG9hORSHDE2xVRNS2+PyEDzuOU4oEor1/S+tclOyqldd9hszwzU5k+cYTRm7T3tUziIycDemDj0GlctaG7i78oEby185/spwG2tGu1jgu6zI4qfq9ut5YjDK/7RC7n724hRy7plMTRGLf8xROSBa3NE2p92jY5rVshxWP0eBZMvV+WnMsOEb5jMr16Zoe4YQWn8sRC7C3Lo9TELUpYvv/bn7p7gUwK6/5EiJgrv0ueZYtBoNAYHhjA301TEKFIcEiBvKUMaexpPvQa3Hu0R+yJSpUpb2ivZETkkOSJ9siVi/yJKqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4iktjCp5GS/8M8W4VEJkInG7sWcP8HxuGqTncJkiWFM=;
+ b=Vy5KyVRuMpQ7mZ+B/ZUm4or406eeIwh41yqLNgPKqsjOcAUJNkobRCZiSvwcnAhsROQRHX2jVZnSLJUDU0gs8LoTzUylMS12bZcEBF/kubzzHaOoSEQkSDvBqhvc4Ij/GOJlaJvhm1kgIvoQySVrFoR/4RxW0Q4ZypNtlHqWwfdZC54PwyZpFiEMOteVgrxojH+FJJrReV4Pmawvsmpk82KtQ1UTLqQaRIogEAkFSBs64P2gRMEofDNagH/JyHa2XbExPRVMFiVKzov0LCCqbVW22Ur8CTVhGbFe2jJNMIlAyfCfryO0aAapEooBWiYdgse0YdT50CP+DUgQLRzuBg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4iktjCp5GS/8M8W4VEJkInG7sWcP8HxuGqTncJkiWFM=;
+ b=4r3TqM+FOytsD4MHl0NCx/DAukhZdRYXPl8XAPO7GWKm4JmLqDNqW9E9r0ZxtXjp3lDq2eGc7AcsW3mu9ciSS/QwrR6nAMHBoeVCJVL8TTx0JirELM8fT/7wczAX7kEzWiaNfWsaBhVE6OiL2JvgsPS4ZDavba0oBBddtbo7aAg=
+Received: from BN9PR03CA0090.namprd03.prod.outlook.com (2603:10b6:408:fc::35)
+ by CY5PR12MB6647.namprd12.prod.outlook.com (2603:10b6:930:40::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.33; Thu, 28 Mar
+ 2024 06:08:09 +0000
+Received: from BN3PEPF0000B372.namprd21.prod.outlook.com
+ (2603:10b6:408:fc:cafe::14) by BN9PR03CA0090.outlook.office365.com
+ (2603:10b6:408:fc::35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7409.13 via Frontend
+ Transport; Thu, 28 Mar 2024 06:08:09 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BN3PEPF0000B372.mail.protection.outlook.com (10.167.243.169) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7452.0 via Frontend Transport; Thu, 28 Mar 2024 06:08:09 +0000
+Received: from cjq-desktop.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Thu, 28 Mar
+ 2024 01:08:06 -0500
+From: Jiqian Chen <Jiqian.Chen@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Stefano Stabellini <sstabellini@kernel.org>, Anthony Perard
+ <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>,
+ <xen-devel@lists.xenproject.org>, Huang Rui <Ray.Huang@amd.com>, Jiqian Chen
+ <Jiqian.Chen@amd.com>, Huang Rui <ray.huang@amd.com>
+Subject: [RFC QEMU PATCH v5 1/1] xen: Use gsi instead of irq for mapping pirq
+Date: Thu, 28 Mar 2024 14:07:31 +0800
+Message-ID: <20240328060731.354356-2-Jiqian.Chen@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240328060731.354356-1-Jiqian.Chen@amd.com>
+References: <20240328060731.354356-1-Jiqian.Chen@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x429.google.com
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B372:EE_|CY5PR12MB6647:EE_
+X-MS-Office365-Filtering-Correlation-Id: e2e18142-2616-4616-208e-08dc4eed7133
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: TFpXLZGHAOE+mjzrmlmfj1lN9OUY3e/hZZZfpRHim6s6Zfmbeo3B4CRE5GtGe0TV0j4TwcGRNIMXXPtWNXEvf0QCcqwGRg7acB0iyBxN1KrR/sfqNUzjjksp8Ov1/huq7dKW4IJLwuiZvq7NpbK2Y4KzIE85mnmgbsaz1KQzpg1cJj2QDACdWGSQsyv8yFdBu9ziL94v1tuK1rc5JG5Vnu+dE4WR8JKcvFAMC2jgGQvz8ybnyfVV3TIxcFdn5ha8CsqWMLohFufOcU55Qi4JXH0BBoVUaKp8TRNcDnbfr3AVywmx8v7i5zib4ffKOoymoYWlnsYdBqqNydNMU4wNKfU1x4xHIIYll5RfRI9Irw9PLDCFA9MJDU/St6Q1twhFBax4bKUHnthTFwRopkCJA2OZicaFzK9GaQRUmVRO33VRyLBJe/D+X0iW1qCTzZagG8ZuTp9cpERUbQRmwcLsEWoj8/LAyxtHIYx7W0OHfJKSBrML11JxzzWVYIrsTBlTWupy3oy+Jp23B9rC8JV+7F0CXlXDXIuxQYhkzTo3oZIjw2Qul/2kft1QzyQKeDO5TkOZarOz9FlYBdyEhrPM77TjL4GkRioK9ANOSfhhz76h8LBcuzUOr2ELQ7CDg6J4aKeue9WnnrQ7mDDp6M7uSKfFksYwlU24QAthE0kML8dLHnHIwbIUnjHoPVW1D8o8htirNQrEtaHNJbVZtbam8BxfUwQLpzN9vJf/4bBBd0oWbz+KcQoalHN79fYE2m4m
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230031)(36860700004)(82310400014)(376005)(1800799015); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Mar 2024 06:08:09.2690 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e2e18142-2616-4616-208e-08dc4eed7133
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B372.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6647
+Received-SPF: permerror client-ip=2a01:111:f403:2408::601;
+ envelope-from=Jiqian.Chen@amd.com;
+ helo=NAM04-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,31 +125,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ppc broadcast tlb flushes should be synchronised with other vCPUs,
-like all other architectures that support such operations seem to
-be doing.
+In PVH dom0, it uses the linux local interrupt mechanism,
+when it allocs irq for a gsi, it is dynamic, and follow
+the principle of applying first, distributing first. And
+the irq number is alloced from small to large, but the
+applying gsi number is not, may gsi 38 comes before gsi
+28, that causes the irq number is not equal with the gsi
+number. And when passthrough a device, qemu wants to use
+gsi to map pirq, xen_pt_realize->xc_physdev_map_pirq, but
+the gsi number is got from file
+/sys/bus/pci/devices/<sbdf>/irq in current code, so it
+will fail when mapping.
 
-Fixing ppc removes the last caller of the non-synced TLB flush
-variants, we can remove some dead code. I'd like to merge patch 1
-for 9.0, and hold patches 2 and 3 until 9.1 to avoid churn (unless
-someone prefers to remove the dead code asap).
+Add gsi into XenHostPCIDevice and use gsi number that
+read from gsi sysfs if it exists.
 
-Thanks,
-Nick
+Signed-off-by: Huang Rui <ray.huang@amd.com>
+Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 
-Nicholas Piggin (3):
-  target/ppc: Fix broadcast tlbie synchronisation
-  tcg/cputlb: Remove non-synced variants of global TLB flushes
-  tcg/cputlb: remove other-cpu capability from TLB flushing
+---
+RFC: discussions ongoing on the Linux side where/how to expose the gsi
 
- docs/devel/multi-thread-tcg.rst |  13 +--
- include/exec/exec-all.h         |  97 ++++-----------------
- accel/tcg/cputlb.c              | 145 ++------------------------------
- target/ppc/helper_regs.c        |   2 +-
- target/ppc/mmu_helper.c         |   2 +-
- 5 files changed, 30 insertions(+), 229 deletions(-)
+---
+ hw/xen/xen-host-pci-device.c | 7 +++++++
+ hw/xen/xen-host-pci-device.h | 1 +
+ hw/xen/xen_pt.c              | 6 +++++-
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
+diff --git a/hw/xen/xen-host-pci-device.c b/hw/xen/xen-host-pci-device.c
+index 8c6e9a1716a2..5be3279aa25b 100644
+--- a/hw/xen/xen-host-pci-device.c
++++ b/hw/xen/xen-host-pci-device.c
+@@ -370,6 +370,13 @@ void xen_host_pci_device_get(XenHostPCIDevice *d, uint16_t domain,
+     }
+     d->irq = v;
+ 
++    xen_host_pci_get_dec_value(d, "gsi", &v, errp);
++    if (*errp) {
++        d->gsi = -1;
++    } else {
++        d->gsi = v;
++    }
++
+     xen_host_pci_get_hex_value(d, "class", &v, errp);
+     if (*errp) {
+         goto error;
+diff --git a/hw/xen/xen-host-pci-device.h b/hw/xen/xen-host-pci-device.h
+index 4d8d34ecb024..74c552bb5548 100644
+--- a/hw/xen/xen-host-pci-device.h
++++ b/hw/xen/xen-host-pci-device.h
+@@ -27,6 +27,7 @@ typedef struct XenHostPCIDevice {
+     uint16_t device_id;
+     uint32_t class_code;
+     int irq;
++    int gsi;
+ 
+     XenHostPCIIORegion io_regions[PCI_NUM_REGIONS - 1];
+     XenHostPCIIORegion rom;
+diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
+index 3635d1b39f79..d34a7a8764ab 100644
+--- a/hw/xen/xen_pt.c
++++ b/hw/xen/xen_pt.c
+@@ -840,7 +840,11 @@ static void xen_pt_realize(PCIDevice *d, Error **errp)
+         goto out;
+     }
+ 
+-    machine_irq = s->real_device.irq;
++    if (s->real_device.gsi < 0) {
++        machine_irq = s->real_device.irq;
++    } else {
++        machine_irq = s->real_device.gsi;
++    }
+     if (machine_irq == 0) {
+         XEN_PT_LOG(d, "machine irq is 0\n");
+         cmd |= PCI_COMMAND_INTX_DISABLE;
 -- 
-2.42.0
+2.34.1
 
 
