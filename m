@@ -4,70 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6988CC54E64
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 12:42:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66533C54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 12:58:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpp3r-00007r-FL; Thu, 28 Mar 2024 08:40:51 -0400
+	id 1rppK8-0006Sd-Li; Thu, 28 Mar 2024 08:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rpp3V-0008Vz-JO
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 08:40:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1rpp3S-00016R-EO
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 08:40:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711629625;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aOrjgk8gwqxbTbPOZmyM+QDSdSLbPDZfce1uCJaJbeg=;
- b=eGD2/NmFcgs2qwGwV4/RFXmvfBaTbw3BwrnqIheuDrH6QuIQWHU/PPA+saT9mBLZDoib1n
- 8N3Z2bJ8e5MhHUX3fknVlGDUrKC69pslN2TEZeLXBsMQK+2/WZ7Rn5YqLN8Lmgij4nxVeN
- szujAc2pGOIjE3n8px37hxYMwRCX0JA=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-145-1lToV2qQMCiZ7ZxvpZmviA-1; Thu, 28 Mar 2024 08:40:23 -0400
-X-MC-Unique: 1lToV2qQMCiZ7ZxvpZmviA-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com
- [10.11.54.7])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 0F2EA84AEC9;
- Thu, 28 Mar 2024 12:40:23 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.33])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id CC5F81C060D0;
- Thu, 28 Mar 2024 12:40:20 +0000 (UTC)
-Date: Thu, 28 Mar 2024 07:40:14 -0500
-From: Eric Blake <eblake@redhat.com>
-To: zhuyangyang <zhuyangyang14@huawei.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>, 
- qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
- luolongmin@huawei.com, suxiaodong1@huawei.com, chenxiaoyu48@huawei.com, 
- wangyan122@huawei.com, yebiaoxiang@huawei.com
-Subject: Re: [PATCH v1] coroutine: avoid inserting duplicate coroutine to
- co_queue_wakeup
-Message-ID: <dv63ec4btdz32schwrwjebce4m7xbu5tt6fncebi5hzxnmctdy@xflzv6tolvrm>
-References: <20240325091850.1087235-1-zhuyangyang14@huawei.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rppK6-0006SE-Oy
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 08:57:38 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rppK2-0006XF-Gb
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 08:57:37 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-56b0af675deso1060004a12.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 05:57:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1711630652; x=1712235452; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1AVngzRg5tYuiQmadZghRuLp3eJrZYi2vOKDqQZUD1Q=;
+ b=uCySL+fPw6R92q5EI7dgBdpQ7wviWYhxleoSaXrnRpNB+MvS4UC939J0F9r1vObOZM
+ Vz+ceKYw0G8ZeZDfXGYkS5myJ9yjDrScclNhjgWhUold/9e4VodWaA4W0LJ+Rb3XFZb7
+ tMvSyjP1twGDelyo8DBLEpoZXvvRPR4lg66TUVnzKTgM0vGlqENzSv5lP9r/2/+rxdRv
+ ggeX+cVL13azUDDUCxNOXjgZNVymjdv70P2jvQiuKYSxpyCzMz1FMcz09fu6C0LkdJSk
+ QckpurV4NWjgqi90IUXer1+aE0F3Yl643pEJcd50eqyny3aBSYxL2cnkyvcMqQDdv4dC
+ WFEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711630652; x=1712235452;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1AVngzRg5tYuiQmadZghRuLp3eJrZYi2vOKDqQZUD1Q=;
+ b=OUQqMyVXs+cC3WnLXnJJrReHsVQOIIWGtO93/OED0unvNCUFAJQ5BG+FzZGsZhjSrT
+ IsOPUNN6aSgUuy0/2vlvEg3K9A4rePBEwuW2vMRi/Yu4YyM9bCHjh8gfcq13tRHUQe8n
+ JIs9tV3qAzhD84OSmSmmcmFPCm2Od5SFl+zBtbR9ma2Z53jNMTbv7J50RqUHdAbHVfs7
+ YBWBB2W5aHl4io5k6cG6BC0EPQM4oe0KJixE8J4daRG54HwNGGfW9RVwptuOWIl39uV3
+ WYVFC7CTm2PcRxJHxdbLqm6K1cDrShCNGIeHSz2GIC8s+52LYzpKcd6t+7CRM8q7F9id
+ npkg==
+X-Gm-Message-State: AOJu0Yywv7hiNYw4s34dNO1EL3rvKhQYOFhKInotjL2VBG0cVKrd1Rd+
+ gLwOmDweorR73HjZwpnA3reZNFclldKwF2bqo3AQPvdIivKNexiSXckY9f2GX9o=
+X-Google-Smtp-Source: AGHT+IFjE49mixQRKwPfyNIMm/3v9QgsDh8zggrin2oVWDU2BMp5XpWd1/jLuLt9EkeRPQKqVMiDWA==
+X-Received: by 2002:a17:907:780e:b0:a4e:1035:3ed7 with SMTP id
+ la14-20020a170907780e00b00a4e10353ed7mr1918504ejc.25.1711630651623; 
+ Thu, 28 Mar 2024 05:57:31 -0700 (PDT)
+Received: from [192.168.69.100] (pas38-h02-176-184-5-52.dsl.sta.abo.bbox.fr.
+ [176.184.5.52]) by smtp.gmail.com with ESMTPSA id
+ s7-20020a1709062ec700b00a46abaeeb1csm723295eji.104.2024.03.28.05.57.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 Mar 2024 05:57:31 -0700 (PDT)
+Message-ID: <07348327-a61c-4cfb-bb5c-658448e3fb42@linaro.org>
+Date: Thu, 28 Mar 2024 13:57:27 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240325091850.1087235-1-zhuyangyang14@huawei.com>
-User-Agent: NeoMutt/20240201
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.7
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.1] rdma: Remove RDMA subsystem and pvrdma device
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yuval Shaia <yuval.shaia.ml@gmail.com>, qemu-block@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, integration@gluster.org,
+ Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ devel@lists.libvirt.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+References: <20240327105549.1824-1-philmd@linaro.org>
+ <ZgUy5rFScwNkmZQK@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZgUy5rFScwNkmZQK@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,68 +108,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 25, 2024 at 05:18:50PM +0800, zhuyangyang via wrote:
-> If g_main_loop_run()/aio_poll() is called in the coroutine context,
-> the pending coroutine may be woken up repeatedly, and the co_queue_wakeup
-> may be disordered.
+On 28/3/24 10:06, Daniel P. Berrangé wrote:
+> On Wed, Mar 27, 2024 at 11:55:48AM +0100, Philippe Mathieu-Daudé wrote:
+>> The whole RDMA subsystem was deprecated in commit e9a54265f5
+>> ("hw/rdma: Deprecate the pvrdma device and the rdma subsystem")
+>> released in v8.2. Time to remove it.
+>>
+>> Keep the RAM_SAVE_FLAG_HOOK definition since it might appears
+>> in old migration streams.
+>>
+>> Remove the dependencies on libibumad and libibverbs.
 > 
-> When the poll() syscall exited in g_main_loop_run()/aio_poll(), it means
-> some listened events is completed. Therefore, the completion callback
-> function is dispatched.
+>>
+>> Remove the generated vmw_pvrdma/ directory from linux-headers.
+>>
+>> Remove RDMA handling from migration.
+>>
+>> Remove RDMA handling in GlusterFS block driver.
 > 
-> If this callback function needs to invoke aio_co_enter(), it will only
-> wake up the coroutine (because we are already in coroutine context),
-> which may cause that the data on this listening event_fd/socket_fd
-> is not read/cleared. When the next poll () exits, it will be woken up again
-> and inserted into the wakeup queue again.
-> 
-> For example, if TLS is enabled in NBD, the server will call g_main_loop_run()
-> in the coroutine, and repeatedly wake up the io_read event on a socket.
-> The call stack is as follows:
-> 
-> aio_co_enter()
-> aio_co_wake()
-> qio_channel_restart_read()
-> aio_dispatch_handler()
-> aio_dispatch_handlers()
-> aio_dispatch()
-> aio_ctx_dispatch()
-> g_main_context_dispatch()
-> g_main_loop_run()
-> nbd_negotiate_handle_starttls()
-> nbd_negotiate_options()
-> nbd_negotiate()
-> nbd_co_client_start()
-> coroutine_trampoline()
+> The RDMA support in GlusterFS is completely opaque to QEMU.
+> All we have there is the CLI syntax to enable use of the
+> RDMA support inside libglusterfs. I'm not convinced that
+> the justification for deprecation (lack of maintanier)
+> applies to this scenario.
 
-zhuyangyang, do you have a reliable reproduction setup for how you
-were able to trigger this?  Obviously, it only happens when TLS is
-enabled (we aren't creating a g_main_loop_run for any other NBD
-command), and only when the server is first starting to serve a
-client; is this a case where you were hammering a long-running qemu
-process running an NBD server with multiple clients trying to
-reconnect to the server all near the same time?
+I'll quote commit 0552ff2465 from 2016 then:
 
-If we can come up with a reliable formula for reproducing the
-corrupted coroutine list, it would make a great iotest addition
-alongside the existing qemu-iotests 233 for ensuring that NBD TLS
-traffic is handled correctly in both server and client.
+     block/gluster: deprecate rdma support
+
+     gluster volfile server fetch happens through unix and/or tcp,
+     it doesn't support volfile fetch over rdma. The rdma code may
+     actually mislead, so to make sure things do not break, for now
+     we fallback to tcp when requested for rdma, with a warning.
+
+     If you are wondering how this worked all these days, its the gluster
+     libgfapi code which handles anything other than unix transport as
+     socket/tcp, sad but true.
 
 > 
-> Signed-off-by: zhuyangyang <zhuyangyang14@huawei.com>
-
-Side note: this appears to be your first qemu contribution (based on
-'git shortlog --author zhuyangyang').  While I am not in a position to
-presume how you would like your name Anglicized, I will point out that
-the prevailing style is to separate given name from family name (just
-because your username at work has no spaces does not mean that your
-S-o-b has to follow suit).  It is also permissible to list your name
-in native characters alongside or in place of the Anglicized version;
-for example, 'git log --author="Stefano Dong"' shows this technique.
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+>> Remove rdmacm-mux tool from contrib/.
+>>
+>> Remove PVRDMA device.
+> 
+> I agree with Thomas that each functional area listed here
+> should be handld in a separate patch, since they're all
+> independant.
+> 
+> With regards,
+> Daniel
 
 
