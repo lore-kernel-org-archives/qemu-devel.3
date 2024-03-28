@@ -4,71 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6AB6C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABC7C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rprUG-0002ch-PR; Thu, 28 Mar 2024 11:16:16 -0400
+	id 1rprUK-0002cy-3D; Thu, 28 Mar 2024 11:16:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rprUC-0002c5-JU
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rprUD-0002c6-Hr
  for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:16:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1rprUA-0003Kp-Ih
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rprUB-0003L5-Ex
  for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:16:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711638969;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1711638970;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l+w3xDrEmi8SU6qoC1GYg9hAuUVnK+SuJ8bqvl0lc2I=;
- b=gVqCLHdOC+CGn2g3F+peoIYivVcCAF75IHGRvRIuggAkfr+5sds+e7D0cQiCq04T8lyjus
- yA5vytwytRQXvkbhSxUsswMhNmpAjKDUWaBjfwsPoLq65bvTpm9aABpOTVpRMxhV+B8mMi
- x9dT7LOICRNbnOhYZYwiF6oO530+m5A=
-Received: from mimecast-mx02.redhat.com (mimecast-mx02.redhat.com
- [66.187.233.88]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dB6iKuO62vFonkQYCgk6muVpTHqtyzGQgWnmHKAu0LA=;
+ b=W4E8EVOGRtpriPlLHL2xc7Z9vL0Eb4JYeDohWCppxGQcRnOIrEsq46HGy8TIgFCeVc5X+r
+ pLvp6zIt7uI/wIYRTDTdrLdS/zR16Hat32FEC+17nYCDjjSiuTrs/AP67GJstHsYdb6ss/
+ cNWLExx9oz711bcjHMEPZ9noQxHXues=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-228-MbdK5HD_M5mDWXpY1C7JMg-1; Thu, 28 Mar 2024 11:16:05 -0400
-X-MC-Unique: MbdK5HD_M5mDWXpY1C7JMg-1
-Received: from smtp.corp.redhat.com (int-mx05.intmail.prod.int.rdu2.redhat.com
- [10.11.54.5])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mimecast-mx02.redhat.com (Postfix) with ESMTPS id 1A29A8007A2;
- Thu, 28 Mar 2024 15:16:05 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.135])
- by smtp.corp.redhat.com (Postfix) with ESMTPS id F29C417AA2;
- Thu, 28 Mar 2024 15:16:02 +0000 (UTC)
-Date: Thu, 28 Mar 2024 15:15:57 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, devel@lists.libvirt.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH-for-9.0 v2] hw/i386/pc: Deprecate 64-bit CPUs on ISA-only
- PC machine
-Message-ID: <ZgWJrTfMl6iQYepJ@redhat.com>
-References: <20240327165456.34716-1-philmd@linaro.org>
+ us-mta-321-3z5niuZpMS6pWR8yQMvz6g-1; Thu, 28 Mar 2024 11:16:08 -0400
+X-MC-Unique: 3z5niuZpMS6pWR8yQMvz6g-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-690ab2b0de1so1856336d6.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:16:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711638968; x=1712243768;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dB6iKuO62vFonkQYCgk6muVpTHqtyzGQgWnmHKAu0LA=;
+ b=Ksyz9GeU18jSkAdmxr6lfpgr/klV0zqKwDWGvPsvYIszEQBifFRmNt/bWh7OHPmKQT
+ NnYY6geTPHUpfh4x++fssXQ+385WQgU+suG+o0J2IBu0i9Xomjf8oqP54G69IPQhUnDk
+ WidO9RYRmWSHwWpdTrsz1m/DJt4gZHwWKEHFUcxOEdW/S9lIdwZbuMbWYfP5TUr6CgEI
+ sSl9Qo4MdYH2zhJSQQyhQBmZMMoOVvqcpu8wC24CUs/i4vxeJCy4+mBAsthzxsPcchPl
+ BWjCfO6QN7Xsl3ulVXJLQHnU9l7oGMS6CAluqitAzqpM6FR43mnjusBUyRobbyOn2TvQ
+ qkJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXZP+TTBjqLwseIw39Eq6W72VqxkF2lXFyahR6R3s1uQ7/+BfEHjsEe17nsJgT5CEXCo6asTCF452qvKJW1BpC0KGIJ7ZE=
+X-Gm-Message-State: AOJu0YxYPf3FT1/XBi/aRmhzG/h9tsO2Z1AnUjwo6vhAkt1J0V7pUQ/9
+ lXnFrl0cXOFiLpBH9qG66gdrMoCXjgKqtB1+AVy0N5yIRaDh3AiSUtMFqUJCw1Gow3wevMAnVrv
+ M1a36EYa8rIQpiacPXoNqDW7rqqpO4HE8f0gBb5HCG7HQnE5E61XW
+X-Received: by 2002:a05:6214:5ed1:b0:696:8a5e:33c6 with SMTP id
+ mn17-20020a0562145ed100b006968a5e33c6mr2826625qvb.5.1711638968153; 
+ Thu, 28 Mar 2024 08:16:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRGCFMvQ+RTOCSEic1tqvYICW9CjM66x8jfwXIa88jbNBfYgZBNCvw9oKqVyjBB/zTQ0+9lQ==
+X-Received: by 2002:a05:6214:5ed1:b0:696:8a5e:33c6 with SMTP id
+ mn17-20020a0562145ed100b006968a5e33c6mr2826574qvb.5.1711638967419; 
+ Thu, 28 Mar 2024 08:16:07 -0700 (PDT)
+Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ ks28-20020a056214311c00b0068f35e9e9a2sm730232qvb.8.2024.03.28.08.16.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 28 Mar 2024 08:16:06 -0700 (PDT)
+Date: Thu, 28 Mar 2024 11:16:04 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Liu, Yuan1" <yuan1.liu@intel.com>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ "farosas@suse.de" <farosas@suse.de>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "hao.xiang@bytedance.com" <hao.xiang@bytedance.com>,
+ "bryan.zhang@bytedance.com" <bryan.zhang@bytedance.com>,
+ "Zou, Nanhai" <nanhai.zou@intel.com>
+Subject: Re: [PATCH v5 5/7] migration/multifd: implement initialization of
+ qpl compression
+Message-ID: <ZgWJtFtbpXDvelvh@x1n>
+References: <ZfsCDhnYYmjxLTRW@x1n>
+ <PH7PR11MB5941F8AE52DBD0F197798103A3332@PH7PR11MB5941.namprd11.prod.outlook.com>
+ <ZftHtgpxOPNA8AYE@x1n>
+ <PH7PR11MB5941186DCF12ED13130CBF5FA3322@PH7PR11MB5941.namprd11.prod.outlook.com>
+ <ZfxSAgJECCOqtGRh@x1n>
+ <PH7PR11MB594128C3B1C9ED66482DFEDEA3312@PH7PR11MB5941.namprd11.prod.outlook.com>
+ <PH7PR11MB5941B5EB0C21FBFB6C8FFA16A3312@PH7PR11MB5941.namprd11.prod.outlook.com>
+ <Zf20gJbSavpp93_b@x1n> <ZgRyxy3MhFp7PiH9@x1n>
+ <PH7PR11MB59417CED1514B574523D6B1CA33B2@PH7PR11MB5941.namprd11.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240327165456.34716-1-philmd@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.11.54.5
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <PH7PR11MB59417CED1514B574523D6B1CA33B2@PH7PR11MB5941.namprd11.prod.outlook.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -89,127 +111,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 27, 2024 at 05:54:56PM +0100, Philippe Mathieu-Daudé wrote:
-> Per Daniel suggestion [*]:
+On Thu, Mar 28, 2024 at 02:32:37AM +0000, Liu, Yuan1 wrote:
+> > -----Original Message-----
+> > From: Peter Xu <peterx@redhat.com>
+> > Sent: Thursday, March 28, 2024 3:26 AM
+> > To: Liu, Yuan1 <yuan1.liu@intel.com>
+> > Cc: Daniel P. Berrangé <berrange@redhat.com>; farosas@suse.de; qemu-
+> > devel@nongnu.org; hao.xiang@bytedance.com; bryan.zhang@bytedance.com; Zou,
+> > Nanhai <nanhai.zou@intel.com>
+> > Subject: Re: [PATCH v5 5/7] migration/multifd: implement initialization of
+> > qpl compression
+> > 
+> > On Fri, Mar 22, 2024 at 12:40:32PM -0400, Peter Xu wrote:
+> > > > > void multifd_recv_zero_page_process(MultiFDRecvParams *p)
+> > > > > {
+> > > > >     for (int i = 0; i < p->zero_num; i++) {
+> > > > >         void *page = p->host + p->zero[i];
+> > > > >         if (!buffer_is_zero(page, p->page_size)) {
+> > > > >             memset(page, 0, p->page_size);
+> > > > >         }
+> > > > >     }
+> > > > > }
+> > >
+> > > It may not matter much (where I also see your below comments), but just
+> > to
+> > > mention another solution to avoid this read is that we can maintain
+> > > RAMBlock->receivedmap for precopy (especially, multifd, afaiu multifd
+> > > doesn't yet update this bitmap.. even if normal precopy does), then here
+> > > instead of scanning every time, maybe we can do:
+> > >
+> > >   /*
+> > >    * If it's the 1st time receiving it, no need to clear it as it must
+> > be
+> > >    * all zeros now.
+> > >    */
+> > >   if (bitmap_test(rb->receivedmap, page_offset)) {
+> > >       memset(page, 0, ...);
+> > >   } else {
+> > >       bitmap_set(rb->receivedmap, page_offset);
+> > >   }
+> > >
+> > > And we also always set the bit when !zero too.
+> > >
+> > > My rational is that it's unlikely a zero page if it's sent once or more,
+> > > while OTOH for the 1st time we receive it, it must be a zero page, so no
+> > > need to scan for the 1st round.
+> > 
+> > Thinking about this, I'm wondering whether we should have this regardless.
+> > IIUC now multifd will always require two page faults on destination for
+> > anonymous guest memories (I suppose shmem/hugetlb is fine as no zero page
+> > in those worlds).  Even though it should be faster than DMA faults, it
+> > still is unwanted.
+> > 
+> > I'll take a note myself as todo to do some measurements in the future
+> > first.  However if anyone thinks that makes sense and want to have a look,
+> > please say so.  It'll be more than welcomed.
 > 
->  > isapc could arguably be restricted to just 32-bit CPU models,
->  > because we should not need it to support any feature that didn't
->  > exist prior to circa 1995. eg refuse to start with isapc, if 'lm'
->  > is present in the CPU model for example.
+> Yes, I think this is a better improvement to avoid two page faults. I can test
+> the performance impact of this change on SVM-capable devices and give some data
+> later. As we saw before, the IOTLB flush occurs via COW, with the change, the 
+> impact of the COW should be gone.
 > 
-> Display a warning when such CPU is used:
-> 
->   $ qemu-system-x86_64 -monitor stdio -S -M isapc -cpu Westmere
->   qemu-system-x86_64: warning: Use of 64-bit CPU 'Westmere' is deprecated on the ISA-only PC machine
->   QEMU 8.2.91 monitor - type 'help' for more information
->   (qemu) q
-> 
->   $ qemu-system-x86_64 -monitor stdio -S -M isapc -cpu athlon
->   QEMU 8.2.91 monitor - type 'help' for more information
->   (qemu) q
+> If you need more testing and analysis on this, please let me know
 
-I've thought of a possible problem here..
+Nothing more than that.  Just a heads up that Xiang used to mention a test
+case where Richard used to suggest dropping the zero check:
 
-   $ qemu-system-x86_64 -monitor stdio -S -M isapc -cpu max
+https://lore.kernel.org/r/CAAYibXib+TWnJpV22E=adncdBmwXJRqgRjJXK7X71J=bDfaxDg@mail.gmail.com
 
-is going to enable 'lm'  (and a bazillion other new features)
-for 'isapc', which is a shame, as 'max' is something we want
-to be usable in general. I'm not sure how to square that
-circle.
+AFAIU this should be resolved if we have the bitmap maintained, but we can
+double check.  IIUC that's exactly the case for an idle guest, in that case
+it should be even faster to skip the memcmp when bit clear.
 
-I might suggest that 'isapc' instead only makes sense in the
-context of qemu-system-i386, since that only has 32-bit CPUs.
-We wanted to kill that binary in favour of qemu-system-x86_64
-for both 32 & 64 bit though, so we can't block 'isapc' from
-qemu-system-x86_64.
+If you're going to post the patches, feel free to post that as a standalone
+small series first, then that can be considered merge even earlier.
 
-> 
-> [*] https://lore.kernel.org/qemu-devel/ZgQkS4RPmSt5Xa08@redhat.com/
-> 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  docs/about/deprecated.rst |  7 +++++++
->  include/hw/i386/pc.h      |  1 +
->  hw/i386/pc_piix.c         | 14 ++++++++++++++
->  3 files changed, 22 insertions(+)
-> 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index 7b548519b5..345c35507f 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -208,6 +208,13 @@ is no longer packaged in any distro making it harder to run the
->  ``check-tcg`` tests. Unless we can improve the testing situation there
->  is a chance the code will bitrot without anyone noticing.
->  
-> +64-bit (x86_64) CPUs on the ``isapc`` machine (since 9.0)
-> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-> +
-> +The ``isapc`` machine aims to emulate old PC machine without PCI was
-> +generalized, so hardware available around 1995, before 64-bit intel
-> +CPUs were produced.
-> +
->  System emulator machines
->  ------------------------
->  
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index 27a68071d7..2d202b9549 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -96,6 +96,7 @@ struct PCMachineClass {
->      const char *default_south_bridge;
->  
->      /* Compat options: */
-> +    bool deprecate_64bit_cpu; /* Specific to the 'isapc' machine */
->  
->      /* Default CPU model version.  See x86_cpu_set_default_version(). */
->      int default_cpu_version;
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 18ba076609..2e5b2efc33 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -182,7 +182,20 @@ static void pc_init1(MachineState *machine, const char *pci_type)
->      }
->  
->      pc_machine_init_sgx_epc(pcms);
-> +
->      x86_cpus_init(x86ms, pcmc->default_cpu_version);
-> +    if (pcmc->deprecate_64bit_cpu) {
-> +        X86CPU *cpu = X86_CPU(first_cpu);
-> +
-> +        if (cpu->env.features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
-> +            const char *cpu_type = object_get_typename(OBJECT(first_cpu));
-> +            int cpu_len = strlen(cpu_type) - strlen(X86_CPU_TYPE_SUFFIX);
-> +
-> +            warn_report("Use of 64-bit CPU '%.*s' is deprecated"
-> +                        " on the ISA-only PC machine",
-> +                        cpu_len, cpu_type);
-> +        }
-> +    }
->  
->      if (kvm_enabled()) {
->          kvmclock_create(pcmc->kvmclock_create_always);
-> @@ -918,6 +931,7 @@ static void isapc_machine_options(MachineClass *m)
->      pcmc->gigabyte_align = false;
->      pcmc->smbios_legacy_mode = true;
->      pcmc->has_reserved_memory = false;
-> +    pcmc->deprecate_64bit_cpu = true;
->      m->default_nic = "ne2k_isa";
->      m->default_cpu_type = X86_CPU_TYPE_NAME("486");
->      m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
-> -- 
-> 2.41.0
-> 
+Thanks a lot for doing this.
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Peter Xu
 
 
