@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E400CD11DD
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 16:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D947CD1283
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 16:01:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rps6m-0003c1-Rc; Thu, 28 Mar 2024 11:56:04 -0400
+	id 1rps8A-0000fO-Mg; Thu, 28 Mar 2024 11:57:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps6k-0003K1-4S
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:02 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps89-0000TB-3U
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:57:29 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps6i-0002IU-9C
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:56:01 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-566e869f631so1282122a12.0
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:55:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1rps87-0002l0-8d
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:57:28 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a466fc8fcccso150255666b.1
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:57:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1711641358; x=1712246158; darn=nongnu.org;
+ d=linaro.org; s=google; t=1711641445; x=1712246245; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jlOZmiJcfWhY/E5lc2Om2vdspo8I2MenAyugtnCqPJ8=;
- b=f21uSOyCySSMOqPB44Usm/FXaQQGWzlQgVB1SPVdp5pwWlRj5e+0ehCrabNYUgcQ6Q
- bfXglLE1eZrwidEBkvwC3x0Bo/wevvxz8BYjaHRuvd4Z/5LL0Dkw5VyFHbqfVDwRDojQ
- Fy4bYKwlwQXLP9nntSXMAsjBYt5FOcWhzgeRbZoC309Bcf/oQgnBwOuZ22h5y5EzhXiH
- vwWKox+bmLobJHNqTMhEnFztGc3Uu/IKRE7NZ17cftXZn21dyfcPhMbiJ6YhlY4Id8nV
- h5tw4V/ZR/nXVKk+0KYuZ8haP/OxUBTO/QcK62DPpmOutKriFdfXEt6JAmhn47934ZGm
- r2Iw==
+ bh=9JGjTd1WToEahvAfY8NVbIAQ8SXrGvIMBj7UnII/d+c=;
+ b=tlzTTWfdU3qU6qSN81Ar6w+u/pQDI1vqH0ikHLsAxcPhGNj8J9NQRlEDHc2ERjal7l
+ R5QBfGLIxZcSitdvJFhhR0KOnDNdZB8ROLzT3/vmjk/vkGmV5wiFdXbS7Br6pQ4FWvFJ
+ Qc+z90m5v3Uv+n8Hn2yn6e9C/P8+sKBvxhgQZMsH14JROgo0vfs46hWsJVxAL7+Np2hk
+ cKwQ8W89d7F4+CpYEXTSjvz1kXPa+aUTl07NpwcgeSfctCLIIemxG/uY/jUYb2MuIjSf
+ GasRWq+t0YcOJw+Vu962XS1v+iWnpwnTy/8fBMWLXe6OykCPxqioVhVwYpHRnI0xameS
+ TKtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711641358; x=1712246158;
+ d=1e100.net; s=20230601; t=1711641445; x=1712246245;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jlOZmiJcfWhY/E5lc2Om2vdspo8I2MenAyugtnCqPJ8=;
- b=XtTRM9E8GHvSrG2yGlKo9Df6QA0yyx6BfQxKSNe2WYWkXeeveRYj4UXAIOS+JRD4xJ
- h7bZpsPOS7U76CXMnl4ihjvrExk6KBKPS3EyylWOjnyh3FGDG2v7dsFILXY8r2A4/qMG
- u8YmBuGikkRwVKCdHmjNcLp4qNkCxC+qWQBSZ8AjB1N1L5rL2p+GbotXVQIdBkZAhb7x
- FQqDtQ5iEKuWGY27I47D/H8IAaEL2EhwD/SrWdEMxRMGllSI7bGNrqrXyRibhjrpuYIK
- w91/eHe/cBLjUVH/vHmH5ORDAEw4zppn8HcSI5fZlfr1mNtoLzTtKT6SfBLb/NYLZXn9
- 0HiA==
-X-Gm-Message-State: AOJu0Yy8s6ucyMIUhGVzHe8X55GY9SygVkyyNF6XjcvVqqqEAdoQCtCg
- 3UE0kr8jToM+UfG0KEnfwGSsiNvqjMJB+BcWiDgN4yjw9JuTEQtkzbUuFJfo05cbQxaJhDmm+OM
- +
-X-Google-Smtp-Source: AGHT+IEHlPzirbO0NxvTAiaCR1AzHmEf11L/n2EPgKkmIcgFqhAD5O/Yt/mmGevQB4ExiPCyjyrkcg==
-X-Received: by 2002:a50:d650:0:b0:56b:cda3:6de6 with SMTP id
- c16-20020a50d650000000b0056bcda36de6mr2166952edj.42.1711641358386; 
- Thu, 28 Mar 2024 08:55:58 -0700 (PDT)
+ bh=9JGjTd1WToEahvAfY8NVbIAQ8SXrGvIMBj7UnII/d+c=;
+ b=RF+OvI4rZsnGl6Y8EYB1bQG+DHdKcNwr6uFtMTT4tHVfsbs5yp1Jxdxn718qL3O4xl
+ kp33VfvNYJTlMlp32dAkaGx/piWdxJ24pP1HGcw5ThokzPVMQqotDr+8JEDx1tuAC+OW
+ uIf33bFBwaIbx5xrmqYl6F3K8oGUnqy/dy3P+t5sl97Hi+WRD0HMtav16fQMF8rvubjK
+ eS7YvZJfT3Ziwp/H8LQ91tIGDe1gitTGIrgp7eRl8pc6kScSmVIsx1b887x6vNLIc3OI
+ pDTuMzMwjGVnVlxH4fSXMXMoX5rjBQnoFpMxEvSN+ILWI8RBiX+XQg281iMop58LgVhK
+ 9eRw==
+X-Gm-Message-State: AOJu0Ywn59rLMmfPA0yP93jqMdA8aTyZYbB2tkuk0Lz4J2pwu5Vq/8rP
+ schrc3k4hOrV5xFCfre+rGX3i3f9CGsp9QHXnXUmFtJMivDuhHxZO24iTlTQmckdgOfwl0iTpEG
+ 9
+X-Google-Smtp-Source: AGHT+IEke0w2rGaQ9eaNpJe9RsSUrMNnkosA5ZqUCdCrrEsx8n7A8+12nHMQifWFPzkMKHDz/PJUtg==
+X-Received: by 2002:a17:907:7d89:b0:a47:5265:9aac with SMTP id
+ oz9-20020a1709077d8900b00a4752659aacmr2577836ejc.55.1711641445324; 
+ Thu, 28 Mar 2024 08:57:25 -0700 (PDT)
 Received: from m1x-phil.lan (pas38-h02-176-184-5-52.dsl.sta.abo.bbox.fr.
  [176.184.5.52]) by smtp.gmail.com with ESMTPSA id
- g20-20020aa7c594000000b0056be0d1cd83sm954932edq.97.2024.03.28.08.55.56
+ k13-20020a1709067acd00b00a47df55cf5esm914850ejo.13.2024.03.28.08.57.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 28 Mar 2024 08:55:57 -0700 (PDT)
+ Thu, 28 Mar 2024 08:57:24 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -69,20 +69,19 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Igor Mammedov <imammedo@redhat.com>,
  Anthony Perard <anthony.perard@citrix.com>,
  Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paul Durrant <paul@xen.org>
-Subject: [RFC PATCH-for-9.1 12/29] hw/i386/pc: Move acpi_build_enabled to
- PcPciMachineState
-Date: Thu, 28 Mar 2024 16:54:20 +0100
-Message-ID: <20240328155439.58719-13-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH-for-9.1 26/29] hw/i386/fw_cfg: Factor
+ fw_cfg_build_smbios_legacy() out
+Date: Thu, 28 Mar 2024 16:54:34 +0100
+Message-ID: <20240328155439.58719-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240328155439.58719-1-philmd@linaro.org>
 References: <20240328155439.58719-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,131 +104,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since only PCI-based machines use the 'acpi_build_enabled',
-move it to PcPciMachineState.
+Factor fw_cfg_build_smbios_legacy() out of
+fw_cfg_build_smbios().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/acpi-build.h  | 2 +-
- include/hw/i386/pc.h  | 3 ++-
- hw/i386/acpi-build.c  | 8 ++++----
- hw/i386/pc.c          | 5 ++---
- hw/i386/xen/xen-hvm.c | 3 ++-
- 5 files changed, 11 insertions(+), 10 deletions(-)
+ hw/i386/fw_cfg.h             |  1 +
+ hw/i386/fw_cfg-smbios-stub.c |  4 ++++
+ hw/i386/fw_cfg.c             | 33 ++++++++++++++++++++++-----------
+ 3 files changed, 27 insertions(+), 11 deletions(-)
 
-diff --git a/hw/i386/acpi-build.h b/hw/i386/acpi-build.h
-index 31de5bddbd..4c1511c432 100644
---- a/hw/i386/acpi-build.h
-+++ b/hw/i386/acpi-build.h
-@@ -10,7 +10,7 @@ extern const struct AcpiGenericAddress x86_nvdimm_acpi_dsmio;
- #define ACPI_PCIHP_SEJ_BASE 0x8
- #define ACPI_PCIHP_BNMR_BASE 0x10
- 
--void acpi_setup(PCMachineState *pcms);
-+void acpi_setup(PcPciMachineState *ppms);
- Object *acpi_get_i386_pci_host(void);
- 
- #endif
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index dd5ee448ef..67f8f4730b 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -41,7 +41,6 @@ typedef struct PCMachineState {
-     SmbiosEntryPointType smbios_entry_point_type;
-     const char *south_bridge;
- 
--    bool acpi_build_enabled;
-     bool smbus_enabled;
-     bool sata_enabled;
-     bool hpet_enabled;
-@@ -61,6 +60,8 @@ typedef struct PcPciMachineState {
- 
-     Notifier machine_done;
- 
-+    bool acpi_build_enabled;
-+
-     CXLState cxl_devices_state;
- } PcPciMachineState;
- 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index e702d5e9d2..ee0e99a2fa 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -2749,9 +2749,9 @@ static const VMStateDescription vmstate_acpi_build = {
-     },
- };
- 
--void acpi_setup(PCMachineState *pcms)
-+void acpi_setup(PcPciMachineState *ppms)
+diff --git a/hw/i386/fw_cfg.h b/hw/i386/fw_cfg.h
+index 7a426119f8..25ce86ec1b 100644
+--- a/hw/i386/fw_cfg.h
++++ b/hw/i386/fw_cfg.h
+@@ -24,6 +24,7 @@
+ FWCfgState *fw_cfg_arch_create(MachineState *ms,
+                                uint16_t boot_cpus,
+                                uint16_t apic_id_limit);
++void fw_cfg_build_smbios_legacy(PCMachineState *pcms, FWCfgState *fw_cfg);
+ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+                          SmbiosEntryPointType ep_type);
+ void fw_cfg_build_feature_control(MachineState *ms, FWCfgState *fw_cfg);
+diff --git a/hw/i386/fw_cfg-smbios-stub.c b/hw/i386/fw_cfg-smbios-stub.c
+index 37dbfdee7c..da00ffc9ae 100644
+--- a/hw/i386/fw_cfg-smbios-stub.c
++++ b/hw/i386/fw_cfg-smbios-stub.c
+@@ -13,3 +13,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+                          SmbiosEntryPointType ep_type)
  {
--    X86MachineState *x86ms = X86_MACHINE(pcms);
-+    X86MachineState *x86ms = X86_MACHINE(ppms);
-     AcpiBuildTables tables;
-     AcpiBuildState *build_state;
-     Object *vmgenid_dev;
-@@ -2765,7 +2765,7 @@ void acpi_setup(PCMachineState *pcms)
-         return;
-     }
- 
--    if (!pcms->acpi_build_enabled) {
-+    if (!ppms->acpi_build_enabled) {
-         ACPI_BUILD_DPRINTF("ACPI build disabled. Bailing out.\n");
-         return;
-     }
-@@ -2778,7 +2778,7 @@ void acpi_setup(PCMachineState *pcms)
-     build_state = g_malloc0(sizeof *build_state);
- 
-     acpi_build_tables_init(&tables);
--    acpi_build(&tables, MACHINE(pcms));
-+    acpi_build(&tables, MACHINE(ppms));
- 
-     /* Now expose it all to Guest */
-     build_state->table_mr = acpi_add_rom_blob(acpi_build_update,
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 47fe3a7c02..f184808e3e 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -627,7 +627,7 @@ static void pc_pci_machine_done(Notifier *notifier, void *data)
- 
-     fw_cfg_add_extra_pci_roots(pcms->pcibus, x86ms->fw_cfg);
- 
--    acpi_setup(pcms);
-+    acpi_setup(ppms);
+ }
++
++void fw_cfg_build_smbios_legacy(PCMachineState *pcms, FWCfgState *fw_cfg)
++{
++}
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index df05fe060c..be37e28f46 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -54,6 +54,22 @@ static bool smbios_legacy_mode(PCMachineState *pcms)
+     return !pc_machine_is_pci_enabled(pcms);
  }
  
- /* setup pci memory address space mapping into system address space */
-@@ -1687,9 +1687,8 @@ static void pc_machine_initfn(Object *obj)
- static void pc_pci_machine_initfn(Object *obj)
++void fw_cfg_build_smbios_legacy(PCMachineState *pcms, FWCfgState *fw_cfg)
++{
++    uint8_t *smbios_tables;
++    size_t smbios_tables_len;
++    MachineState *ms = MACHINE(pcms);
++    X86CPU *cpu = X86_CPU(ms->possible_cpus->cpus[0].cpu);
++
++    /* tell smbios about cpuid version and features */
++    smbios_set_cpuid(cpu->env.cpuid_version, cpu->env.features[FEAT_1_EDX]);
++
++    smbios_tables = smbios_get_table_legacy(&smbios_tables_len,
++                                            &error_fatal);
++    fw_cfg_add_bytes(fw_cfg, FW_CFG_SMBIOS_ENTRIES,
++                     smbios_tables, smbios_tables_len);
++}
++
+ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+                          SmbiosEntryPointType ep_type)
  {
-     PcPciMachineState *ppms = PC_PCI_MACHINE(obj);
--    PCMachineState *pcms = PC_MACHINE(obj);
+@@ -65,22 +81,17 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+     MachineClass *mc = MACHINE_GET_CLASS(pcms);
+     X86CPU *cpu = X86_CPU(ms->possible_cpus->cpus[0].cpu);
  
--    pcms->acpi_build_enabled = true;
-+    ppms->acpi_build_enabled = true;
+-    if (!smbios_legacy_mode(pcms)) {
+-        /* These values are guest ABI, do not change */
+-        smbios_set_defaults("QEMU", mc->desc, mc->name);
++    if (smbios_legacy_mode(pcms)) {
++        fw_cfg_build_smbios_legacy(pcms, fw_cfg);
++        return;
+     }
  
-     cxl_machine_init(obj, &ppms->cxl_devices_state);
++    /* These values are guest ABI, do not change */
++    smbios_set_defaults("QEMU", mc->desc, mc->name);
++
+     /* tell smbios about cpuid version and features */
+     smbios_set_cpuid(cpu->env.cpuid_version, cpu->env.features[FEAT_1_EDX]);
  
-diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
-index 7745cb3963..ce48d51842 100644
---- a/hw/i386/xen/xen-hvm.c
-+++ b/hw/i386/xen/xen-hvm.c
-@@ -586,6 +586,7 @@ static void xen_wakeup_notifier(Notifier *notifier, void *data)
- void xen_hvm_init_pc(PCMachineState *pcms, MemoryRegion **ram_memory)
- {
-     MachineState *ms = MACHINE(pcms);
-+    PcPciMachineState *ppms = PC_PCI_MACHINE(pcms);
-     unsigned int max_cpus = ms->smp.max_cpus;
-     int rc;
-     xen_pfn_t ioreq_pfn;
-@@ -624,7 +625,7 @@ void xen_hvm_init_pc(PCMachineState *pcms, MemoryRegion **ram_memory)
-     xen_ram_init(pcms, ms->ram_size, ram_memory);
- 
-     /* Disable ACPI build because Xen handles it */
--    pcms->acpi_build_enabled = false;
-+    ppms->acpi_build_enabled = false;
- 
-     return;
- 
+-    if (smbios_legacy_mode(pcms)) {
+-        smbios_tables = smbios_get_table_legacy(&smbios_tables_len,
+-                                                &error_fatal);
+-        fw_cfg_add_bytes(fw_cfg, FW_CFG_SMBIOS_ENTRIES,
+-                         smbios_tables, smbios_tables_len);
+-        return;
+-    }
+-
+     /* build the array of physical mem area from e820 table */
+     mem_array = g_malloc0(sizeof(*mem_array) * e820_get_num_entries());
+     for (i = 0, array_count = 0; i < e820_get_num_entries(); i++) {
 -- 
 2.41.0
 
