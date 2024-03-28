@@ -4,76 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C109C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 00:46:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD7CC54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 01:20:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpdtN-0008Df-AM; Wed, 27 Mar 2024 20:45:17 -0400
+	id 1rpeQO-00046Z-N2; Wed, 27 Mar 2024 21:19:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rpdtL-0008DQ-KI
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 20:45:15 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1rpdtI-00086P-CY
- for qemu-devel@nongnu.org; Wed, 27 Mar 2024 20:45:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1711586712; x=1743122712;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=qMr1lni1QD7AcsTQhnj6Msn8Z5FbVcK5sLp+/58NNJ0=;
- b=iw0PORWHdWmigdPioQyk0rA/5R2iUH17LzGMHxcl0930l/5zXcaDEPXY
- CERE7elGO+sNfphQTx+Eg97OcMNMtFHHg04S1amlytDL0xAXq36L4tIJs
- 7mvOHg2oz6iEFTUkOIk4nYLzfPN6X3bMSYtIkqP3HZdNgcccDCsfQQ/ly
- mp/vBoProNRyde4nY+xgowIPETFrfaAgcFSzoSba6x2kHbCA+PrQRPC+v
- 833PWHpuW/Q5lZIAUEnBlb1ZmqS/TdU74GJnsgjgFVZUVQTqkg5nfRDRB
- +DWuh5DcyC/JLgIR1ViK7OEJANYb18EWtmS8XXZwRyljqzjktxpywxhZZ Q==;
-X-CSE-ConnectionGUID: nwjZwjXkR5OeKtmmjGe51w==
-X-CSE-MsgGUID: HSn6YppoTKKDEYz6+9+OwQ==
-X-IronPort-AV: E=McAfee;i="6600,9927,11026"; a="29200854"
-X-IronPort-AV: E=Sophos;i="6.07,160,1708416000"; d="scan'208";a="29200854"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Mar 2024 17:45:08 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.07,160,1708416000"; d="scan'208";a="47683047"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.224.7])
- ([10.124.224.7])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Mar 2024 17:45:06 -0700
-Message-ID: <61462f83-1406-48ea-8f1a-fae848ff1443@intel.com>
-Date: Thu, 28 Mar 2024 08:45:03 +0800
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rpeQN-00046J-CY; Wed, 27 Mar 2024 21:19:23 -0400
+Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1rpeQL-0005gv-SH; Wed, 27 Mar 2024 21:19:23 -0400
+Received: by mail-ua1-x92c.google.com with SMTP id
+ a1e0cc1a2514c-7e0cfda8e00so97007241.2; 
+ Wed, 27 Mar 2024 18:19:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1711588760; x=1712193560; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KxqLt/KlC6tre5aErDNxnNj8XafgBxBA2yk6MH3jpZE=;
+ b=VHeIpC6kjxqXcVgrg6wz5WqVA6BWngBaPGPZac4uKgAh5bJ3HyLyxpVrDFBsJWOAAq
+ bN0NEObtTSSA41YiutKKtQC213/2vBf/6HZzH5R+CEc/9IcjiZr2MrxbeiyvAqWWQBhG
+ l2jyKIXeQhNWaZxNO1NxmIg8A2oPpvf+fJivZ1Tu6kTyTmNmDuO3iTsFuRFduP4DFOTI
+ RZvGLOlBNefYncf0bTijEqxfe7zczbWVtR1spv/BQO45RDixpQnOYnXdwe1cESEU5hQb
+ 1tLlV5WEUbBqDA/iPY4mHNXyUfrIOqiJsy8ui+FlGDLTenDv1VuhELVTmWWxJCkg23ar
+ QRjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1711588760; x=1712193560;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KxqLt/KlC6tre5aErDNxnNj8XafgBxBA2yk6MH3jpZE=;
+ b=eZfjfx20fZGLpR22pwgjyaBIfaM3sjyUjlslLFbAOnGzSVmHmZP3Fv2xbbTcZbRzti
+ iIEqSW2dGoOwzAQxIjuWmp5TGXiMubs4dodRcQwoLYNEn3XTrvvmNpcoNc3q5/tK1rwe
+ DFsyS3tbGZIa5nAsFrs9DeTmde1sB+Sf/dVMNamIO29yj/bPscFdSHOb7Ss8MNVe/DBl
+ uk8Hzepd7LqyDbp5twLa2K2p6gKNzjoWGK+WGZcFo7Rmgud+QKq0/9onSxyKfqaJGrAm
+ ycqyxAjcjND0Fl3u5IsmWqvCTHGADR1G1o5Cch8qEZai6lIe0AIuL0vUUJeI0J6KWS0S
+ E38Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUUik2BPI1fo2b8FhzBqi55PydY34n40DmI5IE4oDM925loj3BRXybwHIBDiHUqn2mE/cjD+tlNmt9oWYVwiGVB/oPK0BgDofZY9NKtInputXgZ3Mx2J+qC2gRybw==
+X-Gm-Message-State: AOJu0Yz3OzwIyuup2PY0WixlcSiUJ6Bywkz5fPV+vb8HTuo3jUUlldqS
+ Wm9y0jLtygqvAsNX4lo8tIrcFYg+ew47jrxxhqJr0KMLWMDj7eWLGwfjmJW0NI0LQl34miC6gtg
+ 1TAZrFd64djs8BD18dUdfoEtSJ+U=
+X-Google-Smtp-Source: AGHT+IF7OJXtbzhwaMx9OMTtNvgjsLZfelE6lpP0uaN74s4dHsKgOE+XdbzsCiLw6vPiQVl8gexyNtciJ+eW0l9Mrfc=
+X-Received: by 2002:a67:e986:0:b0:473:4d73:5e1c with SMTP id
+ b6-20020a67e986000000b004734d735e1cmr1072355vso.9.1711588759746; Wed, 27 Mar
+ 2024 18:19:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 48/49] hw/i386/sev: Use guest_memfd for legacy ROMs
-To: Isaku Yamahata <isaku.yamahata@intel.com>,
- Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Tom Lendacky <thomas.lendacky@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Isaku Yamahata <isaku.yamahata@linux.intel.com>
-References: <20240320083945.991426-1-michael.roth@amd.com>
- <20240320083945.991426-49-michael.roth@amd.com>
- <20240320181223.GG1994522@ls.amr.corp.intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20240320181223.GG1994522@ls.amr.corp.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+References: <20240204054228.651-1-zhiwei_liu@linux.alibaba.com>
+ <20240204054228.651-3-zhiwei_liu@linux.alibaba.com>
+ <CAKmqyKNGMjLg+JjJZAp+EsmfaWAyT7XiHZzBXZxeghS0hv6REg@mail.gmail.com>
+ <CAEg0e7i6zaEhyfhRFKcTYjkCqRCzJ5eB+0EHUDVA6t-ypL78eg@mail.gmail.com>
+ <CAKmqyKPgAQ4JaSNRmFfR-=w3daDkag-ORz0Ckn7r1JNmf8X2oA@mail.gmail.com>
+ <20240327-overrun-outcast-795708a30e8c@spud>
+In-Reply-To: <20240327-overrun-outcast-795708a30e8c@spud>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 28 Mar 2024 11:18:53 +1000
+Message-ID: <CAKmqyKP8kE=BDv2NzLeU+B3WNMJyke41__yOdVVcwe7k=9wpwA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] target/riscv: Support xtheadmaee for thead-c906
+To: Conor Dooley <conor@kernel.org>
+Cc: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>, 
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org, 
+ Alistair.Francis@wdc.com, palmer@dabbelt.com, bin.meng@windriver.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, qemu-riscv@nongnu.org, 
+ bjorn@kernel.org, Philipp Tomsich <philipp.tomsich@vrull.eu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,101 +99,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/21/2024 2:12 AM, Isaku Yamahata wrote:
-> On Wed, Mar 20, 2024 at 03:39:44AM -0500,
-> Michael Roth <michael.roth@amd.com> wrote:
-> 
->> TODO: make this SNP-specific if TDX disables legacy ROMs in general
-> 
-> TDX disables pc.rom, not disable isa-bios. IIRC, TDX doesn't need pc pflash.
+On Wed, Mar 27, 2024 at 9:19=E2=80=AFPM Conor Dooley <conor@kernel.org> wro=
+te:
+>
+> Christoph linked here on his submission to Linux of a fix for this, so I
+> am reviving this to leave a couple comments :)
+>
+> On Thu, Feb 15, 2024 at 02:24:02PM +1000, Alistair Francis wrote:
+> > On Mon, Feb 5, 2024 at 6:37=E2=80=AFPM Christoph M=C3=BCllner
+> > <christoph.muellner@vrull.eu> wrote:
+> > > On Mon, Feb 5, 2024 at 3:42=E2=80=AFAM Alistair Francis <alistair23@g=
+mail.com> wrote:
+> > > > On Sun, Feb 4, 2024 at 3:44=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux=
+.alibaba.com> wrote:
+>
+> > > > >              ppn =3D (pte & (target_ulong)PTE_PPN_MASK) >> PTE_PP=
+N_SHIFT;
+> > > >
+> > > > Unfortunately we won't be able to take this upstream. This is core
+> > > > QEMU RISC-V code that is now being changed against the spec. I thin=
+k
+> > > > adding the CSR is fine, but we can't take this core change.
+> > > >
+> > > > A fix that works for everyone should be supporting the th_mxstatus
+> > > > CSR, but don't support setting the TH_MXSTATUS_MAEE bit. That way
+> > > > guests can detect that the bit isn't set and not use the reserved b=
+its
+> > > > in the PTE. From my understanding the extra PTE bits are related to
+> > > > cache control in the hardware, which we don't need here
+> > >
+> > > Sounds good! Let me recap the overall plan:
+> > > * QEMU does not emulate MAEE, but signals that MAEE is not available
+> > > by setting TH_MXSTATUS_MAEE to 0.
+> >
+> > Yep!
+> >
+> > > * Consequence: The c906 emulation does not enable any page-base memor=
+y
+> > > attribute mechanism.
+> >
+> > Exactly
+> >
+> > > * OpenSBI tests the TH_MXSTATUS_MAEE bit (M-mode only) and provides
+> > > that information to user-space (e.g. DTB).
+> >
+> > To the kernel, but yep!
+> >
+> > > * The current Linux errata code will be enhanced to not assume MAEE
+> > > for each core with T-Head vendor ID, but also query the MAEE bit and
+> > > ensure it is set.
+> >
+> > I feel like it should already do that :)
+>
+> It doesn't quite do this right now. It only makes the assumption for
+> CPUs where marchid and mvendorid are zero. The c908, and I think Guo Ren
+> confirmed it will be the case going forward, sets these to non-zero
+> values. We should have always required a dt property be set, rather than
+> using m*id, but we can't go back on that for these devices. Going
+> forward, if there are more CPUs that want to use this e.g. C908 in MAEE
+> mode (it can do svpbmt too) I'm gonna require it is explicitly set in
+> DT.
 
-Not TDX doesn't need pc pflash, but TDX cannot support pflash.
+A DT node that we don't set also works fine for us
 
-Can SNP support the behavior of pflash? That what's got changed will be 
-synced back to OVMF file?
-
-> Xiaoyao can chime in.
-> 
-> Thanks,
-> 
->>
->> Current SNP guest kernels will attempt to access these regions with
->> with C-bit set, so guest_memfd is needed to handle that. Otherwise,
->> kvm_convert_memory() will fail when the guest kernel tries to access it
->> and QEMU attempts to call KVM_SET_MEMORY_ATTRIBUTES to set these ranges
->> to private.
->>
->> Whether guests should actually try to access ROM regions in this way (or
->> need to deal with legacy ROM regions at all), is a separate issue to be
->> addressed on kernel side, but current SNP guest kernels will exhibit
->> this behavior and so this handling is needed to allow QEMU to continue
->> running existing SNP guest kernels.
->>
->> Signed-off-by: Michael Roth <michael.roth@amd.com>
->> ---
->>   hw/i386/pc.c       | 13 +++++++++----
->>   hw/i386/pc_sysfw.c | 13 ++++++++++---
->>   2 files changed, 19 insertions(+), 7 deletions(-)
->>
->> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
->> index feb7a93083..5feaeb43ee 100644
->> --- a/hw/i386/pc.c
->> +++ b/hw/i386/pc.c
->> @@ -1011,10 +1011,15 @@ void pc_memory_init(PCMachineState *pcms,
->>       pc_system_firmware_init(pcms, rom_memory);
->>   
->>       option_rom_mr = g_malloc(sizeof(*option_rom_mr));
->> -    memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
->> -                           &error_fatal);
->> -    if (pcmc->pci_enabled) {
->> -        memory_region_set_readonly(option_rom_mr, true);
->> +    if (machine_require_guest_memfd(machine)) {
->> +        memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
->> +                                           PC_ROM_SIZE, &error_fatal);
->> +    } else {
->> +        memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
->> +                               &error_fatal);
->> +        if (pcmc->pci_enabled) {
->> +            memory_region_set_readonly(option_rom_mr, true);
->> +        }
->>       }
->>       memory_region_add_subregion_overlap(rom_memory,
->>                                           PC_ROM_MIN_VGA,
->> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
->> index 9dbb3f7337..850f86edd4 100644
->> --- a/hw/i386/pc_sysfw.c
->> +++ b/hw/i386/pc_sysfw.c
->> @@ -54,8 +54,13 @@ static void pc_isa_bios_init(MemoryRegion *rom_memory,
->>       /* map the last 128KB of the BIOS in ISA space */
->>       isa_bios_size = MIN(flash_size, 128 * KiB);
->>       isa_bios = g_malloc(sizeof(*isa_bios));
->> -    memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
->> -                           &error_fatal);
->> +    if (machine_require_guest_memfd(current_machine)) {
->> +        memory_region_init_ram_guest_memfd(isa_bios, NULL, "isa-bios",
->> +                                           isa_bios_size, &error_fatal);
->> +    } else {
->> +        memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
->> +                               &error_fatal);
->> +    }
->>       memory_region_add_subregion_overlap(rom_memory,
->>                                           0x100000 - isa_bios_size,
->>                                           isa_bios,
->> @@ -68,7 +73,9 @@ static void pc_isa_bios_init(MemoryRegion *rom_memory,
->>              ((uint8_t*)flash_ptr) + (flash_size - isa_bios_size),
->>              isa_bios_size);
->>   
->> -    memory_region_set_readonly(isa_bios, true);
->> +    if (!machine_require_guest_memfd(current_machine)) {
->> +        memory_region_set_readonly(isa_bios, true);
->> +    }
->>   }
->>   
->>   static PFlashCFI01 *pc_pflash_create(PCMachineState *pcms,
->> -- 
->> 2.25.1
->>
->>
-> 
-
+Alistair
 
