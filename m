@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD7CC54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 01:20:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0F8C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 01:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpeQO-00046Z-N2; Wed, 27 Mar 2024 21:19:24 -0400
+	id 1rpeht-0007Y8-Fu; Wed, 27 Mar 2024 21:37:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rpeQN-00046J-CY; Wed, 27 Mar 2024 21:19:23 -0400
-Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1rpeQL-0005gv-SH; Wed, 27 Mar 2024 21:19:23 -0400
-Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-7e0cfda8e00so97007241.2; 
- Wed, 27 Mar 2024 18:19:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1711588760; x=1712193560; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KxqLt/KlC6tre5aErDNxnNj8XafgBxBA2yk6MH3jpZE=;
- b=VHeIpC6kjxqXcVgrg6wz5WqVA6BWngBaPGPZac4uKgAh5bJ3HyLyxpVrDFBsJWOAAq
- bN0NEObtTSSA41YiutKKtQC213/2vBf/6HZzH5R+CEc/9IcjiZr2MrxbeiyvAqWWQBhG
- l2jyKIXeQhNWaZxNO1NxmIg8A2oPpvf+fJivZ1Tu6kTyTmNmDuO3iTsFuRFduP4DFOTI
- RZvGLOlBNefYncf0bTijEqxfe7zczbWVtR1spv/BQO45RDixpQnOYnXdwe1cESEU5hQb
- 1tLlV5WEUbBqDA/iPY4mHNXyUfrIOqiJsy8ui+FlGDLTenDv1VuhELVTmWWxJCkg23ar
- QRjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711588760; x=1712193560;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KxqLt/KlC6tre5aErDNxnNj8XafgBxBA2yk6MH3jpZE=;
- b=eZfjfx20fZGLpR22pwgjyaBIfaM3sjyUjlslLFbAOnGzSVmHmZP3Fv2xbbTcZbRzti
- iIEqSW2dGoOwzAQxIjuWmp5TGXiMubs4dodRcQwoLYNEn3XTrvvmNpcoNc3q5/tK1rwe
- DFsyS3tbGZIa5nAsFrs9DeTmde1sB+Sf/dVMNamIO29yj/bPscFdSHOb7Ss8MNVe/DBl
- uk8Hzepd7LqyDbp5twLa2K2p6gKNzjoWGK+WGZcFo7Rmgud+QKq0/9onSxyKfqaJGrAm
- ycqyxAjcjND0Fl3u5IsmWqvCTHGADR1G1o5Cch8qEZai6lIe0AIuL0vUUJeI0J6KWS0S
- E38Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUik2BPI1fo2b8FhzBqi55PydY34n40DmI5IE4oDM925loj3BRXybwHIBDiHUqn2mE/cjD+tlNmt9oWYVwiGVB/oPK0BgDofZY9NKtInputXgZ3Mx2J+qC2gRybw==
-X-Gm-Message-State: AOJu0Yz3OzwIyuup2PY0WixlcSiUJ6Bywkz5fPV+vb8HTuo3jUUlldqS
- Wm9y0jLtygqvAsNX4lo8tIrcFYg+ew47jrxxhqJr0KMLWMDj7eWLGwfjmJW0NI0LQl34miC6gtg
- 1TAZrFd64djs8BD18dUdfoEtSJ+U=
-X-Google-Smtp-Source: AGHT+IF7OJXtbzhwaMx9OMTtNvgjsLZfelE6lpP0uaN74s4dHsKgOE+XdbzsCiLw6vPiQVl8gexyNtciJ+eW0l9Mrfc=
-X-Received: by 2002:a67:e986:0:b0:473:4d73:5e1c with SMTP id
- b6-20020a67e986000000b004734d735e1cmr1072355vso.9.1711588759746; Wed, 27 Mar
- 2024 18:19:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1rpehr-0007Xn-In
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 21:37:27 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1rpeho-0000EI-TJ
+ for qemu-devel@nongnu.org; Wed, 27 Mar 2024 21:37:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1711589844; x=1743125844;
+ h=from:to:cc:subject:in-reply-to:references:date:
+ message-id:mime-version;
+ bh=O1k80KbUBNPKN2Cz8jdjH7/l3Qy2e0v1DTF3Pf8/QLU=;
+ b=D1BS/DljU++m21Z4CgMcG0U8fCTaiZA+CQEBpIBh1p6xqlIOnGXPH4X7
+ PYOCYnw3yMvUKk9MN6SDmi5hZA8xtcJEnhEyMPWKfjA0/1gzgJSSigIXL
+ 8bj3nakjQJOcKfHVnR0HmY+Dj/2K3IoUUrYXyRkS1zuDBV0T44ONmPS/1
+ 1m/48dSpksdeHtBUSolDBzP3fyFOBv8UkTE/Uo41nc7kw6dac9u7E1YGN
+ cQXparpyAZwUo9/ofekHiv8nVmKI4bYsTEoIKuZZrKFD/3nHQqFe0LiqD
+ 9nhMvShFefY2Z2S60q+2ZT8+xdon3odTfsjW1Z14FShelCRL83l1e9Bkm Q==;
+X-CSE-ConnectionGUID: RCJNEjilSbiShJz7CaHneA==
+X-CSE-MsgGUID: 4x4VANluTgm9wjIa0gjjKg==
+X-IronPort-AV: E=McAfee;i="6600,9927,11026"; a="17453692"
+X-IronPort-AV: E=Sophos;i="6.07,160,1708416000"; d="scan'208";a="17453692"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Mar 2024 18:37:21 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.07,160,1708416000"; d="scan'208";a="21131863"
+Received: from yhuang6-desk2.sh.intel.com (HELO
+ yhuang6-desk2.ccr.corp.intel.com) ([10.238.208.55])
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Mar 2024 18:37:16 -0700
+From: "Huang, Ying" <ying.huang@intel.com>
+To: "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Cc: "Gregory Price" <gourry.memverge@gmail.com>,
+ aneesh.kumar@linux.ibm.com,  mhocko@suse.com,  tj@kernel.org,
+ john@jagalactic.com,  "Eishan Mirakhur" <emirakhur@micron.com>,
+ "Vinicius Tavares Petrucci" <vtavarespetr@micron.com>,  "Ravis OpenSrc"
+ <Ravis.OpenSrc@micron.com>,  "Alistair Popple" <apopple@nvidia.com>,
+ "Srinivasulu Thanneeru" <sthanneeru@micron.com>,  Dan Williams
+ <dan.j.williams@intel.com>,  Vishal Verma <vishal.l.verma@intel.com>,
+ Dave Jiang <dave.jiang@intel.com>,  Andrew Morton
+ <akpm@linux-foundation.org>,  nvdimm@lists.linux.dev,
+ linux-cxl@vger.kernel.org,  linux-kernel@vger.kernel.org,
+ linux-mm@kvack.org,  "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,  "Ho-Ren
+ (Jack) Chuang" <horenchuang@gmail.com>,  qemu-devel@nongnu.org,  Hao Xiang
+ <hao.xiang@bytedance.com>
+Subject: Re: [PATCH v6 2/2] memory tier: create CPUless memory tiers after
+ obtaining HMAT info
+In-Reply-To: <20240327072729.3381685-3-horenchuang@bytedance.com> (Ho-Ren
+ Chuang's message of "Wed, 27 Mar 2024 07:27:28 +0000")
+References: <20240327072729.3381685-1-horenchuang@bytedance.com>
+ <20240327072729.3381685-3-horenchuang@bytedance.com>
+Date: Thu, 28 Mar 2024 09:35:22 +0800
+Message-ID: <87v857kujp.fsf@yhuang6-desk2.ccr.corp.intel.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240204054228.651-1-zhiwei_liu@linux.alibaba.com>
- <20240204054228.651-3-zhiwei_liu@linux.alibaba.com>
- <CAKmqyKNGMjLg+JjJZAp+EsmfaWAyT7XiHZzBXZxeghS0hv6REg@mail.gmail.com>
- <CAEg0e7i6zaEhyfhRFKcTYjkCqRCzJ5eB+0EHUDVA6t-ypL78eg@mail.gmail.com>
- <CAKmqyKPgAQ4JaSNRmFfR-=w3daDkag-ORz0Ckn7r1JNmf8X2oA@mail.gmail.com>
- <20240327-overrun-outcast-795708a30e8c@spud>
-In-Reply-To: <20240327-overrun-outcast-795708a30e8c@spud>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 28 Mar 2024 11:18:53 +1000
-Message-ID: <CAKmqyKP8kE=BDv2NzLeU+B3WNMJyke41__yOdVVcwe7k=9wpwA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] target/riscv: Support xtheadmaee for thead-c906
-To: Conor Dooley <conor@kernel.org>
-Cc: =?UTF-8?Q?Christoph_M=C3=BCllner?= <christoph.muellner@vrull.eu>, 
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org, 
- Alistair.Francis@wdc.com, palmer@dabbelt.com, bin.meng@windriver.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, qemu-riscv@nongnu.org, 
- bjorn@kernel.org, Philipp Tomsich <philipp.tomsich@vrull.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset=ascii
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=ying.huang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,68 +95,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 27, 2024 at 9:19=E2=80=AFPM Conor Dooley <conor@kernel.org> wro=
-te:
->
-> Christoph linked here on his submission to Linux of a fix for this, so I
-> am reviving this to leave a couple comments :)
->
-> On Thu, Feb 15, 2024 at 02:24:02PM +1000, Alistair Francis wrote:
-> > On Mon, Feb 5, 2024 at 6:37=E2=80=AFPM Christoph M=C3=BCllner
-> > <christoph.muellner@vrull.eu> wrote:
-> > > On Mon, Feb 5, 2024 at 3:42=E2=80=AFAM Alistair Francis <alistair23@g=
-mail.com> wrote:
-> > > > On Sun, Feb 4, 2024 at 3:44=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux=
-.alibaba.com> wrote:
->
-> > > > >              ppn =3D (pte & (target_ulong)PTE_PPN_MASK) >> PTE_PP=
-N_SHIFT;
-> > > >
-> > > > Unfortunately we won't be able to take this upstream. This is core
-> > > > QEMU RISC-V code that is now being changed against the spec. I thin=
-k
-> > > > adding the CSR is fine, but we can't take this core change.
-> > > >
-> > > > A fix that works for everyone should be supporting the th_mxstatus
-> > > > CSR, but don't support setting the TH_MXSTATUS_MAEE bit. That way
-> > > > guests can detect that the bit isn't set and not use the reserved b=
-its
-> > > > in the PTE. From my understanding the extra PTE bits are related to
-> > > > cache control in the hardware, which we don't need here
-> > >
-> > > Sounds good! Let me recap the overall plan:
-> > > * QEMU does not emulate MAEE, but signals that MAEE is not available
-> > > by setting TH_MXSTATUS_MAEE to 0.
-> >
-> > Yep!
-> >
-> > > * Consequence: The c906 emulation does not enable any page-base memor=
-y
-> > > attribute mechanism.
-> >
-> > Exactly
-> >
-> > > * OpenSBI tests the TH_MXSTATUS_MAEE bit (M-mode only) and provides
-> > > that information to user-space (e.g. DTB).
-> >
-> > To the kernel, but yep!
-> >
-> > > * The current Linux errata code will be enhanced to not assume MAEE
-> > > for each core with T-Head vendor ID, but also query the MAEE bit and
-> > > ensure it is set.
-> >
-> > I feel like it should already do that :)
->
-> It doesn't quite do this right now. It only makes the assumption for
-> CPUs where marchid and mvendorid are zero. The c908, and I think Guo Ren
-> confirmed it will be the case going forward, sets these to non-zero
-> values. We should have always required a dt property be set, rather than
-> using m*id, but we can't go back on that for these devices. Going
-> forward, if there are more CPUs that want to use this e.g. C908 in MAEE
-> mode (it can do svpbmt too) I'm gonna require it is explicitly set in
-> DT.
+"Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com> writes:
 
-A DT node that we don't set also works fine for us
+[snip]
 
-Alistair
+> @@ -655,6 +672,34 @@ void mt_put_memory_types(struct list_head *memory_types)
+>  }
+>  EXPORT_SYMBOL_GPL(mt_put_memory_types);
+>  
+> +/*
+> + * This is invoked via `late_initcall()` to initialize memory tiers for
+> + * CPU-less memory nodes after driver initialization, which is
+> + * expected to provide `adistance` algorithms.
+> + */
+> +static int __init memory_tier_late_init(void)
+> +{
+> +	int nid;
+> +
+> +	mutex_lock(&memory_tier_lock);
+> +	for_each_node_state(nid, N_MEMORY)
+> +		if (!node_state(nid, N_CPU) &&
+> +			node_memory_types[nid].memtype == NULL)
+
+Think about this again.  It seems that it is better to check
+"node_memory_types[nid].memtype == NULL" only here.  Because for all
+node with N_CPU in memory_tier_init(), "node_memory_types[nid].memtype"
+will be !NULL.  And it's possible (in theory) that some nodes becomes
+"node_state(nid, N_CPU) == true" between memory_tier_init() and
+memory_tier_late_init().
+
+Otherwise, Looks good to me.  Feel free to add
+
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+
+in the future version.
+
+> +			/*
+> +			 * Some device drivers may have initialized memory tiers
+> +			 * between `memory_tier_init()` and `memory_tier_late_init()`,
+> +			 * potentially bringing online memory nodes and
+> +			 * configuring memory tiers. Exclude them here.
+> +			 */
+> +			set_node_memory_tier(nid);
+> +
+> +	establish_demotion_targets();
+> +	mutex_unlock(&memory_tier_lock);
+> +
+> +	return 0;
+> +}
+> +late_initcall(memory_tier_late_init);
+> +
+
+[snip]
+
+--
+Best Regards,
+Huang, Ying
 
