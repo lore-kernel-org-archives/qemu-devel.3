@@ -4,107 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6728CD11DD
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 19:06:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31D59CD11DF
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 19:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rpv3y-000465-1Q; Thu, 28 Mar 2024 15:05:22 -0400
+	id 1rpvMo-0000wy-Ir; Thu, 28 Mar 2024 15:24:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rpv3l-000418-SH
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 15:05:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <milesg@linux.vnet.ibm.com>)
+ id 1rpvMm-0000vl-16; Thu, 28 Mar 2024 15:24:48 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rpv3i-0005l7-Ti
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 15:05:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711652701;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=U+nI2o4YYT/plfQANsIbcVbxhidLfBxR/G6yTKn+xIk=;
- b=EYt5H/KCe+7dmakQPNQaIzNhSp7k9HHVuOy9MbJuzJuLrUE+ZRCzIAQcOEwJMn2Dvhz1nB
- kkgvQaBqg5zaa+l6yImM8I0sofrmQzWzsKrkqWQJJUUkYFlcpCm6CxGnGJmWOuZG6S8GbI
- Y43pT2KfQABrc+xF5nm0W7EdqZhYtAQ=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-rVDncnxLNHKglC2NbyJIDw-1; Thu, 28 Mar 2024 15:04:57 -0400
-X-MC-Unique: rVDncnxLNHKglC2NbyJIDw-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-78bc551b234so5026685a.0
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 12:04:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711652697; x=1712257497;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U+nI2o4YYT/plfQANsIbcVbxhidLfBxR/G6yTKn+xIk=;
- b=GrYrJm/QP6GVW/0o5016PY3ZtaVpjQXZ98p+3FyGlnJxjL/WEQ7FXuEYGgYwqU4DMY
- FB9idvAY7Dne0c02OoffRiEjHClN18wZrldn0AlXXSxH8pm7SN3/C8DSKa9R2wEWcvw/
- s1rNnhZhsfdff/NQap6PN/tSx4WlOn4ShPnjrD2y6xXKtE11uIc3BLuOYp5qQlhHEGol
- nHQ0EyJDiKVpoUOQSw1JOE5G6E1HkXrmCtFXVopdt9d/0+uaWlC1bw+o2z+65QYkpE1O
- ioYMK59i/r+tXRd7xU2Ea9AmLRZRI7Pamcv51orMlyG9n8awxTvKMcAGosnJEZNtKINl
- TyEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXctRIhZgGdRGaFbYbXXobQZA8a1NdfUoj8riZ8MbJr3bk0QPap4f0KfUkgD+8mpiFkIe+/5u1XaNyN3g4dvNQSKwxtP9I=
-X-Gm-Message-State: AOJu0Yx9CtwJB7j3z4tiQ/oVidJhhm7JZ5yGRqkR2E2hS15j28i+ooIJ
- T8Kz8WwdE4gcHtKzvtHEhX/EKnrIJUGkmkdT7VO/p5v4yvKWOV+fTp0iQHo0ihnnOLFga/b6cte
- Uiy6H5V9UK4/VX7WVBoIdEXq6F6h0fkt33m1Xg3qPP10c+Y0DHxR6
-X-Received: by 2002:a05:620a:462a:b0:78b:bd95:fbf6 with SMTP id
- br42-20020a05620a462a00b0078bbd95fbf6mr489539qkb.2.1711652697194; 
- Thu, 28 Mar 2024 12:04:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFcsUAe+GoxZqrVCULWAd54/YKiA2deHo+6keboZVvyiKERmFtHBZAC0PNPWjPWwF748OHWRw==
-X-Received: by 2002:a05:620a:462a:b0:78b:bd95:fbf6 with SMTP id
- br42-20020a05620a462a00b0078bbd95fbf6mr489491qkb.2.1711652696497; 
- Thu, 28 Mar 2024 12:04:56 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- c15-20020a05620a164f00b0078a310ae98asm748993qko.77.2024.03.28.12.04.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Mar 2024 12:04:56 -0700 (PDT)
-Date: Thu, 28 Mar 2024 15:04:52 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Yuval Shaia <yuval.shaia.ml@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>,
- Prasanna Kumar Kalever <prasanna.kalever@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Li Zhijian <lizhijian@fujitsu.com>,
- Prasanna Kumar Kalever <prasanna4324@gmail.com>,
- integration@gluster.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-block@nongnu.org,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- devel@lists.libvirt.org, Hanna Reitz <hreitz@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Eric Blake <eblake@redhat.com>, Song Gao <gaosong@loongson.cn>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Yu Zhang <yu.zhang@ionos.com>
-Subject: Re: [PATCH-for-9.1 v2 2/3] migration: Remove RDMA protocol handling
-Message-ID: <ZgW_VF1YUEcefHNw@x1n>
-References: <20240328130255.52257-1-philmd@linaro.org>
- <20240328130255.52257-3-philmd@linaro.org> <87frwatp7n.fsf@suse.de>
- <ZgWGMmUTq0jqSUvr@x1n>
- <a6677385-07c7-4b74-bd78-b14c2e80f107@redhat.com>
+ (Exim 4.90_1) (envelope-from <milesg@linux.vnet.ibm.com>)
+ id 1rpvMj-0001RM-Us; Thu, 28 Mar 2024 15:24:47 -0400
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42SJKisD014385; Thu, 28 Mar 2024 19:24:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=WQqruD1lZOjZzWn8spIOjCc0pZx9Q4EItYOvVw3ppQQ=;
+ b=pXWANVVb6DolchUFMQwT6qG4NFhKixTQsGIsRUl+l5ZgSM1ltQNZlfuuin9qw/NmSESt
+ uCplzQr+ekz+TZZ7dp0eJRY2sfRzJiIchR4+nZVVSY17UWFLcvGxeDsdTq2/QyWCBRRo
+ W2RWt9TtPcGXRteezIuSAPY7mqY7fPOjOQCSLcoanFYlfMi1B7zgiPnwT1IEAetn0IWT
+ scjTIijShULQIuClMSfEpiHlVGzGfP+McUHCOt60U70b3+Gxd4Q59MwvzraabT+Vw3ZC
+ rSS+UzuN2p4IBwfA1P4f0g9e4MGIU8DC5qS/ZFVbaqRkMqH21Gr571aTbEDWKhF/fpCw qA== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x5dua0498-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Mar 2024 19:24:28 +0000
+Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 42SJOS0r019765;
+ Thu, 28 Mar 2024 19:24:28 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3x5dua0497-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Mar 2024 19:24:28 +0000
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 42SJM4gK012965; Thu, 28 Mar 2024 19:24:26 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3x29t0yp0p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 28 Mar 2024 19:24:26 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 42SJOO6N62587312
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 28 Mar 2024 19:24:26 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 86BF758066;
+ Thu, 28 Mar 2024 19:24:24 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 06A4358054;
+ Thu, 28 Mar 2024 19:24:24 +0000 (GMT)
+Received: from mamboa4.aus.stglabs.ibm.com (unknown [9.3.84.87])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 28 Mar 2024 19:24:23 +0000 (GMT)
+From: Glenn Miles <milesg@linux.vnet.ibm.com>
+To: qemu-ppc@nongnu.org
+Cc: Glenn Miles <milesg@linux.vnet.ibm.com>, qemu-devel@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v4 0/4] Add BHRB Facility Support
+Date: Thu, 28 Mar 2024 14:23:52 -0500
+Message-Id: <20240328192356.2144086-1-milesg@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.31.8
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a6677385-07c7-4b74-bd78-b14c2e80f107@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 9Ol4_miF-hgmK5jxJvBA4pnnOaDgx3BR
+X-Proofpoint-GUID: lXAB08f20FqFcRElrq7efthtalzxjgc0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-28_17,2024-03-28_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 suspectscore=0
+ bulkscore=0 mlxlogscore=440 lowpriorityscore=0 phishscore=0 malwarescore=0
+ adultscore=0 spamscore=0 impostorscore=0 priorityscore=1501 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2403210000
+ definitions=main-2403280136
+Received-SPF: none client-ip=148.163.156.1;
+ envelope-from=milesg@linux.vnet.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.08,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,30 +114,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 28, 2024 at 04:22:27PM +0100, Thomas Huth wrote:
-> Since e9a54265f5 was not very clear about rdma migration code, should we
-> maybe rather add a separate deprecation note for the migration part, and add
-> a proper warning message to the migration code in case someone tries to use
-> it there, and then only remove the rdma migration code after two more
-> releases?
+This is a series of patches for adding support for the Branch History
+Rolling Buffer (BHRB) facility.  This was added to the Power ISA
+starting with version 2.07.  Changes were subsequently made in version
+3.1 to limit BHRB recording to instructions run in problem state only
+and to add a control bit to disable recording (MMCRA[BHRBRD]).
 
-Definitely a valid option to me.
+Changes from previous version:
+ - Rebased on latest master head (req'd changing cpu_env to tcg_env)
+ - Fixed compiler errors for non ppc64-softmmu targets
+ - Fixed compiler errors from compiling on 32-bit platforms
 
-So far RDMA isn't covered in tests (actually same to COLO, and I wonder our
-position of COLO too in this case..), so unfortunately we don't even know
-when it'll break just like before.
+Glenn Miles (4):
+  target/ppc: Add new hflags to support BHRB
+  target/ppc: Add recording of taken branches to BHRB
+  target/ppc: Add clrbhrb and mfbhrbe instructions
+  target/ppc: Add migration support for BHRB
 
-From other activities that I can see when new code comes, maintaining RDMA
-code should be fairly manageable so far (and whoever will write new rdma
-codes in those two releases will also need to take the maintainer's
-role). We did it for those years, and we can keep that for two more
-releases. Hopefully that can ring a louder alarm to the current users with
-such warnings, so that people can either stick with old binaries, or invest
-developer/test resources to the community.
-
-Thanks,
+ target/ppc/cpu.h                       |  24 ++++++
+ target/ppc/cpu_init.c                  |  41 +++++++++-
+ target/ppc/helper.h                    |   8 ++
+ target/ppc/helper_regs.c               |  37 +++++++++
+ target/ppc/insn32.decode               |   8 ++
+ target/ppc/machine.c                   |  23 +++++-
+ target/ppc/misc_helper.c               |  50 ++++++++++++
+ target/ppc/power8-pmu-regs.c.inc       |   5 ++
+ target/ppc/power8-pmu.c                |  48 +++++++++++-
+ target/ppc/power8-pmu.h                |  11 ++-
+ target/ppc/spr_common.h                |   1 +
+ target/ppc/translate.c                 | 102 +++++++++++++++++++++++--
+ target/ppc/translate/bhrb-impl.c.inc   |  43 +++++++++++
+ target/ppc/translate/branch-impl.c.inc |   2 +-
+ 14 files changed, 386 insertions(+), 17 deletions(-)
+ create mode 100644 target/ppc/translate/bhrb-impl.c.inc
 
 -- 
-Peter Xu
+2.31.8
 
 
