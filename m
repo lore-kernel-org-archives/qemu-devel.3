@@ -4,93 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABC7C54E67
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF0CC54E64
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rprUK-0002cy-3D; Thu, 28 Mar 2024 11:16:20 -0400
+	id 1rprZ4-0004KW-M4; Thu, 28 Mar 2024 11:21:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rprUD-0002c6-Hr
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:16:14 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rprZ3-0004KK-Ae
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:21:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1rprUB-0003L5-Ex
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:16:12 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1rprZ1-0004Dj-EK
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:21:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711638970;
+ s=mimecast20190719; t=1711639268;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dB6iKuO62vFonkQYCgk6muVpTHqtyzGQgWnmHKAu0LA=;
- b=W4E8EVOGRtpriPlLHL2xc7Z9vL0Eb4JYeDohWCppxGQcRnOIrEsq46HGy8TIgFCeVc5X+r
- pLvp6zIt7uI/wIYRTDTdrLdS/zR16Hat32FEC+17nYCDjjSiuTrs/AP67GJstHsYdb6ss/
- cNWLExx9oz711bcjHMEPZ9noQxHXues=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tU5gcPPjOOQYbjJnEXHPzzXPEWkVTbxIf52ciggj4Qc=;
+ b=UEkY2KBRsccnGk/GvVBz0bUVeRNlVrsTaSrsDBkBEXptQBhOBGlpm28MOZyR2iL6PcNKug
+ qd8p5YM2ic9/Tmzyi3mFcY6Ep1pKEZoUumTyDj0YhrZF/dhN2K6xyyoZgxnzTf9qiz4Y1o
+ CsmTSWUk2ogV1l6AaTVVikh+1y7ADgE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-321-3z5niuZpMS6pWR8yQMvz6g-1; Thu, 28 Mar 2024 11:16:08 -0400
-X-MC-Unique: 3z5niuZpMS6pWR8yQMvz6g-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-690ab2b0de1so1856336d6.0
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:16:08 -0700 (PDT)
+ us-mta-501-HfNhY6YbO5i_n4FLBALmrQ-1; Thu, 28 Mar 2024 11:21:07 -0400
+X-MC-Unique: HfNhY6YbO5i_n4FLBALmrQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4148b739698so6369645e9.0
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:21:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711638968; x=1712243768;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1711639266; x=1712244066;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dB6iKuO62vFonkQYCgk6muVpTHqtyzGQgWnmHKAu0LA=;
- b=Ksyz9GeU18jSkAdmxr6lfpgr/klV0zqKwDWGvPsvYIszEQBifFRmNt/bWh7OHPmKQT
- NnYY6geTPHUpfh4x++fssXQ+385WQgU+suG+o0J2IBu0i9Xomjf8oqP54G69IPQhUnDk
- WidO9RYRmWSHwWpdTrsz1m/DJt4gZHwWKEHFUcxOEdW/S9lIdwZbuMbWYfP5TUr6CgEI
- sSl9Qo4MdYH2zhJSQQyhQBmZMMoOVvqcpu8wC24CUs/i4vxeJCy4+mBAsthzxsPcchPl
- BWjCfO6QN7Xsl3ulVXJLQHnU9l7oGMS6CAluqitAzqpM6FR43mnjusBUyRobbyOn2TvQ
- qkJg==
+ bh=tU5gcPPjOOQYbjJnEXHPzzXPEWkVTbxIf52ciggj4Qc=;
+ b=Q+PsMjfvwclwdGhQyv+XRLFuElENWyEjH4LK9VqTf1Ip/7KDAiIrQvOlXNWh19LPt+
+ arw3qb5udzIaLyrwuO+OVh6YdpH4FmD9/FFruhfrcIwKNU2uxoyZgIpVX+qKLhMR92q6
+ +zwD79SfHSjHqXq0y9UwwRB7C49/EKarkM57b8ZA4Ptv9OvMgKPtkjwbNfXbwlrZ6B5s
+ bMwC4RBZD9xQrR58KGIpMVz91uDHetkbPsWbq+XBASkrm1WoNWW3q6lx60AGvo/PBfqj
+ yJ7g9xnnjzAFEVOPeyw/ixDSVPK8NnLdlEvi+nj/Bs+WPW7Vym7PfffSx5A71eJV4aB2
+ 3r+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXZP+TTBjqLwseIw39Eq6W72VqxkF2lXFyahR6R3s1uQ7/+BfEHjsEe17nsJgT5CEXCo6asTCF452qvKJW1BpC0KGIJ7ZE=
-X-Gm-Message-State: AOJu0YxYPf3FT1/XBi/aRmhzG/h9tsO2Z1AnUjwo6vhAkt1J0V7pUQ/9
- lXnFrl0cXOFiLpBH9qG66gdrMoCXjgKqtB1+AVy0N5yIRaDh3AiSUtMFqUJCw1Gow3wevMAnVrv
- M1a36EYa8rIQpiacPXoNqDW7rqqpO4HE8f0gBb5HCG7HQnE5E61XW
-X-Received: by 2002:a05:6214:5ed1:b0:696:8a5e:33c6 with SMTP id
- mn17-20020a0562145ed100b006968a5e33c6mr2826625qvb.5.1711638968153; 
- Thu, 28 Mar 2024 08:16:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRGCFMvQ+RTOCSEic1tqvYICW9CjM66x8jfwXIa88jbNBfYgZBNCvw9oKqVyjBB/zTQ0+9lQ==
-X-Received: by 2002:a05:6214:5ed1:b0:696:8a5e:33c6 with SMTP id
- mn17-20020a0562145ed100b006968a5e33c6mr2826574qvb.5.1711638967419; 
- Thu, 28 Mar 2024 08:16:07 -0700 (PDT)
-Received: from x1n ([99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- ks28-20020a056214311c00b0068f35e9e9a2sm730232qvb.8.2024.03.28.08.16.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Mar 2024 08:16:06 -0700 (PDT)
-Date: Thu, 28 Mar 2024 11:16:04 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Liu, Yuan1" <yuan1.liu@intel.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- "farosas@suse.de" <farosas@suse.de>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "hao.xiang@bytedance.com" <hao.xiang@bytedance.com>,
- "bryan.zhang@bytedance.com" <bryan.zhang@bytedance.com>,
- "Zou, Nanhai" <nanhai.zou@intel.com>
-Subject: Re: [PATCH v5 5/7] migration/multifd: implement initialization of
- qpl compression
-Message-ID: <ZgWJtFtbpXDvelvh@x1n>
-References: <ZfsCDhnYYmjxLTRW@x1n>
- <PH7PR11MB5941F8AE52DBD0F197798103A3332@PH7PR11MB5941.namprd11.prod.outlook.com>
- <ZftHtgpxOPNA8AYE@x1n>
- <PH7PR11MB5941186DCF12ED13130CBF5FA3322@PH7PR11MB5941.namprd11.prod.outlook.com>
- <ZfxSAgJECCOqtGRh@x1n>
- <PH7PR11MB594128C3B1C9ED66482DFEDEA3312@PH7PR11MB5941.namprd11.prod.outlook.com>
- <PH7PR11MB5941B5EB0C21FBFB6C8FFA16A3312@PH7PR11MB5941.namprd11.prod.outlook.com>
- <Zf20gJbSavpp93_b@x1n> <ZgRyxy3MhFp7PiH9@x1n>
- <PH7PR11MB59417CED1514B574523D6B1CA33B2@PH7PR11MB5941.namprd11.prod.outlook.com>
+ AJvYcCVORXyN+FRmRHYskKoY1q0UOA1lCMPCD+wSDZJj0O6rq4MDoLxXqPIiNyLnrmqMgiP3lg4a8yM7sAUgcDIxdKubGhssOqo=
+X-Gm-Message-State: AOJu0YxqUgeXopSpDdv2Ghdu82ZM/Ws0CllBS3Dfbc2+l+wJ37/wqFls
+ 27ArnAnzfaojE3w2iSaZxNlSk+QGhXJdlNwewY2cCchSWSEUQEbZ14vX97oLr0xYscdKtxdS7nC
+ Lutwh9E3aOewNlfm8YycptsnbBFC281OWcly0Z3nF7rAkXjW63LEv
+X-Received: by 2002:a05:600c:5249:b0:414:6172:8366 with SMTP id
+ fc9-20020a05600c524900b0041461728366mr2877277wmb.15.1711639265974; 
+ Thu, 28 Mar 2024 08:21:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFw5R+IdFvTYwg+oRH4g5EMERdLlctNou2BKjcEhBHy5fkmOaoWevwL+wl0BQfJYU1JdYFBHA==
+X-Received: by 2002:a05:600c:5249:b0:414:6172:8366 with SMTP id
+ fc9-20020a05600c524900b0041461728366mr2877267wmb.15.1711639265613; 
+ Thu, 28 Mar 2024 08:21:05 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ fb7-20020a05600c520700b00414969894a1sm4469202wmb.13.2024.03.28.08.21.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 28 Mar 2024 08:21:05 -0700 (PDT)
+Message-ID: <9aea916e-ea64-424b-bb48-4d1ad75e85ac@redhat.com>
+Date: Thu, 28 Mar 2024 16:21:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <PH7PR11MB59417CED1514B574523D6B1CA33B2@PH7PR11MB5941.namprd11.prod.outlook.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.0 1/2] migration: Set migration error in
+ migration_completion()
+To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <20240328140252.16756-1-avihaih@nvidia.com>
+ <20240328140252.16756-2-avihaih@nvidia.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240328140252.16756-2-avihaih@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -114,84 +105,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 28, 2024 at 02:32:37AM +0000, Liu, Yuan1 wrote:
-> > -----Original Message-----
-> > From: Peter Xu <peterx@redhat.com>
-> > Sent: Thursday, March 28, 2024 3:26 AM
-> > To: Liu, Yuan1 <yuan1.liu@intel.com>
-> > Cc: Daniel P. Berrangé <berrange@redhat.com>; farosas@suse.de; qemu-
-> > devel@nongnu.org; hao.xiang@bytedance.com; bryan.zhang@bytedance.com; Zou,
-> > Nanhai <nanhai.zou@intel.com>
-> > Subject: Re: [PATCH v5 5/7] migration/multifd: implement initialization of
-> > qpl compression
-> > 
-> > On Fri, Mar 22, 2024 at 12:40:32PM -0400, Peter Xu wrote:
-> > > > > void multifd_recv_zero_page_process(MultiFDRecvParams *p)
-> > > > > {
-> > > > >     for (int i = 0; i < p->zero_num; i++) {
-> > > > >         void *page = p->host + p->zero[i];
-> > > > >         if (!buffer_is_zero(page, p->page_size)) {
-> > > > >             memset(page, 0, p->page_size);
-> > > > >         }
-> > > > >     }
-> > > > > }
-> > >
-> > > It may not matter much (where I also see your below comments), but just
-> > to
-> > > mention another solution to avoid this read is that we can maintain
-> > > RAMBlock->receivedmap for precopy (especially, multifd, afaiu multifd
-> > > doesn't yet update this bitmap.. even if normal precopy does), then here
-> > > instead of scanning every time, maybe we can do:
-> > >
-> > >   /*
-> > >    * If it's the 1st time receiving it, no need to clear it as it must
-> > be
-> > >    * all zeros now.
-> > >    */
-> > >   if (bitmap_test(rb->receivedmap, page_offset)) {
-> > >       memset(page, 0, ...);
-> > >   } else {
-> > >       bitmap_set(rb->receivedmap, page_offset);
-> > >   }
-> > >
-> > > And we also always set the bit when !zero too.
-> > >
-> > > My rational is that it's unlikely a zero page if it's sent once or more,
-> > > while OTOH for the 1st time we receive it, it must be a zero page, so no
-> > > need to scan for the 1st round.
-> > 
-> > Thinking about this, I'm wondering whether we should have this regardless.
-> > IIUC now multifd will always require two page faults on destination for
-> > anonymous guest memories (I suppose shmem/hugetlb is fine as no zero page
-> > in those worlds).  Even though it should be faster than DMA faults, it
-> > still is unwanted.
-> > 
-> > I'll take a note myself as todo to do some measurements in the future
-> > first.  However if anyone thinks that makes sense and want to have a look,
-> > please say so.  It'll be more than welcomed.
+Hello Avihai,
+
+On 3/28/24 15:02, Avihai Horon wrote:
+> After commit 9425ef3f990a ("migration: Use migrate_has_error() in
+> close_return_path_on_source()"), close_return_path_on_source() assumes
+> that migration error is set if an error occurs during migration.
 > 
-> Yes, I think this is a better improvement to avoid two page faults. I can test
-> the performance impact of this change on SVM-capable devices and give some data
-> later. As we saw before, the IOTLB flush occurs via COW, with the change, the 
-> impact of the COW should be gone.
+> This may not be true if migration errors in migration_completion(). For
+> example, if qemu_savevm_state_complete_precopy() errors, migration error
+> will not be set
+
+Out of curiosity, could you describe a bit more the context ? Did
+vfio_save_complete_precopy() fail ? why ?
+
+We should propagate errors of .save_live_complete_precopy() handlers as
+it was done .save_setup handlers(). For 9.1.
+
+> This in turn, will cause a migration hang bug, similar to the bug that
+> was fixed by commit 22b04245f0d5 ("migration: Join the return path
+> thread before releasing to_dst_file"), as shutdown() will not be issued
+> for the return-path channel.
+
+yes, but this test :
+
+     if (ret < 0) {
+         goto fail;
+     }
+
+will skip the close_return_path_on_source() call. Won't it ? So I don't
+understand how it can be an issue. Am I missing something ?
+
+> Fix it by ensuring migration error is set in case of error in
+> migration_completion().
+
+Why didn't you add a reference to commit 9425ef3f990a ?
+
+
+> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+> ---
+>   migration/migration.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
 > 
-> If you need more testing and analysis on this, please let me know
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 9fe8fd2afd7..b73ae3a72c4 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -2799,6 +2799,7 @@ static void migration_completion(MigrationState *s)
+>   {
+>       int ret = 0;
+>       int current_active_state = s->state;
+> +    Error *local_err = NULL;
+>   
+>       if (s->state == MIGRATION_STATUS_ACTIVE) {
+>           ret = migration_completion_precopy(s, &current_active_state);
+> @@ -2832,6 +2833,15 @@ static void migration_completion(MigrationState *s)
+>       return;
+>   
+>   fail:
+> +    if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
+> +        migrate_set_error(s, local_err);
+> +        error_free(local_err);
+> +    } else if (ret) {
+> +        error_setg_errno(&local_err, -ret, "Error in migration completion");
 
-Nothing more than that.  Just a heads up that Xiang used to mention a test
-case where Richard used to suggest dropping the zero check:
+The 'ret = -1' case could be improved with error_setg(). As a followup.
 
-https://lore.kernel.org/r/CAAYibXib+TWnJpV22E=adncdBmwXJRqgRjJXK7X71J=bDfaxDg@mail.gmail.com
+Thanks,
 
-AFAIU this should be resolved if we have the bitmap maintained, but we can
-double check.  IIUC that's exactly the case for an idle guest, in that case
-it should be even faster to skip the memcmp when bit clear.
+C.
 
-If you're going to post the patches, feel free to post that as a standalone
-small series first, then that can be considered merge even earlier.
 
-Thanks a lot for doing this.
 
--- 
-Peter Xu
+
+> +        migrate_set_error(s, local_err);
+> +        error_free(local_err);
+> +    }
+> +
+>       migration_completion_failed(s, current_active_state);
+>   }
+>   
 
 
