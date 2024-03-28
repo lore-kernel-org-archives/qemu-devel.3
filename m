@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42190C54E64
-	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:35:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11E09C54E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 28 Mar 2024 15:39:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1rprmS-0000k6-50; Thu, 28 Mar 2024 11:35:04 -0400
+	id 1rprqX-00021t-0F; Thu, 28 Mar 2024 11:39:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rprmQ-0000jj-9p
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:35:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rprqV-00021R-8C
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:39:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rprmO-0006OQ-Ec
- for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:35:02 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1rprqT-00071l-CL
+ for qemu-devel@nongnu.org; Thu, 28 Mar 2024 11:39:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1711640099;
+ s=mimecast20190719; t=1711640352;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=VNGXWTEhGqisd0ZboKqyd1sWzEt2AtmxkVV4hAHD6S8=;
- b=DQyNx9IjDfTIrhAkj4gV4OJ9gaSVSNMy1cJKA/xCbDspNGs7G9NfxI+aRzUoUjyAkIF2im
- et2WsrmwMa5cPjN3CClH3s7cUWrZ1dXv5CTVX6Qy4zd+bd4FqqDw5cS/JYDzNCJlOveT1G
- tuGKefwfjzlbOLAJIymn2YlEWqy1q8A=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0Ir1QOcLha7reu+tFxxQv+hqjR0k2uICWZBFX5k/QE4=;
+ b=E8w774st/ErHZtJCJtqONG9We5i1zhywLLKuBLsR3jU3I4Tq15Zylo31iR9qYJydSNTjbR
+ fot0o5d9FX4cBMHKGJh4++F3/6SPH526XIkATkJ42bnRRWQCIP0rkeO8BGfMcsWixSGgbq
+ aNiDaPjug6/FMMqFi04Qlz7RvSD8CaM=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-179-cLEYsHI6MFaZ7jlonsCBfQ-1; Thu, 28 Mar 2024 11:34:57 -0400
-X-MC-Unique: cLEYsHI6MFaZ7jlonsCBfQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-414908c5403so5337585e9.2
- for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:34:57 -0700 (PDT)
+ us-mta-287-y2RlK78lNceFaLAs8G3Bbg-1; Thu, 28 Mar 2024 11:39:09 -0400
+X-MC-Unique: y2RlK78lNceFaLAs8G3Bbg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-414908c5403so5357455e9.2
+ for <qemu-devel@nongnu.org>; Thu, 28 Mar 2024 08:39:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1711640096; x=1712244896;
+ d=1e100.net; s=20230601; t=1711640349; x=1712245149;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=VNGXWTEhGqisd0ZboKqyd1sWzEt2AtmxkVV4hAHD6S8=;
- b=UgsoHAvqPj7b9E9kRYQrptSSC9v/BIUj1sE3QTvuYzIatFrxqvIl/SHqw0FNGE6AYL
- Ow+KYt0EwQGki1bBXjQzcrwWh9N6ca6+YAuFrTxRpvqXMVmabzQ109gFCNrAtc7s+YsR
- qwbAzBOjduOTiJU5IrU2OC//I+jqIseXFJu8kBh2zhz5h+WMh1bhdkAiLGyP8HmvPUnd
- ku+SJm/g1A4+mo/rmTGfPrtZK5D+rPfRWHjXEbgK3OtZIzCuJhI0FCvhPzR7MkGgfloC
- +NEA5KP7jhfRtnTVmu8/A6uprGdPKZKVe85AEHSXv2uPrz7FYbTlQqtozZxDLcpoq3D5
- 8hBw==
+ bh=0Ir1QOcLha7reu+tFxxQv+hqjR0k2uICWZBFX5k/QE4=;
+ b=E7Z6kI7xVxGmeEuVp/bWs31OzSmA5KcFZjAJLN2iCBiSbsaGSYBD5HWmY0HOnsN1f5
+ U/NhYYGhC6H24A2pWZw9LXYtzuJc/V3yCrRMCUinnKqaoR5xCm0WVzwXTayuoj6SOOEF
+ 31M/Ht3i5eratNxuteATs4Ols04NRL0Po9rQUFSS5rsziKOjfjjwuDQL2Iorh5jdmtJ/
+ aikALyym3OCVXnkg3QdLVTzg6kJ6Ax+qCqf0pc4N0E1voI/1bzTOha6YLsNu8fcWByo/
+ Aoa6+Vhtge+czuv/b+501CkN71SBaiPYb28gE1fE6GUyMnLFNrpzVI7qZGDTmKJISRY7
+ oPdQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjU9Gs5KmPlzB94hsd681sYWhc8R14WweufHSU1RuR3GiFqjhsF368iQSU4iRdIw/Qk397v8p2meOHMc11MmTE2OxQoAU=
-X-Gm-Message-State: AOJu0Yxz9qOir5D61xifSnbG2useUIBiMahvyXfGdHWaU6RX5Bi0LkMA
- gJissL+b4P7vtt47Nnm9SkzpJPOZlUe2EN8mZwIMIBz5bRiXXXar5xglKtPMOkdoDRbKCxztZSZ
- 342ADQ0XbKppvYXsbltmej9GtExe/AgDcT84m3YD2KrBkIaxGEVlG
-X-Received: by 2002:a05:600c:499a:b0:414:8e39:72f9 with SMTP id
- h26-20020a05600c499a00b004148e3972f9mr2569824wmp.23.1711640096495; 
- Thu, 28 Mar 2024 08:34:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEZw+xvPm9EccvKsePkisOH2gL0+N0hEKH0agSgUeycfCA3jNvErQOS+fLhNY3aMzmAVXi1dQ==
-X-Received: by 2002:a05:600c:499a:b0:414:8e39:72f9 with SMTP id
- h26-20020a05600c499a00b004148e3972f9mr2569804wmp.23.1711640096154; 
- Thu, 28 Mar 2024 08:34:56 -0700 (PDT)
+ AJvYcCXm48FL831FfoG6IA5op8dZeM600VIL4Gz+43wfE0esJLw5QuGT/dLewhlDSXlYx2EPir/6HYKiJnPhzKaOs6nd4LxWVlw=
+X-Gm-Message-State: AOJu0YybqfCv/49imu+UJjHTvQ817tOMHBQtc4uRCECCTgHzTb7IwWUU
+ wk+AEKyopuMiBjzkQhDaYrGcjW5QIRKYn8rUfwvi/UfWewJOwaYCc52jorFBgJatcP7HdbCnx2/
+ A4i3VIPrPsEJetvJGKn0euGj7oed309mHJ5AlJAS9Y9iyZyJOVzag
+X-Received: by 2002:a05:600c:3505:b0:413:3160:840f with SMTP id
+ h5-20020a05600c350500b004133160840fmr2687928wmq.0.1711640348911; 
+ Thu, 28 Mar 2024 08:39:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEauUnFs30nU5FTwPhNc3Y/JNTt4Veie8oG0595D5YPZS2WD5ySEoqVicJUBsVqR5SYxJNn1g==
+X-Received: by 2002:a05:600c:3505:b0:413:3160:840f with SMTP id
+ h5-20020a05600c350500b004133160840fmr2687910wmq.0.1711640348410; 
+ Thu, 28 Mar 2024 08:39:08 -0700 (PDT)
 Received: from [192.168.0.9] (ip-109-43-177-37.web.vodafone.de.
  [109.43.177.37]) by smtp.gmail.com with ESMTPSA id
- m28-20020a05600c3b1c00b00414688af147sm5775239wms.20.2024.03.28.08.34.54
+ f10-20020a05600c154a00b004154596db0esm2147488wmg.19.2024.03.28.08.39.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Mar 2024 08:34:55 -0700 (PDT)
-Message-ID: <ab594429-b2da-4274-b498-4a05a2e49d5a@redhat.com>
-Date: Thu, 28 Mar 2024 16:34:54 +0100
+ Thu, 28 Mar 2024 08:39:08 -0700 (PDT)
+Message-ID: <179a8cbf-b645-4027-ad53-13c4beb4f099@redhat.com>
+Date: Thu, 28 Mar 2024 16:39:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 6/9] block/nbd: Use URI parsing code from glib
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Subject: Re: [PATCH-for-9.0 v2] hw/i386/pc: Deprecate 64-bit CPUs on ISA-only
+ PC machine
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Lieven <pl@kamp.de>, "Richard W.M. Jones" <rjones@redhat.com>,
- qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>, qemu-block@nongnu.org
-References: <20240328140607.2433889-1-thuth@redhat.com>
- <20240328140607.2433889-7-thuth@redhat.com>
- <sv4rp7w2cnjy5xykp4t3w5gf3zwnohe5eso422whl2ux2ofixa@xwjphousol77>
- <ZgWF7MGNAlMb_WvY@redhat.com>
+ qemu-devel@nongnu.org
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, devel@lists.libvirt.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20240327165456.34716-1-philmd@linaro.org>
+ <70006b4e-b2ae-4d74-be22-4dabf46e0217@ilande.co.uk>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -128,7 +128,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <ZgWF7MGNAlMb_WvY@redhat.com>
+In-Reply-To: <70006b4e-b2ae-4d74-be22-4dabf46e0217@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -155,98 +155,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/03/2024 15.59, Daniel P. Berrangé wrote:
-> On Thu, Mar 28, 2024 at 09:54:49AM -0500, Eric Blake wrote:
->> On Thu, Mar 28, 2024 at 03:06:03PM +0100, Thomas Huth wrote:
->>> Since version 2.66, glib has useful URI parsing functions, too.
->>> Use those instead of the QEMU-internal ones to be finally able
->>> to get rid of the latter. The g_uri_get_host() also takes care
->>> of removing the square brackets from IPv6 addresses, so we can
->>> drop that part of the QEMU code now, too.
->>>
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>   block/nbd.c | 66 ++++++++++++++++++++++++++++++-----------------------
->>>   1 file changed, 38 insertions(+), 28 deletions(-)
->>>
->>> diff --git a/block/nbd.c b/block/nbd.c
->>> index ef05f7cdfd..95b507f872 100644
->>> --- a/block/nbd.c
->>> +++ b/block/nbd.c
->>> @@ -31,7 +31,6 @@
->>>   #include "qemu/osdep.h"
->>>   
->>>   #include "trace.h"
->>> -#include "qemu/uri.h"
->>>   #include "qemu/option.h"
->>>   #include "qemu/cutils.h"
->>>   #include "qemu/main-loop.h"
->>> @@ -1514,30 +1513,34 @@ static void nbd_client_close(BlockDriverState *bs)
->>>   
->>>   static int nbd_parse_uri(const char *filename, QDict *options)
->>>   {
->>> -    URI *uri;
->>> +    GUri *uri;
->>
->> Is it worth using 'g_autoptr(GUri) uri = NULL;' here, to simplify cleanup later?
-
-Sounds like a good idea, I'll give it a try!
-
->>>       const char *p;
->>> -    QueryParams *qp = NULL;
->>> +    GHashTable *qp = NULL;
->>
->> Presumably would be easier if qp is also auto-free.
->>
->>> +    int qp_n;
->>>       int ret = 0;
->>>       bool is_unix;
->>> +    const char *uri_scheme, *uri_query, *uri_server;
->>> +    int uri_port;
->>>   
->>> -    uri = uri_parse(filename);
->>> +    uri = g_uri_parse(filename, G_URI_FLAGS_NONE, NULL);
->>
->> The glib API is fairly close to what we have in qemu, making this a
->> nice switchover.
->>
->>>           /* nbd[+tcp]://host[:port]/export */
->>> -        if (!uri->server) {
->>> +        if (!uri_server) {
->>>               ret = -EINVAL;
->>>               goto out;
->>>           }
->>>   
->>> -        /* strip braces from literal IPv6 address */
->>> -        if (uri->server[0] == '[') {
->>> -            host = qstring_from_substr(uri->server, 1,
->>> -                                       strlen(uri->server) - 1);
->>> -        } else {
->>> -            host = qstring_from_str(uri->server);
->>> -        }
->>> -
->>>           qdict_put_str(options, "server.type", "inet");
->>> -        qdict_put(options, "server.host", host);
->>> +        qdict_put_str(options, "server.host", uri_server);
->>>   
->>> -        port_str = g_strdup_printf("%d", uri->port ?: NBD_DEFAULT_PORT);
->>> +        port_str = g_strdup_printf("%d", uri_port != -1 ? uri_port
->>> +                                                        : NBD_DEFAULT_PORT);
->>>           qdict_put_str(options, "server.port", port_str);
->>
->> If a user requests nbd://hostname:0/export, this now sets server.port
->> to "0" instead of "10809".  Is that an intentional change?  No one
->> actually passes an explicit ":0" port on purpose, but we do have to
->> worry about malicious URIs.
+On 28/03/2024 16.12, Mark Cave-Ayland wrote:
+> On 27/03/2024 16:54, Philippe Mathieu-Daudé wrote:
 > 
-> Passing '0' will cause the kernel to allocate a random free
-> port, so that is potentially introducing new semantics ?
+>> Per Daniel suggestion [*]:
+>>
+>>   > isapc could arguably be restricted to just 32-bit CPU models,
+>>   > because we should not need it to support any feature that didn't
+>>   > exist prior to circa 1995. eg refuse to start with isapc, if 'lm'
+>>   > is present in the CPU model for example.
+>>
+>> Display a warning when such CPU is used:
+>>
+>>    $ qemu-system-x86_64 -monitor stdio -S -M isapc -cpu Westmere
+>>    qemu-system-x86_64: warning: Use of 64-bit CPU 'Westmere' is deprecated 
+>> on the ISA-only PC machine
+>>    QEMU 8.2.91 monitor - type 'help' for more information
+>>    (qemu) q
+>>
+>>    $ qemu-system-x86_64 -monitor stdio -S -M isapc -cpu athlon
+>>    QEMU 8.2.91 monitor - type 'help' for more information
+>>    (qemu) q
+>>
+>> [*] https://lore.kernel.org/qemu-devel/ZgQkS4RPmSt5Xa08@redhat.com/
+>>
+>> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   docs/about/deprecated.rst |  7 +++++++
+>>   include/hw/i386/pc.h      |  1 +
+>>   hw/i386/pc_piix.c         | 14 ++++++++++++++
+>>   3 files changed, 22 insertions(+)
+>>
+>> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+>> index 7b548519b5..345c35507f 100644
+>> --- a/docs/about/deprecated.rst
+>> +++ b/docs/about/deprecated.rst
+>> @@ -208,6 +208,13 @@ is no longer packaged in any distro making it harder 
+>> to run the
+>>   ``check-tcg`` tests. Unless we can improve the testing situation there
+>>   is a chance the code will bitrot without anyone noticing.
+>> +64-bit (x86_64) CPUs on the ``isapc`` machine (since 9.0)
+>> +'''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+>> +
+>> +The ``isapc`` machine aims to emulate old PC machine without PCI was
+>> +generalized, so hardware available around 1995, before 64-bit intel
+>> +CPUs were produced.
+>> +
+>>   System emulator machines
+>>   ------------------------
+>> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+>> index 27a68071d7..2d202b9549 100644
+>> --- a/include/hw/i386/pc.h
+>> +++ b/include/hw/i386/pc.h
+>> @@ -96,6 +96,7 @@ struct PCMachineClass {
+>>       const char *default_south_bridge;
+>>       /* Compat options: */
+>> +    bool deprecate_64bit_cpu; /* Specific to the 'isapc' machine */
+>>       /* Default CPU model version.  See x86_cpu_set_default_version(). */
+>>       int default_cpu_version;
+>> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+>> index 18ba076609..2e5b2efc33 100644
+>> --- a/hw/i386/pc_piix.c
+>> +++ b/hw/i386/pc_piix.c
+>> @@ -182,7 +182,20 @@ static void pc_init1(MachineState *machine, const 
+>> char *pci_type)
+>>       }
+>>       pc_machine_init_sgx_epc(pcms);
+>> +
+>>       x86_cpus_init(x86ms, pcmc->default_cpu_version);
+>> +    if (pcmc->deprecate_64bit_cpu) {
+>> +        X86CPU *cpu = X86_CPU(first_cpu);
+>> +
+>> +        if (cpu->env.features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
+>> +            const char *cpu_type = object_get_typename(OBJECT(first_cpu));
+>> +            int cpu_len = strlen(cpu_type) - strlen(X86_CPU_TYPE_SUFFIX);
+>> +
+>> +            warn_report("Use of 64-bit CPU '%.*s' is deprecated"
+>> +                        " on the ISA-only PC machine",
+>> +                        cpu_len, cpu_type);
+>> +        }
+>> +    }
+>>       if (kvm_enabled()) {
+>>           kvmclock_create(pcmc->kvmclock_create_always);
+>> @@ -918,6 +931,7 @@ static void isapc_machine_options(MachineClass *m)
+>>       pcmc->gigabyte_align = false;
+>>       pcmc->smbios_legacy_mode = true;
+>>       pcmc->has_reserved_memory = false;
+>> +    pcmc->deprecate_64bit_cpu = true;
+>>       m->default_nic = "ne2k_isa";
+>>       m->default_cpu_type = X86_CPU_TYPE_NAME("486");
+>>       m->no_parallel = !module_object_class_by_name(TYPE_ISA_PARALLEL);
+> 
+> The logic around checking CPUID_EXT2_LM looks good to me. Slightly curious 
+> as to whether people feel updating PCMachineClass is necessary, or you can 
+> simply do qdev_get_machine() and use object_dynamic_cast() to see if the 
+> machine matches MACHINE_NAME("isapc") and warn that way?
 
-Ok, so passing a 0 does not really make sense, since QEMU needs to know the 
-exact port. I'll change the check from "uri_port != -1" to "uri_port > 0" in 
-the next version.
+Why don't you simply pass it as a parameter from pc_init_isa() instead? Or 
+do the whole check in pc_init_isa() instead?
 
   Thomas
-
 
 
